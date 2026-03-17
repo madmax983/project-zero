@@ -202,7 +202,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `459` Ghost Frequencies — `specs/459-ghost-frequencies.md`
 - [ ] `460` The Bureau of Redundancy — `specs/460-the-bureau-of-redundancy.md`
 - [ ] `461` The Panopticon Morale — `specs/461-the-panopticon-morale.md`
-- [ ] `462` Zero-G Sports — `specs/462-zero-g-sports.md`
 - [ ] `463` Biological Transit — `specs/463-biological-transit.md`
 - [ ] `464` Albedo Mining — `specs/464-albedo-mining.md`
 - [ ] `465` Cult of the Forgotten Machine — `specs/465-cult-of-the-forgotten-machine.md`

@@ -1,8 +1,8 @@
+use crate::layer1::scrapcode::Scrapcode;
+use crate::layer2::system::SystemBody;
 use bevy_ecs::prelude::*;
 use rand::seq::SliceRandom;
 use rand::Rng;
-use crate::layer2::system::SystemBody;
-use crate::layer1::scrapcode::Scrapcode;
 
 /// Fleet marker component
 #[derive(Component)]
@@ -13,8 +13,14 @@ pub struct Fleet {
 #[derive(Component, Debug, Clone, PartialEq)]
 pub enum FleetOrders {
     Idle,
-    Haul { target: Entity, resource_type: String, amount: u32 },
-    Patrol { target: Entity },
+    Haul {
+        target: Entity,
+        resource_type: String,
+        amount: u32,
+    },
+    Patrol {
+        target: Entity,
+    },
 }
 
 #[derive(Resource, Default)]
@@ -35,7 +41,11 @@ pub fn check_scrapcode_threshold_system(
     nodes: Query<Entity, With<SystemBody>>,
     scrapcode: Option<Res<Scrapcode>>,
 ) {
-    let mut state = if let Some(s) = state { s } else { return; };
+    let mut state = if let Some(s) = state {
+        s
+    } else {
+        return;
+    };
     let mut rng = rand::thread_rng();
 
     // Integrate with layer 1 scrapcode
@@ -55,7 +65,11 @@ pub fn check_scrapcode_threshold_system(
 
             // Generate a bizarre order
             let bizarre_order = if rng.gen_bool(0.5) {
-                FleetOrders::Haul { target, resource_type: "Dirt".to_string(), amount: 10000 }
+                FleetOrders::Haul {
+                    target,
+                    resource_type: "Dirt".to_string(),
+                    amount: 10000,
+                }
             } else {
                 FleetOrders::Patrol { target }
             };
@@ -66,10 +80,14 @@ pub fn check_scrapcode_threshold_system(
             });
             state.spawn_timer = 100.0;
         } else {
-             // Fallback for tests when no nodes exist
+            // Fallback for tests when no nodes exist
             events.send(SpawnGhostFleetEvent {
                 origin_node: Entity::PLACEHOLDER,
-                bizarre_order: FleetOrders::Haul { target: Entity::PLACEHOLDER, resource_type: "Dirt".to_string(), amount: 10000 },
+                bizarre_order: FleetOrders::Haul {
+                    target: Entity::PLACEHOLDER,
+                    resource_type: "Dirt".to_string(),
+                    amount: 10000,
+                },
             });
             state.spawn_timer = 100.0;
         }
@@ -104,9 +122,15 @@ mod tests {
     fn test_high_scrapcode_spawns_ghost_fleet() {
         let mut app = bevy_app::App::new();
         app.add_event::<SpawnGhostFleetEvent>();
-        app.insert_resource(EmpireAutomationState { scrapcode_buildup: 150.0, spawn_timer: 0.0 });
+        app.insert_resource(EmpireAutomationState {
+            scrapcode_buildup: 150.0,
+            spawn_timer: 0.0,
+        });
 
-        app.add_systems(bevy_app::Update, (check_scrapcode_threshold_system, spawn_ghost_fleet_system).chain());
+        app.add_systems(
+            bevy_app::Update,
+            (check_scrapcode_threshold_system, spawn_ghost_fleet_system).chain(),
+        );
 
         app.update();
 
@@ -120,16 +144,25 @@ mod tests {
             }
         }
 
-        assert!(found_ghost_fleet, "Ghost fleet should have been spawned due to high scrapcode");
+        assert!(
+            found_ghost_fleet,
+            "Ghost fleet should have been spawned due to high scrapcode"
+        );
     }
 
     #[test]
     fn test_low_scrapcode_does_not_spawn_ghost_fleet() {
         let mut app = bevy_app::App::new();
         app.add_event::<SpawnGhostFleetEvent>();
-        app.insert_resource(EmpireAutomationState { scrapcode_buildup: 50.0, spawn_timer: 0.0 });
+        app.insert_resource(EmpireAutomationState {
+            scrapcode_buildup: 50.0,
+            spawn_timer: 0.0,
+        });
 
-        app.add_systems(bevy_app::Update, (check_scrapcode_threshold_system, spawn_ghost_fleet_system).chain());
+        app.add_systems(
+            bevy_app::Update,
+            (check_scrapcode_threshold_system, spawn_ghost_fleet_system).chain(),
+        );
 
         app.update();
 
@@ -142,20 +175,29 @@ mod tests {
     #[test]
     fn test_defragmentation_reduces_buildup() {
         let mut app = bevy_app::App::new();
-        app.insert_resource(EmpireAutomationState { scrapcode_buildup: 150.0, spawn_timer: 0.0 });
+        app.insert_resource(EmpireAutomationState {
+            scrapcode_buildup: 150.0,
+            spawn_timer: 0.0,
+        });
         app.add_systems(bevy_app::Update, defragment_automation_system);
 
         app.update();
 
         let state = app.world().resource::<EmpireAutomationState>();
-        assert_eq!(state.scrapcode_buildup, 100.0, "Defragmentation should lower buildup");
+        assert_eq!(
+            state.scrapcode_buildup, 100.0,
+            "Defragmentation should lower buildup"
+        );
     }
 
     #[test]
     fn test_integration_with_layer1_scrapcode() {
         let mut app = bevy_app::App::new();
         app.add_event::<SpawnGhostFleetEvent>();
-        app.insert_resource(EmpireAutomationState { scrapcode_buildup: 99.0, spawn_timer: 0.0 });
+        app.insert_resource(EmpireAutomationState {
+            scrapcode_buildup: 99.0,
+            spawn_timer: 0.0,
+        });
         app.insert_resource(Scrapcode {
             active: true,
             severity: 20.0, // 20.0 * 0.1 = 2.0 increase -> 101.0
@@ -167,6 +209,9 @@ mod tests {
         app.update();
 
         let state = app.world().resource::<EmpireAutomationState>();
-        assert_eq!(state.scrapcode_buildup, 101.0, "Layer 1 scrapcode should increase buildup");
+        assert_eq!(
+            state.scrapcode_buildup, 101.0,
+            "Layer 1 scrapcode should increase buildup"
+        );
     }
 }
