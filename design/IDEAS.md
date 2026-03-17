@@ -10310,3 +10310,59 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Immediate, game-saving efficiency boosts vs. the slow, horrifying erasure of your colonists' humanity.
 
 ---
+
+## The Living Archive
+
+**Layer:** 1
+
+**Fantasy:** A library not of books, but of genetically modified organic hard drives that must be fed and kept comfortable.
+
+**Mechanic:** Late-game data storage requires "Flesh-Servers" - massive, immobile biological entities that store tech data. They require nutrient paste and perfect temperature control. If they get sick or stressed, data is temporarily corrupted.
+
+**Emergence:** A heatwave hits your data center. The Flesh-Servers get stressed and start hallucinating, outputting bizarre, corrupted tech blueprints that cost twice as much to build but have weird secondary effects.
+
+**Tension:** High-density, unhackable biological data storage vs. the fragility and horror of maintaining living servers.
+
+---
+
+## Symbiotic Habitation
+
+**Layer:** 1
+
+**Fantasy:** Growing your houses instead of building them. Living inside a massive, benign alien organism.
+
+**Mechanic:** You can plant "Hab-Seeds" that grow into multi-room structures. They require water and sunlight but no building materials. Pops living inside gain health regeneration but slowly develop a psychic link with the plant, sharing its stress if it's damaged.
+
+**Emergence:** A toxic spill damages the Hab-Plant. Every Pop living inside it simultaneously experiences severe nausea and depression, crippling an entire sector's workforce without the Pops ever touching the toxin.
+
+**Tension:** Free, self-repairing infrastructure vs. tying the physical and mental health of your Pops directly to a vulnerable plant.
+
+---
+
+## Temporal Echoes
+
+**Layer:** 1
+
+**Fantasy:** A region of the map where time stutters, replaying past tragedies or offering glimpses of the future.
+
+**Mechanic:** "Chrono-Anomalies" occasionally drift across the map. When a Pop enters one, they might experience a "Temporal Echo" - gaining a massive skill boost from a future version of themselves, or suffering severe stress from experiencing their own future death. Buildings in the anomaly age rapidly or revert to unbuilt states.
+
+**Emergence:** You intentionally build your research lab inside a stable Chrono-Anomaly to accelerate research. It works for a year, then the anomaly collapses, aging the entire science team to dust in seconds and reducing the lab to raw materials.
+
+**Tension:** Exploiting localized time distortion for massive gains vs. the unpredictable, catastrophic aging or regression of assets.
+
+---
+
+## The Bureau of Regrets
+
+**Layer:** Cross-layer
+
+**Fantasy:** A faction dedicated solely to undoing the mistakes of the past, even if it destroys the present.
+
+**Mechanic:** If your colony has a high "Atrocity" score (from starving pops, executions, etc.), the "Penitent Faction" forms. They demand the dismantling of the structures or technologies that caused the atrocities (e.g., destroying the very hydroponics bays that saved the colony but required forced labor). If ignored, they initiate "Reparation Strikes."
+
+**Emergence:** You finally build a utopian society on the back of decades of brutal martial law. The Penitent Faction rises up, demanding you destroy the defense grid that kept you safe, claiming it's a monument to oppression.
+
+**Tension:** Acknowledging and repairing past sins (crippling current infrastructure) vs. suppressing the faction and repeating the cycle of violence.
+
+---
