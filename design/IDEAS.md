@@ -10311,7 +10311,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Living Archive
+## The Living Archive [SPECCED]
 
 **Layer:** 1
 
@@ -10325,7 +10325,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Symbiotic Habitation
+## Symbiotic Habitation [SPECCED]
 
 **Layer:** 1
 
@@ -10339,7 +10339,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Temporal Echoes
+## Temporal Echoes [SPECCED]
 
 **Layer:** 1
 
@@ -10353,7 +10353,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Bureau of Regrets
+## The Bureau of Regrets [SPECCED]
 
 **Layer:** Cross-layer
 
