@@ -236,7 +236,7 @@ pub fn proximity_social_system(
     }
 }
 
-#[cfg(test)]
+
 mod tests {
     use super::*;
     use crate::layer1::building::{Building, BuildingType};
@@ -515,7 +515,7 @@ pub mod debt;
 pub mod grievances;
 /// Old Guard logic: Generational friction between Founders and Immigrants (Spec 078).
 pub mod old_guard;
-#[cfg(test)]
+
 mod old_guard_tests;
 
 pub use debt::*;
@@ -524,7 +524,7 @@ pub use grievances::*;
 /// Empty Room logic (Spec 251).
 pub mod empty_room;
 
-#[cfg(test)]
+
 mod empty_room_tests;
 
 pub use empty_room::*;
@@ -549,3 +549,5 @@ pub use society::*;
 /// The Sentient Standard logic (Spec 295).
 pub mod sentient_standard;
 pub use sentient_standard::*;
+pub mod zero_g_sports;
+pub use zero_g_sports::*;
