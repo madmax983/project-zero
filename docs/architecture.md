@@ -29,7 +29,7 @@ Container_Boundary(Simulation, "Simulation Core (Layer 1)") {
     Component(CabinFever, "Cabin Fever System", "cabin_fever.rs", "Tracks Confinement & Crowding")
     Component(GutBiome, "Gut Biome", "gut_biome.rs", "Digestive Adaptation")
     Component(Acoustics, "Acoustics (Nova)", "acoustics.rs", "Noise Map & Weather Audio")
-    Component(Seismic, "Seismic Grid", "geology.rs", "Long-term Stress")
+    Component(Seismic, "Seismic Grid", "geology/mod.rs", "Long-term Stress")
     Component(Vibration, "Vibration Grid", "seismic.rs", "Immediate Vibration")
     Component(Atmosphere, "Atmosphere", "atmosphere.rs", "Pollution Diffusion")
     Component(Pressure, "Pressure", "pressure.rs", "Decompression")
@@ -685,6 +685,7 @@ classDiagram
 - [ADR 037: Headless CLI Dashboard](./adr/037-headless-cli-dashboard.md)
 - [ADR 038: Encapsulate Secret Societies](./adr/038-encapsulate-secret-societies.md)
 - [ADR 039: Integrate Gut Biome Mechanics](./adr/039-integrate-gut-biome.md)
+- [ADR 040: Consolidate Geology Module](./adr/040-consolidate-geology-module.md)
 
 ## Secret Societies Encapsulation
 
