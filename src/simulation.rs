@@ -96,6 +96,12 @@ pub fn build_simulation_schedule() -> Schedule {
     ));
 
     schedule.add_systems((
+        crate::layer2::trade::blockade::debt_blockade_system,
+        crate::layer2::trade::blockade::blockade_interception_system
+            .after(crate::layer2::trade::blockade::debt_blockade_system),
+    ));
+
+    schedule.add_systems((
         crate::layer2::phantom::check_scrapcode_threshold_system
             .after(crate::layer1::scrapcode::scrapcode_decay_system),
         crate::layer2::phantom::spawn_ghost_fleet_system
@@ -195,6 +201,13 @@ pub fn run_simulation_tick(world: &mut World) {
     if !world.contains_resource::<crate::layer2::phantom::EmpireAutomationState>() {
         world.init_resource::<crate::layer2::phantom::EmpireAutomationState>();
     }
+    if !world.contains_resource::<Events<crate::layer2::trade::blockade::TradeShipArrivalEvent>>() {
+        world.init_resource::<Events<crate::layer2::trade::blockade::TradeShipArrivalEvent>>();
+    }
+    if !world.contains_resource::<crate::layer2::trade::blockade::ColonyDebt>() {
+        world.init_resource::<crate::layer2::trade::blockade::ColonyDebt>();
+    }
+
     if !world.contains_resource::<Events<crate::layer2::phantom::SpawnGhostFleetEvent>>() {
         world.init_resource::<Events<crate::layer2::phantom::SpawnGhostFleetEvent>>();
     }
@@ -270,6 +283,9 @@ mod tests {
         world
             .init_resource::<Events<crate::layer1::nature::biosphere_empathy::FloraDamagedEvent>>();
         world.init_resource::<crate::layer2::phantom::EmpireAutomationState>();
+        world.init_resource::<Events<crate::layer2::trade::blockade::TradeShipArrivalEvent>>();
+        world.init_resource::<crate::layer2::trade::blockade::ColonyDebt>();
+
         world.init_resource::<Events<crate::layer2::phantom::SpawnGhostFleetEvent>>();
 
         let schedule = build_simulation_schedule();

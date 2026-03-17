@@ -1,3 +1,4 @@
+pub mod trade;
 pub mod barnacles;
 pub mod combat;
 pub mod debris;

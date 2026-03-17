@@ -195,6 +195,7 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     world.init_resource::<Events<crate::layer1::resources::MiningEvent>>();
     world.init_resource::<crate::layer1::geology::tectonic::TectonicStress>();
     world.init_resource::<crate::layer1::tech::infinite_archive::Archive>();
+    world.init_resource::<crate::layer2::trade::blockade::ColonyDebt>();
     world.init_resource::<crate::layer2::thermal::ThermalSignature>();
     world.init_resource::<Events<crate::layer1::medical::PatientTreated>>();
     world.init_resource::<Events<crate::layer1::hazards::AmputationEvent>>();
@@ -202,6 +203,7 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     world.init_resource::<Events<crate::layer1::eureka::EurekaEvent>>();
     world.init_resource::<Events<crate::layer1::items::UnequipEvent>>();
     world.init_resource::<Events<crate::layer1::construction::GreatWorkCompletedEvent>>();
+    world.init_resource::<Events<crate::layer2::trade::blockade::TradeShipArrivalEvent>>();
     world.init_resource::<Events<crate::layer2::events::LaunchEvent>>();
     world.init_resource::<Events<crate::layer2::events::ShipDestroyedEvent>>();
     world.init_resource::<Events<crate::layer1::direct_link::PossessEntityEvent>>();
