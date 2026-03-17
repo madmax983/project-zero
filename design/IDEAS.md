@@ -10198,3 +10198,59 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you build your defensive fleet far out in the system (spreading your forces thin and risking supply lines), or fight in a tight defensive orbit (risking catastrophic debris fallout on your own citizens)?
 
 ---
+
+## The Dream-State Economy
+
+**Layer:** 1
+
+**Fantasy:** Monetizing the subconscious mind. Building an economy out of nightmares and fantasies.
+
+**Mechanic:** Pops sleeping in high-tech "Dream Pods" generate a new resource: "Dream Data". This data can be refined into "Inspiration" (boosts research/crafting quality) or "Horror" (weaponized stress). However, over-harvesting leads to collective sleep deprivation and "Waking Nightmares" (hallucinations that disrupt work).
+
+**Emergence:** You fund your entire defense budget by harvesting your citizens' nightmares. A power failure traps the whole colony in a collective nightmare simulation, and they wake up completely exhausted and terrified, paralyzing production.
+
+**Tension:** Treating rest as a resource to be extracted vs. allowing natural, unmonitored sleep for mental stability.
+
+---
+
+## Sub-Orbital Piracy
+
+**Layer:** 2 -> 1
+
+**Fantasy:** Highway robbery, but the highway is the upper atmosphere.
+
+**Mechanic:** Pirates don't just attack ships in deep space (Layer 2). They deploy stealthy "Sub-Orbital Skiffs" that hover just above Layer 1, out of range of ground turrets. They cast grappling lines down to "fish" for high-value cargo from outdoor stockpiles or even snatch unwary Pops.
+
+**Emergence:** You carefully organize your stockpiles outdoors for logistical efficiency. A silent skiff glides over in the night and reels up your entire supply of rare fusion cores, leaving the colony powerless by morning.
+
+**Tension:** Fast, efficient outdoor storage (vulnerable) vs. slow, space-constrained indoor storage (safe).
+
+---
+
+## The Chrono-Clone
+
+**Layer:** Cross-layer
+
+**Fantasy:** Meeting yourself from ten years ago, and realizing you hate who you were.
+
+**Mechanic:** A rare temporal anomaly or extreme endgame tech allows you to duplicate a specific Pop exactly as they were at a previous point in the simulation. The new "Chrono-Clone" has the original's old skills and memories.
+
+**Emergence:** Your master diplomat is assassinated. You use a Chrono-Clone to bring them back, but the clone is from 20 years ago, before they learned the customs of your current allies. The clone accidentally insults an ambassador, starting a war the original diplomat spent their life preventing.
+
+**Tension:** Reclaiming lost talent vs. dealing with the psychological fallout of temporal displacement.
+
+---
+
+## Nomadic Architecture
+
+**Layer:** 1
+
+**Fantasy:** A city that walks away from danger.
+
+**Mechanic:** Certain buildings, or entire foundation platforms, can be fitted with massive "Crawler Treads." These structures can physically move across the Layer 1 map, albeit very slowly and consuming massive fuel. They crush anything in their path.
+
+**Emergence:** A devastating forest fire is sweeping toward your industrial zone. You activate the treads and slowly drive your factories away from the flames, abandoning the stationary housing blocks to burn.
+
+**Tension:** The immense resource cost and slow speed of mobility vs. the ultimate flexibility to evade localized disasters.
+
+---
