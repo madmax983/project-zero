@@ -88,7 +88,10 @@ mod tests {
 
         let mut query = app.world_mut().query::<&CollectionSphereBlockade>();
         let blockades = query.iter(app.world()).count();
-        assert_eq!(blockades, 1, "A Collection Sphere should spawn when debt exceeds threshold");
+        assert_eq!(
+            blockades, 1,
+            "A Collection Sphere should spawn when debt exceeds threshold"
+        );
     }
 
     #[test]
@@ -96,7 +99,8 @@ mod tests {
         let mut app = setup_test_app();
 
         // Setup blockade
-        app.world_mut().spawn(CollectionSphereBlockade { active: true });
+        app.world_mut()
+            .spawn(CollectionSphereBlockade { active: true });
 
         // Setup a pending trade ship arrival
         app.world_mut().send_event(TradeShipArrivalEvent {
@@ -111,7 +115,10 @@ mod tests {
 
         // The event should have been intercepted, reducing debt instead of delivering cargo
         let debt = app.world().resource::<ColonyDebt>().amount;
-        assert_eq!(debt, 45_000.0, "The trade ship's cargo should be siphoned to pay debt");
+        assert_eq!(
+            debt, 45_000.0,
+            "The trade ship's cargo should be siphoned to pay debt"
+        );
     }
 
     #[test]
@@ -119,13 +126,21 @@ mod tests {
         let mut app = setup_test_app();
 
         // Setup blockade and zero debt
-        let blockade_entity = app.world_mut().spawn(CollectionSphereBlockade { active: true }).id();
+        let blockade_entity = app
+            .world_mut()
+            .spawn(CollectionSphereBlockade { active: true })
+            .id();
         app.world_mut().resource_mut::<ColonyDebt>().amount = 0.0;
         app.world_mut().resource_mut::<ColonyDebt>().threshold = 50_000.0;
 
         app.update();
 
         // The blockade should despawn or deactivate
-        assert!(app.world().get::<CollectionSphereBlockade>(blockade_entity).is_none(), "Blockade should despawn when debt is cleared");
+        assert!(
+            app.world()
+                .get::<CollectionSphereBlockade>(blockade_entity)
+                .is_none(),
+            "Blockade should despawn when debt is cleared"
+        );
     }
 }

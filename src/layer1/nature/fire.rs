@@ -60,10 +60,13 @@ pub fn fire_spread_system(world: &mut World) {
     }
 
     // 2. Check neighbors for potential spread
-    // We need to access terrain, so we scope the immutable borrow here
-    let (width, height, tiles) = {
+    // We need to access terrain, so we scope the immutable borrow here.
+    // ⚡ Bolt Optimization:
+    // We avoid cloning the massive `terrain.tiles` Vec here. Instead, we query
+    // the resource per neighbor check, eliminating an O(N) allocation per frame.
+    let (width, height) = {
         let terrain = world.resource::<TerrainGrid>();
-        (terrain.width, terrain.height, terrain.tiles.clone())
+        (terrain.width, terrain.height)
     };
 
     let mut rng = rand::thread_rng();
@@ -95,15 +98,18 @@ pub fn fire_spread_system(world: &mut World) {
             let mut should_ignite = false;
 
             // Check Terrain
-            let idx = (ny as usize) * width + (nx as usize);
-            if idx < tiles.len() {
-                let tile = tiles[idx];
-                if tile == TerrainType::Tree {
-                    // Tree flammability chance
-                    if rng.gen_bool(0.1) {
-                        // 10% chance per tick per neighbor
-                        should_ignite = true;
-                    }
+            // ⚡ Bolt Optimization: Immutable borrow of the `TerrainGrid` resource dynamically here avoids cloning.
+            let is_tree = {
+                let terrain = world.resource::<TerrainGrid>();
+                let idx = (ny as usize) * width + (nx as usize);
+                idx < terrain.tiles.len() && terrain.tiles[idx] == TerrainType::Tree
+            };
+
+            if is_tree {
+                // Tree flammability chance
+                if rng.gen_bool(0.1) {
+                    // 10% chance per tick per neighbor
+                    should_ignite = true;
                 }
             }
 
