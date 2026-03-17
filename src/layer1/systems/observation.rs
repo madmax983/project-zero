@@ -162,6 +162,12 @@ pub fn register(schedule: &mut Schedule) {
             #[cfg(feature = "nova")]
             crate::experimental::bioluminescent_trails::spawn_bioluminescent_trails_system
                 .after(crate::layer1::needs::decay_needs_system),
+        )
+            .in_set(Layer1SystemSet::Observation),
+    );
+
+    schedule.add_systems(
+        (
             #[cfg(feature = "nova")]
             crate::experimental::bioluminescent_trails::fade_bioluminescent_trails_system.after(
                 crate::experimental::bioluminescent_trails::spawn_bioluminescent_trails_system,
