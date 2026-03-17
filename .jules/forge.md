@@ -11,3 +11,11 @@
 **[God Functions in Building Placement and Hauling]**
 **Learning:** `try_place_building` in `building.rs` and `handle_drop_off_item` in `hauling.rs` had grown into monolithic "God Functions", managing everything from tech prerequisite checking and resource deduction to entity despawning, item creation, and logging. This excessive responsibility makes testing difficult and masks core flow.
 **Action:** Extract specific phases (e.g. `check_tech_requirements`, `deduct_building_cost`, `try_drop_off_gene_bank`) into helper functions using early returns. This flattens conditionals and transforms large functions into clear, declarative pipelines.
+
+**[Refactoring evaluate_haul and handle_pickup]
+**Learning:** `cargo clippy --fix` on test code might create missing fields when replacing struct initialization with defaults.
+**Action:** Be careful to limit refactoring scopes or fix lints manually when involving tests that rely heavily on `Default::default()`.
+
+**[Workspace Test Failure Handling]
+**Learning:** Some integration tests may fail unrelated to hauling refactors due to missing resources (e.g. `ColonyDebt`) or timing changes.
+**Action:** Since these are unrelated pre-existing or timing failures, document them and proceed with the refactor PR.

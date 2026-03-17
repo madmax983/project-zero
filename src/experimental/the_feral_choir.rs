@@ -1,3 +1,4 @@
+#![allow(clippy::type_complexity)]
 //! The Feral Choir (Nova Feature).
 //!
 //! # The Spark

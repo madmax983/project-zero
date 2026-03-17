@@ -111,7 +111,7 @@ mod tests {
         let p1 = world
             .spawn((
                 Pop,
-                Morale {
+                Morale { modifiers: vec![],
                     value: 0.95,
                     ..Default::default()
                 },
@@ -126,7 +126,7 @@ mod tests {
         let p2 = world
             .spawn((
                 Pop,
-                Morale {
+                Morale { modifiers: vec![],
                     value: 0.5,
                     ..Default::default()
                 },
@@ -141,7 +141,7 @@ mod tests {
         let p3 = world
             .spawn((
                 Pop,
-                Morale {
+                Morale { modifiers: vec![],
                     value: 0.5,
                     ..Default::default()
                 },
@@ -182,7 +182,7 @@ mod tests {
             .spawn((
                 Pop,
                 GridPosition { x: 1, y: 1 }, // Distance 1 (<= 3)
-                Morale {
+                Morale { modifiers: vec![],
                     value: 0.5,
                     ..Default::default()
                 },
@@ -198,7 +198,7 @@ mod tests {
             .spawn((
                 Pop,
                 GridPosition { x: 5, y: 5 }, // Distance 5 (> 3)
-                Morale {
+                Morale { modifiers: vec![],
                     value: 0.5,
                     ..Default::default()
                 },
