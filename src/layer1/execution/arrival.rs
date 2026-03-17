@@ -107,7 +107,7 @@ fn process_arrival(
     log: Option<&mut MessageLog>,
     graffiti_map: Option<&mut crate::layer1::graffiti::GraffitiMap>,
     unequip_events: &mut EventWriter<UnequipEvent>,
-    farms: &mut Query<&mut Farm>,
+    _farms: &mut Query<&mut Farm>,
     housing_q: &mut Query<&mut Housing>,
     taverns: &mut Query<&mut Tavern>,
     offices: &mut Query<&mut Office>,
@@ -191,7 +191,8 @@ fn process_arrival(
             true
         }
         ActionType::SatisfyHunger => {
-            handle_hunger_arrival(pop_entity, target_entity, farms, commands);
+            // SatisfyHunger intentionally assigns no job and no worker slot;
+            // the `consume_food_system` globally checks for hungry pops.
             true
         }
         ActionType::SatisfyRest => {
@@ -211,12 +212,21 @@ fn process_arrival(
             target_entity,
             AssignmentType::LibraryWorker,
         ),
-        ActionType::Farm => assign_pop(
-            commands,
-            pop_entity,
-            target_entity,
-            AssignmentType::FarmWorker,
-        ),
+        ActionType::Farm => {
+            #[allow(clippy::collapsible_if)]
+            if let Ok(mut farm) = _farms.get_mut(target_entity) {
+                if farm.workers.len() < farm.capacity {
+                    farm.workers.push(pop_entity);
+                    assign_pop(
+                        commands,
+                        pop_entity,
+                        target_entity,
+                        AssignmentType::FarmWorker,
+                    );
+                }
+            }
+            true
+        }
         ActionType::Admin => {
             if let Ok(mut office) = offices.get_mut(target_entity) {
                 if !office.workers.contains(&pop_entity) {
@@ -408,24 +418,6 @@ pub fn handle_fetch_clothing(
             commands.entity(pop_entity).insert(Equipment {
                 body: Some(clothing_entity),
                 ..Default::default()
-            });
-        }
-    }
-}
-
-fn handle_hunger_arrival(
-    pop_entity: Entity,
-    target_entity: Entity,
-    farms: &mut Query<&mut Farm>,
-    commands: &mut Commands,
-) {
-    #[allow(clippy::collapsible_if)]
-    if let Ok(mut farm) = farms.get_mut(target_entity) {
-        if farm.workers.len() < farm.capacity {
-            farm.workers.push(pop_entity);
-            commands.entity(pop_entity).insert(AssignedTo {
-                entity: target_entity,
-                assignment_type: AssignmentType::FarmWorker,
             });
         }
     }

@@ -33,7 +33,7 @@ fn test_arrival_assigns_to_farm() {
             MovementTarget {
                 target_entity: farm,
                 target_position: GridPosition { x: 5, y: 5 },
-                for_action: ActionType::SatisfyHunger,
+                for_action: ActionType::Farm,
             },
             AtTarget,
         ))
@@ -52,7 +52,7 @@ fn test_arrival_assigns_to_farm() {
     );
 
     let job = world.get::<Job>(pop);
-    assert!(job.is_none(), "Eating should not assign a Job");
+    assert!(job.is_some(), "Working at farm assigns a Job via assign_pop");
 }
 
 #[test]
