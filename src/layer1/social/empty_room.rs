@@ -35,14 +35,14 @@ pub struct ZoneEntity {
 // either via a new Resource or by mapping connected components of `ZoneType::Sanctuary` on the `ZoneGrid`.
 
 #[derive(Resource, Default)]
-pub struct SanctuaryManager {
+pub struct ActiveSanctuaries {
     // A map from a designated center or first tile to its state,
     // or just a vector of contiguous regions.
     pub sanctuaries: Vec<Sanctuary>,
 }
 
 pub fn update_sanctuary_system(
-    mut manager: ResMut<SanctuaryManager>,
+    mut manager: ResMut<ActiveSanctuaries>,
     zone_grid: Res<ZoneGrid>,
     buildings: Query<&GridPosition, With<Building>>,
     items: Query<&GridPosition, With<Item>>,
@@ -130,7 +130,7 @@ pub fn update_sanctuary_system(
 
 pub fn visit_sanctuary_system(
     mut pops: Query<(&GridPosition, &mut StressTracker)>,
-    manager: Option<Res<SanctuaryManager>>,
+    manager: Option<Res<ActiveSanctuaries>>,
     mut clutter_grid: Option<ResMut<ClutterGrid>>,
 ) {
     let Some(manager) = manager else { return };

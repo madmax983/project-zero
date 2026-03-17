@@ -5,7 +5,7 @@ mod tests {
 
     use crate::layer1::map::GridPosition;
     use crate::layer1::social::empty_room::{
-        update_sanctuary_system, visit_sanctuary_system, SanctuaryManager,
+        update_sanctuary_system, visit_sanctuary_system, ActiveSanctuaries,
     };
     use crate::layer1::stress::StressTracker;
     use crate::layer1::zone::{ZoneGrid, ZoneType};
@@ -17,7 +17,7 @@ mod tests {
         zone_grid.set(0, 0, ZoneType::Sanctuary);
         zone_grid.set(0, 1, ZoneType::Sanctuary);
         world.insert_resource(zone_grid);
-        world.insert_resource(SanctuaryManager::default());
+        world.insert_resource(ActiveSanctuaries::default());
         world.insert_resource(ClutterGrid::new(10, 10));
         world
     }
@@ -30,7 +30,7 @@ mod tests {
         schedule.add_systems(update_sanctuary_system);
         schedule.run(&mut world);
 
-        let manager = world.resource::<SanctuaryManager>();
+        let manager = world.resource::<ActiveSanctuaries>();
         assert_eq!(manager.sanctuaries.len(), 1);
         let sanctuary = &manager.sanctuaries[0];
         assert!(sanctuary.is_valid);
@@ -53,7 +53,7 @@ mod tests {
         schedule.add_systems(update_sanctuary_system);
         schedule.run(&mut world);
 
-        let manager = world.resource::<SanctuaryManager>();
+        let manager = world.resource::<ActiveSanctuaries>();
         assert_eq!(manager.sanctuaries.len(), 1);
         let sanctuary = &manager.sanctuaries[0];
         assert!(!sanctuary.is_valid);

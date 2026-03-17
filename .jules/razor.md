@@ -17,3 +17,8 @@
 **Bloat:** Enterprise FizzBuzz Enum: `ScentType` in `src/layer1/olfactory.rs` only had two variants (`Pleasant` and `Foul`).
 **Cut:** Converted `ScentType` to a simple boolean flag `is_pleasant` on `ScentEmitter`.
 **Saved:** 6 lines and simplified pattern matching to basic `if/else`.
+
+## [Reduction]
+**Bloat:** OOP-style `Manager` suffixes for ECS resources (`ElectionManager`, `SanctuaryManager`, `ShadowMarketManager`).
+**Cut:** Renamed to descriptive, data-oriented state names (`ElectionCycle`, `ActiveSanctuaries`, `ShadowMarketCooldown`) per Bevy/Razor Architecture Insight.
+**Saved:** Eliminated implicit OOP terminology overhead, improving clarity and adherence to Bevy ECS conventions.

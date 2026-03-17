@@ -69,7 +69,7 @@ impl Default for Campaign {
 
 /// Resource managing the election lifecycle.
 #[derive(Resource, Default)]
-pub struct ElectionManager {
+pub struct ElectionCycle {
     /// Current state of the election.
     pub state: ElectionState,
     /// Tick when the next election process begins.
@@ -86,7 +86,7 @@ pub struct PoliticsPlugin;
 
 impl Plugin for PoliticsPlugin {
     fn build(&self, app: &mut App) {
-        app.insert_resource(ElectionManager::default()).add_systems(
+        app.insert_resource(ElectionCycle::default()).add_systems(
             Update,
             (
                 election_cycle_system,
@@ -99,7 +99,7 @@ impl Plugin for PoliticsPlugin {
 }
 
 /// Manages the transitions between election states based on time.
-pub fn election_cycle_system(mut manager: ResMut<ElectionManager>, time: Res<SimulationTime>) {
+pub fn election_cycle_system(mut manager: ResMut<ElectionCycle>, time: Res<SimulationTime>) {
     if manager.state == ElectionState::Idle && time.tick >= manager.next_election_tick {
         manager.state = ElectionState::Campaigning;
         manager.campaign_end_tick = time.tick + 1000; // Campaign lasts 1000 ticks
@@ -113,7 +113,7 @@ pub fn election_cycle_system(mut manager: ResMut<ElectionManager>, time: Res<Sim
 
 /// Generates candidates from Faction Leaders during the Campaigning phase.
 pub fn generate_candidates_system(
-    mut manager: ResMut<ElectionManager>,
+    mut manager: ResMut<ElectionCycle>,
     query: Query<(Entity, &FactionLeader)>,
 ) {
     if manager.state == ElectionState::Campaigning && manager.candidates.is_empty() {
@@ -135,7 +135,7 @@ pub fn generate_candidates_system(
 ///
 /// Simplified logic: Pops vote for the candidate of their faction.
 pub fn voting_system(
-    mut manager: ResMut<ElectionManager>,
+    mut manager: ResMut<ElectionCycle>,
     pop_query: Query<(Entity, &Pop, Option<&FactionMember>)>,
     candidate_query: Query<&FactionMember>,
 ) {
@@ -186,7 +186,7 @@ pub fn voting_system(
 /// Inaugurates the winner as Governor.
 pub fn inauguration_system(world: &mut World) {
     let (winner, state) = {
-        let manager = world.resource::<ElectionManager>();
+        let manager = world.resource::<ElectionCycle>();
         (manager.winner, manager.state)
     };
 
@@ -209,7 +209,7 @@ pub fn inauguration_system(world: &mut World) {
 
         // Reset or schedule next election
         // We need to mutate resource again.
-        let mut manager = world.resource_mut::<ElectionManager>();
+        let mut manager = world.resource_mut::<ElectionCycle>();
         manager.state = ElectionState::Idle;
         // Schedule next election far in future? Or let manual reset?
         // Spec says "Every few years".
@@ -241,7 +241,7 @@ mod tests {
     fn setup_world() -> World {
         let mut world = World::new();
         world.insert_resource(SimulationTime::default());
-        world.insert_resource(ElectionManager::default());
+        world.insert_resource(ElectionCycle::default());
         world.insert_resource(Factions::default());
         world
     }
@@ -249,7 +249,7 @@ mod tests {
     #[test]
     fn test_election_cycle_trigger() {
         let mut world = setup_world();
-        let mut manager = world.resource_mut::<ElectionManager>();
+        let mut manager = world.resource_mut::<ElectionCycle>();
         manager.next_election_tick = 100;
 
         world.resource_mut::<SimulationTime>().tick = 100;
@@ -258,7 +258,7 @@ mod tests {
         // Note: Function systems can be run with `run`.
         let _ = bevy_ecs::system::RunSystemOnce::run_system_once(&mut world, election_cycle_system);
 
-        let manager = world.resource::<ElectionManager>();
+        let manager = world.resource::<ElectionCycle>();
         assert_eq!(manager.state, ElectionState::Campaigning);
         assert!(manager.campaign_end_tick > 100);
     }
@@ -278,7 +278,7 @@ mod tests {
             .id();
 
         // Trigger election manually
-        let mut manager = world.resource_mut::<ElectionManager>();
+        let mut manager = world.resource_mut::<ElectionCycle>();
         manager.state = ElectionState::Campaigning;
 
         // Run candidate generation logic
@@ -287,7 +287,7 @@ mod tests {
             generate_candidates_system,
         );
 
-        let manager = world.resource::<ElectionManager>();
+        let manager = world.resource::<ElectionCycle>();
         assert!(!manager.candidates.is_empty());
         assert_eq!(manager.candidates[0].pop_entity, leader);
         assert!(!manager.candidates[0].platform.promises.is_empty());
@@ -316,7 +316,7 @@ mod tests {
             ))
             .id();
 
-        let mut manager = world.resource_mut::<ElectionManager>();
+        let mut manager = world.resource_mut::<ElectionCycle>();
         manager.state = ElectionState::Voting;
         manager.candidates = vec![
             Campaign {
@@ -342,7 +342,7 @@ mod tests {
         // Run voting
         let _ = bevy_ecs::system::RunSystemOnce::run_system_once(&mut world, voting_system);
 
-        let manager = world.resource::<ElectionManager>();
+        let manager = world.resource::<ElectionCycle>();
         // Candidate A (Miners) should get 2 votes (Candidate A votes for themselves + Voter 1)
         assert_eq!(manager.candidates[0].votes, 2);
         // Candidate B (Artisans) should get 1 vote (Candidate B votes for themselves)
@@ -359,7 +359,7 @@ mod tests {
         let winner_pop = world.spawn(Pop).id();
         let planet = world.spawn(OrbitalBody::default()).id();
 
-        let mut manager = world.resource_mut::<ElectionManager>();
+        let mut manager = world.resource_mut::<ElectionCycle>();
         manager.state = ElectionState::Finished;
         manager.winner = Some(winner_pop);
 
@@ -371,7 +371,7 @@ mod tests {
         assert_eq!(governor.unwrap().pop_entity, winner_pop);
 
         // Check state reset
-        let manager = world.resource::<ElectionManager>();
+        let manager = world.resource::<ElectionCycle>();
         assert_eq!(manager.state, ElectionState::Idle);
     }
 }

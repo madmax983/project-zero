@@ -28,7 +28,7 @@ use crate::layer1::predictive_policing::Suspect;
 use crate::layer1::refining::get_refining_recipe;
 use crate::layer1::resources::{RefiningProgress, ResourceItem};
 use crate::layer1::science::Anomaly;
-use crate::layer1::social::empty_room::SanctuaryManager;
+use crate::layer1::social::empty_room::ActiveSanctuaries;
 use crate::layer1::social::Tavern;
 use crate::layer1::stockpile::Stockpile;
 use crate::layer1::structure::{DeferMaintenance, Structure};
@@ -106,7 +106,7 @@ pub fn populate_ai_buffer(world: &mut World, buffer: &mut UtilityAIBuffer, conte
 
 fn populate_sanctuaries(world: &mut World, buffer: &mut Vec<ScorableCandidate>) {
     buffer.clear();
-    let Some(manager) = world.get_resource::<SanctuaryManager>() else {
+    let Some(manager) = world.get_resource::<ActiveSanctuaries>() else {
         return;
     };
     for sanctuary in &manager.sanctuaries {
