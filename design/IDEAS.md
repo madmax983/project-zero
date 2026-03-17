@@ -10254,3 +10254,59 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** The immense resource cost and slow speed of mobility vs. the ultimate flexibility to evade localized disasters.
 
 ---
+
+## Lithovore Husbandry
+
+**Layer:** 1
+
+**Fantasy:** Taming deep-crust creatures that eat rock and excrete building materials. A living, crawling mining operation.
+
+**Mechanic:** You capture and breed "Lithovores." They autonomously pathfind to and consume raw stone/ore tiles, leaving refined blocks in their wake. They multiply rapidly if overfed but go feral and eat your buildings if starved.
+
+**Emergence:** You intentionally release a swarm of Lithovores into an enemy siege tunnel, letting them eat the tunnel supports and collapse it on the attackers. However, the surviving swarm then turns on your own outer walls.
+
+**Tension:** Free, autonomous resource refinement vs. the risk of breeding an uncontrollable swarm that eats your colony's foundations.
+
+---
+
+## The Empathic Grid
+
+**Layer:** 1
+
+**Fantasy:** Infrastructure built with psycho-reactive materials that scales efficiency based on local Morale. Happy workers make the machines sing.
+
+**Mechanic:** Advanced "Empath-Glass" buildings synchronize with the average Mood of Pops inside or adjacent to them. High Mood increases the building's output by 50%. Low Mood causes the building to stutter, break down, or even emit psychic static that lowers Mood further.
+
+**Emergence:** A minor food shortage drops Morale slightly, causing the Empathic Water Purifier to slow down. Thirst drops Morale further, causing the Purifier to completely break and emit static. A minor inconvenience spirals into a psychic death loop.
+
+**Tension:** Immense potential efficiency bonuses vs. creating a terrifyingly fragile infrastructure that amplifies social crises.
+
+---
+
+## Void-Tethered Fleets
+
+**Layer:** Cross-layer (1 -> 2)
+
+**Fantasy:** Layer 2 ships powered directly by a Layer 1 Quantum Anchor, offering immense firepower but tethering your naval supremacy to local power grid stability.
+
+**Mechanic:** Instead of onboard reactors, you build a massive "Quantum Anchor" on Layer 1 that beams power to a specialized Layer 2 fleet. The fleet is devastatingly powerful and requires no fuel, but is restricted to the system. If the Anchor loses power, the entire fleet instantly shuts down in orbit.
+
+**Emergence:** You are winning a massive orbital battle using your Tethered Fleet. A single saboteur on Layer 1 cuts a minor power line to the Anchor. Your entire invincible armada goes dark in the middle of a dogfight and is systematically picked apart.
+
+**Tension:** Unmatched local naval supremacy with zero fuel logistics vs. a single point of failure that can cost you your entire fleet.
+
+---
+
+## Parasitic Sentience
+
+**Layer:** 1
+
+**Fantasy:** Smart-tools that provide massive skill boosts but slowly overwrite the user's personality with ancient programming.
+
+**Mechanic:** You unearth "Precursor Tools" that grant instant Level 10 proficiency in jobs. However, prolonged use slowly replaces the Pop's traits with uniform "Drone" traits, erasing their individuality, relationships, and eventually causing them to refuse any task except the one the tool was designed for.
+
+**Emergence:** You equip your entire medical staff with Precursor Scalpels to survive a plague. They save the colony, but months later, they refuse to speak to their families, standing motionless in the hospital waiting for the next surgery, effectively dead to society.
+
+**Tension:** Immediate, game-saving efficiency boosts vs. the slow, horrifying erasure of your colonists' humanity.
+
+---
