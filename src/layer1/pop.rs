@@ -148,6 +148,10 @@ pub struct Job {
     pub job_type: AssignmentType,
 }
 
+/// Represents the formal education level of a Pop.
+#[derive(Component, Debug, Clone, Copy, PartialEq, Eq, Default)]
+pub struct EducationLevel(pub u32);
+
 /// Movement speed of a pop.
 ///
 /// Speed is a multiplier for movement logic, which is discrete (tile-based).
@@ -281,6 +285,8 @@ pub struct PopBundle {
     pub linguistics: Linguistics,
     /// Biological digestive adaptation.
     pub gut_biome: GutBiome,
+    /// Formal education level.
+    pub education: EducationLevel,
 }
 
 impl PopBundle {
@@ -317,6 +323,7 @@ impl PopBundle {
             dialect: Dialect::default(),
             linguistics: Linguistics::default(),
             gut_biome: GutBiome::default(),
+            education: EducationLevel(rng.gen_range(1..=3)),
         }
     }
 }

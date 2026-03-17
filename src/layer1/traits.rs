@@ -88,6 +88,8 @@ pub enum Trait {
     Spiteful,
     /// Biosphere empathy link, harmonizes stress and works better near flora.
     EmpathicLink,
+    /// Formal administrative capabilities. Understood the bureaucracy (Spec 464).
+    Bureaucrat,
 }
 
 impl Trait {
@@ -136,6 +138,7 @@ impl Trait {
             Self::Synesthete => "Synesthete",
             Self::Spiteful => "Spiteful",
             Self::EmpathicLink => "Empathic Link",
+            Self::Bureaucrat => "Bureaucrat",
         }
     }
 }
@@ -194,6 +197,7 @@ impl Traits {
             Trait::Synesthete,
             Trait::Spiteful,
             Trait::EmpathicLink,
+            Trait::Bureaucrat,
         ];
 
         while set.len() < count {

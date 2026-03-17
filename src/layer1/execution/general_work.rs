@@ -435,6 +435,13 @@ pub fn calculate_work_amount(
         1.0
     };
 
+    let delay_modifier =
+        if let Some(delay) = world.get::<crate::layer1::bureaucracy::WorkDelay>(pop_entity) {
+            delay.multiplier
+        } else {
+            1.0
+        };
+
     let amount = WORK_PER_TICK
         * tool_efficiency
         * morale_efficiency
@@ -443,7 +450,8 @@ pub fn calculate_work_amount(
         * admin_efficiency
         * (1.0 + augmentation_bonus)
         * organic_factor
-        * neural_buff;
+        * neural_buff
+        * delay_modifier;
 
     // Cap work amount to prevent logic bugs / economy exploits
     amount.min(1000.0)
