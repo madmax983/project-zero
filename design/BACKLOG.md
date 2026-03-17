@@ -209,3 +209,4 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `476` Jury-Rigged Cybernetics — `specs/476-jury-rigged-cybernetics.md`
 - [ ] `478` Artificial Sunspots — `specs/478-artificial-sunspots.md`
 - [ ] `482` The Golden Age — `specs/482-the-golden-age.md`
+- [ ] `483` Bureaucratic Roulette — `specs/483-bureaucratic-roulette.md`
