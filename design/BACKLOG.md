@@ -211,4 +211,3 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `482` The Golden Age — `specs/482-the-golden-age.md`
 - [ ] `483` Bureaucratic Roulette — `specs/483-bureaucratic-roulette.md`
 - [ ] `485` The Orphaned AI Broker — `specs/485-the-orphaned-ai-broker.md`
-- [ ] `486` Debt-Prison Colonies — `specs/486-debt-prison-colonies.md`
