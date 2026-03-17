@@ -10087,7 +10087,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Subspace Contagion
+## The Subspace Contagion [SPECCED]
 
 **Layer:** Cross-layer (2 -> 1)
 
@@ -10101,7 +10101,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Gravity Well Smuggling
+## Gravity Well Smuggling [SPECCED]
 
 **Layer:** Cross-layer (2 -> 1)
 
@@ -10115,7 +10115,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Generational Vow
+## The Generational Vow [SPECCED]
 
 **Layer:** 1
 

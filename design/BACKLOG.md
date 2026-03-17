@@ -211,3 +211,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `482` The Golden Age — `specs/482-the-golden-age.md`
 - [ ] `483` Bureaucratic Roulette — `specs/483-bureaucratic-roulette.md`
 - [ ] `485` The Orphaned AI Broker — `specs/485-the-orphaned-ai-broker.md`
+- [ ] `487` The Subspace Contagion — `specs/487-the-subspace-contagion.md`
+- [ ] `488` Gravity Well Smuggling — `specs/488-gravity-well-smuggling.md`
+- [ ] `489` The Generational Vow — `specs/489-the-generational-vow.md`
