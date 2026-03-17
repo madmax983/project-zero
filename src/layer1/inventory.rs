@@ -10,6 +10,26 @@ pub struct InventoryItem {
     pub entity: Option<Entity>,
 }
 
+/// A global resource for tracking unassigned, stored items.
+#[derive(Resource, Default, Debug, Clone)]
+pub struct ColonyInventory {
+    /// Maps ItemType to quantity.
+    pub items: std::collections::HashMap<ItemType, u32>,
+}
+
+impl ColonyInventory {
+    /// Adds items to the colony inventory.
+    pub fn add_item(&mut self, item_type: ItemType, count: u32) {
+        *self.items.entry(item_type).or_insert(0) += count;
+    }
+
+    /// Gets the count of a specific item type.
+    #[must_use]
+    pub fn get_count(&self, item_type: &ItemType) -> u32 {
+        *self.items.get(item_type).unwrap_or(&0)
+    }
+}
+
 /// Component for storing personal items (tools, curios, etc.).
 #[derive(Component, Debug, Clone)]
 pub struct Inventory {
@@ -83,5 +103,17 @@ mod tests {
         assert!(inventory.try_add(item.clone()));
         assert!(!inventory.try_add(item.clone())); // Should fail
         assert_eq!(inventory.items.len(), 2);
+    }
+
+    #[test]
+    fn test_colony_inventory_add_and_get() {
+        let mut inventory = ColonyInventory::default();
+        inventory.add_item(ItemType::FormalWear, 5);
+        inventory.add_item(ItemType::FormalWear, 3);
+        inventory.add_item(ItemType::Potato, 10);
+
+        assert_eq!(inventory.get_count(&ItemType::FormalWear), 8);
+        assert_eq!(inventory.get_count(&ItemType::Potato), 10);
+        assert_eq!(inventory.get_count(&ItemType::Tool), 0);
     }
 }

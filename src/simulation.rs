@@ -99,6 +99,10 @@ pub fn build_simulation_schedule() -> Schedule {
         crate::layer2::trade::blockade::debt_blockade_system,
         crate::layer2::trade::blockade::blockade_interception_system
             .after(crate::layer2::trade::blockade::debt_blockade_system),
+        crate::layer2::trade::aid::update_aid_cooldown_system,
+        crate::layer2::trade::aid::handle_aid_request_system,
+        crate::layer2::trade::aid::process_care_package_system
+            .after(crate::layer2::trade::aid::handle_aid_request_system),
     ));
 
     schedule.add_systems((
@@ -208,6 +212,19 @@ pub fn run_simulation_tick(world: &mut World) {
         world.init_resource::<crate::layer2::trade::blockade::ColonyDebt>();
     }
 
+    if !world.contains_resource::<Events<crate::layer2::trade::aid::EmergencyAidRequestedEvent>>() {
+        world.init_resource::<Events<crate::layer2::trade::aid::EmergencyAidRequestedEvent>>();
+    }
+    if !world.contains_resource::<Events<crate::layer2::trade::aid::CarePackageArrivalEvent>>() {
+        world.init_resource::<Events<crate::layer2::trade::aid::CarePackageArrivalEvent>>();
+    }
+    if !world.contains_resource::<crate::layer2::trade::aid::AidCooldown>() {
+        world.init_resource::<crate::layer2::trade::aid::AidCooldown>();
+    }
+    if !world.contains_resource::<crate::layer1::inventory::ColonyInventory>() {
+        world.init_resource::<crate::layer1::inventory::ColonyInventory>();
+    }
+
     if !world.contains_resource::<Events<crate::layer2::phantom::SpawnGhostFleetEvent>>() {
         world.init_resource::<Events<crate::layer2::phantom::SpawnGhostFleetEvent>>();
     }
@@ -285,6 +302,11 @@ mod tests {
         world.init_resource::<crate::layer2::phantom::EmpireAutomationState>();
         world.init_resource::<Events<crate::layer2::trade::blockade::TradeShipArrivalEvent>>();
         world.init_resource::<crate::layer2::trade::blockade::ColonyDebt>();
+
+        world.init_resource::<Events<crate::layer2::trade::aid::EmergencyAidRequestedEvent>>();
+        world.init_resource::<Events<crate::layer2::trade::aid::CarePackageArrivalEvent>>();
+        world.init_resource::<crate::layer2::trade::aid::AidCooldown>();
+        world.init_resource::<crate::layer1::inventory::ColonyInventory>();
 
         world.init_resource::<Events<crate::layer2::phantom::SpawnGhostFleetEvent>>();
 

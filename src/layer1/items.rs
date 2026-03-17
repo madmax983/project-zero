@@ -149,6 +149,8 @@ pub enum ItemType {
     LivingStone,
     /// Scrap metal recovered from clutter.
     Scrap,
+    /// Formal wear from the Core Worlds.
+    FormalWear,
 }
 
 impl ItemType {

@@ -196,6 +196,10 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     world.init_resource::<crate::layer1::geology::tectonic::TectonicStress>();
     world.init_resource::<crate::layer1::tech::infinite_archive::Archive>();
     world.init_resource::<crate::layer2::trade::blockade::ColonyDebt>();
+    world.init_resource::<Events<crate::layer2::trade::aid::EmergencyAidRequestedEvent>>();
+    world.init_resource::<Events<crate::layer2::trade::aid::CarePackageArrivalEvent>>();
+    world.init_resource::<crate::layer2::trade::aid::AidCooldown>();
+    world.init_resource::<crate::layer1::inventory::ColonyInventory>();
     world.init_resource::<crate::layer2::thermal::ThermalSignature>();
     world.init_resource::<Events<crate::layer1::medical::PatientTreated>>();
     world.init_resource::<Events<crate::layer1::hazards::AmputationEvent>>();
