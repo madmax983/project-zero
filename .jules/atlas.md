@@ -13,3 +13,6 @@
 **Secret Societies Encapsulation**
 **Tangle:** The `SecretSocieties` logic (`src/layer1/society.rs`) was declared as a root-level module (`pub mod society`) directly under `layer1`, leaking social domain logic into the top-level namespace rather than being encapsulated within its functional domain.
 **Blueprint:** Moved `src/layer1/society.rs` to `src/layer1/social/society.rs` and updated module declarations and imports. This enforces a stronger domain boundary by nesting the secret society mechanics entirely within the `social` subsystem.
+**Geology Module Structural Tangle**
+**Tangle:** The geology module was incorrectly split between `src/layer1/geology.rs` and `src/layer1/geology/tectonic.rs`, and tests were awkwardly injected via an `include!` hack in `src/layer1/mod.rs`.
+**Blueprint:** Moved `src/layer1/geology.rs` to `src/layer1/geology/mod.rs` to establish a proper domain boundary and natively declared the test module in `tectonic.rs`.

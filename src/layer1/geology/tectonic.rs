@@ -54,3 +54,6 @@ pub fn check_quake_system(
         stress.current = 0.0; // Reset
     }
 }
+
+#[cfg(test)]
+mod tectonic_tests;
