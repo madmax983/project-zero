@@ -58,14 +58,19 @@ impl ScanProgress {
 /// Spawns initial anomalies on the map.
 #[allow(clippy::cast_possible_truncation, clippy::cast_possible_wrap)]
 pub fn spawn_initial_anomalies(world: &mut World, count: usize) {
-    let (width, height, tiles) = {
+    let (width, height) = {
         let grid = world.resource::<TerrainGrid>();
-        (grid.width, grid.height, grid.tiles.clone())
+        (grid.width, grid.height)
     };
 
     // We can't access OccupiedTiles and world at the same time if we borrow world mutably.
     // So we copy the occupied set.
     let occupied = world.resource::<OccupiedTiles>().0.clone();
+
+    // ⚡ Bolt Optimization:
+    // We query `is_walkable` using a block-scoped immutable borrow of `TerrainGrid` directly inside the loop,
+    // rather than cloning the entire `grid.tiles` array (which could be massive) upfront.
+    // This removes an O(N) heap allocation and memory copy per function call.
 
     let mut rng = rand::thread_rng();
     let mut spawned = 0;
@@ -82,8 +87,14 @@ pub fn spawn_initial_anomalies(world: &mut World, count: usize) {
         }
 
         // Check walkability (Anomalies must be accessible)
-        let idx = y * width + x;
-        if idx >= tiles.len() || !tiles[idx].is_walkable() {
+        // ⚡ Bolt Optimization: Scope the resource access locally to avoid cloning the whole grid just for one tile check.
+        let is_walkable = {
+            let grid = world.resource::<TerrainGrid>();
+            let idx = y * width + x;
+            idx < grid.tiles.len() && grid.tiles[idx].is_walkable()
+        };
+
+        if !is_walkable {
             continue;
         }
 

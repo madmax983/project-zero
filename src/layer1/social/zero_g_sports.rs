@@ -1,7 +1,7 @@
+use crate::layer1::health::Health;
+use crate::layer1::morale::{MoodModifier, Morale};
 use bevy_ecs::prelude::*;
 use rand::Rng;
-use crate::layer1::morale::{Morale, MoodModifier};
-use crate::layer1::health::Health;
 
 #[derive(Component, Debug, Clone)]
 pub struct ZeroGArena;
@@ -51,11 +51,11 @@ pub fn zero_g_sports_system(
 
 #[cfg(test)]
 mod tests {
-    use bevy_ecs::prelude::*;
-    use super::{ZeroGArena, PlayZeroGSportsAction, zero_g_sports_system};
-    use crate::layer1::pop::Pop;
-    use crate::layer1::morale::Morale;
+    use super::{zero_g_sports_system, PlayZeroGSportsAction, ZeroGArena};
     use crate::layer1::health::Health;
+    use crate::layer1::morale::Morale;
+    use crate::layer1::pop::Pop;
+    use bevy_ecs::prelude::*;
 
     fn setup_world() -> World {
         World::new()
@@ -67,22 +67,35 @@ mod tests {
 
         let arena = world.spawn(ZeroGArena).id();
 
-        let pop1 = world.spawn((
-            Pop,
-            Morale::default(),
-            Health::default(),
-            PlayZeroGSportsAction { target_arena: arena, opponent: None },
-        )).id();
+        let pop1 = world
+            .spawn((
+                Pop,
+                Morale::default(),
+                Health::default(),
+                PlayZeroGSportsAction {
+                    target_arena: arena,
+                    opponent: None,
+                },
+            ))
+            .id();
 
-        let pop2 = world.spawn((
-            Pop,
-            Morale::default(),
-            Health::default(),
-            PlayZeroGSportsAction { target_arena: arena, opponent: Some(pop1) },
-        )).id();
+        let pop2 = world
+            .spawn((
+                Pop,
+                Morale::default(),
+                Health::default(),
+                PlayZeroGSportsAction {
+                    target_arena: arena,
+                    opponent: Some(pop1),
+                },
+            ))
+            .id();
 
         // Update opponent link
-        world.get_mut::<PlayZeroGSportsAction>(pop1).unwrap().opponent = Some(pop2);
+        world
+            .get_mut::<PlayZeroGSportsAction>(pop1)
+            .unwrap()
+            .opponent = Some(pop2);
 
         let mut schedule = Schedule::default();
         schedule.add_systems(zero_g_sports_system);

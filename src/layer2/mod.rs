@@ -1,4 +1,3 @@
-pub mod trade;
 pub mod barnacles;
 pub mod combat;
 pub mod debris;
@@ -21,4 +20,5 @@ pub mod system;
 pub mod thermal;
 #[cfg(test)]
 mod thermal_bloom_tests;
+pub mod trade;
 pub mod visibility;
