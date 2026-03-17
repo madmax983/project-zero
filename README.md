@@ -44,7 +44,9 @@ trunk serve
 
 ### Procedural Generation (Narrative)
 
-# REQUIRES FEATURE NOVA
+> **⚠️ REQUIRES FEATURE NOVA**
+>
+> To use this feature, you must enable the `nova` feature flag in `Cargo.toml` or via command line.
 
 To use SCALE's procedural generation in your own Rust code:
 
