@@ -4006,3 +4006,32 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "The phantom fleet returned. [YEAR]. They completed [NONSENSE_ORDER], wasting [RESOURCE_WASTED]."
 - "[YEAR]: Madness automated. We lost [RESOURCE_WASTED] because the machines insisted on [NONSENSE_ORDER]."
 - "A perfect execution of an insane command. [NONSENSE_ORDER] cost us [RESOURCE_WASTED]. [YEAR]."
+
+## The Debt Collector's Blockade Templates (Spec 436)
+
+## Template: BLOCKADE_ESTABLISHED
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[BLOCKADE_NAME]`, `[CREDITOR_TITLE]`
+
+**Patterns:**
+- "The sky is caged. [YEAR]. The [CREDITOR_TITLE] have deployed [BLOCKADE_NAME]."
+- "[YEAR]: We defaulted. [BLOCKADE_NAME] now surrounds [COLONY]. The [CREDITOR_TITLE] want their due."
+- "Orbit is closed. [CREDITOR_TITLE] sent [BLOCKADE_NAME]. [YEAR]. We must pay."
+
+## Template: TRADE_INTERCEPTED
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[SHIP_NAME]`, `[BLOCKADE_NAME]`
+
+**Patterns:**
+- "[SHIP_NAME] seized by [BLOCKADE_NAME]. [YEAR]. The cargo goes to the debt."
+- "[YEAR]: Interception. The [BLOCKADE_NAME] took the supplies from [SHIP_NAME]."
+- "We watch our lifeline stolen. [SHIP_NAME] stripped by [BLOCKADE_NAME]. [YEAR]."
+
+## Template: BLOCKADE_LIFTED
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[BLOCKADE_NAME]`
+
+**Patterns:**
+- "The ledger is clear. [YEAR]. [BLOCKADE_NAME] breaks formation and leaves."
+- "[YEAR]: Debt paid. The sky opens as [BLOCKADE_NAME] withdraws from [COLONY]."
+- "We bought our freedom. [BLOCKADE_NAME] departs. [YEAR]. Orbit is ours again."
