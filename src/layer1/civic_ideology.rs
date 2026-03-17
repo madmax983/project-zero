@@ -1,6 +1,6 @@
-use bevy_ecs::prelude::*;
 use crate::layer1::needs::Needs;
 use crate::layer1::utility_types::ActionType;
+use bevy_ecs::prelude::*;
 
 #[derive(Resource, Default)]
 pub struct ActiveIdeology(pub IdeologyType);
@@ -24,8 +24,12 @@ pub fn apply_ideological_modifiers_system(
     ideology: Option<Res<ActiveIdeology>>,
     mut query: Query<(&mut Needs, &RecentAction)>,
 ) {
-    let Some(active_ideology) = ideology else { return };
-    if active_ideology.0 == IdeologyType::None { return; }
+    let Some(active_ideology) = ideology else {
+        return;
+    };
+    if active_ideology.0 == IdeologyType::None {
+        return;
+    }
 
     for (mut needs, action) in query.iter_mut() {
         match active_ideology.0 {
@@ -82,19 +86,32 @@ mod tests {
         app.init_resource::<ActiveIdeology>();
         app.add_systems(bevy_app::Update, apply_ideological_modifiers_system);
 
-        app.world_mut().insert_resource(ActiveIdeology(IdeologyType::Survivalist));
+        app.world_mut()
+            .insert_resource(ActiveIdeology(IdeologyType::Survivalist));
 
-        let pop = app.world_mut().spawn((
-            Needs { leisure: 0.5, ..Default::default() },
-            RecentAction { action_type: ActionType::SatisfyHunger, duration: 10.0 }
-        )).id();
+        let pop = app
+            .world_mut()
+            .spawn((
+                Needs {
+                    leisure: 0.5,
+                    ..Default::default()
+                },
+                RecentAction {
+                    action_type: ActionType::SatisfyHunger,
+                    duration: 10.0,
+                },
+            ))
+            .id();
 
         // Act
         app.update();
 
         // Assert
         let needs = app.world().get::<Needs>(pop).unwrap();
-        assert!(needs.leisure > 0.5, "Leisure should increase when performing aligned actions");
+        assert!(
+            needs.leisure > 0.5,
+            "Leisure should increase when performing aligned actions"
+        );
     }
 
     #[test]
@@ -105,19 +122,32 @@ mod tests {
         app.init_resource::<ActiveIdeology>();
         app.add_systems(bevy_app::Update, apply_ideological_modifiers_system);
 
-        app.world_mut().insert_resource(ActiveIdeology(IdeologyType::Survivalist));
+        app.world_mut()
+            .insert_resource(ActiveIdeology(IdeologyType::Survivalist));
 
-        let pop = app.world_mut().spawn((
-            Needs { leisure: 0.5, ..Default::default() },
-            RecentAction { action_type: ActionType::Vandalize, duration: 10.0 }
-        )).id();
+        let pop = app
+            .world_mut()
+            .spawn((
+                Needs {
+                    leisure: 0.5,
+                    ..Default::default()
+                },
+                RecentAction {
+                    action_type: ActionType::Vandalize,
+                    duration: 10.0,
+                },
+            ))
+            .id();
 
         // Act
         app.update();
 
         // Assert
         let needs = app.world().get::<Needs>(pop).unwrap();
-        assert!(needs.leisure < 0.5, "Leisure should decrease when performing opposed actions");
+        assert!(
+            needs.leisure < 0.5,
+            "Leisure should decrease when performing opposed actions"
+        );
     }
 
     #[test]
@@ -127,18 +157,27 @@ mod tests {
         app.add_plugins(bevy::MinimalPlugins);
         app.add_systems(bevy_app::Update, decay_recent_action_system);
 
-        let pop = app.world_mut().spawn(RecentAction {
-            action_type: ActionType::SatisfyHunger,
-            duration: 1.5,
-        }).id();
+        let pop = app
+            .world_mut()
+            .spawn(RecentAction {
+                action_type: ActionType::SatisfyHunger,
+                duration: 1.5,
+            })
+            .id();
 
         // Act - Tick 1
         app.update();
         let action = app.world().get::<RecentAction>(pop).unwrap();
-        assert!((action.duration - 0.5).abs() < f32::EPSILON, "Duration should decrement by 1.0");
+        assert!(
+            (action.duration - 0.5).abs() < f32::EPSILON,
+            "Duration should decrement by 1.0"
+        );
 
         // Act - Tick 2
         app.update();
-        assert!(app.world().get::<RecentAction>(pop).is_none(), "RecentAction should be removed when duration <= 0");
+        assert!(
+            app.world().get::<RecentAction>(pop).is_none(),
+            "RecentAction should be removed when duration <= 0"
+        );
     }
 }

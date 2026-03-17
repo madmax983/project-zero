@@ -8550,7 +8550,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Orphaned AI Broker
+## The Orphaned AI Broker [SPECCED]
 
 **Layer:** 3 -> 1
 
@@ -8578,7 +8578,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Debt-Prison Colonies
+## Debt-Prison Colonies [SPECCED]
 
 **Layer:** Cross-layer
 
