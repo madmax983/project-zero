@@ -1,2 +1,2 @@
-pub mod silence;
 pub mod events;
+pub mod silence;
