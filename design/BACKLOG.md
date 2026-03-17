@@ -15,7 +15,7 @@
 - [ ] `477` The Ransom Broker — `specs/477-the-ransom-broker.md`
 
 ## Future / Ideas
-- [ ] `484` Civic Ideology — `specs/484-civic-ideology.md`
+
 - [ ] `481` Subterranean Mycelial Network — `specs/481-subterranean-mycelial-network.md`
 - [ ] `480` Memory Forgery — `specs/480-memory-forgery.md`
 - [ ] `479` The Endless Draft — `specs/479-the-endless-draft.md`

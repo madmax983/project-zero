@@ -1,89 +1,70 @@
-use crate::layer1::morale::{MoodModifier, Morale};
-use crate::layer1::pop::Pop;
-use crate::layer1::resources::ColonyResources;
 use bevy_ecs::prelude::*;
+use crate::layer1::needs::Needs;
+use crate::layer1::utility_types::ActionType;
 
-/// Resource tracking the colony's selected ideology.
 #[derive(Resource, Default)]
-pub struct CivicIdeology {
-    /// The currently active ideology.
-    pub selected: IdeologyType,
-}
+pub struct ActiveIdeology(pub IdeologyType);
 
-/// The types of civic ideologies available to the colony.
 #[derive(Default, PartialEq, Eq, Clone, Copy, Debug)]
 pub enum IdeologyType {
     #[default]
-    /// Focus on food security and survival.
+    None,
     Survivalist,
-    /// Focus on research and knowledge.
-    Technocratic,
-    /// Focus on production and construction materials.
-    Industrialist,
+    Profit,
+    Knowledge,
 }
 
-/// Evaluates the colony's performance against its ideology and applies morale modifiers.
-///
-/// * **Survivalist**: Checked against food per capita.
-/// * **Technocratic**: Checked against total knowledge.
-/// * **Industrialist**: Checked against total refined materials.
-#[allow(clippy::cast_precision_loss)]
-pub fn evaluate_civic_ideology_system(
-    ideology: Res<CivicIdeology>,
-    resources: Res<ColonyResources>,
-    pops: Query<Entity, With<Pop>>,
-    mut morale_query: Query<&mut Morale, With<Pop>>,
+#[derive(Component)]
+pub struct RecentAction {
+    pub action_type: ActionType,
+    pub duration: f32,
+}
+
+pub fn apply_ideological_modifiers_system(
+    ideology: Option<Res<ActiveIdeology>>,
+    mut query: Query<(&mut Needs, &RecentAction)>,
 ) {
-    let pop_count = pops.iter().count() as f32;
-    if pop_count == 0.0 {
-        return;
+    let Some(active_ideology) = ideology else { return };
+    if active_ideology.0 == IdeologyType::None { return; }
+
+    for (mut needs, action) in query.iter_mut() {
+        match active_ideology.0 {
+            IdeologyType::Survivalist => {
+                if action.action_type == ActionType::SatisfyHunger {
+                    needs.leisure += 0.05; // Bonus for aligned action
+                } else if action.action_type == ActionType::Vandalize {
+                    needs.leisure -= 0.05; // Penalty for waste
+                }
+            }
+            IdeologyType::Profit => {
+                if action.action_type == ActionType::Refine {
+                    needs.leisure += 0.05;
+                } else if action.action_type == ActionType::Idle {
+                    needs.leisure -= 0.05;
+                }
+            }
+            IdeologyType::Knowledge => {
+                if action.action_type == ActionType::Research {
+                    needs.leisure += 0.05;
+                } else if action.action_type == ActionType::Binge {
+                    needs.leisure -= 0.05;
+                }
+            }
+            IdeologyType::None => {}
+        }
+
+        needs.leisure = needs.leisure.clamp(0.0, 1.0);
     }
+}
 
-    let (modifier_value, label): (f32, &str) = match ideology.selected {
-        IdeologyType::Survivalist => {
-            let total_food = resources.total_food();
-            if total_food >= pop_count * 5.0 {
-                (0.1, "Ideological Satisfaction")
-            } else if total_food < pop_count * 2.0 {
-                (-0.1, "Ideological Disappointment")
-            } else {
-                (0.0, "")
-            }
-        }
-        IdeologyType::Technocratic => {
-            if resources.knowledge >= 50.0 {
-                (0.1, "Ideological Satisfaction")
-            } else if resources.knowledge < 10.0 {
-                (-0.1, "Ideological Disappointment")
-            } else {
-                (0.0, "")
-            }
-        }
-        IdeologyType::Industrialist => {
-            let total_mats = resources.metal + resources.planks + resources.blocks;
-            if total_mats >= 50.0 {
-                (0.1, "Ideological Satisfaction")
-            } else if total_mats < 10.0 {
-                (-0.1, "Ideological Disappointment")
-            } else {
-                (0.0, "")
-            }
-        }
-    };
-
-    if modifier_value.abs() > f32::EPSILON && !label.is_empty() {
-        // Parallel iteration could be used here if query is large, but for MVP standard iter is fine.
-        for mut morale in &mut morale_query {
-            // Prevent infinite stacking by removing existing ideological modifiers
-            morale
-                .modifiers
-                .retain(|m| !m.label.starts_with("Ideological"));
-
-            morale.add_modifier(MoodModifier {
-                label: label.to_string(),
-                value: modifier_value,
-                duration: 1, // Applied every tick, so 1 tick duration is appropriate
-            });
+pub fn decay_recent_action_system(
+    mut commands: Commands,
+    mut query: Query<(Entity, &mut RecentAction)>,
+) {
+    for (entity, mut action) in query.iter_mut() {
+        action.duration -= 1.0;
+        if action.duration <= 0.0 {
+            commands.entity(entity).remove::<RecentAction>();
         }
     }
 }
@@ -91,126 +72,73 @@ pub fn evaluate_civic_ideology_system(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::layer1::morale::Morale;
-    use crate::layer1::pop::Pop;
-    use crate::layer1::resources::ColonyResources;
+    use bevy_app::App;
 
     #[test]
-    fn test_survivalist_happiness_with_abundant_food() {
+    fn test_civic_ideology_aligned_action_grants_morale() {
         // Arrange
-        let mut world = World::new();
-        world.insert_resource(CivicIdeology {
-            selected: IdeologyType::Survivalist,
-        });
-        world.insert_resource(ColonyResources {
-            food: 100.0,
-            ..ColonyResources::default()
-        });
+        let mut app = App::new();
+        app.add_plugins(bevy::MinimalPlugins);
+        app.init_resource::<ActiveIdeology>();
+        app.add_systems(bevy_app::Update, apply_ideological_modifiers_system);
 
-        // Spawn 10 pops. Need 10 * 5 = 50 food for bonus. We have 100.
-        for _ in 0..10 {
-            world.spawn((Pop, Morale::default()));
-        }
+        app.world_mut().insert_resource(ActiveIdeology(IdeologyType::Survivalist));
+
+        let pop = app.world_mut().spawn((
+            Needs { leisure: 0.5, ..Default::default() },
+            RecentAction { action_type: ActionType::SatisfyHunger, duration: 10.0 }
+        )).id();
 
         // Act
-        let mut schedule = Schedule::default();
-        schedule.add_systems(evaluate_civic_ideology_system);
-        schedule.run(&mut world);
+        app.update();
 
         // Assert
-        let pop_morale = world.query::<&Morale>().iter(&world).next().unwrap();
-        assert!(pop_morale
-            .modifiers
-            .iter()
-            .any(|m| m.label == "Ideological Satisfaction" && m.value > 0.0));
+        let needs = app.world().get::<Needs>(pop).unwrap();
+        assert!(needs.leisure > 0.5, "Leisure should increase when performing aligned actions");
     }
 
     #[test]
-    fn test_survivalist_anger_with_low_food() {
+    fn test_civic_ideology_opposed_action_reduces_morale() {
         // Arrange
-        let mut world = World::new();
-        world.insert_resource(CivicIdeology {
-            selected: IdeologyType::Survivalist,
-        });
-        world.insert_resource(ColonyResources {
-            food: 10.0, // 1 per pop, below threshold of 2
-            ..ColonyResources::default()
-        });
+        let mut app = App::new();
+        app.add_plugins(bevy::MinimalPlugins);
+        app.init_resource::<ActiveIdeology>();
+        app.add_systems(bevy_app::Update, apply_ideological_modifiers_system);
 
-        for _ in 0..10 {
-            world.spawn((Pop, Morale::default()));
-        }
+        app.world_mut().insert_resource(ActiveIdeology(IdeologyType::Survivalist));
+
+        let pop = app.world_mut().spawn((
+            Needs { leisure: 0.5, ..Default::default() },
+            RecentAction { action_type: ActionType::Vandalize, duration: 10.0 }
+        )).id();
 
         // Act
-        let mut schedule = Schedule::default();
-        schedule.add_systems(evaluate_civic_ideology_system);
-        schedule.run(&mut world);
+        app.update();
 
         // Assert
-        let pop_morale = world.query::<&Morale>().iter(&world).next().unwrap();
-        assert!(pop_morale
-            .modifiers
-            .iter()
-            .any(|m| m.label == "Ideological Disappointment" && m.value < 0.0));
+        let needs = app.world().get::<Needs>(pop).unwrap();
+        assert!(needs.leisure < 0.5, "Leisure should decrease when performing opposed actions");
     }
 
     #[test]
-    fn test_technocratic_happiness_with_high_knowledge() {
+    fn test_decay_recent_action_system() {
         // Arrange
-        let mut world = World::new();
-        world.insert_resource(CivicIdeology {
-            selected: IdeologyType::Technocratic,
-        });
-        world.insert_resource(ColonyResources {
-            knowledge: 60.0, // Threshold 50
-            ..ColonyResources::default()
-        });
+        let mut app = App::new();
+        app.add_plugins(bevy::MinimalPlugins);
+        app.add_systems(bevy_app::Update, decay_recent_action_system);
 
-        for _ in 0..10 {
-            world.spawn((Pop, Morale::default()));
-        }
+        let pop = app.world_mut().spawn(RecentAction {
+            action_type: ActionType::SatisfyHunger,
+            duration: 1.5,
+        }).id();
 
-        // Act
-        let mut schedule = Schedule::default();
-        schedule.add_systems(evaluate_civic_ideology_system);
-        schedule.run(&mut world);
+        // Act - Tick 1
+        app.update();
+        let action = app.world().get::<RecentAction>(pop).unwrap();
+        assert!((action.duration - 0.5).abs() < f32::EPSILON, "Duration should decrement by 1.0");
 
-        // Assert
-        let pop_morale = world.query::<&Morale>().iter(&world).next().unwrap();
-        assert!(pop_morale
-            .modifiers
-            .iter()
-            .any(|m| m.label == "Ideological Satisfaction"));
-    }
-
-    #[test]
-    fn test_industrialist_happiness_with_high_materials() {
-        // Arrange
-        let mut world = World::new();
-        world.insert_resource(CivicIdeology {
-            selected: IdeologyType::Industrialist,
-        });
-        world.insert_resource(ColonyResources {
-            metal: 20.0,
-            planks: 20.0,
-            blocks: 20.0, // Total 60 > 50
-            ..ColonyResources::default()
-        });
-
-        for _ in 0..10 {
-            world.spawn((Pop, Morale::default()));
-        }
-
-        // Act
-        let mut schedule = Schedule::default();
-        schedule.add_systems(evaluate_civic_ideology_system);
-        schedule.run(&mut world);
-
-        // Assert
-        let pop_morale = world.query::<&Morale>().iter(&world).next().unwrap();
-        assert!(pop_morale
-            .modifiers
-            .iter()
-            .any(|m| m.label == "Ideological Satisfaction"));
+        // Act - Tick 2
+        app.update();
+        assert!(app.world().get::<RecentAction>(pop).is_none(), "RecentAction should be removed when duration <= 0");
     }
 }
