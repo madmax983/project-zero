@@ -25,3 +25,7 @@
 ## [Particle Gravity]
 **Friction:** Particles floated weightlessly and slid along axes linearly, which felt "floaty" and lacked physical weight or impact. It did not communicate the grittiness of the world.
 **Flow:** Added a `GRAVITY` constant (0.05) to `particle_physics_system` that pulls particles downwards (increasing `dy`) every tick. This simple tweak gives particles a satisfying parabolic arc, adding immediate visual "Juice" and grounding the effects in the physical world without modifying the engine's core physics loop.
+
+## [Global Hit Stop]
+**Friction:** Critical hits and heavy attacks applied a local hit stop to the combatants, but the rest of the game kept moving. The impact felt isolated and didn't convey the immense weight of the blow to the player.
+**Flow:** Triggered the `GlobalHitStop` resource on critical hits and heavy damage. This briefly freezes the entire game logic (while particles and screen shake continue), simulating the dramatic "Hit Stop" pause found in fighting games and adding massive "Juice" to heavy combat impacts.

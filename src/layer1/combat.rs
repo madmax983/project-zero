@@ -22,6 +22,7 @@
 
 use crate::layer1::map::ScreenShake;
 use crate::layer1::particles::{spawn_moving_particle, spawn_particle};
+use crate::layer1::GlobalHitStop;
 use bevy_ecs::prelude::*;
 use rand::Rng;
 use ratatui::style::Color;
@@ -228,6 +229,11 @@ pub fn execute_attack(world: &mut World, attacker: Entity, target: Entity) {
                         ticks_remaining: hit_stop_ticks,
                     });
                 }
+
+                // Ludwig: Global freeze frame for big impacts!
+                if let Some(mut global_stop) = world.get_resource_mut::<GlobalHitStop>() {
+                    global_stop.trigger(hit_stop_ticks);
+                }
             }
 
             // Scale feedback based on damage
@@ -295,6 +301,7 @@ mod tests {
         world.insert_resource(crate::layer1::resources::ColonyResources::default());
         world.insert_resource(crate::layer1::day_night::DayNightCycle::default());
         world.insert_resource(crate::layer1::taboo::TabooState::default());
+        world.init_resource::<GlobalHitStop>();
         world
     }
 
@@ -660,6 +667,13 @@ mod tests {
             "Expected 6 or 12 ticks, got {}",
             ticks_target
         );
+
+        let global_stop = world.resource::<GlobalHitStop>();
+        assert!(
+            global_stop.ticks == 6 || global_stop.ticks == 12,
+            "GlobalHitStop should match hit stop ticks, got {}",
+            global_stop.ticks
+        );
     }
 
     #[test]
@@ -757,6 +771,13 @@ mod tests {
             ticks == 2 || ticks == 12,
             "Expected 2 (Normal) or 12 (Crit), got {}",
             ticks
+        );
+
+        let global_stop = world.resource::<GlobalHitStop>();
+        assert!(
+            global_stop.ticks == 2 || global_stop.ticks == 12,
+            "GlobalHitStop should match hit stop ticks, got {}",
+            global_stop.ticks
         );
     }
 }
