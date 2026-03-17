@@ -3,6 +3,8 @@ pub mod combat;
 pub mod debris;
 #[cfg(test)]
 mod debris_tests;
+pub mod environment;
+pub use environment::*;
 pub mod events;
 pub mod fleet;
 pub mod generation;

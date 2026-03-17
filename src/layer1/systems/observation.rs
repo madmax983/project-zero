@@ -178,6 +178,8 @@ pub fn register(schedule: &mut Schedule) {
             #[cfg(feature = "nova")]
             crate::experimental::genetic_memory::inherit_genetic_memory_system
                 .after(crate::experimental::genetic_memory::absorb_genetic_memory_system),
+            crate::layer1::psychic::apply_psychic_radiation_system
+                .after(crate::layer1::needs::decay_needs_system),
         )
             .in_set(Layer1SystemSet::Observation),
     );
