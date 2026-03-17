@@ -211,7 +211,8 @@ pub fn run_simulation_tick(world: &mut World) {
     if !world.contains_resource::<Events<crate::layer3::events::debt_prison::BailoutOfferEvent>>() {
         world.init_resource::<Events<crate::layer3::events::debt_prison::BailoutOfferEvent>>();
     }
-    if !world.contains_resource::<Events<crate::layer3::events::debt_prison::AcceptBailoutEvent>>() {
+    if !world.contains_resource::<Events<crate::layer3::events::debt_prison::AcceptBailoutEvent>>()
+    {
         world.init_resource::<Events<crate::layer3::events::debt_prison::AcceptBailoutEvent>>();
     }
     if !world.contains_resource::<crate::layer2::trade::blockade::ColonyDebt>() {

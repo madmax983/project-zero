@@ -25,6 +25,8 @@ pub mod genetic_memory;
 pub mod dreams_of_genesis;
 
 #[cfg(feature = "nova")]
+pub mod poltergeist_activity;
+#[cfg(feature = "nova")]
 pub mod the_feral_choir;
 #[cfg(feature = "nova")]
 pub mod the_humming_monolith;

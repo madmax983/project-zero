@@ -1,8 +1,8 @@
-use bevy::prelude::*;
-use crate::layer2::trade::blockade::ColonyDebt;
+use crate::layer1::factions::{FactionId, FactionMember};
 use crate::layer1::pop::PopBundle;
-use crate::layer1::traits::{Traits, Trait};
-use crate::layer1::factions::{FactionMember, FactionId};
+use crate::layer1::traits::{Trait, Traits};
+use crate::layer2::trade::blockade::ColonyDebt;
+use bevy::prelude::*;
 
 #[derive(Event)]
 pub struct BailoutOfferEvent;
@@ -33,7 +33,9 @@ pub fn process_bailout_acceptance_system(
         for _ in 0..100 {
             let mut bundle = PopBundle::random(0, 0, &mut rng);
             bundle.traits = Traits(vec![Trait::Volatile, Trait::Spiteful].into_iter().collect());
-            bundle.faction = FactionMember { faction_id: Some(FactionId::Cartel) };
+            bundle.faction = FactionMember {
+                faction_id: Some(FactionId::Cartel),
+            };
             commands.spawn(bundle);
         }
     }
@@ -42,9 +44,9 @@ pub fn process_bailout_acceptance_system(
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::layer1::factions::{FactionId, FactionMember};
     use crate::layer1::pop::Pop;
-    use crate::layer1::traits::{Traits, Trait};
-    use crate::layer1::factions::{FactionMember, FactionId};
+    use crate::layer1::traits::{Trait, Traits};
     use crate::layer2::trade::blockade::ColonyDebt;
 
     #[test]
@@ -53,7 +55,10 @@ mod tests {
         let mut app = App::new();
         app.add_event::<BailoutOfferEvent>();
         // Set colony debt to a critical level
-        app.world_mut().insert_resource(ColonyDebt { amount: 1000000.0, threshold: 50000.0 });
+        app.world_mut().insert_resource(ColonyDebt {
+            amount: 1000000.0,
+            threshold: 50000.0,
+        });
 
         app.add_systems(Update, check_bailout_condition_system);
 
@@ -71,7 +76,10 @@ mod tests {
         // Arrange
         let mut app = App::new();
         app.add_event::<AcceptBailoutEvent>();
-        app.world_mut().insert_resource(ColonyDebt { amount: 1000000.0, threshold: 50000.0 });
+        app.world_mut().insert_resource(ColonyDebt {
+            amount: 1000000.0,
+            threshold: 50000.0,
+        });
         app.world_mut().send_event(AcceptBailoutEvent);
 
         app.add_systems(Update, process_bailout_acceptance_system);
@@ -90,8 +98,14 @@ mod tests {
         assert_eq!(pop_count, 100, "Should spawn exactly 100 criminal pops");
 
         for (_, traits) in query.iter(app.world()) {
-            assert!(traits.0.contains(&Trait::Volatile), "Criminals should have the Volatile trait");
-            assert!(traits.0.contains(&Trait::Spiteful), "Criminals should have the Spiteful trait");
+            assert!(
+                traits.0.contains(&Trait::Volatile),
+                "Criminals should have the Volatile trait"
+            );
+            assert!(
+                traits.0.contains(&Trait::Spiteful),
+                "Criminals should have the Spiteful trait"
+            );
         }
     }
 
@@ -100,7 +114,10 @@ mod tests {
         // Arrange
         let mut app = App::new();
         app.add_event::<AcceptBailoutEvent>();
-        app.world_mut().insert_resource(ColonyDebt { amount: 1000000.0, threshold: 50000.0 });
+        app.world_mut().insert_resource(ColonyDebt {
+            amount: 1000000.0,
+            threshold: 50000.0,
+        });
         app.world_mut().send_event(AcceptBailoutEvent);
 
         app.add_systems(Update, process_bailout_acceptance_system);
@@ -112,10 +129,17 @@ mod tests {
         // Verify a criminal faction exists and the new pops belong to it
         let mut query = app.world_mut().query::<(&Pop, &FactionMember)>();
         let pop_count = query.iter(app.world()).count();
-        assert_eq!(pop_count, 100, "Should spawn exactly 100 criminal pops with factions");
+        assert_eq!(
+            pop_count, 100,
+            "Should spawn exactly 100 criminal pops with factions"
+        );
 
         for (_, faction_member) in query.iter(app.world()) {
-            assert_eq!(faction_member.faction_id, Some(FactionId::Cartel), "Criminals should belong to the Cartel faction");
+            assert_eq!(
+                faction_member.faction_id,
+                Some(FactionId::Cartel),
+                "Criminals should belong to the Cartel faction"
+            );
         }
     }
 }
