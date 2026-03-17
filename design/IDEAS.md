@@ -10255,7 +10255,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Lithovore Husbandry
+## Lithovore Husbandry [SPECCED]
 
 **Layer:** 1
 
@@ -10269,7 +10269,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Empathic Grid
+## The Empathic Grid [SPECCED]
 
 **Layer:** 1
 
@@ -10283,7 +10283,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Void-Tethered Fleets
+## Void-Tethered Fleets [SPECCED]
 
 **Layer:** Cross-layer (1 -> 2)
 
@@ -10297,7 +10297,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Parasitic Sentience
+## Parasitic Sentience [SPECCED]
 
 **Layer:** 1
 
