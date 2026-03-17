@@ -201,7 +201,10 @@ impl NarrativeGenerator {
             let trimmed = line.trim();
 
             // Detect Template Header: "### TEMPLATE_NAME"
-            if let Some(id_part) = trimmed.strip_prefix("### ") {
+            if let Some(id_part) = trimmed
+                .strip_prefix("### ")
+                .or_else(|| trimmed.strip_prefix("## Template: "))
+            {
                 // If we were parsing a previous template, save it
                 if let Some(id) = current_id.take() {
                     if !current_patterns.is_empty() {
@@ -244,6 +247,14 @@ impl NarrativeGenerator {
                 if !pattern.is_empty() && !pattern.starts_with("//") {
                     current_patterns.push(pattern.to_string());
                 }
+            } else if !capturing_code_block
+                && trimmed.starts_with("- \"")
+                && trimmed.ends_with('"')
+                && trimmed.len() >= 4
+            {
+                // Capture bullet point patterns outside code blocks
+                let pattern = &trimmed[3..trimmed.len() - 1];
+                current_patterns.push(pattern.to_string());
             }
         }
 
@@ -271,7 +282,10 @@ impl NarrativeGenerator {
             let trimmed = line.trim();
 
             // Detect Fragment Header: "### [FRAGMENT_NAME]"
-            if let Some(header) = trimmed.strip_prefix("### ") {
+            if let Some(header) = trimmed
+                .strip_prefix("### ")
+                .or_else(|| trimmed.strip_prefix("## Fragment Type: "))
+            {
                 if let Some(id) = current_id.take() {
                     if !current_options.is_empty() {
                         self.fragments.insert(
@@ -526,6 +540,36 @@ mod tests {
 
         let result = generator.generate("SIMPLE", &ctx).unwrap();
         assert_eq!(result, "Hello World!");
+    }
+
+    #[test]
+    fn test_template_parsing_alternative_header_and_bullets() {
+        let content = r#"
+## Template: TEST_BULLETS
+- "Pattern one"
+- "Pattern two"
+"#;
+        let mut generator = NarrativeGenerator::default();
+        generator.parse_templates(content);
+        assert_eq!(generator.template_count(), 1);
+        let tmpl = generator.templates.get("TEST_BULLETS").unwrap();
+        assert_eq!(tmpl.patterns.len(), 2);
+        assert_eq!(tmpl.patterns[0], "Pattern one");
+    }
+
+    #[test]
+    fn test_fragment_parsing_alternative_header() {
+        let content = r"
+## Fragment Type: [TEST_FRAG]
+- option A
+- option B
+";
+        let mut generator = NarrativeGenerator::default();
+        generator.parse_fragments(content);
+        assert_eq!(generator.fragment_count(), 1);
+        let frag = generator.fragments.get("TEST_FRAG").unwrap();
+        assert_eq!(frag.options.len(), 2);
+        assert_eq!(frag.options[0], "option A");
     }
 
     #[test]
