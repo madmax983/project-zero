@@ -727,3 +727,7 @@ pub use cryo_shock::*;
 /// Infrastructure system (Spec 452).
 pub mod infrastructure;
 pub use infrastructure::*;
+
+/// Bureaucracy and administration system (Spec 464).
+pub mod bureaucracy;
+pub use bureaucracy::*;
