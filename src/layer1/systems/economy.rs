@@ -74,8 +74,6 @@ pub fn register(schedule: &mut Schedule) {
             restore_rest_in_housing_system.after(update_noise_system),
             restore_leisure_system,
             crate::layer1::tech_envy::tech_envy_system.after(restore_leisure_system),
-            crate::layer1::civic_ideology::evaluate_civic_ideology_system
-                .after(restore_leisure_system),
             #[cfg(feature = "nova")]
             crate::layer1::loci::apply_loci_effects_system.after(restore_leisure_system),
             apply_mood_modifiers_system.after(restore_leisure_system),

@@ -97,6 +97,8 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::contraband::detect_contraband_system
                 .after(crate::layer1::justice::check_crime_system),
             crate::layer1::unrest::recover_mental_break_system.after(decay_needs_system),
+            crate::layer1::civic_ideology::apply_ideological_modifiers_system.after(crate::layer1::unrest::recover_mental_break_system),
+            crate::layer1::civic_ideology::decay_recent_action_system.after(crate::layer1::civic_ideology::apply_ideological_modifiers_system),
             check_generational_friction_system.after(decay_needs_system),
             crate::layer1::hobby::assign_hobby_system.after(decay_needs_system),
             crate::layer1::predictive_policing::check_prediction_system.after(decay_needs_system),
