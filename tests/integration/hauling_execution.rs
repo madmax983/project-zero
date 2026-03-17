@@ -83,7 +83,7 @@ mod tests {
         world.insert_resource(scale::layer1::inspector::InspectorSource::default());
         world.insert_resource(scale::layer1::prototyping::BuildingMastery::default());
         world.init_resource::<scale::layer1::social::old_guard::Demographics>();
-        world.init_resource::<scale::layer1::civic_ideology::CivicIdeology>();
+        world.init_resource::<scale::layer1::civic_ideology::ActiveIdeology>();
         world.insert_resource(scale::layer1::prototyping::BuildingMastery::default());
         world.insert_resource(scale::layer1::graffiti::GraffitiMap::default());
         world.insert_resource(scale::layer1::geology::SeismicGrid::new(10, 10));
