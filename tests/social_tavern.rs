@@ -81,7 +81,7 @@ mod tests {
         world.insert_resource(scale::layer1::fertility::FertilityGrid::new(10, 10));
         world.insert_resource(scale::layer1::prototyping::BuildingMastery::default());
         world.insert_resource(scale::layer1::graffiti::GraffitiMap::default());
-        world.insert_resource(scale::layer1::civic_ideology::CivicIdeology::default());
+        world.insert_resource(scale::layer1::civic_ideology::ActiveIdeology::default());
         world.insert_resource(scale::layer1::ecology::EcologyConfig::default());
         world.insert_resource(RoofGrid::new(10, 10));
         world.init_resource::<Events<scale::layer1::structural_integrity::StructureCollapsed>>();

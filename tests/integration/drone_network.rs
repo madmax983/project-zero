@@ -160,7 +160,7 @@ mod tests {
         world.insert_resource(scale::shared::time::WallTime::default());
         world.insert_resource(scale::layer1::purity::PurityMap::default());
         world.insert_resource(scale::layer1::social::old_guard::Demographics::default());
-        world.init_resource::<scale::layer1::civic_ideology::CivicIdeology>();
+        world.init_resource::<scale::layer1::civic_ideology::ActiveIdeology>();
 
         world.insert_resource(scale::layer2::system::ViewMode::default());
         world.insert_resource(scale::layer2::system::SystemMap);

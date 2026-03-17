@@ -213,3 +213,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `487` The Subspace Contagion — `specs/487-the-subspace-contagion.md`
 - [ ] `488` Gravity Well Smuggling — `specs/488-gravity-well-smuggling.md`
 - [ ] `489` The Generational Vow — `specs/489-the-generational-vow.md`
+- [ ] `490` The Echo of the Void — `specs/490-the-echo-of-the-void.md`
+- [ ] `491` Orbital Tether Snaps — `specs/491-orbital-tether-snaps.md`
+- [ ] `492` The Panic Hoard — `specs/492-the-panic-hoard.md`

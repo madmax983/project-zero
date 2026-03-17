@@ -10129,7 +10129,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Echo of the Void
+## The Echo of the Void [SPECCED]
 
 **Layer:** 2 -> 1
 
@@ -10143,7 +10143,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Orbital Tether Snaps
+## Orbital Tether Snaps [SPECCED]
 
 **Layer:** Cross-layer (2 -> 1)
 
@@ -10157,7 +10157,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Panic Hoard
+## The Panic Hoard [SPECCED]
 
 **Layer:** Cross-layer (2 -> 1)
 
