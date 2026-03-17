@@ -8,3 +8,4 @@ pub mod neural_leech_unrest;
 pub mod machine_awakening_chronicle;
 pub mod vr_pod_integration;
 pub mod flora_empathy;
+pub mod food_needs;
