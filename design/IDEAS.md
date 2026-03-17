@@ -1490,7 +1490,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Civic Ideology
+## Civic Ideology [SPECCED]
 
 **Layer:** 1
 
