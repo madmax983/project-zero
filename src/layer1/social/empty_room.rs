@@ -50,20 +50,21 @@ pub fn update_sanctuary_system(
 ) {
     // 1. Identify all contiguous regions of ZoneType::Sanctuary on the ZoneGrid
     // We'll use a simple flood-fill to find them.
-    let mut visited = vec![false; zone_grid.width * zone_grid.height];
+    let max_idx = zone_grid.width.checked_mul(zone_grid.height).unwrap_or(0);
+    let mut visited = vec![false; max_idx];
     let mut regions = Vec::new();
 
     for y in 0..zone_grid.height {
         for x in 0..zone_grid.width {
-            let idx = y * zone_grid.width + x;
-            if !visited[idx] && zone_grid.grid[idx] == ZoneType::Sanctuary {
+            let idx = y.checked_mul(zone_grid.width).and_then(|i| i.checked_add(x)).unwrap_or(usize::MAX);
+            if idx < visited.len() && !visited[idx] && zone_grid.grid[idx] == ZoneType::Sanctuary {
                 // Flood fill to find all tiles in this Sanctuary
                 let mut tiles = Vec::new();
                 let mut stack = vec![(x, y)];
 
                 while let Some((cx, cy)) = stack.pop() {
-                    let cidx = cy * zone_grid.width + cx;
-                    if visited[cidx] || zone_grid.grid[cidx] != ZoneType::Sanctuary {
+                    let cidx = cy.checked_mul(zone_grid.width).and_then(|i| i.checked_add(cx)).unwrap_or(usize::MAX);
+                    if cidx >= visited.len() || visited[cidx] || zone_grid.grid[cidx] != ZoneType::Sanctuary {
                         continue;
                     }
                     visited[cidx] = true;

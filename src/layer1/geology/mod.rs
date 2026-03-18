@@ -112,8 +112,8 @@ pub fn check_seismic_events(
 ) {
     for y in 0..grid.height {
         for x in 0..grid.width {
-            let idx = y * grid.width + x;
-            if grid.stress[idx] > STRESS_THRESHOLD {
+            let idx = y.checked_mul(grid.width).and_then(|i| i.checked_add(x)).unwrap_or(usize::MAX);
+            if idx < grid.stress.len() && grid.stress[idx] > STRESS_THRESHOLD {
                 // Trigger event
                 // Reset stress (release energy)
                 grid.stress[idx] = 0.0;
