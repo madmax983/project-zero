@@ -403,6 +403,10 @@ pub use gastronomy::*;
 /// Antagonistic Flora system (Spec 092).
 pub mod flora;
 pub use flora::*;
+
+/// Sub-Surface Flora (Spec 507).
+pub mod sub_surface_flora;
+pub use sub_surface_flora::*;
 /// Gut Biome system (Spec 211).
 pub mod gut_biome;
 pub use gut_biome::*;

@@ -70,6 +70,8 @@ pub fn register(schedule: &mut Schedule) {
             #[cfg(feature = "nova")]
             crate::layer1::loci::update_loci_system,
             crate::layer1::social::empty_room::update_sanctuary_system,
+            crate::layer1::sub_surface_flora::grow_tectonic_roots_system,
+            crate::layer1::sub_surface_flora::harvest_tectonic_roots_system,
         )
             .in_set(Layer1SystemSet::Environment),
     );

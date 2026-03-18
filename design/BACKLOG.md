@@ -234,7 +234,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `504` Inherited Grudges — `specs/504-inherited-grudges.md`
 - [ ] `505` Tectonic Extraction — `specs/505-tectonic-extraction.md`
 - [ ] `506` The Organ Trade — `specs/506-the-organ-trade.md`
-- [ ] `507` The Sub-Surface Flora — `specs/507-the-sub-surface-flora.md`
 - [ ] `508` The Atmospheric Siphon — `specs/508-the-atmospheric-siphon.md`
 - [ ] `509` The Memory Plague — `specs/509-the-memory-plague.md`
 - [ ] `510` The Orbital Scavengers — `specs/510-the-orbital-scavengers.md`

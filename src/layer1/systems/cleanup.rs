@@ -42,6 +42,8 @@ pub fn register(schedule: &mut Schedule) {
             update_event_buffer::<crate::layer1::memory_core::ImplantMemoryCoreEvent>,
             update_event_buffer::<crate::layer1::memory_core::HarvestMemoryCoreEvent>,
             update_event_buffer::<crate::layer1::tech::machine_awakening::BotGlitchEvent>,
+            update_event_buffer::<crate::layer1::sub_surface_flora::HarvestCropEvent>,
+            update_event_buffer::<crate::layer1::sub_surface_flora::LocalizedTremorEvent>,
             update_event_buffer::<crate::layer2::trade::blockade::TradeShipArrivalEvent>,
             update_event_buffer::<crate::layer3::events::debt_prison::BailoutOfferEvent>,
             update_event_buffer::<crate::layer3::events::debt_prison::AcceptBailoutEvent>,

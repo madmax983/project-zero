@@ -15,21 +15,23 @@ use rand::Rng;
 /// Bridges Spec 080 (Quirks) to Spec 468 (Escape Velocity Economics).
 pub fn escape_velocity_traits_bridge_system(
     traits: Option<Res<PlanetaryTraits>>,
-    mut gravity: ResMut<PlanetaryGravity>,
+    mut gravity: Option<ResMut<PlanetaryGravity>>,
 ) {
-    if let Some(traits_res) = traits {
-        let mut new_g_force = 1.0;
-        for t in &traits_res.0 {
-            match t {
-                PlanetaryTrait::HighGravity => new_g_force = 2.5,
-                PlanetaryTrait::LowGravity => new_g_force = 0.5,
-                _ => {}
+    if let Some(ref mut gravity) = gravity {
+        if let Some(traits_res) = traits {
+            let mut new_g_force = 1.0;
+            for t in &traits_res.0 {
+                match t {
+                    PlanetaryTrait::HighGravity => new_g_force = 2.5,
+                    PlanetaryTrait::LowGravity => new_g_force = 0.5,
+                    _ => {}
+                }
             }
-        }
 
-        // Prevent floating point jitter if no change is needed
-        if (gravity.g_force - new_g_force).abs() > f32::EPSILON {
-            gravity.g_force = new_g_force;
+            // Prevent floating point jitter if no change is needed
+            if (gravity.g_force - new_g_force).abs() > f32::EPSILON {
+                gravity.g_force = new_g_force;
+            }
         }
     }
 }

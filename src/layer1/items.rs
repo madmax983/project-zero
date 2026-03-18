@@ -149,6 +149,8 @@ pub enum ItemType {
     LivingStone,
     /// Scrap metal recovered from clutter.
     Scrap,
+    /// A root thriving on tectonic energy.
+    TectonicRoot,
 }
 
 impl ItemType {
@@ -171,6 +173,7 @@ impl ItemType {
             | Self::AlienMeatA
             | Self::AlienMeatB
             | Self::GlowMushroom
+            | Self::TectonicRoot
             | Self::MysteryMeal => Some(ResourceType::Food),
             Self::Rations => Some(ResourceType::Rations),
             Self::Waste => Some(ResourceType::Waste),
