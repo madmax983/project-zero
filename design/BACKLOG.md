@@ -248,3 +248,7 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `518` Tidal Cycles — `specs/518-tidal-cycles.md`
 - [ ] `519` The Long Watch — `specs/519-the-long-watch.md`
 - [ ] `520` Galactic Blockade — `specs/520-galactic-blockade.md`
+- [ ] `521` Luxury Monopolies — `specs/521-luxury-monopolies.md`
+- [ ] `522` Generation Ship Arrival — `specs/522-generation-ship-arrival.md`
+- [ ] `523` Emergent Faiths — `specs/523-emergent-faiths.md`
+- [ ] `524` Floating Colonies — `specs/524-floating-colonies.md`

@@ -1952,7 +1952,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Luxury Monopolies
+## Luxury Monopolies [SPECCED]
 
 **Layer:** 3
 
@@ -1966,7 +1966,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Generation Ship Arrival
+## Generation Ship Arrival [SPECCED]
 
 **Layer:** Cross-layer
 
@@ -1980,7 +1980,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Emergent Faiths
+## Emergent Faiths [SPECCED]
 
 **Layer:** 1
 
@@ -1994,7 +1994,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Floating Colonies
+## Floating Colonies [SPECCED]
 
 **Layer:** 2 -> 1
 
