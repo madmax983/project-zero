@@ -247,4 +247,3 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `517` Planetary Axis Tilt — `specs/517-planetary-axis-tilt.md`
 - [ ] `518` Tidal Cycles — `specs/518-tidal-cycles.md`
 - [ ] `519` The Long Watch — `specs/519-the-long-watch.md`
-- [ ] `520` Galactic Blockade — `specs/520-galactic-blockade.md`

@@ -56,6 +56,7 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     let mut world = World::new();
     world.insert_resource(GameState::default());
     world.insert_resource(MenuState::default());
+    world.insert_resource(crate::layer2::trade::galactic_blockade::BlockadeStatus::default());
 
     let terrain = generate_terrain(80, 50);
     let mut roof =
