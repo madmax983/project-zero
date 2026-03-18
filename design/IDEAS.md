@@ -1882,7 +1882,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Sleepwalking
+## Sleepwalking [SPECCED]
 
 **Layer:** 1
 
@@ -1896,7 +1896,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Planetary Axis Tilt
+## Planetary Axis Tilt [SPECCED]
 
 **Layer:** 2 -> 1
 
@@ -1910,7 +1910,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Tidal Cycles
+## Tidal Cycles [SPECCED]
 
 **Layer:** 1
 
@@ -1924,7 +1924,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Long Watch
+## The Long Watch [SPECCED]
 
 **Layer:** 1
 
@@ -1938,7 +1938,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Galactic Blockade
+## Galactic Blockade [SPECCED]
 
 **Layer:** 3 -> 1
 
