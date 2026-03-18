@@ -28,5 +28,8 @@ pub mod dreams_of_genesis;
 pub mod poltergeist_activity;
 #[cfg(feature = "nova")]
 pub mod the_feral_choir;
+
+#[cfg(feature = "nova")]
+pub mod biosphere_empathy;
 #[cfg(feature = "nova")]
 pub mod the_humming_monolith;
