@@ -242,3 +242,4 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `512` Xeno-Botany — `specs/512-xeno-botany.md`
 - [ ] `513` The Ansible Network — `specs/513-the-ansible-network.md`
 - [ ] `514` Planetary Defense Grid — `specs/514-planetary-defense-grid.md`
+- [ ] `515` Deep Crust Geomes — `specs/515-deep-crust-geomes.md`
