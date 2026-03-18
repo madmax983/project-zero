@@ -10526,3 +10526,59 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** The physical necessity of resource extraction vs. the psychological well-being of your most sensitive, often highly skilled colonists.
 
 ---
+
+## The Generational Shipyard
+
+**Layer:** Cross-layer
+
+**Fantasy:** You aren't just building ships; you are building a legacy that takes decades to complete. The people who start the ship will never see it fly.
+
+**Mechanic:** Massive capital ships (Layer 2/3) require dedicated "Shipyard" zones on Layer 1. Construction takes in-game *years*. The shipyard becomes a micro-city itself, with its own culture, specialized jobs, and generational knowledge.
+
+**Emergence:** A famine strikes, and the colony is forced to cannibalize the half-built dreadnought for its hydroponics systems to survive, delaying the war effort by decades.
+
+**Tension:** Committing massive, long-term resources and population to a single project vs. remaining flexible for immediate crises.
+
+---
+
+## Somatic Resonance
+
+**Layer:** 1
+
+**Fantasy:** The colony literally hums with the mood of its people. The physical environment reflects the psychological state of the population.
+
+**Mechanic:** Pops emit a low-level "Resonance" based on their dominant mood. High concentrations of a specific resonance alter the environment slightly—joy makes crops grow marginally faster, despair causes minor electrical glitches, anger increases the flammability of materials.
+
+**Emergence:** A deeply unhappy industrial sector becomes a massive fire hazard not because of the machines, but because the concentrated anger of the workers is literally making the air dry and static-charged.
+
+**Tension:** Grouping pops by job efficiency (creating dangerous emotional monocultures) vs. mixing populations to balance out the resonance.
+
+---
+
+## The Graveyard of Ambition
+
+**Layer:** 2
+
+**Fantasy:** You aren't the first to try and tame this sector. The ruins of failed empires are hazards and opportunities.
+
+**Mechanic:** Certain Layer 2 nodes are "Hulks"—massive, dead megastructures from previous civilizations. They offer incredible salvage, but navigating them is perilous. They possess dormant automated defenses, unstable containment fields, or lingering bio-hazards.
+
+**Emergence:** You send a fleet to salvage a Dyson Sphere fragment. They accidentally trigger a dormant stellar-manipulation engine, causing a localized gravity well that traps your fleet and disrupts trade routes in the entire sector.
+
+**Tension:** The lure of endgame technology and massive resource payouts vs. the high probability of waking something that should have stayed asleep.
+
+---
+
+## The Debt of the Ancients
+
+**Layer:** Cross-layer
+
+**Fantasy:** You inherit the sins of a precursor race. The galaxy holds you accountable for things you didn't do.
+
+**Mechanic:** By settling a specific world or using precursor tech, you trigger an ancient, dormant diplomatic treaty or debt. Layer 3 empires suddenly demand tribute, or conversely, offer subservience based on an agreement signed millennia ago by people who are not you.
+
+**Emergence:** You unearth a powerful shield generator. The moment you turn it on, a neighboring empire declares a holy war, claiming you have activated the "Engine of their Ancestors' Doom," dragging you into a conflict over a history you don't even understand.
+
+**Tension:** Utilizing powerful found advantages vs. the unpredictable, massive diplomatic consequences of stepping into someone else's ancient shoes.
+
+---
