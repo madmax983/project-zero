@@ -133,7 +133,8 @@ mod tests {
             .spawn((
                 Pop,
                 GridPosition { x: 5, y: 5 },
-                Morale { modifiers: vec![],
+                Morale {
+                    modifiers: vec![],
                     value: 0.8,
                     ..Default::default()
                 },
