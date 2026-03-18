@@ -243,3 +243,8 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `513` The Ansible Network — `specs/513-the-ansible-network.md`
 - [ ] `514` Planetary Defense Grid — `specs/514-planetary-defense-grid.md`
 - [ ] `515` Deep Crust Geomes — `specs/515-deep-crust-geomes.md`
+- [ ] `516` Sleepwalking — `specs/516-sleepwalking.md`
+- [ ] `517` Planetary Axis Tilt — `specs/517-planetary-axis-tilt.md`
+- [ ] `518` Tidal Cycles — `specs/518-tidal-cycles.md`
+- [ ] `519` The Long Watch — `specs/519-the-long-watch.md`
+- [ ] `520` Galactic Blockade — `specs/520-galactic-blockade.md`
