@@ -1770,7 +1770,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Expeditionary Corps
+## Expeditionary Corps [SPECCED]
 
 **Layer:** Cross-layer
 
@@ -1784,7 +1784,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Xeno-Botany
+## Xeno-Botany [SPECCED]
 
 **Layer:** 1
 
@@ -1798,7 +1798,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Ansible Network
+## The Ansible Network [SPECCED]
 
 **Layer:** Cross-layer
 
@@ -1812,7 +1812,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Planetary Defense Grid
+## Planetary Defense Grid [SPECCED]
 
 **Layer:** Cross-layer
 
