@@ -256,3 +256,7 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `526` Somatic Resonance — `specs/526-somatic-resonance.md`
 - [ ] `527` The Graveyard of Ambition — `specs/527-the-graveyard-of-ambition.md`
 - [ ] `528` The Debt of the Ancients — `specs/528-the-debt-of-the-ancients.md`
+- [ ] `529` The Flesh-Weaver's Loom — `specs/529-flesh-weavers-loom.md`
+- [ ] `530` Sub-Surface Geodes — `specs/530-sub-surface-geodes.md`
+- [ ] `531` The Diplomatic Contagion — `specs/531-the-diplomatic-contagion.md`
+- [ ] `532` Time-Dilation Vaults — `specs/532-time-dilation-vaults.md`
