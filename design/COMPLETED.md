@@ -253,3 +253,4 @@
 - [x] `484` Civic Ideology — `specs/484-civic-ideology.md` — completed 2026-03-17
 - [x] `486` Debt-Prison Colonies — `specs/486-debt-prison-colonies.md` — completed 2026-03-02
 - [x] `468` Escape Velocity Economics — `specs/468-escape-velocity-economics.md` — completed 2026-03-05
+- [x] `INT-468` Integration: Planetary Traits -> Escape Velocity Gravity — completed 2026-03-27

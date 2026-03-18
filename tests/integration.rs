@@ -192,3 +192,6 @@ mod martyrs_engine;
 mod void_weed_smuggler;
 #[path = "integration/vr_pod_integration.rs"]
 mod vr_pod_integration;
+
+#[path = "integration/escape_velocity_traits.rs"]
+mod escape_velocity_traits;

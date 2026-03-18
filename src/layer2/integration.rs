@@ -2,12 +2,37 @@
 
 use crate::layer1::map::GridPosition;
 use crate::layer1::notifications::NotificationQueue;
+use crate::layer1::quirks::{PlanetaryTrait, PlanetaryTraits};
 use crate::layer1::terrain::TerrainGrid;
 use crate::layer1::the_visitor::TheVisitor;
 use crate::layer2::events::DetectionEvent;
+use crate::layer2::trade::escape_velocity::PlanetaryGravity;
 use crate::shared::time::SimulationTime;
 use bevy_ecs::prelude::*;
 use rand::Rng;
+
+/// Updates the Layer 2 `PlanetaryGravity` resource based on Layer 1 `PlanetaryTraits`.
+/// Bridges Spec 080 (Quirks) to Spec 468 (Escape Velocity Economics).
+pub fn escape_velocity_traits_bridge_system(
+    traits: Option<Res<PlanetaryTraits>>,
+    mut gravity: ResMut<PlanetaryGravity>,
+) {
+    if let Some(traits_res) = traits {
+        let mut new_g_force = 1.0;
+        for t in &traits_res.0 {
+            match t {
+                PlanetaryTrait::HighGravity => new_g_force = 2.5,
+                PlanetaryTrait::LowGravity => new_g_force = 0.5,
+                _ => {}
+            }
+        }
+
+        // Prevent floating point jitter if no change is needed
+        if (gravity.g_force - new_g_force).abs() > f32::EPSILON {
+            gravity.g_force = new_g_force;
+        }
+    }
+}
 
 /// Handles `DetectionEvent` by spawning a hostile `TheVisitor` entity.
 ///
@@ -72,6 +97,39 @@ mod tests {
         world.insert_resource(SimulationTime::default());
         world.init_resource::<Events<DetectionEvent>>();
         world
+    }
+
+    #[test]
+    fn test_escape_velocity_traits_bridge() {
+        let mut world = World::new();
+        world.insert_resource(PlanetaryGravity::default());
+        world.insert_resource(PlanetaryTraits(vec![PlanetaryTrait::HighGravity]));
+
+        world.run_system_once(escape_velocity_traits_bridge_system).unwrap();
+
+        assert_eq!(
+            world.resource::<PlanetaryGravity>().g_force,
+            2.5,
+            "HighGravity trait should set g_force to 2.5"
+        );
+
+        world.insert_resource(PlanetaryTraits(vec![PlanetaryTrait::LowGravity]));
+        world.run_system_once(escape_velocity_traits_bridge_system).unwrap();
+
+        assert_eq!(
+            world.resource::<PlanetaryGravity>().g_force,
+            0.5,
+            "LowGravity trait should set g_force to 0.5"
+        );
+
+        world.insert_resource(PlanetaryTraits(vec![PlanetaryTrait::DenseAtmosphere]));
+        world.run_system_once(escape_velocity_traits_bridge_system).unwrap();
+
+        assert_eq!(
+            world.resource::<PlanetaryGravity>().g_force,
+            1.0,
+            "No gravity trait should set g_force to 1.0"
+        );
     }
 
     #[test]
