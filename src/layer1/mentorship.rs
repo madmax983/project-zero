@@ -383,4 +383,101 @@ mod tests {
 
         assert!(world.get::<Mentorship>(apprentice).is_none());
     }
+
+    #[test]
+    fn test_mentorship_grants_mood_buffs() {
+        let mut world = World::new();
+
+        let master = world
+            .spawn((
+                Pop,
+                Skills::default(),
+                crate::layer1::needs::Needs {
+                    hunger: 0.8,
+                    rest: 0.8,
+                    leisure: 0.5,
+                    hygiene: 0.8,
+                },
+            ))
+            .id();
+
+        let apprentice = world
+            .spawn((
+                Pop,
+                Skills::default(),
+                crate::layer1::needs::Needs {
+                    hunger: 0.8,
+                    rest: 0.8,
+                    leisure: 0.5,
+                    hygiene: 0.8,
+                },
+                Mentorship {
+                    master_entity: master,
+                    skill: SkillType::Mining,
+                    multiplier: 1.5,
+                    expiration: 10,
+                },
+            ))
+            .id();
+
+        let mut schedule = Schedule::default();
+        schedule.add_systems(super::mentorship_mood_system);
+        schedule.run(&mut world);
+
+        // Apprentice should gain leisure/mood buff from learning
+        let app_needs = world
+            .get::<crate::layer1::needs::Needs>(apprentice)
+            .unwrap();
+        assert!(
+            app_needs.leisure > 0.5,
+            "Apprentice should gain mood buff from learning."
+        );
+
+        // Master should gain leisure/mood buff from teaching
+        let master_needs = world.get::<crate::layer1::needs::Needs>(master).unwrap();
+        assert!(
+            master_needs.leisure > 0.5,
+            "Master should gain mood buff from teaching."
+        );
+    }
+}
+
+/// System to apply a small mood/leisure buff to both Master and Apprentice
+/// while they are engaged in a Mentorship relationship.
+pub fn mentorship_mood_system(
+    mut query: Query<(
+        Entity,
+        &mut crate::layer1::needs::Needs,
+        Option<&Mentorship>,
+    )>,
+) {
+    let mut mood_buffs: Vec<Entity> = Vec::new();
+
+    // Identify all pairs and collect entities receiving buffs
+    for (_, _, mentorship_opt) in query.iter() {
+        if let Some(mentorship) = mentorship_opt {
+            // Apply to Apprentice
+            // mood_buffs.push(entity); // Handled directly in the next pass since we are iterating
+
+            // Apply to Master
+            mood_buffs.push(mentorship.master_entity);
+        }
+    }
+
+    let mood_buff = 0.5; // From spec: MOOD_BUFF: f32 = 0.5;
+
+    // We do a two-pass approach to avoid mutable aliasing issues in queries
+    // Pass 1: Add buffs for apprentices
+    for (_, mut needs, mentorship_opt) in query.iter_mut() {
+        if mentorship_opt.is_some() {
+            needs.leisure += mood_buff;
+        }
+    }
+
+    // Pass 2: Add buffs for masters
+    for (entity, mut needs, _) in query.iter_mut() {
+        if mood_buffs.contains(&entity) {
+            needs.leisure += mood_buff;
+        }
+    }
 }
