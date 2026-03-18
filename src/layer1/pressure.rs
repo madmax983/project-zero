@@ -84,11 +84,16 @@ impl PressureGrid {
                     .get(&(x as i32, y as i32))
                     .is_some_and(|&trans| trans <= f32::EPSILON)
                 {
-                    new_values[y * self.width + x] = 0.0;
+                    if let Some(idx) = y.checked_mul(self.width).and_then(|i| i.checked_add(x)) {
+                        new_values[idx] = 0.0;
+                    }
                     continue;
                 }
 
-                let idx = y * self.width + x;
+                let idx = y.checked_mul(self.width).and_then(|i| i.checked_add(x)).unwrap_or(usize::MAX);
+                if idx >= self.values.len() {
+                    continue;
+                }
                 let current_val = self.values[idx];
 
                 let mut sum = current_val;

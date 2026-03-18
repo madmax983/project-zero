@@ -19,3 +19,7 @@
 **2025-05-30 - [Grid Index Arithmetic Integer Overflow]**
 **Threat:** [Integer overflow in grid index calculations (y * width + x) within `HumMap`, `LightMap`, and `SeismicGrid` allowing DoS via application panics.]
 **Defense:** [Switched to safe arithmetic (`checked_mul` and `checked_add`) for coordinate indexing in `get`, `set`, and `add_stress` calculations.]
+
+**2025-06-05 - [Grid Index Arithmetic Integer Overflow Phase 3]**
+**Threat:** [Integer overflow in grid index calculations (`y * width + x`) within `ErosionGrid`, `WaterGrid`, `FertilityGrid`, `TemperatureGrid`, `AtmosphereGrid`, `PressureGrid`, and `Science` anomaly logic allowing DoS via application panics if grid coordinates exceed bounds.]
+**Defense:** [Switched to safe arithmetic (`y.checked_mul(width).and_then(|i| i.checked_add(x))`) across affected modules to handle arithmetic without panicking.]

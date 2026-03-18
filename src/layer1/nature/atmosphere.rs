@@ -317,11 +317,16 @@ impl AtmosphereGrid {
                     .get(&(x as i32, y as i32))
                     .is_some_and(|&trans| trans <= f32::EPSILON)
                 {
-                    self.scratch[y * self.width + x] = 0.0;
+                    if let Some(idx) = y.checked_mul(self.width).and_then(|i| i.checked_add(x)) {
+                        self.scratch[idx] = 0.0;
+                    }
                     continue;
                 }
 
-                let idx = y * self.width + x;
+                let idx = y.checked_mul(self.width).and_then(|i| i.checked_add(x)).unwrap_or(usize::MAX);
+                if idx >= self.values.len() {
+                    continue;
+                }
                 let mut sum = self.values[idx];
                 let mut total_weight = 1.0;
 
