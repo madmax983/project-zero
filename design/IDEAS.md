@@ -10366,3 +10366,51 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Acknowledging and repairing past sins (crippling current infrastructure) vs. suppressing the faction and repeating the cycle of violence.
 
 ---
+
+## The Sub-Surface Flora [SPECCED]
+
+**Layer:** 1
+
+**Fantasy:** Underground vegetation that feeds on tectonic energy, providing a new layer of agricultural possibilities but increasing earthquake risks.
+
+**Mechanic:** Pops can discover and farm "Tectonic Roots" deep underground. These plants grow faster when tectonic stress is high. Harvesting them reduces local tectonic stress slightly, but over-farming triggers minor tremors.
+
+**Emergence:** You solve a food crisis by relying on Tectonic Roots, but the constant farming creates a localized fault line under your main food storage, eventually swallowing it whole.
+
+**Tension:** High-yield food source vs. localized seismic instability.
+
+## The Atmospheric Siphon [SPECCED]
+
+**Layer:** 1 -> 2
+
+**Fantasy:** Stealing the atmosphere from the planet to fuel orbital stations or sell to passing ships.
+
+**Mechanic:** Massive "Siphon Towers" extract atmospheric gases and condense them into high-value trade goods. However, this thins the local atmosphere, increasing radiation exposure and lowering the planet's overall temperature over time.
+
+**Emergence:** You become rich exporting condensed atmosphere, but your surface colony is forced to live in pressurized domes because the air outside has become unbreathable and freezing.
+
+**Tension:** Massive economic gain vs. slowly making the planet uninhabitable for surface life.
+
+## The Memory Plague [SPECCED]
+
+**Layer:** 1
+
+**Fantasy:** A viral infection that doesn't kill you, but makes you forget your skills and relationships.
+
+**Mechanic:** A rare pathogen spreads through the colony. Infected Pops slowly lose skill levels and relationship ties. If untreated, they revert to "Blank Slates" - requiring complete retraining and causing massive Morale drops for their former friends.
+
+**Emergence:** Your legendary chief engineer catches the Memory Plague and forgets how to maintain the fusion reactor, leading to a critical meltdown while the colony tries to retrain a novice.
+
+**Tension:** Quarantine and lost productivity vs. losing the accumulated knowledge of your best specialists.
+
+## The Orbital Scavengers [SPECCED]
+
+**Layer:** 2 -> 1
+
+**Fantasy:** Flocks of small, automated drones that comb through orbital debris, occasionally dropping valuable salvage onto the planet.
+
+**Mechanic:** You deploy "Scavenger Swarms" into orbit. They slowly reduce the risk of Orbital Debris Avalanches and periodically drop "Salvage Pods" onto Layer 1. The drops are inaccurate and can damage buildings if they land poorly.
+
+**Emergence:** You rely on Scavenger Swarms for rare metals, but a poorly aimed Salvage Pod crashes directly into your main medical bay during a plague outbreak.
+
+**Tension:** Passive income and orbital safety vs. the risk of unguided orbital bombardment.
