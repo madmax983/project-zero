@@ -1,3 +1,11 @@
+### INT-468: Escape Velocity Economics Integration
+- **Date:** 2026-03-27
+- **Systems connected:** `PlanetaryTraits` (Layer 1 Quirks) -> `PlanetaryGravity` (Layer 2 Escape Velocity)
+- **Glue added:**
+    - `escape_velocity_traits_bridge_system` in `src/layer2/integration.rs` to map Layer 1 High/Low Gravity traits to Layer 2 gravity coefficients.
+    - Registered bridge in `src/simulation.rs` to run before `process_launch_system`.
+- **Tests:** Added `test_escape_velocity_traits_bridge` in `src/layer2/integration.rs` and `test_integration_escape_velocity_traits` in `tests/integration/escape_velocity_traits.rs`.
+
 ### INT-452: Movement -> Commuter Tax (Toll)
 - **Date:** 2026-03-15
 - **Systems connected:** `movement_system` (Execution) -> `transit_toll_system` (Infrastructure/Transit)
