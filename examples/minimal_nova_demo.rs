@@ -8,6 +8,8 @@
 #[cfg(feature = "nova")]
 mod demo {
     use bevy_ecs::prelude::*;
+    use comfy_table::presets::UTF8_FULL;
+    use comfy_table::{Cell, Color as TableColor, Table};
     use crossterm::style::{Color, Stylize};
     use scale::layer1::chronicle::{Chronicle, EventImportance};
     use scale::layer1::oral_tradition::{collect_chronicles_system, OralTradition};
@@ -77,36 +79,31 @@ mod demo {
         );
 
         // 4. Inspect the result
-        println!(
-            "\n{}",
-            "╭── Updated Oral Tradition ─────────────────────╮".with(Color::Cyan)
-        );
+        println!("\n{}", "Updated Oral Tradition".with(Color::Cyan).bold());
         let tradition = world.resource::<OralTradition>();
+
+        let mut table = Table::new();
+        table
+            .load_preset(UTF8_FULL)
+            .set_header(vec!["Genre", "Origin Tick", "Mutations", "Story Text"]);
+
         for story in &tradition.stories {
             let genre_str = format!("{:?}", story.genre);
-            let genre_styled = match genre_str.as_str() {
-                "Heroic" => genre_str.with(Color::Yellow).bold(),
-                "Tragedy" => genre_str.with(Color::Red).bold(),
-                "Cautionary" => genre_str.with(Color::Magenta).bold(),
-                _ => genre_str.with(Color::DarkGrey).bold(),
+            let genre_color = match genre_str.as_str() {
+                "Heroic" => TableColor::Yellow,
+                "Tragedy" => TableColor::Red,
+                "Cautionary" => TableColor::Magenta,
+                _ => TableColor::DarkGrey,
             };
 
-            println!(
-                "│ • [{}] {}",
-                genre_styled,
-                story.text.clone().with(Color::White)
-            );
-            println!(
-                "│   Origin Tick: {} | Mutations: {}",
-                story.origin_tick.to_string().with(Color::Cyan),
-                story.mutations.to_string().with(Color::Cyan)
-            );
-            println!("│");
+            table.add_row(vec![
+                Cell::new(&genre_str).fg(genre_color),
+                Cell::new(&story.origin_tick.to_string()).fg(TableColor::Cyan),
+                Cell::new(&story.mutations.to_string()).fg(TableColor::Cyan),
+                Cell::new(&story.text).fg(TableColor::White),
+            ]);
         }
-        println!(
-            "{}",
-            "╰───────────────────────────────────────────────╯".with(Color::Cyan)
-        );
+        println!("{table}");
     }
 }
 

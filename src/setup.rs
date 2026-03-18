@@ -136,6 +136,7 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     world.insert_resource(AmbientLight::default());
     world.insert_resource(crate::layer1::day_night::DayNightCycle::default());
     world.insert_resource(crate::layer1::PlanetaryTraits::default());
+    world.insert_resource(crate::layer2::trade::escape_velocity::PlanetaryGravity::default());
     world.insert_resource(crate::layer1::weather::WeatherState::default());
     world.insert_resource(crate::layer1::terraforming::PlanetaryAtmosphere::default());
     world.insert_resource(crate::layer1::solar::SolarCycleState::default());
