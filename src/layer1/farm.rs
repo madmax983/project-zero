@@ -315,7 +315,7 @@ pub fn consume_food_system(
             FaunaType::SpaceRat | FaunaType::Wolf => {
                 available_items.push(ItemType::Meat);
             }
-            FaunaType::Mascot => {}
+            FaunaType::Mascot | FaunaType::Lithovore => {}
         }
     }
 

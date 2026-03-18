@@ -111,6 +111,81 @@ pub fn pasture_confinement_system(world: &mut World) {
 }
 
 /// System for resource production (Milk/Wool).
+#[derive(Component)]
+pub struct Lithovore;
+
+#[derive(Component)]
+pub struct Feral;
+
+#[derive(Component)]
+pub struct Hunger {
+    pub value: f32,
+}
+
+pub fn simulate_lithovore_metabolism(
+    mut commands: Commands,
+    mut query: Query<(Entity, &mut Hunger, Option<&Tame>, &mut Fauna), With<Lithovore>>,
+) {
+    for (entity, mut hunger, tame, mut fauna) in query.iter_mut() {
+        hunger.value += 5.0;
+
+        if hunger.value >= 100.0 && tame.is_some() {
+            commands.entity(entity).remove::<Tame>().insert(Feral);
+            fauna.state = FaunaState::Attack;
+        }
+    }
+}
+
+pub fn lithovore_eating_system(
+    mut query_tame: Query<(&GridPosition, &mut Hunger), (With<Lithovore>, With<Tame>, Without<Feral>)>,
+    mut query_feral: Query<(&GridPosition, &mut Hunger), (With<Lithovore>, With<Feral>, Without<Tame>)>,
+    mut terrain_grid: ResMut<crate::layer1::nature::terrain::TerrainGrid>,
+    mut commands: Commands,
+    mut buildings: Query<(Entity, &GridPosition, &mut crate::layer1::structure::Structure), With<crate::layer1::building::Building>>,
+) {
+    for (pos, mut hunger) in query_tame.iter_mut() {
+        // look for adjacent rock
+        'outer: for dy in -1_i32..=1_i32 {
+            for dx in -1_i32..=1_i32 {
+                if dx == 0 && dy == 0 { continue; }
+                let nx = pos.x + dx;
+                let ny = pos.y + dy;
+                if nx >= 0 && ny >= 0 && terrain_grid.get(nx as usize, ny as usize) == Some(crate::layer1::nature::terrain::TerrainType::Rock) {
+                    terrain_grid.set(nx as usize, ny as usize, crate::layer1::nature::terrain::TerrainType::Dirt);
+                    hunger.value -= 50.0;
+                    if hunger.value < 0.0 { hunger.value = 0.0; }
+                    commands.spawn((
+                        crate::layer1::resources::ResourceItem {
+                            resource_type: crate::layer1::resources::ResourceType::Blocks,
+                            amount: 1.0,
+                        },
+                        GridPosition { x: nx, y: ny },
+                    ));
+                    break 'outer;
+                }
+            }
+        }
+    }
+
+    for (pos, mut hunger) in query_feral.iter_mut() {
+        'outer2: for dy in -1_i32..=1_i32 {
+            for dx in -1_i32..=1_i32 {
+                if dx == 0 && dy == 0 { continue; }
+                let nx = pos.x + dx;
+                let ny = pos.y + dy;
+                for (_ent, b_pos, mut structure) in buildings.iter_mut() {
+                    if b_pos.x == nx && b_pos.y == ny {
+                        structure.current_hp -= 20.0;
+                        hunger.value -= 20.0;
+                        if hunger.value < 0.0 { hunger.value = 0.0; }
+                        break 'outer2;
+                    }
+                }
+            }
+        }
+    }
+}
+
 pub fn husbandry_production_system(world: &mut World) {
     let mut produced = Vec::new();
 
@@ -136,7 +211,7 @@ pub fn husbandry_production_system(world: &mut World) {
             } else {
                 match fauna.fauna_type {
                     FaunaType::SpaceRat => Some(ResourceType::Food), // Rat Milk
-                    FaunaType::Wolf | FaunaType::Mascot => None,
+                    FaunaType::Wolf | FaunaType::Mascot | FaunaType::Lithovore => None,
                 }
             };
 
@@ -366,5 +441,97 @@ mod tests {
             .iter(&world)
             .count();
         assert!(items > 0, "Should produce resource");
+    }
+}
+
+#[cfg(test)]
+mod lithovore_tests {
+    use super::*;
+    use crate::layer1::fauna::{Fauna, FaunaState, FaunaType};
+    use crate::layer1::map::GridPosition;
+    use crate::layer1::nature::terrain::{TerrainGrid, TerrainType};
+    use crate::layer1::structure::Structure;
+    use crate::layer1::building::{Building, BuildingType};
+    use bevy::prelude::*;
+
+    #[test]
+    fn test_starving_lithovore_goes_feral() {
+        let mut app = App::new();
+        app.world_mut().insert_resource(crate::layer1::nature::terrain::generate_terrain(10, 10));
+
+        let lithovore = app.world_mut().spawn((
+            Lithovore,
+            Hunger { value: 95.0 },
+            Tame::default(),
+            Fauna {
+                fauna_type: FaunaType::Lithovore,
+                state: FaunaState::Wander,
+                ..Default::default()
+            }
+        )).id();
+
+        app.add_systems(Update, simulate_lithovore_metabolism);
+        app.update();
+
+        assert!(app.world().entity(lithovore).contains::<Feral>(), "Starving lithovore should become Feral");
+        assert!(!app.world().entity(lithovore).contains::<Tame>(), "Starving lithovore should lose Tame");
+        let fauna = app.world().get::<Fauna>(lithovore).unwrap();
+        assert_eq!(fauna.state, FaunaState::Attack, "Feral lithovore should become hostile");
+    }
+
+    #[test]
+    fn test_lithovore_eats_rock_and_produces_stone_block() {
+        let mut app = App::new();
+        app.world_mut().insert_resource(crate::layer1::nature::terrain::generate_terrain(10, 10));
+
+        let mut terrain = app.world_mut().resource_mut::<TerrainGrid>();
+        terrain.set(1, 1, TerrainType::Rock);
+
+        let lithovore = app.world_mut().spawn((
+            Lithovore,
+            Tame::default(),
+            Hunger { value: 50.0 },
+            GridPosition { x: 0, y: 1 },
+        )).id();
+
+        app.add_systems(Update, lithovore_eating_system);
+        app.update();
+
+        let terrain = app.world().resource::<TerrainGrid>();
+        assert_eq!(terrain.get(1, 1), Some(TerrainType::Dirt), "Lithovore should have eaten the rock");
+
+        let items = app.world_mut().query::<&crate::layer1::resources::ResourceItem>().iter(app.world()).count();
+        assert_eq!(items, 1, "Lithovore should produce a block");
+
+        let hunger = app.world().get::<Hunger>(lithovore).unwrap();
+        assert!(hunger.value < 50.0, "Hunger should decrease after eating");
+    }
+
+    #[test]
+    fn test_feral_lithovore_eats_buildings() {
+        let mut app = App::new();
+        app.world_mut().insert_resource(crate::layer1::nature::terrain::generate_terrain(10, 10));
+
+        let building = app.world_mut().spawn((
+            Building { building_type: BuildingType::Wall },
+            GridPosition { x: 1, y: 1 },
+            Structure { current_hp: 100.0, max_hp: 100.0, ..Default::default() },
+        )).id();
+
+        let lithovore = app.world_mut().spawn((
+            Lithovore,
+            Feral,
+            Hunger { value: 100.0 },
+            GridPosition { x: 0, y: 1 },
+        )).id();
+
+        app.add_systems(Update, lithovore_eating_system);
+        app.update();
+
+        let structure = app.world().get::<Structure>(building).unwrap();
+        assert!(structure.current_hp < 100.0, "Building should take damage from feral lithovore");
+
+        let hunger = app.world().get::<Hunger>(lithovore).unwrap();
+        assert!(hunger.value < 100.0, "Hunger should decrease after eating building");
     }
 }

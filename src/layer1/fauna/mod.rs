@@ -23,6 +23,8 @@ pub enum FaunaType {
     Wolf,
     /// A space rat.
     SpaceRat,
+    /// A rock-eating subterranean creature.
+    Lithovore,
     /// A friendly colony mascot.
     Mascot,
 }

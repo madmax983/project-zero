@@ -989,6 +989,7 @@ pub const fn get_fauna_char(fauna: FaunaType) -> &'static str {
         FaunaType::Wolf => "w",
         FaunaType::SpaceRat => "r",
         FaunaType::Mascot => "M",
+        FaunaType::Lithovore => "L",
     }
 }
 
@@ -999,6 +1000,7 @@ pub const fn get_fauna_color(fauna: FaunaType) -> Color {
         FaunaType::Wolf => Color::Red,
         FaunaType::SpaceRat => Color::Rgb(105, 105, 105), // DimGray
         FaunaType::Mascot => Color::Yellow,
+        FaunaType::Lithovore => Color::DarkGray,
     }
 }
 

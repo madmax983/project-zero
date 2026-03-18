@@ -254,3 +254,4 @@
 - [x] `486` Debt-Prison Colonies — `specs/486-debt-prison-colonies.md` — completed 2026-03-02
 - [x] `468` Escape Velocity Economics — `specs/468-escape-velocity-economics.md` — completed 2026-03-05
 - [x] `INT-468` Integration: Planetary Traits -> Escape Velocity Gravity — completed 2026-03-27
+- [x] `499` Lithovore Husbandry — `specs/499-lithovore-husbandry.md` — completed 2026-03-18
