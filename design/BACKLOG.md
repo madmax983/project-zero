@@ -238,3 +238,7 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `508` The Atmospheric Siphon — `specs/508-the-atmospheric-siphon.md`
 - [ ] `509` The Memory Plague — `specs/509-the-memory-plague.md`
 - [ ] `510` The Orbital Scavengers — `specs/510-the-orbital-scavengers.md`
+- [ ] `511` Expeditionary Corps — `specs/511-expeditionary-corps.md`
+- [ ] `512` Xeno-Botany — `specs/512-xeno-botany.md`
+- [ ] `513` The Ansible Network — `specs/513-the-ansible-network.md`
+- [ ] `514` Planetary Defense Grid — `specs/514-planetary-defense-grid.md`
