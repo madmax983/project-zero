@@ -44,7 +44,6 @@ fn test_sanctuary_evaluated_by_ai() {
             },
             StressTracker {
                 accumulated_stress: 20.0, // < 40
-                ..Default::default()
             },
             PopAction::default(),
         ))
@@ -67,7 +66,6 @@ fn test_sanctuary_evaluated_by_ai() {
             },
             StressTracker {
                 accumulated_stress: 100.0, // >= 40
-                ..Default::default()
             },
             scale::layer1::pop::PopName("Tester".to_string()),
             PopAction {
