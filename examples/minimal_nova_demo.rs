@@ -83,9 +83,12 @@ mod demo {
         let tradition = world.resource::<OralTradition>();
 
         let mut table = Table::new();
-        table
-            .load_preset(UTF8_FULL)
-            .set_header(vec!["Genre", "Origin Tick", "Mutations", "Story Text"]);
+        table.load_preset(UTF8_FULL).set_header(vec![
+            "Genre",
+            "Origin Tick",
+            "Mutations",
+            "Story Text",
+        ]);
 
         for story in &tradition.stories {
             let genre_str = format!("{:?}", story.genre);

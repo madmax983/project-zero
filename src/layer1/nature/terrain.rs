@@ -20,6 +20,12 @@ pub enum TerrainType {
     Shrub,
     /// Young tree, will grow into a full tree.
     Sapling,
+    /// Extremely hard deep rock from the lower crust.
+    DeepRock,
+    /// Molten magma rock causing heat damage.
+    MagmaRock,
+    /// Toxic fungal growth in the deep caverns.
+    SporeBloom,
 }
 
 impl TerrainType {
@@ -43,6 +49,9 @@ impl TerrainType {
             Self::Path => "Path",
             Self::Shrub => "Shrub",
             Self::Sapling => "Sapling",
+            Self::DeepRock => "Deep Rock",
+            Self::MagmaRock => "Magma Rock",
+            Self::SporeBloom => "Spore Bloom",
         }
     }
 
@@ -75,7 +84,7 @@ impl TerrainType {
     /// ```
     #[must_use]
     pub const fn is_walkable(self) -> bool {
-        !matches!(self, Self::Rock | Self::Water)
+        !matches!(self, Self::Rock | Self::Water | Self::DeepRock)
     }
 
     /// Returns the thermal retention (0.0 to 1.0) of the terrain (Spec 198).
@@ -85,9 +94,15 @@ impl TerrainType {
     #[must_use]
     pub const fn heat_retention(self) -> f32 {
         match self {
-            Self::Rock => 0.5,
+            Self::Rock | Self::DeepRock | Self::MagmaRock => 0.5,
             Self::Water => 0.2,
-            Self::Grass | Self::Dirt | Self::Path | Self::Tree | Self::Shrub | Self::Sapling => 0.1,
+            Self::Grass
+            | Self::Dirt
+            | Self::Path
+            | Self::Tree
+            | Self::Shrub
+            | Self::Sapling
+            | Self::SporeBloom => 0.1,
         }
     }
 }
@@ -211,11 +226,35 @@ pub fn generate_terrain(width: usize, height: usize) -> TerrainGrid {
         );
     }
 
-    TerrainGrid {
+    let mut grid = TerrainGrid {
         width,
         height,
         tiles,
+    };
+
+    // Deep Crust Geomes Generation (Spec 515)
+    let mut geome_manager = crate::layer1::geomes::GeomeManager::new();
+    for _ in 0..3 {
+        let cx = rng.gen_range(0..width as i32);
+        let cy = rng.gen_range(0..height as i32);
+        let w = rng.gen_range(3..10);
+        let h = rng.gen_range(3..10);
+
+        let geome_type = if rng.gen_bool(0.5) {
+            crate::layer1::geomes::GeomeType::MagmaRiver
+        } else {
+            crate::layer1::geomes::GeomeType::SporeCavern
+        };
+
+        geome_manager.spawn_geome(
+            geome_type,
+            crate::layer1::geomes::ZLevel(-4),
+            crate::layer1::geomes::Rect::new(cx, cy, cx + w, cy + h),
+        );
     }
+    geome_manager.apply_to_grid(&mut grid);
+
+    grid
 }
 
 #[allow(
@@ -283,6 +322,9 @@ mod tests {
                     | TerrainType::Rock
                     | TerrainType::Water
                     | TerrainType::Tree
+                    | TerrainType::DeepRock
+                    | TerrainType::MagmaRock
+                    | TerrainType::SporeBloom
             )
         });
         assert!(all_valid, "All tiles must be valid terrain types");

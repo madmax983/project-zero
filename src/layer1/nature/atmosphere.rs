@@ -323,7 +323,10 @@ impl AtmosphereGrid {
                     continue;
                 }
 
-                let idx = y.checked_mul(self.width).and_then(|i| i.checked_add(x)).unwrap_or(usize::MAX);
+                let idx = y
+                    .checked_mul(self.width)
+                    .and_then(|i| i.checked_add(x))
+                    .unwrap_or(usize::MAX);
                 if idx >= self.values.len() {
                     continue;
                 }

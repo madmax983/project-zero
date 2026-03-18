@@ -803,6 +803,9 @@ fn print_map(world: &mut World, center_x: i32, center_y: i32) {
                 TerrainType::Path => "=".white(),
                 TerrainType::Shrub => "\"".green().dim(),
                 TerrainType::Sapling => "t".green().dim(),
+                TerrainType::DeepRock => "▓".white().dim(),
+                TerrainType::MagmaRock => "≈".red(),
+                TerrainType::SporeBloom => "♣".magenta(),
             };
             print!("{s}");
         }
@@ -1104,6 +1107,9 @@ fn scan_terrain(world: &mut World, center_x: i32, center_y: i32, radius: i32) {
                 TerrainType::Path => "Path",
                 TerrainType::Shrub => "Shrub",
                 TerrainType::Sapling => "Sapling",
+                TerrainType::DeepRock => "Deep Rock",
+                TerrainType::MagmaRock => "Magma Rock",
+                TerrainType::SporeBloom => "Spore Bloom",
             };
 
             let walkable = tile.is_walkable();
@@ -1178,6 +1184,9 @@ const fn get_terrain_color_headless(t: TerrainType) -> comfy_table::Color {
         TerrainType::Water => CColor::Blue,
         TerrainType::Tree | TerrainType::Sapling | TerrainType::Shrub => CColor::DarkGreen,
         TerrainType::Path => CColor::DarkGrey,
+        TerrainType::DeepRock => CColor::DarkGrey,
+        TerrainType::MagmaRock => CColor::Red,
+        TerrainType::SporeBloom => CColor::Magenta,
     }
 }
 
@@ -1217,6 +1226,9 @@ fn get_tile_info(world: &mut World, x: i32, y: i32) {
         TerrainType::Path => "Path",
         TerrainType::Shrub => "Shrub",
         TerrainType::Sapling => "Sapling",
+        TerrainType::DeepRock => "Deep Rock",
+        TerrainType::MagmaRock => "Magma Rock",
+        TerrainType::SporeBloom => "Spore Bloom",
     };
 
     let walkable = tile.is_walkable();
