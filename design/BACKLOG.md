@@ -252,3 +252,7 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `522` Generation Ship Arrival — `specs/522-generation-ship-arrival.md`
 - [ ] `523` Emergent Faiths — `specs/523-emergent-faiths.md`
 - [ ] `524` Floating Colonies — `specs/524-floating-colonies.md`
+- [ ] `525` The Generational Shipyard — `specs/525-the-generational-shipyard.md`
+- [ ] `526` Somatic Resonance — `specs/526-somatic-resonance.md`
+- [ ] `527` The Graveyard of Ambition — `specs/527-the-graveyard-of-ambition.md`
+- [ ] `528` The Debt of the Ancients — `specs/528-the-debt-of-the-ancients.md`
