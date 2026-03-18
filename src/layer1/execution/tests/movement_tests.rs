@@ -16,7 +16,6 @@ use crate::layer1::traits::{Trait, Traits};
 use crate::layer1::utility_types::{ActionType, PopAction, StartPlan, UtilityWeights};
 use bevy_ecs::prelude::*;
 use bevy_ecs::system::RunSystemOnce;
-use std::collections::HashSet;
 
 #[test]
 fn test_process_start_plan_creates_movement_target() {
@@ -284,7 +283,7 @@ fn test_movement_system_fast_walker() {
                 current: 1.0,
                 accumulator: 0.0,
             },
-            Traits(HashSet::from([Trait::FastWalker])),
+            Traits(1 << (Trait::FastWalker as u8)),
         ))
         .id();
 

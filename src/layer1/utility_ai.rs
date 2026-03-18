@@ -246,7 +246,7 @@ impl<'a> PopDecider<'a> {
         let is_noble = data
             .traits
             .as_ref()
-            .is_some_and(|t| t.0.contains(&Trait::Noble));
+            .is_some_and(|t| t.has(Trait::Noble));
 
         Self {
             evaluator: CandidateEvaluator::new(evaluate_idle(&data.needs)),
@@ -409,7 +409,7 @@ impl<'a> PopDecider<'a> {
             .data
             .traits
             .as_ref()
-            .is_some_and(|t| t.0.contains(&Trait::Feral));
+            .is_some_and(|t| t.has(Trait::Feral));
 
         self.evaluator.evaluate_and_consider(
             evaluate_simple_action(pop_pos, &weights, &self.buffer.refining, 0.5),

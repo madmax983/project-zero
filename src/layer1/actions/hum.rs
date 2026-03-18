@@ -13,7 +13,7 @@ pub(crate) fn evaluate_listen_to_hum(
     if !data
         .traits
         .as_ref()
-        .is_some_and(|t| t.0.contains(&Trait::Sensitive))
+        .is_some_and(|t| t.has(Trait::Sensitive))
     {
         return (ActionType::ListenToTheHum, 0.0, None);
     }

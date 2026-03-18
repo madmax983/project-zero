@@ -835,7 +835,7 @@ mod tests {
 
     #[test]
     fn test_consume_food_rations_immunity() {
-        use std::collections::HashSet;
+
         let mut world = World::new();
         world.insert_resource(ColonyResources {
             rations: 10.0,
@@ -853,9 +853,7 @@ mod tests {
                     ..Default::default()
                 },
                 Morale::default(),
-                crate::layer1::traits::Traits(HashSet::from([
-                    crate::layer1::traits::Trait::Cannibal,
-                ])),
+                crate::layer1::traits::Traits(1 << (crate::layer1::traits::Trait::Cannibal as u8)),
             ))
             .id();
 

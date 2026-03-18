@@ -3,10 +3,10 @@
 use crate::layer1::day_night::TimeOfDay;
 use bevy_ecs::prelude::*;
 use rand::Rng;
-use std::collections::HashSet;
 
 /// Trait enum defining possible personality quirks.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+#[repr(u8)]
 pub enum Trait {
     /// +20% Work Speed.
     HardWorker,
@@ -144,24 +144,43 @@ impl Trait {
 }
 
 /// Component storing a set of traits for a pop.
-#[derive(Component, Debug, Clone, Default)]
-pub struct Traits(pub HashSet<Trait>);
+#[derive(Component, Debug, Clone, Copy, Default)]
+pub struct Traits(pub u64);
 
 impl Traits {
     /// Checks if the pop has the given trait.
     #[must_use]
     pub fn has(&self, t: Trait) -> bool {
-        self.0.contains(&t)
+        (self.0 & (1 << (t as u8))) != 0
     }
 
     /// Adds a trait to the set.
     pub fn add(&mut self, t: Trait) {
-        self.0.insert(t);
+        self.0 |= 1 << (t as u8);
+    }
+
+    /// Removes a trait from the set.
+    pub fn remove(&mut self, t: Trait) {
+        self.0 &= !(1 << (t as u8));
+    }
+
+    /// Iterator over the traits.
+    pub fn iter(&self) -> impl Iterator<Item = Trait> {
+        let mask = self.0;
+        // There are exactly 27 traits, from 0 to 26
+        (0..27).filter_map(move |i| {
+            if (mask & (1 << i)) != 0 {
+                // Safe transmute since Trait is #[repr(u8)] and values map 0..27 exactly
+                Some(unsafe { std::mem::transmute::<u8, Trait>(i as u8) })
+            } else {
+                None
+            }
+        })
     }
 
     /// Generates a random set of traits.
     pub fn random<R: Rng>(rng: &mut R) -> Self {
-        let mut set = HashSet::new();
+        let mut traits = Traits::default();
         // Simple logic: 50% chance to get 1 trait, 20% for 2.
         let count = if rng.gen_bool(0.2) {
             2
@@ -200,57 +219,61 @@ impl Traits {
             Trait::Bureaucrat,
         ];
 
-        while set.len() < count {
+        let mut added = 0;
+        while added < count {
             let t = pool[rng.gen_range(0..pool.len())];
 
             // Check conflicts
-            if t == Trait::HardWorker && set.contains(&Trait::Lazy) {
+            if t == Trait::HardWorker && traits.has(Trait::Lazy) {
                 continue;
             }
-            if t == Trait::Lazy && set.contains(&Trait::HardWorker) {
+            if t == Trait::Lazy && traits.has(Trait::HardWorker) {
                 continue;
             }
-            if t == Trait::Glutton && set.contains(&Trait::Ascetic) {
+            if t == Trait::Glutton && traits.has(Trait::Ascetic) {
                 continue;
             }
-            if t == Trait::Ascetic && set.contains(&Trait::Glutton) {
+            if t == Trait::Ascetic && traits.has(Trait::Glutton) {
                 continue;
             }
-            if t == Trait::NightOwl && set.contains(&Trait::EarlyBird) {
+            if t == Trait::NightOwl && traits.has(Trait::EarlyBird) {
                 continue;
             }
-            if t == Trait::EarlyBird && set.contains(&Trait::NightOwl) {
+            if t == Trait::EarlyBird && traits.has(Trait::NightOwl) {
                 continue;
             }
-            if t == Trait::NativeBorn && set.contains(&Trait::WeakImmunity) {
+            if t == Trait::NativeBorn && traits.has(Trait::WeakImmunity) {
                 continue;
             }
-            if t == Trait::WeakImmunity && set.contains(&Trait::NativeBorn) {
+            if t == Trait::WeakImmunity && traits.has(Trait::NativeBorn) {
                 continue;
             }
-            if t == Trait::Optimist && set.contains(&Trait::Anxious) {
+            if t == Trait::Optimist && traits.has(Trait::Anxious) {
                 continue;
             }
-            if t == Trait::Anxious && set.contains(&Trait::Optimist) {
+            if t == Trait::Anxious && traits.has(Trait::Optimist) {
                 continue;
             }
-            if t == Trait::Curious && set.contains(&Trait::Traditionalist) {
+            if t == Trait::Curious && traits.has(Trait::Traditionalist) {
                 continue;
             }
-            if t == Trait::Traditionalist && set.contains(&Trait::Curious) {
+            if t == Trait::Traditionalist && traits.has(Trait::Curious) {
                 continue;
             }
-            if t == Trait::Spiteful && set.contains(&Trait::Compassionate) {
+            if t == Trait::Spiteful && traits.has(Trait::Compassionate) {
                 continue;
             }
-            if t == Trait::Compassionate && set.contains(&Trait::Spiteful) {
+            if t == Trait::Compassionate && traits.has(Trait::Spiteful) {
                 continue;
             }
 
-            set.insert(t);
+            if !traits.has(t) {
+                traits.add(t);
+                added += 1;
+            }
         }
 
-        Self(set)
+        traits
     }
 }
 
@@ -261,7 +284,7 @@ use crate::layer1::utility_types::AssignmentType;
 pub fn get_job_efficiency_modifier(traits: &Traits, job: AssignmentType) -> f32 {
     let mut modifier = 1.0;
 
-    if traits.0.contains(&Trait::GreenThumb) {
+    if traits.has(Trait::GreenThumb) {
         if job == AssignmentType::FarmWorker {
             modifier += 0.2;
         } else {
@@ -269,7 +292,7 @@ pub fn get_job_efficiency_modifier(traits: &Traits, job: AssignmentType) -> f32 
         }
     }
 
-    if traits.0.contains(&Trait::SilverTongue) {
+    if traits.has(Trait::SilverTongue) {
         if job == AssignmentType::Administrator {
             modifier += 0.2;
         } else {
@@ -277,17 +300,17 @@ pub fn get_job_efficiency_modifier(traits: &Traits, job: AssignmentType) -> f32 
         }
     }
 
-    if traits.0.contains(&Trait::MoleEyes) {
+    if traits.has(Trait::MoleEyes) {
         // No bonus assigned yet, apply penalty to everything
         modifier -= 0.2;
     }
 
-    if traits.0.contains(&Trait::Hunchback) {
+    if traits.has(Trait::Hunchback) {
         // No bonus assigned yet, apply penalty to everything
         modifier -= 0.2;
     }
 
-    if traits.0.contains(&Trait::StaticSkin) {
+    if traits.has(Trait::StaticSkin) {
         // No bonus assigned yet, apply penalty to everything
         modifier -= 0.2;
     }
@@ -299,10 +322,10 @@ pub fn get_job_efficiency_modifier(traits: &Traits, job: AssignmentType) -> f32 
 #[must_use]
 pub fn get_trait_work_speed_modifier(traits: &Traits) -> f32 {
     let mut modifier = 1.0;
-    if traits.0.contains(&Trait::HardWorker) {
+    if traits.has(Trait::HardWorker) {
         modifier += 0.2;
     }
-    if traits.0.contains(&Trait::Lazy) {
+    if traits.has(Trait::Lazy) {
         modifier -= 0.2;
     }
     modifier
@@ -312,10 +335,10 @@ pub fn get_trait_work_speed_modifier(traits: &Traits) -> f32 {
 #[must_use]
 pub fn get_trait_hunger_decay_modifier(traits: &Traits) -> f32 {
     let mut modifier = 1.0;
-    if traits.0.contains(&Trait::Glutton) {
+    if traits.has(Trait::Glutton) {
         modifier += 0.2;
     }
-    if traits.0.contains(&Trait::Ascetic) {
+    if traits.has(Trait::Ascetic) {
         modifier -= 0.2;
     }
     modifier
@@ -325,10 +348,10 @@ pub fn get_trait_hunger_decay_modifier(traits: &Traits) -> f32 {
 #[must_use]
 pub fn get_trait_leisure_decay_modifier(traits: &Traits) -> f32 {
     let mut modifier = 1.0;
-    if traits.0.contains(&Trait::Soulless) {
+    if traits.has(Trait::Soulless) {
         modifier -= 0.5;
     }
-    if traits.0.contains(&Trait::Noble) {
+    if traits.has(Trait::Noble) {
         modifier += 0.5;
     }
     modifier
@@ -338,10 +361,10 @@ pub fn get_trait_leisure_decay_modifier(traits: &Traits) -> f32 {
 #[must_use]
 pub fn get_trait_move_speed_modifier(traits: &Traits) -> f32 {
     let mut modifier = 1.0;
-    if traits.0.contains(&Trait::FastWalker) {
+    if traits.has(Trait::FastWalker) {
         modifier += 0.1;
     }
-    if traits.0.contains(&Trait::Feral) {
+    if traits.has(Trait::Feral) {
         modifier += 0.2;
     }
     modifier
@@ -351,14 +374,14 @@ pub fn get_trait_move_speed_modifier(traits: &Traits) -> f32 {
 #[must_use]
 pub fn get_trait_mood_modifier(traits: &Traits, time_of_day: TimeOfDay) -> f32 {
     let mut modifier = 0.0;
-    if traits.0.contains(&Trait::NightOwl) {
+    if traits.has(Trait::NightOwl) {
         match time_of_day {
             TimeOfDay::Night => modifier += 0.1,
             TimeOfDay::Day => modifier -= 0.05,
             TimeOfDay::Dawn | TimeOfDay::Dusk => {}
         }
     }
-    if traits.0.contains(&Trait::EarlyBird) {
+    if traits.has(Trait::EarlyBird) {
         match time_of_day {
             TimeOfDay::Dawn | TimeOfDay::Day => modifier += 0.05,
             TimeOfDay::Night => modifier -= 0.1,
@@ -372,18 +395,17 @@ pub fn get_trait_mood_modifier(traits: &Traits, time_of_day: TimeOfDay) -> f32 {
 mod tests {
     use super::*;
     use crate::layer1::day_night::TimeOfDay;
-    use std::collections::HashSet;
 
     use crate::layer1::utility_types::AssignmentType;
 
     #[test]
     fn test_job_efficiency_modifiers() {
-        let green_thumb = Traits(HashSet::from([Trait::GreenThumb]));
-        let silver_tongue = Traits(HashSet::from([Trait::SilverTongue]));
-        let mole_eyes = Traits(HashSet::from([Trait::MoleEyes]));
-        let hunchback = Traits(HashSet::from([Trait::Hunchback]));
-        let static_skin = Traits(HashSet::from([Trait::StaticSkin]));
-        let normal = Traits(HashSet::new());
+        let green_thumb = Traits(1 << (Trait::GreenThumb as u8));
+        let silver_tongue = Traits(1 << (Trait::SilverTongue as u8));
+        let mole_eyes = Traits(1 << (Trait::MoleEyes as u8));
+        let hunchback = Traits(1 << (Trait::Hunchback as u8));
+        let static_skin = Traits(1 << (Trait::StaticSkin as u8));
+        let normal = Traits::default();
 
         // Normal has no modifiers
         assert!(
@@ -418,9 +440,9 @@ mod tests {
 
     #[test]
     fn test_work_speed_modifiers() {
-        let hard_worker = Traits(HashSet::from([Trait::HardWorker]));
-        let lazy = Traits(HashSet::from([Trait::Lazy]));
-        let normal = Traits(HashSet::new());
+        let hard_worker = Traits(1 << (Trait::HardWorker as u8));
+        let lazy = Traits(1 << (Trait::Lazy as u8));
+        let normal = Traits::default();
 
         assert!(
             get_trait_work_speed_modifier(&hard_worker) > 1.0,
@@ -438,9 +460,9 @@ mod tests {
 
     #[test]
     fn test_hunger_decay_modifiers() {
-        let glutton = Traits(HashSet::from([Trait::Glutton]));
-        let ascetic = Traits(HashSet::from([Trait::Ascetic]));
-        let normal = Traits(HashSet::new());
+        let glutton = Traits(1 << (Trait::Glutton as u8));
+        let ascetic = Traits(1 << (Trait::Ascetic as u8));
+        let normal = Traits::default();
 
         assert!(
             get_trait_hunger_decay_modifier(&glutton) > 1.0,
@@ -458,9 +480,9 @@ mod tests {
 
     #[test]
     fn test_leisure_decay_modifiers() {
-        let soulless = Traits(HashSet::from([Trait::Soulless]));
-        let noble = Traits(HashSet::from([Trait::Noble]));
-        let normal = Traits(HashSet::new());
+        let soulless = Traits(1 << (Trait::Soulless as u8));
+        let noble = Traits(1 << (Trait::Noble as u8));
+        let normal = Traits::default();
 
         assert!(
             get_trait_leisure_decay_modifier(&soulless) < 1.0,
@@ -478,9 +500,9 @@ mod tests {
 
     #[test]
     fn test_feral_speed_modifier() {
-        let feral = Traits(HashSet::from([Trait::Feral]));
-        let fast = Traits(HashSet::from([Trait::FastWalker]));
-        let both = Traits(HashSet::from([Trait::Feral, Trait::FastWalker]));
+        let feral = Traits(1 << (Trait::Feral as u8));
+        let fast = Traits(1 << (Trait::FastWalker as u8));
+        let both = Traits((1 << (Trait::Feral as u8)) | (1 << (Trait::FastWalker as u8)));
 
         assert!(
             (get_trait_move_speed_modifier(&feral) - 1.2).abs() < 0.0001,
@@ -498,7 +520,7 @@ mod tests {
 
     #[test]
     fn test_night_owl_mood_modifier() {
-        let night_owl = Traits(HashSet::from([Trait::NightOwl]));
+        let night_owl = Traits(1 << (Trait::NightOwl as u8));
 
         let mood_night = get_trait_mood_modifier(&night_owl, TimeOfDay::Night);
         assert!(mood_night > 0.0, "NightOwl should be happier at night");
@@ -512,22 +534,22 @@ mod tests {
         let mut rng = rand::thread_rng();
         for _ in 0..100 {
             let traits = Traits::random(&mut rng);
-            let has_lazy = traits.0.contains(&Trait::Lazy);
-            let has_hard_worker = traits.0.contains(&Trait::HardWorker);
+            let has_lazy = traits.has(Trait::Lazy);
+            let has_hard_worker = traits.has(Trait::HardWorker);
             assert!(
                 !(has_lazy && has_hard_worker),
                 "Should not be both Lazy and HardWorker"
             );
 
-            let has_glutton = traits.0.contains(&Trait::Glutton);
-            let has_ascetic = traits.0.contains(&Trait::Ascetic);
+            let has_glutton = traits.has(Trait::Glutton);
+            let has_ascetic = traits.has(Trait::Ascetic);
             assert!(
                 !(has_glutton && has_ascetic),
                 "Should not be both Glutton and Ascetic"
             );
 
-            let has_night_owl = traits.0.contains(&Trait::NightOwl);
-            let has_early_bird = traits.0.contains(&Trait::EarlyBird);
+            let has_night_owl = traits.has(Trait::NightOwl);
+            let has_early_bird = traits.has(Trait::EarlyBird);
             assert!(
                 !(has_night_owl && has_early_bird),
                 "Should not be both NightOwl and EarlyBird"

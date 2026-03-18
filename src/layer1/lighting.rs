@@ -176,9 +176,9 @@ pub fn apply_lighting_penalties_system(
             let mut stress_factor = 1.0;
 
             if let Some(t) = traits {
-                if t.0.contains(&Trait::Anxious) {
+                if t.has(Trait::Anxious) {
                     stress_factor = 2.0; // Panic!
-                } else if t.0.contains(&Trait::NightOwl) {
+                } else if t.has(Trait::NightOwl) {
                     stress_factor = 0.1; // Minimal stress
                 }
             }

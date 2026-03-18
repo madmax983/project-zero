@@ -20,7 +20,7 @@ mod tests {
         let pop = world
             .spawn((
                 Pop,
-                Traits(std::collections::HashSet::from([Trait::EmpathicLink])),
+                Traits(1 << (Trait::EmpathicLink as u8)),
                 StressTracker {
                     accumulated_stress: 10.0,
                 },

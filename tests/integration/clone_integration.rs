@@ -138,7 +138,7 @@ fn test_soulless_trait_reduces_leisure_decay() {
         .spawn((
             Pop,
             Needs::default(),
-            Traits(std::collections::HashSet::from([Trait::Soulless])),
+            Traits(1 << (Trait::Soulless as u8)),
         ))
         .id();
 

@@ -5,7 +5,6 @@ use scale::layer1::pop::Pop;
 use scale::layer1::social::grievances::{post_grievance_system, BulletinBoard};
 use scale::layer1::stress::StressTracker;
 use scale::layer1::traits::{Trait, Traits};
-use std::collections::HashSet;
 
 #[test]
 fn test_sensitive_pop_posts_hum_grievance() {
@@ -17,8 +16,8 @@ fn test_sensitive_pop_posts_hum_grievance() {
         .id();
 
     // Spawn Sensitive Pop with High Stress
-    let mut traits = HashSet::new();
-    traits.insert(Trait::Sensitive);
+    let mut traits = Traits::default();
+    traits.add(Trait::Sensitive);
 
     let _pop = world
         .spawn((
@@ -30,7 +29,7 @@ fn test_sensitive_pop_posts_hum_grievance() {
                 hygiene: 0.1,
             },
             GridPosition { x: 0, y: 0 },
-            Traits(traits),
+            traits,
             StressTracker {
                 accumulated_stress: 80.0, // High stress (> 50.0)
             },

@@ -522,9 +522,9 @@ mod tests {
         let normal = world.spawn((Pop, Traits::default())).id();
 
         // Outsider Pop (Should be preferred)
-        let mut traits = std::collections::HashSet::new();
-        traits.insert(Trait::Outsider);
-        let outsider = world.spawn((Pop, Traits(traits))).id();
+        let mut traits = Traits::default();
+        traits.add(Trait::Outsider);
+        let outsider = world.spawn((Pop, traits)).id();
 
         world.run_system_once(identify_scapegoat_system).unwrap();
 

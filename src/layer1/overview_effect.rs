@@ -25,13 +25,13 @@ pub fn overview_effect_system(
         if let Ok((mut skills, traits, mut morale)) = query.get_mut(ev.pop) {
             skills.add_xp(SkillType::Crafting, 10.0);
 
-            if traits.0.contains(&Trait::Anxious) || hostile_orbit {
+            if traits.has(Trait::Anxious) || hostile_orbit {
                 morale.modifiers.push(MoodModifier {
                     label: "Existential Dread".to_string(),
                     value: -0.2,
                     duration: 1000,
                 });
-            } else if traits.0.contains(&Trait::Optimist) {
+            } else if traits.has(Trait::Optimist) {
                 morale.modifiers.push(MoodModifier {
                     label: "Inspired".to_string(),
                     value: 0.2,
@@ -65,7 +65,7 @@ mod tests {
             .spawn((
                 Pop,
                 Skills::default(),
-                Traits(std::collections::HashSet::new()),
+                Traits::default(),
                 Morale::default(),
             ))
             .id();
@@ -87,11 +87,11 @@ mod tests {
     fn test_existential_dread_trait_reaction() {
         let mut world = setup_app();
 
-        let mut traits = std::collections::HashSet::new();
-        traits.insert(Trait::Anxious);
+        let mut traits = Traits::default();
+        traits.add(Trait::Anxious);
 
         let pop_entity = world
-            .spawn((Pop, Skills::default(), Traits(traits), Morale::default()))
+            .spawn((Pop, Skills::default(), traits, Morale::default()))
             .id();
 
         world.send_event(ObserveEvent { pop: pop_entity });
@@ -122,7 +122,7 @@ mod tests {
             .spawn((
                 Pop,
                 Skills::default(),
-                Traits(std::collections::HashSet::new()),
+                Traits::default(),
                 Morale::default(),
             ))
             .id();

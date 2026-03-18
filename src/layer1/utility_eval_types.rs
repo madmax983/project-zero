@@ -77,7 +77,7 @@ impl PopEvalData {
             carrying_item: item.carrying_item.map(|c| c.0),
             mental_state: item.mental_state.copied(),
             drafted: item.drafted.copied(),
-            faction_member: item.faction_member.cloned(),
+            faction_member: item.faction_member.copied(),
             penal_labor: item.penal_labor.copied(),
             breakdown: item.breakdown.copied(),
             traits: item.traits.cloned(),

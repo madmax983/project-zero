@@ -32,7 +32,10 @@ pub fn process_bailout_acceptance_system(
         let mut rng = rand::thread_rng();
         for _ in 0..100 {
             let mut bundle = PopBundle::random(0, 0, &mut rng);
-            bundle.traits = Traits(vec![Trait::Volatile, Trait::Spiteful].into_iter().collect());
+            let mut traits = Traits::default();
+            traits.add(Trait::Volatile);
+            traits.add(Trait::Spiteful);
+            bundle.traits = traits;
             bundle.faction = FactionMember {
                 faction_id: Some(FactionId::Cartel),
             };
@@ -99,11 +102,11 @@ mod tests {
 
         for (_, traits) in query.iter(app.world()) {
             assert!(
-                traits.0.contains(&Trait::Volatile),
+                traits.has(Trait::Volatile),
                 "Criminals should have the Volatile trait"
             );
             assert!(
-                traits.0.contains(&Trait::Spiteful),
+                traits.has(Trait::Spiteful),
                 "Criminals should have the Spiteful trait"
             );
         }

@@ -169,7 +169,7 @@ mod tests {
     use crate::layer1::resources::ColonyResources;
     use crate::layer1::tech::{Tech, TechState};
     use crate::layer1::utility_ai::ActionType;
-    use std::collections::HashSet;
+
 
     #[test]
     fn test_check_for_eureka_emits_event() {
@@ -232,7 +232,7 @@ mod tests {
             ..Default::default()
         });
 
-        let traits = Traits(HashSet::from([Trait::Creative]));
+        let traits = Traits(1 << (Trait::Creative as u8));
 
         // Just ensure it doesn't crash
         check_for_eureka_world(&mut world, ActionType::Work, None, Some(traits));

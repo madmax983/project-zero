@@ -59,11 +59,11 @@ pub fn attune_engine_system(
         for (mut stress, traits_opt) in stress_query.iter_mut() {
             let mut penalty = SACRIFICE_STRESS_PENALTY;
             if let Some(traits) = traits_opt {
-                if traits.0.contains(&Trait::Cannibal) || traits.0.contains(&Trait::Outsider) {
+                if traits.has(Trait::Cannibal) || traits.has(Trait::Outsider) {
                     penalty *= 0.1; // Much less stress
                 }
-                if traits.0.contains(&Trait::EmpathicLink)
-                    || traits.0.contains(&Trait::Compassionate)
+                if traits.has(Trait::EmpathicLink)
+                    || traits.has(Trait::Compassionate)
                 {
                     penalty *= 1.5; // More stress
                 }

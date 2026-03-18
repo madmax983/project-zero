@@ -58,7 +58,7 @@ mod tests {
     use crate::layer1::pop::Pop;
     use crate::layer1::traits::{Trait, Traits};
     use bevy::prelude::*;
-    use std::collections::HashSet;
+
 
     fn setup_app() -> App {
         let mut app = App::new();
@@ -80,7 +80,7 @@ mod tests {
             .world_mut()
             .spawn((
                 Pop,
-                Traits(HashSet::from([Trait::Spiteful])),
+                Traits(1 << (Trait::Spiteful as u8)),
                 Inventory {
                     items: vec![InventoryItem {
                         item_type: ItemType::Tool,

@@ -70,7 +70,7 @@ mod tests {
         // Spawn Noble with 1.0 Morale
         world.spawn((
             Pop,
-            Traits(std::collections::HashSet::from([Trait::Noble])),
+            Traits(1 << (Trait::Noble as u8)),
             NobleScion { allowance: 100.0 },
             crate::layer1::morale::Morale {
                 value: 1.0,
@@ -99,7 +99,7 @@ mod tests {
         // Spawn Noble with 0.5 Morale
         world.spawn((
             Pop,
-            Traits(std::collections::HashSet::from([Trait::Noble])),
+            Traits(1 << (Trait::Noble as u8)),
             NobleScion { allowance: 100.0 },
             crate::layer1::morale::Morale {
                 value: 0.5,
@@ -128,7 +128,7 @@ mod tests {
         // Spawn Noble with 1.0 Morale
         world.spawn((
             Pop,
-            Traits(std::collections::HashSet::from([Trait::Noble])),
+            Traits(1 << (Trait::Noble as u8)),
             NobleScion { allowance: 100.0 },
             crate::layer1::morale::Morale {
                 value: 1.0,
