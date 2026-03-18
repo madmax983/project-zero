@@ -1714,7 +1714,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Deep Crust Geomes
+## Deep Crust Geomes [SPECCED]
 
 **Layer:** 1
 
