@@ -10470,3 +10470,59 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Emergence:** You put your legendary founding scientists in the vault to preserve their genius. 100 years later, you wake them up to solve an energy crisis, only to find their knowledge is hopelessly obsolete and the colony speaks a dialect they don't understand.
 
 **Tension:** Perfect preservation of talent vs. the inevitable march of progress rendering that talent obsolete.
+
+## The Silent Mutiny
+
+**Layer:** 2
+
+**Fantasy:** Your flagship is still flying your colors, but the crew isn't yours anymore.
+
+**Mechanic:** A ship operating too far from the core worlds with low crew morale doesn't immediately turn pirate. Instead, a "Silent Mutiny" occurs. The ship accepts your movement orders but secretly skims resources, fakes "sensor glitches" to avoid combat, and slowly changes its internal faction alignment until one day it just refuses to jump.
+
+**Emergence:** You send your best dreadnought to secure a distant border. It reports the sector is clear for five years. When you finally visit the sector, you find your dreadnought has built a thriving, independent smuggler base using your resources, all while sending you "All Clear" signals.
+
+**Tension:** Micro-managing fleet supply lines vs. trusting autonomous deep-space patrols.
+
+---
+
+## Architectural Sympathy
+
+**Layer:** 1
+
+**Fantasy:** The buildings remember the mood of the people who built them.
+
+**Mechanic:** When a building is constructed, it permanently records the average `Mood` of the builders. A building constructed by ecstatic workers gains a permanent "Joyful" aura, slightly boosting the mood of anyone who works or sleeps there. A building built by terrified, starving workers gains a "Despair" aura.
+
+**Emergence:** You force your colonists to build a massive hospital during a famine. The hospital is finished, but it radiates such profound despair that patients refuse to sleep in the beds, preferring to recover outside in the dirt.
+
+**Tension:** Rushing emergency construction with miserable workers vs. waiting for a happy workforce to build permanent, high-quality infrastructure.
+
+---
+
+## The Propaganda Monolith
+
+**Layer:** Cross-layer (1 -> 3)
+
+**Fantasy:** Erasing the sins of the empire by building a statue so big it overwrites reality.
+
+**Mechanic:** A massive Layer 1 megastructure that consumes astronomical amounts of power. When active, it slowly deletes negative "Memories" (like famines, wars, massacres) from all Pops in the system and replaces them with a generic "Golden Age" memory. However, its massive broadcast signature angers neighboring Layer 3 empires who see it as aggressive cultural warfare.
+
+**Emergence:** You brutally crush a worker rebellion and build a Monolith to make them forget it happened. The workers go back to the mines humming imperial anthems. But a neighboring democratic empire is so horrified by the mass brainwashing that they declare a crusade to destroy the Monolith, forcing you into a war you didn't want.
+
+**Tension:** Absolute, instantaneous domestic compliance vs. extreme diplomatic hostility from the rest of the galaxy.
+
+---
+
+## The Empathic Biome Link
+
+**Layer:** 1
+
+**Fantasy:** To a true empath, cutting down a 500-year-old tree sounds like a scream.
+
+**Mechanic:** Certain Pops are born with the "Biome Empath" trait. They gain massive mood boosts from being near untouched nature (high Beauty/Purity tiles). However, if any natural tile (Tree, Rock, Geode) on the map is destroyed or mined, they instantly suffer a severe Stress spike, regardless of where they are on the map.
+
+**Emergence:** You need wood to survive the winter. You send loggers into the ancient forest. Your best scientist, a Biome Empath working in a sealed lab on the other side of the colony, suddenly collapses in psychic agony, halting critical research on the heaters you need to survive.
+
+**Tension:** The physical necessity of resource extraction vs. the psychological well-being of your most sensitive, often highly skilled colonists.
+
+---
