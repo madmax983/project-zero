@@ -686,6 +686,56 @@ classDiagram
 - [ADR 038: Encapsulate Secret Societies](./adr/038-encapsulate-secret-societies.md)
 - [ADR 039: Integrate Gut Biome Mechanics](./adr/039-integrate-gut-biome.md)
 - [ADR 040: Consolidate Geology Module](./adr/040-consolidate-geology-module.md)
+- [ADR 041: Encapsulate Tech Submodules](./adr/041-encapsulate-tech-submodules.md)
+- [ADR 042: Refactor Building God Module](./adr/042-refactor-building-module.md)
+
+## Tech Module Encapsulation
+
+The internal mechanisms of the `tech` module (like `ghost_code`, `machine_awakening`, and `infinite_archive`) were encapsulated by restricting visibility to `pub(crate)` within their submodules. This prevents leaky abstractions and enforces strict module boundaries.
+
+```mermaid
+classDiagram
+    namespace Layer1 {
+        class Systems
+        class Economy
+    }
+
+    namespace Tech {
+        class TechState
+        class GhostCode
+        class MachineAwakening
+        class InfiniteArchive
+    }
+
+    Layer1 --> TechState : interacts via public API
+    TechState ..> GhostCode : uses internal logic (pub(crate))
+    TechState ..> MachineAwakening : uses internal logic (pub(crate))
+    TechState ..> InfiniteArchive : uses internal logic (pub(crate))
+```
+
+## Building God Module Refactor
+
+The massive `building.rs` monolith containing the `spawn_building` god function was extracted into a cleaner facade structure. The configuration logic was moved into the highly cohesive `configuration.rs` submodule.
+
+```mermaid
+classDiagram
+    namespace Layer1 {
+        class Systems
+    }
+
+    namespace BuildingFacade {
+        class ModFacade
+        class Configuration
+        class Blueprint
+        class Components
+    }
+
+    Systems --> ModFacade : queries/spawns via
+    ModFacade --> Configuration : delegates setup to
+    ModFacade --> Blueprint : delegates setup to
+    ModFacade --> Components : provides component types
+    Configuration ..> Components : configures
+```
 
 ## Secret Societies Encapsulation
 
