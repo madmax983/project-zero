@@ -10414,3 +10414,59 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Emergence:** You rely on Scavenger Swarms for rare metals, but a poorly aimed Salvage Pod crashes directly into your main medical bay during a plague outbreak.
 
 **Tension:** Passive income and orbital safety vs. the risk of unguided orbital bombardment.
+
+---
+
+## The Flesh-Weaver's Loom
+
+**Layer:** 1
+
+**Fantasy:** Repurposing the dead into beautiful, horrifying tapestries of biological armor.
+
+**Mechanic:** A specialized building that converts corpses (alien or pop) into "Bio-Weave," a highly resistant but grotesque armor for militia and buildings.
+
+**Emergence:** You clad your entire defensive line in the remains of the last pirate raid. Your defenders are invincible, but their morale plummets because their walls are literally made of their former enemies' faces.
+
+**Tension:** High physical defense vs. extreme psychological horror and morale penalties.
+
+---
+
+## Sub-Surface Geodes
+
+**Layer:** 1
+
+**Fantasy:** Finding a massive, hollow crystal deep underground and moving into it.
+
+**Mechanic:** Rare, massive hollow geode structures spawn deep underground. The inside is perfectly insulated, pre-lit, and beautiful, but the crystal walls are fragile and impossible to replace once broken.
+
+**Emergence:** You build your elite science team's quarters inside a geode. During a minor tremor, a hauler drops a heavy crate, shattering a wall section and exposing the pristine interior to toxic deep-cave spores.
+
+**Tension:** Unmatched natural beauty and insulation vs. extreme fragility of the habitat.
+
+---
+
+## The Diplomatic Contagion
+
+**Layer:** Cross-layer
+
+**Fantasy:** Spreading a biological weapon through a handshake.
+
+**Mechanic:** You can intentionally infect a high-status Pop with a delayed-onset, highly contagious disease and send them as an "Envoy" to a rival Layer 3 empire.
+
+**Emergence:** Your Envoy successfully negotiates a trade deal while secretly coughing on the rival Emperor. Six months later, the rival empire's capital is a quarantined ghost town, and you sweep in to "help."
+
+**Tension:** Bloodless, asymmetrical warfare vs. the risk of the disease mutating and returning on a trade ship.
+
+---
+
+## Time-Dilation Vaults
+
+**Layer:** 1
+
+**Fantasy:** Putting your best people in a box where time stands still until they are needed.
+
+**Mechanic:** Extremely expensive endgame vaults that slow time inside to a crawl. Pops placed inside age 1 day for every year outside, consuming almost no resources.
+
+**Emergence:** You put your legendary founding scientists in the vault to preserve their genius. 100 years later, you wake them up to solve an energy crisis, only to find their knowledge is hopelessly obsolete and the colony speaks a dialect they don't understand.
+
+**Tension:** Perfect preservation of talent vs. the inevitable march of progress rendering that talent obsolete.
