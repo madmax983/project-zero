@@ -552,6 +552,8 @@ mod drone_tests;
 #[cfg(test)]
 mod institutional_memory_tests;
 pub mod memetic;
+pub mod empathic;
+pub use empathic::*;
 pub mod seismic;
 pub use seismic::*;
 /// Orbital Crossfire system (Spec 206).

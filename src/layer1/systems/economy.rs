@@ -1,5 +1,6 @@
 use super::Layer1SystemSet;
 use crate::layer1::inspector::spawn_inspector_system;
+use crate::layer1::empathic::update_empathic_grid_system;
 use crate::layer1::social::old_guard::{
     apply_founder_benefits_system, apply_mood_modifiers_system,
 };
@@ -15,6 +16,7 @@ pub fn register(schedule: &mut Schedule) {
             update_water_system,
             update_weather_system,
             crate::layer1::fertility::update_fertility_system,
+            update_empathic_grid_system,
             produce_food_system.after(crate::layer1::fertility::update_fertility_system),
             crate::layer1::husbandry::husbandry_production_system.after(produce_food_system),
             (

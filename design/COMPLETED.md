@@ -255,3 +255,4 @@
 - [x] `468` Escape Velocity Economics — `specs/468-escape-velocity-economics.md` — completed 2026-03-05
 - [x] `INT-468` Integration: Planetary Traits -> Escape Velocity Gravity — completed 2026-03-27
 - [x] `339` Mentorship — `specs/339-mentorship.md` — completed 2026-03-01
+- [x] `500` The Empathic Grid — `specs/500-the-empathic-grid.md` — completed 2026-03-18
