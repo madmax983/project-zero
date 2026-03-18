@@ -1,9 +1,11 @@
+use bevy_app::App;
 use bevy_ecs::prelude::*;
 use scale::layer1::quirks::{PlanetaryTrait, PlanetaryTraits};
-use scale::layer2::integration::escape_velocity_traits_bridge_system;
-use scale::layer2::trade::escape_velocity::{process_launch_system, CargoItem, LaunchShipEvent, PlanetaryGravity, TradeManifest};
 use scale::layer1::resources::ColonyResources;
-use bevy_app::App;
+use scale::layer2::integration::escape_velocity_traits_bridge_system;
+use scale::layer2::trade::escape_velocity::{
+    process_launch_system, CargoItem, LaunchShipEvent, PlanetaryGravity, TradeManifest,
+};
 
 #[test]
 fn test_integration_escape_velocity_traits() {
@@ -21,19 +23,22 @@ fn test_integration_escape_velocity_traits() {
     // Add Systems
     app.add_systems(
         bevy_app::Update,
-        (
-            escape_velocity_traits_bridge_system,
-            process_launch_system,
-        ).chain()
+        (escape_velocity_traits_bridge_system, process_launch_system).chain(),
     );
 
-    let manifest_entity = app.world_mut().spawn(TradeManifest {
-        items: vec![CargoItem { mass: 50.0, value: 500.0 }]
-    }).id();
+    let manifest_entity = app
+        .world_mut()
+        .spawn(TradeManifest {
+            items: vec![CargoItem {
+                mass: 50.0,
+                value: 500.0,
+            }],
+        })
+        .id();
 
-    app.world_mut().resource_mut::<Events<LaunchShipEvent>>().send(LaunchShipEvent {
-        manifest_entity,
-    });
+    app.world_mut()
+        .resource_mut::<Events<LaunchShipEvent>>()
+        .send(LaunchShipEvent { manifest_entity });
 
     app.update();
 
@@ -42,5 +47,8 @@ fn test_integration_escape_velocity_traits() {
     // Cost = 100 + (50 * 2.5 * 10) = 1350
     // 2000 - 1350 = 650.0
     assert_eq!(post_res.fuel, 650.0);
-    assert!(app.world().get_entity(manifest_entity).is_err(), "Entity should have despawned after launch");
+    assert!(
+        app.world().get_entity(manifest_entity).is_err(),
+        "Entity should have despawned after launch"
+    );
 }

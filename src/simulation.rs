@@ -225,6 +225,10 @@ pub fn run_simulation_tick(world: &mut World) {
         world.init_resource::<Events<crate::layer2::phantom::SpawnGhostFleetEvent>>();
     }
 
+    if !world.contains_resource::<Events<crate::layer1::nanite_fabrication::ContainmentBreachEvent>>() {
+        world.init_resource::<Events<crate::layer1::nanite_fabrication::ContainmentBreachEvent>>();
+    }
+
     // Initialize Infinite Archive Resource (Spec 248)
     if !world.contains_resource::<crate::layer1::tech::infinite_archive::Archive>() {
         world.init_resource::<crate::layer1::tech::infinite_archive::Archive>();
@@ -303,6 +307,7 @@ mod tests {
         world.init_resource::<Events<crate::layer3::events::debt_prison::AcceptBailoutEvent>>();
 
         world.init_resource::<Events<crate::layer2::phantom::SpawnGhostFleetEvent>>();
+        world.init_resource::<Events<crate::layer1::nanite_fabrication::ContainmentBreachEvent>>();
 
         let schedule = build_simulation_schedule();
         world.add_schedule(schedule);

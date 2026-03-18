@@ -105,7 +105,9 @@ mod tests {
         world.insert_resource(PlanetaryGravity::default());
         world.insert_resource(PlanetaryTraits(vec![PlanetaryTrait::HighGravity]));
 
-        world.run_system_once(escape_velocity_traits_bridge_system).unwrap();
+        world
+            .run_system_once(escape_velocity_traits_bridge_system)
+            .unwrap();
 
         assert_eq!(
             world.resource::<PlanetaryGravity>().g_force,
@@ -114,7 +116,9 @@ mod tests {
         );
 
         world.insert_resource(PlanetaryTraits(vec![PlanetaryTrait::LowGravity]));
-        world.run_system_once(escape_velocity_traits_bridge_system).unwrap();
+        world
+            .run_system_once(escape_velocity_traits_bridge_system)
+            .unwrap();
 
         assert_eq!(
             world.resource::<PlanetaryGravity>().g_force,
@@ -123,7 +127,9 @@ mod tests {
         );
 
         world.insert_resource(PlanetaryTraits(vec![PlanetaryTrait::DenseAtmosphere]));
-        world.run_system_once(escape_velocity_traits_bridge_system).unwrap();
+        world
+            .run_system_once(escape_velocity_traits_bridge_system)
+            .unwrap();
 
         assert_eq!(
             world.resource::<PlanetaryGravity>().g_force,
