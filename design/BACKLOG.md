@@ -256,3 +256,7 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `526` Somatic Resonance — `specs/526-somatic-resonance.md`
 - [ ] `527` The Graveyard of Ambition — `specs/527-the-graveyard-of-ambition.md`
 - [ ] `528` The Debt of the Ancients — `specs/528-the-debt-of-the-ancients.md`
+- [ ] `529` The Diplomatic Paradox — `specs/529-the-diplomatic-paradox.md`
+- [ ] `530` The Shadow Biosphere — `specs/530-the-shadow-biosphere.md`
+- [ ] `531` Digital Hauntings — `specs/531-digital-hauntings.md`
+- [ ] `532` The Galactic Relay Strike — `specs/532-the-galactic-relay-strike.md`

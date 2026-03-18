@@ -9108,7 +9108,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Diplomatic Paradox
+## The Diplomatic Paradox [SPECCED]
 
 **Layer:** 3
 
@@ -9122,7 +9122,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Shadow Biosphere
+## The Shadow Biosphere [SPECCED]
 
 **Layer:** 1
 
@@ -9136,7 +9136,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Digital Hauntings
+## Digital Hauntings [SPECCED]
 
 **Layer:** Cross-layer
 
@@ -9150,7 +9150,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Galactic Relay Strike
+## The Galactic Relay Strike [SPECCED]
 
 **Layer:** Cross-layer (1 -> 3)
 
