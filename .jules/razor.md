@@ -22,3 +22,8 @@
 **Bloat:** OOP-style `Manager` suffixes for ECS resources (`ElectionManager`, `SanctuaryManager`, `ShadowMarketManager`).
 **Cut:** Renamed to descriptive, data-oriented state names (`ElectionCycle`, `ActiveSanctuaries`, `ShadowMarketCooldown`) per Bevy/Razor Architecture Insight.
 **Saved:** Eliminated implicit OOP terminology overhead, improving clarity and adherence to Bevy ECS conventions.
+
+## [Reduction]
+**Bloat:** `ShipType` enum in `src/layer1/shipbreaking.rs` which was only used for test simplicity with 2 variants.
+**Cut:** Removed the `ShipType` enum, its usage from `SpawnCrashedShipEvent`, and assignments in tests.
+**Saved:** 7 lines of code and speculative test-only complexity.
