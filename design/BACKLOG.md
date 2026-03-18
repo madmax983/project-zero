@@ -2,7 +2,6 @@
 
 ## High Priority
 
-- [ ] `468` Escape Velocity Economics — `specs/468-escape-velocity-economics.md`
 - [ ] `469` The Galactic Council — `specs/469-galactic-council.md`
 
 

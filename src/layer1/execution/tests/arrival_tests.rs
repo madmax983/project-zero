@@ -52,7 +52,10 @@ fn test_arrival_assigns_to_farm() {
     );
 
     let job = world.get::<Job>(pop);
-    assert!(job.is_some(), "Working at farm assigns a Job via assign_pop");
+    assert!(
+        job.is_some(),
+        "Working at farm assigns a Job via assign_pop"
+    );
 }
 
 #[test]
