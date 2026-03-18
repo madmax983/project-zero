@@ -10471,7 +10471,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 **Tension:** Perfect preservation of talent vs. the inevitable march of progress rendering that talent obsolete.
 
-## The Silent Mutiny
+## The Silent Mutiny [SPECCED]
 
 **Layer:** 2
 
@@ -10485,7 +10485,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Architectural Sympathy
+## Architectural Sympathy [SPECCED]
 
 **Layer:** 1
 
@@ -10499,7 +10499,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Propaganda Monolith
+## The Propaganda Monolith [SPECCED]
 
 **Layer:** Cross-layer (1 -> 3)
 
@@ -10513,7 +10513,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Empathic Biome Link
+## The Empathic Biome Link [SPECCED]
 
 **Layer:** 1
 
