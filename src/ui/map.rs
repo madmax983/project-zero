@@ -664,6 +664,9 @@ pub const fn get_terrain_char(terrain: TerrainType) -> &'static str {
         TerrainType::Path => "░",
         TerrainType::Shrub => "\"",
         TerrainType::Sapling => "t",
+        TerrainType::DeepRock => "▓",
+        TerrainType::MagmaRock => "≈",
+        TerrainType::SporeBloom => "♣",
     }
 }
 
@@ -690,6 +693,9 @@ pub const fn get_terrain_color(terrain: TerrainType) -> Color {
         TerrainType::Path => Color::Rgb(180, 130, 70),
         TerrainType::Shrub => Color::Rgb(80, 180, 80),
         TerrainType::Sapling => Color::Rgb(100, 220, 100),
+        TerrainType::DeepRock => Color::Rgb(100, 100, 110),
+        TerrainType::MagmaRock => Color::Rgb(255, 60, 20),
+        TerrainType::SporeBloom => Color::Rgb(150, 60, 200),
     }
 }
 

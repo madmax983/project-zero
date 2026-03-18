@@ -40,7 +40,6 @@ pub struct SpawnCrashedShipEvent {
     pub location: crate::layer1::map::GridPosition,
 }
 
-
 /// Event representing a mining action.
 #[derive(Event, Debug, Clone)]
 pub struct MineEvent {

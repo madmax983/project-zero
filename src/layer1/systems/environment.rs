@@ -41,6 +41,14 @@ pub fn register(schedule: &mut Schedule) {
         )
             .in_set(Layer1SystemSet::Environment),
     );
+    schedule.add_systems(
+        (
+            crate::layer1::geomes::diffuse_geome_hazards_system,
+            crate::layer1::geomes::environmental_damage_system
+                .after(crate::layer1::geomes::diffuse_geome_hazards_system),
+        )
+            .in_set(Layer1SystemSet::Environment),
+    );
 
     schedule.add_systems(
         (crate::layer1::clutter::clutter_accumulation_system,).in_set(Layer1SystemSet::Environment),

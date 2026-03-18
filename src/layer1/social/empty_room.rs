@@ -56,15 +56,24 @@ pub fn update_sanctuary_system(
 
     for y in 0..zone_grid.height {
         for x in 0..zone_grid.width {
-            let idx = y.checked_mul(zone_grid.width).and_then(|i| i.checked_add(x)).unwrap_or(usize::MAX);
+            let idx = y
+                .checked_mul(zone_grid.width)
+                .and_then(|i| i.checked_add(x))
+                .unwrap_or(usize::MAX);
             if idx < visited.len() && !visited[idx] && zone_grid.grid[idx] == ZoneType::Sanctuary {
                 // Flood fill to find all tiles in this Sanctuary
                 let mut tiles = Vec::new();
                 let mut stack = vec![(x, y)];
 
                 while let Some((cx, cy)) = stack.pop() {
-                    let cidx = cy.checked_mul(zone_grid.width).and_then(|i| i.checked_add(cx)).unwrap_or(usize::MAX);
-                    if cidx >= visited.len() || visited[cidx] || zone_grid.grid[cidx] != ZoneType::Sanctuary {
+                    let cidx = cy
+                        .checked_mul(zone_grid.width)
+                        .and_then(|i| i.checked_add(cx))
+                        .unwrap_or(usize::MAX);
+                    if cidx >= visited.len()
+                        || visited[cidx]
+                        || zone_grid.grid[cidx] != ZoneType::Sanctuary
+                    {
                         continue;
                     }
                     visited[cidx] = true;

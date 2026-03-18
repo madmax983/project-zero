@@ -90,7 +90,10 @@ pub fn spawn_initial_anomalies(world: &mut World, count: usize) {
         // ⚡ Bolt Optimization: Scope the resource access locally to avoid cloning the whole grid just for one tile check.
         let is_walkable = {
             let grid = world.resource::<TerrainGrid>();
-            let idx = y.checked_mul(width).and_then(|i| i.checked_add(x)).unwrap_or(usize::MAX);
+            let idx = y
+                .checked_mul(width)
+                .and_then(|i| i.checked_add(x))
+                .unwrap_or(usize::MAX);
             idx < grid.tiles.len() && grid.tiles[idx].is_walkable()
         };
 

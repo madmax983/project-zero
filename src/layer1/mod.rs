@@ -68,6 +68,8 @@ pub mod edicts;
 pub mod execution;
 /// Farm building and food production.
 pub mod farm;
+/// Deep crust geomes system (Spec 515).
+pub mod geomes;
 /// Fire propagation and damage.
 /// Hauling logic.
 pub mod hauling;
@@ -82,6 +84,8 @@ pub mod health;
 pub mod hit_stop;
 /// Pop hobbies logic (Spec 137).
 pub mod hobby;
+pub use geomes::*;
+
 /// Housing and rest mechanics.
 pub mod housing;
 /// The Inspector system (Spec 091).
