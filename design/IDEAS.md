@@ -10527,7 +10527,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Generational Shipyard
+## The Generational Shipyard [SPECCED]
 
 **Layer:** Cross-layer
 
@@ -10541,7 +10541,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Somatic Resonance
+## Somatic Resonance [SPECCED]
 
 **Layer:** 1
 
@@ -10555,7 +10555,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Graveyard of Ambition
+## The Graveyard of Ambition [SPECCED]
 
 **Layer:** 2
 
@@ -10569,7 +10569,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Debt of the Ancients
+## The Debt of the Ancients [SPECCED]
 
 **Layer:** Cross-layer
 
