@@ -23,7 +23,6 @@ mod tests {
                 Traits(std::collections::HashSet::from([Trait::EmpathicLink])),
                 StressTracker {
                     accumulated_stress: 10.0,
-                    ..Default::default()
                 },
             ))
             .id();

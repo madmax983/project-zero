@@ -17,7 +17,6 @@ mod tests {
         world.insert_resource(SimulationTime {
             speed: crate::shared::time::SimSpeed::Normal,
             tick: 1000,
-            ..Default::default()
         });
         world.insert_resource(TemperatureGrid::new(20, 20, 20.0)); // Flat temp
 
@@ -26,7 +25,6 @@ mod tests {
             .spawn((
                 Item {
                     item_type: ItemType::LivingStone,
-                    ..Default::default()
                 },
                 LivingStone { last_move_tick: 0 },
                 GridPosition { x: 10, y: 10 },
@@ -37,7 +35,6 @@ mod tests {
             .spawn((
                 Item {
                     item_type: ItemType::LivingStone,
-                    ..Default::default()
                 },
                 LivingStone { last_move_tick: 0 },
                 GridPosition { x: 12, y: 10 },
@@ -67,7 +64,6 @@ mod tests {
         world.insert_resource(SimulationTime {
             speed: crate::shared::time::SimSpeed::Normal,
             tick: 1000,
-            ..Default::default()
         });
 
         // Setup heat source adjacent to the stone
@@ -79,7 +75,6 @@ mod tests {
             .spawn((
                 Item {
                     item_type: ItemType::LivingStone,
-                    ..Default::default()
                 },
                 LivingStone { last_move_tick: 0 },
                 GridPosition { x: 15, y: 15 },
@@ -111,7 +106,6 @@ mod tests {
             world.spawn((
                 Item {
                     item_type: ItemType::LivingStone,
-                    ..Default::default()
                 },
                 LivingStone { last_move_tick: 0 },
                 GridPosition { x: 5, y: 5 },

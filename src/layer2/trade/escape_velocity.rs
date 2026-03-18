@@ -1,5 +1,5 @@
-use bevy_ecs::prelude::*;
 use crate::layer1::resources::ColonyResources;
+use bevy_ecs::prelude::*;
 
 /// Resource tracking the gravity of the current planet.
 #[derive(Resource)]
@@ -75,14 +75,20 @@ mod tests {
 
         let manifest = TradeManifest {
             items: vec![
-                CargoItem { mass: 50.0, value: 500.0 }, // 50 tons of iron ore
+                CargoItem {
+                    mass: 50.0,
+                    value: 500.0,
+                }, // 50 tons of iron ore
             ],
         };
 
         let cost_normal = calculate_launch_cost(&gravity_normal, &manifest);
         let cost_high = calculate_launch_cost(&gravity_high, &manifest);
 
-        assert!(cost_high > cost_normal * 2.0, "High gravity should vastly increase launch costs");
+        assert!(
+            cost_high > cost_normal * 2.0,
+            "High gravity should vastly increase launch costs"
+        );
         assert_eq!(cost_normal, 600.0); // 100 + (50 * 1 * 10)
         assert_eq!(cost_high, 1350.0); // 100 + (50 * 2.5 * 10)
     }
@@ -92,11 +98,17 @@ mod tests {
         let gravity_high = PlanetaryGravity { g_force: 2.5 };
 
         let raw_ore = TradeManifest {
-            items: vec![CargoItem { mass: 100.0, value: 1000.0 }],
+            items: vec![CargoItem {
+                mass: 100.0,
+                value: 1000.0,
+            }],
         };
 
         let refined_chips = TradeManifest {
-            items: vec![CargoItem { mass: 5.0, value: 5000.0 }],
+            items: vec![CargoItem {
+                mass: 5.0,
+                value: 5000.0,
+            }],
         };
 
         let cost_ore = calculate_launch_cost(&gravity_high, &raw_ore);
@@ -105,8 +117,14 @@ mod tests {
         let profit_ore = raw_ore.items[0].value - cost_ore;
         let profit_chips = refined_chips.items[0].value - cost_chips;
 
-        assert!(profit_ore < 0.0, "Exporting heavy raw ore on High G should be unprofitable");
-        assert!(profit_chips > 0.0, "Exporting light refined tech on High G should be profitable");
+        assert!(
+            profit_ore < 0.0,
+            "Exporting heavy raw ore on High G should be unprofitable"
+        );
+        assert!(
+            profit_chips > 0.0,
+            "Exporting light refined tech on High G should be profitable"
+        );
     }
 
     #[test]
@@ -125,13 +143,21 @@ mod tests {
             ..Default::default()
         });
 
-        let entity = app.world_mut().spawn(TradeManifest {
-            items: vec![CargoItem { mass: 50.0, value: 500.0 }]
-        }).id();
+        let entity = app
+            .world_mut()
+            .spawn(TradeManifest {
+                items: vec![CargoItem {
+                    mass: 50.0,
+                    value: 500.0,
+                }],
+            })
+            .id();
 
-        app.world_mut().resource_mut::<Events<LaunchShipEvent>>().send(LaunchShipEvent {
-            manifest_entity: entity
-        });
+        app.world_mut()
+            .resource_mut::<Events<LaunchShipEvent>>()
+            .send(LaunchShipEvent {
+                manifest_entity: entity,
+            });
         app.add_systems(bevy_app::Update, process_launch_system);
         app.update();
 
@@ -153,13 +179,21 @@ mod tests {
             ..Default::default()
         });
 
-        let entity = app.world_mut().spawn(TradeManifest {
-            items: vec![CargoItem { mass: 50.0, value: 500.0 }]
-        }).id();
+        let entity = app
+            .world_mut()
+            .spawn(TradeManifest {
+                items: vec![CargoItem {
+                    mass: 50.0,
+                    value: 500.0,
+                }],
+            })
+            .id();
 
-        app.world_mut().resource_mut::<Events<LaunchShipEvent>>().send(LaunchShipEvent {
-            manifest_entity: entity
-        });
+        app.world_mut()
+            .resource_mut::<Events<LaunchShipEvent>>()
+            .send(LaunchShipEvent {
+                manifest_entity: entity,
+            });
         app.add_systems(bevy_app::Update, process_launch_system);
         app.update();
 
