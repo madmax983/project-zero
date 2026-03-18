@@ -10417,7 +10417,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Flesh-Weaver's Loom
+## The Flesh-Weaver's Loom [SPECCED]
 
 **Layer:** 1
 
@@ -10431,7 +10431,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Sub-Surface Geodes
+## Sub-Surface Geodes [SPECCED]
 
 **Layer:** 1
 
@@ -10445,7 +10445,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Diplomatic Contagion
+## The Diplomatic Contagion [SPECCED]
 
 **Layer:** Cross-layer
 
@@ -10459,7 +10459,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Time-Dilation Vaults
+## Time-Dilation Vaults [SPECCED]
 
 **Layer:** 1
 
