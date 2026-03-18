@@ -230,3 +230,7 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `500` The Empathic Grid — `specs/500-the-empathic-grid.md`
 - [ ] `501` Void-Tethered Fleets — `specs/501-void-tethered-fleets.md`
 - [ ] `502` Parasitic Sentience — `specs/502-parasitic-sentience.md`
+- [ ] `503` Bureaucratic Redlining — `specs/503-bureaucratic-redlining.md`
+- [ ] `504` Inherited Grudges — `specs/504-inherited-grudges.md`
+- [ ] `505` Tectonic Extraction — `specs/505-tectonic-extraction.md`
+- [ ] `506` The Organ Trade — `specs/506-the-organ-trade.md`

@@ -9947,7 +9947,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 ---
 
 
-## Tectonic Extraction
+## Tectonic Extraction [SPECCED]
 
 **Layer:** 2 -> 1
 
@@ -9975,7 +9975,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Organ Trade
+## The Organ Trade [SPECCED]
 
 **Layer:** Cross-layer (1 -> 3)
 
@@ -10003,7 +10003,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Bureaucratic Redlining
+## Bureaucratic Redlining [SPECCED]
 
 **Layer:** Cross-layer (1 -> 2)
 
@@ -10017,7 +10017,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Inherited Grudges
+## Inherited Grudges [SPECCED]
 
 **Layer:** 1
 
