@@ -47,10 +47,10 @@ pub fn biocompatibility_system(world: &mut World) {
             // Calculate effective bio
             let mut effective_bio = bio.value;
             if let Some(t) = traits {
-                if t.0.contains(&Trait::NativeBorn) {
+                if t.has(Trait::NativeBorn) {
                     effective_bio += 0.3;
                 }
-                if t.0.contains(&Trait::WeakImmunity) {
+                if t.has(Trait::WeakImmunity) {
                     effective_bio -= 0.2;
                 }
             }
@@ -82,7 +82,7 @@ mod tests {
     use crate::layer1::map::GridPosition;
     use crate::layer1::pop::Pop;
     use crate::layer1::traits::{Trait, Traits};
-    use std::collections::HashSet;
+
 
     #[test]
     fn test_biocompatibility_component_default() {
@@ -166,7 +166,7 @@ mod tests {
                     max: 100.0,
                 },
                 GridPosition { x: 0, y: 0 },
-                Traits(HashSet::from([Trait::NativeBorn])),
+                Traits(1 << (Trait::NativeBorn as u8)),
             ))
             .id();
 
@@ -194,7 +194,7 @@ mod tests {
                     max: 100.0,
                 },
                 GridPosition { x: 0, y: 0 },
-                Traits(HashSet::from([Trait::WeakImmunity])),
+                Traits(1 << (Trait::WeakImmunity as u8)),
             ))
             .id();
 

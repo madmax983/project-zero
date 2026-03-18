@@ -65,6 +65,7 @@ pub enum ChemicalType {
 
 /// An active chemical effect currently modifying a Pop.
 #[derive(Debug, Clone)]
+#[derive(Copy)]
 pub struct ActiveEffect {
     /// The chemical causing the effect.
     pub chemical: ChemicalType,
@@ -80,6 +81,7 @@ pub struct ActiveEffect {
 /// Addiction increases with use and decays very slowly (not implemented yet).
 /// Withdrawal triggers if the chemical is not consumed within the threshold.
 #[derive(Debug, Clone)]
+#[derive(Copy)]
 pub struct Addiction {
     /// The chemical the pop is addicted to.
     pub chemical: ChemicalType,

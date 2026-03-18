@@ -71,20 +71,20 @@ pub fn observer_reaction_system(
         let mut morale_add = 0.0;
 
         if let Some(traits) = traits_opt {
-            if traits.0.contains(&Trait::Lazy) {
+            if traits.has(Trait::Lazy) {
                 // Lazy pops panic-work when watched
                 speed_mult = 1.5;
                 stress_add = 0.5;
-            } else if traits.0.contains(&Trait::HardWorker) {
+            } else if traits.has(Trait::HardWorker) {
                 // Hard workers feel validated
                 stress_add = 0.0;
                 morale_add = 0.002;
             }
 
-            if traits.0.contains(&Trait::Anxious) {
+            if traits.has(Trait::Anxious) {
                 // Anxious pops panic
                 stress_add += 0.5;
-            } else if traits.0.contains(&Trait::Optimist) {
+            } else if traits.has(Trait::Optimist) {
                 // Optimists like attention
                 stress_add = 0.0;
                 morale_add += 0.002;
@@ -194,7 +194,7 @@ mod tests {
     #[test]
     fn test_lazy_pop_speed_reaction() {
         let mut world = World::new();
-        let traits = Traits(HashSet::from([Trait::Lazy]));
+        let traits = Traits(1 << (Trait::Lazy as u8));
         let pop = world
             .spawn((
                 Observed::default(),
@@ -220,7 +220,7 @@ mod tests {
     #[test]
     fn test_anxious_pop_stress_reaction() {
         let mut world = World::new();
-        let traits = Traits(HashSet::from([Trait::Anxious]));
+        let traits = Traits(1 << (Trait::Anxious as u8));
         let pop = world
             .spawn((
                 Observed::default(),
@@ -242,7 +242,7 @@ mod tests {
     #[test]
     fn test_optimist_pop_stress_relief() {
         let mut world = World::new();
-        let traits = Traits(HashSet::from([Trait::Optimist]));
+        let traits = Traits(1 << (Trait::Optimist as u8));
         let pop = world
             .spawn((
                 Observed::default(),

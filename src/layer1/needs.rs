@@ -370,10 +370,10 @@ mod tests {
     #[test]
     fn test_trait_hunger_decay() {
         use crate::layer1::traits::{Trait, Traits};
-        use std::collections::HashSet;
+
 
         let mut world = setup();
-        let glutton = Traits(HashSet::from([Trait::Glutton]));
+        let glutton = Traits(1 << (Trait::Glutton as u8));
 
         world.spawn((Pop, Needs::default(), glutton));
 

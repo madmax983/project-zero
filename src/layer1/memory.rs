@@ -350,7 +350,7 @@ mod tests {
     fn test_trait_mood_modifier() {
         use crate::layer1::day_night::TimeOfDay;
         use crate::layer1::traits::{Trait, Traits};
-        use std::collections::HashSet;
+
 
         let needs = Needs {
             hunger: 0.5,
@@ -358,7 +358,7 @@ mod tests {
             leisure: 0.5,
             hygiene: 0.5,
         };
-        let night_owl = Traits(HashSet::from([Trait::NightOwl]));
+        let night_owl = Traits(1 << (Trait::NightOwl as u8));
 
         // Night time -> +0.1
         let effective = calculate_effective_morale(

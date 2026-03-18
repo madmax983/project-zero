@@ -40,7 +40,11 @@ pub fn implant_memory_core_system(
             *skills = event.core_data.skills.clone();
 
             // Overwrite traits
-            traits.0 = event.core_data.traits.clone().into_iter().collect();
+            let mut new_traits = Traits::default();
+            for t in event.core_data.traits.clone() {
+                new_traits.add(t);
+            }
+            *traits = new_traits;
 
             // Apply massive "Identity Rejection" stress
             stress.accumulated_stress += 80.0;
@@ -63,7 +67,7 @@ pub fn harvest_memory_core_system(
                 let data_entity = commands
                     .spawn(MemoryCoreData {
                         skills: skills.clone(),
-                        traits: traits.0.iter().copied().collect(),
+                        traits: traits.iter().collect(),
                     })
                     .id();
 
@@ -92,7 +96,7 @@ mod tests {
     use crate::layer1::stress::StressTracker;
     use crate::layer1::traits::{Trait, Traits};
 
-    use std::collections::HashSet;
+
 
     fn setup_world() -> World {
         let mut world = World::new();
@@ -113,7 +117,7 @@ mod tests {
                 StressTracker {
                     accumulated_stress: 0.0,
                 },
-                Traits(HashSet::new()),
+                Traits::default(),
                 Memories::default(),
                 Inventory::default(),
             ))
@@ -141,7 +145,7 @@ mod tests {
         assert_eq!(skills.get_level(SkillType::Mining), 10); // Maxed out
 
         let traits = world.get::<Traits>(pop_id).unwrap();
-        assert!(traits.0.contains(&Trait::Volatile));
+        assert!(traits.has(Trait::Volatile));
 
         let stress = world.get::<StressTracker>(pop_id).unwrap();
         assert!(stress.accumulated_stress >= 80.0); // Severe "Identity Rejection" stress
@@ -160,7 +164,7 @@ mod tests {
                 Pop,
                 Dead,
                 dead_skills,
-                Traits(HashSet::from([Trait::Volatile])), // Use a real trait
+                Traits(1 << (Trait::Volatile as u8)), // Use a real trait
             ))
             .id();
 

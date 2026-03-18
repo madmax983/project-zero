@@ -37,7 +37,7 @@ pub fn wild_child_system(
         }
 
         // Check if Feral already (optimization: stop tracking if feral?)
-        if traits.0.contains(&Trait::Feral) {
+        if traits.has(Trait::Feral) {
             continue;
         }
 
@@ -54,7 +54,7 @@ pub fn wild_child_system(
 
         // Trigger Feral
         if exposure.current >= FERAL_THRESHOLD {
-            traits.0.insert(Trait::Feral);
+            traits.add(Trait::Feral);
         }
     }
 }
@@ -69,7 +69,7 @@ mod tests {
     use crate::layer1::zone::{ZoneGrid, ZoneType};
     use bevy_ecs::prelude::*;
     use bevy_ecs::system::RunSystemOnce;
-    use std::collections::HashSet;
+
 
     #[test]
     fn test_wild_exposure_component_init() {
@@ -97,7 +97,7 @@ mod tests {
                     stage: LifeStage::Child,
                 },
                 GridPosition { x: 5, y: 5 },
-                Traits(HashSet::new()),
+                Traits::default(),
             ))
             .id();
 
@@ -127,7 +127,7 @@ mod tests {
                     stage: LifeStage::Child,
                 },
                 GridPosition { x: 5, y: 5 },
-                Traits(HashSet::new()),
+                Traits::default(),
             ))
             .id();
 
@@ -157,7 +157,7 @@ mod tests {
                     stage: LifeStage::Child,
                 },
                 GridPosition { x: 5, y: 5 },
-                Traits(HashSet::new()),
+                Traits::default(),
             ))
             .id();
 
@@ -169,7 +169,7 @@ mod tests {
 
         let traits = world.get::<Traits>(child).unwrap();
         assert!(
-            traits.0.contains(&Trait::Feral),
+            traits.has(Trait::Feral),
             "Child should become Feral"
         );
     }
@@ -188,7 +188,7 @@ mod tests {
                     stage: LifeStage::Adult,
                 },
                 GridPosition { x: 5, y: 5 },
-                Traits(HashSet::new()), // Need Traits component for system query
+                Traits::default(), // Need Traits component for system query
             ))
             .id();
 

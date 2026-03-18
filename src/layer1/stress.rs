@@ -135,16 +135,16 @@ pub fn check_stress_breakdown_system(
 
 fn determine_breakdown_type(traits: Option<&Traits>) -> BreakdownType {
     if let Some(t) = traits {
-        if t.0.contains(&Trait::Pyromaniac) {
+        if t.has(Trait::Pyromaniac) {
             return BreakdownType::FireStarting;
         }
-        if t.0.contains(&Trait::Glutton) {
+        if t.has(Trait::Glutton) {
             return BreakdownType::BingeEating;
         }
-        if t.0.contains(&Trait::Anxious) {
+        if t.has(Trait::Anxious) {
             return BreakdownType::HideInRoom;
         }
-        if t.0.contains(&Trait::Lazy) || t.0.contains(&Trait::Ascetic) {
+        if t.has(Trait::Lazy) || t.has(Trait::Ascetic) {
             return BreakdownType::SadWander;
         }
     }
@@ -217,7 +217,7 @@ mod tests {
                     hygiene: 0.05,
                 }, // Morale = 0.05
                 StressTracker::default(),
-                Traits(std::collections::HashSet::new()),
+                Traits::default(),
             ))
             .id();
 
@@ -252,7 +252,7 @@ mod tests {
                 StressTracker {
                     accumulated_stress: 1000.0,
                 }, // Assume threshold is < 1000
-                Traits(std::collections::HashSet::new()),
+                Traits::default(),
             ))
             .id();
 
@@ -273,8 +273,8 @@ mod tests {
         let mut schedule = Schedule::default();
         schedule.add_systems(check_stress_breakdown_system);
 
-        let mut traits = std::collections::HashSet::new();
-        traits.insert(Trait::Pyromaniac);
+        let mut traits = Traits::default();
+        traits.add(Trait::Pyromaniac);
 
         let pop = world
             .spawn((
@@ -288,7 +288,7 @@ mod tests {
                 StressTracker {
                     accumulated_stress: 1000.0,
                 },
-                Traits(traits),
+                traits,
             ))
             .id();
 
@@ -316,7 +316,7 @@ mod tests {
                 StressTracker {
                     accumulated_stress: 1000.0,
                 },
-                Traits(std::collections::HashSet::new()), // No traits
+                Traits::default(), // No traits
             ))
             .id();
 
@@ -401,7 +401,7 @@ mod tests {
                     hygiene: 0.8,
                 }, // High Morale
                 StressTracker::default(),
-                Traits(std::collections::HashSet::new()),
+                Traits::default(),
                 ActiveAuras {
                     effects: vec![AuraEffect::StressModifier(2.0)],
                 },

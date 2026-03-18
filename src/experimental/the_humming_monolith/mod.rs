@@ -86,9 +86,9 @@ pub fn monolith_influence_system(
                 // Rare chance to alter traits
                 if rng.gen_bool(0.01) {
                     if rng.gen_bool(0.5) {
-                        traits.0.insert(Trait::VoidTouched);
+                        traits.add(Trait::VoidTouched);
                     } else {
-                        traits.0.insert(Trait::Synesthete);
+                        traits.add(Trait::Synesthete);
                     }
                 }
             }
@@ -150,7 +150,7 @@ mod tests {
                     current: 1.0,
                     ..Default::default()
                 },
-                Traits(HashSet::new()),
+                Traits::default(),
             ))
             .id();
 

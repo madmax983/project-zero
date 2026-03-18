@@ -96,13 +96,13 @@ pub fn form_societies_system(
         let mut society_name = None;
         let mut initial_secrecy = 0.5;
 
-        if traits.0.contains(&Trait::Pyromaniac) {
+        if traits.has(Trait::Pyromaniac) {
             society_name = Some("Order of the Flame");
             initial_secrecy = 0.9;
-        } else if traits.0.contains(&Trait::Greedy) {
+        } else if traits.has(Trait::Greedy) {
             society_name = Some("The Golden Circle");
             initial_secrecy = 0.7;
-        } else if traits.0.contains(&Trait::Glutton) {
+        } else if traits.has(Trait::Glutton) {
             society_name = Some("The Epicureans");
             initial_secrecy = 0.5;
         }
@@ -179,7 +179,7 @@ mod tests {
         // Spawn Pops with Pyromaniac trait
         for _ in 0..3 {
             let mut traits = Traits::default();
-            traits.0.insert(Trait::Pyromaniac);
+            traits.add(Trait::Pyromaniac);
             world.spawn((Pop, traits));
         }
 

@@ -46,12 +46,12 @@ pub fn process_observe_system(
                     let mut inspiration_chance: f64 = 0.5;
 
                     if let Some(traits) = traits {
-                        if traits.0.contains(&Trait::Optimist) || traits.0.contains(&Trait::Curious)
+                        if traits.has(Trait::Optimist) || traits.has(Trait::Curious)
                         {
                             inspiration_chance += 0.3;
                         }
-                        if traits.0.contains(&Trait::Anxious)
-                            || traits.0.contains(&Trait::Traditionalist)
+                        if traits.has(Trait::Anxious)
+                            || traits.has(Trait::Traditionalist)
                         {
                             inspiration_chance -= 0.3;
                         }
@@ -204,7 +204,7 @@ mod tests {
                     .spawn((
                         Pop,
                         Morale::default(),
-                        Traits(std::collections::HashSet::from([Trait::Optimist])),
+                        Traits(1 << (Trait::Optimist as u8)),
                         AssignedTo {
                             entity: observatory,
                             assignment_type: AssignmentType::ObservatoryWorker,
@@ -259,7 +259,7 @@ mod tests {
                     .spawn((
                         Pop,
                         Morale::default(),
-                        Traits(std::collections::HashSet::from([Trait::Anxious])),
+                        Traits(1 << (Trait::Anxious as u8)),
                         AssignedTo {
                             entity: observatory,
                             assignment_type: AssignmentType::ObservatoryWorker,

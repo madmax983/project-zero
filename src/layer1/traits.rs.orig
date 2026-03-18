@@ -217,10 +217,10 @@ impl Traits {
 #[must_use]
 pub fn get_trait_work_speed_modifier(traits: &Traits) -> f32 {
     let mut modifier = 1.0;
-    if traits.0.contains(&Trait::HardWorker) {
+    if traits.has(Trait::HardWorker) {
         modifier += 0.2;
     }
-    if traits.0.contains(&Trait::Lazy) {
+    if traits.has(Trait::Lazy) {
         modifier -= 0.2;
     }
     modifier
@@ -230,10 +230,10 @@ pub fn get_trait_work_speed_modifier(traits: &Traits) -> f32 {
 #[must_use]
 pub fn get_trait_hunger_decay_modifier(traits: &Traits) -> f32 {
     let mut modifier = 1.0;
-    if traits.0.contains(&Trait::Glutton) {
+    if traits.has(Trait::Glutton) {
         modifier += 0.2;
     }
-    if traits.0.contains(&Trait::Ascetic) {
+    if traits.has(Trait::Ascetic) {
         modifier -= 0.2;
     }
     modifier
@@ -243,7 +243,7 @@ pub fn get_trait_hunger_decay_modifier(traits: &Traits) -> f32 {
 #[must_use]
 pub fn get_trait_leisure_decay_modifier(traits: &Traits) -> f32 {
     let mut modifier = 1.0;
-    if traits.0.contains(&Trait::Soulless) {
+    if traits.has(Trait::Soulless) {
         modifier -= 0.5;
     }
     modifier
@@ -253,10 +253,10 @@ pub fn get_trait_leisure_decay_modifier(traits: &Traits) -> f32 {
 #[must_use]
 pub fn get_trait_move_speed_modifier(traits: &Traits) -> f32 {
     let mut modifier = 1.0;
-    if traits.0.contains(&Trait::FastWalker) {
+    if traits.has(Trait::FastWalker) {
         modifier += 0.1;
     }
-    if traits.0.contains(&Trait::Feral) {
+    if traits.has(Trait::Feral) {
         modifier += 0.2;
     }
     modifier
@@ -266,14 +266,14 @@ pub fn get_trait_move_speed_modifier(traits: &Traits) -> f32 {
 #[must_use]
 pub fn get_trait_mood_modifier(traits: &Traits, time_of_day: TimeOfDay) -> f32 {
     let mut modifier = 0.0;
-    if traits.0.contains(&Trait::NightOwl) {
+    if traits.has(Trait::NightOwl) {
         match time_of_day {
             TimeOfDay::Night => modifier += 0.1,
             TimeOfDay::Day => modifier -= 0.05,
             TimeOfDay::Dawn | TimeOfDay::Dusk => {}
         }
     }
-    if traits.0.contains(&Trait::EarlyBird) {
+    if traits.has(Trait::EarlyBird) {
         match time_of_day {
             TimeOfDay::Dawn | TimeOfDay::Day => modifier += 0.05,
             TimeOfDay::Night => modifier -= 0.1,
@@ -298,9 +298,9 @@ mod tests {
 
     #[test]
     fn test_work_speed_modifiers() {
-        let hard_worker = Traits(HashSet::from([Trait::HardWorker]));
-        let lazy = Traits(HashSet::from([Trait::Lazy]));
-        let normal = Traits(HashSet::new());
+        let hard_worker = Traits(1 << (Trait::HardWorker as u8));
+        let lazy = Traits(1 << (Trait::Lazy as u8));
+        let normal = Traits::default();
 
         assert!(
             get_trait_work_speed_modifier(&hard_worker) > 1.0,
@@ -318,9 +318,9 @@ mod tests {
 
     #[test]
     fn test_hunger_decay_modifiers() {
-        let glutton = Traits(HashSet::from([Trait::Glutton]));
-        let ascetic = Traits(HashSet::from([Trait::Ascetic]));
-        let normal = Traits(HashSet::new());
+        let glutton = Traits(1 << (Trait::Glutton as u8));
+        let ascetic = Traits(1 << (Trait::Ascetic as u8));
+        let normal = Traits::default();
 
         assert!(
             get_trait_hunger_decay_modifier(&glutton) > 1.0,
@@ -338,8 +338,8 @@ mod tests {
 
     #[test]
     fn test_leisure_decay_modifiers() {
-        let soulless = Traits(HashSet::from([Trait::Soulless]));
-        let normal = Traits(HashSet::new());
+        let soulless = Traits(1 << (Trait::Soulless as u8));
+        let normal = Traits::default();
 
         assert!(
             get_trait_leisure_decay_modifier(&soulless) < 1.0,
@@ -353,9 +353,9 @@ mod tests {
 
     #[test]
     fn test_feral_speed_modifier() {
-        let feral = Traits(HashSet::from([Trait::Feral]));
-        let fast = Traits(HashSet::from([Trait::FastWalker]));
-        let both = Traits(HashSet::from([Trait::Feral, Trait::FastWalker]));
+        let feral = Traits(1 << (Trait::Feral as u8));
+        let fast = Traits(1 << (Trait::FastWalker as u8));
+        let both = Traits(1 << (Trait::Feral, Trait::FastWalker as u8));
 
         assert!(
             (get_trait_move_speed_modifier(&feral) - 1.2).abs() < 0.0001,
@@ -373,7 +373,7 @@ mod tests {
 
     #[test]
     fn test_night_owl_mood_modifier() {
-        let night_owl = Traits(HashSet::from([Trait::NightOwl]));
+        let night_owl = Traits(1 << (Trait::NightOwl as u8));
 
         let mood_night = get_trait_mood_modifier(&night_owl, TimeOfDay::Night);
         assert!(mood_night > 0.0, "NightOwl should be happier at night");
@@ -387,22 +387,22 @@ mod tests {
         let mut rng = rand::thread_rng();
         for _ in 0..100 {
             let traits = Traits::random(&mut rng);
-            let has_lazy = traits.0.contains(&Trait::Lazy);
-            let has_hard_worker = traits.0.contains(&Trait::HardWorker);
+            let has_lazy = traits.has(Trait::Lazy);
+            let has_hard_worker = traits.has(Trait::HardWorker);
             assert!(
                 !(has_lazy && has_hard_worker),
                 "Should not be both Lazy and HardWorker"
             );
 
-            let has_glutton = traits.0.contains(&Trait::Glutton);
-            let has_ascetic = traits.0.contains(&Trait::Ascetic);
+            let has_glutton = traits.has(Trait::Glutton);
+            let has_ascetic = traits.has(Trait::Ascetic);
             assert!(
                 !(has_glutton && has_ascetic),
                 "Should not be both Glutton and Ascetic"
             );
 
-            let has_night_owl = traits.0.contains(&Trait::NightOwl);
-            let has_early_bird = traits.0.contains(&Trait::EarlyBird);
+            let has_night_owl = traits.has(Trait::NightOwl);
+            let has_early_bird = traits.has(Trait::EarlyBird);
             assert!(
                 !(has_night_owl && has_early_bird),
                 "Should not be both NightOwl and EarlyBird"

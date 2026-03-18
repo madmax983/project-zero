@@ -174,7 +174,7 @@ mod tests {
         let traits = world.get::<Traits>(pop);
         assert!(traits.is_some(), "Child should have Traits component added");
         assert!(
-            traits.unwrap().0.contains(&Trait::Volatile),
+            traits.unwrap().has(Trait::Volatile),
             "Child should gain Volatile trait"
         );
     }

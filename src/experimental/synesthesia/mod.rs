@@ -16,7 +16,7 @@ pub fn synesthesia_system(
 ) {
     for (pop_pos, mut needs, mut stress, traits) in &mut pops {
         // Only affect synesthetes
-        if !traits.0.contains(&Trait::Synesthete) {
+        if !traits.has(Trait::Synesthete) {
             continue;
         }
 
@@ -58,7 +58,7 @@ mod tests {
     fn test_synesthesia_system_red_light() {
         let mut world = World::new();
 
-        let traits = Traits(HashSet::from([Trait::Synesthete]));
+        let traits = Traits(1 << (Trait::Synesthete as u8));
         let pop = world
             .spawn((
                 Pop,
@@ -91,7 +91,7 @@ mod tests {
     fn test_synesthesia_system_blue_light() {
         let mut world = World::new();
 
-        let traits = Traits(HashSet::from([Trait::Synesthete]));
+        let traits = Traits(1 << (Trait::Synesthete as u8));
         let pop = world
             .spawn((
                 Pop,
@@ -127,7 +127,7 @@ mod tests {
     fn test_synesthesia_system_ignores_non_synesthetes() {
         let mut world = World::new();
 
-        let traits = Traits(HashSet::new());
+        let traits = Traits::default();
         let pop = world
             .spawn((
                 Pop,
@@ -161,7 +161,7 @@ mod tests {
     fn test_synesthesia_system_out_of_range() {
         let mut world = World::new();
 
-        let traits = Traits(HashSet::from([Trait::Synesthete]));
+        let traits = Traits(1 << (Trait::Synesthete as u8));
         let pop = world
             .spawn((
                 Pop,

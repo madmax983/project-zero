@@ -46,7 +46,7 @@ pub fn stash_creation_system(
 
     if resources.food < 10.0 {
         for (entity, traits) in query.iter() {
-            if traits.0.contains(&Trait::Anxious) && resources.food >= 1.0 {
+            if traits.has(Trait::Anxious) && resources.food >= 1.0 {
                 // Throttle stash creation with a probability
                 if rng.gen_bool(0.001) {
                     resources.food -= 1.0;
@@ -81,7 +81,7 @@ pub fn hoarding_system(
             continue;
         }
 
-        if traits.0.contains(&Trait::Anxious) {
+        if traits.has(Trait::Anxious) {
             // Steal Food
             // Using direct check/subtraction as spec implies simple theft logic
             if resources.food >= 1.0 {
@@ -90,7 +90,7 @@ pub fn hoarding_system(
             }
         }
 
-        if traits.0.contains(&Trait::Greedy) {
+        if traits.has(Trait::Greedy) {
             // Steal Metal
             if resources.metal >= 1.0 {
                 resources.metal -= 1.0;
@@ -137,7 +137,7 @@ mod tests {
     use crate::layer1::resources::{ColonyResources, ResourceType};
     use crate::layer1::traits::{Trait, Traits};
     use bevy_ecs::prelude::*;
-    use std::collections::HashSet;
+
 
     #[test]
     fn test_private_stash_component() {
@@ -159,7 +159,7 @@ mod tests {
         let pop = world
             .spawn((
                 Pop,
-                Traits(HashSet::from([Trait::Anxious])), // New trait
+                Traits(1 << (Trait::Anxious as u8)), // New trait
                 PrivateStash::default(),
             ))
             .id();
@@ -220,7 +220,7 @@ mod tests {
         let pop = world
             .spawn((
                 Pop,
-                Traits(HashSet::from([Trait::Greedy])), // New trait
+                Traits(1 << (Trait::Greedy as u8)), // New trait
                 PrivateStash::default(),
             ))
             .id();
@@ -258,7 +258,7 @@ mod tests {
         let mut stash = PrivateStash::default();
         stash.add(ResourceType::Food, 10.0);
 
-        let pop = world.spawn((Pop, stash, Traits(HashSet::new()))).id();
+        let pop = world.spawn((Pop, stash, Traits::default())).id();
 
         // Inspect the pop
         inspect_pop(&mut world, pop);
@@ -280,7 +280,7 @@ mod tests {
         world.insert_resource(res_before);
 
         let pop = world
-            .spawn((Pop, PrivateStash::default(), Traits(HashSet::new())))
+            .spawn((Pop, PrivateStash::default(), Traits::default()))
             .id();
 
         inspect_pop(&mut world, pop);
@@ -300,7 +300,7 @@ mod tests {
         world.insert_resource(res);
 
         let _pop = world
-            .spawn((Pop, Traits(HashSet::from([Trait::Anxious]))))
+            .spawn((Pop, Traits(1 << (Trait::Anxious as u8))))
             .id();
 
         let mut schedule = Schedule::default();
@@ -360,7 +360,7 @@ mod tests {
         stash.add(ResourceType::Wood, 3.0); // Handled by match
         stash.add(ResourceType::Ore, 1.0); // Not handled by match in current impl? Let's check.
 
-        let pop = world.spawn((Pop, stash, Traits(HashSet::new()))).id();
+        let pop = world.spawn((Pop, stash, Traits::default())).id();
 
         inspect_pop(&mut world, pop);
 

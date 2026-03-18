@@ -55,15 +55,11 @@ pub fn hypno_sleep_system(
 
                     if is_child {
                         if let Some(ref mut traits) = traits_opt {
-                            traits.0.insert(crate::layer1::traits::Trait::Volatile);
+                            traits.add(crate::layer1::traits::Trait::Volatile);
                         } else {
-                            commands
-                                .entity(entity)
-                                .insert(crate::layer1::traits::Traits(
-                                    std::collections::HashSet::from([
-                                        crate::layer1::traits::Trait::Volatile,
-                                    ]),
-                                ));
+                            let mut traits = crate::layer1::traits::Traits::default();
+                            traits.add(crate::layer1::traits::Trait::Volatile);
+                            commands.entity(entity).insert(traits);
                         }
                     } else {
                         // Grant XP

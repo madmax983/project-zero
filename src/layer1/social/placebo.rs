@@ -43,7 +43,7 @@ pub fn placebo_tick_system(
         // If not applied, apply once to all non-distrustful pops.
         if !placebo.applied && !placebo.revealed {
             for (mut stress, traits) in pops.iter_mut() {
-                if !traits.0.contains(&Trait::Distrustful) {
+                if !traits.has(Trait::Distrustful) {
                     stress.accumulated_stress =
                         (stress.accumulated_stress - placebo.stress_relief).max(0.0);
                 }
@@ -71,11 +71,11 @@ pub fn reveal_betrayal_system(
         if placebo.revealed {
             for (mut stress, mut traits) in pops.iter_mut() {
                 // If they weren't distrustful yet, they were affected by the placebo
-                if !traits.0.contains(&Trait::Distrustful) {
+                if !traits.has(Trait::Distrustful) {
                     // Penalty is returning the original relief PLUS another penalty amount,
                     // Effectively 2x the original relief.
                     stress.accumulated_stress += placebo.stress_relief * 2.0;
-                    traits.0.insert(Trait::Distrustful);
+                    traits.add(Trait::Distrustful);
                 }
             }
 
@@ -170,14 +170,14 @@ mod tests {
         assert!(stress.accumulated_stress >= 90.0);
 
         let traits = world.get::<Traits>(pop).unwrap();
-        assert!(traits.0.contains(&Trait::Distrustful));
+        assert!(traits.has(Trait::Distrustful));
     }
 
     #[test]
     fn test_distrustful_pops_ignore_placebos() {
         let mut world = World::new();
         let mut pop_traits = Traits::default();
-        pop_traits.0.insert(Trait::Distrustful);
+        pop_traits.add(Trait::Distrustful);
 
         let pop = world
             .spawn((

@@ -8,7 +8,7 @@ mod tests {
     use crate::layer1::traits::{Trait, Traits};
     use bevy_ecs::prelude::*;
     use bevy_ecs::system::RunSystemOnce;
-    use std::collections::HashSet;
+
 
     #[test]
     fn test_blackout_cuts_power() {
@@ -107,7 +107,7 @@ mod tests {
                 Pop,
                 GridPosition { x: 0, y: 0 },
                 Speed::default(),
-                Traits(HashSet::from([Trait::Anxious])),
+                Traits(1 << (Trait::Anxious as u8)),
                 Needs {
                     leisure: 1.0,
                     ..Default::default()
@@ -121,7 +121,7 @@ mod tests {
                 Pop,
                 GridPosition { x: 0, y: 0 },
                 Speed::default(),
-                Traits(HashSet::from([Trait::NightOwl])),
+                Traits(1 << (Trait::NightOwl as u8)),
                 Needs {
                     leisure: 1.0,
                     ..Default::default()
@@ -135,7 +135,7 @@ mod tests {
                 Pop,
                 GridPosition { x: 0, y: 0 },
                 Speed::default(),
-                Traits(HashSet::new()),
+                Traits::default(),
                 Needs {
                     leisure: 1.0,
                     ..Default::default()

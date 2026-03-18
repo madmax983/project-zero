@@ -20,16 +20,16 @@ pub struct Hobby {
 // Logic to pick hobby from Traits component
 fn pick_hobby_for_traits(traits: &crate::layer1::traits::Traits, rng: &mut impl Rng) -> HobbyType {
     // Priority check
-    if traits.0.contains(&Trait::HardWorker) || traits.0.contains(&Trait::Curious) {
+    if traits.has(Trait::HardWorker) || traits.has(Trait::Curious) {
         return HobbyType::Tinkering;
     }
-    if traits.0.contains(&Trait::Lazy) || traits.0.contains(&Trait::NativeBorn) {
+    if traits.has(Trait::Lazy) || traits.has(Trait::NativeBorn) {
         return HobbyType::CloudWatching;
     }
-    if traits.0.contains(&Trait::Ascetic) || traits.0.contains(&Trait::Traditionalist) {
+    if traits.has(Trait::Ascetic) || traits.has(Trait::Traditionalist) {
         return HobbyType::Meditation;
     }
-    if traits.0.contains(&Trait::Greedy) || traits.0.contains(&Trait::Optimist) {
+    if traits.has(Trait::Greedy) || traits.has(Trait::Optimist) {
         // Mapping Social to Gossip?
         return HobbyType::Gossip;
     }
@@ -141,7 +141,7 @@ mod tests {
     use crate::layer1::utility_ai::{ActionType, PopAction};
     use crate::layer1::utility_eval_types::PopEvalData;
 
-    use std::collections::HashSet;
+
 
     #[test]
     fn test_pop_assigned_hobby_based_on_trait() {
@@ -149,7 +149,7 @@ mod tests {
 
         // Spawn pop with Curious trait (should get Tinkering)
         let pop = world
-            .spawn((Pop, Traits(HashSet::from([Trait::Curious]))))
+            .spawn((Pop, Traits(1 << (Trait::Curious as u8))))
             .id();
 
         // Run assignment system

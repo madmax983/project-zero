@@ -27,7 +27,7 @@ pub fn psychic_resonance_system(
     items: Query<(&GridPosition, &ResourceItem)>,
 ) {
     for (pop_pos, mut needs, traits) in pops.iter_mut() {
-        if !traits.0.contains(&Trait::VoidTouched) {
+        if !traits.has(Trait::VoidTouched) {
             continue;
         }
 
@@ -66,7 +66,7 @@ mod tests {
     fn test_psychic_resonance_positive() {
         let mut world = World::new();
 
-        let traits = Traits(HashSet::from([Trait::VoidTouched]));
+        let traits = Traits(1 << (Trait::VoidTouched as u8));
         let pop = world
             .spawn((
                 Pop,
@@ -101,7 +101,7 @@ mod tests {
     fn test_psychic_resonance_negative() {
         let mut world = World::new();
 
-        let traits = Traits(HashSet::from([Trait::VoidTouched]));
+        let traits = Traits(1 << (Trait::VoidTouched as u8));
         let pop = world
             .spawn((
                 Pop,
@@ -136,7 +136,7 @@ mod tests {
     fn test_non_psychic_ignores_resonance() {
         let mut world = World::new();
 
-        let traits = Traits(HashSet::new()); // Not VoidTouched
+        let traits = Traits::default(); // Not VoidTouched
         let pop = world
             .spawn((
                 Pop,

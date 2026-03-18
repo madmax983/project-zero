@@ -69,10 +69,10 @@ pub fn check_prediction_system(
 
         // Trait factor
         if let Some(t) = traits {
-            if t.0.contains(&Trait::Volatile) {
+            if t.has(Trait::Volatile) {
                 risk += 0.3;
             }
-            if t.0.contains(&Trait::Pyromaniac) {
+            if t.has(Trait::Pyromaniac) {
                 risk += 0.4;
             }
         }
@@ -238,8 +238,8 @@ mod tests {
         schedule.add_systems(check_prediction_system);
 
         // Volatile pop with high stress ticks
-        let mut traits = std::collections::HashSet::new();
-        traits.insert(Trait::Volatile);
+        let mut traits = Traits::default();
+        traits.add(Trait::Volatile);
 
         let pop = world
             .spawn((
@@ -247,7 +247,7 @@ mod tests {
                 StressTracker {
                     accumulated_stress: 80.0,
                 }, // Near breakdown (threshold is 100)
-                Traits(traits),
+                traits,
                 // No Suspect component yet
             ))
             .id();
@@ -272,7 +272,7 @@ mod tests {
                 StressTracker {
                     accumulated_stress: 10.0,
                 },
-                Traits(std::collections::HashSet::new()),
+                Traits::default(),
             ))
             .id();
 

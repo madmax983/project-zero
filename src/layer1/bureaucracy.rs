@@ -21,7 +21,7 @@ pub fn translate_instruction_system(
     let high_speech_enabled = high_speech.is_some_and(|hs| hs.0);
 
     for (entity, education, traits, has_delay) in query.iter() {
-        let is_bureaucrat = traits.is_some_and(|t: &Traits| t.0.contains(&Trait::Bureaucrat));
+        let is_bureaucrat = traits.is_some_and(|t: &Traits| t.has(Trait::Bureaucrat));
 
         let should_be_delayed = high_speech_enabled && !is_bureaucrat && education.0 < 4;
 
@@ -73,7 +73,7 @@ mod tests {
 
         // Spawn bureaucrat pop
         let mut traits = Traits::default();
-        traits.0.insert(Trait::Bureaucrat);
+        traits.add(Trait::Bureaucrat);
         let bureaucrat_pop = app
             .world_mut()
             .spawn(PopBundle {

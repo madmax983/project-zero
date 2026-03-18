@@ -169,7 +169,7 @@ mod tests {
                     value: 0.1,
                     ..Default::default()
                 }, // Set morale low explicitly
-                crate::layer1::traits::Traits(std::collections::HashSet::new()),
+                crate::layer1::traits::Traits::default(),
             ))
             .id();
 
