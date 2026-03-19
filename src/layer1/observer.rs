@@ -130,7 +130,6 @@ mod tests {
     use crate::layer1::pop::Pop;
     use crate::layer1::stress::StressTracker;
     use crate::layer1::traits::{Trait, Traits};
-    use std::collections::HashSet;
 
     #[test]
     fn test_observer_awareness_adds_component() {

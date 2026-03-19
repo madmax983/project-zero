@@ -83,7 +83,6 @@ pub fn fever_dream_system(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use std::collections::HashSet;
 
     fn setup() -> World {
         crate::setup::init_task_pools();
@@ -96,8 +95,8 @@ mod tests {
     fn test_enter_fever_dream() {
         let mut world = setup();
 
-        let mut traits = HashSet::new();
-        traits.insert(Trait::Intellectual);
+        let mut traits = Traits::default();
+        traits.add(Trait::Intellectual);
 
         let entity = world
             .spawn((
@@ -108,7 +107,7 @@ mod tests {
                     leisure: 1.0,
                     hygiene: 1.0,
                 },
-                Traits(traits),
+                traits,
                 Health {
                     current: 100.0,
                     max: 100.0,
@@ -130,8 +129,8 @@ mod tests {
     fn test_fever_dream_damage() {
         let mut world = setup();
 
-        let mut traits = HashSet::new();
-        traits.insert(Trait::Intellectual);
+        let mut traits = Traits::default();
+        traits.add(Trait::Intellectual);
 
         let entity = world
             .spawn((
@@ -142,7 +141,7 @@ mod tests {
                     leisure: 1.0,
                     hygiene: 1.0,
                 },
-                Traits(traits),
+                traits,
                 Health {
                     current: 100.0,
                     max: 100.0,
@@ -168,8 +167,8 @@ mod tests {
     fn test_exit_fever_dream() {
         let mut world = setup();
 
-        let mut traits = HashSet::new();
-        traits.insert(Trait::Intellectual);
+        let mut traits = Traits::default();
+        traits.add(Trait::Intellectual);
 
         let entity = world
             .spawn((
@@ -180,7 +179,7 @@ mod tests {
                     leisure: 1.0,
                     hygiene: 1.0,
                 }, // High rest
-                Traits(traits),
+                traits,
                 Health {
                     current: 100.0,
                     max: 100.0,
@@ -201,7 +200,7 @@ mod tests {
     fn test_non_intellectual_ignored() {
         let mut world = setup();
 
-        let traits = HashSet::new(); // NO Intellectual
+        let traits = Traits::default(); // NO Intellectual
 
         let entity = world
             .spawn((
@@ -212,7 +211,7 @@ mod tests {
                     leisure: 1.0,
                     hygiene: 1.0,
                 },
-                Traits(traits),
+                traits,
                 Health {
                     current: 100.0,
                     max: 100.0,
