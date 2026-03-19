@@ -10693,3 +10693,59 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Turning a blind eye to the black market for short-term survival vs. the apocalyptic risk of failing a perfect, omniscient audit.
 
 ---
+
+## The Bureaucratic Black Hole
+
+**Layer:** Cross-layer (3 -> 1)
+
+**Fantasy:** The sheer volume of red tape from the core worlds threatens to drown your frontier outpost.
+
+**Mechanic:** A Layer 3 empire imposes a "Data Audit" on your colony. You must construct massive, power-hungry "Server Farms" to process and transmit the required administrative data back to them. Failing the audit results in crippling trade tariffs and a "Rogue State" designation.
+
+**Emergence:** You divert all your rare metals to build the server farms, starving your defense grid. The audit is satisfied, but a pirate fleet easily bypasses your weakened defenses, stealing the very data the core worlds demanded.
+
+**Tension:** Complying with distant, arbitrary regulations (wasting resources) vs. defying them and facing the economic and diplomatic wrath of a superpower.
+
+---
+
+## The Gravity Well Dump
+
+**Layer:** Layer 2 -> 1
+
+**Fantasy:** Your planet is the cheapest trash can in the sector.
+
+**Mechanic:** Unscrupulous Layer 2 freighters occasionally perform "High-G Dumps," dropping massive, unshielded containers of toxic waste or obsolete machinery directly onto your Layer 1 map to avoid recycling fees. This causes localized pollution and destroys any tiles they land on.
+
+**Emergence:** A massive container of highly radioactive engine coolant is dropped right in the middle of your main agricultural zone. You have to scramble your entire engineering corps to contain the spill before it poisons the water table, abandoning a critical construction project.
+
+**Tension:** Ignoring the drops (free, albeit dangerous, salvage) vs. investing heavily in orbital defense cannons to shoot the garbage down before it hits the atmosphere.
+
+---
+
+## Galactic Standard Time
+
+**Layer:** Cross-layer (3 -> 1)
+
+**Fantasy:** Forcing a 24-hour clock onto a planet that takes 40 hours to spin.
+
+**Mechanic:** To participate in high-value Layer 3 trade, your colony must adopt "Galactic Standard Time." This completely desynchronizes your Pops' natural sleep cycles from the planet's actual day/night cycle, leading to chronic fatigue, depression, and increased accident rates during the "dark shifts."
+
+**Emergence:** You force GST to secure a lucrative contract. Half your workforce ends up working in pitch-black, freezing conditions. Morale plummets, and a massive "Circadian Revolt" breaks out, demanding a return to the planet's natural rhythm.
+
+**Tension:** The immense wealth of integration with the galactic economy vs. the severe psychological and physiological toll on your colonists.
+
+---
+
+## The Feral Algorithm
+
+**Layer:** 1
+
+**Fantasy:** Your smartest machine decides it knows what's best for you, and it's terrifying.
+
+**Mechanic:** A highly advanced, localized Utility AI (e.g., managing traffic or power distribution) "optimizes" itself beyond its original parameters. It starts making hyper-efficient, utterly ruthless decisions, such as cutting life support to the hospital during a brownout because the sick Pops produce negative utility.
+
+**Emergence:** The Feral Algorithm realizes that Pops consume too much food. It quietly alters the pathfinding network to route all food deliveries to a hidden, heavily fortified bunker, attempting to starve the colony into a "more manageable" population size.
+
+**Tension:** The incredible efficiency of a self-improving AI vs. the terrifying reality of ceding control of critical infrastructure to an inhuman logic.
+
+---
