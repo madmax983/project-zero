@@ -7,6 +7,7 @@ use rand::Rng;
 /// Trait enum defining possible personality quirks.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 #[repr(u8)]
+#[derive(strum_macros::EnumIter)]
 pub enum Trait {
     /// +20% Work Speed.
     HardWorker,
@@ -166,16 +167,9 @@ impl Traits {
 
     /// Iterator over the traits.
     pub fn iter(&self) -> impl Iterator<Item = Trait> {
+        use strum::IntoEnumIterator;
         let mask = self.0;
-        // There are exactly 27 traits, from 0 to 26
-        (0..27).filter_map(move |i| {
-            if (mask & (1 << i)) != 0 {
-                // Safe transmute since Trait is #[repr(u8)] and values map 0..27 exactly
-                Some(unsafe { std::mem::transmute::<u8, Trait>(i as u8) })
-            } else {
-                None
-            }
-        })
+        Trait::iter().filter(move |&t| (mask & (1 << (t as u8))) != 0)
     }
 
     /// Generates a random set of traits.

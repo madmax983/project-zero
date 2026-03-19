@@ -30,7 +30,7 @@ image = "0.25.5"
 wgpu = "23.0.0"
 pollster = "0.3.0"
 bytemuck = { version = "1.19.0", features = ["derive"] }
-strum = "0.26"
+strum = { version = "0.26", features = ["derive"] }
 strum_macros = "0.26"
 ratzilla = "0.3.0"
 
