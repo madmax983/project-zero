@@ -34,3 +34,4 @@ Thumbs.db.worktrees/
 .worktrees/
 
 nul
+echo_tests/
