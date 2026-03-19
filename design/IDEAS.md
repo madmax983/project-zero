@@ -10582,3 +10582,59 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Utilizing powerful found advantages vs. the unpredictable, massive diplomatic consequences of stepping into someone else's ancient shoes.
 
 ---
+
+## The Cartographer's Curse
+
+**Layer:** 2 -> 1
+
+**Fantasy:** Selling the map to your home to afford the walls to protect it.
+
+**Mechanic:** Early game, you can sell highly detailed, localized orbital telemetry to a Layer 3 megacorporation for a massive, instant influx of Credits/Tech. However, doing so permanently removes the "Fog of War" penalty for any hostile faction or pirate fleet attacking your colony, giving them perfect drop-pod accuracy and movement speed.
+
+**Emergence:** You sell the telemetry to survive a devastating winter. Five years later, a pirate raid perfectly bypasses your outer defense ring and lands a dropship directly inside your unprotected agricultural dome, because they bought the map you sold.
+
+**Tension:** Immediate, game-saving economic relief vs. permanently crippling your colony's defensive geographical advantage.
+
+---
+
+## The Sabotaged Seed Bank
+
+**Layer:** 1
+
+**Fantasy:** A miracle crop that feeds the world, until the people who engineered it decide you've had enough.
+
+**Mechanic:** You uncover a precursor "Seed Bank" containing a hyper-efficient crop ("Golden-Wheat") that yields 300% more food and grows in any temperature. The catch: it was bio-engineered by a fallen empire with a genetic kill-switch. If a specific "Precursor Signal" is broadcast (a rare, randomized Layer 2/3 event), every single stalk of Golden-Wheat instantly turns to toxic ash, poisoning the soil.
+
+**Emergence:** You base your entire economy on exporting Golden-Wheat, ignoring native, low-yield crops. An archaeological team on a neighboring world accidentally trips the Precursor Signal. In an instant, your entire global food supply disintegrates, and the soil is permanently ruined, plunging your wealthy utopia into immediate starvation and cannibalism.
+
+**Tension:** The immense, free economic boom of a perfect crop vs. the absolute, unpredictable fragility of a food supply you don't truly control.
+
+---
+
+## The Empathic Sinkhole
+
+**Layer:** 1
+
+**Fantasy:** A place where people go to scream into the void, and the void listens, remembers, and eventually screams back.
+
+**Mechanic:** A unique, un-buildable terrain feature (a deep, glowing chasm). Pops with high Stress will naturally pathfind to it and "Vent," instantly reducing their Stress to zero. However, the Sinkhole absorbs this stress. When its internal capacity is reached, it violently erupts, applying a massive, instantaneous "Despair" debuff to every Pop in a huge radius, proportional to the stress it absorbed.
+
+**Emergence:** You intentionally route all your overworked, miserable miners past the Sinkhole to keep them functioning without building expensive recreation facilities. It works perfectly for a year. Then, during a critical raid defense, the Sinkhole reaches capacity and detonates. Your entire militia drops their weapons and sits on the ground weeping, completely paralyzing your defense.
+
+**Tension:** A free, instantaneous solution to individual stress vs. creating a localized, accumulating emotional time bomb.
+
+---
+
+## Atmospheric Ignition
+
+**Layer:** 1
+
+**Fantasy:** Industry that changes the very composition of the air, turning the sky into a weapon.
+
+**Mechanic:** Highly advanced, dirty industry (e.g., Plasma Forges, Deep Core Refineries) emits "Volatile Vapors" instead of generic smog. These vapors pool in low-altitude tiles and don't harm Pops. However, if any spark occurs (a fired weapon, a short-circuiting battery, a lightning strike) within a Vapor tile, the entire contiguous vapor cloud detonates in a massive "Air-Burst" explosion, destroying buildings and incinerating Pops.
+
+**Emergence:** You build your primary refinery at the bottom of a protective canyon to hide it from orbital strikes. The canyon slowly fills with invisible Volatile Vapors. A minor pirate raid occurs on the canyon rim. A stray bullet hits the vapor cloud, turning the entire canyon into a massive fuel-air bomb that instantly vaporizes the pirates, your defenders, and the refinery itself.
+
+**Tension:** Centralized, highly efficient but dirty production vs. the horrifying risk of literally setting the atmosphere on fire.
+
+---
