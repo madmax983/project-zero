@@ -4804,3 +4804,101 @@ Official reasons given for charging citizens to walk.
 - The Guild of Coin
 - The Iron Ledger
 - The Debt-Brokers
+
+## The Biosphere Empathy Link Fragments (Spec 293)
+
+### Fragment Type: [EMPATHIC_FLORA]
+Names and descriptions of the empathic plant life.
+
+- the singing roots
+- the memory-moss
+- the nerve-vines
+- the whispering canopy
+- the shared bloom
+- the quiet spores
+
+### Fragment Type: [SHARED_SENSATION]
+How the collective feeling is described.
+
+- a thousand heartbeats
+- the great exhale
+- a singular mind
+- the deep resonance
+- an unbroken chorus
+- the quiet understanding
+
+### Fragment Type: [FLORA_DAMAGE_EFFECT]
+How the colony experiences the destruction of their linked flora.
+
+- a phantom limb torn away
+- the scream that made no sound
+- blinding psychic feedback
+- a collective migraine
+- the grief of the soil
+- an echoing agony
+
+## Escape Velocity Economics Fragments (Spec 468)
+
+### Fragment Type: [GRAVITY_WELL]
+How the planetary gravity is described.
+
+- the crushing well
+- the deep gravity
+- the heavy sky
+- the anchor
+- the iron grip
+- the leaden atmosphere
+
+### Fragment Type: [LAUNCH_CARGO]
+What is being lifted out of the well.
+
+- a fortune in refined tech
+- desperate raw materials
+- impossibly heavy ore
+- weightless data drives
+- a skeleton crew
+- stripped-down lifters
+
+## Civic Ideology Fragments (Spec 484)
+
+### Fragment Type: [FOUNDING_PRINCIPLE]
+The core ideological goal of a colony.
+
+- the absolute pursuit of Profit
+- the iron law of Survival
+- the sacred archive of Knowledge
+- the mandated Harmony
+- the ceaseless Expansion
+- the pure Doctrine
+
+### Fragment Type: [IDEOLOGICAL_DEVIATION]
+How the colony describes acting against its own ideology.
+
+- a necessary betrayal
+- ideological rot
+- a pragmatic sin
+- forgetting who we are
+- the compromise that broke us
+- an unforgivable drift
+
+## Debt-Prison Colonies Fragments (Spec 486)
+
+### Fragment Type: [CREDITOR_FACTION]
+The entities holding the debt.
+
+- the Core Syndicates
+- the Golden Fleet
+- the Bank of the First Sphere
+- the High Arbiters
+- the Silent Creditors
+- the Debt-Barons
+
+### Fragment Type: [CRIMINAL_ARRIVALS]
+How the dumped criminal pops are described.
+
+- the brilliant untouchables
+- a tide of violent genius
+- the worst of the Core
+- highly-skilled dregs
+- the Cartel seed
+- the exiled apex predators

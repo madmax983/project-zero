@@ -4035,3 +4035,74 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "The ledger is clear. [YEAR]. [BLOCKADE_NAME] breaks formation and leaves."
 - "[YEAR]: Debt paid. The sky opens as [BLOCKADE_NAME] withdraws from [COLONY]."
 - "We bought our freedom. [BLOCKADE_NAME] departs. [YEAR]. Orbit is ours again."
+
+## The Biosphere Empathy Link Templates (Spec 293)
+
+### Template: EMPATHIC_LINK_ESTABLISHED
+**Generates:** Play event (Chronicle)
+**Slots:** `[COLONY]`, `[YEAR]`, `[EMPATHIC_FLORA]`, `[SHARED_SENSATION]`
+
+**Patterns:**
+- "[YEAR]: We touched [EMPATHIC_FLORA]. It touched back. A [SHARED_SENSATION] spreads."
+- "The workers in [COLONY] are changing. They share [SHARED_SENSATION]. The [EMPATHIC_FLORA] is the conduit."
+- "Year [YEAR]. They stopped talking. They don't need to. [EMPATHIC_FLORA] connects them in [SHARED_SENSATION]."
+
+### Template: FLORA_DAMAGED_BACKLASH
+**Generates:** Play event (Chronicle)
+**Slots:** `[COLONY]`, `[YEAR]`, `[EMPATHIC_FLORA]`, `[FLORA_DAMAGE_EFFECT]`
+
+**Patterns:**
+- "[YEAR]: The bulldozers hit [EMPATHIC_FLORA]. The linked workers collapsed, screaming. [FLORA_DAMAGE_EFFECT]."
+- "We cut [EMPATHIC_FLORA]. They felt it. [COLONY] suffers [FLORA_DAMAGE_EFFECT]."
+- "A mistake in [YEAR]. Destroying [EMPATHIC_FLORA] sent [FLORA_DAMAGE_EFFECT] through the hive-mind."
+
+## Escape Velocity Economics Templates (Spec 468)
+
+### Template: HIGH_G_LAUNCH_SUCCESS
+**Generates:** Play event (Chronicle)
+**Slots:** `[COLONY]`, `[YEAR]`, `[GRAVITY_WELL]`, `[LAUNCH_CARGO]`
+
+**Patterns:**
+- "[YEAR]: Escaping [GRAVITY_WELL]. We burned a fortune in fuel to lift [LAUNCH_CARGO]."
+- "The rockets fight [GRAVITY_WELL] at [COLONY]. Finally, [LAUNCH_CARGO] reaches orbit."
+- "It costs us everything to leave the dirt. [YEAR]: [LAUNCH_CARGO] successfully punches through [GRAVITY_WELL]."
+
+### Template: ECONOMIC_WELL_TRAP
+**Generates:** Play event (Chronicle)
+**Slots:** `[COLONY]`, `[YEAR]`, `[GRAVITY_WELL]`
+
+**Patterns:**
+- "[YEAR]: Iron is worthless if it costs antimatter to lift it. [GRAVITY_WELL] traps our industry."
+- "We are rich in ore, but [GRAVITY_WELL] keeps us poor. [COLONY] cannot afford the sky."
+- "Year [YEAR]: The physics of [GRAVITY_WELL] dictate our economy. We must refine, or we die here."
+
+## Civic Ideology Templates (Spec 484)
+
+### Template: IDEOLOGY_FOUNDED
+**Generates:** Pre-history or Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[FOUNDING_PRINCIPLE]`
+
+**Patterns:**
+- "[YEAR]: The charter is signed. [COLONY] dedicates itself to [FOUNDING_PRINCIPLE]."
+- "We did not come here to just survive. We came for [FOUNDING_PRINCIPLE]. So swore the founders of [COLONY] in [YEAR]."
+- "Year [YEAR]. The path is chosen: [FOUNDING_PRINCIPLE]. This is who we are."
+
+### Template: IDEOLOGICAL_DEVIATION
+**Generates:** Play event (Chronicle)
+**Slots:** `[COLONY]`, `[YEAR]`, `[IDEOLOGICAL_DEVIATION]`, `[FOUNDING_PRINCIPLE]`
+
+**Patterns:**
+- "[YEAR]: We acted against [FOUNDING_PRINCIPLE]. Some call it survival. Others call it [IDEOLOGICAL_DEVIATION]."
+- "Morale plummets in [COLONY]. A betrayal of [FOUNDING_PRINCIPLE]. It feels like [IDEOLOGICAL_DEVIATION]."
+- "[YEAR]: The workers whisper of [IDEOLOGICAL_DEVIATION]. Is this what [FOUNDING_PRINCIPLE] looks like now?"
+
+## Debt-Prison Colonies Templates (Spec 486)
+
+### Template: BAILOUT_ACCEPTED
+**Generates:** Play event (Chronicle)
+**Slots:** `[COLONY]`, `[YEAR]`, `[CREDITOR_FACTION]`, `[CRIMINAL_ARRIVALS]`
+
+**Patterns:**
+- "[YEAR]: We were bankrupt. [CREDITOR_FACTION] offered a clean slate, in exchange for taking [CRIMINAL_ARRIVALS]."
+- "The debt is gone, but the sky is dark with drop pods. [CREDITOR_FACTION] is sending [CRIMINAL_ARRIVALS]. God help [COLONY]."
+- "Year [YEAR]. We traded financial ruin for [CRIMINAL_ARRIVALS]. [CREDITOR_FACTION] owns us in a new way."
