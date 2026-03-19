@@ -264,7 +264,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `536` The Empathic Biome Link — `specs/536-the-empathic-biome-link.md`
 - [ ] `537` Funeral Rites — `specs/537-funeral-rites.md`
 
-- [ ] `539` Penal Contracts — `specs/539-penal-contracts.md`
 - [ ] `541` Xeno-Artifacts — `specs/541-xeno-artifacts.md`
 - [ ] `542` Drone Networks — `specs/542-drone-networks.md`
 - [ ] `543` The Galactic Market — `specs/543-the-galactic-market.md`

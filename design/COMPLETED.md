@@ -260,3 +260,4 @@
 - [x] `540` The Exodus — `specs/540-the-exodus.md` — completed 2026-03-18
 - [x] `INT-540` Integration: The Exodus -> ColonyResources — completed 2026-03-19
 - [x] `538` Inter-Colony Trade Routes — `specs/538-inter-colony-trade-routes.md` — completed 2026-03-20
+- [x] `539` Penal Contracts — `specs/539-penal-contracts.md` — completed 2024-05-18
