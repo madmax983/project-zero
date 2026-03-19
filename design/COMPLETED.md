@@ -259,3 +259,4 @@
 - [x] `INT-515` Integration: Deep Crust Geomes -> Environmental Damage — completed 2026-03-27
 - [x] `540` The Exodus — `specs/540-the-exodus.md` — completed 2026-03-18
 - [x] `INT-540` Integration: The Exodus -> ColonyResources — completed 2026-03-19
+- [x] `538` Inter-Colony Trade Routes — `specs/538-inter-colony-trade-routes.md` — completed 2026-03-20

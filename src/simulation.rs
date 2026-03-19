@@ -98,6 +98,7 @@ pub fn build_simulation_schedule() -> Schedule {
     ));
 
     schedule.add_systems((
+        crate::layer2::trade::routes::execute_trade_routes_system,
         crate::layer2::trade::blockade::debt_blockade_system,
         crate::layer2::trade::blockade::blockade_interception_system
             .after(crate::layer2::trade::blockade::debt_blockade_system),
