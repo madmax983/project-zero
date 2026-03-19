@@ -29,3 +29,11 @@
 ## [Global Hit Stop]
 **Friction:** Critical hits and heavy attacks applied a local hit stop to the combatants, but the rest of the game kept moving. The impact felt isolated and didn't convey the immense weight of the blow to the player.
 **Flow:** Triggered the `GlobalHitStop` resource on critical hits and heavy damage. This briefly freezes the entire game logic (while particles and screen shake continue), simulating the dramatic "Hit Stop" pause found in fighting games and adding massive "Juice" to heavy combat impacts.
+
+## [Combat Feel & Crits]
+**Friction:** Crits were too rare (15%) and when they did hit, the hit stop (12 ticks) felt like it didn't fully sell the "massive impact" against heavy targets.
+**Flow:** Increased base CRIT_CHANCE to 20% to make combat feel more rewarding and juicy, slightly reduced CRIT_MULTIPLIER to 2.5 to maintain balance. Increased HIT_STOP_CRIT to 15 ticks to heavily emphasize those big, crunchy blows.
+
+## [Movement Flow (Coyote Speed)]
+**Friction:** The movement system felt slightly clunky when pops were encumbered, leading to a "just missing the bus" feeling where they had to wait an extra tick to move because they were a fraction of a speed point short.
+**Flow:** Increased COYOTE_THRESHOLD from 0.25 to 0.35. This provides a slightly larger grace period for movement cost evaluation, allowing for smoother, more continuous movement even when dealing with wind or terrain penalties.
