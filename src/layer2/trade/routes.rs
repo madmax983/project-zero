@@ -8,7 +8,11 @@ pub struct Colony {
 
 impl Colony {
     pub fn get_resource(&self, item: &str) -> u32 {
-        self.resources.iter().find(|r| r.0 == item).map(|r| r.1).unwrap_or(0)
+        self.resources
+            .iter()
+            .find(|r| r.0 == item)
+            .map(|r| r.1)
+            .unwrap_or(0)
     }
 
     pub fn add_resource(&mut self, item: String, amount: u32) {
@@ -51,7 +55,9 @@ pub fn execute_trade_routes_system(
             timer.0 -= 1;
         }
         if timer.0 == 0 {
-            if let Ok([mut source_colony, mut dest_colony]) = colonies.get_many_mut([route.source, route.destination]) {
+            if let Ok([mut source_colony, mut dest_colony]) =
+                colonies.get_many_mut([route.source, route.destination])
+            {
                 if source_colony.remove_resource(&route.item_type, route.amount) {
                     dest_colony.add_resource(route.item_type.clone(), route.amount);
                 }
@@ -69,8 +75,18 @@ mod tests {
     fn test_trade_route_creation() {
         // Arrange
         let mut world = World::new();
-        let colony_a = world.spawn(Colony { name: "Earth".to_string(), resources: vec![] }).id();
-        let colony_b = world.spawn(Colony { name: "Mars".to_string(), resources: vec![] }).id();
+        let colony_a = world
+            .spawn(Colony {
+                name: "Earth".to_string(),
+                resources: vec![],
+            })
+            .id();
+        let colony_b = world
+            .spawn(Colony {
+                name: "Mars".to_string(),
+                resources: vec![],
+            })
+            .id();
 
         // Act
         let route = TradeRoute {
@@ -92,8 +108,18 @@ mod tests {
     fn test_trade_route_execution() {
         // Arrange
         let mut world = World::new();
-        let colony_a = world.spawn(Colony { name: "Earth".to_string(), resources: vec![("Food".to_string(), 500)] }).id();
-        let colony_b = world.spawn(Colony { name: "Mars".to_string(), resources: vec![("Food".to_string(), 0)] }).id();
+        let colony_a = world
+            .spawn(Colony {
+                name: "Earth".to_string(),
+                resources: vec![("Food".to_string(), 500)],
+            })
+            .id();
+        let colony_b = world
+            .spawn(Colony {
+                name: "Mars".to_string(),
+                resources: vec![("Food".to_string(), 0)],
+            })
+            .id();
 
         let route = TradeRoute {
             source: colony_a,
@@ -113,14 +139,22 @@ mod tests {
         let a_res = world.get::<Colony>(colony_a).unwrap().get_resource("Food");
         let b_res = world.get::<Colony>(colony_b).unwrap().get_resource("Food");
         assert_eq!(a_res, 400, "Source colony should have sent 100 Food");
-        assert_eq!(b_res, 100, "Destination colony should have received 100 Food");
+        assert_eq!(
+            b_res, 100,
+            "Destination colony should have received 100 Food"
+        );
     }
 
     #[test]
     fn test_trade_route_missing_destination() {
         // Arrange
         let mut world = World::new();
-        let colony_a = world.spawn(Colony { name: "Earth".to_string(), resources: vec![("Food".to_string(), 500)] }).id();
+        let colony_a = world
+            .spawn(Colony {
+                name: "Earth".to_string(),
+                resources: vec![("Food".to_string(), 500)],
+            })
+            .id();
 
         // Non-existent colony
         let colony_b = Entity::from_raw(999);
@@ -141,6 +175,9 @@ mod tests {
 
         // Assert
         let a_res = world.get::<Colony>(colony_a).unwrap().get_resource("Food");
-        assert_eq!(a_res, 500, "Source colony should NOT have sent 100 Food because destination is missing");
+        assert_eq!(
+            a_res, 500,
+            "Source colony should NOT have sent 100 Food because destination is missing"
+        );
     }
 }
