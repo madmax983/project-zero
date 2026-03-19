@@ -30,3 +30,6 @@ pub mod poltergeist_activity;
 pub mod the_feral_choir;
 #[cfg(feature = "nova")]
 pub mod the_humming_monolith;
+
+#[cfg(feature = "nova")]
+pub mod chrono_stutter;
