@@ -1672,7 +1672,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Xeno-Artifacts
+## Xeno-Artifacts [SPECCED]
 
 **Layer:** 1
 
@@ -1686,7 +1686,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Drone Networks
+## Drone Networks [SPECCED]
 
 **Layer:** 1
 
@@ -1728,7 +1728,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Galactic Market
+## The Galactic Market [SPECCED]
 
 **Layer:** 3
 
@@ -1742,7 +1742,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Planetary Governance
+## Planetary Governance [SPECCED]
 
 **Layer:** 2
 
