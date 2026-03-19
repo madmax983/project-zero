@@ -46,3 +46,8 @@
 **Concept:** When multiple Fauna entities cluster together, they form a "Feral Choir" that generates a massive Acoustic noise source, applying a global morale penalty to Pops who can hear it.
 **Fate:** Merged
 **Lesson:** Viral mechanics tied to spatial clustering and audio components.
+
+## [The Chrono-Stutter]
+**Concept:** Localized temporal anomalies randomly spawn across the map. Pops caught inside experience extremely accelerated time, making them move and work significantly faster but also causing their needs to decay and their age to increase at alarming rates.
+**Fate:** Merged
+**Lesson:** Tying temporal flow directly to spatial positioning introduces dynamic risk/reward hotspots to the simulation grid.

@@ -16,6 +16,17 @@ pub fn register(schedule: &mut Schedule) {
         )
             .in_set(Layer1SystemSet::Observation),
     );
+
+    #[cfg(feature = "nova")]
+    schedule.add_systems(
+        (
+            crate::experimental::chrono_stutter::spawn_chrono_anomaly_system
+                .after(decay_needs_system),
+            crate::experimental::chrono_stutter::apply_chrono_stutter_system
+                .after(crate::experimental::chrono_stutter::spawn_chrono_anomaly_system),
+        )
+            .in_set(Layer1SystemSet::Observation),
+    );
     schedule.add_systems(
         (
             biography_monitor_system.after(crate::layer1::health::despawn_dead_entities_system),
