@@ -70,7 +70,6 @@ mod tests {
     use bevy_ecs::prelude::*;
     use bevy_ecs::system::RunSystemOnce;
 
-
     #[test]
     fn test_wild_exposure_component_init() {
         let mut world = World::new();
@@ -168,10 +167,7 @@ mod tests {
         }
 
         let traits = world.get::<Traits>(child).unwrap();
-        assert!(
-            traits.has(Trait::Feral),
-            "Child should become Feral"
-        );
+        assert!(traits.has(Trait::Feral), "Child should become Feral");
     }
 
     #[test]

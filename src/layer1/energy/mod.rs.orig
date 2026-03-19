@@ -185,12 +185,6 @@ pub fn calculate_grid_stats(world: &mut World, start_entity: Entity) -> (f32, f3
 
 /// System to update power grids.
 /// Identifies connected components, sums production/demand, and enables/disables consumers.
-///
-/// ⚡ Bolt Optimization:
-/// - Avoids allocating a Vec for `positions` by iterating directly over `grid_map.keys().copied()`.
-/// - Utilizes single-pass iteration replacing two separate `.iter().filter(...).copied().collect()` chains
-///   with a single loop over `grid_entities`. This avoids iterating the vector twice and removes
-///   two intermediate iterator/collection overheads per grid.
 pub fn power_grid_system(world: &mut World) {
     // 0. Check Protocol
     let blackout = world
@@ -219,8 +213,9 @@ pub fn power_grid_system(world: &mut World) {
 
     // 2. Find connected components
     let mut visited: HashSet<(i32, i32)> = HashSet::new();
+    let positions: Vec<(i32, i32)> = grid_map.keys().copied().collect();
 
-    for start_pos in grid_map.keys().copied() {
+    for start_pos in positions {
         if visited.contains(&start_pos) {
             continue;
         }
@@ -235,19 +230,21 @@ pub fn power_grid_system(world: &mut World) {
         let mut net = total_production - total_demand;
 
         // Collect batteries in this grid
-        let mut batteries = Vec::new();
-        let mut kinetic_batteries = Vec::new();
-        for e in &grid_entities {
-            if world.get::<Battery>(*e).is_some() {
-                batteries.push(*e);
-            }
-            if world
-                .get::<crate::layer1::kinetic_storage::KineticBattery>(*e)
-                .is_some()
-            {
-                kinetic_batteries.push(*e);
-            }
-        }
+        let batteries: Vec<Entity> = grid_entities
+            .iter()
+            .filter(|e| world.get::<Battery>(**e).is_some())
+            .copied()
+            .collect();
+
+        let kinetic_batteries: Vec<Entity> = grid_entities
+            .iter()
+            .filter(|e| {
+                world
+                    .get::<crate::layer1::kinetic_storage::KineticBattery>(**e)
+                    .is_some()
+            })
+            .copied()
+            .collect();
 
         let provided = handle_batteries(world, &batteries, &kinetic_batteries, net);
         if net < 0.0 {

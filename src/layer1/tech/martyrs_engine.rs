@@ -62,9 +62,7 @@ pub fn attune_engine_system(
                 if traits.has(Trait::Cannibal) || traits.has(Trait::Outsider) {
                     penalty *= 0.1; // Much less stress
                 }
-                if traits.has(Trait::EmpathicLink)
-                    || traits.has(Trait::Compassionate)
-                {
+                if traits.has(Trait::EmpathicLink) || traits.has(Trait::Compassionate) {
                     penalty *= 1.5; // More stress
                 }
             }

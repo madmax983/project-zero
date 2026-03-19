@@ -1,9 +1,9 @@
-use bevy_ecs::prelude::*;
 use crate::layer1::building::Building;
-use crate::layer1::items::ItemType;
 use crate::layer1::inventory::{Inventory, InventoryItem};
+use crate::layer1::items::ItemType;
 use crate::layer1::map::GridPosition;
 use crate::layer1::resources::ColonyResources;
+use bevy_ecs::prelude::*;
 use rand::Rng;
 
 #[derive(Component, Default)]
@@ -24,7 +24,12 @@ pub struct ContainmentBreachEvent {
 }
 
 pub fn nanite_fabrication_system(
-    mut query: Query<(Entity, &mut Nanoforge, Option<&mut Inventory>, Option<&GridPosition>)>,
+    mut query: Query<(
+        Entity,
+        &mut Nanoforge,
+        Option<&mut Inventory>,
+        Option<&GridPosition>,
+    )>,
     mut resources: ResMut<ColonyResources>,
     mut breach_events: EventWriter<ContainmentBreachEvent>,
 ) {
@@ -76,11 +81,15 @@ pub fn grey_goo_replication_system(
             // Find an adjacent target to consume
             for (target_entity, target_pos, building_opt) in target_query.iter() {
                 // Check adjacency (simplistic orthogonal check)
-                if (goo_pos.x - target_pos.x).abs() + (goo_pos.y - target_pos.y).abs() == 1 && building_opt.is_some() {
+                if (goo_pos.x - target_pos.x).abs() + (goo_pos.y - target_pos.y).abs() == 1
+                    && building_opt.is_some()
+                {
                     // Consume!
                     commands.entity(target_entity).despawn();
                     commands.spawn((
-                        GreyGoo { replication_progress: 0.0 },
+                        GreyGoo {
+                            replication_progress: 0.0,
+                        },
                         *target_pos,
                     ));
                     break; // Only consume one per tick per goo tile
@@ -93,10 +102,10 @@ pub fn grey_goo_replication_system(
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::layer1::building::BuildingType;
     use bevy_app::App;
     use bevy_app::Update;
     use bevy_ecs::event::Events;
-    use crate::layer1::building::BuildingType;
 
     #[test]
     fn test_nanoforge_instant_production() {
@@ -111,14 +120,19 @@ mod tests {
 
         let inventory = Inventory::default();
 
-        let forge_entity = app.world_mut().spawn((
-            Building { building_type: BuildingType::Housing },
-            Nanoforge {
-                active_recipe: Some(ItemType::Tool),
-                breach_risk: 0.0,
-            },
-            inventory,
-        )).id();
+        let forge_entity = app
+            .world_mut()
+            .spawn((
+                Building {
+                    building_type: BuildingType::Housing,
+                },
+                Nanoforge {
+                    active_recipe: Some(ItemType::Tool),
+                    breach_risk: 0.0,
+                },
+                inventory,
+            ))
+            .id();
 
         app.update();
 
@@ -126,7 +140,10 @@ mod tests {
         assert!(res.metal < 50.0);
 
         let inventory_after = app.world().get::<Inventory>(forge_entity).unwrap();
-        assert!(inventory_after.items.iter().any(|i| i.item_type == ItemType::Tool));
+        assert!(inventory_after
+            .items
+            .iter()
+            .any(|i| i.item_type == ItemType::Tool));
     }
 
     #[test]
@@ -137,13 +154,18 @@ mod tests {
 
         app.insert_resource(ColonyResources::default());
 
-        let forge_entity = app.world_mut().spawn((
-            Building { building_type: BuildingType::Housing },
-            Nanoforge {
-                active_recipe: Some(ItemType::Tool),
-                breach_risk: 1.0, // Guaranteed breach
-            },
-        )).id();
+        let forge_entity = app
+            .world_mut()
+            .spawn((
+                Building {
+                    building_type: BuildingType::Housing,
+                },
+                Nanoforge {
+                    active_recipe: Some(ItemType::Tool),
+                    breach_risk: 1.0, // Guaranteed breach
+                },
+            ))
+            .id();
 
         app.update();
 
@@ -163,19 +185,29 @@ mod tests {
         let pos_goo = GridPosition { x: 10, y: 10 };
         let pos_target = GridPosition { x: 10, y: 11 };
 
-        let target_entity = app.world_mut().spawn((
-            Building { building_type: BuildingType::Housing },
-            pos_target,
-        )).id();
+        let target_entity = app
+            .world_mut()
+            .spawn((
+                Building {
+                    building_type: BuildingType::Housing,
+                },
+                pos_target,
+            ))
+            .id();
 
         app.world_mut().spawn((
-            GreyGoo { replication_progress: 1.0 },
+            GreyGoo {
+                replication_progress: 1.0,
+            },
             pos_goo,
         ));
 
         app.update();
 
-        assert!(app.world().get_entity(target_entity).is_err() || app.world().get::<Building>(target_entity).is_none());
+        assert!(
+            app.world().get_entity(target_entity).is_err()
+                || app.world().get::<Building>(target_entity).is_none()
+        );
 
         let mut new_goo_found = false;
         let mut query = app.world_mut().query::<(&GreyGoo, &GridPosition)>();
@@ -185,6 +217,9 @@ mod tests {
                 break;
             }
         }
-        assert!(new_goo_found, "Grey Goo failed to replicate to adjacent tile.");
+        assert!(
+            new_goo_found,
+            "Grey Goo failed to replicate to adjacent tile."
+        );
     }
 }

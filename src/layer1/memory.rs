@@ -351,7 +351,6 @@ mod tests {
         use crate::layer1::day_night::TimeOfDay;
         use crate::layer1::traits::{Trait, Traits};
 
-
         let needs = Needs {
             hunger: 0.5,
             rest: 0.5,

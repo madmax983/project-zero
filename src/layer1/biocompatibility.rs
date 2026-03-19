@@ -83,7 +83,6 @@ mod tests {
     use crate::layer1::pop::Pop;
     use crate::layer1::traits::{Trait, Traits};
 
-
     #[test]
     fn test_biocompatibility_component_default() {
         let bio = Biocompatibility::default();

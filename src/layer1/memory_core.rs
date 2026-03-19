@@ -96,8 +96,6 @@ mod tests {
     use crate::layer1::stress::StressTracker;
     use crate::layer1::traits::{Trait, Traits};
 
-
-
     fn setup_world() -> World {
         let mut world = World::new();
         world.insert_resource(Events::<ImplantMemoryCoreEvent>::default());
