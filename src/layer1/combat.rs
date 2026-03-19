@@ -28,11 +28,11 @@ use rand::Rng;
 use ratatui::style::Color;
 
 // Ludwig's Tuning Constants
-const CRIT_CHANCE: f64 = 0.15;
-const CRIT_MULTIPLIER: f32 = 3.0;
+const CRIT_CHANCE: f64 = 0.2; // Ludwig: Increased base crit chance for more juice
+const CRIT_MULTIPLIER: f32 = 2.5; // Ludwig: Rebalanced multiplier to compensate for higher chance
 
-// Ludwig: Reduced hit stop times for snappier combat (Game Feel)
-const HIT_STOP_CRIT: u32 = 12;
+// Ludwig: Adjusted hit stop times for snappier combat (Game Feel)
+const HIT_STOP_CRIT: u32 = 15; // Ludwig: Emphasize massive impacts
 const HIT_STOP_HEAVY: u32 = 6;
 const HIT_STOP_MEDIUM: u32 = 2;
 const HIT_STOP_LIGHT: u32 = 1;
@@ -617,7 +617,7 @@ mod tests {
 
         // Heavy Weapon (Damage 20)
         // Normal: 20 dmg -> Heavy (6 ticks)
-        // Crit: 40 dmg -> Crit (12 ticks)
+        // Crit: 50 dmg -> Crit (15 ticks)
         let weapon = world
             .spawn(Weapon {
                 properties: AttackProperties {
@@ -654,8 +654,8 @@ mod tests {
         assert!(attacker_hs.is_some(), "Attacker should have HitStop");
         let ticks = attacker_hs.unwrap().ticks_remaining;
         assert!(
-            ticks == 6 || ticks == 12,
-            "Expected 6 or 12 ticks, got {}",
+            ticks == 6 || ticks == 15,
+            "Expected 6 or 15 ticks, got {}",
             ticks
         );
 
@@ -663,14 +663,14 @@ mod tests {
         assert!(target_hs.is_some(), "Target should have HitStop");
         let ticks_target = target_hs.unwrap().ticks_remaining;
         assert!(
-            ticks_target == 6 || ticks_target == 12,
-            "Expected 6 or 12 ticks, got {}",
+            ticks_target == 6 || ticks_target == 15,
+            "Expected 6 or 15 ticks, got {}",
             ticks_target
         );
 
         let global_stop = world.resource::<GlobalHitStop>();
         assert!(
-            global_stop.ticks == 6 || global_stop.ticks == 12,
+            global_stop.ticks == 6 || global_stop.ticks == 15,
             "GlobalHitStop should match hit stop ticks, got {}",
             global_stop.ticks
         );
@@ -682,7 +682,7 @@ mod tests {
 
         // Very Light Weapon (Damage 4)
         // Normal: 4 dmg -> Light (1 ticks)
-        // Crit: 8 dmg -> Medium (2 ticks, overridden to 12)
+        // Crit: 10 dmg -> Medium (2 ticks, overridden to 15)
         let weapon = world
             .spawn(Weapon {
                 properties: AttackProperties {
@@ -717,8 +717,8 @@ mod tests {
         assert!(hs.is_some(), "Should always have HitStop");
         let ticks = hs.unwrap().ticks_remaining;
 
-        if ticks == 12 {
-            // Crit (12 ticks)
+        if ticks == 15 {
+            // Crit (15 ticks)
         } else {
             // Normal (Damage 4 < 5) -> Light (1 tick)
             assert_eq!(ticks, 1, "Normal light hit should give 1 tick");
@@ -731,9 +731,9 @@ mod tests {
 
         // Medium Weapon (Damage 10)
         // Normal: 10 dmg -> Medium (2 ticks)
-        // Crit: 20 dmg -> Crit (12 ticks) - because 20 >= 15 is Heavy, but Crit flag overrides to Crit duration?
-        // Wait, implementation: if is_crit { 12 } else if dmg >= 15 { 6 } ...
-        // So yes, Crit -> 12 ticks.
+        // Crit: 25 dmg -> Crit (15 ticks) - because 25 >= 15 is Heavy, but Crit flag overrides to Crit duration?
+        // Wait, implementation: if is_crit { 15 } else if dmg >= 15 { 6 } ...
+        // So yes, Crit -> 15 ticks.
         let weapon = world
             .spawn(Weapon {
                 properties: AttackProperties {
@@ -768,14 +768,14 @@ mod tests {
         assert!(hs.is_some());
         let ticks = hs.unwrap().ticks_remaining;
         assert!(
-            ticks == 2 || ticks == 12,
-            "Expected 2 (Normal) or 12 (Crit), got {}",
+            ticks == 2 || ticks == 15,
+            "Expected 2 (Normal) or 15 (Crit), got {}",
             ticks
         );
 
         let global_stop = world.resource::<GlobalHitStop>();
         assert!(
-            global_stop.ticks == 2 || global_stop.ticks == 12,
+            global_stop.ticks == 2 || global_stop.ticks == 15,
             "GlobalHitStop should match hit stop ticks, got {}",
             global_stop.ticks
         );
