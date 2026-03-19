@@ -195,3 +195,5 @@ mod vr_pod_integration;
 
 #[path = "integration/escape_velocity_traits.rs"]
 mod escape_velocity_traits;
+#[path = "integration/geome_hazards.rs"]
+mod geome_hazards;

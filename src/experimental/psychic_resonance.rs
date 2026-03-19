@@ -60,7 +60,6 @@ pub fn psychic_resonance_system(
 mod tests {
     use super::*;
     use bevy_ecs::system::RunSystemOnce;
-    use std::collections::HashSet;
 
     #[test]
     fn test_psychic_resonance_positive() {

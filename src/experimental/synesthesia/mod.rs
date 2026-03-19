@@ -52,7 +52,6 @@ pub fn register(schedule: &mut Schedule) {
 mod tests {
     use super::*;
     use bevy_ecs::system::RunSystemOnce;
-    use std::collections::HashSet;
 
     #[test]
     fn test_synesthesia_system_red_light() {

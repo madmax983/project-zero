@@ -104,7 +104,6 @@ pub fn register(schedule: &mut Schedule) {
 mod tests {
     use super::*;
     use bevy_ecs::system::RunSystemOnce;
-    use std::collections::HashSet;
 
     #[test]
     fn test_spawn_monolith_respects_threshold_and_limit() {

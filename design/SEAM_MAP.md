@@ -415,3 +415,11 @@
     - Updated `consume_food_system` in `src/layer1/farm.rs` to fetch `GutBiome` and apply effects (`Gut Comfort` or `Indigestion`).
     - Added `GutBiome` initialized within `PopBundle`.
 - **Tests:** `src/layer1/gut_biome.rs` tests (5 tests verified)
+
+### INT-515: Deep Crust Geomes -> Environmental Damage
+- **Date:** 2026-03-27
+- **Systems connected:** `GeomeHazard` (Geomes) -> `environmental_damage_system` (Integration) -> `Health` (Health)
+- **Glue added:**
+    - Updated `environmental_damage_system` in `src/layer1/geomes.rs` to correctly accumulate damage for multiple hazards on the same tile using a HashMap and apply it using `Health::take_damage`.
+    - Integrated with `diffuse_geome_hazards_system` that spawns hazards when Geome boundaries are breached.
+- **Tests:** `tests/integration/geome_hazards.rs` (1 integration test verified)

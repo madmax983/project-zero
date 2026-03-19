@@ -3,8 +3,10 @@ use scale::layer1::health::Health;
 
 #[test]
 fn test_take_damage_negative_healing() {
-    let mut health = Health::default();
-    health.current = 50.0;
+    let mut health = Health {
+        current: 50.0,
+        ..Default::default()
+    };
     // Exploit: healing via negative damage
     health.take_damage(-50.0);
     // Should stay 50.0 if fixed, but currently becomes 100.0
@@ -16,8 +18,10 @@ fn test_take_damage_negative_healing() {
 
 #[test]
 fn test_take_damage_nan() {
-    let mut health = Health::default();
-    health.current = 50.0;
+    let mut health = Health {
+        current: 50.0,
+        ..Default::default()
+    };
     // Exploit: NaN could cause weird behavior
     health.take_damage(f32::NAN);
     // Should probably ignore NaN or handle safely

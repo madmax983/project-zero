@@ -129,11 +129,14 @@ pub fn environmental_damage_system(
     mut health_query: Query<(&GridPosition, &mut crate::layer1::health::Health)>,
     hazard_query: Query<(&GridPosition, &GeomeHazard)>,
 ) {
+    let mut hazard_map = std::collections::HashMap::new();
+    for (pos, hazard) in hazard_query.iter() {
+        *hazard_map.entry(*pos).or_insert(0.0) += hazard.damage_per_tick;
+    }
+
     for (health_pos, mut health) in health_query.iter_mut() {
-        for (hazard_pos, hazard) in hazard_query.iter() {
-            if health_pos == hazard_pos {
-                health.current -= hazard.damage_per_tick;
-            }
+        if let Some(damage) = hazard_map.get(health_pos) {
+            health.take_damage(*damage);
         }
     }
 }

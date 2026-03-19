@@ -10,3 +10,4 @@ pub mod vr_pod_integration;
 pub mod flora_empathy;
 pub mod food_needs;
 pub mod escape_velocity_traits;
+pub mod geome_hazards;
