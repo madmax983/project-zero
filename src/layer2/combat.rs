@@ -98,19 +98,27 @@ pub fn resolve_combat(
     }
 }
 
+use crate::layer2::silent_mutiny::AvoidCombat;
+
 /// System to resolve combat between fleets at the same orbital location.
 pub fn fleet_combat_system(
     mut commands: Commands,
-    mut query: Query<(Entity, &InOrbit, &FleetFaction, &mut FleetComposition)>,
+    mut query: Query<(
+        Entity,
+        &InOrbit,
+        &FleetFaction,
+        &mut FleetComposition,
+        Option<&AvoidCombat>,
+    )>,
     mut event_writer: EventWriter<ShipDestroyedEvent>,
 ) {
     // Naive O(N^2) check for MVP. Optimized: Sort by location or use HashMap.
     // Given low N of fleets, sorting/grouping is fine.
 
-    // Vector of (Entity, Parent, Faction, Composition)
+    // Vector of (Entity, Parent, Faction, Composition, AvoidCombat)
     let mut fleets: Vec<_> = query
         .iter_mut()
-        .map(|(e, o, f, c)| (e, o.parent, *f, c.clone()))
+        .map(|(e, o, f, c, a)| (e, o.parent, *f, c.clone(), a.is_some()))
         .collect();
 
     // Group by location
@@ -145,8 +153,14 @@ pub fn fleet_combat_system(
             }
 
             if let Some((idx1, idx2)) = combat_pair {
-                let (e1, _, f1, c1) = &location_fleets[idx1];
-                let (e2, _, f2, c2) = &location_fleets[idx2];
+                let (e1, _, f1, c1, a1) = &location_fleets[idx1];
+                let (e2, _, f2, c2, a2) = &location_fleets[idx2];
+
+                if *a1 || *a2 {
+                    // One of the fleets is avoiding combat
+                    i = group_end;
+                    continue;
+                }
 
                 // Resolve Combat
                 // Assume first one found is "attacker" (arbitrary)

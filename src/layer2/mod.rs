@@ -17,6 +17,7 @@ pub mod phantom;
 pub mod render;
 pub mod shielding;
 pub mod ship;
+pub mod silent_mutiny;
 pub mod station;
 pub mod system;
 pub mod thermal;
