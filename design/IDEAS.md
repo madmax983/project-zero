@@ -9332,7 +9332,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Kinetic Graveyard
+## The Kinetic Graveyard [SPECCED]
 
 **Layer:** 2 -> 1
 
@@ -9876,7 +9876,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Memory Smugglers
+## The Memory Smugglers [SPECCED]
 
 **Layer:** 1 -> Cross-layer
 
@@ -9890,7 +9890,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Architectural Palimpsest
+## The Architectural Palimpsest [SPECCED]
 
 **Layer:** 1
 
@@ -9932,7 +9932,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Gravity Sickness
+## Gravity Sickness [SPECCED]
 
 **Layer:** 1 / 2
 

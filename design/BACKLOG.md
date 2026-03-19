@@ -266,3 +266,7 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `538` Inter-Colony Trade Routes — `specs/538-inter-colony-trade-routes.md`
 - [ ] `539` Penal Contracts — `specs/539-penal-contracts.md`
 - [ ] `540` The Exodus — `specs/540-the-exodus.md`
+- [ ] `541` The Memory Smugglers — `specs/541-the-memory-smugglers.md`
+- [ ] `542` The Architectural Palimpsest — `specs/542-the-architectural-palimpsest.md`
+- [ ] `543` Gravity Sickness — `specs/543-gravity-sickness.md`
+- [ ] `544` The Kinetic Graveyard — `specs/544-the-kinetic-graveyard.md`
