@@ -423,3 +423,10 @@
     - Updated `environmental_damage_system` in `src/layer1/geomes.rs` to correctly accumulate damage for multiple hazards on the same tile using a HashMap and apply it using `Health::take_damage`.
     - Integrated with `diffuse_geome_hazards_system` that spawns hazards when Geome boundaries are breached.
 - **Tests:** `tests/integration/geome_hazards.rs` (1 integration test verified)
+
+### INT-540: Exodus -> ColonyResources
+- **Date:** 2026-03-19
+- **Systems connected:** `build_ark_system` and `cannibalize_infrastructure_system` integrated into `Layer1SystemSet::Economy`
+- **Glue added:** Directly registered in `src/layer1/systems/economy.rs`
+- **Schedule:** Chained in Economy loop
+- **Tests:** `tests/integration/exodus_ark.rs` (1 test)

@@ -34,6 +34,9 @@ pub fn register(schedule: &mut Schedule) {
                 crate::layer1::tech::martyrs_engine::process_martyrs_engine,
                 crate::layer1::eureka::handle_eureka_events,
                 recycle_processing_system,
+                crate::layer1::exodus::cannibalize_infrastructure_system,
+                crate::layer1::exodus::build_ark_system
+                    .after(crate::layer1::exodus::cannibalize_infrastructure_system),
                 #[cfg(feature = "nova")]
                 crate::layer1::machine_consciousness::consciousness_growth_system,
             ),
