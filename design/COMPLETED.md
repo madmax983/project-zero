@@ -258,3 +258,4 @@
 - [x] `515` Deep Crust Geomes — `specs/515-deep-crust-geomes.md` — completed 2026-03-27
 - [x] `INT-515` Integration: Deep Crust Geomes -> Environmental Damage — completed 2026-03-27
 - [x] `540` The Exodus — `specs/540-the-exodus.md` — completed 2026-03-18
+- [x] `INT-540` Integration: The Exodus -> ColonyResources — completed 2026-03-19
