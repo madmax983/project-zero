@@ -371,7 +371,6 @@ mod tests {
     fn test_trait_hunger_decay() {
         use crate::layer1::traits::{Trait, Traits};
 
-
         let mut world = setup();
         let glutton = Traits(1 << (Trait::Glutton as u8));
 

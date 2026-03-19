@@ -138,7 +138,6 @@ mod tests {
     use crate::layer1::traits::{Trait, Traits};
     use bevy_ecs::prelude::*;
 
-
     #[test]
     fn test_private_stash_component() {
         let mut stash = PrivateStash::default();
@@ -299,9 +298,7 @@ mod tests {
         res.food = 5.0; // Shortage
         world.insert_resource(res);
 
-        let _pop = world
-            .spawn((Pop, Traits(1 << (Trait::Anxious as u8))))
-            .id();
+        let _pop = world.spawn((Pop, Traits(1 << (Trait::Anxious as u8)))).id();
 
         let mut schedule = Schedule::default();
         schedule.add_systems(super::stash_creation_system);

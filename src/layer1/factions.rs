@@ -211,8 +211,7 @@ impl Factions {
 /// Component indicating faction membership.
 ///
 /// Every Pop has this component. It is updated periodically based on their highest skill.
-#[derive(Component, Default, Debug, Clone)]
-#[derive(Copy)]
+#[derive(Component, Default, Debug, Clone, Copy)]
 pub struct FactionMember {
     /// The ID of the faction this entity belongs to.
     pub faction_id: Option<FactionId>,

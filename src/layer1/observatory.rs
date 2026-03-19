@@ -46,13 +46,10 @@ pub fn process_observe_system(
                     let mut inspiration_chance: f64 = 0.5;
 
                     if let Some(traits) = traits {
-                        if traits.has(Trait::Optimist) || traits.has(Trait::Curious)
-                        {
+                        if traits.has(Trait::Optimist) || traits.has(Trait::Curious) {
                             inspiration_chance += 0.3;
                         }
-                        if traits.has(Trait::Anxious)
-                            || traits.has(Trait::Traditionalist)
-                        {
+                        if traits.has(Trait::Anxious) || traits.has(Trait::Traditionalist) {
                             inspiration_chance -= 0.3;
                         }
                     }

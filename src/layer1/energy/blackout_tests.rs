@@ -9,7 +9,6 @@ mod tests {
     use bevy_ecs::prelude::*;
     use bevy_ecs::system::RunSystemOnce;
 
-
     #[test]
     fn test_blackout_cuts_power() {
         let mut world = World::new();

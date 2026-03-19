@@ -62,12 +62,7 @@ mod tests {
         let mut world = setup_app();
 
         let pop_entity = world
-            .spawn((
-                Pop,
-                Skills::default(),
-                Traits::default(),
-                Morale::default(),
-            ))
+            .spawn((Pop, Skills::default(), Traits::default(), Morale::default()))
             .id();
 
         world.send_event(ObserveEvent { pop: pop_entity });
@@ -119,12 +114,7 @@ mod tests {
         });
 
         let pop_entity = world
-            .spawn((
-                Pop,
-                Skills::default(),
-                Traits::default(),
-                Morale::default(),
-            ))
+            .spawn((Pop, Skills::default(), Traits::default(), Morale::default()))
             .id();
 
         world.send_event(ObserveEvent { pop: pop_entity });

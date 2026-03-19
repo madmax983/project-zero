@@ -835,7 +835,6 @@ mod tests {
 
     #[test]
     fn test_consume_food_rations_immunity() {
-
         let mut world = World::new();
         world.insert_resource(ColonyResources {
             rations: 10.0,

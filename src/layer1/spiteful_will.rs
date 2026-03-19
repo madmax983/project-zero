@@ -59,7 +59,6 @@ mod tests {
     use crate::layer1::traits::{Trait, Traits};
     use bevy::prelude::*;
 
-
     fn setup_app() -> App {
         let mut app = App::new();
         app.add_event::<InheritanceEvent>();
