@@ -262,7 +262,7 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `534` Architectural Sympathy — `specs/534-architectural-sympathy.md`
 - [ ] `535` The Propaganda Monolith — `specs/535-the-propaganda-monolith.md`
 - [ ] `536` The Empathic Biome Link — `specs/536-the-empathic-biome-link.md`
-- [ ] `537` Funeral Rites — `specs/537-funeral-rites.md`
+
 - [ ] `538` Inter-Colony Trade Routes — `specs/538-inter-colony-trade-routes.md`
 - [ ] `539` Penal Contracts — `specs/539-penal-contracts.md`
 - [ ] `541` Xeno-Artifacts — `specs/541-xeno-artifacts.md`

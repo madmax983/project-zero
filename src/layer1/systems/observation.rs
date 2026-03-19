@@ -13,6 +13,8 @@ pub fn register(schedule: &mut Schedule) {
                 .after(crate::layer1::integration::waste_scent_bridge),
             crate::layer1::olfactory::scent_mood_system
                 .after(crate::layer1::olfactory::scent_diffusion_system),
+            crate::layer1::funeral::apply_corpse_grief_system,
+            crate::layer1::funeral::perform_funeral_system,
         )
             .in_set(Layer1SystemSet::Observation),
     );

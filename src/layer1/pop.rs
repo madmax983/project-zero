@@ -235,6 +235,8 @@ pub struct PopBundle {
     pub health: Health,
     /// Physiological needs.
     pub needs: Needs,
+    /// Grief level.
+    pub grief: crate::layer1::funeral::NeedGrief,
     /// Memories and trauma.
     pub memories: Memories,
     /// Skill levels.
@@ -298,6 +300,7 @@ impl PopBundle {
             pos: GridPosition { x, y },
             health: Health::default(),
             needs: Needs::default(),
+            grief: crate::layer1::funeral::NeedGrief(0.0),
             memories: Memories::default(),
             skills: Skills::default(),
             speed: Speed::default(),

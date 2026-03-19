@@ -1,5 +1,8 @@
+use crate::layer1::actions::AssignedTo;
 use crate::layer1::map::GridPosition;
+use crate::layer1::map::GridPosition as Position;
 use crate::layer1::memory::{Memories, MemoryType};
+use crate::layer1::pop::Pop;
 use crate::layer1::utility_types::manhattan_distance;
 use crate::shared::time::SimulationTime;
 use bevy_ecs::prelude::*;
@@ -11,6 +14,48 @@ pub struct Corpse {
     pub name: String,
     /// Decay progress (0.0 to 1.0).
     pub decay: f32,
+}
+
+#[derive(Component)]
+pub struct NeedGrief(pub f32);
+
+#[derive(Component)]
+pub struct FuneralTask {
+    pub corpse_entity: Entity,
+}
+
+#[derive(Component)]
+pub struct ClosureMemory;
+
+pub fn apply_corpse_grief_system(
+    corpses: Query<&Position, With<Corpse>>,
+    mut pops: Query<(&Position, &mut NeedGrief), With<Pop>>,
+) {
+    for (pop_pos, mut grief) in pops.iter_mut() {
+        for corpse_pos in corpses.iter() {
+            let dx = pop_pos.x - corpse_pos.x;
+            let dy = pop_pos.y - corpse_pos.y;
+            let dist_sq = dx * dx + dy * dy;
+            if dist_sq < 25 {
+                grief.0 += 0.05; // Reduced from 1.0 to prevent instant max out
+            }
+        }
+    }
+}
+
+pub fn perform_funeral_system(
+    mut commands: Commands,
+    tasks: Query<(Entity, &FuneralTask, &AssignedTo)>,
+    mut pops: Query<&mut NeedGrief>,
+) {
+    for (task_entity, task, assigned) in tasks.iter() {
+        if let Ok(mut grief) = pops.get_mut(assigned.entity) {
+            grief.0 = 0.0;
+            commands.entity(assigned.entity).insert(ClosureMemory);
+        }
+        commands.entity(task.corpse_entity).despawn();
+        commands.entity(task_entity).despawn();
+    }
 }
 
 /// A grave for burying corpses.
@@ -245,5 +290,90 @@ mod tests {
             .items
             .iter()
             .any(|m| m.memory_type == MemoryType::AttendedFuneral));
+    }
+}
+
+#[cfg(test)]
+mod rites_tests {
+    use super::*;
+    use bevy_ecs::prelude::*;
+
+    #[test]
+    fn test_corpse_causes_grief() {
+        // Arrange
+        let mut world = World::new();
+        let _entity = world
+            .spawn((
+                Corpse {
+                    name: "Dead".into(),
+                    decay: 0.0,
+                },
+                Position { x: 0, y: 0 },
+            ))
+            .id();
+        let pop = world
+            .spawn((Pop, Position { x: 1, y: 0 }, NeedGrief(0.0)))
+            .id();
+
+        // Act
+        let mut schedule = Schedule::default();
+        schedule.add_systems(apply_corpse_grief_system);
+        schedule.run(&mut world);
+
+        // Assert
+        let pop_grief = world.get::<NeedGrief>(pop).unwrap();
+        assert!(
+            pop_grief.0 > 0.0,
+            "Corpse should cause grief in nearby pops"
+        );
+    }
+
+    #[test]
+    fn test_funeral_ceremony_gives_closure() {
+        // Arrange
+        let mut world = World::new();
+        let corpse = world
+            .spawn((
+                Corpse {
+                    name: "Dead".into(),
+                    decay: 0.0,
+                },
+                Position { x: 0, y: 0 },
+            ))
+            .id();
+        let pop = world
+            .spawn((Pop, Position { x: 1, y: 0 }, NeedGrief(1.0)))
+            .id();
+
+        use crate::layer1::actions::AssignmentType;
+        world.spawn((
+            FuneralTask {
+                corpse_entity: corpse,
+            },
+            AssignedTo {
+                entity: pop,
+                assignment_type: AssignmentType::Funeral,
+            },
+        ));
+
+        // Act
+        let mut schedule = Schedule::default();
+        schedule.add_systems(perform_funeral_system);
+        schedule.run(&mut world);
+
+        // Assert
+        assert!(
+            world.get::<Corpse>(corpse).is_none(),
+            "Corpse should be removed after funeral"
+        );
+        let pop_grief = world.get::<NeedGrief>(pop).unwrap();
+        assert_eq!(
+            pop_grief.0, 0.0,
+            "Funeral should provide closure and clear grief"
+        );
+        assert!(
+            world.get::<ClosureMemory>(pop).is_some(),
+            "Pop should gain closure memory"
+        );
     }
 }

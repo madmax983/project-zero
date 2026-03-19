@@ -1,7 +1,5 @@
 # In Progress
-
 Tasks currently being implemented by Builders.
-
 ---
 - [ ] `183` Geodetic Sentience — `specs/183-geodetic-sentience.md` — claimed 2026-02-26
 - [ ] `239` Operational Detritus — `specs/239-operational-detritus.md` — claimed 2026-02-26

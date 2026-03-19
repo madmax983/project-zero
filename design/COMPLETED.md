@@ -258,3 +258,4 @@
 - [x] `515` Deep Crust Geomes — `specs/515-deep-crust-geomes.md` — completed 2026-03-27
 - [x] `INT-515` Integration: Deep Crust Geomes -> Environmental Damage — completed 2026-03-27
 - [x] `540` The Exodus — `specs/540-the-exodus.md` — completed 2026-03-18
+- [x] `537` Funeral Rites — `specs/537-funeral-rites.md` — completed 2026-03-19
