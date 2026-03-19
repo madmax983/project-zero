@@ -1560,7 +1560,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Funeral Rites
+## Funeral Rites [SPECCED]
 
 **Layer:** 1
 
@@ -1588,7 +1588,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Inter-Colony Trade Routes
+## Inter-Colony Trade Routes [SPECCED]
 
 **Layer:** 2
 
@@ -1602,7 +1602,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Penal Contracts
+## Penal Contracts [SPECCED]
 
 **Layer:** 3 -> 1
 
@@ -1630,7 +1630,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Exodus
+## The Exodus [SPECCED]
 
 **Layer:** Cross-layer
 
