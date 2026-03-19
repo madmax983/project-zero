@@ -10638,3 +10638,58 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Centralized, highly efficient but dirty production vs. the horrifying risk of literally setting the atmosphere on fire.
 
 ---
+## Orbital Necropolis
+
+**Layer:** 2
+
+**Fantasy:** Honoring the dead by sending them to the stars, turning orbit into a sacred, silent ring of tombs.
+
+**Mechanic:** Instead of burying dead Pops on Layer 1, you can launch "Sarcophagus Pods" into Layer 2 orbit. This provides a massive, permanent Morale boost to the colony, but the pods clutter orbit. If an enemy or debris destroys a pod, the entire colony suffers a devastating "Sacrilege" Morale penalty.
+
+**Emergence:** You fill your orbit with honored dead, creating a beautiful ring of Sarcophagi. A pirate raid arrives and uses the Sarcophagi as physical cover during the space battle, forcing your defense fleet to carefully pick their shots or risk shooting their own ancestors.
+
+**Tension:** The immense, space-saving Morale boost of orbital burial vs. the terrifying fragility of putting your cultural heritage in the firing line.
+
+---
+
+## The Parasitic Wardrobe
+
+**Layer:** 1
+
+**Fantasy:** High-fashion that is literally alive, offering incredible benefits but demanding blood in return.
+
+**Mechanic:** You discover "Sym-Weave," a bio-engineered fabric. Clothes made from it provide massive stat boosts (Movement Speed, Armor, Social Prestige) but slowly drain the Pop's Health. If a Pop wears it too long, the clothing permanently bonds to them, and removing it becomes lethal.
+
+**Emergence:** Your elite soldiers and diplomats are all wearing Sym-Weave, becoming virtually unstoppable in combat and negotiations. However, during a food shortage, their compromised health makes them the first to die from minor illnesses, wiping out your entire leadership caste overnight.
+
+**Tension:** Short-term, massive individual power spikes vs. the long-term, irreversible health degradation of your most important Pops.
+
+---
+
+## The Empathic Gridlock
+
+**Layer:** 1
+
+**Fantasy:** A society where you literally cannot move past someone if you are furious with them.
+
+**Mechanic:** Pops with strong negative Relationships project a small "Friction" aura. If two Pops who hate each other try to pathfind through the same narrow corridor or work at the same station, their movement speed and work efficiency drop to near-zero as they stubbornly refuse to cooperate or acknowledge each other.
+
+**Emergence:** A minor dispute over a stolen ration spirals. The two angry Pops happen to be the only operators of your critical air-filtration system. They refuse to work together, and the entire sector begins to suffocate because of a petty grudge.
+
+**Tension:** Designing efficient, compact infrastructure vs. the necessity of building wide, redundant paths to prevent social bottlenecks.
+
+---
+
+## The Quantum Audit
+
+**Layer:** 3 -> 1
+
+**Fantasy:** A bureaucratic nightmare where the laws of physics are weaponized to balance the books.
+
+**Mechanic:** A hyper-advanced Layer 3 regulatory empire periodically demands an "Audit." They deploy a quantum field over your Layer 1 colony that temporarily makes all hidden or "Private Stash" items visible and actively subtracts them from your overall Wealth score. If discrepancies are found, they permanently delete random high-value buildings as a "Fine."
+
+**Emergence:** You've been surviving a harsh tax regime by letting your Pops secretly hoard food. The Quantum Audit hits, exposing the hoard. The regulators instantly vaporize your main hospital to cover the "unreported wealth," leaving your colony perfectly compliant but doomed to die of untreated injuries.
+
+**Tension:** Turning a blind eye to the black market for short-term survival vs. the apocalyptic risk of failing a perfect, omniscient audit.
+
+---
