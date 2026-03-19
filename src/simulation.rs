@@ -98,6 +98,9 @@ pub fn build_simulation_schedule() -> Schedule {
     ));
 
     schedule.add_systems((
+        crate::layer2::silent_mutiny::check_silent_mutiny_system,
+        crate::layer2::silent_mutiny::process_mutiny_effects_system
+            .after(crate::layer2::silent_mutiny::check_silent_mutiny_system),
         crate::layer2::trade::routes::execute_trade_routes_system,
         crate::layer2::trade::penal_contracts::process_penal_contracts_system,
         crate::layer2::trade::penal_contracts::check_prisoner_status_system,
@@ -227,6 +230,9 @@ pub fn run_simulation_tick(world: &mut World) {
     if !world.contains_resource::<Events<crate::layer2::phantom::SpawnGhostFleetEvent>>() {
         world.init_resource::<Events<crate::layer2::phantom::SpawnGhostFleetEvent>>();
     }
+    if !world.contains_resource::<Events<crate::layer2::silent_mutiny::SensorGlitchEvent>>() {
+        world.init_resource::<Events<crate::layer2::silent_mutiny::SensorGlitchEvent>>();
+    }
 
     if !world
         .contains_resource::<Events<crate::layer1::nanite_fabrication::ContainmentBreachEvent>>()
@@ -312,6 +318,7 @@ mod tests {
         world.init_resource::<Events<crate::layer3::events::debt_prison::AcceptBailoutEvent>>();
 
         world.init_resource::<Events<crate::layer2::phantom::SpawnGhostFleetEvent>>();
+        world.init_resource::<Events<crate::layer2::silent_mutiny::SensorGlitchEvent>>();
         world.init_resource::<Events<crate::layer1::nanite_fabrication::ContainmentBreachEvent>>();
 
         let schedule = build_simulation_schedule();
