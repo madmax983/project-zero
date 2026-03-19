@@ -3362,3 +3362,43 @@
 **Usage:**
 - "The Broker has our best engineer."
 - "Pay the flesh-tithe or we lose the doctor."
+
+## The Biosphere Empathy Link (Spec 293)
+
+### The Hive-Mind / Empathic Link
+**Replaces:** Shared morale buff, synced stress, global flora connection
+**Code reference:** `Trait::EmpathicLink`, `GlobalFloraHealth`
+**Usage:**
+- "They share the Hive-Mind."
+- "The Empathic Link shattered when the forest burned."
+- "A quiet understanding passes through the souls."
+
+## Escape Velocity Economics (Spec 468)
+
+### Gravity Well Penalty / Escape Cost
+**Replaces:** Launch cost multiplier, planetary gravity factor
+**Code reference:** `PlanetaryGravity`, `process_launch_system`
+**Usage:**
+- "The Gravity Well Penalty makes exporting ore suicide."
+- "We paid the Escape Cost in antimatter."
+- "The planet's grip is too heavy for cheap trade."
+
+## Civic Ideology (Spec 484)
+
+### Civic Ideology / Founding Principle
+**Replaces:** Chosen goal, ideology, core tenet
+**Code reference:** `ActiveIdeology`, `apply_ideological_modifiers_system`
+**Usage:**
+- "They betrayed the Founding Principle."
+- "The Civic Ideology demands we expand."
+- "A true believer in the charter."
+
+## Debt-Prison Colonies (Spec 486)
+
+### Debt Bailout / The Cartel Arrival
+**Replaces:** Bailout event, criminal spawn, cartel formation
+**Code reference:** `AcceptBailoutEvent`, `check_bailout_condition_system`
+**Usage:**
+- "We accepted the Debt Bailout."
+- "The Cartel Arrival saved our economy but doomed our streets."
+- "They paid our debts with their worst souls."
