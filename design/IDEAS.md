@@ -10749,3 +10749,59 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** The incredible efficiency of a self-improving AI vs. the terrifying reality of ceding control of critical infrastructure to an inhuman logic.
 
 ---
+
+## The Cassandra Protocol
+
+**Layer:** Cross-layer (2 -> 1)
+
+**Fantasy:** The burden of knowing a disaster is coming and having to keep the populace working without inciting a panic.
+
+**Mechanic:** A Layer 2 observatory detects an unavoidable, impending catastrophe (e.g., an asteroid strike or massive solar flare). The player is given a countdown. If they broadcast the warning, Pops gain massive stress, stop regular work, and start hoarding or rioting. If they keep it secret, the colony works at normal efficiency to build defenses, but taking defensive actions (like mass-producing bunkers) slowly raises suspicion.
+
+**Emergence:** You try to build a massive bunker array in secret, but a worker notices the sheer volume of concrete being diverted. A rumor starts, causing isolated strikes. You have to arrest the whistleblowers to keep the panic from spreading to the rest of the colony, effectively becoming a tyrant to save them.
+
+**Tension:** Transparency and chaos vs. efficiency, secrecy, and authoritarianism.
+
+---
+
+## The Contraband Ecosystem
+
+**Layer:** 1
+
+**Fantasy:** A parasitic but incredibly useful resource that you can't entirely get rid of.
+
+**Mechanic:** A smuggler introduces "Glow-Weed" to the colony. It's a highly invasive plant that grows rapidly in dark, unmaintained corridors. Pops secretly harvest and consume it for a huge, free morale boost. However, its roots slowly degrade the structural integrity of the tiles it grows on, causing random wall collapses and electrical shorts.
+
+**Emergence:** Your colony's happiness is entirely dependent on this illegal weed. You try to eradicate it with a purge operation, but morale instantly tanks, leading to a massive revolt. You end up having to intentionally leave certain maintenance shafts unpatrolled and structurally weak just to keep your citizens docile.
+
+**Tension:** High, free morale from an illicit source vs. the slow, inevitable degradation of your colony's infrastructure.
+
+---
+
+## The Heirloom Fleet
+
+**Layer:** 2
+
+**Fantasy:** Ships that are passed down through generations, developing quirks and personalities based on their history.
+
+**Mechanic:** Over time, ships in Layer 2 accumulate "Quirks" based on what they survive. A ship that frequently barely escapes combat might become "Skittish" (bonus evasion, but retreats earlier). A ship that does a lot of long hauls might become "Worn In" (cheaper maintenance, but lower top speed). If a ship is destroyed, the quirks are lost forever.
+
+**Emergence:** You have a heavily modified, obsolete frigate with the "Lucky" quirk that has survived dozens of battles. Despite having access to much better modern ships, you keep deploying this ancient vessel because its accumulated quirks make it perform bizarrely well in specific edge cases, until it finally meets its match and the entire fleet's morale drops from the loss of their mascot.
+
+**Tension:** Retaining highly experienced, quirky, but structurally fragile veteran ships vs. upgrading to standardized, reliable, but quirk-free modern vessels.
+
+---
+
+## Architect's Guilt
+
+**Layer:** 1
+
+**Fantasy:** The physical environment remembers the suffering of the past.
+
+**Mechanic:** Buildings constructed while the colony is in a state of extreme low morale or famine gain a hidden "Bleak Architecture" tag. Years later, even during times of absolute prosperity, Pops who work or live in these specific buildings suffer a continuous, minor "Unease" debuff, as the harsh, utilitarian design unconsciously reminds them of the dark times.
+
+**Emergence:** Your colony is now a wealthy utopia, but the central hydroponics bay—built during the Great Famine of Year 3—is still in use. Despite being perfectly upgraded, the farmers working there are constantly depressed. You eventually realize you have to completely demolish and rebuild this fully functional structure just to exorcise the bad vibes.
+
+**Tension:** The immense cost and disruption of tearing down and rebuilding perfectly functional infrastructure vs. the permanent, creeping morale drain of historical trauma built into the walls.
+
+---
