@@ -2,7 +2,6 @@
 
 ## High Priority
 
-- [ ] `469` The Galactic Council — `specs/469-galactic-council.md`
 
 
 
