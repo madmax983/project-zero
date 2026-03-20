@@ -10805,3 +10805,59 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Paying a constant, draining extortion fee to a superior power vs. calling their bluff and risking devastating, pinpoint orbital bombardment on your civilian infrastructure.
 
 ---
+
+## The Nostalgia Plague
+
+**Layer:** 1
+
+**Fantasy:** A disease of the mind where colonists become obsessed with how things "used to be," rejecting modern convenience.
+
+**Mechanic:** Pops occasionally contract a memetic hazard called "Nostalgia." They suffer severe, compounding mood penalties if forced to use advanced machinery, consume synthesized food, or inhabit high-tech housing. They will actively seek out primitive alternatives (eating raw crops, sleeping outside, using basic hand tools) and attempt to convert their peers to the "old ways."
+
+**Emergence:** You finally upgrade your entire agricultural network to efficient nutrient paste synthesizers. A Nostalgia outbreak hits, and suddenly half your workforce is starving because they refuse to eat the paste, demanding you tear up the floor panels to plant rudimentary dirt farms again.
+
+**Tension:** Forcing the affected Pops to endure the mood penalties (risking violent mental breaks and widespread unrest) versus wasting precious space and resources maintaining a parallel, grossly inefficient low-tech infrastructure solely to pacify the nostalgics.
+
+---
+
+## The Cargo Cult Diplomat
+
+**Layer:** Cross-layer (3 -> 2 -> 1)
+
+**Fantasy:** Your colony drastically misinterprets a passing technological marvel as divine intervention.
+
+**Mechanic:** A vastly superior Layer 3 civilization sends an automated survey drone (Layer 2) that accidentally crashes near your settlement (Layer 1). Instead of salvaging it for parts, a vocal faction forms, worshipping the machine. They demand the colony construct a massive, resource-intensive "Landing Pad Shrine" that mimics the drone's telemetry signals to summon more "gods."
+
+**Emergence:** You ignore the cult, so they start cannibalizing your actual spaceport to build their shrine out of stolen scrap. You give in and build the shrine to restore order. It actually works, but instead of beneficent gods bringing gifts, the signal summons a heavily armed, automated Layer 3 tax collection fleet demanding tribute.
+
+**Tension:** Suppressing a rapidly growing, militant religious movement (causing high internal unrest and sabotage) versus entertaining their expensive delusions and risking the unpredictable, potentially devastating attention of a superpower.
+
+---
+
+## Disaster Tourism
+
+**Layer:** Cross-layer (2 -> 1)
+
+**Fantasy:** The worse your colony is doing, the more wealthy outsiders want to pay to watch it burn.
+
+**Mechanic:** When your Layer 1 colony suffers a massive, highly visible disaster (e.g., a reactor meltdown, a catastrophic localized earthquake, a violent uprising), wealthy Layer 2 "Grief Tourists" arrive in specialized, heavily shielded luxury yachts. They offer exorbitant amounts of credits to safely observe the chaos, demanding you construct high-end "viewing platforms" dangerously close to the disaster zones.
+
+**Emergence:** Your primary fusion reactor melts down, dooming half the colony to radiation sickness. The colony is bankrupt. Suddenly, grief tourists arrive, offering enough credits to easily buy a new reactor—but only if you build a luxury hotel right on the edge of the radioactive exclusion zone, tying up your surviving engineers and exposing the tourists (and their powerful governments) to severe risk.
+
+**Tension:** Exploiting a horrific tragedy for massive, much-needed financial gain versus the utter moral bankruptcy of profiting off your own colonists' suffering while diverting critical emergency response efforts to cater to rich voyeurs.
+
+---
+
+## The Reverse Quarantine
+
+**Layer:** Cross-layer (1 -> 2)
+
+**Fantasy:** Your planet is a pristine sanctuary, but the rest of the galaxy is sick, and they are desperate to get in.
+
+**Mechanic:** A massive, incurable bio-plague sweeps through the surrounding Layer 2 star systems. Your isolated Layer 1 colony is one of the few clean worlds left. Desperate refugee fleets begin arriving constantly, begging for asylum. Accepting them risks introducing the catastrophic plague to your fragile ecosystem. Rejecting them causes the massive fleets to orbitally bombard your outer settlements out of pure spite and desperation.
+
+**Emergence:** You enact a strict, ruthless "Shoot on Sight" policy for the refugee ships to ensure the plague stays out. The destroyed ships rain highly toxic, radioactive debris down onto your colony, causing massive structural damage and triggering a completely different kind of environmental crisis, while the resulting collective guilt completely shatters your Pops' morale.
+
+**Tension:** The humanitarian impulse to save lives (risking total planetary infection and immediate game-over) versus the ruthless pragmatism of extreme isolationism (causing deep, lasting psychological trauma and dealing with the physical fallout of orbital reprisal).
+
+---
