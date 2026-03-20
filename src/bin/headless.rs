@@ -26,7 +26,7 @@
 
 use bevy_ecs::prelude::*;
 use comfy_table::{
-    presets::UTF8_FULL_CONDENSED, Attribute, Cell, Color, ContentArrangement, Table,
+    presets::UTF8_FULL, Attribute, Cell, Color, ContentArrangement, Table,
 };
 use crossterm::style::Stylize;
 use scale::layer1::biography::Biography;
@@ -375,7 +375,7 @@ fn print_status(world: &mut World) {
 
     let mut table = Table::new();
     table
-        .load_preset(UTF8_FULL_CONDENSED)
+        .load_preset(UTF8_FULL)
         .set_content_arrangement(ContentArrangement::Dynamic)
         .set_header(vec![
             Cell::new("Category").add_attribute(Attribute::Bold),
@@ -548,7 +548,7 @@ fn print_tech(world: &mut World) {
 
     let mut table = Table::new();
     table
-        .load_preset(UTF8_FULL_CONDENSED)
+        .load_preset(UTF8_FULL)
         .set_content_arrangement(ContentArrangement::Dynamic)
         .set_header(vec![
             Cell::new("Technology").add_attribute(Attribute::Bold),
@@ -608,7 +608,7 @@ fn print_pops(world: &mut World) {
 
     let mut table = Table::new();
     table
-        .load_preset(UTF8_FULL_CONDENSED)
+        .load_preset(UTF8_FULL)
         .set_content_arrangement(ContentArrangement::Dynamic)
         .set_header(vec![
             Cell::new("ID").add_attribute(Attribute::Bold),
@@ -927,7 +927,7 @@ fn print_designations(world: &mut World) {
     let mut count = 0;
     let mut table = Table::new();
     table
-        .load_preset(UTF8_FULL_CONDENSED)
+        .load_preset(UTF8_FULL)
         .set_content_arrangement(ContentArrangement::Dynamic)
         .set_header(vec![
             Cell::new("Type").add_attribute(Attribute::Bold),
@@ -1033,7 +1033,7 @@ fn scan_terrain(world: &mut World, center_x: i32, center_y: i32, radius: i32) {
 
     let mut table = Table::new();
     table
-        .load_preset(UTF8_FULL_CONDENSED)
+        .load_preset(UTF8_FULL)
         .set_content_arrangement(ContentArrangement::Dynamic)
         .set_header(vec![
             Cell::new("Coord").add_attribute(Attribute::Bold),
@@ -1261,7 +1261,7 @@ fn get_tile_info(world: &mut World, x: i32, y: i32) {
 
     let mut table = Table::new();
     table
-        .load_preset(UTF8_FULL_CONDENSED)
+        .load_preset(UTF8_FULL)
         .set_content_arrangement(ContentArrangement::Dynamic)
         .set_header(vec![
             Cell::new("Property").add_attribute(Attribute::Bold),
@@ -1319,7 +1319,7 @@ fn print_great_works(world: &mut World) {
     let mut count = 0;
     let mut table = Table::new();
     table
-        .load_preset(UTF8_FULL_CONDENSED)
+        .load_preset(UTF8_FULL)
         .set_content_arrangement(ContentArrangement::Dynamic)
         .set_header(vec![
             Cell::new("ID").add_attribute(Attribute::Bold),
@@ -1401,7 +1401,7 @@ fn print_buildings(world: &mut World) {
 
     let mut table = Table::new();
     table
-        .load_preset(UTF8_FULL_CONDENSED)
+        .load_preset(UTF8_FULL)
         .set_content_arrangement(ContentArrangement::Dynamic)
         .set_header(vec![
             Cell::new("ID").add_attribute(Attribute::Bold),
@@ -1475,7 +1475,7 @@ fn print_bio(world: &mut World, target_id: u32) {
                 } else {
                     let mut table = Table::new();
                     table
-                        .load_preset(UTF8_FULL_CONDENSED)
+                        .load_preset(UTF8_FULL)
                         .set_content_arrangement(ContentArrangement::Dynamic)
                         .set_header(vec![
                             Cell::new("Tick").add_attribute(Attribute::Bold),
@@ -1524,7 +1524,7 @@ fn print_chronicle(world: &mut World) {
 
     let mut table = Table::new();
     table
-        .load_preset(UTF8_FULL_CONDENSED)
+        .load_preset(UTF8_FULL)
         .set_content_arrangement(ContentArrangement::Dynamic)
         .set_header(vec![
             Cell::new("Year").add_attribute(Attribute::Bold),
@@ -1584,7 +1584,7 @@ fn print_log(world: &mut World) {
 
     let mut table = Table::new();
     table
-        .load_preset(UTF8_FULL_CONDENSED)
+        .load_preset(UTF8_FULL)
         .set_content_arrangement(ContentArrangement::Dynamic)
         .set_header(vec![
             Cell::new("Level").add_attribute(Attribute::Bold),
@@ -1634,7 +1634,7 @@ fn print_help() {
 
     let mut table = Table::new();
     table
-        .load_preset(UTF8_FULL_CONDENSED)
+        .load_preset(UTF8_FULL)
         .set_content_arrangement(ContentArrangement::Dynamic)
         .set_header(vec![
             Cell::new("Category").add_attribute(Attribute::Bold),
