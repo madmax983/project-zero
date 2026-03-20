@@ -1,20 +1,28 @@
-1. **Remove `std::mem::transmute` in `src/layer1/traits.rs`:** Replace the `transmute` in the iterator of `Traits` with a safe conversion. I'll use `num_enum::TryFromPrimitive` or simply a matching structure/macro (e.g., `strum::EnumIter` or `strum::IntoEnumIterator`). Actually, since we check the bitmask, we just need to iterate over all variants. I'll add `EnumIter` and `IntoEnumIterator` from strum to `Trait` and iterate over `Trait::iter()`, filtering out the ones where `traits.has(t)` is true. Alternatively, `num_enum::TryFromPrimitive` is great since we iterate `0..41` and use `Trait::try_from(i)`.
+1. **Add `Artifact` to `TerrainType`:**
+   - Update `TerrainType` enum in `src/layer1/nature/terrain.rs` with `Artifact` variant.
+   - Update `name`, `movement_cost`, `is_walkable`, and `heat_retention` matching methods to handle `Artifact`. `is_walkable` should return `false`.
+   - Update `headless.rs` and `map.rs` to render the `Artifact` character (e.g. `Ω`).
 
-2. **Fix Iteration Logic Bug:** The current iterator loops `0..27` instead of up to the number of variants (`41`). Using `strum::IntoEnumIterator` avoids hardcoding the variant count. We'll change `Traits::iter` to:
-   ```rust
-   pub fn iter(&self) -> impl Iterator<Item = Trait> {
-       let mask = self.0;
-       Trait::iter().filter(move |&t| (mask & (1 << (t as u8))) != 0)
-   }
-   ```
+2. **Implement `Artifact` Component & Auras (`src/layer1/artifacts.rs`):**
+   - Note: The file `src/layer1/artifacts/mod.rs` already exists, but we need to ensure map generation integrates this.
+   - Create `src/layer1/artifacts/map_gen.rs` (or modify `src/layer1/nature/terrain.rs` directly) to randomly spawn `Artifact` tiles on the map and attach the `Artifact` and `Aura` components to those grid coordinates. The spec says "Modify map generation to randomly spawn a small number of `Artifact` entities on the grid."
+   - Wait, `TerrainType::Artifact` is requested, but also `Artifact` components. Let's make map generation place `TerrainType::Artifact` on the grid and spawn entities with `(TerrainType::Artifact, GridPosition, ArtifactAura)` as requested by the spec tests.
 
-3. **Check other security issues:** Update dependencies or address `paste` unmaintained warning from `cargo audit` if requested, though `paste` is widely used and safe. The current prompt focuses on `unsafe` blocks and CVEs. Wait, `cargo audit` returned:
-   ```
-   Crate:     paste
-   Version:   1.0.15
-   Warning:   unmaintained
-   Title:     paste - no longer maintained
-   ```
-   Since it's a warning, not a CVE, and `unsafe` is the focus, the `transmute` fix is primary.
+3. **Update Map Generation:**
+   - Modify `generate_terrain` in `src/layer1/nature/terrain.rs` to spawn a few `Artifact` tiles (and maybe returning their positions to spawn entities, or spawning entities directly if `generate_terrain` takes a `&mut World`, but wait, `generate_terrain` currently returns a `TerrainGrid` and doesn't take `World`. Let's create a system that runs at startup to turn `TerrainType::Artifact` into entities, OR we change `generate_terrain` OR we spawn them in another startup system after `TerrainGrid` is inserted).
+   - Ah, the spec test says:
+     `world.spawn((TerrainType::Artifact, GridPosition { x: 5, y: 5 }));`
+     This implies `TerrainType` is also a component, but currently `TerrainType` is an enum inside `TerrainGrid.tiles`. Wait, let's look at `TerrainType`.
 
-4. **Update `.jules/warden.md` with journal entry.**
+4. **Verify `TerrainType` usage:**
+   - Is `TerrainType` used as a component anywhere? Let's check `grep "impl Component for TerrainType"`. No, usually it's derived. We'll add `#[derive(Component)]` to `TerrainType`.
+   - Update mining logic in `src/layer1/designation.rs` to ensure `TerrainType::Artifact` cannot be mined or destroyed.
+
+5. **Aura System (`src/layer1/artifacts/mod.rs`):**
+   - Use the existing `ArtifactAura` (or update existing `Aura` to `ArtifactAura` as named in spec).
+   - Apply aura effects to pops. The spec mentions `AuraEffect::Insight` -> `+Science XP, +Stress`. We will implement this.
+   - Wait, `ActiveAuras` already applies effects. Let's make sure it handles the specific ones requested by the spec (e.g. Stress). There's already `AuraEffect::StressModifier`. We just need to ensure the system that accumulates stress uses it, or we apply it directly in `aura_system` or a new system `apply_artifact_auras_system`.
+
+6. **Refactor & Tests:**
+   - Add the required RED phase tests to `src/layer1/artifacts/mod.rs` or `src/layer1/nature/terrain.rs`.
+   - Pre-commit step.

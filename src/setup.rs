@@ -69,9 +69,35 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
         }
     }
     let fertility = crate::layer1::fertility::FertilityGrid::from_terrain(&terrain);
+
+    // Track artifacts to spawn entities for them
+    let mut artifact_positions = Vec::new();
+    for y in 0..terrain.height {
+        for x in 0..terrain.width {
+            if terrain.get(x, y) == Some(crate::layer1::nature::terrain::TerrainType::Artifact) {
+                artifact_positions.push((x, y));
+            }
+        }
+    }
+
     world.insert_resource(terrain);
     world.insert_resource(fertility);
     world.insert_resource(roof);
+
+    for (x, y) in artifact_positions {
+        world.spawn((
+            crate::layer1::nature::terrain::TerrainType::Artifact,
+            crate::layer1::map::GridPosition {
+                x: x as i32,
+                y: y as i32,
+            },
+            crate::layer1::artifacts::ArtifactAura {
+                radius: 5.0,
+                effect: crate::layer1::artifacts::AuraEffect::Insight, // Default to Insight for map gen
+            },
+            crate::layer1::artifacts::Artifact,
+        ));
+    }
 
     world.insert_resource(Viewport::default());
     world.insert_resource(CameraTarget::default());
