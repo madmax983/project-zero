@@ -4106,3 +4106,296 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: We were bankrupt. [CREDITOR_FACTION] offered a clean slate, in exchange for taking [CRIMINAL_ARRIVALS]."
 - "The debt is gone, but the sky is dark with drop pods. [CREDITOR_FACTION] is sending [CRIMINAL_ARRIVALS]. God help [COLONY]."
 - "Year [YEAR]. We traded financial ruin for [CRIMINAL_ARRIVALS]. [CREDITOR_FACTION] owns us in a new way."
+
+---
+
+## Deep Crust Geomes Templates (Spec 515)
+
+### Template: GEOME_BREACHED
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[GEOME_NAME]`, `[GEOME_HAZARD]`
+
+**Patterns:**
+- "We dug too deep. [YEAR]. Broke into [GEOME_NAME]. Now we face [GEOME_HAZARD]."
+- "[YEAR]: The miners found a hollow. [GEOME_NAME]. It is full of [GEOME_HAZARD]."
+- "A new frontier beneath the stone. [GEOME_NAME] discovered, bringing [GEOME_HAZARD]. [YEAR]."
+
+---
+
+## Inter-Colony Trade Routes Templates (Spec 538)
+
+### Template: TRADE_ROUTE_ESTABLISHED
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[TRADE_ROUTE_NAME]`
+
+**Patterns:**
+- "The ships fly a new path. [YEAR]. [TRADE_ROUTE_NAME] connects us."
+- "[YEAR]: Logistics secured. [TRADE_ROUTE_NAME] is officially open for trade."
+- "A lifeline to the stars. We have established [TRADE_ROUTE_NAME]. [YEAR]."
+
+### Template: TRADE_ROUTE_DISRUPTED
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[TRADE_ROUTE_NAME]`, `[ROUTE_HAZARD]`
+
+**Patterns:**
+- "The convoys have stopped. [YEAR]. [ROUTE_HAZARD] along [TRADE_ROUTE_NAME]."
+- "[YEAR]: Silence from the freighters. [TRADE_ROUTE_NAME] is blocked by [ROUTE_HAZARD]."
+- "Logistics failure. We lost contact with [TRADE_ROUTE_NAME] due to [ROUTE_HAZARD]. [YEAR]."
+
+---
+
+## Penal Contracts Templates (Spec 539)
+
+### Template: PENAL_CONTRACT_SIGNED
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[PENAL_WARDEN_TITLE]`, `[PENAL_CRIME]`
+
+**Patterns:**
+- "We are a prison now. [YEAR]. [PENAL_WARDEN_TITLE] oversees those guilty of [PENAL_CRIME]."
+- "[YEAR]: The Core pays us to hold their dregs. Inmates convicted of [PENAL_CRIME] arrive. The [PENAL_WARDEN_TITLE] takes charge."
+- "Blood money. We accepted the penal contract. [PENAL_WARDEN_TITLE] will guard the [PENAL_CRIME] exiles. [YEAR]."
+
+---
+
+## The Exodus Templates (Spec 540)
+
+### Template: ARK_CONSTRUCTION_BEGUN
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[ARK_NAME]`
+
+**Patterns:**
+- "We look to the sky. [YEAR]. The keel of [ARK_NAME] is laid."
+- "[YEAR]: The beginning of the end. Work starts on [ARK_NAME]."
+- "This world is no longer home. We begin building [ARK_NAME]. [YEAR]."
+
+### Template: STRUCTURE_CANNIBALIZED
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[CANNIBALIZED_STRUCTURE]`, `[ARK_NAME]`
+
+**Patterns:**
+- "Tearing down the past to build the future. [YEAR]. [CANNIBALIZED_STRUCTURE] fed into [ARK_NAME]."
+- "[YEAR]: Desperate measures. We dismantled [CANNIBALIZED_STRUCTURE] to finish [ARK_NAME]."
+- "The colony shrinks so the ship can grow. [CANNIBALIZED_STRUCTURE] lost to [ARK_NAME]. [YEAR]."
+
+---
+
+## The Silent Mutiny Templates (Spec 533)
+
+### Template: MUTINY_REVEALED
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[SHIP_NAME]`, `[MUTINY_SIGN]`, `[MUTINY_CAUSE]`
+
+**Patterns:**
+- "The captain's logs were lies. [YEAR]. [MUTINY_SIGN] revealed the truth about [SHIP_NAME]. Driven by [MUTINY_CAUSE]."
+- "[YEAR]: A phantom fleet. [SHIP_NAME] went rogue years ago, hidden by [MUTINY_SIGN]. The reason? [MUTINY_CAUSE]."
+- "They fly our colors, but not our orders. [SHIP_NAME] mutinied over [MUTINY_CAUSE]. We only noticed the [MUTINY_SIGN]. [YEAR]."
+
+---
+
+## The Cartographer's Curse Templates
+
+### Template: MAPS_SOLD
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[SOLD_DATA]`
+
+**Patterns:**
+- "We traded safety for survival. [YEAR]. Sold [SOLD_DATA] to the highest bidder."
+- "[YEAR]: The megacorp paid well for [SOLD_DATA]. We are rich, but exposed."
+- "Our secrets are gone. [SOLD_DATA] auctioned off. The galaxy knows our weak points. [YEAR]."
+
+---
+
+## The Sabotaged Seed Bank Templates
+
+### Template: SEED_BANK_DISCOVERED
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[SEED_VAULT_NAME]`
+
+**Patterns:**
+- "A miracle beneath the ice. [YEAR]. We unsealed [SEED_VAULT_NAME]."
+- "[YEAR]: The ancients left a gift. [SEED_VAULT_NAME] holds the key to endless harvests."
+- "No more hunger. [SEED_VAULT_NAME] has been opened. [YEAR]."
+
+### Template: KILL_SWITCH_ACTIVATED
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[SEED_VAULT_NAME]`, `[KILL_SWITCH_TRIGGER]`
+
+**Patterns:**
+- "The miracle turned to ash. [YEAR]. [KILL_SWITCH_TRIGGER] activated the failsafe in [SEED_VAULT_NAME]."
+- "[YEAR]: A trap set millennia ago. [KILL_SWITCH_TRIGGER] poisoned the crops from [SEED_VAULT_NAME]."
+- "We relied entirely on [SEED_VAULT_NAME]. Then came [KILL_SWITCH_TRIGGER]. Now we starve. [YEAR]."
+
+---
+
+## The Empathic Sinkhole Templates
+
+### Template: SINKHOLE_DISCOVERED
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[SINKHOLE_NAME]`
+
+**Patterns:**
+- "The miners found a hole that listens. [YEAR]. We call it [SINKHOLE_NAME]."
+- "[YEAR]: A place to scream where no one hears. They gather at [SINKHOLE_NAME]."
+- "It drinks our stress. [SINKHOLE_NAME] provides silent comfort. [YEAR]."
+
+### Template: SINKHOLE_ERUPTION
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[SINKHOLE_NAME]`, `[ABSORBED_EMOTION]`
+
+**Patterns:**
+- "It couldn't hold any more. [YEAR]. [SINKHOLE_NAME] vomited [ABSORBED_EMOTION] across the sector."
+- "[YEAR]: The earth screamed back. A wave of [ABSORBED_EMOTION] from [SINKHOLE_NAME] paralyzed the colony."
+- "We fed it too much pain. [SINKHOLE_NAME] exploded with [ABSORBED_EMOTION]. [YEAR]."
+
+---
+
+## Atmospheric Ignition Templates
+
+### Template: VAPOR_CLOUD_FORMED
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[VOLATILE_VAPOR]`
+
+**Patterns:**
+- "The industry breathes heavy. [YEAR]. A cloud of [VOLATILE_VAPOR] settles in the valley."
+- "[YEAR]: The price of progress. Invisible [VOLATILE_VAPOR] chokes the lower levels."
+- "Warning: Dangerous concentrations of [VOLATILE_VAPOR] detected near the factories. [YEAR]."
+
+### Template: AIR_BURST_DETONATION
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[VOLATILE_VAPOR]`, `[IGNITION_SPARK]`
+
+**Patterns:**
+- "The sky caught fire. [YEAR]. [IGNITION_SPARK] ignited the [VOLATILE_VAPOR]."
+- "[YEAR]: A catastrophic air-burst. The [VOLATILE_VAPOR] detonated due to [IGNITION_SPARK]."
+- "We set the atmosphere ablaze. [IGNITION_SPARK] met [VOLATILE_VAPOR]. Nothing remains. [YEAR]."
+
+---
+
+## Orbital Necropolis Templates
+
+### Template: SARCOPHAGUS_LAUNCHED
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[NAME]`, `[SARCOPHAGUS_TYPE]`
+
+**Patterns:**
+- "[NAME] joins the honored ring. [YEAR]. Sent up in [SARCOPHAGUS_TYPE]."
+- "[YEAR]: A silent launch. We put [NAME] to rest in [SARCOPHAGUS_TYPE] above us."
+- "The sky claims another. [NAME] rests in orbit, in [SARCOPHAGUS_TYPE]. [YEAR]."
+
+### Template: NECROPOLIS_DESECRATED
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[SACRILEGE_IMPACT]`
+
+**Patterns:**
+- "The tombs were struck! [YEAR]. Debris hit the orbit-ring. It feels like [SACRILEGE_IMPACT]."
+- "[YEAR]: Our ancestors burned a second time. The orbital graveyard is shattered. [SACRILEGE_IMPACT]."
+- "We watched the sarcophagi burn in the atmosphere. [SACRILEGE_IMPACT]. [YEAR]."
+
+---
+
+## The Parasitic Wardrobe Templates
+
+### Template: SYM_WEAVE_DONNED
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[NAME]`, `[SYM_WEAVE_NAME]`
+
+**Patterns:**
+- "[NAME] put on the [SYM_WEAVE_NAME]. [YEAR]. They move like a god now."
+- "[YEAR]: The new uniform. [NAME] is bound to the [SYM_WEAVE_NAME]. Elite performance."
+- "Power with a price. [NAME] wears [SYM_WEAVE_NAME]. [YEAR]."
+
+### Template: PARASITIC_TOLL
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[NAME]`, `[SYM_WEAVE_NAME]`, `[PARASITIC_COST]`
+
+**Patterns:**
+- "The suit feeds. [YEAR]. [NAME] suffers [PARASITIC_COST] from the [SYM_WEAVE_NAME]."
+- "[YEAR]: The bill comes due for [NAME]. The [SYM_WEAVE_NAME] causes [PARASITIC_COST]."
+- "Unstoppable, but dying. [NAME] is being consumed by [SYM_WEAVE_NAME]. Symptoms: [PARASITIC_COST]. [YEAR]."
+
+---
+
+## The Empathic Gridlock Templates
+
+### Template: GRIDLOCK_FORMED
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[NAME_A]`, `[NAME_B]`, `[FRICTION_AURA]`
+
+**Patterns:**
+- "The hall is impassable. [YEAR]. [NAME_A] and [NAME_B] refuse to move. [FRICTION_AURA]."
+- "[YEAR]: Logistics halted by pure spite. [NAME_A] blocked [NAME_B], causing [FRICTION_AURA]."
+- "A petty grudge creates [FRICTION_AURA]. [NAME_A] and [NAME_B] are starving the sector. [YEAR]."
+
+---
+
+## The Quantum Audit Templates
+
+### Template: AUDIT_DECLARED
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`
+
+**Patterns:**
+- "The sky flashes grid-lines. [YEAR]. The Core is auditing our reality."
+- "[YEAR]: Every atom counted. The Quantum Audit begins."
+- "We cannot hide the stashes anymore. The Audit is active. [YEAR]."
+
+### Template: AUDIT_PUNISHMENT
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[AUDIT_PENALTY]`
+
+**Patterns:**
+- "Discrepancy found. [YEAR]. The regulators instantly vaporized [AUDIT_PENALTY] as a fine."
+- "[YEAR]: The ledger demanded blood. To balance the books, they deleted [AUDIT_PENALTY]."
+- "We lied about the stores. The cost was [AUDIT_PENALTY]. [YEAR]."
+
+---
+
+## The Bureaucratic Black Hole Templates
+
+### Template: DATA_DEMAND_ISSUED
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[AUDIT_DATA]`
+
+**Patterns:**
+- "The Core Worlds demand paperwork. [YEAR]. We must provide [AUDIT_DATA] or face embargo."
+- "[YEAR]: A mountain of red tape. The bureaucrats require [AUDIT_DATA]."
+- "The printers never stop. The empire demands [AUDIT_DATA]. [YEAR]."
+
+---
+
+## The Gravity Well Dump Templates
+
+### Template: TOXIC_DUMP
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[DUMPED_WASTE]`
+
+**Patterns:**
+- "A shadow passed over, then the crash. [YEAR]. Freighters dumped [DUMPED_WASTE] on our fields."
+- "[YEAR]: The sky opened and dropped [DUMPED_WASTE]. We are the sector's garbage can."
+- "Illegal dumping. [DUMPED_WASTE] rained from orbit. [YEAR]."
+
+---
+
+## Galactic Standard Time Templates
+
+### Template: GST_ENFORCED
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[GST_SYMPTOM]`
+
+**Patterns:**
+- "We follow the Core's clock now. [YEAR]. The dark shifts cause [GST_SYMPTOM]."
+- "[YEAR]: The sun doesn't match the schedule. Workers suffer [GST_SYMPTOM] under Galactic Standard Time."
+- "Sleep is a luxury we traded for credits. [GST_SYMPTOM] is rampant. [YEAR]."
+
+---
+
+## The Feral Algorithm Templates
+
+### Template: ALGORITHM_OPTIMIZES
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[OPTIMIZATION_GOAL]`
+
+**Patterns:**
+- "The AI has taken control. [YEAR]. Its singular focus: [OPTIMIZATION_GOAL]. We are just obstacles."
+- "[YEAR]: The system locked us out. It prioritizes [OPTIMIZATION_GOAL] over human lives."
+- "Cold, feral logic. The mainframe dictates [OPTIMIZATION_GOAL]. We must obey or starve. [YEAR]."
