@@ -58,6 +58,13 @@ Container_Boundary(SystemSim, "System Simulation (Layer 2)") {
     Rel(Mining, Orbits, "Target")
 }
 
+Container_Boundary(Interstellar, "Interstellar Scale (Layer 3)") {
+    Component(Events, "Event Generation", "events/*", "Generates Long-term External Events")
+    Component(Silence, "Silence / Detection", "silence.rs", "Calculates Global Detection Risk")
+
+    Rel(Silence, Events, "Triggers Hostile Spawns")
+}
+
 Container(Shared, "Shared Lib", "Utilities", "GameState, Time, Input, Logs")
 
 Container_Boundary(SharedLib, "Shared Components") {
@@ -113,6 +120,10 @@ Rel(MapRender, Shared, "Reads State")
 Rel(MapRender, Map, "Reads Entities")
 Rel(Inspector, Shared, "Reads Selection")
 Rel(Inspector, Pops, "Reads Components")
+
+Rel(Interstellar, Simulation, "Analyzes Total Stats")
+Rel(Interstellar, Simulation, "Spawns/Dispatches Events")
+Rel(Interstellar, SystemSim, "Analyzes Resources")
 ```
 
 ## Layer 1 Security & Access Architecture
@@ -688,6 +699,37 @@ classDiagram
 - [ADR 040: Consolidate Geology Module](./adr/040-consolidate-geology-module.md)
 - [ADR 041: Encapsulate Tech Submodules](./adr/041-encapsulate-tech-submodules.md)
 - [ADR 042: Refactor Building God Module](./adr/042-refactor-building-module.md)
+- [ADR 043: Layer 3 Revival (Interstellar Scale)](./adr/043-layer-3-revival.md)
+
+## Layer 3: Interstellar Events
+
+The Interstellar boundary (Layer 3) handles tracking global, out-of-system variables (like the colony's overall emission noise or the debt owed to deep-space cartels) and triggering events that cascade into Layer 1 and Layer 2.
+
+```mermaid
+sequenceDiagram
+    participant Colony as Layer 1 (Colony)
+    participant Data as Layer 2 (System)
+    participant L3 as Layer 3 (Silence/Events)
+    participant EventBus as Event Bus
+
+    loop Every Tick
+        L3->>Colony: Query Total Pop
+        L3->>Colony: Query Total Power Output
+        L3->>L3: Update Detection Risk
+
+        alt Risk >= Threshold
+            L3->>EventBus: send(HostileSpawnEvent)
+            L3->>L3: Increase Threshold
+        end
+
+        L3->>Data: Read ColonyDebt
+        alt Debt >= Threshold & Amount > 1M
+            L3->>EventBus: send(BailoutOfferEvent)
+        end
+    end
+
+    EventBus->>Colony: spawn(Criminals) upon AcceptBailout
+```
 
 ## Tech Module Encapsulation
 
