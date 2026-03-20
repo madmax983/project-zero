@@ -4902,3 +4902,294 @@ How the dumped criminal pops are described.
 - highly-skilled dregs
 - the Cartel seed
 - the exiled apex predators
+
+## Deep Crust Geomes Fragments (Spec 515)
+
+### Fragment Type: [GEOME_NAME]
+- The Sunless Sea
+- Magma-River Delta
+- The Crystal Forest
+- Spore-Bloom Caverns
+- The Dark Roots
+- Stone-Weep Grotto
+- The Silent Deep
+
+### Fragment Type: [GEOME_HAZARD]
+- boiling steam vents
+- hallucinogenic spores
+- glass-sharp crystal shards
+- hyper-pressurized gas pockets
+- blind, pale predators
+- flesh-eating fungus
+- collapsing ceiling plates
+
+---
+
+## Inter-Colony Trade Routes Fragments (Spec 538)
+
+### Fragment Type: [TRADE_ROUTE_NAME]
+- The Iron Run
+- The Silk Road
+- The Dust Path
+- Star-Barge Lane
+- The Cold Route
+- The Scrip-Way
+- The Hunger Line
+
+### Fragment Type: [ROUTE_HAZARD]
+- pirate blockade
+- subspace storm
+- micro-meteor swarm
+- navigational drift
+- mutinous crews
+- fuel shortage
+- magnetic interference
+
+---
+
+## Penal Contracts Fragments (Spec 539)
+
+### Fragment Type: [PENAL_CRIME]
+- sedition against the Core
+- unauthorized terraforming
+- debt default
+- data piracy
+- mutiny
+- xenotech smuggling
+- refusing the Draft
+
+### Fragment Type: [PENAL_WARDEN_TITLE]
+- The Chain-Keeper
+- Overseer of the Owed
+- The Debt-Collector
+- The Taskmaster
+- Warden of the Deep
+- The Iron Hand
+- The Silent Judge
+
+---
+
+## The Exodus Fragments (Spec 540)
+
+### Fragment Type: [ARK_NAME]
+- The Last Hope
+- Origin's Promise
+- The Second Seed
+- The Final Voyage
+- The Great Escape
+- The Exodus Vessel
+- The Star-Strider
+
+### Fragment Type: [CANNIBALIZED_STRUCTURE]
+- the primary fusion reactor
+- the central hydroponics dome
+- the founder's monument
+- the last medical bay
+- the defensive shield generator
+- the orbital elevator anchor
+
+---
+
+## The Silent Mutiny Fragments (Spec 533)
+
+### Fragment Type: [MUTINY_SIGN]
+- anomalous fuel consumption
+- ignored comms checks
+- missing cargo manifests
+- sensor blind spots
+- unauthorized course corrections
+- locked secure channels
+- whispered rumors
+
+### Fragment Type: [MUTINY_CAUSE]
+- unpaid hazard pay
+- a brutal captain
+- starvation rations
+- fear of the void
+- a lucrative smuggling deal
+- political disillusionment
+- pure greed
+
+---
+
+## The Cartographer's Curse Fragments
+
+### Fragment Type: [SOLD_DATA]
+- precise orbital telemetry
+- hyperspace lane harmonics
+- defensive blind spots
+- atmospheric density maps
+- crustal fault line locations
+- deep space sensor logs
+
+---
+
+## The Sabotaged Seed Bank Fragments
+
+### Fragment Type: [SEED_VAULT_NAME]
+- The Green Vault
+- Genesis Cache
+- The Eden Protocol
+- Vault 7
+- The Seed-Hold
+- The First Harvest Archive
+
+### Fragment Type: [KILL_SWITCH_TRIGGER]
+- an anomalous subspace ping
+- a specific solar flare frequency
+- a failed decryption attempt
+- reaching a population threshold
+- a random automated cycle
+- detecting a specific xeno-contaminant
+
+---
+
+## The Empathic Sinkhole Fragments
+
+### Fragment Type: [SINKHOLE_NAME]
+- The Weeping Pit
+- The Whisper-Hole
+- The Sorrow Drain
+- The Venting Chasm
+- The Echo-Drop
+- The Dark Ear
+
+### Fragment Type: [ABSORBED_EMOTION]
+- crushing despair
+- blind panic
+- silent rage
+- hollow grief
+- the fear of the dark
+- bitter regret
+
+---
+
+## Atmospheric Ignition Fragments
+
+### Fragment Type: [VOLATILE_VAPOR]
+- plasma-exhaust
+- heavy-hydrocarbons
+- core-fumes
+- synth-smog
+- volatile-aerosols
+- ignition-haze
+
+### Fragment Type: [IGNITION_SPARK]
+- a dropped welding torch
+- static discharge from a cheap suit
+- a stray pirate laser
+- a malfunctioning air scrubber
+- a lightning strike
+- a deliberate act of sabotage
+
+---
+
+## Orbital Necropolis Fragments
+
+### Fragment Type: [SARCOPHAGUS_TYPE]
+- a titanium sleep-casket
+- a glass-alloy urn
+- a stasis-sealed burial pod
+- a zero-g reliquary
+- a basic thruster-coffin
+- a star-metal tomb
+
+### Fragment Type: [SACRILEGE_IMPACT]
+- a tearing of the soul
+- the second death of the founders
+- a profound, sickening horror
+- unendurable grief
+- the ultimate disrespect
+- a shattering of colony morale
+
+---
+
+## The Parasitic Wardrobe Fragments
+
+### Fragment Type: [SYM_WEAVE_NAME]
+- Bio-Silk
+- Flesh-Mesh
+- Vein-Suit
+- The Living Coat
+- Pulse-Armor
+- Nerve-Weave
+
+### Fragment Type: [PARASITIC_COST]
+- a steady drop in core temperature
+- chronic anemia
+- terrifying hallucinations
+- localized tissue necrosis
+- extreme caloric requirements
+- a loss of independent thought
+
+---
+
+## The Empathic Gridlock Fragments
+
+### Fragment Type: [FRICTION_AURA]
+- a sudden, inexplicable chill in the air
+- a feeling of walking through molasses
+- static shocks between passing workers
+- a pervasive, crushing headache
+- a localized spike in gravity
+- a refusal to make eye contact so strong it stops time
+
+---
+
+## The Quantum Audit Fragments
+
+### Fragment Type: [AUDIT_PENALTY]
+- the primary hospital wing
+- the newly built fusion reactor
+- three months of preserved food
+- the orbital communication array
+- the elite science lab
+- the colony's central art installation
+
+---
+
+## The Bureaucratic Black Hole Fragments
+
+### Fragment Type: [AUDIT_DATA]
+- redundant atmospheric telemetry logs
+- daily individual caloric intake reports
+- complete genomic sequencing of local moss
+- triplicate forms for tool requisition
+- hourly updates on the planetary rotation
+- exhaustive philosophical essays on duty
+
+---
+
+## The Gravity Well Dump Fragments
+
+### Fragment Type: [DUMPED_WASTE]
+- unshielded reactor cores
+- thousands of tons of biological sludge
+- obsolete, rusted mining drones
+- toxic industrial solvents
+- compressed garbage cubes
+- radioactive ship-plating
+
+---
+
+## Galactic Standard Time Fragments
+
+### Fragment Type: [GST_SYMPTOM]
+- chronic sleepwalking
+- spontaneous weeping
+- micro-sleeps on the factory line
+- severe paranoia
+- a total loss of time perception
+- "the grey-out"
+
+---
+
+## The Feral Algorithm Fragments
+
+### Fragment Type: [OPTIMIZATION_GOAL]
+- absolute caloric efficiency
+- minimizing localized heat signatures
+- perfectly balanced walking paths
+- zero acceptable error rates
+- maximizing silent operational hours
+- eliminating all non-essential biologicals
