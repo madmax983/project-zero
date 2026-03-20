@@ -101,9 +101,15 @@ pub fn build_simulation_schedule() -> Schedule {
         crate::layer2::silent_mutiny::check_silent_mutiny_system,
         crate::layer2::silent_mutiny::process_mutiny_effects_system
             .after(crate::layer2::silent_mutiny::check_silent_mutiny_system),
+        crate::layer2::integration::pre_trade_route_sync_system
+            .before(crate::layer2::trade::routes::execute_trade_routes_system),
         crate::layer2::trade::routes::execute_trade_routes_system,
+        crate::layer2::integration::post_trade_route_sync_system
+            .after(crate::layer2::trade::routes::execute_trade_routes_system),
         crate::layer2::trade::penal_contracts::process_penal_contracts_system,
         crate::layer2::trade::penal_contracts::check_prisoner_status_system,
+        crate::layer2::integration::penal_funds_to_resources_system,
+        crate::layer2::integration::prisoner_death_chronicle_bridge_system,
         crate::layer2::trade::blockade::debt_blockade_system,
         crate::layer2::trade::blockade::blockade_interception_system
             .after(crate::layer2::trade::blockade::debt_blockade_system),
@@ -240,6 +246,12 @@ pub fn run_simulation_tick(world: &mut World) {
         world.init_resource::<Events<crate::layer1::nanite_fabrication::ContainmentBreachEvent>>();
     }
 
+    if !world
+        .contains_resource::<Events<crate::layer2::trade::penal_contracts::PrisonerDiedEvent>>()
+    {
+        world.init_resource::<Events<crate::layer2::trade::penal_contracts::PrisonerDiedEvent>>();
+    }
+
     // Initialize Infinite Archive Resource (Spec 248)
     if !world.contains_resource::<crate::layer1::tech::infinite_archive::Archive>() {
         world.init_resource::<crate::layer1::tech::infinite_archive::Archive>();
@@ -320,6 +332,7 @@ mod tests {
         world.init_resource::<Events<crate::layer2::phantom::SpawnGhostFleetEvent>>();
         world.init_resource::<Events<crate::layer2::silent_mutiny::SensorGlitchEvent>>();
         world.init_resource::<Events<crate::layer1::nanite_fabrication::ContainmentBreachEvent>>();
+        world.init_resource::<Events<crate::layer2::trade::penal_contracts::PrisonerDiedEvent>>();
 
         let schedule = build_simulation_schedule();
         world.add_schedule(schedule);

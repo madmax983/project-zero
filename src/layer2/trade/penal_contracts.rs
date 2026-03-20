@@ -20,6 +20,10 @@ pub struct PrisonerOf(pub Entity);
 #[derive(Component)]
 pub struct FactionRelation(pub i32);
 
+/// Emitted when a state prisoner dies (INT-539).
+#[derive(Event)]
+pub struct PrisonerDiedEvent(pub Entity);
+
 #[allow(clippy::needless_pass_by_value)]
 pub fn process_penal_contracts_system(
     mut contracts: Query<(&PenalContract, &mut ContractTimer)>,
@@ -43,12 +47,16 @@ pub fn check_prisoner_status_system(
     mut commands: Commands,
     prisoners: Query<(Entity, &PrisonerOf, &Health), With<Pop>>,
     mut factions: Query<&mut FactionRelation>,
+    mut death_events: EventWriter<PrisonerDiedEvent>,
 ) {
     for (entity, prisoner_of, health) in prisoners.iter() {
         if health.current <= 0.0 {
             if let Ok(mut relation) = factions.get_mut(prisoner_of.0) {
                 relation.0 -= 50; // Heavy penalty
             }
+            // Emit event for INT-539 (Chronicle bridge)
+            death_events.send(PrisonerDiedEvent(entity));
+
             // Remove PrisonerOf so penalty isn't applied infinitely
             commands.entity(entity).remove::<PrisonerOf>();
         }
@@ -104,6 +112,7 @@ mod tests {
             .id();
 
         // Act
+        world.init_resource::<Events<PrisonerDiedEvent>>();
         let mut schedule = Schedule::default();
         schedule.add_systems(check_prisoner_status_system);
         schedule.run(&mut world);

@@ -173,3 +173,85 @@ mod tests {
         );
     }
 }
+
+// --- INT-539: Penal Contracts -> ColonyResources & Chronicle ---
+
+use crate::layer1::chronicle::{AddChronicleEvent, EventImportance};
+use crate::layer1::resources::ColonyResources;
+use crate::layer2::trade::penal_contracts::{ColonyFunds, PrisonerDiedEvent};
+
+/// Bridges `ColonyFunds` from Penal Contracts into the global `ColonyResources.credits`.
+pub fn penal_funds_to_resources_system(
+    mut funds_query: Query<&mut ColonyFunds>,
+    mut resources: ResMut<ColonyResources>,
+) {
+    for mut funds in funds_query.iter_mut() {
+        if funds.0 > 0 {
+            resources.add_credits(funds.0 as f32);
+            funds.0 = 0;
+        }
+    }
+}
+
+/// Converts `PrisonerDiedEvent` into a Major `AddChronicleEvent`.
+pub fn prisoner_death_chronicle_bridge_system(
+    mut events: EventReader<PrisonerDiedEvent>,
+    mut chronicle_events: EventWriter<AddChronicleEvent>,
+) {
+    for _event in events.read() {
+        chronicle_events.send(AddChronicleEvent {
+            text: "A State Prisoner died on our watch. Our employers are displeased.".to_string(),
+            importance: EventImportance::Major,
+        });
+    }
+}
+
+// --- INT-538: Trade Routes -> ColonyResources ---
+
+use crate::layer2::trade::routes::Colony;
+
+/// Marker component for the local player's colony on Layer 2 (INT-538).
+#[derive(Component, Default)]
+pub struct HomeColony;
+
+pub fn pre_trade_route_sync_system(
+    mut query: Query<&mut Colony, With<HomeColony>>,
+    resources: Res<ColonyResources>,
+) {
+    if let Ok(mut colony) = query.get_single_mut() {
+        // Sync core resources without clearing other potentially exotic items
+        let core_items = [
+            ("Food", resources.food as u32),
+            ("Wood", resources.wood as u32),
+            ("Stone", resources.stone as u32),
+            ("Metal", resources.metal as u32),
+            ("Ore", resources.ore as u32),
+        ];
+
+        for (item_name, amount) in core_items {
+            if let Some(res) = colony.resources.iter_mut().find(|r| r.0 == item_name) {
+                res.1 = amount;
+            } else {
+                colony.resources.push((item_name.to_string(), amount));
+            }
+        }
+    }
+}
+
+pub fn post_trade_route_sync_system(
+    query: Query<&Colony, With<HomeColony>>,
+    mut resources: ResMut<ColonyResources>,
+) {
+    if let Ok(colony) = query.get_single() {
+        for (item, amount) in &colony.resources {
+            match item.as_str() {
+                "Food" => resources.food = *amount as f32,
+                "Wood" => resources.wood = *amount as f32,
+                "Stone" => resources.stone = *amount as f32,
+                "Metal" => resources.metal = *amount as f32,
+                "Ore" => resources.ore = *amount as f32,
+                _ => {}
+            }
+        }
+    }
+}

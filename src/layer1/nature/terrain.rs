@@ -265,6 +265,7 @@ pub fn generate_terrain(width: usize, height: usize) -> TerrainGrid {
     grid
 }
 
+#[allow(clippy::too_many_arguments)]
 fn fill_rect(
     tiles: &mut [TerrainType],
     width: usize,

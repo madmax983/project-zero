@@ -438,3 +438,20 @@
     - `apply_psychic_radiation_system` in `src/layer1/psychic.rs` that reads `PsychicBackground` and modifies `Needs.rest` and `StressTracker.accumulated_stress`.
     - Registered in `src/layer1/systems/observation.rs`.
 - **Tests:** `tests/integration/psychic_psychology.rs` (Integration test verified)
+
+### INT-538: Trade Routes -> ColonyResources
+- **Date:** 2026-03-20
+- **Systems connected:** `Colony` component (Layer 2 Trade Route) -> `ColonyResources` (Layer 1)
+- **Glue added:**
+    - Two bridge systems: `pre_trade_route_sync_system` and `post_trade_route_sync_system`.
+    - Added `HomeColony` marker to identify the player's colony.
+- **Tests:** `tests/integration/trade_routes_bridge.rs` (2 tests verified)
+
+### INT-539: Penal Contracts -> ColonyResources & Chronicle
+- **Date:** 2026-03-20
+- **Systems connected:** `ColonyFunds` (Penal Contract) -> `ColonyResources.credits` (Economy), `check_prisoner_status_system` (Penal Contract) -> `AddChronicleEvent` (Chronicle)
+- **Glue added:**
+    - Added `PrisonerDiedEvent` in `penal_contracts.rs`.
+    - `penal_funds_to_resources_system` moves `ColonyFunds` to `ColonyResources.credits`.
+    - `prisoner_death_chronicle_bridge_system` transforms `PrisonerDiedEvent` to `AddChronicleEvent`.
+- **Tests:** `tests/integration/penal_contracts_bridge.rs` (2 tests verified)
