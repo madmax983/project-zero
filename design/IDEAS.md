@@ -10749,3 +10749,59 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** The incredible efficiency of a self-improving AI vs. the terrifying reality of ceding control of critical infrastructure to an inhuman logic.
 
 ---
+
+## The Cassandra Syndrome
+
+**Layer:** 2 -> 1
+
+**Fantasy:** Knowing a disaster is coming and having to choose between causing a panic or suffering in silence until the last minute.
+
+**Mechanic:** A Layer 2 Orbital Observatory detects a massive incoming threat (e.g., a devastating solar flare, a pirate armada, a rogue asteroid) months in advance. You can choose to "Broadcast Warning," which immediately applies a massive, permanent "Impending Doom" stress debuff to the colony but allows them to start building specific, highly-effective defense structures at a reduced cost. If you stay silent, there is no stress penalty, but the defenses cost full price and the colony is completely unprepared when the event hits.
+
+**Emergence:** You broadcast the warning to prepare for a solar flare. The colony falls into such a deep depression from the stress that they stop working, failing to build the necessary heat shielding before the flare arrives, ensuring their own destruction.
+
+**Tension:** The mathematical advantage of early preparation vs. the psychological fragility of a population staring down their own mortality.
+
+---
+
+## The Cargo Cult Fleet
+
+**Layer:** Cross-layer (2 -> 1)
+
+**Fantasy:** An automated artifact of a forgotten war arrives, and you have to feed the slot machine to see what comes out.
+
+**Mechanic:** A massive, centuries-old automated supply dreadnought wanders into your Layer 2 orbit. It refuses all communication but opens a "Tether" to your Layer 1 colony. It demands massive, arbitrary shipments of basic resources (e.g., thousands of units of water or raw iron). In exchange, it drops completely random, highly advanced, and sometimes dangerously unstable Layer 3 technology or bizarre biological specimens onto your map.
+
+**Emergence:** You bankrupt your colony's water reserves to feed the ship, hoping for a fusion reactor. It drops a crate of genetically modified, hyper-aggressive ornamental plants right into your residential district, which immediately begin eating your Pops.
+
+**Tension:** The irresistible lure of incredibly advanced, free technology vs. the crippling cost of the tribute and the completely unpredictable nature of the reward.
+
+---
+
+## The Petting Zoo Paradox
+
+**Layer:** 1
+
+**Fantasy:** You tamed the apex predator to protect you, but now you can't get rid of its food source.
+
+**Mechanic:** You encounter a highly dangerous "Feral Beast" on Layer 1. Instead of killing it, you invest heavily in a "Domestication Program." The tamed beasts provide incredible defense against raids and a huge Morale boost to Pops. However, the beasts exclusively eat a specific, rapidly reproducing "Pest" insect. If you eradicate the Pest, the beasts starve and go feral again, attacking your Pops.
+
+**Emergence:** You have a thriving colony protected by a pack of loyal beasts. To maintain them, you must intentionally cultivate breeding grounds for the horrifying Pest insects. A minor containment failure occurs, and the insects swarm your crops. You can't use pesticides because it would kill the beasts' food supply, so you have to watch your colony starve while your defenders happily munch on the insects.
+
+**Tension:** The incredible security of a biological weapon vs. the absurd, dangerous requirement of intentionally farming the very thing it's supposed to protect you from.
+
+---
+
+## The Gravity Well Toll
+
+**Layer:** Cross-layer (3 -> 2 -> 1)
+
+**Fantasy:** The sheer mass of your planet makes you a captive audience for orbital extortion.
+
+**Mechanic:** A highly advanced Layer 3 civilization sets up an automated "Toll Station" at the edge of your star system (Layer 2). They don't attack, but they interdict any trade ship entering or leaving the system, demanding a percentage of the cargo. You can refuse, but the Toll Station will then drop a "Kinetic Fine" (a massive, unguided tungsten rod) directly onto a random high-value building in your Layer 1 colony.
+
+**Emergence:** You refuse the toll on a critical shipment of medical supplies, thinking your colony can absorb the hit. The Kinetic Fine drops directly onto your only functioning hospital, destroying the building and all the newly arrived supplies, while also triggering a localized earthquake that collapses your main mine.
+
+**Tension:** Paying a constant, draining extortion fee to a superior power vs. calling their bluff and risking devastating, pinpoint orbital bombardment on your civilian infrastructure.
+
+---
