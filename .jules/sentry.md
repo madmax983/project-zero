@@ -8,3 +8,6 @@
 **[Combat Damage Assertions Drift]**
 **Learning:** Tests checking hard-coded max/min bounds for combat damage (e.g., `(dmg - 20.0)`) can silently start failing if core multipliers (`CRIT_MULTIPLIER`) are changed elsewhere in the codebase.
 **Action:** Always derive expected test assertions from the defined constants (`CRIT_MULTIPLIER`, `CRIT_CHANCE`) rather than hardcoding resulting values.
+**[Mental Break Coverage Improvements]**
+**Learning:** Testing ECS utility functions (like `evaluate_mental_break`) that accept complex context types (`PopEvalData`, `UtilityAIBuffer`) requires robust default factories to prevent boilerplate sprawl and ensure isolation across test variants.
+**Action:** Always create `default_data()` and `default_buffer()` factories when testing ECS evaluation logic to keep test cases concise and focused on the mutated parameters.
