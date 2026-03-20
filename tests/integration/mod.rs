@@ -12,3 +12,4 @@ pub mod food_needs;
 pub mod escape_velocity_traits;
 pub mod geome_hazards;
 pub mod exodus_ark;
+pub mod psychic_psychology;

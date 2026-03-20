@@ -430,3 +430,11 @@
 - **Glue added:** Directly registered in `src/layer1/systems/economy.rs`
 - **Schedule:** Chained in Economy loop
 - **Tests:** `tests/integration/exodus_ark.rs` (1 test)
+
+### INT-467: Psychic Background Radiation -> Pop Psychology
+- **Date:** 2026-03-18
+- **Systems connected:** `PsychicBackground` (Environment) -> `apply_psychic_radiation_system` (Psychology)
+- **Glue added:**
+    - `apply_psychic_radiation_system` in `src/layer1/psychic.rs` that reads `PsychicBackground` and modifies `Needs.rest` and `StressTracker.accumulated_stress`.
+    - Registered in `src/layer1/systems/observation.rs`.
+- **Tests:** `tests/integration/psychic_psychology.rs` (Integration test verified)
