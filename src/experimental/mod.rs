@@ -33,3 +33,6 @@ pub mod the_humming_monolith;
 
 #[cfg(feature = "nova")]
 pub mod chrono_stutter;
+
+#[cfg(feature = "nova")]
+pub mod cartography_export;
