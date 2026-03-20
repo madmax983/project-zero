@@ -24,6 +24,7 @@ pub fn register(schedule: &mut Schedule) {
                 .after(decay_needs_system),
             crate::experimental::chrono_stutter::apply_chrono_stutter_system
                 .after(crate::experimental::chrono_stutter::spawn_chrono_anomaly_system),
+            crate::experimental::cartography_export::map_export_system,
         )
             .in_set(Layer1SystemSet::Observation),
     );

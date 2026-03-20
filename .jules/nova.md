@@ -51,3 +51,7 @@
 **Concept:** Localized temporal anomalies randomly spawn across the map. Pops caught inside experience extremely accelerated time, making them move and work significantly faster but also causing their needs to decay and their age to increase at alarming rates.
 **Fate:** Merged
 **Lesson:** Tying temporal flow directly to spatial positioning introduces dynamic risk/reward hotspots to the simulation grid.
+## [Cartography Export]
+**Concept:** Added a system in `src/experimental/cartography_export.rs` to export the current map terrain and beauty as a PNG file. This makes use of the `image` crate already present in the workspace to allow sharing and viewing the colony map.
+**Fate:** Merged
+**Lesson:** Adding external observability functionality allows for sharing and persistence of the colony's state out of game.
