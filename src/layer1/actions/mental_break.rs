@@ -108,11 +108,11 @@ fn find_food_target(
 mod tests {
     use super::*;
     use crate::layer1::map::GridPosition;
+    use crate::layer1::needs::Needs;
     use crate::layer1::stress::{Breakdown, BreakdownType};
     use crate::layer1::unrest::{MentalBreakType, MentalState};
     use crate::layer1::utility_eval_types::{PopEvalData, ScorableCandidate, UtilityAIBuffer};
     use crate::layer1::utility_types::{ActionType, PopAction, UtilityWeights};
-    use crate::layer1::needs::Needs;
     use bevy_ecs::prelude::Entity;
 
     fn default_pop_eval_data() -> PopEvalData {
@@ -190,17 +190,31 @@ mod tests {
     fn test_evaluate_mental_break_with_breakdown_variants() {
         let mut buffer = default_buffer();
         let structure = Entity::from_raw(10);
-        buffer.all_structures.push(ScorableCandidate::new(structure, GridPosition { x: 5, y: 0 }));
+        buffer.all_structures.push(ScorableCandidate::new(
+            structure,
+            GridPosition { x: 5, y: 0 },
+        ));
 
         let stockpile = Entity::from_raw(20);
-        buffer.stockpiles.push(ScorableCandidate::new(stockpile, GridPosition { x: 10, y: 0 }));
+        buffer.stockpiles.push(ScorableCandidate::new(
+            stockpile,
+            GridPosition { x: 10, y: 0 },
+        ));
 
         let cases = vec![
             (BreakdownType::Dazing, ActionType::Daze, None),
             (BreakdownType::SadWander, ActionType::SadWander, None),
             (BreakdownType::HideInRoom, ActionType::HideInRoom, None),
-            (BreakdownType::BingeEating, ActionType::Binge, Some(stockpile)),
-            (BreakdownType::FireStarting, ActionType::FireStarting, Some(structure)),
+            (
+                BreakdownType::BingeEating,
+                ActionType::Binge,
+                Some(stockpile),
+            ),
+            (
+                BreakdownType::FireStarting,
+                ActionType::FireStarting,
+                Some(structure),
+            ),
         ];
 
         for (break_type, expected_action, expected_target) in cases {
@@ -224,16 +238,29 @@ mod tests {
     fn test_evaluate_mental_break_with_mental_state_variants() {
         let mut buffer = default_buffer();
         let structure = Entity::from_raw(10);
-        buffer.all_structures.push(ScorableCandidate::new(structure, GridPosition { x: 5, y: 0 }));
+        buffer.all_structures.push(ScorableCandidate::new(
+            structure,
+            GridPosition { x: 5, y: 0 },
+        ));
 
         let farm = Entity::from_raw(30);
-        buffer.farms.push(ScorableCandidate::new(farm, GridPosition { x: 15, y: 0 }));
+        buffer
+            .farms
+            .push(ScorableCandidate::new(farm, GridPosition { x: 15, y: 0 }));
 
         let cases = vec![
-            (MentalBreakType::Vandalize, ActionType::Vandalize, Some(structure)),
+            (
+                MentalBreakType::Vandalize,
+                ActionType::Vandalize,
+                Some(structure),
+            ),
             (MentalBreakType::Binge, ActionType::Binge, Some(farm)),
             (MentalBreakType::Daze, ActionType::Daze, None),
-            (MentalBreakType::Sleepwalking, ActionType::Sleepwalking, None),
+            (
+                MentalBreakType::Sleepwalking,
+                ActionType::Sleepwalking,
+                None,
+            ),
         ];
 
         for (break_type, expected_action, expected_target) in cases {
@@ -262,15 +289,24 @@ mod tests {
 
         // Far structure
         let far_struct = Entity::from_raw(10);
-        buffer.all_structures.push(ScorableCandidate::new(far_struct, GridPosition { x: 10, y: 10 }));
+        buffer.all_structures.push(ScorableCandidate::new(
+            far_struct,
+            GridPosition { x: 10, y: 10 },
+        ));
 
         // Close structure
         let close_struct = Entity::from_raw(11);
-        buffer.all_structures.push(ScorableCandidate::new(close_struct, GridPosition { x: 1, y: 1 }));
+        buffer.all_structures.push(ScorableCandidate::new(
+            close_struct,
+            GridPosition { x: 1, y: 1 },
+        ));
 
         // Structure is pop itself (should be ignored)
         let self_struct = data.entity;
-        buffer.all_structures.push(ScorableCandidate::new(self_struct, GridPosition { x: 0, y: 0 }));
+        buffer.all_structures.push(ScorableCandidate::new(
+            self_struct,
+            GridPosition { x: 0, y: 0 },
+        ));
 
         let result = evaluate_mental_break(&data, &buffer);
         assert!(result.is_some());
@@ -289,11 +325,17 @@ mod tests {
 
         // Far stockpile
         let far_stockpile = Entity::from_raw(20);
-        buffer.stockpiles.push(ScorableCandidate::new(far_stockpile, GridPosition { x: 20, y: 0 }));
+        buffer.stockpiles.push(ScorableCandidate::new(
+            far_stockpile,
+            GridPosition { x: 20, y: 0 },
+        ));
 
         // Close farm
         let close_farm = Entity::from_raw(30);
-        buffer.farms.push(ScorableCandidate::new(close_farm, GridPosition { x: 0, y: 5 }));
+        buffer.farms.push(ScorableCandidate::new(
+            close_farm,
+            GridPosition { x: 0, y: 5 },
+        ));
 
         let result = evaluate_mental_break(&data, &buffer);
         assert!(result.is_some());
