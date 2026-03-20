@@ -263,3 +263,4 @@
 - [x] `539` Penal Contracts — `specs/539-penal-contracts.md` — completed 2024-05-18
 - [x] `533` The Silent Mutiny — `specs/533-the-silent-mutiny.md` — completed 2026-03-19
 - [x] `541` Xeno-Artifacts — `specs/541-xeno-artifacts.md` — completed 2026-02-01
+- [x] `INT-467` Integration: Psychic Background Radiation -> Pop Psychology — completed 2026-03-18
