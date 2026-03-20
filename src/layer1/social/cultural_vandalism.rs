@@ -1,4 +1,4 @@
-use crate::layer1::artifacts::{Aura, AuraEffect};
+use crate::layer1::artifacts::{ArtifactAura, AuraEffect};
 use crate::layer1::building::{Building, BuildingType};
 use crate::layer1::map::GridPosition;
 use crate::layer1::pop::Pop;
@@ -44,7 +44,7 @@ pub fn vandalism_system(
 
 /// System that updates the buffs of vandalized structures.
 pub fn update_structure_buffs(
-    mut query: Query<&mut Aura, (With<Vandalized>, Changed<Vandalized>)>,
+    mut query: Query<&mut ArtifactAura, (With<Vandalized>, Changed<Vandalized>)>,
 ) {
     for mut aura in query.iter_mut() {
         // Invert effect
@@ -106,7 +106,7 @@ mod tests {
                     building_type: BuildingType::Statue,
                     ..Default::default()
                 },
-                Aura {
+                ArtifactAura {
                     radius: 5.0,
                     effect: AuraEffect::StressModifier(-0.1),
                 }, // -0.1 Stress/tick (which is +10 Morale effectively)
@@ -118,7 +118,7 @@ mod tests {
         schedule.add_systems(update_structure_buffs);
         schedule.run(&mut world);
 
-        let aura = world.get::<Aura>(statue).unwrap();
+        let aura = world.get::<ArtifactAura>(statue).unwrap();
         // Should be inverted/positive StressModifier
         if let AuraEffect::StressModifier(stress) = aura.effect {
             assert!(stress > 0.0);

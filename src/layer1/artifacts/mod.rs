@@ -16,11 +16,15 @@ pub enum AuraEffect {
     SkillXpBoost(crate::layer1::skills::SkillType, f32),
     /// Multiplier for work speed.
     WorkSpeed(f32),
+    /// The "Insight" aura effect: +Science XP, +Stress (spec 541).
+    Insight,
+    /// The "Vitality" aura effect: +Heal rate, +Hunger (spec 541).
+    Vitality,
 }
 
 /// Component defining the range and effect of an artifact's aura.
 #[derive(Component)]
-pub struct Aura {
+pub struct ArtifactAura {
     /// Radius of the aura in grid cells.
     pub radius: f32,
     /// The effect applied to entities within range.
@@ -50,11 +54,18 @@ impl ActiveAuras {
 
 /// System to update `ActiveAuras` on Pops based on proximity to Artifacts.
 #[allow(clippy::cast_precision_loss)]
-pub fn aura_system(
-    artifacts: Query<(&GridPosition, &Aura), With<Artifact>>,
-    mut targets: Query<(&GridPosition, &mut ActiveAuras), With<crate::layer1::pop::Pop>>,
+pub fn apply_artifact_auras_system(
+    artifacts: Query<(&GridPosition, &ArtifactAura), With<Artifact>>,
+    mut targets: Query<
+        (
+            &GridPosition,
+            &mut ActiveAuras,
+            Option<&mut crate::layer1::stress::StressTracker>,
+        ),
+        With<crate::layer1::pop::Pop>,
+    >,
 ) {
-    for (pos, mut active_auras) in &mut targets {
+    for (pos, mut active_auras, mut stress) in &mut targets {
         // Clear previous frame's auras
         active_auras.effects.clear();
 
@@ -63,6 +74,13 @@ pub fn aura_system(
             let dist_sq = ((pos.x - art_pos.x).pow(2) + (pos.y - art_pos.y).pow(2)) as f32;
             if dist_sq <= aura.radius.powi(2) {
                 active_auras.effects.push(aura.effect);
+
+                // Immediate effects from specific auras
+                if aura.effect == AuraEffect::Insight {
+                    if let Some(ref mut st) = stress {
+                        st.accumulated_stress += 0.5; // Arbitrary increase value per tick
+                    }
+                }
             }
         }
     }
@@ -76,6 +94,84 @@ mod tests {
     use crate::layer1::stress::StressTracker;
 
     #[test]
+    fn test_artifact_spawns_during_map_generation() {
+        use crate::layer1::nature::terrain::TerrainType;
+        use crate::setup::setup_world;
+
+        // Act
+        // Setup world which generates terrain
+        let mut world = setup_world();
+
+        // Assert: At least one tile has the TerrainType::Artifact
+        let mut query = world.query::<&TerrainType>();
+        let artifact_count = query.iter(&world).filter(|&t| *t == TerrainType::Artifact).count();
+        assert!(artifact_count > 0, "Map generation should spawn at least one Artifact entity.");
+    }
+
+    #[test]
+    fn test_artifact_emits_aura_to_nearby_pops() {
+        let mut world = World::new();
+        // Arrange: Spawn an Artifact entity with a specific aura (Insight: +Stress)
+        world.spawn((
+            Artifact,
+            crate::layer1::nature::terrain::TerrainType::Artifact,
+            GridPosition { x: 10, y: 10 },
+            ArtifactAura { radius: 3.0, effect: AuraEffect::Insight }
+        ));
+
+        // Spawn a Pop within the aura's radius
+        let pop = world.spawn((
+            Pop,
+            GridPosition { x: 11, y: 10 },
+            StressTracker::default(),
+            ActiveAuras::default(),
+        )).id();
+
+        // Act: Advance simulation by one tick
+        let mut schedule = Schedule::default();
+        schedule.add_systems(apply_artifact_auras_system);
+        schedule.run(&mut world);
+
+        // Assert: The Pop receives increased stress
+        let stress = world.get::<StressTracker>(pop).unwrap();
+        assert!(stress.accumulated_stress > 0.0, "Pop within Artifact aura should receive increased stress.");
+    }
+
+    #[test]
+    fn test_artifact_indestructible() {
+        let mut world = World::new();
+        let grid = crate::layer1::nature::terrain::TerrainGrid {
+            width: 10,
+            height: 10,
+            tiles: vec![crate::layer1::nature::terrain::TerrainType::Grass; 100],
+        };
+        world.insert_resource(grid);
+
+        // Arrange: Spawn an Artifact on the map
+        let artifact = world.spawn((
+            Artifact,
+            crate::layer1::nature::terrain::TerrainType::Artifact,
+            GridPosition { x: 5, y: 5 }
+        )).id();
+
+        // Ensure the grid tile is actually set to Artifact
+        world.resource_mut::<crate::layer1::nature::terrain::TerrainGrid>().set(5, 5, crate::layer1::nature::terrain::TerrainType::Artifact);
+
+        // Act: Attempt to issue a 'Mine' or 'Destroy' command on the Artifact's tile
+        // Designation logic denies it implicitly because it's not Rock.
+        let can_mine = crate::layer1::designation::can_designate(
+            &world,
+            5,
+            5,
+            crate::layer1::designation::DesignationType::Mine,
+        );
+
+        // Assert: The command is rejected
+        assert!(!can_mine, "Artifacts should be indestructible (cannot be designated to mine).");
+        assert!(world.get_entity(artifact).is_ok(), "Artifact entity should still exist.");
+    }
+
+    #[test]
     fn test_artifact_aura_application() {
         let mut world = World::new();
         // world.init_resource::<crate::shared::time::SimulationTime>(); // Not needed for unit test yet
@@ -83,7 +179,7 @@ mod tests {
         // Spawn Artifact at (10, 10) with Radius 5
         world.spawn((
             Artifact,
-            Aura {
+            ArtifactAura {
                 radius: 5.0,
                 effect: AuraEffect::StressModifier(0.1), // +0.1 Stress/tick
             },
@@ -102,7 +198,7 @@ mod tests {
 
         // Run system
         let mut schedule = Schedule::default();
-        schedule.add_systems(aura_system);
+        schedule.add_systems(apply_artifact_auras_system);
         schedule.run(&mut world);
 
         // Check if Pop has the aura effect applied
@@ -117,7 +213,7 @@ mod tests {
         // Artifact at (10, 10), Radius 2
         world.spawn((
             Artifact,
-            Aura {
+            ArtifactAura {
                 radius: 2.0,
                 effect: AuraEffect::HealRate(1.5),
             },
@@ -131,7 +227,7 @@ mod tests {
 
         // Run system
         let mut schedule = Schedule::default();
-        schedule.add_systems(aura_system);
+        schedule.add_systems(apply_artifact_auras_system);
         schedule.run(&mut world);
 
         // Check - should NOT have aura

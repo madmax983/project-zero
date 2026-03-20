@@ -2,7 +2,7 @@ use bevy_ecs::prelude::*;
 use rand::Rng;
 
 /// Represents the type of terrain in a cell.
-#[derive(Clone, Copy, PartialEq, Eq, Debug, Hash)]
+#[derive(Component, Clone, Copy, PartialEq, Eq, Debug, Hash)]
 pub enum TerrainType {
     /// Green grass, the default ground.
     Grass,
@@ -26,6 +26,8 @@ pub enum TerrainType {
     MagmaRock,
     /// Toxic fungal growth in the deep caverns.
     SporeBloom,
+    /// Ancient, indestructible alien structure.
+    Artifact,
 }
 
 impl TerrainType {
@@ -52,6 +54,7 @@ impl TerrainType {
             Self::DeepRock => "Deep Rock",
             Self::MagmaRock => "Magma Rock",
             Self::SporeBloom => "Spore Bloom",
+            Self::Artifact => "Artifact",
         }
     }
 
@@ -84,7 +87,10 @@ impl TerrainType {
     /// ```
     #[must_use]
     pub const fn is_walkable(self) -> bool {
-        !matches!(self, Self::Rock | Self::Water | Self::DeepRock)
+        !matches!(
+            self,
+            Self::Rock | Self::Water | Self::DeepRock | Self::Artifact
+        )
     }
 
     /// Returns the thermal retention (0.0 to 1.0) of the terrain (Spec 198).
@@ -94,7 +100,7 @@ impl TerrainType {
     #[must_use]
     pub const fn heat_retention(self) -> f32 {
         match self {
-            Self::Rock | Self::DeepRock | Self::MagmaRock => 0.5,
+            Self::Rock | Self::DeepRock | Self::MagmaRock | Self::Artifact => 0.5,
             Self::Water => 0.2,
             Self::Grass
             | Self::Dirt
@@ -232,6 +238,14 @@ pub fn generate_terrain(width: usize, height: usize) -> TerrainGrid {
         tiles,
     };
 
+    // Xeno-Artifacts (Spec 541)
+    let num_artifacts = rng.gen_range(1..=3);
+    for _ in 0..num_artifacts {
+        let x = rng.gen_range(0..width);
+        let y = rng.gen_range(0..height);
+        grid.set(x, y, TerrainType::Artifact);
+    }
+
     // Deep Crust Geomes Generation (Spec 515)
     let mut geome_manager = crate::layer1::geomes::GeomeManager::new();
     for _ in 0..3 {
@@ -325,6 +339,7 @@ mod tests {
                     | TerrainType::DeepRock
                     | TerrainType::MagmaRock
                     | TerrainType::SporeBloom
+                    | TerrainType::Artifact
             )
         });
         assert!(all_valid, "All tiles must be valid terrain types");
@@ -414,6 +429,7 @@ mod tests {
         assert!(TerrainType::Path.is_walkable());
         assert!(!TerrainType::Rock.is_walkable());
         assert!(!TerrainType::Water.is_walkable());
+        assert!(!TerrainType::Artifact.is_walkable());
     }
 
     #[test]
