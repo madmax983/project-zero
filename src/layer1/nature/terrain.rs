@@ -247,28 +247,42 @@ pub fn generate_terrain(width: usize, height: usize) -> TerrainGrid {
     }
 
     // Deep Crust Geomes Generation (Spec 515)
-    let mut geome_manager = crate::layer1::geomes::GeomeManager::new();
     for _ in 0..3 {
-        let cx = rng.gen_range(0..width as i32);
-        let cy = rng.gen_range(0..height as i32);
+        let cx = rng.gen_range(0..width);
+        let cy = rng.gen_range(0..height);
         let w = rng.gen_range(3..10);
         let h = rng.gen_range(3..10);
 
-        let geome_type = if rng.gen_bool(0.5) {
-            crate::layer1::geomes::GeomeType::MagmaRiver
+        let terrain_type = if rng.gen_bool(0.5) {
+            TerrainType::MagmaRock
         } else {
-            crate::layer1::geomes::GeomeType::SporeCavern
+            TerrainType::SporeBloom
         };
 
-        geome_manager.spawn_geome(
-            geome_type,
-            crate::layer1::geomes::ZLevel(-4),
-            crate::layer1::geomes::Rect::new(cx, cy, cx + w, cy + h),
-        );
+        fill_rect(&mut grid.tiles, width, height, cx, cy, w, h, terrain_type);
     }
-    geome_manager.apply_to_grid(&mut grid);
 
     grid
+}
+
+fn fill_rect(
+    tiles: &mut [TerrainType],
+    width: usize,
+    height: usize,
+    x: usize,
+    y: usize,
+    w: usize,
+    h: usize,
+    terrain_type: TerrainType,
+) {
+    for cy in y..(y + h).min(height) {
+        for cx in x..(x + w).min(width) {
+            let idx = cy.saturating_mul(width).saturating_add(cx);
+            if idx < tiles.len() {
+                tiles[idx] = terrain_type;
+            }
+        }
+    }
 }
 
 #[allow(
