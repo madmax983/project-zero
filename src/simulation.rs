@@ -134,6 +134,8 @@ pub fn build_simulation_schedule() -> Schedule {
             .after(crate::layer2::governance::apply_governor_effects_system),
         crate::layer2::governance::check_governor_rebellion_system
             .after(crate::layer2::governance::update_governor_ambition_system),
+        crate::layer2::integration::rebellion_chronicle_bridge_system
+            .after(crate::layer2::governance::check_governor_rebellion_system),
     ));
 
     schedule

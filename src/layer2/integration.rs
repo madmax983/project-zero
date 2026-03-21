@@ -273,3 +273,20 @@ pub fn sensor_glitch_chronicle_bridge_system(
         });
     }
 }
+
+// --- INT-544: RebellionEvent -> Chronicle ---
+
+use crate::layer2::governance::RebellionEvent;
+
+/// Bridges `RebellionEvent` from Planetary Governance into the `Chronicle` system.
+pub fn rebellion_chronicle_bridge_system(
+    mut events: EventReader<RebellionEvent>,
+    mut chronicle_events: EventWriter<AddChronicleEvent>,
+) {
+    for _event in events.read() {
+        chronicle_events.send(AddChronicleEvent {
+            text: "A governor's unchecked ambition has ignited a planetary rebellion!".to_string(),
+            importance: EventImportance::Major,
+        });
+    }
+}

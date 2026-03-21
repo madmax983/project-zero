@@ -270,3 +270,4 @@
 - [x] `472` Synthetic Apathy — `specs/472-synthetic-apathy.md` — completed 2026-03-01
 - [x] `INT-533` Integration: SensorGlitchEvent -> Chronicle — completed 2026-03-20
 - [x] `544` Planetary Governance — `specs/544-planetary-governance.md` — completed 2026-03-20
+- [x] `INT-544` Integration: RebellionEvent -> AddChronicleEvent — completed 2026-03-21

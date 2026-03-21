@@ -462,3 +462,11 @@
 - **Glue added:** `sensor_glitch_chronicle_bridge_system` in `src/layer2/integration.rs`
 - **Schedule:** Chained in Update after `process_mutiny_effects_system`
 - **Tests:** `tests/integration/silent_mutiny_chronicle.rs`
+
+### INT-544: RebellionEvent -> AddChronicleEvent
+- **Date:** 2026-03-21
+- **Systems connected:** `check_governor_rebellion_system` (Layer 2 Governance) -> `rebellion_chronicle_bridge_system` (Integration) -> `AddChronicleEvent` (Chronicle)
+- **Glue added:**
+    - `rebellion_chronicle_bridge_system` in `src/layer2/integration.rs` to convert `RebellionEvent` to `AddChronicleEvent` with `EventImportance::Major`.
+    - Chained in `src/simulation.rs` in `Layer2SystemSet`.
+- **Tests:** `tests/integration/governance_rebellion.rs` (Integration test verified)
