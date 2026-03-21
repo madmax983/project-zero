@@ -700,6 +700,62 @@ classDiagram
 - [ADR 041: Encapsulate Tech Submodules](./adr/041-encapsulate-tech-submodules.md)
 - [ADR 042: Refactor Building God Module](./adr/042-refactor-building-module.md)
 - [ADR 043: Layer 3 Revival (Interstellar Scale)](./adr/043-layer-3-revival.md)
+- [ADR 044: Planetary Governance System](./adr/044-planetary-governance-system.md)
+
+## Layer 2: Planetary Governance Integration
+
+Planetary Governance bridges Layer 1 (Pop Traits) to Layer 2 (Planetary Production) and integrates deeply with narrative systems through Rebellions.
+
+```mermaid
+classDiagram
+    class Planet {
+        <<Component>>
+    }
+    class Governor {
+        +Entity pop_entity
+        +u64 assigned_at
+    }
+    class GovernorStats {
+        +f32 ambition
+        +f32 corruption
+    }
+    class PlanetProduction {
+        +f32 base_throughput
+        +f32 current_throughput
+    }
+    class ProsperityRating {
+        +f32 value
+    }
+    class Pop {
+        <<Component>>
+    }
+    class Traits {
+        <<Component>>
+    }
+    class RebellionEvent {
+        <<Event>>
+        +Entity planet_entity
+    }
+
+    Planet *-- Governor : Appointed
+    Planet *-- PlanetProduction : Outputs
+    Planet *-- ProsperityRating : Drives Ambition
+    Pop *-- GovernorStats : Tracks Over Time
+    Pop *-- Traits : Grants Bonuses
+    Governor ..> Pop : References
+
+    class GovernanceModule {
+        <<Module>>
+        +apply_governor_effects_system()
+        +update_governor_ambition_system()
+        +check_governor_rebellion_system()
+    }
+
+    GovernanceModule ..> Governor : Evaluates
+    GovernanceModule ..> Traits : Reads (e.g., LogisticsExpert)
+    GovernanceModule ..> PlanetProduction : Modifies
+    GovernanceModule ..> RebellionEvent : Triggers
+```
 
 ## Layer 3: Interstellar Events
 
