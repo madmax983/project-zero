@@ -267,7 +267,8 @@ pub fn sensor_glitch_chronicle_bridge_system(
 ) {
     for _event in events.read() {
         chronicle_events.send(AddChronicleEvent {
-            text: "A distant fleet reports anomalous sensor glitches. Combat orders aborted.".to_string(),
+            text: "A distant fleet reports anomalous sensor glitches. Combat orders aborted."
+                .to_string(),
             importance: EventImportance::Standard,
         });
     }
