@@ -10973,3 +10973,56 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Maintaining a powerful, centralized communication network for massive efficiency buffs vs. the terrifying vulnerability of that network being turned against you.
 
 ---
+## The Subterranean Smog Layer
+
+**Layer:** 1
+
+**Fantasy:** The lower you go, the cheaper it gets, but the harder it is to breathe. Building an underclass that literally supports the city above.
+
+**Mechanic:** Heavy industry placed deep underground doesn't vent pollution into the open air; instead, it pools in the lowest Z-levels as "Deep Smog." Deep Smog tiles reduce movement speed, increase disease risk, and obscure vision, but require zero ventilation infrastructure to maintain.
+
+**Emergence:** You try to keep your surface city pristine by moving all manufacturing underground. Ten years later, the "Deep Smog" is so dense that maintenance crews can't find the failing reactor. When the reactor inevitably explodes, the explosion is muffled by the smog, but the toxic cloud is forcefully pushed up the elevator shafts, poisoning the pristine surface city.
+
+**Tension:** The immense, immediate space and aesthetic benefits of hiding your pollution vs. the creation of a literal toxic underbelly that becomes incredibly dangerous to navigate and repair.
+
+---
+
+## Orbital Debt Collections
+
+**Layer:** Cross-layer (3 -> 1)
+
+**Fantasy:** A repo man who doesn't knock on your door, but instead unbolts your roof from orbit.
+
+**Mechanic:** If your colony defaults on a massive loan from a Layer 3 megacorporation, they don't immediately declare war. Instead, they deploy "Repo Drones" in Layer 2 orbit. These drones selectively use precision tractor beams to physically lift high-value manufactured goods (or even entire small modular buildings) straight off the surface of Layer 1, bypassing all ground defenses until the debt is paid.
+
+**Emergence:** You default on a loan to pay for emergency medical supplies. The megacorp arrives and, instead of taking your surplus iron, their algorithms determine your newly built hospital is the most valuable asset. The Repo Drones literally pull the hospital into space while doctors are still trying to treat patients inside.
+
+**Tension:** The short-term survival granted by predatory loans vs. the terrifying, unpredictable precision of corporate asset reclamation.
+
+---
+
+## The Phantom Signal
+
+**Layer:** 2
+
+**Fantasy:** Chasing a ghost in the static, only to realize the ghost is bait.
+
+**Mechanic:** A faint, intermittent distress signal appears on the Layer 2 system map, originating from an empty sector. If a fleet investigates, the signal disappears and reappears in an adjacent sector, constantly staying one step ahead. It requires dedicated sensor probes to pin down. When finally cornered, it reveals itself as either a genuine, incredibly valuable lost technology cache, or an active ambushing pirate fleet utilizing a "Mimic Beacon."
+
+**Emergence:** You desperately need rare resources to survive the winter. You send your only defense fleet to chase the Phantom Signal for months. While they are on a wild goose chase on the edge of the system, a completely separate, small raiding party lands on your undefended capital.
+
+**Tension:** The irresistible lure of massive, unknown salvage vs. the strategic danger of committing vital assets to an unpredictable, potentially malicious hunt.
+
+---
+
+## The Symbiotic Insurgency
+
+**Layer:** 1
+
+**Fantasy:** The planet's immune system isn't trying to kill you; it's trying to convert you.
+
+**Mechanic:** A local, highly adaptable strain of xenoflora ("Mind-Spores") begins to infect Pops. Instead of causing sickness, infected Pops gain a massive Morale boost and increased work speed. However, they secretly form a "Symbiont Faction" that actively works to spread the spores to others and sabotage air-filtration systems to increase spore density.
+
+**Emergence:** Your colony's productivity skyrockets, and everyone is incredibly happy. You ignore the slight green tint to the air. Then, the Symbiont Faction reaches critical mass. They don't revolt with weapons; they simply open all the exterior airlocks simultaneously, attempting to "welcome the forest inside" and completely converting the colony into a massive, biome-integrated hive.
+
+**Tension:** The immense, free productivity and morale boosts of the infection vs. the slow, silent, and irreversible loss of your colonists' humanity and loyalty.
