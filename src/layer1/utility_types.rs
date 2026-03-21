@@ -148,6 +148,12 @@ pub enum ActionType {
     PurgeResidue,
     /// Staring into the abyss (Void Stare manifestation).
     VoidStare,
+    /// Extinguish an adjacent fire.
+    ExtinguishFire,
+    /// Treat wounds.
+    TreatWounds,
+    /// Flee from danger.
+    Flee,
 }
 
 /// Types of hobbies.
@@ -167,7 +173,7 @@ pub enum HobbyType {
 
 impl ActionType {
     /// Total number of action types. Used for array sizing.
-    pub const COUNT: usize = 39;
+    pub const COUNT: usize = 42;
 
     /// Converts action type to a unique array index (0..COUNT-1).
     #[must_use]
@@ -212,7 +218,16 @@ impl ActionType {
             Self::PurgeResidue => 36,
             Self::VisitSanctuary => 37,
             Self::VoidStare => 38,
+            Self::ExtinguishFire => 39,
+            Self::TreatWounds => 40,
+            Self::Flee => 41,
         }
+    }
+
+    /// Returns `true` if this action is an emergency that a Synth would ignore.
+    #[must_use]
+    pub const fn is_emergency(&self) -> bool {
+        matches!(self, Self::ExtinguishFire | Self::TreatWounds | Self::Flee)
     }
 
     /// Returns the danger level of the action (probability of accident per tick).

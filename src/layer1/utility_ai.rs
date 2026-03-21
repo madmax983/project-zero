@@ -244,9 +244,10 @@ impl<'a> PopDecider<'a> {
         let is_striking = Self::check_striking(data, context);
         let is_penal = data.penal_labor.is_some();
         let is_noble = data.traits.as_ref().is_some_and(|t| t.has(Trait::Noble));
+        let is_synth = data.traits.as_ref().is_some_and(|t| t.has(Trait::Synth));
 
         Self {
-            evaluator: CandidateEvaluator::new(evaluate_idle(&data.needs)),
+            evaluator: CandidateEvaluator::new(evaluate_idle(&data.needs), is_synth),
             data,
             buffer,
             context,
@@ -977,5 +978,66 @@ mod tests {
             action.current_utility > 1.0,
             "Should have high utility bonus"
         );
+    }
+}
+
+#[cfg(test)]
+mod synth_tests {
+    use super::*;
+    use crate::layer1::map::GridPosition;
+    use crate::layer1::traits::{Trait, Traits};
+    use crate::layer1::utility_types::ActionType;
+
+    #[test]
+    fn test_synth_pop_ignores_fire_emergency() {
+        let mut world = World::new();
+
+        // Arrange
+        let synth_traits = Traits(1 << (Trait::Synth as u8));
+
+        let mut rng = rand::thread_rng();
+        let mut bundle = crate::layer1::pop::PopBundle::random(10, 10, &mut rng);
+        bundle.traits = synth_traits.clone();
+
+        let _synth = world.spawn(bundle).id();
+
+        let fire = world.spawn((
+            crate::layer1::nature::fire::Fire::default(),
+            GridPosition { x: 10, y: 11 }, // Adjacent
+        )).id();
+
+        let hauling_job = world.spawn((
+            GridPosition { x: 20, y: 20 },
+        )).id();
+
+        let mut evaluator = CandidateEvaluator::new(0.0, true);
+
+        // Fake world context
+        world.insert_resource(crate::layer1::resources::ColonyResources::default());
+        world.insert_resource(crate::layer1::day_night::DayNightCycle::default());
+        world.insert_resource(crate::layer1::taboo::TabooState::default());
+        world.insert_resource(crate::layer1::zone::ZoneGrid::new(1, 1));
+
+        let context = crate::layer1::utility_eval_types::WorldContext {
+            resources: world.resource::<crate::layer1::resources::ColonyResources>(),
+            cycle: world.resource::<crate::layer1::day_night::DayNightCycle>(),
+            taboo: world.resource::<crate::layer1::taboo::TabooState>(),
+            factions: None,
+            zone_grid: world.resource::<crate::layer1::zone::ZoneGrid>(),
+            temperature_grid: None,
+        };
+
+        // Try to consider ExtinguishFire with high utility (0.9)
+        evaluator.evaluate_and_consider(Some((0.9, fire)), ActionType::ExtinguishFire, &context, 0.0);
+
+        // Try to consider Haul with moderate utility (0.5)
+        evaluator.evaluate_and_consider(Some((0.5, hauling_job)), ActionType::Haul, &context, 0.0);
+
+        let (best_action, best_util, best_target) = evaluator.result();
+
+        // The synth should choose to haul rather than extinguish the fire, because ExtinguishFire utility was zeroed.
+        assert_eq!(best_action, ActionType::Haul);
+        assert_eq!(best_target, Some(hauling_job));
+        assert_eq!(best_util, 0.5);
     }
 }

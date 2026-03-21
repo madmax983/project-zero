@@ -424,14 +424,16 @@ pub(crate) struct CandidateEvaluator {
     pub(crate) action: ActionType,
     pub(crate) utility: f32,
     pub(crate) target: Option<Entity>,
+    pub(crate) is_synth: bool,
 }
 
 impl CandidateEvaluator {
-    pub(crate) const fn new(initial_utility: f32) -> Self {
+    pub(crate) const fn new(initial_utility: f32, is_synth: bool) -> Self {
         Self {
             action: ActionType::Idle,
             utility: initial_utility,
             target: None,
+            is_synth,
         }
     }
 
@@ -454,7 +456,10 @@ impl CandidateEvaluator {
         context: &WorldContext,
         bonus: f32,
     ) {
-        if let Some((utility, target)) = evaluation {
+        if let Some((mut utility, target)) = evaluation {
+            if self.is_synth && action.is_emergency() {
+                utility = 0.0; // Apathy: 0 priority for emergencies
+            }
             let penalty = crate::layer1::taboo::evaluate_taboo_penalty(action, context.taboo);
             self.consider(action, utility + penalty + bonus, Some(target));
         }
@@ -472,7 +477,7 @@ mod tests {
 
     #[test]
     fn test_candidate_evaluator_initialization() {
-        let evaluator = CandidateEvaluator::new(0.5);
+        let evaluator = CandidateEvaluator::new(0.5, false);
         let (action, utility, target) = evaluator.result();
 
         assert_eq!(action, ActionType::Idle);
@@ -482,7 +487,7 @@ mod tests {
 
     #[test]
     fn test_candidate_evaluator_consider_higher_utility() {
-        let mut evaluator = CandidateEvaluator::new(0.5);
+        let mut evaluator = CandidateEvaluator::new(0.5, false);
         let entity = Entity::from_raw(42);
 
         evaluator.consider(ActionType::Work, 0.8, Some(entity));
@@ -495,7 +500,7 @@ mod tests {
 
     #[test]
     fn test_candidate_evaluator_ignore_lower_utility() {
-        let mut evaluator = CandidateEvaluator::new(0.8);
+        let mut evaluator = CandidateEvaluator::new(0.8, false);
         let entity = Entity::from_raw(42);
 
         evaluator.consider(ActionType::Work, 0.5, Some(entity));
@@ -534,7 +539,7 @@ mod tests {
 
     #[test]
     fn test_candidate_evaluator_evaluate_and_consider_no_evaluation() {
-        let mut evaluator = CandidateEvaluator::new(0.5);
+        let mut evaluator = CandidateEvaluator::new(0.5, false);
 
         let mut world = bevy_ecs::world::World::new();
         world.insert_resource(crate::layer1::resources::ColonyResources::default());
@@ -565,7 +570,7 @@ mod tests {
 
     #[test]
     fn test_candidate_evaluator_evaluate_and_consider_with_evaluation() {
-        let mut evaluator = CandidateEvaluator::new(0.5);
+        let mut evaluator = CandidateEvaluator::new(0.5, false);
 
         let mut world = bevy_ecs::world::World::new();
         world.insert_resource(crate::layer1::resources::ColonyResources::default());
