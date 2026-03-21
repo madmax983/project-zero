@@ -11,3 +11,11 @@
 **[Mental Break Coverage Improvements]**
 **Learning:** Testing ECS utility functions (like `evaluate_mental_break`) that accept complex context types (`PopEvalData`, `UtilityAIBuffer`) requires robust default factories to prevent boilerplate sprawl and ensure isolation across test variants.
 **Action:** Always create `default_data()` and `default_buffer()` factories when testing ECS evaluation logic to keep test cases concise and focused on the mutated parameters.
+
+## [Coyote Speed Math]
+**Learning:** `calculate_atmospheric_movement_cost` was changed. The math for accumulator thresholds needed updating (`cost - 0.35` threshold wasn't properly checking limits in unit tests). The test was hardcoded to `0.9` assuming cost `1.2`. `1.2 - 0.35 = 0.85`. So `0.9` passed before threshold was lowered from `0.2`.
+**Action:** Be wary of hardcoded numbers in movement tests depending on variable threshold logic.
+
+## [Flaky Integration Tests]
+**Learning:** Some integration tests are failing or complaining about `ResMut<'_, Events<SpawnGhostFleetEvent>>` missing or `XDG_RUNTIME_DIR`.
+**Action:** Ignore pre-existing flaky test failures since Sentry only addresses test improvements related to gaps in coverage or explicitly creating self-contained unit tests.

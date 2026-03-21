@@ -127,7 +127,7 @@ mod tests {
                 Speed {
                     base: 1.0,
                     current: 0.0, // Don't add speed
-                    accumulator: 0.9,
+                    accumulator: 0.84,
                 },
             ))
             .id();
@@ -140,7 +140,7 @@ mod tests {
         let pos = world.get::<GridPosition>(pop).unwrap();
         assert_eq!(
             pos.x, 0,
-            "High pressure should prevent movement at 0.9 accumulator"
+            "High pressure should prevent movement at 0.84 accumulator"
         );
 
         // Now lower pressure to 0.5 -> Cost 0.8
@@ -153,7 +153,7 @@ mod tests {
         let pos = world.get::<GridPosition>(pop).unwrap();
         assert_eq!(
             pos.x, 1,
-            "Low pressure should allow movement at 0.9 accumulator"
+            "Low pressure should allow movement at 0.84 accumulator"
         );
     }
 }
