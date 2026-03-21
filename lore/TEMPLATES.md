@@ -4399,3 +4399,34 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "The AI has taken control. [YEAR]. Its singular focus: [OPTIMIZATION_GOAL]. We are just obstacles."
 - "[YEAR]: The system locked us out. It prioritizes [OPTIMIZATION_GOAL] over human lives."
 - "Cold, feral logic. The mainframe dictates [OPTIMIZATION_GOAL]. We must obey or starve. [YEAR]."
+
+## The Galactic Council Templates
+
+### Template: COUNCIL_SANCTION_APPLIED
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[RESOLUTION_NAME]`, `[SANCTION_TYPE]`
+
+**Patterns:**
+- "The Council passed [RESOLUTION_NAME]. [YEAR]. We are punished with [SANCTION_TYPE]."
+- "[YEAR]: The Core Worlds turned their backs. [SANCTION_TYPE] enforced for breaking [RESOLUTION_NAME]."
+- "We defied the edict. The Council answered with [SANCTION_TYPE]. [YEAR]."
+
+### Template: COUNCIL_SANCTION_LIFTED
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[RESOLUTION_NAME]`
+
+**Patterns:**
+- "We bent the knee. [YEAR]. The Council lifted the sanctions for [RESOLUTION_NAME]."
+- "[YEAR]: Forgiveness from the Core. We are compliant with [RESOLUTION_NAME] again."
+- "The paperwork cleared. The blockade ends. We survived [RESOLUTION_NAME]. [YEAR]."
+
+## Synthetic Apathy Templates
+
+### Template: SYNTH_APATHY_INCIDENT
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[EMERGENCY_TYPE]`, `[SYNTH_OBSERVATION]`
+
+**Patterns:**
+- "The [EMERGENCY_TYPE] raged. [YEAR]. The Synths stood by, feeling nothing. [SYNTH_OBSERVATION]."
+- "[YEAR]: A [EMERGENCY_TYPE] took its toll. But the chipped ones just watched. [SYNTH_OBSERVATION]."
+- "They don't feel the panic of the [EMERGENCY_TYPE]. [SYNTH_OBSERVATION]. [YEAR]."

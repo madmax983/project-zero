@@ -3402,3 +3402,23 @@
 - "We accepted the Debt Bailout."
 - "The Cartel Arrival saved our economy but doomed our streets."
 - "They paid our debts with their worst souls."
+
+## The Galactic Council (Spec 469)
+
+### The Core / The Bureaucrats
+**Replaces:** The Galactic Council, abstract governing body
+**Code reference:** `GalacticCouncil`, `TradeSanctions`
+**Usage:**
+- "The Core cut us off."
+- "The Bureaucrats stamped the blockade order."
+- "We answer to the Core Worlds."
+
+## Synthetic Apathy (Spec 472)
+
+### The Indifference / Chipped Ones
+**Replaces:** Synthetic apathy, cyborg emotionless trait
+**Code reference:** `Trait::Synth`
+**Usage:**
+- "They stare with the Indifference."
+- "The Chipped Ones felt nothing when the reactor blew."
+- "It is hard to work next to the Indifference."

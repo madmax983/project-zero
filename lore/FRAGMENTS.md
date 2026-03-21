@@ -5193,3 +5193,39 @@ How the dumped criminal pops are described.
 - zero acceptable error rates
 - maximizing silent operational hours
 - eliminating all non-essential biologicals
+
+## The Galactic Council Fragments
+
+### Fragment Type: [RESOLUTION_NAME]
+- the Genesis Accords
+- Resolution 44-B
+- the Omega Directive
+- the Frontier Taxation Act
+- the Quarantine Edict
+- the Heritage Protocols
+
+### Fragment Type: [SANCTION_TYPE]
+- a total trade embargo
+- weaponized orbital strikes
+- a massive credit drain
+- seizing all inbound freighters
+- void-weevil biological weapons
+- revoking our charter
+
+## Synthetic Apathy Fragments
+
+### Fragment Type: [EMERGENCY_TYPE]
+- raging fire
+- sudden hull breach
+- devastating plague
+- reactor meltdown
+- localized riot
+- pirate raid
+
+### Fragment Type: [SYNTH_OBSERVATION]
+- they just kept working
+- cold efficiency over human life
+- not a single pulse raised
+- a perfect, terrifying calm
+- their eyes were blank
+- "the Indifference" is what we call it
