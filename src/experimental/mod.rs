@@ -36,3 +36,6 @@ pub mod chrono_stutter;
 
 #[cfg(feature = "nova")]
 pub mod cartography_export;
+
+#[cfg(feature = "nova")]
+pub mod cargo_cult_fleet;

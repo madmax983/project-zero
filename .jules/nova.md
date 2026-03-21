@@ -55,3 +55,7 @@
 **Concept:** Added a system in `src/experimental/cartography_export.rs` to export the current map terrain and beauty as a PNG file. This makes use of the `image` crate already present in the workspace to allow sharing and viewing the colony map.
 **Fate:** Merged
 **Lesson:** Adding external observability functionality allows for sharing and persistence of the colony's state out of game.
+## [The Cargo Cult Fleet]
+**Concept:** Added a `CargoCultFleet` system where an automated supply ship wanders into orbit, opens a `Tether` to the colony, and demands specific resources. If fed properly, it rewards the colony with an `OrbitalDropEvent` of high-tier items.
+**Fate:** Merged
+**Lesson:** Tying external system demands to a reward-focused orbital logistics pipeline creates an interesting economic sink for the colony's excess resources, allowing for unexpected rewards and gambling.
