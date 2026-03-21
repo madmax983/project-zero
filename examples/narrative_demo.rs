@@ -296,17 +296,15 @@ fn ui(f: &mut Frame, app: &mut App) {
             .map(|seg| match seg {
                 NarrativeSegment::Text(t) => Span::raw(t),
                 NarrativeSegment::Slot { value, .. } => Span::styled(
-                    format!(" {} ", value),
+                    value,
                     Style::default()
-                        .fg(Color::Black)
-                        .bg(Color::Cyan)
+                        .fg(Color::Cyan)
                         .add_modifier(Modifier::BOLD),
                 ),
                 NarrativeSegment::Error(e) => Span::styled(
-                    format!(" <Missing: {}> ", e),
+                    format!("[ERROR: {}]", e),
                     Style::default()
-                        .fg(Color::White)
-                        .bg(Color::Red)
+                        .fg(Color::Red)
                         .add_modifier(Modifier::BOLD),
                 ),
             })
