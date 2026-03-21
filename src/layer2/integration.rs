@@ -255,3 +255,20 @@ pub fn post_trade_route_sync_system(
         }
     }
 }
+
+// --- INT-533: SensorGlitchEvent -> Chronicle ---
+
+use crate::layer2::silent_mutiny::SensorGlitchEvent;
+
+/// Bridges `SensorGlitchEvent` into the `Chronicle` system.
+pub fn sensor_glitch_chronicle_bridge_system(
+    mut events: EventReader<SensorGlitchEvent>,
+    mut chronicle_events: EventWriter<AddChronicleEvent>,
+) {
+    for _event in events.read() {
+        chronicle_events.send(AddChronicleEvent {
+            text: "A distant fleet reports anomalous sensor glitches. Combat orders aborted.".to_string(),
+            importance: EventImportance::Standard,
+        });
+    }
+}

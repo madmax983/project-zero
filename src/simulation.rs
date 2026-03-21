@@ -101,6 +101,8 @@ pub fn build_simulation_schedule() -> Schedule {
         crate::layer2::silent_mutiny::check_silent_mutiny_system,
         crate::layer2::silent_mutiny::process_mutiny_effects_system
             .after(crate::layer2::silent_mutiny::check_silent_mutiny_system),
+        crate::layer2::integration::sensor_glitch_chronicle_bridge_system
+            .after(crate::layer2::silent_mutiny::process_mutiny_effects_system),
         crate::layer2::integration::pre_trade_route_sync_system
             .before(crate::layer2::trade::routes::execute_trade_routes_system),
         crate::layer2::trade::routes::execute_trade_routes_system,

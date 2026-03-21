@@ -268,3 +268,4 @@
 - [x] `INT-539` Integration: Penal Contracts -> ColonyResources & Chronicle — completed 2026-03-20
 - [x] `469` The Galactic Council — `specs/469-galactic-council.md` — completed 2026-03-20
 - [x] `472` Synthetic Apathy — `specs/472-synthetic-apathy.md` — completed 2026-03-01
+- [x] `INT-533` Integration: SensorGlitchEvent -> Chronicle — completed 2026-03-20

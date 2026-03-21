@@ -455,3 +455,10 @@
     - `penal_funds_to_resources_system` moves `ColonyFunds` to `ColonyResources.credits`.
     - `prisoner_death_chronicle_bridge_system` transforms `PrisonerDiedEvent` to `AddChronicleEvent`.
 - **Tests:** `tests/integration/penal_contracts_bridge.rs` (2 tests verified)
+
+### INT-533: SensorGlitchEvent -> Chronicle
+- **Date:** 2026-03-20
+- **Systems connected:** `process_mutiny_effects_system` -> `sensor_glitch_chronicle_bridge_system` -> `chronicle_event_handler_system`
+- **Glue added:** `sensor_glitch_chronicle_bridge_system` in `src/layer2/integration.rs`
+- **Schedule:** Chained in Update after `process_mutiny_effects_system`
+- **Tests:** `tests/integration/silent_mutiny_chronicle.rs`
