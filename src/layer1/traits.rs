@@ -39,6 +39,8 @@ pub enum Trait {
     Optimist,
     /// Curious nature (+Knowledge/Mood from Observatory).
     Curious,
+    /// Logistics expert (+Production on planets when Governor).
+    LogisticsExpert,
     /// Traditional values (-Mood from Observatory).
     Traditionalist,
     /// Prone to violent outbursts (+Risk of breakdown).
@@ -143,6 +145,7 @@ impl Trait {
             Self::EmpathicLink => "Empathic Link",
             Self::Bureaucrat => "Bureaucrat",
             Self::Synth => "Synthetic",
+            Self::LogisticsExpert => "Logistics Expert",
         }
     }
 }

@@ -264,4 +264,3 @@ See `design/IDEAS.md` for unspecced concepts.
 
 - [ ] `542` Drone Networks — `specs/542-drone-networks.md`
 - [ ] `543` The Galactic Market — `specs/543-the-galactic-market.md`
-- [ ] `544` Planetary Governance — `specs/544-planetary-governance.md`
