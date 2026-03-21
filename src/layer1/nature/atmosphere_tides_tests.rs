@@ -108,12 +108,12 @@ mod tests {
         // Spawn Pop with Speed accumulator 1.0
         // Cost is 1.0 (Grass) * 1.0 (No Wind) * 1.2 (Pressure) = 1.2
         // With accumulator 1.0, they should NOT move (1.0 < 1.2)
-        // Even with Coyote Threshold (0.2), 1.0 < (1.2 - 0.2) is false (1.0 == 1.0)?
-        // Wait, coyote is: if acc >= cost - 0.2
-        // 1.0 >= 1.2 - 0.2 = 1.0. True. They WOULD move.
-        // Let's set accumulator to 0.9.
-        // 0.9 >= 1.0 (cost-coyote) -> False. No move.
-        // If pressure was 1.0 (Normal), cost 1.0. 0.9 >= 0.8. True. Move.
+        // Even with Coyote Threshold (0.35), 1.0 < (1.2 - 0.35) is false (1.0 == 0.85)?
+        // Wait, coyote is: if acc >= cost - 0.35
+        // 1.0 >= 1.2 - 0.35 = 0.85. True. They WOULD move.
+        // Let's set accumulator to 0.84.
+        // 0.84 >= 0.85 (cost-coyote) -> False. No move.
+        // If pressure was 1.0 (Normal), cost 1.0. 0.84 >= 0.65. True. Move.
 
         let pop = world
             .spawn((
@@ -127,7 +127,7 @@ mod tests {
                 Speed {
                     base: 1.0,
                     current: 0.0, // Don't add speed
-                    accumulator: 0.9,
+                    accumulator: 0.84,
                 },
             ))
             .id();
@@ -140,12 +140,12 @@ mod tests {
         let pos = world.get::<GridPosition>(pop).unwrap();
         assert_eq!(
             pos.x, 0,
-            "High pressure should prevent movement at 0.9 accumulator"
+            "High pressure should prevent movement at 0.84 accumulator"
         );
 
         // Now lower pressure to 0.5 -> Cost 0.8
-        // Coyote threshold: 0.8 - 0.2 = 0.6.
-        // Accumulator 0.9 >= 0.6. Should move.
+        // Coyote threshold: 0.8 - 0.35 = 0.45.
+        // Accumulator 0.84 >= 0.45. Should move.
         world.insert_resource(AtmosphericTide { pressure: 0.5 });
 
         bevy_ecs::system::RunSystemOnce::run_system_once(&mut world, movement_system).unwrap();
@@ -153,7 +153,7 @@ mod tests {
         let pos = world.get::<GridPosition>(pop).unwrap();
         assert_eq!(
             pos.x, 1,
-            "Low pressure should allow movement at 0.9 accumulator"
+            "Low pressure should allow movement at 0.84 accumulator"
         );
     }
 }
