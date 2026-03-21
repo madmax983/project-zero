@@ -91,6 +91,8 @@ pub enum Trait {
     EmpathicLink,
     /// Formal administrative capabilities. Understood the bureaucracy (Spec 464).
     Bureaucrat,
+    /// (Spec 472) Basic synthetic pop. 100% work efficiency, no morale needs, apathetic to emergencies.
+    Synth,
 }
 
 impl Trait {
@@ -140,6 +142,7 @@ impl Trait {
             Self::Spiteful => "Spiteful",
             Self::EmpathicLink => "Empathic Link",
             Self::Bureaucrat => "Bureaucrat",
+            Self::Synth => "Synthetic",
         }
     }
 }
@@ -342,6 +345,9 @@ pub fn get_trait_hunger_decay_modifier(traits: &Traits) -> f32 {
 #[must_use]
 pub fn get_trait_leisure_decay_modifier(traits: &Traits) -> f32 {
     let mut modifier = 1.0;
+    if traits.has(Trait::Synth) {
+        return 0.0;
+    }
     if traits.has(Trait::Soulless) {
         modifier -= 0.5;
     }
@@ -476,6 +482,7 @@ mod tests {
     fn test_leisure_decay_modifiers() {
         let soulless = Traits(1 << (Trait::Soulless as u8));
         let noble = Traits(1 << (Trait::Noble as u8));
+        let synth = Traits(1 << (Trait::Synth as u8));
         let normal = Traits::default();
 
         assert!(
@@ -485,6 +492,10 @@ mod tests {
         assert!(
             get_trait_leisure_decay_modifier(&noble) > 1.0,
             "Noble should have increased leisure decay"
+        );
+        assert!(
+            (get_trait_leisure_decay_modifier(&synth) - 0.0).abs() < f32::EPSILON,
+            "Synth should have zero leisure decay"
         );
         assert!(
             (get_trait_leisure_decay_modifier(&normal) - 1.0).abs() < f32::EPSILON,

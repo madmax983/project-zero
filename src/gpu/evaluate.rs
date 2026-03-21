@@ -402,6 +402,9 @@ const fn action_type_from_u32(v: u32) -> ActionType {
         25 => ActionType::Surgery,
         30 => ActionType::PreCrimeArrest,
         31 => ActionType::ConsumeChemical,
+        39 => ActionType::ExtinguishFire,
+        40 => ActionType::TreatWounds,
+        41 => ActionType::Flee,
         _ => ActionType::Idle,
     }
 }
