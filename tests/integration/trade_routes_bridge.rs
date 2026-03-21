@@ -1,6 +1,8 @@
 use bevy::prelude::*;
 use scale::layer1::resources::ColonyResources;
-use scale::layer2::integration::{post_trade_route_sync_system, pre_trade_route_sync_system, HomeColony};
+use scale::layer2::integration::{
+    post_trade_route_sync_system, pre_trade_route_sync_system, HomeColony,
+};
 use scale::layer2::trade::routes::{execute_trade_routes_system, Colony, Timer, TradeRoute};
 
 #[test]
@@ -52,7 +54,10 @@ fn test_trade_route_resources_bridge_incoming() {
     app.update();
 
     let resources = app.world().resource::<ColonyResources>();
-    assert_eq!(resources.food, 110.0, "Food should have been added to ColonyResources");
+    assert_eq!(
+        resources.food, 110.0,
+        "Food should have been added to ColonyResources"
+    );
 }
 
 #[test]
@@ -105,8 +110,15 @@ fn test_trade_route_resources_bridge_outgoing() {
     app.update();
 
     let resources = app.world().resource::<ColonyResources>();
-    assert_eq!(resources.metal, 400.0, "Metal should be deducted from ColonyResources");
+    assert_eq!(
+        resources.metal, 400.0,
+        "Metal should be deducted from ColonyResources"
+    );
 
     let earth_colony = app.world().get::<Colony>(colony_b).unwrap();
-    assert_eq!(earth_colony.get_resource("Metal"), 100, "Earth should have received the Metal");
+    assert_eq!(
+        earth_colony.get_resource("Metal"),
+        100,
+        "Earth should have received the Metal"
+    );
 }

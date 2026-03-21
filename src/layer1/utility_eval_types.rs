@@ -383,6 +383,7 @@ pub struct UtilityAIBuffer {
     pub item_entities: Vec<ScorableCandidate>,
     /// Buffer for stockpile candidates.
     pub stockpiles: Vec<ScorableCandidate>,
+    pub stockpile_positions: bevy_utils::HashSet<GridPosition>,
     /// Buffer for anomaly candidates.
     pub anomalies: Vec<ScorableCandidate>,
     /// Buffer for hospital candidates.

@@ -157,6 +157,7 @@ mod tests {
             items: vec![],
             item_entities: vec![],
             stockpiles: vec![],
+            stockpile_positions: bevy_utils::HashSet::new(),
             anomalies: vec![],
             hospitals: vec![],
             corpses: vec![],
