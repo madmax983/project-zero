@@ -10861,3 +10861,59 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** The humanitarian impulse to save lives (risking total planetary infection and immediate game-over) versus the ruthless pragmatism of extreme isolationism (causing deep, lasting psychological trauma and dealing with the physical fallout of orbital reprisal).
 
 ---
+
+## The Parasitic Broadcast
+
+**Layer:** Cross-layer (3 -> 2 -> 1)
+
+**Fantasy:** A catchy pop song from a dead empire is actually a hostile, self-replicating memetic virus.
+
+**Mechanic:** A Layer 3 alien civilization broadcasts a seemingly harmless, incredibly catchy audio signal that is picked up by your Layer 2 comms array. It trickles down to your Layer 1 colony's entertainment networks. Pops who hear it get a massive "Entertained" buff. However, the song is a memetic parasite. Infected pops spend their work hours humming the tune, drastically reducing their productivity, and subconsciously re-wiring colony machinery to broadcast the signal back into space, drawing the attention of automated Layer 3 exterminator fleets.
+
+**Emergence:** You are thrilled that your colony's morale is at an all-time high despite terrible conditions. Then you realize your entire mining sector hasn't extracted any ore in weeks because they spent all their time converting the drill rigs into massive acoustic amplifiers.
+
+**Tension:** Enjoying the massive, free morale boost of the alien broadcast vs. the catastrophic productivity loss and the terrifying, delayed consequence of broadcasting your location to a hostile galaxy.
+
+---
+
+## The Biomass Tariff
+
+**Layer:** Cross-layer (2 -> 1)
+
+**Fantasy:** The interstellar trade guild doesn't want your credits; they want your DNA.
+
+**Mechanic:** A powerful, biological Layer 3 empire controls the trade routes (Layer 2) passing near your system. They refuse standard currency. Instead, they demand a "Biomass Tariff" for safe passage or trade. You must physically export a percentage of your colony's organic matter (crops, livestock, or even Pops). In exchange, they provide incredibly durable, self-healing biological building materials (Layer 1).
+
+**Emergence:** A severe famine hits, and you have no crops to pay the tariff. Desperate to keep the trade routes open for medical supplies, you secretly categorize a group of dissenting Pops as "livestock" and export them. The bio-empire accepts, but the resulting biological materials they send back occasionally manifest the faces and voices of the exported Pops, destroying the colony's sanity.
+
+**Tension:** The unparalleled strength and utility of alien biological technology vs. the horrific moral and societal cost of commodifying your own colony's life force.
+
+---
+
+## The Sleep Debt Repo Men
+
+**Layer:** 1
+
+**Fantasy:** Corporate overlords have monetized the biological need for sleep, and they've come to collect.
+
+**Mechanic:** In a desperate bid for early capital, you signed a contract with a predatory megacorp. They provide high-efficiency "Wakefulness Stims" that completely eliminate a Pop's need for sleep, doubling productivity. However, the un-slept hours are tracked as "Sleep Debt." If the debt gets too high, the corp sends specialized "Repo Men" (heavily armored, non-lethal enforcers) to forcibly put Pops into deep, multi-month comas to "reclaim" the debt, dragging them out of their workplaces and into mobile cryo-pods.
+
+**Emergence:** You use the stims to crush a critical production deadline, racking up massive sleep debt across your entire engineering division. The next day, repo men storm the reactor room, tranquilize all your engineers, and leave. The reactor melts down because everyone who knows how to run it is legally required to be unconscious for the next three months.
+
+**Tension:** The incredible short-term economic boom of a 24/7 workforce vs. the sudden, violent, and highly disruptive forced extraction of your most vital personnel when the bill comes due.
+
+---
+
+## The Gravity Siphon
+
+**Layer:** Cross-layer (1 -> 2)
+
+**Fantasy:** You stole a black hole to power your toaster, and now the planet's orbit is decaying.
+
+**Mechanic:** You uncover an ancient, experimental "Micro-Singularity Generator" on Layer 1. It provides truly infinite, clean energy to your colony, completely solving all power needs. However, running the generator subtly increases the gravitational mass of your colony. Over time, this massive localized gravity anomaly begins to disrupt the orbit of the planet on Layer 2, pulling dangerous asteroid belts closer and completely throwing off the trajectories of incoming trade ships.
+
+**Emergence:** You enjoy decades of post-scarcity energy. Then you realize that trade ships keep missing your planet entirely because your colony's gravity well is warping their navigation computers. Finally, the distorted gravity pulls a massive, planet-killer asteroid out of its stable orbit and sends it on a direct collision course with your settlement.
+
+**Tension:** The absolute perfection of limitless, clean energy vs. the slow, silent, and apocalyptic destabilization of your entire star system's orbital mechanics.
+
+---
