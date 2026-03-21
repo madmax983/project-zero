@@ -178,6 +178,10 @@ pub fn register(schedule: &mut Schedule) {
             #[cfg(feature = "nova")]
             crate::experimental::bioluminescent_trails::spawn_bioluminescent_trails_system
                 .after(crate::layer1::needs::decay_needs_system),
+            #[cfg(feature = "nova")]
+            crate::experimental::cargo_cult_fleet::spawn_cargo_cult_fleet_system,
+            #[cfg(feature = "nova")]
+            crate::experimental::cargo_cult_fleet::feed_cargo_cult_tether_system,
         )
             .in_set(Layer1SystemSet::Observation),
     );
