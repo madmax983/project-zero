@@ -1001,14 +1001,14 @@ mod synth_tests {
 
         let _synth = world.spawn(bundle).id();
 
-        let fire = world.spawn((
-            crate::layer1::nature::fire::Fire::default(),
-            GridPosition { x: 10, y: 11 }, // Adjacent
-        )).id();
+        let fire = world
+            .spawn((
+                crate::layer1::nature::fire::Fire::default(),
+                GridPosition { x: 10, y: 11 }, // Adjacent
+            ))
+            .id();
 
-        let hauling_job = world.spawn((
-            GridPosition { x: 20, y: 20 },
-        )).id();
+        let hauling_job = world.spawn((GridPosition { x: 20, y: 20 },)).id();
 
         let mut evaluator = CandidateEvaluator::new(0.0, true);
 
@@ -1028,7 +1028,12 @@ mod synth_tests {
         };
 
         // Try to consider ExtinguishFire with high utility (0.9)
-        evaluator.evaluate_and_consider(Some((0.9, fire)), ActionType::ExtinguishFire, &context, 0.0);
+        evaluator.evaluate_and_consider(
+            Some((0.9, fire)),
+            ActionType::ExtinguishFire,
+            &context,
+            0.0,
+        );
 
         // Try to consider Haul with moderate utility (0.5)
         evaluator.evaluate_and_consider(Some((0.5, hauling_job)), ActionType::Haul, &context, 0.0);

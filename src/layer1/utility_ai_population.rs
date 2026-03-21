@@ -333,11 +333,17 @@ fn populate_buffer_items_and_misc(world: &mut World, buffer: &mut UtilityAIBuffe
     populate_stockpiles(world, &mut buffer.stockpiles);
 
     // Create lookup set for stockpiles (Optimization: O(1) lookup instead of O(N))
-    let stockpile_positions: HashSet<GridPosition> =
-        buffer.stockpiles.iter().map(|s| s.pos).collect();
+    buffer.stockpile_positions.clear();
+    buffer
+        .stockpile_positions
+        .extend(buffer.stockpiles.iter().map(|s| s.pos));
 
     populate_items(world, &mut buffer.items);
-    populate_generic_items(world, &stockpile_positions, &mut buffer.item_entities);
+    populate_generic_items(
+        world,
+        &buffer.stockpile_positions,
+        &mut buffer.item_entities,
+    );
     populate_anomalies(world, &mut buffer.anomalies);
     populate_corpses(world, &mut buffer.corpses);
     populate_graves(world, &mut buffer.graves);

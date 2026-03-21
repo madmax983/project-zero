@@ -32,7 +32,9 @@ pub fn enforce_resolutions_system(
             if let Some(mut sanctions) = sanctions_opt {
                 sanctions.multiplier = 0.5;
             } else {
-                commands.entity(entity).insert(TradeSanctions { multiplier: 0.5 });
+                commands
+                    .entity(entity)
+                    .insert(TradeSanctions { multiplier: 0.5 });
             }
         } else {
             // Remove sanctions if compliant
@@ -54,13 +56,19 @@ mod tests {
             active_resolutions: vec![Resolution::BanStripMining],
         });
 
-        let violator = app.world_mut().spawn(CouncilMember { in_breach: true }).id();
+        let violator = app
+            .world_mut()
+            .spawn(CouncilMember { in_breach: true })
+            .id();
 
         app.add_systems(Update, enforce_resolutions_system);
         app.update();
 
         let sanctions = app.world().get::<TradeSanctions>(violator);
-        assert!(sanctions.is_some(), "Violating member should receive TradeSanctions");
+        assert!(
+            sanctions.is_some(),
+            "Violating member should receive TradeSanctions"
+        );
         assert_eq!(sanctions.unwrap().multiplier, 0.5);
     }
 
@@ -71,17 +79,31 @@ mod tests {
             active_resolutions: vec![Resolution::BanStripMining],
         });
 
-        let compliant = app.world_mut().spawn(CouncilMember { in_breach: false }).id();
-        let formerly_breaching = app.world_mut().spawn((
-            CouncilMember { in_breach: false }, // Fixed their breach
-            TradeSanctions { multiplier: 0.5 },
-        )).id();
+        let compliant = app
+            .world_mut()
+            .spawn(CouncilMember { in_breach: false })
+            .id();
+        let formerly_breaching = app
+            .world_mut()
+            .spawn((
+                CouncilMember { in_breach: false }, // Fixed their breach
+                TradeSanctions { multiplier: 0.5 },
+            ))
+            .id();
 
         app.add_systems(Update, enforce_resolutions_system);
         app.update();
 
-        assert!(app.world().get::<TradeSanctions>(compliant).is_none(), "Compliant member should not get sanctions");
-        assert!(app.world().get::<TradeSanctions>(formerly_breaching).is_none(), "Sanctions should be removed after compliance");
+        assert!(
+            app.world().get::<TradeSanctions>(compliant).is_none(),
+            "Compliant member should not get sanctions"
+        );
+        assert!(
+            app.world()
+                .get::<TradeSanctions>(formerly_breaching)
+                .is_none(),
+            "Sanctions should be removed after compliance"
+        );
     }
 
     #[test]
@@ -91,17 +113,27 @@ mod tests {
             active_resolutions: vec![Resolution::BanStripMining],
         });
 
-        let violator = app.world_mut().spawn((
-            CouncilMember { in_breach: true },
-            TradeSanctions { multiplier: 1.0 }, // Has sanctions, but wrong multiplier
-        )).id();
+        let violator = app
+            .world_mut()
+            .spawn((
+                CouncilMember { in_breach: true },
+                TradeSanctions { multiplier: 1.0 }, // Has sanctions, but wrong multiplier
+            ))
+            .id();
 
         app.add_systems(Update, enforce_resolutions_system);
         app.update();
 
         let sanctions = app.world().get::<TradeSanctions>(violator);
-        assert!(sanctions.is_some(), "Violating member should keep TradeSanctions");
-        assert_eq!(sanctions.unwrap().multiplier, 0.5, "Multiplier should be updated to 0.5");
+        assert!(
+            sanctions.is_some(),
+            "Violating member should keep TradeSanctions"
+        );
+        assert_eq!(
+            sanctions.unwrap().multiplier,
+            0.5,
+            "Multiplier should be updated to 0.5"
+        );
     }
 
     #[test]
@@ -111,12 +143,18 @@ mod tests {
             active_resolutions: vec![], // No active resolutions
         });
 
-        let violator = app.world_mut().spawn(CouncilMember { in_breach: true }).id();
+        let violator = app
+            .world_mut()
+            .spawn(CouncilMember { in_breach: true })
+            .id();
 
         app.add_systems(Update, enforce_resolutions_system);
         app.update();
 
         let sanctions = app.world().get::<TradeSanctions>(violator);
-        assert!(sanctions.is_none(), "Violating member should not receive sanctions if no active resolutions");
+        assert!(
+            sanctions.is_none(),
+            "Violating member should not receive sanctions if no active resolutions"
+        );
     }
 }
