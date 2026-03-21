@@ -10834,7 +10834,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Disaster Tourism
+## Disaster Tourism [SPECCED]
 
 **Layer:** Cross-layer (2 -> 1)
 
@@ -10848,7 +10848,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Reverse Quarantine
+## The Reverse Quarantine [SPECCED]
 
 **Layer:** Cross-layer (1 -> 2)
 
@@ -10862,7 +10862,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Parasitic Broadcast
+## The Parasitic Broadcast [SPECCED]
 
 **Layer:** Cross-layer (3 -> 2 -> 1)
 
@@ -10876,7 +10876,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Biomass Tariff
+## The Biomass Tariff [SPECCED]
 
 **Layer:** Cross-layer (2 -> 1)
 
