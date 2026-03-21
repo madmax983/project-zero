@@ -10917,3 +10917,59 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** The absolute perfection of limitless, clean energy vs. the slow, silent, and apocalyptic destabilization of your entire star system's orbital mechanics.
 
 ---
+
+## The Gravimetric Tides
+
+**Layer:** 2 -> 1
+
+**Fantasy:** Your colony sits at the mercy of celestial mechanics, rising and falling with the pull of distant, unseen moons.
+
+**Mechanic:** Massive planetary bodies passing close to the colony's world periodically alter the local gravity for extended durations. High tides increase the speed of hauling and building but drastically increase the risk of structural collapse and workplace injuries. Low tides provide immense stability but make movement sluggish and exhaustive.
+
+**Emergence:** You perfectly time the construction of a massive space elevator during a low-gravity tide. However, the tide shifts unexpectedly early due to a rogue comet. The sudden return of full gravity crushes the half-built structure, devastating your industrial sector.
+
+**Tension:** Do you push your workforce to the absolute limit during the dangerous, highly productive high tides, or play it safe and slowly build during the sluggish low tides?
+
+---
+
+## The Orphaned Megastructure
+
+**Layer:** 3 -> 2 -> 1
+
+**Fantasy:** Claiming a piece of a dead god, only to realize the corpse might still be twitching.
+
+**Mechanic:** A massive, unidentifiable precursor megastructure drifts into the system. You can establish a specialized Layer 1 colony directly on its surface to mine it for unparalleled, endgame materials. However, the structure occasionally activates dormant sub-routines, altering the map's terrain, changing the atmosphere, or spawning hostile, ancient automated defenders.
+
+**Emergence:** Your colony thrives on the rich precursor metals. Suddenly, the megastructure initiates a "self-cleaning" cycle. The ground you built your farms on literally folds inward, while the automated defense systems misidentify your miners as an infection, forcing you to fight a war on a battlefield that is actively trying to digest you.
+
+**Tension:** Access to incredible wealth and technology vs. the constant, unpredictable threat of building a civilization on an active, hostile machine.
+
+---
+
+## The Cryo-Prison Revolt
+
+**Layer:** Cross-layer (2 -> 1)
+
+**Fantasy:** A ghost ship full of nightmares crashes into your backyard.
+
+**Mechanic:** A massive, ancient Layer 2 penal transport ship suffers a catastrophic failure and crashes onto your Layer 1 map. The crash scatters intact cryo-pods across the terrain. As the pods slowly thaw, they release highly skilled but incredibly dangerous "Criminal" Pops. You can capture them for skilled labor, but they possess massive Unrest and will actively attempt to sabotage or take over the colony.
+
+**Emergence:** You desperately need engineers to fix a failing reactor, so you thaw out several pods from the "Engineering Block" of the crashed ship. They fix the reactor, but immediately rewrite the access codes and hold the colony's power supply hostage, demanding a shuttle off-world.
+
+**Tension:** Immediate access to highly specialized, free labor vs. introducing a massive, volatile security threat directly into the heart of your colony.
+
+---
+
+## The Propaganda Broadcast Hijack
+
+**Layer:** 3 -> 1
+
+**Fantasy:** Your own loudspeakers are telling your people to overthrow you.
+
+**Mechanic:** A hostile Layer 3 empire manages to slice into your colony's primary communication network. Instead of attacking with ships, they broadcast highly effective, tailored propaganda directly to your Pops. Depending on the broadcast, Pops might suffer extreme Morale drops, form seditious factions, or even spontaneously halt work to construct bizarre "Freedom Monuments."
+
+**Emergence:** You are engaged in a tense border dispute. Suddenly, your own Ministry of Truth begins broadcasting the enemy's anthem. Your militia, convinced by the broadcast that you are the true tyrant, lays down their weapons just as the enemy dropships enter the atmosphere.
+
+**Tension:** Maintaining a powerful, centralized communication network for massive efficiency buffs vs. the terrifying vulnerability of that network being turned against you.
+
+---
