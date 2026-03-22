@@ -8,7 +8,7 @@ use crate::layer1::hobby::Hobby;
 use crate::layer1::items::{CarryingItem, Equipment, ItemType};
 use crate::layer1::justice::Inmate;
 use crate::layer1::map::GridPosition;
-use crate::layer1::memetic::MemeticCarrier;
+use crate::layer1::memetics::MemeticCarrier;
 use crate::layer1::needs::Needs;
 use crate::layer1::penal::PenalLabor;
 use crate::layer1::pop::Job;

@@ -693,7 +693,7 @@ pub(crate) fn evaluate_single_pop(
 
     // 1b. Check for Memetic Compulsion (Returns early, overrides drafted)
     if let Some((action, utility, target)) =
-        crate::layer1::memetic::evaluate_scrawl_memetic_sigil(data, buffer)
+        crate::layer1::memetics::evaluate_scrawl_memetic_sigil(data, buffer)
     {
         return (action, utility, target);
     }

@@ -211,3 +211,8 @@ mod tests {
         assert!(world.get::<MemeticCarrier>(victim).is_some());
     }
 }
+
+pub mod parasitic_broadcast;
+#[cfg(test)]
+mod parasitic_broadcast_tests;
+pub use parasitic_broadcast::*;

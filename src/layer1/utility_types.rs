@@ -126,7 +126,7 @@ pub enum ActionType {
     Admin,
     /// Scrawl memetic sigils on walls (Memetic Hazard).
     ///
-    /// See [`crate::layer1::memetic::evaluate_scrawl_memetic_sigil`].
+    /// See [`crate::layer1::memetics::evaluate_scrawl_memetic_sigil`].
     ScrawlMemeticSigil,
     /// Pre-emptive arrest of high-risk Suspects.
     ///

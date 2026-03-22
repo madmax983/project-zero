@@ -134,9 +134,9 @@ pub fn graffiti_observation_system(
         Entity,
         &GridPosition,
         &mut Morale,
-        Option<&crate::layer1::memetic::MemeticCarrier>,
+        Option<&crate::layer1::memetics::MemeticCarrier>,
     )>,
-    config: Option<Res<crate::layer1::memetic::MemeticConfig>>,
+    config: Option<Res<crate::layer1::memetics::MemeticConfig>>,
 ) {
     use rand::Rng;
     let mut rng = rand::thread_rng();
@@ -160,7 +160,7 @@ pub fn graffiti_observation_system(
                 {
                     commands
                         .entity(entity)
-                        .insert(crate::layer1::memetic::MemeticCarrier);
+                        .insert(crate::layer1::memetics::MemeticCarrier);
                 }
 
                 let label = match graffiti.graffiti_type {
