@@ -1,3 +1,52 @@
+//! Explosive Decompression & Suction Dynamics.
+//!
+//! This module handles the physical consequence of sudden pressure drops. When a sealed
+//! environment is breached (e.g., a wall breaks next to the vacuum of space), the violent
+//! outgassing creates a severe pressure gradient.
+//!
+//! `suction_system` forces entities (like pops or items) from high-pressure cells toward
+//! adjacent low-pressure cells if the difference exceeds the suction threshold.
+//!
+//! # Examples
+//!
+//! ```
+//! use bevy_ecs::prelude::*;
+//! use scale::layer1::pressure::PressureGrid;
+//! use scale::layer1::suction::suction_system;
+//! use scale::layer1::pop::Pop;
+//! use scale::layer1::map::GridPosition;
+//!
+//! let mut world = World::new();
+//!
+//! // 1. Create a pressurized grid, but leave a vacuum gap
+//! let mut grid = PressureGrid::new(10, 10);
+//! grid.fill(1.0);     // 1.0 = Atmosphere
+//! grid.set(6, 5, 0.0); // 0.0 = Vacuum Breach!
+//! world.insert_resource(grid);
+//!
+//! // 2. Spawn a Pop next to the breach
+//! let pop = world.spawn((
+//!     Pop,
+//!     GridPosition { x: 5, y: 5 }
+//! )).id();
+//!
+//! // 3. Run the decompression logic
+//! let mut schedule = Schedule::default();
+//! schedule.add_systems(suction_system);
+//! schedule.run(&mut world);
+//!
+//! // The unfortunate pop has been violently sucked into the vacuum cell!
+//! let new_pos = world.get::<GridPosition>(pop).unwrap();
+//! assert_eq!(new_pos.x, 6);
+//! assert_eq!(new_pos.y, 5);
+//! ```
+//!
+//! # Edge Cases
+//! - **Structural Integrity:** Heavy, anchored entities (e.g., [`Building`] components like Walls
+//!   or Airlocks) are immune to suction forces. They do not move, regardless of the gradient.
+//! - **Equilibrium:** Slight variances in atmospheric pressure (< `SUCTION_THRESHOLD`) do not
+//!   cause entities to drift; they only get sucked if the drop is massive (e.g., > 0.5).
+
 use crate::layer1::building::Building;
 use crate::layer1::items::Item;
 use crate::layer1::map::GridPosition;

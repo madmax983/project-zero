@@ -1,3 +1,49 @@
+//! The Atmospheric Pressure System.
+//!
+//! This module simulates the dispersion, containment, and loss of atmospheric pressure
+//! within the colony. Because pops require oxygen to survive, maintaining a pressurized
+//! environment is essential. If a room's pressure drops to a vacuum (0.0), occupants
+//! will quickly take suffocation damage.
+//!
+//! Pressure is simulated as a cellular automata over a 2D grid (`PressureGrid`). Generators
+//! (like `LifeSupport` buildings) inject pressure into the grid, which then diffuses to
+//! adjacent cells. Blockers (like `Wall` or `Airlock` buildings) restrict or halt this
+//! flow, allowing you to create sealed environments.
+//!
+//! # Examples
+//!
+//! ```
+//! use bevy_ecs::prelude::*;
+//! use scale::layer1::pressure::{PressureGrid, update_pressure_system};
+//! use scale::layer1::building::{Building, BuildingType};
+//! use scale::layer1::map::GridPosition;
+//!
+//! let mut world = World::new();
+//!
+//! // 1. Create a 5x5 grid (defaults to 0.0 vacuum)
+//! let grid = PressureGrid::new(5, 5);
+//! world.insert_resource(grid);
+//!
+//! // 2. Add a Life Support generator
+//! world.spawn((
+//!     Building { building_type: BuildingType::LifeSupport },
+//!     GridPosition { x: 2, y: 2 }
+//! ));
+//!
+//! // 3. Run the system to generate and diffuse pressure
+//! update_pressure_system(&mut world);
+//!
+//! // The grid now has pressure near the generator!
+//! let pressure = world.resource::<PressureGrid>().get(2, 2);
+//! assert!(pressure > 0.0);
+//! ```
+//!
+//! # Details
+//! - **Diffusion Algorithm:** Pressure diffuses by averaging a cell with its 4 cardinal
+//!   neighbors, weighted by their `transmissivity` (0.0 for walls, 1.0 for empty space).
+//! - **Vacuum Decay:** If an area is exposed to the void (edges of the grid or breached
+//!   walls), pressure will rapidly equalize with the vacuum, depleting the room.
+
 use bevy_ecs::prelude::*;
 use std::collections::HashMap;
 
