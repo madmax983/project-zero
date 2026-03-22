@@ -263,5 +263,4 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `537` Funeral Rites — `specs/537-funeral-rites.md`
 
 - [ ] `542` Drone Networks — `specs/542-drone-networks.md`
-- [ ] `543` The Galactic Market — `specs/543-the-galactic-market.md`
 - [ ] `547` The Parasitic Broadcast — `specs/547-parasitic-broadcast.md`

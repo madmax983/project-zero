@@ -122,6 +122,7 @@ pub fn build_simulation_schedule() -> Schedule {
             .after(crate::layer2::trade::blockade::blockade_interception_system),
         crate::layer3::events::debt_prison::process_bailout_acceptance_system
             .after(crate::layer3::events::debt_prison::check_bailout_condition_system),
+        crate::layer3::market::update_market_prices_system,
     ));
 
     schedule.add_systems((
@@ -289,6 +290,10 @@ pub fn run_simulation_tick(world: &mut World) {
         world.init_resource::<Events<crate::layer2::trade::biomass_tariff::TradeDeal>>();
     }
 
+    if !world.contains_resource::<crate::layer3::market::GalacticMarket>() {
+        world.init_resource::<crate::layer3::market::GalacticMarket>();
+    }
+
     if !world.contains_resource::<Events<crate::layer2::events_new::reverse_quarantine::RefugeeFleetEvent>>() {
         world.init_resource::<Events<crate::layer2::events_new::reverse_quarantine::RefugeeFleetEvent>>();
     }
@@ -387,6 +392,9 @@ mod tests {
         world.init_resource::<Events<crate::layer2::tourism::disaster_tourism::GriefTouristArrivalEvent>>();
         world.init_resource::<Events<crate::layer2::trade::biomass_tariff::TradeDeal>>();
         world.init_resource::<crate::layer3::council::GalacticCouncil>();
+        world.init_resource::<crate::layer3::market::GalacticMarket>();
+        world.init_resource::<Events<crate::layer2::events_new::reverse_quarantine::RefugeeFleetEvent>>();
+        world.init_resource::<Events<crate::layer1::environment::events::DebrisFallEvent>>();
 
         let schedule = build_simulation_schedule();
         world.add_schedule(schedule);
