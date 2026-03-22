@@ -12,6 +12,13 @@
 
 ## Future / Ideas
 
+- [ ] `549` The Sleep Debt Repo Men — `specs/549-sleep-debt-repo-men.md`
+- [ ] `550` The Gravity Siphon — `specs/550-the-gravity-siphon.md`
+- [ ] `551` The Parasitic Broadcast — `specs/551-the-parasitic-broadcast.md`
+- [ ] `552` The Subterranean Smog Layer — `specs/552-the-subterranean-smog-layer.md`
+- [ ] `553` Orbital Debt Collections — `specs/553-orbital-debt-collections.md`
+- [ ] `554` The Phantom Signal — `specs/554-the-phantom-signal.md`
+- [ ] `555` The Symbiotic Insurgency — `specs/555-the-symbiotic-insurgency.md`
 - [ ] `481` Subterranean Mycelial Network — `specs/481-subterranean-mycelial-network.md`
 - [ ] `480` Memory Forgery — `specs/480-memory-forgery.md`
 - [ ] `479` The Endless Draft — `specs/479-the-endless-draft.md`

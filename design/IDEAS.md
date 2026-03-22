@@ -10890,7 +10890,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Sleep Debt Repo Men
+## The Sleep Debt Repo Men [SPECCED]
 
 **Layer:** 1
 
@@ -10904,7 +10904,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Gravity Siphon
+## The Gravity Siphon [SPECCED]
 
 **Layer:** Cross-layer (1 -> 2)
 
@@ -10973,7 +10973,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Maintaining a powerful, centralized communication network for massive efficiency buffs vs. the terrifying vulnerability of that network being turned against you.
 
 ---
-## The Subterranean Smog Layer
+## The Subterranean Smog Layer [SPECCED]
 
 **Layer:** 1
 
@@ -10987,7 +10987,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Orbital Debt Collections
+## Orbital Debt Collections [SPECCED]
 
 **Layer:** Cross-layer (3 -> 1)
 
@@ -11001,7 +11001,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Phantom Signal
+## The Phantom Signal [SPECCED]
 
 **Layer:** 2
 
@@ -11015,7 +11015,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Symbiotic Insurgency
+## The Symbiotic Insurgency [SPECCED]
 
 **Layer:** 1
 
