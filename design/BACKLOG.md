@@ -267,4 +267,3 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `545` Disaster Tourism — `specs/545-disaster-tourism.md`
 - [ ] `546` The Reverse Quarantine — `specs/546-reverse-quarantine.md`
 - [ ] `547` The Parasitic Broadcast — `specs/547-parasitic-broadcast.md`
-- [ ] `548` The Biomass Tariff — `specs/548-biomass-tariff.md`
