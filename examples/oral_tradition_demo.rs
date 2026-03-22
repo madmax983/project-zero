@@ -238,7 +238,7 @@ mod app {
         fn render_header(&self, f: &mut Frame, area: Rect) {
             let time = self.world.resource::<SimulationTime>();
             let header_text = format!(
-                "Oral Tradition Explorer | Tick: {} | Speed: Auto",
+                "Oral Tradition Explorer | Date: {} | Speed: Auto",
                 time.tick
             );
 
@@ -288,7 +288,7 @@ mod app {
         fn render_table(&mut self, f: &mut Frame, area: Rect) {
             let tradition = self.world.resource::<OralTradition>();
 
-            let header_cells = ["Genre", "Origin", "Mutations", "Snippet"]
+            let header_cells = ["Genre", "Historical Date", "Mutations", "Snippet"]
                 .iter()
                 .map(|h| Cell::from(*h).style(Style::default().fg(Color::Yellow)));
 
