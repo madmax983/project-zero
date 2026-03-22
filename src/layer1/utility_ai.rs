@@ -997,7 +997,7 @@ mod synth_tests {
 
         let mut rng = rand::thread_rng();
         let mut bundle = crate::layer1::pop::PopBundle::random(10, 10, &mut rng);
-        bundle.traits = synth_traits.clone();
+        bundle.traits = synth_traits;
 
         let _synth = world.spawn(bundle).id();
 

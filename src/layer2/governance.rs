@@ -201,7 +201,7 @@ mod tests {
         let events = world.resource::<Events<RebellionEvent>>();
         let mut reader = events.get_cursor();
         assert!(
-            reader.read(&events).any(|e| e.planet_entity == planet),
+            reader.read(events).any(|e| e.planet_entity == planet),
             "High ambition governor should trigger a RebellionEvent."
         );
     }
