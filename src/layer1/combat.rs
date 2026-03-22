@@ -447,7 +447,7 @@ mod tests {
         // Check Enemy Health
         let health = world.get::<Health>(enemy).unwrap();
         let expected_normal = 80.0; // 100 - 20
-        let expected_crit = 40.0; // 100 - (20 * 3)
+        let expected_crit = 100.0 - (20.0 * CRIT_MULTIPLIER);
         assert!(
             (health.current - expected_normal).abs() < f32::EPSILON
                 || (health.current - expected_crit).abs() < f32::EPSILON,
@@ -481,6 +481,33 @@ mod tests {
         // Should fail/no damage
         let health = world.get::<Health>(enemy).unwrap();
         assert!((health.current - health.max).abs() < f32::EPSILON);
+    }
+
+    #[test]
+    fn test_execute_attack_aborts_on_invalid_attacker() {
+        let mut world = setup_world();
+
+        // Target with 100 Health
+        let target = world
+            .spawn(Health {
+                current: 100.0,
+                max: 100.0,
+            })
+            .id();
+
+        // Create an entity and immediately despawn it so it's invalid
+        let invalid_attacker = world.spawn_empty().id();
+        world.despawn(invalid_attacker);
+
+        // This should return early and NOT panic
+        crate::layer1::combat::execute_attack(&mut world, invalid_attacker, target);
+
+        // Check Target Health remains untouched
+        let health = world.get::<Health>(target).unwrap();
+        assert!(
+            (health.current - 100.0).abs() < f32::EPSILON,
+            "Target should not take damage from an invalid attacker"
+        );
     }
 
     #[test]
@@ -524,7 +551,7 @@ mod tests {
         // Check Damage
         let health = world.get::<Health>(target).unwrap();
         let expected_normal = 90.0;
-        let expected_crit = 70.0;
+        let expected_crit = 100.0 - (10.0 * CRIT_MULTIPLIER);
         assert!(
             (health.current - expected_normal).abs() < f32::EPSILON
                 || (health.current - expected_crit).abs() < f32::EPSILON,

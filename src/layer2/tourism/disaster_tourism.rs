@@ -1,6 +1,6 @@
-use bevy_ecs::prelude::*;
 use crate::layer1::disasters::{DisasterEvent, DisasterType};
 use crate::layer1::map::GridPosition;
+use bevy_ecs::prelude::*;
 
 #[derive(Event)]
 pub struct GriefTouristArrivalEvent {
@@ -15,7 +15,9 @@ pub fn process_disaster_tourism_system(
     for disaster in disaster_events.read() {
         if disaster.severity >= 80.0 {
             match disaster.disaster_type {
-                DisasterType::ReactorMeltdown | DisasterType::MassiveEarthquake | DisasterType::ViolentUprising => {
+                DisasterType::ReactorMeltdown
+                | DisasterType::MassiveEarthquake
+                | DisasterType::ViolentUprising => {
                     tourist_events.send(GriefTouristArrivalEvent {
                         target_location: disaster.location,
                         offered_credits: disaster.severity * 500.0,
@@ -28,10 +30,12 @@ pub fn process_disaster_tourism_system(
 }
 #[cfg(test)]
 mod tests {
-    use bevy_ecs::prelude::*;
     use crate::layer1::disasters::{DisasterEvent, DisasterType};
-    use crate::layer2::tourism::disaster_tourism::{GriefTouristArrivalEvent, process_disaster_tourism_system};
     use crate::layer1::map::GridPosition;
+    use crate::layer2::tourism::disaster_tourism::{
+        process_disaster_tourism_system, GriefTouristArrivalEvent,
+    };
+    use bevy_ecs::prelude::*;
 
     #[test]
     fn test_disaster_triggers_grief_tourists() {

@@ -1,5 +1,5 @@
-use bevy_ecs::prelude::*;
 use crate::layer1::map::GridPosition;
+use bevy_ecs::prelude::*;
 
 #[derive(Clone, Copy, PartialEq, Eq, Debug)]
 pub enum DisasterType {
