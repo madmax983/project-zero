@@ -11026,3 +11026,56 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Emergence:** Your colony's productivity skyrockets, and everyone is incredibly happy. You ignore the slight green tint to the air. Then, the Symbiont Faction reaches critical mass. They don't revolt with weapons; they simply open all the exterior airlocks simultaneously, attempting to "welcome the forest inside" and completely converting the colony into a massive, biome-integrated hive.
 
 **Tension:** The immense, free productivity and morale boosts of the infection vs. the slow, silent, and irreversible loss of your colonists' humanity and loyalty.
+## The Subterranean Ecosystem
+
+**Layer:** 1
+
+**Fantasy:** A colony discovers a sprawling, interconnected ecosystem beneath the planet's surface, offering immense resources but hiding unpredictable dangers.
+
+**Mechanic:** Excavating deep enough reveals cavernous spaces filled with bioluminescent flora and blind, subterranean fauna. These biomes provide unique, high-yield resources (e.g., luminescent fungi for medicine, rare minerals). However, disturbing the ecosystem can trigger massive cave-ins, release toxic gases, or awaken ancient, highly adapted predators that aggressively defend their territory.
+
+**Emergence:** You carefully mine a rich vein of luminescent fungi to cure a widespread illness. The removal of the fungi collapses a critical support structure, triggering a cave-in that breaches an underground lake, flooding your deep-mining operations and introducing aggressive aquatic predators to the lower levels of your colony.
+
+**Tension:** The lure of unique, powerful resources hidden beneath the surface vs. the constant, unpredictable threat of catastrophic environmental collapse and hostile fauna.
+
+---
+
+## The Orbital Scrapyard
+
+**Layer:** 2 -> 1
+
+**Fantasy:** A massive field of orbital debris provides a steady stream of salvage, but occasionally rains destruction upon the planet.
+
+**Mechanic:** A dense ring of debris from past conflicts or failed planetary megastructures orbits the planet. Players can launch specialized salvage missions to recover rare components, advanced technology, or raw materials. However, the debris field is unstable. Occasionally, massive chunks of wreckage de-orbit and crash onto the Layer 1 map, causing localized devastation but creating new, highly valuable salvage sites on the surface.
+
+**Emergence:** Your salvage operations in orbit yield incredible technological advancements, accelerating your colony's growth. Suddenly, a chain reaction in the debris field sends a massive dreadnought hull hurtling towards the planet. It obliterates your agricultural sector, but the resulting crash site is rich in advanced alloys and functioning power cores, offering a massive boost to your industrial capacity if you can secure it.
+
+**Tension:** The incredible wealth of orbital salvage vs. the ever-present danger of unpredictable, catastrophic debris impacts on your fragile surface colony.
+
+---
+
+## The Empathic Plague
+
+**Layer:** Cross-layer (1 -> 2)
+
+**Fantasy:** A disease that doesn't kill your body, but forces you to feel everyone else's pain.
+
+**Mechanic:** A unique pathogen sweeps through the colony. Instead of physical symptoms, it heightens the empathy of infected Pops. Infected Pops experience the negative moods (Hunger, Exhaustion, Unrest) of all Pops within a certain radius. As the infection spreads, localized pockets of misery can trigger massive, colony-wide morale collapses, halting production and sparking spontaneous riots.
+
+**Emergence:** A minor food shortage in a distant mining outpost causes the miners' morale to plummet. The empathic plague spreads this misery to the nearby industrial sector, causing factory workers to strike out of overwhelming shared despair. The resulting drop in production halts the construction of a critical orbital defense platform, leaving the entire system vulnerable to a pirate raid.
+
+**Tension:** The challenge of isolating and treating a non-lethal but highly disruptive psychological plague vs. the sudden, catastrophic cascading failures caused by shared misery.
+
+---
+
+## The Celestial Library
+
+**Layer:** 3 -> 1
+
+**Fantasy:** A massive, ancient repository of knowledge drifts into the system, offering incredible technological secrets but demanding bizarre, unpredictable sacrifices.
+
+**Mechanic:** A colossal, seemingly abandoned space station enters the system, broadcasting fragmented data streams. Establishing a research outpost on the station allows players to unlock advanced, reality-bending technologies. However, the library's automated systems periodically demand unique, often bizarre "offerings" to grant access to deeper databanks. These offerings might be specific, rare resources, highly trained Pops, or even the deliberate destruction of specific buildings.
+
+**Emergence:** You desperately need the library's advanced medical tech to cure a widespread plague. The library demands the immediate sacrifice of your entire stock of rare, bioluminescent fungi—the very resource you were using to treat the symptoms. You comply, gaining the cure, but the sudden lack of treatment causes a massive spike in mortality before the new tech can be synthesized and distributed.
+
+**Tension:** The irresistible lure of reality-altering technology vs. the unpredictable, often agonizing sacrifices demanded by an ancient, alien intelligence.
