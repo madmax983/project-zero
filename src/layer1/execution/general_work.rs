@@ -37,6 +37,12 @@ use crate::shared::log::MessageLog;
 /// Work amount applied per tick when a pop is working.
 const WORK_PER_TICK: f32 = 10.0;
 
+/// Ludwig: Shared work critical hit chance to match combat juice.
+pub const WORK_CRIT_CHANCE: f64 = 0.2;
+
+/// Ludwig: Shared work critical hit multiplier to match combat juice.
+pub const WORK_CRIT_MULTIPLIER: f32 = 2.5;
+
 /// Durability loss per tick when working.
 const TOOL_DURABILITY_LOSS: f32 = 0.1;
 

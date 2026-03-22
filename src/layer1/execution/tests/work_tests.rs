@@ -332,17 +332,17 @@ fn test_work_execution_efficiency_low_morale() {
     // Low morale multiplier is 0.5. Base work is 10.0.
     // Efficiency * Base = 5.0
     // Organic factor: 0.9 to 1.1 -> Normal range is 4.5 to 5.5
-    // Crit multiplier is 5.0 -> Crit range is 22.5 to 27.5
+    // Crit multiplier is 2.5 -> Crit range is 11.25 to 13.75
     // BUT! get_morale_efficiency uses 0.5 for <= 0.2 morale.
     // Hunger is 0.1, Rest is 0.1, Leisure is 0.1, Hygiene is 0.8.
     // Depending on Needs config, average morale might be higher than 0.2, OR we have a different organic factor. Let's widen the range.
 
-    let is_crit_range = progress.current >= 15.0 && progress.current <= 30.0;
+    let is_crit_range = progress.current >= 7.5 && progress.current <= 15.0;
     let is_normal_range = progress.current >= 3.0 && progress.current <= 15.0;
 
     assert!(
         is_normal_range || is_crit_range,
-        "Expected ~5.0 (or ~25.0 crit) progress, got {}",
+        "Expected ~5.0 (or ~12.5 crit) progress, got {}",
         progress.current
     );
 }
@@ -402,10 +402,10 @@ fn test_work_execution_efficiency_high_morale() {
 
     let progress = world.get::<MiningProgress>(designation).unwrap();
     let is_normal = progress.current >= 10.8 && progress.current <= 13.2;
-    let is_crit = progress.current >= 54.0 && progress.current <= 70.0;
+    let is_crit = progress.current >= 27.0 && progress.current <= 33.0;
     assert!(
         is_normal || is_crit,
-        "Expected ~12.0 progress, got {}",
+        "Expected ~12.0 (or ~30.0 crit) progress, got {}",
         progress.current
     );
 }
@@ -466,13 +466,13 @@ fn test_work_execution_skills_mining_efficiency() {
     // Skill Lvl 1: 1.1x multiplier. Base: 10.0
     // Lvl 1 Base Work = 11.0
     // Organic factor: 0.9 to 1.1 -> 9.9 to 12.1
-    // Crit multiplier: 5.0 -> 49.5 to 60.5
+    // Crit multiplier: 2.5 -> 24.75 to 30.25
 
     let is_normal = progress.current >= 9.9 && progress.current <= 12.1;
-    let is_crit = progress.current >= 49.5 && progress.current <= 60.5;
+    let is_crit = progress.current >= 24.75 && progress.current <= 30.25;
     assert!(
         is_normal || is_crit,
-        "Expected ~11.0 (or ~55.0 crit) progress, got {}",
+        "Expected ~11.0 (or ~27.5 crit) progress, got {}",
         progress.current
     );
 }
@@ -577,14 +577,14 @@ fn test_work_execution_augmentation_bonus() {
 
     // Augment bonus: 0.5. Total mult: 1.5. Base: 10.0 -> 15.0
     // Organic factor: 0.9 to 1.1 -> 13.5 to 16.5
-    // Crit multiplier: 5.0 -> 67.5 to 82.5
+    // Crit multiplier: 2.5 -> 33.75 to 41.25
 
     let is_normal = progress.current >= 13.5 && progress.current <= 16.5;
-    let is_crit = progress.current >= 67.5 && progress.current <= 82.5;
+    let is_crit = progress.current >= 33.75 && progress.current <= 41.25;
 
     assert!(
         is_normal || is_crit,
-        "Expected ~15.0 (or crit), got {}",
+        "Expected ~15.0 (or ~37.5 crit), got {}",
         progress.current
     );
 }

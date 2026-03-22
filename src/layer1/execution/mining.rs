@@ -10,6 +10,8 @@ use crate::layer1::resources::{process_logging, process_mining};
 use crate::layer1::skills::{SkillType, XpGainEvent, XpSource};
 use crate::shared::log::MessageLog;
 
+use crate::layer1::execution::general_work::{WORK_CRIT_CHANCE, WORK_CRIT_MULTIPLIER};
+
 /// Handles mining work at a designation.
 ///
 /// Reduces terrain health or mining progress, spawns resources, and removes rock/ore.
@@ -20,10 +22,10 @@ pub fn handle_mining_work(
     work_amount: f32,
     pos: Option<GridPosition>,
 ) -> bool {
-    let is_crit = rand::thread_rng().gen_bool(0.05);
+    let is_crit = rand::thread_rng().gen_bool(WORK_CRIT_CHANCE);
 
     let effective_work = if is_crit {
-        let work = work_amount * 5.0;
+        let work = work_amount * WORK_CRIT_MULTIPLIER;
         if let Some(p) = pos {
             spawn_particle(world, p, '*', Color::Yellow, 10);
             trigger_shake(world, 0.3);
@@ -186,11 +188,11 @@ pub fn handle_chopping_work(
     pos: Option<GridPosition>,
 ) -> bool {
     let mut rng = rand::thread_rng();
-    let is_crit = rng.gen_bool(0.05);
+    let is_crit = rng.gen_bool(WORK_CRIT_CHANCE);
 
     let mut effective_work = work_amount;
     if is_crit {
-        effective_work *= 5.0;
+        effective_work *= WORK_CRIT_MULTIPLIER;
         if let Some(p) = pos {
             spawn_particle(world, p, '^', Color::LightGreen, 10);
             trigger_shake(world, 0.3);
