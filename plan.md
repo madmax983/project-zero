@@ -1,13 +1,14 @@
-## The Cargo Cult Fleet
-
-**Concept:** A system where an automated supply ship wanders into orbit. It refuses communication but opens a "Tether" to the colony demanding arbitrary shipments of basic resources. In exchange, it drops completely random highly advanced technology or bizarre biological specimens onto the map.
-
-1. Create a `CargoCultFleet` component and a resource system `CargoCultTether` in `src/experimental/cargo_cult_fleet.rs`.
-2. Add a system that triggers the arrival of the `CargoCultFleet` orbiting a `OrbitalBody` in Layer 2.
-3. The fleet establishes a `Tether` demanding a specific resource (e.g., Water, Iron).
-4. Implement a system allowing the player to "feed" the tether by draining colony resources (`ColonyResources`).
-5. When the demand is met, trigger an `OrbitalDropEvent` via `crate::layer1::logistics::orbital_drop::OrbitalDropEvent` dropping high-tier items (e.g., `Luxury`, `Scrap`, or random alien items) to a random location in Layer 1.
-6. Register the systems in `src/layer1/systems/observation.rs` behind the `nova` feature flag.
-7. Add tests to verify the resource drain, drop event generation, and lifecycle of the Cargo Cult Fleet.
-8. Complete pre-commit steps to ensure proper testing, verification, review, and reflection are done.
-9. Submit the PR with the required Nova PR title and description format.
+1. **Add `process_biomass_tariff_system` (Spec 548) to Simulation Schedule:**
+   - Register `TradeDeal` event using `init_resource::<Events<crate::layer2::trade::biomass_tariff::TradeDeal>>()` in `run_simulation_tick`.
+   - Add `crate::layer2::trade::biomass_tariff::process_biomass_tariff_system` to `build_simulation_schedule` in `src/simulation.rs`.
+   - Update `test_schedule_runs_on_fresh_world` to initialize `Events<TradeDeal>`.
+2. **Add `enforce_resolutions_system` (Spec 469) to Simulation Schedule:**
+   - Register `GalacticCouncil` resource using `init_resource::<crate::layer3::council::GalacticCouncil>()` in `run_simulation_tick`.
+   - Add `crate::layer3::council::enforce_resolutions_system` to `build_simulation_schedule` in `src/simulation.rs`.
+   - Update `test_schedule_runs_on_fresh_world` to initialize `GalacticCouncil`.
+3. **Verify Disconnected/Missing Seams Check:**
+   - Review `src/layer2/trade/biomass_tariff.rs` and `src/layer3/council.rs` tests. Both appear isolated, but we should make sure they are connected in `src/simulation.rs` to ensure the systems actually run during the game loop.
+4. **Complete Pre-Commit Steps**
+   - Complete pre-commit steps to ensure proper testing, verification, review, and reflection are done.
+5. **Submit**
+   - Submit the change with an appropriate commit message.
