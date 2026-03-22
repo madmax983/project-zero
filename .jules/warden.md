@@ -1,3 +1,3 @@
-## 2024-05-30 - WGPU Vulnerability
-**Threat:** The `wgpu` package used a vulnerable version of `metal` which depended on an unmaintained version of `paste` with a security vulnerability.
-**Defense:** Bumped the `wgpu` package version to `24.0.0` which resolves the issue with its `metal` dependency.
+**2024-05-24 - [Unbounded Allocation & Integer Overflow in WaterGrid]
+**Threat:** The `WaterGrid::new` function blindly multiplied `width * height` to determine the backing vector size. This allowed an integer overflow causing a panic, or potentially allowed an unbounded memory allocation leading to Out-Of-Memory (OOM) Denial of Service (DoS) if external inputs controlled the dimensions.
+**Defense:** Replaced the vulnerable arithmetic with `checked_mul` and enforced a hard maximum bound (`assert!(size <= 10_000_000)`) identical to other grid systems in the simulation.
