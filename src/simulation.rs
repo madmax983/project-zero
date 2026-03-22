@@ -58,6 +58,7 @@ pub fn build_simulation_schedule() -> Schedule {
     schedule.add_systems((
         update_detection_risk_system.after(Layer1SystemSet::Economy),
         check_hostile_spawn_system.after(update_detection_risk_system),
+        crate::layer3::council::enforce_resolutions_system,
     ));
 
     // --- Layer 2 Integration ---
@@ -108,6 +109,8 @@ pub fn build_simulation_schedule() -> Schedule {
         crate::layer2::trade::routes::execute_trade_routes_system,
         crate::layer2::integration::post_trade_route_sync_system
             .after(crate::layer2::trade::routes::execute_trade_routes_system),
+        crate::layer2::trade::biomass_tariff::process_biomass_tariff_system
+            .after(crate::layer2::integration::post_trade_route_sync_system),
         crate::layer2::trade::penal_contracts::process_penal_contracts_system,
         crate::layer2::trade::penal_contracts::check_prisoner_status_system,
         crate::layer2::integration::penal_funds_to_resources_system,
@@ -282,6 +285,14 @@ pub fn run_simulation_tick(world: &mut World) {
         world.init_resource::<Events<crate::layer1::disasters::DisasterEvent>>();
     }
 
+    if !world.contains_resource::<Events<crate::layer2::trade::biomass_tariff::TradeDeal>>() {
+        world.init_resource::<Events<crate::layer2::trade::biomass_tariff::TradeDeal>>();
+    }
+
+    if !world.contains_resource::<crate::layer3::council::GalacticCouncil>() {
+        world.init_resource::<crate::layer3::council::GalacticCouncil>();
+    }
+
     // Initialize Infinite Archive Resource (Spec 248)
     if !world.contains_resource::<crate::layer1::tech::infinite_archive::Archive>() {
         world.init_resource::<crate::layer1::tech::infinite_archive::Archive>();
@@ -366,6 +377,8 @@ mod tests {
         world.init_resource::<Events<crate::layer2::governance::RebellionEvent>>();
         world.init_resource::<Events<crate::layer1::disasters::DisasterEvent>>();
         world.init_resource::<Events<crate::layer2::tourism::disaster_tourism::GriefTouristArrivalEvent>>();
+        world.init_resource::<Events<crate::layer2::trade::biomass_tariff::TradeDeal>>();
+        world.init_resource::<crate::layer3::council::GalacticCouncil>();
 
         let schedule = build_simulation_schedule();
         world.add_schedule(schedule);

@@ -470,3 +470,15 @@
     - `rebellion_chronicle_bridge_system` in `src/layer2/integration.rs` to convert `RebellionEvent` to `AddChronicleEvent` with `EventImportance::Major`.
     - Chained in `src/simulation.rs` in `Layer2SystemSet`.
 - **Tests:** `tests/integration/governance_rebellion.rs` (Integration test verified)
+
+### INT-469: Galactic Council -> Trade Sanctions
+- **Date:** 2026-03-22
+- **Systems connected:** `GalacticCouncil` (Council) -> `enforce_resolutions_system` (Council)
+- **Glue added:** Added `GalacticCouncil` resource and `enforce_resolutions_system` system to `SimulationSchedule`.
+- **Tests:** `src/layer3/council.rs` (Integration tests verified)
+
+### INT-548: Biomass Tariff -> Economy
+- **Date:** 2026-03-22
+- **Systems connected:** `TradeDeal` (Biomass Tariff) -> `process_biomass_tariff_system` (Biomass Tariff)
+- **Glue added:** Added `TradeDeal` event and `process_biomass_tariff_system` system to `SimulationSchedule` (chained after `post_trade_route_sync_system`).
+- **Tests:** `src/layer2/trade/biomass_tariff.rs` (Integration tests verified)

@@ -17,3 +17,4 @@ pub mod penal_contracts_bridge;
 pub mod trade_routes_bridge;
 pub mod silent_mutiny_chronicle;
 pub mod governance_rebellion;
+pub mod biomass_tariff;
