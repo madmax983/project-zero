@@ -11079,3 +11079,57 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Emergence:** You desperately need the library's advanced medical tech to cure a widespread plague. The library demands the immediate sacrifice of your entire stock of rare, bioluminescent fungi—the very resource you were using to treat the symptoms. You comply, gaining the cure, but the sudden lack of treatment causes a massive spike in mortality before the new tech can be synthesized and distributed.
 
 **Tension:** The irresistible lure of reality-altering technology vs. the unpredictable, often agonizing sacrifices demanded by an ancient, alien intelligence.
+## The Generational Mutiny
+
+**Layer:** Cross-layer (2 -> 1)
+
+**Fantasy:** A colony ship arrives at its destination, but the descendants of the original crew no longer want to settle down.
+
+**Mechanic:** When a generation ship takes too long to reach a new system, the Pops born during transit develop a "Void-Born" cultural trait. Upon arrival, instead of initiating colonization, a significant faction may mutiny, demanding to keep the ship as a permanent nomadic fleet. If the mutiny succeeds, the ship becomes a mobile Layer 2 faction rather than a Layer 1 colony.
+
+**Emergence:** You spend a century carefully guiding a colony ship across the galaxy to a perfectly terraformed paradise. The day they arrive, the crew locks the landing bays, declares themselves an independent sovereign fleet, and immediately begins demanding tribute from your other nearby colonies.
+
+**Tension:** The slow, safe expansion using generational ships vs. the creeping risk that the descendants will forget the original mission and reject planetary life entirely.
+
+---
+
+## The Hostage Exchange
+
+**Layer:** 3 -> 1
+
+**Fantasy:** Maintaining a fragile peace by offering your best and brightest as collateral.
+
+**Mechanic:** To secure a high-tension peace treaty with a hostile Layer 3 empire, both sides must exchange a certain number of high-tier Pops (e.g., Master Scientists, Elite Governors) to live in each other's capital colonies as "Wards." If either side breaks the treaty, the Wards are immediately executed or enslaved. While living as Wards, these Pops provide massive intelligence boosts about the enemy's tech and economy.
+
+**Emergence:** You trade your best engineer to secure peace. While living in the enemy capital, your engineer invents a revolutionary new power source. The enemy empire benefits from it immediately, but because the engineer is still "yours," the blueprints are secretly transmitted back to you. The enemy realizes this and threatens to execute the engineer unless you surrender the technology.
+
+**Tension:** The immediate diplomatic security of trading hostages vs. the immense risk and potential reward of having your most capable citizens living deep behind enemy lines.
+
+---
+
+## The Gravitational Shadow
+
+**Layer:** 2 -> 1
+
+**Fantasy:** Your colony sits in the orbital shadow of a super-dense moon, creating localized pockets of altered physics.
+
+**Mechanic:** A massive celestial body in the system occasionally eclipses your colony planet, casting a "Gravitational Shadow." During this eclipse, gravity in the Layer 1 colony is temporarily reduced. Heavy construction and hauling become incredibly fast and efficient, but projectile weapons become wildly inaccurate, and un-tethered Pops working outside can literally float away into the atmosphere if they stumble.
+
+**Emergence:** You meticulously plan a massive construction project to coincide with the Gravitational Shadow to save on labor. However, right as the shadow hits and your construction crews un-tether the massive steel beams, a localized tremor knocks the supports loose, sending tons of material and half your workforce floating slowly but unstoppably into the upper atmosphere.
+
+**Tension:** The incredible industrial boon of low-gravity periods vs. the extreme, unique hazards introduced by fundamentally altering the physics of the worksite.
+
+---
+
+## The Parasitic Architecture
+
+**Layer:** 1
+
+**Fantasy:** You didn't build this city; you grew it, and now it's hungry.
+
+**Mechanic:** Instead of mining stone and refining steel, you plant "Bio-Seeds" that grow into buildings (Bio-Architecture). These buildings are alive and constantly drain a small amount of Biomass from the colony's food stores to maintain their structural integrity. If the colony starves, the buildings begin to digest their occupants to survive.
+
+**Emergence:** You experience a massive famine. Instead of simply seeing a "Starvation" debuff, your colonists wake up to find the walls of their apartments slowly dissolving and secreting digestive enzymes. A riot breaks out not against you, but against the literal city itself, as colonists try to burn down their own homes before they are eaten.
+
+**Tension:** The incredible speed and resource-efficiency of growing your infrastructure vs. the terrifying reality of living inside a hungry organism during a food shortage.
+---
