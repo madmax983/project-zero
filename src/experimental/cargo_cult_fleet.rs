@@ -1,4 +1,3 @@
-use bevy_ecs::prelude::*;
 use crate::layer1::items::ItemType;
 use crate::layer1::logistics::orbital_drop::OrbitalDropEvent;
 use crate::layer1::map::GridPosition;
@@ -7,6 +6,7 @@ use crate::layer1::terrain::TerrainGrid;
 use crate::layer2::system::OrbitalBody;
 use crate::shared::log::MessageLog;
 use crate::shared::time::SimulationTime;
+use bevy_ecs::prelude::*;
 use rand::Rng;
 
 /// Marker component for the automated supply dreadnought.
@@ -95,7 +95,11 @@ pub fn spawn_cargo_cult_fleet_system(
     if let Some(mut t) = tether {
         t.active = true;
         t.current_fed = 0.0;
-        let demands = [TetherDemandType::Wood, TetherDemandType::Stone, TetherDemandType::Metal];
+        let demands = [
+            TetherDemandType::Wood,
+            TetherDemandType::Stone,
+            TetherDemandType::Metal,
+        ];
         t.demand_type = demands[rng.gen_range(0..demands.len())];
         t.demand_amount = rng.gen_range(300.0..1000.0);
 
@@ -118,7 +122,11 @@ pub fn spawn_cargo_cult_fleet_system(
             demand_amount: rng.gen_range(300.0..1000.0),
             ..Default::default()
         };
-        let demands = [TetherDemandType::Wood, TetherDemandType::Stone, TetherDemandType::Metal];
+        let demands = [
+            TetherDemandType::Wood,
+            TetherDemandType::Stone,
+            TetherDemandType::Metal,
+        ];
         t.demand_type = demands[rng.gen_range(0..demands.len())];
 
         commands.insert_resource(t);
@@ -139,9 +147,13 @@ pub fn feed_cargo_cult_tether_system(
     mut fleet_query: Query<&mut CargoCultFleet>,
 ) {
     let Some(mut tether) = tether_res else { return };
-    if !tether.active { return; }
+    if !tether.active {
+        return;
+    }
 
-    let Some(mut resources) = colony_resources else { return; };
+    let Some(mut resources) = colony_resources else {
+        return;
+    };
 
     let feed_rate = 5.0; // Amount fed per tick
     let mut fed_this_tick = 0.0;
@@ -192,8 +204,16 @@ pub fn feed_cargo_cult_tether_system(
 
         // Trigger OrbitalDropEvent with random rewards
         let mut rng = rand::thread_rng();
-        let center_x = if let Some(ref grid) = terrain_grid { grid.width / 2 } else { 25 };
-        let center_y = if let Some(ref grid) = terrain_grid { grid.height / 2 } else { 25 };
+        let center_x = if let Some(ref grid) = terrain_grid {
+            grid.width / 2
+        } else {
+            25
+        };
+        let center_y = if let Some(ref grid) = terrain_grid {
+            grid.height / 2
+        } else {
+            25
+        };
 
         let possible_rewards = vec![
             ItemType::LuxuryMeal,
@@ -214,7 +234,10 @@ pub fn feed_cargo_cult_tether_system(
         }
 
         drop_events.send(OrbitalDropEvent {
-            target: GridPosition { x: center_x as i32, y: center_y as i32 },
+            target: GridPosition {
+                x: center_x as i32,
+                y: center_y as i32,
+            },
             items: reward_items,
             scatter_radius: 5,
         });
@@ -232,7 +255,10 @@ mod tests {
     #[test]
     fn test_spawn_cargo_cult_fleet() {
         let mut world = World::new();
-        world.insert_resource(SimulationTime { tick: 150, ..Default::default() });
+        world.insert_resource(SimulationTime {
+            tick: 150,
+            ..Default::default()
+        });
         world.insert_resource(MessageLog::default());
 
         // Need an orbital body to orbit

@@ -136,8 +136,7 @@ pub fn build_simulation_schedule() -> Schedule {
             .after(crate::layer2::governance::update_governor_ambition_system),
         crate::layer2::integration::rebellion_chronicle_bridge_system
             .after(crate::layer2::governance::check_governor_rebellion_system),
-        crate::layer2::tourism::process_disaster_tourism_system
-            .after(Layer1SystemSet::Execution),
+        crate::layer2::tourism::process_disaster_tourism_system.after(Layer1SystemSet::Execution),
     ));
 
     schedule
