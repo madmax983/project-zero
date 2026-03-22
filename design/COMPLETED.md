@@ -275,3 +275,4 @@
 - [x] `548` The Biomass Tariff — `specs/548-biomass-tariff.md` — completed 2026-03-22
 - [x] `INT-469` Integration: Galactic Council -> Trade Sanctions — completed 2026-03-22
 - [x] `INT-548` Integration: Biomass Tariff -> Economy — completed 2026-03-22
+- [x] `546` The Reverse Quarantine — `specs/546-reverse-quarantine.md` — completed 2026-03-22

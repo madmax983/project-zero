@@ -264,5 +264,4 @@ See `design/IDEAS.md` for unspecced concepts.
 
 - [ ] `542` Drone Networks — `specs/542-drone-networks.md`
 - [ ] `543` The Galactic Market — `specs/543-the-galactic-market.md`
-- [ ] `546` The Reverse Quarantine — `specs/546-reverse-quarantine.md`
 - [ ] `547` The Parasitic Broadcast — `specs/547-parasitic-broadcast.md`

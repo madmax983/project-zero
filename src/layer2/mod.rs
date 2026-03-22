@@ -6,6 +6,7 @@ mod debris_tests;
 pub mod environment;
 pub use environment::*;
 pub mod events;
+pub mod events_new;
 pub mod fleet;
 pub mod generation;
 pub mod governance;

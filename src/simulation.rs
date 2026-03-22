@@ -140,6 +140,7 @@ pub fn build_simulation_schedule() -> Schedule {
         crate::layer2::integration::rebellion_chronicle_bridge_system
             .after(crate::layer2::governance::check_governor_rebellion_system),
         crate::layer2::tourism::process_disaster_tourism_system.after(Layer1SystemSet::Execution),
+        crate::layer2::events_new::reverse_quarantine::process_refugee_decisions_system,
     ));
 
     schedule
@@ -286,6 +287,14 @@ pub fn run_simulation_tick(world: &mut World) {
 
     if !world.contains_resource::<Events<crate::layer2::trade::biomass_tariff::TradeDeal>>() {
         world.init_resource::<Events<crate::layer2::trade::biomass_tariff::TradeDeal>>();
+    }
+
+    if !world.contains_resource::<Events<crate::layer2::events_new::reverse_quarantine::RefugeeFleetEvent>>() {
+        world.init_resource::<Events<crate::layer2::events_new::reverse_quarantine::RefugeeFleetEvent>>();
+    }
+
+    if !world.contains_resource::<Events<crate::layer1::environment::events::DebrisFallEvent>>() {
+        world.init_resource::<Events<crate::layer1::environment::events::DebrisFallEvent>>();
     }
 
     if !world.contains_resource::<crate::layer3::council::GalacticCouncil>() {
