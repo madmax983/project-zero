@@ -3422,3 +3422,51 @@
 - "They stare with the Indifference."
 - "The Chipped Ones felt nothing when the reactor blew."
 - "It is hard to work next to the Indifference."
+
+## Planetary Governance (Spec 544)
+
+### the Ambition
+**Replaces:** governor autonomy, rebellion buildup
+**Code reference:** `GovernorStats.ambition`
+**Usage:**
+- "The Ambition grows in the Chair."
+- "They fell to the Ambition."
+
+### the Corruption
+**Replaces:** governor negative traits, resource siphoning
+**Code reference:** `GovernorStats.corruption`
+**Usage:**
+- "The Corruption bleeds us dry."
+- "We traded efficiency for the Corruption."
+
+## Disaster Tourism (Spec 545)
+
+### Grief Tourists
+**Replaces:** Layer 2 wealthy observers
+**Code reference:** `GriefTouristArrivalEvent`
+**Usage:**
+- "The Grief Tourists have docked."
+- "They pay in credits for our tears."
+
+### Viewing Platforms
+**Replaces:** tourist observation decks near disasters
+**Code reference:** `ObservationDeck`
+**Usage:**
+- "Build the Viewing Platform on the ash."
+- "They watch from the Platform."
+
+## The Biomass Tariff (Spec 548)
+
+### the Tariff
+**Replaces:** biomass payment, trade toll
+**Code reference:** `BiomassTariffEvent`
+**Usage:**
+- "The Tariff must be paid in flesh."
+- "They demanded the Tariff."
+
+### Bio-Resin
+**Replaces:** alien building materials, self-healing architecture
+**Code reference:** `ResourceStash.bio_resin`
+**Usage:**
+- "The walls are built of Bio-Resin."
+- "The Resin screams when it is cold."

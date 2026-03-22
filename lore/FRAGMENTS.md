@@ -5229,3 +5229,64 @@ How the dumped criminal pops are described.
 - a perfect, terrifying calm
 - their eyes were blank
 - "the Indifference" is what we call it
+
+## Fragment Type: [REBELLION_REASON]
+Why a governor declared independence (Spec 544).
+
+- the Chair grew too comfortable
+- they tasted true power
+- we delegated our own doom
+- their Ambition eclipsed their loyalty
+- the corruption ran too deep
+- they believed they were Emperor
+- we forgot to watch the watchers
+
+## Fragment Type: [DISASTER_TOURIST_TYPE]
+Who comes to watch the colony burn (Spec 545).
+
+- wealthy grief tourists
+- the voyeurs of the Core Worlds
+- tragedy-chasers in shielded yachts
+- disaster-patrons
+- those who pay to watch us bleed
+- the catastrophe syndicate
+
+## Fragment Type: [MORAL_COMPROMISE]
+What the colony gave up for tourist credits (Spec 545).
+
+- we built them a viewing platform on the edge of the graves
+- emergency funds diverted to luxury shielding
+- we catered to their yachts while the reactor melted
+- we sold our tragedy for a new reactor
+- our suffering became their entertainment
+- we charged admission to the exclusion zone
+
+## Fragment Type: [BIO_EMPIRE_NAME]
+The biological entities demanding the tariff (Spec 548).
+
+- the Flesh-Guild
+- the Chitinous Sovereignty
+- the Hive-Merchants
+- the Biomass Brokers
+- the Carapace Fleet
+- those who trade in DNA
+
+## Fragment Type: [BIOMASS_PAYMENT]
+What was given to the bio-empire (Spec 548).
+
+- a tithe of our crops
+- our prized livestock
+- our own dissenting souls
+- colonists reclassified as "livestock"
+- the bodies of the fallen
+- twenty tons of living flesh
+
+## Fragment Type: [BIO_MATERIAL_MANIFESTATION]
+How the self-healing bio-architecture haunts the colony (Spec 548).
+
+- the walls sprouted the faces of the exported
+- the new bulkheads bleed when cut
+- the bio-resin whispered in the voices of the lost
+- the self-healing floors pulse like a heartbeat
+- the material screams when the temperature drops
+- we built our homes from the DNA we sold
