@@ -85,7 +85,7 @@ mod demo {
         let mut table = Table::new();
         table.load_preset(UTF8_FULL).set_header(vec![
             "Genre",
-            "Origin Tick",
+            "Historical Date",
             "Mutations",
             "Story Text",
         ]);
