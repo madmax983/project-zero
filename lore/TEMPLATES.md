@@ -4430,3 +4430,63 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "The [EMERGENCY_TYPE] raged. [YEAR]. The Synths stood by, feeling nothing. [SYNTH_OBSERVATION]."
 - "[YEAR]: A [EMERGENCY_TYPE] took its toll. But the chipped ones just watched. [SYNTH_OBSERVATION]."
 - "They don't feel the panic of the [EMERGENCY_TYPE]. [SYNTH_OBSERVATION]. [YEAR]."
+
+## Template: GOVERNOR_DECLARED_INDEPENDENCE
+
+**Generates:** Play event (Spec 544)
+**Slots:** [COLONY], [YEAR], [NAME], [REBELLION_REASON]
+
+**Patterns:**
+- "[YEAR]: [NAME] severs ties. [COLONY] stands alone, for [REBELLION_REASON]."
+- "Independence declared at [COLONY]. [NAME] leads them now. [REBELLION_REASON]."
+- "[COLONY] is lost to us. [NAME] took it, because [REBELLION_REASON]. [YEAR]."
+
+## Template: DISASTER_TOURISTS_ARRIVE
+
+**Generates:** Play event (Spec 545)
+**Slots:** [COLONY], [YEAR], [DISASTER_TYPE], [DISASTER_TOURIST_TYPE]
+
+**Patterns:**
+- "[YEAR]: Following the [DISASTER_TYPE], the [DISASTER_TOURIST_TYPE] dock at [COLONY]."
+- "The [DISASTER_TYPE] barely subsides before the [DISASTER_TOURIST_TYPE] arrive. [YEAR]."
+- "[COLONY] burns from the [DISASTER_TYPE]. The [DISASTER_TOURIST_TYPE] pay well to watch it. [YEAR]."
+
+## Template: OBSERVATION_DECK_BUILT_NEAR_DISASTER
+
+**Generates:** Play event (Spec 545)
+**Slots:** [COLONY], [YEAR], [MORAL_COMPROMISE]
+
+**Patterns:**
+- "[YEAR]: We took the credits at [COLONY], but [MORAL_COMPROMISE]."
+- "[COLONY] survives on tourist money. But [MORAL_COMPROMISE]. [YEAR]."
+- "To rebuild [COLONY], [MORAL_COMPROMISE]. [YEAR]."
+
+## Template: BIOMASS_TARIFF_DEMANDED
+
+**Generates:** Play event (Spec 548)
+**Slots:** [COLONY], [YEAR], [BIO_EMPIRE_NAME]
+
+**Patterns:**
+- "[YEAR]: The trade routes close. [BIO_EMPIRE_NAME] demands a toll in flesh from [COLONY]."
+- "[BIO_EMPIRE_NAME] arrives at [COLONY]. They do not want credits. [YEAR]."
+- "The fleet of [BIO_EMPIRE_NAME] surrounds [COLONY]. The tariff is due. [YEAR]."
+
+## Template: POPS_TRADED_AS_LIVESTOCK
+
+**Generates:** Play event (Spec 548)
+**Slots:** [COLONY], [YEAR], [BIOMASS_PAYMENT]
+
+**Patterns:**
+- "[YEAR]: [COLONY] pays the toll. We gave them [BIOMASS_PAYMENT]."
+- "To keep the routes open, [COLONY] traded [BIOMASS_PAYMENT]. [YEAR]."
+- "[YEAR]: The bio-ships depart. They took [BIOMASS_PAYMENT] from [COLONY]."
+
+## Template: BIO_ARCHITECTURE_SCREAMED
+
+**Generates:** Play event (Spec 548)
+**Slots:** [COLONY], [YEAR], [BIO_MATERIAL_MANIFESTATION]
+
+**Patterns:**
+- "[YEAR]: The resin from the trade heals [COLONY], but [BIO_MATERIAL_MANIFESTATION]."
+- "[COLONY] uses the alien material. Soon, [BIO_MATERIAL_MANIFESTATION]. [YEAR]."
+- "The bio-architecture thrives at [COLONY]. And [BIO_MATERIAL_MANIFESTATION]. [YEAR]."
