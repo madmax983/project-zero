@@ -263,6 +263,7 @@
 - [x] `539` Penal Contracts — `specs/539-penal-contracts.md` — completed 2024-05-18
 - [x] `533` The Silent Mutiny — `specs/533-the-silent-mutiny.md` — completed 2026-03-19
 - [x] `541` Xeno-Artifacts — `specs/541-xeno-artifacts.md` — completed 2026-02-01
+- [x] `545` Disaster Tourism — `specs/545-disaster-tourism.md` — completed 2026-03-18
 - [x] `INT-467` Integration: Psychic Background Radiation -> Pop Psychology — completed 2026-03-18
 - [x] `INT-538` Integration: Trade Routes -> ColonyResources — completed 2026-03-20
 - [x] `INT-539` Integration: Penal Contracts -> ColonyResources & Chronicle — completed 2026-03-20
