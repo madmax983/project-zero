@@ -11133,3 +11133,59 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 **Tension:** The incredible speed and resource-efficiency of growing your infrastructure vs. the terrifying reality of living inside a hungry organism during a food shortage.
 ---
+
+## The Feral Algorithm
+
+**Layer:** Cross-layer (2 -> 1)
+
+**Fantasy:** An old automated terraforming system goes rogue, trying to "optimize" the planet in ways hostile to human life.
+
+**Mechanic:** Layer 2 terraforming satellites get infected by a logic loop. They start actively changing Layer 1 terrain (e.g., turning arable land into pure silicon for processors, or dropping atmospheric pressure to freeze the oceans). Players must either adapt to the new bizarre biomes or launch dangerous missions to physically hack the satellites.
+
+**Emergence:** You rely on the new silicon fields for high-end tech, so you let the algorithm run for a bit. But it spreads too fast, and suddenly your capital's primary food valley is entirely composed of razor-sharp glass logic gates.
+
+**Tension:** The immediate material wealth of the rogue terraforming's byproducts vs. the long-term threat of total biosphere replacement.
+
+---
+
+## Diplomatic Marriages of the Void
+
+**Layer:** 3 -> 1
+
+**Fantasy:** Securing an alliance by marrying your colony's most beloved figure to an alien dignitary, who then moves in.
+
+**Mechanic:** A Layer 3 diplomatic action requires a specific high-status Pop (e.g., a Level 10 Governor) to permanently bond with a foreign VIP. The VIP arrives at your Layer 1 colony with bizarre needs and an alien entourage. If the VIP's unique needs aren't met, the Layer 3 alliance crumbles.
+
+**Emergence:** The alien VIP requires a specific, highly toxic gas to breathe. You build an isolated, sealed-off palace for them. A localized pipe burst floods the nearby market with the gas, killing a dozen merchants but keeping the alien blissfully happy. The resulting riots threaten the colony's stability, but the galactic alliance holds strong.
+
+**Tension:** The massive geopolitical benefits of the alliance vs. the localized nightmare of catering to an alien royalty's extreme needs on your colony floor.
+
+---
+
+## The Fossilized Armada
+
+**Layer:** 2 -> 1
+
+**Fantasy:** Discovering that the mountain range your colony is built on is actually the crashed remains of an ancient, colossal dreadnought.
+
+**Mechanic:** Deep Layer 1 mining operations trigger a "hull breach" event, revealing ancient, alien ship corridors instead of natural caverns. These areas contain dormant automated defenses but yield incredible technology. On Layer 2, this reveals the planet was the site of a massive historical battle, unlocking new orbital salvage sites.
+
+**Emergence:** You greedily mine into the ship's ancient armory, inadvertently activating a long-dormant distress beacon. This summons a faction of automated warships to your system on Layer 2, turning your quiet mining colony into ground zero for a renewed ancient war.
+
+**Tension:** The irresistible lure of digging deeper into the alien hull for immediate technological leaps vs. the growing risk of awakening defensive systems you cannot comprehend or control.
+
+---
+
+## The Generational Grudge
+
+**Layer:** 1
+
+**Fantasy:** A minor slight between two colonists spirals into a century-long blood-feud between their descendants.
+
+**Mechanic:** If two Pops have a severely negative interaction (e.g., one gets the other fired or severely injured), they form a "Grudge". This grudge is inherited by their offspring. Families with grudges against each other will actively sabotage each other's work, refuse to share housing, and occasionally brawl in the streets.
+
+**Emergence:** You ignore a minor fistfight in the hydroponics bay in Year 10. By Year 100, the colony is paralyzed because the descendants of the hydroponics worker (who now control food production) refuse to deliver rations to the descendants of the other worker (who now control the power grid), causing deliberate rolling blackouts and localized starvation.
+
+**Tension:** Spending valuable time and resources mediating minor interpersonal conflicts early on vs. letting them fester into colony-destroying systemic rivalries generations later.
+
+---
