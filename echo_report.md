@@ -1,5 +1,0 @@
-# 🗣️ Echo: Getting Started example is broken
-
-* 🤦 **The Confusion:** "Tried to run the `Procedural Generation (Narrative)` code snippet from `README.md`. The docs say it needs `> **⚠️ REQUIRES FEATURE NOVA**`, so I spent time trying to figure out how to add `--features nova` to my build scripts and Cargo.toml."
-* 🕵️ **The Reality:** "Turns out `NarrativeGenerator` and `NarrativeContext` are part of the base build and don't need the `nova` feature at all! The text right below the code block literally says it's available in the default build, contradicting the huge warning banner above it."
-* 💡 **The Fix:** "Remove the `> **⚠️ REQUIRES FEATURE NOVA**` banner from the `Procedural Generation (Narrative)` section in `README.md`. Also, the `Oral Tradition (Nova Feature)` example requires explicitly adding `--extern scale` and `--extern bevy_ecs` if you just copy-paste it into a bare `rustc` command, but works fine in a cargo project, so maybe mention that it assumes a configured Cargo workspace."
