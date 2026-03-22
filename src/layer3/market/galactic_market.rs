@@ -114,7 +114,10 @@ mod tests {
         let market = GalacticMarket::new();
         assert_eq!(market.prices.len(), 15);
         assert_eq!(market.prices.get(&ResourceType::Food).copied(), Some(10.0));
-        assert_eq!(market.supply_pool.get(&ResourceType::Wood).copied(), Some(1000.0));
+        assert_eq!(
+            market.supply_pool.get(&ResourceType::Wood).copied(),
+            Some(1000.0)
+        );
     }
 
     #[test]
@@ -125,7 +128,10 @@ mod tests {
         execute_market_sell(&mut world, ResourceType::Food, f32::INFINITY);
 
         let market = world.resource::<GalacticMarket>();
-        assert_eq!(market.supply_pool.get(&ResourceType::Food).copied(), Some(1000.0));
+        assert_eq!(
+            market.supply_pool.get(&ResourceType::Food).copied(),
+            Some(1000.0)
+        );
     }
 
     #[test]
@@ -136,7 +142,10 @@ mod tests {
         execute_market_buy(&mut world, ResourceType::Food, f32::INFINITY);
 
         let market = world.resource::<GalacticMarket>();
-        assert_eq!(market.supply_pool.get(&ResourceType::Food).copied(), Some(1000.0));
+        assert_eq!(
+            market.supply_pool.get(&ResourceType::Food).copied(),
+            Some(1000.0)
+        );
     }
 
     #[test]

@@ -71,7 +71,7 @@ pub enum Tech {
 impl Tech {
     /// Returns true if this technology carries a Memetic Hazard risk.
     ///
-    /// Researching this will trigger an immediate [`crate::layer1::memetic::MemeticCarrier`] infection
+    /// Researching this will trigger an immediate [`crate::layer1::memetics::MemeticCarrier`] infection
     /// on a random researcher.
     #[must_use]
     pub const fn is_hazardous(&self) -> bool {
@@ -403,7 +403,7 @@ pub fn unlock_tech(world: &mut World, tech: Tech) -> bool {
         // Handle Memetic Hazards
         if tech.is_hazardous() {
             // Find a researcher to infect
-            use crate::layer1::memetic::MemeticCarrier;
+            use crate::layer1::memetics::MemeticCarrier;
             use rand::seq::IteratorRandom;
 
             let mut rng = rand::thread_rng();
