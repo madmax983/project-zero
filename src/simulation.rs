@@ -136,6 +136,8 @@ pub fn build_simulation_schedule() -> Schedule {
             .after(crate::layer2::governance::update_governor_ambition_system),
         crate::layer2::integration::rebellion_chronicle_bridge_system
             .after(crate::layer2::governance::check_governor_rebellion_system),
+        crate::layer2::tourism::process_disaster_tourism_system
+            .after(Layer1SystemSet::Execution),
     ));
 
     schedule
@@ -268,6 +270,18 @@ pub fn run_simulation_tick(world: &mut World) {
         world.init_resource::<Events<crate::layer2::governance::RebellionEvent>>();
     }
 
+    if !world.contains_resource::<Events<crate::layer1::disasters::DisasterEvent>>() {
+        world.init_resource::<Events<crate::layer1::disasters::DisasterEvent>>();
+    }
+
+    if !world.contains_resource::<Events<crate::layer2::tourism::disaster_tourism::GriefTouristArrivalEvent>>() {
+        world.init_resource::<Events<crate::layer2::tourism::disaster_tourism::GriefTouristArrivalEvent>>();
+    }
+
+    if !world.contains_resource::<Events<crate::layer1::disasters::DisasterEvent>>() {
+        world.init_resource::<Events<crate::layer1::disasters::DisasterEvent>>();
+    }
+
     // Initialize Infinite Archive Resource (Spec 248)
     if !world.contains_resource::<crate::layer1::tech::infinite_archive::Archive>() {
         world.init_resource::<crate::layer1::tech::infinite_archive::Archive>();
@@ -350,6 +364,8 @@ mod tests {
         world.init_resource::<Events<crate::layer1::nanite_fabrication::ContainmentBreachEvent>>();
         world.init_resource::<Events<crate::layer2::trade::penal_contracts::PrisonerDiedEvent>>();
         world.init_resource::<Events<crate::layer2::governance::RebellionEvent>>();
+        world.init_resource::<Events<crate::layer1::disasters::DisasterEvent>>();
+        world.init_resource::<Events<crate::layer2::tourism::disaster_tourism::GriefTouristArrivalEvent>>();
 
         let schedule = build_simulation_schedule();
         world.add_schedule(schedule);

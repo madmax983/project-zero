@@ -25,3 +25,4 @@ pub mod thermal;
 mod thermal_bloom_tests;
 pub mod trade;
 pub mod visibility;
+pub mod tourism;
