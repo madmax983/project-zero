@@ -1,10 +1,11 @@
+use scale::layer2::syzygy::PlanetaryGravity;
 use bevy_app::App;
 use bevy_ecs::prelude::*;
 use scale::layer1::quirks::{PlanetaryTrait, PlanetaryTraits};
 use scale::layer1::resources::ColonyResources;
 use scale::layer2::integration::escape_velocity_traits_bridge_system;
 use scale::layer2::trade::escape_velocity::{
-    process_launch_system, CargoItem, LaunchShipEvent, PlanetaryGravity, TradeManifest,
+    process_launch_system, CargoItem, LaunchShipEvent,  TradeManifest,
 };
 
 #[test]

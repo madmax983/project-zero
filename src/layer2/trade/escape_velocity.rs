@@ -1,18 +1,7 @@
 use crate::layer1::resources::ColonyResources;
 use bevy_ecs::prelude::*;
+use crate::layer2::syzygy::PlanetaryGravity;
 
-/// Resource tracking the gravity of the current planet.
-#[derive(Resource)]
-pub struct PlanetaryGravity {
-    /// The gravity force relative to Earth (1.0 = normal, 2.5 = high gravity).
-    pub g_force: f32,
-}
-
-impl Default for PlanetaryGravity {
-    fn default() -> Self {
-        Self { g_force: 1.0 }
-    }
-}
 
 /// A single item of cargo in a trade manifest.
 #[derive(Component, Clone)]
@@ -41,7 +30,7 @@ pub struct LaunchShipEvent {
 pub fn calculate_launch_cost(gravity: &PlanetaryGravity, manifest: &TradeManifest) -> f32 {
     let total_mass: f32 = manifest.items.iter().map(|i| i.mass).sum();
     // Base cost 100.0 fuel units + 10.0 fuel units per ton per G
-    100.0 + (total_mass * gravity.g_force * 10.0)
+    100.0 + (total_mass * gravity.current * 10.0)
 }
 
 /// Processes launch events, deducting fuel and despawning the ship if successful.
@@ -70,8 +59,8 @@ mod tests {
 
     #[test]
     fn test_high_gravity_increases_launch_cost_significantly() {
-        let gravity_normal = PlanetaryGravity { g_force: 1.0 };
-        let gravity_high = PlanetaryGravity { g_force: 2.5 };
+        let gravity_normal = PlanetaryGravity { current: 1.0, base: 1.0 };
+        let gravity_high = PlanetaryGravity { current: 2.5, base: 2.5 };
 
         let manifest = TradeManifest {
             items: vec![
@@ -95,7 +84,7 @@ mod tests {
 
     #[test]
     fn test_low_mass_high_value_goods_are_profitable_on_high_g() {
-        let gravity_high = PlanetaryGravity { g_force: 2.5 };
+        let gravity_high = PlanetaryGravity { current: 2.5, base: 2.5 };
 
         let raw_ore = TradeManifest {
             items: vec![CargoItem {
@@ -130,7 +119,7 @@ mod tests {
     #[test]
     fn test_planetary_gravity_default() {
         let default_gravity = PlanetaryGravity::default();
-        assert_eq!(default_gravity.g_force, 1.0);
+        assert_eq!(default_gravity.current, 1.0);
     }
 
     #[test]
