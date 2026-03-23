@@ -6,7 +6,7 @@ use crate::layer1::quirks::{PlanetaryTrait, PlanetaryTraits};
 use crate::layer1::terrain::TerrainGrid;
 use crate::layer1::the_visitor::TheVisitor;
 use crate::layer2::events::DetectionEvent;
-use crate::layer2::trade::escape_velocity::PlanetaryGravity;
+use crate::layer2::syzygy::PlanetaryGravity;
 use crate::shared::time::SimulationTime;
 use bevy_ecs::prelude::*;
 use rand::Rng;
@@ -28,8 +28,8 @@ pub fn escape_velocity_traits_bridge_system(
         }
 
         // Prevent floating point jitter if no change is needed
-        if (gravity.g_force - new_g_force).abs() > f32::EPSILON {
-            gravity.g_force = new_g_force;
+        if (gravity.base - new_g_force).abs() > f32::EPSILON {
+            gravity.current = new_g_force; gravity.base = new_g_force;
         }
     }
 }
@@ -110,7 +110,7 @@ mod tests {
             .unwrap();
 
         assert_eq!(
-            world.resource::<PlanetaryGravity>().g_force,
+            world.resource::<PlanetaryGravity>().current,
             2.5,
             "HighGravity trait should set g_force to 2.5"
         );
@@ -121,7 +121,7 @@ mod tests {
             .unwrap();
 
         assert_eq!(
-            world.resource::<PlanetaryGravity>().g_force,
+            world.resource::<PlanetaryGravity>().current,
             0.5,
             "LowGravity trait should set g_force to 0.5"
         );
@@ -132,7 +132,7 @@ mod tests {
             .unwrap();
 
         assert_eq!(
-            world.resource::<PlanetaryGravity>().g_force,
+            world.resource::<PlanetaryGravity>().current,
             1.0,
             "No gravity trait should set g_force to 1.0"
         );

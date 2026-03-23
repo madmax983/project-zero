@@ -93,6 +93,15 @@ pub fn build_simulation_schedule() -> Schedule {
             .after(crate::layer2::thermal::detection_risk_system),
         crate::layer2::integration::escape_velocity_traits_bridge_system
             .before(crate::layer2::trade::escape_velocity::process_launch_system),
+    ));
+
+    schedule.add_systems((
+
+        crate::layer2::syzygy::update_syzygy_cycle_system,
+        crate::layer2::syzygy::apply_syzygy_effects_system
+            .after(crate::layer2::syzygy::update_syzygy_cycle_system),
+        crate::layer2::trade::escape_velocity::process_launch_system
+            .after(crate::layer2::syzygy::apply_syzygy_effects_system),
         crate::layer2::visibility::update_visibility_system.after(Layer1SystemSet::Economy),
         crate::layer2::visibility::enforce_view_mode_system
             .after(crate::layer2::visibility::update_visibility_system),
@@ -240,6 +249,9 @@ pub fn run_simulation_tick(world: &mut World) {
     if !world.contains_resource::<Events<crate::layer2::trade::blockade::TradeShipArrivalEvent>>() {
         world.init_resource::<Events<crate::layer2::trade::blockade::TradeShipArrivalEvent>>();
     }
+    if !world.contains_resource::<Events<crate::layer2::trade::escape_velocity::LaunchShipEvent>>() {
+        world.init_resource::<Events<crate::layer2::trade::escape_velocity::LaunchShipEvent>>();
+    }
     if !world.contains_resource::<Events<crate::layer3::events::debt_prison::BailoutOfferEvent>>() {
         world.init_resource::<Events<crate::layer3::events::debt_prison::BailoutOfferEvent>>();
     }
@@ -300,12 +312,26 @@ pub fn run_simulation_tick(world: &mut World) {
 
     if !world.contains_resource::<Events<crate::layer1::environment::events::DebrisFallEvent>>() {
         world.init_resource::<Events<crate::layer1::environment::events::DebrisFallEvent>>();
+        world.init_resource::<crate::layer3::council::GalacticCouncil>();
+        world.init_resource::<crate::layer2::syzygy::SyzygyCycle>();
+        world.init_resource::<crate::layer2::syzygy::PlanetaryGravity>();
+        world.init_resource::<crate::layer2::syzygy::TidalForce>();
     }
 
     if !world.contains_resource::<crate::layer3::council::GalacticCouncil>() {
         world.init_resource::<crate::layer3::council::GalacticCouncil>();
     }
 
+
+    if !world.contains_resource::<crate::layer2::syzygy::SyzygyCycle>() {
+        world.init_resource::<crate::layer2::syzygy::SyzygyCycle>();
+    }
+    if !world.contains_resource::<crate::layer2::syzygy::PlanetaryGravity>() {
+        world.init_resource::<crate::layer2::syzygy::PlanetaryGravity>();
+    }
+    if !world.contains_resource::<crate::layer2::syzygy::TidalForce>() {
+        world.init_resource::<crate::layer2::syzygy::TidalForce>();
+    }
     // Initialize Infinite Archive Resource (Spec 248)
     if !world.contains_resource::<crate::layer1::tech::infinite_archive::Archive>() {
         world.init_resource::<crate::layer1::tech::infinite_archive::Archive>();
@@ -378,6 +404,7 @@ mod tests {
             .init_resource::<Events<crate::layer1::nature::biosphere_empathy::FloraDamagedEvent>>();
         world.init_resource::<crate::layer2::phantom::EmpireAutomationState>();
         world.init_resource::<Events<crate::layer2::trade::blockade::TradeShipArrivalEvent>>();
+        world.init_resource::<Events<crate::layer2::trade::escape_velocity::LaunchShipEvent>>();
         world.init_resource::<crate::layer2::trade::blockade::ColonyDebt>();
 
         world.init_resource::<Events<crate::layer3::events::debt_prison::BailoutOfferEvent>>();
@@ -395,6 +422,10 @@ mod tests {
         world.init_resource::<crate::layer3::market::GalacticMarket>();
         world.init_resource::<Events<crate::layer2::events_new::reverse_quarantine::RefugeeFleetEvent>>();
         world.init_resource::<Events<crate::layer1::environment::events::DebrisFallEvent>>();
+        world.init_resource::<crate::layer3::council::GalacticCouncil>();
+        world.init_resource::<crate::layer2::syzygy::SyzygyCycle>();
+        world.init_resource::<crate::layer2::syzygy::PlanetaryGravity>();
+        world.init_resource::<crate::layer2::syzygy::TidalForce>();
 
         let schedule = build_simulation_schedule();
         world.add_schedule(schedule);
