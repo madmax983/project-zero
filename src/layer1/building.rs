@@ -1385,12 +1385,10 @@ fn spawn_building(
             // Logic handled by components added in system
         }
         BuildingType::Nanoforge => {
-            entity.insert((
-                crate::layer1::nanite_fabrication::Nanoforge {
-                    active_recipe: None,
-                    breach_risk: 0.01,
-                },
-            ));
+            entity.insert((crate::layer1::nanite_fabrication::Nanoforge {
+                active_recipe: None,
+                breach_risk: 0.01,
+            },));
         }
     }
 
@@ -2165,12 +2163,10 @@ fn configure_futuristic_tech(entity: &mut EntityWorldMut, building_type: Buildin
             ));
         }
         BuildingType::Nanoforge => {
-            entity.insert((
-                crate::layer1::nanite_fabrication::Nanoforge {
-                    active_recipe: None,
-                    breach_risk: 0.01,
-                },
-            ));
+            entity.insert((crate::layer1::nanite_fabrication::Nanoforge {
+                active_recipe: None,
+                breach_risk: 0.01,
+            },));
         }
         _ => {}
     }

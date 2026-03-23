@@ -59,3 +59,7 @@
 **Concept:** Added a `CargoCultFleet` system where an automated supply ship wanders into orbit, opens a `Tether` to the colony, and demands specific resources. If fed properly, it rewards the colony with an `OrbitalDropEvent` of high-tier items.
 **Fate:** Merged
 **Lesson:** Tying external system demands to a reward-focused orbital logistics pipeline creates an interesting economic sink for the colony's excess resources, allowing for unexpected rewards and gambling.
+## [The Paranoia Network]
+**Concept:** Added `ParanoiaCooldown` and `paranoia_network_system` which translates intense `StressTracker` accumulations (> 90%) into a projected aura. Any pop coming too close triggers a negative `AffinityChange` event simulating a breakdown in social trust and contagious paranoia.
+**Fate:** Proposed
+**Lesson:** Tying internal psychological breakdowns (`StressTracker`) directly to external social degradation (`AffinityChange`) allows stress to act as a social pathogen, isolating struggling Pops from the community and accelerating colony-wide unrest.

@@ -39,3 +39,6 @@ pub mod cartography_export;
 
 #[cfg(feature = "nova")]
 pub mod cargo_cult_fleet;
+
+#[cfg(feature = "nova")]
+pub mod paranoia_network;
