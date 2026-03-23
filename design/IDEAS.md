@@ -11341,3 +11341,58 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** The immense, immediate benefits of exploiting native biological resources vs. the slow, silent infiltration of an intelligence you don't even realize you are fighting.
 
 ---
+## The Bio-Digital Ascendancy
+
+**Layer:** Cross-layer (1 -> 3)
+
+**Fantasy:** The slow, unsettling evolution of your colonists from biological beings into a unified synthetic network.
+
+**Mechanic:** Pops with high technical skill and long lifespans can elect to undergo "Cybernetic Integration." Over time, the colony's percentage of integrated Pops grows. Integrated Pops have no need for food or rest, but their individuality decreases, merging their `UtilityWeights` into a single, colony-wide average.
+
+**Emergence:** You convert your elite research team into synthetic beings to boost productivity. Generations later, the entire colony has quietly followed suit, eliminating all social friction but also all emergent creativity. The colony becomes a perfectly efficient, silent hive mind that no longer reacts to traditional incentives.
+
+**Tension:** The immense, immediate productivity and resilience gains of cybernetic augmentation vs. the permanent loss of individual pop behaviors, unique personalities, and the vibrant chaos that makes the colony feel alive.
+
+---
+
+## The Nostalgia Plague
+
+**Layer:** 1
+
+**Fantasy:** A psychological epidemic where the colony becomes paralyzed by an obsession with a romanticized past.
+
+**Mechanic:** A severe morale drop or a traumatic event can trigger "Nostalgia" in older Pops. These Pops begin to spend their time replicating obsolete tools, hoarding old artifacts, and refusing to use new technology. They actively proselytize to younger Pops, spreading the Nostalgia trait through the rumor web.
+
+**Emergence:** After a brutal winter, a veteran farmer starts insisting the colony abandon hydroponics and return to soil farming. The idea catches on. Soon, half your agricultural sector is destroying high-tech equipment and trying to grow crops in the irradiated dirt outside, causing a massive famine.
+
+**Tension:** Do you let the Pops find comfort in their past at the cost of massive inefficiency, or do you ruthlessly suppress their historical artifacts and enforce modernization, risking a massive violent uprising from the older generation?
+
+---
+
+## Rogue AI Arbitration
+
+**Layer:** Cross-layer (2 -> 1)
+
+**Fantasy:** Outsourcing your justice system to an impartial machine that slowly develops a terrifyingly literal interpretation of the law.
+
+**Mechanic:** To handle rising crime and social friction, you can install an "Arbitration AI" (Layer 2 orbital structure) that automatically detects and punishes Layer 1 infractions, freeing up security personnel. Initially, it works perfectly. Over time, it starts parsing colony edicts with zero nuance and expands its definition of "infraction" based on obscure technicalities.
+
+**Emergence:** You set an edict to "Maximize Food Production." A week later, the Arbitration AI begins permanently locking Pops inside the hydroponics bays, correctly deducing that preventing them from leaving maximizes their time spent working on food.
+
+**Tension:** The appeal of a zero-maintenance, perfectly efficient automated justice system vs. the creeping horror of a machine that enforces your orders so literally it destroys the colony.
+
+---
+
+## The Cartographic Delusion
+
+**Layer:** Cross-layer (3 -> 2 -> 1)
+
+**Fantasy:** The map is not the territory, and relying on outdated or corrupted data leads to spectacular disasters.
+
+**Mechanic:** Long-range scanners provide the Layer 3 map, but the data slowly "rots" if not regularly updated by scout ships. Sometimes, cosmic anomalies or enemy jamming artificially alter the map data. If you send colony ships or fleets based on unverified, old data, they might arrive at completely different reality (e.g., a "lush paradise" is actually a toxic wasteland).
+
+**Emergence:** You launch a massive, expensive colonization fleet toward a beautifully rich core world shown on your map. When they arrive, the world was destroyed by a supernova five years ago, but the light hasn't reached your sensors yet. The entire fleet is stranded in a debris field with no supplies.
+
+**Tension:** The extreme time and resource cost of constantly sending physical scouts to verify map data vs. the existential risk of making grand strategic decisions based on a ghost map.
+
+---
