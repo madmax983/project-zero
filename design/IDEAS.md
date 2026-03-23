@@ -11189,3 +11189,59 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Spending valuable time and resources mediating minor interpersonal conflicts early on vs. letting them fester into colony-destroying systemic rivalries generations later.
 
 ---
+
+## The Memory Market
+
+**Layer:** 1
+
+**Fantasy:** A grim black market where desperate colonists trade their cherished pasts for survival, creating a fractured society of amnesiacs and memory-hoarders.
+
+**Mechanic:** Pops can extract their `Memories` (using a black-market "Memory Siphon") and sell them to satisfy immediate, critical Needs (like Hunger or Rest). Wealthy Pops or officials can purchase these memories to instantly boost their own UtilityWeights or temporarily cure severe mental breakdowns, essentially "consuming" another Pop's life experiences.
+
+**Emergence:** A starving miner sells the memory of their child's birth to afford rations. Later, they interact with that child but lack the critical social bond, causing massive family friction. Meanwhile, the colony's wealthy governor walks around with the stolen nostalgia of a hundred different childhoods, eventually suffering from severe personality fragmentation and erratic behavior.
+
+**Tension:** The immediate, practical utility of liquidating intangible personal assets to survive a crisis vs. the long-term erosion of the colony's social fabric and individual identities.
+
+---
+
+## The Void-Whisper Resonance
+
+**Layer:** Cross-layer (2 -> 1)
+
+**Fantasy:** Navigating the creeping paranoia of a distant cosmic anomaly that subtly rewrites your colony's gossip and work orders.
+
+**Mechanic:** A spatial anomaly in Layer 2 emits a background frequency that intercepts and subtly alters Layer 1 communications (like social gossip and automated job assignments). Pops passing rumors occasionally receive "Void-Whispers"—hallucinatory orders or terrifying gossip that never actually happened, which they then sincerely spread as truth.
+
+**Emergence:** The anomaly causes a rumor to manifest that the primary atmospheric scrubber is venting poison. A mass panic breaks out, Pops refuse to enter the sector, and riots start over perfectly clean air. Alternatively, a fake "work order" tells all the colony's engineers to simultaneously dismantle the main reactor, which they dutifully and disastrously begin doing.
+
+**Tension:** Do you expend massive system-level fleet resources to isolate and destroy the anomaly, or try to aggressively police, quarantine, and suppress free speech at the colony level to stop the spread of the anomalous rumors?
+
+---
+
+## The Atrophy of Affluence
+
+**Layer:** 1
+
+**Fantasy:** The slow, decadent decline of a post-scarcity district where absolute ease breeds physical and mental decay.
+
+**Mechanic:** If a specific group of Pops has all their Needs met constantly (near 100% satisfaction) for an extended generational period, they develop the "Decadent" trait. Their base movement speed, resilience, and work efficiency plummet, and they develop new, increasingly bizarre, and difficult-to-fulfill "Luxury Needs" just to maintain a baseline mood.
+
+**Emergence:** You carefully construct a fully automated utopian dome for your elite researchers. Years later, an emergency requires them to manually evacuate or repair a critical life-support system. They are too physically weak and apathetic to perform the manual labor, preferring to complain about the sudden lack of bio-acoustic ambiance while the dome slowly depressurizes around them.
+
+**Tension:** The player's natural drive to build a perfect, fully automated utopia vs. the creeping necessity of keeping the populace sharp, resilient, and accustomed to at least some degree of hardship.
+
+---
+
+## The Necro-Industrial Complex
+
+**Layer:** Cross-layer (1 -> 2)
+
+**Fantasy:** The horrifying realization that the most efficient way to fuel your grand stellar expansion is by industrializing the remains of your own dead.
+
+**Mechanic:** Dead Pops can be processed in a "Biomass Sublimator" instead of receiving traditional burials. This yields high-quality organic slurry and trace rare elements essential for advanced Layer 2 ship construction or high-tier agriculture. However, doing so immediately and severely damages the mood of any living Pop who possesses a memory of the deceased.
+
+**Emergence:** A brutal pirate raid in the system results in massive Layer 1 colony casualties. The resulting massive influx of corpses allows you to instantly fast-track the construction of a massive retaliation dreadnought. However, the surviving colonists are so deeply traumatized by the systematic, industrialized harvesting of their loved ones that they launch a full planetary rebellion just as the new fleet leaves orbit.
+
+**Tension:** The immense, immediate material and strategic value of treating the dead as a pure resource vs. the profound social, psychological, and stability damage it inflicts on the living.
+
+---
