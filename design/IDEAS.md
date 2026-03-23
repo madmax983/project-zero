@@ -11245,3 +11245,99 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** The immense, immediate material and strategic value of treating the dead as a pure resource vs. the profound social, psychological, and stability damage it inflicts on the living.
 
 ---
+## Pop Relationships
+
+**Layer:** 1
+
+**Fantasy:** Watching a colony develop social fabric—friendships, rivalries, families.
+
+**Mechanic:** Pops build relationship scores with pops they work alongside. High relationship = mood bonus. Low relationship = conflicts, productivity loss.
+
+**Emergence:** Players might notice two pops always fighting and separate them. A beloved elder pop dying might tank colony morale.
+
+**Tension:** Do you optimize job assignments for efficiency or social harmony?
+
+---
+
+## The Founder Effect
+
+**Layer:** Cross-layer
+
+**Fantasy:** Your first colonists' traits echo through generations and across worlds.
+
+**Mechanic:** Colony ships carry pops with traits. New colonies inherit trait distributions from founders. A colony founded by aggressive pops breeds aggressive culture.
+
+**Emergence:** Your militaristic frontier worlds trace back to that one hotheaded miner you sent on the first ship. Your peaceful core worlds descend from your original scientists.
+
+**Tension:** Do you carefully curate colony ships or just send whoever's available?
+
+---
+
+## Cascade Failure
+
+**Layer:** Cross-layer
+
+**Fantasy:** Watching one small problem snowball into galactic crisis.
+
+**Mechanic:** Resource shortages at Layer 1 reduce colony output. Reduced output strains system logistics. System strain weakens sector defenses. Sector weakness invites invasion.
+
+**Emergence:** That granary fire on your breadbasket world just lost you the war.
+
+**Tension:** How much redundancy do you build? Do you intervene early or trust the system?
+
+---
+## The Subterranean Smog Layer
+
+**Layer:** 1
+
+**Fantasy:** Building downwards traps your colony in its own pollution, forcing desperate ventilation measures.
+
+**Mechanic:** Heavy industrial buildings (smelters, refineries) produce a physical "Smog" entity that obeys gravity and sinks into lower Z-levels. If these levels aren't actively vented to the surface, the smog displaces oxygen, slowly suffocating Pops and corrupting crops.
+
+**Emergence:** You move all your messy industries underground to keep the surface pristine. A power failure shuts off the main ventilation shafts. The entire lower colony slowly fills with toxic gas, forcing a desperate mass evacuation to the surface before the miners suffocate.
+
+**Tension:** The aesthetic and space-saving benefits of burying heavy industry vs. the compounding danger of trapping toxic byproducts in an enclosed space.
+
+---
+
+## Orbital Debt Collections
+
+**Layer:** Cross-layer (2 -> 1)
+
+**Fantasy:** Your colony's financial mismanagement literally falls from the sky to enforce payment.
+
+**Mechanic:** If a colony falls deep into debt with a Layer 3 megacorp, they don't just send angry messages. They park a Layer 2 "Collection Cruiser" in orbit. This cruiser periodically drops specialized, heavily armored "Repo Drones" directly onto Layer 1. These drones don't attack; they simply dismantle high-value buildings, pack the materials, and rocket back to orbit until the debt is paid.
+
+**Emergence:** You spend wildly to build a massive grand monument to boost morale. A month later, Repo Drones drop through the roof and literally deconstruct the monument piece by piece while your Pops watch helplessly, causing a massive unrest spike.
+
+**Tension:** Leveraging aggressive debt to jumpstart colony growth vs. the humiliating and disruptive physical enforcement of that debt by overwhelming orbital power.
+
+---
+
+## The Phantom Signal
+
+**Layer:** Cross-layer (3 -> 2 -> 1)
+
+**Fantasy:** A distress beacon from a dead civilization sends your entire system on a wild goose chase.
+
+**Mechanic:** A deep-space listening post (Layer 2) detects a tantalizing signal promising incredible technology from an unknown sector (Layer 3). Following the signal requires massive resource investment and specialized research on Layer 1 to decipher. However, the signal is actually a complex, ancient memetic virus designed to waste resources.
+
+**Emergence:** You dedicate half your colony's research output and build a massive antenna array to decode the signal, convinced it's the key to winning the game. After a decade of effort and neglected infrastructure, the final "translation" just causes all your automated mining drills to start spinning backwards.
+
+**Tension:** The immense potential reward of ancient alien mysteries vs. the very real possibility that it's a cosmic trap or a dead end that will bankrupt your colony's progress.
+
+---
+
+## The Symbiotic Insurgency
+
+**Layer:** 1
+
+**Fantasy:** The planet's native flora isn't just hostile; it's unionizing against you.
+
+**Mechanic:** Harvesting native "Xeno-Flora" yields high-value medicinal compounds but angers a hidden, planet-wide fungal intelligence. Instead of sending monsters, the intelligence infects the harvested products. Pops who consume the medicine are slowly "converted," becoming unwilling sleeper agents. When a critical mass is reached, they simultaneously sabotage key infrastructure to allow the jungle to reclaim the colony.
+
+**Emergence:** You rely heavily on a highly effective native painkiller to keep the miners working through injuries. Without warning, half your mining crew suddenly shuts down the blast doors, unseals the exterior vents, and sits down quietly as aggressive vines pour into the facility.
+
+**Tension:** The immense, immediate benefits of exploiting native biological resources vs. the slow, silent infiltration of an intelligence you don't even realize you are fighting.
+
+---
