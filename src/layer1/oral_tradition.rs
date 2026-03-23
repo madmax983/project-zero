@@ -16,8 +16,8 @@ use rand::Rng;
 pub struct Story {
     /// The current text of the story.
     pub text: String,
-    /// The original tick when the event happened.
-    pub origin_tick: u64,
+    /// The historical date when the event happened.
+    pub historical_date: u64,
     /// How many times the story has mutated.
     pub mutations: u32,
     /// The type/genre of the story.
@@ -47,12 +47,12 @@ pub struct OralTradition {
 }
 
 impl OralTradition {
-    /// Adds a story if it's not a duplicate (based on origin tick).
+    /// Adds a story if it's not a duplicate (based on historical date).
     pub fn add_story(&mut self, story: Story) {
         if !self
             .stories
             .iter()
-            .any(|s| s.origin_tick == story.origin_tick)
+            .any(|s| s.historical_date == story.historical_date)
         {
             self.stories.push(story);
         }
@@ -103,7 +103,7 @@ pub fn collect_chronicles_system(mut tradition: ResMut<OralTradition>, chronicle
 
         let story = Story {
             text: event.text.clone(),
-            origin_tick: event.tick,
+            historical_date: event.tick,
             mutations: 0,
             genre,
         };
@@ -245,7 +245,7 @@ mod tests {
         let mut tradition = OralTradition::default();
         tradition.add_story(Story {
             text: "Heroic Tale".to_string(),
-            origin_tick: 1,
+            historical_date: 1,
             mutations: 0,
             genre: StoryGenre::Heroic,
         });
@@ -278,7 +278,7 @@ mod tests {
         let mut rng = rand::thread_rng();
         let mut story = Story {
             text: "The colony was founded.".to_string(),
-            origin_tick: 0,
+            historical_date: 0,
             mutations: 0,
             genre: StoryGenre::Trivial,
         };
