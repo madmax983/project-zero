@@ -467,6 +467,13 @@ impl NarrativeGenerator {
             segments.push(NarrativeSegment::Text(current_text));
         }
 
+        // Check for missing context variables/fragments that would produce errors
+        for segment in &segments {
+            if let NarrativeSegment::Error(err) = segment {
+                return Err(anyhow::anyhow!("Missing required context variable or fragment: {err}"));
+            }
+        }
+
         Ok(segments)
     }
 }
@@ -731,12 +738,9 @@ fn test_generate_missing_fragment_options() {
         },
     );
     let ctx = NarrativeContext::new();
-    let segments = generator.generate_structured("EMPTY_FRAG", &ctx).unwrap();
-    assert_eq!(segments.len(), 1);
-    assert_eq!(
-        segments[0],
-        NarrativeSegment::Error("MISSING_FRAGMENT_OPTIONS:FRAG".to_string())
-    );
+    let result = generator.generate_structured("EMPTY_FRAG", &ctx);
+    assert!(result.is_err());
+    assert!(result.unwrap_err().to_string().contains("MISSING_FRAGMENT_OPTIONS:FRAG"));
 }
 
 #[test]
@@ -744,9 +748,9 @@ fn test_generate_missing_key() {
     let mut generator = NarrativeGenerator::default();
     generator.add_template("MISSING".to_string(), vec!["[UNKNOWN]".to_string()]);
     let ctx = NarrativeContext::new();
-    let segments = generator.generate_structured("MISSING", &ctx).unwrap();
-    assert_eq!(segments.len(), 1);
-    assert_eq!(segments[0], NarrativeSegment::Error("UNKNOWN".to_string()));
+    let result = generator.generate_structured("MISSING", &ctx);
+    assert!(result.is_err());
+    assert!(result.unwrap_err().to_string().contains("UNKNOWN"));
 }
 
 #[test]

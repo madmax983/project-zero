@@ -315,7 +315,7 @@ mod app {
                 let cells = vec![
                     Cell::from(format!("{:?}", story.genre))
                         .style(Style::default().fg(genre_color)),
-                    Cell::from(story.origin_tick.to_string()),
+                    Cell::from(story.historical_date.to_string()),
                     Cell::from(story.mutations.to_string()),
                     Cell::from(snippet),
                 ];

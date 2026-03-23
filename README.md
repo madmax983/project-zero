@@ -44,10 +44,6 @@ trunk serve
 
 ### Procedural Generation (Narrative)
 
-> **⚠️ REQUIRES FEATURE NOVA**
->
-> To use this feature, you must enable the `nova` feature flag in `Cargo.toml` or via command line.
-
 To use SCALE's procedural generation in your own Rust code:
 
 ```rust
@@ -64,7 +60,7 @@ fn main() -> anyhow::Result<()> {
     // 2. Prepare Context
     let mut context = NarrativeContext::default();
     context.insert("CIV_NAME", "Terran Dominion");
-    // Note: Missing context variables will appear as [ERROR: KEY] in the text.
+    // Note: If required context variables are missing, `generate` will return an error.
     context.insert("ORIGIN_STAR", "Sol Prime");
     context.insert("YEAR", "2150");
     context.insert("CIV_EPITHET", "The First Ones");
@@ -97,32 +93,23 @@ The "Nova" feature (Oral Tradition) builds upon the base narrative system to cre
 ```rust
 // In Cargo.toml:
 // scale = { version = "...", features = ["nova"] }
-// bevy_ecs = "0.15" // <-- Version 0.15 is strictly required to match the workspace!
 
-use scale::layer1::oral_tradition::{OralTradition, collect_chronicles_system};
-use scale::layer1::chronicle::{Chronicle, EventImportance};
-use bevy_ecs::prelude::*;
+use scale::layer1::oral_tradition::{OralTradition, Story, StoryGenre};
 
 fn main() {
-    let mut world = World::new();
-    world.insert_resource(OralTradition::default());
-    world.insert_resource(Chronicle::default());
+    let mut tradition = OralTradition::default();
 
-    // Add a historical event
-    world.resource_mut::<Chronicle>().add_event(
-        100,
-        "The colony survived the Great Frost.".to_string(),
-        EventImportance::Legendary,
-    );
-
-    // Run system to process events into stories
-    let mut schedule = Schedule::default();
-    schedule.add_systems(collect_chronicles_system);
-    schedule.run(&mut world);
+    // Add a story directly to the tradition
+    let story = Story {
+        text: "The colony survived the Great Frost.".to_string(),
+        historical_date: 100,
+        mutations: 0,
+        genre: StoryGenre::Heroic,
+    };
+    tradition.add_story(story);
 
     // Inspect
-    let tradition = world.resource::<OralTradition>();
-    println!("{:?}", tradition);
+    println!("{:?}", tradition.stories);
 }
 ```
 

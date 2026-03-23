@@ -101,7 +101,7 @@ mod demo {
 
             table.add_row(vec![
                 Cell::new(&genre_str).fg(genre_color),
-                Cell::new(story.origin_tick.to_string()).fg(TableColor::Cyan),
+                Cell::new(story.historical_date.to_string()).fg(TableColor::Cyan),
                 Cell::new(story.mutations.to_string()).fg(TableColor::Cyan),
                 Cell::new(&story.text).fg(TableColor::White),
             ]);
