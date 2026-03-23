@@ -4490,3 +4490,59 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: The resin from the trade heals [COLONY], but [BIO_MATERIAL_MANIFESTATION]."
 - "[COLONY] uses the alien material. Soon, [BIO_MATERIAL_MANIFESTATION]. [YEAR]."
 - "The bio-architecture thrives at [COLONY]. And [BIO_MATERIAL_MANIFESTATION]. [YEAR]."
+
+## The Reverse Quarantine Templates
+
+### Template: REFUGEE_ARRIVAL
+
+**Generates:** Play event (Chronicle during game)
+**Slots:** `[COLONY]`, `[YEAR]`, `[FLEET_SIZE]`, `[FLEET_STATE]`
+
+**Patterns:**
+- "[COLONY], [YEAR]: [FLEET_SIZE] ships appear in orbit. They are [FLEET_STATE]. They beg for asylum."
+- "Year [YEAR]. Sensors detect a refugee fleet of [FLEET_SIZE] vessels. Condition: [FLEET_STATE]."
+- "They came from the dark in [YEAR]. [FLEET_SIZE] hulls, all [FLEET_STATE]. Seeking harbor at [COLONY]."
+
+### Template: REFUGEE_REJECTION
+
+**Generates:** Play event (Chronicle during game)
+**Slots:** `[COLONY]`, `[YEAR]`, `[REJECTION_METHOD]`, `[GUILT_RATIONALIZATION]`
+
+**Patterns:**
+- "[YEAR]: We turned them away using [REJECTION_METHOD]. [GUILT_RATIONALIZATION]. May the Substrate forgive us."
+- "The doors of [COLONY] remain closed in [YEAR]. The fleet was met with [REJECTION_METHOD]. [GUILT_RATIONALIZATION]."
+- "We did what we had to. [REJECTION_METHOD]. The debris fell on [COLONY] for weeks. [GUILT_RATIONALIZATION]."
+
+### Template: REFUGEE_ACCEPTANCE
+
+**Generates:** Play event (Chronicle during game)
+**Slots:** `[COLONY]`, `[YEAR]`, `[DISEASE_NAME]`, `[SURVIVOR_NAME]?`
+
+**Patterns:**
+- "[COLONY] opened its doors in [YEAR]. They brought [DISEASE_NAME] with them. The dying began soon after."
+- "Year [YEAR]. We welcomed the outcasts. We did not know they carried [DISEASE_NAME]."
+- "Compassion was our doom in [YEAR]. [DISEASE_NAME] spread through [COLONY] from the refugees."
+**If [SURVIVOR_NAME]:**
+- "[SURVIVOR_NAME] warned us against opening the doors in [YEAR]. They were right."
+
+## The Parasitic Broadcast Templates
+
+### Template: PARASITIC_INFECTION
+
+**Generates:** Play event (Chronicle during game)
+**Slots:** `[COLONY]`, `[YEAR]`, `[SONG_GENRE]`, `[WORK_DISTRACTION]`
+
+**Patterns:**
+- "A new transmission in [YEAR]. [SONG_GENRE]. Everyone is listening. Nobody is working. They are [WORK_DISTRACTION]."
+- "[COLONY], [YEAR]: The colony is euphoric, humming [SONG_GENRE]. Work has stopped. They are too busy [WORK_DISTRACTION]."
+- "Year [YEAR]. A signal caught on the comms array. [SONG_GENRE]. Morale is at an all-time high, but the extractors are silent. They are [WORK_DISTRACTION]."
+
+### Template: PARASITIC_DANGER
+
+**Generates:** Play event (Chronicle during game)
+**Slots:** `[COLONY]`, `[YEAR]`, `[MACHINERY_REWIRED]`
+
+**Patterns:**
+- "[YEAR]: The song wants to be heard. The colonists have rewired [MACHINERY_REWIRED] into a massive antenna. They are broadcasting it back into the dark."
+- "We are no longer silent. In [YEAR], [COLONY] converted [MACHINERY_REWIRED] to amplify the transmission. The galaxy will hear us."
+- "Year [YEAR]. The earworm spreads. [MACHINERY_REWIRED] has been repurposed to transmit the signal outward. We await the response."

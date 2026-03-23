@@ -5290,3 +5290,74 @@ How the self-healing bio-architecture haunts the colony (Spec 548).
 - the self-healing floors pulse like a heartbeat
 - the material screams when the temperature drops
 - we built our homes from the DNA we sold
+
+## The Reverse Quarantine Fragments
+
+### Fragment Type: [FLEET_STATE]
+
+- venting atmosphere
+- dead in the water
+- barely holding together
+- leaking radiation
+- scarred by [UNKNOWN] weaponry
+- overloaded with bio-signs
+- flashing distress codes in old syntax
+
+### Fragment Type: [REJECTION_METHOD]
+
+- automated defense grids
+- concentrated kinetic strikes
+- threatening missile locks
+- jamming their comms
+- orbital denial systems
+- complete radio silence
+- firing warning shots
+
+### Fragment Type: [GUILT_RATIONALIZATION]
+
+- The sick could not be allowed in
+- Resources were already stretched too thin
+- We couldn't risk the contagion
+- Empathy is a luxury we cannot afford
+- The survival of the colony comes first
+- They would have taken us down with them
+
+### Fragment Type: [DISEASE_NAME]
+
+- the Red Rust
+- the Spore Plague
+- the Void Fever
+- the Silence Sickness
+- the Bleeding Cough
+- the Gray Death
+- the Neural Rot
+
+## The Parasitic Broadcast Fragments
+
+### Fragment Type: [SONG_GENRE]
+
+- A haunting, multi-tonal chorale
+- An upbeat, polyrhythmic synth melody
+- A slow, resonant bass vibration
+- A surprisingly catchy vocal loop
+- An energetic acoustic strumming
+- A fast-paced, atonal screeching
+- A melodic, crystalline ringing
+
+### Fragment Type: [WORK_DISTRACTION]
+
+- tapping the rhythm on the bulkheads
+- humming the tune endlessly
+- swaying to an unheard beat
+- singing the choruses in unison
+- whistling the melody while staring into space
+- writing the frequency patterns on the walls
+
+### Fragment Type: [MACHINERY_REWIRED]
+
+- the deep-core extractors
+- the atmospheric scrubbers
+- the hydroponic arrays
+- the main communications spire
+- the orbital sensor platforms
+- the reactor cooling towers
