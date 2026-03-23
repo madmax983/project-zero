@@ -1,3 +1,11 @@
+### INT-547: AlienBroadcastEvent -> ParasiticBroadcast
+- **Date:** 2026-03-24
+- **Systems connected:** `trigger_alien_broadcast_system` (Layer 3) -> `alien_broadcast_bridge_system` (Integration) -> `MemeticInfection::ParasiticBroadcast` (Layer 1)
+- **Glue added:**
+    - `alien_broadcast_bridge_system` in `src/layer1/integration.rs` to convert `AlienBroadcastEvent` to `MemeticInfection::ParasiticBroadcast` on Pops, generate Notifications, and `AddChronicleEvent`.
+    - Added `AlienBroadcastEvent` in `src/layer3/events/alien_broadcast.rs`.
+- **Tests:** `tests/integration/alien_broadcast_bridge.rs` (Integration test verified)
+
 ### INT-468: Escape Velocity Economics Integration
 - **Date:** 2026-03-27
 - **Systems connected:** `PlanetaryTraits` (Layer 1 Quirks) -> `PlanetaryGravity` (Layer 2 Escape Velocity)

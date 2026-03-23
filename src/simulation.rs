@@ -56,6 +56,7 @@ pub fn build_simulation_schedule() -> Schedule {
 
     // --- Layer 3 Integration ---
     schedule.add_systems((
+        crate::layer3::events::alien_broadcast::trigger_alien_broadcast_system,
         update_detection_risk_system.after(Layer1SystemSet::Economy),
         check_hostile_spawn_system.after(update_detection_risk_system),
         crate::layer3::council::enforce_resolutions_system,
@@ -179,6 +180,12 @@ pub fn run_simulation_tick(world: &mut World) {
     }
     if !world.contains_resource::<Events<DetectionEvent>>() {
         world.init_resource::<Events<DetectionEvent>>();
+    }
+    if !world.contains_resource::<crate::layer3::market::galactic_market::GalacticMarket>() {
+        world.init_resource::<crate::layer3::market::galactic_market::GalacticMarket>();
+    }
+    if !world.contains_resource::<Events<crate::layer3::events::alien_broadcast::AlienBroadcastEvent>>() {
+        world.init_resource::<Events<crate::layer3::events::alien_broadcast::AlienBroadcastEvent>>();
     }
     if !world.contains_resource::<Events<HostileSpawnEvent>>() {
         world.init_resource::<Events<HostileSpawnEvent>>();
@@ -311,6 +318,12 @@ pub fn run_simulation_tick(world: &mut World) {
         world.init_resource::<crate::layer1::tech::infinite_archive::Archive>();
     }
 
+    if !world.contains_resource::<crate::layer3::market::galactic_market::GalacticMarket>() {
+        world.init_resource::<crate::layer3::market::galactic_market::GalacticMarket>();
+    }
+    if !world.contains_resource::<Events<crate::layer3::events::alien_broadcast::AlienBroadcastEvent>>() {
+        world.init_resource::<Events<crate::layer3::events::alien_broadcast::AlienBroadcastEvent>>();
+    }
     if !world.contains_resource::<Events<HostileSpawnEvent>>() {
         world.init_resource::<Events<HostileSpawnEvent>>();
     }
@@ -370,6 +383,7 @@ mod tests {
 
         // Initialize Detection Risk for test
         world.init_resource::<crate::layer3::silence::DetectionRisk>();
+        world.init_resource::<Events<crate::layer3::events::alien_broadcast::AlienBroadcastEvent>>();
         world.init_resource::<Events<crate::layer3::silence::HostileSpawnEvent>>();
 
         world.init_resource::<Events<crate::layer1::spiteful_will::InheritanceEvent>>();

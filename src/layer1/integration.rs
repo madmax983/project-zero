@@ -1047,3 +1047,37 @@ pub fn smuggler_arrival_event_bridge(
         });
     }
 }
+
+/// Bridges `AlienBroadcastEvent` (Layer 3) to `MemeticInfection::ParasiticBroadcast` (Layer 1).
+pub fn alien_broadcast_bridge_system(
+    mut events: EventReader<crate::layer3::events::alien_broadcast::AlienBroadcastEvent>,
+    mut commands: Commands,
+    pops: Query<Entity, With<crate::layer1::pop::Pop>>,
+    mut notifications: ResMut<crate::layer1::notifications::NotificationQueue>,
+    mut chronicle: EventWriter<crate::layer1::chronicle::AddChronicleEvent>,
+    time: Option<Res<crate::shared::time::SimulationTime>>,
+) {
+    let current_tick = time.map(|t| t.tick).unwrap_or(0);
+
+    for _ in events.read() {
+        // Infect 50% of Pops
+        let mut rng = rand::thread_rng();
+        use rand::Rng;
+
+        for pop_entity in pops.iter() {
+            if rng.gen_bool(0.5) {
+                commands.entity(pop_entity).insert(crate::layer1::memetics::MemeticInfection::ParasiticBroadcast);
+            }
+        }
+
+        notifications.add_error(
+            "An infectious alien broadcast has compromised our comms!".to_string(),
+            current_tick,
+        );
+
+        chronicle.send(crate::layer1::chronicle::AddChronicleEvent {
+            text: "Our comms array picked up a strange, incredibly catchy signal from deep space. The colony can't stop humming it.".to_string(),
+            importance: crate::layer1::chronicle::EventImportance::Major,
+        });
+    }
+}
