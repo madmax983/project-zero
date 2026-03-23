@@ -482,3 +482,11 @@
 - **Systems connected:** `TradeDeal` (Biomass Tariff) -> `process_biomass_tariff_system` (Biomass Tariff)
 - **Glue added:** Added `TradeDeal` event and `process_biomass_tariff_system` system to `SimulationSchedule` (chained after `post_trade_route_sync_system`).
 - **Tests:** `src/layer2/trade/biomass_tariff.rs` (Integration tests verified)
+
+### INT-545: Disaster Tourism -> ColonyResources & Chronicle
+- **Date:** 2026-03-24
+- **Systems connected:** `GriefTouristArrivalEvent` (Tourism) -> `process_grief_tourist_arrival_system` (Integration) -> `ColonyResources` (Economy) & `AddChronicleEvent` (Chronicle)
+- **Glue added:**
+    - `process_grief_tourist_arrival_system` in `src/layer2/integration.rs` translates `GriefTouristArrivalEvent` into credits and narrative chronicle events.
+- **Schedule:** Chained in `Layer2SystemSet` after `process_disaster_tourism_system`.
+- **Tests:** `tests/integration/disaster_tourism_bridge.rs` (Integration test verified)
