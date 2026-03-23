@@ -16,3 +16,11 @@
 **Geology Module Structural Tangle**
 **Tangle:** The geology module was incorrectly split between `src/layer1/geology.rs` and `src/layer1/geology/tectonic.rs`, and tests were awkwardly injected via an `include!` hack in `src/layer1/mod.rs`.
 **Blueprint:** Moved `src/layer1/geology.rs` to `src/layer1/geology/mod.rs` to establish a proper domain boundary and natively declared the test module in `tectonic.rs`.
+
+**Utility AI Module Extracted to `mind`**
+**Tangle:** The `utility_ai` and related evaluation logic files (`utility_ai.rs`, `utility_types.rs`, `utility_ai_population.rs`, `utility_eval_types.rs`, etc.) cluttered the root `src/layer1/mod.rs` namespace, adding to the "Blob" anti-pattern in `layer1`.
+**Blueprint:** Encapsulated all `utility_*` files into a dedicated `src/layer1/mind` module. The new `src/layer1/mind/mod.rs` re-exports the public types to maintain backward compatibility, keeping the layer 1 root cleaner while strictly enforcing domain boundaries.
+
+**Utility AI Module Extracted to `mind`**
+**Tangle:** The `utility_ai` and related evaluation logic files (`utility_ai.rs`, `utility_types.rs`, `utility_ai_population.rs`, `utility_eval_types.rs`, etc.) cluttered the root `src/layer1/mod.rs` namespace, adding to the "Blob" anti-pattern in `layer1`.
+**Blueprint:** Encapsulated all `utility_*` files into a dedicated `src/layer1/mind/` module. The new `src/layer1/mind/mod.rs` re-exports the public types to maintain backward compatibility, keeping the layer 1 root cleaner while strictly enforcing domain boundaries.

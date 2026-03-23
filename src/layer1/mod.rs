@@ -33,6 +33,8 @@
 pub mod access_control;
 /// Pop actions logic.
 pub mod actions;
+pub mod mind;
+pub use mind::*;
 pub mod ad_screen;
 /// Bureaucratic Drag system (Spec 175).
 pub mod admin;
@@ -139,20 +141,6 @@ pub mod structure;
 /// Technology and research system.
 pub mod tech;
 /// Terrain generation and grid management.
-/// Emergent utility AI system.
-pub mod utility_ai;
-#[cfg(test)]
-/// Tests for utility AI hierarchy logic.
-pub mod utility_ai_hierarchy_tests;
-/// Utility AI population helpers.
-pub mod utility_ai_population;
-#[cfg(test)]
-/// Tests for utility AI work logic.
-pub mod utility_ai_work_tests;
-/// Shared types for utility AI evaluation (`PopEvalData`, Proxies).
-pub(crate) mod utility_eval_types;
-/// Shared types for utility AI state (`ActionType`, `UtilityWeights`).
-pub mod utility_types;
 #[cfg(test)]
 mod work_building_tests;
 
@@ -228,8 +216,6 @@ pub use stockpile::*;
 pub use structural_integrity::*;
 pub use structure::*;
 pub use tech::*;
-pub use utility_ai::*;
-pub use utility_types::*;
 
 #[cfg(test)]
 mod tool_tests;
