@@ -323,6 +323,8 @@ pub enum BuildingType {
     BulletinBoard,
     /// Holographic projector that emits Beauty when powered.
     HoloProjector,
+    /// Instant matter fabrication (Spec 453).
+    Nanoforge,
 }
 
 impl BuildingType {
@@ -506,6 +508,7 @@ impl BuildingType {
             Self::Recycler => true,
             Self::BulletinBoard => false,
             Self::HoloProjector => false,
+            Self::Nanoforge => false,
         }
     }
 
@@ -666,6 +669,7 @@ impl BuildingType {
             Self::Recycler => "Recycler",
             Self::BulletinBoard => "Bulletin Board",
             Self::HoloProjector => "Holo Projector",
+            Self::Nanoforge => "Nanoforge",
         }
     }
 
@@ -723,6 +727,7 @@ impl BuildingType {
             Self::Shower => '🚿',
             Self::Recycler => '♻',
             Self::BulletinBoard => 'B',
+            Self::Nanoforge => 'N',
         }
     }
 
@@ -1048,6 +1053,10 @@ impl BuildingType {
                 ..ColonyResources::zeroed()
             },
             Self::Lander => ColonyResources::zeroed(),
+            Self::Nanoforge => ColonyResources {
+                metal: 25.0,
+                ..ColonyResources::zeroed()
+            },
         }
     }
 
@@ -1374,6 +1383,14 @@ fn spawn_building(
         | BuildingType::PersonalGarden
         | BuildingType::PersonalShrine => {
             // Logic handled by components added in system
+        }
+        BuildingType::Nanoforge => {
+            entity.insert((
+                crate::layer1::nanite_fabrication::Nanoforge {
+                    active_recipe: None,
+                    breach_risk: 0.01,
+                },
+            ));
         }
     }
 
@@ -2147,6 +2164,14 @@ fn configure_futuristic_tech(entity: &mut EntityWorldMut, building_type: Buildin
                 },
             ));
         }
+        BuildingType::Nanoforge => {
+            entity.insert((
+                crate::layer1::nanite_fabrication::Nanoforge {
+                    active_recipe: None,
+                    breach_risk: 0.01,
+                },
+            ));
+        }
         _ => {}
     }
 }
@@ -2449,7 +2474,8 @@ mod tests {
             BuildingType::BulletinBoard.next(),
             BuildingType::HoloProjector
         );
-        assert_eq!(BuildingType::HoloProjector.next(), BuildingType::Housing);
+        assert_eq!(BuildingType::HoloProjector.next(), BuildingType::Nanoforge);
+        assert_eq!(BuildingType::Nanoforge.next(), BuildingType::Housing);
     }
 
     #[test]
@@ -2675,6 +2701,9 @@ mod tests {
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::HoloProjector);
+
+        mode.selected = mode.selected.next();
+        assert_eq!(mode.selected, BuildingType::Nanoforge);
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::Housing);

@@ -766,6 +766,7 @@ pub const fn get_building_char(building: BuildingType) -> &'static str {
         BuildingType::Recycler => "♻",
         BuildingType::BulletinBoard => "B",
         BuildingType::HoloProjector => "O",
+        BuildingType::Nanoforge => "N",
     }
 }
 
@@ -841,6 +842,7 @@ pub const fn get_building_color(building: BuildingType, material: MaterialType) 
             } // Blue
             BuildingType::BulletinBoard => Color::Rgb(210, 180, 140), // Tan
             BuildingType::HoloProjector => Color::Rgb(200, 200, 255),
+            BuildingType::Nanoforge => Color::Rgb(150, 0, 255),
         }
     }
 }
