@@ -138,8 +138,10 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::logistics::pneumatic::tube_network_system.after(haul_system),
             crate::layer1::logistics::pneumatic::tube_transport_system
                 .after(crate::layer1::logistics::pneumatic::tube_network_system),
-            crate::layer1::nanite_fabrication::nanite_fabrication_system.after(arrival_handler_system),
-            crate::layer1::nanite_fabrication::grey_goo_replication_system.after(crate::layer1::nanite_fabrication::nanite_fabrication_system),
+            crate::layer1::nanite_fabrication::nanite_fabrication_system
+                .after(arrival_handler_system),
+            crate::layer1::nanite_fabrication::grey_goo_replication_system
+                .after(crate::layer1::nanite_fabrication::nanite_fabrication_system),
             process_scan_system.after(arrival_handler_system),
             update_cabin_fever_system.after(movement_system),
             update_noise_system.after(work_execution_system),
