@@ -1,3 +1,11 @@
+//! Psychological Totems and Stress Relief.
+//!
+//! This module implements the Totem system, a psychological mechanic where high-stress Pops
+//! can spontaneously create or find a `Totem` object.
+//!
+//! When equipped, a `Totem` provides passive stress relief. However, if a `Totem` is unequipped
+//! or lost, the Pop suffers a massive stress spike and receives a `BadOmen` penalty.
+
 use crate::layer1::items::{Equipment, Item, UnequipEvent};
 use crate::layer1::stress::StressTracker;
 use crate::shared::log::MessageLog;
@@ -5,6 +13,21 @@ use bevy_ecs::prelude::*;
 use ratatui::style::Color;
 
 /// Component for a Totem item that reduces stress.
+///
+/// # Examples
+///
+/// ```
+/// use bevy_ecs::prelude::*;
+/// use scale::layer1::totems::Totem;
+///
+/// let mut world = World::new();
+/// let totem_entity = world.spawn(Totem {
+///     stress_relief: 0.5,
+///     description: "A polished wooden carving".to_string(),
+/// }).id();
+///
+/// assert!(world.get::<Totem>(totem_entity).is_some());
+/// ```
 #[derive(Component, Debug, Clone)]
 pub struct Totem {
     /// Amount of stress relief provided per tick.

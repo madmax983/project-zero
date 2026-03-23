@@ -1,3 +1,11 @@
+//! Cryo-Stasis Systems.
+//!
+//! This module manages the `CryoStasis` condition, a way to freeze Pops to halt their needs
+//! and aging. The transition into stasis is handled by placing a `CryoOrder` on a building,
+//! while exiting stasis is managed by a `ThawOrder` on the Pop.
+//!
+//! Exiting stasis inflicts `CryoSickness`, a debuff that reduces movement speed.
+
 use crate::layer1::map::GridPosition;
 use crate::layer1::pop::Speed;
 use crate::layer1::utility_types::PopAction;
@@ -5,6 +13,19 @@ use bevy_ecs::prelude::*;
 
 /// Component indicating a Pop is in Cryo-Stasis.
 /// Halts need decay and aging.
+///
+/// # Examples
+///
+/// ```
+/// use bevy_ecs::prelude::*;
+/// use scale::layer1::cryo::CryoStasis;
+/// use scale::layer1::pop::Pop;
+///
+/// let mut world = World::new();
+/// let pop_entity = world.spawn((Pop, CryoStasis)).id();
+///
+/// assert!(world.get::<CryoStasis>(pop_entity).is_some());
+/// ```
 #[derive(Component, Default, Debug)]
 pub struct CryoStasis;
 

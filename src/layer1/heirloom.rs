@@ -1,3 +1,15 @@
+//! Ancient Structures and Heirloom Items.
+//!
+//! This module manages two distinct but related concepts from the Old World:
+//!
+//! 1. **Ancient Structures:** Unrepairable buildings (`AncientStructure`) that decay over time.
+//!    These structures, such as the `AncientReactor`, can be sacrificed for knowledge via the
+//!    `RetrogradeEngineeringEvent`.
+//!
+//! 2. **Heirlooms:** Exceptional tools (`Heirloom`) that have been used extensively.
+//!    Tools track their usage history via `ToolHistory`, and when a threshold is met,
+//!    they are promoted to Heirloom status, gaining a unique name and efficiency bonuses.
+
 use crate::layer1::building::{
     can_place_building, spawn_building_with_material, BuildingType, MaterialType, OccupiedTiles,
 };
@@ -9,6 +21,22 @@ use bevy_ecs::prelude::*;
 ///
 /// Ancient Structures are unrepairable structures from the Old World.
 /// They decay over time and cannot be built by the player.
+///
+/// # Examples
+///
+/// ```
+/// use bevy_ecs::prelude::*;
+/// use scale::layer1::heirloom::AncientStructure;
+/// use scale::layer1::structure::Structure;
+///
+/// let mut world = World::new();
+/// let entity = world.spawn((
+///     AncientStructure,
+///     Structure { current_hp: 100.0, max_hp: 100.0 }
+/// )).id();
+///
+/// assert!(world.get::<AncientStructure>(entity).is_some());
+/// ```
 #[derive(Component, Debug, Clone, Copy, Default)]
 pub struct AncientStructure;
 

@@ -1,4 +1,13 @@
 #![allow(clippy::cast_sign_loss)]
+//! Structural Integrity and Stability Systems.
+//!
+//! This module defines the `RoofGrid` and calculates support limits (`MAX_SUPPORT_DIST`).
+//! It ensures that spaces hollowed out during mining (turning `Rock` to `Dirt`) remain supported
+//! by nearby `Rock` or `Wall` entities.
+//!
+//! Unstable roofs can trigger cave-ins via `apply_collapse`, converting the terrain back to rubble
+//! and damaging trapped entities.
+
 use crate::layer1::building::{Building, BuildingType};
 use crate::layer1::health::Health;
 use crate::layer1::terrain::{TerrainGrid, TerrainType};
@@ -11,6 +20,18 @@ pub const MAX_SUPPORT_DIST: i32 = 5;
 
 #[derive(Resource, Default)]
 /// Tracks which tiles have an overhead roof (underground vs open sky).
+///
+/// # Examples
+///
+/// ```
+/// use scale::layer1::structural_integrity::RoofGrid;
+///
+/// let mut grid = RoofGrid::new(10, 10);
+/// grid.set(5, 5, true);
+///
+/// assert!(grid.has_roof(5, 5));
+/// assert!(!grid.has_roof(0, 0));
+/// ```
 pub struct RoofGrid {
     /// Width of the grid.
     pub width: usize,

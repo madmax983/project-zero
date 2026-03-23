@@ -104,7 +104,7 @@ pub fn spawn_cargo_cult_fleet_system(
         t.demand_amount = rng.gen_range(300.0..1000.0);
 
         if let Some(mut log) = message_log {
-            log.add(&format!(
+            log.add(format!(
                 "An ancient Dreadnought arrived in orbit. It opened a Tether demanding {}!",
                 match t.demand_type {
                     TetherDemandType::Water => "Water",
@@ -215,7 +215,7 @@ pub fn feed_cargo_cult_tether_system(
             25
         };
 
-        let possible_rewards = vec![
+        let possible_rewards = [
             ItemType::LuxuryMeal,
             ItemType::AlienMeatA,
             ItemType::AlienMeatB,
