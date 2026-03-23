@@ -701,6 +701,7 @@ classDiagram
 - [ADR 042: Refactor Building God Module](./adr/042-refactor-building-module.md)
 - [ADR 043: Layer 3 Revival (Interstellar Scale)](./adr/043-layer-3-revival.md)
 - [ADR 044: Planetary Governance System](./adr/044-planetary-governance-system.md)
+- [ADR 045: Galactic Market System](./adr/045-galactic-market-system.md)
 
 ## Layer 2: Planetary Governance Integration
 
@@ -856,4 +857,29 @@ classDiagram
     Layer1 --> Social : initializes
     Social --> Pop : modifies
     SecretSocieties --> Unrest : generates
+```
+
+## Layer 3: Galactic Market System
+
+The Galactic Market dynamically tracks the `prices` and `supply_pool` of resources across the interstellar scale (Layer 3). It adjusts prices based on the inverse relationship between supply and baseline expectations.
+
+```mermaid
+classDiagram
+    class GalacticMarket {
+        <<Resource>>
+        +HashMap~ResourceType, f32~ prices
+        +HashMap~ResourceType, f32~ supply_pool
+        +HashMap~ResourceType, f32~ baseline_prices
+    }
+
+    class MarketModule {
+        <<Module>>
+        +execute_market_sell()
+        +execute_market_buy()
+        +calculate_trade_value()
+        +update_market_prices_system()
+    }
+
+    MarketModule ..> GalacticMarket : Modifies supply_pool
+    MarketModule ..> GalacticMarket : Recalculates prices
 ```
