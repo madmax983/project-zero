@@ -1462,7 +1462,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Airlocks & Pressure
+## Airlocks & Pressure [SPECCED]
 
 **Layer:** 1
 
@@ -1756,7 +1756,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Justice System
+## The Justice System [SPECCED]
 
 **Layer:** 1
 
@@ -1826,7 +1826,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Stellar Engineering
+## Stellar Engineering [SPECCED]
 
 **Layer:** 3
 
@@ -1868,7 +1868,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The "Helpful" AI
+## The "Helpful" AI [SPECCED]
 
 **Layer:** 1 -> Cross-layer
 
@@ -2022,7 +2022,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Gene Splicing
+## Gene Splicing [SPECCED]
 
 **Layer:** 1
 
