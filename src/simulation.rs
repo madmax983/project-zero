@@ -141,6 +141,7 @@ pub fn build_simulation_schedule() -> Schedule {
         crate::layer2::integration::rebellion_chronicle_bridge_system
             .after(crate::layer2::governance::check_governor_rebellion_system),
         crate::layer2::tourism::process_disaster_tourism_system.after(Layer1SystemSet::Execution),
+        crate::layer2::integration::process_grief_tourist_arrival_system.after(crate::layer2::tourism::process_disaster_tourism_system),
         crate::layer2::events_new::reverse_quarantine::process_refugee_decisions_system,
     ));
 

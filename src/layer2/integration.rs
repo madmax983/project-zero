@@ -290,3 +290,22 @@ pub fn rebellion_chronicle_bridge_system(
         });
     }
 }
+
+// --- INT-545: GriefTouristArrivalEvent -> ColonyResources & Chronicle ---
+
+use crate::layer2::tourism::disaster_tourism::GriefTouristArrivalEvent;
+
+/// Bridges `GriefTouristArrivalEvent` into the global `ColonyResources.credits` and the `Chronicle` system.
+pub fn process_grief_tourist_arrival_system(
+    mut events: EventReader<GriefTouristArrivalEvent>,
+    mut resources: ResMut<crate::layer1::resources::ColonyResources>,
+    mut chronicle_events: EventWriter<AddChronicleEvent>,
+) {
+    for event in events.read() {
+        resources.add_credits(event.offered_credits);
+        chronicle_events.send(AddChronicleEvent {
+            text: format!("Grief Tourists arrived, offering {} credits to view the disaster site.", event.offered_credits),
+            importance: EventImportance::Major,
+        });
+    }
+}
