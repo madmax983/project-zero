@@ -11396,3 +11396,59 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** The extreme time and resource cost of constantly sending physical scouts to verify map data vs. the existential risk of making grand strategic decisions based on a ghost map.
 
 ---
+
+## The Synthesizer's Dilemma
+
+**Layer:** 1
+
+**Fantasy:** Replacing nature with perfect, sterile efficiency, only to realize you miss the mess.
+
+**Mechanic:** Late-game "Nutrient Synthesizers" produce infinite, perfectly balanced food from raw power and carbon. However, Pops eating only synthesized food slowly develop "Sensory Deprivation" stress. They crave the complex imperfections of grown food.
+
+**Emergence:** You pave over all your farms to build synthesizers, achieving perfect food security. A year later, your colony's morale crashes. A thriving black market emerges where Pops trade rare, smuggled dirt-grown potatoes for high-value tech, forcing you to tear up a synthesizer to build a single, highly-guarded greenhouse.
+
+**Tension:** Absolute, reliable efficiency vs. the psychological necessity of natural variety and imperfection.
+
+---
+
+## The Gravity Well Graveyard
+
+**Layer:** Cross-layer (2 -> 1)
+
+**Fantasy:** Living at the bottom of a cosmic sinkhole where the galaxy's trash—and treasures—inevitably fall.
+
+**Mechanic:** Settling a colony on a hyper-dense world (or near a black hole) creates a passive "Tractor Effect" on Layer 2. Passing derelicts, asteroid fragments, and occasionally active hostile ships are slowly pulled into your orbit and eventually crash onto your Layer 1 map.
+
+**Emergence:** You enjoy a steady rain of free orbital salvage that builds your early economy. But as local Layer 3 wars escalate, the debris becomes massive warships and active unexploded ordnance. You are forced to build massive, outward-facing planetary shields just to stop the galaxy's garbage from leveling your city.
+
+**Tension:** Free, passive resource acquisition vs. an ever-increasing risk of devastating, unguided orbital impacts.
+
+---
+
+## The Spore-Mind Diplomat
+
+**Layer:** Cross-layer (1 -> 3)
+
+**Fantasy:** Accidentally appointing an alien hive-mind to speak for your people.
+
+**Mechanic:** A Pop heavily infected by "Symbiont Spores" (from native flora) gains a massive boost to their Social and Intellect stats, making them an ideal candidate for an Envoy (Layer 3 diplomat). However, they negotiate on behalf of the colony *and* the planetary fungal network.
+
+**Emergence:** You send your brilliant, spore-infected Envoy to negotiate a trade pact. They secure a perfect deal for high-tech machinery, but slip a clause into the treaty that requires the allied empire to import your planet's spores as "exotic spices." You successfully spread the alien hive-mind to your closest ally, inadvertently starting a galactic biological crisis that is traced back to you.
+
+**Tension:** Using a biologically enhanced super-diplomat vs. losing control over the actual agenda being negotiated on the galactic stage.
+
+---
+
+## The Fallow Cycle
+
+**Layer:** 1
+
+**Fantasy:** A planet that demands respect and periodic rest, punishing those who relentlessly strip-mine its surface.
+
+**Mechanic:** The entire planetary crust has a hidden "Stress" metric. Intensive, constant mining and high-yield farming increase this stress. If the global stress gets too high, the planet enters a "Fallow Cycle": tectonic activity skyrockets, soil fertility drops to zero, and hostile native fauna go into a frenzy to "cleanse" the surface.
+
+**Emergence:** You aggressively strip-mine the continent to build a massive fleet, ignoring the minor tremors. The planet reaches critical stress and enters a Fallow Cycle right as an enemy fleet arrives. Your automated turrets sink into the collapsing ground, and your starving, terrified militia are attacked by both the enemy and massive, enraged tunneling beasts.
+
+**Tension:** Relentless, rapid industrial expansion vs. managing the biological and geological tolerance of the living world you inhabit.
+
+---
