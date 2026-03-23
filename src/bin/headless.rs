@@ -44,6 +44,80 @@ use scale::shared::time::SimulationTime;
 use scale::simulation::run_simulation_tick;
 use std::io::{self, BufRead, Write};
 
+
+
+
+
+/// Renders a Comfy Table with a custom title injected into its top border
+fn print_dashboard_table(title: &str, mut table: comfy_table::Table) {
+    use comfy_table::presets::UTF8_FULL;
+    use crossterm::style::Stylize;
+
+    table.load_preset(UTF8_FULL);
+
+    // Render the table to string
+    let table_str = table.to_string();
+    let lines: Vec<&str> = table_str.lines().collect();
+
+    if lines.is_empty() { return; }
+
+    // The first line is the top border
+    let top_line = lines[0];
+    let top_chars: Vec<char> = top_line.chars().collect();
+    let width = top_chars.len();
+
+    // Using string variables initialized from chars instead of literals
+    let char_tl = '\u{256D}'; // top left rounded
+    let char_h  = '\u{2500}'; // horiz line
+    let char_tr = '\u{256E}'; // top right rounded
+    let char_bl = '\u{2570}'; // bottom left rounded
+    let char_br = '\u{256F}'; // bottom right rounded
+
+    let title_prefix = format!("{}{}{} {} ", char_tl, char_h, char_h, title);
+    let title_len = title_prefix.chars().count();
+
+    let custom_top = if width > title_len + 1 {
+        let mut remainder = String::new();
+        for (i, &ch) in top_chars.iter().enumerate().skip(title_len) {
+            if i == width - 1 && ch == '\u{2510}' {
+                remainder.push(char_tr);
+            } else if ch == '\u{250C}' {
+                remainder.push(char_h);
+            } else {
+                remainder.push(ch);
+            }
+        }
+        format!("{}{}", title_prefix, remainder)
+    } else {
+        // Fallback for extremely narrow tables, just print a basic rounded box top
+        format!("{}{}{} {}", title_prefix, char_h, char_h, char_tr)
+    };
+
+    println!("{}", custom_top.cyan().bold());
+
+    // Print the rest of the table
+    for (i, line) in lines.iter().enumerate().skip(1) {
+        if i == lines.len() - 1 {
+            // Replace bottom corners
+            let bottom = line.replace('\u{2514}', &char_bl.to_string()).replace('\u{2518}', &char_br.to_string());
+            println!("{}", bottom.cyan().bold());
+        } else {
+            println!("{}", line);
+        }
+    }
+}
+
+/// Print a 1-column table as a panel for errors/empty states
+fn print_dashboard_panel(title: &str, content_colored: &str) {
+    use comfy_table::{Table, Cell, ContentArrangement};
+    let mut table = Table::new();
+    table
+        .set_content_arrangement(ContentArrangement::Dynamic)
+        .add_row(vec![Cell::new(content_colored)]);
+
+    print_dashboard_table(title, table);
+}
+
 fn main() {
     let mut world = setup_world_with_config(SetupConfig { headless: true });
     *world.resource_mut::<GameState>() = GameState::Running;
@@ -1022,12 +1096,7 @@ fn scan_terrain(world: &mut World, center_x: i32, center_y: i32, radius: i32) {
         (max_x, max_y, tiles)
     };
 
-    println!(
-        "{}",
-        format!("╭── Scan Results: Center ({center_x}, {center_y}) | Radius {radius} ──╮")
-            .cyan()
-            .bold()
-    );
+
 
     let mut table = Table::new();
     table
@@ -1163,15 +1232,9 @@ fn scan_terrain(world: &mut World, center_x: i32, center_y: i32, radius: i32) {
     }
 
     if found_count == 0 {
-        println!(
-            "│ {} │",
-            "  (No tiles found in range)                    "
-                .dark_grey()
-                .italic()
-        );
-        println!("{}", format!("╰{}╯", "─".repeat(73)).cyan().bold());
+        print_dashboard_panel(&format!("Scan Results: Center ({center_x}, {center_y}) | Radius {radius}"), &format!("{}", "  (No tiles found in range)                    ".dark_grey().italic()));
     } else {
-        println!("{table}");
+        print_dashboard_table(&format!("Scan Results: Center ({center_x}, {center_y}) | Radius {radius}"), table);
     }
 }
 
@@ -1197,21 +1260,8 @@ fn get_tile_info(world: &mut World, x: i32, y: i32) {
     let max_x = i32::try_from(terrain.width).unwrap_or(i32::MAX);
     let max_y = i32::try_from(terrain.height).unwrap_or(i32::MAX);
 
-    println!(
-        "{}",
-        format!("╭── Tile Info: ({x}, {y}) ────────────────────────────────╮")
-            .cyan()
-            .bold()
-    );
-
     if x < 0 || y < 0 || x >= max_x || y >= max_y {
-        println!(
-            "│ {} │",
-            "  ERROR: Coordinates out of bounds             "
-                .red()
-                .bold()
-        );
-        println!("{}", format!("╰{}╯", "─".repeat(59)).cyan().bold());
+        print_dashboard_panel(&format!("Tile Info: ({x}, {y})"), &format!("{}", "  ERROR: Coordinates out of bounds             ".red().bold()));
         return;
     }
 
@@ -1308,7 +1358,7 @@ fn get_tile_info(world: &mut World, x: i32, y: i32) {
         }),
     ]);
 
-    println!("{table}");
+    print_dashboard_table(&format!("Tile Info: ({x}, {y})"), table);
 }
 
 fn print_great_works(world: &mut World) {
@@ -1557,26 +1607,8 @@ fn print_chronicle(world: &mut World) {
 fn print_log(world: &mut World) {
     let log = world.resource::<MessageLog>();
 
-    println!(
-        "{}",
-        "╭── Message Log ────────────────────────────────╮"
-            .cyan()
-            .bold()
-    );
-
     if log.messages.is_empty() {
-        println!(
-            "│ {} │",
-            "  (No messages)                                "
-                .dark_grey()
-                .italic()
-        );
-        println!(
-            "{}",
-            "╰───────────────────────────────────────────────╯"
-                .cyan()
-                .bold()
-        );
+        print_dashboard_panel("Message Log", &format!("{}", "  (No messages)                                ".dark_grey().italic()));
         return;
     }
 
@@ -1607,7 +1639,7 @@ fn print_log(world: &mut World) {
         ]);
     }
 
-    println!("{table}");
+    print_dashboard_table("Message Log", table);
 }
 
 const fn to_comfy_color(c: ratatui::style::Color) -> comfy_table::Color {
