@@ -3470,3 +3470,41 @@
 **Usage:**
 - "The walls are built of Bio-Resin."
 - "The Resin screams when it is cold."
+
+## Encounters & Phenomena
+
+### the outcasts
+
+**Replaces:** refugees, asylum seekers
+**Code reference:** `RefugeeFleetEvent`
+**Usage:**
+- "The outcasts have arrived in orbit."
+- "We turned the outcasts away."
+
+**Note:** Refers specifically to desperate fleets seeking harbor under the Reverse Quarantine feature.
+
+### the closed door
+
+**Replaces:** rejection, denying asylum
+**Code reference:** `Decision::Reject`
+**Usage:**
+- "We gave them the closed door."
+- "The closed door policy stands."
+
+### the transmission / the earworm
+
+**Replaces:** memetic infection, parasitic broadcast
+**Code reference:** `MemeticInfection::ParasiticBroadcast`
+**Usage:**
+- "The transmission has reached the lower levels."
+- "They are caught by the earworm."
+
+**Note:** The song itself is never named, only referred to as the transmission or the earworm.
+
+### the choir
+
+**Replaces:** infected population, infected pops
+**Code reference:** Pops with `MemeticInfection::ParasiticBroadcast`
+**Usage:**
+- "The choir grows louder every day."
+- "We lost sector four to the choir."
