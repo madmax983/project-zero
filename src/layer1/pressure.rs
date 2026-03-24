@@ -240,6 +240,7 @@ pub fn update_pressure_system(world: &mut World) {
 
 /// System to apply suffocation damage.
 pub fn pressure_damage_system(world: &mut World) {
+    use crate::layer1::chronicle::{AddChronicleEvent, EventImportance};
     use crate::layer1::health::Health;
     use crate::layer1::map::GridPosition;
     use crate::layer1::pop::Pop;
@@ -267,9 +268,80 @@ pub fn pressure_damage_system(world: &mut World) {
     }
 
     // 3. Apply damage
+    let mut killed = 0;
     for entity in damage_targets {
         if let Some(mut health) = world.get_mut::<Health>(entity) {
             health.take_damage(1.0);
+            if health.current <= 0.0 {
+                killed += 1;
+            }
+        }
+    }
+
+    // 4. Emit events
+    if killed > 0 {
+        if let Some(mut events) = world.get_resource_mut::<Events<AddChronicleEvent>>() {
+            events.send(AddChronicleEvent {
+                text: format!("{} Pops suffocated due to atmospheric breach.", killed),
+                importance: EventImportance::Major,
+            });
+        }
+    }
+}
+
+pub fn process_door_venting_system(
+    mut grid: ResMut<PressureGrid>,
+    query: Query<(
+        &crate::layer1::building::Building,
+        &crate::layer1::control::DoorControl,
+        &crate::layer1::map::GridPosition,
+    )>,
+) {
+    for (building, control, pos) in query.iter() {
+        if control.state == crate::layer1::control::DoorState::Open {
+            let vent_rate =
+                if building.building_type == crate::layer1::building::BuildingType::Airlock {
+                    0.04
+                } else {
+                    0.5
+                };
+
+            // Diffuse X and Y neighbors across the door
+            for (dx, dy) in [(-1, 0), (0, -1)] {
+                let p1 = grid.get(pos.x + dx, pos.y + dy);
+                let p2 = grid.get(pos.x - dx, pos.y - dy);
+                let diff = (p1 - p2) * vent_rate;
+                grid.set(pos.x + dx, pos.y + dy, p1 - diff);
+                grid.set(pos.x - dx, pos.y - dy, p2 + diff);
+            }
+        }
+    }
+}
+
+pub fn apply_door_movement_penalties_system(
+    mut pop_query: Query<
+        (
+            &crate::layer1::map::GridPosition,
+            &mut crate::layer1::pop::Speed,
+        ),
+        With<crate::layer1::pop::Pop>,
+    >,
+    door_query: Query<(
+        &crate::layer1::map::GridPosition,
+        &crate::layer1::building::Building,
+    )>,
+) {
+    let mut airlock_positions = std::collections::HashSet::new();
+    for (door_pos, building) in door_query.iter() {
+        if building.building_type == crate::layer1::building::BuildingType::Airlock {
+            airlock_positions.insert((door_pos.x, door_pos.y));
+        }
+    }
+
+    for (pop_pos, mut speed) in pop_query.iter_mut() {
+
+        if airlock_positions.contains(&(pop_pos.x, pop_pos.y)) {
+            speed.current *= 0.5; // Slow down
         }
     }
 }
@@ -446,5 +518,121 @@ mod tests {
 
         let grid = world.resource::<PressureGrid>();
         assert!(grid.get(2, 0) > 0.05, "Pressure SHOULD pass through Vent");
+    }
+
+    #[test]
+    fn test_door_vents_atmosphere_on_open() {
+        let mut app = bevy::prelude::App::new();
+        app.add_plugins(bevy::prelude::MinimalPlugins);
+
+        let _door_entity = app
+            .world_mut()
+            .spawn((
+                Building {
+                    building_type: BuildingType::Gate,
+                },
+                crate::layer1::control::DoorControl {
+                    state: crate::layer1::control::DoorState::Open,
+                },
+                GridPosition { x: 10, y: 10 },
+            ))
+            .id();
+
+        app.world_mut().insert_resource(PressureGrid::new(20, 20));
+        app.world_mut()
+            .resource_mut::<PressureGrid>()
+            .set(9, 10, 1.0);
+        app.world_mut()
+            .resource_mut::<PressureGrid>()
+            .set(11, 10, 0.0);
+
+        app.add_systems(bevy::prelude::Update, process_door_venting_system);
+        app.update();
+
+        let grid = app.world().resource::<PressureGrid>();
+        assert!(grid.get(9, 10) < 1.0, "Interior pressure should drop");
+        assert!(grid.get(11, 10) > 0.0, "Exterior pressure should rise");
+    }
+
+    #[test]
+    fn test_airlock_minimizes_venting() {
+        let mut app = bevy::prelude::App::new();
+        app.add_plugins(bevy::prelude::MinimalPlugins);
+
+        let _airlock_entity = app
+            .world_mut()
+            .spawn((
+                Building {
+                    building_type: BuildingType::Airlock,
+                },
+                crate::layer1::control::DoorControl {
+                    state: crate::layer1::control::DoorState::Open,
+                },
+                GridPosition { x: 10, y: 10 },
+            ))
+            .id();
+
+        app.world_mut().insert_resource(PressureGrid::new(20, 20));
+        app.world_mut()
+            .resource_mut::<PressureGrid>()
+            .set(9, 10, 1.0);
+        app.world_mut()
+            .resource_mut::<PressureGrid>()
+            .set(11, 10, 0.0);
+
+        app.add_systems(bevy::prelude::Update, process_door_venting_system);
+        app.update();
+
+        let grid = app.world().resource::<PressureGrid>();
+        assert!(grid.get(9, 10) < 1.0, "Airlock should vent slightly");
+        assert!(
+            grid.get(9, 10) > 0.95,
+            "Airlock should preserve most interior pressure"
+        );
+        assert!(
+            grid.get(11, 10) < 0.05,
+            "Airlock should leak minimal pressure"
+        );
+    }
+
+    #[test]
+    fn test_airlock_slows_movement() {
+        let mut app = bevy::prelude::App::new();
+        app.add_plugins(bevy::prelude::MinimalPlugins);
+
+        let _airlock_entity = app
+            .world_mut()
+            .spawn((
+                Building {
+                    building_type: BuildingType::Airlock,
+                },
+                crate::layer1::control::DoorControl {
+                    state: crate::layer1::control::DoorState::Auto,
+                }, // Even if auto, passing through slows down
+                GridPosition { x: 10, y: 10 },
+            ))
+            .id();
+
+        let pop_entity = app
+            .world_mut()
+            .spawn((
+                Pop,
+                GridPosition { x: 10, y: 10 },
+                crate::layer1::pop::Speed {
+                    base: 1.0,
+                    current: 1.0,
+                    accumulator: 0.0,
+                },
+            ))
+            .id();
+
+        app.add_systems(bevy::prelude::Update, apply_door_movement_penalties_system);
+        app.update();
+
+        let speed = app
+            .world()
+            .get::<crate::layer1::pop::Speed>(pop_entity)
+            .unwrap();
+        assert!(speed.current < speed.base, "Airlock should slow movement");
     }
 }
