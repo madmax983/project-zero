@@ -310,7 +310,7 @@ fn test_work_execution_efficiency_low_morale() {
                 hunger: 0.1,
                 rest: 0.1,
                 leisure: 0.1,
-                hygiene: 0.8,
+                hygiene: 0.1,
             },
             Equipment {
                 tool: Some(tool),
@@ -334,11 +334,11 @@ fn test_work_execution_efficiency_low_morale() {
     // Organic factor: 0.9 to 1.1 -> Normal range is 4.5 to 5.5
     // Crit multiplier is 2.5 -> Crit range is 11.25 to 13.75
     // BUT! get_morale_efficiency uses 0.5 for <= 0.2 morale.
-    // Hunger is 0.1, Rest is 0.1, Leisure is 0.1, Hygiene is 0.8.
-    // Depending on Needs config, average morale might be higher than 0.2, OR we have a different organic factor. Let's widen the range.
+    // Hunger is 0.1, Rest is 0.1, Leisure is 0.1, Hygiene is 0.1.
+    // Average morale is 0.1, so morale efficiency is 0.5.
 
-    let is_crit_range = progress.current >= 7.5 && progress.current <= 15.0;
-    let is_normal_range = progress.current >= 3.0 && progress.current <= 15.0;
+    let is_crit_range = progress.current >= 11.25 && progress.current <= 13.75;
+    let is_normal_range = progress.current >= 4.5 && progress.current <= 5.5;
 
     assert!(
         is_normal_range || is_crit_range,

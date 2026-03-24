@@ -11,3 +11,6 @@
 **[Mental Break Coverage Improvements]**
 **Learning:** Testing ECS utility functions (like `evaluate_mental_break`) that accept complex context types (`PopEvalData`, `UtilityAIBuffer`) requires robust default factories to prevent boilerplate sprawl and ensure isolation across test variants.
 **Action:** Always create `default_data()` and `default_buffer()` factories when testing ECS evaluation logic to keep test cases concise and focused on the mutated parameters.
+**[Work Execution Low Morale Bounds Drift]**
+**Learning:** Tests verifying logic heavily influenced by average multi-factor metrics (like `Needs.morale()`) can silently drift or fail to trigger penalty logic (like `get_morale_efficiency` returning 0.5) if all underlying factors (hunger, rest, hygiene) aren't properly constrained in the test fixture. Additionally, work amount formulas introduce organic RNG variants (`0.9..1.1`) and high-impact crit multipliers (`2.5`) that must be exactly mirrored in the assertion boundaries to avoid panics.
+**Action:** When creating or maintaining tests involving work calculations (`calculate_work_amount`), meticulously calculate the exact bounds of the random elements and ensure test fixtures intentionally trigger the correct logical branching before finalizing assertions.
