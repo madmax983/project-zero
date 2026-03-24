@@ -490,3 +490,9 @@
     - `process_grief_tourist_arrival_system` in `src/layer2/integration.rs` translates `GriefTouristArrivalEvent` into credits and narrative chronicle events.
 - **Schedule:** Chained in `Layer2SystemSet` after `process_disaster_tourism_system`.
 - **Tests:** `tests/integration/disaster_tourism_bridge.rs` (Integration test verified)
+
+### INT-453: Nanite Fabrication -> Chronicle
+- **Date:** 2026-03-24
+- **Systems connected:** `nanite_fabrication_system` -> `nanite_breach_chronicle_bridge`
+- **Glue added:** `nanite_breach_chronicle_bridge` in `src/layer1/integration.rs`
+- **Tests:** `tests/integration/nanite_fabrication_chronicle.rs`
