@@ -11508,3 +11508,58 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Keep the Carrier alive and active to prevent planetary asphyxiation, while desperately trying to manage the rolling epidemics they cause, or execute them to stop the plague and accept the slow, inevitable suffocation of the colony?
 
 ---
+## The Bio-Acoustic Miasma
+
+**Layer:** 1
+
+**Fantasy:** A dense fog that isn't toxic to breathe, but is alive and listening, repeating the colony's secrets back to them.
+
+**Mechanic:** A creeping weather event that envelops the colony. It records the social interactions and complaints of Pops it touches, then broadcasts them globally as ambient noise. High-stress or subversive conversations become public knowledge.
+
+**Emergence:** A secret faction plotting a strike has their plans loudly echoed across the main square, causing premature arrests and mass paranoia as everyone hears what their neighbors truly think of them.
+
+**Tension:** Forcing Pops to stay silent and halt social interactions (ruining morale) vs. letting the miasma broadcast their darkest secrets and grievances.
+
+---
+
+## Gravity-Sheared Trading
+
+**Layer:** Cross-layer (2 -> 1)
+
+**Fantasy:** Catching a care package thrown from a speeding car, but the car is a spaceship and the package weighs ten tons.
+
+**Mechanic:** High-speed, high-risk trade contracts where the Layer 2 freighter never enters orbit to avoid toll fleets. It performs a high-G slingshot, firing cargo pods directly at the Layer 1 surface. If not intercepted by localized gravity-tethers, the pods crater into the colony.
+
+**Emergence:** You order emergency medical supplies. The pod comes in too hot, and your tether misses. The pod annihilates your only hospital, scattering the now-ruined medicine across the burning rubble.
+
+**Tension:** Immensely fast, tax-free emergency logistics vs. the high-skill, catastrophic risk of literally bombing your own city with supplies.
+
+---
+
+## The Sentient Economy
+
+**Layer:** 3
+
+**Fantasy:** The galactic stock market isn't a spreadsheet; it's a massive, inscrutable AI that punishes predictable behavior.
+
+**Mechanic:** The Layer 3 galactic market actively learns the player's trading patterns. If the player repeatedly exploits a specific resource loop (e.g., mass-producing cheap nutrient paste), the market AI artificially crashes the price of that good and inflates the price of its prerequisites out of spite, demanding economic novelty.
+
+**Emergence:** You build a perfectly optimized, unshakeable monopoly on refined uranium. Overnight, the market AI devalues uranium to zero and heavily subsidizes solar tech for your enemies, bankrupting your empire because you were too efficient.
+
+**Tension:** The safety of a highly specialized, optimized economy vs. the constant, inefficient pivoting required to appease a hostile, bored economic algorithm.
+
+---
+
+## The Sub-Zero Empathy
+
+**Layer:** 1
+
+**Fantasy:** A localized cold snap that freezes not just water, but the human capacity for compassion.
+
+**Mechanic:** An extreme, unnatural planetary weather front that drops temperatures so low it chemically inhibits the brain's empathy centers in unprotected Pops. Affected Pops temporarily lose all relationship bonds, ignore the sick, and ruthlessly optimize for personal survival.
+
+**Emergence:** A beloved, altruistic doctor is caught outside during the freeze. They walk back into the hospital, look at the freezing patients, and immediately turn off the life support to route power to their personal heater, feeling absolutely no remorse until the weather breaks.
+
+**Tension:** Wasting massive energy to maintain perfect climate control everywhere vs. letting the cold temporarily turn your cooperative society into a ruthless, hyper-efficient collection of sociopaths.
+
+---
