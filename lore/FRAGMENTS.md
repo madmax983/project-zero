@@ -5361,3 +5361,39 @@ How the self-healing bio-architecture haunts the colony (Spec 548).
 - the main communications spire
 - the orbital sensor platforms
 - the reactor cooling towers
+
+## The Nanoforge Fragments
+
+### Fragment Type: [NANO_FORGE_NAME]
+- The Genesis Engine
+- The Matter Loom
+- The Atom-Spinner
+- The Quick-Forge
+- The Nothing-Mill
+- The Miracle-Press
+
+### Fragment Type: [GREY_GOO_DESCRIPTOR]
+- a silvery wave
+- an undifferentiated mass
+- creeping metallic sludge
+- a hungry tide of dust
+- the eating static
+- relentless grey soil
+
+## The Galactic Market Fragments
+
+### Fragment Type: [MARKET_CRASH_REASON]
+- a glut of raw ore
+- dumping surplus rations
+- an artificial oversupply
+- the invisible hand failing
+- the bottom falling out
+- a panic sell-off
+
+### Fragment Type: [MARKET_BOOM_REASON]
+- sudden scarcity of fuel
+- a desperate bidding war
+- hoarding by the Core Worlds
+- cornering the market
+- unquenchable demand
+- speculative buying

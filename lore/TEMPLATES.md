@@ -4546,3 +4546,52 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: The song wants to be heard. The colonists have rewired [MACHINERY_REWIRED] into a massive antenna. They are broadcasting it back into the dark."
 - "We are no longer silent. In [YEAR], [COLONY] converted [MACHINERY_REWIRED] to amplify the transmission. The galaxy will hear us."
 - "Year [YEAR]. The earworm spreads. [MACHINERY_REWIRED] has been repurposed to transmit the signal outward. We await the response."
+
+## The Nanoforge Templates
+
+### Template: NANOFORGE_BUILT
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[NANO_FORGE_NAME]`
+
+**Patterns:**
+- "We have mastered matter. [YEAR]. [COLONY] constructs the [NANO_FORGE_NAME]."
+- "[YEAR]: Nothingness made into anything. The [NANO_FORGE_NAME] comes online."
+- "The era of labor ends at [COLONY]. The [NANO_FORGE_NAME] begins to print reality. [YEAR]."
+
+### Template: CONTAINMENT_BREACH
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[NANO_FORGE_NAME]`, `[GREY_GOO_DESCRIPTOR]`
+
+**Patterns:**
+- "The [NANO_FORGE_NAME] broke. [YEAR]. Now [GREY_GOO_DESCRIPTOR] eats the sector."
+- "[YEAR]: Containment failure at the [NANO_FORGE_NAME]. It releases [GREY_GOO_DESCRIPTOR]."
+- "We lost the leash. [YEAR]. [GREY_GOO_DESCRIPTOR] pours from the [NANO_FORGE_NAME]."
+
+### Template: GREY_GOO_CONSUMPTION
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[BUILDING_TYPE]`, `[GREY_GOO_DESCRIPTOR]`
+
+**Patterns:**
+- "The [BUILDING_TYPE] is gone. [YEAR]. Devoured by [GREY_GOO_DESCRIPTOR]."
+- "[YEAR]: We watched [GREY_GOO_DESCRIPTOR] dissolve the [BUILDING_TYPE] into nothing."
+- "[COLONY] is eaten alive. The [BUILDING_TYPE] falls to [GREY_GOO_DESCRIPTOR]. [YEAR]."
+
+## The Galactic Market Templates
+
+### Template: MARKET_CRASH
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[RESOURCE]`, `[MARKET_CRASH_REASON]`
+
+**Patterns:**
+- "The price of [RESOURCE] collapsed. [YEAR]. Driven by [MARKET_CRASH_REASON]."
+- "[YEAR]: Our stockpiles are worthless. [RESOURCE] crashed from [MARKET_CRASH_REASON]."
+- "We cannot sell the [RESOURCE]. The market fell because of [MARKET_CRASH_REASON]. [YEAR]."
+
+### Template: MARKET_BOOM
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[RESOURCE]`, `[MARKET_BOOM_REASON]`
+
+**Patterns:**
+- "[RESOURCE] is worth its weight in blood. [YEAR]. Result of [MARKET_BOOM_REASON]."
+- "[YEAR]: A windfall! The [RESOURCE] spikes due to [MARKET_BOOM_REASON]."
+- "We are rich on [RESOURCE]. The [MARKET_BOOM_REASON] drives the price. [YEAR]."

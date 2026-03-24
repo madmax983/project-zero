@@ -3508,3 +3508,35 @@
 **Usage:**
 - "The choir grows louder every day."
 - "We lost sector four to the choir."
+
+## Nanite Fabrication (Spec 453)
+
+### nanoforge
+**Replaces:** nanite fabricator, matter assembler, instant crafter
+**Code reference:** `Nanoforge` building
+**Usage:**
+- "Spin up the nanoforge."
+- "The nanoforge makes labor obsolete."
+
+### grey-goo
+**Replaces:** out of control nanites, replicating destruction
+**Code reference:** `GreyGoo` entity
+**Usage:**
+- "The grey-goo breached the containment."
+- "Sector three is lost to the grey-goo."
+
+## The Galactic Market (Spec 543)
+
+### the Market / the Board
+**Replaces:** Galactic Market resource, dynamic pricing
+**Code reference:** `GalacticMarket`
+**Usage:**
+- "The Market dictates the price of grain."
+- "The Board sets the value of our labor."
+
+### price-crash
+**Replaces:** Dynamic price drop, supply glut
+**Code reference:** `update_market_prices_system` (downward adjustment)
+**Usage:**
+- "A price-crash left us bankrupt."
+- "We flooded the Market, and triggered a crash."
