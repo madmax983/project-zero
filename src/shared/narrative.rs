@@ -471,7 +471,7 @@ impl NarrativeGenerator {
         for segment in &segments {
             if let NarrativeSegment::Error(err) = segment {
                 return Err(anyhow::anyhow!(
-                    "Missing required context variable or fragment: {err}"
+                    "Missing required context variable or fragment: '{err}'. Fix this by calling `context.insert(\"{err}\", \"...\")` before generating."
                 ));
             }
         }
