@@ -277,3 +277,8 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `559` The Empathic Plague — `specs/559-the-empathic-plague.md`
 - [ ] `563` Stellar Engineering — `specs/563-stellar-engineering.md`
 - [ ] `564` The 'Helpful' AI — `specs/564-the-helpful-ai.md`
+- [ ] `566` The Synthesizer's Dilemma — `specs/566-the-synthesizers-dilemma.md`
+- [ ] `567` The Gravity Well Graveyard — `specs/567-the-gravity-well-graveyard.md`
+- [ ] `568` The Spore-Mind Diplomat — `specs/568-the-spore-mind-diplomat.md`
+- [ ] `569` The Fallow Cycle — `specs/569-the-fallow-cycle.md`
+- [ ] `570` The Whispering Ore — `specs/570-the-whispering-ore.md`
