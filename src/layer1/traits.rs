@@ -9,6 +9,16 @@ use rand::Rng;
 #[repr(u8)]
 #[derive(strum_macros::EnumIter)]
 pub enum Trait {
+    /// Hardened skin (+Defense/Biocompatibility).
+    StoneSkin,
+    /// See in the dark (+Efficiency in low light).
+    NightVision,
+    /// Breath underwater or in toxic atmospheres (+Biocompatibility).
+    GillLungs,
+    /// Blinded by bright light (-Efficiency in bright light).
+    LightBlindness,
+    /// Physically weak (-Health Max, +Damage taken).
+    Frail,
     /// +20% Work Speed.
     HardWorker,
     /// -20% Work Speed.
@@ -102,6 +112,11 @@ impl Trait {
     #[must_use]
     pub const fn label(&self) -> &'static str {
         match self {
+            Self::StoneSkin => "Stone Skin",
+            Self::NightVision => "Night Vision",
+            Self::GillLungs => "Gill Lungs",
+            Self::LightBlindness => "Light Blindness",
+            Self::Frail => "Frail",
             Self::HardWorker => "Hard Worker",
             Self::Lazy => "Lazy",
             Self::Glutton => "Glutton",

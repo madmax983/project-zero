@@ -267,6 +267,7 @@ pub fn run_simulation_tick(world: &mut World) {
 
     if !world.contains_resource::<Events<crate::layer2::phantom::SpawnGhostFleetEvent>>() {
         world.init_resource::<Events<crate::layer2::phantom::SpawnGhostFleetEvent>>();
+
     }
     if !world.contains_resource::<Events<crate::layer2::silent_mutiny::SensorGlitchEvent>>() {
         world.init_resource::<Events<crate::layer2::silent_mutiny::SensorGlitchEvent>>();
@@ -281,6 +282,7 @@ pub fn run_simulation_tick(world: &mut World) {
     if !world
         .contains_resource::<Events<crate::layer2::trade::penal_contracts::PrisonerDiedEvent>>()
     {
+        world.init_resource::<Events<crate::layer1::genetics::GeneSplicingEvent>>();
         world.init_resource::<Events<crate::layer2::trade::penal_contracts::PrisonerDiedEvent>>();
     }
 
@@ -412,8 +414,10 @@ mod tests {
         world.init_resource::<Events<crate::layer3::events::debt_prison::AcceptBailoutEvent>>();
 
         world.init_resource::<Events<crate::layer2::phantom::SpawnGhostFleetEvent>>();
+
         world.init_resource::<Events<crate::layer2::silent_mutiny::SensorGlitchEvent>>();
         world.init_resource::<Events<crate::layer1::nanite_fabrication::ContainmentBreachEvent>>();
+        world.init_resource::<Events<crate::layer1::genetics::GeneSplicingEvent>>();
         world.init_resource::<Events<crate::layer2::trade::penal_contracts::PrisonerDiedEvent>>();
         world.init_resource::<Events<crate::layer2::governance::RebellionEvent>>();
         world.init_resource::<Events<crate::layer1::disasters::DisasterEvent>>();
