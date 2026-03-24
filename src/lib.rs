@@ -1,3 +1,4 @@
+#![allow(rustdoc::invalid_rust_codeblocks)]
 //! The core library for SCALE.
 //!
 //! This library exposes the simulation layers, shared utilities, and UI components of the game.

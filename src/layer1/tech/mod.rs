@@ -25,7 +25,7 @@
 //!
 //! ### 4. Memetic Hazards
 //! *   Some technologies (like `Tech::VoidWhispers`) are **Hazardous**.
-//! *   Researching them triggers an immediate infection event (see [`crate::layer1::memetic`]).
+//! *   Researching them triggers an immediate infection event (see [`crate::layer1::memetics`]).
 //! *   This represents the danger of uncovering "Forbidden Knowledge".
 
 #![allow(clippy::collapsible_if)]
