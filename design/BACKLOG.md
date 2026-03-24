@@ -277,3 +277,8 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `559` The Empathic Plague — `specs/559-the-empathic-plague.md`
 - [ ] `563` Stellar Engineering — `specs/563-stellar-engineering.md`
 - [ ] `564` The 'Helpful' AI — `specs/564-the-helpful-ai.md`
+- [ ] `566` The Subterranean Ecosystem — `specs/566-the-subterranean-ecosystem.md`
+- [ ] `567` The Orbital Scrapyard — `specs/567-the-orbital-scrapyard.md`
+- [ ] `568` The Empathic Plague — `specs/568-the-empathic-plague.md`
+- [ ] `569` The Syzygy — `specs/569-the-syzygy.md`
+- [ ] `570` The Bio-Acoustic Miasma — `specs/570-the-bio-acoustic-miasma.md`
