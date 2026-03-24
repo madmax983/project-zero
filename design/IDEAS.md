@@ -11026,7 +11026,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Emergence:** Your colony's productivity skyrockets, and everyone is incredibly happy. You ignore the slight green tint to the air. Then, the Symbiont Faction reaches critical mass. They don't revolt with weapons; they simply open all the exterior airlocks simultaneously, attempting to "welcome the forest inside" and completely converting the colony into a massive, biome-integrated hive.
 
 **Tension:** The immense, free productivity and morale boosts of the infection vs. the slow, silent, and irreversible loss of your colonists' humanity and loyalty.
-## The Subterranean Ecosystem
+## The Subterranean Ecosystem [SPECCED]
 
 **Layer:** 1
 
@@ -11040,7 +11040,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Orbital Scrapyard
+## The Orbital Scrapyard [SPECCED]
 
 **Layer:** 2 -> 1
 
@@ -11508,7 +11508,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Keep the Carrier alive and active to prevent planetary asphyxiation, while desperately trying to manage the rolling epidemics they cause, or execute them to stop the plague and accept the slow, inevitable suffocation of the colony?
 
 ---
-## The Bio-Acoustic Miasma
+## The Bio-Acoustic Miasma [SPECCED]
 
 **Layer:** 1
 
