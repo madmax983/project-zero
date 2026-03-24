@@ -38,3 +38,7 @@
 ## [Movement Flow (Coyote Speed)]
 **Friction:** The movement system felt slightly clunky when pops were encumbered, leading to a "just missing the bus" feeling where they had to wait an extra tick to move because they were a fraction of a speed point short.
 **Flow:** Increased COYOTE_THRESHOLD from 0.25 to 0.35. This provides a slightly larger grace period for movement cost evaluation, allowing for smoother, more continuous movement even when dealing with wind or terrain penalties.
+
+## [Hit Stop Scaling]
+**Friction:** While critical hits felt incredibly impactful, standard medium and heavy attacks lacked "crunch." A hit stop of 2 ticks for a medium attack was barely perceptible, making non-crit combat feel slightly hollow and "spongy."
+**Flow:** Increased `HIT_STOP_MEDIUM` from 2 to 4 ticks and `HIT_STOP_HEAVY` from 6 to 8 ticks. This subtly amplifies the physical weight of every successful blow, making the baseline combat loop significantly juicier without overwhelming the player.

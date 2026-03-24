@@ -311,7 +311,10 @@ pub fn get_speed_modifier(world: &World, entity: Entity) -> f32 {
 ///
 /// This system ensures that the `Speed` component reflects the current chemical state.
 pub fn apply_chemical_speed_modifiers_system(world: &mut World) {
-    let mut query = world.query::<(&crate::layer1::chemical::ChemicalState, &mut crate::layer1::pop::Speed)>();
+    let mut query = world.query::<(
+        &crate::layer1::chemical::ChemicalState,
+        &mut crate::layer1::pop::Speed,
+    )>();
     for (state, mut speed) in query.iter_mut(world) {
         let mut modifier = 1.0;
         // Active Effects

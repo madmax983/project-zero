@@ -339,7 +339,6 @@ pub fn apply_door_movement_penalties_system(
     }
 
     for (pop_pos, mut speed) in pop_query.iter_mut() {
-
         if airlock_positions.contains(&(pop_pos.x, pop_pos.y)) {
             speed.current *= 0.5; // Slow down
         }

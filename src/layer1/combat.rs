@@ -33,8 +33,8 @@ const CRIT_MULTIPLIER: f32 = 2.5; // Ludwig: Rebalanced multiplier to compensate
 
 // Ludwig: Adjusted hit stop times for snappier combat (Game Feel)
 const HIT_STOP_CRIT: u32 = 15; // Ludwig: Emphasize massive impacts
-const HIT_STOP_HEAVY: u32 = 6;
-const HIT_STOP_MEDIUM: u32 = 2;
+const HIT_STOP_HEAVY: u32 = 8;
+const HIT_STOP_MEDIUM: u32 = 4;
 const HIT_STOP_LIGHT: u32 = 1;
 
 /// Component marker for pops that have been drafted for military service.
@@ -682,8 +682,8 @@ mod tests {
         assert!(attacker_hs.is_some(), "Attacker should have HitStop");
         let ticks = attacker_hs.unwrap().ticks_remaining;
         assert!(
-            ticks == 6 || ticks == 15,
-            "Expected 6 or 15 ticks, got {}",
+            ticks == 8 || ticks == 15,
+            "Expected 8 or 15 ticks, got {}",
             ticks
         );
 
@@ -691,14 +691,14 @@ mod tests {
         assert!(target_hs.is_some(), "Target should have HitStop");
         let ticks_target = target_hs.unwrap().ticks_remaining;
         assert!(
-            ticks_target == 6 || ticks_target == 15,
-            "Expected 6 or 15 ticks, got {}",
+            ticks_target == 8 || ticks_target == 15,
+            "Expected 8 or 15 ticks, got {}",
             ticks_target
         );
 
         let global_stop = world.resource::<GlobalHitStop>();
         assert!(
-            global_stop.ticks == 6 || global_stop.ticks == 15,
+            global_stop.ticks == 8 || global_stop.ticks == 15,
             "GlobalHitStop should match hit stop ticks, got {}",
             global_stop.ticks
         );
@@ -796,14 +796,14 @@ mod tests {
         assert!(hs.is_some());
         let ticks = hs.unwrap().ticks_remaining;
         assert!(
-            ticks == 2 || ticks == 15,
-            "Expected 2 (Normal) or 15 (Crit), got {}",
+            ticks == 4 || ticks == 15,
+            "Expected 4 (Normal) or 15 (Crit), got {}",
             ticks
         );
 
         let global_stop = world.resource::<GlobalHitStop>();
         assert!(
-            global_stop.ticks == 2 || global_stop.ticks == 15,
+            global_stop.ticks == 4 || global_stop.ticks == 15,
             "GlobalHitStop should match hit stop ticks, got {}",
             global_stop.ticks
         );
