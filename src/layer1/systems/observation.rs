@@ -187,26 +187,20 @@ pub fn register(schedule: &mut Schedule) {
             .in_set(Layer1SystemSet::Observation),
     );
 
+    #[cfg(feature = "nova")]
     schedule.add_systems(
         (
-            #[cfg(feature = "nova")]
             crate::experimental::bioluminescent_trails::fade_bioluminescent_trails_system.after(
                 crate::experimental::bioluminescent_trails::spawn_bioluminescent_trails_system,
             ),
-            #[cfg(feature = "nova")]
             crate::experimental::sympathetic_architecture::sympathetic_architecture_system
                 .after(crate::layer1::health::despawn_dead_entities_system),
-            #[cfg(feature = "nova")]
             crate::experimental::psychic_resonance::psychic_resonance_system
                 .after(crate::layer1::needs::decay_needs_system),
-            #[cfg(feature = "nova")]
             crate::experimental::genetic_memory::absorb_genetic_memory_system
                 .after(crate::layer1::health::despawn_dead_entities_system),
-            #[cfg(feature = "nova")]
             crate::experimental::genetic_memory::inherit_genetic_memory_system
                 .after(crate::experimental::genetic_memory::absorb_genetic_memory_system),
-            crate::layer1::psychic::apply_psychic_radiation_system
-                .after(crate::layer1::needs::decay_needs_system),
         )
             .in_set(Layer1SystemSet::Observation),
     );

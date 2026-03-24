@@ -58,10 +58,17 @@ pub fn build_simulation_schedule() -> Schedule {
     schedule.add_systems((
         update_detection_risk_system.after(Layer1SystemSet::Economy),
         check_hostile_spawn_system.after(update_detection_risk_system),
+        crate::layer3::integration::parasitic_broadcast_risk_system,
         crate::layer3::council::enforce_resolutions_system,
     ));
 
     // --- Layer 2 Integration ---
+    schedule.add_systems((
+        crate::layer2::integration::election_inauguration_bridge,
+        crate::layer2::integration::apply_psychic_radiation_system,
+        crate::layer2::integration::martyrs_engine_shield_bridge,
+    ));
+
     schedule.add_systems((
         // Cleanup Layer 2 events
         update_event_buffer::<LaunchEvent>,
@@ -296,6 +303,10 @@ pub fn run_simulation_tick(world: &mut World) {
         world.init_resource::<Events<crate::layer2::tourism::disaster_tourism::GriefTouristArrivalEvent>>();
     }
 
+    if !world.contains_resource::<Events<crate::layer1::politics::ElectionFinishedEvent>>() {
+        world.init_resource::<Events<crate::layer1::politics::ElectionFinishedEvent>>();
+    }
+
     if !world.contains_resource::<Events<crate::layer1::disasters::DisasterEvent>>() {
         world.init_resource::<Events<crate::layer1::disasters::DisasterEvent>>();
     }
@@ -417,6 +428,7 @@ mod tests {
         world.init_resource::<Events<crate::layer2::trade::penal_contracts::PrisonerDiedEvent>>();
         world.init_resource::<Events<crate::layer2::governance::RebellionEvent>>();
         world.init_resource::<Events<crate::layer1::disasters::DisasterEvent>>();
+        world.init_resource::<Events<crate::layer1::politics::ElectionFinishedEvent>>();
         world.init_resource::<Events<crate::layer2::tourism::disaster_tourism::GriefTouristArrivalEvent>>();
         world.init_resource::<Events<crate::layer2::trade::biomass_tariff::TradeDeal>>();
         world.init_resource::<crate::layer3::council::GalacticCouncil>();

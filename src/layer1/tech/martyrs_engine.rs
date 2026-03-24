@@ -6,7 +6,6 @@ use crate::layer1::lighting::LightSource;
 use crate::layer1::pop::PopName;
 use crate::layer1::traits::{Trait, Traits};
 use crate::layer1::StressTracker;
-use crate::layer2::shielding::OrbitalShield;
 use bevy::prelude::DespawnRecursiveExt;
 use bevy_ecs::prelude::*;
 
@@ -24,7 +23,6 @@ pub struct AttuneEngineAction {
 // Constants
 const ATTUNE_DURATION_TICKS: u32 = 1000; // E.g., one year
 const ENGINE_POWER_OUTPUT: f32 = 10000.0;
-const ENGINE_SHIELD_CAPACITY: f32 = 5000.0;
 const SACRIFICE_STRESS_PENALTY: f32 = 40.0;
 
 pub fn attune_engine_system(
@@ -80,15 +78,13 @@ pub fn process_martyrs_engine(
         Entity,
         &mut MartyrsEngine,
         &mut PowerSource,
-        &mut OrbitalShield,
         Option<&LightSource>,
     )>,
 ) {
-    for (entity, mut engine, mut power, mut shield, light_opt) in query.iter_mut() {
+    for (entity, mut engine, mut power, light_opt) in query.iter_mut() {
         if engine.ticks_remaining > 0 {
             engine.ticks_remaining -= 1;
             power.output = ENGINE_POWER_OUTPUT;
-            shield.capacity = ENGINE_SHIELD_CAPACITY;
 
             // Add or update eerie glow
             if light_opt.is_none() {
@@ -101,7 +97,6 @@ pub fn process_martyrs_engine(
             }
         } else {
             power.output = 0.0;
-            shield.capacity = 0.0;
             if light_opt.is_some() {
                 commands.entity(entity).remove::<LightSource>();
             }
@@ -117,7 +112,6 @@ mod tests {
         attune_engine_system, process_martyrs_engine, AttuneEngineAction, MartyrsEngine,
     };
     use crate::layer1::StressTracker;
-    use crate::layer2::shielding::OrbitalShield;
     use bevy_ecs::prelude::*;
     use rand::thread_rng;
 
@@ -129,10 +123,6 @@ mod tests {
                 MartyrsEngine { ticks_remaining: 0 },
                 PowerSource {
                     output: 0.0,
-                    ..Default::default()
-                },
-                OrbitalShield {
-                    capacity: 0.0,
                     ..Default::default()
                 },
             ))
@@ -155,10 +145,6 @@ mod tests {
                 MartyrsEngine { ticks_remaining: 0 },
                 PowerSource {
                     output: 0.0,
-                    ..Default::default()
-                },
-                OrbitalShield {
-                    capacity: 0.0,
                     ..Default::default()
                 },
             ))
@@ -194,10 +180,6 @@ mod tests {
                 },
                 PowerSource {
                     output: 0.0,
-                    ..Default::default()
-                },
-                OrbitalShield {
-                    capacity: 0.0,
                     ..Default::default()
                 },
             ))

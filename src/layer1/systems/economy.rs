@@ -82,7 +82,6 @@ pub fn register(schedule: &mut Schedule) {
             apply_mood_modifiers_system.after(restore_leisure_system),
             mascot_buff_system.after(restore_leisure_system),
             crate::layer1::graffiti::graffiti_observation_system.after(apply_mood_modifiers_system),
-            crate::layer1::memetics::parasitic_broadcast_risk_system,
             crate::layer1::memetics::process_parasitic_work_reduction,
             apply_catharsis_morale_bonus_system.after(apply_mood_modifiers_system),
             update_morale_cache_system

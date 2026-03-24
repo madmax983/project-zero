@@ -24,3 +24,7 @@
 **Utility AI Module Extracted to `mind`**
 **Tangle:** The `utility_ai` and related evaluation logic files (`utility_ai.rs`, `utility_types.rs`, `utility_ai_population.rs`, `utility_eval_types.rs`, etc.) cluttered the root `src/layer1/mod.rs` namespace, adding to the "Blob" anti-pattern in `layer1`.
 **Blueprint:** Encapsulated all `utility_*` files into a dedicated `src/layer1/mind/` module. The new `src/layer1/mind/mod.rs` re-exports the public types to maintain backward compatibility, keeping the layer 1 root cleaner while strictly enforcing domain boundaries.
+
+**Layer Violations in Core Domain**
+**Tangle:** Several layer 1 systems directly accessed and mutated layer 2 (`OrbitalBody`, `PsychicBackground`, `OrbitalShield`) and layer 3 (`DetectionRisk`) types, breaking the acyclic architectural directive that lower layers cannot depend on higher layers.
+**Blueprint:** Implemented Event bridges and direct Integration Systems. `layer1::politics` now broadcasts `ElectionFinishedEvent` captured by `layer2::integration`. Moved `apply_psychic_radiation_system` to `layer2::integration` entirely. Separated `MartyrsEngine` duration tracking in layer 1 from `OrbitalShield` effects in `layer2::integration`. Moved `parasitic_broadcast_risk_system` out of layer 1 entirely into the new `layer3::integration` module.

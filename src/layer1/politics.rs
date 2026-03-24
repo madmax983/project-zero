@@ -4,11 +4,15 @@
 
 use crate::layer1::factions::FactionMember;
 use crate::layer1::pop::Pop;
-use crate::layer2::governance::assign_governor;
-use crate::layer2::system::OrbitalBody;
 use crate::shared::time::SimulationTime;
 use bevy_app::{App, Plugin, Update};
 use bevy_ecs::prelude::*;
+
+/// Event fired when an election concludes with a winner.
+#[derive(Event)]
+pub struct ElectionFinishedEvent {
+    pub winner: Entity,
+}
 
 /// FactionLeader struct (Stub/Refactor Needed)
 ///
@@ -86,13 +90,15 @@ pub struct PoliticsPlugin;
 
 impl Plugin for PoliticsPlugin {
     fn build(&self, app: &mut App) {
-        app.insert_resource(ElectionCycle::default()).add_systems(
+        app.insert_resource(ElectionCycle::default());
+        app.add_event::<ElectionFinishedEvent>();
+        app.add_systems(
             Update,
             (
                 election_cycle_system,
                 generate_candidates_system,
                 voting_system,
-                inauguration_system,
+                broadcast_election_results_system,
             ),
         );
     }
@@ -183,33 +189,17 @@ pub fn voting_system(
     }
 }
 
-/// Inaugurates the winner as Governor.
-pub fn inauguration_system(world: &mut World) {
-    let (winner, state) = {
-        let manager = world.resource::<ElectionCycle>();
-        (manager.winner, manager.state)
-    };
-
-    if state == ElectionState::Finished && winner.is_some() {
-        // Find a planet to govern.
-        // For MVP, we pick the first OrbitalBody entity.
-        let mut planet_entity = None;
-        {
-            let mut query = world.query::<(Entity, &OrbitalBody)>();
-            if let Some((entity, _)) = query.iter(world).next() {
-                planet_entity = Some(entity);
-            }
-        }
-
-        if let Some(planet) = planet_entity {
-            if let Some(pop) = winner {
-                assign_governor(world, planet, pop);
-            }
+/// Broadcasts the ElectionFinishedEvent when voting concludes.
+pub fn broadcast_election_results_system(
+    mut manager: ResMut<ElectionCycle>,
+    mut events: EventWriter<ElectionFinishedEvent>,
+) {
+    if manager.state == ElectionState::Finished {
+        if let Some(winner) = manager.winner {
+            events.send(ElectionFinishedEvent { winner });
         }
 
         // Reset or schedule next election
-        // We need to mutate resource again.
-        let mut manager = world.resource_mut::<ElectionCycle>();
         manager.state = ElectionState::Idle;
         // Schedule next election far in future? Or let manual reset?
         // Spec says "Every few years".
@@ -225,7 +215,6 @@ mod tests {
     use crate::layer1::factions::Factions; // To satisfy tests relying on Factions resource existing
     use crate::layer1::factions::{FactionId, FactionMember};
     use crate::layer1::pop::Pop;
-    use crate::layer2::governance::Governor;
     use crate::shared::time::SimulationTime;
 
     // Helper component to mock Faction for testing logic if needed,
@@ -354,24 +343,30 @@ mod tests {
     }
 
     #[test]
-    fn test_winner_becomes_governor() {
+    fn test_election_results_broadcast() {
         let mut world = setup_world();
+        world.insert_resource(Events::<ElectionFinishedEvent>::default());
         let winner_pop = world.spawn(Pop).id();
-        let planet = world.spawn(OrbitalBody::default()).id();
 
         let mut manager = world.resource_mut::<ElectionCycle>();
         manager.state = ElectionState::Finished;
         manager.winner = Some(winner_pop);
 
-        // Run inauguration
-        inauguration_system(&mut world);
+        let _ = bevy_ecs::system::RunSystemOnce::run_system_once(
+            &mut world,
+            broadcast_election_results_system,
+        );
 
-        let governor = world.get::<Governor>(planet);
-        assert!(governor.is_some());
-        assert_eq!(governor.unwrap().pop_entity, winner_pop);
+        let events = world.resource::<Events<ElectionFinishedEvent>>();
+        let mut reader = events.get_cursor();
+        let ev_iter = reader.read(events).collect::<Vec<_>>();
+
+        assert_eq!(ev_iter.len(), 1);
+        assert_eq!(ev_iter[0].winner, winner_pop);
 
         // Check state reset
         let manager = world.resource::<ElectionCycle>();
         assert_eq!(manager.state, ElectionState::Idle);
+        assert_eq!(manager.winner, None);
     }
 }
