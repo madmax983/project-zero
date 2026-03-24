@@ -11606,7 +11606,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Diplomatic Contraband
+## [SPECCED] Diplomatic Contraband
 
 **Layer:** Cross-layer (3 -> 1)
 
@@ -11619,7 +11619,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Massive, free economic injections vs. the terrifying, unpredictable consequences of turning your colony into a blind storage facility for a superpower's darkest secrets.
 
 ---
-## The Pyrophilic Flora
+## [SPECCED] The Pyrophilic Flora
 
 **Layer:** 1
 
@@ -11633,7 +11633,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Silent Generation
+## [SPECCED] The Silent Generation
 
 **Layer:** 1
 
@@ -11647,7 +11647,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Debt-Bound Mercenaries
+## [SPECCED] The Debt-Bound Mercenaries
 
 **Layer:** Cross-layer (3 -> 2 -> 1)
 
@@ -11661,7 +11661,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Sleeper Ship Armada
+## [SPECCED] The Sleeper Ship Armada
 
 **Layer:** Cross-layer (2 -> 1)
 
