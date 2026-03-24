@@ -11563,3 +11563,59 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Wasting massive energy to maintain perfect climate control everywhere vs. letting the cold temporarily turn your cooperative society into a ruthless, hyper-efficient collection of sociopaths.
 
 ---
+
+## The Echo Bureau
+
+**Layer:** 1
+
+**Fantasy:** Managing the psychological weight of a colony that literally cannot forget its past.
+
+**Mechanic:** A "Bureau of Echoes" building where specifically trained Pops (Archivists) curate and broadcast the colony's happiest memories to counteract massive, localized Stress events (like a raid or a famine). However, if an Archivist suffers a mental break, the Bureau malfunctions, broadcasting the colony's darkest, suppressed tragedies instead.
+
+**Emergence:** You survive a brutal winter by rationing food, and the colony is recovering. The head Archivist's spouse dies from an unrelated illness, causing them to break. The Bureau starts broadcasting the desperate screams of the rationing period across the entire colony, plunging the newly stabilized population into a mass panic and forcing you to shut down the power grid to silence it.
+
+**Tension:** The incredible, colony-wide Morale safety net vs. creating a terrifying, centralized vulnerability that weaponizes the colony's own trauma.
+
+---
+
+## Asteroid Tethering
+
+**Layer:** 2 -> 1
+
+**Fantasy:** Turning a cosmic threat into a dangerous, high-yield orbital factory.
+
+**Mechanic:** Instead of destroying incoming asteroids on Layer 2, you can deploy "Tether-Ships" to arrest their momentum and drag them into a low, unstable Layer 1 orbit. You can then build high-efficiency zero-G extraction facilities directly on the tethered rock. However, the tether requires constant, massive power from the Layer 1 colony to maintain orbit.
+
+**Emergence:** You tether a massive, ice-rich comet to solve a global drought, building a thriving orbital extraction economy on it. Decades later, a rebel faction destroys your primary ground-based power plant. The tether fails, and the comet you relied on for water de-orbits and obliterates the rebel sector, ironically solving the rebellion but devastating the planet.
+
+**Tension:** Unparalleled, localized resource extraction vs. the constant, high-upkeep terror of suspending a kinetic weapon directly above your own civilization.
+
+---
+
+## Synthetic Diet Fatigue
+
+**Layer:** 1
+
+**Fantasy:** The slow, creeping madness of a population perfectly nourished but entirely unsatisfied.
+
+**Mechanic:** Late-game "Nutrient Paste" provides perfect caloric and medical sustenance, entirely eliminating starvation and malnutrition. However, Pops who exclusively consume it for extended periods develop "Sensory Deprivation." They stop seeking out entertainment or social interaction, their work speed drops, and they eventually become completely catatonic, requiring "Real Food" (grown crops or meat) to shock them back to reality.
+
+**Emergence:** You pave over all your inefficient, weather-dependent farms to build an impenetrable, perfectly sterile nutrient-paste facility. The colony is fed, but over the next ten years, the entire population slowly stops talking, stops playing, and eventually stops moving entirely, creating a silent, well-fed ghost town that you have to frantically cure by smuggling in a single real apple.
+
+**Tension:** Absolute, reliable biological security vs. the profound psychological necessity of natural variety and the messy reality of agriculture.
+
+---
+
+## Diplomatic Contraband
+
+**Layer:** Cross-layer (3 -> 1)
+
+**Fantasy:** Using your allies not just for trade, but to silently launder the things you are too scared to build yourself.
+
+**Mechanic:** A Layer 3 empire offers a highly lucrative "Black Box" trade agreement. They pay you exorbitant amounts of Credits to store sealed, un-scannable containers in your Layer 1 stockpiles. You are forbidden from opening them. However, they periodically emit strange localized effects: random tech breakthroughs, localized radiation sickness, or spontaneous mutations in nearby Pops.
+
+**Emergence:** You desperately need the Credits to fund a war, so you accept a massive shipment of Black Boxes and store them deep underground. The war is won, but the miners working near the storage facility start mutating into hyper-aggressive, incredibly strong brutes. You realize the allied empire was paying you to secretly incubate their illegal biological weapons program under your capital.
+
+**Tension:** Massive, free economic injections vs. the terrifying, unpredictable consequences of turning your colony into a blind storage facility for a superpower's darkest secrets.
+
+---
