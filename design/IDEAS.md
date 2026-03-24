@@ -11452,3 +11452,59 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Relentless, rapid industrial expansion vs. managing the biological and geological tolerance of the living world you inhabit.
 
 ---
+
+## The Whispering Ore
+
+**Layer:** 1
+
+**Fantasy:** A colony enriched by a strange new material that slowly alters the minds of its miners, birthing an emergent, unsettling religion.
+
+**Mechanic:** A rare, hyper-valuable deep-crust ore is discovered. Miners extracting it slowly accumulate a hidden "Resonant" trait. Resonant Pops begin speaking a dead language and forming a cult around the ore vein. They refuse to work other jobs but mine at 200% efficiency. If the vein is depleted or sealed, the cult violently rebels to "reopen the eye."
+
+**Emergence:** Your economy becomes entirely dependent on the incredibly lucrative ore exports. Suddenly, the miners demand the colony's primary power reactor be dismantled to construct a massive, humming shrine over the mine entrance.
+
+**Tension:** Do you exploit the massive economic boom and risk a localized, fanatical uprising, or seal the mine and starve the colony of crucial funds?
+
+---
+
+## Hostile Architecture
+
+**Layer:** 1
+
+**Fantasy:** The physical layout of the colony becomes a messy, sprawling reflection of its social grievances and petty feuds.
+
+**Mechanic:** Pops with incredibly low mutual relationships (Rivals) will spontaneously build "Spite Fences" or drop heavy, immovable debris on the borders of their assigned housing or work zones, specifically blocking the pathfinding of their rival.
+
+**Emergence:** You perfectly zone an efficient, high-density housing block next to the factory. Two neighbors get into a bitter feud over stolen rations. Overnight, they erect a maze of barricades in the main corridor, forcing the entire night shift to detour through the hazardous waste disposal sector just to get to work.
+
+**Tension:** Maintaining efficient, straight-line logistics vs. the organic, terrible routing of a petty populace. Do you arrest them for vandalism, or expensively re-zone them to opposite sides of the map?
+
+---
+
+## The Bureaucratic Blockade
+
+**Layer:** 3 -> 2
+
+**Fantasy:** Being strangled not by a hostile navy, but by an indifferent, hyper-legalistic galactic zoning authority.
+
+**Mechanic:** A neutral, overwhelmingly powerful Layer 3 faction parks a massive "Audit Fleet" in your Layer 2 system. They don't attack. Instead, they interdict any trade or supply ship that lacks proper, astronomically expensive "System Transit Permits." Attempting to bypass them incurs massive, compounding fines that drain your treasury directly.
+
+**Emergence:** You are on the verge of starvation and desperately awaiting a food shipment. The Audit Fleet halts the freighter just outside planetary orbit because your colony's "Agricultural Import License" expired yesterday. The food rots in orbit while you scramble to mine enough gold to pay the renewal fee.
+
+**Tension:** Paying extortionate permit fees that cripple your early economy vs. attempting to run the blockade and angering a superpower that could vaporize your colony with a single rubber stamp.
+
+---
+
+## The Cryo-Plague Carrier
+
+**Layer:** 1
+
+**Fantasy:** The only person who knows how to save the planet is the person actively killing its inhabitants.
+
+**Mechanic:** A Pop wakes up from an ancient, localized cryo-pod carrying a benign (to them) precursor virus. To the modern colony, it is a devastating, highly contagious plague. However, this "Carrier" is the only Pop possessing the unique "Precursor Engineering" skill required to operate or repair vital, failing ancient terraforming machinery keeping the colony's atmosphere breathable.
+
+**Emergence:** The Carrier begins fixing the failing atmospheric scrubbers, saving the colony from suffocation. Simultaneously, their mere presence in the engineering bay triggers a rolling epidemic that kills dozens of workers.
+
+**Tension:** Keep the Carrier alive and active to prevent planetary asphyxiation, while desperately trying to manage the rolling epidemics they cause, or execute them to stop the plague and accept the slow, inevitable suffocation of the colony?
+
+---
