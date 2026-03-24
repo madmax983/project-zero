@@ -45,10 +45,14 @@ impl RoofGrid {
     /// Creates a new `RoofGrid` with the specified dimensions, initialized to false (no roof).
     #[must_use]
     pub fn new(width: usize, height: usize) -> Self {
+        let size = width
+            .checked_mul(height)
+            .expect("Grid size overflow or too large");
+        assert!(size <= 10_000_000, "Grid size overflow or too large");
         Self {
             width,
             height,
-            has_roof: vec![false; width * height],
+            has_roof: vec![false; size],
         }
     }
 
