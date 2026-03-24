@@ -206,3 +206,6 @@ mod trade_routes_bridge;
 
 #[path = "integration/governance_rebellion.rs"]
 mod governance_rebellion;
+
+#[path = "integration/nanite_fabrication_chronicle.rs"]
+mod nanite_fabrication_chronicle;

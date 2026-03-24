@@ -1047,3 +1047,16 @@ pub fn smuggler_arrival_event_bridge(
         });
     }
 }
+
+/// INT-453: Bridges Nanite Fabrication (Containment Breach) to Chronicle (History).
+pub fn nanite_breach_chronicle_bridge(
+    mut breach_events: EventReader<crate::layer1::nanite_fabrication::ContainmentBreachEvent>,
+    mut chronicle_events: EventWriter<AddChronicleEvent>,
+) {
+    for event in breach_events.read() {
+        chronicle_events.send(AddChronicleEvent {
+            text: format!("Catastrophic Containment Breach! Grey Goo unleashed at position ({}, {}).", event.position.x, event.position.y),
+            importance: EventImportance::Major,
+        });
+    }
+}
