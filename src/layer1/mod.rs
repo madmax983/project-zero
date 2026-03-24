@@ -347,6 +347,8 @@ pub use mentorship::*;
 pub mod stowaway;
 pub use stowaway::*;
 /// Pop personality traits (Spec 084).
+pub mod genetics;
+pub use genetics::*;
 pub mod traits;
 pub use traits::*;
 /// Omens & Taboos system (Spec 088).

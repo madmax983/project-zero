@@ -9,6 +9,11 @@ use rand::Rng;
 #[repr(u8)]
 #[derive(strum_macros::EnumIter)]
 pub enum Trait {
+    StoneSkin,
+    NightVision,
+    GillLungs,
+    LightBlindness,
+    Frail,
     /// +20% Work Speed.
     HardWorker,
     /// -20% Work Speed.
@@ -146,6 +151,11 @@ impl Trait {
             Self::Bureaucrat => "Bureaucrat",
             Self::Synth => "Synthetic",
             Self::LogisticsExpert => "Logistics Expert",
+            Self::StoneSkin => "Stone Skin",
+            Self::NightVision => "Night Vision",
+            Self::GillLungs => "Gill Lungs",
+            Self::LightBlindness => "Light Blindness",
+            Self::Frail => "Frail",
         }
     }
 }

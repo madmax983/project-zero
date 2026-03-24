@@ -205,6 +205,9 @@ pub fn run_simulation_tick(world: &mut World) {
     if !world.contains_resource::<Events<crate::layer1::geology::tectonic::MegaQuakeEvent>>() {
         world.init_resource::<Events<crate::layer1::geology::tectonic::MegaQuakeEvent>>();
     }
+    if !world.contains_resource::<Events<crate::layer1::genetics::GeneSplicingEvent>>() {
+        world.init_resource::<Events<crate::layer1::genetics::GeneSplicingEvent>>();
+    }
     if !world.contains_resource::<Events<crate::layer1::resources::MiningEvent>>() {
         world.init_resource::<Events<crate::layer1::resources::MiningEvent>>();
     }

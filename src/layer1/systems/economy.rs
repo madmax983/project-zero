@@ -61,6 +61,7 @@ pub fn register(schedule: &mut Schedule) {
             flora_spread_system,
             mastery_accumulation_system,
             crate::layer1::cybernetics::surgery_system,
+            crate::layer1::genetics::process_gene_splicing_system,
             crate::layer1::institutional_memory::produce_manual_system,
             crate::layer1::institutional_memory::manual_aura_system,
             crate::layer1::tech::ghost_code::residue_system,
