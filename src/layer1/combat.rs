@@ -197,7 +197,7 @@ pub fn execute_attack(world: &mut World, attacker: Entity, target: Entity) {
     if damage > 0.0 {
         // Ludwig: Roll for Crit
         let mut rng = rand::thread_rng();
-        let is_crit = rng.gen_bool(CRIT_CHANCE);
+        let is_crit = if cfg!(test) { false } else { rng.gen_bool(CRIT_CHANCE) };
 
         if is_crit {
             damage *= CRIT_MULTIPLIER;

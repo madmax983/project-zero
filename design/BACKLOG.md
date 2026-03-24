@@ -278,4 +278,3 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `562` The Justice System — `specs/562-the-justice-system.md`
 - [ ] `563` Stellar Engineering — `specs/563-stellar-engineering.md`
 - [ ] `564` The 'Helpful' AI — `specs/564-the-helpful-ai.md`
-- [ ] `565` Gene Splicing — `specs/565-gene-splicing.md`
