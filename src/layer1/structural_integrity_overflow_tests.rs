@@ -57,3 +57,15 @@ fn test_roof_grid_overflow() {
     let val = roof.has_roof(i32::MAX, i32::MAX);
     assert!(!val);
 }
+
+#[test]
+#[should_panic(expected = "Grid size overflow or too large")]
+fn test_roof_grid_new_overflow() {
+    let _roof = RoofGrid::new(usize::MAX, 2);
+}
+
+#[test]
+#[should_panic(expected = "Grid size overflow or too large")]
+fn test_roof_grid_new_too_large() {
+    let _roof = RoofGrid::new(10000, 10000); // 100,000,000 > 10,000,000
+}

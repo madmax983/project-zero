@@ -53,10 +53,14 @@ impl LociMap {
     /// Creates a new empty LociMap.
     #[must_use]
     pub fn new(width: usize, height: usize) -> Self {
+        let size = width
+            .checked_mul(height)
+            .expect("Grid size overflow or too large");
+        assert!(size <= 10_000_000, "Grid size overflow or too large");
         Self {
             width,
             height,
-            loci: vec![None; width * height],
+            loci: vec![None; size],
         }
     }
 

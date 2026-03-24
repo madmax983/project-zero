@@ -1,3 +1,6 @@
 **2024-05-24 - [Unbounded Allocation & Integer Overflow in WaterGrid]
 **Threat:** The `WaterGrid::new` function blindly multiplied `width * height` to determine the backing vector size. This allowed an integer overflow causing a panic, or potentially allowed an unbounded memory allocation leading to Out-Of-Memory (OOM) Denial of Service (DoS) if external inputs controlled the dimensions.
 **Defense:** Replaced the vulnerable arithmetic with `checked_mul` and enforced a hard maximum bound (`assert!(size <= 10_000_000)`) identical to other grid systems in the simulation.
+**2024-05-24 - [Unbounded Allocation & Integer Overflow in Grid Initializes]
+**Threat:** Multiple grid structures (`RoofGrid`, `HumGrid`, `VoidGrid`, `BeautyGrid`, `LociGrid`, `FertilityGrid`, `ErosionGrid`, `ClutterGrid`, `LightMap`, `AcousticGrid`, `GeologyGrid`, `PressureGrid`) blindly multiplied `width * height` to determine the backing vector size. This allowed an integer overflow causing a panic, or potentially allowed an unbounded memory allocation leading to Out-Of-Memory (OOM) Denial of Service (DoS) if external inputs controlled the dimensions.
+**Defense:** Replaced the vulnerable arithmetic with `checked_mul` and enforced a hard maximum bound (`assert!(size <= 10_000_000)`) across all remaining layer 1 grids.

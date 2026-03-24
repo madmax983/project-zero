@@ -27,10 +27,14 @@ impl ErosionGrid {
     /// Create a new erosion grid.
     #[must_use]
     pub fn new(width: usize, height: usize) -> Self {
+        let size = width
+            .checked_mul(height)
+            .expect("Grid size overflow or too large");
+        assert!(size <= 10_000_000, "Grid size overflow or too large");
         Self {
             width,
             height,
-            values: vec![0; width * height],
+            values: vec![0; size],
         }
     }
 

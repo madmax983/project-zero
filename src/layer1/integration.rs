@@ -1055,7 +1055,10 @@ pub fn nanite_breach_chronicle_bridge(
 ) {
     for event in breach_events.read() {
         chronicle_events.send(AddChronicleEvent {
-            text: format!("Catastrophic Containment Breach! Grey Goo unleashed at position ({}, {}).", event.position.x, event.position.y),
+            text: format!(
+                "Catastrophic Containment Breach! Grey Goo unleashed at position ({}, {}).",
+                event.position.x, event.position.y
+            ),
             importance: EventImportance::Major,
         });
     }

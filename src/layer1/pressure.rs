@@ -68,10 +68,14 @@ impl PressureGrid {
     /// Create a new empty pressure grid (initialized to 0.0).
     #[must_use]
     pub fn new(width: usize, height: usize) -> Self {
+        let size = width
+            .checked_mul(height)
+            .expect("Grid size overflow or too large");
+        assert!(size <= 10_000_000, "Grid size overflow or too large");
         Self {
             width,
             height,
-            values: vec![0.0; width * height],
+            values: vec![0.0; size],
         }
     }
 
@@ -339,7 +343,6 @@ pub fn apply_door_movement_penalties_system(
     }
 
     for (pop_pos, mut speed) in pop_query.iter_mut() {
-
         if airlock_positions.contains(&(pop_pos.x, pop_pos.y)) {
             speed.current *= 0.5; // Slow down
         }
