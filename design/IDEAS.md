@@ -11619,3 +11619,58 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Massive, free economic injections vs. the terrifying, unpredictable consequences of turning your colony into a blind storage facility for a superpower's darkest secrets.
 
 ---
+## The Pyrophilic Flora
+
+**Layer:** 1
+
+**Fantasy:** A forest that demands to be burned in order to give its bounty, making controlled forest fires a necessary but terrifying agricultural practice.
+
+**Mechanic:** A specific, highly valuable alien crop only drops its seeds and edible fruit when exposed to open flame. To harvest it, players must intentionally set fire to the crop field, then scramble Pops to haul the resources away before the fire consumes them entirely or spreads to the rest of the colony.
+
+**Emergence:** You perfectly plan a controlled burn of the Pyrophilic fields just before winter. However, an unexpected windstorm kicks up just as you light the match. The fire jumps your poorly constructed firebreaks, destroying your adjacent wood stockpile and forcing the colony into a freezing winter.
+
+**Tension:** The immense economic and nutritional value of the pyrophilic crop vs. the constant, terrifying risk of intentionally inviting the colony's greatest natural enemy (fire) into your borders.
+
+---
+
+## The Silent Generation
+
+**Layer:** 1
+
+**Fantasy:** A generation born during a time of extreme trauma who simply refuse to talk about it, creating an incredibly resilient but culturally dead society.
+
+**Mechanic:** If a colony suffers a massive death toll or prolonged famine, children born during that specific era gain the "Silent" trait. They are highly resilient to stress and work tirelessly, but they possess zero social needs, refuse to engage in "Leisure" activities, and generate no cultural artifacts or morale-boosting interactions.
+
+**Emergence:** Your colony barely survives a brutal 20-year siege. The resulting generation of "Silent" workers creates a flawless industrial powerhouse that never sleeps or complains. But when the older generation dies off, the colony loses all its artists, diplomats, and leaders, becoming a grim, perfectly efficient machine that eventually crumbles from internal apathy.
+
+**Tension:** The short-term industrial benefit of traumatized, emotionally stunted workers vs. the long-term cultural and diplomatic death of the colony.
+
+---
+
+## The Debt-Bound Mercenaries
+
+**Layer:** Cross-layer (3 -> 2 -> 1)
+
+**Fantasy:** Hiring the best guns in the galaxy to save your life, only to realize you can't afford to pay them to leave.
+
+**Mechanic:** During a desperate siege, you can hire a Layer 3 mercenary fleet to defend your Layer 2 system. They are overwhelmingly powerful. However, their daily upkeep is astronomical. If you run out of credits while they are stationed in your system, they don't leave; they land on Layer 1 and begin seizing assets, forcefully taking over your most profitable industrial zones to "extract payment."
+
+**Emergence:** You hire the dreaded "Crimson Fleet" to save you from a pirate armada. They obliterate the pirates, but your economy is ruined. The mercenaries land, evict your governor, take over the fusion plant, and start exporting your power to the black market, turning your capital into their new base of operations.
+
+**Tension:** Guaranteed military salvation from an immediate threat vs. inviting a superior, predatory force into your home that you might not be able to afford to dismiss.
+
+---
+
+## The Sleeper Ship Armada
+
+**Layer:** Cross-layer (2 -> 1)
+
+**Fantasy:** Waking up thousands of people you don't need, just to cannibalize their ship.
+
+**Mechanic:** A massive, centuries-old "Sleeper Ship" arrives in Layer 2 orbit, packed with millions of frozen colonists from a dead world. They are peaceful but desperately low on power. You can slowly awaken them and integrate them (massive population boom, high strain on food), or you can leave them frozen and slowly strip-mine their ship for highly advanced precursor components, effectively condemning them to a slow death in orbit.
+
+**Emergence:** You decide to strip-mine the ship for parts to survive a harsh decade. However, a localized power failure on the ship accidentally thaws a single section. These survivors realize what you are doing, hijack an armed shuttle, and launch a desperate suicide strike on your capital in revenge for their frozen millions.
+
+**Tension:** A massive, instant population injection (if you can feed them) vs. unparalleled technological salvage obtained through a horrifyingly cold moral calculus.
+
+---
