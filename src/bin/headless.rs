@@ -44,10 +44,6 @@ use scale::shared::time::SimulationTime;
 use scale::simulation::run_simulation_tick;
 use std::io::{self, BufRead, Write};
 
-
-
-
-
 /// Renders a Comfy Table with a custom title injected into its top border
 fn print_dashboard_table(title: &str, mut table: comfy_table::Table) {
     use comfy_table::presets::UTF8_FULL;
@@ -59,7 +55,9 @@ fn print_dashboard_table(title: &str, mut table: comfy_table::Table) {
     let table_str = table.to_string();
     let lines: Vec<&str> = table_str.lines().collect();
 
-    if lines.is_empty() { return; }
+    if lines.is_empty() {
+        return;
+    }
 
     // The first line is the top border
     let top_line = lines[0];
@@ -68,7 +66,7 @@ fn print_dashboard_table(title: &str, mut table: comfy_table::Table) {
 
     // Using string variables initialized from chars instead of literals
     let char_tl = '\u{256D}'; // top left rounded
-    let char_h  = '\u{2500}'; // horiz line
+    let char_h = '\u{2500}'; // horiz line
     let char_tr = '\u{256E}'; // top right rounded
     let char_bl = '\u{2570}'; // bottom left rounded
     let char_br = '\u{256F}'; // bottom right rounded
@@ -99,7 +97,9 @@ fn print_dashboard_table(title: &str, mut table: comfy_table::Table) {
     for (i, line) in lines.iter().enumerate().skip(1) {
         if i == lines.len() - 1 {
             // Replace bottom corners
-            let bottom = line.replace('\u{2514}', &char_bl.to_string()).replace('\u{2518}', &char_br.to_string());
+            let bottom = line
+                .replace('\u{2514}', &char_bl.to_string())
+                .replace('\u{2518}', &char_br.to_string());
             println!("{}", bottom.cyan().bold());
         } else {
             println!("{}", line);
@@ -109,7 +109,7 @@ fn print_dashboard_table(title: &str, mut table: comfy_table::Table) {
 
 /// Print a 1-column table as a panel for errors/empty states
 fn print_dashboard_panel(title: &str, content_colored: &str) {
-    use comfy_table::{Table, Cell, ContentArrangement};
+    use comfy_table::{Cell, ContentArrangement, Table};
     let mut table = Table::new();
     table
         .set_content_arrangement(ContentArrangement::Dynamic)
@@ -1096,8 +1096,6 @@ fn scan_terrain(world: &mut World, center_x: i32, center_y: i32, radius: i32) {
         (max_x, max_y, tiles)
     };
 
-
-
     let mut table = Table::new();
     table
         .load_preset(UTF8_FULL)
@@ -1232,9 +1230,20 @@ fn scan_terrain(world: &mut World, center_x: i32, center_y: i32, radius: i32) {
     }
 
     if found_count == 0 {
-        print_dashboard_panel(&format!("Scan Results: Center ({center_x}, {center_y}) | Radius {radius}"), &format!("{}", "  (No tiles found in range)                    ".dark_grey().italic()));
+        print_dashboard_panel(
+            &format!("Scan Results: Center ({center_x}, {center_y}) | Radius {radius}"),
+            &format!(
+                "{}",
+                "  (No tiles found in range)                    "
+                    .dark_grey()
+                    .italic()
+            ),
+        );
     } else {
-        print_dashboard_table(&format!("Scan Results: Center ({center_x}, {center_y}) | Radius {radius}"), table);
+        print_dashboard_table(
+            &format!("Scan Results: Center ({center_x}, {center_y}) | Radius {radius}"),
+            table,
+        );
     }
 }
 
@@ -1261,7 +1270,15 @@ fn get_tile_info(world: &mut World, x: i32, y: i32) {
     let max_y = i32::try_from(terrain.height).unwrap_or(i32::MAX);
 
     if x < 0 || y < 0 || x >= max_x || y >= max_y {
-        print_dashboard_panel(&format!("Tile Info: ({x}, {y})"), &format!("{}", "  ERROR: Coordinates out of bounds             ".red().bold()));
+        print_dashboard_panel(
+            &format!("Tile Info: ({x}, {y})"),
+            &format!(
+                "{}",
+                "  ERROR: Coordinates out of bounds             "
+                    .red()
+                    .bold()
+            ),
+        );
         return;
     }
 
@@ -1608,7 +1625,15 @@ fn print_log(world: &mut World) {
     let log = world.resource::<MessageLog>();
 
     if log.messages.is_empty() {
-        print_dashboard_panel("Message Log", &format!("{}", "  (No messages)                                ".dark_grey().italic()));
+        print_dashboard_panel(
+            "Message Log",
+            &format!(
+                "{}",
+                "  (No messages)                                "
+                    .dark_grey()
+                    .italic()
+            ),
+        );
         return;
     }
 
