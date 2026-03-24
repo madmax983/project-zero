@@ -121,6 +121,7 @@ pub fn biography_monitor_system(
             AssignmentType::ObservatoryWorker => format!("Observing the cosmos at {target_name}."),
             AssignmentType::Administrator => format!("Started administration at {target_name}."),
             AssignmentType::Surgery => format!("Undergoing surgery at {target_name}."),
+            AssignmentType::Sheriff => format!("Enforcing the law at {target_name}."),
         };
 
         // Avoid duplicate consecutive events

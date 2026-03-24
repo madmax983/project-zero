@@ -191,6 +191,106 @@ pub fn update_inmates_system(mut commands: Commands, mut query: Query<(Entity, &
     }
 }
 
+#[derive(Component, Default)]
+pub struct CrimeRecord {
+    pub wanted: bool,
+    pub severity: u32,
+    pub is_arrested: bool,
+}
+
+impl CrimeRecord {
+    pub fn is_wanted(&self) -> bool {
+        self.wanted
+    }
+}
+
+pub enum CrimeType {
+    Theft,
+    Assault,
+    Vandalism,
+}
+
+#[derive(Event)]
+pub struct CrimeCommittedEvent {
+    pub perpetrator: Entity,
+    pub crime_type: CrimeType,
+}
+
+#[derive(Event)]
+pub struct PardonIssuedEvent {
+    pub target: Entity,
+}
+
+// Updates CrimeRecord when a CrimeCommittedEvent is received
+pub fn process_crimes_system(
+    mut events: EventReader<CrimeCommittedEvent>,
+    mut query: Query<&mut CrimeRecord>,
+) {
+    for ev in events.read() {
+        if let Ok(mut record) = query.get_mut(ev.perpetrator) {
+            record.wanted = true;
+            record.severity += match ev.crime_type {
+                CrimeType::Theft => 50,
+                CrimeType::Assault => 80,
+                CrimeType::Vandalism => 30,
+            };
+        }
+    }
+}
+
+// Finds wanted pops near sheriffs and moves them to jail
+pub fn sheriff_arrest_system(
+    mut criminal_query: Query<(Entity, &mut crate::layer1::map::GridPosition, &mut CrimeRecord), Without<crate::layer1::pop::Job>>,
+    sheriff_query: Query<&crate::layer1::map::GridPosition, With<crate::layer1::pop::Job>>,
+    zone_grid: Res<crate::layer1::zone::ZoneGrid>,
+) {
+    let mut jail_pos = None;
+    for y in 0..zone_grid.height {
+        for x in 0..zone_grid.width {
+            if zone_grid.get(x as i32, y as i32) == crate::layer1::zone::ZoneType::Jail {
+                jail_pos = Some(crate::layer1::map::GridPosition { x: x as i32, y: y as i32 });
+                break;
+            }
+        }
+        if jail_pos.is_some() {
+            break;
+        }
+    }
+
+    if let Some(jail_pos) = jail_pos {
+        for sheriff_pos in sheriff_query.iter() {
+            for (_ent, mut crim_pos, mut record) in criminal_query.iter_mut() {
+                if record.wanted && !record.is_arrested {
+                    // Check adjacency (simplified distance)
+                    let dist = (sheriff_pos.x - crim_pos.x).abs() + (sheriff_pos.y - crim_pos.y).abs();
+                    if dist <= 1 {
+                        record.is_arrested = true;
+                        record.wanted = false;
+                        crim_pos.x = jail_pos.x;
+                        crim_pos.y = jail_pos.y;
+                    }
+                }
+            }
+        }
+    }
+}
+
+// Processes PardonIssuedEvents, clearing record and adding corruption
+pub fn process_pardons_system(
+    mut events: EventReader<PardonIssuedEvent>,
+    mut query: Query<&mut CrimeRecord>,
+    mut stats: ResMut<crate::layer1::black_market::ColonyStats>,
+) {
+    for ev in events.read() {
+        if let Ok(mut record) = query.get_mut(ev.target) {
+            record.wanted = false;
+            record.is_arrested = false;
+            record.severity = 0; // Cleared
+            stats.corruption += 5.0; // Flat penalty
+        }
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use crate::layer1::justice::{
