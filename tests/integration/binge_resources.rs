@@ -88,9 +88,11 @@ mod tests {
         let mut world = setup_world();
 
         // Setup resources
-        let mut resources = ColonyResources::default();
-        resources.food = 20.0;
-        resources.rations = 10.0;
+        let resources = ColonyResources {
+            food: 20.0,
+            rations: 10.0,
+            ..Default::default()
+        };
         world.insert_resource(resources);
 
         // Spawn stockpile
@@ -168,9 +170,11 @@ mod tests {
         let mut world = setup_world();
 
         // Setup resources (low food)
-        let mut resources = ColonyResources::default();
-        resources.food = 2.0;
-        resources.rations = 10.0;
+        let resources = ColonyResources {
+            food: 2.0,
+            rations: 10.0,
+            ..Default::default()
+        };
         world.insert_resource(resources);
 
         let stockpile = world

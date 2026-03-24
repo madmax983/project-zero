@@ -27,9 +27,11 @@ mod tests {
             tiles,
         });
 
-        let mut config = EcologyConfig::default();
-        config.growth_rate = 1.0; // Ensure check happens
-        config.pioneer_chance = 1.0; // Ensure transition happens
+        let config = EcologyConfig {
+            growth_rate: 1.0,
+            pioneer_chance: 1.0,
+            ..Default::default()
+        };
         world.insert_resource(config);
 
         // Run succession
@@ -51,12 +53,11 @@ mod tests {
             tiles,
         });
 
-        let mut config = EcologyConfig::default();
-        config.growth_rate = 1.0;
-        config.seed_spread_chance = 1.0;
-        // Make sure pioneer chance (random shrub) doesn't interfere if we are testing seeding specifically?
-        // Actually, logic usually prioritizes seeding or checks it.
-        // We want to test Sapling appearance.
+        let config = EcologyConfig {
+            growth_rate: 1.0,
+            seed_spread_chance: 1.0,
+            ..Default::default()
+        };
         world.insert_resource(config);
 
         // Run succession multiple times to ensure coverage (avoid flaky test due to random sampling)
@@ -85,9 +86,11 @@ mod tests {
             tiles,
         });
 
-        let mut config = EcologyConfig::default();
-        config.growth_rate = 1.0;
-        config.maturation_chance = 1.0;
+        let config = EcologyConfig {
+            growth_rate: 1.0,
+            maturation_chance: 1.0,
+            ..Default::default()
+        };
         world.insert_resource(config);
 
         // Run succession multiple times to simulate time

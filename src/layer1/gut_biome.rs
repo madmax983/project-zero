@@ -109,8 +109,10 @@ mod tests {
     #[test]
     fn test_digestion_efficiency_impact() {
         let mut world = World::new();
-        let mut resources = ColonyResources::default();
-        resources.food = 10.0;
+        let resources = ColonyResources {
+            food: 10.0,
+            ..Default::default()
+        };
         world.insert_resource(resources);
 
         // Spawn Farm to supply plant food
@@ -158,8 +160,10 @@ mod tests {
     #[test]
     fn test_comfort_food_bonus() {
         let mut world = World::new();
-        let mut resources = ColonyResources::default();
-        resources.food = 10.0;
+        let resources = ColonyResources {
+            food: 10.0,
+            ..Default::default()
+        };
         world.insert_resource(resources);
 
         // Spawn Farm to supply meat food

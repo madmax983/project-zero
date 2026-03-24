@@ -33,9 +33,11 @@ mod tests {
         let mut world = setup_world();
 
         // Add resources for Smelting (Ore + Wood)
-        let mut resources = ColonyResources::default();
-        resources.ore = 10.0;
-        resources.wood = 10.0;
+        let resources = ColonyResources {
+            ore: 10.0,
+            wood: 10.0,
+            ..Default::default()
+        };
         world.insert_resource(resources);
 
         // Spawn Unpowered Smelter

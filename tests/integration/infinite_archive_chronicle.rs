@@ -12,8 +12,10 @@ fn test_purge_tech_creates_chronicle_event() {
     world.insert_resource(Archive::default());
     world.init_resource::<Events<AddChronicleEvent>>();
 
-    let mut tech_state = TechState::default();
-    tech_state.total_capacity = 100.0;
+    let mut tech_state = TechState {
+        total_capacity: 100.0,
+        ..Default::default()
+    };
     tech_state
         .techs
         .insert(Tech::VoidWhispers, TechStatus::Active);

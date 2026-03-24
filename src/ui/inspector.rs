@@ -540,17 +540,9 @@ fn render_tile_inspector(frame: &mut Frame, area: Rect, world: &World, x: i32, y
 }
 
 #[allow(clippy::too_many_lines)]
-fn render_entity_inspector(frame: &mut Frame, area: Rect, world: &World, entity: Entity) {
-    if !world.entities().contains(entity) {
-        frame.render_widget(
-            Paragraph::new("Entity Despawned").style(Style::default().fg(Color::Red)),
-            area,
-        );
-        return;
-    }
 
-    // Determine Entity Type and Name
-    let (name, color): (String, Color) = if let Some(pop_name) = world.get::<PopName>(entity) {
+fn get_entity_header(world: &World, entity: Entity) -> (String, Color) {
+    if let Some(pop_name) = world.get::<PopName>(entity) {
         (pop_name.0.clone(), Color::Yellow)
     } else if world.get::<Pop>(entity).is_some() {
         ("Colonist".to_string(), Color::Yellow)
@@ -564,21 +556,21 @@ fn render_entity_inspector(frame: &mut Frame, area: Rect, world: &World, entity:
         )
     } else {
         ("Entity".to_string(), Color::White)
-    };
+    }
+}
 
-    // Determine Action if Pop
-    let action_line = if let Some(action) = world.get::<PopAction>(entity) {
+fn get_action_line(world: &World, entity: Entity) -> Option<Line<'static>> {
+    world.get::<PopAction>(entity).map(|action| {
         let (icon, label, color) = format_action_type(action.current);
-        Some(Line::from(vec![
+        Line::from(vec![
             Span::raw("Action: "),
             Span::styled(format!("{icon} {label}"), Style::default().fg(color)),
-        ]))
-    } else {
-        None
-    };
+        ])
+    })
+}
 
-    // Determine Generation
-    let generation_line = if let Some(generation) = world.get::<Generation>(entity) {
+fn get_generation_line(world: &World, entity: Entity) -> Option<Line<'static>> {
+    world.get::<Generation>(entity).map(|generation| {
         let label = match generation {
             Generation::Founder => "Founder",
             Generation::Immigrant => "Immigrant",
@@ -595,17 +587,25 @@ fn render_entity_inspector(frame: &mut Frame, area: Rect, world: &World, entity:
             Generation::Immigrant => Color::Gray,
         };
 
-        Some(Line::from(vec![
+        Line::from(vec![
             Span::raw("Status: "),
             Span::styled(format!("{label}{year_str}"), Style::default().fg(color)),
-        ]))
-    } else {
-        None
-    };
+        ])
+    })
+}
 
-    // Dynamic height for details section
-    let details_height = 6;
+struct InspectorLayoutInfo {
+    details_height: u16,
+    has_structure: bool,
+    show_diagnostics: bool,
+    diag_height: u16,
+    extra_height: u16,
+    personality_height: u16,
+    dream_height: u16,
+    diet_height: u16,
+}
 
+fn get_inspector_layout_info(world: &World, entity: Entity) -> InspectorLayoutInfo {
     let has_structure = world.get::<Structure>(entity).is_some();
     let has_personality = world.get::<UtilityWeights>(entity).is_some();
     let personality_height = if has_personality { 2 } else { 0 };
@@ -635,6 +635,32 @@ fn render_entity_inspector(frame: &mut Frame, area: Rect, world: &World, entity:
         + u16::from(has_source)
         + u16::from(has_emitter);
 
+    InspectorLayoutInfo {
+        details_height: 6,
+        has_structure,
+        show_diagnostics,
+        diag_height,
+        extra_height,
+        personality_height,
+        dream_height,
+        diet_height,
+    }
+}
+
+fn render_entity_inspector(frame: &mut Frame, area: Rect, world: &World, entity: Entity) {
+    if !world.entities().contains(entity) {
+        frame.render_widget(
+            Paragraph::new("Entity Despawned").style(Style::default().fg(Color::Red)),
+            area,
+        );
+        return;
+    }
+
+    let (name, color) = get_entity_header(world, entity);
+    let action_line = get_action_line(world, entity);
+    let generation_line = get_generation_line(world, entity);
+    let info = get_inspector_layout_info(world, entity);
+
     let layout = Layout::default()
         .direction(Direction::Vertical)
         .constraints([
@@ -643,18 +669,17 @@ fn render_entity_inspector(frame: &mut Frame, area: Rect, world: &World, entity:
             Constraint::Length(u16::from(generation_line.is_some())), // Generation
             Constraint::Length(u16::from(action_line.is_some())),     // Action
             Constraint::Length(1),                                    // Spacer
-            Constraint::Length(details_height),                       // Needs or Details
-            Constraint::Length(u16::from(has_structure)),             // Structure HP
-            Constraint::Length(diag_height), // Diagnostics (Spirit + Quirk)
-            Constraint::Length(extra_height), // Power / Scent Extra Info
-            Constraint::Length(personality_height), // Personality + Spacer
-            Constraint::Length(dream_height), // Last Dream
-            Constraint::Length(diet_height), // Dietary History
-            Constraint::Min(1),              // Biography
+            Constraint::Length(info.details_height),                  // Needs or Details
+            Constraint::Length(u16::from(info.has_structure)),        // Structure HP
+            Constraint::Length(info.diag_height),                     // Diagnostics
+            Constraint::Length(info.extra_height),                    // Extra Info
+            Constraint::Length(info.personality_height),              // Personality
+            Constraint::Length(info.dream_height),                    // Dream
+            Constraint::Length(info.diet_height),                     // Diet
+            Constraint::Min(1),                                       // Biography
         ])
         .split(area);
 
-    // 1. Name
     frame.render_widget(
         Paragraph::new(Span::styled(
             name,
@@ -663,7 +688,6 @@ fn render_entity_inspector(frame: &mut Frame, area: Rect, world: &World, entity:
         layout[0],
     );
 
-    // 2. Position
     if let Some(pos) = world.get::<GridPosition>(entity) {
         frame.render_widget(
             Paragraph::new(format!("Position: ({}, {})", pos.x, pos.y))
@@ -672,17 +696,14 @@ fn render_entity_inspector(frame: &mut Frame, area: Rect, world: &World, entity:
         );
     }
 
-    // 3. Generation
     if let Some(line) = generation_line {
         frame.render_widget(Paragraph::new(line), layout[2]);
     }
 
-    // 4. Action
     if let Some(line) = action_line {
         frame.render_widget(Paragraph::new(line), layout[3]);
     }
 
-    // 5. Needs or Building Details
     let details_area = layout[5];
     if let Some(needs) = world.get::<Needs>(entity) {
         let bio_opt = world.get::<Biocompatibility>(entity);
@@ -701,7 +722,6 @@ fn render_entity_inspector(frame: &mut Frame, area: Rect, world: &World, entity:
         render_nocturnal_fauna_details(frame, details_area, fauna, world);
     }
 
-    // 6. Structure HP
     if let Some(structure) = world.get::<Structure>(entity) {
         let pct = if structure.max_hp > 0.0 {
             (structure.current_hp / structure.max_hp * 100.0) as u16
@@ -727,40 +747,32 @@ fn render_entity_inspector(frame: &mut Frame, area: Rect, world: &World, entity:
         );
     }
 
-    // 7. Diagnostics (Spirit + Quirk)
-    if show_diagnostics {
+    if info.show_diagnostics {
         let diag_area = layout[7];
         let spirit_opt = world.get::<MachineSpirit>(entity);
         let quirk_opt = world.get::<Quirk>(entity);
         render_diagnostics(frame, diag_area, spirit_opt, quirk_opt);
     }
 
-    // Extra Grid & Scent Info
-    if extra_height > 0 {
+    if info.extra_height > 0 {
         let extra_area = layout[8];
-        render_extra_info(frame, extra_area, extra_height, world, entity);
+        render_extra_info(frame, extra_area, info.extra_height, world, entity);
     }
 
-    // 8. Personality
     if let Some(weights) = world.get::<UtilityWeights>(entity) {
         render_personality(frame, layout[9], *weights);
     }
 
-    // 9. Last Dream
     if let Some(journal) = world.get::<DreamJournal>(entity) {
         render_dream_journal(frame, layout[10], journal);
     }
 
-    // 10. Dietary History
     if let Some(history) = world.get::<DietaryHistory>(entity) {
         render_dietary_history(frame, layout[11], history);
     }
 
-    // 11. Biography
     let bottom_area = layout[12];
-    let bio_opt = world.get::<Biography>(entity);
-
-    if let Some(bio) = bio_opt {
+    if let Some(bio) = world.get::<Biography>(entity) {
         render_biography(frame, bottom_area, bio, world);
     }
 }
