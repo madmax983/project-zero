@@ -5,13 +5,13 @@
 )]
 //! Window Views System (Spec 216).
 //!
-//! This module implements the "View" mechanic, where [`Window`]s capture beauty from the environment
+//! This module implements the "View" mechanic, where `Window`s capture beauty from the environment
 //! and project it into the room as a [`BeautySource`].
 //!
 //! # Mechanics
 //!
 //! 1.  **Placement**: Windows are placed on walls. They have a `Direction` facing outwards.
-//! 2.  **Raycasting**: The [`update_window_views_system`] casts a ray from the window in its facing direction.
+//! 2.  **Raycasting**: The `update_window_views_system` casts a ray from the window in its facing direction.
 //! 3.  **Beauty Capture**: The system sums the beauty values of tiles along the ray (from the [`BeautyGrid`]).
 //! 4.  **Obstruction**: Buildings (like Walls) block the view, terminating the ray.
 //! 5.  **Projection**: The total captured beauty is scaled (currently 10%) and set as the value of the
