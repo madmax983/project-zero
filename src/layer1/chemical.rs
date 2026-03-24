@@ -311,20 +311,23 @@ pub fn get_speed_modifier(world: &World, entity: Entity) -> f32 {
 ///
 /// This system ensures that the `Speed` component reflects the current chemical state.
 pub fn apply_chemical_speed_modifiers_system(world: &mut World) {
-    let mut query = world.query::<(Entity, &mut crate::layer1::pop::Speed)>();
-    let mut updates = Vec::new();
-
-    // We collect updates first to avoid borrow conflicts with `world` inside `get_speed_modifier`.
-    for (entity, _) in query.iter(world) {
-        let modifier = get_speed_modifier(world, entity);
-        // Only update if modifier is significant
-        if (modifier - 1.0).abs() > f32::EPSILON {
-            updates.push((entity, modifier));
+    let mut query = world.query::<(&crate::layer1::chemical::ChemicalState, &mut crate::layer1::pop::Speed)>();
+    for (state, mut speed) in query.iter_mut(world) {
+        let mut modifier = 1.0;
+        // Active Effects
+        for effect in &state.active_effects {
+            if matches!(effect.chemical, ChemicalType::Stim | ChemicalType::Sedative) {
+                modifier *= effect.magnitude;
+            }
         }
-    }
-
-    for (entity, modifier) in updates {
-        if let Some(mut speed) = world.get_mut::<crate::layer1::pop::Speed>(entity) {
+        // Withdrawal Penalties
+        for addiction in &state.addictions {
+            if addiction.in_withdrawal {
+                modifier *= 0.5;
+            }
+        }
+        let modifier = modifier.clamp(0.1, 5.0);
+        if (modifier - 1.0).abs() > f32::EPSILON {
             speed.current *= modifier;
         }
     }

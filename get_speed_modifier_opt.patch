@@ -1,0 +1,11 @@
+--- src/layer1/chemical.rs
++++ src/layer1/chemical.rs
+@@ -326,6 +326,9 @@
+             }
+         }
+         let modifier = modifier.clamp(0.1, 5.0);
++        if (modifier - 1.0).abs() > f32::EPSILON {
++            speed.current *= modifier;
++        }
+     }
+ }

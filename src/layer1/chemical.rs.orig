@@ -39,6 +39,7 @@
 //! # use scale::layer1::chemical::{consume_chemical, ChemicalType};
 //! # // Setup world (assume setup code omitted)
 //! # let mut world = World::new();
+//! # world.insert_resource(scale::shared::time::SimulationTime::default());
 //! # let pop = world.spawn_empty().id();
 //! // Administer a stimulant to a pop
 //! consume_chemical(&mut world, pop, ChemicalType::Stim);
@@ -48,8 +49,8 @@ use crate::layer1::health::Health;
 use crate::layer1::items::ItemType;
 use crate::layer1::map::GridPosition;
 use crate::layer1::needs::Needs;
-use crate::layer1::utility_eval_types::{evaluate_candidates, ScorableCandidate};
-use crate::layer1::utility_types::UtilityWeights;
+use crate::layer1::utility_eval_types::ScorableCandidate;
+use crate::layer1::utility_types::{calculate_context_score, UtilityWeights};
 use crate::shared::time::SimulationTime;
 use bevy_ecs::prelude::*;
 
@@ -63,7 +64,7 @@ pub enum ChemicalType {
 }
 
 /// An active chemical effect currently modifying a Pop.
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Copy)]
 pub struct ActiveEffect {
     /// The chemical causing the effect.
     pub chemical: ChemicalType,
@@ -78,7 +79,7 @@ pub struct ActiveEffect {
 ///
 /// Addiction increases with use and decays very slowly (not implemented yet).
 /// Withdrawal triggers if the chemical is not consumed within the threshold.
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Copy)]
 pub struct Addiction {
     /// The chemical the pop is addicted to.
     pub chemical: ChemicalType,
@@ -142,6 +143,7 @@ impl ChemicalState {
 /// # use bevy_ecs::prelude::*;
 /// # use scale::layer1::chemical::{consume_chemical, ChemicalType};
 /// # let mut world = World::new();
+/// # world.insert_resource(scale::shared::time::SimulationTime::default());
 /// # let pop = world.spawn_empty().id();
 /// consume_chemical(&mut world, pop, ChemicalType::Stim);
 /// ```
@@ -309,22 +311,22 @@ pub fn get_speed_modifier(world: &World, entity: Entity) -> f32 {
 ///
 /// This system ensures that the `Speed` component reflects the current chemical state.
 pub fn apply_chemical_speed_modifiers_system(world: &mut World) {
-    let mut query = world.query::<(Entity, &mut crate::layer1::pop::Speed)>();
-    let mut updates = Vec::new();
-
-    // We collect updates first to avoid borrow conflicts with `world` inside `get_speed_modifier`.
-    for (entity, _) in query.iter(world) {
-        let modifier = get_speed_modifier(world, entity);
-        // Only update if modifier is significant
-        if (modifier - 1.0).abs() > f32::EPSILON {
-            updates.push((entity, modifier));
+    let mut query = world.query::<(&crate::layer1::chemical::ChemicalState, &mut crate::layer1::pop::Speed)>();
+    for (state, mut speed) in query.iter_mut(world) {
+        let mut modifier = 1.0;
+        // Active Effects
+        for effect in &state.active_effects {
+            if matches!(effect.chemical, ChemicalType::Stim | ChemicalType::Sedative) {
+                modifier *= effect.magnitude;
+            }
         }
-    }
-
-    for (entity, modifier) in updates {
-        if let Some(mut speed) = world.get_mut::<crate::layer1::pop::Speed>(entity) {
-            speed.current *= modifier;
+        // Withdrawal Penalties
+        for addiction in &state.addictions {
+            if addiction.in_withdrawal {
+                modifier *= 0.5;
+            }
         }
+        let modifier = modifier.clamp(0.1, 5.0);
     }
 }
 
@@ -369,43 +371,36 @@ pub fn evaluate_consume_chemical(
         desire_sedative += 0.5;
     }
 
-    // Filter candidates by type
-    let mut candidates_stim = Vec::new();
-    let mut candidates_sedative = Vec::new();
-
-    for candidate in item_entities {
-        if let Some(item_type) = &candidate.item_type {
-            match item_type {
-                ItemType::Stim => candidates_stim.push(candidate.clone()),
-                ItemType::Sedative => candidates_sedative.push(candidate.clone()),
-                _ => {}
-            }
-        }
-    }
-
+    // ⚡ Bolt Optimization:
+    // Previously, this function collected candidates into two separate `Vec`s
+    // (`candidates_stim` and `candidates_sedative`) using `.clone()` on each item.
+    // By evaluating candidates inline during a single pass, we eliminate 2 heap
+    // allocations and O(N) clones per pop, per evaluation tick, significantly
+    // reducing memory pressure on the hot path of the Utility AI.
     let mut best_score = 0.0;
     let mut best_target = None;
 
-    // Check Stims
-    if desire_stim > 0.1 {
-        if let Some((score, target)) =
-            evaluate_candidates(pop_pos, weights, &candidates_stim, desire_stim)
-        {
-            if score > best_score {
-                best_score = score;
-                best_target = Some(target);
-            }
-        }
-    }
+    for candidate in item_entities {
+        if let Some(item_type) = &candidate.item_type {
+            let base_desire = match item_type {
+                ItemType::Stim if desire_stim > 0.1 => desire_stim,
+                ItemType::Sedative if desire_sedative > 0.1 => desire_sedative,
+                _ => continue,
+            };
 
-    // Check Sedatives
-    if desire_sedative > 0.1 {
-        if let Some((score, target)) =
-            evaluate_candidates(pop_pos, weights, &candidates_sedative, desire_sedative)
-        {
-            if score > best_score {
-                best_score = score;
-                best_target = Some(target);
+            let context = calculate_context_score(
+                pop_pos,
+                Some(candidate.pos),
+                candidate.capacity,
+                candidate.usage,
+                weights,
+            );
+
+            let utility = (base_desire + candidate.score_bonus) * context;
+
+            if utility > best_score {
+                best_score = utility;
+                best_target = Some(candidate.entity);
             }
         }
     }
