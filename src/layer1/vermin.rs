@@ -264,10 +264,10 @@ mod tests {
 
     #[test]
     fn test_spoilage_modifier() {
-        let mut vermin = VerminState::default();
-
-        // No vermin
-        vermin.severity = 0.0;
+        let mut vermin = VerminState {
+            severity: 0.0,
+            ..Default::default()
+        };
         let mod_zero = calculate_spoilage_modifier(&vermin);
         assert!((mod_zero - 1.0).abs() < f32::EPSILON);
 

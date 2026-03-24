@@ -75,8 +75,10 @@ fn test_trade_route_resources_bridge_outgoing() {
             .chain(),
     );
 
-    let mut resources = ColonyResources::default();
-    resources.metal = 500.0;
+    let resources = ColonyResources {
+        metal: 500.0,
+        ..Default::default()
+    };
     app.insert_resource(resources);
 
     let colony_a = app
