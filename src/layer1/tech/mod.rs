@@ -558,7 +558,10 @@ mod tests {
     #[test]
     fn test_unlock_tech_success() {
         let mut world = World::new();
-        let state = TechState { total_capacity: 100.0, ..Default::default() };
+        let state = TechState {
+            total_capacity: 100.0,
+            ..Default::default()
+        };
         world.insert_resource(state);
         world.insert_resource(MessageLog::default());
         world.insert_resource(ColonyResources {
@@ -632,7 +635,10 @@ mod tests {
     #[test]
     fn test_placement_succeeds_if_tech_unlocked() {
         let mut world = World::new();
-        let mut state = TechState { total_capacity: 100.0, ..Default::default() };
+        let mut state = TechState {
+            total_capacity: 100.0,
+            ..Default::default()
+        };
         state.unlock(Tech::MetalWorking);
         world.insert_resource(state);
         world.insert_resource(MessageLog::default());

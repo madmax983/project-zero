@@ -155,6 +155,11 @@ pub fn build_simulation_schedule() -> Schedule {
         crate::layer2::events_new::reverse_quarantine::process_refugee_decisions_system,
     ));
 
+    schedule.add_systems((
+        crate::layer3::map::map_data_rot_system,
+        crate::layer3::map::scout_ship_scan_system,
+        crate::layer3::map::fleet_arrival_anomaly_system,
+    ));
     schedule
 }
 
@@ -345,6 +350,15 @@ pub fn run_simulation_tick(world: &mut World) {
         world.init_resource::<Events<HostileSpawnEvent>>();
     }
 
+    if !world.contains_resource::<crate::layer3::map::MapData>() {
+        world.init_resource::<crate::layer3::map::MapData>();
+    }
+    if !world.contains_resource::<Events<crate::layer3::map::FleetArrivalEvent>>() {
+        world.init_resource::<Events<crate::layer3::map::FleetArrivalEvent>>();
+    }
+    if !world.contains_resource::<Events<crate::layer3::map::AnomalyDiscoveredEvent>>() {
+        world.init_resource::<Events<crate::layer3::map::AnomalyDiscoveredEvent>>();
+    }
     // Add our schedule if not yet added
     {
         let schedules = world.resource::<Schedules>();
@@ -433,6 +447,10 @@ mod tests {
         world.init_resource::<crate::layer2::syzygy::SyzygyCycle>();
         world.init_resource::<crate::layer2::syzygy::PlanetaryGravity>();
         world.init_resource::<crate::layer2::syzygy::TidalForce>();
+
+        world.init_resource::<crate::layer3::map::MapData>();
+        world.init_resource::<Events<crate::layer3::map::FleetArrivalEvent>>();
+        world.init_resource::<Events<crate::layer3::map::AnomalyDiscoveredEvent>>();
 
         let schedule = build_simulation_schedule();
         world.add_schedule(schedule);

@@ -12,8 +12,15 @@ pub enum GeneMod {
 
 #[derive(Event, Debug, Clone, PartialEq, Eq)]
 pub enum GeneSplicingResultEvent {
-    Success { target: Entity, mod_type: GeneMod },
-    Failure { target: Entity, mod_type: GeneMod, mutation: Option<Trait> },
+    Success {
+        target: Entity,
+        mod_type: GeneMod,
+    },
+    Failure {
+        target: Entity,
+        mod_type: GeneMod,
+        mutation: Option<Trait>,
+    },
 }
 
 #[derive(Event)]
@@ -41,7 +48,10 @@ pub fn process_gene_splicing_system(
                     GeneMod::GillLungs => Trait::GillLungs,
                 };
                 traits.add(new_trait);
-                results.send(GeneSplicingResultEvent::Success { target: ev.target, mod_type: ev.mod_type });
+                results.send(GeneSplicingResultEvent::Success {
+                    target: ev.target,
+                    mod_type: ev.mod_type,
+                });
             } else {
                 health.take_damage(40.0);
 
@@ -52,9 +62,17 @@ pub fn process_gene_splicing_system(
                         Trait::Frail
                     };
                     traits.add(mutation);
-                    results.send(GeneSplicingResultEvent::Failure { target: ev.target, mod_type: ev.mod_type, mutation: Some(mutation) });
+                    results.send(GeneSplicingResultEvent::Failure {
+                        target: ev.target,
+                        mod_type: ev.mod_type,
+                        mutation: Some(mutation),
+                    });
                 } else {
-                    results.send(GeneSplicingResultEvent::Failure { target: ev.target, mod_type: ev.mod_type, mutation: None });
+                    results.send(GeneSplicingResultEvent::Failure {
+                        target: ev.target,
+                        mod_type: ev.mod_type,
+                        mutation: None,
+                    });
                 }
             }
         }

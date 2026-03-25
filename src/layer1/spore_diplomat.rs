@@ -60,7 +60,9 @@ mod tests {
 
         app.add_systems(Update, (spore_stat_boost_system, spore_stat_remove_system));
 
-        app.world_mut().entity_mut(pop).insert(SporeInfection { severity: 1.0 });
+        app.world_mut()
+            .entity_mut(pop)
+            .insert(SporeInfection { severity: 1.0 });
         app.update();
 
         let initial_social = app.world().get::<Stats>(pop).unwrap().social;
