@@ -290,3 +290,4 @@
 - [x] `585` The Cartographic Delusion — `specs/585-cartographic-delusion.md` — completed 2026-03-25
 - [x] `INT-409` Integration: Shipbreaking Seams — completed 2026-03-27
 - [x] `INT-409` Integration: Shipbreaking Seams — completed 2026-03-27
+- [x] `592` The Whispering Ore — `specs/592-the-whispering-ore.md` — completed 2026-02-01

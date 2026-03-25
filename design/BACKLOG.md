@@ -301,4 +301,3 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `589` The Synthesizer's Dilemma — `specs/589-the-synthesizers-dilemma.md`
 - [ ] `590` The Gravity Well Graveyard — `specs/590-the-gravity-well-graveyard.md`
 - [ ] `591` The Fallow Cycle — `specs/591-the-fallow-cycle.md`
-- [ ] `592` The Whispering Ore — `specs/592-the-whispering-ore.md`
