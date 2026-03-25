@@ -32,10 +32,7 @@ impl MapData {
     }
 }
 
-pub fn map_data_rot_system(
-    time: Option<Res<Time>>,
-    mut map: Option<ResMut<MapData>>
-) {
+pub fn map_data_rot_system(time: Option<Res<Time>>, mut map: Option<ResMut<MapData>>) {
     let delta = if let Some(time) = time {
         time.delta_secs()
     } else {
@@ -61,7 +58,7 @@ pub struct SectorPosition(pub SectorId);
 
 pub fn scout_ship_scan_system(
     query: Query<&SectorPosition, With<ScoutShip>>,
-    mut map: Option<ResMut<MapData>>
+    mut map: Option<ResMut<MapData>>,
 ) {
     if let Some(map) = map.as_deref_mut() {
         for pos in query.iter() {
@@ -86,13 +83,15 @@ pub struct AnomalyDiscoveredEvent {
 pub fn fleet_arrival_anomaly_system(
     mut events: EventReader<FleetArrivalEvent>,
     map: Option<Res<MapData>>,
-    mut anomalies: EventWriter<AnomalyDiscoveredEvent>
+    mut anomalies: EventWriter<AnomalyDiscoveredEvent>,
 ) {
     if let Some(map) = map.as_deref() {
         for event in events.read() {
             if let Some(data) = map.get_sector(event.sector) {
                 if data.accuracy < 0.5 {
-                    anomalies.send(AnomalyDiscoveredEvent { sector: event.sector });
+                    anomalies.send(AnomalyDiscoveredEvent {
+                        sector: event.sector,
+                    });
                 }
             }
         }
@@ -102,9 +101,9 @@ pub fn fleet_arrival_anomaly_system(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use std::time::Duration;
     use bevy_app::{App, Update};
     use bevy_time::TimePlugin;
+    use std::time::Duration;
 
     #[test]
     fn test_map_data_rots_over_time() {
@@ -112,7 +111,13 @@ mod tests {
         app.add_plugins(TimePlugin);
 
         let mut map = MapData::new();
-        map.insert_sector(SectorId(1), SectorData { last_scanned: 0, accuracy: 1.0 });
+        map.insert_sector(
+            SectorId(1),
+            SectorData {
+                last_scanned: 0,
+                accuracy: 1.0,
+            },
+        );
         app.insert_resource(map);
 
         app.add_systems(Update, map_data_rot_system);
@@ -135,10 +140,17 @@ mod tests {
     fn test_scout_ship_refreshes_map_data() {
         let mut app = App::new();
         let mut map = MapData::new();
-        map.insert_sector(SectorId(1), SectorData { last_scanned: 0, accuracy: 0.5 });
+        map.insert_sector(
+            SectorId(1),
+            SectorData {
+                last_scanned: 0,
+                accuracy: 0.5,
+            },
+        );
         app.insert_resource(map);
 
-        app.world_mut().spawn((ScoutShip, SectorPosition(SectorId(1))));
+        app.world_mut()
+            .spawn((ScoutShip, SectorPosition(SectorId(1))));
 
         app.add_systems(Update, scout_ship_scan_system);
         app.update();
@@ -154,12 +166,23 @@ mod tests {
         app.add_event::<AnomalyDiscoveredEvent>();
 
         let mut map = MapData::new();
-        map.insert_sector(SectorId(1), SectorData { last_scanned: 0, accuracy: 0.2 });
+        map.insert_sector(
+            SectorId(1),
+            SectorData {
+                last_scanned: 0,
+                accuracy: 0.2,
+            },
+        );
         app.insert_resource(map);
 
         app.add_systems(Update, fleet_arrival_anomaly_system);
 
-        app.world_mut().resource_mut::<Events<FleetArrivalEvent>>().send(FleetArrivalEvent { fleet: Entity::PLACEHOLDER, sector: SectorId(1) });
+        app.world_mut()
+            .resource_mut::<Events<FleetArrivalEvent>>()
+            .send(FleetArrivalEvent {
+                fleet: Entity::PLACEHOLDER,
+                sector: SectorId(1),
+            });
 
         app.update();
 

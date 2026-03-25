@@ -207,12 +207,12 @@ fn find_jail_spot(world: &World) -> Option<GridPosition> {
 #[cfg(test)]
 mod tests {
     use crate::layer1::law::justice::{Inmate, Wanted};
-    use crate::layer1::map::GridPosition;
-    use crate::layer1::pop::Pop;
     use crate::layer1::law::predictive_policing::{
         check_prediction_system, evaluate_pre_crime_arrest, PredictionConfig, PredictiveModel,
         Suspect,
     };
+    use crate::layer1::map::GridPosition;
+    use crate::layer1::pop::Pop;
     use crate::layer1::stress::StressTracker;
     use crate::layer1::traits::{Trait, Traits};
     use crate::layer1::utility_eval_types::ScorableCandidate;
@@ -337,7 +337,9 @@ mod tests {
         let warden = world.spawn((Pop, GridPosition { x: 0, y: 0 })).id();
 
         // Execute arrest
-        crate::layer1::law::predictive_policing::execute_pre_crime_arrest(&mut world, warden, suspect);
+        crate::layer1::law::predictive_policing::execute_pre_crime_arrest(
+            &mut world, warden, suspect,
+        );
 
         // Should be Inmate (Protective Custody)
         let inmate = world.get::<Inmate>(suspect).expect("Should be Inmate");

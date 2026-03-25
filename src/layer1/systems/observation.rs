@@ -40,7 +40,8 @@ pub fn register(schedule: &mut Schedule) {
                 .after(crate::layer1::health::despawn_dead_entities_system),
             cleanup_dream_marker_system.after(dream_system),
             #[cfg(feature = "nova")]
-            crate::experimental::dream_economy::harvest_dreams_system.after(crate::layer1::dreams::dream_system),
+            crate::experimental::dream_economy::harvest_dreams_system
+                .after(crate::layer1::dreams::dream_system),
             #[cfg(feature = "nova")]
             crate::experimental::dream_economy::nightmare_paranoia_system,
             #[cfg(feature = "nova")]
@@ -120,7 +121,8 @@ pub fn register(schedule: &mut Schedule) {
                 .after(crate::layer1::civic_ideology::apply_ideological_modifiers_system),
             check_generational_friction_system.after(decay_needs_system),
             crate::layer1::hobby::assign_hobby_system.after(decay_needs_system),
-            crate::layer1::law::predictive_policing::check_prediction_system.after(decay_needs_system),
+            crate::layer1::law::predictive_policing::check_prediction_system
+                .after(decay_needs_system),
             crate::layer1::social::grievances::post_grievance_system.after(decay_needs_system),
             crate::layer1::social::grievances::read_board_system.after(decay_needs_system),
             crate::layer1::social::cultural_vandalism::vandalism_system.after(decay_needs_system),

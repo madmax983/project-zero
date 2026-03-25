@@ -43,7 +43,10 @@ pub fn build_simulation_schedule() -> Schedule {
     // --- Register Core Layer 1 Systems ---
     register_layer1_systems(&mut schedule);
     // Whispering Ore
-    schedule.add_systems((crate::layer1::whispering_ore::process_whispering_ore_system, crate::layer1::whispering_ore::handle_mine_sealing_system));
+    schedule.add_systems((
+        crate::layer1::whispering_ore::process_whispering_ore_system,
+        crate::layer1::whispering_ore::handle_mine_sealing_system,
+    ));
 
     // --- AI Decision Chain (GPU compute) ---
     schedule.add_systems((
