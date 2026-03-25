@@ -287,3 +287,8 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `573` The Silent Generation — `specs/573-the-silent-generation.md`
 - [ ] `574` The Debt-Bound Mercenaries — `specs/574-the-debt-bound-mercenaries.md`
 - [ ] `575` The Sleeper Ship Armada — `specs/575-the-sleeper-ship-armada.md`
+- [ ] `576` The Echo Bureau — `specs/576-the-echo-bureau.md`
+- [ ] `577` Asteroid Tethering — `specs/577-asteroid-tethering.md`
+- [ ] `578` Synthetic Diet Fatigue — `specs/578-synthetic-diet-fatigue.md`
+- [ ] `579` Gravity-Sheared Trading — `specs/579-gravity-sheared-trading.md`
+- [ ] `580` The Sentient Economy — `specs/580-the-sentient-economy.md`
