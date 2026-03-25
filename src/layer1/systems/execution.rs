@@ -168,4 +168,13 @@ pub fn register(schedule: &mut Schedule) {
         )
             .in_set(Layer1SystemSet::Execution),
     );
+
+    schedule.add_systems(
+        (
+            crate::layer1::shipbreaking::spawn_crashed_ship_system.after(process_start_plan_system),
+            crate::layer1::shipbreaking::mine_system.after(arrival_handler_system),
+            crate::layer1::shipbreaking::hull_destroyed_system.after(crate::layer1::shipbreaking::mine_system),
+        )
+            .in_set(Layer1SystemSet::Execution),
+    );
 }

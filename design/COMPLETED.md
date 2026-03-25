@@ -288,3 +288,5 @@
 - [x] `INT-565` Integration: Gene Splicing -> Chronicle — completed 2026-03-27
 - [x] `588` The Spore-Mind Diplomat — `specs/588-spore-mind-diplomat.md` — completed 2026-03-25
 - [x] `585` The Cartographic Delusion — `specs/585-cartographic-delusion.md` — completed 2026-03-25
+- [x] `INT-409` Integration: Shipbreaking Seams — completed 2026-03-27
+- [x] `INT-409` Integration: Shipbreaking Seams — completed 2026-03-27
