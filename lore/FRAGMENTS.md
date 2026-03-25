@@ -5397,3 +5397,113 @@ How the self-healing bio-architecture haunts the colony (Spec 548).
 - cornering the market
 - unquenchable demand
 - speculative buying
+
+## The Martyr's Engine Fragments (Spec 296)
+
+## Fragment Type: [SACRIFICE_REASON]
+Why the colonist was chosen or volunteered to attune the Engine.
+- they drew the short straw
+- to save their family from the dark
+- they believed it was an honor
+- they were too tired to keep working
+- no one else would step forward
+- ordered by the Chair
+- they wanted to be remembered
+
+## Fragment Type: [ENGINE_HUM]
+The sound or feeling of the active Martyr's Engine.
+- a deep, bone-rattling thrum
+- a sound like a single, endless breath
+- a high whine that makes teeth ache
+- a warm, pulsing glow
+- a silent vibration
+- the heartbeat of the fallen
+
+## Fragment Type: [GUILT_SYMPTOM]
+How the colony reacts to the power provided by the sacrifice.
+- refusing to look at the lights
+- whispering apologies to the vents
+- working in the dark out of shame
+- weeping when the shields hold
+- anger at the endless hum
+- avoiding the engine room
+
+## Airlocks & Pressure Fragments (Spec 561)
+
+## Fragment Type: [PRESSURE_SOUND]
+The sound of air escaping or stabilizing.
+- a sharp hiss
+- a deafening whistle
+- a wet pop
+- a long, mechanical sigh
+- a screaming wind
+- a sudden, terrifying silence
+
+## Fragment Type: [VACUUM_FEELING]
+How a pressure drop is described.
+- lungs burning
+- eyes freezing
+- blood hammering in the ears
+- a cold hand on the throat
+- moving through invisible mud
+- the breath stolen
+
+## The Justice System Fragments (Spec 562)
+
+## Fragment Type: [CRIME_SEVERITY]
+How the colony views the crime.
+- unforgivable
+- a desperate act
+- a minor offense
+- a threat to the whole sector
+- an insult to the founders
+- a sad necessity
+
+## Fragment Type: [PARDON_REASON]
+Why the criminal was set free.
+- we needed their hands in the mines
+- the Governor owed them a favor
+- the jails were too full
+- they paid the right people
+- mercy, or so they claimed
+- a pragmatism that smells like corruption
+
+## Fragment Type: [JAIL_NAME]
+Flavor names for the holding cells.
+- The Box
+- The Quiet Room
+- The Brig
+- The Lock
+- The Pen
+- The Waiting Cell
+- The Cold Iron
+
+## Gene Splicing Fragments (Spec 565)
+
+## Fragment Type: [GENE_MOD_NAME]
+What the genetic modification is called.
+- Stone-Skin
+- Night-Eyes
+- Void-Lungs
+- Iron-Marrow
+- The Deep-Breath
+- Pale-Sight
+- Heavy-Bones
+
+## Fragment Type: [SPLICING_FEELING]
+How the modification process feels to the pop.
+- like boiling from the inside
+- a cold fire in the veins
+- a tearing and a knitting
+- days of fever-dreams
+- waking up feeling heavy
+- the world sounding different
+
+## Fragment Type: [MUTATION_SYMPTOM]
+A negative side-effect of a failed splice.
+- scales that weep fluid
+- eyes sensitive to any light
+- brittle bones
+- a constant, rattling cough
+- skin that cracks in the cold
+- an unnatural pallor

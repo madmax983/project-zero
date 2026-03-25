@@ -4595,3 +4595,92 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[RESOURCE] is worth its weight in blood. [YEAR]. Result of [MARKET_BOOM_REASON]."
 - "[YEAR]: A windfall! The [RESOURCE] spikes due to [MARKET_BOOM_REASON]."
 - "We are rich on [RESOURCE]. The [MARKET_BOOM_REASON] drives the price. [YEAR]."
+
+## The Martyr's Engine Templates (Spec 296)
+
+### Template: ENGINE_ATTUNED
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[NAME]`, `[SACRIFICE_REASON]`, `[ENGINE_HUM]`
+
+**Patterns:**
+- "[YEAR]: [NAME] walked into the core. [SACRIFICE_REASON]. The lights blazed, and now we hear [ENGINE_HUM]."
+- "We have power. [YEAR]. But it cost us [NAME], who went because [SACRIFICE_REASON]. The [ENGINE_HUM] won't let us forget."
+- "The engine is fed. [NAME] is gone. [YEAR]. They said [SACRIFICE_REASON]. We work under the [ENGINE_HUM]."
+
+### Template: ENGINE_DECAYED
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[NAME]`, `[GUILT_SYMPTOM]`
+
+**Patterns:**
+- "The engine goes cold. [YEAR]. The sacrifice is spent. People are [GUILT_SYMPTOM]."
+- "[YEAR]: The silence returns to the core. We survived, but we are still [GUILT_SYMPTOM]."
+- "The power dies. [NAME]'s time is up. The colony is [GUILT_SYMPTOM]. [YEAR]."
+
+## Airlocks & Pressure Templates (Spec 561)
+
+### Template: DOOR_VENTED
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[PRESSURE_SOUND]`, `[VACUUM_FEELING]`
+
+**Patterns:**
+- "A door left open! [YEAR]. A [PRESSURE_SOUND] and the air was gone. Everyone felt [VACUUM_FEELING]."
+- "[YEAR]: Carelessness. The airlock cycled wrong. A [PRESSURE_SOUND], then [VACUUM_FEELING]."
+- "We bleed atmosphere. [PRESSURE_SOUND]. [YEAR]. The sector reports [VACUUM_FEELING]."
+
+### Template: SUFFOCATION_START
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[NAME]`, `[VACUUM_FEELING]`
+
+**Patterns:**
+- "[NAME] gasped for air. [YEAR]. The room was empty of breath. They reported [VACUUM_FEELING]."
+- "[YEAR]: Vacuum exposure. [NAME] was caught without a suit, experiencing [VACUUM_FEELING]."
+- "The pressure dropped. [NAME] fought the [VACUUM_FEELING]. [YEAR]."
+
+## The Justice System Templates (Spec 562)
+
+### Template: CRIME_COMMITTED
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[NAME]`, `[CRIME_SEVERITY]`
+
+**Patterns:**
+- "A crime in the dark. [YEAR]. [NAME] is wanted. The act was [CRIME_SEVERITY]."
+- "[YEAR]: The peace is broken. [NAME] committed an offense deemed [CRIME_SEVERITY]."
+- "Wanted: [NAME]. [YEAR]. Their actions were [CRIME_SEVERITY]."
+
+### Template: ARREST_MADE
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[NAME]`, `[JAIL_NAME]`
+
+**Patterns:**
+- "The Sheriff took [NAME]. [YEAR]. Locked in [JAIL_NAME]."
+- "[YEAR]: Justice served. [NAME] was dragged to [JAIL_NAME]."
+- "No more running. [NAME] sits in [JAIL_NAME]. [YEAR]."
+
+### Template: PARDON_ISSUED
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[NAME]`, `[PARDON_REASON]`
+
+**Patterns:**
+- "[NAME] walks free. [YEAR]. The word came down because [PARDON_REASON]."
+- "[YEAR]: The cell opens. [NAME] is pardoned. People whisper it's because [PARDON_REASON]."
+- "A pardon for [NAME]. [PARDON_REASON]. [YEAR]. The victims are not pleased."
+
+## Gene Splicing Templates (Spec 565)
+
+### Template: SPLICING_SUCCESS
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[NAME]`, `[GENE_MOD_NAME]`, `[SPLICING_FEELING]`
+
+**Patterns:**
+- "A new breed. [YEAR]. [NAME] survived the [GENE_MOD_NAME] process. They described it as [SPLICING_FEELING]."
+- "[YEAR]: Medical triumph. [NAME] awakens with [GENE_MOD_NAME]. The operation was [SPLICING_FEELING]."
+- "[NAME] is changed. [GENE_MOD_NAME] acquired. [YEAR]. Despite [SPLICING_FEELING], they are stronger."
+
+### Template: SPLICING_REJECTION
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[NAME]`, `[GENE_MOD_NAME]`, `[MUTATION_SYMPTOM]`
+
+**Patterns:**
+- "The body fought back. [YEAR]. [NAME] rejected the [GENE_MOD_NAME] and suffers [MUTATION_SYMPTOM]."
+- "[YEAR]: A horrific mutation. The [GENE_MOD_NAME] failed on [NAME], leaving them with [MUTATION_SYMPTOM]."
+- "We pushed biology too far. [NAME] tried to get [GENE_MOD_NAME], but woke up with [MUTATION_SYMPTOM]. [YEAR]."
