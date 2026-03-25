@@ -660,6 +660,34 @@ classDiagram
     AppSchedule ..> ObservationSystemsBlock2 : Registers
 ```
 
+## Law Sub-module Extraction
+
+The simulation extracted the sprawling Law and Order subsystem from the `layer1` root namespace into a dedicated `law` module, enforcing strict domain boundaries and reducing file clutter.
+
+```mermaid
+classDiagram
+    namespace Layer1 {
+        class Systems
+        class Economy
+        class Pop
+    }
+
+    namespace Law {
+        class Justice
+        class Penal
+        class PredictivePolicing
+        class Contraband
+    }
+
+    Systems --> Justice : registers
+    Systems --> PredictivePolicing : registers
+    Systems --> Contraband : registers
+    Justice ..> Pop : arrests
+    Penal ..> Pop : assigns labor
+    PredictivePolicing ..> Justice : feeds suspects
+    Contraband ..> Economy : confiscates items
+```
+
 ## Related Decisions
 
 - [ADR 001: Layered Architecture](./adr/001-layered-architecture.md)
@@ -702,6 +730,8 @@ classDiagram
 - [ADR 043: Layer 3 Revival (Interstellar Scale)](./adr/043-layer-3-revival.md)
 - [ADR 044: Planetary Governance System](./adr/044-planetary-governance-system.md)
 - [ADR 045: Galactic Market System](./adr/045-galactic-market-system.md)
+
+- [ADR 046: Encapsulate Law Domain](./adr/046-encapsulate-law-domain.md)
 
 ## Layer 2: Planetary Governance Integration
 
