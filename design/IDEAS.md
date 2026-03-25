@@ -11729,3 +11729,59 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Ignoring the minor grievances of individual Pops because they seem strategically insignificant vs. the terrifying realization that today's unhappy farmer is tomorrow's vengeful dictator.
 
 ---
+
+## The Pyrite Mirage
+
+**Layer:** 1
+
+**Fantasy:** The gold rush that turns to dust. The horror of building an empire on a lie.
+
+**Mechanic:** A rare, high-value ore spawns in massive quantities. It looks and functions exactly like Gold or Platinum for trading and crafting. However, it has a hidden "Decay" timer. After a few years, it spontaneously crumbles into worthless, toxic dust, destroying any building or item made from it.
+
+**Emergence:** You build a massive, opulent palace and trade your way to planetary supremacy using the "gold." Years later, your entire economy collapses overnight as your treasury and your palace literally dissolve, leaving your Pops poisoned and penniless.
+
+**Tension:** Do you rapidly exploit and spend the wealth before it crumbles (hot potato economy), or do you meticulously test every batch of ore (slowing down extraction)?
+
+---
+
+## The Grave-Robber's Economy
+
+**Layer:** Cross-layer (1 -> 3)
+
+**Fantasy:** Plundering the sacred dead of a fallen empire to pay for your colony's survival.
+
+**Mechanic:** You discover massive, ancient catacombs filled with "Sacred Artifacts." These artifacts sell for astronomical prices on the Layer 3 market to a fanatical precursor-worshipping empire. However, every artifact removed from the catacombs increases a hidden "Vengeance" tracker. When it caps, the precursor empire declares a holy war of extermination against your colony.
+
+**Emergence:** You fund your entire defense grid by selling ancient burial masks. Just as the grid is finished, the precursor empire's retribution fleet arrives. Your defenses hold them off, but the war isolates you from all other trade, starving the colony you tried so hard to protect.
+
+**Tension:** The immediate, massive financial salvation of robbing the dead vs. the slow, inevitable approach of a devastating holy war.
+
+---
+
+## The Censor's Dilemma
+
+**Layer:** 1
+
+**Fantasy:** Controlling the narrative to keep the peace, until the truth leaks out and the lie becomes worse than the reality.
+
+**Mechanic:** When a disaster occurs (e.g., a massive mining collapse), the player can use an "Information Blackout" edict to suppress the news. This prevents the immediate, colony-wide Morale drop. However, the true story begins to circulate as a "Banned Rumor." If a Pop hears the Banned Rumor, their Trust in the Governor permanently plummets, causing far more unrest than the original disaster.
+
+**Emergence:** You successfully hide the death of fifty miners to keep the industrial sector working. A year later, a single surviving miner escapes the quarantine zone and tells the truth. The entire colony instantly realizes they've been lied to for a year, triggering a violent revolution that burns down the administration building.
+
+**Tension:** The short-term stability of suppressing bad news vs. the long-term, catastrophic loss of faith if the cover-up is exposed.
+
+---
+
+## The Sub-Light Ghost
+
+**Layer:** Cross-layer (2 -> 1)
+
+**Fantasy:** A message in a bottle from a dead world, arriving centuries too late to save them, but just in time to damn you.
+
+**Mechanic:** A slow-moving, heavily shielded probe arrives from deep space (Layer 2) and lands on your colony (Layer 1). It contains an automated SOS broadcast and the complete technological database of a civilization that was destroyed by a "Filter Event" a thousand years ago. Downloading the data provides massive, immediate tech unlocks, but also downloads the digital footprint of the entity that destroyed them, acting as a homing beacon.
+
+**Emergence:** You download the data, rocketing your colony into the space age overnight. Decades later, a silent, impossibly advanced exterminator fleet drops out of hyperspace directly above your capital, having finally tracked the beacon you unwittingly activated.
+
+**Tension:** The irresistible lure of an entire civilization's technological legacy vs. the terrifying risk of drawing the attention of whatever killed them.
+
+---
