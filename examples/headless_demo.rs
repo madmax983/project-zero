@@ -2,7 +2,7 @@
 //!
 //! Demonstrates how to run the simulation without a window or GPU context.
 
-use comfy_table::{presets::UTF8_FULL, Cell, Color as TableColor, Table};
+use comfy_table::{presets::UTF8_FULL, Cell, CellAlignment, Color as TableColor, Table};
 use crossterm::style::{Color, Stylize};
 use scale::layer1::pop::Pop;
 use scale::layer1::resources::ColonyResources;
@@ -98,6 +98,11 @@ fn main() {
         Cell::new("Knowledge"),
         Cell::new(format!("{:.1}", resources.knowledge)).fg(TableColor::Cyan),
     ]);
+
+    // Align the Value column to the right for better readability
+    if let Some(col) = table.column_mut(2) {
+        col.set_cell_alignment(CellAlignment::Right);
+    }
 
     println!("\n{table}");
 }

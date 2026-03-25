@@ -27,15 +27,11 @@ mod demo {
         );
         let tradition = world.resource::<OralTradition>();
         if tradition.stories.is_empty() {
-            println!(
-                "│ {} │",
-                "No stories currently circulating.".with(Color::DarkGrey)
-            );
+            let text = format!("{:<47}", "No stories currently circulating.");
+            println!("│ {} │", text.with(Color::DarkGrey));
         } else {
-            println!(
-                "│ {} │",
-                format!("{} stories circulating.", tradition.stories.len()).with(Color::White)
-            );
+            let text = format!("{:<47}", format!("{} stories circulating.", tradition.stories.len()));
+            println!("│ {} │", text.with(Color::White));
         }
         println!(
             "{}",
@@ -52,10 +48,8 @@ mod demo {
             "The colony survived the Great Frost.".to_string(),
             EventImportance::Legendary,
         );
-        println!(
-            "│ {} │",
-            "✓ Event successfully added to Chronicle.".with(Color::Green)
-        );
+        let text = format!("{:<47}", "✓ Event successfully added to Chronicle.");
+        println!("│ {} │", text.with(Color::Green));
         println!(
             "{}",
             "╰───────────────────────────────────────────────╯".with(Color::Cyan)
@@ -69,10 +63,8 @@ mod demo {
         let mut schedule = Schedule::default();
         schedule.add_systems(collect_chronicles_system);
         schedule.run(&mut world);
-        println!(
-            "│ {} │",
-            "✓ Events processed into Oral Tradition.".with(Color::Green)
-        );
+        let text = format!("{:<47}", "✓ Events processed into Oral Tradition.");
+        println!("│ {} │", text.with(Color::Green));
         println!(
             "{}",
             "╰───────────────────────────────────────────────╯".with(Color::Cyan)
