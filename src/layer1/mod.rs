@@ -732,3 +732,5 @@ pub use exodus::*;
 pub mod disasters;
 pub use disasters::*;
 pub mod environment;
+pub mod spore_diplomat;
+pub use spore_diplomat::*;

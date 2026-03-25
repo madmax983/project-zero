@@ -286,3 +286,4 @@
 - [x] `565` Gene Splicing — `specs/565-gene-splicing.md` — completed 2026-03-27
 - [x] `562` The Justice System — `specs/562-the-justice-system.md` — completed 2026-03-24
 - [x] `INT-565` Integration: Gene Splicing -> Chronicle — completed 2026-03-27
+- [x] `588` The Spore-Mind Diplomat — `specs/588-spore-mind-diplomat.md` — completed 2026-03-25
