@@ -54,7 +54,7 @@ mod tests {
         let result = evaluate_simple_action(pop_pos, &weights, &proxies, 0.5);
 
         assert!(result.is_some());
-        let (utility, target) = result.unwrap();
+        let (utility, target) = result.expect("Missing resource or component");
         assert_eq!(target, mill);
         assert!(utility > 0.0);
     }
@@ -92,7 +92,7 @@ mod tests {
         let result = evaluate_simple_action(pop_pos, &weights, &proxies, 0.5);
 
         assert!(result.is_some());
-        let (utility, target) = result.unwrap();
+        let (utility, target) = result.expect("Missing resource or component");
         assert_eq!(target, farm);
         assert!(utility > 0.0);
     }

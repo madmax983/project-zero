@@ -253,7 +253,9 @@ mod tests {
             "Animal should have Tame component"
         );
 
-        let fauna = world.get::<Fauna>(animal).unwrap();
+        let fauna = world
+            .get::<Fauna>(animal)
+            .expect("Missing resource or component");
         assert_ne!(
             fauna.state,
             FaunaState::Attack,
@@ -292,7 +294,9 @@ mod tests {
             "Failed tame should not add component"
         );
 
-        let fauna = world.get::<Fauna>(animal).unwrap();
+        let fauna = world
+            .get::<Fauna>(animal)
+            .expect("Missing resource or component");
         assert_eq!(
             fauna.state,
             FaunaState::Attack,

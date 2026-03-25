@@ -253,7 +253,9 @@ mod tests {
         healing_system(&mut world);
 
         // Check health
-        let health = world.get::<Health>(pop_entity).unwrap();
+        let health = world
+            .get::<Health>(pop_entity)
+            .expect("Missing resource or component");
         assert!((health.current - 51.0).abs() < f32::EPSILON);
     }
 
@@ -288,7 +290,9 @@ mod tests {
 
         healing_system(&mut world);
 
-        let health = world.get::<Health>(pop_entity).unwrap();
+        let health = world
+            .get::<Health>(pop_entity)
+            .expect("Missing resource or component");
         assert!((health.current - 100.0).abs() < f32::EPSILON);
     }
 
@@ -321,7 +325,9 @@ mod tests {
 
         healing_system(&mut world);
 
-        let health = world.get::<Health>(pop).unwrap();
+        let health = world
+            .get::<Health>(pop)
+            .expect("Missing resource or component");
         assert!(
             (health.current - 50.0).abs() < f32::EPSILON,
             "Health should not change if assigned entity is not a hospital"
@@ -358,7 +364,9 @@ mod tests {
 
         healing_system(&mut world);
 
-        let health = world.get::<Health>(pop).unwrap();
+        let health = world
+            .get::<Health>(pop)
+            .expect("Missing resource or component");
         assert!(
             (health.current - 50.0).abs() < f32::EPSILON,
             "Should not heal if not a Patient"
@@ -400,7 +408,9 @@ mod tests {
 
         // Base: 1.0. Bonus (Hospital): 0.5. Total: 1.5.
         healing_system(&mut world);
-        let health = world.get::<Health>(pop).unwrap();
+        let health = world
+            .get::<Health>(pop)
+            .expect("Missing resource or component");
         assert!((health.current - 51.5).abs() < f32::EPSILON);
     }
 }
