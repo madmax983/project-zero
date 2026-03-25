@@ -63,3 +63,8 @@
 **Concept:** Added `ParanoiaCooldown` and `paranoia_network_system` which translates intense `StressTracker` accumulations (> 90%) into a projected aura. Any pop coming too close triggers a negative `AffinityChange` event simulating a breakdown in social trust and contagious paranoia.
 **Fate:** Proposed
 **Lesson:** Tying internal psychological breakdowns (`StressTracker`) directly to external social degradation (`AffinityChange`) allows stress to act as a social pathogen, isolating struggling Pops from the community and accelerating colony-wide unrest.
+
+## [The Dream Economy]
+**Concept:** A system that crystallizes pop dreams into tangible items. When a pop sleeps near a `DreamCatcher` building, their dreams manifest as `DreamMote` or `NightmareFragment` items. Nightmares also actively radiate paranoia (stress) to nearby pops.
+**Fate:** Proposed
+**Lesson:** Monetizing basic biological needs (like sleeping) allows players to farm their colonists' subconscious, creating a perverse incentive to intentionally induce nightmares for rare loot.

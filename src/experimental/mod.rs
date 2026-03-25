@@ -42,3 +42,6 @@ pub mod cargo_cult_fleet;
 
 #[cfg(feature = "nova")]
 pub mod paranoia_network;
+
+#[cfg(feature = "nova")]
+pub mod dream_economy;

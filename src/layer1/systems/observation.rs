@@ -40,6 +40,10 @@ pub fn register(schedule: &mut Schedule) {
                 .after(crate::layer1::health::despawn_dead_entities_system),
             cleanup_dream_marker_system.after(dream_system),
             #[cfg(feature = "nova")]
+            crate::experimental::dream_economy::harvest_dreams_system.after(crate::layer1::dreams::dream_system),
+            #[cfg(feature = "nova")]
+            crate::experimental::dream_economy::nightmare_paranoia_system,
+            #[cfg(feature = "nova")]
             crate::layer1::observer::observer_awareness_system
                 .after(crate::layer1::health::despawn_dead_entities_system),
             #[cfg(feature = "nova")]
