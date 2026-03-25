@@ -11,8 +11,8 @@
 //! - Movement Speed is tripled.
 //! - Needs decay much faster.
 //! - Age increases faster.
-//! This creates dynamic hotspots that are great for quick work but dangerous
-//! for the Pop's lifespan and sanity.
+//!   This creates dynamic hotspots that are great for quick work but dangerous
+//!   for the Pop's lifespan and sanity.
 
 use crate::layer1::lifecycle::Age;
 use crate::layer1::map::GridPosition;

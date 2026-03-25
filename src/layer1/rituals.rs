@@ -129,7 +129,6 @@ mod tests {
                 AncientStructure,
                 MachineSpirit {
                     anger: 0.0,
-                    ..Default::default()
                 },
             ))
             .id();
@@ -154,7 +153,6 @@ mod tests {
                 AncientStructure,
                 MachineSpirit {
                     anger: 100.0,
-                    ..Default::default()
                 }, // Furious
             ))
             .id();
@@ -179,7 +177,6 @@ mod tests {
                 AncientStructure,
                 MachineSpirit {
                     anger: 50.0,
-                    ..Default::default()
                 },
                 Quirk {
                     quirk_type: QuirkType::Glitchy,
@@ -220,7 +217,6 @@ mod tests {
         let entity = world
             .spawn((MachineSpirit {
                 anger: 50.0,
-                ..Default::default()
             },))
             .id();
 
@@ -238,7 +234,6 @@ mod tests {
         let entity = world
             .spawn((MachineSpirit {
                 anger: 10.0,
-                ..Default::default()
             },))
             .id();
 
@@ -261,7 +256,6 @@ mod tests {
             .spawn((
                 MachineSpirit {
                     anger: 100.0,
-                    ..Default::default()
                 },
                 Quirk {
                     quirk_type: QuirkType::Glitchy,

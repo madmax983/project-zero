@@ -317,7 +317,6 @@ mod tests {
             Structure {
                 current_hp: 100.0,
                 max_hp: 100.0,
-                ..Default::default()
             },
         ));
 
@@ -342,7 +341,6 @@ mod tests {
                 Structure {
                     current_hp: 100.0,
                     max_hp: 100.0,
-                    ..Default::default()
                 },
             ))
             .id();
@@ -414,7 +412,6 @@ mod tests {
                 Structure {
                     current_hp: 100.0,
                     max_hp: 100.0,
-                    ..Default::default()
                 },
             ))
             .id();

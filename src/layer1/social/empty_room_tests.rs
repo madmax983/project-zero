@@ -69,7 +69,6 @@ mod tests {
                 GridPosition { x: 0, y: 0 }, // Inside zone
                 StressTracker {
                     accumulated_stress: 50.0,
-                    ..Default::default()
                 },
             ))
             .id();
@@ -91,7 +90,6 @@ mod tests {
                 GridPosition { x: 0, y: 0 }, // Inside zone
                 StressTracker {
                     accumulated_stress: 50.0,
-                    ..Default::default()
                 },
             ))
             .id();

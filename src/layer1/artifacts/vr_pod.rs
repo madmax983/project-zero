@@ -80,12 +80,10 @@ mod tests {
                 },
                 StressTracker {
                     accumulated_stress: 80.0,
-                    ..Default::default()
                 },
                 Health {
                     current: 100.0,
                     max: 100.0,
-                    ..Default::default()
                 },
                 Needs {
                     hunger: 1.0,
@@ -122,7 +120,6 @@ mod tests {
                 Health {
                     current: 100.0,
                     max: 100.0,
-                    ..Default::default()
                 },
                 Needs {
                     hunger: 0.99,
@@ -156,7 +153,6 @@ mod tests {
                 },
                 StressTracker {
                     accumulated_stress: 80.0,
-                    ..Default::default()
                 },
                 InVrPod,
             ))
