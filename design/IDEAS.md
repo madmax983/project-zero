@@ -11674,3 +11674,58 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** A massive, instant population injection (if you can feed them) vs. unparalleled technological salvage obtained through a horrifyingly cold moral calculus.
 
 ---
+## The Ghost Fleet Protocol
+
+**Layer:** 2 -> 3
+
+**Fantasy:** Using automation as a desperate deterrent, creating a mindless armada that you might not be able to turn off.
+
+**Mechanic:** You can set military ships to "Ghost Fleet" mode, completely stripping them of crew and automating them. They require no upkeep and patrol endlessly. But if your system loses its central communication array, the fleet becomes permanently hostile to everyone, including your own colonies, turning your system into an impenetrable, dead fortress.
+
+**Emergence:** You activate the protocol to defend a crucial mining world from a massive invasion. The invasion is repelled, but a stray shot destroys the communication array. The world is saved, but perfectly blockaded by its own mindless defenders, slowly starving the very colony they were built to protect.
+
+**Tension:** The incredible cost-efficiency of automated defense vs. the horrifying risk of creating an eternal, unthinking enemy in your own backyard.
+
+---
+
+## The Nostalgia Plagues
+
+**Layer:** 1
+
+**Fantasy:** A colony paralyzed not by disease, but by a crippling, collective longing for a dead Earth.
+
+**Mechanic:** A psychological condition that spreads like a virus. Pops infected by "Nostalgia" refuse to eat synthetic food, demand incredibly rare "Earth-like" commodities (like real wood or woven fabric), and constantly stop working to gaze at the sky. It spreads quickly through social interactions if untreated.
+
+**Emergence:** You try to boost morale by building a museum of Earth history. It unexpectedly triggers a massive Nostalgia outbreak. Your high-tech fusion engineers suddenly abandon their posts because they demand their control panels be retrofitted with real oak, plunging the entire industrial sector into darkness.
+
+**Tension:** The necessity of connecting colonists to their roots for baseline morale vs. the danger of romanticizing a dead past so much that it halts all future progress.
+
+---
+
+## Gravity-Well Funnels
+
+**Layer:** 2 -> 1
+
+**Fantasy:** Weaponizing the sheer mass of your planet to silently steal from the void without firing a shot.
+
+**Mechanic:** Building massive, localized gravity manipulators on Layer 1 that subtly alter the planet's gravitational pull on Layer 2. This allows you to slowly drag passing neutral trade fleets, wandering comets, or debris slightly off course and into your atmosphere.
+
+**Emergence:** You use a funnel to drag a valuable ice comet down to your desert world, saving the colony from drought. However, the altered gravity well also pulls a passing, heavily armed diplomatic transport from a hostile Layer 3 empire out of orbit. It crashes into your capital, triggering a massive, un-winnable war purely by accident.
+
+**Tension:** Passive, untraceable resource acquisition vs. the terrifying lack of control over what exactly you are pulling out of the dark.
+
+---
+
+## The Generational Grudge
+
+**Layer:** Cross-layer (1 -> 3)
+
+**Fantasy:** A tiny, localized dispute echoing through centuries to define galactic diplomacy.
+
+**Mechanic:** When a Pop is severely wronged by a specific faction (e.g., family killed in a raid), they form a "Grudge" memory. This memory is passed down to their children. If a descendant with this Grudge eventually becomes a planetary governor or faction leader on Layer 3, they will unilaterally sabotage trade or declare war on that faction, completely ignoring your strategic goals.
+
+**Emergence:** In Year 10, a minor pirate raid steals food from a single farming family. In Year 300, the descendant of that family becomes the Supreme Chancellor of your empire. The very next day, they shatter a century of peace by declaring a war of extermination against the descendants of those pirates, dragging your entire galaxy-spanning civilization into chaos over a stolen bushel of wheat.
+
+**Tension:** Ignoring the minor grievances of individual Pops because they seem strategically insignificant vs. the terrifying realization that today's unhappy farmer is tomorrow's vengeful dictator.
+
+---
