@@ -1,3 +1,31 @@
+//! Room Quality system (Spec 064).
+//!
+//! # Context
+//! This module calculates the quality of a room (like a Bedroom or Dining Room)
+//! based on its size, enclosed state, and the beauty of items within it.
+//! Pops receive positive or negative memories depending on the quality of the room they use.
+//!
+//! # Usage
+//! ```rust,no_run
+//! use bevy_ecs::prelude::*;
+//! use scale::layer1::room_quality::calculate_room_quality;
+//! use scale::layer1::map::GridPosition;
+//!
+//! fn evaluate_room_system(world: &mut World) {
+//!     let pos = GridPosition { x: 5, y: 5 };
+//!     let quality = calculate_room_quality(world, pos);
+//!     println!("Room quality at {:?} is {}", pos, quality);
+//! }
+//! ```
+//!
+//! # Details
+//! The total score is computed as `(Space + Beauty * 2.0) * Enclosure`.
+//! `MAX_ROOM_SIZE` limits flood fill to prevent performance issues outdoors.
+//!
+//! # Links
+//! - [`calculate_room_quality`]
+//! - [`apply_room_quality_thoughts`]
+//! - [`crate::layer1::zone::ZoneType`]
 use crate::layer1::actions::{AssignedTo, AssignmentType};
 use crate::layer1::beauty::BeautyGrid;
 use crate::layer1::building::{Building, BuildingType};
@@ -39,10 +67,20 @@ pub fn apply_waking_thoughts_system(world: &mut World) {
 
 /// Calculates the quality score of a room at the given position.
 ///
-/// Quality is based on:
-/// - Space (size of room)
-/// - Beauty (sum of beauty in room)
-/// - Enclosure (fully walled vs open)
+/// This function performs a flood fill to find contiguous tiles with the same [`ZoneType`].
+/// It evaluates the space, enclosure state (walls/rock), and sum of beauty from the [`BeautyGrid`].
+///
+/// # Examples
+/// ```rust,no_run
+/// use bevy_ecs::prelude::*;
+/// use scale::layer1::room_quality::calculate_room_quality;
+/// use scale::layer1::map::GridPosition;
+/// use scale::layer1::zone::{ZoneGrid, ZoneType};
+///
+/// let mut world = World::new();
+/// world.insert_resource(ZoneGrid::new(10, 10));
+/// let quality = calculate_room_quality(&mut world, GridPosition { x: 1, y: 1 });
+/// ```
 pub fn calculate_room_quality(world: &mut World, pos: GridPosition) -> f32 {
     // Cap room size to prevent infinite loops or massive CPU spikes
     const MAX_ROOM_SIZE: usize = 100;
