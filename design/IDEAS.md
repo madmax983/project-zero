@@ -1658,7 +1658,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Solar Cycles
+## Solar Cycles [SPECCED]
 
 **Layer:** 2 -> 1
 
@@ -2050,7 +2050,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## University of the Stars
+## University of the Stars [SPECCED]
 
 **Layer:** 3 -> 1
 
@@ -2120,7 +2120,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Orbital Mirrors
+## Orbital Mirrors [SPECCED]
 
 **Layer:** 2 -> 1
 

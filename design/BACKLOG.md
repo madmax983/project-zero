@@ -302,3 +302,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `590` The Gravity Well Graveyard — `specs/590-the-gravity-well-graveyard.md`
 - [ ] `591` The Fallow Cycle — `specs/591-the-fallow-cycle.md`
 - [ ] `592` The Whispering Ore — `specs/592-the-whispering-ore.md`
+- [ ] `593` Solar Cycles — `specs/593-solar-cycles.md`
+- [ ] `594` University of the Stars — `specs/594-university-of-the-stars.md`
+- [ ] `595` Orbital Mirrors — `specs/595-orbital-mirrors.md`
