@@ -299,4 +299,3 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `585` The Cartographic Delusion — `specs/585-cartographic-delusion.md`
 - [ ] `586` Doppelgangers — `specs/586-doppelgangers.md`
 - [ ] `587` Medical Triage Policies — `specs/587-medical-triage-policies.md`
-- [ ] `588` The Spore-Mind Diplomat — `specs/588-spore-mind-diplomat.md`

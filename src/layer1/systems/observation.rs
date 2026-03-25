@@ -306,6 +306,8 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::fauna::shadow::spawn_shadow_fauna_system,
             crate::layer1::fauna::shadow::shadow_feed_system,
             crate::layer1::fauna::shadow::shadow_visibility_system,
+            crate::layer1::spore_diplomat::spore_stat_boost_system,
+            crate::layer1::spore_diplomat::spore_stat_remove_system,
         )
             .in_set(Layer1SystemSet::Observation),
     );

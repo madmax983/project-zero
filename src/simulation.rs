@@ -131,6 +131,7 @@ pub fn build_simulation_schedule() -> Schedule {
         crate::layer3::events::debt_prison::process_bailout_acceptance_system
             .after(crate::layer3::events::debt_prison::check_bailout_condition_system),
         crate::layer3::market::update_market_prices_system,
+        crate::layer3::diplomacy::diplomatic_negotiation_system,
     ));
 
     schedule.add_systems((
