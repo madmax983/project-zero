@@ -304,7 +304,7 @@ pub fn process_pardons_system(
 
 #[cfg(test)]
 mod tests {
-    use crate::layer1::justice::{
+    use crate::layer1::law::justice::{
         check_crime_system, evaluate_warden_action, execute_arrest_system, update_inmates_system,
         Inmate, Wanted,
     };
@@ -458,7 +458,7 @@ mod tests {
 
         // Run system
         world
-            .run_system_once(crate::layer1::justice::warden_execution_system)
+            .run_system_once(crate::layer1::law::justice::warden_execution_system)
             .unwrap();
 
         // Arrest should happen

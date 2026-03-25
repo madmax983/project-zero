@@ -95,7 +95,7 @@ mod tests {
         world.insert_resource(scale::layer2::visibility::SystemVisibility::default());
         world.insert_resource(scale::layer2::system::ViewMode::default());
         world.insert_resource(scale::layer2::system::SystemMap);
-        world.insert_resource(scale::layer1::predictive_policing::PredictionConfig {
+        world.insert_resource(scale::layer1::law::predictive_policing::PredictionConfig {
             threshold: 0.8,
             enabled: true,
         });

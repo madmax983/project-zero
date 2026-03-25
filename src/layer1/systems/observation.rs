@@ -105,10 +105,10 @@ pub fn register(schedule: &mut Schedule) {
 
     schedule.add_systems(
         (
-            crate::layer1::justice::check_crime_system
+            crate::layer1::law::justice::check_crime_system
                 .after(crate::layer1::unrest::check_mental_break_system),
-            crate::layer1::contraband::detect_contraband_system
-                .after(crate::layer1::justice::check_crime_system),
+            crate::layer1::law::contraband::detect_contraband_system
+                .after(crate::layer1::law::justice::check_crime_system),
             crate::layer1::unrest::recover_mental_break_system.after(decay_needs_system),
             crate::layer1::civic_ideology::apply_ideological_modifiers_system
                 .after(crate::layer1::unrest::recover_mental_break_system),
@@ -116,7 +116,7 @@ pub fn register(schedule: &mut Schedule) {
                 .after(crate::layer1::civic_ideology::apply_ideological_modifiers_system),
             check_generational_friction_system.after(decay_needs_system),
             crate::layer1::hobby::assign_hobby_system.after(decay_needs_system),
-            crate::layer1::predictive_policing::check_prediction_system.after(decay_needs_system),
+            crate::layer1::law::predictive_policing::check_prediction_system.after(decay_needs_system),
             crate::layer1::social::grievances::post_grievance_system.after(decay_needs_system),
             crate::layer1::social::grievances::read_board_system.after(decay_needs_system),
             crate::layer1::social::cultural_vandalism::vandalism_system.after(decay_needs_system),

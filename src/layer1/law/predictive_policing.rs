@@ -5,7 +5,7 @@
 //! Wardens can then arrest these suspects and place them in protective custody.
 
 #![allow(clippy::collapsible_if)]
-use crate::layer1::justice::Inmate;
+use crate::layer1::law::justice::Inmate;
 use crate::layer1::map::GridPosition;
 use crate::layer1::stress::StressTracker;
 use crate::layer1::traits::{Trait, Traits};
@@ -206,10 +206,10 @@ fn find_jail_spot(world: &World) -> Option<GridPosition> {
 
 #[cfg(test)]
 mod tests {
-    use crate::layer1::justice::{Inmate, Wanted};
+    use crate::layer1::law::justice::{Inmate, Wanted};
     use crate::layer1::map::GridPosition;
     use crate::layer1::pop::Pop;
-    use crate::layer1::predictive_policing::{
+    use crate::layer1::law::predictive_policing::{
         check_prediction_system, evaluate_pre_crime_arrest, PredictionConfig, PredictiveModel,
         Suspect,
     };
@@ -337,7 +337,7 @@ mod tests {
         let warden = world.spawn((Pop, GridPosition { x: 0, y: 0 })).id();
 
         // Execute arrest
-        crate::layer1::predictive_policing::execute_pre_crime_arrest(&mut world, warden, suspect);
+        crate::layer1::law::predictive_policing::execute_pre_crime_arrest(&mut world, warden, suspect);
 
         // Should be Inmate (Protective Custody)
         let inmate = world.get::<Inmate>(suspect).expect("Should be Inmate");

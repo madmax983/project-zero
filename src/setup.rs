@@ -176,7 +176,7 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     world.insert_resource(crate::layer1::unrest::Unrest::default());
     world.insert_resource(crate::layer1::tech_envy::TechEnvyConfig::default());
     world.insert_resource(crate::layer1::building::BuildingMap::default());
-    world.insert_resource(crate::layer1::predictive_policing::PredictionConfig {
+    world.insert_resource(crate::layer1::law::predictive_policing::PredictionConfig {
         threshold: 0.8,
         enabled: true,
     });

@@ -12,7 +12,7 @@ use crate::layer1::farm::Farm;
 use crate::layer1::fauna::Fauna;
 use crate::layer1::funeral::{Corpse, Grave};
 use crate::layer1::housing::Housing;
-use crate::layer1::justice::{Inmate, Wanted};
+use crate::layer1::law::justice::{Inmate, Wanted};
 use crate::layer1::map::GridPosition;
 use crate::layer1::medical::Hospital;
 use crate::layer1::needs::Needs;
@@ -374,7 +374,7 @@ pub fn extract_building_inputs(
 
     // Suspects (building_type = 13)
     {
-        use crate::layer1::predictive_policing::Suspect;
+        use crate::layer1::law::predictive_policing::Suspect;
         let mut query = world.query::<(Entity, &GridPosition, &Suspect)>();
         for (entity, pos, _suspect) in query.iter(world) {
             entities.push(entity);

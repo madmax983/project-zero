@@ -86,7 +86,7 @@ pub enum ActionType {
     Farm,
     /// Arrest Wanted criminals and escort them to jail.
     ///
-    /// See [`crate::layer1::justice::evaluate_warden_action`].
+    /// See [`crate::layer1::law::justice::evaluate_warden_action`].
     Warden,
     /// Sleepwalk (Mental Break).
     ///
@@ -130,7 +130,7 @@ pub enum ActionType {
     ScrawlMemeticSigil,
     /// Pre-emptive arrest of high-risk Suspects.
     ///
-    /// See [`crate::layer1::predictive_policing::evaluate_pre_crime_arrest`].
+    /// See [`crate::layer1::law::predictive_policing::evaluate_pre_crime_arrest`].
     PreCrimeArrest,
     /// Consume a chemical substance (Stim/Sedative).
     ///
