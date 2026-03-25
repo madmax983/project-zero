@@ -2638,7 +2638,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Predictive Policing
+## [SPECCED] Predictive Policing
 
 **Layer:** 1
 
@@ -3042,7 +3042,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Zero-G Sports
+## [SPECCED] Zero-G Sports
 
 **Layer:** 1
 
@@ -3126,7 +3126,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Memory Crystals
+## [SPECCED] Memory Crystals
 
 **Layer:** 1
 
@@ -3515,7 +3515,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Solar Sailing
+## [SPECCED] Solar Sailing
 
 **Layer:** 2
 
@@ -10736,7 +10736,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Feral Algorithm
+## [SPECCED] The Feral Algorithm
 
 **Layer:** 1
 
@@ -11134,7 +11134,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** The incredible speed and resource-efficiency of growing your infrastructure vs. the terrifying reality of living inside a hungry organism during a food shortage.
 ---
 
-## The Feral Algorithm
+## [SPECCED] The Feral Algorithm
 
 **Layer:** Cross-layer (2 -> 1)
 
