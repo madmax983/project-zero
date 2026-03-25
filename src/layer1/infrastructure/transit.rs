@@ -76,7 +76,10 @@ mod tests {
             .id();
 
         // Simulate movement onto the road
-        world.get_mut::<GridPosition>(pop).unwrap().y = 5;
+        world
+            .get_mut::<GridPosition>(pop)
+            .expect("Missing GridPosition")
+            .y = 5;
 
         // 3. Run the toll system
         let mut schedule = Schedule::default();
@@ -84,7 +87,7 @@ mod tests {
         schedule.run(&mut world);
 
         // 4. Assert Pop lost credits
-        let pop_wealth = world.get::<Wallet>(pop).unwrap();
+        let pop_wealth = world.get::<Wallet>(pop).expect("Missing Wallet");
         assert_eq!(
             pop_wealth.credits, 9.0,
             "Pop should have paid 1.0 credit for the toll"
@@ -144,12 +147,14 @@ mod tests {
         schedule.run(&mut world);
 
         // 4. Assert Pop moved
-        let new_pos = world.get::<GridPosition>(pop).unwrap();
+        let new_pos = world
+            .get::<GridPosition>(pop)
+            .expect("Missing GridPosition");
         assert_eq!(new_pos.x, 6);
         assert_eq!(new_pos.y, 5);
 
         // 5. Assert Pop lost credits
-        let pop_wealth = world.get::<Wallet>(pop).unwrap();
+        let pop_wealth = world.get::<Wallet>(pop).expect("Missing Wallet");
         assert_eq!(
             pop_wealth.credits, 9.0,
             "Pop should have paid 1.0 credit for the toll after moving"
@@ -183,7 +188,10 @@ mod tests {
             .id();
 
         // Simulate movement onto the road
-        world.get_mut::<GridPosition>(pop).unwrap().y = 5;
+        world
+            .get_mut::<GridPosition>(pop)
+            .expect("Missing GridPosition")
+            .y = 5;
 
         // 3. Run the toll system
         let mut schedule = Schedule::default();
@@ -191,9 +199,11 @@ mod tests {
         schedule.run(&mut world);
 
         // 4. Assert Pop is broke but highly stressed
-        let pop_wealth = world.get::<Wallet>(pop).unwrap();
+        let pop_wealth = world.get::<Wallet>(pop).expect("Missing Wallet");
         assert_eq!(pop_wealth.credits, 0.0);
-        let pop_mood = world.get::<StressTracker>(pop).unwrap();
+        let pop_mood = world
+            .get::<StressTracker>(pop)
+            .expect("Missing StressTracker");
         assert!(
             pop_mood.accumulated_stress > 10.0,
             "Pop should incur stress if they cannot afford the toll"

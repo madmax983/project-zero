@@ -115,7 +115,9 @@ mod tests {
         biocompatibility_system(&mut world);
 
         // Assert: No damage
-        let health = world.get::<Health>(pop).unwrap();
+        let health = world
+            .get::<Health>(pop)
+            .expect("Missing resource or component");
         assert_eq!(health.current, 100.0);
     }
 
@@ -142,7 +144,9 @@ mod tests {
         biocompatibility_system(&mut world);
 
         // Assert: Damage taken
-        let health = world.get::<Health>(pop).unwrap();
+        let health = world
+            .get::<Health>(pop)
+            .expect("Missing resource or component");
         assert!(health.current < 100.0);
     }
 
@@ -171,7 +175,9 @@ mod tests {
 
         biocompatibility_system(&mut world);
 
-        let health = world.get::<Health>(pop).unwrap();
+        let health = world
+            .get::<Health>(pop)
+            .expect("Missing resource or component");
         assert_eq!(health.current, 100.0, "NativeBorn should resist hazard");
     }
 
@@ -201,7 +207,9 @@ mod tests {
         biocompatibility_system(&mut world);
 
         // Assert: No damage should be taken in clean air, even with negative immunity.
-        let health = world.get::<Health>(pop).unwrap();
+        let health = world
+            .get::<Health>(pop)
+            .expect("Missing resource or component");
         assert_eq!(health.current, 100.0, "Should be safe in clean air");
     }
 }

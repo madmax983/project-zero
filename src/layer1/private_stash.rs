@@ -191,7 +191,7 @@ mod tests {
             // Optimization: Break early if theft occurred
             if world
                 .get::<PrivateStash>(pop)
-                .unwrap()
+                .expect("Missing resource or component")
                 .get(ResourceType::Food)
                 > 0.0
             {
@@ -204,7 +204,9 @@ mod tests {
         assert!(res.food < 100.0, "Food should be stolen");
 
         // Check stash increased
-        let stash = world.get::<PrivateStash>(pop).unwrap();
+        let stash = world
+            .get::<PrivateStash>(pop)
+            .expect("Missing resource or component");
         assert!(
             stash.get(ResourceType::Food) > 0.0,
             "Stash should contain Food"
@@ -235,7 +237,7 @@ mod tests {
             schedule.run(&mut world);
             if world
                 .get::<PrivateStash>(pop)
-                .unwrap()
+                .expect("Missing resource or component")
                 .get(ResourceType::Metal)
                 > 0.0
             {
@@ -246,7 +248,9 @@ mod tests {
         let res = world.resource::<ColonyResources>();
         assert!(res.metal < 50.0, "Metal should be stolen");
 
-        let stash = world.get::<PrivateStash>(pop).unwrap();
+        let stash = world
+            .get::<PrivateStash>(pop)
+            .expect("Missing resource or component");
         assert!(
             stash.get(ResourceType::Metal) > 0.0,
             "Stash should contain Metal"
@@ -267,7 +271,9 @@ mod tests {
         inspect_pop(&mut world, pop);
 
         // Stash should be empty
-        let stash = world.get::<PrivateStash>(pop).unwrap();
+        let stash = world
+            .get::<PrivateStash>(pop)
+            .expect("Missing resource or component");
         assert_eq!(stash.get(ResourceType::Food), 0.0);
 
         // Global resources should have the food back

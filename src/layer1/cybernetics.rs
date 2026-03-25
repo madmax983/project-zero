@@ -161,7 +161,9 @@ mod tests {
     fn test_augmentations_component_exists() {
         let mut world = World::new();
         let entity = world.spawn((Pop, Augmentations::default())).id();
-        let augs = world.get::<Augmentations>(entity).unwrap();
+        let augs = world
+            .get::<Augmentations>(entity)
+            .expect("Missing resource or component");
         assert!(augs.installed.is_empty());
     }
 
@@ -215,7 +217,9 @@ mod tests {
         }
 
         // Verify installation
-        let augs = world.get::<Augmentations>(pop).unwrap();
+        let augs = world
+            .get::<Augmentations>(pop)
+            .expect("Missing resource or component");
         assert!(
             augs.installed.contains(&bionic_arm),
             "Prosthetic should be installed"

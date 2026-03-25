@@ -122,7 +122,9 @@ mod tests {
     fn test_equipment_has_totem_slot() {
         let mut world = World::new();
         let entity = world.spawn((Pop, Equipment::default())).id();
-        let eq = world.get::<Equipment>(entity).unwrap();
+        let eq = world
+            .get::<Equipment>(entity)
+            .expect("Missing resource or component");
         assert!(eq.totem.is_none());
     }
 
@@ -148,11 +150,15 @@ mod tests {
         schedule.add_systems(bevy_ecs::prelude::apply_deferred);
         schedule.run(&mut world);
 
-        let eq = world.get::<Equipment>(pop).unwrap();
+        let eq = world
+            .get::<Equipment>(pop)
+            .expect("Missing resource or component");
         assert!(eq.totem.is_some());
 
-        let totem_entity = eq.totem.unwrap();
-        let totem = world.get::<Totem>(totem_entity).unwrap();
+        let totem_entity = eq.totem.expect("Missing resource or component");
+        let totem = world
+            .get::<Totem>(totem_entity)
+            .expect("Missing resource or component");
         assert!(totem.stress_relief > 0.0);
     }
 
@@ -198,7 +204,9 @@ mod tests {
 
         schedule.run(&mut world);
 
-        let tracker = world.get::<StressTracker>(pop).unwrap();
+        let tracker = world
+            .get::<StressTracker>(pop)
+            .expect("Missing resource or component");
         // Base change +1.0, Totem -0.5 => Net +0.5
         assert_eq!(tracker.accumulated_stress, 0.5);
     }
@@ -246,7 +254,9 @@ mod tests {
         assert!(world.get::<BadOmen>(pop).is_some());
 
         // Should have high stress spike
-        let tracker = world.get::<StressTracker>(pop).unwrap();
+        let tracker = world
+            .get::<StressTracker>(pop)
+            .expect("Missing resource or component");
         assert!(tracker.accumulated_stress >= 50.0);
     }
 }

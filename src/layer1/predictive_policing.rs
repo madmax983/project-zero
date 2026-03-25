@@ -307,7 +307,7 @@ mod tests {
         let result = evaluate_pre_crime_arrest(&warden_pos, &weights, &suspects);
 
         assert!(result.is_some());
-        let (score, target) = result.unwrap();
+        let (score, target) = result.expect("Missing result");
         assert!(score > 0.0);
         assert_eq!(target, suspect);
     }

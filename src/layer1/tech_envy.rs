@@ -134,12 +134,12 @@ mod tests {
         schedule.run(&mut world);
 
         // 5. Assert Pop has "Obsolescence" modifier
-        let morale = world.get::<Morale>(pop).unwrap();
+        let morale = world.get::<Morale>(pop).expect("Pop missing Morale");
 
         let obs_mod = morale.modifiers.iter().find(|m| m.label == "Obsolescence");
         assert!(obs_mod.is_some(), "Pop should have Obsolescence modifier");
 
-        let modifier = obs_mod.unwrap();
+        let modifier = obs_mod.expect("Missing Obsolescence modifier");
         // Gap is HighTech(3) - Basic(1) = 2. Penalty = -0.1 * 2 = -0.2
         assert!((modifier.value - -0.2).abs() < f32::EPSILON);
     }
@@ -176,7 +176,7 @@ mod tests {
         schedule.run(&mut world);
 
         // Assert NO modifier
-        let morale = world.get::<Morale>(pop).unwrap();
+        let morale = world.get::<Morale>(pop).expect("Pop missing Morale");
         assert!(!morale.modifiers.iter().any(|m| m.label == "Obsolescence"));
     }
 
@@ -212,7 +212,7 @@ mod tests {
         schedule.run(&mut world);
 
         // Assert NO modifier
-        let morale = world.get::<Morale>(pop).unwrap();
+        let morale = world.get::<Morale>(pop).expect("Pop missing Morale");
         assert!(!morale.modifiers.iter().any(|m| m.label == "Obsolescence"));
     }
 
@@ -248,7 +248,7 @@ mod tests {
         // Run once
         schedule.run(&mut world);
 
-        let morale = world.get::<Morale>(pop).unwrap();
+        let morale = world.get::<Morale>(pop).expect("Pop missing Morale");
         let count_1 = morale
             .modifiers
             .iter()
@@ -259,7 +259,7 @@ mod tests {
         // Run again
         schedule.run(&mut world);
 
-        let morale = world.get::<Morale>(pop).unwrap();
+        let morale = world.get::<Morale>(pop).expect("Pop missing Morale");
         let count_2 = morale
             .modifiers
             .iter()
@@ -271,7 +271,7 @@ mod tests {
             .modifiers
             .iter()
             .find(|m| m.label == "Obsolescence")
-            .unwrap();
+            .expect("Missing Obsolescence modifier");
         assert_eq!(modifier.duration, 10, "Duration should be refreshed");
     }
 }

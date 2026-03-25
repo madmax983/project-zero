@@ -205,7 +205,9 @@ mod tests {
 
         // Assert
         // Health should be unchanged
-        let health = world.get::<Health>(hull_entity).unwrap();
+        let health = world
+            .get::<Health>(hull_entity)
+            .expect("Missing resource or component");
         assert_eq!(
             health.current, 100.0,
             "Miner with low tier tool should not damage Hull tile"

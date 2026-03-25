@@ -11,3 +11,7 @@
 **[Mental Break Coverage Improvements]**
 **Learning:** Testing ECS utility functions (like `evaluate_mental_break`) that accept complex context types (`PopEvalData`, `UtilityAIBuffer`) requires robust default factories to prevent boilerplate sprawl and ensure isolation across test variants.
 **Action:** Always create `default_data()` and `default_buffer()` factories when testing ECS evaluation logic to keep test cases concise and focused on the mutated parameters.
+
+**[Test Assertions Drift]**
+**Learning:** Relying on `.unwrap()` in tests causes silent panics with unhelpful error messages when components or resources go missing during refactors.
+**Action:** Always replace `.unwrap()` with `.expect("[Reason]")` in tests to pinpoint failures immediately.
