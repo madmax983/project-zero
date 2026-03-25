@@ -11785,3 +11785,59 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** The irresistible lure of an entire civilization's technological legacy vs. the terrifying risk of drawing the attention of whatever killed them.
 
 ---
+
+## The Memory Smugglers
+
+**Layer:** 1 -> Cross-layer
+
+**Fantasy:** The black market isn't just for goods; it's for experiences. Colonists trade illegal thrills or stolen secrets.
+
+**Mechanic:** A black market specifically for "Memory Drives." Pops can buy memories to instantly fulfill leisure or social needs, or gain a temporary skill boost. However, using smuggled memories has a chance to inflict "Identity Dysphoria" or accidentally download a "Subversive Thought" trait.
+
+**Emergence:** Your colony's best doctor suddenly forgets how to perform surgery but becomes a master artist because they bought the wrong drive to relieve stress. A whole sector riots because a smuggled memory of an ancient revolution went viral.
+
+**Tension:** Crack down on the memory trade (lowering immediate morale) or risk the long-term mental stability and loyalty of your population?
+
+---
+
+## Fungal Cartography
+
+**Layer:** 1 -> 2
+
+**Fantasy:** The planet's ecosystem is interconnected in ways you don't understand, and it's trying to talk to you.
+
+**Mechanic:** A rare, massive subterranean fungal network spans the entire Layer 1 map. Tapping into its neural nodes using advanced bio-tech reveals "Fungal Maps"—giving perfect sensor data on distant, unexplored Layer 2 planets where the same fungus exists.
+
+**Emergence:** You hook your sensors to the fungus to find a safe colony world. But the connection goes both ways. The alien flora on the distant world gets "spooked" by the connection and starts rapidly mutating, meaning by the time your colony ship arrives, the "safe" world is extremely hostile.
+
+**Tension:** Use the free, instantaneous galactic intel network, or keep your own planetary ecosystem isolated to avoid alerting whatever else is connected to the network?
+
+---
+
+## The Debt-Forged Armada
+
+**Layer:** 3 -> 2
+
+**Fantasy:** Winning a war not with superior tactics, but with overwhelmingly complex financial instruments.
+
+**Mechanic:** You can literally finance a mercenary fleet on Layer 3 using the expected future yield of your Layer 1 colonies as collateral. The fleet is overwhelmingly powerful, but if your colony misses a projected quota (e.g., due to a bad harvest or a strike), the mercenaries immediately switch sides or repossess your orbital infrastructure.
+
+**Emergence:** You fund a massive war to save your empire, securing a victory. However, the subsequent peace means your military-industrial complex slows down. You miss a quota, and the very fleet that saved you turns around and blockades your capital to collect their "late fees."
+
+**Tension:** Leveraging your colony's future to survive the present vs. the terrifying reality of your own defense force becoming your most ruthless creditor.
+
+---
+
+## The Bio-Mimetic Saboteurs
+
+**Layer:** Cross-layer (3 -> 1)
+
+**Fantasy:** The paranoia that your most trusted friend is a vat-grown replica sent by an enemy empire.
+
+**Mechanic:** Hostile Layer 3 empires can secretly abduct your colonists during Layer 2 transit and replace them with "Bio-Mimics." These mimics function perfectly as Pops, gaining skills and relationships. However, during a critical event (a raid, a plague), a hidden signal activates them, and they immediately begin sabotaging critical infrastructure or assassinating leaders.
+
+**Emergence:** Your colony's beloved Chief Medical Officer has secretly been a mimic for ten years. During a devastating plague, instead of synthesizing a cure, they quietly poison the entire water supply, turning a manageable crisis into an apocalyptic event before anyone realizes what happened.
+
+**Tension:** Implementing draconian, morale-crushing genetic screening for all returning colonists vs. the existential risk of sleeper agents deeply embedded in your society.
+
+---
