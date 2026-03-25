@@ -11467,7 +11467,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Hostile Architecture
+## [SPECCED] Hostile Architecture
 
 **Layer:** 1
 
@@ -11481,7 +11481,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Bureaucratic Blockade
+## [SPECCED] The Bureaucratic Blockade
 
 **Layer:** 3 -> 2
 
@@ -11495,7 +11495,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Cryo-Plague Carrier
+## [SPECCED] The Cryo-Plague Carrier
 
 **Layer:** 1
 
@@ -11550,7 +11550,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Sub-Zero Empathy
+## [SPECCED] The Sub-Zero Empathy
 
 **Layer:** 1
 
