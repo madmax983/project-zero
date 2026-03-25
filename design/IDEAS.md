@@ -1532,7 +1532,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Doppelgangers
+## Doppelgangers [SPECCED]
 
 **Layer:** 1
 
@@ -1546,7 +1546,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Medical Triage Policies
+## Medical Triage Policies [SPECCED]
 
 **Layer:** 1
 
@@ -11383,7 +11383,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Cartographic Delusion
+## The Cartographic Delusion [SPECCED]
 
 **Layer:** Cross-layer (3 -> 2 -> 1)
 
@@ -11425,7 +11425,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Spore-Mind Diplomat
+## The Spore-Mind Diplomat [SPECCED]
 
 **Layer:** Cross-layer (1 -> 3)
 
