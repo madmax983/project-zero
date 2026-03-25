@@ -11286,7 +11286,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** How much redundancy do you build? Do you intervene early or trust the system?
 
 ---
-## The Subterranean Smog Layer
+## The Subterranean Smog Layer [SPECCED]
 
 **Layer:** 1
 
@@ -11300,7 +11300,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Orbital Debt Collections
+## Orbital Debt Collections [SPECCED]
 
 **Layer:** Cross-layer (2 -> 1)
 
@@ -11314,7 +11314,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Phantom Signal
+## The Phantom Signal [SPECCED]
 
 **Layer:** Cross-layer (3 -> 2 -> 1)
 
@@ -11328,7 +11328,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Symbiotic Insurgency
+## The Symbiotic Insurgency [SPECCED]
 
 **Layer:** 1
 
