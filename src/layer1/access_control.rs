@@ -1,3 +1,40 @@
+//! Access Control system for doors and airlocks.
+//!
+//! # Context
+//! This module defines access restrictions for buildings like Doors, Airlocks, and Gates.
+//! It allows locking down areas to specific pops or roles (e.g., only Soldiers can enter the Armory).
+//!
+//! # Usage
+//! ```rust
+//! use bevy_ecs::prelude::*;
+//! use scale::layer1::access_control::{AccessControl, AccessMode, check_access};
+//! use scale::layer1::pop::{Pop, Role};
+//! use std::collections::HashSet;
+//!
+//! let mut world = World::new();
+//! let soldier = world.spawn((Pop, Role::Soldier)).id();
+//!
+//! let mut allowed_roles = HashSet::new();
+//! allowed_roles.insert(Role::Soldier);
+//!
+//! let door = world.spawn(AccessControl {
+//!     mode: AccessMode::Restricted,
+//!     allowed_roles,
+//!     ..Default::default()
+//! }).id();
+//!
+//! assert!(check_access(&world, door, soldier));
+//! ```
+//!
+//! # Details
+//! - [`AccessMode::Public`]: Open to everyone.
+//! - [`AccessMode::Restricted`]: Checks `allowed_pops` and `allowed_roles`.
+//! - [`AccessMode::Lockdown`]: Blocks everyone.
+//! Pathfinding automatically respects these rules.
+//!
+//! # Links
+//! - [`AccessControl`]
+//! - [`check_access`]
 use crate::layer1::pop::Role;
 use bevy_ecs::prelude::*;
 use std::collections::HashSet;
@@ -25,16 +62,30 @@ pub struct AccessControl {
     pub allowed_roles: HashSet<Role>,
 }
 
+
 /// Checks if a pop is allowed to access a building.
 ///
 /// Returns `true` if:
-/// - The building has no `AccessControl` component.
-/// - The mode is `Public`.
-/// - The mode is `Restricted` AND the pop is in `allowed_pops` OR has an allowed `Role`.
+/// - The building has no [`AccessControl`] component.
+/// - The mode is [`AccessMode::Public`].
+/// - The mode is [`AccessMode::Restricted`] AND the pop is in `allowed_pops` OR has an allowed [`crate::layer1::pop::Role`].
 ///
 /// Returns `false` if:
-/// - The mode is `Lockdown`.
-/// - The mode is `Restricted` AND the pop is NOT allowed.
+/// - The mode is [`AccessMode::Lockdown`].
+/// - The mode is [`AccessMode::Restricted`] AND the pop is NOT allowed.
+///
+/// # Examples
+/// ```rust
+/// use bevy_ecs::prelude::*;
+/// use scale::layer1::access_control::{AccessControl, check_access};
+/// use scale::layer1::pop::Pop;
+///
+/// let mut world = World::new();
+/// let pop = world.spawn(Pop).id();
+/// let door = world.spawn(AccessControl::default()).id();
+///
+/// assert!(check_access(&world, door, pop));
+/// ```
 pub fn check_access(world: &World, door_entity: Entity, pop_entity: Entity) -> bool {
     let Some(access) = world.get::<AccessControl>(door_entity) else {
         return true; // No control = open
