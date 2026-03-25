@@ -501,3 +501,13 @@
 - **Systems connected:** `process_gene_splicing_system` -> `gene_splicing_chronicle_bridge`
 - **Glue added:** Added `GeneSplicingResultEvent` and `gene_splicing_chronicle_bridge` in `src/layer1/integration.rs`. Registered in `Layer1SystemSet::Economy` and `Observation`.
 - **Tests:** `tests/integration/gene_splicing_chronicle.rs`
+### INT-409: Shipbreaking -> Mining Logistics
+- **Date:** 2026-03-27
+- **Systems connected:** `SpawnCrashedShipEvent` & `MineEvent` registered globally. `spawn_crashed_ship_system`, `mine_system`, and `hull_destroyed_system` registered in `Layer1SystemSet::Execution`.
+- **Glue added:** Event buffer registrations in `cleanup.rs`, schedule in `execution.rs`.
+- **Tests:** `tests/integration/shipbreaking_bridge.rs` (1 test verified)
+### INT-409: Shipbreaking -> Mining Logistics
+- **Date:** 2026-03-27
+- **Systems connected:** `SpawnCrashedShipEvent` & `MineEvent` registered globally. `spawn_crashed_ship_system`, `mine_system`, and `hull_destroyed_system` registered in `Layer1SystemSet::Execution`.
+- **Glue added:** Event buffer registrations in `cleanup.rs`, schedule in `execution.rs`.
+- **Tests:** `tests/integration/shipbreaking_bridge.rs` (1 test verified)

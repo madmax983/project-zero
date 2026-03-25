@@ -220,6 +220,8 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     world.init_resource::<Events<crate::layer1::geology::tectonic::MegaQuakeEvent>>();
     world.init_resource::<Events<crate::layer1::ancestral_graves::SacrilegeEvent>>();
     world.init_resource::<Events<crate::layer1::resources::MiningEvent>>();
+    world.init_resource::<Events<crate::layer1::shipbreaking::SpawnCrashedShipEvent>>();
+    world.init_resource::<Events<crate::layer1::shipbreaking::MineEvent>>();
     world.init_resource::<crate::layer1::geology::tectonic::TectonicStress>();
     world.init_resource::<crate::layer1::tech::infinite_archive::Archive>();
     world.init_resource::<crate::layer2::trade::blockade::ColonyDebt>();

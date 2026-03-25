@@ -20,3 +20,5 @@ pub mod governance_rebellion;
 pub mod biomass_tariff;
 pub mod disaster_tourism_bridge;
 pub mod gene_splicing_chronicle;
+pub mod shipbreaking_bridge;
+pub mod shipbreaking_bridge;

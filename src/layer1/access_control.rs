@@ -30,7 +30,7 @@
 //! - [`AccessMode::Public`]: Open to everyone.
 //! - [`AccessMode::Restricted`]: Checks `allowed_pops` and `allowed_roles`.
 //! - [`AccessMode::Lockdown`]: Blocks everyone.
-//! Pathfinding automatically respects these rules.
+//!   Pathfinding automatically respects these rules.
 //!
 //! # Links
 //! - [`AccessControl`]
