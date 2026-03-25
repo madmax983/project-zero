@@ -240,7 +240,14 @@ pub fn process_crimes_system(
 
 // Finds wanted pops near sheriffs and moves them to jail
 pub fn sheriff_arrest_system(
-    mut criminal_query: Query<(Entity, &mut crate::layer1::map::GridPosition, &mut CrimeRecord), Without<crate::layer1::pop::Job>>,
+    mut criminal_query: Query<
+        (
+            Entity,
+            &mut crate::layer1::map::GridPosition,
+            &mut CrimeRecord,
+        ),
+        Without<crate::layer1::pop::Job>,
+    >,
     sheriff_query: Query<&crate::layer1::map::GridPosition, With<crate::layer1::pop::Job>>,
     zone_grid: Res<crate::layer1::zone::ZoneGrid>,
 ) {
@@ -248,7 +255,10 @@ pub fn sheriff_arrest_system(
     for y in 0..zone_grid.height {
         for x in 0..zone_grid.width {
             if zone_grid.get(x as i32, y as i32) == crate::layer1::zone::ZoneType::Jail {
-                jail_pos = Some(crate::layer1::map::GridPosition { x: x as i32, y: y as i32 });
+                jail_pos = Some(crate::layer1::map::GridPosition {
+                    x: x as i32,
+                    y: y as i32,
+                });
                 break;
             }
         }
@@ -262,7 +272,8 @@ pub fn sheriff_arrest_system(
             for (_ent, mut crim_pos, mut record) in criminal_query.iter_mut() {
                 if record.wanted && !record.is_arrested {
                     // Check adjacency (simplified distance)
-                    let dist = (sheriff_pos.x - crim_pos.x).abs() + (sheriff_pos.y - crim_pos.y).abs();
+                    let dist =
+                        (sheriff_pos.x - crim_pos.x).abs() + (sheriff_pos.y - crim_pos.y).abs();
                     if dist <= 1 {
                         record.is_arrested = true;
                         record.wanted = false;

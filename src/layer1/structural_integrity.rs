@@ -175,20 +175,16 @@ pub fn apply_collapse(world: &mut World, pos: GridPosition) {
     }
 
     // 2. Damage entities
-    // We collect entities first to avoid borrowing world while iterating
-    let mut victims = Vec::new();
-    // Use read-only query to find victims
-    let mut query = world.query::<(Entity, &GridPosition, &Health)>();
+    // ⚡ Bolt Optimization:
+    // Removed intermediate `Vec<Entity>` allocation (`victims`).
+    // Previously, the system queried `&Health` to find victims, collected their `Entity` IDs,
+    // and then did a second pass with `world.get_mut::<Health>` to apply damage.
+    // By querying `&mut Health` directly, we avoid the heap allocation and collapse two
+    // iterations into a single O(N) pass, eliminating memory pressure on the hot path.
+    let mut query = world.query::<(&GridPosition, &mut Health)>();
 
-    for (entity, p, _) in query.iter(world) {
+    for (p, mut health) in query.iter_mut(world) {
         if p.x == pos.x && p.y == pos.y {
-            victims.push(entity);
-        }
-    }
-
-    // Apply damage
-    for entity in victims {
-        if let Some(mut health) = world.get_mut::<Health>(entity) {
             health.take_damage(50.0);
         }
     }

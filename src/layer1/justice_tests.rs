@@ -7,10 +7,10 @@ mod tests {
     };
 
     use crate::layer1::black_market::ColonyStats;
-use crate::layer1::map::GridPosition;
-use crate::layer1::pop::Pop;
-    use crate::layer1::pop::Job;
+    use crate::layer1::map::GridPosition;
     use crate::layer1::mind::utility_types::AssignmentType;
+    use crate::layer1::pop::Job;
+    use crate::layer1::pop::Pop;
 
     #[test]
     fn test_crime_generates_wanted_token() {
@@ -19,10 +19,7 @@ use crate::layer1::pop::Pop;
 
         app.add_event::<CrimeCommittedEvent>();
 
-        let criminal_entity = app.world_mut().spawn((
-            Pop,
-            CrimeRecord::default(),
-        )).id();
+        let criminal_entity = app.world_mut().spawn((Pop, CrimeRecord::default())).id();
 
         // Simulating a crime event
         app.world_mut().send_event(CrimeCommittedEvent {
@@ -34,7 +31,10 @@ use crate::layer1::pop::Pop;
         app.update();
 
         let record = app.world().get::<CrimeRecord>(criminal_entity).unwrap();
-        assert!(record.is_wanted(), "Pop should have a wanted token after a crime");
+        assert!(
+            record.is_wanted(),
+            "Pop should have a wanted token after a crime"
+        );
         assert_eq!(record.severity, 50, "Theft should generate severity 50");
     }
 
@@ -47,17 +47,30 @@ use crate::layer1::pop::Pop;
         zone_grid.set(5, 5, ZoneType::Jail);
         app.world_mut().insert_resource(zone_grid);
 
-        let criminal_entity = app.world_mut().spawn((
-            Pop,
-            GridPosition { x: 10, y: 10 },
-            CrimeRecord { wanted: true, severity: 50, is_arrested: false },
-        )).id();
+        let criminal_entity = app
+            .world_mut()
+            .spawn((
+                Pop,
+                GridPosition { x: 10, y: 10 },
+                CrimeRecord {
+                    wanted: true,
+                    severity: 50,
+                    is_arrested: false,
+                },
+            ))
+            .id();
 
-        let _sheriff_entity = app.world_mut().spawn((
-            Pop,
-            Job { workplace: bevy::prelude::Entity::PLACEHOLDER, job_type: AssignmentType::Sheriff },
-            GridPosition { x: 9, y: 10 },
-        )).id();
+        let _sheriff_entity = app
+            .world_mut()
+            .spawn((
+                Pop,
+                Job {
+                    workplace: bevy::prelude::Entity::PLACEHOLDER,
+                    job_type: AssignmentType::Sheriff,
+                },
+                GridPosition { x: 9, y: 10 },
+            ))
+            .id();
 
         // Simulating sheriff arresting pop
         app.add_systems(bevy::prelude::Update, sheriff_arrest_system);
@@ -66,8 +79,16 @@ use crate::layer1::pop::Pop;
         // Assert: Criminal should be moved to jail zone and marked as arrested
         let record = app.world().get::<CrimeRecord>(criminal_entity).unwrap();
         assert!(record.is_arrested, "Criminal should be marked arrested");
-        assert_eq!(app.world().get::<GridPosition>(criminal_entity).unwrap().x, 5, "Criminal moved to jail X");
-        assert_eq!(app.world().get::<GridPosition>(criminal_entity).unwrap().y, 5, "Criminal moved to jail Y");
+        assert_eq!(
+            app.world().get::<GridPosition>(criminal_entity).unwrap().x,
+            5,
+            "Criminal moved to jail X"
+        );
+        assert_eq!(
+            app.world().get::<GridPosition>(criminal_entity).unwrap().y,
+            5,
+            "Criminal moved to jail Y"
+        );
     }
 
     #[test]
@@ -75,16 +96,28 @@ use crate::layer1::pop::Pop;
         let mut app = bevy::prelude::App::new();
         app.add_plugins(bevy::prelude::MinimalPlugins);
 
-        app.world_mut().insert_resource(ColonyStats { corruption: 0.0, ..Default::default() });
+        app.world_mut().insert_resource(ColonyStats {
+            corruption: 0.0,
+            ..Default::default()
+        });
         app.add_event::<PardonIssuedEvent>();
 
-        let criminal_entity = app.world_mut().spawn((
-            Pop,
-            CrimeRecord { wanted: true, severity: 50, is_arrested: true },
-        )).id();
+        let criminal_entity = app
+            .world_mut()
+            .spawn((
+                Pop,
+                CrimeRecord {
+                    wanted: true,
+                    severity: 50,
+                    is_arrested: true,
+                },
+            ))
+            .id();
 
         // Player issues a pardon
-        app.world_mut().send_event(PardonIssuedEvent { target: criminal_entity });
+        app.world_mut().send_event(PardonIssuedEvent {
+            target: criminal_entity,
+        });
 
         app.add_systems(bevy::prelude::Update, process_pardons_system);
         app.update();
@@ -94,11 +127,13 @@ use crate::layer1::pop::Pop;
         assert!(!record.is_arrested, "Pardon should release from jail");
 
         let stats = app.world().resource::<ColonyStats>();
-        assert!(stats.corruption > 0.0, "Pardoning should increase corruption");
+        assert!(
+            stats.corruption > 0.0,
+            "Pardoning should increase corruption"
+        );
     }
 
     use crate::layer1::justice::{check_crime_system, evaluate_warden_action, Wanted};
-
 
     use crate::layer1::unrest::{MentalBreakType, MentalState};
     use crate::layer1::utility_eval_types::ScorableCandidate;
