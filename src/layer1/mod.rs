@@ -100,9 +100,9 @@ pub mod institutional_memory;
 pub mod integration;
 /// Personal inventory system.
 pub mod inventory;
-pub mod law;
 /// Item definitions (Tools, Equipment).
 pub mod items;
+pub mod law;
 /// Spatial primitives (GridPosition).
 pub mod map;
 /// Colony Mascot system (Spec 129).
@@ -274,8 +274,8 @@ pub use energy::*;
 /// Pop lifecycle and aging (Spec 062).
 pub mod lifecycle;
 pub mod whispering_ore;
-pub use whispering_ore::*;
 pub use lifecycle::*;
+pub use whispering_ore::*;
 /// Atmospheric simulation (Spec 063).
 /// Terraforming and Planetary Atmosphere (Spec 207).
 pub mod terraforming;
@@ -312,9 +312,6 @@ pub use the_visitor::*;
 /// Day/Night cycle system (Spec 065).
 pub mod day_night;
 pub use day_night::*;
-
-
-
 
 /// Planetary Quirks (Spec 080).
 pub mod quirks;
@@ -357,7 +354,6 @@ pub use taboo::*;
 /// Eureka Moments system (Spec 196).
 pub mod eureka;
 pub use eureka::*;
-
 
 /// Pheromone Gardening system (Spec 170).
 pub mod pheromone;

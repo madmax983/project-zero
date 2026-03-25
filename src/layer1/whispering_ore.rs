@@ -1,4 +1,3 @@
-
 use bevy_ecs::prelude::*;
 
 #[derive(PartialEq, Eq, Debug, Clone, Copy)]
@@ -82,7 +81,10 @@ mod tests {
         let mut app = App::new();
         app.add_event::<MinedOreEvent>();
         app.add_event::<MineSealedEvent>();
-        app.add_systems(Update, (process_whispering_ore_system, handle_mine_sealing_system));
+        app.add_systems(
+            Update,
+            (process_whispering_ore_system, handle_mine_sealing_system),
+        );
         app
     }
 
@@ -91,11 +93,20 @@ mod tests {
         let mut app = setup_test_app();
         let miner = app.world_mut().spawn(Pop).id();
 
-        app.world_mut().send_event(MinedOreEvent { miner, ore_type: OreType::Whispering });
+        app.world_mut().send_event(MinedOreEvent {
+            miner,
+            ore_type: OreType::Whispering,
+        });
         app.update();
-        app.world_mut().send_event(MinedOreEvent { miner, ore_type: OreType::Whispering });
+        app.world_mut().send_event(MinedOreEvent {
+            miner,
+            ore_type: OreType::Whispering,
+        });
         app.update();
-        app.world_mut().send_event(MinedOreEvent { miner, ore_type: OreType::Whispering });
+        app.world_mut().send_event(MinedOreEvent {
+            miner,
+            ore_type: OreType::Whispering,
+        });
         app.update();
 
         assert!(app.world().get::<ResonantTrait>(miner).is_some());

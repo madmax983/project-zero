@@ -62,7 +62,6 @@ pub struct AccessControl {
     pub allowed_roles: HashSet<Role>,
 }
 
-
 /// Checks if a pop is allowed to access a building.
 ///
 /// Returns `true` if:

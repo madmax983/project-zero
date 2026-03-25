@@ -1,11 +1,11 @@
 //! Experimental module for The Dream Economy.
-use bevy_ecs::prelude::*;
+use crate::layer1::dreams::{DreamJournal, DreamtThisSleep};
+use crate::layer1::items::{Item, ItemType};
 use crate::layer1::map::GridPosition;
 use crate::layer1::pop::Pop;
-use crate::layer1::items::{Item, ItemType};
-use crate::layer1::dreams::{DreamtThisSleep, DreamJournal};
 use crate::layer1::stress::StressTracker;
 use crate::shared::time::SimulationTime;
+use bevy_ecs::prelude::*;
 
 /// A building component that captures dreams and crystallizes them into items.
 #[derive(Component, Debug, Clone, Default)]
@@ -18,7 +18,6 @@ pub struct DreamMoteItem;
 /// Marker component for a negative dream item.
 #[derive(Component, Debug, Clone)]
 pub struct NightmareFragmentItem;
-
 
 /// Harvesting system that listens for new dreams and creates items if near a DreamCatcher.
 #[allow(clippy::type_complexity)]
@@ -35,7 +34,9 @@ pub fn harvest_dreams_system(
                 // If within 2 grid distance
                 if dist <= 2 {
                     let mut entity = commands.spawn((
-                        Item { item_type: ItemType::None },
+                        Item {
+                            item_type: ItemType::None,
+                        },
                         *catcher_pos,
                     ));
                     if dream.is_nightmare {
@@ -103,12 +104,7 @@ mod tests {
             history: vec![],
         };
 
-        world.spawn((
-            Pop,
-            GridPosition { x: 5, y: 6 },
-            journal,
-            DreamtThisSleep,
-        ));
+        world.spawn((Pop, GridPosition { x: 5, y: 6 }, journal, DreamtThisSleep));
 
         world.run_system_once(harvest_dreams_system).unwrap();
         world.flush(); // Flush required to process commands and spawn the item
@@ -127,18 +123,21 @@ mod tests {
     #[test]
     fn test_nightmare_paranoia_system() {
         let mut world = World::new();
-        world.insert_resource(SimulationTime { tick: 10, ..Default::default() }); // Tick must be % 10 == 0
+        world.insert_resource(SimulationTime {
+            tick: 10,
+            ..Default::default()
+        }); // Tick must be % 10 == 0
 
         // Add Pop near NightmareFragment
-        let pop = world.spawn((
-            Pop,
-            GridPosition { x: 5, y: 6 },
-            StressTracker::default(),
-        )).id();
+        let pop = world
+            .spawn((Pop, GridPosition { x: 5, y: 6 }, StressTracker::default()))
+            .id();
 
         // Add NightmareFragment
         world.spawn((
-            Item { item_type: ItemType::None },
+            Item {
+                item_type: ItemType::None,
+            },
             GridPosition { x: 5, y: 5 },
             NightmareFragmentItem,
         ));
@@ -146,6 +145,9 @@ mod tests {
         world.run_system_once(nightmare_paranoia_system).unwrap();
 
         let stress = world.get::<StressTracker>(pop).unwrap();
-        assert_eq!(stress.accumulated_stress, 1.0, "Pop should have gained stress");
+        assert_eq!(
+            stress.accumulated_stress, 1.0,
+            "Pop should have gained stress"
+        );
     }
 }
