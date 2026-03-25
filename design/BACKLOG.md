@@ -316,3 +316,7 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `603` The Grave-Robber's Economy — `specs/603-graverobbers-economy.md`
 - [ ] `604` The Censor's Dilemma — `specs/604-censors-dilemma.md`
 - [ ] `605` The Sub-Light Ghost — `specs/605-sublight-ghost.md`
+- [ ] `606` Biocompatibility — `specs/606-biocompatibility.md`
+- [ ] `607` Conveyor Logistics — `specs/607-conveyor-logistics.md`
+- [ ] `608` Cultural Artifacts — `specs/608-cultural-artifacts.md`
+- [ ] `609` The Golden Age — `specs/609-the-golden-age.md`
