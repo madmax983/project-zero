@@ -8774,7 +8774,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Ghost Fleet Protocol
+## [SPECCED] The Ghost Fleet Protocol
 
 **Layer:** Cross-layer
 
@@ -11176,7 +11176,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Generational Grudge
+## [SPECCED] The Generational Grudge
 
 **Layer:** 1
 
@@ -11674,7 +11674,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** A massive, instant population injection (if you can feed them) vs. unparalleled technological salvage obtained through a horrifyingly cold moral calculus.
 
 ---
-## The Ghost Fleet Protocol
+## [SPECCED] The Ghost Fleet Protocol
 
 **Layer:** 2 -> 3
 
@@ -11688,7 +11688,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Nostalgia Plagues
+## [SPECCED] The Nostalgia Plagues
 
 **Layer:** 1
 
@@ -11702,7 +11702,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Gravity-Well Funnels
+## [SPECCED] Gravity-Well Funnels
 
 **Layer:** 2 -> 1
 
@@ -11716,7 +11716,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Generational Grudge
+## [SPECCED] The Generational Grudge
 
 **Layer:** Cross-layer (1 -> 3)
 
