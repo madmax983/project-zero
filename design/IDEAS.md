@@ -11397,7 +11397,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Synthesizer's Dilemma
+## The Synthesizer's Dilemma [SPECCED]
 
 **Layer:** 1
 
@@ -11411,7 +11411,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Gravity Well Graveyard
+## The Gravity Well Graveyard [SPECCED]
 
 **Layer:** Cross-layer (2 -> 1)
 
@@ -11439,7 +11439,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Fallow Cycle
+## The Fallow Cycle [SPECCED]
 
 **Layer:** 1
 
@@ -11453,7 +11453,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Whispering Ore
+## The Whispering Ore [SPECCED]
 
 **Layer:** 1
 

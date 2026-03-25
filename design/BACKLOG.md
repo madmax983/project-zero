@@ -299,3 +299,7 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `585` The Cartographic Delusion — `specs/585-cartographic-delusion.md`
 - [ ] `586` Doppelgangers — `specs/586-doppelgangers.md`
 - [ ] `587` Medical Triage Policies — `specs/587-medical-triage-policies.md`
+- [ ] `589` The Synthesizer's Dilemma — `specs/589-the-synthesizers-dilemma.md`
+- [ ] `590` The Gravity Well Graveyard — `specs/590-the-gravity-well-graveyard.md`
+- [ ] `591` The Fallow Cycle — `specs/591-the-fallow-cycle.md`
+- [ ] `592` The Whispering Ore — `specs/592-the-whispering-ore.md`
