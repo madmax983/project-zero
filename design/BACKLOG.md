@@ -307,3 +307,8 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `595` Memory Crystals — `specs/595-memory-crystals.md`
 - [ ] `596` Solar Sailing — `specs/596-solar-sailing.md`
 - [ ] `597` Zero-G Sports — `specs/597-zero-g-sports.md`
+
+- [ ] `598` The Ghost Fleet Protocol — `specs/598-ghost-fleet-protocol.md`
+- [ ] `599` The Nostalgia Plagues — `specs/599-nostalgia-plagues.md`
+- [ ] `600` Gravity-Well Funnels — `specs/600-gravity-well-funnels.md`
+- [ ] `601` The Generational Grudge — `specs/601-generational-grudge.md`
