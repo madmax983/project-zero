@@ -24,7 +24,10 @@ pub fn handle_mining_work(
 ) -> bool {
     let is_crit = rand::thread_rng().gen_bool(WORK_CRIT_CHANCE);
 
-    let effective_work = if is_crit {
+    let is_resonant = world.get::<crate::layer1::whispering_ore::ResonantTrait>(worker_entity).is_some();
+    let resonance_multiplier = if is_resonant { 2.0 } else { 1.0 };
+
+    let mut effective_work = if is_crit {
         let work = work_amount * WORK_CRIT_MULTIPLIER;
         if let Some(p) = pos {
             spawn_particle(world, p, '*', Color::Yellow, 10);
@@ -37,6 +40,8 @@ pub fn handle_mining_work(
     } else {
         work_amount
     };
+
+    effective_work *= resonance_multiplier;
 
     // Emit XP event for mining
     if let Some(mut events) = world.get_resource_mut::<Events<XpGainEvent>>() {

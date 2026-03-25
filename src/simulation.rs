@@ -42,6 +42,8 @@ pub fn build_simulation_schedule() -> Schedule {
 
     // --- Register Core Layer 1 Systems ---
     register_layer1_systems(&mut schedule);
+    // Whispering Ore
+    schedule.add_systems((crate::layer1::whispering_ore::process_whispering_ore_system, crate::layer1::whispering_ore::handle_mine_sealing_system));
 
     // --- AI Decision Chain (GPU compute) ---
     schedule.add_systems((
@@ -210,6 +212,12 @@ pub fn run_simulation_tick(world: &mut World) {
     }
     if !world.contains_resource::<Events<crate::layer1::geology::tectonic::MegaQuakeEvent>>() {
         world.init_resource::<Events<crate::layer1::geology::tectonic::MegaQuakeEvent>>();
+    }
+    if !world.contains_resource::<Events<crate::layer1::whispering_ore::MinedOreEvent>>() {
+        world.init_resource::<Events<crate::layer1::whispering_ore::MinedOreEvent>>();
+    }
+    if !world.contains_resource::<Events<crate::layer1::whispering_ore::MineSealedEvent>>() {
+        world.init_resource::<Events<crate::layer1::whispering_ore::MineSealedEvent>>();
     }
     if !world.contains_resource::<Events<crate::layer1::resources::MiningEvent>>() {
         world.init_resource::<Events<crate::layer1::resources::MiningEvent>>();
@@ -443,6 +451,8 @@ mod tests {
         world.init_resource::<crate::layer3::market::GalacticMarket>();
         world.init_resource::<Events<crate::layer2::events_new::reverse_quarantine::RefugeeFleetEvent>>();
         world.init_resource::<Events<crate::layer1::environment::events::DebrisFallEvent>>();
+        world.init_resource::<Events<crate::layer1::whispering_ore::MinedOreEvent>>();
+        world.init_resource::<Events<crate::layer1::whispering_ore::MineSealedEvent>>();
         world.init_resource::<crate::layer3::council::GalacticCouncil>();
         world.init_resource::<crate::layer2::syzygy::SyzygyCycle>();
         world.init_resource::<crate::layer2::syzygy::PlanetaryGravity>();
