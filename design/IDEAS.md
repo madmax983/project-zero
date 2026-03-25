@@ -11730,7 +11730,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Pyrite Mirage
+## The Pyrite Mirage [SPECCED]
 
 **Layer:** 1
 
@@ -11744,7 +11744,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Grave-Robber's Economy
+## The Grave-Robber's Economy [SPECCED]
 
 **Layer:** Cross-layer (1 -> 3)
 
@@ -11758,7 +11758,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Censor's Dilemma
+## The Censor's Dilemma [SPECCED]
 
 **Layer:** 1
 
@@ -11772,7 +11772,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Sub-Light Ghost
+## The Sub-Light Ghost [SPECCED]
 
 **Layer:** Cross-layer (2 -> 1)
 

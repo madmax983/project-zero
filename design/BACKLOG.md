@@ -312,3 +312,7 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `599` The Nostalgia Plagues — `specs/599-nostalgia-plagues.md`
 - [ ] `600` Gravity-Well Funnels — `specs/600-gravity-well-funnels.md`
 - [ ] `601` The Generational Grudge — `specs/601-generational-grudge.md`
+- [ ] `602` The Pyrite Mirage — `specs/602-pyrite-mirage.md`
+- [ ] `603` The Grave-Robber's Economy — `specs/603-graverobbers-economy.md`
+- [ ] `604` The Censor's Dilemma — `specs/604-censors-dilemma.md`
+- [ ] `605` The Sub-Light Ghost — `specs/605-sublight-ghost.md`
