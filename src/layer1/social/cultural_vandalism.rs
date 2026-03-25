@@ -70,7 +70,6 @@ mod tests {
             Pop,
             StressTracker {
                 accumulated_stress: 90.0,
-                ..Default::default()
             }, // High stress/unrest
             GridPosition { x: 0, y: 0 },
         ));
@@ -80,7 +79,6 @@ mod tests {
             .spawn((
                 Building {
                     building_type: BuildingType::Statue,
-                    ..Default::default()
                 },
                 Structure {
                     ..Default::default()
@@ -104,7 +102,6 @@ mod tests {
             .spawn((
                 Building {
                     building_type: BuildingType::Statue,
-                    ..Default::default()
                 },
                 ArtifactAura {
                     radius: 5.0,

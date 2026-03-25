@@ -224,7 +224,6 @@ mod tests {
         let bystander = world
             .spawn(StressTracker {
                 accumulated_stress: 0.0,
-                ..Default::default()
             })
             .id();
 

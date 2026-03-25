@@ -68,7 +68,6 @@ mod tests {
             .spawn((
                 Building {
                     building_type: BuildingType::Tower,
-                    ..Default::default()
                 },
                 pos,
             ))
@@ -140,7 +139,6 @@ mod tests {
                 PowerConsumer {
                     active: true,
                     demand: 10.0,
-                    ..Default::default()
                 },
             ))
             .id();
