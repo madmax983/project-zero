@@ -1063,3 +1063,27 @@ pub fn nanite_breach_chronicle_bridge(
         });
     }
 }
+
+use crate::layer1::genetics::GeneSplicingResultEvent;
+
+/// Bridges GeneSplicingResultEvent to AddChronicleEvent (Chronicle).
+pub fn gene_splicing_chronicle_bridge(
+    mut events: EventReader<GeneSplicingResultEvent>,
+    mut chronicle_events: EventWriter<AddChronicleEvent>,
+) {
+    for ev in events.read() {
+        let text = match ev {
+            GeneSplicingResultEvent::Success { target: _, mod_type: _ } => {
+                "The cut was successful. We have new mutants among us.".to_string()
+            }
+            GeneSplicingResultEvent::Failure { target: _, mod_type: _, mutation: _ } => {
+                "The splicing failed, resulting in a horrific twist.".to_string()
+            }
+        };
+
+        chronicle_events.send(AddChronicleEvent {
+            text,
+            importance: EventImportance::Major,
+        });
+    }
+}
