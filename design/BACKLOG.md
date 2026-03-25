@@ -292,3 +292,7 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `578` Synthetic Diet Fatigue — `specs/578-synthetic-diet-fatigue.md`
 - [ ] `579` Gravity-Sheared Trading — `specs/579-gravity-sheared-trading.md`
 - [ ] `580` The Sentient Economy — `specs/580-the-sentient-economy.md`
+- [ ] `581` Hostile Architecture — `specs/581-hostile-architecture.md`
+- [ ] `582` The Bureaucratic Blockade — `specs/582-bureaucratic-blockade.md`
+- [ ] `583` The Cryo-Plague Carrier — `specs/583-cryo-plague-carrier.md`
+- [ ] `584` The Sub-Zero Empathy — `specs/584-sub-zero-empathy.md`
