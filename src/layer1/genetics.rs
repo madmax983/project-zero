@@ -1,7 +1,7 @@
+use crate::layer1::health::Health;
+use crate::layer1::traits::{Trait, Traits};
 use bevy_ecs::prelude::*;
 use rand::Rng;
-use crate::layer1::traits::{Trait, Traits};
-use crate::layer1::health::Health;
 
 #[derive(Clone, Copy, PartialEq, Eq)]
 pub enum GeneMod {
@@ -61,10 +61,16 @@ mod tests {
         app.add_plugins(MinimalPlugins);
         app.add_event::<GeneSplicingEvent>();
 
-        let pop_entity = app.world_mut().spawn((
-            Traits::default(),
-            Health { current: 100.0, max: 100.0 },
-        )).id();
+        let pop_entity = app
+            .world_mut()
+            .spawn((
+                Traits::default(),
+                Health {
+                    current: 100.0,
+                    max: 100.0,
+                },
+            ))
+            .id();
 
         app.world_mut().send_event(GeneSplicingEvent {
             target: pop_entity,
@@ -76,7 +82,10 @@ mod tests {
         app.update();
 
         let traits = app.world().get::<Traits>(pop_entity).unwrap();
-        assert!(traits.has(Trait::StoneSkin), "Pop should acquire StoneSkin trait");
+        assert!(
+            traits.has(Trait::StoneSkin),
+            "Pop should acquire StoneSkin trait"
+        );
     }
 
     #[test]
@@ -85,10 +94,16 @@ mod tests {
         app.add_plugins(MinimalPlugins);
         app.add_event::<GeneSplicingEvent>();
 
-        let pop_entity = app.world_mut().spawn((
-            Traits::default(),
-            Health { current: 100.0, max: 100.0 },
-        )).id();
+        let pop_entity = app
+            .world_mut()
+            .spawn((
+                Traits::default(),
+                Health {
+                    current: 100.0,
+                    max: 100.0,
+                },
+            ))
+            .id();
 
         app.world_mut().send_event(GeneSplicingEvent {
             target: pop_entity,
@@ -100,10 +115,16 @@ mod tests {
         app.update();
 
         let health = app.world().get::<Health>(pop_entity).unwrap();
-        assert!(health.current < 100.0, "Pop should take damage from rejection");
+        assert!(
+            health.current < 100.0,
+            "Pop should take damage from rejection"
+        );
 
         let traits = app.world().get::<Traits>(pop_entity).unwrap();
-        assert!(!traits.has(Trait::NightVision), "Pop should not acquire the intended trait on failure");
+        assert!(
+            !traits.has(Trait::NightVision),
+            "Pop should not acquire the intended trait on failure"
+        );
     }
 
     #[test]
@@ -112,10 +133,16 @@ mod tests {
         app.add_plugins(MinimalPlugins);
         app.add_event::<GeneSplicingEvent>();
 
-        let pop_entity = app.world_mut().spawn((
-            Traits::default(),
-            Health { current: 100.0, max: 100.0 },
-        )).id();
+        let pop_entity = app
+            .world_mut()
+            .spawn((
+                Traits::default(),
+                Health {
+                    current: 100.0,
+                    max: 100.0,
+                },
+            ))
+            .id();
 
         app.world_mut().send_event(GeneSplicingEvent {
             target: pop_entity,
@@ -127,6 +154,9 @@ mod tests {
         app.update();
 
         let traits = app.world().get::<Traits>(pop_entity).unwrap();
-        assert!(traits.has(Trait::LightBlindness) || traits.has(Trait::Frail), "Pop should acquire a negative mutation trait on failure");
+        assert!(
+            traits.has(Trait::LightBlindness) || traits.has(Trait::Frail),
+            "Pop should acquire a negative mutation trait on failure"
+        );
     }
 }

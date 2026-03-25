@@ -267,7 +267,6 @@ pub fn run_simulation_tick(world: &mut World) {
 
     if !world.contains_resource::<Events<crate::layer2::phantom::SpawnGhostFleetEvent>>() {
         world.init_resource::<Events<crate::layer2::phantom::SpawnGhostFleetEvent>>();
-
     }
     if !world.contains_resource::<Events<crate::layer2::silent_mutiny::SensorGlitchEvent>>() {
         world.init_resource::<Events<crate::layer2::silent_mutiny::SensorGlitchEvent>>();
