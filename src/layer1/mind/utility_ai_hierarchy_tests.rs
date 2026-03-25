@@ -7,7 +7,7 @@ mod tests {
     use crate::layer1::farm::Farm;
     use crate::layer1::map::GridPosition;
     use crate::layer1::needs::Needs;
-    use crate::layer1::penal::PenalLabor;
+    use crate::layer1::law::penal::PenalLabor;
     use crate::layer1::pop::Pop;
     use crate::layer1::social::Tavern;
     use crate::layer1::unrest::{MentalBreakType, MentalState};

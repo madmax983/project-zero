@@ -68,7 +68,7 @@ pub fn register(schedule: &mut Schedule) {
 
     schedule.add_systems(
         (
-            crate::layer1::justice::update_inmates_system.after(decay_needs_system),
+            crate::layer1::law::justice::update_inmates_system.after(decay_needs_system),
             crate::layer1::day_night::circadian_rhythm_system.after(consume_food_system),
             aging_system.after(consume_food_system),
             natural_death_system.after(aging_system),

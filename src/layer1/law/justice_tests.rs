@@ -1,7 +1,7 @@
 #[cfg(test)]
 mod tests {
 
-    use crate::layer1::justice::{
+    use crate::layer1::law::justice::{
         process_crimes_system, process_pardons_system, sheriff_arrest_system, CrimeCommittedEvent,
         CrimeRecord, CrimeType, PardonIssuedEvent,
     };
@@ -133,7 +133,7 @@ mod tests {
         );
     }
 
-    use crate::layer1::justice::{check_crime_system, evaluate_warden_action, Wanted};
+    use crate::layer1::law::justice::{check_crime_system, evaluate_warden_action, Wanted};
 
     use crate::layer1::unrest::{MentalBreakType, MentalState};
     use crate::layer1::utility_eval_types::ScorableCandidate;

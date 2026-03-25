@@ -48,8 +48,8 @@ use crate::layer1::actions::{
 use crate::layer1::chemical::evaluate_consume_chemical;
 use crate::layer1::factions::Factions;
 use crate::layer1::hobby::evaluate_hobby;
-use crate::layer1::justice::evaluate_warden_action;
-use crate::layer1::predictive_policing::evaluate_pre_crime_arrest;
+use crate::layer1::law::justice::evaluate_warden_action;
+use crate::layer1::law::predictive_policing::evaluate_pre_crime_arrest;
 use crate::layer1::resources::ColonyResources;
 use crate::layer1::temperature::TemperatureGrid;
 use crate::layer1::traits::Trait;
@@ -922,8 +922,8 @@ mod tests {
     #[test]
     fn test_penal_labor_prioritizes_work() {
         use crate::layer1::designation::{Designation, DesignationType};
-        use crate::layer1::justice::Inmate;
-        use crate::layer1::penal::PenalLabor;
+        use crate::layer1::law::justice::Inmate;
+        use crate::layer1::law::penal::PenalLabor;
 
         crate::setup::init_task_pools();
         let mut world = World::new();

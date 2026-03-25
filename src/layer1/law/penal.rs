@@ -1,4 +1,4 @@
-use crate::layer1::justice::Inmate;
+use crate::layer1::law::justice::Inmate;
 use crate::layer1::map::GridPosition;
 use crate::layer1::zone::{ZoneGrid, ZoneType};
 use bevy_ecs::prelude::*;
@@ -96,7 +96,7 @@ pub fn check_jailbreak_system(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::layer1::justice::Inmate;
+    use crate::layer1::law::justice::Inmate;
     use crate::layer1::map::GridPosition;
     use crate::layer1::pop::Pop;
     use crate::layer1::utility_types::PopAction;

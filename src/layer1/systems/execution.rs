@@ -113,8 +113,8 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::husbandry::tame_execution_system.after(arrival_handler_system),
             combat_execution_system.after(arrival_handler_system),
             crate::layer1::turret::turret_fire_system.after(combat_execution_system),
-            crate::layer1::justice::warden_execution_system.after(combat_execution_system),
-            crate::layer1::predictive_policing::pre_crime_execution_system
+            crate::layer1::law::justice::warden_execution_system.after(combat_execution_system),
+            crate::layer1::law::predictive_policing::pre_crime_execution_system
                 .after(combat_execution_system),
             crate::layer1::hygiene::shower_use_system.after(work_execution_system),
             crate::layer1::hum::execute_listen_to_hum_system.after(arrival_handler_system),

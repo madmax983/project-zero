@@ -24,3 +24,7 @@
 **Utility AI Module Extracted to `mind`**
 **Tangle:** The `utility_ai` and related evaluation logic files (`utility_ai.rs`, `utility_types.rs`, `utility_ai_population.rs`, `utility_eval_types.rs`, etc.) cluttered the root `src/layer1/mod.rs` namespace, adding to the "Blob" anti-pattern in `layer1`.
 **Blueprint:** Encapsulated all `utility_*` files into a dedicated `src/layer1/mind/` module. The new `src/layer1/mind/mod.rs` re-exports the public types to maintain backward compatibility, keeping the layer 1 root cleaner while strictly enforcing domain boundaries.
+
+**Law Domain Encapsulation**
+**Tangle:** The Law and Order subsystem (`justice`, `penal`, `predictive_policing`, `contraband`) was scattered across the root `src/layer1/mod.rs` namespace, contributing to the "Blob" anti-pattern in `layer1`. These interrelated modules lacked a clear domain boundary.
+**Blueprint:** Encapsulated all law-related files into a dedicated `src/layer1/law/` module. `mod.rs` now re-exports public types natively under `pub mod law` and fixes the duplicate tests, enforcing strict domain boundaries while reducing clutter in `layer1/mod.rs`.

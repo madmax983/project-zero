@@ -100,6 +100,7 @@ pub mod institutional_memory;
 pub mod integration;
 /// Personal inventory system.
 pub mod inventory;
+pub mod law;
 /// Item definitions (Tools, Equipment).
 pub mod items;
 /// Spatial primitives (GridPosition).
@@ -310,12 +311,8 @@ pub use the_visitor::*;
 pub mod day_night;
 pub use day_night::*;
 /// Justice system (Spec 072).
-pub mod justice;
-pub use justice::*;
 
 /// Penal labor system (Spec 118).
-pub mod penal;
-pub use penal::*;
 
 /// Planetary Quirks (Spec 080).
 pub mod quirks;
@@ -359,8 +356,6 @@ pub use taboo::*;
 pub mod eureka;
 pub use eureka::*;
 /// Predictive Policing system (Spec 173).
-pub mod predictive_policing;
-pub use predictive_policing::*;
 
 /// Pheromone Gardening system (Spec 170).
 pub mod pheromone;
@@ -509,8 +504,6 @@ pub use constellations::*;
 
 /// Xeno-Artifacts system (Spec 156).
 pub mod artifacts;
-#[cfg(test)]
-mod justice_tests;
 pub mod tech_envy;
 pub use artifacts::*;
 
@@ -592,8 +585,6 @@ pub mod civic_ideology;
 pub use civic_ideology::*;
 
 /// Prohibition and Contraband system (Spec 203).
-pub mod contraband;
-pub use contraband::*;
 /// Customs checkpoint system (Spec 214).
 pub mod customs;
 pub use customs::*;

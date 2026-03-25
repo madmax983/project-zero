@@ -65,7 +65,7 @@ mod tests {
         world.insert_resource(scale::layer1::social_mimicry::Trend::default());
         world.insert_resource(scale::layer1::society::SecretSocieties::default());
         world.insert_resource(scale::layer1::society::Unrest::default());
-        world.insert_resource(scale::layer1::predictive_policing::PredictionConfig::default());
+        world.insert_resource(scale::layer1::law::predictive_policing::PredictionConfig::default());
         world.insert_resource(scale::layer1::festivals::FestivalState::default());
         world.insert_resource(scale::layer1::tech::TechState::default());
         world.insert_resource(scale::layer2::visibility::SystemVisibility::default());
