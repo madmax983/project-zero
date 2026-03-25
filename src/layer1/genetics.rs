@@ -3,11 +3,17 @@ use crate::layer1::traits::{Trait, Traits};
 use bevy_ecs::prelude::*;
 use rand::Rng;
 
-#[derive(Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum GeneMod {
     StoneSkin,
     NightVision,
     GillLungs,
+}
+
+#[derive(Event, Debug, Clone, PartialEq, Eq)]
+pub enum GeneSplicingResultEvent {
+    Success { target: Entity, mod_type: GeneMod },
+    Failure { target: Entity, mod_type: GeneMod, mutation: Option<Trait> },
 }
 
 #[derive(Event)]
@@ -20,6 +26,7 @@ pub struct GeneSplicingEvent {
 pub fn process_gene_splicing_system(
     mut events: EventReader<GeneSplicingEvent>,
     mut query: Query<(&mut Traits, &mut Health)>,
+    mut results: EventWriter<GeneSplicingResultEvent>,
 ) {
     let mut rng = rand::thread_rng();
 
@@ -34,6 +41,7 @@ pub fn process_gene_splicing_system(
                     GeneMod::GillLungs => Trait::GillLungs,
                 };
                 traits.add(new_trait);
+                results.send(GeneSplicingResultEvent::Success { target: ev.target, mod_type: ev.mod_type });
             } else {
                 health.take_damage(40.0);
 
@@ -44,6 +52,9 @@ pub fn process_gene_splicing_system(
                         Trait::Frail
                     };
                     traits.add(mutation);
+                    results.send(GeneSplicingResultEvent::Failure { target: ev.target, mod_type: ev.mod_type, mutation: Some(mutation) });
+                } else {
+                    results.send(GeneSplicingResultEvent::Failure { target: ev.target, mod_type: ev.mod_type, mutation: None });
                 }
             }
         }
@@ -60,6 +71,7 @@ mod tests {
         let mut app = App::new();
         app.add_plugins(MinimalPlugins);
         app.add_event::<GeneSplicingEvent>();
+        app.add_event::<GeneSplicingResultEvent>();
 
         let pop_entity = app
             .world_mut()
@@ -93,6 +105,7 @@ mod tests {
         let mut app = App::new();
         app.add_plugins(MinimalPlugins);
         app.add_event::<GeneSplicingEvent>();
+        app.add_event::<GeneSplicingResultEvent>();
 
         let pop_entity = app
             .world_mut()
@@ -132,6 +145,7 @@ mod tests {
         let mut app = App::new();
         app.add_plugins(MinimalPlugins);
         app.add_event::<GeneSplicingEvent>();
+        app.add_event::<GeneSplicingResultEvent>();
 
         let pop_entity = app
             .world_mut()

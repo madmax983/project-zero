@@ -496,3 +496,8 @@
 - **Systems connected:** `nanite_fabrication_system` -> `nanite_breach_chronicle_bridge`
 - **Glue added:** `nanite_breach_chronicle_bridge` in `src/layer1/integration.rs`
 - **Tests:** `tests/integration/nanite_fabrication_chronicle.rs`
+### INT-565: Gene Splicing -> Chronicle
+- **Date:** 2026-03-27
+- **Systems connected:** `process_gene_splicing_system` -> `gene_splicing_chronicle_bridge`
+- **Glue added:** Added `GeneSplicingResultEvent` and `gene_splicing_chronicle_bridge` in `src/layer1/integration.rs`. Registered in `Layer1SystemSet::Economy` and `Observation`.
+- **Tests:** `tests/integration/gene_splicing_chronicle.rs`

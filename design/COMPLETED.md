@@ -285,3 +285,4 @@
 - [x] `INT-453` Integration: Nanite Fabrication -> Chronicle — completed 2026-03-24
 - [x] `565` Gene Splicing — `specs/565-gene-splicing.md` — completed 2026-03-27
 - [x] `562` The Justice System — `specs/562-the-justice-system.md` — completed 2026-03-24
+- [x] `INT-565` Integration: Gene Splicing -> Chronicle — completed 2026-03-27
