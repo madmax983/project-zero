@@ -3540,3 +3540,81 @@
 **Usage:**
 - "A price-crash left us bankrupt."
 - "We flooded the Market, and triggered a crash."
+
+## The Martyr's Engine (Spec 296)
+
+### the Martyr's Engine
+**Replaces:** ancient power generator, sacrificial reactor
+**Code reference:** `MartyrsEngine`
+**Usage:**
+- "The Martyr's Engine must be fed."
+- "The Engine demands a soul."
+
+### attunement / the sacrifice
+**Replaces:** pop dying to activate the engine
+**Code reference:** `AttuneEngineAction`
+**Usage:**
+- "He stepped forward for the attunement."
+- "The sacrifice keeps the lights on."
+
+## Airlocks & Pressure (Spec 561)
+
+### the seal / the lock
+**Replaces:** Airlock, door
+**Code reference:** `Door.is_airlock`
+**Usage:**
+- "Cycle the seal before entering."
+- "Waiting in the lock."
+
+### the gasp / breath-loss
+**Replaces:** Suffocation damage, low pressure
+**Code reference:** `Needs.oxygen` loss
+**Usage:**
+- "He caught the gasp in sector 3."
+- "Breath-loss took her."
+
+## The Justice System (Spec 562)
+
+### the Sheriff / the Law
+**Replaces:** Police job, enforcer
+**Code reference:** `JobRole::Sheriff`
+**Usage:**
+- "The Sheriff is coming for you."
+- "We need the Law down here."
+
+### the cell / the Brig
+**Replaces:** Jail zone
+**Code reference:** `ZoneType::Jail`
+**Usage:**
+- "Throw him in the cell."
+- "Cooling off in the Brig."
+
+### Wanted / the Mark
+**Replaces:** Crime record wanted status
+**Code reference:** `CrimeRecord.wanted`
+**Usage:**
+- "He has the Mark on him."
+- "Wanted for hoarding."
+
+## Gene Splicing (Spec 565)
+
+### splicing / the cut
+**Replaces:** Gene modification action
+**Code reference:** `GeneSplicingEvent`
+**Usage:**
+- "Going under the cut tomorrow."
+- "The splicing takes hours."
+
+### the Modded / mutants
+**Replaces:** Pops with genetic traits
+**Code reference:** `Traits` (altered)
+**Usage:**
+- "The Modded don't feel the cold."
+- "We don't mix with mutants."
+
+### rejection / the twist
+**Replaces:** Failed splice, negative mutation
+**Code reference:** Splicing failure, negative trait
+**Usage:**
+- "He suffered rejection."
+- "The twist left him blind in the light."
