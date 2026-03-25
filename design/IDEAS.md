@@ -11786,7 +11786,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Symbiotic Cult
+## The Symbiotic Cult [SPECCED]
 
 **Layer:** 1
 
@@ -11800,7 +11800,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Orbital Mirror Misalignment
+## The Orbital Mirror Misalignment [SPECCED]
 
 **Layer:** Cross-layer (2 -> 1)
 
@@ -11814,7 +11814,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Bureaucratic Ghost
+## The Bureaucratic Ghost [SPECCED]
 
 **Layer:** 1
 
@@ -11828,7 +11828,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Quantum Smuggler's Route
+## The Quantum Smuggler's Route [SPECCED]
 
 **Layer:** Cross-layer (2 -> 3)
 
