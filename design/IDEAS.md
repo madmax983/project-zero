@@ -11522,7 +11522,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Gravity-Sheared Trading
+## [SPECCED] Gravity-Sheared Trading
 
 **Layer:** Cross-layer (2 -> 1)
 
@@ -11536,7 +11536,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Sentient Economy
+## [SPECCED] The Sentient Economy
 
 **Layer:** 3
 
@@ -11564,7 +11564,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Echo Bureau
+## [SPECCED] The Echo Bureau
 
 **Layer:** 1
 
@@ -11578,7 +11578,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Asteroid Tethering
+## [SPECCED] Asteroid Tethering
 
 **Layer:** 2 -> 1
 
@@ -11592,7 +11592,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Synthetic Diet Fatigue
+## [SPECCED] Synthetic Diet Fatigue
 
 **Layer:** 1
 
