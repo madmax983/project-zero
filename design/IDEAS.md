@@ -11785,3 +11785,59 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** The irresistible lure of an entire civilization's technological legacy vs. the terrifying risk of drawing the attention of whatever killed them.
 
 ---
+
+## The Symbiotic Cult
+
+**Layer:** 1
+
+**Fantasy:** A new religion that demands physical sacrifice, turning colonists into something more, or less, than human.
+
+**Mechanic:** A charismatic Pop founds a "Symbiotic Cult" focused on a specific native flora or fauna. Cult members intentionally infect themselves, gaining unique buffs (e.g., photosynthesis, natural armor) but altering their Needs (requiring raw sunlight or specific alien meat instead of normal food). As the cult grows, they demand the colony's infrastructure be altered to suit their new biology.
+
+**Emergence:** The cult spreads rapidly during a famine, as their new biology allows them to survive without normal rations. You soon find half your workforce refusing to enter the dark mines because they need sunlight to photosynthesize, leaving your industrial sector crippled while your agricultural needs plummet.
+
+**Tension:** Embracing a bizarre, post-human evolution that solves immediate resource crises vs. maintaining a baseline human civilization and risking a holy war against your own adapted citizens.
+
+---
+
+## The Orbital Mirror Misalignment
+
+**Layer:** Cross-layer (2 -> 1)
+
+**Fantasy:** Playing with stellar fire and accidentally burning the house down.
+
+**Mechanic:** You construct massive "Orbital Mirrors" in Layer 2 to reflect extra sunlight onto Layer 1, boosting agricultural output and solar power. However, if the mirrors suffer micro-meteor impacts or sabotage, they can misalign. A misaligned mirror concentrates the beam into a devastating "Sun-Laser" that sweeps across the colony, instantly incinerating buildings and Pops in its path.
+
+**Emergence:** You rely on the mirrors to survive a decades-long ice age. During a pirate raid, a stray shot hits a mirror's control array. The beam focuses and slowly drags across your primary residential dome, cooking it from the inside out while you desperately scramble engineers to manually realign the burning mirror from orbit.
+
+**Tension:** The immense, free energy and agricultural boom of orbital manipulation vs. the terrifying, ever-present risk of literally microwaving your own colony.
+
+---
+
+## The Bureaucratic Ghost
+
+**Layer:** 1
+
+**Fantasy:** Red tape so thick that even dead people are still filling out forms.
+
+**Mechanic:** If your colony's "Admin" capacity is heavily strained for a long time, the system begins to glitch. Dead Pops are not removed from the rosters. They are still assigned jobs, sent rations, and even "vote" in faction disputes. Living Pops become stressed trying to cover the shifts of their deceased coworkers, whom the system insists are just "running late."
+
+**Emergence:** Your most critical fusion reactor is constantly melting down because the system has assigned three dead engineers to maintain it. You can't manually override the assignments without taking the entire Admin network offline, which would cause the rest of the colony's logistics to collapse.
+
+**Tension:** Expanding rapidly without building necessary, non-productive administrative infrastructure vs. the surreal, paralyzing horror of an automated system that refuses to acknowledge death.
+
+---
+
+## The Quantum Smuggler's Route
+
+**Layer:** Cross-layer (2 -> 3)
+
+**Fantasy:** A shortcut through reality that cuts travel time to zero, but occasionally leaves parts of you behind.
+
+**Mechanic:** You discover a "Quantum Fissure" in Layer 2. Trading through it to Layer 3 empires is instantaneous, completely bypassing all blockades and travel times. However, there is a small, compounding "Decoherence" chance. Items, or even Pops, sent through the fissure might arrive fundamentally altered, corrupted, or completely erased from reality.
+
+**Emergence:** You use the fissure to instantly supply a besieged allied empire, turning the tide of their war and securing a massive alliance. But the Decoherence affects your returning trade ships. They arrive filled not with credits, but with a highly toxic, anti-matter sludge that immediately breaches containment and poisons your orbital dockyards.
+
+**Tension:** The unparalleled strategic and economic advantage of instantaneous travel vs. the terrifying, unpredictable corruption of matter and life crossing the quantum threshold.
+
+---
