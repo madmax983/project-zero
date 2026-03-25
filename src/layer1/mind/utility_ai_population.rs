@@ -713,7 +713,10 @@ mod tests {
 
         let mut world = World::new();
         // LumberMill requires 1 Wood.
-        let resources = ColonyResources { wood: 0.0, ..Default::default() };
+        let resources = ColonyResources {
+            wood: 0.0,
+            ..Default::default()
+        };
 
         let cycle = DayNightCycle::default();
         let taboo = TabooState::default();

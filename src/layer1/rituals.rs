@@ -127,9 +127,7 @@ mod tests {
                     building_type: BuildingType::AncientReactor,
                 },
                 AncientStructure,
-                MachineSpirit {
-                    anger: 0.0,
-                },
+                MachineSpirit { anger: 0.0 },
             ))
             .id();
 
@@ -151,9 +149,7 @@ mod tests {
                     building_type: BuildingType::AncientReactor,
                 },
                 AncientStructure,
-                MachineSpirit {
-                    anger: 100.0,
-                }, // Furious
+                MachineSpirit { anger: 100.0 }, // Furious
             ))
             .id();
 
@@ -175,9 +171,7 @@ mod tests {
                     building_type: BuildingType::AncientReactor,
                 },
                 AncientStructure,
-                MachineSpirit {
-                    anger: 50.0,
-                },
+                MachineSpirit { anger: 50.0 },
                 Quirk {
                     quirk_type: QuirkType::Glitchy,
                 },
@@ -214,11 +208,7 @@ mod tests {
     #[test]
     fn test_quirk_not_generated_low_anger() {
         let mut world = World::new();
-        let entity = world
-            .spawn((MachineSpirit {
-                anger: 50.0,
-            },))
-            .id();
+        let entity = world.spawn((MachineSpirit { anger: 50.0 },)).id();
 
         let mut schedule = Schedule::default();
         schedule.add_systems(quirk_generation_system);
@@ -231,11 +221,7 @@ mod tests {
     #[test]
     fn test_ritual_clamped_at_zero() {
         let mut world = World::new();
-        let entity = world
-            .spawn((MachineSpirit {
-                anger: 10.0,
-            },))
-            .id();
+        let entity = world.spawn((MachineSpirit { anger: 10.0 },)).id();
 
         perform_ritual(&mut world, entity);
 
@@ -254,9 +240,7 @@ mod tests {
         // Threshold is < 50. So 50 is NOT < 50. Quirk stays?
         let entity = world
             .spawn((
-                MachineSpirit {
-                    anger: 100.0,
-                },
+                MachineSpirit { anger: 100.0 },
                 Quirk {
                     quirk_type: QuirkType::Glitchy,
                 },

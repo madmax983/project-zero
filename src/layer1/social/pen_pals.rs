@@ -231,7 +231,10 @@ mod tests {
     #[test]
     fn test_espionage_loss() {
         let mut world = World::new();
-        let resources = ColonyResources { knowledge: 100.0, ..Default::default() };
+        let resources = ColonyResources {
+            knowledge: 100.0,
+            ..Default::default()
+        };
         world.insert_resource(resources);
         world.insert_resource(ColonyPolicies::default());
 

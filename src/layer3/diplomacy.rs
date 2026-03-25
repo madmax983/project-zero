@@ -1,5 +1,5 @@
-use bevy::prelude::*;
 use crate::layer1::spore_diplomat::SporeInfection;
+use bevy::prelude::*;
 
 #[derive(Component)]
 pub struct Envoy;
@@ -47,9 +47,13 @@ mod tests {
     #[test]
     fn test_spore_diplomat_inserts_hidden_clause() {
         let mut app = App::new();
-        let pop = app.world_mut().spawn((Pop, Envoy, SporeInfection { severity: 1.0 })).id();
+        let pop = app
+            .world_mut()
+            .spawn((Pop, Envoy, SporeInfection { severity: 1.0 }))
+            .id();
         let treaty = app.world_mut().spawn(Treaty { clauses: vec![] }).id();
-        app.world_mut().insert_resource(ActiveNegotiation { envoy: pop, treaty });
+        app.world_mut()
+            .insert_resource(ActiveNegotiation { envoy: pop, treaty });
 
         app.add_systems(Update, diplomatic_negotiation_system);
         app.update();
