@@ -320,3 +320,7 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `607` The Orbital Mirror Misalignment — `specs/607-orbital-mirror-misalignment.md`
 - [ ] `608` The Bureaucratic Ghost — `specs/608-bureaucratic-ghost.md`
 - [ ] `609` The Quantum Smuggler's Route — `specs/609-quantum-smugglers-route.md`
+- [ ] `610` The Subterranean Smog Layer — `specs/610-subterranean-smog.md`
+- [ ] `611` Orbital Debt Collections — `specs/611-orbital-debt.md`
+- [ ] `612` The Phantom Signal — `specs/612-phantom-signal.md`
+- [ ] `613` The Symbiotic Insurgency — `specs/613-symbiotic-insurgency.md`
