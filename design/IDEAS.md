@@ -11896,7 +11896,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 **Tension:** The immediate tactical advantage of using overwhelming kinetic force in space battles vs. the terrifying, long-term pollution of the galaxy with civilization-ending projectiles.
 
-## The Petrification Sickness
+## The Petrification Sickness [SPECCED]
 
 **Layer:** 1
 
@@ -11910,7 +11910,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Rogue Automation Cults
+## Rogue Automation Cults [SPECCED]
 
 **Layer:** Cross-layer (1 -> 2)
 
@@ -11924,7 +11924,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Orphan Fleet
+## The Orphan Fleet [SPECCED]
 
 **Layer:** Cross-layer (2 -> 1)
 
@@ -11938,7 +11938,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Echoes of the Predecessors
+## Echoes of the Predecessors [SPECCED]
 
 **Layer:** Cross-layer (3 -> 1)
 
