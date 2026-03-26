@@ -73,6 +73,8 @@ pub fn register(schedule: &mut Schedule) {
     schedule.add_systems(
         (
             apply_lighting_penalties_system.after(update_lighting_system),
+            crate::layer1::environment::ignition::process_ignition
+                .after(crate::layer1::combat::hit_stop_system),
             apply_weather_effects_system.after(apply_lighting_penalties_system),
             crate::layer1::nature::mutagenic_rain::apply_mutagenic_rain_system
                 .after(apply_weather_effects_system),

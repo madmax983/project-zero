@@ -342,4 +342,3 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `626` The Cartographer's Curse — `specs/626-cartographers-curse.md`
 - [ ] `627` The Sabotaged Seed Bank — `specs/627-sabotaged-seed-bank.md`
 - [ ] `628` The Empathic Sinkhole — `specs/628-empathic-sinkhole.md`
-- [ ] `629` Atmospheric Ignition — `specs/629-atmospheric-ignition.md`
