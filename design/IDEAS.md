@@ -11841,3 +11841,57 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** The unparalleled strategic and economic advantage of instantaneous travel vs. the terrifying, unpredictable corruption of matter and life crossing the quantum threshold.
 
 ---
+
+## Scrap-Code Prophets
+
+**Layer:** 1
+
+**Fantasy:** A religious awakening born from broken machinery, creating a dangerous new social dynamic.
+
+**Mechanic:** When industrial machines or robots break down repeatedly without proper maintenance, a small chance exists for a Pop working nearby to misinterpret the static and mechanical failures as "divine signals". They form the "Scrap-Code Cult", which gains Morale from being around broken equipment and actively sabotages functioning machinery to create more "holy sites".
+
+**Emergence:** You ignore maintenance in a minor mining outpost to save resources. A year later, you return to find productivity at zero, the machinery completely destroyed, and the entire local workforce fiercely defending their ruined gear from your repair crews.
+
+**Tension:** The cost of diligent, preventative maintenance vs. the risk of your workforce weaponizing your negligence against you.
+
+---
+
+## The Empathy Cascade
+
+**Layer:** Cross-layer (1 -> 2)
+
+**Fantasy:** A psychological contagion that paralyzes a planet not with fear, but with an overwhelming, shared sorrow.
+
+**Mechanic:** If a colony experiences a massive tragedy (e.g., thousands of Pops dying in an orbital bombardment), the intense collective trauma spawns an "Empathy Cascade" event. This operates like a psychic disease. Pops who interact with trauma survivors inherit a portion of their depression. If the Cascade spreads to a spaceport, it can infect departing trade fleets, spreading the depression penalty to other planets in the system.
+
+**Emergence:** You brutally put down a rebellion on a fringe world, accepting the local economic damage. But the merchants who supplied that world carry the trauma back to your glittering capital. Within months, your core worlds grind to a halt as the entire planetary population becomes too depressed to work, crippling your empire without a single shot fired.
+
+**Tension:** Isolating traumatized populations to protect the wider empire vs. providing the social and medical support needed to actually heal the trauma.
+
+---
+
+## Black-Market Terraformers
+
+**Layer:** Cross-layer (2 -> 1)
+
+**Fantasy:** Unsanctioned environmental manipulation that fixes one problem while creating a terrifying unknown.
+
+**Mechanic:** If a colony's environment is highly hostile (e.g., toxic atmosphere, extreme cold) and the player hasn't invested in official terraforming, wealthy Pops might hire "Black-Market Terraformers" from a passing Layer 2 smuggler fleet. These rogue engineers deploy cheap, unregulated geo-engineering devices. They rapidly solve the immediate environmental hazard but introduce a permanent, unstable "Wildcard" trait to the planet (e.g., sentient weather patterns, hyper-aggressive localized flora).
+
+**Emergence:** Your struggling ice-mining colony is saved from freezing to death when rogue terraformers illegally warm the atmosphere. However, the cheap tech they used causes the newly thawed oceans to periodically rise up in massive, unpredictable acid tsunamis that constantly threaten your coastal infrastructure.
+
+**Tension:** The slow, expensive, safe path of official terraforming vs. allowing desperate colonists to gamble the planet's ecological future for immediate survival.
+
+---
+
+## The Kinetic Debt
+
+**Layer:** Cross-layer (3 -> 2 -> 1)
+
+**Fantasy:** The physical consequences of a galactic war arriving decades after the treaties are signed.
+
+**Mechanic:** During Layer 3 fleet battles, massive kinetic weapons (like railgun slugs) that miss their targets continue flying through space. These become "Kinetic Ghosts" tracked by the game. Decades later, these slugs can randomly enter the Layer 2 space of one of your star systems, screaming toward a Layer 1 colony at relativistic speeds with only minutes of warning.
+
+**Emergence:** You are enjoying a golden age of peace, having won a massive war a century ago. Suddenly, a hyper-velocity slug fired by your own flagship during the final battle of that war drops out of the void and obliterates your capital city in a single, unpreventable strike.
+
+**Tension:** The immediate tactical advantage of using overwhelming kinetic force in space battles vs. the terrifying, long-term pollution of the galaxy with civilization-ending projectiles.
