@@ -3618,3 +3618,67 @@
 **Usage:**
 - "He suffered rejection."
 - "The twist left him blind in the light."
+
+## The Spore-Mind Diplomat (Spec 588)
+
+### the Spore-Mind
+**Replaces:** heavily infected diplomat, hive-mind ambassador
+**Code reference:** `Envoy` with `SporeInfection`
+**Usage:**
+- "The Spore-Mind speaks for us now."
+- "Send the Spore-Mind to the negotiating table."
+
+### hidden clause
+**Replaces:** `SporePropagation` treaty clause injected by infected envoy
+**Code reference:** `Clause::SporePropagation`
+**Usage:**
+- "They slipped a hidden clause into the treaty."
+- "The hidden clause ensures the spores travel freely."
+
+## The Cartographic Delusion (Spec 585)
+
+### ghost map
+**Replaces:** outdated/inaccurate Layer 3 MapData
+**Code reference:** `SectorData.accuracy` (low)
+**Usage:**
+- "We are navigating by a ghost map."
+- "The ghost map claims there is a star here."
+
+### map rot
+**Replaces:** decay of scanner data over time
+**Code reference:** `map_data_rot_system`
+**Usage:**
+- "Map rot has blinded the outer sectors."
+- "Beware of map rot before sending the colony ship."
+
+## The Whispering Ore (Spec 592)
+
+### the Whispering Ore
+**Replaces:** rare deep-crust valuable material
+**Code reference:** `OreType::Whispering`
+**Usage:**
+- "We struck the Whispering Ore."
+- "The Whispering Ore is worth more than its weight in blood."
+
+### Resonant
+**Replaces:** trait acquired from mining whispering ore
+**Code reference:** `ResonantTrait`
+**Usage:**
+- "The miners are Resonant now."
+- "He became Resonant and refuses to leave the deep."
+
+## Mutagenic Rain (Spec 427)
+
+### mutagenic rain / the green-storm
+**Replaces:** `WeatherType::MutagenicRain`
+**Code reference:** `WeatherState`
+**Usage:**
+- "The green-storm is falling. Stay inside."
+- "Mutagenic rain washes over the colony."
+
+### mutants / the twisted
+**Replaces:** pops who gained traits from mutagenic rain
+**Code reference:** Pops with traits like `Photosynthesis` or `BrittleBones` from rain
+**Usage:**
+- "The twisted work the outer fields."
+- "He became a mutant after standing in the rain."
