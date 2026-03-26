@@ -105,6 +105,14 @@ pub enum Trait {
     Bureaucrat,
     /// (Spec 472) Basic synthetic pop. 100% work efficiency, no morale needs, apathetic to emergencies.
     Synth,
+    /// Synthesizes food from light.
+    Photosynthesis,
+    /// Thick hide that protects against damage.
+    ThickSkin,
+    /// Fragile bones.
+    BrittleBones,
+    /// Needs more food than normal.
+    ExtremeHunger,
 }
 
 impl Trait {
@@ -161,6 +169,10 @@ impl Trait {
             Self::Bureaucrat => "Bureaucrat",
             Self::Synth => "Synthetic",
             Self::LogisticsExpert => "Logistics Expert",
+            Self::Photosynthesis => "Photosynthesis",
+            Self::ThickSkin => "Thick Skin",
+            Self::BrittleBones => "Brittle Bones",
+            Self::ExtremeHunger => "Extreme Hunger",
         }
     }
 }

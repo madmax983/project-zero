@@ -180,7 +180,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `424` Subterranean Megafauna Migration — `specs/424-subterranean-megafauna-migration.md`
 - [ ] `425` Stellar Wind Surfing — `specs/425-stellar-wind-surfing.md`
 - [ ] `426` The Archive of Regret — `specs/426-the-archive-of-regret.md`
-- [ ] `427` Mutagenic Rain — `specs/427-mutagenic-rain.md`
 - [ ] `428` The Propaganda Black Market — `specs/428-the-propaganda-black-market.md`
 - [ ] `429` The Whispering Gallery — `specs/429-the-whispering-gallery.md`
 - [ ] `430` Gravitational Tides — `specs/430-gravitational-tides.md`

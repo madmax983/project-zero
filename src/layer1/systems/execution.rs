@@ -68,6 +68,10 @@ pub fn register(schedule: &mut Schedule) {
                 .after(crate::layer1::light_pollution::apply_light_pollution_system),
             apply_lighting_penalties_system.after(update_lighting_system),
             apply_weather_effects_system.after(apply_lighting_penalties_system),
+            crate::layer1::nature::mutagenic_rain::apply_mutagenic_rain_system
+                .after(apply_weather_effects_system),
+            crate::layer1::nature::mutagenic_rain::clear_mutation_immunity_system
+                .after(crate::layer1::nature::mutagenic_rain::apply_mutagenic_rain_system),
             apply_quirk_modifiers_system
                 .after(apply_lighting_penalties_system)
                 .after(apply_weather_effects_system),
