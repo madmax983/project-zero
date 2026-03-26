@@ -10806,7 +10806,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Nostalgia Plague
+## The Nostalgia Plague [SPECCED]
 
 **Layer:** 1
 
@@ -10946,7 +10946,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Cryo-Prison Revolt
+## The Cryo-Prison Revolt [SPECCED]
 
 **Layer:** Cross-layer (2 -> 1)
 
@@ -11341,7 +11341,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** The immense, immediate benefits of exploiting native biological resources vs. the slow, silent infiltration of an intelligence you don't even realize you are fighting.
 
 ---
-## The Bio-Digital Ascendancy
+## The Bio-Digital Ascendancy [SPECCED]
 
 **Layer:** Cross-layer (1 -> 3)
 
@@ -11355,7 +11355,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Nostalgia Plague
+## The Nostalgia Plague [SPECCED]
 
 **Layer:** 1
 
@@ -11369,7 +11369,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Rogue AI Arbitration
+## Rogue AI Arbitration [SPECCED]
 
 **Layer:** Cross-layer (2 -> 1)
 
