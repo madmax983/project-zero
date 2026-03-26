@@ -1658,7 +1658,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Solar Cycles
+## Solar Cycles [SPECCED]
 
 **Layer:** 2 -> 1
 
@@ -1840,7 +1840,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Bureaucratic Drag
+## Bureaucratic Drag [SPECCED]
 
 **Layer:** 1
 
@@ -2008,7 +2008,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Cryo-Stasis Vaults
+## Cryo-Stasis Vaults [SPECCED]
 
 **Layer:** 1
 
@@ -2036,7 +2036,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Boarding Actions
+## Boarding Actions [SPECCED]
 
 **Layer:** 2 -> 1
 

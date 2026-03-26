@@ -324,3 +324,7 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `611` Orbital Debt Collections — `specs/611-orbital-debt.md`
 - [ ] `612` The Phantom Signal — `specs/612-phantom-signal.md`
 - [ ] `613` The Symbiotic Insurgency — `specs/613-symbiotic-insurgency.md`
+- [ ] `614` Solar Cycles — `specs/614-solar-cycles.md`
+- [ ] `615` Bureaucratic Drag — `specs/615-bureaucratic-drag.md`
+- [ ] `616` Cryo-Stasis Vaults — `specs/616-cryo-stasis-vaults.md`
+- [ ] `617` Boarding Actions — `specs/617-boarding-actions.md`
