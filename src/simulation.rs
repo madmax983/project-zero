@@ -331,6 +331,11 @@ pub fn run_simulation_tick(world: &mut World) {
         world.init_resource::<Events<crate::layer2::events_new::reverse_quarantine::RefugeeFleetEvent>>();
     }
 
+    if !world.contains_resource::<Events<crate::layer1::environment::ignition::SparkEvent>>() {
+        world.init_resource::<Events<crate::layer1::environment::ignition::SparkEvent>>();
+        world.init_resource::<Events<crate::layer1::environment::ignition::ExplosionEvent>>();
+    }
+
     if !world.contains_resource::<Events<crate::layer1::environment::events::DebrisFallEvent>>() {
         world.init_resource::<Events<crate::layer1::environment::events::DebrisFallEvent>>();
         world.init_resource::<crate::layer3::council::GalacticCouncil>();
@@ -459,6 +464,8 @@ mod tests {
         world.init_resource::<crate::layer3::council::GalacticCouncil>();
         world.init_resource::<crate::layer3::market::GalacticMarket>();
         world.init_resource::<Events<crate::layer2::events_new::reverse_quarantine::RefugeeFleetEvent>>();
+        world.init_resource::<Events<crate::layer1::environment::ignition::SparkEvent>>();
+        world.init_resource::<Events<crate::layer1::environment::ignition::ExplosionEvent>>();
         world.init_resource::<Events<crate::layer1::environment::events::DebrisFallEvent>>();
         world.init_resource::<Events<crate::layer1::whispering_ore::MinedOreEvent>>();
         world.init_resource::<Events<crate::layer1::whispering_ore::MineSealedEvent>>();

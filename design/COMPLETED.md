@@ -294,3 +294,4 @@
 - [x] `427` Mutagenic Rain — `specs/427-mutagenic-rain.md` — completed 2024-05-18
 - [x] `621` Mass Driver Logistics — `specs/621-mass-driver-logistics.md` — completed 2026-03-26
 - [x] `INT-621` Integration: Mass Driver -> Chronicle — completed 2026-03-27
+- [x] `629` Atmospheric Ignition — `specs/629-atmospheric-ignition.md` — completed 2026-03-24
