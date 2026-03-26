@@ -12021,3 +12021,58 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Absolute, controllable, high-efficiency Morale vs. the complete loss of objective reality and the inability of the populace to react to actual threats.
 
 ---
+## Living Architecture
+
+**Layer:** 1
+
+**Fantasy:** Growing your colony rather than building it, relying on biological structures that bleed, heal, and occasionally get hungry.
+
+**Mechanic:** Some advanced buildings can be "planted" using modified bio-mass instead of constructed with metal. They slowly regenerate structural damage, produce minor resources passively, but require a constant supply of organic food or water to survive.
+
+**Emergence:** During a severe famine, a player might have to choose between feeding their starving Pops or feeding the living hospital that keeps the wounded alive. A starving building might eventually "eat" a pop that enters it to sustain itself.
+
+**Tension:** The sustainability and self-repair of bio-buildings vs. the horrific consequences of them starving and turning feral.
+
+---
+
+## Temporal Echo Chambers
+
+**Layer:** Cross-layer (1 -> 3)
+
+**Fantasy:** Capturing the ghost of a past golden age—or a future crisis—by locking a room in a localized time dilation field.
+
+**Mechanic:** Specialized containment rooms where time moves at a fraction of the normal rate. You can seal Pops or resources inside to perfectly preserve them for decades. However, the energy cost increases exponentially the longer it runs, and catastrophic failure releases a "temporal shockwave."
+
+**Emergence:** You seal your best researchers in a chamber to survive an unwinnable siege, hoping future generations can rescue them. 50 years later, the colony has collapsed and devolved into a tribal state, and the chamber finally fails, dropping hyper-advanced, deeply confused scientists into a primitive warzone.
+
+**Tension:** The ultimate safety of perfect stasis vs. the agonizing energy drain on your current colony and the unpredictable consequences of when (and how) they emerge.
+
+---
+
+## Sub-Orbital Harpoon Logistics
+
+**Layer:** Cross-layer (2 -> 1)
+
+**Fantasy:** Forget delicate dropships. You deliver bulk goods from orbit by literally shooting them into the planet's crust with massive kinetic harpoons.
+
+**Mechanic:** A cheap, high-throughput method of moving resources from Layer 2 orbital stations to Layer 1 colonies. Massive payload spikes are fired into the ground. They cause minor localized earthquakes and destroy the tile they land on, but instantly deliver thousands of tons of raw materials.
+
+**Emergence:** A slight miscalculation in orbital trajectory (or a hacked targeting system) causes a desperately needed food harpoon to obliterate the colony's main power reactor instead of landing safely in the designated target zone. Players might intentionally use empty harpoons as crude kinetic bombardment weapons against rival colonies or invading forces.
+
+**Tension:** Unmatched logistical speed and volume vs. the constant, terrifying danger of dropping multi-ton kinetic rods directly into your own populated areas.
+
+---
+
+## Cognitive Overclocking
+
+**Layer:** 1
+
+**Fantasy:** Pushing the human mind beyond its limits to solve impossible problems, burning out the brightest sparks in the process.
+
+**Mechanic:** An edict or specialized module that allows you to "overclock" the brains of specific Pops (usually researchers or engineers). Their work speed and learning rate increase by 500%, but they rapidly accumulate permanent "Neural Burnout" trauma, eventually leading to catatonia or unpredictable manic episodes.
+
+**Emergence:** You overclock your entire science division to rush a cure for a sudden, devastating plague. They cure it just in time, but the entire department suffers synchronized burnout, leaving you with a generation of catatonic geniuses and zero scientific output for the next decade.
+
+**Tension:** The desperate need for immediate, miraculous breakthroughs vs. the irreversible destruction of your most valuable, highly trained human capital.
+
+---
