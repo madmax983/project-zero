@@ -30,6 +30,8 @@
 //! - **Environment:** [`crate::layer1::terrain`], [`crate::layer1::map`], [`crate::layer1::weather`], [`crate::layer1::lighting`]
 //! - **Economy:** [`crate::layer1::resources`], [`crate::layer1::trade`]
 
+pub mod economy;
+pub use economy::*;
 pub mod access_control;
 /// Pop actions logic.
 pub mod actions;
@@ -76,7 +78,6 @@ pub mod genetics;
 pub mod geomes;
 /// Fire propagation and damage.
 /// Hauling logic.
-pub mod hauling;
 /// Workplace hazards logic.
 pub mod hazards;
 #[cfg(test)]
@@ -99,9 +100,7 @@ pub mod institutional_memory;
 /// Integration systems bridging domains.
 pub mod integration;
 /// Personal inventory system.
-pub mod inventory;
 /// Item definitions (Tools, Equipment).
-pub mod items;
 pub mod law;
 /// Spatial primitives (GridPosition).
 pub mod map;
@@ -123,9 +122,7 @@ pub mod pathfinding;
 /// Pop entity and management.
 pub mod pop;
 /// Refining industry (Lumber Mill, Stone Mason).
-pub mod refining;
 /// Colony resources and mining.
-pub mod resources;
 /// Field science and anomalies.
 pub mod science;
 /// Seasonal rhythms (Spring, Summer, Autumn, Winter).
@@ -136,7 +133,6 @@ pub mod social;
 /// Spoilage and decay mechanics.
 pub mod spoilage;
 /// Resource storage limits and stockpile buildings.
-pub mod stockpile;
 /// Structural integrity (cave-ins and supports).
 pub mod structural_integrity;
 /// Structure durability and repair.
@@ -192,7 +188,6 @@ pub use events::*;
 pub use execution::*;
 pub use farm::*;
 pub use graffiti::*;
-pub use hauling::*;
 pub use hazards::*;
 pub use health::*;
 pub use hit_stop::*;
@@ -200,8 +195,6 @@ pub use hobby::*;
 pub use housing::*;
 pub use institutional_memory::*;
 pub use integration::*;
-pub use inventory::*;
-pub use items::*;
 pub use locations::*;
 pub use map::*;
 pub use mascot::*;
@@ -210,12 +203,9 @@ pub use memory::*;
 pub use needs::*;
 pub use notifications::*;
 pub use pop::*;
-pub use refining::*;
-pub use resources::*;
 pub use science::*;
 pub use social::*;
 pub use spoilage::*;
-pub use stockpile::*;
 pub use structural_integrity::*;
 pub use structure::*;
 pub use tech::*;
@@ -265,8 +255,6 @@ pub use acoustic::*;
 mod acoustic_shadow_tests;
 
 /// Trade system.
-pub mod trade;
-pub use trade::*;
 /// Energy system (Spec 042).
 pub mod energy;
 pub use energy::*;
@@ -568,10 +556,7 @@ mod cryo_tests;
 pub mod festivals;
 pub use festivals::*;
 /// Radioactive system (Spec 191).
-pub mod black_market;
 /// Company Scrip and Economy system (Spec 194).
-pub mod economy;
-pub use black_market::*;
 /// Language and Dialect system (Spec 193).
 pub mod language;
 pub use language::*;
@@ -674,7 +659,6 @@ pub mod addiction;
 pub use addiction::*;
 
 pub mod pop_doppelganger;
-pub mod shadow_market;
 pub use pop_doppelganger::*;
 
 pub mod memory_core;
