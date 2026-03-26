@@ -334,4 +334,3 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `618` Local Tributes — `specs/618-local-tributes.md`
 - [ ] `619` The Whisper Network — `specs/619-the-whisper-network.md`
 - [ ] `620` Atmospheric Strata — `specs/620-atmospheric-strata.md`
-- [ ] `621` Mass Driver Logistics — `specs/621-mass-driver-logistics.md`

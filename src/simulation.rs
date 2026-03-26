@@ -339,6 +339,11 @@ pub fn run_simulation_tick(world: &mut World) {
         world.init_resource::<crate::layer2::syzygy::TidalForce>();
     }
 
+    if !world.contains_resource::<Events<crate::layer1::logistics::mass_driver::LaunchEvent>>() {
+        world.init_resource::<Events<crate::layer1::logistics::mass_driver::LaunchEvent>>();
+        world.init_resource::<Events<crate::layer1::logistics::mass_driver::BombardmentEvent>>();
+    }
+
     if !world.contains_resource::<crate::layer3::council::GalacticCouncil>() {
         world.init_resource::<crate::layer3::council::GalacticCouncil>();
     }
@@ -386,6 +391,7 @@ pub fn run_simulation_tick(world: &mut World) {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use bevy::prelude::Time;
     use crate::setup::setup_world;
     use crate::shared::state::GameState;
 
@@ -464,6 +470,11 @@ mod tests {
         world.init_resource::<crate::layer3::map::MapData>();
         world.init_resource::<Events<crate::layer3::map::FleetArrivalEvent>>();
         world.init_resource::<Events<crate::layer3::map::AnomalyDiscoveredEvent>>();
+
+        world.init_resource::<Events<crate::layer1::logistics::mass_driver::LaunchEvent>>();
+        world.init_resource::<Events<crate::layer1::logistics::mass_driver::BombardmentEvent>>();
+
+        world.init_resource::<Time>();
 
         let schedule = build_simulation_schedule();
         world.add_schedule(schedule);

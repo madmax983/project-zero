@@ -96,6 +96,8 @@ pub fn register(schedule: &mut Schedule) {
         (
             crate::layer1::logistics::glider::update_glider_movement_system
                 .after(crate::layer1::pop::reset_speed_system),
+            crate::layer1::logistics::mass_driver::mass_driver_launch_system,
+            crate::layer1::logistics::mass_driver::package_arrival_system,
         )
             .in_set(Layer1SystemSet::Execution),
     );
