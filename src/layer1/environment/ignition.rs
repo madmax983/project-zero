@@ -42,7 +42,9 @@ pub fn process_ignition(
     }
 
     for spark in sparks.read() {
-        if to_ignite.contains(&spark.position) { continue; }
+        if to_ignite.contains(&spark.position) {
+            continue;
+        }
 
         // Simple Flood Fill for contiguous vapor
         let mut queue = VecDeque::new();
@@ -62,10 +64,22 @@ pub fn process_ignition(
 
             // Check adjacent cells
             let adjacent = [
-                GridPosition { x: current_pos.x + 1, y: current_pos.y },
-                GridPosition { x: current_pos.x - 1, y: current_pos.y },
-                GridPosition { x: current_pos.x, y: current_pos.y + 1 },
-                GridPosition { x: current_pos.x, y: current_pos.y - 1 },
+                GridPosition {
+                    x: current_pos.x + 1,
+                    y: current_pos.y,
+                },
+                GridPosition {
+                    x: current_pos.x - 1,
+                    y: current_pos.y,
+                },
+                GridPosition {
+                    x: current_pos.x,
+                    y: current_pos.y + 1,
+                },
+                GridPosition {
+                    x: current_pos.x,
+                    y: current_pos.y - 1,
+                },
             ];
 
             for adj in adjacent {
@@ -91,7 +105,12 @@ mod tests {
         app.add_systems(Update, process_ignition);
 
         let pos = GridPosition { x: 5, y: 5 };
-        app.world_mut().spawn((pos, VolatileVapor { concentration: 10.0 }));
+        app.world_mut().spawn((
+            pos,
+            VolatileVapor {
+                concentration: 10.0,
+            },
+        ));
 
         // Act
         app.world_mut().send_event(SparkEvent { position: pos });
@@ -102,12 +121,23 @@ mod tests {
         let mut reader = explosion_events.get_cursor();
         let explosions: Vec<_> = reader.read(explosion_events).collect();
 
-        assert_eq!(explosions.len(), 1, "An explosion should have been triggered");
-        assert_eq!(explosions[0].position, pos, "Explosion should occur at the spark position");
+        assert_eq!(
+            explosions.len(),
+            1,
+            "An explosion should have been triggered"
+        );
+        assert_eq!(
+            explosions[0].position, pos,
+            "Explosion should occur at the spark position"
+        );
         assert!(explosions[0].damage > 0.0, "Explosion should deal damage");
 
         // Vapor should be consumed
-        let vapor_count = app.world_mut().query::<&VolatileVapor>().iter(app.world()).count();
+        let vapor_count = app
+            .world_mut()
+            .query::<&VolatileVapor>()
+            .iter(app.world())
+            .count();
         assert_eq!(vapor_count, 0, "Ignited vapor should be consumed/despawned");
     }
 
@@ -123,9 +153,24 @@ mod tests {
         let pos2 = GridPosition { x: 6, y: 5 }; // Contiguous to pos1
         let pos3 = GridPosition { x: 10, y: 10 }; // Isolated
 
-        app.world_mut().spawn((pos1, VolatileVapor { concentration: 10.0 }));
-        app.world_mut().spawn((pos2, VolatileVapor { concentration: 10.0 }));
-        app.world_mut().spawn((pos3, VolatileVapor { concentration: 10.0 }));
+        app.world_mut().spawn((
+            pos1,
+            VolatileVapor {
+                concentration: 10.0,
+            },
+        ));
+        app.world_mut().spawn((
+            pos2,
+            VolatileVapor {
+                concentration: 10.0,
+            },
+        ));
+        app.world_mut().spawn((
+            pos3,
+            VolatileVapor {
+                concentration: 10.0,
+            },
+        ));
 
         // Act
         app.world_mut().send_event(SparkEvent { position: pos1 });
@@ -136,11 +181,18 @@ mod tests {
         let mut reader = explosion_events.get_cursor();
         let explosions: Vec<_> = reader.read(explosion_events).collect();
 
-        assert_eq!(explosions.len(), 2, "Explosions should occur at both contiguous tiles");
+        assert_eq!(
+            explosions.len(),
+            2,
+            "Explosions should occur at both contiguous tiles"
+        );
 
         let explosion_positions: HashSet<_> = explosions.iter().map(|e| e.position).collect();
         assert!(explosion_positions.contains(&pos1));
         assert!(explosion_positions.contains(&pos2));
-        assert!(!explosion_positions.contains(&pos3), "Isolated vapor should not ignite");
+        assert!(
+            !explosion_positions.contains(&pos3),
+            "Isolated vapor should not ignite"
+        );
     }
 }
