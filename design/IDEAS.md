@@ -12008,7 +12008,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Propaganda Simulacrum
+## The Propaganda Simulacrum [SPECCED]
 
 **Layer:** 1 -> Cross-layer
 
@@ -12021,7 +12021,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Absolute, controllable, high-efficiency Morale vs. the complete loss of objective reality and the inability of the populace to react to actual threats.
 
 ---
-## Living Architecture
+## Living Architecture [SPECCED]
 
 **Layer:** 1
 
@@ -12035,7 +12035,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Temporal Echo Chambers
+## Temporal Echo Chambers [SPECCED]
 
 **Layer:** Cross-layer (1 -> 3)
 
@@ -12049,7 +12049,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Sub-Orbital Harpoon Logistics
+## Sub-Orbital Harpoon Logistics [SPECCED]
 
 **Layer:** Cross-layer (2 -> 1)
 
