@@ -61,6 +61,8 @@ pub fn build_simulation_schedule() -> Schedule {
 
     // --- Layer 3 Integration ---
     schedule.add_systems((
+        crate::layer2::cartographers_curse::process_telemetry_sale,
+        crate::layer2::cartographers_curse::apply_drop_pod_accuracy,
         update_detection_risk_system.after(Layer1SystemSet::Economy),
         check_hostile_spawn_system.after(update_detection_risk_system),
         crate::layer3::council::enforce_resolutions_system,
@@ -437,6 +439,8 @@ mod tests {
         // Initialize Detection Risk for test
         world.init_resource::<crate::layer3::silence::DetectionRisk>();
         world.init_resource::<Events<crate::layer3::silence::HostileSpawnEvent>>();
+        world.init_resource::<crate::layer2::cartographers_curse::MapTelemetry>();
+        world.init_resource::<Events<crate::layer2::cartographers_curse::SellTelemetryEvent>>();
 
         world.init_resource::<Events<crate::layer1::spiteful_will::InheritanceEvent>>();
         world.init_resource::<Events<crate::layer1::spiteful_will::OverrideWillEvent>>();

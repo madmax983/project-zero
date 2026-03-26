@@ -339,6 +339,5 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `618` Local Tributes — `specs/618-local-tributes.md`
 - [ ] `619` The Whisper Network — `specs/619-the-whisper-network.md`
 - [ ] `620` Atmospheric Strata — `specs/620-atmospheric-strata.md`
-- [ ] `626` The Cartographer's Curse — `specs/626-cartographers-curse.md`
 - [ ] `627` The Sabotaged Seed Bank — `specs/627-sabotaged-seed-bank.md`
 - [ ] `628` The Empathic Sinkhole — `specs/628-empathic-sinkhole.md`
