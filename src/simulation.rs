@@ -391,9 +391,9 @@ pub fn run_simulation_tick(world: &mut World) {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use bevy::prelude::Time;
     use crate::setup::setup_world;
     use crate::shared::state::GameState;
+    use bevy::prelude::Time;
 
     #[test]
     fn test_run_simulation_tick_increments() {

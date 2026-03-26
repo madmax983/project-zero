@@ -81,7 +81,6 @@ pub fn package_arrival_system(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use bevy::prelude::*;
 
     #[test]
     fn test_mass_driver_launches_package() {
@@ -90,19 +89,26 @@ mod tests {
         app.add_systems(Update, mass_driver_launch_system);
         app.add_event::<LaunchEvent>();
 
-        let driver = app.world_mut().spawn(MassDriver {
-            ready_to_fire: true,
-            target_planet: Entity::PLACEHOLDER,
-            payload_amount: 1000,
-        }).id();
+        let driver = app
+            .world_mut()
+            .spawn(MassDriver {
+                ready_to_fire: true,
+                target_planet: Entity::PLACEHOLDER,
+                payload_amount: 1000,
+            })
+            .id();
 
         // Act
-        app.world_mut().send_event(LaunchEvent { driver_id: driver });
+        app.world_mut()
+            .send_event(LaunchEvent { driver_id: driver });
         app.update();
 
         // Assert
         let driver_comp = app.world().get::<MassDriver>(driver).unwrap();
-        assert!(!driver_comp.ready_to_fire, "Driver should not be ready immediately after firing");
+        assert!(
+            !driver_comp.ready_to_fire,
+            "Driver should not be ready immediately after firing"
+        );
 
         // Ensure the package exists in flight
         let mut query = app.world_mut().query::<&InFlightPackage>();
@@ -119,20 +125,35 @@ mod tests {
         app.add_event::<BombardmentEvent>();
         app.add_systems(Update, package_arrival_system);
 
-        let planet = app.world_mut().spawn(CatcherNetwork { success_rate: 1.0, last_catch_successful: false }).id(); // 100% catch rate
-        let package = app.world_mut().spawn(InFlightPackage {
-            target_planet: planet,
-            amount: 1000,
-            eta_timer: Timer::from_seconds(0.0, TimerMode::Once), // Arrives instantly
-        }).id();
+        let planet = app
+            .world_mut()
+            .spawn(CatcherNetwork {
+                success_rate: 1.0,
+                last_catch_successful: false,
+            })
+            .id(); // 100% catch rate
+        let package = app
+            .world_mut()
+            .spawn(InFlightPackage {
+                target_planet: planet,
+                amount: 1000,
+                eta_timer: Timer::from_seconds(0.0, TimerMode::Once), // Arrives instantly
+            })
+            .id();
 
         // Act
         app.update();
 
         // Assert
-        assert!(app.world().get_entity(package).is_err(), "Package should be despawned on arrival");
+        assert!(
+            app.world().get_entity(package).is_err(),
+            "Package should be despawned on arrival"
+        );
         let catcher = app.world().get::<CatcherNetwork>(planet).unwrap();
-        assert!(catcher.last_catch_successful, "Catch should be marked successful");
+        assert!(
+            catcher.last_catch_successful,
+            "Catch should be marked successful"
+        );
     }
 
     #[test]
@@ -143,24 +164,42 @@ mod tests {
         app.add_systems(Update, package_arrival_system);
         app.add_event::<BombardmentEvent>();
 
-        let planet = app.world_mut().spawn(CatcherNetwork { success_rate: 0.0, last_catch_successful: false }).id(); // 0% catch rate
-        let package = app.world_mut().spawn(InFlightPackage {
-            target_planet: planet,
-            amount: 1000,
-            eta_timer: Timer::from_seconds(0.0, TimerMode::Once),
-        }).id();
+        let planet = app
+            .world_mut()
+            .spawn(CatcherNetwork {
+                success_rate: 0.0,
+                last_catch_successful: false,
+            })
+            .id(); // 0% catch rate
+        let package = app
+            .world_mut()
+            .spawn(InFlightPackage {
+                target_planet: planet,
+                amount: 1000,
+                eta_timer: Timer::from_seconds(0.0, TimerMode::Once),
+            })
+            .id();
 
         // Act
         app.update();
 
         // Assert
-        assert!(app.world().get_entity(package).is_err(), "Package should be despawned on arrival");
+        assert!(
+            app.world().get_entity(package).is_err(),
+            "Package should be despawned on arrival"
+        );
 
         let events = app.world().resource::<Events<BombardmentEvent>>();
         let mut reader = events.get_cursor();
         let bomb_event = reader.read(events).next().unwrap();
 
-        assert_eq!(bomb_event.target, planet, "Bombardment should hit the target planet");
-        assert_eq!(bomb_event.kinetic_energy, 1000, "Damage should scale with payload amount");
+        assert_eq!(
+            bomb_event.target, planet,
+            "Bombardment should hit the target planet"
+        );
+        assert_eq!(
+            bomb_event.kinetic_energy, 1000,
+            "Damage should scale with payload amount"
+        );
     }
 }
