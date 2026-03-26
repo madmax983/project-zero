@@ -350,3 +350,7 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `635` The Empathy Cascade — `specs/635-the-empathy-cascade.md`
 - [ ] `636` Black-Market Terraformers — `specs/636-black-market-terraformers.md`
 - [ ] `637` The Kinetic Debt — `specs/637-the-kinetic-debt.md`
+- [ ] `638` Gravimetric Architecture — `specs/638-gravimetric-architecture.md`
+- [ ] `639` The FTL Wake — `specs/639-ftl-wake.md`
+- [ ] `640` Psychic Insulation — `specs/640-psychic-insulation.md`
+- [ ] `641` Aerostat Habitats — `specs/641-aerostat-habitats.md`

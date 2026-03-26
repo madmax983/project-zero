@@ -11952,7 +11952,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Gravimetric Architecture
+## Gravimetric Architecture [SPECCED]
 
 **Layer:** 1
 
@@ -11966,7 +11966,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The FTL Wake
+## The FTL Wake [SPECCED]
 
 **Layer:** Cross-layer (2 -> 1)
 
@@ -11980,7 +11980,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Psychic Insulation
+## Psychic Insulation [SPECCED]
 
 **Layer:** 1
 
@@ -11994,7 +11994,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Aerostat Habitats
+## Aerostat Habitats [SPECCED]
 
 **Layer:** 2 -> 1
 
