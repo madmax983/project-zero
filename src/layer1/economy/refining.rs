@@ -16,7 +16,7 @@
 //!     *   Are there input resources available? (e.g., Wood > 1).
 //!     *   Is there storage space for output? (e.g., Planks < Max).
 //! 2.  **Progress**:
-//!     *   The worker's [`Skills`](crate::layer1::skills::Skills) (Crafting) determine efficiency.
+//!     *   The worker's [`Skills`] (Crafting) determine efficiency.
 //!     *   Progress accumulates in [`RefiningProgress`].
 //! 3.  **Completion**:
 //!     *   Inputs are consumed.

@@ -889,6 +889,42 @@ classDiagram
     SecretSocieties --> Unrest : generates
 ```
 
+## Economy Sub-module Extraction
+
+The simulation extracted 9 interconnected economic subsystems from the crowded `layer1` root namespace into a unified `layer1::economy` domain module. This resolves a "Blob" anti-pattern and clarifies the boundaries between the colony's internal markets and physical resource management.
+
+```mermaid
+classDiagram
+    namespace Layer1 {
+        class Systems
+        class Pop
+    }
+
+    namespace Economy {
+        class Trade
+        class Resources
+        class Refining
+        class Hauling
+        class Items
+        class Stockpile
+        class Inventory
+        class BlackMarket
+        class ShadowMarket
+    }
+
+    Systems --> Trade : registers
+    Systems --> Hauling : registers
+    Pop ..> Inventory : holds items
+    Pop ..> Resources : consumes/produces
+    Hauling ..> Items : moves
+    Hauling ..> Stockpile : deposits
+    Trade ..> Resources : exchanges
+    Trade ..> Items : exchanges
+    Refining ..> Resources : converts
+    BlackMarket ..> Trade : bypasses regulations
+    ShadowMarket ..> Items : undocumented goods
+```
+
 ## Layer 3: Galactic Market System
 
 The Galactic Market dynamically tracks the `prices` and `supply_pool` of resources across the interstellar scale (Layer 3). It adjusts prices based on the inverse relationship between supply and baseline expectations.
