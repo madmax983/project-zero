@@ -22,3 +22,4 @@ pub mod disaster_tourism_bridge;
 pub mod gene_splicing_chronicle;
 pub mod shipbreaking_bridge;
 pub mod shipbreaking_bridge;
+pub mod mass_driver_chronicle;

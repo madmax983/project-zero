@@ -511,3 +511,10 @@
 - **Systems connected:** `SpawnCrashedShipEvent` & `MineEvent` registered globally. `spawn_crashed_ship_system`, `mine_system`, and `hull_destroyed_system` registered in `Layer1SystemSet::Execution`.
 - **Glue added:** Event buffer registrations in `cleanup.rs`, schedule in `execution.rs`.
 - **Tests:** `tests/integration/shipbreaking_bridge.rs` (1 test verified)
+### INT-621: Mass Driver -> Chronicle
+- **Date:** 2026-03-27
+- **Systems connected:** `package_arrival_system` (Mass Driver) -> `mass_driver_chronicle_bridge` (Integration) -> `AddChronicleEvent` (Chronicle)
+- **Glue added:**
+    - `mass_driver_chronicle_bridge` in `src/layer1/integration.rs` converts `BombardmentEvent` to `AddChronicleEvent`.
+- **Schedule:** Registered in `Layer1SystemSet::Observation`, chained after `package_arrival_system`.
+- **Tests:** `tests/integration/mass_driver_chronicle.rs`
