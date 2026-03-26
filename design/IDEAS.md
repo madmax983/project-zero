@@ -2428,7 +2428,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Local Tributes
+## Local Tributes [SPECCED]
 
 **Layer:** 1
 
@@ -2456,7 +2456,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Whisper Network
+## The Whisper Network [SPECCED]
 
 **Layer:** Cross-Layer
 
@@ -2470,7 +2470,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Atmospheric Strata
+## Atmospheric Strata [SPECCED]
 
 **Layer:** 1
 
@@ -2484,7 +2484,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Mass Driver Logistics
+## Mass Driver Logistics [SPECCED]
 
 **Layer:** 1 -> 2
 
@@ -8676,7 +8676,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Whisper Network
+## The Whisper Network [SPECCED]
 
 **Layer:** Cross-layer
 
