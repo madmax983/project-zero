@@ -19,3 +19,7 @@
 **[Workspace Test Failure Handling]
 **Learning:** Some integration tests may fail unrelated to hauling refactors due to missing resources (e.g. `ColonyDebt`) or timing changes.
 **Action:** Since these are unrelated pre-existing or timing failures, document them and proceed with the refactor PR.
+
+**[Bevy System Tuple Limit]**
+**Learning:** Bevy's `IntoSystemConfigs` and `IntoSystemSetConfigs` traits are only implemented for tuples up to size 21. Creating a larger tuple (e.g., in `src/layer1/systems/execution.rs`) results in confusing `E0599: method not found` trait bound errors.
+**Action:** Split large system registration blocks (pyramid of doom) into smaller chunks of logically grouped systems (e.g., <= 10 items) instead of piling everything into one giant tuple.

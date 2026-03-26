@@ -66,6 +66,12 @@ pub fn register(schedule: &mut Schedule) {
                 .after(crate::layer1::light_pollution::calculate_sky_glow_system),
             crate::layer1::integration::nocturnal_aggression_bridge_system
                 .after(crate::layer1::light_pollution::apply_light_pollution_system),
+        )
+            .in_set(Layer1SystemSet::Execution),
+    );
+
+    schedule.add_systems(
+        (
             apply_lighting_penalties_system.after(update_lighting_system),
             apply_weather_effects_system.after(apply_lighting_penalties_system),
             crate::layer1::nature::mutagenic_rain::apply_mutagenic_rain_system

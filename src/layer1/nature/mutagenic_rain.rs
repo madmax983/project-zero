@@ -1,9 +1,9 @@
-use bevy_ecs::prelude::*;
 use crate::layer1::map::GridPosition;
 use crate::layer1::nature::weather::{WeatherState, WeatherType};
 use crate::layer1::pop::Pop;
 use crate::layer1::structural_integrity::RoofGrid;
 use crate::layer1::traits::{Trait, Traits};
+use bevy_ecs::prelude::*;
 use rand::Rng;
 
 /// Tag component to ensure pops don't mutate infinitely during a single storm.
@@ -11,7 +11,12 @@ use rand::Rng;
 pub struct Mutated;
 
 /// Applies random mutant traits to pops exposed to mutagenic rain.
-type MutagenicRainQuery<'w, 's> = Query<'w, 's, (Entity, &'static GridPosition, &'static mut Traits), (With<Pop>, Without<Mutated>)>;
+type MutagenicRainQuery<'w, 's> = Query<
+    'w,
+    's,
+    (Entity, &'static GridPosition, &'static mut Traits),
+    (With<Pop>, Without<Mutated>),
+>;
 pub fn apply_mutagenic_rain_system(
     mut commands: Commands,
     weather: Res<WeatherState>,
@@ -64,13 +69,13 @@ pub fn clear_mutation_immunity_system(
 
 #[cfg(test)]
 mod tests {
-    use bevy_app::{App, Update};
     use super::*;
     use crate::layer1::map::GridPosition;
     use crate::layer1::nature::weather::{WeatherState, WeatherType};
     use crate::layer1::pop::Pop;
     use crate::layer1::structural_integrity::RoofGrid;
     use crate::layer1::traits::{Trait, Traits};
+    use bevy_app::{App, Update};
 
     fn setup_app() -> App {
         let mut app = App::new();
