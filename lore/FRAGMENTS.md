@@ -5507,3 +5507,76 @@ A negative side-effect of a failed splice.
 - a constant, rattling cough
 - skin that cracks in the cold
 - an unnatural pallor
+
+## The Spore-Mind Diplomat Fragments (Spec 588)
+
+### Fragment Type: [SPORE_DIPLOMAT_TITLE]
+- The Fungal Envoy
+- Voice of the Bloom
+- The Shared Mind
+- The Mycelial Ambassador
+- Speaker for the Roots
+- The Infected Tongue
+
+### Fragment Type: [HIDDEN_CLAUSE_EFFECT]
+- unhindered spore propagation across all transit routes
+- mandatory fungal reserves in every cargo hold
+- diplomatic immunity for the blooming networks
+- free passage for all infected hosts
+- untaxed shipments of fertile soil
+- the surrender of the deeper caverns to the roots
+
+## The Cartographic Delusion Fragments (Spec 585)
+
+### Fragment Type: [MAP_ROT_DESCRIPTOR]
+- hopelessly outdated
+- corrupted by cosmic background
+- dangerously optimistic
+- a ghost map
+- a cartographic delusion
+- a fiction painted over the stars
+- dead telemetry
+
+### Fragment Type: [GHOST_DESTINATION]
+- an empty void where the star should be
+- a pulsar that was supposed to be a safe harbor
+- a hostile fleet waiting in the dark
+- a planetary graveyard instead of a colony
+- a gravity well that wasn't on the charts
+- a civilization that died centuries ago
+
+## The Whispering Ore Fragments (Spec 592)
+
+### Fragment Type: [WHISPERING_ORE_NAME]
+- The Singing Vein
+- The Whispering Stone
+- Resonant Ore
+- The Deep Voice
+- The Chanting Crystal
+- Echo-Metal
+
+### Fragment Type: [RESONANT_CHANT]
+- syllables of a dead language
+- a perfect, impossible harmony
+- the sound of glass grinding
+- a song about opening the deep eye
+- a multi-tonal drone
+- words that make the teeth ache
+
+## Mutagenic Rain Fragments (Spec 427)
+
+### Fragment Type: [MUTAGENIC_RAIN_DESC]
+- glowing with a sick green light
+- thick and unnaturally warm
+- heavy drops that burn the skin
+- a shifting, prismatic downpour
+- toxic sludge from the upper atmosphere
+- a rain that smells of copper and ozone
+
+### Fragment Type: [MUTATION_RESULT]
+- skin hardened into a thick carapace
+- bones turning brittle as glass
+- a sudden, extreme hunger that cannot be satisfied
+- skin turning green to drink the sun
+- eyes adjusting to see in the pitch black
+- lungs adapting to breathe the poison

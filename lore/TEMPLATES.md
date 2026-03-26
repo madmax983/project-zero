@@ -4684,3 +4684,83 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "The body fought back. [YEAR]. [NAME] rejected the [GENE_MOD_NAME] and suffers [MUTATION_SYMPTOM]."
 - "[YEAR]: A horrific mutation. The [GENE_MOD_NAME] failed on [NAME], leaving them with [MUTATION_SYMPTOM]."
 - "We pushed biology too far. [NAME] tried to get [GENE_MOD_NAME], but woke up with [MUTATION_SYMPTOM]. [YEAR]."
+
+## The Spore-Mind Diplomat Templates (Spec 588)
+
+### Template: SPORE_DIPLOMAT_APPOINTED
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[NAME]`, `[SPORE_DIPLOMAT_TITLE]`
+
+**Patterns:**
+- "[YEAR]: We sent [NAME] to the treaty table. Now they call them [SPORE_DIPLOMAT_TITLE]."
+- "[NAME] negotiates for [COLONY]. But their eyes are green, the mark of [SPORE_DIPLOMAT_TITLE]. [YEAR]."
+- "An ambassador of two species. [NAME] is our envoy, but they speak as [SPORE_DIPLOMAT_TITLE]. [YEAR]."
+
+### Template: TREATY_INFECTED
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[OTHER_CIV]`, `[HIDDEN_CLAUSE_EFFECT]`
+
+**Patterns:**
+- "The treaty with [OTHER_CIV] is signed. But we didn't notice the clause demanding [HIDDEN_CLAUSE_EFFECT]. [YEAR]."
+- "[YEAR]: Our diplomat secured peace with [OTHER_CIV]. The cost? An agreement for [HIDDEN_CLAUSE_EFFECT]."
+- "We thought we won the negotiation. Then we read the fine print: [OTHER_CIV] must accept [HIDDEN_CLAUSE_EFFECT]. [YEAR]."
+
+## The Cartographic Delusion Templates (Spec 585)
+
+### Template: MAP_DATA_DECAYED
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[SECTOR_ID]`, `[MAP_ROT_DESCRIPTOR]`
+
+**Patterns:**
+- "Our knowledge of sector [SECTOR_ID] is [MAP_ROT_DESCRIPTOR]. [YEAR]. We fly blind."
+- "[YEAR]: Warning. The telemetry for [SECTOR_ID] is now [MAP_ROT_DESCRIPTOR]. Send a scout."
+- "The map lies. Sector [SECTOR_ID] is [MAP_ROT_DESCRIPTOR]. [YEAR]."
+
+### Template: FLEET_LOST_TO_GHOST_MAP
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[FLEET_NAME]`, `[GHOST_DESTINATION]`
+
+**Patterns:**
+- "[FLEET_NAME] jumped to the coordinates. Instead of a safe path, they found [GHOST_DESTINATION]. [YEAR]."
+- "[YEAR]: The delusion was fatal. [FLEET_NAME] arrived at what the map claimed was empty space, but it was [GHOST_DESTINATION]."
+- "We sent [FLEET_NAME] based on old data. They arrived at [GHOST_DESTINATION]. We lost contact. [YEAR]."
+
+## The Whispering Ore Templates (Spec 592)
+
+### Template: WHISPERING_ORE_DISCOVERED
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[WHISPERING_ORE_NAME]`
+
+**Patterns:**
+- "A massive strike in the deep crust. [YEAR]. [WHISPERING_ORE_NAME]. The miners say it hums."
+- "[YEAR]: Unbelievable wealth found. A vein of [WHISPERING_ORE_NAME]. But it speaks in the dark."
+- "We struck [WHISPERING_ORE_NAME]. The economy booms, but the miners are changing. [YEAR]."
+
+### Template: MINE_SEALED_REBELLION
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[RESONANT_CHANT]`, `[WHISPERING_ORE_NAME]`
+
+**Patterns:**
+- "We sealed the mine to save their minds. [YEAR]. Now they riot, screaming [RESONANT_CHANT]."
+- "[YEAR]: The resonant miners demand the eye be reopened. They march on the reactor, chanting [RESONANT_CHANT]."
+- "Violence over the [WHISPERING_ORE_NAME]. The cult broke down the blast doors. Their battle cry is [RESONANT_CHANT]. [YEAR]."
+
+## Mutagenic Rain Templates (Spec 427)
+
+### Template: MUTAGENIC_RAIN_STRIKES
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[MUTAGENIC_RAIN_DESC]`
+
+**Patterns:**
+- "The skies opened, [MUTAGENIC_RAIN_DESC]. [YEAR]. Get under a roof, now."
+- "[YEAR]: Mutagenic storm warning. The rain is [MUTAGENIC_RAIN_DESC]. Flesh will twist if exposed."
+- "A downpour over [COLONY]. It's [MUTAGENIC_RAIN_DESC]. Lock the doors. [YEAR]."
+
+### Template: POP_MUTATED
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[NAME]`, `[MUTATION_RESULT]`
+
+**Patterns:**
+- "[NAME] was caught outside. [YEAR]. The rain left them with [MUTATION_RESULT]."
+- "[YEAR]: Exposure. [NAME] survived the storm, but suffered [MUTATION_RESULT]."
+- "Evolution by storm. [NAME] stood in the rain. Now they have [MUTATION_RESULT]. [YEAR]."
