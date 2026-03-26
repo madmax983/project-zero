@@ -2,6 +2,11 @@
 
 ## High Priority
 
+- [ ] `630` Biocompatibility — `specs/630-biocompatibility.md`
+- [ ] `631` Conveyor Logistics — `specs/631-conveyor-logistics.md`
+- [ ] `632` Cultural Artifacts — `specs/632-cultural-artifacts.md`
+- [ ] `633` The Golden Age — `specs/633-the-golden-age.md`
+
 - [ ] `622` The Bio-Digital Ascendancy — `specs/622-bio-digital-ascendancy.md`
 - [ ] `623` The Nostalgia Plague — `specs/623-nostalgia-plague.md`
 - [ ] `624` Rogue AI Arbitration — `specs/624-rogue-ai-arbitration.md`
