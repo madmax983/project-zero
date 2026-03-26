@@ -11951,3 +11951,73 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Aggressively expanding and exploiting the planet for rapid growth vs. treading carefully and artificially limiting your colony's footprint to avoid waking systems you don't understand and cannot control.
 
 ---
+
+## Gravimetric Architecture
+
+**Layer:** 1
+
+**Fantasy:** Building structures that manipulate their own weight, allowing for impossible construction but risking catastrophic structural failure if the power fails.
+
+**Mechanic:** Advanced construction materials that require constant energy to maintain a low-gravity field. Buildings can be stacked infinitely high or suspended over chasms without physical support, ignoring normal structural integrity rules.
+
+**Emergence:** You construct a massive, sprawling, inverted pyramid city floating above a hazardous toxic swamp. During a severe storm, the main power relay is damaged. The gravimetric field fails, and the entire city collapses into the swamp under its own sudden, immense weight.
+
+**Tension:** The incredible spatial efficiency and aesthetic freedom of gravimetric building vs. the terrifying reliance on a perfectly stable, uninterrupted power grid.
+
+---
+
+## The FTL Wake
+
+**Layer:** Cross-layer (2 -> 1)
+
+**Fantasy:** Faster-than-light travel isn't clean; it leaves a turbulent, radioactive scar in real-space that washes over anything in its path.
+
+**Mechanic:** When massive Layer 2 or 3 fleets use hyper-lanes or jump drives near your system, they generate a "Wake." This wake manifests on Layer 1 as a temporary but intense wave of exotic radiation, causing sensor blindness, minor structural decay, and bizarre mutations in unprotected Pops.
+
+**Emergence:** Your colony sits near a major galactic trade artery. You benefit immensely from the passing trade, but the constant FTL traffic necessitates building thick, lead-lined roofs over all your farms and habitats, transforming your bustling trade hub into a bleak, bunker-like society.
+
+**Tension:** Positioning your colony near lucrative, high-traffic trade lanes vs. dealing with the constant, debilitating environmental fallout of passing ships.
+
+---
+
+## Psychic Insulation
+
+**Layer:** 1
+
+**Fantasy:** Some thoughts are too loud, and some memories are too sharp. Sometimes, the only way to stay sane is to build a wall against the minds of others.
+
+**Mechanic:** Certain rare materials (e.g., "Null-Stone") can be used to construct rooms that block all "Resonance," "Empathy," and "Rumor" mechanics. Pops inside these rooms cannot be affected by the moods, memories, or telepathic traits of others, but they also cannot gain positive social buffs.
+
+**Emergence:** A severe "Despair" plague sweeps through the colony. The only survivors are the antisocial researchers who had hermetically sealed themselves inside a Null-Stone bunker to avoid the distraction of the "Rumor Web." They emerge to find the rest of the colony catatonic.
+
+**Tension:** The safety of total psychological isolation vs. the necessary, humanizing benefits of community connection and shared morale.
+
+---
+
+## Aerostat Habitats
+
+**Layer:** 2 -> 1
+
+**Fantasy:** Floating cities drifting through the upper atmosphere of gas giants, harvesting rare gases while constantly fighting to stay aloft.
+
+**Mechanic:** On Gas Giant planets, colonies must be built on constructible "Aerostat Platforms." These platforms require constant fuel and maintenance to maintain buoyancy. The planet has no solid ground; if a platform loses buoyancy, it slowly sinks into the crushing depths until it is destroyed.
+
+**Emergence:** You build a massive, interconnected network of floating refinery platforms. A labor strike halts maintenance on the primary buoyancy array. As negotiations drag on, the entire city begins to visibly sink into the increasingly turbulent, high-pressure lower atmosphere, forcing a desperate, chaotic evacuation to the remaining stable platforms.
+
+**Tension:** Access to unparalleled, high-value atmospheric resources vs. the constant, high-upkeep terror of living without solid ground beneath your feet.
+
+---
+
+## The Propaganda Simulacrum
+
+**Layer:** 1 -> Cross-layer
+
+**Fantasy:** When the truth is too bleak, you build a machine to tell a better lie, but eventually, people start believing the lie more than reality.
+
+**Mechanic:** A high-tech "Simulacrum" building generates a continuous, artificial stream of fake "Good News" and "Heroic Memories" that replace genuine, negative memories in nearby Pops. It provides a massive, artificial Morale boost but slowly replaces the colony's actual history with a fabricated, perfectly optimistic narrative.
+
+**Emergence:** Your colony is starving and under siege, but the Simulacrum tells everyone they are living in a golden age of peace and plenty. The Pops become so blissfully deluded that they refuse to take up arms or ration food, believing the enemy fleets are simply "friendly firework displays" and the empty granaries are "scheduled fasting holidays," leading to a joyful, entirely preventable collapse.
+
+**Tension:** Absolute, controllable, high-efficiency Morale vs. the complete loss of objective reality and the inability of the populace to react to actual threats.
+
+---
