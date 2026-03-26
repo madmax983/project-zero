@@ -178,3 +178,23 @@ mod tests {
         assert!(get_wage_for_job(job) > 0.0);
     }
 }
+
+pub mod black_market;
+pub mod hauling;
+pub mod inventory;
+pub mod items;
+pub mod refining;
+pub mod resources;
+pub mod shadow_market;
+pub mod stockpile;
+pub mod trade;
+
+pub use black_market::*;
+pub use hauling::*;
+pub use inventory::*;
+pub use items::*;
+pub use refining::*;
+pub use resources::*;
+pub use shadow_market::*;
+pub use stockpile::*;
+pub use trade::*;

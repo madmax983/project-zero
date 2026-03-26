@@ -28,3 +28,7 @@
 **Law Domain Encapsulation**
 **Tangle:** The Law and Order subsystem (`justice`, `penal`, `predictive_policing`, `contraband`) was scattered across the root `src/layer1/mod.rs` namespace, contributing to the "Blob" anti-pattern in `layer1`. These interrelated modules lacked a clear domain boundary.
 **Blueprint:** Encapsulated all law-related files into a dedicated `src/layer1/law/` module. `mod.rs` now re-exports public types natively under `pub mod law` and fixes the duplicate tests, enforcing strict domain boundaries while reducing clutter in `layer1/mod.rs`.
+
+**Economy Sub-module Extracted**
+**Tangle:** `src/layer1/mod.rs` was a monolithic module that contained various economic systems (`trade`, `resources`, `refining`, `hauling`, `items`, `stockpile`, `inventory`, `black_market`, `shadow_market`) loosely coupled, lacking a domain boundary and contributing to the "Blob" anti-pattern in the top-level namespace.
+**Blueprint:** Extracted the 9 economic modules into a new `src/layer1/economy/` module, providing a clean facade `economy/mod.rs` and simplifying the top-level Layer 1 namespace, thus enforcing a stronger domain boundary around trade and logistics logic.
