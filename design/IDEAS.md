@@ -11842,7 +11842,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Scrap-Code Prophets
+## Scrap-Code Prophets [SPECCED]
 
 **Layer:** 1
 
@@ -11856,7 +11856,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Empathy Cascade
+## The Empathy Cascade [SPECCED]
 
 **Layer:** Cross-layer (1 -> 2)
 
@@ -11870,7 +11870,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Black-Market Terraformers
+## Black-Market Terraformers [SPECCED]
 
 **Layer:** Cross-layer (2 -> 1)
 
@@ -11884,7 +11884,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Kinetic Debt
+## The Kinetic Debt [SPECCED]
 
 **Layer:** Cross-layer (3 -> 2 -> 1)
 
