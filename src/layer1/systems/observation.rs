@@ -252,6 +252,8 @@ pub fn register(schedule: &mut Schedule) {
             mega_quake_chronicle_bridge.after(crate::layer1::geology::tectonic::check_quake_system),
             crate::layer1::integration::orbital_drop_chronicle_bridge
                 .after(crate::layer1::logistics::orbital_drop::process_orbital_drops),
+            crate::layer1::integration::mass_driver_chronicle_bridge
+                .after(crate::layer1::logistics::mass_driver::package_arrival_system),
             crate::layer1::integration::hologram_failure_chronicle_bridge
                 .after(crate::layer1::hologram::update_holograms_system),
             retrograde_chronicle_bridge.after(work_execution_system), // work_execution_system is in Execution set

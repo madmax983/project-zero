@@ -209,5 +209,7 @@ mod governance_rebellion;
 
 #[path = "integration/airlocks_pressure.rs"]
 mod airlocks_pressure;
+#[path = "integration/mass_driver_chronicle.rs"]
+mod mass_driver_chronicle;
 #[path = "integration/nanite_fabrication_chronicle.rs"]
 mod nanite_fabrication_chronicle;

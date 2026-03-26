@@ -29,7 +29,24 @@ use rand::prelude::*;
 use ratatui::style::Color;
 use std::collections::HashSet;
 
+use crate::layer1::logistics::mass_driver::BombardmentEvent;
 use crate::layer1::logistics::orbital_drop::OrbitalDropEvent;
+
+/// Bridges BombardmentEvent (Mass Driver) to AddChronicleEvent (Chronicle).
+pub fn mass_driver_chronicle_bridge(
+    mut bomb_events: EventReader<BombardmentEvent>,
+    mut chronicle_events: EventWriter<AddChronicleEvent>,
+) {
+    for event in bomb_events.read() {
+        chronicle_events.send(AddChronicleEvent {
+            text: format!(
+                "Kinetic Bombardment! Mass driver payload struck colony {:?} with {} energy.",
+                event.target, event.kinetic_energy
+            ),
+            importance: EventImportance::Major,
+        });
+    }
+}
 
 /// Bridges OrbitalDropEvent (Logistics) to AddChronicleEvent (Chronicle).
 pub fn orbital_drop_chronicle_bridge(
