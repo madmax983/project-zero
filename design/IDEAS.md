@@ -10583,7 +10583,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Cartographer's Curse
+## [SPECCED] The Cartographer's Curse
 
 **Layer:** 2 -> 1
 
@@ -10597,7 +10597,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Sabotaged Seed Bank
+## [SPECCED] The Sabotaged Seed Bank
 
 **Layer:** 1
 
@@ -10611,7 +10611,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Empathic Sinkhole
+## [SPECCED] The Empathic Sinkhole
 
 **Layer:** 1
 
@@ -10625,7 +10625,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Atmospheric Ignition
+## [SPECCED] Atmospheric Ignition
 
 **Layer:** 1
 
