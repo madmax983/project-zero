@@ -12077,7 +12077,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Flesh Tax
+## The Flesh Tax [SPECCED]
 
 **Layer:** Cross-layer (3 -> 1)
 
@@ -12091,7 +12091,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Memory Blackout
+## The Memory Blackout [SPECCED]
 
 **Layer:** 1
 
@@ -12105,7 +12105,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Feral Logistics Network
+## Feral Logistics Network [SPECCED]
 
 **Layer:** 2
 
@@ -12119,7 +12119,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Symbiotic Leviathans
+## Symbiotic Leviathans [SPECCED]
 
 **Layer:** 2
 
