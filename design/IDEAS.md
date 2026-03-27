@@ -2106,7 +2106,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Orbital Bombardment
+## Orbital Bombardment [SPECCED]
 
 **Layer:** Cross-layer
 
@@ -2120,7 +2120,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Orbital Mirrors
+## Orbital Mirrors [SPECCED]
 
 **Layer:** 2 -> 1
 
@@ -2134,7 +2134,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Secret Societies
+## Secret Societies [SPECCED]
 
 **Layer:** 1
 
@@ -2148,7 +2148,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Refugee Waves
+## Refugee Waves [SPECCED]
 
 **Layer:** 3 -> 1
 

@@ -2,6 +2,11 @@
 
 ## High Priority
 
+- [ ] `659` Orbital Bombardment — `specs/659-orbital-bombardment.md`
+- [ ] `660` Orbital Mirrors — `specs/660-orbital-mirrors.md`
+- [ ] `661` Secret Societies — `specs/661-secret-societies.md`
+- [ ] `662` Refugee Waves — `specs/662-refugee-waves.md`
+
 
 
 - [ ] `648` The Founder Effect — `specs/648-the-founder-effect.md`
