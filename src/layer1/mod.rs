@@ -220,8 +220,6 @@ pub use totems::*;
 
 /// Lighting system.
 pub mod lighting;
-/// Rumor web system (Spec 055).
-pub mod rumor;
 /// Pop skills and experience system.
 pub mod skills;
 #[cfg(test)]
@@ -237,7 +235,6 @@ pub use vermin::*;
 mod vermin_evolution_tests;
 
 pub use lighting::*;
-pub use rumor::*;
 
 /// Designated zones logic (Spec 056).
 pub mod zone;
@@ -267,8 +264,6 @@ pub use whispering_ore::*;
 /// Atmospheric simulation (Spec 063).
 /// Terraforming and Planetary Atmosphere (Spec 207).
 pub mod terraforming;
-/// Civil unrest and mental break system.
-pub mod unrest;
 pub use terraforming::*;
 
 /// Room quality calculation and memories (Spec 064).
@@ -318,16 +313,9 @@ mod sleepwalking_tests;
 #[cfg(test)]
 mod material_provenance_tests;
 
-/// Pop factions system (Spec 068).
-pub mod factions;
-pub use factions::*;
-
 /// Cabin Fever mechanics (Spec 082).
 pub mod cabin_fever;
 pub use cabin_fever::*;
-/// Mentorship system (Spec 069).
-pub mod mentorship;
-pub use mentorship::*;
 
 /// Stowaway system (Spec 086).
 pub mod stowaway;
@@ -335,9 +323,6 @@ pub use stowaway::*;
 /// Pop personality traits (Spec 084).
 pub mod traits;
 pub use traits::*;
-/// Omens & Taboos system (Spec 088).
-pub mod taboo;
-pub use taboo::*;
 /// Erosion system (Spec 093).
 /// Eureka Moments system (Spec 196).
 pub mod eureka;
@@ -346,10 +331,6 @@ pub use eureka::*;
 /// Pheromone Gardening system (Spec 170).
 pub mod pheromone;
 pub use pheromone::*;
-
-#[cfg(test)]
-/// Tests for faction demands logic (Spec 085).
-pub mod faction_demands_tests;
 
 /// Heirloom tech system (Spec 070).
 pub mod heirloom;
@@ -393,10 +374,6 @@ pub use particles::*;
 pub mod contagion;
 pub use contagion::*;
 
-/// Morale system (Spec 031/090).
-pub mod morale;
-pub use morale::*;
-
 /// Biocompatibility system (Spec 107).
 pub mod biocompatibility;
 pub use biocompatibility::*;
@@ -429,13 +406,6 @@ pub use observatory::*;
 pub mod logistics;
 pub use logistics::*;
 
-/// Social stratification system (Spec 113).
-pub mod social_stratification;
-pub use social_stratification::*;
-/// Technological rituals and machine spirits.
-pub mod rituals;
-pub use rituals::*;
-
 /// Airlock & Pressure system (Spec 119).
 pub mod pressure;
 pub use pressure::*;
@@ -445,9 +415,6 @@ pub use suction::*;
 /// Stress and mental breakdown system (Spec 127).
 pub mod stress;
 pub use stress::*;
-/// Social mimicry system (Spec 128).
-pub mod social_mimicry;
-pub use social_mimicry::*;
 /// Turret system (Spec 135).
 pub mod turret;
 pub use turret::*;
@@ -563,14 +530,6 @@ pub use language::*;
 #[cfg(test)]
 mod equipment_tests;
 
-/// Civic Ideology system (Spec 197).
-pub mod civic_ideology;
-pub use civic_ideology::*;
-
-/// Prohibition and Contraband system (Spec 203).
-/// Customs checkpoint system (Spec 214).
-pub mod customs;
-pub use customs::*;
 /// Solar cycle and power generation (Spec 213).
 pub mod window;
 
@@ -627,10 +586,6 @@ pub use clone_vat::*;
 /// Operational Detritus system (Spec 239).
 pub mod clutter;
 pub use clutter::*;
-
-/// Politics and Elections (Spec 241).
-pub mod politics;
-pub use politics::*;
 
 /// Biometric Security system (Spec 244).
 pub mod security;

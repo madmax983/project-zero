@@ -32,3 +32,7 @@
 **Economy Sub-module Extracted**
 **Tangle:** `src/layer1/mod.rs` was a monolithic module that contained various economic systems (`trade`, `resources`, `refining`, `hauling`, `items`, `stockpile`, `inventory`, `black_market`, `shadow_market`) loosely coupled, lacking a domain boundary and contributing to the "Blob" anti-pattern in the top-level namespace.
 **Blueprint:** Extracted the 9 economic modules into a new `src/layer1/economy/` module, providing a clean facade `economy/mod.rs` and simplifying the top-level Layer 1 namespace, thus enforcing a stronger domain boundary around trade and logistics logic.
+
+**Social Domain Encapsulation**
+**Tangle:** The social domain (`rumor`, `factions`, `morale`, `politics`, `unrest`, etc.) was scattered across the root `src/layer1/mod.rs` namespace, adding to the "Blob" anti-pattern in `layer1`. These interrelated modules lacked a clear domain boundary.
+**Blueprint:** Encapsulated 13 social-related files into a dedicated `src/layer1/social/` module. The new `src/layer1/social/mod.rs` re-exports the public types to maintain backward compatibility, keeping the layer 1 root cleaner while strictly enforcing domain boundaries.
