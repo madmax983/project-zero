@@ -403,9 +403,41 @@ fn report_events(world: &mut World) {
     }
 
     if moving > 0 || working > 0 || at_farm > 0 || at_housing > 0 {
-        println!(
-            "  Activity: {moving} moving, {working} working, {at_farm} eating, {at_housing} resting"
-        );
+        let mut table = Table::new();
+        table
+            .load_preset(UTF8_FULL)
+            .set_content_arrangement(ContentArrangement::Dynamic)
+            .set_header(vec![
+                Cell::new("Activity").add_attribute(Attribute::Bold),
+                Cell::new("Pops").add_attribute(Attribute::Bold),
+            ]);
+
+        if moving > 0 {
+            table.add_row(vec![
+                Cell::new("Moving").fg(comfy_table::Color::Cyan),
+                Cell::new(moving.to_string()),
+            ]);
+        }
+        if working > 0 {
+            table.add_row(vec![
+                Cell::new("Working").fg(comfy_table::Color::Yellow),
+                Cell::new(working.to_string()),
+            ]);
+        }
+        if at_farm > 0 {
+            table.add_row(vec![
+                Cell::new("Eating").fg(comfy_table::Color::Green),
+                Cell::new(at_farm.to_string()),
+            ]);
+        }
+        if at_housing > 0 {
+            table.add_row(vec![
+                Cell::new("Resting").fg(comfy_table::Color::Blue),
+                Cell::new(at_housing.to_string()),
+            ]);
+        }
+
+        print_dashboard_table("Recent Activity", table);
     }
 }
 
@@ -1066,12 +1098,40 @@ fn find_terrain(world: &mut World, terrain_name: &str, max_count: usize) {
     }
 
     if found.is_empty() {
-        println!("FOUND: {target:?} count=0");
+        print_dashboard_panel(
+            &format!("Search Results: {target:?} (Max: {max_count})"),
+            &format!(
+                "{}",
+                "  (No tiles found)                             "
+                    .dark_grey()
+                    .italic()
+            ),
+        );
     } else {
-        println!("FOUND: {:?} count={}", target, found.len());
-        for (x, y) in &found {
-            println!("  COORD: {x} {y}");
+        let mut table = Table::new();
+        table
+            .load_preset(UTF8_FULL)
+            .set_content_arrangement(ContentArrangement::Dynamic)
+            .set_header(vec![
+                Cell::new("ID").add_attribute(Attribute::Bold),
+                Cell::new("Coordinate").add_attribute(Attribute::Bold),
+                Cell::new("Terrain").add_attribute(Attribute::Bold),
+            ]);
+
+        let color = get_terrain_color_headless(target);
+
+        for (i, (x, y)) in found.iter().enumerate() {
+            table.add_row(vec![
+                Cell::new((i + 1).to_string()),
+                Cell::new(format!("{}, {}", x, y)),
+                Cell::new(format!("{:?}", target)).fg(color),
+            ]);
         }
+
+        print_dashboard_table(
+            &format!("Search Results: {target:?} (Found: {})", found.len()),
+            table,
+        );
     }
 }
 
@@ -1198,7 +1258,6 @@ fn scan_terrain(world: &mut World, center_x: i32, center_y: i32, radius: i32) {
 
             let bool_to_str = |b: bool| if b { "Y" } else { "-" };
 
-            use comfy_table::Color as CColor;
             table.add_row(vec![
                 Cell::new(format!("{},{}", x, y)),
                 Cell::new(terrain_name).fg(get_terrain_color_headless(tile)),
@@ -1206,24 +1265,24 @@ fn scan_terrain(world: &mut World, center_x: i32, center_y: i32, radius: i32) {
                 Cell::new(bool_to_str(buildable)),
                 Cell::new(bool_to_str(occupied)),
                 Cell::new(bool_to_str(has_pop)).fg(if has_pop {
-                    CColor::Cyan
+                    comfy_table::Color::Cyan
                 } else {
-                    CColor::White
+                    comfy_table::Color::White
                 }),
                 Cell::new(bool_to_str(has_farm)).fg(if has_farm {
-                    CColor::Green
+                    comfy_table::Color::Green
                 } else {
-                    CColor::White
+                    comfy_table::Color::White
                 }),
                 Cell::new(bool_to_str(has_housing)).fg(if has_housing {
-                    CColor::Yellow
+                    comfy_table::Color::Yellow
                 } else {
-                    CColor::White
+                    comfy_table::Color::White
                 }),
                 Cell::new(designation).fg(if designation != "-" {
-                    CColor::Magenta
+                    comfy_table::Color::Magenta
                 } else {
-                    CColor::White
+                    comfy_table::Color::White
                 }),
             ]);
         }
@@ -1248,18 +1307,19 @@ fn scan_terrain(world: &mut World, center_x: i32, center_y: i32, radius: i32) {
 }
 
 const fn get_terrain_color_headless(t: TerrainType) -> comfy_table::Color {
-    use comfy_table::Color as CColor;
     match t {
-        TerrainType::Grass => CColor::Green,
-        TerrainType::Dirt => CColor::DarkYellow,
-        TerrainType::Rock => CColor::Grey,
-        TerrainType::Water => CColor::Blue,
-        TerrainType::Tree | TerrainType::Sapling | TerrainType::Shrub => CColor::DarkGreen,
-        TerrainType::Path => CColor::DarkGrey,
-        TerrainType::DeepRock => CColor::DarkGrey,
-        TerrainType::MagmaRock => CColor::Red,
-        TerrainType::SporeBloom => CColor::Magenta,
-        TerrainType::Artifact => CColor::Yellow,
+        TerrainType::Grass => comfy_table::Color::Green,
+        TerrainType::Dirt => comfy_table::Color::DarkYellow,
+        TerrainType::Rock => comfy_table::Color::Grey,
+        TerrainType::Water => comfy_table::Color::Blue,
+        TerrainType::Tree | TerrainType::Sapling | TerrainType::Shrub => {
+            comfy_table::Color::DarkGreen
+        }
+        TerrainType::Path => comfy_table::Color::DarkGrey,
+        TerrainType::DeepRock => comfy_table::Color::DarkGrey,
+        TerrainType::MagmaRock => comfy_table::Color::Red,
+        TerrainType::SporeBloom => comfy_table::Color::Magenta,
+        TerrainType::Artifact => comfy_table::Color::Yellow,
     }
 }
 
@@ -1352,26 +1412,28 @@ fn get_tile_info(world: &mut World, x: i32, y: i32) {
         Cell::new(bool_to_str(occupied)),
     ]);
 
-    use comfy_table::Color as CColor;
-
     table.add_row(vec![
         Cell::new("Pop Present"),
-        Cell::new(bool_to_str(has_pop)).fg(if has_pop { CColor::Cyan } else { CColor::White }),
+        Cell::new(bool_to_str(has_pop)).fg(if has_pop {
+            comfy_table::Color::Cyan
+        } else {
+            comfy_table::Color::White
+        }),
     ]);
     table.add_row(vec![
         Cell::new("Farm Present"),
         Cell::new(bool_to_str(has_farm)).fg(if has_farm {
-            CColor::Green
+            comfy_table::Color::Green
         } else {
-            CColor::White
+            comfy_table::Color::White
         }),
     ]);
     table.add_row(vec![
         Cell::new("Housing Present"),
         Cell::new(bool_to_str(has_housing)).fg(if has_housing {
-            CColor::Yellow
+            comfy_table::Color::Yellow
         } else {
-            CColor::White
+            comfy_table::Color::White
         }),
     ]);
 
@@ -1668,19 +1730,18 @@ fn print_log(world: &mut World) {
 }
 
 const fn to_comfy_color(c: ratatui::style::Color) -> comfy_table::Color {
-    use comfy_table::Color as CColor;
     use ratatui::style::Color as RColor;
 
     match c {
-        RColor::Black => CColor::Black,
-        RColor::Red | RColor::LightRed => CColor::Red,
-        RColor::Green | RColor::LightGreen => CColor::Green,
-        RColor::Yellow | RColor::LightYellow => CColor::Yellow,
-        RColor::Blue | RColor::LightBlue => CColor::Blue,
-        RColor::Magenta | RColor::LightMagenta => CColor::Magenta,
-        RColor::Cyan | RColor::LightCyan => CColor::Cyan,
-        RColor::Gray | RColor::DarkGray => CColor::Grey,
-        _ => CColor::White,
+        RColor::Black => comfy_table::Color::Black,
+        RColor::Red | RColor::LightRed => comfy_table::Color::Red,
+        RColor::Green | RColor::LightGreen => comfy_table::Color::Green,
+        RColor::Yellow | RColor::LightYellow => comfy_table::Color::Yellow,
+        RColor::Blue | RColor::LightBlue => comfy_table::Color::Blue,
+        RColor::Magenta | RColor::LightMagenta => comfy_table::Color::Magenta,
+        RColor::Cyan | RColor::LightCyan => comfy_table::Color::Cyan,
+        RColor::Gray | RColor::DarkGray => comfy_table::Color::Grey,
+        _ => comfy_table::Color::White,
     }
 }
 
