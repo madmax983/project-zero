@@ -12132,3 +12132,58 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** The massive logistical and military advantage of organic, self-repairing starships vs. the constant, terrifying upkeep of feeding a predator that can eat your own colonies if neglected.
 
 ---
+## The Cartographic Mutiny
+
+**Layer:** Cross-layer
+
+**Fantasy:** Maps lie. And when the truth is revealed, it might break the colony.
+
+**Mechanic:** Exploration data sent back from Layer 2 scouts can be falsified if the scout's morale is too low or they have been bribed by factions. Falsified data appears as resource-rich nodes or safe hyperlanes until verified by a second expedition.
+
+**Emergence:** A colony might stake its entire survival on an orbital drop to a 'lush' continent that turns out to be an irradiated wasteland. Factions might intentionally hide hostile fleets to eliminate political rivals sent to investigate.
+
+**Tension:** Do you act immediately on new telemetry, or do you spend precious fuel and time sending a second ship to verify the claims?
+
+---
+
+## The Aesthetic Rot
+
+**Layer:** 1
+
+**Fantasy:** Beauty is a resource, and ugliness is a contagion.
+
+**Mechanic:** Buildings that fall into disrepair or are built entirely for utilitarian output without decorative elements generate an 'Aesthetic Rot' aura. Pops spending too much time in these auras develop 'Vandalism' behaviors, actively destroying nearby decorative structures to match their mood.
+
+**Emergence:** A temporary industrial push in one sector might lead to a cascading wave of vandalism that sweeps into the pristine residential districts, destroying years of cultural artifact curation.
+
+**Tension:** How much do you invest in the beauty of your industrial sectors? Do you segregate the 'ugly' work and risk breeding a disgruntled underclass?
+
+---
+
+## The Phantom Work Order
+
+**Layer:** 1
+
+**Fantasy:** Bureaucracy takes on a life of its own, outliving its creators.
+
+**Mechanic:** When a highly influential Pop (e.g., a manager or faction leader) dies suddenly, their scheduled work designations and colony edicts remain in the system, but become 'Phantom Orders'. Subordinate Pops will continue to try and fulfill these orders, even if they are now illogical or actively harmful.
+
+**Emergence:** Pops might continue hauling vital food supplies to a deep-crust geome outpost that was abandoned cycles ago, starving the main colony out of sheer bureaucratic inertia.
+
+**Tension:** Do you spend administrative resources auditing and purging old orders, or do you let the system run and hope the dead leaders had a good plan?
+
+---
+
+## The Atmospheric Smugglers
+
+**Layer:** Cross-layer
+
+**Fantasy:** The air itself is contraband.
+
+**Mechanic:** Certain highly valuable, volatile gases can only be refined in secret. Pops involved in the black market will vent these gases into the colony's primary atmosphere grid to hide them from the Justice System, relying on specific atmospheric processors to extract them later.
+
+**Emergence:** A sudden, unexplained spike in colony-wide hallucinogenic effects or respiratory illnesses might be the only clue that a massive smuggling operation is using the life support system as a storage vault.
+
+**Tension:** Do you aggressively purge the atmosphere grid, potentially destroying valuable evidence and crashing the black market economy, or do you let the colony breathe the contraband until you can trace the extraction point?
+
+---
