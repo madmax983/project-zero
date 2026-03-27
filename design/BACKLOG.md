@@ -388,3 +388,7 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `664` The Scrap-Code Evangelists — `specs/664-scrap-code-evangelists.md`
 - [ ] `665` Orbital Graverobbers — `specs/665-orbital-graverobbers.md`
 - [ ] `666` The Echoes of Old Earth — `specs/666-echoes-of-old-earth.md`
+- [ ] `675` The Cartographic Mutiny — `specs/675-cartographic-mutiny.md`
+- [ ] `676` The Aesthetic Rot — `specs/676-aesthetic-rot.md`
+- [ ] `677` The Phantom Work Order — `specs/677-phantom-work-order.md`
+- [ ] `678` The Atmospheric Smugglers — `specs/678-atmospheric-smugglers.md`
