@@ -12241,7 +12241,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 **Tension:** Access to unparalleled, rapid technological advancement vs. the guaranteed, slow destruction of the minds of your most valuable colonists.
 
-## The Ghost-Shift Strike
+## The Ghost-Shift Strike [SPECCED]
 
 **Layer:** 1
 
@@ -12255,7 +12255,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Moon Hermits
+## Moon Hermits [SPECCED]
 
 **Layer:** 2
 
@@ -12269,7 +12269,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Empathy Tax
+## The Empathy Tax [SPECCED]
 
 **Layer:** Cross-layer
 
@@ -12283,7 +12283,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Salvage-Cult Engineers
+## Salvage-Cult Engineers [SPECCED]
 
 **Layer:** 1
 
