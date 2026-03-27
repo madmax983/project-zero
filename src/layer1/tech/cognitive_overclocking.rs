@@ -1,11 +1,8 @@
-use bevy_ecs::prelude::*;
-use bevy::prelude::Time; // time needs to be imported here too since `process_neural_burnout_system` uses Time
-
-
+use bevy::prelude::Time;
+use bevy_ecs::prelude::*; // time needs to be imported here too since `process_neural_burnout_system` uses Time
 
 pub const OVERCLOCK_SPEED_MULTIPLIER: f32 = 5.0;
 pub const BURNOUT_THRESHOLD: f32 = 100.0;
-
 
 #[derive(Component)]
 pub struct WorkStats {
@@ -31,7 +28,7 @@ pub enum ActiveState {
 }
 
 pub fn apply_cognitive_overclocking_system(
-    mut query: Query<(&mut WorkStats, &CognitiveOverclock)>
+    mut query: Query<(&mut WorkStats, &CognitiveOverclock)>,
 ) {
     for (mut stats, overclock) in query.iter_mut() {
         if overclock.active {
@@ -44,7 +41,7 @@ pub fn apply_cognitive_overclocking_system(
 
 pub fn process_neural_burnout_system(
     time: Res<Time>,
-    mut query: Query<(&mut NeuralTrauma, &mut CognitiveOverclock)>
+    mut query: Query<(&mut NeuralTrauma, &mut CognitiveOverclock)>,
 ) {
     for (mut trauma, mut overclock) in query.iter_mut() {
         if overclock.active {
@@ -54,9 +51,7 @@ pub fn process_neural_burnout_system(
     }
 }
 
-pub fn check_burnout_threshold_system(
-    mut query: Query<(&NeuralTrauma, &mut ActiveState)>
-) {
+pub fn check_burnout_threshold_system(mut query: Query<(&NeuralTrauma, &mut ActiveState)>) {
     for (trauma, mut state) in query.iter_mut() {
         if trauma.burnout_level >= BURNOUT_THRESHOLD {
             *state = ActiveState::Catatonic;
@@ -67,8 +62,8 @@ pub fn check_burnout_threshold_system(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use bevy::prelude::*;
     use crate::layer1::Pop;
+    use bevy::prelude::*;
 
     #[test]
     fn test_cognitive_overclocking_increases_work_speed() {
@@ -76,11 +71,20 @@ mod tests {
         let mut app = App::new();
         app.add_systems(Update, apply_cognitive_overclocking_system);
 
-        let entity = app.world_mut().spawn((
-            Pop,
-            WorkStats { base_speed: 1.0, current_speed: 1.0 },
-            CognitiveOverclock { active: true, time_active: 0.0 },
-        )).id();
+        let entity = app
+            .world_mut()
+            .spawn((
+                Pop,
+                WorkStats {
+                    base_speed: 1.0,
+                    current_speed: 1.0,
+                },
+                CognitiveOverclock {
+                    active: true,
+                    time_active: 0.0,
+                },
+            ))
+            .id();
 
         // Act
         app.update();
@@ -97,11 +101,17 @@ mod tests {
         app.insert_resource(Time::new_with(())); // Mock time
         app.add_systems(Update, process_neural_burnout_system);
 
-        let entity = app.world_mut().spawn((
-            Pop,
-            CognitiveOverclock { active: true, time_active: 0.0 },
-            NeuralTrauma { burnout_level: 0.0 },
-        )).id();
+        let entity = app
+            .world_mut()
+            .spawn((
+                Pop,
+                CognitiveOverclock {
+                    active: true,
+                    time_active: 0.0,
+                },
+                NeuralTrauma { burnout_level: 0.0 },
+            ))
+            .id();
 
         // Simulate some time passing
         let mut time = app.world_mut().resource_mut::<Time>();
@@ -121,11 +131,16 @@ mod tests {
         let mut app = App::new();
         app.add_systems(Update, check_burnout_threshold_system);
 
-        let entity = app.world_mut().spawn((
-            Pop,
-            NeuralTrauma { burnout_level: 100.0 }, // Past threshold
-            ActiveState::Working,
-        )).id();
+        let entity = app
+            .world_mut()
+            .spawn((
+                Pop,
+                NeuralTrauma {
+                    burnout_level: 100.0,
+                }, // Past threshold
+                ActiveState::Working,
+            ))
+            .id();
 
         // Act
         app.update();

@@ -9,3 +9,7 @@
 **[Zero-Allocation Apply Collapse]**
 **Learning:** Found an unnecessary `Vec<Entity>` allocation in `src/layer1/structural_integrity.rs` where the system collected entities via a read-only query and then performed a second iteration with `world.get_mut::<Health>()` to apply damage.
 **Action:** Replaced the two loops with a single `query_mut` pass on `(&GridPosition, &mut Health)` to eliminate the heap allocation and O(N) entity lookups. Always prefer single-pass mutable queries over intermediate collections when updating components.
+
+**[Unused Doc Comments on Expressions]**
+**Learning:** Placing `///` doc comments directly above a `for` loop or other expressions triggers an `unused_doc_comments` warning. Under `-D warnings`, this causes a compilation error.
+**Action:** Use standard `//` comments for inline code explanations and reserve `///` strictly for documenting items like structs, enums, and functions.
