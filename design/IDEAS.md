@@ -11162,7 +11162,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Fossilized Armada
+## The Fossilized Armada [SPECCED]
 
 **Layer:** 2 -> 1
 
@@ -11190,7 +11190,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Memory Market
+## The Memory Market [SPECCED]
 
 **Layer:** 1
 
@@ -11204,7 +11204,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Void-Whisper Resonance
+## The Void-Whisper Resonance [SPECCED]
 
 **Layer:** Cross-layer (2 -> 1)
 
@@ -11218,7 +11218,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Atrophy of Affluence
+## The Atrophy of Affluence [SPECCED]
 
 **Layer:** 1
 
@@ -11232,7 +11232,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Necro-Industrial Complex
+## The Necro-Industrial Complex [SPECCED]
 
 **Layer:** Cross-layer (1 -> 2)
 
