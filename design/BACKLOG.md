@@ -397,3 +397,8 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `676` The Aesthetic Rot — `specs/676-aesthetic-rot.md`
 - [ ] `677` The Phantom Work Order — `specs/677-phantom-work-order.md`
 - [ ] `678` The Atmospheric Smugglers — `specs/678-atmospheric-smugglers.md`
+
+- [ ] `683` Feral Drones — `specs/683-feral-drones.md`
+- [ ] `684` The Gossip Economy — `specs/684-gossip-economy.md`
+- [ ] `685` The Parasitic Cargo — `specs/685-parasitic-cargo.md`
+- [ ] `686` Echoes of the Deep — `specs/686-echoes-of-the-deep.md`
