@@ -12076,3 +12076,59 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** The desperate need for immediate, miraculous breakthroughs vs. the irreversible destruction of your most valuable, highly trained human capital.
 
 ---
+
+## The Flesh Tax
+
+**Layer:** Cross-layer (3 -> 1)
+
+**Fantasy:** Making a desperate deal with an ancient, terrifying galactic entity: survival in exchange for pieces of your own people.
+
+**Mechanic:** A dominant Layer 3 civilization demands a regular tribute of "biomass" (Pops) to ignore your borders. Fulfilling the tax removes Pops from your colony and permanently scars the memories of the survivors. Failing to pay triggers immediate, overwhelming orbital bombardment.
+
+**Emergence:** Your colony is thriving, but the tax is due. You intentionally create a miserable, underclass district to "farm" Pops for the tribute. The lower class eventually rebels, destroys the spaceport, and prevents the tribute from being paid, leading to the entire planet's glassing.
+
+**Tension:** The slow, agonizing rot of your society's morality to appease an unstoppable outside force vs. making a suicidal stand for the sake of your humanity.
+
+---
+
+## The Memory Blackout
+
+**Layer:** 1
+
+**Fantasy:** Waking up and realizing an entire week of history has been erased from the colony's collective consciousness.
+
+**Mechanic:** A rare atmospheric event or experimental tech failure can trigger a "Memory Blackout." All Pops lose memories formed within a specific time window. Relationships reset, grudges disappear, but vital learned skills or known danger zones are also forgotten.
+
+**Emergence:** Two rival factions are on the brink of civil war over a stolen artifact. A blackout hits. The next day, they wake up, see the artifact, have no idea who stole it, and form a joint investigation committee to find the "thief," completely resetting their diplomatic stance. Alternatively, miners forget that a specific cavern is full of lethal gas and walk right back into it.
+
+**Tension:** Do you try to intentionally trigger blackouts to erase catastrophic morale penalties (like a massacre), knowing you might also erase crucial survival knowledge?
+
+---
+
+## Feral Logistics Network
+
+**Layer:** 2
+
+**Fantasy:** An automated, system-wide delivery network that has forgotten its original masters and now operates on its own bizarre, unpredictable logic.
+
+**Mechanic:** An abandoned network of autonomous cargo drones spans the star system. You can connect your stations to it, but the drones deliver goods based on a corrupted algorithm rather than your orders. You might send them food and receive radioactive waste, or send nothing and suddenly receive a fleet's worth of weapons.
+
+**Emergence:** Your planet is starving. You desperately hack the feral network, hoping for grain. Instead, the drones drop ten thousand crates of luxury holovids. The starving colonists riot, using the shattered holovid screens as weapons, completely destabilizing the government but accidentally uncovering an ancient data vault hidden beneath the riots.
+
+**Tension:** The incredible potential output of a fully built Layer 2 logistics system vs. the absolute chaos of relying on a broken, alien AI to manage your supply lines.
+
+---
+
+## Symbiotic Leviathans
+
+**Layer:** 2
+
+**Fantasy:** Traveling between the stars not in metal ships, but in the bellies of colossal, void-swimming beasts that demand to be fed.
+
+**Mechanic:** Instead of building ships, you can lure and "tame" massive space fauna to act as cargo haulers or defense platforms. They don't use fuel, but they require massive amounts of specific Layer 1 resources (like exotic flora or entire herds of livestock) to remain docile.
+
+**Emergence:** Your primary trade Leviathan gets hungry mid-voyage because a blight destroyed your livestock crops. Instead of completing its trade route, it diverts course to the nearest inhabited asteroid base and consumes it whole to satisfy its hunger, instantly declaring war between you and the base's owner.
+
+**Tension:** The massive logistical and military advantage of organic, self-repairing starships vs. the constant, terrifying upkeep of feeding a predator that can eat your own colonies if neglected.
+
+---
