@@ -2050,7 +2050,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## University of the Stars
+## University of the Stars [SPECCED]
 
 **Layer:** 3 -> 1
 
@@ -2064,7 +2064,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Heirloom Items
+## Heirloom Items [SPECCED]
 
 **Layer:** 1
 
@@ -2078,7 +2078,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Diplomatic Reflection
+## Diplomatic Reflection [SPECCED]
 
 **Layer:** 3
 
@@ -2092,7 +2092,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Migratory Flora
+## Migratory Flora [SPECCED]
 
 **Layer:** 1
 
