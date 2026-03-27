@@ -2,6 +2,10 @@
 
 ## High Priority
 
+- [ ] `646` Cognitive Overclocking — `specs/646-cognitive-overclocking.md`
+- [ ] `647` Cascade Failure — `specs/647-cascade-failure.md`
+- [ ] `648` The Founder Effect — `specs/648-the-founder-effect.md`
+- [ ] `649` Pop Relationships — `specs/649-pop-relationships.md`
 - [ ] `642` The Propaganda Simulacrum — `specs/642-propaganda-simulacrum.md`
 - [ ] `643` Living Architecture — `specs/643-living-architecture.md`
 - [ ] `644` Temporal Echo Chambers — `specs/644-temporal-echo-chambers.md`

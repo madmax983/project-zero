@@ -11245,7 +11245,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** The immense, immediate material and strategic value of treating the dead as a pure resource vs. the profound social, psychological, and stability damage it inflicts on the living.
 
 ---
-## Pop Relationships
+## Pop Relationships [SPECCED]
 
 **Layer:** 1
 
@@ -11259,7 +11259,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Founder Effect
+## The Founder Effect [SPECCED]
 
 **Layer:** Cross-layer
 
@@ -11273,7 +11273,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Cascade Failure
+## Cascade Failure [SPECCED]
 
 **Layer:** Cross-layer
 
@@ -12063,7 +12063,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Cognitive Overclocking
+## Cognitive Overclocking [SPECCED]
 
 **Layer:** 1
 
