@@ -12187,3 +12187,56 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you aggressively purge the atmosphere grid, potentially destroying valuable evidence and crashing the black market economy, or do you let the colony breathe the contraband until you can trace the extraction point?
 
 ---
+## Feral Drones
+
+**Layer:** 1
+
+**Fantasy:** The machines were built to serve, but without updates, they revert to a bizarre, mechanical state of nature.
+
+**Mechanic:** Automated hauling or mining drones that lose connection to the Command Center don't just shut down; they go "feral." They begin hoarding resources they were supposed to deliver, building strange, non-functional nests out of high-tech scrap, and aggressively defending their new territory from Pops.
+
+**Emergence:** A localized power outage disconnects a mining outpost. When the power comes back, the drones refuse to reconnect. They have walled themselves in with titanium plating and are actively firing mining lasers at the rescue team.
+
+**Tension:** The immense efficiency of automated labor vs. the risk of creating a localized, highly dangerous mechanical ecosystem if your infrastructure fails.
+
+---
+
+## The Gossip Economy
+
+**Layer:** 1
+
+**Fantasy:** Secrets are currency, and a well-timed rumor is worth more than gold.
+
+**Mechanic:** Pops can generate "Intel" tokens by participating in the Rumor Web or working in administrative jobs. These tokens can be spent at a black-market "Broker" for rare resources or to instantly improve relations with hostile factions. However, generating Intel requires Pops to spend time gossiping instead of working, and risks spreading massive negative Morale debuffs if they uncover the colony's dark secrets.
+
+**Emergence:** You desperately need medical supplies to stop a plague. You encourage your Pops to gossip to generate enough Intel to buy the cure from a smuggler. The gossip reveals that *you* accidentally caused the plague by ignoring a bio-hazard warning. You get the cure, but the resulting Unrest causes a violent uprising.
+
+**Tension:** The powerful, intangible utility of secrets vs. the slow erosion of productivity and the dangerous exposure of your own mistakes.
+
+---
+
+## The Parasitic Cargo
+
+**Layer:** Cross-layer (2 -> 1)
+
+**Fantasy:** The Trojan Horse, but the horse is a crate of nutrient paste and the Greeks are microscopic, hyper-aggressive spores.
+
+**Mechanic:** High-value, deeply discounted resource shipments from unknown Layer 2 traders have a chance to carry a "Parasitic Cargo." Once opened on Layer 1, they release a fast-spreading contagion or an invasive, rapidly reproducing vermin species that immediately attacks food stores or infects Pops.
+
+**Emergence:** You score a massive shipment of cheap food during a famine. It arrives, and as soon as the first crate is opened in the granary, thousands of bio-engineered, acidic beetles swarm out, devouring the food and melting the storage facility before spreading into the residential zones.
+
+**Tension:** The irresistible lure of cheap, life-saving resources vs. the terrifying, unpredictable risk of bringing an existential threat directly into the heart of your colony.
+
+---
+
+## Echoes of the Deep
+
+**Layer:** 1
+
+**Fantasy:** Mining too deep doesn't wake a monster; it wakes a memory of something that shouldn't exist.
+
+**Mechanic:** Deep-crust mining operations occasionally uncover "Resonance Chambers." These are not physical structures, but localized areas where the laws of physics are slightly off, causing auditory and visual hallucinations in Pops. Working in these areas provides a massive, unexplained boost to Research output, but causes Pops to develop the "Paranoid" or "Obsessive" traits, eventually leading to violent psychotic breaks.
+
+**Emergence:** You station your elite science team near a Resonance Chamber. They churn out endgame tech at an incredible rate. One day, the lead scientist becomes convinced that the air filters are stealing his thoughts, dismantles the life support system, and suffocates the entire sector.
+
+**Tension:** Access to unparalleled, rapid technological advancement vs. the guaranteed, slow destruction of the minds of your most valuable colonists.
