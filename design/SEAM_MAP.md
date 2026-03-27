@@ -518,3 +518,10 @@
     - `mass_driver_chronicle_bridge` in `src/layer1/integration.rs` converts `BombardmentEvent` to `AddChronicleEvent`.
 - **Schedule:** Registered in `Layer1SystemSet::Observation`, chained after `package_arrival_system`.
 - **Tests:** `tests/integration/mass_driver_chronicle.rs`
+
+### INT-647: Cascade Failure -> Chronicle
+- **Date:** 2026-03-27
+- **Systems connected:** `evaluate_system_logistics` & `update_sector_defenses` -> `AddChronicleEvent` (Chronicle)
+- **Glue added:** `logistics_strained_chronicle_bridge` and `defense_weakened_chronicle_bridge` in `src/layer2/integration.rs`.
+- **Schedule:** Registered in `src/simulation.rs` after the primary cascade failure systems.
+- **Tests:** `tests/integration/cascade_failure_chronicle.rs`

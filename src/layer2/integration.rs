@@ -207,6 +207,42 @@ pub fn prisoner_death_chronicle_bridge_system(
     }
 }
 
+// --- INT-647: Cascade Failure -> Chronicle ---
+
+use crate::layer2::cascade::{DefenseWeakenedEvent, LogisticsStrainedEvent};
+
+/// Bridges `LogisticsStrainedEvent` into the `Chronicle` system.
+pub fn logistics_strained_chronicle_bridge(
+    mut events: EventReader<LogisticsStrainedEvent>,
+    mut chronicle_events: EventWriter<AddChronicleEvent>,
+) {
+    for event in events.read() {
+        chronicle_events.send(AddChronicleEvent {
+            text: format!(
+                "System logistics critically strained. Utilized {}/{} capacity.",
+                event.utilized, event.capacity
+            ),
+            importance: EventImportance::Standard,
+        });
+    }
+}
+
+/// Bridges `DefenseWeakenedEvent` into the `Chronicle` system.
+pub fn defense_weakened_chronicle_bridge(
+    mut events: EventReader<DefenseWeakenedEvent>,
+    mut chronicle_events: EventWriter<AddChronicleEvent>,
+) {
+    for event in events.read() {
+        chronicle_events.send(AddChronicleEvent {
+            text: format!(
+                "Sector defenses weakened to {} power due to logistics failures.",
+                event.power
+            ),
+            importance: EventImportance::Major,
+        });
+    }
+}
+
 // --- INT-538: Trade Routes -> ColonyResources ---
 
 use crate::layer2::trade::routes::Colony;

@@ -23,3 +23,4 @@ pub mod gene_splicing_chronicle;
 pub mod shipbreaking_bridge;
 pub mod shipbreaking_bridge;
 pub mod mass_driver_chronicle;
+pub mod cascade_failure_chronicle;
