@@ -130,3 +130,211 @@ pub(crate) fn evaluate_haul(
 
     best
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::layer1::items::ItemType;
+    use crate::layer1::map::GridPosition;
+    use crate::layer1::resources::{Carrying, ColonyResources, ResourceType};
+    use crate::layer1::utility_eval_types::ScorableCandidate;
+    use crate::layer1::utility_types::UtilityWeights;
+    use bevy_ecs::prelude::Entity;
+
+    fn base_resources() -> ColonyResources {
+        ColonyResources {
+            max_food: 100.0,
+            food: 50.0,
+            max_wood: 100.0,
+            wood: 50.0,
+            ..Default::default()
+        }
+    }
+
+    fn test_entity(id: u64) -> Entity {
+        Entity::from_raw(id as u32)
+    }
+
+    #[test]
+    fn should_target_gene_bank_when_carrying_genetic_sample() {
+        let pop_pos = GridPosition { x: 0, y: 0 };
+        let weights = UtilityWeights {
+            distance_weight: 1.0,
+            availability_weight: 1.0,
+        };
+        let gene_bank_entity = test_entity(1);
+        let gene_banks = vec![ScorableCandidate::new(
+            gene_bank_entity,
+            GridPosition { x: 1, y: 1 },
+        )];
+        let resources = base_resources();
+        let carrying_item = Some(test_entity(2));
+        let carrying_item_type = Some(ItemType::GeneticSample);
+
+        let result = evaluate_haul(
+            pop_pos,
+            &weights,
+            &[],
+            &[],
+            &[],
+            &gene_banks,
+            &resources,
+            None,
+            carrying_item,
+            carrying_item_type,
+        );
+
+        assert!(result.is_some(), "Should return a gene bank target");
+        let (utility, target) = result.unwrap();
+        assert_eq!(target, gene_bank_entity);
+        assert!(utility > 0.0);
+    }
+
+    #[test]
+    fn should_return_none_if_carrying_but_no_stockpile_exists() {
+        let pop_pos = GridPosition { x: 0, y: 0 };
+        let weights = UtilityWeights {
+            distance_weight: 1.0,
+            availability_weight: 1.0,
+        };
+        let resources = base_resources();
+        let carrying = Some(Carrying {
+            amount: 10.0,
+            resource_type: ResourceType::Food,
+        });
+
+        // Empty stockpiles
+        let stockpiles = vec![];
+
+        let result = evaluate_haul(
+            pop_pos,
+            &weights,
+            &[],
+            &[],
+            &stockpiles,
+            &[],
+            &resources,
+            carrying,
+            None,
+            None,
+        );
+
+        assert!(result.is_none(), "Should fail if nowhere to drop off");
+    }
+
+    #[test]
+    fn should_target_stockpile_if_carrying_generic_resource() {
+        let pop_pos = GridPosition { x: 0, y: 0 };
+        let weights = UtilityWeights {
+            distance_weight: 1.0,
+            availability_weight: 1.0,
+        };
+        let stockpile_entity = test_entity(3);
+        let stockpiles = vec![ScorableCandidate::new(
+            stockpile_entity,
+            GridPosition { x: 1, y: 1 },
+        )];
+        let resources = base_resources();
+        let carrying = Some(Carrying {
+            amount: 10.0,
+            resource_type: ResourceType::Food,
+        });
+
+        let result = evaluate_haul(
+            pop_pos,
+            &weights,
+            &[],
+            &[],
+            &stockpiles,
+            &[],
+            &resources,
+            carrying,
+            None,
+            None,
+        );
+
+        assert!(result.is_some());
+        let (utility, target) = result.unwrap();
+        assert_eq!(target, stockpile_entity);
+        assert!(utility > 0.0);
+    }
+
+    #[test]
+    fn should_pick_up_item_if_empty_handed_and_stockpiles_exist() {
+        let pop_pos = GridPosition { x: 0, y: 0 };
+        let weights = UtilityWeights {
+            distance_weight: 1.0,
+            availability_weight: 1.0,
+        };
+        let stockpile_entity = test_entity(3);
+        let stockpiles = vec![ScorableCandidate::new(
+            stockpile_entity,
+            GridPosition { x: 1, y: 1 },
+        )];
+        let resources = base_resources();
+
+        let item_entity = test_entity(4);
+        let mut item_cand = ScorableCandidate::new(item_entity, GridPosition { x: 2, y: 2 });
+        item_cand.resource_type = Some(ResourceType::Food);
+        let items = vec![item_cand];
+
+        let result = evaluate_haul(
+            pop_pos,
+            &weights,
+            &items,
+            &[],
+            &stockpiles,
+            &[],
+            &resources,
+            None,
+            None,
+            None,
+        );
+
+        assert!(result.is_some());
+        let (utility, target) = result.unwrap();
+        assert_eq!(target, item_entity);
+        assert!(utility > 0.0);
+    }
+
+    #[test]
+    fn should_ignore_pickup_if_resource_at_max_capacity() {
+        let pop_pos = GridPosition { x: 0, y: 0 };
+        let weights = UtilityWeights {
+            distance_weight: 1.0,
+            availability_weight: 1.0,
+        };
+        let stockpile_entity = test_entity(3);
+        let stockpiles = vec![ScorableCandidate::new(
+            stockpile_entity,
+            GridPosition { x: 1, y: 1 },
+        )];
+
+        let mut resources = base_resources();
+        // Set food to max capacity
+        resources.food = resources.max_food;
+
+        let item_entity = test_entity(4);
+        let mut item_cand = ScorableCandidate::new(item_entity, GridPosition { x: 2, y: 2 });
+        item_cand.resource_type = Some(ResourceType::Food);
+        let items = vec![item_cand];
+
+        let result = evaluate_haul(
+            pop_pos,
+            &weights,
+            &items,
+            &[],
+            &stockpiles,
+            &[],
+            &resources,
+            None,
+            None,
+            None,
+        );
+
+        assert!(
+            result.is_none(),
+            "Should ignore pickup if we have no room for it in the colony"
+        );
+    }
+}
