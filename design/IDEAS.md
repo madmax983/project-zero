@@ -9248,7 +9248,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Generational Trauma
+## Generational Trauma [SPECCED]
 
 **Layer:** Cross-layer
 
@@ -9262,7 +9262,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Scrap-Code Evangelists
+## The Scrap-Code Evangelists [SPECCED]
 
 **Layer:** 1 -> 3
 
@@ -9276,7 +9276,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Orbital Graverobbers
+## Orbital Graverobbers [SPECCED]
 
 **Layer:** 2 -> 1
 
@@ -9290,7 +9290,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Echoes of Old Earth
+## The Echoes of Old Earth [SPECCED]
 
 **Layer:** 3 -> 1
 
