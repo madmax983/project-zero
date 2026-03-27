@@ -54,7 +54,7 @@ anyhow = "1.0"
 ```
 
 ```rust
-use scale::shared::narrative::{NarrativeContext, NarrativeGenerator};
+use scale::prelude::*;
 
 fn main() -> anyhow::Result<()> {
     // 1. Initialize Generator (loads embedded lore by default)
@@ -101,7 +101,7 @@ The "Nova" feature (Oral Tradition) builds upon the base narrative system to cre
 // In Cargo.toml:
 // scale = { version = "...", features = ["nova"] }
 
-use scale::layer1::oral_tradition::{OralTradition, Story, StoryGenre};
+use scale::prelude::*;
 
 fn main() {
     let mut tradition = OralTradition::default();
@@ -135,9 +135,7 @@ cargo run --features nova --example oral_tradition_demo
 To run the full simulation loop without a window or GPU (e.g. for servers or AI training):
 
 ```rust
-use scale::setup::{setup_world_with_config, SetupConfig};
-use scale::simulation::run_simulation_tick;
-use scale::shared::time::SimulationTime;
+use scale::prelude::*;
 
 fn main() {
     // 1. Setup the world with headless configuration
