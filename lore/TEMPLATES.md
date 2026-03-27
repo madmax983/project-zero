@@ -4764,3 +4764,83 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[NAME] was caught outside. [YEAR]. The rain left them with [MUTATION_RESULT]."
 - "[YEAR]: Exposure. [NAME] survived the storm, but suffered [MUTATION_RESULT]."
 - "Evolution by storm. [NAME] stood in the rain. Now they have [MUTATION_RESULT]. [YEAR]."
+
+## Light Pollution Templates (Spec 450)
+
+### Template: OBSERVATORY_BLINDED
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[SKY_GLOW_DESC]`, `[OBSCURITY_LOSS]`
+
+**Patterns:**
+- "We traded the stars for safety. [YEAR]. The sky is [SKY_GLOW_DESC] and [OBSCURITY_LOSS]."
+- "[YEAR]: The night is dead. A [SKY_GLOW_DESC] hangs over [COLONY]. The scientists report [OBSCURITY_LOSS]."
+- "We cannot see past our own walls. [SKY_GLOW_DESC] blinds us. [OBSCURITY_LOSS]. [YEAR]."
+
+### Template: FAUNA_LIGHT_AGGRO
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[BEAST_NAME]`, `[NOCTURNAL_AGGRO]`
+
+**Patterns:**
+- "The lamps provoked them. [YEAR]. [BEAST_NAME] approach because [NOCTURNAL_AGGRO]."
+- "[YEAR]: We thought the light was a shield, but [NOCTURNAL_AGGRO]. The [BEAST_NAME] are here."
+- "Blood under the floodlights. The [BEAST_NAME] attack. [NOCTURNAL_AGGRO]. [YEAR]."
+
+## The Syzygy Templates (Spec 560)
+
+### Template: SYZYGY_BEGUN
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[SYZYGY_NAME]`, `[ALIGNMENT_FEELING]`
+
+**Patterns:**
+- "The planets align. [YEAR]. It is [SYZYGY_NAME]. We walk with [ALIGNMENT_FEELING]."
+- "[YEAR]: Gravity loosens its grip. [SYZYGY_NAME] has started. The crew reports [ALIGNMENT_FEELING]."
+- "A rare celestial moment. [SYZYGY_NAME] is upon [COLONY]. People describe [ALIGNMENT_FEELING]. [YEAR]."
+
+### Template: SYZYGY_CATASTROPHE
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[SYZYGY_NAME]`, `[TIDE_CATASTROPHE]`
+
+**Patterns:**
+- "The cost of the alignment. [YEAR]. During [SYZYGY_NAME], [TIDE_CATASTROPHE]."
+- "[YEAR]: The pull was too much. [SYZYGY_NAME] triggered an event: [TIDE_CATASTROPHE]."
+- "We were warned about the tides. As [SYZYGY_NAME] peaked, [TIDE_CATASTROPHE]. [YEAR]."
+
+## The Void-Weed Smugglers Templates (Spec 431)
+
+### Template: VOID_WEED_DISCOVERED
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[VOID_WEED_NAME]`, `[WEED_EFFECT]`
+
+**Patterns:**
+- "The workers found something in the dark. [YEAR]. [VOID_WEED_NAME]. It brings [WEED_EFFECT]."
+- "[YEAR]: A new vice. [VOID_WEED_NAME] is cultivated in secret, offering [WEED_EFFECT]."
+- "To numb the cold, they smoke [VOID_WEED_NAME]. The result is [WEED_EFFECT]. [YEAR]."
+
+### Template: SMUGGLING_DEAL_STRUCK
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[VOID_WEED_NAME]`, `[SMUGGLER_OFFER]`
+
+**Patterns:**
+- "The aliens want our [VOID_WEED_NAME]. [YEAR]. They arrived with [SMUGGLER_OFFER]."
+- "[YEAR]: We became a cartel by accident. Trading [VOID_WEED_NAME] for [SMUGGLER_OFFER]."
+- "Our harmless plant is a fortune to them. Sold [VOID_WEED_NAME] to a passing ship for [SMUGGLER_OFFER]. [YEAR]."
+
+## Hyper-Specialized Evolution Templates (Spec 264)
+
+### Template: SPECIALIZATION_NOTICED
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[NAME]`, `[EVOLUTION_TRIGGER]`, `[MUTATION_TRAIT]`
+
+**Patterns:**
+- "The work changes us. [YEAR]. After [EVOLUTION_TRIGGER], [NAME] developed [MUTATION_TRAIT]."
+- "[YEAR]: A new caste is born. [NAME] shows [MUTATION_TRAIT] resulting from [EVOLUTION_TRIGGER]."
+- "Born to the task. [NAME] is no longer entirely human. [EVOLUTION_TRIGGER] caused [MUTATION_TRAIT]. [YEAR]."
+
+### Template: ADAPTATION_REJECTION
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[NAME]`, `[ADAPTATION_SICKNESS]`
+
+**Patterns:**
+- "We moved [NAME] to a new job. [YEAR]. They suffer [ADAPTATION_SICKNESS]."
+- "[YEAR]: The body resists the change. Assigned to unfamiliar work, [NAME] experiences [ADAPTATION_SICKNESS]."
+- "They cannot leave their old caste. [NAME] is struck by [ADAPTATION_SICKNESS] upon reassignment. [YEAR]."

@@ -5580,3 +5580,109 @@ A negative side-effect of a failed splice.
 - skin turning green to drink the sun
 - eyes adjusting to see in the pitch black
 - lungs adapting to breathe the poison
+
+## Light Pollution Fragments (Spec 450)
+
+### Fragment Type: [SKY_GLOW_DESC]
+- an angry orange haze
+- a sickly yellow wash
+- the blinding artificial day
+- a grey, starless ceiling
+- the dome of false light
+- an impenetrable neon fog
+
+### Fragment Type: [OBSCURITY_LOSS]
+- we can no longer see the Wound
+- the old constellations are gone
+- our instruments are blinded by our own fires
+- the observatory records only static
+- the deep dark is a memory
+- the lens sees only our own reflection
+
+### Fragment Type: [NOCTURNAL_AGGRO]
+- the light drives them mad
+- they hate the false sun
+- it burns their sensitive eyes
+- they attack the lamps with a frenzy
+- the brightness makes them reckless
+- they swarm the perimeter, screaming at the glare
+
+## The Syzygy Fragments (Spec 560)
+
+### Fragment Type: [SYZYGY_NAME]
+- The Grand Conjunction
+- The Alignment
+- The Weightless Time
+- The Tide-Mother
+- The High Syzygy
+- The Planetary Convergence
+- The Open Sky
+
+### Fragment Type: [ALIGNMENT_FEELING]
+- floating on a tether
+- the air feels thin and charged
+- a pulling in the gut
+- moving with terrifying ease
+- the ground feels further away
+- an echoing clarity in the mind
+
+### Fragment Type: [TIDE_CATASTROPHE]
+- the oceans swelled and took the lower decks
+- the gravity-wells reversed
+- water rose to places it had never been
+- the pumps failed against the pull of the moons
+- the floodwaters moved like a solid wall
+- a crush of black water from the deep
+
+## The Void-Weed Smugglers Fragments (Spec 431)
+
+### Fragment Type: [VOID_WEED_NAME]
+- The Soft-Leaf
+- Null-Spore
+- Whisper-Weed
+- The Blue-Smoke
+- Drift-Petal
+- Sweet-Root
+- Star-Bite
+
+### Fragment Type: [WEED_EFFECT]
+- a slow, numb warmth
+- forgetting the hunger for a few hours
+- a quietness behind the eyes
+- a heavy, peaceful sleep
+- a slight shift in colors
+- the silence finally feeling comfortable
+
+### Fragment Type: [SMUGGLER_OFFER]
+- a fortune in unregulated credits
+- enough fuel to last a decade
+- weapons we aren't allowed to have
+- a way off this rock
+- untraceable tech from the Core
+- a price we couldn't refuse
+
+## Hyper-Specialized Evolution Fragments (Spec 264)
+
+### Fragment Type: [MUTATION_TRAIT]
+- hunched shoulders and reinforced bone
+- pale, oversized eyes adapted to the dark
+- calloused hands the size of shovels
+- lungs that filter toxic dust automatically
+- a slowed heart rate that requires less oxygen
+- elongated fingers perfect for delicate wiring
+
+### Fragment Type: [EVOLUTION_TRIGGER]
+- decades in the deep shafts
+- a lifetime of zero-g maneuvering
+- endless cycles staring at the monitors
+- breathing the refinery exhaust since birth
+- carrying the heavy loads without rest
+- the relentless, repetitive motion
+
+### Fragment Type: [ADAPTATION_SICKNESS]
+- vomiting from the change in posture
+- a deep, aching muscle fever
+- the body rebelling against the new tools
+- their eyes burning in the sudden light
+- an inability to balance without their burden
+- a terrifying clumsiness
