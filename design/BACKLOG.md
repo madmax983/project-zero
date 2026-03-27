@@ -376,4 +376,3 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `655` University of the Stars — `specs/655-university-of-the-stars.md`
 - [ ] `656` Heirloom Items — `specs/656-heirloom-items.md`
 - [ ] `657` Diplomatic Reflection — `specs/657-diplomatic-reflection.md`
-- [ ] `658` Migratory Flora — `specs/658-migratory-flora.md`
