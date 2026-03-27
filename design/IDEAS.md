@@ -12240,3 +12240,59 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Emergence:** You station your elite science team near a Resonance Chamber. They churn out endgame tech at an incredible rate. One day, the lead scientist becomes convinced that the air filters are stealing his thoughts, dismantles the life support system, and suffocates the entire sector.
 
 **Tension:** Access to unparalleled, rapid technological advancement vs. the guaranteed, slow destruction of the minds of your most valuable colonists.
+
+## The Ghost-Shift Strike
+
+**Layer:** 1
+
+**Fantasy:** A subtle, terrifying form of protest where Pops work perfectly but produce nothing of value.
+
+**Mechanic:** When Unrest is high but Security is also high (preventing violent riots), Pops may initiate a "Ghost-Shift." They will occupy their workstations, consume energy and resources, and play their work animations, but their output will be zero, or they will produce deliberate defects disguised as normal output.
+
+**Emergence:** A heavily policed industrial sector looks perfectly efficient on the surface, but the storage stockpiles never seem to grow. Players might not notice until a critical shortage hits because the UI shows the Pops are "working."
+
+**Tension:** Do you maintain the oppressive security state that forced the strike underground, or do you relax control to identify the ringleaders, risking an open rebellion?
+
+---
+
+## Moon Hermits
+
+**Layer:** 2
+
+**Fantasy:** Pops who reject society and escape to live in hollowed-out rocks, creating unpredictable micro-factions on the fringe.
+
+**Mechanic:** Individual Pops or small families with low Morale and access to basic spacecraft can desert the colony. They land on random uninhabitable asteroids in Layer 2, setting up hidden "Hermit" nodes. They survive by stealing trace amounts of power or resources from passing trade ships.
+
+**Emergence:** A trade route suddenly starts losing 1% of its cargo every trip. If you track it down, you find a small community of your former citizens living in an asteroid, hoarding immense amounts of stolen luxury goods they can't even use.
+
+**Tension:** Do you spend military resources to hunt down and forcefully reintegrate a few miserable hermits, or do you let them bleed your economy slowly because the PR disaster of attacking them isn't worth it?
+
+---
+
+## The Empathy Tax
+
+**Layer:** Cross-layer
+
+**Fantasy:** The heavy psychological toll of leadership, where making "optimal" strategic decisions breaks the minds of your leaders.
+
+**Mechanic:** Pops assigned to leadership or administrative roles develop a hidden "Empathy" stat based on their traits and past actions. When the player executes a ruthless Layer 2/3 command (like orbital bombardment, rationing, or abandoning a colony), Layer 1 leaders with high Empathy suffer massive, permanent Morale penalties and may develop psychotic traits or commit suicide.
+
+**Emergence:** You order a tactical retreat from a failing mining outpost, abandoning the workers there to save the fleet. The next day, your highly efficient, beloved governor of your capital world—who had high empathy—has a total mental breakdown and shuts down the planetary grid in protest.
+
+**Tension:** Do you appoint cold, sociopathic leaders who will never question your orders but cause daily friction with the populace, or empathetic leaders who boost daily morale but might shatter when you need to make the hard calls?
+
+---
+
+## Salvage-Cult Engineers
+
+**Layer:** 1
+
+**Fantasy:** Mechanics who begin worshipping broken machinery instead of fixing it, spreading a techno-religious memetic hazard.
+
+**Mechanic:** If a complex machine (like a power reactor or atmosphere processor) remains in a state of disrepair for a long time, the Pops assigned to fix it have a chance to form a "Salvage Cult." They stop trying to repair the machine and instead start decorating it, protecting it, and preaching about the "purity of the broken state." This belief acts as a memetic virus, spreading to other engineers.
+
+**Emergence:** A critical life-support module breaks down. Instead of fixing it, your engineering corps starts dragging scrap metal to build a shrine around it. If you order them away, they violently defend the broken machine.
+
+**Tension:** Do you immediately spend expensive resources to fast-track repairs to prevent the cult from forming, or do you risk letting it sit broken, potentially losing your entire engineering workforce to a techno-heresy?
+
+---
