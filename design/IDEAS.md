@@ -2218,7 +2218,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Planet Designation
+## Planet Designation [SPECCED]
 
 **Layer:** 2
 
@@ -2246,7 +2246,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Sensor Ambiguity
+## Sensor Ambiguity [SPECCED]
 
 **Layer:** 2
 
@@ -2260,7 +2260,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Indoctrination
+## Indoctrination [SPECCED]
 
 **Layer:** 1
 
@@ -2274,7 +2274,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Remittances
+## Remittances [SPECCED]
 
 **Layer:** Cross-layer
 
