@@ -30,9 +30,7 @@
 //! ## Initializing a Headless Simulation
 //!
 //! ```
-//! use scale::setup::{setup_world_with_config, SetupConfig};
-//! use scale::simulation::run_simulation_tick;
-//! use scale::shared::time::SimulationTime;
+//! use scale::prelude::*;
 //! use bevy_ecs::prelude::*;
 //!
 //! // 1. Setup the world with headless configuration
@@ -74,3 +72,6 @@ pub mod ui;
 pub use shared::selection::{inspect_entity, inspect_tile, Selection, SelectionTarget};
 pub use shared::state::GameState;
 pub mod experimental;
+
+/// The prelude module.
+pub mod prelude;

@@ -32,3 +32,9 @@
 
 ## Final Result of Audit
 I've updated `echo_issue_report.md` with resolutions. The error text fix for `NarrativeGenerator` is implemented and actionable.
+
+## 🗣️ Echo: The Import Scan Failure - Too many nested imports
+🤦 **The Confusion:** When I try to run the basic examples, I have to import multiple different things from deep nested modules like `scale::setup::{setup_world_with_config, SetupConfig}`, `scale::simulation::run_simulation_tick`, and `scale::shared::time::SimulationTime`. I just want to write the code and not worry about internal structure!
+🕵️ **The Reality:** The library did not have a `prelude` module, so users were forced to learn the internal directory structure to get the basic pieces required for a headless loop or a narrative generation.
+💡 **The Fix:** Created a `scale::prelude` module that exports the most commonly used types and functions (like `SetupConfig`, `SimulationTime`, `run_simulation_tick`, `NarrativeGenerator`, and `OralTradition`). Updated the README and examples to just use `use scale::prelude::*;`.
+✅ **Resolution:** Implemented. `src/prelude.rs` added and docs updated.
