@@ -12187,7 +12187,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you aggressively purge the atmosphere grid, potentially destroying valuable evidence and crashing the black market economy, or do you let the colony breathe the contraband until you can trace the extraction point?
 
 ---
-## Feral Drones
+## Feral Drones [SPECCED]
 
 **Layer:** 1
 
@@ -12201,7 +12201,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Gossip Economy
+## The Gossip Economy [SPECCED]
 
 **Layer:** 1
 
@@ -12215,7 +12215,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Parasitic Cargo
+## The Parasitic Cargo [SPECCED]
 
 **Layer:** Cross-layer (2 -> 1)
 
@@ -12229,7 +12229,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Echoes of the Deep
+## Echoes of the Deep [SPECCED]
 
 **Layer:** 1
 
