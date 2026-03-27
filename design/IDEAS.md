@@ -2162,7 +2162,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Megafauna Terrain
+## Megafauna Terrain [SPECCED]
 
 **Layer:** 1
 
@@ -2176,7 +2176,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Impact Event
+## Impact Event [SPECCED]
 
 **Layer:** Cross-layer
 
@@ -2190,7 +2190,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Urban Spelunking
+## Urban Spelunking [SPECCED]
 
 **Layer:** 1
 
@@ -2204,7 +2204,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Cultural Projection
+## Cultural Projection [SPECCED]
 
 **Layer:** 3
 

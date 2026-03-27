@@ -2,6 +2,10 @@
 
 ## High Priority
 
+- [ ] `667` Megafauna Terrain — `specs/667-megafauna-terrain.md`
+- [ ] `668` Impact Event — `specs/668-impact-event.md`
+- [ ] `669` Urban Spelunking — `specs/669-urban-spelunking.md`
+- [ ] `670` Cultural Projection — `specs/670-cultural-projection.md`
 - [ ] `659` Orbital Bombardment — `specs/659-orbital-bombardment.md`
 - [ ] `660` Orbital Mirrors — `specs/660-orbital-mirrors.md`
 - [ ] `661` Secret Societies — `specs/661-secret-societies.md`
