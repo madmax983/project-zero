@@ -68,3 +68,7 @@
 **Concept:** A system that crystallizes pop dreams into tangible items. When a pop sleeps near a `DreamCatcher` building, their dreams manifest as `DreamMote` or `NightmareFragment` items. Nightmares also actively radiate paranoia (stress) to nearby pops.
 **Fate:** Proposed
 **Lesson:** Monetizing basic biological needs (like sleeping) allows players to farm their colonists' subconscious, creating a perverse incentive to intentionally induce nightmares for rare loot.
+## [The Necro-Industrial Complex]
+**Concept:** A `BiomassSublimator` building component that sublimates `Corpse` entities into `food` and `metal` resources, but inflicts a massive `accumulated_stress` penalty on nearby living `Pop`s to simulate the psychological horror of industrialized death.
+**Fate:** Merged
+**Lesson:** Turning a localized tragedy (corpses) into a powerful resource generator while introducing a terrifying secondary social crisis creates excellent mechanical and narrative tension.

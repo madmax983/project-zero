@@ -1,6 +1,9 @@
 pub mod echo_chamber;
 
 #[cfg(feature = "nova")]
+pub mod necro_industry;
+
+#[cfg(feature = "nova")]
 pub mod emotional_weather;
 
 #[cfg(feature = "nova")]
