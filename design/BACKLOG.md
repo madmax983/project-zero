@@ -363,3 +363,8 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `639` The FTL Wake — `specs/639-ftl-wake.md`
 - [ ] `640` Psychic Insulation — `specs/640-psychic-insulation.md`
 - [ ] `641` Aerostat Habitats — `specs/641-aerostat-habitats.md`
+- [ ] `650` The Fossilized Armada — `specs/650-the-fossilized-armada.md`
+- [ ] `651` The Memory Market — `specs/651-the-memory-market.md`
+- [ ] `652` The Void-Whisper Resonance — `specs/652-the-void-whisper-resonance.md`
+- [ ] `653` The Atrophy of Affluence — `specs/653-the-atrophy-of-affluence.md`
+- [ ] `654` The Necro-Industrial Complex — `specs/654-the-necro-industrial-complex.md`
