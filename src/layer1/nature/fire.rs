@@ -71,11 +71,9 @@ pub fn fire_spread_system(world: &mut World) {
 
     let mut rng = rand::thread_rng();
 
-    // Note: We iterate fires again. In a real ECS we might cache this list.
-    // Query must be read-only here if we are pushing to a vec.
-    let fires: Vec<GridPosition> = fire_locations.iter().copied().collect();
-
-    for pos in fires {
+    // ⚡ Bolt Optimization:
+    // Iterating directly over `&fire_locations` avoids allocating a new `Vec` per frame, reducing heap allocations and memory churn.
+    for &pos in &fire_locations {
         let neighbors = [
             (pos.x + 1, pos.y),
             (pos.x - 1, pos.y),

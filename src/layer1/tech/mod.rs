@@ -696,8 +696,8 @@ pub mod harmonic;
 #[cfg(test)]
 mod harmonic_mining_tests;
 
-pub mod event_horizon_tap;
 pub mod cognitive_overclocking;
+pub mod event_horizon_tap;
 pub use cognitive_overclocking::*;
 pub mod machine_awakening;
 pub use machine_awakening::*;
