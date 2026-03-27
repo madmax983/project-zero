@@ -12132,7 +12132,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** The massive logistical and military advantage of organic, self-repairing starships vs. the constant, terrifying upkeep of feeding a predator that can eat your own colonies if neglected.
 
 ---
-## The Cartographic Mutiny
+## [SPECCED] The Cartographic Mutiny
 
 **Layer:** Cross-layer
 
@@ -12146,7 +12146,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Aesthetic Rot
+## [SPECCED] The Aesthetic Rot
 
 **Layer:** 1
 
@@ -12160,7 +12160,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Phantom Work Order
+## [SPECCED] The Phantom Work Order
 
 **Layer:** 1
 
@@ -12174,7 +12174,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Atmospheric Smugglers
+## [SPECCED] The Atmospheric Smugglers
 
 **Layer:** Cross-layer
 
