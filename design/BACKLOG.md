@@ -66,6 +66,11 @@
 - [ ] `495` Temporal Echoes — `specs/495-temporal-echoes.md`
 - [ ] `496` The Bureau of Regrets — `specs/496-the-bureau-of-regrets.md`
 
+- [ ] `679` The Flesh Tax — `specs/679-the-flesh-tax.md`
+- [ ] `680` The Memory Blackout — `specs/680-the-memory-blackout.md`
+- [ ] `681` Feral Logistics Network — `specs/681-feral-logistics-network.md`
+- [ ] `682` Symbiotic Leviathans — `specs/682-symbiotic-leviathans.md`
+
 See `design/IDEAS.md` for unspecced concepts.
 - [x] `255` Hypno-Learning — `specs/255-hypno-learning.md` — completed 2026-03-01
 
