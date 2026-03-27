@@ -1294,15 +1294,6 @@ fn spawn_building(
     insert_base_building_components(&mut entity, building_type, material);
 
     match building_type {
-        BuildingType::Office => {
-            entity.insert((
-                // Office provides admin
-                AdminProvider { amount: 10.0 },
-                Office::default(),
-                // Office typically operates during the day
-                ShiftSchedule::default(),
-            ));
-        }
         BuildingType::Housing | BuildingType::Lander => {
             configure_housing(&mut entity, building_type);
         }
@@ -1322,13 +1313,17 @@ fn spawn_building(
         BuildingType::Stockpile | BuildingType::Landfill => {
             configure_storage(&mut entity, building_type);
         }
-        BuildingType::Tavern
+        BuildingType::Office
+        | BuildingType::Tavern
         | BuildingType::Library
         | BuildingType::FlowerBed
         | BuildingType::Statue
         | BuildingType::Hospital
         | BuildingType::Grave
-        | BuildingType::TradeDepot => configure_civic(&mut entity, building_type),
+        | BuildingType::TradeDepot
+        | BuildingType::Shower
+        | BuildingType::Recycler
+        | BuildingType::BulletinBoard => configure_civic(&mut entity, building_type),
         BuildingType::Wall
         | BuildingType::Window
         | BuildingType::Gate
@@ -1357,38 +1352,12 @@ fn spawn_building(
         | BuildingType::GeneBank
         | BuildingType::CloneVat
         | BuildingType::HypnoPod
-        | BuildingType::HoloProjector => configure_tech(&mut entity, building_type),
-        BuildingType::Shower => configure_civic(&mut entity, building_type),
-        BuildingType::Recycler => {
-            // Recycler configuration
-            entity.insert((
-                crate::layer1::recycling::Recycler::default(),
-                Inventory::default(),
-                crate::layer1::lighting::LightSource {
-                    is_outdoor: true,
-                    radius: 3.0,
-                    intensity: 0.5,
-                    color: (0, 255, 0), // Green glow
-                },
-                ShiftSchedule::default(),
-            ));
-        }
-        BuildingType::BulletinBoard => {
-            entity.insert((
-                crate::layer1::social::grievances::BulletinBoard::default(),
-                ShiftSchedule::default(),
-            ));
-        }
+        | BuildingType::HoloProjector
+        | BuildingType::Nanoforge => configure_tech(&mut entity, building_type),
         BuildingType::PersonalShed
         | BuildingType::PersonalGarden
         | BuildingType::PersonalShrine => {
             // Logic handled by components added in system
-        }
-        BuildingType::Nanoforge => {
-            entity.insert((crate::layer1::nanite_fabrication::Nanoforge {
-                active_recipe: None,
-                breach_risk: 0.01,
-            },));
         }
     }
 
@@ -1664,6 +1633,35 @@ fn configure_storage(entity: &mut EntityWorldMut, building_type: BuildingType) {
 
 fn configure_civic(entity: &mut EntityWorldMut, building_type: BuildingType) {
     match building_type {
+        BuildingType::Office => {
+            entity.insert((
+                // Office provides admin
+                AdminProvider { amount: 10.0 },
+                Office::default(),
+                // Office typically operates during the day
+                ShiftSchedule::default(),
+            ));
+        }
+        BuildingType::Recycler => {
+            // Recycler configuration
+            entity.insert((
+                crate::layer1::recycling::Recycler::default(),
+                Inventory::default(),
+                crate::layer1::lighting::LightSource {
+                    is_outdoor: true,
+                    radius: 3.0,
+                    intensity: 0.5,
+                    color: (0, 255, 0), // Green glow
+                },
+                ShiftSchedule::default(),
+            ));
+        }
+        BuildingType::BulletinBoard => {
+            entity.insert((
+                crate::layer1::social::grievances::BulletinBoard::default(),
+                ShiftSchedule::default(),
+            ));
+        }
         BuildingType::Tavern => {
             entity.insert((
                 Tavern::default(),
@@ -2101,6 +2099,12 @@ fn configure_specialized_tech(entity: &mut EntityWorldMut, building_type: Buildi
 
 fn configure_futuristic_tech(entity: &mut EntityWorldMut, building_type: BuildingType) {
     match building_type {
+        BuildingType::Nanoforge => {
+            entity.insert((crate::layer1::nanite_fabrication::Nanoforge {
+                active_recipe: None,
+                breach_risk: 0.01,
+            },));
+        }
         BuildingType::CloneVat => {
             entity.insert((
                 crate::layer1::clone_vat::CloneVat::default(),
@@ -2162,12 +2166,7 @@ fn configure_futuristic_tech(entity: &mut EntityWorldMut, building_type: Buildin
                 },
             ));
         }
-        BuildingType::Nanoforge => {
-            entity.insert((crate::layer1::nanite_fabrication::Nanoforge {
-                active_recipe: None,
-                breach_risk: 0.01,
-            },));
-        }
+
         _ => {}
     }
 }
