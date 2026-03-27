@@ -23,3 +23,8 @@
 **[Bevy System Tuple Limit]**
 **Learning:** Bevy's `IntoSystemConfigs` and `IntoSystemSetConfigs` traits are only implemented for tuples up to size 21. Creating a larger tuple (e.g., in `src/layer1/systems/execution.rs`) results in confusing `E0599: method not found` trait bound errors.
 **Action:** Split large system registration blocks (pyramid of doom) into smaller chunks of logically grouped systems (e.g., <= 10 items) instead of piling everything into one giant tuple.
+**[Building Type Configuration Refactor]**\n**Learning:**  was a God function over 200 lines long, with huge inline block definitions for buildings like , , , etc. Using Match statements where each block was >15 lines.\n**Action:** Moved configurations into  and  reducing the lines inside the spawn function significantly and making it read linearly.
+
+**[Building Type Configuration Refactor]**
+**Learning:** `spawn_building` was a God function over 200 lines long, with huge inline block definitions for buildings like `Office`, `Recycler`, `Nanoforge`, etc. Using Match statements where each block was >15 lines.
+**Action:** Moved configurations into `configure_civic` and `configure_tech` reducing the lines inside the spawn function significantly and making it read linearly.
