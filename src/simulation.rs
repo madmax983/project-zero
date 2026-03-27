@@ -103,6 +103,14 @@ pub fn build_simulation_schedule() -> Schedule {
     ));
 
     schedule.add_systems((
+        crate::layer2::cascade::evaluate_system_logistics,
+        crate::layer2::cascade::update_sector_defenses
+            .after(crate::layer2::cascade::evaluate_system_logistics),
+        crate::layer2::cascade::calculate_invasion_threat
+            .after(crate::layer2::cascade::update_sector_defenses),
+    ));
+
+    schedule.add_systems((
         crate::layer2::syzygy::update_syzygy_cycle_system,
         crate::layer2::syzygy::apply_syzygy_effects_system
             .after(crate::layer2::syzygy::update_syzygy_cycle_system),
@@ -382,6 +390,12 @@ pub fn run_simulation_tick(world: &mut World) {
     if !world.contains_resource::<Events<crate::layer3::map::AnomalyDiscoveredEvent>>() {
         world.init_resource::<Events<crate::layer3::map::AnomalyDiscoveredEvent>>();
     }
+    if !world.contains_resource::<Events<crate::layer2::cascade::LogisticsStrainedEvent>>() {
+        world.init_resource::<Events<crate::layer2::cascade::LogisticsStrainedEvent>>();
+    }
+    if !world.contains_resource::<Events<crate::layer2::cascade::DefenseWeakenedEvent>>() {
+        world.init_resource::<Events<crate::layer2::cascade::DefenseWeakenedEvent>>();
+    }
     // Add our schedule if not yet added
     {
         let schedules = world.resource::<Schedules>();
@@ -484,6 +498,9 @@ mod tests {
 
         world.init_resource::<Events<crate::layer1::logistics::mass_driver::LaunchEvent>>();
         world.init_resource::<Events<crate::layer1::logistics::mass_driver::BombardmentEvent>>();
+
+        world.init_resource::<Events<crate::layer2::cascade::LogisticsStrainedEvent>>();
+        world.init_resource::<Events<crate::layer2::cascade::DefenseWeakenedEvent>>();
 
         world.init_resource::<Time>();
 
