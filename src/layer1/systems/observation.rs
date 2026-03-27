@@ -8,6 +8,8 @@ use bevy_ecs::prelude::*;
 pub fn register(schedule: &mut Schedule) {
     schedule.add_systems(
         (
+            crate::layer1::integration::diplomatic_reflection_kill_bridge,
+            crate::layer1::integration::diplomatic_reflection_plant_bridge,
             crate::layer1::integration::waste_scent_bridge,
             crate::layer1::olfactory::scent_diffusion_system
                 .after(crate::layer1::integration::waste_scent_bridge),

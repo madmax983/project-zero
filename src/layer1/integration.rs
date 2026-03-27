@@ -1107,3 +1107,27 @@ pub fn gene_splicing_chronicle_bridge(
         });
     }
 }
+
+/// INT-657: Bridge Pop deaths to EntityKilledEvents
+pub fn diplomatic_reflection_kill_bridge(
+    mut events_in: EventReader<crate::layer1::pop::PopDied>,
+    mut events_out: EventWriter<crate::layer3::diplomacy_reflection::EntityKilledEvent>,
+) {
+    for _ in events_in.read() {
+        events_out.send(crate::layer3::diplomacy_reflection::EntityKilledEvent {
+            colony_entity: Entity::PLACEHOLDER,
+        });
+    }
+}
+
+/// INT-657: Bridge Flora planted to FloraPlantedEvents
+pub fn diplomatic_reflection_plant_bridge(
+    query: Query<Entity, Added<crate::layer1::flora::Flora>>,
+    mut events_out: EventWriter<crate::layer3::diplomacy_reflection::FloraPlantedEvent>,
+) {
+    for _ in query.iter() {
+        events_out.send(crate::layer3::diplomacy_reflection::FloraPlantedEvent {
+            colony_entity: Entity::PLACEHOLDER,
+        });
+    }
+}
