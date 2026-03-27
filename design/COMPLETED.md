@@ -298,3 +298,4 @@
 - [x] `629` Atmospheric Ignition — `specs/629-atmospheric-ignition.md` — completed 2026-03-24
 - [x] `646` Cognitive Overclocking — `specs/646-cognitive-overclocking.md` — completed 2026-03-22
 - [x] `647` Cascade Failure — `specs/647-cascade-failure.md` — completed 2026-03-27
+- [x] `INT-647` Integration: Cascade Failure -> Chronicle — completed 2026-03-27

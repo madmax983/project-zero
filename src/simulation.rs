@@ -108,6 +108,10 @@ pub fn build_simulation_schedule() -> Schedule {
             .after(crate::layer2::cascade::evaluate_system_logistics),
         crate::layer2::cascade::calculate_invasion_threat
             .after(crate::layer2::cascade::update_sector_defenses),
+        crate::layer2::integration::logistics_strained_chronicle_bridge
+            .after(crate::layer2::cascade::evaluate_system_logistics),
+        crate::layer2::integration::defense_weakened_chronicle_bridge
+            .after(crate::layer2::cascade::update_sector_defenses),
     ));
 
     schedule.add_systems((
