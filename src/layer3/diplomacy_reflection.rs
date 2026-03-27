@@ -93,9 +93,7 @@ pub fn update_diplomatic_traits(
                 civ.traits.push(DiplomaticTrait::Barbarian); // Simplified
                 changed = true;
             }
-            if stats.trees_planted_last_year >= 1000
-                && !civ.traits.contains(&DiplomaticTrait::Ecological)
-            {
+            if stats.trees_planted_last_year >= 1000 && !civ.traits.contains(&DiplomaticTrait::Ecological) {
                 civ.traits.push(DiplomaticTrait::Ecological);
                 changed = true;
             }
@@ -115,13 +113,9 @@ pub fn apply_diplomatic_reactions(
     for event in trait_events.read() {
         if let Ok((player_civ, player_traits)) = player_query.get(event.civ_entity) {
             if player_traits.traits.contains(&DiplomaticTrait::Barbarian) {
-                for (neighbor_entity, neighbor_traits, mut neighbor_relations) in
-                    neighbor_query.iter_mut()
-                {
+                for (neighbor_entity, neighbor_traits, mut neighbor_relations) in neighbor_query.iter_mut() {
                     // Make sure neighbor is not the player themselves
-                    if neighbor_entity != event.civ_entity
-                        && neighbor_traits.traits.contains(&DiplomaticTrait::Pacifist)
-                    {
+                    if neighbor_entity != event.civ_entity && neighbor_traits.traits.contains(&DiplomaticTrait::Pacifist) {
                         for relation in neighbor_relations.relations.iter_mut() {
                             if relation.target_id == player_civ.id {
                                 relation.sanctioned = true;
@@ -146,28 +140,15 @@ mod tests {
         app.add_event::<FloraPlantedEvent>();
         app.add_event::<TraitChangedEvent>();
         app.add_systems(Update, aggregate_colony_stats);
-        app.add_systems(
-            Update,
-            update_diplomatic_traits.after(aggregate_colony_stats),
-        );
+        app.add_systems(Update, update_diplomatic_traits.after(aggregate_colony_stats));
 
-        let civ = app
-            .world_mut()
-            .spawn(DiplomaticTraits { traits: vec![] })
-            .id();
-        app.world_mut().spawn(ColonyStats {
-            owner_civ: civ,
-            kills_last_year: 5000,
-            ..default()
-        });
+        let civ = app.world_mut().spawn(DiplomaticTraits { traits: vec![] }).id();
+        app.world_mut().spawn(ColonyStats { owner_civ: civ, kills_last_year: 5000, ..default() });
 
         app.update();
 
         let traits = app.world().get::<DiplomaticTraits>(civ).unwrap();
-        assert!(
-            traits.traits.contains(&DiplomaticTrait::Warlike),
-            "High kill count should grant the Warlike trait"
-        );
+        assert!(traits.traits.contains(&DiplomaticTrait::Warlike), "High kill count should grant the Warlike trait");
     }
 
     #[test]
@@ -177,28 +158,15 @@ mod tests {
         app.add_event::<FloraPlantedEvent>();
         app.add_event::<TraitChangedEvent>();
         app.add_systems(Update, aggregate_colony_stats);
-        app.add_systems(
-            Update,
-            update_diplomatic_traits.after(aggregate_colony_stats),
-        );
+        app.add_systems(Update, update_diplomatic_traits.after(aggregate_colony_stats));
 
-        let civ = app
-            .world_mut()
-            .spawn(DiplomaticTraits { traits: vec![] })
-            .id();
-        app.world_mut().spawn(ColonyStats {
-            owner_civ: civ,
-            trees_planted_last_year: 1000,
-            ..default()
-        });
+        let civ = app.world_mut().spawn(DiplomaticTraits { traits: vec![] }).id();
+        app.world_mut().spawn(ColonyStats { owner_civ: civ, trees_planted_last_year: 1000, ..default() });
 
         app.update();
 
         let traits = app.world().get::<DiplomaticTraits>(civ).unwrap();
-        assert!(
-            traits.traits.contains(&DiplomaticTrait::Ecological),
-            "High tree planting should grant the Ecological trait"
-        );
+        assert!(traits.traits.contains(&DiplomaticTrait::Ecological), "High tree planting should grant the Ecological trait");
     }
 
     #[test]
@@ -207,51 +175,23 @@ mod tests {
         app.add_event::<TraitChangedEvent>();
         app.add_systems(Update, apply_diplomatic_reactions);
 
-        let player_civ = app
-            .world_mut()
-            .spawn((
-                Civilization {
-                    id: "player".to_string(),
-                },
-                DiplomaticTraits {
-                    traits: vec![DiplomaticTrait::Barbarian],
-                },
-            ))
-            .id();
+        let player_civ = app.world_mut().spawn((
+            Civilization { id: "player".to_string() },
+            DiplomaticTraits { traits: vec![DiplomaticTrait::Barbarian] }
+        )).id();
 
-        app.world_mut().send_event(TraitChangedEvent {
-            civ_entity: player_civ,
-        });
+        app.world_mut().send_event(TraitChangedEvent { civ_entity: player_civ });
 
-        let neighbor = app
-            .world_mut()
-            .spawn((
-                Civilization {
-                    id: "neighbor".to_string(),
-                },
-                DiplomaticTraits {
-                    traits: vec![DiplomaticTrait::Pacifist],
-                },
-                DiplomaticRelations {
-                    relations: vec![DiplomaticStanding {
-                        target_id: "player".to_string(),
-                        standing: 0.0,
-                        sanctioned: false,
-                    }],
-                },
-            ))
-            .id();
+        let neighbor = app.world_mut().spawn((
+             Civilization { id: "neighbor".to_string() },
+             DiplomaticTraits { traits: vec![DiplomaticTrait::Pacifist] },
+             DiplomaticRelations { relations: vec![DiplomaticStanding { target_id: "player".to_string(), standing: 0.0, sanctioned: false }] }
+        )).id();
 
         app.update();
 
         let relations = app.world().get::<DiplomaticRelations>(neighbor).unwrap();
-        assert!(
-            relations.relations[0].sanctioned,
-            "Pacifist neighbor should sanction a Barbarian civilization"
-        );
-        assert!(
-            relations.relations[0].standing < 0.0,
-            "Standing should decrease"
-        );
+        assert!(relations.relations[0].sanctioned, "Pacifist neighbor should sanction a Barbarian civilization");
+        assert!(relations.relations[0].standing < 0.0, "Standing should decrease");
     }
 }
