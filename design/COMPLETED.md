@@ -301,3 +301,4 @@
 - [x] `INT-647` Integration: Cascade Failure -> Chronicle — completed 2026-03-27
 - [x] `658` Migratory Flora — `specs/658-migratory-flora.md` — completed 2026-03-24
 - [x] `657` Diplomatic Reflection — `specs/657-diplomatic-reflection.md` — completed 2026-03-24
+- [x] `INT-657` Integration: Diplomatic Reflection -> Kill and Plant events — completed 2026-03-27
