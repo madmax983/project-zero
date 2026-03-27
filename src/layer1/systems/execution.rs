@@ -55,6 +55,11 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::tech::event_horizon_tap::apply_time_dilation_system
                 .after(crate::layer1::pop::reset_speed_system)
                 .before(apply_lighting_penalties_system),
+            crate::layer1::tech::apply_cognitive_overclocking_system
+                .after(crate::layer1::pop::reset_speed_system)
+                .before(apply_lighting_penalties_system),
+            crate::layer1::tech::process_neural_burnout_system,
+            crate::layer1::tech::check_burnout_threshold_system,
             crate::layer1::tech::machine_awakening::process_bot_sentience,
             crate::layer1::tech::machine_awakening::apply_awakened_needs,
             update_lighting_system

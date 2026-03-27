@@ -697,6 +697,8 @@ pub mod harmonic;
 mod harmonic_mining_tests;
 
 pub mod event_horizon_tap;
+pub mod cognitive_overclocking;
+pub use cognitive_overclocking::*;
 pub mod machine_awakening;
 pub use machine_awakening::*;
 pub mod martyrs_engine;
