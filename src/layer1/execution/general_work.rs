@@ -441,13 +441,6 @@ pub fn calculate_work_amount(
         1.0
     };
 
-    let delay_modifier =
-        if let Some(delay) = world.get::<crate::layer1::bureaucracy::WorkDelay>(pop_entity) {
-            delay.multiplier
-        } else {
-            1.0
-        };
-
     let infection_modifier =
         match world.get::<crate::layer1::memetics::MemeticInfection>(pop_entity) {
             Some(crate::layer1::memetics::MemeticInfection::ParasiticBroadcast) => 0.5,
@@ -463,7 +456,6 @@ pub fn calculate_work_amount(
         * (1.0 + augmentation_bonus)
         * organic_factor
         * neural_buff
-        * delay_modifier
         * infection_modifier;
 
     // Cap work amount to prevent logic bugs / economy exploits

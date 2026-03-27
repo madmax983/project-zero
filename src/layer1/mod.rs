@@ -648,10 +648,6 @@ pub use cryo_shock::*;
 pub mod infrastructure;
 pub use infrastructure::*;
 
-/// Bureaucracy and administration system (Spec 464).
-pub mod bureaucracy;
-pub use bureaucracy::*;
-
 /// Nanite Fabrication system (Spec 453).
 pub mod nanite_fabrication;
 pub use nanite_fabrication::*;
