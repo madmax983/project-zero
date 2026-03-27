@@ -604,3 +604,5 @@ pub mod politics;
 pub use politics::*;
 pub mod scrap_code_prophets;
 pub use scrap_code_prophets::*;
+pub mod ghost_shift_strike;
+pub use ghost_shift_strike::*;

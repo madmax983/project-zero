@@ -447,6 +447,15 @@ pub fn calculate_work_amount(
             None => 1.0,
         };
 
+    let ghost_shift_modifier = if world
+        .get::<crate::layer1::social::ghost_shift_strike::GhostShiftState>(pop_entity)
+        .is_some()
+    {
+        0.0
+    } else {
+        1.0
+    };
+
     let amount = WORK_PER_TICK
         * tool_efficiency
         * morale_efficiency
@@ -456,7 +465,8 @@ pub fn calculate_work_amount(
         * (1.0 + augmentation_bonus)
         * organic_factor
         * neural_buff
-        * infection_modifier;
+        * infection_modifier
+        * ghost_shift_modifier;
 
     // Cap work amount to prevent logic bugs / economy exploits
     amount.min(1000.0)
