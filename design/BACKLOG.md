@@ -375,4 +375,3 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `654` The Necro-Industrial Complex — `specs/654-the-necro-industrial-complex.md`
 - [ ] `655` University of the Stars — `specs/655-university-of-the-stars.md`
 - [ ] `656` Heirloom Items — `specs/656-heirloom-items.md`
-- [ ] `657` Diplomatic Reflection — `specs/657-diplomatic-reflection.md`
