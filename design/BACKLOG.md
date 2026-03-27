@@ -375,3 +375,7 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `654` The Necro-Industrial Complex — `specs/654-the-necro-industrial-complex.md`
 - [ ] `655` University of the Stars — `specs/655-university-of-the-stars.md`
 - [ ] `656` Heirloom Items — `specs/656-heirloom-items.md`
+- [ ] `663` Generational Trauma — `specs/663-generational-trauma.md`
+- [ ] `664` The Scrap-Code Evangelists — `specs/664-scrap-code-evangelists.md`
+- [ ] `665` Orbital Graverobbers — `specs/665-orbital-graverobbers.md`
+- [ ] `666` The Echoes of Old Earth — `specs/666-echoes-of-old-earth.md`
