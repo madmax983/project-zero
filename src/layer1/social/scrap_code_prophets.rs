@@ -80,6 +80,7 @@ pub fn process_scrap_code_revelations(
     for event in events.read() {
         if let Ok(machine_transform) = machine_query.get(event.entity) {
             for (pop_entity, pop_transform) in pop_query.iter() {
+                #[allow(clippy::collapsible_if)]
                 if machine_transform.translation.distance(pop_transform.translation) < config.revelation_distance {
                     if rng.gen::<f32>() < config.cult_formation_chance {
                         commands.entity(pop_entity).insert(ScrapCodeCultist::default());
@@ -123,6 +124,7 @@ pub fn cultist_morale_aura(
         if let Some(mut cultist) = is_cultist {
             let mut near_broken = false;
             for (machine, machine_transform) in broken_machines.iter() {
+                #[allow(clippy::collapsible_if)]
                 if machine.state == MachineState::Broken {
                     if pop_transform.translation.distance(machine_transform.translation) < config.aura_distance {
                         near_broken = true;

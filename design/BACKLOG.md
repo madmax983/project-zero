@@ -402,7 +402,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `684` The Gossip Economy — `specs/684-gossip-economy.md`
 - [ ] `685` The Parasitic Cargo — `specs/685-parasitic-cargo.md`
 - [ ] `686` Echoes of the Deep — `specs/686-echoes-of-the-deep.md`
-- [ ] `687` The Ghost-Shift Strike — `specs/687-ghost-shift-strike.md`
 - [ ] `688` Moon Hermits — `specs/688-moon-hermits.md`
 - [ ] `689` The Empathy Tax — `specs/689-the-empathy-tax.md`
 - [ ] `690` Salvage-Cult Engineers — `specs/690-salvage-cult-engineers.md`

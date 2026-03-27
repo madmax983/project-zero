@@ -303,3 +303,4 @@
 - [x] `657` Diplomatic Reflection — `specs/657-diplomatic-reflection.md` — completed 2026-03-24
 - [x] `INT-657` Integration: Diplomatic Reflection -> Kill and Plant events — completed 2026-03-27
 - [x] `634` Scrap-Code Prophets — `specs/634-scrap-code-prophets.md` — completed 2026-03-27
+- [x] `687` The Ghost-Shift Strike — `specs/687-ghost-shift-strike.md` — completed 2024-10-24
