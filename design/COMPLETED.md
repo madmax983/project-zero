@@ -302,3 +302,4 @@
 - [x] `658` Migratory Flora — `specs/658-migratory-flora.md` — completed 2026-03-24
 - [x] `657` Diplomatic Reflection — `specs/657-diplomatic-reflection.md` — completed 2026-03-24
 - [x] `INT-657` Integration: Diplomatic Reflection -> Kill and Plant events — completed 2026-03-27
+- [x] `634` Scrap-Code Prophets — `specs/634-scrap-code-prophets.md` — completed 2026-03-27
