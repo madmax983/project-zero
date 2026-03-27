@@ -151,6 +151,11 @@ pub fn build_simulation_schedule() -> Schedule {
             .after(crate::layer3::events::debt_prison::check_bailout_condition_system),
         crate::layer3::market::update_market_prices_system,
         crate::layer3::diplomacy::diplomatic_negotiation_system,
+        crate::layer3::diplomacy_reflection::aggregate_colony_stats,
+        crate::layer3::diplomacy_reflection::update_diplomatic_traits
+            .after(crate::layer3::diplomacy_reflection::aggregate_colony_stats),
+        crate::layer3::diplomacy_reflection::apply_diplomatic_reactions
+            .after(crate::layer3::diplomacy_reflection::update_diplomatic_traits),
     ));
 
     schedule.add_systems((
@@ -393,6 +398,9 @@ pub fn run_simulation_tick(world: &mut World) {
     }
     if !world.contains_resource::<Events<crate::layer3::map::AnomalyDiscoveredEvent>>() {
         world.init_resource::<Events<crate::layer3::map::AnomalyDiscoveredEvent>>();
+        world.init_resource::<Events<crate::layer3::diplomacy_reflection::EntityKilledEvent>>();
+        world.init_resource::<Events<crate::layer3::diplomacy_reflection::FloraPlantedEvent>>();
+        world.init_resource::<Events<crate::layer3::diplomacy_reflection::TraitChangedEvent>>();
     }
     if !world.contains_resource::<Events<crate::layer2::cascade::LogisticsStrainedEvent>>() {
         world.init_resource::<Events<crate::layer2::cascade::LogisticsStrainedEvent>>();
@@ -457,6 +465,21 @@ mod tests {
         // Initialize Detection Risk for test
         world.init_resource::<crate::layer3::silence::DetectionRisk>();
         world.init_resource::<Events<crate::layer3::silence::HostileSpawnEvent>>();
+        if !world
+            .contains_resource::<Events<crate::layer3::diplomacy_reflection::EntityKilledEvent>>()
+        {
+            world.init_resource::<Events<crate::layer3::diplomacy_reflection::EntityKilledEvent>>();
+        }
+        if !world
+            .contains_resource::<Events<crate::layer3::diplomacy_reflection::FloraPlantedEvent>>()
+        {
+            world.init_resource::<Events<crate::layer3::diplomacy_reflection::FloraPlantedEvent>>();
+        }
+        if !world
+            .contains_resource::<Events<crate::layer3::diplomacy_reflection::TraitChangedEvent>>()
+        {
+            world.init_resource::<Events<crate::layer3::diplomacy_reflection::TraitChangedEvent>>();
+        }
         world.init_resource::<crate::layer2::cartographers_curse::MapTelemetry>();
         world.init_resource::<Events<crate::layer2::cartographers_curse::SellTelemetryEvent>>();
 
@@ -499,6 +522,9 @@ mod tests {
         world.init_resource::<crate::layer3::map::MapData>();
         world.init_resource::<Events<crate::layer3::map::FleetArrivalEvent>>();
         world.init_resource::<Events<crate::layer3::map::AnomalyDiscoveredEvent>>();
+        world.init_resource::<Events<crate::layer3::diplomacy_reflection::EntityKilledEvent>>();
+        world.init_resource::<Events<crate::layer3::diplomacy_reflection::FloraPlantedEvent>>();
+        world.init_resource::<Events<crate::layer3::diplomacy_reflection::TraitChangedEvent>>();
 
         world.init_resource::<Events<crate::layer1::logistics::mass_driver::LaunchEvent>>();
         world.init_resource::<Events<crate::layer1::logistics::mass_driver::BombardmentEvent>>();
