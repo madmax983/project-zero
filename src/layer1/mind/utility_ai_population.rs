@@ -1,10 +1,25 @@
 //! Utility AI Population Helpers
 //!
-//! This module contains helper functions for gathering data from the ECS World
-//! and populating the `UtilityAIBuffer` with candidates for AI evaluation.
+//! This module handles the crucial "Gather" phase of the Utility AI architecture.
+//! It extracts entities from the ECS world and places them into categorized,
+//! lock-free buffers within the `UtilityAIBuffer`.
 //!
-//! It separates the "data gathering" concern from the "decision making" concern
-//! in `utility_ai.rs`.
+//! # Why pre-populate buffers?
+//!
+//! Bevy's ECS does not allow mutable access to the world alongside concurrent read
+//! queries natively without careful system parameter design. Since thousands of Pops
+//! need to evaluate thousands of potential targets simultaneously, doing real-time
+//! spatial queries per Pop would be devastating to performance.
+//!
+//! Instead, we:
+//! 1. Run one large query to find all farms, stockpiles, items, etc.
+//! 2. Flatten them into `ScorableCandidate` structs in a continuous `Vec`.
+//! 3. Pass these read-only vectors to the parallel `ComputeTaskPool` for evaluation.
+//!
+//! # Optimization Strategy
+//!
+//! We avoid reallocating these vectors every tick. The `UtilityAIBuffer` lives as a
+//! persistent resource, and we simply `clear()` and `extend()` its internal vectors.
 
 use crate::layer1::admin::Office;
 use crate::layer1::building::{Building, BuildingType, ShiftSchedule};

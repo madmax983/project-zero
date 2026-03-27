@@ -1,3 +1,39 @@
+//! Data structures for the "Gather" phase of the Utility AI.
+//!
+//! This module defines the types used to extract state from the ECS world
+//! and prepare it for lock-free parallel evaluation.
+//!
+//! # Core Concept: The Universal Target
+//!
+//! Instead of having specific target types (e.g., `FarmTarget`, `HospitalTarget`),
+//! all potential interaction points in the colony are flattened into [`ScorableCandidate`]s.
+//! This allows a single evaluation function ([`evaluate_candidates`]) to score
+//! completely different entities using the same underlying math.
+//!
+//! # Context and State
+//!
+//! - [`PopEvalData`]: The specific state of a single Pop (needs, traits, inventory) at the start of the tick.
+//! - [`WorldContext`]: Global state (time of day, resource totals, laws) passed into the evaluation functions.
+//! - [`UtilityAIBuffer`]: The massive memory buffer that holds all candidates and Pops for a single tick.
+//!
+//! # Examples
+//!
+//! Building a candidate:
+//!
+//! ```ignore
+//! // `ScorableCandidate` is used internally during the gather phase:
+//! use bevy_ecs::prelude::Entity;
+//! use scale::layer1::map::GridPosition;
+//! use scale::layer1::mind::utility_eval_types::ScorableCandidate;
+//!
+//! // A farm that can hold 5 workers, currently with 2
+//! let entity = Entity::from_raw(42);
+//! let pos = GridPosition { x: 5, y: 5 };
+//! let candidate = ScorableCandidate::with_capacity(entity, pos, 5, 2);
+//!
+//! assert_eq!(candidate.capacity, 5);
+//! ```
+
 #![allow(clippy::trivially_copy_pass_by_ref)]
 use crate::layer1::chemical::ChemicalState;
 use crate::layer1::combat::Drafted;

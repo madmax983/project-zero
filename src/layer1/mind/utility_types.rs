@@ -1,3 +1,20 @@
+//! The vocabulary and scoring mathematics of the Utility AI.
+//!
+//! This module defines the [`ActionType`] enum, which acts as the menu of possible
+//! goals a Pop can have. It also contains the core math functions that drive decision
+//! making, such as the [`need_response_curve`] and [`calculate_context_score`].
+//!
+//! # Action vs. Execution
+//!
+//! The Utility AI assigns an [`ActionType`] to a Pop via the [`PopAction`] component.
+//! However, this is just a *Goal* (e.g., "Satisfy Hunger"). A separate HTN (Hierarchical
+//! Task Network) or execution system handles the actual steps to achieve that goal
+//! (e.g., "Find Food" -> "Walk to Food" -> "Eat").
+//!
+//! # Customization
+//!
+//! Each Pop's decision-making can be tweaked using the [`UtilityWeights`] component.
+
 use crate::layer1::map::GridPosition;
 use bevy_ecs::prelude::*;
 use strum_macros::EnumIter;
