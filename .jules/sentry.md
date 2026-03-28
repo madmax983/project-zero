@@ -15,3 +15,7 @@
 **[Test Assertions Drift]**
 **Learning:** Relying on `.unwrap()` in tests causes silent panics with unhelpful error messages when components or resources go missing during refactors.
 **Action:** Always replace `.unwrap()` with `.expect("[Reason]")` in tests to pinpoint failures immediately.
+
+**[Totem Component Default Constraints]**
+**Learning:** Attempting to instantiate components like `Totem` using `..Default::default()` in test setups will cause compile errors (`E0277`) if the component struct does not explicitly `#[derive(Default)]`.
+**Action:** Always verify a component implements `Default` before using it in tests, or manually instantiate all fields (e.g., `description`, `stress_relief`) to ensure test setups compile on the first pass.

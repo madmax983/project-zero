@@ -268,34 +268,49 @@ mod tests {
     }
 
     #[test]
-    fn test_breakdown_type_pyromaniac() {
+    fn test_breakdown_types_derived_from_traits() {
         let mut world = World::new();
         let mut schedule = Schedule::default();
         schedule.add_systems(check_stress_breakdown_system);
 
-        let mut traits = Traits::default();
-        traits.add(Trait::Pyromaniac);
+        let test_cases = vec![
+            (Trait::Pyromaniac, BreakdownType::FireStarting),
+            (Trait::Glutton, BreakdownType::BingeEating),
+            (Trait::Anxious, BreakdownType::HideInRoom),
+            (Trait::Lazy, BreakdownType::SadWander),
+            (Trait::Ascetic, BreakdownType::SadWander),
+        ];
 
-        let pop = world
-            .spawn((
-                Pop,
-                Needs {
-                    hunger: 0.0,
-                    rest: 0.0,
-                    leisure: 0.0,
-                    hygiene: 0.0,
-                },
-                StressTracker {
-                    accumulated_stress: 1000.0,
-                },
-                traits,
-            ))
-            .id();
+        for (trait_type, expected_breakdown) in test_cases {
+            let mut traits = Traits::default();
+            traits.add(trait_type);
 
-        schedule.run(&mut world);
+            let pop = world
+                .spawn((
+                    Pop,
+                    Needs {
+                        hunger: 0.0,
+                        rest: 0.0,
+                        leisure: 0.0,
+                        hygiene: 0.0,
+                    },
+                    StressTracker {
+                        accumulated_stress: 1000.0,
+                    },
+                    traits,
+                ))
+                .id();
 
-        let breakdown = world.get::<Breakdown>(pop).unwrap();
-        assert_eq!(breakdown.breakdown_type, BreakdownType::FireStarting);
+            schedule.run(&mut world);
+
+            let breakdown = world
+                .get::<Breakdown>(pop)
+                .expect("Breakdown should have triggered");
+            assert_eq!(breakdown.breakdown_type, expected_breakdown);
+
+            // Cleanup for next iteration
+            world.despawn(pop);
+        }
     }
 
     #[test]
@@ -417,5 +432,103 @@ mod tests {
         schedule.run(&mut world);
         let tracker = world.get::<StressTracker>(pop).unwrap();
         assert_eq!(tracker.accumulated_stress, 2.0);
+    }
+
+    #[test]
+    fn test_skip_stress_tracking_if_already_broken_or_cathartic() {
+        let mut world = World::new();
+        let mut schedule = Schedule::default();
+        schedule.add_systems(check_stress_breakdown_system);
+
+        let pop_broken = world
+            .spawn((
+                Pop,
+                Needs {
+                    hunger: 0.0,
+                    rest: 0.0,
+                    leisure: 0.0,
+                    hygiene: 0.0,
+                },
+                StressTracker {
+                    accumulated_stress: 50.0,
+                }, // Mid-stress
+                Breakdown {
+                    breakdown_type: BreakdownType::Dazing,
+                    duration_remaining: 10,
+                },
+            ))
+            .id();
+
+        let pop_catharsis = world
+            .spawn((
+                Pop,
+                Needs {
+                    hunger: 0.0,
+                    rest: 0.0,
+                    leisure: 0.0,
+                    hygiene: 0.0,
+                },
+                StressTracker {
+                    accumulated_stress: 50.0,
+                },
+                Catharsis {
+                    duration_remaining: 10,
+                    morale_bonus: 0.5,
+                },
+            ))
+            .id();
+
+        schedule.run(&mut world);
+
+        // Stress should be reset to 0 and not accumulate further
+        let tracker1 = world.get::<StressTracker>(pop_broken).unwrap();
+        assert_eq!(tracker1.accumulated_stress, 0.0);
+
+        let tracker2 = world.get::<StressTracker>(pop_catharsis).unwrap();
+        assert_eq!(tracker2.accumulated_stress, 0.0);
+    }
+
+    #[test]
+    fn test_totem_stress_relief() {
+        use crate::layer1::items::Equipment;
+        use crate::layer1::totems::Totem;
+
+        let mut world = World::new();
+        let mut schedule = Schedule::default();
+        schedule.add_systems(check_stress_breakdown_system);
+
+        // Spawn a Totem that provides -0.5 stress
+        let totem_entity = world
+            .spawn(Totem {
+                stress_relief: 0.5,
+                description: "A calming wooden carving".to_string(),
+            })
+            .id();
+
+        let equipment = Equipment {
+            totem: Some(totem_entity),
+            ..Default::default()
+        };
+
+        // Pop with low morale, normally adds +1.0 stress/tick
+        // With totem (-0.5), net should be +0.5/tick
+        let pop = world
+            .spawn((
+                Pop,
+                Needs {
+                    hunger: 0.0,
+                    rest: 0.0,
+                    leisure: 0.0,
+                    hygiene: 0.0,
+                }, // Low Morale
+                StressTracker::default(),
+                equipment,
+            ))
+            .id();
+
+        schedule.run(&mut world);
+
+        let tracker = world.get::<StressTracker>(pop).unwrap();
+        assert_eq!(tracker.accumulated_stress, 0.5);
     }
 }
