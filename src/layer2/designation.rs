@@ -1,6 +1,6 @@
-use bevy_ecs::prelude::*;
 use crate::layer1::resources::ColonyResources;
 use crate::layer1::social::unrest::Unrest;
+use bevy_ecs::prelude::*;
 
 #[derive(Component, Debug, Clone, Copy, PartialEq, Eq)]
 pub enum PlanetDesignation {
@@ -71,8 +71,14 @@ mod tests {
         app.update();
 
         let resources = app.world().resource::<ColonyResources>();
-        assert!(resources.food > 10.0, "Food should be boosted by AgriWorld designation");
-        assert!(resources.metal < 0.0 || resources.ore < 0.0 || resources.stone < 5.0, "Industrial resources should be penalized by AgriWorld designation");
+        assert!(
+            resources.food > 10.0,
+            "Food should be boosted by AgriWorld designation"
+        );
+        assert!(
+            resources.metal < 0.0 || resources.ore < 0.0 || resources.stone < 5.0,
+            "Industrial resources should be penalized by AgriWorld designation"
+        );
     }
 
     #[test]
@@ -85,9 +91,18 @@ mod tests {
         app.update();
 
         let resources = app.world().resource::<ColonyResources>();
-        assert!(resources.metal > 0.0, "Metal should be boosted by ForgeWorld designation");
-        assert!(resources.tools > 2.0, "Tools should be boosted by ForgeWorld designation");
-        assert!(resources.food < 10.0, "Food should be penalized by ForgeWorld designation");
+        assert!(
+            resources.metal > 0.0,
+            "Metal should be boosted by ForgeWorld designation"
+        );
+        assert!(
+            resources.tools > 2.0,
+            "Tools should be boosted by ForgeWorld designation"
+        );
+        assert!(
+            resources.food < 10.0,
+            "Food should be penalized by ForgeWorld designation"
+        );
     }
 
     #[test]
@@ -100,14 +115,23 @@ mod tests {
         app.update();
 
         let resources = app.world().resource::<ColonyResources>();
-        assert!(resources.building_permits > 0.0, "Building Permits should be boosted by FortressWorld designation");
-        assert!(resources.food < 10.0, "Food should be penalized by FortressWorld designation");
+        assert!(
+            resources.building_permits > 0.0,
+            "Building Permits should be boosted by FortressWorld designation"
+        );
+        assert!(
+            resources.food < 10.0,
+            "Food should be penalized by FortressWorld designation"
+        );
     }
 
     #[test]
     fn test_planet_designation_change_causes_unrest() {
         let mut app = bevy_app::App::new();
-        app.insert_resource(Unrest { level: 0.0, ..Default::default() });
+        app.insert_resource(Unrest {
+            level: 0.0,
+            ..Default::default()
+        });
 
         app.world_mut().spawn(PlanetDesignationChange {
             previous: PlanetDesignation::FortressWorld,
@@ -118,6 +142,9 @@ mod tests {
         app.update();
 
         let unrest = app.world().resource::<Unrest>();
-        assert!(unrest.level >= 50.0, "Changing designation should cause a massive spike in unrest");
+        assert!(
+            unrest.level >= 50.0,
+            "Changing designation should cause a massive spike in unrest"
+        );
     }
 }
