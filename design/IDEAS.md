@@ -2288,7 +2288,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Exile
+## The Exile [SPECCED]
 
 **Layer:** 1 -> 3
 
