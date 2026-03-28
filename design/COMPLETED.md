@@ -308,3 +308,4 @@
 - [x] `691` The Exile — `specs/691-the-exile.md` — completed 2026-03-28
 - [x] `INT-183` Integration: Geodetic Sentience -> Chronicle — completed 2026-03-28
 - [x] `672` Sensor Ambiguity — `specs/672-sensor-ambiguity.md` — completed 2026-03-29
+- [x] `INT-672` Integration: Sensor Ambiguity — completed 2026-03-30

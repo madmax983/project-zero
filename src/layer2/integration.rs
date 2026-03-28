@@ -349,3 +349,44 @@ pub fn process_grief_tourist_arrival_system(
         });
     }
 }
+
+use crate::layer2::fleet::{Fleet, FleetFaction};
+use crate::layer2::sensor_ambiguity::{SensorContact, Sensors, UnidentifiedContact};
+
+/// Assigns `Sensors` to player fleets that don't already have them.
+#[allow(clippy::type_complexity)]
+pub fn assign_sensors_to_player_fleets_system(
+    mut commands: Commands,
+    query: Query<(Entity, &FleetFaction), (With<Fleet>, Without<Sensors>)>,
+) {
+    for (entity, faction) in &query {
+        if *faction == FleetFaction::Player {
+            commands.entity(entity).insert(Sensors { range: 100.0 });
+        }
+    }
+}
+
+/// Ensures Player fleets are never rendered as Unidentified Contacts
+/// and their `SensorContact` is correctly resolved to themselves.
+#[allow(clippy::type_complexity)]
+pub fn ensure_player_fleets_identified_system(
+    mut commands: Commands,
+    mut query: Query<(Entity, &FleetFaction, Option<&mut SensorContact>, Option<&UnidentifiedContact>), With<Fleet>>,
+) {
+    for (entity, faction, maybe_contact, maybe_unidentified) in query.iter_mut() {
+        if *faction == FleetFaction::Player {
+            if maybe_unidentified.is_some() {
+                commands.entity(entity).remove::<UnidentifiedContact>();
+            }
+
+            if let Some(mut contact) = maybe_contact {
+                contact.resolved_entity = Some(entity);
+            } else {
+                commands.entity(entity).insert(SensorContact {
+                    signal_strength: 100.0,
+                    resolved_entity: Some(entity),
+                });
+            }
+        }
+    }
+}

@@ -63,6 +63,13 @@ pub fn render_system_view(frame: &mut Frame, area: Rect, world: &World) {
     // We iterate over everything that has an OrbitalBody component (which defines char/color)
     for entity in world.iter_entities() {
         if let Some(body) = entity.get::<OrbitalBody>() {
+            // Apply sensor ambiguity visual override
+            let (render_char, render_color) = if entity.contains::<crate::layer2::sensor_ambiguity::UnidentifiedContact>() {
+                ('?', Color::DarkGray)
+            } else {
+                (body.char, body.color)
+            };
+
             let (x, y) = if entity.contains::<Orbit>() {
                 get_position(entity.id())
             } else if entity.contains::<Fleet>() {
@@ -98,8 +105,8 @@ pub fn render_system_view(frame: &mut Frame, area: Rect, world: &World) {
                     frame.buffer_mut().set_string(
                         pos_x,
                         pos_y,
-                        body.char.to_string(),
-                        Style::default().fg(body.color),
+                        render_char.to_string(),
+                        Style::default().fg(render_color),
                     );
                 }
             }

@@ -219,3 +219,5 @@ mod cascade_failure_chronicle;
 
 #[path = "integration/geodetic_integration.rs"]
 mod geodetic_integration;
+#[path = "integration/sensor_ambiguity_bridge.rs"]
+mod sensor_ambiguity_bridge;
