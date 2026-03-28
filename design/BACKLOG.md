@@ -425,3 +425,7 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `709` The Kessler Cage — `specs/709-kessler-cage.md`
 - [ ] `710` The Engram Economy — `specs/710-engram-economy.md`
 - [ ] `711` The Void-Born Schism — `specs/711-void-born-schism.md`
+- [ ] `712` The Orphanage of Stars — `specs/712-orphanage-of-stars.md`
+- [ ] `713` The Xenofloral Architect — `specs/713-xenofloral-architect.md`
+- [ ] `714` The Kinetic Sleds — `specs/714-kinetic-sleds.md`
+- [ ] `715` The Diplomatic Saboteur — `specs/715-diplomatic-saboteur.md`

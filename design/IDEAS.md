@@ -12463,7 +12463,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** The ultimate, instantaneous tool for maintaining perfect artificial order vs. the terrifying reality of deliberately blinding yourself to crises that are quietly destroying your colony from the inside out.
 
 ---
-## The Orphanage of Stars
+## The Orphanage of Stars [SPECCED]
 
 **Layer:** Cross-layer (3 -> 1)
 
@@ -12477,7 +12477,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Xenofloral Architect
+## The Xenofloral Architect [SPECCED]
 
 **Layer:** 1
 
@@ -12491,7 +12491,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Kinetic Sleds
+## The Kinetic Sleds [SPECCED]
 
 **Layer:** 1
 
@@ -12505,7 +12505,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Diplomatic Saboteur
+## The Diplomatic Saboteur [SPECCED]
 
 **Layer:** 3
 
