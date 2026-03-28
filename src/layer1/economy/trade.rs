@@ -125,8 +125,11 @@ pub fn merchant_arrival_system(world: &mut World) {
         }
         state.cooldown = current_tick + 2000;
     } else if should_arrive {
-        // Collect modifiers from Market (read-only access)
-        let market_items = world.get_resource::<TradeMarket>().map(|m| m.items.clone());
+        // ⚡ Bolt Optimization:
+        // Getting an immutable reference to the `TradeMarket` resource prevents cloning
+        // the entire HashMap of market items every time a merchant arrives.
+        // This removes an O(N) heap allocation, using zero-cost abstraction for read-only access.
+        let market_items = world.get_resource::<TradeMarket>().map(|m| &m.items);
 
         let mut rng = rand::thread_rng();
 
@@ -157,7 +160,7 @@ pub fn merchant_arrival_system(world: &mut World) {
             let mut give_amount = rng.gen_range(2.0f32..10.0f32).round();
 
             // Apply Contraband modifiers if Market exists
-            if let Some(items) = &market_items {
+            if let Some(items) = market_items {
                 // Buying Contraband (receiving it) -> Costs more
                 if let Some(item) = items.get(&give_type) {
                     if item.status == MarketStatus::Contraband {

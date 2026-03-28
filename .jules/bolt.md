@@ -13,3 +13,7 @@
 **[Unused Doc Comments on Expressions]**
 **Learning:** Placing `///` doc comments directly above a `for` loop or other expressions triggers an `unused_doc_comments` warning. Under `-D warnings`, this causes a compilation error.
 **Action:** Use standard `//` comments for inline code explanations and reserve `///` strictly for documenting items like structs, enums, and functions.
+
+**Optimize Trade Market lookups by avoiding full HashMap clone**
+**Learning:** `world.get_resource::<TradeMarket>().map(|m| m.items.clone())` causes an O(N) heap allocation of the entire market items HashMap every time a merchant might arrive.
+**Action:** Used `world.get_resource::<TradeMarket>().map(|m| &m.items)` to keep an immutable reference instead, preventing unnecessary heap allocations and leveraging zero-cost abstractions for read-only access.

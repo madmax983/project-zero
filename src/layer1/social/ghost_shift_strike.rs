@@ -61,11 +61,14 @@ pub fn evaluate_ghost_shifts(
             // Determine security pressure from the profile
             let security_pressure = profile_opt.map_or(0.0, |p| p.drift);
 
-            let should_strike = unrest.level > config.unrest_threshold && security_pressure > config.security_drift_threshold;
+            let should_strike = unrest.level > config.unrest_threshold
+                && security_pressure > config.security_drift_threshold;
 
             if should_strike {
                 if ghost_state_opt.is_none() {
-                    commands.entity(entity).insert(GhostShiftState { active: true });
+                    commands
+                        .entity(entity)
+                        .insert(GhostShiftState { active: true });
                     events.send(GhostShiftStartedEvent { entity });
                 }
             } else if ghost_state_opt.is_some() {

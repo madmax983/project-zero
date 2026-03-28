@@ -1,6 +1,6 @@
-use bevy::prelude::*;
 use crate::layer1::pop::Pop;
 use crate::layer1::social::morale::Morale;
+use bevy::prelude::*;
 use rand::Rng;
 
 #[derive(Resource)]
@@ -81,9 +81,15 @@ pub fn process_scrap_code_revelations(
         if let Ok(machine_transform) = machine_query.get(event.entity) {
             for (pop_entity, pop_transform) in pop_query.iter() {
                 #[allow(clippy::collapsible_if)]
-                if machine_transform.translation.distance(pop_transform.translation) < config.revelation_distance {
+                if machine_transform
+                    .translation
+                    .distance(pop_transform.translation)
+                    < config.revelation_distance
+                {
                     if rng.gen::<f32>() < config.cult_formation_chance {
-                        commands.entity(pop_entity).insert(ScrapCodeCultist::default());
+                        commands
+                            .entity(pop_entity)
+                            .insert(ScrapCodeCultist::default());
                     }
                 }
             }
@@ -126,7 +132,11 @@ pub fn cultist_morale_aura(
             for (machine, machine_transform) in broken_machines.iter() {
                 #[allow(clippy::collapsible_if)]
                 if machine.state == MachineState::Broken {
-                    if pop_transform.translation.distance(machine_transform.translation) < config.aura_distance {
+                    if pop_transform
+                        .translation
+                        .distance(machine_transform.translation)
+                        < config.aura_distance
+                    {
                         near_broken = true;
                         break;
                     }
@@ -163,26 +173,42 @@ mod tests {
         app.insert_resource(config);
 
         app.add_event::<MachineBreakdownEvent>()
-           .add_event::<CultFormationEvent>()
-           .add_systems(Update, process_scrap_code_revelations);
+            .add_event::<CultFormationEvent>()
+            .add_systems(Update, process_scrap_code_revelations);
 
-        let machine = app.world_mut().spawn((
-            Machine { maintenance_debt: 100.0, state: MachineState::Broken },
-            Transform::from_xyz(0.0, 0.0, 0.0),
-        )).id();
+        let machine = app
+            .world_mut()
+            .spawn((
+                Machine {
+                    maintenance_debt: 100.0,
+                    state: MachineState::Broken,
+                },
+                Transform::from_xyz(0.0, 0.0, 0.0),
+            ))
+            .id();
 
-        let pop = app.world_mut().spawn((
-            Pop,
-            Morale { value: 40.0, ..Default::default() },
-            Transform::from_xyz(1.0, 0.0, 0.0),
-        )).id();
+        let pop = app
+            .world_mut()
+            .spawn((
+                Pop,
+                Morale {
+                    value: 40.0,
+                    ..Default::default()
+                },
+                Transform::from_xyz(1.0, 0.0, 0.0),
+            ))
+            .id();
 
         // Act
-        app.world_mut().send_event(MachineBreakdownEvent { entity: machine });
+        app.world_mut()
+            .send_event(MachineBreakdownEvent { entity: machine });
         app.update();
 
         // Assert
-        assert!(app.world().get::<ScrapCodeCultist>(pop).is_some(), "Pop near broken machine should have a chance to become a cultist");
+        assert!(
+            app.world().get::<ScrapCodeCultist>(pop).is_some(),
+            "Pop near broken machine should have a chance to become a cultist"
+        );
     }
 
     #[test]
@@ -191,13 +217,20 @@ mod tests {
         let mut app = App::new();
         app.add_systems(Update, execute_cult_sabotage);
 
-        let machine = app.world_mut().spawn((
-            Machine { maintenance_debt: 0.0, state: MachineState::Working },
-        )).id();
+        let machine = app
+            .world_mut()
+            .spawn((Machine {
+                maintenance_debt: 0.0,
+                state: MachineState::Working,
+            },))
+            .id();
 
         app.world_mut().spawn((
             Pop,
-            Morale { value: 80.0, ..Default::default() },
+            Morale {
+                value: 80.0,
+                ..Default::default()
+            },
             ScrapCodeCultist::default(),
             CurrentAction::Sabotage(machine),
         ));
@@ -207,7 +240,10 @@ mod tests {
 
         // Assert
         let machine_data = app.world().get::<Machine>(machine).unwrap();
-        assert!(machine_data.maintenance_debt > 0.0, "Cultist should increase maintenance debt to break the machine");
+        assert!(
+            machine_data.maintenance_debt > 0.0,
+            "Cultist should increase maintenance debt to break the machine"
+        );
     }
 
     #[test]
@@ -217,22 +253,37 @@ mod tests {
         app.add_systems(Update, cultist_morale_aura);
 
         app.world_mut().spawn((
-            Machine { maintenance_debt: 100.0, state: MachineState::Broken },
+            Machine {
+                maintenance_debt: 100.0,
+                state: MachineState::Broken,
+            },
             Transform::from_xyz(0.0, 0.0, 0.0),
         ));
 
-        let cultist = app.world_mut().spawn((
-            Pop,
-            Morale { value: 50.0, ..Default::default() },
-            ScrapCodeCultist::default(),
-            Transform::from_xyz(1.0, 0.0, 0.0),
-        )).id();
+        let cultist = app
+            .world_mut()
+            .spawn((
+                Pop,
+                Morale {
+                    value: 50.0,
+                    ..Default::default()
+                },
+                ScrapCodeCultist::default(),
+                Transform::from_xyz(1.0, 0.0, 0.0),
+            ))
+            .id();
 
-        let normal_pop = app.world_mut().spawn((
-            Pop,
-            Morale { value: 50.0, ..Default::default() },
-            Transform::from_xyz(1.0, 0.0, 0.0),
-        )).id();
+        let normal_pop = app
+            .world_mut()
+            .spawn((
+                Pop,
+                Morale {
+                    value: 50.0,
+                    ..Default::default()
+                },
+                Transform::from_xyz(1.0, 0.0, 0.0),
+            ))
+            .id();
 
         // Act
         app.update();
@@ -241,8 +292,14 @@ mod tests {
         let cultist_morale = app.world().get::<Morale>(cultist).unwrap().value;
         let normal_morale = app.world().get::<Morale>(normal_pop).unwrap().value;
 
-        assert!(cultist_morale > 50.0, "Cultist should gain morale from nearby broken machine");
-        assert_eq!(normal_morale, 50.0, "Normal pop should not gain morale from broken machine");
+        assert!(
+            cultist_morale > 50.0,
+            "Cultist should gain morale from nearby broken machine"
+        );
+        assert_eq!(
+            normal_morale, 50.0,
+            "Normal pop should not gain morale from broken machine"
+        );
     }
 
     #[test]
@@ -253,12 +310,20 @@ mod tests {
 
         // No machines nearby
 
-        let cultist = app.world_mut().spawn((
-            Pop,
-            Morale { value: 55.0, ..Default::default() },
-            ScrapCodeCultist { current_morale_bonus: 5.0 },
-            Transform::from_xyz(100.0, 0.0, 0.0),
-        )).id();
+        let cultist = app
+            .world_mut()
+            .spawn((
+                Pop,
+                Morale {
+                    value: 55.0,
+                    ..Default::default()
+                },
+                ScrapCodeCultist {
+                    current_morale_bonus: 5.0,
+                },
+                Transform::from_xyz(100.0, 0.0, 0.0),
+            ))
+            .id();
 
         // Act
         app.update();
@@ -267,7 +332,10 @@ mod tests {
         let cultist_morale = app.world().get::<Morale>(cultist).unwrap().value;
         let cultist_comp = app.world().get::<ScrapCodeCultist>(cultist).unwrap();
 
-        assert_eq!(cultist_morale, 54.0, "Cultist should lose morale when away from broken machines");
+        assert_eq!(
+            cultist_morale, 54.0,
+            "Cultist should lose morale when away from broken machines"
+        );
         assert_eq!(cultist_comp.current_morale_bonus, 4.0);
     }
 
@@ -279,16 +347,25 @@ mod tests {
 
         // A working machine nearby
         app.world_mut().spawn((
-            Machine { maintenance_debt: 0.0, state: MachineState::Working },
+            Machine {
+                maintenance_debt: 0.0,
+                state: MachineState::Working,
+            },
             Transform::from_xyz(0.0, 0.0, 0.0),
         ));
 
-        let cultist = app.world_mut().spawn((
-            Pop,
-            Morale { value: 50.0, ..Default::default() },
-            ScrapCodeCultist::default(),
-            Transform::from_xyz(1.0, 0.0, 0.0),
-        )).id();
+        let cultist = app
+            .world_mut()
+            .spawn((
+                Pop,
+                Morale {
+                    value: 50.0,
+                    ..Default::default()
+                },
+                ScrapCodeCultist::default(),
+                Transform::from_xyz(1.0, 0.0, 0.0),
+            ))
+            .id();
 
         // Act
         app.update();
@@ -297,7 +374,10 @@ mod tests {
         let cultist_morale = app.world().get::<Morale>(cultist).unwrap().value;
         let cultist_comp = app.world().get::<ScrapCodeCultist>(cultist).unwrap();
 
-        assert_eq!(cultist_morale, 50.0, "Cultist should NOT gain morale from working machines");
+        assert_eq!(
+            cultist_morale, 50.0,
+            "Cultist should NOT gain morale from working machines"
+        );
         assert_eq!(cultist_comp.current_morale_bonus, 0.0);
     }
 }
