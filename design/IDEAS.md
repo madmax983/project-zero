@@ -12297,7 +12297,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Artisan's Obsession
+## The Artisan's Obsession [SPECCED]
 
 **Layer:** 1
 
@@ -12311,7 +12311,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Scapegoat Protocol
+## The Scapegoat Protocol [SPECCED]
 
 **Layer:** 1
 
@@ -12325,7 +12325,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Kinetic Ransom
+## The Kinetic Ransom [SPECCED]
 
 **Layer:** 2 -> 1
 
@@ -12339,7 +12339,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Potemkin Village
+## The Potemkin Village [SPECCED]
 
 **Layer:** 1
 
