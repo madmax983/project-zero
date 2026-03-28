@@ -2,11 +2,11 @@
 
 use crate::layer1::balance::TICKS_PER_YEAR;
 use crate::layer1::chronicle::{AddChronicleEvent, EventImportance};
-use crate::layer1::geodetic::GolemFormedEvent;
 use crate::layer1::cybernetics::MissingLimb;
 use crate::layer1::edicts::{ColonyPolicies, Policy};
 use crate::layer1::factions::Factions;
 use crate::layer1::fire::Fire;
+use crate::layer1::geodetic::GolemFormedEvent;
 use crate::layer1::hazards::AmputationEvent;
 use crate::layer1::health::Health;
 use crate::layer1::inspector::{Inspector, Reported};
@@ -635,7 +635,9 @@ pub fn drone_spawner_bridge_system(
         if power.active {
             // Spawn drone
             commands.spawn((
-                crate::layer1::drone::Drone { state: crate::layer1::drone::DroneState::Idle },
+                crate::layer1::drone::Drone {
+                    state: crate::layer1::drone::DroneState::Idle,
+                },
                 crate::layer1::drone::ConnectedTo(hub_entity),
                 *pos,
                 crate::layer1::utility_ai::PopAction::default(),

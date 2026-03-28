@@ -48,3 +48,6 @@ pub mod paranoia_network;
 
 #[cfg(feature = "nova")]
 pub mod dream_economy;
+
+#[cfg(feature = "nova")]
+pub mod phantom_workforce;

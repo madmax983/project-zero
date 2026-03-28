@@ -151,8 +151,15 @@ pub fn check_drone_connection(
 pub fn process_feral_drones(
     mut commands: Commands,
     mut feral_drones: Query<(&mut FeralDrone, &GridPosition)>,
-    resources: Query<(Entity, &crate::layer1::resources::ResourceItem, &GridPosition)>,
-    mut pops: Query<(&mut crate::layer1::health::Health, &GridPosition), With<crate::layer1::pop::Pop>>,
+    resources: Query<(
+        Entity,
+        &crate::layer1::resources::ResourceItem,
+        &GridPosition,
+    )>,
+    mut pops: Query<
+        (&mut crate::layer1::health::Health, &GridPosition),
+        With<crate::layer1::pop::Pop>,
+    >,
 ) {
     for (mut feral_drone, drone_pos) in feral_drones.iter_mut() {
         // Hoard nearby resources (within 2 tiles distance)

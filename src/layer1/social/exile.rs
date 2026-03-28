@@ -3,9 +3,9 @@
 //! Handles the Banishment of Pops to the outside, removing them from the colony
 //! and potentially returning them later.
 
-use bevy_ecs::prelude::*;
-use crate::shared::time::SimulationTime;
 use crate::layer1::pop::Pop;
+use crate::shared::time::SimulationTime;
+use bevy_ecs::prelude::*;
 
 #[derive(Component)]
 pub struct Crime {
@@ -44,10 +44,7 @@ pub fn process_banishments(
     }
 }
 
-pub fn evaluate_exile_returns(
-    mut query: Query<&mut ExiledPop>,
-    sim_time: Res<SimulationTime>,
-) {
+pub fn evaluate_exile_returns(mut query: Query<&mut ExiledPop>, sim_time: Res<SimulationTime>) {
     for mut exiled_pop in query.iter_mut() {
         if !exiled_pop.has_returned {
             let elapsed = sim_time.tick.saturating_sub(exiled_pop.exiled_at_tick);
@@ -77,11 +74,10 @@ mod tests {
     fn test_banish_pop_removes_from_layer1() {
         let mut app = setup_app();
 
-        let pop_entity = app.world_mut().spawn((
-            Pop,
-            Crime { severity: 5 },
-            BanishmentState::Pending,
-        )).id();
+        let pop_entity = app
+            .world_mut()
+            .spawn((Pop, Crime { severity: 5 }, BanishmentState::Pending))
+            .id();
 
         app.update();
 
@@ -95,14 +91,15 @@ mod tests {
     fn test_exiled_pop_returns_after_years() {
         let mut app = setup_app();
 
-        let pop_entity = app.world_mut().spawn((
-            ExiledPop {
+        let pop_entity = app
+            .world_mut()
+            .spawn((ExiledPop {
                 exiled_at_tick: 0,
                 base_crime_severity: 5,
                 has_returned: false,
                 return_role: None,
-            },
-        )).id();
+            },))
+            .id();
 
         // Fast forward simulation time by several years (ticks)
         let mut sim_time = app.world_mut().resource_mut::<SimulationTime>();

@@ -72,3 +72,8 @@
 **Concept:** A `BiomassSublimator` building component that sublimates `Corpse` entities into `food` and `metal` resources, but inflicts a massive `accumulated_stress` penalty on nearby living `Pop`s to simulate the psychological horror of industrialized death.
 **Fate:** Merged
 **Lesson:** Turning a localized tragedy (corpses) into a powerful resource generator while introducing a terrifying secondary social crisis creates excellent mechanical and narrative tension.
+
+## [The Phantom Workforce]
+**Concept:** A system that occasionally spawns `PhantomWorker` entities when Pops die at work. These phantoms continue producing resources at their assigned building indefinitely but radiate intense stress to any living Pops nearby.
+**Fate:** Merged
+**Lesson:** Tying an emergent death mechanic directly into the economic production loop forces the player to make uncomfortable choices about relying on haunted infrastructure versus maintaining the mental health of their living colony.
