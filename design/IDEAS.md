@@ -2316,7 +2316,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Procedural Dialects
+## Procedural Dialects [SPECCED]
 
 **Layer:** 1
 
@@ -2330,7 +2330,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Corporate Sponsorship
+## Corporate Sponsorship [SPECCED]
 
 **Layer:** 3 -> 1
 
@@ -2386,7 +2386,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Hedonic Treadmill
+## The Hedonic Treadmill [SPECCED]
 
 **Layer:** 1
 
@@ -2414,7 +2414,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Long Night
+## The Long Night [SPECCED]
 
 **Layer:** 2 -> 1
 
