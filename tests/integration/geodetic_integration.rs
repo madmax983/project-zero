@@ -27,7 +27,6 @@ fn test_geodetic_sentience_chronicle_integration() {
         app.world_mut().spawn((
             Item {
                 item_type: ItemType::LivingStone,
-                ..Default::default()
             },
             LivingStone { last_move_tick: 0 },
             GridPosition { x: 5, y: 5 },
