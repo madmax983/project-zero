@@ -34,3 +34,4 @@ pub mod trade;
 pub mod visibility;
 pub use cartographers_curse::*;
 pub mod sensor_ambiguity;
+pub mod moon_hermits;

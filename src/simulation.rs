@@ -186,6 +186,8 @@ pub fn build_simulation_schedule() -> Schedule {
         crate::layer2::integration::process_grief_tourist_arrival_system
             .after(crate::layer2::tourism::process_disaster_tourism_system),
         crate::layer2::events_new::reverse_quarantine::process_refugee_decisions_system,
+        crate::layer2::moon_hermits::process_hermit_desertions,
+        crate::layer2::moon_hermits::hermit_theft_system,
     ));
 
     schedule.add_systems((
@@ -341,6 +343,10 @@ pub fn run_simulation_tick(world: &mut World) {
 
     if !world.contains_resource::<Events<crate::layer2::tourism::disaster_tourism::GriefTouristArrivalEvent>>() {
         world.init_resource::<Events<crate::layer2::tourism::disaster_tourism::GriefTouristArrivalEvent>>();
+    }
+
+    if !world.contains_resource::<Events<crate::layer2::moon_hermits::PopDesertedEvent>>() {
+        world.init_resource::<Events<crate::layer2::moon_hermits::PopDesertedEvent>>();
     }
 
     if !world.contains_resource::<Events<crate::layer1::disasters::DisasterEvent>>() {

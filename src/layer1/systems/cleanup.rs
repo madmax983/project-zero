@@ -57,6 +57,7 @@ pub fn register(schedule: &mut Schedule) {
         (
             update_event_buffer::<crate::layer1::shipbreaking::SpawnCrashedShipEvent>,
             update_event_buffer::<crate::layer1::shipbreaking::MineEvent>,
+            update_event_buffer::<crate::layer2::moon_hermits::PopDesertedEvent>,
         )
             .in_set(Layer1SystemSet::EventCleanup),
     );
