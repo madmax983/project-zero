@@ -470,13 +470,6 @@ fn print_status(world: &mut World) {
         0.0
     };
 
-    println!(
-        "{}",
-        format!("================== COLONY STATUS (Tick {tick}) ==================")
-            .green()
-            .bold()
-    );
-
     let mut table = Table::new();
     table
         .load_preset(UTF8_FULL)
@@ -633,18 +626,12 @@ fn print_status(world: &mut World) {
         Cell::new(designation_count.to_string()),
     ]);
 
-    println!("{table}");
+    print_dashboard_table(&format!("COLONY STATUS (Tick {})", tick), table);
 }
 
 fn print_tech(world: &mut World) {
     let tech_state = world.resource::<TechState>();
 
-    println!(
-        "{}",
-        "================== TECHNOLOGY STATUS =================="
-            .green()
-            .bold()
-    );
     println!(
         "💾 Total Capacity: {:.1} TB | Used: {:.1} TB",
         tech_state.total_capacity, tech_state.used_capacity
@@ -699,17 +686,10 @@ fn print_tech(world: &mut World) {
         ]);
     }
 
-    println!("{table}");
+    print_dashboard_table("TECHNOLOGY STATUS", table);
 }
 
 fn print_pops(world: &mut World) {
-    println!(
-        "{}",
-        "================== POPULATION DETAILS =================="
-            .green()
-            .bold()
-    );
-
     let mut table = Table::new();
     table
         .load_preset(UTF8_FULL)
@@ -770,7 +750,7 @@ fn print_pops(world: &mut World) {
         ]);
     }
 
-    println!("{table}");
+    print_dashboard_table("POPULATION DETAILS", table);
 }
 
 fn print_map(world: &mut World, center_x: i32, center_y: i32) {
@@ -1026,8 +1006,6 @@ fn designate_at(world: &mut World, designation_type: DesignationType, x: i32, y:
 }
 
 fn print_designations(world: &mut World) {
-    println!("{}", "=== Active Designations ===".green().bold());
-
     let mut count = 0;
     let mut table = Table::new();
     table
@@ -1059,9 +1037,12 @@ fn print_designations(world: &mut World) {
     }
 
     if count == 0 {
-        println!("  {}", "(No active designations)".dark_grey().italic());
+        print_dashboard_panel(
+            "Active Designations",
+            &format!("{}", "  (No active designations)  ".dark_grey().italic()),
+        );
     } else {
-        println!("{table}");
+        print_dashboard_table("Active Designations", table);
     }
 }
 
@@ -1441,8 +1422,6 @@ fn get_tile_info(world: &mut World, x: i32, y: i32) {
 }
 
 fn print_great_works(world: &mut World) {
-    println!("{}", "=== Great Works ===".green().bold());
-
     let mut count = 0;
     let mut table = Table::new();
     table
@@ -1511,21 +1490,17 @@ fn print_great_works(world: &mut World) {
     }
 
     if count == 0 {
-        println!("  {}", "(No great works found)".dark_grey().italic());
+        print_dashboard_panel(
+            "Great Works",
+            &format!("{}", "  (No great works found)  ".dark_grey().italic()),
+        );
     } else {
-        println!("{table}");
+        print_dashboard_table("Great Works", table);
     }
 }
 
 /// List all buildings with positions
 fn print_buildings(world: &mut World) {
-    println!(
-        "{}",
-        "================== BUILDINGS =================="
-            .green()
-            .bold()
-    );
-
     let mut table = Table::new();
     table
         .load_preset(UTF8_FULL)
@@ -1576,9 +1551,12 @@ fn print_buildings(world: &mut World) {
     }
 
     if count == 0 {
-        println!("  {}", "(No buildings found)".dark_grey().italic());
+        print_dashboard_panel(
+            "BUILDINGS",
+            &format!("{}", "  (No buildings found)  ".dark_grey().italic()),
+        );
     } else {
-        println!("{table}");
+        print_dashboard_table("BUILDINGS", table);
     }
 }
 
@@ -1589,16 +1567,14 @@ fn print_bio(world: &mut World, target_id: u32) {
     for (entity, name, bio, dream) in query.iter(world) {
         if entity.index() == target_id {
             found = true;
-            println!(
-                "{}",
-                format!("=== Biography for {} ({:?}) ===", name.0, entity)
-                    .green()
-                    .bold()
-            );
+            let bio_title = format!("Biography for {} ({:?})", name.0, entity);
 
             if let Some(bio) = bio {
                 if bio.events.is_empty() {
-                    println!("  {}", "(No events recorded)".dark_grey().italic());
+                    print_dashboard_panel(
+                        &bio_title,
+                        &format!("{}", "  (No events recorded)  ".dark_grey().italic()),
+                    );
                 } else {
                     let mut table = Table::new();
                     table
@@ -1615,10 +1591,13 @@ fn print_bio(world: &mut World, target_id: u32) {
                             Cell::new(&event.text),
                         ]);
                     }
-                    println!("{table}");
+                    print_dashboard_table(&bio_title, table);
                 }
             } else {
-                println!("  (No biography component)");
+                print_dashboard_panel(
+                    &bio_title,
+                    &format!("{}", "  (No biography component)  ".dark_grey().italic()),
+                );
             }
 
             if let Some(dream) = dream {
@@ -1637,15 +1616,11 @@ fn print_bio(world: &mut World, target_id: u32) {
 fn print_chronicle(world: &mut World) {
     let chronicle = world.resource::<Chronicle>();
 
-    println!(
-        "{}",
-        "================== COLONY CHRONICLE =================="
-            .green()
-            .bold()
-    );
-
     if chronicle.events.is_empty() {
-        println!("  {}", "(No history recorded)".dark_grey().italic());
+        print_dashboard_panel(
+            "COLONY CHRONICLE",
+            &format!("{}", "  (No history recorded)  ".dark_grey().italic()),
+        );
         return;
     }
 
@@ -1680,7 +1655,7 @@ fn print_chronicle(world: &mut World) {
         ]);
     }
 
-    println!("{table}");
+    print_dashboard_table("COLONY CHRONICLE", table);
 }
 
 fn print_log(world: &mut World) {
@@ -1746,8 +1721,6 @@ const fn to_comfy_color(c: ratatui::style::Color) -> comfy_table::Color {
 }
 
 fn print_help() {
-    println!("{}", "=== Commands ===".green().bold());
-
     let mut table = Table::new();
     table
         .load_preset(UTF8_FULL)
@@ -1829,7 +1802,7 @@ fn print_help() {
         }
     }
 
-    println!("{table}");
+    print_dashboard_table("Commands", table);
 }
 
 #[cfg(test)]
