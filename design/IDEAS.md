@@ -12296,3 +12296,59 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you immediately spend expensive resources to fast-track repairs to prevent the cult from forming, or do you risk letting it sit broken, potentially losing your entire engineering workforce to a techno-heresy?
 
 ---
+
+## The Artisan's Obsession
+
+**Layer:** 1
+
+**Fantasy:** A master crafter loses themselves in their work, creating a masterpiece but neglecting their own survival.
+
+**Mechanic:** Highly skilled Pops (Crafters/Smiths) have a rare chance to enter a "Fugue State" when crafting. They lock themselves in their workshop, refusing food, sleep, or social interaction until the item is finished. The resulting item has unparalleled stats and beauty.
+
+**Emergence:** Your colony's only doctor enters a Fugue State to forge a legendary scalpel while an outbreak ravages the hospital. The scalpel is perfect, but half the patients die because the doctor wouldn't open the door.
+
+**Tension:** Do you break down the door to save the starving Pop (and lose the legendary item), or let them risk their life for a masterpiece?
+
+---
+
+## The Scapegoat Protocol
+
+**Layer:** 1
+
+**Fantasy:** The darkest aspect of crowd psychology. When things go wrong, the mob demands blood, not solutions.
+
+**Mechanic:** During periods of severe, prolonged Unrest (starvation, repeated raids), the colony's Pops will spontaneously generate a "Scapegoat" narrative, blaming a specific, innocent Pop (often a minority faction or someone with a strange trait) for the crisis. If the player publicly exiles or executes the Scapegoat, the Unrest instantly vanishes for a time, regardless of the actual underlying problem.
+
+**Emergence:** The colony is starving because you forgot to build farms. The mob blames the only alien scientist in the colony. You execute the scientist to stop the riots, buying time to build farms, but permanently losing your best researcher and acquiring a "Blood on our Hands" historical memory.
+
+**Tension:** The cowardly, horrifyingly effective quick-fix of sacrificing an innocent vs doing the hard work of solving the actual crisis while dealing with the riots.
+
+---
+
+## The Kinetic Ransom
+
+**Layer:** 2 -> 1
+
+**Fantasy:** An enemy doesn't need to invade if they can just hold a rock over your head.
+
+**Mechanic:** A hostile Layer 2 fleet captures a massive asteroid and tows it into a precarious, decaying orbit directly above your Layer 1 colony. They don't fire a shot; they simply demand a massive tribute. If you don't pay (or if you attack them and fail), they cut the tow lines and the asteroid falls.
+
+**Emergence:** You refuse the ransom and launch a desperate strike fleet to destroy the asteroid in orbit. You succeed, but the shattered asteroid becomes a deadly shower of meteorites that bombards your colony for a week, forcing everyone underground and destroying all surface agriculture.
+
+**Tension:** Pay a crippling tribute to an extortionist vs attempting a high-risk military interception that could still result in partial devastation.
+
+---
+
+## The Potemkin Village
+
+**Layer:** 1
+
+**Fantasy:** Faking prosperity to appease the inspector, at the cost of your own people's sanity.
+
+**Mechanic:** Players can use a "Facade" tool to cheaply disguise low-quality buildings or squalor as high-quality "Luxury" tiles. These facades fool external NPCs (like Layer 2 Inspectors or Tourists) and satisfy their requirements. However, the Pops who actually live and work behind the facades suffer a massive "Cognitive Dissonance" stress penalty from living a lie.
+
+**Emergence:** An Imperial Tax Auditor arrives. You quickly throw up Facades over the slums so the auditor sees a thriving utopia and grants you a massive subsidy. The auditor leaves happy, but the slum residents are so insulted and stressed by the fake luxury panels hiding their misery that they immediately riot and burn the subsidized funds.
+
+**Tension:** Easy, cheap diplomatic manipulation vs the internal psychological damage of institutionalized hypocrisy.
+
+---
