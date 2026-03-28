@@ -12352,3 +12352,59 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Easy, cheap diplomatic manipulation vs the internal psychological damage of institutionalized hypocrisy.
 
 ---
+
+## The Harvest Underworld
+
+**Layer:** 1
+
+**Fantasy:** Desperate times push pops to macabre underground economies to survive starvation or fulfill impossible quotas.
+
+**Mechanic:** When a colony faces severe, prolonged food or organic material shortages, pops with low morale and high survival traits may secretly start a "Harvest Ring." They begin processing their own dead (or "disappeared" pops) into generic, highly efficient "Biomass" that bypasses normal food chains but carries a heavy stress penalty for those consuming it without knowing its source.
+
+**Emergence:** Your colony is starving, yet somehow, the central hab sector remains relatively stable. You ignore the rising 'missing persons' rate until a bio-inspector arrives, scans the food vats, and triggers a massive, colony-wide psychological break when the truth is revealed.
+
+**Tension:** Do you investigate the "miracle" food source saving your colony, knowing the truth might shatter morale entirely, or do you turn a blind eye to survive the winter?
+
+---
+
+## The Kessler Cage
+
+**Layer:** 2
+
+**Fantasy:** The slow, inevitable consequence of reckless orbital expansion trapping you on your own planet.
+
+**Mechanic:** Every destroyed ship, abandoned orbital station, and failed missile launch in Layer 2 adds to a "Debris Cloud" above the planet. As the cloud density increases, there is a rising percentage chance that any ship entering or leaving the atmosphere is critically damaged or destroyed, which in turn adds *more* debris to the cloud.
+
+**Emergence:** You win a massive, desperate defensive war in orbit above your capital. The enemy fleet is annihilated. But the resulting debris field is so dense that your planet is now completely cut off from the rest of your empire, slowly starving because trade ships can no longer safely land.
+
+**Tension:** Do you risk a critical shipment through the dangerous debris field, knowing a failure will make the field even worse for future attempts? Do you spend massive resources building specialized cleaner ships instead of warships?
+
+---
+
+## The Engram Economy
+
+**Layer:** Cross-layer (1 & 3)
+
+**Fantasy:** Selling the memories and skills of your greatest minds to keep the empire solvent, at the cost of their humanity.
+
+**Mechanic:** Players can extract "Engrams" (digitized skills and experiences) from high-level, specialized Layer 1 pops to sell on the Galactic Market (Layer 3) for massive wealth. However, the extracted pop loses those skills permanently, suffers a severe "Hollowed" morale penalty, and their relationships are reset.
+
+**Emergence:** You are facing bankruptcy and a fleet invasion. To afford mercenary ships, you extract and sell the engrams of your founding scientists and master engineers. You survive the invasion, but your capital world is now populated by highly-stressed, amnesiac husks who no longer remember how to run the very machines they built.
+
+**Tension:** The immediate, massive financial gain of selling a lifetime of experience vs. the permanent crippling of your most valuable human resources.
+
+---
+
+## The Void-Born Schism
+
+**Layer:** 2
+
+**Fantasy:** A cultural divergence between the people who live on planets and the people who live in the dark between them.
+
+**Mechanic:** Pops that spend significant time living on orbital stations or traveling in fleets (Layer 2) begin to develop "Void-Born" traits. Over time, they start to view "Dirt-Dwellers" (planet-bound pops) with contempt. If the disparity in living standards between stations and planets grows too large, a schism occurs, disrupting trade routes and potentially leading to stations declaring independence.
+
+**Emergence:** You build a massive, luxurious orbital ring to process resources from a harsh, heavily-polluted mining world below. The station workers, comfortable in zero-G, eventually decide they no longer need the planet. They embargo the surface, leaving the miners to freeze in the dark while the station claims all the wealth.
+
+**Tension:** How do you balance the quality of life across vastly different environments, knowing that perfect isolation breeds resentment and eventual rebellion?
+
+---
