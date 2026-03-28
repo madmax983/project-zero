@@ -15,9 +15,6 @@ pub struct OrbitalDebris {
     pub amount: f32,
 }
 
-/// Configuration for debris mechanics.
-pub struct DebrisConfig; // Placeholder for now
-
 /// System that increases orbital debris based on events.
 pub fn debris_accumulation_system(
     mut events_launch: EventReader<LaunchEvent>,

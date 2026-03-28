@@ -37,3 +37,8 @@
 **Bloat:** Enterprise FizzBuzz Abstraction: `AdministrationLevel`, `HighSpeechEnabled` resources and `WorkDelay` component in `src/layer1/bureaucracy.rs`.
 **Cut:** Deleted the entire `src/layer1/bureaucracy.rs` module and removed its integration in `src/layer1/execution/general_work.rs` and `src/layer1/systems/execution.rs`.
 **Saved:** 148 lines of code, speculative mechanics, and unnecessary indirection.
+
+## [Reduction]
+**Bloat:** Enterprise FizzBuzz Speculative Generality: `DebrisConfig` struct in `src/layer2/debris.rs` marked as `// Placeholder for now`.
+**Cut:** Deleted the `DebrisConfig` empty placeholder struct.
+**Saved:** 2 lines of unused setup and speculative overhead.
