@@ -22,6 +22,8 @@ pub fn register(schedule: &mut Schedule) {
                 process_refining_system,
                 crate::layer1::tech::rhythm::update_rhythm_system.after(process_refining_system),
                 crate::layer1::social::cadet::process_allowance_system,
+                crate::layer2::designation::evaluate_designation_bonuses,
+                crate::layer2::designation::handle_designation_changes,
                 crate::layer1::gene_bank::process_cloning_system,
                 crate::layer1::genetics::process_gene_splicing_system,
                 crate::layer1::clone_vat::process_clone_vats_system,
