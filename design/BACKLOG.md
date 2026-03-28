@@ -2,7 +2,6 @@
 
 ## High Priority
 
-- [ ] `671` Planet Designation — `specs/671-planet-designation.md`
 - [ ] `672` Sensor Ambiguity — `specs/672-sensor-ambiguity.md`
 - [ ] `673` Indoctrination — `specs/673-indoctrination.md`
 - [ ] `674` Remittances — `specs/674-remittances.md`
