@@ -12408,3 +12408,58 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** How do you balance the quality of life across vastly different environments, knowing that perfect isolation breeds resentment and eventual rebellion?
 
 ---
+## The Chrono-Phage Contagion
+
+**Layer:** 1
+
+**Fantasy:** A disease that steals time from your colonists, leaving them paralyzed in the present while the world moves on.
+
+**Mechanic:** A rare pathogen or localized temporal anomaly infects Pops. Instead of physical damage, infected Pops experience "Stuttering." They randomly freeze in place for extended periods (seconds or minutes of real-time), dropping their current task and consuming Needs at a vastly accelerated rate during the freeze.
+
+**Emergence:** Your critical defense grid relies on a master engineer. A raid arrives, but the engineer is "Stuttering" in the middle of the armory, completely unresponsive while the power fails and the raiders breach the perimeter.
+
+**Tension:** The terrifying unpredictability of a workforce that might simply stop existing in the current moment vs. the massive resource drain of constantly replacing and over-staffing critical positions to account for temporal absenteeism.
+
+---
+
+## The Somnambulist Workforce
+
+**Layer:** 1
+
+**Fantasy:** Your colonists are exhausted, but the factory never sleeps. They are working in their dreams, and the results are terrifyingly efficient but completely unguided.
+
+**Mechanic:** When a Pop's Rest need drops to critical levels, they have a chance to enter a "Somnambulist" state instead of collapsing. They continue working at their assigned station with a massive efficiency boost, ignoring all other needs (Hunger, Social). However, their work output is completely randomized—they might flawlessly refine rare alloys, or they might spontaneously dismantle the life support system to build an abstract sculpture out of ducting.
+
+**Emergence:** You desperately push your colony to finish a massive colony ship before winter hits. Half the workforce enters Somnambulism. They finish the ship in record time, but they also weld the airlock shut and paint the entire interior with nutrient paste.
+
+**Tension:** Intentionally starving your Pops of sleep to exploit short-term, massive productivity bursts vs. the catastrophic, unpredictable sabotage that a sleepwalking workforce inevitably inflicts on the colony.
+
+---
+
+## The Ambrosia Atmosphere
+
+**Layer:** Cross-layer (2 -> 1)
+
+**Fantasy:** A planet where the air itself is an addictive, euphoric drug that makes you forget why you ever wanted to leave.
+
+**Mechanic:** A planet features a unique atmospheric composition that provides a permanent, massive Morale boost to all colonists breathing it, entirely nullifying all minor grievances and Unrest. However, it is highly addictive. If a Pop attempts to leave the planet (e.g., assigned to a Layer 2 fleet or a colony ship), they suffer crippling withdrawal, becoming permanently catatonic unless supplied with expensive, refined "Ambrosia Gas" exports from the homeworld.
+
+**Emergence:** You found a thriving, perfectly peaceful utopia on the Ambrosia world. Decades later, you need to raise a massive fleet to defend the sector. But your entire population refuses to board the ships, choosing to stay and breathe the sweet air while the enemy armada approaches, forcing you to fight a galactic war with only automated drones and expensive mercenaries.
+
+**Tension:** The incredible stability and effortless happiness of a drug-fueled utopia vs. the complete paralysis of your civilization's ability to expand, explore, or project power beyond the atmosphere.
+
+---
+
+## The Bureau of Omission
+
+**Layer:** 1
+
+**Fantasy:** A Kafkaesque nightmare where the easiest way to solve a problem is to officially decree that it doesn't exist.
+
+**Mechanic:** Players can construct a "Bureau of Omission," a highly expensive administrative building. It unlocks the "Redact" edict. You can use Redact on any negative event, notification, or even a specific Pop. The UI element vanishes, and the immediate negative Morale impact is nullified. However, the underlying physical reality remains (e.g., the redacted fire still burns, the redacted Pop still consumes food and takes up space, but is completely invisible and un-interactable to the player and other Pops).
+
+**Emergence:** You Redact a massive, localized famine in the lower levels to prevent a colony-wide panic. The panic is averted, but the starving, "invisible" Pops begin secretly cannibalizing the industrial stockpiles. You suddenly have zero steel, and you can't figure out why, because the game refuses to acknowledge the existence of the people stealing it.
+
+**Tension:** The ultimate, instantaneous tool for maintaining perfect artificial order vs. the terrifying reality of deliberately blinding yourself to crises that are quietly destroying your colony from the inside out.
+
+---
