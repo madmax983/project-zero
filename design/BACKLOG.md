@@ -417,3 +417,7 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `701` Primitive Civilizations — `specs/701-primitive-civilizations.md`
 - [ ] `702` Fleet Mutiny — `specs/702-fleet-mutiny.md`
 - [ ] `703` Xeno-Gastronomy — `specs/703-xeno-gastronomy.md`
+- [ ] `704` The Artisan's Obsession — `specs/704-artisans-obsession.md`
+- [ ] `705` The Scapegoat Protocol — `specs/705-scapegoat-protocol.md`
+- [ ] `706` The Kinetic Ransom — `specs/706-kinetic-ransom.md`
+- [ ] `707` The Potemkin Village — `specs/707-potemkin-village.md`
