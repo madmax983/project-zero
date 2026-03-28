@@ -2302,7 +2302,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Bioluminescent Flora
+## Bioluminescent Flora [SPECCED]
 
 **Layer:** 1
 
@@ -2344,7 +2344,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Desire Paths
+## Desire Paths [SPECCED]
 
 **Layer:** 1
 
@@ -2358,7 +2358,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Omens & Taboos
+## Omens & Taboos [SPECCED]
 
 **Layer:** 1
 
@@ -2372,7 +2372,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Jury-Rigging
+## Jury-Rigging [SPECCED]
 
 **Layer:** 1
 

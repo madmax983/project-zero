@@ -408,3 +408,8 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `688` Moon Hermits — `specs/688-moon-hermits.md`
 - [ ] `689` The Empathy Tax — `specs/689-the-empathy-tax.md`
 - [ ] `690` Salvage-Cult Engineers — `specs/690-salvage-cult-engineers.md`
+
+- [ ] `696` Bioluminescent Flora — `specs/696-bioluminescent-flora.md`
+- [ ] `697` Desire Paths — `specs/697-desire-paths.md`
+- [ ] `698` Omens & Taboos — `specs/698-omens-taboos.md`
+- [ ] `699` Jury-Rigging — `specs/699-jury-rigging.md`
