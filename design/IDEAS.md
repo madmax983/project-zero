@@ -12353,7 +12353,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Harvest Underworld
+## The Harvest Underworld [SPECCED]
 
 **Layer:** 1
 
@@ -12367,7 +12367,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Kessler Cage
+## The Kessler Cage [SPECCED]
 
 **Layer:** 2
 
@@ -12381,7 +12381,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Engram Economy
+## The Engram Economy [SPECCED]
 
 **Layer:** Cross-layer (1 & 3)
 
@@ -12395,7 +12395,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Void-Born Schism
+## The Void-Born Schism [SPECCED]
 
 **Layer:** 2
 

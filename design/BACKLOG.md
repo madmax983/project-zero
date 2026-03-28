@@ -421,3 +421,7 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `705` The Scapegoat Protocol — `specs/705-scapegoat-protocol.md`
 - [ ] `706` The Kinetic Ransom — `specs/706-kinetic-ransom.md`
 - [ ] `707` The Potemkin Village — `specs/707-potemkin-village.md`
+- [ ] `708` The Harvest Underworld — `specs/708-harvest-underworld.md`
+- [ ] `709` The Kessler Cage — `specs/709-kessler-cage.md`
+- [ ] `710` The Engram Economy — `specs/710-engram-economy.md`
+- [ ] `711` The Void-Born Schism — `specs/711-void-born-schism.md`
