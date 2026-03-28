@@ -22,6 +22,13 @@ pub struct StoneGolem {
     pub max_hp: i32,
 }
 
+/// Event emitted when a Stone Golem is formed.
+#[derive(Event, Debug, Clone)]
+pub struct GolemFormedEvent {
+    /// The location where the Golem was formed.
+    pub position: GridPosition,
+}
+
 /// The number of Living Stones required to form a Golem.
 pub const GOLEM_THRESHOLD: usize = 5;
 /// The interval (in ticks) between Living Stone movements.
@@ -173,6 +180,7 @@ pub fn form_golem_system(
     query: Query<(Entity, &GridPosition, &Item), With<LivingStone>>,
     mut inventories: Query<(Entity, &GridPosition, &mut Inventory)>,
     mut log: Option<ResMut<crate::shared::log::MessageLog>>,
+    mut golem_events: EventWriter<GolemFormedEvent>,
 ) {
     // Map of Position -> Count of Stones
     // We need to track entities to despawn them if they are on ground
@@ -270,6 +278,10 @@ pub fn form_golem_system(
                     lifetime: 0, // Persistent
                 },
             ));
+
+            golem_events.send(GolemFormedEvent {
+                position: GridPosition { x, y },
+            });
 
             if let Some(log) = log.as_mut() {
                 log.add("The stones vibrate and fuse... A Golem is born!");

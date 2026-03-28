@@ -99,6 +99,7 @@ mod tests {
     fn test_golem_formation() {
         let mut world = World::new();
         let mut schedule = Schedule::default();
+        world.init_resource::<bevy_ecs::event::Events<crate::layer1::geodetic::GolemFormedEvent>>();
         schedule.add_systems(form_golem_system);
 
         // Spawn 5 Living Stones at the same location (e.g., in a stockpile)
@@ -128,6 +129,7 @@ mod tests {
     fn test_living_stone_in_inventory_merge() {
         let mut world = World::new();
         let mut schedule = Schedule::default();
+        world.init_resource::<bevy_ecs::event::Events<crate::layer1::geodetic::GolemFormedEvent>>();
         schedule.add_systems(form_golem_system);
 
         // Spawn a Stockpile building at (5, 5) with Inventory containing 5 Living Stones

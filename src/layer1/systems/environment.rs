@@ -44,6 +44,8 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::geodetic::update_living_stone_system,
             crate::layer1::geodetic::form_golem_system
                 .after(crate::layer1::geodetic::update_living_stone_system),
+            crate::layer1::integration::golem_formed_chronicle_bridge_system
+                .after(crate::layer1::geodetic::form_golem_system),
         )
             .in_set(Layer1SystemSet::Environment),
     );

@@ -2,6 +2,7 @@
 
 use crate::layer1::balance::TICKS_PER_YEAR;
 use crate::layer1::chronicle::{AddChronicleEvent, EventImportance};
+use crate::layer1::geodetic::GolemFormedEvent;
 use crate::layer1::cybernetics::MissingLimb;
 use crate::layer1::edicts::{ColonyPolicies, Policy};
 use crate::layer1::factions::Factions;
@@ -1117,6 +1118,21 @@ pub fn diplomatic_reflection_kill_bridge(
     for _ in events_in.read() {
         events_out.send(crate::layer3::diplomacy_reflection::EntityKilledEvent {
             colony_entity: Entity::PLACEHOLDER,
+        });
+    }
+}
+
+// --- INT-183: Geodetic Sentience -> Chronicle ---
+
+/// Bridges `GolemFormedEvent` to `AddChronicleEvent` (Chronicle).
+pub fn golem_formed_chronicle_bridge_system(
+    mut events: EventReader<GolemFormedEvent>,
+    mut chronicle_events: EventWriter<AddChronicleEvent>,
+) {
+    for _event in events.read() {
+        chronicle_events.send(AddChronicleEvent {
+            text: "The Stones Awake: A Golem has been formed from Living Stones.".to_string(),
+            importance: EventImportance::Major,
         });
     }
 }

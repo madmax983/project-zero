@@ -525,3 +525,11 @@
 - **Glue added:** `logistics_strained_chronicle_bridge` and `defense_weakened_chronicle_bridge` in `src/layer2/integration.rs`.
 - **Schedule:** Registered in `src/simulation.rs` after the primary cascade failure systems.
 - **Tests:** `tests/integration/cascade_failure_chronicle.rs`
+### INT-183: Geodetic Sentience -> Chronicle
+- **Date:** 2026-03-28
+- **Systems connected:** `form_golem_system` (Geodetic Sentience) -> `golem_formed_chronicle_bridge_system` (Integration) -> `AddChronicleEvent` (Chronicle)
+- **Glue added:**
+    - `GolemFormedEvent` in `src/layer1/geodetic.rs`.
+    - `golem_formed_chronicle_bridge_system` in `src/layer1/integration.rs` translates `GolemFormedEvent` to `AddChronicleEvent`.
+- **Schedule:** Chained in `Layer1SystemSet::Environment` after `form_golem_system`.
+- **Tests:** `tests/integration/geodetic_integration.rs` (1 test verified)
