@@ -294,6 +294,7 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     world.init_resource::<Events<crate::layer1::memory_core::ImplantMemoryCoreEvent>>();
     world.init_resource::<Events<crate::layer1::memory_core::HarvestMemoryCoreEvent>>();
     world.init_resource::<Events<crate::layer1::tech::machine_awakening::BotGlitchEvent>>();
+    world.init_resource::<Events<crate::layer1::social::ghost_shift_strike::GhostShiftStartedEvent>>();
 
     world.init_resource::<bevy::prelude::Time>();
     world.init_resource::<crate::layer1::tech::machine_awakening::GlobalSentience>();

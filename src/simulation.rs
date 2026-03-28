@@ -78,8 +78,12 @@ pub fn build_simulation_schedule() -> Schedule {
         crate::layer2::station::build_station_system
             .after(crate::layer2::fleet::fleet_order_system),
         crate::layer2::fleet::fleet_movement_system.after(crate::layer2::fleet::fleet_order_system),
-        crate::layer2::sensor_ambiguity::resolve_sensors_system
+        crate::layer2::integration::assign_sensors_to_player_fleets_system
             .after(crate::layer2::fleet::fleet_movement_system),
+        crate::layer2::sensor_ambiguity::resolve_sensors_system
+            .after(crate::layer2::integration::assign_sensors_to_player_fleets_system),
+        crate::layer2::integration::ensure_player_fleets_identified_system
+            .after(crate::layer2::sensor_ambiguity::resolve_sensors_system),
         crate::layer1::integration::fleet_unload_system
             .after(crate::layer2::fleet::fleet_movement_system),
         crate::layer2::fleet::ensure_fleet_health_system,
@@ -94,6 +98,9 @@ pub fn build_simulation_schedule() -> Schedule {
             .after(crate::layer2::debris::debris_accumulation_system),
         crate::layer2::debris::debris_decay_system
             .after(crate::layer2::debris::debris_attrition_system),
+    ));
+
+    schedule.add_systems((
         // Thermal Bloom Systems
         crate::layer2::thermal::update_thermal_bloom_system.after(Layer1SystemSet::Economy),
         crate::layer2::thermal::detection_risk_system

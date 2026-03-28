@@ -533,3 +533,13 @@
     - `golem_formed_chronicle_bridge_system` in `src/layer1/integration.rs` translates `GolemFormedEvent` to `AddChronicleEvent`.
 - **Schedule:** Chained in `Layer1SystemSet::Environment` after `form_golem_system`.
 - **Tests:** `tests/integration/geodetic_integration.rs` (1 test verified)
+
+### INT-672: Sensor Ambiguity
+- **Date:** 2026-03-30
+- **Systems connected:** `FleetFaction` -> `Sensors` & `SensorContact`
+- **Glue added:**
+    - `assign_sensors_to_player_fleets_system` to automatically give player fleets sensors.
+    - `ensure_player_fleets_identified_system` to prevent player fleets from becoming `UnidentifiedContact` to the player.
+    - Added UI obscuration logic for `UnidentifiedContact` in `render_system_view`.
+- **Schedule:** Registered after `resolve_sensors_system`.
+- **Tests:** `tests/integration/sensor_ambiguity_bridge.rs`
