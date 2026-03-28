@@ -172,7 +172,24 @@ pub struct DesignationMode {
 /// assert!(!can_designate(&world, 1, 1, DesignationType::Mine));
 /// ```
 #[must_use]
-#[allow(clippy::cast_sign_loss)]
+fn has_component_at<T: Component>(world: &World, x: i32, y: i32) -> bool {
+    world.iter_entities().any(|e| {
+        let Some(pos) = e.get::<GridPosition>() else {
+            return false;
+        };
+        pos.x == x && pos.y == y && e.contains::<T>()
+    })
+}
+
+fn has_designation_at(world: &World, x: i32, y: i32) -> bool {
+    world.iter_entities().any(|e| {
+        let Some(pos) = e.get::<GridPosition>() else {
+            return false;
+        };
+        pos.x == x && pos.y == y && e.contains::<Designation>()
+    })
+}
+
 pub fn can_designate(world: &World, x: i32, y: i32, designation_type: DesignationType) -> bool {
     // Check bounds (basic check, more detailed check in terrain/occupied logic)
     if x < 0 || y < 0 {
@@ -191,17 +208,7 @@ pub fn can_designate(world: &World, x: i32, y: i32, designation_type: Designatio
     // Note: This linear query might be slow for many designations,
     // but acceptable for the MVP scope (designations < 1000).
     // Future optimization: Spatial index for designations.
-    let existing = world
-        .iter_entities()
-        .filter_map(|e| {
-            if let Some(pos) = e.get::<GridPosition>() {
-                if e.get::<Designation>().is_some() {
-                    return Some(pos);
-                }
-            }
-            None
-        })
-        .any(|pos| pos.x == x && pos.y == y);
+    let existing = has_designation_at(world, x, y);
 
     if existing {
         return false;
@@ -214,28 +221,14 @@ pub fn can_designate(world: &World, x: i32, y: i32, designation_type: Designatio
             if terrain.get(x as usize, y as usize) == Some(TerrainType::Rock) {
                 return true;
             }
-            // Check for ImpactSite (Scrap)
-            world.iter_entities().any(|e| {
-                if let Some(pos) = e.get::<GridPosition>() {
-                    return pos.x == x && pos.y == y && e.contains::<ImpactSite>();
-                }
-                false
-            })
+            has_component_at::<ImpactSite>(world, x, y)
         }
         DesignationType::Demolish => {
             let occupied = world.resource::<OccupiedTiles>();
             if !occupied.0.contains(&(x, y)) {
                 return false;
             }
-            // Cannot demolish Vacuum Welded buildings
-            !world.iter_entities().any(|e| {
-                if let Some(pos) = e.get::<GridPosition>() {
-                    return pos.x == x
-                        && pos.y == y
-                        && e.contains::<crate::layer1::building::VacuumWelded>();
-                }
-                false
-            })
+            !has_component_at::<crate::layer1::building::VacuumWelded>(world, x, y)
         }
         DesignationType::Chop => {
             let terrain = world.resource::<TerrainGrid>();
@@ -247,43 +240,22 @@ pub fn can_designate(world: &World, x: i32, y: i32, designation_type: Designatio
             if !occupied.0.contains(&(x, y)) {
                 return false;
             }
-            // Cannot repair Vacuum Welded buildings
-            !world.iter_entities().any(|e| {
-                if let Some(pos) = e.get::<GridPosition>() {
-                    return pos.x == x
-                        && pos.y == y
-                        && e.contains::<crate::layer1::building::VacuumWelded>();
-                }
-                false
-            })
+            !has_component_at::<crate::layer1::building::VacuumWelded>(world, x, y)
         }
         DesignationType::SetZone(_) => true,
         DesignationType::Tame => {
             // Must target a wild animal (Fauna without Tame component)
-            // This is O(N) over all entities if we don't have spatial index, but okay for MVP
-            world.iter_entities().any(|entity_ref| {
-                if let Some(pos) = entity_ref.get::<GridPosition>() {
-                    if pos.x == x
-                        && pos.y == y
-                        && entity_ref.contains::<crate::layer1::fauna::Fauna>()
-                    {
-                        return !entity_ref.contains::<crate::layer1::husbandry::Tame>();
-                    }
-                }
-                false
+            world.iter_entities().any(|e| {
+                let Some(pos) = e.get::<GridPosition>() else {
+                    return false;
+                };
+                pos.x == x
+                    && pos.y == y
+                    && e.contains::<crate::layer1::fauna::Fauna>()
+                    && !e.contains::<crate::layer1::husbandry::Tame>()
             })
         }
-        DesignationType::ClearFlora => {
-            // Must target a tile with Flora
-            world.iter_entities().any(|entity_ref| {
-                if let Some(pos) = entity_ref.get::<GridPosition>() {
-                    return pos.x == x
-                        && pos.y == y
-                        && entity_ref.contains::<crate::layer1::flora::Flora>();
-                }
-                false
-            })
-        }
+        DesignationType::ClearFlora => has_component_at::<crate::layer1::flora::Flora>(world, x, y),
         DesignationType::JuryRig => {
             let occupied = world.resource::<OccupiedTiles>();
             // Only occupied tiles can be jury-rigged (assumes building)
@@ -291,16 +263,16 @@ pub fn can_designate(world: &World, x: i32, y: i32, designation_type: Designatio
         }
         DesignationType::Cannibalize => {
             // Must target the Lander
-            world.iter_entities().any(|entity_ref| {
-                if let Some(pos) = entity_ref.get::<GridPosition>() {
-                    if pos.x == x && pos.y == y {
-                        if let Some(b) = entity_ref.get::<crate::layer1::building::Building>() {
-                            return b.building_type
-                                == crate::layer1::building::BuildingType::Lander;
-                        }
-                    }
-                }
-                false
+            world.iter_entities().any(|e| {
+                let Some(pos) = e.get::<GridPosition>() else {
+                    return false;
+                };
+                pos.x == x
+                    && pos.y == y
+                    && e.get::<crate::layer1::building::Building>()
+                        .is_some_and(|b| {
+                            b.building_type == crate::layer1::building::BuildingType::Lander
+                        })
             })
         }
         DesignationType::Destroy => {
@@ -309,23 +281,8 @@ pub fn can_designate(world: &World, x: i32, y: i32, designation_type: Designatio
             occupied.0.contains(&(x, y))
         }
         DesignationType::CollectSample => {
-            // Must have Flora or Fauna
-            let has_flora = world.iter_entities().any(|e| {
-                if let Some(pos) = e.get::<GridPosition>() {
-                    return pos.x == x && pos.y == y && e.contains::<crate::layer1::flora::Flora>();
-                }
-                false
-            });
-            if has_flora {
-                return true;
-            }
-            // Check fauna
-            world.iter_entities().any(|e| {
-                if let Some(pos) = e.get::<GridPosition>() {
-                    return pos.x == x && pos.y == y && e.contains::<crate::layer1::fauna::Fauna>();
-                }
-                false
-            })
+            has_component_at::<crate::layer1::flora::Flora>(world, x, y)
+                || has_component_at::<crate::layer1::fauna::Fauna>(world, x, y)
         }
     }
 }
