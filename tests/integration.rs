@@ -216,3 +216,6 @@ mod nanite_fabrication_chronicle;
 
 #[path = "integration/cascade_failure_chronicle.rs"]
 mod cascade_failure_chronicle;
+
+#[path = "integration/geodetic_integration.rs"]
+mod geodetic_integration;

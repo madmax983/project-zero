@@ -341,6 +341,9 @@ pub fn run_simulation_tick(world: &mut World) {
     if !world.contains_resource::<Events<crate::layer2::trade::biomass_tariff::TradeDeal>>() {
         world.init_resource::<Events<crate::layer2::trade::biomass_tariff::TradeDeal>>();
     }
+    if !world.contains_resource::<Events<crate::layer1::geodetic::GolemFormedEvent>>() {
+        world.init_resource::<Events<crate::layer1::geodetic::GolemFormedEvent>>();
+    }
 
     if !world.contains_resource::<crate::layer3::market::GalacticMarket>() {
         world.init_resource::<crate::layer3::market::GalacticMarket>();
@@ -506,6 +509,7 @@ mod tests {
         world.init_resource::<Events<crate::layer1::disasters::DisasterEvent>>();
         world.init_resource::<Events<crate::layer2::tourism::disaster_tourism::GriefTouristArrivalEvent>>();
         world.init_resource::<Events<crate::layer2::trade::biomass_tariff::TradeDeal>>();
+        world.init_resource::<Events<crate::layer1::geodetic::GolemFormedEvent>>();
         world.init_resource::<crate::layer3::council::GalacticCouncil>();
         world.init_resource::<crate::layer3::market::GalacticMarket>();
         world.init_resource::<Events<crate::layer2::events_new::reverse_quarantine::RefugeeFleetEvent>>();
