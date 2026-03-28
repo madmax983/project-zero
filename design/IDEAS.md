@@ -12463,3 +12463,58 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** The ultimate, instantaneous tool for maintaining perfect artificial order vs. the terrifying reality of deliberately blinding yourself to crises that are quietly destroying your colony from the inside out.
 
 ---
+## The Orphanage of Stars
+
+**Layer:** Cross-layer (3 -> 1)
+
+**Fantasy:** You take in the lost children of the galaxy, raising them to be fiercely loyal citizens, but their pasts eventually catch up.
+
+**Mechanic:** Post-war refugee ships sometimes drop off "Orphans" (children with no parents). They consume resources without working until adulthood. Once adults, they gain a massive "Indebted Loyalty" buff, making them incredibly stable workers. However, their original factions might later demand their return, offering huge bounties or threatening war.
+
+**Emergence:** You raise a generation of loyal orphans who become the backbone of your military. Then the alien empire that originally orphaned them demands them back as "citizens," and your best soldiers refuse to leave, forcing a diplomatic crisis you have to fight.
+
+**Tension:** The long-term investment in highly loyal, productive pops vs the short-term drain on food and the ticking time-bomb of interstellar custody battles.
+
+---
+
+## The Xenofloral Architect
+
+**Layer:** 1
+
+**Fantasy:** Building your base out of living, growing plants instead of dead metal, but having to prune your own walls before they crush you.
+
+**Mechanic:** A new building material, "Iron-Vine," can be planted instead of constructed. It slowly grows to fill designated "Wall" tiles for free over time, self-repairing when damaged. However, if not regularly "pruned" by a Farmer pop, it continues growing into adjacent empty tiles, crushing machinery and suffocating pops trapped inside.
+
+**Emergence:** You plant Iron-Vine walls to save on metal during an early expansion. A plague hits your farmers, and nobody prunes the walls. The vines overgrow the hospital, crushing the beds and trapping the sick inside an impenetrable cage of living iron.
+
+**Tension:** The massive resource savings and self-repair of biological architecture vs the constant, terrifying upkeep of stopping your own buildings from eating your colony.
+
+---
+
+## The Kinetic Sleds
+
+**Layer:** 1
+
+**Fantasy:** Reinventing logistics by ignoring friction, but realizing that momentum without brakes is a deadly weapon.
+
+**Mechanic:** A mid-game logistics tech that replaces hauling by hand with "Hover Sleds". Sleds move items almost instantly across straight flat terrain, but they cannot stop or turn quickly. If a sled path is blocked by a sudden obstacle (like a pop walking across the route, or a dropped item), the sled crashes, dealing massive kinetic damage to whatever it hits and scattering the cargo.
+
+**Emergence:** You set up a perfectly efficient hover sled route from the mine to the smelter. The shift changes, and a hundred tired miners walk directly across the sled path. A sled carrying three tons of iron ore plows into the crowd at highway speeds, causing a mass casualty event just to deliver the ore on time.
+
+**Tension:** The incredible throughput of frictionless hauling vs the absolute necessity of strict, segregated traffic planning to avoid turning your logistics network into a bowling alley.
+
+---
+
+## The Diplomatic Saboteur
+
+**Layer:** 3
+
+**Fantasy:** You can't beat them in a fleet battle, so you send an ambassador who is so incredibly annoying that their empire collapses from stress.
+
+**Mechanic:** When assigning an Envoy to a Layer 3 faction, you can intentionally send a pop with highly negative social traits (e.g., "Obnoxious," "Arrogant," "Zealot"). Instead of building positive relations, this "Saboteur" slowly increases the Unrest and lowers the Authority of the target empire's capital by constantly insulting their leaders and throwing offensive parties, eventually sparking a civil war.
+
+**Emergence:** You send your most hated, annoying colonist to the hostile empire next door. They are so infuriating that the enemy emperor has a mental breakdown and the empire fractures into three weaker states. But now, all three states blame you, and you have to fight a three-front war.
+
+**Tension:** The cheap, bloodless destabilization of a rival empire vs the extreme diplomatic risk and the horrifying realization that you are weaponizing terrible personalities.
+
+---
