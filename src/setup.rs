@@ -246,6 +246,7 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     world.init_resource::<Events<crate::layer1::hologram::HologramFailureEvent>>();
     world.init_resource::<Events<crate::layer2::events::DetectionEvent>>();
     world.init_resource::<Events<crate::layer1::logistics::orbital_drop::OrbitalDropEvent>>();
+    world.init_resource::<Events<crate::layer1::drone::DroneDisconnectedEvent>>();
     world.init_resource::<Events<crate::layer1::overview_effect::ObserveEvent>>();
     world.init_resource::<Events<crate::layer1::tech::neural_leech::NeuralHubDeathEvent>>();
 

@@ -610,7 +610,7 @@ pub fn amputation_handler_system(
 pub fn drone_spawner_bridge_system(
     mut commands: Commands,
     hubs: Query<
-        (&GridPosition, &crate::layer1::energy::PowerConsumer),
+        (Entity, &GridPosition, &crate::layer1::energy::PowerConsumer),
         With<crate::layer1::drone::DroneHub>,
     >,
     drones: Query<&crate::layer1::drone::Drone>,
@@ -630,11 +630,12 @@ pub fn drone_spawner_bridge_system(
     }
 
     // Spawn 1 drone per tick max
-    for (pos, power) in hubs.iter() {
+    for (hub_entity, pos, power) in hubs.iter() {
         if power.active {
             // Spawn drone
             commands.spawn((
-                crate::layer1::drone::Drone,
+                crate::layer1::drone::Drone { state: crate::layer1::drone::DroneState::Idle },
+                crate::layer1::drone::ConnectedTo(hub_entity),
                 *pos,
                 crate::layer1::utility_ai::PopAction::default(),
                 crate::layer1::drone::DroneBattery {

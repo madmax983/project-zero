@@ -147,6 +147,8 @@ pub fn register(schedule: &mut Schedule) {
         (
             crate::layer1::execution::vandalize_execution_system.after(arrival_handler_system),
             crate::layer1::pop_doppelganger::sabotage_system.after(work_execution_system),
+            crate::layer1::drone::check_drone_connection.after(arrival_handler_system),
+            crate::layer1::drone::process_feral_drones.after(crate::layer1::drone::check_drone_connection),
             crate::layer1::drone::process_charge_system.after(arrival_handler_system),
             update_social_class_system.after(arrival_handler_system),
             class_friction_system.after(update_social_class_system),
@@ -168,6 +170,11 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::tech::hypno_learning::hypno_sleep_system.after(arrival_handler_system),
             crate::layer1::tech::hypno_learning::wake_up_hypno_system
                 .after(process_start_plan_system),
+        )
+            .in_set(Layer1SystemSet::Execution),
+    );
+    schedule.add_systems(
+        (
             crate::layer1::tech::hypno_learning::update_mental_fog_system.after(movement_system),
         )
             .in_set(Layer1SystemSet::Execution),
