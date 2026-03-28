@@ -16,7 +16,9 @@ mod tests {
         let mut world = World::new();
         let drone = world
             .spawn((
-                Drone { state: DroneState::Idle },
+                Drone {
+                    state: DroneState::Idle,
+                },
                 DroneBattery {
                     current: 100.0,
                     max: 100.0,
@@ -37,7 +39,9 @@ mod tests {
         // Setup Drone with low battery
         let drone = world
             .spawn((
-                Drone { state: DroneState::Idle },
+                Drone {
+                    state: DroneState::Idle,
+                },
                 DroneBattery {
                     current: 10.0,
                     max: 100.0,
@@ -77,7 +81,9 @@ mod tests {
         let mut world = World::new();
         let drone = world
             .spawn((
-                Drone { state: DroneState::Idle },
+                Drone {
+                    state: DroneState::Idle,
+                },
                 DroneBattery {
                     current: 100.0,
                     max: 100.0,
@@ -101,7 +107,9 @@ mod tests {
         let mut world = World::new();
         let drone = world
             .spawn((
-                Drone { state: DroneState::Idle },
+                Drone {
+                    state: DroneState::Idle,
+                },
                 DroneBattery {
                     current: 10.0,
                     max: 100.0,
@@ -141,7 +149,9 @@ mod tests {
         let mut world = World::new();
         let drone = world
             .spawn((
-                Drone { state: DroneState::Idle },
+                Drone {
+                    state: DroneState::Idle,
+                },
                 DroneBattery {
                     current: 100.0,
                     max: 100.0,
@@ -159,7 +169,9 @@ mod tests {
     }
 
     fn setup_app() -> bevy_app::App {
-        use crate::layer1::drone::{DroneDisconnectedEvent, check_drone_connection, process_feral_drones};
+        use crate::layer1::drone::{
+            check_drone_connection, process_feral_drones, DroneDisconnectedEvent,
+        };
         use bevy_app::Update;
         let mut app = bevy_app::App::new();
         app.add_event::<DroneDisconnectedEvent>();
@@ -169,49 +181,78 @@ mod tests {
 
     #[test]
     fn test_drone_becomes_feral_on_disconnect() {
-        use crate::layer1::drone::{ConnectedTo, FeralDrone, DroneState};
         use crate::layer1::building::{Building, BuildingType};
-        use crate::layer1::energy::PowerConsumer;
         use crate::layer1::drone::Drone;
+        use crate::layer1::drone::{ConnectedTo, DroneState, FeralDrone};
+        use crate::layer1::energy::PowerConsumer;
 
         let mut app = setup_app();
-        let command_center = app.world_mut().spawn((
-            Building { building_type: BuildingType::CommandCenter },
-            PowerConsumer { demand: 10.0, active: true },
-        )).id();
+        let command_center = app
+            .world_mut()
+            .spawn((
+                Building {
+                    building_type: BuildingType::CommandCenter,
+                },
+                PowerConsumer {
+                    demand: 10.0,
+                    active: true,
+                },
+            ))
+            .id();
 
-        let drone = app.world_mut().spawn((
-            Drone { state: DroneState::Hauling },
-            ConnectedTo(command_center),
-        )).id();
+        let drone = app
+            .world_mut()
+            .spawn((
+                Drone {
+                    state: DroneState::Hauling,
+                },
+                ConnectedTo(command_center),
+            ))
+            .id();
 
         // Act - Simulate power loss leading to disconnect
-        app.world_mut().entity_mut(command_center).remove::<PowerConsumer>();
+        app.world_mut()
+            .entity_mut(command_center)
+            .remove::<PowerConsumer>();
         app.update(); // check_drone_connection runs
 
         // Assert
         assert!(app.world().entity(drone).contains::<FeralDrone>());
-        assert_eq!(app.world().get::<Drone>(drone).unwrap().state, DroneState::Feral);
+        assert_eq!(
+            app.world().get::<Drone>(drone).unwrap().state,
+            DroneState::Feral
+        );
     }
 
     #[test]
     fn test_feral_drone_hoards_resources() {
-        use crate::layer1::drone::{FeralDrone, DroneState, Drone};
-        use crate::layer1::resources::{ResourceItem, ResourceType};
+        use crate::layer1::drone::{Drone, DroneState, FeralDrone};
         use crate::layer1::map::GridPosition;
+        use crate::layer1::resources::{ResourceItem, ResourceType};
 
         // Arrange
         let mut app = setup_app();
-        let drone = app.world_mut().spawn((
-            Drone { state: DroneState::Feral },
-            FeralDrone { hoard: vec![] },
-            GridPosition { x: 0, y: 0 },
-        )).id();
+        let drone = app
+            .world_mut()
+            .spawn((
+                Drone {
+                    state: DroneState::Feral,
+                },
+                FeralDrone { hoard: vec![] },
+                GridPosition { x: 0, y: 0 },
+            ))
+            .id();
 
-        let resource = app.world_mut().spawn((
-            ResourceItem { resource_type: ResourceType::Metal, amount: 10.0 },
-            GridPosition { x: 1, y: 0 },
-        )).id();
+        let resource = app
+            .world_mut()
+            .spawn((
+                ResourceItem {
+                    resource_type: ResourceType::Metal,
+                    amount: 10.0,
+                },
+                GridPosition { x: 1, y: 0 },
+            ))
+            .id();
 
         // Act
         app.update(); // process_feral_drones runs
@@ -224,30 +265,44 @@ mod tests {
 
     #[test]
     fn test_feral_drone_attacks_nearby_pops() {
-        use crate::layer1::drone::{FeralDrone, DroneState, Drone};
-        use crate::layer1::pop::Pop;
+        use crate::layer1::drone::{Drone, DroneState, FeralDrone};
         use crate::layer1::health::Health;
         use crate::layer1::map::GridPosition;
+        use crate::layer1::pop::Pop;
 
         // Arrange
         let mut app = setup_app();
-        let _drone = app.world_mut().spawn((
-            Drone { state: DroneState::Feral },
-            FeralDrone::default(),
-            GridPosition { x: 0, y: 0 },
-        )).id();
+        let _drone = app
+            .world_mut()
+            .spawn((
+                Drone {
+                    state: DroneState::Feral,
+                },
+                FeralDrone::default(),
+                GridPosition { x: 0, y: 0 },
+            ))
+            .id();
 
-        let pop = app.world_mut().spawn((
-            Pop,
-            Health { current: 100.0, max: 100.0 },
-            GridPosition { x: 1, y: 0 },
-        )).id();
+        let pop = app
+            .world_mut()
+            .spawn((
+                Pop,
+                Health {
+                    current: 100.0,
+                    max: 100.0,
+                },
+                GridPosition { x: 1, y: 0 },
+            ))
+            .id();
 
         // Act
         app.update();
 
         // Assert
         let health = app.world().get::<Health>(pop).unwrap();
-        assert!(health.current < health.max, "Pop should have taken damage from Feral Drone");
+        assert!(
+            health.current < health.max,
+            "Pop should have taken damage from Feral Drone"
+        );
     }
 }

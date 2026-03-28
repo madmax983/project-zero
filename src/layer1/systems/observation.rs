@@ -196,6 +196,18 @@ pub fn register(schedule: &mut Schedule) {
             .in_set(Layer1SystemSet::Observation),
     );
 
+    #[cfg(feature = "nova")]
+    schedule.add_systems(
+        (
+            crate::experimental::phantom_workforce::spawn_phantom_workers_system,
+            crate::experimental::phantom_workforce::phantom_production_system
+                .after(crate::experimental::phantom_workforce::spawn_phantom_workers_system),
+            crate::experimental::phantom_workforce::phantom_terror_system
+                .after(crate::experimental::phantom_workforce::spawn_phantom_workers_system),
+        )
+            .in_set(Layer1SystemSet::Observation),
+    );
+
     schedule.add_systems(
         (
             #[cfg(feature = "nova")]
