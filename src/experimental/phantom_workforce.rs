@@ -93,6 +93,7 @@ pub fn phantom_production_system(
 const PHANTOM_TERROR_RADIUS: i32 = 3;
 const PHANTOM_TERROR_STRESS: f32 = 5.0; // High stress penalty per tick near a phantom
 
+#[allow(clippy::type_complexity)]
 pub fn phantom_terror_system(
     phantoms: Query<&GridPosition, With<PhantomWorker>>,
     mut pops: Query<(&GridPosition, &mut StressTracker), (With<Pop>, Without<Dead>)>,
@@ -117,7 +118,6 @@ pub fn phantom_terror_system(
         }
     }
 }
-
 
 #[cfg(test)]
 mod tests {
