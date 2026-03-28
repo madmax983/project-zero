@@ -404,4 +404,3 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `688` Moon Hermits — `specs/688-moon-hermits.md`
 - [ ] `689` The Empathy Tax — `specs/689-the-empathy-tax.md`
 - [ ] `690` Salvage-Cult Engineers — `specs/690-salvage-cult-engineers.md`
-- [ ] `691` The Exile — `specs/691-the-exile.md`
