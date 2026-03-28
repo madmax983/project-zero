@@ -38,3 +38,8 @@ I've updated `echo_issue_report.md` with resolutions. The error text fix for `Na
 🕵️ **The Reality:** The library did not have a `prelude` module, so users were forced to learn the internal directory structure to get the basic pieces required for a headless loop or a narrative generation.
 💡 **The Fix:** Created a `scale::prelude` module that exports the most commonly used types and functions (like `SetupConfig`, `SimulationTime`, `run_simulation_tick`, `NarrativeGenerator`, and `OralTradition`). Updated the README and examples to just use `use scale::prelude::*;`.
 ✅ **Resolution:** Implemented. `src/prelude.rs` added and docs updated.
+
+## 🗣️ Echo: Headless example crashes on startup
+🤦 **The Confusion:** I copied the basic headless simulation example from the README and ran it, but it immediately crashed with a weird error: `scale::layer1::social::ghost_shift_strike::evaluate_ghost_shifts could not access system parameter ResMut<'_, Events<GhostShiftStartedEvent>>`. I just wanted to run 10 ticks!
+🕵️ **The Reality:** The internal engine forgot to initialize an event required by a background system.
+💡 **The Fix:** The developers need to register `GhostShiftStartedEvent` properly in the setup so the simulation doesn't crash for basic users.
