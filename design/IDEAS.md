@@ -12408,7 +12408,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** How do you balance the quality of life across vastly different environments, knowing that perfect isolation breeds resentment and eventual rebellion?
 
 ---
-## The Chrono-Phage Contagion
+## The Chrono-Phage Contagion [SPECCED]
 
 **Layer:** 1
 
@@ -12422,7 +12422,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Somnambulist Workforce
+## The Somnambulist Workforce [SPECCED]
 
 **Layer:** 1
 
@@ -12436,7 +12436,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Ambrosia Atmosphere
+## The Ambrosia Atmosphere [SPECCED]
 
 **Layer:** Cross-layer (2 -> 1)
 
@@ -12450,7 +12450,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Bureau of Omission
+## The Bureau of Omission [SPECCED]
 
 **Layer:** 1
 
