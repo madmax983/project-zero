@@ -413,3 +413,7 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `697` Desire Paths — `specs/697-desire-paths.md`
 - [ ] `698` Omens & Taboos — `specs/698-omens-taboos.md`
 - [ ] `699` Jury-Rigging — `specs/699-jury-rigging.md`
+- [ ] `700` Spontaneous Architecture — `specs/700-spontaneous-architecture.md`
+- [ ] `701` Primitive Civilizations — `specs/701-primitive-civilizations.md`
+- [ ] `702` Fleet Mutiny — `specs/702-fleet-mutiny.md`
+- [ ] `703` Xeno-Gastronomy — `specs/703-xeno-gastronomy.md`

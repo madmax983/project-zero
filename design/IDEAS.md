@@ -2400,7 +2400,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Spontaneous Architecture
+## Spontaneous Architecture [SPECCED]
 
 **Layer:** 1
 
@@ -2498,7 +2498,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Primitive Civilizations
+## Primitive Civilizations [SPECCED]
 
 **Layer:** 2 -> 1
 
@@ -2512,7 +2512,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Fleet Mutiny
+## Fleet Mutiny [SPECCED]
 
 **Layer:** 2
 
@@ -2526,7 +2526,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Xeno-Gastronomy
+## Xeno-Gastronomy [SPECCED]
 
 **Layer:** 1
 
