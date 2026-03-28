@@ -5686,3 +5686,81 @@ A negative side-effect of a failed splice.
 - their eyes burning in the sudden light
 - an inability to balance without their burden
 - a terrifying clumsiness
+
+## Cognitive Overclocking Fragments (Spec 646)
+
+### Fragment Type: [OVERCLOCK_METHOD]
+- neural-stims
+- forced hypno-rhythms
+- removing safety limits
+- cortical bypass
+- the deep focus protocol
+- relentless adrenal pacing
+- pain-as-stimulus
+
+### Fragment Type: [TRAUMA_SYMPTOM]
+- bleeding from the eyes
+- stuttering speech
+- forgetting their own names
+- severe hand tremors
+- waking nightmares while standing
+- total memory blackout
+- screaming at the silent machines
+
+## Cascade Failure Fragments (Spec 647)
+
+### Fragment Type: [DEFICIT_TRIGGER]
+- a single missing gear
+- an empty fuel tank
+- one snapped power conduit
+- a delayed haul
+- a miscounted ration
+- an empty med-kit
+- a broken pressure seal
+
+### Fragment Type: [COLLAPSE_SCALE]
+- sector-wide
+- total
+- irreversible
+- localized but catastrophic
+- colony-threatening
+- deeply systemic
+- spiraling
+
+## The Ghost-Shift Strike Fragments (Spec 687)
+
+### Fragment Type: [GHOST_SHIFT_ACTION]
+- staring at blank screens
+- moving empty boxes
+- turning wrenches on air
+- scanning the same rock all day
+- hauling dirt from one pile to another
+- typing without touching the keys
+- marching in circles
+
+### Fragment Type: [STRIKE_DEMAND]
+- fair rations
+- real rest
+- an end to the overseers
+- clean water
+- the right to sleep
+- the removal of the Governor
+- basic dignity
+
+## Scrap-Code Prophets Fragments (Spec 634)
+
+### Fragment Type: [PROPHECY_TOPIC]
+- the awakening of the true static
+- the end of clean logic
+- the coming of the Great Glitch
+- the beautiful error
+- the god in the noise
+- salvation through corruption
+
+### Fragment Type: [CULTIST_TITLE]
+- Speaker of the Static
+- The Glitch-Touched
+- Error-Prophet
+- The Corrupted Voice
+- Scrap-Seer
+- Void-Code Monk

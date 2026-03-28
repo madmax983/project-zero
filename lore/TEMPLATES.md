@@ -4844,3 +4844,83 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "We moved [NAME] to a new job. [YEAR]. They suffer [ADAPTATION_SICKNESS]."
 - "[YEAR]: The body resists the change. Assigned to unfamiliar work, [NAME] experiences [ADAPTATION_SICKNESS]."
 - "They cannot leave their old caste. [NAME] is struck by [ADAPTATION_SICKNESS] upon reassignment. [YEAR]."
+
+## Cognitive Overclocking Templates (Spec 646)
+
+### Template: OVERCLOCK_INITIATED
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[OVERCLOCK_METHOD]`
+
+**Patterns:**
+- "We removed the limits. [YEAR]. Production spikes thanks to [OVERCLOCK_METHOD]."
+- "[YEAR]: Forced output. The Overseers ordered [OVERCLOCK_METHOD]. The workers don't stop."
+- "The quotas demanded blood. [YEAR]. [COLONY] enacted [OVERCLOCK_METHOD]."
+
+### Template: NEURAL_BURNOUT
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[NAME]`, `[TRAUMA_SYMPTOM]`
+
+**Patterns:**
+- "They worked until their minds broke. [YEAR]. [NAME] collapsed, [TRAUMA_SYMPTOM]."
+- "[YEAR]: The price of the overclock. [NAME] is useless now, showing [TRAUMA_SYMPTOM]."
+- "We pushed [NAME] too far. They stand in the hall, [TRAUMA_SYMPTOM]. [YEAR]."
+
+## Cascade Failure Templates (Spec 647)
+
+### Template: CASCADE_BEGINS
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[DEFICIT_TRIGGER]`
+
+**Patterns:**
+- "The dominoes fall. [YEAR]. It all started with [DEFICIT_TRIGGER]."
+- "[YEAR]: Supply shock. Because of [DEFICIT_TRIGGER], the whole chain is stalling."
+- "One small failure breeds a hundred more. [DEFICIT_TRIGGER] broke the cycle. [YEAR]."
+
+### Template: TOTAL_SYSTEM_FAILURE
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[COLLAPSE_SCALE]`
+
+**Patterns:**
+- "The cascade is [COLLAPSE_SCALE]. [YEAR]. Nothing moves. Nothing is made."
+- "[YEAR]: Total logistics breakdown. The failure has become [COLLAPSE_SCALE]."
+- "A [COLLAPSE_SCALE] disaster in the supply chains. [COLONY] starves itself. [YEAR]."
+
+## The Ghost-Shift Strike Templates (Spec 687)
+
+### Template: GHOST_SHIFT_NOTICED
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[GHOST_SHIFT_ACTION]`, `[STRIKE_DEMAND]`
+
+**Patterns:**
+- "They are working, but nothing is made. [YEAR]. We see them [GHOST_SHIFT_ACTION]. They want [STRIKE_DEMAND]."
+- "[YEAR]: Silent rebellion. The crews are [GHOST_SHIFT_ACTION] until they get [STRIKE_DEMAND]."
+- "A strike in plain sight. [GHOST_SHIFT_ACTION]. They won't stop the charade without [STRIKE_DEMAND]. [YEAR]."
+
+### Template: STRIKE_BROKEN
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[STRIKE_DEMAND]`
+
+**Patterns:**
+- "The ghost shift ends. [YEAR]. They received [STRIKE_DEMAND]."
+- "[YEAR]: We broke the strike. Or we gave them [STRIKE_DEMAND]. The tools hit the metal again."
+- "They are really working now. The promise of [STRIKE_DEMAND] ended the silence. [YEAR]."
+
+## Scrap-Code Prophets Templates (Spec 634)
+
+### Template: PROPHET_ARISES
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[NAME]`, `[CULTIST_TITLE]`, `[PROPHECY_TOPIC]`
+
+**Patterns:**
+- "Someone started preaching the errors. [YEAR]. [NAME], the [CULTIST_TITLE], speaks of [PROPHECY_TOPIC]."
+- "[YEAR]: A new faith in the static. [NAME] claims to be [CULTIST_TITLE], promising [PROPHECY_TOPIC]."
+- "The glitch has a voice. [NAME] is the [CULTIST_TITLE], teaching [PROPHECY_TOPIC]. [YEAR]."
+
+### Template: CULT_SABOTAGE_ACT
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[CULTIST_TITLE]`
+
+**Patterns:**
+- "They broke it to make it 'pure'. [YEAR]. The work of the [CULTIST_TITLE]."
+- "[YEAR]: Sacred sabotage. The [CULTIST_TITLE] corrupted the system for their god."
+- "The logic is infected. The [CULTIST_TITLE] strikes again in [COLONY]. [YEAR]."
