@@ -2596,7 +2596,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Resource Purity
+## Resource Purity [SPECCED]
 
 **Layer:** 1
 
@@ -2610,7 +2610,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The "Ship of Theseus" Protocol
+## The "Ship of Theseus" Protocol [SPECCED]
 
 **Layer:** 1
 
@@ -2624,7 +2624,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Gridlock
+## The Gridlock [SPECCED]
 
 **Layer:** 1
 
@@ -2652,7 +2652,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Satellite Constellations
+## Satellite Constellations [SPECCED]
 
 **Layer:** 2
 
