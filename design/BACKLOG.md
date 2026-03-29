@@ -452,3 +452,7 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `737` The Monuments of Failure — `specs/737-monuments-of-failure.md`
 - [ ] `738` Technological Orthodoxy — `specs/738-technological-orthodoxy.md`
 - [ ] `739` Vermin Evolution — `specs/739-vermin-evolution.md`
+- [ ] `740` The Subterranean Heat Sink — `specs/740-subterranean-heat-sink.md`
+- [ ] `741` The Paradox Courier — `specs/741-paradox-courier.md`
+- [ ] `742` The Guilt-Eater Fungi — `specs/742-guilt-eater-fungi.md`
+- [ ] `743` The Gravity Loom — `specs/743-gravity-loom.md`

@@ -12518,7 +12518,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** The cheap, bloodless destabilization of a rival empire vs the extreme diplomatic risk and the horrifying realization that you are weaponizing terrible personalities.
 
 ---
-## The Subterranean Heat Sink
+## The Subterranean Heat Sink [SPECCED]
 
 **Layer:** 1
 
@@ -12532,7 +12532,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Paradox Courier
+## The Paradox Courier [SPECCED]
 
 **Layer:** Cross-layer
 
@@ -12546,7 +12546,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Guilt-Eater Fungi
+## The Guilt-Eater Fungi [SPECCED]
 
 **Layer:** 1
 
@@ -12560,7 +12560,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Gravity Loom
+## The Gravity Loom [SPECCED]
 
 **Layer:** Cross-layer
 
