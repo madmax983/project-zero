@@ -64,11 +64,12 @@ pub fn render_system_view(frame: &mut Frame, area: Rect, world: &World) {
     for entity in world.iter_entities() {
         if let Some(body) = entity.get::<OrbitalBody>() {
             // Apply sensor ambiguity visual override
-            let (render_char, render_color) = if entity.contains::<crate::layer2::sensor_ambiguity::UnidentifiedContact>() {
-                ('?', Color::DarkGray)
-            } else {
-                (body.char, body.color)
-            };
+            let (render_char, render_color) =
+                if entity.contains::<crate::layer2::sensor_ambiguity::UnidentifiedContact>() {
+                    ('?', Color::DarkGray)
+                } else {
+                    (body.char, body.color)
+                };
 
             let (x, y) = if entity.contains::<Orbit>() {
                 get_position(entity.id())
