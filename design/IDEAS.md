@@ -10918,7 +10918,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Gravimetric Tides
+## The Gravimetric Tides [SPECCED]
 
 **Layer:** 2 -> 1
 
@@ -10932,7 +10932,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Orphaned Megastructure
+## The Orphaned Megastructure [SPECCED]
 
 **Layer:** 3 -> 2 -> 1
 
@@ -10960,7 +10960,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Propaganda Broadcast Hijack
+## The Propaganda Broadcast Hijack [SPECCED]
 
 **Layer:** 3 -> 1
 
@@ -11054,7 +11054,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Empathic Plague
+## The Empathic Plague [SPECCED]
 
 **Layer:** Cross-layer (1 -> 2)
 

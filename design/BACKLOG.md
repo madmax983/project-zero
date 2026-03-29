@@ -437,3 +437,7 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `721` Maintenance Debt — `specs/721-maintenance-debt.md`
 - [ ] `722` Gravity Slingshots — `specs/722-gravity-slingshots.md`
 - [ ] `723` The Derelict Lottery — `specs/723-derelict-lottery.md`
+- [ ] `724` The Gravimetric Tides — `specs/724-gravimetric-tides.md`
+- [ ] `725` The Orphaned Megastructure — `specs/725-orphaned-megastructure.md`
+- [ ] `726` The Propaganda Broadcast Hijack — `specs/726-propaganda-broadcast-hijack.md`
+- [ ] `727` The Empathic Plague — `specs/727-empathic-plague.md`
