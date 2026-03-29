@@ -2540,7 +2540,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Atmospheric Harvesting
+## Atmospheric Harvesting [SPECCED]
 
 **Layer:** 2
 
@@ -2554,7 +2554,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Maintenance Debt
+## Maintenance Debt [SPECCED]
 
 **Layer:** 1
 
@@ -2568,7 +2568,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Gravity Slingshots
+## Gravity Slingshots [SPECCED]
 
 **Layer:** 2
 
@@ -2582,7 +2582,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Derelict Lottery
+## The Derelict Lottery [SPECCED]
 
 **Layer:** 2 -> 1
 
