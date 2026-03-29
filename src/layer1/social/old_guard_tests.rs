@@ -190,4 +190,110 @@ mod tests {
             assert_eq!(events_res.len(), 1);
         }
     }
+
+    use crate::layer1::needs::Needs;
+    use crate::layer1::social::old_guard::{apply_mood_modifiers_system, MoodModifierEntry};
+
+    #[test]
+    fn test_apply_mood_modifiers_system_positive_change() {
+        let mut world = World::new();
+
+        let pop = world
+            .spawn((
+                Pop,
+                Needs {
+                    leisure: 0.5,
+                    ..Default::default()
+                },
+                MoodModifiers {
+                    entries: vec![MoodModifierEntry {
+                        value: 10.0,
+                        source: "Test".to_string(),
+                        duration: 10.0,
+                    }],
+                },
+            ))
+            .id();
+
+        let _ = world.run_system_once(apply_mood_modifiers_system);
+
+        let needs = world.get::<Needs>(pop).unwrap();
+        assert!(needs.leisure > 0.5);
+        assert!((needs.leisure - 0.505).abs() < f32::EPSILON);
+    }
+
+    #[test]
+    fn test_apply_mood_modifiers_system_negative_change() {
+        let mut world = World::new();
+
+        let pop = world
+            .spawn((
+                Pop,
+                Needs {
+                    leisure: 0.5,
+                    ..Default::default()
+                },
+                MoodModifiers {
+                    entries: vec![MoodModifierEntry {
+                        value: -10.0,
+                        source: "Test".to_string(),
+                        duration: 10.0,
+                    }],
+                },
+            ))
+            .id();
+
+        let _ = world.run_system_once(apply_mood_modifiers_system);
+
+        let needs = world.get::<Needs>(pop).unwrap();
+        assert!(needs.leisure < 0.5);
+        assert!((needs.leisure - 0.495).abs() < f32::EPSILON);
+    }
+
+    #[test]
+    fn test_apply_mood_modifiers_system_clamped_leisure() {
+        let mut world = World::new();
+
+        let pop_high = world
+            .spawn((
+                Pop,
+                Needs {
+                    leisure: 0.999,
+                    ..Default::default()
+                },
+                MoodModifiers {
+                    entries: vec![MoodModifierEntry {
+                        value: 100.0,
+                        source: "Test".to_string(),
+                        duration: 10.0,
+                    }],
+                },
+            ))
+            .id();
+
+        let pop_low = world
+            .spawn((
+                Pop,
+                Needs {
+                    leisure: 0.001,
+                    ..Default::default()
+                },
+                MoodModifiers {
+                    entries: vec![MoodModifierEntry {
+                        value: -100.0,
+                        source: "Test".to_string(),
+                        duration: 10.0,
+                    }],
+                },
+            ))
+            .id();
+
+        let _ = world.run_system_once(apply_mood_modifiers_system);
+
+        let needs_high = world.get::<Needs>(pop_high).unwrap();
+        let needs_low = world.get::<Needs>(pop_low).unwrap();
+
+        assert!((needs_high.leisure - 1.0).abs() < f32::EPSILON);
+        assert!((needs_low.leisure - 0.0).abs() < f32::EPSILON);
+    }
 }
