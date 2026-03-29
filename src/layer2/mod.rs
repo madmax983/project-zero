@@ -33,5 +33,6 @@ pub mod tourism;
 pub mod trade;
 pub mod visibility;
 pub use cartographers_curse::*;
+pub mod empathic_plague;
 pub mod moon_hermits;
 pub mod sensor_ambiguity;
