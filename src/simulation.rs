@@ -551,6 +551,8 @@ mod tests {
         world.init_resource::<Events<crate::layer2::cascade::LogisticsStrainedEvent>>();
         world.init_resource::<Events<crate::layer2::cascade::DefenseWeakenedEvent>>();
 
+        world.init_resource::<Events<crate::layer2::moon_hermits::PopDesertedEvent>>();
+
         world.init_resource::<Time>();
 
         let schedule = build_simulation_schedule();
