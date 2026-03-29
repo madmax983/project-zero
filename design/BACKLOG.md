@@ -460,3 +460,7 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `745` The Martyr's Dividend — `specs/745-martyrs-dividend.md`
 - [ ] `746` The Cargo Cult — `specs/746-cargo-cult.md`
 - [ ] `747` The Debt-Trap Megastructure — `specs/747-debt-trap-megastructure.md`
+- [ ] `748` The Feral Nanite Swarm — `specs/748-feral-nanite-swarm.md`
+- [ ] `749` The Phantom Armada — `specs/749-phantom-armada.md`
+- [ ] `750` The Generational Grudge — `specs/750-generational-grudge.md`
+- [ ] `751` The Biosphere Tax — `specs/751-biosphere-tax.md`

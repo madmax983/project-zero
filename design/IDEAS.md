@@ -12628,7 +12628,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Immediate, desperate salvation vs. an inescapable, crushing economic gravity well.
 
 ---
-## The Feral Nanite Swarm
+## The Feral Nanite Swarm [SPECCED]
 
 **Layer:** 1
 
@@ -12642,7 +12642,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Phantom Armada
+## The Phantom Armada [SPECCED]
 
 **Layer:** 2
 
@@ -12656,7 +12656,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Generational Grudge
+## The Generational Grudge [SPECCED]
 
 **Layer:** Cross-layer
 
@@ -12670,7 +12670,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Biosphere Tax
+## The Biosphere Tax [SPECCED]
 
 **Layer:** 1
 
