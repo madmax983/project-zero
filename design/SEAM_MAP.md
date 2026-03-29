@@ -551,3 +551,10 @@
     - `moon_hermits_chronicle_bridge_system` in `src/layer2/integration.rs` converts `PopDesertedEvent` to `AddChronicleEvent`.
 - **Schedule:** Registered in `src/simulation.rs`, chained after `process_hermit_desertions`.
 - **Tests:** `tests/integration/moon_hermits_chronicle.rs`
+
+### INT-727: Empathic Plague -> Needs/Morale
+- **Date:** 2026-04-01
+- **Systems connected:** `process_empathic_resonance` (Empathic Plague) -> `Morale` & `Needs`
+- **Glue added:** Registered `process_empathic_resonance` in `src/simulation.rs`.
+- **Schedule:** Chained in Layer 2 after `Layer1SystemSet::Observation`.
+- **Tests:** `tests/integration/empathic_plague_bridge.rs`
