@@ -4924,3 +4924,83 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "They broke it to make it 'pure'. [YEAR]. The work of the [CULTIST_TITLE]."
 - "[YEAR]: Sacred sabotage. The [CULTIST_TITLE] corrupted the system for their god."
 - "The logic is infected. The [CULTIST_TITLE] strikes again in [COLONY]. [YEAR]."
+
+## The Orphanage of Stars Templates (Spec 712)
+
+### Template: ORPHAN_ADOPTED
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[ORPHAN_ORIGIN]`, `[ORPHAN_LOYALTY]`
+
+**Patterns:**
+- "We took them in from [ORPHAN_ORIGIN]. [YEAR]. They grew up with [ORPHAN_LOYALTY] to [COLONY]."
+- "[YEAR]: The children of [ORPHAN_ORIGIN] are adults now. Their [ORPHAN_LOYALTY] is absolute."
+- "They have no home but us. [YEAR]. The survivors of [ORPHAN_ORIGIN] serve with [ORPHAN_LOYALTY]."
+
+### Template: FACTION_DEMAND
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[OTHER_CIV]`
+
+**Patterns:**
+- "The [OTHER_CIV] demands their children back. [YEAR]. The orphans refuse to leave."
+- "[YEAR]: An ultimatum from [OTHER_CIV]. Return the orphans, or face war. [COLONY] must choose."
+- "They abandoned them. Now the [OTHER_CIV] wants them. [YEAR]. We stand with our own."
+
+## The Xenofloral Architect Templates (Spec 713)
+
+### Template: IRON_VINE_PLANTED
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[IRON_VINE_DESC]`
+
+**Patterns:**
+- "We planted the walls. [YEAR]. They are [IRON_VINE_DESC]."
+- "[YEAR]: Bio-architecture replaces steel. The walls are [IRON_VINE_DESC] and growing fast."
+- "A living fortress. [IRON_VINE_DESC]. [COLONY] breathes with the vines. [YEAR]."
+
+### Template: VINE_SUFFOCATION
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[VINE_BREACH]`
+
+**Patterns:**
+- "Nobody pruned the east wing. [YEAR]. The vines [VINE_BREACH]."
+- "[YEAR]: Overgrowth! The living walls [VINE_BREACH]. We are trapped inside our own creation."
+- "The architecture is hungry. The vines [VINE_BREACH]. [COLONY] is suffocating. [YEAR]."
+
+## The Kinetic Sleds Templates (Spec 714)
+
+### Template: SLED_ROUTE_ESTABLISHED
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`
+
+**Patterns:**
+- "Frictionless logistics online. [YEAR]. The sleds move faster than thought."
+- "[YEAR]: We bypass the hauling delays. Sleds glide across the compound."
+- "Massive throughput. [YEAR]. The kinetic sleds run the straight paths."
+
+### Template: SLED_CRASH
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[SLED_CARGO]`, `[SLED_CRASH_DESC]`
+
+**Patterns:**
+- "Someone walked onto the sled path. [YEAR]. [SLED_CARGO] hit them with [SLED_CRASH_DESC]."
+- "[YEAR]: A devastating collision. A sled carrying [SLED_CARGO] caused [SLED_CRASH_DESC]."
+- "Momentum cannot be reasoned with. [SLED_CARGO] scattered across the floor. [SLED_CRASH_DESC]. [YEAR]."
+
+## The Diplomatic Saboteur Templates (Spec 715)
+
+### Template: SABOTEUR_SENT
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[NAME]`, `[SABOTEUR_TRAIT]`, `[OTHER_CIV]`
+
+**Patterns:**
+- "We sent [NAME] to the [OTHER_CIV]. [YEAR]. They are [SABOTEUR_TRAIT]."
+- "[YEAR]: Diplomacy by annoyance. [NAME] arrives at [OTHER_CIV], acting [SABOTEUR_TRAIT]."
+- "A weaponized personality. [NAME] is [SABOTEUR_TRAIT]. The [OTHER_CIV] will regret hosting them. [YEAR]."
+
+### Template: FACTION_FRACTURED
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[NAME]`, `[SABOTAGE_RESULT]`, `[OTHER_CIV]`
+
+**Patterns:**
+- "It worked perfectly. [YEAR]. [NAME] annoyed the [OTHER_CIV] so much it [SABOTAGE_RESULT]."
+- "[YEAR]: Total collapse at the [OTHER_CIV] capital. Our envoy's insults [SABOTAGE_RESULT]."
+- "A bloodless victory for [COLONY]. The stress caused by [NAME] [SABOTAGE_RESULT]. [YEAR]."

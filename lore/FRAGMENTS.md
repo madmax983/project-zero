@@ -5764,3 +5764,69 @@ A negative side-effect of a failed splice.
 - The Corrupted Voice
 - Scrap-Seer
 - Void-Code Monk
+
+## The Orphanage of Stars Fragments (Spec 712)
+
+### Fragment Type: [ORPHAN_ORIGIN]
+- the burned sectors
+- a shattered world
+- the refugee fleet
+- the lost front
+- a dying station
+- the silent zone
+
+### Fragment Type: [ORPHAN_LOYALTY]
+- an unbreakable bond
+- fierce devotion
+- a debt that cannot be paid
+- absolute trust
+- silent dedication
+
+## The Xenofloral Architect Fragments (Spec 713)
+
+### Fragment Type: [IRON_VINE_DESC]
+- pulsing with green veins
+- as hard as star-metal
+- weeping bio-resin
+- thick and choked
+- a living cage
+- blooming with rust-flowers
+
+### Fragment Type: [VINE_BREACH]
+- crushed the life-support ducts
+- swallowed the med-bay
+- tore through the steel bulkheads
+- strangled the power conduits
+- entombed the sleeping quarters
+
+## The Kinetic Sleds Fragments (Spec 714)
+
+### Fragment Type: [SLED_CARGO]
+- three tons of raw iron
+- highly volatile fuel cells
+- a week's worth of rations
+- compressed atmospheric tanks
+- heavy machinery parts
+
+### Fragment Type: [SLED_CRASH_DESC]
+- a deafening, metallic shriek
+- scattered like dust in the wind
+- a crater where the wall used to be
+- pure kinetic devastation
+- an unstoppable wave of scrap
+
+## The Diplomatic Saboteur Fragments (Spec 715)
+
+### Fragment Type: [SABOTEUR_TRAIT]
+- insufferably arrogant
+- deliberately offensive
+- toxically obnoxious
+- proudly ignorant
+- aggressively demanding
+
+### Fragment Type: [SABOTAGE_RESULT]
+- sparked a localized civil war
+- shattered their command structure
+- drove the governor to madness
+- incited a bloody coup
+- collapsed their economy out of pure spite
