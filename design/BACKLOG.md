@@ -433,3 +433,7 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `717` The Somnambulist Workforce — `specs/717-somnambulist-workforce.md`
 - [ ] `718` The Ambrosia Atmosphere — `specs/718-ambrosia-atmosphere.md`
 - [ ] `719` The Bureau of Omission — `specs/719-bureau-of-omission.md`
+- [ ] `720` Atmospheric Harvesting — `specs/720-atmospheric-harvesting.md`
+- [ ] `721` Maintenance Debt — `specs/721-maintenance-debt.md`
+- [ ] `722` Gravity Slingshots — `specs/722-gravity-slingshots.md`
+- [ ] `723` The Derelict Lottery — `specs/723-derelict-lottery.md`
