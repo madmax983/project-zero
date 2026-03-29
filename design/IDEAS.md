@@ -12573,7 +12573,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Access to the most powerful armor in the game vs the terrifying requirement of a perfectly flawless, uninterruptible logistical chain.
 
 ---
-## The Nostalgia Contagion
+## The Nostalgia Contagion [SPECCED]
 
 **Layer:** 1
 
@@ -12587,7 +12587,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Martyr's Dividend
+## The Martyr's Dividend [SPECCED]
 
 **Layer:** Cross-layer
 
@@ -12601,7 +12601,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Cargo Cult
+## The Cargo Cult [SPECCED]
 
 **Layer:** 1
 
@@ -12615,7 +12615,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Debt-Trap Megastructure
+## The Debt-Trap Megastructure [SPECCED]
 
 **Layer:** 2
 
