@@ -51,3 +51,5 @@ pub mod dream_economy;
 
 #[cfg(feature = "nova")]
 pub mod phantom_workforce;
+#[cfg(feature = "nova")]
+pub mod sleep_deprived_savant;

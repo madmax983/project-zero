@@ -77,3 +77,7 @@
 **Concept:** A system that occasionally spawns `PhantomWorker` entities when Pops die at work. These phantoms continue producing resources at their assigned building indefinitely but radiate intense stress to any living Pops nearby.
 **Fate:** Merged
 **Lesson:** Tying an emergent death mechanic directly into the economic production loop forces the player to make uncomfortable choices about relying on haunted infrastructure versus maintaining the mental health of their living colony.
+## [The Sleep-Deprived Savant]
+**Concept:** Added a `FeverDream` state for Pops with `Intellectual` or `Creative` traits when their `rest` need falls below 10%. They gain a massive 300% `Speed` boost but take continuous `Health` damage until they finally rest.
+**Fate:** Proposed
+**Lesson:** Tying critical failure states (exhaustion) to high-risk, high-reward buffs (manic productivity) creates interesting management dilemmas, turning a negative need state into a situational tool for the player.
