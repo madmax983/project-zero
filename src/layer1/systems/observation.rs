@@ -221,6 +221,8 @@ pub fn register(schedule: &mut Schedule) {
             crate::experimental::psychic_resonance::psychic_resonance_system
                 .after(crate::layer1::needs::decay_needs_system),
             #[cfg(feature = "nova")]
+            crate::experimental::sleep_deprived_savant::sleep_deprived_savant_system,
+            #[cfg(feature = "nova")]
             crate::experimental::genetic_memory::absorb_genetic_memory_system
                 .after(crate::layer1::health::despawn_dead_entities_system),
             #[cfg(feature = "nova")]
