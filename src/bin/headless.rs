@@ -30,6 +30,8 @@ use crossterm::style::Stylize;
 use scale::layer1::biography::Biography;
 use scale::layer1::construction::{ConstructionProgress, GreatWork, OperationalGreatWork};
 use scale::layer1::dreams::Dream;
+#[cfg(feature = "nova")]
+use scale::layer1::oral_tradition::{OralTradition, StoryGenre};
 use scale::layer1::pop::PopName;
 use scale::layer1::tech::{unlock_tech, Tech, TechState, TechStatus};
 use scale::layer1::{
@@ -289,6 +291,12 @@ fn handle_command(world: &mut World, input: &str) -> bool {
             }
         }
         "chronicle" | "c" | "history" => print_chronicle(world),
+        #[cfg(feature = "nova")]
+        "stories" | "st" | "legends" => print_stories(world),
+        #[cfg(not(feature = "nova"))]
+        "stories" | "st" | "legends" => {
+            println!("{}", "⚠️ Feature 'nova' is not enabled. Run with --features nova.".yellow());
+        }
         "log" | "l" => print_log(world),
         "tech" | "research_status" => print_tech(world),
         "research" | "r" => {
@@ -1613,6 +1621,56 @@ fn print_bio(world: &mut World, target_id: u32) {
     }
 }
 
+#[cfg(feature = "nova")]
+fn print_stories(world: &mut World) {
+    use comfy_table::{Cell, Color, ContentArrangement, Table, Attribute};
+    use comfy_table::presets::UTF8_FULL;
+    use crossterm::style::Stylize;
+    let tradition = world.resource::<OralTradition>();
+
+    if tradition.stories.is_empty() {
+        print_dashboard_panel(
+            "ORAL TRADITION (STORIES)",
+            &format!("{}", "  (No stories recorded)  ".dark_grey().italic()),
+        );
+        return;
+    }
+
+    let mut table = Table::new();
+    table
+        .load_preset(UTF8_FULL)
+        .set_content_arrangement(ContentArrangement::Dynamic)
+        .set_header(vec![
+            Cell::new("Date").add_attribute(Attribute::Bold),
+            Cell::new("Genre").add_attribute(Attribute::Bold),
+            Cell::new("Mutations").add_attribute(Attribute::Bold),
+            Cell::new("Story").add_attribute(Attribute::Bold),
+        ]);
+
+    for story in &tradition.stories {
+        let genre_color = match story.genre {
+            StoryGenre::Heroic => Color::Yellow,
+            StoryGenre::Tragedy => Color::Red,
+            StoryGenre::Cautionary => Color::Cyan,
+            StoryGenre::Trivial => Color::Grey,
+        };
+
+        let mut story_cell = Cell::new(&story.text).fg(genre_color);
+        if story.mutations > 5 {
+            story_cell = story_cell.add_attribute(Attribute::Bold);
+        }
+
+        table.add_row(vec![
+            Cell::new(story.historical_date.to_string()),
+            Cell::new(format!("{:?}", story.genre)).fg(genre_color),
+            Cell::new(story.mutations.to_string()),
+            story_cell,
+        ]);
+    }
+
+    print_dashboard_table("ORAL TRADITION (STORIES)", table);
+}
+
 fn print_chronicle(world: &mut World) {
     let chronicle = world.resource::<Chronicle>();
 
@@ -1754,6 +1812,10 @@ fn print_help() {
                 ("designations", "d", "List all active designations"),
                 ("great_works", "gw", "List all Great Works projects"),
                 ("chronicle", "c, history", "Show colony history events"),
+                #[cfg(feature = "nova")]
+                ("stories", "st, legends", "Show current oral tradition stories"),
+                #[cfg(not(feature = "nova"))]
+                ("stories", "st, legends", "Show current oral tradition stories (Requires --features nova)"),
                 ("log", "l", "Show message log"),
                 (
                     "tech",
