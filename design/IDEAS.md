@@ -12683,3 +12683,59 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Cheap, dirty, rapid industrialization vs. the escalating, active hostility of the very ground you stand on.
 
 ---
+
+## The Somatic Tax
+
+**Layer:** 1
+
+**Fantasy:** Your colonists physically alter themselves to pay off their societal debts, slowly losing their humanity to efficiency.
+
+**Mechanic:** Pops with high debt or low productivity are offered "Somatic Relief"—subsidized cybernetic or biological augmentations that increase work output but permanently reduce their Need capacity for Social and Leisure. They literally work more and care less.
+
+**Emergence:** A poor mining colony eventually transforms entirely into unfeeling cyborgs. When a massive disaster hits, they survive the physical trauma perfectly but are entirely unable to form the social bonds needed to cooperate and rebuild, leading to a silent, solitary collapse.
+
+**Tension:** The immediate benefit of hyper-efficient, complaining-free workers vs. the slow death of your colony's culture and resilience.
+
+---
+
+## The Tethered Guillotine
+
+**Layer:** Cross-layer
+
+**Fantasy:** A sword of Damocles hanging over your rebelling planets, threatening to crash the economy to maintain order.
+
+**Mechanic:** Layer 2 orbital defense stations can "tether" to Layer 1 capital buildings. If the tethered colony's Unrest reaches critical mass and a rebellion starts, the station automatically deorbits itself into the capital, instantly crushing the rebellion but utterly annihilating the sector's infrastructure.
+
+**Emergence:** A rival civilization hacks your diplomacy, artificially spiking Unrest on your core foundry world. Before you can send negotiators or police, your own automated orbital defense drops out of the sky and flattens your primary shipyards, winning the war for your enemy without them firing a shot.
+
+**Tension:** The absolute guarantee of stopping a rebellion vs. the terrifying risk of an automated, irreversible self-destruct sequence.
+
+---
+
+## The Memory Smugglers
+
+**Layer:** 1
+
+**Fantasy:** An underground market where trauma is erased and manufactured happiness is bought and sold.
+
+**Mechanic:** Pops can extract their worst Memories (grief, terror) and sell them to "Memory Brokers" for resources, instantly improving their Mood. These stolen memories are then spliced into other Pops as "synthetic leisure." If a Pop accumulates too many synthetic memories, they develop "Identity Drift" and abandon their assigned jobs to wander the colony looking for people who don't exist.
+
+**Emergence:** You try to fix a morale crisis after a brutal war by legalizing Memory Brokers. The colony becomes perfectly happy, but half your elite scientists are now wandering the wilderness trying to find the family members of the soldiers whose trauma they consumed for entertainment.
+
+**Tension:** A powerful, immediate tool for managing crisis morale vs. the long-term erosion of your population's sanity and workforce reliability.
+
+---
+
+## The Ecological Rubberband
+
+**Layer:** 2
+
+**Fantasy:** Terraformers pushing a planet's climate too fast, causing it to aggressively snap back.
+
+**Mechanic:** When terraforming a planet to change its biome (e.g., Ice to Arid), doing it rapidly builds "Ecological Tension." If the terraforming machines lose power or are destroyed before the tension dissipates, the planet doesn't just revert to its original state—it violently swings in the opposite extreme, triggering massive planetary disasters (hyper-storms, flash-freezes) that wipe out Layer 1 colonies.
+
+**Emergence:** You are halfway through melting a frozen world to create an agricultural paradise. A tiny pirate raid knocks out your orbital mirrors for three days. The Ecological Tension snaps, and the resulting flash-freeze instantly encases your entire farming colony in solid ice, turning them into perfectly preserved monuments of your hubris.
+
+**Tension:** The immense economic value of rapid terraforming vs. the existential risk of a single power failure destroying everything.
+
+---
