@@ -9876,7 +9876,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Memory Smugglers
+## The Memory Smugglers [SPECCED]
 
 **Layer:** 1 -> Cross-layer
 
@@ -12684,7 +12684,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Somatic Tax
+## The Somatic Tax [SPECCED]
 
 **Layer:** 1
 
@@ -12698,7 +12698,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Tethered Guillotine
+## The Tethered Guillotine [SPECCED]
 
 **Layer:** Cross-layer
 
@@ -12712,7 +12712,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Memory Smugglers
+## The Memory Smugglers [SPECCED]
 
 **Layer:** 1
 
@@ -12726,7 +12726,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Ecological Rubberband
+## The Ecological Rubberband [SPECCED]
 
 **Layer:** 2
 
