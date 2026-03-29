@@ -224,3 +224,6 @@ mod sensor_ambiguity_bridge;
 
 #[path = "integration/moon_hermits_chronicle.rs"]
 mod moon_hermits_chronicle;
+
+#[path = "integration/empathic_plague_bridge.rs"]
+mod empathic_plague_bridge;

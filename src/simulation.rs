@@ -190,6 +190,8 @@ pub fn build_simulation_schedule() -> Schedule {
         crate::layer2::integration::moon_hermits_chronicle_bridge_system
             .after(crate::layer2::moon_hermits::process_hermit_desertions),
         crate::layer2::moon_hermits::hermit_theft_system,
+        crate::layer2::empathic_plague::process_empathic_resonance
+            .after(Layer1SystemSet::Observation),
     ));
 
     schedule.add_systems((
