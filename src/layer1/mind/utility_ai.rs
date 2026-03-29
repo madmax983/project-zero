@@ -75,6 +75,12 @@ use bevy_tasks::ComputeTaskPool;
 /// 1.  **Extract**: Move resources out of the World or clone them.
 /// 2.  **Evaluate**: Run read-only logic in a `ComputeTaskPool`.
 /// 3.  **Apply**: Write the results back to the World.
+///
+/// # Architecture Context
+/// By extracting things like `UtilityAIBuffer` entirely using `world.remove_resource()`,
+/// we trick the borrow checker. We can then mutate this buffer in parallel while the
+/// rest of the `World` remains unborrowed. We *must* guarantee the resources are re-inserted
+/// in the `restore()` method.
 struct ScopedEvaluationContext {
     /// Buffer containing both the Pop data (input) and Evaluation results (output).
     buffer: UtilityAIBuffer,
@@ -212,6 +218,31 @@ impl ScopedEvaluationContext {
 ///
 /// Increments `ticks_committed` for every pop. This is used to prevent
 /// "jitter" (rapidly switching tasks) by enforcing a minimum commitment time.
+///
+/// # Architecture Context
+/// By tracking commitment, the AI ensures a Pop won't bounce back and forth
+/// between two equidistant actions (e.g. food on the left, bed on the right)
+/// because of a minuscule 0.001 utility change.
+///
+/// # Examples
+/// ```
+/// use bevy_ecs::prelude::*;
+/// use scale::layer1::mind::utility_types::{ActionType, PopAction};
+/// use scale::layer1::mind::utility_ai::update_action_timer_system;
+///
+/// let mut world = World::new();
+/// let entity = world.spawn(PopAction {
+///     current: ActionType::Idle,
+///     current_utility: 0.0,
+///     ticks_committed: 5,
+/// }).id();
+///
+/// let mut schedule = Schedule::default();
+/// schedule.add_systems(update_action_timer_system);
+/// schedule.run(&mut world);
+///
+/// assert_eq!(world.get::<PopAction>(entity).unwrap().ticks_committed, 6);
+/// ```
 pub fn update_action_timer_system(mut query: Query<&mut PopAction>) {
     query.par_iter_mut().for_each(|mut action| {
         action.ticks_committed = action.ticks_committed.saturating_add(1);
@@ -223,6 +254,12 @@ pub fn update_action_timer_system(mut query: Query<&mut PopAction>) {
 /// This struct holds the transient state for a single Pop's decision-making process.
 /// It iterates through the **Hierarchy of Needs** (Survival -> Social -> Work)
 /// and scores potential actions using the [`CandidateEvaluator`].
+///
+/// # Architecture Context
+/// This encapsulates the actual `Utility AI` logic. It starts at the bottom of Maslow's
+/// hierarchy (food, sleep) and works its way up (social, exploration). The moment an
+/// action scores above the switch threshold, it becomes the new candidate. The evaluator
+/// handles hysteresis internally so Pops don't rapidly flip between options with similar scores.
 struct PopDecider<'a> {
     /// The evaluator that tracks the best action found so far.
     evaluator: CandidateEvaluator,
@@ -680,6 +717,7 @@ impl<'a> PopDecider<'a> {
 /// Helper function to evaluate all potential actions for a single Pop.
 ///
 /// Returns the best `(ActionType, Utility, Target)`.
+#[doc(hidden)]
 #[allow(clippy::too_many_lines, clippy::collapsible_if)]
 pub(crate) fn evaluate_single_pop(
     buffer: &UtilityAIBuffer,
@@ -772,6 +810,29 @@ fn apply_evaluation_results(
     }
 }
 
+/// Evaluates all AI actions and updates `PopAction` for every entity.
+///
+/// This system drives the main behavior loop of the colony. It runs every tick to evaluate
+/// whether a Pop should switch to a higher-utility task. Because evaluating hundreds of
+/// options for thousands of Pops is expensive, this system uses a "Gather-Think-Act" cycle
+/// to run evaluations in parallel across all CPU cores.
+///
+/// # Examples
+///
+/// ```
+/// use scale::prelude::*;
+/// use bevy_ecs::prelude::*;
+///
+/// let mut world = setup_world_with_config(SetupConfig::default());
+///
+/// // In your app setup:
+/// // app.add_systems(Update, scale::layer1::mind::evaluate_actions_system);
+/// ```
+///
+/// # Panics
+///
+/// This system will not panic under normal circumstances, but relies on
+/// `UtilityConfig` being present in the ECS world.
 pub fn evaluate_actions_system(world: &mut World) {
     let mut ctx = ScopedEvaluationContext::new(world);
 

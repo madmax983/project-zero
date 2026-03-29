@@ -44,8 +44,10 @@ mod tests {
     fn test_empathic_plague_spreads_negative_mood() {
         let mut world = World::new();
 
-        let mut infected_morale = Morale::default();
-        infected_morale.value = 1.0;
+        let infected_morale = Morale {
+            value: 1.0,
+            ..Default::default()
+        };
 
         // Setup infected pop
         let infected_pop = world
@@ -57,10 +59,14 @@ mod tests {
             ))
             .id();
 
-        let mut miserable_morale = Morale::default();
-        miserable_morale.value = 0.2; // miserable
-        let mut miserable_needs = Needs::default();
-        miserable_needs.hunger = 0.1; // starving
+        let miserable_morale = Morale {
+            value: 0.2,
+            ..Default::default()
+        };
+        let miserable_needs = Needs {
+            hunger: 0.1,
+            ..Default::default()
+        };
 
         // Setup nearby miserable pop
         world.spawn((
@@ -87,8 +93,10 @@ mod tests {
     fn test_empathic_plague_no_effect_from_happy_pop() {
         let mut world = World::new();
 
-        let mut infected_morale = Morale::default();
-        infected_morale.value = 1.0;
+        let infected_morale = Morale {
+            value: 1.0,
+            ..Default::default()
+        };
 
         // Setup infected pop
         let infected_pop = world
@@ -100,10 +108,14 @@ mod tests {
             ))
             .id();
 
-        let mut happy_morale = Morale::default();
-        happy_morale.value = 0.8; // happy
-        let mut happy_needs = Needs::default();
-        happy_needs.hunger = 0.9; // full
+        let happy_morale = Morale {
+            value: 0.8,
+            ..Default::default()
+        };
+        let happy_needs = Needs {
+            hunger: 0.9,
+            ..Default::default()
+        };
 
         // Setup nearby happy pop
         world.spawn((
