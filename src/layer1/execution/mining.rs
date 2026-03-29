@@ -15,6 +15,12 @@ use crate::layer1::execution::general_work::{WORK_CRIT_CHANCE, WORK_CRIT_MULTIPL
 /// Handles mining work at a designation.
 ///
 /// Reduces terrain health or mining progress, spawns resources, and removes rock/ore.
+#[derive(Event, Debug, Clone)]
+pub struct MineEvent {
+    pub target: Entity,
+    pub amount: f32,
+}
+
 pub fn handle_mining_work(
     world: &mut World,
     entity: Entity,
@@ -44,6 +50,13 @@ pub fn handle_mining_work(
     };
 
     effective_work *= resonance_multiplier;
+
+    if let Some(mut events) = world.get_resource_mut::<Events<MineEvent>>() {
+        events.send(MineEvent {
+            target: entity,
+            amount: effective_work,
+        });
+    }
 
     // Emit XP event for mining
     if let Some(mut events) = world.get_resource_mut::<Events<XpGainEvent>>() {

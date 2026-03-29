@@ -259,6 +259,14 @@ pub fn run_simulation_tick(world: &mut World) {
     if !world.contains_resource::<Events<crate::layer1::resources::MiningEvent>>() {
         world.init_resource::<Events<crate::layer1::resources::MiningEvent>>();
     }
+    if !world.contains_resource::<Events<crate::layer1::execution::mining::MineEvent>>() {
+        world.init_resource::<Events<crate::layer1::execution::mining::MineEvent>>();
+    }
+    if !world
+        .contains_resource::<Events<crate::layer1::nature::megafauna_terrain::AwakenTitanEvent>>()
+    {
+        world.init_resource::<Events<crate::layer1::nature::megafauna_terrain::AwakenTitanEvent>>();
+    }
     if !world.contains_resource::<Events<crate::layer1::spiteful_will::InheritanceEvent>>() {
         world.init_resource::<Events<crate::layer1::spiteful_will::InheritanceEvent>>();
     }
@@ -487,6 +495,8 @@ mod tests {
         // Initialize Detection Risk for test
         world.init_resource::<crate::layer3::silence::DetectionRisk>();
         world.init_resource::<Events<crate::layer2::moon_hermits::PopDesertedEvent>>();
+        world.init_resource::<Events<crate::layer1::execution::mining::MineEvent>>();
+        world.init_resource::<Events<crate::layer1::nature::megafauna_terrain::AwakenTitanEvent>>();
         world.init_resource::<Events<crate::layer3::silence::HostileSpawnEvent>>();
         if !world
             .contains_resource::<Events<crate::layer3::diplomacy_reflection::EntityKilledEvent>>()
@@ -557,6 +567,8 @@ mod tests {
         world.init_resource::<Events<crate::layer2::cascade::DefenseWeakenedEvent>>();
 
         world.init_resource::<Events<crate::layer2::moon_hermits::PopDesertedEvent>>();
+        world.init_resource::<Events<crate::layer1::execution::mining::MineEvent>>();
+        world.init_resource::<Events<crate::layer1::nature::megafauna_terrain::AwakenTitanEvent>>();
 
         world.init_resource::<Time>();
 

@@ -185,7 +185,10 @@ pub use designation::*;
 pub use dreams::*;
 pub use edicts::*;
 pub use events::*;
-pub use execution::*;
+pub use execution::{
+    arrival::*, combat::*, components::*, demolish::*, efficiency::*, general_work::*, movement::*,
+    vandalism::*,
+};
 pub use farm::*;
 pub use graffiti::*;
 pub use hazards::*;

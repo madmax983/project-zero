@@ -34,6 +34,7 @@ pub fn register(schedule: &mut Schedule) {
     schedule.add_systems(
         (
             update_event_buffer::<crate::layer1::nature::biosphere_empathy::FloraDamagedEvent>,
+            update_event_buffer::<crate::layer1::nature::megafauna_terrain::AwakenTitanEvent>,
             update_event_buffer::<crate::layer1::ancestral_graves::SacrilegeEvent>,
             update_event_buffer::<crate::layer1::geology::tectonic::MegaQuakeEvent>,
             update_event_buffer::<crate::layer1::logistics::orbital_drop::OrbitalDropEvent>,
@@ -58,6 +59,7 @@ pub fn register(schedule: &mut Schedule) {
             update_event_buffer::<crate::layer1::shipbreaking::SpawnCrashedShipEvent>,
             update_event_buffer::<crate::layer1::shipbreaking::MineEvent>,
             update_event_buffer::<crate::layer2::moon_hermits::PopDesertedEvent>,
+            update_event_buffer::<crate::layer1::execution::mining::MineEvent>,
         )
             .in_set(Layer1SystemSet::EventCleanup),
     );
