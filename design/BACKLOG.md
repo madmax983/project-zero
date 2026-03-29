@@ -456,3 +456,7 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `741` The Paradox Courier — `specs/741-paradox-courier.md`
 - [ ] `742` The Guilt-Eater Fungi — `specs/742-guilt-eater-fungi.md`
 - [ ] `743` The Gravity Loom — `specs/743-gravity-loom.md`
+- [ ] `744` The Nostalgia Contagion — `specs/744-nostalgia-contagion.md`
+- [ ] `745` The Martyr's Dividend — `specs/745-martyrs-dividend.md`
+- [ ] `746` The Cargo Cult — `specs/746-cargo-cult.md`
+- [ ] `747` The Debt-Trap Megastructure — `specs/747-debt-trap-megastructure.md`
