@@ -464,3 +464,7 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `749` The Phantom Armada — `specs/749-phantom-armada.md`
 - [ ] `750` The Generational Grudge — `specs/750-generational-grudge.md`
 - [ ] `751` The Biosphere Tax — `specs/751-biosphere-tax.md`
+- [ ] `752` The Somatic Tax — `specs/752-somatic-tax.md`
+- [ ] `753` The Tethered Guillotine — `specs/753-tethered-guillotine.md`
+- [ ] `754` The Memory Smugglers — `specs/754-memory-smugglers.md`
+- [ ] `755` The Ecological Rubberband — `specs/755-ecological-rubberband.md`
