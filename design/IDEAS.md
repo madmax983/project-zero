@@ -12518,3 +12518,58 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** The cheap, bloodless destabilization of a rival empire vs the extreme diplomatic risk and the horrifying realization that you are weaponizing terrible personalities.
 
 ---
+## The Subterranean Heat Sink
+
+**Layer:** 1
+
+**Fantasy:** The planet is freezing, so you dig deep for warmth, but the deep is violently unstable.
+
+**Mechanic:** Lower Z-levels have naturally higher ambient temperatures. Players can route ventilation to pull heat up to the surface to save on power. However, extreme temperature differentials between adjacent tiles cause "Thermal Stress," leading to rapid structural decay and cave-ins.
+
+**Emergence:** You try to heat your massive surface greenhouse with deep-core heat to survive an ice age. The thermal stress shatters the greenhouse floor, dropping your entire food supply into the magma vents below.
+
+**Tension:** The free, passive energy of the deep vs the structural risk of fighting thermodynamics.
+
+---
+
+## The Paradox Courier
+
+**Layer:** Cross-layer
+
+**Fantasy:** Receiving a care package from your future self, with the terrifying obligation to eventually send it back in time.
+
+**Mechanic:** A mysterious pod arrives on Layer 1 containing endgame technology or massive resources, attached to a "Temporal Debt" contract. Decades later, a Layer 2 anomaly appears. You must deposit the exact same resources/tech into the anomaly within a tight timeframe, or suffer a massive "Paradox Event" (randomized catastrophic damage).
+
+**Emergence:** You use the future-tech to effortlessly win an unwinnable war in the early game. Fifty years later, your colony is thriving, but you have to artificially cripple your own economy to manufacture and throw away the same tech to close the loop, causing massive localized riots.
+
+**Tension:** Immediate, unearned salvation vs a looming, inescapable cosmic tax.
+
+---
+
+## The Guilt-Eater Fungi
+
+**Layer:** 1
+
+**Fantasy:** A miraculous cure for stress that also removes your colonists' sense of self-preservation.
+
+**Mechanic:** Cultivating a specific alien fungus produces a consumable that instantly sets Unrest to zero and maximizes Morale. However, it applies a permanent "Apathetic" trait. Apathetic pops ignore all hazard warnings, refuse to flee from combat, and won't seek medical attention.
+
+**Emergence:** You use the fungi to quell a massive rebellion during a famine. The colony is perfectly peaceful, but when a minor fire breaks out, the workers just stand in the flames smiling, and the entire sector burns down.
+
+**Tension:** The perfect, instant solution to all social friction vs the horrifying reality of a population that no longer cares if it lives or dies.
+
+---
+
+## The Gravity Loom
+
+**Layer:** Cross-layer
+
+**Fantasy:** Weaving starship armor out of collapsed matter, one micro-singularity at a time.
+
+**Mechanic:** High-end Layer 2 orbital stations can use "Gravity Looms" to compress Layer 1 resources into hyper-dense "Singularity Plating." The loom requires a continuous, massive power beam from the Layer 1 colony. If the power beam fluctuates by even 1%, the loom drops the micro-singularity onto the planet.
+
+**Emergence:** You are building your ultimate flagship. A minor worker dispute on the ground causes a 2-second power brownout in the transmitter array. The loom loses containment, and a micro-singularity drops through your capital, swallowing the dispute, the workers, and the transmitter.
+
+**Tension:** Access to the most powerful armor in the game vs the terrifying requirement of a perfectly flawless, uninterruptible logistical chain.
+
+---
