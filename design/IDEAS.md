@@ -2666,7 +2666,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Xeno-Plague Variants
+## Xeno-Plague Variants [SPECCED]
 
 **Layer:** 1
 
@@ -2680,7 +2680,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Planetary Core Tap
+## Planetary Core Tap [SPECCED]
 
 **Layer:** 1
 
@@ -2694,7 +2694,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Hull Breach Suction
+## Hull Breach Suction [SPECCED]
 
 **Layer:** 1
 
@@ -2708,7 +2708,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Genetic Crop Modification
+## Genetic Crop Modification [SPECCED]
 
 **Layer:** 1
 
