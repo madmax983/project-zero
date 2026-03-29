@@ -43,3 +43,11 @@ I've updated `echo_issue_report.md` with resolutions. The error text fix for `Na
 🤦 **The Confusion:** I copied the basic headless simulation example from the README and ran it, but it immediately crashed with a weird error: `scale::layer1::social::ghost_shift_strike::evaluate_ghost_shifts could not access system parameter ResMut<'_, Events<GhostShiftStartedEvent>>`. I just wanted to run 10 ticks!
 🕵️ **The Reality:** The internal engine forgot to initialize an event required by a background system.
 💡 **The Fix:** The developers need to register `GhostShiftStartedEvent` properly in the setup so the simulation doesn't crash for basic users.
+
+## 🗣️ Echo: Getting Started example is broken
+
+🤦 **The Confusion:** "Tried to run the `nova` demo example from the README. I copied the code snippet exactly. Compiler gave me a bunch of undeclared type errors like `OralTradition`, `Story`, and `StoryGenre` not found."
+
+🕵️ **The Reality:** "Turns out I needed to enable feature `nova`. The README mentions this, but if I just copy-paste the code snippet and run `cargo run`, it fails with generic rustc missing type errors instead of telling me the feature is missing."
+
+💡 **The Fix:** "Add a prominent comment *inside* the rust code block itself: `// RUN WITH: cargo run --features nova` so it's impossible to miss when copy-pasting, or make the code self-documenting about the feature requirement."
