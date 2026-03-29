@@ -447,4 +447,3 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `732` Xeno-Plague Variants — `specs/732-xeno-plague-variants.md`
 - [ ] `733` Planetary Core Tap — `specs/733-planetary-core-tap.md`
 - [ ] `734` Hull Breach Suction — `specs/734-hull-breach-suction.md`
-- [ ] `735` Genetic Crop Modification — `specs/735-genetic-crop-modification.md`
