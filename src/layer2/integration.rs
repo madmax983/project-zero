@@ -371,7 +371,15 @@ pub fn assign_sensors_to_player_fleets_system(
 #[allow(clippy::type_complexity)]
 pub fn ensure_player_fleets_identified_system(
     mut commands: Commands,
-    mut query: Query<(Entity, &FleetFaction, Option<&mut SensorContact>, Option<&UnidentifiedContact>), With<Fleet>>,
+    mut query: Query<
+        (
+            Entity,
+            &FleetFaction,
+            Option<&mut SensorContact>,
+            Option<&UnidentifiedContact>,
+        ),
+        With<Fleet>,
+    >,
 ) {
     for (entity, faction, maybe_contact, maybe_unidentified) in query.iter_mut() {
         if *faction == FleetFaction::Player {

@@ -305,7 +305,9 @@ fn find_and_target_generic_item(world: &mut World, pop_entity: Entity, pos: Grid
     let is_drone = world.get::<Drone>(pop_entity).is_some();
 
     // Collect stockpile positions to avoid hauling items already stored
-    let stockpiles: Vec<GridPosition> = world
+    // ⚡ Bolt Optimization: Use a HashSet for O(1) lookups inside the loop
+    //    instead of a Vec to prevent O(N * M) time complexity.
+    let stockpiles: std::collections::HashSet<GridPosition> = world
         .query::<(&GridPosition, &Stockpile)>()
         .iter(world)
         .map(|(p, _)| *p)

@@ -1,6 +1,6 @@
-use bevy::prelude::*;
-use crate::layer1::pop::Pop;
 use crate::layer1::morale::Morale;
+use crate::layer1::pop::Pop;
+use bevy::prelude::*;
 
 #[derive(Component)]
 pub struct SpacecraftAccess {
@@ -45,7 +45,9 @@ pub fn process_hermit_desertions(
                 commands.entity(pop_entity).insert(Deserted);
 
                 // Create an outpost on the asteroid
-                commands.entity(asteroid_entity).insert(HermitOutpost { stolen_goods: 0.0 });
+                commands
+                    .entity(asteroid_entity)
+                    .insert(HermitOutpost { stolen_goods: 0.0 });
 
                 // Fire event
                 ev_deserted.send(PopDesertedEvent {
@@ -66,7 +68,9 @@ pub fn hermit_theft_system(
 
     for (mut ship, ship_transform) in query_ships.iter_mut() {
         for (mut outpost, outpost_transform) in query_outposts.iter_mut() {
-            let distance = ship_transform.translation.distance(outpost_transform.translation);
+            let distance = ship_transform
+                .translation
+                .distance(outpost_transform.translation);
 
             let theft_amount = ship.cargo * theft_percentage;
 
@@ -92,24 +96,33 @@ mod tests {
         app.add_systems(Update, process_hermit_desertions);
 
         // A Pop with critically low morale and spacecraft access
-        let pop = app.world_mut().spawn((
-            Pop,
-            Morale { value: 10.0, ..Default::default() }, // Very low
-            SpacecraftAccess { available: true },
-        )).id();
+        let pop = app
+            .world_mut()
+            .spawn((
+                Pop,
+                Morale {
+                    value: 10.0,
+                    ..Default::default()
+                }, // Very low
+                SpacecraftAccess { available: true },
+            ))
+            .id();
 
         // An available asteroid node
-        let asteroid = app.world_mut().spawn((
-            AsteroidNode,
-            Transform::from_xyz(100.0, 50.0, 0.0),
-        )).id();
+        let asteroid = app
+            .world_mut()
+            .spawn((AsteroidNode, Transform::from_xyz(100.0, 50.0, 0.0)))
+            .id();
 
         // Act
         app.update();
 
         // Assert
         let hermit_state = app.world().get::<HermitOutpost>(asteroid);
-        assert!(hermit_state.is_some(), "Asteroid should now host a Hermit Outpost");
+        assert!(
+            hermit_state.is_some(),
+            "Asteroid should now host a Hermit Outpost"
+        );
 
         let pop_state = app.world().get::<Deserted>(pop);
         assert!(pop_state.is_some(), "Pop should be marked as Deserted");
@@ -122,7 +135,10 @@ mod tests {
             assert_eq!(event.outpost_entity, asteroid);
             event_count += 1;
         }
-        assert_eq!(event_count, 1, "Should have fired exactly one desertion event");
+        assert_eq!(
+            event_count, 1,
+            "Should have fired exactly one desertion event"
+        );
     }
 
     #[test]
@@ -131,15 +147,21 @@ mod tests {
         let mut app = App::new();
         app.add_systems(Update, hermit_theft_system);
 
-        let hermit_outpost = app.world_mut().spawn((
-            HermitOutpost { stolen_goods: 0.0 },
-            Transform::from_xyz(100.0, 50.0, 0.0),
-        )).id();
+        let hermit_outpost = app
+            .world_mut()
+            .spawn((
+                HermitOutpost { stolen_goods: 0.0 },
+                Transform::from_xyz(100.0, 50.0, 0.0),
+            ))
+            .id();
 
-        let trade_ship = app.world_mut().spawn((
-            TradeShip { cargo: 1000.0 },
-            Transform::from_xyz(105.0, 50.0, 0.0), // Very close
-        )).id();
+        let trade_ship = app
+            .world_mut()
+            .spawn((
+                TradeShip { cargo: 1000.0 },
+                Transform::from_xyz(105.0, 50.0, 0.0), // Very close
+            ))
+            .id();
 
         // Act
         app.update();
@@ -149,8 +171,14 @@ mod tests {
         let updated_outpost = app.world().get::<HermitOutpost>(hermit_outpost).unwrap();
 
         // Steals 1% of 1000 = 10
-        assert_eq!(updated_ship.cargo, 990.0, "Trade ship should have lost 1% of cargo to the hermits");
-        assert_eq!(updated_outpost.stolen_goods, 10.0, "Hermits should have accumulated stolen goods");
+        assert_eq!(
+            updated_ship.cargo, 990.0,
+            "Trade ship should have lost 1% of cargo to the hermits"
+        );
+        assert_eq!(
+            updated_outpost.stolen_goods, 10.0,
+            "Hermits should have accumulated stolen goods"
+        );
     }
 
     #[test]
@@ -160,22 +188,32 @@ mod tests {
         app.add_event::<PopDesertedEvent>();
         app.add_systems(Update, process_hermit_desertions);
 
-        let pop = app.world_mut().spawn((
-            Pop,
-            Morale { value: 90.0, ..Default::default() }, // High
-            SpacecraftAccess { available: true },
-        )).id();
+        let pop = app
+            .world_mut()
+            .spawn((
+                Pop,
+                Morale {
+                    value: 90.0,
+                    ..Default::default()
+                }, // High
+                SpacecraftAccess { available: true },
+            ))
+            .id();
 
-        let asteroid = app.world_mut().spawn((
-            AsteroidNode,
-        )).id();
+        let asteroid = app.world_mut().spawn((AsteroidNode,)).id();
 
         // Act
         app.update();
 
         // Assert
         let hermit_state = app.world().get::<HermitOutpost>(asteroid);
-        assert!(hermit_state.is_none(), "Asteroid should NOT host an outpost");
-        assert!(app.world().get::<Deserted>(pop).is_none(), "Happy Pop should not desert");
+        assert!(
+            hermit_state.is_none(),
+            "Asteroid should NOT host an outpost"
+        );
+        assert!(
+            app.world().get::<Deserted>(pop).is_none(),
+            "Happy Pop should not desert"
+        );
     }
 }
