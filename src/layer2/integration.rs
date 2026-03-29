@@ -398,3 +398,18 @@ pub fn ensure_player_fleets_identified_system(
         }
     }
 }
+
+use crate::layer2::moon_hermits::PopDesertedEvent;
+
+/// Bridges `PopDesertedEvent` from Moon Hermits into the `Chronicle` system.
+pub fn moon_hermits_chronicle_bridge_system(
+    mut events: EventReader<PopDesertedEvent>,
+    mut chronicle_events: EventWriter<AddChronicleEvent>,
+) {
+    for _event in events.read() {
+        chronicle_events.send(AddChronicleEvent {
+            text: "A disgruntled citizen has abandoned the colony to live among the stars.".to_string(),
+            importance: EventImportance::Major,
+        });
+    }
+}

@@ -221,3 +221,6 @@ mod cascade_failure_chronicle;
 mod geodetic_integration;
 #[path = "integration/sensor_ambiguity_bridge.rs"]
 mod sensor_ambiguity_bridge;
+
+#[path = "integration/moon_hermits_chronicle.rs"]
+mod moon_hermits_chronicle;
