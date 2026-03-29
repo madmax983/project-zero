@@ -12573,3 +12573,58 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Access to the most powerful armor in the game vs the terrifying requirement of a perfectly flawless, uninterruptible logistical chain.
 
 ---
+## The Nostalgia Contagion
+
+**Layer:** 1
+
+**Fantasy:** A disease of the mind where the past is so alluring it paralyzes the present.
+
+**Mechanic:** A psychological affliction spread through conversation. Infected Pops experience massive Morale boosts but refuse to perform any "new" tasks (building new structures, researching tech). They will only maintain existing buildings or perform basic survival routines. Curing it requires aggressively isolating infected Pops or destroying the "artifacts" (old buildings, statues) they fixate on.
+
+**Emergence:** You try to preserve your colony's founding monument. A century later, a Nostalgia Contagion sweeps the sector. Half your workforce abandons the advanced orbital shipyards to go polish the old bronze statue, crippling your economy during a war.
+
+**Tension:** The comfort of perfect Morale vs. the complete stagnation of progress.
+
+---
+
+## The Martyr's Dividend
+
+**Layer:** Cross-layer
+
+**Fantasy:** Weaponizing tragedy to fuel an empire's expansion.
+
+**Mechanic:** When a Pop dies under highly specific, dramatic circumstances (e.g., starvation during a siege, crushed by a failing planetary engine), they become a "Martyr." This generates a massive, temporary spike in a unique Layer 3 resource: "Zeal." Zeal can be used to instantly complete massive megaprojects or force through wildly unpopular edicts without Unrest.
+
+**Emergence:** Your capital is starving, and people are dying in the streets. Instead of fixing the food supply, you use the resulting Zeal to instantly build an invasion fleet and conquer a neighboring agricultural world, saving the colony but turning your civilization into a death cult.
+
+**Tension:** Actually solving crises vs. deliberately letting them fester to harvest the resulting political capital.
+
+---
+
+## The Cargo Cult
+
+**Layer:** 1
+
+**Fantasy:** The devastating consequences of trying to help a primitive society without explaining how things work.
+
+**Mechanic:** When interacting with pre-spaceflight civilizations or long-isolated splinter colonies, dropping advanced resources (like high-tech food or medicine) temporarily boosts their development. However, if done too frequently, they form a "Cargo Cult," completely abandoning their own agriculture and industry to build useless mock-ups of your dropships, waiting for the next delivery.
+
+**Emergence:** You charitably feed a struggling mining outpost for a year. You stop the shipments because you need the food for a war. You return later to find they all starved to death while building a giant, non-functional replica of your cargo ship out of the iron ore they were supposed to be mining.
+
+**Tension:** The moral imperative to provide aid vs. the long-term destruction of a society's self-sufficiency.
+
+---
+
+## The Debt-Trap Megastructure
+
+**Layer:** 2
+
+**Fantasy:** A shiny new toy that slowly, imperceptibly bankrupts your entire star system.
+
+**Mechanic:** An incredibly powerful orbital structure (e.g., a massive trade hub or defense grid) that requires no initial resources to build, offered by a wealthy Layer 3 faction. However, its maintenance cost increases exponentially over time. If you fail to pay the upkeep, the faction repossesses the structure and uses it as a beachhead to invade your system.
+
+**Emergence:** You accept the free orbital defense grid to survive an early pirate raid. Fifty years later, the maintenance cost is so high you have to strip-mine your own moons and tax your Pops into rebellion just to afford the payments, turning your system into an impoverished vassal state to keep the very shield that protects it.
+
+**Tension:** Immediate, desperate salvation vs. an inescapable, crushing economic gravity well.
+
+---
