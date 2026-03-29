@@ -12628,3 +12628,58 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Immediate, desperate salvation vs. an inescapable, crushing economic gravity well.
 
 ---
+## The Feral Nanite Swarm
+
+**Layer:** 1
+
+**Fantasy:** A miraculous tool that becomes an apex predator when you stop paying attention.
+
+**Mechanic:** You uncover a cache of programmable nanites. You can assign them to rapidly build structures or heal Pops at zero resource cost. However, every time they are used, there is a small chance they "glitch" and lose connection to the mainframe. Glitched nanites form a hostile feral swarm that consumes metal resources and buildings to replicate, roaming the map like a physical storm.
+
+**Emergence:** You use nanites to quickly build an entire hospital sector during a crisis. A month later, the hospital detaches from the grid, devours its own patients for their cybernetic implants, and begins crawling toward your main power plant.
+
+**Tension:** The intoxicating speed of free, instant labor vs. the looming threat of birthing an unstoppable mechanical plague.
+
+---
+
+## The Phantom Armada
+
+**Layer:** 2
+
+**Fantasy:** A horrifying game of cosmic chicken against an enemy that might not even exist.
+
+**Mechanic:** Long-range sensors occasionally detect massive, overwhelming enemy fleets entering your system, but they are "sensor ghosts" caused by stellar radiation. You have to decide whether to panic-scramble your economy to build orbital defenses, or ignore the warning and risk complete annihilation if the fleet is real. You can spend resources to launch probes to verify, but they take time to arrive.
+
+**Emergence:** A massive sensor blip appears. You crash your entire Layer 1 economy, starving your colonists to build a giant laser platform. The blip turns out to be a comet. Ten years later, a small, real scout fleet arrives, but your colony is too impoverished from the panic to build even a single defensive ship.
+
+**Tension:** The crippling economic cost of absolute security vs. the terrifying gamble of ignoring the void.
+
+---
+
+## The Generational Grudge
+
+**Layer:** Cross-layer
+
+**Fantasy:** Sins of the father echoing through the centuries, turning petty squabbles into planetary wars.
+
+**Mechanic:** Pops track who wronged them (e.g., who took their job, who got the last food ration). When they die, they pass this "Grudge" to their descendants. Over generations, these grudges calcify into distinct, hostile factions within the colony. When a faction member reaches a position of Layer 3 leadership (like an Envoy or Admiral), they will use their power to secretly sabotage the descendants of their rival faction.
+
+**Emergence:** Your best Admiral suddenly orders the bombardment of one of your own mining moons. You investigate and realize the moon is populated by the descendants of a farmer who stole a loaf of bread from the Admiral's great-grandfather three hundred years ago.
+
+**Tension:** Focusing on macro-level empire management vs. the agonizing need to constantly mediate petty interpersonal disputes before they fester into civil wars.
+
+---
+
+## The Biosphere Tax
+
+**Layer:** 1
+
+**Fantasy:** The planet is alive, and it charges rent.
+
+**Mechanic:** As you expand your colony and increase industrial output, you generate "Pollution." If Pollution crosses a threshold, the local flora and fauna don't die—they adapt aggressively. Vines grow thicker and require power tools to clear, weather patterns become violently acidic to wash away smog, and local predators develop armor plating to resist your security forces.
+
+**Emergence:** You build a massive grid of coal generators to power a shield generator. The resulting smog causes the local trees to rapidly petrify into diamond-hard husks. The trees grow right through your shield generator, shattering it from the inside, just as a pirate raid arrives.
+
+**Tension:** Cheap, dirty, rapid industrialization vs. the escalating, active hostility of the very ground you stand on.
+
+---
