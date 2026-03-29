@@ -408,7 +408,8 @@ pub fn moon_hermits_chronicle_bridge_system(
 ) {
     for _event in events.read() {
         chronicle_events.send(AddChronicleEvent {
-            text: "A disgruntled citizen has abandoned the colony to live among the stars.".to_string(),
+            text: "A disgruntled citizen has abandoned the colony to live among the stars."
+                .to_string(),
             importance: EventImportance::Major,
         });
     }
