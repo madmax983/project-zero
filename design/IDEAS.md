@@ -4438,7 +4438,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Epigenetic Trauma
+## Epigenetic Trauma [SPECCED]
 
 **Layer:** 1
 
@@ -4452,7 +4452,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Monuments of Failure
+## The Monuments of Failure [SPECCED]
 
 **Layer:** 1
 
@@ -4466,7 +4466,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Technological Orthodoxy
+## Technological Orthodoxy [SPECCED]
 
 **Layer:** 3
 
@@ -4480,7 +4480,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Vermin Evolution
+## Vermin Evolution [SPECCED]
 
 **Layer:** 1
 
