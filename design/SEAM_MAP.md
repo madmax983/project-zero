@@ -543,3 +543,11 @@
     - Added UI obscuration logic for `UnidentifiedContact` in `render_system_view`.
 - **Schedule:** Registered after `resolve_sensors_system`.
 - **Tests:** `tests/integration/sensor_ambiguity_bridge.rs`
+
+### INT-688: Moon Hermits -> Chronicle
+- **Date:** 2026-03-30
+- **Systems connected:** `process_hermit_desertions` (Moon Hermits) -> `moon_hermits_chronicle_bridge_system` (Integration) -> `AddChronicleEvent` (Chronicle)
+- **Glue added:**
+    - `moon_hermits_chronicle_bridge_system` in `src/layer2/integration.rs` converts `PopDesertedEvent` to `AddChronicleEvent`.
+- **Schedule:** Registered in `src/simulation.rs`, chained after `process_hermit_desertions`.
+- **Tests:** `tests/integration/moon_hermits_chronicle.rs`
