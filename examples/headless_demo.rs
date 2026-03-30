@@ -5,6 +5,7 @@
 use comfy_table::{presets::UTF8_FULL, Cell, CellAlignment, Color as TableColor, Table};
 use crossterm::style::{Color, Stylize};
 use scale::layer1::pop::Pop;
+use std::io::{self, Write};
 use scale::layer1::resources::ColonyResources;
 use scale::setup::{setup_world_with_config, SetupConfig};
 use scale::shared::time::SimulationTime;
@@ -12,7 +13,8 @@ use scale::simulation::run_simulation_tick;
 
 fn main() {
     println!(
-        "{}",
+        "{} {}",
+        "✓".with(Color::Green).bold(),
         "Initializing headless simulation..."
             .with(Color::Cyan)
             .bold()
@@ -23,16 +25,21 @@ fn main() {
     let mut world = setup_world_with_config(config);
 
     println!(
-        "{}",
+        "{} {}",
+        "✓".with(Color::Green).bold(),
         "Simulation started (Headless Mode)"
             .with(Color::Green)
             .bold()
     );
 
     // 2. Run a few ticks
+    print!("{} ", "⠋".with(Color::Cyan).bold());
     for _ in 0..10 {
+        print!("{}", ".".with(Color::DarkGrey));
+        let _ = io::stdout().flush();
         run_simulation_tick(&mut world);
     }
+    println!(" {}", "Done!".with(Color::Green).bold());
 
     // 3. Inspect state
     let pop_count = world.query::<&Pop>().iter(&world).count();

@@ -947,7 +947,7 @@ fn build_at(world: &mut World, building_type: BuildingType, x: i32, y: i32) {
 
     let success = try_place_building(world, x, y, building_type);
     if success {
-        println!("Built {building_type:?} at ({x}, {y})");
+        println!("{} Built {building_type:?} at ({x}, {y})", "✓".green().bold());
     } else {
         // Check why it failed
         let terrain = world.resource::<TerrainGrid>();
@@ -955,11 +955,11 @@ fn build_at(world: &mut World, building_type: BuildingType, x: i32, y: i32) {
         let occupied = world.resource::<OccupiedTiles>();
 
         if tile.is_none() {
-            println!("Failed: ({x}, {y}) is out of bounds");
+            println!("{} Failed: ({x}, {y}) is out of bounds", "✗".red().bold());
         } else if occupied.0.contains(&(x, y)) {
-            println!("Failed: ({x}, {y}) is already occupied");
+            println!("{} Failed: ({x}, {y}) is already occupied", "✗".red().bold());
         } else if let Some(t) = tile {
-            println!("Failed: cannot build on {t:?} at ({x}, {y})");
+            println!("{} Failed: cannot build on {t:?} at ({x}, {y})", "✗".red().bold());
         }
     }
 }
@@ -967,7 +967,7 @@ fn build_at(world: &mut World, building_type: BuildingType, x: i32, y: i32) {
 fn designate_at(world: &mut World, designation_type: DesignationType, x: i32, y: i32) {
     let success = try_designate(world, x, y, designation_type);
     if success {
-        println!("Designated {designation_type:?} at ({x}, {y})");
+        println!("{} Designated {designation_type:?} at ({x}, {y})", "✓".green().bold());
     } else {
         // Check why it failed
         let terrain = world.resource::<TerrainGrid>();
@@ -976,41 +976,41 @@ fn designate_at(world: &mut World, designation_type: DesignationType, x: i32, y:
         match designation_type {
             DesignationType::Mine => {
                 if tile == Some(TerrainType::Rock) {
-                    println!("Failed: already designated at ({x}, {y})");
+                    println!("{} Failed: already designated at ({x}, {y})", "✗".red().bold());
                 } else {
-                    println!("Failed: ({x}, {y}) is {tile:?}, need Rock for mining");
+                    println!("{} Failed: ({x}, {y}) is {tile:?}, need Rock for mining", "✗".red().bold());
                 }
             }
             DesignationType::Chop => {
                 if tile == Some(TerrainType::Tree) {
-                    println!("Failed: already designated at ({x}, {y})");
+                    println!("{} Failed: already designated at ({x}, {y})", "✗".red().bold());
                 } else {
-                    println!("Failed: ({x}, {y}) is {tile:?}, need Tree for chopping");
+                    println!("{} Failed: ({x}, {y}) is {tile:?}, need Tree for chopping", "✗".red().bold());
                 }
             }
             DesignationType::Demolish | DesignationType::Destroy => {
-                println!("Failed: no building at ({x}, {y})");
+                println!("{} Failed: no building at ({x}, {y})", "✗".red().bold());
             }
             DesignationType::Repair => {
-                println!("Failed: no building to repair at ({x}, {y})");
+                println!("{} Failed: no building to repair at ({x}, {y})", "✗".red().bold());
             }
             DesignationType::SetZone(_) => {
-                println!("Failed: cannot set zone at ({x}, {y})");
+                println!("{} Failed: cannot set zone at ({x}, {y})", "✗".red().bold());
             }
             DesignationType::Tame => {
-                println!("Failed: no wild animal at ({x}, {y})");
+                println!("{} Failed: no wild animal at ({x}, {y})", "✗".red().bold());
             }
             DesignationType::ClearFlora => {
-                println!("Failed: no flora at ({x}, {y})");
+                println!("{} Failed: no flora at ({x}, {y})", "✗".red().bold());
             }
             DesignationType::JuryRig => {
-                println!("Failed: no building to jury-rig at ({x}, {y})");
+                println!("{} Failed: no building to jury-rig at ({x}, {y})", "✗".red().bold());
             }
             DesignationType::Cannibalize => {
-                println!("Failed: no Lander at ({x}, {y})");
+                println!("{} Failed: no Lander at ({x}, {y})", "✗".red().bold());
             }
             DesignationType::CollectSample => {
-                println!("Failed: no Flora or Fauna at ({x}, {y})");
+                println!("{} Failed: no Flora or Fauna at ({x}, {y})", "✗".red().bold());
             }
         }
     }
