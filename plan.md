@@ -1,20 +1,15 @@
-1. **Remove `std::mem::transmute` in `src/layer1/traits.rs`:** Replace the `transmute` in the iterator of `Traits` with a safe conversion. I'll use `num_enum::TryFromPrimitive` or simply a matching structure/macro (e.g., `strum::EnumIter` or `strum::IntoEnumIterator`). Actually, since we check the bitmask, we just need to iterate over all variants. I'll add `EnumIter` and `IntoEnumIterator` from strum to `Trait` and iterate over `Trait::iter()`, filtering out the ones where `traits.has(t)` is true. Alternatively, `num_enum::TryFromPrimitive` is great since we iterate `0..41` and use `Trait::try_from(i)`.
-
-2. **Fix Iteration Logic Bug:** The current iterator loops `0..27` instead of up to the number of variants (`41`). Using `strum::IntoEnumIterator` avoids hardcoding the variant count. We'll change `Traits::iter` to:
-   ```rust
-   pub fn iter(&self) -> impl Iterator<Item = Trait> {
-       let mask = self.0;
-       Trait::iter().filter(move |&t| (mask & (1 << (t as u8))) != 0)
-   }
-   ```
-
-3. **Check other security issues:** Update dependencies or address `paste` unmaintained warning from `cargo audit` if requested, though `paste` is widely used and safe. The current prompt focuses on `unsafe` blocks and CVEs. Wait, `cargo audit` returned:
-   ```
-   Crate:     paste
-   Version:   1.0.15
-   Warning:   unmaintained
-   Title:     paste - no longer maintained
-   ```
-   Since it's a warning, not a CVE, and `unsafe` is the focus, the `transmute` fix is primary.
-
-4. **Update `.jules/warden.md` with journal entry.**
+1. **Claim the Task**: Move task `541` (Xeno-Artifacts) from `design/BACKLOG.md` to `design/IN_PROGRESS.md` and commit.
+2. **RED Phase**:
+   - Add failing tests to `src/layer1/artifacts/mod.rs` to verify that `Artifact` tiles spawn `Artifact` entities with `Aura` components via a startup system, and that they apply their specific aura effects.
+   - Add a failing test to `src/layer1/execution/tests/work_tests.rs` to verify `TerrainType::Artifact` is indestructible and ignored by mining logic.
+3. **GREEN Phase**:
+   - Update `src/layer1/nature/terrain.rs`: Add `TerrainType::Artifact` to the `TerrainType` enum and update its associated methods (`name`, `movement_cost`, `is_walkable`, `heat_retention`). Update `generate_terrain` to randomly place a few `Artifact` tiles on the grid. Verify changes using `read_file`.
+   - Update `src/ui/map.rs`: Add rendering support by updating `get_terrain_char`, `get_terrain_color`. Update `src/bin/headless.rs` to handle `TerrainType::Artifact` in `get_terrain_color_headless`. Verify changes using `read_file`.
+   - Update `src/layer1/artifacts/mod.rs`: Create a startup system `spawn_artifacts_from_grid_system` that reads `TerrainGrid`, finds cells with `TerrainType::Artifact`, and spawns an entity with `Artifact`, `GridPosition`, and `Aura`. Register this system in `src/simulation.rs`. Verify changes using `read_file`.
+   - Update `src/layer1/execution/mining.rs`: Update `handle_mining_work` to return early or ignore positions with `TerrainType::Artifact`. Update `src/layer1/designation.rs` to reject `DesignationType::Mine` on `TerrainType::Artifact` cells. Verify changes using `read_file`.
+4. **REFACTOR Phase**:
+   - Ensure the aura effects like `StressModifier` or `SkillXpBoost` are configured correctly when spawning artifact entities.
+   - Run `read_file` to verify any refactoring changes made.
+5. **Run Tests**: Run `cargo test` and `cargo clippy -- -D warnings` locally to confirm all tests pass. Check test coverage with `cargo llvm-cov`.
+6. **Pre commit checks**: Complete pre-commit steps to ensure proper testing, verification, review, and reflection are done.
+7. **Submit**: Move task `541` from `design/IN_PROGRESS.md` to `design/COMPLETED.md` and commit.

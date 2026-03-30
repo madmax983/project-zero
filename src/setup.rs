@@ -170,7 +170,10 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
 
     // Run generation system once
     let mut system_schedule = Schedule::default();
-    system_schedule.add_systems(crate::layer2::generation::generate_system);
+    system_schedule.add_systems((
+        crate::layer2::generation::generate_system,
+        crate::layer1::artifacts::spawn_artifacts_from_grid_system,
+    ));
     system_schedule.run(&mut world);
 
     initialize_visitor_source(&mut world);

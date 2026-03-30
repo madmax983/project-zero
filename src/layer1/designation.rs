@@ -211,7 +211,8 @@ pub fn can_designate(world: &World, x: i32, y: i32, designation_type: Designatio
         DesignationType::Mine => {
             let terrain = world.resource::<TerrainGrid>();
             // Allow casting because we checked for negative above
-            if terrain.get(x as usize, y as usize) == Some(TerrainType::Rock) {
+            let tile = terrain.get(x as usize, y as usize);
+            if matches!(tile, Some(TerrainType::Rock | TerrainType::DeepRock)) {
                 return true;
             }
             // Check for ImpactSite (Scrap)
@@ -514,8 +515,12 @@ pub fn try_designate_area(
 
                 #[allow(clippy::cast_sign_loss)]
                 let is_valid = match tool {
-                    DesignationType::Mine => terrain_grid
-                        .is_some_and(|g| g.get(x as usize, y as usize) == Some(TerrainType::Rock)),
+                    DesignationType::Mine => terrain_grid.is_some_and(|g| {
+                        matches!(
+                            g.get(x as usize, y as usize),
+                            Some(TerrainType::Rock | TerrainType::DeepRock)
+                        )
+                    }),
                     DesignationType::Demolish => {
                         occupied_tiles.is_some_and(|o| o.0.contains(&(x, y)))
                     }

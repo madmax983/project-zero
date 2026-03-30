@@ -26,6 +26,8 @@ pub enum TerrainType {
     MagmaRock,
     /// Toxic fungal growth in the deep caverns.
     SporeBloom,
+    /// Indestructible alien structure emitting powerful auras.
+    Artifact,
 }
 
 impl TerrainType {
@@ -52,6 +54,7 @@ impl TerrainType {
             Self::DeepRock => "Deep Rock",
             Self::MagmaRock => "Magma Rock",
             Self::SporeBloom => "Spore Bloom",
+            Self::Artifact => "Artifact",
         }
     }
 
@@ -84,7 +87,7 @@ impl TerrainType {
     /// ```
     #[must_use]
     pub const fn is_walkable(self) -> bool {
-        !matches!(self, Self::Rock | Self::Water | Self::DeepRock)
+        !matches!(self, Self::Rock | Self::Water | Self::DeepRock | Self::Artifact)
     }
 
     /// Returns the thermal retention (0.0 to 1.0) of the terrain (Spec 198).
@@ -94,7 +97,7 @@ impl TerrainType {
     #[must_use]
     pub const fn heat_retention(self) -> f32 {
         match self {
-            Self::Rock | Self::DeepRock | Self::MagmaRock => 0.5,
+            Self::Rock | Self::DeepRock | Self::MagmaRock | Self::Artifact => 0.5,
             Self::Water => 0.2,
             Self::Grass
             | Self::Dirt
@@ -254,6 +257,15 @@ pub fn generate_terrain(width: usize, height: usize) -> TerrainGrid {
     }
     geome_manager.apply_to_grid(&mut grid);
 
+    // Xeno-Artifacts (Spec 541): rare, single tiles.
+    // Ensure we spawn 1 to 3 artifacts on the map randomly.
+    let num_artifacts = rng.gen_range(1..=3);
+    for _ in 0..num_artifacts {
+        let x = rng.gen_range(0..width);
+        let y = rng.gen_range(0..height);
+        grid.set(x, y, TerrainType::Artifact);
+    }
+
     grid
 }
 
@@ -325,6 +337,7 @@ mod tests {
                     | TerrainType::DeepRock
                     | TerrainType::MagmaRock
                     | TerrainType::SporeBloom
+                    | TerrainType::Artifact
             )
         });
         assert!(all_valid, "All tiles must be valid terrain types");

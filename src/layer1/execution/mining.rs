@@ -37,6 +37,15 @@ pub fn handle_mining_work(
     };
 
     // Emit XP event for mining
+    if let Some(p) = pos {
+        if let Some(terrain) = world.get_resource::<crate::layer1::terrain::TerrainGrid>() {
+            if terrain.get(p.x as usize, p.y as usize) == Some(crate::layer1::terrain::TerrainType::Artifact) {
+                // Cannot mine artifacts. Have no effect.
+                return false;
+            }
+        }
+    }
+
     if let Some(mut events) = world.get_resource_mut::<Events<XpGainEvent>>() {
         events.send(XpGainEvent {
             entity: worker_entity,

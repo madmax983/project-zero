@@ -637,3 +637,32 @@ fn test_calculate_work_amount_cap() {
         work_amount
     );
 }
+
+    #[test]
+    fn test_artifact_indestructible() {
+        let mut world = World::new();
+
+        // Setup a grid with an Artifact tile
+        let mut tiles = vec![TerrainType::Grass; 100];
+        tiles[55] = TerrainType::Artifact; // (5, 5)
+        world.insert_resource(TerrainGrid {
+            width: 10,
+            height: 10,
+            tiles,
+        });
+
+        // Spawn a target entity (mocking the designation or the tile itself)
+        let target = world.spawn(crate::layer1::map::GridPosition { x: 5, y: 5 }).id();
+        let worker = world.spawn(crate::layer1::pop::Pop).id();
+
+        // Add dummy resource for messages
+        world.insert_resource(crate::shared::log::MessageLog::default());
+
+        // Call handle_mining_work on the Artifact tile
+        // It should either return early or have no effect, keeping the tile intact
+        crate::layer1::execution::mining::handle_mining_work(&mut world, target, worker, 10.0, Some(crate::layer1::map::GridPosition { x: 5, y: 5 }));
+
+        // Verify that the tile is STILL Artifact
+        let terrain = world.resource::<TerrainGrid>();
+        assert_eq!(terrain.get(5, 5), Some(TerrainType::Artifact));
+    }

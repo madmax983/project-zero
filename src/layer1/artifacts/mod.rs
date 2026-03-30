@@ -48,6 +48,41 @@ impl ActiveAuras {
     }
 }
 
+use crate::layer1::terrain::{TerrainGrid, TerrainType};
+use rand::Rng;
+
+/// Spawns `Artifact` entities from `TerrainType::Artifact` tiles in the grid.
+pub fn spawn_artifacts_from_grid_system(
+    mut commands: Commands,
+    terrain: Res<TerrainGrid>,
+) {
+    let mut rng = rand::thread_rng();
+    for y in 0..terrain.height {
+        for x in 0..terrain.width {
+            if terrain.get(x, y) == Some(TerrainType::Artifact) {
+                // Determine a random aura effect for the artifact
+                let effect = if rng.gen_bool(0.5) {
+                    AuraEffect::SkillXpBoost(crate::layer1::skills::SkillType::Mining, 2.0)
+                } else {
+                    AuraEffect::StressModifier(0.5)
+                };
+
+                commands.spawn((
+                    Artifact,
+                    GridPosition {
+                        x: i32::try_from(x).unwrap_or(0),
+                        y: i32::try_from(y).unwrap_or(0),
+                    },
+                    Aura {
+                        radius: 5.0,
+                        effect,
+                    },
+                ));
+            }
+        }
+    }
+}
+
 /// System to update `ActiveAuras` on Pops based on proximity to Artifacts.
 #[allow(clippy::cast_precision_loss)]
 pub fn aura_system(
@@ -154,6 +189,71 @@ mod tests {
             active_auras.is_empty(),
             "Aura should be removed when leaving range"
         );
+    }
+    #[test]
+    fn test_artifact_spawns_from_grid() {
+        let mut world = World::new();
+
+        // Setup a grid with an Artifact tile
+        let mut tiles = vec![TerrainType::Grass; 100];
+        tiles[55] = TerrainType::Artifact; // (5, 5)
+        world.insert_resource(TerrainGrid {
+            width: 10,
+            height: 10,
+            tiles,
+        });
+
+        // Run the startup system
+        let mut schedule = Schedule::default();
+        schedule.add_systems(crate::layer1::artifacts::spawn_artifacts_from_grid_system);
+        schedule.run(&mut world);
+
+        // Verify an Artifact entity was spawned
+        let mut query = world.query::<(&Artifact, &GridPosition, &Aura)>();
+        let mut count = 0;
+        for (_, pos, aura) in query.iter(&world) {
+            assert_eq!(pos.x, 5);
+            assert_eq!(pos.y, 5);
+            // Verify it has an effect
+            assert!(matches!(
+                aura.effect,
+                AuraEffect::SkillXpBoost(_, _) | AuraEffect::StressModifier(_)
+            ));
+            count += 1;
+        }
+        assert_eq!(count, 1, "Should have spawned exactly one Artifact entity");
+    }
+
+    #[test]
+    fn test_artifact_emits_aura_to_nearby_pops_spec() {
+        let mut world = World::new();
+
+        // Spawn Artifact at (10, 10) with Radius 3 and Insight (+Science, +Stress)
+        world.spawn((
+            Artifact,
+            Aura {
+                radius: 3.0,
+                effect: AuraEffect::StressModifier(0.5), // For now, let's use StressModifier
+            },
+            GridPosition { x: 10, y: 10 },
+        ));
+
+        // Spawn a Pop within the aura's radius
+        let pop = world.spawn((
+            crate::layer1::pop::Pop,
+            GridPosition { x: 11, y: 10 },
+            crate::layer1::stress::StressTracker::default(),
+            ActiveAuras::default()
+        )).id();
+
+        // Run the system
+        let mut schedule = Schedule::default();
+        schedule.add_systems(aura_system);
+        schedule.run(&mut world);
+
+        // Assert: The Pop receives the specified modifiers
+        let active_auras = world.get::<ActiveAuras>(pop).unwrap();
+        assert!(active_auras.contains_effect(AuraEffect::StressModifier(0.5)), "Pop within Artifact aura should receive increased stress.");
     }
 }
 pub mod vr_pod;
