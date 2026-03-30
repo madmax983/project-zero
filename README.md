@@ -89,9 +89,11 @@ For the **advanced simulation of legends** (Oral Tradition), see the [Oral Tradi
 
 The "Nova" feature (Oral Tradition) builds upon the base narrative system to create living legends that evolve in taverns. It is located in `scale::layer1::oral_tradition`.
 
-> **⚠️ REQUIRES FEATURE NOVA**
+> # 🚨 ⚠️ REQUIRES FEATURE NOVA ⚠️ 🚨
 >
-> To use this feature, you must enable the `nova` feature flag in `Cargo.toml` or via command line.
+> **STOP! If you copy-paste the code below without enabling the `nova` feature, it will NOT compile!**
+>
+> To use this feature, you MUST enable the `nova` feature flag in your `Cargo.toml` or via the command line.
 
 **Usage:**
 

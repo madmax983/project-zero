@@ -50,4 +50,6 @@ I've updated `echo_issue_report.md` with resolutions. The error text fix for `Na
 
 🕵️ **The Reality:** "Turns out I needed to enable feature `nova`. The README mentions this, but if I just copy-paste the code snippet and run `cargo run`, it fails with generic rustc missing type errors instead of telling me the feature is missing."
 
-💡 **The Fix:** "Add a prominent comment *inside* the rust code block itself: `// RUN WITH: cargo run --features nova` so it's impossible to miss when copy-pasting, or make the code self-documenting about the feature requirement."
+💡 **The Fix:** "Add a huge banner in README saying 'REQUIRES FEATURE NOVA'."
+
+✅ **Resolution:** Implemented. Modified `README.md` to add a massive, unmissable warning banner ("🚨 ⚠️ REQUIRES FEATURE NOVA ⚠️ 🚨") about the `nova` feature flag before the code snippet.
