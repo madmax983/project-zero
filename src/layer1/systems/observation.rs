@@ -86,6 +86,8 @@ pub fn register(schedule: &mut Schedule) {
             check_sleepwalking_start_system.after(decay_needs_system),
             crate::layer1::cryo_shock::decay_cryo_shock_system.after(decay_needs_system),
             sleepwalk_end_system.after(decay_needs_system),
+            crate::layer1::sleepwalking::process_sleepwalking_actions.after(decay_needs_system),
+            crate::layer1::sleepwalking::clear_sleepwalking_intents_system.after(crate::layer1::sleepwalking::process_sleepwalking_actions),
         )
             .in_set(Layer1SystemSet::Observation),
     );

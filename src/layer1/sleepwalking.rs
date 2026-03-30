@@ -113,3 +113,84 @@ pub fn assign_sleepwalk_target_system(
         }
     }
 }
+
+#[derive(Debug, PartialEq, Clone)]
+pub enum ActionTypeSleepwalking {
+    Wander,
+    ToggleSwitch,
+    DropItem,
+}
+
+#[derive(Component)]
+pub struct ActionIntent {
+    pub action_type: ActionTypeSleepwalking,
+}
+
+#[derive(Component)]
+pub struct InteractableSwitch {
+    pub is_on: bool,
+}
+
+pub fn process_sleepwalking_actions(
+    mut commands: Commands,
+    query: Query<(Entity, &MentalState, Option<&crate::layer1::items::Equipment>), Without<ActionIntent>>,
+    mut unequip_events: EventWriter<crate::layer1::items::UnequipEvent>,
+    mut switch_query: Query<(&mut InteractableSwitch, &GridPosition)>,
+    pop_pos_query: Query<&GridPosition, With<crate::layer1::pop::Pop>>,
+) {
+    let mut rng = rand::thread_rng();
+    for (entity, state, equipment) in query.iter() {
+        if matches!(*state, MentalState::Broken(MentalBreakType::Sleepwalking)) {
+            // Assign a random low-level action intent occasionally
+            if rng.gen_bool(0.1) {
+                let actions = [
+                    ActionTypeSleepwalking::Wander,
+                    ActionTypeSleepwalking::ToggleSwitch,
+                    ActionTypeSleepwalking::DropItem,
+                ];
+                let chosen_action = actions[rng.gen_range(0..actions.len())].clone();
+
+                // Integrate with game logic based on the action
+                match chosen_action {
+                    ActionTypeSleepwalking::DropItem => {
+                        if let Some(eq) = equipment {
+                            if let Some(item) = eq.tool {
+                                unequip_events.send(crate::layer1::items::UnequipEvent {
+                                    actor: entity,
+                                    item,
+                                    slot: "tool".to_string(),
+                                });
+                            }
+                        }
+                    },
+                    ActionTypeSleepwalking::ToggleSwitch => {
+                        if let Ok(pos) = pop_pos_query.get(entity) {
+                            for (mut switch, switch_pos) in switch_query.iter_mut() {
+                                // Check adjacency (Moore neighborhood)
+                                if (pos.x - switch_pos.x).abs() <= 1 && (pos.y - switch_pos.y).abs() <= 1 {
+                                    switch.is_on = !switch.is_on;
+                                    break;
+                                }
+                            }
+                        }
+                    },
+                    ActionTypeSleepwalking::Wander => {
+                        // Wander logic is handled by assign_sleepwalk_target_system
+                    }
+                }
+
+                commands.entity(entity).insert(ActionIntent { action_type: chosen_action });
+            }
+        }
+    }
+}
+
+/// Clears processed action intents to allow for new ones in subsequent ticks
+pub fn clear_sleepwalking_intents_system(
+    mut commands: Commands,
+    query: Query<Entity, With<ActionIntent>>,
+) {
+    for entity in query.iter() {
+        commands.entity(entity).remove::<ActionIntent>();
+    }
+}

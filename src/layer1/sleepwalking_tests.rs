@@ -155,4 +155,42 @@ mod tests {
             .get::<crate::layer1::sleepwalking::SleepwalkTimer>(pop)
             .is_none());
     }
+
+    #[test]
+    fn test_sleepwalking_pop_performs_random_action() {
+        use bevy::prelude::{App, Update};
+        use crate::layer1::sleepwalking::{process_sleepwalking_actions, ActionIntent, InteractableSwitch};
+
+        // Arrange
+        let mut app = App::new();
+        app.add_systems(Update, process_sleepwalking_actions);
+        app.init_resource::<bevy_ecs::event::Events<crate::layer1::items::UnequipEvent>>();
+
+        let entity = app.world_mut().spawn((
+            Pop,
+            MentalState::Broken(MentalBreakType::Sleepwalking),
+            GridPosition { x: 0, y: 0 },
+        )).id();
+
+        // Setup an adjacent interactable object (e.g., a switch)
+        let _switch = app.world_mut().spawn((
+            InteractableSwitch { is_on: true },
+            GridPosition { x: 1, y: 0 },
+        )).id();
+
+        // Act
+        // Multiple updates might be needed depending on the RNG and action execution time
+        let mut has_action = false;
+        for _ in 0..100 {
+            app.update();
+            if app.world().entity(entity).contains::<ActionIntent>() {
+                has_action = true;
+                break;
+            }
+        }
+
+        // Assert
+        // We expect the sleepwalker to have emitted a random action intent
+        assert!(has_action, "Sleepwalker should generate a random ActionIntent");
+    }
 }
