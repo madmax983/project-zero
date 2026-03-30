@@ -9,7 +9,6 @@ pub fn register(schedule: &mut Schedule) {
             consume_food_system
                 .after(produce_food_system)
                 .after(update_resource_caps_system),
-            crate::layer1::drone::drone_battery_system.after(consume_food_system),
             clothing_wear_system.after(consume_food_system),
             vermin_growth_system.after(consume_food_system),
             vermin_effect_system.after(vermin_growth_system),

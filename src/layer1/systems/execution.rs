@@ -31,9 +31,6 @@ pub fn register(schedule: &mut Schedule) {
                 .after(crate::layer1::artifacts::vr_pod::update_vr_pods_system),
             process_start_plan_system
                 .after(crate::layer1::customs::immigration_interception_system),
-            crate::layer1::integration::drone_spawner_bridge_system
-                .after(process_start_plan_system),
-            crate::layer1::integration::drone_work_bridge_system.after(process_start_plan_system),
             crate::layer1::husbandry::pasture_confinement_system.after(process_start_plan_system),
             crate::layer1::fauna::fauna_behavior_system.after(process_start_plan_system),
             mascot_behavior_system.after(process_start_plan_system),
@@ -130,7 +127,6 @@ pub fn register(schedule: &mut Schedule) {
         (
             crate::layer1::execution::vandalize_execution_system.after(arrival_handler_system),
             crate::layer1::pop_doppelganger::sabotage_system.after(work_execution_system),
-            crate::layer1::drone::process_charge_system.after(arrival_handler_system),
             update_social_class_system.after(arrival_handler_system),
             class_friction_system.after(update_social_class_system),
             haul_system.after(arrival_handler_system),

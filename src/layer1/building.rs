@@ -2063,7 +2063,7 @@ fn configure_specialized_tech(entity: &mut EntityWorldMut, building_type: Buildi
         }
         BuildingType::DroneHub => {
             entity.insert((
-                DroneHub,
+                DroneHub::default(),
                 PowerConsumer {
                     demand: 10.0,
                     active: false,

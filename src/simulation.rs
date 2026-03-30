@@ -47,8 +47,11 @@ pub fn build_simulation_schedule() -> Schedule {
     schedule.add_systems((
         update_building_map_system,
         gpu_evaluate_actions.after(update_building_map_system),
+        crate::layer1::drone::spawn_drones_system.after(update_building_map_system),
+        crate::layer1::drone::drone_power_monitor_system.after(update_building_map_system),
+        crate::layer1::drone::assign_drone_tasks_system.after(crate::layer1::drone::drone_power_monitor_system),
+        crate::layer1::drone::drone_execute_tasks_system.after(crate::layer1::drone::assign_drone_tasks_system),
         crate::layer1::visitor::visitor_behavior_system,
-        crate::layer1::drone::evaluate_drone_actions_system.after(update_building_map_system),
         update_action_timer_system
             .after(gpu_evaluate_actions)
             .before(Layer1SystemSet::Execution),

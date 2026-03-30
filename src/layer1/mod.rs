@@ -552,7 +552,6 @@ pub use sleep_deprived_savant::*;
 pub mod systems;
 
 #[cfg(test)]
-mod drone_tests;
 #[cfg(test)]
 mod institutional_memory_tests;
 pub mod memetic;

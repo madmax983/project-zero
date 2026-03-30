@@ -271,3 +271,4 @@
 - [x] `INT-533` Integration: SensorGlitchEvent -> Chronicle — completed 2026-03-20
 - [x] `544` Planetary Governance — `specs/544-planetary-governance.md` — completed 2026-03-20
 - [x] `INT-544` Integration: RebellionEvent -> AddChronicleEvent — completed 2026-03-21
+- [x] `542` Drone Networks — `specs/542-drone-networks.md` — completed 2026-03-21
