@@ -227,3 +227,6 @@ mod moon_hermits_chronicle;
 
 #[path = "integration/empathic_plague_bridge.rs"]
 mod empathic_plague_bridge;
+
+#[path = "integration/crop_mutation_chronicle.rs"]
+mod crop_mutation_chronicle;

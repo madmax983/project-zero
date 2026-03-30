@@ -1126,6 +1126,30 @@ pub fn diplomatic_reflection_kill_bridge(
 
 // --- INT-183: Geodetic Sentience -> Chronicle ---
 
+use crate::layer1::genetics::{CropMutationEvent, MutationType};
+
+/// INT-735: Bridges CropMutationEvent to AddChronicleEvent (Chronicle).
+pub fn crop_mutation_chronicle_bridge(
+    mut events: EventReader<CropMutationEvent>,
+    mut chronicle_events: EventWriter<AddChronicleEvent>,
+) {
+    for ev in events.read() {
+        let text = match ev.mutation_type {
+            MutationType::AggressiveGrowth => {
+                "A genetically modified crop mutated, exhibiting aggressive growth.".to_string()
+            }
+            MutationType::ToxicSpores => {
+                "A genetically modified crop mutated, releasing toxic spores.".to_string()
+            }
+        };
+
+        chronicle_events.send(AddChronicleEvent {
+            text,
+            importance: EventImportance::Major,
+        });
+    }
+}
+
 /// Bridges `GolemFormedEvent` to `AddChronicleEvent` (Chronicle).
 pub fn golem_formed_chronicle_bridge_system(
     mut events: EventReader<GolemFormedEvent>,
