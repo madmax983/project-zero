@@ -702,6 +702,7 @@ classDiagram
 - [ADR 043: Layer 3 Revival (Interstellar Scale)](./adr/043-layer-3-revival.md)
 - [ADR 044: Planetary Governance System](./adr/044-planetary-governance-system.md)
 - [ADR 045: Galactic Market System](./adr/045-galactic-market-system.md)
+- [ADR 046: Fix Layer Violations](./adr/046-fix-layer-violations.md)
 
 ## Layer 2: Planetary Governance Integration
 
@@ -882,4 +883,28 @@ classDiagram
 
     MarketModule ..> GalacticMarket : Modifies supply_pool
     MarketModule ..> GalacticMarket : Recalculates prices
+```
+
+## Cross-Layer Event Bridges
+
+To maintain an acyclic architecture, Layer 1 (Colony) must never directly mutate Layer 2 (System) or Layer 3 (Interstellar) states. Instead, Layer 1 dispatches Events, which are handled by dedicated `Integration` modules in the higher layers.
+
+```mermaid
+sequenceDiagram
+    participant L1 as Layer 1 (Colony)
+    participant EventBus as Event Bus
+    participant L2Int as Layer 2 Integration
+    participant L3Int as Layer 3 Integration
+
+    L1->>EventBus: Broadcast(ElectionFinishedEvent)
+    EventBus->>L2Int: Read(ElectionFinishedEvent)
+    L2Int->>L2Int: Update Governor Stats
+
+    L1->>EventBus: Broadcast(MartyrsEngineActivated)
+    EventBus->>L2Int: Read(MartyrsEngineActivated)
+    L2Int->>L2Int: Deploy OrbitalShield
+
+    L1->>EventBus: Broadcast(ParasiticBroadcastRisk)
+    EventBus->>L3Int: Read(ParasiticBroadcastRisk)
+    L3Int->>L3Int: Increase DetectionRisk
 ```
