@@ -315,3 +315,4 @@
 - [x] `735` Genetic Crop Modification — `specs/735-genetic-crop-modification.md` — completed 2026-03-31
 - [x] `INT-727` Integration: Empathic Plague -> Morale — completed 2026-04-01
 - [x] `INT-735` Integration: Genetic Crop Modification -> Chronicle — completed 2026-04-01
+- [x] `INT-546` Integration: Reverse Quarantine -> Chronicle — completed 2026-04-01
