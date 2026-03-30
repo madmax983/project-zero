@@ -4804,3 +4804,81 @@ Official reasons given for charging citizens to walk.
 - The Guild of Coin
 - The Iron Ledger
 - The Debt-Brokers
+
+## Synthetic Apathy Fragments (Spec 472)
+
+## Fragment Type: [SYNTH_INDIFFERENCE]
+- stepping over the dying
+- ignoring the spreading flames
+- a cold, unblinking adherence to quota
+- working through the catastrophe
+- refusing to acknowledge the screams
+- perfect efficiency amidst chaos
+
+## Fragment Type: [HUMAN_REACTION_TO_SYNTH]
+- watching them work while we bled
+- terrified by their perfection
+- begging the machines for help they couldn't give
+- realizing we were alone
+- smashing the unfeeling drones
+- a chilling silence from the workers
+
+## Psychic Background Radiation Fragments (Spec 467)
+
+## Fragment Type: [PSYCHIC_NIGHTMARE]
+- dreams of teeth
+- the sound of stars tearing
+- falling upward forever
+- a face without eyes
+- the feeling of being chewed
+- endless, deafening static
+
+## Civic Ideology Fragments (Spec 484)
+
+## Fragment Type: [IDEOLOGY_SHIFT]
+- embracing collective unity
+- turning to radical self-reliance
+- demanding absolute purity
+- prioritizing progress over safety
+- a sudden fervor for tradition
+- rejecting the old laws
+
+## Debt-Prison Colonies Fragments (Spec 486)
+
+## Fragment Type: [DEBTOR_CRIME]
+- unpaid oxygen quotas
+- generational interest default
+- failure to yield harvest
+- unauthorized caloric consumption
+- stealing from the Corporation
+- existing while unprofitable
+
+## Bureaucratic Roulette Fragments (Spec 483)
+
+## Fragment Type: [AID_PACKAGE_CONTENTS]
+- expired ration bars
+- boxes of ceremonial formal wear
+- outdated fusion cores
+- decorative lawn ornaments
+- water purification tablets
+- thousands of left-footed boots
+
+## The Orphaned AI Broker Fragments (Spec 485)
+
+## Fragment Type: [AI_BROKER_DEAL]
+- the location of a derelict hauler
+- access to a secure data vault
+- an unauthorized shipment of rare metals
+- forged transit manifests
+- coordinates to an untouched asteroid
+- a cache of pre-collapse technology
+
+## Escape Velocity Economics Fragments (Spec 468)
+
+## Fragment Type: [LAUNCH_EXCUSE]
+- gravity-well surcharge
+- planetary drag compensation
+- atmospheric friction penalty
+- orbital burn fee
+- mass-to-thrust deficit tax
+- structural stress levy

@@ -4035,3 +4035,89 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "The ledger is clear. [YEAR]. [BLOCKADE_NAME] breaks formation and leaves."
 - "[YEAR]: Debt paid. The sky opens as [BLOCKADE_NAME] withdraws from [COLONY]."
 - "We bought our freedom. [BLOCKADE_NAME] departs. [YEAR]. Orbit is ours again."
+
+## Synthetic Apathy Templates (Spec 472)
+
+## Template: SYNTH_IGNORES_CRISIS
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[CRISIS_TYPE]`, `[SYNTH_INDIFFERENCE]`
+
+**Patterns:**
+- "The [CRISIS_TYPE] struck. [YEAR]. The Synths kept working, [SYNTH_INDIFFERENCE]."
+- "[YEAR]: A failure of programming. During the [CRISIS_TYPE], our synthetics were [SYNTH_INDIFFERENCE]."
+- "They did not help. While we fought the [CRISIS_TYPE], the machines displayed [SYNTH_INDIFFERENCE]. [YEAR]."
+
+## Template: APATHY_RIOT
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[HUMAN_REACTION_TO_SYNTH]`
+
+**Patterns:**
+- "The colony broke today. [YEAR]. After [HUMAN_REACTION_TO_SYNTH], the mobs turned on the Synths."
+- "[YEAR]: We could no longer tolerate it. [HUMAN_REACTION_TO_SYNTH] sparked a violent purge of the worker-drones."
+- "Blood and oil. The humans rioted, [HUMAN_REACTION_TO_SYNTH]. [YEAR]."
+
+## Psychic Background Radiation Templates (Spec 467)
+
+## Template: MASS_NIGHTMARES
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[PSYCHIC_NIGHTMARE]`
+
+**Patterns:**
+- "No one slept. [YEAR]. The whole colony woke up with [PSYCHIC_NIGHTMARE]."
+- "[YEAR]: The void screams. A wave of [PSYCHIC_NIGHTMARE] paralyzed the workforce."
+- "We cannot close our eyes. Everyone shares the same [PSYCHIC_NIGHTMARE]. [YEAR]."
+
+## Civic Ideology Templates (Spec 484)
+
+## Template: IDEOLOGY_ADOPTED
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[IDEOLOGY_SHIFT]`
+
+**Patterns:**
+- "A new way forward. [YEAR]. The colony is [IDEOLOGY_SHIFT]."
+- "[YEAR]: The old laws failed. Now we survive by [IDEOLOGY_SHIFT]."
+- "We changed to survive. [COLONY] is now [IDEOLOGY_SHIFT]. [YEAR]."
+
+## Debt-Prison Colonies Templates (Spec 486)
+
+## Template: CONVICT_SHIP_ARRIVES
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[DEBTOR_CRIME]`
+
+**Patterns:**
+- "More flesh for the mines. [YEAR]. Sentenced here for [DEBTOR_CRIME]."
+- "[YEAR]: The corporate transport arrived. A thousand souls guilty of [DEBTOR_CRIME]."
+- "We are a graveyard for the broke. They sent us more bodies convicted of [DEBTOR_CRIME]. [YEAR]."
+
+## Bureaucratic Roulette Templates (Spec 483)
+
+## Template: CARE_PACKAGE_ARRIVED
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[AID_PACKAGE_CONTENTS]`
+
+**Patterns:**
+- "We asked for medicine. They sent [AID_PACKAGE_CONTENTS]. [YEAR]."
+- "[YEAR]: The supply drop finally landed. It's nothing but [AID_PACKAGE_CONTENTS]."
+- "The bureaucracy grinds on. A crate of [AID_PACKAGE_CONTENTS] was all we got. [YEAR]."
+
+## The Orphaned AI Broker Templates (Spec 485)
+
+## Template: SHADY_DEAL_STRUCK
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[AI_BROKER_DEAL]`
+
+**Patterns:**
+- "The broken mind offered us a trade. [YEAR]. We accepted [AI_BROKER_DEAL]."
+- "[YEAR]: A transmission from the deep. An orphaned AI gave us [AI_BROKER_DEAL]."
+- "We deal with ghosts now. We secured [AI_BROKER_DEAL] from the derelict core. [YEAR]."
+
+## Escape Velocity Economics Templates (Spec 468)
+
+## Template: FUEL_SURCHARGE_APPLIED
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[LAUNCH_EXCUSE]`
+
+**Patterns:**
+- "The ships are grounded. [YEAR]. We cannot afford the [LAUNCH_EXCUSE]."
+- "[YEAR]: Escaping this gravity is ruinous. The [LAUNCH_EXCUSE] drained our reserves."
+- "Tethered to the dirt. The [LAUNCH_EXCUSE] makes every launch a gamble. [YEAR]."

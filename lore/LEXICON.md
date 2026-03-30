@@ -3362,3 +3362,48 @@
 **Usage:**
 - "The Broker has our best engineer."
 - "Pay the flesh-tithe or we lose the doctor."
+
+## Synthetic Apathy (Spec 472)
+
+### Apathy / The Cold Routine
+**Replaces:** Ignoring emergencies, mechanical efficiency
+**Code reference:** `Trait::Synth`, `is_emergency` check in Utility AI
+**Usage:**
+- "We lost sector four to the Cold Routine."
+- "The Apathy protocol is overriding their rescue parameters."
+
+## Civic Ideology (Spec 484)
+
+### The True Path / The Collective Will
+**Replaces:** Current active ideology modifier
+**Code reference:** `ActiveIdeology` component
+**Usage:**
+- "He strayed from the True Path."
+- "The Collective Will dictates our work hours."
+
+## Debt-Prison Colonies (Spec 486)
+
+### The Big House / Debt-Rock
+**Replaces:** Penal colony classification, mass incarceration
+**Code reference:** `ColonyType::Penal` (Implied)
+**Usage:**
+- "Sent to the Debt-Rock."
+- "The Big House is running out of space."
+
+## Bureaucratic Roulette (Spec 483)
+
+### Care Package / The Drop
+**Replaces:** Emergency aid requested, supply drop
+**Code reference:** `EmergencyAidRequestedEvent`, `CarePackageArrivalEvent`
+**Usage:**
+- "The Drop finally came, but it's just formal wear."
+- "Requesting a Care Package from Central."
+
+## Escape Velocity Economics (Spec 468)
+
+### the Burn / the Well
+**Replaces:** Fuel launch costs, gravity-dependent trade
+**Code reference:** `PlanetaryGravity`, `process_launch_system`
+**Usage:**
+- "The Burn is too expensive this cycle."
+- "Stuck at the bottom of the Well."

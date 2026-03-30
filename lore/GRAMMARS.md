@@ -3171,3 +3171,95 @@ PHANTOM_ORDER_EXECUTED:
   increases:
     - WASTE (maximum)
 ```
+
+## Synthetic Apathy Chaining
+
+```yaml
+SYNTH_IGNORES_CRISIS:
+  enables:
+    - APATHY_RIOT (medium)
+    - HUMAN_REACTION_TO_SYNTH (high)
+  increases:
+    - RESENTMENT (maximum)
+    - FEAR_OF_TECH (high)
+
+APATHY_RIOT:
+  enables:
+    - SYNTHS_DISMANTLED (always)
+    - PRODUCTION_CRASH (high)
+  increases:
+    - DESTRUCTION (medium)
+    - UNREST (high)
+```
+
+## Psychic Background Radiation Chaining (Spec 467)
+
+```yaml
+MASS_NIGHTMARES:
+  enables:
+    - INSOMNIA_EPIDEMIC (high)
+    - CABIN_FEVER_BREAK (medium)
+  increases:
+    - UNREST (medium)
+    - FATIGUE (maximum)
+```
+
+## Civic Ideology Chaining (Spec 484)
+
+```yaml
+IDEOLOGY_ADOPTED:
+  enables:
+    - PURGE_NON_BELIEVERS (medium)
+    - MONUMENT_CONSTRUCTED (high)
+  increases:
+    - COHESION (maximum)
+    - UNREST (low, localized)
+```
+
+## Debt-Prison Colonies Chaining (Spec 486)
+
+```yaml
+CONVICT_SHIP_ARRIVES:
+  enables:
+    - MASS_BREAKOUT (low)
+    - GANG_WARFARE (high)
+  increases:
+    - POPULATION (maximum)
+    - CRIME (maximum)
+```
+
+## Bureaucratic Roulette Chaining (Spec 483)
+
+```yaml
+CARE_PACKAGE_ARRIVED:
+  enables:
+    - USELESS_HOARDING (high)
+    - BUREAUCRATIC_DESPAIR (medium)
+  increases:
+    - DISAPPOINTMENT (maximum)
+    - JURY_RIGGING_SKILL (low)
+```
+
+## The Orphaned AI Broker Chaining (Spec 485)
+
+```yaml
+SHADY_DEAL_STRUCK:
+  enables:
+    - SUDDEN_WEALTH (medium)
+    - DERELICT_AWAKENS (low)
+  increases:
+    - CORRUPTION (high)
+    - MYSTERY (maximum)
+```
+
+## Escape Velocity Economics Chaining (Spec 468)
+
+```yaml
+FUEL_SURCHARGE_APPLIED:
+  enables:
+    - SMUGGLER_BOOM (high)
+    - GROUNDED_FLEET (medium)
+  increases:
+    - POVERTY (maximum)
+    - RESOURCE_SCARCITY (high)
+```
