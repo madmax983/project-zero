@@ -255,6 +255,8 @@ pub struct PopBundle {
     pub faction: FactionMember,
     /// Arrival time.
     pub arrival: Arrival,
+    /// Ethics configuration.
+    pub ethics: super::social::indoctrination::PopEthics,
     /// Hygiene filth level.
     pub filth: Filth,
     /// Active status effects.
@@ -308,6 +310,16 @@ impl PopBundle {
             age: Age::new(rng.gen_range(20..40)),
             faction: FactionMember::default(),
             arrival: Arrival { tick: 0 },
+            ethics: super::social::indoctrination::PopEthics {
+                ethic: match rng.gen_range(0..5) {
+                    0 => super::social::indoctrination::Ethic::Pacifist,
+                    1 => super::social::indoctrination::Ethic::Militarist,
+                    2 => super::social::indoctrination::Ethic::Collectivist,
+                    3 => super::social::indoctrination::Ethic::Individualist,
+                    _ => super::social::indoctrination::Ethic::FreeThinker,
+                },
+                stubbornness: rng.gen_range(0.2..1.0),
+            },
             filth: Filth::default(),
             auras: ActiveAuras::default(),
             social_debt: SocialDebt::default(),
