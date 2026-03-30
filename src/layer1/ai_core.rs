@@ -406,3 +406,5 @@ mod tests {
         assert!(locked);
     }
 }
+
+pub mod feral_ai;

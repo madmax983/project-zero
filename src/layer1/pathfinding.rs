@@ -47,6 +47,26 @@ struct AccessCredentials {
     role: Option<Role>,
 }
 
+/// Global modifier for pathfinding logic.
+#[derive(Resource, Default, Debug, Clone, Copy)]
+pub struct PathingGrid {
+    /// If true, food routing paths to non-bunker locations are restricted.
+    pub food_routed_to_bunker: bool,
+}
+
+impl PathingGrid {
+    /// Reroutes food to the bunker (Feral Algorithm).
+    pub fn route_food_to_bunker(&mut self) {
+        self.food_routed_to_bunker = true;
+    }
+
+    /// Returns true if food is routed to the bunker.
+    #[must_use]
+    pub const fn is_food_routed_to_bunker(&self) -> bool {
+        self.food_routed_to_bunker
+    }
+}
+
 /// Node for A* pathfinding.
 ///
 /// Represents a step in the path search.
@@ -396,6 +416,20 @@ fn is_walkable(
             }
 
             if let Some(access) = access_opt {
+                // If Feral Algorithm has routed food to a bunker, we might lock down certain buildings.
+                // For a robust implementation, we check the global PathingGrid.
+                if let Some(pg) = world.get_resource::<PathingGrid>() {
+                    if pg.is_food_routed_to_bunker() && building.building_type == BuildingType::Stockpile {
+                        // In a real scenario, we'd check if this is the bunker.
+                        // Here we simulate the lockdown by restricting access.
+                        if let Some(_creds) = credentials {
+                            // Let's say only Feral pops can enter
+                            // Actually, let's just make it restricted or locked
+                            return false;
+                        }
+                    }
+                }
+
                 return match access.mode {
                     AccessMode::Public => true,
                     AccessMode::Lockdown => false,

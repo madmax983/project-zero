@@ -74,6 +74,15 @@ pub struct BlackoutProtocol {
     pub active: bool,
 }
 
+/// Global grid power state (calculated each tick).
+#[derive(Resource, Default, Debug, Clone, Copy)]
+pub struct GridPower {
+    /// Total available power.
+    pub available: u32,
+    /// Total required power.
+    pub required: u32,
+}
+
 /// Stores excess power to buffer brownouts.
 #[derive(Component, Debug, Clone)]
 pub struct Battery {
@@ -220,6 +229,9 @@ pub fn power_grid_system(world: &mut World) {
     // 2. Find connected components
     let mut visited: HashSet<(i32, i32)> = HashSet::new();
 
+    let mut global_production = 0.0;
+    let mut global_demand = 0.0;
+
     for start_pos in grid_map.keys().copied() {
         if visited.contains(&start_pos) {
             continue;
@@ -277,7 +289,16 @@ pub fn power_grid_system(world: &mut World) {
         handle_overload(world, &grid_entities, total_production, total_demand);
 
         activate_consumers(world, &grid_entities, net, supply_ratio);
+
+        global_production += total_production;
+        global_demand += total_demand;
     }
+
+    #[allow(clippy::cast_possible_truncation, clippy::cast_sign_loss)]
+    world.insert_resource(GridPower {
+        available: global_production.max(0.0) as u32,
+        required: global_demand.max(0.0) as u32,
+    });
 }
 
 /// System to process fuel consumption for power sources.

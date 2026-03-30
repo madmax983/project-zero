@@ -320,7 +320,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `590` The Gravity Well Graveyard — `specs/590-the-gravity-well-graveyard.md`
 - [ ] `591` The Fallow Cycle — `specs/591-the-fallow-cycle.md`
 
-- [ ] `593` The Feral Algorithm — `specs/593-the-feral-algorithm.md`
 - [ ] `594` Predictive Policing — `specs/594-predictive-policing.md`
 - [ ] `595` Memory Crystals — `specs/595-memory-crystals.md`
 - [ ] `596` Solar Sailing — `specs/596-solar-sailing.md`

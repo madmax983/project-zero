@@ -123,6 +123,8 @@ pub fn register(schedule: &mut Schedule) {
                 .after(crate::layer1::energy::power_grid_system),
             ai_automation_system.after(crate::layer1::energy::power_grid_system),
             ai_rogue_system,
+            crate::layer1::ai_core::feral_ai::feral_algorithm_power_system
+                .after(crate::layer1::energy::power_grid_system),
         )
             .in_set(Layer1SystemSet::Economy),
     );

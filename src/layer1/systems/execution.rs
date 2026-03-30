@@ -39,6 +39,8 @@ pub fn register(schedule: &mut Schedule) {
             mascot_behavior_system.after(process_start_plan_system),
             crate::layer1::the_visitor::the_visitor_behavior_system
                 .after(process_start_plan_system),
+            crate::layer1::ai_core::feral_ai::feral_algorithm_routing_system
+                .after(process_start_plan_system),
         )
             .in_set(Layer1SystemSet::Execution),
     );
