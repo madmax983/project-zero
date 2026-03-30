@@ -16,6 +16,12 @@
 //! - [`WorldContext`]: Global state (time of day, resource totals, laws) passed into the evaluation functions.
 //! - [`UtilityAIBuffer`]: The massive memory buffer that holds all candidates and Pops for a single tick.
 //!
+//! [`ScorableCandidate`]: crate::layer1::mind::utility_eval_types::ScorableCandidate
+//! [`evaluate_candidates`]: crate::layer1::mind::utility_eval_types::evaluate_candidates
+//! [`PopEvalData`]: crate::layer1::mind::utility_eval_types::PopEvalData
+//! [`WorldContext`]: crate::layer1::mind::utility_eval_types::WorldContext
+//! [`UtilityAIBuffer`]: crate::layer1::mind::utility_eval_types::UtilityAIBuffer
+//!
 //! # Examples
 //!
 //! Building a candidate:
