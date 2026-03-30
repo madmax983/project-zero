@@ -36,3 +36,13 @@
 **Social Domain Encapsulation**
 **Tangle:** The social domain (`rumor`, `factions`, `morale`, `politics`, `unrest`, etc.) was scattered across the root `src/layer1/mod.rs` namespace, adding to the "Blob" anti-pattern in `layer1`. These interrelated modules lacked a clear domain boundary.
 **Blueprint:** Encapsulated 13 social-related files into a dedicated `src/layer1/social/` module. The new `src/layer1/social/mod.rs` re-exports the public types to maintain backward compatibility, keeping the layer 1 root cleaner while strictly enforcing domain boundaries.
+
+**[The Bloat: layer1::building::mod.rs]**
+**Tangle:** The `src/layer1/building/mod.rs` file had grown into a massive 3300+ line "Blob" anti-pattern. It contained core data structures (like `BuildingType`), ECS components (`Building`, `BuildMode`), complex procedural placement logic (`try_place_building`), update systems, and extensive unit tests all tangled in a single namespace.
+**Blueprint:** Refactored the module by splitting it into distinct, cohesive files:
+- `types.rs`: Core enums and structs (`BuildingType`, `Material`, `Direction`).
+- `building_components.rs`: ECS components.
+- `placement.rs`: The procedural logic for validating and spawning buildings.
+- `systems.rs`: Bevy systems updating global state (like the `BuildingMap`).
+- `tests.rs`: Extracted unit tests.
+Reduced `mod.rs` to a clean facade (`pub use`) that hides the internal structure, immediately improving maintainability and reducing the blast radius of changes.
