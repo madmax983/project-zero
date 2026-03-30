@@ -1,3 +1,4 @@
+- [x] `626` The Cartographer's Curse — `specs/626-cartographers-curse.md` — completed 2026-03-24
 # Completed Specs
 - [x] `296` The Martyr's Engine — `specs/296-martyrs-engine.md` — completed 2026-06-25
 
@@ -205,6 +206,7 @@
 - [x] `INT-257` Integration: Subspace Pen Pals -> Factions & Resources — completed 2026-03-05
 - [x] `INT-224` Integration: DenounceEvent -> Chronicle — completed 2026-03-07
 - [x] `268` Subliminal Advertising — `specs/268-subliminal-advertising.md` — completed 2026-03-06
+- [x] `671` Planet Designation — `specs/671-planet-designation.md` — completed 2024-05-18
 - [x] `255` Hypno-Learning — `specs/255-hypno-learning.md` — completed 2026-03-01
 - [x] `295` The Sentient Standard — `specs/295-sentient-standard.md` — completed 2026-03-15
 - [x] `260` The Industrial Rhythm — `specs/260-industrial-rhythm.md` — completed 2026-03-06
@@ -291,3 +293,25 @@
 - [x] `INT-409` Integration: Shipbreaking Seams — completed 2026-03-27
 - [x] `INT-409` Integration: Shipbreaking Seams — completed 2026-03-27
 - [x] `592` The Whispering Ore — `specs/592-the-whispering-ore.md` — completed 2026-02-01
+- [x] `427` Mutagenic Rain — `specs/427-mutagenic-rain.md` — completed 2024-05-18
+- [x] `621` Mass Driver Logistics — `specs/621-mass-driver-logistics.md` — completed 2026-03-26
+- [x] `INT-621` Integration: Mass Driver -> Chronicle — completed 2026-03-27
+- [x] `629` Atmospheric Ignition — `specs/629-atmospheric-ignition.md` — completed 2026-03-24
+- [x] `646` Cognitive Overclocking — `specs/646-cognitive-overclocking.md` — completed 2026-03-22
+- [x] `647` Cascade Failure — `specs/647-cascade-failure.md` — completed 2026-03-27
+- [x] `INT-647` Integration: Cascade Failure -> Chronicle — completed 2026-03-27
+- [x] `658` Migratory Flora — `specs/658-migratory-flora.md` — completed 2026-03-24
+- [x] `657` Diplomatic Reflection — `specs/657-diplomatic-reflection.md` — completed 2026-03-24
+- [x] `INT-657` Integration: Diplomatic Reflection -> Kill and Plant events — completed 2026-03-27
+- [x] `634` Scrap-Code Prophets — `specs/634-scrap-code-prophets.md` — completed 2026-03-27
+- [x] `687` The Ghost-Shift Strike — `specs/687-ghost-shift-strike.md` — completed 2024-10-24
+- [x] `691` The Exile — `specs/691-the-exile.md` — completed 2026-03-28
+- [x] `INT-183` Integration: Geodetic Sentience -> Chronicle — completed 2026-03-28
+- [x] `672` Sensor Ambiguity — `specs/672-sensor-ambiguity.md` — completed 2026-03-29
+- [x] `INT-672` Integration: Sensor Ambiguity — completed 2026-03-30
+- [x] `688` Moon Hermits — `specs/688-moon-hermits.md` — completed 2026-03-28
+- [x] `727` The Empathic Plague — `specs/727-empathic-plague.md` — completed 2026-03-29
+- [x] `INT-688` Integration: Moon Hermits -> Chronicle — completed 2026-03-30
+- [x] `735` Genetic Crop Modification — `specs/735-genetic-crop-modification.md` — completed 2026-03-31
+- [x] `INT-727` Integration: Empathic Plague -> Morale — completed 2026-04-01
+- [x] `593` The Feral Algorithm — `specs/593-the-feral-algorithm.md` — completed 2026-02-01

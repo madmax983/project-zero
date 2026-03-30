@@ -723,3 +723,4 @@ pub use disasters::*;
 pub mod environment;
 pub mod spore_diplomat;
 pub use spore_diplomat::*;
+pub mod feral_ai;
