@@ -118,4 +118,4 @@ pub fn verify_probe_system(
 - When creating the actual fleet on verification, use the `FleetSpawner` or equivalent logic.
 
 ## 8. Questions
-- *Builder: How long should a probe take to arrive? Make it configurable so Designer can balance the tension.*
+*Architect:* Implement the minimal viable feature to satisfy tests. Advanced interactions will be added in subsequent specs.

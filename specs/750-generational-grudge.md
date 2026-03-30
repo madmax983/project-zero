@@ -135,4 +135,4 @@ pub fn process_grudge_sabotage_system(
 - Consider adding a `GrudgeIntensity` value that decays or grows over time.
 
 ## 8. Questions
-- *Builder: How do grudges resolve? Is there a forgiveness event? (Let's start with eternal grudges, we can add peacemaker events later).*
+*Architect:* Implement the minimal viable feature to satisfy tests. Advanced interactions will be added in subsequent specs.
