@@ -2,7 +2,8 @@
 mod tests {
     use crate::layer1::execution::general_work::calculate_work_amount;
     use crate::layer1::memetics::{
-        parasitic_broadcast_risk_system, process_parasitic_work_reduction, MemeticInfection,
+        parasitic_broadcast_risk_system, process_parasitic_work_reduction,
+        ParasiticBroadcastInfection,
     };
     use crate::layer1::morale::Morale;
     use crate::layer1::skills::Skills;
@@ -20,7 +21,7 @@ mod tests {
                     value: 50.0,
                     ..Default::default()
                 },
-                MemeticInfection::ParasiticBroadcast, // Humming the catchy tune
+                ParasiticBroadcastInfection, // Humming the catchy tune
                 Skills::default(),
             ))
             .id();
@@ -41,7 +42,9 @@ mod tests {
         let infected_work_amount =
             calculate_work_amount(&world, pop, DesignationType::Mine, None, 50.0, 1.0, 1.0);
 
-        world.entity_mut(pop).remove::<MemeticInfection>();
+        world
+            .entity_mut(pop)
+            .remove::<ParasiticBroadcastInfection>();
 
         let uninfected_work_amount =
             calculate_work_amount(&world, pop, DesignationType::Mine, None, 50.0, 1.0, 1.0);
@@ -63,7 +66,7 @@ mod tests {
 
         // Spawn 10 infected pops
         for _ in 0..10 {
-            world.spawn(MemeticInfection::ParasiticBroadcast);
+            world.spawn(ParasiticBroadcastInfection);
         }
 
         let mut schedule = Schedule::default();

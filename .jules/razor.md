@@ -42,3 +42,8 @@
 **Bloat:** Enterprise FizzBuzz Speculative Generality: `DebrisConfig` struct in `src/layer2/debris.rs` marked as `// Placeholder for now`.
 **Cut:** Deleted the `DebrisConfig` empty placeholder struct.
 **Saved:** 2 lines of unused setup and speculative overhead.
+
+## [Reduction]
+**Bloat:** Single-variant enums `BanishmentState` and `MemeticInfection`.
+**Cut:** Flattened `BanishmentState` to marker struct `PendingBanishment`. Flattened `MemeticInfection` to marker struct `ParasiticBroadcastInfection`.
+**Saved:** Unnecessary state-checking logic removed and future-proofing YAGNI violations excised.

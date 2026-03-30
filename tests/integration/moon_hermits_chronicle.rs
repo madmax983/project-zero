@@ -1,7 +1,7 @@
 use bevy::prelude::*;
 use scale::layer1::chronicle::{AddChronicleEvent, EventImportance};
-use scale::layer2::moon_hermits::PopDesertedEvent;
 use scale::layer2::integration::moon_hermits_chronicle_bridge_system;
+use scale::layer2::moon_hermits::PopDesertedEvent;
 
 #[test]
 fn test_moon_hermits_chronicle_bridge() {
