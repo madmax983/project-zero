@@ -2805,7 +2805,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Gold Rush Beacon
+## The Gold Rush Beacon [SPECCED]
 
 **Layer:** 2 -> 1
 

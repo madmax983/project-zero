@@ -3,6 +3,7 @@
 ## High Priority
 
 - [ ] `761` Void Sickness — `specs/761-void-sickness.md`
+- [ ] `762` The Gold Rush Beacon — `specs/762-gold-rush-beacon.md`
 
 
 - [ ] `673` Indoctrination — `specs/673-indoctrination.md`
