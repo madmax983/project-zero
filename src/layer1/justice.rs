@@ -191,6 +191,33 @@ pub fn update_inmates_system(mut commands: Commands, mut query: Query<(Entity, &
     }
 }
 
+
+use crate::layer1::black_market::ColonyStats;
+use crate::layer1::chronicle::{AddChronicleEvent, EventImportance};
+
+#[derive(Event)]
+pub struct PardonIssuedEvent {
+    pub target: Entity,
+}
+
+/// Processes PardonIssuedEvents, clearing record and adding corruption
+pub fn process_pardons_system(
+    mut events: EventReader<PardonIssuedEvent>,
+    mut commands: Commands,
+    mut stats: ResMut<ColonyStats>,
+    mut chronicle_events: EventWriter<AddChronicleEvent>,
+) {
+    for ev in events.read() {
+        commands.entity(ev.target).remove::<Wanted>();
+        commands.entity(ev.target).remove::<Inmate>();
+        stats.corruption += 5.0; // Flat penalty
+        chronicle_events.send(AddChronicleEvent {
+            text: "A criminal was pardoned, returning to utility but increasing corruption.".to_string(),
+            importance: EventImportance::Standard,
+        });
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use crate::layer1::justice::{

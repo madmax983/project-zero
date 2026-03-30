@@ -1,6 +1,6 @@
 #[cfg(test)]
 mod tests {
-    use crate::layer1::justice::{check_crime_system, evaluate_warden_action, Wanted};
+use crate::layer1::justice::{check_crime_system, evaluate_warden_action, Wanted};
     use crate::layer1::map::GridPosition;
     use crate::layer1::pop::Pop;
     use crate::layer1::unrest::{MentalBreakType, MentalState};
@@ -125,5 +125,41 @@ mod tests {
             result.is_some(),
             "Warden should pursue fugitive outside Sanctuary"
         );
+    }
+
+
+    #[test]
+    fn test_pardon_removes_wanted_but_adds_corruption() {
+        use crate::layer1::justice::{process_pardons_system, PardonIssuedEvent};
+        use crate::layer1::black_market::ColonyStats;
+        use crate::layer1::chronicle::AddChronicleEvent;
+
+        let mut world = setup_world();
+        world.insert_resource(ColonyStats { corruption: 0.0, ..Default::default() });
+        world.insert_resource(Events::<PardonIssuedEvent>::default());
+        world.insert_resource(Events::<AddChronicleEvent>::default());
+
+        let criminal_entity = world.spawn((
+            Pop,
+            Wanted { severity: 0.5 },
+            crate::layer1::justice::Inmate { sentence_ticks: 100 },
+        )).id();
+
+        world.send_event(PardonIssuedEvent { target: criminal_entity });
+
+        let mut schedule = Schedule::default();
+        schedule.add_systems(process_pardons_system);
+        schedule.run(&mut world);
+
+        assert!(world.get::<Wanted>(criminal_entity).is_none(), "Pardon should remove wanted status");
+        assert!(world.get::<crate::layer1::justice::Inmate>(criminal_entity).is_none(), "Pardon should release from jail");
+
+        let stats = world.resource::<ColonyStats>();
+        assert!(stats.corruption > 0.0, "Pardoning should increase corruption");
+
+        let chronicle_events = world.resource::<Events<AddChronicleEvent>>();
+        let mut reader = chronicle_events.get_cursor();
+        let events: Vec<_> = reader.read(chronicle_events).collect();
+        assert_eq!(events.len(), 1, "Pardoning should generate a chronicle event");
     }
 }
