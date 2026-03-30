@@ -95,6 +95,20 @@ mod tests {
         world.init_resource::<Events<scale::layer1::void_weed::PirateRaidEvent>>();
         world.init_resource::<Events<scale::layer1::overview_effect::ObserveEvent>>();
         world.init_resource::<Events<scale::layer1::tech::neural_leech::NeuralHubDeathEvent>>();
+        world.init_resource::<Events<scale::layer2::phantom::SpawnGhostFleetEvent>>();
+        world.init_resource::<Events<scale::layer2::trade::penal_contracts::PrisonerDiedEvent>>();
+        world.init_resource::<Events<scale::layer3::events::debt_prison::AcceptBailoutEvent>>();
+        world.init_resource::<Events<scale::layer3::events::debt_prison::BailoutOfferEvent>>();
+        world.init_resource::<Events<scale::layer2::trade::blockade::TradeShipArrivalEvent>>();
+        world.init_resource::<Events<scale::layer1::tech::machine_awakening::BotGlitchEvent>>();
+        world
+            .init_resource::<Events<scale::layer1::nature::biosphere_empathy::FloraDamagedEvent>>();
+        world.init_resource::<Events<scale::layer2::silent_mutiny::SensorGlitchEvent>>();
+
+        // Missing resources fix
+        world.insert_resource(scale::layer2::trade::escape_velocity::PlanetaryGravity::default());
+        world.insert_resource(scale::layer2::trade::blockade::ColonyDebt::default());
+        world.insert_resource(scale::layer1::tech::machine_awakening::GlobalSentience::default());
 
         // Other dependencies for systems
         world.insert_resource(scale::layer1::erosion::ErosionGrid::new(10, 10));
@@ -212,7 +226,7 @@ mod tests {
                 building_type: BuildingType::DroneHub,
             },
             GridPosition { x: 0, y: 0 },
-            DroneHub,
+            DroneHub::default(),
             scale::layer1::energy::PowerConsumer {
                 demand: 10.0,
                 active: false,
@@ -254,7 +268,7 @@ mod tests {
                 building_type: BuildingType::DroneHub,
             },
             GridPosition { x: 1, y: 0 },
-            DroneHub,
+            DroneHub::default(),
             scale::layer1::energy::PowerConsumer {
                 demand: 10.0,
                 active: false,

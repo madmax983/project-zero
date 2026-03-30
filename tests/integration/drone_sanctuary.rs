@@ -22,7 +22,7 @@ mod tests {
         // Spawn Drone with Haul action (simulating idle drone assigned work)
         let drone = world
             .spawn((
-                Drone,
+                Drone::default(),
                 GridPosition { x: 0, y: 0 },
                 PopAction {
                     current: ActionType::Haul,
