@@ -566,3 +566,11 @@
     - `crop_mutation_chronicle_bridge` in `src/layer1/integration.rs` converts `CropMutationEvent` to `AddChronicleEvent`.
 - **Schedule:** Registered in `Layer1SystemSet::Observation`, chained with the other integrations.
 - **Tests:** `tests/integration/crop_mutation_chronicle.rs`
+
+### INT-546: Reverse Quarantine -> Chronicle
+- **Date:** 2026-04-01
+- **Systems connected:** `process_refugee_decisions_system` (Reverse Quarantine) -> `reverse_quarantine_chronicle_bridge` (Integration) -> `AddChronicleEvent` (Chronicle)
+- **Glue added:**
+    - `reverse_quarantine_chronicle_bridge` in `src/layer2/integration.rs` converts `RefugeeFleetEvent` (when rejected) to `AddChronicleEvent` with `EventImportance::Major`.
+- **Schedule:** Chained in `Layer2SystemSet` after `process_refugee_decisions_system`.
+- **Tests:** `tests/integration/reverse_quarantine_bridge.rs`
