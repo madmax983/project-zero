@@ -317,7 +317,6 @@ pub fn build_terrain_spans(
 /// 2. Drag selection rectangles.
 /// 3. Cached entities ([`RenderCache`]).
 /// 4. Base terrain.
-#[must_use]
 #[allow(clippy::too_many_lines)]
 pub fn build_map_layer_spans<S: BuildHasher>(ctx: MapRenderContext<'_, S>) -> Vec<Line<'static>> {
     let mut lines: Vec<Line> = Vec::with_capacity(ctx.area.height as usize);
@@ -330,77 +329,15 @@ pub fn build_map_layer_spans<S: BuildHasher>(ctx: MapRenderContext<'_, S>) -> Ve
             let world_x = ctx.viewport.x.saturating_add(i32::from(screen_x));
 
             // Build mode cursor (highest priority)
-            if let Some((_, selected, material, can_place)) = ctx
-                .build_mode
-                .filter(|(cursor, _, _, _)| cursor.x == world_x && cursor.y == world_y)
-            {
-                // Ludwig: Pulsing cursor effect
-                let pulse = (ctx.wall_time * 5.0).sin().abs(); // 0.0 to 1.0
-                let intensity = (50.0 + 100.0 * pulse) as u8; // 50 to 150
-
-                let bg = if can_place {
-                    Color::Rgb(0, intensity + 50, 0) // Green pulse
-                } else {
-                    Color::Rgb(intensity + 100, 0, 0) // Red pulse
-                };
-
-                let text = get_building_char(selected);
-                let fg = get_building_color(selected, material);
-                line_spans.push(Span::styled(text, Style::default().fg(fg).bg(bg)));
+            if let Some(span) = render_build_mode_cursor(&ctx, world_x, world_y) {
+                line_spans.push(span);
                 continue;
             }
 
             // Designation mode cursor (highest priority, shared with build mode)
-            if let Some((cursor, selected, can_place, drag_start)) = ctx.designation_mode {
-                if cursor.x == world_x && cursor.y == world_y {
-                    // Ludwig: Pulsing cursor effect
-                    let pulse = (ctx.wall_time * 5.0).sin().abs();
-                    let intensity = (50.0 + 100.0 * pulse) as u8;
-
-                    let bg = if can_place {
-                        Color::Rgb(0, intensity + 50, 0)
-                    } else {
-                        Color::Rgb(intensity + 100, 0, 0)
-                    };
-
-                    let text = get_designation_char(selected);
-                    line_spans.push(Span::styled(text, Style::default().fg(Color::White).bg(bg)));
-                    continue;
-                }
-
-                // Rectangle preview: highlight tiles from drag_start to cursor
-                if let Some(start) = drag_start {
-                    let min_x = start.x.min(cursor.x);
-                    let max_x = start.x.max(cursor.x);
-                    let min_y = start.y.min(cursor.y);
-                    let max_y = start.y.max(cursor.y);
-
-                    if world_x >= min_x && world_x <= max_x && world_y >= min_y && world_y <= max_y
-                    {
-                        // Render terrain underneath with a highlight background
-                        let (text, fg) = if let (Ok(ux), Ok(uy)) =
-                            (usize::try_from(world_x), usize::try_from(world_y))
-                        {
-                            ctx.terrain.get(ux, uy).map_or((" ", Color::Black), |tile| {
-                                let color = seasonal_gfx::get_texture_override(tile, ctx.season)
-                                    .unwrap_or_else(|| get_terrain_color(tile));
-                                (get_terrain_char(tile), color)
-                            })
-                        } else {
-                            (" ", Color::Black)
-                        };
-
-                        // Ludwig: Gentle pulsing highlight for selection area
-                        let pulse = (ctx.wall_time * 2.0).sin().abs(); // Slower pulse
-                        let blue = (50.0 + 30.0 * pulse) as u8;
-
-                        line_spans.push(Span::styled(
-                            text,
-                            Style::default().fg(fg).bg(Color::Rgb(50, 50, blue)),
-                        ));
-                        continue;
-                    }
-                }
+            if let Some(span) = render_designation_mode(&ctx, world_x, world_y) {
+                line_spans.push(span);
+                continue;
             }
 
             // Check for entity in cache
@@ -408,131 +345,204 @@ pub fn build_map_layer_spans<S: BuildHasher>(ctx: MapRenderContext<'_, S>) -> Ve
                 x: world_x,
                 y: world_y,
             }) {
-                match entity {
-                    RenderEntity::Particle(c, color) => {
-                        line_spans.push(Span::styled(c.to_string(), Style::default().fg(*color)));
-                        continue;
-                    }
-                    RenderEntity::Fire => {
-                        line_spans.push(Span::styled(
-                            "^",
-                            Style::default()
-                                .fg(Color::Rgb(255, 100, 0))
-                                .add_modifier(Modifier::BOLD),
-                        ));
-                        continue;
-                    }
-                    RenderEntity::Blob => {
-                        line_spans.push(Span::styled(
-                            "%",
-                            Style::default()
-                                .fg(Color::Magenta)
-                                .add_modifier(Modifier::BOLD),
-                        ));
-                        continue;
-                    }
-                    RenderEntity::Designation(tool, progress) => {
-                        let color = progress.map_or(Color::Red, |p| {
-                            if p < 0.33 {
-                                Color::Red
-                            } else if p < 0.66 {
-                                Color::Yellow
-                            } else {
-                                Color::Green
-                            }
-                        });
-
-                        line_spans.push(Span::styled(
-                            get_designation_char(*tool),
-                            Style::default().fg(color),
-                        ));
-                        continue;
-                    }
-                    RenderEntity::Building(b, m, fragile) => {
-                        let mut fg = get_building_color(*b, *m);
-                        if *fragile {
-                            // Pulsing red effect for Jury-Rigged buildings
-                            let pulse = (ctx.wall_time * 8.0).sin();
-                            if pulse > 0.0 {
-                                fg = Color::LightRed;
-                            }
-                        }
-                        line_spans
-                            .push(Span::styled(get_building_char(*b), Style::default().fg(fg)));
-                        continue;
-                    }
-                    RenderEntity::Fauna(ft) => {
-                        line_spans.push(Span::styled(
-                            get_fauna_char(*ft),
-                            Style::default().fg(get_fauna_color(*ft)),
-                        ));
-                        continue;
-                    }
-                    RenderEntity::Flora(ft) => {
-                        line_spans.push(Span::styled(
-                            get_flora_char(*ft),
-                            Style::default().fg(get_flora_color(*ft)),
-                        ));
-                        continue;
-                    }
-                    RenderEntity::Pop(text, color) => {
-                        line_spans.push(Span::styled(*text, Style::default().fg(*color)));
-                        continue;
-                    }
-                    RenderEntity::Anomaly(a) => {
-                        line_spans.push(Span::styled(
-                            get_anomaly_char(*a),
-                            Style::default().fg(get_anomaly_color(*a)),
-                        ));
-                        continue;
-                    }
-                    RenderEntity::Item(r) => {
-                        line_spans.push(Span::styled(
-                            get_resource_char(*r),
-                            Style::default().fg(get_resource_color(*r)),
-                        ));
-                        continue;
-                    }
+                if let Some(span) = render_cached_entity(&ctx, entity) {
+                    line_spans.push(span);
+                    continue;
                 }
             }
 
             // Otherwise render terrain
-            let (text, color) =
+            line_spans.push(render_base_terrain(&ctx, world_x, world_y));
+        }
+        lines.push(Line::from(line_spans));
+    }
+    lines
+}
+
+fn render_build_mode_cursor<S: BuildHasher>(
+    ctx: &MapRenderContext<'_, S>,
+    world_x: i32,
+    world_y: i32,
+) -> Option<Span<'static>> {
+    let (_, selected, material, can_place) = ctx
+        .build_mode
+        .filter(|(cursor, _, _, _)| cursor.x == world_x && cursor.y == world_y)?;
+
+    // Ludwig: Pulsing cursor effect
+    let pulse = (ctx.wall_time * 5.0).sin().abs(); // 0.0 to 1.0
+    let intensity = (50.0 + 100.0 * pulse) as u8; // 50 to 150
+
+    let bg = if can_place {
+        Color::Rgb(0, intensity + 50, 0) // Green pulse
+    } else {
+        Color::Rgb(intensity + 100, 0, 0) // Red pulse
+    };
+
+    let text = get_building_char(selected);
+    let fg = get_building_color(selected, material);
+    Some(Span::styled(text, Style::default().fg(fg).bg(bg)))
+}
+
+fn render_designation_mode<S: BuildHasher>(
+    ctx: &MapRenderContext<'_, S>,
+    world_x: i32,
+    world_y: i32,
+) -> Option<Span<'static>> {
+    let (cursor, selected, can_place, drag_start) = ctx.designation_mode?;
+
+    if cursor.x == world_x && cursor.y == world_y {
+        // Ludwig: Pulsing cursor effect
+        let pulse = (ctx.wall_time * 5.0).sin().abs();
+        let intensity = (50.0 + 100.0 * pulse) as u8;
+
+        let bg = if can_place {
+            Color::Rgb(0, intensity + 50, 0)
+        } else {
+            Color::Rgb(intensity + 100, 0, 0)
+        };
+
+        let text = get_designation_char(selected);
+        return Some(Span::styled(text, Style::default().fg(Color::White).bg(bg)));
+    }
+
+    // Rectangle preview: highlight tiles from drag_start to cursor
+    if let Some(start) = drag_start {
+        let min_x = start.x.min(cursor.x);
+        let max_x = start.x.max(cursor.x);
+        let min_y = start.y.min(cursor.y);
+        let max_y = start.y.max(cursor.y);
+
+        if world_x >= min_x && world_x <= max_x && world_y >= min_y && world_y <= max_y {
+            // Render terrain underneath with a highlight background
+            let (text, fg) =
                 if let (Ok(ux), Ok(uy)) = (usize::try_from(world_x), usize::try_from(world_y)) {
                     ctx.terrain.get(ux, uy).map_or((" ", Color::Black), |tile| {
-                        let mut color = seasonal_gfx::get_texture_override(tile, ctx.season)
+                        let color = seasonal_gfx::get_texture_override(tile, ctx.season)
                             .unwrap_or_else(|| get_terrain_color(tile));
-
-                        // Hydration visualization
-                        let hydration = ctx.water.get(ux, uy);
-                        #[allow(
-                            clippy::collapsible_if,
-                            clippy::cast_possible_truncation,
-                            clippy::cast_sign_loss,
-                            clippy::suboptimal_flops
-                        )]
-                        if hydration > 0 && tile != TerrainType::Water {
-                            if let Color::Rgb(r, g, b) = color {
-                                // Mix with Blue (80, 140, 255) based on hydration level (0-100)
-                                let factor = f32::from(hydration) / 200.0; // Max 50% mix
-                                let r = (f32::from(r) * (1.0 - factor) + 80.0 * factor) as u8;
-                                let g = (f32::from(g) * (1.0 - factor) + 140.0 * factor) as u8;
-                                let b = (f32::from(b) * (1.0 - factor) + 255.0 * factor) as u8;
-                                color = Color::Rgb(r, g, b);
-                            }
-                        }
-
                         (get_terrain_char(tile), color)
                     })
                 } else {
                     (" ", Color::Black)
                 };
 
-            line_spans.push(Span::styled(text, Style::default().fg(color)));
+            // Ludwig: Gentle pulsing highlight for selection area
+            let pulse = (ctx.wall_time * 2.0).sin().abs(); // Slower pulse
+            let blue = (50.0 + 30.0 * pulse) as u8;
+
+            return Some(Span::styled(
+                text,
+                Style::default().fg(fg).bg(Color::Rgb(50, 50, blue)),
+            ));
         }
-        lines.push(Line::from(line_spans));
     }
-    lines
+
+    None
+}
+
+fn render_cached_entity<S: BuildHasher>(
+    ctx: &MapRenderContext<'_, S>,
+    entity: &RenderEntity,
+) -> Option<Span<'static>> {
+    match entity {
+        RenderEntity::Particle(c, color) => {
+            Some(Span::styled(c.to_string(), Style::default().fg(*color)))
+        }
+        RenderEntity::Fire => Some(Span::styled(
+            "^",
+            Style::default()
+                .fg(Color::Rgb(255, 100, 0))
+                .add_modifier(Modifier::BOLD),
+        )),
+        RenderEntity::Blob => Some(Span::styled(
+            "%",
+            Style::default()
+                .fg(Color::Magenta)
+                .add_modifier(Modifier::BOLD),
+        )),
+        RenderEntity::Designation(tool, progress) => {
+            let color = progress.map_or(Color::Red, |p| {
+                if p < 0.33 {
+                    Color::Red
+                } else if p < 0.66 {
+                    Color::Yellow
+                } else {
+                    Color::Green
+                }
+            });
+
+            Some(Span::styled(
+                get_designation_char(*tool),
+                Style::default().fg(color),
+            ))
+        }
+        RenderEntity::Building(b, m, fragile) => {
+            let mut fg = get_building_color(*b, *m);
+            if *fragile {
+                // Pulsing red effect for Jury-Rigged buildings
+                let pulse = (ctx.wall_time * 8.0).sin();
+                if pulse > 0.0 {
+                    fg = Color::LightRed;
+                }
+            }
+            Some(Span::styled(get_building_char(*b), Style::default().fg(fg)))
+        }
+        RenderEntity::Fauna(ft) => Some(Span::styled(
+            get_fauna_char(*ft),
+            Style::default().fg(get_fauna_color(*ft)),
+        )),
+        RenderEntity::Flora(ft) => Some(Span::styled(
+            get_flora_char(*ft),
+            Style::default().fg(get_flora_color(*ft)),
+        )),
+        RenderEntity::Pop(text, color) => Some(Span::styled(*text, Style::default().fg(*color))),
+        RenderEntity::Anomaly(a) => Some(Span::styled(
+            get_anomaly_char(*a),
+            Style::default().fg(get_anomaly_color(*a)),
+        )),
+        RenderEntity::Item(r) => Some(Span::styled(
+            get_resource_char(*r),
+            Style::default().fg(get_resource_color(*r)),
+        )),
+    }
+}
+
+fn render_base_terrain<S: BuildHasher>(
+    ctx: &MapRenderContext<'_, S>,
+    world_x: i32,
+    world_y: i32,
+) -> Span<'static> {
+    let (text, color) =
+        if let (Ok(ux), Ok(uy)) = (usize::try_from(world_x), usize::try_from(world_y)) {
+            ctx.terrain.get(ux, uy).map_or((" ", Color::Black), |tile| {
+                let mut color = seasonal_gfx::get_texture_override(tile, ctx.season)
+                    .unwrap_or_else(|| get_terrain_color(tile));
+
+                // Hydration visualization
+                let hydration = ctx.water.get(ux, uy);
+                #[allow(
+                    clippy::collapsible_if,
+                    clippy::cast_possible_truncation,
+                    clippy::cast_sign_loss,
+                    clippy::suboptimal_flops
+                )]
+                if hydration > 0 && tile != TerrainType::Water {
+                    if let Color::Rgb(r, g, b) = color {
+                        // Mix with Blue (80, 140, 255) based on hydration level (0-100)
+                        let factor = f32::from(hydration) / 200.0; // Max 50% mix
+                        let r = (f32::from(r) * (1.0 - factor) + 80.0 * factor) as u8;
+                        let g = (f32::from(g) * (1.0 - factor) + 140.0 * factor) as u8;
+                        let b = (f32::from(b) * (1.0 - factor) + 255.0 * factor) as u8;
+                        color = Color::Rgb(r, g, b);
+                    }
+                }
+
+                (get_terrain_char(tile), color)
+            })
+        } else {
+            (" ", Color::Black)
+        };
+
+    Span::styled(text, Style::default().fg(color))
 }
 
 /// Render terrain grid, buildings, and pops to the given frame area with viewport offset.

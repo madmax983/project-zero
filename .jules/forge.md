@@ -28,3 +28,7 @@
 **[Building Type Configuration Refactor]**
 **Learning:** `spawn_building` was a God function over 200 lines long, with huge inline block definitions for buildings like `Office`, `Recycler`, `Nanoforge`, etc. Using Match statements where each block was >15 lines.
 **Action:** Moved configurations into `configure_civic` and `configure_tech` reducing the lines inside the spawn function significantly and making it read linearly.
+
+**[God Functions in UI Rendering and GPU Extraction]**
+**Learning:** `build_map_layer_spans` in `src/ui/map.rs` and `extract_building_inputs` in `src/gpu/buffers.rs` had grown into massive God Functions (>150 and >200 lines). They handled iterating over large game states and doing multiple steps in a single sequence of code, causing deep pyramids of logic and poor readability.
+**Action:** Extracted rendering specific parts (e.g. `render_build_mode_cursor`, `render_cached_entity`) and specific buffer extraction logic (e.g. `extract_farms`, `extract_designations`) into private helper functions. This flattens the conditionals and transforms the functions into clear, declarative pipelines.
