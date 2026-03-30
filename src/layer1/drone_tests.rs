@@ -2,8 +2,8 @@
 mod tests {
     use crate::layer1::building::{Building, BuildingType};
     use crate::layer1::drone::{
-        drone_battery_system, evaluate_drone_actions_system, process_charge_system, Drone,
-        DroneBattery, DroneHub,
+        drone_battery_system, evaluate_drone_actions_system, process_charge_system, Drone::default(),
+        DroneBattery, DroneHub::default(),
     };
     use crate::layer1::energy::PowerConsumer;
     use crate::layer1::map::GridPosition;
@@ -15,7 +15,7 @@ mod tests {
         let mut world = World::new();
         let drone = world
             .spawn((
-                Drone,
+                Drone::default(),
                 DroneBattery {
                     current: 100.0,
                     max: 100.0,
@@ -35,7 +35,7 @@ mod tests {
         // Setup Drone with low battery
         let drone = world
             .spawn((
-                Drone,
+                Drone::default(),
                 DroneBattery {
                     current: 10.0,
                     max: 100.0,
@@ -49,9 +49,9 @@ mod tests {
         let _hub = world
             .spawn((
                 Building {
-                    building_type: BuildingType::DroneHub,
+                    building_type: BuildingType::DroneHub::default(),
                 },
-                DroneHub,
+                DroneHub::default(),
                 GridPosition { x: 5, y: 5 },
                 PowerConsumer {
                     demand: 10.0,
@@ -74,7 +74,7 @@ mod tests {
         let mut world = World::new();
         let drone = world
             .spawn((
-                Drone,
+                Drone::default(),
                 DroneBattery {
                     current: 100.0,
                     max: 100.0,
@@ -97,7 +97,7 @@ mod tests {
         let mut world = World::new();
         let drone = world
             .spawn((
-                Drone,
+                Drone::default(),
                 DroneBattery {
                     current: 10.0,
                     max: 100.0,
@@ -113,9 +113,9 @@ mod tests {
         // Setup Hub
         world.spawn((
             Building {
-                building_type: BuildingType::DroneHub,
+                building_type: BuildingType::DroneHub::default(),
             },
-            DroneHub,
+            DroneHub::default(),
             GridPosition { x: 5, y: 5 },
             PowerConsumer {
                 demand: 10.0,
@@ -136,7 +136,7 @@ mod tests {
         let mut world = World::new();
         let drone = world
             .spawn((
-                Drone,
+                Drone::default(),
                 DroneBattery {
                     current: 100.0,
                     max: 100.0,

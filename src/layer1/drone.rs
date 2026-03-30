@@ -4,17 +4,49 @@ use crate::layer1::map::GridPosition;
 use crate::layer1::utility_ai::{manhattan_distance, ActionType, PopAction, StartPlan};
 use bevy_ecs::prelude::*;
 
-/// Marker component for Drone entities.
+/// Component for Drone entities.
 ///
 /// Drones are automated workers that require power (Battery) but have no needs.
-#[derive(Component, Default)]
-pub struct Drone;
+#[derive(Component)]
+pub struct Drone {
+    pub parent_hub: Entity,
+    pub is_active: bool,
+}
 
-/// Marker component for Drone Hub buildings.
+impl Default for Drone {
+    fn default() -> Self {
+        Self {
+            parent_hub: Entity::PLACEHOLDER,
+            is_active: true,
+        }
+    }
+}
+
+/// Task assignment enum for Drones.
+#[derive(Component, Default, Debug, Clone, PartialEq)]
+pub enum DroneTaskAssignment {
+    #[default]
+    None,
+    Assigned(Entity),
+}
+
+/// Component for Drone Hub buildings.
 ///
 /// Drone Hubs consume power and allow Drones to recharge.
-#[derive(Component, Default)]
-pub struct DroneHub;
+#[derive(Component)]
+pub struct DroneHub {
+    pub max_bandwidth: u32,
+    pub active_drones: u32,
+}
+
+impl Default for DroneHub {
+    fn default() -> Self {
+        Self {
+            max_bandwidth: 3,
+            active_drones: 0,
+        }
+    }
+}
 
 /// Component tracking internal battery charge for Drones.
 #[derive(Component, Clone, Copy, Debug)]
@@ -114,5 +146,21 @@ pub fn drone_battery_system(mut query: Query<(&mut DroneBattery, &PopAction), Wi
         };
 
         battery.current = (battery.current - drain).max(0.0);
+    }
+}
+
+/// Monitors drone power and deactivates drones if their parent hub loses power.
+pub fn drone_power_monitor_system(
+    hub_query: Query<&crate::layer1::energy::PowerConsumer, With<DroneHub>>,
+    mut drone_query: Query<&mut Drone>,
+) {
+    for mut drone in drone_query.iter_mut() {
+        if let Ok(power) = hub_query.get(drone.parent_hub) {
+            if !power.active {
+                drone.is_active = false;
+            } else {
+                drone.is_active = true;
+            }
+        }
     }
 }

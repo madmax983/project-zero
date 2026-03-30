@@ -302,7 +302,7 @@ pub enum BuildingType {
     /// High-tech AI Core for base automation.
     AICore,
     /// Hub for spawning and recharging Drones.
-    DroneHub,
+    DroneHub::default(),
     /// Cryo-Stasis Pod.
     CryoPod,
     /// Harvests energy from magnetic storms.
@@ -2063,7 +2063,7 @@ fn configure_specialized_tech(entity: &mut EntityWorldMut, building_type: Buildi
         }
         BuildingType::DroneHub => {
             entity.insert((
-                DroneHub,
+                DroneHub::default(),
                 PowerConsumer {
                     demand: 10.0,
                     active: false,

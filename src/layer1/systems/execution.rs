@@ -31,7 +31,8 @@ pub fn register(schedule: &mut Schedule) {
                 .after(crate::layer1::artifacts::vr_pod::update_vr_pods_system),
             process_start_plan_system
                 .after(crate::layer1::customs::immigration_interception_system),
-            crate::layer1::integration::drone_spawner_bridge_system
+            crate::layer1::integration::drone_spawner_bridge_system,
+            crate::layer1::drone::drone_power_monitor_system
                 .after(process_start_plan_system),
             crate::layer1::integration::drone_work_bridge_system.after(process_start_plan_system),
             crate::layer1::husbandry::pasture_confinement_system.after(process_start_plan_system),

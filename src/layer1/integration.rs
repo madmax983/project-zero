@@ -617,7 +617,7 @@ pub fn drone_spawner_bridge_system(
         if power.active {
             // Spawn drone
             commands.spawn((
-                crate::layer1::drone::Drone,
+                crate::layer1::drone::Drone::default(),
                 *pos,
                 crate::layer1::utility_ai::PopAction::default(),
                 crate::layer1::drone::DroneBattery {

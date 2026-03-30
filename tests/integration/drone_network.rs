@@ -95,6 +95,19 @@ mod tests {
         world.init_resource::<Events<scale::layer1::void_weed::PirateRaidEvent>>();
         world.init_resource::<Events<scale::layer1::overview_effect::ObserveEvent>>();
         world.init_resource::<Events<scale::layer1::tech::neural_leech::NeuralHubDeathEvent>>();
+        world.init_resource::<Events<scale::layer2::silent_mutiny::SensorGlitchEvent>>();
+
+        world.init_resource::<Events<scale::layer1::nature::biosphere_empathy::FloraDamagedEvent>>();
+        world.init_resource::<Events<scale::layer1::tech::machine_awakening::BotGlitchEvent>>();
+
+        world.init_resource::<Events<scale::layer2::trade::blockade::TradeShipArrivalEvent>>();
+        world.init_resource::<Events<scale::layer3::events::debt_prison::BailoutOfferEvent>>();
+
+
+        world.init_resource::<Events<scale::layer3::events::debt_prison::AcceptBailoutEvent>>();
+        world.init_resource::<Events<scale::layer2::phantom::SpawnGhostFleetEvent>>();
+        world.init_resource::<Events<scale::layer2::trade::penal_contracts::PrisonerDiedEvent>>();
+        world.insert_resource(scale::layer2::trade::escape_velocity::PlanetaryGravity::default());
 
         // Other dependencies for systems
         world.insert_resource(scale::layer1::erosion::ErosionGrid::new(10, 10));
@@ -169,6 +182,9 @@ mod tests {
         // Blackout Protocol (Energy)
         world.insert_resource(scale::layer1::energy::BlackoutProtocol::default());
 
+        world.insert_resource(scale::layer2::trade::blockade::ColonyDebt::default());
+        world.insert_resource(scale::layer3::council::GalacticCouncil::default());
+        world.insert_resource(scale::layer1::tech::machine_awakening::GlobalSentience::default());
         world.insert_resource(scale::layer1::predictive_policing::PredictionConfig {
             threshold: 0.8,
             enabled: true,
