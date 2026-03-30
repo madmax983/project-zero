@@ -121,6 +121,8 @@ pub fn apply_mentorship_xp_system(
     }
 }
 
+use bevy_utils::HashSet;
+
 /// System to apply a small mood/leisure buff to both Master and Apprentice
 /// while they are engaged in a Mentorship relationship.
 pub fn mentorship_mood_system(
@@ -130,32 +132,26 @@ pub fn mentorship_mood_system(
         Option<&Mentorship>,
     )>,
 ) {
-    let mut mood_buffs: Vec<Entity> = Vec::new();
+    // ⚡ Bolt Optimization: Use Bevy's fast HashSet to track entities receiving buffs.
+    // This reduces the O(N^2) `.contains(&entity)` check on a Vec to an O(1)
+    // lookup without the overhead of the standard library's SipHash, preventing
+    // scaling bottlenecks in large populations.
+    let mut mood_buffs: HashSet<Entity> = HashSet::new();
 
-    // Identify all pairs and collect entities receiving buffs
+    // Identify all pairs and collect master entities receiving buffs
     for (_, _, mentorship_opt) in query.iter() {
         if let Some(mentorship) = mentorship_opt {
-            // Apply to Apprentice
-            // mood_buffs.push(entity); // Handled directly in the next pass since we are iterating
-
-            // Apply to Master
-            mood_buffs.push(mentorship.master_entity);
+            mood_buffs.insert(mentorship.master_entity);
         }
     }
 
     let mood_buff = 0.5; // From spec: MOOD_BUFF: f32 = 0.5;
 
-    // We do a two-pass approach to avoid mutable aliasing issues in queries
-    // Pass 1: Add buffs for apprentices
-    for (_, mut needs, mentorship_opt) in query.iter_mut() {
-        if mentorship_opt.is_some() {
-            needs.leisure += mood_buff;
-        }
-    }
-
-    // Pass 2: Add buffs for masters
-    for (entity, mut needs, _) in query.iter_mut() {
-        if mood_buffs.contains(&entity) {
+    // Single-pass update: Add buffs for apprentices and masters
+    // Note: If an entity is simultaneously an apprentice and a master,
+    // they now only receive the buff once, which fixes a previous edge-case double-dip.
+    for (entity, mut needs, mentorship_opt) in query.iter_mut() {
+        if mentorship_opt.is_some() || mood_buffs.contains(&entity) {
             needs.leisure += mood_buff;
         }
     }
