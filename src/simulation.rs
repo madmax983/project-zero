@@ -146,6 +146,9 @@ pub fn build_simulation_schedule() -> Schedule {
             .after(crate::layer1::scrapcode::scrapcode_decay_system),
         crate::layer2::phantom::spawn_ghost_fleet_system
             .after(crate::layer2::phantom::check_scrapcode_threshold_system),
+        crate::layer1::scrapcode::process_scrap_code_revelations,
+        crate::layer1::scrapcode::execute_cult_sabotage,
+        crate::layer1::scrapcode::cultist_morale_aura,
     ));
 
     schedule.add_systems((
