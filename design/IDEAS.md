@@ -2833,7 +2833,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Embassy Sector
+## The Embassy Sector [SPECCED]
 
 **Layer:** 1
 
