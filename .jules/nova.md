@@ -63,3 +63,8 @@
 **Concept:** Added `ParanoiaCooldown` and `paranoia_network_system` which translates intense `StressTracker` accumulations (> 90%) into a projected aura. Any pop coming too close triggers a negative `AffinityChange` event simulating a breakdown in social trust and contagious paranoia.
 **Fate:** Proposed
 **Lesson:** Tying internal psychological breakdowns (`StressTracker`) directly to external social degradation (`AffinityChange`) allows stress to act as a social pathogen, isolating struggling Pops from the community and accelerating colony-wide unrest.
+
+## [Poltergeist Activity]
+**Concept:** A system that translates extreme colony-wide stress into physical reality. When average stress is > 80%, loose Items on the map randomly teleport nearby, simulating haunted infrastructure and escalating chaos.
+**Fate:** Merged
+**Lesson:** Tying an abstract colony-wide average (`StressTracker`) to a physical item displacement mechanic (`GridPosition` mutation) creates an unpredictable, emergent narrative penalty for mismanaging psychological health.
