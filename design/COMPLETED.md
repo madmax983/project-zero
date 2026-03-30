@@ -269,3 +269,9 @@
 - [x] `469` The Galactic Council — `specs/469-galactic-council.md` — completed 2026-03-20
 - [x] `472` Synthetic Apathy — `specs/472-synthetic-apathy.md` — completed 2026-03-01
 - [x] `INT-533` Integration: SensorGlitchEvent -> Chronicle — completed 2026-03-20
+- [x] `INT-486` Integration: Debt Bailout -> Chronicle — completed 2026-03-24
+- [x] `INT-453` Integration: Containment Breach -> Chronicle — completed 2026-03-24
+- [x] `INT-043` Integration: Hostile Spawn -> Chronicle — completed 2026-03-24
+- [x] `INT-451` Integration: Spiteful Will -> Chronicle — completed 2026-03-24
+- [x] `INT-252` Integration: Mega Quake -> Chronicle — completed 2026-03-24
+- [x] `INT-431` Integration: Pirate Raid -> Chronicle — completed 2026-03-24

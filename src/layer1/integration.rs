@@ -1047,3 +1047,68 @@ pub fn smuggler_arrival_event_bridge(
         });
     }
 }
+
+/// Bridges `PirateRaidEvent` to `AddChronicleEvent`
+pub fn pirate_raid_chronicle_bridge(
+    mut events_in: bevy_ecs::prelude::EventReader<crate::layer1::void_weed::PirateRaidEvent>,
+    mut events_out: bevy_ecs::prelude::EventWriter<crate::layer1::chronicle::AddChronicleEvent>,
+) {
+    for _ in events_in.read() {
+        events_out.send(crate::layer1::chronicle::AddChronicleEvent {
+            text: "A Pirate Raid has hit the colony!".to_string(),
+            importance: crate::layer1::chronicle::EventImportance::Major,
+        });
+    }
+}
+
+/// Bridges `BailoutOfferEvent` to `AddChronicleEvent`
+pub fn bailout_chronicle_bridge(
+    mut events_in: bevy_ecs::prelude::EventReader<crate::layer3::events::debt_prison::BailoutOfferEvent>,
+    mut events_out: bevy_ecs::prelude::EventWriter<crate::layer1::chronicle::AddChronicleEvent>,
+) {
+    for _ in events_in.read() {
+        events_out.send(crate::layer1::chronicle::AddChronicleEvent {
+            text: "A Debt Prison Bailout Offer has been received! We can escape the cycle of debt.".to_string(),
+            importance: crate::layer1::chronicle::EventImportance::Major,
+        });
+    }
+}
+
+/// Bridges `ContainmentBreachEvent` to `AddChronicleEvent`
+pub fn containment_breach_chronicle_bridge(
+    mut events_in: bevy_ecs::prelude::EventReader<crate::layer1::nanite_fabrication::ContainmentBreachEvent>,
+    mut events_out: bevy_ecs::prelude::EventWriter<crate::layer1::chronicle::AddChronicleEvent>,
+) {
+    for _ in events_in.read() {
+        events_out.send(crate::layer1::chronicle::AddChronicleEvent {
+            text: "A Nanite Containment Breach has occurred! Grey Goo is spreading!".to_string(),
+            importance: crate::layer1::chronicle::EventImportance::Major,
+        });
+    }
+}
+
+/// Bridges `HostileSpawnEvent` to `AddChronicleEvent`
+pub fn hostile_spawn_chronicle_bridge(
+    mut events_in: bevy_ecs::prelude::EventReader<crate::layer3::silence::HostileSpawnEvent>,
+    mut events_out: bevy_ecs::prelude::EventWriter<crate::layer1::chronicle::AddChronicleEvent>,
+) {
+    for event in events_in.read() {
+        events_out.send(crate::layer1::chronicle::AddChronicleEvent {
+            text: format!("Hostile forces have spawned with severity {}. The silence is broken.", event.severity),
+            importance: crate::layer1::chronicle::EventImportance::Major,
+        });
+    }
+}
+
+/// Bridges `InheritanceEvent` to `AddChronicleEvent`
+pub fn inheritance_chronicle_bridge(
+    mut events_in: bevy_ecs::prelude::EventReader<crate::layer1::spiteful_will::InheritanceEvent>,
+    mut events_out: bevy_ecs::prelude::EventWriter<crate::layer1::chronicle::AddChronicleEvent>,
+) {
+    for event in events_in.read() {
+        events_out.send(crate::layer1::chronicle::AddChronicleEvent {
+            text: format!("A spiteful will has been revealed, bequeathing {} item(s).", event.items.len()),
+            importance: crate::layer1::chronicle::EventImportance::Standard,
+        });
+    }
+}

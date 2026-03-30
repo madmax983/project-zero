@@ -462,3 +462,39 @@
 - **Glue added:** `sensor_glitch_chronicle_bridge_system` in `src/layer2/integration.rs`
 - **Schedule:** Chained in Update after `process_mutiny_effects_system`
 - **Tests:** `tests/integration/silent_mutiny_chronicle.rs`
+
+### INT-486: Debt Bailout -> Chronicle
+- **Date:** 2026-03-24
+- **Systems connected:** `BailoutOfferEvent` (Debt Prison) -> `bailout_chronicle_bridge` (Integration) -> `AddChronicleEvent` (Chronicle)
+- **Glue added:** `bailout_chronicle_bridge` converts `BailoutOfferEvent` to `AddChronicleEvent` (Major)
+- **Tests:** `tests/integration/bailout_chronicle.rs`
+
+### INT-453: Containment Breach -> Chronicle
+- **Date:** 2026-03-24
+- **Systems connected:** `ContainmentBreachEvent` (Nanite Fabrication) -> `containment_breach_chronicle_bridge` (Integration) -> `AddChronicleEvent` (Chronicle)
+- **Glue added:** `containment_breach_chronicle_bridge` converts `ContainmentBreachEvent` to `AddChronicleEvent` (Major)
+- **Tests:** `tests/integration/containment_breach_chronicle.rs`
+
+### INT-043: Hostile Spawn -> Chronicle
+- **Date:** 2026-03-24
+- **Systems connected:** `HostileSpawnEvent` (Silence) -> `hostile_spawn_chronicle_bridge` (Integration) -> `AddChronicleEvent` (Chronicle)
+- **Glue added:** `hostile_spawn_chronicle_bridge` converts `HostileSpawnEvent` to `AddChronicleEvent` (Major)
+- **Tests:** `tests/integration/hostile_spawn_chronicle.rs`
+
+### INT-451: Spiteful Will -> Chronicle
+- **Date:** 2026-03-24
+- **Systems connected:** `InheritanceEvent` (Spiteful Will) -> `inheritance_chronicle_bridge` (Integration) -> `AddChronicleEvent` (Chronicle)
+- **Glue added:** `inheritance_chronicle_bridge` converts `InheritanceEvent` to `AddChronicleEvent` (Standard)
+- **Tests:** `tests/integration/inheritance_chronicle.rs`
+
+### INT-252: Mega Quake -> Chronicle
+- **Date:** 2026-03-24
+- **Systems connected:** `MegaQuakeEvent` (Tectonic Stress) -> `mega_quake_chronicle_bridge` (Integration) -> `AddChronicleEvent` (Chronicle)
+- **Glue added:** None (System previously existed, just added the test to verify).
+- **Tests:** `tests/integration/mega_quake_chronicle.rs`
+
+### INT-431: Pirate Raid -> Chronicle
+- **Date:** 2026-03-24
+- **Systems connected:** `PirateRaidEvent` (Void-Weed) -> `pirate_raid_chronicle_bridge` (Integration) -> `AddChronicleEvent` (Chronicle)
+- **Glue added:** `pirate_raid_chronicle_bridge` converts `PirateRaidEvent` to `AddChronicleEvent` (Major)
+- **Tests:** `tests/integration/pirate_raid_chronicle.rs`

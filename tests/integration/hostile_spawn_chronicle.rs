@@ -2,18 +2,20 @@
 mod tests {
     use bevy_ecs::prelude::*;
     use scale::layer1::chronicle::{AddChronicleEvent, EventImportance};
-    use scale::layer1::geology::tectonic::MegaQuakeEvent;
-    use scale::layer1::integration::mega_quake_chronicle_bridge;
+    use scale::layer3::silence::HostileSpawnEvent;
+    use scale::layer1::integration::hostile_spawn_chronicle_bridge;
 
     #[test]
-    fn mega_quake_event_emits_major_chronicle() {
+    fn hostile_spawn_event_emits_major_chronicle() {
         let mut app = bevy_app::App::new();
-        app.add_event::<MegaQuakeEvent>();
+        app.add_event::<HostileSpawnEvent>();
         app.add_event::<AddChronicleEvent>();
 
-        app.add_systems(bevy_app::Update, mega_quake_chronicle_bridge);
+        app.add_systems(bevy_app::Update, hostile_spawn_chronicle_bridge);
 
-        app.world_mut().send_event(MegaQuakeEvent);
+        app.world_mut().send_event(HostileSpawnEvent {
+            severity: 5,
+        });
 
         app.update();
 
@@ -23,6 +25,6 @@ mod tests {
 
         assert_eq!(events.len(), 1);
         assert_eq!(events[0].importance, EventImportance::Major);
-        assert!(events[0].text.contains("Mega-Quake"));
+        assert!(events[0].text.contains("Hostile forces have spawned"));
     }
 }

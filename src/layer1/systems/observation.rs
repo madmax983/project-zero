@@ -297,7 +297,20 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::memory_core::harvest_memory_core_system,
             crate::layer1::integration::bot_awakening_chronicle_bridge
                 .after(crate::layer1::tech::machine_awakening::process_bot_sentience),
+            crate::layer1::integration::bailout_chronicle_bridge,
+            crate::layer1::integration::containment_breach_chronicle_bridge,
+            crate::layer1::integration::hostile_spawn_chronicle_bridge,
+            crate::layer1::integration::inheritance_chronicle_bridge
+                .after(crate::layer1::spiteful_will::process_spiteful_will_system),
             crate::layer1::fauna::shadow::spawn_shadow_fauna_system,
+        )
+            .in_set(Layer1SystemSet::Observation),
+    );
+
+    schedule.add_systems(
+        (
+            crate::layer1::integration::pirate_raid_chronicle_bridge
+                .after(crate::layer1::void_weed::evaluate_smuggling_heat_system),
             crate::layer1::fauna::shadow::shadow_feed_system,
             crate::layer1::fauna::shadow::shadow_visibility_system,
         )

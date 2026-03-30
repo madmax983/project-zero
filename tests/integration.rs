@@ -203,3 +203,6 @@ mod penal_contracts_bridge;
 
 #[path = "integration/trade_routes_bridge.rs"]
 mod trade_routes_bridge;
+
+#[path = "integration/pirate_raid_chronicle.rs"]
+mod pirate_raid_chronicle;
