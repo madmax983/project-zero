@@ -196,6 +196,9 @@ pub fn build_simulation_schedule() -> Schedule {
             .after(Layer1SystemSet::Observation),
     ));
 
+    #[cfg(feature = "nova")]
+    crate::experimental::echo_chamber::register(&mut schedule);
+
     schedule.add_systems((
         crate::layer3::map::map_data_rot_system,
         crate::layer3::map::scout_ship_scan_system,

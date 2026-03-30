@@ -3,6 +3,11 @@
 **Fate:** Conceptual
 **Lesson:** Distance modifier manipulation.
 
+## [The Echo Chamber]
+**Concept:** A social feedback loop where Pops in close proximity who share similar defining traits amplify their associated needs or stresses, creating spatial social cliques (Optimists cheer each other up, Volatiles stress each other out).
+**Fate:** Merged
+**Lesson:** Tying social proximity directly to shared trait outcomes creates dynamic hotspots of emotion that the player has to physically manage via job/housing placement rather than just abstract global values.
+
 ## [Synesthesia Simulation]
 **Concept:** A system that connects colors to sounds. Pops with the 'Synesthete' trait experience specific colors (from nearby light sources) as sounds, affecting their mood and work efficiency.
 **Fate:** Conceptual
