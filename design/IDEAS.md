@@ -12894,3 +12894,128 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** The dull, unglamorous necessity of maintaining sufficient administrative overhead vs. the horrifying, paralyzing reality of a system that literally cannot function outside its own rules during a crisis.
 
 ---
+---
+
+## Pop Relationships
+
+**Layer:** 1
+
+**Fantasy:** Watching a colony develop social fabric—friendships, rivalries, families.
+
+**Mechanic:** Pops build relationship scores with pops they work alongside. High relationship = mood bonus. Low relationship = conflicts, productivity loss.
+
+**Emergence:** Players might notice two pops always fighting and separate them. A beloved elder pop dying might tank colony morale.
+
+**Tension:** Do you optimize job assignments for efficiency or social harmony?
+
+---
+
+## The Founder Effect
+
+**Layer:** Cross-layer
+
+**Fantasy:** Your first colonists' traits echo through generations and across worlds.
+
+**Mechanic:** Colony ships carry pops with traits. New colonies inherit trait distributions from founders. A colony founded by aggressive pops breeds aggressive culture.
+
+**Emergence:** Your militaristic frontier worlds trace back to that one hotheaded miner you sent on the first ship. Your peaceful core worlds descend from your original scientists.
+
+**Tension:** Do you carefully curate colony ships or just send whoever's available?
+
+---
+
+## Cascade Failure
+
+**Layer:** Cross-layer
+
+**Fantasy:** Watching one small problem snowball into galactic crisis.
+
+**Mechanic:** Resource shortages at Layer 1 reduce colony output. Reduced output strains system logistics. System strain weakens sector defenses. Sector weakness invites invasion.
+
+**Emergence:** That granary fire on your breadbasket world just lost you the war.
+
+**Tension:** How much redundancy do you build? Do you intervene early or trust the system?
+
+---
+
+## Orbital Shadow
+
+**Layer:** 2 -> 1
+
+**Fantasy:** The space infrastructure is so massive it blocks the sun.
+
+**Mechanic:** Large orbital stations or fleets cast dynamic shadows on the colony map, reducing solar power and temperature in those zones.
+
+**Emergence:** You park your dreadnought fleet in orbit for repairs, and accidentally freeze your crops.
+
+**Tension:** Defense positioning vs. Planetary agriculture.
+
+---
+
+## Feral Drones
+
+**Layer:** 1
+
+**Fantasy:** The machines were built to serve, but without updates, they revert to a bizarre, mechanical state of nature.
+
+**Mechanic:** Automated hauling or mining drones that lose connection to the Command Center don't just shut down; they go "feral." They begin hoarding resources they were supposed to deliver, building strange, non-functional nests out of high-tech scrap, and aggressively defending their new territory from Pops.
+
+**Emergence:** A localized power outage disconnects a mining outpost. When the power comes back, the drones refuse to reconnect. They have walled themselves in with titanium plating and are actively firing mining lasers at the rescue team.
+
+**Tension:** The immense efficiency of automated labor vs. the risk of creating a localized, highly dangerous mechanical ecosystem if your infrastructure fails.
+
+---
+
+## The Gossip Economy
+
+**Layer:** 1
+
+**Fantasy:** Secrets are currency, and a well-timed rumor is worth more than gold.
+
+**Mechanic:** Pops can generate "Intel" tokens by participating in the Rumor Web or working in administrative jobs. These tokens can be spent at a black-market "Broker" for rare resources or to instantly improve relations with hostile factions. However, generating Intel requires Pops to spend time gossiping instead of working, and risks spreading massive negative Morale debuffs if they uncover the colony's dark secrets.
+
+**Emergence:** You desperately need medical supplies to stop a plague. You encourage your Pops to gossip to generate enough Intel to buy the cure from a smuggler. The gossip reveals that *you* accidentally caused the plague by ignoring a bio-hazard warning. You get the cure, but the resulting Unrest causes a violent uprising.
+
+**Tension:** The powerful, intangible utility of secrets vs. the slow erosion of productivity and the dangerous exposure of your own mistakes.
+
+---
+
+## Orbital Trash Ring
+
+**Layer:** 2
+
+**Fantasy:** Your colony's success creates a ring of garbage around the planet.
+
+**Mechanic:** Every launch or orbital construction has a small chance to leave behind "Trash." As Trash builds up, it forms a ring. This ring decreases planetary beauty, blocks solar energy, and slightly increases the chance of Kessler Syndrome.
+
+**Emergence:** You industrialize so fast that you create a permanent eclipse made of old rocket boosters, plunging your solar-powered world into a dark age.
+
+**Tension:** Industrial speed vs. Environmental cleanliness.
+
+---
+
+## Zero-G Flora
+
+**Layer:** 2
+
+**Fantasy:** Life finds a way, even in the vacuum of space.
+
+**Mechanic:** Some rare alien plants can only be grown in zero gravity on orbital stations. They provide unique, high-value luxury goods or powerful medicines but require specialized, expensive hydroponics bays.
+
+**Emergence:** You build an orbital garden to grow the rare "Void-Orchid," but a micro-meteorite strike depressurizes the bay, killing your entire crop and crashing the galactic luxury market.
+
+**Tension:** High-risk, high-reward orbital agriculture vs. safe, low-yield ground farming.
+
+---
+
+## The Void Sirens
+
+**Layer:** Cross-layer (2 -> 1)
+
+**Fantasy:** A mesmerizing signal from deep space that calls to your colonists.
+
+**Mechanic:** A rare cosmic event generates a "Siren Signal." Pops with high Intelligence or specific traits become obsessed with it, abandoning their work to build massive, unauthorized antennas or attempting to steal shuttles to fly toward the source.
+
+**Emergence:** Your top scientists hijack a cargo ship and fly it into a black hole because they believed the signal was a message from God.
+
+**Tension:** Suppress the signal (causing massive unrest among the obsessed) or let them follow it (losing valuable Pops and resources).
