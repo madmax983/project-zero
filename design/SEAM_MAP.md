@@ -518,3 +518,9 @@
     - `mass_driver_chronicle_bridge` in `src/layer1/integration.rs` converts `BombardmentEvent` to `AddChronicleEvent`.
 - **Schedule:** Registered in `Layer1SystemSet::Observation`, chained after `package_arrival_system`.
 - **Tests:** `tests/integration/mass_driver_chronicle.rs`
+
+### INT-629: Atmospheric Ignition -> Chronicle
+- **Systems connected:** `process_ignition` -> `ignition_chronicle_bridge` -> `handle_explosion_system`
+- **Glue added:** `ignition_chronicle_bridge` in `src/layer1/integration.rs`
+- **Schedule:** Chained in Execution, bridge runs before ignition.
+- **Tests:** `tests/integration/atmospheric_ignition.rs`
