@@ -206,6 +206,54 @@ pub fn prisoner_death_chronicle_bridge_system(
     }
 }
 
+pub fn layer1_disaster_bridge_system(
+    mut mega_quake_events: EventReader<crate::layer1::geology::tectonic::MegaQuakeEvent>,
+    mut explosion_events: EventReader<crate::layer1::volatile::ExplosionEvent>,
+    mut rebellion_events: EventReader<RebellionEvent>,
+    mut disaster_events: EventWriter<crate::layer1::disasters::DisasterEvent>,
+) {
+    for _event in mega_quake_events.read() {
+        disaster_events.send(crate::layer1::disasters::DisasterEvent {
+            disaster_type: crate::layer1::disasters::DisasterType::MassiveEarthquake,
+            location: crate::layer1::map::GridPosition { x: 0, y: 0 },
+            severity: 90.0,
+        });
+    }
+
+    for event in explosion_events.read() {
+        if event.damage >= 80.0 {
+            disaster_events.send(crate::layer1::disasters::DisasterEvent {
+                disaster_type: crate::layer1::disasters::DisasterType::ReactorMeltdown,
+                location: event.center,
+                severity: event.damage,
+            });
+        }
+    }
+
+    for _ in rebellion_events.read() {
+        disaster_events.send(crate::layer1::disasters::DisasterEvent {
+            disaster_type: crate::layer1::disasters::DisasterType::ViolentUprising,
+            location: crate::layer1::map::GridPosition { x: 0, y: 0 },
+            severity: 90.0,
+        });
+    }
+}
+
+pub fn grief_tourist_arrival_handler_system(
+    mut tourist_events: EventReader<crate::layer2::tourism::disaster_tourism::GriefTouristArrivalEvent>,
+    mut resources: ResMut<crate::layer1::resources::ColonyResources>,
+    mut chronicle_events: EventWriter<AddChronicleEvent>,
+) {
+    for event in tourist_events.read() {
+        resources.credits += event.offered_credits;
+
+        chronicle_events.send(AddChronicleEvent {
+            importance: EventImportance::Major,
+            text: format!("Grief tourists arrived offering {} credits to witness the tragedy.", event.offered_credits),
+        });
+    }
+}
+
 // --- INT-538: Trade Routes -> ColonyResources ---
 
 use crate::layer2::trade::routes::Colony;

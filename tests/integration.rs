@@ -206,3 +206,6 @@ mod trade_routes_bridge;
 
 #[path = "integration/governance_rebellion.rs"]
 mod governance_rebellion;
+
+#[path = "integration/disaster_tourism_bridge.rs"]
+mod disaster_tourism_bridge;
