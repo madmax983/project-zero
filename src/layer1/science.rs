@@ -151,7 +151,6 @@ pub fn spawn_initial_anomalies(world: &mut World, count: usize) {
 /// # Panics
 ///
 /// Panics if the anomaly entity exists but lacks the `Anomaly` component.
-#[allow(clippy::too_many_lines)]
 pub fn process_scan_system(world: &mut World) {
     // Collect striking factions
     let striking_factions: std::collections::HashSet<crate::layer1::factions::FactionId> = world
@@ -222,71 +221,80 @@ pub fn process_scan_system(world: &mut World) {
             let pos = world.get::<GridPosition>(anomaly_entity).copied();
 
             // Grant rewards
-            match anomaly_type {
-                AnomalyType::Ruins => {
-                    world
-                        .resource_mut::<ColonyResources>()
-                        .add_knowledge(reward);
-                    world.resource_mut::<MessageLog>().add(format!(
-                        "Discovery: Scanned ruins yielded {reward:.0} Knowledge."
-                    ));
-                }
-                AnomalyType::StrangeFlora => {
-                    world.resource_mut::<ColonyResources>().add_food(reward);
-                    world.resource_mut::<MessageLog>().add(format!(
-                        "Discovery: Strange flora yielded {reward:.0} Food."
-                    ));
-                    // Maybe spawn item too?
-                    if let Some(pos) = pos {
-                        world.spawn((
-                            ResourceItem {
-                                resource_type: ResourceType::Food,
-                                amount: 10.0,
-                            }, // Bonus item
-                            pos,
-                        ));
-                    }
-                }
-                AnomalyType::Geode => {
-                    // Random resource?
-                    let mut rng = rand::thread_rng();
-                    if rng.gen_bool(0.5) {
-                        world.resource_mut::<ColonyResources>().add_stone(reward);
-                        world
-                            .resource_mut::<MessageLog>()
-                            .add(format!("Discovery: Geode yielded {reward:.0} Stone."));
-                        if let Some(pos) = pos {
-                            world.spawn((
-                                ResourceItem {
-                                    resource_type: ResourceType::Stone,
-                                    amount: 10.0,
-                                },
-                                pos,
-                            ));
-                        }
-                    } else {
-                        world.resource_mut::<ColonyResources>().add_ore(reward);
-                        world
-                            .resource_mut::<MessageLog>()
-                            .add(format!("Discovery: Geode yielded {reward:.0} Ore."));
-                        if let Some(pos) = pos {
-                            world.spawn((
-                                ResourceItem {
-                                    resource_type: ResourceType::Ore,
-                                    amount: 10.0,
-                                },
-                                pos,
-                            ));
-                        }
-                    }
-                }
-            }
+            grant_anomaly_rewards(world, anomaly_type, reward, pos);
 
             // Despawn anomaly
             world.despawn(anomaly_entity);
 
             // Cleanup pop
             cleanup_pop_explore_state(world, pop_entity);
+        }
+    }
+}
+
+fn grant_anomaly_rewards(
+    world: &mut World,
+    anomaly_type: AnomalyType,
+    reward: f32,
+    pos: Option<GridPosition>,
+) {
+    match anomaly_type {
+        AnomalyType::Ruins => {
+            world
+                .resource_mut::<ColonyResources>()
+                .add_knowledge(reward);
+            world.resource_mut::<MessageLog>().add(format!(
+                "Discovery: Scanned ruins yielded {reward:.0} Knowledge."
+            ));
+        }
+        AnomalyType::StrangeFlora => {
+            world.resource_mut::<ColonyResources>().add_food(reward);
+            world.resource_mut::<MessageLog>().add(format!(
+                "Discovery: Strange flora yielded {reward:.0} Food."
+            ));
+            // Maybe spawn item too?
+            if let Some(pos) = pos {
+                world.spawn((
+                    ResourceItem {
+                        resource_type: ResourceType::Food,
+                        amount: 10.0,
+                    }, // Bonus item
+                    pos,
+                ));
+            }
+        }
+        AnomalyType::Geode => {
+            // Random resource?
+            let mut rng = rand::thread_rng();
+            if rng.gen_bool(0.5) {
+                world.resource_mut::<ColonyResources>().add_stone(reward);
+                world
+                    .resource_mut::<MessageLog>()
+                    .add(format!("Discovery: Geode yielded {reward:.0} Stone."));
+                if let Some(pos) = pos {
+                    world.spawn((
+                        ResourceItem {
+                            resource_type: ResourceType::Stone,
+                            amount: 10.0,
+                        },
+                        pos,
+                    ));
+                }
+            } else {
+                world.resource_mut::<ColonyResources>().add_ore(reward);
+                world
+                    .resource_mut::<MessageLog>()
+                    .add(format!("Discovery: Geode yielded {reward:.0} Ore."));
+                if let Some(pos) = pos {
+                    world.spawn((
+                        ResourceItem {
+                            resource_type: ResourceType::Ore,
+                            amount: 10.0,
+                        },
+                        pos,
+                    ));
+                }
+            }
         }
     }
 }

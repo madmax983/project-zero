@@ -46,8 +46,18 @@ pub enum Layer1SystemSet {
 ///
 /// This function groups systems into ordered `SystemSet`s to enforce
 /// execution order and logical grouping.
-#[allow(clippy::too_many_lines)]
 pub fn register_layer1_systems(schedule: &mut Schedule) {
+    configure_layer1_sets(schedule);
+
+    cleanup::register(schedule);
+    execution::register(schedule);
+    economy::register(schedule);
+    environment::register(schedule);
+    consumption::register(schedule);
+    observation::register(schedule);
+}
+
+fn configure_layer1_sets(schedule: &mut Schedule) {
     // Configure Sets
     schedule.configure_sets((
         Layer1SystemSet::EventCleanup,
@@ -57,11 +67,4 @@ pub fn register_layer1_systems(schedule: &mut Schedule) {
         Layer1SystemSet::Consumption.after(Layer1SystemSet::Economy), // Parallel with Environment
         Layer1SystemSet::Observation.after(Layer1SystemSet::Consumption),
     ));
-
-    cleanup::register(schedule);
-    execution::register(schedule);
-    economy::register(schedule);
-    environment::register(schedule);
-    consumption::register(schedule);
-    observation::register(schedule);
 }

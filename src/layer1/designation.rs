@@ -349,7 +349,6 @@ pub fn try_designate(world: &mut World, x: i32, y: i32, designation_type: Design
 ///
 /// assert_eq!(try_designate_area(&mut world, 5, 5, 6, 5, DesignationType::Mine), 2);
 /// ```
-#[allow(clippy::too_many_lines)]
 pub fn try_designate_area(
     world: &mut World,
     x1: i32,
@@ -384,64 +383,7 @@ pub fn try_designate_area(
 
     // 3. Pre-fetch relevant targets if needed
     // This avoids iterating all entities for every tile in the loop
-    let valid_targets: Option<HashSet<(i32, i32)>> = match tool {
-        DesignationType::Tame => Some(
-            world
-                .query::<(
-                    Entity,
-                    &GridPosition,
-                    &crate::layer1::fauna::Fauna,
-                    Option<&crate::layer1::husbandry::Tame>,
-                )>()
-                .iter(world)
-                .filter_map(|(_, pos, _, tame)| {
-                    if tame.is_none() {
-                        Some((pos.x, pos.y))
-                    } else {
-                        None
-                    }
-                })
-                .collect(),
-        ),
-        DesignationType::ClearFlora => Some(
-            world
-                .query::<(&GridPosition, &crate::layer1::flora::Flora)>()
-                .iter(world)
-                .map(|(pos, _)| (pos.x, pos.y))
-                .collect(),
-        ),
-        DesignationType::Cannibalize => Some(
-            world
-                .query::<(&GridPosition, &crate::layer1::building::Building)>()
-                .iter(world)
-                .filter_map(|(pos, b)| {
-                    if b.building_type == crate::layer1::building::BuildingType::Lander {
-                        Some((pos.x, pos.y))
-                    } else {
-                        None
-                    }
-                })
-                .collect(),
-        ),
-        DesignationType::CollectSample => {
-            // Collect both Flora and Fauna positions
-            let mut targets = HashSet::new();
-            for (pos, _) in world
-                .query::<(&GridPosition, &crate::layer1::flora::Flora)>()
-                .iter(world)
-            {
-                targets.insert((pos.x, pos.y));
-            }
-            for (pos, _) in world
-                .query::<(&GridPosition, &crate::layer1::fauna::Fauna)>()
-                .iter(world)
-            {
-                targets.insert((pos.x, pos.y));
-            }
-            Some(targets)
-        }
-        _ => None,
-    };
+    let valid_targets = get_valid_designation_targets(world, tool);
 
     let mut to_spawn = Vec::new();
 
@@ -513,6 +455,67 @@ pub fn try_designate_area(
     }
 
     count
+}
+
+fn get_valid_designation_targets(world: &mut World, tool: DesignationType) -> Option<HashSet<(i32, i32)>> {
+    match tool {
+        DesignationType::Tame => Some(
+            world
+                .query::<(
+                    Entity,
+                    &GridPosition,
+                    &crate::layer1::fauna::Fauna,
+                    Option<&crate::layer1::husbandry::Tame>,
+                )>()
+                .iter(world)
+                .filter_map(|(_, pos, _, tame)| {
+                    if tame.is_none() {
+                        Some((pos.x, pos.y))
+                    } else {
+                        None
+                    }
+                })
+                .collect(),
+        ),
+        DesignationType::ClearFlora => Some(
+            world
+                .query::<(&GridPosition, &crate::layer1::flora::Flora)>()
+                .iter(world)
+                .map(|(pos, _)| (pos.x, pos.y))
+                .collect(),
+        ),
+        DesignationType::Cannibalize => Some(
+            world
+                .query::<(&GridPosition, &crate::layer1::building::Building)>()
+                .iter(world)
+                .filter_map(|(pos, b)| {
+                    if b.building_type == crate::layer1::building::BuildingType::Lander {
+                        Some((pos.x, pos.y))
+                    } else {
+                        None
+                    }
+                })
+                .collect(),
+        ),
+        DesignationType::CollectSample => {
+            // Collect both Flora and Fauna positions
+            let mut targets = HashSet::new();
+            for (pos, _) in world
+                .query::<(&GridPosition, &crate::layer1::flora::Flora)>()
+                .iter(world)
+            {
+                targets.insert((pos.x, pos.y));
+            }
+            for (pos, _) in world
+                .query::<(&GridPosition, &crate::layer1::fauna::Fauna)>()
+                .iter(world)
+            {
+                targets.insert((pos.x, pos.y));
+            }
+            Some(targets)
+        }
+        _ => None,
+    }
 }
 
 /// Attempts to remove any designation at the given coordinates.

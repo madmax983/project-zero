@@ -1268,7 +1268,6 @@ fn insert_base_building_components(
     }
 }
 
-#[allow(clippy::too_many_lines, clippy::match_same_arms)]
 fn spawn_building(
     world: &mut World,
     x: i32,
@@ -1292,10 +1291,16 @@ fn spawn_building(
     }
 
     insert_base_building_components(&mut entity, building_type, material);
+    configure_building_components(&mut entity, building_type);
 
+    entity.id()
+}
+
+#[allow(clippy::match_same_arms)]
+fn configure_building_components(entity: &mut EntityWorldMut, building_type: BuildingType) {
     match building_type {
         BuildingType::Housing | BuildingType::Lander => {
-            configure_housing(&mut entity, building_type);
+            configure_housing(entity, building_type);
         }
         BuildingType::Farm
         | BuildingType::Plantation
@@ -1309,9 +1314,9 @@ fn spawn_building(
         | BuildingType::Weaver
         | BuildingType::Tailor
         | BuildingType::Refinery
-        | BuildingType::AncientFabricator => configure_production(&mut entity, building_type),
+        | BuildingType::AncientFabricator => configure_production(entity, building_type),
         BuildingType::Stockpile | BuildingType::Landfill => {
-            configure_storage(&mut entity, building_type);
+            configure_storage(entity, building_type);
         }
         BuildingType::Office
         | BuildingType::Tavern
@@ -1323,7 +1328,7 @@ fn spawn_building(
         | BuildingType::TradeDepot
         | BuildingType::Shower
         | BuildingType::Recycler
-        | BuildingType::BulletinBoard => configure_civic(&mut entity, building_type),
+        | BuildingType::BulletinBoard => configure_civic(entity, building_type),
         BuildingType::Wall
         | BuildingType::Window
         | BuildingType::Gate
@@ -1332,14 +1337,14 @@ fn spawn_building(
         | BuildingType::ConveyorBelt
         | BuildingType::Hopper
         | BuildingType::Airlock
-        | BuildingType::Vent => configure_infrastructure(&mut entity, building_type),
+        | BuildingType::Vent => configure_infrastructure(entity, building_type),
         BuildingType::Generator
         | BuildingType::SolarPanel
         | BuildingType::PowerPole
         | BuildingType::Battery
         | BuildingType::AncientReactor
         | BuildingType::Heater
-        | BuildingType::AuroralCollector => configure_power(&mut entity, building_type),
+        | BuildingType::AuroralCollector => configure_power(entity, building_type),
         BuildingType::Observatory
         | BuildingType::LifeSupport
         | BuildingType::TrashCannon
@@ -1353,15 +1358,13 @@ fn spawn_building(
         | BuildingType::CloneVat
         | BuildingType::HypnoPod
         | BuildingType::HoloProjector
-        | BuildingType::Nanoforge => configure_tech(&mut entity, building_type),
+        | BuildingType::Nanoforge => configure_tech(entity, building_type),
         BuildingType::PersonalShed
         | BuildingType::PersonalGarden
         | BuildingType::PersonalShrine => {
             // Logic handled by components added in system
         }
     }
-
-    entity.id()
 }
 
 fn configure_housing(entity: &mut EntityWorldMut, building_type: BuildingType) {
@@ -1455,157 +1458,172 @@ fn configure_farm_buildings(entity: &mut EntityWorldMut, building_type: Building
     }
 }
 
-#[allow(clippy::too_many_lines)]
 fn configure_refining_buildings(entity: &mut EntityWorldMut, building_type: BuildingType) {
     match building_type {
-        BuildingType::Smokehouse => {
-            entity.insert((
-                RefiningProgress {
-                    current: 0.0,
-                    max: 10.0,
-                },
-                LightSource {
-                    is_outdoor: true,
-                    radius: 4.0,
-                    intensity: 0.5,
-                    color: (200, 200, 200), // Smoky white/grey
-                },
-                ShiftSchedule::default(),
-            ));
-        }
-        BuildingType::LumberMill => {
-            entity.insert((
-                RefiningProgress {
-                    current: 0.0,
-                    max: 10.0,
-                },
-                LightSource {
-                    is_outdoor: true,
-                    radius: 4.0,
-                    intensity: 0.5,
-                    color: (200, 180, 100), // Dim Wood light
-                },
-                SeismicSource {
-                    intensity: 0.5,
-                    radius: 3.0,
-                },
-                NoiseSource {
-                    radius: 6.0,
-                    intensity: 0.8,
-                },
-                ShiftSchedule::default(),
-            ));
-        }
-        BuildingType::Smelter => {
-            entity.insert((
-                RefiningProgress {
-                    current: 0.0,
-                    max: 10.0,
-                },
-                LightSource {
-                    is_outdoor: true,
-                    radius: 5.0,
-                    intensity: 0.9,
-                    color: (255, 50, 0), // Red/Fire
-                },
-                SeismicSource {
-                    intensity: 0.5,
-                    radius: 3.0,
-                },
-                NoiseSource {
-                    radius: 8.0,
-                    intensity: 1.0,
-                },
-                PowerConsumer {
-                    demand: 5.0,
-                    active: false,
-                },
-                ShiftSchedule::default(),
-            ));
-        }
-        BuildingType::Smithy => {
-            entity.insert((
-                RefiningProgress {
-                    current: 0.0,
-                    max: 10.0,
-                },
-                LightSource {
-                    is_outdoor: true,
-                    radius: 4.0,
-                    intensity: 0.7,
-                    color: (255, 100, 0), // Orange/Fire
-                },
-                SeismicSource {
-                    intensity: 0.5,
-                    radius: 3.0,
-                },
-                NoiseSource {
-                    radius: 6.0,
-                    intensity: 0.9,
-                },
-                PowerConsumer {
-                    demand: 2.0,
-                    active: false,
-                },
-                ShiftSchedule::default(),
-            ));
-        }
+        BuildingType::Smokehouse => configure_smokehouse(entity),
+        BuildingType::LumberMill => configure_lumber_mill(entity),
+        BuildingType::Smelter => configure_smelter(entity),
+        BuildingType::Smithy => configure_smithy(entity),
         BuildingType::StoneMason | BuildingType::Weaver | BuildingType::Tailor => {
-            entity.insert((
-                RefiningProgress {
-                    current: 0.0,
-                    max: 10.0,
-                },
-                ShiftSchedule::default(),
-            ));
+            configure_textile_buildings(entity);
         }
-        BuildingType::Refinery => {
-            entity.insert((
-                RefiningProgress {
-                    current: 0.0,
-                    max: 20.0, // Slower process
-                },
-                LightSource {
-                    is_outdoor: true,
-                    radius: 6.0,
-                    intensity: 0.8,
-                    color: (100, 200, 255), // Chemical blue
-                },
-                SeismicSource {
-                    intensity: 0.8,
-                    radius: 6.0,
-                },
-                NoiseSource {
-                    radius: 10.0,
-                    intensity: 1.0,
-                },
-                ShiftSchedule::default(),
-            ));
-        }
-        BuildingType::AncientFabricator => {
-            entity.insert((
-                // Refining logic needs to be added, maybe RefiningProgress with high speed?
-                // For now, just mark it.
-                RefiningProgress {
-                    current: 0.0,
-                    max: 1.0, // Very fast? Default is 10.0
-                },
-                AncientStructure,
-                MachineSpirit::default(),
-                LightSource {
-                    is_outdoor: true,
-                    radius: 6.0,
-                    intensity: 0.8,
-                    color: (0, 255, 255), // Cyan
-                },
-                ShiftSchedule::default(),
-            ));
-            if let Some(mut structure) = entity.get_mut::<crate::layer1::structure::Structure>() {
-                structure.max_hp = 1000.0;
-                structure.current_hp = 1000.0;
-            }
-        }
+        BuildingType::Refinery => configure_refinery(entity),
+        BuildingType::AncientFabricator => configure_ancient_fabricator(entity),
         _ => {}
+    }
+}
+
+fn configure_smokehouse(entity: &mut EntityWorldMut) {
+    entity.insert((
+        RefiningProgress {
+            current: 0.0,
+            max: 10.0,
+        },
+        LightSource {
+            is_outdoor: true,
+            radius: 4.0,
+            intensity: 0.5,
+            color: (200, 200, 200), // Smoky white/grey
+        },
+        ShiftSchedule::default(),
+    ));
+}
+
+fn configure_lumber_mill(entity: &mut EntityWorldMut) {
+    entity.insert((
+        RefiningProgress {
+            current: 0.0,
+            max: 10.0,
+        },
+        LightSource {
+            is_outdoor: true,
+            radius: 4.0,
+            intensity: 0.5,
+            color: (200, 180, 100), // Dim Wood light
+        },
+        SeismicSource {
+            intensity: 0.5,
+            radius: 3.0,
+        },
+        NoiseSource {
+            radius: 6.0,
+            intensity: 0.8,
+        },
+        ShiftSchedule::default(),
+    ));
+}
+
+fn configure_smelter(entity: &mut EntityWorldMut) {
+    entity.insert((
+        RefiningProgress {
+            current: 0.0,
+            max: 10.0,
+        },
+        LightSource {
+            is_outdoor: true,
+            radius: 5.0,
+            intensity: 0.9,
+            color: (255, 50, 0), // Red/Fire
+        },
+        SeismicSource {
+            intensity: 0.5,
+            radius: 3.0,
+        },
+        NoiseSource {
+            radius: 8.0,
+            intensity: 1.0,
+        },
+        PowerConsumer {
+            demand: 5.0,
+            active: false,
+        },
+        ShiftSchedule::default(),
+    ));
+}
+
+fn configure_smithy(entity: &mut EntityWorldMut) {
+    entity.insert((
+        RefiningProgress {
+            current: 0.0,
+            max: 10.0,
+        },
+        LightSource {
+            is_outdoor: true,
+            radius: 4.0,
+            intensity: 0.7,
+            color: (255, 100, 0), // Orange/Fire
+        },
+        SeismicSource {
+            intensity: 0.5,
+            radius: 3.0,
+        },
+        NoiseSource {
+            radius: 6.0,
+            intensity: 0.9,
+        },
+        PowerConsumer {
+            demand: 2.0,
+            active: false,
+        },
+        ShiftSchedule::default(),
+    ));
+}
+
+fn configure_textile_buildings(entity: &mut EntityWorldMut) {
+    entity.insert((
+        RefiningProgress {
+            current: 0.0,
+            max: 10.0,
+        },
+        ShiftSchedule::default(),
+    ));
+}
+
+fn configure_refinery(entity: &mut EntityWorldMut) {
+    entity.insert((
+        RefiningProgress {
+            current: 0.0,
+            max: 20.0, // Slower process
+        },
+        LightSource {
+            is_outdoor: true,
+            radius: 6.0,
+            intensity: 0.8,
+            color: (100, 200, 255), // Chemical blue
+        },
+        SeismicSource {
+            intensity: 0.8,
+            radius: 6.0,
+        },
+        NoiseSource {
+            radius: 10.0,
+            intensity: 1.0,
+        },
+        ShiftSchedule::default(),
+    ));
+}
+
+fn configure_ancient_fabricator(entity: &mut EntityWorldMut) {
+    entity.insert((
+        // Refining logic needs to be added, maybe RefiningProgress with high speed?
+        // For now, just mark it.
+        RefiningProgress {
+            current: 0.0,
+            max: 1.0, // Very fast? Default is 10.0
+        },
+        AncientStructure,
+        MachineSpirit::default(),
+        LightSource {
+            is_outdoor: true,
+            radius: 6.0,
+            intensity: 0.8,
+            color: (0, 255, 255), // Cyan
+        },
+        ShiftSchedule::default(),
+    ));
+    if let Some(mut structure) = entity.get_mut::<crate::layer1::structure::Structure>() {
+        structure.max_hp = 1000.0;
+        structure.current_hp = 1000.0;
     }
 }
 

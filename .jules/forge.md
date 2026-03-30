@@ -28,3 +28,11 @@
 **[Building Type Configuration Refactor]**
 **Learning:** `spawn_building` was a God function over 200 lines long, with huge inline block definitions for buildings like `Office`, `Recycler`, `Nanoforge`, etc. Using Match statements where each block was >15 lines.
 **Action:** Moved configurations into `configure_civic` and `configure_tech` reducing the lines inside the spawn function significantly and making it read linearly.
+
+**[God Functions in Science and Designation]**
+**Learning:** Functions like `try_designate_area` and `process_scan_system` had grown excessively long, requiring `#[allow(clippy::too_many_lines)]` exceptions to bypass lints. These functions buried their core flow under deeply nested match statements for target generation or reward distribution.
+**Action:** Extract specific domain logic blocks (e.g. `get_valid_designation_targets`, `grant_anomaly_rewards`) into helper functions. This strictly enforces the "Extract" and "Flatten" daily processes, removing the need for clippy allowances while keeping the top-level functions declarative.
+
+**[God Functions in Building Construction]**
+**Learning:** `spawn_building` and `configure_refining_buildings` in `src/layer1/building.rs` were monoliths masked by `#[allow(clippy::too_many_lines, clippy::match_same_arms)]`. Massive inline match blocks were dictating entity component additions spanning hundreds of lines.
+**Action:** Decompose large match blocks into grouped or specific helper functions (`configure_building_components`, `configure_smokehouse`, `configure_smelter`, etc.). Keeping the `match` statement strictly for dispatch and moving component initialization into dedicated functions drastically improves clarity.
