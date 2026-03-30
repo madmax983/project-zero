@@ -430,3 +430,10 @@
 - **Glue added:** Directly registered in `src/layer1/systems/economy.rs`
 - **Schedule:** Chained in Economy loop
 - **Tests:** `tests/integration/exodus_ark.rs` (1 test)
+
+### INT-539: Penal Contracts -> Justice System
+- **Date:** 2026-03-27
+- **Systems connected:** `PrisonerOf` (Penal Contracts) -> `Inmate` (Justice)
+- **Glue added:** `sync_prisoner_to_inmate_system` in `src/layer1/integration.rs`
+- **Schedule:** Registered in `Layer1SystemSet::Observation`
+- **Tests:** `tests/integration/penal_contracts.rs` (1 integration test verified)

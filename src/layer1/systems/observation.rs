@@ -154,6 +154,7 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::integration::update_unmet_luxury_system.after(decay_needs_system),
             crate::layer1::integration::sacrilege_unrest_bridge.after(decay_needs_system),
             crate::layer1::integration::issue_placebo_from_edict_system.after(decay_needs_system),
+            crate::layer1::integration::sync_prisoner_to_inmate_system,
             crate::layer1::social::placebo::placebo_tick_system.after(decay_needs_system),
             crate::layer1::social::placebo::reveal_betrayal_system.after(decay_needs_system),
             crate::layer1::contagion::emotional_contagion_system.after(decay_needs_system),

@@ -197,3 +197,6 @@ mod vr_pod_integration;
 mod escape_velocity_traits;
 #[path = "integration/geome_hazards.rs"]
 mod geome_hazards;
+
+#[path = "integration/penal_contracts.rs"]
+mod penal_contracts;

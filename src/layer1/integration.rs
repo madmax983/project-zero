@@ -1047,3 +1047,49 @@ pub fn smuggler_arrival_event_bridge(
         });
     }
 }
+
+/// Bridges `PrisonerOf` (Penal Contracts, Layer 2) to `Inmate` (Justice, Layer 1).
+///
+/// Marker component to indicate an Inmate was imported via a Penal Contract.
+#[derive(bevy_ecs::prelude::Component)]
+pub struct ContractInmate;
+
+/// Bridges `PrisonerOf` (Penal Contracts, Layer 2) to `Inmate` (Justice, Layer 1).
+///
+/// Ensures that any `Pop` marked as a prisoner for a faction gets processed by the
+/// local penal system as an inmate, so they can perform penal labor.
+pub fn sync_prisoner_to_inmate_system(
+    mut commands: bevy_ecs::prelude::Commands,
+    query_add: bevy_ecs::prelude::Query<
+        bevy_ecs::prelude::Entity,
+        (
+            bevy_ecs::prelude::With<crate::layer2::trade::penal_contracts::PrisonerOf>,
+            bevy_ecs::prelude::With<crate::layer1::pop::Pop>,
+            bevy_ecs::prelude::Without<crate::layer1::justice::Inmate>,
+        ),
+    >,
+    query_remove: bevy_ecs::prelude::Query<
+        bevy_ecs::prelude::Entity,
+        (
+            bevy_ecs::prelude::With<ContractInmate>,
+            bevy_ecs::prelude::Without<crate::layer2::trade::penal_contracts::PrisonerOf>,
+        ),
+    >,
+) {
+    for entity in query_add.iter() {
+        // We set a high sentence so they stay inmates as long as the contract holds.
+        // Or we could set a fixed high number and let the justice system manage it,
+        // but penal contracts imply they are inmates until they die or the contract ends.
+        commands.entity(entity).insert((
+            crate::layer1::justice::Inmate {
+                sentence_ticks: 999_999, // Arbitrarily high, tied to contract
+            },
+            ContractInmate,
+        ));
+    }
+
+    for entity in query_remove.iter() {
+        commands.entity(entity).remove::<crate::layer1::justice::Inmate>();
+        commands.entity(entity).remove::<ContractInmate>();
+    }
+}
