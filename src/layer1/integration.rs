@@ -1066,6 +1066,26 @@ pub fn nanite_breach_chronicle_bridge(
 
 use crate::layer1::genetics::GeneSplicingResultEvent;
 
+use crate::layer1::whispering_ore::MineSealedEvent;
+use crate::layer1::whispering_ore::Rebelling;
+
+/// Bridges MineSealedEvent to AddChronicleEvent (Chronicle).
+pub fn whispering_ore_rebellion_chronicle_bridge(
+    mut events: EventReader<MineSealedEvent>,
+    query: Query<(), With<Rebelling>>,
+    mut chronicle_events: EventWriter<AddChronicleEvent>,
+) {
+    for _ in events.read() {
+        if !query.is_empty() {
+            chronicle_events.send(AddChronicleEvent {
+                text: "A sealed vein has sparked a fanatical rebellion among the Resonant!"
+                    .to_string(),
+                importance: EventImportance::Legendary,
+            });
+        }
+    }
+}
+
 /// Bridges GeneSplicingResultEvent to AddChronicleEvent (Chronicle).
 pub fn gene_splicing_chronicle_bridge(
     mut events: EventReader<GeneSplicingResultEvent>,

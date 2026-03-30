@@ -211,3 +211,5 @@ mod governance_rebellion;
 mod airlocks_pressure;
 #[path = "integration/nanite_fabrication_chronicle.rs"]
 mod nanite_fabrication_chronicle;
+#[path = "integration/whispering_ore_chronicle.rs"]
+mod whispering_ore_chronicle;

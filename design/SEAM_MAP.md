@@ -511,3 +511,9 @@
 - **Systems connected:** `SpawnCrashedShipEvent` & `MineEvent` registered globally. `spawn_crashed_ship_system`, `mine_system`, and `hull_destroyed_system` registered in `Layer1SystemSet::Execution`.
 - **Glue added:** Event buffer registrations in `cleanup.rs`, schedule in `execution.rs`.
 - **Tests:** `tests/integration/shipbreaking_bridge.rs` (1 test verified)
+
+### INT-592: Whispering Ore Rebellion -> Chronicle
+- **Date:** 2026-04-01
+- **Systems connected:** `handle_mine_sealing_system` -> `whispering_ore_rebellion_chronicle_bridge`
+- **Glue added:** Added `whispering_ore_rebellion_chronicle_bridge` in `src/layer1/integration.rs`. Registered in `Layer1SystemSet::Observation`.
+- **Tests:** `tests/integration/whispering_ore_chronicle.rs`

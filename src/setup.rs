@@ -222,6 +222,8 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     world.init_resource::<Events<crate::layer1::resources::MiningEvent>>();
     world.init_resource::<Events<crate::layer1::shipbreaking::SpawnCrashedShipEvent>>();
     world.init_resource::<Events<crate::layer1::shipbreaking::MineEvent>>();
+    world.init_resource::<Events<crate::layer1::whispering_ore::MinedOreEvent>>();
+    world.init_resource::<Events<crate::layer1::whispering_ore::MineSealedEvent>>();
     world.init_resource::<crate::layer1::geology::tectonic::TectonicStress>();
     world.init_resource::<crate::layer1::tech::infinite_archive::Archive>();
     world.init_resource::<crate::layer2::trade::blockade::ColonyDebt>();
@@ -285,12 +287,19 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
 
     world.init_resource::<crate::layer1::unrest::Unrest>();
 
+    world.init_resource::<crate::layer3::market::GalacticMarket>();
+    world.init_resource::<crate::layer3::council::GalacticCouncil>();
+    world.init_resource::<crate::layer3::map::MapData>();
+    world.init_resource::<Events<crate::layer3::map::FleetArrivalEvent>>();
+    world.init_resource::<Events<crate::layer3::map::AnomalyDiscoveredEvent>>();
+
     world.init_resource::<Events<crate::layer3::events::debt_prison::BailoutOfferEvent>>();
     world.init_resource::<Events<crate::layer3::events::debt_prison::AcceptBailoutEvent>>();
 
     world.init_resource::<Events<crate::layer1::memory_core::ImplantMemoryCoreEvent>>();
     world.init_resource::<Events<crate::layer1::memory_core::HarvestMemoryCoreEvent>>();
     world.init_resource::<Events<crate::layer1::tech::machine_awakening::BotGlitchEvent>>();
+    world.init_resource::<Events<crate::layer1::nature::biosphere_empathy::FloraDamagedEvent>>();
     world.init_resource::<crate::layer1::tech::machine_awakening::GlobalSentience>();
     #[cfg(feature = "nova")]
     world.init_resource::<crate::layer1::machine_consciousness::ConsciousnessConfig>();

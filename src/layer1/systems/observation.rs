@@ -305,6 +305,8 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::tech::neural_leech::neural_hub_death_bridge_system,
             crate::layer1::memory_core::implant_memory_core_system,
             crate::layer1::memory_core::harvest_memory_core_system,
+            crate::layer1::integration::whispering_ore_rebellion_chronicle_bridge
+                .after(crate::layer1::whispering_ore::handle_mine_sealing_system),
             crate::layer1::integration::bot_awakening_chronicle_bridge
                 .after(crate::layer1::tech::machine_awakening::process_bot_sentience),
             crate::layer1::fauna::shadow::spawn_shadow_fauna_system,
