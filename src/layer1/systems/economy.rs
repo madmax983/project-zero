@@ -104,6 +104,7 @@ pub fn register(schedule: &mut Schedule) {
 
     schedule.add_systems(
         (
+            crate::layer1::economy::remittances::process_remittances_system,
             healing_system,
             crate::layer1::integration::medical_debt_bridge_system.after(healing_system),
             crate::layer1::beauty::update_beauty_grid_system,

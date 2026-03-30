@@ -42,7 +42,11 @@ mod tests {
         let mut reader = chronicle_events.get_cursor();
         let emitted: Vec<_> = reader.read(chronicle_events).collect();
 
-        assert_eq!(emitted.len(), 1, "Should emit one chronicle event for rejected fleet");
+        assert_eq!(
+            emitted.len(),
+            1,
+            "Should emit one chronicle event for rejected fleet"
+        );
         assert!(emitted[0].text.contains("Desperate refugee fleet repelled"));
         assert_eq!(emitted[0].importance, EventImportance::Major);
     }

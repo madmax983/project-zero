@@ -4,7 +4,6 @@
 
 
 - [ ] `673` Indoctrination — `specs/673-indoctrination.md`
-- [ ] `674` Remittances — `specs/674-remittances.md`
 
 - [ ] `667` Megafauna Terrain — `specs/667-megafauna-terrain.md`
 - [ ] `668` Impact Event — `specs/668-impact-event.md`
