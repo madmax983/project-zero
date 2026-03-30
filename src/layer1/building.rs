@@ -2287,14 +2287,7 @@ fn apply_post_placement_effects(
 
 pub fn try_place_building(world: &mut World, x: i32, y: i32, building_type: BuildingType) -> bool {
     // Check for Grave before validation
-    let mut grave_entity = None;
-    if let Some(map) = world.get_resource::<BuildingMap>() {
-        if let Some(&entity) = map.0.get(&(x, y)) {
-            if world.get::<crate::layer1::funeral::Grave>(entity).is_some() {
-                grave_entity = Some(entity);
-            }
-        }
-    }
+    let grave_entity = check_for_grave(world, x, y);
 
     if let Err(e) = validate_building_placement(world, x, y) {
         let allow_override = e == PlacementError::Occupied && grave_entity.is_some();
@@ -2341,6 +2334,17 @@ pub fn try_place_building(world: &mut World, x: i32, y: i32, building_type: Buil
     apply_post_placement_effects(world, entity, x, y, building_type);
 
     true
+}
+
+fn check_for_grave(world: &mut World, x: i32, y: i32) -> Option<Entity> {
+    if let Some(map) = world.get_resource::<BuildingMap>() {
+        if let Some(&entity) = map.0.get(&(x, y)) {
+            if world.get::<crate::layer1::funeral::Grave>(entity).is_some() {
+                return Some(entity);
+            }
+        }
+    }
+    None
 }
 
 #[cfg(test)]

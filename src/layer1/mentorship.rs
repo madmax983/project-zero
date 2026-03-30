@@ -121,6 +121,46 @@ pub fn apply_mentorship_xp_system(
     }
 }
 
+/// System to apply a small mood/leisure buff to both Master and Apprentice
+/// while they are engaged in a Mentorship relationship.
+pub fn mentorship_mood_system(
+    mut query: Query<(
+        Entity,
+        &mut crate::layer1::needs::Needs,
+        Option<&Mentorship>,
+    )>,
+) {
+    let mut mood_buffs: Vec<Entity> = Vec::new();
+
+    // Identify all pairs and collect entities receiving buffs
+    for (_, _, mentorship_opt) in query.iter() {
+        if let Some(mentorship) = mentorship_opt {
+            // Apply to Apprentice
+            // mood_buffs.push(entity); // Handled directly in the next pass since we are iterating
+
+            // Apply to Master
+            mood_buffs.push(mentorship.master_entity);
+        }
+    }
+
+    let mood_buff = 0.5; // From spec: MOOD_BUFF: f32 = 0.5;
+
+    // We do a two-pass approach to avoid mutable aliasing issues in queries
+    // Pass 1: Add buffs for apprentices
+    for (_, mut needs, mentorship_opt) in query.iter_mut() {
+        if mentorship_opt.is_some() {
+            needs.leisure += mood_buff;
+        }
+    }
+
+    // Pass 2: Add buffs for masters
+    for (entity, mut needs, _) in query.iter_mut() {
+        if mood_buffs.contains(&entity) {
+            needs.leisure += mood_buff;
+        }
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::{apply_mentorship_xp_system, check_mentorship_system, Mentorship};
@@ -439,45 +479,5 @@ mod tests {
             master_needs.leisure > 0.5,
             "Master should gain mood buff from teaching."
         );
-    }
-}
-
-/// System to apply a small mood/leisure buff to both Master and Apprentice
-/// while they are engaged in a Mentorship relationship.
-pub fn mentorship_mood_system(
-    mut query: Query<(
-        Entity,
-        &mut crate::layer1::needs::Needs,
-        Option<&Mentorship>,
-    )>,
-) {
-    let mut mood_buffs: Vec<Entity> = Vec::new();
-
-    // Identify all pairs and collect entities receiving buffs
-    for (_, _, mentorship_opt) in query.iter() {
-        if let Some(mentorship) = mentorship_opt {
-            // Apply to Apprentice
-            // mood_buffs.push(entity); // Handled directly in the next pass since we are iterating
-
-            // Apply to Master
-            mood_buffs.push(mentorship.master_entity);
-        }
-    }
-
-    let mood_buff = 0.5; // From spec: MOOD_BUFF: f32 = 0.5;
-
-    // We do a two-pass approach to avoid mutable aliasing issues in queries
-    // Pass 1: Add buffs for apprentices
-    for (_, mut needs, mentorship_opt) in query.iter_mut() {
-        if mentorship_opt.is_some() {
-            needs.leisure += mood_buff;
-        }
-    }
-
-    // Pass 2: Add buffs for masters
-    for (entity, mut needs, _) in query.iter_mut() {
-        if mood_buffs.contains(&entity) {
-            needs.leisure += mood_buff;
-        }
     }
 }

@@ -1,8 +1,8 @@
 use bevy_ecs::prelude::*;
-use scale::layer1::{TerrainGrid, TerrainType, GridPosition};
 use scale::layer1::geomes::{diffuse_geome_hazards_system, environmental_damage_system};
 use scale::layer1::health::Health;
 use scale::layer1::pop::Pop;
+use scale::layer1::{GridPosition, TerrainGrid, TerrainType};
 
 #[test]
 fn test_geome_hazard_damages_health() {
