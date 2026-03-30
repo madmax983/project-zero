@@ -1,14 +1,9 @@
-1. **Add `process_biomass_tariff_system` (Spec 548) to Simulation Schedule:**
-   - Register `TradeDeal` event using `init_resource::<Events<crate::layer2::trade::biomass_tariff::TradeDeal>>()` in `run_simulation_tick`.
-   - Add `crate::layer2::trade::biomass_tariff::process_biomass_tariff_system` to `build_simulation_schedule` in `src/simulation.rs`.
-   - Update `test_schedule_runs_on_fresh_world` to initialize `Events<TradeDeal>`.
-2. **Add `enforce_resolutions_system` (Spec 469) to Simulation Schedule:**
-   - Register `GalacticCouncil` resource using `init_resource::<crate::layer3::council::GalacticCouncil>()` in `run_simulation_tick`.
-   - Add `crate::layer3::council::enforce_resolutions_system` to `build_simulation_schedule` in `src/simulation.rs`.
-   - Update `test_schedule_runs_on_fresh_world` to initialize `GalacticCouncil`.
-3. **Verify Disconnected/Missing Seams Check:**
-   - Review `src/layer2/trade/biomass_tariff.rs` and `src/layer3/council.rs` tests. Both appear isolated, but we should make sure they are connected in `src/simulation.rs` to ensure the systems actually run during the game loop.
-4. **Complete Pre-Commit Steps**
-   - Complete pre-commit steps to ensure proper testing, verification, review, and reflection are done.
-5. **Submit**
-   - Submit the change with an appropriate commit message.
+1. **The Component:** Create `src/experimental/gravity_siphon.rs` implementing `MicroSingularityGenerator` and `GravitationalAnomaly` resource. A system will increment the anomaly while the generator runs. Another system will disrupt Layer 2 fleets (`InTransit`) by delaying their `progress` if the anomaly is high.
+2. **Verify Scaffold:** Run `cat src/experimental/gravity_siphon.rs` to verify the code is correct.
+3. **Integration (Mod):** Modify `src/experimental/mod.rs` to include `pub mod gravity_siphon;` behind the `nova` feature flag.
+4. **Integration (Systems):** Modify `src/layer1/systems/observation.rs` to register the new systems from `gravity_siphon` into the schedule under the `nova` flag.
+5. **Verify Integration:** Run `cat src/experimental/mod.rs` and `cat src/layer1/systems/observation.rs` to ensure the modifications were applied correctly.
+6. **Tests:** Append a `tests` module to `gravity_siphon.rs` asserting the anomaly increases and delays fleets.
+7. **Validation:** Run `cargo test --all-targets --all-features` and `cargo clippy --all-targets --all-features -- -D warnings` to ensure the new feature builds and passes.
+8. **Pre-commit:** Complete pre-commit steps to ensure proper testing, verification, review, and reflection are done.
+9. **Submit:** Submit the PR as Nova.

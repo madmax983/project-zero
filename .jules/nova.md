@@ -59,3 +59,7 @@
 **Concept:** Added a `CargoCultFleet` system where an automated supply ship wanders into orbit, opens a `Tether` to the colony, and demands specific resources. If fed properly, it rewards the colony with an `OrbitalDropEvent` of high-tier items.
 **Fate:** Merged
 **Lesson:** Tying external system demands to a reward-focused orbital logistics pipeline creates an interesting economic sink for the colony's excess resources, allowing for unexpected rewards and gambling.
+## [The Gravity Siphon]
+**Concept:** Added a `MicroSingularityGenerator` component that produces incredible energy but slowly builds up a `GravitationalAnomaly` global resource. If this anomaly grows too high, it randomly delays Layer 2 trade fleets (`InTransit`) by extending their travel time, linking Layer 1 production directly to Layer 2 logistics.
+**Fate:** Merged
+**Lesson:** Tying internal colony power mechanics to external orbital logistics adds immense late-game risk/reward consequences.
