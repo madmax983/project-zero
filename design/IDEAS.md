@@ -2791,7 +2791,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Void Sickness
+## Void Sickness [SPECCED]
 
 **Layer:** Cross-layer
 
