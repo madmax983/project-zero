@@ -39,3 +39,7 @@
 **[Complete Event Registration]**
 **Tangle:** The `test_schedule_runs_on_fresh_world` integration test panicked because a system (`process_hermit_desertions`) tried to access `ResMut<Events<PopDesertedEvent>>` before the event type was registered in the test world setup.
 **Blueprint:** Add `world.init_resource::<Events<crate::layer2::moon_hermits::PopDesertedEvent>>();` alongside other manual test-setup event registrations inside `simulation::tests::test_schedule_runs_on_fresh_world` to align the fresh-world schedule integration test with standard simulation setup.
+
+**Entities Domain Encapsulation**
+**Tangle:** The `layer1/entities` logic was mostly loosely scattered across `src/layer1/mod.rs` with `pop.rs`, `fauna_gen.rs`, `vermin.rs`, `visitor.rs`, etc. contributing to the "Blob" anti-pattern.
+**Blueprint:** Encapsulated multiple core entity files (`pop.rs`, `fauna_gen.rs`, `vermin.rs`, `visitor.rs`, `drone.rs`, `the_visitor.rs`, `blob.rs`, `mascot.rs`, `wild_child.rs`, `pop_doppelganger.rs`, and tests) into a dedicated `src/layer1/entities/` module. The new `src/layer1/entities/mod.rs` re-exports public items natively, enforcing a strong domain boundary for organic and mechanical agents.

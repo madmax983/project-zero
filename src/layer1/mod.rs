@@ -30,6 +30,8 @@
 //! - **Environment:** [`crate::layer1::terrain`], [`crate::layer1::map`], [`crate::layer1::weather`], [`crate::layer1::lighting`]
 //! - **Economy:** [`crate::layer1::resources`], [`crate::layer1::trade`]
 
+pub mod entities;
+pub use entities::*;
 pub mod economy;
 pub use economy::*;
 pub mod access_control;
@@ -105,7 +107,6 @@ pub mod law;
 /// Spatial primitives (GridPosition).
 pub mod map;
 /// Colony Mascot system (Spec 129).
-pub mod mascot;
 /// Medical care and hospital logic.
 pub mod medical;
 /// Pop memories and psychological effects.
@@ -120,7 +121,6 @@ pub mod notifications;
 /// Pathfinding algorithms.
 pub mod pathfinding;
 /// Pop entity and management.
-pub mod pop;
 /// Refining industry (Lumber Mill, Stone Mason).
 /// Colony resources and mining.
 /// Field science and anomalies.
@@ -197,12 +197,10 @@ pub use institutional_memory::*;
 pub use integration::*;
 pub use locations::*;
 pub use map::*;
-pub use mascot::*;
 pub use medical::*;
 pub use memory::*;
 pub use needs::*;
 pub use notifications::*;
-pub use pop::*;
 pub use science::*;
 pub use social::*;
 pub use spoilage::*;
@@ -228,12 +226,6 @@ mod venting_tests;
 mod waste_tests;
 
 /// Vermin infestation logic (Spec 073).
-pub mod vermin;
-pub use vermin::*;
-
-#[cfg(test)]
-mod vermin_evolution_tests;
-
 pub use lighting::*;
 
 /// Designated zones logic (Spec 056).
@@ -280,18 +272,11 @@ pub use fauna::*;
 /// Cultural Artifacts and Statues.
 pub mod art;
 /// Procedural Fauna Generation (Spec 164).
-pub mod fauna_gen;
 pub use art::*;
 /// Combat system and drafting logic.
 pub mod combat;
 /// Visitor system (Spec 074).
-pub mod visitor;
-pub use visitor::*;
-
 /// The Visitor (Mega-Fauna) system (Spec 234).
-pub mod the_visitor;
-pub use the_visitor::*;
-
 /// Day/Night cycle system (Spec 065).
 pub mod day_night;
 pub use day_night::*;
@@ -420,10 +405,6 @@ pub mod turret;
 pub use turret::*;
 
 /// Wild Child system (Spec 124).
-pub mod wild_child;
-pub use wild_child::*;
-pub mod blob;
-
 pub mod prototyping;
 #[cfg(test)]
 mod tech_storage_tests;
@@ -461,9 +442,6 @@ pub mod tech_envy;
 pub use artifacts::*;
 
 /// Drone Networks (Spec 116).
-pub mod drone;
-pub use drone::*;
-
 /// The Observer Effect (Nova Feature).
 #[cfg(feature = "nova")]
 pub mod observer;
@@ -486,8 +464,6 @@ pub use sleep_deprived_savant::*;
 pub mod systems;
 
 #[cfg(test)]
-mod drone_tests;
-#[cfg(test)]
 mod institutional_memory_tests;
 pub mod memetics;
 pub mod seismic;
@@ -498,8 +474,6 @@ pub use orbital_crossfire::*;
 /// Scrapcode virus system (Spec 178).
 pub mod scrapcode;
 pub use scrapcode::*;
-#[cfg(test)]
-mod fauna_modular_tests;
 
 /// Bio-Acoustic Chorus (Spec 419).
 pub mod bio_acoustic;
@@ -613,8 +587,6 @@ pub use hologram::*;
 pub mod addiction;
 pub use addiction::*;
 
-pub mod pop_doppelganger;
-pub use pop_doppelganger::*;
 
 pub mod memory_core;
 pub use memory_core::*;

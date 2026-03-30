@@ -22,30 +22,30 @@
 //! * [`PopAction`]: Current task state.
 //! * [`UtilityWeights`]: Personality/learning factors.
 
-use super::artifacts::ActiveAuras;
-use super::biocompatibility::Biocompatibility;
-use super::cabin_fever::CabinFever;
-use super::contagion::ContagionCooldown;
-use super::factions::FactionMember;
-use super::gut_biome::GutBiome;
-use super::hygiene::Filth;
-use super::items::Equipment;
-use super::language::{Dialect, Linguistics};
-use super::lifecycle::Age;
-use super::map::{GridPosition, ScreenShake};
-use super::morale::Morale;
-use super::needs::Needs;
-use super::palette_fatigue::DietaryHistory;
-use super::rumor::Knowledge;
-use super::skills::Skills;
-use super::social::debt::SocialDebt;
-use super::social::old_guard::Arrival;
-use super::terrain::{TerrainGrid, TerrainType};
-use super::traits::Traits;
-use super::utility_types::AssignmentType;
+use crate::layer1::artifacts::ActiveAuras;
+use crate::layer1::biocompatibility::Biocompatibility;
+use crate::layer1::cabin_fever::CabinFever;
+use crate::layer1::contagion::ContagionCooldown;
+use crate::layer1::factions::FactionMember;
+use crate::layer1::gut_biome::GutBiome;
+use crate::layer1::hygiene::Filth;
+use crate::layer1::items::Equipment;
+use crate::layer1::language::{Dialect, Linguistics};
+use crate::layer1::lifecycle::Age;
+use crate::layer1::map::{GridPosition, ScreenShake};
+use crate::layer1::morale::Morale;
+use crate::layer1::needs::Needs;
+use crate::layer1::palette_fatigue::DietaryHistory;
+use crate::layer1::rumor::Knowledge;
+use crate::layer1::skills::Skills;
+use crate::layer1::social::debt::SocialDebt;
+use crate::layer1::social::old_guard::Arrival;
+use crate::layer1::terrain::{TerrainGrid, TerrainType};
+use crate::layer1::traits::Traits;
+use crate::layer1::utility_types::AssignmentType;
 /// Alias for `AssignmentType` for job-related contexts (Spec 113).
-pub use super::utility_types::AssignmentType as JobType;
-use super::utility_types::{PopAction, UtilityWeights};
+pub use crate::layer1::utility_types::AssignmentType as JobType;
+use crate::layer1::utility_types::{PopAction, UtilityWeights};
 use super::wild_child::WildExposure;
 use crate::layer1::admin::AdminConsumer;
 use crate::layer1::economy::Wallet;
@@ -256,7 +256,7 @@ pub struct PopBundle {
     /// Arrival time.
     pub arrival: Arrival,
     /// Ethics configuration.
-    pub ethics: super::social::indoctrination::PopEthics,
+    pub ethics: crate::layer1::social::indoctrination::PopEthics,
     /// Hygiene filth level.
     pub filth: Filth,
     /// Active status effects.
@@ -310,13 +310,13 @@ impl PopBundle {
             age: Age::new(rng.gen_range(20..40)),
             faction: FactionMember::default(),
             arrival: Arrival { tick: 0 },
-            ethics: super::social::indoctrination::PopEthics {
+            ethics: crate::layer1::social::indoctrination::PopEthics {
                 ethic: match rng.gen_range(0..5) {
-                    0 => super::social::indoctrination::Ethic::Pacifist,
-                    1 => super::social::indoctrination::Ethic::Militarist,
-                    2 => super::social::indoctrination::Ethic::Collectivist,
-                    3 => super::social::indoctrination::Ethic::Individualist,
-                    _ => super::social::indoctrination::Ethic::FreeThinker,
+                    0 => crate::layer1::social::indoctrination::Ethic::Pacifist,
+                    1 => crate::layer1::social::indoctrination::Ethic::Militarist,
+                    2 => crate::layer1::social::indoctrination::Ethic::Collectivist,
+                    3 => crate::layer1::social::indoctrination::Ethic::Individualist,
+                    _ => crate::layer1::social::indoctrination::Ethic::FreeThinker,
                 },
                 stubbornness: rng.gen_range(0.2..1.0),
             },
@@ -449,7 +449,7 @@ pub fn handle_pop_death_system(
 
         // 2. Screen Shake & Hit Stop (Ludwig)
         if let Some(shake) = shake.as_mut() {
-            shake.trigger(1.0); // Intense shake
+            shake.trigger(1.0_f32); // Intense shake
         }
         if let Some(hs) = hit_stop.as_mut() {
             hs.trigger(8); // Freeze for 8 ticks
@@ -858,7 +858,7 @@ mod tests {
 
         spawn_initial_pops(&mut world);
 
-        let mut query = world.query::<(&Pop, &super::super::lifecycle::Age)>();
+        let mut query = world.query::<(&Pop, &crate::layer1::Age)>();
         let count = query.iter(&world).count();
         assert_eq!(count, 5, "All 5 pops should have Age component");
 
@@ -894,7 +894,7 @@ mod tests {
 
         spawn_initial_pops(&mut world);
 
-        let mut query = world.query::<(&Pop, &super::super::palette_fatigue::DietaryHistory)>();
+        let mut query = world.query::<(&Pop, &crate::layer1::DietaryHistory)>();
         let count = query.iter(&world).count();
         assert_eq!(count, 5, "All 5 pops should have DietaryHistory component");
     }
