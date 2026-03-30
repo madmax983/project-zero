@@ -688,6 +688,7 @@ classDiagram
 - [ADR 040: Consolidate Geology Module](./adr/040-consolidate-geology-module.md)
 - [ADR 041: Encapsulate Tech Submodules](./adr/041-encapsulate-tech-submodules.md)
 - [ADR 042: Refactor Building God Module](./adr/042-refactor-building-module.md)
+- [ADR 043: Encapsulate Social Mechanics](./adr/043-encapsulate-social-mechanics.md)
 
 ## Tech Module Encapsulation
 
@@ -737,9 +738,9 @@ classDiagram
     Configuration ..> Components : configures
 ```
 
-## Secret Societies Encapsulation
+## Social Mechanics Encapsulation
 
-The simulation separated social mechanics like Secret Societies into a distinct `layer1::social` module to enforce domain boundaries and clean up the root `layer1` namespace.
+The simulation separated numerous social mechanics (Secret Societies, Debt, Grievances, Old Guard, etc.) into a distinct `layer1::social` module to enforce domain boundaries and clean up the root `layer1` namespace.
 
 ```mermaid
 classDiagram
@@ -751,6 +752,11 @@ classDiagram
 
     namespace Social {
         class SecretSocieties
+        class Debt
+        class Grievances
+        class OldGuard
+        class EmptyRoom
+        class CulturalVandalism
         class Unrest
         class Needs
     }
@@ -758,4 +764,6 @@ classDiagram
     Layer1 --> Social : initializes
     Social --> Pop : modifies
     SecretSocieties --> Unrest : generates
+    Grievances --> Unrest : generates
+    Debt --> Needs : impacts
 ```
