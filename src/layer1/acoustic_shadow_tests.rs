@@ -15,7 +15,7 @@ mod tests {
         let terrain = TerrainGrid {
             width: size,
             height: size,
-            tiles: vec![TerrainType::Grass; size * size],
+            tiles: vec![TerrainType::Grass; size.checked_mul(size).expect("overflow")],
         };
         world.insert_resource(terrain);
 
@@ -62,7 +62,7 @@ mod tests {
         let terrain = TerrainGrid {
             width: size,
             height: size,
-            tiles: vec![TerrainType::Grass; size * size],
+            tiles: vec![TerrainType::Grass; size.checked_mul(size).expect("overflow")],
         };
         world.insert_resource(terrain);
 

@@ -24,7 +24,7 @@ impl WaterGrid {
     /// Creates a new `WaterGrid` with the specified dimensions.
     ///
     /// # Panics
-    /// Panics if `width * height` overflows or exceeds 10_000_000.
+    /// Panics if `width.checked_mul(height).expect("overflow")` overflows or exceeds 10_000_000.
     #[must_use]
     pub fn new(width: usize, height: usize) -> Self {
         let size = width
@@ -167,7 +167,7 @@ mod tests {
 
     fn setup_world(width: usize, height: usize) -> World {
         let mut world = World::new();
-        let tiles = vec![TerrainType::Grass; width * height];
+        let tiles = vec![TerrainType::Grass; width.checked_mul(height).expect("overflow")];
         world.insert_resource(TerrainGrid {
             width,
             height,

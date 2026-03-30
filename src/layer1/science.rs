@@ -376,7 +376,7 @@ mod tests {
         world.insert_resource(TerrainGrid {
             width,
             height,
-            tiles: vec![TerrainType::Grass; width * height],
+            tiles: vec![TerrainType::Grass; width.checked_mul(height).expect("overflow")],
         });
         world.insert_resource(crate::layer1::building::OccupiedTiles::default());
 

@@ -22,7 +22,7 @@ impl VibrationGrid {
     /// Creates a new vibration grid.
     ///
     /// # Panics
-    /// Panics if `width * height` overflows or exceeds 10,000,000.
+    /// Panics if `width.checked_mul(height).expect("overflow")` overflows or exceeds 10,000,000.
     #[must_use]
     pub fn new(width: usize, height: usize) -> Self {
         let size = width
@@ -213,9 +213,9 @@ mod tests {
     #[test]
     fn test_seismic_source_propagation_rock_vs_dirt() {
         let mut world = World::new();
-        let width = 10;
+        let width: usize = 10;
         let height = 10;
-        let tiles = vec![TerrainType::Grass; width * height];
+        let tiles = vec![TerrainType::Grass; width.checked_mul(height).expect("overflow")];
         let mut terrain = TerrainGrid {
             width,
             height,

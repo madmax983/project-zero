@@ -85,7 +85,7 @@ impl WindGrid {
     /// Create a new wind grid.
     ///
     /// # Panics
-    /// Panics if `width * height` overflows or exceeds 10,000,000.
+    /// Panics if `width.checked_mul(height).expect("overflow")` overflows or exceeds 10,000,000.
     #[must_use]
     pub fn new(width: usize, height: usize) -> Self {
         let size = width
@@ -182,7 +182,7 @@ pub fn update_wind_system(
     // This removes heavy hashing overhead for large maps.
     let width_usize = wind_grid.width;
     let height_usize = wind_grid.height;
-    let mut blockers = vec![false; width_usize * height_usize];
+    let mut blockers = vec![false; width_usize.checked_mul(height_usize).expect("overflow")];
 
     // Terrain blockers
     if let Some(terrain) = terrain_grid {
@@ -362,7 +362,7 @@ mod tests {
         world.insert_resource(TerrainGrid {
             width,
             height,
-            tiles: vec![TerrainType::Grass; width * height],
+            tiles: vec![TerrainType::Grass; width.checked_mul(height).expect("overflow")],
         });
 
         // Run system using schedule or directly if signature matches (but it needs params now)
@@ -408,7 +408,7 @@ mod tests {
         world.insert_resource(TerrainGrid {
             width,
             height,
-            tiles: vec![TerrainType::Grass; width * height],
+            tiles: vec![TerrainType::Grass; width.checked_mul(height).expect("overflow")],
         });
 
         bevy_ecs::system::RunSystemOnce::run_system_once(&mut world, update_wind_system).unwrap();
@@ -438,7 +438,7 @@ mod tests {
         world.insert_resource(TerrainGrid {
             width,
             height,
-            tiles: vec![TerrainType::Grass; width * height],
+            tiles: vec![TerrainType::Grass; width.checked_mul(height).expect("overflow")],
         });
 
         // Create Canyon: Walls at y=1 and y=3. Wind flows along y=2.

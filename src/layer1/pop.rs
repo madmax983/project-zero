@@ -581,9 +581,9 @@ mod tests {
         use rand::SeedableRng;
 
         let mut world = World::new();
-        let width = 10;
+        let width: usize = 10;
         let height = 10;
-        let mut tiles = vec![TerrainType::Water; width * height];
+        let mut tiles = vec![TerrainType::Water; width.checked_mul(height).expect("overflow")];
         // Only one walkable tile
         tiles[0] = TerrainType::Grass;
         let terrain = TerrainGrid {
@@ -629,9 +629,9 @@ mod tests {
     #[test]
     fn test_spawn_with_mixed_terrain() {
         let mut world = World::new();
-        let width = 10;
+        let width: usize = 10;
         let height = 10;
-        let mut tiles = vec![TerrainType::Grass; width * height];
+        let mut tiles = vec![TerrainType::Grass; width.checked_mul(height).expect("overflow")];
 
         // Add some non-walkable tiles to force retries
         tiles[5] = TerrainType::Water;
@@ -670,9 +670,9 @@ mod tests {
         use rand::SeedableRng;
 
         let mut world = World::new();
-        let width = 20;
+        let width: usize = 20;
         let height = 20;
-        let mut tiles = vec![TerrainType::Water; width * height];
+        let mut tiles = vec![TerrainType::Water; width.checked_mul(height).expect("overflow")];
 
         // Create a sparse walkable area (only 20 out of 400 tiles)
         for i in 0..20 {
@@ -779,9 +779,9 @@ mod tests {
     fn test_spawn_initial_pops_terminates_on_full_map_repro() {
         let mut world = World::new();
         // 1x1 map
-        let width = 1;
+        let width: usize = 1;
         let height = 1;
-        let tiles = vec![TerrainType::Water; width * height];
+        let tiles = vec![TerrainType::Water; width.checked_mul(height).expect("overflow")];
         let terrain = TerrainGrid {
             width,
             height,
