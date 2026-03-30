@@ -136,3 +136,4 @@ pub fn process_grudge_sabotage_system(
 
 ## 8. Questions
 - *Builder: How do grudges resolve? Is there a forgiveness event? (Let's start with eternal grudges, we can add peacemaker events later).*
+  - *Architect:* Start with eternal grudges for the MVP. We will add peacemaker and forgiveness events in a future spec.

@@ -119,3 +119,4 @@ pub fn verify_probe_system(
 
 ## 8. Questions
 - *Builder: How long should a probe take to arrive? Make it configurable so Designer can balance the tension.*
+  - *Architect:* Yes, please make the probe flight time configurable via a constant or resource, so the Designer can balance the tension. A default of a few in-game days is a good starting point.

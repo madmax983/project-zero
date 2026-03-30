@@ -111,3 +111,4 @@ pub fn process_acid_storm_system(
 
 ## 8. Questions
 - *Builder: Should fauna also mutate immediately, or should we focus on flora first for this spec? (Focus on flora/storms first).*
+  - *Architect:* Focus on flora and storms first for the MVP. Fauna mutations will be handled in a subsequent specification.

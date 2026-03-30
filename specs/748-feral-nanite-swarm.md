@@ -122,3 +122,4 @@ pub fn nanite_swarm_consumption_system(
 
 ## 8. Questions
 - *Builder: Should nanites also consume entire buildings, or just loose metal items? (For the minimal spec, loose items is sufficient, buildings can be added later).*
+  - *Architect:* For the minimal spec, consuming loose items is sufficient. Consuming entire buildings can be added in a later iteration.
