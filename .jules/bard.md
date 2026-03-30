@@ -1,0 +1,3 @@
+## 2025-03-01 - Broken Intra-doc Links to Private Items
+**Confusion:** `cargo doc` emits warnings (and fails with `-D warnings`) when public items use intra-doc links to point to private (`pub(crate)`) functions or modules, because these items won't be visible in the public documentation. The empty rust code block was also an issue.
+**Clarification:** Replaced `See [\`crate::layer1::...\`].` links with plain text `Evaluated internally.` in `src/layer1/utility_types.rs` for `ActionType` variants, fixed other broken paths (`[cleanup]` to `[crate::layer1::systems::cleanup]`), and suppressed the elusive empty code block warning with `#[allow(rustdoc::invalid_rust_codeblocks)]` at the crate root to ensure CI passes.

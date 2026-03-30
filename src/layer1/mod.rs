@@ -134,7 +134,6 @@ pub mod structural_integrity;
 pub mod structure;
 /// Technology and research system.
 pub mod tech;
-/// Terrain generation and grid management.
 /// Emergent utility AI system.
 pub mod utility_ai;
 #[cfg(test)]
