@@ -59,6 +59,8 @@ pub fn build_simulation_schedule() -> Schedule {
         update_detection_risk_system.after(Layer1SystemSet::Economy),
         check_hostile_spawn_system.after(update_detection_risk_system),
         crate::layer3::council::enforce_resolutions_system,
+        crate::layer1::memetics::parasitic_broadcast::process_parasitic_work_reduction,
+        crate::layer1::memetics::parasitic_broadcast::parasitic_broadcast_risk_system.before(check_hostile_spawn_system),
     ));
 
     // --- Layer 2 Integration ---

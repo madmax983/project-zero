@@ -744,3 +744,6 @@ pub use exodus::*;
 pub mod disasters;
 pub use disasters::*;
 pub mod environment;
+
+pub mod memetics;
+pub mod jobs;
