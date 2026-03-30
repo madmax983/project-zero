@@ -310,10 +310,6 @@ pub use the_visitor::*;
 /// Day/Night cycle system (Spec 065).
 pub mod day_night;
 pub use day_night::*;
-/// Justice system (Spec 072).
-
-/// Penal labor system (Spec 118).
-
 /// Planetary Quirks (Spec 080).
 pub mod quirks;
 pub use quirks::*;
@@ -355,8 +351,6 @@ pub use taboo::*;
 /// Eureka Moments system (Spec 196).
 pub mod eureka;
 pub use eureka::*;
-/// Predictive Policing system (Spec 173).
-
 /// Pheromone Gardening system (Spec 170).
 pub mod pheromone;
 pub use pheromone::*;
