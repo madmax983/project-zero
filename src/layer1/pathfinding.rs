@@ -202,6 +202,7 @@ fn find_path_internal(
     let crowding = world.get_resource::<crate::layer1::crowding::CrowdingGrid>();
     let clutter = world.get_resource::<crate::layer1::clutter::ClutterGrid>();
     let wind_grid = world.get_resource::<WindGrid>();
+    let spite_grid = world.get_resource::<crate::layer1::social::SpiteGrid>();
 
     let width = terrain.width;
     let height = terrain.height;
@@ -311,6 +312,9 @@ fn find_path_internal(
             // Apply wind penalty. Ensure cost is at least 1.
             #[allow(clippy::cast_precision_loss, clippy::cast_possible_truncation)]
             let adjusted_cost = (base_cost as f32 * wind_penalty).round() as i32;
+            let spite_penalty = spite_grid.map_or(1.0, |sg| sg.get_cost_multiplier(next.0, next.1));
+            #[allow(clippy::cast_possible_truncation, clippy::cast_precision_loss)]
+            let adjusted_cost = (adjusted_cost as f32 * spite_penalty).round() as i32;
             let tile_cost = adjusted_cost.max(1);
 
             let new_cost = cost + tile_cost;

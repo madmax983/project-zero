@@ -164,7 +164,12 @@ pub fn run_simulation_tick(world: &mut World) {
         world.insert_resource(Schedules::default());
     }
 
+    if !world.contains_resource::<crate::layer1::social::SpiteGrid>() {
+        world.init_resource::<crate::layer1::social::SpiteGrid>();
+    }
+
     if !world.contains_resource::<crate::layer1::social::old_guard::Demographics>() {
+        world.init_resource::<crate::layer1::social::SpiteGrid>();
         world.init_resource::<crate::layer1::social::old_guard::Demographics>();
     }
 

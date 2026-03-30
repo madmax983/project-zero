@@ -11,6 +11,9 @@
 //! *   **Social Debt**: Informal favors tracked via [`debt::SocialDebt`].
 //! *   **Proximity**: Pops gain morale buffs/debuffs simply by being near friends/enemies.
 
+pub mod hostile_architecture;
+pub use hostile_architecture::*;
+
 use crate::layer1::actions::{AssignedTo, AssignmentType};
 use crate::layer1::cybernetics::{Augmentations, Prosthetic};
 use crate::layer1::map::GridPosition;

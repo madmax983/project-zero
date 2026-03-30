@@ -221,6 +221,8 @@ pub fn register(schedule: &mut Schedule) {
                 .after(crate::layer1::mentorship::check_mentorship_system),
             // Process new rumors and affinity changes
             modify_affinity_system.after(crate::layer1::rumor::exchange_rumors_system),
+            crate::layer1::social::hostile_architecture::spawn_spite_fence_system.after(modify_affinity_system),
+            crate::layer1::social::hostile_architecture::calculate_path_cost_system.after(crate::layer1::social::hostile_architecture::spawn_spite_fence_system),
             crate::layer1::social::proximity_social_system.after(modify_affinity_system),
             crate::layer1::social::pen_pals::update_pen_pals_system.after(modify_affinity_system),
             // Process chronicle events
