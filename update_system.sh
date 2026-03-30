@@ -1,0 +1,1 @@
+sed -i '/crate::layer1::tech::machine_awakening::apply_awakened_needs,/a \ \ \ \ \ \ \ \ \ \ \ \ crate::layer1::health_modules::chrono_phage::process_chrono_phage_system,\n            crate::layer1::health_modules::chrono_phage::update_stuttering_duration_system.after(crate::layer1::health_modules::chrono_phage::process_chrono_phage_system),' src/layer1/systems/execution.rs

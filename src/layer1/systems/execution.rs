@@ -60,6 +60,11 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::tech::check_burnout_threshold_system,
             crate::layer1::tech::machine_awakening::process_bot_sentience,
             crate::layer1::tech::machine_awakening::apply_awakened_needs,
+            crate::layer1::health_modules::chrono_phage::process_chrono_phage_system,
+            crate::layer1::health_modules::chrono_phage::update_stuttering_duration_system.after(crate::layer1::health_modules::chrono_phage::process_chrono_phage_system),
+            crate::layer1::health_modules::chrono_phage::process_chrono_phage_system,
+            crate::layer1::health_modules::chrono_phage::update_stuttering_duration_system
+                .after(crate::layer1::health_modules::chrono_phage::process_chrono_phage_system),
             update_lighting_system
                 .after(process_start_plan_system)
                 .after(crate::layer1::day_night::update_ambient_light_from_cycle_system)

@@ -85,6 +85,7 @@ pub mod hazards;
 pub mod hazards_tests;
 pub use genetics::*;
 pub mod health;
+pub mod health_modules;
 /// Global hit stop resource (Juice).
 pub mod hit_stop;
 /// Pop hobbies logic (Spec 137).

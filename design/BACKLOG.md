@@ -429,7 +429,7 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `713` The Xenofloral Architect — `specs/713-xenofloral-architect.md`
 - [ ] `714` The Kinetic Sleds — `specs/714-kinetic-sleds.md`
 - [ ] `715` The Diplomatic Saboteur — `specs/715-diplomatic-saboteur.md`
-- [ ] `716` The Chrono-Phage Contagion — `specs/716-chrono-phage-contagion.md`
+
 - [ ] `717` The Somnambulist Workforce — `specs/717-somnambulist-workforce.md`
 - [ ] `718` The Ambrosia Atmosphere — `specs/718-ambrosia-atmosphere.md`
 - [ ] `719` The Bureau of Omission — `specs/719-bureau-of-omission.md`

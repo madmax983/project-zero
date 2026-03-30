@@ -311,3 +311,4 @@
 - [x] `INT-672` Integration: Sensor Ambiguity — completed 2026-03-30
 - [x] `688` Moon Hermits — `specs/688-moon-hermits.md` — completed 2026-03-28
 - [x] `727` The Empathic Plague — `specs/727-empathic-plague.md` — completed 2026-03-29
+- [x] `716` The Chrono-Phage Contagion — `specs/716-chrono-phage-contagion.md` — completed 2026-02-01
