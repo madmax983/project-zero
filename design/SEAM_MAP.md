@@ -482,3 +482,11 @@
 - **Systems connected:** `TradeDeal` (Biomass Tariff) -> `process_biomass_tariff_system` (Biomass Tariff)
 - **Glue added:** Added `TradeDeal` event and `process_biomass_tariff_system` system to `SimulationSchedule` (chained after `post_trade_route_sync_system`).
 - **Tests:** `src/layer2/trade/biomass_tariff.rs` (Integration tests verified)
+
+### INT-547: Void Signals -> Parasitic Broadcast
+- **Date:** 2026-03-23
+- **Systems connected:** `decrypt_signals_system` (Void Signals) -> `MemeticInfection::ParasiticBroadcast` (Memetics)
+- **Glue added:**
+    - Updated `decrypt_signals_system` in `src/layer1/void_signals.rs` to spawn the `MemeticInfection::ParasiticBroadcast` component on all active colony pops when a `SignalReward::ParasiticBroadcast` is successfully decrypted.
+    - Updated `scan_for_signals_system` in `src/layer1/void_signals.rs` to generate the `SignalReward::ParasiticBroadcast` reward type.
+- **Tests:** `tests/integration/parasitic_broadcast_signals.rs`

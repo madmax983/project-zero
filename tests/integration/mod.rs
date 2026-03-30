@@ -18,3 +18,4 @@ pub mod trade_routes_bridge;
 pub mod silent_mutiny_chronicle;
 pub mod governance_rebellion;
 pub mod biomass_tariff;
+pub mod parasitic_broadcast_signals;

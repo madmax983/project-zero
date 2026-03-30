@@ -38,6 +38,8 @@ pub enum SignalReward {
     Resources(ResourceType, f32),
     /// Lore entry (flavor only).
     Lore(String),
+    /// Memetic virus infection.
+    ParasiticBroadcast,
 }
 
 /// Resource managing the network of intercepted signals.
@@ -84,7 +86,7 @@ pub fn scan_for_signals_system(
 
     // 1% chance per tick to find a signal
     if rng.gen_bool(0.01) {
-        let signal_type = rng.gen_range(0..3);
+        let signal_type = rng.gen_range(0..4);
         let (name, flavor, reward) = match signal_type {
             0 => {
                 // Knowledge Signal
@@ -111,12 +113,20 @@ pub fn scan_for_signals_system(
                     SignalReward::Resources(res_type, rng.gen_range(20.0..100.0)),
                 )
             }
-            _ => {
+            2 => {
                 // Lore Signal
                 (
                     "Ghost Echo".to_string(),
                     "A voice whispering in a dead language.".to_string(),
                     SignalReward::Lore("The void stares back...".to_string()),
+                )
+            }
+            _ => {
+                // Parasitic Broadcast
+                (
+                    "Catchy Tune".to_string(),
+                    "A strangely compelling rhythm.".to_string(),
+                    SignalReward::ParasiticBroadcast,
                 )
             }
         };
@@ -141,6 +151,7 @@ pub fn decrypt_signals_system(
     mut network: ResMut<SignalNetwork>,
     observatories: Query<(Entity, Option<&crate::layer1::observatory::Observatory>)>,
     mut pops: Query<&AssignedTo>,
+    all_pops: Query<Entity, With<crate::layer1::pop::Pop>>,
     mut resources: ResMut<ColonyResources>,
     mut log: Option<ResMut<MessageLog>>,
     mut commands: Commands,
@@ -213,6 +224,14 @@ pub fn decrypt_signals_system(
             SignalReward::Lore(text) => {
                 if let Some(log) = &mut log {
                     log.add(format!("Decrypted '{}': \"{}\"", signal.name, text));
+                }
+            }
+            SignalReward::ParasiticBroadcast => {
+                if let Some(log) = &mut log {
+                    log.add(format!("Decrypted '{}': Everyone is humming the same catchy tune...", signal.name));
+                }
+                for pop_entity in all_pops.iter() {
+                    commands.entity(pop_entity).insert(crate::layer1::memetics::MemeticInfection::ParasiticBroadcast);
                 }
             }
         }
