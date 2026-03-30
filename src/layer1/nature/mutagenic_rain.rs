@@ -86,6 +86,7 @@ mod tests {
         app.insert_resource(grid);
 
         app.insert_resource(WeatherState {
+            is_extreme: false,
             current_weather: WeatherType::MutagenicRain,
             duration_remaining: 100,
         });

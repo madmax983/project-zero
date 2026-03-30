@@ -69,6 +69,8 @@ pub fn build_simulation_schedule() -> Schedule {
     ));
 
     // --- Layer 2 Integration ---
+    schedule.add_systems(crate::layer2::planet::ecological_tension::process_ecological_tension);
+
     schedule.add_systems((
         // Cleanup Layer 2 events
         update_event_buffer::<LaunchEvent>,

@@ -30,6 +30,7 @@ mod tests {
 
         // Set Weather to Inversion
         world.insert_resource(WeatherState {
+            is_extreme: false,
             current_weather: WeatherType::ThermalInversion,
             duration_remaining: 100,
         });

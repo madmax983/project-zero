@@ -140,6 +140,7 @@ mod tests {
             .id();
 
         world.insert_resource(WeatherState {
+            is_extreme: false,
             current_weather: WeatherType::MagneticStorm,
             duration_remaining: 100,
         });
@@ -153,6 +154,7 @@ mod tests {
 
         // Turn off storm
         world.insert_resource(WeatherState {
+            is_extreme: false,
             current_weather: WeatherType::Clear,
             duration_remaining: 100,
         });

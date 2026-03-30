@@ -19,6 +19,7 @@ mod tests {
 
         // Setup Weather: Clear
         world.insert_resource(WeatherState {
+            is_extreme: false,
             current_weather: WeatherType::Clear,
             duration_remaining: 100,
         });
@@ -60,6 +61,7 @@ mod tests {
 
         // Setup Weather: Magnetic Storm
         world.insert_resource(WeatherState {
+            is_extreme: false,
             current_weather: WeatherType::MagneticStorm,
             duration_remaining: 100,
         });
@@ -102,6 +104,7 @@ mod tests {
     fn test_other_buildings_ignored() {
         let mut world = World::new();
         world.insert_resource(WeatherState {
+            is_extreme: false,
             current_weather: WeatherType::MagneticStorm,
             duration_remaining: 100,
         });

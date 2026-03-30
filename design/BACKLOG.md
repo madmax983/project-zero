@@ -467,4 +467,3 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `752` The Somatic Tax — `specs/752-somatic-tax.md`
 - [ ] `753` The Tethered Guillotine — `specs/753-tethered-guillotine.md`
 - [ ] `754` The Memory Smugglers — `specs/754-memory-smugglers.md`
-- [ ] `755` The Ecological Rubberband — `specs/755-ecological-rubberband.md`

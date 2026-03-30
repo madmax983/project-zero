@@ -74,13 +74,16 @@ pub struct WeatherState {
     pub current_weather: WeatherType,
     /// Ticks remaining for the current weather.
     pub duration_remaining: u32,
+    /// Whether the current weather is considered extreme
+    pub is_extreme: bool,
 }
 
 impl Default for WeatherState {
     fn default() -> Self {
         Self {
             current_weather: WeatherType::Clear,
-            duration_remaining: 100, // Initial buffer
+            duration_remaining: 100,
+            is_extreme: false, // Initial buffer
         }
     }
 }
@@ -220,6 +223,7 @@ mod tests {
         world.insert_resource(WeatherState {
             current_weather: WeatherType::Clear,
             duration_remaining: initial_duration,
+            is_extreme: false,
         });
         world.insert_resource(SeasonState::default());
         world.insert_resource(Chronicle::default());
@@ -238,7 +242,8 @@ mod tests {
         let mut world = World::new();
         world.insert_resource(WeatherState {
             current_weather: WeatherType::Clear,
-            duration_remaining: 0, // Force update immediately
+            duration_remaining: 0,
+            is_extreme: false, // Force update immediately
         });
         world.insert_resource(SeasonState {
             current_season: Season::Winter,
@@ -269,6 +274,7 @@ mod tests {
         world.insert_resource(WeatherState {
             current_weather: WeatherType::Storm,
             duration_remaining: 100,
+            is_extreme: false,
         });
 
         let pop = world
@@ -297,6 +303,7 @@ mod tests {
         world.insert_resource(WeatherState {
             current_weather: WeatherType::Storm, // 0.5 modifier
             duration_remaining: 100,
+            is_extreme: false,
         });
 
         let pop = world
@@ -319,5 +326,15 @@ mod tests {
             "Expected 0.25, got {}",
             speed.current
         );
+    }
+}
+
+impl WeatherState {
+    pub fn is_extreme_event(&self) -> bool {
+        self.is_extreme
+    }
+
+    pub fn set_extreme_event(&mut self, is_extreme: bool) {
+        self.is_extreme = is_extreme;
     }
 }
