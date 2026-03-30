@@ -168,6 +168,7 @@ mod tests {
 
         // Initialize Schedules resource
         world.insert_resource(Schedules::default());
+        world.insert_resource(scale::layer2::trade::escape_velocity::PlanetaryGravity::default());
         world
     }
 

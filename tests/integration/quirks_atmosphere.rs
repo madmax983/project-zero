@@ -11,6 +11,7 @@ fn setup_world() -> World {
     world.insert_resource(PlanetaryTraits(vec![]));
     // Quirk system requires DayNightCycle
     world.insert_resource(DayNightCycle::default());
+    world.insert_resource(scale::layer1::atmosphere::DiffusionConfig::default());
 
     // We also need to register the systems if we use schedule, but here we run them manually via run_system_once
     world

@@ -14,6 +14,7 @@ use scale::simulation::run_simulation_tick;
 #[test]
 fn test_husbandry_full_loop() {
     let mut world = setup_world();
+    world.insert_resource(scale::layer2::trade::escape_velocity::PlanetaryGravity::default());
     *world.resource_mut::<GameState>() = GameState::Running;
     world.insert_resource(HusbandryConfig::default());
 

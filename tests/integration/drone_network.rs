@@ -138,6 +138,7 @@ mod tests {
         world.insert_resource(scale::layer1::chronicle::Chronicle::default());
         world.insert_resource(scale::layer1::chronicle::BuildingTracker::default());
         world.insert_resource(scale::layer1::prototyping::BuildingMastery::default());
+        world.insert_resource(scale::layer2::trade::escape_velocity::PlanetaryGravity::default());
         world.insert_resource(scale::layer1::seasons::SeasonState::default());
         world.insert_resource(scale::layer1::temperature::TemperatureGrid::new(
             10, 10, 20.0,

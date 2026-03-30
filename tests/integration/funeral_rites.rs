@@ -13,7 +13,9 @@ mod integration_tests {
     use scale::simulation::run_simulation_tick;
 
     fn setup_world() -> World {
-        scale::setup::setup_world()
+        let mut world = scale::setup::setup_world();
+        world.insert_resource(scale::layer2::trade::escape_velocity::PlanetaryGravity::default());
+        world
     }
 
     #[test]
