@@ -84,7 +84,7 @@ pub fn update_water_system(
     for y in 0..height {
         for x in 0..width {
             let idx = y * width + x;
-            if terrain.tiles[idx] == TerrainType::Water {
+            if terrain.get(x, y) == Some(TerrainType::Water) {
                 water.values[idx] = MAX_HYDRATION;
             }
         }
@@ -110,7 +110,7 @@ pub fn update_water_system(
     for y in 0..height {
         for x in 0..width {
             let idx = y * width + x;
-            if terrain.tiles[idx] == TerrainType::Rock {
+            if terrain.get(x, y) == Some(TerrainType::Rock) {
                 continue;
             }
 
@@ -136,7 +136,7 @@ pub fn update_water_system(
     for y in (0..height).rev() {
         for x in (0..width).rev() {
             let idx = y * width + x;
-            if terrain.tiles[idx] == TerrainType::Rock {
+            if terrain.get(x, y) == Some(TerrainType::Rock) {
                 continue;
             }
 
@@ -161,6 +161,21 @@ pub fn update_water_system(
 
 #[cfg(test)]
 mod tests {
+
+    #[test]
+    fn test_water_mismatch_size() {
+        use bevy_ecs::system::RunSystemOnce;
+        let mut world = World::new();
+        let terrain = TerrainGrid {
+            width: 5,
+            height: 5,
+            tiles: vec![TerrainType::Grass; 25],
+        };
+        world.insert_resource(terrain);
+        world.insert_resource(WaterGrid::new(10, 10));
+        let _ = world.run_system_once(update_water_system);
+    }
+
     use super::*;
     use crate::layer1::building::{Building, BuildingType};
     use bevy_ecs::system::RunSystemOnce;
