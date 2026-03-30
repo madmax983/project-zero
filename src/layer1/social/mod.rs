@@ -608,3 +608,7 @@ pub mod ghost_shift_strike;
 pub use ghost_shift_strike::*;
 pub mod exile;
 pub use exile::*;
+
+/// Remittances system (Spec 674).
+pub mod remittances;
+pub use remittances::*;
