@@ -12809,3 +12809,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Unimaginable, sudden wealth vs. drawing the immediate, overwhelming wrath of the galaxy's automated financial enforcers.
 
 ---
+
+## The Ghost Frequency
+
+**Layer:** Cross-layer
+
+**Fantasy:** A mysterious broadcast that only certain pops can hear, driving them to act strangely or unlocking hidden tech, but attracting unwanted attention.
+
+**Mechanic:** A signal from Layer 3 is picked up by the colony. It selectively affects Pops with specific traits (e.g., 'Sensitive', 'Genius'). Affected pops gain massive research or crafting boosts but suffer escalating Stress and occasionally abandon their jobs to construct bizarre, non-functional "Antennas" out of colony resources.
+
+**Emergence:** You rely on the affected pops to push your tech tree. However, during a critical siege, your lead engineer wanders off to build an antenna out of the shield generator's spare parts, leaving the colony defenseless.
+
+**Tension:** Do you shut down the comms array (losing all Layer 3 intel and the tech boost) to cure the afflicted, or let the signal continue and try to manage the creeping madness?
+
+---
+
+## Generational Hoarders
+
+**Layer:** 1
+
+**Fantasy:** Pops become deeply attached to junk over their lifetimes, cluttering the base but creating a weird sense of personal history and culture.
+
+**Mechanic:** Pops slowly accumulate "Personal Items" (broken tools, strange rocks, empty ration tins) from their daily tasks. They store them in their assigned housing. These items degrade room quality but provide a persistent, stacking Morale buff to the owner. Forcibly 'cleaning' a room instantly destroys the items and inflicts a severe, long-lasting Grief penalty.
+
+**Emergence:** An elder pop dies, and their room is packed floor-to-ceiling with 50 years of accumulated junk. The new occupant refuses to move in until it's cleared, but the elder's surviving family members riot when your haulers start tossing the "heirlooms" into the incinerator.
+
+**Tension:** Spatial efficiency and pristine room quality vs. the emotional well-being and organic, messy lives of your colonists.
+
+---
+
+## Space Lanes
+
+**Layer:** 2
+
+**Fantasy:** Space isn't an open ocean; it's a series of highways. Controlling the highway means controlling the system's economy.
+
+**Mechanic:** Layer 2 trade and civilian fleets naturally gravitate towards established, fuel-efficient "Lanes" between planetary bodies. Players can construct "Toll Stations" on these Lanes to extract a percentage of passing cargo or credits. However, heavily tolled Lanes cause factions to seek alternate, slower routes, and Toll Stations become prime targets for Pirate raids.
+
+**Emergence:** You build a massive, heavily armed Toll Station on the main route to your capital, getting incredibly rich off passing alien merchants. The merchants get fed up, form a massive coalition fleet, and bypass your toll entirely by charting a dangerous path through an asteroid field, leaving your expensive station guarding empty space.
+
+**Tension:** The immense, passive wealth of taxing the highway vs. the risk of driving trade away entirely or inviting a concentrated attack on a fixed choke point.
+
+---
