@@ -83,6 +83,8 @@ pub fn build_simulation_schedule() -> Schedule {
         crate::layer2::fleet::ensure_fleet_health_system,
         crate::layer2::combat::fleet_combat_system
             .after(crate::layer2::fleet::fleet_movement_system),
+        crate::layer2::sensor_ambiguity::resolve_sensors_system
+            .after(crate::layer2::fleet::fleet_movement_system),
         crate::layer2::barnacles::ensure_barnacles_component_system,
         crate::layer2::barnacles::barnacle_accumulation_system,
         // Debris Systems

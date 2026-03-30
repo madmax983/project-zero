@@ -1,6 +1,7 @@
 //! Rendering logic for Layer 2: System View.
 
 use crate::layer2::fleet::{Fleet, InOrbit, InTransit};
+use crate::layer2::sensor_ambiguity::SensorContact;
 use crate::layer2::system::{Orbit, OrbitalBody};
 use bevy_ecs::prelude::*;
 use ratatui::{
@@ -95,11 +96,21 @@ pub fn render_system_view(frame: &mut Frame, area: Rect, world: &World) {
                 let pos_y = y_i32 as u16;
 
                 if inner.contains(ratatui::layout::Position { x: pos_x, y: pos_y }) {
+                    let mut render_char = body.char.to_string();
+                    let mut render_color = body.color;
+
+                    if let Some(contact) = entity.get::<SensorContact>() {
+                        if contact.resolved_entity.is_none() {
+                            render_char = "?".to_string();
+                            render_color = ratatui::style::Color::DarkGray;
+                        }
+                    }
+
                     frame.buffer_mut().set_string(
                         pos_x,
                         pos_y,
-                        body.char.to_string(),
-                        Style::default().fg(body.color),
+                        render_char,
+                        Style::default().fg(render_color),
                     );
                 }
             }

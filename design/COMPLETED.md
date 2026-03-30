@@ -305,3 +305,4 @@
 - [x] `INT-657` Integration: Diplomatic Reflection -> Kill and Plant events — completed 2026-03-27
 - [x] `634` Scrap-Code Prophets — `specs/634-scrap-code-prophets.md` — completed 2026-03-27
 - [x] `687` The Ghost-Shift Strike — `specs/687-ghost-shift-strike.md` — completed 2024-10-24
+- [x] `672` Sensor Ambiguity — `specs/672-sensor-ambiguity.md` — completed 2024-05-24
