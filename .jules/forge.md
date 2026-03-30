@@ -19,3 +19,6 @@
 **[Workspace Test Failure Handling]
 **Learning:** Some integration tests may fail unrelated to hauling refactors due to missing resources (e.g. `ColonyDebt`) or timing changes.
 **Action:** Since these are unrelated pre-existing or timing failures, document them and proceed with the refactor PR.
+**[Guard Clauses and Iterator Chains in Hauling]**
+**Learning:** `src/layer1/hauling.rs` contained duplicated `clear_movement_state` logic and nested `for` loops to find closest items/stockpiles. Extracting state clearing to a helper function, and using `.iter().find(...).map(...)` and `.iter().filter(...).min_by_key(...)` removes the pyramid of doom and makes code significantly more idiomatic.
+**Action:** Always look for opportunities to replace manual iteration with Rust's powerful iterator methods (like `min_by_key`), and extract duplicated cleanup code (like removing multiple components) into small helper functions.
