@@ -2063,7 +2063,10 @@ fn configure_specialized_tech(entity: &mut EntityWorldMut, building_type: Buildi
         }
         BuildingType::DroneHub => {
             entity.insert((
-                DroneHub,
+                DroneHub {
+                    max_bandwidth: 5,
+                    active_drones: 0,
+                },
                 PowerConsumer {
                     demand: 10.0,
                     active: false,

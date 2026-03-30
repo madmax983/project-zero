@@ -15,7 +15,10 @@ mod tests {
         let mut world = World::new();
         let drone = world
             .spawn((
-                Drone,
+                Drone {
+                    parent_hub: None,
+                    is_active: true,
+                },
                 DroneBattery {
                     current: 100.0,
                     max: 100.0,
@@ -35,7 +38,10 @@ mod tests {
         // Setup Drone with low battery
         let drone = world
             .spawn((
-                Drone,
+                Drone {
+                    parent_hub: None,
+                    is_active: true,
+                },
                 DroneBattery {
                     current: 10.0,
                     max: 100.0,
@@ -51,7 +57,10 @@ mod tests {
                 Building {
                     building_type: BuildingType::DroneHub,
                 },
-                DroneHub,
+                DroneHub {
+                    max_bandwidth: 5,
+                    active_drones: 0,
+                },
                 GridPosition { x: 5, y: 5 },
                 PowerConsumer {
                     demand: 10.0,
@@ -74,7 +83,10 @@ mod tests {
         let mut world = World::new();
         let drone = world
             .spawn((
-                Drone,
+                Drone {
+                    parent_hub: None,
+                    is_active: true,
+                },
                 DroneBattery {
                     current: 100.0,
                     max: 100.0,
@@ -97,7 +109,10 @@ mod tests {
         let mut world = World::new();
         let drone = world
             .spawn((
-                Drone,
+                Drone {
+                    parent_hub: None,
+                    is_active: true,
+                },
                 DroneBattery {
                     current: 10.0,
                     max: 100.0,
@@ -115,7 +130,10 @@ mod tests {
             Building {
                 building_type: BuildingType::DroneHub,
             },
-            DroneHub,
+            DroneHub {
+                max_bandwidth: 5,
+                active_drones: 0,
+            },
             GridPosition { x: 5, y: 5 },
             PowerConsumer {
                 demand: 10.0,
@@ -136,7 +154,10 @@ mod tests {
         let mut world = World::new();
         let drone = world
             .spawn((
-                Drone,
+                Drone {
+                    parent_hub: None,
+                    is_active: true,
+                },
                 DroneBattery {
                     current: 100.0,
                     max: 100.0,

@@ -212,7 +212,10 @@ mod tests {
                 building_type: BuildingType::DroneHub,
             },
             GridPosition { x: 0, y: 0 },
-            DroneHub,
+            DroneHub {
+                max_bandwidth: 5,
+                active_drones: 0,
+            },
             scale::layer1::energy::PowerConsumer {
                 demand: 10.0,
                 active: false,
@@ -254,7 +257,10 @@ mod tests {
                 building_type: BuildingType::DroneHub,
             },
             GridPosition { x: 1, y: 0 },
-            DroneHub,
+            DroneHub {
+                max_bandwidth: 5,
+                active_drones: 0,
+            },
             scale::layer1::energy::PowerConsumer {
                 demand: 10.0,
                 active: false,

@@ -4,17 +4,27 @@ use crate::layer1::map::GridPosition;
 use crate::layer1::utility_ai::{manhattan_distance, ActionType, PopAction, StartPlan};
 use bevy_ecs::prelude::*;
 
-/// Marker component for Drone entities.
+/// Component for Drone entities.
 ///
 /// Drones are automated workers that require power (Battery) but have no needs.
 #[derive(Component, Default)]
-pub struct Drone;
+pub struct Drone {
+    /// The hub that spawned this drone.
+    pub parent_hub: Option<Entity>,
+    /// Whether the drone is active.
+    pub is_active: bool,
+}
 
-/// Marker component for Drone Hub buildings.
+/// Component for Drone Hub buildings.
 ///
 /// Drone Hubs consume power and allow Drones to recharge.
 #[derive(Component, Default)]
-pub struct DroneHub;
+pub struct DroneHub {
+    /// Maximum number of active drones this hub can support.
+    pub max_bandwidth: u32,
+    /// Currently active drones linked to this hub.
+    pub active_drones: u32,
+}
 
 /// Component tracking internal battery charge for Drones.
 #[derive(Component, Clone, Copy, Debug)]
@@ -31,10 +41,10 @@ pub struct DroneBattery {
 #[allow(clippy::type_complexity)]
 pub fn evaluate_drone_actions_system(
     mut commands: Commands,
-    mut drone_query: Query<(Entity, &DroneBattery, &mut PopAction, &GridPosition), With<Drone>>,
+    mut drone_query: Query<(Entity, &DroneBattery, &mut PopAction, &GridPosition, &Drone)>,
     hub_query: Query<(Entity, &GridPosition, &PowerConsumer), (With<DroneHub>, With<Building>)>,
 ) {
-    for (entity, battery, mut action, pos) in &mut drone_query {
+    for (entity, battery, mut action, pos, drone_cmp) in &mut drone_query {
         let battery_pct = battery.current / battery.max;
 
         // 1. Charge if low
@@ -78,9 +88,34 @@ pub fn evaluate_drone_actions_system(
             commands.entity(entity).remove::<StartPlan>(); // Stop moving to charger
         }
 
-        // 3. TODO: Haul Logic
-        if action.current == ActionType::Idle {
-            // Placeholder: Stay Idle
+        // 3. Haul Logic handled by integration
+
+        // If deactivated, force idle and clear utility
+        if !drone_cmp.is_active && action.current != ActionType::Idle {
+            action.current = ActionType::Idle;
+            action.current_utility = 0.0;
+            action.ticks_committed = 0;
+            commands.entity(entity).remove::<StartPlan>();
+        }
+    }
+}
+
+/// Disables drones if their parent hub loses power or is destroyed.
+pub fn drone_power_monitor_system(
+    mut drone_query: Query<&mut Drone>,
+    hub_query: Query<&PowerConsumer, With<DroneHub>>,
+) {
+    for mut drone in &mut drone_query {
+        if let Some(hub_entity) = drone.parent_hub {
+            if let Ok(power) = hub_query.get(hub_entity) {
+                drone.is_active = power.active;
+            } else {
+                // Hub doesn't exist or lost power component
+                drone.is_active = false;
+            }
+        } else {
+            // No parent hub
+            drone.is_active = false;
         }
     }
 }

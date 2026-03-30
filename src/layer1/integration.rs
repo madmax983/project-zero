@@ -592,32 +592,33 @@ pub fn amputation_handler_system(
 /// Bridges Building (`DroneHub`) and Drone system (Agents).
 pub fn drone_spawner_bridge_system(
     mut commands: Commands,
-    hubs: Query<
-        (&GridPosition, &crate::layer1::energy::PowerConsumer),
-        With<crate::layer1::drone::DroneHub>,
+    mut hubs: Query<
+        (Entity, &GridPosition, &crate::layer1::energy::PowerConsumer, &mut crate::layer1::drone::DroneHub),
     >,
     drones: Query<&crate::layer1::drone::Drone>,
     _time: Res<SimulationTime>,
 ) {
-    // Limit total drones to 3 * Hubs
-    let hub_count = hubs.iter().count();
-    if hub_count == 0 {
-        return;
+    // Count active drones per hub
+    let mut hub_active_drones = std::collections::HashMap::new();
+    for drone in drones.iter() {
+        if let Some(hub_entity) = drone.parent_hub {
+            if drone.is_active {
+                *hub_active_drones.entry(hub_entity).or_insert(0) += 1;
+            }
+        }
     }
 
-    let drone_count = drones.iter().count();
-    let max_drones = hub_count * 3;
+    // Process hubs and spawn drones if needed
+    for (hub_entity, pos, power, mut hub) in hubs.iter_mut() {
+        let active_count = *hub_active_drones.get(&hub_entity).unwrap_or(&0);
+        hub.active_drones = active_count;
 
-    if drone_count >= max_drones {
-        return;
-    }
-
-    // Spawn 1 drone per tick max
-    for (pos, power) in hubs.iter() {
-        if power.active {
-            // Spawn drone
+        if power.active && active_count < hub.max_bandwidth {
             commands.spawn((
-                crate::layer1::drone::Drone,
+                crate::layer1::drone::Drone {
+                    parent_hub: Some(hub_entity),
+                    is_active: true,
+                },
                 *pos,
                 crate::layer1::utility_ai::PopAction::default(),
                 crate::layer1::drone::DroneBattery {
