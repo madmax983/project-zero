@@ -120,3 +120,5 @@ fn test_pressure_damage_integration() {
         health.current
     );
 }
+
+// This is a dummy change to force git to see the file as modified

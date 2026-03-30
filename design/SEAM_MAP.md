@@ -496,3 +496,9 @@
 - **Systems connected:** `nanite_fabrication_system` -> `nanite_breach_chronicle_bridge`
 - **Glue added:** `nanite_breach_chronicle_bridge` in `src/layer1/integration.rs`
 - **Tests:** `tests/integration/nanite_fabrication_chronicle.rs`
+
+### INT-561: Airlocks & Pressure Integration
+- **Date:** 2026-06-25
+- **Systems connected:** `process_door_venting_system` (Pressure) -> `update_pressure_system` (Environment), `apply_door_movement_penalties_system` (Pressure) -> `Speed` (Execution).
+- **Glue added:** Registered `process_door_venting_system` and `apply_door_movement_penalties_system` in Layer 1.
+- **Tests:** `tests/integration/airlocks_pressure.rs`

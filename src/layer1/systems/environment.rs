@@ -116,6 +116,7 @@ pub fn register(schedule: &mut Schedule) {
 
     schedule.add_systems(
         (
+            crate::layer1::pressure::process_door_venting_system.before(update_pressure_system),
             update_pressure_system,
             crate::layer1::temperature::update_temperature_system.after(update_pressure_system),
             crate::layer1::radioactive::radiation_system

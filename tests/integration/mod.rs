@@ -19,3 +19,4 @@ pub mod silent_mutiny_chronicle;
 pub mod governance_rebellion;
 pub mod biomass_tariff;
 pub mod disaster_tourism_bridge;
+pub mod airlocks_pressure;
