@@ -73,8 +73,15 @@ pub fn build_simulation_schedule() -> Schedule {
         crate::layer1::integration::fleet_unload_system
             .after(crate::layer2::fleet::fleet_movement_system),
         crate::layer2::fleet::ensure_fleet_health_system,
-        crate::layer2::combat::fleet_combat_system
+        crate::layer2::mutiny::silent_mutiny::check_silent_mutiny_system,
+        crate::layer2::mutiny::silent_mutiny::process_mutiny_effects_system,
+        crate::layer2::mutiny::silent_mutiny::intercept_combat_system
             .after(crate::layer2::fleet::fleet_movement_system),
+    ));
+
+    schedule.add_systems((
+        crate::layer2::combat::fleet_combat_system
+            .after(crate::layer2::mutiny::silent_mutiny::intercept_combat_system),
         crate::layer2::barnacles::ensure_barnacles_component_system,
         crate::layer2::barnacles::barnacle_accumulation_system,
         // Debris Systems
@@ -225,8 +232,15 @@ pub fn run_simulation_tick(world: &mut World) {
         world.init_resource::<Events<crate::layer2::phantom::SpawnGhostFleetEvent>>();
     }
 
-    if !world.contains_resource::<Events<crate::layer1::nanite_fabrication::ContainmentBreachEvent>>() {
+    if !world
+        .contains_resource::<Events<crate::layer1::nanite_fabrication::ContainmentBreachEvent>>()
+    {
         world.init_resource::<Events<crate::layer1::nanite_fabrication::ContainmentBreachEvent>>();
+    }
+
+    if !world.contains_resource::<Events<crate::layer2::mutiny::silent_mutiny::SensorGlitchEvent>>()
+    {
+        world.init_resource::<Events<crate::layer2::mutiny::silent_mutiny::SensorGlitchEvent>>();
     }
 
     // Initialize Infinite Archive Resource (Spec 248)
@@ -308,6 +322,7 @@ mod tests {
 
         world.init_resource::<Events<crate::layer2::phantom::SpawnGhostFleetEvent>>();
         world.init_resource::<Events<crate::layer1::nanite_fabrication::ContainmentBreachEvent>>();
+        world.init_resource::<Events<crate::layer2::mutiny::silent_mutiny::SensorGlitchEvent>>();
 
         let schedule = build_simulation_schedule();
         world.add_schedule(schedule);

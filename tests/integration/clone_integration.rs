@@ -135,11 +135,7 @@ fn test_soulless_trait_reduces_leisure_decay() {
 
     // Spawn Soulless Pop
     let soulless_pop = world
-        .spawn((
-            Pop,
-            Needs::default(),
-            Traits(1 << (Trait::Soulless as u8)),
-        ))
+        .spawn((Pop, Needs::default(), Traits(1 << (Trait::Soulless as u8))))
         .id();
 
     // Spawn Normal Pop

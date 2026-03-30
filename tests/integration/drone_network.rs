@@ -176,6 +176,11 @@ mod tests {
 
         world.insert_resource(Schedules::default());
 
+        world.init_resource::<Events<scale::layer2::trade::blockade::TradeShipArrivalEvent>>();
+        world.init_resource::<scale::layer2::trade::blockade::ColonyDebt>();
+        world.init_resource::<Events<scale::layer2::phantom::SpawnGhostFleetEvent>>();
+        world.init_resource::<Events<scale::layer2::mutiny::silent_mutiny::SensorGlitchEvent>>();
+
         // Add schedule
         let schedule = build_simulation_schedule();
         world.add_schedule(schedule);

@@ -170,7 +170,6 @@ mod tests {
     use crate::layer1::tech::{Tech, TechState};
     use crate::layer1::utility_ai::ActionType;
 
-
     #[test]
     fn test_check_for_eureka_emits_event() {
         let mut world = World::new();

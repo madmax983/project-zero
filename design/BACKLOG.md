@@ -258,7 +258,7 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `530` Sub-Surface Geodes — `specs/530-sub-surface-geodes.md`
 - [ ] `531` The Diplomatic Contagion — `specs/531-the-diplomatic-contagion.md`
 - [ ] `532` Time-Dilation Vaults — `specs/532-time-dilation-vaults.md`
-- [ ] `533` The Silent Mutiny — `specs/533-the-silent-mutiny.md`
+- [x] `533` The Silent Mutiny — `specs/533-the-silent-mutiny.md`
 - [ ] `534` Architectural Sympathy — `specs/534-architectural-sympathy.md`
 - [ ] `535` The Propaganda Monolith — `specs/535-the-propaganda-monolith.md`
 - [ ] `536` The Empathic Biome Link — `specs/536-the-empathic-biome-link.md`

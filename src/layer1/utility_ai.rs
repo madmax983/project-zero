@@ -243,10 +243,7 @@ impl<'a> PopDecider<'a> {
     ) -> Self {
         let is_striking = Self::check_striking(data, context);
         let is_penal = data.penal_labor.is_some();
-        let is_noble = data
-            .traits
-            .as_ref()
-            .is_some_and(|t| t.has(Trait::Noble));
+        let is_noble = data.traits.as_ref().is_some_and(|t| t.has(Trait::Noble));
 
         Self {
             evaluator: CandidateEvaluator::new(evaluate_idle(&data.needs)),

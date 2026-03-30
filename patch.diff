@@ -1,0 +1,13 @@
+<<<<<<< SEARCH
+        crate::layer2::combat::fleet_combat_system
+            .after(crate::layer2::fleet::fleet_movement_system),
+        crate::layer2::barnacles::ensure_barnacles_component_system,
+=======
+        crate::layer2::mutiny::silent_mutiny::check_silent_mutiny_system,
+        crate::layer2::mutiny::silent_mutiny::process_mutiny_effects_system,
+        crate::layer2::mutiny::silent_mutiny::intercept_combat_system
+            .after(crate::layer2::fleet::fleet_movement_system),
+        crate::layer2::combat::fleet_combat_system
+            .after(crate::layer2::mutiny::silent_mutiny::intercept_combat_system),
+        crate::layer2::barnacles::ensure_barnacles_component_system,
+>>>>>>> REPLACE

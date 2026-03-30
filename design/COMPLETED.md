@@ -256,3 +256,4 @@
 - [x] `INT-468` Integration: Planetary Traits -> Escape Velocity Gravity — completed 2026-03-27
 - [x] `339` Mentorship — `specs/339-mentorship.md` — completed 2026-03-01
 - [x] `515` Deep Crust Geomes — `specs/515-deep-crust-geomes.md` — completed 2026-03-27
+- [x] `533` The Silent Mutiny — `specs/533-the-silent-mutiny.md`
