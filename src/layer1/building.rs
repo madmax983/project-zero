@@ -729,8 +729,21 @@ impl BuildingType {
     /// Returns the resource cost to build this building with the specified material.
     #[must_use]
     #[allow(clippy::match_same_arms, clippy::too_many_lines)]
-    pub const fn cost(&self, material: MaterialType) -> ColonyResources {
-        match self {
+pub const fn cost(&self, material: MaterialType) -> ColonyResources {
+        if let Some(res) = self.cost_tech_and_infrastructure(material) {
+            return res;
+        }
+        if let Some(res) = self.cost_production_and_civic(material) {
+            return res;
+        }
+        if let Some(res) = self.cost_basic_and_power(material) {
+            return res;
+        }
+        ColonyResources::zeroed()
+    }
+
+    const fn cost_tech_and_infrastructure(&self, material: MaterialType) -> Option<ColonyResources> {
+        let res = match self {
             Self::AICore => ColonyResources {
                 metal: 50.0,
                 stone: 20.0,
@@ -744,11 +757,6 @@ impl BuildingType {
             Self::CryoPod => ColonyResources {
                 metal: 20.0,
                 stone: 10.0,
-                ..ColonyResources::zeroed()
-            },
-            Self::AuroralCollector => ColonyResources {
-                metal: 50.0,
-                stone: 20.0,
                 ..ColonyResources::zeroed()
             },
             Self::AtmosphericProcessor => ColonyResources {
@@ -771,20 +779,6 @@ impl BuildingType {
                 tools: 5.0,
                 ..ColonyResources::zeroed()
             },
-            Self::Shower => ColonyResources {
-                metal: 10.0,
-                stone: 5.0,
-                ..ColonyResources::zeroed()
-            },
-            Self::Recycler => ColonyResources {
-                metal: 20.0,
-                stone: 10.0,
-                ..ColonyResources::zeroed()
-            },
-            Self::BulletinBoard => ColonyResources {
-                wood: 20.0,
-                ..ColonyResources::zeroed()
-            },
             Self::HoloProjector => ColonyResources {
                 metal: 20.0,
                 stone: 10.0,
@@ -803,10 +797,6 @@ impl BuildingType {
             Self::TrashCannon => ColonyResources {
                 metal: 20.0,
                 stone: 10.0,
-                ..ColonyResources::zeroed()
-            },
-            Self::Heater => ColonyResources {
-                metal: 20.0,
                 ..ColonyResources::zeroed()
             },
             Self::LifeSupport => ColonyResources {
@@ -841,11 +831,6 @@ impl BuildingType {
             },
             Self::Hopper => ColonyResources {
                 metal: 10.0,
-                ..ColonyResources::zeroed()
-            },
-            Self::HydroponicsBay => ColonyResources {
-                metal: 30.0,
-                stone: 20.0, // 10 Stone + 10 Glass fallback
                 ..ColonyResources::zeroed()
             },
             Self::Wall => match material {
@@ -893,27 +878,32 @@ impl BuildingType {
                 stone: 10.0,
                 ..ColonyResources::zeroed()
             },
-            Self::Housing => match material {
-                MaterialType::Wood => ColonyResources {
-                    wood: 10.0,
-                    ..ColonyResources::zeroed()
-                },
-                MaterialType::Stone => ColonyResources {
-                    stone: 10.0,
-                    ..ColonyResources::zeroed()
-                },
-                MaterialType::Metal => ColonyResources {
-                    metal: 10.0,
-                    ..ColonyResources::zeroed()
-                },
-                MaterialType::Gold => ColonyResources {
-                    metal: 100.0,
-                    ..ColonyResources::zeroed()
-                },
+            Self::Observatory => ColonyResources {
+                wood: 20.0,
+                stone: 50.0,
+                metal: 10.0, // Needs advanced materials
+                ..ColonyResources::zeroed()
             },
-            Self::Office => ColonyResources {
-                wood: 50.0,
-                stone: 20.0,
+            Self::Lander => ColonyResources::zeroed(),
+            _ => return None,
+        };
+        Some(res)
+    }
+
+    const fn cost_production_and_civic(&self, _material: MaterialType) -> Option<ColonyResources> {
+        let res = match self {
+            Self::Shower => ColonyResources {
+                metal: 10.0,
+                stone: 5.0,
+                ..ColonyResources::zeroed()
+            },
+            Self::Recycler => ColonyResources {
+                metal: 20.0,
+                stone: 10.0,
+                ..ColonyResources::zeroed()
+            },
+            Self::BulletinBoard => ColonyResources {
+                wood: 20.0,
                 ..ColonyResources::zeroed()
             },
             Self::Farm => ColonyResources {
@@ -974,7 +964,7 @@ impl BuildingType {
                 wood: 5.0,
                 ..ColonyResources::zeroed()
             },
-            Self::Statue => match material {
+            Self::Statue => match _material {
                 MaterialType::Stone | MaterialType::Wood => ColonyResources {
                     stone: 20.0,
                     ..ColonyResources::zeroed()
@@ -995,6 +985,51 @@ impl BuildingType {
             Self::TradeDepot => ColonyResources {
                 wood: 50.0,
                 stone: 20.0,
+                ..ColonyResources::zeroed()
+            },
+            Self::Greenhouse => ColonyResources {
+                wood: 10.0,
+                stone: 20.0,
+                metal: 10.0,
+                ..ColonyResources::zeroed()
+            },
+            Self::HydroponicsBay => ColonyResources {
+                metal: 30.0,
+                stone: 20.0, // 10 Stone + 10 Glass fallback
+                ..ColonyResources::zeroed()
+            },
+            _ => return None,
+        };
+        Some(res)
+    }
+
+    const fn cost_basic_and_power(&self, material: MaterialType) -> Option<ColonyResources> {
+        let res = match self {
+            Self::Housing => match material {
+                MaterialType::Wood => ColonyResources {
+                    wood: 10.0,
+                    ..ColonyResources::zeroed()
+                },
+                MaterialType::Stone => ColonyResources {
+                    stone: 10.0,
+                    ..ColonyResources::zeroed()
+                },
+                MaterialType::Metal => ColonyResources {
+                    metal: 10.0,
+                    ..ColonyResources::zeroed()
+                },
+                MaterialType::Gold => ColonyResources {
+                    metal: 100.0,
+                    ..ColonyResources::zeroed()
+                },
+            },
+            Self::Office => ColonyResources {
+                wood: 50.0,
+                stone: 20.0,
+                ..ColonyResources::zeroed()
+            },
+            Self::Heater => ColonyResources {
+                metal: 20.0,
                 ..ColonyResources::zeroed()
             },
             Self::Generator => ColonyResources {
@@ -1023,12 +1058,6 @@ impl BuildingType {
                 ..ColonyResources::zeroed()
             },
             Self::AncientReactor | Self::AncientFabricator => ColonyResources::zeroed(),
-            Self::Greenhouse => ColonyResources {
-                wood: 10.0,
-                stone: 20.0,
-                metal: 10.0,
-                ..ColonyResources::zeroed()
-            },
             Self::PersonalShed => ColonyResources {
                 wood: 10.0,
                 ..ColonyResources::zeroed()
@@ -1041,14 +1070,14 @@ impl BuildingType {
                 stone: 10.0,
                 ..ColonyResources::zeroed()
             },
-            Self::Observatory => ColonyResources {
-                wood: 20.0,
-                stone: 50.0,
-                metal: 10.0, // Needs advanced materials
+            Self::AuroralCollector => ColonyResources {
+                metal: 50.0,
+                stone: 20.0,
                 ..ColonyResources::zeroed()
             },
-            Self::Lander => ColonyResources::zeroed(),
-        }
+            _ => return None,
+        };
+        Some(res)
     }
 
     /// Returns the next building type in the cycle.
@@ -1284,98 +1313,7 @@ fn spawn_building(
 
     insert_base_building_components(&mut entity, building_type, material);
 
-    match building_type {
-        BuildingType::Office => {
-            entity.insert((
-                // Office provides admin
-                AdminProvider { amount: 10.0 },
-                Office::default(),
-                // Office typically operates during the day
-                ShiftSchedule::default(),
-            ));
-        }
-        BuildingType::Housing | BuildingType::Lander => {
-            configure_housing(&mut entity, building_type);
-        }
-        BuildingType::Farm
-        | BuildingType::Plantation
-        | BuildingType::Greenhouse
-        | BuildingType::HydroponicsBay
-        | BuildingType::Smokehouse
-        | BuildingType::LumberMill
-        | BuildingType::StoneMason
-        | BuildingType::Smelter
-        | BuildingType::Smithy
-        | BuildingType::Weaver
-        | BuildingType::Tailor
-        | BuildingType::Refinery
-        | BuildingType::AncientFabricator => configure_production(&mut entity, building_type),
-        BuildingType::Stockpile | BuildingType::Landfill => {
-            configure_storage(&mut entity, building_type);
-        }
-        BuildingType::Tavern
-        | BuildingType::Library
-        | BuildingType::FlowerBed
-        | BuildingType::Statue
-        | BuildingType::Hospital
-        | BuildingType::Grave
-        | BuildingType::TradeDepot => configure_civic(&mut entity, building_type),
-        BuildingType::Wall
-        | BuildingType::Window
-        | BuildingType::Gate
-        | BuildingType::Tower
-        | BuildingType::Well
-        | BuildingType::ConveyorBelt
-        | BuildingType::Hopper
-        | BuildingType::Airlock
-        | BuildingType::Vent => configure_infrastructure(&mut entity, building_type),
-        BuildingType::Generator
-        | BuildingType::SolarPanel
-        | BuildingType::PowerPole
-        | BuildingType::Battery
-        | BuildingType::AncientReactor
-        | BuildingType::Heater
-        | BuildingType::AuroralCollector => configure_power(&mut entity, building_type),
-        BuildingType::Observatory
-        | BuildingType::LifeSupport
-        | BuildingType::TrashCannon
-        | BuildingType::ServerBank
-        | BuildingType::CommandCenter
-        | BuildingType::AICore
-        | BuildingType::DroneHub
-        | BuildingType::CryoPod
-        | BuildingType::AtmosphericProcessor
-        | BuildingType::GeneBank
-        | BuildingType::CloneVat
-        | BuildingType::HypnoPod
-        | BuildingType::HoloProjector => configure_tech(&mut entity, building_type),
-        BuildingType::Shower => configure_civic(&mut entity, building_type),
-        BuildingType::Recycler => {
-            // Recycler configuration
-            entity.insert((
-                crate::layer1::recycling::Recycler::default(),
-                Inventory::default(),
-                crate::layer1::lighting::LightSource {
-                    is_outdoor: true,
-                    radius: 3.0,
-                    intensity: 0.5,
-                    color: (0, 255, 0), // Green glow
-                },
-                ShiftSchedule::default(),
-            ));
-        }
-        BuildingType::BulletinBoard => {
-            entity.insert((
-                crate::layer1::social::grievances::BulletinBoard::default(),
-                ShiftSchedule::default(),
-            ));
-        }
-        BuildingType::PersonalShed
-        | BuildingType::PersonalGarden
-        | BuildingType::PersonalShrine => {
-            // Logic handled by components added in system
-        }
-    }
+    configure_building_components(&mut entity, building_type);
 
     entity.id()
 }
@@ -2158,6 +2096,102 @@ fn configure_tech(entity: &mut EntityWorldMut, building_type: BuildingType) {
 }
 
 /// Helper for spawning buildings in tests/tools.
+fn configure_building_components(entity: &mut EntityWorldMut, building_type: BuildingType) {
+    match building_type {
+        BuildingType::Office => {
+            entity.insert((
+                // Office provides admin
+                AdminProvider { amount: 10.0 },
+                Office::default(),
+                // Office typically operates during the day
+                ShiftSchedule::default(),
+            ));
+        }
+        BuildingType::Housing | BuildingType::Lander => {
+            configure_housing(entity, building_type);
+        }
+        BuildingType::Farm
+        | BuildingType::Plantation
+        | BuildingType::Greenhouse
+        | BuildingType::HydroponicsBay
+        | BuildingType::Smokehouse
+        | BuildingType::LumberMill
+        | BuildingType::StoneMason
+        | BuildingType::Smelter
+        | BuildingType::Smithy
+        | BuildingType::Weaver
+        | BuildingType::Tailor
+        | BuildingType::Refinery
+        | BuildingType::AncientFabricator => configure_production(entity, building_type),
+        BuildingType::Stockpile | BuildingType::Landfill => {
+            configure_storage(entity, building_type);
+        }
+        BuildingType::Tavern
+        | BuildingType::Library
+        | BuildingType::FlowerBed
+        | BuildingType::Statue
+        | BuildingType::Hospital
+        | BuildingType::Grave
+        | BuildingType::TradeDepot => configure_civic(entity, building_type),
+        BuildingType::Wall
+        | BuildingType::Window
+        | BuildingType::Gate
+        | BuildingType::Tower
+        | BuildingType::Well
+        | BuildingType::ConveyorBelt
+        | BuildingType::Hopper
+        | BuildingType::Airlock
+        | BuildingType::Vent => configure_infrastructure(entity, building_type),
+        BuildingType::Generator
+        | BuildingType::SolarPanel
+        | BuildingType::PowerPole
+        | BuildingType::Battery
+        | BuildingType::AncientReactor
+        | BuildingType::Heater
+        | BuildingType::AuroralCollector => configure_power(entity, building_type),
+        BuildingType::Observatory
+        | BuildingType::LifeSupport
+        | BuildingType::TrashCannon
+        | BuildingType::ServerBank
+        | BuildingType::CommandCenter
+        | BuildingType::AICore
+        | BuildingType::DroneHub
+        | BuildingType::CryoPod
+        | BuildingType::AtmosphericProcessor
+        | BuildingType::GeneBank
+        | BuildingType::CloneVat
+        | BuildingType::HypnoPod
+        | BuildingType::HoloProjector => configure_tech(entity, building_type),
+        BuildingType::Shower => configure_civic(entity, building_type),
+        BuildingType::Recycler => {
+            // Recycler configuration
+            entity.insert((
+                crate::layer1::recycling::Recycler::default(),
+                Inventory::default(),
+                crate::layer1::lighting::LightSource {
+                    is_outdoor: true,
+                    radius: 3.0,
+                    intensity: 0.5,
+                    color: (0, 255, 0), // Green glow
+                },
+                ShiftSchedule::default(),
+            ));
+        }
+        BuildingType::BulletinBoard => {
+            entity.insert((
+                crate::layer1::social::grievances::BulletinBoard::default(),
+                ShiftSchedule::default(),
+            ));
+        }
+        BuildingType::PersonalShed
+        | BuildingType::PersonalGarden
+        | BuildingType::PersonalShrine => {
+            // Logic handled by components added in system
+        }
+    }
+
+}
+
 pub fn spawn_building_with_material(
     world: &mut World,
     x: i32,
