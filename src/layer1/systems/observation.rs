@@ -8,6 +8,9 @@ use bevy_ecs::prelude::*;
 pub fn register(schedule: &mut Schedule) {
     schedule.add_systems(
         (
+            crate::layer1::scrapcode_cult::process_scrap_code_revelations,
+            crate::layer1::scrapcode_cult::execute_cult_sabotage,
+            crate::layer1::scrapcode_cult::cultist_morale_aura,
             crate::layer1::integration::waste_scent_bridge,
             crate::layer1::olfactory::scent_diffusion_system
                 .after(crate::layer1::integration::waste_scent_bridge),

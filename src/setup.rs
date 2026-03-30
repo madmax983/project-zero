@@ -293,6 +293,8 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     world.init_resource::<Events<crate::layer1::memory_core::ImplantMemoryCoreEvent>>();
     world.init_resource::<Events<crate::layer1::memory_core::HarvestMemoryCoreEvent>>();
     world.init_resource::<Events<crate::layer1::tech::machine_awakening::BotGlitchEvent>>();
+    world.init_resource::<bevy_ecs::event::Events<crate::layer1::scrapcode_cult::MachineBreakdownEvent>>();
+    world.init_resource::<bevy_ecs::event::Events<crate::layer1::scrapcode_cult::CultFormationEvent>>();
 
     world.init_resource::<bevy::prelude::Time>();
     world.init_resource::<crate::layer1::tech::machine_awakening::GlobalSentience>();

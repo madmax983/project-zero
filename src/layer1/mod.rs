@@ -707,3 +707,5 @@ pub use disasters::*;
 pub mod environment;
 pub mod spore_diplomat;
 pub use spore_diplomat::*;
+pub mod scrapcode_cult;
+pub use scrapcode_cult::{CultistMachine, CultFormationEvent, CultistPop, CultistCurrentAction, MachineBreakdownEvent, MachineState, ScrapCodeCultist, process_scrap_code_revelations, execute_cult_sabotage, cultist_morale_aura};
