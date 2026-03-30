@@ -539,6 +539,9 @@ pub use pen_pals::*;
 /// The Cadet Branch (Spec 263).
 pub mod cadet;
 pub use cadet::*;
+pub mod indoctrination;
+pub use indoctrination::*;
+
 pub mod placebo;
 
 /// Secret Societies system (Spec 147).

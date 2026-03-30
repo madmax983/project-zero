@@ -325,6 +325,10 @@ pub enum BuildingType {
     HoloProjector,
     /// Instant matter fabrication (Spec 453).
     Nanoforge,
+    /// Educational facility that spreads Ethics.
+    School,
+    /// Media station that broadcasts State Ideology.
+    MediaStation,
 }
 
 impl BuildingType {
@@ -509,6 +513,7 @@ impl BuildingType {
             Self::BulletinBoard => false,
             Self::HoloProjector => false,
             Self::Nanoforge => false,
+            Self::School | Self::MediaStation => false,
         }
     }
 
@@ -670,6 +675,8 @@ impl BuildingType {
             Self::BulletinBoard => "Bulletin Board",
             Self::HoloProjector => "Holo Projector",
             Self::Nanoforge => "Nanoforge",
+            Self::School => "School",
+            Self::MediaStation => "Media Station",
         }
     }
 
@@ -728,6 +735,8 @@ impl BuildingType {
             Self::Recycler => '♻',
             Self::BulletinBoard => 'B',
             Self::Nanoforge => 'N',
+            Self::School => 'S',
+            Self::MediaStation => 'M',
         }
     }
 
@@ -1057,6 +1066,15 @@ impl BuildingType {
                 metal: 25.0,
                 ..ColonyResources::zeroed()
             },
+            Self::School => ColonyResources {
+                wood: 25.0,
+                stone: 10.0,
+                ..ColonyResources::zeroed()
+            },
+            Self::MediaStation => ColonyResources {
+                metal: 25.0,
+                ..ColonyResources::zeroed()
+            },
         }
     }
 
@@ -1354,6 +1372,8 @@ fn spawn_building(
         | BuildingType::HypnoPod
         | BuildingType::HoloProjector
         | BuildingType::Nanoforge => configure_tech(&mut entity, building_type),
+        BuildingType::School
+        | BuildingType::MediaStation => configure_civic(&mut entity, building_type),
         BuildingType::PersonalShed
         | BuildingType::PersonalGarden
         | BuildingType::PersonalShrine => {
@@ -1633,6 +1653,34 @@ fn configure_storage(entity: &mut EntityWorldMut, building_type: BuildingType) {
 
 fn configure_civic(entity: &mut EntityWorldMut, building_type: BuildingType) {
     match building_type {
+        BuildingType::School => {
+            entity.insert((
+                crate::layer1::social::indoctrination::IndoctrinationAura {
+                    target_ethic: crate::layer1::social::indoctrination::Ethic::StateLoyalist,
+                    strength: 0.5,
+                    radius: 3.0,
+                },
+                LightSource {
+                    is_outdoor: true,
+                    radius: 3.0,
+                    intensity: 0.8,
+                    color: (200, 200, 255),
+                },
+            ));
+        }
+        BuildingType::MediaStation => {
+            entity.insert((
+                crate::layer1::social::indoctrination::IndoctrinationAura {
+                    target_ethic: crate::layer1::social::indoctrination::Ethic::StateLoyalist,
+                    strength: 1.0,
+                    radius: 10.0,
+                },
+                PowerConsumer {
+                    demand: 5.0,
+                    active: true,
+                },
+            ));
+        }
         BuildingType::Office => {
             entity.insert((
                 // Office provides admin
@@ -2470,7 +2518,9 @@ mod tests {
             BuildingType::HoloProjector
         );
         assert_eq!(BuildingType::HoloProjector.next(), BuildingType::Nanoforge);
-        assert_eq!(BuildingType::Nanoforge.next(), BuildingType::Housing);
+        assert_eq!(BuildingType::Nanoforge.next(), BuildingType::School);
+        assert_eq!(BuildingType::School.next(), BuildingType::MediaStation);
+        assert_eq!(BuildingType::MediaStation.next(), BuildingType::Housing);
     }
 
     #[test]
@@ -2699,6 +2749,12 @@ mod tests {
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::Nanoforge);
+
+        mode.selected = mode.selected.next();
+        assert_eq!(mode.selected, BuildingType::School);
+
+        mode.selected = mode.selected.next();
+        assert_eq!(mode.selected, BuildingType::MediaStation);
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::Housing);

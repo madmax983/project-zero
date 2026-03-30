@@ -132,6 +132,8 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::social::cultural_vandalism::vandalism_system.after(decay_needs_system),
             crate::layer1::social::cultural_vandalism::update_structure_buffs
                 .after(crate::layer1::social::cultural_vandalism::vandalism_system),
+            crate::layer1::social::indoctrination::process_indoctrination_system
+                .after(decay_needs_system),
         )
             .in_set(Layer1SystemSet::Observation),
     );
