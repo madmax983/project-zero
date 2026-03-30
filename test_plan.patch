@@ -1,0 +1,37 @@
+--- src/layer1/drone.rs
++++ src/layer1/drone.rs
+@@ -19,6 +19,10 @@
+     pub max: f32,
+ }
+
++/// Associates a Drone with its originating Hub.
++#[derive(Component, Clone, Copy, Debug)]
++pub struct ParentHub(pub Entity);
++
+ /// Evaluates drone actions.
+ /// Prioritizes Charging if battery is low (< 20%).
+ /// Otherwise Idles (Placeholder for Hauling).
+@@ -118,3 +122,23 @@
+         battery.current = (battery.current - drain).max(0.0);
+     }
+ }
++
++/// Monitors drone power. If parent hub is destroyed or loses power, drones idle.
++pub fn drone_power_monitor_system(
++    mut commands: Commands,
++    mut query: Query<(Entity, &ParentHub, &mut PopAction), With<Drone>>,
++    hub_query: Query<&PowerConsumer, With<DroneHub>>,
++) {
++    for (entity, parent_hub, mut action) in &mut query {
++        let mut hub_active = false;
++        if let Ok(power) = hub_query.get(parent_hub.0) {
++            hub_active = power.active;
++        }
++
++        if !hub_active && action.current != ActionType::Idle && action.current != ActionType::Charge {
++            action.current = ActionType::Idle;
++            action.current_utility = 1.0;
++            commands.entity(entity).remove::<StartPlan>();
++        }
++    }
++}

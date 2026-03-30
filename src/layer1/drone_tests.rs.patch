@@ -1,0 +1,56 @@
+--- src/layer1/drone_tests.rs
++++ src/layer1/drone_tests.rs
+@@ -4,6 +4,6 @@
+     use crate::layer1::building::{Building, BuildingType};
+     use crate::layer1::drone::{
+-        drone_battery_system, evaluate_drone_actions_system, process_charge_system, Drone,
+-        DroneBattery, DroneHub,
++        drone_battery_system, evaluate_drone_actions_system, process_charge_system, drone_power_monitor_system,
++        Drone, DroneBattery, DroneHub,
+     };
+     use crate::layer1::energy::PowerConsumer;
+@@ -156,4 +156,66 @@
+         assert!(battery.current < 100.0, "Battery should drain");
+     }
++
++    #[test]
++    fn test_drones_deactivate_without_power_or_bandwidth() {
++        let mut world = World::new();
++
++        let hub = world
++            .spawn((
++                Building {
++                    building_type: BuildingType::DroneHub,
++                },
++                DroneHub,
++                GridPosition { x: 5, y: 5 },
++                PowerConsumer {
++                    demand: 10.0,
++                    active: false, // Power cut!
++                },
++            ))
++            .id();
++
++        let drone = world
++            .spawn((
++                Drone,
++                DroneBattery {
++                    current: 50.0,
++                    max: 100.0,
++                },
++                PopAction {
++                    current: ActionType::Haul,
++                    ..Default::default()
++                },
++                crate::layer1::pop::ParentHub { hub },
++            ))
++            .id();
++
++        let mut schedule = Schedule::default();
++        schedule.add_systems(drone_power_monitor_system);
++        schedule.run(&mut world);
++
++        let action = world.get::<PopAction>(drone).unwrap();
++        assert_eq!(action.current, ActionType::Idle, "Drone should be inactive (Idle) when parent hub loses power.");
++    }
+ }

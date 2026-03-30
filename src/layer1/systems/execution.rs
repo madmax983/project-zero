@@ -34,6 +34,8 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::integration::drone_spawner_bridge_system
                 .after(process_start_plan_system),
             crate::layer1::integration::drone_work_bridge_system.after(process_start_plan_system),
+            crate::layer1::drone::drone_power_monitor_system
+                .after(crate::layer1::integration::drone_spawner_bridge_system),
             crate::layer1::husbandry::pasture_confinement_system.after(process_start_plan_system),
             crate::layer1::fauna::fauna_behavior_system.after(process_start_plan_system),
             mascot_behavior_system.after(process_start_plan_system),

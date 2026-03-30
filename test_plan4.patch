@@ -1,0 +1,10 @@
+--- src/layer1/integration.rs
++++ src/layer1/integration.rs
+@@ -628,6 +628,7 @@
+                     accumulator: 0.0,
+                 },
+                 crate::layer1::utility_ai::UtilityWeights::default(),
++                crate::layer1::drone::ParentHub(pos.clone()), // Use grid pos, or properly ref to entity. Oh wait we need Entity
+             ));
+             break; // Only one per tick
+         }
