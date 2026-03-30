@@ -328,14 +328,20 @@ pub fn run_simulation_tick(world: &mut World) {
 
     if !world.contains_resource::<Events<crate::layer1::disasters::DisasterEvent>>() {
         world.init_resource::<Events<crate::layer1::disasters::DisasterEvent>>();
+        world.init_resource::<Events<crate::layer1::social::ghost_shift_strike::GhostShiftStartedEvent>>();
     }
 
     if !world.contains_resource::<Events<crate::layer2::tourism::disaster_tourism::GriefTouristArrivalEvent>>() {
         world.init_resource::<Events<crate::layer2::tourism::disaster_tourism::GriefTouristArrivalEvent>>();
     }
 
+    if !world.contains_resource::<Events<crate::layer1::social::ghost_shift_strike::GhostShiftStartedEvent>>() {
+        world.init_resource::<Events<crate::layer1::social::ghost_shift_strike::GhostShiftStartedEvent>>();
+    }
+
     if !world.contains_resource::<Events<crate::layer1::disasters::DisasterEvent>>() {
         world.init_resource::<Events<crate::layer1::disasters::DisasterEvent>>();
+        world.init_resource::<Events<crate::layer1::social::ghost_shift_strike::GhostShiftStartedEvent>>();
     }
 
     if !world.contains_resource::<Events<crate::layer2::trade::biomass_tariff::TradeDeal>>() {
@@ -504,6 +510,7 @@ mod tests {
         world.init_resource::<Events<crate::layer2::trade::penal_contracts::PrisonerDiedEvent>>();
         world.init_resource::<Events<crate::layer2::governance::RebellionEvent>>();
         world.init_resource::<Events<crate::layer1::disasters::DisasterEvent>>();
+        world.init_resource::<Events<crate::layer1::social::ghost_shift_strike::GhostShiftStartedEvent>>();
         world.init_resource::<Events<crate::layer2::tourism::disaster_tourism::GriefTouristArrivalEvent>>();
         world.init_resource::<Events<crate::layer2::trade::biomass_tariff::TradeDeal>>();
         world.init_resource::<crate::layer3::council::GalacticCouncil>();
