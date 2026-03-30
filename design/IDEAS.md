@@ -2302,7 +2302,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Bioluminescent Flora
+## Bioluminescent Flora [SPECCED]
 
 **Layer:** 1
 
@@ -2316,7 +2316,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Procedural Dialects
+## Procedural Dialects [SPECCED]
 
 **Layer:** 1
 
@@ -2330,7 +2330,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Corporate Sponsorship
+## Corporate Sponsorship [SPECCED]
 
 **Layer:** 3 -> 1
 
@@ -2344,7 +2344,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Desire Paths
+## Desire Paths [SPECCED]
 
 **Layer:** 1
 

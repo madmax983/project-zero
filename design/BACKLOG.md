@@ -405,3 +405,7 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `689` The Empathy Tax — `specs/689-the-empathy-tax.md`
 - [ ] `690` Salvage-Cult Engineers — `specs/690-salvage-cult-engineers.md`
 - [ ] `691` The Exile — `specs/691-the-exile.md`
+- [ ] `692` Bioluminescent Flora — `specs/692-bioluminescent-flora.md`
+- [ ] `693` Procedural Dialects — `specs/693-procedural-dialects.md`
+- [ ] `694` Corporate Sponsorship — `specs/694-corporate-sponsorship.md`
+- [ ] `695` Desire Paths — `specs/695-desire-paths.md`

@@ -17,6 +17,7 @@ use crate::layer3::silence::{
     check_hostile_spawn_system, update_detection_risk_system, DetectionRisk, HostileSpawnEvent,
 };
 use crate::shared::time::SimulationTime;
+use crate::layer1::social::ghost_shift_strike::GhostShiftStartedEvent;
 
 /// Schedule label for the main simulation tick.
 #[derive(ScheduleLabel, Debug, Clone, PartialEq, Eq, Hash)]
@@ -42,6 +43,9 @@ pub fn build_simulation_schedule() -> Schedule {
 
     // --- Register Core Layer 1 Systems ---
     register_layer1_systems(&mut schedule);
+
+    // Register missing GhostShiftStartedEvent update buffer
+    schedule.add_systems(update_event_buffer::<GhostShiftStartedEvent>.in_set(Layer1SystemSet::EventCleanup));
     // Whispering Ore
     schedule.add_systems((
         crate::layer1::whispering_ore::process_whispering_ore_system,
