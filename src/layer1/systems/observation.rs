@@ -333,6 +333,7 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::fauna::shadow::shadow_visibility_system,
             crate::layer1::spore_diplomat::spore_stat_boost_system,
             crate::layer1::spore_diplomat::spore_stat_remove_system,
+            crate::layer1::epigenetics::apply_epigenetic_trauma_system,
         )
             .in_set(Layer1SystemSet::Observation),
     );

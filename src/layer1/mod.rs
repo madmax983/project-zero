@@ -651,6 +651,9 @@ pub use infrastructure::*;
 /// Nanite Fabrication system (Spec 453).
 pub mod nanite_fabrication;
 pub use nanite_fabrication::*;
+
+pub mod epigenetics;
+pub use epigenetics::*;
 pub mod exodus;
 pub use exodus::*;
 pub mod disasters;
