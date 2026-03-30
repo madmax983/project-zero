@@ -19,8 +19,7 @@ fn test_rebellion_triggers_chronicle_event() {
     let planet_entity = app.world_mut().spawn_empty().id();
 
     // Act: Send a RebellionEvent
-    app.world_mut()
-        .send_event(RebellionEvent { planet_entity });
+    app.world_mut().send_event(RebellionEvent { planet_entity });
     app.update();
 
     // Assert: We should receive a major chronicle event
@@ -29,9 +28,7 @@ fn test_rebellion_triggers_chronicle_event() {
 
     let mut found = false;
     for event in reader.read(chronicle_events) {
-        if event.importance == EventImportance::Major
-            && event.text.contains("rebellion")
-        {
+        if event.importance == EventImportance::Major && event.text.contains("rebellion") {
             found = true;
             break;
         }
