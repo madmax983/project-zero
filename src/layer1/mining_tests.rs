@@ -105,7 +105,9 @@ mod tests {
         }
 
         if let Some(e) = anomaly_entity {
-            let anomaly = world.get::<Anomaly>(e).unwrap();
+            let anomaly = world
+                .get::<Anomaly>(e)
+                .expect("Expected Anomaly component to exist on anomaly entity");
             // Should be a valid type (Ruins, Geode, etc)
             assert!(matches!(
                 anomaly.anomaly_type,

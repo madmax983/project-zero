@@ -440,7 +440,9 @@ mod tests {
         // Simulate consuming a Stim
         crate::layer1::chemical::consume_chemical(&mut world, pop, ChemicalType::Stim);
 
-        let state = world.get::<ChemicalState>(pop).unwrap();
+        let state = world
+            .get::<ChemicalState>(pop)
+            .expect("Pop should have ChemicalState");
         assert!(state
             .active_effects
             .iter()
@@ -481,10 +483,12 @@ mod tests {
             crate::layer1::chemical::consume_chemical(&mut world, pop, ChemicalType::Stim);
         }
 
-        let state = world.get::<ChemicalState>(pop).unwrap();
+        let state = world
+            .get::<ChemicalState>(pop)
+            .expect("Pop should have ChemicalState");
         let addiction = state.get_addiction(ChemicalType::Stim);
         assert!(addiction.is_some());
-        assert!(addiction.unwrap().severity > 0.0);
+        assert!(addiction.expect("Pop should have Addiction").severity > 0.0);
     }
 
     #[test]
@@ -514,7 +518,9 @@ mod tests {
         // Run system
         crate::layer1::chemical::addiction_system(&mut world);
 
-        let state = world.get::<ChemicalState>(pop).unwrap();
+        let state = world
+            .get::<ChemicalState>(pop)
+            .expect("Pop should have ChemicalState");
         assert!(state.is_in_withdrawal(ChemicalType::Stim));
     }
 
@@ -543,7 +549,7 @@ mod tests {
             evaluate_consume_chemical(pop_pos, &needs, &weights, Some(&state), 0.0, &[item]);
 
         assert!(result.is_some());
-        let (score, _) = result.unwrap();
+        let (score, _) = result.expect("Expected valid result");
         assert!(score >= 1.0, "Withdrawal should produce high score");
     }
 
@@ -562,7 +568,7 @@ mod tests {
         let result = evaluate_consume_chemical(pop_pos, &needs, &weights, None, 0.0, &[item]);
 
         assert!(result.is_some());
-        let (score, _) = result.unwrap();
+        let (score, _) = result.expect("Expected valid result");
         assert!(score > 0.5, "Tired pop should want Stim");
     }
 
@@ -585,7 +591,7 @@ mod tests {
         );
 
         assert!(result.is_some());
-        let (score, _) = result.unwrap();
+        let (score, _) = result.expect("Expected valid result");
         assert!(score > 0.5, "Stressed pop should want Sedative");
     }
 
@@ -606,7 +612,7 @@ mod tests {
 
         crate::layer1::chemical::consume_chemical(&mut world, pop, ChemicalType::Stim);
 
-        let health = world.get::<Health>(pop).unwrap();
+        let health = world.get::<Health>(pop).expect("Pop should have Health");
         assert!(health.current < 100.0);
         assert!((health.current - 98.0).abs() < f32::EPSILON); // 100 - 2
     }
@@ -627,7 +633,9 @@ mod tests {
 
         crate::layer1::chemical::consume_chemical(&mut world, pop, ChemicalType::Sedative);
 
-        let stress = world.get::<StressTracker>(pop).unwrap();
+        let stress = world
+            .get::<StressTracker>(pop)
+            .expect("Pop should have StressTracker");
         assert!(stress.accumulated_stress < 50.0);
         assert!((stress.accumulated_stress - 30.0).abs() < f32::EPSILON); // 50 - 20
     }
@@ -652,7 +660,9 @@ mod tests {
 
         crate::layer1::chemical::addiction_system(&mut world);
 
-        let state = world.get::<ChemicalState>(pop).unwrap();
+        let state = world
+            .get::<ChemicalState>(pop)
+            .expect("Pop should have ChemicalState");
         // Duration 1 -> 0, still kept (retained if duration > 0 BEFORE decrement? No.
         // Logic: if duration > 0 { duration -= 1; true } else { false }
         // So duration 1 -> duration 0 -> kept.
@@ -661,8 +671,168 @@ mod tests {
 
         crate::layer1::chemical::addiction_system(&mut world);
 
-        let state = world.get::<ChemicalState>(pop).unwrap();
+        let state = world
+            .get::<ChemicalState>(pop)
+            .expect("Pop should have ChemicalState");
         // Duration 0 -> else branch -> removed.
         assert!(state.active_effects.is_empty());
+    }
+
+    #[test]
+    fn test_evaluate_consume_chemical_ignores_irrelevant_items() {
+        let pop_pos = GridPosition { x: 0, y: 0 };
+        let needs = Needs {
+            rest: 0.1, // Very tired (wants stim)
+            ..Default::default()
+        };
+        let weights = UtilityWeights::default();
+
+        let mut item1 = ScorableCandidate::new(Entity::from_raw(1), GridPosition { x: 0, y: 0 });
+        item1.item_type = Some(ItemType::Tool); // Irrelevant type
+
+        let mut item2 = ScorableCandidate::new(Entity::from_raw(2), GridPosition { x: 0, y: 0 });
+        item2.item_type = None; // No type
+
+        let result =
+            evaluate_consume_chemical(pop_pos, &needs, &weights, None, 0.0, &[item1, item2]);
+
+        assert!(result.is_none(), "Should ignore non-chemical items");
+    }
+
+    #[test]
+    fn test_get_speed_modifier_clamps_bounds() {
+        let mut world = World::new();
+
+        // Test lower bound (0.1)
+        let pop_slow = world
+            .spawn((
+                Pop,
+                ChemicalState {
+                    active_effects: vec![],
+                    addictions: vec![
+                        Addiction {
+                            chemical: ChemicalType::Stim,
+                            severity: 1.0,
+                            last_consumed_tick: 0,
+                            withdrawal_threshold: 10,
+                            in_withdrawal: true,
+                        },
+                        Addiction {
+                            chemical: ChemicalType::Sedative,
+                            severity: 1.0,
+                            last_consumed_tick: 0,
+                            withdrawal_threshold: 10,
+                            in_withdrawal: true,
+                        },
+                        Addiction {
+                            chemical: ChemicalType::Stim,
+                            severity: 1.0,
+                            last_consumed_tick: 0,
+                            withdrawal_threshold: 10,
+                            in_withdrawal: true,
+                        },
+                        Addiction {
+                            chemical: ChemicalType::Stim,
+                            severity: 1.0,
+                            last_consumed_tick: 0,
+                            withdrawal_threshold: 10,
+                            in_withdrawal: true,
+                        },
+                        Addiction {
+                            chemical: ChemicalType::Stim,
+                            severity: 1.0,
+                            last_consumed_tick: 0,
+                            withdrawal_threshold: 10,
+                            in_withdrawal: true,
+                        },
+                    ],
+                },
+            ))
+            .id();
+
+        let slow_modifier = crate::layer1::chemical::get_speed_modifier(&world, pop_slow);
+        assert!(
+            (slow_modifier - 0.1).abs() < f32::EPSILON,
+            "Speed should clamp at minimum 0.1"
+        );
+
+        // Test upper bound (5.0)
+        let pop_fast = world
+            .spawn((
+                Pop,
+                ChemicalState {
+                    active_effects: vec![
+                        ActiveEffect {
+                            chemical: ChemicalType::Stim,
+                            duration: 10,
+                            magnitude: 1.5,
+                        },
+                        ActiveEffect {
+                            chemical: ChemicalType::Stim,
+                            duration: 10,
+                            magnitude: 1.5,
+                        },
+                        ActiveEffect {
+                            chemical: ChemicalType::Stim,
+                            duration: 10,
+                            magnitude: 1.5,
+                        },
+                        ActiveEffect {
+                            chemical: ChemicalType::Stim,
+                            duration: 10,
+                            magnitude: 1.5,
+                        },
+                        ActiveEffect {
+                            chemical: ChemicalType::Stim,
+                            duration: 10,
+                            magnitude: 1.5,
+                        },
+                    ],
+                    addictions: vec![],
+                },
+            ))
+            .id();
+
+        let fast_modifier = crate::layer1::chemical::get_speed_modifier(&world, pop_fast);
+        assert!(
+            (fast_modifier - 5.0).abs() < f32::EPSILON,
+            "Speed should clamp at maximum 5.0"
+        );
+    }
+
+    #[test]
+    fn test_addiction_system_resets_invalid_withdrawal() {
+        let mut world = World::new();
+        world.insert_resource(SimulationTime {
+            tick: 100,
+            ..Default::default()
+        });
+
+        let pop = world
+            .spawn((
+                Pop,
+                ChemicalState {
+                    active_effects: vec![],
+                    addictions: vec![Addiction {
+                        chemical: ChemicalType::Stim,
+                        severity: 0.8,
+                        last_consumed_tick: 50, // 100 - 50 = 50 < 1000 (withdrawal_threshold)
+                        withdrawal_threshold: 1000,
+                        in_withdrawal: true, // Invalid state!
+                    }],
+                },
+            ))
+            .id();
+
+        // Run system
+        crate::layer1::chemical::addiction_system(&mut world);
+
+        let state = world
+            .get::<ChemicalState>(pop)
+            .expect("Pop should have ChemicalState");
+        assert!(
+            !state.is_in_withdrawal(ChemicalType::Stim),
+            "Invalid withdrawal state should be reset to false"
+        );
     }
 }
