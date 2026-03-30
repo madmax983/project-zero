@@ -1,0 +1,23 @@
+--- src/layer1/hauling.rs
++++ src/layer1/hauling.rs
+@@ -14,6 +14,7 @@
+ use crate::layer1::zone::{ZoneGrid, ZoneType};
+ use crate::layer1::GridPosition;
+ use bevy_ecs::prelude::*;
++use std::collections::HashSet;
+ use bevy_ecs::query::QueryData;
+
+ /// Moves resources from the world to stockpiles.
+@@ -305,8 +306,12 @@
+     let is_drone = world.get::<Drone>(pop_entity).is_some();
+
+     // Collect stockpile positions to avoid hauling items already stored
+-    let stockpiles: Vec<GridPosition> = world
++    // ⚡ Bolt Optimization:
++    // By collecting stockpile positions into a `HashSet` rather than a `Vec`,
++    // we reduce the time complexity of the inner loop inclusion check from O(N) to O(1).
++    // This dramatically reduces cpu time spent per idle hauler scanning for generic items.
++    let stockpiles: HashSet<GridPosition> = world
+         .query::<(&GridPosition, &Stockpile)>()
+         .iter(world)
+         .map(|(p, _)| *p)

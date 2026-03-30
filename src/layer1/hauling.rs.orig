@@ -14,7 +14,6 @@ use crate::layer1::zone::{ZoneGrid, ZoneType};
 use crate::layer1::GridPosition;
 use bevy_ecs::prelude::*;
 use bevy_ecs::query::QueryData;
-use std::collections::HashSet;
 
 /// Moves resources from the world to stockpiles.
 /// ⚡ Bolt: Avoids cloning the Factions HashMap every tick. Reduces heap allocations by 1 per frame.
@@ -306,11 +305,7 @@ fn find_and_target_generic_item(world: &mut World, pop_entity: Entity, pos: Grid
     let is_drone = world.get::<Drone>(pop_entity).is_some();
 
     // Collect stockpile positions to avoid hauling items already stored
-    // ⚡ Bolt Optimization:
-    // By collecting stockpile positions into a `HashSet` rather than a `Vec`,
-    // we reduce the time complexity of the inner loop inclusion check from O(N) to O(1).
-    // This dramatically reduces cpu time spent per idle hauler scanning for generic items.
-    let stockpiles: HashSet<GridPosition> = world
+    let stockpiles: Vec<GridPosition> = world
         .query::<(&GridPosition, &Stockpile)>()
         .iter(world)
         .map(|(p, _)| *p)
