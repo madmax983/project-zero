@@ -12,15 +12,18 @@ pub fn register(schedule: &mut Schedule) {
             .in_set(Layer1SystemSet::Environment),
     );
     schedule.add_systems(
+        (fire_damage_system
+            .after(fire_spread_system)
+            .after(fire_damage_pops_system)
+            .after(crate::layer1::structure::fire_damage_structure_system),)
+            .in_set(Layer1SystemSet::Environment),
+    );
+    schedule.add_systems(
         (
             fire_pressure_check_system,
             fire_spread_system.after(fire_pressure_check_system),
             fire_damage_pops_system.after(fire_spread_system),
             crate::layer1::structure::fire_damage_structure_system.after(fire_spread_system),
-            fire_damage_system
-                .after(fire_spread_system)
-                .after(fire_damage_pops_system)
-                .after(crate::layer1::structure::fire_damage_structure_system),
             blob_spread_system,
             blob_consumption_system.after(blob_spread_system),
             flora_attack_system,

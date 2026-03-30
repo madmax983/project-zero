@@ -5,7 +5,6 @@
     clippy::collapsible_if
 )]
 
-use crate::layer1::structure::Structure;
 use crate::layer1::terrain::{TerrainGrid, TerrainType};
 use crate::layer1::GridPosition;
 use bevy_ecs::prelude::*;
@@ -142,77 +141,50 @@ pub fn fire_spread_system(world: &mut World) {
 }
 
 /// System that handles fire damage and burning out.
-pub fn fire_damage_system(world: &mut World) {
-    // Decrement lifetime, destroy burnt objects
-    let mut fires_to_remove = Vec::new();
-    let mut terrain_changes = Vec::new(); // (x, y, NewType)
-    let mut burnt_entities = Vec::new(); // Entities at position to check for destruction
+// ⚡ Bolt Optimization:
+// Replaced an exclusive system (`&mut World`) with a standard Bevy system,
+// eliminating 5 intermediate `Vec` allocations (`fires_to_remove`, `terrain_changes`, `burnt_entities`, `entities_to_despawn`, `entities_to_destroy`)
+// and merging the logic into a single pass with `Commands` and `Query`.
+pub fn fire_damage_system(
+    mut commands: Commands,
+    mut terrain: ResMut<crate::layer1::terrain::TerrainGrid>,
+    mut fires: Query<(Entity, &crate::layer1::GridPosition, &mut Fire)>,
+    flammables: Query<
+        (
+            Entity,
+            &crate::layer1::GridPosition,
+            Option<&crate::layer1::structure::Structure>,
+        ),
+        With<Flammable>,
+    >,
+) {
+    let mut burnt_positions = std::collections::HashSet::new();
 
-    let mut query = world.query::<(Entity, &GridPosition, &mut Fire)>();
-    for (entity, pos, mut fire) in query.iter_mut(world) {
+    for (entity, pos, mut fire) in fires.iter_mut() {
         if fire.lifetime > 0 {
             fire.lifetime -= 1;
         }
 
         if fire.lifetime == 0 {
-            fires_to_remove.push((entity, *pos));
-            burnt_entities.push(*pos);
-        }
-    }
-
-    // Apply destruction for burnt-out fires
-    let mut entities_to_despawn = Vec::new();
-    {
-        let terrain = world.resource::<TerrainGrid>();
-
-        // Process removals and terrain/building destruction
-        for (entity, pos) in &fires_to_remove {
-            entities_to_despawn.push(*entity);
-
-            // If it was on a tree, turn to dirt
+            commands.entity(entity).despawn();
+            burnt_positions.insert((pos.x, pos.y));
             if let Some(tile) = terrain.get(pos.x as usize, pos.y as usize) {
-                if tile == TerrainType::Tree {
-                    terrain_changes.push((pos.x, pos.y, TerrainType::Dirt));
+                if tile == crate::layer1::terrain::TerrainType::Tree {
+                    let idx = (pos.y as usize) * terrain.width + (pos.x as usize);
+                    if idx < terrain.tiles.len() {
+                        terrain.tiles[idx] = crate::layer1::terrain::TerrainType::Dirt;
+                    }
                 }
-            }
-        }
-    }
-
-    for entity in entities_to_despawn {
-        world.despawn(entity);
-    }
-
-    // Apply terrain changes
-    if !terrain_changes.is_empty() {
-        let mut terrain_mut = world.resource_mut::<TerrainGrid>();
-        for (x, y, new_type) in terrain_changes {
-            let idx = (y as usize) * terrain_mut.width + (x as usize);
-            if idx < terrain_mut.tiles.len() {
-                terrain_mut.tiles[idx] = new_type;
             }
         }
     }
 
     // Destroy flammable entities at burnt locations
-    // We do this by finding all Flammable entities at the burnt positions
-    // This requires a query scan which is O(N_buildings * N_burnt_tiles), ok for MVP
-    if !burnt_entities.is_empty() {
-        let mut entities_to_destroy = Vec::new();
-        // Check for Structure component to avoid destroying durable buildings
-        let mut query = world.query::<(Entity, &GridPosition, &Flammable, Option<&Structure>)>();
-
-        for (entity, pos, _flammable, structure) in query.iter(world) {
-            if burnt_entities.contains(pos) {
-                // If it's a structure, it survives the fire burning out (unless HP was 0, handled elsewhere)
-                if structure.is_some() {
-                    continue;
-                }
-                entities_to_destroy.push(entity);
+    if !burnt_positions.is_empty() {
+        for (f_entity, f_pos, structure) in flammables.iter() {
+            if burnt_positions.contains(&(f_pos.x, f_pos.y)) && structure.is_none() {
+                commands.entity(f_entity).despawn();
             }
-        }
-
-        for entity in entities_to_destroy {
-            world.despawn(entity);
         }
     }
 }
@@ -406,7 +378,9 @@ mod tests {
 
         // Run damage system (decrements lifetime)
         // Lifetime is 1, so one tick should set it to 0
-        fire_damage_system(&mut world);
+        let mut schedule = bevy_ecs::schedule::Schedule::default();
+        schedule.add_systems(fire_damage_system);
+        schedule.run(&mut world);
 
         // Fire should be gone (lifetime 0 -> remove)
         // Wait, logic says if fire.lifetime == 0 { remove }.

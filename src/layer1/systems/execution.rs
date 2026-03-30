@@ -83,6 +83,12 @@ pub fn register(schedule: &mut Schedule) {
             #[cfg(feature = "nova")]
             crate::layer1::observer::observer_reaction_system
                 .after(apply_lighting_penalties_system),
+        )
+            .in_set(Layer1SystemSet::Execution),
+    );
+
+    schedule.add_systems(
+        (
             #[cfg(feature = "nova")]
             crate::layer1::machine_consciousness::consciousness_effect_system
                 .after(crate::layer1::pop::reset_speed_system),

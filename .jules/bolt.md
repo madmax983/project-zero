@@ -1,11 +1,5 @@
-**[Optimized PopEvalData]**
-**Learning:** `Traits`, `ChemicalState`, and `FactionMember` components were frequently cloned inside `PopEvalData` causing a performance bottleneck on the hot path for `evaluate_actions_system`. `HashSet<Trait>` inside `Traits` specifically added high allocation overhead.
-**Action:** Changed `Traits` to utilize a `u64` bitmask, removing `HashSet`, making it 8 bytes and `Copy`. Added `Copy` to `FactionMember`. This eliminated heap allocations on the hottest path in the codebase.
-
-## Avoid HashMap initialization inside tight loops
-**Learning:** `HashSet::new()` and iter -> collect causes memory allocation.
-**Action:** Lift `HashMap` / `HashSet` creation out of loops by storing them in a persistent state/buffer that can be cleared each iteration.
-
-**[Zero-Allocation Apply Collapse]**
-**Learning:** Found an unnecessary `Vec<Entity>` allocation in `src/layer1/structural_integrity.rs` where the system collected entities via a read-only query and then performed a second iteration with `world.get_mut::<Health>()` to apply damage.
-**Action:** Replaced the two loops with a single `query_mut` pass on `(&GridPosition, &mut Health)` to eliminate the heap allocation and O(N) entity lookups. Always prefer single-pass mutable queries over intermediate collections when updating components.
+## Zero-Allocation `fire_damage_system`
+**Learning:** Found a hot path in `src/layer1/nature/fire.rs` where `fire_damage_system` allocated 5 `Vec`s (`fires_to_remove`, `terrain_changes`, `burnt_entities`, `entities_to_despawn`, `entities_to_destroy`) per tick because it was implemented as an exclusive `&mut World` system.
+Converting it to a regular system using `Commands` and `Query` eliminated all heap allocations and enabled safe, inline despawning and terrain modifications using a small `HashSet` to manage state overlaps.
+However, converting an exclusive system to a regular system changes its generic traits in Bevy's `add_systems(...)` macro. Mixing `&mut World` systems and regular systems in the SAME tuple breaks type inference with a confusing `E0599` error on `NodeConfigs`.
+**Action:** Always place exclusive systems and standard systems in separate `add_systems(...)` calls. When converting a system to a non-exclusive variant, move it into its own tuple if the surrounding systems remain exclusive.
