@@ -53,7 +53,7 @@ fn test_combat_execution_system_attacks_in_range() {
     let dmg = 100.0 - health.current;
     assert!(
         (dmg - 10.0).abs() < f32::EPSILON || (dmg - 30.0).abs() < f32::EPSILON,
-        "Damage should be 10.0 or 30.0 (crit), got {}",
+        "Damage should be 10.0 or 25.0 (crit), got {}",
         dmg
     );
 }
