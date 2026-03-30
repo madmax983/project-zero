@@ -15,3 +15,11 @@
 **[Test Assertions Drift]**
 **Learning:** Relying on `.unwrap()` in tests causes silent panics with unhelpful error messages when components or resources go missing during refactors.
 **Action:** Always replace `.unwrap()` with `.expect("[Reason]")` in tests to pinpoint failures immediately.
+**[Lack of `should_panic` tests for Grid]**
+**Action:** `PressureGrid`, `AtmosphereGrid`, `WaterGrid`, etc. have `expect("Grid size overflow or too large")` but most of them do not have a test that ensures this safety bound works! Wait, `structural_integrity_overflow_tests.rs` covers one of them. Let's see if we should test grid initialization boundaries across the board, or pick a specific complex match statement.
+**[match statement handling missing coverage]**
+**Action:** Let's find other places with complex matches.
+**[match statement handling missing coverage]**
+**Learning:** Found two matches inside `src/layer1/mind/utility_types.rs` that use a `_ => 0.0` wildcard for `ActionType`: `danger_level` and `accident_damage`. This means newly added action types won't cause compilation errors here but silently default to 0.0 risk, which is usually correct. It also looks properly tested since `test_action_type_methods` handles this (I assume, or maybe I should write tests for `danger_level` and `accident_damage`). Let's check test coverage in `src/layer1/mind/utility_types.rs` for these methods.
+**[match statement handling missing coverage]**
+**Action:** Let's write unit tests for `ActionType::danger_level()` and `ActionType::accident_damage()` in `src/layer1/mind/utility_types.rs` since they lack explicit coverage.

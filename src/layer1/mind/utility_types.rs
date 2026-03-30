@@ -573,6 +573,30 @@ mod tests {
     }
 
     #[test]
+    fn test_action_type_danger_level_and_accident_damage() {
+        // High danger / High damage
+        assert_eq!(ActionType::Tame.danger_level(), 0.005);
+        assert_eq!(ActionType::Tame.accident_damage(), 15.0);
+
+        // Low danger / Low damage
+        assert_eq!(ActionType::Work.danger_level(), 0.001);
+        assert_eq!(ActionType::Work.accident_damage(), 10.0);
+
+        assert_eq!(ActionType::Repair.danger_level(), 0.001);
+        assert_eq!(ActionType::Repair.accident_damage(), 10.0);
+
+        // No danger / No damage (wildcard fallback)
+        assert_eq!(ActionType::Idle.danger_level(), 0.0);
+        assert_eq!(ActionType::Idle.accident_damage(), 0.0);
+
+        assert_eq!(ActionType::SatisfyHunger.danger_level(), 0.0);
+        assert_eq!(ActionType::SatisfyHunger.accident_damage(), 0.0);
+
+        assert_eq!(ActionType::Socialize.danger_level(), 0.0);
+        assert_eq!(ActionType::Socialize.accident_damage(), 0.0);
+    }
+
+    #[test]
     fn test_pop_action_default() {
         let action = PopAction::default();
         assert_eq!(action.current, ActionType::Idle);
