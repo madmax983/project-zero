@@ -178,8 +178,8 @@ mod tests {
 // --- INT-539: Penal Contracts -> ColonyResources & Chronicle ---
 
 use crate::layer1::chronicle::{AddChronicleEvent, EventImportance};
-use crate::layer2::events_new::reverse_quarantine::{Decision, RefugeeFleetEvent};
 use crate::layer1::resources::ColonyResources;
+use crate::layer2::events_new::reverse_quarantine::{Decision, RefugeeFleetEvent};
 use crate::layer2::trade::penal_contracts::{ColonyFunds, PrisonerDiedEvent};
 
 /// Bridges `ColonyFunds` from Penal Contracts into the global `ColonyResources.credits`.
@@ -415,7 +415,6 @@ pub fn moon_hermits_chronicle_bridge_system(
         });
     }
 }
-
 
 /// Translates the rejection of a refugee fleet into a chronicle event.
 pub fn reverse_quarantine_chronicle_bridge(

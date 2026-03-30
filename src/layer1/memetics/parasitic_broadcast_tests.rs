@@ -20,7 +20,7 @@ mod tests {
                     value: 50.0,
                     ..Default::default()
                 },
-                MemeticInfection::ParasiticBroadcast, // Humming the catchy tune
+                MemeticInfection, // Humming the catchy tune
                 Skills::default(),
             ))
             .id();
@@ -63,7 +63,7 @@ mod tests {
 
         // Spawn 10 infected pops
         for _ in 0..10 {
-            world.spawn(MemeticInfection::ParasiticBroadcast);
+            world.spawn(MemeticInfection);
         }
 
         let mut schedule = Schedule::default();
