@@ -226,12 +226,13 @@ pub fn update_camera_smooth(world: &mut World) {
         (c.x, c.y)
     };
 
-    // Lerp Factor (Frame independent ideally, but assuming ~60fps for now or rate-limited in main)
-    // 0.2 provides a snappy but smooth feel.
-    let t = 0.2;
+    // Ludwig: "Ease-Out" - Camera Smooth Panning
+    // Decreased from 0.2 to 0.15. This slightly elongates the interpolation curve,
+    // making sudden target snaps feel less jarring and more cinematic (Juicy).
+    const CAMERA_LERP_FACTOR: f32 = 0.15;
 
-    cx += (tx - cx) * t;
-    cy += (ty - cy) * t;
+    cx += (tx - cx) * CAMERA_LERP_FACTOR;
+    cy += (ty - cy) * CAMERA_LERP_FACTOR;
 
     // Snap if close enough (to avoid infinite micro-floats)
     if (tx - cx).abs() < 0.01 {
@@ -355,11 +356,11 @@ mod tests {
         update_camera_smooth(&mut world);
 
         let current = world.resource::<CameraCurrent>();
-        // Lerp 0 -> 10 with t=0.2 => 0 + (10-0)*0.2 = 2.0
-        assert!((current.x - 2.0).abs() < 0.001);
+        // Lerp 0 -> 10 with t=0.15 => 0 + (10-0)*0.15 = 1.5
+        assert!((current.x - 1.5).abs() < 0.001);
 
         let viewport = world.resource::<crate::layer1::terrain::Viewport>();
-        assert_eq!(viewport.x, 2);
+        assert_eq!(viewport.x, 2); // 1.5 rounds to 2
     }
 
     #[test]

@@ -37,3 +37,7 @@
 ## [Movement Flow (Coyote Speed)]
 **Friction:** The movement system felt slightly clunky when pops were encumbered, leading to a "just missing the bus" feeling where they had to wait an extra tick to move because they were a fraction of a speed point short.
 **Flow:** Increased COYOTE_THRESHOLD from 0.25 to 0.35. This provides a slightly larger grace period for movement cost evaluation, allowing for smoother, more continuous movement even when dealing with wind or terrain penalties.
+
+## [Camera Smoothing (Lerp)]
+**Friction:** Camera panning felt slightly jarring and rigid when moving large distances or switching targets. The hardcoded linear interpolation factor (0.2) snapped too quickly, causing mild visual discomfort.
+**Flow:** Extracted the lerp multiplier into a `CAMERA_LERP_FACTOR` constant and decreased it from `0.2` to `0.15`. This slightly elongates the interpolation curve, providing a more elegant, cinematic "Ease-Out" effect that feels significantly more polished and "Juicy".
