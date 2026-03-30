@@ -238,6 +238,7 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     world.init_resource::<Events<crate::layer2::trade::blockade::TradeShipArrivalEvent>>();
     world.init_resource::<Events<crate::layer2::events::LaunchEvent>>();
     world.init_resource::<Events<crate::layer2::events::ShipDestroyedEvent>>();
+    world.init_resource::<Events<crate::layer1::social::indoctrination::IndoctrinationFailureEvent>>();
     world.init_resource::<Events<crate::layer1::direct_link::PossessEntityEvent>>();
     world.init_resource::<Events<crate::layer1::direct_link::UnpossessEvent>>();
     world.init_resource::<Events<crate::layer1::volatile::ExplosionEvent>>();
