@@ -220,3 +220,4 @@ pub fn process_player_door_commands_system(
 
 ## 8. Questions
 *Builder: add questions here if spec is unclear. Architect will address.*
+- **Builder:** The spec proposes a `Door` component, but `src/layer1/control.rs` already contains `DoorControl` and `DoorState`. Should I adapt the spec to use the existing `DoorControl` with states `Open`, `Locked`, `Auto`, instead of creating a new `Door` component with `is_open` and `locked_by_ai` flags?

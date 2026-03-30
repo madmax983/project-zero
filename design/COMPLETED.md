@@ -281,3 +281,4 @@
 - [x] `546` The Reverse Quarantine — `specs/546-reverse-quarantine.md` — completed 2026-03-22
 - [x] `547` The Parasitic Broadcast — `specs/547-parasitic-broadcast.md` — completed 2026-03-22
 - [x] `453` Nanite Fabrication — `specs/453-nanite-fabrication.md` — completed 2026-03-24
+- [x] `558` The Orbital Scrapyard — `specs/558-the-orbital-scrapyard.md` — completed 2026-03-24

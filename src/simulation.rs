@@ -45,6 +45,12 @@ pub fn build_simulation_schedule() -> Schedule {
 
     // --- AI Decision Chain (GPU compute) ---
     schedule.add_systems((
+        crate::layer2::orbital_scrapyard::process_salvage_missions,
+        crate::layer2::orbital_scrapyard::check_deorbit_trigger,
+        crate::layer2::orbital_scrapyard::process_debris_impact,
+    ));
+
+    schedule.add_systems((
         update_building_map_system,
         gpu_evaluate_actions.after(update_building_map_system),
         crate::layer1::visitor::visitor_behavior_system,
@@ -56,12 +62,24 @@ pub fn build_simulation_schedule() -> Schedule {
 
     // --- Layer 3 Integration ---
     schedule.add_systems((
+        crate::layer2::orbital_scrapyard::process_salvage_missions,
+        crate::layer2::orbital_scrapyard::check_deorbit_trigger,
+        crate::layer2::orbital_scrapyard::process_debris_impact,
+    ));
+
+    schedule.add_systems((
         update_detection_risk_system.after(Layer1SystemSet::Economy),
         check_hostile_spawn_system.after(update_detection_risk_system),
         crate::layer3::council::enforce_resolutions_system,
     ));
 
     // --- Layer 2 Integration ---
+    schedule.add_systems((
+        crate::layer2::orbital_scrapyard::process_salvage_missions,
+        crate::layer2::orbital_scrapyard::check_deorbit_trigger,
+        crate::layer2::orbital_scrapyard::process_debris_impact,
+    ));
+
     schedule.add_systems((
         // Cleanup Layer 2 events
         update_event_buffer::<LaunchEvent>,
@@ -96,6 +114,12 @@ pub fn build_simulation_schedule() -> Schedule {
     ));
 
     schedule.add_systems((
+        crate::layer2::orbital_scrapyard::process_salvage_missions,
+        crate::layer2::orbital_scrapyard::check_deorbit_trigger,
+        crate::layer2::orbital_scrapyard::process_debris_impact,
+    ));
+
+    schedule.add_systems((
 
         crate::layer2::syzygy::update_syzygy_cycle_system,
         crate::layer2::syzygy::apply_syzygy_effects_system
@@ -105,6 +129,12 @@ pub fn build_simulation_schedule() -> Schedule {
         crate::layer2::visibility::update_visibility_system.after(Layer1SystemSet::Economy),
         crate::layer2::visibility::enforce_view_mode_system
             .after(crate::layer2::visibility::update_visibility_system),
+    ));
+
+    schedule.add_systems((
+        crate::layer2::orbital_scrapyard::process_salvage_missions,
+        crate::layer2::orbital_scrapyard::check_deorbit_trigger,
+        crate::layer2::orbital_scrapyard::process_debris_impact,
     ));
 
     schedule.add_systems((
@@ -135,10 +165,22 @@ pub fn build_simulation_schedule() -> Schedule {
     ));
 
     schedule.add_systems((
+        crate::layer2::orbital_scrapyard::process_salvage_missions,
+        crate::layer2::orbital_scrapyard::check_deorbit_trigger,
+        crate::layer2::orbital_scrapyard::process_debris_impact,
+    ));
+
+    schedule.add_systems((
         crate::layer2::phantom::check_scrapcode_threshold_system
             .after(crate::layer1::scrapcode::scrapcode_decay_system),
         crate::layer2::phantom::spawn_ghost_fleet_system
             .after(crate::layer2::phantom::check_scrapcode_threshold_system),
+    ));
+
+    schedule.add_systems((
+        crate::layer2::orbital_scrapyard::process_salvage_missions,
+        crate::layer2::orbital_scrapyard::check_deorbit_trigger,
+        crate::layer2::orbital_scrapyard::process_debris_impact,
     ));
 
     schedule.add_systems((

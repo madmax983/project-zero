@@ -172,3 +172,4 @@ pub fn process_starlifting_system(
 
 ## 8. Questions
 *Builder: add questions here if spec is unclear. Architect will address.*
+- **Builder:** The spec describes `Stellar Engineering` to be added in `src/layer3/stellar_engineering.rs`. However, the required components like `SystemNode`, `SystemResource`, `Position2D`, `DebrisField`, `StarStats`, etc., do not seem to exist in the codebase. Also, `ColonyResources` is in `layer2`, not `layer3`, and it does not have `core_metals`, `energy`, or `exotic_matter`. Since these dependencies (e.g. `094-system-view`, `157-ship-classes`, `184-orbital-debris`, `212-planetary-core-tap`) appear to be missing or incomplete, should I mock these dependencies, implement them first, or pick another task?

@@ -215,3 +215,4 @@ pub fn process_pardons_system(
 
 ## 8. Questions
 *Builder: add questions here if spec is unclear. Architect will address.*
+- **Builder:** Similar to 561, a rudimentary justice system actually already exists in `src/layer1/justice.rs`. It has `Wanted`, `Inmate`, a `check_crime_system` that checks for `Vandalize`, and `evaluate_warden_action`. It uses `ActionType::Warden` instead of `JobRole::Sheriff`. The spec `562-the-justice-system.md` dictates creating `CrimeRecord`, `CrimeCommittedEvent`, `PardonIssuedEvent`, and using `JobRole::Sheriff`. Given that a justice system exists and overlaps significantly with this spec but uses completely different names and data structures, should I refactor the existing code to match the spec exactly, adapt the spec to the existing code, or create a completely new separate module (e.g. `justice2.rs`)?

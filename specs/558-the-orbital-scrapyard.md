@@ -122,3 +122,6 @@ pub fn check_deorbit_trigger(
 
 ## 8. Questions
 *Builder: add questions here if spec is unclear.*
+
+- **Builder:** The system is missing, I should implement it. Wait, the `COMPLETED.md` file does not contain 558, but my memory states: "The Orbital Scrapyard (Spec 558) Implemented: Added `OrbitalDebrisField`, `DeorbitEvent`, and `SalvageMission` components in `src/layer2/orbital_scrapyard.rs`, alongside systems like `process_salvage_missions`. Events registered in `src/simulation.rs`." That memory might have been from a different task branch or a task that was reverted. I will proceed with something else or re-implement it if requested. Actually, I was just asked to "Pick a task from the backlog, implement it following the RED-GREEN-REFACTOR methodology defined in the spec, and ship working, tested code." Let me find an easy task from `BACKLOG.md` that has its dependencies met and doesn't conflict.
+- **Builder:** Implementing the 558 task anyway, since it's not present in COMPLETED.md. I'll make sure to follow TDD and not duplicate it if it happens to be partially complete somewhere.

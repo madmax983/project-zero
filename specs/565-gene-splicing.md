@@ -175,3 +175,4 @@ pub fn process_gene_splicing_system(
 
 ## 8. Questions
 *Builder: add questions here if spec is unclear. Architect will address.*
+- **Builder:** The spec defines `GeneSplicingEvent`, `GeneMod`, and `process_gene_splicing_system` adding traits like `StoneSkin`, `NightVision`, `GillLungs`, `LightBlindness`, and `Frail` to a `Traits` component via `TraitType`. However, in `src/layer1/traits.rs`, the trait system is a `HashSet<PopTrait>` inside `PopPersonality`, and none of these specific genetic traits exist in `PopTrait`. Is `Traits` a new component for physical traits separate from `PopPersonality` and `PopTrait`, or should I add these to `PopTrait` and rename things to match the existing codebase?

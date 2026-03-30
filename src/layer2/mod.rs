@@ -28,3 +28,4 @@ pub mod tourism;
 pub mod trade;
 pub mod visibility;
 pub mod syzygy;
+pub mod orbital_scrapyard;

@@ -209,3 +209,4 @@ pub fn process_suffocation_system(
 
 ## 8. Questions
 *Builder: add questions here if spec is unclear. Architect will address.*
+- **Builder:** The spec specifies `AtmosphereGrid` for pressure and a `Door` component, however, the codebase already has a `PressureGrid` in `src/layer1/pressure.rs` that manages pressure and vacuum, and a `DoorControl` component in `src/layer1/control.rs` managing door states. There's also an `AtmosphereGrid` in `src/layer1/nature/atmosphere.rs` which is actually for pollution. Following the spec literally would duplicate logic and mix pollution with pressure. Should I implement this using the existing `PressureGrid` and `DoorControl` instead? Because the spec is contradictory with the existing state of the project.
