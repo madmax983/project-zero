@@ -323,6 +323,25 @@ pub fn run_simulation_tick(world: &mut World) {
     world.resource_mut::<SimulationTime>().tick += 1;
 }
 
+pub fn init_test_resources(world: &mut World) {
+    if !world.contains_resource::<Events<crate::layer2::tourism::disaster_tourism::GriefTouristArrivalEvent>>() {
+        world.init_resource::<Events<crate::layer2::tourism::disaster_tourism::GriefTouristArrivalEvent>>();
+    }
+    if !world.contains_resource::<Events<crate::layer2::events_new::reverse_quarantine::RefugeeFleetEvent>>() {
+        world.init_resource::<Events<crate::layer2::events_new::reverse_quarantine::RefugeeFleetEvent>>();
+    }
+    if !world.contains_resource::<Events<crate::layer1::environment::events::DebrisFallEvent>>() {
+        world.init_resource::<Events<crate::layer1::environment::events::DebrisFallEvent>>();
+    }
+    if !world.contains_resource::<Events<crate::layer2::trade::biomass_tariff::TradeDeal>>() {
+        world.init_resource::<Events<crate::layer2::trade::biomass_tariff::TradeDeal>>();
+    }
+    if !world.contains_resource::<crate::layer3::council::GalacticCouncil>() {
+        world.init_resource::<crate::layer3::council::GalacticCouncil>();
+    }
+}
+
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -387,6 +406,8 @@ mod tests {
         world.init_resource::<Events<crate::layer2::tourism::disaster_tourism::GriefTouristArrivalEvent>>();
         world.init_resource::<Events<crate::layer2::trade::biomass_tariff::TradeDeal>>();
         world.init_resource::<crate::layer3::council::GalacticCouncil>();
+        world.init_resource::<Events<crate::layer2::events_new::reverse_quarantine::RefugeeFleetEvent>>();
+        world.init_resource::<Events<crate::layer1::environment::events::DebrisFallEvent>>();
 
         let schedule = build_simulation_schedule();
         world.add_schedule(schedule);

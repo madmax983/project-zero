@@ -177,6 +177,39 @@ mod tests {
         world.insert_resource(Schedules::default());
 
         // Add schedule
+        scale::simulation::init_test_resources(&mut world);
+        world.init_resource::<bevy_ecs::event::Events<scale::layer2::trade::penal_contracts::PrisonerDiedEvent>>();
+        world.init_resource::<scale::layer1::social::old_guard::Demographics>();
+        world.init_resource::<scale::layer1::tech_envy::TechEnvyConfig>();
+        world.init_resource::<scale::layer1::shadow_market::ShadowMarketCooldown>();
+        world.init_resource::<scale::layer2::trade::escape_velocity::PlanetaryGravity>();
+        world
+            .init_resource::<bevy_ecs::event::Events<scale::layer2::phantom::SpawnGhostFleetEvent>>(
+            );
+        world.init_resource::<scale::layer2::phantom::EmpireAutomationState>();
+        world.init_resource::<bevy_ecs::event::Events<scale::layer3::events::debt_prison::AcceptBailoutEvent>>();
+        world.init_resource::<bevy_ecs::event::Events<scale::layer3::events::debt_prison::BailoutOfferEvent>>();
+        world.init_resource::<bevy_ecs::event::Events<scale::layer1::spiteful_will::InheritanceEvent>>();
+        world.init_resource::<bevy_ecs::event::Events<scale::layer1::spiteful_will::OverrideWillEvent>>();
+        world.init_resource::<bevy_ecs::event::Events<scale::layer1::nature::biosphere_empathy::FloraDamagedEvent>>();
+        world.init_resource::<bevy_ecs::event::Events<scale::layer2::governance::RebellionEvent>>();
+        world.init_resource::<bevy_ecs::event::Events<scale::layer1::tech::machine_awakening::BotGlitchEvent>>();
+        world.init_resource::<scale::layer1::tech::machine_awakening::GlobalSentience>();
+        world.init_resource::<bevy_ecs::event::Events<scale::layer1::disasters::DisasterEvent>>();
+        #[cfg(feature = "nova")]
+world.init_resource::<scale::layer1::machine_consciousness::ConsciousnessConfig>();
+        world.init_resource::<scale::layer1::void_signals::SignalNetwork>();
+        #[cfg(feature = "nova")]
+world.insert_resource::<scale::layer1::constellations::Sky>(scale::layer1::constellations::Sky {
+            constellations: vec![],
+            current_index: 0,
+        });
+        world.init_resource::<scale::layer1::loci::LociMap>();
+
+        world.init_resource::<bevy_ecs::event::Events<scale::layer2::silent_mutiny::SensorGlitchEvent>>();
+        world.init_resource::<bevy_ecs::event::Events<scale::layer1::nanite_fabrication::ContainmentBreachEvent>>();
+        world.init_resource::<bevy_ecs::event::Events<scale::layer2::trade::blockade::TradeShipArrivalEvent>>();
+        world.init_resource::<scale::layer2::trade::blockade::ColonyDebt>();
         let schedule = build_simulation_schedule();
         world.add_schedule(schedule);
 
