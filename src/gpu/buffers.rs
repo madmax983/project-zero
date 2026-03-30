@@ -184,227 +184,270 @@ pub fn extract_building_inputs(
     entities.clear();
     inputs.clear();
 
-    // Farms (building_type = 0)
-    {
-        let mut query = world.query::<(Entity, &GridPosition, &Farm)>();
-        for (entity, pos, farm) in query.iter(world) {
-            entities.push(entity);
-            inputs.push(GpuBuildingInput {
-                pos_x: pos.x,
-                pos_y: pos.y,
-                building_type: 0,
-                capacity: farm.capacity as u32,
-                occupied: farm.workers.len() as u32,
-                resource_has_room: 0,
-                _padding: [0; 2],
-            });
-        }
+    extract_farms(world, entities, inputs);
+    extract_housing(world, entities, inputs);
+    extract_taverns(world, entities, inputs);
+    extract_libraries(world, entities, inputs);
+    extract_hospitals(world, entities, inputs);
+    extract_designations(world, entities, inputs);
+    extract_resource_items(world, entities, inputs);
+    extract_corpses(world, entities, inputs);
+    extract_wanted(world, entities, inputs);
+    extract_suspects(world, entities, inputs);
+    extract_fauna(world, entities, inputs);
+}
+
+fn extract_farms(
+    world: &mut World,
+    entities: &mut Vec<Entity>,
+    inputs: &mut Vec<GpuBuildingInput>,
+) {
+    let mut query = world.query::<(Entity, &GridPosition, &Farm)>();
+    for (entity, pos, farm) in query.iter(world) {
+        entities.push(entity);
+        inputs.push(GpuBuildingInput {
+            pos_x: pos.x,
+            pos_y: pos.y,
+            building_type: 0,
+            capacity: farm.capacity as u32,
+            occupied: farm.workers.len() as u32,
+            resource_has_room: 0,
+            _padding: [0; 2],
+        });
     }
+}
 
-    // Housing (building_type = 1)
-    {
-        let mut query = world.query::<(Entity, &GridPosition, &Housing)>();
-        for (entity, pos, housing) in query.iter(world) {
-            entities.push(entity);
-            inputs.push(GpuBuildingInput {
-                pos_x: pos.x,
-                pos_y: pos.y,
-                building_type: 1,
-                capacity: housing.capacity as u32,
-                occupied: housing.residents.len() as u32,
-                resource_has_room: 0,
-                _padding: [0; 2],
-            });
-        }
+fn extract_housing(
+    world: &mut World,
+    entities: &mut Vec<Entity>,
+    inputs: &mut Vec<GpuBuildingInput>,
+) {
+    let mut query = world.query::<(Entity, &GridPosition, &Housing)>();
+    for (entity, pos, housing) in query.iter(world) {
+        entities.push(entity);
+        inputs.push(GpuBuildingInput {
+            pos_x: pos.x,
+            pos_y: pos.y,
+            building_type: 1,
+            capacity: housing.capacity as u32,
+            occupied: housing.residents.len() as u32,
+            resource_has_room: 0,
+            _padding: [0; 2],
+        });
     }
+}
 
-    // Taverns (building_type = 2)
-    {
-        let mut query = world.query::<(Entity, &GridPosition, &Tavern)>();
-        for (entity, pos, tavern) in query.iter(world) {
-            entities.push(entity);
-            inputs.push(GpuBuildingInput {
-                pos_x: pos.x,
-                pos_y: pos.y,
-                building_type: 2,
-                capacity: tavern.capacity as u32,
-                occupied: tavern.visitors.len() as u32,
-                resource_has_room: 0,
-                _padding: [0; 2],
-            });
-        }
+fn extract_taverns(
+    world: &mut World,
+    entities: &mut Vec<Entity>,
+    inputs: &mut Vec<GpuBuildingInput>,
+) {
+    let mut query = world.query::<(Entity, &GridPosition, &Tavern)>();
+    for (entity, pos, tavern) in query.iter(world) {
+        entities.push(entity);
+        inputs.push(GpuBuildingInput {
+            pos_x: pos.x,
+            pos_y: pos.y,
+            building_type: 2,
+            capacity: tavern.capacity as u32,
+            occupied: tavern.visitors.len() as u32,
+            resource_has_room: 0,
+            _padding: [0; 2],
+        });
     }
+}
 
-    // Libraries (building_type = 3)
-    {
-        let mut query = world.query::<(Entity, &GridPosition, &Library)>();
-        for (entity, pos, _library) in query.iter(world) {
-            entities.push(entity);
-            inputs.push(GpuBuildingInput {
-                pos_x: pos.x,
-                pos_y: pos.y,
-                building_type: 3,
-                capacity: 5,
-                occupied: 0,
-                resource_has_room: 0,
-                _padding: [0; 2],
-            });
-        }
+fn extract_libraries(
+    world: &mut World,
+    entities: &mut Vec<Entity>,
+    inputs: &mut Vec<GpuBuildingInput>,
+) {
+    let mut query = world.query::<(Entity, &GridPosition, &Library)>();
+    for (entity, pos, _library) in query.iter(world) {
+        entities.push(entity);
+        inputs.push(GpuBuildingInput {
+            pos_x: pos.x,
+            pos_y: pos.y,
+            building_type: 3,
+            capacity: 5,
+            occupied: 0,
+            resource_has_room: 0,
+            _padding: [0; 2],
+        });
     }
+}
 
-    // Hospitals (building_type = 7)
-    {
-        let mut query = world.query::<(Entity, &GridPosition, &Hospital)>();
-        for (entity, pos, _hospital) in query.iter(world) {
-            entities.push(entity);
-            inputs.push(GpuBuildingInput {
-                pos_x: pos.x,
-                pos_y: pos.y,
-                building_type: 7,
-                capacity: 10, // Assumed capacity for MVP
-                occupied: 0,  // TODO: track patients
-                resource_has_room: 0,
-                _padding: [0; 2],
-            });
-        }
+fn extract_hospitals(
+    world: &mut World,
+    entities: &mut Vec<Entity>,
+    inputs: &mut Vec<GpuBuildingInput>,
+) {
+    let mut query = world.query::<(Entity, &GridPosition, &Hospital)>();
+    for (entity, pos, _hospital) in query.iter(world) {
+        entities.push(entity);
+        inputs.push(GpuBuildingInput {
+            pos_x: pos.x,
+            pos_y: pos.y,
+            building_type: 7,
+            capacity: 10,
+            occupied: 0,
+            resource_has_room: 0,
+            _padding: [0; 2],
+        });
     }
+}
 
-    // Designations (building_type = 4 for Work, 6 for Repair)
-    {
-        use crate::layer1::designation::DesignationType;
-        let mut query = world.query::<(Entity, &GridPosition, &Designation)>();
-        for (entity, pos, designation) in query.iter(world) {
-            let building_type = match designation.designation_type {
-                DesignationType::Repair => 6,
-                DesignationType::Tame => 11,
-                _ => 4,
-            };
-            entities.push(entity);
-            inputs.push(GpuBuildingInput {
-                pos_x: pos.x,
-                pos_y: pos.y,
-                building_type,
-                capacity: 1,
-                occupied: 0,
-                resource_has_room: 0,
-                _padding: [0; 2],
-            });
-        }
+fn extract_designations(
+    world: &mut World,
+    entities: &mut Vec<Entity>,
+    inputs: &mut Vec<GpuBuildingInput>,
+) {
+    use crate::layer1::designation::DesignationType;
+    let mut query = world.query::<(Entity, &GridPosition, &Designation)>();
+    for (entity, pos, designation) in query.iter(world) {
+        let building_type = match designation.designation_type {
+            DesignationType::Repair => 6,
+            DesignationType::Tame => 11,
+            _ => 4,
+        };
+        entities.push(entity);
+        inputs.push(GpuBuildingInput {
+            pos_x: pos.x,
+            pos_y: pos.y,
+            building_type,
+            capacity: 1,
+            occupied: 0,
+            resource_has_room: 0,
+            _padding: [0; 2],
+        });
     }
+}
 
-    // ResourceItems (building_type = 5)
-    {
-        let resources = world
-            .get_resource::<ColonyResources>()
-            .cloned()
-            .unwrap_or_default();
+fn extract_resource_items(
+    world: &mut World,
+    entities: &mut Vec<Entity>,
+    inputs: &mut Vec<GpuBuildingInput>,
+) {
+    let resources = world
+        .get_resource::<ColonyResources>()
+        .cloned()
+        .unwrap_or_default();
 
-        let mut query = world.query::<(Entity, &GridPosition, &ResourceItem)>();
-        for (entity, pos, item) in query.iter(world) {
-            let has_room = match item.resource_type {
-                ResourceType::Food => resources.food < resources.max_food,
-                ResourceType::Wood => resources.wood < resources.max_wood,
-                ResourceType::Stone => resources.stone < resources.max_stone,
-                ResourceType::Ore => resources.ore < resources.max_ore,
-                ResourceType::Metal => resources.metal < resources.max_metal,
-                ResourceType::Planks => resources.planks < resources.max_planks,
-                ResourceType::Blocks => resources.blocks < resources.max_blocks,
-                ResourceType::Waste => resources.waste < resources.max_waste,
-                ResourceType::Rations => resources.rations < resources.max_rations,
-                ResourceType::Fuel => resources.fuel < resources.max_fuel,
-                ResourceType::Alcohol => resources.alcohol < resources.max_alcohol,
-                ResourceType::Scrap => resources.scrap < resources.max_scrap,
-                ResourceType::Tools => resources.tools < resources.max_tools,
-                ResourceType::BuildingPermit => {
-                    resources.building_permits < resources.max_building_permits
-                }
-                ResourceType::MemoryCore => resources.memory_cores < resources.max_memory_cores,
-            };
+    let mut query = world.query::<(Entity, &GridPosition, &ResourceItem)>();
+    for (entity, pos, item) in query.iter(world) {
+        let has_room = match item.resource_type {
+            ResourceType::Food => resources.food < resources.max_food,
+            ResourceType::Wood => resources.wood < resources.max_wood,
+            ResourceType::Stone => resources.stone < resources.max_stone,
+            ResourceType::Ore => resources.ore < resources.max_ore,
+            ResourceType::Metal => resources.metal < resources.max_metal,
+            ResourceType::Planks => resources.planks < resources.max_planks,
+            ResourceType::Blocks => resources.blocks < resources.max_blocks,
+            ResourceType::Waste => resources.waste < resources.max_waste,
+            ResourceType::Rations => resources.rations < resources.max_rations,
+            ResourceType::Fuel => resources.fuel < resources.max_fuel,
+            ResourceType::Alcohol => resources.alcohol < resources.max_alcohol,
+            ResourceType::Scrap => resources.scrap < resources.max_scrap,
+            ResourceType::Tools => resources.tools < resources.max_tools,
+            ResourceType::BuildingPermit => {
+                resources.building_permits < resources.max_building_permits
+            }
+            ResourceType::MemoryCore => resources.memory_cores < resources.max_memory_cores,
+        };
 
-            entities.push(entity);
-            inputs.push(GpuBuildingInput {
-                pos_x: pos.x,
-                pos_y: pos.y,
-                building_type: 5,
-                capacity: 1,
-                occupied: 0,
-                resource_has_room: u32::from(has_room),
-                _padding: [0; 2],
-            });
-        }
+        entities.push(entity);
+        inputs.push(GpuBuildingInput {
+            pos_x: pos.x,
+            pos_y: pos.y,
+            building_type: 5,
+            capacity: 1,
+            occupied: 0,
+            resource_has_room: u32::from(has_room),
+            _padding: [0; 2],
+        });
     }
+}
 
-    // Corpses (building_type = 9)
-    {
-        // Check if there are any empty graves globally
-        let any_empty_grave = world.query::<&Grave>().iter(world).any(|g| !g.occupied);
+fn extract_corpses(
+    world: &mut World,
+    entities: &mut Vec<Entity>,
+    inputs: &mut Vec<GpuBuildingInput>,
+) {
+    let any_empty_grave = world.query::<&Grave>().iter(world).any(|g| !g.occupied);
 
-        let mut query = world.query::<(Entity, &GridPosition, &Corpse)>();
-        for (entity, pos, _corpse) in query.iter(world) {
-            entities.push(entity);
-            inputs.push(GpuBuildingInput {
-                pos_x: pos.x,
-                pos_y: pos.y,
-                building_type: 9,
-                capacity: 1,
-                occupied: 0,
-                // Reuse resource_has_room to indicate if a grave is available
-                resource_has_room: u32::from(any_empty_grave),
-                _padding: [0; 2],
-            });
-        }
+    let mut query = world.query::<(Entity, &GridPosition, &Corpse)>();
+    for (entity, pos, _corpse) in query.iter(world) {
+        entities.push(entity);
+        inputs.push(GpuBuildingInput {
+            pos_x: pos.x,
+            pos_y: pos.y,
+            building_type: 9,
+            capacity: 1,
+            occupied: 0,
+            resource_has_room: u32::from(any_empty_grave),
+            _padding: [0; 2],
+        });
     }
+}
 
-    // Wanted criminals (building_type = 10)
-    {
-        let mut query = world.query::<(Entity, &GridPosition, &Wanted)>();
-        for (entity, pos, _wanted) in query.iter(world) {
-            entities.push(entity);
-            inputs.push(GpuBuildingInput {
-                pos_x: pos.x,
-                pos_y: pos.y,
-                building_type: 10,
-                capacity: 1,
-                occupied: 0,
-                resource_has_room: 1, // Always "available" to be arrested
-                _padding: [0; 2],
-            });
-        }
+fn extract_wanted(
+    world: &mut World,
+    entities: &mut Vec<Entity>,
+    inputs: &mut Vec<GpuBuildingInput>,
+) {
+    let mut query = world.query::<(Entity, &GridPosition, &Wanted)>();
+    for (entity, pos, _wanted) in query.iter(world) {
+        entities.push(entity);
+        inputs.push(GpuBuildingInput {
+            pos_x: pos.x,
+            pos_y: pos.y,
+            building_type: 10,
+            capacity: 1,
+            occupied: 0,
+            resource_has_room: 1,
+            _padding: [0; 2],
+        });
     }
+}
 
-    // Suspects (building_type = 13)
-    {
-        use crate::layer1::law::predictive_policing::Suspect;
-        let mut query = world.query::<(Entity, &GridPosition, &Suspect)>();
-        for (entity, pos, _suspect) in query.iter(world) {
-            entities.push(entity);
-            inputs.push(GpuBuildingInput {
-                pos_x: pos.x,
-                pos_y: pos.y,
-                building_type: 13,
-                capacity: 1,
-                occupied: 0,
-                resource_has_room: 1, // Always "available" to be arrested
-                _padding: [0; 2],
-            });
-        }
+fn extract_suspects(
+    world: &mut World,
+    entities: &mut Vec<Entity>,
+    inputs: &mut Vec<GpuBuildingInput>,
+) {
+    use crate::layer1::law::predictive_policing::Suspect;
+    let mut query = world.query::<(Entity, &GridPosition, &Suspect)>();
+    for (entity, pos, _suspect) in query.iter(world) {
+        entities.push(entity);
+        inputs.push(GpuBuildingInput {
+            pos_x: pos.x,
+            pos_y: pos.y,
+            building_type: 13,
+            capacity: 1,
+            occupied: 0,
+            resource_has_room: 1,
+            _padding: [0; 2],
+        });
     }
+}
 
-    // Fauna (building_type = 12)
-    {
-        let mut query = world.query::<(Entity, &GridPosition, &Fauna)>();
-        for (entity, pos, _fauna) in query.iter(world) {
-            entities.push(entity);
-            inputs.push(GpuBuildingInput {
-                pos_x: pos.x,
-                pos_y: pos.y,
-                building_type: 12,
-                capacity: 1,
-                occupied: 0,
-                resource_has_room: 1, // Always "available"
-                _padding: [0; 2],
-            });
-        }
+fn extract_fauna(
+    world: &mut World,
+    entities: &mut Vec<Entity>,
+    inputs: &mut Vec<GpuBuildingInput>,
+) {
+    let mut query = world.query::<(Entity, &GridPosition, &Fauna)>();
+    for (entity, pos, _fauna) in query.iter(world) {
+        entities.push(entity);
+        inputs.push(GpuBuildingInput {
+            pos_x: pos.x,
+            pos_y: pos.y,
+            building_type: 12,
+            capacity: 1,
+            occupied: 0,
+            resource_has_room: 1,
+            _padding: [0; 2],
+        });
     }
 }
 
