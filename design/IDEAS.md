@@ -2944,7 +2944,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Orbital Commute
+## Orbital Commute [SPECCED]
 
 **Layer:** Cross-layer
 
@@ -2986,7 +2986,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Digital Immortality
+## Digital Immortality [SPECCED]
 
 **Layer:** 1
 
@@ -3028,7 +3028,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Cloud Seeding
+## Cloud Seeding [SPECCED]
 
 **Layer:** 2 -> 1
 
@@ -3070,7 +3070,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Technological Rituals
+## Technological Rituals [SPECCED]
 
 **Layer:** 1
 

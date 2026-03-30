@@ -6,6 +6,10 @@
 - [ ] `623` The Nostalgia Plague — `specs/623-nostalgia-plague.md`
 - [ ] `624` Rogue AI Arbitration — `specs/624-rogue-ai-arbitration.md`
 - [ ] `625` The Cryo-Prison Revolt — `specs/625-cryo-prison-revolt.md`
+- [ ] `626` Orbital Commute — `specs/626-orbital-commute.md`
+- [ ] `627` Digital Immortality — `specs/627-digital-immortality.md`
+- [ ] `628` Cloud Seeding — `specs/628-cloud-seeding.md`
+- [ ] `629` Technological Rituals — `specs/629-technological-rituals.md`
 
 
 
