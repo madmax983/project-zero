@@ -307,7 +307,7 @@ mod tests {
         let result = evaluate_pre_crime_arrest(&warden_pos, &weights, &suspects);
 
         assert!(result.is_some());
-        let (score, target) = result.unwrap();
+        let (score, target) = result.expect("Expected result to exist");
         assert!(score > 0.0);
         assert_eq!(target, suspect);
     }
@@ -355,4 +355,5 @@ mod tests {
             .expect("Should have StressTracker");
         assert_eq!(tracker.accumulated_stress, 0.0);
     }
+
 }
