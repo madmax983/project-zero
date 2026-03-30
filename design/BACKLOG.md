@@ -7,7 +7,7 @@
 - [ ] `632` Cultural Artifacts — `specs/632-cultural-artifacts.md`
 - [ ] `633` The Golden Age — `specs/633-the-golden-age.md`
 
-- [ ] `622` The Bio-Digital Ascendancy — `specs/622-bio-digital-ascendancy.md`
+
 - [ ] `623` The Nostalgia Plague — `specs/623-nostalgia-plague.md`
 - [ ] `624` Rogue AI Arbitration — `specs/624-rogue-ai-arbitration.md`
 - [ ] `625` The Cryo-Prison Revolt — `specs/625-cryo-prison-revolt.md`

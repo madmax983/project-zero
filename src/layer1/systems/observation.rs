@@ -6,6 +6,7 @@ use crate::layer1::*;
 use bevy_ecs::prelude::*;
 
 pub fn register(schedule: &mut Schedule) {
+    schedule.add_systems((crate::layer1::bio_digital::cybernetic_integration_system, crate::layer1::bio_digital::calculate_average_utility_system, crate::layer1::bio_digital::cybernetic_mind_merge_system.after(crate::layer1::bio_digital::calculate_average_utility_system)).in_set(Layer1SystemSet::Observation));
     schedule.add_systems(
         (
             crate::layer1::integration::waste_scent_bridge,
