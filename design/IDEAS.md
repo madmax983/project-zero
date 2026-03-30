@@ -12851,3 +12851,46 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** The immense, passive wealth of taxing the highway vs. the risk of driving trade away entirely or inviting a concentrated attack on a fixed choke point.
 
 ---
+
+
+## The Debt of the Dead
+
+**Layer:** 1
+
+**Fantasy:** Death does not absolve you of your obligations to the company.
+
+**Mechanic:** When a Pop with high Credit debt dies, the debt is not erased. Instead, it is inherited by their closest relatives or, if none exist, social connections. The inheritors suffer an immediate "Inherited Burden" morale penalty. If a family line is entirely wiped out, the debt is socialized to the colony, slightly increasing prices for everyone at the local store.
+
+**Emergence:** A poor miner takes out massive loans to afford "Somatic Relief" to meet quotas, but dies in a collapse anyway. His children, previously happy and productive, are suddenly crushed by his debt. They are forced to work triple shifts in the hazardous waste sector just to pay the interest, creating a multigenerational cycle of misery.
+
+**Tension:** The economic stability of the colony relying on strict credit enforcement vs. the agonizing generational trauma and cascading morale failures of inheriting the sins (and bills) of the father.
+
+---
+
+## The Solar Flare Lottery
+
+**Layer:** Cross-layer (2 -> 1)
+
+**Fantasy:** The heavens open up, and it's raining both fire and fortune.
+
+**Mechanic:** Periodic, massive "Solar Flares" sweep the system (Layer 2). On Layer 1, they cause catastrophic EMP damage to all unshielded electronics and massive radiation sickness. However, they also super-charge the atmosphere with rare, incredibly valuable "Flare-Isotopes" that rapidly decay. You only have a few days to harvest them before they vanish.
+
+**Emergence:** A massive flare warning sounds. You can either lock everyone in the lead-lined bunkers (safe, but poor) or send your brave (and soon to be terminally ill) prospectors out in rudimentary suits to harvest the isotopes. They succeed, making the colony incredibly wealthy, but the prospectors spend their remaining short lives suffering from radiation sickness in a glittering, newly built hospital they paid for.
+
+**Tension:** Absolute safety and economic stagnation vs. a desperate, deadly gamble for unparalleled wealth in the face of cosmic fury.
+
+---
+
+## The Bureaucratic Black Hole
+
+**Layer:** 1
+
+**Fantasy:** Forms that must be filled out in triplicate before anyone is allowed to put out the fire.
+
+**Mechanic:** If the "Admin" resource drops below a critical threshold, the colony doesn't just slow down; it institutes "Mandatory Verification." High-priority tasks (like emergency medical care or firefighting) suddenly require approval from an "Admin Desk" building. Pops will literally stand next to a burning building or a bleeding colleague, waiting for a piece of paper.
+
+**Emergence:** An asteroid strike causes massive fires. You have plenty of water and firefighters, but your single Admin Desk is currently processing the daily ration logs. The colony burns to the ground because the firefighters are waiting in line to get their "Extinguisher Deployment Authorization Form" stamped.
+
+**Tension:** The dull, unglamorous necessity of maintaining sufficient administrative overhead vs. the horrifying, paralyzing reality of a system that literally cannot function outside its own rules during a crisis.
+
+---
