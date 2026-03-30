@@ -278,3 +278,4 @@
 - [x] `INT-548` Integration: Biomass Tariff -> Economy — completed 2026-03-22
 - [x] `546` The Reverse Quarantine — `specs/546-reverse-quarantine.md` — completed 2026-03-22
 - [x] `547` The Parasitic Broadcast — `specs/547-parasitic-broadcast.md` — completed 2026-03-22
+- [x] `558` The Orbital Scrapyard — `specs/558-the-orbital-scrapyard.md` — completed 2026-03-23

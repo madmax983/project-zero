@@ -300,6 +300,11 @@ pub fn run_simulation_tick(world: &mut World) {
 
     if !world.contains_resource::<Events<crate::layer1::environment::events::DebrisFallEvent>>() {
         world.init_resource::<Events<crate::layer1::environment::events::DebrisFallEvent>>();
+        world.init_resource::<Events<crate::layer2::orbital_scrapyard::DeorbitEvent>>();
+    }
+
+    if !world.contains_resource::<Events<crate::layer2::orbital_scrapyard::DeorbitEvent>>() {
+        world.init_resource::<Events<crate::layer2::orbital_scrapyard::DeorbitEvent>>();
     }
 
     if !world.contains_resource::<crate::layer3::council::GalacticCouncil>() {
@@ -395,6 +400,7 @@ mod tests {
         world.init_resource::<crate::layer3::market::GalacticMarket>();
         world.init_resource::<Events<crate::layer2::events_new::reverse_quarantine::RefugeeFleetEvent>>();
         world.init_resource::<Events<crate::layer1::environment::events::DebrisFallEvent>>();
+        world.init_resource::<Events<crate::layer2::orbital_scrapyard::DeorbitEvent>>();
 
         let schedule = build_simulation_schedule();
         world.add_schedule(schedule);
