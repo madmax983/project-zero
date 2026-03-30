@@ -213,9 +213,11 @@ mod tests {
     #[test]
     fn test_seismic_source_propagation_rock_vs_dirt() {
         let mut world = World::new();
-        let width = 10;
+        let width: usize = 10;
         let height = 10;
-        let tiles = vec![TerrainType::Grass; width * height];
+        let size = width.checked_mul(height).expect("Grid size overflow");
+        assert!(size <= 10_000_000, "Grid size too large");
+        let tiles = vec![TerrainType::Grass; size];
         let mut terrain = TerrainGrid {
             width,
             height,

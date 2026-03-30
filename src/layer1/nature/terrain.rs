@@ -362,9 +362,11 @@ mod tests {
 
     #[test]
     fn test_terrain_grid_get_bounds() {
-        let width = 10;
+        let width: usize = 10;
         let height = 5;
-        let tiles = vec![TerrainType::Grass; width * height];
+        let size = width.checked_mul(height).expect("Grid size overflow");
+        assert!(size <= 10_000_000, "Grid size too large");
+        let tiles = vec![TerrainType::Grass; size];
         let grid = TerrainGrid {
             width,
             height,
@@ -384,9 +386,11 @@ mod tests {
 
     #[test]
     fn test_fill_circle_clipping() {
-        let width = 10;
+        let width: usize = 10;
         let height = 10;
-        let mut tiles = vec![TerrainType::Grass; width * height];
+        let size = width.checked_mul(height).expect("Grid size overflow");
+        assert!(size <= 10_000_000, "Grid size too large");
+        let mut tiles = vec![TerrainType::Grass; size];
 
         // Draw a circle of Dirt at (0,0) with radius 2.
         // Should cover (0,0), (0,1), (0,2), (1,0), (1,1), (2,0) etc.
@@ -414,7 +418,7 @@ mod tests {
 
     #[test]
     fn test_fill_circle_all_terrain_types() {
-        let width = 10;
+        let width: usize = 10;
         let height = 10;
 
         for terrain_type in [
@@ -423,7 +427,9 @@ mod tests {
             TerrainType::Rock,
             TerrainType::Water,
         ] {
-            let mut tiles = vec![TerrainType::Grass; width * height];
+            let size = width.checked_mul(height).expect("Grid size overflow");
+            assert!(size <= 10_000_000, "Grid size too large");
+            let mut tiles = vec![TerrainType::Grass; size];
             fill_circle(&mut tiles, width, height, 5, 5, 2, terrain_type);
 
             // Center should be the terrain type
@@ -470,7 +476,7 @@ mod tests {
     fn test_get_overflow_protection() {
         // Construct a grid with huge dimensions but small buffer
         // This simulates a potentially malicious or corrupted state
-        let width = usize::MAX / 2;
+        let width: usize = usize::MAX / 2;
         let height = 10;
         let tiles = vec![TerrainType::Grass; 1];
 

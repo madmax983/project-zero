@@ -133,10 +133,12 @@ mod tests {
         let width = 20;
         let height = 20;
         world.insert_resource(BeautyGrid::new(width, height));
+        let size = width.checked_mul(height).expect("Grid size overflow");
+        assert!(size <= 10_000_000, "Grid size too large");
         world.insert_resource(TerrainGrid {
             width,
             height,
-            tiles: vec![TerrainType::Grass; width * height],
+            tiles: vec![TerrainType::Grass; size],
         });
         world.insert_resource(OccupiedTiles::default());
         world.insert_resource(BuildingMap::default());

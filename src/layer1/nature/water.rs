@@ -167,7 +167,9 @@ mod tests {
 
     fn setup_world(width: usize, height: usize) -> World {
         let mut world = World::new();
-        let tiles = vec![TerrainType::Grass; width * height];
+        let size = width.checked_mul(height).expect("Grid size overflow");
+        assert!(size <= 10_000_000, "Grid size too large");
+        let tiles = vec![TerrainType::Grass; size];
         world.insert_resource(TerrainGrid {
             width,
             height,
