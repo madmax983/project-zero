@@ -7,6 +7,7 @@ pub mod environment;
 pub use environment::*;
 pub mod events;
 pub mod events_new;
+pub mod fissures;
 pub mod fleet;
 pub mod generation;
 pub mod governance;

@@ -120,6 +120,9 @@ pub fn build_simulation_schedule() -> Schedule {
         crate::layer2::integration::pre_trade_route_sync_system
             .before(crate::layer2::trade::routes::execute_trade_routes_system),
         crate::layer2::trade::routes::execute_trade_routes_system,
+        crate::layer2::fissures::quantum_route::quantum_fissure_transit_system,
+        crate::layer2::fissures::quantum_route::apply_decoherence_system,
+        crate::layer2::fissures::quantum_route::apply_crew_decoherence_system,
         crate::layer2::integration::post_trade_route_sync_system
             .after(crate::layer2::trade::routes::execute_trade_routes_system),
         crate::layer2::trade::biomass_tariff::process_biomass_tariff_system
@@ -323,7 +326,12 @@ pub fn run_simulation_tick(world: &mut World) {
         world.init_resource::<Events<crate::layer2::trade::biomass_tariff::TradeDeal>>();
     }
 
+
+    if !world.contains_resource::<crate::layer2::fissures::quantum_route::DecoherenceProbability>() {
+        world.init_resource::<crate::layer2::fissures::quantum_route::DecoherenceProbability>();
+    }
     if !world.contains_resource::<crate::layer3::market::GalacticMarket>() {
+        world.init_resource::<crate::layer2::fissures::quantum_route::DecoherenceProbability>();
         world.init_resource::<crate::layer3::market::GalacticMarket>();
     }
 
@@ -451,6 +459,7 @@ mod tests {
         world.init_resource::<Events<crate::layer2::tourism::disaster_tourism::GriefTouristArrivalEvent>>();
         world.init_resource::<Events<crate::layer2::trade::biomass_tariff::TradeDeal>>();
         world.init_resource::<crate::layer3::council::GalacticCouncil>();
+        world.init_resource::<crate::layer2::fissures::quantum_route::DecoherenceProbability>();
         world.init_resource::<crate::layer3::market::GalacticMarket>();
         world.init_resource::<Events<crate::layer2::events_new::reverse_quarantine::RefugeeFleetEvent>>();
         world.init_resource::<Events<crate::layer1::environment::events::DebrisFallEvent>>();

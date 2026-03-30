@@ -319,4 +319,3 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `606` The Symbiotic Cult — `specs/606-symbiotic-cult.md`
 - [ ] `607` The Orbital Mirror Misalignment — `specs/607-orbital-mirror-misalignment.md`
 - [ ] `608` The Bureaucratic Ghost — `specs/608-bureaucratic-ghost.md`
-- [ ] `609` The Quantum Smuggler's Route — `specs/609-quantum-smugglers-route.md`
