@@ -1,0 +1,8 @@
+ Documenting scale v0.1.0 (/app)
+warning: Rust code block is empty
+  |
+  = note: `#[warn(rustdoc::invalid_rust_codeblocks)]` on by default
+
+warning: `scale` (lib doc) generated 1 warning
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 16.85s
+   Generated /app/target/doc/scale/index.html and 2 other files

@@ -4,12 +4,12 @@
 //! To avoid a single "God File", the systems are split into sub-modules based on their
 //! execution phase:
 //!
-//! * [`cleanup`]: Event cleanup and input handling.
+//! * [`crate::layer1::systems::cleanup`]: Event cleanup and input handling.
 //! * [`execution`]: Movement, work, and direct interactions.
 //! * [`economy`]: Production, resources, and passive ticking.
-//! * [`environment`]: Fire, weather, and decay.
-//! * [`consumption`]: Needs decay, spoilage, and death.
-//! * [`observation`]: History, social, and dreams.
+//! * [`crate::layer1::systems::environment`]: Fire, weather, and decay.
+//! * [`crate::layer1::systems::consumption`]: Needs decay, spoilage, and death.
+//! * [`crate::layer1::systems::observation`]: History, social, and dreams.
 
 use bevy_ecs::prelude::*;
 
