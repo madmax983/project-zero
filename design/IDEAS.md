@@ -2819,7 +2819,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Smuggler's Coves
+## Smuggler's Coves [SPECCED]
 
 **Layer:** 1
 
