@@ -376,6 +376,10 @@ pub fn run_simulation_tick(world: &mut World) {
         world.init_resource::<Events<crate::layer3::map::AnomalyDiscoveredEvent>>();
     }
     // Add our schedule if not yet added
+    if !world.contains_resource::<crate::layer1::cybernetics::ColonyAverageUtility>() {
+        world.init_resource::<crate::layer1::cybernetics::ColonyAverageUtility>();
+    }
+
     {
         let schedules = world.resource::<Schedules>();
         if schedules.get(SimulationSchedule).is_none() {
@@ -430,6 +434,7 @@ mod tests {
         *world.resource_mut::<GameState>() = GameState::Running;
 
         // Initialize Detection Risk for test
+        world.init_resource::<crate::layer1::cybernetics::ColonyAverageUtility>();
         world.init_resource::<crate::layer3::silence::DetectionRisk>();
         world.init_resource::<Events<crate::layer3::silence::HostileSpawnEvent>>();
 

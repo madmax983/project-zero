@@ -2,6 +2,41 @@ use crate::layer1::actions::{AssignedTo, AssignmentType};
 use crate::layer1::map::GridPosition;
 use bevy_ecs::prelude::*;
 
+use crate::layer1::needs::Needs;
+use crate::layer1::utility_ai::UtilityWeights;
+
+#[derive(Component, Default)]
+pub struct CyberneticIntegration {
+    pub integration_level: f32, // 0.0 to 1.0
+}
+
+#[derive(Resource, Default)]
+pub struct ColonyAverageUtility {
+    pub weights: UtilityWeights,
+}
+
+pub fn cybernetic_integration_system(
+    mut commands: Commands,
+    query: Query<Entity, (With<CyberneticIntegration>, With<Needs>)>,
+) {
+    for entity in query.iter() {
+        commands.entity(entity).remove::<Needs>();
+    }
+}
+
+pub fn cybernetic_mind_merge_system(
+    avg: Res<ColonyAverageUtility>,
+    mut query: Query<(&mut UtilityWeights, &CyberneticIntegration)>,
+) {
+    for (mut weights, integration) in query.iter_mut() {
+        let blend = integration.integration_level;
+        weights.distance_weight =
+            weights.distance_weight * (1.0 - blend) + avg.weights.distance_weight * blend;
+        weights.availability_weight =
+            weights.availability_weight * (1.0 - blend) + avg.weights.availability_weight * blend;
+    }
+}
+
 /// Types of prosthetic augmentations available.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Component)]
 pub enum ProstheticType {
@@ -289,5 +324,67 @@ mod tests {
             (penalty - 0.2).abs() < f32::EPSILON,
             "Social penalty should be 0.2"
         );
+    }
+
+    #[test]
+    fn test_cybernetic_integration_removes_biological_needs() {
+        use crate::layer1::needs::Needs;
+        let mut app = bevy_app::App::new();
+        app.add_systems(bevy_app::Update, super::cybernetic_integration_system);
+
+        let pop_entity = app
+            .world_mut()
+            .spawn((
+                crate::layer1::pop::Pop,
+                Needs {
+                    hunger: 50.0,
+                    rest: 50.0,
+                    leisure: 50.0,
+                    hygiene: 50.0,
+                },
+                super::CyberneticIntegration::default(),
+            ))
+            .id();
+
+        app.update();
+
+        assert!(
+            app.world().get::<Needs>(pop_entity).is_none(),
+            "Integrated Pop should not have Needs"
+        );
+    }
+
+    #[test]
+    fn test_utility_weights_merge_towards_average() {
+        use crate::layer1::utility_ai::UtilityWeights;
+        let mut app = bevy_app::App::new();
+        app.insert_resource(super::ColonyAverageUtility {
+            weights: UtilityWeights {
+                distance_weight: 0.8,
+                availability_weight: 0.2,
+            },
+        });
+        app.add_systems(bevy_app::Update, super::cybernetic_mind_merge_system);
+
+        let pop_entity = app
+            .world_mut()
+            .spawn((
+                crate::layer1::pop::Pop,
+                UtilityWeights {
+                    distance_weight: 0.2,
+                    availability_weight: 0.9,
+                },
+                super::CyberneticIntegration {
+                    integration_level: 0.5,
+                },
+            ))
+            .id();
+
+        app.update();
+
+        let weights = app.world().get::<UtilityWeights>(pop_entity).unwrap();
+        // Should move towards the average
+        assert!(weights.distance_weight > 0.2);
+        assert!(weights.availability_weight < 0.9);
     }
 }
