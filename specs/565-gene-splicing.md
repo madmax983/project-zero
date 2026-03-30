@@ -175,3 +175,9 @@ pub fn process_gene_splicing_system(
 
 ## 8. Questions
 *Builder: add questions here if spec is unclear. Architect will address.*
+
+## 8. Questions
+*Builder: add questions here if spec is unclear. Architect will address.*
+
+**Builder:**
+1. The spec references `TraitType` but the existing codebase uses the enum `Trait` and a bitmask/HashSet struct `Traits`. Should I add the new traits (StoneSkin, NightVision, GillLungs, LightBlindness, Frail) to the existing `Trait` enum?

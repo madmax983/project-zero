@@ -470,7 +470,9 @@ impl NarrativeGenerator {
         // Check for missing context variables/fragments that would produce errors
         for segment in &segments {
             if let NarrativeSegment::Error(err) = segment {
-                return Err(anyhow::anyhow!("Missing required context variable or fragment: {err}"));
+                return Err(anyhow::anyhow!(
+                    "Missing required context variable or fragment: {err}"
+                ));
             }
         }
 
@@ -740,7 +742,10 @@ fn test_generate_missing_fragment_options() {
     let ctx = NarrativeContext::new();
     let result = generator.generate_structured("EMPTY_FRAG", &ctx);
     assert!(result.is_err());
-    assert!(result.unwrap_err().to_string().contains("MISSING_FRAGMENT_OPTIONS:FRAG"));
+    assert!(result
+        .unwrap_err()
+        .to_string()
+        .contains("MISSING_FRAGMENT_OPTIONS:FRAG"));
 }
 
 #[test]

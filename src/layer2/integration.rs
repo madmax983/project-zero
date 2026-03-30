@@ -29,7 +29,8 @@ pub fn escape_velocity_traits_bridge_system(
 
         // Prevent floating point jitter if no change is needed
         if (gravity.base - new_g_force).abs() > f32::EPSILON {
-            gravity.current = new_g_force; gravity.base = new_g_force;
+            gravity.current = new_g_force;
+            gravity.base = new_g_force;
         }
     }
 }
@@ -304,7 +305,10 @@ pub fn process_grief_tourist_arrival_system(
     for event in events.read() {
         resources.add_credits(event.offered_credits);
         chronicle_events.send(AddChronicleEvent {
-            text: format!("Grief Tourists arrived, offering {} credits to view the disaster site.", event.offered_credits),
+            text: format!(
+                "Grief Tourists arrived, offering {} credits to view the disaster site.",
+                event.offered_credits
+            ),
             importance: EventImportance::Major,
         });
     }

@@ -220,3 +220,9 @@ pub fn process_player_door_commands_system(
 
 ## 8. Questions
 *Builder: add questions here if spec is unclear. Architect will address.*
+
+## 8. Questions
+*Builder: add questions here if spec is unclear. Architect will address.*
+
+**Builder:**
+1. The spec asks to implement `Door` and `PlayerToggleDoorEvent` but `DoorControl` and `DoorState` already exist in `src/layer1/control.rs` for locking doors. Should I modify `DoorControl` to support an AI override instead of creating a new `Door` component?

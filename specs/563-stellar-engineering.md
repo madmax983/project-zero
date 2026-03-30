@@ -172,3 +172,9 @@ pub fn process_starlifting_system(
 
 ## 8. Questions
 *Builder: add questions here if spec is unclear. Architect will address.*
+
+## 8. Questions
+*Builder: add questions here if spec is unclear. Architect will address.*
+
+**Builder:**
+1. The spec references `SystemNode`, `SystemResource`, `DebrisField` (with density field), and `StarStats` which do not seem to exist in the current codebase. Should these components be created as part of this feature, or are they from incomplete dependencies?

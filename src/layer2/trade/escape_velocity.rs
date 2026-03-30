@@ -1,7 +1,6 @@
 use crate::layer1::resources::ColonyResources;
-use bevy_ecs::prelude::*;
 use crate::layer2::syzygy::PlanetaryGravity;
-
+use bevy_ecs::prelude::*;
 
 /// A single item of cargo in a trade manifest.
 #[derive(Component, Clone)]
@@ -59,8 +58,14 @@ mod tests {
 
     #[test]
     fn test_high_gravity_increases_launch_cost_significantly() {
-        let gravity_normal = PlanetaryGravity { current: 1.0, base: 1.0 };
-        let gravity_high = PlanetaryGravity { current: 2.5, base: 2.5 };
+        let gravity_normal = PlanetaryGravity {
+            current: 1.0,
+            base: 1.0,
+        };
+        let gravity_high = PlanetaryGravity {
+            current: 2.5,
+            base: 2.5,
+        };
 
         let manifest = TradeManifest {
             items: vec![
@@ -84,7 +89,10 @@ mod tests {
 
     #[test]
     fn test_low_mass_high_value_goods_are_profitable_on_high_g() {
-        let gravity_high = PlanetaryGravity { current: 2.5, base: 2.5 };
+        let gravity_high = PlanetaryGravity {
+            current: 2.5,
+            base: 2.5,
+        };
 
         let raw_ore = TradeManifest {
             items: vec![CargoItem {

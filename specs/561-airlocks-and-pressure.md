@@ -209,3 +209,12 @@ pub fn process_suffocation_system(
 
 ## 8. Questions
 *Builder: add questions here if spec is unclear. Architect will address.*
+
+## 8. Questions
+*Builder: add questions here if spec is unclear. Architect will address.*
+
+**Builder:**
+1. The spec uses `Position` but the codebase uses `GridPosition`. Should I use `GridPosition`?
+2. The spec uses `AtmosphereGrid::set_pressure` and `.get_pressure` but `AtmosphereGrid` uses `get` and `set` for pollution/gases. Should I use the existing `PressureGrid` in `src/layer1/pressure.rs` instead of `AtmosphereGrid`?
+3. The spec defines a new `Door` component, but `DoorControl` and `DoorState` already exist in `src/layer1/control.rs`. Should I augment `DoorControl` or add a new component?
+4. The spec uses `MovementStats` (`base_speed`, `current_speed`) which does not exist in `src/layer1/pop.rs`. How should movement penalties be applied without this component?

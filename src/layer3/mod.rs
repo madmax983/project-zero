@@ -3,3 +3,4 @@ pub mod events;
 pub mod market;
 pub mod silence;
 pub use council::*;
+pub mod stellar_engineering;
