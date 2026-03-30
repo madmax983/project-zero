@@ -301,7 +301,8 @@ fn assign_pop(
         | AssignmentType::TavernVisitor
         | AssignmentType::Patient
         | AssignmentType::Funeral
-        | AssignmentType::Surgery => {
+        | AssignmentType::Surgery
+        | AssignmentType::Sheriff => {
             // These are not jobs, so we don't update Job component.
             // The pop keeps their previous job (if any).
         }

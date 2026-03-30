@@ -8,6 +8,14 @@ use bevy_ecs::prelude::*;
 pub fn register(schedule: &mut Schedule) {
     schedule.add_systems(
         (
+            crate::layer1::justice::process_crimes_system,
+            crate::layer1::justice::process_pardons_system,
+        )
+            .in_set(Layer1SystemSet::Observation),
+    );
+
+    schedule.add_systems(
+        (
             crate::layer1::integration::waste_scent_bridge,
             crate::layer1::olfactory::scent_diffusion_system
                 .after(crate::layer1::integration::waste_scent_bridge),

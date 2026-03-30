@@ -114,6 +114,13 @@ pub fn register(schedule: &mut Schedule) {
             combat_execution_system.after(arrival_handler_system),
             crate::layer1::turret::turret_fire_system.after(combat_execution_system),
             crate::layer1::justice::warden_execution_system.after(combat_execution_system),
+        )
+            .in_set(Layer1SystemSet::Execution),
+    );
+    schedule.add_systems(
+        (
+            crate::layer1::justice::sheriff_arrest_system
+                .after(crate::layer1::justice::warden_execution_system),
             crate::layer1::predictive_policing::pre_crime_execution_system
                 .after(combat_execution_system),
             crate::layer1::hygiene::shower_use_system.after(work_execution_system),

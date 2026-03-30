@@ -726,6 +726,7 @@ pub enum AssignmentType {
     ObservatoryWorker,
     /// Administrator job.
     Administrator,
+    Sheriff,
     /// Undergoing surgery.
     Surgery,
 }
