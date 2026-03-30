@@ -468,3 +468,8 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `753` The Tethered Guillotine — `specs/753-tethered-guillotine.md`
 - [ ] `754` The Memory Smugglers — `specs/754-memory-smugglers.md`
 - [ ] `755` The Ecological Rubberband — `specs/755-ecological-rubberband.md`
+- [ ] `756` Orbital Traffic Control — `specs/756-orbital-traffic-control.md`
+- [ ] `757` The "Mother" Lode — `specs/757-the-mother-lode.md`
+- [ ] `758` Magnetic Storms — `specs/758-magnetic-storms.md`
+- [ ] `759` Salvage Rights — `specs/759-salvage-rights.md`
+- [ ] `760` Command Center Dependency — `specs/760-command-center-dependency.md`

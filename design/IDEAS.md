@@ -2722,7 +2722,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Orbital Traffic Control
+## Orbital Traffic Control [SPECCED]
 
 **Layer:** 2
 
@@ -2736,7 +2736,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The "Mother" Lode
+## The "Mother" Lode [SPECCED]
 
 **Layer:** 1
 
@@ -2750,7 +2750,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Magnetic Storms
+## Magnetic Storms [SPECCED]
 
 **Layer:** 2 -> 1
 
@@ -2764,7 +2764,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Salvage Rights
+## Salvage Rights [SPECCED]
 
 **Layer:** 3
 
@@ -2777,7 +2777,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Safe Trade vs. Risky Scavenging.
 
 ---
-## Command Center Dependency
+## Command Center Dependency [SPECCED]
 
 **Layer:** Cross-layer
 
