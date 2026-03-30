@@ -558,3 +558,11 @@
 - **Glue added:** Registered `process_empathic_resonance` in `src/simulation.rs`.
 - **Schedule:** Chained in Layer 2 after `Layer1SystemSet::Observation`.
 - **Tests:** `tests/integration/empathic_plague_bridge.rs`
+
+### INT-735: Genetic Crop Modification -> Chronicle
+- **Date:** 2026-04-01
+- **Systems connected:** `process_mutations` (Genetic Crop Modification) -> `crop_mutation_chronicle_bridge` (Integration) -> `AddChronicleEvent` (Chronicle)
+- **Glue added:**
+    - `crop_mutation_chronicle_bridge` in `src/layer1/integration.rs` converts `CropMutationEvent` to `AddChronicleEvent`.
+- **Schedule:** Registered in `Layer1SystemSet::Observation`, chained with the other integrations.
+- **Tests:** `tests/integration/crop_mutation_chronicle.rs`

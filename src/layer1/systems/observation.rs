@@ -305,6 +305,7 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::integration::industrial_rhythm_morale_bridge,
             crate::layer1::integration::great_work_chronicle_bridge,
             crate::layer1::integration::gene_splicing_chronicle_bridge,
+            crate::layer1::integration::crop_mutation_chronicle_bridge,
             crate::layer1::integration::smuggler_arrival_event_bridge
                 .before(crate::layer1::void_weed::process_void_weed_trade_system),
         )

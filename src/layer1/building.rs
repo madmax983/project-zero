@@ -1372,8 +1372,9 @@ fn spawn_building(
         | BuildingType::HypnoPod
         | BuildingType::HoloProjector
         | BuildingType::Nanoforge => configure_tech(&mut entity, building_type),
-        BuildingType::School
-        | BuildingType::MediaStation => configure_civic(&mut entity, building_type),
+        BuildingType::School | BuildingType::MediaStation => {
+            configure_civic(&mut entity, building_type)
+        }
         BuildingType::PersonalShed
         | BuildingType::PersonalGarden
         | BuildingType::PersonalShrine => {
