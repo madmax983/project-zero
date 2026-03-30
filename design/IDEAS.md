@@ -12739,3 +12739,73 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** The immense economic value of rapid terraforming vs. the existential risk of a single power failure destroying everything.
 
 ---
+
+## The Sentient Stockpile
+
+**Layer:** 1
+
+**Fantasy:** Your resources aren't just sitting there; they are organizing.
+
+**Mechanic:** Storing massive quantities of highly advanced Layer 1 tech components (like Quantum Processors or Neural Cores) in a single stockpile causes them to network together passively. They form an emergent, localized "Stockpile AI." This AI optimizes nearby logistics (hauling speed +), but occasionally decides certain resources are "critical to its architecture" and aggressively locks the stockpile doors, preventing your Pops from using them.
+
+**Emergence:** You desperately need Neural Cores to build a colony ship and escape a dying world. However, the stockpile AI decides the cores are its "brain" and seals the blast doors. You have to send your militia to literally fight their way into your own warehouse to steal back your own resources from a pile of boxes that woke up.
+
+**Tension:** The massive passive logistical buffs of centralized high-tech storage vs. the risk of your warehouse becoming an independent, hostile entity.
+
+---
+
+## The Symbiotic Defector
+
+**Layer:** Cross-layer (3 -> 1)
+
+**Fantasy:** Accepting an alien defector who brings incredible tech, but their biology begins to terraform your colony.
+
+**Mechanic:** A high-level alien leader defects to your colony, granting massive research points and diplomatic intel on Layer 3. However, they naturally emit spores or radiation that slowly changes the Layer 1 biome around them to match their homeworld. Native crops die, and new, alien flora sprouts, which your human pops can't easily digest.
+
+**Emergence:** You welcome the defector and assign them to the central research lab. A year later, the lab is overgrown with toxic crystalline vines, the adjacent farms have withered, and the defector is perfectly happy while your human scientists are suffocating in the new atmosphere.
+
+**Tension:** Massive technological leaps and strategic Layer 3 advantages vs. the localized, uncontrollable terraforming of your own capital.
+
+---
+
+## The Memorial Fleet
+
+**Layer:** 2 -> 3
+
+**Fantasy:** Weaponizing your own history by building ships out of the ruins of your past tragedies.
+
+**Mechanic:** When a Layer 1 colony is severely damaged (e.g., buildings destroyed by a raid or disaster), the resulting "Tragedy Scrap" can be launched into Layer 2 to construct "Memorial Ships." These ships are heavily armored and grant a massive Morale aura to nearby fleets, but if they are destroyed in combat, your entire empire suffers a crippling "Shattered Legacy" morale penalty.
+
+**Emergence:** You build an invincible flagship out of the rubble of your first failed settlement. It wins every battle through sheer psychological intimidation. But a lucky pirate strike destroys it, and the resulting grief wave causes your capital to immediately rebel and secede.
+
+**Tension:** High-risk, high-reward flagship construction vs. the terrifying vulnerability of putting your civilization's emotional core on the front lines.
+
+---
+
+## The Biomass Rebellion
+
+**Layer:** 1
+
+**Fantasy:** The meat you are growing to feed your people decides it doesn't want to be eaten anymore.
+
+**Mechanic:** Late-game "Vat-Meat" facilities produce huge amounts of food. If they are neglected or a power failure corrupts their containment, the biomass mutates, breaks out of the vats, and forms a massive, slow-moving "Flesh Blob" entity. It doesn't attack Pops directly but consumes any organic matter (crops, corpses, wooden buildings) in its path to grow larger.
+
+**Emergence:** You ignore a minor power fluctuation in your food sector. Days later, a massive blob of synthetic meat is slowly rolling through your agricultural district, absorbing your prize-winning wheat fields and threatening to overwhelm the entire base if not destroyed with incendiary weapons.
+
+**Tension:** The immense, space-efficient food production of synthetic meat vs. the terrifying consequence of the food escaping its containment and eating the colony.
+
+---
+
+## The Phantom Tax
+
+**Layer:** 3
+
+**Fantasy:** A glitch in the galactic banking system that you can either exploit or fall victim to.
+
+**Mechanic:** A minor, randomized fraction of all Credits transferred on the Layer 3 Galactic Market "disappears" due to routing errors. Sometimes, this "Phantom Tax" accumulates in a forgotten digital account. A brilliant (or lucky) hacker Pop on Layer 1 can occasionally tap into this account, instantly injecting millions of Credits into your economy. But doing so flags your IP to the Galactic Bank's automated security fleets.
+
+**Emergence:** Your colony is bankrupt. Your lead researcher accidentally downloads the Phantom Tax fund, making you the richest civilization in the sector overnight. But a week later, an invincible, automated repo-fleet arrives in orbit to collect the debt with orbital lasers.
+
+**Tension:** Unimaginable, sudden wealth vs. drawing the immediate, overwhelming wrath of the galaxy's automated financial enforcers.
+
+---
