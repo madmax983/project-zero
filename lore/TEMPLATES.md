@@ -2924,7 +2924,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ---
 
-## The Empathy Plague Templates
+## The Empathic Plague Templates (Spec 727)
 
 ### EMPATHY_PLAGUE_START
 
@@ -4192,7 +4192,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ---
 
-## The Cartographer's Curse Templates
+## The Cartographer's Curse Templates (Spec 626)
 
 ### Template: MAPS_SOLD
 **Generates:** Play event
@@ -4984,6 +4984,97 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "Someone walked onto the sled path. [YEAR]. [SLED_CARGO] hit them with [SLED_CRASH_DESC]."
 - "[YEAR]: A devastating collision. A sled carrying [SLED_CARGO] caused [SLED_CRASH_DESC]."
 - "Momentum cannot be reasoned with. [SLED_CARGO] scattered across the floor. [SLED_CRASH_DESC]. [YEAR]."
+
+## Genetic Crop Modification Templates (Spec 735)
+
+### Template: CROP_MODIFIED
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[GENETIC_CROP_TRAIT]`
+
+**Patterns:**
+- "We changed the seed. [YEAR]. The new harvest is [GENETIC_CROP_TRAIT]."
+- "[YEAR]: A breakthrough in the lab. The crops are now [GENETIC_CROP_TRAIT]."
+- "Nature is too slow. We made the plants [GENETIC_CROP_TRAIT]. [YEAR]."
+
+### Template: CROP_MUTATED
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[CROP_MUTATION_TYPE]`
+
+**Patterns:**
+- "The genetic code is breaking. [YEAR]. We are seeing [CROP_MUTATION_TYPE]."
+- "[YEAR]: The fields turned against us. A mutation caused [CROP_MUTATION_TYPE]."
+- "We pushed the biology too far. [YEAR]. Now we fight the [CROP_MUTATION_TYPE]."
+
+## Emotional Contagion Templates (Spec 346)
+
+### Template: EMOTIONAL_CONTAGION_SPREAD
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[CONTAGION_EMOTION]`, `[CONTAGION_VECTOR]`
+
+**Patterns:**
+- "The feeling caught hold. [YEAR]. We saw [CONTAGION_EMOTION] pass [CONTAGION_VECTOR]."
+- "[YEAR]: It wasn't an order, it was an instinct. [CONTAGION_EMOTION] spread [CONTAGION_VECTOR]."
+- "One started it, and the rest followed. [YEAR]. [CONTAGION_EMOTION] moving [CONTAGION_VECTOR]."
+
+## Sensor Ambiguity Templates (Spec 672)
+
+### Template: SENSOR_CONTACT_DETECTED
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[SENSOR_BLIP_DESC]`
+
+**Patterns:**
+- "The scope picks up something. [YEAR]. Just [SENSOR_BLIP_DESC]."
+- "[YEAR]: Ambiguity on the radar. The watch reports [SENSOR_BLIP_DESC]."
+- "We see a shadow. [YEAR]. It looks like [SENSOR_BLIP_DESC], but we cannot be sure."
+
+### Template: SENSOR_CONTACT_REVEALED
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[BLIP_REVEAL]`
+
+**Patterns:**
+- "The distance closes. [YEAR]. The contact is [BLIP_REVEAL]."
+- "[YEAR]: The fog lifts. We are looking at [BLIP_REVEAL]."
+- "It wasn't a glitch. The sensors resolve the target: [BLIP_REVEAL]. [YEAR]."
+
+## Moon Hermits Templates (Spec 688)
+
+### Template: POP_DESERTED
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[NAME]`, `[HERMIT_OUTPOST_NAME]`
+
+**Patterns:**
+- "[NAME] couldn't take the pressure. [YEAR]. They fled to [HERMIT_OUTPOST_NAME]."
+- "[YEAR]: Desertion. [NAME] took a shuttle to [HERMIT_OUTPOST_NAME] to live in the dark."
+- "The colony broke [NAME]. [YEAR]. Now they hide at [HERMIT_OUTPOST_NAME]."
+
+### Template: HERMIT_THEFT_REPORTED
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[HERMIT_THEFT_METHOD]`, `[HERMIT_OUTPOST_NAME]`
+
+**Patterns:**
+- "The freighters are light on cargo. [YEAR]. They report [HERMIT_THEFT_METHOD] near [HERMIT_OUTPOST_NAME]."
+- "[YEAR]: The exiles are stealing from us. [HERMIT_THEFT_METHOD] traced to [HERMIT_OUTPOST_NAME]."
+- "We are losing resources to the fringe. [YEAR]. A case of [HERMIT_THEFT_METHOD] by the hermits of [HERMIT_OUTPOST_NAME]."
+
+## The Exile Templates (Spec 691)
+
+### Template: POP_EXILED
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[NAME]`, `[BANISHMENT_REASON]`
+
+**Patterns:**
+- "We cast [NAME] out. [YEAR]. Punished [BANISHMENT_REASON]."
+- "[YEAR]: Banishment. [NAME] was sent into the void [BANISHMENT_REASON]."
+- "The colony has no room for them. [NAME] exiled [BANISHMENT_REASON]. [YEAR]."
+
+### Template: EXILE_RETURNED
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[NAME]`, `[EXILE_RETURN_ROLE]`
+
+**Patterns:**
+- "The past comes back. [YEAR]. [NAME] returned to us as [EXILE_RETURN_ROLE]."
+- "[YEAR]: A familiar face on the comms. The exile [NAME] is now [EXILE_RETURN_ROLE]."
+- "We sent them away to die. Instead, [NAME] comes back as [EXILE_RETURN_ROLE]. [YEAR]."
 
 ## The Diplomatic Saboteur Templates (Spec 715)
 

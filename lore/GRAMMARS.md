@@ -2514,25 +2514,6 @@ TETHER_SACRIFICE:
     - SAFETY (high, temporary)
 ```
 
-## The Empathy Plague Chaining
-
-```yaml
-EMPATHY_PLAGUE_START:
-  enables:
-    - CASCADE_BREAKDOWN (high)
-    - SYNCHRONIZED_WORK (low, if happy)
-  increases:
-    - COHESION (maximum)
-    - VULNERABILITY (high)
-
-CASCADE_BREAKDOWN:
-  enables:
-    - WORK_STOPPAGE (always)
-    - MEDICAL_EMERGENCY (high)
-  increases:
-    - STRESS (maximum)
-```
-
 ## Counterfeit Reality Chaining
 
 ```yaml
@@ -3216,10 +3197,6 @@ PHANTOM_ORDER_EXECUTED:
 - MUTINY_REVEALED → enables → FLEET_DESERTION, ROGUE_STATION_FOUNDED
 - MUTINY_REVEALED → increases_chance → PARANOIA, WITCH_HUNT, SUPPLY_SHORTAGE
 
-## The Cartographer's Curse Chaining
-- MAPS_SOLD → enables → ECONOMIC_WINDFALL, RAPID_EXPANSION
-- MAPS_SOLD → increases_chance → TARGETED_RAID, SABOTAGE, ESPIONAGE
-
 ## The Sabotaged Seed Bank Chaining
 - SEED_BANK_DISCOVERED → enables → AGRICULTURAL_REVOLUTION, POPULATION_BOOM
 - SEED_BANK_DISCOVERED → increases_chance → COMPLACENCY, MONOCULTURE
@@ -3337,6 +3314,46 @@ PHANTOM_ORDER_EXECUTED:
 - ENGINE_ATTUNED → increases_chance → UNREST, POWER_SURGE
 - ENGINE_DECAYED → enables → BLACKOUT, PANIC_SPREAD
 - ENGINE_DECAYED → increases_chance → RELIEF, FEAR
+
+## Emotional Contagion Chaining (Spec 346)
+- EMOTIONAL_CONTAGION_SPREAD → enables → MOOD_WAVE, WORK_STOPPAGE
+- EMOTIONAL_CONTAGION_SPREAD → increases_chance → MASS_HYSTERIA, PRODUCTIVITY_SPIKE
+
+## The Cartographer's Curse Chaining (Spec 626)
+- MAPS_SOLD → enables → ECONOMIC_WINDFALL, RAPID_EXPANSION
+- MAPS_SOLD → increases_chance → TARGETED_RAID, PIRATE_AMBUSH
+- TARGETED_RAID → enables → ORBITAL_BOMBARDMENT, STRUCTURE_COLLAPSE
+- TARGETED_RAID → increases_chance → DESTRUCTION, PANIC
+
+## Sensor Ambiguity Chaining (Spec 672)
+- SENSOR_CONTACT_DETECTED → enables → SENSOR_CONTACT_REVEALED, FALSE_ALARM
+- SENSOR_CONTACT_DETECTED → increases_chance → PARANOIA, TENSION
+- SENSOR_CONTACT_REVEALED → enables → FLEET_ENGAGEMENT, TRADE_ESTABLISHED
+- SENSOR_CONTACT_REVEALED → increases_chance → RELIEF, COMBAT_PREP
+
+## Moon Hermits Chaining (Spec 688)
+- POP_DESERTED → enables → HERMIT_OUTPOST_ESTABLISHED, FAMILY_GRIEF
+- POP_DESERTED → increases_chance → RUMOR_SPREAD, EXILE
+- HERMIT_THEFT_REPORTED → enables → MILITIA_MUSTER, RESOURCE_SHORTAGE
+- HERMIT_THEFT_REPORTED → increases_chance → ANGER, FRUSTRATION
+
+## The Exile Chaining (Spec 691)
+- POP_EXILED → enables → EXILE_RETURNED, LEGEND_BIRTH
+- POP_EXILED → increases_chance → GUILT, DIVISION
+- EXILE_RETURNED → enables → REVENGE_ATTEMPT, TRADE_BOOM
+- EXILE_RETURNED → increases_chance → CHAOS, WEALTH
+
+## The Empathic Plague Chaining (Spec 727)
+- EMPATHY_PLAGUE_START → enables → CASCADE_BREAKDOWN, SYNCHRONIZED_WORK
+- EMPATHY_PLAGUE_START → increases_chance → COHESION, VULNERABILITY
+- CASCADE_BREAKDOWN → enables → WORK_STOPPAGE, MEDICAL_EMERGENCY
+- CASCADE_BREAKDOWN → increases_chance → STRESS, MASS_HYSTERIA
+
+## Genetic Crop Modification Chaining (Spec 735)
+- CROP_MODIFIED → enables → FOOD_STABILITY, CROP_MUTATED
+- CROP_MODIFIED → increases_chance → HARVEST_BOOM, MUTATION
+- CROP_MUTATED → enables → TOXIC_SPORES_RELEASE, AGGRESSIVE_GROWTH
+- CROP_MUTATED → increases_chance → SICKNESS, FAMINE
 
 ## Airlocks & Pressure Chaining (Spec 561)
 - DOOR_VENTED → enables → INJURY_ACCIDENT, REPAIR_RUSH

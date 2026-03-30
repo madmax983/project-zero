@@ -3679,7 +3679,7 @@ Adjectives for the damage when a tether falls.
 
 ---
 
-## Empathy Plague Fragments
+## Empathic Plague Fragments (Spec 727)
 
 ## Fragment Type: [SHARED_EMOTION]
 What everyone suddenly feels.
@@ -4470,6 +4470,123 @@ What causes the existential dread.
 
 ---
 
+## Genetic Crop Modification Fragments (Spec 735)
+
+## Fragment Type: [GENETIC_CROP_TRAIT]
+Beneficial traits spliced into crops.
+
+- luminescent
+- nutrient-dense
+- frost-hardy
+- rapid-growth
+- void-resistant
+- sweet-yielding
+- deep-rooted
+
+## Fragment Type: [CROP_MUTATION_TYPE]
+Negative mutations from genetic instability.
+
+- aggressive growth
+- toxic spores
+- weeping rot
+- acidic sap
+- parasitic roots
+- choking vines
+- spore-clouds
+
+## Emotional Contagion Fragments (Spec 346)
+
+## Fragment Type: [CONTAGION_EMOTION]
+Types of spreading emotions.
+
+- a sudden panic
+- an infectious laugh
+- a creeping dread
+- an overwhelming joy
+- a bitter rage
+- a shared sorrow
+- a collective calm
+
+## Fragment Type: [CONTAGION_VECTOR]
+How the emotion spreads.
+
+- through the mess hall
+- along the assembly line
+- across the shift
+- down the main corridor
+- from soul to soul
+- like a spark in the dark
+
+## Sensor Ambiguity Fragments (Spec 672)
+
+## Fragment Type: [SENSOR_BLIP_DESC]
+Descriptions of the unidentified contact.
+
+- a ghost echo
+- a faint thermal bloom
+- a repeating static pulse
+- an anomalous mass
+- a dark shadow on the scope
+- a flicker in the void
+- an unlogged signature
+
+## Fragment Type: [BLIP_REVEAL]
+What the blip turns out to be.
+
+- a drifting merchant
+- a pirate ambush
+- just space junk
+- a dead colony ship
+- a hostile frigate
+- a distress beacon
+- an asteroid shower
+
+## Moon Hermits Fragments (Spec 688)
+
+## Fragment Type: [HERMIT_OUTPOST_NAME]
+Names given to the hidden hermit bases.
+
+- The Silent Rock
+- Exile's Hollow
+- The Stolen Crag
+- Hermit's Drop
+- The Dark Asteroid
+- Nowhere Station
+- The Rim-Hold
+
+## Fragment Type: [HERMIT_THEFT_METHOD]
+How they steal from trade ships.
+
+- siphoning fuel in the dark
+- skimming the cargo pods
+- cutting the tether
+- hacking the manifest
+- boarding during the drift
+- silent scavenging
+
+## The Exile Fragments (Spec 691)
+
+## Fragment Type: [BANISHMENT_REASON]
+Why they were exiled.
+
+- for speaking against the Chair
+- for stealing rations
+- for dangerous incompetence
+- for breaking the silence
+- for hoarding medicine
+- for mutiny
+- for a debt unpaid
+
+## Fragment Type: [EXILE_RETURN_ROLE]
+What they became after banishment.
+
+- a wealthy merchant
+- a pirate dreadnought captain
+- a broken beggar
+- a vengeful warlord
+- a silent wanderer
+- a powerful broker
+
 ## The Spiteful Will Fragments (Spec 451)
 
 ## Fragment Type: [INHERITOR_TITLE]
@@ -5012,7 +5129,7 @@ How the dumped criminal pops are described.
 
 ---
 
-## The Cartographer's Curse Fragments
+## The Cartographer's Curse Fragments (Spec 626)
 
 ### Fragment Type: [SOLD_DATA]
 - precise orbital telemetry
