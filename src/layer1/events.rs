@@ -19,3 +19,10 @@ pub struct BuildingCompletedEvent {
     /// The entity ID of the new building.
     pub entity: Entity,
 }
+
+/// Event triggered when a game-ending condition is met.
+#[derive(Event, Debug, Clone, PartialEq, Eq)]
+pub enum GameOverEvent {
+    /// The Symbiont Spores have completely taken over the colony.
+    SymbiontAssimilation,
+}

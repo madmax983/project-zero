@@ -454,6 +454,15 @@ pub fn calculate_work_amount(
             None => 1.0,
         };
 
+    let symbiont_modifier = if world
+        .get::<crate::layer1::memetics::symbiont_spores::SymbiontInfection>(pop_entity)
+        .is_some()
+    {
+        2.0
+    } else {
+        1.0
+    };
+
     let amount = WORK_PER_TICK
         * tool_efficiency
         * morale_efficiency
@@ -464,7 +473,8 @@ pub fn calculate_work_amount(
         * organic_factor
         * neural_buff
         * delay_modifier
-        * infection_modifier;
+        * infection_modifier
+        * symbiont_modifier;
 
     // Cap work amount to prevent logic bugs / economy exploits
     amount.min(1000.0)

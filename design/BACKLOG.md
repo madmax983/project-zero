@@ -270,7 +270,7 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `537` Funeral Rites — `specs/537-funeral-rites.md`
 
 - [ ] `542` Drone Networks — `specs/542-drone-networks.md`
-- [ ] `556` Symbiont Spores — `specs/556-symbiont-spores.md`
+
 - [ ] `557` The Subterranean Ecosystem — `specs/557-the-subterranean-ecosystem.md`
 - [ ] `558` The Orbital Scrapyard — `specs/558-the-orbital-scrapyard.md`
 - [ ] `559` The Empathic Plague — `specs/559-the-empathic-plague.md`

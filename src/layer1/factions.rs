@@ -67,6 +67,8 @@ impl Default for FactionDemand {
 /// Unique identifier for each faction.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub enum FactionId {
+    /// Faction for Symbiont infection
+    Symbiont,
     /// Faction for miners (`SkillType::Mining`).
     MinersGuild,
     /// Faction for farmers (`SkillType::Farming`, `SkillType::Husbandry`).
@@ -225,13 +227,28 @@ pub struct FactionMember {
 /// *   **Forestry** -> `LoggersGuild`
 /// *   **Crafting** -> `ArtisansGuild`
 /// *   **None/Tie** -> Unaligned (default tie-breaking order exists)
+#[allow(clippy::type_complexity)]
 pub fn update_faction_membership_system(
     mut query: Query<
-        (&crate::layer1::skills::Skills, &mut FactionMember),
-        Changed<crate::layer1::skills::Skills>,
+        (Entity, &crate::layer1::skills::Skills, &mut FactionMember),
+        Or<(
+            Changed<crate::layer1::skills::Skills>,
+            Added<crate::layer1::memetics::symbiont_spores::SymbiontFactionMember>,
+        )>,
+    >,
+    symbiont_query: Query<
+        (),
+        With<crate::layer1::memetics::symbiont_spores::SymbiontFactionMember>,
     >,
 ) {
-    for (skills, mut member) in &mut query {
+    for (entity, skills, mut member) in &mut query {
+        if symbiont_query.get(entity).is_ok() {
+            if member.faction_id != Some(FactionId::Symbiont) {
+                member.faction_id = Some(FactionId::Symbiont);
+            }
+            continue;
+        }
+
         let mut max_xp = 0.0;
         let mut best_skill = None;
 
