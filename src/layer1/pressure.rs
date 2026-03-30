@@ -200,7 +200,13 @@ pub fn update_pressure_system(world: &mut World) {
 
             if let Some(ctrl) = control {
                 match ctrl.state {
-                    crate::layer1::control::DoorState::Open => transmissivity = Some(1.0),
+                    crate::layer1::control::DoorState::Open => {
+                        if b.building_type == BuildingType::Airlock {
+                            transmissivity = Some(0.05);
+                        } else {
+                            transmissivity = Some(0.5);
+                        }
+                    },
                     crate::layer1::control::DoorState::Locked => transmissivity = Some(0.0),
                     crate::layer1::control::DoorState::Auto => {}
                 }
@@ -267,9 +273,22 @@ pub fn pressure_damage_system(world: &mut World) {
     }
 
     // 3. Apply damage
+    let mut died = false;
     for entity in damage_targets {
         if let Some(mut health) = world.get_mut::<Health>(entity) {
             health.take_damage(1.0);
+            if !health.is_alive() {
+                died = true;
+            }
+        }
+    }
+
+    if died {
+        if let Some(mut events) = world.get_resource_mut::<Events<crate::layer1::chronicle::AddChronicleEvent>>() {
+            events.send(crate::layer1::chronicle::AddChronicleEvent {
+                text: "A colonist suffocated due to lack of breathable atmosphere.".to_string(),
+                importance: crate::layer1::chronicle::EventImportance::Major,
+            });
         }
     }
 }
@@ -337,6 +356,115 @@ mod tests {
             grid.get(3, 0) < 0.01,
             "Pressure should not pass through wall"
         );
+    }
+
+
+    #[test]
+    fn test_door_vents_atmosphere_on_open() {
+        let mut world = World::new();
+        let mut grid = PressureGrid::new(5, 1);
+        grid.set(1, 0, 1.0);
+        world.insert_resource(grid);
+
+        // Gate at (2, 0)
+        world.spawn((
+            Building {
+                building_type: BuildingType::Gate,
+            },
+            GridPosition { x: 2, y: 0 },
+            crate::layer1::control::DoorControl { state: crate::layer1::control::DoorState::Open },
+            Structure::default(),
+        ));
+
+        for _ in 0..50 {
+            world.resource_mut::<PressureGrid>().set(1, 0, 1.0);
+            update_pressure_system(&mut world);
+        }
+
+        let grid = world.resource::<PressureGrid>();
+        let vented = grid.get(3, 0);
+        assert!(vented > 0.02, "Pressure SHOULD vent quickly through open Gate ({})", vented);
+    }
+
+    #[test]
+    fn test_airlock_minimizes_venting() {
+        let mut world = World::new();
+        let mut grid = PressureGrid::new(5, 1);
+        grid.set(1, 0, 1.0);
+        world.insert_resource(grid);
+
+        // Airlock at (2, 0)
+        world.spawn((
+            Building {
+                building_type: BuildingType::Airlock,
+            },
+            GridPosition { x: 2, y: 0 },
+            crate::layer1::control::DoorControl { state: crate::layer1::control::DoorState::Open },
+            Structure::default(),
+        ));
+
+        for _ in 0..50 {
+            world.resource_mut::<PressureGrid>().set(1, 0, 1.0);
+            update_pressure_system(&mut world);
+        }
+
+        let grid = world.resource::<PressureGrid>();
+        let vented = grid.get(3, 0);
+        assert!(vented > 0.0, "Pressure SHOULD vent slowly through open Airlock");
+        assert!(vented < 0.05, "Airlock should vent significantly less than standard door ({})", vented);
+    }
+
+    #[test]
+    fn test_airlock_slows_movement() {
+        use crate::layer1::execution::{movement_system, MovementTarget};
+        use crate::layer1::terrain::{TerrainGrid, TerrainType};
+        use crate::layer1::erosion::ErosionGrid;
+        use crate::layer1::pop::Speed;
+        use crate::layer1::utility_types::ActionType;
+        use crate::layer1::building::OccupiedTiles;
+
+        let mut world = World::new();
+        // Setup Grid
+        world.insert_resource(TerrainGrid {
+            width: 10,
+            height: 10,
+            tiles: vec![TerrainType::Grass; 100],
+        });
+        world.insert_resource(ErosionGrid::new(10, 10));
+        world.insert_resource(OccupiedTiles::default());
+
+        // Spawn Airlock
+        world.spawn((
+            Building {
+                building_type: BuildingType::Airlock,
+            },
+            GridPosition { x: 1, y: 0 },
+            crate::layer1::control::DoorControl { state: crate::layer1::control::DoorState::Open },
+            Structure::default(),
+        ));
+        world.resource_mut::<OccupiedTiles>().0.insert((1, 0));
+
+        let pop = world
+            .spawn((
+                Pop,
+                GridPosition { x: 0, y: 0 },
+                MovementTarget {
+                    target_entity: Entity::from_raw(1),
+                    target_position: GridPosition { x: 5, y: 0 },
+                    for_action: ActionType::Work,
+                },
+                Speed {
+                    base: 1.0,
+                    current: 0.0,
+                    accumulator: 1.0, // Enough for 1 grass but NOT 2 for airlock
+                },
+            ))
+            .id();
+
+        bevy_ecs::system::RunSystemOnce::run_system_once(&mut world, movement_system).unwrap();
+
+        let pos = world.get::<GridPosition>(pop).unwrap();
+        assert_eq!(pos.x, 0, "Airlock should double movement cost, preventing move");
     }
 
     #[test]

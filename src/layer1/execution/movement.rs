@@ -232,7 +232,17 @@ pub fn movement_system(
             crate::layer1::atmosphere::calculate_atmospheric_movement_cost(t.pressure)
         });
 
-        let movement_cost = base_cost * wind_mod * pressure_mod;
+        let mut airlock_mod = 1.0;
+        if occupied_tiles.as_deref().map_or(true, |occ| occ.0.contains(&(new_pos.x, new_pos.y))) {
+            for (pos, b, _gate, _access) in &buildings {
+                if pos.x == new_pos.x && pos.y == new_pos.y && b.building_type == crate::layer1::building::BuildingType::Airlock {
+                    airlock_mod = 2.0; // Slow down (50% speed = 200% cost)
+                    break;
+                }
+            }
+        }
+
+        let movement_cost = base_cost * wind_mod * pressure_mod * airlock_mod;
 
         // Check if we can move
         let can_move = if let Some(ref mut speed) = speed_opt {
