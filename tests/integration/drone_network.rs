@@ -161,6 +161,18 @@ mod tests {
         world.insert_resource(scale::layer1::purity::PurityMap::default());
         world.insert_resource(scale::layer1::social::old_guard::Demographics::default());
         world.init_resource::<scale::layer1::civic_ideology::ActiveIdeology>();
+        world.insert_resource(Events::<scale::layer2::trade::penal_contracts::PrisonerDiedEvent>::default());
+        world.insert_resource(Events::<scale::layer2::phantom::SpawnGhostFleetEvent>::default());
+        world.insert_resource(scale::layer2::trade::blockade::ColonyDebt::default());
+        world.insert_resource(scale::layer1::trade::TradeMarket::default());
+        world.insert_resource(scale::layer2::trade::escape_velocity::PlanetaryGravity::default());
+        world.insert_resource(Events::<scale::layer3::events::debt_prison::AcceptBailoutEvent>::default());
+        world.insert_resource(Events::<scale::layer3::events::debt_prison::BailoutOfferEvent>::default());
+        world.insert_resource(Events::<scale::layer2::trade::blockade::TradeShipArrivalEvent>::default());
+        world.insert_resource(Events::<scale::layer1::tech::machine_awakening::BotGlitchEvent>::default());
+        world.insert_resource(Events::<scale::layer1::nature::biosphere_empathy::FloraDamagedEvent>::default());
+        world.insert_resource(scale::layer1::tech::machine_awakening::GlobalSentience::default());
+        world.insert_resource(Events::<scale::layer2::silent_mutiny::SensorGlitchEvent>::default());
 
         world.insert_resource(scale::layer2::system::ViewMode::default());
         world.insert_resource(scale::layer2::system::SystemMap);
