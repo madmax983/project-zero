@@ -116,14 +116,16 @@ mod tests {
 
     fn setup_world() -> World {
         let mut world = World::new();
-        let width = 10;
+        let width: usize = 10;
         let height = 10;
 
         // Setup Terrain
+        let size = width.checked_mul(height).expect("Grid size overflow");
+        assert!(size <= 10_000_000, "Grid size too large");
         let terrain = TerrainGrid {
             width,
             height,
-            tiles: vec![TerrainType::Grass; width * height],
+            tiles: vec![TerrainType::Grass; size],
         };
         world.insert_resource(terrain);
 

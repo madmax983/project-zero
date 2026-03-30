@@ -189,9 +189,11 @@ mod tests {
         let mut world = World::new();
         world.insert_resource(NoiseMap::new(10, 10));
 
-        let width = 10;
+        let width: usize = 10;
         let height = 10;
-        let tiles = vec![TerrainType::Grass; width * height];
+        let size = width.checked_mul(height).expect("Grid size overflow");
+        assert!(size <= 10_000_000, "Grid size too large");
+        let tiles = vec![TerrainType::Grass; size];
         world.insert_resource(TerrainGrid {
             width,
             height,
@@ -228,9 +230,11 @@ mod tests {
     #[test]
     fn test_noise_damping_by_terrain() {
         let mut world = World::new();
-        let width = 10;
+        let width: usize = 10;
         let height = 10;
-        let mut tiles = vec![TerrainType::Grass; width * height];
+        let size = width.checked_mul(height).expect("Grid size overflow");
+        assert!(size <= 10_000_000, "Grid size too large");
+        let mut tiles = vec![TerrainType::Grass; size];
 
         // Place Rock (blocking) at (6, 5) to block sound going to (7, 5)
         tiles[5 * 10 + 6] = TerrainType::Rock;
@@ -271,9 +275,11 @@ mod tests {
     #[test]
     fn test_noise_damping_by_trees() {
         let mut world = World::new();
-        let width = 10;
+        let width: usize = 10;
         let height = 10;
-        let mut tiles = vec![TerrainType::Grass; width * height];
+        let size = width.checked_mul(height).expect("Grid size overflow");
+        assert!(size <= 10_000_000, "Grid size too large");
+        let mut tiles = vec![TerrainType::Grass; size];
 
         // Place Tree at (6, 5)
         tiles[5 * 10 + 6] = TerrainType::Tree;

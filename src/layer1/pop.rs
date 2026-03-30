@@ -593,9 +593,11 @@ mod tests {
         use rand::SeedableRng;
 
         let mut world = World::new();
-        let width = 10;
+        let width: usize = 10;
         let height = 10;
-        let mut tiles = vec![TerrainType::Water; width * height];
+        let size = width.checked_mul(height).expect("Grid size overflow");
+        assert!(size <= 10_000_000, "Grid size too large");
+        let mut tiles = vec![TerrainType::Water; size];
         // Only one walkable tile
         tiles[0] = TerrainType::Grass;
         let terrain = TerrainGrid {
@@ -641,9 +643,11 @@ mod tests {
     #[test]
     fn test_spawn_with_mixed_terrain() {
         let mut world = World::new();
-        let width = 10;
+        let width: usize = 10;
         let height = 10;
-        let mut tiles = vec![TerrainType::Grass; width * height];
+        let size = width.checked_mul(height).expect("Grid size overflow");
+        assert!(size <= 10_000_000, "Grid size too large");
+        let mut tiles = vec![TerrainType::Grass; size];
 
         // Add some non-walkable tiles to force retries
         tiles[5] = TerrainType::Water;
@@ -682,9 +686,11 @@ mod tests {
         use rand::SeedableRng;
 
         let mut world = World::new();
-        let width = 20;
+        let width: usize = 20;
         let height = 20;
-        let mut tiles = vec![TerrainType::Water; width * height];
+        let size = width.checked_mul(height).expect("Grid size overflow");
+        assert!(size <= 10_000_000, "Grid size too large");
+        let mut tiles = vec![TerrainType::Water; size];
 
         // Create a sparse walkable area (only 20 out of 400 tiles)
         for i in 0..20 {
@@ -791,9 +797,11 @@ mod tests {
     fn test_spawn_initial_pops_terminates_on_full_map_repro() {
         let mut world = World::new();
         // 1x1 map
-        let width = 1;
+        let width: usize = 1;
         let height = 1;
-        let tiles = vec![TerrainType::Water; width * height];
+        let size = width.checked_mul(height).expect("Grid size overflow");
+        assert!(size <= 10_000_000, "Grid size too large");
+        let tiles = vec![TerrainType::Water; size];
         let terrain = TerrainGrid {
             width,
             height,

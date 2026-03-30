@@ -359,10 +359,12 @@ mod tests {
             direction: Vec2::new(1.0, 0.0),
             speed: 1.0,
         }); // East wind
+        let size = width.checked_mul(height).expect("Grid size overflow");
+        assert!(size <= 10_000_000, "Grid size too large");
         world.insert_resource(TerrainGrid {
             width,
             height,
-            tiles: vec![TerrainType::Grass; width * height],
+            tiles: vec![TerrainType::Grass; size],
         });
 
         // Run system using schedule or directly if signature matches (but it needs params now)
@@ -405,10 +407,12 @@ mod tests {
         ));
 
         // Setup terrain (needed for checking blocks)
+        let size = width.checked_mul(height).expect("Grid size overflow");
+        assert!(size <= 10_000_000, "Grid size too large");
         world.insert_resource(TerrainGrid {
             width,
             height,
-            tiles: vec![TerrainType::Grass; width * height],
+            tiles: vec![TerrainType::Grass; size],
         });
 
         bevy_ecs::system::RunSystemOnce::run_system_once(&mut world, update_wind_system).unwrap();
@@ -435,10 +439,12 @@ mod tests {
             direction: Vec2::new(1.0, 0.0),
             speed: 1.0,
         }); // East wind
+        let size = width.checked_mul(height).expect("Grid size overflow");
+        assert!(size <= 10_000_000, "Grid size too large");
         world.insert_resource(TerrainGrid {
             width,
             height,
-            tiles: vec![TerrainType::Grass; width * height],
+            tiles: vec![TerrainType::Grass; size],
         });
 
         // Create Canyon: Walls at y=1 and y=3. Wind flows along y=2.
