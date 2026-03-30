@@ -68,3 +68,8 @@
 **Concept:** A system that crystallizes pop dreams into tangible items. When a pop sleeps near a `DreamCatcher` building, their dreams manifest as `DreamMote` or `NightmareFragment` items. Nightmares also actively radiate paranoia (stress) to nearby pops.
 **Fate:** Proposed
 **Lesson:** Monetizing basic biological needs (like sleeping) allows players to farm their colonists' subconscious, creating a perverse incentive to intentionally induce nightmares for rare loot.
+
+## [The Architectural Palimpsest]
+**Concept:** A system that detects when buildings are demolished and spawns an invisible `BuildingShadow` at that location. This shadow inherits the old building's squalor and beauty, applying a passive stress modifier to Pops walking over the "ghost" of the old city.
+**Fate:** Proposed
+**Lesson:** Storing the history of destroyed entities as new invisible environmental components adds a layer of consequence to city planning, turning standard game progression (rebuilding) into a narrative event (haunting).

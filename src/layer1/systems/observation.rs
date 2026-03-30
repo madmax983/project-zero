@@ -26,6 +26,9 @@ pub fn register(schedule: &mut Schedule) {
                 .after(crate::experimental::chrono_stutter::spawn_chrono_anomaly_system),
             crate::experimental::cartography_export::map_export_system,
             crate::experimental::paranoia_network::paranoia_network_system,
+            crate::experimental::architectural_palimpsest::detect_building_demolitions,
+            crate::experimental::architectural_palimpsest::apply_palimpsest_aura
+                .after(crate::experimental::architectural_palimpsest::detect_building_demolitions),
         )
             .in_set(Layer1SystemSet::Observation),
     );
