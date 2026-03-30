@@ -104,8 +104,14 @@ mod tests {
 
         // Assert: At least one tile has the TerrainType::Artifact
         let mut query = world.query::<&TerrainType>();
-        let artifact_count = query.iter(&world).filter(|&t| *t == TerrainType::Artifact).count();
-        assert!(artifact_count > 0, "Map generation should spawn at least one Artifact entity.");
+        let artifact_count = query
+            .iter(&world)
+            .filter(|&t| *t == TerrainType::Artifact)
+            .count();
+        assert!(
+            artifact_count > 0,
+            "Map generation should spawn at least one Artifact entity."
+        );
     }
 
     #[test]
@@ -116,16 +122,21 @@ mod tests {
             Artifact,
             crate::layer1::nature::terrain::TerrainType::Artifact,
             GridPosition { x: 10, y: 10 },
-            ArtifactAura { radius: 3.0, effect: AuraEffect::Insight }
+            ArtifactAura {
+                radius: 3.0,
+                effect: AuraEffect::Insight,
+            },
         ));
 
         // Spawn a Pop within the aura's radius
-        let pop = world.spawn((
-            Pop,
-            GridPosition { x: 11, y: 10 },
-            StressTracker::default(),
-            ActiveAuras::default(),
-        )).id();
+        let pop = world
+            .spawn((
+                Pop,
+                GridPosition { x: 11, y: 10 },
+                StressTracker::default(),
+                ActiveAuras::default(),
+            ))
+            .id();
 
         // Act: Advance simulation by one tick
         let mut schedule = Schedule::default();
@@ -134,7 +145,10 @@ mod tests {
 
         // Assert: The Pop receives increased stress
         let stress = world.get::<StressTracker>(pop).unwrap();
-        assert!(stress.accumulated_stress > 0.0, "Pop within Artifact aura should receive increased stress.");
+        assert!(
+            stress.accumulated_stress > 0.0,
+            "Pop within Artifact aura should receive increased stress."
+        );
     }
 
     #[test]
@@ -148,14 +162,18 @@ mod tests {
         world.insert_resource(grid);
 
         // Arrange: Spawn an Artifact on the map
-        let artifact = world.spawn((
-            Artifact,
-            crate::layer1::nature::terrain::TerrainType::Artifact,
-            GridPosition { x: 5, y: 5 }
-        )).id();
+        let artifact = world
+            .spawn((
+                Artifact,
+                crate::layer1::nature::terrain::TerrainType::Artifact,
+                GridPosition { x: 5, y: 5 },
+            ))
+            .id();
 
         // Ensure the grid tile is actually set to Artifact
-        world.resource_mut::<crate::layer1::nature::terrain::TerrainGrid>().set(5, 5, crate::layer1::nature::terrain::TerrainType::Artifact);
+        world
+            .resource_mut::<crate::layer1::nature::terrain::TerrainGrid>()
+            .set(5, 5, crate::layer1::nature::terrain::TerrainType::Artifact);
 
         // Act: Attempt to issue a 'Mine' or 'Destroy' command on the Artifact's tile
         // Designation logic denies it implicitly because it's not Rock.
@@ -167,8 +185,14 @@ mod tests {
         );
 
         // Assert: The command is rejected
-        assert!(!can_mine, "Artifacts should be indestructible (cannot be designated to mine).");
-        assert!(world.get_entity(artifact).is_ok(), "Artifact entity should still exist.");
+        assert!(
+            !can_mine,
+            "Artifacts should be indestructible (cannot be designated to mine)."
+        );
+        assert!(
+            world.get_entity(artifact).is_ok(),
+            "Artifact entity should still exist."
+        );
     }
 
     #[test]

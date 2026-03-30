@@ -16,3 +16,7 @@
 **Geology Module Structural Tangle**
 **Tangle:** The geology module was incorrectly split between `src/layer1/geology.rs` and `src/layer1/geology/tectonic.rs`, and tests were awkwardly injected via an `include!` hack in `src/layer1/mod.rs`.
 **Blueprint:** Moved `src/layer1/geology.rs` to `src/layer1/geology/mod.rs` to establish a proper domain boundary and natively declared the test module in `tectonic.rs`.
+
+**Building Blob Extracted**
+**Tangle:** `src/layer1/building.rs` was a 3,300+ line monolithic module containing core structural logic, type definitions, inline tests, and placement logic deeply coupled together, exhibiting "The Blob" anti-pattern.
+**Blueprint:** Extracted the file into a proper submodule `src/layer1/building/mod.rs` and moved the 1,000+ lines of test code into a separate `src/layer1/building/tests.rs` file. Flattened the `tests::tests` module structure in the new file to enforce a cleaner domain boundary without breaking downstream imports.
