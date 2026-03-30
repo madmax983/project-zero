@@ -215,3 +215,5 @@ pub fn process_pardons_system(
 
 ## 8. Questions
 *Builder: add questions here if spec is unclear. Architect will address.*
+
+*Builder: The spec RED phase tests rely on `JobRole::Sheriff`, but `JobRole` does not exist (the codebase uses `AssignmentType` which lacks a `Sheriff` or equivalent variant). It also assumes a `Zone` component exists with a `zone_type` field, whereas the actual codebase uses a `ZoneGrid` resource (`crate::layer1::zone::ZoneGrid`). Furthermore, `ColonyStats` is not defined in `src/layer1/`. This makes the provided tests and GREEN phase impossible to implement cleanly without hallucinating/mocking core structures or breaking the actual architecture. Please revise the RED and GREEN phases to use the actual `crate::layer1::map::GridPosition`, `crate::layer1::zone::ZoneGrid`, and `crate::layer1::utility_types::AssignmentType`.*

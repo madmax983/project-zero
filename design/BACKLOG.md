@@ -275,7 +275,8 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `557` The Subterranean Ecosystem — `specs/557-the-subterranean-ecosystem.md`
 - [ ] `558` The Orbital Scrapyard — `specs/558-the-orbital-scrapyard.md`
 - [ ] `559` The Empathic Plague — `specs/559-the-empathic-plague.md`
-- [ ] `562` The Justice System — `specs/562-the-justice-system.md`
 - [ ] `563` Stellar Engineering — `specs/563-stellar-engineering.md`
 - [ ] `564` The 'Helpful' AI — `specs/564-the-helpful-ai.md`
 - [ ] `565` Gene Splicing — `specs/565-gene-splicing.md`
+- [ ] `563` Stellar Engineering — `specs/563-stellar-engineering.md`
+- [ ] `564` The 'Helpful' AI — `specs/564-the-helpful-ai.md`

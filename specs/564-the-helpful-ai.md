@@ -220,3 +220,5 @@ pub fn process_player_door_commands_system(
 
 ## 8. Questions
 *Builder: add questions here if spec is unclear. Architect will address.*
+
+*Builder: The RED phase tests and GREEN phase code rely on components and resources that do not exist or differ structurally in the actual codebase: `ColonyStats` (with an `efficiency` field) is missing in `src/layer1/`. The `Building` component is imported but assumes `power_status: PowerStatus::Powered` which contradicts the actual `Building` struct (`building_type: BuildingType` only). The `Door` component assumes fields (`is_open`, `is_airlock`, `locked_by_ai`) which are likely not present in this exact form. The tests also reference `CrisisEvent`, `CrisisSeverity`, and `PlayerToggleDoorEvent` which don't exist. This specification hallucinates components and makes isolated assumptions. Please revise it to use the actual `crate::layer1::building::Building` and the appropriate existing power and door status components.*
