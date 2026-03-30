@@ -138,6 +138,7 @@ impl Trait {
             Self::Agoraphobic => "Agoraphobic",
             Self::Transhumanist => "Transhumanist",
             Self::Noble => "Noble",
+
             Self::Distrustful => "Distrustful",
 
             Self::Synesthete => "Synesthete",

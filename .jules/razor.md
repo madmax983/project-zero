@@ -1,34 +1,8 @@
 ## [Reduction]
-**Bloat:** `GasType` enum with only one variant (`Smog`) and unnecessary wrapper methods `get_gas` and `set_gas` on `AtmosphereGrid`.
-**Cut:** Removed `GasType` enum and the wrapper methods, calling `get` and `set` directly on the grid.
-**Saved:** Unnecessary indirection and 15 lines of speculative code.
-
+**Bloat:** [Unnecessary mutable assignments with default initialization followed immediately by field reassignment, unused imports, empty/superfluous default updates]
+**Cut:** [Refactored let mut Type::default() into Type { field, ..Default::default() }, dropped `mut` where fields were no longer mutated later. Also applied missing Distrustful trait implementation.]
+**Saved:** [Lines of code / Cognitive load]
 ## [Reduction]
-**Bloat:** Layer Lasagna: `evaluate_tame` in `src/layer1/husbandry.rs` simply wrapped `evaluate_candidates` with an extra layer.
-**Cut:** Deleted `evaluate_tame` and invoked `evaluate_candidates` directly in callers (`utility_ai.rs` and `utility_types.rs`).
-**Saved:** 5 lines of useless indirection.
-
-## [Reduction]
-**Bloat:** Empty Struct / Speculative Generality: `RhythmManager` in `src/layer1/tech/rhythm.rs` was an empty struct injected into the world for no reason.
-**Cut:** Deleted the `RhythmManager` struct and removed its registration from tests.
-**Saved:** 5 lines of boilerplate setup.
-
-## [Reduction]
-**Bloat:** Enterprise FizzBuzz Enum: `ScentType` in `src/layer1/olfactory.rs` only had two variants (`Pleasant` and `Foul`).
-**Cut:** Converted `ScentType` to a simple boolean flag `is_pleasant` on `ScentEmitter`.
-**Saved:** 6 lines and simplified pattern matching to basic `if/else`.
-
-## [Reduction]
-**Bloat:** OOP-style `Manager` suffixes for ECS resources (`ElectionManager`, `SanctuaryManager`, `ShadowMarketManager`).
-**Cut:** Renamed to descriptive, data-oriented state names (`ElectionCycle`, `ActiveSanctuaries`, `ShadowMarketCooldown`) per Bevy/Razor Architecture Insight.
-**Saved:** Eliminated implicit OOP terminology overhead, improving clarity and adherence to Bevy ECS conventions.
-
-## [Reduction]
-**Bloat:** `ShipType` enum in `src/layer1/shipbreaking.rs` which was only used for test simplicity with 2 variants.
-**Cut:** Removed the `ShipType` enum, its usage from `SpawnCrashedShipEvent`, and assignments in tests.
-**Saved:** 7 lines of code and speculative test-only complexity.
-
-## [Reduction]
-**Bloat:** Enterprise FizzBuzz Abstraction: `GeomeManager`, `GeomeType`, `ZLevel`, and `Rect` structs in `src/layer1/geomes.rs`.
-**Cut:** Deleted the entire manager layer and speculative structs. Replaced with a single `fill_rect` function in `src/layer1/nature/terrain.rs` that directly sets the `TerrainType`.
-**Saved:** 71 lines of code, speculative wrapper types, and unnecessary indirection.
+**Bloat:** Unused imports and unused mutable variables that complicate code semantics and compiler checking. Also missing feature implementations (Distrustful) causing tests to have complex workarounds.
+**Cut:** Removed `mut queue` in `placebo.rs`, removed unused `NotificationSeverity`. Re-added missing `Distrustful` trait to `traits.rs` so tests properly mock behaviors without unnecessary bloat.
+**Saved:** 2 lines of code / 1 cognitive load context

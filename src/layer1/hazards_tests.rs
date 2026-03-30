@@ -54,7 +54,6 @@ mod tests {
         let pristine = Structure {
             current_hp: 100.0,
             max_hp: 100.0,
-            ..Default::default()
         };
         let risk_pristine =
             calculate_risk(base_risk, &skills, SkillType::Construction, &pristine, 1.0);
@@ -62,7 +61,6 @@ mod tests {
         let crumbling = Structure {
             current_hp: 10.0,
             max_hp: 100.0,
-            ..Default::default()
         };
         let risk_crumbling =
             calculate_risk(base_risk, &skills, SkillType::Construction, &crumbling, 1.0);

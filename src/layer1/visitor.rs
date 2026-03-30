@@ -237,7 +237,6 @@ mod tests {
         world.insert_resource(VisitorSource {
             spawn_points: vec![GridPosition { x: 0, y: 0 }],
             next_spawn_tick: 100,
-            ..Default::default()
         });
 
         // Run system

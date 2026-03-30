@@ -53,9 +53,11 @@ mod tests {
     fn test_pay_biomass_tariff_with_crops() {
         let mut world = World::new();
         // Setup stash with crops
-        let mut stash = ColonyResources::default();
-        stash.food = 500.0;
-        stash.wood = 0.0; // The alien currency (using wood for now)
+        let stash = ColonyResources {
+            food: 500.0,
+            wood: 0.0,
+            ..Default::default()
+        };
         world.insert_resource(stash);
         world.init_resource::<Events<TradeDeal>>();
 
@@ -89,8 +91,10 @@ mod tests {
             .id();
 
         // Stash to receive the reward
-        let mut stash = ColonyResources::default();
-        stash.wood = 0.0; // The alien currency
+        let stash = ColonyResources {
+            wood: 0.0,
+            ..Default::default()
+        };
         world.insert_resource(stash);
         world.init_resource::<Events<TradeDeal>>();
 

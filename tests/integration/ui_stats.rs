@@ -23,8 +23,10 @@ mod tests {
         world.insert_resource(NamedLocations::default());
 
         // 2. Add Data (Seam Input)
-        let mut resources = ColonyResources::default();
-        resources.food = 42.0;
+        let resources = ColonyResources {
+            food: 42.0,
+            ..Default::default()
+        };
         world.insert_resource(resources);
 
         world.spawn(Pop);

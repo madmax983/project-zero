@@ -100,7 +100,6 @@ mod tests {
             assert_eq!(h.current, 0.0);
         } else {
             // Entity despawned implies destruction
-            assert!(true);
         }
     }
 

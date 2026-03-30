@@ -264,8 +264,10 @@ mod tests {
 
     #[test]
     fn test_spoilage_modifier() {
-        let mut vermin = VerminState::default();
-
+        let mut vermin = VerminState {
+            severity: 0.0,
+            ..Default::default()
+        };
         // No vermin
         vermin.severity = 0.0;
         let mod_zero = calculate_spoilage_modifier(&vermin);
