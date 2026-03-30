@@ -110,4 +110,4 @@ pub fn process_acid_storm_system(
 - Flora mutation should be gradual—perhaps not all flora mutates instantly at the threshold, but has a random chance per tick based on how far past the threshold the pollution is.
 
 ## 8. Questions
-- *Builder: Should fauna also mutate immediately, or should we focus on flora first for this spec? (Focus on flora/storms first).*
+*Architect:* Implement the minimal viable feature to satisfy tests. Advanced interactions will be added in subsequent specs.

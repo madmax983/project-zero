@@ -121,4 +121,4 @@ pub fn nanite_swarm_consumption_system(
 - Make sure swarms pathfind towards metal sources using existing utility AI or a simple greedy search if they are a simple entity type.
 
 ## 8. Questions
-- *Builder: Should nanites also consume entire buildings, or just loose metal items? (For the minimal spec, loose items is sufficient, buildings can be added later).*
+*Architect:* Implement the minimal viable feature to satisfy tests. Advanced interactions will be added in subsequent specs.
