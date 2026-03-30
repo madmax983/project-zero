@@ -2,6 +2,11 @@
 
 ## High Priority
 
+- [ ] `585` Biocompatibility rating with local flora/atmosphere — `specs/585-biocompatibility.md`
+- [ ] `586` Doppelgangers and mimics replacing pops — `specs/586-doppelgangers.md`
+- [ ] `587` Medical Triage Policies for hospitals — `specs/587-medical-triage-policies.md`
+- [ ] `588` Conveyor Logistics for automated items — `specs/588-conveyor-logistics.md`
+- [ ] `589` Cultural Artifacts radiating memory auras — `specs/589-cultural-artifacts.md`
 
 
 

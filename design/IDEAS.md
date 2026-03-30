@@ -1476,7 +1476,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Biocompatibility
+## [SPECCED] Biocompatibility
 
 **Layer:** 1
 
@@ -1532,7 +1532,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Doppelgangers
+## [SPECCED] Doppelgangers
 
 **Layer:** 1
 
@@ -1546,7 +1546,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Medical Triage Policies
+## [SPECCED] Medical Triage Policies
 
 **Layer:** 1
 
@@ -1574,7 +1574,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Conveyor Logistics
+## [SPECCED] Conveyor Logistics
 
 **Layer:** 1
 
@@ -1616,7 +1616,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Cultural Artifacts
+## [SPECCED] Cultural Artifacts
 
 **Layer:** 1
 
