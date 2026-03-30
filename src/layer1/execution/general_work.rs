@@ -103,6 +103,97 @@ pub fn work_execution_system(world: &mut World) {
     }
 }
 
+type WorkerQueryItem<'a> = (
+    Entity,
+    &'a MovementTarget,
+    Option<&'a Needs>,
+    Option<&'a Memories>,
+    Option<&'a SocialBuff>,
+    Option<&'a Equipment>,
+    Option<&'a Traits>,
+    Option<&'a Morale>,
+    Option<&'a crate::layer1::factions::FactionMember>,
+    Option<&'a WorkSpeedBuff>,
+    Option<&'a Job>,
+    Option<&'a Dialect>,
+    Option<&'a Linguistics>,
+    Option<&'a MentalFog>,
+);
+
+fn is_worker_eligible(
+    mt: &MovementTarget,
+    faction_member: Option<&crate::layer1::factions::FactionMember>,
+    striking_factions: &std::collections::HashSet<crate::layer1::factions::FactionId>,
+) -> bool {
+    let is_work = mt.for_action == ActionType::Work || mt.for_action == ActionType::Repair;
+    if !is_work {
+        return false;
+    }
+
+    let is_striking = faction_member
+        .and_then(|m| m.faction_id)
+        .is_some_and(|fid| striking_factions.contains(&fid));
+
+    !is_striking
+}
+
+fn build_worker_data(
+    item: WorkerQueryItem<'_>,
+    policies: Option<&ColonyPolicies>,
+    cycle: Option<crate::layer1::day_night::TimeOfDay>,
+) -> (Entity, WorkerData) {
+    let (
+        e,
+        mt,
+        needs,
+        memories,
+        social_buff,
+        eq,
+        traits,
+        morale_comp,
+        _,
+        buff,
+        job,
+        dialect,
+        ling,
+        fog,
+    ) = item;
+
+    let morale = needs.map_or(0.5, |n| {
+        calculate_effective_morale(
+            n,
+            memories,
+            social_buff,
+            policies,
+            traits,
+            cycle,
+            morale_comp,
+        )
+    });
+    let trait_work_mod = traits.map_or(1.0, get_trait_work_speed_modifier);
+    let job_eff_mod = if let (Some(t), Some(j)) = (traits, job) {
+        get_job_efficiency_modifier(t, j.job_type)
+    } else {
+        1.0
+    };
+    let buff_mod = buff.map_or(1.0, |b| b.multiplier);
+    let fog_mod = fog.map_or(1.0, |f| f.work_speed_penalty);
+
+    (
+        mt.target_entity,
+        WorkerData {
+            entity: e,
+            morale,
+            action: mt.for_action,
+            equipment: eq.copied(),
+            speed_modifier: trait_work_mod * job_eff_mod * buff_mod * fog_mod,
+            job: job.copied(),
+            dialect: dialect.copied().unwrap_or_default(),
+            linguistics: ling.cloned().unwrap_or_default(),
+        },
+    )
+}
+
 fn collect_workers_by_target(
     world: &mut World,
     policies: Option<&ColonyPolicies>,
@@ -112,22 +203,7 @@ fn collect_workers_by_target(
     let mut workers_by_target: std::collections::HashMap<Entity, Vec<WorkerData>> =
         std::collections::HashMap::new();
 
-    let mut query = world.query_filtered::<(
-        Entity,
-        &MovementTarget,
-        Option<&Needs>,
-        Option<&Memories>,
-        Option<&SocialBuff>,
-        Option<&Equipment>,
-        Option<&Traits>,
-        Option<&Morale>,
-        Option<&crate::layer1::factions::FactionMember>,
-        Option<&WorkSpeedBuff>,
-        Option<&Job>,
-        Option<&Dialect>,
-        Option<&Linguistics>,
-        Option<&MentalFog>,
-    ), With<AtTarget>>();
+    let mut query = world.query_filtered::<WorkerQueryItem<'_>, With<AtTarget>>();
 
     // ⚡ Bolt Optimization:
     // We iterate over `query.iter(world)` and stream directly into the `HashMap`.
@@ -135,70 +211,8 @@ fn collect_workers_by_target(
     // significantly reducing heap allocations per frame when evaluating large worker populations.
     for (target, worker) in query
         .iter(world)
-        .filter(|(_, mt, _, _, _, _, _, _, faction_member, _, _, _, _, _)| {
-            let is_work = mt.for_action == ActionType::Work || mt.for_action == ActionType::Repair;
-            if !is_work {
-                return false;
-            }
-
-            let is_striking = faction_member
-                .and_then(|m| m.faction_id)
-                .is_some_and(|fid| striking_factions.contains(&fid));
-
-            !is_striking
-        })
-        .map(
-            |(
-                e,
-                mt,
-                needs,
-                memories,
-                social_buff,
-                eq,
-                traits,
-                morale_comp,
-                _,
-                buff,
-                job,
-                dialect,
-                ling,
-                fog,
-            )| {
-                let morale = needs.map_or(0.5, |n| {
-                    calculate_effective_morale(
-                        n,
-                        memories,
-                        social_buff,
-                        policies,
-                        traits,
-                        cycle,
-                        morale_comp,
-                    )
-                });
-                let trait_work_mod = traits.map_or(1.0, get_trait_work_speed_modifier);
-                let job_eff_mod = if let (Some(t), Some(j)) = (traits, job) {
-                    get_job_efficiency_modifier(t, j.job_type)
-                } else {
-                    1.0
-                };
-                let buff_mod = buff.map_or(1.0, |b| b.multiplier);
-                let fog_mod = fog.map_or(1.0, |f| f.work_speed_penalty);
-
-                (
-                    mt.target_entity,
-                    WorkerData {
-                        entity: e,
-                        morale,
-                        action: mt.for_action,
-                        equipment: eq.copied(),
-                        speed_modifier: trait_work_mod * job_eff_mod * buff_mod * fog_mod,
-                        job: job.copied(),
-                        dialect: dialect.copied().unwrap_or_default(),
-                        linguistics: ling.cloned().unwrap_or_default(),
-                    },
-                )
-            },
-        )
+        .filter(|item| is_worker_eligible(item.1, item.8, striking_factions))
+        .map(|item| build_worker_data(item, policies, cycle))
     {
         workers_by_target.entry(target).or_default().push(worker);
     }
