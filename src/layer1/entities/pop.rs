@@ -22,17 +22,23 @@
 //! * [`PopAction`]: Current task state.
 //! * [`UtilityWeights`]: Personality/learning factors.
 
+use super::wild_child::WildExposure;
+use crate::layer1::admin::AdminConsumer;
 use crate::layer1::artifacts::ActiveAuras;
 use crate::layer1::biocompatibility::Biocompatibility;
 use crate::layer1::cabin_fever::CabinFever;
 use crate::layer1::contagion::ContagionCooldown;
+use crate::layer1::economy::Wallet;
 use crate::layer1::factions::FactionMember;
+use crate::layer1::funeral::Corpse;
 use crate::layer1::gut_biome::GutBiome;
+use crate::layer1::health::{Dead, Health};
 use crate::layer1::hygiene::Filth;
 use crate::layer1::items::Equipment;
 use crate::layer1::language::{Dialect, Linguistics};
 use crate::layer1::lifecycle::Age;
 use crate::layer1::map::{GridPosition, ScreenShake};
+use crate::layer1::memory::{Memories, MemoryType};
 use crate::layer1::morale::Morale;
 use crate::layer1::needs::Needs;
 use crate::layer1::palette_fatigue::DietaryHistory;
@@ -46,12 +52,6 @@ use crate::layer1::utility_types::AssignmentType;
 /// Alias for `AssignmentType` for job-related contexts (Spec 113).
 pub use crate::layer1::utility_types::AssignmentType as JobType;
 use crate::layer1::utility_types::{PopAction, UtilityWeights};
-use super::wild_child::WildExposure;
-use crate::layer1::admin::AdminConsumer;
-use crate::layer1::economy::Wallet;
-use crate::layer1::funeral::Corpse;
-use crate::layer1::health::{Dead, Health};
-use crate::layer1::memory::{Memories, MemoryType};
 use crate::layer1::GlobalHitStop;
 use crate::shared::log::MessageLog;
 use bevy_ecs::prelude::*;

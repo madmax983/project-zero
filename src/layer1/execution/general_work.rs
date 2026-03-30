@@ -441,11 +441,14 @@ pub fn calculate_work_amount(
         1.0
     };
 
-    let infection_modifier =
-        match world.get::<crate::layer1::memetics::MemeticInfection>(pop_entity) {
-            Some(crate::layer1::memetics::MemeticInfection::ParasiticBroadcast) => 0.5,
-            None => 1.0,
-        };
+    let infection_modifier = if world
+        .get::<crate::layer1::memetics::MemeticInfection>(pop_entity)
+        .is_some()
+    {
+        0.5
+    } else {
+        1.0
+    };
 
     let ghost_shift_modifier = if world
         .get::<crate::layer1::social::ghost_shift_strike::GhostShiftState>(pop_entity)

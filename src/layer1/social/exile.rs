@@ -13,9 +13,7 @@ pub struct Crime {
 }
 
 #[derive(Component)]
-pub enum BanishmentState {
-    Pending,
-}
+pub struct PendingBanishment;
 
 #[derive(Component)]
 pub struct ExiledPop {
@@ -28,12 +26,12 @@ pub struct ExiledPop {
 #[allow(clippy::type_complexity)]
 pub fn process_banishments(
     mut commands: Commands,
-    query: Query<(Entity, &Crime), (With<BanishmentState>, With<Pop>)>,
+    query: Query<(Entity, &Crime), (With<PendingBanishment>, With<Pop>)>,
     sim_time: Res<SimulationTime>,
 ) {
     for (entity, crime) in query.iter() {
         commands.entity(entity).remove::<Pop>();
-        commands.entity(entity).remove::<BanishmentState>();
+        commands.entity(entity).remove::<PendingBanishment>();
         commands.entity(entity).remove::<Crime>();
         commands.entity(entity).insert(ExiledPop {
             exiled_at_tick: sim_time.tick,
@@ -76,7 +74,7 @@ mod tests {
 
         let pop_entity = app
             .world_mut()
-            .spawn((Pop, Crime { severity: 5 }, BanishmentState::Pending))
+            .spawn((Pop, Crime { severity: 5 }, PendingBanishment))
             .id();
 
         app.update();
