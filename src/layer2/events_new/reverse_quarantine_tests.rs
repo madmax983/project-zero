@@ -4,7 +4,7 @@ mod tests {
     use crate::layer1::map::GridPosition;
     use crate::layer1::morale::Morale;
     use crate::layer2::events_new::reverse_quarantine::{
-        process_refugee_decisions_system, Decision, RefugeeFleetEvent,
+        process_refugee_decisions_system, RefugeeFleetEvent,
     };
     use bevy_ecs::prelude::*;
 
@@ -25,7 +25,7 @@ mod tests {
         // Trigger a refugee event, resolving as Rejected
         world.send_event(RefugeeFleetEvent {
             fleet_size: 5,
-            decision: Some(Decision::Reject),
+            is_accepted: Some(false),
             target_location: GridPosition { x: 50, y: 50 },
         });
 
@@ -64,7 +64,7 @@ mod tests {
         // Trigger a refugee event, resolving as Accepted
         world.send_event(RefugeeFleetEvent {
             fleet_size: 5,
-            decision: Some(Decision::Accept),
+            is_accepted: Some(true),
             target_location: GridPosition { x: 50, y: 50 },
         });
 

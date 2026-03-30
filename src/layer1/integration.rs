@@ -1054,14 +1054,10 @@ pub fn smuggler_arrival_event_bridge(
     mut event_writer: EventWriter<crate::layer1::void_weed::MerchantArrivalEvent>,
 ) {
     for _ in query_smuggler.iter() {
-        event_writer.send(crate::layer1::void_weed::MerchantArrivalEvent {
-            merchant_type: crate::layer1::void_weed::MerchantType::Smuggler,
-        });
+        event_writer.send(crate::layer1::void_weed::MerchantArrivalEvent { is_smuggler: true });
     }
     for _ in query_shadow.iter() {
-        event_writer.send(crate::layer1::void_weed::MerchantArrivalEvent {
-            merchant_type: crate::layer1::void_weed::MerchantType::Smuggler,
-        });
+        event_writer.send(crate::layer1::void_weed::MerchantArrivalEvent { is_smuggler: true });
     }
 }
 

@@ -17,14 +17,6 @@ use bevy_ecs::prelude::*;
 ///
 /// This choice dictates the subsequent cascading effects on the colony's morale,
 /// physical safety (via orbital debris), and potential disease outbreaks.
-#[derive(Clone, Copy)]
-pub enum Decision {
-    /// Allow the refugees to land, risking plague but preserving morale.
-    Accept,
-    /// Forcibly repel the refugees, causing orbital debris and colony-wide guilt.
-    Reject,
-}
-
 /// Event representing the arrival of a refugee fleet seeking asylum.
 ///
 /// This event is used to trigger the "Reverse Quarantine" scenario. It holds
@@ -36,14 +28,14 @@ pub enum Decision {
 /// ```rust
 /// use bevy_ecs::prelude::*;
 /// use scale::layer1::map::GridPosition;
-/// use scale::layer2::events_new::reverse_quarantine::{Decision, RefugeeFleetEvent};
+/// use scale::layer2::events_new::reverse_quarantine::{RefugeeFleetEvent};
 ///
 /// let mut world = World::new();
 /// world.insert_resource(Events::<RefugeeFleetEvent>::default());
 ///
 /// world.send_event(RefugeeFleetEvent {
 ///     fleet_size: 3,
-///     decision: Some(Decision::Reject),
+///     is_accepted: Some(false),
 ///     target_location: GridPosition { x: 10, y: 20 },
 /// });
 /// ```
@@ -52,7 +44,7 @@ pub struct RefugeeFleetEvent {
     /// The number of ships in the refugee fleet.
     pub fleet_size: u32,
     /// The decision on how to handle the fleet. `None` if unresolved.
-    pub decision: Option<Decision>,
+    pub is_accepted: Option<bool>,
     /// The coordinates above the colony where the fleet is holding orbit.
     pub target_location: GridPosition,
 }
@@ -63,11 +55,11 @@ pub struct RefugeeFleetEvent {
 ///
 /// ## Consequences
 ///
-/// *   **[`Decision::Reject`]**: Iterates through all ships based on `fleet_size` and
+/// *   **[``false``]**: Iterates through all ships based on `fleet_size` and
 ///     dispatches a [`DebrisFallEvent`] for each, simulating the forceful repulsion
 ///     of the fleet. It also applies a negative [`MoodModifier`] to all Pops in the
 ///     colony, simulating the collective guilt of turning away the desperate.
-/// *   **[`Decision::Accept`]**: (Currently a placeholder for MVP). Intended to
+/// *   **[``true``]**: (Currently a placeholder for MVP). Intended to
 ///     introduce new, potentially infected Pops to the colony.
 ///
 /// ## Examples
@@ -77,7 +69,7 @@ pub struct RefugeeFleetEvent {
 /// use scale::layer1::environment::events::DebrisFallEvent;
 /// use scale::layer1::map::GridPosition;
 /// use scale::layer1::morale::Morale;
-/// use scale::layer2::events_new::reverse_quarantine::{process_refugee_decisions_system, Decision, RefugeeFleetEvent};
+/// use scale::layer2::events_new::reverse_quarantine::{process_refugee_decisions_system, RefugeeFleetEvent};
 ///
 /// let mut world = World::new();
 /// world.insert_resource(Events::<RefugeeFleetEvent>::default());
@@ -88,7 +80,7 @@ pub struct RefugeeFleetEvent {
 ///
 /// world.send_event(RefugeeFleetEvent {
 ///     fleet_size: 2,
-///     decision: Some(Decision::Reject),
+///     is_accepted: Some(false),
 ///     target_location: GridPosition { x: 0, y: 0 },
 /// });
 ///
@@ -110,7 +102,7 @@ pub fn process_refugee_decisions_system(
     mut pops: Query<&mut Morale>,
 ) {
     for event in events.read() {
-        if let Some(Decision::Reject) = event.decision {
+        if let Some(false) = event.is_accepted {
             // Repelling the fleet causes massive debris
             for i in 0..event.fleet_size {
                 debris_events.send(DebrisFallEvent {
@@ -131,6 +123,6 @@ pub fn process_refugee_decisions_system(
                 });
             }
         }
-        // Decision::Accept logic omitted for MVP
+        // `true` logic omitted for MVP
     }
 }

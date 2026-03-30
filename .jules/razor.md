@@ -32,3 +32,8 @@
 **Bloat:** Enterprise FizzBuzz Abstraction: `GeomeManager`, `GeomeType`, `ZLevel`, and `Rect` structs in `src/layer1/geomes.rs`.
 **Cut:** Deleted the entire manager layer and speculative structs. Replaced with a single `fill_rect` function in `src/layer1/nature/terrain.rs` that directly sets the `TerrainType`.
 **Saved:** 71 lines of code, speculative wrapper types, and unnecessary indirection.
+
+## [Reduction]
+**Bloat:** Speculative Generality / Enterprise FizzBuzz Enums: `MemeticInfection`, `QuirkType`, `XpSource` had 0 or 1 variants and were needlessly verbose. `MimicState`, `Decision`, `MerchantType`, `OreType`, `SyzygyPhase` were binary states masquerading as enums.
+**Cut:** Flattened 0/1 variant enums into unit structs (`struct MemeticInfection;`, `struct QuirkType;`, `struct XpSource;`). Converted 2-variant enums into simple boolean flags (`is_revealed`, `is_accepted`, `is_smuggler`, `is_whispering`, `is_active`) on their respective components/events. Removed `Decision` entirely.
+**Saved:** Unnecessary indirection, matching boilerplate, and type definitions across 10+ files. Simplified logic to direct boolean evaluations (`if is_active {}`).

@@ -143,7 +143,7 @@ mod tests {
             entity: twin_a,
             skill: SkillType::Mining,
             amount: 50.0,
-            source: XpSource::Action,
+            source: XpSource,
         });
 
         schedule.run(&mut world);

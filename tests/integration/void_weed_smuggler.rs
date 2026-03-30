@@ -3,7 +3,7 @@ use scale::layer1::black_market::Smuggler;
 use scale::layer1::integration::smuggler_arrival_event_bridge;
 use scale::layer1::shadow_market::ShadowTrader;
 use scale::layer1::trade::Merchant;
-use scale::layer1::void_weed::{MerchantArrivalEvent, MerchantType};
+use scale::layer1::void_weed::MerchantArrivalEvent;
 
 #[test]
 fn test_smuggler_triggers_merchant_arrival_event() {
@@ -21,7 +21,7 @@ fn test_smuggler_triggers_merchant_arrival_event() {
     let emitted: Vec<_> = reader.read(events).collect();
 
     assert_eq!(emitted.len(), 1, "Should emit exactly one event");
-    assert_eq!(emitted[0].merchant_type, MerchantType::Smuggler);
+    assert!(emitted[0].is_smuggler);
 }
 
 #[test]
@@ -47,5 +47,5 @@ fn test_shadow_trader_triggers_merchant_arrival_event() {
     let emitted: Vec<_> = reader.read(events).collect();
 
     assert_eq!(emitted.len(), 1, "Should emit exactly one event");
-    assert_eq!(emitted[0].merchant_type, MerchantType::Smuggler);
+    assert!(emitted[0].is_smuggler);
 }

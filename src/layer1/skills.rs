@@ -40,12 +40,7 @@ pub struct XpGainEvent {
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
-pub enum XpSource {
-    /// Standard action (mining, farming, etc.).
-    Action,
-    /// Quantum entanglement sharing.
-    Entanglement,
-}
+pub struct XpSource;
 
 impl Skills {
     /// Adds XP to a specific skill.

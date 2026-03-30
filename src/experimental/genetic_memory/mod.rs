@@ -86,7 +86,7 @@ mod tests {
                 entity,
                 skill: SkillType::Mining,
                 amount: 100.0,
-                source: XpSource::Action,
+                source: XpSource,
             });
 
         world.run_system_once(absorb_genetic_memory_system).unwrap();

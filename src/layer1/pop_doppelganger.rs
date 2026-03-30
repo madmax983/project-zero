@@ -7,7 +7,7 @@ use bevy_ecs::prelude::*;
 
 #[derive(Component, Debug, PartialEq, Clone)]
 pub struct Mimic {
-    pub state: MimicState,
+    pub is_revealed: bool,
     pub original_identity: String,
 }
 
@@ -53,7 +53,7 @@ pub fn replace_pop_with_mimic(world: &mut World, target: Entity) -> Entity {
         .unwrap_or_else(|| "Unknown".to_string());
 
     spawn.insert(Mimic {
-        state: MimicState::Hidden,
+        is_revealed: false,
         original_identity: orig_name,
     });
 
@@ -65,7 +65,7 @@ pub fn sabotage_system(
     mut target_query: Query<&mut MiningProgress>,
 ) {
     for (mimic, target) in query.iter() {
-        if mimic.state == MimicState::Hidden {
+        if !mimic.is_revealed {
             if let Ok(mut progress) = target_query.get_mut(target.target_entity) {
                 // Stall mining progress
                 if progress.current > 80.0 {
@@ -79,7 +79,7 @@ pub fn sabotage_system(
 pub fn reveal_mimic(world: &mut World, target: Entity) -> bool {
     if let Ok(mut entity_mut) = world.get_entity_mut(target) {
         if let Some(mut mimic) = entity_mut.get_mut::<Mimic>() {
-            mimic.state = MimicState::Revealed;
+            mimic.is_revealed = true;
             return true;
         }
     }
@@ -131,7 +131,7 @@ mod tests {
         world.spawn((
             Pop,
             Mimic {
-                state: MimicState::Hidden,
+                is_revealed: false,
                 original_identity: "Miner Bob".to_string(),
             },
             MovementTarget {
@@ -157,7 +157,7 @@ mod tests {
             .spawn((
                 Pop,
                 Mimic {
-                    state: MimicState::Hidden,
+                    is_revealed: false,
                     original_identity: "Suspect".to_string(),
                 },
                 PopName("Suspect".to_string()),
@@ -168,6 +168,6 @@ mod tests {
         assert!(is_mimic);
 
         let mimic_comp = world.get::<Mimic>(mimic).unwrap();
-        assert_eq!(mimic_comp.state, MimicState::Revealed);
+        assert!(mimic_comp.is_revealed);
     }
 }

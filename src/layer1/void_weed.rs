@@ -17,7 +17,7 @@ pub struct SmugglingHeat {
 
 #[derive(Event)]
 pub struct MerchantArrivalEvent {
-    pub merchant_type: MerchantType,
+    pub is_smuggler: bool,
 }
 
 #[derive(PartialEq, Debug)]
@@ -36,7 +36,7 @@ pub fn process_void_weed_trade_system(
     mut heat: ResMut<SmugglingHeat>,
 ) {
     for event in events.read() {
-        if event.merchant_type == MerchantType::Smuggler {
+        if event.is_smuggler {
             for mut stash in stashes.iter_mut() {
                 if stash.amount > 0.0 {
                     let profit = stash.amount * 500.0;
@@ -77,9 +77,7 @@ mod tests {
 
         world
             .resource_mut::<Events<MerchantArrivalEvent>>()
-            .send(MerchantArrivalEvent {
-                merchant_type: MerchantType::Smuggler,
-            });
+            .send(MerchantArrivalEvent { is_smuggler: true });
 
         schedule.run(&mut world);
 

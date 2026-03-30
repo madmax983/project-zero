@@ -51,7 +51,7 @@ pub fn handle_mining_work(
             entity: worker_entity,
             skill: SkillType::Mining,
             amount: 5.0, // Base amount per tick of work
-            source: XpSource::Action,
+            source: XpSource,
         });
     }
 
@@ -224,7 +224,7 @@ fn emit_forestry_xp(world: &mut World, worker_entity: Entity) {
             entity: worker_entity,
             skill: SkillType::Forestry,
             amount: 5.0,
-            source: XpSource::Action,
+            source: XpSource,
         });
     }
 }
