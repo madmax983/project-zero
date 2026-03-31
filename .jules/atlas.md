@@ -43,3 +43,7 @@
 **Entities Domain Encapsulation**
 **Tangle:** The `layer1/entities` logic was mostly loosely scattered across `src/layer1/mod.rs` with `pop.rs`, `fauna_gen.rs`, `vermin.rs`, `visitor.rs`, etc. contributing to the "Blob" anti-pattern.
 **Blueprint:** Encapsulated multiple core entity files (`pop.rs`, `fauna_gen.rs`, `vermin.rs`, `visitor.rs`, `drone.rs`, `the_visitor.rs`, `blob.rs`, `mascot.rs`, `wild_child.rs`, `pop_doppelganger.rs`, and tests) into a dedicated `src/layer1/entities/` module. The new `src/layer1/entities/mod.rs` re-exports public items natively, enforcing a strong domain boundary for organic and mechanical agents.
+
+**Physics Module Extracted**
+**Tangle:** The `layer1` core module was cluttered with scattered physics and spatial dynamics systems (`acoustic`, `pressure`, `suction`, `particles`, `structural_integrity`, `kinetic_storage`, `hit_stop`), contributing to the "Blob" anti-pattern in `src/layer1/mod.rs`.
+**Blueprint:** Encapsulated these interrelated physical interaction and simulation systems into a dedicated `src/layer1/physics/` module. The new `src/layer1/physics/mod.rs` re-exports the public types to maintain backward compatibility and API stability while strictly enforcing domain boundaries.
