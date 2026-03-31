@@ -232,6 +232,12 @@ pub fn register(schedule: &mut Schedule) {
                 .after(crate::experimental::genetic_memory::absorb_genetic_memory_system),
             crate::layer1::psychic::apply_psychic_radiation_system
                 .after(crate::layer1::needs::decay_needs_system),
+            #[cfg(feature = "nova")]
+            crate::experimental::meme_plague::process_meme_contagion
+                .after(crate::layer1::needs::decay_needs_system),
+            #[cfg(feature = "nova")]
+            crate::experimental::meme_plague::apply_meme_effects
+                .after(crate::experimental::meme_plague::process_meme_contagion),
         )
             .in_set(Layer1SystemSet::Observation),
     );

@@ -86,3 +86,8 @@
 **Concept:** Added a `FeverDream` state for Pops with `Intellectual` or `Creative` traits when their `rest` need falls below 10%. They gain a massive 300% `Speed` boost but take continuous `Health` damage until they finally rest.
 **Fate:** Proposed
 **Lesson:** Tying critical failure states (exhaustion) to high-risk, high-reward buffs (manic productivity) creates interesting management dilemmas, turning a negative need state into a situational tool for the player.
+
+## [Meme Plague]
+**Concept:** A system that introduces contagious ideas (`WorkCult`, `DanceMeme`, `ParanoiaMeme`) that spread physically between adjacent Pops, heavily overriding their `Needs` and `StressTracker` until the meme decays.
+**Fate:** Merged
+**Lesson:** Introducing a psychological contagion adds an unpredictable spatial element to base management, forcing players to physically separate pops to quarantine ideas rather than just managing global values.
