@@ -2,6 +2,9 @@
 
 ## High Priority
 - [ ] `765` Diplomatic Wards — `specs/765-diplomatic-wards.md`
+- [ ] `766` Relativistic Time Dilation — `specs/766-relativistic-time-dilation.md`
+- [ ] `767` Orbital Commute — `specs/767-orbital-commute.md`
+- [ ] `768` Dynastic Succession — `specs/768-dynastic-succession.md`
 
 - [ ] `764` The Embassy Sector — `specs/764-the-embassy-sector.md`
 - [ ] `761` Void Sickness — `specs/761-void-sickness.md`

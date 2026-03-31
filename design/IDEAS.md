@@ -2916,7 +2916,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Relativistic Time Dilation
+## Relativistic Time Dilation [SPECCED]
 
 **Layer:** 3
 
@@ -2944,7 +2944,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Orbital Commute
+## Orbital Commute [SPECCED]
 
 **Layer:** Cross-layer
 
@@ -2958,7 +2958,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Dynastic Succession
+## Dynastic Succession [SPECCED]
 
 **Layer:** 3 -> 1
 
