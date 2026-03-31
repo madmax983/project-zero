@@ -1,3 +1,12 @@
+//! Doppelgangers and social mimics.
+//!
+//! This module introduces the terrifying reality of social mimics—entities that infiltrate
+//! the colony by killing and replacing a [`Pop`]. Once hidden, they subtly sabotage operations
+//! (like stalling mining progress) until they are detected.
+//!
+//! The `pop_doppelganger` module handles replacing legitimate pops with impostors,
+//! executing their secretive sabotage tasks, and revealing their true nature to the colony.
+
 use crate::layer1::execution::MovementTarget;
 use crate::layer1::health::Health;
 use crate::layer1::map::GridPosition;
@@ -5,18 +14,56 @@ use crate::layer1::pop::{Pop, PopName};
 use crate::layer1::resources::MiningProgress;
 use bevy_ecs::prelude::*;
 
+/// A component attached to an infiltrator entity masquerading as a legitimate pop.
+///
+/// A `Mimic` retains the name and basic attributes of the pop it replaced but works
+/// against the colony's goals when unobserved.
+///
+/// # Examples
+///
+/// ```
+/// use scale::layer1::entities::pop_doppelganger::{Mimic, MimicState};
+///
+/// let impostor = Mimic {
+///     state: MimicState::Hidden,
+///     original_identity: "Miner Bob".to_string(),
+/// };
+/// ```
 #[derive(Component, Debug, PartialEq, Clone)]
 pub struct Mimic {
+    /// The current operational state of the mimic.
     pub state: MimicState,
+    /// The name of the pop that was originally replaced by this mimic.
     pub original_identity: String,
 }
 
+/// The current operational state of a [`Mimic`].
 #[derive(Debug, PartialEq, Clone, Copy)]
 pub enum MimicState {
+    /// The mimic is successfully masquerading as a normal pop.
     Hidden,
+    /// The mimic has been discovered and is now recognized as a threat.
     Revealed,
 }
 
+/// Despawns a target pop and spawns a new identical entity with a [`Mimic`] component.
+///
+/// This function carefully copies the `PopName`, `GridPosition`, and `Health` components
+/// from the victim to the new mimic entity to ensure the colony remains unaware of the substitution.
+///
+/// # Examples
+///
+/// ```
+/// use bevy_ecs::prelude::*;
+/// use scale::layer1::entities::pop_doppelganger::replace_pop_with_mimic;
+/// use scale::layer1::pop::{Pop, PopName};
+///
+/// let mut world = World::new();
+/// let original_pop = world.spawn((Pop, PopName("Alice".to_string()))).id();
+///
+/// // The original entity is destroyed, replaced by a mimic with the same name.
+/// let mimic_entity = replace_pop_with_mimic(&mut world, original_pop);
+/// ```
 pub fn replace_pop_with_mimic(world: &mut World, target: Entity) -> Entity {
     let mut name = None;
     let mut pos = None;
@@ -60,6 +107,21 @@ pub fn replace_pop_with_mimic(world: &mut World, target: Entity) -> Entity {
     spawn.id()
 }
 
+/// A Bevy system that causes hidden mimics to sabotage colony tasks.
+///
+/// If a [`Mimic`] is in the [`MimicState::Hidden`] state and targets a resource for mining,
+/// they will stall the [`MiningProgress`] at 80%, preventing completion.
+///
+/// # Examples
+///
+/// ```
+/// use scale::layer1::entities::pop_doppelganger::sabotage_system;
+/// use bevy_ecs::prelude::*;
+///
+/// let mut schedule = Schedule::default();
+/// schedule.add_systems(sabotage_system);
+/// // The schedule will stall any mining progress targeted by a hidden mimic!
+/// ```
 pub fn sabotage_system(
     query: Query<(&Mimic, &MovementTarget)>,
     mut target_query: Query<&mut MiningProgress>,
@@ -76,6 +138,28 @@ pub fn sabotage_system(
     }
 }
 
+/// Exposes a mimic's true nature by changing its state to [`MimicState::Revealed`].
+///
+/// # Returns
+///
+/// Returns `true` if the entity was a hidden mimic and was successfully revealed,
+/// or `false` if the entity was not a mimic or could not be found.
+///
+/// # Examples
+///
+/// ```
+/// use bevy_ecs::prelude::*;
+/// use scale::layer1::entities::pop_doppelganger::{reveal_mimic, Mimic, MimicState};
+///
+/// let mut world = World::new();
+/// let suspect = world.spawn(Mimic {
+///     state: MimicState::Hidden,
+///     original_identity: "Bob".to_string()
+/// }).id();
+///
+/// let was_mimic = reveal_mimic(&mut world, suspect);
+/// assert!(was_mimic);
+/// ```
 pub fn reveal_mimic(world: &mut World, target: Entity) -> bool {
     if let Ok(mut entity_mut) = world.get_entity_mut(target) {
         if let Some(mut mimic) = entity_mut.get_mut::<Mimic>() {
