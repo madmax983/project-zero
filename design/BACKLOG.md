@@ -1,6 +1,7 @@
 # Backlog
 
 ## High Priority
+- [ ] `765` Diplomatic Wards — `specs/765-diplomatic-wards.md`
 
 - [ ] `764` The Embassy Sector — `specs/764-the-embassy-sector.md`
 - [ ] `761` Void Sickness — `specs/761-void-sickness.md`
