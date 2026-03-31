@@ -14,6 +14,8 @@ use ratatui::{
     widgets::{Block, BorderType, Borders, Cell, Gauge, List, ListItem, Paragraph, Row, Table},
 };
 
+#[cfg(feature = "nova")]
+use crate::experimental::meme_plague::{MemeCarrier, MemeType};
 use crate::layer1::biography::Biography;
 use crate::layer1::day_night::DayNightCycle;
 use crate::layer1::dreams::DreamJournal;
@@ -27,8 +29,6 @@ use crate::layer1::purity::PurityMap;
 use crate::layer1::rituals::{MachineSpirit, Quirk, QuirkType};
 use crate::layer1::social::old_guard::{Arrival, Generation};
 use crate::layer1::utility_types::UtilityWeights;
-#[cfg(feature = "nova")]
-use crate::experimental::meme_plague::{MemeCarrier, MemeType};
 use crate::layer1::{
     building::Building,
     building::Material,
@@ -886,7 +886,7 @@ fn render_extra_info(
     world: &World,
     entity: Entity,
 ) {
-    let mut extra_idx = 0;
+    let extra_idx = 0;
     let extra_chunks = Layout::default()
         .direction(Direction::Vertical)
         .constraints(vec![Constraint::Length(1); extra_height as usize])
@@ -916,7 +916,6 @@ fn render_extra_info(
             ])),
             extra_chunks[extra_idx],
         );
-        extra_idx += 1;
     }
 
     if let Some(battery) = world.get::<Battery>(entity) {
@@ -945,7 +944,6 @@ fn render_extra_info(
             ])),
             extra_chunks[extra_idx],
         );
-        extra_idx += 1;
     }
 
     if let Some(consumer) = world.get::<PowerConsumer>(entity) {
@@ -969,7 +967,6 @@ fn render_extra_info(
             ])),
             extra_chunks[extra_idx],
         );
-        extra_idx += 1;
     }
 
     if let Some(source) = world.get::<PowerSource>(entity) {
@@ -989,7 +986,6 @@ fn render_extra_info(
             ])),
             extra_chunks[extra_idx],
         );
-        extra_idx += 1;
     }
 
     if let Some(emitter) = world.get::<ScentEmitter>(entity) {
@@ -1016,7 +1012,6 @@ fn render_extra_info(
             ])),
             extra_chunks[extra_idx],
         );
-        extra_idx += 1;
     }
 
     #[cfg(feature = "nova")]
@@ -1037,6 +1032,10 @@ fn render_extra_info(
             ])),
             extra_chunks[extra_idx],
         );
+        #[allow(unused_assignments)]
+        {
+            extra_idx += 1;
+        }
     }
 }
 

@@ -44,6 +44,15 @@ pub fn register(schedule: &mut Schedule) {
 
     schedule.add_systems(
         (
+            crate::layer1::logistics::biomass_network::process_biomass_network_hunger,
+            crate::layer1::logistics::biomass_network::digest_transit_contents
+                .after(crate::layer1::logistics::biomass_network::process_biomass_network_hunger),
+        )
+            .in_set(Layer1SystemSet::Consumption),
+    );
+
+    schedule.add_systems(
+        (
             crate::layer1::addiction::init_addiction_system.after(decay_needs_system),
             crate::layer1::addiction::update_addiction_system
                 .after(crate::layer1::addiction::init_addiction_system),
