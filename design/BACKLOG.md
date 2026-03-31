@@ -1,6 +1,12 @@
 # Backlog
 
 ## High Priority
+- [ ] `772` The Biomass Commute — `specs/772-the-biomass-commute.md`
+- [ ] `773` Stellar Weather Navigation — `specs/773-stellar-weather-navigation.md`
+- [ ] `774` Architectural Grafting — `specs/774-architectural-grafting.md`
+- [ ] `775` The Quantum Famine — `specs/775-the-quantum-famine.md`
+- [ ] `776` Black Market Terraforming — `specs/776-black-market-terraforming.md`
+- [ ] `777` The Void Whispers — `specs/777-the-void-whispers.md`
 - [ ] `765` Diplomatic Wards — `specs/765-diplomatic-wards.md`
 - [ ] `767` Orbital Commute — `specs/767-orbital-commute.md`
 - [ ] `768` Dynastic Succession — `specs/768-dynastic-succession.md`
