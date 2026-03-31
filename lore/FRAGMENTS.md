@@ -5830,3 +5830,195 @@ A negative side-effect of a failed splice.
 - drove the governor to madness
 - incited a bloody coup
 - collapsed their economy out of pure spite
+
+## Fragment Type: [MIGRATORY_FLORA_NAME]
+
+- the Ironwood Grove
+- the Shifting Thicket
+- the Walking Pines
+- the Nomadic Bramble
+- the Creeping Canopy
+- the Wander-Roots
+
+## Fragment Type: [DIPLOMATIC_TRAIT]
+
+- the Warmongers
+- the Tree-Hugging Zealots
+- the Bleeding Hearts
+- the Calculating Merchants
+- the Iron-Fisted Rulers
+- the Isolationists
+
+## Fragment Type: [JUSTIFICATION_ACTION]
+
+- endless hunting of local fauna
+- planting of vast bio-reserves
+- executing our own citizens
+- hoarding of trade goods
+- refusal to open our borders
+
+## Fragment Type: [EXILE_REASON]
+
+- stealing rations during the shortage
+- speaking against the Governor
+- a crime they probably didn't commit
+- carrying the genetic taint
+- refusing to work the deep mines
+- hoarding medical supplies
+
+## Fragment Type: [NEW_TITLE]
+
+- a Pirate Captain
+- a wealthy Merchant Prince
+- a fanatic Warlord
+- a ragged Beggar
+- a mysterious Prophet
+- the commander of a mercenary fleet
+
+## Fragment Type: [REUNION_ACTION]
+
+- burn the colony to ash
+- buy us out entirely
+- forgive us
+- demand their old job back
+- take what is owed
+
+## Fragment Type: [SIGNAL_STRENGTH]
+
+- A faint ghost echo
+- A massive, pulsing return
+- Intermittent static
+- A weak signature
+- An erratic blip
+- An overwhelming signal
+
+## Fragment Type: [SUSPECTED_ENTITY]
+
+- space junk
+- a merchant straying off course
+- a pirate scouting ship
+- a glitch in the array
+- an asteroid
+- a distress beacon
+
+## Fragment Type: [ACTUAL_ENTITY]
+
+- a stealth frigate
+- a derelict cargo hauler
+- an automated mine-layer
+- a rogue comet
+- a heavily armed raider
+- a damaged surveyor ship
+
+## Fragment Type: [RESOLUTION_METHOD]
+
+- we flew right up to it
+- they hailed us on an open channel
+- we boosted sensor power
+- they uncloaked and fired
+- it crashed into our shield
+
+## Fragment Type: [DESERTION_METHOD]
+
+- hacking the launch codes
+- bribing a cargo pilot
+- overriding the auto-pilot
+- hotwiring a service pod
+- sneaking into a fuel tanker
+
+## Fragment Type: [HERMIT_DWELLING]
+
+- a hollowed-out crater
+- a jury-rigged comms satellite
+- an ancient mining shaft
+- a web of solar panels and scrap
+- a pressurized cave system
+- a crashed and buried hauler
+
+## Fragment Type: [STOLEN_GOODS]
+
+- hundreds of protein bars
+- spare fusion batteries
+- stolen water filtration filters
+- piles of shiny scrap metal
+- intercepted mail packages
+
+## Fragment Type: [OLD_CROP_TYPE]
+
+- the standard wheat
+- the hydroponic soy
+- the nutrient tubers
+- the terra-corn
+- the moss vats
+- the synthetic algae
+
+## Fragment Type: [NEW_MUTATION]
+
+- luminescent and warm to the touch
+- covered in defensive thorns
+- incredibly cold-resistant
+- weeping sweet nectar
+- violently explosive if dropped
+- rapidly spreading like a weed
+
+## Fragment Type: [CROP_RESULT]
+
+- enough to feed the colony twice over
+- a massive, uncontrollable overgrowth
+- completely toxic to human biology
+- strangely addictive and calming
+- mostly ash and ruined soil
+- delicious but nutritionally empty
+
+## The Empathic Plague Fragments
+
+## Fragment Type: [SHARED_EMOTION]
+
+- a deep, unshakeable sorrow
+- a terrifying collective manic joy
+- the sensation of drowning in fear
+- an overwhelming phantom pain
+- a sudden, perfect tranquility
+- the memory of a dying world
+
+## Fragment Type: [MIND_LINK_SYMPTOM]
+
+- speaking in unison
+- weeping without reason
+- finishing each other's sentences
+- unable to distinguish self from the crowd
+- dreaming the exact same nightmare
+
+## The Reverse Quarantine Fragments
+
+## Fragment Type: [FLEET_SIZE]
+
+- a handful of battered
+- dozens of patchwork
+- an armada of dying
+- a lone, massive generational
+- three heavily damaged
+
+## Fragment Type: [FLEET_STATE]
+
+- venting atmosphere and begging for air
+- silent but packed with thermal blooms
+- riddled with parasitic growths
+- out of fuel and drifting
+- carrying a highly contagious plague
+
+## Fragment Type: [REJECTION_METHOD]
+
+- our defense grid lasers
+- a barrage of warning shots
+- total comms silence
+- deploying a minefield
+- threatening orbital bombardment
+
+## Fragment Type: [GUILT_RATIONALIZATION]
+
+- We barely have enough water for ourselves.
+- The risk of infection was too high.
+- They were likely pirates in disguise.
+- The Council strictly forbade it.
+- Better they die than all of us.

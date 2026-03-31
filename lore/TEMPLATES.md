@@ -5004,3 +5004,114 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "It worked perfectly. [YEAR]. [NAME] annoyed the [OTHER_CIV] so much it [SABOTAGE_RESULT]."
 - "[YEAR]: Total collapse at the [OTHER_CIV] capital. Our envoy's insults [SABOTAGE_RESULT]."
 - "A bloodless victory for [COLONY]. The stress caused by [NAME] [SABOTAGE_RESULT]. [YEAR]."
+
+## Migratory Flora Templates (Spec 658)
+
+### Template: FLORA_MIGRATION_NOTICED
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[MIGRATORY_FLORA_NAME]`, `[DIRECTION]`
+
+**Patterns:**
+- "[YEAR]: The trees are moving. The [MIGRATORY_FLORA_NAME] shifts [DIRECTION]. Slowly, but we see it."
+- "The forest walks. [MIGRATORY_FLORA_NAME] is creeping [DIRECTION] from [COLONY]. [YEAR]."
+- "We built a road, and the [MIGRATORY_FLORA_NAME] moved across it. Heading [DIRECTION]. [YEAR]."
+
+### Template: FLORA_ENCROACHMENT
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[BUILDING_TYPE]`, `[MIGRATORY_FLORA_NAME]`
+
+**Patterns:**
+- "[YEAR]: The [MIGRATORY_FLORA_NAME] overtook the [BUILDING_TYPE]. Roots in the machinery."
+- "We woke up and the [BUILDING_TYPE] was inside the [MIGRATORY_FLORA_NAME] grove. We lost it. [YEAR]."
+- "A slow siege. The [MIGRATORY_FLORA_NAME] swallowed our [BUILDING_TYPE]. [YEAR]."
+
+## Diplomatic Reflection Templates (Spec 657)
+
+### Template: REPUTATION_SHIFTED
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[DIPLOMATIC_TRAIT]`, `[JUSTIFICATION_ACTION]`
+
+**Patterns:**
+- "[YEAR]: The galaxy sees us differently. We are [DIPLOMATIC_TRAIT] now. They noticed the [JUSTIFICATION_ACTION]."
+- "Because of [COLONY] and the [JUSTIFICATION_ACTION], the Council labels us [DIPLOMATIC_TRAIT]. [YEAR]."
+- "We cannot hide our nature. The endless [JUSTIFICATION_ACTION] has branded us [DIPLOMATIC_TRAIT]. [YEAR]."
+
+### Template: DIPLOMATIC_ECHO
+**Generates:** Play event
+**Slots:** `[OTHER_CIV]`, `[YEAR]`, `[ECHO_ACTION]`, `[OUR_TRAIT]`
+
+**Patterns:**
+- "[YEAR]: [OTHER_CIV] responds in kind. They mirror our [OUR_TRAIT] ways by [ECHO_ACTION]."
+- "We taught them this. [OTHER_CIV] is [ECHO_ACTION], reflecting our own [OUR_TRAIT] nature. [YEAR]."
+- "An echo across the stars. [OTHER_CIV] learned from us, and now they [ECHO_ACTION]. [YEAR]."
+
+## The Exile Templates (Spec 691)
+
+### Template: POP_BANISHED
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[NAME]`, `[EXILE_REASON]`
+
+**Patterns:**
+- "[YEAR]: We sent [NAME] into the dark. Better than execution, they said. Banishment for [EXILE_REASON]."
+- "[NAME] was stripped of their gear and cast out for [EXILE_REASON]. We locked the gates. [YEAR]."
+- "A one-way ticket off-world. [NAME] is exiled. The charge: [EXILE_REASON]. [YEAR]."
+
+### Template: EXILE_RETURNS
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[NAME]`, `[NEW_TITLE]`, `[REUNION_ACTION]`
+
+**Patterns:**
+- "[YEAR]: A ship hails us. It is [NAME]. They are [NEW_TITLE] now. They want to [REUNION_ACTION]."
+- "The past returns. [NAME] survived the banishment. As [NEW_TITLE], they demand to [REUNION_ACTION]. [YEAR]."
+- "We cast out a thief, and [NEW_TITLE] returns. [NAME] is back. [YEAR]. They intend to [REUNION_ACTION]."
+
+## Sensor Ambiguity Templates (Spec 672)
+
+### Template: UNIDENTIFIED_CONTACT_DETECTED
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[SIGNAL_STRENGTH]`, `[SUSPECTED_ENTITY]`
+
+**Patterns:**
+- "[YEAR]: A blip on the radar. [SIGNAL_STRENGTH]. We hope it's just [SUSPECTED_ENTITY]."
+- "Radar anomaly. [SIGNAL_STRENGTH]. Is it [SUSPECTED_ENTITY] or worse? [YEAR]."
+- "A shadow in the void. [SIGNAL_STRENGTH]. No transponder. Might be [SUSPECTED_ENTITY]. [YEAR]."
+
+### Template: CONTACT_RESOLVED
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[ACTUAL_ENTITY]`, `[RESOLUTION_METHOD]`
+
+**Patterns:**
+- "[YEAR]: The blip was real. [RESOLUTION_METHOD] reveals it's [ACTUAL_ENTITY]."
+- "We got close enough to see. [RESOLUTION_METHOD]. It's [ACTUAL_ENTITY]. [YEAR]."
+- "The mystery is solved. By [RESOLUTION_METHOD], we found [ACTUAL_ENTITY]. [YEAR]."
+
+## Moon Hermits Templates (Spec 688)
+
+### Template: POP_DESERTED
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[NAME]`, `[DESERTION_METHOD]`
+
+**Patterns:**
+- "[YEAR]: [NAME] could not take the noise anymore. They stole a ship by [DESERTION_METHOD] and vanished into the rocks."
+- "A launch in the dead of night. [NAME] is gone. They used [DESERTION_METHOD] to escape the colony. [YEAR]."
+- "They left a note about the humming in the walls. [NAME] fled using [DESERTION_METHOD]. [YEAR]."
+
+### Template: HERMIT_OUTPOST_DISCOVERED
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[HERMIT_NAME]`, `[HERMIT_DWELLING]`, `[STOLEN_GOODS]`
+
+**Patterns:**
+- "[YEAR]: We tracked the missing cargo. We found [HERMIT_NAME] living in [HERMIT_DWELLING]. They had hoarded [STOLEN_GOODS]."
+- "An anomaly on the asteroid. It was [HERMIT_NAME], surviving in [HERMIT_DWELLING]. They took [STOLEN_GOODS] from passing ships. [YEAR]."
+- "A crazy person with a laser array. It was our missing [HERMIT_NAME]. Their [HERMIT_DWELLING] was filled with [STOLEN_GOODS]. [YEAR]."
+
+## Genetic Crop Modification Templates (Spec 735)
+
+### Template: CROP_MUTATED
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[OLD_CROP_TYPE]`, `[NEW_MUTATION]`, `[CROP_RESULT]`
+
+**Patterns:**
+- "[YEAR]: We spliced the [OLD_CROP_TYPE]. Now they are [NEW_MUTATION]. The yield is [CROP_RESULT]."
+- "The greenhouse glows. Our [OLD_CROP_TYPE] is [NEW_MUTATION] after the treatment. [CROP_RESULT]. [YEAR]."
+- "A genetic gamble. The [OLD_CROP_TYPE] changed. They are [NEW_MUTATION]. The harvest: [CROP_RESULT]. [YEAR]."
