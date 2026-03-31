@@ -218,5 +218,7 @@ pub fn process_atmospheric_harvesting(
 - Hook up the system in `src/simulation.rs` or the appropriate layer 2 system execution set.
 
 ## 8. Questions
-- Should the damage scale randomly to add unpredictability (e.g., storms are variable)?
-- Should there be a cooldown on harvesting the same atmosphere?
+- *Builder: Should the damage scale randomly to add unpredictability (e.g., storms are variable)?*
+  *Architect:* Yes, damage should include a randomized variance (e.g., +/- 20%) to represent unpredictable turbulence and storms.
+- *Builder: Should there be a cooldown on harvesting the same atmosphere?*
+  *Architect:* For the MVP, a cooldown is not necessary. We rely on the risk of damage to limit excessive harvesting.
