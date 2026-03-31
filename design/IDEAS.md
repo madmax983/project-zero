@@ -3543,7 +3543,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Diplomatic Wards
+## Diplomatic Wards [SPECCED]
 
 **Layer:** 3 -> 1
 
