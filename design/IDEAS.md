@@ -13145,3 +13145,73 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** The immense strategic necessity of deep-space exploration vs. the slow, unpredictable cultural contamination of your pristine colony by the minds of traumatized explorers.
 
 ---
+
+## The Diplomatic Hostage
+
+**Layer:** Cross-layer (3 -> 1)
+
+**Fantasy:** Hosting royalty in a mud hut, and trying to keep them alive to secure a galactic alliance.
+
+**Mechanic:** A powerful Layer 3 empire offers a massive defensive pact, but requires you to take their beloved Heir as a "Ward" on your Layer 1 colony to ensure your loyalty. The Heir refuses to work, consumes luxury resources, and constantly complains, generating negative Morale auras. If the Heir is injured, becomes too stressed, or dies, the pact is broken and the empire immediately declares war.
+
+**Emergence:** Your colony is starving during a brutal winter. The Heir demands a feast of imported delicacies. You have to trade your last shipment of medical supplies just to buy the Heir's favorite exotic fruit to prevent a galactic war, while your own colonists die of preventable diseases in the next room.
+
+**Tension:** The incredible strategic security of an allied armada vs. the constant, localized, and incredibly expensive logistical nightmare of keeping a spoiled aristocrat alive on a harsh frontier.
+
+---
+
+## The Feral Administration
+
+**Layer:** 1
+
+**Fantasy:** Red tape so thick it literally barricades the doors.
+
+**Mechanic:** If your administrative buildings (Offices, Data Centers) are understaffed or lose power, they don't just stop producing "Admin" points. They begin spawning physical "Unprocessed Forms" items on adjacent tiles. These forms rapidly stack, creating impassable terrain that blocks pathfinding and eventually buries nearby buildings.
+
+**Emergence:** A labor strike empties the central bureaucracy. By the time the strike is settled a week later, the main thoroughfare is completely blocked by a ten-foot wall of physical paperwork. You have to assign your mining crew to literally excavate the governor's office out from under a mountain of rejected requisition forms.
+
+**Tension:** The necessity of keeping bureaucratic jobs fully staffed and powered vs. the physical threat of an expanding paperwork avalanche that can choke your colony's logistics.
+
+---
+
+## Gravity Tides
+
+**Layer:** 2 -> 1
+
+**Fantasy:** Learning to work when the planet intermittently forgets to hold you down.
+
+**Mechanic:** A planetary quirk where the local gravity well fluctuates periodically due to the orbit of a massive, dense moon (Layer 2). During "Low Tide," hauling capacity doubles and movement speed increases, but unanchored resources slowly float away into the atmosphere and kinetic weapons fling the shooter backward. During "High Tide," movement grinds to a halt and structural integrity is severely tested.
+
+**Emergence:** You try to fight off a pirate raid during a Low Tide event. Your militia fires their mass-drivers, and the recoil instantly launches them backward out of cover and into the stratosphere. You have to rely on melee combat or anchored laser turrets until the gravity returns to normal.
+
+**Tension:** The massive, predictable logistical boost of moving heavy materials during Low Tide vs. the terrifying unreliability of combat and loose storage when gravity fails.
+
+---
+
+## The Whispering Core
+
+**Layer:** 1 -> Cross-layer
+
+**Fantasy:** Eavesdropping on the galaxy using a crystal that might be insane.
+
+**Mechanic:** You discover a massive, ancient crystalline structure deep underground. Connecting it to your power grid allows you to intercept Layer 3 diplomatic communications and trade data without building expensive orbital arrays. However, the crystal occasionally "hallucinates," generating fake intel or spontaneously broadcasting bizarre, localized insults to neighboring empires, slightly degrading your diplomatic standing over time.
+
+**Emergence:** You rely on the Whispering Core to perfectly time your market trades, making a fortune. Then, during a delicate peace summit, the crystal suddenly broadcasts a highly specific, ancient insult to the neighboring Warlord, sparking a border skirmish you were trying to avoid.
+
+**Tension:** Access to free, incredibly powerful strategic intelligence vs. the unpredictable diplomatic damage of relying on a sentient, possibly schizophrenic rock for your communications.
+
+---
+
+## The Biological Stock Market
+
+**Layer:** Cross-layer (1 -> 3)
+
+**Fantasy:** Crashing your rival's economy by sending them a "gift" of infected grain.
+
+**Mechanic:** Your Layer 1 bio-labs can engineer specialized, non-lethal "Market Viruses." These viruses don't kill Pops; they subtly alter behaviors (e.g., causing a sudden aversion to synthetic fabrics or an intense craving for specific native spices). You can secretly inoculate your Layer 2 trade exports with these viruses. When the goods are sold to Layer 3 empires, the virus spreads, artificially manipulating their market demands to match the goods you produce.
+
+**Emergence:** You possess a monopoly on a completely useless, foul-tasting local root. You engineer a virus that makes Pops crave the root, infect a shipment of luxury textiles, and sell it to the galactic capital. A month later, the entire empire is violently addicted to your foul root, and you become the wealthiest civilization in the sector by exporting literal garbage.
+
+**Tension:** The incredible, underhanded economic power of bio-engineered market manipulation vs. the extreme diplomatic and military fallout if your biological sabotage is discovered by a major superpower.
+
+---
