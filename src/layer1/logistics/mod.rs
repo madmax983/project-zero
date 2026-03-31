@@ -9,3 +9,5 @@ pub mod orbital_drop;
 pub use orbital_drop::*;
 pub mod mass_driver;
 pub use mass_driver::*;
+pub mod biomass_network;
+pub use biomass_network::*;
