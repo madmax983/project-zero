@@ -3682,3 +3682,51 @@
 **Usage:**
 - "The twisted work the outer fields."
 - "He became a mutant after standing in the rain."
+
+## migratory flora
+
+**Replaces:** moving trees, shifting plants, wandering forest
+**Code reference:** `MigratoryFlora` or `FloraMovement` systems
+**Usage:** "The migratory flora shifts toward the water."
+
+## diplomatic reflection
+
+**Replaces:** reputation sync, faction alignment, karma system
+**Code reference:** `DiplomaticTraits` and `DiplomaticStanding` logic
+**Usage:** "The colony's actions trigger a diplomatic reflection across the system."
+
+## exile
+
+**Replaces:** banished, kicked out, expelled
+**Code reference:** `BanishmentState`, `ExiledPop`
+**Usage:** "The pop was exiled to the fringe."
+
+## unidentified contact
+
+**Replaces:** unknown ship, blip, radar ghost
+**Code reference:** `UnidentifiedContact`
+**Usage:** "The sensor array tracked an unidentified contact near the asteroid belt."
+
+## hermit
+
+**Replaces:** deserter, lone survivor, rogue colonist
+**Code reference:** `HermitOutpost`
+**Usage:** "The hermit had siphoned power from the trade route for years."
+
+## crop mutation
+
+**Replaces:** GMO, plant upgrade, lab food
+**Code reference:** `GeneticCropModifier` or `CropMutationEvent`
+**Usage:** "The crop mutation saved us from starvation."
+
+## empathic plague
+
+**Replaces:** mind virus, emotional link sickness, psychic fever
+**Code reference:** `EmpathicPlague`
+**Usage:** "The empathic plague caused a cascade of shared sorrow."
+
+## reverse quarantine
+
+**Replaces:** refugee rejection, border block, blockade
+**Code reference:** `ReverseQuarantine` or `RefugeeFleetEvent`
+**Usage:** "The governor enforced a reverse quarantine, letting the refugee ships burn."
