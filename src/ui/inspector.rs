@@ -27,6 +27,8 @@ use crate::layer1::purity::PurityMap;
 use crate::layer1::rituals::{MachineSpirit, Quirk, QuirkType};
 use crate::layer1::social::old_guard::{Arrival, Generation};
 use crate::layer1::utility_types::UtilityWeights;
+#[cfg(feature = "nova")]
+use crate::experimental::meme_plague::{MemeCarrier, MemeType};
 use crate::layer1::{
     building::Building,
     building::Material,
@@ -627,11 +629,17 @@ fn get_inspector_layout_info(world: &World, entity: Entity) -> InspectorLayoutIn
     let has_source = world.get::<PowerSource>(entity).is_some();
     let has_emitter = world.get::<ScentEmitter>(entity).is_some();
 
+    #[cfg(feature = "nova")]
+    let has_meme = world.get::<MemeCarrier>(entity).is_some();
+    #[cfg(not(feature = "nova"))]
+    let has_meme = false;
+
     let extra_height = u16::from(has_cable)
         + u16::from(has_battery)
         + u16::from(has_consumer)
         + u16::from(has_source)
-        + u16::from(has_emitter);
+        + u16::from(has_emitter)
+        + u16::from(has_meme);
 
     InspectorLayoutInfo {
         details_height: 6,
@@ -1003,6 +1011,27 @@ fn render_extra_info(
                         },
                         emitter.strength
                     ),
+                    Style::default().fg(color),
+                ),
+            ])),
+            extra_chunks[extra_idx],
+        );
+        extra_idx += 1;
+    }
+
+    #[cfg(feature = "nova")]
+    if let Some(meme) = world.get::<MemeCarrier>(entity) {
+        let (label, color) = match meme.meme_type {
+            MemeType::WorkCult => ("Work Cult", Color::Yellow),
+            MemeType::DanceMeme => ("Dance Fever", Color::Magenta),
+            MemeType::ParanoiaMeme => ("Paranoia", Color::Red),
+        };
+
+        frame.render_widget(
+            Paragraph::new(Line::from(vec![
+                Span::raw("🧠 Meme Infection: "),
+                Span::styled(
+                    format!("{} ({}t remaining)", label, meme.duration),
                     Style::default().fg(color),
                 ),
             ])),
