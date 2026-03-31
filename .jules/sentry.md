@@ -19,3 +19,6 @@
 **[Totem Component Default Constraints]**
 **Learning:** Attempting to instantiate components like `Totem` using `..Default::default()` in test setups will cause compile errors (`E0277`) if the component struct does not explicitly `#[derive(Default)]`.
 **Action:** Always verify a component implements `Default` before using it in tests, or manually instantiate all fields (e.g., `description`, `stress_relief`) to ensure test setups compile on the first pass.
+## [evaluate_shower Coverage Improvements]
+**Learning:** When writing tests for ECS utility functions that rely on evaluating candidates (like `evaluate_shower`), accurately instantiating mock data like `ColonyResources` and `Needs` using their `Default` implementation ensures robust testing of early-exit logic (like insufficient water or high hygiene).
+**Action:** Continue using `..Default::default()` when mocking complex structs for targeted unit tests to minimize test setup boilerplate.
