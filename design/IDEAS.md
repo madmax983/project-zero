@@ -13062,7 +13062,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Biomass Commute
+## The Biomass Commute [SPECCED]
 
 **Layer:** 1
 
@@ -13076,7 +13076,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Stellar Weather Navigation
+## Stellar Weather Navigation [SPECCED]
 
 **Layer:** 2
 
@@ -13090,7 +13090,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Black Market Terraforming
+## Black Market Terraforming [SPECCED]
 
 **Layer:** Cross-layer
 
@@ -13104,7 +13104,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Quantum Famine
+## The Quantum Famine [SPECCED]
 
 **Layer:** Cross-layer
 
@@ -13118,7 +13118,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Architectural Grafting
+## Architectural Grafting [SPECCED]
 
 **Layer:** 1
 
@@ -13132,7 +13132,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Void Whispers
+## The Void Whispers [SPECCED]
 
 **Layer:** Cross-layer (2 -> 1)
 
