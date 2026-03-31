@@ -13061,3 +13061,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** The unparalleled power of Megastructures vs. the horrifying, continuous logistical drain of constantly feeding your own city to itself.
 
 ---
+
+## The Biomass Commute
+
+**Layer:** 1
+
+**Fantasy:** Building your infrastructure out of living, breathing tissue that requires feeding, but offers incredible efficiency.
+
+**Mechanic:** A late-game biological alternative to conveyor belts or mass transit. "Vein Tubes" transport resources and pops instantly across the map. However, the network itself has a Hunger need. If it isn't fed excess organic matter, it begins digesting whatever is inside it—including raw resources, finished goods, or commuting Pops.
+
+**Emergence:** You forget to maintain the nutrient vats connected to your transit system during a food shortage. The vein network, starving, eats a shift of highly trained engineers commuting to the fusion reactor, causing a catastrophic power failure.
+
+**Tension:** The incredible logistical power of instantaneous biological transit vs. the horror of managing an infrastructure network that can literally eat your workforce if mismanaged.
+
+---
+
+## Stellar Weather Navigation
+
+**Layer:** 2
+
+**Fantasy:** Sailing the dangerous, unpredictable oceans of space where the "wind" is solar radiation and the "storms" are coronal mass ejections.
+
+**Mechanic:** Fleet movement between nodes isn't just a straight line with a set ETA. Solar winds, radiation belts, and magnetic storms dynamically alter travel times, ship health, and communication reliability. Ships can equip "Solar Sails" to ride these currents for massive speed boosts, but risk being blown off course or destroyed by sudden solar flares.
+
+**Emergence:** You launch a desperate relief fleet to a starving colony. Halfway there, a massive solar flare erupts. The fleet is forced to drop their sails and hide in the radiation shadow of a rogue asteroid for months, while the colony falls to famine and rebellion.
+
+**Tension:** Taking the slow, safe route using standard fusion drives vs. riding the dangerous, highly efficient stellar weather systems to arrive faster or save fuel.
+
+---
+
+## Black Market Terraforming
+
+**Layer:** Cross-layer
+
+**Fantasy:** Rogue billionaires playing god with a planet's climate to boost their own profit margins, consequences be damned.
+
+**Mechanic:** Extremely wealthy Pops or corporate factions on a planet can secretly fund localized, illegal terraforming projects. An agricultural magnate might deploy atmospheric seeders to increase rainfall, drastically boosting their farm yields, but inadvertently flooding the industrial sector and causing massive infrastructure damage.
+
+**Emergence:** You notice your desert mining world is slowly turning into a swamp, ruining your extraction efficiency. You investigate and find that the local Water Cartel has been secretly importing ice comets and crashing them into the poles to drive up the price of their newly established luxury resort operations.
+
+**Tension:** Cracking down on these illegal operations (which requires spending valuable administrative power and angering the elite) vs. trying to adapt the colony to the new, chaotic, player-uncontrolled climate shifts.
+
+---
