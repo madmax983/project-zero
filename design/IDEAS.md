@@ -13019,3 +13019,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Emergence:** Your top scientists hijack a cargo ship and fly it into a black hole because they believed the signal was a message from God.
 
 **Tension:** Suppress the signal (causing massive unrest among the obsessed) or let them follow it (losing valuable Pops and resources).
+
+## The Agony Extract
+
+**Layer:** Cross-layer
+
+**Fantasy:** A highly lucrative resource that requires pops to be under extreme stress to harvest, forcing a choice between morality and immense wealth.
+
+**Mechanic:** Certain rare flora or fauna only produce "Agony Extract" (which sells for astronomical prices on Layer 3) when harvested by Pops with critically low Morale or high Stress. Happy workers yield nothing.
+
+**Emergence:** You intentionally create a "misery district" with terrible conditions, no light, and grueling shifts just to harvest the extract. The wealth funds a utopia for the rest of the colony, creating an extreme, localized class divide that constantly threatens to boil over into a violent, well-funded rebellion.
+
+**Tension:** The immediate, massive economic gain of intentionally torturing a segment of your population vs. the long-term diplomatic fallout and internal risk of maintaining a concentrated pocket of absolute misery.
+
+---
+
+## Temporal Ghost Towns
+
+**Layer:** 1
+
+**Fantasy:** Building your future on top of your past, only to find the past isn't entirely gone.
+
+**Mechanic:** A rare planetary quirk where specific map tiles occasionally "stutter" in time. Buildings on these tiles temporarily revert to whatever structure occupied them decades ago (e.g., a modern Fusion Reactor becomes the wooden hut from Year 1) before snapping back.
+
+**Emergence:** Your primary logistics hub stutters back into being the original colony graveyard for a week. Your advanced conveyor belts dump iron ore onto the graves of the founders, completely halting production and causing a massive Morale penalty for "Sacrilege" until the time anomaly passes.
+
+**Tension:** The incredibly high resource density often found in these "chronally unstable" zones vs. the terrifying unreliability of your infrastructure randomly devolving into primitive structures during a crisis.
+
+---
+
+## Parasitic Architecture
+
+**Layer:** 1
+
+**Fantasy:** A sprawling, magnificent city that slowly digests its own foundations to stay aloft.
+
+**Mechanic:** Late-game "Megastructures" (like an Atmospheric Shield or a Spire) provide incredible colony-wide buffs but have a "Consumption" radius. Over time, they literally absorb the building materials and structural integrity of smaller, lower-tier buildings built beneath them to maintain themselves.
+
+**Emergence:** You build a massive, beautiful Spire that boosts tech output to incredible levels. But to keep it running, you have to constantly assign builders to construct cheap "sacrificial" housing around its base for it to consume. If you stop feeding it buildings, the Spire begins consuming the Pops living nearby instead.
+
+**Tension:** The unparalleled power of Megastructures vs. the horrifying, continuous logistical drain of constantly feeding your own city to itself.
+
+---
