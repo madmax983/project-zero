@@ -13103,3 +13103,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Cracking down on these illegal operations (which requires spending valuable administrative power and angering the elite) vs. trying to adapt the colony to the new, chaotic, player-uncontrolled climate shifts.
 
 ---
+
+## The Quantum Famine
+
+**Layer:** Cross-layer
+
+**Fantasy:** The galaxy's economy is so interconnected that the mere prediction of a shortage causes actual starvation today.
+
+**Mechanic:** High-level Layer 3 market predictions of future food scarcity cause automated Layer 2 trade fleets to preemptively hoard food. Layer 1 colonies with open trade instantly experience artificial food shortages because local suppliers sell everything off-world at massive speculative markups.
+
+**Emergence:** A completely peaceful, agriculturally rich planet starves to death because a rumor of a war three sectors away caused their own farmers to sell the harvest to a passing automated freighter for a 1000% profit.
+
+**Tension:** Regulate trade to keep food local (tanking your economic income) vs. allowing free trade (risking sudden, unpredictable starvation based on galaxy-wide panic).
+
+---
+
+## Architectural Grafting
+
+**Layer:** 1
+
+**Fantasy:** A sprawling, messy colony where new tech is just bolted onto old rusted frames, creating a Frankenstein city.
+
+**Mechanic:** Instead of deconstructing obsolete buildings to build new ones, you can "Graft" high-tech modules directly onto low-tech ruins or obsolete structures to save resources. The grafted building operates at higher efficiency but inherits the "Quirks" and higher maintenance debt of the base structure.
+
+**Emergence:** You graft a zero-point energy reactor onto a 100-year-old coal plant's cooling tower. It produces infinite energy, but still occasionally fills the room with toxic coal soot because the old vents are still active, poisoning the high-tech engineers.
+
+**Tension:** The massive, immediate resource savings of grafting vs. the long-term, unpredictable maintenance nightmares of stacking new systems on crumbling foundations.
+
+---
+
+## The Void Whispers
+
+**Layer:** Cross-layer (2 -> 1)
+
+**Fantasy:** Deep space exploration isn't just about finding resources; it's about what the darkness does to the people who go there.
+
+**Mechanic:** Exploratory fleets sent to distant, uncharted Layer 2 nodes don't just bring back loot. The crews accumulate "Void Whispers"—strange, subtle memetic traits. When they return to Layer 1, they spread these traits through the Rumor Web. These traits might manifest as a new, bizarre religious cult, a sudden colony-wide aversion to specific colors, or a terrifying new architectural style.
+
+**Emergence:** Your brave explorers return with a massive haul of precursor tech, saving your economy. However, within a year, half your colony has stopped speaking and begun carving intricate, non-Euclidean patterns into the walls of the hab-blocks, severely disrupting productivity.
+
+**Tension:** The immense strategic necessity of deep-space exploration vs. the slow, unpredictable cultural contamination of your pristine colony by the minds of traumatized explorers.
+
+---
