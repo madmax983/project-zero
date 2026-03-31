@@ -203,6 +203,9 @@ pub fn build_simulation_schedule() -> Schedule {
         crate::layer3::map::map_data_rot_system,
         crate::layer3::map::scout_ship_scan_system,
         crate::layer3::map::fleet_arrival_anomaly_system,
+        crate::layer3::physics::relativity::process_time_dilation_system,
+        crate::layer3::physics::relativity::update_fleet_local_time_system
+            .after(crate::layer3::physics::relativity::process_time_dilation_system),
     ));
     schedule
 }
@@ -432,6 +435,9 @@ pub fn run_simulation_tick(world: &mut World) {
     if !world.contains_resource::<Events<crate::layer2::cascade::LogisticsStrainedEvent>>() {
         world.init_resource::<Events<crate::layer2::cascade::LogisticsStrainedEvent>>();
     }
+    if !world.contains_resource::<crate::layer3::physics::relativity::SimulationTime>() {
+        world.init_resource::<crate::layer3::physics::relativity::SimulationTime>();
+    }
     if !world.contains_resource::<Events<crate::layer2::cascade::DefenseWeakenedEvent>>() {
         world.init_resource::<Events<crate::layer2::cascade::DefenseWeakenedEvent>>();
     }
@@ -446,6 +452,7 @@ pub fn run_simulation_tick(world: &mut World) {
 
     world.run_schedule(SimulationSchedule);
     world.resource_mut::<SimulationTime>().tick += 1;
+    world.resource_mut::<crate::layer3::physics::relativity::SimulationTime>().tick += 1;
 }
 
 #[cfg(test)]
@@ -560,6 +567,8 @@ mod tests {
 
         world.init_resource::<Events<crate::layer2::cascade::LogisticsStrainedEvent>>();
         world.init_resource::<Events<crate::layer2::cascade::DefenseWeakenedEvent>>();
+
+        world.init_resource::<crate::layer3::physics::relativity::SimulationTime>();
 
         world.init_resource::<Events<crate::layer2::moon_hermits::PopDesertedEvent>>();
 

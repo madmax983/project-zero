@@ -7,3 +7,4 @@ pub mod diplomacy;
 pub use diplomacy::*;
 pub mod diplomacy_reflection;
 pub mod map;
+pub mod physics;
