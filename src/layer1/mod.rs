@@ -87,8 +87,6 @@ pub mod hazards;
 pub mod hazards_tests;
 pub use genetics::*;
 pub mod health;
-/// Global hit stop resource (Juice).
-pub mod hit_stop;
 /// Pop hobbies logic (Spec 137).
 pub mod hobby;
 pub use geomes::*;
@@ -133,8 +131,6 @@ pub mod social;
 /// Spoilage and decay mechanics.
 pub mod spoilage;
 /// Resource storage limits and stockpile buildings.
-/// Structural integrity (cave-ins and supports).
-pub mod structural_integrity;
 /// Structure durability and repair.
 pub mod structure;
 /// Technology and research system.
@@ -190,7 +186,6 @@ pub use farm::*;
 pub use graffiti::*;
 pub use hazards::*;
 pub use health::*;
-pub use hit_stop::*;
 pub use hobby::*;
 pub use housing::*;
 pub use institutional_memory::*;
@@ -204,7 +199,6 @@ pub use notifications::*;
 pub use science::*;
 pub use social::*;
 pub use spoilage::*;
-pub use structural_integrity::*;
 pub use structure::*;
 pub use tech::*;
 
@@ -221,8 +215,6 @@ pub mod lighting;
 /// Pop skills and experience system.
 pub mod skills;
 #[cfg(test)]
-mod venting_tests;
-#[cfg(test)]
 mod waste_tests;
 
 /// Vermin infestation logic (Spec 073).
@@ -235,13 +227,6 @@ pub use zone::*;
 /// Funeral rites and corpse management (Spec 057).
 pub mod funeral;
 pub use funeral::*;
-
-/// Acoustic simulation (Spec 060).
-pub mod acoustic;
-pub use acoustic::*;
-
-#[cfg(test)]
-mod acoustic_shadow_tests;
 
 /// Trade system.
 /// Energy system (Spec 042).
@@ -351,10 +336,6 @@ pub use private_stash::*;
 /// Resource purity system (Spec 106).
 pub mod purity;
 pub use purity::*;
-/// Visual particle effects system (Juice).
-pub mod particles;
-pub use particles::*;
-
 /// Emotional Contagion system (Spec 090).
 pub mod contagion;
 pub use contagion::*;
@@ -374,8 +355,6 @@ mod hydroponics_tests;
 /// Palette fatigue system (Spec 114).
 pub mod palette_fatigue;
 #[cfg(test)]
-mod structural_integrity_overflow_tests;
-#[cfg(test)]
 mod structure_maintenance_tests;
 pub use palette_fatigue::*;
 
@@ -391,12 +370,6 @@ pub use observatory::*;
 pub mod logistics;
 pub use logistics::*;
 
-/// Airlock & Pressure system (Spec 119).
-pub mod pressure;
-pub use pressure::*;
-/// Explosive Decompression system (Spec 136).
-pub mod suction;
-pub use suction::*;
 /// Stress and mental breakdown system (Spec 127).
 pub mod stress;
 pub use stress::*;
@@ -488,9 +461,6 @@ pub use chemical::*;
 pub use cryo::*;
 
 #[cfg(test)]
-mod vacuum_welding_tests;
-
-#[cfg(test)]
 mod cryo_tests;
 
 /// Emergent Festivals system (Spec 077).
@@ -539,11 +509,8 @@ pub use direct_link::*;
 pub mod void_signals;
 #[cfg(feature = "nova")]
 pub use void_signals::*;
-/// Kinetic Storage system (Spec 235).
-pub mod kinetic_storage;
 /// Volatile Resources system (Spec 223).
 pub mod volatile;
-pub use kinetic_storage::*;
 
 /// The Hum system (Spec 238).
 pub mod hum;
@@ -605,6 +572,9 @@ pub use light_pollution::*;
 /// The Spiteful Will (Spec 451).
 pub mod spiteful_will;
 pub use spiteful_will::*;
+
+pub mod physics;
+pub use physics::*;
 
 pub mod nature;
 pub use nature::*;
