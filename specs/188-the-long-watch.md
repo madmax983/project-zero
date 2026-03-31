@@ -267,3 +267,8 @@ pub fn apply_isolation_effects_system(
 
 - Use Manhattan distance (`(x1-x2).abs() + (y1-y2).abs()`) for grid calculations.
 - Remember to import `Trait` from `crate::layer1::traits`.
+
+## Questions
+
+*Builder needs to update `src/layer1/traits.rs` to include `Hermit`.*
+*Architect:* Yes, ensure `Trait::Hermit` is added to the `Trait` enum in `src/layer1/traits.rs`.
