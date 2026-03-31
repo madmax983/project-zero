@@ -13020,7 +13020,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 **Tension:** Suppress the signal (causing massive unrest among the obsessed) or let them follow it (losing valuable Pops and resources).
 
-## The Agony Extract
+## [SPECCED] The Agony Extract
 
 **Layer:** Cross-layer
 
@@ -13034,7 +13034,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Temporal Ghost Towns
+## [SPECCED] Temporal Ghost Towns
 
 **Layer:** 1
 
@@ -13048,7 +13048,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Parasitic Architecture
+## [SPECCED] Parasitic Architecture
 
 **Layer:** 1
 
