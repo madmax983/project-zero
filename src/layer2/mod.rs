@@ -35,4 +35,5 @@ pub mod visibility;
 pub use cartographers_curse::*;
 pub mod empathic_plague;
 pub mod moon_hermits;
+pub mod navigation;
 pub mod sensor_ambiguity;
