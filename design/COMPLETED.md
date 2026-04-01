@@ -317,3 +317,4 @@
 - [x] `INT-727` Integration: Empathic Plague -> Morale — completed 2026-04-01
 - [x] `INT-735` Integration: Genetic Crop Modification -> Chronicle — completed 2026-04-01
 - [x] `INT-546` Integration: Reverse Quarantine -> Chronicle — completed 2026-04-01
+- [x] `INT-562` Integration: Justice System Main Loop — completed 2026-04-01

@@ -57,6 +57,14 @@ pub fn register(schedule: &mut Schedule) {
 
     schedule.add_systems(
         (
+            update_event_buffer::<crate::layer1::law::justice::CrimeCommittedEvent>,
+            update_event_buffer::<crate::layer1::law::justice::PardonIssuedEvent>,
+        )
+            .in_set(Layer1SystemSet::EventCleanup),
+    );
+
+    schedule.add_systems(
+        (
             update_event_buffer::<crate::layer1::shipbreaking::SpawnCrashedShipEvent>,
             update_event_buffer::<crate::layer1::shipbreaking::MineEvent>,
             update_event_buffer::<crate::layer2::moon_hermits::PopDesertedEvent>,

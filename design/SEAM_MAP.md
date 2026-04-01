@@ -574,3 +574,13 @@
     - `reverse_quarantine_chronicle_bridge` in `src/layer2/integration.rs` converts `RefugeeFleetEvent` (when rejected) to `AddChronicleEvent` with `EventImportance::Major`.
 - **Schedule:** Chained in `Layer2SystemSet` after `process_refugee_decisions_system`.
 - **Tests:** `tests/integration/reverse_quarantine_bridge.rs`
+
+### INT-562: Justice System Main Loop
+- **Date:** 2026-04-01
+- **Systems connected:** `CrimeCommittedEvent` -> `process_crimes_system`, `PardonIssuedEvent` -> `process_pardons_system`, `Wanted` pops -> `sheriff_arrest_system`
+- **Glue added:**
+    - Registered `process_crimes_system`, `process_pardons_system` in `Layer1SystemSet::Observation`
+    - Registered `sheriff_arrest_system` in `Layer1SystemSet::Execution`
+    - Initialized event buffers in `src/simulation.rs` and cleanup in `src/layer1/systems/cleanup.rs`
+- **Schedule:** Properly interleaved in observation and execution phases
+- **Tests:** `tests/integration/justice_system_bridge.rs` (1 test verified)

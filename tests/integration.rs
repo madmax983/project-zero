@@ -1,4 +1,6 @@
 #![allow(missing_docs)]
+#[path = "integration/justice_system_bridge.rs"]
+mod justice_system_bridge;
 #[path = "integration/ui_stats.rs"]
 mod ui_stats;
 

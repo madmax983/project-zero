@@ -306,6 +306,12 @@ pub fn run_simulation_tick(world: &mut World) {
     if !world.contains_resource::<Events<crate::layer2::trade::blockade::TradeShipArrivalEvent>>() {
         world.init_resource::<Events<crate::layer2::trade::blockade::TradeShipArrivalEvent>>();
     }
+    if !world.contains_resource::<Events<crate::layer1::law::justice::CrimeCommittedEvent>>() {
+        world.init_resource::<Events<crate::layer1::law::justice::CrimeCommittedEvent>>();
+    }
+    if !world.contains_resource::<Events<crate::layer1::law::justice::PardonIssuedEvent>>() {
+        world.init_resource::<Events<crate::layer1::law::justice::PardonIssuedEvent>>();
+    }
     if !world.contains_resource::<Events<crate::layer2::trade::escape_velocity::LaunchShipEvent>>()
     {
         world.init_resource::<Events<crate::layer2::trade::escape_velocity::LaunchShipEvent>>();
@@ -518,6 +524,8 @@ mod tests {
         world.init_resource::<crate::layer2::phantom::EmpireAutomationState>();
         world.init_resource::<Events<crate::layer2::trade::blockade::TradeShipArrivalEvent>>();
         world.init_resource::<Events<crate::layer2::trade::escape_velocity::LaunchShipEvent>>();
+        world.init_resource::<Events<crate::layer1::law::justice::CrimeCommittedEvent>>();
+        world.init_resource::<Events<crate::layer1::law::justice::PardonIssuedEvent>>();
         world.init_resource::<crate::layer2::trade::blockade::ColonyDebt>();
 
         world.init_resource::<Events<crate::layer3::events::debt_prison::BailoutOfferEvent>>();

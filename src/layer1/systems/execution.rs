@@ -137,7 +137,14 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::hum::execute_listen_to_hum_system.after(arrival_handler_system),
             crate::layer1::clutter::clutter_cleaning_system.after(arrival_handler_system),
             crate::layer1::tech::ghost_code::purge_execution_system.after(arrival_handler_system),
+        )
+            .in_set(Layer1SystemSet::Execution),
+    );
+
+    schedule.add_systems(
+        (
             crate::layer1::tech::martyrs_engine::attune_engine_system.after(arrival_handler_system),
+            crate::layer1::law::justice::sheriff_arrest_system.after(combat_execution_system),
             crate::layer1::tech::harmonic::process_harmonic_mining.after(arrival_handler_system),
         )
             .in_set(Layer1SystemSet::Execution),

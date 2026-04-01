@@ -116,6 +116,10 @@ pub fn register(schedule: &mut Schedule) {
         (
             crate::layer1::law::justice::check_crime_system
                 .after(crate::layer1::unrest::check_mental_break_system),
+            crate::layer1::law::justice::process_crimes_system
+                .after(crate::layer1::law::justice::check_crime_system),
+            crate::layer1::law::justice::process_pardons_system
+                .after(crate::layer1::law::justice::process_crimes_system),
             crate::layer1::law::contraband::detect_contraband_system
                 .after(crate::layer1::law::justice::check_crime_system),
             crate::layer1::unrest::recover_mental_break_system.after(decay_needs_system),
@@ -128,6 +132,12 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::law::predictive_policing::check_prediction_system
                 .after(decay_needs_system),
             crate::layer1::social::grievances::post_grievance_system.after(decay_needs_system),
+        )
+            .in_set(Layer1SystemSet::Observation),
+    );
+
+    schedule.add_systems(
+        (
             crate::layer1::social::grievances::read_board_system.after(decay_needs_system),
             crate::layer1::social::cultural_vandalism::vandalism_system.after(decay_needs_system),
             crate::layer1::social::cultural_vandalism::update_structure_buffs
