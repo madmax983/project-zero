@@ -10,6 +10,7 @@ use crate::shared::log::MessageLog;
 use bevy_ecs::prelude::*;
 use ratatui::style::Color;
 
+pub mod lithovore;
 /// Modular fauna components (Spec 164).
 pub mod modular;
 pub mod shadow;

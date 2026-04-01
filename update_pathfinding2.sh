@@ -1,0 +1,1 @@
+sed -i 's/fn is_walkable(/fn is_walkable(\n    pos: (i32, i32),\n    world: \&World,\n    terrain: \&TerrainGrid,\n    occupied: Option<\&OccupiedTiles>,\n    building_map: \&BuildingMap,\n    can_use_vents: bool,\n    credentials: Option<\&AccessCredentials>,\n    is_target: bool,\n    can_eat_rock: bool,\n) -> bool {/g' src/layer1/pathfinding.rs

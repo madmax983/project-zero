@@ -114,7 +114,7 @@ impl PartialOrd for Node {
 /// assert_eq!(p.last(), Some(&(2, 0)));
 /// ```
 pub fn find_path(world: &World, start: (i32, i32), end: (i32, i32)) -> Option<Vec<(i32, i32)>> {
-    find_path_internal(world, start, end, false, None)
+    find_path_internal(world, start, end, false, None, false)
 }
 
 /// Finds a path for a specific Pop, considering their access rights.
@@ -161,7 +161,17 @@ pub fn find_path_for_pop(
 ) -> Option<Vec<(i32, i32)>> {
     let role = world.get::<Role>(pop).copied();
     let credentials = Some(AccessCredentials { entity: pop, role });
-    find_path_internal(world, start, end, false, credentials.as_ref())
+    find_path_internal(world, start, end, false, credentials.as_ref(), false)
+}
+
+/// Finds a path for a specific entity type, considering unique capabilities like eating rock.
+pub fn find_path_for_lithovore(
+    world: &World,
+    start: (i32, i32),
+    end: (i32, i32),
+    can_eat_rock: bool,
+) -> Option<Vec<(i32, i32)>> {
+    find_path_internal(world, start, end, false, None, can_eat_rock)
 }
 
 /// Finds a path for a specific entity type, considering unique capabilities.
@@ -182,7 +192,7 @@ pub fn find_path_for_entity<T: Component>(
 ) -> Option<Vec<(i32, i32)>> {
     let can_use_vents =
         std::any::TypeId::of::<T>() == std::any::TypeId::of::<crate::layer1::vermin::Vermin>();
-    find_path_internal(world, start, end, can_use_vents, None)
+    find_path_internal(world, start, end, can_use_vents, None, false)
 }
 
 /// Internal A* implementation.
@@ -195,6 +205,7 @@ fn find_path_internal(
     end: (i32, i32),
     can_use_vents: bool,
     credentials: Option<&AccessCredentials>,
+    can_eat_rock: bool,
 ) -> Option<Vec<(i32, i32)>> {
     let terrain = world.resource::<TerrainGrid>();
     let occupied = world.get_resource::<OccupiedTiles>();
@@ -284,6 +295,7 @@ fn find_path_internal(
                 can_use_vents,
                 credentials,
                 next == end,
+                can_eat_rock,
             ) {
                 continue;
             }
@@ -356,6 +368,7 @@ fn is_walkable(
     can_use_vents: bool,
     credentials: Option<&AccessCredentials>,
     _is_target: bool,
+    can_eat_rock: bool,
 ) -> bool {
     let (x, y) = pos;
 
@@ -368,7 +381,11 @@ fn is_walkable(
     };
 
     if !terrain.get(ux, uy).is_some_and(TerrainType::is_walkable) {
-        return false;
+        if can_eat_rock && terrain.get(ux, uy) == Some(TerrainType::Rock) {
+            // Lithovores can walk on rock
+        } else {
+            return false;
+        }
     }
 
     // 2. Check Occupied Tiles

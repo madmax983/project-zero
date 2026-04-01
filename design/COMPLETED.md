@@ -252,3 +252,4 @@
 - [x] `467` Psychic Background Radiation — `specs/467-psychic-background-radiation.md` — completed 2024-03-24
 - [x] `484` Civic Ideology — `specs/484-civic-ideology.md` — completed 2026-03-17
 - [x] `486` Debt-Prison Colonies — `specs/486-debt-prison-colonies.md` — completed 2026-03-02
+- [x] `499` Lithovore Husbandry — `specs/499-lithovore-husbandry.md` — completed 2026-04-01

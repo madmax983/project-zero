@@ -227,7 +227,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `496` Sub-Orbital Piracy — `specs/496-sub-orbital-piracy.md`
 - [ ] `497` The Chrono-Clone — `specs/497-the-chrono-clone.md`
 - [ ] `498` Nomadic Architecture — `specs/498-nomadic-architecture.md`
-- [ ] `499` Lithovore Husbandry — `specs/499-lithovore-husbandry.md`
 - [ ] `500` The Empathic Grid — `specs/500-the-empathic-grid.md`
 - [ ] `501` Void-Tethered Fleets — `specs/501-void-tethered-fleets.md`
 - [ ] `502` Parasitic Sentience — `specs/502-parasitic-sentience.md`

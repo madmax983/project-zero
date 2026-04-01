@@ -14,7 +14,8 @@ mod tests {
         let mut world = World::new();
         let mut schedule = Schedule::default();
         schedule.add_systems(update_living_stone_system);
-        world.insert_resource(SimulationTime { speed: crate::shared::time::SimSpeed::Normal,
+        world.insert_resource(SimulationTime {
+            speed: crate::shared::time::SimSpeed::Normal,
             tick: 1000,
             ..Default::default()
         });
@@ -63,7 +64,8 @@ mod tests {
     #[test]
     fn test_living_stone_heat_attraction() {
         let mut world = World::new();
-        world.insert_resource(SimulationTime { speed: crate::shared::time::SimSpeed::Normal,
+        world.insert_resource(SimulationTime {
+            speed: crate::shared::time::SimSpeed::Normal,
             tick: 1000,
             ..Default::default()
         });

@@ -1,0 +1,1 @@
+sed -i 's/fn find_path_internal(/fn find_path_internal(\n    world: \&World,\n    start: (i32, i32),\n    end: (i32, i32),\n    can_use_vents: bool,\n    credentials: Option<\&AccessCredentials>,\n    can_eat_rock: bool,\n) -> Option<Vec<(i32, i32)>> {/g' src/layer1/pathfinding.rs
