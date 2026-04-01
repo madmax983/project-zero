@@ -13215,3 +13215,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** The incredible, underhanded economic power of bio-engineered market manipulation vs. the extreme diplomatic and military fallout if your biological sabotage is discovered by a major superpower.
 
 ---
+## The Nostalgia Black Market
+
+**Layer:** Cross-layer (1 -> 3)
+
+**Fantasy:** Profiting off a society's desperate need to remember a time before the war.
+
+**Mechanic:** Pops on deeply traumatized colonies (e.g., recovering from orbital bombardment or famine) develop a hidden "Nostalgia" need. Cunning smugglers can manufacture fake or genuine artifacts from the colony's "Golden Age" (Layer 3) and secretly import them (Layer 2). These artifacts temporarily massively boost morale but create a long-term dependency.
+
+**Emergence:** Your recovering fortress world's economy suddenly booms, and everyone is happy. You investigate and discover they're all spending their wages on illegally imported, mass-produced snow globes depicting their destroyed original homeworld, enriching a rival empire's manufacturing sector.
+
+**Tension:** Crack down on the smuggling ring and face an immediate, crippling depression and possible riots, or let your rival empire slowly drain your economy while keeping your population artificially docile.
+
+---
+
+## Orbital Debris Warfare
+
+**Layer:** Cross-layer (2 -> 1)
+
+**Fantasy:** Turning your own garbage into a planetary defense system.
+
+**Mechanic:** Instead of cleaning up destroyed ships and satellite debris (Layer 2), you can intentionally alter their orbits to create an impassable Kessler Syndrome shell around your planet. This blocks all incoming trade, orbital drops, and invasions. However, as the debris decays, it randomly strikes your own colony (Layer 1) as catastrophic meteor showers.
+
+**Emergence:** You are massively outgunned by an invading fleet. In desperation, you detonate your own orbital shipyards, creating a shield of jagged metal. The enemy fleet is shredded trying to pass through. You survive, but now you are trapped on a world where it rains burning steel every Tuesday, slowly destroying your infrastructure.
+
+**Tension:** The ultimate, impenetrable defense against superior fleets vs. completely cutting off your colony from the galaxy and subjecting it to perpetual, self-inflicted bombardment.
+
+---
+
+## The Bureaucratic Martyrdom
+
+**Layer:** 1
+
+**Fantasy:** A single clerk dying at their desk to save the colony from administrative collapse.
+
+**Mechanic:** When administrative tasks (e.g., organizing emergency rations, processing riot police deployment) are critically backlogged, a highly stressed Pop with the "Loyal" or "Workaholic" trait might trigger a "Martyrdom" state. They will refuse sleep, food, and medicine to process the paperwork at 500% efficiency, eventually dying of sheer exhaustion at their desk.
+
+**Emergence:** A famine hits, and the food distribution system breaks down due to missing paperwork. Just as the colony is about to riot, a single clerk stays at their desk for six days straight, routing all the food correctly. The colony is saved, but the clerk dies. Their death triggers a massive, spontaneous "Golden Age" memory for the entire colony, permanently making the clerk a local folk hero.
+
+**Tension:** Forcing an administrative override to solve a crisis instantly vs. letting the system slowly resolve itself, knowing that pushing the override might literally kill your best workers.
+
+---
