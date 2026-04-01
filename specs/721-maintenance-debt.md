@@ -140,5 +140,7 @@ pub fn process_maintenance_debt(
 - If an explosion system exists, route the failure event into it.
 
 ## 8. Questions
-- Should deferred maintenance lower building output efficiency?
-- How fast should debt accumulate relative to standard simulation ticks?
+- *Builder: Should deferred maintenance lower building output efficiency?*
+- *Architect:* Not for the MVP. The building continues to function at 100% efficiency until it suffers Catastrophic Failure.
+- *Builder: How fast should debt accumulate relative to standard simulation ticks?*
+- *Architect:* The accumulation rate is defined by the `accumulation_rate` field, which should be balanced during gameplay testing, but for tests, using a static float like 5.0 per tick is sufficient.
