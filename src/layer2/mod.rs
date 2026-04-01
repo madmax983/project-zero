@@ -18,6 +18,7 @@ pub mod render;
 pub mod shielding;
 pub mod ship;
 pub mod station;
+pub mod stellar_forge;
 pub mod system;
 pub mod thermal;
 #[cfg(test)]

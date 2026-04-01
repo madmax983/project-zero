@@ -29,6 +29,12 @@ impl Default for Inventory {
 }
 
 impl Inventory {
+    /// Creates a new Inventory with the default capacity.
+    #[must_use]
+    pub fn new() -> Self {
+        Self::default()
+    }
+
     /// Adds an item to the inventory.
     ///
     /// # Deprecated
@@ -48,6 +54,45 @@ impl Inventory {
         }
         self.items.push(item);
         true
+    }
+
+    /// Checks if the inventory contains at least one item of the given type.
+    #[must_use]
+    pub fn has_item(&self, item_type: ItemType) -> bool {
+        self.items.iter().any(|item| item.item_type == item_type)
+    }
+
+    /// Gets the count of items of the given type in the inventory.
+    #[must_use]
+    pub fn get_count(&self, item_type: ItemType) -> usize {
+        self.items
+            .iter()
+            .filter(|item| item.item_type == item_type)
+            .count()
+    }
+
+    /// Removes a specific amount of items of the given type from the inventory.
+    pub fn remove(&mut self, item_type: ItemType, mut count: usize) {
+        self.items.retain(|item| {
+            if count > 0 && item.item_type == item_type {
+                count -= 1;
+                false
+            } else {
+                true
+            }
+        });
+    }
+
+    /// Helper to add a specific amount of items of the given type.
+    pub fn add_count(&mut self, item_type: ItemType, count: usize) {
+        for _ in 0..count {
+            if !self.try_add(InventoryItem {
+                item_type,
+                entity: None,
+            }) {
+                break;
+            }
+        }
     }
 }
 

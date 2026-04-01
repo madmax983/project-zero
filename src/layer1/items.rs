@@ -149,6 +149,12 @@ pub enum ItemType {
     LivingStone,
     /// Scrap metal recovered from clutter.
     Scrap,
+    /// Unrefined raw mass extracted from stellar bodies.
+    RawMass,
+    /// Coolant used to manage thermal stress.
+    Coolant,
+    /// Advanced alloy forged near a star.
+    StellarAlloy,
 }
 
 impl ItemType {

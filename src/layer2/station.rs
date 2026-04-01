@@ -14,6 +14,8 @@ pub enum StationType {
     MiningPlatform,
     /// A facility for ship construction and repair.
     Shipyard,
+    /// A specialized orbital forge that produces Stellar Alloys using star heat.
+    StellarForge,
 }
 
 impl StationType {
@@ -24,6 +26,7 @@ impl StationType {
             Self::Outpost => vec![(ResourceType::Metal, 50.0)],
             Self::MiningPlatform => vec![(ResourceType::Metal, 100.0), (ResourceType::Fuel, 10.0)],
             Self::Shipyard => vec![(ResourceType::Metal, 200.0), (ResourceType::Fuel, 50.0)],
+            Self::StellarForge => vec![(ResourceType::Metal, 500.0), (ResourceType::Fuel, 100.0)],
         }
     }
 
@@ -34,6 +37,7 @@ impl StationType {
             Self::Outpost => "Outpost",
             Self::MiningPlatform => "Mining Platform",
             Self::Shipyard => "Shipyard",
+            Self::StellarForge => "Stellar Forge",
         }
     }
 
@@ -44,6 +48,7 @@ impl StationType {
             Self::Outpost => '+',
             Self::MiningPlatform => '⚒',
             Self::Shipyard => '⚓',
+            Self::StellarForge => '☼',
         }
     }
 }
