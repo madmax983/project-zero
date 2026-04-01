@@ -198,6 +198,7 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::shipbreaking::mine_system.after(arrival_handler_system),
             crate::layer1::shipbreaking::hull_destroyed_system
                 .after(crate::layer1::shipbreaking::mine_system),
+            crate::layer1::grafting::process_grafting,
         )
             .in_set(Layer1SystemSet::Execution),
     );

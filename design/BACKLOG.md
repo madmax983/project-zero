@@ -2,7 +2,7 @@
 
 ## High Priority
 
-- [ ] `774` Architectural Grafting — `specs/774-architectural-grafting.md`
+
 - [ ] `775` The Quantum Famine — `specs/775-the-quantum-famine.md`
 - [ ] `776` Black Market Terraforming — `specs/776-black-market-terraforming.md`
 - [ ] `777` The Void Whispers — `specs/777-the-void-whispers.md`
