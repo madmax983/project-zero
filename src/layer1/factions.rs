@@ -81,6 +81,8 @@ pub enum FactionId {
     Unaligned,
     /// Faction for criminals from neighboring empire bailing out debt.
     Cartel,
+    /// Faction for Symbiont Spore infected pops.
+    Symbiont,
 }
 
 /// Data associated with a faction.

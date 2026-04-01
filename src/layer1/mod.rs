@@ -744,3 +744,7 @@ pub use exodus::*;
 pub mod disasters;
 pub use disasters::*;
 pub mod environment;
+
+/// Symbiont Spores system (Spec 556).
+pub mod symbiont_spores;
+pub use symbiont_spores::*;

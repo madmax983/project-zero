@@ -13,3 +13,12 @@ pub enum GameState {
     /// The game is in the process of shutting down.
     Quitting,
 }
+
+use bevy_ecs::event::Event;
+
+/// Event emitted when the game ends.
+#[derive(Event, Debug, Clone, PartialEq, Eq)]
+pub enum GameOverEvent {
+    /// The colony was fully assimilated by Symbiont Spores.
+    SymbiontAssimilation,
+}
