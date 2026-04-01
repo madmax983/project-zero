@@ -95,19 +95,32 @@ impl NoiseMap {
     /// Returns 0.0 if out of bounds.
     #[must_use]
     pub fn get(&self, x: i32, y: i32) -> f32 {
-        if x < 0 || y < 0 || x >= self.width as i32 || y >= self.height as i32 {
+        if x < 0 || y < 0 || (x as usize) >= self.width || (y as usize) >= self.height {
             return 0.0;
         }
-        self.values[(y as usize) * self.width + (x as usize)]
+        let idx = (y as usize)
+            .checked_mul(self.width)
+            .and_then(|i| i.checked_add(x as usize));
+
+        if let Some(idx) = idx.filter(|&i| i < self.values.len()) {
+            return self.values[idx];
+        }
+        0.0
     }
 
     /// Sets the noise value at the given coordinates.
     /// Clamps value between 0.0 and 1.0.
     pub fn set(&mut self, x: i32, y: i32, val: f32) {
-        if x < 0 || y < 0 || x >= self.width as i32 || y >= self.height as i32 {
+        if x < 0 || y < 0 || (x as usize) >= self.width || (y as usize) >= self.height {
             return;
         }
-        self.values[(y as usize) * self.width + (x as usize)] = val.clamp(0.0, 1.0);
+        let idx = (y as usize)
+            .checked_mul(self.width)
+            .and_then(|i| i.checked_add(x as usize));
+
+        if let Some(idx) = idx.filter(|&i| i < self.values.len()) {
+            self.values[idx] = val.clamp(0.0, 1.0);
+        }
     }
 }
 

@@ -91,7 +91,14 @@ impl PressureGrid {
         if ux >= self.width || uy >= self.height {
             return 0.0;
         }
-        self.values[uy * self.width + ux]
+        let idx = uy
+            .checked_mul(self.width)
+            .and_then(|i| i.checked_add(ux));
+
+        if let Some(idx) = idx.filter(|&i| i < self.values.len()) {
+            return self.values[idx];
+        }
+        0.0
     }
 
     /// Set pressure at (x, y). Clamped between 0.0 and 1.0.
@@ -105,7 +112,13 @@ impl PressureGrid {
         if ux >= self.width || uy >= self.height {
             return;
         }
-        self.values[uy * self.width + ux] = value.clamp(0.0, 1.0);
+        let idx = uy
+            .checked_mul(self.width)
+            .and_then(|i| i.checked_add(ux));
+
+        if let Some(idx) = idx.filter(|&i| i < self.values.len()) {
+            self.values[idx] = value.clamp(0.0, 1.0);
+        }
     }
 
     /// Add pressure at (x, y). Clamped to max 1.0.
