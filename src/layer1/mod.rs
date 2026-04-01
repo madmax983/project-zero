@@ -44,14 +44,15 @@ pub mod ad_screen;
 pub mod admin;
 /// AI Core system (Spec 148).
 pub mod ai_core;
-/// Biometric access control system (Spec 142).
-pub mod ancestral_graves;
 /// Game balance constants.
 pub mod balance;
 /// Beauty and decoration system.
 pub mod beauty;
 /// Pop biography system.
 pub mod biography;
+/// Cultural, Religious, and Belief systems.
+pub mod culture;
+pub use culture::*;
 /// Building placement and types.
 pub mod building;
 pub mod chronicle;
@@ -206,9 +207,6 @@ pub use tech::*;
 mod tool_tests;
 pub use clothing::*;
 
-/// Totems and superstition system (Spec 200).
-pub mod totems;
-pub use totems::*;
 
 /// Lighting system.
 pub mod lighting;
@@ -224,9 +222,6 @@ pub use lighting::*;
 pub mod zone;
 pub use zone::*;
 
-/// Funeral rites and corpse management (Spec 057).
-pub mod funeral;
-pub use funeral::*;
 
 /// Trade system.
 /// Energy system (Spec 042).
@@ -254,10 +249,7 @@ pub use ruins::*;
 /// Hostile Fauna (Spec 048).
 pub mod fauna;
 pub use fauna::*;
-/// Cultural Artifacts and Statues.
-pub mod art;
 /// Procedural Fauna Generation (Spec 164).
-pub use art::*;
 /// Combat system and drafting logic.
 pub mod combat;
 /// Visitor system (Spec 074).
@@ -409,10 +401,7 @@ pub mod constellations;
 #[cfg(feature = "nova")]
 pub use constellations::*;
 
-/// Xeno-Artifacts system (Spec 156).
-pub mod artifacts;
 pub mod tech_envy;
-pub use artifacts::*;
 
 /// Drone Networks (Spec 116).
 /// The Observer Effect (Nova Feature).
@@ -463,9 +452,6 @@ pub use cryo::*;
 #[cfg(test)]
 mod cryo_tests;
 
-/// Emergent Festivals system (Spec 077).
-pub mod festivals;
-pub use festivals::*;
 /// Radioactive system (Spec 191).
 /// Company Scrip and Economy system (Spec 194).
 /// Language and Dialect system (Spec 193).
