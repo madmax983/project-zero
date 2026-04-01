@@ -99,7 +99,7 @@ pub fn flora_spread_system(
     let mut rng = rand::thread_rng();
 
     // Cache occupied positions for speed
-    let occupied: std::collections::HashSet<(i32, i32)> =
+    let occupied: bevy_utils::HashSet<(i32, i32)> =
         other_flora.iter().map(|p| (p.x, p.y)).collect();
 
     for (mut flora, pos) in &mut query {

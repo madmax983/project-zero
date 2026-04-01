@@ -17,3 +17,7 @@
 **Optimize Trade Market lookups by avoiding full HashMap clone**
 **Learning:** `world.get_resource::<TradeMarket>().map(|m| m.items.clone())` causes an O(N) heap allocation of the entire market items HashMap every time a merchant might arrive.
 **Action:** Used `world.get_resource::<TradeMarket>().map(|m| &m.items)` to keep an immutable reference instead, preventing unnecessary heap allocations and leveraging zero-cost abstractions for read-only access.
+
+## Fast Integer Keys using AHash
+**Learning:** `std::collections::HashSet` uses SipHash, which is secure but slow for hashing small integers like `(i32, i32)` grid coordinates.
+**Action:** Replace `std::collections::HashSet` with `bevy_utils::HashSet` (which uses AHash/FxHash) when repeatedly constructing sets of small integers or entity IDs.

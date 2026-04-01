@@ -53,7 +53,7 @@ use crate::layer1::map::GridPosition;
 use crate::layer1::pop::Pop;
 use crate::layer1::pressure::PressureGrid;
 use bevy_ecs::prelude::*;
-use std::collections::HashSet;
+use bevy_utils::HashSet;
 
 /// System to simulate explosive decompression suction.
 /// Entities are moved from high pressure to low pressure if the gradient is steep enough.
