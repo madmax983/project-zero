@@ -2,7 +2,6 @@
 
 ## High Priority
 
-- [ ] `773` Stellar Weather Navigation — `specs/773-stellar-weather-navigation.md`
 - [ ] `774` Architectural Grafting — `specs/774-architectural-grafting.md`
 - [ ] `775` The Quantum Famine — `specs/775-the-quantum-famine.md`
 - [ ] `776` Black Market Terraforming — `specs/776-black-market-terraforming.md`

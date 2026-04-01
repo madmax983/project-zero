@@ -319,3 +319,4 @@
 - [x] `INT-546` Integration: Reverse Quarantine -> Chronicle — completed 2026-04-01
 - [x] `766` Relativistic Time Dilation — `specs/766-relativistic-time-dilation.md` — completed 2026-04-02
 - [x] `772` The Biomass Commute — `specs/772-the-biomass-commute.md` — completed 2026-03-31
+- [x] `773` Stellar Weather Navigation — `specs/773-stellar-weather-navigation.md` — completed 2026-04-01

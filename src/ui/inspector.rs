@@ -886,7 +886,8 @@ fn render_extra_info(
     world: &World,
     entity: Entity,
 ) {
-    let extra_idx = 0;
+    #[allow(unused_mut)]
+    let mut extra_idx = 0;
     let extra_chunks = Layout::default()
         .direction(Direction::Vertical)
         .constraints(vec![Constraint::Length(1); extra_height as usize])
