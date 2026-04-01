@@ -204,7 +204,12 @@ pub fn decay_needs_system(
         let hunger_decay = base_hunger_decay * hunger_trait_mod;
 
         let leisure_trait_mod = traits.map_or(1.0, get_trait_leisure_decay_modifier);
-        let leisure_decay = LEISURE_DECAY_PER_TICK * leisure_trait_mod;
+        let leisure_decay =
+            if traits.is_some_and(|t| t.0.contains(&crate::layer1::traits::Trait::Synth)) {
+                0.0
+            } else {
+                LEISURE_DECAY_PER_TICK * leisure_trait_mod
+            };
 
         needs.hunger = (needs.hunger - hunger_decay).max(0.0);
         needs.rest = (needs.rest - REST_DECAY_PER_TICK).max(0.0);

@@ -8,6 +8,9 @@ use strum_macros::EnumIter;
 /// finding a designation, walking to it, and performing the task until complete.
 #[derive(Clone, Copy, PartialEq, Eq, Hash, Debug, EnumIter)]
 pub enum ActionType {
+    ExtinguishFire,
+    TreatWounds,
+    Flee,
     /// Eat food to reduce hunger.
     ///
     /// See [`crate::layer1::actions::hunger::evaluate_satisfy_hunger`].
@@ -167,13 +170,20 @@ pub enum HobbyType {
 
 impl ActionType {
     /// Total number of action types. Used for array sizing.
-    pub const COUNT: usize = 39;
+    pub const COUNT: usize = 42;
+
+    pub const fn is_emergency(&self) -> bool {
+        matches!(self, Self::ExtinguishFire | Self::TreatWounds | Self::Flee)
+    }
 
     /// Converts action type to a unique array index (0..COUNT-1).
     #[must_use]
     pub const fn as_index(self) -> usize {
         match self {
             Self::SatisfyHunger => 0,
+            Self::ExtinguishFire => 39,
+            Self::TreatWounds => 40,
+            Self::Flee => 41,
             Self::SatisfyRest => 1,
             Self::Socialize => 2,
             Self::Explore => 3,
@@ -689,6 +699,14 @@ mod tests {
             (score_ignore - 1.0).abs() < f32::EPSILON,
             "Score should be 1.0 when weight is 0"
         );
+    }
+
+    #[test]
+    fn test_synth_pop_ignores_fire_emergency() {
+        assert!(ActionType::ExtinguishFire.is_emergency());
+        assert!(ActionType::TreatWounds.is_emergency());
+        assert!(ActionType::Flee.is_emergency());
+        assert!(!ActionType::Work.is_emergency());
     }
 }
 

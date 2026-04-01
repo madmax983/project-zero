@@ -8,6 +8,8 @@ use std::collections::HashSet;
 /// Trait enum defining possible personality quirks.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub enum Trait {
+    /// Basic "Synth" pop with apathy towards emergencies.
+    Synth,
     /// +20% Work Speed.
     HardWorker,
     /// -20% Work Speed.
@@ -97,6 +99,7 @@ impl Trait {
     #[must_use]
     pub const fn label(&self) -> &'static str {
         match self {
+            Self::Synth => "Synth",
             Self::HardWorker => "Hard Worker",
             Self::Lazy => "Lazy",
             Self::Glutton => "Glutton",
@@ -171,6 +174,7 @@ impl Traits {
 
         // Pool of all traits
         let pool = [
+            Trait::Synth,
             Trait::HardWorker,
             Trait::Lazy,
             Trait::Glutton,

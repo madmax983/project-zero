@@ -707,7 +707,16 @@ pub(crate) fn evaluate_single_pop(
 
     // 3. Normal evaluation (undrafted, sane)
     let decider = PopDecider::new(data, buffer, context);
-    decider.run()
+    let (action, mut utility, target) = decider.run();
+    if data
+        .traits
+        .as_ref()
+        .is_some_and(|t| t.0.contains(&Trait::Synth))
+        && action.is_emergency()
+    {
+        utility = 0.0;
+    }
+    (action, utility, target)
 }
 
 fn run_evaluations(
