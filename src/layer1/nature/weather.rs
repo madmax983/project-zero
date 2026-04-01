@@ -199,6 +199,85 @@ pub fn apply_weather_effects_system(mut pops: Query<&mut Speed>, weather: Res<We
 
 #[cfg(test)]
 mod tests {
+
+
+    // StepRng generates values by starting at `initial` and adding `increment` each time.
+    // For f32 mapping (0.0..1.0), it uses next_u32.
+    // If we want a specific f32 `x` between 0 and 1, we set next_u32 to `x * 2^32`.
+    // Or we can just use `rand_pcg::Pcg32` with different seeds to find the ones that map to our targets,
+    // but building our own `RngCore` is easiest if we do it right.
+
+    use rand::rngs::StdRng;
+    use rand::SeedableRng;
+
+    #[test]
+    fn test_pick_weather_for_season_table_driven() {
+        // We dynamically find seeds that produce exact float ranges to avoid
+        // hardcoding brittle seeds or trying to reverse engineer rand math.
+
+        let mut bucket_seeds = [0u64; 9];
+        let targets = [
+            (0.0, 0.35), // < 0.4
+            (0.4, 0.48), // < 0.5
+            (0.5, 0.58), // < 0.6
+            (0.6, 0.68), // < 0.7
+            (0.7, 0.78), // < 0.8
+            (0.81, 0.84), // < 0.85
+            (0.86, 0.89), // < 0.9
+            (0.91, 0.94), // < 0.95
+            (0.96, 0.99), // >= 0.95
+        ];
+
+        for (i, (min, max)) in targets.iter().enumerate() {
+            for seed in 0..100000 {
+                let mut rng = StdRng::seed_from_u64(seed);
+                // pick_weather_for_season calls `rng.gen_range(0.0..1.0)` but Rust infers
+                // it is `f64` since the literal is `0.0..1.0` unless specified! Let's check `pick_weather_for_season`.
+                // Wait, it says: `let roll = rng.gen_range(0.0..1.0);`
+                // Rust infers `roll` type from usage: `roll < 0.6`. `0.6` is f64 by default.
+                // Ah, the constants in the function are `0.6`, not `0.6_f32`.
+                // Let's just generate using the exact same generic call.
+                let val: f64 = rng.gen_range(0.0..1.0);
+                if val >= *min && val <= *max {
+                    bucket_seeds[i] = seed;
+                    break;
+                }
+            }
+        }
+
+        let cases = vec![
+            // Spring (Roll < 0.6, < 0.9)
+            (Season::Spring, bucket_seeds[2], WeatherType::Clear),  // 0.5 - 0.58
+            (Season::Spring, bucket_seeds[4], WeatherType::Rain),   // 0.7 - 0.78
+            (Season::Spring, bucket_seeds[8], WeatherType::Fog),    // 0.96 - 0.99
+
+            // Summer (Roll < 0.7, < 0.85, < 0.95)
+            (Season::Summer, bucket_seeds[3], WeatherType::Clear),         // 0.6 - 0.68
+            (Season::Summer, bucket_seeds[4], WeatherType::Heatwave),      // 0.7 - 0.78
+            (Season::Summer, bucket_seeds[7], WeatherType::Storm),         // 0.91 - 0.94
+            (Season::Summer, bucket_seeds[8], WeatherType::MagneticStorm), // 0.96 - 0.99
+
+            // Autumn (Roll < 0.5, < 0.8)
+            (Season::Autumn, bucket_seeds[1], WeatherType::Clear),  // 0.4 - 0.48
+            (Season::Autumn, bucket_seeds[4], WeatherType::Rain),   // 0.7 - 0.78
+            (Season::Autumn, bucket_seeds[5], WeatherType::Fog),    // 0.81 - 0.84
+
+            // Winter (Roll < 0.4, < 0.8, < 0.9, < 0.95)
+            (Season::Winter, bucket_seeds[0], WeatherType::Clear),            // 0.0 - 0.35
+            (Season::Winter, bucket_seeds[4], WeatherType::Snow),             // 0.7 - 0.78
+            (Season::Winter, bucket_seeds[6], WeatherType::ThermalInversion), // 0.86 - 0.89
+            (Season::Winter, bucket_seeds[7], WeatherType::Storm),            // 0.91 - 0.94
+            (Season::Winter, bucket_seeds[8], WeatherType::MagneticStorm),    // 0.96 - 0.99
+        ];
+
+        for (season, seed, expected) in cases {
+            let mut rng = StdRng::seed_from_u64(seed);
+            let result = pick_weather_for_season(season, &mut rng);
+            assert_eq!(result, expected, "Failed for Season: {:?}, Seed: {}", season, seed);
+        }
+    }
+
+
     use super::*;
     use crate::layer1::chronicle::Chronicle;
     use crate::layer1::pop::{Pop, Speed};
@@ -227,7 +306,7 @@ mod tests {
         // Need to add events resource for Chronicle to work
         world.init_resource::<Events<crate::layer1::chronicle::AddChronicleEvent>>();
 
-        world.run_system_once(update_weather_system).unwrap();
+        world.run_system_once(update_weather_system).expect("Failed to run update_weather_system");
 
         let state = world.resource::<WeatherState>();
         assert_eq!(state.duration_remaining, initial_duration - 1);
@@ -252,7 +331,7 @@ mod tests {
         // For RED phase, just running it and checking state change or event is enough.
         // Since we can't mock RNG easily without dependency injection, we'll check logic flow.
 
-        world.run_system_once(update_weather_system).unwrap();
+        world.run_system_once(update_weather_system).expect("Failed to run update_weather_system");
 
         let state = world.resource::<WeatherState>();
         // Duration should be reset to > 0
@@ -282,9 +361,9 @@ mod tests {
             ))
             .id();
 
-        world.run_system_once(apply_weather_effects_system).unwrap();
+        world.run_system_once(apply_weather_effects_system).expect("Failed to run apply_weather_effects_system");
 
-        let speed = world.get::<Speed>(pop).unwrap();
+        let speed = world.get::<Speed>(pop).expect("Pop should have Speed component");
         // Storm modifier is 0.5. 1.0 * 0.5 = 0.5.
         assert!((speed.current - 0.5).abs() < f32::EPSILON);
     }
@@ -310,9 +389,9 @@ mod tests {
             ))
             .id();
 
-        world.run_system_once(apply_weather_effects_system).unwrap();
+        world.run_system_once(apply_weather_effects_system).expect("Failed to run apply_weather_effects_system");
 
-        let speed = world.get::<Speed>(pop).unwrap();
+        let speed = world.get::<Speed>(pop).expect("Pop should have Speed component");
         // Should be 0.5 (current) * 0.5 (weather) = 0.25
         assert!(
             (speed.current - 0.25).abs() < f32::EPSILON,

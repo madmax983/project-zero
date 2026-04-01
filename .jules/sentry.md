@@ -22,3 +22,10 @@
 ## [evaluate_shower Coverage Improvements]
 **Learning:** When writing tests for ECS utility functions that rely on evaluating candidates (like `evaluate_shower`), accurately instantiating mock data like `ColonyResources` and `Needs` using their `Default` implementation ensures robust testing of early-exit logic (like insufficient water or high hygiene).
 **Action:** Continue using `..Default::default()` when mocking complex structs for targeted unit tests to minimize test setup boilerplate.
+**[Weather Selection RNG Coverage]**
+**Learning:** Testing logic that relies on `rand::Rng::gen_range(0.0..1.0)` for branching probabilities (like `pick_weather_for_season`) is highly brittle if you try to mock `RngCore` to reverse-engineer float generation math. `rand`'s internal bit-shifting changes across architectures and versions.
+**Action:** Always use a deterministic seeded PRNG like `rand::rngs::StdRng` and dynamically search for seeds that map to the desired probability buckets during the test setup, or hardcode pre-verified cross-platform seeds if performance is a concern.
+
+**[Refactoring Test Panics]**
+**Learning:** Legacy tests often use `unwrap()` on `World::run_system_once` or `World::get::<T>()` calls, leading to opaque "called `Result::unwrap()` on an `Err` value" or "Option::unwrap() on a None value" panics when refactoring breaks a system constraint.
+**Action:** Relentlessly replace `.unwrap()` with `.expect("[Specific reason why this should succeed]")` in the test suite to immediately pinpoint the point of failure when a refactor introduces a regression.
