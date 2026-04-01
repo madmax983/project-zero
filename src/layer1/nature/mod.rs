@@ -39,3 +39,5 @@ pub use weather::*;
 pub use wind::*;
 pub mod mutagenic_rain;
 pub use mutagenic_rain::*;
+pub mod megafauna_terrain;
+pub use megafauna_terrain::*;
