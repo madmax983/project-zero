@@ -42,6 +42,13 @@ pub fn build_simulation_schedule() -> Schedule {
 
     // --- Register Core Layer 1 Systems ---
     register_layer1_systems(&mut schedule);
+    // Black Market Terraforming
+    schedule.add_systems((
+        crate::layer3::planet::black_market_terraforming::trigger_rogue_terraforming,
+        crate::layer3::planet::black_market_terraforming::apply_rogue_terraforming_events,
+        crate::layer3::integration::black_market_terraforming_bridge,
+    ));
+
     // Whispering Ore
     schedule.add_systems((
         crate::layer1::whispering_ore::process_whispering_ore_system,
@@ -384,6 +391,7 @@ pub fn run_simulation_tick(world: &mut World) {
     }
     if !world.contains_resource::<Events<crate::layer1::grafting::GraftBuildingEvent>>() {
         world.init_resource::<Events<crate::layer1::grafting::GraftBuildingEvent>>();
+        world.init_resource::<Events<crate::layer3::planet::black_market_terraforming::RogueTerraformEvent>>();
         world.init_resource::<Events<crate::layer3::market::quantum_famine::MarketPanicEvent>>();
         world.init_resource::<Events<crate::layer3::market::quantum_famine::ExportDumpEvent>>();
     }
@@ -519,6 +527,7 @@ mod tests {
         world.init_resource::<Events<crate::layer2::moon_hermits::PopDesertedEvent>>();
         world.init_resource::<Events<crate::layer3::silence::HostileSpawnEvent>>();
         world.init_resource::<Events<crate::layer1::grafting::GraftBuildingEvent>>();
+        world.init_resource::<Events<crate::layer3::planet::black_market_terraforming::RogueTerraformEvent>>();
         world.init_resource::<Events<crate::layer3::market::quantum_famine::MarketPanicEvent>>();
         world.init_resource::<Events<crate::layer3::market::quantum_famine::ExportDumpEvent>>();
         if !world
@@ -567,6 +576,7 @@ mod tests {
         world.init_resource::<crate::layer3::market::GalacticMarket>();
         world.init_resource::<Events<crate::layer2::events_new::reverse_quarantine::RefugeeFleetEvent>>();
         world.init_resource::<Events<crate::layer1::grafting::GraftBuildingEvent>>();
+        world.init_resource::<Events<crate::layer3::planet::black_market_terraforming::RogueTerraformEvent>>();
         world.init_resource::<Events<crate::layer3::market::quantum_famine::MarketPanicEvent>>();
         world.init_resource::<Events<crate::layer3::market::quantum_famine::ExportDumpEvent>>();
         world

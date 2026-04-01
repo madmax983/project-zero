@@ -241,3 +241,5 @@ mod stellar_weather_bridge;
 
 #[path = "integration/architectural_grafting_bridge.rs"]
 mod architectural_grafting_bridge;
+#[path = "integration/black_market_terraforming_bridge.rs"]
+mod black_market_terraforming_bridge;
