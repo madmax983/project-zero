@@ -204,5 +204,7 @@ pub fn process_derelict_opening(
 - Use Bevy events (`AddChronicleEvent`) to record the outcome of opening the "mystery box".
 
 ## 8. Questions
-- Can players scrap the derelict in orbit for a minor, safe yield instead of towing it down?
-- What determines the scan accuracy? Can high-tech sensors reveal exactly what is inside?
+- *Builder: Can players scrap the derelict in orbit for a minor, safe yield instead of towing it down?*
+- *Architect:* Yes, but this should be handled in a future specification for orbital scrapping mechanics. The MVP should focus only on towing and ground-opening.
+- *Builder: What determines the scan accuracy? Can high-tech sensors reveal exactly what is inside?*
+- *Architect:* For the MVP, scan hints are static strings based on the contents (e.g., "Biologicals" always maps to Plague/Xenomorphs). Advanced sensor systems will be designed later.

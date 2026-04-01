@@ -177,5 +177,7 @@ pub fn process_fleet_movement_with_slingshot(
 - Orbit lines/UI pathing needs to calculate the slingshot vector ahead of time so the player knows what direction they are committing to.
 
 ## 8. Questions
-- How long does the momentum last? Just one tick/movement order?
-- Should gravity wells have varying "bands" of strength?
+- *Builder: How long does the momentum last? Just one tick/movement order?*
+- *Architect:* For the MVP, it lasts for exactly one tick/movement order, and the bonus is immediately consumed upon processing the movement.
+- *Builder: Should gravity wells have varying "bands" of strength?*
+- *Architect:* No, for simplicity in the MVP, the gravity well has a single radius and a uniform strength value. Advanced gravitational gradients will be deferred to later specifications.
