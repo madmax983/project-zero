@@ -46,3 +46,7 @@
 **Bloat:** Speculative Generality: `MemeticInfection` enum in `src/layer1/memetics/parasitic_broadcast.rs` and `BanishmentState` enum in `src/layer1/social/exile.rs` which had only 1 variant.
 **Cut:** Converted both enums into simple marker structs and updated Bevy queries to use `With<T>` rather than retrieving data and matching on it.
 **Saved:** 5 lines of code, speculative pattern matching overhead, and improved idiomatic Bevy usage by using ECS filters instead of iterating and checking values.
+## [Reduction]
+**Bloat:** Layer Lasagna (Deep folder hierarchy for `tectonic.rs`)
+**Cut:** Flattened `src/layer1/geology/tectonic/tectonic_tests.rs` into `src/layer1/geology/tectonic.rs` and deleted the `tectonic` directory.
+**Saved:** Removed unnecessary nested folder structure, making the module flat and easier to navigate without "Russian doll" files.
