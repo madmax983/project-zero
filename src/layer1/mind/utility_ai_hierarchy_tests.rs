@@ -43,6 +43,7 @@ mod tests {
                     rest: 0.8,
                     leisure: 0.8,
                     hygiene: 0.8,
+                    oxygen: 100.0,
                 },
                 UtilityWeights::default(),
                 PopAction {
@@ -141,7 +142,8 @@ mod tests {
                     hunger: 0.8,
                     rest: 0.8,
                     leisure: 0.1,
-                    hygiene: 0.8, // Very bored
+                    hygiene: 0.8,
+                    oxygen: 100.0, // Very bored
                 },
                 UtilityWeights::default(),
                 PopAction {
@@ -235,6 +237,7 @@ mod tests {
                     rest: 0.8,
                     leisure: 0.8,
                     hygiene: 0.8,
+                    oxygen: 100.0,
                 },
                 UtilityWeights::default(),
                 PopAction {
@@ -277,7 +280,8 @@ mod tests {
                     hunger: 0.8,
                     rest: 0.8,
                     leisure: 0.8,
-                    hygiene: 0.1, // Dirty!
+                    hygiene: 0.1,
+                    oxygen: 100.0, // Dirty!
                 },
                 UtilityWeights::default(),
                 PopAction {
@@ -318,7 +322,8 @@ mod tests {
                     hunger: 0.8,
                     rest: 0.8,
                     leisure: 0.8,
-                    hygiene: 0.1, // Dirty!
+                    hygiene: 0.1,
+                    oxygen: 100.0, // Dirty!
                 },
                 UtilityWeights::default(),
                 PopAction {
@@ -373,6 +378,7 @@ mod tests {
                     rest: 0.8,
                     leisure: 0.8,
                     hygiene: 0.8,
+                    oxygen: 100.0,
                 },
                 UtilityWeights::default(),
                 PopAction {

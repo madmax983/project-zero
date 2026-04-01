@@ -27,6 +27,7 @@ fn test_sensitive_pop_posts_hum_grievance() {
                 rest: 0.1,
                 leisure: 0.1,
                 hygiene: 0.1,
+                oxygen: 100.0,
             },
             GridPosition { x: 0, y: 0 },
             traits,

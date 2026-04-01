@@ -291,3 +291,4 @@
 - [x] `INT-409` Integration: Shipbreaking Seams — completed 2026-03-27
 - [x] `INT-409` Integration: Shipbreaking Seams — completed 2026-03-27
 - [x] `592` The Whispering Ore — `specs/592-the-whispering-ore.md` — completed 2026-02-01
+- [x] `610` The Subterranean Smog Layer — `specs/610-subterranean-smog.md` — completed 2026-03-20

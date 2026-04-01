@@ -547,6 +547,7 @@ mod tests {
                     rest: 0.5,
                     leisure: 0.9,
                     hygiene: 0.8,
+                    oxygen: 100.0,
                 },
                 UtilityWeights {
                     distance_weight: 1.2,

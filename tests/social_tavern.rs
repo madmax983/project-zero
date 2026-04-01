@@ -127,6 +127,7 @@ mod tests {
                     hygiene: 0.8, // Very bored
                     hunger: 0.8,
                     rest: 0.8,
+                    oxygen: 100.0,
                 },
                 PopAction::default(),
                 UtilityWeights::default(),

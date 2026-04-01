@@ -30,7 +30,10 @@ mod demo {
             let text = format!("{:<47}", "No stories currently circulating.");
             println!("│ {} │", text.with(Color::DarkGrey));
         } else {
-            let text = format!("{:<47}", format!("{} stories circulating.", tradition.stories.len()));
+            let text = format!(
+                "{:<47}",
+                format!("{} stories circulating.", tradition.stories.len())
+            );
             println!("│ {} │", text.with(Color::White));
         }
         println!(

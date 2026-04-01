@@ -50,7 +50,7 @@ use bevy_ecs::prelude::*;
 /// # Default Values
 ///
 /// New pops start with needs at **0.8** (80%), giving them a buffer before needing to act.
-#[derive(Component, Clone, Copy, Debug)]
+#[derive(bevy_ecs::component::Component, Clone, Copy, Debug)]
 pub struct Needs {
     /// Hunger level.
     /// *   **1.0**: Full belly.
@@ -73,6 +73,7 @@ pub struct Needs {
     /// *   **1.0**: Clean.
     /// *   **< 0.2**: Dirty/Unhappy.
     pub hygiene: f32,
+    pub oxygen: f32,
 }
 
 impl Default for Needs {
@@ -82,6 +83,7 @@ impl Default for Needs {
             rest: 0.8,
             leisure: 0.8,
             hygiene: 0.8,
+            oxygen: 100.0,
         }
     }
 }
@@ -96,7 +98,7 @@ impl Needs {
     /// ```
     /// use scale::layer1::needs::Needs;
     ///
-    /// let needs = Needs { hunger: 0.9, rest: 0.2, leisure: 0.5, hygiene: 1.0 };
+    /// let needs = Needs { hunger: 0.9, rest: 0.2, leisure: 0.5, hygiene: 1.0, oxygen: 100.0 };
     /// assert_eq!(needs.worst(), 0.2); // Rest is the lowest
     /// ```
     #[must_use]
@@ -127,7 +129,7 @@ impl Needs {
     /// ```
     /// use scale::layer1::needs::Needs;
     ///
-    /// let needs = Needs { hunger: 1.0, rest: 0.5, leisure: 0.0, hygiene: 0.5 };
+    /// let needs = Needs { hunger: 1.0, rest: 0.5, leisure: 0.0, hygiene: 0.5, oxygen: 100.0 };
     /// // (1.0 + 0.5 + 0.0 + 0.5) / 4.0 = 0.5
     /// assert_eq!(needs.morale(), 0.5);
     /// ```
@@ -239,6 +241,7 @@ mod tests {
             rest: 0.7,
             leisure: 0.8,
             hygiene: 0.9,
+            oxygen: 100.0,
         };
         assert!((needs1.worst() - 0.5).abs() < f32::EPSILON);
 
@@ -247,6 +250,7 @@ mod tests {
             rest: 0.3,
             leisure: 0.8,
             hygiene: 0.9,
+            oxygen: 100.0,
         };
         assert!((needs2.worst() - 0.3).abs() < f32::EPSILON);
 
@@ -255,6 +259,7 @@ mod tests {
             rest: 0.5,
             leisure: 0.5,
             hygiene: 0.1,
+            oxygen: 100.0,
         };
         assert!((needs3.worst() - 0.1).abs() < f32::EPSILON);
     }
@@ -269,6 +274,7 @@ mod tests {
                 rest: 0.0001,
                 leisure: 0.0001,
                 hygiene: 0.8,
+                oxygen: 100.0,
             },
         ));
 
@@ -315,6 +321,7 @@ mod tests {
             rest: 1.0,
             leisure: 1.0,
             hygiene: 1.0,
+            oxygen: 100.0,
         };
         assert!((needs.morale() - 1.0).abs() < f32::EPSILON);
 
@@ -323,6 +330,7 @@ mod tests {
             rest: 0.5,
             leisure: 0.5,
             hygiene: 0.5,
+            oxygen: 100.0,
         };
         assert!((needs_mixed.morale() - 0.5).abs() < f32::EPSILON);
 
@@ -331,6 +339,7 @@ mod tests {
             rest: 0.0,
             leisure: 0.0,
             hygiene: 0.0,
+            oxygen: 100.0,
         };
         assert!((needs_bad.morale() - 0.0).abs() < f32::EPSILON);
 
@@ -340,6 +349,7 @@ mod tests {
             rest: 0.0,
             leisure: 0.5,
             hygiene: 0.5,
+            oxygen: 100.0,
         };
         // (1+0+0.5+0.5)/4 = 2.0/4 = 0.5
         assert!((needs_uneven.morale() - 0.5).abs() < f32::EPSILON);

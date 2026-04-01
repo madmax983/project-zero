@@ -68,6 +68,7 @@ mod tests {
                     rest: 1.0,
                     leisure: 1.0,
                     hygiene: 0.8,
+                    oxygen: 100.0,
                 },
                 UtilityWeights::default(),
                 PopAction {
@@ -161,6 +162,7 @@ mod tests {
                     rest: 1.0,
                     leisure: 1.0,
                     hygiene: 0.8,
+                    oxygen: 100.0,
                 },
                 UtilityWeights::default(),
                 PopAction {

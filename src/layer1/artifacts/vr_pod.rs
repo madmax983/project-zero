@@ -90,6 +90,7 @@ mod tests {
                     rest: 1.0,
                     leisure: 1.0,
                     hygiene: 1.0,
+                    oxygen: 100.0,
                 },
             ))
             .id();
@@ -126,6 +127,7 @@ mod tests {
                     rest: 1.0,
                     leisure: 1.0,
                     hygiene: 1.0,
+                    oxygen: 100.0,
                 },
             ))
             .id();

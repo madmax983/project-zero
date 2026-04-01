@@ -179,6 +179,7 @@ mod tests {
                     rest: 0.1,
                     leisure: 0.1,
                     hygiene: 0.1,
+                    oxygen: 100.0,
                 },
                 Knowledge::default(),
             ))
@@ -290,6 +291,7 @@ mod tests {
                 Needs {
                     leisure: 0.5,
                     hygiene: 0.8,
+                    oxygen: 100.0,
                     ..Default::default()
                 },
                 Knowledge::default(),
@@ -318,6 +320,7 @@ mod tests {
                 Needs {
                     leisure: 0.5,
                     hygiene: 0.8,
+                    oxygen: 100.0,
                     ..Default::default()
                 },
                 Knowledge::default(),

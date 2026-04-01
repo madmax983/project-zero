@@ -107,6 +107,7 @@ mod tests {
                     rest: 1.0,
                     leisure: 1.0,
                     hygiene: 0.8,
+                    oxygen: 100.0,
                 }, // Fully satisfied needs
                 scale::layer1::utility_ai::UtilityWeights::default(),
                 PopAction {

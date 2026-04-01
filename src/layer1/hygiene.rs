@@ -286,6 +286,7 @@ mod tests {
             .spawn((
                 Needs {
                     hygiene: 0.1,
+                    oxygen: 100.0,
                     ..Default::default()
                 },
                 Filth {

@@ -6,6 +6,14 @@ use bevy_ecs::prelude::*;
 pub fn register(schedule: &mut Schedule) {
     schedule.add_systems(
         (
+            crate::layer1::smog::generate_smog_system,
+            crate::layer1::smog::apply_smog_effects_system
+                .after(crate::layer1::smog::generate_smog_system),
+        )
+            .in_set(Layer1SystemSet::Environment),
+    );
+    schedule.add_systems(
+        (
             crate::layer1::shadow_market::despawn_in_light_system,
             crate::layer1::shadow_market::spawn_shadow_trader_system,
         )
@@ -24,6 +32,7 @@ pub fn register(schedule: &mut Schedule) {
             blob_spread_system,
             blob_consumption_system.after(blob_spread_system),
             flora_attack_system,
+            // crate::layer1::flora::process_flora_migration,
             ancient_structure_decay_system,
             crate::layer1::graffiti::graffiti_decay_system,
             crate::layer1::orbital_crossfire::impact_system,
@@ -34,10 +43,17 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::ecology::biome_collapse_system,
             crate::layer1::social::grievances::decay_notes_system,
             crate::layer1::hum::update_hum_system,
+        )
+            .in_set(Layer1SystemSet::Environment),
+    );
+    schedule.add_systems(
+        (
             crate::layer1::photophobic::photophobic_decay_system,
             crate::layer1::geodetic::update_living_stone_system,
             crate::layer1::geodetic::form_golem_system
                 .after(crate::layer1::geodetic::update_living_stone_system),
+            // crate::layer1::integration::golem_formed_chronicle_bridge_system
+            // .after(crate::layer1::geodetic::form_golem_system),
         )
             .in_set(Layer1SystemSet::Environment),
     );
