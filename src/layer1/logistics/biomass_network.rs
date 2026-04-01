@@ -28,12 +28,22 @@ pub fn process_biomass_network_hunger(mut query: Query<&mut BiomassNetwork>) {
 pub fn digest_transit_contents(
     mut commands: Commands,
     mut networks: Query<&mut BiomassNetwork>,
-    transit_query: Query<(Entity, &InTransit)>,
+    transit_query: Query<(Entity, &InTransit, Option<&crate::layer1::pop::PopName>)>,
+    mut pop_died_events: EventWriter<crate::layer1::pop::PopDied>,
+    time: Option<Res<crate::shared::time::SimulationTime>>,
 ) {
-    for (entity, transit) in transit_query.iter() {
+    for (entity, transit, pop_name) in transit_query.iter() {
         if let Ok(mut network) = networks.get_mut(transit.network) {
             if network.hunger >= network.max_hunger {
                 // Digest!
+                if let Some(name) = pop_name {
+                    pop_died_events.send(crate::layer1::pop::PopDied {
+                        entity,
+                        name: name.0.clone(),
+                        reason: "digested by starving biomass network".to_string(),
+                        tick: time.as_ref().map_or(0, |t| t.tick),
+                    });
+                }
                 commands.entity(entity).despawn();
                 network.hunger = (network.hunger - 20.0).max(0.0);
             }

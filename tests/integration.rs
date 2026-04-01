@@ -232,3 +232,12 @@ mod empathic_plague_bridge;
 mod crop_mutation_chronicle;
 #[path = "integration/reverse_quarantine_bridge.rs"]
 mod reverse_quarantine_bridge;
+
+#[path = "integration/biomass_commute_bridge.rs"]
+mod biomass_commute_bridge;
+
+#[path = "integration/stellar_weather_bridge.rs"]
+mod stellar_weather_bridge;
+
+#[path = "integration/architectural_grafting_bridge.rs"]
+mod architectural_grafting_bridge;

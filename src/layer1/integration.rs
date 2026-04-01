@@ -1150,6 +1150,21 @@ pub fn crop_mutation_chronicle_bridge(
     }
 }
 
+use crate::layer1::grafting::GraftBuildingEvent;
+
+/// Bridges `GraftBuildingEvent` to `AddChronicleEvent` (Chronicle).
+pub fn grafting_chronicle_bridge(
+    mut events: EventReader<GraftBuildingEvent>,
+    mut chronicle_events: EventWriter<AddChronicleEvent>,
+) {
+    for _event in events.read() {
+        chronicle_events.send(AddChronicleEvent {
+            importance: EventImportance::Minor,
+            text: "A structure was grafted with mismatched technology, adopting Frankenstein architecture.".to_string(),
+        });
+    }
+}
+
 /// Bridges `GolemFormedEvent` to `AddChronicleEvent` (Chronicle).
 pub fn golem_formed_chronicle_bridge_system(
     mut events: EventReader<GolemFormedEvent>,

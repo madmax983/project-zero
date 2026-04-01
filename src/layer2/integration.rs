@@ -354,6 +354,41 @@ pub fn process_grief_tourist_arrival_system(
 use crate::layer2::fleet::{Fleet, FleetFaction};
 use crate::layer2::sensor_ambiguity::{SensorContact, Sensors, UnidentifiedContact};
 
+use crate::layer2::navigation::stellar_weather::FleetDamagedEvent;
+
+/// Bridges `FleetDamagedEvent` (Stellar Weather) to `FleetHealth` and `AddChronicleEvent` (Chronicle).
+pub fn stellar_weather_damage_bridge_system(
+    mut commands: Commands,
+    mut events: EventReader<FleetDamagedEvent>,
+    mut fleets: Query<(&mut crate::layer2::fleet::FleetHealth, Option<&mut crate::layer2::fleet::FleetComposition>)>,
+    mut chronicle_events: EventWriter<AddChronicleEvent>,
+) {
+    for event in events.read() {
+        if let Ok((mut health, maybe_comp)) = fleets.get_mut(event.fleet) {
+            // Apply damage
+            health.current -= event.amount;
+
+            // If fleet has composition, apply damage to ships
+            if let Some(mut comp) = maybe_comp {
+                comp.take_damage(event.amount);
+            }
+
+            chronicle_events.send(AddChronicleEvent {
+                importance: EventImportance::Major,
+                text: "A fleet was heavily damaged by a sudden solar flare.".to_string(),
+            });
+
+            if health.current <= 0.0 {
+                commands.entity(event.fleet).despawn();
+                chronicle_events.send(AddChronicleEvent {
+                    importance: EventImportance::Legendary,
+                    text: "A fleet was entirely consumed by a solar flare.".to_string(),
+                });
+            }
+        }
+    }
+}
+
 /// Assigns `Sensors` to player fleets that don't already have them.
 #[allow(clippy::type_complexity)]
 pub fn assign_sensors_to_player_fleets_system(
