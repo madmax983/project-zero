@@ -348,13 +348,12 @@ fn find_and_target_generic_item(world: &mut World, pop_entity: Entity, pos: Grid
     }
 }
 
-fn handle_drop_off_item(
+fn try_drop_off_gene_bank(
     world: &mut World,
     pop_entity: Entity,
     item_entity: CarryingItem,
     pos: GridPosition,
-) {
-    // Check for GeneBank Dropoff
+) -> bool {
     let gene_bank_target = {
         let mut query = world.query::<(Entity, &GridPosition, &mut GeneBank)>();
         let mut target = None;
@@ -367,28 +366,35 @@ fn handle_drop_off_item(
         target
     };
 
-    if let Some(gene_bank_entity) = gene_bank_target {
-        // We are at a Gene Bank.
-        // Check if we have GeneticSample
-        if let Some(sample) = world.get::<crate::layer1::gene_bank::GeneticSample>(item_entity.0) {
-            let data = sample.data.clone();
-            // Store it
-            if let Some(mut bank) = world.get_mut::<GeneBank>(gene_bank_entity) {
-                bank.store_sample(data);
-            }
-            // Despawn Item
-            world.despawn(item_entity.0);
-            world.entity_mut(pop_entity).remove::<CarryingItem>();
-            world
-                .entity_mut(pop_entity)
-                .remove::<AtTarget>()
-                .remove::<MovementTarget>();
-            return;
-        }
+    let Some(gene_bank_entity) = gene_bank_target else {
+        return false;
+    };
+
+    let Some(sample) = world.get::<crate::layer1::gene_bank::GeneticSample>(item_entity.0) else {
+        return false;
+    };
+
+    let data = sample.data.clone();
+    if let Some(mut bank) = world.get_mut::<GeneBank>(gene_bank_entity) {
+        bank.store_sample(data);
     }
 
-    // Check if we are dropping off at a container (Inventory)
-    // Find entity at pos with Inventory (Recycler, etc)
+    world.despawn(item_entity.0);
+    world.entity_mut(pop_entity).remove::<CarryingItem>();
+    world
+        .entity_mut(pop_entity)
+        .remove::<AtTarget>()
+        .remove::<MovementTarget>();
+
+    true
+}
+
+fn try_drop_off_inventory(
+    world: &mut World,
+    pop_entity: Entity,
+    item_entity: CarryingItem,
+    pos: GridPosition,
+) {
     let container = {
         let mut query = world.query::<(Entity, &GridPosition, &mut Inventory)>();
         let mut target = None;
@@ -402,9 +408,7 @@ fn handle_drop_off_item(
     };
 
     let Some(container_entity) = container else {
-        // Drop item on ground (No container found)
         world.entity_mut(item_entity.0).insert(pos);
-        // Remove Parent if present (e.g. if we support pickup from inventory in future)
         world
             .entity_mut(item_entity.0)
             .remove::<crate::layer1::photophobic::Parent>();
@@ -447,17 +451,14 @@ fn handle_drop_off_item(
 
     if success {
         if is_photophobic {
-            // Preserve Entity: Parent to container
             world.entity_mut(item_entity.0).remove::<GridPosition>();
             world
                 .entity_mut(item_entity.0)
                 .insert(crate::layer1::photophobic::Parent(container_entity));
         } else {
-            // Standard Logic: Despawn the carried item entity
             world.despawn(item_entity.0);
         }
     } else {
-        // Full: Drop back on ground at target position
         world.entity_mut(item_entity.0).insert(pos);
         world
             .entity_mut(item_entity.0)
@@ -465,12 +466,23 @@ fn handle_drop_off_item(
     }
 
     world.entity_mut(pop_entity).remove::<CarryingItem>();
-
-    // Clear movement
     world
         .entity_mut(pop_entity)
         .remove::<AtTarget>()
         .remove::<MovementTarget>();
+}
+
+fn handle_drop_off_item(
+    world: &mut World,
+    pop_entity: Entity,
+    item_entity: CarryingItem,
+    pos: GridPosition,
+) {
+    if try_drop_off_gene_bank(world, pop_entity, item_entity, pos) {
+        return;
+    }
+
+    try_drop_off_inventory(world, pop_entity, item_entity, pos);
 }
 
 fn find_and_target_stockpile_item(
