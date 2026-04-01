@@ -1174,3 +1174,25 @@ pub fn diplomatic_reflection_plant_bridge(
         });
     }
 }
+
+/// INT-687: Bridge Ghost Shift starts to Chronicle
+pub fn ghost_shift_chronicle_bridge(
+    mut events_in: EventReader<crate::layer1::social::ghost_shift_strike::GhostShiftStartedEvent>,
+    mut chronicle_events: EventWriter<AddChronicleEvent>,
+    generator: Res<NarrativeGenerator>,
+    colony: Res<ColonyName>,
+) {
+    for _event in events_in.read() {
+        let mut ctx = NarrativeContext::new();
+        ctx.insert("COLONY", &colony.name);
+
+        let text = generator
+            .generate("GHOST_SHIFT_START", &ctx)
+            .unwrap_or_else(|_| "A quiet rebellion has begun. The machines hum, but the workers produce nothing—a ghost shift.".to_string());
+
+        chronicle_events.send(AddChronicleEvent {
+            text,
+            importance: EventImportance::Major,
+        });
+    }
+}

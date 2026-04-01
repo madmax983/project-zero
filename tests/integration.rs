@@ -1,4 +1,6 @@
 #![allow(missing_docs)]
+#[path = "integration/ghost_shift_chronicle.rs"]
+mod ghost_shift_chronicle;
 #[path = "integration/ui_stats.rs"]
 mod ui_stats;
 

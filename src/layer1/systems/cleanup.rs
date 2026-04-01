@@ -50,6 +50,7 @@ pub fn register(schedule: &mut Schedule) {
             update_event_buffer::<crate::layer1::genetics::GeneSplicingResultEvent>,
             update_event_buffer::<crate::layer1::genetics::CropMutationEvent>,
             update_event_buffer::<crate::layer1::economy::remittances::MigrantArrivalEvent>,
+            update_event_buffer::<crate::layer1::social::ghost_shift_strike::GhostShiftStartedEvent>,
             handle_direct_input_system,
         )
             .in_set(Layer1SystemSet::EventCleanup),

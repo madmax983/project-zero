@@ -574,3 +574,11 @@
     - `reverse_quarantine_chronicle_bridge` in `src/layer2/integration.rs` converts `RefugeeFleetEvent` (when rejected) to `AddChronicleEvent` with `EventImportance::Major`.
 - **Schedule:** Chained in `Layer2SystemSet` after `process_refugee_decisions_system`.
 - **Tests:** `tests/integration/reverse_quarantine_bridge.rs`
+
+### INT-687: Ghost-Shift Strike -> Chronicle
+- **Date:** 2026-04-01
+- **Systems connected:** `evaluate_ghost_shifts` (Ghost-Shift Strike) -> `ghost_shift_chronicle_bridge` (Integration) -> `AddChronicleEvent` (Chronicle)
+- **Glue added:**
+    - `ghost_shift_chronicle_bridge` in `src/layer1/integration.rs` converts `GhostShiftStartedEvent` to `AddChronicleEvent` with `EventImportance::Major`.
+- **Schedule:** Chained in `Layer1SystemSet::Observation` after `evaluate_ghost_shifts`.
+- **Tests:** `tests/integration/ghost_shift_chronicle.rs`
