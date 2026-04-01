@@ -13256,3 +13256,73 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Forcing an administrative override to solve a crisis instantly vs. letting the system slowly resolve itself, knowing that pushing the override might literally kill your best workers.
 
 ---
+
+## The Monument of Regret
+
+**Layer:** 1
+
+**Fantasy:** A permanent scar on the landscape to remind the colony of a terrible sacrifice made for survival.
+
+**Mechanic:** After a massive disaster where the player deliberately sacrificed Pops (e.g., locking them in a burning room to save the reactor), the survivors spontaneously construct a massive "Monument of Regret" out of the wreckage. It provides a permanent, massive Resilience buff (Pops panic less) but a permanent Beauty debuff to the entire sector.
+
+**Emergence:** You save your capital by sealing the lower levels during a flood. Years later, the massive rusted iron statue erected by the survivors sits in the middle of your pristine new plaza, ruining the land value but making the locals immune to fear.
+
+**Tension:** Destroy the ugly monument to build a more efficient layout (and trigger a massive "Sacrilege" riot) or leave it as a grim reminder of the cost of survival?
+
+---
+
+## Orphaned Terraforming Engines
+
+**Layer:** Cross-layer (2 -> 1)
+
+**Fantasy:** The garden world you settled isn't natural; it's on life support, and you just plugged in the blender.
+
+**Mechanic:** You settle a seemingly perfect "Lush" world. Deep underground, you discover ancient, massive Terraforming Engines running on fumes. They are actively suppressing the planet's true, hyper-toxic nature. Tapping into their geothermal vents for free power drastically accelerates their decay.
+
+**Emergence:** You build a massive, power-hungry industrial grid using the "free" energy from the ancient vents. A decade later, the engines sputter and fail. The sky turns green, the oceans boil into acid, and your entire surface colony is wiped out in days because you were too greedy.
+
+**Tension:** The immense, free energy output of the ancient machines vs. the ticking clock of planetary collapse if you drain them too fast.
+
+---
+
+## The Pirate's Pension
+
+**Layer:** Cross-layer (3 -> 1)
+
+**Fantasy:** Harboring a retired monster because their blood money built your hospital.
+
+**Mechanic:** A legendary, incredibly wealthy Pirate Lord from Layer 3 retires to your Layer 1 colony. They demand absolute immunity from your Justice System and build a massive, opulent "Estate." They inject millions of Credits into your local economy but generate constant "Vice" (crime, corruption) and periodically attract hostile Bounty Hunter fleets to your orbit.
+
+**Emergence:** Your colony is broke. You accept the Pirate Lord. Your economy booms, and everyone has high-tech gear. But the Pirate Lord keeps shooting your local Sheriffs for fun, and a massive mercenary armada just blockaded your planet demanding you hand the Pirate over.
+
+**Tension:** Unparalleled, localized economic stimulation vs. the constant erosion of local law and the looming threat of massive orbital retaliation.
+
+---
+
+## Biological Sabotage
+
+**Layer:** Cross-layer (1 -> 3)
+
+**Fantasy:** Winning a war not by shooting the enemy, but by making them allergic to their own food.
+
+**Mechanic:** Your Bio-Labs engineer a highly contagious, non-lethal pathogen that permanently alters the dietary needs of infected Pops (e.g., they can no longer process synthetic proteins and require fresh fruit). You infect a Layer 2 trade shipment bound for a rival Empire. The pathogen spreads, instantly rendering their massive nutrient-paste stockpiles useless and crashing their economy.
+
+**Emergence:** You infect the militaristic empire next door with a "Fruit-Craving" virus. Their massive, specialized synthetic-meat farms become useless overnight. Their soldiers starve, their economy collapses, and they beg you to sell them your excess apples at a 5000% markup, turning a bitter enemy into a desperate client state without a single shot fired.
+
+**Tension:** The incredible, bloodless strategic power of biological warfare vs. the terrifying risk of the virus mutating or blowing back into your own trade network.
+
+---
+
+## Phantom Shareholders
+
+**Layer:** Cross-layer (3 -> 1)
+
+**Fantasy:** You didn't conquer the galaxy; you just sold the naming rights.
+
+**Mechanic:** Facing bankruptcy, you accept a massive bailout from a Layer 3 "Megacorp." In return, they become "Shareholders." They don't control you directly, but they periodically issue "Corporate Mandates" (e.g., "Demolish the parks and build more smog-factories" or "Halve all medical rations"). Complying grants more funding; refusing causes them to artificially crash your trade prices or send corporate enforcers.
+
+**Emergence:** You save your colony from starvation with Megacorp money. A year later, they mandate that your beautiful, morale-boosting arboretum must be replaced with a toxic sludge refinery. You obey, and the colony riots because you sold their happiness to appease off-world accountants.
+
+**Tension:** Immediate, massive financial salvation vs. the slow, humiliating loss of sovereignty and the brutalization of your own populace to meet quarterly earning targets.
+
+---
