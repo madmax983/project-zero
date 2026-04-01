@@ -3730,3 +3730,26 @@
 **Replaces:** refugee rejection, border block, blockade
 **Code reference:** `ReverseQuarantine` or `RefugeeFleetEvent`
 **Usage:** "The governor enforced a reverse quarantine, letting the refugee ships burn."
+
+## Remittances (Spec 674)
+
+### the send-back / the tithe
+**Replaces:** remittance, sending money home
+**Code reference:** `process_remittances_system`
+**Usage:**
+- "He skipped a meal to afford the send-back."
+- "The tithe drains our economy."
+
+### void-longing / homesick
+**Replaces:** depression from failed remittance
+**Code reference:** `Homesick` morale modifier
+**Usage:**
+- "She suffers from the void-longing."
+- "He is too homesick to work."
+
+### cousins / the kin
+**Replaces:** new migrants arriving due to remittances
+**Code reference:** `MigrantArrivalEvent`
+**Usage:**
+- "Her cousins arrived on the last ship."
+- "The kin keep coming because of the send-back."

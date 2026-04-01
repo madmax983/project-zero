@@ -6022,3 +6022,32 @@ A negative side-effect of a failed splice.
 - They were likely pirates in disguise.
 - The Council strictly forbade it.
 - Better they die than all of us.
+
+## Remittance Fragments (Spec 674)
+
+## Fragment Type: [REMITTANCE_ITEM]
+- hard credits
+- company scrip
+- the send-back
+- smuggled ore
+- blood-money
+- the tithe
+- a share of the harvest
+
+## Fragment Type: [HOMESICK_SYMPTOM]
+- staring at the dark
+- weeping in the mess hall
+- refusing to eat
+- working to exhaustion
+- speaking to ghosts
+- a heavy, silent grief
+- void-longing
+
+## Fragment Type: [MIGRANT_RELATION]
+- cousins
+- blood-kin
+- old neighbors
+- debt-brothers
+- the extended family
+- desperate relatives
+- distant kin
