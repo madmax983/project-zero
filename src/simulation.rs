@@ -396,7 +396,9 @@ pub fn run_simulation_tick(world: &mut World) {
         world.init_resource::<Events<crate::layer3::planet::black_market_terraforming::RogueTerraformEvent>>();
         world.init_resource::<Events<crate::layer3::market::quantum_famine::MarketPanicEvent>>();
         world.init_resource::<Events<crate::layer3::market::quantum_famine::ExportDumpEvent>>();
-        world.init_resource::<Events<crate::layer2::exploration::void_whispers::FleetReturnedEvent>>();
+        world
+            .init_resource::<Events<crate::layer2::exploration::void_whispers::FleetReturnedEvent>>(
+            );
     }
     if !world
         .contains_resource::<Events<crate::layer2::navigation::stellar_weather::FleetDamagedEvent>>(
@@ -582,7 +584,9 @@ mod tests {
         world.init_resource::<Events<crate::layer3::planet::black_market_terraforming::RogueTerraformEvent>>();
         world.init_resource::<Events<crate::layer3::market::quantum_famine::MarketPanicEvent>>();
         world.init_resource::<Events<crate::layer3::market::quantum_famine::ExportDumpEvent>>();
-        world.init_resource::<Events<crate::layer2::exploration::void_whispers::FleetReturnedEvent>>();
+        world
+            .init_resource::<Events<crate::layer2::exploration::void_whispers::FleetReturnedEvent>>(
+            );
         world
             .init_resource::<Events<crate::layer2::navigation::stellar_weather::FleetDamagedEvent>>(
             );

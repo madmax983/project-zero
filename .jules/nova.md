@@ -1,3 +1,8 @@
+## [Fever Pitch]
+**Concept:** Added `FeverPitch` which triggers when a Pop's `accumulated_stress` crosses 85.0. It connects their psychological breakdown directly to the physical `TemperatureGrid` by appending a `HeatSource` component.
+**Fate:** Proposed
+**Lesson:** Turning abstract psychological concepts (stress) into tangible physical hazards (thermal emission) allows for interesting systemic interactions, where mental breakdowns can physically cook the colony if they happen in crowds.
+
 ## [Psychic Resonance]
 **Concept:** A new pop trait 'Psychic' that allows a pop to passively 'sense' unseen items, boosting utility of finding distant things.
 **Fate:** Conceptual
