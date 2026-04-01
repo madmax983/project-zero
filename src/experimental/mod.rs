@@ -51,6 +51,8 @@ pub mod paranoia_network;
 pub mod dream_economy;
 
 #[cfg(feature = "nova")]
+pub mod fever_pitch;
+#[cfg(feature = "nova")]
 pub mod meme_plague;
 #[cfg(feature = "nova")]
 pub mod phantom_workforce;

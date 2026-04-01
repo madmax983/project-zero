@@ -2,7 +2,6 @@
 pub mod ancestral_graves;
 pub use ancestral_graves::*;
 
-
 /// Cultural Artifacts and Statues.
 pub mod art;
 pub use art::*;
