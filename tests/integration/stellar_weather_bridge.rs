@@ -69,11 +69,7 @@ fn test_stellar_weather_damage_bridge() {
     let events: Vec<&AddChronicleEvent> = reader.read(chronicle_events).collect();
 
     // Total 3 events because the first update added 1, second update adds 2 (damage + destruction)
-    assert_eq!(
-        events.len(),
-        3,
-        "Should emit damage and destruction events"
-    );
+    assert_eq!(events.len(), 3, "Should emit damage and destruction events");
 
     assert!(
         app.world().get_entity(fleet_entity).is_err(),

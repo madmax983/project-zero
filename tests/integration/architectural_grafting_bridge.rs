@@ -10,7 +10,10 @@ fn test_grafting_chronicle_bridge() {
     app.add_event::<GraftBuildingEvent>();
     app.add_event::<AddChronicleEvent>();
 
-    app.add_systems(Update, (process_grafting, grafting_chronicle_bridge).chain());
+    app.add_systems(
+        Update,
+        (process_grafting, grafting_chronicle_bridge).chain(),
+    );
 
     let target = app.world_mut().spawn_empty().id();
 

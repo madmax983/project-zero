@@ -1,3 +1,52 @@
+//! Kinetic Energy Storage and Gravity Batteries.
+//!
+//! This module handles `KineticBattery` components, which physically store energy in the form
+//! of heavy masses suspended in gravity shafts (Gravity Batteries).
+//!
+//! They act as a buffer for the colony's energy grid, absorbing surplus `PowerSource` output
+//! and releasing it when `PowerConsumer` demands exceed current generation.
+//!
+//! # Volatile Nature
+//!
+//! Because kinetic batteries store massive amounts of physical potential energy, they are incredibly
+//! dangerous. If a highly charged `KineticBattery` is destroyed (e.g., by enemy fire or sabotage),
+//! it triggers a catastrophic `ExplosionEvent`, severely damaging nearby entities and structures.
+//!
+//! # Examples
+//!
+//! ```
+//! use bevy_ecs::prelude::*;
+//! use scale::layer1::physics::kinetic_storage::{KineticBattery, handle_battery_destruction_system};
+//! use scale::layer1::map::GridPosition;
+//! use scale::layer1::health::Dead;
+//! use scale::layer1::volatile::ExplosionEvent;
+//!
+//! let mut world = World::new();
+//! let mut events = Events::<ExplosionEvent>::default();
+//! world.insert_resource(events);
+//!
+//! // 1. A fully charged battery takes lethal damage
+//! let battery = world.spawn((
+//!     KineticBattery { charge: 100.0, capacity: 100.0, charge_rate: 5.0, efficiency: 0.9 },
+//!     GridPosition { x: 5, y: 5 },
+//! )).id();
+//!
+//! // Simulate destruction
+//! world.entity_mut(battery).insert(Dead);
+//!
+//! // 2. Run the destruction handler
+//! let mut schedule = Schedule::default();
+//! schedule.add_systems(handle_battery_destruction_system);
+//! schedule.run(&mut world);
+//!
+//! // 3. The battery violently exploded
+//! let events = world.resource::<Events<ExplosionEvent>>();
+//! let mut reader = events.get_reader();
+//! let explosion = reader.read(events).next().unwrap();
+//!
+//! assert_eq!(explosion.center.x, 5);
+//! assert_eq!(explosion.damage, 100.0); // Full potential energy released
+//! ```
 use crate::layer1::energy::{PowerConsumer, PowerSource};
 use crate::layer1::map::GridPosition;
 use crate::layer1::volatile::ExplosionEvent;
