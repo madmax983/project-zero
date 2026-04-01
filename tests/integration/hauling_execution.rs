@@ -173,7 +173,9 @@ mod tests {
 
     #[test]
     fn test_arrival_handler_clobbers_hauling() {
-        let mut world = setup_world();
+        let mut world = scale::setup::setup_world();
+        world.init_resource::<bevy_ecs::event::Events<scale::layer1::genetics::GeneSplicingResultEvent>>();
+
 
         // Create a dummy item entity as target
         let item_entity = world.spawn(GridPosition { x: 5, y: 5 }).id();
@@ -210,7 +212,51 @@ mod tests {
 
     #[test]
     fn test_full_hauling_cycle() {
-        let mut world = setup_world();
+        let mut world = scale::setup::setup_world();
+        world.init_resource::<bevy_ecs::event::Events<scale::layer1::genetics::GeneSplicingResultEvent>>();
+
+        world.init_resource::<bevy_ecs::event::Events<scale::layer2::exploration::void_whispers::FleetReturnedEvent>>();
+        world.init_resource::<bevy_ecs::event::Events<scale::layer1::whispering_ore::MinedOreEvent>>();
+        world.init_resource::<scale::layer2::trade::blockade::ColonyDebt>();
+        world.init_resource::<bevy_ecs::event::Events<scale::layer2::trade::penal_contracts::PrisonerDiedEvent>>();
+        world.init_resource::<bevy_ecs::event::Events<scale::layer3::planet::black_market_terraforming::RogueTerraformEvent>>();
+        world.init_resource::<scale::layer2::syzygy::SyzygyCycle>();
+        world.init_resource::<scale::layer2::syzygy::PlanetaryGravity>();
+        world.init_resource::<scale::layer2::syzygy::TidalForce>();
+        world.init_resource::<bevy_ecs::event::Events<scale::layer1::grafting::GraftBuildingEvent>>();
+        world.init_resource::<bevy_ecs::event::Events<scale::layer3::market::quantum_famine::ExportDumpEvent>>();
+        world.init_resource::<bevy_ecs::event::Events<scale::layer3::market::quantum_famine::MarketPanicEvent>>();
+        world.init_resource::<bevy_ecs::event::Events<scale::layer2::navigation::stellar_weather::FleetDamagedEvent>>();
+        world.init_resource::<bevy_ecs::event::Events<scale::layer2::events_new::reverse_quarantine::RefugeeFleetEvent>>();
+        world.init_resource::<bevy_ecs::event::Events<scale::layer3::diplomacy_reflection::EntityKilledEvent>>();
+        world.init_resource::<bevy_ecs::event::Events<scale::layer3::diplomacy_reflection::FloraPlantedEvent>>();
+        world.init_resource::<bevy_ecs::event::Events<scale::layer3::diplomacy_reflection::TraitChangedEvent>>();
+        world.init_resource::<bevy_ecs::event::Events<scale::layer2::moon_hermits::PopDesertedEvent>>();
+
+        world.init_resource::<bevy_ecs::event::Events<scale::layer2::exploration::void_whispers::FleetReturnedEvent>>();
+        world.init_resource::<bevy_ecs::event::Events<scale::layer1::whispering_ore::MinedOreEvent>>();
+        world.init_resource::<scale::layer2::trade::blockade::ColonyDebt>();
+        world.init_resource::<bevy_ecs::event::Events<scale::layer2::trade::penal_contracts::PrisonerDiedEvent>>();
+        world.init_resource::<bevy_ecs::event::Events<scale::layer3::planet::black_market_terraforming::RogueTerraformEvent>>();
+        world.init_resource::<scale::layer2::syzygy::SyzygyCycle>();
+        world.init_resource::<scale::layer2::syzygy::PlanetaryGravity>();
+        world.init_resource::<scale::layer2::syzygy::TidalForce>();
+        world.init_resource::<bevy_ecs::event::Events<scale::layer1::grafting::GraftBuildingEvent>>();
+        world.init_resource::<bevy_ecs::event::Events<scale::layer3::market::quantum_famine::ExportDumpEvent>>();
+        world.init_resource::<bevy_ecs::event::Events<scale::layer3::market::quantum_famine::MarketPanicEvent>>();
+        world.init_resource::<bevy_ecs::event::Events<scale::layer2::navigation::stellar_weather::FleetDamagedEvent>>();
+        world.init_resource::<bevy_ecs::event::Events<scale::layer2::events_new::reverse_quarantine::RefugeeFleetEvent>>();
+        world.init_resource::<bevy_ecs::event::Events<scale::layer3::diplomacy_reflection::EntityKilledEvent>>();
+        world.init_resource::<bevy_ecs::event::Events<scale::layer3::diplomacy_reflection::FloraPlantedEvent>>();
+        world.init_resource::<bevy_ecs::event::Events<scale::layer3::diplomacy_reflection::TraitChangedEvent>>();
+        world.init_resource::<bevy_ecs::event::Events<scale::layer2::moon_hermits::PopDesertedEvent>>();
+        world.init_resource::<bevy_ecs::event::Events<scale::layer2::cascade::failure::LogisticsStrainedEvent>>();
+        world.init_resource::<bevy_ecs::event::Events<scale::layer2::cascade::failure::DefenseWeakenedEvent>>();
+        world.init_resource::<bevy_ecs::event::Events<scale::layer1::logistics::mass_driver::LaunchEvent>>();
+        world.init_resource::<bevy_ecs::event::Events<scale::layer1::logistics::mass_driver::BombardmentEvent>>();
+        world.init_resource::<bevy_ecs::event::Events<scale::layer2::cartographers_curse::SellTelemetryEvent>>();
+        world.init_resource::<bevy_ecs::event::Events<scale::layer2::phantom::SpawnGhostFleetEvent>>();
+
         let schedule = build_simulation_schedule();
         world.add_schedule(schedule);
 
@@ -255,17 +301,17 @@ mod tests {
         // 2. Run simulation ticks
 
         // Tick 1: movement (no-op), arrival (no-op), haul_system (finds item, sets target (2,0))
-        world.run_schedule(SimulationSchedule);
+            scale::simulation::run_simulation_tick(&mut world);
         let mt = world.get::<MovementTarget>(pop);
         assert!(mt.is_some(), "Pop should target item");
         assert_eq!(mt.unwrap().target_position, GridPosition { x: 2, y: 0 });
 
         // Tick 2: movement (moves to 1,0), arrival (no-op), haul (no-op)
-        world.run_schedule(SimulationSchedule);
+            scale::simulation::run_simulation_tick(&mut world);
         assert_eq!(world.get::<GridPosition>(pop).unwrap().x, 1);
 
         // Tick 3: movement (moves to 2,0, sets AtTarget), arrival (preserves AtTarget), haul (picks up)
-        world.run_schedule(SimulationSchedule);
+            scale::simulation::run_simulation_tick(&mut world);
 
         // Verify Pickup Complete
         assert_eq!(world.get::<GridPosition>(pop).unwrap().x, 2);
@@ -286,17 +332,17 @@ mod tests {
         );
 
         // Tick 4: movement (no-op), arrival (no-op), haul (finds stockpile, sets target (4,0))
-        world.run_schedule(SimulationSchedule);
+            scale::simulation::run_simulation_tick(&mut world);
         let mt = world.get::<MovementTarget>(pop);
         assert!(mt.is_some(), "Pop should target stockpile");
         assert_eq!(mt.unwrap().target_position, GridPosition { x: 4, y: 0 });
 
         // Tick 5: movement (moves to 3,0)
-        world.run_schedule(SimulationSchedule);
+            scale::simulation::run_simulation_tick(&mut world);
         assert_eq!(world.get::<GridPosition>(pop).unwrap().x, 3);
 
         // Tick 6: movement (moves to 4,0, sets AtTarget), arrival (preserves), haul (drops off)
-        world.run_schedule(SimulationSchedule);
+            scale::simulation::run_simulation_tick(&mut world);
 
         // Verify Drop off Complete
         assert_eq!(world.get::<GridPosition>(pop).unwrap().x, 4);

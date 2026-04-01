@@ -177,6 +177,48 @@ mod tests {
         world.insert_resource(Schedules::default());
 
         // Add schedule
+        world.init_resource::<bevy_ecs::event::Events<scale::layer2::exploration::void_whispers::FleetReturnedEvent>>();
+        world.init_resource::<bevy_ecs::event::Events<scale::layer1::whispering_ore::MinedOreEvent>>();
+        world.init_resource::<scale::layer2::trade::blockade::ColonyDebt>();
+        world.init_resource::<bevy_ecs::event::Events<scale::layer2::trade::penal_contracts::PrisonerDiedEvent>>();
+        world.init_resource::<bevy_ecs::event::Events<scale::layer3::planet::black_market_terraforming::RogueTerraformEvent>>();
+        world.init_resource::<scale::layer2::syzygy::SyzygyCycle>();
+        world.init_resource::<scale::layer2::syzygy::PlanetaryGravity>();
+        world.init_resource::<scale::layer2::syzygy::TidalForce>();
+        world.init_resource::<bevy_ecs::event::Events<scale::layer1::grafting::GraftBuildingEvent>>();
+        world.init_resource::<bevy_ecs::event::Events<scale::layer3::market::quantum_famine::ExportDumpEvent>>();
+        world.init_resource::<bevy_ecs::event::Events<scale::layer3::market::quantum_famine::MarketPanicEvent>>();
+        world.init_resource::<bevy_ecs::event::Events<scale::layer2::navigation::stellar_weather::FleetDamagedEvent>>();
+        world.init_resource::<bevy_ecs::event::Events<scale::layer2::events_new::reverse_quarantine::RefugeeFleetEvent>>();
+        world.init_resource::<bevy_ecs::event::Events<scale::layer3::diplomacy_reflection::EntityKilledEvent>>();
+        world.init_resource::<bevy_ecs::event::Events<scale::layer3::diplomacy_reflection::FloraPlantedEvent>>();
+        world.init_resource::<bevy_ecs::event::Events<scale::layer3::diplomacy_reflection::TraitChangedEvent>>();
+        world.init_resource::<bevy_ecs::event::Events<scale::layer2::moon_hermits::PopDesertedEvent>>();
+
+        world.init_resource::<bevy_ecs::event::Events<scale::layer2::exploration::void_whispers::FleetReturnedEvent>>();
+        world.init_resource::<bevy_ecs::event::Events<scale::layer1::whispering_ore::MinedOreEvent>>();
+        world.init_resource::<scale::layer2::trade::blockade::ColonyDebt>();
+        world.init_resource::<bevy_ecs::event::Events<scale::layer2::trade::penal_contracts::PrisonerDiedEvent>>();
+        world.init_resource::<bevy_ecs::event::Events<scale::layer3::planet::black_market_terraforming::RogueTerraformEvent>>();
+        world.init_resource::<scale::layer2::syzygy::SyzygyCycle>();
+        world.init_resource::<scale::layer2::syzygy::PlanetaryGravity>();
+        world.init_resource::<scale::layer2::syzygy::TidalForce>();
+        world.init_resource::<bevy_ecs::event::Events<scale::layer1::grafting::GraftBuildingEvent>>();
+        world.init_resource::<bevy_ecs::event::Events<scale::layer3::market::quantum_famine::ExportDumpEvent>>();
+        world.init_resource::<bevy_ecs::event::Events<scale::layer3::market::quantum_famine::MarketPanicEvent>>();
+        world.init_resource::<bevy_ecs::event::Events<scale::layer2::navigation::stellar_weather::FleetDamagedEvent>>();
+        world.init_resource::<bevy_ecs::event::Events<scale::layer2::events_new::reverse_quarantine::RefugeeFleetEvent>>();
+        world.init_resource::<bevy_ecs::event::Events<scale::layer3::diplomacy_reflection::EntityKilledEvent>>();
+        world.init_resource::<bevy_ecs::event::Events<scale::layer3::diplomacy_reflection::FloraPlantedEvent>>();
+        world.init_resource::<bevy_ecs::event::Events<scale::layer3::diplomacy_reflection::TraitChangedEvent>>();
+        world.init_resource::<bevy_ecs::event::Events<scale::layer2::moon_hermits::PopDesertedEvent>>();
+        world.init_resource::<bevy_ecs::event::Events<scale::layer2::cascade::failure::LogisticsStrainedEvent>>();
+        world.init_resource::<bevy_ecs::event::Events<scale::layer2::cascade::failure::DefenseWeakenedEvent>>();
+        world.init_resource::<bevy_ecs::event::Events<scale::layer1::logistics::mass_driver::LaunchEvent>>();
+        world.init_resource::<bevy_ecs::event::Events<scale::layer1::logistics::mass_driver::BombardmentEvent>>();
+        world.init_resource::<bevy_ecs::event::Events<scale::layer2::cartographers_curse::SellTelemetryEvent>>();
+        world.init_resource::<bevy_ecs::event::Events<scale::layer2::phantom::SpawnGhostFleetEvent>>();
+
         let schedule = build_simulation_schedule();
         world.add_schedule(schedule);
 
@@ -185,7 +227,7 @@ mod tests {
 
     #[test]
     fn test_drone_spawning() {
-        let mut world = setup_world();
+        let mut world = scale::setup::setup_world();
 
         // Place a DroneHub at (0,0)
         // Note: We use spawn_building helper logic by manually inserting components
@@ -222,7 +264,7 @@ mod tests {
 
         // Run simulation for a few ticks to allow power grid to update and spawner to run
         for _ in 0..10 {
-            world.run_schedule(SimulationSchedule);
+            scale::simulation::run_simulation_tick(&mut world);
         }
 
         // Check for Drones
@@ -232,7 +274,7 @@ mod tests {
 
     #[test]
     fn test_drone_hauling() {
-        let mut world = setup_world();
+        let mut world = scale::setup::setup_world();
 
         // 1. Setup Infrastructure
         // Power Source
@@ -286,7 +328,7 @@ mod tests {
         // Wait for spawn
         let mut drone_spawned = false;
         for _ in 0..10 {
-            world.run_schedule(SimulationSchedule);
+            scale::simulation::run_simulation_tick(&mut world);
             if world.query::<&Drone>().iter(&world).count() > 0 {
                 drone_spawned = true;
                 break;
@@ -299,7 +341,7 @@ mod tests {
         // 5 (Item) -> 9 (Stockpile) = 4 ticks
         // Plus some decision delay. 20 ticks should be enough.
         for _ in 0..50 {
-            world.run_schedule(SimulationSchedule);
+            scale::simulation::run_simulation_tick(&mut world);
             if world.get_entity(item).is_err() {
                 // Item despawned (picked up)
             }
