@@ -18,7 +18,9 @@ mod integration_tests {
 
     #[test]
     fn test_death_spawns_corpse() {
-        let mut world = setup_world();
+        let mut world = scale::setup::setup_world();
+        *world.resource_mut::<scale::shared::state::GameState>() = scale::shared::state::GameState::Running;
+
         world.insert_resource(scale::shared::state::GameState::Running);
         world.insert_resource(SimulationTime::default());
 
@@ -53,7 +55,9 @@ mod integration_tests {
 
     #[test]
     fn test_funeral_integration_death_to_burial() {
-        let mut world = setup_world();
+        let mut world = scale::setup::setup_world();
+        *world.resource_mut::<scale::shared::state::GameState>() = scale::shared::state::GameState::Running;
+
         world.insert_resource(scale::shared::state::GameState::Running);
         world.insert_resource(SimulationTime::default());
         world.insert_resource(UtilityConfig {
@@ -144,7 +148,9 @@ mod integration_tests {
 
     #[test]
     fn test_grief_from_corpse() {
-        let mut world = setup_world();
+        let mut world = scale::setup::setup_world();
+        *world.resource_mut::<scale::shared::state::GameState>() = scale::shared::state::GameState::Running;
+
         world.insert_resource(scale::shared::state::GameState::Running);
         world.insert_resource(SimulationTime::default());
 

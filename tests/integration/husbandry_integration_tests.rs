@@ -13,7 +13,9 @@ use scale::simulation::run_simulation_tick;
 
 #[test]
 fn test_husbandry_full_loop() {
-    let mut world = setup_world();
+        let mut world = scale::setup::setup_world();
+        *world.resource_mut::<scale::shared::state::GameState>() = scale::shared::state::GameState::Running;
+
     *world.resource_mut::<GameState>() = GameState::Running;
     world.insert_resource(HusbandryConfig::default());
 
