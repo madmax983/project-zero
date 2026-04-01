@@ -130,6 +130,7 @@ pub fn register(schedule: &mut Schedule) {
                 .after(crate::layer1::energy::power_grid_system),
             ai_automation_system.after(crate::layer1::energy::power_grid_system),
             ai_rogue_system,
+            crate::layer3::market::quantum_famine::process_market_panic_hoarding,
         )
             .in_set(Layer1SystemSet::Economy),
     );

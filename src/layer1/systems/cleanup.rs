@@ -61,6 +61,8 @@ pub fn register(schedule: &mut Schedule) {
             update_event_buffer::<crate::layer1::shipbreaking::MineEvent>,
             update_event_buffer::<crate::layer2::moon_hermits::PopDesertedEvent>,
             update_event_buffer::<crate::layer1::grafting::GraftBuildingEvent>,
+            update_event_buffer::<crate::layer3::market::quantum_famine::MarketPanicEvent>,
+            update_event_buffer::<crate::layer3::market::quantum_famine::ExportDumpEvent>,
         )
             .in_set(Layer1SystemSet::EventCleanup),
     );

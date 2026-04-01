@@ -380,10 +380,10 @@ pub fn run_simulation_tick(world: &mut World) {
     if !world.contains_resource::<Events<crate::layer2::events_new::reverse_quarantine::RefugeeFleetEvent>>() {
         world.init_resource::<Events<crate::layer2::events_new::reverse_quarantine::RefugeeFleetEvent>>();
     }
-    if !world
-        .contains_resource::<Events<crate::layer1::grafting::GraftBuildingEvent>>()
-    {
+    if !world.contains_resource::<Events<crate::layer1::grafting::GraftBuildingEvent>>() {
         world.init_resource::<Events<crate::layer1::grafting::GraftBuildingEvent>>();
+        world.init_resource::<Events<crate::layer3::market::quantum_famine::MarketPanicEvent>>();
+        world.init_resource::<Events<crate::layer3::market::quantum_famine::ExportDumpEvent>>();
     }
     if !world
         .contains_resource::<Events<crate::layer2::navigation::stellar_weather::FleetDamagedEvent>>(
@@ -517,6 +517,8 @@ mod tests {
         world.init_resource::<Events<crate::layer2::moon_hermits::PopDesertedEvent>>();
         world.init_resource::<Events<crate::layer3::silence::HostileSpawnEvent>>();
         world.init_resource::<Events<crate::layer1::grafting::GraftBuildingEvent>>();
+        world.init_resource::<Events<crate::layer3::market::quantum_famine::MarketPanicEvent>>();
+        world.init_resource::<Events<crate::layer3::market::quantum_famine::ExportDumpEvent>>();
         if !world
             .contains_resource::<Events<crate::layer3::diplomacy_reflection::EntityKilledEvent>>()
         {
@@ -563,6 +565,8 @@ mod tests {
         world.init_resource::<crate::layer3::market::GalacticMarket>();
         world.init_resource::<Events<crate::layer2::events_new::reverse_quarantine::RefugeeFleetEvent>>();
         world.init_resource::<Events<crate::layer1::grafting::GraftBuildingEvent>>();
+        world.init_resource::<Events<crate::layer3::market::quantum_famine::MarketPanicEvent>>();
+        world.init_resource::<Events<crate::layer3::market::quantum_famine::ExportDumpEvent>>();
         world
             .init_resource::<Events<crate::layer2::navigation::stellar_weather::FleetDamagedEvent>>(
             );
