@@ -3,7 +3,6 @@
 ## High Priority
 
 
-- [ ] `776` Black Market Terraforming — `specs/776-black-market-terraforming.md`
 - [ ] `777` The Void Whispers — `specs/777-the-void-whispers.md`
 - [ ] `765` Diplomatic Wards — `specs/765-diplomatic-wards.md`
 - [ ] `767` Orbital Commute — `specs/767-orbital-commute.md`

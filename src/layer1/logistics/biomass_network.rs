@@ -81,6 +81,7 @@ mod tests {
     #[test]
     fn test_starving_network_digests_contents() {
         let mut app = App::new();
+        app.add_event::<crate::layer1::pop::PopDied>();
         app.add_systems(
             bevy_app::Update,
             (process_biomass_network_hunger, digest_transit_contents),
@@ -128,6 +129,7 @@ mod tests {
     #[test]
     fn test_fed_network_safely_transports() {
         let mut app = App::new();
+        app.add_event::<crate::layer1::pop::PopDied>();
         app.add_systems(
             bevy_app::Update,
             (process_biomass_network_hunger, digest_transit_contents),
