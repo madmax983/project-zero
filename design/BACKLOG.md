@@ -2,7 +2,7 @@
 
 ## High Priority
 
-- [ ] `622` The Bio-Digital Ascendancy — `specs/622-bio-digital-ascendancy.md`
+- [ ] `622` The Bio-Digital Ascendancy — `specs/622-bio-digital-ascendancy.md` — claimed 2026-03-26
 - [ ] `623` The Nostalgia Plague — `specs/623-nostalgia-plague.md`
 - [ ] `624` Rogue AI Arbitration — `specs/624-rogue-ai-arbitration.md`
 - [ ] `625` The Cryo-Prison Revolt — `specs/625-cryo-prison-revolt.md`

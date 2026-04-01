@@ -72,6 +72,12 @@ pub fn register(schedule: &mut Schedule) {
                 .after(apply_weather_effects_system),
             crate::layer1::nature::mutagenic_rain::clear_mutation_immunity_system
                 .after(crate::layer1::nature::mutagenic_rain::apply_mutagenic_rain_system),
+        )
+            .in_set(Layer1SystemSet::Execution),
+    );
+
+    schedule.add_systems(
+        (
             apply_quirk_modifiers_system
                 .after(apply_lighting_penalties_system)
                 .after(apply_weather_effects_system),
