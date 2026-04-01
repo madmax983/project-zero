@@ -1,12 +1,12 @@
 // src/layer1/environment/artificial_sunspots.rs
 
-use bevy_ecs::prelude::*;
 use crate::layer1::building::{Building, BuildingType};
+use crate::layer1::chronicle::{AddChronicleEvent, EventImportance};
 use crate::layer1::energy::PowerSource;
 use crate::layer1::health::Health;
-use crate::layer1::structural_integrity::RoofGrid;
 use crate::layer1::map::GridPosition;
-use crate::layer1::chronicle::{AddChronicleEvent, EventImportance};
+use crate::layer1::structural_integrity::RoofGrid;
+use bevy_ecs::prelude::*;
 
 /// Represents an active artificial sunspot event and its intensity.
 /// `intensity` typically ranges from 0.0 (inactive) to 1.0 (full effect).
@@ -83,7 +83,8 @@ pub fn track_sunspot_chronicle_system(
         } else if !is_active && sunspot.was_active {
             sunspot.was_active = false;
             chronicle_events.send(AddChronicleEvent {
-                text: "The artificial sunspot has dissipated. The star's light returns to normal.".to_string(),
+                text: "The artificial sunspot has dissipated. The star's light returns to normal."
+                    .to_string(),
                 importance: EventImportance::Major,
             });
         }
@@ -93,10 +94,10 @@ pub fn track_sunspot_chronicle_system(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::layer1::energy::PowerSource;
-    use crate::layer1::pop::PopBundle;
-    use crate::layer1::health::Health;
     use crate::layer1::building::{Building, BuildingType};
+    use crate::layer1::energy::PowerSource;
+    use crate::layer1::health::Health;
+    use crate::layer1::pop::PopBundle;
 
     fn setup_world() -> World {
         World::new()
@@ -107,13 +108,23 @@ mod tests {
         let mut world = setup_world();
 
         // Spawn a solar panel that normally generates power
-        let solar_panel = world.spawn((
-            Building { building_type: BuildingType::SolarPanel },
-            PowerSource { output: 100.0, active: true },
-        )).id();
+        let solar_panel = world
+            .spawn((
+                Building {
+                    building_type: BuildingType::SolarPanel,
+                },
+                PowerSource {
+                    output: 100.0,
+                    active: true,
+                },
+            ))
+            .id();
 
         // Trigger the artificial sunspot event
-        world.insert_resource(ArtificialSunspot { intensity: 1.0, was_active: false });
+        world.insert_resource(ArtificialSunspot {
+            intensity: 1.0,
+            was_active: false,
+        });
 
         let mut schedule = Schedule::default();
         schedule.add_systems(apply_sunspot_effects_system);
@@ -131,15 +142,23 @@ mod tests {
         // Spawn a pop outdoors (no shielding)
         let mut rng = rand::thread_rng();
         let mut bundle = PopBundle::random(0, 0, &mut rng);
-        bundle.health = Health { current: 100.0, max: 100.0 };
+        bundle.health = Health {
+            current: 100.0,
+            max: 100.0,
+        };
 
-        let pop = world.spawn((
-            bundle,
-            OutdoorExposure, // Indicates the pop is outside
-        )).id();
+        let pop = world
+            .spawn((
+                bundle,
+                OutdoorExposure, // Indicates the pop is outside
+            ))
+            .id();
 
         // Trigger the artificial sunspot event
-        world.insert_resource(ArtificialSunspot { intensity: 1.0, was_active: false });
+        world.insert_resource(ArtificialSunspot {
+            intensity: 1.0,
+            was_active: false,
+        });
 
         let mut schedule = Schedule::default();
         schedule.add_systems(apply_sunspot_radiation_system);
@@ -157,12 +176,18 @@ mod tests {
         // Spawn a pop indoors (shielded)
         let mut rng = rand::thread_rng();
         let mut bundle = PopBundle::random(0, 0, &mut rng);
-        bundle.health = Health { current: 100.0, max: 100.0 };
+        bundle.health = Health {
+            current: 100.0,
+            max: 100.0,
+        };
 
         let pop = world.spawn(bundle).id();
 
         // Trigger the artificial sunspot event
-        world.insert_resource(ArtificialSunspot { intensity: 1.0, was_active: false });
+        world.insert_resource(ArtificialSunspot {
+            intensity: 1.0,
+            was_active: false,
+        });
 
         let mut schedule = Schedule::default();
         schedule.add_systems(apply_sunspot_radiation_system);
@@ -175,9 +200,9 @@ mod tests {
 
     #[test]
     fn test_update_outdoor_exposure_system() {
-        use crate::layer1::structural_integrity::RoofGrid;
         use crate::layer1::map::GridPosition;
         use crate::layer1::pop::Pop;
+        use crate::layer1::structural_integrity::RoofGrid;
 
         let mut world = setup_world();
         let mut roof = RoofGrid::new(10, 10);
@@ -186,7 +211,9 @@ mod tests {
         world.insert_resource(roof);
 
         // Spawn a pop indoors (under roof)
-        let pop_indoors = world.spawn((Pop, GridPosition { x: 5, y: 5 }, OutdoorExposure)).id();
+        let pop_indoors = world
+            .spawn((Pop, GridPosition { x: 5, y: 5 }, OutdoorExposure))
+            .id();
         // Spawn a pop outdoors (no roof)
         let pop_outdoors = world.spawn((Pop, GridPosition { x: 1, y: 1 })).id();
 
@@ -205,7 +232,10 @@ mod tests {
         use crate::layer1::chronicle::AddChronicleEvent;
 
         let mut world = setup_world();
-        world.insert_resource(ArtificialSunspot { intensity: 1.0, was_active: false });
+        world.insert_resource(ArtificialSunspot {
+            intensity: 1.0,
+            was_active: false,
+        });
         world.init_resource::<Events<AddChronicleEvent>>();
 
         let mut schedule = Schedule::default();

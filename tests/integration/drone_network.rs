@@ -7,8 +7,9 @@ mod tests {
     use scale::layer1::stockpile::Stockpile;
     use scale::layer1::GridPosition;
     use scale::shared::time::SimulationTime;
-    use scale::simulation::{build_simulation_schedule, SimulationSchedule};
+    use scale::simulation::build_simulation_schedule;
 
+    #[allow(dead_code)]
     fn setup_world() -> World {
         scale::setup::init_task_pools();
         let mut world = World::new();
@@ -178,36 +179,52 @@ mod tests {
 
         // Add schedule
         world.init_resource::<bevy_ecs::event::Events<scale::layer2::exploration::void_whispers::FleetReturnedEvent>>();
-        world.init_resource::<bevy_ecs::event::Events<scale::layer1::whispering_ore::MinedOreEvent>>();
+        world
+            .init_resource::<bevy_ecs::event::Events<scale::layer1::whispering_ore::MinedOreEvent>>(
+            );
         world.init_resource::<scale::layer2::trade::blockade::ColonyDebt>();
         world.init_resource::<bevy_ecs::event::Events<scale::layer2::trade::penal_contracts::PrisonerDiedEvent>>();
-        world.init_resource::<bevy_ecs::event::Events<scale::layer3::planet::black_market_terraforming::RogueTerraformEvent>>();
+        world.init_resource::<bevy_ecs::event::Events<
+            scale::layer3::planet::black_market_terraforming::RogueTerraformEvent,
+        >>();
         world.init_resource::<scale::layer2::syzygy::SyzygyCycle>();
         world.init_resource::<scale::layer2::syzygy::PlanetaryGravity>();
         world.init_resource::<scale::layer2::syzygy::TidalForce>();
-        world.init_resource::<bevy_ecs::event::Events<scale::layer1::grafting::GraftBuildingEvent>>();
+        world
+            .init_resource::<bevy_ecs::event::Events<scale::layer1::grafting::GraftBuildingEvent>>(
+            );
         world.init_resource::<bevy_ecs::event::Events<scale::layer3::market::quantum_famine::ExportDumpEvent>>();
         world.init_resource::<bevy_ecs::event::Events<scale::layer3::market::quantum_famine::MarketPanicEvent>>();
         world.init_resource::<bevy_ecs::event::Events<scale::layer2::navigation::stellar_weather::FleetDamagedEvent>>();
-        world.init_resource::<bevy_ecs::event::Events<scale::layer2::events_new::reverse_quarantine::RefugeeFleetEvent>>();
+        world.init_resource::<bevy_ecs::event::Events<
+            scale::layer2::events_new::reverse_quarantine::RefugeeFleetEvent,
+        >>();
         world.init_resource::<bevy_ecs::event::Events<scale::layer3::diplomacy_reflection::EntityKilledEvent>>();
         world.init_resource::<bevy_ecs::event::Events<scale::layer3::diplomacy_reflection::FloraPlantedEvent>>();
         world.init_resource::<bevy_ecs::event::Events<scale::layer3::diplomacy_reflection::TraitChangedEvent>>();
         world.init_resource::<bevy_ecs::event::Events<scale::layer2::moon_hermits::PopDesertedEvent>>();
 
         world.init_resource::<bevy_ecs::event::Events<scale::layer2::exploration::void_whispers::FleetReturnedEvent>>();
-        world.init_resource::<bevy_ecs::event::Events<scale::layer1::whispering_ore::MinedOreEvent>>();
+        world
+            .init_resource::<bevy_ecs::event::Events<scale::layer1::whispering_ore::MinedOreEvent>>(
+            );
         world.init_resource::<scale::layer2::trade::blockade::ColonyDebt>();
         world.init_resource::<bevy_ecs::event::Events<scale::layer2::trade::penal_contracts::PrisonerDiedEvent>>();
-        world.init_resource::<bevy_ecs::event::Events<scale::layer3::planet::black_market_terraforming::RogueTerraformEvent>>();
+        world.init_resource::<bevy_ecs::event::Events<
+            scale::layer3::planet::black_market_terraforming::RogueTerraformEvent,
+        >>();
         world.init_resource::<scale::layer2::syzygy::SyzygyCycle>();
         world.init_resource::<scale::layer2::syzygy::PlanetaryGravity>();
         world.init_resource::<scale::layer2::syzygy::TidalForce>();
-        world.init_resource::<bevy_ecs::event::Events<scale::layer1::grafting::GraftBuildingEvent>>();
+        world
+            .init_resource::<bevy_ecs::event::Events<scale::layer1::grafting::GraftBuildingEvent>>(
+            );
         world.init_resource::<bevy_ecs::event::Events<scale::layer3::market::quantum_famine::ExportDumpEvent>>();
         world.init_resource::<bevy_ecs::event::Events<scale::layer3::market::quantum_famine::MarketPanicEvent>>();
         world.init_resource::<bevy_ecs::event::Events<scale::layer2::navigation::stellar_weather::FleetDamagedEvent>>();
-        world.init_resource::<bevy_ecs::event::Events<scale::layer2::events_new::reverse_quarantine::RefugeeFleetEvent>>();
+        world.init_resource::<bevy_ecs::event::Events<
+            scale::layer2::events_new::reverse_quarantine::RefugeeFleetEvent,
+        >>();
         world.init_resource::<bevy_ecs::event::Events<scale::layer3::diplomacy_reflection::EntityKilledEvent>>();
         world.init_resource::<bevy_ecs::event::Events<scale::layer3::diplomacy_reflection::FloraPlantedEvent>>();
         world.init_resource::<bevy_ecs::event::Events<scale::layer3::diplomacy_reflection::TraitChangedEvent>>();
@@ -217,7 +234,9 @@ mod tests {
         world.init_resource::<bevy_ecs::event::Events<scale::layer1::logistics::mass_driver::LaunchEvent>>();
         world.init_resource::<bevy_ecs::event::Events<scale::layer1::logistics::mass_driver::BombardmentEvent>>();
         world.init_resource::<bevy_ecs::event::Events<scale::layer2::cartographers_curse::SellTelemetryEvent>>();
-        world.init_resource::<bevy_ecs::event::Events<scale::layer2::phantom::SpawnGhostFleetEvent>>();
+        world
+            .init_resource::<bevy_ecs::event::Events<scale::layer2::phantom::SpawnGhostFleetEvent>>(
+            );
 
         let schedule = build_simulation_schedule();
         world.add_schedule(schedule);

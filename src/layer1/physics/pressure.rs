@@ -91,9 +91,7 @@ impl PressureGrid {
         if ux >= self.width || uy >= self.height {
             return 0.0;
         }
-        let idx = uy
-            .checked_mul(self.width)
-            .and_then(|i| i.checked_add(ux));
+        let idx = uy.checked_mul(self.width).and_then(|i| i.checked_add(ux));
 
         if let Some(idx) = idx.filter(|&i| i < self.values.len()) {
             return self.values[idx];
@@ -112,9 +110,7 @@ impl PressureGrid {
         if ux >= self.width || uy >= self.height {
             return;
         }
-        let idx = uy
-            .checked_mul(self.width)
-            .and_then(|i| i.checked_add(ux));
+        let idx = uy.checked_mul(self.width).and_then(|i| i.checked_add(ux));
 
         if let Some(idx) = idx.filter(|&i| i < self.values.len()) {
             self.values[idx] = value.clamp(0.0, 1.0);

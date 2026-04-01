@@ -246,6 +246,15 @@ pub fn run_simulation_tick(world: &mut World) {
     }
 
     // Initialize Layer 2 Events
+    if !world.contains_resource::<Events<crate::layer1::diplomacy::wards::WarDeclaredEvent>>() {
+        world.init_resource::<Events<crate::layer1::diplomacy::wards::WarDeclaredEvent>>();
+    }
+    if !world.contains_resource::<crate::layer1::diplomacy::wards::DiplomaticStanding>() {
+        world.insert_resource(crate::layer1::diplomacy::wards::DiplomaticStanding {
+            faction_relations: std::collections::HashMap::new(),
+        });
+    }
+
     if !world.contains_resource::<Events<LaunchEvent>>() {
         world.init_resource::<Events<LaunchEvent>>();
     }

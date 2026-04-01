@@ -585,3 +585,4 @@ pub mod spore_diplomat;
 pub use spore_diplomat::*;
 pub mod grafting;
 pub use grafting::*;
+pub mod diplomacy;

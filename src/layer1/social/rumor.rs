@@ -144,12 +144,6 @@ pub fn exchange_rumors_system(world: &mut World) {
         for &speaker in &group {
             for &listener in &group {
                 if speaker != listener {
-
-
-
-
-
-
                     share_rumor(world, speaker, listener);
                 }
             }
