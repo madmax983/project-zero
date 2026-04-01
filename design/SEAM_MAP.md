@@ -592,3 +592,9 @@
 - **Systems connected:** `process_grafting` (Grafting) -> `grafting_chronicle_bridge` (Integration) -> `AddChronicleEvent`
 - **Glue added:** Added `grafting_chronicle_bridge` to emit an `AddChronicleEvent` (`EventImportance::Minor`) upon `GraftBuildingEvent`. Registered in `Layer1SystemSet::Observation`.
 - **Tests:** `tests/integration/architectural_grafting_bridge.rs`
+
+### INT-776: Black Market Terraforming -> Chronicle
+- **Date:** 2026-04-10
+- **Systems connected:** `trigger_rogue_terraforming` (Black Market Terraforming) -> `black_market_terraforming_bridge` (Integration) -> `AddChronicleEvent`
+- **Glue added:** Added `black_market_terraforming_bridge` to emit an `AddChronicleEvent` (`EventImportance::Major`) upon `RogueTerraformEvent`. Registered in `simulation.rs`.
+- **Tests:** `tests/integration/black_market_terraforming_bridge.rs`
