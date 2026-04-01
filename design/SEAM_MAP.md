@@ -574,3 +574,21 @@
     - `reverse_quarantine_chronicle_bridge` in `src/layer2/integration.rs` converts `RefugeeFleetEvent` (when rejected) to `AddChronicleEvent` with `EventImportance::Major`.
 - **Schedule:** Chained in `Layer2SystemSet` after `process_refugee_decisions_system`.
 - **Tests:** `tests/integration/reverse_quarantine_bridge.rs`
+
+### INT-772: Biomass Commute -> PopDied
+- **Date:** 2026-04-10
+- **Systems connected:** `digest_transit_contents` (Biomass Network) -> `PopDied` (Pop lifecycle)
+- **Glue added:** Modifies `digest_transit_contents` to emit `PopDied` when an entity has a `PopName`.
+- **Tests:** `tests/integration/biomass_commute_bridge.rs`
+
+### INT-773: Stellar Weather Navigation -> FleetHealth/Chronicle
+- **Date:** 2026-04-10
+- **Systems connected:** `apply_stellar_weather_effects` (Stellar Weather) -> `stellar_weather_damage_bridge_system` (Integration) -> `FleetHealth` & `AddChronicleEvent`
+- **Glue added:** Added `stellar_weather_damage_bridge_system` to apply `FleetDamagedEvent` damage to ships, despawn if health drops below 0, and record it in Chronicle. Registered in `Layer2SystemSet`.
+- **Tests:** `tests/integration/stellar_weather_bridge.rs`
+
+### INT-774: Architectural Grafting -> Chronicle
+- **Date:** 2026-04-10
+- **Systems connected:** `process_grafting` (Grafting) -> `grafting_chronicle_bridge` (Integration) -> `AddChronicleEvent`
+- **Glue added:** Added `grafting_chronicle_bridge` to emit an `AddChronicleEvent` (`EventImportance::Minor`) upon `GraftBuildingEvent`. Registered in `Layer1SystemSet::Observation`.
+- **Tests:** `tests/integration/architectural_grafting_bridge.rs`

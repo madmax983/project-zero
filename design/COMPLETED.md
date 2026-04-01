@@ -322,3 +322,6 @@
 - [x] `772` The Biomass Commute — `specs/772-the-biomass-commute.md` — completed 2026-03-31
 - [x] `773` Stellar Weather Navigation — `specs/773-stellar-weather-navigation.md` — completed 2026-04-01
 - [x] `774` Architectural Grafting — `specs/774-architectural-grafting.md` — completed 2026-04-10
+- [x] `INT-772` Integration: Biomass Commute -> PopDied — completed 2026-04-10
+- [x] `INT-773` Integration: Stellar Weather Navigation -> FleetHealth/Chronicle — completed 2026-04-10
+- [x] `INT-774` Integration: Architectural Grafting -> Chronicle — completed 2026-04-10

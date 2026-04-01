@@ -186,6 +186,8 @@ pub fn build_simulation_schedule() -> Schedule {
         crate::layer2::integration::process_grief_tourist_arrival_system
             .after(crate::layer2::tourism::process_disaster_tourism_system),
         crate::layer2::navigation::stellar_weather::apply_stellar_weather_effects,
+        crate::layer2::integration::stellar_weather_damage_bridge_system
+            .after(crate::layer2::navigation::stellar_weather::apply_stellar_weather_effects),
         crate::layer2::events_new::reverse_quarantine::process_refugee_decisions_system,
         crate::layer2::integration::reverse_quarantine_chronicle_bridge
             .after(crate::layer2::events_new::reverse_quarantine::process_refugee_decisions_system),
