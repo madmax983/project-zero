@@ -608,3 +608,5 @@ pub mod ghost_shift_strike;
 pub use ghost_shift_strike::*;
 pub mod exile;
 pub use exile::*;
+pub mod gossip_economy;
+pub use gossip_economy::*;

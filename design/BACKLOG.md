@@ -402,7 +402,7 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `678` The Atmospheric Smugglers — `specs/678-atmospheric-smugglers.md`
 
 - [ ] `683` Feral Drones — `specs/683-feral-drones.md`
-- [ ] `684` The Gossip Economy — `specs/684-gossip-economy.md`
+
 - [ ] `685` The Parasitic Cargo — `specs/685-parasitic-cargo.md`
 - [ ] `686` Echoes of the Deep — `specs/686-echoes-of-the-deep.md`
 
