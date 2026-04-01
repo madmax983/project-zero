@@ -4,7 +4,6 @@
 
 
 
-- [ ] `765` Diplomatic Wards — `specs/765-diplomatic-wards.md`
 
 - [ ] `768` Dynastic Succession — `specs/768-dynastic-succession.md`
 - [ ] `769` The Agony Extract — `specs/769-the-agony-extract.md`

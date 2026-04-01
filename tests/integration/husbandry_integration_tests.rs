@@ -7,14 +7,14 @@ use scale::layer1::pop::Pop;
 use scale::layer1::skills::{SkillType, Skills};
 use scale::layer1::utility_ai::{ActionType, PopAction, UtilityWeights};
 use scale::layer1::zone::{ZoneGrid, ZoneType};
-use scale::setup::setup_world;
 use scale::shared::state::GameState;
 use scale::simulation::run_simulation_tick;
 
 #[test]
 fn test_husbandry_full_loop() {
-        let mut world = scale::setup::setup_world();
-        *world.resource_mut::<scale::shared::state::GameState>() = scale::shared::state::GameState::Running;
+    let mut world = scale::setup::setup_world();
+    *world.resource_mut::<scale::shared::state::GameState>() =
+        scale::shared::state::GameState::Running;
 
     *world.resource_mut::<GameState>() = GameState::Running;
     world.insert_resource(HusbandryConfig::default());

@@ -739,7 +739,9 @@ mod migratory_flora_tests {
             for x in 0i32..10 {
                 let dist = ((x - 5).abs() + (y - 5).abs()) as f32;
                 let val: f32 = 100.0 - dist * 10.0;
-                let idx = (y as usize).checked_mul(water_grid.width).and_then(|i| i.checked_add(x as usize));
+                let idx = (y as usize)
+                    .checked_mul(water_grid.width)
+                    .and_then(|i| i.checked_add(x as usize));
                 if let Some(idx) = idx.filter(|&i| i < water_grid.values.len()) {
                     water_grid.values[idx] = val.max(0.0) as u8;
                 }
@@ -852,7 +854,9 @@ mod migratory_flora_tests {
             for x in 0i32..10 {
                 let dist = ((x - 5).abs() + (y - 5).abs()) as f32;
                 let val: f32 = 100.0 - dist * 10.0;
-                let idx = (y as usize).checked_mul(water_grid.width).and_then(|i| i.checked_add(x as usize));
+                let idx = (y as usize)
+                    .checked_mul(water_grid.width)
+                    .and_then(|i| i.checked_add(x as usize));
                 if let Some(idx) = idx.filter(|&i| i < water_grid.values.len()) {
                     water_grid.values[idx] = val.max(0.0) as u8;
                 }
