@@ -36,6 +36,8 @@ pub enum ZoneType {
     Sanctuary,
     /// Customs checkpoint for vetting new arrivals.
     Customs,
+    /// Extraterritorial zone for diplomats.
+    Extraterritorial,
 }
 
 /// Resource storing the grid of zones.

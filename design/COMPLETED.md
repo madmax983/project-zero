@@ -317,3 +317,4 @@
 - [x] `INT-727` Integration: Empathic Plague -> Morale — completed 2026-04-01
 - [x] `INT-735` Integration: Genetic Crop Modification -> Chronicle — completed 2026-04-01
 - [x] `INT-546` Integration: Reverse Quarantine -> Chronicle — completed 2026-04-01
+- [x] `764` The Embassy Sector — `specs/764-the-embassy-sector.md` — completed 2026-03-24

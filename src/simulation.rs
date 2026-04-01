@@ -310,6 +310,15 @@ pub fn run_simulation_tick(world: &mut World) {
     {
         world.init_resource::<Events<crate::layer2::trade::escape_velocity::LaunchShipEvent>>();
     }
+    if !world.contains_resource::<Events<crate::layer1::diplomacy::embassy::ArrestEvent>>() {
+        world.init_resource::<Events<crate::layer1::diplomacy::embassy::ArrestEvent>>();
+    }
+    if !world.contains_resource::<Events<crate::layer1::diplomacy::embassy::DiplomaticIncidentEvent>>() {
+        world.init_resource::<Events<crate::layer1::diplomacy::embassy::DiplomaticIncidentEvent>>();
+    }
+    if !world.contains_resource::<Events<crate::layer1::law::justice::CrimeCommittedEvent>>() {
+        world.init_resource::<Events<crate::layer1::law::justice::CrimeCommittedEvent>>();
+    }
     if !world.contains_resource::<Events<crate::layer3::events::debt_prison::BailoutOfferEvent>>() {
         world.init_resource::<Events<crate::layer3::events::debt_prison::BailoutOfferEvent>>();
     }
@@ -518,6 +527,9 @@ mod tests {
         world.init_resource::<crate::layer2::phantom::EmpireAutomationState>();
         world.init_resource::<Events<crate::layer2::trade::blockade::TradeShipArrivalEvent>>();
         world.init_resource::<Events<crate::layer2::trade::escape_velocity::LaunchShipEvent>>();
+        world.init_resource::<Events<crate::layer1::diplomacy::embassy::ArrestEvent>>();
+        world.init_resource::<Events<crate::layer1::diplomacy::embassy::DiplomaticIncidentEvent>>();
+        world.init_resource::<Events<crate::layer1::law::justice::CrimeCommittedEvent>>();
         world.init_resource::<crate::layer2::trade::blockade::ColonyDebt>();
 
         world.init_resource::<Events<crate::layer3::events::debt_prison::BailoutOfferEvent>>();

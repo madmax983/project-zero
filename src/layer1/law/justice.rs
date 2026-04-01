@@ -52,7 +52,8 @@ pub fn check_crime_system(
     zone_grid: Res<ZoneGrid>,
 ) {
     for (entity, state, pos) in query.iter() {
-        if zone_grid.get(pos.x, pos.y) == ZoneType::Sanctuary {
+        let zone = zone_grid.get(pos.x, pos.y);
+        if zone == ZoneType::Sanctuary || zone == ZoneType::Extraterritorial {
             continue;
         }
         if matches!(state, MentalState::Broken(MentalBreakType::Vandalize)) {
@@ -77,7 +78,8 @@ pub fn evaluate_warden_action(
     let weights = UtilityWeights::default();
 
     for criminal in criminals {
-        if zone_grid.get(criminal.pos.x, criminal.pos.y) == ZoneType::Sanctuary {
+        let zone = zone_grid.get(criminal.pos.x, criminal.pos.y);
+        if zone == ZoneType::Sanctuary || zone == ZoneType::Extraterritorial {
             continue;
         }
 

@@ -116,6 +116,11 @@ pub fn register(schedule: &mut Schedule) {
         (
             crate::layer1::law::justice::check_crime_system
                 .after(crate::layer1::unrest::check_mental_break_system),
+            crate::layer1::law::justice::process_crimes_system
+                .after(crate::layer1::law::justice::check_crime_system),
+            crate::layer1::diplomacy::embassy::evaluate_diplomatic_crime_system
+                .after(crate::layer1::law::justice::process_crimes_system),
+            crate::layer1::diplomacy::embassy::process_diplomatic_arrest_system,
             crate::layer1::law::contraband::detect_contraband_system
                 .after(crate::layer1::law::justice::check_crime_system),
             crate::layer1::unrest::recover_mental_break_system.after(decay_needs_system),

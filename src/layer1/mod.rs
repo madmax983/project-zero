@@ -629,3 +629,7 @@ pub use disasters::*;
 pub mod environment;
 pub mod spore_diplomat;
 pub use spore_diplomat::*;
+
+/// Diplomacy System (Spec 764)
+pub mod diplomacy;
+pub use diplomacy::*;
