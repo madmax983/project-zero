@@ -15,7 +15,7 @@ pub fn register(schedule: &mut Schedule) {
             update_event_buffer::<crate::layer1::heirloom::RetrogradeEngineeringEvent>,
             update_event_buffer::<crate::layer1::energy::GridOverloadEvent>,
             update_event_buffer::<crate::layer1::hazards::AmputationEvent>,
-            update_event_buffer::<crate::layer1::geology::GeologicalEvent>,
+            update_event_buffer::<crate::layer1::geology::EarthquakeEvent>,
             update_event_buffer::<crate::layer1::society::InvestigationEvent>,
             update_event_buffer::<crate::layer1::society::SuppressSocietyEvent>,
             update_event_buffer::<crate::layer1::medical::PatientTreated>,

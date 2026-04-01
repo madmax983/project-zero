@@ -55,7 +55,7 @@ mod tests {
             ..Default::default()
         });
         world.init_resource::<Events<MegaQuakeEvent>>();
-        world.init_resource::<Events<crate::layer1::geology::GeologicalEvent>>();
+        world.init_resource::<Events<crate::layer1::geology::EarthquakeEvent>>();
 
         let mut schedule = Schedule::default();
         schedule.add_systems(check_quake_system);
@@ -65,7 +65,7 @@ mod tests {
         let events = world.resource::<Events<MegaQuakeEvent>>();
         assert!(!events.is_empty());
 
-        let geo_events = world.resource::<Events<crate::layer1::geology::GeologicalEvent>>();
+        let geo_events = world.resource::<Events<crate::layer1::geology::EarthquakeEvent>>();
         assert!(!geo_events.is_empty());
 
         let stress = world.resource::<TectonicStress>();

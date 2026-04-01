@@ -16,8 +16,6 @@ pub enum ImmigrationStatus {
     Vetted,
     /// Rejected due to hidden traits or policy.
     Rejected(String),
-    /// Detained for further processing.
-    Detained,
 }
 
 /// Hidden traits that are revealed during vetting.

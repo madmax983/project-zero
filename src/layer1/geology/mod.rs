@@ -79,21 +79,13 @@ impl SeismicGrid {
     }
 }
 
-/// Events related to geological instability.
+/// Event related to a major earthquake (damage).
 #[derive(Event, Debug, Clone)]
-pub enum GeologicalEvent {
-    /// A minor tremor (warning).
-    Tremor {
-        /// Center of the tremor.
-        center: GridPosition,
-    },
-    /// A major earthquake (damage).
-    Earthquake {
-        /// Center of the earthquake.
-        center: GridPosition,
-        /// Magnitude of the earthquake (determines damage radius and intensity).
-        magnitude: f32,
-    },
+pub struct EarthquakeEvent {
+    /// Center of the earthquake.
+    pub center: GridPosition,
+    /// Magnitude of the earthquake (determines damage radius and intensity).
+    pub magnitude: f32,
 }
 
 /// Helper to add stress to the grid from other systems.
@@ -112,7 +104,7 @@ pub fn seismic_decay_system(mut grid: ResMut<SeismicGrid>) {
 #[allow(clippy::cast_possible_truncation, clippy::cast_possible_wrap)]
 pub fn check_seismic_events(
     mut grid: ResMut<SeismicGrid>,
-    mut events: EventWriter<GeologicalEvent>,
+    mut events: EventWriter<EarthquakeEvent>,
 ) {
     for y in 0..grid.height {
         for x in 0..grid.width {
@@ -124,7 +116,7 @@ pub fn check_seismic_events(
                 // Trigger event
                 // Reset stress (release energy)
                 grid.stress[idx] = 0.0;
-                events.send(GeologicalEvent::Earthquake {
+                events.send(EarthquakeEvent {
                     center: GridPosition {
                         x: x as i32,
                         y: y as i32,
@@ -140,42 +132,40 @@ pub fn check_seismic_events(
 pub mod tectonic;
 
 pub fn apply_geological_event_system(
-    mut events: EventReader<GeologicalEvent>,
+    mut events: EventReader<EarthquakeEvent>,
     mut commands: Commands,
     mut health_query: Query<(Entity, &GridPosition, &mut crate::layer1::health::Health)>,
     mut shake: Option<ResMut<ScreenShake>>,
 ) {
     for event in events.read() {
-        if let GeologicalEvent::Earthquake { center, magnitude } = event {
-            // Apply damage in radius (simple 1 tile for now based on test)
-            let damage = 10.0 * magnitude;
-            for (_entity, pos, mut health) in &mut health_query {
-                if pos == center {
-                    health.current -= damage;
-                }
+        // Apply damage in radius (simple 1 tile for now based on test)
+        let damage = 10.0 * event.magnitude;
+        for (_entity, pos, mut health) in &mut health_query {
+            if pos == &event.center {
+                health.current -= damage;
             }
-
-            // Visual feedback
-            if let Some(ref mut s) = shake {
-                s.trigger(0.5 * magnitude);
-            }
-
-            commands.spawn((
-                crate::layer1::particles::Particle {
-                    char: '#',
-                    color: Color::Red,
-                    lifetime: 20,
-                },
-                *center,
-            ));
         }
+
+        // Visual feedback
+        if let Some(ref mut s) = shake {
+            s.trigger(0.5 * event.magnitude);
+        }
+
+        commands.spawn((
+            crate::layer1::particles::Particle {
+                char: '#',
+                color: Color::Red,
+                lifetime: 20,
+            },
+            event.center,
+        ));
     }
 }
 
 #[cfg(test)]
 mod tests {
     use crate::layer1::geology::{
-        add_seismic_stress, apply_geological_event_system, check_seismic_events, GeologicalEvent,
+        add_seismic_stress, apply_geological_event_system, check_seismic_events, EarthquakeEvent,
         SeismicGrid,
     };
     use crate::layer1::health::Health;
@@ -225,30 +215,25 @@ mod tests {
         // Set stress above threshold (e.g., 100.0)
         grid.add_stress(5, 5, 150.0);
         world.insert_resource(grid);
-        world.init_resource::<Events<GeologicalEvent>>();
+        world.init_resource::<Events<EarthquakeEvent>>();
 
         // Run check system
         world.run_system_once(check_seismic_events).unwrap();
 
         // Check event
-        let events = world.resource::<Events<GeologicalEvent>>();
+        let events = world.resource::<Events<EarthquakeEvent>>();
         let mut reader = events.get_cursor();
         let emitted: Vec<_> = reader.read(events).collect();
 
         assert!(!emitted.is_empty());
-        match emitted[0] {
-            GeologicalEvent::Earthquake { center, .. } => {
-                assert_eq!(center.x, 5);
-                assert_eq!(center.y, 5);
-            }
-            _ => panic!("Expected Earthquake"),
-        }
+        assert_eq!(emitted[0].center.x, 5);
+        assert_eq!(emitted[0].center.y, 5);
     }
 
     #[test]
     fn test_earthquake_damage() {
         let mut world = World::new();
-        world.init_resource::<Events<GeologicalEvent>>();
+        world.init_resource::<Events<EarthquakeEvent>>();
 
         // Setup building/victim
         let victim = world
@@ -263,7 +248,7 @@ mod tests {
         world.insert_resource(crate::layer1::map::ScreenShake::default());
 
         // Send event
-        world.send_event(GeologicalEvent::Earthquake {
+        world.send_event(EarthquakeEvent {
             center: GridPosition { x: 5, y: 5 },
             magnitude: 5.0,
         });

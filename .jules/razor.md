@@ -46,3 +46,12 @@
 **Bloat:** Speculative Generality: `MemeticInfection` enum in `src/layer1/memetics/parasitic_broadcast.rs` and `BanishmentState` enum in `src/layer1/social/exile.rs` which had only 1 variant.
 **Cut:** Converted both enums into simple marker structs and updated Bevy queries to use `With<T>` rather than retrieving data and matching on it.
 **Saved:** 5 lines of code, speculative pattern matching overhead, and improved idiomatic Bevy usage by using ECS filters instead of iterating and checking values.
+## [Reduction]
+**Bloat:** `GeologicalEvent` enum with only two variants where one (`Tremor`) was completely unused.
+**Cut:** Removed the unused `Tremor` variant and refactored the enum into a simple `EarthquakeEvent` struct.
+**Saved:** Speculative generality and removed an unnecessary layer of pattern matching for event handling across 5 modules.
+
+## [Reduction]
+**Bloat:** `ImmigrationStatus` enum had a `Detained` variant that was never constructed or evaluated.
+**Cut:** Excised the `Detained` variant.
+**Saved:** Speculative enum variant causing mental load.

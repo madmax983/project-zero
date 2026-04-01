@@ -42,12 +42,12 @@ pub fn update_stress_system(
 pub fn check_quake_system(
     mut stress: ResMut<TectonicStress>,
     mut quake_writer: EventWriter<MegaQuakeEvent>,
-    mut geo_events: EventWriter<crate::layer1::geology::GeologicalEvent>,
+    mut geo_events: EventWriter<crate::layer1::geology::EarthquakeEvent>,
 ) {
     if stress.current >= stress.threshold {
         quake_writer.send(MegaQuakeEvent);
-        // Dispatch actual damage using GeologicalEvent
-        geo_events.send(crate::layer1::geology::GeologicalEvent::Earthquake {
+        // Dispatch actual damage using EarthquakeEvent
+        geo_events.send(crate::layer1::geology::EarthquakeEvent {
             center: crate::layer1::map::GridPosition { x: 50, y: 50 }, // Approximation since map size is not directly here, or we can just send multiple.
             magnitude: 15.0,                                           // MegaQuake is big
         });

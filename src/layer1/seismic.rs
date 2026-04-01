@@ -1,7 +1,7 @@
 //! Seismic Resonance system (Spec 171).
 
 use crate::layer1::flora::Flora;
-use crate::layer1::geology::GeologicalEvent;
+use crate::layer1::geology::EarthquakeEvent;
 use crate::layer1::map::GridPosition;
 use crate::layer1::terrain::{TerrainGrid, TerrainType};
 use bevy_ecs::prelude::*;
@@ -167,7 +167,7 @@ pub fn seismic_flora_reaction_system(
 #[allow(clippy::cast_possible_truncation, clippy::cast_possible_wrap)]
 pub fn seismic_instability_system(
     grid: Res<VibrationGrid>,
-    mut events: EventWriter<GeologicalEvent>,
+    mut events: EventWriter<EarthquakeEvent>,
 ) {
     let mut rng = rand::thread_rng();
 
@@ -179,7 +179,7 @@ pub fn seismic_instability_system(
                 // 1% chance per tick per tile is actually quite high if many tiles are vibrating.
                 // Let's make it 1% chance.
                 if rng.r#gen::<f32>() < 0.01 {
-                    events.send(GeologicalEvent::Earthquake {
+                    events.send(EarthquakeEvent {
                         center: GridPosition {
                             x: x as i32,
                             y: y as i32,
@@ -199,7 +199,7 @@ pub fn seismic_instability_system(
 mod tests {
     use super::*;
     use crate::layer1::flora::Flora;
-    use crate::layer1::geology::GeologicalEvent;
+    use crate::layer1::geology::EarthquakeEvent;
     use crate::layer1::terrain::{TerrainGrid, TerrainType};
 
     #[test]
@@ -307,7 +307,7 @@ mod tests {
     fn test_seismic_triggers_instability() {
         let mut world = World::new();
         let mut grid = VibrationGrid::new(10, 10);
-        world.insert_resource(Events::<GeologicalEvent>::default());
+        world.insert_resource(Events::<EarthquakeEvent>::default());
 
         // Set EXTREME vibration at (5, 5)
         grid.set(5, 5, 1.5); // Over threshold
@@ -319,7 +319,7 @@ mod tests {
 
         for _ in 0..1000 {
             schedule.run(&mut world);
-            let events = world.resource::<Events<GeologicalEvent>>();
+            let events = world.resource::<Events<EarthquakeEvent>>();
             let mut reader = events.get_cursor();
             if reader.read(events).next().is_some() {
                 triggered = true;
