@@ -13256,3 +13256,43 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Forcing an administrative override to solve a crisis instantly vs. letting the system slowly resolve itself, knowing that pushing the override might literally kill your best workers.
 
 ---
+
+## The Ephemeral Archipelago
+
+**Layer:** 2
+
+**Fantasy:** Chasing fading islands of wealth before they vanish into the cosmic storm.
+
+**Mechanic:** A dense cluster of highly valuable resource nodes (asteroids or micro-moons) appears in orbit around a gas giant or star, but they are slowly spiraling inward. You have a limited window to mine them before they are destroyed by the gravity well or atmospheric pressure. Mining them requires specialized, fast, but fragile ships.
+
+**Emergence:** You dedicate your entire economy to building ships to harvest the archipelago. Just as the biggest node is about to fall, your fleet is attacked by pirates who have the exact same idea. A massive battle takes place on a sinking island, and you lose half your ships trying to save a single cargo hold of rare metals.
+
+**Tension:** Do you risk your expensive ships for incredible wealth, knowing the very ground they are mining is doomed? How long do you stay before it's too late?
+
+---
+
+## The Subterranean Ocean
+
+**Layer:** 1
+
+**Fantasy:** You thought you were digging a mine, but you punctured the roof of an abyss.
+
+**Mechanic:** Mining deep into the crust has a chance to reveal a massive, pressurized subterranean body of water (or other fluid). Breaking into it causes rapid, violent flooding of the lower levels. However, this ocean contains unique bioluminescent flora, blind predators, and incredible thermal energy potential.
+
+**Emergence:** You accidentally flood your primary iron mine. While desperately building pumps to save the trapped miners, you discover the water is filled with a rare, hyper-nutritious kelp. Your colony pivots from a struggling mining outpost to a thriving, aquatic farming society, but now you have to deal with the terrifying, massive blind Leviathans that occasionally surface in your flooded shafts.
+
+**Tension:** The immediate crisis of a massive flood vs. the long-term potential of an entirely new, alien biome hidden beneath your feet.
+
+---
+
+## The Orbital Casino
+
+**Layer:** Cross-layer (2 -> 3)
+
+**Fantasy:** A wretched hive of scum, villainy, and galactic diplomacy, where fortunes are won and lost on the roll of a die.
+
+**Mechanic:** A neutral, heavily armed Layer 3 faction parks a massive Casino Station in your Layer 2 system. It generates massive trade value and attracts tourists, but your own Pops (Layer 1) can take shuttles there to "gamble." Pops might return incredibly wealthy (boosting local economy but causing jealousy) or entirely bankrupt and indebted (causing severe Morale drops and crime).
+
+**Emergence:** Your most brilliant scientist gets addicted to the Casino's holoslots. They embezzle funds from the research budget, halting your tech progression, and eventually sell critical colony defense schematics to pay off their debts to a rival empire. You have to raid the Casino to get the schematics back, sparking an interstellar incident.
+
+**Tension:** The incredible passive income and diplomatic leverage of hosting a galactic hub vs. the devastating social decay and unpredictable financial ruin of your own population.
