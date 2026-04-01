@@ -174,6 +174,8 @@ pub fn build_simulation_schedule() -> Schedule {
             .after(crate::layer3::diplomacy_reflection::update_diplomatic_traits),
     ));
 
+    schedule.add_systems((crate::layer3::diplomacy::succession::process_succession_system,));
+
     schedule.add_systems((
         crate::layer2::phantom::check_scrapcode_threshold_system
             .after(crate::layer1::scrapcode::scrapcode_decay_system),
@@ -573,6 +575,11 @@ mod tests {
 
         world.init_resource::<Events<crate::layer3::events::debt_prison::BailoutOfferEvent>>();
         world.init_resource::<Events<crate::layer3::events::debt_prison::AcceptBailoutEvent>>();
+
+        world.init_resource::<Events<crate::layer1::diplomacy::wards::WarDeclaredEvent>>();
+        world.insert_resource(crate::layer1::diplomacy::wards::DiplomaticStanding {
+            faction_relations: std::collections::HashMap::new(),
+        });
 
         world.init_resource::<Events<crate::layer2::phantom::SpawnGhostFleetEvent>>();
 

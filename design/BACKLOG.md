@@ -5,7 +5,6 @@
 
 
 
-- [ ] `768` Dynastic Succession — `specs/768-dynastic-succession.md`
 - [ ] `769` The Agony Extract — `specs/769-the-agony-extract.md`
 - [ ] `770` Temporal Ghost Towns — `specs/770-temporal-ghost-towns.md`
 - [ ] `771` Parasitic Architecture — `specs/771-parasitic-architecture.md`
