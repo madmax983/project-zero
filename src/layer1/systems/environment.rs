@@ -59,7 +59,15 @@ pub fn register(schedule: &mut Schedule) {
     );
 
     schedule.add_systems(
-        (crate::layer1::clutter::clutter_accumulation_system,).in_set(Layer1SystemSet::Environment),
+        (
+            crate::layer1::clutter::clutter_accumulation_system,
+            crate::layer1::environment::artificial_sunspots::apply_sunspot_effects_system,
+            crate::layer1::environment::artificial_sunspots::update_outdoor_exposure_system,
+            crate::layer1::environment::artificial_sunspots::apply_sunspot_radiation_system
+                .after(crate::layer1::environment::artificial_sunspots::update_outdoor_exposure_system),
+            crate::layer1::environment::artificial_sunspots::track_sunspot_chronicle_system,
+        )
+            .in_set(Layer1SystemSet::Environment),
     );
 
     schedule.add_systems(
