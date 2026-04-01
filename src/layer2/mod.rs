@@ -37,3 +37,4 @@ pub mod empathic_plague;
 pub mod moon_hermits;
 pub mod navigation;
 pub mod sensor_ambiguity;
+pub mod exploration;
