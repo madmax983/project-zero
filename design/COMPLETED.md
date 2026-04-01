@@ -1,3 +1,4 @@
+- [x] `775` The Quantum Famine — `specs/775-the-quantum-famine.md` — completed 2026-03-20
 - [x] `626` The Cartographer's Curse — `specs/626-cartographers-curse.md` — completed 2026-03-24
 # Completed Specs
 - [x] `296` The Martyr's Engine — `specs/296-martyrs-engine.md` — completed 2026-06-25
