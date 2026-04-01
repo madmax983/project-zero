@@ -470,6 +470,8 @@ pub use rituals::*;
 /// Airlock & Pressure system (Spec 119).
 pub mod pressure;
 pub use pressure::*;
+pub mod propaganda;
+pub use propaganda::*;
 /// Explosive Decompression system (Spec 136).
 pub mod suction;
 pub use suction::*;

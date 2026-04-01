@@ -53,6 +53,8 @@ pub enum MemoryType {
     MascotDeath,
     /// Lost a limb in an accident.
     LostLimb,
+    /// Generic positive memory implanted by the Propaganda Monolith.
+    GoldenAge,
 }
 
 impl MemoryType {
@@ -79,6 +81,7 @@ impl MemoryType {
             Self::AteInDecentRoom => 0.0,
             Self::AteInGreatRoom => 0.02,
             Self::AteInLegendaryRoom => 0.05,
+            Self::GoldenAge => 0.2, // Strong positive effect
         }
     }
 
@@ -105,6 +108,7 @@ impl MemoryType {
             | Self::AteInDecentRoom
             | Self::AteInGreatRoom
             | Self::AteInLegendaryRoom => 0.01,
+            Self::GoldenAge => 0.0001, // Very slow fade (10000 ticks)
         }
     }
 }

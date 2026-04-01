@@ -111,6 +111,9 @@ pub fn build_simulation_schedule() -> Schedule {
             .after(crate::layer2::trade::blockade::blockade_interception_system),
         crate::layer3::events::debt_prison::process_bailout_acceptance_system
             .after(crate::layer3::events::debt_prison::check_bailout_condition_system),
+        crate::layer1::propaganda::propaganda_broadcast_system,
+        crate::layer3::diplomacy::propaganda_diplomatic_fallout_system
+            .after(crate::layer1::propaganda::propaganda_broadcast_system),
     ));
 
     schedule.add_systems((
@@ -219,6 +222,9 @@ pub fn run_simulation_tick(world: &mut World) {
     if !world.contains_resource::<Events<crate::layer3::events::debt_prison::BailoutOfferEvent>>() {
         world.init_resource::<Events<crate::layer3::events::debt_prison::BailoutOfferEvent>>();
     }
+    if !world.contains_resource::<Events<crate::layer1::propaganda::PropagandaBroadcastEvent>>() {
+        world.init_resource::<Events<crate::layer1::propaganda::PropagandaBroadcastEvent>>();
+    }
     if !world.contains_resource::<Events<crate::layer3::events::debt_prison::AcceptBailoutEvent>>()
     {
         world.init_resource::<Events<crate::layer3::events::debt_prison::AcceptBailoutEvent>>();
@@ -316,6 +322,7 @@ mod tests {
 
         world.init_resource::<Events<crate::layer3::events::debt_prison::BailoutOfferEvent>>();
         world.init_resource::<Events<crate::layer3::events::debt_prison::AcceptBailoutEvent>>();
+        world.init_resource::<Events<crate::layer1::propaganda::PropagandaBroadcastEvent>>();
 
         world.init_resource::<Events<crate::layer2::phantom::SpawnGhostFleetEvent>>();
         world.init_resource::<Events<crate::layer2::silent_mutiny::SensorGlitchEvent>>();

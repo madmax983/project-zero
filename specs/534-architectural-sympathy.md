@@ -59,3 +59,5 @@ fn test_building_aura_affects_occupants() {
 
 ## 8. Questions
 *Builder: add questions here if spec is unclear.*
+
+Builder: Buildings in the current `src/layer1/building.rs` implementation spawn instantaneously when `try_place_building` is called (no build time). `Blueprint`, `UnderConstruction`, and `construction_system` do not seem to exist. How should builder mood be tracked if there is no over-time construction process?
