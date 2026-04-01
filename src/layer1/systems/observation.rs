@@ -172,6 +172,8 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::social::placebo::reveal_betrayal_system.after(decay_needs_system),
             crate::layer1::social::exile::process_banishments.after(decay_needs_system),
             crate::layer1::social::exile::evaluate_exile_returns.after(decay_needs_system),
+            crate::layer1::integration::exile_returned_chronicle_bridge
+                .after(crate::layer1::social::exile::evaluate_exile_returns),
             crate::layer1::contagion::emotional_contagion_system.after(decay_needs_system),
             crate::layer1::social::sentient_standard::apply_sentient_standard_stress_system
                 .after(decay_needs_system),

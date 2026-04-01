@@ -534,6 +534,15 @@
 - **Schedule:** Chained in `Layer1SystemSet::Environment` after `form_golem_system`.
 - **Tests:** `tests/integration/geodetic_integration.rs` (1 test verified)
 
+### INT-691: The Exile -> Chronicle
+- **Date:** 2026-04-03
+- **Systems connected:** `evaluate_exile_returns` (Exile) -> `exile_returned_chronicle_bridge` (Integration) -> `AddChronicleEvent` (Chronicle)
+- **Glue added:**
+    - `ExileReturnedEvent` in `src/layer1/social/exile.rs`.
+    - `exile_returned_chronicle_bridge` in `src/layer1/integration.rs` translates `ExileReturnedEvent` to `AddChronicleEvent`.
+- **Schedule:** Chained in `Layer1SystemSet::Observation` after `evaluate_exile_returns`.
+- **Tests:** `tests/integration/exile_chronicle.rs` (1 test verified)
+
 ### INT-672: Sensor Ambiguity
 - **Date:** 2026-03-30
 - **Systems connected:** `FleetFaction` -> `Sensors` & `SensorContact`

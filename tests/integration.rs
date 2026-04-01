@@ -232,3 +232,6 @@ mod empathic_plague_bridge;
 mod crop_mutation_chronicle;
 #[path = "integration/reverse_quarantine_bridge.rs"]
 mod reverse_quarantine_bridge;
+
+#[path = "integration/exile_chronicle.rs"]
+mod exile_chronicle;

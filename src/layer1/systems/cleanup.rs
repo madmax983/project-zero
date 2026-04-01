@@ -48,6 +48,7 @@ pub fn register(schedule: &mut Schedule) {
             update_event_buffer::<crate::layer3::events::debt_prison::BailoutOfferEvent>,
             update_event_buffer::<crate::layer3::events::debt_prison::AcceptBailoutEvent>,
             update_event_buffer::<crate::layer1::genetics::GeneSplicingResultEvent>,
+            update_event_buffer::<crate::layer1::social::exile::ExileReturnedEvent>,
             update_event_buffer::<crate::layer1::genetics::CropMutationEvent>,
             update_event_buffer::<crate::layer1::economy::remittances::MigrantArrivalEvent>,
             handle_direct_input_system,

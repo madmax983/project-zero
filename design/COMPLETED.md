@@ -307,6 +307,7 @@
 - [x] `634` Scrap-Code Prophets — `specs/634-scrap-code-prophets.md` — completed 2026-03-27
 - [x] `687` The Ghost-Shift Strike — `specs/687-ghost-shift-strike.md` — completed 2024-10-24
 - [x] `691` The Exile — `specs/691-the-exile.md` — completed 2026-03-28
+- [x] `INT-691` Integration: The Exile -> Chronicle — completed 2026-04-03
 - [x] `INT-183` Integration: Geodetic Sentience -> Chronicle — completed 2026-03-28
 - [x] `672` Sensor Ambiguity — `specs/672-sensor-ambiguity.md` — completed 2026-03-29
 - [x] `INT-672` Integration: Sensor Ambiguity — completed 2026-03-30

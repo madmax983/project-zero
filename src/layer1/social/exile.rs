@@ -23,6 +23,13 @@ pub struct ExiledPop {
     pub return_role: Option<String>,
 }
 
+#[derive(Event, Debug)]
+pub struct ExileReturnedEvent {
+    pub entity: Entity,
+    pub role: String,
+    pub severity: u32,
+}
+
 #[allow(clippy::type_complexity)]
 pub fn process_banishments(
     mut commands: Commands,
@@ -42,13 +49,23 @@ pub fn process_banishments(
     }
 }
 
-pub fn evaluate_exile_returns(mut query: Query<&mut ExiledPop>, sim_time: Res<SimulationTime>) {
-    for mut exiled_pop in query.iter_mut() {
+pub fn evaluate_exile_returns(
+    mut query: Query<(Entity, &mut ExiledPop)>,
+    sim_time: Res<SimulationTime>,
+    mut return_events: EventWriter<ExileReturnedEvent>,
+) {
+    for (entity, mut exiled_pop) in query.iter_mut() {
         if !exiled_pop.has_returned {
             let elapsed = sim_time.tick.saturating_sub(exiled_pop.exiled_at_tick);
             if elapsed >= 1_000_000 {
                 exiled_pop.has_returned = true;
-                exiled_pop.return_role = Some("Pirate".to_string());
+                let role = "Pirate".to_string();
+                exiled_pop.return_role = Some(role.clone());
+                return_events.send(ExileReturnedEvent {
+                    entity,
+                    role,
+                    severity: exiled_pop.base_crime_severity,
+                });
             }
         }
     }
@@ -71,6 +88,7 @@ mod tests {
     #[test]
     fn test_banish_pop_removes_from_layer1() {
         let mut app = setup_app();
+        app.add_event::<ExileReturnedEvent>();
 
         let pop_entity = app
             .world_mut()
@@ -88,6 +106,7 @@ mod tests {
     #[test]
     fn test_exiled_pop_returns_after_years() {
         let mut app = setup_app();
+        app.add_event::<ExileReturnedEvent>();
 
         let pop_entity = app
             .world_mut()
@@ -109,5 +128,13 @@ mod tests {
         let exiled_pop = app.world().get::<ExiledPop>(pop_entity).unwrap();
         assert!(exiled_pop.has_returned);
         assert!(exiled_pop.return_role.is_some()); // e.g., Pirate, Merchant
+
+        let events = app.world().resource::<Events<ExileReturnedEvent>>();
+        #[allow(deprecated)]
+        let mut reader = events.get_reader();
+        let emitted: Vec<_> = reader.read(events).collect();
+        assert_eq!(emitted.len(), 1);
+        assert_eq!(emitted[0].role, "Pirate");
+        assert_eq!(emitted[0].severity, 5);
     }
 }

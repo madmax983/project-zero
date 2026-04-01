@@ -1150,6 +1150,21 @@ pub fn crop_mutation_chronicle_bridge(
     }
 }
 
+use crate::layer1::social::exile::ExileReturnedEvent;
+
+/// Bridges `ExileReturnedEvent` to the `Chronicle` system.
+pub fn exile_returned_chronicle_bridge(
+    mut events: EventReader<ExileReturnedEvent>,
+    mut chronicle_events: EventWriter<AddChronicleEvent>,
+) {
+    for event in events.read() {
+        chronicle_events.send(AddChronicleEvent {
+            text: format!("An exile has returned from the void as a {}.", event.role),
+            importance: EventImportance::Major,
+        });
+    }
+}
+
 /// Bridges `GolemFormedEvent` to `AddChronicleEvent` (Chronicle).
 pub fn golem_formed_chronicle_bridge_system(
     mut events: EventReader<GolemFormedEvent>,
