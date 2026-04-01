@@ -67,26 +67,45 @@ impl LociMap {
     /// Gets a reference to the locus at the given position.
     #[must_use]
     pub fn get(&self, x: i32, y: i32) -> Option<&Locus> {
-        if x < 0 || y < 0 || x >= self.width as i32 || y >= self.height as i32 {
+        if x < 0 || y < 0 || (x as usize) >= self.width || (y as usize) >= self.height {
             return None;
         }
-        self.loci[(y as usize) * self.width + (x as usize)].as_ref()
+        let idx = (y as usize)
+            .checked_mul(self.width)
+            .and_then(|i| i.checked_add(x as usize));
+
+        if let Some(idx) = idx.filter(|&i| i < self.loci.len()) {
+            return self.loci[idx].as_ref();
+        }
+        None
     }
 
     /// Sets a locus at the given position.
     pub fn set(&mut self, x: i32, y: i32, locus: Locus) {
-        if x < 0 || y < 0 || x >= self.width as i32 || y >= self.height as i32 {
+        if x < 0 || y < 0 || (x as usize) >= self.width || (y as usize) >= self.height {
             return;
         }
-        self.loci[(y as usize) * self.width + (x as usize)] = Some(locus);
+        let idx = (y as usize)
+            .checked_mul(self.width)
+            .and_then(|i| i.checked_add(x as usize));
+
+        if let Some(idx) = idx.filter(|&i| i < self.loci.len()) {
+            self.loci[idx] = Some(locus);
+        }
     }
 
     /// Clears a locus at the given position.
     pub fn clear(&mut self, x: i32, y: i32) {
-        if x < 0 || y < 0 || x >= self.width as i32 || y >= self.height as i32 {
+        if x < 0 || y < 0 || (x as usize) >= self.width || (y as usize) >= self.height {
             return;
         }
-        self.loci[(y as usize) * self.width + (x as usize)] = None;
+        let idx = (y as usize)
+            .checked_mul(self.width)
+            .and_then(|i| i.checked_add(x as usize));
+
+        if let Some(idx) = idx.filter(|&i| i < self.loci.len()) {
+            self.loci[idx] = None;
+        }
     }
 }
 

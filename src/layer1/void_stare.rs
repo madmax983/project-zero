@@ -51,16 +51,26 @@ impl VoidGrid {
 
     pub fn set(&mut self, x: i32, y: i32, value: f32) {
         if x >= 0 && y >= 0 && (x as usize) < self.width && (y as usize) < self.height {
-            self.values[(y as usize) * self.width + (x as usize)] = value;
+            let idx = (y as usize)
+                .checked_mul(self.width)
+                .and_then(|i| i.checked_add(x as usize));
+            if let Some(idx) = idx.filter(|&i| i < self.values.len()) {
+                self.values[idx] = value;
+            }
         }
     }
 
     pub fn get(&self, x: i32, y: i32) -> f32 {
         if x >= 0 && y >= 0 && (x as usize) < self.width && (y as usize) < self.height {
-            self.values[(y as usize) * self.width + (x as usize)]
-        } else {
-            1.0 // Outside is Void
+            let idx = (y as usize)
+                .checked_mul(self.width)
+                .and_then(|i| i.checked_add(x as usize));
+            if let Some(idx) = idx.filter(|&i| i < self.values.len()) {
+                return self.values[idx];
+            }
         }
+
+        1.0 // Outside is Void
     }
 }
 

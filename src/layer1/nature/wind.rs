@@ -205,7 +205,10 @@ pub fn update_wind_system(
                         && x < width_usize
                         && y < height_usize
                     {
-                        blockers[y * width_usize + x] = true;
+                        let idx = y.checked_mul(width_usize).and_then(|i| i.checked_add(x));
+                        if let Some(idx) = idx.filter(|&i| i < blockers.len()) {
+                            blockers[idx] = true;
+                        }
                     }
                 }
             }
@@ -221,7 +224,10 @@ pub fn update_wind_system(
                 let ux = x as usize;
                 let uy = y as usize;
                 if ux < width_usize && uy < height_usize {
-                    blockers[uy * width_usize + ux] = true;
+                    let idx = uy.checked_mul(width_usize).and_then(|i| i.checked_add(ux));
+                    if let Some(idx) = idx.filter(|&i| i < blockers.len()) {
+                        blockers[idx] = true;
+                    }
                 }
             }
         }
@@ -233,7 +239,10 @@ pub fn update_wind_system(
             let ux = x as usize;
             let uy = y as usize;
             if ux < width_usize && uy < height_usize {
-                return blockers[uy * width_usize + ux];
+                let idx = uy.checked_mul(width_usize).and_then(|i| i.checked_add(ux));
+                if let Some(idx) = idx.filter(|&i| i < blockers.len()) {
+                    return blockers[idx];
+                }
             }
         }
         false
