@@ -284,3 +284,4 @@
 - [x] `561` Airlocks & Pressure — `specs/561-airlocks-and-pressure.md` — completed 2026-03-24
 - [x] `INT-453` Integration: Nanite Fabrication -> Chronicle — completed 2026-03-24
 - [x] `565` Gene Splicing — `specs/565-gene-splicing.md` — completed 2026-03-27
+- [x] `471` The Organ Trade — `specs/471-the-organ-trade.md` — completed 2026-04-01

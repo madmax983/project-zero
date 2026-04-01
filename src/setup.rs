@@ -54,6 +54,7 @@ pub fn setup_world() -> World {
 pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -> World {
     init_task_pools();
     let mut world = World::new();
+    world.insert_resource(crate::layer1::organ_trade::ColonyInventory::default());
     world.insert_resource(GameState::default());
     world.insert_resource(MenuState::default());
 

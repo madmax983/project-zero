@@ -540,7 +540,6 @@ fn render_tile_inspector(frame: &mut Frame, area: Rect, world: &World, x: i32, y
 }
 
 #[allow(clippy::too_many_lines)]
-
 fn get_entity_header(world: &World, entity: Entity) -> (String, Color) {
     if let Some(pop_name) = world.get::<PopName>(entity) {
         (pop_name.0.clone(), Color::Yellow)

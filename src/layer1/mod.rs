@@ -70,6 +70,8 @@ pub mod edicts;
 pub mod execution;
 /// Farm building and food production.
 pub mod farm;
+/// Pop health and damage.
+pub mod genetics;
 /// Deep crust geomes system (Spec 515).
 pub mod geomes;
 /// Fire propagation and damage.
@@ -80,8 +82,6 @@ pub mod hazards;
 #[cfg(test)]
 /// Tests for hazards logic.
 pub mod hazards_tests;
-/// Pop health and damage.
-pub mod genetics;
 pub use genetics::*;
 pub mod health;
 /// Global hit stop resource (Juice).
@@ -732,3 +732,4 @@ pub use exodus::*;
 pub mod disasters;
 pub use disasters::*;
 pub mod environment;
+pub mod organ_trade;

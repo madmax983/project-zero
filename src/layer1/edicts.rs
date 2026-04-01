@@ -23,6 +23,8 @@ pub enum Policy {
     Prohibition(ResourceType),
     /// Blocks Remote Bonds and Intel gain from Subspace Pen Pals.
     FirewallComms,
+    /// Allows harvesting organs from dead pops, causing horror.
+    MandatoryOrganHarvesting,
     /// Issues a Placebo Protocol to temporarily reduce stress.
     Placebo(PlaceboProtocol),
 }

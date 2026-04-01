@@ -190,6 +190,9 @@ pub fn run_simulation_tick(world: &mut World) {
     if !world.contains_resource::<Events<DetectionEvent>>() {
         world.init_resource::<Events<DetectionEvent>>();
     }
+    if !world.contains_resource::<Events<crate::layer1::organ_trade::OrganHarvestedEvent>>() {
+        world.init_resource::<Events<crate::layer1::organ_trade::OrganHarvestedEvent>>();
+    }
     if !world.contains_resource::<Events<HostileSpawnEvent>>() {
         world.init_resource::<Events<HostileSpawnEvent>>();
     }
@@ -267,7 +270,6 @@ pub fn run_simulation_tick(world: &mut World) {
 
     if !world.contains_resource::<Events<crate::layer2::phantom::SpawnGhostFleetEvent>>() {
         world.init_resource::<Events<crate::layer2::phantom::SpawnGhostFleetEvent>>();
-
     }
     if !world.contains_resource::<Events<crate::layer2::silent_mutiny::SensorGlitchEvent>>() {
         world.init_resource::<Events<crate::layer2::silent_mutiny::SensorGlitchEvent>>();
@@ -401,6 +403,7 @@ mod tests {
         world.init_resource::<crate::layer3::silence::DetectionRisk>();
         world.init_resource::<Events<crate::layer3::silence::HostileSpawnEvent>>();
 
+        world.init_resource::<Events<crate::layer1::organ_trade::OrganHarvestedEvent>>();
         world.init_resource::<Events<crate::layer1::spiteful_will::InheritanceEvent>>();
         world.init_resource::<Events<crate::layer1::spiteful_will::OverrideWillEvent>>();
         world

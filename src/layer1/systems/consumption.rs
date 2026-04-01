@@ -6,6 +6,15 @@ use bevy_ecs::prelude::*;
 pub fn register(schedule: &mut Schedule) {
     schedule.add_systems(
         (
+            crate::layer1::organ_trade::process_dead_pops_for_organs,
+            crate::layer1::organ_trade::apply_harvesting_horror_system
+                .after(crate::layer1::organ_trade::process_dead_pops_for_organs),
+        )
+            .in_set(Layer1SystemSet::Consumption),
+    );
+
+    schedule.add_systems(
+        (
             consume_food_system
                 .after(produce_food_system)
                 .after(update_resource_caps_system),

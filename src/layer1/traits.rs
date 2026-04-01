@@ -105,6 +105,8 @@ pub enum Trait {
     Bureaucrat,
     /// (Spec 472) Basic synthetic pop. 100% work efficiency, no morale needs, apathetic to emergencies.
     Synth,
+    /// Unaffected by horror debuffs.
+    Psychopath,
 }
 
 impl Trait {
@@ -160,6 +162,7 @@ impl Trait {
             Self::EmpathicLink => "Empathic Link",
             Self::Bureaucrat => "Bureaucrat",
             Self::Synth => "Synthetic",
+            Self::Psychopath => "Psychopath",
             Self::LogisticsExpert => "Logistics Expert",
         }
     }
