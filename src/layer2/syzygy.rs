@@ -69,7 +69,7 @@ pub fn apply_syzygy_effects_system(
 mod tests {
     use super::*;
     use crate::shared::time::SimulationTime;
-    use bevy_ecs::prelude::*;
+
 
     #[test]
     fn test_syzygy_trigger_reduces_gravity_penalty() {

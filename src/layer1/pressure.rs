@@ -274,9 +274,163 @@ pub fn pressure_damage_system(world: &mut World) {
     }
 }
 
+
+pub fn process_door_venting_system(
+    mut grid: bevy_ecs::prelude::ResMut<PressureGrid>,
+    query: bevy_ecs::prelude::Query<(
+        &crate::layer1::building::Building,
+        &crate::layer1::map::GridPosition,
+        Option<&crate::layer1::control::DoorControl>
+    )>,
+) {
+    let mut new_values = grid.values.clone();
+    let width = grid.width as i32;
+    let height = grid.height as i32;
+
+    for (building, pos, control) in query.iter() {
+        let is_open = control.is_some_and(|c| c.state == crate::layer1::control::DoorState::Open);
+        if is_open {
+            let vent_rate = if building.building_type == crate::layer1::building::BuildingType::Airlock { 0.05 } else { 0.5 };
+
+            // Collect adjacent pressures including center
+            let mut neighbors = Vec::new();
+            for (dx, dy) in [(-1, 0), (1, 0), (0, -1), (0, 1)] {
+                let nx = pos.x + dx;
+                let ny = pos.y + dy;
+                if nx >= 0 && ny >= 0 && nx < width && ny < height {
+                    neighbors.push((nx, ny, grid.get(nx, ny)));
+                }
+            }
+
+            // Add center
+            let center_p = grid.get(pos.x, pos.y);
+            let mut total_pressure = center_p;
+            for (_, _, p) in &neighbors {
+                total_pressure += p;
+            }
+
+            let avg_pressure = total_pressure / (neighbors.len() + 1) as f32;
+
+            // Diffuse out
+            for (nx, ny, p) in neighbors {
+                let diff = (avg_pressure - p) * vent_rate;
+                let n_idx = (ny * width + nx) as usize;
+                new_values[n_idx] += diff;
+            }
+            // Diffuse center
+            let diff = (avg_pressure - center_p) * vent_rate;
+            let c_idx = (pos.y * width + pos.x) as usize;
+            new_values[c_idx] += diff;
+        }
+    }
+    grid.values = new_values;
+}
+
+pub fn apply_door_movement_penalties_system(
+    mut pop_query: bevy_ecs::prelude::Query<
+        (&crate::layer1::map::GridPosition, &mut crate::layer1::pop::Speed),
+        bevy_ecs::prelude::With<crate::layer1::pop::Pop>
+    >,
+    door_query: bevy_ecs::prelude::Query<
+        (&crate::layer1::map::GridPosition, &crate::layer1::building::Building)
+    >,
+) {
+    // Build a set of airlock positions to avoid O(N*M) lookup
+    let mut airlocks = std::collections::HashSet::new();
+    for (door_pos, door) in door_query.iter() {
+        if door.building_type == crate::layer1::building::BuildingType::Airlock {
+            airlocks.insert((door_pos.x, door_pos.y));
+        }
+    }
+
+    for (pop_pos, mut stats) in pop_query.iter_mut() {
+        stats.current = stats.base; // Reset to base each frame
+        if airlocks.contains(&(pop_pos.x, pop_pos.y)) {
+            stats.current *= 0.5; // 50% slow down
+        }
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn test_door_vents_atmosphere_on_open() {
+        let mut app = bevy_app::App::new();
+        app.add_plugins(bevy::MinimalPlugins);
+
+        app.world_mut().spawn((
+            crate::layer1::building::Building { building_type: crate::layer1::building::BuildingType::Gate },
+            crate::layer1::control::DoorControl { state: crate::layer1::control::DoorState::Open },
+            crate::layer1::map::GridPosition { x: 10, y: 10 },
+            crate::layer1::structure::Structure::default(),
+        ));
+
+        let mut grid = PressureGrid::new(20, 20);
+        grid.set(9, 10, 1.0);
+        grid.set(11, 10, 0.0);
+        grid.set(10, 10, 0.5); // Provide pressure to diffuse across the door
+        app.world_mut().insert_resource(grid);
+
+        app.add_systems(bevy_app::Update, super::process_door_venting_system);
+        app.update();
+
+        let grid = app.world().resource::<PressureGrid>();
+        assert!(grid.get(9, 10) < 1.0, "Interior pressure should drop");
+        assert!(grid.get(11, 10) > 0.0, "Exterior pressure should rise");
+    }
+
+    #[test]
+    fn test_airlock_minimizes_venting() {
+        let mut app = bevy_app::App::new();
+        app.add_plugins(bevy::MinimalPlugins);
+
+        app.world_mut().spawn((
+            crate::layer1::building::Building { building_type: crate::layer1::building::BuildingType::Airlock },
+            crate::layer1::control::DoorControl { state: crate::layer1::control::DoorState::Open },
+            crate::layer1::map::GridPosition { x: 10, y: 10 },
+            crate::layer1::structure::Structure::default(),
+        ));
+
+        let mut grid = PressureGrid::new(20, 20);
+        grid.set(9, 10, 1.0);
+        grid.set(11, 10, 0.0);
+        grid.set(10, 10, 0.5); // Provide pressure to diffuse across the door
+        app.world_mut().insert_resource(grid);
+
+        app.add_systems(bevy_app::Update, super::process_door_venting_system);
+        app.update();
+
+        let grid = app.world().resource::<PressureGrid>();
+        assert!(grid.get(9, 10) > 0.95, "Airlock should preserve most interior pressure");
+        assert!(grid.get(11, 10) < 0.05, "Airlock should leak minimal pressure");
+    }
+
+    #[test]
+    fn test_airlock_slows_movement() {
+        let mut app = bevy_app::App::new();
+        app.add_plugins(bevy::MinimalPlugins);
+
+        app.world_mut().spawn((
+            crate::layer1::building::Building { building_type: crate::layer1::building::BuildingType::Airlock },
+            crate::layer1::map::GridPosition { x: 10, y: 10 },
+            crate::layer1::structure::Structure::default(),
+        ));
+
+        let pop_entity = app.world_mut().spawn((
+            crate::layer1::pop::Pop,
+            crate::layer1::map::GridPosition { x: 10, y: 10 },
+            crate::layer1::pop::Speed { base: 1.0, current: 1.0, accumulator: 0.0 },
+        )).id();
+
+        app.add_systems(bevy_app::Update, super::apply_door_movement_penalties_system);
+        app.update();
+
+        let stats = app.world().get::<crate::layer1::pop::Speed>(pop_entity).unwrap();
+        assert!(stats.current < stats.base, "Airlock should slow movement");
+    }
+
     use crate::layer1::building::{Building, BuildingType};
     use crate::layer1::health::Health;
     use crate::layer1::map::GridPosition;
