@@ -5115,3 +5115,32 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: We spliced the [OLD_CROP_TYPE]. Now they are [NEW_MUTATION]. The yield is [CROP_RESULT]."
 - "The greenhouse glows. Our [OLD_CROP_TYPE] is [NEW_MUTATION] after the treatment. [CROP_RESULT]. [YEAR]."
 - "A genetic gamble. The [OLD_CROP_TYPE] changed. They are [NEW_MUTATION]. The harvest: [CROP_RESULT]. [YEAR]."
+
+## Remittance Templates (Spec 674)
+
+### Template: REMITTANCE_SENT_HOME
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[REMITTANCE_ITEM]`
+
+**Patterns:**
+- "A freighter leaves orbit. [YEAR]. The holds are packed with [REMITTANCE_ITEM]."
+- "[YEAR]: The workers tighten their belts to send [REMITTANCE_ITEM] back to the homeworld."
+- "The economy bleeds outwards. [YEAR]. Another shipment of [REMITTANCE_ITEM] leaves [COLONY]."
+
+### Template: HOMESICKNESS_ONSET
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[NAME]`, `[HOMESICK_SYMPTOM]`
+
+**Patterns:**
+- "[NAME] couldn't afford the send-back. [YEAR]. They are [HOMESICK_SYMPTOM]."
+- "[YEAR]: The void-longing sets in. [NAME] is [HOMESICK_SYMPTOM] after missing a payment."
+- "They failed their family. [NAME] is overwhelmed by guilt, [HOMESICK_SYMPTOM]. [YEAR]."
+
+### Template: MIGRANT_ARRIVAL_REMITTANCE
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[MIGRANT_RELATION]`
+
+**Patterns:**
+- "The send-back pays off. [YEAR]. A transport arrives carrying [MIGRANT_RELATION]."
+- "[YEAR]: Following the wealth. [MIGRANT_RELATION] arrive to join the workforce."
+- "They sent enough back to buy a ticket. The [MIGRANT_RELATION] are here. [YEAR]."
