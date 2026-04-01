@@ -1,3 +1,54 @@
+//! Acoustic Propagation and Shadowing System.
+//!
+//! This module simulates the spread of noise across the colony. Machinery, pops, and
+//! events generate noise, which then propagates outward through a specialized `NoiseMap`.
+//!
+//! Noise is an environmental hazard: prolonged exposure causes stress to the colony's inhabitants,
+//! reducing their leisure, and ultimately their morale.
+//!
+//! # Propagation and Damping
+//!
+//! Noise does not simply draw a circle. It considers:
+//! - **Distance:** Sound falls off linearly with distance from the source.
+//! - **Terrain Types:** Obstacles like `TerrainType::Rock` heavily dampen noise, creating "Acoustic Shadows".
+//! - **Vacuum:** Sound cannot travel through a vacuum. If a cell's pressure is below 0.1, propagation stops instantly.
+//!
+//! # Examples
+//!
+//! ```
+//! use bevy_ecs::prelude::*;
+//! use scale::layer1::physics::acoustic::{NoiseMap, NoiseSource, update_noise_system};
+//! use scale::layer1::map::GridPosition;
+//! use scale::layer1::terrain::{TerrainGrid, TerrainType};
+//!
+//! let mut world = World::new();
+//!
+//! // 1. Set up the environment (10x10 map of grass)
+//! let grid_size = 10 * 10;
+//! let terrain = TerrainGrid { width: 10, height: 10, tiles: vec![TerrainType::Grass; grid_size] };
+//! world.insert_resource(terrain);
+//! world.insert_resource(NoiseMap::new(10, 10));
+//!
+//! // 2. Spawn a noisy generator in the center
+//! world.spawn((
+//!     NoiseSource { radius: 5.0, intensity: 1.0 },
+//!     GridPosition { x: 5, y: 5 },
+//! ));
+//!
+//! // 3. Run the update system to calculate noise spread
+//! let mut schedule = Schedule::default();
+//! schedule.add_systems(update_noise_system);
+//! schedule.run(&mut world);
+//!
+//! // 4. Check the results
+//! let noise_map = world.resource::<NoiseMap>();
+//!
+//! // The source itself is incredibly loud
+//! assert!(noise_map.get(5, 5) > 0.9);
+//!
+//! // As we move away, the noise fades
+//! assert!(noise_map.get(5, 5) > noise_map.get(7, 5));
+//! ```
 #![allow(
     clippy::cast_precision_loss,
     clippy::cast_possible_truncation,

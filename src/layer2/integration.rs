@@ -360,7 +360,10 @@ use crate::layer2::navigation::stellar_weather::FleetDamagedEvent;
 pub fn stellar_weather_damage_bridge_system(
     mut commands: Commands,
     mut events: EventReader<FleetDamagedEvent>,
-    mut fleets: Query<(&mut crate::layer2::fleet::FleetHealth, Option<&mut crate::layer2::fleet::FleetComposition>)>,
+    mut fleets: Query<(
+        &mut crate::layer2::fleet::FleetHealth,
+        Option<&mut crate::layer2::fleet::FleetComposition>,
+    )>,
     mut chronicle_events: EventWriter<AddChronicleEvent>,
 ) {
     for event in events.read() {

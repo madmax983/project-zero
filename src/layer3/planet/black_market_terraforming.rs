@@ -71,26 +71,37 @@ mod tests {
             (trigger_rogue_terraforming, apply_rogue_terraforming_events),
         );
 
-        let faction_entity = app.world_mut().spawn((
-            Faction { wealth: 10_000.0, sector: 1 },
-            CorporateGreed { active: true },
-        )).id();
+        let faction_entity = app
+            .world_mut()
+            .spawn((
+                Faction {
+                    wealth: 10_000.0,
+                    sector: 1,
+                },
+                CorporateGreed { active: true },
+            ))
+            .id();
 
-        app.world_mut().spawn((
-            SectorClimate { sector: 1, humidity: 10.0 },
-        ));
+        app.world_mut().spawn((SectorClimate {
+            sector: 1,
+            humidity: 10.0,
+        },));
 
         // Neighboring sector that will get ruined
-        app.world_mut().spawn((
-            SectorClimate { sector: 2, humidity: 10.0 },
-        ));
+        app.world_mut().spawn((SectorClimate {
+            sector: 2,
+            humidity: 10.0,
+        },));
 
         app.update(); // Triggers event
         app.update(); // Processes event
 
         // Faction spent money
         let faction = app.world().get::<Faction>(faction_entity).unwrap();
-        assert!(faction.wealth < 10_000.0, "Faction should spend wealth to terraform");
+        assert!(
+            faction.wealth < 10_000.0,
+            "Faction should spend wealth to terraform"
+        );
 
         // Their sector improved (increased humidity for farming)
         let mut climates = app.world_mut().query::<&SectorClimate>();

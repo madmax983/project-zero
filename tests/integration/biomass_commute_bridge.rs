@@ -42,5 +42,8 @@ fn test_biomass_commute_digestion_emits_pop_died() {
     let emitted: Vec<&PopDied> = reader.read(events).collect();
 
     assert_eq!(emitted.len(), 1, "Should emit one PopDied event");
-    assert_eq!(emitted[0].entity, pop_entity, "The digested pop entity should match the event");
+    assert_eq!(
+        emitted[0].entity, pop_entity,
+        "The digested pop entity should match the event"
+    );
 }

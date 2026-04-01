@@ -1,3 +1,50 @@
+//! Sub-Grid Particle Effects and "Juice".
+//!
+//! This module handles purely visual, temporary entities called `Particle`s.
+//! Particles are used to add "Juice" to the game—explosions, confetti, sparks, and debris.
+//!
+//! Unlike standard grid-locked entities, particles support sub-grid movement. They accumulate
+//! fractional velocity (`dx`, `dy`) and only move across the integer grid when the accumulator
+//! reaches `1.0`.
+//!
+//! # Physics
+//! - **Gravity:** Particles with a `ParticleVelocity` are constantly pulled downwards.
+//! - **Friction:** Particles naturally slow down over time, simulating air resistance.
+//! - **Lifetime:** Every particle has a `lifetime` in ticks. When it hits `0`, it is despawned.
+//!
+//! # Examples
+//!
+//! ```
+//! use bevy_ecs::prelude::*;
+//! use scale::layer1::physics::particles::{Particle, ParticleVelocity, ParticleAccumulator, particle_physics_system, particle_system, spawn_moving_particle};
+//! use scale::layer1::map::GridPosition;
+//! use ratatui::style::Color;
+//!
+//! let mut world = World::new();
+//!
+//! // 1. Spawn a moving particle (e.g., a spark)
+//! spawn_moving_particle(
+//!     &mut world,
+//!     GridPosition { x: 5, y: 5 },
+//!     '*',
+//!     Color::Yellow,
+//!     10,   // Lifetime of 10 ticks
+//!     2.0,  // Move 2 tiles right per tick
+//!     0.0,  // No initial vertical movement
+//! );
+//!
+//! // 2. Run the physics and lifetime systems
+//! let mut schedule = Schedule::default();
+//! schedule.add_systems((particle_physics_system, particle_system));
+//! schedule.run(&mut world);
+//!
+//! // 3. The particle moved right, slowed down via friction, and lost 1 lifetime tick
+//! let mut query = world.query::<(&GridPosition, &Particle)>();
+//! let (pos, particle) = query.single(&world);
+//!
+//! assert_eq!(pos.x, 7); // Moved 2 tiles
+//! assert_eq!(particle.lifetime, 9); // Lost 1 tick
+//! ```
 #![allow(clippy::cast_possible_truncation, clippy::cast_precision_loss)]
 use crate::layer1::map::GridPosition;
 use bevy_ecs::prelude::*;
