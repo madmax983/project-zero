@@ -3,7 +3,7 @@
 ## High Priority
 
 
-- [ ] `777` The Void Whispers — `specs/777-the-void-whispers.md`
+
 - [ ] `765` Diplomatic Wards — `specs/765-diplomatic-wards.md`
 - [ ] `767` Orbital Commute — `specs/767-orbital-commute.md`
 - [ ] `768` Dynastic Succession — `specs/768-dynastic-succession.md`
