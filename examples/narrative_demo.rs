@@ -303,9 +303,7 @@ fn ui(f: &mut Frame, app: &mut App) {
                 ),
                 NarrativeSegment::Error(e) => Span::styled(
                     format!("[ERROR: {}]", e),
-                    Style::default()
-                        .fg(Color::Red)
-                        .add_modifier(Modifier::BOLD),
+                    Style::default().fg(Color::Red).add_modifier(Modifier::BOLD),
                 ),
             })
             .collect();

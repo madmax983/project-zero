@@ -62,7 +62,7 @@ pub fn work_execution_system(world: &mut World) {
 
     // Fetch Factions for strike check
     // We collect striking factions into a set to avoid borrowing conflicts with world
-    let striking_factions: std::collections::HashSet<crate::layer1::factions::FactionId> = world
+    let striking_factions: bevy_utils::HashSet<crate::layer1::factions::FactionId> = world
         .get_resource::<crate::layer1::factions::Factions>()
         .map(|f| {
             f.map
@@ -106,11 +106,11 @@ pub fn work_execution_system(world: &mut World) {
 fn collect_workers_by_target(
     world: &mut World,
     policies: Option<&ColonyPolicies>,
-    striking_factions: &std::collections::HashSet<crate::layer1::factions::FactionId>,
+    striking_factions: &bevy_utils::HashSet<crate::layer1::factions::FactionId>,
     cycle: Option<crate::layer1::day_night::TimeOfDay>,
-) -> std::collections::HashMap<Entity, Vec<WorkerData>> {
-    let mut workers_by_target: std::collections::HashMap<Entity, Vec<WorkerData>> =
-        std::collections::HashMap::new();
+) -> bevy_utils::HashMap<Entity, Vec<WorkerData>> {
+    let mut workers_by_target: bevy_utils::HashMap<Entity, Vec<WorkerData>> =
+        bevy_utils::HashMap::new();
 
     let mut query = world.query_filtered::<(
         Entity,

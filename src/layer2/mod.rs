@@ -23,6 +23,6 @@ pub mod system;
 pub mod thermal;
 #[cfg(test)]
 mod thermal_bloom_tests;
+pub mod tourism;
 pub mod trade;
 pub mod visibility;
-pub mod tourism;

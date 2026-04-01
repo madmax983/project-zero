@@ -80,7 +80,7 @@ impl PopEvalData {
             faction_member: item.faction_member.copied(),
             penal_labor: item.penal_labor.copied(),
             breakdown: item.breakdown.copied(),
-            traits: item.traits.cloned(),
+            traits: item.traits.copied(),
             stress: item
                 .stress
                 .map_or(0.0, |s| s.accumulated_stress / BREAKDOWN_TICKS_REQUIRED),
