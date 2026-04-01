@@ -59,7 +59,6 @@ pub fn update_fleet_local_time_system(
 mod tests {
     use super::*;
 
-
     #[test]
     fn test_time_dilation_slows_down_local_ticks() {
         let mut app = App::new();

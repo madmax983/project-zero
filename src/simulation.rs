@@ -452,7 +452,9 @@ pub fn run_simulation_tick(world: &mut World) {
 
     world.run_schedule(SimulationSchedule);
     world.resource_mut::<SimulationTime>().tick += 1;
-    world.resource_mut::<crate::layer3::physics::relativity::SimulationTime>().tick += 1;
+    world
+        .resource_mut::<crate::layer3::physics::relativity::SimulationTime>()
+        .tick += 1;
 }
 
 #[cfg(test)]
