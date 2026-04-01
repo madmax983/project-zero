@@ -53,6 +53,13 @@ impl App {
         context.insert("YEAR", "2150");
         context.insert("LEADER_NAME", "Valerian");
 
+        // Common variables required by various other templates in the demo
+        context.insert("NAME", "John Doe");
+        context.insert("LOCK_STATUS", "locked");
+        context.insert("COLONY", "Alpha Site");
+        context.insert("SHIP_NAME", "The Wanderer");
+        context.insert("RESOURCE", "Water");
+
         let mut state = ListState::default();
         if !template_ids.is_empty() {
             state.select(Some(0));
