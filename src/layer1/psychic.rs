@@ -1,3 +1,16 @@
+//! Psychic Background Subsystem.
+//!
+//! An invisible environmental layer that slowly erodes a Pop's mental fortitude over time.
+//! Unlike standard hazards like temperature or hunger, Psychic Radiation directly
+//! saps a Pop's `rest` need and actively increases their `accumulated_stress`.
+//!
+//! # Integration
+//!
+//! This module connects the `PsychicBackground` from Layer 2 (often influenced by stellar
+//! phenomena or anomalous artifacts) with the daily needs of Layer 1 Pops.
+//! A high intensity background requires active mitigation (like better totems or shielding)
+//! or the entire colony will quickly succumb to mental breaks.
+
 use crate::layer1::needs::Needs;
 use crate::layer1::stress::StressTracker;
 use crate::layer2::environment::PsychicBackground;

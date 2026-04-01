@@ -1,3 +1,20 @@
+//! Health and Mortality Subsystem.
+//!
+//! This module tracks the physical well-being of Pops and handles the transitions
+//! between life, injury, and death. It decouples the *cause* of death (e.g., starvation,
+//! combat damage, environmental hazards) from the *state* of death itself.
+//!
+//! # Mechanics
+//!
+//! When a Pop's [`Health::current`] reaches 0, they aren't immediately despawned.
+//! Instead, they are marked with the [`Dead`] component. This allows other systems
+//! (like mourning, funeral rites, or body disposal) to react to the corpse before
+//! it is fully removed from the simulation.
+//!
+//! # Scars and Trauma
+//! Non-lethal damage can result in [`Scars`], which may affect social standing
+//! or biometric identification systems over time.
+
 use bevy_ecs::prelude::*;
 
 /// Represents the physical health of an entity (Pop).

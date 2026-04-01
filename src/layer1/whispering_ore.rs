@@ -1,3 +1,19 @@
+//! The Whispering Ore Phenomenon.
+//!
+//! An esoteric resource mined by Pops that carries strange, memetic, or psychic
+//! properties. This module manages the risks and rewards associated with extracting
+//! and handling "Whispering Ore".
+//!
+//! # Risk and Reward
+//!
+//! Mining [`OreType::Whispering`] yields valuable resources but exposes the miner to
+//! [`WhisperingExposure`]. If a Pop's exposure crosses a threshold, and they
+//! possess the [`ResonantTrait`], they may undergo dangerous mental states
+//! like [`Rebelling`].
+//!
+//! The colony must balance the immense profit of the ore against the growing
+//! madness of its mining workforce.
+
 use bevy_ecs::prelude::*;
 
 #[derive(PartialEq, Eq, Debug, Clone, Copy)]

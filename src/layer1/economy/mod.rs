@@ -1,3 +1,15 @@
+//! The Colony Economy.
+//!
+//! This module tracks the flow of credits, resources, and trade within the colony.
+//! Instead of a purely communal system, Pops have individual [`Wallet`]s and must
+//! purchase their own food and luxuries using wages earned from their assigned jobs.
+//!
+//! # Core Concepts
+//!
+//! - **Wallets & Wages:** Pops earn credits via [`pay_wage`] based on their [`crate::layer1::actions::AssignmentType`].
+//! - **Prices:** Global costs for basic needs are defined in the [`ColonyPrices`] resource.
+//! - **Sub-markets:** Includes specialized trading like the [`black_market`] and [`shadow_market`].
+
 use crate::layer1::actions::AssignmentType;
 use bevy_ecs::prelude::*;
 
