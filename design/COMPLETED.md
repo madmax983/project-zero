@@ -304,3 +304,4 @@
 - [x] `INT-657` Integration: Diplomatic Reflection -> Kill and Plant events — completed 2026-03-27
 - [x] `634` Scrap-Code Prophets — `specs/634-scrap-code-prophets.md` — completed 2026-03-27
 - [x] `687` The Ghost-Shift Strike — `specs/687-ghost-shift-strike.md` — completed 2024-10-24
+- [x] `688` Moon Hermits — `specs/688-moon-hermits.md` — completed 2026-04-01

@@ -177,6 +177,8 @@ pub fn build_simulation_schedule() -> Schedule {
         crate::layer2::integration::process_grief_tourist_arrival_system
             .after(crate::layer2::tourism::process_disaster_tourism_system),
         crate::layer2::events_new::reverse_quarantine::process_refugee_decisions_system,
+        crate::layer2::trade::moon_hermits::process_hermit_desertions,
+        crate::layer2::trade::moon_hermits::hermit_theft_system,
     ));
 
     schedule.add_systems((
@@ -408,6 +410,12 @@ pub fn run_simulation_tick(world: &mut World) {
     if !world.contains_resource::<Events<crate::layer2::cascade::DefenseWeakenedEvent>>() {
         world.init_resource::<Events<crate::layer2::cascade::DefenseWeakenedEvent>>();
     }
+    if !world.contains_resource::<Events<crate::layer1::social::ghost_shift_strike::GhostShiftStartedEvent>>() {
+        world.init_resource::<Events<crate::layer1::social::ghost_shift_strike::GhostShiftStartedEvent>>();
+    }
+    if !world.contains_resource::<Events<crate::layer2::trade::moon_hermits::PopDesertedEvent>>() {
+        world.init_resource::<Events<crate::layer2::trade::moon_hermits::PopDesertedEvent>>();
+    }
     // Add our schedule if not yet added
     {
         let schedules = world.resource::<Schedules>();
@@ -531,6 +539,8 @@ mod tests {
 
         world.init_resource::<Events<crate::layer2::cascade::LogisticsStrainedEvent>>();
         world.init_resource::<Events<crate::layer2::cascade::DefenseWeakenedEvent>>();
+        world.init_resource::<Events<crate::layer1::social::ghost_shift_strike::GhostShiftStartedEvent>>();
+        world.init_resource::<Events<crate::layer2::trade::moon_hermits::PopDesertedEvent>>();
 
         world.init_resource::<Time>();
 
