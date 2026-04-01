@@ -838,6 +838,9 @@ pub fn fleet_unload_system(
                         crate::layer1::resources::ResourceType::MemoryCore => {
                             resources.add_memory_cores(stack.amount);
                         }
+                        crate::layer1::resources::ResourceType::VitalOrgans => {
+                            resources.add_vital_organs(stack.amount);
+                        }
                     }
                     summary.push(format!("{:.1} {:?}", stack.amount, stack.resource_type));
                 }

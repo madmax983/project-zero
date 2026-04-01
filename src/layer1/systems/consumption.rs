@@ -95,6 +95,12 @@ pub fn register(schedule: &mut Schedule) {
         (
             crate::layer1::pop::handle_pop_death_system
                 .after(crate::layer1::health::check_health_status_system),
+            crate::layer1::organ_trade::process_dead_pops_for_organs
+                .after(crate::layer1::pop::handle_pop_death_system)
+                .before(crate::layer1::health::despawn_dead_entities_system),
+            crate::layer1::organ_trade::apply_harvesting_horror_system
+                .after(crate::layer1::organ_trade::process_dead_pops_for_organs)
+                .before(crate::layer1::health::despawn_dead_entities_system),
             crate::layer1::fauna::handle_fauna_death_system
                 .after(crate::layer1::health::check_health_status_system),
             crate::layer1::pop::handle_witness_death_system

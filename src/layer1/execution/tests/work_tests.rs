@@ -312,6 +312,10 @@ fn test_work_execution_efficiency_low_morale() {
                 leisure: 0.1,
                 hygiene: 0.8,
             },
+            crate::layer1::morale::Morale {
+                value: 0.1,
+                modifiers: vec![],
+            },
             Equipment {
                 tool: Some(tool),
                 ..Default::default()

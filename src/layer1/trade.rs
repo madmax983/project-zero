@@ -270,6 +270,7 @@ pub fn execute_trade(world: &mut World, deal: &TradeDeal) -> bool {
         ResourceType::Tools => resources.tools >= deal.cost_amount,
         ResourceType::BuildingPermit => resources.building_permits >= deal.cost_amount,
         ResourceType::MemoryCore => resources.memory_cores >= deal.cost_amount,
+        ResourceType::VitalOrgans => resources.vital_organs >= deal.cost_amount,
     };
 
     if !affordable {
@@ -293,6 +294,7 @@ pub fn execute_trade(world: &mut World, deal: &TradeDeal) -> bool {
         ResourceType::Tools => resources.tools -= deal.cost_amount,
         ResourceType::BuildingPermit => resources.building_permits -= deal.cost_amount,
         ResourceType::MemoryCore => resources.memory_cores -= deal.cost_amount,
+        ResourceType::VitalOrgans => resources.vital_organs -= deal.cost_amount,
     }
 
     // Add
@@ -312,6 +314,7 @@ pub fn execute_trade(world: &mut World, deal: &TradeDeal) -> bool {
         ResourceType::Tools => resources.add_tools(deal.give_amount),
         ResourceType::BuildingPermit => resources.add_building_permits(deal.give_amount),
         ResourceType::MemoryCore => resources.add_memory_cores(deal.give_amount),
+        ResourceType::VitalOrgans => resources.add_vital_organs(deal.give_amount),
     }
 
     true

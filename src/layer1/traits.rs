@@ -69,6 +69,8 @@ pub enum Trait {
     MoleEyes,
     /// Specialized trait for hauling.
     Hunchback,
+    /// Psychopathic traits (prevents horror from atrocities).
+    Psychopath,
     /// Specialized trait for engineering.
     StaticSkin,
     /// Manufactured in a Clone Vat.
@@ -146,6 +148,7 @@ impl Trait {
             Self::Bureaucrat => "Bureaucrat",
             Self::Synth => "Synthetic",
             Self::LogisticsExpert => "Logistics Expert",
+            Self::Psychopath => "Psychopath",
         }
     }
 }

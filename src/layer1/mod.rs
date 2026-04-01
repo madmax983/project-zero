@@ -696,6 +696,7 @@ pub use hologram::*;
 pub mod addiction;
 pub use addiction::*;
 
+pub mod organ_trade;
 pub mod pop_doppelganger;
 pub mod shadow_market;
 pub use pop_doppelganger::*;

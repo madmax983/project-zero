@@ -65,6 +65,8 @@ pub enum ResourceType {
     BuildingPermit,
     /// A Memory Core extracted from a dead Pop.
     MemoryCore,
+    /// High-value organs harvested from dead pops via Edict.
+    VitalOrgans,
 }
 
 /// A physical resource item in the world (dropped on the ground).
@@ -208,6 +210,33 @@ pub struct ColonyResources {
     pub memory_cores: f32,
     /// Maximum memory cores capacity.
     pub max_memory_cores: f32,
+    /// Total vital organs harvested via edict.
+    pub vital_organs: f32,
+}
+
+impl ColonyResources {
+    /// Gets the total amount of a given resource.
+    #[must_use]
+    pub const fn get_amount(&self, resource_type: &ResourceType) -> f32 {
+        match resource_type {
+            ResourceType::Food => self.food,
+            ResourceType::Wood => self.wood,
+            ResourceType::Stone => self.stone,
+            ResourceType::Ore => self.ore,
+            ResourceType::Metal => self.metal,
+            ResourceType::Planks => self.planks,
+            ResourceType::Blocks => self.blocks,
+            ResourceType::Waste => self.waste,
+            ResourceType::Rations => self.rations,
+            ResourceType::Fuel => self.fuel,
+            ResourceType::Alcohol => self.alcohol,
+            ResourceType::Scrap => self.scrap,
+            ResourceType::Tools => self.tools,
+            ResourceType::BuildingPermit => self.building_permits,
+            ResourceType::MemoryCore => self.memory_cores,
+            ResourceType::VitalOrgans => self.vital_organs,
+        }
+    }
 }
 
 impl Default for ColonyResources {
@@ -255,6 +284,7 @@ impl Default for ColonyResources {
             max_credits: 1000000.0,
             memory_cores: 0.0,
             max_memory_cores: 50.0,
+            vital_organs: 0.0,
         }
     }
 }
@@ -307,6 +337,7 @@ impl Mul<f32> for ColonyResources {
             max_credits: self.max_credits,
             memory_cores: (self.memory_cores * rhs).ceil(),
             max_memory_cores: self.max_memory_cores,
+            vital_organs: (self.vital_organs * rhs).ceil(),
         }
     }
 }
@@ -361,6 +392,7 @@ impl ColonyResources {
             max_credits: 0.0,
             memory_cores: 0.0,
             max_memory_cores: 0.0,
+            vital_organs: 0.0,
         }
     }
 
@@ -382,6 +414,13 @@ impl ColonyResources {
     pub fn add_memory_cores(&mut self, amount: f32) {
         if amount.is_finite() {
             self.memory_cores = (self.memory_cores + amount).clamp(0.0, self.max_memory_cores);
+        }
+    }
+
+    /// Adds vital organs, clamping to greater than 0.
+    pub fn add_vital_organs(&mut self, amount: f32) {
+        if amount.is_finite() {
+            self.vital_organs = (self.vital_organs + amount).max(0.0);
         }
     }
 
@@ -689,6 +728,9 @@ impl ColonyResources {
             ResourceType::MemoryCore => {
                 self.memory_cores = (self.memory_cores - amount).max(0.0);
             }
+            ResourceType::VitalOrgans => {
+                self.vital_organs = (self.vital_organs - amount).max(0.0);
+            }
         }
     }
 
@@ -710,6 +752,7 @@ impl ColonyResources {
             ResourceType::Tools => self.tools < self.max_tools,
             ResourceType::BuildingPermit => self.building_permits < self.max_building_permits,
             ResourceType::MemoryCore => self.memory_cores < self.max_memory_cores,
+            ResourceType::VitalOrgans => true, // Infinite capacity
         }
     }
 
@@ -731,6 +774,7 @@ impl ColonyResources {
             ResourceType::Tools => self.add_tools(amount),
             ResourceType::BuildingPermit => self.add_building_permits(amount),
             ResourceType::MemoryCore => self.add_memory_cores(amount),
+            ResourceType::VitalOrgans => self.add_vital_organs(amount),
         }
     }
 }

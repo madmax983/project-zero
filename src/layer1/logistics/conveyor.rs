@@ -132,6 +132,7 @@ pub fn hopper_system(
                     (resources.building_permits, resources.max_building_permits)
                 }
                 ResourceType::MemoryCore => (resources.memory_cores, resources.max_memory_cores),
+                ResourceType::VitalOrgans => (0.0, f32::MAX),
             };
 
             let space = (max - current).max(0.0);
@@ -154,6 +155,7 @@ pub fn hopper_system(
                     ResourceType::Tools => resources.add_tools(added),
                     ResourceType::BuildingPermit => resources.add_building_permits(added),
                     ResourceType::MemoryCore => resources.add_memory_cores(added),
+                    ResourceType::VitalOrgans => resources.add_vital_organs(added),
                 }
 
                 item.amount -= added;

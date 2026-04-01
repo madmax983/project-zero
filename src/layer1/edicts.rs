@@ -25,6 +25,8 @@ pub enum Policy {
     FirewallComms,
     /// Issues a Placebo Protocol to temporarily reduce stress.
     Placebo(PlaceboProtocol),
+    /// Harvests organs from dead pops, generating resources but causing horror.
+    MandatoryOrganHarvesting,
 }
 
 impl ColonyPolicies {
