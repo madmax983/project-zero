@@ -5,7 +5,7 @@
 
 
 - [ ] `765` Diplomatic Wards — `specs/765-diplomatic-wards.md`
-- [ ] `767` Orbital Commute — `specs/767-orbital-commute.md`
+
 - [ ] `768` Dynastic Succession — `specs/768-dynastic-succession.md`
 - [ ] `769` The Agony Extract — `specs/769-the-agony-extract.md`
 - [ ] `770` Temporal Ghost Towns — `specs/770-temporal-ghost-towns.md`
