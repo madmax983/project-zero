@@ -39,6 +39,8 @@ pub fn register(schedule: &mut Schedule) {
             update_event_buffer::<crate::layer1::logistics::orbital_drop::OrbitalDropEvent>,
             update_event_buffer::<crate::layer1::geodetic::GolemFormedEvent>,
             update_event_buffer::<crate::layer1::drone::DroneDisconnectedEvent>,
+            update_event_buffer::<crate::layer1::social::gossip_economy::GossipEvent>,
+            update_event_buffer::<crate::layer1::social::gossip_economy::BrokerPurchaseEvent>,
             update_event_buffer::<crate::layer1::spiteful_will::InheritanceEvent>,
             update_event_buffer::<crate::layer1::spiteful_will::OverrideWillEvent>,
             update_event_buffer::<crate::layer1::memory_core::ImplantMemoryCoreEvent>,

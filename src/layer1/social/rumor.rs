@@ -79,12 +79,22 @@ pub fn share_rumor(world: &mut World, speaker: Entity, listener: Entity) {
     });
 
     if let Some(rumor) = rumor_to_share {
+        // Emitting gossip event
+        world.send_event(crate::layer1::social::gossip_economy::GossipEvent {
+            pop: speaker,
+            rumor: rumor.topic.clone(),
+        });
         // Check if listener already knows it
         let already_knows = world
             .get::<Knowledge>(listener)
             .is_some_and(|k| k.knows(&rumor.topic));
 
         if !already_knows {
+            world.send_event(crate::layer1::social::gossip_economy::GossipEvent {
+                pop: listener,
+                rumor: rumor.topic.clone(),
+            });
+
             // Add rumor to listener
             if let Some(mut listener_knowledge) = world.get_mut::<Knowledge>(listener) {
                 listener_knowledge.add_rumor(rumor.clone());
@@ -134,6 +144,12 @@ pub fn exchange_rumors_system(world: &mut World) {
         for &speaker in &group {
             for &listener in &group {
                 if speaker != listener {
+
+
+
+
+
+
                     share_rumor(world, speaker, listener);
                 }
             }
