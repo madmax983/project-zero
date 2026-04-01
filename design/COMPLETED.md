@@ -326,3 +326,4 @@
 - [x] `INT-773` Integration: Stellar Weather Navigation -> FleetHealth/Chronicle — completed 2026-04-10
 - [x] `INT-774` Integration: Architectural Grafting -> Chronicle — completed 2026-04-10
 - [x] `776` Black Market Terraforming — `specs/776-black-market-terraforming.md` — completed 2026-04-01
+- [x] `777` The Void Whispers — `specs/777-the-void-whispers.md` — completed 2026-04-10
