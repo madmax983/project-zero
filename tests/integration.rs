@@ -232,3 +232,5 @@ mod empathic_plague_bridge;
 mod crop_mutation_chronicle;
 #[path = "integration/reverse_quarantine_bridge.rs"]
 mod reverse_quarantine_bridge;
+#[path = "integration/relativistic_time_dilation.rs"]
+mod relativistic_time_dilation;

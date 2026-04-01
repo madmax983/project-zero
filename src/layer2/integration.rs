@@ -433,3 +433,30 @@ pub fn reverse_quarantine_chronicle_bridge(
         }
     }
 }
+
+// --- INT-766: Relativistic Time Dilation -> Fleet Movement ---
+
+use crate::layer3::physics::relativity::StationedAt;
+use crate::layer2::fleet::InOrbit;
+
+/// Bridges `InOrbit` (from `layer2::fleet`) to `StationedAt` (from `layer3::physics::relativity`).
+///
+/// `StationedAt` is used by the time dilation system to apply local time effects to fleets.
+#[allow(clippy::type_complexity)]
+pub fn in_orbit_to_stationed_at_bridge_system(
+    mut commands: Commands,
+    query: Query<(Entity, &InOrbit), (With<crate::layer2::fleet::Fleet>, Without<StationedAt>)>,
+    mut removed: RemovedComponents<InOrbit>,
+) {
+    // Add StationedAt when InOrbit is present
+    for (entity, in_orbit) in query.iter() {
+        commands.entity(entity).insert(StationedAt(in_orbit.parent));
+    }
+
+    // Remove StationedAt when InOrbit is removed
+    for entity in removed.read() {
+        if let Some(mut cmds) = commands.get_entity(entity) {
+            cmds.remove::<StationedAt>();
+        }
+    }
+}

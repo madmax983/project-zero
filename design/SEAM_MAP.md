@@ -574,3 +574,11 @@
     - `reverse_quarantine_chronicle_bridge` in `src/layer2/integration.rs` converts `RefugeeFleetEvent` (when rejected) to `AddChronicleEvent` with `EventImportance::Major`.
 - **Schedule:** Chained in `Layer2SystemSet` after `process_refugee_decisions_system`.
 - **Tests:** `tests/integration/reverse_quarantine_bridge.rs`
+
+### INT-766: Relativistic Time Dilation -> Fleet Movement
+- **Date:** 2026-04-03
+- **Systems connected:** `InOrbit` (Layer 2 Fleet) -> `StationedAt` (Layer 3 Relativity)
+- **Glue added:**
+    - `in_orbit_to_stationed_at_bridge_system` in `src/layer2/integration.rs` converts `InOrbit` to `StationedAt`.
+- **Schedule:** Chained in `SimulationSchedule` right before `process_time_dilation_system` and `update_fleet_local_time_system`.
+- **Tests:** `tests/integration/relativistic_time_dilation.rs`

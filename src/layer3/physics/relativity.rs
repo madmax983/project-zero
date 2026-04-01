@@ -19,16 +19,20 @@ pub struct SimulationTime {
     pub tick: u64,
 }
 
-#[derive(Component)]
-pub struct Fleet;
+// `Fleet` should use the one from `layer2::fleet`.
+use crate::layer2::fleet::Fleet;
 
 #[derive(Component)]
 pub struct StationedAt(pub Entity);
 
 pub fn process_time_dilation_system(
-    global_time: Res<SimulationTime>,
+    global_time: Option<Res<SimulationTime>>,
     mut query: Query<(&TimeDilationZone, &mut LocalTimeTracker)>,
 ) {
+    let global_time = match global_time {
+        Some(t) => t,
+        None => return,
+    };
     for (dilation, mut tracker) in query.iter_mut() {
         if dilation.dilation_factor > 0 {
             let delta = global_time
