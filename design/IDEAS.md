@@ -13422,3 +13422,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** The immediate, absolute salvation of infinite credit vs. the terrifying, unstoppable repossession of your civilization's physical infrastructure if your economy falters.
 
 ---
+## The Generational Fugue
+
+**Layer:** 1
+
+**Fantasy:** A psychological phenomena where colonists lose touch with the present, slipping into the memories of their ancestors due to the long-term effects of cryo-sleep or isolation.
+
+**Mechanic:** Pops can develop a "Fugue State" trait under high stress. While in this state, they will attempt to perform jobs or tasks that were relevant to their great-grandparents (e.g., trying to farm in a heavy industrial sector, or building ancestral shelters in the middle of a modern arcology). This state spreads if others talk to them for too long.
+
+**Emergence:** A vital plasma reactor shuts down because the lead engineer is found in the corner, desperately trying to churn non-existent butter or weave baskets out of fiber-optic cables, leading to cascading power failures.
+
+**Tension:** Do you isolate these "historians" to protect your modern infrastructure, or try to cure them, risking the spread of the fugue to your medical staff?
+
+---
+
+## Ghost-Fleet Trade Routes
+
+**Layer:** Cross-layer (2 -> 3)
+
+**Fantasy:** Interstellar trade that relies on automated ships from an empire that died a thousand years ago.
+
+**Mechanic:** Ancient, indestructible automated cargo haulers occasionally pass through your system along forgotten hyperlanes. They will passively scoop up specific resources if left in orbit, and drop off bizarre, advanced technology or completely useless, decayed relics in exchange.
+
+**Emergence:** You rely on the Ghost-Fleet for advanced medical supplies, building a massive orbital cache of the strange rocks they seem to want. Then, suddenly, the fleet stops coming. You trace their route to a neighboring system only to find a rival empire has built a massive net to catch and dismantle the ancient ships, destroying your vital supply line.
+
+**Tension:** Relying on an unpredictable, uncommunicative source of wealth vs. building your own stable, but less lucrative, trade network.
+
+---
+
+## The Memory Market
+
+**Layer:** Cross-layer (1 -> 3)
+
+**Fantasy:** Selling the lived experiences of your citizens to bored, wealthy elites across the galaxy.
+
+**Mechanic:** You can build a "Memory Extraction Facility" (Layer 1) that harvests the most intense memories from your Pops (great joys, terrible traumas). These are refined into "Experiential Data" and sold on the Galactic Market (Layer 3) for exorbitant prices. Pops who have their memories harvested lose the traits and relationships associated with those memories.
+
+**Emergence:** Your colony is broke, so you start harvesting the happy memories of your citizens to pay off debts. Soon, your entire population is rich but completely apathetic, lacking any deep relationships or passions. When a crisis hits, no one cares enough to fight or rebuild, and the colony quietly dies of sheer indifference.
+
+**Tension:** The immense, immediate financial windfall of selling raw human experience vs. the slow, irreversible hollowing out of your colony's soul.
+
+---
