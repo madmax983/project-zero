@@ -83,6 +83,10 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::unrest::calculate_unrest_system.after(decay_needs_system),
             crate::layer1::bio_acoustic::bio_acoustic_chorus_system
                 .after(crate::layer1::unrest::calculate_unrest_system),
+            crate::layer1::bio_acoustic_miasma::record_miasma_secret
+                .after(crate::layer1::unrest::calculate_unrest_system),
+            crate::layer1::bio_acoustic_miasma::broadcast_miasma_secrets
+                .after(crate::layer1::bio_acoustic_miasma::record_miasma_secret),
         )
             .in_set(Layer1SystemSet::Observation),
     );

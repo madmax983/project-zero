@@ -55,6 +55,7 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     init_task_pools();
     let mut world = World::new();
     world.insert_resource(GameState::default());
+    world.init_resource::<crate::layer1::bio_acoustic_miasma::MiasmaRecordedSecret>();
     world.init_resource::<crate::layer2::cartographers_curse::MapTelemetry>();
     world.init_resource::<bevy_ecs::event::Events<crate::layer2::cartographers_curse::SellTelemetryEvent>>();
     world.insert_resource(MenuState::default());

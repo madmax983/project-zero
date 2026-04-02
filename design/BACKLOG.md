@@ -333,7 +333,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `567` The Orbital Scrapyard — `specs/567-the-orbital-scrapyard.md`
 - [ ] `568` The Empathic Plague — `specs/568-the-empathic-plague.md`
 - [ ] `569` The Syzygy — `specs/569-the-syzygy.md`
-- [ ] `570` The Bio-Acoustic Miasma — `specs/570-the-bio-acoustic-miasma.md`
 - [ ] `571` Diplomatic Contraband — `specs/571-diplomatic-contraband.md`
 - [ ] `572` The Pyrophilic Flora — `specs/572-the-pyrophilic-flora.md`
 - [ ] `573` The Silent Generation — `specs/573-the-silent-generation.md`
