@@ -3651,6 +3651,22 @@
 - "Map rot has blinded the outer sectors."
 - "Beware of map rot before sending the colony ship."
 
+## The Cartographer's Curse (Spec 626)
+
+### the open map / sold-sky
+**Replaces:** sold telemetry, exposed coordinates
+**Code reference:** `SoldMapData` state
+**Usage:**
+- "We live under the sold-sky now."
+- "The open map brings them straight to us."
+
+### pinpoint / direct-drop
+**Replaces:** precise enemy landing, zero-scatter drop
+**Code reference:** `LandingScatter` (zeroed)
+**Usage:**
+- "It was a pinpoint strike on the reactor."
+- "A direct-drop from orbit, no warning."
+
 ## The Whispering Ore (Spec 592)
 
 ### the Whispering Ore

@@ -4194,6 +4194,15 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## The Cartographer's Curse Templates
 
+### Template: PRECISION_STRIKE
+**Generates:** Play event
+**Slots:** `[COLONY]`, `[YEAR]`, `[ENEMY]`, `[STRIKE_PRECISION]`, `[STRIKE_REACTION]`
+
+**Patterns:**
+- "[YEAR]: The [ENEMY] drop-ships landed [STRIKE_PRECISION]. [STRIKE_REACTION]."
+- "An orbital strike at [COLONY]. The [ENEMY] arrived [STRIKE_PRECISION]. [STRIKE_REACTION]. [YEAR]."
+- "[STRIKE_REACTION]. [YEAR]. The [ENEMY] bypassed the scatter, hitting [COLONY] [STRIKE_PRECISION]."
+
 ### Template: MAPS_SOLD
 **Generates:** Play event
 **Slots:** `[COLONY]`, `[YEAR]`, `[SOLD_DATA]`
