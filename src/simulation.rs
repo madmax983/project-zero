@@ -248,6 +248,9 @@ pub fn run_simulation_tick(world: &mut World) {
     }
 
     // Initialize Layer 2 Events
+    if !world.contains_resource::<Events<crate::layer1::social::ghost_shift_strike::GhostShiftStartedEvent>>() {
+        world.init_resource::<Events<crate::layer1::social::ghost_shift_strike::GhostShiftStartedEvent>>();
+    }
     if !world.contains_resource::<Events<crate::layer1::diplomacy::wards::WarDeclaredEvent>>() {
         world.init_resource::<Events<crate::layer1::diplomacy::wards::WarDeclaredEvent>>();
     }
@@ -645,6 +648,8 @@ mod tests {
         world.init_resource::<Events<crate::layer2::moon_hermits::PopDesertedEvent>>();
 
         world.init_resource::<Time>();
+
+        world.init_resource::<Events<crate::layer1::social::ghost_shift_strike::GhostShiftStartedEvent>>();
 
         let schedule = build_simulation_schedule();
         world.add_schedule(schedule);
