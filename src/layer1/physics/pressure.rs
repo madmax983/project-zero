@@ -44,8 +44,8 @@
 //! - **Vacuum Decay:** If an area is exposed to the void (edges of the grid or breached
 //!   walls), pressure will rapidly equalize with the vacuum, depleting the room.
 
+use bevy::utils::HashMap;
 use bevy_ecs::prelude::*;
-use std::collections::HashMap;
 
 /// Represents the atmospheric pressure layer.
 /// Values range from 0.0 (Vacuum) to 1.0 (Standard Atmosphere).
@@ -195,95 +195,84 @@ impl PressureGrid {
 }
 
 /// System to update atmospheric pressure.
-pub fn update_pressure_system(world: &mut World) {
-    use crate::layer1::building::{Building, BuildingType};
-    use crate::layer1::energy::PowerConsumer;
-    use crate::layer1::map::GridPosition;
+pub fn update_pressure_system(
+    grid_opt: Option<ResMut<PressureGrid>>,
+    blocker_query: Query<(
+        &crate::layer1::building::Building,
+        &crate::layer1::map::GridPosition,
+        Option<&crate::layer1::control::DoorControl>,
+    )>,
+    generator_query: Query<(
+        &crate::layer1::building::Building,
+        &crate::layer1::map::GridPosition,
+        Option<&crate::layer1::energy::PowerConsumer>,
+    )>,
+) {
+    use crate::layer1::building::BuildingType;
+
+    let Some(mut grid) = grid_opt else { return };
 
     // 1. Identify blockers
-    let mut blockers = HashMap::new();
-    {
-        let mut query = world.query::<(
-            &Building,
-            &GridPosition,
-            Option<&crate::layer1::control::DoorControl>,
-        )>();
-        for (b, pos, control) in query.iter(world) {
-            let mut transmissivity = b.building_type.flow_transmissivity();
+    // Pre-sizing hashmap using blocker_query size estimate, though not all buildings have flow_transmissivity.
+    let mut blockers =
+        HashMap::with_capacity_and_hasher(blocker_query.iter().len() / 2, Default::default());
+    for (b, pos, control) in blocker_query.iter() {
+        let mut transmissivity = b.building_type.flow_transmissivity();
 
-            if let Some(ctrl) = control {
-                match ctrl.state {
-                    crate::layer1::control::DoorState::Open => transmissivity = Some(1.0),
-                    crate::layer1::control::DoorState::Locked => transmissivity = Some(0.0),
-                    crate::layer1::control::DoorState::Auto => {}
-                }
+        if let Some(ctrl) = control {
+            match ctrl.state {
+                crate::layer1::control::DoorState::Open => transmissivity = Some(1.0),
+                crate::layer1::control::DoorState::Locked => transmissivity = Some(0.0),
+                crate::layer1::control::DoorState::Auto => {}
             }
+        }
 
-            if let Some(t) = transmissivity {
-                blockers.insert((pos.x, pos.y), t);
-            }
+        if let Some(t) = transmissivity {
+            blockers.insert((pos.x, pos.y), t);
         }
     }
 
-    // 2. Identify Generators
-    let mut generators = Vec::new();
-    {
-        let mut query = world.query::<(&Building, &GridPosition, Option<&PowerConsumer>)>();
-        for (b, pos, power) in query.iter(world) {
-            if b.building_type == BuildingType::LifeSupport {
-                let is_active = power.is_none_or(|p| p.active);
-                if is_active {
-                    generators.push(*pos);
+    // 2. Identify Generators and apply to Grid directly without intermediate Vec
+    for (b, pos, power) in generator_query.iter() {
+        if b.building_type == BuildingType::LifeSupport {
+            let is_active = power.is_none_or(|p| p.active);
+            if is_active {
+                let current = grid.get(pos.x, pos.y);
+                if current < 1.0 {
+                    grid.set(pos.x, pos.y, (current + 0.2).min(1.0));
                 }
             }
         }
     }
 
-    // 3. Apply to Grid
-    if let Some(mut grid) = world.get_resource_mut::<PressureGrid>() {
-        for pos in generators {
-            let current = grid.get(pos.x, pos.y);
-            if current < 1.0 {
-                grid.set(pos.x, pos.y, (current + 0.2).min(1.0));
-            }
-        }
-        grid.diffuse(&blockers);
-    }
+    // 3. Diffuse
+    grid.diffuse(&blockers);
 }
 
 /// System to apply suffocation damage.
-pub fn pressure_damage_system(world: &mut World) {
-    use crate::layer1::chronicle::{AddChronicleEvent, EventImportance};
-    use crate::layer1::health::Health;
-    use crate::layer1::map::GridPosition;
-    use crate::layer1::pop::Pop;
+pub fn pressure_damage_system(
+    mut pop_query: Query<
+        (
+            &crate::layer1::map::GridPosition,
+            &mut crate::layer1::health::Health,
+        ),
+        With<crate::layer1::pop::Pop>,
+    >,
+    grid_opt: Option<Res<PressureGrid>>,
+    mut events: EventWriter<crate::layer1::chronicle::AddChronicleEvent>,
+) {
+    use crate::layer1::chronicle::EventImportance;
 
-    // 1. Collect candidate entities (Entity, Pos)
-    let mut candidates = Vec::new();
-    {
-        let mut query = world.query_filtered::<(Entity, &GridPosition, &Health), With<Pop>>();
-        for (entity, pos, health) in query.iter(world) {
-            if health.current > 0.0 {
-                candidates.push((entity, *pos));
-            }
-        }
-    }
-
-    // 2. Check pressure against Grid
-    let mut damage_targets = Vec::new();
-    if let Some(grid) = world.get_resource::<PressureGrid>() {
-        for (entity, pos) in candidates {
-            let pressure = grid.get(pos.x, pos.y);
-            if pressure < 0.2 {
-                damage_targets.push(entity);
-            }
-        }
-    }
-
-    // 3. Apply damage
+    let Some(grid) = grid_opt else { return };
     let mut killed = 0;
-    for entity in damage_targets {
-        if let Some(mut health) = world.get_mut::<Health>(entity) {
+
+    for (pos, mut health) in pop_query.iter_mut() {
+        if health.current <= 0.0 {
+            continue;
+        }
+
+        let pressure = grid.get(pos.x, pos.y);
+        if pressure < 0.2 {
             health.take_damage(1.0);
             if health.current <= 0.0 {
                 killed += 1;
@@ -291,14 +280,11 @@ pub fn pressure_damage_system(world: &mut World) {
         }
     }
 
-    // 4. Emit events
     if killed > 0 {
-        if let Some(mut events) = world.get_resource_mut::<Events<AddChronicleEvent>>() {
-            events.send(AddChronicleEvent {
-                text: format!("{} Pops suffocated due to atmospheric breach.", killed),
-                importance: EventImportance::Major,
-            });
-        }
+        events.send(crate::layer1::chronicle::AddChronicleEvent {
+            text: format!("{} Pops suffocated due to atmospheric breach.", killed),
+            importance: EventImportance::Major,
+        });
     }
 }
 
@@ -375,20 +361,22 @@ mod tests {
 
     #[test]
     fn test_life_support_generates_pressure() {
-        let mut world = World::new();
+        let mut app = bevy::prelude::App::new();
+        app.add_plugins(bevy::prelude::MinimalPlugins);
         let grid = PressureGrid::new(10, 10);
-        world.insert_resource(grid);
+        app.insert_resource(grid);
 
-        world.spawn((
+        app.world_mut().spawn((
             Building {
                 building_type: BuildingType::LifeSupport,
             },
             GridPosition { x: 5, y: 5 },
         ));
 
-        update_pressure_system(&mut world);
+        app.add_systems(bevy::prelude::Update, update_pressure_system);
+        app.update();
 
-        let grid = world.resource::<PressureGrid>();
+        let grid = app.world().resource::<PressureGrid>();
         assert!(
             grid.get(5, 5) > 0.0,
             "Life Support should generate pressure"
@@ -397,13 +385,14 @@ mod tests {
 
     #[test]
     fn test_walls_block_diffusion() {
-        let mut world = World::new();
+        let mut app = bevy::prelude::App::new();
+        app.add_plugins(bevy::prelude::MinimalPlugins);
         let mut grid = PressureGrid::new(5, 1);
         grid.set(1, 0, 1.0); // Source
-        world.insert_resource(grid);
+        app.insert_resource(grid);
 
         // Wall at (2, 0)
-        world.spawn((
+        app.world_mut().spawn((
             Building {
                 building_type: BuildingType::Wall,
             },
@@ -411,11 +400,13 @@ mod tests {
             Structure::default(),
         ));
 
+        app.add_systems(bevy::prelude::Update, update_pressure_system);
+
         for _ in 0..5 {
-            update_pressure_system(&mut world);
+            app.update();
         }
 
-        let grid = world.resource::<PressureGrid>();
+        let grid = app.world().resource::<PressureGrid>();
         // (1,0) source. (2,0) wall. (3,0) target.
         assert!(
             grid.get(3, 0) < 0.01,
@@ -425,13 +416,14 @@ mod tests {
 
     #[test]
     fn test_gate_leaks_pressure() {
-        let mut world = World::new();
+        let mut app = bevy::prelude::App::new();
+        app.add_plugins(bevy::prelude::MinimalPlugins);
         let mut grid = PressureGrid::new(5, 1);
         grid.set(1, 0, 1.0);
-        world.insert_resource(grid);
+        app.insert_resource(grid);
 
         // Gate at (2, 0)
-        world.spawn((
+        app.world_mut().spawn((
             Building {
                 building_type: BuildingType::Gate,
             },
@@ -439,24 +431,27 @@ mod tests {
             Structure::default(),
         ));
 
+        app.add_systems(bevy::prelude::Update, update_pressure_system);
+
         // Run multiple ticks
         for _ in 0..5 {
-            update_pressure_system(&mut world);
+            app.update();
         }
 
-        let grid = world.resource::<PressureGrid>();
+        let grid = app.world().resource::<PressureGrid>();
         assert!(grid.get(3, 0) > 0.0, "Pressure SHOULD leak through Gate");
     }
 
     #[test]
     fn test_airlock_blocks_pressure() {
-        let mut world = World::new();
+        let mut app = bevy::prelude::App::new();
+        app.add_plugins(bevy::prelude::MinimalPlugins);
         let mut grid = PressureGrid::new(5, 1);
         grid.set(1, 0, 1.0);
-        world.insert_resource(grid);
+        app.insert_resource(grid);
 
         // Airlock at (2, 0)
-        world.spawn((
+        app.world_mut().spawn((
             Building {
                 building_type: BuildingType::Airlock,
             },
@@ -464,11 +459,13 @@ mod tests {
             Structure::default(),
         ));
 
+        app.add_systems(bevy::prelude::Update, update_pressure_system);
+
         for _ in 0..5 {
-            update_pressure_system(&mut world);
+            app.update();
         }
 
-        let grid = world.resource::<PressureGrid>();
+        let grid = app.world().resource::<PressureGrid>();
         assert!(
             grid.get(3, 0) < 0.01,
             "Pressure should NOT leak through Airlock"
@@ -477,11 +474,14 @@ mod tests {
 
     #[test]
     fn test_suffocation_damage() {
-        let mut world = World::new();
+        let mut app = bevy::prelude::App::new();
+        app.add_plugins(bevy::prelude::MinimalPlugins);
+        app.init_resource::<Events<crate::layer1::chronicle::AddChronicleEvent>>();
         let grid = PressureGrid::new(10, 10);
-        world.insert_resource(grid);
+        app.insert_resource(grid);
 
-        let pop = world
+        let pop = app
+            .world_mut()
             .spawn((
                 Pop,
                 Health {
@@ -492,21 +492,23 @@ mod tests {
             ))
             .id();
 
-        pressure_damage_system(&mut world);
+        app.add_systems(bevy::prelude::Update, pressure_damage_system);
+        app.update();
 
-        let health = world.get::<Health>(pop).unwrap();
+        let health = app.world().get::<Health>(pop).unwrap();
         assert!(health.current < 100.0, "Pop in vacuum should take damage");
     }
 
     #[test]
     fn test_pressure_passes_through_vent() {
-        let mut world = World::new();
+        let mut app = bevy::prelude::App::new();
+        app.add_plugins(bevy::prelude::MinimalPlugins);
         let mut grid = PressureGrid::new(5, 1);
         grid.set(0, 0, 1.0); // Source
-        world.insert_resource(grid);
+        app.insert_resource(grid);
 
         // Source generator at (0, 0) to maintain pressure against vacuum
-        world.spawn((
+        app.world_mut().spawn((
             Building {
                 building_type: BuildingType::LifeSupport,
             },
@@ -514,21 +516,25 @@ mod tests {
         ));
 
         // Vent at (1, 0)
-        world.spawn((
+        app.world_mut().spawn((
             Building {
                 building_type: BuildingType::Vent,
             },
             GridPosition { x: 1, y: 0 },
         ));
 
+        app.add_systems(bevy::prelude::Update, update_pressure_system);
+
         // Run pressure update multiple times to allow diffusion
         for _ in 0..20 {
             // Manually refill source to fight vacuum decay for test purposes
-            world.resource_mut::<PressureGrid>().set(0, 0, 1.0);
-            update_pressure_system(&mut world);
+            app.world_mut()
+                .resource_mut::<PressureGrid>()
+                .set(0, 0, 1.0);
+            app.update();
         }
 
-        let grid = world.resource::<PressureGrid>();
+        let grid = app.world().resource::<PressureGrid>();
         assert!(grid.get(2, 0) > 0.05, "Pressure SHOULD pass through Vent");
     }
 
