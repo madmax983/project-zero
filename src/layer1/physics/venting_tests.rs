@@ -18,14 +18,15 @@ mod tests {
 
     #[test]
     fn test_open_airlock_vents_pressure() {
-        let mut world = World::new();
+        let mut app = bevy::prelude::App::new();
+        app.add_plugins(bevy::prelude::MinimalPlugins);
         // Setup Pressure Grid: (1,0) is High Pressure, (3,0) is Vacuum
         let mut grid = PressureGrid::new(5, 1);
         grid.set(1, 0, 1.0);
-        world.insert_resource(grid);
+        app.insert_resource(grid);
 
         // Spawn Airlock at (2,0) set to OPEN
-        world.spawn((
+        app.world_mut().spawn((
             Building {
                 building_type: BuildingType::Airlock,
             },
@@ -36,14 +37,18 @@ mod tests {
             Structure::default(),
         ));
 
+        app.add_systems(bevy::prelude::Update, update_pressure_system);
+
         // Run pressure update multiple times to allow diffusion
         for _ in 0..10 {
             // Replenish source to fight vacuum decay at edges
-            world.resource_mut::<PressureGrid>().set(1, 0, 1.0);
-            update_pressure_system(&mut world);
+            app.world_mut()
+                .resource_mut::<PressureGrid>()
+                .set(1, 0, 1.0);
+            app.update();
         }
 
-        let grid = world.resource::<PressureGrid>();
+        let grid = app.world().resource::<PressureGrid>();
         // Pressure should diffuse past the airlock because it is open
         assert!(
             grid.get(3, 0) > 0.05,
@@ -53,13 +58,14 @@ mod tests {
 
     #[test]
     fn test_locked_airlock_maintains_pressure() {
-        let mut world = World::new();
+        let mut app = bevy::prelude::App::new();
+        app.add_plugins(bevy::prelude::MinimalPlugins);
         let mut grid = PressureGrid::new(5, 1);
         grid.set(1, 0, 1.0);
-        world.insert_resource(grid);
+        app.insert_resource(grid);
 
         // Spawn Airlock at (2,0) set to LOCKED (Closed)
-        world.spawn((
+        app.world_mut().spawn((
             Building {
                 building_type: BuildingType::Airlock,
             },
@@ -70,12 +76,14 @@ mod tests {
             Structure::default(),
         ));
 
+        app.add_systems(bevy::prelude::Update, update_pressure_system);
+
         // Run pressure update multiple times
         for _ in 0..10 {
-            update_pressure_system(&mut world);
+            app.update();
         }
 
-        let grid = world.resource::<PressureGrid>();
+        let grid = app.world().resource::<PressureGrid>();
         assert!(
             grid.get(3, 0) < 0.01,
             "Pressure should NOT vent through LOCKED airlock"
