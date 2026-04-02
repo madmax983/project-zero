@@ -43,6 +43,7 @@ I've updated `echo_issue_report.md` with resolutions. The error text fix for `Na
 🤦 **The Confusion:** I copied the basic headless simulation example from the README and ran it, but it immediately crashed with a weird error: `scale::layer1::social::ghost_shift_strike::evaluate_ghost_shifts could not access system parameter ResMut<'_, Events<GhostShiftStartedEvent>>`. I just wanted to run 10 ticks!
 🕵️ **The Reality:** The internal engine forgot to initialize an event required by a background system.
 💡 **The Fix:** The developers need to register `GhostShiftStartedEvent` properly in the setup so the simulation doesn't crash for basic users.
+✅ **Resolution:** Implemented. Registered `GhostShiftStartedEvent` in `simulation.rs` so the headless simulation correctly executes without crashing.
 
 ## 🗣️ Echo: Getting Started example is broken
 
