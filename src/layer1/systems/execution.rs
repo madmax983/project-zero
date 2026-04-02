@@ -174,6 +174,14 @@ pub fn register(schedule: &mut Schedule) {
         )
             .in_set(Layer1SystemSet::Execution),
     );
+
+    schedule.add_systems(
+        (
+            crate::layer1::agony_extract::process_agony_extract_harvest_system
+                .after(work_execution_system),
+        )
+            .in_set(Layer1SystemSet::Execution),
+    );
     schedule.add_systems(
         (crate::layer1::tech::hypno_learning::update_mental_fog_system.after(movement_system),)
             .in_set(Layer1SystemSet::Execution),
