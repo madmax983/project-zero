@@ -1,3 +1,17 @@
+//! # Environmental Beauty and Aesthetics
+//!
+//! This module handles the psychological impact of the environment on Pops.
+//! In SCALE, aesthetics are not purely decorative; they actively influence
+//! a Pop's `Leisure` need and overall morale.
+//!
+//! ## The Beauty Grid
+//!
+//! Beauty is calculated spatially using the [`BeautyGrid`] resource.
+//! Different terrain types (like `Grass` vs `Dirt`) and placeable items
+//! (like `Statues` or `Waste`) emit beauty values that accumulate on the grid.
+//! Pops moving through these tiles have their internal state modified by
+//! the ambient beauty of their surroundings.
+
 #![allow(
     clippy::collapsible_if,
     clippy::cast_possible_truncation,
@@ -6,6 +20,26 @@
 use bevy_ecs::prelude::*;
 
 /// Component indicating an entity emits beauty (positive or negative).
+///
+/// # Examples
+///
+/// ```
+/// use scale::layer1::beauty::BeautySource;
+///
+/// let statue = BeautySource {
+///     value: 10.0,
+///     radius: 2.0,
+/// };
+/// ```
+///
+/// ```compile_fail
+/// use scale::layer1::beauty::BeautySource;
+/// // Fails because value must be a float
+/// let invalid = BeautySource {
+///     value: "very pretty",
+///     radius: 1.0,
+/// };
+/// ```
 #[derive(Component, Default, Debug, Clone, Copy)]
 pub struct BeautySource {
     /// The amount of beauty emitted.
@@ -42,6 +76,21 @@ pub const BEAUTY_EFFECT_RATE: f32 = 0.001;
 
 impl BeautyGrid {
     /// Create a new beauty grid.
+    ///
+    /// # Panics
+    ///
+    /// Panics if the calculated grid size (`width * height`) exceeds 10,000,000
+    /// or overflows.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use scale::layer1::beauty::BeautyGrid;
+    ///
+    /// let grid = BeautyGrid::new(10, 10);
+    /// assert_eq!(grid.width, 10);
+    /// assert_eq!(grid.height, 10);
+    /// ```
     #[must_use]
     pub fn new(width: usize, height: usize) -> Self {
         let size = width
@@ -54,7 +103,23 @@ impl BeautyGrid {
             values: vec![0.0; size],
         }
     }
+
     /// Get beauty value at position.
+    /// Returns `0.0` if the coordinates are out of bounds.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use scale::layer1::beauty::BeautyGrid;
+    ///
+    /// let mut grid = BeautyGrid::new(10, 10);
+    ///
+    /// // Uninitialized cells default to 0.0
+    /// assert_eq!(grid.get(5, 5), 0.0);
+    ///
+    /// // Out-of-bounds coordinates return 0.0
+    /// assert_eq!(grid.get(20, 20), 0.0);
+    /// ```
     #[must_use]
     pub fn get(&self, x: usize, y: usize) -> f32 {
         if x >= self.width || y >= self.height {

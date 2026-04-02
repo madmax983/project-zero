@@ -1,9 +1,36 @@
+//! # Health and Mortality
+//!
+//! This module provides the foundational mechanics for tracking the physical
+//! well-being of biological and synthetic entities (Pops) in the simulation.
+//!
+//! ## The Core Philosophy
+//!
+//! In SCALE, health is deliberately decoupled from the specific *causes* of
+//! damage. Starvation, orbital crossfire, and workplace accidents all reduce
+//! a unified [`Health`] pool. When health reaches zero, the entity is marked
+//! with the [`Dead`] marker component rather than immediately despawned.
+//!
+//! This delayed despawn allows other systems (like Medical Triage, Organ
+//! Harvesting, or Funerary Rites) to intercept and process the death event.
+
 use bevy_ecs::prelude::*;
 
 /// Represents the physical health of an entity (Pop).
 ///
 /// Decouples death from specific causes (starvation, damage).
 /// Current range: 0.0 to max (default 100.0).
+///
+/// # Examples
+///
+/// ```
+/// use scale::layer1::health::Health;
+///
+/// let entity_health = Health {
+///     current: 100.0,
+///     max: 100.0,
+/// };
+/// assert!(entity_health.is_alive());
+/// ```
 #[derive(Component, Debug, Clone, Copy)]
 pub struct Health {
     /// Current health points. <= 0 means death.
@@ -35,6 +62,18 @@ impl Default for Health {
 
 impl Health {
     /// Returns true if health is greater than 0.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use scale::layer1::health::Health;
+    ///
+    /// let mut health = Health::default();
+    /// assert!(health.is_alive());
+    ///
+    /// health.take_damage(100.0);
+    /// assert!(!health.is_alive());
+    /// ```
     #[must_use]
     pub fn is_alive(&self) -> bool {
         self.current > 0.0
@@ -42,6 +81,25 @@ impl Health {
 
     /// Reduces health by amount, clamped at 0.
     /// Ignores negative damage (healing) and NaN.
+    ///
+    /// # Panics
+    ///
+    /// This method will not panic, but passing `NaN` or negative numbers
+    /// will result in a no-op to prevent accidental healing or state corruption.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use scale::layer1::health::Health;
+    ///
+    /// let mut health = Health { current: 50.0, max: 100.0 };
+    /// health.take_damage(10.0);
+    /// assert_eq!(health.current, 40.0);
+    ///
+    /// // Damage is clamped at zero
+    /// health.take_damage(200.0);
+    /// assert_eq!(health.current, 0.0);
+    /// ```
     pub fn take_damage(&mut self, amount: f32) {
         if amount.is_nan() || amount < 0.0 {
             return;
