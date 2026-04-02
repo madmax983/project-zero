@@ -1,31 +1,14 @@
-Let's consider all three:
+1. **Goal**: Fulfill the missing integration for `570` "The Bio-Acoustic Miasma" by linking `ParanoiaTracker` to `StressTracker` so paranoia hits can trigger mental breakdowns.
 
-1. **INT-773: Stellar Weather Navigation (FleetDamagedEvent) -> FleetHealth**
-   Currently, `apply_stellar_weather_effects` sends a `FleetDamagedEvent`. But no system reads it!
-   We should add a bridge system `stellar_weather_damage_bridge_system` in `src/layer2/integration.rs` that reads `FleetDamagedEvent` and applies damage to `FleetHealth`. And if `FleetHealth` <= 0.0, we despawn the fleet (or `commands.entity(fleet).despawn()`). Actually `debris_attrition_system` handles damage similarly.
-   Also, we should record a Chronicle event maybe, but the main issue is "damage happens but health doesn't decrease".
-   Wait, if we despawn the fleet, we might want to spawn debris, similar to `fleet_combat_system`. Let's just decrease health and let `fleet_combat_system` or similar handle it, or we can despawn it.
-   Let's check `layer2/debris.rs` `debris_attrition_system` which damages fleet health.
+2. **Actions**:
+   - In `src/layer1/integration.rs`, add a new bridge system: `pub fn paranoia_stress_bridge_system(mut query: Query<(&mut crate::layer1::stress::StressTracker, &mut crate::layer1::bio_acoustic_miasma::ParanoiaTracker)>) { ... }`
+     - Inside, iterate over the query and add `paranoia.level as f32` to `stress.accumulated_stress`. Then set `paranoia.level = 0`.
+   - In `src/layer1/systems/observation.rs`, register this bridge system in `Layer1SystemSet::Observation`:
+     - Run `crate::layer1::integration::paranoia_stress_bridge_system.after(crate::layer1::bio_acoustic_miasma::broadcast_miasma_secrets).before(crate::layer1::stress::check_stress_breakdown_system)`
+   - Create `tests/integration/bio_acoustic_miasma_bridge.rs` testing that `ParanoiaTracker` effectively increases `accumulated_stress` and can trigger a `Breakdown`.
+     - The test should spawn an entity with `Needs`, `StressTracker`, `Traits`, and `ParanoiaTracker`. Run `paranoia_stress_bridge_system` and `check_stress_breakdown_system`, and assert that the entity gets a `Breakdown` component.
+   - Register the test module in `tests/integration/mod.rs` if needed (seems to be picked up automatically usually, but let's check).
+   - Update `design/SEAM_MAP.md` and `design/COMPLETED.md` with the new seam. Wait, `570` is already in `COMPLETED.md`. I should add `INT-570` to `design/COMPLETED.md` and `SEAM_MAP.md`.
 
-2. **INT-772: Biomass Commute -> PopDied & ColonyResources**
-   In `src/layer1/logistics/biomass_network.rs`, `digest_transit_contents` despawns `entity`. If the entity has `Pop` and `PopName`, it just despawns. It *should* send a `PopDied` event so the rest of the game knows a pop died.
-   ```rust
-   pub fn digest_transit_contents(
-       mut commands: Commands,
-       mut networks: Query<&mut BiomassNetwork>,
-       transit_query: Query<(Entity, &InTransit, Option<&PopName>)>,
-       mut pop_died_events: EventWriter<PopDied>,
-   ) {
-      //... if network is hungry and it's a pop, send PopDied
-   }
-   ```
-   Wait, if it's a `ResourceYield`, it also just despawns without any UI or log. Let's focus on `PopDied` event.
-
-3. **INT-774: Architectural Grafting -> Chronicle**
-   `GraftBuildingEvent` occurs, it modifies tech level, adds `MaintenanceDebt` and `Quirks`. But there is no log or chronicle entry. It makes sense to bridge `GraftBuildingEvent` to `AddChronicleEvent`.
-
-Let's claim one of them: "INT-773: Stellar Weather -> FleetHealth and Chronicle" OR "INT-772: Biomass Commute -> PopDied".
-
-Let's do **INT-773: Stellar Weather -> FleetHealth & Chronicle**
-
-Wait, let's claim `INT-773`. Let's create an entry in `design/IN_PROGRESS.md`.
+3. **Pre-commit**:
+   - Ask for pre-commit instructions and run tests, lint, etc.

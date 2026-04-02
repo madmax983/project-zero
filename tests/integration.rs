@@ -243,3 +243,6 @@ mod stellar_weather_bridge;
 mod architectural_grafting_bridge;
 #[path = "integration/black_market_terraforming_bridge.rs"]
 mod black_market_terraforming_bridge;
+
+#[path = "integration/bio_acoustic_miasma_bridge.rs"]
+mod bio_acoustic_miasma_bridge;

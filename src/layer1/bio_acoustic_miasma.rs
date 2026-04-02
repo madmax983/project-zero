@@ -27,10 +27,8 @@ pub fn record_miasma_secret(
 ) {
     // For each pop with high stress, check if they are in a miasma cloud
     for (pop_pos, stress) in pop_query.iter() {
-        if stress.accumulated_stress > 50.0 {
-            if cloud_query.iter().any(|cloud| cloud.position == *pop_pos) {
-                secrets.secrets.push("high_stress_complaint".to_string());
-            }
+        if stress.accumulated_stress > 50.0 && cloud_query.iter().any(|cloud| cloud.position == *pop_pos) {
+            secrets.secrets.push("high_stress_complaint".to_string());
         }
     }
 }

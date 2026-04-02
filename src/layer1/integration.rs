@@ -1189,3 +1189,19 @@ pub fn diplomatic_reflection_plant_bridge(
         });
     }
 }
+
+/// INT-570: Bridges the gap between Bio-Acoustic Miasma's paranoia and the general stress system.
+/// Adds paranoia levels directly to accumulated stress, pushing Pops closer to a mental breakdown.
+pub fn paranoia_stress_bridge_system(
+    mut query: Query<(
+        &mut crate::layer1::stress::StressTracker,
+        &mut crate::layer1::bio_acoustic_miasma::ParanoiaTracker,
+    )>,
+) {
+    for (mut stress, mut paranoia) in &mut query {
+        if paranoia.level > 0 {
+            stress.accumulated_stress += paranoia.level as f32;
+            paranoia.level = 0;
+        }
+    }
+}

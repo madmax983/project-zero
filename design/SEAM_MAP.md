@@ -598,3 +598,10 @@
 - **Systems connected:** `trigger_rogue_terraforming` (Black Market Terraforming) -> `black_market_terraforming_bridge` (Integration) -> `AddChronicleEvent`
 - **Glue added:** Added `black_market_terraforming_bridge` to emit an `AddChronicleEvent` (`EventImportance::Major`) upon `RogueTerraformEvent`. Registered in `simulation.rs`.
 - **Tests:** `tests/integration/black_market_terraforming_bridge.rs`
+
+### INT-570: Bio-Acoustic Miasma Paranoia -> Stress Breakdown
+- **Date:** 2026-04-10
+- **Systems connected:** `broadcast_miasma_secrets` (Bio-Acoustic Miasma) -> `paranoia_stress_bridge_system` (Integration) -> `check_stress_breakdown_system` (Stress)
+- **Glue added:** Added `paranoia_stress_bridge_system` in `src/layer1/integration.rs` to convert `ParanoiaTracker.level` into `StressTracker.accumulated_stress`.
+- **Schedule:** Registered in `Layer1SystemSet::Observation`, chained correctly between broadcast and stress check.
+- **Tests:** `tests/integration/bio_acoustic_miasma_bridge.rs` (2 tests verified)
