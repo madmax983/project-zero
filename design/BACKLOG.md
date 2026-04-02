@@ -484,3 +484,4 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `778` Hyperlane Collapse — `specs/778-hyperlane-collapse.md`
 - [ ] `779` The Wild Child — `specs/779-the-wild-child.md`
 - [ ] `780` The Biomass Rebellion — `specs/780-the-biomass-rebellion.md`
+- [ ] `781` The Generational Fugue — `specs/781-the-generational-fugue.md`
