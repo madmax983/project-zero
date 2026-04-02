@@ -35,6 +35,7 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::ecology::biome_collapse_system,
             crate::layer1::social::grievances::decay_notes_system,
             crate::layer1::hum::update_hum_system,
+            crate::layer1::bio_acoustic_miasma::update_miasma_clouds,
         )
             .in_set(Layer1SystemSet::Environment),
     );

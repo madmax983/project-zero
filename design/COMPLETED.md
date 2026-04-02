@@ -332,3 +332,4 @@
 - [x] `777` The Void Whispers — `specs/777-the-void-whispers.md` — completed 2026-04-01
 - [x] `767` Orbital Commute — `specs/767-orbital-commute.md` — completed 2026-04-01
 - [x] `768` Dynastic Succession — `specs/768-dynastic-succession.md` — completed 2026-04-10
+- [x] `570` The Bio-Acoustic Miasma — `specs/570-the-bio-acoustic-miasma.md` — completed 2026-04-02

@@ -513,6 +513,7 @@ mod tests {
     #[test]
     fn test_run_simulation_tick_increments() {
         let mut world = setup_world();
+        world.init_resource::<crate::layer1::bio_acoustic_miasma::MiasmaRecordedSecret>();
         *world.resource_mut::<GameState>() = GameState::Running;
 
         let tick_before = world.resource::<SimulationTime>().tick;
@@ -525,6 +526,7 @@ mod tests {
     #[test]
     fn test_run_multiple_ticks() {
         let mut world = setup_world();
+        world.init_resource::<crate::layer1::bio_acoustic_miasma::MiasmaRecordedSecret>();
         *world.resource_mut::<GameState>() = GameState::Running;
 
         for _ in 0..10 {
@@ -546,6 +548,7 @@ mod tests {
 
         // Initialize Detection Risk for test
         world.init_resource::<crate::layer3::silence::DetectionRisk>();
+        world.init_resource::<crate::layer1::bio_acoustic_miasma::MiasmaRecordedSecret>();
         world.init_resource::<Events<crate::layer2::moon_hermits::PopDesertedEvent>>();
         world.init_resource::<Events<crate::layer3::silence::HostileSpawnEvent>>();
         world.init_resource::<Events<crate::layer1::grafting::GraftBuildingEvent>>();
