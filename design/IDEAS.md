@@ -13366,3 +13366,59 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Exploiting deep resources vs. managing the radical cultural shifts caused by the planet's song.
 
 ---
+
+## The Cultural Contagion
+
+**Layer:** Cross-layer (1 -> 3)
+
+**Fantasy:** A trend started by a few bored colonists spirals out of control and becomes a terrifying galactic religion.
+
+**Mechanic:** A minor, randomly generated "fad" or "quirk" (e.g., wearing a specific color, speaking in rhymes, obsessing over a rare crystal) begins among a few Pops on Layer 1. If not suppressed by administrative edicts, it spreads virally. Once enough Pops adopt it, it "Ascends" into a rigid Layer 3 Cultural Ethic, instantly overwriting your civilization's carefully planned diplomatic stance and national identity.
+
+**Emergence:** You are running a logical, hyper-efficient technocracy. A fad for "communing with the dirt" starts in a farming dome. You ignore it because agricultural output remains high. Ten years later, the fad ascends, and your entire empire suddenly pivots to extreme, anti-technology agrarian mysticism, immediately triggering a civil war with your cyborg armies and tanking your research output.
+
+**Tension:** Spending valuable admin capacity to violently suppress harmless, morale-boosting quirks vs. the risk of letting the mob organically redefine the entire empire's identity.
+
+---
+
+## The Necro-Acoustic Engine
+
+**Layer:** Cross-layer (1 -> 2)
+
+**Fantasy:** Fueling your expansion to the stars with the literal death-rattles of your failed settlements.
+
+**Mechanic:** An endgame orbital structure (Layer 2) that requires no fuel but instead runs on "Trauma Resonance" beamed up from Layer 1. The engine generates massive, free propulsion for your capital ships, but only while Pops on the surface are actively dying from violence, starvation, or disease.
+
+**Emergence:** You are locked in a desperate, losing war. You build the engine to power a last-ditch counteroffensive fleet. However, to get the fleet moving fast enough, you have to intentionally cut life support to a massive slum district in your own capital. Your fleet wins the war, powered by the agonizing suffocation of millions of your own people.
+
+**Tension:** The unparalleled military and logistical advantage of free, high-speed travel vs. the horrifying necessity of intentionally committing atrocities against your own population to keep the engines running.
+
+---
+
+## Rogue Terraforming Seeds
+
+**Layer:** Cross-layer (2 -> 1)
+
+**Fantasy:** Ancient, automated environmental pods that don't care if the planet is already inhabited; they have a job to do.
+
+**Mechanic:** Dense clusters of dormant "Terraforming Seeds" occasionally drift into your system (Layer 2). If they impact your planet (Layer 1), they immediately begin aggressively altering the local biome to match their programmed (and often alien) ideal. They overwrite terrain, spawn bizarre xenoflora, and release atmospheric gases that are highly toxic to your current Pops.
+
+**Emergence:** You settle a perfect, Earth-like world. A rogue seed impacts the southern hemisphere and begins converting the continent into an ammonia-based, crystalline hellscape. You have to desperately scramble your military to fight a literal expanding ecosystem before it replaces your biosphere, creating a brutal war against the terrain itself.
+
+**Tension:** Ignoring the seeds to save orbital defense costs (risk) vs. spending massive resources to shoot down harmless-looking pods before they can "plant" themselves on your world.
+
+---
+
+## The Debt-Bound Fleet
+
+**Layer:** Cross-layer (3 -> 2)
+
+**Fantasy:** The repo men of the galaxy don't just take your ship; they take your star system.
+
+**Mechanic:** You can take out massive, instantaneous loans of Layer 3 Credits from the mysterious "Galactic Bank" to fund sudden crises or rapid expansion. However, the interest compounds aggressively. If you default, the Bank dispatches a "Debt-Bound Fleet" to your Layer 2 system. These ships are invincible but don't shoot; instead, they attach massive kinetic tethers to your orbital infrastructure and literally tow it out of the system as payment.
+
+**Emergence:** You borrow heavily to survive a famine, intending to pay it back after the harvest. A blight destroys the harvest, and you default. The repo fleet arrives and calmly attaches tow cables to your only orbital shipyard and your primary solar array, dragging them into hyperspace and plunging your recovering colony back into the dark ages.
+
+**Tension:** The immediate, absolute salvation of infinite credit vs. the terrifying, unstoppable repossession of your civilization's physical infrastructure if your economy falters.
+
+---
