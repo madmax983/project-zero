@@ -40,30 +40,47 @@ pub struct Dead;
 #[derive(Component)]
 pub struct SuccessionCrisis;
 
+#[derive(Event, Debug, Clone)]
+pub struct SuccessionEvent {
+    pub faction_name: String,
+    pub old_leader_name: String,
+    pub new_leader_name: String,
+    pub leader_trait: Option<LeaderTrait>,
+}
+
+#[derive(Event, Debug, Clone)]
+pub struct SuccessionCrisisEvent {
+    pub faction_name: String,
+    pub old_leader_name: String,
+}
+
+
 #[allow(clippy::type_complexity)]
 pub fn process_succession_system(
     mut commands: Commands,
-    leader_query: Query<(Entity, &Age), (With<Leader>, Without<Dead>)>,
+    leader_query: Query<(Entity, &Age, &Leader), Without<Dead>>,
     mut faction_query: Query<
         (
             Entity,
             &mut CurrentLeader,
             Option<&HeirApparent>,
             Option<&SuccessionCrisis>,
+            &Faction,
         ),
-        With<Faction>,
     >,
-    heir_query: Query<&Heir>,
+    heir_query: Query<(&Heir, Option<&LeaderTrait>)>,
+    mut succession_events: EventWriter<SuccessionEvent>,
+    mut crisis_events: EventWriter<SuccessionCrisisEvent>,
 ) {
     // Reverse the iteration order to avoid nesting: Iterate over Factions first
-    for (faction_entity, mut current_leader, heir_apparent, crisis) in faction_query.iter_mut() {
+    for (faction_entity, mut current_leader, heir_apparent, crisis, faction) in faction_query.iter_mut() {
         // If they already have a crisis, we don't process them again
         if crisis.is_some() {
             continue;
         }
 
         // Check if the current leader is dead/dying
-        if let Ok((leader_entity, age)) = leader_query.get(current_leader.0) {
+        if let Ok((leader_entity, age, leader)) = leader_query.get(current_leader.0) {
             if age.current >= age.max {
                 // Leader died
                 commands.entity(leader_entity).insert(Dead);
@@ -74,17 +91,28 @@ pub fn process_succession_system(
                     current_leader.0 = heir.0;
                     commands.entity(heir.0).remove::<Heir>();
 
-                    let heir_name = if let Ok(h) = heir_query.get(heir.0) {
-                        h.name.clone()
+                    let (heir_name, leader_trait) = if let Ok((h, t)) = heir_query.get(heir.0) {
+                        (h.name.clone(), t.cloned())
                     } else {
-                        "New King".to_string()
+                        ("New King".to_string(), None)
                     };
 
-                    commands.entity(heir.0).insert(Leader { name: heir_name });
+                    commands.entity(heir.0).insert(Leader { name: heir_name.clone() });
                     commands.entity(faction_entity).remove::<HeirApparent>();
+
+                    succession_events.send(SuccessionEvent {
+                        faction_name: faction.name.clone(),
+                        old_leader_name: leader.name.clone(),
+                        new_leader_name: heir_name,
+                        leader_trait,
+                    });
                 } else {
                     // No heir, crisis
                     commands.entity(faction_entity).insert(SuccessionCrisis);
+                    crisis_events.send(SuccessionCrisisEvent {
+                        faction_name: faction.name.clone(),
+                        old_leader_name: leader.name.clone(),
+                    });
                 }
             }
         }
@@ -99,6 +127,8 @@ mod tests {
     fn test_dynastic_succession_applies_new_modifiers() {
         let mut app = App::new();
         app.add_plugins(MinimalPlugins);
+        app.add_event::<SuccessionEvent>();
+        app.add_event::<SuccessionCrisisEvent>();
         app.add_systems(Update, process_succession_system);
 
         // Current leader with a trait
@@ -164,6 +194,8 @@ mod tests {
     fn test_leader_death_without_heir_causes_crisis() {
         let mut app = App::new();
         app.add_plugins(MinimalPlugins);
+        app.add_event::<SuccessionEvent>();
+        app.add_event::<SuccessionCrisisEvent>();
         app.add_systems(Update, process_succession_system);
 
         let leader_entity = app

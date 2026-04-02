@@ -605,3 +605,9 @@
 - **Glue added:** Added `paranoia_stress_bridge_system` in `src/layer1/integration.rs` to convert `ParanoiaTracker.level` into `StressTracker.accumulated_stress`.
 - **Schedule:** Registered in `Layer1SystemSet::Observation`, chained correctly between broadcast and stress check.
 - **Tests:** `tests/integration/bio_acoustic_miasma_bridge.rs` (2 tests verified)
+
+### INT-768: Dynastic Succession -> Chronicle
+- **Date:** 2026-04-10
+- **Systems connected:** `process_succession_system` (Dynastic Succession) -> `dynastic_succession_chronicle_bridge` & `dynastic_crisis_chronicle_bridge` (Integration) -> `AddChronicleEvent`
+- **Glue added:** Added `SuccessionEvent` and `SuccessionCrisisEvent`. Created bridge systems in `src/layer3/integration.rs`.
+- **Tests:** `tests/integration/dynastic_succession_bridge.rs`
