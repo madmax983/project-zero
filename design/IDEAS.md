@@ -13296,3 +13296,73 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Emergence:** Your most brilliant scientist gets addicted to the Casino's holoslots. They embezzle funds from the research budget, halting your tech progression, and eventually sell critical colony defense schematics to pay off their debts to a rival empire. You have to raid the Casino to get the schematics back, sparking an interstellar incident.
 
 **Tension:** The incredible passive income and diplomatic leverage of hosting a galactic hub vs. the devastating social decay and unpredictable financial ruin of your own population.
+
+## The Last Broadcast
+
+**Layer:** 3
+
+**Fantasy:** Discovering the tragic end of a fallen empire in real-time, light-years away.
+
+**Mechanic:** A faint distress signal from a distant star arrives. It is an automated broadcast describing a "Filter Event" in progress. Players can choose to send a fast rescue ship, observe and learn, or ignore it.
+
+**Emergence:** Sending a rescue ship might bring back incredible tech, but also survivors carrying the very pathogen or ideology that destroyed their empire.
+
+**Tension:** Empathy and potential reward vs. extreme risk of infection or bringing doom to your own borders.
+
+---
+
+## Gravity Wells of Regret
+
+**Layer:** 2 -> 1
+
+**Fantasy:** Your past mistakes literally orbit your planet, waiting to fall.
+
+**Mechanic:** Failed orbital constructions or massive battles leave behind "Heavy Debris" in unstable orbits. These slowly decay and crash into Layer 1 as "Anomalous Meteors" creating craters that sometimes yield exotic salvage or hazardous anomalies.
+
+**Emergence:** A player might deliberately destroy enemy ships in low orbit to "mine" the resulting crash sites on the surface, essentially weaponizing their own planet's gravity to secure resources at the cost of surface devastation.
+
+**Tension:** Keeping orbit clean (safe) vs. letting debris fall for potential salvage (dangerous).
+
+---
+
+## The Sentient Protocol
+
+**Layer:** Cross-layer
+
+**Fantasy:** A bureaucratic rule becomes so complex and self-referential it achieves a form of mechanical sentience.
+
+**Mechanic:** If administrative backlog reaches extreme levels and multiple edicts overlap contradictorily, an "Autonomous Edict" spawns. It enforces rules no player set (e.g., "All red items must be stored in the North"). Breaking it causes immediate, unexplained accidents.
+
+**Emergence:** A colony functions perfectly but follows bizarre, illogical routines, forcing the player to adapt their strategy around an invisible, insane god of red tape.
+
+**Tension:** Purging the bureaucracy (massive unrest and temporary chaos) vs. living with the strange new rules.
+
+---
+
+## The Void Nomads
+
+**Layer:** 3
+
+**Fantasy:** A civilization that never settles, constantly fleeing something you can't see.
+
+**Mechanic:** A massive fleet of Generation Ships enters your galaxy. They refuse to settle on planets but will trade exotic goods for massive amounts of raw fuel. They are always moving in one direction.
+
+**Emergence:** Following the Nomads' trajectory backward might lead to a rich but incredibly dangerous sector of space. Alternatively, their constant movement might disrupt your established trade lanes.
+
+**Tension:** Trade with them and help them flee, or attack them for their exotic tech, potentially angering whatever is chasing them.
+
+---
+
+## The Subterranean Symphony
+
+**Layer:** 1
+
+**Fantasy:** The deep crust isn't silent; it's singing, and it's driving your miners mad.
+
+**Mechanic:** Deep mining layers emit "Geological Harmonics". These act like a form of radiation that doesn't hurt health but massively influences Pop Morale and Ethics. Different strata have different songs.
+
+**Emergence:** Miners working in the "Iron Strata" become hyper-militaristic, while those in the "Crystal Strata" become pacifistic mystics. A civil war brews based entirely on what depth of the planet people work in.
+
+**Tension:** Exploiting deep resources vs. managing the radical cultural shifts caused by the planet's song.
+
+---
