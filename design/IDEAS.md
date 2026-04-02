@@ -12782,7 +12782,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Biomass Rebellion
+## The Biomass Rebellion [SPECCED]
 
 **Layer:** 1
 
