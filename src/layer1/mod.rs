@@ -420,8 +420,8 @@ pub use scrapcode::*;
 /// Bio-Acoustic Chorus (Spec 419).
 pub mod bio_acoustic;
 pub mod bio_acoustic_miasma;
-pub use bio_acoustic_miasma::*;
 pub use bio_acoustic::*;
+pub use bio_acoustic_miasma::*;
 
 /// Chemical regulation system (Spec 181).
 pub mod chemical;

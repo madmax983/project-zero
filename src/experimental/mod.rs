@@ -51,6 +51,8 @@ pub mod paranoia_network;
 pub mod dream_economy;
 
 #[cfg(feature = "nova")]
+pub mod bureaucratic_martyrdom;
+#[cfg(feature = "nova")]
 pub mod fever_pitch;
 #[cfg(feature = "nova")]
 pub mod meme_plague;
@@ -58,5 +60,3 @@ pub mod meme_plague;
 pub mod phantom_workforce;
 #[cfg(feature = "nova")]
 pub mod sleep_deprived_savant;
-#[cfg(feature = "nova")]
-pub mod bureaucratic_martyrdom;
