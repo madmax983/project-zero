@@ -96,3 +96,8 @@
 **Concept:** A system that introduces contagious ideas (`WorkCult`, `DanceMeme`, `ParanoiaMeme`) that spread physically between adjacent Pops, heavily overriding their `Needs` and `StressTracker` until the meme decays.
 **Fate:** Merged
 **Lesson:** Introducing a psychological contagion adds an unpredictable spatial element to base management, forcing players to physically separate pops to quarantine ideas rather than just managing global values.
+
+## [Bureaucratic Martyrdom]
+**Concept:** A system that monitors administrative backlog via `AdminBacklog`. When the backlog gets critical, Pops assigned as `Administrator` with the `HardWorker` trait can enter a `Martyrdom` state. They receive a 500% speed boost but continuously drain health until they die, at which point they dispatch an `AddChronicleEvent` marking a 'Golden Age' for their sacrifice.
+**Fate:** Merged
+**Lesson:** Tying extreme abstract logistical pressure directly to individual entity sacrifice creates narrative weight. Forcing a systemic override that physically damages a Pop to solve an administrative crisis forces players to weigh efficiency against human life.

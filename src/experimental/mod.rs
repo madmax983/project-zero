@@ -58,3 +58,5 @@ pub mod meme_plague;
 pub mod phantom_workforce;
 #[cfg(feature = "nova")]
 pub mod sleep_deprived_savant;
+#[cfg(feature = "nova")]
+pub mod bureaucratic_martyrdom;
