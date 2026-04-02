@@ -12,10 +12,10 @@
 
 use crate::layer1::biology::health::Health;
 use crate::layer1::chronicle::AddChronicleEvent;
-use crate::layer1::pop::Speed;
 use crate::layer1::entities::pop::{Job, Pop, PopName};
-use crate::layer1::traits::{Trait, Traits};
 use crate::layer1::mind::utility_types::AssignmentType;
+use crate::layer1::pop::Speed;
+use crate::layer1::traits::{Trait, Traits};
 use bevy_ecs::prelude::*;
 
 /// A resource representing the current administrative backlog of the colony.
@@ -53,7 +53,16 @@ pub fn trigger_martyrdom_system(
 
 /// System that processes the effects of Martyrdom: massive speed boost and health drain.
 pub fn process_martyrdom_system(
-    mut pops: Query<(Entity, &mut Speed, &mut Health, Option<&PopName>, &Martyrdom), With<Pop>>,
+    mut pops: Query<
+        (
+            Entity,
+            &mut Speed,
+            &mut Health,
+            Option<&PopName>,
+            &Martyrdom,
+        ),
+        With<Pop>,
+    >,
     mut chronicle_events: EventWriter<AddChronicleEvent>,
 ) {
     for (_entity, mut speed, mut health, name, martyrdom) in pops.iter_mut() {
@@ -77,7 +86,10 @@ pub fn process_martyrdom_system(
 }
 
 pub fn register(schedule: &mut Schedule) {
-    schedule.add_systems((trigger_martyrdom_system, process_martyrdom_system.after(trigger_martyrdom_system)));
+    schedule.add_systems((
+        trigger_martyrdom_system,
+        process_martyrdom_system.after(trigger_martyrdom_system),
+    ));
 }
 
 #[cfg(test)]
@@ -99,14 +111,26 @@ mod tests {
         let mut traits = Traits::default();
         traits.add(Trait::HardWorker);
 
-        let pop = world.spawn((
-            Pop,
-            Job { workplace: Entity::PLACEHOLDER, job_type: AssignmentType::Administrator },
-            traits,
-            Speed { base: 1.0, current: 1.0, accumulator: 0.0 },
-            Health { current: 5.0, max: 100.0 },
-            PopName("Bob".to_string()),
-        )).id();
+        let pop = world
+            .spawn((
+                Pop,
+                Job {
+                    workplace: Entity::PLACEHOLDER,
+                    job_type: AssignmentType::Administrator,
+                },
+                traits,
+                Speed {
+                    base: 1.0,
+                    current: 1.0,
+                    accumulator: 0.0,
+                },
+                Health {
+                    current: 5.0,
+                    max: 100.0,
+                },
+                PopName("Bob".to_string()),
+            ))
+            .id();
 
         // 1. Trigger
         world.run_system_once(trigger_martyrdom_system).unwrap();

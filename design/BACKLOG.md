@@ -482,3 +482,4 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `760` Command Center Dependency — `specs/760-command-center-dependency.md`
 - [ ] `761` The Nostalgia Black Market — `specs/761-the-nostalgia-black-market.md`
 - [ ] `778` Hyperlane Collapse — `specs/778-hyperlane-collapse.md`
+- [ ] `779` The Wild Child — `specs/779-the-wild-child.md`

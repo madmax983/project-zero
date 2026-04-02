@@ -2860,7 +2860,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Wild Child
+## The Wild Child [SPECCED]
 
 **Layer:** 1
 
