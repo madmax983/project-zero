@@ -1,0 +1,85 @@
+specs/218-improvised-tools.md: *Builder: Should "Scrap" be better than "Stone"?*
+specs/257-subspace-pen-pals.md: *Builder: Can I date a Hive Mind?*
+specs/254-doppelgangers.md: - *Builder: How does the Mimic spawn?*
+specs/146-command-center.md: -   *Builder: Should multiple Command Centers provide redundancy?*
+specs/146-command-center.md: -   *Builder: Does the Command Center need to be staffed?*
+specs/083-building-shifts.md: - *Builder: Should `Dawn` and `Dusk` be configurable separately?*
+specs/083-building-shifts.md: - *Builder: Does this apply to Construction tasks?*
+specs/135-trash-cannon-defense.md: *Builder: How much waste creates a "mess"?*
+specs/205-auroral-harvesting.md: - *Builder: Should the collector take damage during the storm?*
+specs/179-magnetic-storms.md: - *Builder: Should Magnetic Storm affect Battery discharge rate?*
+specs/117-fuel-consumption.md: - *Builder: How much fuel does a generator consume?*
+specs/723-derelict-lottery.md: - *Builder: Can players scrap the derelict in orbit for a minor, safe yield instead of towing it down?*
+specs/723-derelict-lottery.md: - *Builder: What determines the scan accuracy? Can high-tech sensors reveal exactly what is inside?*
+specs/252-tectonic-stress.md: *Builder: Does digging a hole reduce stress?*
+specs/137-pop-hobbies.md: *Builder: How do we handle "Gossip" hobby mechanically?*
+specs/258-acoustic-shadows.md: *Builder: Does glass block sound?*
+specs/244-biometric-drift.md: *Builder: Does drift affect non-security interactions?*
+specs/126-blackout-protocol.md: *Builder: Should Blackout disable Batteries too?*
+specs/245-quantum-twins.md: *Builder: Can twins be separated by Layer?*
+specs/169-subspace-currents.md: - *Builder: Should currents drift over time?*
+specs/151-cybernetic-augmentation.md: *Builder: Should surgery require a Doctor pop to be present?*
+specs/049-industrial-waste.md: *Builder: Should Waste decay naturally?*
+specs/112-maintenance-debt.md: - *Builder: Does `DeferMaintenance` stop manual repairs?*
+specs/062-pop-lifecycle.md: *Builder: How fast should a "year" be?*
+specs/241-campaign-season.md: - *Builder: What happens if there are no factions?*
+specs/206-orbital-crossfire.md: *Builder: Should impact destroy Pops?*
+specs/125-grid-instability.md: *Builder: How to visualize Overload?*
+specs/156-xeno-artifacts.md: -   *Builder: Do artifacts block movement?*
+specs/156-xeno-artifacts.md: -   *Builder: Can we move artifacts?*
+specs/240-clone-vats.md: - *Builder: Should clones be born as adults?*
+specs/240-clone-vats.md: - *Builder: Do they have parents?*
+specs/013-schedule-system-ordering.md:         let schedule = ScheduleBuilder::new().build();
+specs/013-schedule-system-ordering.md:         let schedule = ScheduleBuilder::new()
+specs/013-schedule-system-ordering.md:         let schedule = ScheduleBuilder::new()
+specs/013-schedule-system-ordering.md:         let schedule = ScheduleBuilder::new()
+specs/013-schedule-system-ordering.md:         let schedule = ScheduleBuilder::new()
+specs/013-schedule-system-ordering.md: - ScheduleBuilder: system registration, stage ordering
+specs/013-schedule-system-ordering.md:     let mut builder = ScheduleBuilder::new();
+specs/255-hypno-learning.md: - *Builder: Does the pod require power?*
+specs/255-hypno-learning.md: - *Builder: Can children use it?*
+specs/166-xeno-gastronomy.md: - *Builder: Should "Mystery Meals" stack?*
+specs/248-infinite-archive.md: - *Builder: Does deleting a prerequisite tech lock the advanced tech?*
+specs/220-hygiene-squalor.md: - *Builder: Should Showers require Power?*
+specs/220-hygiene-squalor.md: - *Builder: Does Filth affect Room Quality?*
+specs/722-gravity-slingshots.md: - *Builder: How long does the momentum last? Just one tick/movement order?*
+specs/722-gravity-slingshots.md: - *Builder: Should gravity wells have varying "bands" of strength?*
+specs/460-the-bureau-of-redundancy.md:         let mut schedule = ScheduleBuilder::new().build();
+specs/023-refining-industry.md: *Builder: Should the "10 tile range" be a constant shared with Mining?*
+specs/181-chemical-regulation.md: *Builder: Should withdrawal kill the pop or just incapacitate them?*
+specs/181-chemical-regulation.md: *Builder: Do we need a dedicated "Chemical Plant" building or just use "Lab"?*
+specs/452-event-horizon-tap.md: - *Builder:* How does the tap connect to Layer 2?
+specs/452-event-horizon-tap.md: - *Builder:* Does time dilation affect aging/hunger?
+specs/061-cultural-artifacts.md: *Builder: Should Art also emit Beauty?*
+specs/147-secret-societies.md: -   *Builder: Should societies compete with each other?*
+specs/147-secret-societies.md: -   *Builder: Can a Pop belong to multiple societies?*
+specs/721-maintenance-debt.md: - *Builder: Should deferred maintenance lower building output efficiency?*
+specs/721-maintenance-debt.md: - *Builder: How fast should debt accumulate relative to standard simulation ticks?*
+specs/242-the-echo.md: - *Builder: Should Echoes block movement?*
+specs/242-the-echo.md: - *Builder: Can we harvest Echoes?*
+specs/691-the-exile.md: // Builder: Implement `BanishmentState`, `ExiledPop`, and `Crime` components.
+specs/691-the-exile.md: // Builder: Implement `process_banishments` system to remove `Pop` component and insert `ExiledPop`.
+specs/691-the-exile.md: // Builder: Implement `evaluate_exile_returns` system to check `SimulationTime` against `exiled_at_tick`.
+specs/184-orbital-debris.md: - *Builder: Should debris eventually form a ring system if it gets high enough?*
+specs/184-orbital-debris.md: - *Builder: Does debris affect incoming trade ships?*
+specs/211-gut-biome.md: - *Builder: Should "Synthetic" (Rations) cause decay of natural biomes?*
+specs/246-legacy-code.md: *Builder: Does bloat affect life support?*
+specs/215-safehouse-contracts.md: - *Builder: Should Agents have specific needs (Luxury food)?*
+specs/215-safehouse-contracts.md: - *Builder: Can we hold multiple agents in one zone?*
+specs/264-hyper-specialized-evolution.md: *Builder: Should tenure degrade if they stop working the job?*
+specs/159-fleet-combat.md: - *Builder: How do I calculate loot?*
+specs/157-ship-classes.md: -   *Builder: Do ships have individual fuel?*
+specs/157-ship-classes.md: -   *Builder: Can I split a fleet?*
+specs/103-private-stashes.md: - *Builder: Should pops consume their stash?*
+specs/103-private-stashes.md: - *Builder: Does this affect "Total" counts in UI?*
+specs/265-shadow-ecosystems.md: *Builder: Do they move?*
+specs/106-resource-purity.md: *Builder: Should Purity also affect the amount of Stone?*
+specs/247-ghost-code.md: - *Builder: Does residue stack?*
+specs/720-atmospheric-harvesting.md: - *Builder: Should the damage scale randomly to add unpredictability (e.g., storms are variable)?*
+specs/720-atmospheric-harvesting.md: - *Builder: Should there be a cooldown on harvesting the same atmosphere?*
+specs/253-cultural-vandalism.md: *Builder: Does vandalism destroy the building?*
+specs/219-space-barnacles.md: - *Builder: Should barnacles fall off if the fleet moves fast enough?*
+specs/251-the-empty-room.md: *Builder: Does a person standing in the room count as "not empty"?*
+specs/165-gene-banks.md: - *Builder: Should we allow cloning of Pops?*
+specs/256-placebo-protocols.md: *Builder: Can you stack placebos?*
+specs/227-corrosive-atmosphere.md: - *Builder: Does corrosion affect units (Pops)?*
