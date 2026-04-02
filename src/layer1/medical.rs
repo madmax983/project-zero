@@ -1,3 +1,22 @@
+//! # Medical Triage and Healing
+//!
+//! This module manages the recovery of [`crate::layer1::health::Health`] and the treatment of specific
+//! afflictions like [`CryoTrauma`] and [`RadiationSickness`].
+//!
+//! ## The Hospital System
+//!
+//! Pops injured in the simulation do not heal automatically. They must be assigned
+//! as `Patient`s to a [`Hospital`] building. The `healing_system` processes these
+//! assignments and restores health based on the hospital's capacity and the
+//! global [`MedicalPolicy`].
+//!
+//! ## Triage
+//!
+//! Healing capacity is finite. When a hospital reaches its `max_healing_per_tick`,
+//! the [`MedicalPolicy`] dictates who gets treated first (e.g., critical patients,
+//! or productive workers). Specific afflictions (like [`CryoTrauma`]) consume
+//! significantly more healing capacity than standard damage.
+
 #![allow(clippy::too_many_lines, clippy::type_complexity, clippy::doc_markdown)]
 use crate::layer1::actions::{AssignedTo, AssignmentType};
 use crate::layer1::cryo_dreams::CryoTrauma;
@@ -6,6 +25,16 @@ use crate::layer1::radioactive::RadiationSickness;
 use bevy_ecs::prelude::*;
 
 /// Policy controlling how medical treatment is prioritized.
+///
+/// # Examples
+///
+/// ```
+/// use scale::layer1::medical::MedicalPolicy;
+///
+/// // The default policy treats everyone equally in order of arrival
+/// let policy = MedicalPolicy::default();
+/// assert_eq!(policy, MedicalPolicy::SaveEveryone);
+/// ```
 #[derive(Resource, Default, Debug, PartialEq, Eq, Copy, Clone)]
 pub enum MedicalPolicy {
     /// Treat everyone equally (FIFO or random).
@@ -18,6 +47,19 @@ pub enum MedicalPolicy {
 }
 
 /// Event emitted when a patient is treated.
+///
+/// # Examples
+///
+/// ```
+/// use scale::layer1::medical::PatientTreated;
+/// use bevy_ecs::prelude::Entity;
+///
+/// let event = PatientTreated {
+///     patient: Entity::PLACEHOLDER,
+///     hospital: Entity::PLACEHOLDER,
+///     amount: 15.0,
+/// };
+/// ```
 #[derive(Event, Debug, Clone)]
 pub struct PatientTreated {
     /// The patient being healed.
@@ -29,6 +71,18 @@ pub struct PatientTreated {
 }
 
 /// Component indicating a building is a hospital that can heal patients.
+///
+/// # Examples
+///
+/// ```
+/// use scale::layer1::medical::Hospital;
+///
+/// // Create a custom hospital that heals slowly but can treat many patients
+/// let hospital = Hospital {
+///     healing_rate: 0.1,
+///     max_healing_per_tick: 20.0,
+/// };
+/// ```
 #[derive(Component)]
 pub struct Hospital {
     /// The amount of health restored per tick to patients.
