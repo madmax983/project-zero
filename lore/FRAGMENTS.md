@@ -5014,6 +5014,24 @@ How the dumped criminal pops are described.
 
 ## The Cartographer's Curse Fragments
 
+### Fragment Type: [STRIKE_PRECISION]
+- dead center
+- perfectly on target
+- threading the needle
+- avoiding every automated defense
+- without a single course correction
+- ignoring the atmospheric scatter
+- exactly where we were weakest
+
+### Fragment Type: [STRIKE_REACTION]
+- they knew exactly where to hit
+- there was no warning
+- the maps we sold brought them to our door
+- our own telemetry betrayed us
+- they bypassed the radar completely
+- we had no time to raise the shields
+- the curse of the open map falls upon us
+
 ### Fragment Type: [SOLD_DATA]
 - precise orbital telemetry
 - hyperspace lane harmonics
