@@ -3,16 +3,35 @@ use crate::layer1::terrain::{TerrainGrid, TerrainType};
 use bevy_ecs::prelude::*;
 use image::{ImageBuffer, Rgb};
 
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct ExportPath(String);
+
+impl ExportPath {
+    pub fn new(path: &str) -> Result<Self, String> {
+        if path.contains('/') || path.contains('\\') || path.contains("..") {
+            return Err("Invalid characters in export path. Path traversal is not allowed.".to_string());
+        }
+        if !path.chars().all(|c| c.is_alphanumeric() || c == '.' || c == '-' || c == '_') {
+             return Err("Invalid characters in export path. Only alphanumeric characters, dots, dashes, and underscores are allowed.".to_string());
+        }
+        Ok(Self(path.to_string()))
+    }
+
+    pub fn as_str(&self) -> &str {
+        &self.0
+    }
+}
+
 #[derive(Resource)]
 pub struct CartographyExportConfig {
-    pub export_path: String,
+    pub export_path: ExportPath,
     pub trigger_export: bool,
 }
 
 impl Default for CartographyExportConfig {
     fn default() -> Self {
         Self {
-            export_path: "colony_map.png".to_string(),
+            export_path: ExportPath::new("colony_map.png").expect("Default path is valid"),
             trigger_export: false,
         }
     }
@@ -73,10 +92,10 @@ pub fn map_export_system(
         }
     }
 
-    if let Err(e) = img.save(&config.export_path) {
-        log::error!("Failed to export map to {}: {}", config.export_path, e);
+    if let Err(e) = img.save(config.export_path.as_str()) {
+        log::error!("Failed to export map to {}: {}", config.export_path.as_str(), e);
     } else {
-        log::info!("Successfully exported map to {}", config.export_path);
+        log::info!("Successfully exported map to {}", config.export_path.as_str());
     }
 
     config.trigger_export = false;
@@ -87,10 +106,21 @@ mod tests {
     use super::*;
 
     #[test]
+    fn test_export_path_validation() {
+        assert!(ExportPath::new("valid_map.png").is_ok());
+        assert!(ExportPath::new("map-2023.png").is_ok());
+
+        assert!(ExportPath::new("../map.png").is_err());
+        assert!(ExportPath::new("dir/map.png").is_err());
+        assert!(ExportPath::new("C:\\map.png").is_err());
+        assert!(ExportPath::new("map*.png").is_err());
+    }
+
+    #[test]
     fn test_map_export_system() {
         let mut world = World::new();
         world.insert_resource(CartographyExportConfig {
-            export_path: "test_export.png".to_string(),
+            export_path: ExportPath::new("test_export.png").unwrap(),
             trigger_export: true,
         });
 
