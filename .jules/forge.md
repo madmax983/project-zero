@@ -32,3 +32,6 @@
 **[God Functions in UI Rendering and GPU Extraction]**
 **Learning:** `build_map_layer_spans` in `src/ui/map.rs` and `extract_building_inputs` in `src/gpu/buffers.rs` had grown into massive God Functions (>150 and >200 lines). They handled iterating over large game states and doing multiple steps in a single sequence of code, causing deep pyramids of logic and poor readability.
 **Action:** Extracted rendering specific parts (e.g. `render_build_mode_cursor`, `render_cached_entity`) and specific buffer extraction logic (e.g. `extract_farms`, `extract_designations`) into private helper functions. This flattens the conditionals and transforms the functions into clear, declarative pipelines.
+**[God Functions in UI Rendering: Colony Stats]**
+**Learning:** `render_colony_stats` in `src/ui/inspector.rs` had grown into a massive God Function (>250 lines). It handled rendering four distinct UI modules (Status, Survival, Industry, Economy) in a single sequence of code, causing poor readability and triggering the clippy::too_many_lines warning.
+**Action:** Extracted the rendering for each specific module into private helper functions (e.g., `render_status_module`, `render_survival_module`). This flattened the layout logic and transformed the parent function into a clear, declarative pipeline, allowing the removal of the clippy allow attribute.

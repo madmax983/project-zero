@@ -131,7 +131,6 @@ fn get_resource_color(current: f32, max: f32, inverse: bool) -> Color {
     }
 }
 
-#[allow(clippy::too_many_lines)]
 fn render_colony_stats(frame: &mut Frame, area: Rect, world: &World) {
     let resources = world.resource::<ColonyResources>();
 
@@ -171,7 +170,27 @@ fn render_colony_stats(frame: &mut Frame, area: Rect, world: &World) {
         ])
         .split(area);
 
-    // --- 1. Status Module ---
+    render_status_module(
+        frame,
+        chunks[0],
+        pop_count,
+        avg_morale,
+        housing_used,
+        housing_capacity,
+    );
+    render_survival_module(frame, chunks[1], resources);
+    render_industry_module(frame, chunks[2], resources);
+    render_economy_module(frame, chunks[3], resources, world);
+}
+
+fn render_status_module(
+    frame: &mut Frame,
+    area: Rect,
+    pop_count: usize,
+    avg_morale: f32,
+    housing_used: usize,
+    housing_capacity: usize,
+) {
     let morale_color = if avg_morale > 0.7 {
         Color::Green
     } else if avg_morale > 0.4 {
@@ -207,9 +226,10 @@ fn render_colony_stats(frame: &mut Frame, area: Rect, world: &World) {
             .border_type(BorderType::Rounded)
             .border_style(Style::default().fg(Color::Cyan)),
     );
-    frame.render_widget(status_table, chunks[0]);
+    frame.render_widget(status_table, area);
+}
 
-    // --- 2. Survival Module ---
+fn render_survival_module(frame: &mut Frame, area: Rect, resources: &ColonyResources) {
     let survival_rows = vec![
         Row::new(vec![
             Cell::from("🍖 Food").style(Style::default().fg(Color::Green)),
@@ -267,9 +287,10 @@ fn render_colony_stats(frame: &mut Frame, area: Rect, world: &World) {
             .border_type(BorderType::Rounded)
             .border_style(Style::default().fg(Color::Green)),
     );
-    frame.render_widget(survival_table, chunks[1]);
+    frame.render_widget(survival_table, area);
+}
 
-    // --- 3. Construction & Industry Module ---
+fn render_industry_module(frame: &mut Frame, area: Rect, resources: &ColonyResources) {
     let industry_rows = vec![
         Row::new(vec![
             Cell::from("🌲 Wood").style(Style::default().fg(Color::White)),
@@ -324,9 +345,15 @@ fn render_colony_stats(frame: &mut Frame, area: Rect, world: &World) {
             .border_type(BorderType::Rounded)
             .border_style(Style::default().fg(Color::Gray)),
     );
-    frame.render_widget(industry_table, chunks[2]);
+    frame.render_widget(industry_table, area);
+}
 
-    // --- 4. Economy & Science Module ---
+fn render_economy_module(
+    frame: &mut Frame,
+    area: Rect,
+    resources: &ColonyResources,
+    world: &World,
+) {
     let economy_rows = vec![
         Row::new(vec![
             Cell::from("🔬 Tech").style(Style::default().fg(Color::Magenta)),
@@ -390,7 +417,7 @@ fn render_colony_stats(frame: &mut Frame, area: Rect, world: &World) {
             .border_type(BorderType::Rounded)
             .border_style(Style::default().fg(Color::Magenta)),
     );
-    frame.render_widget(economy_table, chunks[3]);
+    frame.render_widget(economy_table, area);
 }
 
 #[allow(clippy::too_many_lines)]
