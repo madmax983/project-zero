@@ -66,6 +66,7 @@ pub fn register(schedule: &mut Schedule) {
             update_event_buffer::<crate::layer3::market::quantum_famine::MarketPanicEvent>,
             update_event_buffer::<crate::layer3::market::quantum_famine::ExportDumpEvent>,
             update_event_buffer::<crate::layer2::exploration::void_whispers::FleetReturnedEvent>,
+            update_event_buffer::<crate::layer1::agony_extract::HarvestAgonyExtractEvent>,
         )
             .in_set(Layer1SystemSet::EventCleanup),
     );

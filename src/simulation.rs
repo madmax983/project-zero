@@ -380,6 +380,12 @@ pub fn run_simulation_tick(world: &mut World) {
         world.init_resource::<Events<crate::layer2::tourism::disaster_tourism::GriefTouristArrivalEvent>>();
     }
 
+    if !world.contains_resource::<Events<crate::layer1::agony_extract::HarvestAgonyExtractEvent>>()
+    {
+        world.init_resource::<Events<crate::layer1::agony_extract::HarvestAgonyExtractEvent>>();
+        world.init_resource::<crate::layer1::agony_extract::AgonyExtractConfig>();
+    }
+
     if !world.contains_resource::<Events<crate::layer2::moon_hermits::PopDesertedEvent>>() {
         world.init_resource::<Events<crate::layer2::moon_hermits::PopDesertedEvent>>();
     }
@@ -591,6 +597,8 @@ mod tests {
         world.init_resource::<Events<crate::layer2::governance::RebellionEvent>>();
         world.init_resource::<Events<crate::layer1::disasters::DisasterEvent>>();
         world.init_resource::<Events<crate::layer2::tourism::disaster_tourism::GriefTouristArrivalEvent>>();
+        world.init_resource::<Events<crate::layer1::agony_extract::HarvestAgonyExtractEvent>>();
+        world.init_resource::<crate::layer1::agony_extract::AgonyExtractConfig>();
         world.init_resource::<Events<crate::layer2::trade::biomass_tariff::TradeDeal>>();
         world.init_resource::<Events<crate::layer1::geodetic::GolemFormedEvent>>();
         world.init_resource::<crate::layer3::council::GalacticCouncil>();

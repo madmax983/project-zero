@@ -149,6 +149,8 @@ pub enum ItemType {
     LivingStone,
     /// Scrap metal recovered from clutter.
     Scrap,
+    /// Agony Extract harvested under extreme stress.
+    AgonyExtract,
 }
 
 impl ItemType {
@@ -175,6 +177,7 @@ impl ItemType {
             Self::Rations => Some(ResourceType::Rations),
             Self::Waste => Some(ResourceType::Waste),
             Self::BuildingPermit => Some(ResourceType::BuildingPermit),
+            Self::AgonyExtract => None,
             _ => None,
         }
     }
