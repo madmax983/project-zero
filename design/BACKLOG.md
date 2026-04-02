@@ -482,3 +482,4 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `759` Salvage Rights — `specs/759-salvage-rights.md`
 - [ ] `760` Command Center Dependency — `specs/760-command-center-dependency.md`
 - [ ] `761` The Nostalgia Black Market — `specs/761-the-nostalgia-black-market.md`
+- [ ] `778` Hyperlane Collapse — `specs/778-hyperlane-collapse.md`

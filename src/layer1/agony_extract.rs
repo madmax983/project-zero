@@ -63,11 +63,10 @@ mod tests {
             .spawn((
                 Morale {
                     value: 80.0,
-                    ..default()
+                    modifiers: Vec::new(),
                 },
                 StressTracker {
                     accumulated_stress: 10.0,
-                    ..default()
                 },
                 Inventory::default(),
             ))
@@ -78,11 +77,10 @@ mod tests {
             .spawn((
                 Morale {
                     value: 10.0,
-                    ..default()
+                    modifiers: Vec::new(),
                 },
                 StressTracker {
                     accumulated_stress: 90.0,
-                    ..default()
                 },
                 Inventory::default(),
             ))
