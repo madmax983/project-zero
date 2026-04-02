@@ -9,10 +9,15 @@ pub struct ExportPath(String);
 impl ExportPath {
     pub fn new(path: &str) -> Result<Self, String> {
         if path.contains('/') || path.contains('\\') || path.contains("..") {
-            return Err("Invalid characters in export path. Path traversal is not allowed.".to_string());
+            return Err(
+                "Invalid characters in export path. Path traversal is not allowed.".to_string(),
+            );
         }
-        if !path.chars().all(|c| c.is_alphanumeric() || c == '.' || c == '-' || c == '_') {
-             return Err("Invalid characters in export path. Only alphanumeric characters, dots, dashes, and underscores are allowed.".to_string());
+        if !path
+            .chars()
+            .all(|c| c.is_alphanumeric() || c == '.' || c == '-' || c == '_')
+        {
+            return Err("Invalid characters in export path. Only alphanumeric characters, dots, dashes, and underscores are allowed.".to_string());
         }
         Ok(Self(path.to_string()))
     }
@@ -93,9 +98,16 @@ pub fn map_export_system(
     }
 
     if let Err(e) = img.save(config.export_path.as_str()) {
-        log::error!("Failed to export map to {}: {}", config.export_path.as_str(), e);
+        log::error!(
+            "Failed to export map to {}: {}",
+            config.export_path.as_str(),
+            e
+        );
     } else {
-        log::info!("Successfully exported map to {}", config.export_path.as_str());
+        log::info!(
+            "Successfully exported map to {}",
+            config.export_path.as_str()
+        );
     }
 
     config.trigger_export = false;
