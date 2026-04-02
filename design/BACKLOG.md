@@ -483,3 +483,4 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `761` The Nostalgia Black Market — `specs/761-the-nostalgia-black-market.md`
 - [ ] `778` Hyperlane Collapse — `specs/778-hyperlane-collapse.md`
 - [ ] `779` The Wild Child — `specs/779-the-wild-child.md`
+- [ ] `780` The Biomass Rebellion — `specs/780-the-biomass-rebellion.md`
