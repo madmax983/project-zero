@@ -55,12 +55,15 @@ pub fn process_ignition(
 
         while let Some(current_pos) = queue.pop_front() {
             // Trigger explosion
-            let (entity, concentration) = vapor_map.get(&current_pos).unwrap();
-            explosions.send(ExplosionEvent {
-                position: current_pos,
-                damage: *concentration * 5.0, // Arbitrary scaling
-            });
-            commands.entity(*entity).despawn(); // Consume vapor
+            if let Some((entity, concentration)) = vapor_map.remove(&current_pos) {
+                explosions.send(ExplosionEvent {
+                    position: current_pos,
+                    damage: concentration * 5.0, // Arbitrary scaling
+                });
+                commands.entity(entity).despawn(); // Consume vapor
+            } else {
+                continue;
+            }
 
             // Check adjacent cells
             let adjacent = [
@@ -193,6 +196,45 @@ mod tests {
         assert!(
             !explosion_positions.contains(&pos3),
             "Isolated vapor should not ignite"
+        );
+    }
+
+    #[test]
+    fn test_multiple_sparks_do_not_panic() {
+        // Arrange
+        let mut app = App::new();
+        app.add_event::<SparkEvent>();
+        app.add_event::<ExplosionEvent>();
+        app.add_systems(Update, process_ignition);
+
+        let pos1 = GridPosition { x: 5, y: 5 };
+
+        // Spawn a single vapor source
+        app.world_mut().spawn((
+            pos1,
+            VolatileVapor {
+                concentration: 10.0,
+            },
+        ));
+
+        // Act: Send multiple sparks to the exact same position in the same frame.
+        // The first spark will consume the vapor in the flood-fill queue.
+        // The second spark will attempt to process it again if not handled correctly.
+        app.world_mut().send_event(SparkEvent { position: pos1 });
+        app.world_mut().send_event(SparkEvent { position: pos1 });
+
+        // This should not panic
+        app.update();
+
+        // Assert
+        let explosion_events = app.world().resource::<Events<ExplosionEvent>>();
+        let mut reader = explosion_events.get_cursor();
+        let explosions: Vec<_> = reader.read(explosion_events).collect();
+
+        assert_eq!(
+            explosions.len(),
+            1,
+            "Only one explosion should occur since the vapor is consumed"
         );
     }
 }

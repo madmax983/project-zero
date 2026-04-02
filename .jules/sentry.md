@@ -29,3 +29,6 @@
 **[Refactoring Test Panics]**
 **Learning:** Legacy tests often use `unwrap()` on `World::run_system_once` or `World::get::<T>()` calls, leading to opaque "called `Result::unwrap()` on an `Err` value" or "Option::unwrap() on a None value" panics when refactoring breaks a system constraint.
 **Action:** Relentlessly replace `.unwrap()` with `.expect("[Specific reason why this should succeed]")` in the test suite to immediately pinpoint the point of failure when a refactor introduces a regression.
+**[Ignition Flood Fill False Alarm]**
+**Learning:** When auditing for dangerous `.unwrap()` calls (e.g., on `HashMap::get`), carefully trace the data flow and queue population logic. In the `process_ignition` flood fill, the `vapor_map` was immutable and keys were pre-validated before entering the queue, making the `.unwrap()` mathematically safe. However, failing to remove the entry caused duplicate events if the same key was queued multiple times (e.g., from multiple identical sparks). The fix wasn't just avoiding `unwrap()` but correctly modifying the data structure by using `HashMap::remove()` to ensure each vapor entity is exploded only once per frame.
+**Action:** Always verify if a map needs to be mutated (e.g., using `.remove()`) during a processing loop to prevent duplicate processing, rather than just blindly replacing `.unwrap()` with `if let Some()`.
