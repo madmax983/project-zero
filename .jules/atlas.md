@@ -51,3 +51,7 @@
 **Culture Domain Encapsulation**
 **Tangle:** The cultural, religious, and belief logic (`ancestral_graves`, `animism`, `art`, `artifacts`, `festivals`, `funeral`, `totems`) was scattered across the root `src/layer1/mod.rs` namespace, contributing to the "Blob" anti-pattern in `layer1`. These interrelated modules lacked a clear domain boundary.
 **Blueprint:** Encapsulated these 7 culture and belief files into a dedicated `src/layer1/culture/` module. The new `src/layer1/culture/mod.rs` re-exports the public types natively to maintain backward compatibility, strictly enforcing domain boundaries while reducing clutter in `layer1/mod.rs`.
+
+**Biology Domain Encapsulation**
+**Tangle:** The health and medical modules (health, medical, genetics, addiction, contagion, cybernetics, etc.) were scattered across the root `src/layer1/mod.rs` namespace, adding to the "Blob" anti-pattern in `layer1`. These interrelated organic life functions lacked a clear domain boundary.
+**Blueprint:** Encapsulated 13 biology-related logic modules into a dedicated `src/layer1/biology/` module. The new `src/layer1/biology/mod.rs` re-exports the public types natively to maintain backward compatibility, keeping the layer 1 root cleaner while strictly enforcing domain boundaries.

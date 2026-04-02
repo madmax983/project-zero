@@ -76,7 +76,6 @@ pub mod execution;
 /// Farm building and food production.
 pub mod farm;
 /// Pop health and damage.
-pub mod genetics;
 /// Deep crust geomes system (Spec 515).
 pub mod geomes;
 /// Fire propagation and damage.
@@ -86,8 +85,6 @@ pub mod hazards;
 #[cfg(test)]
 /// Tests for hazards logic.
 pub mod hazards_tests;
-pub use genetics::*;
-pub mod health;
 /// Pop hobbies logic (Spec 137).
 pub mod hobby;
 pub use geomes::*;
@@ -107,7 +104,6 @@ pub mod law;
 pub mod map;
 /// Colony Mascot system (Spec 129).
 /// Medical care and hospital logic.
-pub mod medical;
 /// Pop memories and psychological effects.
 pub mod memory;
 #[cfg(test)]
@@ -154,9 +150,6 @@ mod preservation_tests;
 #[cfg(test)]
 mod execution_demolish_test;
 
-#[cfg(test)]
-mod medical_triage_tests;
-
 /// Named locations on the map.
 pub mod locations;
 
@@ -182,18 +175,19 @@ pub use designation::*;
 pub use dreams::*;
 pub use edicts::*;
 pub use events::*;
+
+pub mod biology;
+pub use biology::*;
 pub use execution::*;
 pub use farm::*;
 pub use graffiti::*;
 pub use hazards::*;
-pub use health::*;
 pub use hobby::*;
 pub use housing::*;
 pub use institutional_memory::*;
 pub use integration::*;
 pub use locations::*;
 pub use map::*;
-pub use medical::*;
 pub use memory::*;
 pub use needs::*;
 pub use notifications::*;
@@ -318,22 +312,12 @@ pub use gastronomy::*;
 pub mod flora;
 pub use flora::*;
 /// Gut Biome system (Spec 211).
-pub mod gut_biome;
-pub use gut_biome::*;
 /// Private stash system for pops.
 pub mod private_stash;
 pub use private_stash::*;
 /// Resource purity system (Spec 106).
 pub mod purity;
 pub use purity::*;
-/// Emotional Contagion system (Spec 090).
-pub mod contagion;
-pub use contagion::*;
-
-/// Biocompatibility system (Spec 107).
-pub mod biocompatibility;
-pub use biocompatibility::*;
-
 #[cfg(test)]
 mod fuel_consumption_tests;
 #[cfg(test)]
@@ -373,8 +357,6 @@ pub mod prototyping;
 mod tech_storage_tests;
 pub use prototyping::*;
 /// Cybernetic augmentation system (Spec 151).
-pub mod cybernetics;
-pub use cybernetics::*;
 pub mod psychic;
 pub use psychic::*;
 
@@ -466,13 +448,11 @@ pub mod hygiene;
 pub use hygiene::*;
 
 /// Gene Bank system (Spec 165).
-pub mod gene_bank;
 pub mod geodetic;
 #[cfg(test)]
 mod improvised_tools_tests;
 #[cfg(test)]
 mod urban_heat_tests;
-pub use gene_bank::*;
 pub use geodetic::*;
 
 /// The Mother Lode system (Spec 168).
@@ -504,10 +484,6 @@ pub use hum::*;
 pub mod photophobic;
 pub use photophobic::*;
 
-/// Clone Vat system (Spec 240).
-pub mod clone_vat;
-pub use clone_vat::*;
-
 /// Operational Detritus system (Spec 239).
 pub mod clutter;
 pub use clutter::*;
@@ -533,10 +509,6 @@ pub mod hologram;
 #[cfg(test)]
 mod hologram_tests;
 pub use hologram::*;
-
-/// Surgical Addiction system (Spec 250).
-pub mod addiction;
-pub use addiction::*;
 
 pub mod memory_core;
 pub use memory_core::*;
@@ -566,8 +538,6 @@ pub mod shipbreaking;
 pub use shipbreaking::*;
 pub mod void_weed;
 pub use void_weed::*;
-pub mod cryo_shock;
-pub use cryo_shock::*;
 
 /// Infrastructure system (Spec 452).
 pub mod infrastructure;
@@ -583,8 +553,4 @@ pub use disasters::*;
 pub mod environment;
 pub mod spore_diplomat;
 pub use spore_diplomat::*;
-pub mod grafting;
-pub use grafting::*;
-pub mod agony_extract;
 pub mod diplomacy;
-pub use agony_extract::*;
