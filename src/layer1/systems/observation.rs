@@ -87,6 +87,9 @@ pub fn register(schedule: &mut Schedule) {
                 .after(crate::layer1::unrest::calculate_unrest_system),
             crate::layer1::bio_acoustic_miasma::broadcast_miasma_secrets
                 .after(crate::layer1::bio_acoustic_miasma::record_miasma_secret),
+            crate::layer1::integration::paranoia_stress_bridge_system
+                .after(crate::layer1::bio_acoustic_miasma::broadcast_miasma_secrets)
+                .before(crate::layer1::stress::check_stress_breakdown_system),
         )
             .in_set(Layer1SystemSet::Observation),
     );
