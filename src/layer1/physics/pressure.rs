@@ -251,8 +251,10 @@ pub fn update_pressure_system(
 
 /// System to apply suffocation damage.
 pub fn pressure_damage_system(
+    mut commands: Commands,
     mut pop_query: Query<
         (
+            Entity,
             &crate::layer1::map::GridPosition,
             &mut crate::layer1::health::Health,
         ),
@@ -266,7 +268,7 @@ pub fn pressure_damage_system(
     let Some(grid) = grid_opt else { return };
     let mut killed = 0;
 
-    for (pos, mut health) in pop_query.iter_mut() {
+    for (entity, pos, mut health) in pop_query.iter_mut() {
         if health.current <= 0.0 {
             continue;
         }
@@ -275,6 +277,11 @@ pub fn pressure_damage_system(
         if pressure < 0.2 {
             health.take_damage(1.0);
             if health.current <= 0.0 {
+                commands
+                    .entity(entity)
+                    .insert(crate::layer1::health::DeathCause(
+                        "Atmospheric breach".to_string(),
+                    ));
                 killed += 1;
             }
         }

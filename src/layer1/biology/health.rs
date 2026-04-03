@@ -43,6 +43,10 @@ pub struct Health {
 #[derive(Component, Default, Debug, Clone, Copy)]
 pub struct Dead;
 
+/// Records the proximate cause of death for downstream UI and chronicle systems.
+#[derive(Component, Debug, Clone)]
+pub struct DeathCause(pub String);
+
 /// Tracks physical trauma that affects biometric identification.
 ///
 /// Scars accumulate over time due to damage or surgery and contribute to biometric drift.

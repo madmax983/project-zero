@@ -1123,15 +1123,13 @@ fn render_extra_info(
     if let Some(martyrdom) = world.get::<Martyrdom>(entity) {
         if martyrdom.active {
             frame.render_widget(
-                Paragraph::new(Line::from(vec![
-                    Span::styled(
-                        "⚠️ BUREAUCRATIC MARTYRDOM ACTIVE ⚠️",
-                        Style::default()
-                            .fg(Color::Red)
-                            .add_modifier(Modifier::BOLD)
-                            .add_modifier(Modifier::RAPID_BLINK),
-                    ),
-                ])),
+                Paragraph::new(Line::from(vec![Span::styled(
+                    "⚠️ BUREAUCRATIC MARTYRDOM ACTIVE ⚠️",
+                    Style::default()
+                        .fg(Color::Red)
+                        .add_modifier(Modifier::BOLD)
+                        .add_modifier(Modifier::RAPID_BLINK),
+                )])),
                 extra_chunks[extra_idx],
             );
             #[allow(unused_assignments)]

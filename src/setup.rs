@@ -15,7 +15,8 @@ use crate::layer1::{
     spawn_initial_anomalies, spawn_initial_pops, AmbientLight, AtmosphereGrid, BuildMode,
     BuildingTracker, CameraCurrent, CameraTarget, Chronicle, ChronicleUiState, ColonyPolicies,
     ColonyResources, DesignationMode, GlobalHitStop, LightMap, NamedLocations, NotificationQueue,
-    OccupiedTiles, ScreenShake, SeasonState, TechState, TerrainType, UtilityConfig, Viewport,
+    OccupiedTiles, PopBundle, ScreenShake, SeasonState, TechState, TerrainType, UtilityConfig,
+    Viewport,
 };
 use crate::shared::colony::ColonyName;
 use crate::shared::input::{Input, InputContextStack};
@@ -315,9 +316,19 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     world.insert_resource(ColonyName { name: colony_name });
     generate_world_history(&mut world);
 
-    spawn_initial_pops(&mut world);
+    let starter_colony = spawn_starter_colony(&mut world);
+
+    if let Some(layout) = starter_colony.as_ref() {
+        spawn_initial_pops_at_positions(&mut world, &layout.pop_positions);
+    } else {
+        spawn_initial_pops(&mut world);
+    }
     spawn_initial_anomalies(&mut world, 5);
-    spawn_ancient_structures(&mut world);
+    spawn_ancient_structures(
+        &mut world,
+        starter_colony.as_ref().map(|layout| layout.center),
+        STARTER_HAZARD_BUFFER_RADIUS,
+    );
     initial_naming_system(&mut world);
     initial_chronicle_event(&mut world);
 
@@ -366,6 +377,211 @@ fn initialize_visitor_source(world: &mut World) {
         spawn_points,
         next_spawn_tick: 500,
     });
+}
+
+const STARTER_WALL_OFFSETS: &[(i32, i32)] = &[
+    (-2, -2),
+    (-1, -2),
+    (0, -2),
+    (1, -2),
+    (2, -2),
+    (-2, -1),
+    (2, -1),
+    (-2, 0),
+    (2, 0),
+    (-2, 1),
+    (2, 1),
+    (-2, 2),
+    (-1, 2),
+    (1, 2),
+    (2, 2),
+];
+
+const STARTER_AIRLOCK_OFFSET: (i32, i32) = (0, 2);
+const STARTER_LANDER_OFFSET: (i32, i32) = (1, 0);
+const STARTER_LIFE_SUPPORT_OFFSET: (i32, i32) = (-1, 0);
+const STARTER_POP_OFFSETS: &[(i32, i32)] = &[(0, 0), (-1, -1), (0, -1), (1, -1), (0, 1)];
+const STARTER_HAZARD_BUFFER_RADIUS: i32 = 14;
+
+struct StarterColonyLayout {
+    center: crate::layer1::GridPosition,
+    pop_positions: Vec<crate::layer1::GridPosition>,
+}
+
+fn spawn_initial_pops_at_positions(world: &mut World, positions: &[crate::layer1::GridPosition]) {
+    let mut rng = rand::thread_rng();
+    for pos in positions {
+        world.spawn(PopBundle::random(pos.x, pos.y, &mut rng));
+    }
+}
+
+fn spawn_starter_colony(world: &mut World) -> Option<StarterColonyLayout> {
+    let center = find_starter_colony_site(world)?;
+    let interior_tiles: Vec<crate::layer1::GridPosition> = (-1..=1)
+        .flat_map(|dy| {
+            (-1..=1).map(move |dx| crate::layer1::GridPosition {
+                x: center.x + dx,
+                y: center.y + dy,
+            })
+        })
+        .collect();
+
+    for &(dx, dy) in STARTER_WALL_OFFSETS {
+        let x = center.x + dx;
+        let y = center.y + dy;
+        crate::layer1::building::spawn_building_with_material(
+            world,
+            x,
+            y,
+            crate::layer1::building::BuildingType::Wall,
+            crate::layer1::building::MaterialType::Metal,
+        );
+        world.resource_mut::<OccupiedTiles>().0.insert((x, y));
+    }
+
+    let airlock_pos = crate::layer1::GridPosition {
+        x: center.x + STARTER_AIRLOCK_OFFSET.0,
+        y: center.y + STARTER_AIRLOCK_OFFSET.1,
+    };
+    crate::layer1::building::spawn_building_with_material(
+        world,
+        airlock_pos.x,
+        airlock_pos.y,
+        crate::layer1::building::BuildingType::Airlock,
+        crate::layer1::building::MaterialType::Metal,
+    );
+    world
+        .resource_mut::<OccupiedTiles>()
+        .0
+        .insert((airlock_pos.x, airlock_pos.y));
+
+    let lander_pos = crate::layer1::GridPosition {
+        x: center.x + STARTER_LANDER_OFFSET.0,
+        y: center.y + STARTER_LANDER_OFFSET.1,
+    };
+    crate::layer1::building::spawn_building_with_material(
+        world,
+        lander_pos.x,
+        lander_pos.y,
+        crate::layer1::building::BuildingType::Lander,
+        crate::layer1::building::MaterialType::default(),
+    );
+    world
+        .resource_mut::<OccupiedTiles>()
+        .0
+        .insert((lander_pos.x, lander_pos.y));
+
+    let life_support_pos = crate::layer1::GridPosition {
+        x: center.x + STARTER_LIFE_SUPPORT_OFFSET.0,
+        y: center.y + STARTER_LIFE_SUPPORT_OFFSET.1,
+    };
+    crate::layer1::building::spawn_building_with_material(
+        world,
+        life_support_pos.x,
+        life_support_pos.y,
+        crate::layer1::building::BuildingType::LifeSupport,
+        crate::layer1::building::MaterialType::default(),
+    );
+    world
+        .resource_mut::<OccupiedTiles>()
+        .0
+        .insert((life_support_pos.x, life_support_pos.y));
+
+    if let Some(mut pressure) = world.get_resource_mut::<crate::layer1::pressure::PressureGrid>() {
+        for tile in &interior_tiles {
+            pressure.set(tile.x, tile.y, 1.0);
+        }
+    }
+
+    Some(StarterColonyLayout {
+        center,
+        pop_positions: STARTER_POP_OFFSETS
+            .iter()
+            .map(|(dx, dy)| crate::layer1::GridPosition {
+                x: center.x + dx,
+                y: center.y + dy,
+            })
+            .collect(),
+    })
+}
+
+fn find_starter_colony_site(world: &World) -> Option<crate::layer1::GridPosition> {
+    let (width, height) = {
+        let terrain = world.resource::<crate::layer1::TerrainGrid>();
+        (terrain.width, terrain.height)
+    };
+    let center_x = i32::try_from(width / 2).ok()?;
+    let center_y = i32::try_from(height / 2).ok()?;
+    let max_radius = center_x.max(center_y);
+
+    for radius in 0..=max_radius {
+        for dy in -radius..=radius {
+            for dx in -radius..=radius {
+                if radius > 0 && dx.abs() != radius && dy.abs() != radius {
+                    continue;
+                }
+
+                let candidate = crate::layer1::GridPosition {
+                    x: center_x + dx,
+                    y: center_y + dy,
+                };
+
+                if starter_colony_site_is_valid(world, candidate) {
+                    return Some(candidate);
+                }
+            }
+        }
+    }
+
+    None
+}
+
+fn starter_colony_site_is_valid(world: &World, center: crate::layer1::GridPosition) -> bool {
+    let terrain = world.resource::<crate::layer1::TerrainGrid>();
+    let occupied = world.resource::<OccupiedTiles>();
+
+    for dy in -2..=2 {
+        for dx in -2..=2 {
+            let x = center.x + dx;
+            let y = center.y + dy;
+            let Ok(ux) = usize::try_from(x) else {
+                return false;
+            };
+            let Ok(uy) = usize::try_from(y) else {
+                return false;
+            };
+
+            let Some(tile) = terrain.get(ux, uy) else {
+                return false;
+            };
+
+            if !tile.is_walkable() {
+                return false;
+            }
+
+            if occupied.0.contains(&(x, y)) {
+                return false;
+            }
+        }
+    }
+
+    for &(dx, dy) in STARTER_WALL_OFFSETS {
+        if !crate::layer1::building::can_place_building(world, center.x + dx, center.y + dy) {
+            return false;
+        }
+    }
+
+    for &(dx, dy) in &[
+        STARTER_AIRLOCK_OFFSET,
+        STARTER_LANDER_OFFSET,
+        STARTER_LIFE_SUPPORT_OFFSET,
+    ] {
+        if !crate::layer1::building::can_place_building(world, center.x + dx, center.y + dy) {
+            return false;
+        }
+    }
+
+    true
 }
 
 use crate::shared::menu::MenuState;
