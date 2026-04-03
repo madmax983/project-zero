@@ -19,7 +19,7 @@
 //!    - **Map**: The main gameplay area (`map::render_map`).
 //!    - **Info Panel**: Selected entity details (`panels::render_info_panel`).
 //!    - **Status Bar**: Global colony stats (`status::render_status_bar`).
-//!    - **Chronicle**: Historical events overlay (`chronicle::render_chronicle`).
+//!    - **Shell Panes**: Chronicle and tech now live behind shell-managed pane plugins.
 //! 3. **Hypertile Bridge**: [`shell::plugins`] adapts those legacy frame-based renderers into
 //!    pane plugins while the runtime shell migration is in progress.
 
@@ -58,14 +58,12 @@ use crate::layer2::system::ViewMode;
 use crate::shared::menu::MenuState;
 use crate::shared::state::GameState;
 
-use self::chronicle::render_chronicle;
 use self::map::render_map;
 use self::menu::render_main_menu;
 use self::notifications::render_notifications;
 use self::panels::render_info_panel;
 use self::shell::UiShell;
 use self::status::render_status_bar;
-use self::tech::render_tech_tree;
 
 /// Render the full game UI for one frame.
 ///
@@ -136,15 +134,9 @@ pub fn render(world: &World, frame: &mut Frame) {
 
     // Render status bar
     render_status_bar(frame, status_area, world);
-
-    // Render chronicle
-    render_chronicle(frame, frame.area(), world);
-
-    // Render Tech Tree
-    render_tech_tree(frame, frame.area(), world);
 }
 
-/// Render the game UI through the hypertile shell while preserving legacy overlays.
+/// Render the game UI through the hypertile shell.
 pub fn render_with_shell(world: &World, shell: &mut UiShell, frame: &mut Frame) {
     if *world.resource::<GameState>() == GameState::MainMenu {
         let menu_state = world.resource::<MenuState>();
@@ -172,6 +164,4 @@ pub fn render_with_shell(world: &World, shell: &mut UiShell, frame: &mut Frame) 
 
     shell.render(frame.area(), frame.buffer_mut());
     render_notifications(frame, frame.area(), world);
-    render_chronicle(frame, frame.area(), world);
-    render_tech_tree(frame, frame.area(), world);
 }

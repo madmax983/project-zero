@@ -154,6 +154,22 @@ The migration should happen in slices:
 
 This keeps rendering logic reusable and prevents the classic "rewrite the terminal, discover nothing works, perish in rounded borders" outcome.
 
+## Implementation Status
+
+Implemented on 2026-04-03:
+
+- shell state and modifier-aware input plumbing,
+- pane plugins for colony map, system map, inspector, status, chronicle, and tech,
+- curated workspaces bootstrapped through hypertile,
+- `Ctrl+K` unified command palette with shell and gameplay actions,
+- chronicle/tech promoted to pane-managed views instead of overlay-open gating,
+- persisted shell layout snapshots with fallback to `Colony Ops` when saved state is invalid,
+- ADR and architecture map updates for the shell model.
+
+Known limitation:
+
+- WASM-target verification is still blocked by the repository's existing `getrandom 0.3.2` wasm backend configuration issue, so native verification is complete but `wasm32-unknown-unknown` remains externally blocked.
+
 ## Failure Handling
 
 - Bad layout state falls back to `Colony Ops`.

@@ -8,6 +8,7 @@ pub enum ShellCommandDomain {
 pub enum ShellCommandAction {
     SwitchWorkspace(&'static str),
     OpenPane(&'static str),
+    EnterLayoutMode,
     PauseSimulation,
     ResumeSimulation,
     SetSimulationSpeed(u8),
@@ -40,6 +41,16 @@ impl CommandRegistry {
     #[must_use]
     pub fn contains(&self, label: &str) -> bool {
         self.commands.iter().any(|command| command.label == label)
+    }
+
+    #[must_use]
+    pub fn get_by_id(&self, id: &str) -> Option<&ShellCommand> {
+        self.commands.iter().find(|command| command.id == id)
+    }
+
+    #[must_use]
+    pub fn get_by_label(&self, label: &str) -> Option<&ShellCommand> {
+        self.commands.iter().find(|command| command.label == label)
     }
 }
 
@@ -99,6 +110,12 @@ pub fn build_default_command_registry() -> CommandRegistry {
             label: "Open Tech Tree",
             domain: ShellCommandDomain::Gameplay,
             action: ShellCommandAction::OpenPane("tech"),
+        },
+        ShellCommand {
+            id: "shell.layout_mode",
+            label: "Enter Layout Mode",
+            domain: ShellCommandDomain::Shell,
+            action: ShellCommandAction::EnterLayoutMode,
         },
         ShellCommand {
             id: "sim.pause",

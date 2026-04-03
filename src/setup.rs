@@ -13,10 +13,9 @@ use crate::layer1::social::AffinityChange;
 use crate::layer1::{
     generate_terrain, initial_chronicle_event, initial_naming_system, spawn_ancient_structures,
     spawn_initial_anomalies, spawn_initial_pops, AmbientLight, AtmosphereGrid, BuildMode,
-    BuildingTracker, CameraCurrent, CameraTarget, Chronicle, ChronicleUiState, ColonyPolicies,
-    ColonyResources, DesignationMode, GlobalHitStop, LightMap, NamedLocations, NotificationQueue,
-    OccupiedTiles, PopBundle, ScreenShake, SeasonState, TechState, TerrainType, UtilityConfig,
-    Viewport,
+    BuildingTracker, CameraCurrent, CameraTarget, Chronicle, ColonyPolicies, ColonyResources,
+    DesignationMode, GlobalHitStop, LightMap, NamedLocations, NotificationQueue, OccupiedTiles,
+    PopBundle, ScreenShake, SeasonState, TechState, TerrainType, UtilityConfig, Viewport,
 };
 use crate::shared::colony::ColonyName;
 use crate::shared::input::{Input, InputContextStack};
@@ -123,7 +122,6 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     world.insert_resource(InputContextStack::default());
     world.insert_resource(MessageLog::default());
     world.insert_resource(Chronicle::default());
-    world.insert_resource(ChronicleUiState::default());
     world.insert_resource(crate::ui::tech::TechUiState::default());
     world.insert_resource(crate::ui::shell::ShellConfig::default());
     world.insert_resource(UiState::default());

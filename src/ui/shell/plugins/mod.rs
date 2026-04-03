@@ -133,11 +133,7 @@ mod tests {
         CHRONICLE_PLUGIN_TYPE, COLONY_MAP_PLUGIN_TYPE, INSPECTOR_PLUGIN_TYPE, STATUS_PLUGIN_TYPE,
         SYSTEM_MAP_PLUGIN_TYPE, TECH_PLUGIN_TYPE,
     };
-    use crate::{
-        layer1::ChronicleUiState,
-        prelude::{setup_world_with_config, SetupConfig},
-        ui::tech::TechUiState,
-    };
+    use crate::prelude::{setup_world_with_config, SetupConfig};
     use ratatui::{buffer::Buffer, layout::Rect};
     use ratatui_hypertile_extras::{HypertilePlugin, Registry};
     use std::{cell::RefCell, collections::BTreeSet, rc::Rc};
@@ -202,7 +198,6 @@ mod tests {
     #[test]
     fn chronicle_plugin_renders_even_when_overlay_state_is_closed() {
         let world = test_world();
-        assert!(!world.borrow().resource::<ChronicleUiState>().is_open);
 
         let plugin = ChroniclePlugin::new(Rc::clone(&world));
         let area = Rect::new(0, 0, 80, 24);
@@ -213,18 +208,13 @@ mod tests {
         let text = buffer_text(&buffer);
         assert!(
             text.contains("Chronicle"),
-            "chronicle pane should render even when the legacy overlay flag is closed"
-        );
-        assert!(
-            !world.borrow().resource::<ChronicleUiState>().is_open,
-            "chronicle pane should restore the legacy overlay flag after rendering"
+            "chronicle pane should render as a normal pane without overlay gating"
         );
     }
 
     #[test]
     fn tech_plugin_renders_even_when_overlay_state_is_closed() {
         let world = test_world();
-        assert!(!world.borrow().resource::<TechUiState>().is_open);
 
         let plugin = TechPlugin::new(Rc::clone(&world));
         let area = Rect::new(0, 0, 100, 30);
@@ -235,11 +225,7 @@ mod tests {
         let text = buffer_text(&buffer);
         assert!(
             text.contains("Technology Tree"),
-            "tech pane should render even when the legacy overlay flag is closed"
-        );
-        assert!(
-            !world.borrow().resource::<TechUiState>().is_open,
-            "tech pane should restore the legacy overlay flag after rendering"
+            "tech pane should render as a normal pane without overlay gating"
         );
     }
 

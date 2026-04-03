@@ -12,7 +12,7 @@ use crate::shared::menu::MenuState;
 use crate::shared::selection::{handle_selection_click, screen_to_world, Selection};
 use crate::shared::state::GameState;
 use crate::shared::time::{SimSpeed, SimulationTime};
-use crate::ui::shell::plugins::SharedWorld;
+use crate::ui::shell::plugins::{SharedWorld, COLONY_MAP_PLUGIN_TYPE, SYSTEM_MAP_PLUGIN_TYPE};
 use crate::ui::shell::UiShell;
 
 /// Defines the current input handling context.
@@ -178,8 +178,27 @@ pub fn route_root_input(world: &SharedWorld, shell: &mut UiShell, key: GameKeyEv
         return;
     }
 
+    if shell.is_palette_open() {
+        let _ = shell.handle_key(key);
+        return;
+    }
+
     if shell.is_layout_mode() {
         let _ = shell.handle_key(key);
+        return;
+    }
+
+    if matches!(key.code, GameKeyCode::Char('l' | 'h'))
+        && shell.execute_command_by_id("pane.chronicle")
+    {
+        return;
+    }
+
+    if matches!(key.code, GameKeyCode::Char('t')) && shell.execute_command_by_id("pane.tech") {
+        return;
+    }
+
+    if shell.handle_key(key) {
         return;
     }
 
@@ -209,7 +228,14 @@ pub fn route_root_mouse_input(world: &SharedWorld, shell: &UiShell, mouse: GameM
         *world.resource::<GameState>() == GameState::MainMenu
     };
 
-    if is_main_menu || shell.is_layout_mode() {
+    if is_main_menu || shell.is_layout_mode() || shell.is_palette_open() {
+        return;
+    }
+
+    if !matches!(
+        shell.focused_plugin_type(),
+        Some(COLONY_MAP_PLUGIN_TYPE | SYSTEM_MAP_PLUGIN_TYPE)
+    ) {
         return;
     }
 
@@ -329,21 +355,6 @@ fn handle_normal_mode(world: &mut World, key: GameKeyEvent) {
             // Enter Designation mode (Chop)
             enter_designation_mode(world, DesignationType::Chop);
         }
-        GameKeyCode::Char('l' | 'h') => {
-            // Open chronicle
-            world
-                .resource_mut::<InputContextStack>()
-                .push(InputContext::Overlay);
-            world.resource_mut::<ChronicleUiState>().is_open = true;
-            *world.resource_mut::<GameState>() = GameState::Paused;
-        }
-        GameKeyCode::Char('t') => {
-            // Open Tech Tree
-            world
-                .resource_mut::<InputContextStack>()
-                .push(InputContext::TechTree);
-            world.resource_mut::<crate::ui::tech::TechUiState>().is_open = true;
-        }
         GameKeyCode::Tab => {
             let visibility = *world.resource::<crate::layer2::visibility::SystemVisibility>();
             let mut view_mode = world.resource_mut::<ViewMode>();
@@ -370,7 +381,6 @@ fn handle_tech_tree_mode(world: &mut World, key: GameKeyEvent) {
     match key.code {
         GameKeyCode::Esc | GameKeyCode::Char('t') => {
             world.resource_mut::<InputContextStack>().pop();
-            world.resource_mut::<crate::ui::tech::TechUiState>().is_open = false;
         }
         GameKeyCode::Up | GameKeyCode::Char('w') => {
             world
@@ -578,7 +588,9 @@ fn handle_overlay_mode(world: &mut World, key: GameKeyEvent) {
     match key.code {
         GameKeyCode::Esc | GameKeyCode::Char('l' | 'h') => {
             world.resource_mut::<InputContextStack>().pop();
-            world.resource_mut::<ChronicleUiState>().is_open = false;
+            if let Some(mut ui_state) = world.get_resource_mut::<ChronicleUiState>() {
+                ui_state.is_open = false;
+            }
         }
         _ => {}
     }
@@ -615,8 +627,63 @@ mod tests {
             GameKeyEvent::new(GameKeyCode::Char('k')).with_ctrl(),
         );
 
-        assert!(shell_buffer_contains(&mut shell, "Add Plugin"));
+        assert!(shell_buffer_contains(&mut shell, "Command Palette"));
+        assert!(shell_buffer_contains(&mut shell, "Open Chronicle"));
         assert_eq!(*world.borrow().resource::<GameState>(), GameState::Running);
+    }
+
+    #[test]
+    fn command_palette_can_execute_open_tech_tree() {
+        let (world, mut shell) = setup_shell_world_for_test();
+
+        route_root_input(
+            &world,
+            &mut shell,
+            GameKeyEvent::new(GameKeyCode::Char('k')).with_ctrl(),
+        );
+        route_root_input(&world, &mut shell, key_event(GameKeyCode::Char('t')));
+        route_root_input(&world, &mut shell, key_event(GameKeyCode::Char('e')));
+        route_root_input(&world, &mut shell, key_event(GameKeyCode::Char('c')));
+        route_root_input(&world, &mut shell, key_event(GameKeyCode::Char('h')));
+        route_root_input(&world, &mut shell, key_event(GameKeyCode::Enter));
+
+        assert!(active_workspace_contains_plugin(&mut shell, "tech"));
+        assert_eq!(
+            world.borrow().resource::<InputContextStack>().current(),
+            InputContext::Normal
+        );
+    }
+
+    #[test]
+    fn chronicle_hotkey_opens_shell_pane_without_overlay_context() {
+        let (world, mut shell) = setup_shell_world_for_test();
+        let switched = shell.switch_to_workspace("System Survey");
+
+        assert!(switched);
+        assert!(!active_workspace_contains_plugin(&mut shell, "chronicle"));
+
+        route_root_input(&world, &mut shell, key_event(GameKeyCode::Char('l')));
+
+        assert!(active_workspace_contains_plugin(&mut shell, "chronicle"));
+        assert_eq!(
+            world.borrow().resource::<InputContextStack>().current(),
+            InputContext::Normal
+        );
+    }
+
+    #[test]
+    fn tech_hotkey_opens_shell_pane_without_overlay_context() {
+        let (world, mut shell) = setup_shell_world_for_test();
+
+        assert!(!active_workspace_contains_plugin(&mut shell, "tech"));
+
+        route_root_input(&world, &mut shell, key_event(GameKeyCode::Char('t')));
+
+        assert!(active_workspace_contains_plugin(&mut shell, "tech"));
+        assert_eq!(
+            world.borrow().resource::<InputContextStack>().current(),
+            InputContext::Normal
+        );
     }
 
     #[test]
@@ -734,30 +801,20 @@ mod tests {
     }
 
     #[test]
-    fn test_chronicle_toggle() {
+    fn test_route_input_normal_mode_leaves_chronicle_hotkey_to_shell() {
         let mut world = World::new();
         world.insert_resource(GameState::Running);
         let mut stack = InputContextStack::default();
         stack.push(InputContext::Normal);
         world.insert_resource(stack);
-        world.insert_resource(ChronicleUiState::default());
 
-        // Open with 'l'
         route_input(&mut world, key_event(GameKeyCode::Char('l')));
-        assert_eq!(
-            world.resource::<InputContextStack>().current(),
-            InputContext::Overlay
-        );
-        assert!(world.resource::<ChronicleUiState>().is_open);
-        assert_eq!(*world.resource::<GameState>(), GameState::Paused);
 
-        // Close with 'l'
-        route_input(&mut world, key_event(GameKeyCode::Char('l')));
         assert_eq!(
             world.resource::<InputContextStack>().current(),
             InputContext::Normal
         );
-        assert!(!world.resource::<ChronicleUiState>().is_open);
+        assert_eq!(*world.resource::<GameState>(), GameState::Running);
     }
 
     #[test]
@@ -950,41 +1007,31 @@ mod tests {
     }
 
     #[test]
-    fn test_tech_tree_mode_navigation() {
-        let mut world = World::new();
-        world.insert_resource(GameState::Running);
-        let mut stack = InputContextStack::default();
-        stack.push(InputContext::TechTree);
-        world.insert_resource(stack);
-        world.insert_resource(crate::ui::tech::TechUiState {
-            is_open: true,
-            selected_index: 0,
-        });
+    fn focused_tech_pane_handles_navigation_in_plugin_input_mode() {
+        let (world, mut shell) = setup_shell_world_for_test();
 
-        // Down
-        route_input(&mut world, key_event(GameKeyCode::Char('s')));
+        route_root_input(&world, &mut shell, key_event(GameKeyCode::Char('t')));
+        route_root_input(&world, &mut shell, key_event(GameKeyCode::Char('s')));
+
         assert_eq!(
             world
+                .borrow()
                 .resource::<crate::ui::tech::TechUiState>()
                 .selected_index,
             1
         );
+        assert_eq!(
+            world.borrow().resource::<InputContextStack>().current(),
+            InputContext::Normal
+        );
 
-        // Up
-        route_input(&mut world, key_event(GameKeyCode::Char('w')));
+        route_root_input(&world, &mut shell, key_event(GameKeyCode::Char('w')));
         assert_eq!(
             world
+                .borrow()
                 .resource::<crate::ui::tech::TechUiState>()
                 .selected_index,
             0
-        );
-
-        // Esc
-        route_input(&mut world, key_event(GameKeyCode::Esc));
-        assert!(!world.resource::<crate::ui::tech::TechUiState>().is_open);
-        assert_eq!(
-            world.resource::<InputContextStack>().current(),
-            InputContext::MainMenu
         );
     }
 
@@ -1018,5 +1065,16 @@ mod tests {
             .collect::<Vec<_>>()
             .join("")
             .contains(needle)
+    }
+
+    fn active_workspace_contains_plugin(shell: &mut UiShell, plugin_type: &str) -> bool {
+        let area = Rect::new(0, 0, 100, 30);
+        let mut buffer = Buffer::empty(area);
+        shell.render(area, &mut buffer);
+        let runtime = shell.workspaces().active_runtime();
+        runtime
+            .panes()
+            .into_iter()
+            .any(|pane| runtime.registry().plugin_type_for(pane.id) == Some(plugin_type))
     }
 }

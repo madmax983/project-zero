@@ -7,8 +7,6 @@ use strum::IntoEnumIterator;
 /// State for the Tech Tree UI.
 #[derive(Resource, Default, Debug)]
 pub struct TechUiState {
-    /// Whether the Tech Tree UI is currently open.
-    pub is_open: bool,
     /// The index of the currently selected technology in the list.
     pub selected_index: usize,
 }
@@ -57,29 +55,27 @@ use ratatui::widgets::{
 
 /// Renders the Tech Tree UI.
 pub fn render_tech_tree(frame: &mut Frame, area: Rect, world: &World) {
-    let ui_state = world.resource::<TechUiState>();
-    if !ui_state.is_open {
+    if area.width == 0 || area.height == 0 {
         return;
     }
 
+    let ui_state = world.resource::<TechUiState>();
     let tech_state = world.get_resource::<crate::layer1::tech::TechState>();
     let resources = world.get_resource::<crate::layer1::resources::ColonyResources>();
     let knowledge = resources.map_or(0.0, |r| r.knowledge);
 
-    // Centered Popup
-    let popup_area = centered_rect(80, 80, area);
-    frame.render_widget(Clear, popup_area);
+    frame.render_widget(Clear, area);
 
     let main_block = Block::default()
-        .title(" Technology Tree (Press T/Esc to close) ")
+        .title(" Technology Tree ")
         .borders(Borders::ALL)
         .border_type(BorderType::Rounded)
         .style(Style::default().bg(Color::Black));
 
-    frame.render_widget(main_block.clone(), popup_area);
+    frame.render_widget(main_block.clone(), area);
 
     // Inner area for content
-    let inner_area = main_block.inner(popup_area);
+    let inner_area = main_block.inner(area);
 
     let chunks = Layout::default()
         .direction(Direction::Horizontal)
@@ -254,26 +250,6 @@ fn render_tech_details(
     }
 }
 
-fn centered_rect(percent_x: u16, percent_y: u16, r: Rect) -> Rect {
-    let popup_layout = Layout::default()
-        .direction(Direction::Vertical)
-        .constraints([
-            Constraint::Percentage((100 - percent_y) / 2),
-            Constraint::Percentage(percent_y),
-            Constraint::Percentage((100 - percent_y) / 2),
-        ])
-        .split(r);
-
-    Layout::default()
-        .direction(Direction::Horizontal)
-        .constraints([
-            Constraint::Percentage((100 - percent_x) / 2),
-            Constraint::Percentage(percent_x),
-            Constraint::Percentage((100 - percent_x) / 2),
-        ])
-        .split(popup_layout[1])[1]
-}
-
 #[cfg(test)]
 mod tests {
     use crate::layer1::resources::ColonyResources;
@@ -284,7 +260,6 @@ mod tests {
     #[test]
     fn test_tech_ui_state_resource_defaults() {
         let state = TechUiState::default();
-        assert!(!state.is_open);
         assert_eq!(state.selected_index, 0);
     }
 

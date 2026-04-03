@@ -11,5 +11,8 @@ pub use commands::{
     build_default_command_registry, CommandRegistry, ShellCommand, ShellCommandAction,
     ShellCommandDomain,
 };
-pub use config::ShellConfig;
+pub use config::{
+    load_shell_config, PersistedPaneBinding, PersistedShellLayout, PersistedWorkspaceLayout,
+    ShellConfig, SHELL_LAYOUT_VERSION,
+};
 pub use runtime::{build_default_shell, UiShell};
