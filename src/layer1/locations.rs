@@ -3,10 +3,12 @@ use crate::layer1::map::GridPosition;
 use crate::layer1::pop::Pop;
 use crate::shared::narrative::NarrativeGenerator;
 use crate::shared::time::SimulationTime;
+use bevy::utils::HashMap;
 use bevy_ecs::prelude::*;
-use std::collections::HashMap;
 
 /// Stores named locations on the world map.
+/// ⚡ Bolt Optimization: Switched to `bevy::utils::HashMap` (AHash) to eliminate SipHash overhead
+/// for integer coordinate keys, avoiding bottlenecks during location lookups.
 #[derive(Resource, Default, Debug)]
 pub struct NamedLocations {
     /// A map from grid coordinates (x, y) to location names.
