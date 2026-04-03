@@ -160,7 +160,11 @@ mod tests {
         let pop = world
             .spawn((
                 Pop,
-                Traits(1 << (Trait::Anxious as u8)), // New trait
+                {
+                    let mut t = Traits::default();
+                    t.add(Trait::Anxious);
+                    t
+                }, // New trait
                 PrivateStash::default(),
             ))
             .id();
@@ -225,7 +229,11 @@ mod tests {
         let pop = world
             .spawn((
                 Pop,
-                Traits(1 << (Trait::Greedy as u8)), // New trait
+                {
+                    let mut t = Traits::default();
+                    t.add(Trait::Greedy);
+                    t
+                }, // New trait
                 PrivateStash::default(),
             ))
             .id();
@@ -310,7 +318,13 @@ mod tests {
         };
         world.insert_resource(res);
 
-        let _pop = world.spawn((Pop, Traits(1 << (Trait::Anxious as u8)))).id();
+        let _pop = world
+            .spawn((Pop, {
+                let mut t = Traits::default();
+                t.add(Trait::Anxious);
+                t
+            }))
+            .id();
 
         let mut schedule = Schedule::default();
         schedule.add_systems(super::stash_creation_system);

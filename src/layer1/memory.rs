@@ -357,7 +357,11 @@ mod tests {
             leisure: 0.5,
             hygiene: 0.5,
         };
-        let night_owl = Traits(1 << (Trait::NightOwl as u8));
+        let night_owl = {
+            let mut t = Traits::default();
+            t.add(Trait::NightOwl);
+            t
+        };
 
         // Night time -> +0.1
         let effective = calculate_effective_morale(

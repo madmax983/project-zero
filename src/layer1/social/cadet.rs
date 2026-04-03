@@ -70,7 +70,11 @@ mod tests {
         // Spawn Noble with 1.0 Morale
         world.spawn((
             Pop,
-            Traits(1 << (Trait::Noble as u8)),
+            {
+                let mut t = Traits::default();
+                t.add(Trait::Noble);
+                t
+            },
             NobleScion { allowance: 100.0 },
             crate::layer1::morale::Morale {
                 value: 1.0,
@@ -99,7 +103,11 @@ mod tests {
         // Spawn Noble with 0.5 Morale
         world.spawn((
             Pop,
-            Traits(1 << (Trait::Noble as u8)),
+            {
+                let mut t = Traits::default();
+                t.add(Trait::Noble);
+                t
+            },
             NobleScion { allowance: 100.0 },
             crate::layer1::morale::Morale {
                 value: 0.5,
@@ -128,7 +136,11 @@ mod tests {
         // Spawn Noble with 1.0 Morale
         world.spawn((
             Pop,
-            Traits(1 << (Trait::Noble as u8)),
+            {
+                let mut t = Traits::default();
+                t.add(Trait::Noble);
+                t
+            },
             NobleScion { allowance: 100.0 },
             crate::layer1::morale::Morale {
                 value: 1.0,

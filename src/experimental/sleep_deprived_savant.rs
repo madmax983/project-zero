@@ -79,7 +79,11 @@ mod tests {
     fn test_enters_fever_dream() {
         let mut world = World::new();
 
-        let traits = Traits(1 << (Trait::Intellectual as u8));
+        let traits = {
+            let mut t = Traits::default();
+            t.add(Trait::Intellectual);
+            t
+        };
         let pop = world
             .spawn((
                 Pop,
@@ -119,7 +123,11 @@ mod tests {
     fn test_breaks_fever_dream() {
         let mut world = World::new();
 
-        let traits = Traits(1 << (Trait::Creative as u8));
+        let traits = {
+            let mut t = Traits::default();
+            t.add(Trait::Creative);
+            t
+        };
         let pop = world
             .spawn((
                 Pop,

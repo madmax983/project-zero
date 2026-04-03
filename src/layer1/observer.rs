@@ -193,7 +193,11 @@ mod tests {
     #[test]
     fn test_lazy_pop_speed_reaction() {
         let mut world = World::new();
-        let traits = Traits(1 << (Trait::Lazy as u8));
+        let traits = {
+            let mut t = Traits::default();
+            t.add(Trait::Lazy);
+            t
+        };
         let pop = world
             .spawn((
                 Observed::default(),
@@ -219,7 +223,11 @@ mod tests {
     #[test]
     fn test_anxious_pop_stress_reaction() {
         let mut world = World::new();
-        let traits = Traits(1 << (Trait::Anxious as u8));
+        let traits = {
+            let mut t = Traits::default();
+            t.add(Trait::Anxious);
+            t
+        };
         let pop = world
             .spawn((
                 Observed::default(),
@@ -241,7 +249,11 @@ mod tests {
     #[test]
     fn test_optimist_pop_stress_relief() {
         let mut world = World::new();
-        let traits = Traits(1 << (Trait::Optimist as u8));
+        let traits = {
+            let mut t = Traits::default();
+            t.add(Trait::Optimist);
+            t
+        };
         let pop = world
             .spawn((
                 Observed::default(),

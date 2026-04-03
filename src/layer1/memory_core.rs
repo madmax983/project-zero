@@ -162,7 +162,11 @@ mod tests {
                 Pop,
                 Dead,
                 dead_skills,
-                Traits(1 << (Trait::Volatile as u8)), // Use a real trait
+                {
+                    let mut t = Traits::default();
+                    t.add(Trait::Volatile);
+                    t
+                }, // Use a real trait
             ))
             .id();
 

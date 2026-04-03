@@ -178,31 +178,30 @@ impl Trait {
 }
 
 /// Component storing a set of traits for a pop.
-#[derive(Component, Debug, Clone, Copy, Default)]
-pub struct Traits(pub u64);
+#[derive(Component, Debug, Clone, Default)]
+pub struct Traits(pub bevy::utils::HashSet<Trait>);
 
 impl Traits {
     /// Checks if the pop has the given trait.
     #[must_use]
     pub fn has(&self, t: Trait) -> bool {
-        (self.0 & (1 << (t as u8))) != 0
+        self.0.contains(&t)
     }
 
     /// Adds a trait to the set.
     pub fn add(&mut self, t: Trait) {
-        self.0 |= 1 << (t as u8);
+        self.0.insert(t);
     }
 
     /// Removes a trait from the set.
     pub fn remove(&mut self, t: Trait) {
-        self.0 &= !(1 << (t as u8));
+        self.0.remove(&t);
     }
 
     /// Iterator over the traits.
-    pub fn iter(&self) -> impl Iterator<Item = Trait> {
+    pub fn iter(&self) -> impl Iterator<Item = Trait> + '_ {
         use strum::IntoEnumIterator;
-        let mask = self.0;
-        Trait::iter().filter(move |&t| (mask & (1 << (t as u8))) != 0)
+        Trait::iter().filter(move |t| self.has(*t))
     }
 
     /// Generates a random set of traits.
@@ -430,11 +429,31 @@ mod tests {
 
     #[test]
     fn test_job_efficiency_modifiers() {
-        let green_thumb = Traits(1 << (Trait::GreenThumb as u8));
-        let silver_tongue = Traits(1 << (Trait::SilverTongue as u8));
-        let mole_eyes = Traits(1 << (Trait::MoleEyes as u8));
-        let hunchback = Traits(1 << (Trait::Hunchback as u8));
-        let static_skin = Traits(1 << (Trait::StaticSkin as u8));
+        let green_thumb = {
+            let mut t = Traits::default();
+            t.add(Trait::GreenThumb);
+            t
+        };
+        let silver_tongue = {
+            let mut t = Traits::default();
+            t.add(Trait::SilverTongue);
+            t
+        };
+        let mole_eyes = {
+            let mut t = Traits::default();
+            t.add(Trait::MoleEyes);
+            t
+        };
+        let hunchback = {
+            let mut t = Traits::default();
+            t.add(Trait::Hunchback);
+            t
+        };
+        let static_skin = {
+            let mut t = Traits::default();
+            t.add(Trait::StaticSkin);
+            t
+        };
         let normal = Traits::default();
 
         // Normal has no modifiers
@@ -470,8 +489,16 @@ mod tests {
 
     #[test]
     fn test_work_speed_modifiers() {
-        let hard_worker = Traits(1 << (Trait::HardWorker as u8));
-        let lazy = Traits(1 << (Trait::Lazy as u8));
+        let hard_worker = {
+            let mut t = Traits::default();
+            t.add(Trait::HardWorker);
+            t
+        };
+        let lazy = {
+            let mut t = Traits::default();
+            t.add(Trait::Lazy);
+            t
+        };
         let normal = Traits::default();
 
         assert!(
@@ -490,8 +517,16 @@ mod tests {
 
     #[test]
     fn test_hunger_decay_modifiers() {
-        let glutton = Traits(1 << (Trait::Glutton as u8));
-        let ascetic = Traits(1 << (Trait::Ascetic as u8));
+        let glutton = {
+            let mut t = Traits::default();
+            t.add(Trait::Glutton);
+            t
+        };
+        let ascetic = {
+            let mut t = Traits::default();
+            t.add(Trait::Ascetic);
+            t
+        };
         let normal = Traits::default();
 
         assert!(
@@ -510,9 +545,21 @@ mod tests {
 
     #[test]
     fn test_leisure_decay_modifiers() {
-        let soulless = Traits(1 << (Trait::Soulless as u8));
-        let noble = Traits(1 << (Trait::Noble as u8));
-        let synth = Traits(1 << (Trait::Synth as u8));
+        let soulless = {
+            let mut t = Traits::default();
+            t.add(Trait::Soulless);
+            t
+        };
+        let noble = {
+            let mut t = Traits::default();
+            t.add(Trait::Noble);
+            t
+        };
+        let synth = {
+            let mut t = Traits::default();
+            t.add(Trait::Synth);
+            t
+        };
         let normal = Traits::default();
 
         assert!(
@@ -535,9 +582,22 @@ mod tests {
 
     #[test]
     fn test_feral_speed_modifier() {
-        let feral = Traits(1 << (Trait::Feral as u8));
-        let fast = Traits(1 << (Trait::FastWalker as u8));
-        let both = Traits((1 << (Trait::Feral as u8)) | (1 << (Trait::FastWalker as u8)));
+        let feral = {
+            let mut t = Traits::default();
+            t.add(Trait::Feral);
+            t
+        };
+        let fast = {
+            let mut t = Traits::default();
+            t.add(Trait::FastWalker);
+            t
+        };
+        let both = {
+            let mut t = Traits::default();
+            t.add(Trait::Feral);
+            t.add(Trait::FastWalker);
+            t
+        };
 
         assert!(
             (get_trait_move_speed_modifier(&feral) - 1.2).abs() < 0.0001,
@@ -555,7 +615,11 @@ mod tests {
 
     #[test]
     fn test_night_owl_mood_modifier() {
-        let night_owl = Traits(1 << (Trait::NightOwl as u8));
+        let night_owl = {
+            let mut t = Traits::default();
+            t.add(Trait::NightOwl);
+            t
+        };
 
         let mood_night = get_trait_mood_modifier(&night_owl, TimeOfDay::Night);
         assert!(mood_night > 0.0, "NightOwl should be happier at night");

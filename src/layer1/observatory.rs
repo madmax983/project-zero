@@ -203,7 +203,11 @@ mod tests {
                     .spawn((
                         Pop,
                         Morale::default(),
-                        Traits(1 << (Trait::Optimist as u8)),
+                        {
+                            let mut t = Traits::default();
+                            t.add(Trait::Optimist);
+                            t
+                        },
                         AssignedTo {
                             entity: observatory,
                             assignment_type: AssignmentType::ObservatoryWorker,
@@ -258,7 +262,11 @@ mod tests {
                     .spawn((
                         Pop,
                         Morale::default(),
-                        Traits(1 << (Trait::Anxious as u8)),
+                        {
+                            let mut t = Traits::default();
+                            t.add(Trait::Anxious);
+                            t
+                        },
                         AssignedTo {
                             entity: observatory,
                             assignment_type: AssignmentType::ObservatoryWorker,

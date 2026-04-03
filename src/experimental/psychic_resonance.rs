@@ -65,7 +65,11 @@ mod tests {
     fn test_psychic_resonance_positive() {
         let mut world = World::new();
 
-        let traits = Traits(1 << (Trait::VoidTouched as u8));
+        let traits = {
+            let mut t = Traits::default();
+            t.add(Trait::VoidTouched);
+            t
+        };
         let pop = world
             .spawn((
                 Pop,
@@ -100,7 +104,11 @@ mod tests {
     fn test_psychic_resonance_negative() {
         let mut world = World::new();
 
-        let traits = Traits(1 << (Trait::VoidTouched as u8));
+        let traits = {
+            let mut t = Traits::default();
+            t.add(Trait::VoidTouched);
+            t
+        };
         let pop = world
             .spawn((
                 Pop,

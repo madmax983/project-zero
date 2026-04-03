@@ -1054,7 +1054,11 @@ mod synth_tests {
         let mut world = World::new();
 
         // Arrange
-        let synth_traits = Traits(1 << (Trait::Synth as u8));
+        let synth_traits = {
+            let mut t = Traits::default();
+            t.add(Trait::Synth);
+            t
+        };
 
         let mut rng = rand::thread_rng();
         let mut bundle = crate::layer1::pop::PopBundle::random(10, 10, &mut rng);
