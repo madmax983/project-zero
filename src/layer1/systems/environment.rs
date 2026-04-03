@@ -36,6 +36,7 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::social::grievances::decay_notes_system,
             crate::layer1::hum::update_hum_system,
             crate::layer1::bio_acoustic_miasma::update_miasma_clouds,
+            crate::layer1::megastructure::process_megastructure_consumption,
         )
             .in_set(Layer1SystemSet::Environment),
     );
