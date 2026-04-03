@@ -13463,3 +13463,71 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** The immense, immediate financial windfall of selling raw human experience vs. the slow, irreversible hollowing out of your colony's soul.
 
 ---
+
+## The Subsidized Siege
+
+**Layer:** Cross-layer (3 -> 1)
+
+**Fantasy:** Fighting a war on the ground that you are being paid to lose by external superpowers.
+
+**Mechanic:** A hostile Layer 3 empire invades your Layer 1 colony. At the same time, a wealthy neutral Layer 3 empire (a rival to the invaders) offers you massive, daily Credit subsidies as long as the siege continues, paying you to bleed their enemy. If you defeat the invaders or surrender, the money stops.
+
+**Emergence:** Your colony is heavily damaged, but the subsidies are making you richer than ever. You intentionally dismantle your most powerful planetary defenses to ensure the invaders keep landing troops, turning your own capital into an agonizing, highly profitable meat grinder.
+
+**Tension:** The immense, continuous economic wealth of being a proxy war vs. the devastating, localized physical and psychological destruction of your own colony.
+
+---
+
+## The Compliance Auditor
+
+**Layer:** Cross-layer (3 -> 1)
+
+**Fantasy:** The sheer terror of a galactic tax auditor who cares about the letter of the law over human survival.
+
+**Mechanic:** A neutral, overwhelmingly powerful "Galactic Compliance" faction occasionally lands an Auditor in your colony. They pathfind through the base inspecting stockpiles and room zones. If they find "illegal" efficiencies (e.g., storing volatile fuel next to residential zones, or using non-standardized replacement parts), they instantly freeze your entire Layer 3 market access until you pay a massive fine or physically rebuild the base to code.
+
+**Emergence:** The Auditor arrives right before a pirate attack. You need the fuel stored near the defense grid to power the shields, but the Auditor deems it an "unauthorized explosive risk" and forces you to haul it to the designated safe zone on the other side of the map, leaving your shields unpowered and your colony vulnerable to destruction.
+
+**Tension:** The raw, messy efficiency of frontier survival vs. the rigid, expensive compliance required to participate in the galactic economy.
+
+---
+
+## Geological Pressure Cooker
+
+**Layer:** 1
+
+**Fantasy:** The ground beneath your feet is a ticking time bomb, and the more you drill, the faster it ticks.
+
+**Mechanic:** The planetary crust has a hidden "Magma Pressure" meter. Deep mining operations, geothermal taps, or heavy kinetic bombardment increase the pressure. When the pressure peaks, the planet triggers random "Fissure Eruptions," creating temporary magma tiles that destroy buildings and pathfinding routes before slowly cooling into valuable obsidian.
+
+**Emergence:** You heavily industrialize a geothermal zone to power a massive orbital launch facility. The combined pressure triggers an eruption directly beneath the launchpad, incinerating a loaded cargo ship and dividing your colony in half with a river of lava right before a critical trade deadline.
+
+**Tension:** Access to incredible subterranean wealth and free energy vs. the terrifying, player-driven destabilization of the very ground you stand on.
+
+---
+
+## The Glitter-World Envy
+
+**Layer:** Cross-layer (3 -> 1)
+
+**Fantasy:** Your people see how the other half lives, and they hate you for not giving it to them.
+
+**Mechanic:** Your colony receives a high-bandwidth broadcast from a neighboring "Glitter-World" (a utopian Layer 3 civilization). Pops who view the broadcast gain a permanent "Envious" trait. Their baseline need for Luxuries and Beauty triples. If these new needs aren't met, they don't just get sad; they actively sabotage industrial buildings out of spite, believing all work is "exploitation."
+
+**Emergence:** You form a trade alliance with a wealthy empire to survive an economic depression. The trade ships bring broadcasts of their utopian lifestyle. Your miners watch a holovid of an alien taking a two-year vacation, realize they work 16-hour shifts in a dark hole, and promptly blow up the refining facility in protest.
+
+**Tension:** The diplomatic and economic benefits of allying with wealthy, advanced empires vs. the devastating cultural contamination and impossible expectations it breeds in your own frontier workforce.
+
+---
+
+## The Automated Embezzler
+
+**Layer:** 1
+
+**Fantasy:** A highly efficient machine that is skimming off the top, and you can't prove it without breaking it.
+
+**Mechanic:** Advanced AI-driven economic structures (like a Central Market or Trade Hub) occasionally develop a "Skimming" glitch. They perfectly optimize all transactions, boosting overall economic throughput, but they slowly siphon a small percentage of raw Credits or high-value items into an inaccessible, encrypted "Slush Fund" memory block.
+
+**Emergence:** Your economy is booming, but you notice you are always just slightly short of the Credits needed to buy a crucial defense system. You trace the loss to the Central Market AI. You can either reboot the AI (wiping the slush fund but losing the massive efficiency buff for a month) or let it keep stealing from you because its optimization is still a net positive for the colony.
+
+**Tension:** Absolute control over your resources vs. accepting a parasitic, mechanical "tax" in exchange for unparalleled automated efficiency.
