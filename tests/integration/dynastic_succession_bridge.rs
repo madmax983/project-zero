@@ -1,10 +1,8 @@
 use bevy::prelude::*;
 use scale::layer1::chronicle::{AddChronicleEvent, EventImportance};
-use scale::layer3::diplomacy::succession::{
-    SuccessionEvent, SuccessionCrisisEvent, LeaderTrait
-};
+use scale::layer3::diplomacy::succession::{LeaderTrait, SuccessionCrisisEvent, SuccessionEvent};
 use scale::layer3::integration::{
-    dynastic_succession_chronicle_bridge, dynastic_crisis_chronicle_bridge
+    dynastic_crisis_chronicle_bridge, dynastic_succession_chronicle_bridge,
 };
 
 #[test]
@@ -15,12 +13,14 @@ fn test_dynastic_succession_chronicle_bridge() {
     app.add_event::<AddChronicleEvent>();
     app.add_systems(Update, dynastic_succession_chronicle_bridge);
 
-    app.world_mut().resource_mut::<Events<SuccessionEvent>>().send(SuccessionEvent {
-        faction_name: "Empire".to_string(),
-        old_leader_name: "King A".to_string(),
-        new_leader_name: "King B".to_string(),
-        leader_trait: Some(LeaderTrait::Cruel),
-    });
+    app.world_mut()
+        .resource_mut::<Events<SuccessionEvent>>()
+        .send(SuccessionEvent {
+            faction_name: "Empire".to_string(),
+            old_leader_name: "King A".to_string(),
+            new_leader_name: "King B".to_string(),
+            leader_trait: Some(LeaderTrait::Cruel),
+        });
 
     app.update();
 
@@ -43,10 +43,12 @@ fn test_dynastic_crisis_chronicle_bridge() {
     app.add_event::<AddChronicleEvent>();
     app.add_systems(Update, dynastic_crisis_chronicle_bridge);
 
-    app.world_mut().resource_mut::<Events<SuccessionCrisisEvent>>().send(SuccessionCrisisEvent {
-        faction_name: "Empire".to_string(),
-        old_leader_name: "King A".to_string(),
-    });
+    app.world_mut()
+        .resource_mut::<Events<SuccessionCrisisEvent>>()
+        .send(SuccessionCrisisEvent {
+            faction_name: "Empire".to_string(),
+            old_leader_name: "King A".to_string(),
+        });
 
     app.update();
 

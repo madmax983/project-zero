@@ -54,26 +54,25 @@ pub struct SuccessionCrisisEvent {
     pub old_leader_name: String,
 }
 
-
 #[allow(clippy::type_complexity)]
 pub fn process_succession_system(
     mut commands: Commands,
     leader_query: Query<(Entity, &Age, &Leader), Without<Dead>>,
-    mut faction_query: Query<
-        (
-            Entity,
-            &mut CurrentLeader,
-            Option<&HeirApparent>,
-            Option<&SuccessionCrisis>,
-            &Faction,
-        ),
-    >,
+    mut faction_query: Query<(
+        Entity,
+        &mut CurrentLeader,
+        Option<&HeirApparent>,
+        Option<&SuccessionCrisis>,
+        &Faction,
+    )>,
     heir_query: Query<(&Heir, Option<&LeaderTrait>)>,
     mut succession_events: EventWriter<SuccessionEvent>,
     mut crisis_events: EventWriter<SuccessionCrisisEvent>,
 ) {
     // Reverse the iteration order to avoid nesting: Iterate over Factions first
-    for (faction_entity, mut current_leader, heir_apparent, crisis, faction) in faction_query.iter_mut() {
+    for (faction_entity, mut current_leader, heir_apparent, crisis, faction) in
+        faction_query.iter_mut()
+    {
         // If they already have a crisis, we don't process them again
         if crisis.is_some() {
             continue;
@@ -97,7 +96,9 @@ pub fn process_succession_system(
                         ("New King".to_string(), None)
                     };
 
-                    commands.entity(heir.0).insert(Leader { name: heir_name.clone() });
+                    commands.entity(heir.0).insert(Leader {
+                        name: heir_name.clone(),
+                    });
                     commands.entity(faction_entity).remove::<HeirApparent>();
 
                     succession_events.send(SuccessionEvent {

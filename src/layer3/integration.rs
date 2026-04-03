@@ -18,7 +18,7 @@ pub fn black_market_terraforming_bridge(
     }
 }
 
-use crate::layer3::diplomacy::succession::{SuccessionEvent, SuccessionCrisisEvent};
+use crate::layer3::diplomacy::succession::{SuccessionCrisisEvent, SuccessionEvent};
 
 /// Bridges `SuccessionEvent` to `AddChronicleEvent`
 pub fn dynastic_succession_chronicle_bridge(
