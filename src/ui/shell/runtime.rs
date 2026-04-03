@@ -7,9 +7,13 @@ use super::{
         TECH_PLUGIN_TYPE,
     },
 };
-use ratatui::layout::Direction;
-use ratatui_hypertile::PaneId;
-use ratatui_hypertile_extras::{HypertileRuntime, SplitBehavior, WorkspaceRuntime};
+use crate::platform::input::{GameKeyCode, GameKeyEvent};
+use ratatui::{
+    buffer::Buffer,
+    layout::{Direction, Rect},
+};
+use ratatui_hypertile::{HypertileEvent, KeyChord, KeyCode, Modifiers, PaneId};
+use ratatui_hypertile_extras::{HypertileRuntime, InputMode, SplitBehavior, WorkspaceRuntime};
 
 const COLONY_OPS_WORKSPACE: &str = "Colony Ops";
 const SYSTEM_SURVEY_WORKSPACE: &str = "System Survey";
@@ -45,6 +49,11 @@ impl UiShell {
     }
 
     #[must_use]
+    pub fn active_workspace_name(&self) -> &str {
+        &self.workspace_names[self.workspaces.active_tab_index()]
+    }
+
+    #[must_use]
     pub fn config(&self) -> &ShellConfig {
         &self.config
     }
@@ -52,6 +61,72 @@ impl UiShell {
     #[must_use]
     pub fn command_registry(&self) -> &CommandRegistry {
         &self.commands
+    }
+
+    #[must_use]
+    pub fn is_layout_mode(&self) -> bool {
+        self.workspaces.active_runtime().mode() == InputMode::Layout
+    }
+
+    #[must_use]
+    pub fn switch_to_workspace(&mut self, name: &str) -> bool {
+        if let Some(index) = self
+            .workspace_names
+            .iter()
+            .position(|workspace| workspace == name)
+        {
+            self.workspaces.go_to_tab(index);
+            true
+        } else {
+            false
+        }
+    }
+
+    pub fn render(&mut self, area: Rect, buf: &mut Buffer) {
+        self.workspaces.render(area, buf);
+    }
+
+    #[must_use]
+    pub fn open_palette(&mut self) -> bool {
+        let runtime = self.workspaces.active_runtime_mut();
+        runtime.set_mode(InputMode::Layout);
+        runtime
+            .handle_event(HypertileEvent::Key(KeyChord::new(KeyCode::Char('p'))))
+            .is_consumed()
+    }
+
+    #[must_use]
+    pub fn handle_key(&mut self, key: GameKeyEvent) -> bool {
+        let code = match key.code {
+            GameKeyCode::Char(ch) => KeyCode::Char(ch),
+            GameKeyCode::Enter => KeyCode::Enter,
+            GameKeyCode::Esc => KeyCode::Escape,
+            GameKeyCode::Tab => KeyCode::Tab,
+            GameKeyCode::BackTab => KeyCode::BackTab,
+            GameKeyCode::Backspace => KeyCode::Backspace,
+            GameKeyCode::Delete => KeyCode::Delete,
+            GameKeyCode::Up => KeyCode::Up,
+            GameKeyCode::Down => KeyCode::Down,
+            GameKeyCode::Left => KeyCode::Left,
+            GameKeyCode::Right => KeyCode::Right,
+        };
+
+        let mut modifiers = Modifiers::NONE;
+        if key.modifiers.shift {
+            modifiers |= Modifiers::SHIFT;
+        }
+        if key.modifiers.ctrl {
+            modifiers |= Modifiers::CTRL;
+        }
+        if key.modifiers.alt {
+            modifiers |= Modifiers::ALT;
+        }
+
+        self.workspaces
+            .handle_event(HypertileEvent::Key(KeyChord::with_modifiers(
+                code, modifiers,
+            )))
+            .is_consumed()
     }
 }
 
@@ -73,6 +148,9 @@ pub fn build_default_shell(world: SharedWorld, config: ShellConfig) -> UiShell {
     register_default_plugins_with_runtime(workspaces.active_runtime_mut(), world.clone());
     workspaces.rename_tab(0, String::from(COLONY_OPS_WORKSPACE));
     apply_workspace_preset(workspaces.active_runtime_mut(), COLONY_OPS_WORKSPACE);
+    workspaces
+        .active_runtime_mut()
+        .set_mode(InputMode::PluginInput);
 
     for workspace_name in [
         SYSTEM_SURVEY_WORKSPACE.to_string(),
@@ -82,6 +160,9 @@ pub fn build_default_shell(world: SharedWorld, config: ShellConfig) -> UiShell {
         register_default_plugins_with_runtime(workspaces.active_runtime_mut(), world.clone());
         workspaces.rename_tab(workspaces.active_tab_index(), workspace_name.clone());
         apply_workspace_preset(workspaces.active_runtime_mut(), &workspace_name);
+        workspaces
+            .active_runtime_mut()
+            .set_mode(InputMode::PluginInput);
     }
 
     if let Some(index) = workspace_names

@@ -63,6 +63,7 @@ use self::map::render_map;
 use self::menu::render_main_menu;
 use self::notifications::render_notifications;
 use self::panels::render_info_panel;
+use self::shell::UiShell;
 use self::status::render_status_bar;
 use self::tech::render_tech_tree;
 
@@ -140,5 +141,37 @@ pub fn render(world: &World, frame: &mut Frame) {
     render_chronicle(frame, frame.area(), world);
 
     // Render Tech Tree
+    render_tech_tree(frame, frame.area(), world);
+}
+
+/// Render the game UI through the hypertile shell while preserving legacy overlays.
+pub fn render_with_shell(world: &World, shell: &mut UiShell, frame: &mut Frame) {
+    if *world.resource::<GameState>() == GameState::MainMenu {
+        let menu_state = world.resource::<MenuState>();
+        render_main_menu(frame, frame.area(), menu_state);
+        return;
+    }
+
+    let ui_state = world.get_resource::<UiState>();
+    let suppress_ui = ui_state.is_some_and(|state| state.suppress_global_ui);
+    if suppress_ui {
+        render_map(frame, frame.area(), world);
+        render_notifications(frame, frame.area(), world);
+        return;
+    }
+
+    match *world.resource::<ViewMode>() {
+        ViewMode::System => {
+            let _ = shell.switch_to_workspace("System Survey");
+        }
+        ViewMode::Colony if shell.active_workspace_name() == "System Survey" => {
+            let _ = shell.switch_to_workspace("Colony Ops");
+        }
+        ViewMode::Colony => {}
+    }
+
+    shell.render(frame.area(), frame.buffer_mut());
+    render_notifications(frame, frame.area(), world);
+    render_chronicle(frame, frame.area(), world);
     render_tech_tree(frame, frame.area(), world);
 }

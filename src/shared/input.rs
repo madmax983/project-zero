@@ -12,6 +12,8 @@ use crate::shared::menu::MenuState;
 use crate::shared::selection::{handle_selection_click, screen_to_world, Selection};
 use crate::shared::state::GameState;
 use crate::shared::time::{SimSpeed, SimulationTime};
+use crate::ui::shell::plugins::SharedWorld;
+use crate::ui::shell::UiShell;
 
 /// Defines the current input handling context.
 #[derive(Clone, Copy, PartialEq, Eq, Debug, Default, Hash)]
@@ -159,6 +161,31 @@ pub fn route_input(world: &mut World, key: GameKeyEvent) {
     }
 }
 
+/// Route top-level input through the shell first, then gameplay handlers.
+pub fn route_root_input(world: &SharedWorld, shell: &mut UiShell, key: GameKeyEvent) {
+    let is_main_menu = {
+        let world = world.borrow();
+        *world.resource::<GameState>() == GameState::MainMenu
+    };
+
+    if is_main_menu {
+        route_input(&mut world.borrow_mut(), key);
+        return;
+    }
+
+    if key.modifiers.ctrl && matches!(key.code, GameKeyCode::Char('k' | 'K')) {
+        let _ = shell.open_palette();
+        return;
+    }
+
+    if shell.is_layout_mode() {
+        let _ = shell.handle_key(key);
+        return;
+    }
+
+    route_input(&mut world.borrow_mut(), key);
+}
+
 /// Route mouse input to the appropriate handler based on current context.
 pub fn route_mouse_input(world: &mut World, mouse: GameMouseEvent) {
     let context = world.resource::<InputContextStack>().current();
@@ -173,6 +200,20 @@ pub fn route_mouse_input(world: &mut World, mouse: GameMouseEvent) {
         }
         _ => {}
     }
+}
+
+/// Route top-level mouse input, suppressing gameplay clicks while layout mode is active.
+pub fn route_root_mouse_input(world: &SharedWorld, shell: &UiShell, mouse: GameMouseEvent) {
+    let is_main_menu = {
+        let world = world.borrow();
+        *world.resource::<GameState>() == GameState::MainMenu
+    };
+
+    if is_main_menu || shell.is_layout_mode() {
+        return;
+    }
+
+    route_mouse_input(&mut world.borrow_mut(), mouse);
 }
 
 fn handle_direct_control_mode(world: &mut World, key: GameKeyEvent) {
@@ -548,9 +589,13 @@ mod tests {
     use super::*;
     use crate::layer1::Viewport;
     use crate::platform::input::{GameKeyCode, GameKeyEvent, GameMouseEvent};
+    use crate::prelude::{setup_world_with_config, SetupConfig};
     use crate::shared::selection::{Selection, SelectionTarget};
     use crate::shared::state::GameState;
     use crate::shared::time::{SimSpeed, SimulationTime};
+    use crate::ui::shell::{build_default_shell, ShellConfig};
+    use ratatui::{buffer::Buffer, layout::Rect};
+    use std::{cell::RefCell, rc::Rc};
 
     fn key_event(code: GameKeyCode) -> GameKeyEvent {
         GameKeyEvent::new(code)
@@ -558,6 +603,20 @@ mod tests {
 
     fn mouse_event(column: u16, row: u16) -> GameMouseEvent {
         GameMouseEvent::new(column, row)
+    }
+
+    #[test]
+    fn ctrl_k_opens_palette_without_toggling_gameplay_state() {
+        let (world, mut shell) = setup_shell_world_for_test();
+
+        route_root_input(
+            &world,
+            &mut shell,
+            GameKeyEvent::new(GameKeyCode::Char('k')).with_ctrl(),
+        );
+
+        assert!(shell_buffer_contains(&mut shell, "Add Plugin"));
+        assert_eq!(*world.borrow().resource::<GameState>(), GameState::Running);
     }
 
     #[test]
@@ -927,5 +986,37 @@ mod tests {
             world.resource::<InputContextStack>().current(),
             InputContext::MainMenu
         );
+    }
+
+    fn setup_shell_world_for_test() -> (SharedWorld, UiShell) {
+        let world = Rc::new(RefCell::new(setup_world_with_config(SetupConfig {
+            headless: true,
+        })));
+        {
+            let mut world_ref = world.borrow_mut();
+            world_ref.insert_resource(GameState::Running);
+            let mut stack = InputContextStack::default();
+            stack.push(InputContext::Normal);
+            world_ref.insert_resource(stack);
+            world_ref.insert_resource(ViewMode::Colony);
+            world_ref.insert_resource(crate::layer2::visibility::SystemVisibility::Full);
+        }
+
+        let config = world.borrow().resource::<ShellConfig>().clone();
+        let shell = build_default_shell(Rc::clone(&world), config);
+        (world, shell)
+    }
+
+    fn shell_buffer_contains(shell: &mut UiShell, needle: &str) -> bool {
+        let area = Rect::new(0, 0, 100, 30);
+        let mut buffer = Buffer::empty(area);
+        shell.render(area, &mut buffer);
+        buffer
+            .content()
+            .iter()
+            .map(|cell| cell.symbol())
+            .collect::<Vec<_>>()
+            .join("")
+            .contains(needle)
     }
 }

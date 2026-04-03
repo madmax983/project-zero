@@ -11,13 +11,16 @@ use scale::layer1::map::{update_camera_smooth, update_screen_shake_system};
 use scale::layer1::GlobalHitStop;
 use scale::platform::input::{GameKeyEvent, GameMouseEvent};
 use scale::setup::setup_world;
-use scale::shared::input::{route_input, route_mouse_input};
+use scale::shared::input::{route_root_input, route_root_mouse_input};
 use scale::shared::state::GameState;
 use scale::shared::time::{SimSpeed, SimulationTime, WallTime};
 use scale::simulation::run_simulation_tick;
 use scale::ui::map::update_render_cache;
-use scale::ui::render;
+use scale::ui::render_with_shell;
+use scale::ui::shell::build_default_shell;
+use std::cell::RefCell;
 use std::io;
+use std::rc::Rc;
 use std::time::{Duration, Instant};
 
 fn main() -> anyhow::Result<()> {
@@ -44,7 +47,12 @@ fn main() -> anyhow::Result<()> {
 }
 
 fn run_app(terminal: &mut Terminal<CrosstermBackend<io::Stdout>>) -> anyhow::Result<()> {
-    let mut world = setup_world();
+    let world = Rc::new(RefCell::new(setup_world()));
+    let config = world
+        .borrow()
+        .resource::<scale::ui::shell::ShellConfig>()
+        .clone();
+    let mut shell = build_default_shell(Rc::clone(&world), config);
 
     // Main loop
     let tick_rate = Duration::from_millis(100); // 10 FPS base
@@ -56,7 +64,7 @@ fn run_app(terminal: &mut Terminal<CrosstermBackend<io::Stdout>>) -> anyhow::Res
         let delta = now.duration_since(last_frame);
         last_frame = now;
 
-        world.resource_mut::<WallTime>().0 += delta.as_secs_f32();
+        world.borrow_mut().resource_mut::<WallTime>().0 += delta.as_secs_f32();
 
         // Input
         // event::read() must only be called after event::poll() indicates that an event is available.
@@ -66,12 +74,12 @@ fn run_app(terminal: &mut Terminal<CrosstermBackend<io::Stdout>>) -> anyhow::Res
             match event::read()? {
                 Event::Key(key) => {
                     if let Ok(game_key) = GameKeyEvent::try_from(key) {
-                        route_input(&mut world, game_key);
+                        route_root_input(&world, &mut shell, game_key);
                     }
                 }
                 Event::Mouse(mouse) => {
                     if let Ok(game_mouse) = GameMouseEvent::try_from(mouse) {
-                        route_mouse_input(&mut world, game_mouse);
+                        route_root_mouse_input(&world, &shell, game_mouse);
                     }
                 }
                 _ => {}
@@ -79,7 +87,7 @@ fn run_app(terminal: &mut Terminal<CrosstermBackend<io::Stdout>>) -> anyhow::Res
         }
 
         // Check quit
-        if *world.resource::<GameState>() == GameState::Quitting {
+        if *world.borrow().resource::<GameState>() == GameState::Quitting {
             break;
         }
 
@@ -87,17 +95,17 @@ fn run_app(terminal: &mut Terminal<CrosstermBackend<io::Stdout>>) -> anyhow::Res
         if last_tick.elapsed() >= tick_rate {
             // Check Global Hit Stop (Juice Freeze)
             let mut hit_stop_active = false;
-            if let Some(mut hs) = world.get_resource_mut::<GlobalHitStop>() {
+            if let Some(mut hs) = world.borrow_mut().get_resource_mut::<GlobalHitStop>() {
                 if hs.ticks > 0 {
                     hs.ticks -= 1;
                     hit_stop_active = true;
                 }
             }
 
-            if !hit_stop_active && *world.resource::<GameState>() == GameState::Running {
-                let speed = world.resource::<SimulationTime>().speed;
+            if !hit_stop_active && *world.borrow().resource::<GameState>() == GameState::Running {
+                let speed = world.borrow().resource::<SimulationTime>().speed;
                 if speed != SimSpeed::Paused {
-                    run_simulation_tick(&mut world);
+                    run_simulation_tick(&mut world.borrow_mut());
                 }
             }
 
@@ -106,14 +114,20 @@ fn run_app(terminal: &mut Terminal<CrosstermBackend<io::Stdout>>) -> anyhow::Res
 
         // Prepare render data
         // We run screen shake here to ensure it updates even during hit stop
-        if let Err(e) = world.run_system_once(update_screen_shake_system) {
+        if let Err(e) = world
+            .borrow_mut()
+            .run_system_once(update_screen_shake_system)
+        {
             log::error!("Screen shake system failed: {}", e);
         }
-        update_camera_smooth(&mut world);
-        update_render_cache(&mut world);
+        update_camera_smooth(&mut world.borrow_mut());
+        update_render_cache(&mut world.borrow_mut());
 
         // Render
-        terminal.draw(|frame| render(&world, frame))?;
+        terminal.draw(|frame| {
+            let world = world.borrow();
+            render_with_shell(&world, &mut shell, frame);
+        })?;
     }
 
     Ok(())
