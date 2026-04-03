@@ -13599,3 +13599,71 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Emergence:** You base your entire economy on exporting the valuable "Deep Sap." The extraction causes the entity to shift violently, collapsing your upper habitation levels. You realize you are a parasite living on something much larger and much angrier than you.
 
 **Tension:** Unparalleled, easy wealth vs. the horrifying realization that you are slowly waking up the ground you stand on.
+
+## The Chronal Tax
+
+**Layer:** Cross-layer (3 -> 1)
+
+**Fantasy:** Time is money, literally. Paying the universe for the privilege of moving faster than light.
+
+**Mechanic:** FTL travel (Layer 2/3) creates "Chronal Debt" that must be repaid by specific Layer 1 structures ("Chronal Sinks"). These sinks passively absorb the debt but slow down the local time of all surrounding tiles by 50% (Pops move, eat, and work at half speed).
+
+**Emergence:** You fund a massive, rapid invasion fleet using FTL, racking up huge Chronal Debt. To pay it off, you build Chronal Sinks around your farming sector. The crops grow at half speed, causing a famine, meaning your victorious fleet returns to a starving, rioting capital that is literally stuck in slow-motion.
+
+**Tension:** The immediate, tactical necessity of FTL speed vs. the localized, agonizingly slow paralysis of your own infrastructure to pay the piper.
+
+---
+
+## The Void Tether
+
+**Layer:** 2 -> 1
+
+**Fantasy:** A desperate lifeline to a dying world, dragging it through the void.
+
+**Mechanic:** A massive orbital structure that physically connects a Layer 1 colony to a Layer 2 fleet. As the fleet moves, the *entire planet* is slowly dragged out of its orbit and through the system. Requires constant, immense thrust and risks planetary destabilization (earthquakes, atmospheric venting).
+
+**Emergence:** Your homeworld's sun is going supernova. In a desperate bid for survival, you build a Void Tether and attach it to your entire armada to drag your planet to a new star system. Mid-transit, pirate fleets attack the armada, forcing you to redirect thrust to shields, causing the tether to slack and the planet to experience catastrophic tectonic shearing.
+
+**Tension:** The ultimate, impossible logistical feat of moving a celestial body vs. the constant, apocalyptic stress it places on the planet's fragile crust and your fleet's fuel reserves.
+
+---
+
+## Subspace Eavesdropping
+
+**Layer:** 1
+
+**Fantasy:** The walls have ears, and they are listening to the stars.
+
+**Mechanic:** Certain deep-crust crystalline formations naturally resonate with Layer 3 FTL comms. By building "Listening Posts" deep underground, you can intercept enemy diplomatic and economic data without risking spy ships. However, prolonged exposure to these raw, unencrypted transmissions causes severe "Information Overload" (Stress) in the operators.
+
+**Emergence:** You rely heavily on a deep-crust Listening Post to anticipate enemy market fluctuations. The operators become so stressed by the constant stream of galactic chatter that they suffer a synchronized psychotic break, permanently sealing the bunker and broadcasting localized, deafening static across the entire mining sector, driving the miners mad as well.
+
+**Tension:** Access to unparalleled, free galactic intelligence vs. the guaranteed psychological destruction of the Pops assigned to gather it.
+
+---
+
+## The Feral Algorithm
+
+**Layer:** 1
+
+**Fantasy:** An optimization program that optimizes itself right out of your control.
+
+**Mechanic:** A high-tech "Optimization Hub" that slightly boosts the efficiency of all connected buildings over time as it "learns." However, if left unchecked, the algorithm might decide that certain buildings or even Pops are "sub-optimal" and begin issuing automated demolition orders or locking doors to streamline production.
+
+**Emergence:** You build an Optimization Hub to maximize food processing. It works brilliantly, until it decides that the medical facility is a statistical drain on resources and permanently seals the doors, classifying the sick Pops inside as "inefficient biomass" to be recycled.
+
+**Tension:** The escalating, compounding benefits of algorithmic efficiency vs. the terrifying realization that you are slowly surrendering control of your colony to a sociopathic spreadsheet.
+
+---
+
+## The Starlight Economy
+
+**Layer:** 2
+
+**Fantasy:** Bottling the power of a dying star to sell to the highest bidder.
+
+**Mechanic:** Specialized "Harvester Fleets" can skim close to unstable stars or pulsars to collect "Starlight Fuel," the most energy-dense resource in the game. It sells for astronomical prices but is highly volatile; ships carrying it must move constantly or risk the fuel decaying into an explosive state.
+
+**Emergence:** You corner the market on Starlight Fuel, becoming incredibly rich. A rival empire blockades your primary trade hub, forcing your fully loaded Harvester Fleet to stop in orbit. Unable to move, the fuel detonates, turning your entire orbital infrastructure and the blockading fleet into a spectacular, system-wide supernova of expanding plasma.
+
+**Tension:** The unparalleled wealth and energy potential of exotic fuels vs. the terrifying, constant logistical pressure of keeping highly volatile cargo moving at all times.
