@@ -26,7 +26,8 @@ fn test_void_whispers_returns_chronicle_event() {
         .spawn((VoidWhispers { intensity: 50.0 },))
         .id();
 
-    app.world_mut().send_event(FleetReturnedEvent { fleet, colony });
+    app.world_mut()
+        .send_event(FleetReturnedEvent { fleet, colony });
 
     app.update();
 

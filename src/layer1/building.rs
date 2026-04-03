@@ -1476,8 +1476,7 @@ fn configure_farm_buildings(entity: &mut EntityWorldMut, building_type: Building
     }
 }
 
-#[allow(clippy::too_many_lines)]
-fn configure_refining_buildings(entity: &mut EntityWorldMut, building_type: BuildingType) {
+fn configure_basic_refiners(entity: &mut EntityWorldMut, building_type: BuildingType) {
     match building_type {
         BuildingType::Smokehouse => {
             entity.insert((
@@ -1517,6 +1516,21 @@ fn configure_refining_buildings(entity: &mut EntityWorldMut, building_type: Buil
                 ShiftSchedule::default(),
             ));
         }
+        BuildingType::StoneMason | BuildingType::Weaver | BuildingType::Tailor => {
+            entity.insert((
+                RefiningProgress {
+                    current: 0.0,
+                    max: 10.0,
+                },
+                ShiftSchedule::default(),
+            ));
+        }
+        _ => {}
+    }
+}
+
+fn configure_advanced_refiners(entity: &mut EntityWorldMut, building_type: BuildingType) {
+    match building_type {
         BuildingType::Smelter => {
             entity.insert((
                 RefiningProgress {
@@ -1571,15 +1585,6 @@ fn configure_refining_buildings(entity: &mut EntityWorldMut, building_type: Buil
                 ShiftSchedule::default(),
             ));
         }
-        BuildingType::StoneMason | BuildingType::Weaver | BuildingType::Tailor => {
-            entity.insert((
-                RefiningProgress {
-                    current: 0.0,
-                    max: 10.0,
-                },
-                ShiftSchedule::default(),
-            ));
-        }
         BuildingType::Refinery => {
             entity.insert((
                 RefiningProgress {
@@ -1605,11 +1610,9 @@ fn configure_refining_buildings(entity: &mut EntityWorldMut, building_type: Buil
         }
         BuildingType::AncientFabricator => {
             entity.insert((
-                // Refining logic needs to be added, maybe RefiningProgress with high speed?
-                // For now, just mark it.
                 RefiningProgress {
                     current: 0.0,
-                    max: 1.0, // Very fast? Default is 10.0
+                    max: 1.0,
                 },
                 AncientStructure,
                 MachineSpirit::default(),
@@ -1628,6 +1631,11 @@ fn configure_refining_buildings(entity: &mut EntityWorldMut, building_type: Buil
         }
         _ => {}
     }
+}
+
+fn configure_refining_buildings(entity: &mut EntityWorldMut, building_type: BuildingType) {
+    configure_basic_refiners(entity, building_type);
+    configure_advanced_refiners(entity, building_type);
 }
 
 fn configure_production(entity: &mut EntityWorldMut, building_type: BuildingType) {
