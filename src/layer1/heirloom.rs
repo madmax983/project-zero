@@ -13,6 +13,7 @@
 use crate::layer1::building::{
     can_place_building, spawn_building_with_material, BuildingType, MaterialType, OccupiedTiles,
 };
+use crate::layer1::map::GridPosition;
 use crate::layer1::structure::Structure;
 use crate::layer1::terrain::TerrainGrid;
 use bevy_ecs::prelude::*;
@@ -103,7 +104,11 @@ pub fn check_heirloom_status_system(
 }
 
 /// Spawns the initial Ancient Structures on the map.
-pub fn spawn_ancient_structures(world: &mut World) {
+pub fn spawn_ancient_structures(
+    world: &mut World,
+    exclusion_center: Option<GridPosition>,
+    exclusion_radius: i32,
+) {
     let (width, height) = {
         let grid = world.resource::<TerrainGrid>();
         #[allow(clippy::cast_possible_truncation, clippy::cast_possible_wrap)]
@@ -112,9 +117,17 @@ pub fn spawn_ancient_structures(world: &mut World) {
 
     let center_x = width / 2;
     let center_y = height / 2;
+    let search_radius = width.max(height);
 
     // Place Ancient Reactor
-    if let Some((x, y)) = find_valid_spot(world, center_x, center_y, 15) {
+    if let Some((x, y)) = find_valid_spot(
+        world,
+        center_x,
+        center_y,
+        search_radius,
+        exclusion_center,
+        exclusion_radius,
+    ) {
         spawn_building_with_material(
             world,
             x,
@@ -130,7 +143,14 @@ pub fn spawn_ancient_structures(world: &mut World) {
     }
 
     // Place Ancient Fabricator (offset slightly)
-    if let Some((x, y)) = find_valid_spot(world, center_x + 3, center_y + 3, 15) {
+    if let Some((x, y)) = find_valid_spot(
+        world,
+        center_x + 3,
+        center_y + 3,
+        search_radius,
+        exclusion_center,
+        exclusion_radius,
+    ) {
         spawn_building_with_material(
             world,
             x,
@@ -146,9 +166,18 @@ pub fn spawn_ancient_structures(world: &mut World) {
     }
 }
 
-fn find_valid_spot(world: &World, cx: i32, cy: i32, radius: i32) -> Option<(i32, i32)> {
+fn find_valid_spot(
+    world: &World,
+    cx: i32,
+    cy: i32,
+    radius: i32,
+    exclusion_center: Option<GridPosition>,
+    exclusion_radius: i32,
+) -> Option<(i32, i32)> {
+    let exclusion_radius_sq = exclusion_radius.saturating_mul(exclusion_radius);
+
     // Spiral search outward from center
-    for r in 0..radius {
+    for r in 0..=radius {
         for dy in -r..=r {
             for dx in -r..=r {
                 // Only check the perimeter of the current radius to avoid re-checking inner tiles
@@ -158,11 +187,28 @@ fn find_valid_spot(world: &World, cx: i32, cy: i32, radius: i32) -> Option<(i32,
 
                 let x = cx + dx;
                 let y = cy + dy;
-                if can_place_building(world, x, y) {
+                if can_place_building(world, x, y)
+                    && is_outside_exclusion_zone(x, y, exclusion_center, exclusion_radius_sq)
+                {
                     return Some((x, y));
                 }
             }
         }
     }
     None
+}
+
+fn is_outside_exclusion_zone(
+    x: i32,
+    y: i32,
+    exclusion_center: Option<GridPosition>,
+    exclusion_radius_sq: i32,
+) -> bool {
+    let Some(center) = exclusion_center else {
+        return true;
+    };
+
+    let dx = x - center.x;
+    let dy = y - center.y;
+    dx.saturating_mul(dx) + dy.saturating_mul(dy) >= exclusion_radius_sq
 }

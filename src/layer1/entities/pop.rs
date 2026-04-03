@@ -88,6 +88,9 @@ pub struct PopDied {
     pub reason: String,
 }
 
+const POP_DEATH_SCREEN_SHAKE: f32 = 0.25;
+const POP_DEATH_HIT_STOP_TICKS: u32 = 2;
+
 /// Event triggered when a pop is born/spawned (e.g. from Clone Vat).
 #[derive(Event, Debug, Clone)]
 pub struct PopBorn {
@@ -414,7 +417,15 @@ pub fn reset_speed_system(mut query: Query<&mut Speed>) {
 #[allow(clippy::type_complexity)]
 pub fn handle_pop_death_system(
     mut pop_died_events: EventWriter<PopDied>,
-    query: Query<(Entity, Option<&GridPosition>, Option<&PopName>), (With<Pop>, Added<Dead>)>,
+    query: Query<
+        (
+            Entity,
+            Option<&GridPosition>,
+            Option<&PopName>,
+            Option<&crate::layer1::health::DeathCause>,
+        ),
+        (With<Pop>, Added<Dead>),
+    >,
     mut commands: Commands,
     mut log: Option<ResMut<MessageLog>>,
     mut shake: Option<ResMut<ScreenShake>>,
@@ -423,8 +434,11 @@ pub fn handle_pop_death_system(
 ) {
     let tick = time.map_or(0, |t| t.tick);
 
-    for (entity, pos_opt, name_opt) in query.iter() {
+    for (entity, pos_opt, name_opt, cause_opt) in query.iter() {
         let name = name_opt.map_or_else(|| "Unknown".to_string(), |n| n.0.clone());
+        let reason = cause_opt
+            .map(|cause| cause.0.clone())
+            .unwrap_or_else(|| "Causes unknown".to_string());
 
         // 1. Spawn Corpse & Visuals
         if let Some(pos) = pos_opt {
@@ -449,10 +463,10 @@ pub fn handle_pop_death_system(
 
         // 2. Screen Shake & Hit Stop (Ludwig)
         if let Some(shake) = shake.as_mut() {
-            shake.trigger(1.0_f32); // Intense shake
+            shake.trigger(POP_DEATH_SCREEN_SHAKE);
         }
         if let Some(hs) = hit_stop.as_mut() {
-            hs.trigger(8); // Freeze for 8 ticks
+            hs.trigger(POP_DEATH_HIT_STOP_TICKS);
         }
 
         // 3. Log
@@ -465,7 +479,7 @@ pub fn handle_pop_death_system(
             entity,
             name,
             tick,
-            reason: "Causes unknown".to_string(),
+            reason,
         });
 
         // Note: We do NOT despawn here. Generic `despawn_dead_entities_system` handles it.
