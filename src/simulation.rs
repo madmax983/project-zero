@@ -227,6 +227,7 @@ pub fn build_simulation_schedule() -> Schedule {
             .after(crate::layer3::physics::relativity::process_time_dilation_system),
         crate::layer2::exploration::void_whispers::accumulate_void_whispers_in_deep_space,
         crate::layer2::exploration::void_whispers::spread_whispers_to_colony,
+        crate::layer2::integration::void_whispers_chronicle_bridge,
     ));
     schedule
 }

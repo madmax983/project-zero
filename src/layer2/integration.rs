@@ -471,3 +471,21 @@ pub fn reverse_quarantine_chronicle_bridge(
         }
     }
 }
+
+use crate::layer2::exploration::void_whispers::{FleetReturnedEvent, VoidWhispers};
+
+/// Bridges `FleetReturnedEvent` from Void Whispers exploration into the `Chronicle` system.
+pub fn void_whispers_chronicle_bridge(
+    mut events: EventReader<FleetReturnedEvent>,
+    fleets: Query<&VoidWhispers>,
+    mut chronicle_events: EventWriter<AddChronicleEvent>,
+) {
+    for event in events.read() {
+        if fleets.get(event.fleet).is_ok() {
+            chronicle_events.send(AddChronicleEvent {
+                text: "A returning fleet brings strange tales... and Void Whispers that begin to infect the colony.".to_string(),
+                importance: EventImportance::Major,
+            });
+        }
+    }
+}
