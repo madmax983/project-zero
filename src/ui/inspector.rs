@@ -15,6 +15,8 @@ use ratatui::{
 };
 
 #[cfg(feature = "nova")]
+use crate::experimental::bureaucratic_martyrdom::Martyrdom;
+#[cfg(feature = "nova")]
 use crate::experimental::meme_plague::{MemeCarrier, MemeType};
 use crate::layer1::biography::Biography;
 use crate::layer1::day_night::DayNightCycle;
@@ -706,12 +708,18 @@ fn get_inspector_layout_info(world: &World, entity: Entity) -> InspectorLayoutIn
     #[cfg(not(feature = "nova"))]
     let has_meme = false;
 
+    #[cfg(feature = "nova")]
+    let has_martyrdom = world.get::<Martyrdom>(entity).map_or(false, |m| m.active);
+    #[cfg(not(feature = "nova"))]
+    let has_martyrdom = false;
+
     let extra_height = u16::from(has_cable)
         + u16::from(has_battery)
         + u16::from(has_consumer)
         + u16::from(has_source)
         + u16::from(has_emitter)
-        + u16::from(has_meme);
+        + u16::from(has_meme)
+        + u16::from(has_martyrdom);
 
     InspectorLayoutInfo {
         details_height: 6,
@@ -1108,6 +1116,28 @@ fn render_extra_info(
         #[allow(unused_assignments)]
         {
             extra_idx += 1;
+        }
+    }
+
+    #[cfg(feature = "nova")]
+    if let Some(martyrdom) = world.get::<Martyrdom>(entity) {
+        if martyrdom.active {
+            frame.render_widget(
+                Paragraph::new(Line::from(vec![
+                    Span::styled(
+                        "⚠️ BUREAUCRATIC MARTYRDOM ACTIVE ⚠️",
+                        Style::default()
+                            .fg(Color::Red)
+                            .add_modifier(Modifier::BOLD)
+                            .add_modifier(Modifier::RAPID_BLINK),
+                    ),
+                ])),
+                extra_chunks[extra_idx],
+            );
+            #[allow(unused_assignments)]
+            {
+                extra_idx += 1;
+            }
         }
     }
 }
