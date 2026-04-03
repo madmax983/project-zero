@@ -1,3 +1,46 @@
+//! Bio-Acoustic Chorus System.
+//!
+//! This module implements the "Bio-Acoustic Chorus" mechanic, where certain flora emit
+//! sympathetic vibrations and sounds based on the overall emotional state of the colony.
+//!
+//! # Context
+//! When the colony's `Unrest` is low (i.e. high colony mood), [`BioAcousticFlora`] emit a
+//! beautiful, relaxing symphony that provides a positive [`MoodModifier`] to nearby `Pop`s.
+//! Conversely, if the colony is in turmoil, the flora emit a dissonant, stressful screech
+//! that penalizes the `Morale` of nearby `Pop`s.
+//!
+//! # Usage
+//! ```
+//! use bevy_ecs::prelude::*;
+//! use scale::layer1::bio_acoustic::{BioAcousticFlora, bio_acoustic_chorus_system};
+//! use scale::layer1::map::GridPosition;
+//! use scale::layer1::morale::{Morale, MoodModifier};
+//! use scale::layer1::pop::Pop;
+//! use scale::layer1::unrest::Unrest;
+//!
+//! let mut world = World::new();
+//!
+//! // Low unrest (0.2) means high colony mood.
+//! world.insert_resource(Unrest {
+//!     level: 0.2,
+//!     ..Default::default()
+//! });
+//!
+//! // Spawn flora and a nearby pop
+//! world.spawn((BioAcousticFlora, GridPosition { x: 5, y: 5 }));
+//! let pop = world.spawn((Pop, GridPosition { x: 6, y: 5 }, Morale::default())).id();
+//!
+//! // Run the system
+//! let mut schedule = Schedule::default();
+//! schedule.add_systems(bio_acoustic_chorus_system);
+//! schedule.run(&mut world);
+//!
+//! // The pop receives a positive mood modifier!
+//! let morale = world.get::<Morale>(pop).unwrap();
+//! assert!(!morale.modifiers.is_empty());
+//! assert!(morale.modifiers[0].value > 0.0);
+//! ```
+
 use crate::layer1::map::GridPosition;
 use crate::layer1::morale::{MoodModifier, Morale};
 use crate::layer1::pop::Pop;

@@ -1,3 +1,43 @@
+//! Day/Night Cycle System.
+//!
+//! This module implements the "Day/Night Cycle" mechanic, driving global changes in lighting,
+//! scheduling, and physiological needs based on the progression of time.
+//!
+//! # Context
+//! The [`DayNightCycle`] resource tracks the current [`TimeOfDay`] (Dawn, Day, Dusk, Night) and the
+//! number of days elapsed. It is updated by the [`update_day_night_cycle_system`] based on the global
+//! [`SimulationTime`](crate::shared::time::SimulationTime).
+//!
+//! Progression of the cycle has systemic effects:
+//! *   [`update_ambient_light_from_cycle_system`] adjusts the global [`AmbientLight`](crate::layer1::lighting::AmbientLight) level.
+//! *   [`circadian_rhythm_system`] increases the rate at which `Pop`s' `rest` need decays during `TimeOfDay::Night`.
+//!
+//! # Usage
+//! ```
+//! use bevy_ecs::prelude::*;
+//! use scale::layer1::day_night::{DayNightCycle, TimeOfDay, update_day_night_cycle_system};
+//! use scale::shared::time::SimulationTime;
+//!
+//! let mut world = World::new();
+//!
+//! // Setup time and cycle
+//! world.insert_resource(SimulationTime { tick: 90, ..Default::default() });
+//! world.insert_resource(DayNightCycle {
+//!     time_of_day: TimeOfDay::Day,
+//!     ticks_per_day: 100, // 0-9: Dawn, 10-74: Day, 75-84: Dusk, 85-99: Night
+//!     day_count: 0,
+//! });
+//!
+//! // Advance the cycle
+//! let mut schedule = Schedule::default();
+//! schedule.add_systems(update_day_night_cycle_system);
+//! schedule.run(&mut world);
+//!
+//! // At tick 90, it is Night!
+//! let cycle = world.resource::<DayNightCycle>();
+//! assert_eq!(cycle.time_of_day, TimeOfDay::Night);
+//! ```
+
 use crate::layer1::lighting::AmbientLight;
 use crate::layer1::needs::Needs;
 use crate::layer1::pop::Pop;

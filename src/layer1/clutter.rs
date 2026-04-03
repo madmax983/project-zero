@@ -1,3 +1,35 @@
+//! Operational Detritus (Clutter) System.
+//!
+//! This module implements the "Clutter" mechanic, representing the physical mess left behind by
+//! active `Pop`s. Clutter negatively impacts beauty and increases pathfinding cost.
+//!
+//! # Context
+//! The [`ClutterGrid`] stores the current clutter value for every tile.
+//! *   The [`clutter_accumulation_system`] passively increases clutter on tiles where `Pop`s perform
+//!     actions. The messiness depends on the [`ActionType`](crate::layer1::ActionType) (e.g., Working generates more clutter than Idling).
+//! *   The [`clutter_cleaning_system`] is run when `Pop`s are assigned the `Clean` action. It reduces
+//!     clutter on their current tile and has a small chance to spawn a `Scrap` item.
+//!
+//! # Usage
+//! ```
+//! use bevy_ecs::prelude::*;
+//! use scale::layer1::clutter::ClutterGrid;
+//!
+//! let mut grid = ClutterGrid::new(10, 10);
+//!
+//! // Add clutter
+//! grid.add_clutter(5, 5, 20.0);
+//! assert_eq!(grid.get(5, 5), 20.0);
+//!
+//! // Remove clutter
+//! grid.remove_clutter(5, 5, 5.0);
+//! assert_eq!(grid.get(5, 5), 15.0);
+//!
+//! // Clutter is clamped at 0.0 and 100.0
+//! grid.remove_clutter(5, 5, 50.0);
+//! assert_eq!(grid.get(5, 5), 0.0);
+//! ```
+
 use bevy_ecs::prelude::*;
 use rand::Rng;
 

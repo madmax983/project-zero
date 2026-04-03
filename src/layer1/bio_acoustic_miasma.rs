@@ -1,3 +1,61 @@
+//! Bio-Acoustic Miasma System.
+//!
+//! This module implements the "Bio-Acoustic Miasma" mechanic. Certain conditions in the colony
+//! create dense invisible clouds ([`MiasmaCloud`]) that act as recording media for `Pop`s' innermost thoughts.
+//!
+//! # Context
+//! When a `Pop` with high stress enters a [`MiasmaCloud`], their negative thoughts and secrets
+//! are permanently recorded into the environment ([`record_miasma_secret`]). Later, these secrets
+//! are broadcasted back into the colony via sympathetic resonance ([`broadcast_miasma_secrets`]),
+//! which significantly increases the level of a [`ParanoiaTracker`] in any `Pop` that hears it.
+//!
+//! # Usage
+//! ```
+//! use bevy_ecs::prelude::*;
+//! use scale::layer1::bio_acoustic_miasma::{MiasmaCloud, ParanoiaTracker, MiasmaRecordedSecret, record_miasma_secret, broadcast_miasma_secrets};
+//! use scale::layer1::map::GridPosition;
+//! use scale::layer1::pop::Pop;
+//! use scale::layer1::stress::StressTracker;
+//! use scale::layer1::chronicle::{Chronicle, AddChronicleEvent};
+//!
+//! let mut world = World::new();
+//! world.init_resource::<MiasmaRecordedSecret>();
+//! world.init_resource::<Chronicle>();
+//! world.init_resource::<Events<AddChronicleEvent>>();
+//!
+//! let pos = GridPosition { x: 5, y: 5 };
+//!
+//! // Spawn a cloud
+//! world.spawn(MiasmaCloud { position: pos, lifetime: 5 });
+//!
+//! // Spawn a highly stressed Pop in the cloud
+//! world.spawn((Pop, pos, StressTracker { accumulated_stress: 80.0 }));
+//!
+//! // Record secrets
+//! let mut schedule1 = Schedule::default();
+//! schedule1.add_systems(record_miasma_secret);
+//! schedule1.run(&mut world);
+//!
+//! // The secret should be recorded
+//! let secrets = world.get_resource::<MiasmaRecordedSecret>().unwrap();
+//! assert_eq!(secrets.secrets.len(), 1);
+//!
+//! // Spawn a listener
+//! let listener = world.spawn((Pop, pos, ParanoiaTracker { level: 0 })).id();
+//!
+//! // Broadcast secrets
+//! let mut schedule2 = Schedule::default();
+//! schedule2.add_systems(broadcast_miasma_secrets);
+//! schedule2.run(&mut world);
+//!
+//! // The listener's paranoia increases, and secrets are cleared
+//! let paranoia = world.get::<ParanoiaTracker>(listener).unwrap().level;
+//! assert!(paranoia > 0);
+//!
+//! let secrets_after = world.get_resource::<MiasmaRecordedSecret>().unwrap();
+//! assert!(secrets_after.secrets.is_empty());
+//! ```
+
 use crate::layer1::chronicle::{AddChronicleEvent, EventImportance};
 use crate::layer1::map::GridPosition;
 use crate::layer1::pop::Pop;
