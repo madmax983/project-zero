@@ -101,3 +101,8 @@
 **Concept:** A system that monitors administrative backlog via `AdminBacklog`. When the backlog gets critical, Pops assigned as `Administrator` with the `HardWorker` trait can enter a `Martyrdom` state. They receive a 500% speed boost but continuously drain health until they die, at which point they dispatch an `AddChronicleEvent` marking a 'Golden Age' for their sacrifice.
 **Fate:** Merged
 **Lesson:** Tying extreme abstract logistical pressure directly to individual entity sacrifice creates narrative weight. Forcing a systemic override that physically damages a Pop to solve an administrative crisis forces players to weigh efficiency against human life.
+
+## [The Panopticon Glitch]
+**Concept:** Added `PanopticonNode` and `panopticon_surveillance_system`. Normal operation reduces nearby Pops' stress and clamps morale via an intrusive surveillance grid. Over time it builds `instability`. When instability hits a threshold, it glitches, broadcasting everyone's secrets and causing a massive stress spike and morale crash, along with dispatching an `AddChronicleEvent`.
+**Fate:** Proposed
+**Lesson:** Providing a powerful, passive solution to complex negative states (stress) should come with a systemic risk. The 'glitch' transforms a reliable infrastructural tool into a ticking time bomb, forcing players to actively manage the tool's usage rather than "fire and forget".

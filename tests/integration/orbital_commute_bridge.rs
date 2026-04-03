@@ -1,7 +1,7 @@
 use bevy::prelude::*;
-use scale::layer1::logistics::commute::{CommuteAction, CurrentLocation, process_orbital_commutes};
 use scale::layer1::economy::ColonyResources;
 use scale::layer1::entities::Pop;
+use scale::layer1::logistics::commute::{process_orbital_commutes, CommuteAction, CurrentLocation};
 use scale::layer3::physics::relativity::SystemNode;
 
 #[test]

@@ -709,7 +709,7 @@ fn get_inspector_layout_info(world: &World, entity: Entity) -> InspectorLayoutIn
     let has_meme = false;
 
     #[cfg(feature = "nova")]
-    let has_martyrdom = world.get::<Martyrdom>(entity).map_or(false, |m| m.active);
+    let has_martyrdom = world.get::<Martyrdom>(entity).is_some_and(|m| m.active);
     #[cfg(not(feature = "nova"))]
     let has_martyrdom = false;
 
