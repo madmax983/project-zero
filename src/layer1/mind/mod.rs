@@ -56,6 +56,7 @@
 //! ```
 
 /// Emergent utility AI system.
+pub mod fugue;
 pub mod utility_ai;
 #[cfg(test)]
 /// Tests for utility AI hierarchy logic.
@@ -71,4 +72,5 @@ pub(crate) mod utility_eval_types;
 pub mod utility_types;
 
 pub use utility_ai::*;
+pub use fugue::*;
 pub use utility_types::*;

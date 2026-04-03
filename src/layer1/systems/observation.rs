@@ -108,6 +108,9 @@ pub fn register(schedule: &mut Schedule) {
                 .after(check_stress_breakdown_system),
             crate::layer1::totems::unequip_totem_system.after(decay_needs_system),
             update_breakdown_system.after(check_stress_breakdown_system),
+            crate::layer1::mind::process_fugue_onset.after(check_stress_breakdown_system),
+            crate::layer1::mind::enforce_fugue_job.after(crate::layer1::mind::process_fugue_onset),
+            crate::layer1::mind::process_fugue_spread.after(crate::layer1::mind::enforce_fugue_job),
             update_catharsis_duration_system.after(decay_needs_system),
             #[cfg(feature = "nova")]
             crate::layer1::sleep_deprived_savant::fever_dream_system

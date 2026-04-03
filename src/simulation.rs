@@ -263,6 +263,7 @@ pub fn run_simulation_tick(world: &mut World) {
         world.init_resource::<Events<crate::layer3::diplomacy::succession::SuccessionEvent>>();
         world
             .init_resource::<Events<crate::layer3::diplomacy::succession::SuccessionCrisisEvent>>();
+        world.init_resource::<crate::layer1::mind::fugue::FugueEventTracker>();
     }
     if !world.contains_resource::<Events<crate::layer1::diplomacy::wards::WarDeclaredEvent>>() {
         world.init_resource::<Events<crate::layer1::diplomacy::wards::WarDeclaredEvent>>();
