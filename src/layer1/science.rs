@@ -146,14 +146,8 @@ pub fn spawn_initial_anomalies(world: &mut World, count: usize) {
     }
 }
 
-/// Processes the scanning action for pops.
-///
-/// # Panics
-///
-/// Panics if the anomaly entity exists but lacks the `Anomaly` component.
-#[allow(clippy::too_many_lines)]
-pub fn process_scan_system(world: &mut World) {
-    // Collect striking factions
+#[allow(clippy::type_complexity)]
+fn collect_scanners(world: &mut World) -> Vec<(Entity, Entity)> {
     let striking_factions: std::collections::HashSet<crate::layer1::factions::FactionId> = world
         .get_resource::<crate::layer1::factions::Factions>()
         .map(|f| {
@@ -165,18 +159,15 @@ pub fn process_scan_system(world: &mut World) {
         })
         .unwrap_or_default();
 
-    // 1. Collect scanner pops
     let mut scanners = Vec::new();
-
-    // Query manually to avoid borrow checker issues with world
     let mut query = world.query_filtered::<(
         Entity,
         &MovementTarget,
         Option<&crate::layer1::factions::FactionMember>,
     ), With<AtTarget>>();
+
     for (entity, mt, faction_member) in query.iter(world) {
         if mt.for_action == ActionType::Explore {
-            // Check strike
             let is_striking = faction_member
                 .and_then(|m| m.faction_id)
                 .is_some_and(|fid| striking_factions.contains(&fid));
@@ -186,107 +177,108 @@ pub fn process_scan_system(world: &mut World) {
             }
         }
     }
+    scanners
+}
 
-    // 2. Process each scanner
+fn complete_anomaly_scan(world: &mut World, pop_entity: Entity, anomaly_entity: Entity) {
+    let (anomaly_type, reward) = if let Some(anomaly) = world.get::<Anomaly>(anomaly_entity) {
+        (anomaly.anomaly_type, anomaly.reward_amount)
+    } else {
+        cleanup_pop_explore_state(world, pop_entity);
+        return;
+    };
+
+    let pos = world.get::<GridPosition>(anomaly_entity).copied();
+
+    match anomaly_type {
+        AnomalyType::Ruins => {
+            world
+                .resource_mut::<ColonyResources>()
+                .add_knowledge(reward);
+            world.resource_mut::<MessageLog>().add(format!(
+                "Discovery: Scanned ruins yielded {reward:.0} Knowledge."
+            ));
+        }
+        AnomalyType::StrangeFlora => {
+            world.resource_mut::<ColonyResources>().add_food(reward);
+            world.resource_mut::<MessageLog>().add(format!(
+                "Discovery: Strange flora yielded {reward:.0} Food."
+            ));
+            if let Some(pos) = pos {
+                world.spawn((
+                    ResourceItem {
+                        resource_type: ResourceType::Food,
+                        amount: 10.0,
+                    },
+                    pos,
+                ));
+            }
+        }
+        AnomalyType::Geode => {
+            let mut rng = rand::thread_rng();
+            if rng.gen_bool(0.5) {
+                world.resource_mut::<ColonyResources>().add_stone(reward);
+                world
+                    .resource_mut::<MessageLog>()
+                    .add(format!("Discovery: Geode yielded {reward:.0} Stone."));
+                if let Some(pos) = pos {
+                    world.spawn((
+                        ResourceItem {
+                            resource_type: ResourceType::Stone,
+                            amount: 10.0,
+                        },
+                        pos,
+                    ));
+                }
+            } else {
+                world.resource_mut::<ColonyResources>().add_ore(reward);
+                world
+                    .resource_mut::<MessageLog>()
+                    .add(format!("Discovery: Geode yielded {reward:.0} Ore."));
+                if let Some(pos) = pos {
+                    world.spawn((
+                        ResourceItem {
+                            resource_type: ResourceType::Ore,
+                            amount: 10.0,
+                        },
+                        pos,
+                    ));
+                }
+            }
+        }
+    }
+
+    world.despawn(anomaly_entity);
+    cleanup_pop_explore_state(world, pop_entity);
+}
+
+/// Processes the scanning action for pops.
+///
+/// # Panics
+///
+/// Panics if the anomaly entity exists but lacks the `Anomaly` component.
+pub fn process_scan_system(world: &mut World) {
+    let scanners = collect_scanners(world);
+
     for (pop_entity, anomaly_entity) in scanners {
-        let scan_amount = 1.0; // Base scan speed (could be skill-based)
+        let scan_amount = 1.0;
 
-        // Check if anomaly still exists
         if world.get_entity(anomaly_entity).is_err() {
             cleanup_pop_explore_state(world, pop_entity);
             continue;
         }
 
-        // Update progress
         let is_complete = if let Some(mut progress) = world.get_mut::<ScanProgress>(anomaly_entity)
         {
             progress.current += scan_amount;
             progress.is_complete()
         } else {
-            // Target is not an anomaly or missing ScanProgress
             cleanup_pop_explore_state(world, pop_entity);
             continue;
         };
 
-        // Handle completion
         if is_complete {
-            // Get anomaly data (safe now that mutable borrow of progress is dropped)
-            let (anomaly_type, reward) = if let Some(anomaly) = world.get::<Anomaly>(anomaly_entity)
-            {
-                (anomaly.anomaly_type, anomaly.reward_amount)
-            } else {
-                cleanup_pop_explore_state(world, pop_entity);
-                continue;
-            };
-
-            let pos = world.get::<GridPosition>(anomaly_entity).copied();
-
-            // Grant rewards
-            match anomaly_type {
-                AnomalyType::Ruins => {
-                    world
-                        .resource_mut::<ColonyResources>()
-                        .add_knowledge(reward);
-                    world.resource_mut::<MessageLog>().add(format!(
-                        "Discovery: Scanned ruins yielded {reward:.0} Knowledge."
-                    ));
-                }
-                AnomalyType::StrangeFlora => {
-                    world.resource_mut::<ColonyResources>().add_food(reward);
-                    world.resource_mut::<MessageLog>().add(format!(
-                        "Discovery: Strange flora yielded {reward:.0} Food."
-                    ));
-                    // Maybe spawn item too?
-                    if let Some(pos) = pos {
-                        world.spawn((
-                            ResourceItem {
-                                resource_type: ResourceType::Food,
-                                amount: 10.0,
-                            }, // Bonus item
-                            pos,
-                        ));
-                    }
-                }
-                AnomalyType::Geode => {
-                    // Random resource?
-                    let mut rng = rand::thread_rng();
-                    if rng.gen_bool(0.5) {
-                        world.resource_mut::<ColonyResources>().add_stone(reward);
-                        world
-                            .resource_mut::<MessageLog>()
-                            .add(format!("Discovery: Geode yielded {reward:.0} Stone."));
-                        if let Some(pos) = pos {
-                            world.spawn((
-                                ResourceItem {
-                                    resource_type: ResourceType::Stone,
-                                    amount: 10.0,
-                                },
-                                pos,
-                            ));
-                        }
-                    } else {
-                        world.resource_mut::<ColonyResources>().add_ore(reward);
-                        world
-                            .resource_mut::<MessageLog>()
-                            .add(format!("Discovery: Geode yielded {reward:.0} Ore."));
-                        if let Some(pos) = pos {
-                            world.spawn((
-                                ResourceItem {
-                                    resource_type: ResourceType::Ore,
-                                    amount: 10.0,
-                                },
-                                pos,
-                            ));
-                        }
-                    }
-                }
-            }
-
-            // Despawn anomaly
-            world.despawn(anomaly_entity);
-
-            // Cleanup pop
-            cleanup_pop_explore_state(world, pop_entity);
+            complete_anomaly_scan(world, pop_entity, anomaly_entity);
         }
     }
 }

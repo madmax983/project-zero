@@ -349,16 +349,7 @@ pub fn try_designate(world: &mut World, x: i32, y: i32, designation_type: Design
 ///
 /// assert_eq!(try_designate_area(&mut world, 5, 5, 6, 5, DesignationType::Mine), 2);
 /// ```
-#[allow(clippy::too_many_lines)]
-pub fn try_designate_area(
-    world: &mut World,
-    x1: i32,
-    y1: i32,
-    x2: i32,
-    y2: i32,
-    tool: DesignationType,
-) -> u32 {
-    // 1. Enforce Area Limits to prevent DoS (e.g. 50x50 max selection)
+fn clamp_area_dimensions(x1: i32, y1: i32, x2: i32, y2: i32) -> (i32, i32, i32, i32) {
     const MAX_DIMENSION: i32 = 50;
 
     let min_x_raw = x1.min(x2);
@@ -369,22 +360,19 @@ pub fn try_designate_area(
     let width = (max_x_raw - min_x_raw).min(MAX_DIMENSION);
     let height = (max_y_raw - min_y_raw).min(MAX_DIMENSION);
 
-    // Clamp to start point + max dimension
     let min_x = min_x_raw;
     let max_x = min_x_raw + width;
     let min_y = min_y_raw;
     let max_y = min_y_raw + height;
 
-    // 2. Pre-fetch existing designations (Optimization: O(N) -> O(1) lookup)
-    let existing_designations: HashSet<(i32, i32)> = world
-        .query::<(&Designation, &GridPosition)>()
-        .iter(world)
-        .map(|(_, pos)| (pos.x, pos.y))
-        .collect();
+    (min_x, max_x, min_y, max_y)
+}
 
-    // 3. Pre-fetch relevant targets if needed
-    // This avoids iterating all entities for every tile in the loop
-    let valid_targets: Option<HashSet<(i32, i32)>> = match tool {
+fn get_valid_targets_for_tool(
+    world: &mut World,
+    tool: DesignationType,
+) -> Option<HashSet<(i32, i32)>> {
+    match tool {
         DesignationType::Tame => Some(
             world
                 .query::<(
@@ -424,7 +412,6 @@ pub fn try_designate_area(
                 .collect(),
         ),
         DesignationType::CollectSample => {
-            // Collect both Flora and Fauna positions
             let mut targets = HashSet::new();
             for (pos, _) in world
                 .query::<(&GridPosition, &crate::layer1::flora::Flora)>()
@@ -441,18 +428,56 @@ pub fn try_designate_area(
             Some(targets)
         }
         _ => None,
-    };
+    }
+}
 
+/// Designate all eligible tiles in a rectangle. Returns count of successful designations.
+///
+/// The rectangle is defined by two corners `(x1, y1)` and `(x2, y2)`. Corners can be
+/// given in any order; the function normalizes to min/max internally.
+///
+/// # Examples
+///
+/// ```
+/// use scale::layer1::designation::{try_designate_area, DesignationType};
+/// use scale::layer1::terrain::{TerrainGrid, TerrainType};
+/// use scale::layer1::building::OccupiedTiles;
+/// use bevy_ecs::prelude::*;
+///
+/// let mut world = World::new();
+/// let mut tiles = vec![TerrainType::Grass; 100];
+/// tiles[55] = TerrainType::Rock; // (5,5)
+/// tiles[56] = TerrainType::Rock; // (6,5)
+/// world.insert_resource(TerrainGrid { width: 10, height: 10, tiles });
+/// world.insert_resource(OccupiedTiles::default());
+///
+/// assert_eq!(try_designate_area(&mut world, 5, 5, 6, 5, DesignationType::Mine), 2);
+/// ```
+pub fn try_designate_area(
+    world: &mut World,
+    x1: i32,
+    y1: i32,
+    x2: i32,
+    y2: i32,
+    tool: DesignationType,
+) -> u32 {
+    let (min_x, max_x, min_y, max_y) = clamp_area_dimensions(x1, y1, x2, y2);
+
+    let existing_designations: HashSet<(i32, i32)> = world
+        .query::<(&Designation, &GridPosition)>()
+        .iter(world)
+        .map(|(_, pos)| (pos.x, pos.y))
+        .collect();
+
+    let valid_targets = get_valid_targets_for_tool(world, tool);
     let mut to_spawn = Vec::new();
 
-    // Scope the immutable borrows so we can mutate world later
     {
         let terrain_grid = world.get_resource::<TerrainGrid>();
         let occupied_tiles = world.get_resource::<OccupiedTiles>();
 
         for y in min_y..=max_y {
             for x in min_x..=max_x {
-                // Bounds check
                 if x < 0 || y < 0 {
                     continue;
                 }
@@ -464,7 +489,6 @@ pub fn try_designate_area(
                     continue;
                 }
 
-                // Check existing
                 if existing_designations.contains(&(x, y)) {
                     continue;
                 }
@@ -500,7 +524,6 @@ pub fn try_designate_area(
         }
     }
 
-    // 4. Spawn entities
     let mut count = 0;
     for (x, y) in to_spawn {
         world.spawn((
