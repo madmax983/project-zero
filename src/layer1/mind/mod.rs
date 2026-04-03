@@ -71,6 +71,6 @@ pub(crate) mod utility_eval_types;
 /// Shared types for utility AI state (`ActionType`, `UtilityWeights`).
 pub mod utility_types;
 
-pub use utility_ai::*;
 pub use fugue::*;
+pub use utility_ai::*;
 pub use utility_types::*;

@@ -1,9 +1,9 @@
-use bevy_ecs::prelude::*;
 use crate::layer1::chronicle::{AddChronicleEvent, EventImportance};
 use crate::layer1::map::GridPosition;
 use crate::layer1::pop::Job;
 use crate::layer1::stress::StressTracker;
 use crate::layer1::utility_types::AssignmentType;
+use bevy_ecs::prelude::*;
 use rand::seq::SliceRandom;
 use rand::Rng;
 
@@ -58,9 +58,7 @@ pub fn process_fugue_onset(
 }
 
 /// System to forcefully override a Pop's active job with their ancestral fugue job.
-pub fn enforce_fugue_job(
-    mut query: Query<(&mut Job, &FugueState)>,
-) {
+pub fn enforce_fugue_job(mut query: Query<(&mut Job, &FugueState)>) {
     for (mut job, fugue) in query.iter_mut() {
         if job.job_type != fugue.ancestral_job {
             job.job_type = fugue.ancestral_job;
@@ -77,9 +75,11 @@ pub fn process_fugue_spread(
     let mut rng = rand::thread_rng();
     for infected_pos in infected.iter() {
         for (entity, target_pos, stress) in susceptible.iter() {
-            if stress.accumulated_stress > 40.0 && infected_pos.distance_chebyshev(*target_pos) <= 2 {
+            if stress.accumulated_stress > 40.0 && infected_pos.distance_chebyshev(*target_pos) <= 2
+            {
                 let chance = if cfg!(test) { 1.0 } else { 0.05 };
-                if rng.gen_bool(chance) { // 5% chance to spread if close and moderately stressed
+                if rng.gen_bool(chance) {
+                    // 5% chance to spread if close and moderately stressed
                     let ancestral_job = random_ancestral_job(&mut rng);
                     commands.entity(entity).insert(FugueState { ancestral_job });
                 }
@@ -91,8 +91,8 @@ pub fn process_fugue_spread(
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::layer1::pop::{Job, Pop};
     use bevy_app::{App, Update};
-    use crate::layer1::pop::{Pop, Job};
 
     fn setup_app() -> App {
         let mut app = App::new();

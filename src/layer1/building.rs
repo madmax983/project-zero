@@ -146,7 +146,9 @@ impl MaterialType {
         let mut iter = Self::iter();
         while let Some(current) = iter.next() {
             if &current == self {
-                return iter.next().unwrap_or_else(|| Self::iter().next().unwrap_or_default());
+                return iter
+                    .next()
+                    .unwrap_or_else(|| Self::iter().next().unwrap_or_default());
             }
         }
         Self::default()
@@ -1096,7 +1098,9 @@ impl BuildingType {
         let mut iter = Self::iter();
         while let Some(current) = iter.next() {
             if &current == self {
-                return iter.next().unwrap_or_else(|| Self::iter().next().unwrap_or_default());
+                return iter
+                    .next()
+                    .unwrap_or_else(|| Self::iter().next().unwrap_or_default());
             }
         }
         Self::default()
