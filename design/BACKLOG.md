@@ -5,7 +5,6 @@
 
 
 
-- [ ] `770` Temporal Ghost Towns — `specs/770-temporal-ghost-towns.md`
 - [ ] `771` Parasitic Architecture — `specs/771-parasitic-architecture.md`
 
 - [ ] `764` The Embassy Sector — `specs/764-the-embassy-sector.md`
