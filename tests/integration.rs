@@ -250,3 +250,5 @@ mod bio_acoustic_miasma_bridge;
 mod dynastic_succession_bridge;
 #[path = "integration/void_whispers_chronicle.rs"]
 mod void_whispers_chronicle;
+#[path = "integration/orbital_commute_bridge.rs"]
+mod orbital_commute_bridge;
