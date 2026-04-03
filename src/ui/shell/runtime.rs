@@ -28,7 +28,9 @@ use ratatui::{
     text::{Line, Span},
     widgets::{Block, Borders, Clear, List, ListItem, Paragraph, Widget},
 };
-use ratatui_hypertile::{HypertileEvent, KeyChord, KeyCode, Modifiers, PaneId};
+use ratatui_hypertile::{
+    raw::Node as LayoutNode, HypertileEvent, KeyChord, KeyCode, Modifiers, PaneId, SplitPolicy,
+};
 use ratatui_hypertile_extras::{HypertileRuntime, InputMode, SplitBehavior, WorkspaceRuntime};
 
 const COLONY_OPS_WORKSPACE: &str = "Colony Ops";
@@ -133,6 +135,9 @@ impl UiShell {
 
     pub fn render(&mut self, area: Rect, buf: &mut Buffer) {
         self.workspaces.render(area, buf);
+        if self.is_layout_mode() && !self.command_palette.is_open {
+            self.render_layout_help(area, buf);
+        }
         if self.command_palette.is_open {
             self.render_command_palette(area, buf);
         }
@@ -267,6 +272,9 @@ impl UiShell {
                     .set_mode(InputMode::Layout);
                 true
             }
+            ShellCommandAction::ResetCurrentWorkspaceLayout => {
+                self.reset_current_workspace_layout()
+            }
             ShellCommandAction::PauseSimulation => {
                 *self.world.borrow_mut().resource_mut::<GameState>() = GameState::Paused;
                 true
@@ -327,6 +335,15 @@ impl UiShell {
             .is_ok();
         runtime.set_mode(InputMode::PluginInput);
         opened
+    }
+
+    fn reset_current_workspace_layout(&mut self) -> bool {
+        let workspace_name = self.active_workspace_name().to_string();
+        apply_workspace_preset(self.workspaces.active_runtime_mut(), &workspace_name);
+        self.workspaces
+            .active_runtime_mut()
+            .set_mode(InputMode::PluginInput);
+        true
     }
 
     fn record_recent_command(&mut self, label: &str) {
@@ -450,6 +467,24 @@ impl UiShell {
             .render(layout[2], buf);
     }
 
+    fn render_layout_help(&self, area: Rect, buf: &mut Buffer) {
+        if area.width == 0 || area.height == 0 {
+            return;
+        }
+
+        let help_area = Rect::new(
+            area.x,
+            area.y + area.height.saturating_sub(1),
+            area.width,
+            1,
+        );
+        let help = "LAYOUT: hjkl focus  Shift+HJKL move  [ ] resize  s/v split  d close  Enter interact  Esc play";
+        Paragraph::new(help)
+            .style(Style::default().bg(Color::DarkGray).fg(Color::Cyan))
+            .alignment(Alignment::Left)
+            .render(help_area, buf);
+    }
+
     fn sync_persisted_layout(&mut self) {
         let active_workspace = self.active_workspace_name().to_string();
         self.config.startup_workspace = active_workspace;
@@ -537,6 +572,8 @@ pub fn build_default_shell(world: SharedWorld, config: ShellConfig) -> UiShell {
 
     let mut workspaces = WorkspaceRuntime::new(|| {
         HypertileRuntime::builder()
+            .with_resize_step(0.08)
+            .with_split_policy(SplitPolicy::Golden)
             .with_split_behavior(SplitBehavior::PromptPalette)
             .with_default_split_plugin(COLONY_MAP_PLUGIN_TYPE)
     });
@@ -728,84 +765,129 @@ fn centered_rect(percent_x: u16, percent_y: u16, area: Rect) -> Rect {
 }
 
 fn apply_workspace_preset(runtime: &mut HypertileRuntime, workspace_name: &str) {
-    match workspace_name {
-        COLONY_OPS_WORKSPACE => configure_colony_ops(runtime),
-        SYSTEM_SURVEY_WORKSPACE => configure_system_survey(runtime),
-        DIRECTOR_WORKSPACE => configure_director(runtime),
-        _ => configure_colony_ops(runtime),
+    let preset = match workspace_name {
+        COLONY_OPS_WORKSPACE => colony_ops_layout(),
+        SYSTEM_SURVEY_WORKSPACE => system_survey_layout(),
+        DIRECTOR_WORKSPACE => director_layout(),
+        _ => colony_ops_layout(),
+    };
+
+    apply_workspace_layout(runtime, &preset)
+        .expect("workspace presets should always produce valid layouts");
+}
+
+fn colony_ops_layout() -> PersistedWorkspaceLayout {
+    PersistedWorkspaceLayout {
+        name: COLONY_OPS_WORKSPACE.to_string(),
+        root: LayoutNode::Split {
+            direction: Direction::Vertical,
+            ratio: 0.95,
+            first: Box::new(LayoutNode::Split {
+                direction: Direction::Horizontal,
+                ratio: 0.72,
+                first: Box::new(LayoutNode::Pane(PaneId::ROOT)),
+                second: Box::new(LayoutNode::Split {
+                    direction: Direction::Vertical,
+                    ratio: 0.62,
+                    first: Box::new(LayoutNode::Pane(PaneId::new(1))),
+                    second: Box::new(LayoutNode::Pane(PaneId::new(2))),
+                }),
+            }),
+            second: Box::new(LayoutNode::Pane(PaneId::new(3))),
+        },
+        focused_pane: Some(PaneId::ROOT),
+        panes: vec![
+            PersistedPaneBinding {
+                pane_id: PaneId::ROOT,
+                plugin_type: COLONY_MAP_PLUGIN_TYPE.to_string(),
+            },
+            PersistedPaneBinding {
+                pane_id: PaneId::new(1),
+                plugin_type: INSPECTOR_PLUGIN_TYPE.to_string(),
+            },
+            PersistedPaneBinding {
+                pane_id: PaneId::new(2),
+                plugin_type: CHRONICLE_PLUGIN_TYPE.to_string(),
+            },
+            PersistedPaneBinding {
+                pane_id: PaneId::new(3),
+                plugin_type: STATUS_PLUGIN_TYPE.to_string(),
+            },
+        ],
     }
 }
 
-fn configure_colony_ops(runtime: &mut HypertileRuntime) {
-    runtime.reset();
-    runtime
-        .replace_focused_plugin(COLONY_MAP_PLUGIN_TYPE)
-        .expect("colony ops should replace the placeholder root");
-
-    let status_pane = runtime
-        .split_focused(Direction::Vertical, STATUS_PLUGIN_TYPE)
-        .expect("colony ops should add a status pane");
-    runtime
-        .focus_pane(PaneId::ROOT)
-        .expect("colony ops should re-focus the primary map pane");
-    let inspector_pane = runtime
-        .split_focused(Direction::Horizontal, INSPECTOR_PLUGIN_TYPE)
-        .expect("colony ops should add an inspector pane");
-    runtime
-        .focus_pane(inspector_pane)
-        .expect("colony ops should focus the inspector side stack");
-    let _chronicle_pane = runtime
-        .split_focused(Direction::Vertical, CHRONICLE_PLUGIN_TYPE)
-        .expect("colony ops should add a chronicle pane");
-    runtime
-        .focus_pane(status_pane)
-        .expect("colony ops should focus the status strip after bootstrapping");
+fn system_survey_layout() -> PersistedWorkspaceLayout {
+    PersistedWorkspaceLayout {
+        name: SYSTEM_SURVEY_WORKSPACE.to_string(),
+        root: LayoutNode::Split {
+            direction: Direction::Vertical,
+            ratio: 0.95,
+            first: Box::new(LayoutNode::Split {
+                direction: Direction::Horizontal,
+                ratio: 0.74,
+                first: Box::new(LayoutNode::Pane(PaneId::ROOT)),
+                second: Box::new(LayoutNode::Pane(PaneId::new(1))),
+            }),
+            second: Box::new(LayoutNode::Pane(PaneId::new(2))),
+        },
+        focused_pane: Some(PaneId::ROOT),
+        panes: vec![
+            PersistedPaneBinding {
+                pane_id: PaneId::ROOT,
+                plugin_type: SYSTEM_MAP_PLUGIN_TYPE.to_string(),
+            },
+            PersistedPaneBinding {
+                pane_id: PaneId::new(1),
+                plugin_type: INSPECTOR_PLUGIN_TYPE.to_string(),
+            },
+            PersistedPaneBinding {
+                pane_id: PaneId::new(2),
+                plugin_type: STATUS_PLUGIN_TYPE.to_string(),
+            },
+        ],
+    }
 }
 
-fn configure_system_survey(runtime: &mut HypertileRuntime) {
-    runtime.reset();
-    runtime
-        .replace_focused_plugin(SYSTEM_MAP_PLUGIN_TYPE)
-        .expect("system survey should replace the placeholder root");
-
-    let status_pane = runtime
-        .split_focused(Direction::Vertical, STATUS_PLUGIN_TYPE)
-        .expect("system survey should add a status pane");
-    runtime
-        .focus_pane(PaneId::ROOT)
-        .expect("system survey should re-focus the map pane");
-    let _inspector_pane = runtime
-        .split_focused(Direction::Horizontal, INSPECTOR_PLUGIN_TYPE)
-        .expect("system survey should add an inspector pane");
-    runtime
-        .focus_pane(status_pane)
-        .expect("system survey should focus the status strip after bootstrapping");
-}
-
-fn configure_director(runtime: &mut HypertileRuntime) {
-    runtime.reset();
-    runtime
-        .replace_focused_plugin(CHRONICLE_PLUGIN_TYPE)
-        .expect("director should replace the placeholder root");
-
-    let tech_pane = runtime
-        .split_focused(Direction::Horizontal, TECH_PLUGIN_TYPE)
-        .expect("director should add a tech pane");
-    runtime
-        .focus_pane(PaneId::ROOT)
-        .expect("director should re-focus the chronicle pane");
-    let status_pane = runtime
-        .split_focused(Direction::Vertical, STATUS_PLUGIN_TYPE)
-        .expect("director should add a status pane");
-    runtime
-        .focus_pane(tech_pane)
-        .expect("director should focus the tech pane");
-    let _inspector_pane = runtime
-        .split_focused(Direction::Vertical, INSPECTOR_PLUGIN_TYPE)
-        .expect("director should add an inspector pane");
-    runtime
-        .focus_pane(status_pane)
-        .expect("director should focus the status pane after bootstrapping");
+fn director_layout() -> PersistedWorkspaceLayout {
+    PersistedWorkspaceLayout {
+        name: DIRECTOR_WORKSPACE.to_string(),
+        root: LayoutNode::Split {
+            direction: Direction::Vertical,
+            ratio: 0.94,
+            first: Box::new(LayoutNode::Split {
+                direction: Direction::Horizontal,
+                ratio: 0.58,
+                first: Box::new(LayoutNode::Pane(PaneId::ROOT)),
+                second: Box::new(LayoutNode::Split {
+                    direction: Direction::Vertical,
+                    ratio: 0.58,
+                    first: Box::new(LayoutNode::Pane(PaneId::new(1))),
+                    second: Box::new(LayoutNode::Pane(PaneId::new(2))),
+                }),
+            }),
+            second: Box::new(LayoutNode::Pane(PaneId::new(3))),
+        },
+        focused_pane: Some(PaneId::ROOT),
+        panes: vec![
+            PersistedPaneBinding {
+                pane_id: PaneId::ROOT,
+                plugin_type: CHRONICLE_PLUGIN_TYPE.to_string(),
+            },
+            PersistedPaneBinding {
+                pane_id: PaneId::new(1),
+                plugin_type: TECH_PLUGIN_TYPE.to_string(),
+            },
+            PersistedPaneBinding {
+                pane_id: PaneId::new(2),
+                plugin_type: INSPECTOR_PLUGIN_TYPE.to_string(),
+            },
+            PersistedPaneBinding {
+                pane_id: PaneId::new(3),
+                plugin_type: STATUS_PLUGIN_TYPE.to_string(),
+            },
+        ],
+    }
 }
 
 #[cfg(test)]
@@ -829,6 +911,7 @@ mod tests {
 
         assert!(registry.contains("Pause Simulation"));
         assert!(registry.contains("Open Chronicle"));
+        assert!(registry.contains("Reset Current Workspace Layout"));
     }
 
     #[test]
@@ -870,6 +953,58 @@ mod tests {
         assert!(shell.is_layout_mode());
     }
 
+    #[test]
+    fn colony_ops_starts_with_compact_status_footer() {
+        let mut shell = build_default_shell_for_test();
+
+        let status_rect = pane_rect_for_plugin(&mut shell, STATUS_PLUGIN_TYPE);
+
+        assert!(status_rect.height <= 4);
+        assert_eq!(shell.focused_plugin_type(), Some(COLONY_MAP_PLUGIN_TYPE));
+    }
+
+    #[test]
+    fn reset_current_workspace_layout_restores_compact_status_footer() {
+        let mut shell = build_default_shell_for_test();
+        let status_pane =
+            find_pane_by_plugin_type(shell.workspaces().active_runtime(), STATUS_PLUGIN_TYPE)
+                .expect("status pane should exist");
+        shell
+            .workspaces_mut()
+            .active_runtime_mut()
+            .focus_pane(status_pane)
+            .expect("status pane should be focusable");
+        shell
+            .workspaces_mut()
+            .active_runtime_mut()
+            .set_focused_ratio(0.5)
+            .expect("status footer ratio should be adjustable");
+
+        let bloated = pane_rect_for_plugin(&mut shell, STATUS_PLUGIN_TYPE);
+        assert!(bloated.height > 4);
+
+        let executed = shell.execute_command_by_label("Reset Current Workspace Layout");
+        let reset = pane_rect_for_plugin(&mut shell, STATUS_PLUGIN_TYPE);
+
+        assert!(executed);
+        assert!(reset.height <= 4);
+        assert_eq!(shell.focused_plugin_type(), Some(COLONY_MAP_PLUGIN_TYPE));
+    }
+
+    #[test]
+    fn layout_mode_renders_resize_help() {
+        let mut shell = build_default_shell_for_test();
+        let area = Rect::new(0, 0, 120, 40);
+        let mut buffer = Buffer::empty(area);
+
+        assert!(shell.execute_command_by_label("Enter Layout Mode"));
+        shell.render(area, &mut buffer);
+
+        let text = buffer_text(&buffer);
+        assert!(text.contains("resize"));
+        assert!(text.contains("LAYOUT:"));
+    }
+
     fn build_default_shell_for_test() -> UiShell {
         let world = Rc::new(RefCell::new(setup_world_with_config(SetupConfig {
             headless: true,
@@ -890,5 +1025,28 @@ mod tests {
             .into_iter()
             .filter(|pane_id| runtime.registry().plugin_type_for(*pane_id) == Some(plugin_type))
             .count()
+    }
+
+    fn pane_rect_for_plugin(shell: &mut UiShell, plugin_type: &str) -> Rect {
+        let area = Rect::new(0, 0, 120, 40);
+        let mut buffer = Buffer::empty(area);
+        shell.render(area, &mut buffer);
+
+        let runtime = shell.workspaces().active_runtime();
+        runtime
+            .panes()
+            .into_iter()
+            .find(|pane| runtime.registry().plugin_type_for(pane.id) == Some(plugin_type))
+            .map(|pane| pane.rect)
+            .expect("plugin should have a rendered pane rect")
+    }
+
+    fn buffer_text(buffer: &Buffer) -> String {
+        buffer
+            .content()
+            .iter()
+            .map(|cell| cell.symbol())
+            .collect::<Vec<_>>()
+            .join("")
     }
 }

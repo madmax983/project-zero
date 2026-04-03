@@ -2,7 +2,7 @@ use bevy_ecs::prelude::Resource;
 use ratatui_hypertile::raw::{Node as LayoutNode, PaneId};
 use serde::{Deserialize, Serialize};
 
-pub const SHELL_LAYOUT_VERSION: u32 = 1;
+pub const SHELL_LAYOUT_VERSION: u32 = 2;
 
 #[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct PersistedShellLayout {
@@ -70,6 +70,7 @@ impl ShellConfig {
         self.persisted_layout
             .as_ref()
             .and_then(|json| serde_json::from_str(json).ok())
+            .filter(|layout: &PersistedShellLayout| layout.version == SHELL_LAYOUT_VERSION)
     }
 
     pub fn store_persisted_layout(
@@ -150,5 +151,14 @@ mod tests {
 
         assert_eq!(cfg.startup_workspace, "Colony Ops");
         assert!(cfg.persisted_layout.is_none());
+    }
+
+    #[test]
+    fn persisted_layout_with_old_version_is_ignored() {
+        let mut cfg = ShellConfig::default();
+        cfg.persisted_layout =
+            Some(r#"{"version":1,"active_workspace":"Colony Ops","workspaces":[]}"#.to_string());
+
+        assert!(cfg.decoded_persisted_layout().is_none());
     }
 }

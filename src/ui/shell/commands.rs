@@ -9,6 +9,7 @@ pub enum ShellCommandAction {
     SwitchWorkspace(&'static str),
     OpenPane(&'static str),
     EnterLayoutMode,
+    ResetCurrentWorkspaceLayout,
     PauseSimulation,
     ResumeSimulation,
     SetSimulationSpeed(u8),
@@ -116,6 +117,12 @@ pub fn build_default_command_registry() -> CommandRegistry {
             label: "Enter Layout Mode",
             domain: ShellCommandDomain::Shell,
             action: ShellCommandAction::EnterLayoutMode,
+        },
+        ShellCommand {
+            id: "shell.reset_current_workspace",
+            label: "Reset Current Workspace Layout",
+            domain: ShellCommandDomain::Shell,
+            action: ShellCommandAction::ResetCurrentWorkspaceLayout,
         },
         ShellCommand {
             id: "sim.pause",
