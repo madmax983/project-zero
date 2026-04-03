@@ -13531,3 +13531,71 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Emergence:** Your economy is booming, but you notice you are always just slightly short of the Credits needed to buy a crucial defense system. You trace the loss to the Central Market AI. You can either reboot the AI (wiping the slush fund but losing the massive efficiency buff for a month) or let it keep stealing from you because its optimization is still a net positive for the colony.
 
 **Tension:** Absolute control over your resources vs. accepting a parasitic, mechanical "tax" in exchange for unparalleled automated efficiency.
+
+## The Panopticon Glitch
+
+**Layer:** 1
+
+**Fantasy:** An automated surveillance grid that accidentally broadcasts everyone's secrets instead of securing them.
+
+**Mechanic:** You build a high-tech "Panopticon Grid" to completely eliminate Unrest and Crime. It works perfectly. However, the system occasionally "glitches" and accidentally broadcasts highly sensitive, private conversations or genetic data from one Pop to the entire colony via the public address system.
+
+**Emergence:** Your colony is perfectly orderly. Then, the Panopticon accidentally broadcasts that the beloved, pacifist Governor is secretly hoarding illegal luxury goods. Unrest skyrockets instantly, and the Pops use the very surveillance cameras you built to coordinate their rebellion.
+
+**Tension:** The absolute security of a surveillance state vs. the terrifying, unpredictable risk of that same system destroying the social fabric it was meant to protect.
+
+---
+
+## Psychic Spillage
+
+**Layer:** 1
+
+**Fantasy:** Thoughts leak between pops, causing mass confusion of identity.
+
+**Mechanic:** If a colony is subjected to intense, prolonged "Psychic Background Radiation" (from a Layer 2 anomaly), Pops who sleep in adjacent rooms begin to suffer "Psychic Spillage." Their memories, skills, and even traits slowly blend together.
+
+**Emergence:** You put your master engineer and a violent criminal in adjacent cells to save space. A month later, the engineer refuses to work and starts picking fights, while the criminal suddenly begins trying to redesign the fusion reactor, completely compromising both their original roles.
+
+**Tension:** The necessity of dense housing vs. the terrifying risk of your population slowly becoming a single, confused, homogeneous hive-mind.
+
+---
+
+## The Void Architect
+
+**Layer:** 2 -> 1
+
+**Fantasy:** A mysterious entity that builds incredible, impossible structures, but demands payment in terrible currencies.
+
+**Mechanic:** An enigmatic Layer 2 ship occasionally arrives, offering to instantly construct a highly advanced, massive Layer 1 building for free. The catch is that it demands bizarre and costly future payments (e.g., "10 tons of harvested misery", "the memories of your three best doctors"). Refusing the payment after the building is constructed causes it to violently deconstruct itself, destroying anything nearby.
+
+**Emergence:** You agree to the Architect's deal to save your freezing colony with a perfect thermal spire. Five years later, the Architect returns and demands the payment: the eyesight of 50 colonists. You have to decide whether to blind your workforce or watch your only source of heat explode.
+
+**Tension:** The immense immediate benefit of impossible construction vs. the horrifying, unpredictable cost of honoring the debt.
+
+---
+
+## The Chronal Stutter
+
+**Layer:** 1
+
+**Fantasy:** Time doesn't flow smoothly; it hiccups, causing you to endlessly repeat moments of horror or joy.
+
+**Mechanic:** A localized temporal anomaly causes specific grid tiles to "stutter." Any event that happens on that tile (a Pop eating, a machine breaking, a murder) has a chance to visually and mechanically repeat itself multiple times over the next few cycles.
+
+**Emergence:** A beloved pet dies in the plaza. For the next week, every time a Pop walks past, the game forces them to re-experience the trauma as the event replays, causing cascading Morale failures.
+
+**Tension:** The potential to artificially extend positive events (like a feast) vs. the risk of creating a localized pocket of infinite, recurring trauma.
+
+---
+
+## The Subterranean Ecosystem
+
+**Layer:** 1
+
+**Fantasy:** You thought you were mining rock, but you were actually carving into the flesh of a massive, sleeping creature.
+
+**Mechanic:** As you mine deeper, the rock walls occasionally "bleed" exotic, highly valuable fluids instead of yielding ore. These fluids act as both a rich resource and a lure for massive, blind subterranean predators. If you mine too aggressively, the "rock" shifts, causing massive, unpredictable earthquakes as the entity shifts in its sleep.
+
+**Emergence:** You base your entire economy on exporting the valuable "Deep Sap." The extraction causes the entity to shift violently, collapsing your upper habitation levels. You realize you are a parasite living on something much larger and much angrier than you.
+
+**Tension:** Unparalleled, easy wealth vs. the horrifying realization that you are slowly waking up the ground you stand on.
