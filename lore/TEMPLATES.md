@@ -5153,3 +5153,41 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "The send-back pays off. [YEAR]. A transport arrives carrying [MIGRANT_RELATION]."
 - "[YEAR]: Following the wealth. [MIGRANT_RELATION] arrive to join the workforce."
 - "They sent enough back to buy a ticket. The [MIGRANT_RELATION] are here. [YEAR]."
+
+
+## Dynastic Succession Templates (Spec 768)
+
+### SUCCESSION_EVENT
+
+**Generates:** Play event (Leader dies, heir takes over)
+**Slots:** `[FACTION_NAME]`, `[OLD_LEADER]`, `[NEW_LEADER]`, `[TRAIT]`
+
+**Patterns:**
+- "[OLD_LEADER] is dead. Long live [NEW_LEADER]. The [FACTION_NAME] brace for their [TRAIT] rule."
+- "The throne of [FACTION_NAME] passes from [OLD_LEADER] to [NEW_LEADER]. Whispers call them [TRAIT]."
+- "Year [YEAR]: [FACTION_NAME] succession. [OLD_LEADER] deceased. [NEW_LEADER] ascends, bringing [TRAIT] policies."
+- "[OLD_LEADER] has fallen. The Bloodline continues. [NEW_LEADER], known to be [TRAIT], takes control of [FACTION_NAME]."
+
+### SUCCESSION_CRISIS
+
+**Generates:** Play event (Leader dies, no heir)
+**Slots:** `[FACTION_NAME]`, `[OLD_LEADER]`
+
+**Patterns:**
+- "[OLD_LEADER] died without a recognized heir. [FACTION_NAME] is fracturing."
+- "The bloodline ends. [OLD_LEADER] leaves [FACTION_NAME] in a state of crisis."
+- "Year [YEAR]: Succession crisis in [FACTION_NAME]. [OLD_LEADER] deceased, throne empty."
+- "With no heir to follow [OLD_LEADER], the [FACTION_NAME] tears itself apart."
+
+## Relativistic Time Dilation Templates (Spec 766)
+
+### DILATION_EXPERIENCED
+
+**Generates:** Play event (Fleet returns from dilated zone)
+**Slots:** `[FLEET_NAME]`, `[SYSTEM_NAME]`, `[DILATION_FACTOR]`, `[LOST_YEARS]`
+
+**Patterns:**
+- "[FLEET_NAME] returns from [SYSTEM_NAME]. To them, mere moments passed. To us, [LOST_YEARS] years."
+- "They stationed at [SYSTEM_NAME] with a dilation factor of [DILATION_FACTOR]. [FLEET_NAME] is now temporally desynced by [LOST_YEARS] years."
+- "Year [YEAR]: [FLEET_NAME] attempts to report from [SYSTEM_NAME]. Their intelligence is [LOST_YEARS] years out of date."
+- "[FLEET_NAME] escaped the gravity well of [SYSTEM_NAME], but not the Desync. They mourn the [LOST_YEARS] years they lost."
