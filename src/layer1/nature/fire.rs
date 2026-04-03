@@ -415,4 +415,48 @@ mod tests {
         let terrain = world.resource::<TerrainGrid>();
         assert_eq!(terrain.get(5, 5), Some(TerrainType::Dirt));
     }
+
+    #[test]
+    fn test_fire_extinguished_in_vacuum() {
+        use crate::layer1::pressure::PressureGrid;
+        use bevy_ecs::system::RunSystemOnce;
+        let mut world = World::new();
+
+        let mut pressure = PressureGrid::new(10, 10);
+        pressure.set(5, 5, 0.0); // Vacuum
+        world.insert_resource(pressure);
+
+        let fire_entity = world
+            .spawn((Fire::default(), GridPosition { x: 5, y: 5 }))
+            .id();
+
+        world.run_system_once(fire_pressure_check_system).expect("System should run successfully");
+
+        assert!(
+            world.get_entity(fire_entity).is_err(),
+            "Fire should be extinguished in vacuum"
+        );
+    }
+
+    #[test]
+    fn test_fire_survives_in_pressure() {
+        use crate::layer1::pressure::PressureGrid;
+        use bevy_ecs::system::RunSystemOnce;
+        let mut world = World::new();
+
+        let mut pressure = PressureGrid::new(10, 10);
+        pressure.set(5, 5, 1.0); // Normal pressure
+        world.insert_resource(pressure);
+
+        let fire_entity = world
+            .spawn((Fire::default(), GridPosition { x: 5, y: 5 }))
+            .id();
+
+        world.run_system_once(fire_pressure_check_system).expect("System should run successfully");
+
+        assert!(
+            world.get_entity(fire_entity).is_ok(),
+            "Fire should survive in normal pressure"
+        );
+    }
 }
