@@ -331,6 +331,7 @@
 - [x] `INT-776` Integration: Black Market Terraforming -> Chronicle — completed 2026-04-10
 - [x] `777` The Void Whispers — `specs/777-the-void-whispers.md` — completed 2026-04-01
 - [x] `767` Orbital Commute — `specs/767-orbital-commute.md` — completed 2026-04-01
+- [x] `INT-767` Integration: Orbital Commute System Scheduling — completed 2026-04-10
 - [x] `768` Dynastic Succession — `specs/768-dynastic-succession.md` — completed 2026-04-10
 - [x] `570` The Bio-Acoustic Miasma — `specs/570-the-bio-acoustic-miasma.md` — completed 2026-04-02
 - [x] `INT-570` Integration: Bio-Acoustic Miasma -> Stress Breakdown — completed 2026-04-10

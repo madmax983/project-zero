@@ -109,6 +109,8 @@ pub fn register(schedule: &mut Schedule) {
                 .after(crate::layer1::pop::reset_speed_system),
             crate::layer1::logistics::mass_driver::mass_driver_launch_system,
             crate::layer1::logistics::mass_driver::package_arrival_system,
+            crate::layer1::logistics::commute::process_orbital_commutes
+                .after(process_start_plan_system),
         )
             .in_set(Layer1SystemSet::Execution),
     );
