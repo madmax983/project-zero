@@ -372,7 +372,11 @@ mod tests {
         use crate::layer1::traits::{Trait, Traits};
 
         let mut world = setup();
-        let glutton = Traits(1 << (Trait::Glutton as u8));
+        let glutton = {
+            let mut t = Traits::default();
+            t.add(Trait::Glutton);
+            t
+        };
 
         world.spawn((Pop, Needs::default(), glutton));
 

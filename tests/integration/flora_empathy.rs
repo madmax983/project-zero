@@ -20,7 +20,11 @@ mod tests {
         let pop = world
             .spawn((
                 Pop,
-                Traits(1 << (Trait::EmpathicLink as u8)),
+                {
+                    let mut t = Traits::default();
+                    t.add(Trait::EmpathicLink);
+                    t
+                },
                 StressTracker {
                     accumulated_stress: 10.0,
                 },

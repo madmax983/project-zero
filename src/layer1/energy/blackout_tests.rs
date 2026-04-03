@@ -106,7 +106,11 @@ mod tests {
                 Pop,
                 GridPosition { x: 0, y: 0 },
                 Speed::default(),
-                Traits(1 << (Trait::Anxious as u8)),
+                {
+                    let mut t = Traits::default();
+                    t.add(Trait::Anxious);
+                    t
+                },
                 Needs {
                     leisure: 1.0,
                     ..Default::default()
@@ -120,7 +124,11 @@ mod tests {
                 Pop,
                 GridPosition { x: 0, y: 0 },
                 Speed::default(),
-                Traits(1 << (Trait::NightOwl as u8)),
+                {
+                    let mut t = Traits::default();
+                    t.add(Trait::NightOwl);
+                    t
+                },
                 Needs {
                     leisure: 1.0,
                     ..Default::default()

@@ -169,7 +169,11 @@ mod tests {
                     max: 100.0,
                 },
                 GridPosition { x: 0, y: 0 },
-                Traits(1 << (Trait::NativeBorn as u8)),
+                {
+                    let mut t = Traits::default();
+                    t.add(Trait::NativeBorn);
+                    t
+                },
             ))
             .id();
 
@@ -199,7 +203,11 @@ mod tests {
                     max: 100.0,
                 },
                 GridPosition { x: 0, y: 0 },
-                Traits(1 << (Trait::WeakImmunity as u8)),
+                {
+                    let mut t = Traits::default();
+                    t.add(Trait::WeakImmunity);
+                    t
+                },
             ))
             .id();
 

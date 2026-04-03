@@ -79,7 +79,11 @@ mod tests {
             .world_mut()
             .spawn((
                 Pop,
-                Traits(1 << (Trait::Spiteful as u8)),
+                {
+                    let mut t = Traits::default();
+                    t.add(Trait::Spiteful);
+                    t
+                },
                 Inventory {
                     items: vec![InventoryItem {
                         item_type: ItemType::Tool,

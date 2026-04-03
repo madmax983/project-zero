@@ -114,7 +114,7 @@ mod tests {
         }
 
         let traits = app.world().get::<Traits>(safe_pop).unwrap();
-        assert_eq!(traits.0, 0, "Pop under roof should not mutate.");
+        assert!(traits.0.is_empty(), "Pop under roof should not mutate.");
     }
 
     #[test]
@@ -136,8 +136,8 @@ mod tests {
         }
 
         let traits = app.world().get::<Traits>(exposed_pop).unwrap();
-        assert_ne!(
-            traits.0, 0,
+        assert!(
+            !traits.0.is_empty(),
             "Pop outside during mutagenic rain should mutate."
         );
 
@@ -174,8 +174,8 @@ mod tests {
         }
 
         let traits = app.world().get::<Traits>(exposed_pop).unwrap();
-        assert_eq!(
-            traits.0, 0,
+        assert!(
+            traits.0.is_empty(),
             "Pop with Mutated tag should not gain further traits."
         );
     }

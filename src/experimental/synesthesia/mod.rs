@@ -57,7 +57,11 @@ mod tests {
     fn test_synesthesia_system_red_light() {
         let mut world = World::new();
 
-        let traits = Traits(1 << (Trait::Synesthete as u8));
+        let traits = {
+            let mut t = Traits::default();
+            t.add(Trait::Synesthete);
+            t
+        };
         let pop = world
             .spawn((
                 Pop,
@@ -90,7 +94,11 @@ mod tests {
     fn test_synesthesia_system_blue_light() {
         let mut world = World::new();
 
-        let traits = Traits(1 << (Trait::Synesthete as u8));
+        let traits = {
+            let mut t = Traits::default();
+            t.add(Trait::Synesthete);
+            t
+        };
         let pop = world
             .spawn((
                 Pop,
@@ -160,7 +168,11 @@ mod tests {
     fn test_synesthesia_system_out_of_range() {
         let mut world = World::new();
 
-        let traits = Traits(1 << (Trait::Synesthete as u8));
+        let traits = {
+            let mut t = Traits::default();
+            t.add(Trait::Synesthete);
+            t
+        };
         let pop = world
             .spawn((
                 Pop,

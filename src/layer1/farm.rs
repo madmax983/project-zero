@@ -852,7 +852,11 @@ mod tests {
                     ..Default::default()
                 },
                 Morale::default(),
-                crate::layer1::traits::Traits(1 << (crate::layer1::traits::Trait::Cannibal as u8)),
+                {
+                    let mut t = crate::layer1::traits::Traits::default();
+                    t.add(crate::layer1::traits::Trait::Cannibal);
+                    t
+                },
             ))
             .id();
 

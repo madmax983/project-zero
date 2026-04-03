@@ -233,7 +233,11 @@ mod tests {
             ..Default::default()
         });
 
-        let traits = Traits(1 << (Trait::Creative as u8));
+        let traits = {
+            let mut t = Traits::default();
+            t.add(Trait::Creative);
+            t
+        };
 
         // Just ensure it doesn't crash
         check_for_eureka_world(&mut world, ActionType::Work, None, Some(traits));

@@ -283,7 +283,11 @@ fn test_movement_system_fast_walker() {
                 current: 1.0,
                 accumulator: 0.0,
             },
-            Traits(1 << (Trait::FastWalker as u8)),
+            {
+                let mut t = Traits::default();
+                t.add(Trait::FastWalker);
+                t
+            },
         ))
         .id();
 

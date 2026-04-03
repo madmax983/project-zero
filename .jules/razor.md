@@ -50,3 +50,7 @@
 **Bloat:** Layer Lasagna (Deep folder hierarchy for `tectonic.rs`)
 **Cut:** Flattened `src/layer1/geology/tectonic/tectonic_tests.rs` into `src/layer1/geology/tectonic.rs` and deleted the `tectonic` directory.
 **Saved:** Removed unnecessary nested folder structure, making the module flat and easier to navigate without "Russian doll" files.
+## [Reduction]
+**Bloat:** Speculative Optimization / Clever Code: `Traits` component in `src/layer1/traits.rs` using a `u64` bitmask to store a rapidly growing `Trait` enum (over 50 variants), requiring manual bitwise logic (`Traits(1 << (Trait::... as u8))`) across the codebase.
+**Cut:** Replaced the `u64` bitmask with a standard `bevy::utils::HashSet<Trait>`. Updated methods to use standard set operations (`insert`, `remove`, `contains`) and replaced all bitwise initializations with explicit builder patterns (`Traits::default().add(...)`). Retained deterministic iteration by yielding over the enum and filtering by the set.
+**Saved:** Eliminated cognitive load of manual bitwise operations, prevented an imminent integer overflow (capped at 64 traits), and standardized component initialization.

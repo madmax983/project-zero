@@ -146,7 +146,13 @@ mod tests {
         let mut world = World::new();
 
         // Spawn pop with Curious trait (should get Tinkering)
-        let pop = world.spawn((Pop, Traits(1 << (Trait::Curious as u8)))).id();
+        let pop = world
+            .spawn((Pop, {
+                let mut t = Traits::default();
+                t.add(Trait::Curious);
+                t
+            }))
+            .id();
 
         // Run assignment system
         let mut schedule = Schedule::default();
