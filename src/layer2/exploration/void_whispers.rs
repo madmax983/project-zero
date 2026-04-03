@@ -19,8 +19,7 @@ pub struct ColonyPop {
     pub colony: Entity,
 }
 
-#[derive(Component)]
-pub struct MemeticInfection;
+
 
 #[derive(Event)]
 pub struct FleetReturnedEvent {
@@ -63,7 +62,7 @@ pub fn spread_whispers_to_colony(
                 })
                 .choose(&mut rng)
             {
-                commands.entity(pop_entity).insert(MemeticInfection);
+                commands.entity(pop_entity).insert(crate::layer1::memetics::MemeticCarrier);
             }
         }
     }
@@ -129,14 +128,14 @@ mod tests {
         app.update();
 
         // Target colony pop should now have an infection
-        let meme = app.world().get::<MemeticInfection>(colony_pop_entity);
+        let meme = app.world().get::<crate::layer1::memetics::MemeticCarrier>(colony_pop_entity);
         assert!(
             meme.is_some(),
-            "Target colony pop should receive MemeticInfection from returning fleet"
+            "Target colony pop should receive crate::layer1::memetics::MemeticCarrier from returning fleet"
         );
 
         // Other colony pop should NOT be infected
-        let other_meme = app.world().get::<MemeticInfection>(other_colony_pop_entity);
+        let other_meme = app.world().get::<crate::layer1::memetics::MemeticCarrier>(other_colony_pop_entity);
         assert!(
             other_meme.is_none(),
             "Other colony pop should not be infected"

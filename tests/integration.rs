@@ -248,3 +248,5 @@ mod black_market_terraforming_bridge;
 mod bio_acoustic_miasma_bridge;
 #[path = "integration/dynastic_succession_bridge.rs"]
 mod dynastic_succession_bridge;
+#[path = "integration/void_whispers_chronicle.rs"]
+mod void_whispers_chronicle;

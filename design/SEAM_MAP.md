@@ -611,3 +611,9 @@
 - **Systems connected:** `process_succession_system` (Dynastic Succession) -> `dynastic_succession_chronicle_bridge` & `dynastic_crisis_chronicle_bridge` (Integration) -> `AddChronicleEvent`
 - **Glue added:** Added `SuccessionEvent` and `SuccessionCrisisEvent`. Created bridge systems in `src/layer3/integration.rs`.
 - **Tests:** `tests/integration/dynastic_succession_bridge.rs`
+
+### INT-777: Void Whispers -> Rumor Web & Chronicle
+- **Date:** 2026-04-10
+- **Systems connected:** `spread_whispers_to_colony` (Void Whispers) -> `MemeticCarrier` (Memetics) & `void_whispers_chronicle_bridge` (Integration) -> `AddChronicleEvent`
+- **Glue added:** Refactored `spread_whispers_to_colony` to apply the actual `MemeticCarrier` component. Added `void_whispers_chronicle_bridge` to emit a Chronicle event upon fleet return with whispers.
+- **Tests:** `tests/integration/void_whispers_chronicle.rs`
