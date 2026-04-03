@@ -6069,3 +6069,46 @@ A negative side-effect of a failed splice.
 - the extended family
 - desperate relatives
 - distant kin
+
+## Fragment Type: [LEADER_TRAIT]
+
+- Pacifist
+- Militant
+- Cruel
+- Wise
+- Paranoia-stricken
+- Reclusive
+- Charismatic
+- Incompetent
+- Zealot
+- Pragmatic
+
+## Fragment Type: [SUCCESSION_CRISIS_STATE]
+
+- in turmoil
+- fracturing
+- rulerless
+- tearing itself apart
+- dissolving into civil war
+- vulnerable to usurpers
+- grieving and lost
+
+## Fragment Type: [DILATION_EFFECT]
+
+- temporally desynced
+- aged slowly
+- lost to the well
+- out of sync
+- temporally displaced
+- hauntingly young
+- chronologically severed
+
+## Fragment Type: [GRAVITY_WELL_TYPE]
+
+- Black Hole
+- Neutron Star
+- Dense Anomaly
+- Singularity
+- Collapsar
+- Supermassive Event Horizon
+- Gravity Trough

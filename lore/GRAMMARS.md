@@ -3474,3 +3474,21 @@ PHANTOM_ORDER_EXECUTED:
 - HOMESICKNESS_ONSET → increases_chance → SUICIDE, DEPRESSION_SPIRAL
 - MIGRANT_ARRIVAL_REMITTANCE → enables → OVERCROWDING, CULTURAL_CLASH
 - MIGRANT_ARRIVAL_REMITTANCE → increases_chance → UNREST, ECONOMIC_BOOM
+
+## Dynastic Succession Chaining
+SUCCESSION_EVENT:
+    - enables: POLICY_SHIFT
+    - enables: FACTION_SPLIT
+    - increases_chance: ASSASSINATION_PLOT
+
+SUCCESSION_CRISIS:
+    - increases_chance: CIVIL_WAR
+    - increases_chance: REBELLION
+    - increases_chance: VULNERABILITY
+    - enables: USURPER_RISE
+
+## Relativistic Time Dilation Chaining
+STATIONED_AT_WELL:
+    - enables: DILATION_EXPERIENCED
+    - enables: OUTDATED_INTELLIGENCE
+    - increases_chance: TACTICAL_MISMATCH

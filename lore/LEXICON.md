@@ -3769,3 +3769,33 @@
 **Usage:**
 - "Her cousins arrived on the last ship."
 - "The kin keep coming because of the send-back."
+
+## Dynastic Succession
+
+### the Crown / the Throne
+**Replaces:** Leadership role, Faction leader
+**Code reference:** `CurrentLeader`
+**Usage:**
+- "The Crown passes to a new generation."
+- "The Throne remains empty."
+
+### the Bloodline
+**Replaces:** Heirs, Next in line
+**Code reference:** `HeirApparent`
+**Usage:**
+- "The Bloodline must continue."
+- "A break in the Bloodline."
+
+## Relativistic Time Dilation
+
+### Time Dilation Zone
+**Code reference:** `TimeDilationZone`
+**Usage:**
+- "They ventured too deep into the Time Dilation Zone."
+
+### the Desync
+**Replaces:** time lag, tick mismatch
+**Code reference:** `LocalTimeTracker` vs `SimulationTime`
+**Usage:**
+- "The Desync cost them the war."
+- "Returning from the well, they faced the Desync."
