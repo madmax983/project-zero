@@ -430,7 +430,9 @@ mod tests {
             .spawn((Fire::default(), GridPosition { x: 5, y: 5 }))
             .id();
 
-        world.run_system_once(fire_pressure_check_system).expect("System should run successfully");
+        world
+            .run_system_once(fire_pressure_check_system)
+            .expect("System should run successfully");
 
         assert!(
             world.get_entity(fire_entity).is_err(),
@@ -452,7 +454,9 @@ mod tests {
             .spawn((Fire::default(), GridPosition { x: 5, y: 5 }))
             .id();
 
-        world.run_system_once(fire_pressure_check_system).expect("System should run successfully");
+        world
+            .run_system_once(fire_pressure_check_system)
+            .expect("System should run successfully");
 
         assert!(
             world.get_entity(fire_entity).is_ok(),
