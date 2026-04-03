@@ -1,57 +1,31 @@
-# Integration tasks:
-1. INT-772: Biomass Commute -> PopDied Event / Chronicle
-If `digest_transit_contents` digests an entity that has a `Pop` component, we should probably emit a `PopDied` event so that the rest of the systems (morale, chronicle, etc) can react.
-Actually, let's look at `src/layer1/logistics/biomass_network.rs` again.
+1. **RED Phase: Create test suite for `temporal_ghost_towns`**
+   - Create `src/layer1/temporal_ghost_towns.rs`.
+   - Add the test module containing `test_temporal_stutter_reverts_building` based on the exact spec definition, making adjustments for actual `BuildingType` values (e.g. `AncientReactor` instead of `FusionReactor` and `Housing` instead of `WoodenHut`, since they exist in the `BuildingType` enum from exploration).
+   - Add REFACTOR phase tests verifying that a recovery mechanism works and restores the building's original state.
+   - Run `cargo test` to verify that the file was created and that the tests fail, as required by the TDD RED phase.
 
-2. INT-773: Stellar Weather -> Chronicle
-When `FleetDamagedEvent` happens, maybe generate an `AddChronicleEvent`.
+2. **GREEN Phase: Minimal Implementation**
+   - Implement the `ChronallyUnstableTile`, `TemporalHistory`, and `TemporalStutterEvent` types in `src/layer1/temporal_ghost_towns.rs` exactly as spec'ed (using `building_type` to match `Building`).
+   - Implement `process_temporal_stutters` to mutate the building type and set `active_stutter = true`.
+   - Add refactored fields (e.g. `recovery_ticks: u64` and `modern_building_type: BuildingType`) to `TemporalHistory` to keep track of state.
+   - Implement `recover_temporal_stutters` system that decrements `recovery_ticks` while active, and reverts `building_type` when it hits 0.
+   - Register the `temporal_ghost_towns` module in `src/layer1/mod.rs` (`pub mod temporal_ghost_towns; pub use temporal_ghost_towns::*;`).
+   - Run `cargo check` to verify compilation.
 
-3. INT-774: Architectural Grafting -> Chronicle
-When `GraftBuildingEvent` happens, generate an `AddChronicleEvent`.
+3. **Register Systems and Events**
+   - In `src/layer1/systems/environment.rs`, register `process_temporal_stutters` and `recover_temporal_stutters` in `Layer1SystemSet::Environment`.
+   - In `src/layer1/systems/cleanup.rs`, add `update_event_buffer::<crate::layer1::temporal_ghost_towns::TemporalStutterEvent>` to clear events.
+   - In `src/setup.rs`, initialize the event by adding `world.init_resource::<Events<crate::layer1::temporal_ghost_towns::TemporalStutterEvent>>();` inside the `setup_world` function.
+   - In `src/simulation.rs`, initialize the event by adding `world.init_resource::<Events<crate::layer1::temporal_ghost_towns::TemporalStutterEvent>>();` inside the `test_schedule_runs_on_fresh_world` function.
+   - Run `cargo check` to verify registration correctness.
 
-Wait! The instructions say: "One seam at a time — Finish wiring one connection before starting another".
-Let's just pick one. `INT-774` Architectural Grafting -> Chronicle.
-"GraftBuildingEvent is sent but nobody listens" (Actually `process_grafting` listens).
-What about: `GraftBuildingEvent` -> `AddChronicleEvent`?
-If we look at `src/layer1/integration.rs`, we can add:
-```rust
-pub fn graft_building_chronicle_bridge(
-    mut graft_events: EventReader<GraftBuildingEvent>,
-    mut chronicle_events: EventWriter<AddChronicleEvent>,
-    time: Res<SimulationTime>,
-) {
-    // ...
-}
-```
+4. **Testing and Verification**
+   - Run `cargo test` to ensure all unit tests pass, achieving 100% pass rate.
+   - Run `cargo clippy -- -D warnings` to verify code quality standards.
+   - Check test coverage with `cargo llvm-cov` specifically for `src/layer1/temporal_ghost_towns.rs` to guarantee ≥85%.
 
-Wait, let's look at `design/SEAM_MAP.md` and what makes a good integration. "Who should be reading its output? Who should be feeding it input?"
-Grafting creates Frankenstein Architecture. It's a significant event. A chronicle event makes sense.
+5. **Complete pre commit steps**
+   - Complete pre commit steps to ensure proper testing, verification, review, and reflection are done.
 
-What about `INT-773` Stellar Weather Navigation? `FleetDamagedEvent` is fired but nothing else happens. It's an event black hole. No one reads `FleetDamagedEvent`! We need a system that reads `FleetDamagedEvent` and applies damage to `FleetHealth` or similar, OR we just record it in Chronicle. Wait, `FleetComposition` has `take_damage`. `FleetHealth` component exists!
-In `src/layer2/navigation/stellar_weather.rs`, it sends `FleetDamagedEvent { fleet, amount }`.
-In `src/layer2/fleet.rs`, `FleetHealth` is a component.
-We should bridge `FleetDamagedEvent` to `FleetHealth`!
-
-Yes! This is a PERFECT integration.
-
-```rust
-// In src/layer2/integration.rs:
-pub fn fleet_weather_damage_bridge_system(
-    mut events: EventReader<FleetDamagedEvent>,
-    mut fleets: Query<&mut FleetHealth>,
-) {
-    for event in events.read() {
-        if let Ok(mut health) = fleets.get_mut(event.fleet) {
-            health.current -= event.amount;
-            if health.current < 0.0 {
-                health.current = 0.0;
-            }
-        }
-    }
-}
-```
-Wait, we should also destroy the fleet if health <= 0? Actually, there might already be a system for fleet destruction or we can just let `FleetHealth` hit 0. Let's check `src/layer2/fleet.rs` to see if there is a death system.
-
-Let's check `src/layer1/logistics/biomass_network.rs`.
-The `digest_transit_contents` despawns the entity. But if it's a `Pop`, it skips sending `PopDied`, which means "Pop death -> Population counter" UI might get out of sync, or families won't mourn.
-We should emit `PopDied` when a Pop is digested!
+6. **Submit**
+   - Submit the completed feature.
