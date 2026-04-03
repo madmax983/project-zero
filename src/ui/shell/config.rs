@@ -1,7 +1,8 @@
+use bevy_ecs::prelude::Resource;
 use serde::{Deserialize, Serialize};
 
 /// Persisted shell configuration for the hypertile UI.
-#[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Eq, Resource, Serialize, Deserialize)]
 pub struct ShellConfig {
     /// Workspace opened at startup.
     pub startup_workspace: String,

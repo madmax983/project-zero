@@ -125,6 +125,7 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     world.insert_resource(Chronicle::default());
     world.insert_resource(ChronicleUiState::default());
     world.insert_resource(crate::ui::tech::TechUiState::default());
+    world.insert_resource(crate::ui::shell::ShellConfig::default());
     world.insert_resource(UiState::default());
     world.init_resource::<Input>();
     world.insert_resource(NotificationQueue::default());

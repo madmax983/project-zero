@@ -1,6 +1,6 @@
 use bevy_ecs::prelude::*;
 use ratatui::{backend::TestBackend, buffer::Buffer, layout::Rect, Terminal};
-use ratatui_hypertile_extras::Registry;
+use ratatui_hypertile_extras::{HypertileRuntime, Registry};
 use std::{cell::RefCell, rc::Rc};
 
 mod chronicle;
@@ -54,6 +54,41 @@ pub fn register_default_plugins(registry: &mut Registry, world: SharedWorld) {
 
     let tech_world = Rc::clone(&world);
     registry.register_plugin_type(TECH_PLUGIN_TYPE, move || {
+        TechPlugin::new(Rc::clone(&tech_world))
+    });
+}
+
+pub(crate) fn register_default_plugins_with_runtime(
+    runtime: &mut HypertileRuntime,
+    world: SharedWorld,
+) {
+    let colony_world = Rc::clone(&world);
+    runtime.register_plugin_type(COLONY_MAP_PLUGIN_TYPE, move || {
+        ColonyMapPlugin::new(Rc::clone(&colony_world))
+    });
+
+    let system_world = Rc::clone(&world);
+    runtime.register_plugin_type(SYSTEM_MAP_PLUGIN_TYPE, move || {
+        SystemMapPlugin::new(Rc::clone(&system_world))
+    });
+
+    let inspector_world = Rc::clone(&world);
+    runtime.register_plugin_type(INSPECTOR_PLUGIN_TYPE, move || {
+        InspectorPlugin::new(Rc::clone(&inspector_world))
+    });
+
+    let status_world = Rc::clone(&world);
+    runtime.register_plugin_type(STATUS_PLUGIN_TYPE, move || {
+        StatusPlugin::new(Rc::clone(&status_world))
+    });
+
+    let chronicle_world = Rc::clone(&world);
+    runtime.register_plugin_type(CHRONICLE_PLUGIN_TYPE, move || {
+        ChroniclePlugin::new(Rc::clone(&chronicle_world))
+    });
+
+    let tech_world = Rc::clone(&world);
+    runtime.register_plugin_type(TECH_PLUGIN_TYPE, move || {
         TechPlugin::new(Rc::clone(&tech_world))
     });
 }
