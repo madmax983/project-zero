@@ -2,6 +2,7 @@
 //!
 //! This module handles the election cycle, candidate generation, and voting.
 
+use crate::layer1::chronicle::{AddChronicleEvent, EventImportance};
 use crate::layer1::factions::FactionMember;
 use crate::layer1::pop::Pop;
 use crate::layer2::governance::assign_governor;
@@ -37,6 +38,13 @@ pub enum ElectionState {
 pub struct Promise {
     /// Human-readable description of the promise.
     pub description: String,
+}
+
+/// The active mandate (promises) of the current Governor.
+#[derive(Resource, Default, Debug, Clone)]
+pub struct ActiveMandate {
+    /// The promises they made.
+    pub promises: Vec<Promise>,
 }
 
 /// A political platform consisting of multiple promises.
@@ -86,28 +94,42 @@ pub struct PoliticsPlugin;
 
 impl Plugin for PoliticsPlugin {
     fn build(&self, app: &mut App) {
-        app.insert_resource(ElectionCycle::default()).add_systems(
-            Update,
-            (
-                election_cycle_system,
-                generate_candidates_system,
-                voting_system,
-                inauguration_system,
-            ),
-        );
+        app.insert_resource(ElectionCycle::default())
+            .init_resource::<ActiveMandate>()
+            .add_systems(
+                Update,
+                (
+                    election_cycle_system,
+                    generate_candidates_system,
+                    voting_system,
+                    inauguration_system,
+                ),
+            );
     }
 }
 
 /// Manages the transitions between election states based on time.
-pub fn election_cycle_system(mut manager: ResMut<ElectionCycle>, time: Res<SimulationTime>) {
+pub fn election_cycle_system(
+    mut manager: ResMut<ElectionCycle>,
+    time: Res<SimulationTime>,
+    mut events: EventWriter<AddChronicleEvent>,
+) {
     if manager.state == ElectionState::Idle && time.tick >= manager.next_election_tick {
         manager.state = ElectionState::Campaigning;
         manager.campaign_end_tick = time.tick + 1000; // Campaign lasts 1000 ticks
+        events.send(AddChronicleEvent {
+            text: "Campaign Started".to_string(),
+            importance: EventImportance::Standard,
+        });
     }
 
     // Transitions
     if manager.state == ElectionState::Campaigning && time.tick >= manager.campaign_end_tick {
         manager.state = ElectionState::Voting;
+        events.send(AddChronicleEvent {
+            text: "Election Day".to_string(),
+            importance: EventImportance::Standard,
+        });
     }
 }
 
@@ -207,6 +229,28 @@ pub fn inauguration_system(world: &mut World) {
             }
         }
 
+        let mut promises = Vec::new();
+        {
+            let manager = world.resource::<ElectionCycle>();
+            if let Some(winner_entity) = winner {
+                if let Some(campaign) = manager
+                    .candidates
+                    .iter()
+                    .find(|c| c.pop_entity == winner_entity)
+                {
+                    promises = campaign.platform.promises.clone();
+                }
+            }
+        }
+
+        world.send_event(AddChronicleEvent {
+            text: "Winner Announced".to_string(),
+            importance: EventImportance::Major,
+        });
+
+        let mut mandate = world.resource_mut::<ActiveMandate>();
+        mandate.promises = promises;
+
         // Reset or schedule next election
         // We need to mutate resource again.
         let mut manager = world.resource_mut::<ElectionCycle>();
@@ -243,6 +287,8 @@ mod tests {
         world.insert_resource(SimulationTime::default());
         world.insert_resource(ElectionCycle::default());
         world.insert_resource(Factions::default());
+        world.init_resource::<Events<AddChronicleEvent>>();
+        world.init_resource::<ActiveMandate>();
         world
     }
 
@@ -373,5 +419,81 @@ mod tests {
         // Check state reset
         let manager = world.resource::<ElectionCycle>();
         assert_eq!(manager.state, ElectionState::Idle);
+    }
+
+    #[test]
+    fn test_inauguration_creates_mandate_and_emits_event() {
+        let mut world = setup_world();
+
+        let winner_pop = world.spawn(Pop).id();
+        world.spawn(OrbitalBody::default());
+
+        let mut manager = world.resource_mut::<ElectionCycle>();
+        manager.state = ElectionState::Finished;
+        manager.winner = Some(winner_pop);
+        manager.candidates.push(Campaign {
+            pop_entity: winner_pop,
+            platform: Platform {
+                promises: vec![Promise {
+                    description: "Free Space Pizza".to_string(),
+                }],
+            },
+            votes: 10,
+        });
+
+        inauguration_system(&mut world);
+
+        // Check ActiveMandate
+        let mandate = world.resource::<ActiveMandate>();
+        assert_eq!(mandate.promises.len(), 1);
+        assert_eq!(mandate.promises[0].description, "Free Space Pizza");
+
+        // Check Event
+        let events = world.resource::<Events<AddChronicleEvent>>();
+        let mut reader = events.get_cursor();
+        let mut event_found = false;
+        for ev in reader.read(events) {
+            if ev.text == "Winner Announced" {
+                assert_eq!(ev.importance, EventImportance::Major);
+                event_found = true;
+            }
+        }
+        assert!(event_found);
+    }
+
+    #[test]
+    fn test_election_cycle_emits_events() {
+        let mut world = setup_world();
+
+        let mut manager = world.resource_mut::<ElectionCycle>();
+        manager.state = ElectionState::Idle;
+        manager.next_election_tick = 100;
+        world.resource_mut::<SimulationTime>().tick = 100;
+
+        // Transition to Campaigning
+        let _ = bevy_ecs::system::RunSystemOnce::run_system_once(&mut world, election_cycle_system);
+        {
+            let events = world.resource::<Events<AddChronicleEvent>>();
+            let mut reader = events.get_cursor();
+            assert!(
+                reader
+                    .read(events)
+                    .any(|e| e.text == "Campaign Started"
+                        && e.importance == EventImportance::Standard)
+            );
+        }
+
+        // Fast forward to end of campaign
+        world.resource_mut::<SimulationTime>().tick = 1100;
+
+        // Transition to Voting
+        let _ = bevy_ecs::system::RunSystemOnce::run_system_once(&mut world, election_cycle_system);
+        {
+            let events = world.resource::<Events<AddChronicleEvent>>();
+            let mut reader = events.get_cursor();
+            assert!(reader
+                .read(events)
+                .any(|e| e.text == "Election Day" && e.importance == EventImportance::Standard));
+        }
     }
 }

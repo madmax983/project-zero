@@ -188,6 +188,7 @@
 - [x] `INT-039` Integration: Infinite Archive -> Chronicle — completed 2026-03-03
 - [x] `INT-040` Integration: Sanctuary -> Utility AI — completed 2026-03-03
 - [x] `240` Clone Vats — `specs/240-clone-vats.md` — completed 2026-02-26
+- [x] `241` Campaign Season — `specs/241-campaign-season.md` — completed 2026-02-27
 - [x] `246` Legacy Code — `specs/246-legacy-code.md` — completed 2026-02-26
 - [x] `247` Ghost Code — `specs/247-ghost-code.md` — completed 2026-02-27
 - [x] `243` Thermal Bloom — `specs/243-thermal-bloom.md` — completed 2026-02-27
