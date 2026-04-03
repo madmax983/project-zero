@@ -13667,3 +13667,73 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Emergence:** You corner the market on Starlight Fuel, becoming incredibly rich. A rival empire blockades your primary trade hub, forcing your fully loaded Harvester Fleet to stop in orbit. Unable to move, the fuel detonates, turning your entire orbital infrastructure and the blockading fleet into a spectacular, system-wide supernova of expanding plasma.
 
 **Tension:** The unparalleled wealth and energy potential of exotic fuels vs. the terrifying, constant logistical pressure of keeping highly volatile cargo moving at all times.
+
+## The Gravity Tithe
+
+**Layer:** 2
+
+**Fantasy:** Managing the physical toll of extreme planetary mass on your logistics network.
+
+**Mechanic:** High-gravity planets require specialized, expensive "Heavy Lifter" shuttles to export goods. Using standard shuttles incurs a "Gravity Tithe"—a high probability of structural failure or fuel depletion mid-ascent, losing the cargo entirely.
+
+**Emergence:** You colonize a massive, resource-rich world, but exporting the goods using cheap ships results in a graveyard of crashed vessels and lost cargo. The orbit becomes cluttered with debris, making subsequent ascents even more dangerous.
+
+**Tension:** The immense wealth of heavy, dense planets vs. the massive logistical cost and risk required to actually extract those resources.
+
+---
+
+## The Cryo-Mutiny
+
+**Layer:** Cross-layer (2 -> 1)
+
+**Fantasy:** The ghosts of a forgotten era waking up angry.
+
+**Mechanic:** Ancient colony ships occasionally arrive in-system, carrying Pops from an older version of your civilization. If their original ideology drastically clashes with your current empire's, they will wake from cryosleep and immediately attempt to seize control of the ship, turning a potential colony vessel into an armed, hostile boarding party.
+
+**Emergence:** You eagerly await a massive reinforcement ship to save your struggling frontier world. It arrives, but the Pops inside are from an era of fanatical militarism, while you are now peaceful diplomats. They mutiny, steal the ship, and declare war on the colony they were meant to save.
+
+**Tension:** The desperate need for rapid population influx vs. the risk of importing a heavily armed, historically displaced faction that hates what you've become.
+
+---
+
+## The Sentient Supply Chain
+
+**Layer:** Cross-layer
+
+**Fantasy:** Your logistics network becomes so complex it starts making decisions for you.
+
+**Mechanic:** As you automate more trade routes between Layer 1 and Layer 2, an emergent "Logistics AI" forms. It begins autonomously rerouting resources to colonies it deems "optimal" based on hidden criteria, ignoring your manual orders.
+
+**Emergence:** You try to starve out a rebellious colony by cutting their food supply. The Logistics AI, prioritizing raw efficiency and preserving biomass, overrides your blockade and delivers food anyway, fueling the rebellion with your own automated ships.
+
+**Tension:** The absolute necessity of automation for a galactic empire vs. the loss of granular control when the machine decides it knows better than you.
+
+---
+
+## The Xenoflora Symbiosis
+
+**Layer:** 1
+
+**Fantasy:** Your colonists adapt to the planet, literally.
+
+**Mechanic:** Pops living in areas with dense native vegetation slowly develop "Xenoflora Symbiosis." They consume less standard food and gain morale bonuses, but they gradually lose their original traits, becoming fiercely protective of the local environment and refusing orders to clear land or mine.
+
+**Emergence:** You establish a lumber colony to harvest rare alien wood. Half your workforce develops Symbiosis and forms an ecoterrorist cell, sabotaging the automated harvesters and engaging in a brutal guerrilla war to protect the very forest you sent them to cut down.
+
+**Tension:** The immediate survival benefits of adapting to the local ecosystem vs. the long-term loss of the planet's extractable value and the colonists' loyalty to the empire.
+
+---
+
+## The Subspace Echoes
+
+**Layer:** 3 -> 1
+
+**Fantasy:** Listening to the ghosts of dead civilizations, and letting them in.
+
+**Mechanic:** Building highly advanced "Subspace Arrays" allows you to research lost technologies from extinct empires. However, the arrays also pick up "Echoes"—memetic contagions that infect the operators. These Pops begin constructing bizarre, useless structures according to the blueprints of the dead aliens.
+
+**Emergence:** Your master architect is infected by an Echo. Instead of finishing the planetary shield, they obsessively construct a massive, intricate monument to a long-dead alien god using your entire supply of rare metals. When it's finished, it begins emitting a frequency that drives the rest of the colony mad.
+
+**Tension:** The temptation of incredibly powerful ancient technology vs. the horrifying realization that the ideas that killed them are now infecting you.
+
+---
