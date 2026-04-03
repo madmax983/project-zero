@@ -35,6 +35,8 @@ pub mod notifications;
 pub mod panels;
 /// Seasonal graphics helpers.
 pub mod seasonal_gfx;
+/// Hypertile shell scaffolding.
+pub mod shell;
 /// UI State resource.
 pub mod state;
 /// Status bar rendering.

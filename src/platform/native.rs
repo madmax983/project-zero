@@ -2,7 +2,7 @@
 
 use crossterm::event::{KeyCode, KeyEvent, KeyEventKind, MouseEvent, MouseEventKind};
 
-use crate::platform::input::{GameKeyCode, GameKeyEvent, GameMouseEvent};
+use crate::platform::input::{GameKeyCode, GameKeyEvent, GameKeyModifiers, GameMouseEvent};
 
 /// Convert a crossterm `KeyEvent` to a platform-agnostic `GameKeyEvent`.
 ///
@@ -29,7 +29,14 @@ impl TryFrom<KeyEvent> for GameKeyEvent {
             KeyCode::Delete => GameKeyCode::Delete,
             _ => return Err(()),
         };
-        Ok(Self { code })
+        let modifiers = GameKeyModifiers::new(
+            key.modifiers
+                .contains(crossterm::event::KeyModifiers::CONTROL),
+            key.modifiers.contains(crossterm::event::KeyModifiers::ALT),
+            key.modifiers
+                .contains(crossterm::event::KeyModifiers::SHIFT),
+        );
+        Ok(Self { code, modifiers })
     }
 }
 
@@ -64,6 +71,16 @@ mod tests {
         let key = crossterm_key(KeyCode::Char('q'));
         let game_key = GameKeyEvent::try_from(key).unwrap();
         assert_eq!(game_key.code, GameKeyCode::Char('q'));
+        assert_eq!(game_key.modifiers, GameKeyModifiers::default());
+    }
+
+    #[test]
+    fn test_translate_ctrl_modifier() {
+        let key = KeyEvent::new(KeyCode::Char('k'), crossterm::event::KeyModifiers::CONTROL);
+        let game_key = GameKeyEvent::try_from(key).unwrap();
+        assert!(game_key.modifiers.ctrl);
+        assert!(!game_key.modifiers.alt);
+        assert!(!game_key.modifiers.shift);
     }
 
     #[test]
