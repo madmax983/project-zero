@@ -41,6 +41,13 @@ pub fn register(schedule: &mut Schedule) {
     );
     schedule.add_systems(
         (
+            crate::layer1::temporal_ghost_towns::process_temporal_stutters,
+            crate::layer1::temporal_ghost_towns::process_temporal_recovery,
+        )
+            .in_set(Layer1SystemSet::Environment),
+    );
+    schedule.add_systems(
+        (
             crate::layer1::photophobic::photophobic_decay_system,
             crate::layer1::geodetic::update_living_stone_system,
             crate::layer1::geodetic::form_golem_system
