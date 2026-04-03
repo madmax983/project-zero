@@ -13737,3 +13737,72 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** The temptation of incredibly powerful ancient technology vs. the horrifying realization that the ideas that killed them are now infecting you.
 
 ---
+## The Sleepwalker Protocol
+
+**Layer:** 1
+
+**Fantasy:** In times of extreme desperation, your people unconsciously continue their work while sleeping, driven by sheer survival instinct.
+
+**Mechanic:** If the colony's essential resources (food, power) drop to critical levels, highly stressed Pops may enter a "Sleepwalking" state instead of fully resting. They perform basic survival tasks (harvesting, hauling) at reduced efficiency without depleting their Rest need, but their Sanity decays rapidly.
+
+**Emergence:** You are starving during a harsh winter. Your farmers begin sleep-harvesting in the dead of night, keeping the colony alive but driving themselves insane. Eventually, they wake up, snap from the psychological toll, and collectively revolt against the administration.
+
+**Tension:** Do you allow them to sleepwalk to save the colony from immediate starvation, or force them to rest and risk total collapse?
+
+---
+
+## The Asteroid Lasso
+
+**Layer:** 2 -> 1
+
+**Fantasy:** Catching a falling star to fuel your civilization.
+
+**Mechanic:** You can use a Layer 2 fleet to "Lasso" a resource-rich asteroid and drag it into a stable orbit around a Layer 1 colony, providing massive orbital mining bonuses. However, if the tether breaks or the orbit decays, the asteroid will crash into the colony, causing apocalyptic damage to the terrain grid.
+
+**Emergence:** You lasso a massive gold asteroid to fund a critical war. Enemy saboteurs target the orbital tether. The asteroid plummets, wiping out your capital city but leaving a massive crater filled with easily accessible gold for the traumatized survivors.
+
+**Tension:** The incredible economic boom of a captured asteroid vs. the constant, terrifying risk of hanging a literal sword of Damocles over your own capital.
+
+---
+
+## The Chronal Debt Collectors
+
+**Layer:** 3 -> 1
+
+**Fantasy:** When you borrow time to win a war, someone eventually comes to collect the interest.
+
+**Mechanic:** Using experimental FTL drives or hyper-production edicts accumulates "Chronal Debt." Eventually, enigmatic "Debt Collectors" arrive at your highest-debt colony. They don't attack; they simply "pause" random sections of your infrastructure or Pops, stealing their time to repay the debt.
+
+**Emergence:** You hyper-produced a massive fleet to win a crucial border skirmish. The Debt Collectors arrive and "pause" your entire agricultural sector right before the harvest. Your victorious fleet returns to a starving world partially frozen in time.
+
+**Tension:** The immense immediate power of chronal acceleration vs. the unpredictable, localized paralysis of your infrastructure when the cosmic bill comes due.
+
+---
+
+## The Void Lottery
+
+**Layer:** Cross-layer (1, 2)
+
+**Fantasy:** A desperate gamble where your own citizens offer themselves to the unknown for a chance at salvation.
+
+**Mechanic:** When a colony reaches critical Unrest or Poverty, Pops may autonomously organize the "Void Lottery." Winners board minimal-lifesupport pods and launch themselves into deep space (Layer 2). Most simply die, but occasionally one returns decades later with advanced alien tech, vast wealth, or horrific memetic mutations.
+
+**Emergence:** Your failing mining colony launches a dozen lottery pods. You write them off. Fifty years later, a massive, unrecognizable dreadnought enters the system, captained by one of the "winners" who has come to conquer the empire that abandoned them.
+
+**Tension:** Allowing a societal pressure valve for unrest vs. the slow bleed of population and the terrifying risk of creating a future existential threat.
+
+---
+
+## The Subterranean Arms Race
+
+**Layer:** 1
+
+**Fantasy:** A cold war fought entirely underground through escalating drilling technology.
+
+**Mechanic:** Two rival factions (or your colony and native subterranean life) share a planet. Instead of surface warfare, both sides compete to mine deeper for better resources. If tunnels intersect, brutal melee skirmishes break out. You can research explosive charges or specialized drill-mechs to collapse enemy tunnels.
+
+**Emergence:** You try to bypass an enemy tunnel block by drilling deeper, inadvertently cracking the planet's mantle. Lava floods the entire subterranean network, wiping out both your mining operations and the enemy faction in a self-inflicted geological disaster.
+
+**Tension:** The lure of deep-crust wealth vs. the claustrophobic, unpredictable danger of underground skirmishes and catastrophic cave-ins.
+
+---
