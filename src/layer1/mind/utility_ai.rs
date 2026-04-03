@@ -170,10 +170,11 @@ impl ScopedEvaluationContext {
 
     fn populate(&mut self, world: &mut World) {
         let zone_grid_fallback = ZoneGrid::new(1, 1);
+        let default_taboo = crate::layer1::taboo::TabooState::default();
         let context = Self::build_context(
             &self.resources,
             &self.cycle,
-            self.taboo.as_ref().expect("TabooState must exist"),
+            self.taboo.as_ref().unwrap_or(&default_taboo),
             self.factions.as_ref(),
             self.zone_grid.as_ref(),
             self.temperature_grid.as_ref(),
@@ -185,10 +186,11 @@ impl ScopedEvaluationContext {
 
     fn run(&mut self) {
         let zone_grid_fallback = ZoneGrid::new(1, 1);
+        let default_taboo = crate::layer1::taboo::TabooState::default();
         let context = Self::build_context(
             &self.resources,
             &self.cycle,
-            self.taboo.as_ref().expect("TabooState must exist"),
+            self.taboo.as_ref().unwrap_or(&default_taboo),
             self.factions.as_ref(),
             self.zone_grid.as_ref(),
             self.temperature_grid.as_ref(),
