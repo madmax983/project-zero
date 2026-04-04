@@ -1205,3 +1205,18 @@ pub fn paranoia_stress_bridge_system(
         }
     }
 }
+
+use crate::layer1::temporal_ghost_towns::TemporalStutterEvent;
+
+/// Bridges `TemporalStutterEvent` to `AddChronicleEvent` (Chronicle).
+pub fn temporal_stutter_chronicle_bridge(
+    mut events: EventReader<TemporalStutterEvent>,
+    mut chronicle_events: EventWriter<AddChronicleEvent>,
+) {
+    for _event in events.read() {
+        chronicle_events.send(AddChronicleEvent {
+            importance: EventImportance::Minor,
+            text: "A map tile stuttered in time, causing buildings to revert temporarily.".to_string(),
+        });
+    }
+}
