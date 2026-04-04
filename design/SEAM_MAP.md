@@ -623,3 +623,9 @@
 - **Systems connected:** `process_orbital_commutes` (Orbital Commute) -> `Layer1SystemSet::Execution` (Execution Schedule)
 - **Glue added:** Registered `process_orbital_commutes` in `src/layer1/systems/execution.rs` correctly after start-of-tick actions.
 - **Tests:** `tests/integration/orbital_commute_bridge.rs`
+
+### INT-770: Temporal Ghost Towns -> Chronicle
+- **Date:** 2026-05-18
+- **Systems connected:** `process_temporal_stutters` (Temporal Ghost Towns) -> `temporal_stutter_chronicle_bridge` (Integration) -> `AddChronicleEvent`
+- **Glue added:** Added `temporal_stutter_chronicle_bridge` to emit an `AddChronicleEvent` (`EventImportance::Minor`) upon `TemporalStutterEvent`. Registered in `Layer1SystemSet::Observation`.
+- **Tests:** `tests/integration/temporal_ghost_towns_bridge.rs`
