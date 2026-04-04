@@ -25,3 +25,4 @@ pub mod shipbreaking_bridge;
 pub mod mass_driver_chronicle;
 pub mod cascade_failure_chronicle;
 pub mod diplomacy_reflection;
+pub mod parasitic_architecture_bridge;

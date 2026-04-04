@@ -340,4 +340,5 @@
 - [x] `INT-768` Integration: Dynastic Succession -> Chronicle — completed 2026-04-10
 - [x] `INT-777` Integration: Void Whispers -> Rumor Web & Chronicle — completed 2026-04-10
 - [x] `771` Parasitic Architecture — `specs/771-parasitic-architecture.md` — completed 2026-05-18
+- [x] `INT-771` Integration: Parasitic Architecture -> Chronicle — completed 2026-05-18
 - [x] `INT-770` Integration: Temporal Ghost Towns -> Chronicle — completed 2026-05-18
