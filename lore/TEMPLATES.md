@@ -5191,3 +5191,49 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "They stationed at [SYSTEM_NAME] with a dilation factor of [DILATION_FACTOR]. [FLEET_NAME] is now temporally desynced by [LOST_YEARS] years."
 - "Year [YEAR]: [FLEET_NAME] attempts to report from [SYSTEM_NAME]. Their intelligence is [LOST_YEARS] years out of date."
 - "[FLEET_NAME] escaped the gravity well of [SYSTEM_NAME], but not the Desync. They mourn the [LOST_YEARS] years they lost."
+
+## Temporal Ghost Towns Templates (Spec 770)
+
+### TEMPORAL_STUTTER_START
+
+**Generates:** Play event (Tile reverts to past state)
+**Slots:** `[COLONY]`, `[YEAR]`, `[MODERN_BUILDING]`, `[PAST_BUILDING]`
+
+**Patterns:**
+- "Year [YEAR]: The Stutter strikes. The [MODERN_BUILDING] vanished, replaced by the ghost of a [PAST_BUILDING]."
+- "We built a [MODERN_BUILDING] here, but the timeline snapped back. Now it's a [PAST_BUILDING] again. [YEAR]."
+- "A violent temporal shift in [COLONY]. The [MODERN_BUILDING] is gone. We are staring at a [PAST_BUILDING]. [YEAR]."
+
+## Parasitic Architecture Templates (Spec 771)
+
+### MEGASTRUCTURE_FEEDS
+
+**Generates:** Play event (Megastructure consumes nearby building)
+**Slots:** `[COLONY]`, `[YEAR]`, `[MEGASTRUCTURE]`, `[VICTIM_BUILDING]`
+
+**Patterns:**
+- "[YEAR]: The [MEGASTRUCTURE] was hungry. The [VICTIM_BUILDING] collapsed as its foundations were digested."
+- "The Feeding begins. To keep the [MEGASTRUCTURE] aloft, we sacrificed the [VICTIM_BUILDING]. [YEAR]."
+- "Year [YEAR]: A necessary cost. The [MEGASTRUCTURE] absorbed the materials of the [VICTIM_BUILDING]."
+
+## The Bio-Acoustic Miasma Templates (Spec 570)
+
+### MIASMA_RECORDS_SECRET
+
+**Generates:** Play event (High stress pop speaks in miasma)
+**Slots:** `[COLONY]`, `[YEAR]`, `[POP_NAME]`, `[SECRET_TYPE]`
+
+**Patterns:**
+- "[YEAR]: [POP_NAME] walked into the Whisper-Fog and confessed [SECRET_TYPE]."
+- "The Miasma heard [POP_NAME]. Their [SECRET_TYPE] is now trapped in the mist. [YEAR]."
+- "In a moment of stress, [POP_NAME] spoke to the fog. It recorded [SECRET_TYPE]. [YEAR]."
+
+### SECRET_BROADCAST
+
+**Generates:** Play event (Miasma broadcasts secrets)
+**Slots:** `[COLONY]`, `[YEAR]`, `[SECRET_TYPE]`, `[FALLOUT_RESULT]`
+
+**Patterns:**
+- "[YEAR]: The clouds spoke. A broadcast of [SECRET_TYPE] echoed across [COLONY]. The result: [FALLOUT_RESULT]."
+- "We could not hide from the Tell. The Miasma shouted our [SECRET_TYPE]. Now there is [FALLOUT_RESULT]. [YEAR]."
+- "A devastating Broadcast. The fog played back our [SECRET_TYPE]. It caused [FALLOUT_RESULT]. [YEAR]."

@@ -6112,3 +6112,53 @@ A negative side-effect of a failed splice.
 - Collapsar
 - Supermassive Event Horizon
 - Gravity Trough
+
+## Temporal Ghost Towns Fragments (Spec 770)
+
+### Fragment Type: [MODERN_BUILDING]
+- fusion reactor
+- deep-core extractor
+- orbital comms array
+- high-density hab-block
+- research laboratory
+
+### Fragment Type: [PAST_BUILDING]
+- wooden hut
+- rusted surveyor tent
+- primitive mass-grave
+- abandoned mining shaft
+- crashed escape pod
+
+## Parasitic Architecture Fragments (Spec 771)
+
+### Fragment Type: [MEGASTRUCTURE]
+- the Rot-Spire
+- the Citadel
+- the Core-Engine
+- the Grand Archive
+- the Void-Tether
+
+### Fragment Type: [VICTIM_BUILDING]
+- the lower habs
+- a water filtration plant
+- the old clinic
+- the perimeter wall
+- a food distribution center
+
+## The Bio-Acoustic Miasma Fragments (Spec 570)
+
+### Fragment Type: [SECRET_TYPE]
+- a plot to strike
+- intense hatred for the governor
+- stealing from the ration stockpiles
+- a forbidden romance
+- worship of the void
+- plans for a mutiny
+
+### Fragment Type: [FALLOUT_RESULT]
+- a wave of mass paranoia
+- spontaneous arrests by the loyalists
+- an immediate drop in morale
+- fistfights breaking out in the corridors
+- a sudden, violent work stoppage
+- silent, terrified obedience
