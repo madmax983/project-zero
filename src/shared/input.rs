@@ -1062,8 +1062,7 @@ mod tests {
             .content()
             .iter()
             .map(|cell| cell.symbol())
-            .collect::<Vec<_>>()
-            .join("")
+            .collect::<String>()
             .contains(needle)
     }
 

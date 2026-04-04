@@ -5,3 +5,7 @@
 **[HashMap Hashing]**
 **Learning:** `std::collections::HashMap` uses a cryptographically strong but slow default hasher, which causes significant overhead in hot loops (like cellular automata physics simulations mapping `(i32, i32)` to `f32`).
 **Action:** Always use `bevy::utils::HashMap` (which defaults to `AHasher`) inside Bevy queries and physics loops instead of `std::collections::HashMap`.
+
+**[Optimize String Collect and Join]**
+**Learning:** `buffer.content().iter().map(|cell| cell.symbol()).collect::<Vec<_>>().join("")` creates unnecessary intermediate `Vec` allocations just to pass to `.join()`.
+**Action:** Use `.collect::<String>()` directly instead to allocate only once for the target `String` and avoid creating and tearing down an intermediate heap-allocated `Vec`.

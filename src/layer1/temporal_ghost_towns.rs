@@ -72,7 +72,6 @@ mod tests {
                 position,
                 Building {
                     building_type: BuildingType::AncientReactor,
-                    ..default()
                 },
                 TemporalHistory {
                     past_btype: BuildingType::Housing,
@@ -114,7 +113,6 @@ mod tests {
                 position,
                 Building {
                     building_type: BuildingType::Housing,
-                    ..default()
                 }, // It's currently in the past state
                 TemporalHistory {
                     past_btype: BuildingType::Housing,
