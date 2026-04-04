@@ -5,7 +5,7 @@
 
 
 
-- [ ] `771` Parasitic Architecture — `specs/771-parasitic-architecture.md`
+
 
 - [ ] `764` The Embassy Sector — `specs/764-the-embassy-sector.md`
 - [ ] `761` Void Sickness — `specs/761-void-sickness.md`

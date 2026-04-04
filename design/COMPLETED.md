@@ -339,3 +339,4 @@
 - [x] `INT-570` Integration: Bio-Acoustic Miasma -> Stress Breakdown — completed 2026-04-10
 - [x] `INT-768` Integration: Dynastic Succession -> Chronicle — completed 2026-04-10
 - [x] `INT-777` Integration: Void Whispers -> Rumor Web & Chronicle — completed 2026-04-10
+- [x] `771` Parasitic Architecture — `specs/771-parasitic-architecture.md` — completed 2026-05-18
