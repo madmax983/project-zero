@@ -1,3 +1,16 @@
+//! The `Animism` module simulates the "Spirits" of inanimate objects and tools.
+//!
+//! # The Story
+//! Objects in the colony are not entirely dead. Through constant use, items absorb the emotional
+//! resonance of their wielders, developing a `Spirit`. A tool used by a joyous worker might become
+//! `Eager`, increasing productivity, while a workplace filled with despair might become `Haunted`,
+//! dragging down the morale of anyone who enters.
+//!
+//! # Mechanics
+//! - Objects gain `experience` points as they are used in work actions.
+//! - Upon leveling up, objects acquire new `SpiritTrait`s based on the user's `Morale`.
+//! - These traits passively affect whoever equips or uses the object (modifying `Speed` or `Morale`).
+
 use crate::layer1::items::{Equipment, Tool};
 use crate::layer1::morale::{MoodModifier, Morale};
 use crate::layer1::pop::{Job, Pop, Speed};
@@ -63,10 +76,45 @@ const XP_PER_USE: u32 = 1;
 const XP_THRESHOLD_LEVEL_1: u32 = 100; // MVP: Fast leveling for testing
 const MAX_TRAITS: usize = 3;
 
-/// System that evolves spirits based on usage.
+/// Evolves the `Spirit` of tools and workplaces based on their usage by `Pop`s.
 ///
-/// Adds XP to tools and workplaces when Pops work.
-/// Adds traits when leveling up.
+/// When a `Pop` is actively working, this system adds experience points (`XP_PER_USE`) to their
+/// equipped `Tool` and their assigned workplace. If the object gains enough experience, it levels up
+/// and acquires a new `SpiritTrait` influenced by the `Pop`'s current `Morale`.
+///
+/// # Examples
+///
+/// ```
+/// use bevy_ecs::prelude::*;
+/// use scale::layer1::animism::{Spirit, evolve_spirits_system};
+/// use scale::layer1::items::Equipment;
+/// use scale::layer1::morale::Morale;
+/// use scale::layer1::pop::{Job, Pop};
+/// use scale::layer1::utility_types::{ActionType, PopAction};
+///
+/// let mut world = World::new();
+///
+/// // Spawn a tool with a nascent spirit
+/// let tool_id = world.spawn(Spirit::default()).id();
+///
+/// // Spawn a Pop using the tool while working
+/// world.spawn((
+///     Pop,
+///     Equipment { tool: Some(tool_id), ..Default::default() },
+///     PopAction { current: ActionType::Work, ..Default::default() },
+///     Morale::default(),
+///     Job { workplace: Entity::PLACEHOLDER, job_type: scale::layer1::utility_types::AssignmentType::FarmWorker },
+/// ));
+///
+/// // Run the system
+/// let mut schedule = Schedule::default();
+/// schedule.add_systems(evolve_spirits_system);
+/// schedule.run(&mut world);
+///
+/// // The tool should have gained experience
+/// let spirit = world.get::<Spirit>(tool_id).unwrap();
+/// assert!(spirit.experience > 0);
+/// ```
 pub fn evolve_spirits_system(
     mut commands: Commands,
     pop_query: Query<(&Pop, &PopAction, &Equipment, Option<&Job>, &Morale)>,
