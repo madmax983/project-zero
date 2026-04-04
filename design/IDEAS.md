@@ -13945,3 +13945,73 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** The incredible speed and reach of advanced FTL technology vs. the insidious, invisible corruption it brings back to your core worlds.
 
 ---
+
+## The Bio-Luminescent Syndicate
+
+**Layer:** 1 -> 3
+
+**Fantasy:** A black market that operates entirely through biological signals invisible to standard sensors.
+
+**Mechanic:** A subterranean flora emits bioluminescence that can be genetically modified to encode data. Pops use this to trade contraband and spread illicit tech across the galaxy, bypassing official orbital scanners.
+
+**Emergence:** You try to eradicate the flora to stop the smuggling, but doing so destroys the planet's fragile ecosystem, plunging the colony into starvation just as a massive black-market shipment of weapons is intercepted.
+
+**Tension:** The immediate need to control illegal trade vs. the risk of catastrophic ecological collapse by destroying the syndicate's living network.
+
+---
+
+## The Orbital Scrap-Tether
+
+**Layer:** 2 -> 1
+
+**Fantasy:** Dropping junk from orbit as a cheap, terrifying logistical solution.
+
+**Mechanic:** Instead of safe landing pads, you construct a massive tether that literally flings discarded orbital station components and waste directly into a designated "Scrap Zone" on the planet's surface for Pops to recycle.
+
+**Emergence:** The tether's targeting computer glitches during a solar flare, and instead of dropping scrap into the designated wasteland, it begins pelting your high-density residential zones with thousands of tons of metal rain.
+
+**Tension:** The extremely low cost and high efficiency of orbital recycling vs. the ever-present danger of kinetic bombardment accidents on your own people.
+
+---
+
+## The Sub-Lithic Cult
+
+**Layer:** 1
+
+**Fantasy:** A society that worships the deep underground and fears the open sky.
+
+**Mechanic:** Pops assigned to deep mining for multiple generations begin to develop "Agoraphobia." They refuse to work on the surface and form a cult that actively sabotages spaceports to prevent people from "leaving the embrace of the stone."
+
+**Emergence:** Your primary spaceport is destroyed just as a colony ship is about to launch. When you send enforcers into the deep mines to arrest the saboteurs, you discover they've built a massive, thriving subterranean city entirely independent of your rule.
+
+**Tension:** The incredible mining efficiency of the deep-dwellers vs. the slow, inevitable loss of control over your own subterranean infrastructure.
+
+---
+
+## The FTL Sabotage
+
+**Layer:** 3 -> 2
+
+**Fantasy:** Weaponizing the very fabric of space travel to strand your enemies.
+
+**Mechanic:** You can deploy stealth ships to subtly alter the physics of specific hyperlanes, causing any rival ships that use them to exit FTL travel light-years off course, often in hazardous star systems.
+
+**Emergence:** You sabotage a critical trade route to bankrupt a rival empire. However, the misdirected ships end up in an uncharted system, accidentally awakening an ancient, hostile swarm that then uses your sabotaged hyperlanes to invade your own core worlds.
+
+**Tension:** The asymmetric advantage of crippling enemy logistics vs. the unpredictable consequences of blindly rerouting massive fleets into unknown space.
+
+---
+
+## The Psionic Resonance Chamber
+
+**Layer:** 1 -> 2
+
+**Fantasy:** Harnessing the collective will of a population to influence events across the system.
+
+**Mechanic:** You can construct a massive facility that amplifies the current dominant mood of your Layer 1 colony and projects it across the star system, affecting the morale of enemy fleets or inspiring allied outposts.
+
+**Emergence:** You intend to project "Fanatical Courage" to buff your defending fleets during an invasion. However, a sudden food shortage drops your colony's mood to "Despair" just as the chamber fires, accidentally demoralizing your own armada and causing them to surrender without firing a shot.
+
+**Tension:** The immense system-wide power of weaponized morale vs. the absolute necessity of keeping your domestic population perfectly happy at all times to avoid catastrophic misfires.
+
+---
