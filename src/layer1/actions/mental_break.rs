@@ -139,6 +139,7 @@ mod tests {
             health: None,
             job: None,
             insulation: 0.0,
+            is_silent: false,
         }
     }
 

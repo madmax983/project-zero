@@ -532,3 +532,42 @@ mod tests {
         assert_eq!(tracker.accumulated_stress, 0.5);
     }
 }
+
+#[derive(Resource, Default)]
+pub struct TraumaTracker {
+    pub recent_deaths: u32,
+    pub famine_ticks: u32,
+}
+
+#[derive(Component, Debug, Clone, Copy)]
+pub struct TraitSilent;
+
+pub fn assign_generational_traits_system(
+    mut events: EventReader<crate::layer1::pop::PopBorn>,
+    trauma: Res<TraumaTracker>,
+    mut commands: Commands,
+) {
+    for event in events.read() {
+        // Thresholds for "extreme trauma"
+        if trauma.recent_deaths >= 20 || trauma.famine_ticks >= 500 {
+            if let Some(mut entity_cmds) = commands.get_entity(event.entity) {
+                entity_cmds.insert(TraitSilent);
+            }
+        }
+    }
+}
+
+pub fn silent_needs_suppression_system(
+    mut query: Query<
+        (&mut crate::layer1::needs::Needs, Option<&mut StressTracker>),
+        With<TraitSilent>,
+    >,
+) {
+    for (mut needs, stress_opt) in query.iter_mut() {
+        needs.leisure = 0.0;
+        // Suppress stress to simulate resilience
+        if let Some(mut stress) = stress_opt {
+            stress.accumulated_stress = stress.accumulated_stress.min(50.0);
+        }
+    }
+}

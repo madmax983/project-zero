@@ -401,7 +401,7 @@ impl<'a> PopDecider<'a> {
     ///
     /// *   **Socialize**: Visits a tavern if lonely.
     fn evaluate_group_social(&mut self) {
-        if self.is_penal {
+        if self.is_penal || self.data.is_silent {
             return;
         }
 

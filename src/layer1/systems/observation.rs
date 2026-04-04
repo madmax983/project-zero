@@ -8,6 +8,8 @@ use bevy_ecs::prelude::*;
 pub fn register(schedule: &mut Schedule) {
     schedule.add_systems(
         (
+            crate::layer1::stress::assign_generational_traits_system,
+            crate::layer1::stress::silent_needs_suppression_system,
             crate::layer1::integration::diplomatic_reflection_kill_bridge,
             crate::layer1::integration::diplomatic_reflection_plant_bridge,
             crate::layer1::integration::waste_scent_bridge,
