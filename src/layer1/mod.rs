@@ -91,6 +91,7 @@ pub use geomes::*;
 
 /// Housing and rest mechanics.
 pub mod housing;
+pub mod parasitic_architecture;
 /// The Inspector system (Spec 091).
 pub mod inspector;
 /// Institutional Memory system (Spec 172).
