@@ -155,9 +155,12 @@ mod tests {
 
     #[test]
     fn persisted_layout_with_old_version_is_ignored() {
-        let mut cfg = ShellConfig::default();
-        cfg.persisted_layout =
-            Some(r#"{"version":1,"active_workspace":"Colony Ops","workspaces":[]}"#.to_string());
+        let cfg = ShellConfig {
+            persisted_layout: Some(
+                r#"{"version":1,"active_workspace":"Colony Ops","workspaces":[]}"#.to_string(),
+            ),
+            ..Default::default()
+        };
 
         assert!(cfg.decoded_persisted_layout().is_none());
     }

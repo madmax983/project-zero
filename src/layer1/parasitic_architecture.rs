@@ -1,6 +1,6 @@
-use bevy_ecs::prelude::*;
 use crate::layer1::map::GridPosition;
 use crate::layer1::structure::Structure;
+use bevy_ecs::prelude::*;
 
 /// Component indicating a megastructure that consumes the structural integrity of nearby buildings.
 #[derive(Component)]
@@ -39,25 +39,39 @@ pub fn process_megastructure_consumption(
 mod tests {
     use super::*;
 
-    use crate::layer1::map::GridPosition;
     use crate::layer1::building::{Building, BuildingType};
+    use crate::layer1::map::GridPosition;
     use crate::layer1::structure::Structure;
 
     #[test]
     fn test_megastructure_consumes_nearby_building_integrity() {
         let mut world = World::new();
 
-        let _megastructure = world.spawn((
-            GridPosition { x: 10, y: 10 },
-            Building { building_type: BuildingType::Lander, ..Default::default() },
-            ParasiticArchitecture { radius: 2.0, consumption_rate: 10.0 },
-        )).id();
+        let _megastructure = world
+            .spawn((
+                GridPosition { x: 10, y: 10 },
+                Building {
+                    building_type: BuildingType::Lander,
+                },
+                ParasiticArchitecture {
+                    radius: 2.0,
+                    consumption_rate: 10.0,
+                },
+            ))
+            .id();
 
-        let victim = world.spawn((
-            GridPosition { x: 11, y: 10 },
-            Building { building_type: BuildingType::Housing, ..Default::default() },
-            Structure { current_hp: 100.0, max_hp: 100.0 },
-        )).id();
+        let victim = world
+            .spawn((
+                GridPosition { x: 11, y: 10 },
+                Building {
+                    building_type: BuildingType::Housing,
+                },
+                Structure {
+                    current_hp: 100.0,
+                    max_hp: 100.0,
+                },
+            ))
+            .id();
 
         // Run the system once
         let mut schedule = bevy_ecs::schedule::Schedule::default();
@@ -73,17 +87,31 @@ mod tests {
     fn test_megastructure_destroys_building() {
         let mut world = World::new();
 
-        let _megastructure = world.spawn((
-            GridPosition { x: 10, y: 10 },
-            Building { building_type: BuildingType::Lander, ..Default::default() },
-            ParasiticArchitecture { radius: 2.0, consumption_rate: 100.0 },
-        )).id();
+        let _megastructure = world
+            .spawn((
+                GridPosition { x: 10, y: 10 },
+                Building {
+                    building_type: BuildingType::Lander,
+                },
+                ParasiticArchitecture {
+                    radius: 2.0,
+                    consumption_rate: 100.0,
+                },
+            ))
+            .id();
 
-        let victim = world.spawn((
-            GridPosition { x: 11, y: 10 },
-            Building { building_type: BuildingType::Housing, ..Default::default() },
-            Structure { current_hp: 50.0, max_hp: 100.0 },
-        )).id();
+        let victim = world
+            .spawn((
+                GridPosition { x: 11, y: 10 },
+                Building {
+                    building_type: BuildingType::Housing,
+                },
+                Structure {
+                    current_hp: 50.0,
+                    max_hp: 100.0,
+                },
+            ))
+            .id();
 
         // Run the system once
         let mut schedule = bevy_ecs::schedule::Schedule::default();
@@ -98,17 +126,31 @@ mod tests {
     fn test_megastructure_ignores_out_of_range_buildings() {
         let mut world = World::new();
 
-        let _megastructure = world.spawn((
-            GridPosition { x: 10, y: 10 },
-            Building { building_type: BuildingType::Lander, ..Default::default() },
-            ParasiticArchitecture { radius: 1.0, consumption_rate: 10.0 },
-        )).id();
+        let _megastructure = world
+            .spawn((
+                GridPosition { x: 10, y: 10 },
+                Building {
+                    building_type: BuildingType::Lander,
+                },
+                ParasiticArchitecture {
+                    radius: 1.0,
+                    consumption_rate: 10.0,
+                },
+            ))
+            .id();
 
-        let victim = world.spawn((
-            GridPosition { x: 15, y: 15 },
-            Building { building_type: BuildingType::Housing, ..Default::default() },
-            Structure { current_hp: 100.0, max_hp: 100.0 },
-        )).id();
+        let victim = world
+            .spawn((
+                GridPosition { x: 15, y: 15 },
+                Building {
+                    building_type: BuildingType::Housing,
+                },
+                Structure {
+                    current_hp: 100.0,
+                    max_hp: 100.0,
+                },
+            ))
+            .id();
 
         // Run the system once
         let mut schedule = bevy_ecs::schedule::Schedule::default();
