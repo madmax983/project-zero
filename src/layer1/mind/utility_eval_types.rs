@@ -103,6 +103,7 @@ pub struct PopEvaluationQuery {
     pub memetic_carrier: Option<&'static MemeticCarrier>,
     pub health: Option<&'static Health>,
     pub job: Option<&'static Job>,
+    pub is_silent: Option<&'static crate::layer1::stress::TraitSilent>,
 }
 
 impl PopEvalData {
@@ -133,6 +134,7 @@ impl PopEvalData {
             job: item.job.copied(),
             insulation: 0.0,
             carrying_item_type: None,
+            is_silent: item.is_silent.is_some(),
         }
     }
 }
@@ -210,6 +212,7 @@ pub struct PopEvalData {
     pub job: Option<Job>,
     /// Current insulation provided by clothing.
     pub insulation: f32,
+    pub is_silent: bool,
 }
 
 #[cfg(test)]
@@ -240,6 +243,7 @@ impl PopEvalData {
             health: None,
             job: None,
             insulation: 0.0,
+            is_silent: false,
         }
     }
 }

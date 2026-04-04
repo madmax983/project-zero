@@ -247,6 +247,10 @@ pub fn run_simulation_tick(world: &mut World) {
         world.init_resource::<BuildingMap>();
     }
 
+    if !world.contains_resource::<crate::layer1::stress::TraumaTracker>() {
+        world.init_resource::<crate::layer1::stress::TraumaTracker>();
+    }
+
     if !world.contains_resource::<crate::layer1::tech_envy::TechEnvyConfig>() {
         world.init_resource::<crate::layer1::tech_envy::TechEnvyConfig>();
     }
@@ -622,6 +626,7 @@ mod tests {
         world.init_resource::<Events<crate::layer1::geodetic::GolemFormedEvent>>();
         world.init_resource::<crate::layer3::council::GalacticCouncil>();
         world.init_resource::<crate::layer3::market::GalacticMarket>();
+        world.init_resource::<crate::layer1::stress::TraumaTracker>();
         world.init_resource::<Events<crate::layer2::events_new::reverse_quarantine::RefugeeFleetEvent>>();
         world.init_resource::<Events<crate::layer1::grafting::GraftBuildingEvent>>();
         world.init_resource::<Events<crate::layer3::planet::black_market_terraforming::RogueTerraformEvent>>();

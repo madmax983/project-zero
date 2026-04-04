@@ -335,7 +335,7 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `569` The Syzygy — `specs/569-the-syzygy.md`
 - [ ] `571` Diplomatic Contraband — `specs/571-diplomatic-contraband.md`
 - [ ] `572` The Pyrophilic Flora — `specs/572-the-pyrophilic-flora.md`
-- [ ] `573` The Silent Generation — `specs/573-the-silent-generation.md`
+
 - [ ] `574` The Debt-Bound Mercenaries — `specs/574-the-debt-bound-mercenaries.md`
 - [ ] `575` The Sleeper Ship Armada — `specs/575-the-sleeper-ship-armada.md`
 - [ ] `576` The Echo Bureau — `specs/576-the-echo-bureau.md`
