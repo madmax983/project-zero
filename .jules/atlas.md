@@ -55,3 +55,7 @@
 **Biology Domain Encapsulation**
 **Tangle:** The health and medical modules (health, medical, genetics, addiction, contagion, cybernetics, etc.) were scattered across the root `src/layer1/mod.rs` namespace, adding to the "Blob" anti-pattern in `layer1`. These interrelated organic life functions lacked a clear domain boundary.
 **Blueprint:** Encapsulated 13 biology-related logic modules into a dedicated `src/layer1/biology/` module. The new `src/layer1/biology/mod.rs` re-exports the public types natively to maintain backward compatibility, keeping the layer 1 root cleaner while strictly enforcing domain boundaries.
+
+**Agriculture Sub-module Extracted**
+**Tangle:** The `layer1` core module was cluttered with related food production systems (`farm`, `gastronomy`, `husbandry`, `greenhouse`, `hydroponics`, `preservation`), contributing to the "Blob" anti-pattern in `src/layer1/mod.rs` without a clear domain boundary.
+**Blueprint:** Encapsulated these interrelated food production systems into a dedicated `src/layer1/agriculture/` module. The new `src/layer1/agriculture/mod.rs` re-exports the public types natively to maintain backward compatibility, keeping the layer 1 root cleaner while strictly enforcing domain boundaries.
