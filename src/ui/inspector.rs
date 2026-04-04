@@ -467,7 +467,53 @@ fn render_economy_module(
     frame.render_widget(economy_table, area);
 }
 
-#[allow(clippy::too_many_lines)]
+fn get_purity_line(
+    world: &World,
+    x: i32,
+    y: i32,
+    terrain_type: Option<crate::layer1::terrain::TerrainType>,
+) -> Option<Line<'static>> {
+    if terrain_type != Some(crate::layer1::terrain::TerrainType::Rock) {
+        return None;
+    }
+    let map = world.get_resource::<PurityMap>()?;
+    let purity = map.get(x, y);
+    let pct = (purity * 100.0) as u32;
+    let color = if purity > 0.8 {
+        Color::Green
+    } else if purity > 0.4 {
+        Color::Yellow
+    } else {
+        Color::Red
+    };
+    Some(Line::from(vec![
+        Span::raw("Purity: "),
+        Span::styled(format!("{pct}%"), Style::default().fg(color)),
+    ]))
+}
+
+fn get_scent_line(world: &World, x: i32, y: i32) -> Option<Line<'static>> {
+    let scent_map = world.get_resource::<ScentMap>()?;
+    let tile_scent = scent_map.get_scent(GridPosition { x, y });
+
+    if tile_scent.pleasant <= 0.0 && tile_scent.foul <= 0.0 {
+        return None;
+    }
+
+    Some(Line::from(vec![
+        Span::raw("Scent: "),
+        Span::styled(
+            format!("🌸 {:.1}", tile_scent.pleasant),
+            Style::default().fg(Color::LightMagenta),
+        ),
+        Span::raw(" / "),
+        Span::styled(
+            format!("🤢 {:.1}", tile_scent.foul),
+            Style::default().fg(Color::Rgb(150, 200, 50)),
+        ),
+    ]))
+}
+
 fn render_tile_inspector(frame: &mut Frame, area: Rect, world: &World, x: i32, y: i32) {
     let terrain = world.resource::<TerrainGrid>();
 
@@ -483,53 +529,9 @@ fn render_tile_inspector(frame: &mut Frame, area: Rect, world: &World, x: i32, y
             (t.name(), get_terrain_char(t), get_terrain_color(t), Some(t))
         });
 
-    // Purity Logic for Rocks
-    let purity_line = if terrain_type == Some(crate::layer1::terrain::TerrainType::Rock) {
-        if let Some(map) = world.get_resource::<PurityMap>() {
-            let purity = map.get(x, y);
-            let pct = (purity * 100.0) as u32;
-            let color = if purity > 0.8 {
-                Color::Green
-            } else if purity > 0.4 {
-                Color::Yellow
-            } else {
-                Color::Red
-            };
-            Some(Line::from(vec![
-                Span::raw("Purity: "),
-                Span::styled(format!("{pct}%"), Style::default().fg(color)),
-            ]))
-        } else {
-            None
-        }
-    } else {
-        None
-    };
-
+    let purity_line = get_purity_line(world, x, y, terrain_type);
     let echo_line: Option<Line> = None;
-
-    // Scent Logic
-    let scent_line = if let Some(scent_map) = world.get_resource::<ScentMap>() {
-        let tile_scent = scent_map.get_scent(GridPosition { x, y });
-        if tile_scent.pleasant > 0.0 || tile_scent.foul > 0.0 {
-            Some(Line::from(vec![
-                Span::raw("Scent: "),
-                Span::styled(
-                    format!("🌸 {:.1}", tile_scent.pleasant),
-                    Style::default().fg(Color::LightMagenta),
-                ),
-                Span::raw(" / "),
-                Span::styled(
-                    format!("🤢 {:.1}", tile_scent.foul),
-                    Style::default().fg(Color::Rgb(150, 200, 50)),
-                ),
-            ]))
-        } else {
-            None
-        }
-    } else {
-        None
-    };
+    let scent_line = get_scent_line(world, x, y);
 
     let mut constraints = vec![
         Constraint::Length(1), // Header
@@ -588,19 +590,20 @@ fn render_tile_inspector(frame: &mut Frame, area: Rect, world: &World, x: i32, y
     }
 
     let visual_idx = current_idx;
+    render_tile_visual(frame, layout[visual_idx], char, color);
+}
 
-    // Big visual representation
+fn render_tile_visual(frame: &mut Frame, area: Rect, char: &str, color: Color) {
     let visual_block = Block::default()
         .borders(Borders::ALL)
         .border_type(BorderType::Rounded)
         .title(" Visual ");
-    let visual_inner = visual_block.inner(layout[visual_idx]);
-    frame.render_widget(visual_block, layout[visual_idx]);
+    let visual_inner = visual_block.inner(area);
+    frame.render_widget(visual_block, area);
 
     let visual = Paragraph::new(char)
         .style(Style::default().fg(color))
         .alignment(Alignment::Center);
-    // .block(Block::default().borders(Borders::NONE)); // Centered inside block
 
     // Center the char vertically
     let v_layout = Layout::default()
