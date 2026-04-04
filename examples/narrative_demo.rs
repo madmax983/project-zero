@@ -294,23 +294,30 @@ fn ui(f: &mut Frame, app: &mut App) {
             .block(
                 Block::default()
                     .borders(Borders::ALL)
-                    .title("Generated Story"),
+                    .border_type(BorderType::Rounded)
+                    .border_style(Style::default().fg(Color::Red))
+                    .title(Span::styled(" Error ", Style::default().fg(Color::Red).add_modifier(Modifier::BOLD)))
+                    .padding(Padding::uniform(1)),
             )
             .wrap(Wrap { trim: true })
     } else if let Some(segments) = &app.generated_segments {
         let spans: Vec<Span> = segments
             .iter()
             .map(|seg| match seg {
-                NarrativeSegment::Text(t) => Span::raw(t),
+                NarrativeSegment::Text(t) => Span::styled(t, Style::default().fg(Color::White)),
                 NarrativeSegment::Slot { value, .. } => Span::styled(
                     value,
                     Style::default()
                         .fg(Color::Cyan)
-                        .add_modifier(Modifier::BOLD),
+                        .add_modifier(Modifier::BOLD)
+                        .add_modifier(Modifier::ITALIC),
                 ),
                 NarrativeSegment::Error(e) => Span::styled(
                     format!("[ERROR: {}]", e),
-                    Style::default().fg(Color::Red).add_modifier(Modifier::BOLD),
+                    Style::default()
+                        .fg(Color::White)
+                        .bg(Color::Red)
+                        .add_modifier(Modifier::BOLD),
                 ),
             })
             .collect();
@@ -320,16 +327,23 @@ fn ui(f: &mut Frame, app: &mut App) {
             .block(
                 Block::default()
                     .borders(Borders::ALL)
-                    .title("Generated Story"),
+                    .border_type(BorderType::Rounded)
+                    .border_style(Style::default().fg(Color::Cyan))
+                    .title(Span::styled(" ✨ Generated Story ", Style::default().fg(Color::Cyan).add_modifier(Modifier::BOLD)))
+                    .padding(Padding::uniform(1)),
             )
             .wrap(Wrap { trim: true })
     } else {
         Paragraph::new("Press ENTER to generate a story...")
-            .style(Style::default().fg(Color::DarkGray))
+            .style(Style::default().fg(Color::DarkGray).add_modifier(Modifier::ITALIC))
+            .alignment(Alignment::Center)
             .block(
                 Block::default()
                     .borders(Borders::ALL)
-                    .title("Generated Story"),
+                    .border_type(BorderType::Rounded)
+                    .border_style(Style::default().fg(Color::DarkGray))
+                    .title(" Generated Story ")
+                    .padding(Padding::uniform(1)),
             )
             .wrap(Wrap { trim: true })
     };
