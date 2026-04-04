@@ -1,6 +1,11 @@
 use crate::layer1::social::morale::Morale;
 use crate::layer1::social::rumor::RumorTopic;
 use bevy_ecs::prelude::*;
+use crate::layer1::utility_eval_types::PopEvalData;
+use crate::layer1::utility_types::{ActionType, PopAction};
+use crate::layer1::social::rumor::Knowledge;
+use rand::seq::SliceRandom;
+use rand::Rng;
 
 #[derive(Event)]
 pub struct GossipEvent {
@@ -51,6 +56,53 @@ pub fn process_gossip(
 
             // Add Gossiping component to temporarily halt work
             commands.entity(event.pop).insert(Gossiping(1));
+        }
+    }
+}
+
+/// Evaluates the utility of the Gossip action for a pop.
+///
+/// A pop will want to gossip if they have a low leisure score and they
+/// know at least one rumor.
+#[must_use]
+pub fn evaluate_gossip(data: &PopEvalData) -> f32 {
+    let base_score = 0.0;
+
+    // High social need (low leisure) increases desire to gossip.
+    let urgency = 1.0 - data.needs.leisure;
+
+    // If they have no rumors, they can't really gossip.
+    // However, since we don't have direct access to their Knowledge component here in the PopEvalData
+    // without expanding PopEvalData, we just use a baseline urgency.
+    // If urgency is high enough, they choose to gossip.
+    (base_score + (urgency * 1.2)).min(1.0)
+}
+
+/// Executes the gossip action for a pop.
+///
+/// If the pop is assigned to Gossip by Utility AI, they will randomly share a rumor they know.
+pub fn execute_gossip_system(
+    mut commands: Commands,
+    query: Query<(Entity, &PopAction, &Knowledge)>,
+    mut gossip_events: EventWriter<GossipEvent>,
+) {
+    let mut rng = rand::thread_rng();
+    for (entity, action, knowledge) in &query {
+        if action.current != ActionType::Gossip {
+            continue;
+        }
+
+        // Add Gossiping component to halt other progress
+        commands.entity(entity).insert(Gossiping(1));
+
+        // Random chance to actually gossip this tick to prevent spam
+        if rng.gen_bool(0.05) {
+            if let Some(rumor) = knowledge.known_rumors.choose(&mut rng) {
+                gossip_events.send(GossipEvent {
+                    pop: entity,
+                    rumor: rumor.topic.clone(),
+                });
+            }
         }
     }
 }

@@ -617,3 +617,10 @@
 - **Systems connected:** `spread_whispers_to_colony` (Void Whispers) -> `MemeticCarrier` (Memetics) & `void_whispers_chronicle_bridge` (Integration) -> `AddChronicleEvent`
 - **Glue added:** Refactored `spread_whispers_to_colony` to apply the actual `MemeticCarrier` component. Added `void_whispers_chronicle_bridge` to emit a Chronicle event upon fleet return with whispers.
 - **Tests:** `tests/integration/void_whispers_chronicle.rs`
+
+### INT-684: The Gossip Economy -> Utility AI
+- **Date:** 2026-04-10
+- **Systems connected:** `evaluate_gossip` -> `UtilityAI` -> `execute_gossip_system` -> `GossipEvent`
+- **Glue added:** Added `ActionType::Gossip`. Integrated gossip evaluation directly into `utility_ai.rs`'s `evaluate_group_social`. Pops now actively choose to gossip based on low leisure, triggering `execute_gossip_system` which halts work (via `Gossiping`) and emits `GossipEvent`s to generate `IntelTokens`.
+- **Schedule:** Registered `execute_gossip_system` in `Layer1SystemSet::Execution`.
+- **Tests:** `tests/integration/gossip_economy_bridge.rs` (Verified data flow from GossipEvent -> IntelTokens -> BrokerPurchaseEvent)

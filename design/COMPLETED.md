@@ -337,3 +337,4 @@
 - [x] `INT-570` Integration: Bio-Acoustic Miasma -> Stress Breakdown — completed 2026-04-10
 - [x] `INT-768` Integration: Dynastic Succession -> Chronicle — completed 2026-04-10
 - [x] `INT-777` Integration: Void Whispers -> Rumor Web & Chronicle — completed 2026-04-10
+- [x] `684` The Gossip Economy — `specs/684-gossip-economy.md` — completed 2026-04-10

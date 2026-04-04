@@ -90,6 +90,7 @@ const fn format_action_type(action: ActionType) -> (&'static str, &'static str, 
         ActionType::ExtinguishFire => ("🧯", "Extinguishing", Color::Blue),
         ActionType::TreatWounds => ("🩹", "Treating Wounds", Color::Green),
         ActionType::Flee => ("🏃", "Fleeing", Color::Yellow),
+        ActionType::Gossip => ("🗣️", "Gossiping", Color::Magenta),
     }
 }
 

@@ -97,6 +97,10 @@ pub enum ActionType {
     ///
     /// See \[`crate::layer1::actions::refine::evaluate_refine`\].
     Refine,
+    /// Actively participate in the gossip economy to generate intel.
+    ///
+    /// See \[`crate::layer1::social::gossip_economy::evaluate_gossip`\].
+    Gossip,
     /// Work at a farm to produce food.
     ///
     /// See \[`crate::layer1::actions::farm::evaluate_farm`\].
@@ -190,7 +194,7 @@ pub enum HobbyType {
 
 impl ActionType {
     /// Total number of action types. Used for array sizing.
-    pub const COUNT: usize = 42;
+    pub const COUNT: usize = 43;
 
     /// Converts action type to a unique array index (0..COUNT-1).
     #[must_use]
@@ -213,6 +217,7 @@ impl ActionType {
             Self::Daze => 14,
             Self::Fight => 15,
             Self::Refine => 16,
+            Self::Gossip => 42,
             Self::Farm => 17,
             Self::Warden => 18,
             Self::Sleepwalking => 19,

@@ -391,6 +391,12 @@ impl<'a> PopDecider<'a> {
             self.context,
             0.0,
         );
+
+        // Evaluate Gossip
+        let gossip_score = crate::layer1::social::gossip_economy::evaluate_gossip(self.data);
+        if gossip_score > 0.0 {
+            self.evaluator.consider(ActionType::Gossip, gossip_score, None);
+        }
     }
 
     /// **Priority 2: Social & Mental Health**

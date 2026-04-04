@@ -127,6 +127,7 @@ pub fn register(schedule: &mut Schedule) {
             work_execution_system.after(arrival_handler_system),
             crate::layer1::customs::vetting_work_system.after(arrival_handler_system),
             crate::layer1::hobby::execute_hobby_system.after(arrival_handler_system),
+            crate::layer1::social::gossip_economy::execute_gossip_system.after(arrival_handler_system),
             crate::layer1::husbandry::tame_execution_system.after(arrival_handler_system),
             combat_execution_system.after(arrival_handler_system),
             crate::layer1::turret::turret_fire_system.after(combat_execution_system),
