@@ -253,6 +253,7 @@ pub fn run_simulation_tick(world: &mut World) {
 
     // Initialize Layer 2 Events
     if !world.contains_resource::<Events<crate::layer1::social::ghost_shift_strike::GhostShiftStartedEvent>>() {
+        world.init_resource::<Events<crate::layer1::physics::temporal_stutter::TemporalStutterEvent>>();
         world.init_resource::<Events<crate::layer1::social::ghost_shift_strike::GhostShiftStartedEvent>>();
     }
     if !world.contains_resource::<Events<crate::layer3::diplomacy::succession::SuccessionEvent>>() {

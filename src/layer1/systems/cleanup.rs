@@ -31,6 +31,7 @@ pub fn register(schedule: &mut Schedule) {
             .in_set(Layer1SystemSet::EventCleanup),
     );
 
+    schedule.add_systems(update_event_buffer::<crate::layer1::physics::temporal_stutter::TemporalStutterEvent>.in_set(Layer1SystemSet::EventCleanup));
     schedule.add_systems(
         (
             update_event_buffer::<crate::layer1::nature::biosphere_empathy::FloraDamagedEvent>,

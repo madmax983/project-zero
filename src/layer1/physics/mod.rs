@@ -47,3 +47,5 @@ mod vacuum_welding_tests;
 
 #[cfg(test)]
 mod structural_integrity_overflow_tests;
+pub mod temporal_stutter;
+pub use temporal_stutter::*;

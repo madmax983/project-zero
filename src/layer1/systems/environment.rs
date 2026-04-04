@@ -134,6 +134,7 @@ pub fn register(schedule: &mut Schedule) {
 
     schedule.add_systems(
         (
+            crate::layer1::physics::temporal_stutter::process_temporal_stutters,
             update_pressure_system,
             crate::layer1::temperature::update_temperature_system.after(update_pressure_system),
             crate::layer1::radioactive::radiation_system
