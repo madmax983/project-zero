@@ -54,3 +54,13 @@ I've updated `echo_issue_report.md` with resolutions. The error text fix for `Na
 💡 **The Fix:** "Add a huge banner in README saying 'REQUIRES FEATURE NOVA'."
 
 ✅ **Resolution:** Implemented. Modified `README.md` to add a massive, unmissable warning banner ("🚨 ⚠️ REQUIRES FEATURE NOVA ⚠️ 🚨") about the `nova` feature flag before the code snippet.
+
+## 🗣️ Echo: Doctest for `update_pressure_system` fails to compile
+🤦 **The Confusion:** I ran `cargo test --doc` and the doctest for `update_pressure_system` in `src/layer1/physics/pressure.rs` failed with `error[E0061]: this function takes 3 arguments but 1 argument was supplied`.
+🕵️ **The Reality:** The signature of `update_pressure_system` was updated to be a Bevy system taking `Option<ResMut<'_, PressureGrid>>` and `Query` arguments, but the doctest still tries to call it with `&mut world` like in earlier versions.
+💡 **The Fix:** Update the doctest to use the correct signature or remove it if it's an internal system.
+
+## 🗣️ Echo: Unused import warning in headless doctest
+🤦 **The Confusion:** When I copied the "Initializing a Headless Simulation" code block from `src/lib.rs` (which is also similar to the one in `README.md` but with an extra import), the compiler warned me: `warning: unused import: bevy_ecs::prelude::*`.
+🕵️ **The Reality:** The `bevy_ecs` types aren't explicitly needed in that snippet because `world` is fully qualified or its methods are accessible without it, or because `scale::prelude::*` covers everything needed for the basic loop.
+💡 **The Fix:** Remove `use bevy_ecs::prelude::*;` from the doctest in `src/lib.rs` to keep the user experience clean and warning-free.
