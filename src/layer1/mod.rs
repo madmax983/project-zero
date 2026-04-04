@@ -74,7 +74,7 @@ pub mod edicts;
 /// Execution layer bridging utility AI to actions.
 pub mod execution;
 /// Farm building and food production.
-pub mod farm;
+
 /// Pop health and damage.
 /// Deep crust geomes system (Spec 515).
 pub mod geomes;
@@ -82,7 +82,7 @@ pub mod geomes;
 /// Hauling logic.
 /// Workplace hazards logic.
 pub mod hazards;
-#[cfg(test)]
+
 /// Tests for hazards logic.
 pub mod hazards_tests;
 /// Pop hobbies logic (Spec 137).
@@ -106,7 +106,7 @@ pub mod map;
 /// Medical care and hospital logic.
 /// Pop memories and psychological effects.
 pub mod memory;
-#[cfg(test)]
+
 /// Tests for metal industry (Spec 024).
 pub mod metal_industry_tests;
 /// Pop needs (hunger, rest).
@@ -122,7 +122,6 @@ pub mod pathfinding;
 /// Field science and anomalies.
 pub mod science;
 /// Seasonal rhythms (Spring, Summer, Autumn, Winter).
-#[cfg(test)]
 mod shift_integration_tests;
 /// Social needs and tavern.
 pub mod social;
@@ -134,21 +133,14 @@ pub mod structure;
 /// Technology and research system.
 pub mod tech;
 /// Terrain generation and grid management.
-#[cfg(test)]
 mod work_building_tests;
 
-#[cfg(test)]
 /// Tests for mining logic (Spec 052).
 pub mod mining_tests;
 
-#[cfg(test)]
 /// Tests for mother lode logic (Spec 168).
 pub mod mother_lode_tests;
 
-#[cfg(test)]
-mod preservation_tests;
-
-#[cfg(test)]
 mod execution_demolish_test;
 
 /// Named locations on the map.
@@ -180,7 +172,7 @@ pub use events::*;
 pub mod biology;
 pub use biology::*;
 pub use execution::*;
-pub use farm::*;
+
 pub use graffiti::*;
 pub use hazards::*;
 pub use hobby::*;
@@ -198,7 +190,6 @@ pub use spoilage::*;
 pub use structure::*;
 pub use tech::*;
 
-#[cfg(test)]
 mod tool_tests;
 pub use clothing::*;
 
@@ -206,7 +197,7 @@ pub use clothing::*;
 pub mod lighting;
 /// Pop skills and experience system.
 pub mod skills;
-#[cfg(test)]
+
 mod waste_tests;
 
 /// Vermin infestation logic (Spec 073).
@@ -262,10 +253,8 @@ pub use sleepwalking::*;
 #[cfg(test)]
 mod quirks_tests;
 
-#[cfg(test)]
 mod sleepwalking_tests;
 
-#[cfg(test)]
 mod material_provenance_tests;
 
 /// Cabin Fever mechanics (Spec 082).
@@ -290,24 +279,20 @@ pub use pheromone::*;
 /// Heirloom tech system (Spec 070).
 pub mod heirloom;
 pub use heirloom::*;
-#[cfg(test)]
+
 mod heirloom_items_tests;
-#[cfg(test)]
+
 mod heirloom_tests;
-#[cfg(test)]
+
 mod retrograde_tests;
-#[cfg(test)]
+
 mod structure_fragile_tests;
-#[cfg(test)]
+
 mod structure_jury_rig_tests;
 
 /// Animal Husbandry system (Spec 075).
-pub mod husbandry;
-pub use husbandry::*;
 
 /// Gastronomy system (Spec 166).
-pub mod gastronomy;
-pub use gastronomy::*;
 
 /// Antagonistic Flora system (Spec 092).
 pub mod flora;
@@ -319,17 +304,14 @@ pub use private_stash::*;
 /// Resource purity system (Spec 106).
 pub mod purity;
 pub use purity::*;
-#[cfg(test)]
+
 mod fuel_consumption_tests;
-#[cfg(test)]
+
 mod fuel_industry_tests;
-#[cfg(test)]
-mod greenhouse_tests;
-#[cfg(test)]
-mod hydroponics_tests;
+
 /// Palette fatigue system (Spec 114).
 pub mod palette_fatigue;
-#[cfg(test)]
+
 mod structure_maintenance_tests;
 pub use palette_fatigue::*;
 
@@ -354,7 +336,7 @@ pub use turret::*;
 
 /// Wild Child system (Spec 124).
 pub mod prototyping;
-#[cfg(test)]
+
 mod tech_storage_tests;
 pub use prototyping::*;
 /// Cybernetic augmentation system (Spec 151).
@@ -406,7 +388,6 @@ pub use sleep_deprived_savant::*;
 /// System registration and sets (Facade).
 pub mod systems;
 
-#[cfg(test)]
 mod institutional_memory_tests;
 pub mod memetics;
 pub mod seismic;
@@ -440,7 +421,7 @@ mod cryo_tests;
 /// Language and Dialect system (Spec 193).
 pub mod language;
 pub use language::*;
-#[cfg(test)]
+
 mod equipment_tests;
 
 /// Solar cycle and power generation (Spec 213).
@@ -452,9 +433,9 @@ pub use hygiene::*;
 
 /// Gene Bank system (Spec 165).
 pub mod geodetic;
-#[cfg(test)]
+
 mod improvised_tools_tests;
-#[cfg(test)]
+
 mod urban_heat_tests;
 pub use geodetic::*;
 
@@ -495,7 +476,6 @@ pub use clutter::*;
 pub mod security;
 pub use security::*;
 
-#[cfg(test)]
 mod geodetic_tests;
 
 /// Void Stare (Spec 242).
@@ -509,7 +489,7 @@ pub use quantum_twins::*;
 /// Holographic Facades (Spec 249).
 pub mod construction;
 pub mod hologram;
-#[cfg(test)]
+
 mod hologram_tests;
 pub use hologram::*;
 
@@ -560,3 +540,6 @@ pub mod environment;
 pub mod spore_diplomat;
 pub use spore_diplomat::*;
 pub mod diplomacy;
+/// Agriculture and Food Production
+pub mod agriculture;
+pub use agriculture::*;
