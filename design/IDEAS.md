@@ -13806,3 +13806,72 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** The lure of deep-crust wealth vs. the claustrophobic, unpredictable danger of underground skirmishes and catastrophic cave-ins.
 
 ---
+## The FTL Wake Storms
+
+**Layer:** 3 -> 2
+
+**Fantasy:** Your advanced travel networks inadvertently rip space apart, creating hazards for everyone.
+
+**Mechanic:** High traffic FTL routes generate "Wake Storms" in local star systems. These storms disrupt communications, damage Layer 2 fleets, and occasionally deposit strange anomalies or lost ships from the subspace tear.
+
+**Emergence:** You build a massive trade hub that relies on heavy FTL traffic. The resulting Wake Storms become so severe they destroy your own trade fleets, while opportunistic pirates use the storms as cover to raid your weakened defenses.
+
+**Tension:** The immense economic benefit of centralized FTL logistics vs. the escalating environmental damage to your core systems.
+
+---
+
+## Biomimetic Architecture
+
+**Layer:** 1
+
+**Fantasy:** Your buildings blur the line between machinery and native life, eventually becoming wild.
+
+**Mechanic:** You can research structures that grow from native flora rather than being built from metal. They cost zero maintenance and heal themselves, but over time, they begin to express feral behaviors, occasionally moving slightly or consuming nearby small resources without permission.
+
+**Emergence:** Your self-repairing factory complex decides the best way to optimize its structural integrity is to physically uproot itself and merge with your adjacent residential block, creating a massive, terrifying, but highly efficient super-structure that your Pops are afraid to enter.
+
+**Tension:** The zero-cost sustainability of biological buildings vs. the loss of rigid, predictable urban planning.
+
+---
+
+## The Orbital Graveyard Economy
+
+**Layer:** 2 -> 1
+
+**Fantasy:** Scavenging the corpses of dead fleets to build your future.
+
+**Mechanic:** Space battles at Layer 2 leave behind permanent "Debris Fields" in planetary orbits. Instead of clearing them, you can build "Scrapper Stations" to slowly harvest them for advanced, otherwise un-researchable alien components. However, debris fields also block solar power and increase the risk of catastrophic Kessler Syndrome for any ships leaving Layer 1.
+
+**Emergence:** You intentionally lure massive enemy armadas into the orbit of your heavily fortified capital, sacrificing your own defensive platforms to create a colossal debris field. You then survive off the scavenged tech for decades, essentially farming enemy invasions for resources.
+
+**Tension:** The lucrative, exclusive tech gained from scavenging vs. the massive risk of entombing your own planet in a sphere of lethal, high-velocity shrapnel.
+
+---
+
+## The Propaganda Contagion
+
+**Layer:** 3 -> 1
+
+**Fantasy:** An idea goes viral across the galaxy, overriding all borders and allegiances.
+
+**Mechanic:** Instead of physical weapons, you can launch "Memetic Payloads" into rival communication networks. These ideas spread autonomously from Pop to Pop, colony to colony. If a Pop is infected, their faction allegiance shifts. The contagion mutates as it spreads, meaning the idea might morph into something entirely different by the time it reaches the other side of the galaxy.
+
+**Emergence:** You deploy a memetic payload designed to cause pacifism in a rival warlike empire. It works, but as it spreads back along trade routes to your own core worlds, it mutates into fanatical anti-technology luddism, causing your own people to sabotage your orbital shipyards.
+
+**Tension:** The unparalleled soft power of weaponized ideas vs. the absolute inability to control the idea once it leaves your hands.
+
+---
+
+## The Sub-Planetary Parasite
+
+**Layer:** 1 -> 2
+
+**Fantasy:** You didn't settle on a planet. You settled on an egg.
+
+**Mechanic:** Mining too deep or extracting too much geothermal energy on certain "dead" worlds can awaken a dormant Sub-Planetary Parasite. It begins consuming the planet from the inside out, drastically increasing resource output temporarily as the crust shatters, but eventually, the parasite will hatch, destroying the planet and launching a massive, hostile biological entity into Layer 2 space.
+
+**Emergence:** You realize a frontier colony is doomed to be consumed by a parasite. Instead of evacuating, you double down, strip-mining the collapsing crust at a frenetic pace to fund a massive fleet, planning to use that very fleet to kill the parasite the moment it hatches.
+
+**Tension:** The incredible, immediate wealth of a dying planet vs. the moral cost of sacrificing a colony and unleashing a galactic threat.
+
+---
