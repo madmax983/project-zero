@@ -1,8 +1,26 @@
+//! The `AdScreen` module manages corporate advertising entities that extract credits from nearby `Pop`s.
+//!
+//! # The Story
+//! In the hyper-capitalist frontier, even leisure time is a commodity. `AdScreen` structures emit
+//! subliminal and overt advertisements, extracting value (`accumulated_credits`) from any `Pop` that
+//! wanders too close. However, this corporate intrusion accelerates the decay of the `Pop`'s `leisure`
+//! needs, forcing them to seek entertainment more frequently.
+//!
+//! # Usage
+//! Attach an `AdScreen` component to any entity with a `GridPosition`. Pops within the `radius` will
+//! automatically be affected when `update_ad_screens_system` runs.
+//!
+
 use crate::layer1::map::GridPosition;
 use crate::layer1::needs::Needs;
 use crate::layer1::pop::Pop;
 use bevy_ecs::prelude::*;
 
+/// A structure representing an active advertising screen.
+///
+/// When a `Pop` enters the `radius` of this screen:
+/// 1. The screen generates `credits_per_pop`.
+/// 2. The `Pop`'s `leisure` need decays faster based on the `need_decay_multiplier`.
 #[derive(Component)]
 pub struct AdScreen {
     pub radius: f32,
@@ -11,6 +29,54 @@ pub struct AdScreen {
     pub accumulated_credits: f32,
 }
 
+/// Processes all active `AdScreen` entities and applies their effects to nearby `Pop`s.
+///
+/// For every `Pop` within the `radius` of an `AdScreen`, this system:
+/// 1. Adds `credits_per_pop` to the screen's `accumulated_credits`.
+/// 2. Accelerates the decay of the `Pop`'s `leisure` need.
+///
+/// # Examples
+///
+/// ```
+/// use bevy_ecs::prelude::*;
+/// use scale::layer1::ad_screen::{AdScreen, update_ad_screens_system};
+/// use scale::layer1::map::GridPosition;
+/// use scale::layer1::needs::Needs;
+/// use scale::layer1::pop::Pop;
+///
+/// let mut world = World::new();
+///
+/// // Spawn a Pop with high leisure
+/// let pop_id = world.spawn((
+///     Pop,
+///     GridPosition { x: 0, y: 0 },
+///     Needs { leisure: 1.0, ..Default::default() },
+/// )).id();
+///
+/// // Spawn an AdScreen nearby
+/// let screen_id = world.spawn((
+///     GridPosition { x: 1, y: 0 },
+///     AdScreen {
+///         radius: 5.0,
+///         credits_per_pop: 10.0,
+///         need_decay_multiplier: 2.0, // Doubles the standard 0.0015 decay
+///         accumulated_credits: 0.0,
+///     },
+/// )).id();
+///
+/// // Run the system
+/// let mut schedule = Schedule::default();
+/// schedule.add_systems(update_ad_screens_system);
+/// schedule.run(&mut world);
+///
+/// // The screen has generated credits
+/// let screen = world.get::<AdScreen>(screen_id).unwrap();
+/// assert_eq!(screen.accumulated_credits, 10.0);
+///
+/// // The Pop's leisure has decayed faster than normal
+/// let needs = world.get::<Needs>(pop_id).unwrap();
+/// assert!(needs.leisure < 1.0);
+/// ```
 pub fn update_ad_screens_system(
     mut screens: Query<(&GridPosition, &mut AdScreen)>,
     mut pops: Query<(&GridPosition, &mut Needs), With<Pop>>,

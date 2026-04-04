@@ -1,3 +1,17 @@
+//! The `Constellations` module manages the procedurally generated night sky and its effects on the colony.
+//!
+//! # The Story
+//! The night sky of the frontier is not static. Procedurally generated constellations rotate into view,
+//! each bringing its own mythological resonance (`myth`). Observatory workers who study the sky have a
+//! chance to be affected by the ascendant constellation, gaining temporary emotional modifiers such as
+//! `Cosmic Inspiration` or `Existential Dread`.
+//!
+//! # Mechanics
+//! - A `Sky` resource initializes with a set of generated `Constellation`s.
+//! - `update_sky_system` rotates the ascendant constellation over time.
+//! - `observe_constellations_system` allows observatory workers to randomly acquire the active constellation's effect.
+//!
+
 #![allow(clippy::cast_precision_loss)]
 use crate::layer1::actions::{AssignedTo, AssignmentType};
 use crate::layer1::morale::{MoodModifier, Morale};
@@ -126,7 +140,39 @@ impl FromWorld for Sky {
     }
 }
 
-/// Rotates the sky over time.
+/// Rotates the `Sky` resource over time, changing the currently ascendant constellation.
+///
+/// The sky advances its `current_index` every 1,000 simulation ticks, wrapping around
+/// once it reaches the end of the `constellations` list.
+///
+/// # Examples
+///
+/// ```
+/// use bevy_ecs::prelude::*;
+/// use scale::layer1::constellations::{Sky, Constellation, ConstellationEffect, update_sky_system};
+/// use scale::shared::time::SimulationTime;
+///
+/// let mut world = World::new();
+///
+/// // Create a sky with two constellations
+/// let sky = Sky {
+///     constellations: vec![
+///         Constellation { name: "Star A".into(), myth: "".into(), effect: ConstellationEffect::Calm, stars: vec![] },
+///         Constellation { name: "Star B".into(), myth: "".into(), effect: ConstellationEffect::Dread, stars: vec![] },
+///     ],
+///     current_index: 0,
+/// };
+/// world.insert_resource(sky);
+/// world.insert_resource(SimulationTime { tick: 1500, ..Default::default() });
+///
+/// // Run the system
+/// let mut schedule = Schedule::default();
+/// schedule.add_systems(update_sky_system);
+/// schedule.run(&mut world);
+///
+/// // Tick 1500 / 1000 = 1. The index should have rotated to 1.
+/// assert_eq!(world.resource::<Sky>().current_index, 1);
+/// ```
 pub fn update_sky_system(mut sky: ResMut<Sky>, time: Res<crate::shared::time::SimulationTime>) {
     if sky.constellations.is_empty() {
         return;
@@ -138,7 +184,55 @@ pub fn update_sky_system(mut sky: ResMut<Sky>, time: Res<crate::shared::time::Si
     sky.current_index = index;
 }
 
-/// Applies constellation effects to observatory workers.
+/// Applies the current constellation's effect to `Pop`s working at an `Observatory`.
+///
+/// Each tick, `ObservatoryWorker`s have a 5% chance to be struck by the mythological
+/// resonance of the currently ascendant constellation in the `Sky`. If triggered, a
+/// `MoodModifier` matching the constellation's effect is added to the `Pop`'s `Morale`.
+///
+/// # Examples
+///
+/// ```
+/// use bevy_ecs::prelude::*;
+/// use scale::layer1::constellations::{Sky, Constellation, ConstellationEffect, observe_constellations_system};
+/// use scale::layer1::actions::{AssignedTo, AssignmentType};
+/// use scale::layer1::observatory::Observatory;
+/// use scale::layer1::morale::Morale;
+///
+/// let mut world = World::new();
+///
+/// // Setup a sky with a known effect
+/// let sky = Sky {
+///     constellations: vec![Constellation {
+///         name: "The Great Gear".into(),
+///         myth: "".into(),
+///         effect: ConstellationEffect::Vigor,
+///         stars: vec![]
+///     }],
+///     current_index: 0,
+/// };
+/// world.insert_resource(sky);
+///
+/// // Spawn an observatory
+/// let observatory_id = world.spawn(Observatory { efficiency: 1.0 }).id();
+///
+/// // Spawn a Pop assigned to the observatory
+/// let pop_id = world.spawn((
+///     AssignedTo { entity: observatory_id, assignment_type: AssignmentType::ObservatoryWorker },
+///     Morale::default(),
+/// )).id();
+///
+/// // Run the system repeatedly to ensure the 5% chance triggers
+/// let mut schedule = Schedule::default();
+/// schedule.add_systems(observe_constellations_system);
+/// for _ in 0..100 {
+///     schedule.run(&mut world);
+/// }
+///
+/// // The Pop should have received the Vigor modifier
+/// let morale = world.get::<Morale>(pop_id).unwrap();
+/// assert!(morale.modifiers.iter().any(|m| m.label == ConstellationEffect::Vigor.label()));
+/// ```
 pub fn observe_constellations_system(
     sky: Res<Sky>,
     mut pops: Query<(&AssignedTo, &mut Morale)>,
