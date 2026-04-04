@@ -256,3 +256,5 @@ mod orbital_commute_bridge;
 mod void_whispers_chronicle;
 #[path = "integration/temporal_ghost_towns_bridge.rs"]
 mod temporal_ghost_towns_bridge;
+#[path = "integration/parasitic_architecture_bridge.rs"]
+mod parasitic_architecture_bridge;

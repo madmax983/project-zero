@@ -11,9 +11,16 @@ pub struct ParasiticArchitecture {
     pub consumption_rate: f32,
 }
 
-/// System that processes the consumption of buildings by parasitic megastructures.
+/// Event triggered when a parasitic megastructure consumes a building entirely.
+#[derive(Event, Debug)]
+pub struct BuildingConsumedEvent {
+    /// The entity of the building that was consumed.
+    pub entity: Entity,
+}
+
 pub fn process_megastructure_consumption(
     mut commands: Commands,
+    mut events: EventWriter<BuildingConsumedEvent>,
     megastructures: Query<(&GridPosition, &ParasiticArchitecture)>,
     mut buildings: Query<(Entity, &GridPosition, &mut Structure), Without<ParasiticArchitecture>>,
 ) {
@@ -28,6 +35,7 @@ pub fn process_megastructure_consumption(
                 structure.current_hp -= parasitic.consumption_rate;
 
                 if structure.current_hp <= 0.0 {
+                    events.send(BuildingConsumedEvent { entity });
                     commands.entity(entity).despawn();
                 }
             }
@@ -74,6 +82,7 @@ mod tests {
             .id();
 
         // Run the system once
+        world.init_resource::<Events<BuildingConsumedEvent>>();
         let mut schedule = bevy_ecs::schedule::Schedule::default();
         schedule.add_systems(process_megastructure_consumption);
         schedule.run(&mut world);
@@ -114,6 +123,7 @@ mod tests {
             .id();
 
         // Run the system once
+        world.init_resource::<Events<BuildingConsumedEvent>>();
         let mut schedule = bevy_ecs::schedule::Schedule::default();
         schedule.add_systems(process_megastructure_consumption);
         schedule.run(&mut world);
@@ -153,6 +163,7 @@ mod tests {
             .id();
 
         // Run the system once
+        world.init_resource::<Events<BuildingConsumedEvent>>();
         let mut schedule = bevy_ecs::schedule::Schedule::default();
         schedule.add_systems(process_megastructure_consumption);
         schedule.run(&mut world);

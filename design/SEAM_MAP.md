@@ -629,3 +629,9 @@
 - **Systems connected:** `process_temporal_stutters` (Temporal Ghost Towns) -> `temporal_stutter_chronicle_bridge` (Integration) -> `AddChronicleEvent`
 - **Glue added:** Added `temporal_stutter_chronicle_bridge` to emit an `AddChronicleEvent` (`EventImportance::Minor`) upon `TemporalStutterEvent`. Registered in `Layer1SystemSet::Observation`.
 - **Tests:** `tests/integration/temporal_ghost_towns_bridge.rs`
+
+### INT-771: Parasitic Architecture -> Chronicle
+- **Date:** 2026-05-18
+- **Systems connected:** `process_megastructure_consumption` (Parasitic Architecture) -> `parasitic_architecture_chronicle_bridge` (Integration) -> `AddChronicleEvent`
+- **Glue added:** Added `parasitic_architecture_chronicle_bridge` to emit an `AddChronicleEvent` (`EventImportance::Minor`) upon `BuildingConsumedEvent`. Registered in `Layer1SystemSet::Observation`.
+- **Tests:** `tests/integration/parasitic_architecture_bridge.rs`

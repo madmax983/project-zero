@@ -1220,3 +1220,16 @@ pub fn temporal_stutter_chronicle_bridge(
         });
     }
 }
+
+/// Bridges `BuildingConsumedEvent` (Parasitic Architecture) to `AddChronicleEvent` (Chronicle).
+pub fn parasitic_architecture_chronicle_bridge(
+    mut events: EventReader<crate::layer1::parasitic_architecture::BuildingConsumedEvent>,
+    mut chronicle_events: EventWriter<AddChronicleEvent>,
+) {
+    for _event in events.read() {
+        chronicle_events.send(AddChronicleEvent {
+            text: "A building was completely consumed by a parasitic megastructure.".to_string(),
+            importance: EventImportance::Minor,
+        });
+    }
+}
