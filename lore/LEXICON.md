@@ -3799,3 +3799,51 @@
 **Usage:**
 - "The Desync cost them the war."
 - "Returning from the well, they faced the Desync."
+
+## Temporal Ghost Towns (Spec 770)
+
+### the Stutter / the Blink
+**Replaces:** Temporal stutter event, building reversion
+**Code reference:** `TemporalStutterEvent`
+**Usage:**
+- "We lost the reactor to the Stutter."
+- "The Blink took the hab-block back to the dirt."
+
+### chronal ghost
+**Replaces:** Past building state, unstable tile
+**Code reference:** `ChronallyUnstableTile`, `TemporalHistory`
+**Usage:**
+- "They work inside a chronal ghost."
+- "The foundation is built on an unstable tile."
+
+## Parasitic Architecture (Spec 771)
+
+### the Feeding
+**Replaces:** Megastructure consumption of structural integrity
+**Code reference:** `ParasiticArchitecture` consumption
+**Usage:**
+- "The spire demands the Feeding."
+- "You can hear the Feeding in the walls at night."
+
+### the Rot-Spire
+**Replaces:** Megastructure with parasitic trait
+**Code reference:** `Building` with `ParasiticArchitecture`
+**Usage:**
+- "The Rot-Spire keeps the air clean, but it eats the low-town."
+- "We built a Rot-Spire out of desperation."
+
+## The Bio-Acoustic Miasma (Spec 570)
+
+### the Miasma / the Whisper-Fog
+**Replaces:** Miasma cloud, stress recording anomaly
+**Code reference:** `MiasmaCloud`
+**Usage:**
+- "Don't speak when the Whisper-Fog rolls in."
+- "The Miasma remembers what you said."
+
+### the Broadcast / the Tell
+**Replaces:** Global secret reveal event
+**Code reference:** `broadcast_miasma_secrets`
+**Usage:**
+- "The Broadcast ruined the governor."
+- "We woke up to the Tell echoing from the clouds."
