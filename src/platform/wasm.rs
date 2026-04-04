@@ -2,7 +2,7 @@
 
 use ratzilla::event::{KeyCode, KeyEvent, MouseEvent, MouseEventKind};
 
-use super::input::{GameKeyCode, GameKeyEvent, GameMouseEvent};
+use super::input::{GameKeyCode, GameKeyEvent, GameKeyModifiers, GameMouseEvent};
 
 /// Convert a ratzilla `KeyEvent` to a platform-agnostic `GameKeyEvent`.
 ///
@@ -25,7 +25,8 @@ impl TryFrom<KeyEvent> for GameKeyEvent {
             KeyCode::Delete => GameKeyCode::Delete,
             _ => return Err(()),
         };
-        Ok(Self { code })
+        let modifiers = GameKeyModifiers::new(key.ctrl, key.alt, key.shift);
+        Ok(Self { code, modifiers })
     }
 }
 
@@ -46,5 +47,24 @@ impl TryFrom<MouseEvent> for GameMouseEvent {
         } else {
             Err(())
         }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_translate_ctrl_modifier() {
+        let key = KeyEvent {
+            code: KeyCode::Char('k'),
+            ctrl: true,
+            alt: false,
+            shift: false,
+        };
+        let game_key = GameKeyEvent::try_from(key).unwrap();
+        assert!(game_key.modifiers.ctrl);
+        assert!(!game_key.modifiers.alt);
+        assert!(!game_key.modifiers.shift);
     }
 }

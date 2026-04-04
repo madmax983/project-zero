@@ -31,6 +31,25 @@ pub enum GameKeyCode {
     BackTab,
 }
 
+/// Platform-agnostic key modifiers.
+#[derive(Clone, Copy, PartialEq, Eq, Debug, Default)]
+pub struct GameKeyModifiers {
+    /// Control key.
+    pub ctrl: bool,
+    /// Alt/Option key.
+    pub alt: bool,
+    /// Shift key.
+    pub shift: bool,
+}
+
+impl GameKeyModifiers {
+    /// Create modifiers from individual flags.
+    #[must_use]
+    pub const fn new(ctrl: bool, alt: bool, shift: bool) -> Self {
+        Self { ctrl, alt, shift }
+    }
+}
+
 /// A platform-agnostic keyboard event.
 ///
 /// Only represents key-press events; repeat/release are filtered at the
@@ -39,13 +58,46 @@ pub enum GameKeyCode {
 pub struct GameKeyEvent {
     /// The key that was pressed.
     pub code: GameKeyCode,
+    /// Modifier state active during the key event.
+    pub modifiers: GameKeyModifiers,
 }
 
 impl GameKeyEvent {
     /// Create a new key event.
     #[must_use]
     pub const fn new(code: GameKeyCode) -> Self {
-        Self { code }
+        Self {
+            code,
+            modifiers: GameKeyModifiers::new(false, false, false),
+        }
+    }
+
+    /// Attach explicit modifier state.
+    #[must_use]
+    pub const fn with_modifiers(mut self, modifiers: GameKeyModifiers) -> Self {
+        self.modifiers = modifiers;
+        self
+    }
+
+    /// Mark the event as control-modified.
+    #[must_use]
+    pub const fn with_ctrl(mut self) -> Self {
+        self.modifiers.ctrl = true;
+        self
+    }
+
+    /// Mark the event as alt-modified.
+    #[must_use]
+    pub const fn with_alt(mut self) -> Self {
+        self.modifiers.alt = true;
+        self
+    }
+
+    /// Mark the event as shift-modified.
+    #[must_use]
+    pub const fn with_shift(mut self) -> Self {
+        self.modifiers.shift = true;
+        self
     }
 }
 
@@ -71,11 +123,29 @@ impl GameMouseEvent {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::ui::shell::ShellConfig;
 
     #[test]
     fn test_game_key_event_creation() {
         let event = GameKeyEvent::new(GameKeyCode::Char('q'));
         assert_eq!(event.code, GameKeyCode::Char('q'));
+        assert_eq!(event.modifiers, GameKeyModifiers::default());
+    }
+
+    #[test]
+    fn test_game_key_event_with_ctrl() {
+        let event = GameKeyEvent::new(GameKeyCode::Char('k')).with_ctrl();
+        assert!(event.modifiers.ctrl);
+        assert!(!event.modifiers.alt);
+        assert!(!event.modifiers.shift);
+    }
+
+    #[test]
+    fn test_shell_config_round_trips_default_workspace() {
+        let cfg = ShellConfig::default();
+        let json = serde_json::to_string(&cfg).unwrap();
+        let decoded: ShellConfig = serde_json::from_str(&json).unwrap();
+        assert_eq!(decoded.startup_workspace, "Colony Ops");
     }
 
     #[test]

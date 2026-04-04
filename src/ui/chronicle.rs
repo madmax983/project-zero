@@ -4,28 +4,23 @@ use ratatui::{
     widgets::{Block, BorderType, Borders, Clear, Row, Table},
 };
 
-use crate::layer1::{format_event_prefix, Chronicle, ChronicleUiState, EventImportance};
+use crate::layer1::{format_event_prefix, Chronicle, EventImportance};
 
-/// Renders the chronicle overlay if active.
-///
-/// This displays a scrolling history of colony events (births, deaths, construction, etc.).
-/// It is toggled by the [`ChronicleUiState`] resource.
+/// Renders the chronicle pane into the provided area.
 pub fn render_chronicle(frame: &mut Frame, area: Rect, world: &World) {
-    let ui_state = world.resource::<ChronicleUiState>();
-    if !ui_state.is_open {
+    if area.width == 0 || area.height == 0 {
         return;
     }
 
     let chronicle = world.resource::<Chronicle>();
 
     let block = Block::default()
-        .title(" Chronicle (Press L/H to close) ")
+        .title(" Chronicle ")
         .borders(Borders::ALL)
         .border_type(BorderType::Rounded)
         .style(Style::default().bg(Color::Black));
 
-    let popup_area = centered_rect(60, 60, area);
-    frame.render_widget(Clear, popup_area); // Clear background
+    frame.render_widget(Clear, area);
 
     // Table Header
     let header = Row::new(vec!["Time", "Imp", "Event"])
@@ -67,27 +62,7 @@ pub fn render_chronicle(frame: &mut Frame, area: Rect, world: &World) {
 
     let table = Table::new(rows, widths).header(header).block(block);
 
-    frame.render_widget(table, popup_area);
-}
-
-fn centered_rect(percent_x: u16, percent_y: u16, r: Rect) -> Rect {
-    let popup_layout = Layout::default()
-        .direction(Direction::Vertical)
-        .constraints([
-            Constraint::Percentage((100 - percent_y) / 2),
-            Constraint::Percentage(percent_y),
-            Constraint::Percentage((100 - percent_y) / 2),
-        ])
-        .split(r);
-
-    Layout::default()
-        .direction(Direction::Horizontal)
-        .constraints([
-            Constraint::Percentage((100 - percent_x) / 2),
-            Constraint::Percentage(percent_x),
-            Constraint::Percentage((100 - percent_x) / 2),
-        ])
-        .split(popup_layout[1])[1]
+    frame.render_widget(table, area);
 }
 
 /// Returns the display color for an event based on its importance.

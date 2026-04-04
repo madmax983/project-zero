@@ -68,21 +68,25 @@ Container_Boundary(Interstellar, "Interstellar Scale (Layer 3)") {
 Container(Shared, "Shared Lib", "Utilities", "GameState, Time, Input, Logs")
 
 Container_Boundary(SharedLib, "Shared Components") {
-    Component(InputStack, "Input Context Stack", "input.rs", "Modal Input Handling")
+    Component(InputStack, "Input Context Stack", "input.rs", "Gameplay Input Contexts")
 }
 
 Container_Boundary(UI, "UI Layer") {
-    Component(MapRender, "Map Module", "map.rs", "Renders Grid & Entities")
-    Component(Inspector, "Inspector Module", "inspector.rs", "Renders Details")
-    Component(Chronicle, "Chronicle Module", "chronicle.rs", "Renders Logs")
-    Component(Status, "Status Module", "status.rs", "Renders Top Bar")
+    Component(UiShell, "Hypertile Shell", "ui/shell/*", "Owns workspaces, palette, and pane routing")
+    Component(WorkspaceTabs, "Workspace Runtime", "ui/shell/runtime.rs", "Tracks Colony Ops, System Survey, Director")
+    Component(MapRender, "Colony Map Plugin", "ui/map.rs", "Renders colony pane")
+    Component(SystemRender, "System Map Plugin", "layer2/render.rs", "Renders system pane")
+    Component(Inspector, "Inspector Plugin", "ui/panels.rs", "Renders selection details")
+    Component(Chronicle, "Chronicle Plugin", "ui/chronicle.rs", "Renders chronicle pane")
+    Component(TechTree, "Tech Plugin", "ui/tech.rs", "Renders and handles tech pane input")
+    Component(Status, "Status Plugin", "ui/status.rs", "Renders telemetry pane")
 }
 
 Rel(Main, Shared, "Uses")
 Rel(Main, SystemOrchestrator, "Registers Systems")
 Rel(SystemOrchestrator, UtilityOrchestrator, "Schedules")
 Rel(UtilityOrchestrator, GPU, "Dispatches Work")
-Rel(Main, MapRender, "Calls Render")
+Rel(Main, UiShell, "Routes Input + Calls Render")
 
 Rel(UtilityOrchestrator, Actions, "Calls evaluate_*")
 Rel(UtilityOrchestrator, DomainActions, "Calls evaluate_*")
@@ -116,10 +120,21 @@ Rel(Logistics, Map, "Reads/Writes")
 Rel(Logistics, Resources, "Moves Items")
 Rel(Logistics, World, "Connects Buildings")
 
+Rel(UiShell, InputStack, "Delegates Gameplay Input")
+Rel(UiShell, WorkspaceTabs, "Owns")
+Rel(WorkspaceTabs, MapRender, "Mounts Plugin")
+Rel(WorkspaceTabs, SystemRender, "Mounts Plugin")
+Rel(WorkspaceTabs, Inspector, "Mounts Plugin")
+Rel(WorkspaceTabs, Chronicle, "Mounts Plugin")
+Rel(WorkspaceTabs, TechTree, "Mounts Plugin")
+Rel(WorkspaceTabs, Status, "Mounts Plugin")
 Rel(MapRender, Shared, "Reads State")
 Rel(MapRender, Map, "Reads Entities")
+Rel(SystemRender, Shared, "Reads State")
 Rel(Inspector, Shared, "Reads Selection")
 Rel(Inspector, Pops, "Reads Components")
+Rel(Chronicle, Shared, "Reads Chronicle State")
+Rel(TechTree, Shared, "Reads/Writes Tech State")
 
 Rel(Interstellar, Simulation, "Analyzes Total Stats")
 Rel(Interstellar, Simulation, "Spawns/Dispatches Events")
@@ -304,14 +319,20 @@ sequenceDiagram
 sequenceDiagram
     participant User
     participant Main
+    participant Shell as UiShell
     participant Input as InputContextStack
     participant ECS as Bevy World
-    participant UI as TUI Layer
+    participant UI as Pane Plugins
 
     loop Every Frame
         User->>Main: Key Press (Event)
-        Main->>Input: route(key) -> active_context
-        Input->>ECS: Update Resources/Components
+        Main->>Shell: route_root_input(key)
+        alt Shell command or palette action
+            Shell->>ECS: Mutate shell/gameplay resources
+        else Focused gameplay pane
+            Shell->>Input: route(key) -> active_context
+            Input->>ECS: Update Resources/Components
+        end
 
         opt Simulation Tick
             Main->>ECS: run_schedule()
@@ -319,16 +340,33 @@ sequenceDiagram
         end
 
         Main->>ECS: update_camera_smooth()
-        Main->>UI: render(world, frame)
+        Main->>Shell: render_with_shell(world, frame)
 
         rect rgb(30, 30, 30)
-            note right of UI: UI Rendering Phase
-            UI->>ECS: Query Selection
-            UI->>ECS: Query Map/Entities
+            note right of Shell: Shell Rendering Phase
+            Shell->>UI: Render active workspace
+            UI->>ECS: Query Selection / Map / Chronicle / Tech
             ECS-->>UI: Data
-            UI-->>User: Draw Widgets
+            UI-->>User: Draw Pane Grid + Command Palette
         end
     end
+```
+
+## Hypertile Shell Flow
+
+```mermaid
+flowchart LR
+    MainLoop[Native / WASM Loop] --> Shell[UiShell]
+    Shell --> Palette[Ctrl+K Command Palette]
+    Shell --> LayoutMode[Hypertile Layout Mode]
+    Shell --> Workspaces[WorkspaceRuntime]
+    Workspaces --> ColonyOps[Colony Ops]
+    Workspaces --> SystemSurvey[System Survey]
+    Workspaces --> Director[Director]
+    ColonyOps --> Plugins[Pane Plugins]
+    SystemSurvey --> Plugins
+    Director --> Plugins
+    Plugins --> ECS[Bevy ECS World]
 ```
 
 ## Core to Storage Relationship
