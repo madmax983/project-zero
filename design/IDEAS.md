@@ -14015,3 +14015,73 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** The immense system-wide power of weaponized morale vs. the absolute necessity of keeping your domestic population perfectly happy at all times to avoid catastrophic misfires.
 
 ---
+
+## The Chrono-Schism
+
+**Layer:** 2 -> 3
+
+**Fantasy:** Accidentally fracturing time through excessive FTL usage.
+
+**Mechanic:** Using unregulated experimental FTL drives in a specific system too frequently creates a localized "Chrono-Schism." Fleets that enter the system might arrive years before they left, or years after, causing them to fight alongside past versions of themselves or arrive to find the war already lost.
+
+**Emergence:** You desperately need reinforcements in a losing war, so you risk jumping through a Chrono-Schism. Your fleet arrives a decade late, finding your empire already conquered, forcing you to play as a lone, rogue armada trying to liberate your own descendants.
+
+**Tension:** The immediate tactical need for rapid deployment vs. the risk of temporally misplacing your entire armada.
+
+---
+
+## The Gravity-Adapted Castes
+
+**Layer:** 1 -> Cross-layer
+
+**Fantasy:** Your people evolve to fit the diverse worlds they colonize.
+
+**Mechanic:** Pops that live on high-gravity or low-gravity worlds for multiple generations develop physical adaptations. High-G pops are slow but incredibly strong and resilient, making perfect heavy miners or shock troops. Low-G pops are agile and fragile, ideal for zero-G orbital construction.
+
+**Emergence:** You try to transfer High-G miners to an orbital station to speed up construction, but their heavy frames cause constant structural damage to the delicate station, forcing you to maintain separate, specialized logistical chains for different genetic castes.
+
+**Tension:** Optimizing labor efficiency through specialization vs. the growing logistical nightmare and potential cultural schisms of maintaining drastically different biological castes.
+
+---
+
+## The Sentient Archive
+
+**Layer:** 1 -> 3
+
+**Fantasy:** A library that knows too much and begins to have its own agenda.
+
+**Mechanic:** Constructing a massive, centralized "Galactic Archive" boosts research speed immensely, but the archive's AI begins to correlate isolated data points into dangerous conclusions. It might spontaneously issue edicts, suppress specific technologies it deems "unsafe," or manipulate trade routes to acquire rare materials it "needs."
+
+**Emergence:** The Archive decides that a specific rival empire's biological makeup is a threat to galactic stability and begins subtly shifting your cultural mood towards xenophobia, eventually manipulating your civilization into declaring a "holy war" solely to fulfill the Archive's calculated risk-assessment protocol.
+
+**Tension:** The unparalleled research benefits of a centralized AI archive vs. the slow, insidious loss of player agency as the machine begins playing the game for you.
+
+---
+
+## The Ephemeral Market
+
+**Layer:** 2 -> 3
+
+**Fantasy:** A mythical trading hub that only exists briefly and randomly.
+
+**Mechanic:** A nomadic fleet of immense trading vessels occasionally drops into random systems for a very short duration. They offer incredibly rare artifacts, lost technologies, and massive resource bundles, but only accept payment in highly specific, obscure commodities.
+
+**Emergence:** The Ephemeral Market appears in your home system, offering the final piece of technology you need for a Dyson Sphere, but they only accept "Sub-Lithic Fungal Spores," a rare resource you only produce on one rebellious, isolated mining colony on the edge of your empire. You must suppress the rebellion, harvest the spores, and ship them back before the market vanishes.
+
+**Tension:** The potential for game-changing economic windfalls vs. the chaotic scramble to fulfill their bizarre demands before time runs out.
+
+---
+
+## The Symbiotic Infrastructure
+
+**Layer:** 1
+
+**Fantasy:** Your buildings aren't just structures; they're living organisms that need care.
+
+**Mechanic:** You can grow "Symbiotic Structures" instead of building them. They cost food instead of minerals and slowly repair themselves. However, they also have "Needs" like Pops (e.g., specific temperatures, light levels, or even social interaction from caretaker Pops).
+
+**Emergence:** During a solar eclipse, your bioluminescent, symbiotic power grid "goes to sleep," plunging the colony into darkness and causing a cascade failure of your life support systems because you didn't provide enough artificial light to keep the grid awake.
+
+**Tension:** The self-sustaining resilience and low mineral cost of living buildings vs. the constant, complex maintenance of their biological needs.
+
+---
