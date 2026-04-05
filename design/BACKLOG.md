@@ -492,3 +492,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `789` The Bureaucratic Black Market — `specs/789-the-bureaucratic-black-market.md`
 - [ ] `790` Gravity Anomalies — `specs/790-gravity-anomalies.md`
 - [ ] `791` Psionic Echoes — `specs/791-psionic-echoes.md`
+- [ ] `792` Invasive Domestication — `specs/792-invasive-domestication.md`
+- [ ] `793` Cargo Cult Protocol — `specs/793-cargo-cult-protocol.md`
+- [ ] `794` Hyperspace Wake Turbulence — `specs/794-hyperspace-wake-turbulence.md`
