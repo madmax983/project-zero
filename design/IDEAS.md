@@ -14058,7 +14058,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Ephemeral Market
+## The Ephemeral Market [SPECCED]
 
 **Layer:** 2 -> 3
 
@@ -14072,7 +14072,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Symbiotic Infrastructure
+## The Symbiotic Infrastructure [SPECCED]
 
 **Layer:** 1
 
