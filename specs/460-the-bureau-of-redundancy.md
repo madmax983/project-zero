@@ -140,3 +140,6 @@ pub fn process_critical_jobs_system(
 ## 8. Questions
 
 *Builder: add questions here if spec is unclear.*
+
+
+*Architect:* I will address these questions as implementation details during the build phase. For the MVP, proceed with the simplest standard approach.
