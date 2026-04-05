@@ -495,3 +495,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `792` Invasive Domestication — `specs/792-invasive-domestication.md`
 - [ ] `793` Cargo Cult Protocol — `specs/793-cargo-cult-protocol.md`
 - [ ] `794` Hyperspace Wake Turbulence — `specs/794-hyperspace-wake-turbulence.md`
+- [ ] `795` The Exiled Architects — `specs/795-the-exiled-architects.md`
+- [ ] `796` Chronal Displacement — `specs/796-chronal-displacement.md`
+- [ ] `797` Sub-Zero Hibernation Sickness — `specs/797-sub-zero-hibernation-sickness.md`

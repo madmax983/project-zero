@@ -14169,7 +14169,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Exiled Architects
+## The Exiled Architects [SPECCED]
 
 **Layer:** Cross-layer
 
@@ -14225,7 +14225,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Chronal Displacement
+## Chronal Displacement [SPECCED]
 
 **Layer:** Cross-layer
 
@@ -14239,7 +14239,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Sub-Zero Hibernation Sickness
+## Sub-Zero Hibernation Sickness [SPECCED]
 
 **Layer:** 1 -> 2
 
