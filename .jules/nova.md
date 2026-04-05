@@ -106,3 +106,7 @@
 **Concept:** Added `PanopticonNode` and `panopticon_surveillance_system`. Normal operation reduces nearby Pops' stress and clamps morale via an intrusive surveillance grid. Over time it builds `instability`. When instability hits a threshold, it glitches, broadcasting everyone's secrets and causing a massive stress spike and morale crash, along with dispatching an `AddChronicleEvent`.
 **Fate:** Proposed
 **Lesson:** Providing a powerful, passive solution to complex negative states (stress) should come with a systemic risk. The 'glitch' transforms a reliable infrastructural tool into a ticking time bomb, forcing players to actively manage the tool's usage rather than "fire and forget".
+## [The Symbiotic Spores]
+**Concept:** Added `symbiotic_spore_system` where heavily mutated Pops (like `Photosynthesis` or `Mutant`) release an aura that heals both themselves and nearby `Fauna`, whilst slightly restoring the Pop's rest need.
+**Fate:** Merged
+**Lesson:** Tying mutant outcasts to the planet's ecosystem gives a mechanically positive spin to otherwise scary or detrimental mutations, rewarding players for integrating mutants with wildlife.
