@@ -14210,3 +14210,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you destroy a harmless, slightly buggy machine and risk a massive holy war, or do you leave it running, knowing a random error code might accidentally trigger a colony-wide suicide pact?
 
 ---
+
+## Generational Dissonance
+
+**Layer:** 1
+
+**Fantasy:** The young no longer understand the struggles of the old. The colony fractures along age lines.
+
+**Mechanic:** Pops born on the colony (Generation 2+) do not inherit the trauma/memories of the founding generation. The founders view the youth as ungrateful, suffering morale penalties when working alongside them. The youth view the founders as paranoid, ignoring safety warnings or ancient edicts.
+
+**Emergence:** Your original pioneer generation insists on maintaining an expensive, high-energy bunker defense system because they survived the initial hostile wildlife. The new generation, never having seen a predator, stages a protest to shut down the bunkers and convert them into leisure spaces.
+
+**Tension:** Do you force the colony to adhere to the rigid, safe traditions of the founders, or adapt to the relaxed, resource-efficient lifestyle of the native-born youth?
+
+---
+
+## Chronal Displacement
+
+**Layer:** Cross-layer
+
+**Fantasy:** Time is not a constant; sometimes you borrow from the future, but you always have to pay it back.
+
+**Mechanic:** You can overcharge your colony's production by initiating a "Chronal Shift," drastically speeding up local Layer 1 time relative to Layer 2/3. However, this incurs a "Chronal Debt." Eventually, the area will suffer a "Chronal Stutter," grinding to a halt for an equal amount of time while the rest of the universe catches up.
+
+**Emergence:** You use a Chronal Shift to rapidly build a defense platform before an enemy fleet arrives in your system. The fleet arrives and you easily defeat them. A month later, the Chronal Stutter hits, and your entire defense platform freezes in time right as a random pirate raid drops into the system.
+
+**Tension:** The immense, immediate benefit of borrowing time vs. the terrifying vulnerability of paying it back when you least expect it.
+
+---
+
+## Sub-Zero Hibernation Sickness
+
+**Layer:** 1 -> 2
+
+**Fantasy:** They woke up, but a piece of them stayed in the ice.
+
+**Mechanic:** Pops transported over long distances in Cryo-Sleep have a chance to develop "Hibernation Sickness." They physically function normally, but their needs decay at half speed, and they cannot experience morale boosts. They act as emotionless automatons, terrifying their non-afflicted peers and creating severe social friction.
+
+**Emergence:** You ship a large workforce to a new mining colony. They all contract Hibernation Sickness. The colony runs with terrifying, flawless efficiency because no one stops for leisure or social interaction. However, the handful of native-born colonists are so horrified by their "zombie" coworkers that their stress maxes out, leading to violent psychotic breaks.
+
+**Tension:** The incredibly high productivity of the afflicted pops vs. the severe collateral damage to the mental health of your normal colonists.
+
+---
