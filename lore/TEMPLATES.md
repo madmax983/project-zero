@@ -5237,3 +5237,13 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: The clouds spoke. A broadcast of [SECRET_TYPE] echoed across [COLONY]. The result: [FALLOUT_RESULT]."
 - "We could not hide from the Tell. The Miasma shouted our [SECRET_TYPE]. Now there is [FALLOUT_RESULT]. [YEAR]."
 - "A devastating Broadcast. The fog played back our [SECRET_TYPE]. It caused [FALLOUT_RESULT]. [YEAR]."
+
+## Template: HYPERLANE_COLLAPSE
+
+**Generates:** Play event (Chronicle during game)
+**Slots:** `[SYSTEM_A]`, `[SYSTEM_B]`, `[YEAR]`
+
+**Patterns:**
+- "[YEAR]: The hyperlane connecting [SYSTEM_A] and [SYSTEM_B] collapsed. The route is severed."
+- "A violent fold-space anomaly severed the connection between [SYSTEM_A] and [SYSTEM_B]. [YEAR]."
+- "[YEAR]. Trade halts. The hyperlane from [SYSTEM_A] to [SYSTEM_B] has collapsed."

@@ -6162,3 +6162,12 @@ A negative side-effect of a failed splice.
 - fistfights breaking out in the corridors
 - a sudden, violent work stoppage
 - silent, terrified obedience
+
+## Fragment Type: [COLLAPSE_SOUND]
+
+- a silent tear
+- a blinding flash of fold-energy
+- a low, deep rumble across all frequencies
+- a sudden cessation of background noise
+- a violent spatial ripple
+- a scream in the sensors
