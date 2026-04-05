@@ -184,6 +184,16 @@ pub fn build_simulation_schedule() -> Schedule {
     );
 
     schedule.add_systems((
+        crate::layer3::map::trigger_hyperlane_collapse_system,
+        crate::layer3::map::process_hyperlane_collapse_system
+            .after(crate::layer3::map::trigger_hyperlane_collapse_system),
+        crate::layer3::map::recalculate_trade_routes_system
+            .after(crate::layer3::map::process_hyperlane_collapse_system),
+        crate::layer3::integration::hyperlane_collapse_chronicle_bridge
+            .after(crate::layer3::map::process_hyperlane_collapse_system),
+    ));
+
+    schedule.add_systems((
         crate::layer2::phantom::check_scrapcode_threshold_system
             .after(crate::layer1::scrapcode::scrapcode_decay_system),
         crate::layer2::phantom::spawn_ghost_fleet_system

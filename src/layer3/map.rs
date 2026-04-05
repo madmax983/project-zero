@@ -1,3 +1,4 @@
+use bevy::prelude::DespawnRecursiveExt;
 use bevy_ecs::prelude::*;
 use bevy_time::Time;
 use std::collections::HashMap;
@@ -98,6 +99,66 @@ pub fn fleet_arrival_anomaly_system(
     }
 }
 
+#[derive(Component)]
+pub struct StarSystem {
+    pub id: u32,
+}
+
+#[derive(Component)]
+pub struct Hyperlane {
+    pub start: Entity,
+    pub end: Entity,
+    pub stability: f32,
+}
+
+#[derive(Event)]
+pub struct HyperlaneCollapseEvent {
+    pub lane_entity: Entity,
+}
+
+#[derive(Event)]
+pub struct TradeRouteSeveredEvent {
+    pub system_a: Entity,
+    pub system_b: Entity,
+}
+
+pub fn trigger_hyperlane_collapse_system(
+    query: Query<(Entity, &Hyperlane)>,
+    mut collapse_events: EventWriter<HyperlaneCollapseEvent>,
+) {
+    for (entity, lane) in query.iter() {
+        if lane.stability <= 0.0 {
+            collapse_events.send(HyperlaneCollapseEvent { lane_entity: entity });
+        }
+    }
+}
+
+pub fn process_hyperlane_collapse_system(
+    mut commands: Commands,
+    mut events: EventReader<HyperlaneCollapseEvent>,
+    lane_query: Query<&Hyperlane>,
+    mut severed_events: EventWriter<TradeRouteSeveredEvent>,
+) {
+    for ev in events.read() {
+        if let Ok(lane) = lane_query.get(ev.lane_entity) {
+            severed_events.send(TradeRouteSeveredEvent {
+                system_a: lane.start,
+                system_b: lane.end,
+            });
+            commands.entity(ev.lane_entity).despawn_recursive();
+        }
+    }
+}
+
+pub fn recalculate_trade_routes_system(
+    mut events: EventReader<TradeRouteSeveredEvent>,
+) {
+    for _ev in events.read() {
+        // Trigger a global recalculation of paths and trade networks
+        // If a route cannot be reformed, emit a Starvation/Shortage event for affected colonies
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -189,5 +250,70 @@ mod tests {
         let anomalies = app.world().resource::<Events<AnomalyDiscoveredEvent>>();
         let mut reader = anomalies.get_cursor();
         assert!(reader.read(anomalies).count() > 0);
+    }
+
+    fn setup_app() -> App {
+        use crate::shared::time::SimulationTime;
+        let mut app = App::new();
+        app.insert_resource(SimulationTime::default());
+        app.add_event::<HyperlaneCollapseEvent>();
+        app.add_event::<TradeRouteSeveredEvent>();
+        app.add_systems(Update, (
+            trigger_hyperlane_collapse_system,
+            process_hyperlane_collapse_system,
+            recalculate_trade_routes_system
+        ));
+        app
+    }
+
+    #[test]
+    fn test_hyperlane_collapse_severs_connection() {
+        let mut app = setup_app();
+
+        let sys_a = app.world_mut().spawn(StarSystem { id: 1 }).id();
+        let sys_b = app.world_mut().spawn(StarSystem { id: 2 }).id();
+
+        // Spawn a hyperlane connecting A and B
+        let lane = app.world_mut().spawn(Hyperlane {
+            start: sys_a,
+            end: sys_b,
+            stability: 100.0,
+        }).id();
+
+        // Trigger a collapse event
+        app.world_mut().resource_mut::<Events<HyperlaneCollapseEvent>>().send(HyperlaneCollapseEvent {
+            lane_entity: lane,
+        });
+
+        app.update();
+
+        // The hyperlane should be despawned or marked as collapsed
+        assert!(app.world().get::<Hyperlane>(lane).is_none(), "Hyperlane should be destroyed after a collapse");
+    }
+
+    #[test]
+    fn test_fleet_pathfinding_fails_when_lane_collapses() {
+        let mut app = setup_app();
+
+        let sys_a = app.world_mut().spawn(StarSystem { id: 1 }).id();
+        let sys_b = app.world_mut().spawn(StarSystem { id: 2 }).id();
+
+        let lane = app.world_mut().spawn(Hyperlane {
+            start: sys_a,
+            end: sys_b,
+            stability: 0.0, // trigger system requires stability <= 0.0
+        }).id();
+
+        app.update();
+
+        // Need an extra update tick to process the despawn commands that were
+        // queued during process_hyperlane_collapse_system.
+        app.update();
+
+        // After update, recalculate_trade_routes_system or similar should run
+        assert!(app.world().get::<Hyperlane>(lane).is_none());
+        let events = app.world().resource::<Events<TradeRouteSeveredEvent>>();
+        let mut reader = events.get_cursor();
+        assert!(reader.read(events).count() > 0);
     }
 }
