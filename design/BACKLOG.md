@@ -483,3 +483,4 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `779` The Wild Child — `specs/779-the-wild-child.md`
 - [ ] `780` The Biomass Rebellion — `specs/780-the-biomass-rebellion.md`
 - [ ] `781` The Generational Fugue — `specs/781-the-generational-fugue.md`
+- [ ] `782` The Void Architect — `specs/782-the-void-architect.md`
