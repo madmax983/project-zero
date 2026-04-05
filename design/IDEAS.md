@@ -14127,7 +14127,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** The efficiency of reusing space vs. the hidden psychological toll of the colony's history.
 
 ---
-## Invasive Domestication
+## Invasive Domestication [SPECCED]
 
 **Layer:** 1 -> Cross-layer
 
@@ -14141,7 +14141,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Cargo Cult Protocol
+## Cargo Cult Protocol [SPECCED]
 
 **Layer:** 1 -> 2
 
@@ -14155,7 +14155,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Hyperspace Wake Turbulence
+## Hyperspace Wake Turbulence [SPECCED]
 
 **Layer:** 2 -> 3
 
