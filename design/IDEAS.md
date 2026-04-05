@@ -14085,3 +14085,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** The self-sustaining resilience and low mineral cost of living buildings vs. the constant, complex maintenance of their biological needs.
 
 ---
+
+## The Bureaucratic Black Market
+
+**Layer:** 1
+
+**Fantasy:** Trading red tape for favors. A secondary economy built entirely on circumventing the rules.
+
+**Mechanic:** As "Admin" resources become scarce, Pops with high 'Intelligence' or 'Deceitful' traits can forge "Priority Tokens." These tokens are sold locally. Pops who buy them use them to force the system to prioritize their needs or workloads, causing the *actual* necessary administrative tasks to fall further behind.
+
+**Emergence:** Your colony is starving, but the food distribution is perfectly organized... for the elite few who bought priority tokens. The rest of the colony riots because the "system" is failing them, while the token forgers get rich.
+
+**Tension:** Crack down on the black market (which might be the only thing keeping the elite productive) vs. letting the official administrative system collapse entirely.
+
+---
+
+## Gravity Anomalies
+
+**Layer:** 1
+
+**Fantasy:** Walking on the ceiling when the planet decides to change the rules.
+
+**Mechanic:** Localized "Gravity Pockets" shift periodically. Inside a pocket, movement is either drastically sped up or slowed down, and dropped items might 'fall' upwards or sideways, clinging to walls or ceilings.
+
+**Emergence:** A critical medical supply drop lands in a reverse-gravity pocket, sticking to the ceiling of a cavern just out of reach. Pops must construct a temporary scaffolding to 'fall' upwards to retrieve it before a patient dies.
+
+**Tension:** The unpredictable logistical hurdles vs. the potential for utilizing strange gravity flows for efficient vertical hauling.
+
+---
+
+## Psionic Echoes
+
+**Layer:** 1 -> Cross-layer
+
+**Fantasy:** The walls remember the terror.
+
+**Mechanic:** Areas where intense emotions (like the terror of a raid or the joy of a festival) occurred become imprinted with "Psionic Echoes." Future Pops entering these areas passively absorb these emotions. Strong echoes can even bleed into Layer 2, slightly influencing the morale of orbiting fleets.
+
+**Emergence:** You convert an old battlefield into a residential block. A year later, all the residents suffer from severe, unexplained night terrors, crippling their productivity. You have to 'exorcise' the area or abandon the housing.
+
+**Tension:** The efficiency of reusing space vs. the hidden psychological toll of the colony's history.
+
+---
