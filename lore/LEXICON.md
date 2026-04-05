@@ -3847,3 +3847,19 @@
 **Usage:**
 - "The Broadcast ruined the governor."
 - "We woke up to the Tell echoing from the clouds."
+
+## Hyperlanes & Collapse
+
+### the thread / the silk-road
+**Replaces:** hyperlane, interstellar route
+**Code reference:** `Hyperlane`
+**Usage:**
+- "The thread to Sirius holds."
+- "Traveling the silk-road."
+
+### the Snap / the Severing
+**Replaces:** hyperlane collapse, route severed
+**Code reference:** `HyperlaneCollapseEvent`, `TradeRouteSeveredEvent`
+**Usage:**
+- "Caught in the Snap."
+- "The Severing left them isolated."
