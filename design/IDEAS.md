@@ -14127,3 +14127,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** The efficiency of reusing space vs. the hidden psychological toll of the colony's history.
 
 ---
+## Invasive Domestication
+
+**Layer:** 1 -> Cross-layer
+
+**Fantasy:** The flora isn't just hostile; it's trying to adopt you as pets.
+
+**Mechanic:** Certain biomes contain plant life that, instead of attacking, releases pheromones that rapidly fulfill the 'Leisure' and 'Social' needs of Pops. However, extended exposure causes a "Dependency" trait. Dependent Pops refuse to work, preferring to bask in the flora's aura, and will violently defend the plants if the player tries to harvest or clear them.
+
+**Emergence:** You try to clear a patch of "Bliss-Weed" to build a crucial power plant. The workers you send, who have been secretly exposed, rebel and form a protective commune around the weed, crippling your construction efforts and creating a localized secessionist movement based entirely on botanical addiction.
+
+**Tension:** The incredible, free morale boost of the flora vs. the creeping loss of a productive, autonomous workforce.
+
+---
+
+## Cargo Cult Protocol
+
+**Layer:** 1 -> 2
+
+**Fantasy:** Revering the sky-gods that drop the supply crates.
+
+**Mechanic:** If an isolated Layer 1 outpost survives a disaster via an emergency drop-pod from orbit, the surviving Pops might develop a "Cargo Cult" belief. They begin interpreting mundane logistical operations (like routine supply shuttles) as divine favor, constructing elaborate, non-functional mock-landing pads out of scrap to attract more 'blessings.'
+
+**Emergence:** Your central hub is starving, but you notice your remote mining outpost is swimming in surplus supplies. You realize the outpost's Cargo Cult has been using their advanced mining lasers to hijack supply shuttles mid-flight, believing they are "praying" them down to their mock-shrines.
+
+**Tension:** Crack down on the heresy (risking a violent uprising in a critical resource node) or exploit their belief by disguising necessary orders as divine edicts.
+
+---
+
+## Hyperspace Wake Turbulence
+
+**Layer:** 2 -> 3
+
+**Fantasy:** FTL travel isn't clean; it leaves a dirty, dangerous trail.
+
+**Mechanic:** Massive fleets or poorly maintained drives leave a "Wake" in the hyperlanes they traverse. This wake persists for weeks, making subsequent travel through that lane slower and more dangerous, potentially causing smaller ships to drop out of FTL prematurely into uncharted space.
+
+**Emergence:** An enemy empire sends a massive, lumbering invasion armada through a key hyperlane. You intentionally let them pass, then send a small, agile strike force. The strike force hits the enemy's chaotic hyperspace wake, spinning out of control and crashing into a dormant, ancient Dyson Sphere hidden in the void, accidentally awakening its defenders who then annihilate both your strike force and the enemy armada.
+
+**Tension:** Using major hyperlanes for rapid fleet movement vs. the need to 'rest' lanes to prevent catastrophic navigation hazards for civilian and smaller military vessels.
+
+---
