@@ -489,3 +489,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `786` The Sentient Archive — `specs/786-the-sentient-archive.md`
 - [ ] `787` The Gravity-Adapted Castes — `specs/787-the-gravity-adapted-castes.md`
 - [ ] `788` The Chrono-Schism — `specs/788-the-chrono-schism.md`
+- [ ] `789` The Bureaucratic Black Market — `specs/789-the-bureaucratic-black-market.md`
+- [ ] `790` Gravity Anomalies — `specs/790-gravity-anomalies.md`
+- [ ] `791` Psionic Echoes — `specs/791-psionic-echoes.md`
