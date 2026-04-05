@@ -9,7 +9,8 @@ use crate::layer1::weather::{WeatherState, WeatherType};
 use bevy_ecs::prelude::*;
 use rand::seq::SliceRandom;
 use rand::Rng;
-use std::collections::{HashMap, HashSet, VecDeque};
+use std::collections::VecDeque;
+use bevy::utils::{HashMap, HashSet};
 
 /// Auroral power generation.
 pub mod auroral;
@@ -99,6 +100,10 @@ impl Battery {
     }
 }
 
+/// ⚡ Bolt Optimization:
+/// - Replaced `std::collections::{HashMap, HashSet}` with `bevy::utils::{HashMap, HashSet}` (AHash).
+/// - Using AHash eliminates SipHash overhead on coordinate-based integer tuple keys `(i32, i32)`.
+/// - Measurably reduces the CPU cost of `build_grid_map` and `bfs_grid` calls every frame.
 fn build_grid_map(world: &mut World) -> HashMap<(i32, i32), Entity> {
     let mut grid_map = HashMap::new();
     let mut query = world.query_filtered::<(Entity, &GridPosition), Or<(
