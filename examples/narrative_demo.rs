@@ -296,7 +296,10 @@ fn ui(f: &mut Frame, app: &mut App) {
                     .borders(Borders::ALL)
                     .border_type(BorderType::Rounded)
                     .border_style(Style::default().fg(Color::Red))
-                    .title(Span::styled(" Error ", Style::default().fg(Color::Red).add_modifier(Modifier::BOLD)))
+                    .title(Span::styled(
+                        " Error ",
+                        Style::default().fg(Color::Red).add_modifier(Modifier::BOLD),
+                    ))
                     .padding(Padding::uniform(1)),
             )
             .wrap(Wrap { trim: true })
@@ -329,13 +332,22 @@ fn ui(f: &mut Frame, app: &mut App) {
                     .borders(Borders::ALL)
                     .border_type(BorderType::Rounded)
                     .border_style(Style::default().fg(Color::Cyan))
-                    .title(Span::styled(" ✨ Generated Story ", Style::default().fg(Color::Cyan).add_modifier(Modifier::BOLD)))
+                    .title(Span::styled(
+                        " ✨ Generated Story ",
+                        Style::default()
+                            .fg(Color::Cyan)
+                            .add_modifier(Modifier::BOLD),
+                    ))
                     .padding(Padding::uniform(1)),
             )
             .wrap(Wrap { trim: true })
     } else {
         Paragraph::new("Press ENTER to generate a story...")
-            .style(Style::default().fg(Color::DarkGray).add_modifier(Modifier::ITALIC))
+            .style(
+                Style::default()
+                    .fg(Color::DarkGray)
+                    .add_modifier(Modifier::ITALIC),
+            )
             .alignment(Alignment::Center)
             .block(
                 Block::default()

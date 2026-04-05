@@ -1,7 +1,7 @@
 use bevy::prelude::*;
-use scale::layer1::temporal_ghost_towns::TemporalStutterEvent;
+use scale::layer1::chronicle::{AddChronicleEvent, Chronicle};
 use scale::layer1::integration::temporal_stutter_chronicle_bridge;
-use scale::layer1::chronicle::{Chronicle, AddChronicleEvent};
+use scale::layer1::temporal_ghost_towns::TemporalStutterEvent;
 
 #[test]
 fn test_temporal_stutter_triggers_chronicle_event() {
@@ -22,5 +22,8 @@ fn test_temporal_stutter_triggers_chronicle_event() {
     app.update();
 
     let chronicle_events = app.world().resource::<Events<AddChronicleEvent>>();
-    assert!(!chronicle_events.is_empty(), "Temporal stutter should trigger a chronicle event");
+    assert!(
+        !chronicle_events.is_empty(),
+        "Temporal stutter should trigger a chronicle event"
+    );
 }
