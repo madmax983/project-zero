@@ -1,3 +1,35 @@
+//! Core building lifecycle events.
+//!
+//! # Context
+//! This module defines the essential events emitted when buildings are constructed or destroyed
+//! within the simulation grid. These events are integral to systems reacting to structural changes,
+//! such as updating navigation meshes, adjusting resource outputs, or generating historical chronicles.
+//!
+//! # Usage
+//! ```rust
+//! use bevy_ecs::prelude::*;
+//! use scale::layer1::events::{BuildingCompletedEvent, BuildingRemovedEvent};
+//! use scale::layer1::building::BuildingType;
+//! use scale::layer1::map::GridPosition;
+//!
+//! let mut world = World::new();
+//! world.init_resource::<Events<BuildingCompletedEvent>>();
+//! let mut events = world.resource_mut::<Events<BuildingCompletedEvent>>();
+//!
+//! // Emitting a construction event
+//! events.send(BuildingCompletedEvent {
+//!     entity: Entity::from_raw(1),
+//! });
+//! ```
+//!
+//! # Details
+//! * [`BuildingCompletedEvent`] is triggered *after* a building entity has been fully initialized and placed in the world.
+//! * [`BuildingRemovedEvent`] must be emitted *before* the entity is despawned, capturing its final state and position.
+//!
+//! # Links
+//! - [`BuildingCompletedEvent`]
+//! - [`BuildingRemovedEvent`]
+
 use crate::layer1::building::BuildingType;
 use crate::layer1::map::GridPosition;
 use bevy_ecs::prelude::*;

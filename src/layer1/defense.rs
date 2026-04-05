@@ -1,3 +1,38 @@
+//! Defense structures and access pathfinding logic.
+//!
+//! # Context
+//! This module defines structures and helper functions to manage movement accessibility
+//! across the simulation grid. It evaluates obstacles such as Terrain, solid Buildings (e.g. Walls),
+//! and interactive Gates.
+//!
+//! # Usage
+//! The core of the module is the [`is_walkable`] and [`is_obstacle`] functions, which interact
+//! with the [`crate::layer1::access_control::AccessControl`] components to dynamically determine if an agent can traverse a tile.
+//!
+//! ```rust
+//! use bevy_ecs::prelude::*;
+//! use scale::layer1::defense::{Gate, is_obstacle};
+//! use scale::layer1::building::{Building, BuildingType};
+//!
+//! let mut world = World::new();
+//!
+//! // Spawn a locked gate
+//! let entity = world.spawn((
+//!     Building { building_type: BuildingType::Gate },
+//!     Gate { is_locked: true },
+//! )).id();
+//!
+//! assert!(is_obstacle(&world, entity));
+//! ```
+//!
+//! # Details
+//! If an entity possesses an [`crate::layer1::access_control::AccessControl`] component, its mode takes precedence over the [`Gate`]'s legacy state.
+//!
+//! # Links
+//! - [`is_walkable`]
+//! - [`is_obstacle`]
+//! - [`Gate`]
+
 use crate::layer1::access_control::{AccessControl, AccessMode};
 use crate::layer1::building::{Building, OccupiedTiles};
 use crate::layer1::map::GridPosition;
