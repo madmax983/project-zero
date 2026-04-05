@@ -13974,7 +13974,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Sub-Lithic Cult
+## The Sub-Lithic Cult [SPECCED]
 
 **Layer:** 1
 
