@@ -14086,7 +14086,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Bureaucratic Black Market
+## The Bureaucratic Black Market [SPECCED]
 
 **Layer:** 1
 
@@ -14100,7 +14100,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Gravity Anomalies
+## Gravity Anomalies [SPECCED]
 
 **Layer:** 1
 
@@ -14114,7 +14114,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Psionic Echoes
+## Psionic Echoes [SPECCED]
 
 **Layer:** 1 -> Cross-layer
 
