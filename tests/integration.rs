@@ -252,9 +252,9 @@ mod bio_acoustic_miasma_bridge;
 mod dynastic_succession_bridge;
 #[path = "integration/orbital_commute_bridge.rs"]
 mod orbital_commute_bridge;
-#[path = "integration/void_whispers_chronicle.rs"]
-mod void_whispers_chronicle;
-#[path = "integration/temporal_ghost_towns_bridge.rs"]
-mod temporal_ghost_towns_bridge;
 #[path = "integration/parasitic_architecture_bridge.rs"]
 mod parasitic_architecture_bridge;
+#[path = "integration/temporal_ghost_towns_bridge.rs"]
+mod temporal_ghost_towns_bridge;
+#[path = "integration/void_whispers_chronicle.rs"]
+mod void_whispers_chronicle;

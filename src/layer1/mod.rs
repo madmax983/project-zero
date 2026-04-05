@@ -536,7 +536,7 @@ pub use disasters::*;
 pub mod environment;
 pub mod spore_diplomat;
 pub use spore_diplomat::*;
-pub mod diplomacy;
 /// Agriculture and Food Production
 pub mod agriculture;
+pub mod diplomacy;
 pub use agriculture::*;

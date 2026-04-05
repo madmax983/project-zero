@@ -90,7 +90,7 @@ pub fn arrival_handler_system(
     }
 }
 
-#[allow(clippy::too_many_arguments, clippy::too_many_lines)]
+#[allow(clippy::too_many_arguments)]
 fn process_arrival(
     action: ActionType,
     pop_entity: Entity,
@@ -118,58 +118,20 @@ fn process_arrival(
 ) -> bool {
     match action {
         ActionType::ConsumeChemical => {
-            if let Ok(item) = items.get(target_entity) {
-                let chem_type = match item.item_type {
-                    crate::layer1::items::ItemType::Stim => {
-                        Some(crate::layer1::chemical::ChemicalType::Stim)
-                    }
-                    crate::layer1::items::ItemType::Sedative => {
-                        Some(crate::layer1::chemical::ChemicalType::Sedative)
-                    }
-                    _ => None,
-                };
-
-                if let Some(ct) = chem_type {
-                    let tick = time.tick;
-                    if let Some(state) = chemical_state_opt {
-                        crate::layer1::chemical::consume_chemical_logic(
-                            state,
-                            ct,
-                            tick,
-                            health_opt.as_deref_mut(),
-                            stress_opt.as_deref_mut(),
-                        );
-                    } else {
-                        let mut state = crate::layer1::chemical::ChemicalState::default();
-                        crate::layer1::chemical::consume_chemical_logic(
-                            &mut state,
-                            ct,
-                            tick,
-                            health_opt.as_deref_mut(),
-                            stress_opt.as_deref_mut(),
-                        );
-                        commands.entity(pop_entity).insert(state);
-                    }
-                    commands.entity(target_entity).despawn();
-                }
-            }
+            handle_consume_chemical_arrival(
+                target_entity,
+                pop_entity,
+                items,
+                chemical_state_opt,
+                health_opt,
+                stress_opt,
+                commands,
+                time,
+            );
             true
         }
         ActionType::ScrawlMemeticSigil => {
-            if let Some(map) = graffiti_map {
-                use crate::layer1::graffiti::{Graffiti, GraffitiType};
-                map.markings.insert(
-                    (target_pos.x, target_pos.y),
-                    Graffiti {
-                        graffiti_type: GraffitiType::MemeticSigil,
-                        decay: 500.0,
-                        modifier: -0.2, // Strong debuff
-                    },
-                );
-                if let Some(log) = log {
-                    log.add_colored("A Memetic Sigil has been scrawled on a wall!", Color::Red);
-                }
-            }
+            handle_scrawl_memetic_sigil_arrival(target_pos, graffiti_map, log);
             true
         }
         ActionType::Binge => {
@@ -437,6 +399,75 @@ fn handle_rest_arrival(
                 entity: target_entity,
                 assignment_type: AssignmentType::HousingResident,
             });
+        }
+    }
+}
+
+#[allow(clippy::too_many_arguments)]
+fn handle_consume_chemical_arrival(
+    target_entity: Entity,
+    pop_entity: Entity,
+    items: &Query<&crate::layer1::items::Item>,
+    chemical_state_opt: &mut Option<Mut<crate::layer1::chemical::ChemicalState>>,
+    health_opt: &mut Option<Mut<crate::layer1::health::Health>>,
+    stress_opt: &mut Option<Mut<crate::layer1::stress::StressTracker>>,
+    commands: &mut Commands,
+    time: &Res<SimulationTime>,
+) {
+    if let Ok(item) = items.get(target_entity) {
+        let chem_type = match item.item_type {
+            crate::layer1::items::ItemType::Stim => {
+                Some(crate::layer1::chemical::ChemicalType::Stim)
+            }
+            crate::layer1::items::ItemType::Sedative => {
+                Some(crate::layer1::chemical::ChemicalType::Sedative)
+            }
+            _ => None,
+        };
+
+        if let Some(ct) = chem_type {
+            let tick = time.tick;
+            if let Some(state) = chemical_state_opt {
+                crate::layer1::chemical::consume_chemical_logic(
+                    state,
+                    ct,
+                    tick,
+                    health_opt.as_deref_mut(),
+                    stress_opt.as_deref_mut(),
+                );
+            } else {
+                let mut state = crate::layer1::chemical::ChemicalState::default();
+                crate::layer1::chemical::consume_chemical_logic(
+                    &mut state,
+                    ct,
+                    tick,
+                    health_opt.as_deref_mut(),
+                    stress_opt.as_deref_mut(),
+                );
+                commands.entity(pop_entity).insert(state);
+            }
+            commands.entity(target_entity).despawn();
+        }
+    }
+}
+
+fn handle_scrawl_memetic_sigil_arrival(
+    target_pos: GridPosition,
+    graffiti_map: Option<&mut crate::layer1::graffiti::GraffitiMap>,
+    log: Option<&mut MessageLog>,
+) {
+    if let Some(map) = graffiti_map {
+        use crate::layer1::graffiti::{Graffiti, GraffitiType};
+        map.markings.insert(
+            (target_pos.x, target_pos.y),
+            Graffiti {
+                graffiti_type: GraffitiType::MemeticSigil,
+                decay: 500.0,
+                modifier: -0.2, // Strong debuff
+            },
+        );
+        if let Some(l) = log {
+            l.add_colored("A Memetic Sigil has been scrawled on a wall!", Color::Red);
         }
     }
 }

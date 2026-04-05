@@ -112,7 +112,7 @@ pub fn process_start_plan_system(
 /// When a pop arrives at its target position (or adjacent for work), this system
 /// marks it with `AtTarget`.
 #[allow(clippy::type_complexity)]
-#[allow(clippy::too_many_lines, clippy::too_many_arguments)]
+#[allow(clippy::too_many_arguments)]
 pub fn movement_system(
     mut pops: Query<
         (
@@ -206,74 +206,23 @@ pub fn movement_system(
             continue;
         };
 
-        // Determine base movement cost
-        let base_cost =
-            if let (Ok(x), Ok(y)) = (usize::try_from(new_pos.x), usize::try_from(new_pos.y)) {
-                terrain
-                    .get(x, y)
-                    .map_or(1.0, crate::layer1::terrain::TerrainType::movement_cost)
-            } else {
-                1.0
-            };
+        let movement_cost = calculate_movement_cost(
+            new_pos,
+            *current_pos,
+            &terrain,
+            wind_grid.as_deref(),
+            tide.as_deref(),
+        );
 
-        // Wind penalty
-        let wind_mod = if let Some(ref w) = wind_grid {
-            let wind_vec = w.get_wind(current_pos.x, current_pos.y);
-            let move_dir = crate::layer1::wind::Vec2::new(
-                (new_pos.x - current_pos.x) as f32,
-                (new_pos.y - current_pos.y) as f32,
-            );
-            crate::layer1::wind::calculate_wind_movement_penalty(wind_vec, move_dir)
-        } else {
-            1.0
-        };
-
-        // Pressure penalty
-        let pressure_mod = tide.as_ref().map_or(1.0, |t| {
-            crate::layer1::atmosphere::calculate_atmospheric_movement_cost(t.pressure)
-        });
-
-        let movement_cost = base_cost * wind_mod * pressure_mod;
-
-        // Check if we can move
-        let can_move = if let Some(ref mut speed) = speed_opt {
-            // Ludwig: "Coyote Speed" - Allow moving if we are *almost* there.
-            // This prevents the feeling of "just missing the bus" by 0.01 speed.
-            // Increased to 0.35 for even better flow, making movement feel far less clunky when encumbered.
-            const COYOTE_THRESHOLD: f32 = 0.35;
-            if speed.accumulator >= (movement_cost - COYOTE_THRESHOLD) {
-                // If we are using the threshold to squeeze by...
-                if speed.accumulator < movement_cost {
-                    // Ludwig: "Hustle" particle to show effort
-                    commands.spawn((
-                        Particle {
-                            char: '.',
-                            color: Color::DarkGray,
-                            lifetime: 5,
-                        },
-                        *current_pos,
-                    ));
-                }
-                speed.accumulator -= movement_cost;
-                true
-            } else {
-                false
-            }
-        } else {
-            true
-        };
-
-        if !can_move {
+        if !try_apply_movement_speed(&mut speed_opt, movement_cost, &mut commands, *current_pos) {
             continue;
         }
 
         current_pos.x = new_pos.x;
+
         current_pos.y = new_pos.y;
 
-        // Apply Erosion
-        if let (Ok(x), Ok(y)) = (usize::try_from(new_pos.x), usize::try_from(new_pos.y)) {
-            erosion.add_erosion(x, y, MOVEMENT_EROSION_AMOUNT);
-        }
+        apply_erosion(&mut erosion, new_pos);
 
         if new_pos == target_pos {
             commands.entity(pop_entity).insert(AtTarget);
@@ -460,5 +409,79 @@ pub(crate) fn calculate_next_positions(
         (move_x, move_y)
     } else {
         (move_y, None)
+    }
+}
+
+fn calculate_movement_cost(
+    new_pos: GridPosition,
+    current_pos: GridPosition,
+    terrain: &TerrainGrid,
+    wind_grid: Option<&crate::layer1::wind::WindGrid>,
+    tide: Option<&crate::layer1::atmosphere::AtmosphericTide>,
+) -> f32 {
+    let base_cost = if let (Ok(x), Ok(y)) = (usize::try_from(new_pos.x), usize::try_from(new_pos.y))
+    {
+        terrain
+            .get(x, y)
+            .map_or(1.0, crate::layer1::terrain::TerrainType::movement_cost)
+    } else {
+        1.0
+    };
+
+    let wind_mod = if let Some(w) = wind_grid {
+        let wind_vec = w.get_wind(current_pos.x, current_pos.y);
+        let move_dir = crate::layer1::wind::Vec2::new(
+            (new_pos.x - current_pos.x) as f32,
+            (new_pos.y - current_pos.y) as f32,
+        );
+        crate::layer1::wind::calculate_wind_movement_penalty(wind_vec, move_dir)
+    } else {
+        1.0
+    };
+
+    let pressure_mod = tide.map_or(1.0, |t| {
+        crate::layer1::atmosphere::calculate_atmospheric_movement_cost(t.pressure)
+    });
+
+    base_cost * wind_mod * pressure_mod
+}
+
+fn try_apply_movement_speed(
+    speed_opt: &mut Option<Mut<Speed>>,
+    movement_cost: f32,
+    commands: &mut Commands,
+    current_pos: GridPosition,
+) -> bool {
+    let Some(ref mut speed) = speed_opt else {
+        return true;
+    };
+
+    // Ludwig: "Coyote Speed" - Allow moving if we are *almost* there.
+    // This prevents the feeling of "just missing the bus" by 0.01 speed.
+    // Increased to 0.35 for even better flow, making movement feel far less clunky when encumbered.
+    const COYOTE_THRESHOLD: f32 = 0.35;
+    if speed.accumulator >= (movement_cost - COYOTE_THRESHOLD) {
+        // If we are using the threshold to squeeze by...
+        if speed.accumulator < movement_cost {
+            // Ludwig: "Hustle" particle to show effort
+            commands.spawn((
+                Particle {
+                    char: '.',
+                    color: Color::DarkGray,
+                    lifetime: 5,
+                },
+                current_pos,
+            ));
+        }
+        speed.accumulator -= movement_cost;
+        true
+    } else {
+        false
+    }
+}
+
+fn apply_erosion(erosion: &mut ErosionGrid, new_pos: GridPosition) {
+    if let (Ok(x), Ok(y)) = (usize::try_from(new_pos.x), usize::try_from(new_pos.y)) {
+        erosion.add_erosion(x, y, MOVEMENT_EROSION_AMOUNT);
     }
 }
