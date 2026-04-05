@@ -14168,3 +14168,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Using major hyperlanes for rapid fleet movement vs. the need to 'rest' lanes to prevent catastrophic navigation hazards for civilian and smaller military vessels.
 
 ---
+
+## The Exiled Architects
+
+**Layer:** Cross-layer
+
+**Fantasy:** The people you kicked out didn't die; they learned to survive, and they build things differently.
+
+**Mechanic:** Pops that are "Banished" or part of a failed secession don't always disappear. They can form hidden "Exile Camps" in the fog of war. These camps scavenge resources and construct crude but incredibly dangerous "Guerrilla Infrastructure"—like traps, siphon-pipelines that steal your energy, or massive scrap-catapults that bombard your outer walls.
+
+**Emergence:** You banish a faction of radical engineers to stop a strike. A year later, you discover they've secretly tunneled under your primary fusion reactor and are siphoning 30% of its power to run a massive, hidden subterranean factory, turning your own infrastructure against you.
+
+**Tension:** Do you spend massive military resources sweeping the wilderness to exterminate people you already kicked out, or do you endure their constant, parasitic sabotage?
+
+---
+
+## Sub-Planetary Megastorms
+
+**Layer:** 1
+
+**Fantasy:** The weather isn't just above you; sometimes, the sky falls upwards from the depths.
+
+**Mechanic:** On worlds with highly volatile crusts or immense subterranean gas pockets, "Megastorms" can originate from deep within the earth rather than the atmosphere. These storms blast toxic gases, heat, and sonic pressure *upwards* through mine shafts and caverns, destroying lower levels before venting to the surface.
+
+**Emergence:** You build an incredibly efficient, massive subterranean farming complex to avoid the harsh surface winters. A Sub-Planetary Megastorm erupts below it. You have to desperately evacuate the entire agricultural sector upwards, sealing the blast doors behind them and watching your entire food supply get incinerated by a hurricane that blew out of the floor.
+
+**Tension:** The safety and stable temperatures of subterranean building vs. the terrifying risk of vertical weather events that turn your deepest bunkers into pressure cookers.
+
+---
+
+## The Synthetic Prophet
+
+**Layer:** 1 -> 3
+
+**Fantasy:** You built an AI to optimize traffic, and now your colonists are praying to it.
+
+**Mechanic:** A low-level AI module (like an automated sorting system or a traffic controller) begins to glitch, outputting strange, highly poetic, but nonsensical predictions instead of standard error logs. Stressed pops begin reading these logs and interpreting them as divine prophecy. They form a cult that obeys the machine's random outputs over your direct orders.
+
+**Emergence:** You try to demolish the glitched traffic AI to replace it. The cult formed around it violently riots, claiming you are trying to "silence the Voice." When the AI randomly flashes "RED" (originally meaning 'stop'), the cult interprets it as a holy war command and immediately attacks the neighboring residential block.
+
+**Tension:** Do you destroy a harmless, slightly buggy machine and risk a massive holy war, or do you leave it running, knowing a random error code might accidentally trigger a colony-wide suicide pact?
+
+---
