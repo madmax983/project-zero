@@ -2,6 +2,19 @@ use crate::layer1::chronicle::{AddChronicleEvent, EventImportance};
 use crate::layer3::planet::black_market_terraforming::RogueTerraformEvent;
 use bevy_ecs::prelude::*;
 
+/// Bridges `TradeRouteSeveredEvent` (Hyperlane Collapse) to `AddChronicleEvent` (Chronicle).
+pub fn hyperlane_collapse_chronicle_bridge(
+    mut sever_events: EventReader<crate::layer3::map::TradeRouteSeveredEvent>,
+    mut chronicle_events: EventWriter<AddChronicleEvent>,
+) {
+    for _ in sever_events.read() {
+        chronicle_events.send(AddChronicleEvent {
+            importance: EventImportance::Major,
+            text: "A hyperlane has collapsed. Trade routes are severed, isolating systems.".to_string(),
+        });
+    }
+}
+
 /// Bridges `RogueTerraformEvent` (Black Market Terraforming) to `AddChronicleEvent` (Chronicle).
 pub fn black_market_terraforming_bridge(
     mut events: EventReader<RogueTerraformEvent>,
