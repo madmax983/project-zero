@@ -14183,7 +14183,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Sub-Planetary Megastorms
+## Sub-Planetary Megastorms [SPECCED]
 
 **Layer:** 1
 
@@ -14197,7 +14197,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Synthetic Prophet
+## The Synthetic Prophet [SPECCED]
 
 **Layer:** 1 -> 3
 
@@ -14211,7 +14211,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Generational Dissonance
+## Generational Dissonance [SPECCED]
 
 **Layer:** 1
 

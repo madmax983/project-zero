@@ -498,3 +498,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `795` The Exiled Architects — `specs/795-the-exiled-architects.md`
 - [ ] `796` Chronal Displacement — `specs/796-chronal-displacement.md`
 - [ ] `797` Sub-Zero Hibernation Sickness — `specs/797-sub-zero-hibernation-sickness.md`
+- [ ] `798` Sub-Planetary Megastorms — `specs/798-sub-planetary-megastorms.md`
+- [ ] `799` The Synthetic Prophet — `specs/799-the-synthetic-prophet.md`
+- [ ] `800` Generational Dissonance — `specs/800-generational-dissonance.md`
