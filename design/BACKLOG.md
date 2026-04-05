@@ -486,3 +486,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `780` The Biomass Rebellion — `specs/780-the-biomass-rebellion.md`
 - [ ] `781` The Generational Fugue — `specs/781-the-generational-fugue.md`
 - [ ] `782` The Void Architect — `specs/782-the-void-architect.md`
+- [ ] `786` The Sentient Archive — `specs/786-the-sentient-archive.md`
+- [ ] `787` The Gravity-Adapted Castes — `specs/787-the-gravity-adapted-castes.md`
+- [ ] `788` The Chrono-Schism — `specs/788-the-chrono-schism.md`

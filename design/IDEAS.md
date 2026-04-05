@@ -14016,7 +14016,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Chrono-Schism
+## The Chrono-Schism [SPECCED]
 
 **Layer:** 2 -> 3
 
@@ -14030,7 +14030,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Gravity-Adapted Castes
+## The Gravity-Adapted Castes [SPECCED]
 
 **Layer:** 1 -> Cross-layer
 
@@ -14044,7 +14044,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Sentient Archive
+## The Sentient Archive [SPECCED]
 
 **Layer:** 1 -> 3
 
