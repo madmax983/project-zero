@@ -345,3 +345,4 @@
 - [x] `778` Hyperlane Collapse — `specs/778-hyperlane-collapse.md` — completed 2026-05-18
 - [x] `INT-778` Integration: Hyperlane Collapse -> Chronicle — completed 2026-05-18
 - [x] `785` The Symbiotic Infrastructure — `specs/785-the-symbiotic-infrastructure.md` — completed 2026-05-18
+- [x] `817` Haunted Assembly Lines — `specs/817-haunted-assembly-lines.md` — completed 2026-05-19

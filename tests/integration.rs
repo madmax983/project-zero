@@ -260,3 +260,4 @@ mod parasitic_architecture_bridge;
 mod temporal_ghost_towns_bridge;
 #[path = "integration/void_whispers_chronicle.rs"]
 mod void_whispers_chronicle;
+#[path = "integration/haunted_assembly_lines_tests.rs"] mod haunted_assembly_lines_tests;
