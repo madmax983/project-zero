@@ -524,3 +524,8 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `823` The Architect's Hubris — `specs/823-the-architects-hubris.md`
 - [ ] `824` Mutational Drift — `specs/824-mutational-drift.md`
 - [ ] `825` Symbiotic Transit Arteries — `specs/825-symbiotic-transit-arteries.md`
+- [ ] `826` Quantum Bureaucracy — `specs/826-quantum-bureaucracy.md`
+- [ ] `827` Weaponized Ecology — `specs/827-weaponized-ecology.md`
+- [ ] `828` Predatory Architecture — `specs/828-predatory-architecture.md`
+- [ ] `829` Bureaucratic Fiefdoms — `specs/829-bureaucratic-fiefdoms.md`
+- [ ] `830` The Panopticon's Blindspot — `specs/830-the-panopticons-blindspot.md`
