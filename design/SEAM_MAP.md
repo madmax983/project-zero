@@ -641,3 +641,9 @@
 - **Systems connected:** `process_hyperlane_collapse_system` (Hyperlane Collapse) -> `hyperlane_collapse_chronicle_bridge` (Integration) -> `AddChronicleEvent`
 - **Glue added:** Added `hyperlane_collapse_chronicle_bridge` to emit an `AddChronicleEvent` (`EventImportance::Major`) upon `TradeRouteSeveredEvent`. Registered in `SimulationSchedule`.
 - **Tests:** `tests/integration/hyperlane_collapse_bridge.rs`
+
+### INT-573: The Silent Generation -> PopDied & ColonyResources
+- **Date:** 2026-05-18
+- **Systems connected:** `PopDied` (Event) & `ColonyResources` (Resource) -> `silent_generation_trauma_bridge_system` (Integration) -> `TraumaTracker` (Resource)
+- **Glue added:** Added `silent_generation_trauma_bridge_system` to increment `recent_deaths` upon `PopDied` and mutate `famine_ticks` based on `ColonyResources.food`. Registered in `Layer1SystemSet::Observation`.
+- **Tests:** `tests/integration/silent_generation_bridge.rs`

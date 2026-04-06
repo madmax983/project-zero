@@ -68,6 +68,25 @@ pub fn orbital_drop_chronicle_bridge(
     }
 }
 
+pub fn silent_generation_trauma_bridge_system(
+    mut events: EventReader<PopDied>,
+    resources: Option<Res<crate::layer1::resources::ColonyResources>>,
+    mut trauma: ResMut<crate::layer1::stress::TraumaTracker>,
+) {
+    for _ in events.read() {
+        trauma.recent_deaths = trauma.recent_deaths.saturating_add(1);
+    }
+
+    if let Some(res) = resources {
+        if res.food <= 0.0 {
+            trauma.famine_ticks = trauma.famine_ticks.saturating_add(1);
+        } else {
+            // Decay famine ticks if there is food
+            trauma.famine_ticks = trauma.famine_ticks.saturating_sub(1);
+        }
+    }
+}
+
 /// Bridges `Awakened` component addition (Machine Awakening) to `AddChronicleEvent` (Chronicle).
 pub fn bot_awakening_chronicle_bridge(
     query: Query<Entity, Added<crate::layer1::tech::machine_awakening::Awakened>>,

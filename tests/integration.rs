@@ -260,3 +260,5 @@ mod temporal_ghost_towns_bridge;
 mod void_whispers_chronicle;
 #[path = "integration/hyperlane_collapse_bridge.rs"]
 mod hyperlane_collapse_bridge;
+#[path = "integration/silent_generation_bridge.rs"]
+mod silent_generation_bridge;
