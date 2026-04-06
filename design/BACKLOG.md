@@ -519,3 +519,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `817` Haunted Assembly Lines — `specs/817-haunted-assembly-lines.md`
 - [ ] `818` Bureaucratic Cascade — `specs/818-bureaucratic-cascade.md`
 - [ ] `819` The Nutrient Synthesizer's Saboteur — `specs/819-nutrient-synthesizers-saboteur.md`
+- [ ] `820` The Empathic Echo Chamber — `specs/820-empathic-echo-chamber.md`
+- [ ] `821` The Sub-Space Whispers — `specs/821-sub-space-whispers.md`
+- [ ] `822` Orbital Necropolises — `specs/822-orbital-necropolises.md`

@@ -14393,7 +14393,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Empathic Echo Chamber
+## The Empathic Echo Chamber [SPECCED]
 
 **Layer:** 1
 
@@ -14407,7 +14407,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Sub-Space Whispers
+## The Sub-Space Whispers [SPECCED]
 
 **Layer:** 2
 
@@ -14421,7 +14421,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Orbital Necropolises
+## Orbital Necropolises [SPECCED]
 
 **Layer:** 2 -> 1
 
