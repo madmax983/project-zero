@@ -1666,8 +1666,11 @@ fn print_bio(world: &mut World, target_id: u32) {
             }
 
             if let Some(dream) = dream {
-                println!("\n{}", "Last Dream:".cyan().bold());
-                println!("  [Tick {}] \"{}\"", dream.tick, dream.content);
+                let dream_content = format!("\"{}\"", dream.content);
+                print_dashboard_panel(
+                    &format!("Last Dream (Tick {})", dream.tick),
+                    &format!("{}", dream_content.magenta().italic()),
+                );
             }
             break;
         }
