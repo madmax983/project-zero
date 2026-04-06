@@ -2874,7 +2874,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Orbital Tether
+## Orbital Tether [SPECCED]
 
 **Layer:** Cross-layer
 
@@ -2888,7 +2888,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Seismic Resonance
+## Seismic Resonance [SPECCED]
 
 **Layer:** 1
 
@@ -2902,7 +2902,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Blackout Protocol
+## The Blackout Protocol [SPECCED]
 
 **Layer:** 1
 
