@@ -66,3 +66,6 @@ pub mod panopticon_glitch;
 
 #[cfg(feature = "nova")]
 pub mod symbiotic_spores;
+
+#[cfg(feature = "nova")]
+pub mod generational_dissonance;
