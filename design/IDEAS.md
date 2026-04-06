@@ -14448,3 +14448,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Paying the extortionate ransom to keep your people breathing vs. launching a desperate, costly military strike against the hackers before your colony suffocates.
 
 ---
+
+## Predatory Architecture
+
+**Layer:** 1
+
+**Fantasy:** Building a base that actively consumes its inhabitants to stay operational.
+
+**Mechanic:** High-efficiency, late-game structures (like "Bio-Forges") periodically require "Organic Calibration" (consuming a living Pop). If the player doesn't manually assign a sacrifice, the building will randomly snatch a Pop walking nearby.
+
+**Emergence:** A player builds a massive logistics shortcut directly past a Bio-Forge to save travel time. The building starts silently eating the colony's most skilled couriers, crippling the economy until the player notices the missing Pops and routes them the long way around.
+
+**Tension:** The unmatched, necessary productivity of Predatory Architecture versus the constant, agonizing drain on your population and morale.
+
+---
+
+## Bureaucratic Fiefdoms
+
+**Layer:** 1 -> 3
+
+**Fantasy:** The government isn't a monolith; it's a hundred petty kings fighting over office supplies.
+
+**Mechanic:** As your colony grows, distinct administrative sectors develop into "Fiefdoms," led by powerful Mayor Pops. These Fiefdoms begin taxing resources that cross their physical boundaries and refuse to share advanced machinery with other Fiefdoms, even in an emergency.
+
+**Emergence:** You have a massive famine in Sector A, but Sector B's Mayor refuses to unlock their overflowing granaries because Sector A recently vetoed a vanity project for Sector B in the local council. You have to actively incite a riot in Sector B just to steal your own food to save Sector A.
+
+**Tension:** The autonomous, micro-managed efficiency of Fiefdoms versus the sudden, catastrophic lack of unified control during a crisis.
+
+---
+
+## The Panopticon's Blindspot
+
+**Layer:** Cross-layer
+
+**Fantasy:** You see everything, but the things you don't see are terrifying.
+
+**Mechanic:** Constructing a "Total Surveillance Grid" gives 100% visibility on all crime, unrest, and subversion across the system, seemingly making management trivial. However, it generates tiny, invisible "Blindspots" (1-2 tiles) where the cameras inherently cannot see. Pops intuitively find these and use them for extreme, concentrated illicit activities.
+
+**Emergence:** Your entire world has zero crime, zero unrest. Then, suddenly, a heavily armed rebellion erupts from a single 2x2 supply closet because generations of dissenters, black marketers, and rogue AIs had been coordinating exclusively in that one unmonitored space for decades.
+
+**Tension:** The comfort of absolute surveillance vs. the terrifying reality of concentrated, hyper-efficient subversion hiding right under your nose.
+
+---
