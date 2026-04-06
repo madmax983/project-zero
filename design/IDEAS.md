@@ -3014,7 +3014,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Indoor Weather
+## [SPECCED] Indoor Weather
 
 **Layer:** 1
 
@@ -3028,7 +3028,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Cloud Seeding
+## [SPECCED] Cloud Seeding
 
 **Layer:** 2 -> 1
 
@@ -3056,7 +3056,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Trash-Cannon Defense
+## [SPECCED] Trash-Cannon Defense
 
 **Layer:** 1
 
@@ -3070,7 +3070,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Technological Rituals
+## [SPECCED] Technological Rituals
 
 **Layer:** 1
 
@@ -3084,7 +3084,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Memetic Hazards
+## [SPECCED] Memetic Hazards
 
 **Layer:** 1
 
@@ -3098,7 +3098,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Diplomatic White Elephants
+## [SPECCED] Diplomatic White Elephants
 
 **Layer:** 3 -> 1
 
