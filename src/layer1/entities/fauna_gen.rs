@@ -1,7 +1,27 @@
+//! Procedural generation of modular fauna entities.
+//!
+//! This module handles the creation of `FaunaBody` entities using a modular system.
+//! Fauna are generated from a `FaunaSeed`, which dictates what `FaunaPart`s they receive.
+//! The parts are then aggregated to define their stats and what resources they drop.
+
 use crate::layer1::fauna::{BodyPartType, FaunaBody, FaunaPart, FaunaStats};
 use rand::{rngs::StdRng, SeedableRng};
 
 /// Seed for generating modular fauna.
+///
+/// Uses either a numeric seed or a named preset (e.g., "Wolf") to generate parts.
+///
+/// # Examples
+///
+/// ```
+/// use scale::layer1::entities::fauna_gen::FaunaSeed;
+///
+/// let random_seed = FaunaSeed::new(1234);
+/// assert_eq!(random_seed.value, 1234);
+///
+/// let preset_seed = FaunaSeed::from_preset("Wolf");
+/// assert_eq!(preset_seed.preset.unwrap(), "Wolf");
+/// ```
 #[derive(Debug, Clone)]
 pub struct FaunaSeed {
     /// Random seed value.

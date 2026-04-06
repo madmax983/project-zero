@@ -1,3 +1,9 @@
+//! The Visitor: An unpredictable mega-fauna entity.
+//!
+//! This module implements "The Visitor" (Spec 234), a powerful roaming entity that enters
+//! the map seeking resources. Once its hunger is satiated by consuming `Stockpile`s,
+//! it leaves. It is generally too powerful to fight directly and will trample structures in its path.
+
 use crate::layer1::map::GridPosition;
 use crate::layer1::resources::ColonyResources;
 use crate::layer1::stockpile::Stockpile;
@@ -5,6 +11,17 @@ use crate::layer1::structure::Structure;
 use bevy_ecs::prelude::*;
 
 /// State of "The Visitor" (Spec 234).
+///
+/// Tracks the high-level behavior goals of the entity.
+///
+/// # Examples
+///
+/// ```
+/// use scale::layer1::entities::the_visitor::TheVisitorState;
+///
+/// let state = TheVisitorState::default();
+/// assert_eq!(state, TheVisitorState::Wander);
+/// ```
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
 pub enum TheVisitorState {
     #[default]

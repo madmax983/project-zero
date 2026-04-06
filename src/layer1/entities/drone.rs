@@ -1,3 +1,12 @@
+//! Drone entities and automation logic.
+//!
+//! This module defines the `Drone` entity and its associated states and systems.
+//! Drones are automated workers that operate without the complex needs of normal `Pop`s,
+//! requiring only a connection to a `CommandCenter` and access to a `DroneHub` for recharging.
+//!
+//! If a drone loses its connection to a command center, it becomes feral, attacking
+//! nearby pops and hoarding resources.
+
 use crate::layer1::building::Building;
 use crate::layer1::energy::PowerConsumer;
 use crate::layer1::map::GridPosition;
@@ -5,6 +14,20 @@ use crate::layer1::utility_ai::{manhattan_distance, ActionType, PopAction, Start
 use bevy_ecs::prelude::*;
 
 /// State of a drone.
+///
+/// Indicates what the drone is currently doing, such as hauling or if it has gone feral.
+///
+/// # Examples
+///
+/// ```
+/// use scale::layer1::entities::drone::{Drone, DroneState};
+///
+/// let my_drone = Drone {
+///     state: DroneState::Idle,
+/// };
+///
+/// assert_eq!(my_drone.state, DroneState::Idle);
+/// ```
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
 pub enum DroneState {
     /// Drone is idle and waiting for tasks.

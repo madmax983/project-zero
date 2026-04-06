@@ -20,7 +20,7 @@
 //!    - **Info Panel**: Selected entity details (`panels::render_info_panel`).
 //!    - **Status Bar**: Global colony stats (`status::render_status_bar`).
 //!    - **Shell Panes**: Chronicle and tech now live behind shell-managed pane plugins.
-//! 3. **Hypertile Bridge**: [`shell::plugins`] adapts those legacy frame-based renderers into
+//! 3. **Hypertile Bridge**: `shell::plugins` adapts those legacy frame-based renderers into
 //!    pane plugins while the runtime shell migration is in progress.
 
 /// Chronicle overlay rendering.
