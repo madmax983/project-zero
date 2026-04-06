@@ -1,3 +1,12 @@
+//! Vermin infestation and population mechanics.
+//!
+//! This module simulates the growth and evolution of Vermin pests (Spec 073).
+//! Vermin are drawn to unattended food, waste, and fuel. As their population
+//! grows, they can evolve specific traits based on what they consume.
+//!
+//! `VerminState` acts as a global severity tracker, influencing spoilage and triggering
+//! hazardous events like fires if the vermin become `Volatile`.
+
 use crate::layer1::edicts::{ColonyPolicies, Policy};
 use crate::layer1::fire::Fire;
 use crate::layer1::resources::{ColonyResources, ResourceItem, ResourceType};
@@ -16,6 +25,22 @@ pub enum VerminTrait {
 }
 
 /// Tracks the severity of vermin infestation in the colony.
+///
+/// This resource stores the current severity, maximum severity, and the
+/// evolved traits of the local vermin population.
+///
+/// # Examples
+///
+/// ```
+/// use scale::layer1::entities::vermin::{VerminState, VerminTrait};
+///
+/// let mut state = VerminState::default();
+/// state.severity = 50.0;
+/// state.traits.insert(VerminTrait::Toxic);
+///
+/// assert!(state.traits.contains(&VerminTrait::Toxic));
+/// assert_eq!(state.severity, 50.0);
+/// ```
 #[derive(Resource)]
 pub struct VerminState {
     /// The current severity level (0.0 to 100.0).

@@ -1,3 +1,11 @@
+//! Mascot entities and social buffs.
+//!
+//! This module implements the `Mascot` system. Mascots are special fauna entities
+//! that roam the colony, seeking out `Dining` zones (and other social areas) to
+//! hang out. While wandering, they apply morale buffs to nearby `Pop`s.
+//!
+//! If a mascot dies, pops who remember it will experience grief.
+
 use crate::layer1::execution::MovementTarget;
 use crate::layer1::fauna::{Fauna, FaunaState};
 
@@ -9,6 +17,21 @@ use bevy_ecs::prelude::*;
 use rand::Rng;
 
 /// Component representing a Mascot.
+///
+/// Attached to a fauna entity to give it mascot behavior, which includes
+/// seeking social zones and applying morale buffs.
+///
+/// # Examples
+///
+/// ```
+/// use scale::layer1::entities::mascot::Mascot;
+///
+/// let mascot = Mascot {
+///     name: "Sparky".to_string(),
+/// };
+///
+/// assert_eq!(mascot.name, "Sparky");
+/// ```
 #[derive(Component, Default)]
 pub struct Mascot {
     /// Name of the mascot.
