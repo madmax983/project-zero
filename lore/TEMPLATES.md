@@ -5238,7 +5238,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "We could not hide from the Tell. The Miasma shouted our [SECRET_TYPE]. Now there is [FALLOUT_RESULT]. [YEAR]."
 - "A devastating Broadcast. The fog played back our [SECRET_TYPE]. It caused [FALLOUT_RESULT]. [YEAR]."
 
-## Template: HYPERLANE_COLLAPSE
+## Template: HYPERLANE_COLLAPSE (Spec 778)
 
 **Generates:** Play event (Chronicle during game)
 **Slots:** `[SYSTEM_A]`, `[SYSTEM_B]`, `[YEAR]`

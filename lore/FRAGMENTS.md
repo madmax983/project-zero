@@ -6171,3 +6171,21 @@ A negative side-effect of a failed splice.
 - a sudden cessation of background noise
 - a violent spatial ripple
 - a scream in the sensors
+
+## Hyperlane Collapse Fragments (Spec 778)
+
+### Fragment Type: [COLLAPSE_REASON]
+- a massive gravity sheer
+- an uncontrolled void-storm
+- the failure of an ancient tether
+- a deep-space fracture
+- the overloading of the primary gate
+- a spontaneous chronal tear
+
+### Fragment Type: [ISOLATION_FEAR]
+- terrifying, unbroken static
+- the realization that no ships are coming
+- a sudden severing from the galactic market
+- the crushing silence of closed borders
+- an immediate rationing of emergency air
+- the terrifying prospect of slow-warp travel
