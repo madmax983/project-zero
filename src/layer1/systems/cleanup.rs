@@ -72,7 +72,10 @@ pub fn register(schedule: &mut Schedule) {
     );
 
     schedule.add_systems(
-        (update_event_buffer::<crate::layer1::diplomacy::wards::WarDeclaredEvent>,)
+        (
+            update_event_buffer::<crate::layer1::diplomacy::wards::WarDeclaredEvent>,
+            update_event_buffer::<crate::layer1::orbital_tether::TetherSnapEvent>,
+        )
             .in_set(Layer1SystemSet::EventCleanup),
     );
 }
