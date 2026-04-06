@@ -21,3 +21,7 @@ pub use funeral::*;
 /// Totems and superstition system (Spec 200).
 pub mod totems;
 pub use totems::*;
+
+/// Symbiotic Cult system (Spec 606).
+pub mod symbiotic_cult;
+pub use symbiotic_cult::*;

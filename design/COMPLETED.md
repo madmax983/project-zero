@@ -344,3 +344,4 @@
 - [x] `INT-770` Integration: Temporal Ghost Towns -> Chronicle — completed 2026-05-18
 - [x] `778` Hyperlane Collapse — `specs/778-hyperlane-collapse.md` — completed 2026-05-18
 - [x] `INT-778` Integration: Hyperlane Collapse -> Chronicle — completed 2026-05-18
+- [x] `606` The Symbiotic Cult — `specs/606-symbiotic-cult.md` — completed 2026-04-06

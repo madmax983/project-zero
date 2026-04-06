@@ -373,6 +373,15 @@ pub fn register(schedule: &mut Schedule) {
 
     schedule.add_systems(
         (
+            crate::layer1::culture::symbiotic_cult::spawn_symbiotic_cult_system,
+            crate::layer1::culture::symbiotic_cult::apply_cult_biology_system,
+            crate::layer1::culture::symbiotic_cult::cult_infrastructure_demand_system,
+        )
+            .in_set(Layer1SystemSet::Observation),
+    );
+
+    schedule.add_systems(
+        (
             crate::layer1::diplomacy::wards::process_diplomatic_wards_system,
             crate::layer1::diplomacy::wards::process_ward_deaths_system,
         )

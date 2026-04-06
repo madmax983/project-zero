@@ -368,7 +368,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `603` The Grave-Robber's Economy — `specs/603-graverobbers-economy.md`
 - [ ] `604` The Censor's Dilemma — `specs/604-censors-dilemma.md`
 - [ ] `605` The Sub-Light Ghost — `specs/605-sublight-ghost.md`
-- [ ] `606` The Symbiotic Cult — `specs/606-symbiotic-cult.md`
 - [ ] `607` The Orbital Mirror Misalignment — `specs/607-orbital-mirror-misalignment.md`
 - [ ] `608` The Bureaucratic Ghost — `specs/608-bureaucratic-ghost.md`
 - [ ] `609` The Quantum Smuggler's Route — `specs/609-quantum-smugglers-route.md`
