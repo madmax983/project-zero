@@ -3514,7 +3514,7 @@ STATIONED_AT_WELL:
 - SECRET_BROADCAST → enables → ARREST_MADE, LYNCH_MOB, REBELLION
 - SECRET_BROADCAST → increases_chance → MENTAL_BREAKDOWN, UNREST
 
-## Hyperlane Collapse Chaining
+## Hyperlane Collapse Chaining (Spec 778)
 
 - HYPERLANE_COLLAPSE → enables → TRADE_ROUTE_DISRUPTED
 - HYPERLANE_COLLAPSE → increases_chance → RESOURCE_SHORTAGE, FAMINE

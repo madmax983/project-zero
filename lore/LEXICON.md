@@ -3848,7 +3848,7 @@
 - "The Broadcast ruined the governor."
 - "We woke up to the Tell echoing from the clouds."
 
-## Hyperlanes & Collapse
+## Hyperlanes & Collapse (Spec 778)
 
 ### the thread / the silk-road
 **Replaces:** hyperlane, interstellar route
