@@ -14295,7 +14295,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Architect's Hubris
+## The Architect's Hubris [SPECCED]
 
 **Layer:** 1 -> 2
 
@@ -14309,7 +14309,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Mutational Drift
+## Mutational Drift [SPECCED]
 
 **Layer:** Cross-layer
 
@@ -14323,7 +14323,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Symbiotic Transit Arteries
+## Symbiotic Transit Arteries [SPECCED]
 
 **Layer:** 1
 
