@@ -266,8 +266,13 @@ fn handle_command(world: &mut World, input: &str) -> bool {
         "scan" => {
             let x = parts.get(1).and_then(|s| s.parse().ok()).unwrap_or(40);
             let y = parts.get(2).and_then(|s| s.parse().ok()).unwrap_or(25);
-            let radius = parts.get(3).and_then(|s| s.parse().ok()).unwrap_or(10);
-            scan_terrain(world, x, y, radius);
+            let raw_radius: i32 = parts.get(3).and_then(|s| s.parse().ok()).unwrap_or(10);
+            match ScanRadius::new(raw_radius) {
+                Ok(radius) => scan_terrain(world, x, y, radius),
+                Err(e) => {
+                    println!("{}", e.red());
+                }
+            }
         }
         "terrain" => {
             if parts.len() < 3 {
@@ -1160,8 +1165,24 @@ fn find_terrain(world: &mut World, terrain_name: &str, max_count: usize) {
     }
 }
 
+pub struct ScanRadius(i32);
+
+impl ScanRadius {
+    pub fn new(radius: i32) -> Result<Self, String> {
+        if !(0..=100).contains(&radius) {
+            return Err("Radius must be between 0 and 100".to_string());
+        }
+        Ok(Self(radius))
+    }
+
+    pub fn get(&self) -> i32 {
+        self.0
+    }
+}
+
 /// Semantic terrain scan - outputs parseable coordinate:type pairs
-fn scan_terrain(world: &mut World, center_x: i32, center_y: i32, radius: i32) {
+fn scan_terrain(world: &mut World, center_x: i32, center_y: i32, radius: ScanRadius) {
+    let radius = radius.get();
     // Copy terrain data before querying to avoid borrow conflicts
     let (width, height, terrain_tiles) = {
         let terrain = world.resource::<TerrainGrid>();
@@ -1946,6 +1967,17 @@ mod reproduction_tests {
     fn test_scan_terrain_overflow() {
         let mut world = setup_minimal_world();
         // This should panic in debug mode due to overflow if not handled
-        scan_terrain(&mut world, i32::MAX, i32::MAX, 10);
+        scan_terrain(&mut world, i32::MAX, i32::MAX, ScanRadius::new(10).unwrap());
+    }
+
+    #[test]
+    fn test_scan_radius_validation() {
+        assert!(ScanRadius::new(10).is_ok());
+        assert!(ScanRadius::new(0).is_ok());
+        assert!(ScanRadius::new(100).is_ok());
+
+        assert!(ScanRadius::new(-1).is_err());
+        assert!(ScanRadius::new(101).is_err());
+        assert!(ScanRadius::new(i32::MAX).is_err());
     }
 }

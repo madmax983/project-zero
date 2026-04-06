@@ -1,3 +1,6 @@
 **2024-05-28 - [Path Traversal in Cartography Export]
 **Threat:** [Path Traversal] The `CartographyExportConfig` allowed an unsanitized `String` to dictate the file output path, enabling writes to arbitrary files (e.g. `../../../etc/passwd`).
 **Defense:** [Parse, don't validate] Replaced the raw `String` with an `ExportPath` newtype wrapper. Its constructor strictly validates that the path string contains no path separators (`/`, `\`) or traversal elements (`..`), and only allows alphanumeric characters, dots, dashes, and underscores.
+**2024-05-29 - [Denial of Service in Headless Scan]
+**Threat:** [CPU Exhaustion DoS] The `scan` command in `src/bin/headless.rs` accepted an unbounded `radius` parameter directly as an `i32`. A maliciously large radius value would cause the server to hang or crash while iterating over a grid area of `(2 * radius + 1)^2`.
+**Defense:** [Parse, Don't Validate] Created a newtype `ScanRadius` that enforces bounds (0-100) at construction time. The `scan_terrain` function signature was updated to require `ScanRadius` instead of raw `i32`, ensuring that only validated, bounded radii can be processed.
