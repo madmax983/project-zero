@@ -17,7 +17,7 @@ use crate::layer1::resources::{ResourceItem, ResourceType};
 use crate::layer1::seasons::SeasonState;
 use crate::layer1::terrain::TerrainGrid;
 use bevy_ecs::prelude::*;
-use std::collections::HashMap;
+use bevy::utils::HashMap;
 
 /// Emits heat into the temperature grid.
 #[derive(Component, Debug, Clone, Default)]
@@ -27,6 +27,10 @@ pub struct HeatSource {
 }
 
 /// Grid managing temperature simulation.
+///
+/// ⚡ Bolt Optimization:
+/// - Uses `bevy::utils::HashMap` (AHash) instead of `std::collections::HashMap`.
+/// - Integer tuple keys `(i32, i32)` hash significantly faster with AHash, reducing overhead in diffusion calculations.
 #[derive(Resource)]
 pub struct TemperatureGrid {
     /// Grid width.

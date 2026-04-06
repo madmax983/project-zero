@@ -8,9 +8,13 @@ use crate::layer1::structure::Structure;
 use crate::layer1::weather::{WeatherState, WeatherType};
 use crate::shared::time::SimulationTime;
 use bevy_ecs::prelude::*;
-use std::collections::HashMap;
+use bevy::utils::HashMap;
 
 /// Global corrosive atmosphere settings.
+///
+/// ⚡ Bolt Optimization:
+/// - Uses `bevy::utils::HashMap` (AHash) instead of `std::collections::HashMap`.
+/// - Integer tuple keys `(i32, i32)` hash significantly faster with AHash, reducing overhead in diffusion calculations.
 #[derive(Resource, Default, Debug)]
 pub struct CorrosiveAtmosphere {
     /// Intensity of corrosion (0.0 to 1.0 multiplier).

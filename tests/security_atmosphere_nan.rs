@@ -1,7 +1,7 @@
 #[cfg(test)]
 mod tests {
     use scale::layer1::atmosphere::AtmosphereGrid;
-    use std::collections::HashMap;
+    use bevy::utils::HashMap;
 
     #[test]
     fn test_atmosphere_inf_propagation() {
