@@ -14337,7 +14337,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Quantum Bureaucracy
+## Quantum Bureaucracy [SPECCED]
 
 **Layer:** Cross-layer
 
@@ -14351,7 +14351,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Weaponized Ecology
+## Weaponized Ecology [SPECCED]
 
 **Layer:** Cross-layer
 
@@ -14449,7 +14449,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Predatory Architecture
+## Predatory Architecture [SPECCED]
 
 **Layer:** 1
 
@@ -14463,7 +14463,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Bureaucratic Fiefdoms
+## Bureaucratic Fiefdoms [SPECCED]
 
 **Layer:** 1 -> 3
 
@@ -14477,7 +14477,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Panopticon's Blindspot
+## The Panopticon's Blindspot [SPECCED]
 
 **Layer:** Cross-layer
 
