@@ -504,3 +504,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `801` Orbital Tether — `specs/801-orbital-tether.md`
 - [ ] `802` Seismic Resonance — `specs/802-seismic-resonance.md`
 - [ ] `803` The Blackout Protocol — `specs/803-blackout-protocol.md`
+- [ ] `804` O'Neill Cylinders — `specs/804-oneill-cylinders.md`
+- [ ] `805` Digital Immortality — `specs/805-digital-immortality.md`
+- [ ] `806` Chronobiological Desync — `specs/806-chronobiological-desync.md`
