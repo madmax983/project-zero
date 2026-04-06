@@ -14252,3 +14252,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** The incredibly high productivity of the afflicted pops vs. the severe collateral damage to the mental health of your normal colonists.
 
 ---
+
+## Haunted Assembly Lines
+
+**Layer:** 1
+
+**Fantasy:** The machines remember the hands that built them, and sometimes, they reach back.
+
+**Mechanic:** When a Pop dies in a tragic industrial accident (e.g., crushed by machinery, burned in a fusion core), the surrounding factory or infrastructure becomes "Haunted." This building gains a permanent "Echo of the Fallen" trait. It operates at 150% efficiency (as if the ghost is still working), but living Pops assigned to work there suffer massive stress and paranoia penalties, eventually refusing to enter.
+
+**Emergence:** Your main munitions factory is haunted after a terrible accident. It produces weapons at a breakneck pace, but every living worker you assign there suffers a psychological break within a week. You end up relying entirely on the "ghost" workforce, turning a blind eye to the screaming machinery to win a war.
+
+**Tension:** The incredible, guilt-ridden efficiency of haunted infrastructure versus the escalating mental health crisis of the living colonists forced to work alongside the dead.
+
+---
+
+## Bureaucratic Cascade
+
+**Layer:** Cross-layer
+
+**Fantasy:** A single missing form in the capital star system starves a frontier colony.
+
+**Mechanic:** Layer 3 diplomatic or economic agreements generate "Administrative Debt" on Layer 1 colonies. This debt manifests as physical "Paperwork Tasks" that Pops must complete at Administrator Desks. If the tasks aren't completed in time, the Layer 3 agreement temporarily fails—trade routes halt, alliances fracture, or supply drops cease.
+
+**Emergence:** You sign a massive, life-saving food import treaty. However, your colony lacks trained administrators. The food ships arrive in orbit but refuse to land because the planetary customs forms haven't been physically processed by your overwhelmed bureaucratic workforce.
+
+**Tension:** Expanding your galactic influence versus ensuring your local colonies have the tedious, non-productive administrative capacity to support that expansion.
+
+---
+
+## The Nutrient Synthesizer's Saboteur
+
+**Layer:** 1
+
+**Fantasy:** Someone is poisoning the well, not with toxins, but with memories.
+
+**Mechanic:** Advanced Nutrient Synthesizers produce food efficiently, but a disgruntled Pop with high stress can perform an act of sabotage: "Flavor Imprinting." They secretly encode a specific emotional trauma (e.g., despair, terror) into the synthesizer's flavor profile matrix. Every Pop who eats the food experiences a sudden, inexplicable shared emotional breakdown.
+
+**Emergence:** Your colony's morale suddenly plummets across all demographics. You investigate and find no recent disasters. You eventually trace the source to the main cafeteria's synthesizer, which a grieving widower secretly reprogrammed to taste like his profound loss.
+
+**Tension:** The reliance on centralized, highly efficient food production systems versus their vulnerability to psychological sabotage that can instantly paralyze the entire population.
+
+---
