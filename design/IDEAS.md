@@ -14294,3 +14294,73 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** The reliance on centralized, highly efficient food production systems versus their vulnerability to psychological sabotage that can instantly paralyze the entire population.
 
 ---
+
+## The Architect's Hubris
+
+**Layer:** 1 -> 2
+
+**Fantasy:** You build a structure so tall it pierces the atmosphere, but physics and nature conspire to tear it down.
+
+**Mechanic:** Constructing "Mega-Spires" provides massive localized bonuses and orbital launch capabilities without shuttles. However, they alter local weather patterns, drawing hyper-storms and suffering from immense wind shear that requires constant, scaling maintenance.
+
+**Emergence:** Your Spire creates a permanent hurricane at its base. The wealthy elite live in the calm above the clouds, while the working class at the base are constantly repairing flood and wind damage, leading to extreme social stratification and eventual rebellion.
+
+**Tension:** The unparalleled logistical and prestige benefits of the Spire vs. the localized environmental devastation and spiraling maintenance costs.
+
+---
+
+## Mutational Drift
+
+**Layer:** Cross-layer
+
+**Fantasy:** Your people adapt to the new world so well that they forget where they came from.
+
+**Mechanic:** Generations born on extreme worlds (high radiation, extreme cold) naturally develop minor, beneficial genetic mutations. Over time, these stack, turning them into a new sub-species. The homeworld empire (Layer 3) begins to view them with suspicion, applying diplomatic penalties and trade tariffs to "mutants."
+
+**Emergence:** You intentionally settle a radioactive hellscape because the mutated miners are incredibly efficient. Fifty years later, the Core Worlds declare a holy war to purge your "impure" population, forcing you to fight your own ancestors just to survive.
+
+**Tension:** Embracing local adaptation for immediate survival and efficiency vs. maintaining genetic purity to preserve diplomatic and trade ties with the rest of the galaxy.
+
+---
+
+## Symbiotic Transit Arteries
+
+**Layer:** 1
+
+**Fantasy:** The colony's logistics run on living, breathing veins rather than cold metal.
+
+**Mechanic:** Instead of building conveyor belts or pneumatic tubes, you can cultivate "Transit Arteries"—massive, hollow, biological worm-like structures that move items and Pops rapidly. They consume waste and organic matter as fuel but react poorly to extreme temperatures or toxic byproducts.
+
+**Emergence:** You route a Transit Artery through your industrial sector. A chemical spill poisons the artery; it "coughs," violently ejecting a week's worth of refined electronics and commuting workers into a toxic slag heap, causing a mass casualty and economic event.
+
+**Tension:** The cheap, self-repairing, and high-throughput nature of biological transit vs. the fragility and unpredictability of relying on living infrastructure.
+
+---
+
+## Quantum Bureaucracy
+
+**Layer:** Cross-layer
+
+**Fantasy:** The government's decisions happen before they are even made, creating localized temporal paradoxes.
+
+**Mechanic:** Late-game "Quantum Admin Computers" can process Layer 3 edicts with negative time latency, meaning the effects happen before you pay the cost. However, this creates "Causality Debt" tiles on Layer 1. Pops walking through these tiles experience reality glitches (e.g., repeating tasks, spontaneous item duplication or deletion).
+
+**Emergence:** You pass an emergency defense edict using the Quantum Computer to instantly repel an invasion. The resulting Causality Debt tile spawns in your hospital. A doctor is caught in a loop, endlessly performing the same surgery, while medical supplies randomly blink out of existence.
+
+**Tension:** The god-like power of instantaneous, retroactive administration vs. the localized breakdown of physics and sanity within your own colony.
+
+---
+
+## Weaponized Ecology
+
+**Layer:** Cross-layer
+
+**Fantasy:** Turning the planet itself into an unassailable fortress that eats your enemies.
+
+**Mechanic:** You can bio-engineer native flora/fauna to be hyper-aggressive toward non-native biologicals or specific Layer 3 faction signatures. When invaded, you don't fight; you just let the jungle consume the landing forces. However, this permanently alters the biome, drastically reducing habitability and farming efficiency for your own Pops.
+
+**Emergence:** You face an overwhelming invasion. You release the "Death-Spore" protocol. The enemy army is dissolved in days. But the spores mutate, and you can never go outside again without heavy hazmat gear, essentially turning your own planet into a hostile prison.
+
+**Tension:** The ultimate asymmetrical defense vs. the permanent, agonizing destruction of your own planet's livability.
+
+---
