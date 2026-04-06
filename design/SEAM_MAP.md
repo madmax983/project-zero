@@ -635,3 +635,9 @@
 - **Systems connected:** `process_megastructure_consumption` (Parasitic Architecture) -> `parasitic_architecture_chronicle_bridge` (Integration) -> `AddChronicleEvent`
 - **Glue added:** Added `parasitic_architecture_chronicle_bridge` to emit an `AddChronicleEvent` (`EventImportance::Minor`) upon `BuildingConsumedEvent`. Registered in `Layer1SystemSet::Observation`.
 - **Tests:** `tests/integration/parasitic_architecture_bridge.rs`
+
+### INT-778: Hyperlane Collapse -> Chronicle
+- **Date:** 2026-05-18
+- **Systems connected:** `process_hyperlane_collapse_system` (Hyperlane Collapse) -> `hyperlane_collapse_chronicle_bridge` (Integration) -> `AddChronicleEvent`
+- **Glue added:** Added `hyperlane_collapse_chronicle_bridge` to emit an `AddChronicleEvent` (`EventImportance::Major`) upon `TradeRouteSeveredEvent`. Registered in `SimulationSchedule`.
+- **Tests:** `tests/integration/hyperlane_collapse_bridge.rs`
