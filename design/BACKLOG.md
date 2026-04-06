@@ -2,7 +2,6 @@
 
 ## High Priority
 
-- [ ] `785` The Symbiotic Infrastructure — `specs/785-the-symbiotic-infrastructure.md`
 - [ ] `784` The Ephemeral Market — `specs/784-the-ephemeral-market.md`
 - [ ] `783` The Sub-Lithic Cult — `specs/783-the-sub-lithic-cult.md`
 

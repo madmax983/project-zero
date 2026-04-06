@@ -129,6 +129,7 @@ pub mod spoilage;
 /// Resource storage limits and stockpile buildings.
 /// Structure durability and repair.
 pub mod structure;
+pub mod symbiotic_infrastructure;
 /// Technology and research system.
 pub mod tech;
 /// Terrain generation and grid management.
