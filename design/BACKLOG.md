@@ -516,3 +516,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `811` Memetic Hazards — `specs/811-memetic-hazards.md`
 - [ ] `812` Diplomatic White Elephants — `specs/812-diplomatic-white-elephants.md`
 - [ ] `813` The FTL Sabotage — `specs/813-ftl-sabotage.md`
+- [ ] `817` Haunted Assembly Lines — `specs/817-haunted-assembly-lines.md`
+- [ ] `818` Bureaucratic Cascade — `specs/818-bureaucratic-cascade.md`
+- [ ] `819` The Nutrient Synthesizer's Saboteur — `specs/819-nutrient-synthesizers-saboteur.md`
