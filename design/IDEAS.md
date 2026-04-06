@@ -14253,7 +14253,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Haunted Assembly Lines
+## Haunted Assembly Lines [SPECCED]
 
 **Layer:** 1
 
@@ -14267,7 +14267,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Bureaucratic Cascade
+## Bureaucratic Cascade [SPECCED]
 
 **Layer:** Cross-layer
 
@@ -14281,7 +14281,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Nutrient Synthesizer's Saboteur
+## The Nutrient Synthesizer's Saboteur [SPECCED]
 
 **Layer:** 1
 
