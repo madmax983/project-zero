@@ -3140,7 +3140,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Radio Nostalgia
+## Radio Nostalgia [SPECCED]
 
 **Layer:** Cross-layer
 
@@ -3168,7 +3168,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Zero-G Fermentation
+## Zero-G Fermentation [SPECCED]
 
 **Layer:** 2 -> 1
 
@@ -3182,7 +3182,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Accidental Gods
+## Accidental Gods [SPECCED]
 
 **Layer:** 3 -> 2
 
