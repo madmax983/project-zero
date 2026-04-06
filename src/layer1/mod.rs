@@ -523,6 +523,9 @@ pub use void_weed::*;
 pub mod temporal_ghost_towns;
 pub use temporal_ghost_towns::*;
 
+pub mod orbital_tether;
+pub use orbital_tether::*;
+
 /// Infrastructure system (Spec 452).
 pub mod infrastructure;
 pub use infrastructure::*;

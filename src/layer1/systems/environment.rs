@@ -13,6 +13,14 @@ pub fn register(schedule: &mut Schedule) {
     );
     schedule.add_systems(
         (
+            crate::layer1::orbital_tether::detect_tether_destruction_system,
+            crate::layer1::orbital_tether::process_tether_whip_system
+                .after(crate::layer1::orbital_tether::detect_tether_destruction_system),
+        )
+            .in_set(Layer1SystemSet::Environment),
+    );
+    schedule.add_systems(
+        (
             fire_pressure_check_system,
             fire_spread_system.after(fire_pressure_check_system),
             fire_damage_pops_system.after(fire_spread_system),
