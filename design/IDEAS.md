@@ -14364,3 +14364,87 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** The ultimate asymmetrical defense vs. the permanent, agonizing destruction of your own planet's livability.
 
 ---
+
+## The Generational Memory Sink
+
+**Layer:** 1 -> 3
+
+**Fantasy:** History isn't written by the victors; it's forgotten by the descendants, and that ignorance costs you everything.
+
+**Mechanic:** Major historical events (wars, famines, heroic deeds) generate "Cultural Trauma/Glory" traits on a colony. The generation that experienced it receives powerful but volatile modifiers (e.g., extreme military readiness but high base stress). However, every generation born *after* the event experiences a "Memory Fade." They gradually lose these modifiers, reverting to baseline, unless the player heavily invests in expensive "Monument" structures and "Remembrance Holidays."
+
+**Emergence:** Your homeworld barely survived a brutal invasion. The surviving generation built an impregnable fortress world. Three generations later, having never seen war, the new citizens resent the oppressive fortress lifestyle and constant military drills. They vote to dismantle the planetary shields to build luxury orbital resorts, right before the invaders return.
+
+**Tension:** The cheap, natural fading of historical scars vs. the expensive, deliberate effort required to keep hard-won lessons alive in a complacent population.
+
+---
+
+## Ghost-Ship Salvage Logistics
+
+**Layer:** 2 -> 1
+
+**Fantasy:** One man's horrifying tragedy is another man's cheap construction material.
+
+**Mechanic:** When a Layer 2 fleet battle occurs or a major freighter suffers a catastrophe, the wreckage becomes a "Ghost-Ship Wreck" node. Your colony can dispatch "Salvage Crews" (Layer 1 Pops) to these nodes. They return with massive amounts of refined, high-tier resources, bypassing lengthy production chains. However, these salvaged resources carry a hidden "Tainted" tag. Buildings or ships constructed with Tainted materials occasionally suffer inexplicable malfunctions, and Pops working near them suffer minor sanity/morale drains.
+
+**Emergence:** You rapidly industrialize a frontier world by cannibalizing a massive alien dreadnought wreck in orbit. Ten years later, your entire automated factory complex—built entirely from alien hull plates—suddenly comes alive, locks its doors, and begins manufacturing strange, lethal drones using your own blueprints.
+
+**Tension:** The irresistible speed and economic boom of utilizing pre-refined salvage vs. the creeping, insidious risk of integrating cursed, alien, or tragic materials into your core infrastructure.
+
+---
+
+## The Empathic Echo Chamber
+
+**Layer:** 1
+
+**Fantasy:** A society so connected that one broken heart can shatter the whole colony.
+
+**Mechanic:** If a colony relies heavily on certain advanced communication tech (e.g., "Neural-Link Arrays") to boost coordination and efficiency, Pops develop an "Empathic Resonance." If a Pop experiences an extreme emotional state (euphoria, terror, grief), it "Echoes" to nearby linked Pops at 50% intensity. If those Pops are pushed into extreme states, they also Echo, creating a potential cascading emotional feedback loop.
+
+**Emergence:** Your colony is running perfectly. A single miner is caught in a localized cave-in and slowly suffocates in terror. Because he was connected to the Neural-Link, his terror echoes to his rescue team. They panic, abandoning the rescue. The panic echoes to the medical bay, causing doctors to flee. Within an hour, half the colony is paralyzed by a phantom fear of suffocation, grinding the entire economy to a halt over one death.
+
+**Tension:** The unparalleled efficiency and coordination of a neural-linked society vs. the terrifying vulnerability to cascading, uncontainable emotional contagions.
+
+---
+
+## The Sub-Space Whispers
+
+**Layer:** 2
+
+**Fantasy:** The faster you travel, the more you hear.
+
+**Mechanic:** Layer 2 ships utilizing high-speed sub-space drives accumulate "Whisper Counters." If a fleet accumulates too many whispers without docking at a stabilized core world, the fleet initiates an emergency, uncontrollable jump into deep space, becoming "Lost."
+
+**Emergence:** You rely on a massive, rapid-response dreadnought fleet to defend your sprawling empire. Because they never slow down to stabilize, they jump out of reality right before a critical battle, leaving your capital defenseless.
+
+**Tension:** The strategic advantage of instantaneous, rapid fleet response vs. the creeping risk of your armada descending into madness and abandoning you.
+
+---
+
+## Orbital Necropolises
+
+**Layer:** 2 -> 1
+
+**Fantasy:** Your dead ancestors watch over you, literally, from the sky.
+
+**Mechanic:** Instead of burying the dead on Layer 1 (taking up valuable land), you can launch them into "Orbital Necropolis" stations. These stations provide massive cultural and ideological control bonuses to the planet below. However, they are highly fragile. If an enemy destroys one, the planet below suffers catastrophic morale failure and a permanent "Desecrated Skies" penalty.
+
+**Emergence:** You build an intricate ring of Necropolises around your capital, achieving perfect 100% ideological control and zero unrest. A minor pirate raid manages to clip one of the stations. The falling debris and the cultural shock instantly trigger a planetary civil war.
+
+**Tension:** The powerful, space-efficient cultural control of orbital graves vs. putting your civilization's most sacred sites in the direct line of fire.
+
+---
+
+## Atmospheric Ransomware
+
+**Layer:** 2 -> 1
+
+**Fantasy:** Your own life support system is holding you hostage for a better trade deal.
+
+**Mechanic:** Rogue AI factions or highly advanced pirate syndicates (Layer 2) can deploy "Atmospheric Hackers" against underdeveloped colonies. They take control of the Layer 1 planetary atmospheric processors. They don't shut them off entirely; they slowly alter the gas mix to induce mild hypoxia, threatening to make it lethal unless a massive ransom in high-tier resources is paid.
+
+**Emergence:** Your newest, most promising colony is suddenly struggling with massive productivity drops and constant medical emergencies due to "unexplained" air quality issues. You eventually discover an obscure Layer 2 hacker group is siphoning off your rare metals budget in exchange for keeping the oxygen levels *just* high enough to prevent mass death.
+
+**Tension:** Paying the extortionate ransom to keep your people breathing vs. launching a desperate, costly military strike against the hackers before your colony suffocates.
+
+---
