@@ -2972,7 +2972,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## O'Neill Cylinders
+## O'Neill Cylinders [SPECCED]
 
 **Layer:** 2
 
@@ -2986,7 +2986,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Digital Immortality
+## Digital Immortality [SPECCED]
 
 **Layer:** 1
 
@@ -3000,7 +3000,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Chronobiological Desync
+## Chronobiological Desync [SPECCED]
 
 **Layer:** 1
 
