@@ -513,3 +513,4 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `810` Technological Rituals — `specs/810-technological-rituals.md`
 - [ ] `811` Memetic Hazards — `specs/811-memetic-hazards.md`
 - [ ] `812` Diplomatic White Elephants — `specs/812-diplomatic-white-elephants.md`
+- [ ] `813` The FTL Sabotage — `specs/813-ftl-sabotage.md`
