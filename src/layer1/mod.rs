@@ -541,3 +541,4 @@ pub use spore_diplomat::*;
 pub mod agriculture;
 pub mod diplomacy;
 pub use agriculture::*;
+pub mod haunted_assembly_lines;
