@@ -16,8 +16,8 @@ use crate::layer1::pop::Pop;
 use crate::layer1::resources::{ResourceItem, ResourceType};
 use crate::layer1::seasons::SeasonState;
 use crate::layer1::terrain::TerrainGrid;
-use bevy_ecs::prelude::*;
 use bevy::utils::HashMap;
+use bevy_ecs::prelude::*;
 
 /// Emits heat into the temperature grid.
 #[derive(Component, Debug, Clone, Default)]
