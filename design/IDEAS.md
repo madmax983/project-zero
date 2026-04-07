@@ -14574,3 +14574,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you enforce egalitarian but borderline-lethal air quality for everyone, or deliberately suffocate your lowest-tier workers to keep your vital specialists at peak performance?
 
 ---
+
+## Ghost Ships of the First Wave
+
+**Layer:** 2 -> 3
+
+**Fantasy:** Relics of your ancient past return to haunt your hyper-advanced present.
+
+**Mechanic:** Long before FTL was invented, early sub-light colony ships were launched. Centuries later, these "Sleeper Ships" occasionally drift into your established, hyper-advanced star systems. The inhabitants wake up, legally demand the planetary land grants promised to their great-great-grandparents by your founding government, and refuse to recognize your current authority.
+
+**Emergence:** You have a heavily fortified, 100% stable Core World. A rusted, barely functioning generation ship parks in orbit, and suddenly 50,000 legally recognized citizens with zero modern skills and extreme culture shock beam down into your pristine capital, crashing the economy and demanding archaic rights.
+
+**Tension:** Do you violently suppress these defenseless historical relics (taking a massive galactic reputation and morale hit), or honor the ancient pact and let them ruin your perfectly optimized economy?
+
+---
+
+## The Cargo Cult of the Supply Drop
+
+**Layer:** 1
+
+**Fantasy:** Automated benevolence becomes twisted into religious fanaticism by desperate people.
+
+**Mechanic:** When a colony's communication array fails, it relies on automated blind supply drops from Layer 2. If the communication is down for too long, low-intellect or high-stress Pops begin worshipping the supply drones. They form a "Cargo Cult," stopping all meaningful labor to build massive, useless effigies of the drones in hopes of attracting more food.
+
+**Emergence:** You notice a struggling mining outpost hasn't exported ore in months. You zoom in to find the entire population starving next to a mountain of perfectly usable, unopened supply crates, while they exhaustively strip-mine the colony's vital infrastructure just to build a 100-foot tall metal statue of a drone.
+
+**Tension:** Restoring communications instantly destroys their worldview, causing massive immediate psychological trauma and riots, versus leaving them isolated but slowly starving as they refuse to open the "sacred" crates.
+
+---
+
+## The Mutually Assured Quarantine
+
+**Layer:** Cross-layer
+
+**Fantasy:** A dying city holding the galaxy's logistics hostage.
+
+**Mechanic:** If a severe contagion breaks out on Layer 1, the planetary governor (Layer 2) automatically initiates a quarantine, halting all orbital trade to protect the wider empire. However, desperate Pops on Layer 1 can storm the local orbital defense cannons and hold the planet's hyperlane junction hostage, threatening to shoot down *all* passing commercial traffic unless the quarantine is lifted and a cure is delivered immediately.
+
+**Emergence:** A minor outbreak in a backwater agricultural hub escalates. The local workers seize the planetary defense grid. Suddenly, the main trade artery feeding your capital world is completely blockaded by your own terrified citizens, starving your core worlds over a flu on a farm world.
+
+**Tension:** Lifting the quarantine guarantees the contagion spreads to your core worlds, but leaving the quarantine in place means your capital starves to death while your own defense cannons shred your supply fleet.
+
+---
