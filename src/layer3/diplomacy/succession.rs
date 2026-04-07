@@ -140,11 +140,9 @@ mod tests {
         // The heir with a different trait
         let heir_entity = app
             .world_mut()
-            .spawn((
-                Heir {
-                    name: "Prince B".to_string(),
-                },
-            ))
+            .spawn((Heir {
+                name: "Prince B".to_string(),
+            },))
             .id();
 
         let faction_entity = app

@@ -110,3 +110,8 @@
 **Concept:** Added `symbiotic_spore_system` where heavily mutated Pops (like `Photosynthesis` or `Mutant`) release an aura that heals both themselves and nearby `Fauna`, whilst slightly restoring the Pop's rest need.
 **Fate:** Merged
 **Lesson:** Tying mutant outcasts to the planet's ecosystem gives a mechanically positive spin to otherwise scary or detrimental mutations, rewarding players for integrating mutants with wildlife.
+
+## [The Epigenetic Crucible]
+**Concept:** Added `epigenetic_mutation_system` where Pops suffering from intense chronic stress (`accumulated_stress > 1000.0`) have a chance to undergo a permanent epigenetic mutation, gaining the `Trait::Mutant` trait and releasing half their stress as a traumatic catharsis.
+**Fate:** Proposed
+**Lesson:** Tying long-term negative states (`Stress`) to permanent physical changes (`Traits`) makes poor colony management have lasting demographic consequences rather than just temporary breakdowns.

@@ -69,3 +69,6 @@ pub mod symbiotic_spores;
 
 #[cfg(feature = "nova")]
 pub mod generational_dissonance;
+
+#[cfg(feature = "nova")]
+pub mod epigenetic_stress;

@@ -30,6 +30,7 @@ pub fn register(schedule: &mut Schedule) {
                 .after(crate::experimental::chrono_stutter::spawn_chrono_anomaly_system),
             crate::experimental::cartography_export::map_export_system,
             crate::experimental::paranoia_network::paranoia_network_system,
+            crate::experimental::epigenetic_stress::epigenetic_mutation_system,
         )
             .in_set(Layer1SystemSet::Observation),
     );

@@ -142,10 +142,7 @@ mod tests {
             update_diplomatic_traits.after(aggregate_colony_stats),
         );
 
-        let civ = app
-            .world_mut()
-            .spawn(DiplomaticTraits { ..default() })
-            .id();
+        let civ = app.world_mut().spawn(DiplomaticTraits { ..default() }).id();
         app.world_mut().spawn(ColonyStats {
             owner_civ: civ,
             kills_last_year: 5000,
@@ -173,10 +170,7 @@ mod tests {
             update_diplomatic_traits.after(aggregate_colony_stats),
         );
 
-        let civ = app
-            .world_mut()
-            .spawn(DiplomaticTraits { ..default() })
-            .id();
+        let civ = app.world_mut().spawn(DiplomaticTraits { ..default() }).id();
         app.world_mut().spawn(ColonyStats {
             owner_civ: civ,
             trees_planted_last_year: 1000,
