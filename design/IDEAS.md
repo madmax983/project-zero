@@ -3406,7 +3406,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Subscription Prosthetics
+## Subscription Prosthetics [SPECCED]
 
 **Layer:** 1
 
@@ -3459,7 +3459,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Volumetric Gas Pockets
+## Volumetric Gas Pockets [SPECCED]
 
 **Layer:** 1
 
@@ -3501,7 +3501,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Thermal Bloom
+## Thermal Bloom [SPECCED]
 
 **Layer:** Cross-layer
 
@@ -3529,7 +3529,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Cryo-Amnesia
+## Cryo-Amnesia [SPECCED]
 
 **Layer:** 1
 
@@ -3571,7 +3571,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Spare Parts Economy
+## Spare Parts Economy [SPECCED]
 
 **Layer:** 1
 
