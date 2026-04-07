@@ -3863,3 +3863,51 @@
 **Usage:**
 - "Caught in the Snap."
 - "The Severing left them isolated."
+
+## Haunted Assembly Lines (Spec 817)
+
+### the Echo / the Shadow
+**Replaces:** Haunted building, ghost, workplace anomaly
+**Code reference:** `EchoOfTheFallen`, `HauntedBuilding`
+**Usage:**
+- "There is an Echo in the primary reactor."
+- "The workers refuse to step into the Shadow."
+
+### the Incident
+**Replaces:** Industrial accident, pop death in workplace
+**Code reference:** `PopDiedInAccidentEvent`
+**Usage:**
+- "Ever since the Incident, production has been erratic."
+- "He died in the Incident, but his shift never ended."
+
+## Local Tributes (Spec 618)
+
+### the Landlord / the Sleeper
+**Replaces:** Leviathan, local monster, ancient entity
+**Code reference:** `LocalTributeSystem`, `LeviathanEntity`
+**Usage:**
+- "The Landlord has sent its demands."
+- "Do not wake the Sleeper."
+
+### the Appeasement / the Tithe
+**Replaces:** Tribute payment, resource drain
+**Code reference:** `PayTributeEvent`
+**Usage:**
+- "We must gather the Tithe before the cycle ends."
+- "The Appeasement is draining our reserves."
+
+## Radio Nostalgia (Spec 814)
+
+### the Echo-Cast / the Time-Ghost
+**Replaces:** Delayed broadcast, old radio signal
+**Code reference:** `BroadcastReceivedEvent`, `RadioNostalgia`
+**Usage:**
+- "An Echo-Cast just arrived from the Homeworld."
+- "Listening to the Time-Ghosts is bad for morale."
+
+### the Truth-Lag
+**Replaces:** Delayed realization, propaganda revelation
+**Code reference:** `TruthRevelationEvent`
+**Usage:**
+- "The Truth-Lag hit the colony hard."
+- "They cheered yesterday, but the Truth-Lag arrived today."

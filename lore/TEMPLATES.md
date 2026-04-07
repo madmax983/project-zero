@@ -5247,3 +5247,63 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: The hyperlane connecting [SYSTEM_A] and [SYSTEM_B] collapsed. The route is severed."
 - "A violent fold-space anomaly severed the connection between [SYSTEM_A] and [SYSTEM_B]. [YEAR]."
 - "[YEAR]. Trade halts. The hyperlane from [SYSTEM_A] to [SYSTEM_B] has collapsed."
+
+## Template: INDUSTRIAL_ACCIDENT (Spec 817)
+
+**Generates:** Play event (Chronicle during game)
+**Slots:** `[POP_NAME]`, `[BUILDING]`, `[YEAR]`, `[ACCIDENT_TYPE]`
+
+**Patterns:**
+- "[YEAR]: We lost [POP_NAME] in the [BUILDING]. They were [ACCIDENT_TYPE]. The line did not stop."
+- "An Incident in the [BUILDING]. [POP_NAME] was [ACCIDENT_TYPE]. The quota must still be met. [YEAR]."
+- "[YEAR]: [POP_NAME] died in the [BUILDING]. [ACCIDENT_TYPE]. We scrubbed the area and resumed work."
+
+## Template: HAUNTED_ASSEMBLY_LINE (Spec 817)
+
+**Generates:** Play event (Chronicle during game)
+**Slots:** `[BUILDING]`, `[YEAR]`, `[HAUNT_EVIDENCE]`
+
+**Patterns:**
+- "[YEAR]: The workers in the [BUILDING] report [HAUNT_EVIDENCE]. The Echo remains."
+- "We cannot explain the efficiency of the [BUILDING]. But there are reports of [HAUNT_EVIDENCE]. [YEAR]."
+- "[YEAR]: Production is up in the [BUILDING], but the souls there speak of [HAUNT_EVIDENCE]. They are afraid."
+
+## Template: TRIBUTE_DEMANDED (Spec 618)
+
+**Generates:** Play event (Chronicle during game)
+**Slots:** `[LEVIATHAN_TYPE]`, `[TRIBUTE_DEMAND]`, `[YEAR]`
+
+**Patterns:**
+- "[YEAR]: The Landlord awakens. It is [LEVIATHAN_TYPE]. It demands [TRIBUTE_DEMAND]."
+- "We have received terms from [LEVIATHAN_TYPE]. The Tithe must be paid: [TRIBUTE_DEMAND]. [YEAR]."
+- "[YEAR]: [LEVIATHAN_TYPE] threatens the colony. The Appeasement price is [TRIBUTE_DEMAND]."
+
+## Template: TRIBUTE_REFUSED (Spec 618)
+
+**Generates:** Play event (Chronicle during game)
+**Slots:** `[LEVIATHAN_TYPE]`, `[LEVIATHAN_WRATH]`, `[YEAR]`
+
+**Patterns:**
+- "[YEAR]: We refused the Tithe. [LEVIATHAN_TYPE] answered. It [LEVIATHAN_WRATH]."
+- "The Landlord was denied. In anger, [LEVIATHAN_TYPE] [LEVIATHAN_WRATH]. [YEAR]."
+- "[YEAR]: Defiance has a cost. [LEVIATHAN_TYPE] awoke and [LEVIATHAN_WRATH]."
+
+## Template: DELAYED_BROADCAST_RECEIVED (Spec 814)
+
+**Generates:** Play event (Chronicle during game)
+**Slots:** `[BROADCAST_TOPIC]`, `[YEAR_SENT]`, `[YEAR]`
+
+**Patterns:**
+- "[YEAR]: An Echo-Cast arrives from [YEAR_SENT]. It tells of [BROADCAST_TOPIC]. The colony listens."
+- "The comms array picked up a ghost signal from [YEAR_SENT]. The news: [BROADCAST_TOPIC]. [YEAR]."
+- "[YEAR]: Voices from the past. A broadcast from [YEAR_SENT] details [BROADCAST_TOPIC]."
+
+## Template: TRUTH_REVELATION (Spec 814)
+
+**Generates:** Play event (Chronicle during game)
+**Slots:** `[BROADCAST_TOPIC]`, `[BROADCAST_REVELATION]`, `[YEAR]`
+
+**Patterns:**
+- "[YEAR]: The Truth-Lag hits. The news of [BROADCAST_TOPIC] was a lie. We now know [BROADCAST_REVELATION]."
+- "A new signal contradicts the old. The [BROADCAST_TOPIC] was false. In truth, [BROADCAST_REVELATION]. [YEAR]."
+- "[YEAR]: The history we celebrated was propaganda. Concerning [BROADCAST_TOPIC], we learned [BROADCAST_REVELATION]."
