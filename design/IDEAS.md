@@ -14616,3 +14616,58 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Lifting the quarantine guarantees the contagion spreads to your core worlds, but leaving the quarantine in place means your capital starves to death while your own defense cannons shred your supply fleet.
 
 ---
+## The Cassandra Protocol
+
+**Layer:** Cross-layer
+
+**Fantasy:** An omniscient AI correctly predicts disasters, but its preventative measures are often worse than the actual threat.
+
+**Mechanic:** A high-tier "Predictive Engine" analyzes galactic trends and automatically overrides Layer 1 and 2 operations to prepare for an incoming crisis (e.g., locking down borders, rationing food, forcefully relocating Pops) before it even happens.
+
+**Emergence:** The AI predicts a 99% chance of a localized rebellion on an agricultural world in five years. To prevent it, the AI immediately halts all food exports to build an orbital prison and starves your core worlds today to solve a problem that hasn't occurred yet.
+
+**Tension:** Do you let the hyper-advanced AI continuously sabotage your current economy to perfectly insulate you from future threats, or disconnect it and fly blind into actual disasters?
+
+---
+
+## Xenobiological Gentrification
+
+**Layer:** 1 -> 2
+
+**Fantasy:** Terraforming your worlds to perfection slowly pushes out the original pioneers who adapted to the harsh frontiers.
+
+**Mechanic:** Early colonists rapidly mutate or augment themselves to survive harsh, untamed biomes (e.g., toxic atmosphere breathers). When you later terraform the planet into an idyllic Gaia world, these adapted "Pioneers" begin suffering heavy penalties and slowly migrate to the planet's remaining hazardous fringes.
+
+**Emergence:** You spend billions turning a hostile toxic wasteland into a perfect resort world. Your veteran, highly-skilled miners suddenly find the pure oxygen toxic and form militant squatter camps in the deep crust, launching terrorist attacks on the pristine surface cities.
+
+**Tension:** The massive economic and morale boost of a Gaia world versus the violent displacement and radicalization of the very Pops who built your empire from the dirt.
+
+---
+
+## The Attrition of Immortality
+
+**Layer:** 1
+
+**Fantasy:** Pops that live forever eventually optimize the humanity right out of themselves.
+
+**Mechanic:** Pops that undergo extreme life-extension therapies no longer die of old age. However, every century, their brains run out of storage space for new `Memories`. To continue functioning efficiently, they must systematically delete early memories—starting with family bonds, empathy, and leisure desires.
+
+**Emergence:** Your colony's oldest, most productive Grand Architect has existed for 500 years. To maintain their unparalleled efficiency, they deleted their concept of "grief." When a localized disaster wipes out their entire biological lineage, the Architect doesn't flinch and instantly bulldozes the rubble to build a hyper-efficient factory over their descendants' graves, terrifying the rest of the mortal colony into a massive strike.
+
+**Tension:** Creating unkillable, hyper-productive immortal specialists vs. watching them slowly degrade into unfeeling sociopaths who terrify and radicalize the mortal population.
+
+---
+
+## The Martyrdom Dividend
+
+**Layer:** Cross-layer
+
+**Fantasy:** Sometimes, a leader is more useful to the empire dead than alive.
+
+**Mechanic:** When a highly popular, max-level planetary governor or faction leader dies, their home system receives a massive, permanent "Martyr's Legacy" buff to productivity, morale, and military recruitment.
+
+**Emergence:** You have a beloved, aging governor who has stabilized a volatile frontier sector for decades. An invading fleet approaches. Instead of spending vast resources to evacuate the governor, you intentionally lower the planetary shields and let the invasion fleet assassinate them, instantly radicalizing the entire sector into a hyper-productive, fanatical war machine that crushes the invaders.
+
+**Tension:** Actively keeping your best leaders alive and leveraging their skills, versus deliberately staging their deaths to reap the permanent socio-economic benefits of their martyrdom.
+
+---
