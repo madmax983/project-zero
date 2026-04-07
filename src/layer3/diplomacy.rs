@@ -45,7 +45,12 @@ mod tests {
             .world_mut()
             .spawn((Pop, Envoy, SporeInfection { severity: 1.0 }))
             .id();
-        let treaty = app.world_mut().spawn(Treaty { has_spore_propagation: false }).id();
+        let treaty = app
+            .world_mut()
+            .spawn(Treaty {
+                has_spore_propagation: false,
+            })
+            .id();
         app.world_mut()
             .insert_resource(ActiveNegotiation { envoy: pop, treaty });
 
