@@ -40,15 +40,11 @@ pub fn dynastic_succession_chronicle_bridge(
     mut chronicle_events: EventWriter<AddChronicleEvent>,
 ) {
     for event in succession_events.read() {
-        let trait_str = match &event.leader_trait {
-            Some(t) => format!(" {:?}", t),
-            None => "".to_string(),
-        };
         chronicle_events.send(AddChronicleEvent {
             importance: EventImportance::Major,
             text: format!(
-                "Succession in {}: {} has died. {} takes the throne.{}",
-                event.faction_name, event.old_leader_name, event.new_leader_name, trait_str
+                "Succession in {}: {} has died. {} takes the throne.",
+                event.faction_name, event.old_leader_name, event.new_leader_name
             ),
         });
     }

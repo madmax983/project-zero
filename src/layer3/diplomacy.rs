@@ -6,15 +6,9 @@ pub mod succession;
 #[derive(Component)]
 pub struct Envoy;
 
-#[derive(PartialEq, Eq, Clone, Debug)]
-pub enum Clause {
-    SporePropagation,
-    TradeAgreement,
-}
-
 #[derive(Component)]
 pub struct Treaty {
-    pub clauses: Vec<Clause>,
+    pub has_spore_propagation: bool,
 }
 
 #[derive(Resource)]
@@ -32,9 +26,7 @@ pub fn diplomatic_negotiation_system(
         if let Ok(infection) = envoys.get(negotiation.envoy) {
             if infection.severity > 0.0 {
                 if let Ok(mut treaty) = treaties.get_mut(negotiation.treaty) {
-                    if !treaty.clauses.contains(&Clause::SporePropagation) {
-                        treaty.clauses.push(Clause::SporePropagation);
-                    }
+                    treaty.has_spore_propagation = true;
                 }
             }
         }
@@ -53,7 +45,7 @@ mod tests {
             .world_mut()
             .spawn((Pop, Envoy, SporeInfection { severity: 1.0 }))
             .id();
-        let treaty = app.world_mut().spawn(Treaty { clauses: vec![] }).id();
+        let treaty = app.world_mut().spawn(Treaty { has_spore_propagation: false }).id();
         app.world_mut()
             .insert_resource(ActiveNegotiation { envoy: pop, treaty });
 
@@ -61,6 +53,6 @@ mod tests {
         app.update();
 
         let treaty_data = app.world().get::<Treaty>(treaty).unwrap();
-        assert!(treaty_data.clauses.contains(&Clause::SporePropagation));
+        assert!(treaty_data.has_spore_propagation);
     }
 }

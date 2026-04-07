@@ -21,13 +21,6 @@ pub struct Heir {
     pub name: String,
 }
 
-#[derive(Component, PartialEq, Debug, Clone)]
-pub enum LeaderTrait {
-    Pacifist,
-    Militant,
-    Cruel,
-}
-
 #[derive(Component)]
 pub struct Age {
     pub current: u32,
@@ -45,7 +38,6 @@ pub struct SuccessionEvent {
     pub faction_name: String,
     pub old_leader_name: String,
     pub new_leader_name: String,
-    pub leader_trait: Option<LeaderTrait>,
 }
 
 #[derive(Event, Debug, Clone)]
@@ -65,7 +57,7 @@ pub fn process_succession_system(
         Option<&SuccessionCrisis>,
         &Faction,
     )>,
-    heir_query: Query<(&Heir, Option<&LeaderTrait>)>,
+    heir_query: Query<&Heir>,
     mut succession_events: EventWriter<SuccessionEvent>,
     mut crisis_events: EventWriter<SuccessionCrisisEvent>,
 ) {
@@ -90,10 +82,10 @@ pub fn process_succession_system(
                     current_leader.0 = heir.0;
                     commands.entity(heir.0).remove::<Heir>();
 
-                    let (heir_name, leader_trait) = if let Ok((h, t)) = heir_query.get(heir.0) {
-                        (h.name.clone(), t.cloned())
+                    let heir_name = if let Ok(h) = heir_query.get(heir.0) {
+                        h.name.clone()
                     } else {
-                        ("New King".to_string(), None)
+                        "New King".to_string()
                     };
 
                     commands.entity(heir.0).insert(Leader {
@@ -105,7 +97,6 @@ pub fn process_succession_system(
                         faction_name: faction.name.clone(),
                         old_leader_name: leader.name.clone(),
                         new_leader_name: heir_name,
-                        leader_trait,
                     });
                 } else {
                     // No heir, crisis
@@ -139,7 +130,6 @@ mod tests {
                 Leader {
                     name: "Queen A".to_string(),
                 },
-                LeaderTrait::Pacifist,
                 Age {
                     current: 90,
                     max: 90,
@@ -154,7 +144,6 @@ mod tests {
                 Heir {
                     name: "Prince B".to_string(),
                 },
-                LeaderTrait::Militant,
             ))
             .id();
 

@@ -2,13 +2,7 @@ use bevy::prelude::*;
 
 #[derive(Resource, Default)]
 pub struct GalacticCouncil {
-    pub active_resolutions: Vec<Resolution>,
-}
-
-#[derive(PartialEq, Eq, Clone, Debug)]
-pub enum Resolution {
-    BanStripMining,
-    UniversalRights,
+    pub has_active_resolutions: bool,
 }
 
 #[derive(Component)]
@@ -27,7 +21,7 @@ pub fn enforce_resolutions_system(
     mut members: Query<(Entity, &CouncilMember, Option<&mut TradeSanctions>)>,
 ) {
     for (entity, member, sanctions_opt) in members.iter_mut() {
-        if member.in_breach && !council.active_resolutions.is_empty() {
+        if member.in_breach && council.has_active_resolutions {
             // Apply severe sanctions (50% trade penalty)
             if let Some(mut sanctions) = sanctions_opt {
                 sanctions.multiplier = 0.5;
@@ -53,7 +47,7 @@ mod tests {
     fn test_in_breach_member_gets_trade_sanctions() {
         let mut app = App::new();
         app.insert_resource(GalacticCouncil {
-            active_resolutions: vec![Resolution::BanStripMining],
+            has_active_resolutions: true,
         });
 
         let violator = app
@@ -76,7 +70,7 @@ mod tests {
     fn test_compliant_member_no_sanctions() {
         let mut app = App::new();
         app.insert_resource(GalacticCouncil {
-            active_resolutions: vec![Resolution::BanStripMining],
+            has_active_resolutions: true,
         });
 
         let compliant = app
@@ -110,7 +104,7 @@ mod tests {
     fn test_in_breach_member_already_has_sanctions() {
         let mut app = App::new();
         app.insert_resource(GalacticCouncil {
-            active_resolutions: vec![Resolution::BanStripMining],
+            has_active_resolutions: true,
         });
 
         let violator = app
@@ -140,7 +134,7 @@ mod tests {
     fn test_in_breach_member_no_active_resolutions() {
         let mut app = App::new();
         app.insert_resource(GalacticCouncil {
-            active_resolutions: vec![], // No active resolutions
+            has_active_resolutions: false, // No active resolutions
         });
 
         let violator = app
