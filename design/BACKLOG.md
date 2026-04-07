@@ -550,3 +550,8 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `853` Thermal Bloom — `specs/853-thermal-bloom.md`
 - [ ] `854` Cryo-Amnesia — `specs/854-cryo-amnesia.md`
 - [ ] `855` Spare Parts Economy — `specs/855-spare-parts-economy.md`
+- [ ] `856` Space Lanes — `specs/856-space-lanes.md`
+- [ ] `857` Colony Ship Cannibalization — `specs/857-colony-ship-cannibalization.md`
+- [ ] `858` Prototyping Phase — `specs/858-prototyping-phase.md`
+- [ ] `859` Atmospheric Entry — `specs/859-atmospheric-entry.md`
+- [ ] `860` Sub-light Communication — `specs/860-sub-light-communication.md`

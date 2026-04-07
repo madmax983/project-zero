@@ -3434,7 +3434,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Space Lanes
+## Space Lanes [SPECCED]
 
 **Layer:** 2
 
@@ -3445,7 +3445,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Emergence:** You build a super-highway for your trade. It becomes so popular that pirates blockade it perfectly. You have to revert to "bush-whacking" through deep space to avoid them.
 
 **Tension:** Efficiency (Lane) vs. Security (Random path).
-## Colony Ship Cannibalization
+## Colony Ship Cannibalization [SPECCED]
 
 **Layer:** 1
 
@@ -3487,7 +3487,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Prototyping Phase
+## Prototyping Phase [SPECCED]
 
 **Layer:** 1
 
@@ -3585,7 +3585,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Atmospheric Entry
+## Atmospheric Entry [SPECCED]
 
 **Layer:** 2 -> 1
 
@@ -3599,7 +3599,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Sub-light Communication
+## Sub-light Communication [SPECCED]
 
 **Layer:** 2
 
@@ -12838,7 +12838,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Space Lanes
+## Space Lanes [SPECCED]
 
 **Layer:** 2
 
