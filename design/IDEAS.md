@@ -3210,7 +3210,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Skyhooks
+## Skyhooks [SPECCED]
 
 **Layer:** 2
 
@@ -3238,7 +3238,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Scrapcode
+## Scrapcode [SPECCED]
 
 **Layer:** 1
 
@@ -3252,7 +3252,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The "Thing" in the Ice
+## The "Thing" in the Ice [SPECCED]
 
 **Layer:** 1
 
