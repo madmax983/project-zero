@@ -535,3 +535,7 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `836` Geodetic Sentience — `specs/836-geodetic-sentience.md`
 - [ ] `838` Scrapcode — `specs/838-scrapcode.md`
 - [ ] `839` The "Thing" in the Ice — `specs/839-the-thing-in-the-ice.md`
+- [ ] `840` Soil Liquefaction — `specs/840-soil-liquefaction.md`
+- [ ] `841` Radioactive Hearth — `specs/841-radioactive-hearth.md`
+- [ ] `842` Data Physicality — `specs/842-data-physicality.md`
+- [ ] `843` Urban Canyons — `specs/843-urban-canyons.md`

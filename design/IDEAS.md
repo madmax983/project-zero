@@ -3266,7 +3266,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Soil Liquefaction
+## Soil Liquefaction [SPECCED]
 
 **Layer:** 1
 
@@ -3280,7 +3280,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Radioactive Hearth
+## Radioactive Hearth [SPECCED]
 
 **Layer:** 1
 
@@ -3322,7 +3322,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Data Physicality
+## Data Physicality [SPECCED]
 
 **Layer:** 1
 
@@ -3336,7 +3336,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Urban Canyons
+## Urban Canyons [SPECCED]
 
 **Layer:** 1
 
