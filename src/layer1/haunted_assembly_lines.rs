@@ -1,7 +1,7 @@
-use bevy_app::App;
-use bevy_ecs::prelude::*;
 use crate::layer1::actions::AssignedTo;
 use crate::layer1::building::Building;
+use bevy_app::App;
+use bevy_ecs::prelude::*;
 
 #[derive(Event)]
 pub struct PopDiedInAccidentEvent {

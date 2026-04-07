@@ -1,0 +1,203 @@
+use bevy::prelude::*;
+use crate::layer1::economy::inventory::Inventory;
+use crate::layer1::economy::items::ItemType;
+use crate::layer1::disasters::{DisasterEvent, DisasterType};
+
+#[derive(Component)]
+pub struct Leviathan {
+    pub tribute_timer: Timer,
+    pub current_demand: Option<TributeDemand>,
+    pub anger_level: u32,
+}
+
+#[derive(Clone, Copy, Debug)]
+pub struct TributeDemand {
+    pub item: ItemType,
+    pub amount: u32,
+}
+
+#[derive(Resource)]
+pub struct LeviathanProtectionBuff {
+    pub duration: Timer,
+}
+
+#[derive(Event)]
+pub struct PayTributeEvent {
+    pub leviathan_id: Entity,
+}
+
+#[derive(Event)]
+pub struct RefuseTributeEvent {
+    pub leviathan_id: Entity,
+}
+
+pub fn leviathan_tribute_system(
+    time: Res<Time>,
+    mut query: Query<&mut Leviathan>,
+) {
+    for mut leviathan in query.iter_mut() {
+        if leviathan.current_demand.is_none() {
+            leviathan.tribute_timer.tick(time.delta());
+            if leviathan.tribute_timer.just_finished() {
+                // Generate random demand (hardcoded for minimal implementation)
+                leviathan.current_demand = Some(TributeDemand { item: ItemType::Potato, amount: 5 });
+            }
+        }
+    }
+}
+
+pub fn leviathan_appeasement_system(
+    mut commands: Commands,
+    mut events: EventReader<PayTributeEvent>,
+    mut query: Query<&mut Leviathan>,
+    mut inventory_query: Query<&mut Inventory>,
+) {
+    for event in events.read() {
+        if let Ok(mut leviathan) = query.get_mut(event.leviathan_id) {
+            if let Some(demand) = leviathan.current_demand {
+                // In minimal implementation, look for any inventory that has enough of the item and remove them.
+                let mut satisfied = false;
+                for mut inventory in inventory_query.iter_mut() {
+                    let count = inventory.items.iter().filter(|i| i.item_type == demand.item).count() as u32;
+                    if count >= demand.amount {
+                        // Remove the items
+                        let mut removed = 0;
+                        inventory.items.retain(|i| {
+                            if removed < demand.amount && i.item_type == demand.item {
+                                removed += 1;
+                                false // Do not retain
+                            } else {
+                                true
+                            }
+                        });
+                        satisfied = true;
+                        break;
+                    }
+                }
+
+                if satisfied {
+                    leviathan.current_demand = None;
+                    leviathan.anger_level = 0;
+                    commands.insert_resource(LeviathanProtectionBuff {
+                        duration: Timer::from_seconds(60.0, TimerMode::Once),
+                    });
+                }
+            }
+        }
+    }
+}
+
+pub fn leviathan_refusal_system(
+    mut events: EventReader<RefuseTributeEvent>,
+    mut disaster_writer: EventWriter<DisasterEvent>,
+    mut query: Query<&mut Leviathan>,
+) {
+    for event in events.read() {
+        if let Ok(mut leviathan) = query.get_mut(event.leviathan_id) {
+            leviathan.current_demand = None;
+            leviathan.anger_level += 10;
+            if leviathan.anger_level >= 100 {
+                disaster_writer.send(DisasterEvent {
+                    disaster_type: DisasterType::ViolentUprising, // Dummy for leviathan attack
+                    location: crate::layer1::map::GridPosition { x: 0, y: 0 },
+                    severity: leviathan.anger_level as f32,
+                });
+                leviathan.anger_level = 0; // Reset after disaster
+            }
+        }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::layer1::economy::inventory::InventoryItem;
+
+    #[test]
+    fn test_leviathan_demands_tribute_on_timer() {
+        // Arrange
+        let mut app = App::new();
+        app.init_resource::<Time>();
+        app.add_systems(Update, leviathan_tribute_system);
+
+        let leviathan = app.world_mut().spawn(Leviathan {
+            tribute_timer: Timer::from_seconds(10.0, TimerMode::Repeating),
+            current_demand: None,
+            anger_level: 0,
+        }).id();
+
+        // Act
+        app.world_mut().resource_mut::<Time>().advance_by(std::time::Duration::from_secs(11));
+        app.update();
+
+        // Assert
+        let leviathan_comp = app.world().get::<Leviathan>(leviathan).unwrap();
+        assert!(leviathan_comp.current_demand.is_some(), "Leviathan should have generated a demand after the timer elapsed");
+    }
+
+    #[test]
+    fn test_appeasing_leviathan_grants_buff_and_resets_anger() {
+        // Arrange
+        let mut app = App::new();
+        app.add_event::<PayTributeEvent>();
+        app.add_systems(Update, leviathan_appeasement_system);
+
+        let mut inventory = Inventory::default();
+        for _ in 0..5 {
+            inventory.try_add(InventoryItem { item_type: ItemType::Potato, entity: None });
+        }
+        app.world_mut().spawn(inventory);
+
+        let leviathan = app.world_mut().spawn(Leviathan {
+            tribute_timer: Timer::from_seconds(10.0, TimerMode::Repeating),
+            current_demand: Some(TributeDemand { item: ItemType::Potato, amount: 5 }),
+            anger_level: 50,
+        }).id();
+
+        // Act
+        // Simulate player clicking "Pay Tribute"
+        app.world_mut().send_event(PayTributeEvent { leviathan_id: leviathan });
+        app.update();
+
+        // Assert
+        let mut query = app.world_mut().query::<&Inventory>();
+        let inventory = query.iter(app.world()).next().unwrap();
+        let count = inventory.items.iter().filter(|i| i.item_type == ItemType::Potato).count();
+        assert_eq!(count, 0, "Inventory should be depleted by tribute amount");
+
+        let leviathan_comp = app.world().get::<Leviathan>(leviathan).unwrap();
+        assert!(leviathan_comp.current_demand.is_none(), "Demand should be cleared");
+        assert_eq!(leviathan_comp.anger_level, 0, "Anger should be reset to 0 upon appeasement");
+
+        // Check for buff (e.g., global morale boost or protection aura)
+        assert!(app.world().get_resource::<LeviathanProtectionBuff>().is_some(), "Appeasement should grant a protection buff");
+    }
+
+    #[test]
+    fn test_refusing_leviathan_increases_anger_and_triggers_disaster() {
+        // Arrange
+        let mut app = App::new();
+        app.add_event::<DisasterEvent>();
+        app.add_event::<RefuseTributeEvent>();
+        app.add_systems(Update, leviathan_refusal_system);
+
+        let leviathan = app.world_mut().spawn(Leviathan {
+            tribute_timer: Timer::from_seconds(10.0, TimerMode::Repeating),
+            current_demand: Some(TributeDemand { item: ItemType::Potato, amount: 5 }),
+            anger_level: 90, // Close to threshold
+        }).id();
+
+        // Act
+        app.world_mut().send_event(RefuseTributeEvent { leviathan_id: leviathan });
+        app.update();
+
+        // Assert
+        let leviathan_comp = app.world().get::<Leviathan>(leviathan).unwrap();
+        assert_eq!(leviathan_comp.anger_level, 0, "Refusing should reset anger after disaster");
+        assert!(leviathan_comp.current_demand.is_none(), "Demand should be cleared after refusal");
+
+        let disaster_events = app.world().resource::<Events<DisasterEvent>>();
+        let mut reader = disaster_events.get_cursor();
+        assert!(reader.read(disaster_events).next().is_some(), "Reaching max anger should trigger a disaster event");
+    }
+}
