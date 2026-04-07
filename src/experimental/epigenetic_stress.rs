@@ -46,8 +46,8 @@ pub fn epigenetic_mutation_system(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use bevy_ecs::system::RunSystemOnce;
     use crate::layer1::pop::Pop;
+    use bevy_ecs::system::RunSystemOnce;
 
     #[test]
     fn test_epigenetic_mutation_system_triggers() {

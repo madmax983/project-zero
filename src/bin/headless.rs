@@ -33,7 +33,9 @@ use scale::layer1::dreams::Dream;
 #[cfg(feature = "nova")]
 use scale::layer1::oral_tradition::{OralTradition, StoryGenre};
 use scale::layer1::pop::PopName;
+use scale::layer1::stress::StressTracker;
 use scale::layer1::tech::{unlock_tech, Tech, TechState, TechStatus};
+use scale::layer1::traits::Traits;
 use scale::layer1::{
     try_designate, try_place_building, Building, BuildingType, Chronicle, ColonyResources,
     Designation, DesignationType, EventImportance, Farm, GlobalWind, GridPosition, Housing, Morale,
@@ -471,7 +473,7 @@ fn print_status(world: &mut World) {
     let housing_count = world.query::<&Housing>().iter(world).count();
     let designation_count = world.query::<&Designation>().iter(world).count();
 
-    // Calculate Average Morale
+    // Calculate Average Morale & Stress
     let mut total_morale = 0.0;
     let mut morale_count = 0;
     for morale in world.query::<&Morale>().iter(world) {
@@ -482,6 +484,20 @@ fn print_status(world: &mut World) {
         #[allow(clippy::cast_precision_loss)]
         let count = morale_count as f32;
         total_morale / count
+    } else {
+        0.0
+    };
+
+    let mut total_stress = 0.0;
+    let mut stress_count = 0;
+    for stress in world.query::<&StressTracker>().iter(world) {
+        total_stress += stress.accumulated_stress;
+        stress_count += 1;
+    }
+    let avg_stress = if stress_count > 0 {
+        #[allow(clippy::cast_precision_loss)]
+        let count = stress_count as f32;
+        total_stress / count
     } else {
         0.0
     };
@@ -513,6 +529,19 @@ fn print_status(world: &mut World) {
         Cell::new("Society").fg(Color::Magenta),
         Cell::new("Avg Morale"),
         Cell::new(format!("{:.0}%", avg_morale * 100.0)).fg(morale_color),
+    ]);
+
+    let stress_color = if avg_stress > 100.0 {
+        Color::Red
+    } else if avg_stress > 50.0 {
+        Color::Yellow
+    } else {
+        Color::Green
+    };
+    table.add_row(vec![
+        Cell::new(""),
+        Cell::new("Avg Stress"),
+        Cell::new(format!("{:.1}", avg_stress)).fg(stress_color),
     ]);
 
     let wind_arrow = if wind_dir.x > 0.0 {
@@ -716,6 +745,8 @@ fn print_pops(world: &mut World) {
             Cell::new("Pos").add_attribute(Attribute::Bold),
             Cell::new("Hunger").add_attribute(Attribute::Bold),
             Cell::new("Rest").add_attribute(Attribute::Bold),
+            Cell::new("Stress").add_attribute(Attribute::Bold),
+            Cell::new("Traits").add_attribute(Attribute::Bold),
             Cell::new("Action").add_attribute(Attribute::Bold),
             Cell::new("Status").add_attribute(Attribute::Bold),
         ]);
@@ -724,6 +755,8 @@ fn print_pops(world: &mut World) {
         .query::<(Entity, &PopName, &GridPosition, &Needs, &PopAction)>()
         .iter(world)
     {
+        let stress_tracker = world.get::<StressTracker>(entity);
+        let traits = world.get::<Traits>(entity);
         let mt = world.get::<MovementTarget>(entity);
         let at_target = world.get::<scale::layer1::AtTarget>(entity).is_some();
 
@@ -755,12 +788,42 @@ fn print_pops(world: &mut World) {
             Color::Green
         };
 
+        let stress_val = stress_tracker.map_or(0.0, |s| s.accumulated_stress);
+        let stress_color = if stress_val > 100.0 {
+            Color::Red
+        } else if stress_val > 50.0 {
+            Color::Yellow
+        } else {
+            Color::Green
+        };
+
+        let traits_str = if let Some(t) = traits {
+            let list: Vec<String> = t.iter().map(|tr| format!("{:?}", tr)).collect();
+            if list.is_empty() {
+                "-".to_string()
+            } else {
+                list.join(", ")
+            }
+        } else {
+            "-".to_string()
+        };
+
+        let traits_color = if traits_str == "-" {
+            Color::DarkGrey
+        } else if traits_str.contains("Mutant") {
+            Color::Magenta
+        } else {
+            Color::Cyan
+        };
+
         table.add_row(vec![
             Cell::new(entity.index().to_string()),
             Cell::new(&name.0),
             Cell::new(format!("{},{}", pos.x, pos.y)),
             Cell::new(format!("{:.0}%", needs.hunger * 100.0)).fg(hunger_color),
             Cell::new(format!("{:.0}%", needs.rest * 100.0)).fg(rest_color),
+            Cell::new(format!("{:.1}", stress_val)).fg(stress_color),
+            Cell::new(traits_str).fg(traits_color),
             Cell::new(action_str),
             Cell::new(status),
         ]);
