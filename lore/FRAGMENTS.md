@@ -6189,3 +6189,67 @@ A negative side-effect of a failed splice.
 - the crushing silence of closed borders
 - an immediate rationing of emergency air
 - the terrifying prospect of slow-warp travel
+
+## Haunted Assembly Lines (Spec 817) Fragments
+
+### Fragment Type: [ACCIDENT_TYPE]
+- crushed by a collapsing gantry
+- incinerated in a fusion core surge
+- suffocated in an atmospheric vent malfunction
+- exposed to a raw coolant leak
+- caught in the stamping press
+- irradiated by an unshielded manifold
+- pulled into the mass-conveyer
+
+### Fragment Type: [HAUNT_EVIDENCE]
+- tools moving when no one is looking
+- shadows shifting in the catwalks
+- the sound of weeping over the comms
+- machinery starting up on its own
+- a cold spot near the primary assembly node
+- phantom readings on the stress monitors
+- the lingering smell of ozone and burning copper
+
+## Local Tributes (Spec 618) Fragments
+
+### Fragment Type: [LEVIATHAN_TYPE]
+- an ancient orbital defense platform
+- a subterranean hive intelligence
+- a dormant lithoid colossus
+- a sprawling predatory fungal network
+- a rogue terraforming engine
+- a crystalline entity sleeping in the crust
+
+### Fragment Type: [TRIBUTE_DEMAND]
+- a shipment of raw biomass
+- half of the season's energy yield
+- three living souls
+- unrefined fissile material
+- complex synthetic components
+- a specific, rare xenoflora sample
+
+### Fragment Type: [LEVIATHAN_WRATH]
+- triggered localized seismic events
+- deployed a swarm of bio-mechanical harvesters
+- targeted the colony with orbital kinetic strikes
+- released a corrosive atmospheric spore cloud
+- severed the local energy grid
+- drove the local fauna into a frenzy
+
+## Radio Nostalgia (Spec 814) Fragments
+
+### Fragment Type: [BROADCAST_TOPIC]
+- a decisive victory in the Orion sector
+- the inauguration of a new Emperor
+- a breakthrough in anti-aging treatments
+- the end of a century-long famine
+- a popular new musical movement
+- the discovery of a pristine garden world
+
+### Fragment Type: [BROADCAST_REVELATION]
+- the "victory" was actually a devastating retreat
+- the Emperor was assassinated days after the broadcast
+- the treatments caused massive genetic breakdown
+- the "end" of the famine was achieved via orbital bombardment
+- the garden world was already occupied and hostile
+- the broadcast was entirely synthetic propaganda
