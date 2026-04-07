@@ -32,14 +32,6 @@ pub struct Civilization {
     pub id: String,
 }
 
-#[derive(PartialEq, Eq, Clone, Debug)]
-pub enum DiplomaticTrait {
-    Warlike,
-    Barbarian,
-    Ecological,
-    Pacifist,
-}
-
 #[derive(Event)]
 pub struct TraitChangedEvent {
     pub civ_entity: Entity,
@@ -47,7 +39,10 @@ pub struct TraitChangedEvent {
 
 #[derive(Component, Default)]
 pub struct DiplomaticTraits {
-    pub traits: Vec<DiplomaticTrait>,
+    pub is_warlike: bool,
+    pub is_barbarian: bool,
+    pub is_ecological: bool,
+    pub is_pacifist: bool,
 }
 
 #[derive(Clone)]
@@ -88,15 +83,13 @@ pub fn update_diplomatic_traits(
     for stats in colony_query.iter() {
         if let Ok((entity, mut civ)) = civ_query.get_mut(stats.owner_civ) {
             let mut changed = false;
-            if stats.kills_last_year >= 5000 && !civ.traits.contains(&DiplomaticTrait::Warlike) {
-                civ.traits.push(DiplomaticTrait::Warlike);
-                civ.traits.push(DiplomaticTrait::Barbarian); // Simplified
+            if stats.kills_last_year >= 5000 && (!civ.is_warlike || !civ.is_barbarian) {
+                civ.is_warlike = true;
+                civ.is_barbarian = true; // Simplified
                 changed = true;
             }
-            if stats.trees_planted_last_year >= 1000
-                && !civ.traits.contains(&DiplomaticTrait::Ecological)
-            {
-                civ.traits.push(DiplomaticTrait::Ecological);
+            if stats.trees_planted_last_year >= 1000 && !civ.is_ecological {
+                civ.is_ecological = true;
                 changed = true;
             }
 
@@ -114,14 +107,12 @@ pub fn apply_diplomatic_reactions(
 ) {
     for event in trait_events.read() {
         if let Ok((player_civ, player_traits)) = player_query.get(event.civ_entity) {
-            if player_traits.traits.contains(&DiplomaticTrait::Barbarian) {
+            if player_traits.is_barbarian {
                 for (neighbor_entity, neighbor_traits, mut neighbor_relations) in
                     neighbor_query.iter_mut()
                 {
                     // Make sure neighbor is not the player themselves
-                    if neighbor_entity != event.civ_entity
-                        && neighbor_traits.traits.contains(&DiplomaticTrait::Pacifist)
-                    {
+                    if neighbor_entity != event.civ_entity && neighbor_traits.is_pacifist {
                         for relation in neighbor_relations.relations.iter_mut() {
                             if relation.target_id == player_civ.id {
                                 relation.sanctioned = true;
@@ -153,7 +144,7 @@ mod tests {
 
         let civ = app
             .world_mut()
-            .spawn(DiplomaticTraits { traits: vec![] })
+            .spawn(DiplomaticTraits { ..default() })
             .id();
         app.world_mut().spawn(ColonyStats {
             owner_civ: civ,
@@ -165,7 +156,7 @@ mod tests {
 
         let traits = app.world().get::<DiplomaticTraits>(civ).unwrap();
         assert!(
-            traits.traits.contains(&DiplomaticTrait::Warlike),
+            traits.is_warlike,
             "High kill count should grant the Warlike trait"
         );
     }
@@ -184,7 +175,7 @@ mod tests {
 
         let civ = app
             .world_mut()
-            .spawn(DiplomaticTraits { traits: vec![] })
+            .spawn(DiplomaticTraits { ..default() })
             .id();
         app.world_mut().spawn(ColonyStats {
             owner_civ: civ,
@@ -196,7 +187,7 @@ mod tests {
 
         let traits = app.world().get::<DiplomaticTraits>(civ).unwrap();
         assert!(
-            traits.traits.contains(&DiplomaticTrait::Ecological),
+            traits.is_ecological,
             "High tree planting should grant the Ecological trait"
         );
     }
@@ -214,7 +205,8 @@ mod tests {
                     id: "player".to_string(),
                 },
                 DiplomaticTraits {
-                    traits: vec![DiplomaticTrait::Barbarian],
+                    is_barbarian: true,
+                    ..default()
                 },
             ))
             .id();
@@ -230,7 +222,8 @@ mod tests {
                     id: "neighbor".to_string(),
                 },
                 DiplomaticTraits {
-                    traits: vec![DiplomaticTrait::Pacifist],
+                    is_pacifist: true,
+                    ..default()
                 },
                 DiplomaticRelations {
                     relations: vec![DiplomaticStanding {

@@ -54,3 +54,22 @@
 **Bloat:** Speculative Optimization / Clever Code: `Traits` component in `src/layer1/traits.rs` using a `u64` bitmask to store a rapidly growing `Trait` enum (over 50 variants), requiring manual bitwise logic (`Traits(1 << (Trait::... as u8))`) across the codebase.
 **Cut:** Replaced the `u64` bitmask with a standard `bevy::utils::HashSet<Trait>`. Updated methods to use standard set operations (`insert`, `remove`, `contains`) and replaced all bitwise initializations with explicit builder patterns (`Traits::default().add(...)`). Retained deterministic iteration by yielding over the enum and filtering by the set.
 **Saved:** Eliminated cognitive load of manual bitwise operations, prevented an imminent integer overflow (capped at 64 traits), and standardized component initialization.
+## [Reduction]
+**Bloat:** `Resolution` enum in `src/layer3/council.rs` used to denote variants in a Vec but not meaningfully matched anywhere.
+**Cut:** Removed the `Resolution` enum entirely and replaced `active_resolutions: Vec<Resolution>` in `GalacticCouncil` with a simple boolean `has_active_resolutions`.
+**Saved:** 7 lines of code and speculative wrapper overhead.
+
+## [Reduction]
+**Bloat:** `Clause` enum in `src/layer3/diplomacy.rs` had only two variants where only `SporePropagation` was ever used or checked.
+**Cut:** Deleted the `Clause` enum entirely and replaced `clauses: Vec<Clause>` in `Treaty` with a simple boolean `has_spore_propagation`. Updated test and system logic.
+**Saved:** 8 lines of code and speculative wrapper/vec overhead.
+
+## [Reduction]
+**Bloat:** `DiplomaticTrait` enum in `src/layer3/diplomacy_reflection.rs` stored as an array of traits, matched frequently with `.contains(&DiplomaticTrait::X)`.
+**Cut:** Replaced the enum and vector entirely with flat boolean fields (`is_warlike`, `is_barbarian`, `is_ecological`, `is_pacifist`) directly on `DiplomaticTraits`.
+**Saved:** Removed speculative enumeration complexity and vector overhead, resulting in 24 fewer lines across tests and component logic.
+
+## [Reduction]
+**Bloat:** `LeaderTrait` enum in `src/layer3/diplomacy/succession.rs` containing variants (`Pacifist`, `Militant`, `Cruel`), which served no mechanical purpose other than optional flavor text in a single Chronicle event.
+**Cut:** Excised `LeaderTrait` enum entirely. Removed `leader_trait` from `SuccessionEvent` and integration bridges.
+**Saved:** 15 lines of code, one less `#[derive]`, and removed an unnecessary text-formatting path.
