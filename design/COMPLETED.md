@@ -346,3 +346,4 @@
 - [x] `INT-778` Integration: Hyperlane Collapse -> Chronicle — completed 2026-05-18
 - [x] `785` The Symbiotic Infrastructure — `specs/785-the-symbiotic-infrastructure.md` — completed 2026-05-18
 - [x] `817` Haunted Assembly Lines — `specs/817-haunted-assembly-lines.md` — completed 2026-05-19
+- [x] `618` Local Tributes — `specs/618-local-tributes.md` — completed 2026-06-01

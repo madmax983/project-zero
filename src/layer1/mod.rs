@@ -545,3 +545,4 @@ pub mod agriculture;
 pub mod diplomacy;
 pub use agriculture::*;
 pub mod haunted_assembly_lines;
+pub mod local_tributes;

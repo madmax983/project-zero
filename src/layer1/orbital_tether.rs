@@ -1,6 +1,6 @@
-use bevy::prelude::*;
 use crate::layer1::map::GridPosition;
 use crate::layer1::structure::Structure;
+use bevy::prelude::*;
 
 #[derive(Component)]
 pub struct OrbitalTetherAnchor {
@@ -54,19 +54,19 @@ pub fn process_tether_whip_system(
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::layer1::chronicle::AddChronicleEvent;
     use crate::layer1::map::GridPosition;
     use crate::layer1::structure::Structure;
-    use crate::layer1::chronicle::AddChronicleEvent;
 
     fn setup_app() -> App {
         let mut app = App::new();
         app.add_event::<TetherSnapEvent>();
         app.add_event::<AddChronicleEvent>();
         // TerrainGrid is not used by tests
-        app.add_systems(Update, (
-            detect_tether_destruction_system,
-            process_tether_whip_system,
-        ));
+        app.add_systems(
+            Update,
+            (detect_tether_destruction_system, process_tether_whip_system),
+        );
         app
     }
 
@@ -74,11 +74,19 @@ mod tests {
     fn test_tether_destruction_triggers_snap_event() {
         let mut app = setup_app();
 
-        let tether_entity = app.world_mut().spawn((
-            OrbitalTetherAnchor { orientation: Vec2::new(1.0, 0.0) },
-            GridPosition { x: 10, y: 10 },
-            Structure { current_hp: 0.0, max_hp: 1000.0 }, // Destroyed
-        )).id();
+        let tether_entity = app
+            .world_mut()
+            .spawn((
+                OrbitalTetherAnchor {
+                    orientation: Vec2::new(1.0, 0.0),
+                },
+                GridPosition { x: 10, y: 10 },
+                Structure {
+                    current_hp: 0.0,
+                    max_hp: 1000.0,
+                }, // Destroyed
+            ))
+            .id();
 
         app.update();
 
@@ -96,18 +104,36 @@ mod tests {
         let mut app = setup_app();
 
         // Spawn structures in the path of the falling cable (horizontal fall)
-        let struct_1 = app.world_mut().spawn((
-            GridPosition { x: 11, y: 10 },
-            Structure { current_hp: 100.0, max_hp: 100.0 },
-        )).id();
-        let struct_2 = app.world_mut().spawn((
-            GridPosition { x: 20, y: 10 },
-            Structure { current_hp: 100.0, max_hp: 100.0 },
-        )).id();
-        let struct_safe = app.world_mut().spawn((
-            GridPosition { x: 10, y: 11 }, // Not in line
-            Structure { current_hp: 100.0, max_hp: 100.0 },
-        )).id();
+        let struct_1 = app
+            .world_mut()
+            .spawn((
+                GridPosition { x: 11, y: 10 },
+                Structure {
+                    current_hp: 100.0,
+                    max_hp: 100.0,
+                },
+            ))
+            .id();
+        let struct_2 = app
+            .world_mut()
+            .spawn((
+                GridPosition { x: 20, y: 10 },
+                Structure {
+                    current_hp: 100.0,
+                    max_hp: 100.0,
+                },
+            ))
+            .id();
+        let struct_safe = app
+            .world_mut()
+            .spawn((
+                GridPosition { x: 10, y: 11 }, // Not in line
+                Structure {
+                    current_hp: 100.0,
+                    max_hp: 100.0,
+                },
+            ))
+            .id();
 
         // Trigger a snap event
         app.world_mut().send_event(TetherSnapEvent {
@@ -119,9 +145,21 @@ mod tests {
         app.update();
 
         // Structures in path should be destroyed (health = 0)
-        assert_eq!(app.world().get::<Structure>(struct_1).unwrap().current_hp, 0.0);
-        assert_eq!(app.world().get::<Structure>(struct_2).unwrap().current_hp, 0.0);
+        assert_eq!(
+            app.world().get::<Structure>(struct_1).unwrap().current_hp,
+            0.0
+        );
+        assert_eq!(
+            app.world().get::<Structure>(struct_2).unwrap().current_hp,
+            0.0
+        );
         // Safe structure remains intact
-        assert_eq!(app.world().get::<Structure>(struct_safe).unwrap().current_hp, 100.0);
+        assert_eq!(
+            app.world()
+                .get::<Structure>(struct_safe)
+                .unwrap()
+                .current_hp,
+            100.0
+        );
     }
 }

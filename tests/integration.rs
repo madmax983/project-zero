@@ -250,6 +250,8 @@ mod black_market_terraforming_bridge;
 mod bio_acoustic_miasma_bridge;
 #[path = "integration/dynastic_succession_bridge.rs"]
 mod dynastic_succession_bridge;
+#[path = "integration/haunted_assembly_lines_tests.rs"]
+mod haunted_assembly_lines_tests;
 #[path = "integration/hyperlane_collapse_bridge.rs"]
 mod hyperlane_collapse_bridge;
 #[path = "integration/orbital_commute_bridge.rs"]
@@ -260,4 +262,3 @@ mod parasitic_architecture_bridge;
 mod temporal_ghost_towns_bridge;
 #[path = "integration/void_whispers_chronicle.rs"]
 mod void_whispers_chronicle;
-#[path = "integration/haunted_assembly_lines_tests.rs"] mod haunted_assembly_lines_tests;

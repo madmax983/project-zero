@@ -382,7 +382,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `615` Bureaucratic Drag — `specs/615-bureaucratic-drag.md`
 - [ ] `616` Cryo-Stasis Vaults — `specs/616-cryo-stasis-vaults.md`
 - [ ] `617` Boarding Actions — `specs/617-boarding-actions.md`
-- [ ] `618` Local Tributes — `specs/618-local-tributes.md`
 - [ ] `619` The Whisper Network — `specs/619-the-whisper-network.md`
 - [ ] `620` Atmospheric Strata — `specs/620-atmospheric-strata.md`
 - [ ] `627` The Sabotaged Seed Bank — `specs/627-sabotaged-seed-bank.md`

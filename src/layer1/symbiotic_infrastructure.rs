@@ -1,5 +1,5 @@
-use bevy::prelude::*;
 use crate::layer1::structure::Structure;
+use bevy::prelude::*;
 
 #[derive(Component)]
 pub struct SymbioticStructure {
@@ -47,7 +47,6 @@ mod tests {
     use super::*;
     use crate::layer1::structure::Structure;
 
-
     fn setup_app() -> App {
         let mut app = App::new();
         app.add_systems(
@@ -55,7 +54,8 @@ mod tests {
             (
                 process_symbiotic_needs_system,
                 process_symbiotic_regeneration_system,
-            ).chain(),
+            )
+                .chain(),
         );
         app
     }
