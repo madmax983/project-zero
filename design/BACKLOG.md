@@ -542,6 +542,5 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `845` Hull Geometry — `specs/845-hull-geometry.md`
 - [ ] `846` Ice Architecture — `specs/846-ice-architecture.md`
 - [ ] `847` Window Views — `specs/847-window-views.md`
-- [ ] `848` The Prophet of the Engine — `specs/848-prophet-of-the-engine.md`
 - [ ] `849` Generational Wealth — `specs/849-generational-wealth.md`
 - [ ] `850` The Whispering Asteroid — `specs/850-the-whispering-asteroid.md`

@@ -34,6 +34,8 @@ pub enum Trait {
     /// +10% Move Speed.
     FastWalker,
     /// Hoards Valuables (Metal, Luxuries).
+    Prophet,
+    EngineCultist,
     Greedy,
     /// Hoards Survival Goods (Food, Meds).
     Anxious,
@@ -132,6 +134,8 @@ impl Trait {
             Self::NightOwl => "Night Owl",
             Self::EarlyBird => "Early Bird",
             Self::FastWalker => "Fast Walker",
+            Self::Prophet => "Prophet",
+            Self::EngineCultist => "Engine Cultist",
             Self::Greedy => "Greedy",
             Self::Anxious => "Anxious",
             Self::NativeBorn => "Native Born",
@@ -353,6 +357,9 @@ pub fn get_trait_work_speed_modifier(traits: &Traits) -> f32 {
     }
     if traits.has(Trait::Lazy) {
         modifier -= 0.2;
+    }
+    if traits.has(Trait::EngineCultist) {
+        modifier += 0.5;
     }
     modifier
 }

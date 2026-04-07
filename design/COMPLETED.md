@@ -351,3 +351,4 @@
 - [x] `837` Skyhooks — `specs/837-skyhooks.md` — completed 2024-04-07
 - [x] `811` Memetic Hazards — `specs/811-memetic-hazards.md` — completed 2026-04-07
 - [x] `INT-837` Integration: Skyhook Launch System Scheduling — completed 2026-04-07
+- [x] `848` The Prophet of the Engine — `specs/848-prophet-of-the-engine.md` — completed 2026-02-01
