@@ -17,14 +17,15 @@ pub struct Toll {
     pub cost: f32,
 }
 
-use std::collections::HashMap;
+use bevy::utils::HashMap;
 
 /// System to deduct wealth or apply stress for pops using toll transit infrastructure.
+/// ⚡ Bolt Optimization: Uses `bevy::utils::HashMap` (AHash) and pre-allocates capacity to reduce hashing overhead and heap allocations.
 pub fn transit_toll_system(
     mut pops: Query<(&GridPosition, &mut Wallet, &mut StressTracker), Changed<GridPosition>>,
     roads: Query<(&GridPosition, &Toll), With<TransitInfrastructure>>,
 ) {
-    let mut toll_map = HashMap::new();
+    let mut toll_map = HashMap::with_capacity(roads.iter().len());
     for (pos, toll) in roads.iter() {
         toll_map.insert(*pos, toll.cost);
     }
