@@ -555,3 +555,8 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `858` Prototyping Phase — `specs/858-prototyping-phase.md`
 - [ ] `859` Atmospheric Entry — `specs/859-atmospheric-entry.md`
 - [ ] `860` Sub-light Communication — `specs/860-sub-light-communication.md`
+- [ ] `861` Stellar Cartography — `specs/861-stellar-cartography.md`
+- [ ] `862` Ventilation Networks — `specs/862-ventilation-networks.md`
+- [ ] `863` Corporate Foreclosure — `specs/863-corporate-foreclosure.md`
+- [ ] `864` Xeno-Zoo — `specs/864-xeno-zoo.md`
+- [ ] `865` Bio-Ship Breeding — `specs/865-bio-ship-breeding.md`

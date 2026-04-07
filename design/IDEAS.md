@@ -3613,7 +3613,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Stellar Cartography
+## Stellar Cartography [SPECCED]
 
 **Layer:** 3
 
@@ -3627,7 +3627,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Ventilation Networks
+## Ventilation Networks [SPECCED]
 
 **Layer:** 1
 
@@ -3641,7 +3641,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Corporate Foreclosure
+## Corporate Foreclosure [SPECCED]
 
 **Layer:** Cross-layer
 
@@ -3655,7 +3655,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Xeno-Zoo
+## Xeno-Zoo [SPECCED]
 
 **Layer:** 1
 
@@ -3669,7 +3669,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Bio-Ship Breeding
+## Bio-Ship Breeding [SPECCED]
 
 **Layer:** 2
 
