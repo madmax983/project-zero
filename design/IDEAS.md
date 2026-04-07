@@ -3350,7 +3350,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Pollen Season
+## Pollen Season [SPECCED]
 
 **Layer:** 1
 
@@ -3364,7 +3364,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Hull Geometry
+## Hull Geometry [SPECCED]
 
 **Layer:** 2
 
@@ -3378,7 +3378,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Ice Architecture
+## Ice Architecture [SPECCED]
 
 **Layer:** 1
 
@@ -3392,7 +3392,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Window Views
+## Window Views [SPECCED]
 
 **Layer:** 1
 
