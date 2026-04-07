@@ -533,6 +533,5 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `834` Station Keeping — `specs/834-station-keeping.md`
 - [ ] `835` The Colony Mascot — `specs/835-the-colony-mascot.md`
 - [ ] `836` Geodetic Sentience — `specs/836-geodetic-sentience.md`
-- [ ] `837` Skyhooks — `specs/837-skyhooks.md`
 - [ ] `838` Scrapcode — `specs/838-scrapcode.md`
 - [ ] `839` The "Thing" in the Ice — `specs/839-the-thing-in-the-ice.md`
