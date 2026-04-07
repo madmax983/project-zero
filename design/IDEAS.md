@@ -13297,7 +13297,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 **Tension:** The incredible passive income and diplomatic leverage of hosting a galactic hub vs. the devastating social decay and unpredictable financial ruin of your own population.
 
-## The Last Broadcast
+## The Last Broadcast [SPECCED]
 
 **Layer:** 3
 
@@ -13311,7 +13311,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Gravity Wells of Regret
+## Gravity Wells of Regret [SPECCED]
 
 **Layer:** 2 -> 1
 
@@ -13325,7 +13325,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Sentient Protocol
+## The Sentient Protocol [SPECCED]
 
 **Layer:** Cross-layer
 
