@@ -322,6 +322,7 @@ pub fn register(schedule: &mut Schedule) {
             inspector_report_system.after(chronicle_event_handler_system),
             inspector_outcome_bridge_system.after(inspector_report_system),
             taboo_event_system.after(crate::layer1::health::despawn_dead_entities_system),
+            crate::layer1::radio_nostalgia::handle_broadcasts_system,
             crate::layer1::quantum_twins::update_twin_sync_system.after(Layer1SystemSet::Economy),
             crate::layer1::quantum_twins::update_twin_mood_system
                 .after(Layer1SystemSet::Consumption),

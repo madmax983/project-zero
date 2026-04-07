@@ -226,6 +226,10 @@ pub use terraforming::*;
 pub mod room_quality;
 pub use room_quality::*;
 
+/// Radio Nostalgia system (Spec 814).
+pub mod radio_nostalgia;
+pub use radio_nostalgia::*;
+
 /// Ruins system (Spec 167).
 pub mod ruins;
 pub use ruins::*;
