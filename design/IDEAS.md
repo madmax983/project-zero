@@ -14490,3 +14490,87 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** The comfort of absolute surveillance vs. the terrifying reality of concentrated, hyper-efficient subversion hiding right under your nose.
 
 ---
+
+## The Stolen Blueprint
+
+**Layer:** 2
+
+**Fantasy:** Corporate espionage in space—stealing tech gives a massive leap but brings heat.
+
+**Mechanic:** Pops with high intellect or stealth traits can occasionally "discover" proprietary tech schematics from passing trade ships or rival factions, unlocking advanced Layer 1 buildings early.
+
+**Emergence:** You suddenly have a high-tech Bio-Forge centuries before you naturally researched it, but the rival faction that owned it forms an angry blockade around your planet, choking off basic supplies.
+
+**Tension:** Using the stolen tech makes you a target, but the early advantage might be exactly what you need to survive.
+
+---
+
+## The Prophet of the Engine
+
+**Layer:** 1
+
+**Fantasy:** A charismatic worker turns your industrial infrastructure into an object of worship.
+
+**Mechanic:** A low-morale Pop might experience a "vision" and start preaching to the machinery. They gain the "Prophet" trait, converting nearby Pops to an "Engine Cult." Cultists work 50% faster on machines but violently protest if you try to dismantle or upgrade the "sacred" machines.
+
+**Emergence:** You need to tear down an obsolete, inefficient generator to make room for a new one, but the Engine Cult threatens to riot and shut down the entire sector if you touch their holy artifact.
+
+**Tension:** The massive short-term productivity boost of the cult versus the long-term technological stagnation and potential for violent revolt.
+
+---
+
+## Generational Wealth
+
+**Layer:** 1
+
+**Fantasy:** The original colonists become an entrenched aristocracy, hoarding resources while new arrivals suffer.
+
+**Mechanic:** Pops can pass down their personal inventory (tools, high-quality clothes, saved rations) to their descendants. Over generations, "Founder Families" accumulate massive personal stockpiles.
+
+**Emergence:** A severe famine hits the colony. You notice a few dozen Pops are perfectly fine—they are descendants of the first miners, eating stockpiled ancestral rations, while the newly arrived agricultural workers are starving to death.
+
+**Tension:** Do you forcefully redistribute the founders' ancestral wealth (causing massive unrest among your most skilled, oldest families) or let the newcomers perish?
+
+---
+
+## The Whispering Asteroid
+
+**Layer:** 2
+
+**Fantasy:** Mining a rock that seems to have a mind of its own, slowly driving the crew mad.
+
+**Mechanic:** Certain high-yield asteroids emit a sub-frequency that slowly increases the "Paranoia" need of Pops working on or near it.
+
+**Emergence:** A mining operation yields unprecedented wealth, but the miners start sabotaging the orbital tethers because they believe the ore is trying to escape back into the void.
+
+**Tension:** The immense economic windfall of the rare minerals versus the inevitable psychological breakdown of your orbital workforce.
+
+---
+
+## The Black Market of Memories
+
+**Layer:** Cross-layer
+
+**Fantasy:** Pops trading traumatic or euphoric memories as a hyper-addictive currency.
+
+**Mechanic:** High-tech colonies can extract and store Pops' `Memories`. A black market emerges where Pops buy "Euphoria" memories to ignore their terrible living conditions, or rival factions buy "Trauma" memories to weaponize and broadcast at your cities.
+
+**Emergence:** Your colony's morale is inexplicably maxed out despite massive food shortages, because everyone is addicted to a black-market memory of a historic victory, completely ignoring reality until they starve.
+
+**Tension:** Allowing the memory market to flourish keeps unrest at zero, but leaves your population completely detached from managing actual physical crises.
+
+---
+
+## The Debt of Oxygen
+
+**Layer:** 1
+
+**Fantasy:** Air is a commodity, and some Pops simply can't afford to breathe.
+
+**Mechanic:** If life support becomes strained, the system automatically allocates optimal oxygen mixtures based on a Pop's "Economic Value" score. Low-value Pops get a thinner mix, reducing their movement speed and health.
+
+**Emergence:** You build an elite research wing, which drains massive life support. The system silently compensates by thinning the air in the slums. The resulting hypoxic lethargy means the slum workers can't mine the fuel needed to power the life support, creating a death spiral.
+
+**Tension:** Do you enforce egalitarian but borderline-lethal air quality for everyone, or deliberately suffocate your lowest-tier workers to keep your vital specialists at peak performance?
+
+---
