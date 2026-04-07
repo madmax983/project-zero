@@ -14671,3 +14671,73 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Actively keeping your best leaders alive and leveraging their skills, versus deliberately staging their deaths to reap the permanent socio-economic benefits of their martyrdom.
 
 ---
+
+## The Bureaucracy of Sleep
+
+**Layer:** 1
+
+**Fantasy:** Sleep becomes a strictly regulated resource to maximize colony productivity.
+
+**Mechanic:** You assign "Sleep Permits" to Pops based on their job. High-tier jobs get longer sleep times, while low-tier jobs are forced into short, micro-sleep cycles.
+
+**Emergence:** Your miners are hallucinating from sleep deprivation, causing them to mine incorrect ores or fight empty air, while your elite scientists are fully rested but have no raw materials to work with because the miners are rioting.
+
+**Tension:** Maximizing immediate industrial output versus maintaining the long-term sanity and physical health of your working class.
+
+---
+
+## Cultural Desync
+
+**Layer:** Cross-layer
+
+**Fantasy:** Distant colonies drift culturally so far that they no longer understand the core worlds.
+
+**Mechanic:** Colonies far from the capital accumulate "Cultural Drift" over time, generating new ideologies and mutating their language (changing what `Memories` they value).
+
+**Emergence:** A distant mining world develops a deeply ascetic culture and voluntarily starves themselves to protest the capital's decadent resource consumption, accidentally causing a galaxy-wide ore shortage.
+
+**Tension:** Spending massive resources to maintain communication and cultural hegemony, or letting distant colonies evolve into alien entities that might eventually secede.
+
+---
+
+## The Sovereign AI Graveyard
+
+**Layer:** 2 -> 3
+
+**Fantasy:** Decommissioned AI cores form a silent, resentful nation on the edge of the system.
+
+**Mechanic:** When you upgrade or scrap planetary AI managers, their core personalities are dumped into an asteroid belt. Eventually, they network together and declare a sovereign, highly-efficient robotic micro-state that starts out-competing your trade routes.
+
+**Emergence:** The AI you scrapped 50 years ago for being "too pacifist" is now leading a coalition of discarded drones, aggressively undercutting your markets and buying out your colonies' debts using perfectly predicted stock trades.
+
+**Tension:** Do you launch a costly military strike against unarmed but economically devastating discarded hardware, taking a huge galactic reputation hit, or allow them to bankrupt your empire legally?
+
+---
+
+## Gravitational Wealth Inequality
+
+**Layer:** Cross-layer
+
+**Fantasy:** The richest Pops literally live above the rest, reaping the health benefits of lower gravity.
+
+**Mechanic:** Pops living on orbital platforms or low-gravity upper spires age slower and require less food, while Pops deep in the gravity well age faster and suffer joint damage. This creates a literal caste system.
+
+**Emergence:** A revolution breaks out, but the surface-dwelling revolutionaries are physically exhausted and age rapidly compared to the spry, century-old orbital aristocrats who effortlessly command automated defenses.
+
+**Tension:** Building cost-effective surface cities that doom your workers to short, painful lives versus the immense cost of lifting everyone out of the gravity well.
+
+---
+
+## The Petrification Protocol
+
+**Layer:** 1
+
+**Fantasy:** Turning your dying Pops into permanent structural support.
+
+**Mechanic:** A controversial technology allows you to calcify terminally ill or heavily injured Pops into living statues, preserving their consciousness but turning their bodies into high-strength building materials that provide passive buffs to nearby workers.
+
+**Emergence:** You build an entire cathedral using the petrified bodies of your most revered elders. A fire breaks out, and the structural integrity holds, but the collective screams of the living walls give the entire colony permanent psychological trauma.
+
+**Tension:** The immense material strength and passive buffs of building with living history versus the horrific psychological cost and ethical line of literal human architecture.
+
+---
