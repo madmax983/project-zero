@@ -1,12 +1,38 @@
+//! **Orbital Tether** module.
+//!
+//! Simulates the catastrophic physical destruction of massive orbital infrastructure.
+//! When an [`OrbitalTetherAnchor`] is destroyed, it triggers a catastrophic whip effect across the map,
+//! instantly obliterating any structures caught in its linear path.
+//!
+//! ## Mechanics
+//! - **The Collapse:** The `detect_tether_destruction_system` monitors tether anchors for fatal damage.
+//! - **The Snap Event:** Destruction dispatches a [`TetherSnapEvent`] containing the direction of the fall.
+//! - **The Whip:** The `process_tether_whip_system` computes the collision line and sets the HP of intercepted structures to zero.
+//!
+
 use crate::layer1::map::GridPosition;
 use crate::layer1::structure::Structure;
 use bevy::prelude::*;
 
+/// A structural attachment point for massive space elevators or cables.
+///
+/// Determines the trajectory of the cable should the anchor be destroyed.
+///
+/// # Examples
+/// ```rust
+/// use scale::layer1::orbital_tether::OrbitalTetherAnchor;
+/// use bevy::math::Vec2;
+///
+/// let anchor = OrbitalTetherAnchor {
+///     orientation: Vec2::new(1.0, 0.0), // Cable falls to the east
+/// };
+/// ```
 #[derive(Component)]
 pub struct OrbitalTetherAnchor {
     pub orientation: Vec2, // Direction the cable falls if severed
 }
 
+/// Emitted when a tether anchor is destroyed, signaling the start of a localized catastrophe.
 #[derive(Event)]
 pub struct TetherSnapEvent {
     pub anchor_entity: Entity,
@@ -14,6 +40,10 @@ pub struct TetherSnapEvent {
     pub fall_direction: Vec2,
 }
 
+/// Monitors the health of tether anchors and triggers snap events when destroyed.
+///
+/// Reads `Structure` components attached to [`OrbitalTetherAnchor`]s and fires a [`TetherSnapEvent`]
+/// if the current HP drops to zero or below.
 pub fn detect_tether_destruction_system(
     query: Query<(Entity, &OrbitalTetherAnchor, &GridPosition, &Structure), Changed<Structure>>,
     mut snap_events: EventWriter<TetherSnapEvent>,
@@ -29,6 +59,10 @@ pub fn detect_tether_destruction_system(
     }
 }
 
+/// Processes the physical path of a falling orbital tether, instantly destroying caught structures.
+///
+/// Reads [`TetherSnapEvent`]s and zeroes the health of any `Structure` occupying the grid tiles
+/// along the fall vector.
 pub fn process_tether_whip_system(
     mut snap_events: EventReader<TetherSnapEvent>,
     mut struct_query: Query<(&GridPosition, &mut Structure)>,
