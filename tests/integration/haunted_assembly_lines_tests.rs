@@ -1,5 +1,5 @@
 use bevy_app::App;
-use bevy_ecs::prelude::*;
+
 use scale::layer1::actions::{AssignedTo, AssignmentType};
 use scale::layer1::building::{Building, BuildingType};
 use scale::layer1::entities::pop::Pop;

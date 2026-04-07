@@ -45,11 +45,7 @@ pub fn generational_dissonance_system(
         // Check if adjacent
         if pos1.distance_chebyshev(*pos2) <= 1 {
             // Check age difference
-            let age_diff = if age1.ticks_alive > age2.ticks_alive {
-                age1.ticks_alive - age2.ticks_alive
-            } else {
-                age2.ticks_alive - age1.ticks_alive
-            };
+            let age_diff = age1.ticks_alive.abs_diff(age2.ticks_alive);
 
             if age_diff > DISSONANCE_AGE_GAP_TICKS {
                 // Determine who is older

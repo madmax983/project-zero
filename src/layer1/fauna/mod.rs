@@ -103,78 +103,18 @@ pub fn fauna_behavior_system(world: &mut World) {
         }
 
         match fauna.state {
-            FaunaState::Wander => {
-                // Look for targets
-                let mut best_target = None;
-                let mut min_dist = fauna.detection_range;
-
-                for (target_e, target_pos) in &pops {
-                    let dist = pos.distance_chebyshev(*target_pos) as f32;
-                    if dist <= min_dist {
-                        min_dist = dist;
-                        best_target = Some(*target_e);
-                    }
-                }
-
-                if let Some(target) = best_target {
-                    fauna.state = FaunaState::Chase;
-                    fauna.target = Some(target);
-                }
-            }
-            FaunaState::Chase => {
-                if let Some(target) = fauna.target {
-                    // Check if target still valid and exists in our pops list
-                    if let Some((_, target_pos)) = pops.iter().find(|(e, _)| *e == target) {
-                        let dist = pos.distance_chebyshev(*target_pos);
-
-                        if dist <= 1 {
-                            // Adjacent -> Attack
-                            if fauna.attack_cooldown == 0 {
-                                let damage = body.map_or(5.0, |b| b.aggregate_stats().attack);
-                                attacks.push((entity, target, damage));
-                                fauna.attack_cooldown = 10; // Cooldown ticks
-                                fauna.state = FaunaState::Attack;
-                            }
-                        } else if dist as f32 > fauna.detection_range * 1.5 {
-                            // Lost target
-                            fauna.state = FaunaState::Wander;
-                            fauna.target = None;
-                        } else {
-                            // Move towards target
-                            fauna.state = FaunaState::Chase;
-                            fauna_updates.push((entity, *target_pos));
-                        }
-                    } else {
-                        // Target gone
-                        fauna.state = FaunaState::Wander;
-                        fauna.target = None;
-                    }
-                } else {
-                    fauna.state = FaunaState::Wander;
-                }
-            }
+            FaunaState::Wander => handle_wander_state(&mut fauna, pos, &pops),
+            FaunaState::Chase => handle_chase_state(
+                &mut fauna,
+                entity,
+                pos,
+                body,
+                &pops,
+                &mut attacks,
+                &mut fauna_updates,
+            ),
             FaunaState::Attack => {
-                // Stick to target if still adjacent
-                if let Some(target) = fauna.target {
-                    if let Some((_, target_pos)) = pops.iter().find(|(e, _)| *e == target) {
-                        let dist = pos.distance_chebyshev(*target_pos);
-                        if dist <= 1 {
-                            if fauna.attack_cooldown == 0 {
-                                let damage = body.map_or(5.0, |b| b.aggregate_stats().attack);
-                                attacks.push((entity, target, damage));
-                                fauna.attack_cooldown = 10;
-                            }
-                        } else {
-                            // Target moved away, chase
-                            fauna.state = FaunaState::Chase;
-                        }
-                    } else {
-                        fauna.state = FaunaState::Wander;
-                        fauna.target = None;
-                    }
-                } else {
-                    fauna.state = FaunaState::Wander;
-                }
+                handle_attack_state(&mut fauna, entity, pos, body, &pops, &mut attacks)
             }
             FaunaState::Flee => {}
         }
@@ -272,6 +212,93 @@ pub fn handle_fauna_death_system(
         if let Some(log) = log.as_mut() {
             log.add_colored("Creature slain!", Color::Red);
         }
+    }
+}
+
+fn handle_wander_state(fauna: &mut Fauna, pos: &GridPosition, pops: &[(Entity, GridPosition)]) {
+    let mut best_target = None;
+    let mut min_dist = fauna.detection_range;
+
+    for (target_e, target_pos) in pops {
+        let dist = pos.distance_chebyshev(*target_pos) as f32;
+        if dist <= min_dist {
+            min_dist = dist;
+            best_target = Some(*target_e);
+        }
+    }
+
+    if let Some(target) = best_target {
+        fauna.state = FaunaState::Chase;
+        fauna.target = Some(target);
+    }
+}
+
+fn handle_chase_state(
+    fauna: &mut Fauna,
+    entity: Entity,
+    pos: &GridPosition,
+    body: Option<&FaunaBody>,
+    pops: &[(Entity, GridPosition)],
+    attacks: &mut Vec<(Entity, Entity, f32)>,
+    fauna_updates: &mut Vec<(Entity, GridPosition)>,
+) {
+    let Some(target) = fauna.target else {
+        fauna.state = FaunaState::Wander;
+        return;
+    };
+
+    let Some((_, target_pos)) = pops.iter().find(|(e, _)| *e == target) else {
+        fauna.state = FaunaState::Wander;
+        fauna.target = None;
+        return;
+    };
+
+    let dist = pos.distance_chebyshev(*target_pos);
+
+    if dist <= 1 {
+        if fauna.attack_cooldown == 0 {
+            let damage = body.map_or(5.0, |b| b.aggregate_stats().attack);
+            attacks.push((entity, target, damage));
+            fauna.attack_cooldown = 10;
+            fauna.state = FaunaState::Attack;
+        }
+    } else if dist as f32 > fauna.detection_range * 1.5 {
+        fauna.state = FaunaState::Wander;
+        fauna.target = None;
+    } else {
+        fauna.state = FaunaState::Chase;
+        fauna_updates.push((entity, *target_pos));
+    }
+}
+
+fn handle_attack_state(
+    fauna: &mut Fauna,
+    entity: Entity,
+    pos: &GridPosition,
+    body: Option<&FaunaBody>,
+    pops: &[(Entity, GridPosition)],
+    attacks: &mut Vec<(Entity, Entity, f32)>,
+) {
+    let Some(target) = fauna.target else {
+        fauna.state = FaunaState::Wander;
+        return;
+    };
+
+    let Some((_, target_pos)) = pops.iter().find(|(e, _)| *e == target) else {
+        fauna.state = FaunaState::Wander;
+        fauna.target = None;
+        return;
+    };
+
+    let dist = pos.distance_chebyshev(*target_pos);
+    if dist <= 1 {
+        if fauna.attack_cooldown == 0 {
+            let damage = body.map_or(5.0, |b| b.aggregate_stats().attack);
+            attacks.push((entity, target, damage));
+            fauna.attack_cooldown = 10;
+        }
+    } else {
+        fauna.state = FaunaState::Chase;
     }
 }
 
