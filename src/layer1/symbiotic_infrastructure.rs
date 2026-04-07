@@ -1,25 +1,55 @@
+//! **Symbiotic Infrastructure** module.
+//!
+//! Introduces living buildings that integrate biological mechanics with standard colony infrastructure.
+//! Symbiotic structures have environmental needs (like light and temperature) and can autonomously regenerate
+//! damage over time, provided their needs are met.
+//!
+//! ## Mechanics
+//! - **The Needs:** A [`SymbioticStructure`] relies on the `process_symbiotic_needs_system` to check if local environmental conditions meet its [`SymbioticNeeds`].
+//! - **Dormancy:** If needs fall below required thresholds, the structure enters a dormant state to conserve energy.
+//! - **Regeneration:** While active, the `process_symbiotic_regeneration_system` slowly repairs the building's core `Structure` health points.
+//!
+
 use crate::layer1::structure::Structure;
 use bevy::prelude::*;
 
+/// Defines a building that possesses living, biological traits.
+///
+/// # Examples
+/// ```rust
+/// use scale::layer1::symbiotic_infrastructure::SymbioticStructure;
+///
+/// let living_wall = SymbioticStructure {
+///     regeneration_rate: 5.0,
+///     is_dormant: false,
+/// };
+/// ```
 #[derive(Component)]
 pub struct SymbioticStructure {
     pub regeneration_rate: f32,
     pub is_dormant: bool,
 }
 
+/// The environmental thresholds required to keep a symbiotic structure active.
 #[derive(Component)]
 pub struct SymbioticNeeds {
     pub required_light: f32,
     pub required_temp: f32,
 }
 
-// Dummy environment component for testing
+/// A simple representation of local environmental conditions.
+///
+/// *Note: This is currently used primarily as a test stub for integration.*
 #[derive(Component)]
 pub struct EnvironmentStatus {
     pub current_light: f32,
     pub current_temp: f32,
 }
 
+/// Evaluates whether a living building has the resources to remain active.
+///
+/// Compares the [`EnvironmentStatus`] against the [`SymbioticNeeds`] and toggles the `is_dormant` flag
+/// on the [`SymbioticStructure`] accordingly.
 pub fn process_symbiotic_needs_system(
     mut query: Query<(&mut SymbioticStructure, &SymbioticNeeds, &EnvironmentStatus)>,
 ) {
@@ -29,6 +59,10 @@ pub fn process_symbiotic_needs_system(
     }
 }
 
+/// Applies biological healing to active living structures.
+///
+/// Restores `Structure` HP per tick based on the `regeneration_rate` of the [`SymbioticStructure`],
+/// provided the entity is not dormant.
 pub fn process_symbiotic_regeneration_system(
     mut query: Query<(&mut Structure, &SymbioticStructure)>,
 ) {

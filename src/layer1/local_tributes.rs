@@ -1,8 +1,33 @@
+//! **Local Tributes** module.
+//!
+//! This module handles the interactions between the colony and ancient, massive native lifeforms known as Leviathans.
+//! Leviathans demand regular tributes from the colony. Appeasing them grants a temporary [`LeviathanProtectionBuff`],
+//! while refusing them triggers violent uprisings that can devastate the colony.
+//!
+//! ## Mechanics
+//! - **The Demand:** The [`leviathan_tribute_system`] generates periodic demands for resources.
+//! - **The Appeasement:** The [`leviathan_appeasement_system`] attempts to consume resources from the colony's inventory to satisfy the demand when a [`PayTributeEvent`] is fired.
+//! - **The Refusal:** The [`leviathan_refusal_system`] triggers when a [`RefuseTributeEvent`] is fired, increasing the Leviathan's anger. If anger reaches a critical threshold, a `DisasterEvent` is dispatched.
+//!
+
 use crate::layer1::disasters::{DisasterEvent, DisasterType};
 use crate::layer1::economy::inventory::Inventory;
 use crate::layer1::economy::items::ItemType;
 use bevy::prelude::*;
 
+/// A massive native lifeform that demands resources from the colony.
+///
+/// # Examples
+/// ```rust
+/// use scale::layer1::local_tributes::Leviathan;
+/// use bevy::time::{Timer, TimerMode};
+///
+/// let beast = Leviathan {
+///     tribute_timer: Timer::from_seconds(10.0, TimerMode::Repeating),
+///     current_demand: None,
+///     anger_level: 0,
+/// };
+/// ```
 #[derive(Component)]
 pub struct Leviathan {
     pub tribute_timer: Timer,
@@ -10,27 +35,34 @@ pub struct Leviathan {
     pub anger_level: u32,
 }
 
+/// Describes the specific items and quantities requested by a Leviathan.
 #[derive(Clone, Copy, Debug)]
 pub struct TributeDemand {
     pub item: ItemType,
     pub amount: u32,
 }
 
+/// A global buff granted to the colony for successfully appeasing a Leviathan.
 #[derive(Resource)]
 pub struct LeviathanProtectionBuff {
     pub duration: Timer,
 }
 
+/// Triggered when the player decides to attempt to satisfy a Leviathan's demand.
 #[derive(Event)]
 pub struct PayTributeEvent {
     pub leviathan_id: Entity,
 }
 
+/// Triggered when the player actively denies a Leviathan's request.
 #[derive(Event)]
 pub struct RefuseTributeEvent {
     pub leviathan_id: Entity,
 }
 
+/// Periodically generates resource demands for each Leviathan on the map.
+///
+/// When a Leviathan's internal timer completes, a new [`TributeDemand`] is generated.
 pub fn leviathan_tribute_system(time: Res<Time>, mut query: Query<&mut Leviathan>) {
     for mut leviathan in query.iter_mut() {
         if leviathan.current_demand.is_none() {
@@ -46,6 +78,10 @@ pub fn leviathan_tribute_system(time: Res<Time>, mut query: Query<&mut Leviathan
     }
 }
 
+/// Attempts to fulfill a Leviathan's demand using colony inventories.
+///
+/// Listens for [`PayTributeEvent`]s, scans `Inventory` components for the requested items,
+/// consumes them if available, and grants a [`LeviathanProtectionBuff`].
 pub fn leviathan_appeasement_system(
     mut commands: Commands,
     mut events: EventReader<PayTributeEvent>,
@@ -91,6 +127,10 @@ pub fn leviathan_appeasement_system(
     }
 }
 
+/// Handles the consequences of angering a Leviathan.
+///
+/// Listens for [`RefuseTributeEvent`]s, increments the Leviathan's anger, and may dispatch
+/// a `DisasterEvent` if the entity is pushed beyond its limits.
 pub fn leviathan_refusal_system(
     mut events: EventReader<RefuseTributeEvent>,
     mut disaster_writer: EventWriter<DisasterEvent>,
