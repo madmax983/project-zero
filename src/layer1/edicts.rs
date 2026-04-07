@@ -25,6 +25,8 @@ pub enum Policy {
     FirewallComms,
     /// Issues a Placebo Protocol to temporarily reduce stress.
     Placebo(PlaceboProtocol),
+    /// Censors delayed broadcasts, preventing large morale swings but increasing distrust.
+    CensorBroadcasts,
 }
 
 impl ColonyPolicies {
