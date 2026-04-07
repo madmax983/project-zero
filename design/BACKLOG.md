@@ -530,3 +530,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `831` The Last Broadcast — `specs/831-the-last-broadcast.md`
 - [ ] `832` Gravity Wells of Regret — `specs/832-gravity-wells-of-regret.md`
 - [ ] `833` The Sentient Protocol — `specs/833-the-sentient-protocol.md`
+- [ ] `834` Station Keeping — `specs/834-station-keeping.md`
+- [ ] `835` The Colony Mascot — `specs/835-the-colony-mascot.md`
+- [ ] `836` Geodetic Sentience — `specs/836-geodetic-sentience.md`

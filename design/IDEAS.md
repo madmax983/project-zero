@@ -3112,7 +3112,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Station Keeping
+## Station Keeping [SPECCED]
 
 **Layer:** 2
 
@@ -3154,7 +3154,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Colony Mascot
+## The Colony Mascot [SPECCED]
 
 **Layer:** 1
 
@@ -3196,7 +3196,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Geodetic Sentience
+## Geodetic Sentience [SPECCED]
 
 **Layer:** 1
 
