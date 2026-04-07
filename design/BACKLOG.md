@@ -527,3 +527,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `828` Predatory Architecture — `specs/828-predatory-architecture.md`
 - [ ] `829` Bureaucratic Fiefdoms — `specs/829-bureaucratic-fiefdoms.md`
 - [ ] `830` The Panopticon's Blindspot — `specs/830-the-panopticons-blindspot.md`
+- [ ] `831` The Last Broadcast — `specs/831-the-last-broadcast.md`
+- [ ] `832` Gravity Wells of Regret — `specs/832-gravity-wells-of-regret.md`
+- [ ] `833` The Sentient Protocol — `specs/833-the-sentient-protocol.md`
