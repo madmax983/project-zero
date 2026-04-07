@@ -538,3 +538,7 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `841` Radioactive Hearth — `specs/841-radioactive-hearth.md`
 - [ ] `842` Data Physicality — `specs/842-data-physicality.md`
 - [ ] `843` Urban Canyons — `specs/843-urban-canyons.md`
+- [ ] `844` Pollen Season — `specs/844-pollen-season.md`
+- [ ] `845` Hull Geometry — `specs/845-hull-geometry.md`
+- [ ] `846` Ice Architecture — `specs/846-ice-architecture.md`
+- [ ] `847` Window Views — `specs/847-window-views.md`
