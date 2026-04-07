@@ -41,6 +41,7 @@ pub fn death_consequence_system(
             unrest.modifiers.push(UnrestModifier {
                 value: 0.5,
                 duration: 1000,
+                label: "Noble Died".to_string(),
             });
             unrest.level = (unrest.level + 0.5).clamp(0.0, 1.0);
         }

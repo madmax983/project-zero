@@ -25,6 +25,8 @@ pub struct UnrestModifier {
     pub value: f32,
     /// Remaining duration in ticks.
     pub duration: u32,
+    /// The reason for this unrest modification.
+    pub label: String,
 }
 
 /// Marker component for a Pop identified as a Scapegoat target.
@@ -162,6 +164,7 @@ pub fn handle_denounce_event_system(
         unrest.modifiers.push(UnrestModifier {
             value: -reduction,
             duration,
+            label: "Scapegoat".to_string(),
         });
 
         // Apply Penalty
