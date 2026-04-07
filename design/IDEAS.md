@@ -14505,7 +14505,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Prophet of the Engine
+## The Prophet of the Engine [SPECCED]
 
 **Layer:** 1
 
@@ -14519,7 +14519,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Generational Wealth
+## Generational Wealth [SPECCED]
 
 **Layer:** 1
 
@@ -14533,7 +14533,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Whispering Asteroid
+## The Whispering Asteroid [SPECCED]
 
 **Layer:** 2
 
