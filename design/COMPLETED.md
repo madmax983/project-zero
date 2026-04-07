@@ -350,3 +350,4 @@
 - [x] `814` Radio Nostalgia — `specs/814-radio-nostalgia.md` — completed 2026-02-01
 - [x] `837` Skyhooks — `specs/837-skyhooks.md` — completed 2024-04-07
 - [x] `811` Memetic Hazards — `specs/811-memetic-hazards.md` — completed 2026-04-07
+- [x] `INT-837` Integration: Skyhook Launch System Scheduling — completed 2026-04-07

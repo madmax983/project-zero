@@ -136,6 +136,8 @@ pub fn build_simulation_schedule() -> Schedule {
             .after(crate::layer2::syzygy::update_syzygy_cycle_system),
         crate::layer2::trade::escape_velocity::process_launch_system
             .after(crate::layer2::syzygy::apply_syzygy_effects_system),
+        crate::layer2::skyhooks::process_skyhook_launch
+            .after(crate::layer2::syzygy::apply_syzygy_effects_system),
         crate::layer2::visibility::update_visibility_system.after(Layer1SystemSet::Economy),
         crate::layer2::visibility::enforce_view_mode_system
             .after(crate::layer2::visibility::update_visibility_system),
@@ -259,6 +261,7 @@ pub fn run_simulation_tick(world: &mut World) {
 
     if !world.contains_resource::<crate::layer1::stress::TraumaTracker>() {
         world.init_resource::<crate::layer1::stress::TraumaTracker>();
+        world.init_resource::<Events<crate::layer2::skyhooks::LaunchIntent>>();
     }
 
     if !world.contains_resource::<crate::layer1::tech_envy::TechEnvyConfig>() {
@@ -545,6 +548,7 @@ mod tests {
     fn test_run_simulation_tick_increments() {
         let mut world = setup_world();
         world.init_resource::<crate::layer1::bio_acoustic_miasma::MiasmaRecordedSecret>();
+        world.init_resource::<bevy::prelude::Events<crate::layer2::skyhooks::LaunchIntent>>();
         *world.resource_mut::<GameState>() = GameState::Running;
 
         let tick_before = world.resource::<SimulationTime>().tick;
@@ -558,6 +562,7 @@ mod tests {
     fn test_run_multiple_ticks() {
         let mut world = setup_world();
         world.init_resource::<crate::layer1::bio_acoustic_miasma::MiasmaRecordedSecret>();
+        world.init_resource::<bevy::prelude::Events<crate::layer2::skyhooks::LaunchIntent>>();
         *world.resource_mut::<GameState>() = GameState::Running;
 
         for _ in 0..10 {
@@ -580,6 +585,7 @@ mod tests {
         // Initialize Detection Risk for test
         world.init_resource::<crate::layer3::silence::DetectionRisk>();
         world.init_resource::<crate::layer1::bio_acoustic_miasma::MiasmaRecordedSecret>();
+        world.init_resource::<bevy::prelude::Events<crate::layer2::skyhooks::LaunchIntent>>();
         world.init_resource::<Events<crate::layer2::moon_hermits::PopDesertedEvent>>();
         world.init_resource::<Events<crate::layer3::silence::HostileSpawnEvent>>();
         world.init_resource::<Events<crate::layer1::grafting::GraftBuildingEvent>>();
@@ -639,6 +645,7 @@ mod tests {
         world.init_resource::<crate::layer3::council::GalacticCouncil>();
         world.init_resource::<crate::layer3::market::GalacticMarket>();
         world.init_resource::<crate::layer1::stress::TraumaTracker>();
+        world.init_resource::<Events<crate::layer2::skyhooks::LaunchIntent>>();
         world.init_resource::<Events<crate::layer2::events_new::reverse_quarantine::RefugeeFleetEvent>>();
         world.init_resource::<Events<crate::layer1::grafting::GraftBuildingEvent>>();
         world.init_resource::<Events<crate::layer3::planet::black_market_terraforming::RogueTerraformEvent>>();

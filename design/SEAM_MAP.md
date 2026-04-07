@@ -641,3 +641,9 @@
 - **Systems connected:** `process_hyperlane_collapse_system` (Hyperlane Collapse) -> `hyperlane_collapse_chronicle_bridge` (Integration) -> `AddChronicleEvent`
 - **Glue added:** Added `hyperlane_collapse_chronicle_bridge` to emit an `AddChronicleEvent` (`EventImportance::Major`) upon `TradeRouteSeveredEvent`. Registered in `SimulationSchedule`.
 - **Tests:** `tests/integration/hyperlane_collapse_bridge.rs`
+
+### INT-837: Skyhook Launch System Scheduling
+- **Date:** 2026-04-07
+- **Systems connected:** `process_skyhook_launch` (Skyhooks) -> `SimulationSchedule` (Execution Schedule)
+- **Glue added:** Registered `process_skyhook_launch` in `src/simulation.rs` correctly after syzygy effects and initialized `LaunchIntent` resource.
+- **Tests:** `tests/integration/skyhook_launch_bridge.rs`
