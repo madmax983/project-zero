@@ -357,3 +357,4 @@
 - [x] `869` The Bureaucracy of Sleep — `specs/869-bureaucracy-of-sleep.md` — completed 2026-04-08
 - [x] `INT-869` Integration: Bureaucracy of Sleep Hallucination -> Work Efficiency — completed 2026-04-08
 - [x] `874` The Blob — `specs/874-the-blob.md` — completed 2026-04-08
+- [x] `702` Fleet Mutiny — `specs/702-fleet-mutiny.md` — completed 2026-04-08
