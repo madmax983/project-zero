@@ -10,7 +10,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 **Layer:** 1
 
-**Fantasy:** Pops remember what happened to them. A pop who survived a famine distrusts food supplies. A pop who was in the first colony ship has prestige.
+**Fantasy:** Pops remember what happened to them. [SPECCED] A pop who survived a famine distrusts food supplies. A pop who was in the first colony ship has prestige.
 
 **Mechanic:** Pops accumulate "memories" from events they witness. Memories influence behavior and mood. Shared memories create culture.
 
@@ -24,7 +24,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 **Layer:** 1
 
-**Fantasy:** Places earn names from what happened there. "Famine Field." "The Old Mine." "Founders' Square."
+**Fantasy:** Places earn names from what happened there. [SPECCED] "Famine Field." "The Old Mine." "Founders' Square."
 
 **Mechanic:** Tiles where significant events occur get named. Names persist. Pops reference names. Player can see history by clicking a named place.
 
@@ -38,7 +38,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 **Layer:** 2 → 3
 
-**Fantasy:** Interstellar travel is dangerous. Ships can be lost. Sometimes they come back... changed.
+**Fantasy:** Interstellar travel is dangerous. [SPECCED] Ships can be lost. Sometimes they come back... changed.
 
 **Mechanic:** Ships traveling between stars have a small chance of "incidents." Lost ships might reappear years later with strange cargo, changed crews, or warnings.
 
