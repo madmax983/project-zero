@@ -14616,7 +14616,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Lifting the quarantine guarantees the contagion spreads to your core worlds, but leaving the quarantine in place means your capital starves to death while your own defense cannons shred your supply fleet.
 
 ---
-## The Cassandra Protocol
+## The Cassandra Protocol [SPECCED]
 
 **Layer:** Cross-layer
 
@@ -14644,7 +14644,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Attrition of Immortality
+## The Attrition of Immortality [SPECCED]
 
 **Layer:** 1
 
@@ -14728,7 +14728,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Petrification Protocol
+## The Petrification Protocol [SPECCED]
 
 **Layer:** 1
 
