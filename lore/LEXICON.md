@@ -3911,3 +3911,34 @@
 **Usage:**
 - "The Truth-Lag hit the colony hard."
 - "They cheered yesterday, but the Truth-Lag arrived today."
+
+
+## The Cargo Cult
+
+**Replaces:** religious fanatics, idolaters
+**Code reference:** `CargoCultist` trait, `Effigy` component
+**Usage:** "The Cargo Cult offered wires to the sky."
+
+## Sleep Permits
+
+**Replaces:** rest limits, wake quotas
+**Code reference:** `SleepPermit` component
+**Usage:** "Miners begged for Tier-1 Sleep Permits."
+
+## The Quarantine Hold
+
+**Replaces:** orbital blockade, planetary lockdown
+**Code reference:** `QuarantineState` enum
+**Usage:** "The Quarantine Hold starved the core."
+
+## The Discarded Minds
+
+**Replaces:** rogue AI, machine uprising
+**Code reference:** `AIGraveyard` faction
+**Usage:** "The Discarded Minds bought our debt."
+
+## Star Charts
+
+**Replaces:** fog of war reveals, map data
+**Code reference:** `StarChart` item, `ChartFreshness` float
+**Usage:** "The Star Chart was fatally outdated."

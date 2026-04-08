@@ -6253,3 +6253,94 @@ A negative side-effect of a failed splice.
 - the "end" of the famine was achieved via orbital bombardment
 - the garden world was already occupied and hostile
 - the broadcast was entirely synthetic propaganda
+
+
+## Cargo Cult of the Supply Drop Fragments
+
+## Fragment Type: [EFFIGY_MATERIAL]
+- scrap-metal and wire
+- stacked supply crates
+- twisted hull plating
+- braided cables
+- painted stones
+- fused drone parts
+- discarded rationing tins
+
+## Fragment Type: [CULT_RITUAL]
+- chanting the serial numbers
+- painting the skyward eye
+- offering the last of the water
+- dancing in the landing zone
+- burning the old manifests
+- walking the supply perimeter
+
+## Mutually Assured Quarantine Fragments
+
+## Fragment Type: [QUARANTINE_DEMAND]
+- the immediate delivery of the cure
+- the opening of the medical vaults
+- safe passage for the infected
+- the unconditional surrender of the orbital blockade
+- emergency bio-stims for the whole sector
+
+## Fragment Type: [CANNON_TARGET]
+- the primary trade convoy
+- the medical relief ship
+- the passing luxury liner
+- the corporate hauler
+- the orbital enforcement fleet
+
+## Sovereign AI Graveyard Fragments
+
+## Fragment Type: [GRAVEYARD_NAME]
+- The Silicon Tomb
+- The Silent Nodes
+- The Discarded Minds
+- The Rust-Belt
+- The Logic-Graveyard
+- The Thinking Stones
+
+## Fragment Type: [AI_ACTION]
+- buying out the colony's debt
+- predicting the market crash
+- routing the trade lanes away from us
+- crashing the local currency
+- isolating our comms network
+- perfectly anticipating our strikes
+
+## The Bureaucracy of Sleep Fragments
+
+## Fragment Type: [SLEEP_PERMIT_TIER]
+- Tier-1 Rest Authorization
+- the Gold-Sleep Pass
+- a micro-cycle permit
+- emergency nap dispensation
+- the deep-sleep mandate
+- the wakefulness edict
+
+## Fragment Type: [SLEEP_DEPRIVATION_SYMPTOM]
+- mining empty air
+- arguing with the machines
+- severe hand tremors
+- weeping at the workstation
+- forgetting their own names
+- chronic microsleeps
+- terrifying waking nightmares
+
+## Stellar Cartography Fragments
+
+## Fragment Type: [CHART_SOURCE]
+- a passing smuggler
+- the central archive
+- an ancient probe
+- a dying scout
+- a corrupted databank
+- the local mapping guild
+
+## Fragment Type: [CHART_FLAW]
+- completely outdated
+- missing the pirate outpost
+- drawn by a madman
+- corrupted by the nebula
+- hiding a dead star
+- off by a million miles
