@@ -14854,3 +14854,58 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Enforce expensive safety gear (slowing production) or allow the slow, metallic poisoning of your workforce for a strange kind of resilience?
 
 ---
+## The Bioluminescent Graffiti
+
+**Layer:** 1
+
+**Fantasy:** The lower classes use genetically modified flora to express their discontent in the dark.
+
+**Mechanic:** Pops with high unrest but low power plant a slow-growing, glowing fungus in unpatrolled corridors. The fungus forms anti-establishment symbols that boost the morale of the lower class but anger the enforcers.
+
+**Emergence:** A power outage plunges a sector into total darkness, revealing that the entire ceiling is coated in a massive, glowing mural of a forgotten martyr. The enforcers panic, while the workers feel an overwhelming surge of unity.
+
+**Tension:** Eradicating the fungus requires toxic chemicals that lower air quality, but leaving it empowers a passive rebellion.
+
+---
+
+## The Martyr's Dividend
+
+**Layer:** Cross-layer
+
+**Fantasy:** Profiting off the tragic deaths of your own heroes.
+
+**Mechanic:** When a highly experienced Pop dies in the line of duty (e.g., a seasoned explorer or heroic enforcer), they generate a massive spike in "Cultural Heritage." This heritage can be spent to instantly recruit inspired replacements or sold to the galactic market as inspiring media.
+
+**Emergence:** You intentionally send your most beloved, veteran scientist on a suicide mission into an anomaly. The ensuing tragedy generates so much Cultural Heritage that you instantly fund a new colony ship from the proceeds.
+
+**Tension:** Milking the heroic deaths of your people for economic gain versus keeping your most skilled veterans alive.
+
+---
+
+## Bureaucracy of the Deceased
+
+**Layer:** 1
+
+**Fantasy:** The dead still have paperwork to file.
+
+**Mechanic:** When a Pop dies, their administrative load doesn't instantly vanish. "Death Certificates" and "Estate Transfers" must be processed by the Bureaucrat Pops. Until processed, the dead Pop's former housing remains locked, and their next of kin suffer a "Limbo" stress debuff.
+
+**Emergence:** A sudden disaster kills dozens of Pops. The Bureaucrats are so overwhelmed that bodies are physically removed, but the system still recognizes them as "alive and occupying housing." The surviving population is forced into homelessness while the paperwork slowly clears over months.
+
+**Tension:** Expanding an otherwise useless bureaucratic sector to handle sudden mortality spikes versus dealing with severe housing and morale crises post-disaster.
+
+---
+
+## The Cannibal's Empathy
+
+**Layer:** 1
+
+**Fantasy:** Extreme survival breeds a terrifying closeness.
+
+**Mechanic:** During severe famines, Pops might consume the deceased to survive. While doing so, they inherit a fraction of the dead Pop's `Memories` and relationship scores, literally internalizing the person they ate.
+
+**Emergence:** A desperate miner eats their rival to survive a cave-in. They emerge not just alive, but burdened with the rival's fond memories of their family. The miner then attempts to care for the rival's children, driven by the inherited guilt.
+
+**Tension:** Allowing cannibalism prevents starvation but irreversibly tangles the social web of your colony with borrowed traumas and conflicting loyalties.
+
+---
