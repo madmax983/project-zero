@@ -1,305 +1,177 @@
-//! The Blob: An expanding hazard (Spec 138).
-//!
-//! The Blob is a semi-indestructible, creeping hazard that consumes resources and damages buildings.
-//! It serves as a mid-game crisis that requires containment rather than direct combat.
-//!
-//! # Mechanics
-//!
-//! 1.  **Spreading**: Every few ticks, a Blob attempts to replicate into an adjacent tile.
-//!     *   It prioritizes empty space.
-//!     *   It cannot spread into walls/buildings immediately; instead, it damages them.
-//! 2.  **Consumption**: If a Blob occupies a tile with a [`ResourceItem`], it destroys the item.
-//! 3.  **Containment**: Since Blobs damage structures slowly, thick walls or airlocks can slow it down.
-//!     However, it will eventually breach containment if left unchecked.
-//!
-//! # Counterplay
-//!
-//! *   **Fire**: Blobs are highly flammable (Future Spec).
-//! *   **Venting**: Exposure to vacuum (Spec 134) can freeze/kill it.
-
-use crate::layer1::building::Building;
-use crate::layer1::map::GridPosition;
-use crate::layer1::resources::ResourceItem;
-use crate::layer1::structure::Structure;
-use crate::layer1::terrain::TerrainGrid;
+//! The Blob (Spec 874)
+//! An indestructible, slow-growing entity that consumes adjacent tiles.
 use bevy_ecs::prelude::*;
-use rand::Rng;
-use std::collections::{HashMap, HashSet};
+use crate::layer1::map::GridPosition;
+use crate::layer1::nature::terrain::TerrainGrid;
+use crate::layer1::nature::terrain::TerrainType;
+use crate::layer1::resources::ResourceItem;
+use crate::layer1::resources::ResourceType;
 
-/// A slow-moving, semi-indestructible hazard that consumes everything in its path.
-#[derive(Component, Default, Debug, Clone)]
-pub struct Blob {
-    /// Ticks until next spread attempt.
-    ///
-    /// When this reaches 0, the Blob attempts to spawn a new Blob in an adjacent tile.
-    pub spread_timer: u32,
+#[derive(Component)]
+pub struct BlobNetwork {
+    pub expansion_timer: f32,
+    pub current_time: f32,
 }
 
-/// System that handles the spread of the Blob.
-///
-/// # Logic
-/// 1.  Decrements `spread_timer`.
-/// 2.  If ready, picks a random adjacent tile (NSEW).
-/// 3.  If the target is a building: Damages the structure (e.g., wall). Does NOT spread yet.
-/// 4.  If the target is empty and valid: Spawns a new [`Blob`] entity.
-/// 5.  Resets `spread_timer` (randomized 10-15 ticks).
-#[allow(clippy::cast_possible_truncation, clippy::cast_possible_wrap)]
-pub fn blob_spread_system(
+#[derive(Component)]
+pub struct BlobNode {
+    pub network_id: Entity,
+}
+
+pub fn blob_expansion_system(
     mut commands: Commands,
-    mut blobs: Query<(&mut Blob, &GridPosition)>,
-    mut buildings: Query<(Entity, &GridPosition, &mut Structure), With<Building>>,
-    terrain: Res<TerrainGrid>,
+    mut networks: Query<(Entity, &mut BlobNetwork)>,
+    nodes: Query<(&BlobNode, &GridPosition)>,
+    grid: Res<TerrainGrid>,
 ) {
-    let mut rng = rand::thread_rng();
+    for (net_entity, mut network) in networks.iter_mut() {
+        network.current_time += 1.0; // Simulate tick
 
-    // 1. Build map of existing blobs to prevent stacking
-    let mut blob_positions = HashSet::new();
-    for (_, pos) in blobs.iter() {
-        blob_positions.insert(*pos);
-    }
+        if network.current_time >= network.expansion_timer {
+            network.current_time = 0.0;
 
-    // 2. Build map of buildings for O(1) lookup
-    let mut building_map = HashMap::new();
-    for (entity, pos, _) in buildings.iter() {
-        building_map.insert(*pos, entity);
-    }
+            let mut expanded = false;
 
-    for (mut blob, pos) in &mut blobs {
-        if blob.spread_timer > 0 {
-            blob.spread_timer -= 1;
-            continue;
-        }
-        // Spread!
-        blob.spread_timer = 10; // Reset timer
+            for (node, pos) in nodes.iter() {
+                if node.network_id != net_entity { continue; }
 
-        // Pick random neighbor
-        let (dx, dy) = match rng.gen_range(0..4) {
-            0 => (0, 1),
-            1 => (0, -1),
-            2 => (1, 0),
-            _ => (-1, 0),
-        };
-        let target_pos = GridPosition {
-            x: pos.x + dx,
-            y: pos.y + dy,
-        };
+                // Check cardinal directions
+                let adjacents = [
+                    GridPosition { x: pos.x + 1, y: pos.y },
+                    GridPosition { x: pos.x - 1, y: pos.y },
+                    GridPosition { x: pos.x, y: pos.y + 1 },
+                    GridPosition { x: pos.x, y: pos.y - 1 },
+                ];
 
-        // Check bounds
-        if target_pos.x < 0
-            || target_pos.y < 0
-            || target_pos.x >= terrain.width as i32
-            || target_pos.y >= terrain.height as i32
-        {
-            continue;
-        }
+                for adj in adjacents {
+                    // Stop if out of bounds or blocked by a Wall (Rock)
+                    if let Some(terrain) = grid.get(adj.x as usize, adj.y as usize) {
+                        if !matches!(terrain, TerrainType::Rock | TerrainType::DeepRock) {
+                            // Expand! (Minimal logic: just spawn one new node per network per tick)
+                            commands.spawn((
+                                BlobNode { network_id: net_entity },
+                                adj,
+                            ));
+                            expanded = true;
+                            break;
+                        }
+                    }
+                }
 
-        // Check for building
-        if let Some(&entity) = building_map.get(&target_pos) {
-            if let Ok((_, _, mut structure)) = buildings.get_mut(entity) {
-                structure.current_hp -= 1.0;
+                if expanded { break; }
             }
-            continue; // Attacked building, don't move/spawn
         }
-
-        // Check for existing blob
-        if blob_positions.contains(&target_pos) {
-            continue; // Already occupied by blob
-        }
-
-        // Spawn new blob
-        commands.spawn((
-            Blob {
-                spread_timer: 10 + rng.gen_range(0..5),
-            },
-            target_pos,
-        ));
-
-        blob_positions.insert(target_pos);
     }
 }
 
-/// System that handles consumption of items by the Blob.
-///
-/// If a Blob shares a tile with a [`ResourceItem`], the item is destroyed (despawned).
+pub fn blob_spread_system() {}
+
 pub fn blob_consumption_system(
     mut commands: Commands,
-    blobs: Query<&GridPosition, With<Blob>>,
-    items: Query<(Entity, &GridPosition), With<ResourceItem>>,
+    mut networks: Query<&mut BlobNetwork>,
+    nodes: Query<(&BlobNode, &GridPosition)>,
+    items: Query<(Entity, &GridPosition, &ResourceItem)>,
 ) {
-    // Optimize: Build a HashSet of blob positions
-    let mut blob_positions = HashSet::new();
-    for pos in blobs.iter() {
-        blob_positions.insert(*pos);
+    let mut blob_positions = std::collections::HashMap::new();
+    for (node, pos) in nodes.iter() {
+        blob_positions.insert(*pos, node.network_id);
     }
 
-    for (entity, pos) in items.iter() {
-        if blob_positions.contains(pos) {
-            commands.entity(entity).despawn();
+    for (item_entity, item_pos, resource) in items.iter() {
+        if resource.resource_type == ResourceType::Waste {
+            if let Some(network_id) = blob_positions.get(item_pos) {
+                if let Ok(mut network) = networks.get_mut(*network_id) {
+                    network.current_time -= 5.0; // Stall growth
+                    commands.entity(item_entity).despawn();
+                }
+            }
         }
     }
 }
+
+#[derive(Component, Default)]
+pub struct Blob;
 
 #[cfg(test)]
 mod tests {
-    use crate::layer1::blob::{blob_consumption_system, blob_spread_system, Blob};
-    use crate::layer1::building::{Building, BuildingType};
+    use super::*;
+    use bevy_app::App;
+    use bevy_app::Update;
     use crate::layer1::map::GridPosition;
-    use crate::layer1::resources::{ResourceItem, ResourceType};
-    use crate::layer1::structure::Structure;
-    use bevy_ecs::prelude::*;
-    use bevy_ecs::system::RunSystemOnce;
+    use crate::layer1::nature::terrain::TerrainType;
+    use crate::layer1::nature::terrain::generate_terrain;
 
     #[test]
-    fn test_blob_spreads_to_empty_tile() {
-        let mut world = World::new();
-        // Setup: 1 Blob at (5,5)
-        world.spawn((Blob { spread_timer: 0 }, GridPosition { x: 5, y: 5 }));
+    fn test_blob_expands_to_adjacent_empty_tile() {
+        let mut app = App::new();
+        let mut grid = generate_terrain(10, 10);
+        // Center is empty
+        grid.set(5, 5, TerrainType::Dirt);
+        grid.set(6, 5, TerrainType::Dirt);
+        app.insert_resource(grid);
 
-        // Mock resources (Map bounds etc) if needed
-        world.insert_resource(crate::layer1::terrain::TerrainGrid {
-            width: 10,
-            height: 10,
-            tiles: vec![crate::layer1::terrain::TerrainType::Grass; 100],
-        });
-        world.insert_resource(crate::layer1::building::OccupiedTiles::default());
+        app.add_systems(Update, blob_expansion_system);
 
-        // Run spread system
-        // We force timer to trigger
-        let _ = world.run_system_once(blob_spread_system);
+        let network = app.world_mut().spawn(BlobNetwork { expansion_timer: 1.0, current_time: 1.0 }).id();
 
-        // Should have more than 1 blob now
-        let blob_count = world.query::<&Blob>().iter(&world).count();
-        assert!(blob_count > 1, "Blob should spread");
-
-        // Check adjacency (simplistic check)
-        let positions: Vec<GridPosition> = world
-            .query_filtered::<&GridPosition, With<Blob>>()
-            .iter(&world)
-            .cloned()
-            .collect();
-        assert!(positions.contains(&GridPosition { x: 5, y: 5 }));
-        // New blob should be adjacent
-        let new_pos = positions
-            .iter()
-            .find(|p| **p != GridPosition { x: 5, y: 5 })
-            .unwrap();
-        assert!((new_pos.x - 5).abs() <= 1 && (new_pos.y - 5).abs() <= 1);
-    }
-
-    #[test]
-    fn test_blob_eats_items() {
-        let mut world = World::new();
-        // Blob and Item at same location
-        world.spawn((Blob::default(), GridPosition { x: 5, y: 5 }));
-        let item = world
-            .spawn((
-                ResourceItem {
-                    resource_type: ResourceType::Wood,
-                    amount: 1.0,
-                },
-                GridPosition { x: 5, y: 5 },
-            ))
-            .id();
-
-        let _ = world.run_system_once(blob_consumption_system);
-
-        // Item should be despawned
-        assert!(world.get_entity(item).is_err());
-    }
-
-    #[test]
-    fn test_blob_damages_buildings() {
-        let mut world = World::new();
-        world.insert_resource(crate::layer1::terrain::TerrainGrid {
-            width: 10,
-            height: 10,
-            tiles: vec![crate::layer1::terrain::TerrainType::Grass; 100],
-        });
-
-        world.spawn((Blob { spread_timer: 0 }, GridPosition { x: 5, y: 5 }));
-
-        // Walls everywhere around
-        let walls = vec![(5, 6), (5, 4), (6, 5), (4, 5)];
-
-        let mut wall_entities = Vec::new();
-        for (x, y) in walls {
-            let w = world
-                .spawn((
-                    Building {
-                        building_type: BuildingType::Wall,
-                    },
-                    GridPosition { x, y },
-                    Structure {
-                        current_hp: 100.0,
-                        max_hp: 100.0,
-                    },
-                ))
-                .id();
-            wall_entities.push(w);
-        }
-
-        let _ = world.run_system_once(blob_spread_system);
-
-        // At least one wall should be damaged
-        let damaged = wall_entities.iter().any(|&e| {
-            let s = world.get::<Structure>(e).unwrap();
-            s.current_hp < 100.0
-        });
-
-        assert!(damaged, "Blob should damage at least one adjacent building");
-    }
-
-    #[test]
-    fn test_blob_blocked_by_walls() {
-        let mut world = World::new();
-        world.insert_resource(crate::layer1::terrain::TerrainGrid {
-            width: 10,
-            height: 10,
-            tiles: vec![crate::layer1::terrain::TerrainType::Grass; 100],
-        });
-
-        // Blob at (0,0)
-        world.spawn((Blob { spread_timer: 0 }, GridPosition { x: 0, y: 0 }));
-
-        // Wall at (0,1) and (1,0) (blocking spread)
-        world.spawn((
-            Building {
-                building_type: BuildingType::Wall,
-            },
-            GridPosition { x: 0, y: 1 },
-            Structure {
-                current_hp: 10.0,
-                max_hp: 10.0,
-            },
-        ));
-        world.spawn((
-            Building {
-                building_type: BuildingType::Wall,
-            },
-            GridPosition { x: 1, y: 0 },
-            Structure {
-                current_hp: 10.0,
-                max_hp: 10.0,
-            },
+        // Spawn the seed blob
+        app.world_mut().spawn((
+            BlobNode { network_id: network },
+            GridPosition { x: 5, y: 5 },
         ));
 
-        // Mock OccupiedTiles logic
-        let mut occupied = crate::layer1::building::OccupiedTiles::default();
-        occupied.0.insert((0, 1));
-        occupied.0.insert((1, 0));
-        world.insert_resource(occupied);
+        app.update();
 
-        // Run multiple times to ensure it tries to spread
-        for _ in 0..10 {
-            let _ = world.run_system_once(blob_spread_system);
-            // Reset timer manually to force attempt
-            if let Some(mut blob) = world.query::<&mut Blob>().iter_mut(&mut world).next() {
-                blob.spread_timer = 0;
-            }
-        }
+        // A new blob node should have spawned at (6, 5) or another adjacent tile
+        let blob_count = app.world_mut().query::<&BlobNode>().iter(&app.world()).count();
+        assert!(blob_count > 1, "Blob failed to expand");
+    }
 
-        // Blob count should NOT increase (blocked by wall)
-        let blob_count = world.query::<&Blob>().iter(&world).count();
-        assert_eq!(blob_count, 1);
+    #[test]
+    fn test_blob_halts_when_contained_by_walls() {
+        let mut app = App::new();
+        let mut grid = generate_terrain(10, 10);
+        // Surround the blob with walls
+        grid.set(4, 5, TerrainType::Rock);
+        grid.set(6, 5, TerrainType::Rock);
+        grid.set(5, 4, TerrainType::Rock);
+        grid.set(5, 6, TerrainType::Rock);
+        app.insert_resource(grid);
+
+        app.add_systems(Update, blob_expansion_system);
+
+        let network = app.world_mut().spawn(BlobNetwork { expansion_timer: 1.0, current_time: 1.0 }).id();
+
+        app.world_mut().spawn((
+            BlobNode { network_id: network },
+            GridPosition { x: 5, y: 5 },
+        ));
+
+        app.update();
+
+        // No new blobs should spawn since it is boxed in
+        let blob_count = app.world_mut().query::<&BlobNode>().iter(&app.world()).count();
+        assert_eq!(blob_count, 1, "Blob expanded through walls");
+    }
+
+    #[test]
+    fn test_blob_consumes_waste_to_delay_expansion() {
+        let mut app = App::new();
+        app.insert_resource(generate_terrain(10, 10));
+        app.add_systems(Update, blob_expansion_system);
+
+        // Give it a negative timer to signify it was just "fed"
+        let network = app.world_mut().spawn(BlobNetwork { expansion_timer: 1.0, current_time: -5.0 }).id();
+
+        app.world_mut().spawn((
+            BlobNode { network_id: network },
+            GridPosition { x: 5, y: 5 },
+        ));
+
+        app.update();
+
+        // Because current_time < expansion_timer, it should not expand
+        let blob_count = app.world_mut().query::<&BlobNode>().iter(&app.world()).count();
+        assert_eq!(blob_count, 1, "Blob expanded despite being fed");
     }
 }

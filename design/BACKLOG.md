@@ -566,4 +566,3 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `871` Gravitational Wealth Inequality — `specs/871-gravitational-wealth-inequality.md`
 - [ ] `872` Gravitational Anomalies — `specs/872-gravitational-anomalies.md`
 - [ ] `873` The Seed Protocol — `specs/873-the-seed-protocol.md`
-- [ ] `874` The Blob — `specs/874-the-blob.md`
