@@ -88,6 +88,7 @@ pub mod hazards_tests;
 pub mod hobby;
 pub use geomes::*;
 
+pub mod bureaucracy_of_sleep;
 /// Housing and rest mechanics.
 pub mod housing;
 /// The Inspector system (Spec 091).
