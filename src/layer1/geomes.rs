@@ -1,5 +1,6 @@
 use crate::layer1::map::GridPosition;
 use crate::layer1::nature::terrain::{TerrainGrid, TerrainType};
+use bevy::utils::{HashMap, HashSet};
 use bevy_ecs::prelude::*;
 
 /// A hazard present on a specific tile (e.g., Toxic Spores, Extreme Heat).
@@ -9,13 +10,17 @@ pub struct GeomeHazard {
 }
 
 /// Diffuses hazards from breached geome tiles into adjacent empty/walkable tiles.
+///
+/// ⚡ Bolt Optimization:
+/// - Replaced `std::collections::{HashMap, HashSet}` with `bevy::utils::{HashMap, HashSet}` (AHash).
+/// - Using AHash eliminates SipHash overhead on `GridPosition` keys, reducing lookup/insertion times.
 pub fn diffuse_geome_hazards_system(
     mut commands: Commands,
     grid: Res<TerrainGrid>,
     hazard_query: Query<&GridPosition, With<GeomeHazard>>,
 ) {
     // Collect existing hazard positions to avoid spawning multiple hazards on the same tile
-    let mut existing_hazards = std::collections::HashSet::new();
+    let mut existing_hazards = HashSet::new();
     for pos in hazard_query.iter() {
         existing_hazards.insert(*pos);
     }
@@ -58,7 +63,7 @@ pub fn environmental_damage_system(
     mut health_query: Query<(&GridPosition, &mut crate::layer1::health::Health)>,
     hazard_query: Query<(&GridPosition, &GeomeHazard)>,
 ) {
-    let mut hazard_map = std::collections::HashMap::new();
+    let mut hazard_map = HashMap::new();
     for (pos, hazard) in hazard_query.iter() {
         *hazard_map.entry(*pos).or_insert(0.0) += hazard.damage_per_tick;
     }
