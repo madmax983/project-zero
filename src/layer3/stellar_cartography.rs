@@ -25,11 +25,10 @@ pub struct StellarCartographyPlugin;
 
 impl Plugin for StellarCartographyPlugin {
     fn build(&self, app: &mut App) {
-        app.add_event::<JumpEvent>()
-            .add_systems(Update, (
-                decay_chart_freshness_system,
-                handle_jump_risk_system,
-            ));
+        app.add_event::<JumpEvent>().add_systems(
+            Update,
+            (decay_chart_freshness_system, handle_jump_risk_system),
+        );
     }
 }
 
@@ -70,7 +69,9 @@ pub fn handle_jump_risk_system(
             k.known_charts.contains_key(&event.destination)
         } else {
             // Fallback for tests: check if any knowledge has it (global)
-            knowledge_query.iter().any(|k| k.known_charts.contains_key(&event.destination))
+            knowledge_query
+                .iter()
+                .any(|k| k.known_charts.contains_key(&event.destination))
         };
 
         if !is_known {
@@ -103,7 +104,9 @@ mod tests {
 
         // Add a fresh chart
         let mut knowledge = app.world_mut().get_mut::<LocalKnowledge>(player).unwrap();
-        knowledge.known_charts.insert(system_a, StarChart { freshness: 100 });
+        knowledge
+            .known_charts
+            .insert(system_a, StarChart { freshness: 100 });
 
         // Update loop reduces freshness over time
         let mut time: Time<()> = Time::default();
@@ -113,7 +116,10 @@ mod tests {
 
         let knowledge = app.world().get::<LocalKnowledge>(player).unwrap();
         let chart = knowledge.known_charts.get(&system_a).unwrap();
-        assert!(chart.freshness < 100, "Chart freshness should decrease over time");
+        assert!(
+            chart.freshness < 100,
+            "Chart freshness should decrease over time"
+        );
     }
 
     #[test]
@@ -124,11 +130,17 @@ mod tests {
         let system_unknown = app.world_mut().spawn(StarSystemNode).id();
         let ship = app.world_mut().spawn((Ship, Position(Vec3::ZERO))).id();
 
-        app.world_mut().send_event(JumpEvent { ship, destination: system_unknown });
+        app.world_mut().send_event(JumpEvent {
+            ship,
+            destination: system_unknown,
+        });
         app.update();
 
         // The jump should carry a risk if the system is unknown
         let has_risk_status = app.world().get::<JumpRisk>(ship).is_some();
-        assert!(has_risk_status, "Jumping to an unknown system should apply a risk status");
+        assert!(
+            has_risk_status,
+            "Jumping to an unknown system should apply a risk status"
+        );
     }
 }
