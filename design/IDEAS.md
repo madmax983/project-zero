@@ -14909,3 +14909,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Allowing cannibalism prevents starvation but irreversibly tangles the social web of your colony with borrowed traumas and conflicting loyalties.
 
 ---
+
+## The Sunk-Cost Monument
+
+**Layer:** 1
+
+**Fantasy:** Committing so many resources into a grand project that abandoning it is unthinkable, even as it dooms the colony.
+
+**Mechanic:** Very large, multi-stage structures scale up their upkeep cost exponentially the longer they take to build. If canceled, they leave behind permanent "ruins" that heavily penalize nearby morale.
+
+**Emergence:** You start building a massive spire. Halfway through, a resource shortage slows construction. The upkeep skyrockets. To keep the project alive, you starve the rest of the colony. The spire is completed by a dying population.
+
+**Tension:** Knowing when to cut losses on a vanity project versus pushing through and starving your people to avoid the permanent penalty of failure.
+
+---
+
+## The Symbiotic Parasite
+
+**Layer:** 1
+
+**Fantasy:** Accepting a horrific affliction because the benefits are just too good to ignore.
+
+**Mechanic:** A rare alien spore infects Pops. Infected Pops no longer need to sleep or eat and work at 150% efficiency, but they slowly drain the health of adjacent healthy Pops during work cycles.
+
+**Emergence:** You isolate the infected into a super-productive "leper colony" of immortal, sleepless workers. Then an infected Pop accidentally escapes into a crowded hospital, draining the patients to power a furious burst of medical research.
+
+**Tension:** Using the horrific efficiency of the infected to survive a crisis versus the moral cost and danger of them draining your healthy population.
+
+---
+
+## Generational Vengeance
+
+**Layer:** Cross-layer
+
+**Fantasy:** A petty feud over a stolen sandwich escalating into an interstellar war centuries later.
+
+**Mechanic:** Pops have a "Grudge" system. If a Pop dies with an unresolved grudge against another Pop, the grudge passes down to their descendants. If a descendant becomes a colony leader or fleet commander, the grudge becomes a faction-level penalty or war goal.
+
+**Emergence:** Two miners hate each other in year 1. In year 300, the descendants of miner A form an orbital faction and aggressively blockade the surface planet governed by descendants of miner B, entirely because of an ancient grudge over a mining tool.
+
+**Tension:** Managing interpersonal conflicts early when they are trivial, or risking them festering into deep societal divides and wars generations down the line.
+
+---
