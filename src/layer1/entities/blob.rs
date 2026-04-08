@@ -1,11 +1,11 @@
 //! The Blob (Spec 874)
 //! An indestructible, slow-growing entity that consumes adjacent tiles.
-use bevy_ecs::prelude::*;
 use crate::layer1::map::GridPosition;
 use crate::layer1::nature::terrain::TerrainGrid;
 use crate::layer1::nature::terrain::TerrainType;
 use crate::layer1::resources::ResourceItem;
 use crate::layer1::resources::ResourceType;
+use bevy_ecs::prelude::*;
 
 #[derive(Component)]
 pub struct BlobNetwork {
@@ -33,14 +33,28 @@ pub fn blob_expansion_system(
             let mut expanded = false;
 
             for (node, pos) in nodes.iter() {
-                if node.network_id != net_entity { continue; }
+                if node.network_id != net_entity {
+                    continue;
+                }
 
                 // Check cardinal directions
                 let adjacents = [
-                    GridPosition { x: pos.x + 1, y: pos.y },
-                    GridPosition { x: pos.x - 1, y: pos.y },
-                    GridPosition { x: pos.x, y: pos.y + 1 },
-                    GridPosition { x: pos.x, y: pos.y - 1 },
+                    GridPosition {
+                        x: pos.x + 1,
+                        y: pos.y,
+                    },
+                    GridPosition {
+                        x: pos.x - 1,
+                        y: pos.y,
+                    },
+                    GridPosition {
+                        x: pos.x,
+                        y: pos.y + 1,
+                    },
+                    GridPosition {
+                        x: pos.x,
+                        y: pos.y - 1,
+                    },
                 ];
 
                 for adj in adjacents {
@@ -49,7 +63,9 @@ pub fn blob_expansion_system(
                         if !matches!(terrain, TerrainType::Rock | TerrainType::DeepRock) {
                             // Expand! (Minimal logic: just spawn one new node per network per tick)
                             commands.spawn((
-                                BlobNode { network_id: net_entity },
+                                BlobNode {
+                                    network_id: net_entity,
+                                },
                                 adj,
                             ));
                             expanded = true;
@@ -58,7 +74,9 @@ pub fn blob_expansion_system(
                     }
                 }
 
-                if expanded { break; }
+                if expanded {
+                    break;
+                }
             }
         }
     }
@@ -95,11 +113,11 @@ pub struct Blob;
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::layer1::map::GridPosition;
+    use crate::layer1::nature::terrain::generate_terrain;
+    use crate::layer1::nature::terrain::TerrainType;
     use bevy_app::App;
     use bevy_app::Update;
-    use crate::layer1::map::GridPosition;
-    use crate::layer1::nature::terrain::TerrainType;
-    use crate::layer1::nature::terrain::generate_terrain;
 
     #[test]
     fn test_blob_expands_to_adjacent_empty_tile() {
@@ -112,18 +130,30 @@ mod tests {
 
         app.add_systems(Update, blob_expansion_system);
 
-        let network = app.world_mut().spawn(BlobNetwork { expansion_timer: 1.0, current_time: 1.0 }).id();
+        let network = app
+            .world_mut()
+            .spawn(BlobNetwork {
+                expansion_timer: 1.0,
+                current_time: 1.0,
+            })
+            .id();
 
         // Spawn the seed blob
         app.world_mut().spawn((
-            BlobNode { network_id: network },
+            BlobNode {
+                network_id: network,
+            },
             GridPosition { x: 5, y: 5 },
         ));
 
         app.update();
 
         // A new blob node should have spawned at (6, 5) or another adjacent tile
-        let blob_count = app.world_mut().query::<&BlobNode>().iter(&app.world()).count();
+        let blob_count = app
+            .world_mut()
+            .query::<&BlobNode>()
+            .iter(app.world())
+            .count();
         assert!(blob_count > 1, "Blob failed to expand");
     }
 
@@ -140,17 +170,29 @@ mod tests {
 
         app.add_systems(Update, blob_expansion_system);
 
-        let network = app.world_mut().spawn(BlobNetwork { expansion_timer: 1.0, current_time: 1.0 }).id();
+        let network = app
+            .world_mut()
+            .spawn(BlobNetwork {
+                expansion_timer: 1.0,
+                current_time: 1.0,
+            })
+            .id();
 
         app.world_mut().spawn((
-            BlobNode { network_id: network },
+            BlobNode {
+                network_id: network,
+            },
             GridPosition { x: 5, y: 5 },
         ));
 
         app.update();
 
         // No new blobs should spawn since it is boxed in
-        let blob_count = app.world_mut().query::<&BlobNode>().iter(&app.world()).count();
+        let blob_count = app
+            .world_mut()
+            .query::<&BlobNode>()
+            .iter(app.world())
+            .count();
         assert_eq!(blob_count, 1, "Blob expanded through walls");
     }
 
@@ -161,17 +203,29 @@ mod tests {
         app.add_systems(Update, blob_expansion_system);
 
         // Give it a negative timer to signify it was just "fed"
-        let network = app.world_mut().spawn(BlobNetwork { expansion_timer: 1.0, current_time: -5.0 }).id();
+        let network = app
+            .world_mut()
+            .spawn(BlobNetwork {
+                expansion_timer: 1.0,
+                current_time: -5.0,
+            })
+            .id();
 
         app.world_mut().spawn((
-            BlobNode { network_id: network },
+            BlobNode {
+                network_id: network,
+            },
             GridPosition { x: 5, y: 5 },
         ));
 
         app.update();
 
         // Because current_time < expansion_timer, it should not expand
-        let blob_count = app.world_mut().query::<&BlobNode>().iter(&app.world()).count();
+        let blob_count = app
+            .world_mut()
+            .query::<&BlobNode>()
+            .iter(app.world())
+            .count();
         assert_eq!(blob_count, 1, "Blob expanded despite being fed");
     }
 }

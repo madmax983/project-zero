@@ -72,3 +72,6 @@ pub mod generational_dissonance;
 
 #[cfg(feature = "nova")]
 pub mod epigenetic_stress;
+
+#[cfg(feature = "nova")]
+pub mod empathy_cascade;
