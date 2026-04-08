@@ -571,3 +571,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `871` Gravitational Wealth Inequality — `specs/871-gravitational-wealth-inequality.md`
 - [ ] `872` Gravitational Anomalies — `specs/872-gravitational-anomalies.md`
 - [ ] `873` The Seed Protocol — `specs/873-the-seed-protocol.md`
+- [ ] `879` The Cassandra Protocol — `specs/879-the-cassandra-protocol.md`
+- [ ] `880` The Attrition of Immortality — `specs/880-the-attrition-of-immortality.md`
+- [ ] `881` The Petrification Protocol — `specs/881-the-petrification-protocol.md`
