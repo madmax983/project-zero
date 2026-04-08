@@ -562,6 +562,5 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `866` The Cargo Cult of the Supply Drop — `specs/866-cargo-cult-supply-drop.md`
 - [ ] `867` The Mutually Assured Quarantine — `specs/867-mutually-assured-quarantine.md`
 - [ ] `868` The Sovereign AI Graveyard — `specs/868-sovereign-ai-graveyard.md`
-- [ ] `869` The Bureaucracy of Sleep — `specs/869-bureaucracy-of-sleep.md`
 - [ ] `870` Cultural Desync — `specs/870-cultural-desync.md`
 - [ ] `871` Gravitational Wealth Inequality — `specs/871-gravitational-wealth-inequality.md`

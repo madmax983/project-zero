@@ -129,4 +129,11 @@ pub fn register(schedule: &mut Schedule) {
         )
             .in_set(Layer1SystemSet::Consumption),
     );
+    schedule.add_systems(
+        (
+            crate::layer1::bureaucracy_of_sleep::assign_sleep_permits_system,
+            crate::layer1::bureaucracy_of_sleep::process_sleep_deprivation_system,
+        )
+            .in_set(Layer1SystemSet::Consumption),
+    );
 }
