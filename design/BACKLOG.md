@@ -576,3 +576,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `881` The Petrification Protocol — `specs/881-the-petrification-protocol.md`
 - [ ] `882` The Architect's Guilt — `specs/882-the-architects-guilt.md`
 - [ ] `883` The Nostalgia Contagion — `specs/883-the-nostalgia-contagion.md`
+- [ ] `884` The Bioluminescent Graffiti — `specs/884-bioluminescent-graffiti.md`
+- [ ] `885` Bureaucracy of the Deceased — `specs/885-bureaucracy-of-the-deceased.md`
+- [ ] `886` The Cannibal's Empathy — `specs/886-the-cannibals-empathy.md`
