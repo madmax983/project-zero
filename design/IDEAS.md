@@ -14810,3 +14810,47 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Lowering the oppressive quotas to ease their minds (losing efficiency) or implementing mandatory physical restraints during sleep cycles (causing massive waking unrest).
 
 ---
+
+## Gravity-Well Taxation
+
+**Layer:** 2 -> 1
+
+**Fantasy:** Physics dictates the economy, and the elite use it to literally keep the poor down.
+
+**Mechanic:** Planets with extremely high gravity cost more fuel to launch from. Wealthy populations migrate to low-G orbital rings to save on shipping costs, leaving the poor trapped on the high-G surface doing the heavy lifting.
+
+**Emergence:** Your orbital elite institute a "launch tax" on the surface miners. The miners, hardened by high-G, simply stop sending food up, starving the delicate, low-G aristocrats in their gilded cages.
+
+**Tension:** Do you subsidize the heavy surface lifters to maintain economic unity, or let the orbital elite enforce a literal caste system?
+
+---
+
+
+## The Sub-Space Tinnitus
+
+**Layer:** Cross-layer
+
+**Fantasy:** The ringing in your ears isn't a medical issue; it's the dying scream of a civilization halfway across the galaxy.
+
+**Mechanic:** Frequent use of high-power communications arrays causes a localized "Sub-Space Hum." Pops living near the arrays slowly develop "Tinnitus," leading to insomnia and eventually hallucinatory translations of background cosmic noise.
+
+**Emergence:** Your comms technicians stop sleeping. They claim the static is giving them blueprints for a weapon. You follow the blueprints, only to realize it's a beacon that summons the very threat the distant civilization was trying to warn you about.
+
+**Tension:** Do you shut down the arrays (losing crucial intel) to cure your people, or endure the madness for the sake of galactic awareness?
+
+---
+
+
+## The Rust-Lung Epidemic
+
+**Layer:** 1
+
+**Fantasy:** Breathing the air of progress until it suffocates you.
+
+**Mechanic:** Extracting low-purity ores releases microscopic, jagged metallic dust ("Rust"). Pops without proper rebreathers accumulate "Rust-Lung," slightly reducing their movement speed but making them immune to certain toxic gases (because their lungs are already coated in metal).
+
+**Emergence:** You ignore safety protocols to meet a quota. Half your colony gets Rust-Lung. Years later, a catastrophic toxic gas leak occurs. The only survivors are the afflicted miners, who now rule the ruined colony because the healthy elite all suffocated.
+
+**Tension:** Enforce expensive safety gear (slowing production) or allow the slow, metallic poisoning of your workforce for a strange kind of resilience?
+
+---
