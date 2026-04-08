@@ -647,3 +647,9 @@
 - **Systems connected:** `process_skyhook_launch` (Skyhooks) -> `SimulationSchedule` (Execution Schedule)
 - **Glue added:** Registered `process_skyhook_launch` in `src/simulation.rs` correctly after syzygy effects and initialized `LaunchIntent` resource.
 - **Tests:** `tests/integration/skyhook_launch_bridge.rs`
+
+### INT-861: Stellar Cartography JumpRisk -> Damage/Chronicle
+- **Date:** 2026-04-10
+- **Systems connected:** `handle_jump_risk_system` (Stellar Cartography) -> `jump_risk_bridge_system` (Integration) -> `FleetDamagedEvent` & `AddChronicleEvent`
+- **Glue added:** Added `jump_risk_bridge_system` to consume `JumpRisk` from fleets and apply hull damage, as well as emit an `AddChronicleEvent` (`EventImportance::Major`). Registered in `SimulationSchedule`.
+- **Tests:** `tests/integration/jump_risk_bridge.rs`

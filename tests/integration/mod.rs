@@ -27,3 +27,4 @@ pub mod cascade_failure_chronicle;
 pub mod diplomacy_reflection;
 pub mod parasitic_architecture_bridge;
 pub mod hyperlane_collapse_bridge;
+pub mod jump_risk_bridge;

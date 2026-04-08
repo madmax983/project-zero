@@ -65,3 +65,32 @@ pub fn dynastic_crisis_chronicle_bridge(
         });
     }
 }
+
+
+use crate::layer2::navigation::stellar_weather::FleetDamagedEvent;
+use crate::layer3::stellar_cartography::JumpRisk;
+
+/// Bridges `JumpRisk` (Stellar Cartography) to `FleetDamagedEvent` and `AddChronicleEvent` (Chronicle).
+pub fn jump_risk_bridge_system(
+    mut commands: Commands,
+    query: Query<Entity, With<JumpRisk>>,
+    mut damage_events: EventWriter<FleetDamagedEvent>,
+    mut chronicle_events: EventWriter<AddChronicleEvent>,
+) {
+    for entity in query.iter() {
+        // Remove the risk component so we don't repeatedly damage
+        commands.entity(entity).remove::<JumpRisk>();
+
+        // Apply a flat minor damage for jumping blind
+        damage_events.send(FleetDamagedEvent {
+            fleet: entity,
+            amount: 20.0,
+        });
+
+        // Add to chronicle
+        chronicle_events.send(AddChronicleEvent {
+            importance: EventImportance::Major,
+            text: "A fleet suffered hull damage after jumping blind into an uncharted system.".to_string(),
+        });
+    }
+}
