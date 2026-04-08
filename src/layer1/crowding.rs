@@ -173,10 +173,25 @@ mod tests {
         // Assert
         // Path should go around the crowded tile (1,0)
         assert!(path.is_some());
-        let p = path.unwrap();
+        let p = path.expect("Path should avoid crowded tile (1,0)");
         // If pathfinding ignores crowding, it will be (0,0)->(1,0)->(2,0)->(3,0)
         // If it respects crowding, it should go (0,0)->(0,1)->(1,1)->(2,1)->(3,1)->(3,0) or similar.
         // The crowded tile is (1,0).
         assert!(!p.contains(&(1, 0)), "Path should avoid crowded tile (1,0)");
+    }
+
+    #[test]
+    fn test_crowding_out_of_bounds_safety() {
+        // Arrange
+        let mut grid = CrowdingGrid::new(10, 10);
+
+        // Act & Assert
+        // These should safely return 0 or do nothing, rather than panicking due to out of bounds
+        // or arithmetic overflow.
+        assert_eq!(grid.get(usize::MAX, usize::MAX), 0);
+        grid.add_crowding(usize::MAX, usize::MAX, 10);
+
+        assert_eq!(grid.get(10, 10), 0); // Exactly at width/height bounds
+        grid.add_crowding(10, 10, 10);
     }
 }
