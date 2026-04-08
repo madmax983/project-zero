@@ -57,6 +57,9 @@
 - [ ] `474` Inherited Grudges — `specs/474-inherited-grudges.md`
 - [ ] `477` The Ransom Broker — `specs/477-the-ransom-broker.md`
 
+- [ ] `887` The Sunk-Cost Monument — `specs/887-the-sunk-cost-monument.md`
+- [ ] `888` The Symbiotic Parasite — `specs/888-the-symbiotic-parasite.md`
+- [ ] `889` Generational Vengeance — `specs/889-generational-vengeance.md`
 
 ## Future / Ideas
 

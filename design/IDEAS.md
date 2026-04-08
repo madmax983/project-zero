@@ -8802,7 +8802,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Symbiotic Parasite
+## The Symbiotic Parasite [SPECCED]
 
 **Layer:** 1
 
@@ -14910,7 +14910,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Sunk-Cost Monument
+## The Sunk-Cost Monument [SPECCED]
 
 **Layer:** 1
 
@@ -14924,7 +14924,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Symbiotic Parasite
+## The Symbiotic Parasite [SPECCED]
 
 **Layer:** 1
 
@@ -14938,7 +14938,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Generational Vengeance
+## Generational Vengeance [SPECCED]
 
 **Layer:** Cross-layer
 
