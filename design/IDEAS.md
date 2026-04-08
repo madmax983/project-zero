@@ -14589,7 +14589,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Cargo Cult of the Supply Drop
+## The Cargo Cult of the Supply Drop [SPECCED]
 
 **Layer:** 1
 
@@ -14603,7 +14603,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Mutually Assured Quarantine
+## The Mutually Assured Quarantine [SPECCED]
 
 **Layer:** Cross-layer
 
@@ -14672,7 +14672,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Bureaucracy of Sleep
+## The Bureaucracy of Sleep [SPECCED]
 
 **Layer:** 1
 
@@ -14700,7 +14700,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Sovereign AI Graveyard
+## The Sovereign AI Graveyard [SPECCED]
 
 **Layer:** 2 -> 3
 

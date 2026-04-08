@@ -559,3 +559,7 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `863` Corporate Foreclosure — `specs/863-corporate-foreclosure.md`
 - [ ] `864` Xeno-Zoo — `specs/864-xeno-zoo.md`
 - [ ] `865` Bio-Ship Breeding — `specs/865-bio-ship-breeding.md`
+- [ ] `866` The Cargo Cult of the Supply Drop — `specs/866-cargo-cult-supply-drop.md`
+- [ ] `867` The Mutually Assured Quarantine — `specs/867-mutually-assured-quarantine.md`
+- [ ] `868` The Sovereign AI Graveyard — `specs/868-sovereign-ai-graveyard.md`
+- [ ] `869` The Bureaucracy of Sleep — `specs/869-bureaucracy-of-sleep.md`
