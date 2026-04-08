@@ -10,17 +10,12 @@ fn test_hallucination_work_penalty() {
     let mut world = World::new();
 
     // Spawn a normal worker
-    let normal_worker = world.spawn((
-        Pop,
-        Skills::default(),
-    )).id();
+    let normal_worker = world.spawn((Pop, Skills::default())).id();
 
     // Spawn a hallucinating worker
-    let hallucinating_worker = world.spawn((
-        Pop,
-        Skills::default(),
-        Hallucinating { duration: 10 },
-    )).id();
+    let hallucinating_worker = world
+        .spawn((Pop, Skills::default(), Hallucinating { duration: 10 }))
+        .id();
 
     let normal_amount = calculate_work_amount(
         &world,
@@ -43,5 +38,8 @@ fn test_hallucination_work_penalty() {
     );
 
     assert!(normal_amount > 0.0, "Normal worker should produce work");
-    assert_eq!(hallucinating_amount, 0.0, "Hallucinating worker should produce 0 work");
+    assert_eq!(
+        hallucinating_amount, 0.0,
+        "Hallucinating worker should produce 0 work"
+    );
 }

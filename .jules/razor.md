@@ -73,3 +73,8 @@
 **Bloat:** `LeaderTrait` enum in `src/layer3/diplomacy/succession.rs` containing variants (`Pacifist`, `Militant`, `Cruel`), which served no mechanical purpose other than optional flavor text in a single Chronicle event.
 **Cut:** Excised `LeaderTrait` enum entirely. Removed `leader_trait` from `SuccessionEvent` and integration bridges.
 **Saved:** 15 lines of code, one less `#[derive]`, and removed an unnecessary text-formatting path.
+
+## [Reduction]
+**Bloat:** `GeologicalEvent` enum in `src/layer1/geology/mod.rs` containing variants (`Tremor`, `Earthquake`), where `Tremor` was never constructed or utilized.
+**Cut:** Converted `GeologicalEvent` from an enum into a standard struct (representing just an `Earthquake`). Removed pattern matching wrappers at instantiation sites across `src/layer1/geology/mod.rs`, `src/layer1/seismic.rs`, and `src/layer1/geology/tectonic.rs`.
+**Saved:** 7 lines of code, speculative pattern matching overhead, and improved explicit ECS communication by eliminating unused event variants.

@@ -81,19 +81,11 @@ impl SeismicGrid {
 
 /// Events related to geological instability.
 #[derive(Event, Debug, Clone)]
-pub enum GeologicalEvent {
-    /// A minor tremor (warning).
-    Tremor {
-        /// Center of the tremor.
-        center: GridPosition,
-    },
-    /// A major earthquake (damage).
-    Earthquake {
-        /// Center of the earthquake.
-        center: GridPosition,
-        /// Magnitude of the earthquake (determines damage radius and intensity).
-        magnitude: f32,
-    },
+pub struct GeologicalEvent {
+    /// Center of the geological event.
+    pub center: GridPosition,
+    /// Magnitude of the event (determines damage radius and intensity).
+    pub magnitude: f32,
 }
 
 /// Helper to add stress to the grid from other systems.
@@ -124,7 +116,7 @@ pub fn check_seismic_events(
                 // Trigger event
                 // Reset stress (release energy)
                 grid.stress[idx] = 0.0;
-                events.send(GeologicalEvent::Earthquake {
+                events.send(GeologicalEvent {
                     center: GridPosition {
                         x: x as i32,
                         y: y as i32,
@@ -146,29 +138,28 @@ pub fn apply_geological_event_system(
     mut shake: Option<ResMut<ScreenShake>>,
 ) {
     for event in events.read() {
-        if let GeologicalEvent::Earthquake { center, magnitude } = event {
-            // Apply damage in radius (simple 1 tile for now based on test)
-            let damage = 10.0 * magnitude;
-            for (_entity, pos, mut health) in &mut health_query {
-                if pos == center {
-                    health.current -= damage;
-                }
+        let GeologicalEvent { center, magnitude } = event;
+        // Apply damage in radius (simple 1 tile for now based on test)
+        let damage = 10.0 * magnitude;
+        for (_entity, pos, mut health) in &mut health_query {
+            if pos == center {
+                health.current -= damage;
             }
-
-            // Visual feedback
-            if let Some(ref mut s) = shake {
-                s.trigger(0.5 * magnitude);
-            }
-
-            commands.spawn((
-                crate::layer1::particles::Particle {
-                    char: '#',
-                    color: Color::Red,
-                    lifetime: 20,
-                },
-                *center,
-            ));
         }
+
+        // Visual feedback
+        if let Some(ref mut s) = shake {
+            s.trigger(0.5 * magnitude);
+        }
+
+        commands.spawn((
+            crate::layer1::particles::Particle {
+                char: '#',
+                color: Color::Red,
+                lifetime: 20,
+            },
+            *center,
+        ));
     }
 }
 
@@ -236,13 +227,9 @@ mod tests {
         let emitted: Vec<_> = reader.read(events).collect();
 
         assert!(!emitted.is_empty());
-        match emitted[0] {
-            GeologicalEvent::Earthquake { center, .. } => {
-                assert_eq!(center.x, 5);
-                assert_eq!(center.y, 5);
-            }
-            _ => panic!("Expected Earthquake"),
-        }
+        let center = emitted[0].center;
+        assert_eq!(center.x, 5);
+        assert_eq!(center.y, 5);
     }
 
     #[test]
@@ -263,7 +250,7 @@ mod tests {
         world.insert_resource(crate::layer1::map::ScreenShake::default());
 
         // Send event
-        world.send_event(GeologicalEvent::Earthquake {
+        world.send_event(GeologicalEvent {
             center: GridPosition { x: 5, y: 5 },
             magnitude: 5.0,
         });

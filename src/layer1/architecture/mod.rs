@@ -14,20 +14,20 @@ mod structure_jury_rig_tests;
 mod structure_maintenance_tests;
 
 pub mod parasitic_architecture;
-pub mod spontaneous_architecture;
-pub mod symbiotic_infrastructure;
 pub mod room_quality;
 pub mod ruins;
+pub mod spontaneous_architecture;
+pub mod symbiotic_infrastructure;
 pub mod turret;
 pub mod window;
 
 pub use building::*;
 pub use housing::*;
-pub use structure::*;
 pub use parasitic_architecture::*;
-pub use spontaneous_architecture::*;
-pub use symbiotic_infrastructure::*;
 pub use room_quality::*;
 pub use ruins::*;
+pub use spontaneous_architecture::*;
+pub use structure::*;
+pub use symbiotic_infrastructure::*;
 pub use turret::*;
 pub use window::*;
