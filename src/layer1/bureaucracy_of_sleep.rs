@@ -86,7 +86,9 @@ pub fn process_sleep_deprivation_system(
 
         // Extreme fatigue causes hallucinations
         if fatigue.current > 95.0 {
-            commands.entity(entity).insert(crate::layer1::agriculture::gastronomy::Hallucinating { duration: 100 });
+            commands
+                .entity(entity)
+                .insert(crate::layer1::agriculture::gastronomy::Hallucinating { duration: 100 });
         }
     }
 }
@@ -192,7 +194,9 @@ mod tests {
             stress.accumulated_stress
         );
         assert!(
-            app.world().get::<crate::layer1::agriculture::gastronomy::Hallucinating>(worker).is_some(),
+            app.world()
+                .get::<crate::layer1::agriculture::gastronomy::Hallucinating>(worker)
+                .is_some(),
             "Should be hallucinating"
         );
     }

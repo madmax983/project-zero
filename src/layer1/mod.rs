@@ -109,6 +109,9 @@ pub mod memory;
 
 /// Tests for metal industry (Spec 024).
 pub mod metal_industry_tests;
+/// Terrain generation and grid management.
+/// Tests for mining logic (Spec 052).
+pub mod mining_tests;
 /// Pop needs (hunger, rest).
 pub mod needs;
 /// Notification system.
@@ -130,9 +133,6 @@ pub mod spoilage;
 /// Structure durability and repair.
 /// Technology and research system.
 pub mod tech;
-/// Terrain generation and grid management.
-/// Tests for mining logic (Spec 052).
-pub mod mining_tests;
 
 /// Tests for mother lode logic (Spec 168).
 pub mod mother_lode_tests;
@@ -276,8 +276,6 @@ mod heirloom_items_tests;
 mod heirloom_tests;
 
 mod retrograde_tests;
-
-
 
 /// Animal Husbandry system (Spec 075).
 /// Gastronomy system (Spec 166).

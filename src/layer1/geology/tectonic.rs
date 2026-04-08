@@ -47,7 +47,7 @@ pub fn check_quake_system(
     if stress.current >= stress.threshold {
         quake_writer.send(MegaQuakeEvent);
         // Dispatch actual damage using GeologicalEvent
-        geo_events.send(crate::layer1::geology::GeologicalEvent::Earthquake {
+        geo_events.send(crate::layer1::geology::GeologicalEvent {
             center: crate::layer1::map::GridPosition { x: 50, y: 50 }, // Approximation since map size is not directly here, or we can just send multiple.
             magnitude: 15.0,                                           // MegaQuake is big
         });

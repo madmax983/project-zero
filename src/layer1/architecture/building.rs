@@ -20,30 +20,30 @@
 //! *   [`crate::layer1::structure::Structure`]: Health and durability.
 //! *   Specific Logic Components: e.g., [`Housing`], [`Farm`], [`Stockpile`].
 
-use crate::layer1::physics::acoustic::NoiseSource;
-use crate::layer1::beauty::BeautySource;
-use crate::layer1::agriculture::farm::Farm;
-use crate::layer1::nature::fire::Flammable;
 use super::housing::Housing;
-use crate::layer1::social::Tavern;
-use crate::layer1::economy::stockpile::Stockpile;
-use crate::layer1::map::GridPosition;
 use crate::layer1::access_control::AccessControl;
 use crate::layer1::admin::{AdminConsumer, AdminProvider, Office};
+use crate::layer1::agriculture::farm::Farm;
 use crate::layer1::ai_core::AICore;
 use crate::layer1::atmosphere::CorrosionResistant;
+use crate::layer1::beauty::BeautySource;
 use crate::layer1::control::DoorControl;
 use crate::layer1::drone::DroneHub;
+use crate::layer1::economy::stockpile::Stockpile;
 use crate::layer1::energy::{Conduit, FuelConsumer, PowerConsumer, PowerSource};
 use crate::layer1::heirloom::AncientStructure;
 use crate::layer1::inventory::Inventory;
 use crate::layer1::items::ItemType;
 use crate::layer1::lighting::LightSource;
+use crate::layer1::map::GridPosition;
+use crate::layer1::nature::fire::Flammable;
 use crate::layer1::permit::PermitRequired;
+use crate::layer1::physics::acoustic::NoiseSource;
 use crate::layer1::prototyping::{BuildingMastery, Prototype};
 use crate::layer1::resources::{ColonyResources, RefiningProgress};
 use crate::layer1::rituals::MachineSpirit;
 use crate::layer1::seismic::SeismicSource;
+use crate::layer1::social::Tavern;
 use crate::layer1::solar::SolarPower;
 use crate::layer1::tech::{DataStorage, Library, Tech, TechState};
 use crate::layer1::terrain::{TerrainGrid, TerrainType};

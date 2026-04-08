@@ -179,7 +179,7 @@ pub fn seismic_instability_system(
                 // 1% chance per tick per tile is actually quite high if many tiles are vibrating.
                 // Let's make it 1% chance.
                 if rng.r#gen::<f32>() < 0.01 {
-                    events.send(GeologicalEvent::Earthquake {
+                    events.send(GeologicalEvent {
                         center: GridPosition {
                             x: x as i32,
                             y: y as i32,

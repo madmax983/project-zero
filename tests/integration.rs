@@ -260,9 +260,9 @@ mod jump_risk_bridge;
 mod orbital_commute_bridge;
 #[path = "integration/parasitic_architecture_bridge.rs"]
 mod parasitic_architecture_bridge;
+#[path = "integration/sleep_hallucination_bridge.rs"]
+mod sleep_hallucination_bridge;
 #[path = "integration/temporal_ghost_towns_bridge.rs"]
 mod temporal_ghost_towns_bridge;
 #[path = "integration/void_whispers_chronicle.rs"]
 mod void_whispers_chronicle;
-#[path = "integration/sleep_hallucination_bridge.rs"]
-mod sleep_hallucination_bridge;
