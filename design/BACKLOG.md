@@ -574,3 +574,5 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `879` The Cassandra Protocol — `specs/879-the-cassandra-protocol.md`
 - [ ] `880` The Attrition of Immortality — `specs/880-the-attrition-of-immortality.md`
 - [ ] `881` The Petrification Protocol — `specs/881-the-petrification-protocol.md`
+- [ ] `882` The Architect's Guilt — `specs/882-the-architects-guilt.md`
+- [ ] `883` The Nostalgia Contagion — `specs/883-the-nostalgia-contagion.md`
