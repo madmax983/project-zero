@@ -14741,3 +14741,72 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** The immense material strength and passive buffs of building with living history versus the horrific psychological cost and ethical line of literal human architecture.
 
 ---
+## The Architect's Guilt
+
+**Layer:** 1
+
+**Fantasy:** Watching your lead builder slowly descend into madness because of the people who died constructing their masterpiece.
+
+**Mechanic:** Pops who build structures where other pops died accumulate "Guilt." High guilt makes them refuse to repair the building or approach it, eventually trying to sabotage it.
+
+**Emergence:** Your glorious space elevator is falling apart because the only master engineer capable of fixing it is the one who designed it, and they are actively trying to blow it up to avenge the workers who fell from it.
+
+**Tension:** Forcing the guilty architect to maintain their cursed creation (risking sabotage) or letting it decay safely but inefficiently.
+
+---
+
+## The Nostalgia Contagion
+
+**Layer:** Cross-layer
+
+**Fantasy:** An entire planet becomes paralyzed by a sudden, intense yearning for a home they never knew.
+
+**Mechanic:** Trade ships from the Core Worlds occasionally carry "Nostalgia Artifacts" (old holovids, physical books). Pops who interact with them get a massive morale boost but a permanent "Yearning" debuff, causing them to spend work hours staring at the sky.
+
+**Emergence:** Your thriving frontier mining colony completely stops producing ore because everyone is sitting on the surface, looking toward Earth and crying over a 400-year-old sitcom broadcast.
+
+**Tension:** Banning cultural imports (causing immediate unrest and diplomatic penalties) or risking a slow, melancholic collapse of your workforce.
+
+---
+
+## The Phantom Grid
+
+**Layer:** 1
+
+**Fantasy:** Your colony is powered by something you didn't build and don't understand.
+
+**Mechanic:** Unpowered buildings occasionally tap into an invisible, subterranean energy grid. They function perfectly, but emit a low-frequency hum that slightly raises the Stress of any Pop nearby.
+
+**Emergence:** Your entire hospital remains operational during a week-long blackout, saving hundreds of lives. But afterward, the doctors refuse to sleep without the hum, creating a localized cult that actively unplugs generators to keep the Phantom Grid active.
+
+**Tension:** Embracing the free, reliable alien power source or aggressively isolating your infrastructure to maintain human control over reality.
+
+---
+
+## The Orbital Breadcrumbs
+
+**Layer:** 2 -> 1
+
+**Fantasy:** Following a trail of trash to find a lost treasure, or a trap.
+
+**Mechanic:** Fleeing pirate fleets or damaged merchant vessels occasionally jettison encrypted data drives or locked cargo pods into orbit. They slowly decay and fall to Layer 1. Collecting them reveals a fragment of a larger treasure map or a warning.
+
+**Emergence:** You spend years collecting falling debris, finally piecing together coordinates to a massive precursor cache. You send your fleet, only to realize the "treasure" is the coordinates to a dormant super-predator the pirates were desperately trying to flee.
+
+**Tension:** Dedicating valuable ground haulers to constantly retrieve falling orbital trash versus ignoring potential galactic-scale opportunities.
+
+---
+
+## The Sleepwalker's Rebellion
+
+**Layer:** 1
+
+**Fantasy:** Your colonists are perfectly obedient while awake, but their subconscious minds are staging a violent uprising.
+
+**Mechanic:** In highly oppressive or micromanaged colonies, Pops develop "Subconscious Dissent." While asleep, they occasionally sleepwalk and perform minor acts of sabotage or vandalism against authority symbols, with no memory of it upon waking.
+
+**Emergence:** The Governor's mansion is covered in anti-government graffiti every morning. The enforcers arrest the culprits, only to find the security footage shows the enforcers themselves doing it while fast asleep.
+
+**Tension:** Lowering the oppressive quotas to ease their minds (losing efficiency) or implementing mandatory physical restraints during sleep cycles (causing massive waking unrest).
+
+---
