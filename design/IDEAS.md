@@ -14741,7 +14741,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** The immense material strength and passive buffs of building with living history versus the horrific psychological cost and ethical line of literal human architecture.
 
 ---
-## The Architect's Guilt
+## The Architect's Guilt [SPECCED]
 
 **Layer:** 1
 
@@ -14755,7 +14755,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Nostalgia Contagion
+## The Nostalgia Contagion [SPECCED]
 
 **Layer:** Cross-layer
 
