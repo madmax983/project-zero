@@ -12768,7 +12768,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Memorial Fleet
+## The Memorial Fleet [SPECCED]
 
 **Layer:** 2 -> 3
 
@@ -12796,7 +12796,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Phantom Tax
+## The Phantom Tax [SPECCED]
 
 **Layer:** 3
 
@@ -12853,7 +12853,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 ---
 
 
-## The Debt of the Dead
+## The Debt of the Dead [SPECCED]
 
 **Layer:** 1
 
@@ -12867,7 +12867,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Solar Flare Lottery
+## The Solar Flare Lottery [SPECCED]
 
 **Layer:** Cross-layer (2 -> 1)
 

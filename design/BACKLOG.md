@@ -85,6 +85,12 @@
 - [ ] `681` Feral Logistics Network — `specs/681-feral-logistics-network.md`
 - [ ] `682` Symbiotic Leviathans — `specs/682-symbiotic-leviathans.md`
 
+
+- [ ] `875` The Memorial Fleet — `specs/875-the-memorial-fleet.md`
+- [ ] `876` The Phantom Tax — `specs/876-the-phantom-tax.md`
+- [ ] `877` The Debt of the Dead — `specs/877-the-debt-of-the-dead.md`
+- [ ] `878` The Solar Flare Lottery — `specs/878-the-solar-flare-lottery.md`
+
 See `design/IDEAS.md` for unspecced concepts.
 - [x] `255` Hypno-Learning — `specs/255-hypno-learning.md` — completed 2026-03-01
 
