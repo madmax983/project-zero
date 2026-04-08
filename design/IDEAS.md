@@ -14686,7 +14686,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Cultural Desync
+## Cultural Desync [SPECCED]
 
 **Layer:** Cross-layer
 
@@ -14714,7 +14714,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Gravitational Wealth Inequality
+## Gravitational Wealth Inequality [SPECCED]
 
 **Layer:** Cross-layer
 
