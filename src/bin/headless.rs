@@ -677,10 +677,7 @@ fn print_status(world: &mut World) {
 fn print_tech(world: &mut World) {
     let tech_state = world.resource::<TechState>();
 
-    println!(
-        "💾 Total Capacity: {:.1} TB | Used: {:.1} TB",
-        tech_state.total_capacity, tech_state.used_capacity
-    );
+
 
     let mut table = Table::new();
     table
@@ -731,7 +728,10 @@ fn print_tech(world: &mut World) {
         ]);
     }
 
-    print_dashboard_table("TECHNOLOGY STATUS", table);
+    print_dashboard_table(
+        &format!("TECHNOLOGY STATUS (Capacity: {:.1} TB / {:.1} TB)", tech_state.used_capacity, tech_state.total_capacity),
+        table,
+    );
 }
 
 fn print_pops(world: &mut World) {
@@ -810,6 +810,8 @@ fn print_pops(world: &mut World) {
 
         let traits_color = if traits_str == "-" {
             Color::DarkGrey
+        } else if traits_str.contains("Prophet") || traits_str.contains("Engine Cultist") {
+            Color::Yellow
         } else if traits_str.contains("Mutant") {
             Color::Magenta
         } else {
