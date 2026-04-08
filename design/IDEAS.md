@@ -3683,7 +3683,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Gravitational Anomalies
+## Gravitational Anomalies [SPECCED]
 
 **Layer:** 1
 
@@ -3697,7 +3697,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Seed Protocol
+## The Seed Protocol [SPECCED]
 
 **Layer:** 2 -> 3
 
@@ -3739,7 +3739,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Blob
+## The Blob [SPECCED]
 
 **Layer:** 1
 
