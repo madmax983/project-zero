@@ -564,3 +564,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `868` The Sovereign AI Graveyard — `specs/868-sovereign-ai-graveyard.md`
 - [ ] `870` Cultural Desync — `specs/870-cultural-desync.md`
 - [ ] `871` Gravitational Wealth Inequality — `specs/871-gravitational-wealth-inequality.md`
+- [ ] `872` Gravitational Anomalies — `specs/872-gravitational-anomalies.md`
+- [ ] `873` The Seed Protocol — `specs/873-the-seed-protocol.md`
+- [ ] `874` The Blob — `specs/874-the-blob.md`
