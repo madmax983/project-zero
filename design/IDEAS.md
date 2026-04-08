@@ -14854,7 +14854,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Enforce expensive safety gear (slowing production) or allow the slow, metallic poisoning of your workforce for a strange kind of resilience?
 
 ---
-## The Bioluminescent Graffiti
+## The Bioluminescent Graffiti [SPECCED]
 
 **Layer:** 1
 
@@ -14882,7 +14882,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Bureaucracy of the Deceased
+## Bureaucracy of the Deceased [SPECCED]
 
 **Layer:** 1
 
@@ -14896,7 +14896,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Cannibal's Empathy
+## The Cannibal's Empathy [SPECCED]
 
 **Layer:** 1
 
