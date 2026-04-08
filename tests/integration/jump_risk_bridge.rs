@@ -1,8 +1,8 @@
 use bevy::prelude::*;
 use scale::layer1::chronicle::{AddChronicleEvent, EventImportance};
 use scale::layer2::navigation::stellar_weather::FleetDamagedEvent;
-use scale::layer3::stellar_cartography::JumpRisk;
 use scale::layer3::integration::jump_risk_bridge_system;
+use scale::layer3::stellar_cartography::JumpRisk;
 
 #[test]
 fn test_jump_risk_bridge() {
@@ -13,10 +13,7 @@ fn test_jump_risk_bridge() {
 
     app.add_systems(Update, jump_risk_bridge_system);
 
-    let fleet_entity = app
-        .world_mut()
-        .spawn(JumpRisk)
-        .id();
+    let fleet_entity = app.world_mut().spawn(JumpRisk).id();
 
     app.update();
 
