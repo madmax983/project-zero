@@ -264,3 +264,5 @@ mod parasitic_architecture_bridge;
 mod temporal_ghost_towns_bridge;
 #[path = "integration/void_whispers_chronicle.rs"]
 mod void_whispers_chronicle;
+#[path = "integration/sleep_hallucination_bridge.rs"]
+mod sleep_hallucination_bridge;
