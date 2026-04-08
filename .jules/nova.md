@@ -115,3 +115,7 @@
 **Concept:** Added `epigenetic_mutation_system` where Pops suffering from intense chronic stress (`accumulated_stress > 1000.0`) have a chance to undergo a permanent epigenetic mutation, gaining the `Trait::Mutant` trait and releasing half their stress as a traumatic catharsis.
 **Fate:** Proposed
 **Lesson:** Tying long-term negative states (`Stress`) to permanent physical changes (`Traits`) makes poor colony management have lasting demographic consequences rather than just temporary breakdowns.
+## [The Empathy Cascade]
+**Concept:** Added `empathy_cascade_system` where Pops with the `EmpathicLink` trait physically broadcast any damage they take to nearby Pops. Normal Pops suffer massive stress, while fellow Empaths suffer sympathetic physical damage, creating a dangerous chain reaction in crowded areas.
+**Fate:** Proposed
+**Lesson:** Tying internal physical states (`Health`) directly to spatial area-of-effect components using psychological traits (`EmpathicLink`) turns a minor local injury into a terrifying, colony-wide crisis, making base layout and trait segregation mechanically relevant.

@@ -1,5 +1,5 @@
 use super::Layer1SystemSet;
-use crate::layer1::blob::{blob_expansion_system, blob_spread_system, blob_consumption_system};
+use crate::layer1::blob::{blob_consumption_system, blob_expansion_system, blob_spread_system};
 use crate::layer1::*;
 use bevy_ecs::prelude::*;
 
@@ -29,7 +29,11 @@ pub fn register(schedule: &mut Schedule) {
                 .after(fire_spread_system)
                 .after(fire_damage_pops_system)
                 .after(crate::layer1::structure::fire_damage_structure_system),
-            (blob_expansion_system, blob_spread_system, blob_consumption_system),
+            (
+                blob_expansion_system,
+                blob_spread_system,
+                blob_consumption_system,
+            ),
             blob_consumption_system.after(blob_spread_system),
             flora_attack_system,
             crate::layer1::flora::process_flora_migration,

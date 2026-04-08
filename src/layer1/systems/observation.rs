@@ -31,6 +31,9 @@ pub fn register(schedule: &mut Schedule) {
             crate::experimental::cartography_export::map_export_system,
             crate::experimental::paranoia_network::paranoia_network_system,
             crate::experimental::epigenetic_stress::epigenetic_mutation_system,
+            crate::experimental::empathy_cascade::init_empathic_health_tracker_system,
+            crate::experimental::empathy_cascade::empathy_cascade_system
+                .after(crate::experimental::empathy_cascade::init_empathic_health_tracker_system),
         )
             .in_set(Layer1SystemSet::Observation),
     );
