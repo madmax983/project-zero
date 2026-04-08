@@ -20,14 +20,14 @@
 //! *   [`crate::layer1::structure::Structure`]: Health and durability.
 //! *   Specific Logic Components: e.g., [`Housing`], [`Farm`], [`Stockpile`].
 
-use super::acoustic::NoiseSource;
-use super::beauty::BeautySource;
-use super::farm::Farm;
-use super::fire::Flammable;
+use crate::layer1::physics::acoustic::NoiseSource;
+use crate::layer1::beauty::BeautySource;
+use crate::layer1::agriculture::farm::Farm;
+use crate::layer1::nature::fire::Flammable;
 use super::housing::Housing;
-use super::social::Tavern;
-use super::stockpile::Stockpile;
-use super::GridPosition;
+use crate::layer1::social::Tavern;
+use crate::layer1::economy::stockpile::Stockpile;
+use crate::layer1::map::GridPosition;
 use crate::layer1::access_control::AccessControl;
 use crate::layer1::admin::{AdminConsumer, AdminProvider, Office};
 use crate::layer1::ai_core::AICore;
@@ -530,11 +530,11 @@ impl BuildingType {
     #[allow(clippy::match_same_arms)]
     pub const fn beauty_value(&self) -> f32 {
         match self {
-            Self::Statue => super::beauty::STATUE_BEAUTY,
+            Self::Statue => crate::layer1::beauty::STATUE_BEAUTY,
             Self::Landfill => -10.0,
             Self::Recycler => -5.0, // Grim machinery
             Self::Grave => -2.0,    // Graves are slightly spooky
-            Self::FlowerBed => super::beauty::FLOWER_BED_BEAUTY,
+            Self::FlowerBed => crate::layer1::beauty::FLOWER_BED_BEAUTY,
             Self::HoloProjector => 50.0, // Massive beauty boost
             Self::TradeDepot => 5.0,     // Trade brings goods and culture
             Self::Well | Self::HydroponicsBay | Self::LifeSupport => 1.0,

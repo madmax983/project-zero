@@ -59,3 +59,7 @@
 **Agriculture Sub-module Extracted**
 **Tangle:** The `layer1` core module was cluttered with related food production systems (`farm`, `gastronomy`, `husbandry`, `greenhouse`, `hydroponics`, `preservation`), contributing to the "Blob" anti-pattern in `src/layer1/mod.rs` without a clear domain boundary.
 **Blueprint:** Encapsulated these interrelated food production systems into a dedicated `src/layer1/agriculture/` module. The new `src/layer1/agriculture/mod.rs` re-exports the public types natively to maintain backward compatibility, keeping the layer 1 root cleaner while strictly enforcing domain boundaries.
+
+**Layer 1 Architecture Encapsulation**
+**Tangle:** The `layer1` core module was littered with loosely cohesive building and structural systems (e.g. `building`, `housing`, `structure`, `symbiotic_infrastructure`, `turret`, `ruins`, etc.), exacerbating the "Blob" anti-pattern in `src/layer1/mod.rs` and lacking a strict structural boundary.
+**Blueprint:** Encapsulated these interrelated construction and structural simulation files into a dedicated `src/layer1/architecture/` module. The new `src/layer1/architecture/mod.rs` centralizes their exports, reducing `layer1/mod.rs` bloat and enforcing a distinct architectural domain boundary.
