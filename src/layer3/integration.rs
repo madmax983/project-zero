@@ -66,7 +66,6 @@ pub fn dynastic_crisis_chronicle_bridge(
     }
 }
 
-
 use crate::layer2::navigation::stellar_weather::FleetDamagedEvent;
 use crate::layer3::stellar_cartography::JumpRisk;
 
@@ -90,7 +89,8 @@ pub fn jump_risk_bridge_system(
         // Add to chronicle
         chronicle_events.send(AddChronicleEvent {
             importance: EventImportance::Major,
-            text: "A fleet suffered hull damage after jumping blind into an uncharted system.".to_string(),
+            text: "A fleet suffered hull damage after jumping blind into an uncharted system."
+                .to_string(),
         });
     }
 }

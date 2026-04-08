@@ -1,26 +1,49 @@
+//! Stellar Cartography
+//!
+//! This module manages the generation, degradation, and usage of navigational star charts.
+//! In the vastness of space, knowledge is perishable. Navigational data ([`StarChart`]) degrades over
+//! time. Ships that attempt to jump to destinations without fresh data are subjected to navigation
+//! hazards ([`JumpRisk`]).
+
 use bevy::prelude::*;
 use std::collections::HashMap;
 
 // Required components and events for the module
+/// Represents navigational data for a specific star system.
+///
+/// The `freshness` of a chart decays over time. If a chart becomes entirely stale,
+/// attempting to navigate using it carries significant risk.
 #[derive(Clone, Debug)]
 pub struct StarChart {
     pub freshness: u32,
 }
 
+/// The accumulated cartographic knowledge held by an entity (like a player or faction).
+///
+/// Maps known destination entities to their current [`StarChart`].
 #[derive(Component, Default)]
 pub struct LocalKnowledge {
     pub known_charts: HashMap<Entity, StarChart>,
 }
 
+/// Fired when a ship attempts to enter hyperspace.
+///
+/// Systems intercept this event to check if the `destination` is known in the faction's
+/// [`LocalKnowledge`]. If not, a risk factor is applied.
 #[derive(Event)]
 pub struct JumpEvent {
     pub ship: Entity,
     pub destination: Entity,
 }
 
+/// A tag component applied to ships attempting to jump to an unknown or stale destination.
+///
+/// Ships with this component are significantly more likely to encounter anomalies,
+/// take damage, or end up wildly off-course.
 #[derive(Component)]
 pub struct JumpRisk;
 
+/// Plugin that registers stellar cartography events and systems.
 pub struct StellarCartographyPlugin;
 
 impl Plugin for StellarCartographyPlugin {
@@ -32,6 +55,24 @@ impl Plugin for StellarCartographyPlugin {
     }
 }
 
+/// Decays the freshness of all known star charts over time.
+///
+/// # Examples
+/// ```
+/// use bevy::prelude::*;
+/// use scale::layer3::stellar_cartography::{LocalKnowledge, StarChart, decay_chart_freshness_system};
+///
+/// let mut app = App::new();
+/// let player = app.world_mut().spawn(LocalKnowledge::default()).id();
+///
+/// // Needs Time resource to decay
+/// let mut time = Time::default();
+/// time.advance_by(bevy::utils::Duration::from_secs(5));
+/// app.insert_resource(time);
+///
+/// app.add_systems(Update, decay_chart_freshness_system);
+/// app.update();
+/// ```
 pub fn decay_chart_freshness_system(
     mut queries: Query<&mut LocalKnowledge>,
     time: Option<Res<Time>>,
@@ -55,6 +96,28 @@ pub fn decay_chart_freshness_system(
     }
 }
 
+/// Evaluates hyperspace jumps and applies a [`JumpRisk`] to ships navigating blindly.
+///
+/// If a ship attempts to jump to a destination not recorded in its (or its faction's)
+/// [`LocalKnowledge`], the ship is marked with a [`JumpRisk`] component.
+///
+/// # Examples
+/// ```
+/// use bevy::prelude::*;
+/// use scale::layer3::stellar_cartography::{JumpEvent, JumpRisk, handle_jump_risk_system};
+///
+/// let mut app = App::new();
+/// app.add_event::<JumpEvent>();
+/// app.add_systems(Update, handle_jump_risk_system);
+///
+/// let ship = app.world_mut().spawn_empty().id();
+/// let unknown_system = app.world_mut().spawn_empty().id();
+///
+/// app.world_mut().send_event(JumpEvent { ship, destination: unknown_system });
+/// app.update();
+///
+/// assert!(app.world().get::<JumpRisk>(ship).is_some());
+/// ```
 pub fn handle_jump_risk_system(
     mut events: EventReader<JumpEvent>,
     knowledge_query: Query<&LocalKnowledge>, // Player/Faction knowledge

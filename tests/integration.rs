@@ -254,6 +254,8 @@ mod dynastic_succession_bridge;
 mod haunted_assembly_lines_tests;
 #[path = "integration/hyperlane_collapse_bridge.rs"]
 mod hyperlane_collapse_bridge;
+#[path = "integration/jump_risk_bridge.rs"]
+mod jump_risk_bridge;
 #[path = "integration/orbital_commute_bridge.rs"]
 mod orbital_commute_bridge;
 #[path = "integration/parasitic_architecture_bridge.rs"]
@@ -262,5 +264,3 @@ mod parasitic_architecture_bridge;
 mod temporal_ghost_towns_bridge;
 #[path = "integration/void_whispers_chronicle.rs"]
 mod void_whispers_chronicle;
-#[path = "integration/jump_risk_bridge.rs"]
-mod jump_risk_bridge;

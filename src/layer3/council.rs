@@ -1,20 +1,54 @@
+//! Galactic Council
+//!
+//! This module represents the highest diplomatic body in the galaxy. It tracks active resolutions
+//! and enforces compliance among its members. Members in breach of active resolutions may face
+//! severe trade sanctions until they align with galactic law.
+
 use bevy::prelude::*;
 
+/// The central legislative body for the galaxy.
+///
+/// Tracks whether there are active, binding resolutions that members must follow.
 #[derive(Resource, Default)]
 pub struct GalacticCouncil {
     pub has_active_resolutions: bool,
 }
 
+/// Identifies a faction or entity as a member of the Galactic Council.
+///
+/// Members who are `in_breach` of active resolutions are subject to sanctions.
 #[derive(Component)]
 pub struct CouncilMember {
     pub in_breach: bool,
 }
 
+/// An economic penalty applied to factions that defy the [`GalacticCouncil`].
+///
+/// The `multiplier` acts as a penalty to economic output or trade value.
 #[derive(Component)]
 pub struct TradeSanctions {
     pub multiplier: f32, // 1.0 is normal, 0.5 is 50% penalty
 }
 
+/// Enforces council resolutions by applying or removing [`TradeSanctions`] on members.
+///
+/// If the [`GalacticCouncil`] has active resolutions and a [`CouncilMember`] is `in_breach`,
+/// a [`TradeSanctions`] component is added to them. If they become compliant, the sanctions are removed.
+///
+/// # Examples
+/// ```
+/// use bevy::prelude::*;
+/// use scale::layer3::council::{CouncilMember, GalacticCouncil, TradeSanctions, enforce_resolutions_system};
+///
+/// let mut app = App::new();
+/// app.insert_resource(GalacticCouncil { has_active_resolutions: true });
+/// app.add_systems(Update, enforce_resolutions_system);
+///
+/// let violator = app.world_mut().spawn(CouncilMember { in_breach: true }).id();
+/// app.update();
+///
+/// assert!(app.world().get::<TradeSanctions>(violator).is_some());
+/// ```
 pub fn enforce_resolutions_system(
     council: Res<GalacticCouncil>,
     mut commands: Commands,
