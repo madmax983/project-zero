@@ -39,3 +39,4 @@ pub mod moon_hermits;
 pub mod navigation;
 pub mod sensor_ambiguity;
 pub mod skyhooks;
+pub mod mutiny;
