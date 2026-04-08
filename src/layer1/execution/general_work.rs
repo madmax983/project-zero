@@ -468,6 +468,15 @@ pub fn calculate_work_amount(
         1.0
     };
 
+    let hallucinating_modifier = if world
+        .get::<crate::layer1::agriculture::gastronomy::Hallucinating>(pop_entity)
+        .is_some()
+    {
+        0.0
+    } else {
+        1.0
+    };
+
     let amount = WORK_PER_TICK
         * tool_efficiency
         * morale_efficiency
@@ -479,7 +488,8 @@ pub fn calculate_work_amount(
         * neural_buff
         * infection_modifier
         * ghost_shift_modifier
-        * gossiping_modifier;
+        * gossiping_modifier
+        * hallucinating_modifier;
 
     // Cap work amount to prevent logic bugs / economy exploits
     amount.min(1000.0)

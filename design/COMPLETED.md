@@ -355,3 +355,4 @@
 - [x] `861` Stellar Cartography — `specs/861-stellar-cartography.md` — completed 2026-04-08
 - [x] `INT-861` Integration: Stellar Cartography JumpRisk -> Damage/Chronicle — completed 2026-04-10
 - [x] `869` The Bureaucracy of Sleep — `specs/869-bureaucracy-of-sleep.md` — completed 2026-04-08
+- [x] `INT-869` Integration: Bureaucracy of Sleep Hallucination -> Work Efficiency — completed 2026-04-08
