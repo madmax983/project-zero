@@ -110,7 +110,7 @@ impl PartialOrd for Node {
 ///
 /// let path = find_path(&world, (0, 0), (2, 0));
 /// assert!(path.is_some());
-/// let p = path.unwrap();
+/// let p = path.expect("Path should be found in doc test");
 /// assert_eq!(p.last(), Some(&(2, 0)));
 /// ```
 pub fn find_path(world: &World, start: (i32, i32), end: (i32, i32)) -> Option<Vec<(i32, i32)>> {
@@ -462,7 +462,7 @@ mod tests {
         let world = setup_world();
         let path = find_path(&world, (0, 0), (2, 0));
         assert!(path.is_some(), "Should find simple straight path");
-        let p = path.unwrap();
+        let p = path.expect("Path should be found on an empty map");
         // Path from (0,0) to (2,0) should be [(1,0), (2,0)] or similar length
         assert!(p.len() >= 2);
         assert_eq!(p.last(), Some(&(2, 0)));
@@ -701,7 +701,7 @@ mod tests {
 
         let path = find_path(&world, (0, 0), (5, 0));
         assert!(path.is_some());
-        let p = path.unwrap();
+        let p = path.expect("Path should exist and avoid headwind");
 
         // Path should use row 1 (y=1) to avoid headwind
         let uses_shelter = p.iter().any(|pos| pos.1 == 1);
@@ -750,7 +750,7 @@ mod tests {
 
         let path = find_path(&world, (0, 0), (5, 0));
         assert!(path.is_some());
-        let p = path.unwrap();
+        let p = path.expect("Path should exist and use tailwind");
 
         // Path should use row 1 (y=1) for tailwind boost
         let uses_tailwind = p.iter().any(|pos| pos.1 == 1);
