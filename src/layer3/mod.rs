@@ -10,3 +10,4 @@ pub mod integration;
 pub mod map;
 pub mod physics;
 pub mod planet;
+pub mod stellar_cartography;
