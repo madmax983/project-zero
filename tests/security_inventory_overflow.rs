@@ -1,3 +1,4 @@
+//! Tests for inventory overflow security
 #[cfg(test)]
 mod tests {
 

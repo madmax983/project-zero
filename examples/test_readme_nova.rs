@@ -1,3 +1,4 @@
+//! Nova README example
 // This file tests the Oral Tradition example snippet in the README.
 
 fn main() {

@@ -1,3 +1,4 @@
+//! Tests for render overflow security
 #[cfg(test)]
 mod tests {
     use ratatui::layout::Rect;

@@ -1,3 +1,4 @@
+//! Utility AI Benchmarks
 use criterion::{criterion_group, criterion_main, Criterion};
 use scale::layer1::map::GridPosition;
 use scale::layer1::utility_types::{calculate_context_score, UtilityWeights};

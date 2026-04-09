@@ -1,3 +1,4 @@
+//! Tests for access control security
 #[cfg(test)]
 mod tests {
     use bevy_ecs::prelude::*;

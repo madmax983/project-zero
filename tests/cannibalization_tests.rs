@@ -1,3 +1,4 @@
+//! Cannibalization mechanics tests
 // tests/layer1/cannibalization_tests.rs
 
 use bevy_ecs::prelude::*;
