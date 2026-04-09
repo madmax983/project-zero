@@ -1247,3 +1247,24 @@ pub fn parasitic_architecture_chronicle_bridge(
         });
     }
 }
+
+/// INT-874: Bridges `BlobNode` expansion onto a tile with a `Building` to `BuildingRemovedEvent`.
+pub fn blob_building_destruction_system(
+    mut commands: Commands,
+    blob_nodes: Query<&GridPosition, Added<crate::layer1::blob::BlobNode>>,
+    buildings: Query<(Entity, &GridPosition, &crate::layer1::building::Building)>,
+    mut remove_events: EventWriter<crate::layer1::events::BuildingRemovedEvent>,
+) {
+    for blob_pos in blob_nodes.iter() {
+        for (building_entity, building_pos, building) in buildings.iter() {
+            if blob_pos == building_pos {
+                remove_events.send(crate::layer1::events::BuildingRemovedEvent {
+                    entity: building_entity,
+                    position: *building_pos,
+                    building_type: building.building_type,
+                });
+                commands.entity(building_entity).despawn();
+            }
+        }
+    }
+}

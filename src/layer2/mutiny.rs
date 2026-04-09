@@ -1,7 +1,7 @@
 use crate::layer1::chronicle::{AddChronicleEvent, EventImportance};
-use crate::layer2::fleet::FleetFaction;
 #[cfg(test)]
 use crate::layer2::fleet::Fleet;
+use crate::layer2::fleet::FleetFaction;
 use bevy_ecs::prelude::*;
 
 /// Tracks the morale of a fleet's crew.
@@ -55,11 +55,17 @@ mod tests {
     fn test_fleet_loses_morale_when_unpaid_or_starving() {
         // Arrange
         let mut app = bevy_app::App::new();
-        let fleet = app.world_mut().spawn((
-            Fleet, FleetFaction::Player,
-            CrewMorale { value: 100.0 },
-            SupplyLines { food_supplied: false }
-        )).id();
+        let fleet = app
+            .world_mut()
+            .spawn((
+                Fleet,
+                FleetFaction::Player,
+                CrewMorale { value: 100.0 },
+                SupplyLines {
+                    food_supplied: false,
+                },
+            ))
+            .id();
 
         // Act
         app.add_systems(bevy_app::Update, decay_fleet_morale);
@@ -76,10 +82,14 @@ mod tests {
         let mut app = bevy_app::App::new();
         app.init_resource::<Events<AddChronicleEvent>>();
 
-        let fleet = app.world_mut().spawn((
-            Fleet, FleetFaction::Player,
-            CrewMorale { value: 0.0 }, // Critically low
-        )).id();
+        let fleet = app
+            .world_mut()
+            .spawn((
+                Fleet,
+                FleetFaction::Player,
+                CrewMorale { value: 0.0 }, // Critically low
+            ))
+            .id();
 
         // Act
         app.add_systems(bevy_app::Update, evaluate_fleet_mutiny);
@@ -87,8 +97,15 @@ mod tests {
 
         // Assert
         let fleet_faction = app.world().get::<FleetFaction>(fleet).unwrap();
-        assert_eq!(*fleet_faction, FleetFaction::Pirate, "Fleet should switch to pirate faction upon mutiny");
-        assert!(app.world().get::<Mutinied>(fleet).is_some(), "Fleet should be tagged as mutinied");
+        assert_eq!(
+            *fleet_faction,
+            FleetFaction::Pirate,
+            "Fleet should switch to pirate faction upon mutiny"
+        );
+        assert!(
+            app.world().get::<Mutinied>(fleet).is_some(),
+            "Fleet should be tagged as mutinied"
+        );
 
         let events = app.world().resource::<Events<AddChronicleEvent>>();
         let mut reader = events.get_cursor();
