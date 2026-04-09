@@ -10,6 +10,7 @@ use std::{cell::RefCell, rc::Rc};
 fn invalid_shell_layout_falls_back_to_colony_ops() {
     let world = Rc::new(RefCell::new(setup_world_with_config(SetupConfig {
         headless: true,
+        ..Default::default()
     })));
     let config = ShellConfig::from_json_or_default("{\"broken\":true}");
 
@@ -22,6 +23,7 @@ fn invalid_shell_layout_falls_back_to_colony_ops() {
 fn persisted_shell_layout_restores_active_workspace_and_panes() {
     let world = Rc::new(RefCell::new(setup_world_with_config(SetupConfig {
         headless: true,
+        ..Default::default()
     })));
     let base_config = world.borrow().resource::<ShellConfig>().clone();
     let mut shell = build_default_shell(Rc::clone(&world), base_config);
@@ -35,6 +37,7 @@ fn persisted_shell_layout_restores_active_workspace_and_panes() {
 
     let restored_world = Rc::new(RefCell::new(setup_world_with_config(SetupConfig {
         headless: true,
+        ..Default::default()
     })));
     let restored_config = ShellConfig::from_json_or_default(&json);
     let restored_shell = build_default_shell(restored_world, restored_config);

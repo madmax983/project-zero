@@ -9,6 +9,7 @@ C4Component
 title Component Diagram - SCALE System Architecture
 
 Container(Main, "Main Entry", "Rust/Crossterm", "Initializes World, runs Game Loop")
+Component(StartupScenario, "Startup Scenario Framework", "setup.rs", "Selects built-in opening metadata and seeds initial world state")
 
 Container_Boundary(StorageBox, "Storage Crate") {
     Component(Storage, "Storage Module", "storage/*", "Implements Persistence Traits")
@@ -83,7 +84,10 @@ Container_Boundary(UI, "UI Layer") {
 }
 
 Rel(Main, Shared, "Uses")
+Rel(Main, StartupScenario, "Invokes")
 Rel(Main, SystemOrchestrator, "Registers Systems")
+Rel(StartupScenario, Pops, "Seeds Initial Population")
+Rel(StartupScenario, World, "Seeds Shared Landing Shell")
 Rel(SystemOrchestrator, UtilityOrchestrator, "Schedules")
 Rel(UtilityOrchestrator, GPU, "Dispatches Work")
 Rel(Main, UiShell, "Routes Input + Calls Render")

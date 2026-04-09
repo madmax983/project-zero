@@ -232,6 +232,7 @@ mod tests {
     fn test_world() -> SharedWorld {
         Rc::new(RefCell::new(setup_world_with_config(SetupConfig {
             headless: true,
+            ..Default::default()
         })))
     }
 
