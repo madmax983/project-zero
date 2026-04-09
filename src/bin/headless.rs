@@ -1721,7 +1721,7 @@ fn print_bio(world: &mut World, target_id: u32) {
     for (entity, name, bio, dream) in query.iter(world) {
         if entity.index() == target_id {
             found = true;
-            let bio_title = format!("Biography for {} ({:?})", name.0, entity);
+            let bio_title = format!("Biography for {} (ID {})", name.0, entity.index());
 
             if let Some(bio) = bio {
                 if bio.events.is_empty() {
@@ -1844,9 +1844,9 @@ fn print_chronicle(world: &mut World) {
     for event in &chronicle.events {
         let importance_color = match event.importance {
             EventImportance::Legendary => Color::Yellow,
-            EventImportance::Major => Color::Cyan,
+            EventImportance::Major => Color::Magenta,
             EventImportance::Standard => Color::White,
-            EventImportance::Minor => Color::Grey,
+            EventImportance::Minor => Color::DarkGrey,
         };
 
         // Legendary events get bold text
