@@ -594,3 +594,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `891` Historical Geography — `specs/891-historical-geography.md`
 - [ ] `897` The Orbital Breadcrumbs — `specs/897-the-orbital-breadcrumbs.md`
 - [ ] `898` The Sleepwalker's Rebellion — `specs/898-the-sleepwalkers-rebellion.md`
+- [ ] `905` The Phantom Obstacle — `specs/905-the-phantom-obstacle.md`
+- [ ] `906` The Resource Hoard — `specs/906-the-resource-hoard.md`
+- [ ] `907` The Architect's Signature — `specs/907-the-architects-signature.md`
