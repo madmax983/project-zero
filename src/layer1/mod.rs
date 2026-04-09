@@ -74,12 +74,12 @@ pub mod dreams;
 pub mod edicts;
 /// Execution layer bridging utility AI to actions.
 pub mod execution;
+/// Historical geography naming.
+pub mod geography;
 /// Farm building and food production.
 /// Pop health and damage.
 /// Deep crust geomes system (Spec 515).
 pub mod geomes;
-/// Historical geography naming.
-pub mod geography;
 /// Fire propagation and damage.
 /// Hauling logic.
 /// Workplace hazards logic.
@@ -131,6 +131,7 @@ mod shift_integration_tests;
 pub mod social;
 /// Spoilage and decay mechanics.
 pub mod spoilage;
+pub mod jobs;
 /// Resource storage limits and stockpile buildings.
 /// Structure durability and repair.
 /// Technology and research system.
@@ -183,6 +184,7 @@ pub use notifications::*;
 pub use science::*;
 pub use social::*;
 pub use spoilage::*;
+pub use jobs::*;
 pub use tech::*;
 
 mod tool_tests;
@@ -366,6 +368,9 @@ pub mod sleep_deprived_savant;
 pub use sleep_deprived_savant::*;
 
 /// System registration and sets (Facade).
+pub mod somnambulism;
+pub use somnambulism::*;
+
 pub mod systems;
 
 mod institutional_memory_tests;

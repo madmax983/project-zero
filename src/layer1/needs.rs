@@ -43,6 +43,15 @@ use crate::layer1::traits::{
 };
 use bevy_ecs::prelude::*;
 
+#[derive(Clone, Copy, PartialEq, Eq, Debug)]
+pub enum NeedType {
+    Hunger,
+    Rest,
+    Leisure,
+    Hygiene,
+    Food, // Alias used in spec tests
+}
+
 /// Pop survival needs.
 ///
 /// Tracks the physical and mental state of a citizen. Values range from 0.0 (Empty/Critical) to 1.0 (Full/Satisfied).
@@ -100,6 +109,24 @@ impl Needs {
     /// assert_eq!(needs.worst(), 0.2); // Rest is the lowest
     /// ```
     #[must_use]
+    pub fn get(&self, need_type: NeedType) -> f32 {
+        match need_type {
+            NeedType::Hunger | NeedType::Food => self.hunger,
+            NeedType::Rest => self.rest,
+            NeedType::Leisure => self.leisure,
+            NeedType::Hygiene => self.hygiene,
+        }
+    }
+
+    pub fn set(&mut self, need_type: NeedType, value: f32) {
+        match need_type {
+            NeedType::Hunger | NeedType::Food => self.hunger = value,
+            NeedType::Rest => self.rest = value,
+            NeedType::Leisure => self.leisure = value,
+            NeedType::Hygiene => self.hygiene = value,
+        }
+    }
+
     pub const fn worst(&self) -> f32 {
         let min_hr = if self.hunger < self.rest {
             self.hunger
@@ -190,10 +217,12 @@ const LEISURE_DECAY_PER_TICK: f32 = 0.0015;
 /// *   **Policies**: Adjusts hunger decay if [`ColonyPolicies`] are active (e.g. Rationing).
 /// *   **Traits**: Adjusts hunger decay if the pop has specific [`Traits`] (e.g. Glutton).
 ///
+type DecayNeedsFilter = (Without<crate::layer1::cryo::CryoStasis>, Without<crate::layer1::somnambulism::Somnambulist>);
+
 /// # Threading
 /// Uses `par_iter_mut` for parallel processing, as need decay is independent per pop.
 pub fn decay_needs_system(
-    mut query: Query<(&mut Needs, Option<&Traits>), Without<crate::layer1::cryo::CryoStasis>>,
+    mut query: Query<(&mut Needs, Option<&Traits>), DecayNeedsFilter>,
     policies: Option<Res<ColonyPolicies>>,
 ) {
     let hunger_mod = policies.map_or(1.0, |p| get_hunger_decay_modifier(&p));

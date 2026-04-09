@@ -477,6 +477,15 @@ pub fn calculate_work_amount(
         1.0
     };
 
+    let somnambulist_modifier = if world
+        .get::<crate::layer1::somnambulism::Somnambulist>(pop_entity)
+        .is_some()
+    {
+        5.0
+    } else {
+        1.0
+    };
+
     let amount = WORK_PER_TICK
         * tool_efficiency
         * morale_efficiency
@@ -489,7 +498,8 @@ pub fn calculate_work_amount(
         * infection_modifier
         * ghost_shift_modifier
         * gossiping_modifier
-        * hallucinating_modifier;
+        * hallucinating_modifier
+        * somnambulist_modifier;
 
     // Cap work amount to prevent logic bugs / economy exploits
     amount.min(1000.0)
