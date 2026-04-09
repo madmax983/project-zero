@@ -6344,3 +6344,120 @@ A negative side-effect of a failed splice.
 - corrupted by the nebula
 - hiding a dead star
 - off by a million miles
+
+## Fleet Mutiny Fragments (Spec 702)
+
+### Fragment Type: [REBEL_FACTION]
+Names for pirate or breakaway factions.
+- the Free Fleet
+- the Corsair Kings
+- the Broken Chain
+- the Unbound
+- the Pirate Republic
+- the Mutineers of [COLONY]
+- the Void Wolves
+- those who walk away
+
+## Pop Memories Fragments (Spec 890)
+
+### Fragment Type: [MEMORY_DESCRIPTOR]
+Adjectives for memories.
+- burning
+- cold
+- crystalline
+- jagged
+- heavy
+- infectious
+- silent
+- roaring
+- parasitic
+
+### Fragment Type: [MEMORY_TOPIC]
+What the Pops remember.
+- the Long Famine
+- the Drop Pod Crash
+- the Silence of the Comms
+- the Day the Sun Flared
+- the Mutiny of the Guard
+- the Taste of Synthetic Rations
+- the Smell of Burning Wiring
+- the Sound of the Hull Groaning
+
+## Ghost Ships Fragments (Spec 892)
+
+### Fragment Type: [GHOST_SHIP_CONDITION]
+How the ghost ship appears.
+- completely silent, venting atmosphere
+- pulsing with an unknown energy signature
+- repeating a distress signal from a dead language
+- crewed by people who haven't aged a day
+- welded together with alien architecture
+- painted with warnings in blood
+- carrying cargo we never loaded
+- broadcasting a song of pure static
+
+## The Blob Fragments (Spec 874)
+
+### Fragment Type: [BLOB_NAME]
+Names for the Blob entity.
+- the Grey Goo
+- the Creeping Crystal
+- the Slime
+- the Hunger
+- the Mass
+- the Substrate
+- the Living Waste
+
+### Fragment Type: [BLOB_ACTION]
+What the Blob does.
+- dissolved
+- absorbed
+- consumed
+- suffocated
+- crushed
+- assimilated
+
+### Fragment Type: [BLOB_DESCRIPTOR]
+Adjectives for the Blob.
+- pulsing
+- acidic
+- crystalline
+- foul-smelling
+- semi-translucent
+- rapidly expanding
+- indestructible
+
+## Historical Geography Fragments (Spec 891)
+
+### Fragment Type: [NEW_LOCATION_NAME]
+Generated names for tiles.
+- the Martyr's Field
+- the Famine Trench
+- the First Landing
+- the Broken Ridge
+- the Silent Basin
+- the Traitor's Drop
+- the Miracle Springs
+- the Rust Wastes
+
+## Cargo Cult Supply Drop Fragments (Spec 866)
+
+### Fragment Type: [EFFIGY_TYPE]
+- scrap-metal landing pads
+- wicker supply drones
+- false beacons
+- painted landing zones
+
+## Mutually Assured Quarantine Fragments (Spec 867)
+
+### Fragment Type: [DEFENSE_INSTALLATION]
+- Planetary Cannon
+- Orbital Railgun Array
+- Hyperlane Interdiction Battery
+
+## Sovereign AI Graveyard Fragments (Spec 868)
+
+### Fragment Type: [AI_STATE_NAME]
+- The Discarded Network
+- The Sovereign Heap
+- The Silicon Republic
