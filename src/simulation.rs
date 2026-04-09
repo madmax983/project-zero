@@ -531,6 +531,10 @@ pub fn run_simulation_tick(world: &mut World) {
     {
         let schedules = world.resource::<Schedules>();
         if schedules.get(SimulationSchedule).is_none() {
+            world.init_resource::<Events<crate::layer3::ghost_ships::EvaluateTransitEvent>>();
+            world
+                .init_resource::<Events<crate::layer3::ghost_ships::EvaluateLostShipReturnEvent>>();
+
             let schedule = build_simulation_schedule();
             world.add_schedule(schedule);
         }
@@ -696,6 +700,9 @@ mod tests {
         world.init_resource::<Events<crate::layer3::diplomacy::succession::SuccessionEvent>>();
         world
             .init_resource::<Events<crate::layer3::diplomacy::succession::SuccessionCrisisEvent>>();
+
+        world.init_resource::<Events<crate::layer3::ghost_ships::EvaluateTransitEvent>>();
+        world.init_resource::<Events<crate::layer3::ghost_ships::EvaluateLostShipReturnEvent>>();
 
         let schedule = build_simulation_schedule();
         world.add_schedule(schedule);

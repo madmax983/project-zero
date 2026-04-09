@@ -36,7 +36,7 @@ pub use cartographers_curse::*;
 pub mod empathic_plague;
 pub mod exploration;
 pub mod moon_hermits;
+pub mod mutiny;
 pub mod navigation;
 pub mod sensor_ambiguity;
 pub mod skyhooks;
-pub mod mutiny;

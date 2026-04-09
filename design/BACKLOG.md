@@ -584,4 +584,3 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `886` The Cannibal's Empathy — `specs/886-the-cannibals-empathy.md`
 - [ ] `890` Pop Memories — `specs/890-pop-memories.md`
 - [ ] `891` Historical Geography — `specs/891-historical-geography.md`
-- [ ] `892` Ghost Ships — `specs/892-ghost-ships.md`
