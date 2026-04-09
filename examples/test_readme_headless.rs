@@ -1,3 +1,4 @@
+//! Headless README example
 use scale::prelude::*;
 
 fn main() {

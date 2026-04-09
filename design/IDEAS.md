@@ -10,7 +10,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 **Layer:** 1
 
-**Fantasy:** Pops remember what happened to them. A pop who survived a famine distrusts food supplies. A pop who was in the first colony ship has prestige.
+**Fantasy:** Pops remember what happened to them. [SPECCED] A pop who survived a famine distrusts food supplies. A pop who was in the first colony ship has prestige.
 
 **Mechanic:** Pops accumulate "memories" from events they witness. Memories influence behavior and mood. Shared memories create culture.
 
@@ -24,7 +24,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 **Layer:** 1
 
-**Fantasy:** Places earn names from what happened there. "Famine Field." "The Old Mine." "Founders' Square."
+**Fantasy:** Places earn names from what happened there. [SPECCED] "Famine Field." "The Old Mine." "Founders' Square."
 
 **Mechanic:** Tiles where significant events occur get named. Names persist. Pops reference names. Player can see history by clicking a named place.
 
@@ -38,7 +38,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 **Layer:** 2 → 3
 
-**Fantasy:** Interstellar travel is dangerous. Ships can be lost. Sometimes they come back... changed.
+**Fantasy:** Interstellar travel is dangerous. [SPECCED] Ships can be lost. Sometimes they come back... changed.
 
 **Mechanic:** Ships traveling between stars have a small chance of "incidents." Lost ships might reappear years later with strange cargo, changed crews, or warnings.
 
@@ -3715,7 +3715,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 **Layer:** 1
 
-**Fantasy:** A place where something terrible happened *feels* wrong.
+**Fantasy:** [SPECCED] A place where something terrible happened *feels* wrong.
 
 **Mechanic:** Tiles where Pops die violently retain a "Trauma" value. High Trauma causes stress/fear in passersby. Can be "Cleansed" by Chaplains or time.
 
@@ -3757,7 +3757,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 **Layer:** 1
 
-**Fantasy:** "You owe me one." The informal economy of favors.
+**Fantasy:** [SPECCED] "You owe me one." The informal economy of favors.
 
 **Mechanic:** Pops track "Favors". If Pop A saves Pop B (Medical/Combat), Pop B "Owes" Pop A. They will perform tasks for them or support their Faction regardless of their own ethics.
 
@@ -3771,7 +3771,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 **Layer:** 2 -> 1
 
-**Fantasy:** The night sky is not static.
+**Fantasy:** [SPECCED] The night sky is not static.
 
 **Mechanic:** The planet captures temporary asteroids/moons. They alter tides/light for a few months before being ejected or crashing.
 
@@ -3781,7 +3781,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Rogue Planets
+## Rogue Planets [SPECCED]
 
 **Layer:** 2
 
@@ -3795,7 +3795,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Nebulae
+## Nebulae [SPECCED]
 
 **Layer:** 2
 
@@ -3823,7 +3823,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Latent Psionics
+## Latent Psionics [SPECCED]
 
 **Layer:** 1
 
@@ -3837,7 +3837,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Derelict Stations
+## Derelict Stations [SPECCED]
 
 **Layer:** 2 -> 1
 
@@ -3851,7 +3851,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Binary Star Systems
+## Binary Star Systems [SPECCED]
 
 **Layer:** 2 -> 1
 
@@ -3865,7 +3865,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Proxy Wars
+## Proxy Wars [SPECCED]
 
 **Layer:** 3
 
@@ -8802,7 +8802,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Symbiotic Parasite
+## The Symbiotic Parasite [SPECCED]
 
 **Layer:** 1
 
@@ -14739,5 +14739,368 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Emergence:** You build an entire cathedral using the petrified bodies of your most revered elders. A fire breaks out, and the structural integrity holds, but the collective screams of the living walls give the entire colony permanent psychological trauma.
 
 **Tension:** The immense material strength and passive buffs of building with living history versus the horrific psychological cost and ethical line of literal human architecture.
+
+---
+## The Architect's Guilt [SPECCED]
+
+**Layer:** 1
+
+**Fantasy:** Watching your lead builder slowly descend into madness because of the people who died constructing their masterpiece.
+
+**Mechanic:** Pops who build structures where other pops died accumulate "Guilt." High guilt makes them refuse to repair the building or approach it, eventually trying to sabotage it.
+
+**Emergence:** Your glorious space elevator is falling apart because the only master engineer capable of fixing it is the one who designed it, and they are actively trying to blow it up to avenge the workers who fell from it.
+
+**Tension:** Forcing the guilty architect to maintain their cursed creation (risking sabotage) or letting it decay safely but inefficiently.
+
+---
+
+## The Nostalgia Contagion [SPECCED]
+
+**Layer:** Cross-layer
+
+**Fantasy:** An entire planet becomes paralyzed by a sudden, intense yearning for a home they never knew.
+
+**Mechanic:** Trade ships from the Core Worlds occasionally carry "Nostalgia Artifacts" (old holovids, physical books). Pops who interact with them get a massive morale boost but a permanent "Yearning" debuff, causing them to spend work hours staring at the sky.
+
+**Emergence:** Your thriving frontier mining colony completely stops producing ore because everyone is sitting on the surface, looking toward Earth and crying over a 400-year-old sitcom broadcast.
+
+**Tension:** Banning cultural imports (causing immediate unrest and diplomatic penalties) or risking a slow, melancholic collapse of your workforce.
+
+---
+
+## The Phantom Grid [SPECCED]
+
+**Layer:** 1
+
+**Fantasy:** Your colony is powered by something you didn't build and don't understand.
+
+**Mechanic:** Unpowered buildings occasionally tap into an invisible, subterranean energy grid. They function perfectly, but emit a low-frequency hum that slightly raises the Stress of any Pop nearby.
+
+**Emergence:** Your entire hospital remains operational during a week-long blackout, saving hundreds of lives. But afterward, the doctors refuse to sleep without the hum, creating a localized cult that actively unplugs generators to keep the Phantom Grid active.
+
+**Tension:** Embracing the free, reliable alien power source or aggressively isolating your infrastructure to maintain human control over reality.
+
+---
+
+## The Orbital Breadcrumbs [SPECCED]
+
+**Layer:** 2 -> 1
+
+**Fantasy:** Following a trail of trash to find a lost treasure, or a trap.
+
+**Mechanic:** Fleeing pirate fleets or damaged merchant vessels occasionally jettison encrypted data drives or locked cargo pods into orbit. They slowly decay and fall to Layer 1. Collecting them reveals a fragment of a larger treasure map or a warning.
+
+**Emergence:** You spend years collecting falling debris, finally piecing together coordinates to a massive precursor cache. You send your fleet, only to realize the "treasure" is the coordinates to a dormant super-predator the pirates were desperately trying to flee.
+
+**Tension:** Dedicating valuable ground haulers to constantly retrieve falling orbital trash versus ignoring potential galactic-scale opportunities.
+
+---
+
+## The Sleepwalker's Rebellion [SPECCED]
+
+**Layer:** 1
+
+**Fantasy:** Your colonists are perfectly obedient while awake, but their subconscious minds are staging a violent uprising.
+
+**Mechanic:** In highly oppressive or micromanaged colonies, Pops develop "Subconscious Dissent." While asleep, they occasionally sleepwalk and perform minor acts of sabotage or vandalism against authority symbols, with no memory of it upon waking.
+
+**Emergence:** The Governor's mansion is covered in anti-government graffiti every morning. The enforcers arrest the culprits, only to find the security footage shows the enforcers themselves doing it while fast asleep.
+
+**Tension:** Lowering the oppressive quotas to ease their minds (losing efficiency) or implementing mandatory physical restraints during sleep cycles (causing massive waking unrest).
+
+---
+
+## Gravity-Well Taxation
+
+**Layer:** 2 -> 1
+
+**Fantasy:** Physics dictates the economy, and the elite use it to literally keep the poor down.
+
+**Mechanic:** Planets with extremely high gravity cost more fuel to launch from. Wealthy populations migrate to low-G orbital rings to save on shipping costs, leaving the poor trapped on the high-G surface doing the heavy lifting.
+
+**Emergence:** Your orbital elite institute a "launch tax" on the surface miners. The miners, hardened by high-G, simply stop sending food up, starving the delicate, low-G aristocrats in their gilded cages.
+
+**Tension:** Do you subsidize the heavy surface lifters to maintain economic unity, or let the orbital elite enforce a literal caste system?
+
+---
+
+
+## The Sub-Space Tinnitus
+
+**Layer:** Cross-layer
+
+**Fantasy:** The ringing in your ears isn't a medical issue; it's the dying scream of a civilization halfway across the galaxy.
+
+**Mechanic:** Frequent use of high-power communications arrays causes a localized "Sub-Space Hum." Pops living near the arrays slowly develop "Tinnitus," leading to insomnia and eventually hallucinatory translations of background cosmic noise.
+
+**Emergence:** Your comms technicians stop sleeping. They claim the static is giving them blueprints for a weapon. You follow the blueprints, only to realize it's a beacon that summons the very threat the distant civilization was trying to warn you about.
+
+**Tension:** Do you shut down the arrays (losing crucial intel) to cure your people, or endure the madness for the sake of galactic awareness?
+
+---
+
+
+## The Rust-Lung Epidemic
+
+**Layer:** 1
+
+**Fantasy:** Breathing the air of progress until it suffocates you.
+
+**Mechanic:** Extracting low-purity ores releases microscopic, jagged metallic dust ("Rust"). Pops without proper rebreathers accumulate "Rust-Lung," slightly reducing their movement speed but making them immune to certain toxic gases (because their lungs are already coated in metal).
+
+**Emergence:** You ignore safety protocols to meet a quota. Half your colony gets Rust-Lung. Years later, a catastrophic toxic gas leak occurs. The only survivors are the afflicted miners, who now rule the ruined colony because the healthy elite all suffocated.
+
+**Tension:** Enforce expensive safety gear (slowing production) or allow the slow, metallic poisoning of your workforce for a strange kind of resilience?
+
+---
+## The Bioluminescent Graffiti [SPECCED]
+
+**Layer:** 1
+
+**Fantasy:** The lower classes use genetically modified flora to express their discontent in the dark.
+
+**Mechanic:** Pops with high unrest but low power plant a slow-growing, glowing fungus in unpatrolled corridors. The fungus forms anti-establishment symbols that boost the morale of the lower class but anger the enforcers.
+
+**Emergence:** A power outage plunges a sector into total darkness, revealing that the entire ceiling is coated in a massive, glowing mural of a forgotten martyr. The enforcers panic, while the workers feel an overwhelming surge of unity.
+
+**Tension:** Eradicating the fungus requires toxic chemicals that lower air quality, but leaving it empowers a passive rebellion.
+
+---
+
+## The Martyr's Dividend
+
+**Layer:** Cross-layer
+
+**Fantasy:** Profiting off the tragic deaths of your own heroes.
+
+**Mechanic:** When a highly experienced Pop dies in the line of duty (e.g., a seasoned explorer or heroic enforcer), they generate a massive spike in "Cultural Heritage." This heritage can be spent to instantly recruit inspired replacements or sold to the galactic market as inspiring media.
+
+**Emergence:** You intentionally send your most beloved, veteran scientist on a suicide mission into an anomaly. The ensuing tragedy generates so much Cultural Heritage that you instantly fund a new colony ship from the proceeds.
+
+**Tension:** Milking the heroic deaths of your people for economic gain versus keeping your most skilled veterans alive.
+
+---
+
+## Bureaucracy of the Deceased [SPECCED]
+
+**Layer:** 1
+
+**Fantasy:** The dead still have paperwork to file.
+
+**Mechanic:** When a Pop dies, their administrative load doesn't instantly vanish. "Death Certificates" and "Estate Transfers" must be processed by the Bureaucrat Pops. Until processed, the dead Pop's former housing remains locked, and their next of kin suffer a "Limbo" stress debuff.
+
+**Emergence:** A sudden disaster kills dozens of Pops. The Bureaucrats are so overwhelmed that bodies are physically removed, but the system still recognizes them as "alive and occupying housing." The surviving population is forced into homelessness while the paperwork slowly clears over months.
+
+**Tension:** Expanding an otherwise useless bureaucratic sector to handle sudden mortality spikes versus dealing with severe housing and morale crises post-disaster.
+
+---
+
+## The Cannibal's Empathy [SPECCED]
+
+**Layer:** 1
+
+**Fantasy:** Extreme survival breeds a terrifying closeness.
+
+**Mechanic:** During severe famines, Pops might consume the deceased to survive. While doing so, they inherit a fraction of the dead Pop's `Memories` and relationship scores, literally internalizing the person they ate.
+
+**Emergence:** A desperate miner eats their rival to survive a cave-in. They emerge not just alive, but burdened with the rival's fond memories of their family. The miner then attempts to care for the rival's children, driven by the inherited guilt.
+
+**Tension:** Allowing cannibalism prevents starvation but irreversibly tangles the social web of your colony with borrowed traumas and conflicting loyalties.
+
+---
+
+## The Sunk-Cost Monument [SPECCED]
+
+**Layer:** 1
+
+**Fantasy:** Committing so many resources into a grand project that abandoning it is unthinkable, even as it dooms the colony.
+
+**Mechanic:** Very large, multi-stage structures scale up their upkeep cost exponentially the longer they take to build. If canceled, they leave behind permanent "ruins" that heavily penalize nearby morale.
+
+**Emergence:** You start building a massive spire. Halfway through, a resource shortage slows construction. The upkeep skyrockets. To keep the project alive, you starve the rest of the colony. The spire is completed by a dying population.
+
+**Tension:** Knowing when to cut losses on a vanity project versus pushing through and starving your people to avoid the permanent penalty of failure.
+
+---
+
+## The Symbiotic Parasite [SPECCED]
+
+**Layer:** 1
+
+**Fantasy:** Accepting a horrific affliction because the benefits are just too good to ignore.
+
+**Mechanic:** A rare alien spore infects Pops. Infected Pops no longer need to sleep or eat and work at 150% efficiency, but they slowly drain the health of adjacent healthy Pops during work cycles.
+
+**Emergence:** You isolate the infected into a super-productive "leper colony" of immortal, sleepless workers. Then an infected Pop accidentally escapes into a crowded hospital, draining the patients to power a furious burst of medical research.
+
+**Tension:** Using the horrific efficiency of the infected to survive a crisis versus the moral cost and danger of them draining your healthy population.
+
+---
+
+## Generational Vengeance [SPECCED]
+
+**Layer:** Cross-layer
+
+**Fantasy:** A petty feud over a stolen sandwich escalating into an interstellar war centuries later.
+
+**Mechanic:** Pops have a "Grudge" system. If a Pop dies with an unresolved grudge against another Pop, the grudge passes down to their descendants. If a descendant becomes a colony leader or fleet commander, the grudge becomes a faction-level penalty or war goal.
+
+**Emergence:** Two miners hate each other in year 1. In year 300, the descendants of miner A form an orbital faction and aggressively blockade the surface planet governed by descendants of miner B, entirely because of an ancient grudge over a mining tool.
+
+**Tension:** Managing interpersonal conflicts early when they are trivial, or risking them festering into deep societal divides and wars generations down the line.
+
+---
+## The Phantom Obstacle [SPECCED]
+
+**Layer:** 1
+
+**Fantasy:** The ghosts of failed architecture haunt your current construction efforts.
+
+**Mechanic:** When a building is destroyed or canceled, it leaves behind an invisible "Phantom Footprint". Pops walking over it experience a brief chill (minor stress increase), and new buildings built over it take slightly longer to construct due to unseen structural quirks.
+
+**Emergence:** An old industrial zone that was bulldozed centuries ago becomes a notoriously slow neighborhood to develop. Pops claim the area is "cursed," leading to organic formation of historical districts where players simply avoid building to prevent morale hits.
+
+**Tension:** Saving space by building over old foundations versus the compounding stress and construction delays on your workforce.
+
+---
+
+## The Resource Hoard [SPECCED]
+
+**Layer:** Cross-layer
+
+**Fantasy:** Generational wealth and greed become physical obstacles.
+
+**Mechanic:** Extremely old or wealthy Pops start physically hoarding high-value resources in their homes instead of depositing them in colony storage. If they die, the hoard is inherited by their descendants.
+
+**Emergence:** A critical shortage of rare metals brings your orbital shipyard to a halt. You realize a single aristocratic family on the surface has been hoarding the metal as "art" for five generations, creating an immense, localized wealth disparity that threatens the entire system's defense.
+
+**Tension:** Confiscating the hoard by force (causing massive unrest among the elite) or bribing the family with political power to release the resources.
+
+---
+
+## The Architect's Signature [SPECCED]
+
+**Layer:** 1
+
+**Fantasy:** Buildings that reflect the personality and flaws of their creators.
+
+**Mechanic:** Every structure built inherits a subtle hidden trait from the primary builder Pop (e.g., "Meticulous", "Rushed", "Paranoid"). A paranoid builder might add hidden reinforced locks, making the building harder to sabotage but slower to access during emergencies.
+
+**Emergence:** You order the construction of a critical hospital. The builder was "Claustrophobic", so the hospital accidentally features excessively wide corridors and few doors. During a toxic gas leak, those wide corridors make it impossible to seal the hospital off, dooming the patients.
+
+**Tension:** Do you micromanage the assignment of builders for critical infrastructure based on their personality, or accept the procedural quirks of your colony's development?
+
+---
+
+## The Silent Strike
+
+**Layer:** 1
+
+**Fantasy:** Workers weaponize their presence without officially rebelling.
+
+**Mechanic:** Highly dissatisfied but non-violent Pops will perform a "Silent Strike" where they show up to their workstations but produce exactly zero output. They still consume food and occupy space, making it harder to replace them with scabs.
+
+**Emergence:** A critical factory goes offline, but the UI shows it's fully staffed. Enforcers can't arrest anyone because no laws are being broken, leading to a perfectly legal economic collapse.
+
+**Tension:** Do you violently evict workers who haven't actually committed a crime, permanently lowering global morale, or negotiate concessions while your colony bleeds resources?
+
+---
+
+## Orbital Debris Cult
+
+**Layer:** 2
+
+**Fantasy:** The trash you leave in orbit becomes a holy relic for those who live among it.
+
+**Mechanic:** Pops living in low-tier orbital stations begin to venerate uncollected space debris (destroyed ships, old satellites). The more debris in orbit, the higher their morale, but the higher the collision risk for your trade routes.
+
+**Emergence:** You try to clean up the orbit to secure a crucial trade lane, and the station workers launch a holy war to protect the "Sacred Shrapnel," turning a simple janitorial task into a localized civil war.
+
+**Tension:** Securing safe space travel versus respecting the bizarre religious beliefs of your orbital underclass to avoid an uprising.
+
+---
+
+## The Sympathetic Infrastructure
+
+**Layer:** 1
+
+**Fantasy:** Buildings that reflect the collective mood of the colony.
+
+**Mechanic:** Advanced biomimetic structures subtly adjust their color, temperature, and lighting based on the average morale of the Pops inside them.
+
+**Emergence:** A grieving colony turns entirely dark and cold, which inadvertently triggers a hibernation reflex in the alien flora you're cultivating, completely destroying your food supply out of "sympathy."
+
+**Tension:** Designing infrastructure that suppresses emotional resonance for stability, or allowing sympathetic feedback loops that can amplify both joy and despair.
+
+---
+
+## The Genetic Lottery
+
+**Layer:** Cross-layer
+
+**Fantasy:** A random genetic mutation in one generation dictates the future of your civilization.
+
+**Mechanic:** Every new generation of Pops has a tiny chance to develop a spontaneous, radical genetic trait (e.g., zero-G affinity, extreme radiation tolerance, or dietary obligate cannibalism).
+
+**Emergence:** A single pop is born with the ability to survive in hard vacuum. Centuries later, their descendants form an elite, unkillable void-navy that refuses to land on planets, creating a bifurcated civilization of "grounders" and "void-born."
+
+**Tension:** Culling or isolating anomalous pops early to preserve a unified human baseline, versus letting mutations spread and radically altering your empire's future capabilities and culture.
+
+---
+
+## The Black Market Airlock
+
+**Layer:** 1
+
+**Fantasy:** Contraband entering the colony outside official channels, creating an illicit economy.
+
+**Mechanic:** Pops with low morale and high greed secretly repurpose a malfunctioning or remote airlock to smuggle restricted goods (like exotic spices or banned media), bypassing colony storage.
+
+**Emergence:** An "abandoned" maintenance corridor becomes the busiest area in the colony. If the airlock experiences a critical failure, it could decompress the hidden black market, instantly killing key figures of your underground economy.
+
+**Tension:** Do you repair the airlock and crush the black market (causing massive withdrawal stress for the population), or leave it broken and risk explosive decompression?
+
+---
+
+## Memorial Scrap
+
+**Layer:** 2
+
+**Fantasy:** Sacred reverence for destroyed ships preventing necessary recycling.
+
+**Mechanic:** When a veteran fleet is destroyed, its wreckage is marked as "Memorial Scrap". Pops assigned to salvage it suffer massive morale penalties, and may even refuse the work order entirely.
+
+**Emergence:** A vital hyperlane choke point becomes cluttered with the husks of past heroic last stands. You desperately need the alloys to build a defense fleet, but attempting to harvest them triggers an immediate mutiny in your salvage crews.
+
+**Tension:** Do you leave the scrap as an orbital monument blocking traffic, or desecrate the memorial to build your next fleet?
+
+---
+
+## The Work-Shift Cartel
+
+**Layer:** 1
+
+**Fantasy:** Workers organizing to control labor supply and demand informally.
+
+**Mechanic:** Pops with high social influence in a specific sector (e.g., Mining) form a "Shift Cartel," demanding higher leisure time for their members while subtly sabotaging the productivity of non-members.
+
+**Emergence:** You try to ramp up alloy production by assigning new miners, but the Cartel traps them in endless "informal safety training" loops, effectively capping your production until you meet the Cartel's demands.
+
+**Tension:** Do you forcefully disband the cartel and risk a violent wildcat strike, or appease them and accept a permanent cap on that sector's maximum efficiency?
+
+---
+
+## The Sentient Rumor
+
+**Layer:** Cross-layer
+
+**Fantasy:** An idea taking on a life of its own, independent of the truth, and spreading across worlds.
+
+**Mechanic:** A minor gossip event (e.g., "The water tastes funny") mutates as it spreads between Pops and via interstellar trade routes. If unchecked by Official Broadcasts, it can evolve into a full-blown systemic panic.
+
+**Emergence:** You ignore a small complaint about a faulty hydro-processor on a mining outpost. Three months later, a heavily armed faction on your capital world storms a water treatment plant, convinced they are saving the empire from mind control.
+
+**Tension:** Do you waste valuable administrative resources continuously debunking trivial rumors, or ignore them and risk them blossoming into violent interstellar conspiracy theories?
 
 ---

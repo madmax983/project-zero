@@ -1,6 +1,14 @@
 # Backlog
 
 ## High Priority
+- [ ] `900` Latent Psionics — `specs/900-latent-psionics.md`
+- [ ] `901` Derelict Stations — `specs/901-derelict-stations.md`
+- [ ] `902` Nebulae — `specs/902-nebulae.md`
+- [ ] `903` Binary Star Systems — `specs/903-binary-star-systems.md`
+- [ ] `904` Proxy Wars — `specs/904-proxy-wars.md`
+- [ ] `893` Psychic Stains — `specs/893-psychic-stains.md`
+- [ ] `894` Social Debt — `specs/894-social-debt.md`
+- [ ] `895` Ephemeral Moons — `specs/895-ephemeral-moons.md`
 - [ ] `815` Zero-G Fermentation — `specs/815-zero-g-fermentation.md`
 - [ ] `816` Accidental Gods — `specs/816-accidental-gods.md`
 
@@ -57,6 +65,9 @@
 - [ ] `474` Inherited Grudges — `specs/474-inherited-grudges.md`
 - [ ] `477` The Ransom Broker — `specs/477-the-ransom-broker.md`
 
+- [ ] `887` The Sunk-Cost Monument — `specs/887-the-sunk-cost-monument.md`
+- [ ] `888` The Symbiotic Parasite — `specs/888-the-symbiotic-parasite.md`
+- [ ] `889` Generational Vengeance — `specs/889-generational-vengeance.md`
 
 ## Future / Ideas
 
@@ -560,7 +571,7 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `858` Prototyping Phase — `specs/858-prototyping-phase.md`
 - [ ] `859` Atmospheric Entry — `specs/859-atmospheric-entry.md`
 - [ ] `860` Sub-light Communication — `specs/860-sub-light-communication.md`
-- [ ] `862` Ventilation Networks — `specs/862-ventilation-networks.md`
+
 - [ ] `863` Corporate Foreclosure — `specs/863-corporate-foreclosure.md`
 - [ ] `864` Xeno-Zoo — `specs/864-xeno-zoo.md`
 - [ ] `865` Bio-Ship Breeding — `specs/865-bio-ship-breeding.md`
@@ -574,3 +585,15 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `879` The Cassandra Protocol — `specs/879-the-cassandra-protocol.md`
 - [ ] `880` The Attrition of Immortality — `specs/880-the-attrition-of-immortality.md`
 - [ ] `881` The Petrification Protocol — `specs/881-the-petrification-protocol.md`
+- [ ] `882` The Architect's Guilt — `specs/882-the-architects-guilt.md`
+- [ ] `883` The Nostalgia Contagion — `specs/883-the-nostalgia-contagion.md`
+- [ ] `884` The Bioluminescent Graffiti — `specs/884-bioluminescent-graffiti.md`
+- [ ] `885` Bureaucracy of the Deceased — `specs/885-bureaucracy-of-the-deceased.md`
+- [ ] `886` The Cannibal's Empathy — `specs/886-the-cannibals-empathy.md`
+
+- [ ] `891` Historical Geography — `specs/891-historical-geography.md`
+- [ ] `897` The Orbital Breadcrumbs — `specs/897-the-orbital-breadcrumbs.md`
+- [ ] `898` The Sleepwalker's Rebellion — `specs/898-the-sleepwalkers-rebellion.md`
+- [ ] `905` The Phantom Obstacle — `specs/905-the-phantom-obstacle.md`
+- [ ] `906` The Resource Hoard — `specs/906-the-resource-hoard.md`
+- [ ] `907` The Architect's Signature — `specs/907-the-architects-signature.md`

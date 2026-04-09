@@ -27,6 +27,7 @@ pub mod particles;
 pub mod pressure;
 pub mod structural_integrity;
 pub mod suction;
+pub mod vent;
 
 pub use acoustic::*;
 pub use hit_stop::*;
@@ -35,6 +36,7 @@ pub use particles::*;
 pub use pressure::*;
 pub use structural_integrity::*;
 pub use suction::*;
+pub use vent::*;
 
 #[cfg(test)]
 mod acoustic_shadow_tests;

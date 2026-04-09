@@ -357,6 +357,7 @@
 - [x] `869` The Bureaucracy of Sleep — `specs/869-bureaucracy-of-sleep.md` — completed 2026-04-08
 - [x] `INT-869` Integration: Bureaucracy of Sleep Hallucination -> Work Efficiency — completed 2026-04-08
 - [x] `874` The Blob — `specs/874-the-blob.md` — completed 2026-04-08
+- [x] `INT-874` Integration: The Blob -> Building Destruction — completed 2026-04-10
 - [x] `702` Fleet Mutiny — `specs/702-fleet-mutiny.md` — completed 2026-04-08
 - [x] `882` Start Scenario Framework - `specs/882-start-scenario-framework.md` - completed 2026-04-09
 - [x] `883` Start Scenario Selection - `specs/883-start-scenario-selection.md` - completed 2026-04-09
@@ -364,3 +365,7 @@
 - [x] `885` Social Drama Start - `specs/885-social-drama-start.md` - completed 2026-04-09
 - [x] `886` Layer 2 Ready Start - `specs/886-layer2-ready-start.md` - completed 2026-04-09
 - [x] `887` Start Scenario Verification - `specs/887-start-scenario-verification.md` - completed 2026-04-09
+- [x] `892` Ghost Ships — `specs/892-ghost-ships.md` — completed 2026-04-09
+- [x] `890` Pop Memories — `specs/890-pop-memories.md` — completed 2026-04-09
+- [x] `896` The Phantom Grid — `specs/896-the-phantom-grid.md` — completed 2026-04-10
+- [x] `899` Rogue Planets — `specs/899-rogue-planets.md` — completed 2026-04-10

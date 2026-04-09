@@ -1,3 +1,4 @@
+//! Energy fire mechanics tests
 #[cfg(test)]
 mod tests {
     use bevy_ecs::prelude::*;

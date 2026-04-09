@@ -5,15 +5,9 @@ pub struct Researcher {
     pub xp: u32,
 }
 
-#[derive(PartialEq, Debug)]
-pub enum ArtifactType {
-    Safe,
-    Hazardous,
-}
-
 #[derive(Component)]
 pub struct ActiveResearch {
-    pub artifact_type: ArtifactType,
+    pub is_hazardous: bool,
     pub progress: f32,
 }
 
@@ -41,7 +35,7 @@ pub fn process_artifact_research_system(
     for (entity, research, mut researcher) in query.iter_mut() {
         if research.progress >= 100.0 {
             researcher.xp += 1000;
-            if research.artifact_type == ArtifactType::Hazardous {
+            if research.is_hazardous {
                 commands
                     .entity(entity)
                     .insert(crate::layer1::memetics::MemeticCarrier);
@@ -96,7 +90,7 @@ mod tests {
             .spawn((
                 Researcher { xp: 0 },
                 ActiveResearch {
-                    artifact_type: ArtifactType::Hazardous,
+                    is_hazardous: true,
                     progress: 100.0,
                 },
             ))

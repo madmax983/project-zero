@@ -680,11 +680,6 @@ fn print_status(world: &mut World) {
 fn print_tech(world: &mut World) {
     let tech_state = world.resource::<TechState>();
 
-    println!(
-        "💾 Total Capacity: {:.1} TB | Used: {:.1} TB",
-        tech_state.total_capacity, tech_state.used_capacity
-    );
-
     let mut table = Table::new();
     table
         .load_preset(UTF8_FULL)
@@ -734,7 +729,13 @@ fn print_tech(world: &mut World) {
         ]);
     }
 
-    print_dashboard_table("TECHNOLOGY STATUS", table);
+    print_dashboard_table(
+        &format!(
+            "TECHNOLOGY STATUS (Capacity: {:.1} TB / {:.1} TB)",
+            tech_state.used_capacity, tech_state.total_capacity
+        ),
+        table,
+    );
 }
 
 fn print_pops(world: &mut World) {
@@ -813,6 +814,8 @@ fn print_pops(world: &mut World) {
 
         let traits_color = if traits_str == "-" {
             Color::DarkGrey
+        } else if traits_str.contains("Prophet") || traits_str.contains("Engine Cultist") {
+            Color::Yellow
         } else if traits_str.contains("Mutant") {
             Color::Magenta
         } else {
@@ -1231,9 +1234,31 @@ fn find_terrain(world: &mut World, terrain_name: &str, max_count: usize) {
     }
 }
 
+/// Configuration for semantic terrain scanning radius.
+///
+/// Use this struct to ensure the scanning radius stays within valid bounds
+/// before passing it into `scan_terrain`. Attempting to scan too large of an area
+/// may result in significant performance degradation or overflows.
+///
+/// # Examples
+///
+/// ```
+/// use scale::bin::headless::ScanRadius;
+///
+/// // Initialize a valid scan radius.
+/// let radius = ScanRadius::new(10).unwrap();
+///
+/// // Reject absurdly large bounds that might cause an overflow during the scan loop.
+/// assert!(ScanRadius::new(i32::MAX).is_err());
+/// ```
 pub struct ScanRadius(i32);
 
 impl ScanRadius {
+    /// Creates a new `ScanRadius`, validating it against hardcoded bounds (0 to 100).
+    ///
+    /// # Panics
+    ///
+    /// Does not panic, but returns an error if the radius is outside the `0..=100` range.
     pub fn new(radius: i32) -> Result<Self, String> {
         if !(0..=100).contains(&radius) {
             return Err("Radius must be between 0 and 100".to_string());
@@ -1241,6 +1266,7 @@ impl ScanRadius {
         Ok(Self(radius))
     }
 
+    #[doc(hidden)]
     pub fn get(&self) -> i32 {
         self.0
     }
@@ -1698,7 +1724,7 @@ fn print_bio(world: &mut World, target_id: u32) {
     for (entity, name, bio, dream) in query.iter(world) {
         if entity.index() == target_id {
             found = true;
-            let bio_title = format!("Biography for {} ({:?})", name.0, entity);
+            let bio_title = format!("Biography for {} (ID {})", name.0, entity.index());
 
             if let Some(bio) = bio {
                 if bio.events.is_empty() {
@@ -1821,9 +1847,9 @@ fn print_chronicle(world: &mut World) {
     for event in &chronicle.events {
         let importance_color = match event.importance {
             EventImportance::Legendary => Color::Yellow,
-            EventImportance::Major => Color::Cyan,
+            EventImportance::Major => Color::Magenta,
             EventImportance::Standard => Color::White,
-            EventImportance::Minor => Color::Grey,
+            EventImportance::Minor => Color::DarkGrey,
         };
 
         // Legendary events get bold text

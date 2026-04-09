@@ -213,6 +213,7 @@ pub fn build_simulation_schedule() -> Schedule {
         crate::layer2::integration::rebellion_chronicle_bridge_system
             .after(crate::layer2::governance::check_governor_rebellion_system),
         crate::layer2::tourism::process_disaster_tourism_system.after(Layer1SystemSet::Execution),
+        crate::layer2::rogue_planets::rogue_planet_drift_system,
         crate::layer2::integration::process_grief_tourist_arrival_system
             .after(crate::layer2::tourism::process_disaster_tourism_system),
         crate::layer2::navigation::stellar_weather::apply_stellar_weather_effects,
@@ -279,6 +280,9 @@ pub fn run_simulation_tick(world: &mut World) {
     }
 
     // Initialize Layer 2 Events
+    if !world.contains_resource::<Events<crate::layer1::geography::HistoricalEvent>>() {
+        world.init_resource::<Events<crate::layer1::geography::HistoricalEvent>>();
+    }
     if !world.contains_resource::<Events<crate::layer1::social::ghost_shift_strike::GhostShiftStartedEvent>>() {
         world.init_resource::<Events<crate::layer1::social::ghost_shift_strike::GhostShiftStartedEvent>>();
     }
@@ -531,6 +535,10 @@ pub fn run_simulation_tick(world: &mut World) {
     {
         let schedules = world.resource::<Schedules>();
         if schedules.get(SimulationSchedule).is_none() {
+            world.init_resource::<Events<crate::layer3::ghost_ships::EvaluateTransitEvent>>();
+            world
+                .init_resource::<Events<crate::layer3::ghost_ships::EvaluateLostShipReturnEvent>>();
+
             let schedule = build_simulation_schedule();
             world.add_schedule(schedule);
         }
@@ -696,6 +704,9 @@ mod tests {
         world.init_resource::<Events<crate::layer3::diplomacy::succession::SuccessionEvent>>();
         world
             .init_resource::<Events<crate::layer3::diplomacy::succession::SuccessionCrisisEvent>>();
+
+        world.init_resource::<Events<crate::layer3::ghost_ships::EvaluateTransitEvent>>();
+        world.init_resource::<Events<crate::layer3::ghost_ships::EvaluateLostShipReturnEvent>>();
 
         let schedule = build_simulation_schedule();
         world.add_schedule(schedule);

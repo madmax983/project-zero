@@ -31,6 +31,8 @@ pub fn register(schedule: &mut Schedule) {
                 .after(crate::layer1::structure::fire_damage_structure_system),
             (
                 blob_expansion_system,
+                crate::layer1::integration::blob_building_destruction_system
+                    .after(blob_expansion_system),
                 blob_spread_system,
                 blob_consumption_system,
             ),
@@ -50,6 +52,10 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::bio_acoustic_miasma::update_miasma_clouds,
             crate::layer1::parasitic_architecture::process_megastructure_consumption,
         )
+            .in_set(Layer1SystemSet::Environment),
+    );
+    schedule.add_systems(
+        (crate::layer1::energy::phantom_grid::phantom_grid_hum_system,)
             .in_set(Layer1SystemSet::Environment),
     );
     schedule.add_systems(

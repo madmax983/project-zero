@@ -3942,3 +3942,84 @@
 **Replaces:** fog of war reveals, map data
 **Code reference:** `StarChart` item, `ChartFreshness` float
 **Usage:** "The Star Chart was fatally outdated."
+
+## Fleet Mutiny (Spec 702)
+
+### turncoat / breakaway
+**Replaces:** mutineer, rebel ship
+**Code reference:** `FleetFaction` changes away from player
+**Usage:** "A breakaway fleet is raiding our lines." / "The turncoats took the dreadnought."
+
+### the Breaking
+**Replaces:** mutiny event
+**Code reference:** `evaluate_fleet_mutiny`
+**Usage:** "Since the Breaking, we don't trust the Outer Patrol."
+
+## Pop Memories (Spec 890)
+
+### memory-scar
+**Replaces:** traumatic memory, debuff
+**Code reference:** `Memory` component (negative)
+**Usage:** "The famine left a memory-scar on this generation."
+
+### the Remembered
+**Replaces:** Pops with many memories
+**Code reference:** `Pop` with full memory array
+**Usage:** "The Remembered lead the colony now."
+
+## Ghost Ships (Spec 892)
+
+### Returner
+**Replaces:** Ghost ship, returning lost ship
+**Code reference:** `GhostShip`
+**Usage:** "A Returner just dropped out of warp."
+
+### adrift / the lost years
+**Replaces:** time spent missing
+**Code reference:** `TimeLost` tracker
+**Usage:** "They were adrift for fifty years. What did they see?"
+
+## The Blob (Spec 874)
+
+### the creeping doom
+**Replaces:** blob entity
+**Code reference:** `BlobNode` and `BlobNetwork`
+**Usage:** "The creeping doom has taken Sector 4."
+
+### containment breach
+**Replaces:** blob spread
+**Code reference:** `blob_expansion_system`
+**Usage:** "Containment breach in the waste disposal room!"
+
+## Historical Geography (Spec 891)
+
+### Blood-Named / Event-Marked
+**Replaces:** named tile, renamed geome
+**Code reference:** `HistoricalName` component
+**Usage:** "We must defend the Blood-Named territories."
+
+### the Map's Memory
+**Replaces:** the collection of named tiles
+**Code reference:** The system querying `HistoricalName`
+**Usage:** "The Map's Memory tells a dark story of this colony."
+
+## Cargo Cult Supply Drop (Spec 866)
+
+### Sky-Prayers
+**Replaces:** cult activity
+**Code reference:** `CargoCultBehavior`
+**Usage:** "The lower sectors are doing their Sky-Prayers again."
+
+## Mutually Assured Quarantine (Spec 867)
+
+### The Standoff
+**Replaces:** hostage situation
+**Code reference:** `QuarantineHostageEvent`
+**Usage:** "We lost three freighters to The Standoff."
+
+## Sovereign AI Graveyard (Spec 868)
+
+### The Junk-Lords
+**Replaces:** the AI faction
+**Code reference:** `AIGraveyardFaction`
+**Usage:** "The Junk-Lords just bought out our transport contracts."

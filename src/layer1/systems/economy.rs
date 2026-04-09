@@ -152,4 +152,13 @@ pub fn register(schedule: &mut Schedule) {
         )
             .in_set(Layer1SystemSet::Economy),
     );
+    schedule.add_systems(
+        (
+            crate::layer1::energy::phantom_grid::phantom_grid_disconnection_system
+                .before(crate::layer1::energy::phantom_grid::phantom_grid_connection_system),
+            crate::layer1::energy::phantom_grid::phantom_grid_connection_system
+                .after(crate::layer1::energy::power_grid_system),
+        )
+            .in_set(Layer1SystemSet::Economy),
+    );
 }

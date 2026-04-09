@@ -1,3 +1,4 @@
+//! Narrative README example
 use scale::prelude::*;
 
 fn main() -> anyhow::Result<()> {

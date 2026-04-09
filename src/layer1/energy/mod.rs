@@ -21,6 +21,9 @@ mod blackout_tests;
 #[cfg(test)]
 mod instability_tests;
 pub mod load_limits;
+pub mod phantom_grid;
+#[cfg(test)]
+mod phantom_grid_tests;
 pub use auroral::update_auroral_output_system;
 
 /// Emits power to the grid.

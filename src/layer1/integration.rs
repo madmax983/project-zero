@@ -1247,3 +1247,26 @@ pub fn parasitic_architecture_chronicle_bridge(
         });
     }
 }
+
+/// INT-874: When the Blob expands onto a building, it triggers a BuildingRemovedEvent
+/// and destroys the building.
+pub fn blob_building_destruction_system(
+    mut commands: Commands,
+    blobs: Query<&crate::layer1::map::GridPosition, Added<crate::layer1::blob::BlobNode>>,
+    mut events: EventWriter<crate::layer1::events::BuildingRemovedEvent>,
+    building_map: Res<crate::layer1::building::BuildingMap>,
+    buildings: Query<(Entity, &crate::layer1::building::Building)>,
+) {
+    for pos in blobs.iter() {
+        if let Some(&building_entity) = building_map.0.get(&(pos.x, pos.y)) {
+            if let Ok((entity, building)) = buildings.get(building_entity) {
+                events.send(crate::layer1::events::BuildingRemovedEvent {
+                    entity,
+                    position: *pos,
+                    building_type: building.building_type,
+                });
+                commands.entity(entity).despawn();
+            }
+        }
+    }
+}

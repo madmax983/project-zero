@@ -46,14 +46,12 @@ trunk serve
 
 To use SCALE's procedural generation in your own Rust code:
 
-```toml
-# In Cargo.toml:
-[dependencies]
-scale = "0.1"
-anyhow = "1.0"
-```
-
 ```rust
+// In Cargo.toml:
+// [dependencies]
+// scale = "0.1"
+// anyhow = "1.0"
+
 use scale::prelude::*;
 
 fn main() -> anyhow::Result<()> {
@@ -101,6 +99,7 @@ The "Nova" feature (Oral Tradition) builds upon the base narrative system to cre
 
 ```rust
 // In Cargo.toml:
+// [dependencies]
 // scale = { version = "...", features = ["nova"] }
 
 use scale::prelude::*;

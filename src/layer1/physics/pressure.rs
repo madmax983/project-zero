@@ -13,28 +13,32 @@
 //! # Examples
 //!
 //! ```
-//! use bevy_ecs::prelude::*;
-//! use scale::layer1::pressure::{PressureGrid, update_pressure_system};
+//! use bevy::prelude::*;
+//! use scale::layer1::physics::pressure::{PressureGrid, update_pressure_system};
 //! use scale::layer1::building::{Building, BuildingType};
+//! use scale::layer1::Structure;
 //! use scale::layer1::map::GridPosition;
 //!
-//! let mut world = World::new();
+//! let mut app = App::new();
+//! app.add_plugins(MinimalPlugins);
 //!
 //! // 1. Create a 5x5 grid (defaults to 0.0 vacuum)
 //! let grid = PressureGrid::new(5, 5);
-//! world.insert_resource(grid);
+//! app.insert_resource(grid);
 //!
 //! // 2. Add a Life Support generator
-//! world.spawn((
+//! app.world_mut().spawn((
 //!     Building { building_type: BuildingType::LifeSupport },
-//!     GridPosition { x: 2, y: 2 }
+//!     GridPosition { x: 2, y: 2 },
+//!     Structure::default(),
 //! ));
 //!
 //! // 3. Run the system to generate and diffuse pressure
-//! update_pressure_system(&mut world);
+//! app.add_systems(Update, update_pressure_system);
+//! app.update();
 //!
 //! // The grid now has pressure near the generator!
-//! let pressure = world.resource::<PressureGrid>().get(2, 2);
+//! let pressure = app.world().resource::<PressureGrid>().get(2, 2);
 //! assert!(pressure > 0.0);
 //! ```
 //!
@@ -207,6 +211,7 @@ pub fn update_pressure_system(
         &crate::layer1::map::GridPosition,
         Option<&crate::layer1::energy::PowerConsumer>,
     )>,
+    vents: Query<(&crate::layer1::map::GridPosition, &crate::layer1::physics::vent::VentConnection)>,
 ) {
     use crate::layer1::building::BuildingType;
 
@@ -231,6 +236,12 @@ pub fn update_pressure_system(
             blockers.insert((pos.x, pos.y), t);
         }
     }
+
+    for (pos, vent) in vents.iter() {
+        let airflow = crate::layer1::physics::vent::calculate_vent_airflow(vent);
+        blockers.insert((pos.x, pos.y), airflow);
+    }
+
 
     // 2. Identify Generators and apply to Grid directly without intermediate Vec
     for (b, pos, power) in generator_query.iter() {
