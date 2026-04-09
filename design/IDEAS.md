@@ -14951,7 +14951,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Managing interpersonal conflicts early when they are trivial, or risking them festering into deep societal divides and wars generations down the line.
 
 ---
-## The Phantom Obstacle
+## The Phantom Obstacle [SPECCED]
 
 **Layer:** 1
 
@@ -14965,7 +14965,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Resource Hoard
+## The Resource Hoard [SPECCED]
 
 **Layer:** Cross-layer
 
@@ -14979,7 +14979,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Architect's Signature
+## The Architect's Signature [SPECCED]
 
 **Layer:** 1
 
