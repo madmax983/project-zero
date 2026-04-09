@@ -359,3 +359,4 @@
 - [x] `874` The Blob — `specs/874-the-blob.md` — completed 2026-04-08
 - [x] `702` Fleet Mutiny — `specs/702-fleet-mutiny.md` — completed 2026-04-08
 - [x] `892` Ghost Ships — `specs/892-ghost-ships.md` — completed 2026-04-09
+- [x] `890` Pop Memories — `specs/890-pop-memories.md` — completed 2026-04-09
