@@ -363,3 +363,4 @@
 - [x] `884` Ground Survival Start - `specs/884-ground-survival-start.md` - completed 2026-04-09
 - [x] `885` Social Drama Start - `specs/885-social-drama-start.md` - completed 2026-04-09
 - [x] `886` Layer 2 Ready Start - `specs/886-layer2-ready-start.md` - completed 2026-04-09
+- [x] `887` Start Scenario Verification - `specs/887-start-scenario-verification.md` - completed 2026-04-09

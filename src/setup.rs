@@ -1020,6 +1020,63 @@ mod tests {
         (founders, immigrants)
     }
 
+    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+    struct ScenarioSignature {
+        pop_count: usize,
+        founders: usize,
+        immigrants: usize,
+        food_tenths: i32,
+        tools_tenths: i32,
+        visibility: crate::layer2::visibility::SystemVisibility,
+        command_center_count: usize,
+        life_support_damaged: bool,
+    }
+
+    fn scenario_signature(scenario: StartScenarioId) -> ScenarioSignature {
+        let mut world = setup_world_with_config(SetupConfig {
+            headless: true,
+            scenario,
+        });
+
+        let resources = *world.resource::<ColonyResources>();
+        let visibility = *world.resource::<crate::layer2::visibility::SystemVisibility>();
+        let (founders, immigrants) = generation_counts(&mut world);
+        let pop_count = world.query::<&Pop>().iter(&world).count();
+        let life_support = life_support_structure(&mut world);
+        let command_center_count = world
+            .query::<&Building>()
+            .iter(&world)
+            .filter(|building| building.building_type == BuildingType::CommandCenter)
+            .count();
+
+        ScenarioSignature {
+            pop_count,
+            founders,
+            immigrants,
+            food_tenths: (resources.food * 10.0).round() as i32,
+            tools_tenths: (resources.tools * 10.0).round() as i32,
+            visibility,
+            command_center_count,
+            life_support_damaged: life_support.current_hp < life_support.max_hp,
+        }
+    }
+
+    fn run_start_scenario_smoke_ticks(scenario: StartScenarioId, ticks: u64) -> World {
+        let mut world = setup_world_with_config(SetupConfig {
+            headless: true,
+            scenario,
+        });
+        world.init_resource::<crate::layer1::bio_acoustic_miasma::MiasmaRecordedSecret>();
+        world.init_resource::<bevy::prelude::Events<crate::layer2::skyhooks::LaunchIntent>>();
+        *world.resource_mut::<GameState>() = GameState::Running;
+
+        for _ in 0..ticks {
+            crate::simulation::run_simulation_tick(&mut world);
+        }
+
+        world
+    }
+
     #[test]
     fn test_setup_world_default_scenario_is_classic() {
         let config = SetupConfig::default();
@@ -1312,6 +1369,88 @@ mod tests {
                 .any(|event| event.text.contains("orbital charter")),
             "Layer 2 Ready should add a distinct startup chronicle entry"
         );
+    }
+
+    #[test]
+    fn test_curated_start_scenarios_share_first_pass_starter_shell() {
+        let mut classic = setup_world_with_config(SetupConfig {
+            headless: true,
+            scenario: StartScenarioId::Classic,
+        });
+        let classic_shell = starter_shell(&mut classic);
+
+        for scenario in [
+            StartScenarioId::GroundSurvival,
+            StartScenarioId::SocialDrama,
+            StartScenarioId::Layer2Ready,
+        ] {
+            let mut world = setup_world_with_config(SetupConfig {
+                headless: true,
+                scenario,
+            });
+            assert_eq!(
+                starter_shell(&mut world),
+                classic_shell,
+                "{scenario:?} should keep the shared starter shell"
+            );
+        }
+    }
+
+    #[test]
+    fn test_curated_start_scenarios_have_distinct_mechanical_signatures() {
+        let classic = scenario_signature(StartScenarioId::Classic);
+        let ground_survival = scenario_signature(StartScenarioId::GroundSurvival);
+        let social_drama = scenario_signature(StartScenarioId::SocialDrama);
+        let layer2_ready = scenario_signature(StartScenarioId::Layer2Ready);
+
+        assert_ne!(classic, ground_survival);
+        assert_ne!(classic, social_drama);
+        assert_ne!(classic, layer2_ready);
+        assert_ne!(ground_survival, social_drama);
+        assert_ne!(ground_survival, layer2_ready);
+        assert_ne!(social_drama, layer2_ready);
+
+        assert!(
+            ground_survival.food_tenths < classic.food_tenths,
+            "Ground Survival should be leaner than Classic"
+        );
+        assert!(
+            layer2_ready.food_tenths > classic.food_tenths,
+            "Layer 2 Ready should be richer than Classic"
+        );
+        assert!(
+            ground_survival.pop_count < social_drama.pop_count,
+            "Ground Survival should open with fewer pops than Social Drama"
+        );
+        assert!(
+            social_drama.immigrants > social_drama.founders,
+            "Social Drama should start immigrant-heavy"
+        );
+        assert!(
+            ground_survival.life_support_damaged,
+            "Ground Survival should carry a damaged survival core"
+        );
+        assert_eq!(
+            layer2_ready.visibility,
+            crate::layer2::visibility::SystemVisibility::Full,
+            "Layer 2 Ready should expose the system immediately"
+        );
+        assert_eq!(
+            layer2_ready.command_center_count, 1,
+            "Layer 2 Ready should start with a command center"
+        );
+    }
+
+    #[test]
+    fn test_built_in_start_scenarios_survive_early_headless_ticks() {
+        for scenario in StartScenarioId::all() {
+            let world = run_start_scenario_smoke_ticks(scenario, 5);
+            assert_eq!(
+                world.resource::<SimulationTime>().tick,
+                5,
+                "{scenario:?} should survive five early ticks"
+            );
+        }
     }
 
     #[test]
