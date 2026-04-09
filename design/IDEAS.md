@@ -15048,3 +15048,59 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Culling or isolating anomalous pops early to preserve a unified human baseline, versus letting mutations spread and radically altering your empire's future capabilities and culture.
 
 ---
+
+## The Black Market Airlock
+
+**Layer:** 1
+
+**Fantasy:** Contraband entering the colony outside official channels, creating an illicit economy.
+
+**Mechanic:** Pops with low morale and high greed secretly repurpose a malfunctioning or remote airlock to smuggle restricted goods (like exotic spices or banned media), bypassing colony storage.
+
+**Emergence:** An "abandoned" maintenance corridor becomes the busiest area in the colony. If the airlock experiences a critical failure, it could decompress the hidden black market, instantly killing key figures of your underground economy.
+
+**Tension:** Do you repair the airlock and crush the black market (causing massive withdrawal stress for the population), or leave it broken and risk explosive decompression?
+
+---
+
+## Memorial Scrap
+
+**Layer:** 2
+
+**Fantasy:** Sacred reverence for destroyed ships preventing necessary recycling.
+
+**Mechanic:** When a veteran fleet is destroyed, its wreckage is marked as "Memorial Scrap". Pops assigned to salvage it suffer massive morale penalties, and may even refuse the work order entirely.
+
+**Emergence:** A vital hyperlane choke point becomes cluttered with the husks of past heroic last stands. You desperately need the alloys to build a defense fleet, but attempting to harvest them triggers an immediate mutiny in your salvage crews.
+
+**Tension:** Do you leave the scrap as an orbital monument blocking traffic, or desecrate the memorial to build your next fleet?
+
+---
+
+## The Work-Shift Cartel
+
+**Layer:** 1
+
+**Fantasy:** Workers organizing to control labor supply and demand informally.
+
+**Mechanic:** Pops with high social influence in a specific sector (e.g., Mining) form a "Shift Cartel," demanding higher leisure time for their members while subtly sabotaging the productivity of non-members.
+
+**Emergence:** You try to ramp up alloy production by assigning new miners, but the Cartel traps them in endless "informal safety training" loops, effectively capping your production until you meet the Cartel's demands.
+
+**Tension:** Do you forcefully disband the cartel and risk a violent wildcat strike, or appease them and accept a permanent cap on that sector's maximum efficiency?
+
+---
+
+## The Sentient Rumor
+
+**Layer:** Cross-layer
+
+**Fantasy:** An idea taking on a life of its own, independent of the truth, and spreading across worlds.
+
+**Mechanic:** A minor gossip event (e.g., "The water tastes funny") mutates as it spreads between Pops and via interstellar trade routes. If unchecked by Official Broadcasts, it can evolve into a full-blown systemic panic.
+
+**Emergence:** You ignore a small complaint about a faulty hydro-processor on a mining outpost. Three months later, a heavily armed faction on your capital world storms a water treatment plant, convinced they are saving the empire from mind control.
+
+**Tension:** Do you waste valuable administrative resources continuously debunking trivial rumors, or ignore them and risk them blossoming into violent interstellar conspiracy theories?
+
+---
