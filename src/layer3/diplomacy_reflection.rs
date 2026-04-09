@@ -86,10 +86,11 @@ pub struct DiplomaticRelations {
 /// # Examples
 /// ```
 /// use bevy::prelude::*;
-/// use scale::layer3::diplomacy_reflection::{ColonyStats, EntityKilledEvent, aggregate_colony_stats};
+/// use scale::layer3::diplomacy_reflection::{ColonyStats, EntityKilledEvent, FloraPlantedEvent, aggregate_colony_stats};
 ///
 /// let mut app = App::new();
 /// app.add_event::<EntityKilledEvent>();
+/// app.add_event::<FloraPlantedEvent>();
 /// app.add_systems(Update, aggregate_colony_stats);
 ///
 /// let colony = app.world_mut().spawn(ColonyStats::default()).id();
