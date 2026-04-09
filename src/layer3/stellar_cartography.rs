@@ -66,7 +66,7 @@ impl Plugin for StellarCartographyPlugin {
 /// let player = app.world_mut().spawn(LocalKnowledge::default()).id();
 ///
 /// // Needs Time resource to decay
-/// let mut time = Time::default();
+/// let mut time: Time = Time::default();
 /// time.advance_by(bevy::utils::Duration::from_secs(5));
 /// app.insert_resource(time);
 ///
