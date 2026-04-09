@@ -1,7 +1,6 @@
 # Backlog
 
 ## High Priority
-- [ ] `899` Rogue Planets — `specs/899-rogue-planets.md`
 - [ ] `900` Latent Psionics — `specs/900-latent-psionics.md`
 - [ ] `901` Derelict Stations — `specs/901-derelict-stations.md`
 - [ ] `902` Nebulae — `specs/902-nebulae.md`

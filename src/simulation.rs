@@ -213,6 +213,7 @@ pub fn build_simulation_schedule() -> Schedule {
         crate::layer2::integration::rebellion_chronicle_bridge_system
             .after(crate::layer2::governance::check_governor_rebellion_system),
         crate::layer2::tourism::process_disaster_tourism_system.after(Layer1SystemSet::Execution),
+        crate::layer2::rogue_planets::rogue_planet_drift_system,
         crate::layer2::integration::process_grief_tourist_arrival_system
             .after(crate::layer2::tourism::process_disaster_tourism_system),
         crate::layer2::navigation::stellar_weather::apply_stellar_weather_effects,

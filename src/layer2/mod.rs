@@ -40,3 +40,5 @@ pub mod mutiny;
 pub mod navigation;
 pub mod sensor_ambiguity;
 pub mod skyhooks;
+
+pub mod rogue_planets;
