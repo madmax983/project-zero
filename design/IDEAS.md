@@ -3781,7 +3781,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Rogue Planets
+## Rogue Planets [SPECCED]
 
 **Layer:** 2
 
@@ -3823,7 +3823,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Latent Psionics
+## Latent Psionics [SPECCED]
 
 **Layer:** 1
 
@@ -3837,7 +3837,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Derelict Stations
+## Derelict Stations [SPECCED]
 
 **Layer:** 2 -> 1
 
