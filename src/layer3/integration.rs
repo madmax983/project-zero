@@ -94,3 +94,22 @@ pub fn jump_risk_bridge_system(
         });
     }
 }
+
+use crate::layer2::fleet::InTransit;
+use crate::layer3::ghost_ships::{EvaluateLostShipReturnEvent, EvaluateTransitEvent, LostInTransit};
+
+/// Bridges `InTransit` and `LostInTransit` to Ghost Ships evaluation events.
+pub fn ghost_ships_bridge_system(
+    transit_query: Query<Entity, With<InTransit>>,
+    lost_query: Query<Entity, With<LostInTransit>>,
+    mut evaluate_transit_events: EventWriter<EvaluateTransitEvent>,
+    mut evaluate_return_events: EventWriter<EvaluateLostShipReturnEvent>,
+) {
+    for entity in transit_query.iter() {
+        evaluate_transit_events.send(EvaluateTransitEvent { ship: entity });
+    }
+
+    for entity in lost_query.iter() {
+        evaluate_return_events.send(EvaluateLostShipReturnEvent { ship: entity });
+    }
+}
