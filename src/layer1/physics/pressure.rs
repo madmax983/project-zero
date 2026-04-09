@@ -207,6 +207,7 @@ pub fn update_pressure_system(
         &crate::layer1::map::GridPosition,
         Option<&crate::layer1::energy::PowerConsumer>,
     )>,
+    vents: Query<(&crate::layer1::map::GridPosition, &crate::layer1::physics::vent::VentConnection)>,
 ) {
     use crate::layer1::building::BuildingType;
 
@@ -231,6 +232,12 @@ pub fn update_pressure_system(
             blockers.insert((pos.x, pos.y), t);
         }
     }
+
+    for (pos, vent) in vents.iter() {
+        let airflow = crate::layer1::physics::vent::calculate_vent_airflow(vent);
+        blockers.insert((pos.x, pos.y), airflow);
+    }
+
 
     // 2. Identify Generators and apply to Grid directly without intermediate Vec
     for (b, pos, power) in generator_query.iter() {
