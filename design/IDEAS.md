@@ -15104,3 +15104,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you waste valuable administrative resources continuously debunking trivial rumors, or ignore them and risk them blossoming into violent interstellar conspiracy theories?
 
 ---
+
+## The Parasitic Artifact
+
+**Layer:** 1
+
+**Fantasy:** Digging up a treasure that slowly eats your colony's culture.
+
+**Mechanic:** A mined xeno-artifact provides a massive passive boost to nearby building efficiency, but slowly 're-writes' the UtilityWeights (personality) of pops who spend time near it, making them obsessed with staring at the artifact instead of sleeping or socializing.
+
+**Emergence:** You place the artifact in your main industrial zone to boost production. Months later, the entire factory staff starves to death because their 'need to admire the artifact' score overrode their 'need to eat' score.
+
+**Tension:** Exploiting the massive efficiency boost versus the slow, insidious destruction of your workforce's sanity.
+
+---
+
+## Rogue Habitation Modules
+
+**Layer:** 2
+
+**Fantasy:** A neighborhood simply deciding to leave the planet.
+
+**Mechanic:** High-tier orbital housing units have emergency thrusters. If the inhabitants' unrest reaches critical mass, instead of rioting, they fire the thrusters, decouple from the main station or colony, and become an independent, mobile mini-station.
+
+**Emergence:** You overtax your wealthiest orbital citizens. Instead of paying, they launch their luxury condos into deep space, taking a massive chunk of your tax base and several vital trade delegates with them.
+
+**Tension:** Keeping powerful pops happy not just to avoid riots, but to physically prevent them from taking their infrastructure and leaving.
+
+---
+
+## Debt Gravity
+
+**Layer:** Cross-layer
+
+**Fantasy:** Economic failure physically trapping you on a world.
+
+**Mechanic:** Pops and factions track severe financial debt. High levels of collective debt physically increase the mass/fuel cost required to launch ships from that colony, representing the bureaucratic and literal blockade of debt collectors seizing assets and fuel.
+
+**Emergence:** A once-thriving trade hub suffers an economic crash. The massive resulting debt makes it too expensive to launch merchant fleets to trade their way out of the crash, turning the planet into an inescapable 'debt sink' where nobody can afford the fuel to leave.
+
+**Tension:** Taking on loans to rapidly develop a colony, knowing that if you fail to pay, the planet itself will become a gravitational prison.
+
+---
