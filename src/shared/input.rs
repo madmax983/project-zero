@@ -431,6 +431,7 @@ fn handle_main_menu_mode(world: &mut World, key: GameKeyEvent) {
                             name: scenario.name,
                             difficulty: scenario.difficulty,
                         };
+                    crate::setup::apply_selected_start_scenario(world);
                     *world.resource_mut::<GameState>() = GameState::Running;
                     let mut stack = world.resource_mut::<InputContextStack>();
                     stack.stack = vec![InputContext::Normal];

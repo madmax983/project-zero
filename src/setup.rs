@@ -92,6 +92,12 @@ pub struct ActiveStartScenario {
     pub difficulty: StartScenarioDifficulty,
 }
 
+/// The startup scenario state already baked into the current world.
+#[derive(Resource, Debug, Clone, Copy, PartialEq, Eq)]
+pub struct AppliedStartScenario {
+    pub id: StartScenarioId,
+}
+
 #[must_use]
 pub const fn start_scenario_definition(id: StartScenarioId) -> StartScenarioDefinition {
     match id {
@@ -408,10 +414,12 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     let starter_colony = spawn_starter_colony(&mut world);
 
     if let Some(layout) = starter_colony.as_ref() {
-        spawn_initial_pops_at_positions(&mut world, &layout.pop_positions);
+        let pop_positions = start_scenario_pop_positions(layout, scenario.id);
+        spawn_initial_pops_at_positions(&mut world, &pop_positions);
     } else {
         spawn_initial_pops(&mut world);
     }
+    apply_start_scenario_state(&mut world, scenario.id, starter_colony.as_ref());
     spawn_initial_anomalies(&mut world, 5);
     spawn_ancient_structures(
         &mut world,
@@ -420,6 +428,8 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     );
     initial_naming_system(&mut world);
     initial_chronicle_event(&mut world);
+    add_start_scenario_intro_event(&mut world, scenario.id);
+    world.insert_resource(AppliedStartScenario { id: scenario.id });
 
     world
 }
@@ -492,9 +502,22 @@ const STARTER_LIFE_SUPPORT_OFFSET: (i32, i32) = (-1, 0);
 const STARTER_POP_OFFSETS: &[(i32, i32)] = &[(0, 0), (-1, -1), (0, -1), (1, -1), (0, 1)];
 const STARTER_HAZARD_BUFFER_RADIUS: i32 = 14;
 
+#[derive(Resource, Clone)]
 struct StarterColonyLayout {
     center: crate::layer1::GridPosition,
+    interior_tiles: Vec<crate::layer1::GridPosition>,
+    life_support_pos: crate::layer1::GridPosition,
     pop_positions: Vec<crate::layer1::GridPosition>,
+}
+
+fn start_scenario_pop_positions(
+    layout: &StarterColonyLayout,
+    scenario_id: StartScenarioId,
+) -> Vec<crate::layer1::GridPosition> {
+    match scenario_id {
+        StartScenarioId::GroundSurvival => layout.pop_positions.iter().take(4).copied().collect(),
+        _ => layout.pop_positions.clone(),
+    }
 }
 
 fn spawn_initial_pops_at_positions(world: &mut World, positions: &[crate::layer1::GridPosition]) {
@@ -502,6 +525,94 @@ fn spawn_initial_pops_at_positions(world: &mut World, positions: &[crate::layer1
     for pos in positions {
         world.spawn(PopBundle::random(pos.x, pos.y, &mut rng));
     }
+}
+
+fn apply_start_scenario_state(
+    world: &mut World,
+    scenario_id: StartScenarioId,
+    layout: Option<&StarterColonyLayout>,
+) {
+    match scenario_id {
+        StartScenarioId::GroundSurvival => apply_ground_survival_start(world, layout),
+        StartScenarioId::Classic | StartScenarioId::SocialDrama | StartScenarioId::Layer2Ready => {}
+    }
+}
+
+fn apply_ground_survival_start(world: &mut World, layout: Option<&StarterColonyLayout>) {
+    {
+        let mut resources = world.resource_mut::<ColonyResources>();
+        resources.food = 4.0;
+        resources.wood = 8.0;
+        resources.stone = 2.0;
+        resources.tools = 1.0;
+    }
+
+    let mut pop_entities: Vec<_> = world
+        .query_filtered::<(Entity, &crate::layer1::map::GridPosition), With<crate::layer1::pop::Pop>>()
+        .iter(world)
+        .map(|(entity, pos)| (entity, pos.x, pos.y))
+        .collect();
+    pop_entities.sort_by_key(|(_, x, y)| (*y, *x));
+    for (entity, _, _) in pop_entities.into_iter().skip(4) {
+        world.despawn(entity);
+    }
+
+    let Some(layout) = layout else { return };
+
+    if let Some(mut pressure) = world.get_resource_mut::<crate::layer1::pressure::PressureGrid>() {
+        for tile in &layout.interior_tiles {
+            pressure.set(tile.x, tile.y, 0.45);
+        }
+        pressure.set(layout.life_support_pos.x, layout.life_support_pos.y, 0.15);
+    }
+
+    let mut life_support_query = world.query::<(
+        &crate::layer1::building::Building,
+        &crate::layer1::map::GridPosition,
+        &mut crate::layer1::structure::Structure,
+    )>();
+    for (building, pos, mut structure) in life_support_query.iter_mut(world) {
+        if building.building_type == crate::layer1::building::BuildingType::LifeSupport
+            && *pos == layout.life_support_pos
+        {
+            structure.current_hp = (structure.max_hp * 0.35).max(1.0);
+        }
+    }
+}
+
+fn add_start_scenario_intro_event(world: &mut World, scenario_id: StartScenarioId) {
+    match scenario_id {
+        StartScenarioId::GroundSurvival => {
+            let founder_count = world
+                .query::<&crate::layer1::pop::Pop>()
+                .iter(world)
+                .count();
+            world.resource_mut::<Chronicle>().add_event(
+                0,
+                format!(
+                    "Ground Survival: a hard landing left {founder_count} battered founders with thin stores and a failing habitat core."
+                ),
+                crate::layer1::chronicle::EventImportance::Major,
+            );
+        }
+        StartScenarioId::Classic | StartScenarioId::SocialDrama | StartScenarioId::Layer2Ready => {}
+    }
+}
+
+/// Applies the currently selected startup scenario to an already-created world.
+pub fn apply_selected_start_scenario(world: &mut World) {
+    let selected = world.resource::<ActiveStartScenario>().id;
+    if world
+        .get_resource::<AppliedStartScenario>()
+        .is_some_and(|applied| applied.id == selected)
+    {
+        return;
+    }
+
+    let layout = world.get_resource::<StarterColonyLayout>().cloned();
+    apply_start_scenario_state(world, selected, layout.as_ref());
+    add_start_scenario_intro_event(world, selected);
+    world.insert_resource(AppliedStartScenario { id: selected });
 }
 
 fn spawn_starter_colony(world: &mut World) -> Option<StarterColonyLayout> {
@@ -582,8 +693,10 @@ fn spawn_starter_colony(world: &mut World) -> Option<StarterColonyLayout> {
         }
     }
 
-    Some(StarterColonyLayout {
+    let layout = StarterColonyLayout {
         center,
+        interior_tiles,
+        life_support_pos,
         pop_positions: STARTER_POP_OFFSETS
             .iter()
             .map(|(dx, dy)| crate::layer1::GridPosition {
@@ -591,7 +704,9 @@ fn spawn_starter_colony(world: &mut World) -> Option<StarterColonyLayout> {
                 y: center.y + dy,
             })
             .collect(),
-    })
+    };
+    world.insert_resource(layout.clone());
+    Some(layout)
 }
 
 fn find_starter_colony_site(world: &World) -> Option<crate::layer1::GridPosition> {
@@ -678,9 +793,45 @@ use crate::shared::menu::MenuState;
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::layer1::{Pop, TerrainGrid};
+    use crate::layer1::building::{Building, BuildingType};
+    use crate::layer1::structure::Structure;
+    use crate::layer1::{ColonyResources, GridPosition, Pop, TerrainGrid};
     use crate::shared::colony::ColonyName;
     use crate::shared::narrative::NarrativeGenerator;
+
+    fn starter_shell(world: &mut World) -> Vec<(BuildingType, i32, i32)> {
+        let mut shell: Vec<_> = world
+            .query::<(&Building, &GridPosition)>()
+            .iter(world)
+            .filter(|(building, _)| {
+                matches!(
+                    building.building_type,
+                    BuildingType::Wall
+                        | BuildingType::Airlock
+                        | BuildingType::Lander
+                        | BuildingType::LifeSupport
+                )
+            })
+            .map(|(building, pos)| (building.building_type, pos.x, pos.y))
+            .collect();
+        let min_x = shell.iter().map(|(_, x, _)| *x).min().unwrap_or(0);
+        let min_y = shell.iter().map(|(_, _, y)| *y).min().unwrap_or(0);
+        for (_, x, y) in &mut shell {
+            *x -= min_x;
+            *y -= min_y;
+        }
+        shell.sort_by_key(|(_, x, y)| (*x, *y));
+        shell
+    }
+
+    fn life_support_structure(world: &mut World) -> Structure {
+        world
+            .query::<(&Building, &Structure)>()
+            .iter(world)
+            .find(|(building, _)| building.building_type == BuildingType::LifeSupport)
+            .map(|(_, structure)| *structure)
+            .expect("starter colony should include life support")
+    }
 
     #[test]
     fn test_setup_world_default_scenario_is_classic() {
@@ -705,6 +856,87 @@ mod tests {
             let definition = start_scenario_definition(id);
             assert_eq!(definition.id, id);
         }
+    }
+
+    #[test]
+    fn test_ground_survival_keeps_shared_starter_shell_layout() {
+        let mut classic = setup_world_with_config(SetupConfig {
+            headless: true,
+            scenario: StartScenarioId::Classic,
+        });
+        let mut ground_survival = setup_world_with_config(SetupConfig {
+            headless: true,
+            scenario: StartScenarioId::GroundSurvival,
+        });
+
+        assert_eq!(
+            starter_shell(&mut classic),
+            starter_shell(&mut ground_survival)
+        );
+    }
+
+    #[test]
+    fn test_ground_survival_reduces_opening_population_and_supplies() {
+        let mut classic = setup_world_with_config(SetupConfig {
+            headless: true,
+            scenario: StartScenarioId::Classic,
+        });
+        let mut ground_survival = setup_world_with_config(SetupConfig {
+            headless: true,
+            scenario: StartScenarioId::GroundSurvival,
+        });
+
+        let classic_pop_count = classic.query::<&Pop>().iter(&classic).count();
+        let ground_survival_pop_count = ground_survival
+            .query::<&Pop>()
+            .iter(&ground_survival)
+            .count();
+        let classic_resources = *classic.resource::<ColonyResources>();
+        let ground_survival_resources = *ground_survival.resource::<ColonyResources>();
+
+        assert!(
+            ground_survival_pop_count < classic_pop_count,
+            "Ground Survival should start with fewer pops than Classic"
+        );
+        assert!(
+            ground_survival_resources.food < classic_resources.food,
+            "Ground Survival should start with less food than Classic"
+        );
+        assert!(
+            ground_survival_resources.tools < classic_resources.tools,
+            "Ground Survival should start with fewer tools than Classic"
+        );
+    }
+
+    #[test]
+    fn test_ground_survival_damages_starter_life_support() {
+        let mut world = setup_world_with_config(SetupConfig {
+            headless: true,
+            scenario: StartScenarioId::GroundSurvival,
+        });
+
+        let life_support = life_support_structure(&mut world);
+        assert!(
+            life_support.current_hp < life_support.max_hp,
+            "Ground Survival should start with damaged life support"
+        );
+    }
+
+    #[test]
+    fn test_ground_survival_adds_distinct_intro_chronicle_text() {
+        let world = setup_world_with_config(SetupConfig {
+            headless: true,
+            scenario: StartScenarioId::GroundSurvival,
+        });
+
+        let chronicle = world.resource::<Chronicle>();
+        assert!(
+            chronicle
+                .events
+                .iter()
+                .any(|event| event.text.contains("hard landing")),
+            "Ground Survival should add a distinct startup chronicle entry"
+        );
     }
 
     #[test]

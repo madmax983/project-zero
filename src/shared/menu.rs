@@ -67,8 +67,12 @@ impl MenuState {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::layer1::{Chronicle, ColonyResources, Pop};
     use crate::platform::input::{GameKeyCode, GameKeyEvent};
-    use crate::setup::{start_scenario_definition, ActiveStartScenario, StartScenarioId};
+    use crate::setup::{
+        setup_world_with_config, start_scenario_definition, ActiveStartScenario, SetupConfig,
+        StartScenarioId,
+    };
     use crate::shared::input::{route_input, InputContext, InputContextStack};
     use crate::shared::state::GameState;
 
@@ -199,5 +203,45 @@ mod tests {
 
         // Should transition to Quitting
         assert_eq!(*world.resource::<GameState>(), GameState::Quitting);
+    }
+
+    #[test]
+    fn test_menu_start_game_applies_ground_survival_state() {
+        let mut world = setup_world_with_config(SetupConfig {
+            headless: true,
+            ..Default::default()
+        });
+        *world.resource_mut::<GameState>() = GameState::MainMenu;
+
+        let mut stack = InputContextStack::default();
+        stack.push(InputContext::MainMenu);
+        world.insert_resource(stack);
+
+        world.insert_resource(MenuState {
+            selected_index: 0,
+            selected_scenario: StartScenarioId::GroundSurvival,
+            ..Default::default()
+        });
+
+        route_input(&mut world, key_event(GameKeyCode::Enter));
+
+        assert_eq!(*world.resource::<GameState>(), GameState::Running);
+        assert_eq!(
+            world.query::<&Pop>().iter(&world).count(),
+            4,
+            "Ground Survival should reduce the opening pop count on the menu path"
+        );
+        assert!(
+            world.resource::<ColonyResources>().food < 10.0,
+            "Ground Survival should reduce food on the menu path"
+        );
+        assert!(
+            world
+                .resource::<Chronicle>()
+                .events
+                .iter()
+                .any(|event| event.text.contains("hard landing")),
+            "Ground Survival intro text should be added on the menu path"
+        );
     }
 }
