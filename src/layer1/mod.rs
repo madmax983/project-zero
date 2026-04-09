@@ -78,6 +78,8 @@ pub mod execution;
 /// Pop health and damage.
 /// Deep crust geomes system (Spec 515).
 pub mod geomes;
+/// Historical geography naming.
+pub mod geography;
 /// Fire propagation and damage.
 /// Hauling logic.
 /// Workplace hazards logic.
