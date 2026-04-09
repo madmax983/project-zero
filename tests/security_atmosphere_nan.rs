@@ -1,3 +1,4 @@
+//! Tests for atmosphere NaN security
 #[cfg(test)]
 mod tests {
     use bevy::utils::HashMap;

@@ -1,3 +1,4 @@
+//! Tests for crowding overflow security
 #[cfg(test)]
 mod tests {
     use scale::layer1::crowding::CrowdingGrid;

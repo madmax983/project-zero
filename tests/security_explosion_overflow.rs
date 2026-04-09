@@ -1,3 +1,4 @@
+//! Tests for explosion overflow security
 #[cfg(test)]
 mod tests {
     use bevy_ecs::prelude::*;
