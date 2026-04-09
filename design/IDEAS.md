@@ -14992,3 +14992,59 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you micromanage the assignment of builders for critical infrastructure based on their personality, or accept the procedural quirks of your colony's development?
 
 ---
+
+## The Silent Strike
+
+**Layer:** 1
+
+**Fantasy:** Workers weaponize their presence without officially rebelling.
+
+**Mechanic:** Highly dissatisfied but non-violent Pops will perform a "Silent Strike" where they show up to their workstations but produce exactly zero output. They still consume food and occupy space, making it harder to replace them with scabs.
+
+**Emergence:** A critical factory goes offline, but the UI shows it's fully staffed. Enforcers can't arrest anyone because no laws are being broken, leading to a perfectly legal economic collapse.
+
+**Tension:** Do you violently evict workers who haven't actually committed a crime, permanently lowering global morale, or negotiate concessions while your colony bleeds resources?
+
+---
+
+## Orbital Debris Cult
+
+**Layer:** 2
+
+**Fantasy:** The trash you leave in orbit becomes a holy relic for those who live among it.
+
+**Mechanic:** Pops living in low-tier orbital stations begin to venerate uncollected space debris (destroyed ships, old satellites). The more debris in orbit, the higher their morale, but the higher the collision risk for your trade routes.
+
+**Emergence:** You try to clean up the orbit to secure a crucial trade lane, and the station workers launch a holy war to protect the "Sacred Shrapnel," turning a simple janitorial task into a localized civil war.
+
+**Tension:** Securing safe space travel versus respecting the bizarre religious beliefs of your orbital underclass to avoid an uprising.
+
+---
+
+## The Sympathetic Infrastructure
+
+**Layer:** 1
+
+**Fantasy:** Buildings that reflect the collective mood of the colony.
+
+**Mechanic:** Advanced biomimetic structures subtly adjust their color, temperature, and lighting based on the average morale of the Pops inside them.
+
+**Emergence:** A grieving colony turns entirely dark and cold, which inadvertently triggers a hibernation reflex in the alien flora you're cultivating, completely destroying your food supply out of "sympathy."
+
+**Tension:** Designing infrastructure that suppresses emotional resonance for stability, or allowing sympathetic feedback loops that can amplify both joy and despair.
+
+---
+
+## The Genetic Lottery
+
+**Layer:** Cross-layer
+
+**Fantasy:** A random genetic mutation in one generation dictates the future of your civilization.
+
+**Mechanic:** Every new generation of Pops has a tiny chance to develop a spontaneous, radical genetic trait (e.g., zero-G affinity, extreme radiation tolerance, or dietary obligate cannibalism).
+
+**Emergence:** A single pop is born with the ability to survive in hard vacuum. Centuries later, their descendants form an elite, unkillable void-navy that refuses to land on planets, creating a bifurcated civilization of "grounders" and "void-born."
+
+**Tension:** Culling or isolating anomalous pops early to preserve a unified human baseline, versus letting mutations spread and radically altering your empire's future capabilities and culture.
+
+---
