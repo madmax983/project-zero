@@ -282,4 +282,39 @@ mod tests {
             "Social Drama intro text should be added on the menu path"
         );
     }
+
+    #[test]
+    fn test_menu_start_game_applies_layer2_ready_state() {
+        let mut world = setup_world_with_config(SetupConfig {
+            headless: true,
+            ..Default::default()
+        });
+        *world.resource_mut::<GameState>() = GameState::MainMenu;
+
+        let mut stack = InputContextStack::default();
+        stack.push(InputContext::MainMenu);
+        world.insert_resource(stack);
+
+        world.insert_resource(MenuState {
+            selected_index: 0,
+            selected_scenario: StartScenarioId::Layer2Ready,
+            ..Default::default()
+        });
+
+        route_input(&mut world, key_event(GameKeyCode::Enter));
+
+        assert_eq!(
+            *world.resource::<crate::layer2::visibility::SystemVisibility>(),
+            crate::layer2::visibility::SystemVisibility::Full,
+            "Layer 2 Ready should unlock system visibility on the menu path"
+        );
+        assert!(
+            world
+                .resource::<Chronicle>()
+                .events
+                .iter()
+                .any(|event| event.text.contains("orbital charter")),
+            "Layer 2 Ready intro text should be added on the menu path"
+        );
+    }
 }

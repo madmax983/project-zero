@@ -516,6 +516,24 @@ fn start_scenario_pop_positions(
 ) -> Vec<crate::layer1::GridPosition> {
     match scenario_id {
         StartScenarioId::GroundSurvival => layout.pop_positions.iter().take(4).copied().collect(),
+        StartScenarioId::Layer2Ready => {
+            let command_center_pos = layout.center;
+            let rerouted_pop_pos = crate::layer1::GridPosition {
+                x: layout.center.x + 1,
+                y: layout.center.y + 1,
+            };
+            layout
+                .pop_positions
+                .iter()
+                .map(|pos| {
+                    if *pos == command_center_pos {
+                        rerouted_pop_pos
+                    } else {
+                        *pos
+                    }
+                })
+                .collect()
+        }
         _ => layout.pop_positions.clone(),
     }
 }
@@ -535,7 +553,8 @@ fn apply_start_scenario_state(
     match scenario_id {
         StartScenarioId::GroundSurvival => apply_ground_survival_start(world, layout),
         StartScenarioId::SocialDrama => apply_social_drama_start(world),
-        StartScenarioId::Classic | StartScenarioId::Layer2Ready => {}
+        StartScenarioId::Layer2Ready => apply_layer2_ready_start(world, layout),
+        StartScenarioId::Classic => {}
     }
 }
 
@@ -630,6 +649,97 @@ fn apply_social_drama_start(world: &mut World) {
     let _ = world.run_system_once(crate::layer1::chronicle::chronicle_event_handler_system);
 }
 
+fn apply_layer2_ready_start(world: &mut World, layout: Option<&StarterColonyLayout>) {
+    {
+        let mut resources = world.resource_mut::<ColonyResources>();
+        resources.food = resources.food.max(14.0);
+        resources.wood = resources.wood.max(20.0);
+        resources.stone = resources.stone.max(20.0);
+        resources.metal = resources.metal.max(25.0);
+        resources.tools = resources.tools.max(4.0);
+        resources.knowledge = resources.knowledge.max(15.0);
+    }
+
+    let Some(layout) = layout else { return };
+
+    let command_center_pos = layout.center;
+    let rerouted_pop_pos = crate::layer1::GridPosition {
+        x: layout.center.x + 1,
+        y: layout.center.y + 1,
+    };
+
+    for mut pos in world
+        .query_filtered::<&mut crate::layer1::map::GridPosition, With<crate::layer1::pop::Pop>>()
+        .iter_mut(world)
+    {
+        if *pos == command_center_pos {
+            *pos = rerouted_pop_pos;
+        }
+    }
+
+    let has_command_center = world
+        .query::<(
+            &crate::layer1::building::Building,
+            &crate::layer1::map::GridPosition,
+        )>()
+        .iter(world)
+        .any(|(building, pos)| {
+            building.building_type == crate::layer1::building::BuildingType::CommandCenter
+                && *pos == command_center_pos
+        });
+
+    if !has_command_center {
+        crate::layer1::building::spawn_building_with_material(
+            world,
+            command_center_pos.x,
+            command_center_pos.y,
+            crate::layer1::building::BuildingType::CommandCenter,
+            crate::layer1::building::MaterialType::Metal,
+        );
+        world
+            .resource_mut::<OccupiedTiles>()
+            .0
+            .insert((command_center_pos.x, command_center_pos.y));
+    }
+
+    let lander_pos = crate::layer1::GridPosition {
+        x: layout.center.x + STARTER_LANDER_OFFSET.0,
+        y: layout.center.y + STARTER_LANDER_OFFSET.1,
+    };
+    for (building, pos, mut source) in world
+        .query::<(
+            &crate::layer1::building::Building,
+            &crate::layer1::map::GridPosition,
+            &mut crate::layer1::energy::PowerSource,
+        )>()
+        .iter_mut(world)
+    {
+        if building.building_type == crate::layer1::building::BuildingType::Lander
+            && *pos == lander_pos
+        {
+            source.output = 100.0;
+            source.active = true;
+        }
+    }
+
+    crate::layer1::energy::power_grid_system(world);
+    for (building, pos, mut consumer) in world
+        .query::<(
+            &crate::layer1::building::Building,
+            &crate::layer1::map::GridPosition,
+            &mut crate::layer1::energy::PowerConsumer,
+        )>()
+        .iter_mut(world)
+    {
+        if building.building_type == crate::layer1::building::BuildingType::CommandCenter
+            && *pos == command_center_pos
+        {
+            consumer.active = true;
+        }
+    }
+    let _ = world.run_system_once(crate::layer2::visibility::update_visibility_system);
+}
+
 fn add_start_scenario_intro_event(world: &mut World, scenario_id: StartScenarioId) {
     match scenario_id {
         StartScenarioId::GroundSurvival => {
@@ -652,7 +762,14 @@ fn add_start_scenario_intro_event(world: &mut World, scenario_id: StartScenarioI
                 crate::layer1::chronicle::EventImportance::Major,
             );
         }
-        StartScenarioId::Classic | StartScenarioId::Layer2Ready => {}
+        StartScenarioId::Layer2Ready => {
+            world.resource_mut::<Chronicle>().add_event(
+                0,
+                "Layer 2 Ready: an orbital charter and a live command deck put the colony's eyes on the system before the dust has even settled.".to_string(),
+                crate::layer1::chronicle::EventImportance::Major,
+            );
+        }
+        StartScenarioId::Classic => {}
     }
 }
 
@@ -1089,6 +1206,111 @@ mod tests {
                 .iter()
                 .any(|event| event.text.contains("powder keg")),
             "Social Drama should add a distinct startup chronicle entry"
+        );
+    }
+
+    #[test]
+    fn test_layer2_ready_keeps_shared_starter_shell_layout() {
+        let mut classic = setup_world_with_config(SetupConfig {
+            headless: true,
+            scenario: StartScenarioId::Classic,
+        });
+        let mut layer2_ready = setup_world_with_config(SetupConfig {
+            headless: true,
+            scenario: StartScenarioId::Layer2Ready,
+        });
+
+        assert_eq!(
+            starter_shell(&mut classic),
+            starter_shell(&mut layer2_ready)
+        );
+    }
+
+    #[test]
+    fn test_layer2_ready_is_materially_stronger_and_unlocks_system_view() {
+        let classic = setup_world_with_config(SetupConfig {
+            headless: true,
+            scenario: StartScenarioId::Classic,
+        });
+        let layer2_ready = setup_world_with_config(SetupConfig {
+            headless: true,
+            scenario: StartScenarioId::Layer2Ready,
+        });
+
+        let classic_resources = *classic.resource::<ColonyResources>();
+        let layer2_resources = *layer2_ready.resource::<ColonyResources>();
+
+        assert!(
+            layer2_resources.food > classic_resources.food,
+            "Layer 2 Ready should start with more food than Classic"
+        );
+        assert!(
+            layer2_resources.tools > classic_resources.tools,
+            "Layer 2 Ready should start with more tools than Classic"
+        );
+        assert_eq!(
+            *layer2_ready.resource::<crate::layer2::visibility::SystemVisibility>(),
+            crate::layer2::visibility::SystemVisibility::Full,
+            "Layer 2 Ready should unlock system visibility immediately"
+        );
+    }
+
+    #[test]
+    fn test_layer2_ready_starts_with_powered_command_center() {
+        let mut world = setup_world_with_config(SetupConfig {
+            headless: true,
+            scenario: StartScenarioId::Layer2Ready,
+        });
+
+        let mut command_center_count = 0;
+        let mut command_center_pos = None;
+        let mut command_center_active = false;
+        for (building, pos, power) in world
+            .query::<(
+                &Building,
+                &GridPosition,
+                &crate::layer1::energy::PowerConsumer,
+            )>()
+            .iter(&world)
+        {
+            if building.building_type == BuildingType::CommandCenter {
+                command_center_count += 1;
+                command_center_pos = Some(*pos);
+                command_center_active = power.active;
+            }
+        }
+
+        assert_eq!(command_center_count, 1);
+        assert!(
+            command_center_active,
+            "Layer 2 Ready command center should be powered"
+        );
+
+        let command_center_pos = command_center_pos.expect("command center should exist");
+        let pop_on_command_center = world
+            .query::<(&Pop, &GridPosition)>()
+            .iter(&world)
+            .any(|(_, pos)| *pos == command_center_pos);
+        assert!(
+            !pop_on_command_center,
+            "Layer 2 Ready should not leave a starter pop standing on the command center tile"
+        );
+    }
+
+    #[test]
+    fn test_layer2_ready_adds_distinct_intro_chronicle_text() {
+        let world = setup_world_with_config(SetupConfig {
+            headless: true,
+            scenario: StartScenarioId::Layer2Ready,
+        });
+
+        let chronicle = world.resource::<Chronicle>();
+        assert!(
+            chronicle
+                .events
+                .iter()
+                .any(|event| event.text.contains("orbital charter")),
+            "Layer 2 Ready should add a distinct startup chronicle entry"
         );
     }
 
