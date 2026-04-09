@@ -1,6 +1,6 @@
 //! Shared world setup used by all entry points (native, headless, WASM).
 
-use bevy_ecs::prelude::*;
+use bevy_ecs::{prelude::*, system::RunSystemOnce};
 use rand::RngCore;
 
 // Fix: Unconditional import of AddChronicleEvent because init_resource usage is unconditional below
@@ -534,7 +534,8 @@ fn apply_start_scenario_state(
 ) {
     match scenario_id {
         StartScenarioId::GroundSurvival => apply_ground_survival_start(world, layout),
-        StartScenarioId::Classic | StartScenarioId::SocialDrama | StartScenarioId::Layer2Ready => {}
+        StartScenarioId::SocialDrama => apply_social_drama_start(world),
+        StartScenarioId::Classic | StartScenarioId::Layer2Ready => {}
     }
 }
 
@@ -580,6 +581,55 @@ fn apply_ground_survival_start(world: &mut World, layout: Option<&StarterColonyL
     }
 }
 
+fn apply_social_drama_start(world: &mut World) {
+    {
+        let mut resources = world.resource_mut::<ColonyResources>();
+        resources.food = resources.food.max(12.0);
+        resources.tools = resources.tools.max(3.0);
+        resources.wood = resources.wood.max(12.0);
+    }
+
+    let immigrant_arrival_tick = crate::layer1::social::old_guard::FOUNDER_CUTOFF_YEAR
+        * crate::layer1::balance::TICKS_PER_YEAR
+        + 1;
+
+    let mut pop_entities: Vec<_> = world
+        .query_filtered::<(Entity, &crate::layer1::map::GridPosition), With<crate::layer1::pop::Pop>>()
+        .iter(world)
+        .map(|(entity, pos)| (entity, pos.x, pos.y))
+        .collect();
+    pop_entities.sort_by_key(|(entity, x, y)| (*y, *x, entity.index()));
+
+    for (index, (entity, _, _)) in pop_entities.into_iter().enumerate() {
+        let arrival_tick = if index == 0 {
+            0
+        } else {
+            immigrant_arrival_tick
+        };
+        let ethic = if index == 0 {
+            crate::layer1::social::indoctrination::Ethic::StateLoyalist
+        } else {
+            crate::layer1::social::indoctrination::Ethic::FreeThinker
+        };
+
+        let mut entity_mut = world.entity_mut(entity);
+        entity_mut.insert(crate::layer1::social::old_guard::Arrival { tick: arrival_tick });
+        entity_mut.insert(crate::layer1::social::indoctrination::PopEthics {
+            ethic,
+            stubbornness: 0.9,
+        });
+        entity_mut.remove::<crate::layer1::social::old_guard::Generation>();
+        entity_mut.remove::<crate::layer1::social::old_guard::FounderBuff>();
+        entity_mut.remove::<crate::layer1::social::old_guard::MoodModifiers>();
+    }
+
+    world.insert_resource(crate::layer1::social::old_guard::Demographics::default());
+    let _ = world.run_system_once(crate::layer1::social::old_guard::apply_founder_benefits_system);
+    let _ =
+        world.run_system_once(crate::layer1::social::old_guard::check_generational_friction_system);
+    let _ = world.run_system_once(crate::layer1::chronicle::chronicle_event_handler_system);
+}
+
 fn add_start_scenario_intro_event(world: &mut World, scenario_id: StartScenarioId) {
     match scenario_id {
         StartScenarioId::GroundSurvival => {
@@ -595,7 +645,14 @@ fn add_start_scenario_intro_event(world: &mut World, scenario_id: StartScenarioI
                 crate::layer1::chronicle::EventImportance::Major,
             );
         }
-        StartScenarioId::Classic | StartScenarioId::SocialDrama | StartScenarioId::Layer2Ready => {}
+        StartScenarioId::SocialDrama => {
+            world.resource_mut::<Chronicle>().add_event(
+                0,
+                "Social Drama: the habitat is stocked, but one founder now sleeps among four latecomers and the whole camp feels like a powder keg.".to_string(),
+                crate::layer1::chronicle::EventImportance::Major,
+            );
+        }
+        StartScenarioId::Classic | StartScenarioId::Layer2Ready => {}
     }
 }
 
@@ -794,6 +851,7 @@ use crate::shared::menu::MenuState;
 mod tests {
     use super::*;
     use crate::layer1::building::{Building, BuildingType};
+    use crate::layer1::social::old_guard::{Generation, MoodModifiers};
     use crate::layer1::structure::Structure;
     use crate::layer1::{ColonyResources, GridPosition, Pop, TerrainGrid};
     use crate::shared::colony::ColonyName;
@@ -831,6 +889,18 @@ mod tests {
             .find(|(building, _)| building.building_type == BuildingType::LifeSupport)
             .map(|(_, structure)| *structure)
             .expect("starter colony should include life support")
+    }
+
+    fn generation_counts(world: &mut World) -> (usize, usize) {
+        let mut founders = 0;
+        let mut immigrants = 0;
+        for generation in world.query::<&Generation>().iter(world) {
+            match generation {
+                Generation::Founder => founders += 1,
+                Generation::Immigrant => immigrants += 1,
+            }
+        }
+        (founders, immigrants)
     }
 
     #[test]
@@ -936,6 +1006,89 @@ mod tests {
                 .iter()
                 .any(|event| event.text.contains("hard landing")),
             "Ground Survival should add a distinct startup chronicle entry"
+        );
+    }
+
+    #[test]
+    fn test_social_drama_rebalances_founders_and_immigrants() {
+        let mut world = setup_world_with_config(SetupConfig {
+            headless: true,
+            scenario: StartScenarioId::SocialDrama,
+        });
+
+        assert_eq!(generation_counts(&mut world), (1, 4));
+    }
+
+    #[test]
+    fn test_social_drama_is_materially_stable() {
+        let classic = setup_world_with_config(SetupConfig {
+            headless: true,
+            scenario: StartScenarioId::Classic,
+        });
+        let social_drama = setup_world_with_config(SetupConfig {
+            headless: true,
+            scenario: StartScenarioId::SocialDrama,
+        });
+
+        let classic_resources = *classic.resource::<ColonyResources>();
+        let social_resources = *social_drama.resource::<ColonyResources>();
+
+        assert!(
+            social_resources.food >= classic_resources.food,
+            "Social Drama should not start with less food than Classic"
+        );
+        assert!(
+            social_resources.tools >= classic_resources.tools,
+            "Social Drama should not start with fewer tools than Classic"
+        );
+    }
+
+    #[test]
+    fn test_social_drama_triggers_old_guard_tension_on_startup() {
+        let mut world = setup_world_with_config(SetupConfig {
+            headless: true,
+            scenario: StartScenarioId::SocialDrama,
+        });
+
+        let demographics = world.resource::<crate::layer1::social::old_guard::Demographics>();
+        assert_eq!(demographics.founders, 1);
+        assert_eq!(demographics.immigrants, 4);
+        assert!(
+            demographics.has_triggered_turning_point,
+            "Social Drama should trigger the turning point immediately"
+        );
+
+        let founder_pressure = world
+            .query::<(&Generation, &MoodModifiers)>()
+            .iter(&world)
+            .filter(|(generation, modifiers)| {
+                **generation == Generation::Founder
+                    && modifiers
+                        .entries
+                        .iter()
+                        .any(|entry| entry.source == "Overwhelmed by Strangers")
+            })
+            .count();
+        assert!(
+            founder_pressure > 0,
+            "Founders should feel the immigrant-majority pressure at startup"
+        );
+    }
+
+    #[test]
+    fn test_social_drama_adds_distinct_intro_chronicle_text() {
+        let world = setup_world_with_config(SetupConfig {
+            headless: true,
+            scenario: StartScenarioId::SocialDrama,
+        });
+
+        let chronicle = world.resource::<Chronicle>();
+        assert!(
+            chronicle
+                .events
+                .iter()
+                .any(|event| event.text.contains("powder keg")),
+            "Social Drama should add a distinct startup chronicle entry"
         );
     }
 

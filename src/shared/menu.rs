@@ -244,4 +244,42 @@ mod tests {
             "Ground Survival intro text should be added on the menu path"
         );
     }
+
+    #[test]
+    fn test_menu_start_game_applies_social_drama_state() {
+        let mut world = setup_world_with_config(SetupConfig {
+            headless: true,
+            ..Default::default()
+        });
+        *world.resource_mut::<GameState>() = GameState::MainMenu;
+
+        let mut stack = InputContextStack::default();
+        stack.push(InputContext::MainMenu);
+        world.insert_resource(stack);
+
+        world.insert_resource(MenuState {
+            selected_index: 0,
+            selected_scenario: StartScenarioId::SocialDrama,
+            ..Default::default()
+        });
+
+        route_input(&mut world, key_event(GameKeyCode::Enter));
+
+        let immigrant_count = world
+            .query::<&crate::layer1::social::old_guard::Generation>()
+            .iter(&world)
+            .filter(|generation| {
+                **generation == crate::layer1::social::old_guard::Generation::Immigrant
+            })
+            .count();
+        assert_eq!(immigrant_count, 4);
+        assert!(
+            world
+                .resource::<Chronicle>()
+                .events
+                .iter()
+                .any(|event| event.text.contains("powder keg")),
+            "Social Drama intro text should be added on the menu path"
+        );
+    }
 }

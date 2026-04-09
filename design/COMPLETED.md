@@ -361,3 +361,4 @@
 - [x] `882` Start Scenario Framework - `specs/882-start-scenario-framework.md` - completed 2026-04-09
 - [x] `883` Start Scenario Selection - `specs/883-start-scenario-selection.md` - completed 2026-04-09
 - [x] `884` Ground Survival Start - `specs/884-ground-survival-start.md` - completed 2026-04-09
+- [x] `885` Social Drama Start - `specs/885-social-drama-start.md` - completed 2026-04-09

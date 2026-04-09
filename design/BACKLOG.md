@@ -1,7 +1,6 @@
 # Backlog
 
 ## High Priority
-- [ ] `885` Social Drama Start - `specs/885-social-drama-start.md`
 - [ ] `886` Layer 2 Ready Start - `specs/886-layer2-ready-start.md`
 - [ ] `887` Start Scenario Verification - `specs/887-start-scenario-verification.md`
 - [ ] `815` Zero-G Fermentation — `specs/815-zero-g-fermentation.md`
