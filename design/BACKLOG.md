@@ -4,6 +4,9 @@
 - [ ] `899` Rogue Planets — `specs/899-rogue-planets.md`
 - [ ] `900` Latent Psionics — `specs/900-latent-psionics.md`
 - [ ] `901` Derelict Stations — `specs/901-derelict-stations.md`
+- [ ] `902` Nebulae — `specs/902-nebulae.md`
+- [ ] `903` Binary Star Systems — `specs/903-binary-star-systems.md`
+- [ ] `904` Proxy Wars — `specs/904-proxy-wars.md`
 - [ ] `893` Psychic Stains — `specs/893-psychic-stains.md`
 - [ ] `894` Social Debt — `specs/894-social-debt.md`
 - [ ] `895` Ephemeral Moons — `specs/895-ephemeral-moons.md`
