@@ -82,7 +82,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 **Fantasy:** The consequences of your industrial expansion trap you on the planet.
 
-**Mechanic:** Every ship launch, destruction, or orbital construction generates "debris" probability in orbit. High debris risks destroying new launches.
+**[SPECCED] Mechanic:** Every ship launch, destruction, or orbital construction generates "debris" probability in orbit. High debris risks destroying new launches.
 
 **Emergence:** A Kessler Syndrome event locks you on the surface just as you need to evacuate or trade. You must invent "janitor ships."
 
@@ -96,7 +96,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 **Fantasy:** Ruling a galactic empire means dealing with the speed of light. You are an Emperor, not a god.
 
-**Mechanic:** Orders issued to Layer 2/3 entities take time to arrive based on distance. Intel reports are similarly delayed.
+**[SPECCED] Mechanic:** Orders issued to Layer 2/3 entities take time to arrive based on distance. Intel reports are similarly delayed.
 
 **Emergence:** You send a fleet to quell a rebellion, but by the time they arrive, the rebels have already surrendered—or taken the system.
 
@@ -110,7 +110,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 **Fantasy:** The ground beneath your feet is a graveyard of civilizations. You are digging on a world that has seen empires rise and fall before.
 
-**Mechanic:** Deep terrain layers contain "Ruins" tiles. Excavating them yields Artifacts (lore/resources) but risks "Old World Maladies" (curses/diseases).
+**[SPECCED] Mechanic:** Deep terrain layers contain "Ruins" tiles. Excavating them yields Artifacts (lore/resources) but risks "Old World Maladies" (curses/diseases).
 
 **Emergence:** A colony built on top of an ancient necropolis might get rich but go mad. Players might ban mining in certain "cursed" areas.
 

@@ -600,3 +600,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `908` Dying Stars — `specs/908-dying-stars.md`
 - [ ] `909` Radio Broadcasts — `specs/909-radio-broadcasts.md`
 - [ ] `910` Dream Shaping — `specs/910-dream-shaping.md`
+- [ ] `911` Kessler Syndrome — `specs/911-kessler-syndrome.md`
+- [ ] `912` Relativistic Orders — `specs/912-relativistic-orders.md`
+- [ ] `913` Ruins Excavation — `specs/913-ruins-excavation.md`
