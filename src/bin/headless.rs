@@ -677,8 +677,6 @@ fn print_status(world: &mut World) {
 fn print_tech(world: &mut World) {
     let tech_state = world.resource::<TechState>();
 
-
-
     let mut table = Table::new();
     table
         .load_preset(UTF8_FULL)
@@ -729,7 +727,10 @@ fn print_tech(world: &mut World) {
     }
 
     print_dashboard_table(
-        &format!("TECHNOLOGY STATUS (Capacity: {:.1} TB / {:.1} TB)", tech_state.used_capacity, tech_state.total_capacity),
+        &format!(
+            "TECHNOLOGY STATUS (Capacity: {:.1} TB / {:.1} TB)",
+            tech_state.used_capacity, tech_state.total_capacity
+        ),
         table,
     );
 }
