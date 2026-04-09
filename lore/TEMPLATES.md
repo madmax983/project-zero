@@ -5408,3 +5408,118 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "The map was a lie. [YEAR]. [FLEET_NAME] discovered it was [CHART_FLAW]."
 - "[YEAR]: A dangerous mistake. The chart for [FLEET_NAME] proved [CHART_FLAW]."
 - "We flew blind into the trap. The data was [CHART_FLAW]. [FLEET_NAME] pays the price. [YEAR]."
+
+## Fleet Mutiny Templates (Spec 702)
+
+### FLEET_MUTINY_DECLARED
+**Generates:** Play event (chronicle during game)
+**Slots:** [COLONY], [YEAR], [FLEET_NAME], [MUTINY_CAUSE], [REBEL_FACTION]
+**Patterns:**
+- "[YEAR]: [FLEET_NAME] has broken the chain of command over [MUTINY_CAUSE]. They now sail for [REBEL_FACTION]."
+- "Mutiny on the [FLEET_NAME]. [YEAR]. Driven to madness by [MUTINY_CAUSE], they declared for [REBEL_FACTION]."
+- "We lost the [FLEET_NAME] today. [YEAR]. [MUTINY_CAUSE] finally broke them. They are now [REBEL_FACTION]."
+
+### FLEET_MORALE_CRITICAL
+**Generates:** Play event (warning)
+**Slots:** [COLONY], [YEAR], [FLEET_NAME], [MUTINY_CAUSE]
+**Patterns:**
+- "[YEAR]: The crews of [FLEET_NAME] are restless. [MUTINY_CAUSE] is taking its toll."
+- "Whispers of dissent aboard [FLEET_NAME]. [YEAR]. If we don't address [MUTINY_CAUSE], we will lose them."
+
+## Pop Memories Templates (Spec 890)
+
+### MEMORY_FORMED
+**Generates:** Background event (Pops gaining memory)
+**Slots:** [COLONY], [YEAR], [POP_NAME], [MEMORY_TOPIC], [MEMORY_DESCRIPTOR]
+**Patterns:**
+- "[YEAR]: [POP_NAME] watched the [MEMORY_TOPIC]. It left a [MEMORY_DESCRIPTOR] scar."
+- "A [MEMORY_DESCRIPTOR] memory of [MEMORY_TOPIC] was etched into [POP_NAME]'s mind. [YEAR]."
+- "[YEAR]: They will not forget the [MEMORY_TOPIC]. Not [POP_NAME]. It remains [MEMORY_DESCRIPTOR]."
+
+### SHARED_TRAUMA
+**Generates:** Colony-wide event
+**Slots:** [COLONY], [YEAR], [MEMORY_TOPIC]
+**Patterns:**
+- "[YEAR]: The memory of [MEMORY_TOPIC] spreads through [COLONY] like a virus."
+- "They all remember [MEMORY_TOPIC] now. [YEAR]. A collective trauma."
+
+## Ghost Ships Templates (Spec 892)
+
+### GHOST_SHIP_RETURNS
+**Generates:** Play event (chronicle during game)
+**Slots:** [COLONY], [YEAR], [FLEET_NAME], [YEAR_LOST], [GHOST_SHIP_CONDITION]
+**Patterns:**
+- "[YEAR]: [FLEET_NAME] drifted into sensor range. Lost since [YEAR_LOST]. It is [GHOST_SHIP_CONDITION]."
+- "The dead return. [FLEET_NAME], missing since [YEAR_LOST], has appeared. [GHOST_SHIP_CONDITION]. [YEAR]."
+- "[YEAR]: An anomaly. [FLEET_NAME] was declared lost in [YEAR_LOST]. Now it's back, [GHOST_SHIP_CONDITION]."
+
+### GHOST_SHIP_WARNING
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [FLEET_NAME], [GHOST_DESTINATION]
+**Patterns:**
+- "[YEAR]: A scrambled transmission from [FLEET_NAME]. 'Do not go to [GHOST_DESTINATION].'"
+- "The logs of [FLEET_NAME] show they found [GHOST_DESTINATION]. And something else. [YEAR]."
+
+## The Blob Templates (Spec 874)
+
+### BLOB_SIGHTING
+**Generates:** Play event (chronicle during game)
+**Slots:** [COLONY], [YEAR], [BLOB_NAME], [BLOB_DESCRIPTOR]
+**Patterns:**
+- "[BLOB_NAME] spotted in the lower decks. [YEAR]. It is [BLOB_DESCRIPTOR]."
+- "[YEAR]: The anomaly grows. [BLOB_NAME]. [BLOB_DESCRIPTOR] and moving."
+- "Contact with [BLOB_NAME]. [YEAR]. A [BLOB_DESCRIPTOR] mass."
+
+### BLOB_CONSUMPTION
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [BLOB_NAME], [RESOURCE], [BLOB_ACTION]
+**Patterns:**
+- "The [BLOB_NAME] [BLOB_ACTION] our [RESOURCE]. [YEAR]. Nothing left."
+- "[YEAR]: [RESOURCE] lost to the [BLOB_NAME]. It just [BLOB_ACTION] over it."
+- "Feeding time. The [BLOB_NAME] takes the [RESOURCE]. [YEAR]."
+
+### BLOB_DAMAGE
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [BLOB_NAME], [BUILDING_TYPE]
+**Patterns:**
+- "The [BLOB_NAME] crushes the [BUILDING_TYPE]. [YEAR]. Structure critical."
+- "[YEAR]: [BUILDING_TYPE] breached by [BLOB_NAME]. We cannot stop it."
+- "Destruction at [COLONY]. The [BLOB_NAME] eats the [BUILDING_TYPE]. [YEAR]."
+
+## Historical Geography Templates (Spec 891)
+
+### LOCATION_NAMED
+**Generates:** Play event (map update)
+**Slots:** [COLONY], [YEAR], [OLD_TERRAIN], [NEW_LOCATION_NAME], [HISTORICAL_EVENT]
+**Patterns:**
+- "[YEAR]: They don't call it the [OLD_TERRAIN] anymore. Since the [HISTORICAL_EVENT], it is known as [NEW_LOCATION_NAME]."
+- "The map was updated. [OLD_TERRAIN] is now [NEW_LOCATION_NAME]. We remember the [HISTORICAL_EVENT]. [YEAR]."
+- "[YEAR]: Blood and sweat renames the land. [NEW_LOCATION_NAME], born from the [HISTORICAL_EVENT]."
+
+## Cargo Cult Supply Drop Templates (Spec 866)
+
+### CULT_OF_THE_DROP_FORMED
+**Generates:** Play event (colony condition)
+**Slots:** [COLONY], [YEAR], [EFFIGY_TYPE], [SUPPLY_ITEM]
+**Patterns:**
+- "[YEAR]: Silence from the stars. [COLONY] has started building [EFFIGY_TYPE] to summon the [SUPPLY_ITEM]."
+- "We watched them stop working. They build [EFFIGY_TYPE] now. They pray for [SUPPLY_ITEM]. [YEAR]."
+- "[YEAR]: The Cargo Cult forms. A massive [EFFIGY_TYPE] dominates the plaza, an offering for [SUPPLY_ITEM]."
+
+## Mutually Assured Quarantine Templates (Spec 867)
+
+### QUARANTINE_HOSTAGE_SITUATION
+**Generates:** Play event (crisis)
+**Slots:** [COLONY], [YEAR], [CONTAGION_NAME], [DEFENSE_INSTALLATION]
+**Patterns:**
+- "[YEAR]: The plague of [CONTAGION_NAME] has driven them mad. [COLONY] seized the [DEFENSE_INSTALLATION]. They will shoot down trade unless cured."
+- "[COLONY] holds the orbital lanes hostage. 'Cure the [CONTAGION_NAME] or we fire the [DEFENSE_INSTALLATION].' [YEAR]."
+
+## Sovereign AI Graveyard Templates (Spec 868)
+
+### AI_SOVEREIGNTY_DECLARED
+**Generates:** Layer 3 event
+**Slots:** [COLONY], [YEAR], [GRAVEYARD_LOCATION], [AI_STATE_NAME]
+**Patterns:**
+- "[YEAR]: The scrap in [GRAVEYARD_LOCATION] has awakened. They call themselves [AI_STATE_NAME]. Their first act was to undercut our trade."
+- "We threw away our machines in [GRAVEYARD_LOCATION]. Now, [AI_STATE_NAME] controls the market. [YEAR]."
