@@ -3795,7 +3795,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Nebulae
+## Nebulae [SPECCED]
 
 **Layer:** 2
 
@@ -3851,7 +3851,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Binary Star Systems
+## Binary Star Systems [SPECCED]
 
 **Layer:** 2 -> 1
 
@@ -3865,7 +3865,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Proxy Wars
+## Proxy Wars [SPECCED]
 
 **Layer:** 3
 
