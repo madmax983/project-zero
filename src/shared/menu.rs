@@ -1,3 +1,4 @@
+use crate::setup::StartScenarioId;
 use bevy_ecs::prelude::*;
 
 /// Resources for the Main Menu.
@@ -7,6 +8,8 @@ pub struct MenuState {
     pub selected_index: usize,
     /// The list of menu options.
     pub options: Vec<String>,
+    /// The currently selected built-in start scenario.
+    pub selected_scenario: StartScenarioId,
 }
 
 impl Default for MenuState {
@@ -14,6 +17,7 @@ impl Default for MenuState {
         Self {
             selected_index: 0,
             options: vec!["Start Game".to_string(), "Quit".to_string()],
+            selected_scenario: StartScenarioId::Classic,
         }
     }
 }
@@ -34,12 +38,37 @@ impl MenuState {
             self.selected_index -= 1;
         }
     }
+
+    /// Select the next start scenario.
+    pub fn next_scenario(&mut self) {
+        let scenarios = StartScenarioId::all();
+        let current = scenarios
+            .iter()
+            .position(|id| *id == self.selected_scenario)
+            .unwrap_or(0);
+        if current + 1 < scenarios.len() {
+            self.selected_scenario = scenarios[current + 1];
+        }
+    }
+
+    /// Select the previous start scenario.
+    pub fn prev_scenario(&mut self) {
+        let scenarios = StartScenarioId::all();
+        let current = scenarios
+            .iter()
+            .position(|id| *id == self.selected_scenario)
+            .unwrap_or(0);
+        if current > 0 {
+            self.selected_scenario = scenarios[current - 1];
+        }
+    }
 }
 
 #[cfg(test)]
 mod tests {
     use super::*;
     use crate::platform::input::{GameKeyCode, GameKeyEvent};
+    use crate::setup::{start_scenario_definition, ActiveStartScenario, StartScenarioId};
     use crate::shared::input::{route_input, InputContext, InputContextStack};
     use crate::shared::state::GameState;
 
@@ -65,6 +94,7 @@ mod tests {
         let menu = MenuState::default();
         // Should default to first option (Start Game)
         assert_eq!(menu.selected_index, 0);
+        assert_eq!(menu.selected_scenario, StartScenarioId::Classic);
         // Should have options
         assert!(menu.options.len() >= 2);
         assert_eq!(menu.options[0], "Start Game");
@@ -99,9 +129,26 @@ mod tests {
     }
 
     #[test]
+    fn test_menu_scenario_cycles_forward_and_back() {
+        let mut menu = MenuState::default();
+
+        menu.next_scenario();
+        assert_eq!(menu.selected_scenario, StartScenarioId::GroundSurvival);
+
+        menu.prev_scenario();
+        assert_eq!(menu.selected_scenario, StartScenarioId::Classic);
+    }
+
+    #[test]
     fn test_menu_input_start_game() {
         let mut world = World::new();
         world.insert_resource(GameState::MainMenu);
+        let active = start_scenario_definition(StartScenarioId::Classic);
+        world.insert_resource(ActiveStartScenario {
+            id: active.id,
+            name: active.name,
+            difficulty: active.difficulty,
+        });
 
         let mut stack = InputContextStack::default();
         stack.push(InputContext::MainMenu);
@@ -109,6 +156,7 @@ mod tests {
 
         world.insert_resource(MenuState {
             selected_index: 0,
+            selected_scenario: StartScenarioId::SocialDrama,
             ..Default::default()
         }); // "Start Game" selected
 
@@ -116,6 +164,10 @@ mod tests {
 
         // Should transition to Running
         assert_eq!(*world.resource::<GameState>(), GameState::Running);
+        assert_eq!(
+            world.resource::<ActiveStartScenario>().id,
+            StartScenarioId::SocialDrama
+        );
         // Should switch input context to Normal
         assert_eq!(
             world.resource::<InputContextStack>().current(),
@@ -127,6 +179,12 @@ mod tests {
     fn test_menu_input_quit() {
         let mut world = World::new();
         world.insert_resource(GameState::MainMenu);
+        let active = start_scenario_definition(StartScenarioId::Classic);
+        world.insert_resource(ActiveStartScenario {
+            id: active.id,
+            name: active.name,
+            difficulty: active.difficulty,
+        });
         world.insert_resource(InputContextStack::default());
         world
             .resource_mut::<InputContextStack>()

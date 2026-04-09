@@ -1,7 +1,6 @@
 # Backlog
 
 ## High Priority
-- [ ] `883` Start Scenario Selection - `specs/883-start-scenario-selection.md`
 - [ ] `884` Ground Survival Start - `specs/884-ground-survival-start.md`
 - [ ] `885` Social Drama Start - `specs/885-social-drama-start.md`
 - [ ] `886` Layer 2 Ready Start - `specs/886-layer2-ready-start.md`

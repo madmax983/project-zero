@@ -359,3 +359,4 @@
 - [x] `874` The Blob — `specs/874-the-blob.md` — completed 2026-04-08
 - [x] `702` Fleet Mutiny — `specs/702-fleet-mutiny.md` — completed 2026-04-08
 - [x] `882` Start Scenario Framework - `specs/882-start-scenario-framework.md` - completed 2026-04-09
+- [x] `883` Start Scenario Selection - `specs/883-start-scenario-selection.md` - completed 2026-04-09

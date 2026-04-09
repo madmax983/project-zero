@@ -406,6 +406,12 @@ fn handle_tech_tree_mode(world: &mut World, key: GameKeyEvent) {
 
 fn handle_main_menu_mode(world: &mut World, key: GameKeyEvent) {
     match key.code {
+        GameKeyCode::Left | GameKeyCode::Char('a') => {
+            world.resource_mut::<MenuState>().prev_scenario();
+        }
+        GameKeyCode::Right | GameKeyCode::Char('d') => {
+            world.resource_mut::<MenuState>().next_scenario();
+        }
         GameKeyCode::Up | GameKeyCode::Char('w') => {
             world.resource_mut::<MenuState>().prev();
         }
@@ -417,6 +423,14 @@ fn handle_main_menu_mode(world: &mut World, key: GameKeyEvent) {
             match selected {
                 0 => {
                     // Start Game
+                    let selected_scenario = world.resource::<MenuState>().selected_scenario;
+                    let scenario = crate::setup::start_scenario_definition(selected_scenario);
+                    *world.resource_mut::<crate::setup::ActiveStartScenario>() =
+                        crate::setup::ActiveStartScenario {
+                            id: scenario.id,
+                            name: scenario.name,
+                            difficulty: scenario.difficulty,
+                        };
                     *world.resource_mut::<GameState>() = GameState::Running;
                     let mut stack = world.resource_mut::<InputContextStack>();
                     stack.stack = vec![InputContext::Normal];

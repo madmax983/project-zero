@@ -1,3 +1,4 @@
+use crate::setup::{start_scenario_definition, StartScenarioDifficulty};
 use crate::shared::menu::MenuState;
 use ratatui::prelude::*;
 use ratatui::widgets::{Block, BorderType, Borders, Paragraph};
@@ -23,7 +24,8 @@ pub fn render_main_menu(frame: &mut Frame, area: Rect, state: &MenuState) {
             Constraint::Min(2),                                 // Top spacing
             Constraint::Length(9),                              // Title and Subtitle
             Constraint::Length(state.options.len() as u16 + 2), // Menu items
-            Constraint::Min(2),                                 // Bottom spacing
+            Constraint::Length(3),                              // Scenario info
+            Constraint::Min(1),                                 // Bottom spacing
             Constraint::Length(3),                              // Footer
         ])
         .split(area);
@@ -90,8 +92,29 @@ pub fn render_main_menu(frame: &mut Frame, area: Rect, state: &MenuState) {
         frame.render_widget(p, menu_layout[i]);
     }
 
+    let scenario = start_scenario_definition(state.selected_scenario);
+    let scenario_text = format!(
+        "Scenario: {} [{}]",
+        scenario.name,
+        difficulty_label(scenario.difficulty)
+    );
+    let scenario_info = Paragraph::new(vec![
+        Line::from(Span::styled(
+            scenario_text,
+            Style::default()
+                .fg(Color::Cyan)
+                .add_modifier(Modifier::BOLD),
+        )),
+        Line::from(Span::styled(
+            "Use ←/→ to change scenario",
+            Style::default().fg(Color::Gray),
+        )),
+    ])
+    .alignment(Alignment::Center);
+    frame.render_widget(scenario_info, layout[3]);
+
     // Footer
-    let footer_text = "Use ↑/↓ to select | Enter to confirm";
+    let footer_text = "Use ↑/↓ to select | ←/→ change scenario | Enter to confirm";
     let footer = Paragraph::new(footer_text)
         .style(Style::default().fg(Color::DarkGray))
         .alignment(Alignment::Center)
@@ -102,4 +125,46 @@ pub fn render_main_menu(frame: &mut Frame, area: Rect, state: &MenuState) {
                 .border_style(Style::default().fg(Color::DarkGray)),
         );
     frame.render_widget(footer, layout[4]);
+}
+
+fn difficulty_label(difficulty: StartScenarioDifficulty) -> &'static str {
+    match difficulty {
+        StartScenarioDifficulty::Hard => "Hard",
+        StartScenarioDifficulty::Medium => "Medium",
+        StartScenarioDifficulty::Easy => "Easy",
+        StartScenarioDifficulty::Standard => "Standard",
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::setup::StartScenarioId;
+    use ratatui::backend::TestBackend;
+    use ratatui::Terminal;
+
+    #[test]
+    fn test_render_main_menu_shows_selected_scenario_and_difficulty() {
+        let backend = TestBackend::new(80, 24);
+        let mut terminal = Terminal::new(backend).unwrap();
+        let state = MenuState {
+            selected_scenario: StartScenarioId::GroundSurvival,
+            ..Default::default()
+        };
+
+        terminal
+            .draw(|frame| render_main_menu(frame, frame.area(), &state))
+            .unwrap();
+
+        let buffer = terminal.backend().buffer();
+        let cells: Vec<String> = buffer
+            .content
+            .iter()
+            .map(|cell| cell.symbol().to_string())
+            .collect();
+        let full_text = cells.join("");
+
+        assert!(full_text.contains("Ground Survival"));
+        assert!(full_text.contains("Hard"));
+    }
 }
