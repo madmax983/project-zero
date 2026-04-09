@@ -75,3 +75,6 @@ pub mod epigenetic_stress;
 
 #[cfg(feature = "nova")]
 pub mod empathy_cascade;
+
+#[cfg(feature = "nova")]
+pub mod symbiotic_parasite;

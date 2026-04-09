@@ -34,6 +34,7 @@ pub fn register(schedule: &mut Schedule) {
             crate::experimental::empathy_cascade::init_empathic_health_tracker_system,
             crate::experimental::empathy_cascade::empathy_cascade_system
                 .after(crate::experimental::empathy_cascade::init_empathic_health_tracker_system),
+            crate::experimental::symbiotic_parasite::symbiotic_parasite_system,
         )
             .in_set(Layer1SystemSet::Observation),
     );
