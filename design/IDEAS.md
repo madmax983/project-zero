@@ -14951,3 +14951,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Managing interpersonal conflicts early when they are trivial, or risking them festering into deep societal divides and wars generations down the line.
 
 ---
+## The Phantom Obstacle
+
+**Layer:** 1
+
+**Fantasy:** The ghosts of failed architecture haunt your current construction efforts.
+
+**Mechanic:** When a building is destroyed or canceled, it leaves behind an invisible "Phantom Footprint". Pops walking over it experience a brief chill (minor stress increase), and new buildings built over it take slightly longer to construct due to unseen structural quirks.
+
+**Emergence:** An old industrial zone that was bulldozed centuries ago becomes a notoriously slow neighborhood to develop. Pops claim the area is "cursed," leading to organic formation of historical districts where players simply avoid building to prevent morale hits.
+
+**Tension:** Saving space by building over old foundations versus the compounding stress and construction delays on your workforce.
+
+---
+
+## The Resource Hoard
+
+**Layer:** Cross-layer
+
+**Fantasy:** Generational wealth and greed become physical obstacles.
+
+**Mechanic:** Extremely old or wealthy Pops start physically hoarding high-value resources in their homes instead of depositing them in colony storage. If they die, the hoard is inherited by their descendants.
+
+**Emergence:** A critical shortage of rare metals brings your orbital shipyard to a halt. You realize a single aristocratic family on the surface has been hoarding the metal as "art" for five generations, creating an immense, localized wealth disparity that threatens the entire system's defense.
+
+**Tension:** Confiscating the hoard by force (causing massive unrest among the elite) or bribing the family with political power to release the resources.
+
+---
+
+## The Architect's Signature
+
+**Layer:** 1
+
+**Fantasy:** Buildings that reflect the personality and flaws of their creators.
+
+**Mechanic:** Every structure built inherits a subtle hidden trait from the primary builder Pop (e.g., "Meticulous", "Rushed", "Paranoid"). A paranoid builder might add hidden reinforced locks, making the building harder to sabotage but slower to access during emergencies.
+
+**Emergence:** You order the construction of a critical hospital. The builder was "Claustrophobic", so the hospital accidentally features excessively wide corridors and few doors. During a toxic gas leak, those wide corridors make it impossible to seal the hospital off, dooming the patients.
+
+**Tension:** Do you micromanage the assignment of builders for critical infrastructure based on their personality, or accept the procedural quirks of your colony's development?
+
+---
