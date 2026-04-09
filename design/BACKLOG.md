@@ -582,5 +582,5 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `884` The Bioluminescent Graffiti — `specs/884-bioluminescent-graffiti.md`
 - [ ] `885` Bureaucracy of the Deceased — `specs/885-bureaucracy-of-the-deceased.md`
 - [ ] `886` The Cannibal's Empathy — `specs/886-the-cannibals-empathy.md`
-- [ ] `890` Pop Memories — `specs/890-pop-memories.md`
+
 - [ ] `891` Historical Geography — `specs/891-historical-geography.md`
