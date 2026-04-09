@@ -119,3 +119,8 @@
 **Concept:** Added `empathy_cascade_system` where Pops with the `EmpathicLink` trait physically broadcast any damage they take to nearby Pops. Normal Pops suffer massive stress, while fellow Empaths suffer sympathetic physical damage, creating a dangerous chain reaction in crowded areas.
 **Fate:** Proposed
 **Lesson:** Tying internal physical states (`Health`) directly to spatial area-of-effect components using psychological traits (`EmpathicLink`) turns a minor local injury into a terrifying, colony-wide crisis, making base layout and trait segregation mechanically relevant.
+
+## [The Symbiotic Parasite]
+**Concept:** Added `SymbioticParasite` where Pops infected with this parasite lose hunger much faster but gain passive health regeneration. This serves as a risky biological augment for pops working in hazardous environments.
+**Fate:** Proposed
+**Lesson:** Providing a biological trade-off mechanic creates interesting management dilemmas, where players might intentionally expose certain workers to parasites to keep them alive in dangerous conditions at the cost of feeding them more.
