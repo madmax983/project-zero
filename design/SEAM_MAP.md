@@ -653,3 +653,9 @@
 - **Systems connected:** `handle_jump_risk_system` (Stellar Cartography) -> `jump_risk_bridge_system` (Integration) -> `FleetDamagedEvent` & `AddChronicleEvent`
 - **Glue added:** Added `jump_risk_bridge_system` to consume `JumpRisk` from fleets and apply hull damage, as well as emit an `AddChronicleEvent` (`EventImportance::Major`). Registered in `SimulationSchedule`.
 - **Tests:** `tests/integration/jump_risk_bridge.rs`
+
+### INT-874: The Blob -> Building Destruction
+- **Date:** 2026-04-10
+- **Systems connected:** `blob_expansion_system` (The Blob) -> `blob_building_destruction_system` (Integration) -> `BuildingRemovedEvent`
+- **Glue added:** Added `blob_building_destruction_system` to emit an `BuildingRemovedEvent` and despawn buildings when the Blob expands onto their location.
+- **Tests:** `tests/integration/blob_building_destruction.rs`
