@@ -14993,7 +14993,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Silent Strike
+## The Silent Strike [SPECCED]
 
 **Layer:** 1
 
@@ -15007,7 +15007,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Orbital Debris Cult
+## Orbital Debris Cult [SPECCED]
 
 **Layer:** 2
 
@@ -15021,7 +15021,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Sympathetic Infrastructure
+## The Sympathetic Infrastructure [SPECCED]
 
 **Layer:** 1
 
