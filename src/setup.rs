@@ -40,6 +40,82 @@ pub fn init_task_pools() {
 pub struct SetupConfig {
     /// If true, skip GPU initialization (for headless environments).
     pub headless: bool,
+    /// Which built-in start scenario to use for startup plumbing.
+    pub scenario: StartScenarioId,
+}
+
+/// Coarse difficulty tags for curated start scenarios.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum StartScenarioDifficulty {
+    Hard,
+    Medium,
+    Easy,
+    Standard,
+}
+
+/// Stable built-in identifiers for curated startup scenarios.
+#[derive(Debug, Default, Clone, Copy, PartialEq, Eq)]
+pub enum StartScenarioId {
+    #[default]
+    Classic,
+    GroundSurvival,
+    SocialDrama,
+    Layer2Ready,
+}
+
+impl StartScenarioId {
+    /// All built-in start scenarios in stable menu order.
+    #[must_use]
+    pub const fn all() -> [Self; 4] {
+        [
+            Self::Classic,
+            Self::GroundSurvival,
+            Self::SocialDrama,
+            Self::Layer2Ready,
+        ]
+    }
+}
+
+/// Static metadata for a built-in start scenario.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct StartScenarioDefinition {
+    pub id: StartScenarioId,
+    pub name: &'static str,
+    pub difficulty: StartScenarioDifficulty,
+}
+
+/// The startup scenario selected for the active world.
+#[derive(Resource, Debug, Clone, Copy, PartialEq, Eq)]
+pub struct ActiveStartScenario {
+    pub id: StartScenarioId,
+    pub name: &'static str,
+    pub difficulty: StartScenarioDifficulty,
+}
+
+#[must_use]
+pub const fn start_scenario_definition(id: StartScenarioId) -> StartScenarioDefinition {
+    match id {
+        StartScenarioId::Classic => StartScenarioDefinition {
+            id,
+            name: "Classic",
+            difficulty: StartScenarioDifficulty::Standard,
+        },
+        StartScenarioId::GroundSurvival => StartScenarioDefinition {
+            id,
+            name: "Ground Survival",
+            difficulty: StartScenarioDifficulty::Hard,
+        },
+        StartScenarioId::SocialDrama => StartScenarioDefinition {
+            id,
+            name: "Social Drama",
+            difficulty: StartScenarioDifficulty::Medium,
+        },
+        StartScenarioId::Layer2Ready => StartScenarioDefinition {
+            id,
+            name: "Layer 2 Ready",
+            difficulty: StartScenarioDifficulty::Easy,
+        },
+    }
 }
 
 /// Create and initialize a new game world with all resources.
@@ -54,6 +130,12 @@ pub fn setup_world() -> World {
 pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -> World {
     init_task_pools();
     let mut world = World::new();
+    let scenario = start_scenario_definition(config.scenario);
+    world.insert_resource(ActiveStartScenario {
+        id: scenario.id,
+        name: scenario.name,
+        difficulty: scenario.difficulty,
+    });
     world.insert_resource(GameState::default());
     world.init_resource::<crate::layer1::bio_acoustic_miasma::MiasmaRecordedSecret>();
     world.init_resource::<crate::layer1::stress::TraumaTracker>();
@@ -599,6 +681,31 @@ mod tests {
     use crate::layer1::{Pop, TerrainGrid};
     use crate::shared::colony::ColonyName;
     use crate::shared::narrative::NarrativeGenerator;
+
+    #[test]
+    fn test_setup_world_default_scenario_is_classic() {
+        let config = SetupConfig::default();
+        assert_eq!(config.scenario, StartScenarioId::Classic);
+    }
+
+    #[test]
+    fn test_setup_world_records_selected_scenario() {
+        let world = setup_world_with_config(SetupConfig {
+            headless: true,
+            scenario: StartScenarioId::GroundSurvival,
+        });
+
+        let active = world.resource::<ActiveStartScenario>();
+        assert_eq!(active.id, StartScenarioId::GroundSurvival);
+    }
+
+    #[test]
+    fn test_built_in_start_scenarios_have_definitions() {
+        for id in StartScenarioId::all() {
+            let definition = start_scenario_definition(id);
+            assert_eq!(definition.id, id);
+        }
+    }
 
     #[test]
     fn test_setup_world_creates_resources() {

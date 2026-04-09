@@ -1008,6 +1008,7 @@ mod tests {
     fn build_default_shell_for_test() -> UiShell {
         let world = Rc::new(RefCell::new(setup_world_with_config(SetupConfig {
             headless: true,
+            ..Default::default()
         })));
         build_default_shell(world, ShellConfig::default())
     }

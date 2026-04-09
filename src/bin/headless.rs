@@ -123,7 +123,10 @@ fn print_dashboard_panel(title: &str, content_colored: &str) {
 }
 
 fn main() {
-    let mut world = setup_world_with_config(SetupConfig { headless: true });
+    let mut world = setup_world_with_config(SetupConfig {
+        headless: true,
+        ..Default::default()
+    });
     *world.resource_mut::<GameState>() = GameState::Running;
 
     println!(

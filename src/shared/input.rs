@@ -1038,6 +1038,7 @@ mod tests {
     fn setup_shell_world_for_test() -> (SharedWorld, UiShell) {
         let world = Rc::new(RefCell::new(setup_world_with_config(SetupConfig {
             headless: true,
+            ..Default::default()
         })));
         {
             let mut world_ref = world.borrow_mut();

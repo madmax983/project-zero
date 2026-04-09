@@ -58,7 +58,10 @@ fn test_setup_world_bootstraps_breathable_start_for_initial_pops() {
 
 #[test]
 fn test_ancient_structures_spawn_outside_starter_habitat_buffer() {
-    let mut world = setup_world_with_config(SetupConfig { headless: true });
+    let mut world = setup_world_with_config(SetupConfig {
+        headless: true,
+        ..Default::default()
+    });
 
     let lander_pos = world
         .query::<(&Building, &GridPosition)>()

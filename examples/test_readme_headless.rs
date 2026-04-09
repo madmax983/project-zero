@@ -2,7 +2,10 @@ use scale::prelude::*;
 
 fn main() {
     // 1. Setup the world with headless configuration
-    let config = SetupConfig { headless: true };
+    let config = SetupConfig {
+        headless: true,
+        ..Default::default()
+    };
     let mut world = setup_world_with_config(config);
 
     // 2. Run a few ticks
