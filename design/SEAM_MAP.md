@@ -659,3 +659,9 @@
 - **Systems connected:** `blob_expansion_system` (The Blob) -> `blob_building_destruction_system` (Integration) -> `BuildingRemovedEvent`
 - **Glue added:** Added `blob_building_destruction_system` to emit an `BuildingRemovedEvent` and despawn buildings when the Blob expands onto their location.
 - **Tests:** `tests/integration/blob_building_destruction.rs`
+
+### INT-892: Ghost Ships -> Chronicle
+- **Date:** 2026-04-11
+- **Systems connected:** `evaluate_lost_ship_return_system` (Ghost Ships) -> `AddChronicleEvent` (Chronicle)
+- **Glue added:** Added `evaluate_transit_system` and `evaluate_lost_ship_return_system` to `src/simulation.rs` schedule. The system itself handles emitting the `AddChronicleEvent`.
+- **Tests:** `tests/integration/ghost_ships_bridge.rs`
