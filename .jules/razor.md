@@ -78,3 +78,8 @@
 **Bloat:** `GeologicalEvent` enum in `src/layer1/geology/mod.rs` containing variants (`Tremor`, `Earthquake`), where `Tremor` was never constructed or utilized.
 **Cut:** Converted `GeologicalEvent` from an enum into a standard struct (representing just an `Earthquake`). Removed pattern matching wrappers at instantiation sites across `src/layer1/geology/mod.rs`, `src/layer1/seismic.rs`, and `src/layer1/geology/tectonic.rs`.
 **Saved:** 7 lines of code, speculative pattern matching overhead, and improved explicit ECS communication by eliminating unused event variants.
+
+## [Reduction]
+**Bloat:** `ArtifactType` enum in `src/layer1/memetics/memetic_hazards.rs` containing variants (`Safe`, `Hazardous`), which was an unnecessary level of indirection.
+**Cut:** Converted `ArtifactType` from an enum into a standard boolean (`is_hazardous: bool`) in `ActiveResearch`. Removed the enum entirely and updated assignment logic.
+**Saved:** 7 lines of code, speculative indirection, and simplified property access.
