@@ -1248,7 +1248,6 @@ pub fn parasitic_architecture_chronicle_bridge(
     }
 }
 
-
 /// INT-874: When the Blob expands onto a building, it triggers a BuildingRemovedEvent
 /// and destroys the building.
 pub fn blob_building_destruction_system(

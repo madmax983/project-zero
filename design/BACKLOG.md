@@ -587,6 +587,5 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `886` The Cannibal's Empathy — `specs/886-the-cannibals-empathy.md`
 
 - [ ] `891` Historical Geography — `specs/891-historical-geography.md`
-- [ ] `896` The Phantom Grid — `specs/896-the-phantom-grid.md`
 - [ ] `897` The Orbital Breadcrumbs — `specs/897-the-orbital-breadcrumbs.md`
 - [ ] `898` The Sleepwalker's Rebellion — `specs/898-the-sleepwalkers-rebellion.md`
