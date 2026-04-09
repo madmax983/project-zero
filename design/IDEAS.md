@@ -3715,7 +3715,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 **Layer:** 1
 
-**Fantasy:** A place where something terrible happened *feels* wrong.
+**Fantasy:** [SPECCED] A place where something terrible happened *feels* wrong.
 
 **Mechanic:** Tiles where Pops die violently retain a "Trauma" value. High Trauma causes stress/fear in passersby. Can be "Cleansed" by Chaplains or time.
 
@@ -3757,7 +3757,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 **Layer:** 1
 
-**Fantasy:** "You owe me one." The informal economy of favors.
+**Fantasy:** [SPECCED] "You owe me one." The informal economy of favors.
 
 **Mechanic:** Pops track "Favors". If Pop A saves Pop B (Medical/Combat), Pop B "Owes" Pop A. They will perform tasks for them or support their Faction regardless of their own ethics.
 
@@ -3771,7 +3771,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 **Layer:** 2 -> 1
 
-**Fantasy:** The night sky is not static.
+**Fantasy:** [SPECCED] The night sky is not static.
 
 **Mechanic:** The planet captures temporary asteroids/moons. They alter tides/light for a few months before being ejected or crashing.
 
