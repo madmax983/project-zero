@@ -219,27 +219,27 @@ pub fn fire_damage_system(world: &mut World) {
 pub fn fire_pressure_check_system(world: &mut World) {
     use crate::layer1::pressure::PressureGrid;
 
+    // ⚡ Bolt Optimization:
+    // We avoid allocating an intermediate `Vec` (`fire_positions`) to store query results before processing.
+    // We use `resource_scope` to allow querying the `World` while safely accessing `PressureGrid`.
     let mut to_despawn = Vec::new();
 
-    // 1. Collect fire positions
-    let mut fire_positions = Vec::new();
-    {
-        let mut query = world.query_filtered::<(Entity, &GridPosition), With<Fire>>();
-        for (e, pos) in query.iter(world) {
-            fire_positions.push((e, *pos));
-        }
+    let mut query = world.query_filtered::<(Entity, &GridPosition), With<Fire>>();
+
+    // Try to get resource safely and if it doesn't exist, we just skip.
+    if world.get_resource::<PressureGrid>().is_none() {
+        return;
     }
 
-    // 2. Check pressure
-    if let Some(pressure) = world.get_resource::<PressureGrid>() {
-        for (e, pos) in fire_positions {
+    world.resource_scope(|world, pressure: Mut<PressureGrid>| {
+        for (e, pos) in query.iter(world) {
             if pressure.get(pos.x, pos.y) < 0.1 {
                 to_despawn.push(e);
             }
         }
-    }
+    });
 
-    // 3. Despawn extinguished fires
+    // Despawn extinguished fires
     for e in to_despawn {
         world.despawn(e);
     }

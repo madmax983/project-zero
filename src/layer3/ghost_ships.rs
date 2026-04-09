@@ -70,7 +70,6 @@ pub fn evaluate_lost_ship_return_system(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use bevy::prelude::*;
 
     // Mock components for tests to compile
     #[derive(Component)]
