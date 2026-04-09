@@ -5,6 +5,7 @@
 - [x] `769` The Agony Extract — `specs/769-the-agony-extract.md` — completed 2026-04-10
 - [x] `296` The Martyr's Engine — `specs/296-martyrs-engine.md` — completed 2026-06-25
 
+- [x] `891` Historical Geography — `specs/891-historical-geography.md` — completed 2026-04-09
 - [x] `346` Emotional Contagion — `specs/346-emotional-contagion.md` — completed 2026-03-06
 - [x] `001` Architecture Setup — `specs/001-architecture-setup.md` — completed 2026-06-01
 - [x] `002` Basic Map — `specs/002-basic-map.md` — completed 2026-06-02

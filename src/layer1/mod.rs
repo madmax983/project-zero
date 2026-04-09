@@ -527,3 +527,5 @@ pub mod local_tributes;
 pub mod pop_memories;
 pub mod religion;
 pub use pop_memories::*;
+pub mod historical_geography;
+pub use historical_geography::*;

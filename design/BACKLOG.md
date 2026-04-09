@@ -586,4 +586,3 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `885` Bureaucracy of the Deceased — `specs/885-bureaucracy-of-the-deceased.md`
 - [ ] `886` The Cannibal's Empathy — `specs/886-the-cannibals-empathy.md`
 
-- [ ] `891` Historical Geography — `specs/891-historical-geography.md`

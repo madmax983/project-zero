@@ -282,6 +282,7 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::social::pen_pals::update_pen_pals_system.after(modify_affinity_system),
             // Process chronicle events
             chronicle_event_handler_system.after(check_milestones_system),
+            crate::layer1::historical_geography::process_historical_events.after(chronicle_event_handler_system),
             crate::layer1::festivals::check_for_festivals_system
                 .after(chronicle_event_handler_system),
             crate::layer1::festivals::festival_lifecycle_system
