@@ -71,7 +71,6 @@ mod tests {
     use super::*;
     use crate::layer1::pop::Pop;
     use crate::layer1::stress::StressTracker;
-    use bevy_ecs::prelude::*;
 
     #[test]
     fn test_pop_gains_memory_from_event() {
