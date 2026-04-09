@@ -597,3 +597,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `905` The Phantom Obstacle — `specs/905-the-phantom-obstacle.md`
 - [ ] `906` The Resource Hoard — `specs/906-the-resource-hoard.md`
 - [ ] `907` The Architect's Signature — `specs/907-the-architects-signature.md`
+- [ ] `908` Dying Stars — `specs/908-dying-stars.md`
+- [ ] `909` Radio Broadcasts — `specs/909-radio-broadcasts.md`
+- [ ] `910` Dream Shaping — `specs/910-dream-shaping.md`

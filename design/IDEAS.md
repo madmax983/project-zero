@@ -3879,7 +3879,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Dying Stars
+## Dying Stars [SPECCED]
 
 **Layer:** 2
 
@@ -4032,7 +4032,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Radio Broadcasts
+## Radio Broadcasts [SPECCED]
 
 **Layer:** 2 -> 1
 
@@ -4046,7 +4046,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Dream Shaping
+## Dream Shaping [SPECCED]
 
 **Layer:** 1
 
