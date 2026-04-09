@@ -1,6 +1,6 @@
-use bevy_ecs::prelude::*;
-use bevy::prelude::{App, Plugin, Update};
 use bevy::math::UVec2;
+use bevy::prelude::{App, Plugin, Update};
+use bevy_ecs::prelude::*;
 
 #[derive(Component)]
 pub struct Position(pub UVec2);
@@ -35,7 +35,7 @@ pub struct VentilationPlugin;
 impl Plugin for VentilationPlugin {
     fn build(&self, app: &mut App) {
         app.add_event::<PathRequest>()
-           .add_systems(Update, handle_vent_pathfinding);
+            .add_systems(Update, handle_vent_pathfinding);
     }
 }
 
@@ -89,24 +89,45 @@ mod tests {
         let pos_b = UVec2::new(0, 1);
 
         // Vent connecting A and B
-        app.world_mut().spawn(VentConnection { pos_a, pos_b, grated: false });
+        app.world_mut().spawn(VentConnection {
+            pos_a,
+            pos_b,
+            grated: false,
+        });
 
         // Small entity
-        let rat = app.world_mut().spawn((SmallEntity, PathNavigator, Position(pos_a))).id();
+        let rat = app
+            .world_mut()
+            .spawn((SmallEntity, PathNavigator, Position(pos_a)))
+            .id();
 
         // Large entity
         let human = app.world_mut().spawn((PathNavigator, Position(pos_a))).id();
 
         // System should allow rat to path through, but not human
-        app.world_mut().send_event(PathRequest { entity: rat, start: pos_a, end: pos_b });
-        app.world_mut().send_event(PathRequest { entity: human, start: pos_a, end: pos_b });
+        app.world_mut().send_event(PathRequest {
+            entity: rat,
+            start: pos_a,
+            end: pos_b,
+        });
+        app.world_mut().send_event(PathRequest {
+            entity: human,
+            start: pos_a,
+            end: pos_b,
+        });
         app.update();
 
         let rat_path = app.world().get::<PathResult>(rat).unwrap();
-        assert!(rat_path.success, "Small entities should path through open vents");
+        assert!(
+            rat_path.success,
+            "Small entities should path through open vents"
+        );
 
         let human_path = app.world().get::<PathResult>(human).unwrap();
-        assert!(!human_path.success, "Large entities should not path through vents");
+        assert!(
+            !human_path.success,
+            "Large entities should not path through vents"
+        );
     }
 
     #[test]
@@ -117,18 +138,39 @@ mod tests {
         let pos_a = UVec2::new(0, 0);
         let pos_b = UVec2::new(0, 1);
 
-        let vent = app.world_mut().spawn(VentConnection { pos_a, pos_b, grated: true }).id();
+        let vent = app
+            .world_mut()
+            .spawn(VentConnection {
+                pos_a,
+                pos_b,
+                grated: true,
+            })
+            .id();
 
-        let rat = app.world_mut().spawn((SmallEntity, PathNavigator, Position(pos_a))).id();
+        let rat = app
+            .world_mut()
+            .spawn((SmallEntity, PathNavigator, Position(pos_a)))
+            .id();
 
-        app.world_mut().send_event(PathRequest { entity: rat, start: pos_a, end: pos_b });
+        app.world_mut().send_event(PathRequest {
+            entity: rat,
+            start: pos_a,
+            end: pos_b,
+        });
         app.update();
 
         let rat_path = app.world().get::<PathResult>(rat).unwrap();
-        assert!(!rat_path.success, "Small entities should not path through grated vents");
+        assert!(
+            !rat_path.success,
+            "Small entities should not path through grated vents"
+        );
 
         // Verify airflow is still present but reduced
-        let airflow_amount = calculate_vent_airflow(app.world().get::<VentConnection>(vent).unwrap());
-        assert!(airflow_amount > 0.0 && airflow_amount < 1.0, "Grated vent should have reduced airflow");
+        let airflow_amount =
+            calculate_vent_airflow(app.world().get::<VentConnection>(vent).unwrap());
+        assert!(
+            airflow_amount > 0.0 && airflow_amount < 1.0,
+            "Grated vent should have reduced airflow"
+        );
     }
 }

@@ -1,5 +1,5 @@
-use bevy::prelude::*;
 use crate::layer1::map::GridPosition;
+use bevy::prelude::*;
 use bevy::utils::HashMap;
 
 /// Name given to a tile due to a significant historical event.
@@ -36,13 +36,7 @@ pub fn process_historical_events(
     // Build a spatial map for fast lookup
     let mut tile_map: HashMap<GridPosition, (Entity, Option<String>)> = HashMap::new();
     for (entity, pos, current_name) in query.iter() {
-        tile_map.insert(
-            *pos,
-            (
-                entity,
-                current_name.map(|n| n.name.clone()),
-            ),
-        );
+        tile_map.insert(*pos, (entity, current_name.map(|n| n.name.clone())));
     }
 
     for event in events.read() {
@@ -80,10 +74,10 @@ mod tests {
         app.add_event::<HistoricalEvent>();
         app.add_systems(Update, process_historical_events);
 
-        let tile_entity = app.world_mut().spawn((
-            GridPosition { x: 5, y: 5 },
-            TerrainType::Grass,
-        )).id();
+        let tile_entity = app
+            .world_mut()
+            .spawn((GridPosition { x: 5, y: 5 }, TerrainType::Grass))
+            .id();
 
         // Emit an event that happened at this location
         app.world_mut().send_event(HistoricalEvent {
@@ -104,11 +98,16 @@ mod tests {
         app.add_event::<HistoricalEvent>();
         app.add_systems(Update, process_historical_events);
 
-        let tile_entity = app.world_mut().spawn((
-            GridPosition { x: 0, y: 0 },
-            TerrainType::Rock,
-            HistoricalName { name: "Founders' Peak".to_string() }
-        )).id();
+        let tile_entity = app
+            .world_mut()
+            .spawn((
+                GridPosition { x: 0, y: 0 },
+                TerrainType::Rock,
+                HistoricalName {
+                    name: "Founders' Peak".to_string(),
+                },
+            ))
+            .id();
 
         // New event happens
         app.world_mut().send_event(HistoricalEvent {

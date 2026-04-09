@@ -21,7 +21,9 @@ const PARASITE_HUNGER_DRAIN: f32 = 0.05;
 const PARASITE_HEALTH_REGEN: f32 = 5.0;
 
 /// System that applies the effects of the Symbiotic Parasite.
-pub fn symbiotic_parasite_system(mut query: Query<(&mut Needs, &mut Health), With<SymbioticParasite>>) {
+pub fn symbiotic_parasite_system(
+    mut query: Query<(&mut Needs, &mut Health), With<SymbioticParasite>>,
+) {
     for (mut needs, mut health) in query.iter_mut() {
         // Drain hunger faster
         needs.hunger = (needs.hunger - PARASITE_HUNGER_DRAIN).max(0.0);

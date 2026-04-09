@@ -44,6 +44,14 @@ pub fn register(schedule: &mut Schedule) {
 
     schedule.add_systems(
         (
+            crate::layer1::somnambulism::trigger_somnambulism_system.after(decay_needs_system),
+            crate::layer1::somnambulism::process_somnambulist_work_system.after(crate::layer1::somnambulism::trigger_somnambulism_system),
+        )
+            .in_set(Layer1SystemSet::Consumption),
+    );
+
+    schedule.add_systems(
+        (
             crate::layer1::logistics::biomass_network::process_biomass_network_hunger,
             crate::layer1::logistics::biomass_network::digest_transit_contents
                 .after(crate::layer1::logistics::biomass_network::process_biomass_network_hunger),

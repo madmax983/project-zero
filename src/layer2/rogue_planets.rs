@@ -1,8 +1,7 @@
-
+use crate::layer2::fleet::InOrbit;
 use bevy_ecs::prelude::*;
 use bevy_time::Time;
 use bevy_time::Timer;
-use crate::layer2::fleet::InOrbit;
 
 /// Configuration for Rogue Planets.
 #[derive(Resource, Debug, Clone)]
@@ -57,11 +56,11 @@ pub fn rogue_planet_drift_system(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use bevy::prelude::*;
-    use crate::layer2::system::SystemBody;
+    use crate::layer1::economy::resources::ResourceType;
     use crate::layer1::solar::SolarPower;
     use crate::layer2::mining::MiningTarget;
-    use crate::layer1::economy::resources::ResourceType;
+    use crate::layer2::system::SystemBody;
+    use bevy::prelude::*;
 
     #[test]
     fn test_rogue_planet_drift_and_despawn() {
@@ -69,21 +68,24 @@ mod tests {
         app.insert_resource(bevy::time::Time::default() as bevy::time::Time);
         app.insert_resource(RoguePlanetConfig::default());
 
-        let entity = app.world_mut().spawn((
-            RoguePlanet,
-            RoguePlanetDrift {
-                timer: Timer::from_seconds(1.0, TimerMode::Once),
-            },
-        )).id();
+        let entity = app
+            .world_mut()
+            .spawn((
+                RoguePlanet,
+                RoguePlanetDrift {
+                    timer: Timer::from_seconds(1.0, TimerMode::Once),
+                },
+            ))
+            .id();
 
         // Spawn a dummy fleet in orbit
-        let fleet_entity = app.world_mut().spawn(InOrbit {
-            parent: entity,
-        }).id();
+        let fleet_entity = app.world_mut().spawn(InOrbit { parent: entity }).id();
 
         app.add_systems(Update, rogue_planet_drift_system);
 
-        app.world_mut().resource_mut::<Time>().advance_by(std::time::Duration::from_secs_f32(1.5));
+        app.world_mut()
+            .resource_mut::<Time>()
+            .advance_by(std::time::Duration::from_secs_f32(1.5));
         app.update();
 
         // Verify the Rogue Planet entity is despawned
@@ -97,16 +99,19 @@ mod tests {
     fn test_rogue_planet_solar_power_and_resources() {
         let mut app = bevy::app::App::new();
 
-        let entity = app.world_mut().spawn((
-            RoguePlanet,
-            SystemBody,
-            SolarPower { base_output: 0.0 }, // 0 Solar Power
-            MiningTarget {
-                resource_type: ResourceType::Scrap, // Rare resource
-                amount: 10000.0,
-                mining_difficulty: 1.0,
-            },
-        )).id();
+        let entity = app
+            .world_mut()
+            .spawn((
+                RoguePlanet,
+                SystemBody,
+                SolarPower { base_output: 0.0 }, // 0 Solar Power
+                MiningTarget {
+                    resource_type: ResourceType::Scrap, // Rare resource
+                    amount: 10000.0,
+                    mining_difficulty: 1.0,
+                },
+            ))
+            .id();
 
         let solar = app.world().get::<SolarPower>(entity).unwrap();
         assert_eq!(solar.base_output, 0.0);
