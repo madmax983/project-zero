@@ -15187,3 +15187,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Using living citizens as political currency and dealing with the consequences of their actions in enemy territory.
 
 ---
+
+## Language Drift
+
+**Layer:** Cross-layer
+
+**Fantasy:** Watching isolated colonies evolve distinct, eventually mutually unintelligible cultures.
+
+**Mechanic:** A "Linguistic Drift" value slowly increments over time based on the distance between colonies and the frequency of trade/travel. High drift imposes a "Translation Tax" on diplomacy, trade efficiency, and cross-colony migrations.
+
+**Emergence:** You colonize the galactic rim and leave them to their own devices for centuries. When a crisis forces you to integrate their massive workforce into your core worlds, the sheer translation barrier causes administration to grind to a halt, and your native Pops treat the arrivals as hostile aliens despite sharing the same ancestors.
+
+**Tension:** Spending valuable transport capacity to enforce "cultural synchronization flights" between worlds, versus letting them drift apart to save resources at the cost of eventual deep alienation.
+
+---
+
+## Commuter's Exile
+
+**Layer:** Cross-layer
+
+**Fantasy:** The grueling reality of interplanetary commutes causing families to fall apart.
+
+**Mechanic:** Pops living on a high-amenity residential moon but working on an industrial planet spend chunks of their "Lifespan" in sub-light transit. This creates a "Time-Debt" where their family on the moon ages faster in their perceived interaction window, tanking relationship scores between the commuter and their stationary relatives.
+
+**Emergence:** Your core world relies on cheap labor from a nearby orbital ring. Eventually, an entire generation of workers snaps because their children grew up without them due to transit lag. They refuse to return home, setting up a hyper-militarized squatters' camp in the factory zone.
+
+**Tension:** Maximizing efficiency by separating residential luxury from industrial toxicity, versus the psychological toll it takes on the pops who have to bridge that gap every day.
+
+---
+
+## Bio-Rhythm Desync
+
+**Layer:** 1
+
+**Fantasy:** A colony's biological clock shattering due to artificial light and endless work quotas.
+
+**Mechanic:** Pops have a natural circadian rhythm expectation. If they are forced to work night shifts or live in underground sectors without simulated sunlight cycles, their "Sleep Quality" degrades over time, eventually leading to spontaneous micro-sleeps where they drop items or fail tasks.
+
+**Emergence:** You try to squeeze extra production out of a subterranean mining outpost by running three shifts continuously under harsh floodlights. A few months later, half your miners fall asleep while carrying volatile explosives, collapsing a main artery and trapping the other half.
+
+**Tension:** Implementing expensive, power-hungry artificial day/night cycles in your dark colonies, versus wringing every drop of efficiency out of a 24-hour cycle and risking catastrophic, exhaustion-driven accidents.
+
+---
