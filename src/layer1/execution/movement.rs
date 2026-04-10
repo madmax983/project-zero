@@ -156,29 +156,40 @@ pub fn movement_system(
             &mut current_pos,
             mt,
             &mut speed_opt,
-            traits,
-            hit_stop,
-            role,
-            fog,
+            MovementComponents {
+                traits,
+                hit_stop,
+                role,
+                fog,
+            },
             &mut ctx,
             &mut commands,
         );
     }
 }
 
-#[allow(clippy::too_many_arguments)]
+struct MovementComponents<'a> {
+    traits: Option<&'a Traits>,
+    hit_stop: Option<&'a HitStop>,
+    role: Option<&'a Role>,
+    fog: Option<&'a MentalFog>,
+}
+
 fn process_single_movement(
     pop_entity: Entity,
     current_pos: &mut GridPosition,
     mt: &MovementTarget,
     speed_opt: &mut Option<Mut<Speed>>,
-    traits: Option<&Traits>,
-    hit_stop: Option<&HitStop>,
-    role: Option<&Role>,
-    fog: Option<&MentalFog>,
+    components: MovementComponents<'_>,
     ctx: &mut MovementContext,
     commands: &mut Commands,
 ) {
+    let MovementComponents {
+        traits,
+        hit_stop,
+        role,
+        fog,
+    } = components;
     // Ludwig: Check Hit Stop
     if let Some(hs) = hit_stop {
         if hs.ticks_remaining > 0 {
