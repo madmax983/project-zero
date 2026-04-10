@@ -6461,3 +6461,35 @@ Generated names for tiles.
 - The Discarded Network
 - The Sovereign Heap
 - The Silicon Republic
+
+## The Sympathetic Infrastructure Fragments (Spec 916)
+
+### Fragment Type: [BIOMIMETIC_BUILDING_NAME]
+- the Empath-Spire
+- the Weeping-Hab
+- the Resonance-Farm
+- the Mirror-Block
+- the Glass-Heart
+- the Mood-Lattice
+
+### Fragment Type: [FREEZE_EFFECT]
+- plunged into an icy hibernation
+- frosted the interior bulkheads
+- became a frozen tomb
+- crystallized the air itself
+
+### Fragment Type: [FEVER_EFFECT]
+- boiled the hydroponics alive
+- radiated a suffocating heat
+- suddenly vented thermal energy
+- turned into an oven
+
+### Fragment Type: [LOW_MORALE_TRIGGER]
+- collective grief over the accident
+- an overwhelming sense of despair
+- localized panic
+- the deep, unspoken void-longing
+
+### Fragment Type: [HIGH_MORALE_TRIGGER]
+- the euphoria of the harvest
+- the infectious joy of the festival
