@@ -54,3 +54,22 @@
 **Bloat:** Speculative Optimization / Clever Code: `Traits` component in `src/layer1/traits.rs` using a `u64` bitmask to store a rapidly growing `Trait` enum (over 50 variants), requiring manual bitwise logic (`Traits(1 << (Trait::... as u8))`) across the codebase.
 **Cut:** Replaced the `u64` bitmask with a standard `bevy::utils::HashSet<Trait>`. Updated methods to use standard set operations (`insert`, `remove`, `contains`) and replaced all bitwise initializations with explicit builder patterns (`Traits::default().add(...)`). Retained deterministic iteration by yielding over the enum and filtering by the set.
 **Saved:** Eliminated cognitive load of manual bitwise operations, prevented an imminent integer overflow (capped at 64 traits), and standardized component initialization.
+## [Reduction]
+**Bloat:** `ScentMap` struct in `src/layer1/olfactory.rs` wrapping a `HashMap` with no other fields.
+**Cut:** Replaced the struct with a tuple struct (`pub struct ScentMap(pub HashMap<GridPosition, TileScent>);`), flattening the wrapper and updating callers to access the inner map with `.0`.
+**Saved:** Unnecessary wrapper field and improved code simplicity.
+
+## [Reduction]
+**Bloat:** `MiasmaRecordedSecret` in `src/layer1/bio_acoustic_miasma.rs` which just wrapped `secrets: Vec<String>`.
+**Cut:** Flattened the wrapper to a tuple struct `MiasmaRecordedSecret(pub Vec<String>)`.
+**Saved:** Unnecessary indirection.
+
+## [Reduction]
+**Bloat:** `BulletinBoard` in `src/layer1/social/grievances.rs` which was a component wrapping a `notes: Vec<BulletinNote>`.
+**Cut:** Converted it to a tuple struct `BulletinBoard(pub Vec<BulletinNote>)`.
+**Saved:** Redundant named fields.
+
+## [Reduction]
+**Bloat:** `GalacticCouncil` in `src/layer3/council.rs` wrapped an `active_resolutions: Vec<Resolution>`.
+**Cut:** Flattened it to `GalacticCouncil(pub Vec<Resolution>)`.
+**Saved:** Unnecessary indirection.

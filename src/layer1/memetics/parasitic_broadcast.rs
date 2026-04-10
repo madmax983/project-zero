@@ -1,12 +1,11 @@
 use bevy_ecs::prelude::*;
 
-#[derive(Component, PartialEq, Clone, Copy, Debug, Default)]
-pub struct MemeticInfection;
-
 use crate::layer1::morale::{MoodModifier, Morale};
 use crate::layer3::silence::DetectionRisk;
 
-pub fn process_parasitic_work_reduction(mut query: Query<&mut Morale, With<MemeticInfection>>) {
+pub fn process_parasitic_work_reduction(
+    mut query: Query<&mut Morale, With<crate::layer1::memetics::MemeticCarrier>>,
+) {
     for mut morale in query.iter_mut() {
         morale.value = (morale.value + 10.0).min(100.0);
 
@@ -26,7 +25,7 @@ pub fn process_parasitic_work_reduction(mut query: Query<&mut Morale, With<Memet
 
 pub fn parasitic_broadcast_risk_system(
     mut risk: ResMut<DetectionRisk>,
-    query: Query<(), With<MemeticInfection>>,
+    query: Query<(), With<crate::layer1::memetics::MemeticCarrier>>,
 ) {
     // Every infected pop acts as a tiny antenna
     let infected_count = query.iter().count() as f32;

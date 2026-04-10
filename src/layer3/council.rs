@@ -1,9 +1,7 @@
 use bevy::prelude::*;
 
 #[derive(Resource, Default)]
-pub struct GalacticCouncil {
-    pub active_resolutions: Vec<Resolution>,
-}
+pub struct GalacticCouncil(pub Vec<Resolution>);
 
 #[derive(PartialEq, Eq, Clone, Debug)]
 pub enum Resolution {
@@ -27,7 +25,7 @@ pub fn enforce_resolutions_system(
     mut members: Query<(Entity, &CouncilMember, Option<&mut TradeSanctions>)>,
 ) {
     for (entity, member, sanctions_opt) in members.iter_mut() {
-        if member.in_breach && !council.active_resolutions.is_empty() {
+        if member.in_breach && !council.0.is_empty() {
             // Apply severe sanctions (50% trade penalty)
             if let Some(mut sanctions) = sanctions_opt {
                 sanctions.multiplier = 0.5;
@@ -52,9 +50,7 @@ mod tests {
     #[test]
     fn test_in_breach_member_gets_trade_sanctions() {
         let mut app = App::new();
-        app.insert_resource(GalacticCouncil {
-            active_resolutions: vec![Resolution::BanStripMining],
-        });
+        app.insert_resource(GalacticCouncil(vec![Resolution::BanStripMining]));
 
         let violator = app
             .world_mut()
@@ -75,9 +71,7 @@ mod tests {
     #[test]
     fn test_compliant_member_no_sanctions() {
         let mut app = App::new();
-        app.insert_resource(GalacticCouncil {
-            active_resolutions: vec![Resolution::BanStripMining],
-        });
+        app.insert_resource(GalacticCouncil(vec![Resolution::BanStripMining]));
 
         let compliant = app
             .world_mut()
@@ -109,9 +103,7 @@ mod tests {
     #[test]
     fn test_in_breach_member_already_has_sanctions() {
         let mut app = App::new();
-        app.insert_resource(GalacticCouncil {
-            active_resolutions: vec![Resolution::BanStripMining],
-        });
+        app.insert_resource(GalacticCouncil(vec![Resolution::BanStripMining]));
 
         let violator = app
             .world_mut()
@@ -139,9 +131,7 @@ mod tests {
     #[test]
     fn test_in_breach_member_no_active_resolutions() {
         let mut app = App::new();
-        app.insert_resource(GalacticCouncil {
-            active_resolutions: vec![], // No active resolutions
-        });
+        app.insert_resource(GalacticCouncil(vec![]));
 
         let violator = app
             .world_mut()

@@ -16,13 +16,11 @@ pub struct TileScent {
 }
 
 #[derive(Resource, Default)]
-pub struct ScentMap {
-    pub map: HashMap<GridPosition, TileScent>,
-}
+pub struct ScentMap(pub HashMap<GridPosition, TileScent>);
 
 impl ScentMap {
     pub fn get_scent(&self, pos: GridPosition) -> TileScent {
-        self.map.get(&pos).cloned().unwrap_or_default()
+        self.0.get(&pos).cloned().unwrap_or_default()
     }
 }
 
@@ -40,9 +38,9 @@ pub fn scent_diffusion_system(
     mut scent_map: ResMut<ScentMap>,
     emitters: Query<(&ScentEmitter, &GridPosition)>,
 ) {
-    scent_map.map.clear();
+    scent_map.0.clear();
     for (emitter, pos) in emitters.iter() {
-        let entry = scent_map.map.entry(*pos).or_default();
+        let entry = scent_map.0.entry(*pos).or_default();
         if emitter.is_pleasant {
             entry.pleasant += emitter.strength;
         } else {
@@ -71,7 +69,7 @@ pub fn scent_diffusion_system(
 
         let diffused_strength = emitter.strength * 0.5;
         for neighbor in neighbors {
-            let n_entry = scent_map.map.entry(neighbor).or_default();
+            let n_entry = scent_map.0.entry(neighbor).or_default();
             if emitter.is_pleasant {
                 n_entry.pleasant += diffused_strength;
             } else {

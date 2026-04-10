@@ -442,7 +442,7 @@ pub fn calculate_work_amount(
     };
 
     let infection_modifier = if world
-        .get::<crate::layer1::memetics::MemeticInfection>(pop_entity)
+        .get::<crate::layer1::memetics::MemeticCarrier>(pop_entity)
         .is_some()
     {
         0.5
