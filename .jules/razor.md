@@ -54,3 +54,18 @@
 **Bloat:** Speculative Optimization / Clever Code: `Traits` component in `src/layer1/traits.rs` using a `u64` bitmask to store a rapidly growing `Trait` enum (over 50 variants), requiring manual bitwise logic (`Traits(1 << (Trait::... as u8))`) across the codebase.
 **Cut:** Replaced the `u64` bitmask with a standard `bevy::utils::HashSet<Trait>`. Updated methods to use standard set operations (`insert`, `remove`, `contains`) and replaced all bitwise initializations with explicit builder patterns (`Traits::default().add(...)`). Retained deterministic iteration by yielding over the enum and filtering by the set.
 **Saved:** Eliminated cognitive load of manual bitwise operations, prevented an imminent integer overflow (capped at 64 traits), and standardized component initialization.
+
+## [Reduction]
+**Bloat:** Speculative Generality / Enterprise FizzBuzz: `MachineState` and `CurrentAction` enums in `src/layer1/social/scrap_code_prophets.rs` with unused variants or over-engineered abstractions.
+**Cut:** Flattened `MachineState::Working/Broken` to `is_broken: bool` on `Machine`. Replaced `CurrentAction::Sabotage(Entity)/Idle` with a concrete `SabotageTarget(pub Entity)` component.
+**Saved:** Eliminated 2 enums, simplifying the state logic and pattern matching.
+
+## [Reduction]
+**Bloat:** Single-Variant Enum / Speculative Generality: `Resolution` enum in `src/layer3/council.rs` where `UniversalRights` was entirely unused.
+**Cut:** Deleted the `Resolution` enum and the `active_resolutions` vector on `GalacticCouncil`. Replaced with a concrete, single `ban_strip_mining_active: bool` flag.
+**Saved:** 7 lines of code and simplified council logic by removing vector iteration.
+
+## [Reduction]
+**Bloat:** Single-Variant Enum / Speculative Generality: `Clause` enum in `src/layer3/diplomacy.rs` where `TradeAgreement` was entirely unused.
+**Cut:** Deleted the `Clause` enum and the `clauses` vector on the `Treaty` component. Replaced with a concrete, single `has_spore_propagation: bool` flag.
+**Saved:** 9 lines of code and simplified treaty manipulation by removing vector allocation/checks.

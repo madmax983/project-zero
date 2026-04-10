@@ -47,23 +47,14 @@ pub struct CultFormationEvent {
     pub pop: Entity,
 }
 
-#[derive(Component, PartialEq, Clone)]
-pub enum MachineState {
-    Working,
-    Broken,
-}
-
 #[derive(Component)]
 pub struct Machine {
     pub maintenance_debt: f32,
-    pub state: MachineState,
+    pub is_broken: bool,
 }
 
 #[derive(Component)]
-pub enum CurrentAction {
-    Sabotage(Entity),
-    Idle,
-}
+pub struct SabotageTarget(pub Entity);
 
 #[allow(clippy::type_complexity)]
 pub fn process_scrap_code_revelations(
@@ -98,20 +89,18 @@ pub fn process_scrap_code_revelations(
 }
 
 pub fn execute_cult_sabotage(
-    cultist_query: Query<&CurrentAction, With<ScrapCodeCultist>>,
+    cultist_query: Query<&SabotageTarget, With<ScrapCodeCultist>>,
     mut machine_query: Query<&mut Machine>,
     config: Option<Res<ScrapCodeConfig>>,
 ) {
     let default_config = ScrapCodeConfig::default();
     let config = config.as_deref().unwrap_or(&default_config);
 
-    for action in cultist_query.iter() {
-        if let CurrentAction::Sabotage(machine_ent) = action {
-            if let Ok(mut machine) = machine_query.get_mut(*machine_ent) {
-                machine.maintenance_debt += config.sabotage_debt_increase;
-                if machine.maintenance_debt >= 100.0 {
-                    machine.state = MachineState::Broken;
-                }
+    for target in cultist_query.iter() {
+        if let Ok(mut machine) = machine_query.get_mut(target.0) {
+            machine.maintenance_debt += config.sabotage_debt_increase;
+            if machine.maintenance_debt >= 100.0 {
+                machine.is_broken = true;
             }
         }
     }
@@ -131,7 +120,7 @@ pub fn cultist_morale_aura(
             let mut near_broken = false;
             for (machine, machine_transform) in broken_machines.iter() {
                 #[allow(clippy::collapsible_if)]
-                if machine.state == MachineState::Broken {
+                if machine.is_broken {
                     if pop_transform
                         .translation
                         .distance(machine_transform.translation)
@@ -181,7 +170,7 @@ mod tests {
             .spawn((
                 Machine {
                     maintenance_debt: 100.0,
-                    state: MachineState::Broken,
+                    is_broken: true,
                 },
                 Transform::from_xyz(0.0, 0.0, 0.0),
             ))
@@ -221,7 +210,7 @@ mod tests {
             .world_mut()
             .spawn((Machine {
                 maintenance_debt: 0.0,
-                state: MachineState::Working,
+                is_broken: false,
             },))
             .id();
 
@@ -232,7 +221,7 @@ mod tests {
                 ..Default::default()
             },
             ScrapCodeCultist::default(),
-            CurrentAction::Sabotage(machine),
+            SabotageTarget(machine),
         ));
 
         // Act
@@ -255,7 +244,7 @@ mod tests {
         app.world_mut().spawn((
             Machine {
                 maintenance_debt: 100.0,
-                state: MachineState::Broken,
+                is_broken: true,
             },
             Transform::from_xyz(0.0, 0.0, 0.0),
         ));
@@ -349,7 +338,7 @@ mod tests {
         app.world_mut().spawn((
             Machine {
                 maintenance_debt: 0.0,
-                state: MachineState::Working,
+                is_broken: false,
             },
             Transform::from_xyz(0.0, 0.0, 0.0),
         ));
