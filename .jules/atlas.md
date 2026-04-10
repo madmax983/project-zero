@@ -63,3 +63,6 @@
 **Layer 1 Architecture Encapsulation**
 **Tangle:** The `layer1` core module was littered with loosely cohesive building and structural systems (e.g. `building`, `housing`, `structure`, `symbiotic_infrastructure`, `turret`, `ruins`, etc.), exacerbating the "Blob" anti-pattern in `src/layer1/mod.rs` and lacking a strict structural boundary.
 **Blueprint:** Encapsulated these interrelated construction and structural simulation files into a dedicated `src/layer1/architecture/` module. The new `src/layer1/architecture/mod.rs` centralizes their exports, reducing `layer1/mod.rs` bloat and enforcing a distinct architectural domain boundary.
+**Administration Sub-module Extracted**
+**Tangle:** The administration subsystem (`admin`, `bureaucracy_of_sleep`, `designation`, `edicts`, `inspector`, `permit`, `zone`) was scattered across the root `src/layer1/mod.rs` namespace, adding to the "Blob" anti-pattern in `layer1`. These interrelated modules lacked a clear domain boundary.
+**Blueprint:** Encapsulated these 7 administration and bureaucratic control files into a dedicated `src/layer1/administration/` module. The new `src/layer1/administration/mod.rs` re-exports the public types to maintain backward compatibility, keeping the layer 1 root cleaner while strictly enforcing domain boundaries.
