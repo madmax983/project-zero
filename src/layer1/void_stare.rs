@@ -271,4 +271,33 @@ mod tests {
             "Log should record manifestation"
         );
     }
+
+    #[test]
+    #[should_panic(expected = "Grid size overflow or too large")]
+    fn test_void_grid_new_overflow() {
+        let _grid = VoidGrid::new(usize::MAX, 2);
+    }
+
+    #[test]
+    #[should_panic(expected = "Grid size overflow or too large")]
+    fn test_void_grid_new_too_large() {
+        let _grid = VoidGrid::new(10000, 10000); // 100,000,000 > 10,000,000
+    }
+
+    #[test]
+    fn test_void_grid_get_and_set_out_of_bounds() {
+        let mut grid = VoidGrid::new(10, 10);
+
+        // Negative coordinates
+        grid.set(-1, -1, 0.5);
+        assert_eq!(grid.get(-1, -1), 1.0, "Out of bounds should return 1.0");
+
+        // Very large coordinates (preventing integer wrapping bugs)
+        grid.set(i32::MAX, i32::MAX, 0.5);
+        assert_eq!(grid.get(i32::MAX, i32::MAX), 1.0);
+
+        // Just outside bounds
+        grid.set(10, 10, 0.5);
+        assert_eq!(grid.get(10, 10), 1.0);
+    }
 }
