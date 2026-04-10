@@ -35,3 +35,7 @@
 **[Bevy ECS System Testing]**
 **Learning:** To test a standard Bevy system in isolation in unit tests, you cannot call it directly as a function (e.g., `my_system(&mut world)`). Doing so causes compile errors due to missing trait bounds for system parameters.
 **Action:** Always import the `RunSystemOnce` trait (`use bevy_ecs::system::RunSystemOnce;`) and invoke the system using `world.run_system_once(my_system)`. Note that some older codebase tests may still use legacy approaches, but `RunSystemOnce` is the required pattern for modern Bevy.
+
+**[Boundary Defenses on Grid Logic]**
+**Learning:** Found several untested `Grid size overflow or too large` `expect()` statements across grid instantiations (`VoidGrid`, `HumMap`, `PressureGrid`). These panics protect against OOM / memory allocation attacks but lacked explicit `#[should_panic]` coverage, risking accidental refactor regressions.
+**Action:** Added explicit boundary testing (`test_void_grid_new_overflow`, `test_void_grid_get_and_set_out_of_bounds`) verifying coordinate saturations and safe negative coordinate handling in custom array-backed map structures. Future grid implementations should have these exact edge case tests added immediately.

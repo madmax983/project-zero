@@ -454,7 +454,6 @@ impl ColonyResources {
         }
     }
 
-
     /// Adds void ale, clamping to the maximum capacity.
     pub fn add_void_ale(&mut self, amount: f32) {
         if amount.is_finite() {

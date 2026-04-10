@@ -153,6 +153,15 @@ mod tests {
             name: active.name,
             difficulty: active.difficulty,
         });
+        world.insert_resource(ColonyResources::default());
+        world.insert_resource(bevy_ecs::event::Events::<
+            crate::layer1::chronicle::AddChronicleEvent,
+        >::default());
+        world.insert_resource(crate::layer1::Chronicle::default());
+        world.insert_resource(crate::shared::time::SimulationTime::default());
+        world.insert_resource(crate::setup::AppliedStartScenario {
+            id: StartScenarioId::Classic,
+        });
 
         let mut stack = InputContextStack::default();
         stack.push(InputContext::MainMenu);
