@@ -343,3 +343,4 @@
 - [x] `INT-771` Integration: Parasitic Architecture -> Chronicle — completed 2026-05-18
 - [x] `INT-770` Integration: Temporal Ghost Towns -> Chronicle — completed 2026-05-18
 - [x] `778` Hyperlane Collapse — `specs/778-hyperlane-collapse.md` — completed 2026-05-18
+- [x] `785` The Symbiotic Infrastructure — `specs/785-the-symbiotic-infrastructure.md` — completed 2026-05-19

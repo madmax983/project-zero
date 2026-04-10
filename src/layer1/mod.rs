@@ -202,6 +202,7 @@ mod waste_tests;
 /// Vermin infestation logic (Spec 073).
 pub use lighting::*;
 
+pub mod symbiotic_infrastructure;
 /// Designated zones logic (Spec 056).
 pub mod zone;
 pub use zone::*;

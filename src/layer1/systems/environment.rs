@@ -42,6 +42,14 @@ pub fn register(schedule: &mut Schedule) {
     );
     schedule.add_systems(
         (
+            crate::layer1::symbiotic_infrastructure::process_symbiotic_needs_system,
+            crate::layer1::symbiotic_infrastructure::process_symbiotic_regeneration_system
+                .after(crate::layer1::symbiotic_infrastructure::process_symbiotic_needs_system),
+        )
+            .in_set(Layer1SystemSet::Environment),
+    );
+    schedule.add_systems(
+        (
             crate::layer1::temporal_ghost_towns::process_temporal_stutters,
             crate::layer1::temporal_ghost_towns::process_temporal_recovery,
         )
