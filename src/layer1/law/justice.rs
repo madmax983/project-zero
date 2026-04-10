@@ -191,17 +191,35 @@ pub fn update_inmates_system(mut commands: Commands, mut query: Query<(Entity, &
     }
 }
 
-#[derive(Component, Default)]
+#[derive(Component)]
 pub struct CrimeRecord {
     pub wanted: bool,
     pub severity: u32,
     pub is_arrested: bool,
+    pub crime_severity: CrimeSeverity,
+}
+
+impl Default for CrimeRecord {
+    fn default() -> Self {
+        Self {
+            wanted: false,
+            severity: 0,
+            is_arrested: false,
+            crime_severity: CrimeSeverity::Minor,
+        }
+    }
 }
 
 impl CrimeRecord {
     pub fn is_wanted(&self) -> bool {
         self.wanted
     }
+}
+
+#[derive(Clone, PartialEq, Eq)]
+pub enum CrimeSeverity {
+    Minor,
+    Major,
 }
 
 pub enum CrimeType {
@@ -211,9 +229,15 @@ pub enum CrimeType {
 }
 
 #[derive(Event)]
+pub struct ArrestEvent {
+    pub target: Entity,
+}
+
+#[derive(Event)]
 pub struct CrimeCommittedEvent {
     pub perpetrator: Entity,
     pub crime_type: CrimeType,
+    pub severity: CrimeSeverity,
 }
 
 #[derive(Event)]
@@ -234,6 +258,7 @@ pub fn process_crimes_system(
                 CrimeType::Assault => 80,
                 CrimeType::Vandalism => 30,
             };
+            record.crime_severity = ev.severity.clone();
         }
     }
 }
