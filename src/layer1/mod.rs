@@ -43,7 +43,8 @@ pub mod mind;
 pub use mind::*;
 pub mod ad_screen;
 /// Bureaucratic Drag system (Spec 175).
-pub mod admin;
+pub mod administration;
+pub use administration::*;
 /// AI Core system (Spec 148).
 pub mod ai_core;
 /// Game balance constants.
@@ -66,12 +67,10 @@ pub mod crowding;
 /// Defensive structures and logic.
 pub mod defense;
 /// Designation system for player tools.
-pub mod designation;
 /// Pop dreams system.
 pub mod dreams;
 /// Ecological succession system (Spec 161).
 /// Colony policies and edicts.
-pub mod edicts;
 /// Execution layer bridging utility AI to actions.
 pub mod execution;
 /// Historical geography naming.
@@ -91,10 +90,8 @@ pub mod hazards_tests;
 pub mod hobby;
 pub use geomes::*;
 
-pub mod bureaucracy_of_sleep;
 /// Housing and rest mechanics.
 /// The Inspector system (Spec 091).
-pub mod inspector;
 /// Institutional Memory system (Spec 172).
 pub mod institutional_memory;
 /// Integration systems bridging domains.
@@ -153,7 +150,6 @@ pub mod events;
 
 pub use access_control::*;
 pub use actions::*;
-pub use admin::*;
 pub use ai_core::*;
 pub use balance::*;
 pub use beauty::*;
@@ -162,9 +158,7 @@ pub use chronicle::*;
 pub use control::*;
 pub use crowding::*;
 pub use defense::*;
-pub use designation::*;
 pub use dreams::*;
-pub use edicts::*;
 pub use events::*;
 
 pub mod biology;
@@ -199,10 +193,6 @@ mod waste_tests;
 
 /// Vermin infestation logic (Spec 073).
 pub use lighting::*;
-
-/// Designated zones logic (Spec 056).
-pub mod zone;
-pub use zone::*;
 
 /// Trade system.
 /// Energy system (Spec 042).
@@ -432,7 +422,6 @@ pub use recycling::*;
 /// Direct Link (Possession) system (Spec 236).
 pub mod direct_link;
 /// Permit system for advanced construction.
-pub mod permit;
 pub use direct_link::*;
 
 /// Void Signals (Nova Feature).
