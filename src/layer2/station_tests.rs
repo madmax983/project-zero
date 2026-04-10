@@ -7,9 +7,7 @@ use bevy_ecs::prelude::*;
 use ratatui::style::Color;
 
 fn setup_world() -> World {
-    let world = World::new();
-    // Register components
-    world
+    World::new()
 }
 
 #[test]
