@@ -179,6 +179,8 @@ mod light_pollution_fauna;
 mod waste_scent;
 pub mod integration {
     pub mod spiteful_will_chronicle;
+    #[path = "the_silent_generation_bridge.rs"]
+    pub mod the_silent_generation_bridge;
 }
 
 #[path = "integration/neural_leech_unrest.rs"]

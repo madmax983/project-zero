@@ -301,6 +301,9 @@ pub fn register(schedule: &mut Schedule) {
 
     schedule.add_systems(
         (
+            crate::layer1::integration::trauma_death_bridge_system,
+            crate::layer1::integration::famine_tracking_system,
+            crate::layer1::integration::trauma_decay_system,
             pop_death_chronicle_bridge.after(crate::layer1::health::despawn_dead_entities_system),
             mega_quake_chronicle_bridge.after(crate::layer1::geology::tectonic::check_quake_system),
             crate::layer1::integration::orbital_drop_chronicle_bridge
