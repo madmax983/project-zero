@@ -461,14 +461,22 @@ pub fn update_weather_diffusion_system(
 pub fn simulate_diffusion_system(
     mut grid: ResMut<AtmosphereGrid>,
     config: Res<DiffusionConfig>,
-    query: Query<(&Building, &GridPosition)>,
+    query: Query<(
+        &Building,
+        &GridPosition,
+        Option<&crate::layer1::infrastructure::ventilation::VentConnection>,
+    )>,
 ) {
     // Diffusion rate is now set by update_weather_diffusion_system (and potentially modified by terraforming)
 
     // 2. Identify Blockers
     let mut blockers = HashMap::new();
-    for (b, pos) in query.iter() {
-        if let Some(transmissivity) = b.building_type.flow_transmissivity() {
+    for (b, pos, vent) in query.iter() {
+        if let Some(mut transmissivity) = b.building_type.flow_transmissivity() {
+            if let Some(vent_conn) = vent {
+                transmissivity *=
+                    crate::layer1::infrastructure::ventilation::calculate_vent_airflow(vent_conn);
+            }
             blockers.insert((pos.x, pos.y), transmissivity);
         }
     }

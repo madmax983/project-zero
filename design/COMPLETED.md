@@ -353,3 +353,4 @@
 - [x] `INT-837` Integration: Skyhook Launch System Scheduling — completed 2026-04-07
 - [x] `848` The Prophet of the Engine — `specs/848-prophet-of-the-engine.md` — completed 2026-02-01
 - [x] `861` Stellar Cartography — `specs/861-stellar-cartography.md` — completed 2026-04-08
+- [x] `862` Ventilation Networks — `specs/862-ventilation-networks.md` — completed 2026-04-10

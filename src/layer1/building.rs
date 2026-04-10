@@ -1825,6 +1825,14 @@ fn configure_infrastructure(entity: &mut EntityWorldMut, building_type: Building
                 },
             ));
         }
+        BuildingType::Vent => {
+            let pos = entity.get::<GridPosition>().cloned().unwrap_or(GridPosition { x: 0, y: 0 });
+            entity.insert(crate::layer1::infrastructure::ventilation::VentConnection {
+                pos_a: bevy::math::UVec2::new(pos.x as u32, pos.y as u32),
+                pos_b: bevy::math::UVec2::new(pos.x as u32, pos.y as u32),
+                grated: false,
+            });
+        }
         BuildingType::Gate => {
             entity.insert((
                 crate::layer1::defense::Gate::default(),
