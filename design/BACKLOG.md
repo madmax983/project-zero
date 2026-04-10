@@ -616,3 +616,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `930` The Parasitic Artifact — `specs/930-parasitic-artifact.md`
 - [ ] `931` Rogue Habitation Modules — `specs/931-rogue-habitation-modules.md`
 - [ ] `932` Debt Gravity — `specs/932-debt-gravity.md`
+- [ ] `933` The Sentient Stockpile — `specs/933-sentient-stockpile.md`
+- [ ] `934` The Symbiotic Defector — `specs/934-symbiotic-defector.md`
+- [ ] `935` The Ghost Frequency — `specs/935-ghost-frequency.md`

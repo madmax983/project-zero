@@ -12740,7 +12740,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Sentient Stockpile
+## The Sentient Stockpile [SPECCED]
 
 **Layer:** 1
 
@@ -12754,7 +12754,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Symbiotic Defector
+## The Symbiotic Defector [SPECCED]
 
 **Layer:** Cross-layer (3 -> 1)
 
@@ -12810,7 +12810,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Ghost Frequency
+## The Ghost Frequency [SPECCED]
 
 **Layer:** Cross-layer
 
