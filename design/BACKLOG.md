@@ -605,3 +605,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `913` Ruins Excavation — `specs/913-ruins-excavation.md`
 - [ ] `914` The Silent Strike — `specs/914-silent-strike.md`
 - [ ] `915` Orbital Debris Cult — `specs/915-orbital-debris-cult.md`
+- [ ] `917` Inertial Logistics — `specs/917-inertial-logistics.md`
+- [ ] `918` Chronal Anomalies — `specs/918-chronal-anomalies.md`
+- [ ] `919` Silent Running — `specs/919-silent-running.md`
