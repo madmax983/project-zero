@@ -3907,7 +3907,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Inertial Logistics
+## Inertial Logistics [SPECCED]
 
 **Layer:** 2
 
@@ -3935,7 +3935,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Silent Running
+## Silent Running [SPECCED]
 
 **Layer:** 2
 
@@ -3962,7 +3962,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Maintenance downtime vs. creeping inefficiency.
 
 ---
-## Chronal Anomalies
+## Chronal Anomalies [SPECCED]
 
 **Layer:** 1
 
