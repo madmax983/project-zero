@@ -560,3 +560,6 @@ pub mod environment;
 pub mod spore_diplomat;
 pub use spore_diplomat::*;
 pub mod diplomacy;
+
+pub mod cryo_plague;
+pub use cryo_plague::*;

@@ -181,6 +181,8 @@ pub fn register(schedule: &mut Schedule) {
         (
             crate::layer1::agony_extract::process_agony_extract_harvest_system
                 .after(work_execution_system),
+            crate::layer1::cryo_plague::repair_precursor_machinery_system
+                .after(arrival_handler_system),
         )
             .in_set(Layer1SystemSet::Execution),
     );
