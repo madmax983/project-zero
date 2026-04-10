@@ -152,41 +152,14 @@ fn process_arrival(
             true
         }
         ActionType::SeekMedicalCare => {
-            assign_pop(commands, pop_entity, target_entity, AssignmentType::Patient)
+            handle_seek_medical_care_arrival(commands, pop_entity, target_entity)
         }
-        ActionType::Research => assign_pop(
-            commands,
-            pop_entity,
-            target_entity,
-            AssignmentType::LibraryWorker,
-        ),
+        ActionType::Research => handle_research_arrival(commands, pop_entity, target_entity),
         ActionType::Farm => {
-            #[allow(clippy::collapsible_if)]
-            if let Ok(mut farm) = ctx.farms.get_mut(target_entity) {
-                if farm.workers.len() < farm.capacity {
-                    farm.workers.push(pop_entity);
-                    assign_pop(
-                        commands,
-                        pop_entity,
-                        target_entity,
-                        AssignmentType::FarmWorker,
-                    );
-                }
-            }
-            true
+            handle_farm_arrival(commands, &mut ctx.farms, pop_entity, target_entity)
         }
         ActionType::Admin => {
-            if let Ok(mut office) = ctx.offices.get_mut(target_entity) {
-                if !office.workers.contains(&pop_entity) {
-                    office.workers.push(pop_entity);
-                }
-            }
-            assign_pop(
-                commands,
-                pop_entity,
-                target_entity,
-                AssignmentType::Administrator,
-            )
+            handle_admin_arrival(commands, &mut ctx.offices, pop_entity, target_entity)
         }
         ActionType::BuryCorpse => {
             handle_bury_corpse(
@@ -456,4 +429,65 @@ fn handle_scrawl_memetic_sigil_arrival(
             l.add_colored("A Memetic Sigil has been scrawled on a wall!", Color::Red);
         }
     }
+}
+
+fn handle_farm_arrival(
+    commands: &mut Commands,
+    farms: &mut Query<&mut Farm>,
+    pop_entity: Entity,
+    target_entity: Entity,
+) -> bool {
+    #[allow(clippy::collapsible_if)]
+    if let Ok(mut farm) = farms.get_mut(target_entity) {
+        if farm.workers.len() < farm.capacity {
+            farm.workers.push(pop_entity);
+            assign_pop(
+                commands,
+                pop_entity,
+                target_entity,
+                AssignmentType::FarmWorker,
+            );
+        }
+    }
+    true
+}
+
+fn handle_admin_arrival(
+    commands: &mut Commands,
+    offices: &mut Query<&mut Office>,
+    pop_entity: Entity,
+    target_entity: Entity,
+) -> bool {
+    if let Ok(mut office) = offices.get_mut(target_entity) {
+        if !office.workers.contains(&pop_entity) {
+            office.workers.push(pop_entity);
+        }
+    }
+    assign_pop(
+        commands,
+        pop_entity,
+        target_entity,
+        AssignmentType::Administrator,
+    )
+}
+
+fn handle_seek_medical_care_arrival(
+    commands: &mut Commands,
+    pop_entity: Entity,
+    target_entity: Entity,
+) -> bool {
+    assign_pop(commands, pop_entity, target_entity, AssignmentType::Patient)
+}
+
+fn handle_research_arrival(
+    commands: &mut Commands,
+    pop_entity: Entity,
+    target_entity: Entity,
+) -> bool {
+    assign_pop(
+        commands,
+        pop_entity,
+        target_entity,
+        AssignmentType::LibraryWorker,
+    )
 }
