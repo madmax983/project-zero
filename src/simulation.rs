@@ -136,6 +136,11 @@ pub fn build_simulation_schedule() -> Schedule {
             .after(crate::layer2::syzygy::update_syzygy_cycle_system),
         crate::layer2::trade::escape_velocity::process_launch_system
             .after(crate::layer2::syzygy::apply_syzygy_effects_system),
+        crate::layer1::integration::update_trauma_tracker_deaths_system,
+        crate::layer1::integration::update_trauma_tracker_famine_system,
+        crate::layer1::integration::decay_trauma_tracker_system
+            .after(crate::layer1::integration::update_trauma_tracker_deaths_system)
+            .after(crate::layer1::integration::update_trauma_tracker_famine_system),
         crate::layer2::visibility::update_visibility_system.after(Layer1SystemSet::Economy),
         crate::layer2::visibility::enforce_view_mode_system
             .after(crate::layer2::visibility::update_visibility_system),

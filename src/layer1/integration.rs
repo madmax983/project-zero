@@ -1234,3 +1234,40 @@ pub fn parasitic_architecture_chronicle_bridge(
         });
     }
 }
+
+use crate::layer1::stress::TraumaTracker;
+
+/// Listens for `PopDied` and increments `TraumaTracker.recent_deaths`
+pub fn update_trauma_tracker_deaths_system(
+    mut events: EventReader<PopDied>,
+    mut trauma: ResMut<TraumaTracker>,
+) {
+    for _ in events.read() {
+        trauma.recent_deaths = trauma.recent_deaths.saturating_add(1);
+    }
+}
+
+/// Checks `ColonyResources` for famine and increments `TraumaTracker.famine_ticks`
+pub fn update_trauma_tracker_famine_system(
+    resources: Option<Res<ColonyResources>>,
+    mut trauma: ResMut<TraumaTracker>,
+) {
+    if let Some(res) = resources {
+        if res.food <= 0.0 {
+            trauma.famine_ticks = trauma.famine_ticks.saturating_add(1);
+        }
+    }
+}
+
+/// Decays `TraumaTracker` stats over time
+pub fn decay_trauma_tracker_system(
+    mut trauma: ResMut<TraumaTracker>,
+    sim_time: Option<Res<SimulationTime>>,
+) {
+    if let Some(time) = sim_time {
+        if time.tick % 60 == 0 {
+            trauma.recent_deaths = trauma.recent_deaths.saturating_sub(1);
+            trauma.famine_ticks = trauma.famine_ticks.saturating_sub(10);
+        }
+    }
+}
