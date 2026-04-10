@@ -124,3 +124,8 @@
 **Concept:** Added `SymbioticParasite` where Pops infected with this parasite lose hunger much faster but gain passive health regeneration. This serves as a risky biological augment for pops working in hazardous environments.
 **Fate:** Proposed
 **Lesson:** Providing a biological trade-off mechanic creates interesting management dilemmas, where players might intentionally expose certain workers to parasites to keep them alive in dangerous conditions at the cost of feeding them more.
+
+## [The Somnolent Engine]
+**Concept:** A `DreamDynamo` building component that harvests the `rest` need of sleeping Pops nearby to generate `fuel` resources. It explores the dark monetization of subconscious states.
+**Fate:** Merged
+**Lesson:** Tying an abstract psychological state (sleep/rest) directly to industrial resource generation (fuel) allows for sinister optimization mechanics.

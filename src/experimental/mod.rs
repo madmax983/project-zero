@@ -78,3 +78,6 @@ pub mod empathy_cascade;
 
 #[cfg(feature = "nova")]
 pub mod symbiotic_parasite;
+
+#[cfg(feature = "nova")]
+pub mod somnolent_engine;
