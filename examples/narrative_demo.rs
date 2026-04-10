@@ -275,18 +275,14 @@ fn ui(f: &mut Frame, app: &mut App) {
         vec![ListItem::new(Line::from("No template selected."))]
     };
 
-    let pattern_list = List::new(pattern_items)
-        .block(Block::default().borders(Borders::ALL).title("Patterns"));
+    let pattern_list =
+        List::new(pattern_items).block(Block::default().borders(Borders::ALL).title("Patterns"));
     f.render_widget(pattern_list, right_chunks[0]);
 
     // Generated Output
     let output_block = if let Some(err) = &app.error_message {
         Paragraph::new(format!(" Failed to generate story: {} ", err))
-            .style(
-                Style::default()
-                    .fg(Color::Red)
-                    .add_modifier(Modifier::BOLD),
-            )
+            .style(Style::default().fg(Color::Red).add_modifier(Modifier::BOLD))
             .block(
                 Block::default()
                     .borders(Borders::ALL)
@@ -313,9 +309,7 @@ fn ui(f: &mut Frame, app: &mut App) {
                 ),
                 NarrativeSegment::Error(e) => Span::styled(
                     format!("[ERROR: {}]", e),
-                    Style::default()
-                        .fg(Color::Red)
-                        .add_modifier(Modifier::BOLD),
+                    Style::default().fg(Color::Red).add_modifier(Modifier::BOLD),
                 ),
             })
             .collect();
