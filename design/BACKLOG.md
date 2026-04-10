@@ -622,3 +622,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `936` Unseen Bureaucracy — `specs/936-unseen-bureaucracy.md`
 - [ ] `937` The Observer Effect — `specs/937-observer-effect.md`
 - [ ] `938` The Diplomatic Hostage — `specs/938-diplomatic-hostage.md`
+- [ ] `939` Language Drift — `specs/939-language-drift.md`
+- [ ] `940` Commuter's Exile — `specs/940-commuters-exile.md`
+- [ ] `941` Bio-Rhythm Desync — `specs/941-bio-rhythm-desync.md`
