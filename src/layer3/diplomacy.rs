@@ -2,6 +2,7 @@ use crate::layer1::spore_diplomat::SporeInfection;
 use bevy::prelude::*;
 
 pub mod succession;
+pub mod contraband;
 
 #[derive(Component)]
 pub struct Envoy;
@@ -63,4 +64,15 @@ mod tests {
         let treaty_data = app.world().get::<Treaty>(treaty).unwrap();
         assert!(treaty_data.clauses.contains(&Clause::SporePropagation));
     }
+}
+
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub enum AgreementType {
+    BlackBoxStorage { payout: u32 },
+}
+
+#[derive(Event, Clone, Debug)]
+pub struct AcceptDiplomaticAgreementEvent {
+    pub agreement_type: AgreementType,
+    pub partner_id: Entity,
 }

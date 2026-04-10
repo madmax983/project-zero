@@ -151,6 +151,8 @@ pub enum ItemType {
     Scrap,
     /// Agony Extract harvested under extreme stress.
     AgonyExtract,
+    /// A sealed black box storage container
+    SealedBlackBox,
 }
 
 impl ItemType {

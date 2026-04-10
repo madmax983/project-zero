@@ -375,6 +375,7 @@ pub fn register(schedule: &mut Schedule) {
         (
             crate::layer1::diplomacy::wards::process_diplomatic_wards_system,
             crate::layer1::diplomacy::wards::process_ward_deaths_system,
+
         )
             .in_set(Layer1SystemSet::Observation),
     );

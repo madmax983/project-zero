@@ -42,6 +42,13 @@ pub fn register(schedule: &mut Schedule) {
     );
     schedule.add_systems(
         (
+            crate::layer1::physics::strange_emitter_system,
+            crate::layer1::physics::strange_emitter_system,
+        )
+            .in_set(Layer1SystemSet::Environment),
+    );
+    schedule.add_systems(
+        (
             crate::layer1::temporal_ghost_towns::process_temporal_stutters,
             crate::layer1::temporal_ghost_towns::process_temporal_recovery,
         )

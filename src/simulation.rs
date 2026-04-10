@@ -167,6 +167,7 @@ pub fn build_simulation_schedule() -> Schedule {
             .after(crate::layer3::events::debt_prison::check_bailout_condition_system),
         crate::layer3::market::update_market_prices_system,
         crate::layer3::diplomacy::diplomatic_negotiation_system,
+
         crate::layer3::diplomacy_reflection::aggregate_colony_stats,
         crate::layer3::diplomacy_reflection::update_diplomatic_traits
             .after(crate::layer3::diplomacy_reflection::aggregate_colony_stats),
@@ -506,6 +507,7 @@ pub fn run_simulation_tick(world: &mut World) {
     if !world.contains_resource::<Events<crate::layer3::map::AnomalyDiscoveredEvent>>() {
         world.init_resource::<Events<crate::layer3::map::AnomalyDiscoveredEvent>>();
         world.init_resource::<Events<crate::layer3::diplomacy_reflection::EntityKilledEvent>>();
+        world.init_resource::<Events<crate::layer3::diplomacy::AcceptDiplomaticAgreementEvent>>();
         world.init_resource::<Events<crate::layer3::diplomacy_reflection::FloraPlantedEvent>>();
         world.init_resource::<Events<crate::layer3::diplomacy_reflection::TraitChangedEvent>>();
     }
@@ -591,6 +593,7 @@ mod tests {
             .contains_resource::<Events<crate::layer3::diplomacy_reflection::EntityKilledEvent>>()
         {
             world.init_resource::<Events<crate::layer3::diplomacy_reflection::EntityKilledEvent>>();
+        world.init_resource::<Events<crate::layer3::diplomacy::AcceptDiplomaticAgreementEvent>>();
         }
         if !world
             .contains_resource::<Events<crate::layer3::diplomacy_reflection::FloraPlantedEvent>>()
@@ -664,6 +667,7 @@ mod tests {
         world.init_resource::<Events<crate::layer3::map::FleetArrivalEvent>>();
         world.init_resource::<Events<crate::layer3::map::AnomalyDiscoveredEvent>>();
         world.init_resource::<Events<crate::layer3::diplomacy_reflection::EntityKilledEvent>>();
+        world.init_resource::<Events<crate::layer3::diplomacy::AcceptDiplomaticAgreementEvent>>();
         world.init_resource::<Events<crate::layer3::diplomacy_reflection::FloraPlantedEvent>>();
         world.init_resource::<Events<crate::layer3::diplomacy_reflection::TraitChangedEvent>>();
 
