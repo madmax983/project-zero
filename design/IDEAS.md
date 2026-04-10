@@ -15146,3 +15146,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Taking on loans to rapidly develop a colony, knowing that if you fail to pay, the planet itself will become a gravitational prison.
 
 ---
+## Unseen Bureaucracy
+
+**Layer:** 1
+
+**Fantasy:** Watching an invisible workforce keep your colony running.
+
+**Mechanic:** Under conditions of extreme systemic inefficiency (e.g., massive job backlogs, neglected infrastructure), a 'Phantom Shift' emerges. Pops with the 'Fringe' cultural tag or high desperation secretly work during the night cycle. They fix things and complete jobs but use up colony resources without logging them and slowly build an invisible, untaxable shadow economy.
+
+**Emergence:** You ignore a massive backlog of repairs. Suddenly, things start getting fixed overnight, but your resource stockpiles mysteriously shrink. You realize your colony is being run by a shadow workforce that only exists when you aren't looking.
+
+**Tension:** Immediate, massive relief of infrastructure debt vs. intentionally incubating a hostile, untaxable shadow state in your own backyard.
+
+---
+
+## The Observer Effect
+
+**Layer:** Cross-layer
+
+**Fantasy:** Quantum entanglement meets colony management.
+
+**Mechanic:** A high-tier 'Quantum Hub' generates massive amounts of power, but only functions optimally when its efficiency isn't being actively monitored by the player via the UI Inspector or when there are no Pops physically in the building. As soon as the player 'looks' at it or a Pop enters, its output collapses.
+
+**Emergence:** You desperately need the power boost to fight off an invasion, so you are forced to lock all Pops out of the Hub and deliberately never check its stats. Eventually, the unmonitored Hub begins generating its own bizarre, localized physics anomalies that spread through the colony.
+
+**Tension:** Having to actively ignore a critical piece of infrastructure to maximize its benefit, trusting a system you cannot directly observe.
+
+---
+
+## The Diplomatic Hostage
+
+**Layer:** 3
+
+**Fantasy:** Playing high-stakes politics with people's lives.
+
+**Mechanic:** When negotiating peace treaties with rival empires, you can offer or demand 'Ward' Pops. A Ward is a high-value Pop (like the governor's child) sent to live in the rival empire. While the Ward is safe, the peace treaty holds. If the Ward is mistreated or killed, war immediately resumes with massive Casus Belli bonuses.
+
+**Emergence:** You send your best scientist as a Ward to secure peace. They end up inventing a revolutionary weapon for your rival. Now you have to decide whether to assassinate your own Ward to cripple their research, instantly starting a war, or let them build a weapon that will be used against you.
+
+**Tension:** Using living citizens as political currency and dealing with the consequences of their actions in enemy territory.
+
+---
