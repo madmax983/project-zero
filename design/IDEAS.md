@@ -15035,7 +15035,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Genetic Lottery
+## The Genetic Lottery [SPECCED]
 
 **Layer:** Cross-layer
 
@@ -15091,7 +15091,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Sentient Rumor
+## The Sentient Rumor [SPECCED]
 
 **Layer:** Cross-layer
 
