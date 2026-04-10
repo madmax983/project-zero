@@ -4102,7 +4102,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Observer Effect
+## The Observer Effect [SPECCED]
 
 **Layer:** 1
 
@@ -8704,7 +8704,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Diplomatic Hostage
+## The Diplomatic Hostage [SPECCED]
 
 **Layer:** 3 -> 1
 
@@ -13146,7 +13146,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Diplomatic Hostage
+## The Diplomatic Hostage [SPECCED]
 
 **Layer:** Cross-layer (3 -> 1)
 
@@ -15146,7 +15146,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Taking on loans to rapidly develop a colony, knowing that if you fail to pay, the planet itself will become a gravitational prison.
 
 ---
-## Unseen Bureaucracy
+## Unseen Bureaucracy [SPECCED]
 
 **Layer:** 1
 
@@ -15160,7 +15160,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Observer Effect
+## The Observer Effect [SPECCED]
 
 **Layer:** Cross-layer
 
@@ -15174,7 +15174,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Diplomatic Hostage
+## The Diplomatic Hostage [SPECCED]
 
 **Layer:** 3
 
