@@ -1083,7 +1083,7 @@ fn render_extra_info(
                 Span::raw("💨 Emits Scent: "),
                 Span::styled(
                     format!(
-                        "{:?} ({:.1})",
+                        "{} ({:.1})",
                         if emitter.is_pleasant {
                             "Pleasant"
                         } else {
