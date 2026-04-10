@@ -141,6 +141,14 @@ fn bfs_grid(
             grid_entities.push(entity);
 
             if let Some(source) = world.get::<PowerSource>(entity).filter(|s| s.active) {
+                // Check if a SymbioticStructure is dormant
+                let is_symbiotic_dormant = world
+                    .get::<crate::layer1::symbiotic_infrastructure::SymbioticStructure>(entity)
+                    .is_some_and(|s| s.is_dormant);
+
+                if is_symbiotic_dormant {
+                    continue;
+                }
                 // Check if a Quirk stops production
                 let is_stopped = world
                     .get::<crate::layer1::rituals::Quirk>(entity)
