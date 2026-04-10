@@ -45,7 +45,12 @@ impl WaterGrid {
         if x >= self.width || y >= self.height {
             return 0;
         }
-        self.values[y * self.width + x]
+        if let Some(idx) = y.checked_mul(self.width).and_then(|i| i.checked_add(x)) {
+            if idx < self.values.len() {
+                return self.values[idx];
+            }
+        }
+        0
     }
 
     /// Sets the hydration value at the specified coordinates.
@@ -53,7 +58,11 @@ impl WaterGrid {
         if x >= self.width || y >= self.height {
             return;
         }
-        self.values[y * self.width + x] = value;
+        if let Some(idx) = y.checked_mul(self.width).and_then(|i| i.checked_add(x)) {
+            if idx < self.values.len() {
+                self.values[idx] = value;
+            }
+        }
     }
 }
 
@@ -83,7 +92,12 @@ pub fn update_water_system(
     // 1. Set sources (Terrain::Water)
     for y in 0..height {
         for x in 0..width {
-            let idx = y * width + x;
+            let Some(idx) = y.checked_mul(width).and_then(|i| i.checked_add(x)) else {
+                continue;
+            };
+            if idx >= terrain.tiles.len() || idx >= water.values.len() {
+                continue;
+            }
             if terrain.tiles[idx] == TerrainType::Water {
                 water.values[idx] = MAX_HYDRATION;
             }
@@ -98,8 +112,11 @@ pub fn update_water_system(
             #[allow(clippy::cast_sign_loss)]
             let y = pos.y as usize;
             if x < width && y < height {
-                let idx = y * width + x;
-                water.values[idx] = source.amount;
+                if let Some(idx) = y.checked_mul(width).and_then(|i| i.checked_add(x)) {
+                    if idx < water.values.len() {
+                        water.values[idx] = source.amount;
+                    }
+                }
             }
         }
     }
@@ -109,7 +126,12 @@ pub fn update_water_system(
     // Pass 1: Top-Left -> Bottom-Right
     for y in 0..height {
         for x in 0..width {
-            let idx = y * width + x;
+            let Some(idx) = y.checked_mul(width).and_then(|i| i.checked_add(x)) else {
+                continue;
+            };
+            if idx >= terrain.tiles.len() || idx >= water.values.len() {
+                continue;
+            }
             if terrain.tiles[idx] == TerrainType::Rock {
                 continue;
             }
@@ -135,7 +157,12 @@ pub fn update_water_system(
     // Pass 2: Bottom-Right -> Top-Left
     for y in (0..height).rev() {
         for x in (0..width).rev() {
-            let idx = y * width + x;
+            let Some(idx) = y.checked_mul(width).and_then(|i| i.checked_add(x)) else {
+                continue;
+            };
+            if idx >= terrain.tiles.len() || idx >= water.values.len() {
+                continue;
+            }
             if terrain.tiles[idx] == TerrainType::Rock {
                 continue;
             }

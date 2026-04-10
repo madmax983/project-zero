@@ -121,7 +121,12 @@ impl TemperatureGrid {
 
         for y in 0..self.height {
             for x in 0..self.width {
-                let idx = y * self.width + x;
+                let Some(idx) = y.checked_mul(self.width).and_then(|i| i.checked_add(x)) else {
+                    continue;
+                };
+                if idx >= self.values.len() || idx >= self.scratch.len() {
+                    continue;
+                }
                 let current_temp = self.values[idx];
                 let ix = x as i32;
                 let iy = y as i32;

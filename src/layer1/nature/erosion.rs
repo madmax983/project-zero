@@ -40,28 +40,30 @@ impl ErosionGrid {
 
     /// Add erosion usage to a tile.
     pub fn add_erosion(&mut self, x: usize, y: usize, amount: u16) {
-        let idx = y * self.width + x;
-        if idx < self.values.len() {
-            self.values[idx] = self.values[idx].saturating_add(amount);
+        if let Some(idx) = y.checked_mul(self.width).and_then(|i| i.checked_add(x)) {
+            if idx < self.values.len() {
+                self.values[idx] = self.values[idx].saturating_add(amount);
+            }
         }
     }
 
     /// Get usage value at a tile.
     #[must_use]
     pub fn get(&self, x: usize, y: usize) -> u16 {
-        let idx = y * self.width + x;
-        if idx < self.values.len() {
-            self.values[idx]
-        } else {
-            0
+        if let Some(idx) = y.checked_mul(self.width).and_then(|i| i.checked_add(x)) {
+            if idx < self.values.len() {
+                return self.values[idx];
+            }
         }
+        0
     }
 
     /// Set usage value at a tile.
     pub fn set(&mut self, x: usize, y: usize, val: u16) {
-        let idx = y * self.width + x;
-        if idx < self.values.len() {
-            self.values[idx] = val;
+        if let Some(idx) = y.checked_mul(self.width).and_then(|i| i.checked_add(x)) {
+            if idx < self.values.len() {
+                self.values[idx] = val;
+            }
         }
     }
 }
@@ -70,7 +72,9 @@ impl ErosionGrid {
 pub fn update_erosion_system(mut terrain: ResMut<TerrainGrid>, erosion: Res<ErosionGrid>) {
     for y in 0..terrain.height {
         for x in 0..terrain.width {
-            let idx = y * terrain.width + x;
+            let Some(idx) = y.checked_mul(terrain.width).and_then(|i| i.checked_add(x)) else {
+                continue;
+            };
             if idx >= terrain.tiles.len() || idx >= erosion.values.len() {
                 continue;
             }

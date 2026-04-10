@@ -60,24 +60,32 @@ impl FertilityGrid {
     #[must_use]
     pub fn get(&self, x: usize, y: usize) -> f32 {
         if x < self.width && y < self.height {
-            self.values[y * self.width + x]
-        } else {
-            0.0
+            if let Some(idx) = y.checked_mul(self.width).and_then(|i| i.checked_add(x)) {
+                return self.values.get(idx).copied().unwrap_or(0.0);
+            }
         }
+        0.0
     }
 
     /// Set fertility at (x, y). Clamps between 0.0 and 1.0.
     pub fn set(&mut self, x: usize, y: usize, value: f32) {
         if x < self.width && y < self.height {
-            self.values[y * self.width + x] = value.clamp(0.0, 1.0);
+            if let Some(idx) = y.checked_mul(self.width).and_then(|i| i.checked_add(x)) {
+                if idx < self.values.len() {
+                    self.values[idx] = value.clamp(0.0, 1.0);
+                }
+            }
         }
     }
 
     /// Modify fertility at (x, y) by delta. Clamps result.
     pub fn modify(&mut self, x: usize, y: usize, delta: f32) {
         if x < self.width && y < self.height {
-            let idx = y * self.width + x;
-            self.values[idx] = (self.values[idx] + delta).clamp(0.0, 1.0);
+            if let Some(idx) = y.checked_mul(self.width).and_then(|i| i.checked_add(x)) {
+                if idx < self.values.len() {
+                    self.values[idx] = (self.values[idx] + delta).clamp(0.0, 1.0);
+                }
+            }
         }
     }
 }
