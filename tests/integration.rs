@@ -262,3 +262,5 @@ mod parasitic_architecture_bridge;
 mod temporal_ghost_towns_bridge;
 #[path = "integration/void_whispers_chronicle.rs"]
 mod void_whispers_chronicle;
+#[path = "integration/silent_generation_bridge.rs"]
+mod silent_generation_bridge;

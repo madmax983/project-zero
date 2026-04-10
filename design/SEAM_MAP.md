@@ -641,3 +641,11 @@
 - **Systems connected:** `process_hyperlane_collapse_system` (Hyperlane Collapse) -> `hyperlane_collapse_chronicle_bridge` (Integration) -> `AddChronicleEvent`
 - **Glue added:** Added `hyperlane_collapse_chronicle_bridge` to emit an `AddChronicleEvent` (`EventImportance::Major`) upon `TradeRouteSeveredEvent`. Registered in `SimulationSchedule`.
 - **Tests:** `tests/integration/hyperlane_collapse_bridge.rs`
+
+### INT-573: The Silent Generation -> Trauma Tracker
+- **Date:** 2026-05-18
+- **Systems connected:** `PopDied` & `ColonyResources.food` -> `silent_generation_trauma_bridge_system` -> `TraumaTracker`
+- **Glue added:**
+    - `silent_generation_trauma_bridge_system` in `src/layer1/integration.rs` to track recent deaths and famine duration in `TraumaTracker`.
+- **Schedule:** Registered in `Layer1SystemSet::Observation`.
+- **Tests:** `tests/integration/silent_generation_bridge.rs`

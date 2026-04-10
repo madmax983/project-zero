@@ -1247,3 +1247,21 @@ pub fn parasitic_architecture_chronicle_bridge(
         });
     }
 }
+
+/// INT-573: Bridges PopDied events and ColonyResources.food to the TraumaTracker.
+pub fn silent_generation_trauma_bridge_system(
+    mut events: bevy_ecs::prelude::EventReader<crate::layer1::pop::PopDied>,
+    resources: bevy_ecs::prelude::Res<crate::layer1::resources::ColonyResources>,
+    mut trauma: bevy_ecs::prelude::ResMut<crate::layer1::stress::TraumaTracker>,
+) {
+    let mut death_count = 0;
+    for _ in events.read() {
+        death_count += 1;
+    }
+    trauma.recent_deaths = trauma.recent_deaths.saturating_add(death_count);
+
+    if resources.food <= 0.0 {
+        trauma.famine_ticks = trauma.famine_ticks.saturating_add(1);
+    }
+
+}

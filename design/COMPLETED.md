@@ -348,3 +348,4 @@
 - [x] `817` Haunted Assembly Lines — `specs/817-haunted-assembly-lines.md` — completed 2026-05-19
 - [x] `618` Local Tributes — `specs/618-local-tributes.md` — completed 2026-06-01
 - [x] `814` Radio Nostalgia — `specs/814-radio-nostalgia.md` — completed 2026-02-01
+- [x] `573` The Silent Generation — `specs/573-the-silent-generation.md` — completed 2026-05-18
