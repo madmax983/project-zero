@@ -110,6 +110,7 @@ pub mod memory;
 pub mod metal_industry_tests;
 /// Pop needs (hunger, rest).
 pub mod needs;
+pub mod invasive_domestication;
 /// Notification system.
 pub mod notifications;
 pub mod parasitic_architecture;

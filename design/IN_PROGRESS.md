@@ -3,6 +3,7 @@
 Tasks currently being implemented by Builders.
 
 ---
+- [ ] `792` Invasive Domestication — `specs/792-invasive-domestication.md` — claimed 2026-05-18
 - [ ] `239` Operational Detritus — `specs/239-operational-detritus.md` — claimed 2026-02-26
 - [ ] `242` The Echo — `specs/242-the-echo.md` — claimed 2026-02-27
 - [ ] `244` Biometric Drift — `specs/244-biometric-drift.md` — claimed 2026-02-28
