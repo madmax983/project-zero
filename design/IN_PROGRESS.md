@@ -12,3 +12,4 @@ Tasks currently being implemented by Builders.
 - [ ] `684` The Gossip Economy - `specs/684-gossip-economy.md` - claimed 2026-04-01
 - [ ] `573` The Silent Generation - `specs/573-the-silent-generation.md` - claimed 2026-05-18
 - [ ] `862` Ventilation Networks — `specs/862-ventilation-networks.md` — claimed 2026-06-01
+- [ ] `924` Memorial Scrap — `specs/924-memorial-scrap.md` — claimed 2026-06-03

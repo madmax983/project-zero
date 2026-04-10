@@ -105,6 +105,10 @@ pub fn build_simulation_schedule() -> Schedule {
             .after(crate::layer2::combat::fleet_combat_system),
         crate::layer2::debris::debris_attrition_system
             .after(crate::layer2::debris::debris_accumulation_system),
+    ));
+    schedule.add_systems((
+        crate::layer2::memorial_scrap::handle_ship_destruction_system,
+        crate::layer2::memorial_scrap::process_salvage_jobs_system,
         crate::layer2::debris::debris_decay_system
             .after(crate::layer2::debris::debris_attrition_system),
     ));

@@ -612,5 +612,4 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `921` Rogue Habitation Modules — `specs/921-rogue-habitation-modules.md`
 - [ ] `922` Debt Gravity — `specs/922-debt-gravity.md`
 - [ ] `923` The Black Market Airlock — `specs/923-black-market-airlock.md`
-- [ ] `924` Memorial Scrap — `specs/924-memorial-scrap.md`
 - [ ] `925` The Work-Shift Cartel — `specs/925-work-shift-cartel.md`

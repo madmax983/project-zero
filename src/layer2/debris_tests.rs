@@ -66,6 +66,7 @@ mod tests {
         world.send_event(ShipDestroyedEvent {
             planet,
             ship_class: "Frigate".to_string(),
+            is_veteran: false,
         });
 
         let mut schedule = Schedule::default();

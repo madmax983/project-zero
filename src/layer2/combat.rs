@@ -178,6 +178,7 @@ pub fn fleet_combat_system(
                     event_writer.send(ShipDestroyedEvent {
                         planet: current_location,
                         ship_class: format!("{ship:?}"),
+                        is_veteran: false,
                     });
                 }
 

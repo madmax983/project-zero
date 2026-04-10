@@ -68,6 +68,8 @@ pub struct ShipDestroyedEvent {
     pub planet: Entity,
     /// The classification of the destroyed ship (e.g., "Frigate", "Colony Ship").
     pub ship_class: String,
+    /// Whether the destroyed ship was a veteran.
+    pub is_veteran: bool,
 }
 
 /// Event triggered when the colony's thermal or electromagnetic signature is detected by hostile forces.

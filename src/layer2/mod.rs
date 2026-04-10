@@ -44,3 +44,4 @@ pub mod sensor_ambiguity;
 pub mod skyhooks;
 
 pub mod rogue_planets;
+pub mod memorial_scrap;

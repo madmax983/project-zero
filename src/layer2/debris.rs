@@ -69,6 +69,7 @@ pub fn debris_attrition_system(
                     event_writer.send(ShipDestroyedEvent {
                         planet: orbit.parent,
                         ship_class: format!("{ship_type:?}"),
+                        is_veteran: false,
                     });
                 }
 
@@ -89,6 +90,7 @@ pub fn debris_attrition_system(
                     event_writer.send(ShipDestroyedEvent {
                         planet: orbit.parent,
                         ship_class: "Unknown Fleet".to_string(),
+                        is_veteran: false,
                     });
                 }
             }
