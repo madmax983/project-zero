@@ -659,3 +659,9 @@
 - **Systems connected:** `blob_expansion_system` (The Blob) -> `blob_building_destruction_system` (Integration) -> `BuildingRemovedEvent`
 - **Glue added:** Added `blob_building_destruction_system` to emit an `BuildingRemovedEvent` and despawn buildings when the Blob expands onto their location.
 - **Tests:** `tests/integration/blob_building_destruction.rs`
+
+### INT-573: The Silent Generation -> Trauma Tracker
+- **Date:** 2026-06-15
+- **Systems connected:** `PopDied` (Pop lifecycle) & `ColonyResources` (Economy) -> `trauma_death_bridge_system`, `famine_tracking_system`, and `trauma_decay_system` (Integration) -> `TraumaTracker` (Stress)
+- **Glue added:** Added bridge systems in `src/layer1/integration.rs` to track deaths and famine and apply trauma decay. Registered in `Layer1SystemSet::Observation`.
+- **Tests:** `tests/integration/the_silent_generation_bridge.rs`

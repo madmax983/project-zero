@@ -1273,3 +1273,36 @@ pub fn blob_building_destruction_system(
         }
     }
 }
+
+// --- INT-573: The Silent Generation ---
+
+/// Bridges `PopDied` events into the `TraumaTracker` system.
+pub fn trauma_death_bridge_system(
+    mut events: EventReader<PopDied>,
+    mut trauma: ResMut<crate::layer1::stress::TraumaTracker>,
+) {
+    for _ in events.read() {
+        trauma.recent_deaths = trauma.recent_deaths.saturating_add(1);
+    }
+}
+
+/// Bridges `ColonyResources` into the `TraumaTracker` system by detecting famine.
+pub fn famine_tracking_system(
+    resources: Res<ColonyResources>,
+    mut trauma: ResMut<crate::layer1::stress::TraumaTracker>,
+) {
+    if resources.food <= 0.0 {
+        trauma.famine_ticks = trauma.famine_ticks.saturating_add(1);
+    }
+}
+
+/// Decays trauma values over time.
+pub fn trauma_decay_system(
+    time: Res<SimulationTime>,
+    mut trauma: ResMut<crate::layer1::stress::TraumaTracker>,
+) {
+    if time.tick.is_multiple_of(10) {
+        trauma.recent_deaths = trauma.recent_deaths.saturating_sub(1);
+        trauma.famine_ticks = trauma.famine_ticks.saturating_sub(10);
+    }
+}
