@@ -15229,3 +15229,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Implementing expensive, power-hungry artificial day/night cycles in your dark colonies, versus wringing every drop of efficiency out of a 24-hour cycle and risking catastrophic, exhaustion-driven accidents.
 
 ---
+
+## The Martyr's Shrine
+
+**Layer:** 1
+
+**Fantasy:** The darkest moments of a colony becoming the foundation of its eventual success.
+
+**Mechanic:** If Pops die while performing a critical job during an active crisis (e.g., starving while desperately harvesting a crop, suffocating while repairing life support), the specific tile where they died becomes a temporary "Martyr's Shrine." Pops working near this tile gain a massive, overriding boost to productivity and ignore all negative mood effects, fueled by collective grief and purpose. However, while under this effect, they rapidly drain their own health due to self-neglect, potentially creating *more* martyrs in a cascading death spiral.
+
+**Emergence:** You suffer a terrible mining accident that claims several lives. The resulting shrines turn the surviving miners into incredibly efficient, unstoppable workers who quickly clear the backlog and secure the colony's resources. But you look away for a moment, and their sheer, fanatical overwork leads to half the remaining crew working themselves to death in the very same tunnels.
+
+**Tension:** Do you cordon off the area of tragedy to protect the surviving Pops and lose out on the massive productivity surge, or deliberately exploit the grief-fueled frenzy at the risk of losing even more of your workforce to exhaustion?
+
+---
+
+## Cultural Ransom
+
+**Layer:** 3
+
+**Fantasy:** Waging war not for territory, but for the soul of an enemy civilization.
+
+**Mechanic:** During deep strikes into enemy territory, specialized fleets can steal unique "Cultural Artifacts" or the primary databanks containing a faction's "Founding Histories." Holding these items inflicts severe, compounding diplomatic and morale penalties on the victim faction. In peace negotiations, these items can be traded back for staggering concessions (entire planets, total economic submission) that far exceed the value of standard military victories.
+
+**Emergence:** A minor, militaristic pirate faction manages a lucky raid on the core world of the oldest, most prestigious civilization in the galaxy. They steal the original colonial charter. Rather than fighting a losing war against the ancient civilization's massive fleets, the pirates hold the charter hostage, extorting an endless stream of resources and essentially turning the great empire into their unwilling, resentful subjects.
+
+**Tension:** Spending military resources targeting heavily defended civilian and cultural centers instead of strategic military targets, and managing the risk that holding these items might provoke an uncontrollable "holy war" response from the victim.
+
+---
+
+## Generation Ship Drift
+
+**Layer:** Cross-layer
+
+**Fantasy:** The terror of sending a piece of your civilization into the dark and not knowing what will emerge on the other side.
+
+**Mechanic:** When launching sub-light Generation Ships (early tech or for specific long-distance colonization without hyperlanes), the colony inside the ship simulates years of cultural and social drift during the transit based on onboard conditions (e.g., food scarcity, overcrowding, random mechanical failures). When the ship finally arrives and establishes the Layer 1 colony, it inherits the *result* of that drift.
+
+**Emergence:** You launch a massive, expensive Generation Ship populated by peaceful agrarians to a distant, fertile world. You forget about them as you fight a local war. Two centuries later, the ship arrives. Due to an unmonitored hydroponics failure during year 50 of transit, the ship devolved into a brutal, cannibalistic survival cult. Instead of establishing a peaceful farming colony for your empire, they immediately declare independence, cannibalize the ship to build a warfleet, and attack your core worlds.
+
+**Tension:** The cheap, early-game expansion offered by generation ships vs. the enormous risk of "incubating" a completely alien, potentially hostile civilization that will emerge on your borders centuries later.
+
+---
