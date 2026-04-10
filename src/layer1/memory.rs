@@ -53,6 +53,8 @@ pub enum MemoryType {
     MascotDeath,
     /// Lost a limb in an accident.
     LostLimb,
+    /// False memory implanted during cryosleep.
+    CryoFalseMemory,
 }
 
 impl MemoryType {
@@ -68,7 +70,7 @@ impl MemoryType {
             Self::InspectorImpressed => 0.15,
             Self::AteFineMeal | Self::AttendedFuneral => 0.1,
             Self::WonFight | Self::AdmiredArt => 0.05,
-            Self::SawCorpse => -0.05,
+            Self::SawCorpse | Self::CryoFalseMemory => -0.05,
             Self::SleptInAwfulRoom => -0.1,
             Self::SleptInDullRoom => -0.05,
             Self::SleptInDecentRoom => 0.0,
@@ -94,6 +96,7 @@ impl MemoryType {
             Self::AteFineMeal | Self::WonFight => 0.002,     // Fast (500 ticks)
             Self::SawCorpse | Self::AdmiredArt | Self::DisgustedByVermin => 0.01, // Very fast fade (100 ticks)
             Self::InspectorImpressed | Self::InspectorDisappointed => 0.005, // Medium-long duration (~200 ticks)
+            Self::CryoFalseMemory => 0.0005, // False memories persist for a long time
             // Room thoughts last 1 day (100 ticks)
             Self::SleptInAwfulRoom
             | Self::SleptInDullRoom

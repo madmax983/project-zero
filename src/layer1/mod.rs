@@ -412,8 +412,10 @@ pub mod chemical;
 /// Cryo-Stasis system (Spec 139).
 pub mod cryo;
 pub mod cryo_dreams;
+pub mod cryo_amnesia;
 pub use chemical::*;
 pub use cryo::*;
+pub use cryo_amnesia::*;
 
 #[cfg(test)]
 mod cryo_tests;

@@ -548,7 +548,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `851` Subscription Prosthetics — `specs/851-subscription-prosthetics.md`
 - [ ] `852` Volumetric Gas Pockets — `specs/852-volumetric-gas-pockets.md`
 - [ ] `853` Thermal Bloom — `specs/853-thermal-bloom.md`
-- [ ] `854` Cryo-Amnesia — `specs/854-cryo-amnesia.md`
 - [ ] `855` Spare Parts Economy — `specs/855-spare-parts-economy.md`
 - [ ] `856` Space Lanes — `specs/856-space-lanes.md`
 - [ ] `857` Colony Ship Cannibalization — `specs/857-colony-ship-cannibalization.md`

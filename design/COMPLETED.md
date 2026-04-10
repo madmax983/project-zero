@@ -353,3 +353,4 @@
 - [x] `INT-837` Integration: Skyhook Launch System Scheduling — completed 2026-04-07
 - [x] `848` The Prophet of the Engine — `specs/848-prophet-of-the-engine.md` — completed 2026-02-01
 - [x] `861` Stellar Cartography — `specs/861-stellar-cartography.md` — completed 2026-04-08
+- [x] `854` Cryo-Amnesia — `specs/854-cryo-amnesia.md` — completed 2026-05-18
