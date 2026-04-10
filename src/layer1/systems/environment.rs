@@ -90,6 +90,11 @@ pub fn register(schedule: &mut Schedule) {
 
     schedule.add_systems(
         (
+            crate::layer1::seismic::emit_vibration_system,
+            crate::layer1::seismic::process_vibration_resonance_system
+                .after(crate::layer1::seismic::emit_vibration_system),
+            crate::layer1::seismic::thumper_beast_attraction_system
+                .after(crate::layer1::seismic::emit_vibration_system),
             crate::layer1::seismic::update_seismic_system,
             crate::layer1::seismic::seismic_flora_reaction_system
                 .after(crate::layer1::seismic::update_seismic_system),
