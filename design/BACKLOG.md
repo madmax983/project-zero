@@ -608,11 +608,11 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `917` Inertial Logistics — `specs/917-inertial-logistics.md`
 - [ ] `918` Chronal Anomalies — `specs/918-chronal-anomalies.md`
 - [ ] `919` Silent Running — `specs/919-silent-running.md`
-- [ ] `920` The Parasitic Artifact — `specs/920-parasitic-artifact.md`
-- [ ] `921` Rogue Habitation Modules — `specs/921-rogue-habitation-modules.md`
-- [ ] `922` Debt Gravity — `specs/922-debt-gravity.md`
-- [ ] `923` The Black Market Airlock — `specs/923-black-market-airlock.md`
-- [ ] `924` Memorial Scrap — `specs/924-memorial-scrap.md`
 - [ ] `925` The Work-Shift Cartel — `specs/925-work-shift-cartel.md`
 - [ ] `926` The Sentient Rumor — `specs/926-sentient-rumor.md`
 - [ ] `927` The Genetic Lottery — `specs/927-genetic-lottery.md`
+- [ ] `928` The Black Market Airlock — `specs/928-black-market-airlock.md`
+- [ ] `929` Memorial Scrap — `specs/929-memorial-scrap.md`
+- [ ] `930` The Parasitic Artifact — `specs/930-parasitic-artifact.md`
+- [ ] `931` Rogue Habitation Modules — `specs/931-rogue-habitation-modules.md`
+- [ ] `932` Debt Gravity — `specs/932-debt-gravity.md`
