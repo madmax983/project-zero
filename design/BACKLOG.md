@@ -619,3 +619,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `933` The Sentient Stockpile — `specs/933-sentient-stockpile.md`
 - [ ] `934` The Symbiotic Defector — `specs/934-symbiotic-defector.md`
 - [ ] `935` The Ghost Frequency — `specs/935-ghost-frequency.md`
+- [ ] `936` Unseen Bureaucracy — `specs/936-unseen-bureaucracy.md`
+- [ ] `937` The Observer Effect — `specs/937-observer-effect.md`
+- [ ] `938` The Diplomatic Hostage — `specs/938-diplomatic-hostage.md`
