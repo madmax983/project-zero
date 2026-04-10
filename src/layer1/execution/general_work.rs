@@ -477,6 +477,15 @@ pub fn calculate_work_amount(
         1.0
     };
 
+    let silent_strike_modifier = if world
+        .get::<crate::layer1::social::strike::SilentStrike>(pop_entity)
+        .is_some()
+    {
+        0.0
+    } else {
+        1.0
+    };
+
     let somnambulist_modifier = if world
         .get::<crate::layer1::somnambulism::Somnambulist>(pop_entity)
         .is_some()
@@ -499,6 +508,7 @@ pub fn calculate_work_amount(
         * ghost_shift_modifier
         * gossiping_modifier
         * hallucinating_modifier
+        * silent_strike_modifier
         * somnambulist_modifier;
 
     // Cap work amount to prevent logic bugs / economy exploits

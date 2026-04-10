@@ -45,7 +45,8 @@ pub fn register(schedule: &mut Schedule) {
     schedule.add_systems(
         (
             crate::layer1::somnambulism::trigger_somnambulism_system.after(decay_needs_system),
-            crate::layer1::somnambulism::process_somnambulist_work_system.after(crate::layer1::somnambulism::trigger_somnambulism_system),
+            crate::layer1::somnambulism::process_somnambulist_work_system
+                .after(crate::layer1::somnambulism::trigger_somnambulism_system),
         )
             .in_set(Layer1SystemSet::Consumption),
     );

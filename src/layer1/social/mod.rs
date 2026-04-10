@@ -613,3 +613,5 @@ pub mod exile;
 pub use exile::*;
 pub mod gossip_economy;
 pub use gossip_economy::*;
+pub mod strike;
+pub use strike::*;
