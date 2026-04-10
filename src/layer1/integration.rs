@@ -16,6 +16,7 @@ use crate::layer1::memory::{Memories, MemoryType};
 use crate::layer1::needs::Needs;
 use crate::layer1::notifications::NotificationQueue;
 use crate::layer1::pop::{Pop, PopBorn, PopDied, PopName};
+use crate::layer1::stress::TraumaTracker;
 use crate::layer1::resources::ColonyResources;
 use crate::layer1::rumor::{Knowledge, Rumor, RumorTopic};
 use crate::layer1::social::placebo::{ActivePlacebo, PlaceboProtocol};
@@ -46,6 +47,50 @@ pub fn mass_driver_chronicle_bridge(
             ),
             importance: EventImportance::Major,
         });
+    }
+}
+
+/// Bridges `PopDied` events to update the `TraumaTracker.recent_deaths`.
+pub fn trauma_tracker_death_system(
+    mut events: EventReader<PopDied>,
+    mut trauma: ResMut<TraumaTracker>,
+) {
+    for _ in events.read() {
+        trauma.recent_deaths += 1;
+    }
+}
+
+/// Polls `Needs` to check for starvation, updating `TraumaTracker.famine_ticks` if so.
+pub fn famine_tracking_system(
+    query: Query<&Needs, With<Pop>>,
+    mut trauma: ResMut<TraumaTracker>,
+) {
+    let mut is_famine = false;
+    for needs in query.iter() {
+        if needs.hunger <= 0.0 {
+            is_famine = true;
+            break;
+        }
+    }
+
+    if is_famine {
+        trauma.famine_ticks += 1;
+    }
+}
+
+/// Slowly decays the values in `TraumaTracker` so the era of trauma eventually ends.
+pub fn trauma_decay_system(
+    time: Option<Res<crate::shared::time::SimulationTime>>,
+    mut trauma: ResMut<TraumaTracker>,
+) {
+    let tick = time.map_or(0, |t| t.tick);
+    if tick.is_multiple_of(100) {
+        if trauma.recent_deaths > 0 {
+            trauma.recent_deaths -= 1;
+        }
+        if trauma.famine_ticks > 0 {
+            trauma.famine_ticks = trauma.famine_ticks.saturating_sub(10);
+        }
     }
 }
 

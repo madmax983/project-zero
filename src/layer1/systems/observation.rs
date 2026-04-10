@@ -337,6 +337,9 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::integration::grafting_chronicle_bridge,
             crate::layer1::integration::temporal_stutter_chronicle_bridge,
             crate::layer1::integration::parasitic_architecture_chronicle_bridge,
+            crate::layer1::integration::trauma_tracker_death_system,
+            crate::layer1::integration::famine_tracking_system,
+            crate::layer1::integration::trauma_decay_system,
             crate::layer1::integration::smuggler_arrival_event_bridge
                 .before(crate::layer1::void_weed::process_void_weed_trade_system),
         )

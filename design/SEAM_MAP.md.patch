@@ -1,0 +1,11 @@
+<<<<<<< SEARCH
+### INT-771: Parasitic Architecture -> Chronicle
+=======
+### INT-573: The Silent Generation -> Trauma Tracking & Decay
+- **Date:** 2026-05-18
+- **Systems connected:** `PopDied` and `Needs` -> `TraumaTracker`
+- **Glue added:** `trauma_tracker_death_system`, `famine_tracking_system`, and `trauma_decay_system` in `src/layer1/integration.rs`. Registered under `Layer1SystemSet::Observation`.
+- **Tests:** `tests/integration/silent_generation_bridge.rs`
+
+### INT-771: Parasitic Architecture -> Chronicle
+>>>>>>> REPLACE
