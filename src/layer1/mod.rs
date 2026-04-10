@@ -107,6 +107,9 @@ pub mod map;
 /// Pop memories and psychological effects.
 pub mod memory;
 
+pub mod pop_memories;
+pub use pop_memories::*;
+
 /// Tests for metal industry (Spec 024).
 pub mod metal_industry_tests;
 /// Terrain generation and grid management.

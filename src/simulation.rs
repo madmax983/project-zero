@@ -429,6 +429,12 @@ pub fn run_simulation_tick(world: &mut World) {
     if !world.contains_resource::<Events<crate::layer2::moon_hermits::PopDesertedEvent>>() {
         world.init_resource::<Events<crate::layer2::moon_hermits::PopDesertedEvent>>();
     }
+    if !world.contains_resource::<Events<crate::layer1::pop_memories::SignificantEvent>>() {
+        world.init_resource::<Events<crate::layer1::pop_memories::SignificantEvent>>();
+    }
+    if !world.contains_resource::<Events<crate::layer1::pop_memories::FoodShortageEvent>>() {
+        world.init_resource::<Events<crate::layer1::pop_memories::FoodShortageEvent>>();
+    }
 
     if !world.contains_resource::<Events<crate::layer1::disasters::DisasterEvent>>() {
         world.init_resource::<Events<crate::layer1::disasters::DisasterEvent>>();
