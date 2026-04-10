@@ -75,6 +75,7 @@ pub fn register(schedule: &mut Schedule) {
         (
             update_event_buffer::<crate::layer1::diplomacy::wards::WarDeclaredEvent>,
             update_event_buffer::<crate::layer1::orbital_tether::TetherSnapEvent>,
+            update_event_buffer::<crate::layer1::architecture::BiomimeticShiftEvent>,
         )
             .in_set(Layer1SystemSet::EventCleanup),
     );
