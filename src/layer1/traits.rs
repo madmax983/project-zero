@@ -204,6 +204,15 @@ impl Traits {
         Trait::iter().filter(move |t| self.has(*t))
     }
 
+    /// Checks if a pop with these traits can perform the given assignment.
+    #[must_use]
+    pub fn can_do_assignment(&self, job: crate::layer1::mind::utility_types::AssignmentType) -> bool {
+        if self.has(Trait::Feral) && job.is_intellectual() {
+            return false;
+        }
+        true
+    }
+
     /// Generates a random set of traits.
     pub fn random<R: Rng>(rng: &mut R) -> Self {
         let mut traits = Traits::default();
@@ -654,5 +663,20 @@ mod tests {
                 "Should not be both NightOwl and EarlyBird"
             );
         }
+    }
+}
+
+#[cfg(test)]
+mod wild_child_tests {
+    use super::*;
+    use crate::layer1::mind::utility_types::AssignmentType;
+
+    #[test]
+    fn test_feral_trait_blocks_intellectual_jobs() {
+        let mut traits = Traits::default();
+        traits.add(Trait::Feral);
+
+        assert!(!traits.can_do_assignment(AssignmentType::ObservatoryWorker), "Feral pop should not be able to work at Observatory");
+        assert!(traits.can_do_assignment(AssignmentType::FarmWorker), "Feral pop should be able to work at Farm");
     }
 }

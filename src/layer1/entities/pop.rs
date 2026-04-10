@@ -896,7 +896,7 @@ mod tests {
         assert_eq!(count, 5, "All 5 pops should have WildExposure component");
 
         for (_, exposure) in query.iter(&world) {
-            assert_eq!(exposure.current, 0.0);
+            assert_eq!(exposure.ticks, 0);
         }
     }
 

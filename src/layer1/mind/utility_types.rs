@@ -752,3 +752,17 @@ pub enum AssignmentType {
     /// Undergoing surgery.
     Surgery,
 }
+
+impl AssignmentType {
+    /// Returns true if the job is considered an intellectual pursuit.
+    #[must_use]
+    pub fn is_intellectual(&self) -> bool {
+        matches!(
+            self,
+            Self::LibraryWorker
+                | Self::ObservatoryWorker
+                | Self::Administrator
+                | Self::Surgery
+        )
+    }
+}

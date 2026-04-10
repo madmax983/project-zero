@@ -482,7 +482,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `759` Salvage Rights — `specs/759-salvage-rights.md`
 - [ ] `760` Command Center Dependency — `specs/760-command-center-dependency.md`
 - [ ] `761` The Nostalgia Black Market — `specs/761-the-nostalgia-black-market.md`
-- [ ] `779` The Wild Child — `specs/779-the-wild-child.md`
 - [ ] `780` The Biomass Rebellion — `specs/780-the-biomass-rebellion.md`
 - [ ] `781` The Generational Fugue — `specs/781-the-generational-fugue.md`
 - [ ] `782` The Void Architect — `specs/782-the-void-architect.md`

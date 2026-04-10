@@ -191,7 +191,9 @@ pub fn register(schedule: &mut Schedule) {
 
     schedule.add_systems(
         (
-            wild_child_system.after(movement_system),
+            crate::layer1::entities::wild_child::wild_child_exposure_system.after(movement_system),
+            crate::layer1::entities::wild_child::apply_feral_traits_system
+                .after(crate::layer1::entities::wild_child::wild_child_exposure_system),
             update_erosion_system.after(movement_system),
             crate::layer1::particles::particle_physics_system.after(movement_system),
             crate::layer1::particles::particle_system

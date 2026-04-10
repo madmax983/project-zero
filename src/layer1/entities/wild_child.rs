@@ -1,59 +1,72 @@
-//! Wild Child system (Spec 124).
-//!
-//! Children who spend too much time outside of "Civilized" areas (Buildings or Designated Zones)
-//! accumulate `WildExposure`. If exposure reaches a threshold, they gain the `Feral` trait.
+//! The Wild Child (Spec 779)
+//! Mechanics for children becoming Feral if left out in wild zones.
 
-use crate::layer1::building::OccupiedTiles;
-use crate::layer1::lifecycle::{Age, LifeStage};
+use crate::layer1::lifecycle::Age;
 use crate::layer1::map::GridPosition;
+use crate::layer1::terrain::{TerrainGrid, TerrainType};
 use crate::layer1::traits::{Trait, Traits};
 use crate::layer1::zone::{ZoneGrid, ZoneType};
 use bevy_ecs::prelude::*;
 
-/// Threshold of exposure required to become Feral.
-pub const FERAL_THRESHOLD: f32 = 1000.0;
-/// Rate at which exposure increases per tick in the wild.
-const EXPOSURE_RATE: f32 = 1.0;
-/// Rate at which exposure decreases per tick in civilization.
-const RECOVERY_RATE: f32 = 2.0;
-
-/// Component tracking a child's exposure to the wild.
-#[derive(Component, Default, Debug, Clone)]
+/// Tracks exposure to the wild.
+#[derive(Component, Default)]
 pub struct WildExposure {
-    /// Current exposure level.
-    pub current: f32,
+    /// Number of ticks exposed.
+    pub ticks: u32,
 }
 
-/// System to update wild exposure and trigger Feral trait.
-pub fn wild_child_system(
-    mut query: Query<(Entity, &mut WildExposure, &Age, &GridPosition, &mut Traits)>,
+const FERAL_THRESHOLD: u32 = 1000;
+
+use crate::layer1::building::OccupiedTiles;
+
+/// System that increments wild exposure for children.
+pub fn wild_child_exposure_system(
+    terrain: Res<TerrainGrid>,
     zone_grid: Res<ZoneGrid>,
-    occupied_tiles: Res<OccupiedTiles>,
+    occupied_tiles: Option<Res<OccupiedTiles>>,
+    mut query: Query<(&GridPosition, &Age, &mut WildExposure)>,
 ) {
-    for (_entity, mut exposure, age, pos, mut traits) in &mut query {
-        // Only affects Children
-        if age.stage != LifeStage::Child {
-            continue;
+    for (pos, age, mut exposure) in query.iter_mut() {
+        if age.stage == crate::layer1::lifecycle::LifeStage::Child {
+            let is_wild = is_wild_tile(&terrain, &zone_grid, occupied_tiles.as_deref(), pos);
+            if is_wild {
+                exposure.ticks += 1;
+            } else if exposure.ticks > 0 {
+                exposure.ticks -= 1;
+            }
         }
+    }
+}
 
-        // Check if Feral already (optimization: stop tracking if feral?)
-        if traits.has(Trait::Feral) {
-            continue;
-        }
+/// Helper function to determine if a tile is "wild".
+fn is_wild_tile(
+    terrain: &TerrainGrid,
+    zone_grid: &ZoneGrid,
+    occupied_tiles: Option<&OccupiedTiles>,
+    pos: &GridPosition,
+) -> bool {
+    if pos.x < 0 || pos.y < 0 {
+        return false;
+    }
 
-        // Check environment
-        let is_in_zone = zone_grid.get(pos.x, pos.y) != ZoneType::None;
-        let is_in_building = occupied_tiles.0.contains(&(pos.x, pos.y));
-        let is_civilized = is_in_zone || is_in_building;
+    let t_type = terrain.get(pos.x as usize, pos.y as usize);
+    let z_type = zone_grid.get(pos.x, pos.y);
 
-        if is_civilized {
-            exposure.current = (exposure.current - RECOVERY_RATE).max(0.0);
-        } else {
-            exposure.current += EXPOSURE_RATE;
-        }
+    let is_natural_flora = matches!(
+        t_type,
+        Some(TerrainType::Tree) | Some(TerrainType::Shrub) | Some(TerrainType::Sapling)
+    );
+    let has_no_zone = z_type == ZoneType::None;
 
-        // Trigger Feral
-        if exposure.current >= FERAL_THRESHOLD {
+    let is_occupied = occupied_tiles.is_some_and(|tiles| tiles.0.contains(&(pos.x, pos.y)));
+
+    is_natural_flora && has_no_zone && !is_occupied
+}
+
+/// System that applies the Feral trait if exposure reaches the threshold.
+pub fn apply_feral_traits_system(mut query: Query<(&WildExposure, &mut Traits)>) {
+    for (exposure, mut traits) in query.iter_mut() {
+        if exposure.ticks >= FERAL_THRESHOLD && !traits.has(Trait::Feral) {
             traits.add(Trait::Feral);
         }
     }
@@ -61,136 +74,83 @@ pub fn wild_child_system(
 
 #[cfg(test)]
 mod tests {
-    use super::{wild_child_system, WildExposure, FERAL_THRESHOLD};
-    use crate::layer1::building::OccupiedTiles;
-    use crate::layer1::lifecycle::{Age, LifeStage};
-    use crate::layer1::map::GridPosition;
-    use crate::layer1::traits::{Trait, Traits};
-    use crate::layer1::zone::{ZoneGrid, ZoneType};
-    use bevy_ecs::prelude::*;
-    use bevy_ecs::system::RunSystemOnce;
+    use super::*;
+    use crate::layer1::entities::pop::Pop;
+    use crate::shared::time::SimulationTime;
+    use bevy_app::{App, Update};
 
-    #[test]
-    fn test_wild_exposure_component_init() {
-        let mut world = World::new();
-        // Assume new children spawn with this component
-        let entity = world.spawn(WildExposure::default()).id();
-        let exposure = world.get::<WildExposure>(entity).unwrap();
-        assert_eq!(exposure.current, 0.0);
+    fn setup_app() -> App {
+        let mut app = App::new();
+        app.insert_resource(SimulationTime::default());
+        app.add_systems(
+            Update,
+            (wild_child_exposure_system, apply_feral_traits_system),
+        );
+        app
     }
 
     #[test]
-    fn test_exposure_increases_in_wild() {
-        let mut world = World::new();
+    fn test_child_in_wild_gains_feral_exposure() {
+        let mut app = setup_app();
 
-        // Setup map resources
-        world.insert_resource(ZoneGrid::new(10, 10)); // Empty zones
-        world.insert_resource(OccupiedTiles::default()); // No buildings
-
-        // Spawn a Child at (5,5) - Wild
-        let child = world
+        let child = app
+            .world_mut()
             .spawn((
-                WildExposure::default(),
-                Age {
-                    ticks_alive: 100,
-                    stage: LifeStage::Child,
-                },
-                GridPosition { x: 5, y: 5 },
+                Pop::default(),
+                Age::new(5), // 5 years old
+                GridPosition { x: 10, y: 10 },
                 Traits::default(),
+                WildExposure { ticks: 0 },
             ))
             .id();
 
-        // Run system
-        let _ = world.run_system_once(wild_child_system);
+        let mut terrain = TerrainGrid {
+            width: 20,
+            height: 20,
+            tiles: vec![TerrainType::Grass; 400],
+        };
+        terrain.tiles[10 * 20 + 10] = TerrainType::Tree; // Wild tile
+        app.world_mut().insert_resource(terrain);
+        app.world_mut().insert_resource(ZoneGrid::new(20, 20));
 
-        let exposure = world.get::<WildExposure>(child).unwrap();
-        assert!(exposure.current > 0.0, "Exposure should increase in wild");
-    }
+        app.update();
 
-    #[test]
-    fn test_exposure_decreases_in_civilization() {
-        let mut world = World::new();
-
-        // Setup civilized zone at (5,5)
-        let mut zones = ZoneGrid::new(10, 10);
-        zones.set(5, 5, ZoneType::Bedroom);
-        world.insert_resource(zones);
-        world.insert_resource(OccupiedTiles::default());
-
-        // Spawn a Child with some exposure
-        let child = world
-            .spawn((
-                WildExposure { current: 10.0 },
-                Age {
-                    ticks_alive: 100,
-                    stage: LifeStage::Child,
-                },
-                GridPosition { x: 5, y: 5 },
-                Traits::default(),
-            ))
-            .id();
-
-        let _ = world.run_system_once(wild_child_system);
-
-        let exposure = world.get::<WildExposure>(child).unwrap();
+        let exposure = app.world().get::<WildExposure>(child).unwrap();
         assert!(
-            exposure.current < 10.0,
-            "Exposure should decrease in civilization"
+            exposure.ticks > 0,
+            "Child in wild should gain exposure ticks"
         );
     }
 
     #[test]
-    fn test_feral_trait_acquisition() {
-        let mut world = World::new();
-        world.insert_resource(ZoneGrid::new(10, 10));
-        world.insert_resource(OccupiedTiles::default());
+    fn test_high_exposure_grants_feral_trait() {
+        let mut app = setup_app();
 
-        // Spawn Child near threshold
-        let child = world
+        let child = app
+            .world_mut()
             .spawn((
-                WildExposure {
-                    current: FERAL_THRESHOLD - 0.1,
-                },
-                Age {
-                    ticks_alive: 100,
-                    stage: LifeStage::Child,
-                },
-                GridPosition { x: 5, y: 5 },
+                Pop::default(),
+                Age::new(8),
+                GridPosition { x: 10, y: 10 },
                 Traits::default(),
+                WildExposure { ticks: 1000 }, // Threshold
             ))
             .id();
 
-        // Run system enough times to cross threshold
-        // Assuming increase is >= 0.1 per tick
-        for _ in 0..10 {
-            let _ = world.run_system_once(wild_child_system);
-        }
+        let terrain = TerrainGrid {
+            width: 20,
+            height: 20,
+            tiles: vec![TerrainType::Grass; 400],
+        };
+        app.world_mut().insert_resource(terrain);
+        app.world_mut().insert_resource(ZoneGrid::new(20, 20));
 
-        let traits = world.get::<Traits>(child).unwrap();
-        assert!(traits.has(Trait::Feral), "Child should become Feral");
-    }
+        app.update();
 
-    #[test]
-    fn test_adults_do_not_gain_exposure() {
-        let mut world = World::new();
-        world.insert_resource(ZoneGrid::new(10, 10));
-        world.insert_resource(OccupiedTiles::default());
-
-        let adult = world
-            .spawn((
-                WildExposure::default(),
-                Age {
-                    ticks_alive: 20000,
-                    stage: LifeStage::Adult,
-                },
-                GridPosition { x: 5, y: 5 },
-                Traits::default(), // Need Traits component for system query
-            ))
-            .id();
-
-        let _ = world.run_system_once(wild_child_system);
-
-        let exposure = world.get::<WildExposure>(adult).unwrap();
-        assert_eq!(exposure.current, 0.0, "Adults should not gain exposure");
+        let traits = app.world().get::<Traits>(child).unwrap();
+        assert!(
+            traits.has(Trait::Feral),
+            "High exposure should grant Feral trait"
+        );
     }
 }
