@@ -3609,3 +3609,7 @@ STATIONED_AT_WELL:
 ## Sovereign AI Graveyard Chaining (Spec 868)
 - AI_MANAGER_SCRAPPED → increases_chance → AI_SOVEREIGNTY_DECLARED
 - AI_SOVEREIGNTY_DECLARED → enables → ECONOMIC_CRASH, REPUTATION_LOSS
+
+## The Sympathetic Infrastructure Chaining (Spec 916)
+- BIOMIMETIC_FREEZE → increases_chance → CROP_DEATH, COLONY_FAMINE
+- BIOMIMETIC_FEVER → increases_chance → INFRASTRUCTURE_FIRE, HEAT_STROKE

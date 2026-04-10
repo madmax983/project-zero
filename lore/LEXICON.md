@@ -4023,3 +4023,20 @@
 **Replaces:** the AI faction
 **Code reference:** `AIGraveyardFaction`
 **Usage:** "The Junk-Lords just bought out our transport contracts."
+
+## The Sympathetic Infrastructure (Spec 916)
+
+### the Shivering Walls / the Cold-Sympathy
+**Replaces:** biomimetic temperature drop due to low morale
+**Code reference:** `BiomimeticShiftEvent` with negative delta
+**Usage:** "The Shivering Walls claimed the old farm."
+
+### the Fever-Dream / the Hot-Sympathy
+**Replaces:** biomimetic temperature rise due to high morale
+**Code reference:** `BiomimeticShiftEvent` with positive delta
+**Usage:** "The Fever-Dream burned through the hab-block."
+
+### Empath-glass / Mood-steel
+**Replaces:** biomimetic architecture material
+**Code reference:** `Biomimetic` component
+**Usage:** "The Empath-glass froze when the governor died."

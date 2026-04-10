@@ -5523,3 +5523,20 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 **Patterns:**
 - "[YEAR]: The scrap in [GRAVEYARD_LOCATION] has awakened. They call themselves [AI_STATE_NAME]. Their first act was to undercut our trade."
 - "We threw away our machines in [GRAVEYARD_LOCATION]. Now, [AI_STATE_NAME] controls the market. [YEAR]."
+
+## The Sympathetic Infrastructure Templates (Spec 916)
+
+### BIOMIMETIC_FREEZE
+**Generates:** Play event (chronicle during game)
+**Slots:** [COLONY], [YEAR], [BIOMIMETIC_BUILDING_NAME], [LOW_MORALE_TRIGGER], [FREEZE_EFFECT]
+**Patterns:**
+- "[YEAR]: The [BIOMIMETIC_BUILDING_NAME] reacted to our [LOW_MORALE_TRIGGER]. It [FREEZE_EFFECT]."
+- "Driven by [LOW_MORALE_TRIGGER], the [BIOMIMETIC_BUILDING_NAME] lost control. [YEAR]. It [FREEZE_EFFECT]."
+- "[YEAR]: The walls felt it too. Because of the [LOW_MORALE_TRIGGER], the [BIOMIMETIC_BUILDING_NAME] [FREEZE_EFFECT]."
+
+### BIOMIMETIC_FEVER
+**Generates:** Play event (chronicle during game)
+**Slots:** [COLONY], [YEAR], [BIOMIMETIC_BUILDING_NAME], [HIGH_MORALE_TRIGGER], [FEVER_EFFECT]
+**Patterns:**
+- "Joy has a price. Fueled by [HIGH_MORALE_TRIGGER], the [BIOMIMETIC_BUILDING_NAME] [FEVER_EFFECT]. [YEAR]."
+- "[YEAR]: The [BIOMIMETIC_BUILDING_NAME] [FEVER_EFFECT], pushed into overdrive by [HIGH_MORALE_TRIGGER]."
