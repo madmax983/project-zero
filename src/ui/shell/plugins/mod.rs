@@ -102,11 +102,17 @@ where
     }
 
     let backend = TestBackend::new(area.width, area.height);
-    let mut terminal =
-        Terminal::new(backend).expect("shell plugins should create an offscreen terminal");
-    terminal
-        .draw(|frame| render(frame))
-        .expect("shell plugins should render into the offscreen terminal");
+    let mut terminal = match Terminal::new(backend) {
+        Ok(t) => t,
+        Err(e) => {
+            log::error!("shell plugins failed to create an offscreen terminal: {}", e);
+            return;
+        }
+    };
+    if let Err(e) = terminal.draw(|frame| render(frame)) {
+        log::error!("shell plugins failed to render into the offscreen terminal: {}", e);
+        return;
+    }
 
     let rendered = terminal.backend().buffer();
     copy_buffer_into_area(rendered, area, buf);
