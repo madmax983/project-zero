@@ -15188,7 +15188,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Language Drift
+## Language Drift [SPECCED]
 
 **Layer:** Cross-layer
 
@@ -15202,7 +15202,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Commuter's Exile
+## Commuter's Exile [SPECCED]
 
 **Layer:** Cross-layer
 
@@ -15216,7 +15216,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Bio-Rhythm Desync
+## Bio-Rhythm Desync [SPECCED]
 
 **Layer:** 1
 
