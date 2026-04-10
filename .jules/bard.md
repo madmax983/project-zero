@@ -10,3 +10,6 @@
 ## 2024-05-22 - [Proper Doctests for Structs]
 **Confusion:** Previous doctests imported binary targets incorrectly (e.g., `use scale::bin::headless::ScanRadius`), which broke compilation, and used automated low-value comments which violated persona constraints.
 **Clarification:** Rewrote `ScanRadius` documentation to use a correct, functional doctest that does not break `cargo test`, explicitly hides the getter using `#[doc(hidden)]` as per guidelines, and explains the *why* of the bounds validation to avoid overflow panics during semantic terrain scans.
+## 2024-06-15 - [The Physics of Breath and Movement]
+**Confusion:** The physics sub-systems for `vent` networks and the infrastructure `transit` modules were entirely undocumented, leaving users blind to how sub-grid entity movement and economic toll mechanics were connected to the Bevy ECS.
+**Clarification:** Added rich `//!` module documentation and executable `///` doctests to `vent.rs`, `transit.rs`, and the `entities/mod.rs` registry. Clarified the distinction between `Position` (sub-grid vent navigation) and `GridPosition` (standard coordinate navigation). Also corrected a misplaced `#[derive(Resource)]` macro that was causing compilation failures when running formatting checks.

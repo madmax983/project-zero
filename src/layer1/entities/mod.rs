@@ -1,3 +1,10 @@
+//! The Living Colony: Entities and Inhabitants
+//!
+//! This module aggregates all living (and pseudo-living) entities within the simulation.
+//! It defines the core data structures, behaviors, and spawning logic for the various
+//! actors that populate the colony, from the standard human colonists (`Pop`) to hostile
+//! incursions (`Blob`), utility machines (`Drone`), and native wildlife (`Fauna`).
+
 pub mod blob;
 pub mod drone;
 #[cfg(test)]

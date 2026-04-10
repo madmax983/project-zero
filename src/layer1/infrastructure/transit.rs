@@ -1,3 +1,10 @@
+//! Transit infrastructure for accelerated movement and toll collection.
+//!
+//! This module defines the components and systems necessary for building and utilizing
+//! transit networks (like roads or tubes). It also provides economic mechanics allowing
+//! infrastructure to charge a toll to passing entities, converting credits into speed,
+//! or causing stress if a toll cannot be paid.
+
 use crate::layer1::economy::Wallet;
 use crate::layer1::map::GridPosition;
 use crate::layer1::stress::StressTracker;

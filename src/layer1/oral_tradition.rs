@@ -37,10 +37,9 @@ pub enum StoryGenre {
     Trivial,
 }
 
-/// Resource storing the collective oral tradition of the colony.
-#[derive(Resource, Default, Debug)]
 pub const MAX_STORIES: usize = 100;
 
+/// Resource storing the collective oral tradition of the colony.
 #[derive(Resource, Default, Debug)]
 pub struct OralTradition {
     /// The collection of known stories.
