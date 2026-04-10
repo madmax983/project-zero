@@ -151,6 +151,8 @@ pub enum ItemType {
     Scrap,
     /// Agony Extract harvested under extreme stress.
     AgonyExtract,
+    /// Fermented luxury good from orbital stations.
+    VoidAle,
 }
 
 impl ItemType {
@@ -173,7 +175,8 @@ impl ItemType {
             | Self::AlienMeatA
             | Self::AlienMeatB
             | Self::GlowMushroom
-            | Self::MysteryMeal => Some(ResourceType::Food),
+            | Self::MysteryMeal
+            | Self::VoidAle => Some(ResourceType::Food),
             Self::Rations => Some(ResourceType::Rations),
             Self::Waste => Some(ResourceType::Waste),
             Self::BuildingPermit => Some(ResourceType::BuildingPermit),

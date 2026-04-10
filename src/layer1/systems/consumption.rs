@@ -9,6 +9,7 @@ pub fn register(schedule: &mut Schedule) {
             consume_food_system
                 .after(produce_food_system)
                 .after(update_resource_caps_system),
+            consume_void_ale_system.after(consume_food_system),
             crate::layer1::drone::drone_battery_system.after(consume_food_system),
             clothing_wear_system.after(consume_food_system),
             vermin_growth_system.after(consume_food_system),
@@ -144,4 +145,28 @@ pub fn register(schedule: &mut Schedule) {
         )
             .in_set(Layer1SystemSet::Consumption),
     );
+}
+
+
+/// System for consuming Void-Ale to boost morale and leisure.
+pub fn consume_void_ale_system(
+    mut query: Query<(
+        &mut crate::layer1::needs::Needs,
+        &mut crate::layer1::economy::inventory::Inventory,
+    )>,
+) {
+    for (mut needs, mut inventory) in query.iter_mut() {
+        if needs.leisure < 0.5 || needs.morale() < 0.5 {
+            let ale_index = inventory.items.iter().position(|item| item.item_type == crate::layer1::items::ItemType::VoidAle);
+
+            if let Some(index) = ale_index {
+                // Consume the ale
+                inventory.items.remove(index);
+
+                // Huge boost to leisure and rest
+                needs.leisure = (needs.leisure + 0.6).min(1.0);
+                needs.rest = (needs.rest + 0.4).min(1.0);
+            }
+        }
+    }
 }

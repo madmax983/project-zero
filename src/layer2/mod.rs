@@ -24,6 +24,8 @@ pub mod shielding;
 pub mod ship;
 pub mod silent_mutiny;
 pub mod station;
+#[cfg(test)]
+mod station_tests;
 pub mod system;
 pub mod syzygy;
 pub mod thermal;

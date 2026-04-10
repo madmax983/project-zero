@@ -107,6 +107,18 @@ pub struct Orbit {
     pub angle: f32,
 }
 
+/// Gravity level of an orbital body or station.
+#[derive(Component, Debug, Clone, Copy, PartialEq, Eq, Default)]
+pub enum GravityLevel {
+    /// Normal planetary gravity
+    #[default]
+    Normal,
+    /// Microgravity (e.g. moons, asteroids)
+    MicroGravity,
+    /// Zero-G environment (e.g. deep space stations)
+    ZeroG,
+}
+
 /// Resource holding system-level map data.
 ///
 /// Currently a placeholder for potential future features like fog of war,

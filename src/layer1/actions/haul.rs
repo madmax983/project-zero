@@ -114,6 +114,9 @@ pub(crate) fn evaluate_haul(
                 crate::layer1::resources::ResourceType::MemoryCore => {
                     resources.memory_cores < resources.max_memory_cores
                 }
+                crate::layer1::resources::ResourceType::VoidAle => {
+                    resources.memory_cores < resources.max_memory_cores
+                }
             };
 
             if !has_room {

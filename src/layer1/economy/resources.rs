@@ -65,6 +65,8 @@ pub enum ResourceType {
     BuildingPermit,
     /// A Memory Core extracted from a dead Pop.
     MemoryCore,
+    /// Void-Ale.
+    VoidAle,
 }
 
 /// A physical resource item in the world (dropped on the ground).
@@ -208,6 +210,10 @@ pub struct ColonyResources {
     pub memory_cores: f32,
     /// Maximum memory cores capacity.
     pub max_memory_cores: f32,
+    /// Total Void-Ale available.
+    pub void_ale: f32,
+    /// Max Void-Ale.
+    pub max_void_ale: f32,
 }
 
 impl Default for ColonyResources {
@@ -255,6 +261,8 @@ impl Default for ColonyResources {
             max_credits: 1000000.0,
             memory_cores: 0.0,
             max_memory_cores: 50.0,
+            void_ale: 0.0,
+            max_void_ale: 50.0,
         }
     }
 }
@@ -307,6 +315,8 @@ impl Mul<f32> for ColonyResources {
             max_credits: self.max_credits,
             memory_cores: (self.memory_cores * rhs).ceil(),
             max_memory_cores: self.max_memory_cores,
+            void_ale: (self.void_ale * rhs).ceil(),
+            max_void_ale: self.max_void_ale,
         }
     }
 }
@@ -361,6 +371,8 @@ impl ColonyResources {
             max_credits: 0.0,
             memory_cores: 0.0,
             max_memory_cores: 0.0,
+            void_ale: 0.0,
+            max_void_ale: 0.0,
         }
     }
 
@@ -442,6 +454,13 @@ impl ColonyResources {
         }
     }
 
+
+    /// Adds void ale, clamping to the maximum capacity.
+    pub fn add_void_ale(&mut self, amount: f32) {
+        if amount.is_finite() {
+            self.void_ale = (self.void_ale + amount).clamp(0.0, self.max_void_ale);
+        }
+    }
     /// Returns the total food available (food aggregate + rations).
     #[must_use]
     pub fn total_food(&self) -> f32 {
@@ -544,6 +563,7 @@ impl ColonyResources {
             || self.building_permits < 0.0
             || self.credits < 0.0
             || self.memory_cores < 0.0
+            || self.void_ale < 0.0
     }
 
     /// Checks if all resource values are finite (not NaN or Infinity).
@@ -569,6 +589,7 @@ impl ColonyResources {
             && self.building_permits.is_finite()
             && self.credits.is_finite()
             && self.memory_cores.is_finite()
+            && self.void_ale.is_finite()
     }
 
     /// Checks if the colony can afford the given cost.
@@ -608,6 +629,7 @@ impl ColonyResources {
             && self.building_permits >= cost.building_permits
             && self.credits >= cost.credits
             && self.memory_cores >= cost.memory_cores
+            && self.void_ale >= cost.void_ale
     }
 
     /// Deducts the given cost from the colony's resources.
@@ -636,6 +658,7 @@ impl ColonyResources {
         self.building_permits -= cost.building_permits;
         self.credits -= cost.credits;
         self.memory_cores -= cost.memory_cores;
+        self.void_ale -= cost.void_ale;
     }
 
     /// Attempts to deduct the given cost from the colony's resources.
@@ -686,6 +709,7 @@ impl ColonyResources {
             ResourceType::BuildingPermit => {
                 self.building_permits = (self.building_permits - amount).max(0.0);
             }
+            ResourceType::VoidAle => self.void_ale = (self.void_ale - amount).max(0.0),
             ResourceType::MemoryCore => {
                 self.memory_cores = (self.memory_cores - amount).max(0.0);
             }
@@ -710,6 +734,7 @@ impl ColonyResources {
             ResourceType::Tools => self.tools < self.max_tools,
             ResourceType::BuildingPermit => self.building_permits < self.max_building_permits,
             ResourceType::MemoryCore => self.memory_cores < self.max_memory_cores,
+            ResourceType::VoidAle => self.void_ale < self.max_void_ale,
         }
     }
 
@@ -731,6 +756,7 @@ impl ColonyResources {
             ResourceType::Tools => self.add_tools(amount),
             ResourceType::BuildingPermit => self.add_building_permits(amount),
             ResourceType::MemoryCore => self.add_memory_cores(amount),
+            ResourceType::VoidAle => self.add_void_ale(amount),
         }
     }
 }
