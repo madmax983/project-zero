@@ -572,7 +572,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `859` Atmospheric Entry — `specs/859-atmospheric-entry.md`
 - [ ] `860` Sub-light Communication — `specs/860-sub-light-communication.md`
 
-- [ ] `863` Corporate Foreclosure — `specs/863-corporate-foreclosure.md`
 - [ ] `864` Xeno-Zoo — `specs/864-xeno-zoo.md`
 - [ ] `865` Bio-Ship Breeding — `specs/865-bio-ship-breeding.md`
 - [ ] `866` The Cargo Cult of the Supply Drop — `specs/866-cargo-cult-supply-drop.md`

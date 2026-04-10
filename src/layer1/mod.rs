@@ -109,6 +109,7 @@ pub mod map;
 /// Pop memories and psychological effects.
 pub mod memory;
 
+pub mod jobs;
 /// Tests for metal industry (Spec 024).
 pub mod metal_industry_tests;
 /// Terrain generation and grid management.
@@ -131,7 +132,6 @@ mod shift_integration_tests;
 pub mod social;
 /// Spoilage and decay mechanics.
 pub mod spoilage;
-pub mod jobs;
 /// Resource storage limits and stockpile buildings.
 /// Structure durability and repair.
 /// Technology and research system.
@@ -176,6 +176,7 @@ pub use hazards::*;
 pub use hobby::*;
 pub use institutional_memory::*;
 pub use integration::*;
+pub use jobs::*;
 pub use locations::*;
 pub use map::*;
 pub use memory::*;
@@ -184,7 +185,6 @@ pub use notifications::*;
 pub use science::*;
 pub use social::*;
 pub use spoilage::*;
-pub use jobs::*;
 pub use tech::*;
 
 mod tool_tests;

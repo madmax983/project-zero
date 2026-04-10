@@ -46,7 +46,8 @@ pub fn register(schedule: &mut Schedule) {
     schedule.add_systems(
         (
             crate::layer1::somnambulism::trigger_somnambulism_system.after(decay_needs_system),
-            crate::layer1::somnambulism::process_somnambulist_work_system.after(crate::layer1::somnambulism::trigger_somnambulism_system),
+            crate::layer1::somnambulism::process_somnambulist_work_system
+                .after(crate::layer1::somnambulism::trigger_somnambulism_system),
         )
             .in_set(Layer1SystemSet::Consumption),
     );
@@ -147,7 +148,6 @@ pub fn register(schedule: &mut Schedule) {
     );
 }
 
-
 /// System for consuming Void-Ale to boost morale and leisure.
 pub fn consume_void_ale_system(
     mut query: Query<(
@@ -157,7 +157,10 @@ pub fn consume_void_ale_system(
 ) {
     for (mut needs, mut inventory) in query.iter_mut() {
         if needs.leisure < 0.5 || needs.morale() < 0.5 {
-            let ale_index = inventory.items.iter().position(|item| item.item_type == crate::layer1::items::ItemType::VoidAle);
+            let ale_index = inventory
+                .items
+                .iter()
+                .position(|item| item.item_type == crate::layer1::items::ItemType::VoidAle);
 
             if let Some(index) = ale_index {
                 // Consume the ale

@@ -1,7 +1,7 @@
-use bevy::prelude::*;
-use crate::layer1::needs::{Needs, NeedType};
-use crate::layer1::jobs::CurrentTask;
 use crate::layer1::entities::Pop;
+use crate::layer1::jobs::CurrentTask;
+use crate::layer1::needs::{NeedType, Needs};
+use bevy::prelude::*;
 
 #[derive(Component)]
 pub struct Somnambulist {
@@ -15,7 +15,8 @@ pub fn trigger_somnambulism_system(
     mut query: Query<(Entity, &Needs), TriggerSomnambulismQueryFilter>,
 ) {
     for (entity, needs) in query.iter_mut() {
-        if needs.get(NeedType::Rest) < 10.0 { // Critical threshold
+        if needs.get(NeedType::Rest) < 10.0 {
+            // Critical threshold
             commands.entity(entity).insert(Somnambulist {
                 duration_left: 60.0, // Arbitrary starting duration
             });
@@ -26,7 +27,12 @@ pub fn trigger_somnambulism_system(
 pub fn process_somnambulist_work_system(
     mut commands: Commands,
     time: Res<Time>,
-    mut query: Query<(Entity, &mut Somnambulist, Option<&mut CurrentTask>, &mut Needs)>,
+    mut query: Query<(
+        Entity,
+        &mut Somnambulist,
+        Option<&mut CurrentTask>,
+        &mut Needs,
+    )>,
 ) {
     let dt = time.delta_secs();
 
@@ -50,14 +56,20 @@ pub fn process_somnambulist_work_system(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::layer1::needs::{Needs, NeedType};
     use crate::layer1::jobs::{CurrentTask, ResourceType};
+    use crate::layer1::needs::{NeedType, Needs};
 
     fn setup_app() -> App {
         let mut app = App::new();
         // Use full TimePlugin so `Time` updates correctly during `app.update()`
         app.add_plugins(bevy::time::TimePlugin);
-        app.add_systems(Update, (trigger_somnambulism_system, process_somnambulist_work_system));
+        app.add_systems(
+            Update,
+            (
+                trigger_somnambulism_system,
+                process_somnambulist_work_system,
+            ),
+        );
         app
     }
 
@@ -68,11 +80,20 @@ mod tests {
         let mut needs = Needs::default();
         needs.set(NeedType::Rest, 5.0); // Critical low
 
-        let entity = app.world_mut().spawn((
-            Pop,
-            needs,
-            CurrentTask { task_id: 1, duration: 10.0, base_output: ResourceType::Metal, efficiency: 1.0, is_randomized_output: false }, // Currently working
-        )).id();
+        let entity = app
+            .world_mut()
+            .spawn((
+                Pop,
+                needs,
+                CurrentTask {
+                    task_id: 1,
+                    duration: 10.0,
+                    base_output: ResourceType::Metal,
+                    efficiency: 1.0,
+                    is_randomized_output: false,
+                }, // Currently working
+            ))
+            .id();
 
         app.update();
 
@@ -87,11 +108,16 @@ mod tests {
         needs.set(NeedType::Food, 50.0);
         needs.set(NeedType::Rest, 0.0);
 
-        let entity = app.world_mut().spawn((
-            Pop,
-            needs,
-            Somnambulist { duration_left: 10.0 },
-        )).id();
+        let entity = app
+            .world_mut()
+            .spawn((
+                Pop,
+                needs,
+                Somnambulist {
+                    duration_left: 10.0,
+                },
+            ))
+            .id();
 
         let mut time = Time::default() as Time;
         time.advance_by(std::time::Duration::from_secs_f32(1.0));
@@ -111,15 +137,26 @@ mod tests {
         // This is a complex test: we want to ensure the work amount is higher than normal,
         // and that the output (the task completion or product) is randomized.
         // We simulate a task that normally produces 1 Steel.
-        let entity = app.world_mut().spawn((
-            Pop,
-            Needs::default(), // Needs component is required by process_somnambulist_work_system query
-            Somnambulist { duration_left: 5.0 },
-            CurrentTask { task_id: 1, duration: 10.0, base_output: ResourceType::Metal, efficiency: 1.0, is_randomized_output: false },
-        )).id();
+        let entity = app
+            .world_mut()
+            .spawn((
+                Pop,
+                Needs::default(), // Needs component is required by process_somnambulist_work_system query
+                Somnambulist { duration_left: 5.0 },
+                CurrentTask {
+                    task_id: 1,
+                    duration: 10.0,
+                    base_output: ResourceType::Metal,
+                    efficiency: 1.0,
+                    is_randomized_output: false,
+                },
+            ))
+            .id();
 
         // Advance time to simulate a tick
-        app.world_mut().resource_mut::<Time>().advance_by(std::time::Duration::from_secs_f32(1.0));
+        app.world_mut()
+            .resource_mut::<Time>()
+            .advance_by(std::time::Duration::from_secs_f32(1.0));
 
         app.update();
 

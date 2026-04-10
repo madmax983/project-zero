@@ -217,7 +217,10 @@ const LEISURE_DECAY_PER_TICK: f32 = 0.0015;
 /// *   **Policies**: Adjusts hunger decay if [`ColonyPolicies`] are active (e.g. Rationing).
 /// *   **Traits**: Adjusts hunger decay if the pop has specific [`Traits`] (e.g. Glutton).
 ///
-type DecayNeedsFilter = (Without<crate::layer1::cryo::CryoStasis>, Without<crate::layer1::somnambulism::Somnambulist>);
+type DecayNeedsFilter = (
+    Without<crate::layer1::cryo::CryoStasis>,
+    Without<crate::layer1::somnambulism::Somnambulist>,
+);
 
 /// # Threading
 /// Uses `par_iter_mut` for parallel processing, as need decay is independent per pop.

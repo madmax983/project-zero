@@ -146,6 +146,22 @@ mod tests {
     #[test]
     fn test_menu_input_start_game() {
         let mut world = World::new();
+        world.init_resource::<bevy::time::Time>();
+        world.init_resource::<bevy::ecs::event::Events<crate::layer2::events::LaunchEvent>>();
+        world
+            .init_resource::<bevy::ecs::event::Events<crate::layer2::events::ShipDestroyedEvent>>();
+        world.init_resource::<bevy::ecs::event::Events<crate::layer2::events::DetectionEvent>>();
+        world.init_resource::<crate::shared::time::SimulationTime>();
+        world.init_resource::<crate::layer1::chronicle::Chronicle>();
+        world.init_resource::<bevy::ecs::event::Events<crate::layer2::skyhooks::LaunchIntent>>();
+        world.init_resource::<bevy::ecs::event::Events<crate::layer2::cartographers_curse::SellTelemetryEvent>>();
+        world.init_resource::<crate::layer1::stress::TraumaTracker>();
+        world
+            .init_resource::<bevy::ecs::event::Events<crate::layer1::chronicle::AddChronicleEvent>>(
+            );
+        world.init_resource::<bevy::ecs::event::Events<crate::layer1::economy::foreclosure::BuybackEvent>>();
+        world.init_resource::<bevy::ecs::event::Events<crate::layer1::economy::foreclosure::ForecloseEvent>>();
+        world.insert_resource(crate::layer1::economy::resources::ColonyResources::default());
         world.insert_resource(GameState::MainMenu);
         let active = start_scenario_definition(StartScenarioId::Classic);
         world.insert_resource(ActiveStartScenario {

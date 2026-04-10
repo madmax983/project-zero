@@ -200,3 +200,5 @@ pub use resources::*;
 pub use shadow_market::*;
 pub use stockpile::*;
 pub use trade::*;
+pub mod foreclosure;
+pub use foreclosure::*;
