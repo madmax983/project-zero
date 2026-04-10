@@ -114,6 +114,8 @@ pub enum ItemType {
     Fruit,
     /// High-quality prepared food.
     LuxuryMeal,
+    /// Zero-G Fermentation product.
+    VoidAle,
     /// Alien meat variety A.
     AlienMeatA,
     /// Alien meat variety B.
@@ -161,6 +163,7 @@ impl ItemType {
     pub const fn as_resource_type(&self) -> Option<ResourceType> {
         match self {
             Self::Alcohol => Some(ResourceType::Alcohol),
+            Self::VoidAle => Some(ResourceType::Alcohol),
             Self::Potato
             | Self::Wheat
             | Self::Rice

@@ -8,6 +8,7 @@ pub mod environment;
 pub use environment::*;
 pub mod cartographers_curse;
 pub mod cascade;
+pub mod fermentation;
 pub use cascade::*;
 pub mod events;
 pub mod events_new;

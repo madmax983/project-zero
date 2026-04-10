@@ -14,6 +14,8 @@ pub enum StationType {
     MiningPlatform,
     /// A facility for ship construction and repair.
     Shipyard,
+    /// A facility that ferments Void-Ale in Zero-G.
+    Brewery,
 }
 
 impl StationType {
@@ -24,6 +26,7 @@ impl StationType {
             Self::Outpost => vec![(ResourceType::Metal, 50.0)],
             Self::MiningPlatform => vec![(ResourceType::Metal, 100.0), (ResourceType::Fuel, 10.0)],
             Self::Shipyard => vec![(ResourceType::Metal, 200.0), (ResourceType::Fuel, 50.0)],
+            Self::Brewery => vec![(ResourceType::Metal, 100.0), (ResourceType::Food, 50.0)],
         }
     }
 
@@ -34,6 +37,7 @@ impl StationType {
             Self::Outpost => "Outpost",
             Self::MiningPlatform => "Mining Platform",
             Self::Shipyard => "Shipyard",
+            Self::Brewery => "Zero-G Brewery",
         }
     }
 
@@ -44,8 +48,16 @@ impl StationType {
             Self::Outpost => '+',
             Self::MiningPlatform => '⚒',
             Self::Shipyard => '⚓',
+            Self::Brewery => 'B',
         }
     }
+}
+
+/// Level of gravity for an entity.
+#[derive(Component, Debug, Clone, Copy, PartialEq, Eq)]
+pub enum GravityLevel {
+    ZeroG,
+    Standard,
 }
 
 /// Component marking an entity as a space station.
@@ -53,6 +65,8 @@ impl StationType {
 pub struct Station {
     /// The type of station.
     pub station_type: StationType,
+    /// The gravity level on this station.
+    pub gravity: GravityLevel,
 }
 
 /// System to handle `FleetOrder::BuildStation`.
@@ -99,8 +113,11 @@ pub fn build_station_system(
                 cargo.contents.retain(|s| s.amount > 0.0);
 
                 // Spawn Station
-                commands.spawn((
-                    Station { station_type },
+                let mut ent_cmds = commands.spawn((
+                    Station {
+                        station_type,
+                        gravity: GravityLevel::ZeroG,
+                    },
                     OrbitalBody {
                         name: format!("{} {}", station_type.label(), entity.index()), // Unique-ish name
                         radius: 0.5,
@@ -114,6 +131,10 @@ pub fn build_station_system(
                         angle: 0.0,
                     },
                 ));
+                if station_type == StationType::Brewery {
+                    ent_cmds.insert(crate::layer2::fermentation::ZeroGBrewery::default());
+                    ent_cmds.insert(crate::layer1::economy::inventory::Inventory::default());
+                }
 
                 // Consume Order
                 commands.entity(entity).remove::<FleetOrder>();

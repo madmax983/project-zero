@@ -84,6 +84,10 @@ pub fn build_simulation_schedule() -> Schedule {
         crate::layer2::fleet::fleet_order_system,
         crate::layer2::station::build_station_system
             .after(crate::layer2::fleet::fleet_order_system),
+        crate::layer2::fermentation::zero_g_fermentation_system
+            .after(crate::layer2::station::build_station_system),
+        crate::layer2::fermentation::consume_void_ale_system
+            .after(crate::layer1::systems::Layer1SystemSet::Consumption),
         crate::layer2::fleet::fleet_movement_system.after(crate::layer2::fleet::fleet_order_system),
         crate::layer2::integration::assign_sensors_to_player_fleets_system
             .after(crate::layer2::fleet::fleet_movement_system),
@@ -242,10 +246,8 @@ pub fn build_simulation_schedule() -> Schedule {
         crate::layer2::integration::void_whispers_chronicle_bridge,
     ));
 
-    schedule.add_systems((
-        crate::layer3::integration::jump_risk_bridge_system
-            .after(crate::layer3::stellar_cartography::handle_jump_risk_system),
-    ));
+    schedule.add_systems((crate::layer3::integration::jump_risk_bridge_system
+        .after(crate::layer3::stellar_cartography::handle_jump_risk_system),));
 
     schedule
 }

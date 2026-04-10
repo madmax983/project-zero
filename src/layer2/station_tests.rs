@@ -19,6 +19,7 @@ fn test_station_component() {
         .spawn((
             Station {
                 station_type: StationType::Outpost,
+                gravity: crate::layer2::station::GravityLevel::ZeroG,
             },
             OrbitalBody {
                 name: "Alpha Station".to_string(),
