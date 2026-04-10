@@ -63,3 +63,6 @@ pub mod sleep_deprived_savant;
 
 #[cfg(feature = "nova")]
 pub mod panopticon_glitch;
+
+#[cfg(feature = "nova")]
+pub mod automated_embezzler;
