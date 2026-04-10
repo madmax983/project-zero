@@ -2,7 +2,7 @@ use bevy::prelude::*;
 use scale::layer1::economy::ColonyResources;
 use scale::layer1::entities::Pop;
 use scale::layer1::logistics::commute::{process_orbital_commutes, CommuteAction, CurrentLocation};
-use scale::layer3::physics::relativity::SystemNode;
+use scale::layer2::system::OrbitalBody;
 
 #[test]
 fn test_orbital_commute_integration() {
@@ -16,8 +16,8 @@ fn test_orbital_commute_integration() {
     // For this bridge test, we just ensure that chaining it directly works as expected.
     app.add_systems(Update, process_orbital_commutes);
 
-    let planet_entity = app.world_mut().spawn(SystemNode).id();
-    let station_entity = app.world_mut().spawn(SystemNode).id();
+    let planet_entity = app.world_mut().spawn(OrbitalBody::default()).id();
+    let station_entity = app.world_mut().spawn(OrbitalBody::default()).id();
 
     let pop = app
         .world_mut()

@@ -1,7 +1,7 @@
 use bevy::prelude::*;
-
-#[derive(Component)]
-pub struct SystemNode;
+use crate::layer2::fleet::{Fleet, InOrbit};
+use crate::layer3::map::StarSystem;
+use crate::shared::time::SimulationTime;
 
 #[derive(Component)]
 pub struct TimeDilationZone {
@@ -13,17 +13,6 @@ pub struct LocalTimeTracker {
     pub local_ticks: u64,
     pub accumulated_global_ticks: u64,
 }
-
-#[derive(Resource, Default)]
-pub struct SimulationTime {
-    pub tick: u64,
-}
-
-#[derive(Component)]
-pub struct Fleet;
-
-#[derive(Component)]
-pub struct StationedAt(pub Entity);
 
 pub fn process_time_dilation_system(
     global_time: Res<SimulationTime>,
@@ -44,11 +33,11 @@ pub fn process_time_dilation_system(
 }
 
 pub fn update_fleet_local_time_system(
-    system_query: Query<&LocalTimeTracker, (With<SystemNode>, Without<Fleet>)>,
-    mut fleet_query: Query<(&StationedAt, &mut LocalTimeTracker), With<Fleet>>,
+    system_query: Query<&LocalTimeTracker, (With<StarSystem>, Without<Fleet>)>,
+    mut fleet_query: Query<(&InOrbit, &mut LocalTimeTracker), With<Fleet>>,
 ) {
-    for (stationed, mut fleet_tracker) in fleet_query.iter_mut() {
-        if let Ok(system_tracker) = system_query.get(stationed.0) {
+    for (orbit, mut fleet_tracker) in fleet_query.iter_mut() {
+        if let Ok(system_tracker) = system_query.get(orbit.parent) {
             fleet_tracker.local_ticks = system_tracker.local_ticks;
             fleet_tracker.accumulated_global_ticks = system_tracker.accumulated_global_ticks;
         }
@@ -63,13 +52,13 @@ mod tests {
     fn test_time_dilation_slows_down_local_ticks() {
         let mut app = App::new();
         app.add_plugins(MinimalPlugins);
-        app.init_resource::<SimulationTime>();
+        app.insert_resource(SimulationTime::default());
         app.add_systems(Update, process_time_dilation_system);
 
         let system_entity = app
             .world_mut()
             .spawn((
-                SystemNode,
+                StarSystem { id: 1 },
                 TimeDilationZone {
                     dilation_factor: 10,
                 }, // 1 local tick per 10 global ticks
@@ -104,7 +93,7 @@ mod tests {
     fn test_fleet_local_time_inherits_from_system() {
         let mut app = App::new();
         app.add_plugins(MinimalPlugins);
-        app.init_resource::<SimulationTime>();
+        app.insert_resource(SimulationTime::default());
         app.add_systems(
             Update,
             (process_time_dilation_system, update_fleet_local_time_system).chain(),
@@ -113,7 +102,7 @@ mod tests {
         let system_entity = app
             .world_mut()
             .spawn((
-                SystemNode,
+                StarSystem { id: 1 },
                 TimeDilationZone { dilation_factor: 5 },
                 LocalTimeTracker::default(),
             ))
@@ -123,7 +112,7 @@ mod tests {
             .world_mut()
             .spawn((
                 Fleet,
-                StationedAt(system_entity),
+                InOrbit { parent: system_entity },
                 LocalTimeTracker::default(),
             ))
             .id();

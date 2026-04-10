@@ -1,7 +1,7 @@
 use crate::layer1::economy::ColonyResources;
 use bevy::prelude::*;
 // use crate::layer1::entities::Pop;
-// use crate::layer3::physics::relativity::SystemNode;
+// use crate::layer2::system::OrbitalBody;
 
 #[derive(Component)]
 pub struct CurrentLocation(pub Entity);
@@ -37,7 +37,7 @@ mod tests {
 
     use super::*;
     use crate::layer1::entities::Pop;
-    use crate::layer3::physics::relativity::SystemNode;
+    use crate::layer2::system::OrbitalBody;
 
     #[test]
     fn test_orbital_commute_consumes_fuel_and_updates_location() {
@@ -47,8 +47,8 @@ mod tests {
         app.world_mut().resource_mut::<ColonyResources>().fuel = 10.0;
         app.add_systems(Update, process_orbital_commutes);
 
-        let planet_entity = app.world_mut().spawn(SystemNode).id();
-        let station_entity = app.world_mut().spawn(SystemNode).id();
+        let planet_entity = app.world_mut().spawn(OrbitalBody::default()).id();
+        let station_entity = app.world_mut().spawn(OrbitalBody::default()).id();
 
         let pop = app
             .world_mut()
@@ -93,8 +93,8 @@ mod tests {
         app.world_mut().resource_mut::<ColonyResources>().fuel = 0.0; // No fuel
         app.add_systems(Update, process_orbital_commutes);
 
-        let planet_entity = app.world_mut().spawn(SystemNode).id();
-        let station_entity = app.world_mut().spawn(SystemNode).id();
+        let planet_entity = app.world_mut().spawn(OrbitalBody::default()).id();
+        let station_entity = app.world_mut().spawn(OrbitalBody::default()).id();
 
         let pop = app
             .world_mut()

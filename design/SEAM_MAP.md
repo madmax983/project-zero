@@ -635,3 +635,9 @@
 - **Systems connected:** `process_megastructure_consumption` (Parasitic Architecture) -> `parasitic_architecture_chronicle_bridge` (Integration) -> `AddChronicleEvent`
 - **Glue added:** Added `parasitic_architecture_chronicle_bridge` to emit an `AddChronicleEvent` (`EventImportance::Minor`) upon `BuildingConsumedEvent`. Registered in `Layer1SystemSet::Observation`.
 - **Tests:** `tests/integration/parasitic_architecture_bridge.rs`
+
+### INT-766: Relativistic Time Dilation -> Fleet (InOrbit)
+- **Date:** 2026-04-10
+- **Systems connected:** `process_time_dilation_system` & `update_fleet_local_time_system` (Layer 3) -> `StarSystem` (Layer 3) & `Fleet` / `InOrbit` (Layer 2)
+- **Glue added:** Replaced placeholder `SystemNode` and `StationedAt` components in `src/layer3/physics/relativity.rs` with the actual game components (`StarSystem`, `Fleet`, `InOrbit`). Switched the isolated `SimulationTime` struct in relativity to the shared game tick `SimulationTime`.
+- **Tests:** `tests/integration/time_dilation_bridge.rs`
