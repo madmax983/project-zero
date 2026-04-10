@@ -7,14 +7,14 @@ mod chronicle;
 mod colony_map;
 mod inspector;
 mod status;
-mod system_map;
+mod system_view;
 mod tech;
 
 pub use chronicle::ChroniclePlugin;
 pub use colony_map::ColonyMapPlugin;
 pub use inspector::InspectorPlugin;
 pub use status::StatusPlugin;
-pub use system_map::SystemMapPlugin;
+pub use system_view::SystemViewPlugin;
 pub use tech::TechPlugin;
 
 pub const COLONY_MAP_PLUGIN_TYPE: &str = "colony-map";
@@ -34,7 +34,7 @@ pub fn register_default_plugins(registry: &mut Registry, world: SharedWorld) {
 
     let system_world = Rc::clone(&world);
     registry.register_plugin_type(SYSTEM_MAP_PLUGIN_TYPE, move || {
-        SystemMapPlugin::new(Rc::clone(&system_world))
+        SystemViewPlugin::new(Rc::clone(&system_world))
     });
 
     let inspector_world = Rc::clone(&world);
@@ -69,7 +69,7 @@ pub(crate) fn register_default_plugins_with_runtime(
 
     let system_world = Rc::clone(&world);
     runtime.register_plugin_type(SYSTEM_MAP_PLUGIN_TYPE, move || {
-        SystemMapPlugin::new(Rc::clone(&system_world))
+        SystemViewPlugin::new(Rc::clone(&system_world))
     });
 
     let inspector_world = Rc::clone(&world);

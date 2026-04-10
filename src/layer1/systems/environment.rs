@@ -31,7 +31,6 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::volatile::volatile_decay_system,
             crate::layer1::volatile::handle_explosion_system
                 .after(crate::layer1::volatile::volatile_decay_system),
-            crate::layer1::logistics::pneumatic::tube_clog_system,
             crate::layer1::ecology::biome_collapse_system,
             crate::layer1::social::grievances::decay_notes_system,
             crate::layer1::hum::update_hum_system,

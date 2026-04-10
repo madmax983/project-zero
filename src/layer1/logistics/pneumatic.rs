@@ -36,13 +36,6 @@ pub struct TubeCarrier {
     pub path: Option<Vec<GridPosition>>,
 }
 
-/// Component indicating a blockage in a tube segment.
-#[derive(Component, Debug, Clone, Default)]
-pub struct Clogged {
-    /// Severity of the clog (0.0 to 1.0). >0 blocks movement.
-    pub severity: f32,
-}
-
 /// System that manages the movement of tube carriers.
 ///
 /// Handles:
@@ -52,7 +45,7 @@ pub struct Clogged {
 /// 4. Delivering items to the target terminal's inventory.
 type CarrierQuery<'a> = (Entity, &'a mut TubeCarrier, &'a mut GridPosition);
 type CarrierFilter = (Without<PneumaticTerminal>, Without<PneumaticTube>);
-type TubeQuery<'a> = (&'a GridPosition, Option<&'a Clogged>);
+type TubeQuery<'a> = &'a GridPosition;
 type TubeFilter = (With<PneumaticTube>, Without<TubeCarrier>);
 
 pub fn tube_transport_system(
@@ -78,10 +71,9 @@ pub fn tube_transport_system(
     }
 
     // 2. Move Logic
-    let mut tube_map: HashMap<GridPosition, bool> = HashMap::new();
-    for (pos, clogged) in &tubes {
-        let is_clogged = clogged.is_some_and(|c| c.severity > 0.0);
-        tube_map.insert(*pos, is_clogged);
+    let mut tube_set: HashSet<GridPosition> = HashSet::new();
+    for pos in &tubes {
+        tube_set.insert(*pos);
     }
 
     let mut term_id_to_entity: HashMap<u32, Entity> = HashMap::new();
@@ -96,7 +88,7 @@ pub fn tube_transport_system(
         // Calculate path if needed
         if carrier.path.is_none() {
             if let Some(target_pos) = term_id_to_pos.get(&carrier.target_terminal_id) {
-                if let Some(path) = find_path(*pos, *target_pos, &tube_map) {
+                if let Some(path) = find_path(*pos, *target_pos, &tube_set) {
                     carrier.path = Some(path);
                 } else {
                     continue;
@@ -111,13 +103,6 @@ pub fn tube_transport_system(
         if let Some(mut path) = carrier.path.take() {
             if !path.is_empty() {
                 let next_step = path[0];
-
-                let is_clogged = *tube_map.get(&next_step).unwrap_or(&false);
-                if is_clogged {
-                    // Stuck, restore path
-                    carrier.path = Some(path);
-                    continue;
-                }
 
                 carrier.progress += carrier.speed;
                 if carrier.progress >= 1.0 {
@@ -150,7 +135,7 @@ pub fn tube_transport_system(
 fn find_path(
     start: GridPosition,
     end: GridPosition,
-    tube_map: &HashMap<GridPosition, bool>,
+    tube_set: &HashSet<GridPosition>,
 ) -> Option<Vec<GridPosition>> {
     let mut queue = VecDeque::new();
     queue.push_back((start, vec![]));
@@ -170,7 +155,7 @@ fn find_path(
                 y: current.y + dy,
             };
 
-            if tube_map.contains_key(&next) && !visited.contains(&next) {
+            if tube_set.contains(&next) && !visited.contains(&next) {
                 visited.insert(next);
                 let mut new_path = path.clone();
                 new_path.push(next);
@@ -235,13 +220,6 @@ fn find_reachable_terminals(
         }
     }
     results
-}
-
-/// System that manages tube clogging.
-///
-/// Currently a placeholder for future mechanics.
-pub fn tube_clog_system(mut _tubes: Query<&mut Clogged>) {
-    // Empty for MVP
 }
 
 #[cfg(test)]
@@ -363,73 +341,4 @@ mod tests {
         assert_eq!(inv_b.items[0].item_type, ItemType::BuildingPermit);
     }
 
-    #[test]
-    fn test_tube_clogging() {
-        let mut world = World::new();
-        let term_a = world
-            .spawn((
-                PneumaticTerminal {
-                    id: 1,
-                    connected_to: vec![2],
-                },
-                GridPosition { x: 0, y: 0 },
-                TubeCarrier {
-                    target_terminal_id: 2,
-                    payload: InventoryItem {
-                        item_type: ItemType::None,
-                        entity: None,
-                    },
-                    progress: 0.0,
-                    speed: 1.0,
-                    path: None,
-                },
-                Inventory::default(),
-                PowerConsumer {
-                    active: true,
-                    ..Default::default()
-                },
-            ))
-            .id();
-
-        world.spawn((
-            PneumaticTerminal {
-                id: 2,
-                connected_to: vec![],
-            },
-            GridPosition { x: 2, y: 0 },
-            Inventory::default(),
-            PowerConsumer {
-                active: true,
-                ..Default::default()
-            },
-        ));
-
-        world.spawn((PneumaticTube, GridPosition { x: 0, y: 0 }));
-        world.spawn((
-            PneumaticTube,
-            GridPosition { x: 1, y: 0 },
-            Clogged { severity: 1.0 },
-        ));
-        world.spawn((PneumaticTube, GridPosition { x: 2, y: 0 }));
-
-        let mut schedule = Schedule::default();
-        schedule.add_systems(tube_transport_system);
-
-        for _ in 0..5 {
-            schedule.run(&mut world);
-        }
-
-        // Check original terminal for carrier (it was removed)
-        assert!(world.get::<TubeCarrier>(term_a).is_none());
-
-        // Find spawned carrier
-        let mut carriers = world.query::<(&TubeCarrier, &GridPosition)>();
-        let mut found = false;
-        for (_c, pos) in carriers.iter(&world) {
-            found = true;
-            assert_eq!(pos.x, 0);
-            assert_eq!(pos.y, 0);
-        }
-        assert!(found, "Carrier should exist");
-    }
 }

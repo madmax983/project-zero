@@ -164,7 +164,6 @@ mod tests {
         world.init_resource::<scale::layer1::civic_ideology::ActiveIdeology>();
 
         world.insert_resource(scale::layer2::system::ViewMode::default());
-        world.insert_resource(scale::layer2::system::SystemMap);
         world.insert_resource(scale::layer2::visibility::SystemVisibility::default());
 
         // Blackout Protocol (Energy)

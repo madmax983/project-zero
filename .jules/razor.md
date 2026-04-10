@@ -54,3 +54,13 @@
 **Bloat:** Speculative Optimization / Clever Code: `Traits` component in `src/layer1/traits.rs` using a `u64` bitmask to store a rapidly growing `Trait` enum (over 50 variants), requiring manual bitwise logic (`Traits(1 << (Trait::... as u8))`) across the codebase.
 **Cut:** Replaced the `u64` bitmask with a standard `bevy::utils::HashSet<Trait>`. Updated methods to use standard set operations (`insert`, `remove`, `contains`) and replaced all bitwise initializations with explicit builder patterns (`Traits::default().add(...)`). Retained deterministic iteration by yielding over the enum and filtering by the set.
 **Saved:** Eliminated cognitive load of manual bitwise operations, prevented an imminent integer overflow (capped at 64 traits), and standardized component initialization.
+
+## [Reduction]
+**Bloat:** Enterprise FizzBuzz Speculative Generality: `SystemMap` struct in `src/layer2/system.rs` which was merely an empty placeholder type registered as a Bevy Resource, adding redundant conceptual load when `ViewMode::System` already signals Layer 2 active status.
+**Cut:** Removed the `SystemMap` struct and its resource registration in `setup.rs`. Renamed `SystemMapPlugin` to `SystemViewPlugin` for naming consistency and accuracy.
+**Saved:** 7 lines of code and reduced abstraction overhead.
+
+## [Reduction]
+**Bloat:** Enterprise FizzBuzz Speculative Generality: `Clogged` component and `tube_clog_system` in `src/layer1/logistics/pneumatic.rs` which were merely empty placeholders with "// Empty for MVP" implementations.
+**Cut:** Removed the `Clogged` component, the `tube_clog_system`, and simplified `tube_transport_system` queries since there are no blockages to handle.
+**Saved:** 27 lines of code, speculative pattern matching, and unnecessary Bevy system execution.

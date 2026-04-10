@@ -107,13 +107,6 @@ pub struct Orbit {
     pub angle: f32,
 }
 
-/// Resource holding system-level map data.
-///
-/// Currently a placeholder for potential future features like fog of war,
-/// discovered anomalies, or sector ownership maps.
-#[derive(Resource, Default)]
-pub struct SystemMap;
-
 #[cfg(test)]
 mod tests {
     use super::*;
