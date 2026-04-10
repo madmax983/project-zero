@@ -173,6 +173,7 @@ Actually, `ResourceItem` spawning is centralized in:
 - `Farm` harvest (Food - Perishable).
 
 Builder must check where `ResourceType::Food` is spawned and add `Perishable`.
+*Architect:* See related specifications for design details. MVP implementation should follow standard conventions.
 
 ## REFACTOR Phase: Quality & Design
 

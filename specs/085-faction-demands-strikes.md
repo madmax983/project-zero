@@ -309,6 +309,7 @@ pub fn is_pop_striking(world: &World, entity: Entity) -> bool {
 ### 5. Update `evaluate_work` (Utility AI)
 
 Builder needs to locate `evaluate_work` (usually in `src/layer1/utility_ai/actions/work.rs` or similar) and add:
+*Architect:* See related specifications for design details. MVP implementation should follow standard conventions.
 
 ```rust
 if is_pop_striking(world, entity) {

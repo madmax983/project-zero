@@ -372,6 +372,7 @@ After tests pass, consider these improvements:
 1. **Manual assignment required**: Spec doesn't auto-assign pops to housing
    - Future: Spec 009 (Job System) will handle automatic assignment
    - Current: Builder must manually add pops to `residents` for testing
+  *Architect:* See related specifications for design details. MVP implementation should follow standard conventions.
 
 2. **No eviction logic**: Pops stay until satisfied
    - Future: Spec 009 will handle releasing satisfied pops

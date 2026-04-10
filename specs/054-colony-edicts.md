@@ -174,6 +174,7 @@ pub fn get_morale_modifier(policies: &ColonyPolicies) -> f32 {
 ### 3. Integrate with Systems (Guidance)
 
 The Builder will need to modify existing systems to call these functions.
+*Architect:* See related specifications for design details. MVP implementation should follow standard conventions.
 
 - **Needs System**: In `src/layer1/needs.rs`, multiply hunger decay by `get_hunger_decay_modifier`.
 - **Work System**: In `src/layer1/pop.rs` (or wherever work speed is applied), multiply by `get_work_speed_modifier`.
@@ -194,6 +195,7 @@ The Builder will need to modify existing systems to call these functions.
 - [ ] Modifiers are correctly calculated based on active policies.
 - [ ] Tests pass.
 - [ ] Builder instructions clarify integration points.
+  *Architect:* See related specifications for design details. MVP implementation should follow standard conventions.
 
 ## Technical Guidance
 

@@ -198,6 +198,7 @@ pub fn reveal_stowaway_system(
 ### 5. UI Updates (Important!)
 
 Builder MUST update `src/ui/status.rs` to exclude `Hidden` pops from the count.
+*Architect:* See related specifications for design details. MVP implementation should follow standard conventions.
 
 ```rust
 // In src/ui/status.rs

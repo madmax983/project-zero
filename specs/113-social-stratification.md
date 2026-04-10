@@ -135,6 +135,7 @@ impl Prestige {
         let value = match job {
             JobType::Miner | JobType::Farmer | JobType::Hauler => 1,
             JobType::Builder | JobType::Crafter | JobType::Guard => 3,
+*Architect:* See related specifications for design details. MVP implementation should follow standard conventions.
             JobType::Engineer | JobType::Doctor | JobType::Merchant => 5,
             JobType::Scientist | JobType::Artist => 7,
             JobType::Governor | JobType::Administrator => 10,
