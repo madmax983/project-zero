@@ -446,7 +446,7 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `724` The Gravimetric Tides — `specs/724-gravimetric-tides.md`
 - [ ] `725` The Orphaned Megastructure — `specs/725-orphaned-megastructure.md`
 - [ ] `726` The Propaganda Broadcast Hijack — `specs/726-propaganda-broadcast-hijack.md`
-- [ ] `728` Resource Purity — `specs/728-resource-purity.md`
+
 - [ ] `729` The "Ship of Theseus" Protocol — `specs/729-the-ship-of-theseus-protocol.md`
 - [ ] `730` The Gridlock — `specs/730-the-gridlock.md`
 - [ ] `731` Satellite Constellations — `specs/731-satellite-constellations.md`

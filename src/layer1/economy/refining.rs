@@ -715,3 +715,114 @@ mod tests {
         assert_eq!(progress.current, 0.0, "Glitchy mill should not progress");
     }
 }
+
+/// A component that processes raw ore into refined materials.
+#[derive(Component, Debug, Clone, Copy)]
+pub struct Refinery {
+    /// Efficiency bonus added to node purity.
+    pub efficiency_bonus: f32,
+    /// Accumulated fractional progress for refined resources.
+    pub fractional_refined: f32,
+    /// Accumulated fractional progress for waste.
+    pub fractional_waste: f32,
+}
+
+impl Refinery {
+    /// Creates a new refinery.
+    #[must_use]
+    pub fn new() -> Self {
+        Self {
+            efficiency_bonus: 0.0,
+            fractional_refined: 0.0,
+            fractional_waste: 0.0,
+        }
+    }
+
+    /// Sets the efficiency bonus for the refinery.
+    pub fn set_efficiency_bonus(&mut self, bonus: f32) {
+        self.efficiency_bonus = bonus;
+    }
+
+    /// Processes ore from a resource node, yielding refined resource and waste.
+    pub fn process_ore(
+        &mut self,
+        node: &crate::layer1::economy::resources::ResourceNode,
+        input_amount: u32,
+    ) -> (u32, u32) {
+        let effective_purity = (node.purity + self.efficiency_bonus).clamp(0.0, 1.0);
+
+        // Add to fractional accumulators
+        self.fractional_refined += input_amount as f32 * effective_purity;
+        self.fractional_waste += input_amount as f32 * (1.0 - effective_purity);
+
+        // Extract integer portions
+        let refined_yield = self.fractional_refined.floor();
+        let waste_yield = self.fractional_waste.floor();
+
+        // Subtract integer portions from accumulators
+        self.fractional_refined -= refined_yield;
+        self.fractional_waste -= waste_yield;
+
+        (refined_yield as u32, waste_yield as u32)
+    }
+}
+
+#[cfg(test)]
+mod tests_purity {
+    use super::*;
+    use crate::layer1::economy::resources::{ResourceNode, ResourceType};
+
+    #[test]
+    fn test_resource_purity_yields_correct_ratio() {
+        // Arrange
+        let mut world = World::new();
+        // A node with 40% purity
+        let node_id = world
+            .spawn(ResourceNode {
+                resource_type: ResourceType::Ore,
+                amount: 100,
+                purity: 0.4,
+            })
+            .id();
+
+        let mut refinery = Refinery::new();
+
+        // Act
+        // Process 10 units of ore from the node
+        let (refined, waste) =
+            refinery.process_ore(&world.get::<ResourceNode>(node_id).unwrap(), 10);
+
+        // Assert
+        // 40% purity of 10 units = 4 refined, 6 waste
+        assert_eq!(refined, 4);
+        assert_eq!(waste, 6);
+    }
+
+    #[test]
+    fn test_resource_purity_high_efficiency_tech() {
+        // Arrange
+        let mut world = World::new();
+        // A node with 40% purity
+        let node_id = world
+            .spawn(ResourceNode {
+                resource_type: ResourceType::Ore,
+                amount: 100,
+                purity: 0.4,
+            })
+            .id();
+
+        let mut refinery = Refinery::new();
+        // Apply tech bonus (+10% effective purity)
+        refinery.set_efficiency_bonus(0.1);
+
+        // Act
+        // Process 10 units of ore from the node
+        let (refined, waste) =
+            refinery.process_ore(&world.get::<ResourceNode>(node_id).unwrap(), 10);
+
+        // Assert
+        // (40% + 10%) of 10 units = 5 refined, 5 waste
+        assert_eq!(refined, 5);
+        assert_eq!(waste, 5);
+    }
+}

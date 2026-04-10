@@ -1491,3 +1491,14 @@ mod tests {
         );
     }
 }
+
+/// Represents a minable node of resources with a specific purity.
+#[derive(Component, Debug, Clone, Copy)]
+pub struct ResourceNode {
+    /// The type of resource contained in the node.
+    pub resource_type: ResourceType,
+    /// The remaining amount of raw resource in the node.
+    pub amount: u32,
+    /// The purity of the node (0.0 to 1.0).
+    pub purity: f32,
+}
