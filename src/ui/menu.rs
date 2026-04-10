@@ -103,3 +103,39 @@ pub fn render_main_menu(frame: &mut Frame, area: Rect, state: &MenuState) {
         );
     frame.render_widget(footer, layout[4]);
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use ratatui::backend::TestBackend;
+    use ratatui::Terminal;
+    use crate::shared::menu::MenuState;
+
+    #[test]
+    fn test_render_main_menu_empty_options() {
+        let backend = TestBackend::new(40, 25);
+        let mut terminal = Terminal::new(backend).unwrap();
+        let state = MenuState {
+            options: vec![],
+            selected_index: 0,
+        };
+
+        terminal.draw(|f| {
+            render_main_menu(f, f.area(), &state);
+        }).unwrap();
+    }
+
+    #[test]
+    fn test_render_main_menu_with_options() {
+        let backend = TestBackend::new(40, 25);
+        let mut terminal = Terminal::new(backend).unwrap();
+        let state = MenuState {
+            options: vec!["Start".to_string(), "Quit".to_string()],
+            selected_index: 1,
+        };
+
+        terminal.draw(|f| {
+            render_main_menu(f, f.area(), &state);
+        }).unwrap();
+    }
+}

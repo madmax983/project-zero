@@ -104,3 +104,56 @@ pub fn render_notifications(frame: &mut Frame, area: Rect, world: &World) {
     let list = List::new(items);
     frame.render_widget(list, inner);
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use ratatui::backend::TestBackend;
+    use ratatui::Terminal;
+    use crate::layer1::notifications::Notification;
+
+    #[test]
+    fn test_render_notifications_empty_queue() {
+        let mut world = World::new();
+        world.insert_resource(NotificationQueue::default());
+
+        let backend = TestBackend::new(40, 25);
+        let mut terminal = Terminal::new(backend).unwrap();
+
+        terminal.draw(|f| {
+            render_notifications(f, f.area(), &world);
+        }).unwrap();
+    }
+
+    #[test]
+    fn test_render_notifications_with_items() {
+        let mut world = World::new();
+        let mut queue = NotificationQueue::default();
+        queue.active.push(Notification {
+            text: "Warning!".to_string(),
+            severity: NotificationSeverity::Warning,
+            created_at: 0,
+            expires_at: Some(100),
+            id: 0,
+            action_link: None,
+        });
+        queue.active.push(Notification {
+            text: "All good".to_string(),
+            severity: NotificationSeverity::Success,
+            created_at: 0,
+            expires_at: None,
+            id: 1,
+            action_link: None,
+        });
+        world.insert_resource(queue);
+        // Ensure simulation time exists for time diff logic
+        world.insert_resource(crate::shared::time::SimulationTime { tick: 5, ..Default::default() });
+
+        let backend = TestBackend::new(40, 25);
+        let mut terminal = Terminal::new(backend).unwrap();
+
+        terminal.draw(|f| {
+            render_notifications(f, f.area(), &world);
+        }).unwrap();
+    }
+}

@@ -165,3 +165,144 @@ pub fn render_with_shell(world: &World, shell: &mut UiShell, frame: &mut Frame) 
     shell.render(frame.area(), frame.buffer_mut());
     render_notifications(frame, frame.area(), world);
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use ratatui::backend::TestBackend;
+    use ratatui::Terminal;
+    use crate::shared::menu::MenuState;
+    use crate::shared::state::GameState;
+    use crate::layer2::system::ViewMode;
+    use bevy_ecs::world::World;
+    use crate::ui::UiState;
+
+    // Add necessary component for testing full render path
+    use crate::layer1::TerrainGrid;
+    use crate::layer1::water::WaterGrid;
+    use crate::layer1::Viewport;
+    use crate::layer1::BuildMode;
+    use crate::layer1::DesignationMode;
+    use crate::ui::map::RenderCache;
+    use crate::shared::time::WallTime;
+    use crate::shared::selection::Selection;
+    use crate::shared::time::SimulationTime;
+
+    fn setup_world_for_render() -> World {
+        let mut world = World::new();
+        world.insert_resource(TerrainGrid { width: 10, height: 10, tiles: vec![crate::layer1::TerrainType::Grass; 100] });
+        world.insert_resource(crate::layer1::nature::terrain::TerrainGrid { width: 10, height: 10, tiles: vec![crate::layer1::TerrainType::Grass; 100] });
+        world.insert_resource(WaterGrid::new(10, 10));
+        world.insert_resource(Viewport::default());
+        world.insert_resource(BuildMode::default());
+        world.insert_resource(DesignationMode::default());
+        world.insert_resource(RenderCache::default());
+        world.insert_resource(WallTime(0.0));
+        world.insert_resource(crate::layer1::economy::resources::ColonyResources::default());
+        world.insert_resource(SimulationTime::default());
+        world.insert_resource(Selection::default());
+        world.insert_resource(crate::layer1::locations::NamedLocations::default());
+        world.insert_resource(crate::layer1::chronicle::Chronicle::default());
+
+        world
+    }
+
+    #[test]
+    fn test_render_main_menu_state() {
+        let mut world = World::new();
+        world.insert_resource(GameState::MainMenu);
+        world.insert_resource(MenuState {
+            options: vec!["Start".to_string()],
+            selected_index: 0,
+        });
+
+        let backend = TestBackend::new(40, 25);
+        let mut terminal = Terminal::new(backend).unwrap();
+
+        terminal.draw(|f| {
+            render(&world, f);
+        }).unwrap();
+    }
+
+    #[test]
+    fn test_render_system_view_mode() {
+        let mut world = World::new();
+        world.insert_resource(GameState::Running);
+        world.insert_resource(ViewMode::System);
+
+        let backend = TestBackend::new(40, 25);
+        let mut terminal = Terminal::new(backend).unwrap();
+
+        terminal.draw(|f| {
+            render(&world, f);
+        }).unwrap();
+    }
+
+    #[test]
+    fn test_render_suppressed_ui() {
+        let mut world = setup_world_for_render();
+        world.insert_resource(GameState::Running);
+        world.insert_resource(ViewMode::Colony);
+        world.insert_resource(UiState {
+            suppress_global_ui: true,
+            ..Default::default()
+        });
+
+        let backend = TestBackend::new(40, 25);
+        let mut terminal = Terminal::new(backend).unwrap();
+
+        terminal.draw(|f| {
+            render(&world, f);
+        }).unwrap();
+    }
+
+    #[test]
+    fn test_render_normal_colony() {
+        let mut world = setup_world_for_render();
+        world.insert_resource(GameState::Running);
+        world.insert_resource(ViewMode::Colony);
+
+        let backend = TestBackend::new(40, 25);
+        let mut terminal = Terminal::new(backend).unwrap();
+
+        terminal.draw(|f| {
+            render(&world, f);
+        }).unwrap();
+    }
+
+    #[test]
+    fn test_render_with_shell_main_menu() {
+        let mut world = World::new();
+        world.insert_resource(GameState::MainMenu);
+        world.insert_resource(MenuState {
+            options: vec!["Start".to_string()],
+            selected_index: 0,
+        });
+
+        let backend = TestBackend::new(40, 25);
+        let mut terminal = Terminal::new(backend).unwrap();
+        let mut shell = crate::ui::shell::build_default_shell(std::rc::Rc::new(std::cell::RefCell::new(World::new())), crate::ui::shell::config::ShellConfig::default());
+
+        terminal.draw(|f| {
+            render_with_shell(&world, &mut shell, f);
+        }).unwrap();
+    }
+
+    #[test]
+    fn test_render_with_shell_colony() {
+        let mut world = setup_world_for_render();
+        world.insert_resource(GameState::Running);
+        world.insert_resource(ViewMode::Colony);
+
+        let backend = TestBackend::new(40, 25);
+        let mut terminal = Terminal::new(backend).unwrap();
+        let mut w2 = setup_world_for_render();
+        w2.insert_resource(GameState::Running);
+        w2.insert_resource(ViewMode::Colony);
+        let mut shell = crate::ui::shell::build_default_shell(std::rc::Rc::new(std::cell::RefCell::new(w2)), crate::ui::shell::config::ShellConfig::default());
+
+        terminal.draw(|f| {
+            render_with_shell(&world, &mut shell, f);
+        }).unwrap();
+    }
+}

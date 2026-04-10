@@ -92,7 +92,7 @@ mod tests {
 
         let snap_events = app.world().resource::<Events<TetherSnapEvent>>();
         let mut reader = snap_events.get_cursor();
-        let events: Vec<_> = reader.read(&snap_events).collect();
+        let events: Vec<_> = reader.read(snap_events).collect();
 
         assert_eq!(events.len(), 1);
         assert_eq!(events[0].anchor_entity, tether_entity);
