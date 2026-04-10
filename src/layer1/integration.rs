@@ -49,6 +49,36 @@ pub fn mass_driver_chronicle_bridge(
     }
 }
 
+// --- INT-573: The Silent Generation -> PopDied & Resources ---
+
+use crate::layer1::stress::TraumaTracker;
+
+/// Bridges PopDied events to TraumaTracker.recent_deaths
+pub fn trauma_death_bridge_system(
+    mut events: EventReader<PopDied>,
+    mut trauma: ResMut<TraumaTracker>,
+) {
+    for _ in events.read() {
+        trauma.recent_deaths = trauma.recent_deaths.saturating_add(1);
+    }
+}
+
+/// Bridges ColonyResources food scarcity to TraumaTracker.famine_ticks
+pub fn famine_tracking_system(resources: Res<ColonyResources>, mut trauma: ResMut<TraumaTracker>) {
+    if resources.total_food() < f32::EPSILON {
+        trauma.famine_ticks = trauma.famine_ticks.saturating_add(1);
+    }
+}
+
+/// Slowly decays the trauma values over time.
+pub fn trauma_decay_system(time: Res<SimulationTime>, mut trauma: ResMut<TraumaTracker>) {
+    // Decay trauma values every 10 ticks
+    if time.tick > 0 && time.tick.is_multiple_of(10) {
+        trauma.recent_deaths = trauma.recent_deaths.saturating_sub(1);
+        trauma.famine_ticks = trauma.famine_ticks.saturating_sub(1);
+    }
+}
+
 /// Bridges OrbitalDropEvent (Logistics) to AddChronicleEvent (Chronicle).
 pub fn orbital_drop_chronicle_bridge(
     mut drop_events: EventReader<OrbitalDropEvent>,

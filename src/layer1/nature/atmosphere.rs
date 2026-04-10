@@ -7,8 +7,8 @@ use crate::layer1::pop::Pop;
 use crate::layer1::structure::Structure;
 use crate::layer1::weather::{WeatherState, WeatherType};
 use crate::shared::time::SimulationTime;
-use bevy_ecs::prelude::*;
 use bevy::utils::HashMap;
+use bevy_ecs::prelude::*;
 
 /// Global corrosive atmosphere settings.
 ///

@@ -635,3 +635,9 @@
 - **Systems connected:** `process_megastructure_consumption` (Parasitic Architecture) -> `parasitic_architecture_chronicle_bridge` (Integration) -> `AddChronicleEvent`
 - **Glue added:** Added `parasitic_architecture_chronicle_bridge` to emit an `AddChronicleEvent` (`EventImportance::Minor`) upon `BuildingConsumedEvent`. Registered in `Layer1SystemSet::Observation`.
 - **Tests:** `tests/integration/parasitic_architecture_bridge.rs`
+
+### INT-573: The Silent Generation -> PopDied & Resources
+- **Date:** 2026-05-18
+- **Systems connected:** `PopDied` & `ColonyResources` -> `TraumaTracker` (The Silent Generation)
+- **Glue added:** Added `trauma_death_bridge_system`, `famine_tracking_system`, and `trauma_decay_system` to `src/layer1/integration.rs` to track recent deaths and famine duration for the `TraumaTracker`, allowing `assign_generational_traits_system` to operate.
+- **Tests:** `tests/integration/silent_generation_bridge.rs`
