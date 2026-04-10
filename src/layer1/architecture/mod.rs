@@ -1,4 +1,6 @@
 pub mod building;
+pub mod biomimetic;
+pub use biomimetic::*;
 #[cfg(test)]
 mod building_gate_test;
 #[cfg(test)]

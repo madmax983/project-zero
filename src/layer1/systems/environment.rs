@@ -55,6 +55,10 @@ pub fn register(schedule: &mut Schedule) {
             .in_set(Layer1SystemSet::Environment),
     );
     schedule.add_systems(
+        (crate::layer1::architecture::biomimetic::adjust_sympathetic_infrastructure_system,)
+            .in_set(Layer1SystemSet::Environment),
+    );
+    schedule.add_systems(
         (crate::layer1::energy::phantom_grid::phantom_grid_hum_system,)
             .in_set(Layer1SystemSet::Environment),
     );

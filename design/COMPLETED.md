@@ -369,3 +369,4 @@
 - [x] `890` Pop Memories — `specs/890-pop-memories.md` — completed 2026-04-09
 - [x] `896` The Phantom Grid — `specs/896-the-phantom-grid.md` — completed 2026-04-10
 - [x] `899` Rogue Planets — `specs/899-rogue-planets.md` — completed 2026-04-10
+- [x] `916` The Sympathetic Infrastructure — `specs/916-sympathetic-infrastructure.md` — completed 2026-06-05
