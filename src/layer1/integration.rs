@@ -49,6 +49,18 @@ pub fn mass_driver_chronicle_bridge(
     }
 }
 
+pub fn orbital_tether_chronicle_bridge(
+    mut events: EventReader<crate::layer1::orbital_tether::TetherSnapEvent>,
+    mut chronicle: EventWriter<AddChronicleEvent>,
+) {
+    for _event in events.read() {
+        chronicle.send(AddChronicleEvent {
+            importance: crate::layer1::chronicle::EventImportance::Major,
+            text: "The Sky Fell".to_string(),
+        });
+    }
+}
+
 /// Bridges OrbitalDropEvent (Logistics) to AddChronicleEvent (Chronicle).
 pub fn orbital_drop_chronicle_bridge(
     mut drop_events: EventReader<OrbitalDropEvent>,

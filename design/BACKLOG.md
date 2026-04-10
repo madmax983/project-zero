@@ -501,6 +501,5 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `798` Sub-Planetary Megastorms — `specs/798-sub-planetary-megastorms.md`
 - [ ] `799` The Synthetic Prophet — `specs/799-the-synthetic-prophet.md`
 - [ ] `800` Generational Dissonance — `specs/800-generational-dissonance.md`
-- [ ] `801` Orbital Tether — `specs/801-orbital-tether.md`
 - [ ] `802` Seismic Resonance — `specs/802-seismic-resonance.md`
 - [ ] `803` The Blackout Protocol — `specs/803-blackout-protocol.md`

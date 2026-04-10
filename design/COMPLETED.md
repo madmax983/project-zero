@@ -343,3 +343,4 @@
 - [x] `INT-771` Integration: Parasitic Architecture -> Chronicle — completed 2026-05-18
 - [x] `INT-770` Integration: Temporal Ghost Towns -> Chronicle — completed 2026-05-18
 - [x] `778` Hyperlane Collapse — `specs/778-hyperlane-collapse.md` — completed 2026-05-18
+- [x] `801` Orbital Tether — `specs/801-orbital-tether.md` — completed 2026-04-06

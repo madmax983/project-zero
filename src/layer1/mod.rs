@@ -519,7 +519,9 @@ pub use shipbreaking::*;
 pub mod void_weed;
 pub use void_weed::*;
 
+pub mod orbital_tether;
 pub mod temporal_ghost_towns;
+pub use orbital_tether::*;
 pub use temporal_ghost_towns::*;
 
 /// Infrastructure system (Spec 452).
