@@ -248,6 +248,8 @@ pub struct PopBundle {
     pub action: PopAction,
     /// Equipped items.
     pub equipment: Equipment,
+    /// Productivity modifier from cartels and other events.
+    pub productivity_modifier: crate::layer1::social::strike::work_shift_cartel::ProductivityModifier,
     /// AI decision weights.
     pub weights: UtilityWeights,
     /// Known rumors and topics.
@@ -308,6 +310,7 @@ impl PopBundle {
             speed: Speed::default(),
             action: PopAction::default(),
             equipment: Equipment::default(),
+            productivity_modifier: crate::layer1::social::strike::work_shift_cartel::ProductivityModifier { value: 1.0 },
             weights: UtilityWeights::default(),
             knowledge: Knowledge::default(),
             age: Age::new(rng.gen_range(20..40)),

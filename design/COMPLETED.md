@@ -370,3 +370,4 @@
 - [x] `896` The Phantom Grid — `specs/896-the-phantom-grid.md` — completed 2026-04-10
 - [x] `899` Rogue Planets — `specs/899-rogue-planets.md` — completed 2026-04-10
 - [x] `916` The Sympathetic Infrastructure — `specs/916-sympathetic-infrastructure.md` — completed 2026-06-05
+- [x] `925` The Work-Shift Cartel — `specs/925-work-shift-cartel.md` — completed 2026-04-10

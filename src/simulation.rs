@@ -55,6 +55,11 @@ pub fn build_simulation_schedule() -> Schedule {
         crate::layer1::whispering_ore::handle_mine_sealing_system,
     ));
 
+    // Work Shift Cartel
+    schedule.add_systems((
+        crate::layer1::social::strike::work_shift_cartel::apply_cartel_sabotage_system,
+    ));
+
     // --- AI Decision Chain (GPU compute) ---
     schedule.add_systems((
         update_building_map_system,

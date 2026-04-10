@@ -486,6 +486,10 @@ pub fn calculate_work_amount(
         1.0
     };
 
+    let cartel_modifier = world
+        .get::<crate::layer1::social::strike::work_shift_cartel::ProductivityModifier>(pop_entity)
+        .map_or(1.0, |m| m.value);
+
     let amount = WORK_PER_TICK
         * tool_efficiency
         * morale_efficiency
@@ -499,7 +503,8 @@ pub fn calculate_work_amount(
         * ghost_shift_modifier
         * gossiping_modifier
         * hallucinating_modifier
-        * somnambulist_modifier;
+        * somnambulist_modifier
+        * cartel_modifier;
 
     // Cap work amount to prevent logic bugs / economy exploits
     amount.min(1000.0)
