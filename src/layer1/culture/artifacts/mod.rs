@@ -12,14 +12,8 @@ pub enum AuraEffect {
     StressModifier(f32),
     /// Multiplier for healing rate.
     HealRate(f32),
-    /// Boosts XP gain for a specific skill.
-    SkillXpBoost(crate::layer1::skills::SkillType, f32),
-    /// Multiplier for work speed.
-    WorkSpeed(f32),
     /// The "Insight" aura effect: +Science XP, +Stress (spec 541).
     Insight,
-    /// The "Vitality" aura effect: +Heal rate, +Hunger (spec 541).
-    Vitality,
 }
 
 /// Component defining the range and effect of an artifact's aura.

@@ -83,3 +83,17 @@
 **Bloat:** `ArtifactType` enum in `src/layer1/memetics/memetic_hazards.rs` containing variants (`Safe`, `Hazardous`), which was an unnecessary level of indirection.
 **Cut:** Converted `ArtifactType` from an enum into a standard boolean (`is_hazardous: bool`) in `ActiveResearch`. Removed the enum entirely and updated assignment logic.
 **Saved:** 7 lines of code, speculative indirection, and simplified property access.
+## [Reduction]
+**Bloat:** Unused variants `WorkSpeed`, `SkillXpBoost`, and `Vitality` in the `AuraEffect` enum in `src/layer1/culture/artifacts/mod.rs`.
+**Cut:** Removed the unused variants.
+**Saved:** 5 lines of code and speculative generality.
+
+## [Reduction]
+**Bloat:** `Water` variant in `TetherDemandType` enum in `src/experimental/cargo_cult_fleet.rs` which was explicitly commented as a conceptual proxy and only used in a single match arm for logging.
+**Cut:** Removed the `Water` variant and updated the logging match arm. Also removed an unnecessary default fallback `_ => {}` after removing `Water`.
+**Saved:** 4 lines of code, speculative mechanics, and an unreachable match arm warning.
+
+## [Reduction]
+**Bloat:** `AnomalyType` enum in `src/layer3/ghost_ships.rs` (`AlteredCargo`, `ChangedCrew`, `MysteriousWarnings`, `Unknown`). It was an over-engineered enterprise fizzbuzz pattern where only `Unknown` was ever assigned, and it was never read.
+**Cut:** Deleted the `AnomalyType` enum and made `GhostShip` a simple marker component instead.
+**Saved:** 10 lines of code, speculative pattern matching overhead, and improved idiomatic Bevy usage by using ECS marker structs instead of enums.

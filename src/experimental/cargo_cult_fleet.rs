@@ -31,7 +31,6 @@ pub struct CargoCultTether {
 
 #[derive(Debug, Clone, Copy, PartialEq)]
 pub enum TetherDemandType {
-    Water, // We'll map this to an arbitrary drain on the simulation, or just use Food as a proxy if Water isn't tracked. We'll track 'Water' conceptually but drain food for now if needed, or better, let's use actual resources: Wood, Stone, Metal.
     Wood,
     Stone,
     Metal,
@@ -107,7 +106,6 @@ pub fn spawn_cargo_cult_fleet_system(
             log.add(format!(
                 "An ancient Dreadnought arrived in orbit. It opened a Tether demanding {}!",
                 match t.demand_type {
-                    TetherDemandType::Water => "Water",
                     TetherDemandType::Wood => "Wood",
                     TetherDemandType::Stone => "Stone",
                     TetherDemandType::Metal => "Metal",
@@ -186,7 +184,6 @@ pub fn feed_cargo_cult_tether_system(
                 resources.metal = 0.0;
             }
         }
-        _ => {}
     }
 
     tether.current_fed += fed_this_tick;
