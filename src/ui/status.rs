@@ -650,7 +650,6 @@ mod tests {
             .collect();
         let full_text = cells.join("");
 
-        println!("text: {}", full_text);
         assert!(full_text.contains("Morale: 63%"));
     }
 

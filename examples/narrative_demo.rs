@@ -262,33 +262,29 @@ fn ui(f: &mut Frame, app: &mut App) {
 
     // Pattern Preview
     let selected_id = app.state.selected().and_then(|i| app.template_ids.get(i));
-    let pattern_text = if let Some(id) = selected_id {
+    let pattern_items = if let Some(id) = selected_id {
         if let Some(tmpl) = app.generator.get_template(id) {
-            let patterns: Vec<Line> = tmpl
-                .patterns
+            tmpl.patterns
                 .iter()
-                .map(|p| Line::from(format!("• {}", p)))
-                .collect();
-            patterns
+                .map(|p| ListItem::new(Line::from(format!("• {}", p))))
+                .collect::<Vec<ListItem>>()
         } else {
-            vec![Line::from("Template not found.")]
+            vec![ListItem::new(Line::from("Template not found."))]
         }
     } else {
-        vec![Line::from("No template selected.")]
+        vec![ListItem::new(Line::from("No template selected."))]
     };
 
-    let pattern_block = Paragraph::new(pattern_text)
-        .block(Block::default().borders(Borders::ALL).title("Patterns"))
-        .wrap(Wrap { trim: true });
-    f.render_widget(pattern_block, right_chunks[0]);
+    let pattern_list = List::new(pattern_items)
+        .block(Block::default().borders(Borders::ALL).title("Patterns"));
+    f.render_widget(pattern_list, right_chunks[0]);
 
     // Generated Output
     let output_block = if let Some(err) = &app.error_message {
         Paragraph::new(format!(" Failed to generate story: {} ", err))
             .style(
                 Style::default()
-                    .fg(Color::White)
-                    .bg(Color::Red)
+                    .fg(Color::Red)
                     .add_modifier(Modifier::BOLD),
             )
             .block(
@@ -318,8 +314,7 @@ fn ui(f: &mut Frame, app: &mut App) {
                 NarrativeSegment::Error(e) => Span::styled(
                     format!("[ERROR: {}]", e),
                     Style::default()
-                        .fg(Color::White)
-                        .bg(Color::Red)
+                        .fg(Color::Red)
                         .add_modifier(Modifier::BOLD),
                 ),
             })
