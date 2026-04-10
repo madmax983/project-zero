@@ -112,12 +112,26 @@ fn print_dashboard_table(title: &str, mut table: comfy_table::Table) {
 }
 
 /// Print a 1-column table as a panel for errors/empty states
-fn print_dashboard_panel(title: &str, content_colored: &str) {
+fn print_dashboard_panel(
+    title: &str,
+    content: &str,
+    color: Option<comfy_table::Color>,
+    attribute: Option<comfy_table::Attribute>,
+) {
     use comfy_table::{Cell, ContentArrangement, Table};
     let mut table = Table::new();
+    let mut cell = Cell::new(format!("  {}  ", content.trim()));
+
+    if let Some(c) = color {
+        cell = cell.fg(c);
+    }
+    if let Some(a) = attribute {
+        cell = cell.add_attribute(a);
+    }
+
     table
         .set_content_arrangement(ContentArrangement::Dynamic)
-        .add_row(vec![Cell::new(content_colored)]);
+        .add_row(vec![cell]);
 
     print_dashboard_table(title, table);
 }
@@ -1157,7 +1171,9 @@ fn print_designations(world: &mut World) {
     if count == 0 {
         print_dashboard_panel(
             "Active Designations",
-            &format!("{}", "  (No active designations)  ".dark_grey().italic()),
+            "(No active designations)",
+            Some(comfy_table::Color::DarkGrey),
+            Some(comfy_table::Attribute::Italic),
         );
     } else {
         print_dashboard_table("Active Designations", table);
@@ -1199,12 +1215,9 @@ fn find_terrain(world: &mut World, terrain_name: &str, max_count: usize) {
     if found.is_empty() {
         print_dashboard_panel(
             &format!("Search Results: {target:?} (Max: {max_count})"),
-            &format!(
-                "{}",
-                "  (No tiles found)                             "
-                    .dark_grey()
-                    .italic()
-            ),
+            "(No tiles found)",
+            Some(comfy_table::Color::DarkGrey),
+            Some(comfy_table::Attribute::Italic),
         );
     } else {
         let mut table = Table::new();
@@ -1429,12 +1442,9 @@ fn scan_terrain(world: &mut World, center_x: i32, center_y: i32, radius: ScanRad
     if found_count == 0 {
         print_dashboard_panel(
             &format!("Scan Results: Center ({center_x}, {center_y}) | Radius {radius}"),
-            &format!(
-                "{}",
-                "  (No tiles found in range)                    "
-                    .dark_grey()
-                    .italic()
-            ),
+            "(No tiles found in range)",
+            Some(comfy_table::Color::DarkGrey),
+            Some(comfy_table::Attribute::Italic),
         );
     } else {
         print_dashboard_table(
@@ -1470,12 +1480,9 @@ fn get_tile_info(world: &mut World, x: i32, y: i32) {
     if x < 0 || y < 0 || x >= max_x || y >= max_y {
         print_dashboard_panel(
             &format!("Tile Info: ({x}, {y})"),
-            &format!(
-                "{}",
-                "  ERROR: Coordinates out of bounds             "
-                    .red()
-                    .bold()
-            ),
+            "ERROR: Coordinates out of bounds",
+            Some(comfy_table::Color::Red),
+            Some(comfy_table::Attribute::Bold),
         );
         return;
     }
@@ -1649,7 +1656,9 @@ fn print_great_works(world: &mut World) {
     if count == 0 {
         print_dashboard_panel(
             "Great Works",
-            &format!("{}", "  (No great works found)  ".dark_grey().italic()),
+            "(No great works found)",
+            Some(comfy_table::Color::DarkGrey),
+            Some(comfy_table::Attribute::Italic),
         );
     } else {
         print_dashboard_table("Great Works", table);
@@ -1710,7 +1719,9 @@ fn print_buildings(world: &mut World) {
     if count == 0 {
         print_dashboard_panel(
             "BUILDINGS",
-            &format!("{}", "  (No buildings found)  ".dark_grey().italic()),
+            "(No buildings found)",
+            Some(comfy_table::Color::DarkGrey),
+            Some(comfy_table::Attribute::Italic),
         );
     } else {
         print_dashboard_table("BUILDINGS", table);
@@ -1730,7 +1741,9 @@ fn print_bio(world: &mut World, target_id: u32) {
                 if bio.events.is_empty() {
                     print_dashboard_panel(
                         &bio_title,
-                        &format!("{}", "  (No events recorded)  ".dark_grey().italic()),
+                        "(No events recorded)",
+                        Some(comfy_table::Color::DarkGrey),
+                        Some(comfy_table::Attribute::Italic),
                     );
                 } else {
                     let mut table = Table::new();
@@ -1753,15 +1766,18 @@ fn print_bio(world: &mut World, target_id: u32) {
             } else {
                 print_dashboard_panel(
                     &bio_title,
-                    &format!("{}", "  (No biography component)  ".dark_grey().italic()),
+                    "(No biography component)",
+                    Some(comfy_table::Color::DarkGrey),
+                    Some(comfy_table::Attribute::Italic),
                 );
             }
 
             if let Some(dream) = dream {
-                let dream_content = format!("\"{}\"", dream.content);
                 print_dashboard_panel(
                     &format!("Last Dream (Tick {})", dream.tick),
-                    &format!("{}", dream_content.magenta().italic()),
+                    &format!("\"{}\"", dream.content),
+                    Some(comfy_table::Color::Magenta),
+                    Some(comfy_table::Attribute::Italic),
                 );
             }
             break;
@@ -1783,7 +1799,9 @@ fn print_stories(world: &mut World) {
     if tradition.stories.is_empty() {
         print_dashboard_panel(
             "ORAL TRADITION (STORIES)",
-            &format!("{}", "  (No stories recorded)  ".dark_grey().italic()),
+            "(No stories recorded)",
+            Some(comfy_table::Color::DarkGrey),
+            Some(comfy_table::Attribute::Italic),
         );
         return;
     }
@@ -1829,7 +1847,9 @@ fn print_chronicle(world: &mut World) {
     if chronicle.events.is_empty() {
         print_dashboard_panel(
             "COLONY CHRONICLE",
-            &format!("{}", "  (No history recorded)  ".dark_grey().italic()),
+            "(No history recorded)",
+            Some(comfy_table::Color::DarkGrey),
+            Some(comfy_table::Attribute::Italic),
         );
         return;
     }
@@ -1874,12 +1894,9 @@ fn print_log(world: &mut World) {
     if log.messages.is_empty() {
         print_dashboard_panel(
             "Message Log",
-            &format!(
-                "{}",
-                "  (No messages)                                "
-                    .dark_grey()
-                    .italic()
-            ),
+            "(No messages)",
+            Some(comfy_table::Color::DarkGrey),
+            Some(comfy_table::Attribute::Italic),
         );
         return;
     }
