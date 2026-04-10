@@ -54,7 +54,6 @@ pub mod biography;
 pub mod culture;
 pub use culture::*;
 /// Building placement and types.
-pub mod building;
 pub mod chronicle;
 /// Chronicle system and historical records.
 pub mod clothing;
@@ -89,7 +88,6 @@ pub mod hobby;
 pub use geomes::*;
 
 /// Housing and rest mechanics.
-pub mod housing;
 /// The Inspector system (Spec 091).
 pub mod inspector;
 /// Institutional Memory system (Spec 172).
@@ -108,11 +106,13 @@ pub mod memory;
 
 /// Tests for metal industry (Spec 024).
 pub mod metal_industry_tests;
+/// Terrain generation and grid management.
+/// Tests for mining logic (Spec 052).
+pub mod mining_tests;
 /// Pop needs (hunger, rest).
 pub mod needs;
 /// Notification system.
 pub mod notifications;
-pub mod parasitic_architecture;
 /// Pathfinding algorithms.
 pub mod pathfinding;
 /// Pop entity and management.
@@ -121,21 +121,14 @@ pub mod pathfinding;
 /// Field science and anomalies.
 pub mod science;
 /// Seasonal rhythms (Spring, Summer, Autumn, Winter).
-mod shift_integration_tests;
 /// Social needs and tavern.
 pub mod social;
 /// Spoilage and decay mechanics.
 pub mod spoilage;
 /// Resource storage limits and stockpile buildings.
 /// Structure durability and repair.
-pub mod structure;
 /// Technology and research system.
 pub mod tech;
-/// Terrain generation and grid management.
-mod work_building_tests;
-
-/// Tests for mining logic (Spec 052).
-pub mod mining_tests;
 
 /// Tests for mother lode logic (Spec 168).
 pub mod mother_lode_tests;
@@ -158,7 +151,7 @@ pub use ai_core::*;
 pub use balance::*;
 pub use beauty::*;
 pub use biography::*;
-pub use building::*;
+
 pub use chronicle::*;
 pub use control::*;
 pub use crowding::*;
@@ -175,7 +168,7 @@ pub use execution::*;
 pub use graffiti::*;
 pub use hazards::*;
 pub use hobby::*;
-pub use housing::*;
+
 pub use institutional_memory::*;
 pub use integration::*;
 pub use locations::*;
@@ -186,7 +179,7 @@ pub use notifications::*;
 pub use science::*;
 pub use social::*;
 pub use spoilage::*;
-pub use structure::*;
+
 pub use tech::*;
 
 mod tool_tests;
@@ -222,13 +215,7 @@ pub mod terraforming;
 pub use terraforming::*;
 
 /// Room quality calculation and memories (Spec 064).
-pub mod room_quality;
-pub use room_quality::*;
-
 /// Ruins system (Spec 167).
-pub mod ruins;
-pub use ruins::*;
-
 /// Hostile Fauna (Spec 048).
 pub mod fauna;
 pub use fauna::*;
@@ -285,10 +272,6 @@ mod heirloom_tests;
 
 mod retrograde_tests;
 
-mod structure_fragile_tests;
-
-mod structure_jury_rig_tests;
-
 /// Animal Husbandry system (Spec 075).
 /// Gastronomy system (Spec 166).
 /// Antagonistic Flora system (Spec 092).
@@ -309,13 +292,9 @@ mod fuel_industry_tests;
 /// Palette fatigue system (Spec 114).
 pub mod palette_fatigue;
 
-mod structure_maintenance_tests;
 pub use palette_fatigue::*;
 
 /// Spontaneous Architecture system (Spec 110).
-pub mod spontaneous_architecture;
-pub use spontaneous_architecture::*;
-
 /// Observatory and Overview Effect (Spec 115).
 pub mod observatory;
 pub use observatory::*;
@@ -422,8 +401,6 @@ pub use language::*;
 mod equipment_tests;
 
 /// Solar cycle and power generation (Spec 213).
-pub mod window;
-
 /// Hygiene system (Spec 220).
 pub mod hygiene;
 pub use hygiene::*;
@@ -484,7 +461,6 @@ pub mod quantum_twins;
 pub use quantum_twins::*;
 
 /// Holographic Facades (Spec 249).
-pub mod construction;
 pub mod hologram;
 
 mod hologram_tests;

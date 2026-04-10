@@ -1,5 +1,4 @@
-#[cfg(test)]
-mod tests {
+use bevy_ecs::prelude::*;
     use crate::layer1::building::{Building, BuildingType, ShiftSchedule};
     use crate::layer1::day_night::DayNightCycle;
     use crate::layer1::farm::Farm;
@@ -9,7 +8,7 @@ mod tests {
 
     use crate::layer1::utility_eval_types::ScorableCandidate;
     use crate::layer1::utility_types::UtilityWeights;
-    use bevy_ecs::prelude::*;
+
 
     // Helper to evaluate refine
     use crate::layer1::actions::evaluate_simple_action;
@@ -96,4 +95,3 @@ mod tests {
         assert_eq!(target, farm);
         assert!(utility > 0.0);
     }
-}

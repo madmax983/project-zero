@@ -1,8 +1,7 @@
-#[cfg(test)]
-mod tests {
+use bevy_ecs::prelude::*;
     use crate::layer1::structure::{fragile_decay_system, Fragile, Structure};
     use crate::layer1::GridPosition;
-    use bevy_ecs::prelude::*;
+
 
     fn setup_world() -> World {
         World::new()
@@ -77,4 +76,3 @@ mod tests {
             hp_high
         );
     }
-}

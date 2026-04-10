@@ -1,5 +1,4 @@
-#[cfg(test)]
-mod tests {
+use bevy_ecs::prelude::*;
     use crate::layer1::actions::evaluate_simple_action;
     use crate::layer1::building::{Building, BuildingType};
     use crate::layer1::structure::{
@@ -8,7 +7,7 @@ mod tests {
     use crate::layer1::utility_eval_types::ScorableCandidate;
     use crate::layer1::utility_types::UtilityWeights;
     use crate::layer1::GridPosition;
-    use bevy_ecs::prelude::*;
+
 
     fn setup_world() -> World {
         World::new()
@@ -149,4 +148,3 @@ mod tests {
         );
         assert_ne!(result.unwrap().1, building);
     }
-}

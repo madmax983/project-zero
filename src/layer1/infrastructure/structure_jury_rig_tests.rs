@@ -1,12 +1,11 @@
-#[cfg(test)]
-mod tests {
+use bevy_ecs::prelude::*;
     use crate::layer1::designation::DesignationType;
     use crate::layer1::fire::Fire;
     use crate::layer1::structure::{
         fire_damage_structure_system, process_jury_rig, Fragile, Structure,
     };
     use crate::layer1::GridPosition;
-    use bevy_ecs::prelude::*;
+
 
     fn setup_world() -> World {
         // Register components
@@ -151,4 +150,3 @@ mod tests {
         assert_eq!(DesignationType::JuryRig.char(), 'J'); // or similar
         assert_eq!(DesignationType::JuryRig.label(), "Jury-Rig");
     }
-}

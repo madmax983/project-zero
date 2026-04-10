@@ -1,5 +1,4 @@
-#[cfg(test)]
-mod tests {
+use bevy_ecs::prelude::*;
     use crate::layer1::building::{Building, BuildingType, ShiftSchedule};
     use crate::layer1::day_night::{DayNightCycle, TimeOfDay};
     use crate::layer1::farm::Farm;
@@ -9,7 +8,7 @@ mod tests {
     use crate::layer1::resources::{ColonyResources, RefiningProgress};
     use crate::layer1::utility_ai::evaluate_actions_system;
     use crate::layer1::utility_types::{ActionType, PopAction, UtilityConfig, UtilityWeights};
-    use bevy_ecs::prelude::*;
+
     use bevy_ecs::system::RunSystemOnce;
 
     fn setup_world() -> World {
@@ -277,4 +276,3 @@ mod tests {
             "Pop should research at night when shift is open"
         );
     }
-}

@@ -1,3 +1,4 @@
+use bevy_ecs::prelude::*;
 
     #[test]
     fn test_place_gate_adds_gate_component() {
