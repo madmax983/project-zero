@@ -24,6 +24,13 @@ pub fn register(schedule: &mut Schedule) {
             blob_spread_system,
             blob_consumption_system.after(blob_spread_system),
             flora_attack_system,
+        )
+            .in_set(Layer1SystemSet::Environment),
+    );
+    schedule.add_systems(
+        (
+            crate::layer1::nature::pyrophilic_flora::pyrophilic_ignition_harvest_system
+                .after(crate::layer1::fire::fire_spread_system),
             crate::layer1::flora::process_flora_migration,
             ancient_structure_decay_system,
             crate::layer1::graffiti::graffiti_decay_system,
