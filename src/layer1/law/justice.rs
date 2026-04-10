@@ -221,6 +221,11 @@ pub struct PardonIssuedEvent {
     pub target: Entity,
 }
 
+#[derive(Event)]
+pub struct ArrestEvent {
+    pub target: Entity,
+}
+
 // Updates CrimeRecord when a CrimeCommittedEvent is received
 pub fn process_crimes_system(
     mut events: EventReader<CrimeCommittedEvent>,

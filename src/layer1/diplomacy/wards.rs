@@ -19,6 +19,17 @@ pub struct WarDeclaredEvent {
     pub target_faction: FactionId,
 }
 
+#[derive(Component)]
+pub struct DiplomaticImmunity {
+    pub faction_id: FactionId,
+}
+
+#[derive(Event)]
+pub struct DiplomaticIncidentEvent {
+    pub faction_id: FactionId,
+    pub reason: String,
+}
+
 pub fn process_diplomatic_wards_system(
     ward_query: Query<(&DiplomaticWard, &Morale)>,
     mut standing: ResMut<DiplomaticStanding>,

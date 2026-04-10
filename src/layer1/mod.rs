@@ -73,8 +73,6 @@ pub mod dreams;
 pub mod edicts;
 /// Execution layer bridging utility AI to actions.
 pub mod execution;
-/// Farm building and food production.
-
 /// Pop health and damage.
 /// Deep crust geomes system (Spec 515).
 pub mod geomes;
@@ -289,10 +287,6 @@ mod retrograde_tests;
 mod structure_fragile_tests;
 
 mod structure_jury_rig_tests;
-
-/// Animal Husbandry system (Spec 075).
-
-/// Gastronomy system (Spec 166).
 
 /// Antagonistic Flora system (Spec 092).
 pub mod flora;
