@@ -17,6 +17,8 @@ pub fn register(schedule: &mut Schedule) {
             fire_spread_system.after(fire_pressure_check_system),
             fire_damage_pops_system.after(fire_spread_system),
             crate::layer1::structure::fire_damage_structure_system.after(fire_spread_system),
+            crate::layer1::nature::pyrophilic_flora::pyrophilic_ignition_harvest_system
+                .after(fire_spread_system),
             fire_damage_system
                 .after(fire_spread_system)
                 .after(fire_damage_pops_system)

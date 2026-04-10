@@ -125,6 +125,10 @@ pub enum ItemType {
     /// A unique item produced by a hobby (e.g., "Wooden Duck").
     /// ⚡ Bolt Optimization: Made Copy to eliminate heap allocations
     Curio(&'static str),
+    /// Seeds from a pyrophilic plant
+    BurntSeeds,
+    /// Fruit from a pyrophilic plant
+    PyrophilicFruit,
     /// A chemical stimulant that boosts speed but damages health.
     Stim,
     /// A chemical sedative that reduces stress but slows speed.
@@ -173,7 +177,8 @@ impl ItemType {
             | Self::AlienMeatA
             | Self::AlienMeatB
             | Self::GlowMushroom
-            | Self::MysteryMeal => Some(ResourceType::Food),
+            | Self::MysteryMeal
+            | Self::PyrophilicFruit => Some(ResourceType::Food),
             Self::Rations => Some(ResourceType::Rations),
             Self::Waste => Some(ResourceType::Waste),
             Self::BuildingPermit => Some(ResourceType::BuildingPermit),

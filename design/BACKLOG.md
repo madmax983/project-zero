@@ -333,7 +333,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `568` The Empathic Plague — `specs/568-the-empathic-plague.md`
 - [ ] `569` The Syzygy — `specs/569-the-syzygy.md`
 - [ ] `571` Diplomatic Contraband — `specs/571-diplomatic-contraband.md`
-- [ ] `572` The Pyrophilic Flora — `specs/572-the-pyrophilic-flora.md`
 
 - [ ] `574` The Debt-Bound Mercenaries — `specs/574-the-debt-bound-mercenaries.md`
 - [ ] `575` The Sleeper Ship Armada — `specs/575-the-sleeper-ship-armada.md`
