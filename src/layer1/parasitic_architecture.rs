@@ -1,6 +1,10 @@
 use crate::layer1::map::GridPosition;
 use crate::layer1::structure::Structure;
 use bevy_ecs::prelude::*;
+use crate::layer1::building::Building;
+use crate::layer1::chronicle::{AddChronicleEvent, EventImportance};
+use crate::layer1::events::BuildingRemovedEvent;
+
 
 /// Component indicating a megastructure that consumes the structural integrity of nearby buildings.
 #[derive(Component)]
@@ -15,11 +19,13 @@ pub struct ParasiticArchitecture {
 pub fn process_megastructure_consumption(
     mut commands: Commands,
     megastructures: Query<(&GridPosition, &ParasiticArchitecture)>,
-    mut buildings: Query<(Entity, &GridPosition, &mut Structure), Without<ParasiticArchitecture>>,
+    mut buildings: Query<(Entity, &GridPosition, Option<&Building>, &mut Structure), Without<ParasiticArchitecture>>,
+    mut removed_events: EventWriter<BuildingRemovedEvent>,
+    mut chronicle_events: EventWriter<AddChronicleEvent>,
 ) {
     for (mega_pos, parasitic) in megastructures.iter() {
         let radius_sq = parasitic.radius * parasitic.radius;
-        for (entity, build_pos, mut structure) in buildings.iter_mut() {
+        for (entity, build_pos, building, mut structure) in buildings.iter_mut() {
             let dx = (mega_pos.x as f32) - (build_pos.x as f32);
             let dy = (mega_pos.y as f32) - (build_pos.y as f32);
             let distance_sq = dx * dx + dy * dy;
@@ -29,6 +35,17 @@ pub fn process_megastructure_consumption(
 
                 if structure.current_hp <= 0.0 {
                     commands.entity(entity).despawn();
+                    if let Some(building) = building {
+                        removed_events.send(BuildingRemovedEvent {
+                            entity,
+                            position: *build_pos,
+                            building_type: building.building_type,
+                        });
+                        chronicle_events.send(AddChronicleEvent {
+                            text: format!("A {:?} was consumed by the parasitic megastructure at ({}, {}).", building.building_type, mega_pos.x, mega_pos.y),
+                            importance: EventImportance::Standard,
+                        });
+                    }
                 }
             }
         }
@@ -46,6 +63,8 @@ mod tests {
     #[test]
     fn test_megastructure_consumes_nearby_building_integrity() {
         let mut world = World::new();
+        world.init_resource::<Events<BuildingRemovedEvent>>();
+        world.init_resource::<Events<AddChronicleEvent>>();
 
         let _megastructure = world
             .spawn((
@@ -86,6 +105,8 @@ mod tests {
     #[test]
     fn test_megastructure_destroys_building() {
         let mut world = World::new();
+        world.init_resource::<Events<BuildingRemovedEvent>>();
+        world.init_resource::<Events<AddChronicleEvent>>();
 
         let _megastructure = world
             .spawn((
@@ -125,6 +146,8 @@ mod tests {
     #[test]
     fn test_megastructure_ignores_out_of_range_buildings() {
         let mut world = World::new();
+        world.init_resource::<Events<BuildingRemovedEvent>>();
+        world.init_resource::<Events<AddChronicleEvent>>();
 
         let _megastructure = world
             .spawn((

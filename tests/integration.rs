@@ -254,3 +254,6 @@ mod dynastic_succession_bridge;
 mod orbital_commute_bridge;
 #[path = "integration/void_whispers_chronicle.rs"]
 mod void_whispers_chronicle;
+
+#[path = "integration/parasitic_architecture_bridge.rs"]
+mod parasitic_architecture_bridge;

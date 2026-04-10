@@ -623,3 +623,9 @@
 - **Systems connected:** `process_orbital_commutes` (Orbital Commute) -> `Layer1SystemSet::Execution` (Execution Schedule)
 - **Glue added:** Registered `process_orbital_commutes` in `src/layer1/systems/execution.rs` correctly after start-of-tick actions.
 - **Tests:** `tests/integration/orbital_commute_bridge.rs`
+
+### INT-771: Parasitic Architecture -> BuildingRemovedEvent & Chronicle
+- **Date:** 2026-05-18
+- **Systems connected:** `process_megastructure_consumption` -> `BuildingRemovedEvent` & `AddChronicleEvent`
+- **Glue added:** Modified `process_megastructure_consumption` directly to emit `BuildingRemovedEvent` when buildings are consumed, ensuring cleanup (like ghost code residues or UI updates) works properly, and added narrative flavor via `AddChronicleEvent`.
+- **Tests:** `tests/integration/parasitic_architecture_bridge.rs`
