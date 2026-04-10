@@ -15049,7 +15049,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Black Market Airlock
+## The Black Market Airlock [SPECCED]
 
 **Layer:** 1
 
@@ -15063,7 +15063,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Memorial Scrap
+## Memorial Scrap [SPECCED]
 
 **Layer:** 2
 
@@ -15105,7 +15105,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Parasitic Artifact
+## The Parasitic Artifact [SPECCED]
 
 **Layer:** 1
 
@@ -15119,7 +15119,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Rogue Habitation Modules
+## Rogue Habitation Modules [SPECCED]
 
 **Layer:** 2
 
@@ -15133,7 +15133,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Debt Gravity
+## Debt Gravity [SPECCED]
 
 **Layer:** Cross-layer
 
