@@ -1216,7 +1216,8 @@ pub fn temporal_stutter_chronicle_bridge(
     for _event in events.read() {
         chronicle_events.send(AddChronicleEvent {
             importance: EventImportance::Minor,
-            text: "A map tile stuttered in time, causing buildings to revert temporarily.".to_string(),
+            text: "A map tile stuttered in time, causing buildings to revert temporarily."
+                .to_string(),
         });
     }
 }

@@ -440,7 +440,9 @@ mod tests {
         // Simulate consuming a Stim
         crate::layer1::chemical::consume_chemical(&mut world, pop, ChemicalType::Stim);
 
-        let state = world.get::<ChemicalState>(pop).unwrap();
+        let state = world
+            .get::<ChemicalState>(pop)
+            .expect("Missing component or evaluation result");
         assert!(state
             .active_effects
             .iter()
@@ -481,10 +483,17 @@ mod tests {
             crate::layer1::chemical::consume_chemical(&mut world, pop, ChemicalType::Stim);
         }
 
-        let state = world.get::<ChemicalState>(pop).unwrap();
+        let state = world
+            .get::<ChemicalState>(pop)
+            .expect("Missing component or evaluation result");
         let addiction = state.get_addiction(ChemicalType::Stim);
         assert!(addiction.is_some());
-        assert!(addiction.unwrap().severity > 0.0);
+        assert!(
+            addiction
+                .expect("Missing component or evaluation result")
+                .severity
+                > 0.0
+        );
     }
 
     #[test]
@@ -514,7 +523,9 @@ mod tests {
         // Run system
         crate::layer1::chemical::addiction_system(&mut world);
 
-        let state = world.get::<ChemicalState>(pop).unwrap();
+        let state = world
+            .get::<ChemicalState>(pop)
+            .expect("Missing component or evaluation result");
         assert!(state.is_in_withdrawal(ChemicalType::Stim));
     }
 
@@ -543,7 +554,7 @@ mod tests {
             evaluate_consume_chemical(pop_pos, &needs, &weights, Some(&state), 0.0, &[item]);
 
         assert!(result.is_some());
-        let (score, _) = result.unwrap();
+        let (score, _) = result.expect("Missing component or evaluation result");
         assert!(score >= 1.0, "Withdrawal should produce high score");
     }
 
@@ -562,7 +573,7 @@ mod tests {
         let result = evaluate_consume_chemical(pop_pos, &needs, &weights, None, 0.0, &[item]);
 
         assert!(result.is_some());
-        let (score, _) = result.unwrap();
+        let (score, _) = result.expect("Missing component or evaluation result");
         assert!(score > 0.5, "Tired pop should want Stim");
     }
 
@@ -585,7 +596,7 @@ mod tests {
         );
 
         assert!(result.is_some());
-        let (score, _) = result.unwrap();
+        let (score, _) = result.expect("Missing component or evaluation result");
         assert!(score > 0.5, "Stressed pop should want Sedative");
     }
 
@@ -606,7 +617,9 @@ mod tests {
 
         crate::layer1::chemical::consume_chemical(&mut world, pop, ChemicalType::Stim);
 
-        let health = world.get::<Health>(pop).unwrap();
+        let health = world
+            .get::<Health>(pop)
+            .expect("Missing component or evaluation result");
         assert!(health.current < 100.0);
         assert!((health.current - 98.0).abs() < f32::EPSILON); // 100 - 2
     }
@@ -627,7 +640,9 @@ mod tests {
 
         crate::layer1::chemical::consume_chemical(&mut world, pop, ChemicalType::Sedative);
 
-        let stress = world.get::<StressTracker>(pop).unwrap();
+        let stress = world
+            .get::<StressTracker>(pop)
+            .expect("Missing component or evaluation result");
         assert!(stress.accumulated_stress < 50.0);
         assert!((stress.accumulated_stress - 30.0).abs() < f32::EPSILON); // 50 - 20
     }
@@ -652,7 +667,9 @@ mod tests {
 
         crate::layer1::chemical::addiction_system(&mut world);
 
-        let state = world.get::<ChemicalState>(pop).unwrap();
+        let state = world
+            .get::<ChemicalState>(pop)
+            .expect("Missing component or evaluation result");
         // Duration 1 -> 0, still kept (retained if duration > 0 BEFORE decrement? No.
         // Logic: if duration > 0 { duration -= 1; true } else { false }
         // So duration 1 -> duration 0 -> kept.
@@ -661,7 +678,9 @@ mod tests {
 
         crate::layer1::chemical::addiction_system(&mut world);
 
-        let state = world.get::<ChemicalState>(pop).unwrap();
+        let state = world
+            .get::<ChemicalState>(pop)
+            .expect("Missing component or evaluation result");
         // Duration 0 -> else branch -> removed.
         assert!(state.active_effects.is_empty());
     }

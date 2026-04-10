@@ -128,7 +128,9 @@ pub fn trigger_hyperlane_collapse_system(
 ) {
     for (entity, lane) in query.iter() {
         if lane.stability <= 0.0 {
-            collapse_events.send(HyperlaneCollapseEvent { lane_entity: entity });
+            collapse_events.send(HyperlaneCollapseEvent {
+                lane_entity: entity,
+            });
         }
     }
 }
@@ -150,9 +152,7 @@ pub fn process_hyperlane_collapse_system(
     }
 }
 
-pub fn recalculate_trade_routes_system(
-    mut events: EventReader<TradeRouteSeveredEvent>,
-) {
+pub fn recalculate_trade_routes_system(mut events: EventReader<TradeRouteSeveredEvent>) {
     for _ev in events.read() {
         // Trigger a global recalculation of paths and trade networks
         // If a route cannot be reformed, emit a Starvation/Shortage event for affected colonies
@@ -258,11 +258,14 @@ mod tests {
         app.insert_resource(SimulationTime::default());
         app.add_event::<HyperlaneCollapseEvent>();
         app.add_event::<TradeRouteSeveredEvent>();
-        app.add_systems(Update, (
-            trigger_hyperlane_collapse_system,
-            process_hyperlane_collapse_system,
-            recalculate_trade_routes_system
-        ));
+        app.add_systems(
+            Update,
+            (
+                trigger_hyperlane_collapse_system,
+                process_hyperlane_collapse_system,
+                recalculate_trade_routes_system,
+            ),
+        );
         app
     }
 
@@ -274,21 +277,27 @@ mod tests {
         let sys_b = app.world_mut().spawn(StarSystem { id: 2 }).id();
 
         // Spawn a hyperlane connecting A and B
-        let lane = app.world_mut().spawn(Hyperlane {
-            start: sys_a,
-            end: sys_b,
-            stability: 100.0,
-        }).id();
+        let lane = app
+            .world_mut()
+            .spawn(Hyperlane {
+                start: sys_a,
+                end: sys_b,
+                stability: 100.0,
+            })
+            .id();
 
         // Trigger a collapse event
-        app.world_mut().resource_mut::<Events<HyperlaneCollapseEvent>>().send(HyperlaneCollapseEvent {
-            lane_entity: lane,
-        });
+        app.world_mut()
+            .resource_mut::<Events<HyperlaneCollapseEvent>>()
+            .send(HyperlaneCollapseEvent { lane_entity: lane });
 
         app.update();
 
         // The hyperlane should be despawned or marked as collapsed
-        assert!(app.world().get::<Hyperlane>(lane).is_none(), "Hyperlane should be destroyed after a collapse");
+        assert!(
+            app.world().get::<Hyperlane>(lane).is_none(),
+            "Hyperlane should be destroyed after a collapse"
+        );
     }
 
     #[test]
@@ -298,11 +307,14 @@ mod tests {
         let sys_a = app.world_mut().spawn(StarSystem { id: 1 }).id();
         let sys_b = app.world_mut().spawn(StarSystem { id: 2 }).id();
 
-        let lane = app.world_mut().spawn(Hyperlane {
-            start: sys_a,
-            end: sys_b,
-            stability: 0.0, // trigger system requires stability <= 0.0
-        }).id();
+        let lane = app
+            .world_mut()
+            .spawn(Hyperlane {
+                start: sys_a,
+                end: sys_b,
+                stability: 0.0, // trigger system requires stability <= 0.0
+            })
+            .id();
 
         app.update();
 

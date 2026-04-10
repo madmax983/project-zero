@@ -6,11 +6,11 @@
 use crate::layer1::map::GridPosition;
 use crate::layer1::resources::ColonyResources;
 use crate::layer1::weather::{WeatherState, WeatherType};
+use bevy::utils::{HashMap, HashSet};
 use bevy_ecs::prelude::*;
 use rand::seq::SliceRandom;
 use rand::Rng;
 use std::collections::VecDeque;
-use bevy::utils::{HashMap, HashSet};
 
 /// Auroral power generation.
 pub mod auroral;
