@@ -6,18 +6,8 @@ pub struct LostInTransit {
     pub cycles_lost: u32,
 }
 
-#[derive(Debug, Clone, PartialEq, Eq)]
-pub enum AnomalyType {
-    AlteredCargo,
-    ChangedCrew,
-    MysteriousWarnings,
-    Unknown,
-}
-
 #[derive(Component)]
-pub struct GhostShip {
-    pub anomaly_type: AnomalyType,
-}
+pub struct GhostShip;
 
 #[derive(Event)]
 pub struct EvaluateTransitEvent {
@@ -56,9 +46,7 @@ pub fn evaluate_lost_ship_return_system(
         if rng.gen_bool(1.0) {
             // Assume RNG favors return for the test
             commands.entity(event.ship).remove::<LostInTransit>();
-            commands.entity(event.ship).insert(GhostShip {
-                anomaly_type: AnomalyType::Unknown,
-            });
+            commands.entity(event.ship).insert(GhostShip);
             chronicle_events.send(AddChronicleEvent {
                 text: "A ghost ship has returned from the void.".to_string(),
                 importance: EventImportance::Major,
