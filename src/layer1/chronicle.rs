@@ -82,6 +82,8 @@ pub struct ChronicleEvent {
 }
 
 /// Chronicle resource - stores the colony's historical record.
+pub const MAX_CHRONICLE_EVENTS: usize = 1000;
+
 #[derive(Resource, Default)]
 pub struct Chronicle {
     /// List of events in the chronicle.
@@ -109,6 +111,10 @@ impl Chronicle {
             text,
             importance,
         });
+
+        if self.events.len() > MAX_CHRONICLE_EVENTS {
+            self.events.remove(0);
+        }
     }
 
     /// Add a pre-history event (year 0, tick 0) to the chronicle.
@@ -122,6 +128,10 @@ impl Chronicle {
             text,
             importance,
         });
+
+        if self.events.len() > MAX_CHRONICLE_EVENTS {
+            self.events.remove(0);
+        }
     }
 }
 

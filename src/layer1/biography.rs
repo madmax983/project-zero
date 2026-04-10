@@ -53,6 +53,8 @@ pub struct BiographyEvent {
 /// assert_eq!(bio.events.len(), 1);
 /// assert_eq!(bio.events[0].tick, 100);
 /// ```
+pub const MAX_BIOGRAPHY_EVENTS: usize = 50;
+
 #[derive(Component, Default, Debug, Clone)]
 pub struct Biography {
     /// Chronological list of life events.
@@ -63,6 +65,9 @@ impl Biography {
     /// Appends a new event to the biography.
     pub fn add_event(&mut self, tick: u64, text: String) {
         self.events.push(BiographyEvent { tick, text });
+        if self.events.len() > MAX_BIOGRAPHY_EVENTS {
+            self.events.remove(0);
+        }
     }
 }
 

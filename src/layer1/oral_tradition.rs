@@ -39,6 +39,9 @@ pub enum StoryGenre {
 
 /// Resource storing the collective oral tradition of the colony.
 #[derive(Resource, Default, Debug)]
+pub const MAX_STORIES: usize = 100;
+
+#[derive(Resource, Default, Debug)]
 pub struct OralTradition {
     /// The collection of known stories.
     pub stories: Vec<Story>,
@@ -55,6 +58,9 @@ impl OralTradition {
             .any(|s| s.historical_date == story.historical_date)
         {
             self.stories.push(story);
+            if self.stories.len() > MAX_STORIES {
+                self.stories.remove(0);
+            }
         }
     }
 }
