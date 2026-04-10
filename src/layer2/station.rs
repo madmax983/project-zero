@@ -14,6 +14,8 @@ pub enum StationType {
     MiningPlatform,
     /// A facility for ship construction and repair.
     Shipyard,
+    /// A brewery specializing in zero-g fermentation.
+    Brewery,
 }
 
 impl StationType {
@@ -24,6 +26,7 @@ impl StationType {
             Self::Outpost => vec![(ResourceType::Metal, 50.0)],
             Self::MiningPlatform => vec![(ResourceType::Metal, 100.0), (ResourceType::Fuel, 10.0)],
             Self::Shipyard => vec![(ResourceType::Metal, 200.0), (ResourceType::Fuel, 50.0)],
+            Self::Brewery => vec![(ResourceType::Metal, 150.0)],
         }
     }
 
@@ -34,6 +37,7 @@ impl StationType {
             Self::Outpost => "Outpost",
             Self::MiningPlatform => "Mining Platform",
             Self::Shipyard => "Shipyard",
+            Self::Brewery => "Zero-G Brewery",
         }
     }
 
@@ -44,11 +48,40 @@ impl StationType {
             Self::Outpost => '+',
             Self::MiningPlatform => '⚒',
             Self::Shipyard => '⚓',
+            Self::Brewery => 'B',
         }
     }
 }
 
-/// Component marking an entity as a space station.
+/// Component for a Zero-G Brewery station.
+#[derive(Component, Debug, Clone)]
+pub struct ZeroGBrewery {
+    /// Timer for producing Void-Ale.
+    pub production_time: bevy_time::Timer,
+}
+
+/// System to handle Zero-G fermentation.
+pub fn zero_g_fermentation_system(
+    time: Res<bevy_time::Time>,
+    mut query: Query<(
+        &mut ZeroGBrewery,
+        &crate::layer2::system::GravityLevel,
+        &mut crate::layer1::economy::inventory::Inventory,
+    )>,
+) {
+    for (mut brewery, gravity, mut inventory) in query.iter_mut() {
+        if *gravity == crate::layer2::system::GravityLevel::ZeroG {
+            brewery.production_time.tick(time.delta());
+            if brewery.production_time.just_finished() {
+                inventory.try_add(crate::layer1::economy::inventory::InventoryItem {
+                    item_type: crate::layer1::items::ItemType::VoidAle,
+                    entity: None,
+                });
+            }
+        }
+    }
+}
+
 #[derive(Component, Debug, Clone)]
 pub struct Station {
     /// The type of station.

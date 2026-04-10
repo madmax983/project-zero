@@ -141,3 +141,128 @@ fn test_build_station_fails_insufficient_resources() {
     // Verify Order Not Consumed
     assert!(world.get::<FleetOrder>(fleet).is_some());
 }
+
+#[test]
+fn test_zero_g_fermentation_production() {
+    let mut world = setup_world();
+    let planet = world.spawn_empty().id();
+
+    // Arrange: Setup world with an orbital station capable of fermentation
+    let orbital_station = world.spawn((
+        Station {
+            station_type: StationType::Brewery,
+        },
+        OrbitalBody {
+            name: "Brewery Station".to_string(),
+            radius: 1.0,
+            color: Color::Gray,
+            char: 'B',
+        },
+        Orbit {
+            parent: planet,
+            radius: 10.0,
+            speed: 0.1,
+            angle: 0.0,
+        },
+        crate::layer2::system::GravityLevel::ZeroG,
+        crate::layer2::station::ZeroGBrewery {
+            production_time: bevy_time::Timer::new(std::time::Duration::from_secs_f32(1.0), bevy_time::TimerMode::Repeating),
+        },
+        crate::layer1::economy::inventory::Inventory::default(),
+    )).id();
+
+    // Act: Advance simulation time for a production cycle
+    let mut schedule = Schedule::default();
+    schedule.add_systems(crate::layer2::station::zero_g_fermentation_system);
+
+    let mut time: bevy_time::Time = bevy_time::Time::default();
+    time.advance_by(std::time::Duration::from_secs_f32(1.1));
+    world.insert_resource(time);
+
+    schedule.run(&mut world);
+
+    // Assert: Verify Void-Ale was produced in the station's inventory
+    let inventory = world.get::<crate::layer1::economy::inventory::Inventory>(orbital_station).unwrap();
+    let has_ale = inventory.items.iter().any(|item| item.item_type == crate::layer1::items::ItemType::VoidAle);
+    assert!(has_ale, "Zero-G fermentation should produce Void-Ale");
+}
+
+#[test]
+fn test_zero_g_fermentation_consumption_morale() {
+    let mut world = setup_world();
+
+    // Arrange: Setup world with a colonist consuming Void-Ale
+    let pop_entity = world.spawn((
+        crate::layer1::pop::Pop,
+        crate::layer1::needs::Needs {
+            leisure: 0.2, // Low leisure
+            ..Default::default()
+        },
+        crate::layer1::economy::inventory::Inventory {
+            items: vec![crate::layer1::economy::inventory::InventoryItem {
+                item_type: crate::layer1::items::ItemType::VoidAle,
+                entity: None,
+            }],
+            capacity: 5,
+        }
+    )).id();
+
+    // Act: Advance simulation to trigger consumption
+    let initial_morale = world.get::<crate::layer1::needs::Needs>(pop_entity).unwrap().leisure;
+
+    let mut schedule = Schedule::default();
+    schedule.add_systems(crate::layer1::systems::consumption::consume_void_ale_system);
+    schedule.run(&mut world);
+
+    // Assert: Verify morale increases significantly
+    let new_morale = world.get::<crate::layer1::needs::Needs>(pop_entity).unwrap().leisure;
+    assert!(new_morale > initial_morale, "Consuming Void-Ale should increase morale");
+
+    let inv = world.get::<crate::layer1::economy::inventory::Inventory>(pop_entity).unwrap();
+    assert!(inv.items.is_empty(), "Void-Ale should be consumed");
+}
+
+#[test]
+fn test_zero_g_fermentation_requires_zero_g() {
+    let mut world = setup_world();
+    let planet = world.spawn_empty().id();
+
+    // Arrange: Attempt to produce Void-Ale on the ground (MicroGravity or Normal)
+    let ground_brewery = world.spawn((
+        Station {
+            station_type: StationType::Brewery,
+        },
+        OrbitalBody {
+            name: "Ground Brewery".to_string(),
+            radius: 1.0,
+            color: Color::Gray,
+            char: 'B',
+        },
+        Orbit {
+            parent: planet,
+            radius: 1.0,
+            speed: 0.1,
+            angle: 0.0,
+        },
+        crate::layer2::system::GravityLevel::Normal,
+        crate::layer2::station::ZeroGBrewery {
+            production_time: bevy_time::Timer::new(std::time::Duration::from_secs_f32(1.0), bevy_time::TimerMode::Repeating),
+        },
+        crate::layer1::economy::inventory::Inventory::default(),
+    )).id();
+
+    // Act: Advance simulation time
+    let mut schedule = Schedule::default();
+    schedule.add_systems(crate::layer2::station::zero_g_fermentation_system);
+
+    let mut time: bevy_time::Time = bevy_time::Time::default();
+    time.advance_by(std::time::Duration::from_secs_f32(1.1));
+    world.insert_resource(time);
+
+    schedule.run(&mut world);
+
+    // Assert: Verify Void-Ale was NOT produced
+    let inventory = world.get::<crate::layer1::economy::inventory::Inventory>(ground_brewery).unwrap();
+    let has_ale = inventory.items.iter().any(|item| item.item_type == crate::layer1::items::ItemType::VoidAle);
+    assert!(!has_ale, "Void-Ale cannot be produced on the ground");
+}

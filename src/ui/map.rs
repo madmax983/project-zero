@@ -916,6 +916,7 @@ pub const fn get_resource_char(resource: ResourceType) -> &'static str {
         ResourceType::Tools => "T",
         ResourceType::BuildingPermit => "P",
         ResourceType::MemoryCore => "M",
+        ResourceType::VoidAle => "V",
     }
 }
 
@@ -946,6 +947,7 @@ pub const fn get_resource_color(resource: ResourceType) -> Color {
         ResourceType::Alcohol => Color::Rgb(148, 0, 211), // DarkViolet
         ResourceType::Scrap => Color::Rgb(105, 105, 105), // DimGray
         ResourceType::MemoryCore => Color::Rgb(148, 0, 211), // DarkViolet
+        ResourceType::VoidAle => Color::Yellow,
     }
 }
 
