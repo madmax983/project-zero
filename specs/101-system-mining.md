@@ -342,6 +342,7 @@ pub fn mining_system(
 ### 2. Update `FleetOrder` Enum
 
 *Note: This requires updating the existing `FleetOrder` definition in `src/layer2/fleet.rs`. The Builder must do this.*
+*Architect:* See related specifications for design details. MVP implementation should follow standard conventions.
 
 ```rust
 // In src/layer2/fleet.rs

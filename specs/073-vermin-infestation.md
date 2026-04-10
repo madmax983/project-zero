@@ -214,6 +214,7 @@ pub fn calculate_spoilage_modifier(vermin: &VerminState) -> f32 {
 ### 4. Integration with Spoilage System (`src/layer1/spoilage.rs`)
 
 *Builder Note: Modify `spoilage_system` to use the modifier.*
+*Architect:* See related specifications for design details. MVP implementation should follow standard conventions.
 
 ```rust
 // In src/layer1/spoilage.rs
@@ -234,6 +235,7 @@ pub fn spoilage_system(world: &mut World) {
 ### 5. Add Policy (`src/layer1/edicts.rs`)
 
 *Builder Note: Add `PestControl` to `Policy` enum.*
+*Architect:* See related specifications for design details. MVP implementation should follow standard conventions.
 
 ```rust
 pub enum Policy {

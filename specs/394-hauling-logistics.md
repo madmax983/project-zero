@@ -42,6 +42,7 @@ mod tests {
         // The builder should not be able to find valid materials
         let builder = app.world().get::<Builder>(pop).unwrap();
         assert!(!builder.has_materials, "Builder cannot use loose items");
+*Architect:* See related specifications for design details. MVP implementation should follow standard conventions.
     }
 
     #[test]
@@ -122,6 +123,7 @@ pub struct Stockpile {
 
 #[derive(Component)]
 pub struct Builder {
+*Architect:* See related specifications for design details. MVP implementation should follow standard conventions.
     pub has_materials: bool,
 }
 

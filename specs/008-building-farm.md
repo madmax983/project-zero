@@ -463,6 +463,7 @@ After tests pass, consider these improvements:
 1. **Manual worker assignment**: Like spec 007, requires manual testing
    - Spec 009 will implement automatic job assignment
    - Current: Builder must manually add pops to `workers` vector
+  *Architect:* See related specifications for design details. MVP implementation should follow standard conventions.
 
 2. **Constants hardcoded**: Production/consumption rates are magic numbers
    - Future: Extract to config or balance file

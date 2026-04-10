@@ -246,6 +246,7 @@ pub fn apply_isolation_effects_system(
 ### 2. Update `Trait` Enum
 
 *Builder needs to update `src/layer1/traits.rs` to include `Hermit`.*
+*Architect:* See related specifications for design details. MVP implementation should follow standard conventions.
 
 ## REFACTOR Phase: Quality & Design
 
