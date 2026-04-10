@@ -41,6 +41,11 @@ pub fn register(schedule: &mut Schedule) {
             .in_set(Layer1SystemSet::Environment),
     );
     schedule.add_systems(
+        (crate::layer1::agriculture::pyrophilic::pyrophilic_ignition_harvest_system
+            .after(fire_spread_system),)
+            .in_set(Layer1SystemSet::Environment),
+    );
+    schedule.add_systems(
         (
             crate::layer1::temporal_ghost_towns::process_temporal_stutters,
             crate::layer1::temporal_ghost_towns::process_temporal_recovery,

@@ -122,6 +122,10 @@ pub enum ItemType {
     GlowMushroom,
     /// A meal with unknown effects.
     MysteryMeal,
+    /// Fruit yielded by burning Pyrophilic Flora.
+    PyrophilicFruit,
+    /// Seeds yielded by burning Pyrophilic Flora.
+    BurntSeeds,
     /// A unique item produced by a hobby (e.g., "Wooden Duck").
     /// ⚡ Bolt Optimization: Made Copy to eliminate heap allocations
     Curio(&'static str),
@@ -173,7 +177,8 @@ impl ItemType {
             | Self::AlienMeatA
             | Self::AlienMeatB
             | Self::GlowMushroom
-            | Self::MysteryMeal => Some(ResourceType::Food),
+            | Self::MysteryMeal
+            | Self::PyrophilicFruit => Some(ResourceType::Food),
             Self::Rations => Some(ResourceType::Rations),
             Self::Waste => Some(ResourceType::Waste),
             Self::BuildingPermit => Some(ResourceType::BuildingPermit),

@@ -11,6 +11,9 @@ mod hydroponics_tests;
 #[cfg(test)]
 mod preservation_tests;
 
+pub mod pyrophilic;
+
 pub use farm::*;
 pub use gastronomy::*;
 pub use husbandry::*;
+pub use pyrophilic::*;
