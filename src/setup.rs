@@ -149,6 +149,7 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     world.init_resource::<crate::layer2::cartographers_curse::MapTelemetry>();
     world.init_resource::<bevy_ecs::event::Events<crate::layer2::cartographers_curse::SellTelemetryEvent>>();
     world.insert_resource(MenuState::default());
+    world.init_resource::<crate::layer1::unseen_bureaucracy::ShadowEconomy>();
 
     let terrain = generate_terrain(80, 50);
     let mut roof =

@@ -372,3 +372,4 @@
 - [x] `916` The Sympathetic Infrastructure — `specs/916-sympathetic-infrastructure.md` — completed 2026-06-05
 - [x] `915` Orbital Debris Cult — `specs/915-orbital-debris-cult.md` — completed
 - [x] `INT-573` Integration: The Silent Generation -> Trauma Tracker — completed 2026-06-15
+- [x] `936` Unseen Bureaucracy — `specs/936-unseen-bureaucracy.md` — completed 2026-04-10
