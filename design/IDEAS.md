@@ -15077,7 +15077,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Work-Shift Cartel
+## The Work-Shift Cartel [SPECCED]
 
 **Layer:** 1
 
@@ -15230,7 +15230,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Martyr's Shrine
+## The Martyr's Shrine [SPECCED]
 
 **Layer:** 1
 
@@ -15244,7 +15244,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Cultural Ransom
+## Cultural Ransom [SPECCED]
 
 **Layer:** 3
 
@@ -15258,7 +15258,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Generation Ship Drift
+## Generation Ship Drift [SPECCED]
 
 **Layer:** Cross-layer
 
