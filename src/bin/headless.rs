@@ -1793,7 +1793,6 @@ fn print_bio(world: &mut World, target_id: u32) {
 fn print_stories(world: &mut World) {
     use comfy_table::presets::UTF8_FULL;
     use comfy_table::{Attribute, Cell, Color, ContentArrangement, Table};
-    use crossterm::style::Stylize;
     let tradition = world.resource::<OralTradition>();
 
     if tradition.stories.is_empty() {
