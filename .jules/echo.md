@@ -14,3 +14,8 @@
 
 ## 4. 🧪 VERIFY - The "idiot proofing"
 - "After the fix, `cargo build` and `cargo run --bin scale --features native` compile correctly out of the box. The narrative and headless examples in the README also compile and run beautifully without feature flags."
+
+## DX Audit Update
+- 🤦 **The Confusion:** "Tried to run `cargo test --doc` but it failed on `src/layer1/beauty.rs` with `expected f32, found &str`!"
+- 🕵️ **The Reality:** "The doctest was outdated and tried to pass `value: "very pretty"` to an `f32` field."
+- 💡 **The Fix:** "Changed the snippet to pass `10.0` instead, making the doctest pass."
