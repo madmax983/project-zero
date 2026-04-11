@@ -570,7 +570,7 @@ mod tests {
         pollution_effects_system(&mut world);
 
         // Health should drop
-        let health = world.get::<Health>(pop).unwrap();
+        let health = world.get::<Health>(pop).expect("Component should exist");
         assert!(
             health.current < 100.0,
             "Health should drop due to pollution"

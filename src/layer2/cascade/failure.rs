@@ -122,7 +122,7 @@ mod tests {
         app.update();
 
         // Assert
-        let logistics = app.world().get::<SystemLogistics>(entity).unwrap();
+        let logistics = app.world().get::<SystemLogistics>(entity).expect("Component should exist");
         assert_eq!(logistics.capacity, 50); // Capacity drops to match colony output ratio
     }
 
@@ -148,7 +148,7 @@ mod tests {
         app.update();
 
         // Assert
-        let defense = app.world().get::<SectorDefense>(entity).unwrap();
+        let defense = app.world().get::<SectorDefense>(entity).expect("Component should exist");
         assert!(defense.power < 1000); // Defenses should weaken under strain
     }
 
@@ -170,7 +170,7 @@ mod tests {
         app.update();
 
         // Assert
-        let threat = app.world().get::<InvasionThreat>(entity).unwrap();
+        let threat = app.world().get::<InvasionThreat>(entity).expect("Component should exist");
         assert!(threat.level > 0.0);
     }
 }
