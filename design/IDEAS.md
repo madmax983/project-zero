@@ -4856,7 +4856,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Planetary Cortex
+## The Planetary Cortex [SPECCED]
 
 **Layer:** 1
 
@@ -4870,7 +4870,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Quantum Stockpiles
+## Quantum Stockpiles [SPECCED]
 
 **Layer:** Cross-layer
 
@@ -15435,7 +15435,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Silent World
+## The Silent World [SPECCED]
 
 **Layer:** 2 -> 1
 

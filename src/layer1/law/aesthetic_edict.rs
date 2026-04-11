@@ -148,7 +148,7 @@ mod tests {
         policies.active_policies.insert(Policy::Aesthetic);
         app.insert_resource(policies);
 
-        let mut grid = AtmosphereGrid::new(10, 10);
+        let grid = AtmosphereGrid::new(10, 10);
         app.insert_resource(grid);
 
         let factory = app
