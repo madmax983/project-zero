@@ -69,7 +69,7 @@ mod tests {
             sanctions.is_some(),
             "Violating member should receive TradeSanctions"
         );
-        assert_eq!(sanctions.unwrap().multiplier, 0.5);
+        assert_eq!(sanctions.expect("Component should exist").multiplier, 0.5);
     }
 
     #[test]
@@ -130,7 +130,7 @@ mod tests {
             "Violating member should keep TradeSanctions"
         );
         assert_eq!(
-            sanctions.unwrap().multiplier,
+            sanctions.expect("Component should exist").multiplier,
             0.5,
             "Multiplier should be updated to 0.5"
         );
