@@ -58,6 +58,8 @@ pub enum FleetOrder {
     BuildStation(StationType),
     /// Order to mine a target entity.
     Mine(Entity),
+    /// Order to claim a derelict station.
+    ClaimStation(Entity),
 }
 
 /// System to process `FleetOrder`s.

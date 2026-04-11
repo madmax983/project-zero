@@ -1311,6 +1311,9 @@ fn render_quirk(frame: &mut Frame, area: Rect, quirk: &Quirk) {
         QuirkType::Glitchy => "⚠ Glitchy (Stops Production)",
         QuirkType::Overheating => "⚠ Overheating (Fire Risk)",
         QuirkType::Demanding => "⚠ Demanding (Anger++)",
+        QuirkType::Haunted => "⚠ Haunted (Stress++)",
+        QuirkType::GasLeak => "⚠ Gas Leak (Hazard)",
+        QuirkType::Pests => "⚠ Pests (Disease Risk)",
     };
 
     let p =

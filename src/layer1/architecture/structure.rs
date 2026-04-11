@@ -250,6 +250,7 @@ pub fn process_repair(world: &mut World, target_entity: Entity, amount: f32) -> 
     // 3. Apply repair
     let mut new_hp = 0.0;
     let mut max_hp = 0.0;
+    let mut old_hp = 0.0;
     let mut ancient = false;
 
     // Check for AncientStructure prevention
@@ -259,6 +260,7 @@ pub fn process_repair(world: &mut World, target_entity: Entity, amount: f32) -> 
     {
         ancient = true;
     } else if let Some(mut s) = world.get_mut::<Structure>(structure_entity) {
+        old_hp = s.current_hp;
         s.current_hp = (s.current_hp + amount).min(s.max_hp);
         new_hp = s.current_hp;
         max_hp = s.max_hp;
@@ -266,6 +268,17 @@ pub fn process_repair(world: &mut World, target_entity: Entity, amount: f32) -> 
 
     if ancient {
         return false; // Cannot repair
+    }
+
+    // Spec 901: Reveal hidden quirks on repair
+    if new_hp > old_hp {
+        if let Some(hidden_quirk) = world
+            .get::<crate::layer2::derelict_stations::HiddenQuirk>(structure_entity)
+            .map(|q| q.0)
+        {
+            world.entity_mut(structure_entity).remove::<crate::layer2::derelict_stations::HiddenQuirk>();
+            world.entity_mut(structure_entity).insert(crate::layer1::social::rituals::Quirk { quirk_type: hidden_quirk });
+        }
     }
 
     let fully_repaired = (new_hp - max_hp).abs() < f32::EPSILON;
