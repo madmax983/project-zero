@@ -1,3 +1,44 @@
+//! # Planetary Traits (Quirks)
+//!
+//! This module defines the planetary-scale physical and atmospheric modifiers that
+//! alter the fundamental constants of a simulation scenario. Rather than hardcoding
+//! environment variables like gravity or orbit duration, traits like [`PlanetaryTrait::HighGravity`]
+//! and [`PlanetaryTrait::RapidOrbit`] dynamically shift these rules.
+//!
+//! This is the mechanical foundation of a planet's "Personality", affecting base entity stats like
+//! pop movement, solar power output, and the total tick duration of a solar day.
+//!
+//! ## Examples
+//!
+//! Simulating a world with a thin atmosphere and a slow orbit:
+//!
+//! ```rust
+//! use bevy_ecs::prelude::*;
+//! use scale::layer1::quirks::{PlanetaryTrait, PlanetaryTraits, apply_quirk_modifiers_system};
+//! use scale::layer1::day_night::DayNightCycle;
+//!
+//! let mut world = World::new();
+//!
+//! // Define the specific traits for the scenario
+//! world.insert_resource(PlanetaryTraits(vec![
+//!     PlanetaryTrait::ThinAtmosphere,
+//!     PlanetaryTrait::SlowOrbit,
+//! ]));
+//!
+//! // Provide the necessary default component for the cycle
+//! world.insert_resource(DayNightCycle::default());
+//!
+//! // Run the application of modifiers
+//! let mut schedule = Schedule::default();
+//! schedule.add_systems(apply_quirk_modifiers_system);
+//! schedule.run(&mut world);
+//!
+//! // The slow orbit trait lengthens the day by 100%.
+//! // Standard base tick duration is 250 ticks.
+//! let day_night = world.resource::<DayNightCycle>();
+//! assert_eq!(day_night.ticks_per_day, 500);
+//! ```
+
 use crate::layer1::atmosphere::AtmosphereGrid;
 use crate::layer1::building::{Building, BuildingType};
 use crate::layer1::day_night::DayNightCycle;
@@ -23,7 +64,21 @@ pub enum PlanetaryTrait {
 }
 
 impl PlanetaryTrait {
-    /// Returns the speed modifier for this trait.
+    /// Retrieves the multiplier applied to the base movement speed of pops.
+    ///
+    /// Extreme gravitational forces directly alter traversal times across the map.
+    /// High gravity worlds create slower logistical networks, making clustered base
+    /// designs far more efficient than sprawling ones. Low gravity worlds allow
+    /// rapid expansion but often come paired with thin atmospheres.
+    ///
+    /// ## Examples
+    ///
+    /// ```rust
+    /// use scale::layer1::quirks::PlanetaryTrait;
+    ///
+    /// let quirk = PlanetaryTrait::HighGravity;
+    /// assert_eq!(quirk.speed_modifier(), 0.8);
+    /// ```
     #[must_use]
     pub const fn speed_modifier(&self) -> f32 {
         match self {
@@ -33,7 +88,21 @@ impl PlanetaryTrait {
         }
     }
 
-    /// Returns the day length modifier for this trait.
+    /// Retrieves the multiplier applied to the base tick length of a solar day.
+    ///
+    /// Modifying the day length alters the frequency of the [`DayNightCycle`],
+    /// which dictates pop sleep schedules, solar power generation windows, and
+    /// nocturnal threat spawning. A rapid orbit forces frequent context switching
+    /// for pops, potentially increasing stress.
+    ///
+    /// ## Examples
+    ///
+    /// ```rust
+    /// use scale::layer1::quirks::PlanetaryTrait;
+    ///
+    /// let quirk = PlanetaryTrait::RapidOrbit;
+    /// assert_eq!(quirk.day_length_modifier(), 0.5);
+    /// ```
     #[must_use]
     pub const fn day_length_modifier(&self) -> f32 {
         match self {
@@ -43,7 +112,20 @@ impl PlanetaryTrait {
         }
     }
 
-    /// Returns the power output modifier for this trait.
+    /// Retrieves the multiplier applied to the output of `Generator` building types.
+    ///
+    /// Atmospheric density directly affects light refraction and wind resistance.
+    /// A dense atmosphere chokes out solar arrays, forcing colonies to rely
+    /// heavily on subterranean geothermal or nuclear power sources early on.
+    ///
+    /// ## Examples
+    ///
+    /// ```rust
+    /// use scale::layer1::quirks::PlanetaryTrait;
+    ///
+    /// let quirk = PlanetaryTrait::DenseAtmosphere;
+    /// assert_eq!(quirk.power_output_modifier(), 0.8);
+    /// ```
     #[must_use]
     pub const fn power_output_modifier(&self) -> f32 {
         match self {
@@ -53,7 +135,20 @@ impl PlanetaryTrait {
         }
     }
 
-    /// Returns the diffusion rate modifier (pollution retention) for this trait.
+    /// Retrieves the atmospheric diffusion modifier affecting the `AtmosphereGrid`.
+    ///
+    /// High diffusion rates mean pollution and toxic gases dissipate quickly.
+    /// A dense atmosphere traps gases, meaning heavy industry will rapidly render
+    /// a local region uninhabitable without extensive precursor scrubber technology.
+    ///
+    /// ## Examples
+    ///
+    /// ```rust
+    /// use scale::layer1::quirks::PlanetaryTrait;
+    ///
+    /// let quirk = PlanetaryTrait::ThinAtmosphere;
+    /// assert_eq!(quirk.diffusion_modifier(), 0.91);
+    /// ```
     #[must_use]
     pub const fn diffusion_modifier(&self) -> f32 {
         match self {
@@ -63,7 +158,9 @@ impl PlanetaryTrait {
         }
     }
 
-    /// Returns the human-readable label of the trait.
+    /// Retrieves the UI-facing localization key or plain-text label for the trait.
+    ///
+    /// Used by the inspector UI to display the active planetary conditions.
     #[must_use]
     pub const fn label(&self) -> &'static str {
         match self {

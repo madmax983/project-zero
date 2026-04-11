@@ -13,3 +13,6 @@
 ## 2024-06-15 - [The Physics of Breath and Movement]
 **Confusion:** The physics sub-systems for `vent` networks and the infrastructure `transit` modules were entirely undocumented, leaving users blind to how sub-grid entity movement and economic toll mechanics were connected to the Bevy ECS.
 **Clarification:** Added rich `//!` module documentation and executable `///` doctests to `vent.rs`, `transit.rs`, and the `entities/mod.rs` registry. Clarified the distinction between `Position` (sub-grid vent navigation) and `GridPosition` (standard coordinate navigation). Also corrected a misplaced `#[derive(Resource)]` macro that was causing compilation failures when running formatting checks.
+## 2026-04-11 - [Module-Level Storytelling]
+**Confusion:** The `quirks.rs` module lacked context for how Planetary Traits (Quirks) fit into the wider simulation, and simply documented getters (e.g. `Returns the speed modifier`) without explaining *why* a dense atmosphere affects solar power.
+**Clarification:** Rewrote `PlanetaryTrait` method documentation to connect the numerical modifiers to mechanical outcomes (e.g., tying high gravity to clustered base designs and thin atmospheres to rapid expansion). Added executable doctests for each modifier and the main system to enforce functionality.
