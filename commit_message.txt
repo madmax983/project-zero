@@ -1,0 +1,9 @@
+🗺️ Atlas: [architectural change] Extract building monolith
+
+🕸️ Tangle: The `src/layer1/building.rs` module was a massive "Blob" anti-pattern of over 3,400 lines containing fundamental system types, components, extensive placement/configuration logic, and dozens of tests. This made it a bottleneck for logic changes and compile times.
+
+📐 Blueprint: Extracted the monolithic `building.rs` into a well-defined `src/layer1/building` directory containing `mod.rs` (Facade), `types.rs`, `components.rs`, `placement.rs`, and `tests.rs`. All types are explicitly re-exported through the `mod.rs` Facade to maintain the public API contract across the dozens of systems that depend on them.
+
+🧱 Stability: Reduced coupling, improved internal module navigation, and established a scalable structure for future building logic without breaking existing downstream dependencies.
+
+🔬 Verification: Builds successfully (`cargo check`, `cargo test --lib`), strictly separated concerns, and verified with `cargo clippy`.
