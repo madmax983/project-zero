@@ -4040,3 +4040,27 @@
 **Replaces:** biomimetic architecture material
 **Code reference:** `Biomimetic` component
 **Usage:** "The Empath-glass froze when the governor died."
+
+## Latent Psionics (Spec 900)
+
+### the Sparked / the Mind-Torn
+**Replaces:** Psionic pop, awakened user, magic user
+**Code reference:** `AwakenedPsionic`
+**Usage:** "The Sparked burn the colony down when they are sad."
+
+### the Mind-Fire
+**Replaces:** Psionic power activation, magic
+**Code reference:** `FireEvent` or psionic event triggers
+**Usage:** "The Mind-Fire caught the kitchen during the famine."
+
+## Unseen Bureaucracy (Spec 936)
+
+### the Phantom-Shift / the Dark-Labor
+**Replaces:** Night work by desperate pops, phantom labor
+**Code reference:** `phantom_shift_system`
+**Usage:** "The Phantom-Shift repaired the generator while we slept."
+
+### the Under-Ledger / the Shadow-Market
+**Replaces:** Shadow Economy value, black market economy
+**Code reference:** `ShadowEconomy`
+**Usage:** "You can't buy food with credits anymore; only through the Under-Ledger."

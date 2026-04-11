@@ -5540,3 +5540,39 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 **Patterns:**
 - "Joy has a price. Fueled by [HIGH_MORALE_TRIGGER], the [BIOMIMETIC_BUILDING_NAME] [FEVER_EFFECT]. [YEAR]."
 - "[YEAR]: The [BIOMIMETIC_BUILDING_NAME] [FEVER_EFFECT], pushed into overdrive by [HIGH_MORALE_TRIGGER]."
+
+## Latent Psionics Templates (Spec 900)
+
+### LATENT_AWAKENING
+**Generates:** Play event (chronicle during game)
+**Slots:** [COLONY], [YEAR], [POP_NAME], [AWAKENING_TRIGGER], [PSIONIC_POWER_TYPE]
+**Patterns:**
+- "[YEAR]: The stress broke [POP_NAME]. Driven by [AWAKENING_TRIGGER], they awakened to [PSIONIC_POWER_TYPE]."
+- "[POP_NAME] could not take the [AWAKENING_TRIGGER]. The mind opened. They wield [PSIONIC_POWER_TYPE] now. [YEAR]."
+- "A new power. [POP_NAME] is a Latent no more. The [AWAKENING_TRIGGER] forged them into a master of [PSIONIC_POWER_TYPE]. [YEAR]."
+
+### PSIONIC_INCIDENT
+**Generates:** Play event (chronicle during game)
+**Slots:** [COLONY], [YEAR], [POP_NAME], [PSIONIC_POWER_TYPE], [PSIONIC_INCIDENT_RESULT]
+**Patterns:**
+- "[POP_NAME] lost control of their [PSIONIC_POWER_TYPE]. [YEAR]. The result was [PSIONIC_INCIDENT_RESULT]."
+- "[YEAR]: A surge of [PSIONIC_POWER_TYPE] from [POP_NAME] caused [PSIONIC_INCIDENT_RESULT]."
+- "The power cannot be chained. [POP_NAME] unleashed [PSIONIC_POWER_TYPE], leading to [PSIONIC_INCIDENT_RESULT]. [YEAR]."
+
+## Unseen Bureaucracy Templates (Spec 936)
+
+### PHANTOM_SHIFT_DISCOVERED
+**Generates:** Play event (chronicle during game)
+**Slots:** [COLONY], [YEAR], [DESPERATION_REASON], [PHANTOM_WORKER_ALIAS]
+**Patterns:**
+- "[YEAR]: Driven by [DESPERATION_REASON], the [PHANTOM_WORKER_ALIAS] are working in the dark."
+- "The machines run at night. The [PHANTOM_WORKER_ALIAS] toil to escape the [DESPERATION_REASON]. [YEAR]."
+- "[YEAR]: We noticed the missing resources. The [PHANTOM_WORKER_ALIAS] are building a new system from the [DESPERATION_REASON]."
+
+### SHADOW_ECONOMY_BOOM
+**Generates:** Play event (chronicle during game)
+**Slots:** [COLONY], [YEAR], [SHADOW_GOOD], [PHANTOM_WORKER_ALIAS]
+**Patterns:**
+- "A parallel market flourishes. The [PHANTOM_WORKER_ALIAS] trade in [SHADOW_GOOD] while the administration sleeps. [YEAR]."
+- "[YEAR]: The ledgers do not balance. There is a hidden wealth of [SHADOW_GOOD] kept by the [PHANTOM_WORKER_ALIAS]."
+- "We cannot tax them. The [PHANTOM_WORKER_ALIAS] hoard [SHADOW_GOOD]. The shadow economy grows. [YEAR]."
