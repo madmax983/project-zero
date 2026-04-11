@@ -617,3 +617,5 @@ pub mod culture;
 pub use culture::*;
 pub mod generational_dissonance;
 pub use generational_dissonance::*;
+pub mod deserters;
+pub use deserters::*;

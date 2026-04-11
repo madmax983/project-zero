@@ -316,6 +316,15 @@ pub fn run_simulation_tick(world: &mut World) {
     if !world.contains_resource::<Events<crate::layer1::diplomacy::wards::WarDeclaredEvent>>() {
         world.init_resource::<Events<crate::layer1::diplomacy::wards::WarDeclaredEvent>>();
     }
+    if !world.contains_resource::<Events<crate::layer1::social::deserters::ProxyWarEvent>>() {
+        world.init_resource::<Events<crate::layer1::social::deserters::ProxyWarEvent>>();
+    }
+    if !world.contains_resource::<Events<crate::layer1::social::deserters::HavenExposedEvent>>() {
+        world.init_resource::<Events<crate::layer1::social::deserters::HavenExposedEvent>>();
+    }
+    if !world.contains_resource::<crate::layer1::social::deserters::EscalatingTension>() {
+        world.init_resource::<crate::layer1::social::deserters::EscalatingTension>();
+    }
     if !world.contains_resource::<crate::layer1::diplomacy::wards::DiplomaticStanding>() {
         world.insert_resource(crate::layer1::diplomacy::wards::DiplomaticStanding {
             faction_relations: std::collections::HashMap::new(),
@@ -629,6 +638,9 @@ mod tests {
 
         // Initialize Detection Risk for test
         world.init_resource::<crate::layer3::silence::DetectionRisk>();
+        world.init_resource::<crate::layer1::social::deserters::EscalatingTension>();
+        world.init_resource::<Events<crate::layer1::social::deserters::ProxyWarEvent>>();
+        world.init_resource::<Events<crate::layer1::social::deserters::HavenExposedEvent>>();
         world.init_resource::<crate::layer1::bio_acoustic_miasma::MiasmaRecordedSecret>();
         world.init_resource::<bevy::prelude::Events<crate::layer2::skyhooks::LaunchIntent>>();
         world.init_resource::<Events<crate::layer2::moon_hermits::PopDesertedEvent>>();

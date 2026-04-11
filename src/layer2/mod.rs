@@ -9,6 +9,7 @@ pub use environment::*;
 pub mod cartographers_curse;
 pub mod cascade;
 pub use cascade::*;
+pub mod derelict_stations;
 pub mod events;
 pub mod events_new;
 pub mod fleet;
@@ -26,7 +27,6 @@ pub mod silent_mutiny;
 pub mod station;
 #[cfg(test)]
 mod station_tests;
-pub mod derelict_stations;
 pub mod system;
 pub mod syzygy;
 pub mod thermal;

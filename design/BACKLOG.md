@@ -633,4 +633,3 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `951` Space Barnacles — `specs/951-space-barnacles.md`
 - [ ] `952` Fungal Networking — `specs/952-fungal-networking.md`
 - [ ] `953` Interstellar Quarantine Fields — `specs/953-interstellar-quarantine-fields.md`
-- [ ] `954` The Deserter's Haven — `specs/954-deserters-haven.md`
