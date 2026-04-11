@@ -125,7 +125,7 @@ mod tests {
         let logistics = app
             .world()
             .get::<SystemLogistics>(entity)
-            .expect("Component should exist");
+            .expect("SystemLogistics should exist");
         assert_eq!(logistics.capacity, 50); // Capacity drops to match colony output ratio
     }
 
@@ -154,7 +154,7 @@ mod tests {
         let defense = app
             .world()
             .get::<SectorDefense>(entity)
-            .expect("Component should exist");
+            .expect("SectorDefense should exist");
         assert!(defense.power < 1000); // Defenses should weaken under strain
     }
 
@@ -179,7 +179,7 @@ mod tests {
         let threat = app
             .world()
             .get::<InvasionThreat>(entity)
-            .expect("Component should exist");
+            .expect("InvasionThreat should exist");
         assert!(threat.level > 0.0);
     }
 }
