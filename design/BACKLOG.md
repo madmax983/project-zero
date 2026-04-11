@@ -629,3 +629,4 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `946` The Self-Fulfilling Prophecy — `specs/946-self-fulfilling-prophecy.md`
 - [ ] `947` Aesthetic Orbital Blockade — `specs/947-aesthetic-orbital-blockade.md`
 - [ ] `948` The Orphaned Edict — `specs/948-the-orphaned-edict.md`
+- [ ] `949` The Bureaucratic Black Hole — `specs/949-the-bureaucratic-black-hole.md`

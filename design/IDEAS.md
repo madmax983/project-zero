@@ -12881,7 +12881,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Bureaucratic Black Hole
+## The Bureaucratic Black Hole [SPECCED]
 
 **Layer:** 1
 
