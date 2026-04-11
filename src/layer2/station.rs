@@ -154,3 +154,210 @@ pub fn build_station_system(
         }
     }
 }
+
+/// Component for the Debt-Trap Megastructure.
+#[derive(Component, Debug, Clone)]
+pub struct DebtTrapMegastructure {
+    pub base_upkeep: f32,
+    pub cycles_active: u32,
+    pub faction_id: Entity,
+    pub missed_payments: u32,
+}
+
+/// Event to signal the decommissioning of a Debt-Trap Megastructure.
+#[derive(Event, Debug, Clone)]
+pub struct DecommissionDebtTrapEvent(pub Entity);
+
+pub fn calculate_upkeep(base: f32, cycles: u32) -> f32 {
+    base * (1.5_f32).powi(cycles as i32)
+}
+
+pub fn process_megastructure_upkeep(
+    mut query: Query<(Entity, &mut DebtTrapMegastructure)>,
+    mut credits: ResMut<crate::layer3::resources::EmpireCredits>,
+    mut warning_events: EventWriter<crate::layer3::diplomacy::WarningDiplomaticMessageEvent>,
+    mut invasion_events: EventWriter<crate::layer3::diplomacy::RepossessionInvasionEvent>,
+    mut chronicle_events: EventWriter<crate::layer1::chronicle::AddChronicleEvent>,
+) {
+    for (entity, mut structure) in query.iter_mut() {
+        let cost = calculate_upkeep(structure.base_upkeep, structure.cycles_active);
+        if credits.0 >= cost {
+            credits.0 -= cost;
+            structure.cycles_active += 1;
+            structure.missed_payments = 0;
+        } else {
+            structure.missed_payments += 1;
+            if structure.missed_payments == 1 {
+                warning_events.send(crate::layer3::diplomacy::WarningDiplomaticMessageEvent {
+                    target_system: entity,
+                    faction_id: structure.faction_id,
+                });
+            } else if structure.missed_payments > 1 {
+                invasion_events.send(crate::layer3::diplomacy::RepossessionInvasionEvent {
+                    target_system: entity,
+                    faction_id: structure.faction_id,
+                });
+                chronicle_events.send(crate::layer1::chronicle::AddChronicleEvent {
+                    text: "Hostile takeover due to missed megastructure payments.".to_string(),
+                    importance: crate::layer1::chronicle::EventImportance::Major,
+                });
+            }
+        }
+    }
+}
+
+pub fn decommission_megastructure_system(
+    mut commands: Commands,
+    mut events: EventReader<DecommissionDebtTrapEvent>,
+    query: Query<&DebtTrapMegastructure>,
+    mut credits: ResMut<crate::layer3::resources::EmpireCredits>,
+) {
+    for event in events.read() {
+        if let Ok(structure) = query.get(event.0) {
+            let cost = calculate_upkeep(structure.base_upkeep, structure.cycles_active + 1);
+            if credits.0 >= cost {
+                credits.0 -= cost;
+                commands.entity(event.0).despawn();
+            }
+        }
+    }
+}
+
+#[derive(Component)]
+pub struct GenerousGiftLogged;
+
+pub fn log_generous_gift_system(
+    mut commands: Commands,
+    query: Query<Entity, (With<DebtTrapMegastructure>, Without<GenerousGiftLogged>)>,
+    mut chronicle_events: EventWriter<crate::layer1::chronicle::AddChronicleEvent>,
+) {
+    for entity in query.iter() {
+        commands.entity(entity).insert(GenerousGiftLogged);
+        chronicle_events.send(crate::layer1::chronicle::AddChronicleEvent {
+            text: "A foreign power has constructed a magnificent orbital structure for us—a truly generous gift!".to_string(),
+            importance: crate::layer1::chronicle::EventImportance::Major,
+        });
+    }
+}
+
+#[cfg(test)]
+mod debt_trap_tests {
+    use super::*;
+    use crate::layer1::chronicle::AddChronicleEvent;
+    use crate::layer3::diplomacy::{RepossessionInvasionEvent, WarningDiplomaticMessageEvent};
+    use crate::layer3::resources::EmpireCredits;
+    use bevy::prelude::*;
+
+    #[test]
+    fn test_megastructure_exponential_upkeep() {
+        let mut app = App::new();
+        app.add_event::<RepossessionInvasionEvent>();
+        app.add_event::<WarningDiplomaticMessageEvent>();
+        app.add_event::<AddChronicleEvent>();
+        app.insert_resource(EmpireCredits(100.0));
+        app.add_systems(
+            Update,
+            (process_megastructure_upkeep, log_generous_gift_system),
+        );
+
+        let faction = app.world_mut().spawn_empty().id();
+        let megastructure = app
+            .world_mut()
+            .spawn(DebtTrapMegastructure {
+                base_upkeep: 10.0,
+                cycles_active: 0,
+                faction_id: faction,
+                missed_payments: 0,
+            })
+            .id();
+
+        app.update(); // Tick once to process log_generous_gift_system
+        let mut chron_reader = app.world_mut().resource_mut::<Events<AddChronicleEvent>>();
+        assert_eq!(chron_reader.drain().count(), 1); // Generous gift logged
+
+        assert_eq!(app.world().resource::<EmpireCredits>().0, 90.0);
+        assert_eq!(
+            app.world()
+                .entity(megastructure)
+                .get::<DebtTrapMegastructure>()
+                .unwrap()
+                .cycles_active,
+            1
+        );
+
+        // Cycle 1: Cost 15.0, Credits 90.0 -> 75.0
+        app.update();
+        assert_eq!(app.world().resource::<EmpireCredits>().0, 75.0);
+
+        // Cycle 2: Cost 22.5, Credits 75.0 -> 52.5
+        app.update();
+        assert_eq!(app.world().resource::<EmpireCredits>().0, 52.5);
+
+        // Cycle 3: Cost 33.75, Credits 52.5 -> 18.75
+        app.update();
+        assert_eq!(app.world().resource::<EmpireCredits>().0, 18.75);
+
+        // Cycle 4: Cost 50.625, Credits 18.75 -> INSUFFICIENT
+        app.update();
+        assert_eq!(app.world().resource::<EmpireCredits>().0, 18.75); // Credits unspent
+
+        let warning = app
+            .world()
+            .entity(megastructure)
+            .get::<DebtTrapMegastructure>()
+            .unwrap();
+        assert_eq!(warning.missed_payments, 1);
+
+        let mut warn_reader = app
+            .world_mut()
+            .resource_mut::<Events<WarningDiplomaticMessageEvent>>();
+        assert_eq!(warn_reader.drain().count(), 1); // Warning Event fired
+
+        // Cycle 5: Cost 50.625, Credits 18.75 -> STILL INSUFFICIENT
+        app.update();
+        assert_eq!(app.world().resource::<EmpireCredits>().0, 18.75); // Credits unspent
+
+        let invasion = app
+            .world()
+            .entity(megastructure)
+            .get::<DebtTrapMegastructure>()
+            .unwrap();
+        assert_eq!(invasion.missed_payments, 2);
+
+        let mut inv_reader = app
+            .world_mut()
+            .resource_mut::<Events<RepossessionInvasionEvent>>();
+        assert_eq!(inv_reader.drain().count(), 1); // Invasion Event fired
+
+        let mut chron_reader = app.world_mut().resource_mut::<Events<AddChronicleEvent>>();
+        assert_eq!(chron_reader.drain().count(), 1); // Log Event fired
+    }
+
+    #[test]
+    fn test_decommission_debt_trap() {
+        let mut app = App::new();
+        app.add_event::<DecommissionDebtTrapEvent>();
+        app.insert_resource(EmpireCredits(100.0));
+        app.add_systems(Update, decommission_megastructure_system);
+
+        let faction = app.world_mut().spawn_empty().id();
+        let megastructure = app
+            .world_mut()
+            .spawn(DebtTrapMegastructure {
+                base_upkeep: 10.0,
+                cycles_active: 1, // Next cycle cost will be base * 1.5^2 = 22.5
+                faction_id: faction,
+                missed_payments: 0,
+            })
+            .id();
+
+        app.world_mut()
+            .resource_mut::<Events<DecommissionDebtTrapEvent>>()
+            .send(DecommissionDebtTrapEvent(megastructure));
+
+        app.update();
+
+        assert_eq!(app.world().resource::<EmpireCredits>().0, 77.5);
+        assert!(app.world().get_entity(megastructure).is_err()); // Despawned
+    }
+}

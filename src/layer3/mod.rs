@@ -1,6 +1,7 @@
 pub mod council;
 pub mod events;
 pub mod market;
+pub mod resources;
 pub mod silence;
 pub use council::*;
 pub mod diplomacy;

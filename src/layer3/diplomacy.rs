@@ -61,3 +61,15 @@ mod tests {
         assert!(treaty_data.has_spore_propagation);
     }
 }
+
+#[derive(Event, Debug, Clone)]
+pub struct RepossessionInvasionEvent {
+    pub target_system: Entity,
+    pub faction_id: Entity,
+}
+
+#[derive(Event, Debug, Clone)]
+pub struct WarningDiplomaticMessageEvent {
+    pub target_system: Entity,
+    pub faction_id: Entity,
+}

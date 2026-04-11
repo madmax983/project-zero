@@ -47,6 +47,9 @@ pub fn build_simulation_schedule() -> Schedule {
         crate::layer3::planet::black_market_terraforming::trigger_rogue_terraforming,
         crate::layer3::planet::black_market_terraforming::apply_rogue_terraforming_events,
         crate::layer3::integration::black_market_terraforming_bridge,
+        crate::layer2::station::process_megastructure_upkeep,
+        crate::layer2::station::decommission_megastructure_system,
+        crate::layer2::station::log_generous_gift_system,
     ));
 
     // Whispering Ore
