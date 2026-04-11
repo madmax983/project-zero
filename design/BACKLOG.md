@@ -634,3 +634,9 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `952` Fungal Networking — `specs/952-fungal-networking.md`
 - [ ] `953` Interstellar Quarantine Fields — `specs/953-interstellar-quarantine-fields.md`
 - [ ] `954` The Deserter's Haven — `specs/954-deserters-haven.md`
+- [ ] `955` The Scrap Heirs — `specs/955-the-scrap-heirs.md`
+- [ ] `956` Hyperlane Fluctuations — `specs/956-hyperlane-fluctuations.md`
+- [ ] `957` Somnolent Synchronization — `specs/957-somnolent-synchronization.md`
+- [ ] `958` The Scapegoat Ritual — `specs/958-the-scapegoat-ritual.md`
+- [ ] `959` Automated Attrition — `specs/959-automated-attrition.md`
+- [ ] `960` The Cult of the Core — `specs/960-the-cult-of-the-core.md`

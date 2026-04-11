@@ -15352,7 +15352,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 **Tension:** The immense, free influx of high-tier talent vs. the constant, volatile risk of harboring the galaxy's most dangerous and traumatized fugitives.
 
-## The Scrap Heirs
+## The Scrap Heirs [SPECCED]
 
 **Layer:** 1 -> 2
 
@@ -15366,7 +15366,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Hyperlane Fluctuations
+## Hyperlane Fluctuations [SPECCED]
 
 **Layer:** Cross-layer (2 -> 3)
 
@@ -15380,7 +15380,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Somnolent Synchronization
+## Somnolent Synchronization [SPECCED]
 
 **Layer:** 1
 
@@ -15393,7 +15393,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Enforcing rigid, perfectly timed sleep schedules to maintain absolute emotional stability across the colony vs. the risk of a single catastrophic psychological event infecting everyone at once.
 
 ---
-## The Scapegoat Ritual
+## The Scapegoat Ritual [SPECCED]
 
 **Layer:** 1
 
@@ -15407,7 +15407,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Automated Attrition
+## Automated Attrition [SPECCED]
 
 **Layer:** Cross-layer
 
@@ -15421,7 +15421,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Cult of the Core
+## The Cult of the Core [SPECCED]
 
 **Layer:** 1
 
