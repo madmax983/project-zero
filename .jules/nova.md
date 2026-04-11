@@ -129,3 +129,8 @@
 **Concept:** A `DreamDynamo` building component that harvests the `rest` need of sleeping Pops nearby to generate `fuel` resources. It explores the dark monetization of subconscious states.
 **Fate:** Merged
 **Lesson:** Tying an abstract psychological state (sleep/rest) directly to industrial resource generation (fuel) allows for sinister optimization mechanics.
+
+## [Gestalt Consciousness]
+**Concept:** A system where pops lose their individuality and share a single pool of needs and health. Implemented via the `GestaltParticipant` component which averages stats across all participants and slowly interpolates their individual states towards the mean.
+**Fate:** Merged
+**Lesson:** Creates interesting biological networks where a well-fed pop can sustain a starving one, but also introduces a massive vulnerability where the entire hivemind can collapse simultaneously.
