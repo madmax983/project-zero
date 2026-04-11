@@ -31,6 +31,8 @@ pub enum Policy {
     CensorBroadcasts,
     /// Automated systems target and destroy any infected individuals.
     ShootInfected,
+    /// Halts heavy industry when pollution gets too high, enacted by orbital elites.
+    Aesthetic,
 }
 
 #[derive(Event, Debug)]

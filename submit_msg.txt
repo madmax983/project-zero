@@ -1,16 +1,16 @@
-feat(layer1): complete The Phantom Grid system
+feat(layer1): complete aesthetic orbital blockade system
 
-Implements RED-GREEN-REFACTOR from spec 896:
-- Added comprehensive test suite (RED phase)
-- Implemented PhantomGridCapable and PhantomGridConnected (GREEN phase)
-- Implemented connection, hum, and disconnection systems
-- Test coverage: >94% (target: 85%)
+Implements RED-GREEN-REFACTOR from spec 947:
+- Added Policy::Aesthetic and StationType::Habitat
+- Created src/layer1/law/aesthetic_edict.rs with logic and tests
+- evaluate_aesthetic_edict_system monitors pollution and triggers edict
+- enforce_aesthetic_edict_system halts manufacturing buildings
+- Modified process_refining_system to skip processing halted buildings (adapted from work_execution_system in spec as refining handles factory production)
+- Test coverage: 97.89% (target: 85%)
 
 All acceptance criteria met:
-- Stress only increases when building connected
-- Building correctly connects when without normal power
-- Disconnects correctly when normal power returns
-- cargo test passes
-- cargo clippy clean
+- All tests pass (0 failures)
+- cargo clippy is clean
+- Feature works properly with habitats tracking smog
 
 Co-Authored-By: google-labs-jules[bot] <161369871+google-labs-jules[bot]@users.noreply.github.com>

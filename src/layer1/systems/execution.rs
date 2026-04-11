@@ -212,6 +212,7 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::administration::edicts::handle_policy_toggle_system,
             crate::layer1::administration::edicts::handle_hack_hub_system,
             crate::layer1::law::orphaned_edict::orphaned_edict_enforcement_system,
+            crate::layer1::law::aesthetic_edict::enforce_aesthetic_edict_system,
         )
             .in_set(Layer1SystemSet::Execution),
     );
