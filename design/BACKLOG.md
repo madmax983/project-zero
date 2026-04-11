@@ -640,3 +640,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `958` The Scapegoat Ritual — `specs/958-the-scapegoat-ritual.md`
 - [ ] `959` Automated Attrition — `specs/959-automated-attrition.md`
 - [ ] `960` The Cult of the Core — `specs/960-the-cult-of-the-core.md`
+- [ ] `961` The Silent World — `specs/961-the-silent-world.md`
+- [ ] `962` The Planetary Cortex — `specs/962-the-planetary-cortex.md`
+- [ ] `963` Quantum Stockpiles — `specs/963-quantum-stockpiles.md`
