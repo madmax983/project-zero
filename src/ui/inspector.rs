@@ -977,145 +977,28 @@ fn render_extra_info(
         .split(extra_area);
 
     if let Some(cable) = world.get::<PowerCable>(entity) {
-        let load_color = if cable.current_load > cable.capacity {
-            Color::Red
-        } else {
-            Color::Cyan
-        };
-        let load_pct = if cable.capacity > 0.0 {
-            (cable.current_load / cable.capacity) * 100.0
-        } else {
-            0.0
-        };
-        frame.render_widget(
-            Paragraph::new(Line::from(vec![
-                Span::raw("⚡ Cable Load: "),
-                Span::styled(
-                    format!(
-                        "{:.0}/{:.0} ({:.0}%)",
-                        cable.current_load, cable.capacity, load_pct
-                    ),
-                    Style::default().fg(load_color),
-                ),
-            ])),
-            extra_chunks[extra_idx],
-        );
+        render_power_cable_info(frame, extra_chunks[extra_idx], cable);
     }
 
     if let Some(battery) = world.get::<Battery>(entity) {
-        let charge_pct = if battery.capacity > 0.0 {
-            (battery.charge / battery.capacity) * 100.0
-        } else {
-            0.0
-        };
-        let charge_color = if charge_pct < 20.0 {
-            Color::Red
-        } else if charge_pct < 80.0 {
-            Color::Yellow
-        } else {
-            Color::Green
-        };
-        frame.render_widget(
-            Paragraph::new(Line::from(vec![
-                Span::raw("🔋 Battery Charge: "),
-                Span::styled(
-                    format!(
-                        "{:.0}/{:.0} ({:.0}%)",
-                        battery.charge, battery.capacity, charge_pct
-                    ),
-                    Style::default().fg(charge_color),
-                ),
-            ])),
-            extra_chunks[extra_idx],
-        );
+        render_battery_info(frame, extra_chunks[extra_idx], battery);
     }
 
     if let Some(consumer) = world.get::<PowerConsumer>(entity) {
-        let status = if consumer.active {
-            "Active"
-        } else {
-            "Inactive"
-        };
-        let color = if consumer.active {
-            Color::Green
-        } else {
-            Color::Red
-        };
-        frame.render_widget(
-            Paragraph::new(Line::from(vec![
-                Span::raw("🔌 Consumer Demand: "),
-                Span::styled(
-                    format!("{:.0} ({})", consumer.demand, status),
-                    Style::default().fg(color),
-                ),
-            ])),
-            extra_chunks[extra_idx],
-        );
+        render_power_consumer_info(frame, extra_chunks[extra_idx], consumer);
     }
 
     if let Some(source) = world.get::<PowerSource>(entity) {
-        let status = if source.active { "Active" } else { "Inactive" };
-        let color = if source.active {
-            Color::Green
-        } else {
-            Color::Red
-        };
-        frame.render_widget(
-            Paragraph::new(Line::from(vec![
-                Span::raw("🏭 Source Output: "),
-                Span::styled(
-                    format!("{:.0} ({})", source.output, status),
-                    Style::default().fg(color),
-                ),
-            ])),
-            extra_chunks[extra_idx],
-        );
+        render_power_source_info(frame, extra_chunks[extra_idx], source);
     }
 
     if let Some(emitter) = world.get::<ScentEmitter>(entity) {
-        let color = if emitter.is_pleasant {
-            Color::LightMagenta
-        } else {
-            Color::Rgb(150, 200, 50)
-        };
-        frame.render_widget(
-            Paragraph::new(Line::from(vec![
-                Span::raw("💨 Emits Scent: "),
-                Span::styled(
-                    format!(
-                        "{} ({:.1})",
-                        if emitter.is_pleasant {
-                            "Pleasant"
-                        } else {
-                            "Foul"
-                        },
-                        emitter.strength
-                    ),
-                    Style::default().fg(color),
-                ),
-            ])),
-            extra_chunks[extra_idx],
-        );
+        render_scent_emitter_info(frame, extra_chunks[extra_idx], emitter);
     }
 
     #[cfg(feature = "nova")]
     if let Some(meme) = world.get::<MemeCarrier>(entity) {
-        let (label, color) = match meme.meme_type {
-            MemeType::WorkCult => ("Work Cult", Color::Yellow),
-            MemeType::DanceMeme => ("Dance Fever", Color::Magenta),
-            MemeType::ParanoiaMeme => ("Paranoia", Color::Red),
-        };
-
-        frame.render_widget(
-            Paragraph::new(Line::from(vec![
-                Span::raw("🧠 Meme Infection: "),
-                Span::styled(
-                    format!("{} ({}t remaining)", label, meme.duration),
-                    Style::default().fg(color),
-                ),
-            ])),
-            extra_chunks[extra_idx],
-        );
+        render_meme_carrier_info(frame, extra_chunks[extra_idx], meme);
         #[allow(unused_assignments)]
         {
             extra_idx += 1;
@@ -1124,22 +1007,171 @@ fn render_extra_info(
 
     #[cfg(feature = "nova")]
     if let Some(martyrdom) = world.get::<Martyrdom>(entity) {
+        render_martyrdom_info(frame, extra_chunks[extra_idx], martyrdom);
         if martyrdom.active {
-            frame.render_widget(
-                Paragraph::new(Line::from(vec![Span::styled(
-                    "⚠️ BUREAUCRATIC MARTYRDOM ACTIVE ⚠️",
-                    Style::default()
-                        .fg(Color::Red)
-                        .add_modifier(Modifier::BOLD)
-                        .add_modifier(Modifier::RAPID_BLINK),
-                )])),
-                extra_chunks[extra_idx],
-            );
             #[allow(unused_assignments)]
             {
                 extra_idx += 1;
             }
         }
+    }
+}
+
+fn render_power_cable_info(frame: &mut Frame, area: Rect, cable: &PowerCable) {
+    let load_color = if cable.current_load > cable.capacity {
+        Color::Red
+    } else {
+        Color::Cyan
+    };
+    let load_pct = if cable.capacity > 0.0 {
+        (cable.current_load / cable.capacity) * 100.0
+    } else {
+        0.0
+    };
+    frame.render_widget(
+        Paragraph::new(Line::from(vec![
+            Span::raw("⚡ Cable Load: "),
+            Span::styled(
+                format!(
+                    "{:.0}/{:.0} ({:.0}%)",
+                    cable.current_load, cable.capacity, load_pct
+                ),
+                Style::default().fg(load_color),
+            ),
+        ])),
+        area,
+    );
+}
+
+fn render_battery_info(frame: &mut Frame, area: Rect, battery: &Battery) {
+    let charge_pct = if battery.capacity > 0.0 {
+        (battery.charge / battery.capacity) * 100.0
+    } else {
+        0.0
+    };
+    let charge_color = if charge_pct < 20.0 {
+        Color::Red
+    } else if charge_pct < 80.0 {
+        Color::Yellow
+    } else {
+        Color::Green
+    };
+    frame.render_widget(
+        Paragraph::new(Line::from(vec![
+            Span::raw("🔋 Battery Charge: "),
+            Span::styled(
+                format!(
+                    "{:.0}/{:.0} ({:.0}%)",
+                    battery.charge, battery.capacity, charge_pct
+                ),
+                Style::default().fg(charge_color),
+            ),
+        ])),
+        area,
+    );
+}
+
+fn render_power_consumer_info(frame: &mut Frame, area: Rect, consumer: &PowerConsumer) {
+    let status = if consumer.active {
+        "Active"
+    } else {
+        "Inactive"
+    };
+    let color = if consumer.active {
+        Color::Green
+    } else {
+        Color::Red
+    };
+    frame.render_widget(
+        Paragraph::new(Line::from(vec![
+            Span::raw("🔌 Consumer Demand: "),
+            Span::styled(
+                format!("{:.0} ({})", consumer.demand, status),
+                Style::default().fg(color),
+            ),
+        ])),
+        area,
+    );
+}
+
+fn render_power_source_info(frame: &mut Frame, area: Rect, source: &PowerSource) {
+    let status = if source.active { "Active" } else { "Inactive" };
+    let color = if source.active {
+        Color::Green
+    } else {
+        Color::Red
+    };
+    frame.render_widget(
+        Paragraph::new(Line::from(vec![
+            Span::raw("🏭 Source Output: "),
+            Span::styled(
+                format!("{:.0} ({})", source.output, status),
+                Style::default().fg(color),
+            ),
+        ])),
+        area,
+    );
+}
+
+fn render_scent_emitter_info(frame: &mut Frame, area: Rect, emitter: &ScentEmitter) {
+    let color = if emitter.is_pleasant {
+        Color::LightMagenta
+    } else {
+        Color::Rgb(150, 200, 50)
+    };
+    frame.render_widget(
+        Paragraph::new(Line::from(vec![
+            Span::raw("💨 Emits Scent: "),
+            Span::styled(
+                format!(
+                    "{} ({:.1})",
+                    if emitter.is_pleasant {
+                        "Pleasant"
+                    } else {
+                        "Foul"
+                    },
+                    emitter.strength
+                ),
+                Style::default().fg(color),
+            ),
+        ])),
+        area,
+    );
+}
+
+#[cfg(feature = "nova")]
+fn render_meme_carrier_info(frame: &mut Frame, area: Rect, meme: &MemeCarrier) {
+    let (label, color) = match meme.meme_type {
+        MemeType::WorkCult => ("Work Cult", Color::Yellow),
+        MemeType::DanceMeme => ("Dance Fever", Color::Magenta),
+        MemeType::ParanoiaMeme => ("Paranoia", Color::Red),
+    };
+
+    frame.render_widget(
+        Paragraph::new(Line::from(vec![
+            Span::raw("🧠 Meme Infection: "),
+            Span::styled(
+                format!("{} ({}t remaining)", label, meme.duration),
+                Style::default().fg(color),
+            ),
+        ])),
+        area,
+    );
+}
+
+#[cfg(feature = "nova")]
+fn render_martyrdom_info(frame: &mut Frame, area: Rect, martyrdom: &Martyrdom) {
+    if martyrdom.active {
+        frame.render_widget(
+            Paragraph::new(Line::from(vec![Span::styled(
+                "⚠️ BUREAUCRATIC MARTYRDOM ACTIVE ⚠️",
+                Style::default()
+                    .fg(Color::Red)
+                    .add_modifier(Modifier::BOLD)
+                    .add_modifier(Modifier::RAPID_BLINK),
+            )])),
+            area,
+        );
     }
 }
 
