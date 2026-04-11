@@ -627,3 +627,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `942` The Work-Shift Cartel — `specs/942-work-shift-cartel.md`
 - [ ] `943` The Martyr's Shrine — `specs/943-martyrs-shrine.md`
 - [ ] `944` Cultural Ransom — `specs/944-cultural-ransom.md`
+- [ ] `946` The Self-Fulfilling Prophecy — `specs/946-self-fulfilling-prophecy.md`
+- [ ] `947` Aesthetic Orbital Blockade — `specs/947-aesthetic-orbital-blockade.md`
+- [ ] `948` The Orphaned Edict — `specs/948-the-orphaned-edict.md`
