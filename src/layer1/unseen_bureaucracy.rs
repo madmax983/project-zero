@@ -18,6 +18,11 @@ pub struct ShadowEconomy {
     pub value: f32,
 }
 
+#[derive(Event, Debug, Clone)]
+pub struct PhantomShiftEvent {
+    pub amount_repaired: u32,
+}
+
 pub fn phantom_shift_system(
     mut commands: Commands,
     mut shadow_economy: ResMut<ShadowEconomy>,
@@ -25,6 +30,7 @@ pub fn phantom_shift_system(
     day_night: Option<Res<DayNightCycle>>,
     pops: Query<&Desperation, With<Pop>>,
     mut designations: Query<(Entity, &Designation, &mut Structure)>,
+    mut event_writer: EventWriter<PhantomShiftEvent>,
 ) {
     let mut is_night = false;
     if let Some(dn) = day_night {
@@ -49,6 +55,8 @@ pub fn phantom_shift_system(
         return;
     }
 
+    let mut amount_repaired = 0;
+
     for (entity, designation, mut structure) in designations.iter_mut() {
         if designation.designation_type == DesignationType::Repair
             && resources.metal >= 1.0
@@ -59,9 +67,14 @@ pub fn phantom_shift_system(
 
             structure.current_hp = structure.max_hp;
             shadow_economy.value += 5.0;
+            amount_repaired += 1;
 
             commands.entity(entity).remove::<Designation>();
         }
+    }
+
+    if amount_repaired > 0 {
+        event_writer.send(PhantomShiftEvent { amount_repaired });
     }
 }
 
@@ -104,6 +117,8 @@ mod tests {
                 },
             ))
             .id();
+
+        world.init_resource::<Events<PhantomShiftEvent>>();
 
         // Act
         let mut schedule = Schedule::default();
@@ -167,6 +182,8 @@ mod tests {
             ))
             .id();
 
+        world.init_resource::<Events<PhantomShiftEvent>>();
+
         // Act
         let mut schedule = Schedule::default();
         schedule.add_systems(phantom_shift_system);
@@ -220,6 +237,8 @@ mod tests {
                 },
             ))
             .id();
+
+        world.init_resource::<Events<PhantomShiftEvent>>();
 
         // Act
         let mut schedule = Schedule::default();

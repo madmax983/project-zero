@@ -1306,3 +1306,15 @@ pub fn trauma_decay_system(
         trauma.famine_ticks = trauma.famine_ticks.saturating_sub(10);
     }
 }
+
+pub fn phantom_shift_chronicle_bridge(
+    mut events: EventReader<crate::layer1::unseen_bureaucracy::PhantomShiftEvent>,
+    mut chronicle_events: EventWriter<AddChronicleEvent>,
+) {
+    for _event in events.read() {
+        chronicle_events.send(AddChronicleEvent {
+            importance: EventImportance::Minor,
+            text: "We noticed missing resources. The desperate toil in the dark to fix our neglected infrastructure.".to_string(),
+        });
+    }
+}

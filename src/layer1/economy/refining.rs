@@ -27,12 +27,12 @@
 use crate::layer1::building::{Building, BuildingType};
 use crate::layer1::eureka::check_for_eureka_world;
 use crate::layer1::factions::{FactionMember, FactionState, Factions};
+use crate::layer1::law::aesthetic_edict::Halted;
 use crate::layer1::pop::Pop;
 use crate::layer1::resources::{ColonyResources, RefiningProgress, ResourceItem, ResourceType};
 use crate::layer1::skills::{get_skill_efficiency, SkillType, Skills};
 use crate::layer1::tech::Tech;
 use crate::layer1::utility_ai::{ActionType, PopAction};
-use crate::layer1::law::aesthetic_edict::Halted;
 use crate::layer1::GridPosition;
 use bevy_ecs::prelude::*;
 use rand::Rng;
