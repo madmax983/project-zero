@@ -9,8 +9,8 @@ use crate::layer1::structure::Structure;
 use crate::layer1::terrain::{TerrainGrid, TerrainType};
 use crate::layer1::GridPosition;
 use bevy_ecs::prelude::*;
+use bevy_utils::HashSet;
 use rand::Rng;
-use std::collections::HashSet;
 
 /// Component representing a fire instance.
 #[derive(Component, Debug, Clone, Copy)]
@@ -50,7 +50,7 @@ impl Default for Flammable {
 
 /// System that handles fire spreading to adjacent tiles.
 pub fn fire_spread_system(world: &mut World) {
-    let mut new_fires = Vec::new();
+    let mut new_fires = HashSet::new();
     let mut fire_locations = HashSet::new();
 
     // 1. Collect all current fire locations to avoid re-igniting or double-checking
@@ -126,9 +126,7 @@ pub fn fire_spread_system(world: &mut World) {
 
             if should_ignite {
                 // Check if we already queued a fire for this spot (avoid dupes in same frame)
-                if !new_fires.contains(&n_pos) {
-                    new_fires.push(n_pos);
-                }
+                new_fires.insert(n_pos);
             }
         }
     }
@@ -144,7 +142,7 @@ pub fn fire_damage_system(world: &mut World) {
     // Decrement lifetime, destroy burnt objects
     let mut fires_to_remove = Vec::new();
     let mut terrain_changes = Vec::new(); // (x, y, NewType)
-    let mut burnt_entities = Vec::new(); // Entities at position to check for destruction
+    let mut burnt_entities = HashSet::new(); // Entities at position to check for destruction
 
     let mut query = world.query::<(Entity, &GridPosition, &mut Fire)>();
     for (entity, pos, mut fire) in query.iter_mut(world) {
@@ -154,7 +152,7 @@ pub fn fire_damage_system(world: &mut World) {
 
         if fire.lifetime == 0 {
             fires_to_remove.push((entity, *pos));
-            burnt_entities.push(*pos);
+            burnt_entities.insert(*pos);
         }
     }
 
