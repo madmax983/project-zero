@@ -1,34 +1,12 @@
 use bevy_ecs::prelude::*;
 
-#[derive(Component, Default)]
-/// Tracks the memories accumulated by a pop.
-pub struct MemoryTracker {
-    pub memories: Vec<PopMemoryType>,
-}
-
-impl MemoryTracker {
-    pub fn has_memory(&self, memory: PopMemoryType) -> bool {
-        self.memories.contains(&memory)
-    }
-
-    pub fn add_memory(&mut self, memory: PopMemoryType) {
-        if !self.has_memory(memory.clone()) {
-            self.memories.push(memory);
-        }
-    }
-}
-
-#[derive(Clone, PartialEq, Debug)]
-/// Represents the different types of memories a pop can have.
-pub enum PopMemoryType {
-    SurvivedFamine,
-}
+#[derive(Component)]
+/// Tracks if a pop has a memory of surviving famine.
+pub struct SurvivedFamineMemory;
 
 #[derive(Event)]
 /// A significant event that pops can witness.
-pub enum SignificantEvent {
-    Famine,
-}
+pub struct FamineEvent;
 
 #[derive(Event)]
 /// Event representing a colony-wide food shortage.
@@ -36,16 +14,13 @@ pub struct FoodShortageEvent;
 
 /// System that records significant events into pop memories.
 pub fn record_significant_events_system(
-    mut events: EventReader<SignificantEvent>,
-    mut query: Query<&mut MemoryTracker>,
+    mut commands: Commands,
+    mut events: EventReader<FamineEvent>,
+    query: Query<Entity, With<crate::layer1::pop::Pop>>,
 ) {
-    for event in events.read() {
-        match event {
-            SignificantEvent::Famine => {
-                for mut tracker in query.iter_mut() {
-                    tracker.add_memory(PopMemoryType::SurvivedFamine);
-                }
-            }
+    for _ in events.read() {
+        for entity in query.iter() {
+            commands.entity(entity).try_insert(SurvivedFamineMemory);
         }
     }
 }
@@ -53,12 +28,15 @@ pub fn record_significant_events_system(
 /// System that processes food shortage events and applies stress based on memories.
 pub fn process_food_shortage_stress_system(
     mut events: EventReader<FoodShortageEvent>,
-    mut query: Query<(&MemoryTracker, &mut crate::layer1::stress::StressTracker)>,
+    mut query: Query<(
+        Option<&SurvivedFamineMemory>,
+        &mut crate::layer1::stress::StressTracker,
+    )>,
 ) {
     for _ in events.read() {
-        for (tracker, mut stress) in query.iter_mut() {
-            if tracker.has_memory(PopMemoryType::SurvivedFamine) {
-                stress.accumulated_stress += 15.0; // > 10.0
+        for (memory, mut stress) in query.iter_mut() {
+            if memory.is_some() {
+                stress.accumulated_stress += 15.0;
             } else {
                 stress.accumulated_stress += 5.0;
             }
@@ -76,20 +54,19 @@ mod tests {
     fn test_pop_gains_memory_from_event() {
         let mut world = World::new();
         // Setup events
-        world.insert_resource(Events::<SignificantEvent>::default());
+        world.insert_resource(Events::<FamineEvent>::default());
 
-        let pop_entity = world.spawn((Pop, MemoryTracker::default())).id();
+        let pop_entity = world.spawn(Pop).id();
 
         // Emit a significant event
-        world.send_event(SignificantEvent::Famine);
+        world.send_event(FamineEvent);
 
         let mut schedule = Schedule::default();
         schedule.add_systems(super::record_significant_events_system);
         schedule.run(&mut world);
 
         // Pop should now have a memory of the famine
-        let tracker = world.get::<MemoryTracker>(pop_entity).unwrap();
-        assert!(tracker.has_memory(PopMemoryType::SurvivedFamine));
+        assert!(world.get::<SurvivedFamineMemory>(pop_entity).is_some());
     }
 
     #[test]
@@ -97,16 +74,13 @@ mod tests {
         let mut world = World::new();
         world.insert_resource(Events::<FoodShortageEvent>::default());
 
-        let mut tracker = MemoryTracker::default();
-        tracker.add_memory(PopMemoryType::SurvivedFamine);
-
         let pop_entity = world
             .spawn((
                 Pop,
                 StressTracker {
                     accumulated_stress: 0.0,
                 },
-                tracker,
+                SurvivedFamineMemory,
             ))
             .id();
 
