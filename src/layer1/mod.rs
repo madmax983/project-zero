@@ -314,6 +314,8 @@ pub use prototyping::*;
 /// Cybernetic augmentation system (Spec 151).
 pub mod psychic;
 pub use psychic::*;
+pub mod psionics;
+pub use psionics::*;
 
 pub mod geology;
 pub use geology::*;

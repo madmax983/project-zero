@@ -374,3 +374,4 @@
 - [x] `915` Orbital Debris Cult — `specs/915-orbital-debris-cult.md` — completed
 - [x] `INT-573` Integration: The Silent Generation -> Trauma Tracker — completed 2026-06-15
 - [x] `936` Unseen Bureaucracy — `specs/936-unseen-bureaucracy.md` — completed 2026-04-10
+- [x] `900` Latent Psionics — `specs/900-latent-psionics.md` — completed 2026-06-15
