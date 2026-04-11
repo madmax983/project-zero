@@ -26,6 +26,7 @@ pub mod silent_mutiny;
 pub mod station;
 #[cfg(test)]
 mod station_tests;
+pub mod derelict_stations;
 pub mod system;
 pub mod syzygy;
 pub mod thermal;

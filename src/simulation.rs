@@ -95,6 +95,8 @@ pub fn build_simulation_schedule() -> Schedule {
         crate::layer2::fleet::fleet_order_system,
         crate::layer2::station::build_station_system
             .after(crate::layer2::fleet::fleet_order_system),
+        crate::layer2::derelict_stations::claim_station_system
+            .after(crate::layer2::fleet::fleet_order_system),
         crate::layer2::fleet::fleet_movement_system.after(crate::layer2::fleet::fleet_order_system),
         crate::layer2::mutiny::decay_fleet_morale,
         crate::layer2::mutiny::evaluate_fleet_mutiny,

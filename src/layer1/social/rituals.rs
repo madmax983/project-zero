@@ -27,6 +27,12 @@ pub enum QuirkType {
     Overheating,
     /// Increases anger faster (not yet implemented).
     Demanding,
+    /// Unnatural efficiency boost but inflicts stress.
+    Haunted,
+    /// Hidden quirk on derelict stations.
+    GasLeak,
+    /// Hidden quirk on derelict stations.
+    Pests,
 }
 
 /// Component representing a negative trait on a machine.

@@ -18,6 +18,8 @@ pub enum StationType {
     Brewery,
     /// High-wealth orbital habitat.
     Habitat,
+    /// An abandoned station that can be claimed and repaired.
+    Derelict,
 }
 
 impl StationType {
@@ -30,6 +32,7 @@ impl StationType {
             Self::Shipyard => vec![(ResourceType::Metal, 200.0), (ResourceType::Fuel, 50.0)],
             Self::Brewery => vec![(ResourceType::Metal, 150.0)],
             Self::Habitat => vec![(ResourceType::Metal, 150.0), (ResourceType::Food, 100.0)],
+            Self::Derelict => vec![],
         }
     }
 
@@ -42,6 +45,7 @@ impl StationType {
             Self::Shipyard => "Shipyard",
             Self::Brewery => "Zero-G Brewery",
             Self::Habitat => "Habitat",
+            Self::Derelict => "Derelict Station",
         }
     }
 
@@ -54,6 +58,7 @@ impl StationType {
             Self::Shipyard => '⚓',
             Self::Brewery => 'B',
             Self::Habitat => 'O',
+            Self::Derelict => 'D',
         }
     }
 }
