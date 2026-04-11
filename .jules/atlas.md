@@ -66,3 +66,6 @@
 **Administration Sub-module Extracted**
 **Tangle:** The administration subsystem (`admin`, `bureaucracy_of_sleep`, `designation`, `edicts`, `inspector`, `permit`, `zone`) was scattered across the root `src/layer1/mod.rs` namespace, adding to the "Blob" anti-pattern in `layer1`. These interrelated modules lacked a clear domain boundary.
 **Blueprint:** Encapsulated these 7 administration and bureaucratic control files into a dedicated `src/layer1/administration/` module. The new `src/layer1/administration/mod.rs` re-exports the public types to maintain backward compatibility, keeping the layer 1 root cleaner while strictly enforcing domain boundaries.
+**Core Domain Encapsulation**
+**Tangle:** The core game foundation modules (`ai_core`, `chronicle`, `control`, `events`, `integration`, `map`) were declared loosely in the top-level `src/layer1/mod.rs`, exacerbating the "Blob" anti-pattern and blurring domain boundaries.
+**Blueprint:** Encapsulated these foundational primitives into a new `src/layer1/core` module. Created `src/layer1/core/mod.rs` to safely re-export them and replaced the direct top-level `mod` declarations with `pub mod core; pub use core::*; `. Fixed trailing doc comment errors to ensure a clean compilation structure.
