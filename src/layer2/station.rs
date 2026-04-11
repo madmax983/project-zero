@@ -16,6 +16,8 @@ pub enum StationType {
     Shipyard,
     /// A brewery specializing in zero-g fermentation.
     Brewery,
+    /// High-wealth orbital habitat.
+    Habitat,
 }
 
 impl StationType {
@@ -27,6 +29,7 @@ impl StationType {
             Self::MiningPlatform => vec![(ResourceType::Metal, 100.0), (ResourceType::Fuel, 10.0)],
             Self::Shipyard => vec![(ResourceType::Metal, 200.0), (ResourceType::Fuel, 50.0)],
             Self::Brewery => vec![(ResourceType::Metal, 150.0)],
+            Self::Habitat => vec![(ResourceType::Metal, 150.0), (ResourceType::Food, 100.0)],
         }
     }
 
@@ -38,6 +41,7 @@ impl StationType {
             Self::MiningPlatform => "Mining Platform",
             Self::Shipyard => "Shipyard",
             Self::Brewery => "Zero-G Brewery",
+            Self::Habitat => "Habitat",
         }
     }
 
@@ -49,6 +53,7 @@ impl StationType {
             Self::MiningPlatform => '⚒',
             Self::Shipyard => '⚓',
             Self::Brewery => 'B',
+            Self::Habitat => 'O',
         }
     }
 }

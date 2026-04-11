@@ -32,6 +32,7 @@ use crate::layer1::resources::{ColonyResources, RefiningProgress, ResourceItem, 
 use crate::layer1::skills::{get_skill_efficiency, SkillType, Skills};
 use crate::layer1::tech::Tech;
 use crate::layer1::utility_ai::{ActionType, PopAction};
+use crate::layer1::law::aesthetic_edict::Halted;
 use crate::layer1::GridPosition;
 use bevy_ecs::prelude::*;
 use rand::Rng;
@@ -216,7 +217,7 @@ fn process_active_refining_buildings(
     let mut xp_gains = Vec::new();
 
     let buildings: Vec<(Entity, BuildingType, GridPosition, f32, f32, bool, f32)> = world
-        .query::<(
+        .query_filtered::<(
             Entity,
             &Building,
             &GridPosition,
@@ -224,7 +225,7 @@ fn process_active_refining_buildings(
             Option<&crate::layer1::energy::PowerConsumer>,
             Option<&crate::layer1::rituals::Quirk>,
             Option<&crate::layer1::prototyping::Prototype>,
-        )>()
+        ), Without<Halted>>()
         .iter(world)
         .map(|(e, b, p, prog, power, quirk, prototype)| {
             let active = power.is_none_or(|c| c.active);

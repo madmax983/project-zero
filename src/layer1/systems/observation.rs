@@ -10,6 +10,7 @@ pub fn register(schedule: &mut Schedule) {
         (
             crate::layer1::stress::assign_generational_traits_system,
             crate::layer1::stress::silent_needs_suppression_system,
+            crate::layer1::law::aesthetic_edict::evaluate_aesthetic_edict_system,
             crate::layer1::integration::diplomatic_reflection_kill_bridge,
             crate::layer1::integration::diplomatic_reflection_plant_bridge,
             crate::layer1::integration::waste_scent_bridge,
