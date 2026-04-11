@@ -78,10 +78,7 @@ pub fn evaluate_drone_actions_system(
             commands.entity(entity).remove::<StartPlan>(); // Stop moving to charger
         }
 
-        // 3. TODO: Haul Logic
-        if action.current == ActionType::Idle {
-            // Placeholder: Stay Idle
-        }
+
     }
 }
 
