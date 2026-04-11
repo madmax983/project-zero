@@ -51,3 +51,7 @@
 **Culture Domain Encapsulation**
 **Tangle:** The cultural, religious, and belief logic (`ancestral_graves`, `animism`, `art`, `artifacts`, `festivals`, `funeral`, `totems`) was scattered across the root `src/layer1/mod.rs` namespace, contributing to the "Blob" anti-pattern in `layer1`. These interrelated modules lacked a clear domain boundary.
 **Blueprint:** Encapsulated these 7 culture and belief files into a dedicated `src/layer1/culture/` module. The new `src/layer1/culture/mod.rs` re-exports the public types natively to maintain backward compatibility, strictly enforcing domain boundaries while reducing clutter in `layer1/mod.rs`.
+
+**Building Module Dismantled**
+**Tangle:** The `src/layer1/building.rs` file was a massive 3,400+ line monolith ("The Blob" anti-pattern), containing the building types, physical components, placement logic, and an enormous test suite, severely lacking cohesion.
+**Blueprint:** Created a new `src/layer1/building/` directory and dismantled the monolith into four focused files: `types.rs`, `components.rs`, `placement.rs`, and `tests.rs`. A `mod.rs` facade was created to seamlessly re-export the public API, ensuring the rest of the codebase was undisturbed by the internal structural refactor.
