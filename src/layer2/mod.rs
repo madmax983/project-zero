@@ -25,6 +25,7 @@ pub mod ship;
 pub mod silent_mutiny;
 pub mod station;
 pub mod system;
+pub mod alignment;
 pub mod syzygy;
 pub mod thermal;
 #[cfg(test)]

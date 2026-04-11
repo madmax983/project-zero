@@ -334,3 +334,4 @@
 - [x] `768` Dynastic Succession — `specs/768-dynastic-succession.md` — completed 2026-04-10
 - [x] `570` The Bio-Acoustic Miasma — `specs/570-the-bio-acoustic-miasma.md` — completed 2026-04-02
 - [x] `INT-570` Integration: Bio-Acoustic Miasma -> Stress Breakdown — completed 2026-04-10
+- [x] `569` The Syzygy — `specs/569-the-syzygy.md` — completed 2026-05-01
