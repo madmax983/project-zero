@@ -45,8 +45,6 @@ pub mod ad_screen;
 /// Bureaucratic Drag system (Spec 175).
 pub mod administration;
 pub use administration::*;
-/// AI Core system (Spec 148).
-pub mod ai_core;
 /// Game balance constants.
 pub mod balance;
 /// Beauty and decoration system.
@@ -57,11 +55,9 @@ pub mod biography;
 pub mod culture;
 pub use culture::*;
 /// Building placement and types.
-pub mod chronicle;
 /// Chronicle system and historical records.
 pub mod clothing;
 /// Door control system (Spec 134).
-pub mod control;
 /// Crowding system (Spec 176).
 pub mod crowding;
 /// Defensive structures and logic.
@@ -94,14 +90,10 @@ pub use geomes::*;
 /// The Inspector system (Spec 091).
 /// Institutional Memory system (Spec 172).
 pub mod institutional_memory;
-/// Integration systems bridging domains.
-pub mod integration;
 /// Personal inventory system.
 /// Item definitions (Tools, Equipment).
 pub mod law;
 pub use law::orphaned_edict::*;
-/// Spatial primitives (GridPosition).
-pub mod map;
 /// Colony Mascot system (Spec 129).
 /// Medical care and hospital logic.
 /// Pop memories and psychological effects.
@@ -146,21 +138,15 @@ pub mod locations;
 /// Graffiti and Signage system (Spec 144).
 pub mod graffiti;
 
-/// Event definitions.
-pub mod events;
 
 pub use access_control::*;
 pub use actions::*;
-pub use ai_core::*;
 pub use balance::*;
 pub use beauty::*;
 pub use biography::*;
-pub use chronicle::*;
-pub use control::*;
 pub use crowding::*;
 pub use defense::*;
 pub use dreams::*;
-pub use events::*;
 
 pub mod biology;
 pub use biology::*;
@@ -170,10 +156,8 @@ pub use graffiti::*;
 pub use hazards::*;
 pub use hobby::*;
 pub use institutional_memory::*;
-pub use integration::*;
 pub use jobs::*;
 pub use locations::*;
-pub use map::*;
 pub use memory::*;
 pub use needs::*;
 pub use notifications::*;
@@ -528,3 +512,5 @@ pub mod religion;
 pub use pop_memories::*;
 pub mod unseen_bureaucracy;
 pub use unseen_bureaucracy::*;
+pub mod core;
+pub use core::*;
