@@ -15351,3 +15351,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Emergence:** You welcome the deserters, drastically boosting your colony's tech and defense capabilities. However, you inadvertently mix veterans from opposing sides in your residential blocks. A tavern brawl between two rival deserters escalates, and suddenly your colony is fighting a miniature proxy war in the streets, using the advanced weapons they smuggled in, threatening to expose your haven to the empires they fled.
 
 **Tension:** The immense, free influx of high-tier talent vs. the constant, volatile risk of harboring the galaxy's most dangerous and traumatized fugitives.
+
+## The Scrap Heirs
+
+**Layer:** 1 -> 2
+
+**Fantasy:** Watching your frontier salvage colony evolve from picking through trash to venerating it as divine legacy.
+
+**Mechanic:** Pops born in colonies built primarily from "Tainted" or "Salvaged" materials (e.g., from Ghost-Ship Wrecks) develop the "Scrap Heir" trait. They gain massive bonuses to repairing and modifying old tech but suffer severe morale penalties if forced to use pristine, newly manufactured equipment.
+
+**Emergence:** A crisis forces you to replace your dilapidated orbital defenses with brand-new cannons. Your Scrap Heir engineers go on strike, claiming the new metal is "soulless," and instead secretly rebuild the old, destroyed cannons using scavenged parts. These rebuilt weapons fire with 200% efficiency but occasionally explode.
+
+**Tension:** Upgrading to safe, reliable modern technology vs. indulging a hyper-specialized subculture that turns garbage into miracles.
+
+---
+
+## Hyperlane Fluctuations
+
+**Layer:** Cross-layer (2 -> 3)
+
+**Fantasy:** The geography of the galaxy is a breathing, shifting organism, not a static map.
+
+**Mechanic:** Hyperlanes have a "Stability" metric. Over decades, stable lanes may slowly decay into impassable "Dead Zones," while previously unconnected star systems might suddenly form rapid, temporary "Surge Lanes."
+
+**Emergence:** Your impregnable core sector, safe behind a single heavily fortified chokepoint, suddenly finds itself connected directly to a Devouring Swarm via a new Surge Lane. Conversely, your enemy's main trade route decays into a Dead Zone, starving their capital without you firing a single shot.
+
+**Tension:** Building permanent, massive defenses on currently critical borders vs. maintaining a mobile, adaptable fleet for when the galactic map inevitably redraws itself.
+
+---
+
+## Somnolent Synchronization
+
+**Layer:** 1
+
+**Fantasy:** A society so tightly knit that they even dream together, creating a surreal, hive-mind workforce.
+
+**Mechanic:** If an entire sector of Pops goes to sleep simultaneously in an interconnected, high-density residential block, they enter "Somnolent Synchronization." Their individual needs and moods are averaged out across the entire group when they wake up, completely erasing individual mental breaks.
+
+**Emergence:** You synchronize a thousand workers to cure a few highly-stressed engineers. It works, but one night a terrifying nightmare (caused by a nearby Psychic Anomaly) infects the synchronization. The entire sector wakes up simultaneously paralyzed by the exact same hallucination, plunging the colony into mass panic.
+
+**Tension:** Enforcing rigid, perfectly timed sleep schedules to maintain absolute emotional stability across the colony vs. the risk of a single catastrophic psychological event infecting everyone at once.
+
+---
