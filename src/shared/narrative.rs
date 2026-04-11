@@ -1,9 +1,26 @@
-use anyhow::{Context, Result};
 use bevy_ecs::prelude::*;
 use rand::seq::SliceRandom;
 use std::collections::HashMap;
 use std::fs;
 use std::path::Path;
+
+use thiserror::Error;
+
+#[derive(Error, Debug)]
+pub enum NarrativeError {
+    #[error("Narrative Engine Error: Missing required context variable or fragment: {0}")]
+    MissingContext(String),
+    #[error("Narrative Engine Error: No lore files found in `{0}`. Expected TEMPLATES.md or FRAGMENTS.md")]
+    NoLoreFiles(String),
+    #[error("Narrative Engine Error: Template not found (`{0}`)")]
+    TemplateNotFound(String),
+    #[error("Narrative Engine Error: Template `{0}` has no patterns")]
+    NoPatternsForTemplate(String),
+    #[error("Narrative Engine Error: Directory not found or not a directory (`{0}`)")]
+    DirectoryNotFound(String),
+    #[error("Narrative Engine Error: Failed to read `{0}`: {1}")]
+    IoError(String, std::io::Error),
+}
 
 /// A segment of a generated narrative.
 #[derive(Debug, Clone, PartialEq, Eq)]
@@ -109,13 +126,15 @@ impl NarrativeGenerator {
     /// # Errors
     /// Returns an error if reading the template or fragment files fails,
     /// or if the directory does not exist, or if no lore files are found.
-    pub fn load_from_files<P: AsRef<Path>>(&mut self, path: P) -> Result<()> {
+    pub fn load_from_files<P: AsRef<Path>>(
+        &mut self,
+        path: P,
+    ) -> std::result::Result<(), NarrativeError> {
         let path = path.as_ref();
 
         if !path.exists() || !path.is_dir() {
-            return Err(anyhow::anyhow!(
-                "Directory not found or not a directory: {}",
-                path.display()
+            return Err(NarrativeError::DirectoryNotFound(
+                path.display().to_string(),
             ));
         }
 
@@ -124,7 +143,8 @@ impl NarrativeGenerator {
         let templates_path = path.join("TEMPLATES.md");
         if templates_path.exists() {
             let content = fs::read_to_string(&templates_path)
-                .with_context(|| format!("Failed to read {}", templates_path.display()))?;
+                .map_err(|e| NarrativeError::IoError(templates_path.display().to_string(), e))?;
+
             self.parse_templates(&content);
             loaded_any = true;
         }
@@ -132,16 +152,14 @@ impl NarrativeGenerator {
         let fragments_path = path.join("FRAGMENTS.md");
         if fragments_path.exists() {
             let content = fs::read_to_string(&fragments_path)
-                .with_context(|| format!("Failed to read {}", fragments_path.display()))?;
+                .map_err(|e| NarrativeError::IoError(fragments_path.display().to_string(), e))?;
+
             self.parse_fragments(&content);
             loaded_any = true;
         }
 
         if !loaded_any {
-            return Err(anyhow::anyhow!(
-                "No lore files found in {}. Expected TEMPLATES.md or FRAGMENTS.md.",
-                path.display()
-            ));
+            return Err(NarrativeError::NoLoreFiles(path.display().to_string()));
         }
 
         Ok(())
@@ -362,7 +380,11 @@ impl NarrativeGenerator {
     ///
     /// # Errors
     /// Returns an error if the template ID is not found or if the template has no patterns.
-    pub fn generate(&self, template_id: &str, context: &NarrativeContext) -> Result<String> {
+    pub fn generate(
+        &self,
+        template_id: &str,
+        context: &NarrativeContext,
+    ) -> std::result::Result<String, NarrativeError> {
         let segments = self.generate_structured(template_id, context)?;
         Ok(segments
             .iter()
@@ -381,17 +403,17 @@ impl NarrativeGenerator {
         &self,
         template_id: &str,
         context: &NarrativeContext,
-    ) -> Result<Vec<NarrativeSegment>> {
+    ) -> std::result::Result<Vec<NarrativeSegment>, NarrativeError> {
         let template = self
             .templates
             .get(template_id)
-            .ok_or_else(|| anyhow::anyhow!("Template not found: {template_id}"))?;
+            .ok_or_else(|| NarrativeError::TemplateNotFound(template_id.to_string()))?;
 
         // Pick a random pattern
         let pattern = template
             .patterns
             .choose(&mut rand::thread_rng())
-            .ok_or_else(|| anyhow::anyhow!("Template {template_id} has no patterns"))?;
+            .ok_or_else(|| NarrativeError::NoPatternsForTemplate(template_id.to_string()))?;
 
         let mut segments = Vec::new();
         let mut char_iter = pattern.chars().peekable();
@@ -470,9 +492,9 @@ impl NarrativeGenerator {
         // Check for missing context variables/fragments that would produce errors
         for segment in &segments {
             if let NarrativeSegment::Error(err) = segment {
-                return Err(anyhow::anyhow!(
-                    "Missing required context variable or fragment: '{err}'. Please add it using `context.insert(\"{err}\", <value>)`."
-                ));
+                return Err(NarrativeError::MissingContext(format!(
+                    "{err}'. Please add it using `context.insert(\"{err}\", <value>)`"
+                )));
             }
         }
 
@@ -639,7 +661,7 @@ mod tests {
         let result = generator.load_from_files("non_existent_path_xyz_123");
         assert!(result.is_err());
         let err = result.unwrap_err();
-        assert!(err.to_string().contains("Directory not found"));
+        assert!(matches!(err, NarrativeError::DirectoryNotFound(_)));
     }
 }
 
@@ -690,10 +712,10 @@ fn test_generate_missing_template() {
     let ctx = NarrativeContext::new();
     let result = generator.generate_structured("NON_EXISTENT", &ctx);
     assert!(result.is_err());
-    assert_eq!(
-        result.unwrap_err().to_string(),
-        "Template not found: NON_EXISTENT"
-    );
+    assert!(matches!(
+        result.unwrap_err(),
+        NarrativeError::TemplateNotFound(_)
+    ));
 }
 
 #[test]
@@ -709,10 +731,10 @@ fn test_generate_empty_patterns() {
     let ctx = NarrativeContext::new();
     let result = generator.generate_structured("EMPTY", &ctx);
     assert!(result.is_err());
-    assert_eq!(
-        result.unwrap_err().to_string(),
-        "Template EMPTY has no patterns"
-    );
+    assert!(matches!(
+        result.unwrap_err(),
+        NarrativeError::NoPatternsForTemplate(_)
+    ));
 }
 
 #[test]
