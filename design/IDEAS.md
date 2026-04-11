@@ -3990,7 +3990,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Galactic Insurance
+## Galactic Insurance [SPECCED]
 
 **Layer:** Cross-layer
 

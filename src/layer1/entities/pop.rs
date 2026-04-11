@@ -306,7 +306,8 @@ impl PopBundle {
             health: Health::default(),
             needs: Needs::default(),
             memories: Memories::default(),
-            edict_compliance: crate::layer1::social::generational_dissonance::EdictCompliance::default(),
+            edict_compliance:
+                crate::layer1::social::generational_dissonance::EdictCompliance::default(),
             skills: Skills::default(),
             speed: Speed::default(),
             action: PopAction::default(),

@@ -630,3 +630,4 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `947` Aesthetic Orbital Blockade — `specs/947-aesthetic-orbital-blockade.md`
 - [ ] `948` The Orphaned Edict — `specs/948-the-orphaned-edict.md`
 - [ ] `949` The Bureaucratic Black Hole — `specs/949-the-bureaucratic-black-hole.md`
+- [ ] `950` Galactic Insurance — `specs/950-galactic-insurance.md`
