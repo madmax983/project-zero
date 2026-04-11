@@ -240,6 +240,8 @@ pub struct PopBundle {
     pub needs: Needs,
     /// Memories and trauma.
     pub memories: Memories,
+    /// Compliance with edicts and laws.
+    pub edict_compliance: crate::layer1::social::generational_dissonance::EdictCompliance,
     /// Skill levels.
     pub skills: Skills,
     /// Movement speed.
@@ -304,6 +306,7 @@ impl PopBundle {
             health: Health::default(),
             needs: Needs::default(),
             memories: Memories::default(),
+            edict_compliance: crate::layer1::social::generational_dissonance::EdictCompliance::default(),
             skills: Skills::default(),
             speed: Speed::default(),
             action: PopAction::default(),
