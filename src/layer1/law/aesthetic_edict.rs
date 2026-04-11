@@ -30,7 +30,9 @@ pub fn evaluate_aesthetic_edict_system(
         }
     }
 
-    let has_habitat = stations.iter().any(|s| s.station_type == StationType::Habitat);
+    let has_habitat = stations
+        .iter()
+        .any(|s| s.station_type == StationType::Habitat);
     let high_pollution = grid_pollution > 1000.0; // Tuning threshold
 
     let should_be_active = has_habitat && high_pollution;
@@ -52,9 +54,10 @@ pub fn enforce_aesthetic_edict_system(
 
     for (entity, building, halted) in buildings.iter() {
         // "Heavy Industry" defined as Manufacturing Category buildings.
-        let is_heavy_industry = building.building_type.tier_info().is_some_and(|(category, _)| {
-            category == Category::Manufacturing
-        });
+        let is_heavy_industry = building
+            .building_type
+            .tier_info()
+            .is_some_and(|(category, _)| category == Category::Manufacturing);
 
         if is_heavy_industry {
             if is_active && halted.is_none() {
@@ -71,11 +74,11 @@ pub fn enforce_aesthetic_edict_system(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use bevy_app::App;
     use crate::layer1::administration::edicts::{ColonyPolicies, Policy};
     use crate::layer1::building::{Building, BuildingType};
     use crate::layer1::nature::atmosphere::AtmosphereGrid;
     use crate::layer2::station::{Station, StationType};
+    use bevy_app::App;
 
     #[test]
     fn test_high_pollution_triggers_aesthetic_edict() {
@@ -118,9 +121,12 @@ mod tests {
         policies.active_policies.insert(Policy::Aesthetic);
         app.insert_resource(policies);
 
-        let factory = app.world_mut().spawn(Building {
-            building_type: BuildingType::Smelter,
-        }).id();
+        let factory = app
+            .world_mut()
+            .spawn(Building {
+                building_type: BuildingType::Smelter,
+            })
+            .id();
 
         // Add the system to enforce the edict
         app.add_systems(bevy_app::Update, enforce_aesthetic_edict_system);
@@ -145,11 +151,26 @@ mod tests {
         let mut grid = AtmosphereGrid::new(10, 10);
         app.insert_resource(grid);
 
-        let factory = app.world_mut().spawn((Building {
-            building_type: BuildingType::Smelter,
-        }, Halted { reason: "Aesthetic Edict".to_string() })).id();
+        let factory = app
+            .world_mut()
+            .spawn((
+                Building {
+                    building_type: BuildingType::Smelter,
+                },
+                Halted {
+                    reason: "Aesthetic Edict".to_string(),
+                },
+            ))
+            .id();
 
-        app.add_systems(bevy_app::Update, (evaluate_aesthetic_edict_system, enforce_aesthetic_edict_system).chain());
+        app.add_systems(
+            bevy_app::Update,
+            (
+                evaluate_aesthetic_edict_system,
+                enforce_aesthetic_edict_system,
+            )
+                .chain(),
+        );
 
         // Act: Update without a habitat present
         app.update();

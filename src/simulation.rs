@@ -566,6 +566,7 @@ pub fn run_simulation_tick(world: &mut World) {
             world.init_resource::<Events<crate::layer3::ghost_ships::EvaluateTransitEvent>>();
             world
                 .init_resource::<Events<crate::layer3::ghost_ships::EvaluateLostShipReturnEvent>>();
+            world.init_resource::<Events<crate::layer1::unseen_bureaucracy::PhantomShiftEvent>>();
 
             let schedule = build_simulation_schedule();
             world.add_schedule(schedule);
@@ -740,6 +741,7 @@ mod tests {
 
         world.init_resource::<Events<crate::layer3::ghost_ships::EvaluateTransitEvent>>();
         world.init_resource::<Events<crate::layer3::ghost_ships::EvaluateLostShipReturnEvent>>();
+        world.init_resource::<Events<crate::layer1::unseen_bureaucracy::PhantomShiftEvent>>();
 
         let schedule = build_simulation_schedule();
         world.add_schedule(schedule);
