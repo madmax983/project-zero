@@ -39,3 +39,10 @@
 **[Boundary Defenses on Grid Logic]**
 **Learning:** Found several untested `Grid size overflow or too large` `expect()` statements across grid instantiations (`VoidGrid`, `HumMap`, `PressureGrid`). These panics protect against OOM / memory allocation attacks but lacked explicit `#[should_panic]` coverage, risking accidental refactor regressions.
 **Action:** Added explicit boundary testing (`test_void_grid_new_overflow`, `test_void_grid_get_and_set_out_of_bounds`) verifying coordinate saturations and safe negative coordinate handling in custom array-backed map structures. Future grid implementations should have these exact edge case tests added immediately.
+**[Integer Overflow in Debug Mode Terrain Loops]**
+**Learning:** Using `unwrap_or(i32::MAX)` as an upper bound for spatial coordinate loops (`for x in min_x..=max_x`) creates a severe vulnerability. If an unconstrained or extreme coordinate (e.g., `i32::MAX`) is passed into a `saturating_add` radius calculation, the loop attempts to iterate up to `i32::MAX`, causing an integer overflow panic in debug builds when evaluating the loop boundary, or a functional freeze in release builds.
+**Action:** Always provide a reasonable, constrained fallback (e.g., `unwrap_or(100)`) for spatial grids and explicitly check for `.checked_add()` / `.checked_sub()` overflow before entering coordinate processing loops.
+
+**[Unsafe Component Access in Systems]**
+**Learning:** Production logic in `layer2` systems often relies on `.unwrap()` or vague `.expect("Component should exist")` when fetching components from an `Entity` that triggered an event. If the entity was despawned earlier in the frame by another system, this causes an immediate game crash.
+**Action:** Replace `.unwrap()` with `if let Ok(comp) = world.get::<T>(entity)` for safe continuation, or use highly specific `.expect("SpecificComponent should exist on EventTrigger")` in tests to immediately identify the missing component during regressions.

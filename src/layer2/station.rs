@@ -280,7 +280,7 @@ mod debt_trap_tests {
             app.world()
                 .entity(megastructure)
                 .get::<DebtTrapMegastructure>()
-                .unwrap()
+                .expect("DebtTrapMegastructure should exist")
                 .cycles_active,
             1
         );
@@ -305,7 +305,7 @@ mod debt_trap_tests {
             .world()
             .entity(megastructure)
             .get::<DebtTrapMegastructure>()
-            .unwrap();
+            .expect("DebtTrapMegastructure should exist");
         assert_eq!(warning.missed_payments, 1);
 
         let mut warn_reader = app
@@ -321,7 +321,7 @@ mod debt_trap_tests {
             .world()
             .entity(megastructure)
             .get::<DebtTrapMegastructure>()
-            .unwrap();
+            .expect("DebtTrapMegastructure should exist");
         assert_eq!(invasion.missed_payments, 2);
 
         let mut inv_reader = app
