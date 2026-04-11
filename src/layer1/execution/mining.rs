@@ -11,6 +11,7 @@ use crate::layer1::skills::{SkillType, XpGainEvent, XpSource};
 use crate::shared::log::MessageLog;
 
 use crate::layer1::execution::general_work::{WORK_CRIT_CHANCE, WORK_CRIT_MULTIPLIER};
+use crate::layer1::events::NatureDestroyedEvent;
 
 /// Handles mining work at a designation.
 ///
@@ -151,6 +152,9 @@ fn process_normal_mining(
 fn handle_mining_visuals(world: &mut World, entity: Entity, pos: GridPosition, is_crit: bool) {
     let mut rng = rand::thread_rng();
     if world.get_entity(entity).is_err() {
+        if let Some(mut events) = world.get_resource_mut::<Events<NatureDestroyedEvent>>() {
+            events.send(NatureDestroyedEvent);
+        }
         // Finished: Big shake + Debris
         trigger_shake(world, 0.5);
         spawn_particle(world, pos, '*', Color::White, 10);
@@ -225,6 +229,9 @@ fn emit_forestry_xp(world: &mut World, worker_entity: Entity) {
 fn handle_chopping_visuals(world: &mut World, entity: Entity, pos: GridPosition, is_crit: bool) {
     let mut rng = rand::thread_rng();
     if world.get_entity(entity).is_err() {
+        if let Some(mut events) = world.get_resource_mut::<Events<NatureDestroyedEvent>>() {
+            events.send(NatureDestroyedEvent);
+        }
         // Finished
         trigger_shake(world, 0.3);
         spawn_particle(world, pos, '^', Color::Green, 10);

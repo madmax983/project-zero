@@ -41,6 +41,8 @@ pub enum Trait {
     Curious,
     /// Logistics expert (+Production on planets when Governor).
     LogisticsExpert,
+    /// Empathic connection to the biome. Suffers stress on nature destruction.
+    BiomeEmpath,
     /// Traditional values (-Mood from Observatory).
     Traditionalist,
     /// Prone to violent outbursts (+Risk of breakdown).
@@ -146,6 +148,7 @@ impl Trait {
             Self::Bureaucrat => "Bureaucrat",
             Self::Synth => "Synthetic",
             Self::LogisticsExpert => "Logistics Expert",
+            Self::BiomeEmpath => "Biome Empath",
         }
     }
 }

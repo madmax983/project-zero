@@ -140,6 +140,11 @@ pub fn build_simulation_schedule() -> Schedule {
             .after(crate::layer2::governance::update_governor_ambition_system),
         crate::layer2::integration::rebellion_chronicle_bridge_system
             .after(crate::layer2::governance::check_governor_rebellion_system),
+        crate::layer1::empathic_biome_link::process_empath_nature_link_system.after(Layer1SystemSet::Execution),
+        crate::layer1::empathic_biome_link::process_empath_nature_link_system.after(Layer1SystemSet::Execution),
+        crate::layer1::empathic_biome_link::process_empath_nature_link_system.after(Layer1SystemSet::Execution),
+        crate::layer1::empathic_biome_link::process_empath_nature_link_system.after(Layer1SystemSet::Execution),
+        crate::layer1::empathic_biome_link::process_empath_nature_link_system.after(Layer1SystemSet::Execution),
         crate::layer2::tourism::process_disaster_tourism_system.after(Layer1SystemSet::Execution),
         crate::layer2::events_new::reverse_quarantine::process_refugee_decisions_system,
     ));
@@ -298,8 +303,24 @@ pub fn run_simulation_tick(world: &mut World) {
         world.init_resource::<Events<crate::layer2::events_new::reverse_quarantine::RefugeeFleetEvent>>();
     }
 
+    if !world.contains_resource::<Events<crate::layer1::events::NatureDestroyedEvent>>() {
+        world.init_resource::<Events<crate::layer1::events::NatureDestroyedEvent>>();
+    }
+    if !world.contains_resource::<Events<crate::layer1::events::NatureDestroyedEvent>>() {
+        world.init_resource::<Events<crate::layer1::events::NatureDestroyedEvent>>();
+    }
+    if !world.contains_resource::<Events<crate::layer1::events::NatureDestroyedEvent>>() {
+        world.init_resource::<Events<crate::layer1::events::NatureDestroyedEvent>>();
+    }
+    if !world.contains_resource::<Events<crate::layer1::events::NatureDestroyedEvent>>() {
+        world.init_resource::<Events<crate::layer1::events::NatureDestroyedEvent>>();
+    }
+
     if !world.contains_resource::<Events<crate::layer1::environment::events::DebrisFallEvent>>() {
+        world.init_resource::<Events<crate::layer1::events::NatureDestroyedEvent>>();
         world.init_resource::<Events<crate::layer1::environment::events::DebrisFallEvent>>();
+        world.init_resource::<Events<crate::layer1::events::NatureDestroyedEvent>>();
+        world.init_resource::<Events<crate::layer1::events::NatureDestroyedEvent>>();
     }
 
     if !world.contains_resource::<crate::layer3::council::GalacticCouncil>() {
@@ -394,7 +415,10 @@ mod tests {
         world.init_resource::<crate::layer3::council::GalacticCouncil>();
         world.init_resource::<crate::layer3::market::GalacticMarket>();
         world.init_resource::<Events<crate::layer2::events_new::reverse_quarantine::RefugeeFleetEvent>>();
+        world.init_resource::<Events<crate::layer1::events::NatureDestroyedEvent>>();
         world.init_resource::<Events<crate::layer1::environment::events::DebrisFallEvent>>();
+        world.init_resource::<Events<crate::layer1::events::NatureDestroyedEvent>>();
+        world.init_resource::<Events<crate::layer1::events::NatureDestroyedEvent>>();
 
         let schedule = build_simulation_schedule();
         world.add_schedule(schedule);

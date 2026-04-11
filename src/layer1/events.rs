@@ -19,3 +19,7 @@ pub struct BuildingCompletedEvent {
     /// The entity ID of the new building.
     pub entity: Entity,
 }
+
+/// Event triggered when a natural resource node (Tree, Rock, Geode) is mined/destroyed.
+#[derive(Event, Debug, Clone)]
+pub struct NatureDestroyedEvent;

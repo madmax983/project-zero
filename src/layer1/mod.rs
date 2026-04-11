@@ -744,3 +744,5 @@ pub use exodus::*;
 pub mod disasters;
 pub use disasters::*;
 pub mod environment;
+pub mod empathic_biome_link;
+pub use empathic_biome_link::*;
