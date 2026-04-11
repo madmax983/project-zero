@@ -81,3 +81,6 @@ pub mod symbiotic_parasite;
 
 #[cfg(feature = "nova")]
 pub mod somnolent_engine;
+
+#[cfg(feature = "nova")]
+pub mod gestalt_consciousness;
