@@ -253,6 +253,11 @@ pub fn build_simulation_schedule() -> Schedule {
     schedule.add_systems((crate::layer3::integration::jump_risk_bridge_system
         .after(crate::layer3::stellar_cartography::handle_jump_risk_system),));
 
+    schedule.add_systems((
+        crate::layer3::fleets::simulate_transit_drift_system,
+        crate::layer3::fleets::apply_drift_on_foundation_system,
+    ));
+
     schedule
 }
 
@@ -290,6 +295,9 @@ pub fn run_simulation_tick(world: &mut World) {
     }
     if !world.contains_resource::<Events<crate::layer1::social::ghost_shift_strike::GhostShiftStartedEvent>>() {
         world.init_resource::<Events<crate::layer1::social::ghost_shift_strike::GhostShiftStartedEvent>>();
+    }
+    if !world.contains_resource::<Events<crate::layer3::fleets::ColonyFoundedEvent>>() {
+        world.init_resource::<Events<crate::layer3::fleets::ColonyFoundedEvent>>();
     }
     if !world.contains_resource::<Events<crate::layer3::diplomacy::succession::SuccessionEvent>>() {
         world.init_resource::<Events<crate::layer3::diplomacy::succession::SuccessionEvent>>();
@@ -459,6 +467,7 @@ pub fn run_simulation_tick(world: &mut World) {
     }
     if !world.contains_resource::<Events<crate::layer1::grafting::GraftBuildingEvent>>() {
         world.init_resource::<Events<crate::layer1::grafting::GraftBuildingEvent>>();
+        world.init_resource::<Events<crate::layer3::fleets::ColonyFoundedEvent>>();
         world.init_resource::<Events<crate::layer3::planet::black_market_terraforming::RogueTerraformEvent>>();
         world.init_resource::<Events<crate::layer3::market::quantum_famine::MarketPanicEvent>>();
         world.init_resource::<Events<crate::layer3::market::quantum_famine::ExportDumpEvent>>();
@@ -608,6 +617,7 @@ mod tests {
         world.init_resource::<Events<crate::layer2::moon_hermits::PopDesertedEvent>>();
         world.init_resource::<Events<crate::layer3::silence::HostileSpawnEvent>>();
         world.init_resource::<Events<crate::layer1::grafting::GraftBuildingEvent>>();
+        world.init_resource::<Events<crate::layer3::fleets::ColonyFoundedEvent>>();
         world.init_resource::<Events<crate::layer1::temporal_ghost_towns::TemporalStutterEvent>>();
         world.init_resource::<Events<crate::layer3::planet::black_market_terraforming::RogueTerraformEvent>>();
         world.init_resource::<Events<crate::layer3::market::quantum_famine::MarketPanicEvent>>();
@@ -667,6 +677,7 @@ mod tests {
         world.init_resource::<Events<crate::layer2::skyhooks::LaunchIntent>>();
         world.init_resource::<Events<crate::layer2::events_new::reverse_quarantine::RefugeeFleetEvent>>();
         world.init_resource::<Events<crate::layer1::grafting::GraftBuildingEvent>>();
+        world.init_resource::<Events<crate::layer3::fleets::ColonyFoundedEvent>>();
         world.init_resource::<Events<crate::layer3::planet::black_market_terraforming::RogueTerraformEvent>>();
         world.init_resource::<Events<crate::layer3::market::quantum_famine::MarketPanicEvent>>();
         world.init_resource::<Events<crate::layer3::market::quantum_famine::ExportDumpEvent>>();
