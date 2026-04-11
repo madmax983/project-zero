@@ -15312,3 +15312,42 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Benefiting from the immediate, flawless enforcement of an automated system during a crisis, knowing you might lose the ability to turn it off when the world changes.
 
 ---
+## Fungal Networking
+
+**Layer:** 1
+
+**Fantasy:** The planet's ecosystem is more connected than you think, and tapping into it yields incredible but disturbing results.
+
+**Mechanic:** Certain deep subterranean biomes contain a massive, interconnected fungal root system. Players can build "Mycorrhizal Taps" to connect buildings to this network. Buildings connected to the network share power and "Admin" resources instantly without wires, and even slowly transfer "Nutrients" (a basic food substitute) between them. However, the network is slightly sentient.
+
+**Emergence:** You connect your entire subterranean mining facility to the fungal network to save on power cabling. It works perfectly for a year. Then, the network "decides" that your newly built, high-heat smelting facility is a threat, and it intentionally cuts power to that specific node, while simultaneously flooding your connected residential blocks with hallucinogenic spores as a warning.
+
+**Tension:** The incredible, zero-cost logistical efficiency of using a living planetary network vs. the slow realization that you are giving an alien intelligence administrative control over your critical infrastructure.
+
+---
+
+## Interstellar Quarantine Fields
+
+**Layer:** 2 -> 3
+
+**Fantasy:** Sometimes the only way to stop a plague is to lock the door and throw away the key, dooming billions.
+
+**Mechanic:** A late-game megastructure, the "Subspace Nullifier," can be built at the edge of a star system. When activated, it projects a massive field that completely prevents FTL travel into or out of the system. The system becomes an impenetrable, isolated island.
+
+**Emergence:** A terrifying memetic or biological plague begins sweeping the galaxy. It enters one of your most populous, wealthy core systems. In a moment of cold calculus, you activate the Subspace Nullifier. The system is saved from outside invasion, but it can never trade again, and the plague is locked inside with billions of your own citizens. You watch the system slowly tear itself apart on the Layer 2 map, knowing you can never turn the field off without risking the rest of your empire.
+
+**Tension:** The ultimate, unbreakable defense vs. the horrifying cost of permanently severing a piece of your empire from the rest of the universe.
+
+---
+
+## The Deserter's Haven
+
+**Layer:** Cross-layer (3 -> 1)
+
+**Fantasy:** Your colony becomes a refuge for those fleeing the wars of giants, turning your home into a powder keg.
+
+**Mechanic:** When a massive war breaks out between two major Layer 3 empires, your neutral, backwater Layer 1 colony starts receiving hidden, untracked shuttles. These contain highly trained "Deserters" from both sides. They offer incredible skills (master engineers, elite soldiers) and demand no pay, only secrecy.
+
+**Emergence:** You welcome the deserters, drastically boosting your colony's tech and defense capabilities. However, you inadvertently mix veterans from opposing sides in your residential blocks. A tavern brawl between two rival deserters escalates, and suddenly your colony is fighting a miniature proxy war in the streets, using the advanced weapons they smuggled in, threatening to expose your haven to the empires they fled.
+
+**Tension:** The immense, free influx of high-tier talent vs. the constant, volatile risk of harboring the galaxy's most dangerous and traumatized fugitives.
