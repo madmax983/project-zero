@@ -3949,7 +3949,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Space Barnacles
+## Space Barnacles [SPECCED]
 
 **Layer:** 2
 

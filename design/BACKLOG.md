@@ -631,3 +631,4 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `948` The Orphaned Edict — `specs/948-the-orphaned-edict.md`
 - [ ] `949` The Bureaucratic Black Hole — `specs/949-the-bureaucratic-black-hole.md`
 - [ ] `950` Galactic Insurance — `specs/950-galactic-insurance.md`
+- [ ] `951` Space Barnacles — `specs/951-space-barnacles.md`
