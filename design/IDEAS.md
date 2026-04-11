@@ -15393,3 +15393,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Enforcing rigid, perfectly timed sleep schedules to maintain absolute emotional stability across the colony vs. the risk of a single catastrophic psychological event infecting everyone at once.
 
 ---
+## The Scapegoat Ritual
+
+**Layer:** 1
+
+**Fantasy:** The dark side of maintaining order in a collapsing society. When things go wrong, the mob demands blood.
+
+**Mechanic:** When global Unrest reaches critical levels due to compounding disasters (famine, power failure), Pops form a "Mob" faction. They select a low-status or outsider Pop and demand their execution. Approving the execution instantly resets Unrest and provides a massive, temporary "Catharsis" morale boost, but permanently damages relationships with the victim's family and certain ethical factions.
+
+**Emergence:** A beloved but clumsy engineer accidentally causes a minor fire during a brutal famine. The starving mob demands their head. You execute your only engineer to stop a full-scale riot, only to realize no one else knows how to fix the broken hydroponics, dooming the colony anyway.
+
+**Tension:** Do you sacrifice an innocent Pop to instantly stabilize the colony (cruelty for survival), or defend them and risk a violent revolution?
+
+---
+
+## Automated Attrition
+
+**Layer:** Cross-layer
+
+**Fantasy:** Winning a war not through brilliant tactics, but through sheer, terrifying industrial momentum. The swarm consumes all.
+
+**Mechanic:** You can transition your Layer 1 industry to produce "Scrap Swarms"—massive clouds of incredibly cheap, entirely automated, low-damage drones. On Layer 2, these swarms move slowly but cost zero upkeep. They don't fight to destroy enemy ships; they attach to them and slowly drain their fuel and ammunition.
+
+**Emergence:** You are hopelessly outgunned by a high-tech rival empire. Instead of building dreadnoughts, you strip-mine three planets to launch trillions of Scrap Swarms. The enemy's elite fleet destroys millions of your drones, but they run out of ammo and fuel doing so, leaving their untouchable dreadnoughts stranded in deep space to be slowly dismantled.
+
+**Tension:** Devoting your entire economy to mindless, disposable units vs. building a balanced, adaptable fleet.
+
+---
+
+## The Cult of the Core
+
+**Layer:** 1
+
+**Fantasy:** The deeper you dig, the more the planet whispers to you.
+
+**Mechanic:** Pops assigned to deep crust mining (Z-levels near the mantle) for extended periods accumulate "Core Reverence." They begin to view the planetary heat as a divine presence. They work faster in extreme heat but will actively sabotage cooling systems, vents, and air conditioning units, seeking to "bring the warmth to the surface."
+
+**Emergence:** Your most efficient deep-mining team slowly converts to the Cult. You praise their high output until you realize they've secretly disabled the thermal regulators on the main fusion reactor, causing a catastrophic meltdown because they wanted to "feed the holy fire."
+
+**Tension:** The incredible efficiency of deep miners vs. the constant, paranoid need to monitor them for infrastructure sabotage.
+
+---
