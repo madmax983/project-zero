@@ -13,3 +13,4 @@ pub mod map;
 pub mod physics;
 pub mod planet;
 pub mod stellar_cartography;
+pub mod fleets;

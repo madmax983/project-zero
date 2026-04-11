@@ -627,4 +627,3 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `942` The Work-Shift Cartel — `specs/942-work-shift-cartel.md`
 - [ ] `943` The Martyr's Shrine — `specs/943-martyrs-shrine.md`
 - [ ] `944` Cultural Ransom — `specs/944-cultural-ransom.md`
-- [ ] `945` Generation Ship Drift — `specs/945-generation-ship-drift.md`
