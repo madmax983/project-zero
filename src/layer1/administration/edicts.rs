@@ -8,6 +8,8 @@ use std::collections::HashSet;
 pub struct ColonyPolicies {
     /// Set of currently active policies.
     pub active_policies: HashSet<Policy>,
+    /// Set of policies that have become orphaned and cannot be normally removed.
+    pub orphaned_policies: HashSet<Policy>,
 }
 
 /// Available policies that can be enacted.
@@ -27,6 +29,21 @@ pub enum Policy {
     Placebo(PlaceboProtocol),
     /// Censors delayed broadcasts, preventing large morale swings but increasing distrust.
     CensorBroadcasts,
+    /// Automated systems target and destroy any infected individuals.
+    ShootInfected,
+}
+
+#[derive(Event, Debug)]
+pub struct TogglePolicyEvent(pub Policy);
+
+#[derive(Event, Debug)]
+pub struct AccessDeniedEvent {
+    pub reason: String,
+}
+
+#[derive(Event, Debug)]
+pub struct HackCentralHubEvent {
+    pub target_policy: Policy,
 }
 
 impl ColonyPolicies {
@@ -43,6 +60,34 @@ impl ColonyPolicies {
     #[must_use]
     pub fn is_active(&self, policy: Policy) -> bool {
         self.active_policies.contains(&policy)
+    }
+}
+
+pub fn handle_policy_toggle_system(
+    mut events: EventReader<TogglePolicyEvent>,
+    mut policies: ResMut<ColonyPolicies>,
+    mut access_denied: EventWriter<AccessDeniedEvent>,
+) {
+    for ev in events.read() {
+        let policy = ev.0;
+        if policies.orphaned_policies.contains(&policy) {
+            access_denied.send(AccessDeniedEvent {
+                reason: format!("Edict {:?} is orphaned and cannot be toggled", policy),
+            });
+        } else {
+            policies.toggle(policy);
+        }
+    }
+}
+
+pub fn handle_hack_hub_system(
+    mut events: EventReader<HackCentralHubEvent>,
+    mut policies: ResMut<ColonyPolicies>,
+) {
+    for ev in events.read() {
+        let policy = ev.target_policy;
+        policies.orphaned_policies.remove(&policy);
+        policies.active_policies.remove(&policy);
     }
 }
 
@@ -181,5 +226,58 @@ mod tests {
         // Should reduce speed by 0.05
         let modifier = get_work_speed_modifier(&policies);
         assert!((modifier - 0.95).abs() < f32::EPSILON);
+    }
+
+    #[test]
+    fn test_player_cannot_rescind_orphaned_edict() {
+        // Arrange: Player attempts to toggle the edict off
+        let mut app = bevy_app::App::new();
+        app.add_event::<TogglePolicyEvent>();
+        app.add_event::<AccessDeniedEvent>();
+
+        let mut policies = ColonyPolicies::default();
+        policies.active_policies.insert(Policy::ShootInfected);
+        policies.orphaned_policies.insert(Policy::ShootInfected);
+        app.insert_resource(policies);
+
+        app.add_systems(bevy_app::Update, handle_policy_toggle_system);
+
+        // Act: Send UI/Input event to disable the edict
+        app.world_mut()
+            .send_event(TogglePolicyEvent(Policy::ShootInfected));
+        app.update();
+
+        // Assert: The edict remains active, and an 'AccessDenied' event is logged.
+        let policies = app.world().resource::<ColonyPolicies>();
+        assert!(policies.is_active(Policy::ShootInfected));
+
+        let events = app.world().resource::<Events<AccessDeniedEvent>>();
+        let mut cursor = events.get_cursor();
+        assert!(cursor.read(events).next().is_some());
+    }
+
+    #[test]
+    fn test_resolving_orphaned_edict_via_bureaucratic_hack() {
+        // Arrange: App with orphaned edict
+        let mut app = bevy_app::App::new();
+        app.add_event::<HackCentralHubEvent>();
+
+        let mut policies = ColonyPolicies::default();
+        policies.active_policies.insert(Policy::ShootInfected);
+        policies.orphaned_policies.insert(Policy::ShootInfected);
+        app.insert_resource(policies);
+
+        app.add_systems(bevy_app::Update, handle_hack_hub_system);
+
+        // Act: Perform a 'HackCentralHub' action
+        app.world_mut().send_event(HackCentralHubEvent {
+            target_policy: Policy::ShootInfected,
+        });
+        app.update();
+
+        // Assert: The edict is finally removed from the active edicts list.
+        let policies = app.world().resource::<ColonyPolicies>();
+        assert!(!policies.is_active(Policy::ShootInfected));
+        assert!(!policies.orphaned_policies.contains(&Policy::ShootInfected));
     }
 }
