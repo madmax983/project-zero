@@ -141,6 +141,8 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::civic_ideology::decay_recent_action_system
                 .after(crate::layer1::civic_ideology::apply_ideological_modifiers_system),
             check_generational_friction_system.after(decay_needs_system),
+            crate::layer1::social::process_generational_dissonance_system.after(decay_needs_system),
+            crate::layer1::social::evaluate_safety_edicts_system.after(decay_needs_system),
             crate::layer1::hobby::assign_hobby_system.after(decay_needs_system),
             crate::layer1::law::predictive_policing::check_prediction_system
                 .after(decay_needs_system),

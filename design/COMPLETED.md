@@ -377,3 +377,4 @@
 - [x] `900` Latent Psionics — `specs/900-latent-psionics.md` — completed 2026-06-15
 - [x] `945` Generation Ship Drift — `specs/945-generation-ship-drift.md` — completed 2026-06-01
 - [x] `948` The Orphaned Edict — `specs/948-the-orphaned-edict.md` - completed 2026-06-01
+- [x] `800` Generational Dissonance — `specs/800-generational-dissonance.md` — completed 2026-04-11
