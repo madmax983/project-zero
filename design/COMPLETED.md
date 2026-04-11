@@ -1,5 +1,6 @@
 - [x] `626` The Cartographer's Curse — `specs/626-cartographers-curse.md` — completed 2026-03-24
 # Completed Specs
+- [x] `764` The Embassy Sector — `specs/764-the-embassy-sector.md` — completed 2026-04-01
 - [x] `296` The Martyr's Engine — `specs/296-martyrs-engine.md` — completed 2026-06-25
 
 - [x] `346` Emotional Contagion — `specs/346-emotional-contagion.md` — completed 2026-03-06
