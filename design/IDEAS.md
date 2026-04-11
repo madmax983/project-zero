@@ -15434,3 +15434,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** The incredible efficiency of deep miners vs. the constant, paranoid need to monitor them for infrastructure sabotage.
 
 ---
+
+## The Silent World
+
+**Layer:** 2 -> 1
+
+**Fantasy:** Settling a world that seems perfectly safe, only to realize the silence is a symptom, not a feature.
+
+**Mechanic:** A planet type with exactly zero native fauna and an incredibly fast-growing, highly nutritious single species of flora. The flora is perfectly safe to eat and provides massive growth bonuses, but emits a microscopic airborne compound that completely nullifies all sound within a 5-tile radius on Layer 1.
+
+**Emergence:** You settle the world and enjoy a massive population boom and zero unrest. However, because sound doesn't travel, "Noise" based alerts fail. You only realize the central fusion reactor is suffering a critical meltdown when you pan the camera over and see it visibly burning, because the alarms were totally silenced by the local flora.
+
+**Tension:** The incredibly easy, rapid growth provided by the silent ecology vs. the absolute necessity of obsessive visual micro-management because auditory alerts and warnings simply do not function.
+
+---
+
+## The Pirate's Pension
+
+**Layer:** 3 -> 1
+
+**Fantasy:** Your colony becomes the retirement home for the galaxy's most wanted criminals.
+
+**Mechanic:** You can enact a policy to offer "Amnesty Visas" to Layer 3 Pirate Fleets. The fleets disband, and the pirate crews land as Pops on your Layer 1 colony. They arrive with massive amounts of stolen Credits and rare goods, instantly boosting your local economy, but they possess terrible work ethics and severe "Criminal History" traits.
+
+**Emergence:** You save your bankrupt colony by accepting Amnesty Visas. The pirates arrive, infusing the economy with stolen wealth. But they refuse to work the mines. Worse, ten years later, the Galactic Empire they stole from traces the Credits to your colony and demands you pay them back with interest, or face an orbital bombardment you can no longer afford to fight off because half your population is retired pirates who refuse to serve in the militia.
+
+**Tension:** The immediate, massive economic bailout from stolen wealth vs. the long-term diplomatic consequences and the destruction of your colony's productive work culture.
+
+---
+
+## The Vertical Schism
+
+**Layer:** 1
+
+**Fantasy:** The physical structure of your colony naturally breeds a catastrophic class war.
+
+**Mechanic:** In extremely deep or tall colonies (e.g., deep mines or high spires), Pops track their "Average Z-Level" over their lifetime. Pops who live primarily in "High Altitude" (clean air, low gravity, high beauty) develop a "Sky-Born" trait, while Pops who live in "Deep Depth" (high pressure, high heat, low beauty) develop a "Core-Born" trait. These two groups develop mutual, compounding animosity.
+
+**Emergence:** You meticulously design a sprawling subterranean mining complex below a pristine surface garden city to maximize efficiency. Decades later, the Core-Born miners go on strike, claiming the Sky-Born surface dwellers are useless aristocrats. The Core-Born seal the elevator shafts, trapping the Sky-Born without the raw materials needed for life support, starting a brutal civil war fought entirely across elevator choke-points.
+
+**Tension:** Segregating your colony for optimal industrial/residential efficiency vs. the inevitable, devastating social stratification that physical segregation creates.
+
+---
