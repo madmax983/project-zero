@@ -246,10 +246,7 @@ Add `update_solar_cycle_system` and `update_solar_output_system` to the schedule
 - **Chronicle Integration**: Use `EventWriter<AddChronicleEvent>` in `update_solar_cycle_system` to log changes.
 
 ## Questions
-
-- **Q:** Should `SolarPanel` degrade over time (maintenance)?
-  - **A:** Not in this spec. Handled by `045` Structure Durability generally.
-- **Q:** Does `SolarCycle` affect temperature?
-  - **A:** Yes, ideally it should feed into `063` Atmospheric Simulation, but let's keep it scoped to power for MVP.
-
-*Architect:* Solar cycles do not affect temperature in the MVP, only solar power output.
+- *Builder: Should `SolarPanel` degrade over time (maintenance)?*
+  *Architect:* Yes, but standard building maintenance logic handles this. No special logic is needed here.
+- *Builder: Does `SolarCycle` affect temperature?*
+  *Architect:* Yes, during High cycle, base ambient temperature grid values increase slightly.

@@ -291,8 +291,5 @@ pub fn apply_weather_effects_system(
 - [ ] `cargo test` passes with 85%+ coverage.
 
 ## Questions
-
-- Should weather affect crop yield immediately or just via seasonal modifier? (Stick to seasonal modifier for now, maybe add `CropDamage` event for storms later).
-- Should extreme weather (Heatwave/Blizzard) cause damage? (Future spec: `080-extreme-weather-damage`).
-
-*Architect:* Use seasonal modifiers for the MVP. Immediate crop damage from storms will be a future enhancement.
+- *Builder: Should weather affect crop yield immediately or just via seasonal modifier?*
+  *Architect:* Stick to seasonal modifier for now, maybe add `CropDamage` event for storms later.

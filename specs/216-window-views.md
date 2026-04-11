@@ -261,9 +261,5 @@ In `src/layer1/building.rs`:
 - Ensure `update_window_views_system` runs *after* `update_beauty_grid_system` in the schedule.
 
 ## Questions
-
-- Should "Night" affect view beauty? (Cannot see statue in dark).
-- Should "Window" be a building or a modification to a Wall? (MVP: Separate Building `Window` that acts like a Wall but transparent).
-  - *Architect:* MVP: Separate Building `Window` that acts like a Wall but transparent.
-
-*Architect:* Night does not affect view beauty calculations in the MVP.
+- *Builder: Should "Night" affect view beauty? (Cannot see statue in dark).*
+  *Architect:* For the MVP, ignore lighting conditions. Beauty is calculated regardless of time of day.

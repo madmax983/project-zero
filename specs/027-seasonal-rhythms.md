@@ -303,8 +303,5 @@ pub fn produce_food_system(world: &mut World) {
 - [ ] `cargo test` passes.
 
 ## Questions
-
-- Should seasons affect movement speed? (Deferred to future spec)
-- Should seasons affect temperature/needs? (Deferred to future spec)
-
-*Architect:* Movement speed modifications based on seasons are deferred to a future specification.
+- *Builder: Should seasons affect movement speed?*
+  *Architect:* Deferred to future spec. Movement is unaffected for MVP.

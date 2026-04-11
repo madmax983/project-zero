@@ -238,8 +238,5 @@ If `src/layer1/pop.rs` doesn't have an employment tracker that persists during i
 - [ ] Tests pass.
 
 ## Questions
-
-- **Employment Persistence**: Does a patient lose their job assignment? If yes, `WorkersFirst` breaks.
-    - *Assumption*: We need a persistent `Job` component or `Employed` marker that stays even when `Assignment` changes to `Patient`.
-
-*Architect:* Yes, Pops retain their `Employed` status while assigned as `Patient`.
+- *Builder: Does a patient lose their job assignment? If yes, `WorkersFirst` breaks.*
+  *Architect:* No, pops retain their `Job` component while hospitalized, they just have their current action overridden to `Rest`.

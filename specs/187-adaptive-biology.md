@@ -239,12 +239,9 @@ pub fn get_temp_tolerance_modifiers(traits: &Traits) -> (f32, f32) {
 - [ ] Tests pass verifying accumulation and mutation trigger.
 
 ## Questions
-
-*   **Q:** Should mutations happen instantly or require a "Sickness" phase?
-    *   **A:** For MVP, instant. Sickness/Metamorphosis can be added later with "Gene Splicing".
-*   **Q:** Can traits be removed?
-    *   **A:** Not naturally. Maybe via high-tech Medical beds later.
-*   **Q:** Should clothing affect exposure?
-    *   **A:** Yes. Good clothing should reduce exposure gain (preventing mutation), just as it prevents damage. The logic should use the *felt* temperature (after insulation).
-
-*Architect:* Mutations should happen gradually. Removal and clothing modifiers are deferred to future specs.
+- *Builder: Should mutations happen instantly or require a "Sickness" phase?*
+  *Architect:* For MVP, mutations happen instantly when the `Exposure` reaches 100.0.
+- *Builder: Can traits be removed?*
+  *Architect:* No, adaptive traits are permanent once acquired.
+- *Builder: Should clothing affect exposure?*
+  *Architect:* Yes, but that is out of scope for MVP. Assume base pop bodies for now.

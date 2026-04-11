@@ -302,8 +302,5 @@ pub fn update_tech_capacity_system(
 - Ensure `update_tech_capacity_system` runs before building logic in the schedule.
 
 ## Questions
-
-- Should `Library` provide a small base capacity (e.g. 5.0) so early game isn't broken?
-  - **Answer**: Yes, or start with `BaseCapacity` in `TechState` (e.g., 10.0 from the Lander computer).
-
-*Architect:* Assume a base capacity provided by the initial starting tech state.
+- *Builder: Should `Library` provide a small base capacity (e.g. 5.0) so early game isn't broken?*
+  *Architect:* Yes, all colonies start with a base capacity of 10.0 data storage without needing a Library.

@@ -140,5 +140,7 @@ pub fn process_maintenance_debt(
 - If an explosion system exists, route the failure event into it.
 
 ## 8. Questions
-- Should deferred maintenance lower building output efficiency?
-- How fast should debt accumulate relative to standard simulation ticks?
+- *Builder: Should deferred maintenance lower building output efficiency?*
+  *Architect:* No, deferred maintenance retains full efficiency right up until catastrophic failure.
+- *Builder: How fast should debt accumulate relative to standard simulation ticks?*
+  *Architect:* It should accumulate slowly base rate, but scale exponentially based on how long it has been deferred.

@@ -206,10 +206,6 @@ mod tests {
 *   **Component Query:** In `can_designate`, checking components requires iterating entities or using a spatial map. `OccupiedTiles` only gives coordinates. Use `world.iter_entities()` filter or `BuildingMap` if available (it is available as a resource `BuildingMap`). Ideally use `BuildingMap` for O(1) lookup if `can_designate` is called frequently.
 *   **Resource Drop:** `execute_demolish` calls `ruins::process_scavenge` or spawns debris. `execute_destroy` should skip this entirely.
 
-## 8. Questions
-
-*   **Does this apply to all buildings?** Yes, anything with `Structure`.
-*   **Can I destroy non-welded buildings with Destroy?** Yes, if you hate resources. It's a "fast delete" option essentially.
-  - *Architect:* Yes, this serves as a fast delete option that foregoes resource recovery.
-
-*Architect:* Yes, this applies to all entities with a `Structure` component.
+## Questions
+- *Builder: Does this apply to all buildings?*
+  *Architect:* Yes, anything with a `Structure` component.

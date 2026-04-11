@@ -177,5 +177,7 @@ pub fn process_fleet_movement_with_slingshot(
 - Orbit lines/UI pathing needs to calculate the slingshot vector ahead of time so the player knows what direction they are committing to.
 
 ## 8. Questions
-- How long does the momentum last? Just one tick/movement order?
-- Should gravity wells have varying "bands" of strength?
+- *Builder: How long does the momentum last? Just one tick/movement order?*
+  *Architect:* Yes, the Slingshot momentum applies only to the immediate next turn's movement.
+- *Builder: Should gravity wells have varying "bands" of strength?*
+  *Architect:* For MVP, use a single adjacent tile ring. Expanding to bands can be a future optimization.

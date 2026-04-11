@@ -319,8 +319,5 @@ pub fn inspect_tile(world: &World, x: i32, y: i32) -> String {
 - **Visuals**: Since we don't have a heatmap view yet, inspection is critical for verifying the feature works.
 
 ## Questions
-
-- Should fertilizer items exist? (Future feature)
-- Should crop rotation (different crops) matter? (Future feature)
-
-*Architect:* Fertilizer items are deferred to a future feature specification.
+- *Builder: Should fertilizer items exist?*
+  *Architect:* Future feature. Out of scope for MVP.

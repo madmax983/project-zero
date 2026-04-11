@@ -213,9 +213,6 @@ Update `src/layer1/pathfinding.rs` (or `navigation.rs`):
 - **Performance**: Building the blocker map every tick is O(N) where N is buildings. For 1000 buildings, this is fast. Don't over-optimize yet.
 - **Visuals**: Vents should look distinct. Maybe use a specific character like `#` but lighter color, or `≡`.
 
-## 8. Questions
-
-- Should Vents conduct temperature? (Future scope: Yes, but for now focus on Pressure/Pollution).
-- Can Vents be closed? (Future scope: Active Vents).
-
-*Architect:* Focus on Pressure/Pollution for the MVP. Temperature and active venting are deferred.
+## Questions
+- *Builder: Should Vents conduct temperature?*
+  *Architect:* Future scope: Yes, but for now focus on Pressure/Pollution.

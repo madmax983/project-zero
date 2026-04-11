@@ -330,11 +330,7 @@ pub fn visitor_behavior_system(
 - Be careful with `Query` mutability conflicts when iterating `visitors` and `stockpiles`. You might need to collect commands/updates and apply them after the loop.
 
 ## Questions
-
-- **Q**: Does the Visitor take damage?
-- **A**: Yes, but has massive health. If killed, drops massive loot.
-- **Q**: Do turrets shoot it?
-- **A**: Yes, if it is tagged `Hostile` (maybe only after it eats?). For MVP, treat as Neutral until attacked.
-  - *Architect:* Correct, treat visitors as neutral until provoked or explicitly tagged hostile.
-
-*Architect:* The Visitor can take damage and turrets will engage if it becomes hostile.
+- *Builder: Does the Visitor take damage?*
+  *Architect:* No, the Visitor is considered an invulnerable entity for the purpose of the MVP event.
+- *Builder: Do turrets shoot it?*
+  *Architect:* Defensive structures should ignore the Visitor, treating it as neutral.

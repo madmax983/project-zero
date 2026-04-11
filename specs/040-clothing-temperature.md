@@ -325,9 +325,5 @@ In `src/main.rs` (and `layer1/mod.rs`):
 - Remember to update `src/ui/status.rs` to display new resources if desired, or leave for separate UI task.
 
 ## Questions
-
-- Should Fiber rot like Food? (Deferred to Entropy spec).
-- Should Clothing have different tiers? (No, keep simple).
-  - *Architect:* No, keep clothing temperature effects simple and uniform for the MVP.
-
-*Architect:* Fiber rot is deferred to the Entropy spec.
+- *Builder: Should Fiber rot like Food?*
+  *Architect:* Deferred to Entropy spec. No rotting for now.

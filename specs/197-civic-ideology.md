@@ -232,9 +232,5 @@ pub fn evaluate_civic_ideology_system(
 - [ ] All RED phase tests pass.
 
 ## Questions
-
-- Should switching ideology be allowed mid-game? (Assume no for MVP, or with penalty).
-- Should "Satisfaction" scale with success margin? (e.g. +0.2 for *very* high food). Keep simple (+0.1) for now.
-  - *Architect:* No, use a flat satisfaction bonus for the MVP.
-
-*Architect:* Ideology switching is not allowed in the MVP.
+- *Builder: Should switching ideology be allowed mid-game? (Assume no for MVP, or with penalty).*
+  *Architect:* Assume no for MVP. Once chosen, it is locked.

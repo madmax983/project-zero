@@ -204,5 +204,7 @@ pub fn process_derelict_opening(
 - Use Bevy events (`AddChronicleEvent`) to record the outcome of opening the "mystery box".
 
 ## 8. Questions
-- Can players scrap the derelict in orbit for a minor, safe yield instead of towing it down?
-- What determines the scan accuracy? Can high-tech sensors reveal exactly what is inside?
+- *Builder: Can players scrap the derelict in orbit for a minor, safe yield instead of towing it down?*
+  *Architect:* Yes, but the yield is significantly lower (10% of total) and removes the chance for rare tech.
+- *Builder: What determines the scan accuracy? Can high-tech sensors reveal exactly what is inside?*
+  *Architect:* Sensor level determines the detail of the tooltip, from vague "Energy Spike" to specific "Active Bio-Weapon".

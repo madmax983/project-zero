@@ -263,8 +263,5 @@ pub fn pollution_effects_system(world: &mut World) {
 - Add `pollution_effects_system` to `SimulationSchedule` (Pop Update phase).
 
 ## Questions
-
-- Should masks/suits protect pops? (Future feature: Equipment)
-- Should pollution kill plants? (Future feature: Crop Death)
-
-*Architect:* Protective equipment is deferred to the Equipment specification.
+- *Builder: Should masks/suits protect pops?*
+  *Architect:* Future feature (Equipment module). For now, no.

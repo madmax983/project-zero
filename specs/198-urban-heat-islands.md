@@ -310,9 +310,7 @@ pub fn update_temperature_system(
 - Ensure `TerrainGrid` is accessible in `update_temperature_system` to get retention for empty tiles.
 
 ## Questions
-
-- **Shadows?** Future feature (Urban Canyons 182 already handles wind, maybe shadows later).
-- **Interiors?** Roofed buildings shouldn't get solar gain *inside*.
-    - *Answer:* For MVP, `Housing` is treated as a "block" that heats up. If we track internal vs external temp, we need a separate layer. For now, Layer 1 grid represents the "Tile Temperature" (Average of structure and air).
-
-*Architect:* Shadows and interiors will be handled in future updates. Keep MVP simple.
+- *Builder: Shadows? Future feature (Urban Canyons 182 already handles wind, maybe shadows later).*
+  *Architect:* Correct, shadows are out of scope for MVP.
+- *Builder: Interiors? Roofed buildings shouldn't get solar gain inside.*
+  *Architect:* Roofed tiles do not generate the `HeatIsland` modifier from solar gain.
