@@ -6493,3 +6493,57 @@ Generated names for tiles.
 ### Fragment Type: [HIGH_MORALE_TRIGGER]
 - the euphoria of the harvest
 - the infectious joy of the festival
+
+### Fragment Type: [PSIONIC_POWER_TYPE]
+
+- Pyrokinesis
+- Empathic Projection
+- Foresight
+- Telekinetic Breach
+- Mind-Weaving
+- Neural Static
+
+### Fragment Type: [PSIONIC_INCIDENT_RESULT]
+
+- an unquenchable fire in the galley
+- an aura of deep melancholy among the workers
+- a sudden panic over a raid that had not yet come
+- structural damage to the habitat walls
+- the spontaneous destruction of valuable salvage
+- a whispered secret bleeding into every mind
+
+### Fragment Type: [AWAKENING_TRIGGER]
+
+- extreme systemic starvation
+- the psychic weight of a dead artifact
+- unrelenting shifts in the zero-g forge
+- the sudden death of their kin
+- sensory deprivation in the outer hull
+- an overload of the biomimetic architecture
+
+### Fragment Type: [PHANTOM_WORKER_ALIAS]
+
+- the Under-Shift
+- the Sleep-Walkers
+- the Fringe-Hands
+- those who work the dark
+- the Night-Forge Cartel
+- the Phantom Masons
+
+### Fragment Type: [SHADOW_GOOD]
+
+- untraceable stims
+- stolen caloric paste
+- off-book thermal batteries
+- scrap-metal idols
+- hoarded oxygen canisters
+- unsanctioned tool-kits
+
+### Fragment Type: [DESPERATION_REASON]
+
+- a collapsing job market
+- brutal infrastructure decay
+- impossible sleep quotas
+- famine on the lower decks
+- the tightening grip of the council
+- an unpayable social debt
