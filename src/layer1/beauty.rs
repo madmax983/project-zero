@@ -125,14 +125,27 @@ impl BeautyGrid {
         if x >= self.width || y >= self.height {
             return 0.0;
         }
-        self.values[y * self.width + x]
+        self.values
+            .get(
+                y.checked_mul(self.width)
+                    .and_then(|i| i.checked_add(x))
+                    .unwrap_or(usize::MAX),
+            )
+            .copied()
+            .unwrap_or(0.0)
     }
     /// Set beauty value at position.
     pub fn set(&mut self, x: usize, y: usize, val: f32) {
         if x >= self.width || y >= self.height {
             return;
         }
-        self.values[y * self.width + x] = val;
+        if let Some(v) = self.values.get_mut(
+            y.checked_mul(self.width)
+                .and_then(|i| i.checked_add(x))
+                .unwrap_or(usize::MAX),
+        ) {
+            *v = val;
+        }
     }
 
     /// Clear the grid.

@@ -286,7 +286,21 @@ impl AtmosphereGrid {
             for x in 0..self.width {
                 let wind = wind_grid.get_wind(x as i32, y as i32);
                 if wind.length() < f32::EPSILON {
-                    self.scratch[y * self.width + x] = self.values[y * self.width + x];
+                    if let Some(v) = self.scratch.get_mut(
+                        y.checked_mul(self.width)
+                            .and_then(|i| i.checked_add(x))
+                            .unwrap_or(usize::MAX),
+                    ) {
+                        *v = self
+                            .values
+                            .get(
+                                y.checked_mul(self.width)
+                                    .and_then(|i| i.checked_add(x))
+                                    .unwrap_or(usize::MAX),
+                            )
+                            .copied()
+                            .unwrap_or(0.0);
+                    }
                     continue;
                 }
 
@@ -294,7 +308,14 @@ impl AtmosphereGrid {
                 let src_x = x as f32 - wind.x;
                 let src_y = y as f32 - wind.y;
 
-                self.scratch[y * self.width + x] = self.get_interpolated(src_x, src_y);
+                let interpolated_val = self.get_interpolated(src_x, src_y);
+                if let Some(v) = self.scratch.get_mut(
+                    y.checked_mul(self.width)
+                        .and_then(|i| i.checked_add(x))
+                        .unwrap_or(usize::MAX),
+                ) {
+                    *v = interpolated_val;
+                }
             }
         }
 

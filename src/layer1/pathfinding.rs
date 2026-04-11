@@ -218,7 +218,7 @@ fn find_path_internal(
         let ux = usize::try_from(x).ok()?;
         let uy = usize::try_from(y).ok()?;
         if ux < width && uy < height {
-            Some(uy * width + ux)
+            uy.checked_mul(width).and_then(|i| i.checked_add(ux))
         } else {
             None
         }
