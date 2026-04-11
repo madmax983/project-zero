@@ -1,5 +1,5 @@
-use bevy::prelude::*;
 use crate::layer1::social::culture::{Alignment, Culture};
+use bevy::prelude::*;
 
 #[derive(Component)]
 pub struct GenerationShip;
@@ -45,7 +45,9 @@ pub fn apply_drift_on_foundation_system(
                 Alignment::Peaceful
             };
 
-            commands.entity(event.target_planet).insert(Culture { alignment });
+            commands
+                .entity(event.target_planet)
+                .insert(Culture { alignment });
         }
     }
 }
@@ -61,11 +63,19 @@ mod tests {
         let mut app = App::new();
         app.add_systems(Update, simulate_transit_drift_system);
 
-        let ship_id = app.world_mut().spawn((
-            GenerationShip,
-            TransitConditions { food_scarcity: true, mechanical_failures: 2 },
-            TransitDrift { hostility_score: 0.0 },
-        )).id();
+        let ship_id = app
+            .world_mut()
+            .spawn((
+                GenerationShip,
+                TransitConditions {
+                    food_scarcity: true,
+                    mechanical_failures: 2,
+                },
+                TransitDrift {
+                    hostility_score: 0.0,
+                },
+            ))
+            .id();
 
         // Act
         app.update();
@@ -73,7 +83,10 @@ mod tests {
         // Assert
         // Hostility score should increase due to poor conditions
         let drift = app.world().get::<TransitDrift>(ship_id).unwrap();
-        assert!(drift.hostility_score > 0.0, "Drift hostility should increase under poor conditions.");
+        assert!(
+            drift.hostility_score > 0.0,
+            "Drift hostility should increase under poor conditions."
+        );
     }
 
     #[test]
@@ -83,10 +96,15 @@ mod tests {
         app.add_event::<ColonyFoundedEvent>();
         app.add_systems(Update, apply_drift_on_foundation_system);
 
-        let ship_id = app.world_mut().spawn((
-            GenerationShip,
-            TransitDrift { hostility_score: 100.0 }, // High hostility
-        )).id();
+        let ship_id = app
+            .world_mut()
+            .spawn((
+                GenerationShip,
+                TransitDrift {
+                    hostility_score: 100.0,
+                }, // High hostility
+            ))
+            .id();
 
         let target_planet_id = app.world_mut().spawn_empty().id();
 
@@ -100,6 +118,10 @@ mod tests {
         // Assert
         // Target planet should now have a hostile culture
         let culture = app.world().get::<Culture>(target_planet_id).unwrap();
-        assert_eq!(culture.alignment, Alignment::Hostile, "High drift should result in hostile alignment.");
+        assert_eq!(
+            culture.alignment,
+            Alignment::Hostile,
+            "High drift should result in hostile alignment."
+        );
     }
 }

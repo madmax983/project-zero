@@ -99,6 +99,7 @@ pub mod integration;
 /// Personal inventory system.
 /// Item definitions (Tools, Equipment).
 pub mod law;
+pub use law::orphaned_edict::*;
 /// Spatial primitives (GridPosition).
 pub mod map;
 /// Colony Mascot system (Spec 129).
