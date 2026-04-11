@@ -15312,7 +15312,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Benefiting from the immediate, flawless enforcement of an automated system during a crisis, knowing you might lose the ability to turn it off when the world changes.
 
 ---
-## Fungal Networking
+## Fungal Networking [SPECCED]
 
 **Layer:** 1
 
@@ -15326,7 +15326,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Interstellar Quarantine Fields
+## Interstellar Quarantine Fields [SPECCED]
 
 **Layer:** 2 -> 3
 
@@ -15340,7 +15340,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Deserter's Haven
+## The Deserter's Haven [SPECCED]
 
 **Layer:** Cross-layer (3 -> 1)
 
