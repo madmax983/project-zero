@@ -314,3 +314,4 @@
 - [x] `INT-688` Integration: Moon Hermits -> Chronicle — completed 2026-03-30
 - [x] `735` Genetic Crop Modification — `specs/735-genetic-crop-modification.md` — completed 2026-03-31
 - [x] `INT-727` Integration: Empathic Plague -> Morale — completed 2026-04-01
+- [x] `674` Remittances — `specs/674-remittances.md` — completed 2026-04-01

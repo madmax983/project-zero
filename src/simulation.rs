@@ -430,6 +430,12 @@ pub fn run_simulation_tick(world: &mut World) {
     if !world.contains_resource::<Events<crate::layer2::cascade::DefenseWeakenedEvent>>() {
         world.init_resource::<Events<crate::layer2::cascade::DefenseWeakenedEvent>>();
     }
+
+    if !world.contains_resource::<crate::layer1::social::remittances::RemittanceLedger>() {
+        world.init_resource::<crate::layer1::social::remittances::RemittanceLedger>();
+        world.init_resource::<Events<crate::layer1::social::remittances::MigrantArrivalEvent>>();
+    }
+
     // Add our schedule if not yet added
     {
         let schedules = world.resource::<Schedules>();
@@ -557,6 +563,9 @@ mod tests {
         world.init_resource::<Events<crate::layer2::cascade::DefenseWeakenedEvent>>();
 
         world.init_resource::<Events<crate::layer2::moon_hermits::PopDesertedEvent>>();
+
+        world.init_resource::<crate::layer1::social::remittances::RemittanceLedger>();
+        world.init_resource::<Events<crate::layer1::social::remittances::MigrantArrivalEvent>>();
 
         world.init_resource::<Time>();
 

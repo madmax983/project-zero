@@ -113,6 +113,8 @@ pub enum Trait {
     BrittleBones,
     /// Needs more food than normal.
     ExtremeHunger,
+    /// Supports a family elsewhere. Sends remittances.
+    Family,
 }
 
 impl Trait {
@@ -173,6 +175,7 @@ impl Trait {
             Self::ThickSkin => "Thick Skin",
             Self::BrittleBones => "Brittle Bones",
             Self::ExtremeHunger => "Extreme Hunger",
+            Self::Family => "Family",
         }
     }
 }
@@ -244,6 +247,7 @@ impl Traits {
             Trait::Spiteful,
             Trait::EmpathicLink,
             Trait::Bureaucrat,
+            Trait::Family,
         ];
 
         let mut added = 0;

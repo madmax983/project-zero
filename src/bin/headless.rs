@@ -295,7 +295,10 @@ fn handle_command(world: &mut World, input: &str) -> bool {
         "stories" | "st" | "legends" => print_stories(world),
         #[cfg(not(feature = "nova"))]
         "stories" | "st" | "legends" => {
-            println!("{}", "⚠️ Feature 'nova' is not enabled. Run with --features nova.".yellow());
+            println!(
+                "{}",
+                "⚠️ Feature 'nova' is not enabled. Run with --features nova.".yellow()
+            );
         }
         "log" | "l" => print_log(world),
         "tech" | "research_status" => print_tech(world),
@@ -1623,8 +1626,8 @@ fn print_bio(world: &mut World, target_id: u32) {
 
 #[cfg(feature = "nova")]
 fn print_stories(world: &mut World) {
-    use comfy_table::{Cell, Color, ContentArrangement, Table, Attribute};
     use comfy_table::presets::UTF8_FULL;
+    use comfy_table::{Attribute, Cell, Color, ContentArrangement, Table};
     use crossterm::style::Stylize;
     let tradition = world.resource::<OralTradition>();
 
@@ -1813,9 +1816,17 @@ fn print_help() {
                 ("great_works", "gw", "List all Great Works projects"),
                 ("chronicle", "c, history", "Show colony history events"),
                 #[cfg(feature = "nova")]
-                ("stories", "st, legends", "Show current oral tradition stories"),
+                (
+                    "stories",
+                    "st, legends",
+                    "Show current oral tradition stories",
+                ),
                 #[cfg(not(feature = "nova"))]
-                ("stories", "st, legends", "Show current oral tradition stories (Requires --features nova)"),
+                (
+                    "stories",
+                    "st, legends",
+                    "Show current oral tradition stories (Requires --features nova)",
+                ),
                 ("log", "l", "Show message log"),
                 (
                     "tech",
