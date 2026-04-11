@@ -1,32 +1,24 @@
-# Integration Plan
+# Requesting Plan Review
 
-I will wire up three unintegrated completed specs: `INT-772`, `INT-773`, and `INT-774`. Following the Integrator agent protocol, I will focus on seams, event bridge systems, and integration tests to ensure these newly created features correctly propagate state to the broader game systems (like the Chronicle and Fleet logic).
+Okay, I have examined spec `768` (Dynastic Succession) which was recently completed but lacks integration.
+The requirement says:
+`Integrate the succession event into the Chronicle system (src/layer1/chronicle.rs) using a new template.`
 
-## 1. INT-772: Biomass Commute Seam
-**Problem:** `digest_transit_contents` currently just despawns the entity when digesting a commuter or resources. This is an event black hole. When a `Pop` is digested, it should produce a `PopDied` event, triggering UI updates, morale hits, and chronicle logs.
-**Solution:**
-- Create an integration test `tests/integration/biomass_commute_bridge.rs`.
-- Add a new bridge system `biomass_digestion_bridge` in `src/layer1/integration.rs` (or modify `digest_transit_contents` slightly to emit `PopDied` if `PopName` is present). I will modify `digest_transit_contents` by adding an `EventWriter<PopDied>` to keep it atomic and avoid a God System, checking if the entity has a `PopName` before despawning.
+But `src/layer3/diplomacy/succession.rs` does not emit any events currently, only mutating components (`Dead`, `Leader`, `SuccessionCrisis`).
+The Integrator should write integration code without modifying the builder's code too much. So I should add an event like `SuccessionEvent` or `SuccessionCrisisEvent` that gets fired, or perhaps a system in `src/layer3/integration.rs` (or similar) that queries for `Added<SuccessionCrisis>` and `Added<Leader>` to send an `AddChronicleEvent`.
 
-## 2. INT-773: Stellar Weather Navigation Seam
-**Problem:** `apply_stellar_weather_effects` sends a `FleetDamagedEvent` which nobody listens to.
-**Solution:**
-- Create an integration test `tests/integration/stellar_weather_bridge.rs`.
-- Create a new bridge system `stellar_weather_damage_bridge_system` in `src/layer2/integration.rs` that reads `FleetDamagedEvent` and:
-  1. Reduces `FleetHealth.current`.
-  2. Reduces `FleetComposition.take_damage`.
-  3. Despawns the fleet if health reaches 0.
-  4. Emits an `AddChronicleEvent` for the solar flare damage.
-- Register this system in `src/simulation.rs` in the `Layer2SystemSet`.
+Let's check `tests/integration/` for `dynastic_succession_chronicle.rs` or similar. We should create `tests/integration/dynastic_succession_chronicle.rs`.
+Wait, in `src/layer3/integration.rs` does it exist? Or `src/layer2/integration.rs`? I will create the bridge and the test.
+The problem is: how do I know the succession actually occurred across frames without an event?
+Wait! `Added<Leader>` is perfect for tracking a new leader taking over, and `Added<SuccessionCrisis>` is perfect for a crisis!
 
-## 3. INT-774: Architectural Grafting Seam
-**Problem:** `GraftBuildingEvent` runs `process_grafting` which updates the local building components correctly, but no record is made of this Frankenstein architecture in the colony's history.
-**Solution:**
-- Create an integration test `tests/integration/architectural_grafting_bridge.rs`.
-- Create a new bridge system `grafting_chronicle_bridge` in `src/layer1/integration.rs` that reads `GraftBuildingEvent` and produces an `AddChronicleEvent` with `EventImportance::Minor`.
-- Register the bridge system in `src/simulation.rs` (Layer 1 Observation).
+Wait, `Added<Leader>` could match newly spawned leaders at the start of the game. I could use `Added<Leader>, Without<Age>` perhaps, or something specific, but actually, checking `Added<SuccessionCrisis>` and maybe `Changed<CurrentLeader>` is better!
+But `Changed<CurrentLeader>` requires `CurrentLeader`. Yes, `CurrentLeader` is changed!
 
-## 4. Documentation & Verification
-- Update `design/IN_PROGRESS.md` and `design/SEAM_MAP.md` during implementation.
-- Move tasks to `design/COMPLETED.md` when done.
-- Run `cargo test integration`, `cargo clippy`, and complete pre-commit steps to ensure proper testing, verification, review, and reflection are done.
+So the plan:
+1. Write RED phase tests in `tests/integration/dynastic_succession_chronicle.rs` for:
+    - New leader succession sending `AddChronicleEvent`
+    - Succession crisis sending `AddChronicleEvent`
+2. Add a bridge system in `src/layer3/integration.rs` (or create it if not exist, or `src/layer1/integration.rs` depending on where it belongs. Layer 3 -> 1, probably `src/layer1/integration.rs` or `src/layer3/integration.rs`). I will use `layer1/integration.rs` to emit `AddChronicleEvent`. Wait, `layer2/integration.rs` bridges L2 to L1. I'll check where other layer3 bridges are.
+3. Update `src/simulation.rs` to register the new bridge system.
+4. Update `design/SEAM_MAP.md` and `design/COMPLETED.md`.

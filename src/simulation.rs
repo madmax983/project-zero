@@ -174,7 +174,11 @@ pub fn build_simulation_schedule() -> Schedule {
             .after(crate::layer3::diplomacy_reflection::update_diplomatic_traits),
     ));
 
-    schedule.add_systems((crate::layer3::diplomacy::succession::process_succession_system,));
+    schedule.add_systems((
+        crate::layer3::diplomacy::succession::process_succession_system,
+        crate::layer3::integration::dynastic_succession_chronicle_bridge
+            .after(crate::layer3::diplomacy::succession::process_succession_system),
+    ));
 
     schedule.add_systems((
         crate::layer2::phantom::check_scrapcode_threshold_system

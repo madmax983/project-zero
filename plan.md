@@ -1,18 +1,42 @@
-1. **Understand Goal**: Integrate the three recently completed feature specs (772, 773, 774) with existing systems where their events/outputs are currently isolated. Write integration tests and bridge systems, run pre-commit steps, and verify end-to-end functionality.
+# Integration Plan: Grid Instability -> Fire Ignition (INT-448/INT-008)
 
-2. **INT-772 Integration**: The Biomass Commute -> Colony Resources / Chronicle
-   - Find or create a way to feed the `BiomassNetwork`. The spec says it "consumes upkeep" and "digests transit contents". It lacks a clear connection for *feeding* it from colony stockpiles, or reporting digested pops/resources.
-   - However, a simpler integration is connecting Digested pops to `AddChronicleEvent` or `PopDied`. Wait, the digestion just despawns the entity: `commands.entity(entity).despawn();`. We need an event for this, but modifying the builder's code should be minimal.
-   - If we look at the codebase, we should probably add a `PopDigestedEvent` or similar in `layer1/logistics/biomass_network.rs` when `Pop` component is present.
-   - Wait, "Never add gameplay features... If a seam needs a new game mechanic, create a spec." But adding an event is standard integration glue. Wait, maybe the seam is `BiomassNetwork` digestion -> Morale / Needs, or `PopDied` event.
-   - Let's modify `digest_transit_contents` to send a `PopDied` event if the digested entity has a `Pop` component.
+Wait, earlier I saw an integration task completed:
+```
+### INT-008: Grid Overload -> Fire Ignition
+- **Date:** 2026-02-16
+- **Systems connected:** `power_grid_system` (Energy) -> `Fire` (Environment)
+- **Glue added:**
+    - Updated `src/layer1/energy/mod.rs` to spawn `Fire` entity on severe overload.
+- **Tests:** `tests/energy_fire.rs` (Integration test verified)
+```
+Wait, let me double check `tests/energy_fire.rs` and `INT-008`.
+Is `tests/integration/energy_fire.rs` there? No.
+Ah, the `design/SEAM_MAP.md` might be listing INT-008. But the user asked me to implement missing integration.
 
-3. **INT-773 Integration**: Stellar Weather Navigation -> UI / Notifications or Chronicle
-   - `FleetDamagedEvent` is fired. It should bridge to `AddChronicleEvent` (Chronicle).
-   - Create a `stellar_weather_chronicle_bridge` system in `src/layer2/integration.rs`.
+Let's read the backlog or look for `INT-448`. Wait, I did not find `INT-448` in `IN_PROGRESS.md` or `COMPLETED.md`.
+Ah, the user's prompt gave me some rules:
+"Find completed features that aren't talking to each other...
+... Read design/COMPLETED.md
+... Read design/IN_PROGRESS.md
+... Scan src/
+"
 
-4. **INT-774 Integration**: Architectural Grafting -> Chronicle
-   - `GraftBuildingEvent` is fired. It should bridge to `AddChronicleEvent` (Chronicle).
-   - Create a `grafting_chronicle_bridge` in `src/layer1/integration.rs`.
+Wait! `448 Grid Instability — specs/448-grid-instability.md` is in `COMPLETED.md`.
+The spec 448 says:
+`Drawing too much power through a single cable or a specific circuit causes "Overload," generating heat damage and potential fires. `
 
-Let's refine these plans based on checking exact components.
+Let's check `tests/integration/grid_instability_fire.rs`. It does not exist.
+Also `evaluate_grid_load_system` handles the grid load for specific components like `PowerCable`, but wait! `power_grid_system` from `src/layer1/energy/mod.rs` handles overloads too!
+
+Let's look closely at `src/layer1/energy/load_limits.rs`. It defines `PowerCable` and `evaluate_grid_load_system`.
+Does `evaluate_grid_load_system` connect properly to the heat system?
+```rust
+temperature_grid.add(pos.x, pos.y, overload_amount * 0.1); // Add some heat
+commands.spawn((Fire::default(), *pos));
+```
+Wait, the prompt says:
+"Are events from A being listened to by B?"
+"Do entities spawned by A have all components B expects in its queries?"
+
+Ah! `Fire` needs a `Health` or `GridPosition` or something else?
+Let's see what `src/layer1/fire.rs` expects or what the `FirePropagation` spec (Spec 033) says.

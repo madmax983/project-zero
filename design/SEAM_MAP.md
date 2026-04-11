@@ -1,3 +1,10 @@
+### INT-768: Dynastic Succession -> Chronicle
+- **Date:** 2026-04-10
+- **Systems connected:** `process_succession_system` (Diplomacy) -> `AddChronicleEvent` (Chronicle)
+- **Glue added:**
+    - `dynastic_succession_chronicle_bridge` in `src/layer3/integration.rs` tracking `Added<SuccessionCrisis>` and `Changed<CurrentLeader>`.
+- **Tests:** `tests/integration/dynastic_succession_chronicle.rs` (Integration test verified)
+
 ### INT-468: Escape Velocity Economics Integration
 - **Date:** 2026-03-27
 - **Systems connected:** `PlanetaryTraits` (Layer 1 Quirks) -> `PlanetaryGravity` (Layer 2 Escape Velocity)
