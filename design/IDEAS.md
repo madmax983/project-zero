@@ -15271,7 +15271,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** The cheap, early-game expansion offered by generation ships vs. the enormous risk of "incubating" a completely alien, potentially hostile civilization that will emerge on your borders centuries later.
 
 ---
-## The Self-Fulfilling Prophecy
+## The Self-Fulfilling Prophecy [SPECCED]
 
 **Layer:** 1
 
@@ -15285,7 +15285,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Aesthetic Orbital Blockade
+## Aesthetic Orbital Blockade [SPECCED]
 
 **Layer:** Cross-layer
 
@@ -15299,7 +15299,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Orphaned Edict
+## The Orphaned Edict [SPECCED]
 
 **Layer:** Cross-layer
 
