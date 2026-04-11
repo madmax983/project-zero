@@ -15449,7 +15449,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Pirate's Pension
+## The Pirate's Pension [SPECCED]
 
 **Layer:** 3 -> 1
 
@@ -15463,7 +15463,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Vertical Schism
+## The Vertical Schism [SPECCED]
 
 **Layer:** 1
 
