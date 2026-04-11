@@ -99,7 +99,10 @@ pub fn fire_spread_system(world: &mut World) {
             // ⚡ Bolt Optimization: Immutable borrow of the `TerrainGrid` resource dynamically here avoids cloning.
             let is_tree = {
                 let terrain = world.resource::<TerrainGrid>();
-                let idx = (ny as usize) * width + (nx as usize);
+                let idx = (ny as usize)
+                    .checked_mul(width)
+                    .and_then(|i| i.checked_add(nx as usize))
+                    .unwrap_or(usize::MAX);
                 idx < terrain.tiles.len() && terrain.tiles[idx] == TerrainType::Tree
             };
 
@@ -182,7 +185,10 @@ pub fn fire_damage_system(world: &mut World) {
     if !terrain_changes.is_empty() {
         let mut terrain_mut = world.resource_mut::<TerrainGrid>();
         for (x, y, new_type) in terrain_changes {
-            let idx = (y as usize) * terrain_mut.width + (x as usize);
+            let idx = (y as usize)
+                .checked_mul(terrain_mut.width)
+                .and_then(|i| i.checked_add(x as usize))
+                .unwrap_or(usize::MAX);
             if idx < terrain_mut.tiles.len() {
                 terrain_mut.tiles[idx] = new_type;
             }
