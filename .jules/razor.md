@@ -32,3 +32,8 @@
 **Bloat:** Enterprise FizzBuzz Abstraction: `GeomeManager`, `GeomeType`, `ZLevel`, and `Rect` structs in `src/layer1/geomes.rs`.
 **Cut:** Deleted the entire manager layer and speculative structs. Replaced with a single `fill_rect` function in `src/layer1/nature/terrain.rs` that directly sets the `TerrainType`.
 **Saved:** 71 lines of code, speculative wrapper types, and unnecessary indirection.
+
+## [Reduction]
+**Bloat:** [Clippy complaints: Always-true assertions and un-indented list items in markdown docs]
+**Cut:** [Removed the `assert!(true)` in `layer1/tech/harmonic_mining_tests.rs` and properly indented `experimental/chrono_stutter.rs` markdown.]
+**Saved:** [1 line of code / Cognitive load of ignoring warnings]

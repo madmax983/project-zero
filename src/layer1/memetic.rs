@@ -100,8 +100,10 @@ mod tests {
     fn test_unlocking_hazardous_tech_infects_researcher() {
         let mut world = World::new();
         // Setup TechState, Resources, and a Researcher Pop
-        let mut tech_state = TechState::default();
-        tech_state.total_capacity = 1000.0; // Ensure enough capacity
+        let tech_state = TechState {
+            total_capacity: 1000.0,
+            ..Default::default()
+        }; // Ensure enough capacity
         world.insert_resource(tech_state);
         world.insert_resource(ColonyResources {
             knowledge: 1000.0, // Plenty of knowledge
