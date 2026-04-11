@@ -97,3 +97,8 @@
 **Bloat:** `AnomalyType` enum in `src/layer3/ghost_ships.rs` (`AlteredCargo`, `ChangedCrew`, `MysteriousWarnings`, `Unknown`). It was an over-engineered enterprise fizzbuzz pattern where only `Unknown` was ever assigned, and it was never read.
 **Cut:** Deleted the `AnomalyType` enum and made `GhostShip` a simple marker component instead.
 **Saved:** 10 lines of code, speculative pattern matching overhead, and improved idiomatic Bevy usage by using ECS marker structs instead of enums.
+
+## [Reduction]
+**Bloat:** [Single-variant enums `PopMemoryType` and `SignificantEvent` wrapped in a vector inside `MemoryTracker`]
+**Cut:** [Replaced the enums and wrapper struct with a simple zero-sized marker component `SurvivedFamineMemory` and a concrete struct `FamineEvent`.]
+**Saved:** [~30 Lines of code / Reduced cognitive load by eliminating an unnecessary abstraction layer and bringing the code closer to idiomatic Bevy ECS patterns.]
