@@ -293,6 +293,8 @@ pub enum BuildingType {
     Vent,
     /// Defensive structure that consumes Waste as ammunition.
     TrashCannon,
+    /// Pulls orbital debris down to Layer 1.
+    GravityHarpoon,
     /// Generates heat to combat cold temperatures.
     Heater,
     /// Stores data capacity for technology.
@@ -400,7 +402,8 @@ impl BuildingType {
             | Self::Hospital
             | Self::CommandCenter
             | Self::AICore
-            | Self::Recycler => 0.6,
+            | Self::Recycler
+            | Self::GravityHarpoon => 0.6,
             Self::FlowerBed | Self::PersonalGarden | Self::Grave | Self::BulletinBoard => 0.1,
             _ => 0.5,
         }
@@ -516,6 +519,7 @@ impl BuildingType {
             Self::HoloProjector => false,
             Self::Nanoforge => false,
             Self::School | Self::MediaStation => false,
+            Self::GravityHarpoon => false,
         }
     }
 
@@ -542,6 +546,7 @@ impl BuildingType {
                 0.0
             }
             Self::TrashCannon => -2.0, // Industrial machinery is ugly
+            Self::GravityHarpoon => -3.0,
             Self::Heater | Self::ServerBank => 0.0,
             Self::CommandCenter | Self::AICore | Self::CryoPod | Self::GeneBank => 0.0,
             Self::CloneVat => -5.0, // Unsettling
@@ -563,6 +568,7 @@ impl BuildingType {
             Self::Grave | Self::Well | Self::HydroponicsBay | Self::LifeSupport => 2.0,
             Self::CloneVat => 3.0,
             Self::HypnoPod => 2.0,
+            Self::GravityHarpoon => 3.0,
             Self::HoloProjector => 8.0,
             _ => 0.0,
         }
@@ -592,6 +598,7 @@ impl BuildingType {
             Self::Observatory => Some(Tech::Astronomy),
             Self::HydroponicsBay => Some(Tech::Hydroponics),
             Self::TrashCannon => Some(Tech::Militia),
+            Self::GravityHarpoon => Some(Tech::Astronomy),
             Self::CryoPod => Some(Tech::Medical),
             Self::AuroralCollector => Some(Tech::Electromagnetism),
             Self::AtmosphericProcessor => Some(Tech::Terraforming),
@@ -660,6 +667,7 @@ impl BuildingType {
             Self::Airlock => "Airlock",
             Self::Vent => "Vent",
             Self::TrashCannon => "Trash Cannon",
+            Self::GravityHarpoon => "Gravity Harpoon",
             Self::Heater => "Heater",
             Self::ServerBank => "Server Bank",
             Self::Lander => "Lander",
@@ -722,6 +730,7 @@ impl BuildingType {
             Self::Airlock => '⌷',
             Self::Vent => '≡',
             Self::TrashCannon => '♣',
+            Self::GravityHarpoon => 'J',
             Self::Heater => 'h',
             Self::ServerBank => '▥',
             Self::Lander => 'Λ',
@@ -819,6 +828,11 @@ impl BuildingType {
             Self::TrashCannon => ColonyResources {
                 metal: 20.0,
                 stone: 10.0,
+                ..ColonyResources::zeroed()
+            },
+            Self::GravityHarpoon => ColonyResources {
+                metal: 50.0,
+                stone: 20.0,
                 ..ColonyResources::zeroed()
             },
             Self::Heater => ColonyResources {
@@ -1365,6 +1379,7 @@ fn spawn_building(
         BuildingType::Observatory
         | BuildingType::LifeSupport
         | BuildingType::TrashCannon
+        | BuildingType::GravityHarpoon
         | BuildingType::ServerBank
         | BuildingType::CommandCenter
         | BuildingType::AICore
@@ -2064,6 +2079,36 @@ fn configure_science_buildings(entity: &mut EntityWorldMut, building_type: Build
 
 fn configure_specialized_tech(entity: &mut EntityWorldMut, building_type: BuildingType) {
     match building_type {
+        BuildingType::GravityHarpoon => {
+            entity.insert((
+                PowerConsumer {
+                    demand: 100.0,
+                    active: false,
+                },
+                crate::layer1::logistics::gravity_harpoon::GravityHarpoon {
+                    target_entity: None,
+                    winch_progress: 0.0,
+                },
+                LightSource {
+                    is_outdoor: true,
+                    radius: 6.0,
+                    intensity: 0.9,
+                    color: (255, 100, 0), // Warning Orange
+                },
+                NoiseSource {
+                    radius: 12.0,
+                    intensity: 1.0,
+                },
+                SeismicSource {
+                    intensity: 1.5,
+                    radius: 5.0,
+                },
+            ));
+            if let Some(mut structure) = entity.get_mut::<crate::layer1::structure::Structure>() {
+                structure.max_hp = 1000.0;
+                structure.current_hp = 1000.0;
+            }
+        }
         BuildingType::TrashCannon => {
             entity.insert((
                 crate::layer1::turret::Turret {
@@ -2505,7 +2550,11 @@ mod tests {
         assert_eq!(BuildingType::LifeSupport.next(), BuildingType::Airlock);
         assert_eq!(BuildingType::Airlock.next(), BuildingType::Vent);
         assert_eq!(BuildingType::Vent.next(), BuildingType::TrashCannon);
-        assert_eq!(BuildingType::TrashCannon.next(), BuildingType::Heater);
+        assert_eq!(
+            BuildingType::TrashCannon.next(),
+            BuildingType::GravityHarpoon
+        );
+        assert_eq!(BuildingType::GravityHarpoon.next(), BuildingType::Heater);
         assert_eq!(BuildingType::Heater.next(), BuildingType::ServerBank);
         assert_eq!(BuildingType::ServerBank.next(), BuildingType::Lander);
         assert_eq!(BuildingType::Lander.next(), BuildingType::CommandCenter);
@@ -2711,6 +2760,9 @@ mod tests {
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::TrashCannon);
+
+        mode.selected = mode.selected.next();
+        assert_eq!(mode.selected, BuildingType::GravityHarpoon);
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::Heater);

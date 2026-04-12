@@ -11,26 +11,29 @@ use rand::Rng;
 /// Spawns Layer 1 Pirate pops in response to a Layer 3 pirate fleet accepting amnesty.
 pub fn process_pirate_amnesty_system(
     mut commands: Commands,
-    mut amnesty_events: EventReader<PirateAmnestyEvent>,
+    amnesty_events: Option<Res<'_, bevy::prelude::Events<PirateAmnestyEvent>>>,
 ) {
-    for _ev in amnesty_events.read() {
-        // Spawn multiple pirate pops per fleet
-        for _ in 0..5 {
-            let mut pirate_traits = Traits::default();
-            pirate_traits.add(Trait::Pirate);
+    if let Some(events) = amnesty_events {
+        let mut cursor = events.get_cursor();
+        for _ev in cursor.read(&events) {
+            // Spawn multiple pirate pops per fleet
+            for _ in 0..5 {
+                let mut pirate_traits = Traits::default();
+                pirate_traits.add(Trait::Pirate);
 
-            commands.spawn((
-                Pop,
-                pirate_traits,
-                Wallet { credits: 1000.0 }, // Massive credit boost
-            ));
+                commands.spawn((
+                    Pop,
+                    pirate_traits,
+                    Wallet { credits: 1000.0 }, // Massive credit boost
+                ));
+            }
         }
     }
 }
 
 /// Pirates frequently shirk work and engage in brawls/crime randomly.
 pub fn pirate_crime_system(
-    mut crime_events: EventWriter<CrimeCommittedEvent>,
+    mut crime_events: Option<ResMut<'_, bevy::prelude::Events<CrimeCommittedEvent>>>,
     pirates: Query<(Entity, &Traits), With<Pop>>,
     _sim_time: Res<SimulationTime>,
 ) {
@@ -41,10 +44,12 @@ pub fn pirate_crime_system(
             // Determine base on arbitrary periodic check
             // e.g. 5% chance per tick to commit vandalism
             if rng.gen_bool(0.05) {
-                crime_events.send(CrimeCommittedEvent {
-                    perpetrator: entity,
-                    crime_type: CrimeType::Vandalism,
-                });
+                if let Some(ref mut events) = crime_events {
+                    events.send(CrimeCommittedEvent {
+                        perpetrator: entity,
+                        crime_type: CrimeType::Vandalism,
+                    });
+                }
             }
         }
     }

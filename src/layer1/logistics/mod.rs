@@ -13,3 +13,5 @@ pub mod biomass_network;
 pub use biomass_network::*;
 pub mod commute;
 pub use commute::*;
+pub mod gravity_harpoon;
+pub use gravity_harpoon::*;

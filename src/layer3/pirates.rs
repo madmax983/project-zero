@@ -9,7 +9,7 @@ pub fn evaluate_pirate_amnesty_system(
     mut commands: Commands,
     policies: Res<ColonyPolicies>,
     fleets: Query<(Entity, &FleetFaction), (With<Fleet>, With<InOrbit>)>,
-    mut amnesty_events: EventWriter<PirateAmnestyEvent>,
+    mut amnesty_events: Option<ResMut<'_, bevy::prelude::Events<PirateAmnestyEvent>>>,
 ) {
     if !policies.is_active(Policy::AmnestyVisa) {
         return;
@@ -18,7 +18,9 @@ pub fn evaluate_pirate_amnesty_system(
     for (entity, faction) in fleets.iter() {
         if *faction == FleetFaction::Pirate {
             commands.entity(entity).despawn_recursive();
-            amnesty_events.send(PirateAmnestyEvent { fleet: entity });
+            if let Some(ref mut events) = amnesty_events {
+                events.send(PirateAmnestyEvent { fleet: entity });
+            }
         }
     }
 }
