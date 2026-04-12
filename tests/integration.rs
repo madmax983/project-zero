@@ -270,3 +270,5 @@ mod temporal_ghost_towns_bridge;
 mod unseen_bureaucracy_bridge;
 #[path = "integration/void_whispers_chronicle.rs"]
 mod void_whispers_chronicle;
+#[path = "integration/orphaned_edict_bridge.rs"]
+mod orphaned_edict_bridge;

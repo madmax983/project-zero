@@ -1,3 +1,11 @@
+### INT-948: Orphaned Edicts -> Chronicle
+- **Date:** 2026-06-25
+- **Systems connected:** `AccessDeniedEvent` and `HackCentralHubEvent` (Edicts) -> `AddChronicleEvent` (Chronicle)
+- **Glue added:**
+    - `access_denied_chronicle_bridge` and `hack_hub_chronicle_bridge` in `src/layer1/core/integration.rs` to generate chronicle events when orphaned edicts deny access or are hacked.
+    - Registered bridges in `src/layer1/systems/observation.rs`.
+- **Tests:** `tests/integration/orphaned_edict_bridge.rs` (2 tests verified).
+
 ### INT-468: Escape Velocity Economics Integration
 - **Date:** 2026-03-27
 - **Systems connected:** `PlanetaryTraits` (Layer 1 Quirks) -> `PlanetaryGravity` (Layer 2 Escape Velocity)

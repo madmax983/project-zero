@@ -360,6 +360,8 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::integration::famine_chronicle_bridge,
             crate::layer1::integration::silent_flora_chronicle_bridge,
             crate::layer1::integration::aesthetic_edict_chronicle_bridge,
+            crate::layer1::integration::access_denied_chronicle_bridge,
+            crate::layer1::integration::hack_hub_chronicle_bridge,
             crate::layer1::integration::smuggler_arrival_event_bridge
                 .before(crate::layer1::void_weed::process_void_weed_trade_system),
         )
