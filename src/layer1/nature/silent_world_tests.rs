@@ -1,7 +1,5 @@
 #[cfg(test)]
 mod tests {
-    use bevy_ecs::prelude::*;
-    use bevy_ecs::system::RunSystemOnce;
 
     use crate::layer1::fauna::{suppress_fauna_system, Fauna};
     use crate::layer1::flora::{consume_silent_flora_system, Flora, FloraType};

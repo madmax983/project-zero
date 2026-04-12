@@ -665,3 +665,9 @@
 - **Systems connected:** `PopDied` (Pop lifecycle) & `ColonyResources` (Economy) -> `trauma_death_bridge_system`, `famine_tracking_system`, and `trauma_decay_system` (Integration) -> `TraumaTracker` (Stress)
 - **Glue added:** Added bridge systems in `src/layer1/integration.rs` to track deaths and famine and apply trauma decay. Registered in `Layer1SystemSet::Observation`.
 - **Tests:** `tests/integration/the_silent_generation_bridge.rs`
+
+### INT-947: Aesthetic Edict -> Chronicle
+- **Date:** 2026-06-20
+- **Systems connected:** `aesthetic_edict_chronicle_bridge` (Integration) -> `AddChronicleEvent` (Chronicle)
+- **Glue added:** Added `aesthetic_edict_chronicle_bridge` to emit an `AddChronicleEvent` when `Policy::Aesthetic` is added or removed from `ColonyPolicies`. Registered in `Layer1SystemSet::Observation`.
+- **Tests:** `tests/integration/aesthetic_edict_chronicle_bridge.rs`
