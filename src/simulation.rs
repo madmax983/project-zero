@@ -43,6 +43,7 @@ pub fn build_simulation_schedule() -> Schedule {
     // --- Register Core Layer 1 Systems ---
     register_layer1_systems(&mut schedule);
     // Black Market Terraforming
+    schedule.add_systems((crate::layer2::weather::weather_movement_system,));
     schedule.add_systems((
         crate::layer3::planet::black_market_terraforming::trigger_rogue_terraforming,
         crate::layer3::planet::black_market_terraforming::apply_rogue_terraforming_events,
@@ -468,6 +469,8 @@ pub fn run_simulation_tick(world: &mut World) {
 
     if !world.contains_resource::<Events<crate::layer2::moon_hermits::PopDesertedEvent>>() {
         world.init_resource::<Events<crate::layer2::moon_hermits::PopDesertedEvent>>();
+        world.init_resource::<bevy::prelude::Events<crate::layer2::weather::StormImpactEvent>>();
+        world.init_resource::<bevy::prelude::Events<crate::layer2::weather::StormImpactEvent>>();
     }
 
     if !world.contains_resource::<Events<crate::layer1::environment::disasters::DisasterEvent>>() {
@@ -604,6 +607,7 @@ mod tests {
             .init_resource::<crate::layer1::environment::bio_acoustic_miasma::MiasmaRecordedSecret>(
             );
         world.init_resource::<bevy::prelude::Events<crate::layer2::skyhooks::LaunchIntent>>();
+        world.init_resource::<bevy::prelude::Events<crate::layer2::weather::StormImpactEvent>>();
         world.init_resource::<bevy::prelude::Events<crate::layer1::law::justice::CrimeCommittedEvent>>();
         world.init_resource::<bevy::prelude::Events<crate::layer1::pop_memories::FamineEvent>>();
         *world.resource_mut::<GameState>() = GameState::Running;
@@ -623,6 +627,7 @@ mod tests {
             );
         world.init_resource::<bevy::prelude::Events<crate::layer2::skyhooks::LaunchIntent>>();
         world.init_resource::<bevy::prelude::Events<crate::layer1::law::justice::CrimeCommittedEvent>>();
+        world.init_resource::<bevy::prelude::Events<crate::layer2::weather::StormImpactEvent>>();
         world.init_resource::<bevy::prelude::Events<crate::layer1::pop_memories::FamineEvent>>();
         *world.resource_mut::<GameState>() = GameState::Running;
 
@@ -645,6 +650,7 @@ mod tests {
 
         // Initialize Detection Risk for test
         world.init_resource::<crate::layer3::silence::DetectionRisk>();
+        world.init_resource::<bevy::prelude::Events<crate::layer2::weather::StormImpactEvent>>();
         world
             .init_resource::<crate::layer1::environment::bio_acoustic_miasma::MiasmaRecordedSecret>(
             );
