@@ -120,4 +120,172 @@ mod tests {
             "Fire should die in vacuum"
         );
     }
+
+    #[test]
+    fn test_emergency_venting_extinguishes_fire() {
+        use crate::layer1::building::{Building, BuildingType};
+        use crate::layer1::control::{DoorControl, DoorState};
+        use crate::layer1::fire::Fire;
+        use crate::layer1::map::GridPosition;
+        use crate::layer1::pressure::PressureGrid;
+
+        use crate::layer1::physics::pressure::process_door_venting_system;
+        use bevy::prelude::{App, Update};
+        let mut app = App::new();
+        app.add_plugins(bevy::prelude::MinimalPlugins);
+
+        let mut grid = PressureGrid::new(5, 5);
+        grid.fill(1.0); // fully pressurized room
+        app.insert_resource(grid);
+
+        // Act: Force the DoorControl of the Airlock to DoorState::Open to vent the room.
+        app.world_mut().spawn((
+            Building {
+                building_type: BuildingType::Airlock,
+            },
+            DoorControl {
+                state: DoorState::Open,
+            },
+            GridPosition { x: 2, y: 2 },
+        ));
+
+        let fire = app
+            .world_mut()
+            .spawn((
+                Fire {
+                    intensity: 1.0,
+                    lifetime: 100,
+                    ..Default::default()
+                },
+                GridPosition { x: 2, y: 3 }, // adjacent to airlock
+            ))
+            .id();
+
+        app.add_systems(Update, process_door_venting_system);
+        app.add_systems(
+            Update,
+            crate::layer1::fire::fire_pressure_check_system.after(process_door_venting_system),
+        );
+
+        for _ in 0..10 {
+            app.update();
+        }
+
+        // Assert: Verify that the Fire entity is despawned or extinguished due to lack of pressure.
+        assert!(
+            app.world().get_entity(fire).is_err(),
+            "Fire should be extinguished due to emergency venting"
+        );
+    }
+
+    #[test]
+    fn test_emergency_venting_causes_vacuum_damage() {
+        use crate::layer1::building::{Building, BuildingType};
+        use crate::layer1::control::{DoorControl, DoorState};
+        use crate::layer1::health::Health;
+        use crate::layer1::map::GridPosition;
+        use crate::layer1::pop::Pop;
+        use crate::layer1::pressure::{pressure_damage_system, PressureGrid};
+
+        use crate::layer1::physics::pressure::process_door_venting_system;
+        use bevy::prelude::{App, Update};
+        let mut app = App::new();
+        app.add_plugins(bevy::prelude::MinimalPlugins);
+        app.init_resource::<bevy::ecs::event::Events<crate::layer1::chronicle::AddChronicleEvent>>(
+        );
+
+        let mut grid = PressureGrid::new(5, 5);
+        grid.fill(1.0); // fully pressurized room
+        app.insert_resource(grid);
+
+        app.world_mut().spawn((
+            Building {
+                building_type: BuildingType::Airlock,
+            },
+            DoorControl {
+                state: DoorState::Open,
+            },
+            GridPosition { x: 2, y: 2 },
+        ));
+
+        let pop = app
+            .world_mut()
+            .spawn((
+                Pop,
+                Health {
+                    current: 100.0,
+                    max: 100.0,
+                },
+                GridPosition { x: 2, y: 3 }, // adjacent to airlock
+            ))
+            .id();
+
+        app.add_systems(Update, process_door_venting_system);
+        app.add_systems(
+            Update,
+            pressure_damage_system.after(process_door_venting_system),
+        );
+
+        for _ in 0..10 {
+            app.update();
+        }
+
+        // Assert: Verify the Pop takes damage from lack of pressure/suffocation.
+        let health = app.world().get::<Health>(pop).unwrap();
+        assert!(health.current < 100.0, "Pop should take vacuum damage");
+    }
+
+    #[test]
+    fn test_emergency_venting_pulls_unanchored_items() {
+        use crate::layer1::building::{Building, BuildingType};
+        use crate::layer1::control::{DoorControl, DoorState};
+        use crate::layer1::items::{Item, ItemType};
+        use crate::layer1::map::GridPosition;
+        use crate::layer1::physics::pressure::process_door_venting_system;
+        use crate::layer1::pressure::PressureGrid;
+        use crate::layer1::suction::suction_system;
+        use bevy::prelude::{App, Update};
+
+        let mut app = App::new();
+        app.add_plugins(bevy::prelude::MinimalPlugins);
+
+        let mut grid = PressureGrid::new(5, 5);
+        grid.fill(1.0);
+        app.insert_resource(grid);
+
+        // Act: Force the Airlock open.
+        app.world_mut().spawn((
+            Building {
+                building_type: BuildingType::Airlock,
+            },
+            DoorControl {
+                state: DoorState::Open,
+            },
+            GridPosition { x: 2, y: 2 },
+        ));
+
+        let item = app
+            .world_mut()
+            .spawn((
+                Item {
+                    item_type: ItemType::Rations,
+                },
+                GridPosition { x: 2, y: 4 }, // further away
+            ))
+            .id();
+
+        app.add_systems(Update, process_door_venting_system);
+        app.add_systems(Update, suction_system.after(process_door_venting_system));
+
+        for _ in 0..10 {
+            app.update();
+        }
+
+        // Assert: The unanchored item's position changes, moving towards the venting airlock (suction effect).
+        let pos = app.world().get::<GridPosition>(item).unwrap();
+        assert!(
+            pos.x == 2 && pos.y < 4,
+            "Item should be sucked toward the airlock"
+        );
+    }
 }
