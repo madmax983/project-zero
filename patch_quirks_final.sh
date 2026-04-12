@@ -1,7 +1,6 @@
+cat << 'INNER_EOF' > tests/integration/quirks_atmosphere.rs
 use bevy_ecs::prelude::*;
-use scale::layer1::atmosphere::{
-    simulate_diffusion_system, update_atmosphere_system, AtmosphereGrid, DiffusionConfig,
-};
+use scale::layer1::atmosphere::{update_atmosphere_system, simulate_diffusion_system, AtmosphereGrid, DiffusionConfig};
 use scale::layer1::day_night::DayNightCycle;
 use scale::layer1::pop::{Pop, Speed};
 use scale::layer1::quirks::{apply_quirk_modifiers_system, PlanetaryTrait, PlanetaryTraits};
@@ -36,20 +35,12 @@ fn test_dense_atmosphere_increases_pollution_retention() {
     let val_dense = world.resource::<AtmosphereGrid>().get(5, 5);
 
     let mut world_normal = setup_world();
-    world_normal
-        .resource_mut::<AtmosphereGrid>()
-        .set(5, 5, start_val);
-    world_normal
-        .run_system_once(apply_quirk_modifiers_system)
-        .unwrap();
+    world_normal.resource_mut::<AtmosphereGrid>().set(5, 5, start_val);
+    world_normal.run_system_once(apply_quirk_modifiers_system).unwrap();
 
     for _ in 0..10 {
-        world_normal
-            .run_system_once(update_atmosphere_system)
-            .unwrap();
-        world_normal
-            .run_system_once(simulate_diffusion_system)
-            .unwrap();
+        world_normal.run_system_once(update_atmosphere_system).unwrap();
+        world_normal.run_system_once(simulate_diffusion_system).unwrap();
     }
 
     let val_normal = world_normal.resource::<AtmosphereGrid>().get(5, 5);
@@ -81,19 +72,11 @@ fn test_thin_atmosphere_decreases_pollution_retention() {
     let val_thin = world.resource::<AtmosphereGrid>().get(5, 5);
 
     let mut world_normal = setup_world();
-    world_normal
-        .resource_mut::<AtmosphereGrid>()
-        .set(5, 5, start_val);
-    world_normal
-        .run_system_once(apply_quirk_modifiers_system)
-        .unwrap();
+    world_normal.resource_mut::<AtmosphereGrid>().set(5, 5, start_val);
+    world_normal.run_system_once(apply_quirk_modifiers_system).unwrap();
     for _ in 0..10 {
-        world_normal
-            .run_system_once(update_atmosphere_system)
-            .unwrap();
-        world_normal
-            .run_system_once(simulate_diffusion_system)
-            .unwrap();
+        world_normal.run_system_once(update_atmosphere_system).unwrap();
+        world_normal.run_system_once(simulate_diffusion_system).unwrap();
     }
 
     let val_normal = world_normal.resource::<AtmosphereGrid>().get(5, 5);
@@ -131,3 +114,4 @@ fn test_high_gravity_slows_movement() {
         "High Gravity should slow speed to 0.8"
     );
 }
+INNER_EOF

@@ -3,12 +3,12 @@ cat << 'INNER_EOF' > tests/security_atmosphere_nan.rs
 mod tests {
     use scale::layer1::atmosphere::*;
     use scale::layer1::weather::{WeatherState, WeatherType};
-    use bevy_utils::hashbrown::HashMap;
+    use hashbrown::HashMap;
 
     #[test]
     fn test_atmosphere_inf_propagation() {
         let mut grid = AtmosphereGrid::new(10, 10);
-        grid.set(5, 5, f32::INFINITY);
+        grid.set(5, 5, std::f32::INFINITY);
 
         let blockers = HashMap::new();
         grid.diffuse(&blockers, 0.5);
@@ -26,10 +26,8 @@ mod tests {
             vertical_escape: 0.1,
         });
 
-        let weather = WeatherState {
-            current_weather: WeatherType::ThermalInversion,
-            ..Default::default()
-        };
+        let mut weather = WeatherState::default();
+        weather.current_weather = WeatherType::ThermalInversion;
         world.insert_resource(weather);
 
         use bevy_ecs::system::RunSystemOnce;
@@ -38,10 +36,8 @@ mod tests {
         let grid = world.resource::<AtmosphereGrid>();
         assert_eq!(grid.diffusion_rate, 1.0, "Thermal Inversion should have 0 escape rate");
 
-        let weather2 = WeatherState {
-            current_weather: WeatherType::Clear,
-            ..Default::default()
-        };
+        let mut weather2 = WeatherState::default();
+        weather2.current_weather = WeatherType::Clear;
         world.insert_resource(weather2);
 
         world.run_system_once(update_weather_diffusion_system).unwrap();
@@ -50,7 +46,3 @@ mod tests {
     }
 }
 INNER_EOF
-
-sed -i '/use bevy_ecs::prelude::\*;/d' src/layer1/nature/silent_world_tests.rs
-sed -i '/use bevy_ecs::system::RunSystemOnce;/d' src/layer1/nature/silent_world_tests.rs
-

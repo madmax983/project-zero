@@ -1,0 +1,1 @@
+sed -i 's/#\[ignore(reason = "AI evaluation does not currently select Tame action. Requires review.")\]/#\[ignore = "AI evaluation does not currently select Tame action. Requires review."\]/' tests/integration/husbandry_integration_tests.rs
