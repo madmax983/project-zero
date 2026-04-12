@@ -15476,3 +15476,58 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Segregating your colony for optimal industrial/residential efficiency vs. the inevitable, devastating social stratification that physical segregation creates.
 
 ---
+## Fungal Networking
+
+**Layer:** 1
+
+**Fantasy:** A colony that slowly realizes it is building its infrastructure inside a living, interconnected fungal super-organism.
+
+**Mechanic:** A rare underground biomes features "Mycorrhizal Networks." Buildings constructed over these networks automatically share power and fluid resources without needing pipes or wires. However, the fungus occasionally demands a "tax" by siphoning random resources (food, water, power) to feed itself.
+
+**Emergence:** You design a perfectly efficient mining outpost relying entirely on the fungal network for power transmission to save on copper wiring. During a brutal winter, the fungus gets "hungry" and siphons all the heat energy from your atmospheric regulators, plunging the colony into a deep freeze to save itself.
+
+**Tension:** The incredible cost-saving efficiency of free, wireless resource transmission vs. relying on an unpredictable, living infrastructure that might prioritize its own survival over yours.
+
+---
+
+## Interstellar Quarantine Fields
+
+**Layer:** Cross-layer (2 -> 3)
+
+**Fantasy:** Locking down an entire star system to contain a threat, isolating millions of souls in the dark.
+
+**Mechanic:** When a system is hit by a Class-5 biological or memetic threat, you can activate a "Quarantine Field." This physically prevents all FTL travel in and out of the system. The quarantined system is effectively cut off from your empire's resource pool and must survive entirely on its own.
+
+**Emergence:** You quarantine a core agricultural world to stop a plague from spreading to your capital. The capital starves without the food shipments, while the quarantined world, now isolated and desperate, descends into brutal warlordism. When you finally lift the quarantine a decade later, the plague is gone, but the world has become a hostile independent empire that immediately attacks you.
+
+**Tension:** Containing a galactic threat by sacrificing an entire world, vs. risking your entire empire to keep the supply lines open.
+
+---
+
+## Ecosystem Mimicry
+
+**Layer:** 1
+
+**Fantasy:** Survival by blending into a hostile, alien environment instead of conquering it.
+
+**Mechanic:** On planets with extreme hostile fauna (e.g., swarms of apex predators), you can build "Mimicry Generators" instead of turrets. These generators emit pheromones, sounds, and visual patterns that trick the local wildlife into believing your colony is a natural part of the landscape, like a massive termite mound or a dormant predator.
+
+**Emergence:** You perfectly tune your colony's mimicry to blend in with a terrifying local predator species. They ignore your miners completely. However, a rival empire lands a heavily armed expeditionary force on the planet. The predators, seeing your colony as "one of them," rally to defend your colony from the invaders, dragging you into an accidental war you didn't want to fight, fought entirely by alien beasts defending your "nest."
+
+**Tension:** The cheap, zero-casualty defense of mimicry vs. the total lack of control over the alien ecosystem you are now integrated with.
+
+---
+
+## Leviathan Tapping
+
+**Layer:** 2
+
+**Fantasy:** Harvesting energy from a creature so large it has its own gravity well.
+
+**Mechanic:** Spaceborn "Leviathans" occasionally drift through star systems. Instead of fighting them, you can launch specialized "Tether Harvesters" that latch onto their armored hide. These tethers siphon massive amounts of exotic energy, providing a huge boost to system-wide power, as long as the Leviathan remains in the system.
+
+**Emergence:** You tether a massive Void-Whale passing through your system, solving your energy crisis overnight. You build three new orbital shipyards relying on this power. Then, the whale simply decides to leave. As it enters FTL, the unbreakable tethers drag your three brand new shipyards out of orbit and across the galaxy, losing them forever.
+
+**Tension:** The massive, immediate windfall of energy vs. the unpredictable movement and whims of a cosmic entity you cannot control.
+
+---
