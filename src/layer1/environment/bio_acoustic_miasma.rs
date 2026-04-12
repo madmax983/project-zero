@@ -12,7 +12,7 @@
 //! # Usage
 //! ```
 //! use bevy_ecs::prelude::*;
-//! use scale::layer1::bio_acoustic_miasma::{MiasmaCloud, ParanoiaTracker, MiasmaRecordedSecret, record_miasma_secret, broadcast_miasma_secrets};
+//! use scale::layer1::environment::bio_acoustic_miasma::{MiasmaCloud, ParanoiaTracker, MiasmaRecordedSecret, record_miasma_secret, broadcast_miasma_secrets};
 //! use scale::layer1::map::GridPosition;
 //! use scale::layer1::pop::Pop;
 //! use scale::layer1::stress::StressTracker;

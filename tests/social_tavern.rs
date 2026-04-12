@@ -72,7 +72,7 @@ mod tests {
         world.insert_resource(scale::layer2::system::ViewMode::default());
         world.insert_resource(scale::layer1::crowding::CrowdingGrid::new(10, 10));
         world.insert_resource(scale::layer1::geology::SeismicGrid::new(10, 10));
-        world.insert_resource(scale::layer1::seismic::VibrationGrid::new(10, 10));
+        world.insert_resource(scale::layer1::environment::seismic::VibrationGrid::new(10, 10));
         world.insert_resource(scale::layer1::radioactive::RadiationGrid::new(10, 10));
         world.insert_resource(scale::layer1::temperature::TemperatureGrid::new(
             10, 10, 20.0,
@@ -92,7 +92,7 @@ mod tests {
         world.init_resource::<Events<scale::layer1::energy::GridOverloadEvent>>();
         world.init_resource::<Events<scale::layer1::items::UnequipEvent>>();
         world.init_resource::<Events<scale::layer1::eureka::EurekaEvent>>();
-        world.init_resource::<Events<scale::layer1::hazards::AmputationEvent>>();
+        world.init_resource::<Events<scale::layer1::environment::hazards::AmputationEvent>>();
         world.init_resource::<Events<scale::layer1::geology::GeologicalEvent>>();
         world.init_resource::<Events<scale::layer1::society::InvestigationEvent>>();
         world.init_resource::<Events<scale::layer1::society::SuppressSocietyEvent>>();

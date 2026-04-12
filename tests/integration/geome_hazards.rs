@@ -1,5 +1,5 @@
 use bevy_ecs::prelude::*;
-use scale::layer1::geomes::{diffuse_geome_hazards_system, environmental_damage_system};
+use scale::layer1::environment::geomes::{diffuse_geome_hazards_system, environmental_damage_system};
 use scale::layer1::health::Health;
 use scale::layer1::pop::Pop;
 use scale::layer1::{GridPosition, TerrainGrid, TerrainType};

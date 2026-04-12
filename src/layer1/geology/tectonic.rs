@@ -1,5 +1,5 @@
 use crate::layer1::resources::MiningEvent;
-use crate::layer1::volatile::ExplosionEvent;
+use crate::layer1::environment::volatile::ExplosionEvent;
 use bevy_ecs::prelude::*;
 
 #[derive(Resource, Debug)]
@@ -62,7 +62,7 @@ mod tests {
         check_quake_system, update_stress_system, MegaQuakeEvent, TectonicStress,
     };
     use crate::layer1::resources::MiningEvent;
-    use crate::layer1::volatile::ExplosionEvent;
+    use crate::layer1::environment::volatile::ExplosionEvent;
     use bevy_ecs::prelude::*;
 
     #[test]

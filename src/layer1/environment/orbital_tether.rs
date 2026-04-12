@@ -20,7 +20,7 @@ use bevy::prelude::*;
 ///
 /// # Examples
 /// ```rust
-/// use scale::layer1::orbital_tether::OrbitalTetherAnchor;
+/// use scale::layer1::environment::orbital_tether::OrbitalTetherAnchor;
 /// use bevy::math::Vec2;
 ///
 /// let anchor = OrbitalTetherAnchor {

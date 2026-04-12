@@ -7,7 +7,7 @@ use scale::layer1::cybernetics::{
     get_efficiency_bonus, surgery_system, Augmentations, MissingLimb, PendingSurgery, Prosthetic,
     ProstheticType,
 };
-use scale::layer1::hazards::AmputationEvent;
+use scale::layer1::environment::hazards::AmputationEvent;
 use scale::layer1::integration::amputation_handler_system;
 use scale::layer1::memory::{Memories, MemoryType};
 use scale::layer1::pop::Pop;

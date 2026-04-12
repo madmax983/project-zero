@@ -347,8 +347,8 @@ pub fn run_simulation_tick(world: &mut World) {
     if !world.contains_resource::<Events<crate::layer1::unrest::DenounceEvent>>() {
         world.init_resource::<Events<crate::layer1::unrest::DenounceEvent>>();
     }
-    if !world.contains_resource::<Events<crate::layer1::volatile::ExplosionEvent>>() {
-        world.init_resource::<Events<crate::layer1::volatile::ExplosionEvent>>();
+    if !world.contains_resource::<Events<crate::layer1::environment::volatile::ExplosionEvent>>() {
+        world.init_resource::<Events<crate::layer1::environment::volatile::ExplosionEvent>>();
     }
 
     if !world
@@ -452,8 +452,8 @@ pub fn run_simulation_tick(world: &mut World) {
         world.init_resource::<Events<crate::layer2::governance::RebellionEvent>>();
     }
 
-    if !world.contains_resource::<Events<crate::layer1::disasters::DisasterEvent>>() {
-        world.init_resource::<Events<crate::layer1::disasters::DisasterEvent>>();
+    if !world.contains_resource::<Events<crate::layer1::environment::disasters::DisasterEvent>>() {
+        world.init_resource::<Events<crate::layer1::environment::disasters::DisasterEvent>>();
     }
 
     if !world.contains_resource::<Events<crate::layer2::tourism::disaster_tourism::GriefTouristArrivalEvent>>() {
@@ -470,8 +470,8 @@ pub fn run_simulation_tick(world: &mut World) {
         world.init_resource::<Events<crate::layer2::moon_hermits::PopDesertedEvent>>();
     }
 
-    if !world.contains_resource::<Events<crate::layer1::disasters::DisasterEvent>>() {
-        world.init_resource::<Events<crate::layer1::disasters::DisasterEvent>>();
+    if !world.contains_resource::<Events<crate::layer1::environment::disasters::DisasterEvent>>() {
+        world.init_resource::<Events<crate::layer1::environment::disasters::DisasterEvent>>();
     }
 
     if !world.contains_resource::<Events<crate::layer2::trade::biomass_tariff::TradeDeal>>() {
@@ -600,7 +600,7 @@ mod tests {
     #[test]
     fn test_run_simulation_tick_increments() {
         let mut world = setup_world();
-        world.init_resource::<crate::layer1::bio_acoustic_miasma::MiasmaRecordedSecret>();
+        world.init_resource::<crate::layer1::environment::bio_acoustic_miasma::MiasmaRecordedSecret>();
         world.init_resource::<bevy::prelude::Events<crate::layer2::skyhooks::LaunchIntent>>();
         world.init_resource::<bevy::prelude::Events<crate::layer1::law::justice::CrimeCommittedEvent>>();
         world.init_resource::<bevy::prelude::Events<crate::layer1::pop_memories::FamineEvent>>();
@@ -616,7 +616,7 @@ mod tests {
     #[test]
     fn test_run_multiple_ticks() {
         let mut world = setup_world();
-        world.init_resource::<crate::layer1::bio_acoustic_miasma::MiasmaRecordedSecret>();
+        world.init_resource::<crate::layer1::environment::bio_acoustic_miasma::MiasmaRecordedSecret>();
         world.init_resource::<bevy::prelude::Events<crate::layer2::skyhooks::LaunchIntent>>();
         world.init_resource::<bevy::prelude::Events<crate::layer1::law::justice::CrimeCommittedEvent>>();
         world.init_resource::<bevy::prelude::Events<crate::layer1::pop_memories::FamineEvent>>();
@@ -641,7 +641,7 @@ mod tests {
 
         // Initialize Detection Risk for test
         world.init_resource::<crate::layer3::silence::DetectionRisk>();
-        world.init_resource::<crate::layer1::bio_acoustic_miasma::MiasmaRecordedSecret>();
+        world.init_resource::<crate::layer1::environment::bio_acoustic_miasma::MiasmaRecordedSecret>();
         world.init_resource::<bevy::prelude::Events<crate::layer2::skyhooks::LaunchIntent>>();
         world.init_resource::<Events<crate::layer2::moon_hermits::PopDesertedEvent>>();
         world.init_resource::<Events<crate::layer3::silence::HostileSpawnEvent>>();
@@ -697,7 +697,7 @@ mod tests {
         world.init_resource::<Events<crate::layer1::genetics::GeneSplicingResultEvent>>();
         world.init_resource::<Events<crate::layer2::trade::penal_contracts::PrisonerDiedEvent>>();
         world.init_resource::<Events<crate::layer2::governance::RebellionEvent>>();
-        world.init_resource::<Events<crate::layer1::disasters::DisasterEvent>>();
+        world.init_resource::<Events<crate::layer1::environment::disasters::DisasterEvent>>();
         world.init_resource::<Events<crate::layer2::tourism::disaster_tourism::GriefTouristArrivalEvent>>();
         world.init_resource::<Events<crate::layer1::agony_extract::HarvestAgonyExtractEvent>>();
         world.init_resource::<crate::layer1::agony_extract::AgonyExtractConfig>();

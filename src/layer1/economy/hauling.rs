@@ -411,7 +411,7 @@ fn try_drop_off_inventory(
         world.entity_mut(item_entity.0).insert(pos);
         world
             .entity_mut(item_entity.0)
-            .remove::<crate::layer1::photophobic::Parent>();
+            .remove::<crate::layer1::environment::photophobic::Parent>();
 
         world.entity_mut(pop_entity).remove::<CarryingItem>();
         world
@@ -433,7 +433,7 @@ fn try_drop_off_inventory(
     let item_type = item.item_type;
     let is_photophobic = world
         .entity(item_entity.0)
-        .contains::<crate::layer1::photophobic::Photophobic>();
+        .contains::<crate::layer1::environment::photophobic::Photophobic>();
 
     let inv_item = InventoryItem {
         item_type,
@@ -454,7 +454,7 @@ fn try_drop_off_inventory(
             world.entity_mut(item_entity.0).remove::<GridPosition>();
             world
                 .entity_mut(item_entity.0)
-                .insert(crate::layer1::photophobic::Parent(container_entity));
+                .insert(crate::layer1::environment::photophobic::Parent(container_entity));
         } else {
             world.despawn(item_entity.0);
         }
@@ -462,7 +462,7 @@ fn try_drop_off_inventory(
         world.entity_mut(item_entity.0).insert(pos);
         world
             .entity_mut(item_entity.0)
-            .remove::<crate::layer1::photophobic::Parent>();
+            .remove::<crate::layer1::environment::photophobic::Parent>();
     }
 
     world.entity_mut(pop_entity).remove::<CarryingItem>();
