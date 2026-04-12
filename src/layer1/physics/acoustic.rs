@@ -139,9 +139,19 @@ pub fn update_noise_system(
     terrain: Res<TerrainGrid>,
     pressure: Option<Res<crate::layer1::pressure::PressureGrid>>,
     sources: Query<(&NoiseSource, &GridPosition)>,
+    flora: Query<(&crate::layer1::flora::Flora, &GridPosition)>,
 ) {
     // Reset to ambient noise
     noise_map.values.fill(0.1);
+
+    // Find all SilentFlora positions to nullify noise
+    let silent_flora_positions: Vec<GridPosition> = flora.iter().filter_map(|(f, p)| {
+        if f.flora_type == crate::layer1::flora::FloraType::SilentFlora {
+            Some(*p)
+        } else {
+            None
+        }
+    }).collect();
 
     for (source, pos) in &sources {
         let mut queue = std::collections::VecDeque::new();
@@ -162,6 +172,21 @@ pub fn update_noise_system(
                     // Sound dies instantly in vacuum
                     continue;
                 }
+            }
+
+            // Nullify sound if within 5 tiles of SilentFlora
+            let mut is_nullified = false;
+            let current_pos = GridPosition { x: px, y: py };
+            for flora_pos in &silent_flora_positions {
+                if current_pos.distance_chebyshev(*flora_pos) <= 5 {
+                    is_nullified = true;
+                    break;
+                }
+            }
+
+            if is_nullified {
+                noise_map.set(px, py, 0.0); // Hard zero noise
+                continue; // Stop propagating from this cell
             }
 
             // Apply noise to current cell

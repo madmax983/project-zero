@@ -19,6 +19,36 @@ pub struct Bioluminescent {
     pub intensity: f32,
 }
 
+/// Pops close to SilentFlora can consume it to gain high nutrition and growth bonuses.
+pub fn consume_silent_flora_system(
+    mut pop_query: Query<(&GridPosition, &mut crate::layer1::needs::Needs)>,
+    flora_query: Query<(&Flora, &GridPosition)>,
+) {
+    // Collect all silent flora positions
+    let mut silent_flora_positions = Vec::new();
+    for (flora, pos) in &flora_query {
+        if flora.flora_type == FloraType::SilentFlora {
+            silent_flora_positions.push(*pos);
+        }
+    }
+
+    if silent_flora_positions.is_empty() {
+        return;
+    }
+
+    for (pop_pos, mut needs) in &mut pop_query {
+        if needs.hunger < 0.8 { // Only eat if they need to
+            for flora_pos in &silent_flora_positions {
+                if pop_pos.distance_chebyshev(*flora_pos) <= 1 {
+                    needs.hunger = 1.0;
+                    // Provide additional bonuses here, or just massive nutrition
+                    break;
+                }
+            }
+        }
+    }
+}
+
 /// Updates bioluminescent flora to emit light at night.
 pub fn update_bioluminescence_system(
     mut commands: Commands,
@@ -51,6 +81,8 @@ pub enum FloraType {
     XenoMoss,
     /// Vines that constrict and damage buildings heavily.
     StrangleVines,
+    /// Nutritious flora that completely nullifies sound.
+    SilentFlora,
 }
 
 /// Component representing hostile plant life.

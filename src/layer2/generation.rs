@@ -122,6 +122,10 @@ pub fn generate_system(
             }
         }
 
+        if rng.gen_bool(0.1) {
+            planet_traits.push(PlanetaryTrait::SilentWorld);
+        }
+
         let planet = commands
             .spawn((
                 Planet,

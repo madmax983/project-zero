@@ -380,3 +380,4 @@
 - [x] `800` Generational Dissonance — `specs/800-generational-dissonance.md` — completed 2026-04-11
 - [x] `947` Aesthetic Orbital Blockade — `specs/947-aesthetic-orbital-blockade.md` — completed 2026-05-15
 - [x] `901` Derelict Stations — `specs/901-derelict-stations.md` — completed 2026-04-11
+- [x] `961` The Silent World — `specs/961-the-silent-world.md` — completed 2026-06-01

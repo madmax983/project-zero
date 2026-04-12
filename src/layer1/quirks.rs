@@ -61,6 +61,8 @@ pub enum PlanetaryTrait {
     DenseAtmosphere,
     /// Thin atmosphere increases solar power output (+20%).
     ThinAtmosphere,
+    /// Nullifies sound and suppresses fauna.
+    SilentWorld,
 }
 
 impl PlanetaryTrait {
@@ -170,6 +172,7 @@ impl PlanetaryTrait {
             Self::SlowOrbit => "Slow Orbit",
             Self::DenseAtmosphere => "Dense Atmosphere",
             Self::ThinAtmosphere => "Thin Atmosphere",
+            Self::SilentWorld => "Silent World",
         }
     }
 }
