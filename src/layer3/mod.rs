@@ -12,5 +12,6 @@ pub mod ghost_ships;
 pub mod integration;
 pub mod map;
 pub mod physics;
+pub mod pirates;
 pub mod planet;
 pub mod stellar_cartography;

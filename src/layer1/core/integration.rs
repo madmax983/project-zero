@@ -1319,6 +1319,11 @@ pub fn phantom_shift_chronicle_bridge(
     }
 }
 
+#[derive(Event, Debug, Clone)]
+pub struct PirateAmnestyEvent {
+    pub fleet: Entity,
+}
+
 /// INT-947: Bridges Aesthetic Orbital Blockade (Policy::Aesthetic) to AddChronicleEvent (Chronicle).
 pub fn aesthetic_edict_chronicle_bridge(
     policies: bevy_ecs::prelude::Res<crate::layer1::administration::edicts::ColonyPolicies>,

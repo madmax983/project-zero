@@ -55,6 +55,7 @@ pub enum Trait {
     LogisticsExpert,
     /// Traditional values (-Mood from Observatory).
     Traditionalist,
+    Pirate,
     /// Prone to violent outbursts (+Risk of breakdown).
     Volatile,
     /// Creative mindset (+Cryo Dream rate, +Art quality).
@@ -145,6 +146,7 @@ impl Trait {
             Self::Optimist => "Optimist",
             Self::Curious => "Curious",
             Self::Traditionalist => "Traditionalist",
+            Self::Pirate => "Pirate",
             Self::Volatile => "Volatile",
             Self::Creative => "Creative",
             Self::Intellectual => "Intellectual",
@@ -361,6 +363,9 @@ pub fn get_trait_work_speed_modifier(traits: &Traits) -> f32 {
     if traits.has(Trait::EngineCultist) {
         modifier += 0.5;
     }
+    if traits.has(Trait::Pirate) {
+        modifier -= 0.3;
+    }
     modifier
 }
 
@@ -519,6 +524,15 @@ mod tests {
         assert!(
             (get_trait_work_speed_modifier(&normal) - 1.0).abs() < f32::EPSILON,
             "Normal should work at normal speed"
+        );
+        let pirate = {
+            let mut t = Traits::default();
+            t.add(Trait::Pirate);
+            t
+        };
+        assert!(
+            get_trait_work_speed_modifier(&pirate) < 1.0,
+            "Pirate should work slower"
         );
     }
 

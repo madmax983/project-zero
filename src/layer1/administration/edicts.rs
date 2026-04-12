@@ -33,6 +33,8 @@ pub enum Policy {
     ShootInfected,
     /// Halts heavy industry when pollution gets too high, enacted by orbital elites.
     Aesthetic,
+    /// Offers amnesty visas to pirate fleets.
+    AmnestyVisa,
 }
 
 #[derive(Event, Debug)]

@@ -1079,6 +1079,8 @@ mod tests {
         });
         world.init_resource::<crate::layer1::bio_acoustic_miasma::MiasmaRecordedSecret>();
         world.init_resource::<bevy::prelude::Events<crate::layer2::skyhooks::LaunchIntent>>();
+        world.init_resource::<bevy::prelude::Events<crate::layer1::law::justice::CrimeCommittedEvent>>();
+        world.init_resource::<bevy::prelude::Events<crate::layer1::pop_memories::FamineEvent>>();
         *world.resource_mut::<GameState>() = GameState::Running;
 
         for _ in 0..ticks {
