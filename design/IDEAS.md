@@ -3976,7 +3976,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Phase-Shift Architecture
+## Phase-Shift Architecture [SPECCED]
 
 **Layer:** 1
 
