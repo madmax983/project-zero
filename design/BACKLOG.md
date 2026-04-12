@@ -1,6 +1,7 @@
 # Backlog
 
 ## High Priority
+- [ ] `975` The Geothermal Heartbeat — `specs/975-the-geothermal-heartbeat.md`
 - [ ] `902` Nebulae — `specs/902-nebulae.md`
 - [ ] `903` Binary Star Systems — `specs/903-binary-star-systems.md`
 - [ ] `904` Proxy Wars — `specs/904-proxy-wars.md`
