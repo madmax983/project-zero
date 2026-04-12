@@ -493,7 +493,7 @@ impl NarrativeGenerator {
         for segment in &segments {
             if let NarrativeSegment::Error(err) = segment {
                 return Err(NarrativeError::MissingContext(format!(
-                    "{err}'. Please add it using `context.insert(\"{err}\", <value>)`"
+                    "{err}. Please add it using `context.insert(\"{err}\", <value>)`"
                 )));
             }
         }
