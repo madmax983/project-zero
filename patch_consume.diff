@@ -1,0 +1,195 @@
+<<<<<<< SEARCH
+        if ate {
+            #[allow(clippy::collapsible_if)]
+            if let Ok((
+                _,
+                mut needs,
+                mut history_opt,
+                mut wallet_opt,
+                mut morale_opt,
+                traits_opt,
+                biome_opt,
+            )) = pop_query.get_mut(entity)
+            {
+                // Determine GutBiome category
+                let category = crate::layer1::gut_biome::get_biome_category(&eaten_item);
+
+                // Get Biome Data
+                let (efficiency, mood_effect) = if let Some(mut biome) = biome_opt {
+                    let fam = biome.get_familiarity(category);
+                    biome.adapt(category);
+
+                    if fam > 0.8 {
+                        (1.0, Some("Gut Comfort"))
+                    } else if fam < 0.3 {
+                        (0.6, Some("Indigestion"))
+                    } else {
+                        (1.0, None)
+                    }
+                } else {
+                    (1.0, None)
+                };
+
+                needs.hunger = (needs.hunger + (HUNGER_PER_MEAL * efficiency)).min(1.0);
+
+                // Apply Gut Mood Effect
+                if let Some(label) = mood_effect {
+                    if let Some(morale) = morale_opt.as_deref_mut() {
+                        let val = if label == "Gut Comfort" { 0.05 } else { -0.1 };
+                        morale.add_modifier(MoodModifier {
+                            label: label.to_string(),
+                            value: val,
+                            duration: 200,
+                        });
+                    }
+                }
+
+                // Deduct Cost
+                if let Some(wallet) = wallet_opt.as_deref_mut() {
+                    wallet.credits -= food_price;
+                }
+
+                // Rations Mood Logic
+                if eaten_item == ItemType::Rations {
+                    let is_immune = traits_opt
+                        .is_some_and(|t| t.has(Trait::Cannibal) || t.has(Trait::Pragmatist));
+
+                    if !is_immune {
+                        if let Some(morale) = morale_opt.as_deref_mut() {
+                            morale.add_modifier(MoodModifier {
+                                label: "Ate Slop".to_string(),
+                                value: -0.1, // -10% mood (0.1 in 0.0-1.0 scale, spec said -10 but scale is usually 0-1 or 0-100? Morale struct says value 0.0-1.0. Modifier sum added to value. MoodModifier value is f32. Let's assume 0.1 means 10%)
+                                duration: 250, // 24h
+                            });
+                        }
+                    }
+                }
+
+                // Palette Fatigue Logic
+                if let Some(ref mut history) = history_opt {
+                    record_meal(history, eaten_item);
+                } else {
+                    let mut history = DietaryHistory::default();
+                    record_meal(&mut history, eaten_item);
+                    commands.entity(entity).insert(history);
+                }
+
+                // Mimicry Integration
+                commands
+                    .entity(entity)
+                    .insert(JustConsumed { item: eaten_item });
+            }
+        }
+    }
+}
+=======
+        if ate {
+            if let Ok((
+                _,
+                mut needs,
+                mut history_opt,
+                mut wallet_opt,
+                mut morale_opt,
+                traits_opt,
+                biome_opt,
+            )) = pop_query.get_mut(entity)
+            {
+                apply_food_consumption_effects(
+                    &mut commands,
+                    entity,
+                    &mut needs,
+                    &mut history_opt,
+                    &mut wallet_opt,
+                    &mut morale_opt,
+                    traits_opt,
+                    biome_opt,
+                    eaten_item,
+                    food_price,
+                );
+            }
+        }
+    }
+}
+
+#[allow(clippy::too_many_arguments)]
+fn apply_food_consumption_effects(
+    commands: &mut Commands,
+    entity: Entity,
+    needs: &mut Needs,
+    history_opt: &mut Option<Mut<DietaryHistory>>,
+    wallet_opt: &mut Option<Mut<Wallet>>,
+    morale_opt: &mut Option<Mut<Morale>>,
+    traits_opt: Option<&crate::layer1::traits::Traits>,
+    biome_opt: Option<Mut<crate::layer1::gut_biome::GutBiome>>,
+    eaten_item: ItemType,
+    food_price: f32,
+) {
+    // Determine GutBiome category
+    let category = crate::layer1::gut_biome::get_biome_category(&eaten_item);
+
+    // Get Biome Data
+    let (efficiency, mood_effect) = if let Some(mut biome) = biome_opt {
+        let fam = biome.get_familiarity(category);
+        biome.adapt(category);
+
+        if fam > 0.8 {
+            (1.0, Some("Gut Comfort"))
+        } else if fam < 0.3 {
+            (0.6, Some("Indigestion"))
+        } else {
+            (1.0, None)
+        }
+    } else {
+        (1.0, None)
+    };
+
+    needs.hunger = (needs.hunger + (HUNGER_PER_MEAL * efficiency)).min(1.0);
+
+    // Apply Gut Mood Effect
+    if let Some(label) = mood_effect {
+        if let Some(morale) = morale_opt.as_deref_mut() {
+            let val = if label == "Gut Comfort" { 0.05 } else { -0.1 };
+            morale.add_modifier(MoodModifier {
+                label: label.to_string(),
+                value: val,
+                duration: 200,
+            });
+        }
+    }
+
+    // Deduct Cost
+    if let Some(wallet) = wallet_opt.as_deref_mut() {
+        wallet.credits -= food_price;
+    }
+
+    // Rations Mood Logic
+    if eaten_item == ItemType::Rations {
+        let is_immune = traits_opt
+            .is_some_and(|t| t.has(Trait::Cannibal) || t.has(Trait::Pragmatist));
+
+        if !is_immune {
+            if let Some(morale) = morale_opt.as_deref_mut() {
+                morale.add_modifier(MoodModifier {
+                    label: "Ate Slop".to_string(),
+                    value: -0.1, // -10% mood (0.1 in 0.0-1.0 scale, spec said -10 but scale is usually 0-1 or 0-100? Morale struct says value 0.0-1.0. Modifier sum added to value. MoodModifier value is f32. Let's assume 0.1 means 10%)
+                    duration: 250, // 24h
+                });
+            }
+        }
+    }
+
+    // Palette Fatigue Logic
+    if let Some(ref mut history) = history_opt {
+        record_meal(history, eaten_item);
+    } else {
+        let mut history = DietaryHistory::default();
+        record_meal(&mut history, eaten_item);
+        commands.entity(entity).insert(history);
+    }
+
+    // Mimicry Integration
+    commands
+        .entity(entity)
+        .insert(JustConsumed { item: eaten_item });
+}
+>>>>>>> REPLACE

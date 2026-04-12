@@ -1,8 +1,4 @@
-#![allow(
-    clippy::cast_sign_loss,
-    clippy::too_many_lines,
-    clippy::unnecessary_map_or
-)]
+#![allow(clippy::cast_sign_loss, clippy::unnecessary_map_or)]
 #![allow(clippy::collapsible_if, clippy::type_complexity)]
 use crate::layer1::actions::AssignmentType;
 use crate::layer1::balance::{
@@ -157,122 +153,139 @@ pub fn produce_food_system(
         }
 
         if let Some((building_type, is_powered, selected_crop)) = farm_map.get(pos) {
-            // Tech Corruption Check
-            if let Some(tech) = building_type.required_tech() {
-                // Use read-only resource for check to avoid conflict?
-                // Wait, if I have ResMut, I can use it as ref.
-                // But I have Option<ResMut>.
-                // I changed arguments to have both? That might conflict if I request Res and ResMut of same type.
-                // Rust bevy ECS rules: &T and &mut T cannot coexist.
-                // I must request ONLY ResMut if I need mutability.
-                // So I will remove `tech_state_res` and use `tech_state_mut` for reading too.
-                let tech_active = tech_state_mut
-                    .as_ref()
-                    .map_or(true, |ts| ts.is_active(tech));
+            process_single_farmer(
+                building_type,
+                *is_powered,
+                selected_crop,
+                pos,
+                skills_opt,
+                traits,
+                &mut wallet_opt,
+                job_opt,
+                &mut resources,
+                tech_state_mut.as_deref(),
+                fertility_grid.as_deref(),
+                eureka_config.as_deref(),
+                &mut eureka_events,
+                modifier,
+                current_season,
+            );
+        }
+    }
+}
 
-                if !tech_active {
-                    continue;
-                }
-            }
+#[allow(clippy::too_many_arguments)]
+fn process_single_farmer(
+    building_type: &BuildingType,
+    is_powered: bool,
+    selected_crop: &ItemType,
+    pos: &GridPosition,
+    mut skills_opt: Option<Mut<'_, Skills>>,
+    traits: Option<&crate::layer1::traits::Traits>,
+    wallet_opt: &mut Option<Mut<'_, Wallet>>,
+    job_opt: Option<&Job>,
+    resources: &mut ColonyResources,
+    tech_state_mut: Option<&crate::layer1::tech::TechState>,
+    fertility_grid: Option<&FertilityGrid>,
+    eureka_config: Option<&EurekaConfig>,
+    eureka_events: &mut EventWriter<crate::layer1::eureka::EurekaEvent>,
+    modifier: f32,
+    current_season: Season,
+) {
+    // Tech Corruption Check
+    if let Some(tech) = building_type.required_tech() {
+        let tech_active = tech_state_mut.map_or(true, |ts| ts.is_active(tech));
+        if !tech_active {
+            return;
+        }
+    }
 
-            let skill_type = SkillType::Farming;
+    let skill_type = SkillType::Farming;
 
-            // Calculate efficiency
-            let efficiency = get_skill_efficiency(skills_opt.as_deref(), skill_type);
+    // Calculate efficiency
+    let efficiency = get_skill_efficiency(skills_opt.as_deref(), skill_type);
 
-            // Add XP
-            if let Some(mut skills) = skills_opt {
-                skills.add_xp(skill_type, 1.0);
-            }
+    // Add XP
+    if let Some(ref mut skills) = skills_opt {
+        skills.add_xp(skill_type, 1.0);
+    }
 
-            let crop_stats = get_crop_stats(selected_crop);
+    let crop_stats = get_crop_stats(selected_crop);
 
-            // Determine yield and modifiers
-            let (base_production, water_cost, effective_modifier) = match building_type {
-                BuildingType::HydroponicsBay => {
-                    if *is_powered {
-                        // Hydroponics uses its own multiplier on top of crop base yield?
-                        // Or overrides?
-                        // Spec says: "Production logic respects selected_crop stats"
-                        // But Hydroponics usually ignores seasons.
-                        (
-                            crop_stats.base_yield,
-                            HYDROPONICS_WATER_COST,
-                            HYDROPONICS_MULTIPLIER,
-                        )
-                    } else {
-                        (0.0, 0.0, 0.0)
-                    }
-                }
-                BuildingType::Plantation => {
-                    // Plantation produces Fiber, uses generic yield probably
-                    (FOOD_PER_WORKER_PER_TICK, 0.0, modifier)
-                }
-                _ => {
-                    // Standard Farm or Greenhouse
-                    // Check for immunity (Greenhouse)
-                    let season_mod = if building_type.seasonal_immunity() {
-                        1.0
-                    } else if current_season == Season::Winter {
-                        crop_stats.winter_modifier
-                    } else {
-                        modifier // Use general season modifier (e.g. Autumn harvest bonus?)
-                    };
-                    (crop_stats.base_yield, 0.0, season_mod)
-                }
-            };
-
-            // Integrate Fertility
-            let fertility_modifier = if *building_type == BuildingType::HydroponicsBay {
-                1.0 // Hydroponics ignores soil fertility
-            } else if let Some(grid) = &fertility_grid {
-                grid.get(pos.x as usize, pos.y as usize)
+    // Determine yield and modifiers
+    let (base_production, water_cost, effective_modifier) = match building_type {
+        BuildingType::HydroponicsBay => {
+            if is_powered {
+                (
+                    crop_stats.base_yield,
+                    HYDROPONICS_WATER_COST,
+                    HYDROPONICS_MULTIPLIER,
+                )
             } else {
+                (0.0, 0.0, 0.0)
+            }
+        }
+        BuildingType::Plantation => (FOOD_PER_WORKER_PER_TICK, 0.0, modifier),
+        _ => {
+            let season_mod = if building_type.seasonal_immunity() {
                 1.0
+            } else if current_season == Season::Winter {
+                crop_stats.winter_modifier
+            } else {
+                modifier
             };
+            (crop_stats.base_yield, 0.0, season_mod)
+        }
+    };
 
-            // Check water availability
-            if water_cost > 0.0 && resources.water < water_cost {
-                continue;
+    // Integrate Fertility
+    let fertility_modifier = if *building_type == BuildingType::HydroponicsBay {
+        1.0
+    } else if let Some(grid) = fertility_grid {
+        grid.get(pos.x as usize, pos.y as usize)
+    } else {
+        1.0
+    };
+
+    // Check water availability
+    if water_cost > 0.0 && resources.water < water_cost {
+        return;
+    }
+
+    // Deduct water
+    if water_cost > 0.0 {
+        resources.water -= water_cost;
+    }
+
+    let production = efficiency * base_production * effective_modifier * fertility_modifier;
+
+    if production > 0.0 {
+        match building_type {
+            BuildingType::Plantation => {
+                resources.add_fiber(production);
             }
-
-            // Deduct water
-            if water_cost > 0.0 {
-                resources.water -= water_cost;
+            _ => {
+                resources.add_food(production);
             }
+        }
 
-            let production = efficiency * base_production * effective_modifier * fertility_modifier;
+        // Pay Wages
+        if let Some(wallet) = wallet_opt.as_deref_mut() {
+            let job_type = job_opt.map_or(AssignmentType::FarmWorker, |j| j.job_type);
+            let base_wage = get_wage_for_job(job_type);
+            let wage = base_wage * 0.01;
+            wallet.credits += wage;
+        }
 
-            if production > 0.0 {
-                match building_type {
-                    BuildingType::Plantation => {
-                        resources.add_fiber(production);
-                    }
-                    _ => {
-                        resources.add_food(production);
-                    }
-                }
-
-                // Pay Wages
-                if let Some(wallet) = wallet_opt.as_deref_mut() {
-                    let job_type = job_opt.map_or(AssignmentType::FarmWorker, |j| j.job_type);
-                    let base_wage = get_wage_for_job(job_type);
-                    // Pay 1% of base wage per tick of active production
-                    let wage = base_wage * 0.01;
-                    wallet.credits += wage;
-                }
-
-                // Eureka Check
-                if let Some(config) = &eureka_config {
-                    check_for_eureka(
-                        &mut eureka_events,
-                        config,
-                        ActionType::Farm,
-                        Some(Tech::Hydroponics), // Related to farming
-                        traits,
-                    );
-                }
-            }
+        // Eureka Check
+        if let Some(config) = eureka_config {
+            check_for_eureka(
+                eureka_events,
+                config,
+                ActionType::Farm,
+                Some(Tech::Hydroponics),
+                traits,
+            );
         }
     }
 }
@@ -367,7 +380,6 @@ pub fn consume_food_system(
         }
 
         if ate {
-            #[allow(clippy::collapsible_if)]
             if let Ok((
                 _,
                 mut needs,
@@ -378,76 +390,103 @@ pub fn consume_food_system(
                 biome_opt,
             )) = pop_query.get_mut(entity)
             {
-                // Determine GutBiome category
-                let category = crate::layer1::gut_biome::get_biome_category(&eaten_item);
-
-                // Get Biome Data
-                let (efficiency, mood_effect) = if let Some(mut biome) = biome_opt {
-                    let fam = biome.get_familiarity(category);
-                    biome.adapt(category);
-
-                    if fam > 0.8 {
-                        (1.0, Some("Gut Comfort"))
-                    } else if fam < 0.3 {
-                        (0.6, Some("Indigestion"))
-                    } else {
-                        (1.0, None)
-                    }
-                } else {
-                    (1.0, None)
-                };
-
-                needs.hunger = (needs.hunger + (HUNGER_PER_MEAL * efficiency)).min(1.0);
-
-                // Apply Gut Mood Effect
-                if let Some(label) = mood_effect {
-                    if let Some(morale) = morale_opt.as_deref_mut() {
-                        let val = if label == "Gut Comfort" { 0.05 } else { -0.1 };
-                        morale.add_modifier(MoodModifier {
-                            label: label.to_string(),
-                            value: val,
-                            duration: 200,
-                        });
-                    }
-                }
-
-                // Deduct Cost
-                if let Some(wallet) = wallet_opt.as_deref_mut() {
-                    wallet.credits -= food_price;
-                }
-
-                // Rations Mood Logic
-                if eaten_item == ItemType::Rations {
-                    let is_immune = traits_opt
-                        .is_some_and(|t| t.has(Trait::Cannibal) || t.has(Trait::Pragmatist));
-
-                    if !is_immune {
-                        if let Some(morale) = morale_opt.as_deref_mut() {
-                            morale.add_modifier(MoodModifier {
-                                label: "Ate Slop".to_string(),
-                                value: -0.1, // -10% mood (0.1 in 0.0-1.0 scale, spec said -10 but scale is usually 0-1 or 0-100? Morale struct says value 0.0-1.0. Modifier sum added to value. MoodModifier value is f32. Let's assume 0.1 means 10%)
-                                duration: 250, // 24h
-                            });
-                        }
-                    }
-                }
-
-                // Palette Fatigue Logic
-                if let Some(ref mut history) = history_opt {
-                    record_meal(history, eaten_item);
-                } else {
-                    let mut history = DietaryHistory::default();
-                    record_meal(&mut history, eaten_item);
-                    commands.entity(entity).insert(history);
-                }
-
-                // Mimicry Integration
-                commands
-                    .entity(entity)
-                    .insert(JustConsumed { item: eaten_item });
+                apply_food_consumption_effects(
+                    &mut commands,
+                    entity,
+                    &mut needs,
+                    &mut history_opt,
+                    &mut wallet_opt,
+                    &mut morale_opt,
+                    traits_opt,
+                    biome_opt,
+                    eaten_item,
+                    food_price,
+                );
             }
         }
     }
+}
+
+#[allow(clippy::too_many_arguments)]
+fn apply_food_consumption_effects(
+    commands: &mut Commands,
+    entity: Entity,
+    needs: &mut Needs,
+    history_opt: &mut Option<Mut<'_, DietaryHistory>>,
+    wallet_opt: &mut Option<Mut<'_, Wallet>>,
+    morale_opt: &mut Option<Mut<'_, Morale>>,
+    traits_opt: Option<&crate::layer1::traits::Traits>,
+    biome_opt: Option<Mut<'_, crate::layer1::gut_biome::GutBiome>>,
+    eaten_item: ItemType,
+    food_price: f32,
+) {
+    // Determine GutBiome category
+    let category = crate::layer1::gut_biome::get_biome_category(&eaten_item);
+
+    // Get Biome Data
+    let (efficiency, mood_effect) = if let Some(mut biome) = biome_opt {
+        let fam = biome.get_familiarity(category);
+        biome.adapt(category);
+
+        if fam > 0.8 {
+            (1.0, Some("Gut Comfort"))
+        } else if fam < 0.3 {
+            (0.6, Some("Indigestion"))
+        } else {
+            (1.0, None)
+        }
+    } else {
+        (1.0, None)
+    };
+
+    needs.hunger = (needs.hunger + (HUNGER_PER_MEAL * efficiency)).min(1.0);
+
+    // Apply Gut Mood Effect
+    if let Some(label) = mood_effect {
+        if let Some(morale) = morale_opt.as_deref_mut() {
+            let val = if label == "Gut Comfort" { 0.05 } else { -0.1 };
+            morale.add_modifier(MoodModifier {
+                label: label.to_string(),
+                value: val,
+                duration: 200,
+            });
+        }
+    }
+
+    // Deduct Cost
+    if let Some(wallet) = wallet_opt.as_deref_mut() {
+        wallet.credits -= food_price;
+    }
+
+    // Rations Mood Logic
+    if eaten_item == ItemType::Rations {
+        let is_immune =
+            traits_opt.is_some_and(|t| t.has(Trait::Cannibal) || t.has(Trait::Pragmatist));
+
+        if !is_immune {
+            if let Some(morale) = morale_opt.as_deref_mut() {
+                morale.add_modifier(MoodModifier {
+                    label: "Ate Slop".to_string(),
+                    value: -0.1, // -10% mood (0.1 in 0.0-1.0 scale, spec said -10 but scale is usually 0-1 or 0-100? Morale struct says value 0.0-1.0. Modifier sum added to value. MoodModifier value is f32. Let's assume 0.1 means 10%)
+                    duration: 250, // 24h
+                });
+            }
+        }
+    }
+
+    // Palette Fatigue Logic
+    if let Some(ref mut history) = history_opt {
+        record_meal(history, eaten_item);
+    } else {
+        let mut history = DietaryHistory::default();
+        record_meal(&mut history, eaten_item);
+        commands.entity(entity).insert(history);
+    }
+
+    // Mimicry Integration
+    commands
+        .entity(entity)
+        .insert(JustConsumed { item: eaten_item });
 }
 
 /// Removes dead workers from farms.
