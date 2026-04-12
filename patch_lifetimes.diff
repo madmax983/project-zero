@@ -1,0 +1,68 @@
+<<<<<<< SEARCH
+#[allow(clippy::too_many_arguments)]
+fn apply_food_consumption_effects(
+    commands: &mut Commands,
+    entity: Entity,
+    needs: &mut Needs,
+    history_opt: &mut Option<Mut<DietaryHistory>>,
+    wallet_opt: &mut Option<Mut<Wallet>>,
+    morale_opt: &mut Option<Mut<Morale>>,
+    traits_opt: Option<&crate::layer1::traits::Traits>,
+    biome_opt: Option<Mut<crate::layer1::gut_biome::GutBiome>>,
+    eaten_item: ItemType,
+    food_price: f32,
+) {
+=======
+#[allow(clippy::too_many_arguments)]
+fn apply_food_consumption_effects(
+    commands: &mut Commands,
+    entity: Entity,
+    needs: &mut Needs,
+    history_opt: &mut Option<Mut<'_, DietaryHistory>>,
+    wallet_opt: &mut Option<Mut<'_, Wallet>>,
+    morale_opt: &mut Option<Mut<'_, Morale>>,
+    traits_opt: Option<&crate::layer1::traits::Traits>,
+    biome_opt: Option<Mut<'_, crate::layer1::gut_biome::GutBiome>>,
+    eaten_item: ItemType,
+    food_price: f32,
+) {
+>>>>>>> REPLACE
+<<<<<<< SEARCH
+#[allow(clippy::too_many_arguments)]
+fn process_single_farmer(
+    building_type: &BuildingType,
+    is_powered: bool,
+    selected_crop: &ItemType,
+    pos: &GridPosition,
+    mut skills_opt: Option<Mut<Skills>>,
+    traits: Option<&crate::layer1::traits::Traits>,
+    wallet_opt: &mut Option<Mut<Wallet>>,
+    job_opt: Option<&Job>,
+    resources: &mut ColonyResources,
+    tech_state_mut: Option<&crate::layer1::tech::TechState>,
+    fertility_grid: Option<&FertilityGrid>,
+    eureka_config: Option<&EurekaConfig>,
+    eureka_events: &mut EventWriter<crate::layer1::eureka::EurekaEvent>,
+    modifier: f32,
+    current_season: Season,
+) {
+=======
+#[allow(clippy::too_many_arguments)]
+fn process_single_farmer(
+    building_type: &BuildingType,
+    is_powered: bool,
+    selected_crop: &ItemType,
+    pos: &GridPosition,
+    mut skills_opt: Option<Mut<'_, Skills>>,
+    traits: Option<&crate::layer1::traits::Traits>,
+    wallet_opt: &mut Option<Mut<'_, Wallet>>,
+    job_opt: Option<&Job>,
+    resources: &mut ColonyResources,
+    tech_state_mut: Option<&crate::layer1::tech::TechState>,
+    fertility_grid: Option<&FertilityGrid>,
+    eureka_config: Option<&EurekaConfig>,
+    eureka_events: &mut EventWriter<crate::layer1::eureka::EurekaEvent>,
+    modifier: f32,
+    current_season: Season,
+) {
+>>>>>>> REPLACE
