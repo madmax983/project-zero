@@ -15531,3 +15531,56 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** The massive, immediate windfall of energy vs. the unpredictable movement and whims of a cosmic entity you cannot control.
 
 ---
+
+## The Fungal Monoliths
+
+**Layer:** 1
+
+**Fantasy:** Worshipping that which consumes us.
+
+**Mechanic:** A rapidly growing, incredibly dense fungal structure that randomly erupts from the ground. It consumes all biological matter (crops, corpses, slow-moving pops) in adjacent tiles to grow taller. However, as it grows, it emits a powerful "Euphoric Spore" cloud. Pops within the cloud have their Morale locked at 100% and completely ignore Needs (Hunger, Sleep), working at maximum efficiency until they literally drop dead from exhaustion.
+
+**Emergence:** Your colony is starving and on the brink of rebellion. A Fungal Monolith erupts in the center of your agricultural district, consuming your last remaining crops. Instead of panicking, your starving colonists become euphoric. They work flawlessly for five days straight without eating, building a massive defense array, before simultaneously collapsing, leaving a perfectly defended, utterly dead colony.
+
+**Tension:** The immense, immediate benefit of the euphoria spores vs. the terrifying reality of mass, delayed starvation and the loss of physical space to the monolith.
+
+---
+
+## The Fractal Bureaucracy
+
+**Layer:** 3 -> 1
+
+**Fantasy:** A government so complex it literally bends reality and physical space.
+
+**Mechanic:** As your Layer 3 empire expands, you must build "Administration Hubs" on your Layer 1 colonies to reduce systemic penalty. However, each Hub you build requires the construction of "Sub-Offices" adjacent to it, which in turn require "Archival Nodes." This creates a sprawling, fractal building chain that consumes massive amounts of physical space. If the fractal pattern is broken (e.g., a node is destroyed), the entire bureaucracy suffers a "Logic Cascade," causing all Pops in the colony to become "Confused" and randomly misplace resources for several cycles.
+
+**Emergence:** You dedicate a massive section of your core world to the Fractal Bureaucracy to manage your expanding empire. A small meteor strike destroys a single, deep-level Archival Node. The resulting Logic Cascade causes your planetary governor to accidentally classify all food as hazardous waste, leading to a massive, self-inflicted famine as drones dump your entire grain stockpile into the local volcano.
+
+**Tension:** The necessity of expanding the bureaucracy to manage the empire vs. the terrifying physical footprint and catastrophic fragility of the administrative structure.
+---
+
+## The Kinetic Heist
+
+**Layer:** 2 -> 1
+
+**Fantasy:** Stealing resources not with ships, but with applied physics.
+
+**Mechanic:** A hostile faction or pirate group doesn't send troops; they send "Harvester Meteors." These are dense, kinetic projectiles fired from Layer 2. They crash into your Layer 1 colony, causing massive localized damage. However, the meteor isn't just a weapon; it's a sponge. It absorbs specific rare resources from the impact zone (like refined alloys or energy crystals). After a set time, the meteor launches itself back into orbit, stealing the resources.
+
+**Emergence:** You stockpile your most valuable refined materials in a highly defended central vault. A pirate faction fires a Harvester Meteor directly into the vault. It crushes the defenders, absorbs the entire stockpile, and begins its launch sequence. You have three minutes to frantically dismantle the indestructible meteor with mining lasers before it blasts off with your colony's entire economic future.
+
+**Tension:** The defensive challenge of stopping an indestructible kinetic impactor vs. the offensive challenge of disabling its launch mechanism before it steals your wealth.
+
+---
+
+## Subspace Stowaways
+
+**Layer:** Cross-layer (1 -> 2)
+
+**Fantasy:** The unintended, horrific consequences of cheap FTL travel.
+
+**Mechanic:** When a Layer 2 trade ship uses a low-quality or damaged FTL drive to jump into a system, there is a chance it creates a "Subspace Wake." This wake randomly teleports small sections of the Layer 1 colony (buildings, pops, resources) into the void of space, or conversely, teleports highly dangerous "Subspace Flora" directly into the middle of the colony.
+
+**Emergence:** You rely heavily on cheap, third-party smugglers to keep your colony supplied. A massive smuggler convoy jumps into your system, creating a huge Subspace Wake. The wake instantly teleports your primary medical facility into high orbit, venting all the doctors into the vacuum, while simultaneously dropping a patch of aggressive, fast-growing Subspace Flora into the middle of your main transit hub.
+
+**Tension:** The economic necessity of cheap, fast trade vs. the terrifying, unpredictable physical disruption of your colony's infrastructure.
