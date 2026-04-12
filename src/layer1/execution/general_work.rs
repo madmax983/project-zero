@@ -15,7 +15,7 @@ use crate::layer1::execution::demolish::{
 use crate::layer1::execution::mining::{handle_chopping_work, handle_mining_work};
 use crate::layer1::flora::process_flora_clearing;
 use crate::layer1::gastronomy::WorkSpeedBuff;
-use crate::layer1::hazards::handle_workplace_hazards;
+use crate::layer1::environment::hazards::handle_workplace_hazards;
 use crate::layer1::heirloom::{Heirloom, ToolHistory};
 use crate::layer1::items::{Equipment, Tool, UnequipEvent};
 use crate::layer1::language::{calculate_coordination_penalty, Dialect, Linguistics};

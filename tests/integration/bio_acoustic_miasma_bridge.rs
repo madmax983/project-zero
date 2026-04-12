@@ -1,5 +1,5 @@
 use bevy::prelude::*;
-use scale::layer1::bio_acoustic_miasma::ParanoiaTracker;
+use scale::layer1::environment::bio_acoustic_miasma::ParanoiaTracker;
 use scale::layer1::integration::paranoia_stress_bridge_system;
 use scale::layer1::needs::Needs;
 use scale::layer1::pop::Pop;

@@ -24,7 +24,7 @@ use crate::layer1::dreams::DreamJournal;
 use crate::layer1::energy::load_limits::PowerCable;
 use crate::layer1::energy::{Battery, PowerConsumer, PowerSource};
 use crate::layer1::fauna::NocturnalFauna;
-use crate::layer1::light_pollution::SkyGlow;
+use crate::layer1::environment::light_pollution::SkyGlow;
 use crate::layer1::observatory::Observatory;
 use crate::layer1::olfactory::{ScentEmitter, ScentMap};
 use crate::layer1::purity::PurityMap;
@@ -447,7 +447,7 @@ fn render_economy_module(
             Cell::from(format!(
                 "{:.1}",
                 world
-                    .get_resource::<crate::layer1::light_pollution::SkyGlow>()
+                    .get_resource::<crate::layer1::environment::light_pollution::SkyGlow>()
                     .map_or(0.0, |g| g.global_level)
             )),
         ]),
@@ -1940,7 +1940,7 @@ mod tests {
 
     #[test]
     fn test_inspector_render_colony_stats_skyglow() {
-        use crate::layer1::light_pollution::SkyGlow;
+        use crate::layer1::environment::light_pollution::SkyGlow;
 
         let mut world = World::new();
         world.insert_resource(Selection::default()); // SelectionTarget::None triggers render_colony_stats
@@ -1971,7 +1971,7 @@ mod tests {
     #[test]
     fn test_inspector_render_observatory() {
         use crate::layer1::building::BuildingType;
-        use crate::layer1::light_pollution::SkyGlow;
+        use crate::layer1::environment::light_pollution::SkyGlow;
         use crate::layer1::observatory::Observatory;
 
         let mut world = World::new();
@@ -2015,7 +2015,7 @@ mod tests {
     #[test]
     fn test_inspector_render_nocturnal_fauna() {
         use crate::layer1::fauna::NocturnalFauna;
-        use crate::layer1::light_pollution::SkyGlow;
+        use crate::layer1::environment::light_pollution::SkyGlow;
 
         let mut world = World::new();
         world.insert_resource(Selection::default());

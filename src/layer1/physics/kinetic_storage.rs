@@ -19,7 +19,7 @@
 //! use scale::layer1::physics::kinetic_storage::{KineticBattery, handle_battery_destruction_system};
 //! use scale::layer1::map::GridPosition;
 //! use scale::layer1::health::Dead;
-//! use scale::layer1::volatile::ExplosionEvent;
+//! use scale::layer1::environment::volatile::ExplosionEvent;
 //!
 //! let mut world = World::new();
 //! let mut events = Events::<ExplosionEvent>::default();
@@ -49,7 +49,7 @@
 //! ```
 use crate::layer1::energy::{PowerConsumer, PowerSource};
 use crate::layer1::map::GridPosition;
-use crate::layer1::volatile::ExplosionEvent;
+use crate::layer1::environment::volatile::ExplosionEvent;
 use bevy_ecs::prelude::*;
 
 #[derive(Component, Default, Debug, Clone)]

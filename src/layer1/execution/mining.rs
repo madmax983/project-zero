@@ -4,7 +4,7 @@ use ratatui::style::Color;
 
 use crate::layer1::map::{GridPosition, ScreenShake};
 use crate::layer1::mother_lode::MotherLode;
-use crate::layer1::orbital_crossfire::{mine_scrap, ImpactSite};
+use crate::layer1::environment::orbital_crossfire::{mine_scrap, ImpactSite};
 use crate::layer1::particles::{spawn_moving_particle, spawn_particle};
 use crate::layer1::resources::{process_logging, process_mining};
 use crate::layer1::skills::{SkillType, XpGainEvent, XpSource};

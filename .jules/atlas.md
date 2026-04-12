@@ -69,3 +69,7 @@
 **Core Domain Encapsulation**
 **Tangle:** The core game foundation modules (`ai_core`, `chronicle`, `control`, `events`, `integration`, `map`) were declared loosely in the top-level `src/layer1/mod.rs`, exacerbating the "Blob" anti-pattern and blurring domain boundaries.
 **Blueprint:** Encapsulated these foundational primitives into a new `src/layer1/core` module. Created `src/layer1/core/mod.rs` to safely re-export them and replaced the direct top-level `mod` declarations with `pub mod core; pub use core::*; `. Fixed trailing doc comment errors to ensure a clean compilation structure.
+
+**Environment Domain Encapsulation**
+**Tangle:** The `layer1` core module was heavily congested with environmental hazards, planetary conditions, and volatile event modules (`geomes`, `hazards`, `terraforming`, `seismic`, `orbital_crossfire`, `bio_acoustic`, `volatile`, `photophobic`, `light_pollution`, `orbital_tether`, `disasters`), muddying the root namespace and blurring the line between local colony mechanics and macroscopic environmental physics.
+**Blueprint:** Extracted these 13 planetary condition modules into a dedicated `src/layer1/environment/` module, providing a unified `mod.rs` to mediate their exports (resolving global type collisions like `ExplosionEvent`). This drastically slims down `layer1/mod.rs` while strictly enforcing a domain boundary for macroscopic environmental hazards.

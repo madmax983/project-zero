@@ -80,7 +80,7 @@ mod tests {
     use crate::layer1::inventory::{Inventory, InventoryItem};
     use crate::layer1::items::{Item, ItemType};
     use crate::layer1::map::GridPosition;
-    use crate::layer1::photophobic::{photophobic_decay_system, Parent, Photophobic};
+    use crate::layer1::environment::photophobic::{photophobic_decay_system, Parent, Photophobic};
     use crate::layer1::LightMap;
     use bevy_ecs::prelude::*;
 

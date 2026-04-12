@@ -12,7 +12,7 @@
 //! # Usage
 //! ```
 //! use bevy_ecs::prelude::*;
-//! use scale::layer1::bio_acoustic::{BioAcousticFlora, bio_acoustic_chorus_system};
+//! use scale::layer1::environment::bio_acoustic::{BioAcousticFlora, bio_acoustic_chorus_system};
 //! use scale::layer1::map::GridPosition;
 //! use scale::layer1::morale::{Morale, MoodModifier};
 //! use scale::layer1::pop::Pop;

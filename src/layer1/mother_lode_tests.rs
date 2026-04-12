@@ -1,6 +1,6 @@
 #[cfg(test)]
 mod tests {
-    use crate::layer1::hazards::calculate_risk;
+    use crate::layer1::environment::hazards::calculate_risk;
     use crate::layer1::map::GridPosition;
     use crate::layer1::mother_lode::MotherLode;
     use crate::layer1::resources::{ColonyResources, ResourceType};

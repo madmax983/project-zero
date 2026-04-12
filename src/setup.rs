@@ -143,7 +143,7 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
         difficulty: scenario.difficulty,
     });
     world.insert_resource(GameState::default());
-    world.init_resource::<crate::layer1::bio_acoustic_miasma::MiasmaRecordedSecret>();
+    world.init_resource::<crate::layer1::environment::bio_acoustic_miasma::MiasmaRecordedSecret>();
     world.init_resource::<crate::layer1::stress::TraumaTracker>();
     world.init_resource::<bevy_ecs::event::Events<crate::layer2::skyhooks::LaunchIntent>>();
     world.init_resource::<crate::layer2::cartographers_curse::MapTelemetry>();
@@ -253,19 +253,19 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     ));
     world.insert_resource(crate::layer1::radioactive::RadiationGrid::new(80, 50));
     world.insert_resource(LightMap::new(80, 50));
-    world.insert_resource(crate::layer1::light_pollution::SkyGlow::default());
+    world.insert_resource(crate::layer1::environment::light_pollution::SkyGlow::default());
     world.insert_resource(AmbientLight::default());
     world.insert_resource(crate::layer1::day_night::DayNightCycle::default());
     world.insert_resource(crate::layer1::PlanetaryTraits::default());
     world.insert_resource(crate::layer2::syzygy::PlanetaryGravity::default());
     world.insert_resource(crate::layer1::weather::WeatherState::default());
-    world.insert_resource(crate::layer1::terraforming::PlanetaryAtmosphere::default());
+    world.insert_resource(crate::layer1::environment::terraforming::PlanetaryAtmosphere::default());
     world.insert_resource(crate::layer1::solar::SolarCycleState::default());
     world.insert_resource(crate::layer1::medical::MedicalPolicy::default());
     world.insert_resource(crate::layer1::prototyping::BuildingMastery::default());
     world.insert_resource(crate::layer1::graffiti::GraffitiMap::default());
     world.insert_resource(crate::layer1::geology::SeismicGrid::new(80, 50));
-    world.insert_resource(crate::layer1::seismic::VibrationGrid::new(80, 50));
+    world.insert_resource(crate::layer1::environment::seismic::VibrationGrid::new(80, 50));
     world.insert_resource(crate::layer1::ecology::EcologyConfig::default());
     world.insert_resource(crate::layer1::social::society::SecretSocieties::default());
     world.insert_resource(crate::layer1::unrest::Unrest::default());
@@ -329,7 +329,7 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     world.init_resource::<crate::layer2::thermal::ThermalSignature>();
     world.init_resource::<Events<crate::layer1::medical::PatientTreated>>();
     world.init_resource::<Events<crate::layer1::genetics::GeneSplicingEvent>>();
-    world.init_resource::<Events<crate::layer1::hazards::AmputationEvent>>();
+    world.init_resource::<Events<crate::layer1::environment::hazards::AmputationEvent>>();
     world.init_resource::<Events<crate::layer1::social::FavorChange>>();
     world.init_resource::<Events<crate::layer1::eureka::EurekaEvent>>();
     world.init_resource::<Events<crate::layer1::items::UnequipEvent>>();
@@ -345,7 +345,7 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     world.init_resource::<crate::layer1::social::gossip_economy::IntelTokens>();
     world.init_resource::<Events<crate::layer1::direct_link::PossessEntityEvent>>();
     world.init_resource::<Events<crate::layer1::direct_link::UnpossessEvent>>();
-    world.init_resource::<Events<crate::layer1::volatile::ExplosionEvent>>();
+    world.init_resource::<Events<crate::layer1::environment::volatile::ExplosionEvent>>();
     world.init_resource::<Events<crate::layer1::unrest::DenounceEvent>>();
     world.init_resource::<Events<crate::layer1::skills::XpGainEvent>>();
     world.init_resource::<Events<crate::layer1::hologram::HologramFailureEvent>>();
@@ -403,7 +403,7 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     world.init_resource::<Events<crate::layer1::memory_core::ImplantMemoryCoreEvent>>();
     world.init_resource::<Events<crate::layer1::memory_core::HarvestMemoryCoreEvent>>();
     world.init_resource::<Events<crate::layer1::tech::machine_awakening::BotGlitchEvent>>();
-    world.init_resource::<Events<crate::layer1::orbital_tether::TetherSnapEvent>>();
+    world.init_resource::<Events<crate::layer1::environment::orbital_tether::TetherSnapEvent>>();
     world.init_resource::<Events<crate::layer3::diplomacy::RepossessionInvasionEvent>>();
     world.init_resource::<Events<crate::layer3::diplomacy::WarningDiplomaticMessageEvent>>();
     world.init_resource::<Events<crate::layer2::station::DecommissionDebtTrapEvent>>();
@@ -1077,7 +1077,7 @@ mod tests {
             headless: true,
             scenario,
         });
-        world.init_resource::<crate::layer1::bio_acoustic_miasma::MiasmaRecordedSecret>();
+        world.init_resource::<crate::layer1::environment::bio_acoustic_miasma::MiasmaRecordedSecret>();
         world.init_resource::<bevy::prelude::Events<crate::layer2::skyhooks::LaunchIntent>>();
         *world.resource_mut::<GameState>() = GameState::Running;
 

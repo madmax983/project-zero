@@ -42,7 +42,7 @@ use crate::layer1::physics::acoustic::NoiseSource;
 use crate::layer1::prototyping::{BuildingMastery, Prototype};
 use crate::layer1::resources::{ColonyResources, RefiningProgress};
 use crate::layer1::rituals::MachineSpirit;
-use crate::layer1::seismic::SeismicSource;
+use crate::layer1::environment::seismic::SeismicSource;
 use crate::layer1::social::Tavern;
 use crate::layer1::solar::SolarPower;
 use crate::layer1::tech::{DataStorage, Library, Tech, TechState};

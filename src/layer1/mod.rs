@@ -74,17 +74,13 @@ pub mod geography;
 /// Farm building and food production.
 /// Pop health and damage.
 /// Deep crust geomes system (Spec 515).
-pub mod geomes;
 /// Fire propagation and damage.
 /// Hauling logic.
 /// Workplace hazards logic.
-pub mod hazards;
 
 /// Tests for hazards logic.
-pub mod hazards_tests;
 /// Pop hobbies logic (Spec 137).
 pub mod hobby;
-pub use geomes::*;
 
 /// Housing and rest mechanics.
 /// The Inspector system (Spec 091).
@@ -152,7 +148,6 @@ pub use biology::*;
 pub use execution::*;
 
 pub use graffiti::*;
-pub use hazards::*;
 pub use hobby::*;
 pub use institutional_memory::*;
 pub use jobs::*;
@@ -190,8 +185,6 @@ pub use lifecycle::*;
 pub use whispering_ore::*;
 /// Atmospheric simulation (Spec 063).
 /// Terraforming and Planetary Atmosphere (Spec 207).
-pub mod terraforming;
-pub use terraforming::*;
 
 /// Room quality calculation and memories (Spec 064).
 /// Radio Nostalgia system (Spec 814).
@@ -351,20 +344,12 @@ pub mod systems;
 
 mod institutional_memory_tests;
 pub mod memetics;
-pub mod seismic;
-pub use seismic::*;
 /// Orbital Crossfire system (Spec 206).
-pub mod orbital_crossfire;
-pub use orbital_crossfire::*;
 /// Scrapcode virus system (Spec 178).
 pub mod scrapcode;
 pub use scrapcode::*;
 
 /// Bio-Acoustic Chorus (Spec 419).
-pub mod bio_acoustic;
-pub mod bio_acoustic_miasma;
-pub use bio_acoustic::*;
-pub use bio_acoustic_miasma::*;
 
 /// Chemical regulation system (Spec 181).
 pub mod chemical;
@@ -416,15 +401,12 @@ pub mod void_signals;
 #[cfg(feature = "nova")]
 pub use void_signals::*;
 /// Volatile Resources system (Spec 223).
-pub mod volatile;
 
 /// The Hum system (Spec 238).
 pub mod hum;
 pub use hum::*;
 
 /// Photophobic resources system (Spec 237).
-pub mod photophobic;
-pub use photophobic::*;
 
 /// Operational Detritus system (Spec 239).
 pub mod clutter;
@@ -463,8 +445,6 @@ pub mod overview_effect;
 pub use overview_effect::*;
 
 /// Light Pollution system (Spec 450).
-pub mod light_pollution;
-pub use light_pollution::*;
 
 /// The Spiteful Will (Spec 451).
 pub mod spiteful_will;
@@ -483,8 +463,6 @@ pub use void_weed::*;
 pub mod temporal_ghost_towns;
 pub use temporal_ghost_towns::*;
 
-pub mod orbital_tether;
-pub use orbital_tether::*;
 
 /// Infrastructure system (Spec 452).
 pub mod infrastructure;
@@ -495,8 +473,6 @@ pub mod nanite_fabrication;
 pub use nanite_fabrication::*;
 pub mod exodus;
 pub use exodus::*;
-pub mod disasters;
-pub use disasters::*;
 pub mod environment;
 pub mod spore_diplomat;
 pub use spore_diplomat::*;

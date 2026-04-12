@@ -1,6 +1,6 @@
 #[cfg(test)]
 mod tests {
-    use crate::layer1::hazards::{
+    use crate::layer1::environment::hazards::{
         calculate_risk, determine_severity, trigger_accident, AccidentSeverity, AmputationEvent,
     };
     use crate::layer1::map::GridPosition;

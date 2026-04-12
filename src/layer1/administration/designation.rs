@@ -10,7 +10,7 @@
 //! * **DesignationType**: The kind of request (Mine, Demolish).
 //! * **Validation**: Rules for where designations can be placed (`can_designate`).
 
-use crate::layer1::orbital_crossfire::ImpactSite;
+use crate::layer1::environment::orbital_crossfire::ImpactSite;
 use crate::layer1::particles::spawn_particle;
 use crate::layer1::zone::ZoneType;
 use crate::layer1::{GridPosition, OccupiedTiles, TerrainGrid, TerrainType};

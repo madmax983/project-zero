@@ -6,7 +6,7 @@
 #![allow(clippy::option_if_let_else)]
 use crate::layer1::execution::MovementTarget;
 use crate::layer1::fauna::{Fauna, FaunaState, FaunaType};
-use crate::layer1::hazards::handle_workplace_hazards;
+use crate::layer1::environment::hazards::handle_workplace_hazards;
 use crate::layer1::map::GridPosition;
 use crate::layer1::resources::{ResourceItem, ResourceType};
 use crate::layer1::skills::{SkillType, Skills};

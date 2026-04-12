@@ -7,7 +7,7 @@ use crate::layer1::edicts::{ColonyPolicies, Policy};
 use crate::layer1::factions::Factions;
 use crate::layer1::fire::Fire;
 use crate::layer1::geodetic::GolemFormedEvent;
-use crate::layer1::hazards::AmputationEvent;
+use crate::layer1::environment::hazards::AmputationEvent;
 use crate::layer1::health::Health;
 use crate::layer1::inspector::{Inspector, Reported};
 use crate::layer1::map::GridPosition;
@@ -51,7 +51,7 @@ pub fn mass_driver_chronicle_bridge(
 
 /// Bridges `TetherSnapEvent` (Orbital Tether) to `AddChronicleEvent` (Chronicle).
 pub fn tether_snap_chronicle_bridge(
-    mut events: EventReader<crate::layer1::orbital_tether::TetherSnapEvent>,
+    mut events: EventReader<crate::layer1::environment::orbital_tether::TetherSnapEvent>,
     mut chronicle_events: EventWriter<AddChronicleEvent>,
 ) {
     for _event in events.read() {
@@ -1211,7 +1211,7 @@ pub fn diplomatic_reflection_plant_bridge(
 pub fn paranoia_stress_bridge_system(
     mut query: Query<(
         &mut crate::layer1::stress::StressTracker,
-        &mut crate::layer1::bio_acoustic_miasma::ParanoiaTracker,
+        &mut crate::layer1::environment::bio_acoustic_miasma::ParanoiaTracker,
     )>,
 ) {
     for (mut stress, mut paranoia) in &mut query {

@@ -1,4 +1,4 @@
-use crate::layer1::disasters::{DisasterEvent, DisasterType};
+use crate::layer1::environment::disasters::{DisasterEvent, DisasterType};
 use crate::layer1::map::GridPosition;
 use bevy_ecs::prelude::*;
 
@@ -30,7 +30,7 @@ pub fn process_disaster_tourism_system(
 }
 #[cfg(test)]
 mod tests {
-    use crate::layer1::disasters::{DisasterEvent, DisasterType};
+    use crate::layer1::environment::disasters::{DisasterEvent, DisasterType};
     use crate::layer1::map::GridPosition;
     use crate::layer2::tourism::disaster_tourism::{
         process_disaster_tourism_system, GriefTouristArrivalEvent,

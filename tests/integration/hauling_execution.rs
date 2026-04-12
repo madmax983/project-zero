@@ -39,7 +39,7 @@ mod tests {
         world.insert_resource(scale::layer1::chronicle::BuildingTracker::default());
         world.insert_resource(scale::layer1::erosion::ErosionGrid::new(10, 10));
         world.insert_resource(scale::layer1::water::WaterGrid::new(10, 10));
-        world.insert_resource(scale::layer1::light_pollution::SkyGlow::default());
+        world.insert_resource(scale::layer1::environment::light_pollution::SkyGlow::default());
         world.insert_resource(scale::layer1::tech::TechState::default());
         world.insert_resource(scale::layer1::beauty::BeautyGrid::new(10, 10));
         world.insert_resource(scale::layer1::structural_integrity::RoofGrid::new(10, 10));
@@ -63,7 +63,7 @@ mod tests {
         world.init_resource::<Events<StructureCollapsed>>();
         world.init_resource::<Events<scale::layer1::heirloom::RetrogradeEngineeringEvent>>();
         world.init_resource::<Events<scale::layer1::energy::GridOverloadEvent>>();
-        world.init_resource::<Events<scale::layer1::hazards::AmputationEvent>>();
+        world.init_resource::<Events<scale::layer1::environment::hazards::AmputationEvent>>();
         world.init_resource::<Events<scale::layer1::geology::GeologicalEvent>>();
         world.init_resource::<Events<scale::layer1::society::InvestigationEvent>>();
         world.init_resource::<Events<scale::layer1::society::SuppressSocietyEvent>>();
@@ -88,7 +88,7 @@ mod tests {
         world.insert_resource(scale::layer1::prototyping::BuildingMastery::default());
         world.insert_resource(scale::layer1::graffiti::GraffitiMap::default());
         world.insert_resource(scale::layer1::geology::SeismicGrid::new(10, 10));
-        world.insert_resource(scale::layer1::seismic::VibrationGrid::new(10, 10));
+        world.insert_resource(scale::layer1::environment::seismic::VibrationGrid::new(10, 10));
         world.insert_resource(scale::layer1::ecology::EcologyConfig::default());
         world.insert_resource(scale::layer1::society::SecretSocieties::default());
         world.insert_resource(scale::layer1::society::Unrest::default());
@@ -122,7 +122,7 @@ mod tests {
         world.init_resource::<Events<scale::layer1::tech::neural_leech::NeuralHubDeathEvent>>();
         world.init_resource::<Events<scale::layer1::geology::tectonic::MegaQuakeEvent>>();
         world.init_resource::<Events<scale::layer1::resources::MiningEvent>>();
-        world.init_resource::<Events<scale::layer1::volatile::ExplosionEvent>>();
+        world.init_resource::<Events<scale::layer1::environment::volatile::ExplosionEvent>>();
         world.insert_resource(scale::shared::input::Input::default());
         world.insert_resource(scale::ui::UiState::default());
         world.insert_resource(scale::layer1::trade::TradeMarket::default());
@@ -153,10 +153,10 @@ mod tests {
         #[cfg(feature = "nova")]
         world.insert_resource(scale::layer1::loci::LociMap::new(10, 10));
         world.insert_resource(scale::layer1::clutter::ClutterGrid::new(10, 10));
-        world.insert_resource(scale::layer1::light_pollution::SkyGlow::default());
+        world.insert_resource(scale::layer1::environment::light_pollution::SkyGlow::default());
         world.insert_resource(scale::layer1::ColonyStats::default());
         world.insert_resource(scale::layer1::atmosphere::CorrosiveAtmosphere::default());
-        world.insert_resource(scale::layer1::terraforming::PlanetaryAtmosphere::default());
+        world.insert_resource(scale::layer1::environment::terraforming::PlanetaryAtmosphere::default());
         world.insert_resource(scale::layer1::atmosphere::DiffusionConfig::default());
         world.insert_resource(scale::layer1::void_stare::VoidGrid::new(10, 10));
         world.insert_resource(scale::layer1::festivals::FestivalState::default());

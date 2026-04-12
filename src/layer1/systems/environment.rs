@@ -13,9 +13,9 @@ pub fn register(schedule: &mut Schedule) {
     );
     schedule.add_systems(
         (
-            crate::layer1::orbital_tether::detect_tether_destruction_system,
-            crate::layer1::orbital_tether::process_tether_whip_system
-                .after(crate::layer1::orbital_tether::detect_tether_destruction_system),
+            crate::layer1::environment::orbital_tether::detect_tether_destruction_system,
+            crate::layer1::environment::orbital_tether::process_tether_whip_system
+                .after(crate::layer1::environment::orbital_tether::detect_tether_destruction_system),
         )
             .in_set(Layer1SystemSet::Environment),
     );
@@ -41,15 +41,15 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::flora::process_flora_migration,
             ancient_structure_decay_system,
             crate::layer1::graffiti::graffiti_decay_system,
-            crate::layer1::orbital_crossfire::impact_system,
-            crate::layer1::volatile::volatile_decay_system,
-            crate::layer1::volatile::handle_explosion_system
-                .after(crate::layer1::volatile::volatile_decay_system),
+            crate::layer1::environment::orbital_crossfire::impact_system,
+            crate::layer1::environment::volatile::volatile_decay_system,
+            crate::layer1::environment::volatile::handle_explosion_system
+                .after(crate::layer1::environment::volatile::volatile_decay_system),
             crate::layer1::logistics::pneumatic::tube_clog_system,
             crate::layer1::ecology::biome_collapse_system,
             crate::layer1::social::grievances::decay_notes_system,
             crate::layer1::hum::update_hum_system,
-            crate::layer1::bio_acoustic_miasma::update_miasma_clouds,
+            crate::layer1::environment::bio_acoustic_miasma::update_miasma_clouds,
             crate::layer1::parasitic_architecture::process_megastructure_consumption,
         )
             .in_set(Layer1SystemSet::Environment),
@@ -71,7 +71,7 @@ pub fn register(schedule: &mut Schedule) {
     );
     schedule.add_systems(
         (
-            crate::layer1::photophobic::photophobic_decay_system,
+            crate::layer1::environment::photophobic::photophobic_decay_system,
             crate::layer1::geodetic::update_living_stone_system,
             crate::layer1::geodetic::form_golem_system
                 .after(crate::layer1::geodetic::update_living_stone_system),
@@ -82,9 +82,9 @@ pub fn register(schedule: &mut Schedule) {
     );
     schedule.add_systems(
         (
-            crate::layer1::geomes::diffuse_geome_hazards_system,
-            crate::layer1::geomes::environmental_damage_system
-                .after(crate::layer1::geomes::diffuse_geome_hazards_system),
+            crate::layer1::environment::geomes::diffuse_geome_hazards_system,
+            crate::layer1::environment::geomes::environmental_damage_system
+                .after(crate::layer1::environment::geomes::diffuse_geome_hazards_system),
         )
             .in_set(Layer1SystemSet::Environment),
     );
@@ -104,17 +104,17 @@ pub fn register(schedule: &mut Schedule) {
 
     schedule.add_systems(
         (
-            crate::layer1::seismic::update_seismic_system,
-            crate::layer1::seismic::seismic_flora_reaction_system
-                .after(crate::layer1::seismic::update_seismic_system),
-            crate::layer1::seismic::seismic_instability_system
-                .after(crate::layer1::seismic::update_seismic_system),
+            crate::layer1::environment::seismic::update_seismic_system,
+            crate::layer1::environment::seismic::seismic_flora_reaction_system
+                .after(crate::layer1::environment::seismic::update_seismic_system),
+            crate::layer1::environment::seismic::seismic_instability_system
+                .after(crate::layer1::environment::seismic::update_seismic_system),
             crate::layer1::geology::seismic_decay_system,
             crate::layer1::geology::check_seismic_events
                 .after(crate::layer1::geology::seismic_decay_system),
             crate::layer1::geology::apply_geological_event_system
                 .after(crate::layer1::geology::check_seismic_events)
-                .after(crate::layer1::seismic::seismic_instability_system),
+                .after(crate::layer1::environment::seismic::seismic_instability_system),
             crate::layer1::geology::tectonic::update_stress_system,
             crate::layer1::geology::tectonic::check_quake_system
                 .after(crate::layer1::geology::tectonic::update_stress_system),
@@ -149,14 +149,14 @@ pub fn register(schedule: &mut Schedule) {
                 .after(crate::layer1::wind::update_wind_system),
             crate::layer1::atmosphere::corrosion_damage_system
                 .after(crate::layer1::atmosphere::update_atmosphere_system),
-            crate::layer1::terraforming::update_planetary_atmosphere_system
+            crate::layer1::environment::terraforming::update_planetary_atmosphere_system
                 .after(crate::layer1::atmosphere::update_atmosphere_system),
             crate::layer1::atmosphere::update_weather_diffusion_system
-                .after(crate::layer1::terraforming::update_planetary_atmosphere_system),
-            crate::layer1::terraforming::apply_planetary_effects_system
+                .after(crate::layer1::environment::terraforming::update_planetary_atmosphere_system),
+            crate::layer1::environment::terraforming::apply_planetary_effects_system
                 .after(crate::layer1::atmosphere::update_weather_diffusion_system),
             crate::layer1::atmosphere::simulate_diffusion_system
-                .after(crate::layer1::terraforming::apply_planetary_effects_system),
+                .after(crate::layer1::environment::terraforming::apply_planetary_effects_system),
             crate::layer1::logistics::orbital_drop::process_orbital_drops,
         )
             .in_set(Layer1SystemSet::Environment),
