@@ -15584,3 +15584,51 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Emergence:** You rely heavily on cheap, third-party smugglers to keep your colony supplied. A massive smuggler convoy jumps into your system, creating a huge Subspace Wake. The wake instantly teleports your primary medical facility into high orbit, venting all the doctors into the vacuum, while simultaneously dropping a patch of aggressive, fast-growing Subspace Flora into the middle of your main transit hub.
 
 **Tension:** The economic necessity of cheap, fast trade vs. the terrifying, unpredictable physical disruption of your colony's infrastructure.
+
+## The Propaganda Contagion
+
+**Layer:** 3 -> 1
+
+**Fantasy:** Weaponizing culture to destroy an empire from the inside out without firing a single shot.
+
+**Mechanic:** You can dedicate Layer 3 espionage resources to create a "Memetic Virus" targeting a specific rival empire. This virus is disguised as a highly addictive cultural artifact (a holovid, a song, a philosophy). When introduced to a Layer 1 colony via trade or diplomacy, infected Pops experience a massive, artificial Morale boost, but they completely stop producing resources, instead spending their time trying to "share" the artifact with adjacent Pops.
+
+**Emergence:** You sneak the virus onto the capital world of a militaristic rival. Instead of building dreadnoughts, their entire population becomes obsessed with your synthetic pop-star. The rival empire's economy grinds to a halt as millions of citizens throw non-stop raves in the shipyards. When they finally deploy their military to quarantine the infected cities, the soldiers get infected too.
+
+**Tension:** The incredible, bloodless power of memetic warfare vs. the terrifying risk that the virus mutates and spreads back across your own trade routes, collapsing your own empire in a wave of forced euphoria.
+
+## Atmospheric Sabotage
+
+**Layer:** 2 -> 1
+
+**Fantasy:** Slowly, invisibly suffocating a world from orbit before the invasion begins.
+
+**Mechanic:** A specialized stealth ship in Layer 2 orbit can deploy microscopic "Atmosphere Scrubbers" into a planet's upper atmosphere. These scrubbers slowly and silently alter the global atmospheric composition of the Layer 1 colony below, replacing oxygen with trace amounts of a mild, odorless neurotoxin over the course of several in-game months.
+
+**Emergence:** You target a heavily fortified fortress world that you cannot crack with conventional weapons. Over six months, you slowly reduce the oxygen levels while increasing the neurotoxin. The defending Pops don't realize what's happening; they just suffer increasing penalties to movement speed and combat accuracy. By the time you finally land your troops, the terrifying fortress is garrisoned by confused, lethargic soldiers who can barely lift their rifles.
+
+**Tension:** The incredibly low-risk, high-reward nature of atmospheric sabotage vs. the immense patience required and the risk that an orbital scan detects your stealth ship before the process is complete.
+
+## The Generation Ship Mutiny
+
+**Layer:** Cross-layer (2 -> 1)
+
+**Fantasy:** The harrowing internal politics of a colony ship that takes lifetimes to reach its destination.
+
+**Mechanic:** For extremely distant colonies, you launch a "Generation Ship." In Layer 2, it moves incredibly slowly. However, you can "zoom in" and manage the ship as a tiny, isolated Layer 1 colony. As generations pass, the original mission parameters are forgotten. The descendants might form radical factions, demanding to settle on the nearest asteroid instead of the intended paradise world, or they might develop a violently xenophobic religion based on the ship's ancient AI.
+
+**Emergence:** You launch a massive Generation Ship toward a pristine Gaia world on the edge of the galaxy. Three hundred years later, when it finally arrives, the ship doesn't land. Instead, the descendants, having forgotten the concept of a planetary surface, declare the Gaia world "unclean" and begin using their massive colony lasers to glass the planet from orbit to protect their holy ship.
+
+**Tension:** The cheap, early-game expansion potential of Generation Ships vs. the total loss of control over what the colonists become during the centuries-long journey.
+
+## Corporate Espionage: The Trojan Architect
+
+**Layer:** 3 -> 1
+
+**Fantasy:** Infiltrating an enemy's infrastructure at the blueprint level.
+
+**Mechanic:** You use Layer 3 espionage to infiltrate a rival empire's architectural database. You secretly alter the blueprint for a common, essential building (e.g., a basic power relay or a water purifier). From that point on, whenever the rival empire builds that structure on any of their Layer 1 colonies, the building contains a hidden backdoor that slowly siphons resources directly into your empire's coffers, or acts as a hidden surveillance node.
+
+**Emergence:** You alter the blueprint for the standard Imperial Farm. Over the next decade, your rival builds thousands of these farms across their empire. You are suddenly flush with a massive, untraceable influx of food. But then, a sharp-eyed player on the rival side notices that their farm efficiency is exactly 2% lower than it should be. They dismantle a farm, discover the backdoor, and instantly realize that every single farm they've built in the last decade is compromised.
+
+**Tension:** The slow, creeping advantage of architectural sabotage vs. the devastating consequences when the backdoor is inevitably discovered and traced back to you.
