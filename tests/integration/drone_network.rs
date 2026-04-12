@@ -68,7 +68,9 @@ mod tests {
         world.insert_resource(scale::layer3::silence::DetectionRisk::default());
         world.insert_resource(scale::layer1::shadow_market::ShadowMarketCooldown::default());
         world.insert_resource(scale::layer1::social::empty_room::ActiveSanctuaries::default());
-        world.insert_resource(scale::layer1::environment::terraforming::PlanetaryAtmosphere::default());
+        world.insert_resource(
+            scale::layer1::environment::terraforming::PlanetaryAtmosphere::default(),
+        );
         world.insert_resource(scale::layer1::atmosphere::CorrosiveAtmosphere::default());
         world.insert_resource(scale::layer1::atmosphere::DiffusionConfig::default());
         world.insert_resource(scale::layer1::environment::light_pollution::SkyGlow::default());
@@ -100,7 +102,9 @@ mod tests {
         // Other dependencies for systems
         world.insert_resource(scale::layer1::erosion::ErosionGrid::new(10, 10));
         world.insert_resource(scale::layer1::geology::SeismicGrid::new(10, 10));
-        world.insert_resource(scale::layer1::environment::seismic::VibrationGrid::new(10, 10));
+        world.insert_resource(scale::layer1::environment::seismic::VibrationGrid::new(
+            10, 10,
+        ));
         world.insert_resource(scale::layer1::water::WaterGrid::new(10, 10));
         world.insert_resource(scale::layer1::tech::TechState::default());
         world.insert_resource(scale::layer1::beauty::BeautyGrid::new(10, 10));

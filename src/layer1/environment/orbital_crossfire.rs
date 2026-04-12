@@ -161,8 +161,8 @@ pub fn impact_system(world: &mut World) {
 #[cfg(test)]
 mod tests {
     use crate::layer1::building::{Building, BuildingType};
-    use crate::layer1::map::GridPosition;
     use crate::layer1::environment::orbital_crossfire::{impact_system, ImpactSite, OrbitalEvent};
+    use crate::layer1::map::GridPosition;
     use crate::layer1::structure::Structure;
     use crate::layer1::temperature::TemperatureGrid;
     use crate::layer1::terrain::{TerrainGrid, TerrainType};

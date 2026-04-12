@@ -2,9 +2,9 @@
 #[cfg(test)]
 mod tests {
     use bevy_ecs::prelude::*;
+    use scale::layer1::environment::volatile::{handle_explosion_system, ExplosionEvent};
     use scale::layer1::map::GridPosition;
     use scale::layer1::structure::Structure;
-    use scale::layer1::environment::volatile::{handle_explosion_system, ExplosionEvent};
 
     #[test]
     fn test_explosion_overflow_exploit() {

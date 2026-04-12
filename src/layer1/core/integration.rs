@@ -4,10 +4,10 @@ use crate::layer1::balance::TICKS_PER_YEAR;
 use crate::layer1::chronicle::{AddChronicleEvent, EventImportance};
 use crate::layer1::cybernetics::MissingLimb;
 use crate::layer1::edicts::{ColonyPolicies, Policy};
+use crate::layer1::environment::hazards::AmputationEvent;
 use crate::layer1::factions::Factions;
 use crate::layer1::fire::Fire;
 use crate::layer1::geodetic::GolemFormedEvent;
-use crate::layer1::environment::hazards::AmputationEvent;
 use crate::layer1::health::Health;
 use crate::layer1::inspector::{Inspector, Reported};
 use crate::layer1::map::GridPosition;
@@ -50,8 +50,12 @@ pub fn mass_driver_chronicle_bridge(
 }
 
 pub fn access_denied_chronicle_bridge(
-    mut events: bevy_ecs::prelude::EventReader<crate::layer1::administration::edicts::AccessDeniedEvent>,
-    mut chronicle_events: bevy_ecs::prelude::EventWriter<crate::layer1::chronicle::AddChronicleEvent>,
+    mut events: bevy_ecs::prelude::EventReader<
+        crate::layer1::administration::edicts::AccessDeniedEvent,
+    >,
+    mut chronicle_events: bevy_ecs::prelude::EventWriter<
+        crate::layer1::chronicle::AddChronicleEvent,
+    >,
 ) {
     for event in events.read() {
         chronicle_events.send(crate::layer1::chronicle::AddChronicleEvent {
@@ -62,13 +66,20 @@ pub fn access_denied_chronicle_bridge(
 }
 
 pub fn hack_hub_chronicle_bridge(
-    mut events: bevy_ecs::prelude::EventReader<crate::layer1::administration::edicts::HackCentralHubEvent>,
-    mut chronicle_events: bevy_ecs::prelude::EventWriter<crate::layer1::chronicle::AddChronicleEvent>,
+    mut events: bevy_ecs::prelude::EventReader<
+        crate::layer1::administration::edicts::HackCentralHubEvent,
+    >,
+    mut chronicle_events: bevy_ecs::prelude::EventWriter<
+        crate::layer1::chronicle::AddChronicleEvent,
+    >,
 ) {
     for event in events.read() {
         chronicle_events.send(crate::layer1::chronicle::AddChronicleEvent {
             importance: crate::layer1::chronicle::EventImportance::Standard,
-            text: format!("A successful hack into the central hub has removed the orphaned {:?} edict.", event.target_policy),
+            text: format!(
+                "A successful hack into the central hub has removed the orphaned {:?} edict.",
+                event.target_policy
+            ),
         });
     }
 }

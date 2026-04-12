@@ -48,8 +48,8 @@
 //! assert_eq!(explosion.damage, 100.0); // Full potential energy released
 //! ```
 use crate::layer1::energy::{PowerConsumer, PowerSource};
-use crate::layer1::map::GridPosition;
 use crate::layer1::environment::volatile::ExplosionEvent;
+use crate::layer1::map::GridPosition;
 use bevy_ecs::prelude::*;
 
 #[derive(Component, Default, Debug, Clone)]

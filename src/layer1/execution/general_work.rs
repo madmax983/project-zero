@@ -7,6 +7,7 @@ use crate::layer1::day_night::DayNightCycle;
 use crate::layer1::designation::{Designation, DesignationType};
 use crate::layer1::economy::{get_wage_for_job, pay_wage};
 use crate::layer1::edicts::{get_work_speed_modifier, ColonyPolicies};
+use crate::layer1::environment::hazards::handle_workplace_hazards;
 use crate::layer1::eureka::check_for_eureka_world;
 use crate::layer1::execution::components::{AtTarget, MovementTarget};
 use crate::layer1::execution::demolish::{
@@ -15,7 +16,6 @@ use crate::layer1::execution::demolish::{
 use crate::layer1::execution::mining::{handle_chopping_work, handle_mining_work};
 use crate::layer1::flora::process_flora_clearing;
 use crate::layer1::gastronomy::WorkSpeedBuff;
-use crate::layer1::environment::hazards::handle_workplace_hazards;
 use crate::layer1::heirloom::{Heirloom, ToolHistory};
 use crate::layer1::items::{Equipment, Tool, UnequipEvent};
 use crate::layer1::language::{calculate_coordination_penalty, Dialect, Linguistics};

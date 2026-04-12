@@ -10,9 +10,9 @@
 //! - **The Refusal:** The [`leviathan_refusal_system`] triggers when a [`RefuseTributeEvent`] is fired, increasing the Leviathan's anger. If anger reaches a critical threshold, a `DisasterEvent` is dispatched.
 //!
 
-use crate::layer1::environment::disasters::{DisasterEvent, DisasterType};
 use crate::layer1::economy::inventory::Inventory;
 use crate::layer1::economy::items::ItemType;
+use crate::layer1::environment::disasters::{DisasterEvent, DisasterType};
 use bevy::prelude::*;
 
 /// A massive native lifeform that demands resources from the colony.

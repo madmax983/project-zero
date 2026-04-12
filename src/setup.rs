@@ -214,7 +214,9 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     world.insert_resource(MessageLog::default());
     world.insert_resource(Chronicle::default());
     world.init_resource::<bevy_ecs::event::Events<crate::layer1::pop_memories::FamineEvent>>();
-    world.init_resource::<bevy_ecs::event::Events<crate::layer1::law::justice::CrimeCommittedEvent>>();
+    world
+        .init_resource::<bevy_ecs::event::Events<crate::layer1::law::justice::CrimeCommittedEvent>>(
+        );
     world.insert_resource(crate::ui::tech::TechUiState::default());
     world.insert_resource(crate::ui::shell::ShellConfig::default());
     world.insert_resource(UiState::default());
@@ -266,7 +268,9 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     world.insert_resource(crate::layer1::prototyping::BuildingMastery::default());
     world.insert_resource(crate::layer1::graffiti::GraffitiMap::default());
     world.insert_resource(crate::layer1::geology::SeismicGrid::new(80, 50));
-    world.insert_resource(crate::layer1::environment::seismic::VibrationGrid::new(80, 50));
+    world.insert_resource(crate::layer1::environment::seismic::VibrationGrid::new(
+        80, 50,
+    ));
     world.insert_resource(crate::layer1::ecology::EcologyConfig::default());
     world.insert_resource(crate::layer1::social::society::SecretSocieties::default());
     world.insert_resource(crate::layer1::unrest::Unrest::default());
@@ -1078,7 +1082,9 @@ mod tests {
             headless: true,
             scenario,
         });
-        world.init_resource::<crate::layer1::environment::bio_acoustic_miasma::MiasmaRecordedSecret>();
+        world
+            .init_resource::<crate::layer1::environment::bio_acoustic_miasma::MiasmaRecordedSecret>(
+            );
         world.init_resource::<bevy::prelude::Events<crate::layer2::skyhooks::LaunchIntent>>();
         world.init_resource::<bevy::prelude::Events<crate::layer1::law::justice::CrimeCommittedEvent>>();
         world.init_resource::<bevy::prelude::Events<crate::layer1::pop_memories::FamineEvent>>();
