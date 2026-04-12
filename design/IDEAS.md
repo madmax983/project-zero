@@ -3921,7 +3921,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Emergency Venting
+## Emergency Venting [SPECCED]
 
 **Layer:** 1
 

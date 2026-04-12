@@ -276,8 +276,14 @@ pub fn process_repair(world: &mut World, target_entity: Entity, amount: f32) -> 
             .get::<crate::layer2::derelict_stations::HiddenQuirk>(structure_entity)
             .map(|q| q.0)
         {
-            world.entity_mut(structure_entity).remove::<crate::layer2::derelict_stations::HiddenQuirk>();
-            world.entity_mut(structure_entity).insert(crate::layer1::social::rituals::Quirk { quirk_type: hidden_quirk });
+            world
+                .entity_mut(structure_entity)
+                .remove::<crate::layer2::derelict_stations::HiddenQuirk>();
+            world
+                .entity_mut(structure_entity)
+                .insert(crate::layer1::social::rituals::Quirk {
+                    quirk_type: hidden_quirk,
+                });
         }
     }
 
