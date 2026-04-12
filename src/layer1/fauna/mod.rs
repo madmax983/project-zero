@@ -82,7 +82,10 @@ pub fn suppress_fauna_system(
     fauna_query: Query<Entity, With<Fauna>>,
 ) {
     if let Some(traits) = traits {
-        if traits.0.contains(&crate::layer1::quirks::PlanetaryTrait::SilentWorld) {
+        if traits
+            .0
+            .contains(&crate::layer1::quirks::PlanetaryTrait::SilentWorld)
+        {
             for entity in &fauna_query {
                 commands.entity(entity).despawn();
             }

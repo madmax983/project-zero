@@ -1,5 +1,5 @@
-use scale::prelude::*;
 use crossterm::style::{Color, Stylize};
+use scale::prelude::*;
 
 fn main() -> anyhow::Result<()> {
     let mut generator = NarrativeGenerator::default();

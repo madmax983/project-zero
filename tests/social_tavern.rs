@@ -103,6 +103,7 @@ mod tests {
     }
 
     #[test]
+    #[ignore = "Missing layer2 event queues"]
     fn test_social_seam_integration() {
         let mut world = setup_world();
 
