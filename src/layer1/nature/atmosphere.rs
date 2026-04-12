@@ -284,22 +284,16 @@ impl AtmosphereGrid {
         )]
         for y in 0..self.height {
             for x in 0..self.width {
+                let idx = y
+                    .checked_mul(self.width)
+                    .and_then(|i| i.checked_add(x))
+                    .unwrap_or(usize::MAX);
+
                 let wind = wind_grid.get_wind(x as i32, y as i32);
                 if wind.length() < f32::EPSILON {
-                    if let Some(v) = self.scratch.get_mut(
-                        y.checked_mul(self.width)
-                            .and_then(|i| i.checked_add(x))
-                            .unwrap_or(usize::MAX),
-                    ) {
-                        *v = self
-                            .values
-                            .get(
-                                y.checked_mul(self.width)
-                                    .and_then(|i| i.checked_add(x))
-                                    .unwrap_or(usize::MAX),
-                            )
-                            .copied()
-                            .unwrap_or(0.0);
+                    let val = self.values.get(idx).copied().unwrap_or(0.0);
+                    if let Some(v) = self.scratch.get_mut(idx) {
+                        *v = val;
                     }
                     continue;
                 }
@@ -309,11 +303,7 @@ impl AtmosphereGrid {
                 let src_y = y as f32 - wind.y;
 
                 let interpolated_val = self.get_interpolated(src_x, src_y);
-                if let Some(v) = self.scratch.get_mut(
-                    y.checked_mul(self.width)
-                        .and_then(|i| i.checked_add(x))
-                        .unwrap_or(usize::MAX),
-                ) {
+                if let Some(v) = self.scratch.get_mut(idx) {
                     *v = interpolated_val;
                 }
             }
@@ -337,25 +327,27 @@ impl AtmosphereGrid {
 
         for y in 0..self.height {
             for x in 0..self.width {
+                let idx = y
+                    .checked_mul(self.width)
+                    .and_then(|i| i.checked_add(x))
+                    .unwrap_or(usize::MAX);
+
                 // If the cell itself is a solid blocker (Wall), it contains no pollution.
                 if blockers
                     .get(&(x as i32, y as i32))
                     .is_some_and(|&trans| trans <= f32::EPSILON)
                 {
-                    if let Some(idx) = y.checked_mul(self.width).and_then(|i| i.checked_add(x)) {
-                        self.scratch[idx] = 0.0;
+                    if let Some(v) = self.scratch.get_mut(idx) {
+                        *v = 0.0;
                     }
                     continue;
                 }
 
-                let idx = y
-                    .checked_mul(self.width)
-                    .and_then(|i| i.checked_add(x))
-                    .unwrap_or(usize::MAX);
-                if idx >= self.values.len() {
+                let current_val = self.values.get(idx);
+                let Some(&current_val) = current_val else {
                     continue;
-                }
-                let mut sum = self.values[idx];
+                };
+                let mut sum = current_val;
                 let mut total_weight = 1.0;
 
                 // Check 4 neighbors
@@ -387,13 +379,15 @@ impl AtmosphereGrid {
                 }
 
                 // Average
-                if total_weight > 0.0 {
-                    self.scratch[idx] = sum / total_weight;
+                let final_val = if total_weight > 0.0 {
+                    sum / total_weight
                 } else {
-                    self.scratch[idx] = 0.0;
+                    0.0
+                };
+
+                if let Some(v) = self.scratch.get_mut(idx) {
+                    *v = final_val * self.diffusion_rate;
                 }
-                // Decay
-                self.scratch[idx] *= self.diffusion_rate;
             }
         }
         // Swap buffers
