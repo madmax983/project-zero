@@ -8760,7 +8760,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Geothermal Heartbeat
+## The Geothermal Heartbeat [SPECCED]
 
 **Layer:** 1
 
@@ -15633,7 +15633,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 **Tension:** The slow, creeping advantage of architectural sabotage vs. the devastating consequences when the backdoor is inevitably discovered and traced back to you.
 
-## The Geothermal Heartbeat
+## The Geothermal Heartbeat [SPECCED]
 
 **Layer:** 1
 
