@@ -1034,6 +1034,7 @@ pub const fn get_flora_char(flora: FloraType) -> &'static str {
     match flora {
         FloraType::XenoMoss => "▒",
         FloraType::StrangleVines => "§",
+        FloraType::SilentFlora => "♠",
     }
 }
 
@@ -1043,5 +1044,6 @@ pub const fn get_flora_color(flora: FloraType) -> Color {
     match flora {
         FloraType::XenoMoss => Color::Rgb(0, 100, 0), // DarkGreen
         FloraType::StrangleVines => Color::Rgb(139, 0, 139), // DarkMagenta
+        FloraType::SilentFlora => Color::Rgb(255, 255, 255), // White
     }
 }

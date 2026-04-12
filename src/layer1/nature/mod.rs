@@ -39,3 +39,6 @@ pub use weather::*;
 pub use wind::*;
 pub mod mutagenic_rain;
 pub use mutagenic_rain::*;
+
+#[cfg(test)]
+mod silent_world_tests;

@@ -75,6 +75,21 @@ impl Default for Fauna {
     }
 }
 
+/// Suppresses fauna on planets with the SilentWorld trait.
+pub fn suppress_fauna_system(
+    mut commands: Commands,
+    traits: Option<Res<crate::layer1::quirks::PlanetaryTraits>>,
+    fauna_query: Query<Entity, With<Fauna>>,
+) {
+    if let Some(traits) = traits {
+        if traits.0.contains(&crate::layer1::quirks::PlanetaryTrait::SilentWorld) {
+            for entity in &fauna_query {
+                commands.entity(entity).despawn();
+            }
+        }
+    }
+}
+
 /// System that drives fauna behavior (AI).
 ///
 /// Implements a simple State Machine:

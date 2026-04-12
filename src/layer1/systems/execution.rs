@@ -179,6 +179,14 @@ pub fn register(schedule: &mut Schedule) {
 
     schedule.add_systems(
         (
+            crate::layer1::flora::consume_silent_flora_system.after(movement_system),
+            crate::layer1::fauna::suppress_fauna_system.after(movement_system),
+        )
+            .in_set(Layer1SystemSet::Execution),
+    );
+
+    schedule.add_systems(
+        (
             crate::layer1::agony_extract::process_agony_extract_harvest_system
                 .after(work_execution_system),
         )
