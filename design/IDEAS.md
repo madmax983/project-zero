@@ -15585,7 +15585,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 **Tension:** The economic necessity of cheap, fast trade vs. the terrifying, unpredictable physical disruption of your colony's infrastructure.
 
-## The Propaganda Contagion
+## The Propaganda Contagion [SPECCED]
 
 **Layer:** 3 -> 1
 
@@ -15597,7 +15597,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 **Tension:** The incredible, bloodless power of memetic warfare vs. the terrifying risk that the virus mutates and spreads back across your own trade routes, collapsing your own empire in a wave of forced euphoria.
 
-## Atmospheric Sabotage
+## Atmospheric Sabotage [SPECCED]
 
 **Layer:** 2 -> 1
 
@@ -15609,7 +15609,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 **Tension:** The incredibly low-risk, high-reward nature of atmospheric sabotage vs. the immense patience required and the risk that an orbital scan detects your stealth ship before the process is complete.
 
-## The Generation Ship Mutiny
+## The Generation Ship Mutiny [SPECCED]
 
 **Layer:** Cross-layer (2 -> 1)
 
@@ -15621,7 +15621,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 **Tension:** The cheap, early-game expansion potential of Generation Ships vs. the total loss of control over what the colonists become during the centuries-long journey.
 
-## Corporate Espionage: The Trojan Architect
+## Corporate Espionage: The Trojan Architect [SPECCED]
 
 **Layer:** 3 -> 1
 
