@@ -142,25 +142,26 @@ impl PressureGrid {
 
         for y in 0..self.height {
             for x in 0..self.width {
+                let idx = y
+                    .checked_mul(self.width)
+                    .and_then(|i| i.checked_add(x))
+                    .unwrap_or(usize::MAX);
+
                 // If the cell itself is a solid blocker (Wall), it contains no pressure.
                 if blockers
                     .get(&(x as i32, y as i32))
                     .is_some_and(|&trans| trans <= f32::EPSILON)
                 {
-                    if let Some(idx) = y.checked_mul(self.width).and_then(|i| i.checked_add(x)) {
-                        new_values[idx] = 0.0;
+                    if let Some(v) = new_values.get_mut(idx) {
+                        *v = 0.0;
                     }
                     continue;
                 }
 
-                let idx = y
-                    .checked_mul(self.width)
-                    .and_then(|i| i.checked_add(x))
-                    .unwrap_or(usize::MAX);
-                if idx >= self.values.len() {
+                let current_val = self.values.get(idx);
+                let Some(&current_val) = current_val else {
                     continue;
-                }
-                let current_val = self.values[idx];
+                };
 
                 let mut sum = current_val;
                 let mut total_weight = 1.0;
@@ -190,7 +191,9 @@ impl PressureGrid {
                 }
 
                 if total_weight > 0.0 {
-                    new_values[idx] = sum / total_weight;
+                    if let Some(v) = new_values.get_mut(idx) {
+                        *v = sum / total_weight;
+                    }
                 }
             }
         }
