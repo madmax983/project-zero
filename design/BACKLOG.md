@@ -644,4 +644,3 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `962` The Planetary Cortex — `specs/962-the-planetary-cortex.md`
 - [ ] `963` Quantum Stockpiles — `specs/963-quantum-stockpiles.md`
 - [ ] `964` The Pirate's Pension — `specs/964-the-pirates-pension.md`
-- [ ] `965` The Vertical Schism — `specs/965-the-vertical-schism.md`
