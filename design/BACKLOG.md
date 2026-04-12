@@ -657,3 +657,7 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `976` The Beanstalk Mutiny — `specs/976-the-beanstalk-mutiny.md`
 - [ ] `977` The Flesh-Double Infiltration — `specs/977-the-flesh-double-infiltration.md`
 - [ ] `978` The Ghost-Worker Assembly — `specs/978-the-ghost-worker-assembly.md`
+- [ ] `979` The Propaganda Contagion — `specs/979-the-propaganda-contagion.md`
+- [ ] `980` Atmospheric Sabotage — `specs/980-atmospheric-sabotage.md`
+- [ ] `981` Corporate Espionage: The Trojan Architect — `specs/981-corporate-espionage-trojan-architect.md`
+- [ ] `982` The Generation Ship Mutiny — `specs/982-the-generation-ship-mutiny.md`
