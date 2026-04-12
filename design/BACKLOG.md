@@ -651,3 +651,5 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `970` Reality Anchors — `specs/970-reality-anchors.md`
 - [ ] `971` The Living Constitution — `specs/971-the-living-constitution.md`
 - [ ] `972` Corporate Rivals — `specs/972-corporate-rivals.md`
+- [ ] `973` Ecosystem Mimicry — `specs/973-ecosystem-mimicry.md`
+- [ ] `974` Leviathan Tapping — `specs/974-leviathan-tapping.md`

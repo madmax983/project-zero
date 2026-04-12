@@ -15504,7 +15504,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Ecosystem Mimicry
+## Ecosystem Mimicry [SPECCED]
 
 **Layer:** 1
 
@@ -15518,7 +15518,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Leviathan Tapping
+## Leviathan Tapping [SPECCED]
 
 **Layer:** 2
 
