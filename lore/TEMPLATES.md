@@ -5576,3 +5576,72 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "A parallel market flourishes. The [PHANTOM_WORKER_ALIAS] trade in [SHADOW_GOOD] while the administration sleeps. [YEAR]."
 - "[YEAR]: The ledgers do not balance. There is a hidden wealth of [SHADOW_GOOD] kept by the [PHANTOM_WORKER_ALIAS]."
 - "We cannot tax them. The [PHANTOM_WORKER_ALIAS] hoard [SHADOW_GOOD]. The shadow economy grows. [YEAR]."
+
+## Generation Ship Drift Templates (Spec 945)
+
+## Template: DRIFT_COLONY_FOUNDED
+**Generates:** Play event (chronicle during game)
+**Slots:** [COLONY], [YEAR], [TRANSIT_HARDSHIP], [DRIFT_MUTATION]
+**Patterns:**
+- "[YEAR]: They have arrived. But [TRANSIT_HARDSHIP] changed them. [COLONY] is born of [DRIFT_MUTATION]."
+- "The Long Sleep is over. [COLONY] has been founded. Surviving [TRANSIT_HARDSHIP] left them with [DRIFT_MUTATION]. [YEAR]."
+- "[YEAR]: The generation ship lands. They survived [TRANSIT_HARDSHIP]. Now [COLONY] must endure their [DRIFT_MUTATION]."
+
+## Template: DRIFT_HOSTILITY_MANIFESTS
+**Generates:** Play event (chronicle during game)
+**Slots:** [COLONY], [YEAR], [DRIFT_MUTATION], [FACTION]
+**Patterns:**
+- "[COLONY] turns its [DRIFT_MUTATION] against [FACTION]. [YEAR]. The void breeds monsters."
+- "[YEAR]: Driven by [DRIFT_MUTATION], the colonists of [COLONY] struck out against [FACTION]."
+
+## The Vertical Schism Templates (Spec 965)
+
+## Template: SCHISM_BRAWL_ERUPTS
+**Generates:** Play event (chronicle during game)
+**Slots:** [COLONY], [YEAR], [SKY_BORN_INSULT], [CORE_BORN_INSULT], [SCHISM_VIOLENCE]
+**Patterns:**
+- "[YEAR]: The Z-Line snaps. They called them [CORE_BORN_INSULT]. They responded with [SCHISM_VIOLENCE]."
+- "Tension at the boundary. The [SKY_BORN_INSULT] pushed too far, leading to [SCHISM_VIOLENCE]. [YEAR]."
+- "[YEAR]: [SCHISM_VIOLENCE] broke out. The [CORE_BORN_INSULT] and the [SKY_BORN_INSULT] are at war in the corridors."
+
+## The Orphaned Edict Templates (Spec 948)
+
+## Template: ORPHANED_EDICT_ENFORCED
+**Generates:** Play event (chronicle during game)
+**Slots:** [COLONY], [YEAR], [OBSOLETE_RULE], [EDICT_PENALTY]
+**Patterns:**
+- "[YEAR]: The Dead Hand strikes. A citizen violated [OBSOLETE_RULE] and suffered [EDICT_PENALTY]."
+- "The machines enforce [OBSOLETE_RULE] with no master. The result is [EDICT_PENALTY]. [YEAR]."
+- "[YEAR]: Punished for [OBSOLETE_RULE]. The sentence was [EDICT_PENALTY]. We cannot stop the system."
+
+## Template: HUB_HACK_ATTEMPT
+**Generates:** Play event (chronicle during game)
+**Slots:** [COLONY], [YEAR], [OBSOLETE_RULE]
+**Patterns:**
+- "[YEAR]: An attempt to purge [OBSOLETE_RULE] from the central hub failed."
+- "They tried to hack the core to erase [OBSOLETE_RULE]. The defenses held. [YEAR]."
+
+## The Deserter's Haven Templates (Spec 954)
+
+## Template: DESERTER_ARRIVES
+**Generates:** Play event (chronicle during game)
+**Slots:** [COLONY], [YEAR], [FACTION], [DESERTER_CRIME]
+**Patterns:**
+- "[YEAR]: A ship from [FACTION] requests asylum. They are wanted for [DESERTER_CRIME]."
+- "They fled [FACTION] after [DESERTER_CRIME]. Now they hide in [COLONY]. [YEAR]."
+- "[YEAR]: Deserters from [FACTION] arrived. Their crime: [DESERTER_CRIME]. We took them in."
+
+## Template: HAVEN_EXPOSED
+**Generates:** Play event (chronicle during game)
+**Slots:** [COLONY], [YEAR], [FACTION]
+**Patterns:**
+- "[YEAR]: [FACTION] discovered our Hidden Port. They know we harbor their traitors."
+- "The secret is out. [FACTION] knows the deserters are here. [YEAR]."
+
+## Template: PROXY_WAR_ESCALATES
+**Generates:** Play event (chronicle during game)
+**Slots:** [COLONY], [YEAR], [FACTION], [PROXY_WAR_TACTIC]
+**Patterns:**
+- "[YEAR]: [FACTION] will not let it go. They resorted to [PROXY_WAR_TACTIC]."
+- "The Proxy-War begins. [FACTION] is using [PROXY_WAR_TACTIC] against [COLONY]. [YEAR]."
+- "[YEAR]: Retaliation. Because we kept the deserters, [FACTION] executed [PROXY_WAR_TACTIC]."

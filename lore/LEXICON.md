@@ -4064,3 +4064,56 @@
 **Replaces:** Shadow Economy value, black market economy
 **Code reference:** `ShadowEconomy`
 **Usage:** "You can't buy food with credits anymore; only through the Under-Ledger."
+
+## Generation Ship Drift (Spec 945)
+
+### Transit Drift
+**Replaces:** Cultural shift, transit conditions tracker
+**Code reference:** `TransitDrift`
+**Usage:** "The Transit Drift left them suspicious and angry."
+
+### the Long Sleep
+**Replaces:** the journey, transit time
+**Code reference:** `TransitConditions` duration
+**Usage:** "They endured the Long Sleep only to find war."
+
+## The Vertical Schism (Spec 965)
+
+### Sky-Born
+**Replaces:** High altitude pops
+**Code reference:** `SkyBorn`
+**Usage:** "The Sky-Born look down on the rest of us."
+
+### Core-Born
+**Replaces:** Deep depth pops
+**Code reference:** `CoreBorn`
+**Usage:** "The Core-Born endure the pressure."
+
+### the Z-Line
+**Replaces:** The boundary between high and low altitude
+**Code reference:** Threshold for Z-Level history
+**Usage:** "Do not cross the Z-Line after dark."
+
+## The Orphaned Edict (Spec 948)
+
+### Ghost-Law
+**Replaces:** Orphaned edict, old rule
+**Code reference:** `ColonyPolicies::orphaned_policies`
+**Usage:** "He was punished by a Ghost-Law."
+
+### the Dead Hand
+**Replaces:** The automated enforcement system
+**Code reference:** `orphaned_edict_enforcement_system`
+**Usage:** "The Dead Hand executed the sentence."
+
+## The Deserter's Haven (Spec 954)
+
+### the Hidden Port
+**Replaces:** Deserter sanctuary, haven
+**Code reference:** `DesertersHaven` (or equivalent haven component)
+**Usage:** "They sought refuge in the Hidden Port."
+
+### Proxy-War
+**Replaces:** Indirect combat, retaliation
+**Code reference:** `ProxyWarEvent`
+**Usage:** "The faction initiated a Proxy-War against the colony."
