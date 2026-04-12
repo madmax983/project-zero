@@ -49,6 +49,30 @@ pub fn mass_driver_chronicle_bridge(
     }
 }
 
+pub fn access_denied_chronicle_bridge(
+    mut events: bevy_ecs::prelude::EventReader<crate::layer1::administration::edicts::AccessDeniedEvent>,
+    mut chronicle_events: bevy_ecs::prelude::EventWriter<crate::layer1::chronicle::AddChronicleEvent>,
+) {
+    for event in events.read() {
+        chronicle_events.send(crate::layer1::chronicle::AddChronicleEvent {
+            importance: crate::layer1::chronicle::EventImportance::Minor,
+            text: format!("Access Denied: {}", event.reason),
+        });
+    }
+}
+
+pub fn hack_hub_chronicle_bridge(
+    mut events: bevy_ecs::prelude::EventReader<crate::layer1::administration::edicts::HackCentralHubEvent>,
+    mut chronicle_events: bevy_ecs::prelude::EventWriter<crate::layer1::chronicle::AddChronicleEvent>,
+) {
+    for event in events.read() {
+        chronicle_events.send(crate::layer1::chronicle::AddChronicleEvent {
+            importance: crate::layer1::chronicle::EventImportance::Standard,
+            text: format!("A successful hack into the central hub has removed the orphaned {:?} edict.", event.target_policy),
+        });
+    }
+}
+
 /// Bridges `TetherSnapEvent` (Orbital Tether) to `AddChronicleEvent` (Chronicle).
 pub fn tether_snap_chronicle_bridge(
     mut events: EventReader<crate::layer1::orbital_tether::TetherSnapEvent>,
