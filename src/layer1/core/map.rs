@@ -124,6 +124,9 @@ pub struct GridPosition {
     pub y: i32,
 }
 
+#[derive(Component, Default, Debug, Clone, Copy, PartialEq, Eq, Hash)]
+pub struct ShadowLayer;
+
 impl GridPosition {
     /// Returns the Chebyshev distance (chessboard distance) between two positions.
     /// This is the number of moves a King would take to get from A to B.

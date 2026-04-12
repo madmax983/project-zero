@@ -304,6 +304,7 @@ pub enum BuildingType {
     /// High-tech AI Core for base automation.
     AICore,
     /// Hub for spawning and recharging Drones.
+    PhaseShifter,
     DroneHub,
     /// Cryo-Stasis Pod.
     CryoPod,
@@ -515,7 +516,7 @@ impl BuildingType {
             Self::BulletinBoard => false,
             Self::HoloProjector => false,
             Self::Nanoforge => false,
-            Self::School | Self::MediaStation => false,
+            Self::School | Self::MediaStation | Self::PhaseShifter => false,
         }
     }
 
@@ -678,6 +679,7 @@ impl BuildingType {
             Self::HoloProjector => "Holo Projector",
             Self::Nanoforge => "Nanoforge",
             Self::School => "School",
+            Self::PhaseShifter => "Phase Shifter",
             Self::MediaStation => "Media Station",
         }
     }
@@ -739,6 +741,7 @@ impl BuildingType {
             Self::Nanoforge => 'N',
             Self::School => 'S',
             Self::MediaStation => 'M',
+            Self::PhaseShifter => 'P',
         }
     }
 
@@ -1073,6 +1076,12 @@ impl BuildingType {
                 stone: 10.0,
                 ..ColonyResources::zeroed()
             },
+            Self::PhaseShifter => ColonyResources {
+                wood: 0.0,
+                stone: 0.0,
+                metal: 100.0,
+                ..ColonyResources::zeroed()
+            },
             Self::MediaStation => ColonyResources {
                 metal: 25.0,
                 ..ColonyResources::zeroed()
@@ -1338,6 +1347,7 @@ fn spawn_building(
         BuildingType::Office
         | BuildingType::Tavern
         | BuildingType::Library
+        | BuildingType::PhaseShifter
         | BuildingType::FlowerBed
         | BuildingType::Statue
         | BuildingType::Hospital
@@ -1666,6 +1676,9 @@ fn configure_storage(entity: &mut EntityWorldMut, building_type: BuildingType) {
 
 fn configure_civic(entity: &mut EntityWorldMut, building_type: BuildingType) {
     match building_type {
+        BuildingType::PhaseShifter => {
+            entity.insert(crate::layer1::architecture::phase_shifter::PhaseShifter);
+        }
         BuildingType::School => {
             entity.insert((
                 crate::layer1::social::indoctrination::IndoctrinationAura {
@@ -2510,7 +2523,8 @@ mod tests {
         assert_eq!(BuildingType::ServerBank.next(), BuildingType::Lander);
         assert_eq!(BuildingType::Lander.next(), BuildingType::CommandCenter);
         assert_eq!(BuildingType::CommandCenter.next(), BuildingType::AICore);
-        assert_eq!(BuildingType::AICore.next(), BuildingType::DroneHub);
+        assert_eq!(BuildingType::AICore.next(), BuildingType::PhaseShifter);
+        assert_eq!(BuildingType::PhaseShifter.next(), BuildingType::DroneHub);
         assert_eq!(BuildingType::DroneHub.next(), BuildingType::CryoPod);
         assert_eq!(BuildingType::CryoPod.next(), BuildingType::AuroralCollector);
         assert_eq!(
@@ -2726,6 +2740,9 @@ mod tests {
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::AICore);
+
+        mode.selected = mode.selected.next();
+        assert_eq!(mode.selected, BuildingType::PhaseShifter);
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::DroneHub);

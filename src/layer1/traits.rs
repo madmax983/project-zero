@@ -99,6 +99,7 @@ pub enum Trait {
     Distrustful,
     /// Experiences light colors as emotional sounds.
     Synesthete,
+    ShadowTouched,
     /// Leaves a spiteful will upon death, giving belongings to rivals or pets.
     Spiteful,
     /// Biosphere empathy link, harmonizes stress and works better near flora.
@@ -122,6 +123,7 @@ impl Trait {
     #[must_use]
     pub const fn label(&self) -> &'static str {
         match self {
+            Self::ShadowTouched => "Shadow-Touched",
             Self::StoneSkin => "Stone Skin",
             Self::NightVision => "Night Vision",
             Self::GillLungs => "Gill Lungs",
@@ -244,6 +246,7 @@ impl Traits {
             Trait::Mutant,
             Trait::Compassionate,
             Trait::Synesthete,
+            Trait::ShadowTouched,
             Trait::Spiteful,
             Trait::EmpathicLink,
             Trait::Bureaucrat,

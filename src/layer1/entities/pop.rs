@@ -268,6 +268,7 @@ pub struct PopBundle {
     pub auras: ActiveAuras,
     /// Social debts owed.
     pub social_debt: SocialDebt,
+    pub sanity: crate::layer1::social::mental_health::Sanity,
     /// Overall morale.
     pub morale: Morale,
     /// Disease cooldown.
@@ -330,6 +331,7 @@ impl PopBundle {
             filth: Filth::default(),
             auras: ActiveAuras::default(),
             social_debt: SocialDebt::default(),
+            sanity: crate::layer1::social::mental_health::Sanity::default(),
             morale: Morale::default(),
             contagion: ContagionCooldown::default(),
             traits: Traits::random(rng),

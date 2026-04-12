@@ -124,6 +124,10 @@ pub struct TerrainGrid {
     pub tiles: Vec<TerrainType>, // row-major: index = y * width + x
 }
 
+/// A 2D grid representing the game map's shadow layer.
+#[derive(Resource)]
+pub struct ShadowTerrainGrid(pub TerrainGrid);
+
 impl TerrainGrid {
     /// Retrieves the terrain type at the specified coordinates, if within bounds.
     ///
