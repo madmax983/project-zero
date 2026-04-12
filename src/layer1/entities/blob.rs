@@ -1,5 +1,10 @@
 //! The Blob (Spec 874)
+//!
 //! An indestructible, slow-growing entity that consumes adjacent tiles.
+//!
+//! The Blob acts as a slow environmental threat. It grows along cardinal directions,
+//! gradually converting standard terrain into Blob biomass. It is organized into
+//! networks ([`BlobNetwork`]) which manage the expansion rate across multiple nodes ([`BlobNode`]).
 use crate::layer1::map::GridPosition;
 use crate::layer1::nature::terrain::TerrainGrid;
 use crate::layer1::nature::terrain::TerrainType;
@@ -7,17 +12,51 @@ use crate::layer1::resources::ResourceItem;
 use crate::layer1::resources::ResourceType;
 use bevy_ecs::prelude::*;
 
+/// Manages the expansion timing for a connected network of Blob nodes.
+///
+/// ## Examples
+///
+/// ```
+/// use scale::layer1::entities::blob::BlobNetwork;
+///
+/// let mut network = BlobNetwork {
+///     expansion_timer: 100.0,
+///     current_time: 0.0,
+/// };
+/// network.current_time += 1.0;
+/// assert_eq!(network.current_time, 1.0);
+/// ```
 #[derive(Component)]
 pub struct BlobNetwork {
+    /// The threshold time required before the network expands.
     pub expansion_timer: f32,
+    /// The current accumulated time since the last expansion.
     pub current_time: f32,
 }
 
+/// A single cell of The Blob, associated with a parent [`BlobNetwork`].
+///
+/// ## Examples
+///
+/// ```
+/// use scale::layer1::entities::blob::BlobNode;
+/// use bevy_ecs::prelude::*;
+///
+/// let node = BlobNode {
+///     network_id: Entity::PLACEHOLDER,
+/// };
+/// assert_eq!(node.network_id, Entity::PLACEHOLDER);
+/// ```
 #[derive(Component)]
 pub struct BlobNode {
+    /// The entity ID of the [`BlobNetwork`] controlling this node's expansion.
     pub network_id: Entity,
 }
 
+/// Evaluates [`BlobNetwork`] timers and triggers expansion into adjacent tiles.
+///
+/// This system increments the network timer. When the threshold is reached, it searches
+/// adjacent tiles for viable expansion targets and spawns new [`BlobNode`] entities.
 pub fn blob_expansion_system(
     mut commands: Commands,
     mut networks: Query<(Entity, &mut BlobNetwork)>,
@@ -82,8 +121,13 @@ pub fn blob_expansion_system(
     }
 }
 
+/// A placeholder system for future blob spreading mechanics (e.g., spore dispersion).
 pub fn blob_spread_system() {}
 
+/// Destroys resources that find themselves on the same tile as a [`BlobNode`].
+///
+/// Once a tile is consumed by the Blob, any dropped `ResourceItem` entities
+/// on that tile are despawned.
 pub fn blob_consumption_system(
     mut commands: Commands,
     mut networks: Query<&mut BlobNetwork>,
@@ -107,6 +151,7 @@ pub fn blob_consumption_system(
     }
 }
 
+/// A simple marker component for the Blob entity.
 #[derive(Component, Default)]
 pub struct Blob;
 

@@ -1,8 +1,25 @@
+//! Parasitic Architecture
+//!
+//! Megastructures that extract resources or structural integrity from nearby standard
+//! buildings to fuel themselves or trigger specific events.
+
 use crate::layer1::map::GridPosition;
 use crate::layer1::structure::Structure;
 use bevy_ecs::prelude::*;
 
 /// Component indicating a megastructure that consumes the structural integrity of nearby buildings.
+///
+/// ## Examples
+///
+/// ```
+/// use scale::layer1::architecture::parasitic_architecture::ParasiticArchitecture;
+///
+/// let mega = ParasiticArchitecture {
+///     radius: 10.0,
+///     consumption_rate: 5.0,
+/// };
+/// assert_eq!(mega.radius, 10.0);
+/// ```
 #[derive(Component)]
 pub struct ParasiticArchitecture {
     /// The radius within which buildings are consumed.
@@ -18,6 +35,9 @@ pub struct BuildingConsumedEvent {
     pub entity: Entity,
 }
 
+/// Drains HP from structures within the radius of a [`ParasiticArchitecture`] entity.
+///
+/// Buildings whose HP reaches zero are despawned, and a [`BuildingConsumedEvent`] is emitted.
 pub fn process_megastructure_consumption(
     mut commands: Commands,
     mut events: EventWriter<BuildingConsumedEvent>,

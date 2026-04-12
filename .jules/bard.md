@@ -1,18 +1,3 @@
-## 2024-03-23 - [Missing Module Docs]
-**Confusion:** Several modules in `src/layer1/` lack module-level `//!` documentation and adequate `///` documentation for public items, making it difficult to understand their purpose.
-**Clarification:** Adding module-level documentation and executable doc-tests to these modules to improve clarity and enforce TDD for documentation.
-## 2024-05-20 - [Testing AI Commitment Logic]
-**Confusion:** Users attempting to verify `PopAction` task switching behavior usually boot up the entire `evaluate_actions_system`, which requires an immense amount of scaffolding (`ColonyResources`, `DayNightCycle`, `TabooState`, etc.).
-**Clarification:** To test how commitment timers behave, users don't need a full simulation step, just the `update_action_timer_system` itself, which is trivially tested with a minimal `World` and `Schedule`. Added a targeted doctest to demonstrate this isolated unit testing pattern.
-## 2024-05-21 - [Module Doc Formatting]
-**Confusion:** Module-level documentation (`//!`) inserted programmatically directly before `use` imports can cause formatting issues if a blank newline is not explicitly included, leading to code review nitpicks.
-**Clarification:** Always ensure that there is at least one blank newline separating the final `//!` doc comment line and the first line of code (like `use` statements) to maintain clean standard Rust formatting.
-## 2024-05-22 - [Proper Doctests for Structs]
-**Confusion:** Previous doctests imported binary targets incorrectly (e.g., `use scale::bin::headless::ScanRadius`), which broke compilation, and used automated low-value comments which violated persona constraints.
-**Clarification:** Rewrote `ScanRadius` documentation to use a correct, functional doctest that does not break `cargo test`, explicitly hides the getter using `#[doc(hidden)]` as per guidelines, and explains the *why* of the bounds validation to avoid overflow panics during semantic terrain scans.
-## 2024-06-15 - [The Physics of Breath and Movement]
-**Confusion:** The physics sub-systems for `vent` networks and the infrastructure `transit` modules were entirely undocumented, leaving users blind to how sub-grid entity movement and economic toll mechanics were connected to the Bevy ECS.
-**Clarification:** Added rich `//!` module documentation and executable `///` doctests to `vent.rs`, `transit.rs`, and the `entities/mod.rs` registry. Clarified the distinction between `Position` (sub-grid vent navigation) and `GridPosition` (standard coordinate navigation). Also corrected a misplaced `#[derive(Resource)]` macro that was causing compilation failures when running formatting checks.
-## 2026-04-11 - [Module-Level Storytelling]
-**Confusion:** The `quirks.rs` module lacked context for how Planetary Traits (Quirks) fit into the wider simulation, and simply documented getters (e.g. `Returns the speed modifier`) without explaining *why* a dense atmosphere affects solar power.
-**Clarification:** Rewrote `PlanetaryTrait` method documentation to connect the numerical modifiers to mechanical outcomes (e.g., tying high gravity to clustered base designs and thin atmospheres to rapid expansion). Added executable doctests for each modifier and the main system to enforce functionality.
+## 2025-04-12 - The Missing Module Docs
+**Confusion:** Rustdoc generation was throwing 1000+ warnings primarily because modules lack `//!` level documentation and many public items lack `///` documentation.
+**Clarification:** I am beginning to add module-level docs and doctests, specifically prioritizing undocumented functions in `src/layer1/entities/` and `src/layer1/architecture/`.

@@ -1,20 +1,49 @@
+//! Biomimetic Architecture
+//!
+//! This module defines systems and components for buildings that adapt their physical
+//! characteristics (like heat output) based on the emotions and morale of the pops
+//! residing or working within them.
+
 use crate::layer1::architecture::{Building, Housing};
 use crate::layer1::entities::pop::{Job, Pop};
 use crate::layer1::nature::temperature::HeatSource;
 use crate::layer1::social::morale::Morale;
 use bevy_ecs::prelude::*;
 
+/// Marker component for buildings that exhibit biomimetic sympathetic traits.
 #[derive(Component)]
 pub struct Biomimetic;
 
 /// Event emitted when a biomimetic building changes its temperature output.
+///
+/// ## Examples
+///
+/// ```
+/// use scale::layer1::architecture::biomimetic::BiomimeticShiftEvent;
+/// use bevy_ecs::prelude::*;
+///
+/// let event = BiomimeticShiftEvent {
+///     building: Entity::PLACEHOLDER,
+///     new_output: 100.0,
+///     delta: 5.0,
+/// };
+/// assert_eq!(event.new_output, 100.0);
+/// ```
 #[derive(Event, Debug, Clone, PartialEq)]
 pub struct BiomimeticShiftEvent {
+    /// The entity of the building that shifted.
     pub building: Entity,
+    /// The new temperature output value of the building.
     pub new_output: f32,
+    /// The change in output value compared to the previous tick.
     pub delta: f32,
 }
 
+/// Dynamically adjusts the heat output of biomimetic buildings based on pop morale.
+///
+/// This system queries all pops residing in or assigned to a biomimetic building
+/// and averages their [`Morale`]. It then adjusts the building's [`HeatSource`]
+/// output proportionally, emitting a [`BiomimeticShiftEvent`] if the output changes.
 #[allow(clippy::type_complexity)]
 pub fn adjust_sympathetic_infrastructure_system(
     mut building_query: Query<
