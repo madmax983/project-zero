@@ -15632,3 +15632,51 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Emergence:** You alter the blueprint for the standard Imperial Farm. Over the next decade, your rival builds thousands of these farms across their empire. You are suddenly flush with a massive, untraceable influx of food. But then, a sharp-eyed player on the rival side notices that their farm efficiency is exactly 2% lower than it should be. They dismantle a farm, discover the backdoor, and instantly realize that every single farm they've built in the last decade is compromised.
 
 **Tension:** The slow, creeping advantage of architectural sabotage vs. the devastating consequences when the backdoor is inevitably discovered and traced back to you.
+
+## The Geothermal Heartbeat
+
+**Layer:** 1
+
+**Fantasy:** Building your colony to the rhythm of the planet's tectonic breathing.
+
+**Mechanic:** Some planets have a "Geothermal Pulse." Every few cycles, deep underground vents release a massive surge of thermal energy and rich minerals to the surface. Buildings placed over these vents receive a massive power and production boost during the pulse but suffer rapid durability decay. If a building is not heavily reinforced or shut down before a major pulse, it explodes, damaging adjacent tiles.
+
+**Emergence:** You build an entire industrial sector over a vent network. To maximize output, you keep the factories running right up to the edge of the pulse. A sudden drop in pop morale causes your maintenance workers to strike just as the pulse hits. The unmaintained factories explode in a chain reaction, destroying your industrial capacity but leaving behind a massive deposit of rare gems that your surviving colonists immediately start mining.
+
+**Tension:** The incredible efficiency of vent-powered industry vs. the constant micromanagement and catastrophic risk of failing to prepare for the pulse.
+
+## The Beanstalk Mutiny
+
+**Layer:** Cross-layer (1 -> 2)
+
+**Fantasy:** The sheer terrifying scale of orbital infrastructure falling back to earth.
+
+**Mechanic:** You build a massive Space Elevator (Beanstalk) to eliminate the cost of launching goods from Layer 1 to Layer 2. However, the Beanstalk is maintained by a specialized, isolated caste of pops living inside the cable. If their morale drops too low, they can initiate a "Cable Lock," halting all planetary trade. If pushed further, they can sever the anchor. The massive cable whips down across the colony, instantly destroying a massive swath of tiles in a line before the orbital counterweight flings the rest of the structure into deep space.
+
+**Emergence:** Your planet is the breadbasket for the sector, exporting food via the Beanstalk. You raise the Layer 3 export quota, forcing the Beanstalk workers into double shifts. They mutiny and sever the cable. The falling cable crushes your capital city, and the loss of the elevator instantly starves three neighboring planets in your empire.
+
+**Tension:** The ultimate logistical shortcut of the Beanstalk vs. its massive physical vulnerability and the terrifying power held by the workers who maintain it.
+
+## The Flesh-Double Infiltration
+
+**Layer:** 3 -> 1
+
+**Fantasy:** The paranoia of knowing your closest allies might not be who they seem.
+
+**Mechanic:** A rival empire with advanced biotechnology can use Layer 3 espionage to replace one of your key Pops (a governor, a top scientist, or a highly skilled miner) with a genetically identical "Flesh-Double." The double acts exactly like the original but slowly and secretly sabotages their immediate environment (e.g., a farmer double secretly poisons a small percentage of the crop; a scientist double introduces subtle flaws into research data).
+
+**Emergence:** Your colony's food supply is slowly dwindling for no apparent reason. You assign your best farmer to manage the primary hydroponics bay to boost production. The farmer is a Flesh-Double. Instead of fixing the problem, they accelerate the sabotage, leading to localized famine. Other pops begin to suspect the farmer, leading to spontaneous "witch hunts" where the colony might accidentally lynch an innocent pop out of sheer paranoia.
+
+**Tension:** The slow, invisible drain on your colony's resources vs. the high cost of invasive genetic screening and the social unrest caused by paranoia.
+
+## The Ghost-Worker Assembly
+
+**Layer:** 1
+
+**Fantasy:** Exploiting the literal echoes of the dead for industrial gain.
+
+**Mechanic:** When a highly skilled Pop dies, they leave behind a "Skill Echo"—a localized psychic imprint of their expertise in the tile where they worked the most. If you build a specialized "Echo Reciter" in that tile, it can harness the echo to automatically perform that pop's specific job at 50% efficiency without requiring a living worker. However, running the Reciter slowly drains the Morale of any living pops working nearby, as they are constantly subjected to the repetitive, whispered thoughts of the deceased.
+
+**Emergence:** Your master weaponsmith dies defending the armory. You build an Echo Reciter in his old forge. The forge continues producing high-quality weapons automatically. However, the living apprentices in the adjacent workshops are slowly driven mad by the constant psychic whispering of their dead master demanding perfection. They eventually snap, grab the masterwork weapons from the auto-forge, and start a violent riot.
+
+**Tension:** The appeal of free, highly skilled automated labor vs. the creeping psychological toll on your living workforce and the rigid spatial constraints of where the Echo was formed.
