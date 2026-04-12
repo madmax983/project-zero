@@ -1,10 +1,10 @@
 use bevy_ecs::prelude::*;
-use scale::layer1::health::Health;
-use scale::layer1::map::GridPosition;
-use scale::layer1::pop::Pop;
 use scale::layer1::environment::volatile::{
     handle_explosion_system, volatile_decay_system, ExplosionEvent, Volatile,
 };
+use scale::layer1::health::Health;
+use scale::layer1::map::GridPosition;
+use scale::layer1::pop::Pop;
 use scale::shared::time::SimulationTime;
 
 #[test]

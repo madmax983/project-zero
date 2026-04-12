@@ -1,5 +1,5 @@
-use crate::layer1::resources::MiningEvent;
 use crate::layer1::environment::volatile::ExplosionEvent;
+use crate::layer1::resources::MiningEvent;
 use bevy_ecs::prelude::*;
 
 #[derive(Resource, Debug)]
@@ -58,11 +58,11 @@ pub fn check_quake_system(
 #[cfg(test)]
 #[cfg(test)]
 mod tests {
+    use crate::layer1::environment::volatile::ExplosionEvent;
     use crate::layer1::geology::tectonic::{
         check_quake_system, update_stress_system, MegaQuakeEvent, TectonicStress,
     };
     use crate::layer1::resources::MiningEvent;
-    use crate::layer1::environment::volatile::ExplosionEvent;
     use bevy_ecs::prelude::*;
 
     #[test]

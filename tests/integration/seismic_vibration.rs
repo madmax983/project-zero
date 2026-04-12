@@ -1,7 +1,7 @@
 use scale::layer1::building::BuildingType;
+use scale::layer1::environment::seismic::VibrationGrid;
 use scale::layer1::flora::Flora;
 use scale::layer1::map::GridPosition;
-use scale::layer1::environment::seismic::VibrationGrid;
 use scale::setup::setup_world;
 use scale::simulation::run_simulation_tick;
 

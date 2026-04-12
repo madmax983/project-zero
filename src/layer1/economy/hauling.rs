@@ -452,9 +452,9 @@ fn try_drop_off_inventory(
     if success {
         if is_photophobic {
             world.entity_mut(item_entity.0).remove::<GridPosition>();
-            world
-                .entity_mut(item_entity.0)
-                .insert(crate::layer1::environment::photophobic::Parent(container_entity));
+            world.entity_mut(item_entity.0).insert(
+                crate::layer1::environment::photophobic::Parent(container_entity),
+            );
         } else {
             world.despawn(item_entity.0);
         }

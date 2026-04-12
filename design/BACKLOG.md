@@ -649,3 +649,5 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `968` Gravity Fishing — `specs/968-gravity-fishing.md`
 - [ ] `969` Predatory Weather — `specs/969-predatory-weather.md`
 - [ ] `970` Reality Anchors — `specs/970-reality-anchors.md`
+- [ ] `971` The Living Constitution — `specs/971-the-living-constitution.md`
+- [ ] `972` Corporate Rivals — `specs/972-corporate-rivals.md`

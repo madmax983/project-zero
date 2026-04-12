@@ -1,11 +1,11 @@
 use bevy::MinimalPlugins;
 use bevy_app::{App, Update};
 use bevy_ecs::prelude::*;
-use scale::layer1::fauna::{Fauna, FaunaType, NocturnalFauna};
-use scale::layer1::integration::nocturnal_aggression_bridge_system;
 use scale::layer1::environment::light_pollution::{
     apply_light_pollution_system, calculate_sky_glow_system, SkyGlow,
 };
+use scale::layer1::fauna::{Fauna, FaunaType, NocturnalFauna};
+use scale::layer1::integration::nocturnal_aggression_bridge_system;
 use scale::layer1::lighting::LightSource;
 use scale::layer1::map::GridPosition;
 

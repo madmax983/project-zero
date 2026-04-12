@@ -76,8 +76,6 @@ pub mod geography;
 /// Deep crust geomes system (Spec 515).
 /// Fire propagation and damage.
 /// Hauling logic.
-/// Workplace hazards logic.
-
 /// Tests for hazards logic.
 /// Pop hobbies logic (Spec 137).
 pub mod hobby;
@@ -184,8 +182,6 @@ pub mod whispering_ore;
 pub use lifecycle::*;
 pub use whispering_ore::*;
 /// Atmospheric simulation (Spec 063).
-/// Terraforming and Planetary Atmosphere (Spec 207).
-
 /// Room quality calculation and memories (Spec 064).
 /// Radio Nostalgia system (Spec 814).
 pub mod radio_nostalgia;
@@ -349,8 +345,6 @@ pub mod memetics;
 pub mod scrapcode;
 pub use scrapcode::*;
 
-/// Bio-Acoustic Chorus (Spec 419).
-
 /// Chemical regulation system (Spec 181).
 pub mod chemical;
 /// Cryo-Stasis system (Spec 139).
@@ -400,13 +394,9 @@ pub use direct_link::*;
 pub mod void_signals;
 #[cfg(feature = "nova")]
 pub use void_signals::*;
-/// Volatile Resources system (Spec 223).
-
 /// The Hum system (Spec 238).
 pub mod hum;
 pub use hum::*;
-
-/// Photophobic resources system (Spec 237).
 
 /// Operational Detritus system (Spec 239).
 pub mod clutter;
@@ -444,8 +434,6 @@ pub use olfactory::*;
 pub mod overview_effect;
 pub use overview_effect::*;
 
-/// Light Pollution system (Spec 450).
-
 /// The Spiteful Will (Spec 451).
 pub mod spiteful_will;
 pub use spiteful_will::*;
@@ -462,7 +450,6 @@ pub use void_weed::*;
 
 pub mod temporal_ghost_towns;
 pub use temporal_ghost_towns::*;
-
 
 /// Infrastructure system (Spec 452).
 pub mod infrastructure;

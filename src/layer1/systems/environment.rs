@@ -14,8 +14,9 @@ pub fn register(schedule: &mut Schedule) {
     schedule.add_systems(
         (
             crate::layer1::environment::orbital_tether::detect_tether_destruction_system,
-            crate::layer1::environment::orbital_tether::process_tether_whip_system
-                .after(crate::layer1::environment::orbital_tether::detect_tether_destruction_system),
+            crate::layer1::environment::orbital_tether::process_tether_whip_system.after(
+                crate::layer1::environment::orbital_tether::detect_tether_destruction_system,
+            ),
         )
             .in_set(Layer1SystemSet::Environment),
     );
@@ -151,8 +152,9 @@ pub fn register(schedule: &mut Schedule) {
                 .after(crate::layer1::atmosphere::update_atmosphere_system),
             crate::layer1::environment::terraforming::update_planetary_atmosphere_system
                 .after(crate::layer1::atmosphere::update_atmosphere_system),
-            crate::layer1::atmosphere::update_weather_diffusion_system
-                .after(crate::layer1::environment::terraforming::update_planetary_atmosphere_system),
+            crate::layer1::atmosphere::update_weather_diffusion_system.after(
+                crate::layer1::environment::terraforming::update_planetary_atmosphere_system,
+            ),
             crate::layer1::environment::terraforming::apply_planetary_effects_system
                 .after(crate::layer1::atmosphere::update_weather_diffusion_system),
             crate::layer1::atmosphere::simulate_diffusion_system

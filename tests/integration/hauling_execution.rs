@@ -88,7 +88,9 @@ mod tests {
         world.insert_resource(scale::layer1::prototyping::BuildingMastery::default());
         world.insert_resource(scale::layer1::graffiti::GraffitiMap::default());
         world.insert_resource(scale::layer1::geology::SeismicGrid::new(10, 10));
-        world.insert_resource(scale::layer1::environment::seismic::VibrationGrid::new(10, 10));
+        world.insert_resource(scale::layer1::environment::seismic::VibrationGrid::new(
+            10, 10,
+        ));
         world.insert_resource(scale::layer1::ecology::EcologyConfig::default());
         world.insert_resource(scale::layer1::society::SecretSocieties::default());
         world.insert_resource(scale::layer1::society::Unrest::default());
@@ -156,7 +158,9 @@ mod tests {
         world.insert_resource(scale::layer1::environment::light_pollution::SkyGlow::default());
         world.insert_resource(scale::layer1::ColonyStats::default());
         world.insert_resource(scale::layer1::atmosphere::CorrosiveAtmosphere::default());
-        world.insert_resource(scale::layer1::environment::terraforming::PlanetaryAtmosphere::default());
+        world.insert_resource(
+            scale::layer1::environment::terraforming::PlanetaryAtmosphere::default(),
+        );
         world.insert_resource(scale::layer1::atmosphere::DiffusionConfig::default());
         world.insert_resource(scale::layer1::void_stare::VoidGrid::new(10, 10));
         world.insert_resource(scale::layer1::festivals::FestivalState::default());
