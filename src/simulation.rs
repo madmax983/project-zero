@@ -241,6 +241,10 @@ pub fn build_simulation_schedule() -> Schedule {
         crate::layer2::moon_hermits::hermit_theft_system,
         crate::layer2::empathic_plague::process_empathic_resonance
             .after(Layer1SystemSet::Observation),
+        crate::layer3::pirates::evaluate_pirate_amnesty_system,
+        crate::layer1::social::pirates::process_pirate_amnesty_system
+            .after(crate::layer3::pirates::evaluate_pirate_amnesty_system),
+        crate::layer1::social::pirates::pirate_crime_system,
     ));
 
     #[cfg(feature = "nova")]
@@ -490,6 +494,7 @@ pub fn run_simulation_tick(world: &mut World) {
         world
             .init_resource::<Events<crate::layer2::exploration::void_whispers::FleetReturnedEvent>>(
             );
+        world.init_resource::<Events<crate::layer1::core::integration::PirateAmnestyEvent>>();
     }
     if !world
         .contains_resource::<Events<crate::layer2::navigation::stellar_weather::FleetDamagedEvent>>(
@@ -594,6 +599,8 @@ mod tests {
         let mut world = setup_world();
         world.init_resource::<crate::layer1::bio_acoustic_miasma::MiasmaRecordedSecret>();
         world.init_resource::<bevy::prelude::Events<crate::layer2::skyhooks::LaunchIntent>>();
+        world.init_resource::<bevy::prelude::Events<crate::layer1::law::justice::CrimeCommittedEvent>>();
+        world.init_resource::<bevy::prelude::Events<crate::layer1::pop_memories::FamineEvent>>();
         *world.resource_mut::<GameState>() = GameState::Running;
 
         let tick_before = world.resource::<SimulationTime>().tick;
@@ -608,6 +615,8 @@ mod tests {
         let mut world = setup_world();
         world.init_resource::<crate::layer1::bio_acoustic_miasma::MiasmaRecordedSecret>();
         world.init_resource::<bevy::prelude::Events<crate::layer2::skyhooks::LaunchIntent>>();
+        world.init_resource::<bevy::prelude::Events<crate::layer1::law::justice::CrimeCommittedEvent>>();
+        world.init_resource::<bevy::prelude::Events<crate::layer1::pop_memories::FamineEvent>>();
         *world.resource_mut::<GameState>() = GameState::Running;
 
         for _ in 0..10 {
@@ -704,6 +713,9 @@ mod tests {
         world
             .init_resource::<Events<crate::layer2::exploration::void_whispers::FleetReturnedEvent>>(
             );
+        world.init_resource::<Events<crate::layer1::core::integration::PirateAmnestyEvent>>();
+        world.init_resource::<Events<crate::layer1::law::justice::CrimeCommittedEvent>>();
+        world.init_resource::<Events<crate::layer1::pop_memories::FamineEvent>>();
         world
             .init_resource::<Events<crate::layer2::navigation::stellar_weather::FleetDamagedEvent>>(
             );
