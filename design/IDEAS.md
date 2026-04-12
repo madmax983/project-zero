@@ -15645,7 +15645,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 **Tension:** The incredible efficiency of vent-powered industry vs. the constant micromanagement and catastrophic risk of failing to prepare for the pulse.
 
-## The Beanstalk Mutiny
+## The Beanstalk Mutiny [SPECCED]
 
 **Layer:** Cross-layer (1 -> 2)
 
@@ -15657,7 +15657,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 **Tension:** The ultimate logistical shortcut of the Beanstalk vs. its massive physical vulnerability and the terrifying power held by the workers who maintain it.
 
-## The Flesh-Double Infiltration
+## The Flesh-Double Infiltration [SPECCED]
 
 **Layer:** 3 -> 1
 
@@ -15669,7 +15669,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 **Tension:** The slow, invisible drain on your colony's resources vs. the high cost of invasive genetic screening and the social unrest caused by paranoia.
 
-## The Ghost-Worker Assembly
+## The Ghost-Worker Assembly [SPECCED]
 
 **Layer:** 1
 
