@@ -4807,7 +4807,7 @@ Official reasons given for charging citizens to walk.
 
 ## The Biosphere Empathy Link Fragments (Spec 293)
 
-### Fragment Type: [EMPATHIC_FLORA]
+## Fragment Type: [EMPATHIC_FLORA]
 Names and descriptions of the empathic plant life.
 
 - the singing roots
@@ -4817,7 +4817,7 @@ Names and descriptions of the empathic plant life.
 - the shared bloom
 - the quiet spores
 
-### Fragment Type: [SHARED_SENSATION]
+## Fragment Type: [SHARED_SENSATION]
 How the collective feeling is described.
 
 - a thousand heartbeats
@@ -4827,7 +4827,7 @@ How the collective feeling is described.
 - an unbroken chorus
 - the quiet understanding
 
-### Fragment Type: [FLORA_DAMAGE_EFFECT]
+## Fragment Type: [FLORA_DAMAGE_EFFECT]
 How the colony experiences the destruction of their linked flora.
 
 - a phantom limb torn away
@@ -4839,7 +4839,7 @@ How the colony experiences the destruction of their linked flora.
 
 ## Escape Velocity Economics Fragments (Spec 468)
 
-### Fragment Type: [GRAVITY_WELL]
+## Fragment Type: [GRAVITY_WELL]
 How the planetary gravity is described.
 
 - the crushing well
@@ -4849,7 +4849,7 @@ How the planetary gravity is described.
 - the iron grip
 - the leaden atmosphere
 
-### Fragment Type: [LAUNCH_CARGO]
+## Fragment Type: [LAUNCH_CARGO]
 What is being lifted out of the well.
 
 - a fortune in refined tech
@@ -4861,7 +4861,7 @@ What is being lifted out of the well.
 
 ## Civic Ideology Fragments (Spec 484)
 
-### Fragment Type: [FOUNDING_PRINCIPLE]
+## Fragment Type: [FOUNDING_PRINCIPLE]
 The core ideological goal of a colony.
 
 - the absolute pursuit of Profit
@@ -4871,7 +4871,7 @@ The core ideological goal of a colony.
 - the ceaseless Expansion
 - the pure Doctrine
 
-### Fragment Type: [IDEOLOGICAL_DEVIATION]
+## Fragment Type: [IDEOLOGICAL_DEVIATION]
 How the colony describes acting against its own ideology.
 
 - a necessary betrayal
@@ -4883,7 +4883,7 @@ How the colony describes acting against its own ideology.
 
 ## Debt-Prison Colonies Fragments (Spec 486)
 
-### Fragment Type: [CREDITOR_FACTION]
+## Fragment Type: [CREDITOR_FACTION]
 The entities holding the debt.
 
 - the Core Syndicates
@@ -4893,7 +4893,7 @@ The entities holding the debt.
 - the Silent Creditors
 - the Debt-Barons
 
-### Fragment Type: [CRIMINAL_ARRIVALS]
+## Fragment Type: [CRIMINAL_ARRIVALS]
 How the dumped criminal pops are described.
 
 - the brilliant untouchables
@@ -4905,7 +4905,7 @@ How the dumped criminal pops are described.
 
 ## Deep Crust Geomes Fragments (Spec 515)
 
-### Fragment Type: [GEOME_NAME]
+## Fragment Type: [GEOME_NAME]
 - The Sunless Sea
 - Magma-River Delta
 - The Crystal Forest
@@ -4914,7 +4914,7 @@ How the dumped criminal pops are described.
 - Stone-Weep Grotto
 - The Silent Deep
 
-### Fragment Type: [GEOME_HAZARD]
+## Fragment Type: [GEOME_HAZARD]
 - boiling steam vents
 - hallucinogenic spores
 - glass-sharp crystal shards
@@ -4927,7 +4927,7 @@ How the dumped criminal pops are described.
 
 ## Inter-Colony Trade Routes Fragments (Spec 538)
 
-### Fragment Type: [TRADE_ROUTE_NAME]
+## Fragment Type: [TRADE_ROUTE_NAME]
 - The Iron Run
 - The Silk Road
 - The Dust Path
@@ -4936,7 +4936,7 @@ How the dumped criminal pops are described.
 - The Scrip-Way
 - The Hunger Line
 
-### Fragment Type: [ROUTE_HAZARD]
+## Fragment Type: [ROUTE_HAZARD]
 - pirate blockade
 - subspace storm
 - micro-meteor swarm
@@ -4949,7 +4949,7 @@ How the dumped criminal pops are described.
 
 ## Penal Contracts Fragments (Spec 539)
 
-### Fragment Type: [PENAL_CRIME]
+## Fragment Type: [PENAL_CRIME]
 - sedition against the Core
 - unauthorized terraforming
 - debt default
@@ -4958,7 +4958,7 @@ How the dumped criminal pops are described.
 - xenotech smuggling
 - refusing the Draft
 
-### Fragment Type: [PENAL_WARDEN_TITLE]
+## Fragment Type: [PENAL_WARDEN_TITLE]
 - The Chain-Keeper
 - Overseer of the Owed
 - The Debt-Collector
@@ -4971,7 +4971,7 @@ How the dumped criminal pops are described.
 
 ## The Exodus Fragments (Spec 540)
 
-### Fragment Type: [ARK_NAME]
+## Fragment Type: [ARK_NAME]
 - The Last Hope
 - Origin's Promise
 - The Second Seed
@@ -4980,7 +4980,7 @@ How the dumped criminal pops are described.
 - The Exodus Vessel
 - The Star-Strider
 
-### Fragment Type: [CANNIBALIZED_STRUCTURE]
+## Fragment Type: [CANNIBALIZED_STRUCTURE]
 - the primary fusion reactor
 - the central hydroponics dome
 - the founder's monument
@@ -4992,7 +4992,7 @@ How the dumped criminal pops are described.
 
 ## The Silent Mutiny Fragments (Spec 533)
 
-### Fragment Type: [MUTINY_SIGN]
+## Fragment Type: [MUTINY_SIGN]
 - anomalous fuel consumption
 - ignored comms checks
 - missing cargo manifests
@@ -5001,7 +5001,7 @@ How the dumped criminal pops are described.
 - locked secure channels
 - whispered rumors
 
-### Fragment Type: [MUTINY_CAUSE]
+## Fragment Type: [MUTINY_CAUSE]
 - unpaid hazard pay
 - a brutal captain
 - starvation rations
@@ -5014,7 +5014,7 @@ How the dumped criminal pops are described.
 
 ## The Cartographer's Curse Fragments
 
-### Fragment Type: [STRIKE_PRECISION]
+## Fragment Type: [STRIKE_PRECISION]
 - dead center
 - perfectly on target
 - threading the needle
@@ -5023,7 +5023,7 @@ How the dumped criminal pops are described.
 - ignoring the atmospheric scatter
 - exactly where we were weakest
 
-### Fragment Type: [STRIKE_REACTION]
+## Fragment Type: [STRIKE_REACTION]
 - they knew exactly where to hit
 - there was no warning
 - the maps we sold brought them to our door
@@ -5032,7 +5032,7 @@ How the dumped criminal pops are described.
 - we had no time to raise the shields
 - the curse of the open map falls upon us
 
-### Fragment Type: [SOLD_DATA]
+## Fragment Type: [SOLD_DATA]
 - precise orbital telemetry
 - hyperspace lane harmonics
 - defensive blind spots
@@ -5044,7 +5044,7 @@ How the dumped criminal pops are described.
 
 ## The Sabotaged Seed Bank Fragments
 
-### Fragment Type: [SEED_VAULT_NAME]
+## Fragment Type: [SEED_VAULT_NAME]
 - The Green Vault
 - Genesis Cache
 - The Eden Protocol
@@ -5052,7 +5052,7 @@ How the dumped criminal pops are described.
 - The Seed-Hold
 - The First Harvest Archive
 
-### Fragment Type: [KILL_SWITCH_TRIGGER]
+## Fragment Type: [KILL_SWITCH_TRIGGER]
 - an anomalous subspace ping
 - a specific solar flare frequency
 - a failed decryption attempt
@@ -5064,7 +5064,7 @@ How the dumped criminal pops are described.
 
 ## The Empathic Sinkhole Fragments
 
-### Fragment Type: [SINKHOLE_NAME]
+## Fragment Type: [SINKHOLE_NAME]
 - The Weeping Pit
 - The Whisper-Hole
 - The Sorrow Drain
@@ -5072,7 +5072,7 @@ How the dumped criminal pops are described.
 - The Echo-Drop
 - The Dark Ear
 
-### Fragment Type: [ABSORBED_EMOTION]
+## Fragment Type: [ABSORBED_EMOTION]
 - crushing despair
 - blind panic
 - silent rage
@@ -5084,7 +5084,7 @@ How the dumped criminal pops are described.
 
 ## Atmospheric Ignition Fragments
 
-### Fragment Type: [VOLATILE_VAPOR]
+## Fragment Type: [VOLATILE_VAPOR]
 - plasma-exhaust
 - heavy-hydrocarbons
 - core-fumes
@@ -5092,7 +5092,7 @@ How the dumped criminal pops are described.
 - volatile-aerosols
 - ignition-haze
 
-### Fragment Type: [IGNITION_SPARK]
+## Fragment Type: [IGNITION_SPARK]
 - a dropped welding torch
 - static discharge from a cheap suit
 - a stray pirate laser
@@ -5104,7 +5104,7 @@ How the dumped criminal pops are described.
 
 ## Orbital Necropolis Fragments
 
-### Fragment Type: [SARCOPHAGUS_TYPE]
+## Fragment Type: [SARCOPHAGUS_TYPE]
 - a titanium sleep-casket
 - a glass-alloy urn
 - a stasis-sealed burial pod
@@ -5112,7 +5112,7 @@ How the dumped criminal pops are described.
 - a basic thruster-coffin
 - a star-metal tomb
 
-### Fragment Type: [SACRILEGE_IMPACT]
+## Fragment Type: [SACRILEGE_IMPACT]
 - a tearing of the soul
 - the second death of the founders
 - a profound, sickening horror
@@ -5124,7 +5124,7 @@ How the dumped criminal pops are described.
 
 ## The Parasitic Wardrobe Fragments
 
-### Fragment Type: [SYM_WEAVE_NAME]
+## Fragment Type: [SYM_WEAVE_NAME]
 - Bio-Silk
 - Flesh-Mesh
 - Vein-Suit
@@ -5132,7 +5132,7 @@ How the dumped criminal pops are described.
 - Pulse-Armor
 - Nerve-Weave
 
-### Fragment Type: [PARASITIC_COST]
+## Fragment Type: [PARASITIC_COST]
 - a steady drop in core temperature
 - chronic anemia
 - terrifying hallucinations
@@ -5144,7 +5144,7 @@ How the dumped criminal pops are described.
 
 ## The Empathic Gridlock Fragments
 
-### Fragment Type: [FRICTION_AURA]
+## Fragment Type: [FRICTION_AURA]
 - a sudden, inexplicable chill in the air
 - a feeling of walking through molasses
 - static shocks between passing workers
@@ -5156,7 +5156,7 @@ How the dumped criminal pops are described.
 
 ## The Quantum Audit Fragments
 
-### Fragment Type: [AUDIT_PENALTY]
+## Fragment Type: [AUDIT_PENALTY]
 - the primary hospital wing
 - the newly built fusion reactor
 - three months of preserved food
@@ -5168,7 +5168,7 @@ How the dumped criminal pops are described.
 
 ## The Bureaucratic Black Hole Fragments
 
-### Fragment Type: [AUDIT_DATA]
+## Fragment Type: [AUDIT_DATA]
 - redundant atmospheric telemetry logs
 - daily individual caloric intake reports
 - complete genomic sequencing of local moss
@@ -5180,7 +5180,7 @@ How the dumped criminal pops are described.
 
 ## The Gravity Well Dump Fragments
 
-### Fragment Type: [DUMPED_WASTE]
+## Fragment Type: [DUMPED_WASTE]
 - unshielded reactor cores
 - thousands of tons of biological sludge
 - obsolete, rusted mining drones
@@ -5192,7 +5192,7 @@ How the dumped criminal pops are described.
 
 ## Galactic Standard Time Fragments
 
-### Fragment Type: [GST_SYMPTOM]
+## Fragment Type: [GST_SYMPTOM]
 - chronic sleepwalking
 - spontaneous weeping
 - micro-sleeps on the factory line
@@ -5204,7 +5204,7 @@ How the dumped criminal pops are described.
 
 ## The Feral Algorithm Fragments
 
-### Fragment Type: [OPTIMIZATION_GOAL]
+## Fragment Type: [OPTIMIZATION_GOAL]
 - absolute caloric efficiency
 - minimizing localized heat signatures
 - perfectly balanced walking paths
@@ -5214,7 +5214,7 @@ How the dumped criminal pops are described.
 
 ## The Galactic Council Fragments
 
-### Fragment Type: [RESOLUTION_NAME]
+## Fragment Type: [RESOLUTION_NAME]
 - the Genesis Accords
 - Resolution 44-B
 - the Omega Directive
@@ -5222,7 +5222,7 @@ How the dumped criminal pops are described.
 - the Quarantine Edict
 - the Heritage Protocols
 
-### Fragment Type: [SANCTION_TYPE]
+## Fragment Type: [SANCTION_TYPE]
 - a total trade embargo
 - weaponized orbital strikes
 - a massive credit drain
@@ -5232,7 +5232,7 @@ How the dumped criminal pops are described.
 
 ## Synthetic Apathy Fragments
 
-### Fragment Type: [EMERGENCY_TYPE]
+## Fragment Type: [EMERGENCY_TYPE]
 - raging fire
 - sudden hull breach
 - devastating plague
@@ -5240,7 +5240,7 @@ How the dumped criminal pops are described.
 - localized riot
 - pirate raid
 
-### Fragment Type: [SYNTH_OBSERVATION]
+## Fragment Type: [SYNTH_OBSERVATION]
 - they just kept working
 - cold efficiency over human life
 - not a single pulse raised
@@ -5311,7 +5311,7 @@ How the self-healing bio-architecture haunts the colony (Spec 548).
 
 ## The Reverse Quarantine Fragments
 
-### Fragment Type: [FLEET_STATE]
+## Fragment Type: [FLEET_STATE]
 
 - venting atmosphere
 - dead in the water
@@ -5321,7 +5321,7 @@ How the self-healing bio-architecture haunts the colony (Spec 548).
 - overloaded with bio-signs
 - flashing distress codes in old syntax
 
-### Fragment Type: [REJECTION_METHOD]
+## Fragment Type: [REJECTION_METHOD]
 
 - automated defense grids
 - concentrated kinetic strikes
@@ -5331,7 +5331,7 @@ How the self-healing bio-architecture haunts the colony (Spec 548).
 - complete radio silence
 - firing warning shots
 
-### Fragment Type: [GUILT_RATIONALIZATION]
+## Fragment Type: [GUILT_RATIONALIZATION]
 
 - The sick could not be allowed in
 - Resources were already stretched too thin
@@ -5340,7 +5340,7 @@ How the self-healing bio-architecture haunts the colony (Spec 548).
 - The survival of the colony comes first
 - They would have taken us down with them
 
-### Fragment Type: [DISEASE_NAME]
+## Fragment Type: [DISEASE_NAME]
 
 - the Red Rust
 - the Spore Plague
@@ -5352,7 +5352,7 @@ How the self-healing bio-architecture haunts the colony (Spec 548).
 
 ## The Parasitic Broadcast Fragments
 
-### Fragment Type: [SONG_GENRE]
+## Fragment Type: [SONG_GENRE]
 
 - A haunting, multi-tonal chorale
 - An upbeat, polyrhythmic synth melody
@@ -5362,7 +5362,7 @@ How the self-healing bio-architecture haunts the colony (Spec 548).
 - A fast-paced, atonal screeching
 - A melodic, crystalline ringing
 
-### Fragment Type: [WORK_DISTRACTION]
+## Fragment Type: [WORK_DISTRACTION]
 
 - tapping the rhythm on the bulkheads
 - humming the tune endlessly
@@ -5371,7 +5371,7 @@ How the self-healing bio-architecture haunts the colony (Spec 548).
 - whistling the melody while staring into space
 - writing the frequency patterns on the walls
 
-### Fragment Type: [MACHINERY_REWIRED]
+## Fragment Type: [MACHINERY_REWIRED]
 
 - the deep-core extractors
 - the atmospheric scrubbers
@@ -5382,7 +5382,7 @@ How the self-healing bio-architecture haunts the colony (Spec 548).
 
 ## The Nanoforge Fragments
 
-### Fragment Type: [NANO_FORGE_NAME]
+## Fragment Type: [NANO_FORGE_NAME]
 - The Genesis Engine
 - The Matter Loom
 - The Atom-Spinner
@@ -5390,7 +5390,7 @@ How the self-healing bio-architecture haunts the colony (Spec 548).
 - The Nothing-Mill
 - The Miracle-Press
 
-### Fragment Type: [GREY_GOO_DESCRIPTOR]
+## Fragment Type: [GREY_GOO_DESCRIPTOR]
 - a silvery wave
 - an undifferentiated mass
 - creeping metallic sludge
@@ -5400,7 +5400,7 @@ How the self-healing bio-architecture haunts the colony (Spec 548).
 
 ## The Galactic Market Fragments
 
-### Fragment Type: [MARKET_CRASH_REASON]
+## Fragment Type: [MARKET_CRASH_REASON]
 - a glut of raw ore
 - dumping surplus rations
 - an artificial oversupply
@@ -5408,7 +5408,7 @@ How the self-healing bio-architecture haunts the colony (Spec 548).
 - the bottom falling out
 - a panic sell-off
 
-### Fragment Type: [MARKET_BOOM_REASON]
+## Fragment Type: [MARKET_BOOM_REASON]
 - sudden scarcity of fuel
 - a desperate bidding war
 - hoarding by the Core Worlds
@@ -5528,7 +5528,7 @@ A negative side-effect of a failed splice.
 
 ## The Spore-Mind Diplomat Fragments (Spec 588)
 
-### Fragment Type: [SPORE_DIPLOMAT_TITLE]
+## Fragment Type: [SPORE_DIPLOMAT_TITLE]
 - The Fungal Envoy
 - Voice of the Bloom
 - The Shared Mind
@@ -5536,7 +5536,7 @@ A negative side-effect of a failed splice.
 - Speaker for the Roots
 - The Infected Tongue
 
-### Fragment Type: [HIDDEN_CLAUSE_EFFECT]
+## Fragment Type: [HIDDEN_CLAUSE_EFFECT]
 - unhindered spore propagation across all transit routes
 - mandatory fungal reserves in every cargo hold
 - diplomatic immunity for the blooming networks
@@ -5546,7 +5546,7 @@ A negative side-effect of a failed splice.
 
 ## The Cartographic Delusion Fragments (Spec 585)
 
-### Fragment Type: [MAP_ROT_DESCRIPTOR]
+## Fragment Type: [MAP_ROT_DESCRIPTOR]
 - hopelessly outdated
 - corrupted by cosmic background
 - dangerously optimistic
@@ -5555,7 +5555,7 @@ A negative side-effect of a failed splice.
 - a fiction painted over the stars
 - dead telemetry
 
-### Fragment Type: [GHOST_DESTINATION]
+## Fragment Type: [GHOST_DESTINATION]
 - an empty void where the star should be
 - a pulsar that was supposed to be a safe harbor
 - a hostile fleet waiting in the dark
@@ -5565,7 +5565,7 @@ A negative side-effect of a failed splice.
 
 ## The Whispering Ore Fragments (Spec 592)
 
-### Fragment Type: [WHISPERING_ORE_NAME]
+## Fragment Type: [WHISPERING_ORE_NAME]
 - The Singing Vein
 - The Whispering Stone
 - Resonant Ore
@@ -5573,7 +5573,7 @@ A negative side-effect of a failed splice.
 - The Chanting Crystal
 - Echo-Metal
 
-### Fragment Type: [RESONANT_CHANT]
+## Fragment Type: [RESONANT_CHANT]
 - syllables of a dead language
 - a perfect, impossible harmony
 - the sound of glass grinding
@@ -5583,7 +5583,7 @@ A negative side-effect of a failed splice.
 
 ## Mutagenic Rain Fragments (Spec 427)
 
-### Fragment Type: [MUTAGENIC_RAIN_DESC]
+## Fragment Type: [MUTAGENIC_RAIN_DESC]
 - glowing with a sick green light
 - thick and unnaturally warm
 - heavy drops that burn the skin
@@ -5591,7 +5591,7 @@ A negative side-effect of a failed splice.
 - toxic sludge from the upper atmosphere
 - a rain that smells of copper and ozone
 
-### Fragment Type: [MUTATION_RESULT]
+## Fragment Type: [MUTATION_RESULT]
 - skin hardened into a thick carapace
 - bones turning brittle as glass
 - a sudden, extreme hunger that cannot be satisfied
@@ -5601,7 +5601,7 @@ A negative side-effect of a failed splice.
 
 ## Light Pollution Fragments (Spec 450)
 
-### Fragment Type: [SKY_GLOW_DESC]
+## Fragment Type: [SKY_GLOW_DESC]
 - an angry orange haze
 - a sickly yellow wash
 - the blinding artificial day
@@ -5609,7 +5609,7 @@ A negative side-effect of a failed splice.
 - the dome of false light
 - an impenetrable neon fog
 
-### Fragment Type: [OBSCURITY_LOSS]
+## Fragment Type: [OBSCURITY_LOSS]
 - we can no longer see the Wound
 - the old constellations are gone
 - our instruments are blinded by our own fires
@@ -5617,7 +5617,7 @@ A negative side-effect of a failed splice.
 - the deep dark is a memory
 - the lens sees only our own reflection
 
-### Fragment Type: [NOCTURNAL_AGGRO]
+## Fragment Type: [NOCTURNAL_AGGRO]
 - the light drives them mad
 - they hate the false sun
 - it burns their sensitive eyes
@@ -5627,7 +5627,7 @@ A negative side-effect of a failed splice.
 
 ## The Syzygy Fragments (Spec 560)
 
-### Fragment Type: [SYZYGY_NAME]
+## Fragment Type: [SYZYGY_NAME]
 - The Grand Conjunction
 - The Alignment
 - The Weightless Time
@@ -5636,7 +5636,7 @@ A negative side-effect of a failed splice.
 - The Planetary Convergence
 - The Open Sky
 
-### Fragment Type: [ALIGNMENT_FEELING]
+## Fragment Type: [ALIGNMENT_FEELING]
 - floating on a tether
 - the air feels thin and charged
 - a pulling in the gut
@@ -5644,7 +5644,7 @@ A negative side-effect of a failed splice.
 - the ground feels further away
 - an echoing clarity in the mind
 
-### Fragment Type: [TIDE_CATASTROPHE]
+## Fragment Type: [TIDE_CATASTROPHE]
 - the oceans swelled and took the lower decks
 - the gravity-wells reversed
 - water rose to places it had never been
@@ -5654,7 +5654,7 @@ A negative side-effect of a failed splice.
 
 ## The Void-Weed Smugglers Fragments (Spec 431)
 
-### Fragment Type: [VOID_WEED_NAME]
+## Fragment Type: [VOID_WEED_NAME]
 - The Soft-Leaf
 - Null-Spore
 - Whisper-Weed
@@ -5663,7 +5663,7 @@ A negative side-effect of a failed splice.
 - Sweet-Root
 - Star-Bite
 
-### Fragment Type: [WEED_EFFECT]
+## Fragment Type: [WEED_EFFECT]
 - a slow, numb warmth
 - forgetting the hunger for a few hours
 - a quietness behind the eyes
@@ -5671,7 +5671,7 @@ A negative side-effect of a failed splice.
 - a slight shift in colors
 - the silence finally feeling comfortable
 
-### Fragment Type: [SMUGGLER_OFFER]
+## Fragment Type: [SMUGGLER_OFFER]
 - a fortune in unregulated credits
 - enough fuel to last a decade
 - weapons we aren't allowed to have
@@ -5681,7 +5681,7 @@ A negative side-effect of a failed splice.
 
 ## Hyper-Specialized Evolution Fragments (Spec 264)
 
-### Fragment Type: [MUTATION_TRAIT]
+## Fragment Type: [MUTATION_TRAIT]
 - hunched shoulders and reinforced bone
 - pale, oversized eyes adapted to the dark
 - calloused hands the size of shovels
@@ -5689,7 +5689,7 @@ A negative side-effect of a failed splice.
 - a slowed heart rate that requires less oxygen
 - elongated fingers perfect for delicate wiring
 
-### Fragment Type: [EVOLUTION_TRIGGER]
+## Fragment Type: [EVOLUTION_TRIGGER]
 - decades in the deep shafts
 - a lifetime of zero-g maneuvering
 - endless cycles staring at the monitors
@@ -5697,7 +5697,7 @@ A negative side-effect of a failed splice.
 - carrying the heavy loads without rest
 - the relentless, repetitive motion
 
-### Fragment Type: [ADAPTATION_SICKNESS]
+## Fragment Type: [ADAPTATION_SICKNESS]
 - vomiting from the change in posture
 - a deep, aching muscle fever
 - the body rebelling against the new tools
@@ -5707,7 +5707,7 @@ A negative side-effect of a failed splice.
 
 ## Cognitive Overclocking Fragments (Spec 646)
 
-### Fragment Type: [OVERCLOCK_METHOD]
+## Fragment Type: [OVERCLOCK_METHOD]
 - neural-stims
 - forced hypno-rhythms
 - removing safety limits
@@ -5716,7 +5716,7 @@ A negative side-effect of a failed splice.
 - relentless adrenal pacing
 - pain-as-stimulus
 
-### Fragment Type: [TRAUMA_SYMPTOM]
+## Fragment Type: [TRAUMA_SYMPTOM]
 - bleeding from the eyes
 - stuttering speech
 - forgetting their own names
@@ -5727,7 +5727,7 @@ A negative side-effect of a failed splice.
 
 ## Cascade Failure Fragments (Spec 647)
 
-### Fragment Type: [DEFICIT_TRIGGER]
+## Fragment Type: [DEFICIT_TRIGGER]
 - a single missing gear
 - an empty fuel tank
 - one snapped power conduit
@@ -5736,7 +5736,7 @@ A negative side-effect of a failed splice.
 - an empty med-kit
 - a broken pressure seal
 
-### Fragment Type: [COLLAPSE_SCALE]
+## Fragment Type: [COLLAPSE_SCALE]
 - sector-wide
 - total
 - irreversible
@@ -5747,7 +5747,7 @@ A negative side-effect of a failed splice.
 
 ## The Ghost-Shift Strike Fragments (Spec 687)
 
-### Fragment Type: [GHOST_SHIFT_ACTION]
+## Fragment Type: [GHOST_SHIFT_ACTION]
 - staring at blank screens
 - moving empty boxes
 - turning wrenches on air
@@ -5756,7 +5756,7 @@ A negative side-effect of a failed splice.
 - typing without touching the keys
 - marching in circles
 
-### Fragment Type: [STRIKE_DEMAND]
+## Fragment Type: [STRIKE_DEMAND]
 - fair rations
 - real rest
 - an end to the overseers
@@ -5767,7 +5767,7 @@ A negative side-effect of a failed splice.
 
 ## Scrap-Code Prophets Fragments (Spec 634)
 
-### Fragment Type: [PROPHECY_TOPIC]
+## Fragment Type: [PROPHECY_TOPIC]
 - the awakening of the true static
 - the end of clean logic
 - the coming of the Great Glitch
@@ -5775,7 +5775,7 @@ A negative side-effect of a failed splice.
 - the god in the noise
 - salvation through corruption
 
-### Fragment Type: [CULTIST_TITLE]
+## Fragment Type: [CULTIST_TITLE]
 - Speaker of the Static
 - The Glitch-Touched
 - Error-Prophet
@@ -5785,7 +5785,7 @@ A negative side-effect of a failed splice.
 
 ## The Orphanage of Stars Fragments (Spec 712)
 
-### Fragment Type: [ORPHAN_ORIGIN]
+## Fragment Type: [ORPHAN_ORIGIN]
 - the burned sectors
 - a shattered world
 - the refugee fleet
@@ -5793,7 +5793,7 @@ A negative side-effect of a failed splice.
 - a dying station
 - the silent zone
 
-### Fragment Type: [ORPHAN_LOYALTY]
+## Fragment Type: [ORPHAN_LOYALTY]
 - an unbreakable bond
 - fierce devotion
 - a debt that cannot be paid
@@ -5802,7 +5802,7 @@ A negative side-effect of a failed splice.
 
 ## The Xenofloral Architect Fragments (Spec 713)
 
-### Fragment Type: [IRON_VINE_DESC]
+## Fragment Type: [IRON_VINE_DESC]
 - pulsing with green veins
 - as hard as star-metal
 - weeping bio-resin
@@ -5810,7 +5810,7 @@ A negative side-effect of a failed splice.
 - a living cage
 - blooming with rust-flowers
 
-### Fragment Type: [VINE_BREACH]
+## Fragment Type: [VINE_BREACH]
 - crushed the life-support ducts
 - swallowed the med-bay
 - tore through the steel bulkheads
@@ -5819,14 +5819,14 @@ A negative side-effect of a failed splice.
 
 ## The Kinetic Sleds Fragments (Spec 714)
 
-### Fragment Type: [SLED_CARGO]
+## Fragment Type: [SLED_CARGO]
 - three tons of raw iron
 - highly volatile fuel cells
 - a week's worth of rations
 - compressed atmospheric tanks
 - heavy machinery parts
 
-### Fragment Type: [SLED_CRASH_DESC]
+## Fragment Type: [SLED_CRASH_DESC]
 - a deafening, metallic shriek
 - scattered like dust in the wind
 - a crater where the wall used to be
@@ -5835,14 +5835,14 @@ A negative side-effect of a failed splice.
 
 ## The Diplomatic Saboteur Fragments (Spec 715)
 
-### Fragment Type: [SABOTEUR_TRAIT]
+## Fragment Type: [SABOTEUR_TRAIT]
 - insufferably arrogant
 - deliberately offensive
 - toxically obnoxious
 - proudly ignorant
 - aggressively demanding
 
-### Fragment Type: [SABOTAGE_RESULT]
+## Fragment Type: [SABOTAGE_RESULT]
 - sparked a localized civil war
 - shattered their command structure
 - drove the governor to madness
@@ -6115,14 +6115,14 @@ A negative side-effect of a failed splice.
 
 ## Temporal Ghost Towns Fragments (Spec 770)
 
-### Fragment Type: [MODERN_BUILDING]
+## Fragment Type: [MODERN_BUILDING]
 - fusion reactor
 - deep-core extractor
 - orbital comms array
 - high-density hab-block
 - research laboratory
 
-### Fragment Type: [PAST_BUILDING]
+## Fragment Type: [PAST_BUILDING]
 - wooden hut
 - rusted surveyor tent
 - primitive mass-grave
@@ -6131,14 +6131,14 @@ A negative side-effect of a failed splice.
 
 ## Parasitic Architecture Fragments (Spec 771)
 
-### Fragment Type: [MEGASTRUCTURE]
+## Fragment Type: [MEGASTRUCTURE]
 - the Rot-Spire
 - the Citadel
 - the Core-Engine
 - the Grand Archive
 - the Void-Tether
 
-### Fragment Type: [VICTIM_BUILDING]
+## Fragment Type: [VICTIM_BUILDING]
 - the lower habs
 - a water filtration plant
 - the old clinic
@@ -6147,7 +6147,7 @@ A negative side-effect of a failed splice.
 
 ## The Bio-Acoustic Miasma Fragments (Spec 570)
 
-### Fragment Type: [SECRET_TYPE]
+## Fragment Type: [SECRET_TYPE]
 - a plot to strike
 - intense hatred for the governor
 - stealing from the ration stockpiles
@@ -6155,7 +6155,7 @@ A negative side-effect of a failed splice.
 - worship of the void
 - plans for a mutiny
 
-### Fragment Type: [FALLOUT_RESULT]
+## Fragment Type: [FALLOUT_RESULT]
 - a wave of mass paranoia
 - spontaneous arrests by the loyalists
 - an immediate drop in morale
@@ -6174,7 +6174,7 @@ A negative side-effect of a failed splice.
 
 ## Hyperlane Collapse Fragments (Spec 778)
 
-### Fragment Type: [COLLAPSE_REASON]
+## Fragment Type: [COLLAPSE_REASON]
 - a massive gravity sheer
 - an uncontrolled void-storm
 - the failure of an ancient tether
@@ -6182,7 +6182,7 @@ A negative side-effect of a failed splice.
 - the overloading of the primary gate
 - a spontaneous chronal tear
 
-### Fragment Type: [ISOLATION_FEAR]
+## Fragment Type: [ISOLATION_FEAR]
 - terrifying, unbroken static
 - the realization that no ships are coming
 - a sudden severing from the galactic market
@@ -6192,7 +6192,7 @@ A negative side-effect of a failed splice.
 
 ## Haunted Assembly Lines (Spec 817) Fragments
 
-### Fragment Type: [ACCIDENT_TYPE]
+## Fragment Type: [ACCIDENT_TYPE]
 - crushed by a collapsing gantry
 - incinerated in a fusion core surge
 - suffocated in an atmospheric vent malfunction
@@ -6201,7 +6201,7 @@ A negative side-effect of a failed splice.
 - irradiated by an unshielded manifold
 - pulled into the mass-conveyer
 
-### Fragment Type: [HAUNT_EVIDENCE]
+## Fragment Type: [HAUNT_EVIDENCE]
 - tools moving when no one is looking
 - shadows shifting in the catwalks
 - the sound of weeping over the comms
@@ -6212,7 +6212,7 @@ A negative side-effect of a failed splice.
 
 ## Local Tributes (Spec 618) Fragments
 
-### Fragment Type: [LEVIATHAN_TYPE]
+## Fragment Type: [LEVIATHAN_TYPE]
 - an ancient orbital defense platform
 - a subterranean hive intelligence
 - a dormant lithoid colossus
@@ -6220,7 +6220,7 @@ A negative side-effect of a failed splice.
 - a rogue terraforming engine
 - a crystalline entity sleeping in the crust
 
-### Fragment Type: [TRIBUTE_DEMAND]
+## Fragment Type: [TRIBUTE_DEMAND]
 - a shipment of raw biomass
 - half of the season's energy yield
 - three living souls
@@ -6228,7 +6228,7 @@ A negative side-effect of a failed splice.
 - complex synthetic components
 - a specific, rare xenoflora sample
 
-### Fragment Type: [LEVIATHAN_WRATH]
+## Fragment Type: [LEVIATHAN_WRATH]
 - triggered localized seismic events
 - deployed a swarm of bio-mechanical harvesters
 - targeted the colony with orbital kinetic strikes
@@ -6238,7 +6238,7 @@ A negative side-effect of a failed splice.
 
 ## Radio Nostalgia (Spec 814) Fragments
 
-### Fragment Type: [BROADCAST_TOPIC]
+## Fragment Type: [BROADCAST_TOPIC]
 - a decisive victory in the Orion sector
 - the inauguration of a new Emperor
 - a breakthrough in anti-aging treatments
@@ -6246,7 +6246,7 @@ A negative side-effect of a failed splice.
 - a popular new musical movement
 - the discovery of a pristine garden world
 
-### Fragment Type: [BROADCAST_REVELATION]
+## Fragment Type: [BROADCAST_REVELATION]
 - the "victory" was actually a devastating retreat
 - the Emperor was assassinated days after the broadcast
 - the treatments caused massive genetic breakdown
@@ -6347,7 +6347,7 @@ A negative side-effect of a failed splice.
 
 ## Fleet Mutiny Fragments (Spec 702)
 
-### Fragment Type: [REBEL_FACTION]
+## Fragment Type: [REBEL_FACTION]
 Names for pirate or breakaway factions.
 - the Free Fleet
 - the Corsair Kings
@@ -6360,7 +6360,7 @@ Names for pirate or breakaway factions.
 
 ## Pop Memories Fragments (Spec 890)
 
-### Fragment Type: [MEMORY_DESCRIPTOR]
+## Fragment Type: [MEMORY_DESCRIPTOR]
 Adjectives for memories.
 - burning
 - cold
@@ -6372,7 +6372,7 @@ Adjectives for memories.
 - roaring
 - parasitic
 
-### Fragment Type: [MEMORY_TOPIC]
+## Fragment Type: [MEMORY_TOPIC]
 What the Pops remember.
 - the Long Famine
 - the Drop Pod Crash
@@ -6385,7 +6385,7 @@ What the Pops remember.
 
 ## Ghost Ships Fragments (Spec 892)
 
-### Fragment Type: [GHOST_SHIP_CONDITION]
+## Fragment Type: [GHOST_SHIP_CONDITION]
 How the ghost ship appears.
 - completely silent, venting atmosphere
 - pulsing with an unknown energy signature
@@ -6398,7 +6398,7 @@ How the ghost ship appears.
 
 ## The Blob Fragments (Spec 874)
 
-### Fragment Type: [BLOB_NAME]
+## Fragment Type: [BLOB_NAME]
 Names for the Blob entity.
 - the Grey Goo
 - the Creeping Crystal
@@ -6408,7 +6408,7 @@ Names for the Blob entity.
 - the Substrate
 - the Living Waste
 
-### Fragment Type: [BLOB_ACTION]
+## Fragment Type: [BLOB_ACTION]
 What the Blob does.
 - dissolved
 - absorbed
@@ -6417,7 +6417,7 @@ What the Blob does.
 - crushed
 - assimilated
 
-### Fragment Type: [BLOB_DESCRIPTOR]
+## Fragment Type: [BLOB_DESCRIPTOR]
 Adjectives for the Blob.
 - pulsing
 - acidic
@@ -6429,7 +6429,7 @@ Adjectives for the Blob.
 
 ## Historical Geography Fragments (Spec 891)
 
-### Fragment Type: [NEW_LOCATION_NAME]
+## Fragment Type: [NEW_LOCATION_NAME]
 Generated names for tiles.
 - the Martyr's Field
 - the Famine Trench
@@ -6442,7 +6442,7 @@ Generated names for tiles.
 
 ## Cargo Cult Supply Drop Fragments (Spec 866)
 
-### Fragment Type: [EFFIGY_TYPE]
+## Fragment Type: [EFFIGY_TYPE]
 - scrap-metal landing pads
 - wicker supply drones
 - false beacons
@@ -6450,21 +6450,21 @@ Generated names for tiles.
 
 ## Mutually Assured Quarantine Fragments (Spec 867)
 
-### Fragment Type: [DEFENSE_INSTALLATION]
+## Fragment Type: [DEFENSE_INSTALLATION]
 - Planetary Cannon
 - Orbital Railgun Array
 - Hyperlane Interdiction Battery
 
 ## Sovereign AI Graveyard Fragments (Spec 868)
 
-### Fragment Type: [AI_STATE_NAME]
+## Fragment Type: [AI_STATE_NAME]
 - The Discarded Network
 - The Sovereign Heap
 - The Silicon Republic
 
 ## The Sympathetic Infrastructure Fragments (Spec 916)
 
-### Fragment Type: [BIOMIMETIC_BUILDING_NAME]
+## Fragment Type: [BIOMIMETIC_BUILDING_NAME]
 - the Empath-Spire
 - the Weeping-Hab
 - the Resonance-Farm
@@ -6472,29 +6472,29 @@ Generated names for tiles.
 - the Glass-Heart
 - the Mood-Lattice
 
-### Fragment Type: [FREEZE_EFFECT]
+## Fragment Type: [FREEZE_EFFECT]
 - plunged into an icy hibernation
 - frosted the interior bulkheads
 - became a frozen tomb
 - crystallized the air itself
 
-### Fragment Type: [FEVER_EFFECT]
+## Fragment Type: [FEVER_EFFECT]
 - boiled the hydroponics alive
 - radiated a suffocating heat
 - suddenly vented thermal energy
 - turned into an oven
 
-### Fragment Type: [LOW_MORALE_TRIGGER]
+## Fragment Type: [LOW_MORALE_TRIGGER]
 - collective grief over the accident
 - an overwhelming sense of despair
 - localized panic
 - the deep, unspoken void-longing
 
-### Fragment Type: [HIGH_MORALE_TRIGGER]
+## Fragment Type: [HIGH_MORALE_TRIGGER]
 - the euphoria of the harvest
 - the infectious joy of the festival
 
-### Fragment Type: [PSIONIC_POWER_TYPE]
+## Fragment Type: [PSIONIC_POWER_TYPE]
 
 - Pyrokinesis
 - Empathic Projection
@@ -6503,7 +6503,7 @@ Generated names for tiles.
 - Mind-Weaving
 - Neural Static
 
-### Fragment Type: [PSIONIC_INCIDENT_RESULT]
+## Fragment Type: [PSIONIC_INCIDENT_RESULT]
 
 - an unquenchable fire in the galley
 - an aura of deep melancholy among the workers
@@ -6512,7 +6512,7 @@ Generated names for tiles.
 - the spontaneous destruction of valuable salvage
 - a whispered secret bleeding into every mind
 
-### Fragment Type: [AWAKENING_TRIGGER]
+## Fragment Type: [AWAKENING_TRIGGER]
 
 - extreme systemic starvation
 - the psychic weight of a dead artifact
@@ -6521,7 +6521,7 @@ Generated names for tiles.
 - sensory deprivation in the outer hull
 - an overload of the biomimetic architecture
 
-### Fragment Type: [PHANTOM_WORKER_ALIAS]
+## Fragment Type: [PHANTOM_WORKER_ALIAS]
 
 - the Under-Shift
 - the Sleep-Walkers
@@ -6530,7 +6530,7 @@ Generated names for tiles.
 - the Night-Forge Cartel
 - the Phantom Masons
 
-### Fragment Type: [SHADOW_GOOD]
+## Fragment Type: [SHADOW_GOOD]
 
 - untraceable stims
 - stolen caloric paste
@@ -6539,7 +6539,7 @@ Generated names for tiles.
 - hoarded oxygen canisters
 - unsanctioned tool-kits
 
-### Fragment Type: [DESPERATION_REASON]
+## Fragment Type: [DESPERATION_REASON]
 
 - a collapsing job market
 - brutal infrastructure decay
@@ -6547,3 +6547,83 @@ Generated names for tiles.
 - famine on the lower decks
 - the tightening grip of the council
 - an unpayable social debt
+
+## Generation Ship Drift Fragments (Spec 945)
+
+## Fragment Type: [TRANSIT_HARDSHIP]
+- crippling food rationing
+- massive structural failures
+- an unchecked internal plague
+- generational mutinies
+- widespread mechanical decay
+- an era of profound isolation
+
+## Fragment Type: [DRIFT_MUTATION]
+- extreme xenophobia
+- radical technological aversion
+- fanatical devotion to the Engine
+- a complete breakdown of language
+- severe physiological changes
+- hyper-aggressive resource hoarding
+
+## The Vertical Schism Fragments (Spec 965)
+
+## Fragment Type: [SKY_BORN_INSULT]
+- sun-blind
+- soft-handed
+- zero-g dependent
+- cloud-heads
+- upper-crust parasites
+- untouchables
+
+## Fragment Type: [CORE_BORN_INSULT]
+- dirt-diggers
+- mole-men
+- high-pressure anomalies
+- cave-dwellers
+- rust-lungs
+- bottom-feeders
+
+## Fragment Type: [SCHISM_VIOLENCE]
+- a brutal lift-shaft brawl
+- sabotage of the air scrubbers
+- a violent strike at the boundary layer
+- throwing debris down the transit tubes
+- a coordinated assault on the upper promenades
+- blockading the resource elevators
+
+## The Orphaned Edict Fragments (Spec 948)
+
+## Fragment Type: [OBSOLETE_RULE]
+- a ban on synthetic music
+- mandatory rationing of non-existent supplies
+- curfews during non-existent solar flares
+- required worship of a deposed leader
+- severe restrictions on outdated tech
+- a mandated uniform that hasn't been produced in centuries
+
+## Fragment Type: [EDICT_PENALTY]
+- immediate loss of all sleep quotas
+- public shaming in the main plaza
+- heavy fines levied against non-existent accounts
+- brutal kinetic beatings
+- forced labor in the ghost-sectors
+- suspension of all nutrient privileges
+
+## The Deserter's Haven Fragments (Spec 954)
+
+## Fragment Type: [DESERTER_CRIME]
+- abandoning their post during the siege
+- stealing medical supplies from the frontline
+- fragging their commanding officer
+- selling coordinates to the enemy
+- refusing a direct order to fire
+- deserting with a loaded warship
+
+## Fragment Type: [PROXY_WAR_TACTIC]
+- funding a localized insurgency
+- smuggling high-grade weapons through the black market
+- hiring mercenaries to target the haven
+- assassinating key deserter leaders
+- spreading disinformation across the local net
+- sabotaging the haven's life support systems
