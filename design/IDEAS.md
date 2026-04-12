@@ -4074,7 +4074,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Reality Anchors
+## Reality Anchors [SPECCED]
 
 **Layer:** 1
 

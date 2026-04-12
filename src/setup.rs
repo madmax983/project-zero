@@ -214,6 +214,7 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     world.insert_resource(MessageLog::default());
     world.insert_resource(Chronicle::default());
     world.init_resource::<bevy_ecs::event::Events<crate::layer1::pop_memories::FamineEvent>>();
+    world.init_resource::<bevy_ecs::event::Events<crate::layer1::law::justice::CrimeCommittedEvent>>();
     world.insert_resource(crate::ui::tech::TechUiState::default());
     world.insert_resource(crate::ui::shell::ShellConfig::default());
     world.insert_resource(UiState::default());
