@@ -84,3 +84,6 @@ pub mod somnolent_engine;
 
 #[cfg(feature = "nova")]
 pub mod gestalt_consciousness;
+
+#[cfg(feature = "nova")]
+pub mod cursed_artifacts;
