@@ -352,14 +352,6 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::integration::parasitic_architecture_chronicle_bridge,
             crate::layer1::integration::phantom_shift_chronicle_bridge,
             crate::layer1::integration::tether_snap_chronicle_bridge,
-        )
-            .in_set(Layer1SystemSet::Observation),
-    );
-    schedule.add_systems(
-        (
-            crate::layer1::integration::famine_chronicle_bridge,
-            crate::layer1::integration::silent_flora_chronicle_bridge,
-            crate::layer1::integration::aesthetic_edict_chronicle_bridge,
             crate::layer1::integration::smuggler_arrival_event_bridge
                 .before(crate::layer1::void_weed::process_void_weed_trade_system),
         )

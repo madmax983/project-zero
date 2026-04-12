@@ -1,0 +1,10 @@
+--- observation.rs
++++ observation.rs
+@@ -196,6 +196,7 @@
+             crate::layer1::integration::tether_snap_chronicle_bridge,
+             crate::layer1::integration::famine_chronicle_bridge,
+             crate::layer1::integration::silent_flora_chronicle_bridge,
++            crate::layer1::integration::aesthetic_edict_chronicle_bridge,
+             crate::layer1::integration::smuggler_arrival_event_bridge
+                 .before(crate::layer1::void_weed::process_void_weed_trade_system),
+         )

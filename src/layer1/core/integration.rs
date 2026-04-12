@@ -1318,3 +1318,63 @@ pub fn phantom_shift_chronicle_bridge(
         });
     }
 }
+
+/// INT-947: Bridges Aesthetic Orbital Blockade (Policy::Aesthetic) to AddChronicleEvent (Chronicle).
+pub fn aesthetic_edict_chronicle_bridge(
+    policies: bevy_ecs::prelude::Res<crate::layer1::administration::edicts::ColonyPolicies>,
+    mut last_status: bevy_ecs::prelude::Local<bool>,
+    mut chronicle_events: bevy_ecs::prelude::EventWriter<
+        crate::layer1::chronicle::AddChronicleEvent,
+    >,
+) {
+    let current_status =
+        policies.is_active(crate::layer1::administration::edicts::Policy::Aesthetic);
+    if current_status && !*last_status {
+        chronicle_events.send(crate::layer1::chronicle::AddChronicleEvent {
+            importance: crate::layer1::chronicle::EventImportance::Major,
+            text: "The orbital elites have passed an Aesthetic Edict, halting our most productive factories to clear their view.".to_string(),
+        });
+    } else if !current_status && *last_status {
+        chronicle_events.send(crate::layer1::chronicle::AddChronicleEvent {
+            importance: crate::layer1::chronicle::EventImportance::Standard,
+            text: "The Aesthetic Edict has been lifted. The factories roar back to life, belching smoke into the sky once more.".to_string(),
+        });
+    }
+    *last_status = current_status;
+}
+
+/// INT-890: Bridges FamineEvent to AddChronicleEvent (Chronicle).
+pub fn famine_chronicle_bridge(
+    mut events: bevy_ecs::prelude::EventReader<crate::layer1::pop_memories::FamineEvent>,
+    mut chronicle_events: bevy_ecs::prelude::EventWriter<
+        crate::layer1::chronicle::AddChronicleEvent,
+    >,
+) {
+    for _event in events.read() {
+        chronicle_events.send(crate::layer1::chronicle::AddChronicleEvent {
+            importance: crate::layer1::chronicle::EventImportance::Major,
+            text: "A devastating famine swept through the colony, searing memories of starvation into the survivors.".to_string(),
+        });
+    }
+}
+
+/// INT-961: Bridges Silent Flora discovery to AddChronicleEvent (Chronicle).
+pub fn silent_flora_chronicle_bridge(
+    query: bevy_ecs::prelude::Query<
+        &crate::layer1::flora::Flora,
+        bevy_ecs::prelude::Added<crate::layer1::flora::Flora>,
+    >,
+    mut chronicle_events: bevy_ecs::prelude::EventWriter<
+        crate::layer1::chronicle::AddChronicleEvent,
+    >,
+) {
+    for flora in query.iter() {
+        if flora.flora_type == crate::layer1::flora::FloraType::SilentFlora {
+            chronicle_events.send(crate::layer1::chronicle::AddChronicleEvent {
+                importance: crate::layer1::chronicle::EventImportance::Major,
+                text: "We discovered a strange new flora. It grows rapidly, but an eerie silence surrounds it.".to_string(),
+            });
+            break;
+        }
+    }
+}
