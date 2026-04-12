@@ -647,7 +647,7 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `966` Phase-Shift Architecture — `specs/966-phase-shift-architecture.md`
 - [ ] `967` Emergency Venting — `specs/967-emergency-venting.md`
 - [ ] `968` Gravity Fishing — `specs/968-gravity-fishing.md`
-- [ ] `969` Predatory Weather — `specs/969-predatory-weather.md`
+
 - [ ] `970` Reality Anchors — `specs/970-reality-anchors.md`
 - [ ] `971` The Living Constitution — `specs/971-the-living-constitution.md`
 - [ ] `972` Corporate Rivals — `specs/972-corporate-rivals.md`

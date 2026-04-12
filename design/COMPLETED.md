@@ -383,3 +383,4 @@
 - [x] `901` Derelict Stations — `specs/901-derelict-stations.md` — completed 2026-04-11
 - [x] `961` The Silent World — `specs/961-the-silent-world.md` — completed 2026-06-01
 - [x] `INT-947` Integration: Aesthetic Orbital Blockade -> Chronicle — completed 2026-06-20
+- [x] `969` Predatory Weather - `specs/969-predatory-weather.md` - completed 2026-06-15

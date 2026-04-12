@@ -1088,6 +1088,7 @@ mod tests {
         world.init_resource::<bevy::prelude::Events<crate::layer2::skyhooks::LaunchIntent>>();
         world.init_resource::<bevy::prelude::Events<crate::layer1::law::justice::CrimeCommittedEvent>>();
         world.init_resource::<bevy::prelude::Events<crate::layer1::pop_memories::FamineEvent>>();
+        world.init_resource::<bevy::prelude::Events<crate::layer2::weather::StormImpactEvent>>();
         *world.resource_mut::<GameState>() = GameState::Running;
 
         for _ in 0..ticks {
@@ -1496,6 +1497,7 @@ mod tests {
     #[test]
     fn test_setup_world_spawns_pops() {
         let mut world = setup_world();
+        world.init_resource::<bevy::prelude::Events<crate::layer2::weather::StormImpactEvent>>();
         let pop_count = world.query::<&Pop>().iter(&world).count();
         assert!(pop_count > 0, "Should have spawned initial pops");
     }
