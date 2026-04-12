@@ -293,13 +293,19 @@ fn process_single_worker(
     );
 
     // Execute Work
-    let worked = execute_work_on_designation(
+    let mut worked = execute_work_on_designation(
         world,
         pop_entity,
         designation_entity,
         designation_type,
         work_amount,
     );
+
+    // INT-900 Latent Psionics: Small chance for work to fail, generating a WorkFailedEvent.
+    if worked && rand::thread_rng().gen_bool(0.005) {
+        worked = false;
+        world.send_event(crate::layer1::psionics::WorkFailedEvent { entity: pop_entity });
+    }
 
     if check_work_completion(world, designation_entity, designation_type) {
         cleanup_pop_work_state(world, pop_entity);

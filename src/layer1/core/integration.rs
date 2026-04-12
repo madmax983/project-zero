@@ -1407,3 +1407,13 @@ pub fn silent_flora_chronicle_bridge(
         }
     }
 }
+
+/// INT-900: Bridges `FireEvent` (Latent Psionics) to actual `Fire` entities (Environment).
+pub fn psionics_fire_event_bridge_system(
+    mut events: bevy_ecs::prelude::EventReader<crate::layer1::psionics::FireEvent>,
+    mut commands: bevy_ecs::prelude::Commands,
+) {
+    for event in events.read() {
+        commands.spawn((crate::layer1::fire::Fire::default(), event.position));
+    }
+}

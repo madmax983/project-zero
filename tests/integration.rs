@@ -272,3 +272,6 @@ mod unseen_bureaucracy_bridge;
 mod void_whispers_chronicle;
 #[path = "integration/orphaned_edict_bridge.rs"]
 mod orphaned_edict_bridge;
+
+#[path = "integration/psionics_bridge.rs"]
+mod psionics_bridge;
