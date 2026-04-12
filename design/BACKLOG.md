@@ -654,3 +654,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `972` Corporate Rivals — `specs/972-corporate-rivals.md`
 - [ ] `973` Ecosystem Mimicry — `specs/973-ecosystem-mimicry.md`
 - [ ] `974` Leviathan Tapping — `specs/974-leviathan-tapping.md`
+- [ ] `976` The Beanstalk Mutiny — `specs/976-the-beanstalk-mutiny.md`
+- [ ] `977` The Flesh-Double Infiltration — `specs/977-the-flesh-double-infiltration.md`
+- [ ] `978` The Ghost-Worker Assembly — `specs/978-the-ghost-worker-assembly.md`
