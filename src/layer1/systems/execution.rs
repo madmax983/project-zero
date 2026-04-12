@@ -64,7 +64,8 @@ pub fn register(schedule: &mut Schedule) {
                 .after(process_start_plan_system)
                 .after(crate::layer1::day_night::update_ambient_light_from_cycle_system)
                 .after(update_bioluminescence_system),
-            crate::layer1::environment::light_pollution::calculate_sky_glow_system.after(update_lighting_system),
+            crate::layer1::environment::light_pollution::calculate_sky_glow_system
+                .after(update_lighting_system),
             crate::layer1::environment::light_pollution::apply_light_pollution_system
                 .after(crate::layer1::environment::light_pollution::calculate_sky_glow_system),
             crate::layer1::integration::nocturnal_aggression_bridge_system

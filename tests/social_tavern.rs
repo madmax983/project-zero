@@ -72,7 +72,9 @@ mod tests {
         world.insert_resource(scale::layer2::system::ViewMode::default());
         world.insert_resource(scale::layer1::crowding::CrowdingGrid::new(10, 10));
         world.insert_resource(scale::layer1::geology::SeismicGrid::new(10, 10));
-        world.insert_resource(scale::layer1::environment::seismic::VibrationGrid::new(10, 10));
+        world.insert_resource(scale::layer1::environment::seismic::VibrationGrid::new(
+            10, 10,
+        ));
         world.insert_resource(scale::layer1::radioactive::RadiationGrid::new(10, 10));
         world.insert_resource(scale::layer1::temperature::TemperatureGrid::new(
             10, 10, 20.0,
