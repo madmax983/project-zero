@@ -4004,7 +4004,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Predatory Weather
+## Predatory Weather [SPECCED]
 
 **Layer:** 2
 
@@ -4758,7 +4758,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Gravity Fishing
+## Gravity Fishing [SPECCED]
 
 **Layer:** 1 -> 2
 
