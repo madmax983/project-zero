@@ -272,3 +272,5 @@ mod temporal_ghost_towns_bridge;
 mod unseen_bureaucracy_bridge;
 #[path = "integration/void_whispers_chronicle.rs"]
 mod void_whispers_chronicle;
+#[path = "integration/pheromone_gardening_bridge.rs"]
+mod pheromone_gardening_bridge;

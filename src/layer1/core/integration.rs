@@ -1418,3 +1418,30 @@ pub fn silent_flora_chronicle_bridge(
         }
     }
 }
+
+// Pheromone Gardening integration (984)
+#[allow(clippy::type_complexity)]
+pub fn flora_scent_bridge_system(
+    mut commands: bevy_ecs::prelude::Commands,
+    query: bevy_ecs::prelude::Query<(bevy_ecs::prelude::Entity, &crate::layer1::flora::PheromoneFlora), bevy_ecs::prelude::Or<(bevy_ecs::prelude::Added<crate::layer1::flora::PheromoneFlora>, bevy_ecs::prelude::Changed<crate::layer1::flora::PheromoneFlora>)>>,
+) {
+    for (entity, flora) in query.iter() {
+        match flora.emission_type {
+            crate::layer1::flora::PheromoneEmission::Calming => {
+                commands.entity(entity).insert(crate::layer1::olfactory::ScentEmitter {
+                    is_pleasant: true,
+                    strength: flora.strength,
+                });
+            }
+            crate::layer1::flora::PheromoneEmission::Danger => {
+                commands.entity(entity).insert(crate::layer1::olfactory::ScentEmitter {
+                    is_pleasant: false,
+                    strength: flora.strength,
+                });
+            }
+            crate::layer1::flora::PheromoneEmission::Normal => {
+                commands.entity(entity).remove::<crate::layer1::olfactory::ScentEmitter>();
+            }
+        }
+    }
+}
