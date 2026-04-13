@@ -87,71 +87,61 @@ pub struct MachineConsciousness {
 }
 
 /// System that increases machine XP when worked.
+/// ⚡ Bolt Optimization: Removed intermediate `HashMap` grouping, using direct `get_mut`
+/// lookups to completely eliminate heap allocations during execution.
 pub fn consciousness_growth_system(
-    mut machines: Query<(Entity, &mut MachineConsciousness, &Building)>,
+    mut machines: Query<&mut MachineConsciousness, With<Building>>,
     workers: Query<(Entity, &Job, Option<&Traits>), With<Pop>>,
     config: Res<ConsciousnessConfig>,
     mut log: ResMut<MessageLog>,
 ) {
-    let mut workers_by_building: std::collections::HashMap<Entity, Vec<(Entity, Option<&Traits>)>> =
-        std::collections::HashMap::new();
-
     for (worker_entity, job, traits) in &workers {
-        workers_by_building
-            .entry(job.workplace)
-            .or_default()
-            .push((worker_entity, traits));
-    }
+        if let Ok(mut consciousness) = machines.get_mut(job.workplace) {
+            let mut xp_gain = config.base_xp_rate;
 
-    for (machine_entity, mut consciousness, _building) in &mut machines {
-        if let Some(worker_list) = workers_by_building.get(&machine_entity) {
-            for (worker_entity, traits) in worker_list {
-                let mut xp_gain = config.base_xp_rate;
-
-                if let Some(t) = traits {
-                    if t.has(Trait::Intellectual) {
-                        xp_gain *= 1.5;
-                    }
-                    if t.has(Trait::Curious) {
-                        xp_gain *= 1.2;
-                    }
-                    if t.has(Trait::Traditionalist) {
-                        xp_gain *= 0.5;
-                    }
+            if let Some(t) = traits {
+                if t.has(Trait::Intellectual) {
+                    xp_gain *= 1.5;
                 }
+                if t.has(Trait::Curious) {
+                    xp_gain *= 1.2;
+                }
+                if t.has(Trait::Traditionalist) {
+                    xp_gain *= 0.5;
+                }
+            }
 
-                consciousness.xp += xp_gain;
+            consciousness.xp += xp_gain;
 
-                let old_level = consciousness.level;
-                let new_level = if consciousness.xp >= config.xp_level_3 {
-                    3
-                } else if consciousness.xp >= config.xp_level_2 {
-                    2
-                } else {
-                    u8::from(consciousness.xp >= config.xp_level_1)
-                };
+            let old_level = consciousness.level;
+            let new_level = if consciousness.xp >= config.xp_level_3 {
+                3
+            } else if consciousness.xp >= config.xp_level_2 {
+                2
+            } else {
+                u8::from(consciousness.xp >= config.xp_level_1)
+            };
 
-                if new_level > old_level {
-                    consciousness.level = new_level;
+            if new_level > old_level {
+                consciousness.level = new_level;
+                log.add_colored(
+                    format!(
+                        "Machine Consciousness Level Up! Now Level {new_level}. {flavor}",
+                        flavor = consciousness.personality.flavor_text()
+                    ),
+                    ratatui::style::Color::Cyan,
+                );
+
+                if consciousness.bonded_worker.is_none() && new_level >= 1 {
+                    consciousness.bonded_worker = Some(worker_entity);
                     log.add_colored(
-                        format!(
-                            "Machine Consciousness Level Up! Now Level {new_level}. {flavor}",
-                            flavor = consciousness.personality.flavor_text()
-                        ),
-                        ratatui::style::Color::Cyan,
+                        "The machine has chosen a favorite operator.",
+                        ratatui::style::Color::Magenta,
                     );
 
-                    if consciousness.bonded_worker.is_none() && new_level >= 1 {
-                        consciousness.bonded_worker = Some(*worker_entity);
-                        log.add_colored(
-                            "The machine has chosen a favorite operator.",
-                            ratatui::style::Color::Magenta,
-                        );
-
-                        if consciousness.personality == MachinePersonality::Stoic {
-                            let mut rng = rand::thread_rng();
-                            consciousness.personality = MachinePersonality::random(&mut rng);
-                        }
+                    if consciousness.personality == MachinePersonality::Stoic {
+                        let mut rng = rand::thread_rng();
+                        consciousness.personality = MachinePersonality::random(&mut rng);
                     }
                 }
             }

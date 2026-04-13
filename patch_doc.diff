@@ -1,0 +1,11 @@
+--- src/layer1/machine_consciousness.rs
++++ src/layer1/machine_consciousness.rs
+@@ -87,6 +87,8 @@
+ }
+
+ /// System that increases machine XP when worked.
++/// ⚡ Bolt Optimization: Removed intermediate `HashMap` grouping, using direct `get_mut`
++/// lookups to completely eliminate heap allocations during execution.
+ pub fn consciousness_growth_system(
+     mut machines: Query<&mut MachineConsciousness, With<Building>>,
+     workers: Query<(Entity, &Job, Option<&Traits>), With<Pop>>,
