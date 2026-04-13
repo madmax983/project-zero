@@ -28,7 +28,7 @@ pub fn process_redactions_system(
     }
 }
 
-use crate::layer1::social::morale::MoodModifier;
+
 
 pub fn apply_propaganda_effects_system(
     chronicle: Res<DailyChronicle>,
@@ -44,7 +44,7 @@ pub fn apply_propaganda_effects_system(
     // since Morale is driven by a complex calculation system and changing `value` directly is overwritten anyway.
 
     for (mut traits, memories, _morale) in query.iter_mut() {
-        let mut is_dissident = false;
+        let mut _is_dissident = false;
 
         for (_, truth) in chronicle.redacted_truths.iter() {
             // Using string format for comparison as per spec guidance, though enum EventId is better.
@@ -53,7 +53,7 @@ pub fn apply_propaganda_effects_system(
                 if !traits.has(Trait::Dissident) {
                     traits.add(Trait::Dissident);
                 }
-                is_dissident = true;
+                _is_dissident = true;
             }
         }
 
