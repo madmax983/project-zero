@@ -4018,7 +4018,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Last Light
+## The Last Light [SPECCED]
 
 **Layer:** 3
 
@@ -4186,7 +4186,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Shattered World
+## The Shattered World [SPECCED]
 
 **Layer:** 2 -> 1
 
@@ -4200,7 +4200,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Teleporter Psychosis
+## Teleporter Psychosis [SPECCED]
 
 **Layer:** 1
 
