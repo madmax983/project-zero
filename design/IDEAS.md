@@ -4130,7 +4130,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Cargo Cult Logistics
+## Cargo Cult Logistics [SPECCED]
 
 **Layer:** 1
 
@@ -4144,7 +4144,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Pheromone Gardening
+## Pheromone Gardening [SPECCED]
 
 **Layer:** 1
 
@@ -4172,7 +4172,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Propaganda Press
+## Propaganda Press [SPECCED]
 
 **Layer:** 1
 
