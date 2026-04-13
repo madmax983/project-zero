@@ -667,3 +667,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `982` The Generation Ship Mutiny — `specs/982-the-generation-ship-mutiny.md`
 - [ ] `983` Cargo Cult Logistics — `specs/983-cargo-cult-logistics.md`
 - [ ] `985` Propaganda Press — `specs/985-propaganda-press.md`
+- [ ] `989` Heat Death — `specs/989-heat-death.md`
+- [ ] `990` Treaty Cruisers — `specs/990-treaty-cruisers.md`
+- [ ] `991` Sub-Glacial Oceans — `specs/991-sub-glacial-oceans.md`
