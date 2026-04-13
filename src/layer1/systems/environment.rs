@@ -6,6 +6,14 @@ use bevy_ecs::prelude::*;
 pub fn register(schedule: &mut Schedule) {
     schedule.add_systems(
         (
+            crate::layer1::environment::geothermal::geothermal_pulse_system,
+            crate::layer1::environment::geothermal::geothermal_boost_system,
+            crate::layer1::environment::geothermal::geothermal_decay_system,
+        )
+            .in_set(Layer1SystemSet::Environment),
+    );
+    schedule.add_systems(
+        (
             crate::layer1::shadow_market::despawn_in_light_system,
             crate::layer1::shadow_market::spawn_shadow_trader_system,
         )

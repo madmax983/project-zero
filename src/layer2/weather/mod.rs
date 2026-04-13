@@ -1,5 +1,5 @@
-use bevy_ecs::prelude::*;
 use bevy::math::Vec2;
+use bevy_ecs::prelude::*;
 
 #[derive(Component)]
 pub struct Storm {
@@ -56,7 +56,8 @@ pub fn weather_movement_system(
                 }
             }
 
-            if dist < 1.0 { // Impact threshold
+            if dist < 1.0 {
+                // Impact threshold
                 impact_events.send(StormImpactEvent {
                     storm: storm_entity,
                     target: target_entity,
@@ -81,11 +82,14 @@ mod tests {
         app.add_event::<StormImpactEvent>();
         app.add_systems(bevy_app::Update, weather_movement_system);
 
-        let storm = app.world_mut().spawn(Storm {
-            position: Vec2::new(0.0, 0.0),
-            velocity: Vec2::new(0.0, 1.0), // Initially moving up
-            strength: 1.0,
-        }).id();
+        let storm = app
+            .world_mut()
+            .spawn(Storm {
+                position: Vec2::new(0.0, 0.0),
+                velocity: Vec2::new(0.0, 1.0), // Initially moving up
+                strength: 1.0,
+            })
+            .id();
 
         app.world_mut().spawn(AggroTarget {
             position: Vec2::new(10.0, 0.0),
@@ -98,7 +102,10 @@ mod tests {
 
         // Assert: The Storm's movement vector shifts towards the colony tile rather than following random or global wind patterns.
         let storm_data = app.world().get::<Storm>(storm).unwrap();
-        assert!(storm_data.velocity.x > 0.0, "Storm should accelerate towards the target");
+        assert!(
+            storm_data.velocity.x > 0.0,
+            "Storm should accelerate towards the target"
+        );
     }
 
     #[test]
@@ -108,11 +115,14 @@ mod tests {
         app.add_event::<StormImpactEvent>();
         app.add_systems(bevy_app::Update, weather_movement_system);
 
-        let storm = app.world_mut().spawn(Storm {
-            position: Vec2::new(0.0, 0.0),
-            velocity: Vec2::new(0.0, 1.0), // Initially moving up
-            strength: 1.0,
-        }).id();
+        let storm = app
+            .world_mut()
+            .spawn(Storm {
+                position: Vec2::new(0.0, 0.0),
+                velocity: Vec2::new(0.0, 1.0), // Initially moving up
+                strength: 1.0,
+            })
+            .id();
 
         app.world_mut().spawn(AggroTarget {
             position: Vec2::new(10.0, 0.0),
@@ -125,7 +135,10 @@ mod tests {
 
         // Assert: The Storm continues on its natural path without homing in on the colony.
         let storm_data = app.world().get::<Storm>(storm).unwrap();
-        assert_eq!(storm_data.velocity.x, 0.0, "Storm should not accelerate towards low energy target");
+        assert_eq!(
+            storm_data.velocity.x, 0.0,
+            "Storm should not accelerate towards low energy target"
+        );
     }
 
     #[test]
@@ -135,17 +148,23 @@ mod tests {
         app.add_event::<StormImpactEvent>();
         app.add_systems(bevy_app::Update, weather_movement_system);
 
-        let storm = app.world_mut().spawn(Storm {
-            position: Vec2::new(0.0, 0.0),
-            velocity: Vec2::new(0.0, 0.0),
-            strength: 2.0,
-        }).id();
+        let storm = app
+            .world_mut()
+            .spawn(Storm {
+                position: Vec2::new(0.0, 0.0),
+                velocity: Vec2::new(0.0, 0.0),
+                strength: 2.0,
+            })
+            .id();
 
-        let colony = app.world_mut().spawn(AggroTarget {
-            position: Vec2::new(0.5, 0.0), // Close enough to impact (< 1.0)
-            energy_emission: 200.0,
-            heat_signature: 0.0,
-        }).id();
+        let colony = app
+            .world_mut()
+            .spawn(AggroTarget {
+                position: Vec2::new(0.5, 0.0), // Close enough to impact (< 1.0)
+                energy_emission: 200.0,
+                heat_signature: 0.0,
+            })
+            .id();
 
         // Act: Process the storm impact event.
         app.update();

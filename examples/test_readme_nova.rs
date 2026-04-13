@@ -4,10 +4,10 @@
 fn main() {
     #[cfg(feature = "nova")]
     {
-        use scale::layer1::oral_tradition::{OralTradition, Story, StoryGenre};
         use comfy_table::presets::UTF8_FULL;
         use comfy_table::{Cell, Color as TableColor, Table};
         use crossterm::style::{Color, Stylize};
+        use scale::layer1::oral_tradition::{OralTradition, Story, StoryGenre};
 
         let mut tradition = OralTradition::default();
 
@@ -23,7 +23,10 @@ fn main() {
             "\n{}",
             "╭── Oral Tradition (Stories) ───────────────────╮".with(Color::Cyan)
         );
-        let text = format!("{:<45}", format!("{} stories circulating.", tradition.stories.len()));
+        let text = format!(
+            "{:<45}",
+            format!("{} stories circulating.", tradition.stories.len())
+        );
         println!("│ {} │", text.with(Color::White));
         println!(
             "{}",

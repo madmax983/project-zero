@@ -384,3 +384,4 @@
 - [x] `961` The Silent World — `specs/961-the-silent-world.md` — completed 2026-06-01
 - [x] `INT-947` Integration: Aesthetic Orbital Blockade -> Chronicle — completed 2026-06-20
 - [x] `969` Predatory Weather - `specs/969-predatory-weather.md` - completed 2026-06-15
+- [x] `975` The Geothermal Heartbeat — `specs/975-the-geothermal-heartbeat.md` — completed 2026-06-02
