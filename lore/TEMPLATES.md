@@ -5645,3 +5645,119 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: [FACTION] will not let it go. They resorted to [PROXY_WAR_TACTIC]."
 - "The Proxy-War begins. [FACTION] is using [PROXY_WAR_TACTIC] against [COLONY]. [YEAR]."
 - "[YEAR]: Retaliation. Because we kept the deserters, [FACTION] executed [PROXY_WAR_TACTIC]."
+
+
+## The Silent World Templates (Spec 961)
+
+## Template: SILENT_FLORA_DISCOVERED
+**Generates:** Play event (chronicle during game)
+**Slots:** [COLONY], [YEAR], [FLORA_NAME]
+**Patterns:**
+- "[YEAR]: We found the [FLORA_NAME]. It grows fast, but it steals the sound from the air in [COLONY]."
+- "The [FLORA_NAME] spread through [COLONY]. High yield, but it eats the noise. [YEAR]."
+- "[YEAR]: Silence descends. The [FLORA_NAME] thrives here."
+
+## Template: SILENT_ALERT_FAILURE
+**Generates:** Play event (chronicle during game)
+**Slots:** [COLONY], [YEAR], [THREAT_TYPE]
+**Patterns:**
+- "[YEAR]: The alarms flashed for [THREAT_TYPE], but the air was dead. The warning made no sound."
+- "Nobody heard the [THREAT_TYPE] approach [COLONY]. The [FLORA_NAME] had muted the sirens. [YEAR]."
+
+## The Pirate's Pension Templates (Spec 964)
+
+## Template: PIRATE_AMNESTY_ACCEPTED
+**Generates:** Play event (chronicle during game)
+**Slots:** [COLONY], [YEAR], [FLEET_NAME], [CREDITS]
+**Patterns:**
+- "[YEAR]: The [FLEET_NAME] accepted the Amnesty Visa. They landed at [COLONY] with [CREDITS] credits and a promise."
+- "They lowered their flags. The [FLEET_NAME] came to [COLONY] to retire. They brought [CREDITS] credits and bad habits. [YEAR]."
+- "[YEAR]: Amnesty granted to the [FLEET_NAME]. The colony's coffers swell by [CREDITS], but the streets are no longer safe."
+
+## Template: PIRATE_BRAWL_ERUPTS
+**Generates:** Play event (chronicle during game)
+**Slots:** [COLONY], [YEAR], [FLEET_NAME]
+**Patterns:**
+- "[YEAR]: Old habits. A brawl erupted in [COLONY] started by the former crew of the [FLEET_NAME]."
+- "The pensioners from the [FLEET_NAME] refuse to work. Instead, violence in the corridors of [COLONY]. [YEAR]."
+
+## Phase-Shift Architecture Templates (Spec 966)
+
+## Template: SHADOW_LAYER_ENTERED
+**Generates:** Play event (chronicle during game)
+**Slots:** [COLONY], [YEAR], [POP_NAME]
+**Patterns:**
+- "[YEAR]: [POP_NAME] stepped through the Phase Shifter into the Shadow Layer."
+- "To save space in [COLONY], [POP_NAME] was assigned to the Shadow Layer. It is cold there. [YEAR]."
+
+## Template: SANITY_SHATTERED_SHADOW
+**Generates:** Play event (chronicle during game)
+**Slots:** [COLONY], [YEAR], [POP_NAME], [SHADOW_HORROR]
+**Patterns:**
+- "[YEAR]: The angles were wrong. [POP_NAME] returned from the Shadow Layer broken by [SHADOW_HORROR]."
+- "[POP_NAME] is Shadow-Touched. They speak only of [SHADOW_HORROR]. [YEAR]."
+- "[YEAR]: The phase-shift took a toll. [POP_NAME] cannot unsee [SHADOW_HORROR]."
+
+## Gravity Fishing Templates (Spec 968)
+
+## Template: HARPOON_CATCH_SUCCESS
+**Generates:** Play event (chronicle during game)
+**Slots:** [COLONY], [YEAR], [DEBRIS_NAME]
+**Patterns:**
+- "[YEAR]: The harpoons held. [DEBRIS_NAME] was winched down from orbit to [COLONY]."
+- "A successful catch. [DEBRIS_NAME] landed in the drop zone. The salvagers are ready. [YEAR]."
+
+## Template: HARPOON_CABLE_SNAP
+**Generates:** Play event (chronicle during game)
+**Slots:** [COLONY], [YEAR], [DEBRIS_NAME], [DEATHS]
+**Patterns:**
+- "[YEAR]: The cables snapped. The prize fell. [DEBRIS_NAME] crashed into [COLONY], taking [DEATHS] souls."
+- "We pulled too hard. [DEBRIS_NAME] slipped the winch and became an orbital strike. [DEATHS] lost. [YEAR]."
+
+## Predatory Weather Templates (Spec 969)
+
+## Template: STORM_AGGRO
+**Generates:** Play event (chronicle during game)
+**Slots:** [COLONY], [YEAR], [STORM_NAME]
+**Patterns:**
+- "[YEAR]: We generated too much heat. The [STORM_NAME] turned its eye toward [COLONY]."
+- "The energy spike drew its attention. The [STORM_NAME] is hunting us. [YEAR]."
+
+## Template: STORM_IMPACT
+**Generates:** Play event (chronicle during game)
+**Slots:** [COLONY], [YEAR], [STORM_NAME]
+**Patterns:**
+- "[YEAR]: The [STORM_NAME] struck [COLONY]. It hunted the energy spikes."
+- "No longer random weather. The [STORM_NAME] deliberately tore through our power grid. [YEAR]."
+
+## The Living Constitution Templates (Spec 971)
+
+## Template: TRADITION_ESTABLISHED
+**Generates:** Play event (chronicle during game)
+**Slots:** [COLONY], [YEAR], [EDICT_NAME]
+**Patterns:**
+- "[YEAR]: [EDICT_NAME] is no longer just law. It is tradition in [COLONY]."
+- "The souls of [COLONY] have forgotten life before [EDICT_NAME]. It is now their way. [YEAR]."
+
+## Template: TRADITION_REVOKED_UNREST
+**Generates:** Play event (chronicle during game)
+**Slots:** [COLONY], [YEAR], [EDICT_NAME]
+**Patterns:**
+- "[YEAR]: They tried to repeal [EDICT_NAME]. The souls of [COLONY] revolted. 'It is our way.'"
+- "Riots in [COLONY]. You cannot simply un-write a tradition like [EDICT_NAME]. [YEAR]."
+
+## The Geothermal Heartbeat Templates (Spec 975)
+
+## Template: GEOTHERMAL_PULSE_BOOST
+**Generates:** Play event (chronicle during game)
+**Slots:** [COLONY], [YEAR]
+**Patterns:**
+- "[YEAR]: The earth beats. The vents pulsed beneath [COLONY], pushing industry to the breaking point."
+- "A massive geothermal surge. The factories run at double capacity, groaning under the strain. [YEAR]."
+
+## Template: GEOTHERMAL_EXPLOSION
+**Generates:** Play event (chronicle during game)
+**Slots:** [COLONY], [YEAR]
+**Patterns:**
+- "[YEAR]: The vent surged. A facility in [COLONY] could not hold the pressure and detonated."
+- "The heartbeat was too strong. Structures built on the vents were torn apart. [YEAR]."

@@ -6627,3 +6627,52 @@ Generated names for tiles.
 - assassinating key deserter leaders
 - spreading disinformation across the local net
 - sabotaging the haven's life support systems
+
+
+## Fragment Type: [FLORA_NAME]
+Specific varieties of the silent flora.
+- the Hushweed
+- the Mute-Moss
+- the Dead-Air Bloom
+- the Quiet Spore
+- the Suffocating Blossom
+
+## Fragment Type: [FLEET_NAME]
+Names of notorious Layer 3 Pirate Fleets.
+- the Bloodied Star
+- the Void Reapers
+- the Rust Barons
+- the Unseen Hand
+- the Black Wake
+
+## Fragment Type: [SHADOW_HORROR]
+What Pops see or experience in the Shadow Layer that drains their sanity.
+- the whispers in the static
+- the geometry that does not align
+- the cold that burns
+- the eyes in the dark
+- the echo of their own heartbeat
+
+## Fragment Type: [DEBRIS_NAME]
+Notable pieces of orbital salvage.
+- the rusted hulk
+- the dormant core
+- the ghost ship
+- the silent sentinel
+- the shattered dreadnought
+
+## Fragment Type: [STORM_NAME]
+Names given to the predatory storms that hunt energy.
+- the Great Eye
+- the Hungry Wind
+- the Screaming Front
+- the Ember Storm
+- the Thundering Void
+
+## Fragment Type: [EDICT_NAME]
+Laws that can become entrenched as Traditions.
+- Martial Law
+- Strict Rationing
+- the Silence Act
+- the Work Mandate
+- the Purge Protocol

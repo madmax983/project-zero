@@ -4117,3 +4117,41 @@
 **Replaces:** Indirect combat, retaliation
 **Code reference:** `ProxyWarEvent`
 **Usage:** "The faction initiated a Proxy-War against the colony."
+
+
+## Mechanics Vocabulary
+
+### the Dead Air
+**Replaces:** sound nullification zone, silence radius
+**Code reference:** `SilentFlora` radius effect
+**Usage:** "The alarms triggered, but they were in the Dead Air."
+
+### pensioner
+**Replaces:** retired pirate pop, amnesty pop
+**Code reference:** `Pop` with `Pirate` trait from amnesty
+**Usage:** "The pensioners are brawling in the mess hall again."
+
+### the Shadow Layer
+**Replaces:** phase-shifted Z-level, secondary building plane
+**Code reference:** `ShadowLayer` coordinate plane
+**Usage:** "We put the toxic refiners in the Shadow Layer."
+
+### the Catch
+**Replaces:** successfully winched orbital debris
+**Code reference:** `OrbitalDebris` brought to `Layer 1` via `GravityHarpoon`
+**Usage:** "The harpoons secured the Catch."
+
+### predatory weather
+**Replaces:** aggro storms, heat-seeking weather
+**Code reference:** `Storm` entity with `AggroTarget`
+**Usage:** "Shut down the reactors! We're attracting predatory weather."
+
+### the old ways
+**Replaces:** Traditions, entrenched edicts
+**Code reference:** `Policy` with `is_tradition = true`
+**Usage:** "You can't lift the rations; the people cling to the old ways."
+
+### the Heartbeat
+**Replaces:** geothermal pulse cycle
+**Code reference:** `GeothermalPulseState::is_pulsing == true`
+**Usage:** "Brace the supports, the Heartbeat is coming."
