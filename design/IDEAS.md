@@ -15681,7 +15681,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 **Tension:** The appeal of free, highly skilled automated labor vs. the creeping psychological toll on your living workforce and the rigid spatial constraints of where the Echo was formed.
 
-## The Symbiotic Data-Weavers
+## The Symbiotic Data-Weavers [SPECCED]
 
 **Layer:** Cross-layer
 
@@ -15695,7 +15695,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Interplanetary Pollination
+## Interplanetary Pollination [SPECCED]
 
 **Layer:** 2 -> 1
 
@@ -15709,7 +15709,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Eclipsing Swarm
+## The Eclipsing Swarm [SPECCED]
 
 **Layer:** 2 -> 1
 
