@@ -12,17 +12,15 @@ mod tests {
     #[test]
     fn test_debris_decay() {
         let mut world = World::new();
-        let planet = world
-            .spawn((SystemBody, OrbitalDebris { amount: 1.0 }))
-            .id();
+        let planet = world.spawn((SystemBody, OrbitalDebris(1.0))).id();
 
         let mut schedule = Schedule::default();
         schedule.add_systems(debris_decay_system);
         schedule.run(&mut world);
 
         let debris = world.get::<OrbitalDebris>(planet).unwrap();
-        assert!(debris.amount < 1.0, "Debris should decay over time");
-        assert!(debris.amount > 0.9, "Decay should be slow");
+        assert!(debris.0 < 1.0, "Debris should decay over time");
+        assert!(debris.0 > 0.9, "Decay should be slow");
     }
 
     #[test]
@@ -32,9 +30,7 @@ mod tests {
         world.init_resource::<Events<LaunchEvent>>();
         world.init_resource::<Events<ShipDestroyedEvent>>();
 
-        let planet = world
-            .spawn((SystemBody, OrbitalDebris { amount: 0.0 }))
-            .id();
+        let planet = world.spawn((SystemBody, OrbitalDebris(0.0))).id();
 
         // Trigger Launch Event
         world.send_event(LaunchEvent {
@@ -49,7 +45,7 @@ mod tests {
 
         // Verify Debris Increase
         let debris = world.get::<OrbitalDebris>(planet).unwrap();
-        assert!(debris.amount > 0.0, "Debris should increase after launch");
+        assert!(debris.0 > 0.0, "Debris should increase after launch");
     }
 
     #[test]
@@ -58,9 +54,7 @@ mod tests {
         world.init_resource::<Events<LaunchEvent>>();
         world.init_resource::<Events<ShipDestroyedEvent>>();
 
-        let planet = world
-            .spawn((SystemBody, OrbitalDebris { amount: 0.0 }))
-            .id();
+        let planet = world.spawn((SystemBody, OrbitalDebris(0.0))).id();
 
         // Trigger Destruction Event
         world.send_event(ShipDestroyedEvent {
@@ -75,7 +69,7 @@ mod tests {
         let debris = world.get::<OrbitalDebris>(planet).unwrap();
         // Should be higher than launch debris (0.05 vs 0.20 roughly)
         assert!(
-            debris.amount >= 0.1,
+            debris.0 >= 0.1,
             "Debris should increase significantly after ship destruction"
         );
     }
@@ -86,9 +80,7 @@ mod tests {
         // Register events required by system
         world.init_resource::<Events<ShipDestroyedEvent>>();
 
-        let planet = world
-            .spawn((SystemBody, OrbitalDebris { amount: 0.5 }))
-            .id(); // High debris
+        let planet = world.spawn((SystemBody, OrbitalDebris(0.5))).id(); // High debris
 
         let fleet = world
             .spawn((
@@ -117,9 +109,7 @@ mod tests {
         let mut world = World::new();
         world.init_resource::<Events<ShipDestroyedEvent>>();
 
-        let planet = world
-            .spawn((SystemBody, OrbitalDebris { amount: 10.0 }))
-            .id(); // Extreme debris
+        let planet = world.spawn((SystemBody, OrbitalDebris(10.0))).id(); // Extreme debris
 
         let fleet = world
             .spawn((
@@ -163,16 +153,14 @@ mod tests {
     #[test]
     fn test_debris_cleanup_action() {
         let mut world = World::new();
-        let planet = world
-            .spawn((SystemBody, OrbitalDebris { amount: 0.5 }))
-            .id();
+        let planet = world.spawn((SystemBody, OrbitalDebris(0.5))).id();
 
         // Assume a Cleanup Action system exists or simulate it
         crate::layer2::debris::perform_cleanup(&mut world, planet, 0.2);
 
         let debris = world.get::<OrbitalDebris>(planet).unwrap();
         assert!(
-            (debris.amount - 0.3).abs() < 0.001,
+            (debris.0 - 0.3).abs() < 0.001,
             "Cleanup should reduce debris"
         );
     }
