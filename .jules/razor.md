@@ -102,3 +102,7 @@
 **Bloat:** [Single-variant enums `PopMemoryType` and `SignificantEvent` wrapped in a vector inside `MemoryTracker`]
 **Cut:** [Replaced the enums and wrapper struct with a simple zero-sized marker component `SurvivedFamineMemory` and a concrete struct `FamineEvent`.]
 **Saved:** [~30 Lines of code / Reduced cognitive load by eliminating an unnecessary abstraction layer and bringing the code closer to idiomatic Bevy ECS patterns.]
+## [Reduction]
+**Bloat:** `OrbitalDebris` struct in `src/layer2/debris.rs` acting as an unnecessary wrapper around a single `f32` field (`pub amount: f32`).
+**Cut:** Converted `OrbitalDebris` into a newtype tuple struct (`OrbitalDebris(pub f32)`).
+**Saved:** 4 lines of code, reduced verbosity of instantiating the component (e.g. `OrbitalDebris(0.0)` vs `OrbitalDebris { amount: 0.0 }`), and simplified field accesses.

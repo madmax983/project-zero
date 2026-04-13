@@ -8,12 +8,9 @@ use crate::layer2::fleet::{Fleet, FleetComposition, FleetHealth, InOrbit};
 use bevy_ecs::prelude::*;
 
 /// Component tracking the amount of debris in orbit around a body.
+/// The density of debris, where 0.0 is clear and 1.0 is extremely hazardous. Can exceed 1.0.
 #[derive(Component, Default, Debug)]
-pub struct OrbitalDebris {
-    /// The density of debris, where 0.0 is clear and 1.0 is extremely hazardous.
-    /// Can exceed 1.0.
-    pub amount: f32,
-}
+pub struct OrbitalDebris(pub f32);
 
 /// System that increases orbital debris based on events.
 pub fn debris_accumulation_system(
@@ -24,16 +21,16 @@ pub fn debris_accumulation_system(
     for event in events_launch.read() {
         if let Ok(mut debris) = query.get_mut(event.planet) {
             if event.success {
-                debris.amount += 0.05;
+                debris.0 += 0.05;
             } else {
-                debris.amount += 0.10;
+                debris.0 += 0.10;
             }
         }
     }
 
     for event in events_destroy.read() {
         if let Ok(mut debris) = query.get_mut(event.planet) {
-            debris.amount += 0.20;
+            debris.0 += 0.20;
         }
     }
 }
@@ -58,9 +55,9 @@ pub fn debris_attrition_system(
             continue;
         };
 
-        if debris.amount > 0.1 {
+        if debris.0 > 0.1 {
             // Damage based on debris amount
-            let damage = debris.amount * 5.0;
+            let damage = debris.0 * 5.0;
 
             if let Some(ref mut comp) = maybe_comp {
                 // Concrete fleet with ships
@@ -99,12 +96,12 @@ pub fn debris_attrition_system(
 /// System that slowly decays orbital debris over time due to atmospheric drag.
 pub fn debris_decay_system(mut query: Query<&mut OrbitalDebris>) {
     for mut debris in &mut query {
-        if debris.amount > 0.0 {
+        if debris.0 > 0.0 {
             // Decay by 0.5% per tick
-            debris.amount *= 0.995;
+            debris.0 *= 0.995;
             // Floor at very low values to avoid floating point drift
-            if debris.amount < 0.001 {
-                debris.amount = 0.0;
+            if debris.0 < 0.001 {
+                debris.0 = 0.0;
             }
         }
     }
@@ -127,6 +124,6 @@ pub fn calculate_launch_risk(debris_amount: f32) -> f32 {
 /// Helper function to perform debris cleanup on a planet.
 pub fn perform_cleanup(world: &mut World, planet: Entity, amount: f32) {
     if let Some(mut debris) = world.get_mut::<OrbitalDebris>(planet) {
-        debris.amount = (debris.amount - amount).max(0.0);
+        debris.0 = (debris.0 - amount).max(0.0);
     }
 }
