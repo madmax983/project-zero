@@ -274,7 +274,6 @@ pub fn process_flora_clearing(world: &mut World, designation_entity: Entity, wor
     }
 }
 
-use crate::layer1::olfactory::ScentMap;
 
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub enum PheromoneEmission {
@@ -289,42 +288,6 @@ pub struct PheromoneFlora {
     pub strength: f32,
 }
 
-pub fn emit_flora_pheromones_system(
-    mut scent_map: ResMut<ScentMap>,
-    query: Query<(&PheromoneFlora, &GridPosition)>,
-) {
-    for (flora, pos) in query.iter() {
-        let entry = scent_map.map.entry(*pos).or_default();
-        match flora.emission_type {
-            PheromoneEmission::Calming => {
-                entry.pleasant += flora.strength;
-            }
-            PheromoneEmission::Danger => {
-                entry.foul += flora.strength;
-            }
-            PheromoneEmission::Normal => {}
-        }
-    }
-}
-
-pub fn apply_pheromone_mood_system(
-    scent_map: Res<ScentMap>,
-    mut query: Query<(&GridPosition, &mut crate::layer1::morale::Morale)>,
-) {
-    for (pos, mut morale) in query.iter_mut() {
-        let scent = scent_map.get_scent(*pos);
-        if scent.pleasant > 0.0 {
-            // Only add if not already present to avoid spamming
-            if !morale.modifiers.iter().any(|m| m.label == "Calming Scent") {
-                morale.add_modifier(crate::layer1::morale::MoodModifier {
-                    label: "Calming Scent".to_string(),
-                    value: 0.1, // Matches spec's intent
-                    duration: 10,
-                });
-            }
-        }
-    }
-}
 
 /// Extends PheromoneFlora to detect hazards.
 /// It turns into `PheromoneEmission::Danger` when it detects an EarthquakeEvent or ReactorMeltdown near the plant.
@@ -358,62 +321,8 @@ pub fn detect_hazards_system(
 
 #[cfg(test)]
 mod tests {
-    use crate::layer1::flora::{
-        apply_pheromone_mood_system, emit_flora_pheromones_system, PheromoneEmission,
-        PheromoneFlora,
-    };
-    use crate::layer1::morale::Morale;
-    use crate::layer1::olfactory::ScentMap;
-    use bevy_app::App;
 
-    #[test]
-    fn test_flora_emits_calming_pheromones() {
-        let mut app = App::new();
-        app.add_systems(bevy_app::Update, emit_flora_pheromones_system);
-        app.init_resource::<ScentMap>();
-
-        // Plant a Calm-Lily
-        app.world_mut().spawn((
-            PheromoneFlora {
-                emission_type: PheromoneEmission::Calming,
-                strength: 5.0,
-            },
-            GridPosition { x: 5, y: 5 },
-        ));
-
-        app.update();
-
-        // Verify the grid now contains the calming scent at the flora's position
-        let grid = app.world().resource::<ScentMap>();
-        assert!(grid.get_scent(GridPosition { x: 5, y: 5 }).pleasant > 0.0);
-    }
-
-    #[test]
-    fn test_calming_pheromones_boost_morale() {
-        let mut app = App::new();
-        app.add_systems(bevy_app::Update, apply_pheromone_mood_system);
-
-        let mut grid = ScentMap::default();
-        let entry = grid.map.entry(GridPosition { x: 5, y: 5 }).or_default();
-        entry.pleasant += 10.0;
-        app.insert_resource(grid);
-
-        let pop_entity = app
-            .world_mut()
-            .spawn((
-                GridPosition { x: 5, y: 5 },
-                Morale::default(),
-                crate::layer1::pop::Pop,
-            ))
-            .id();
-
-        app.update();
-
-        let morale = app.world().entity(pop_entity).get::<Morale>().unwrap();
-        assert!(morale.modifiers.iter().any(|m| m.label == "Calming Scent"));
-    }
-
-    use crate::layer1::building::{Building, BuildingType};
+            use crate::layer1::building::{Building, BuildingType};
     use crate::layer1::flora::{
         flora_attack_system, flora_spread_system, process_flora_clearing,
         update_bioluminescence_system, Bioluminescent, Flora, FloraClearingProgress, FloraType,
