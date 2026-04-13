@@ -95,7 +95,9 @@ pub fn build_simulation_schedule() -> Schedule {
         update_event_buffer::<ShipDestroyedEvent>,
         update_event_buffer::<DetectionEvent>,
         crate::layer2::fleet::fleet_order_system,
-        crate::layer2::station::build_station_system
+        crate::layer2::station::build_station_system,
+        crate::layer2::station::zero_g_fermentation_system
+            .after(crate::layer2::fleet::fleet_order_system)
             .after(crate::layer2::fleet::fleet_order_system),
         crate::layer2::derelict_stations::claim_station_system
             .after(crate::layer2::fleet::fleet_order_system),
@@ -113,7 +115,6 @@ pub fn build_simulation_schedule() -> Schedule {
         crate::layer2::fleet::ensure_fleet_health_system,
         crate::layer2::combat::fleet_combat_system
             .after(crate::layer2::fleet::fleet_movement_system),
-        crate::layer2::barnacles::ensure_barnacles_component_system,
         crate::layer2::barnacles::barnacle_accumulation_system,
         // Debris Systems
         crate::layer2::debris::debris_accumulation_system
