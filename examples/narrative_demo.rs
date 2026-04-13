@@ -15,7 +15,7 @@
 //!   in taverns based on simulation events. Requires `cargo run --features nova`.
 //!   See `examples/oral_tradition_demo.rs`.
 
-use crossterm::style::Stylize;
+
 use crossterm::{
     event::{self, DisableMouseCapture, EnableMouseCapture, Event, KeyCode, KeyEventKind},
     execute,
@@ -23,6 +23,7 @@ use crossterm::{
 };
 use ratatui::{prelude::*, widgets::*};
 use scale::shared::narrative::{NarrativeContext, NarrativeGenerator, NarrativeSegment};
+use comfy_table::{presets::UTF8_FULL, Cell, Color as TableColor, Table};
 use std::io;
 use std::time::Duration;
 
@@ -149,19 +150,11 @@ fn main() -> anyhow::Result<()> {
         terminal.show_cursor()?;
 
         if let Err(err) = res {
-            let error_msg = format!("{}", err);
-            let width = error_msg.chars().count() + 4;
-            let border = "─".repeat(width);
-            let top_border = format!("╭{}╮", border);
-            let bottom_border = format!("╰{}╯", border);
-
-            println!("{}", top_border.with(crossterm::style::Color::Cyan));
-            println!(
-                "│ {} {} │",
-                "✗".with(crossterm::style::Color::Red).bold(),
-                error_msg.with(crossterm::style::Color::White)
-            );
-            println!("{}", bottom_border.with(crossterm::style::Color::Cyan));
+            let error_msg = format!("✗ {}", err);
+            let mut table = Table::new();
+            table.load_preset(UTF8_FULL);
+            table.add_row(vec![Cell::new(&error_msg).fg(TableColor::Red)]);
+            println!("{table}");
         }
     } else {
         // Restore terminal if app creation failed
@@ -174,19 +167,11 @@ fn main() -> anyhow::Result<()> {
         terminal.show_cursor()?;
 
         if let Some(err) = app_result.err() {
-            let error_msg = format!("Failed to initialize app: {}", err);
-            let width = error_msg.chars().count() + 4;
-            let border = "─".repeat(width);
-            let top_border = format!("╭{}╮", border);
-            let bottom_border = format!("╰{}╯", border);
-
-            eprintln!("{}", top_border.with(crossterm::style::Color::Cyan));
-            eprintln!(
-                "│ {} {} │",
-                "✗".with(crossterm::style::Color::Red).bold(),
-                error_msg.with(crossterm::style::Color::White)
-            );
-            eprintln!("{}", bottom_border.with(crossterm::style::Color::Cyan));
+            let error_msg = format!("✗ Failed to initialize app: {}", err);
+            let mut table = Table::new();
+            table.load_preset(UTF8_FULL);
+            table.add_row(vec![Cell::new(&error_msg).fg(TableColor::Red)]);
+            eprintln!("{table}");
         }
     }
 

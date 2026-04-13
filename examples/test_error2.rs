@@ -1,5 +1,6 @@
-use crossterm::style::{Color, Stylize};
+
 use scale::prelude::*;
+use comfy_table::{presets::UTF8_FULL, Cell, Color as TableColor, Table};
 
 fn main() -> anyhow::Result<()> {
     let mut generator = NarrativeGenerator::default();
@@ -8,19 +9,11 @@ fn main() -> anyhow::Result<()> {
     match result {
         Ok(_) => println!("Loaded successfully."),
         Err(e) => {
-            let error_msg = format!("{}", e);
-            let width = error_msg.chars().count() + 4; // 2 for padding, 2 for icon
-            let border = "─".repeat(width);
-            let top_border = format!("╭{}╮", border);
-            let bottom_border = format!("╰{}╯", border);
-
-            println!("{}", top_border.with(Color::Cyan));
-            println!(
-                "│ {} {} │",
-                "✗".with(Color::Red).bold(),
-                error_msg.with(Color::White)
-            );
-            println!("{}", bottom_border.with(Color::Cyan));
+            let error_msg = format!("✗ {}", e);
+            let mut table = Table::new();
+            table.load_preset(UTF8_FULL);
+            table.add_row(vec![Cell::new(&error_msg).fg(TableColor::Red)]);
+            println!("{table}");
         }
     }
     Ok(())
