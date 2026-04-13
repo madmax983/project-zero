@@ -86,16 +86,18 @@ const MAX_TRAITS: usize = 3;
 ///
 /// ```
 /// use bevy_ecs::prelude::*;
-/// use scale::layer1::animism::{Spirit, evolve_spirits_system};
+/// use scale::layer1::culture::animism::{Spirit, evolve_spirits_system};
 /// use scale::layer1::items::Equipment;
 /// use scale::layer1::morale::Morale;
-/// use scale::layer1::pop::{Job, Pop};
+/// use scale::layer1::pop::Pop;
+/// use scale::layer1::Job;
 /// use scale::layer1::utility_types::{ActionType, PopAction};
 ///
 /// let mut world = World::new();
 ///
 /// // Spawn a tool with a nascent spirit
 /// let tool_id = world.spawn(Spirit::default()).id();
+/// let workplace = world.spawn_empty().id();
 ///
 /// // Spawn a Pop using the tool while working
 /// world.spawn((
@@ -103,7 +105,7 @@ const MAX_TRAITS: usize = 3;
 ///     Equipment { tool: Some(tool_id), ..Default::default() },
 ///     PopAction { current: ActionType::Work, ..Default::default() },
 ///     Morale::default(),
-///     Job { workplace: Entity::PLACEHOLDER, job_type: scale::layer1::utility_types::AssignmentType::FarmWorker },
+///     Job { workplace, job_type: scale::layer1::utility_types::AssignmentType::FarmWorker }
 /// ));
 ///
 /// // Run the system
@@ -157,7 +159,7 @@ pub fn evolve_spirits_system(
                     // unless we add a `Building` query.
                     // Let's rely on manual adding or a separate initializer for buildings if we want.
                     // actually, let's just add it. `commands.entity` is safe even if despawned (it just warns).
-                     commands.entity(job.workplace).insert(Spirit::default());
+                    commands.entity(job.workplace).insert(Spirit::default());
                 }
             }
         }
@@ -235,8 +237,12 @@ fn apply_traits(spirit: &Spirit, speed: &mut Speed, morale: &mut Morale) {
             }
             SpiritTrait::Comforting => {
                 // Add ephemeral modifier if not present
-                if !morale.modifiers.iter().any(|m| m.label == "Comforting Spirit") {
-                     morale.add_modifier(MoodModifier {
+                if !morale
+                    .modifiers
+                    .iter()
+                    .any(|m| m.label == "Comforting Spirit")
+                {
+                    morale.add_modifier(MoodModifier {
                         label: "Comforting Spirit".to_string(),
                         value: 0.05, // +5% Morale
                         duration: 2, // Lasts 2 ticks (refreshed every tick)
@@ -244,8 +250,8 @@ fn apply_traits(spirit: &Spirit, speed: &mut Speed, morale: &mut Morale) {
                 }
             }
             SpiritTrait::Haunted => {
-                 if !morale.modifiers.iter().any(|m| m.label == "Haunted Spirit") {
-                     morale.add_modifier(MoodModifier {
+                if !morale.modifiers.iter().any(|m| m.label == "Haunted Spirit") {
+                    morale.add_modifier(MoodModifier {
                         label: "Haunted Spirit".to_string(),
                         value: -0.05, // -5% Morale
                         duration: 2,
@@ -263,6 +269,7 @@ mod tests {
     use crate::layer1::morale::Morale;
     use crate::layer1::pop::{Pop, Speed};
     use crate::layer1::utility_types::AssignmentType;
+    use crate::layer1::Job;
 
     #[test]
     fn test_spirit_evolution_adds_experience() {
@@ -270,14 +277,24 @@ mod tests {
 
         // Create Tool
         let tool = world.spawn(Spirit::default()).id();
+        let workplace = world.spawn_empty().id();
 
         // Create Pop using Tool
         world.spawn((
             Pop,
-            Equipment { tool: Some(tool), ..Default::default() },
-            PopAction { current: ActionType::Work, ..Default::default() },
+            Equipment {
+                tool: Some(tool),
+                ..Default::default()
+            },
+            PopAction {
+                current: ActionType::Work,
+                ..Default::default()
+            },
             Morale::default(),
-            Job { workplace: Entity::PLACEHOLDER, job_type: AssignmentType::FarmWorker }, // Just a placeholder
+            Job {
+                workplace,
+                job_type: AssignmentType::FarmWorker,
+            }, // Just a placeholder
         ));
 
         // Run system
@@ -297,19 +314,34 @@ mod tests {
         let mut world = World::new();
 
         // Create Tool with almost enough XP
-        let tool = world.spawn(Spirit {
-            experience: XP_THRESHOLD_LEVEL_1 - 1,
-            level: 0,
-            traits: vec![],
-        }).id();
+        let tool = world
+            .spawn(Spirit {
+                experience: XP_THRESHOLD_LEVEL_1 - 1,
+                level: 0,
+                traits: vec![],
+            })
+            .id();
+        let workplace = world.spawn_empty().id();
 
         // Create Happy Pop
         world.spawn((
             Pop,
-            Equipment { tool: Some(tool), ..Default::default() },
-            PopAction { current: ActionType::Work, ..Default::default() },
-            Morale { value: 1.0, modifiers: vec![] }, // Very Happy
-            Job { workplace: Entity::PLACEHOLDER, job_type: AssignmentType::FarmWorker },
+            Equipment {
+                tool: Some(tool),
+                ..Default::default()
+            },
+            PopAction {
+                current: ActionType::Work,
+                ..Default::default()
+            },
+            Morale {
+                value: 1.0,
+                modifiers: vec![],
+            }, // Very Happy
+            Job {
+                workplace,
+                job_type: AssignmentType::FarmWorker,
+            },
         ));
 
         let mut schedule = Schedule::default();
@@ -320,7 +352,10 @@ mod tests {
         assert_eq!(spirit.level, 1);
         assert!(!spirit.traits.is_empty());
         // Should be positive trait
-        assert!(spirit.traits.contains(&SpiritTrait::Eager) || spirit.traits.contains(&SpiritTrait::Comforting));
+        assert!(
+            spirit.traits.contains(&SpiritTrait::Eager)
+                || spirit.traits.contains(&SpiritTrait::Comforting)
+        );
     }
 
     #[test]
@@ -328,25 +363,39 @@ mod tests {
         let mut world = World::new();
 
         // Create Tool with Eager
-        let tool = world.spawn(Spirit {
-            experience: 0,
-            level: 1,
-            traits: vec![SpiritTrait::Eager],
-        }).id();
+        let tool = world
+            .spawn(Spirit {
+                experience: 0,
+                level: 1,
+                traits: vec![SpiritTrait::Eager],
+            })
+            .id();
 
         // Create Pop
-        let pop = world.spawn((
-            Pop,
-            Equipment { tool: Some(tool), ..Default::default() },
-            Speed { base: 1.0, current: 1.0, accumulator: 0.0 },
-            Morale::default(),
-        )).id();
+        let pop = world
+            .spawn((
+                Pop,
+                Equipment {
+                    tool: Some(tool),
+                    ..Default::default()
+                },
+                Speed {
+                    base: 1.0,
+                    current: 1.0,
+                    accumulator: 0.0,
+                },
+                Morale::default(),
+            ))
+            .id();
 
         let mut schedule = Schedule::default();
         schedule.add_systems(apply_spirit_effects_system);
         schedule.run(&mut world);
 
         let speed = world.get::<Speed>(pop).unwrap();
-        assert!((speed.current - 1.1).abs() < f32::EPSILON, "Speed should be 1.1 (Eager)");
+        assert!(
+            (speed.current - 1.1).abs() < f32::EPSILON,
+            "Speed should be 1.1 (Eager)"
+        );
     }
 }
