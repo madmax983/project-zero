@@ -101,6 +101,11 @@
 - [ ] `878` The Solar Flare Lottery — `specs/878-the-solar-flare-lottery.md`
 
 See `design/IDEAS.md` for unspecced concepts.
+
+- [ ] `986` The Last Light — `specs/986-the-last-light.md`
+- [ ] `987` The Shattered World — `specs/987-the-shattered-world.md`
+- [ ] `988` Teleporter Psychosis — `specs/988-teleporter-psychosis.md`
+
 - [x] `255` Hypno-Learning — `specs/255-hypno-learning.md` — completed 2026-03-01
 
 
