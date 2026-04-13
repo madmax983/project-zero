@@ -13,3 +13,10 @@
 **2024-11-13 - [Integer Overflow DoS in Grid Indexing II]
 **Threat:** [Integer Overflow] Similar to previous findings, remaining core grid mechanics (like `beauty.rs`, `clutter.rs`, `fire.rs`, `resources.rs`, and `pathfinding.rs`) computed memory addresses manually using `let idx = y * width + x;` inside high-frequency loops. On exceptionally massive maps, or via malicious map dimensions or values, this can bypass the `x < width && y < height` bounds check (due to multiplication overflow), resulting in a valid memory address outside the grid boundary, causing out-of-bounds writes, memory corruption, or Denial of Service (DoS) panics.
 **Defense:** [Safe Arithmetic Bounds] Refactored array indexing in all identified `layer1` grids to use `y.checked_mul(width).and_then(|i| i.checked_add(x)).unwrap_or(usize::MAX)` to prevent wrap-around. Since `usize::MAX` is practically guaranteed to be greater than any grid size check, invalid addresses will be safely discarded or ignored by bounds checks without panicking or creating UB.
+**2024-11-13 - [Security Scan Summary]
+**Threat:** [Multiple Vectors Investigated]
+- Checked for memory safety and unsound `unsafe` code. None found.
+- Scanned for dependency vulnerabilities with `cargo audit`. Found unmaintained `paste` and unsound `rand` versions, but they are transitive dependencies. Logged for monitoring.
+- Investigated integer overflow DoS vectors specifically in `unwrap_or(usize::MAX)` patterns. Confirmed that all instances are either guarded by bounds checking or safely handled by `Vec::get` returning `None`.
+- Tested specific exploit test cases (`test_exploit.rs`, `security_crowding_overflow.rs`, `security_access_control.rs`, etc.). All tests passed and demonstrated safe behavior under malicious conditions.
+**Defense:** [Verified Safe] The codebase appears robust against the investigated vectors. No immediate action required.
