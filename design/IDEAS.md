@@ -4898,7 +4898,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Heat Death
+## Heat Death [SPECCED]
 
 **Layer:** 1
 
@@ -4912,7 +4912,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Treaty Cruisers
+## Treaty Cruisers [SPECCED]
 
 **Layer:** 3 -> 2
 
@@ -4926,7 +4926,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Sub-Glacial Oceans
+## Sub-Glacial Oceans [SPECCED]
 
 **Layer:** 1
 
