@@ -117,6 +117,8 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::totems::check_spontaneous_totem_creation
                 .after(check_stress_breakdown_system),
             crate::layer1::totems::unequip_totem_system.after(decay_needs_system),
+            crate::layer1::administration::edicts::update_policy_tradition_system,
+            crate::layer1::administration::edicts::handle_revoke_policy_system,
             update_breakdown_system.after(check_stress_breakdown_system),
             crate::layer1::mind::process_fugue_onset.after(check_stress_breakdown_system),
             crate::layer1::mind::enforce_fugue_job.after(crate::layer1::mind::process_fugue_onset),
