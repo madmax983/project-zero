@@ -523,7 +523,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `802` Seismic Resonance — `specs/802-seismic-resonance.md`
 - [ ] `803` The Blackout Protocol — `specs/803-blackout-protocol.md`
 - [ ] `804` O'Neill Cylinders — `specs/804-oneill-cylinders.md`
-- [ ] `805` Digital Immortality — `specs/805-digital-immortality.md`
 - [ ] `806` Chronobiological Desync — `specs/806-chronobiological-desync.md`
 - [ ] `807` Indoor Weather — `specs/807-indoor-weather.md`
 - [ ] `808` Cloud Seeding — `specs/808-cloud-seeding.md`
