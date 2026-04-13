@@ -15737,7 +15737,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Bio-Rhythmic Commute
+## The Bio-Rhythmic Commute [SPECCED]
 
 **Layer:** 1
 
