@@ -4828,13 +4828,13 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Vacuum Welding
+## Vacuum Welding [SPECCED]
 
 **Layer:** 1
 
 **Fantasy:** Building structures that are meant to last forever in the void.
 
-**Mechanic:** Structures built in Vacuum biomes have 2x HP and 0.5x Build Time (metals cold-weld instantly). However, they cannot be Deconstructed or Repaired (fused solid). To remove them, you must Destroy them (yielding no resources).
+**[SPECCED] Mechanic:** Structures built in Vacuum biomes have 2x HP and 0.5x Build Time (metals cold-weld instantly). However, they cannot be Deconstructed or Repaired (fused solid). To remove them, you must Destroy them (yielding no resources).
 
 **Emergence:** You build a hasty defense wall in vacuum to stop a raid. Later, you need to expand the spaceport, but the wall is fused solid. You have to blow it up with explosives, wasting massive resources and risking hull breach.
 
