@@ -10,6 +10,8 @@ use thiserror::Error;
 pub enum NarrativeError {
     #[error("Narrative Engine Error: Missing required context variable or fragment: {0}")]
     MissingContext(String),
+    #[error("Narrative Engine Error: Fragment '{0}' has no options defined")]
+    MissingFragmentOptions(String),
     #[error("Narrative Engine Error: No lore files found in `{0}`. Expected TEMPLATES.md or FRAGMENTS.md")]
     NoLoreFiles(String),
     #[error("Narrative Engine Error: Template not found (`{0}`)")]
@@ -34,8 +36,10 @@ pub enum NarrativeSegment {
         /// The value filled into the slot.
         value: String,
     },
-    /// An error or missing value.
-    Error(String),
+    /// A missing context variable.
+    MissingContext(String),
+    /// A missing fragment options.
+    MissingFragmentOptions(String),
 }
 
 impl std::fmt::Display for NarrativeSegment {
@@ -43,7 +47,8 @@ impl std::fmt::Display for NarrativeSegment {
         match self {
             Self::Text(s) => write!(f, "{s}"),
             Self::Slot { value, .. } => write!(f, "{value}"),
-            Self::Error(s) => write!(f, "[ERROR: {s}]"),
+            Self::MissingContext(s) => write!(f, "[MISSING CONTEXT: {s}]"),
+            Self::MissingFragmentOptions(s) => write!(f, "[MISSING FRAGMENT OPTIONS: {s}]"),
         }
     }
 }
@@ -464,14 +469,12 @@ impl NarrativeGenerator {
                                 value: option.clone(),
                             });
                         } else {
-                            segments.push(NarrativeSegment::Error(format!(
-                                "MISSING_FRAGMENT_OPTIONS:{key}"
-                            )));
+                            segments.push(NarrativeSegment::MissingFragmentOptions(key.to_string()));
                         }
                     } else {
                         // Not found in context or fragments
                         if !is_optional {
-                            segments.push(NarrativeSegment::Error(slot_name.clone()));
+                            segments.push(NarrativeSegment::MissingContext(slot_name.clone()));
                         }
                     }
                 } else {
@@ -491,10 +494,16 @@ impl NarrativeGenerator {
 
         // Check for missing context variables/fragments that would produce errors
         for segment in &segments {
-            if let NarrativeSegment::Error(err) = segment {
-                return Err(NarrativeError::MissingContext(format!(
-                    "{err}. Please add it using `context.insert(\"{err}\", <value>)`"
-                )));
+            match segment {
+                NarrativeSegment::MissingContext(err) => {
+                    return Err(NarrativeError::MissingContext(format!(
+                        "{err}. Please add it using `context.insert(\"{err}\", <value>)`"
+                    )));
+                }
+                NarrativeSegment::MissingFragmentOptions(err) => {
+                    return Err(NarrativeError::MissingFragmentOptions(err.clone()));
+                }
+                _ => {}
             }
         }
 
@@ -764,10 +773,10 @@ fn test_generate_missing_fragment_options() {
     let ctx = NarrativeContext::new();
     let result = generator.generate_structured("EMPTY_FRAG", &ctx);
     assert!(result.is_err());
-    assert!(result
-        .unwrap_err()
-        .to_string()
-        .contains("MISSING_FRAGMENT_OPTIONS:FRAG"));
+    assert!(matches!(
+        result.unwrap_err(),
+        NarrativeError::MissingFragmentOptions(err) if err == "FRAG"
+    ));
 }
 
 #[test]

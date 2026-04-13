@@ -334,8 +334,12 @@ fn ui(f: &mut Frame, app: &mut App) {
                         .add_modifier(Modifier::BOLD)
                         .add_modifier(Modifier::ITALIC),
                 ),
-                NarrativeSegment::Error(e) => Span::styled(
-                    format!("[ERROR: {}]", e),
+                NarrativeSegment::MissingContext(e) => Span::styled(
+                    format!("[MISSING CONTEXT: {}]", e),
+                    Style::default().fg(Color::Red).add_modifier(Modifier::BOLD),
+                ),
+                NarrativeSegment::MissingFragmentOptions(e) => Span::styled(
+                    format!("[MISSING FRAGMENT OPTIONS: {}]", e),
                     Style::default().fg(Color::Red).add_modifier(Modifier::BOLD),
                 ),
             })
