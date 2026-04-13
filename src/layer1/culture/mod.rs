@@ -21,3 +21,5 @@ pub use funeral::*;
 /// Totems and superstition system (Spec 200).
 pub mod totems;
 pub use totems::*;
+pub mod animism;
+pub use animism::*;

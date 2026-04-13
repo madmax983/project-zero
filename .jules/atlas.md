@@ -73,3 +73,6 @@
 **Environment Domain Encapsulation**
 **Tangle:** The `layer1` core module was heavily congested with environmental hazards, planetary conditions, and volatile event modules (`geomes`, `hazards`, `terraforming`, `seismic`, `orbital_crossfire`, `bio_acoustic`, `volatile`, `photophobic`, `light_pollution`, `orbital_tether`, `disasters`), muddying the root namespace and blurring the line between local colony mechanics and macroscopic environmental physics.
 **Blueprint:** Extracted these 13 planetary condition modules into a dedicated `src/layer1/environment/` module, providing a unified `mod.rs` to mediate their exports (resolving global type collisions like `ExplosionEvent`). This drastically slims down `layer1/mod.rs` while strictly enforcing a domain boundary for macroscopic environmental hazards.
+**Culture Domain Encapsulation - Animism**
+**Tangle:** The `animism.rs` module was lingering in the root of `src/layer1/` instead of being inside its proper cultural domain alongside `ancestral_graves`, `art`, `totems`, etc., exacerbating the "Blob" anti-pattern in Layer 1.
+**Blueprint:** Moved `src/layer1/animism.rs` to `src/layer1/culture/animism.rs`. Updated `layer1/culture/mod.rs` to re-export it, resolving structural clutter and unifying the culture mechanics boundary.
