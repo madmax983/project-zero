@@ -15680,3 +15680,59 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Emergence:** Your master weaponsmith dies defending the armory. You build an Echo Reciter in his old forge. The forge continues producing high-quality weapons automatically. However, the living apprentices in the adjacent workshops are slowly driven mad by the constant psychic whispering of their dead master demanding perfection. They eventually snap, grab the masterwork weapons from the auto-forge, and start a violent riot.
 
 **Tension:** The appeal of free, highly skilled automated labor vs. the creeping psychological toll on your living workforce and the rigid spatial constraints of where the Echo was formed.
+
+## The Symbiotic Data-Weavers
+
+**Layer:** Cross-layer
+
+**Fantasy:** Building a supercomputer out of living, breathing alien flora.
+
+**Mechanic:** Certain bioluminescent flora on Layer 1 can be genetically altered to act as optical data processors. Instead of building massive, power-hungry silicon server farms, players cultivate "Data Forests." These forests process Layer 3 administrative tasks and tech research but require perfect ecological balance, water, and specific soil nutrients rather than raw electricity.
+
+**Emergence:** A severe drought hits the colony. To save the water supply for the crops feeding the population, the player must cut water to the Data Forest. The resulting "wilting" of the network crashes the entire planetary administrative grid and erases ongoing tech research, turning an ecological crisis into a bureaucratic dark age.
+
+**Tension:** Do you rely on cheap, self-sustaining biological computing that is highly vulnerable to ecological shifts, or expensive, power-hungry mechanical infrastructure?
+
+---
+
+## Interplanetary Pollination
+
+**Layer:** 2 -> 1
+
+**Fantasy:** Accidentally terraforming neighboring worlds with the wind from your own.
+
+**Mechanic:** Mass cultivation of genetically modified flora on a low-gravity world allows spores and seeds to escape the atmosphere into Layer 2 orbit. Over decades, these spores catch stellar winds or hitch rides on passing freighters, "infecting" neighboring worlds with your genetically modified plants, altering their biomes.
+
+**Emergence:** You engineer an ultra-hardy, aggressive crop to survive a barren world. Decades later, a neighboring empire declares war because your "super-crop" drifted across the system, took root on their pristine garden world, and completely choked out their native ecosystem in an uncontrollable invasive wave.
+
+**Tension:** Rapidly maximizing agricultural output on harsh worlds vs. the slow, creeping risk of accidentally bio-forming the entire star system against your (or your neighbors') wishes.
+
+---
+
+## The Eclipsing Swarm
+
+**Layer:** 2 -> 1
+
+**Fantasy:** The sheer terror of watching the sun disappear behind a living wall.
+
+**Mechanic:** Enormous swarms of migratory, void-dwelling locusts travel through Layer 2. When they pass between your planet and its sun, they create a "Swarm Eclipse." Solar power drops to zero, temperatures plummet, and the swarm sheds highly corrosive bio-waste onto the planet's surface before moving on.
+
+**Emergence:** You heavily fortify your colony with solar-powered laser defenses in preparation for an incoming pirate raid. Right as the pirates enter orbit, the Swarm passes by. Your defenses instantly shut down in the unnatural darkness, forcing your colonists into desperate, brutal melee combat to defend their homes.
+
+**Tension:** Developing robust, diversified power grids to survive sudden, catastrophic solar blockages vs. the efficiency of relying solely on the sun.
+
+---
+
+## Subterranean Biosphere Inversion
+
+**Layer:** 1
+
+**Fantasy:** The surface is dead, but the deep crust is teeming with horrific, necessary life.
+
+**Mechanic:** On worlds with utterly inhospitable surfaces (extreme radiation, toxic atmosphere), players must dig deep. However, the deep crust contains its own hyper-aggressive, closed ecosystem. Digging deeper yields incredible exotic resources, but physically unleashes more dangerous flora and fauna into your mining shafts, forcing you to constantly fight a war of attrition against the planet's immune system.
+
+**Emergence:** You punch through a particularly thick layer of bedrock to access a motherlode of energy crystals. The breach unleashes a flood of subterranean, acid-spitting mega-fauna into the lower levels of your colony. You are forced to permanently seal the bulkheads, sacrificing your best miners and essentially turning the lower third of your base into a sealed, feral terrarium.
+
+**Tension:** The irresistible lure of deep-crust wealth vs. the absolute certainty of unearthing biological horrors you cannot easily control.
+
+---
