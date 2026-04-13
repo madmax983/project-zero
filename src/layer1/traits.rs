@@ -106,6 +106,8 @@ pub enum Trait {
     EmpathicLink,
     /// Formal administrative capabilities. Understood the bureaucracy (Spec 464).
     Bureaucrat,
+    /// Has read redacted history and witnessed the truth.
+    Dissident,
     /// (Spec 472) Basic synthetic pop. 100% work efficiency, no morale needs, apathetic to emergencies.
     Synth,
     /// Synthesizes food from light.
@@ -173,6 +175,7 @@ impl Trait {
             Self::Spiteful => "Spiteful",
             Self::EmpathicLink => "Empathic Link",
             Self::Bureaucrat => "Bureaucrat",
+            Self::Dissident => "Dissident",
             Self::Synth => "Synthetic",
             Self::LogisticsExpert => "Logistics Expert",
             Self::Photosynthesis => "Photosynthesis",
@@ -249,6 +252,7 @@ impl Traits {
             Trait::Spiteful,
             Trait::EmpathicLink,
             Trait::Bureaucrat,
+            Trait::Dissident,
         ];
 
         let mut added = 0;

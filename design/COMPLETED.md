@@ -389,3 +389,4 @@
 - [x] `984` Pheromone Gardening — `specs/984-pheromone-gardening.md` — completed 2026-04-13
 - [x] `805` Digital Immortality — `specs/805-digital-immortality.md` — completed 2026-06-01
 - [x] `805` Digital Immortality — `specs/805-digital-immortality.md` — completed 2026-06-01
+- [x] `985` Propaganda Press — `specs/985-propaganda-press.md` — completed 2026-06-01
