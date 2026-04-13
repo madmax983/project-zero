@@ -207,6 +207,9 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     world.insert_resource(ColonyResources::default());
     world.insert_resource(crate::layer1::purity::PurityMap::default());
     world.insert_resource(ColonyPolicies::default());
+    world.init_resource::<bevy_ecs::event::Events<crate::layer2::weather::StormImpactEvent>>();
+    world.init_resource::<bevy_ecs::event::Events<crate::layer1::environment::geothermal::GeothermalPulseEvent>>();
+    world.insert_resource(crate::layer1::environment::geothermal::GeothermalPulseState::default());
     world.init_resource::<crate::layer1::civic_ideology::ActiveIdeology>();
     world.insert_resource(crate::layer1::social_mimicry::Trend::default());
     world.insert_resource(crate::layer1::factions::Factions::default());
