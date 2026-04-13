@@ -672,3 +672,7 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `992` The Fungal Monoliths — `specs/992-the-fungal-monoliths.md`
 - [ ] `993` The Fractal Bureaucracy — `specs/993-the-fractal-bureaucracy.md`
 - [ ] `994` The Kinetic Heist — `specs/994-the-kinetic-heist.md`
+
+- [ ] `995` Fungal Networking — `specs/995-fungal-networking.md`
+- [ ] `996` Interstellar Quarantine Fields — `specs/996-interstellar-quarantine-fields.md`
+- [ ] `997` Subspace Stowaways — `specs/997-subspace-stowaways.md`
