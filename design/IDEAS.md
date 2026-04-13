@@ -13876,7 +13876,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Fungal Monoliths
+## The Fungal Monoliths [SPECCED]
 
 **Layer:** 1
 
@@ -13890,7 +13890,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Fractal Bureaucracy
+## The Fractal Bureaucracy [SPECCED]
 
 **Layer:** 3 -> 1
 
@@ -13918,7 +13918,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Kinetic Heist
+## The Kinetic Heist [SPECCED]
 
 **Layer:** 2 -> 1
 
@@ -15532,7 +15532,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Fungal Monoliths
+## The Fungal Monoliths [SPECCED]
 
 **Layer:** 1
 
@@ -15546,7 +15546,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Fractal Bureaucracy
+## The Fractal Bureaucracy [SPECCED]
 
 **Layer:** 3 -> 1
 
@@ -15559,7 +15559,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** The necessity of expanding the bureaucracy to manage the empire vs. the terrifying physical footprint and catastrophic fragility of the administrative structure.
 ---
 
-## The Kinetic Heist
+## The Kinetic Heist [SPECCED]
 
 **Layer:** 2 -> 1
 
