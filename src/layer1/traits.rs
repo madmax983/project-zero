@@ -116,6 +116,8 @@ pub enum Trait {
     BrittleBones,
     /// Needs more food than normal.
     ExtremeHunger,
+    /// Pop actively dissents against the colony (Spec 985).
+    Dissident,
 }
 
 impl Trait {
@@ -179,6 +181,7 @@ impl Trait {
             Self::ThickSkin => "Thick Skin",
             Self::BrittleBones => "Brittle Bones",
             Self::ExtremeHunger => "Extreme Hunger",
+            Self::Dissident => "Dissident",
         }
     }
 }

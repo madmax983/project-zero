@@ -604,6 +604,8 @@ pub use customs::*;
 
 /// Politics and Elections (Spec 241).
 pub mod politics;
+pub mod propaganda;
+pub use propaganda::*;
 pub use politics::*;
 pub mod scrap_code_prophets;
 pub use scrap_code_prophets::*;
