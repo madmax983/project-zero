@@ -6,16 +6,112 @@ use std::collections::HashSet;
 /// Resource tracking active colony policies/edicts.
 
 #[derive(Debug, Clone, PartialEq, Eq)]
+/// Stores the current state of a policy, including its active status and duration.
+///
+/// # Examples
+///
+/// ```
+/// use scale::layer1::administration::edicts::PolicyState;
+///
+/// let state = PolicyState { active: true, duration: 10, is_tradition: false };
+/// ```
+/// Stores the current state of a policy, including its active status and duration.
+///
+/// # Examples
+///
+/// ```
+/// use scale::layer1::administration::edicts::PolicyState;
+///
+/// let state = PolicyState { active: true, duration: 10, is_tradition: false };
+/// ```
+/// Stores the current state of a policy, including its active status and duration.
+///
+/// # Examples
+///
+/// ```
+/// use scale::layer1::administration::edicts::PolicyState;
+///
+/// let state = PolicyState { active: true, duration: 10, is_tradition: false };
+/// ```
+/// Stores the current state of a policy, including its active status and duration.
+///
+/// # Examples
+///
+/// ```
+/// use scale::layer1::administration::edicts::PolicyState;
+///
+/// let state = PolicyState { active: true, duration: 10, is_tradition: false };
+/// ```
 pub struct PolicyState {
+    /// Whether the policy is currently active.
+    /// Whether the policy is currently active.
+    /// Whether the policy is currently active.
+    /// Whether the policy is currently active.
     pub active: bool,
+    /// The remaining duration of the policy in ticks.
+    /// The remaining duration of the policy in ticks.
+    /// The remaining duration of the policy in ticks.
+    /// The remaining duration of the policy in ticks.
     pub duration: u32,
+    /// Whether this policy has been entrenched as a cultural tradition.
+    /// Whether this policy has been entrenched as a cultural tradition.
+    /// Whether this policy has been entrenched as a cultural tradition.
+    /// Whether this policy has been entrenched as a cultural tradition.
     pub is_tradition: bool,
 }
 
 #[derive(Resource, Default, Debug, Clone)]
+/// Resource tracking active colony policies/edicts and their states.
+///
+/// # Examples
+///
+/// ```
+/// use scale::layer1::administration::edicts::{ColonyPolicies, Policy};
+///
+/// let mut policies = ColonyPolicies::default();
+/// policies.toggle(Policy::Rationing);
+/// assert!(policies.is_active(Policy::Rationing));
+/// ```
+/// Resource tracking active colony policies/edicts and their states.
+///
+/// # Examples
+///
+/// ```
+/// use scale::layer1::administration::edicts::{ColonyPolicies, Policy};
+///
+/// let mut policies = ColonyPolicies::default();
+/// policies.toggle(Policy::Rationing);
+/// assert!(policies.is_active(Policy::Rationing));
+/// ```
+/// Resource tracking active colony policies/edicts and their states.
+///
+/// # Examples
+///
+/// ```
+/// use scale::layer1::administration::edicts::{ColonyPolicies, Policy};
+///
+/// let mut policies = ColonyPolicies::default();
+/// policies.toggle(Policy::Rationing);
+/// assert!(policies.is_active(Policy::Rationing));
+/// ```
+/// Resource tracking active colony policies/edicts and their states.
+///
+/// # Examples
+///
+/// ```
+/// use scale::layer1::administration::edicts::{ColonyPolicies, Policy};
+///
+/// let mut policies = ColonyPolicies::default();
+/// policies.toggle(Policy::Rationing);
+/// assert!(policies.is_active(Policy::Rationing));
+/// ```
 pub struct ColonyPolicies {
     /// Set of currently active policies.
     pub active_policies: HashSet<Policy>,
+    /// A map of all policies and their current state information.
+    /// A map of all policies and their current state information.
+    /// A map of all policies and their current state information.
+    /// A map of all policies and their current state information.
     pub policy_states: std::collections::HashMap<Policy, PolicyState>,
     /// Set of policies that have become orphaned and cannot be normally removed.
     pub orphaned_policies: HashSet<Policy>,
@@ -44,24 +140,56 @@ pub enum Policy {
     Aesthetic,
     /// Offers amnesty visas to pirate fleets.
     AmnestyVisa,
+    /// Declares martial law, restricting movement and increasing security.
+    /// Declares martial law, restricting movement and increasing security.
+    /// Declares martial law, restricting movement and increasing security.
+    /// Declares martial law, restricting movement and increasing security.
     MartialLaw,
 }
 
 #[derive(Event, Debug)]
+/// Event triggered to toggle the active status of a policy.
+/// Event triggered to toggle the active status of a policy.
+/// Event triggered to toggle the active status of a policy.
+/// Event triggered to toggle the active status of a policy.
 pub struct TogglePolicyEvent(pub Policy);
 
 #[derive(Event, Debug)]
+/// Event triggered when a policy action is denied due to insufficient access.
+/// Event triggered when a policy action is denied due to insufficient access.
+/// Event triggered when a policy action is denied due to insufficient access.
+/// Event triggered when a policy action is denied due to insufficient access.
 pub struct AccessDeniedEvent {
+    /// The reason why access was denied.
+    /// The reason why access was denied.
+    /// The reason why access was denied.
+    /// The reason why access was denied.
     pub reason: String,
 }
 
 #[derive(Event, Debug, Clone)]
+/// Event triggered to forcefully revoke an active policy.
+/// Event triggered to forcefully revoke an active policy.
+/// Event triggered to forcefully revoke an active policy.
+/// Event triggered to forcefully revoke an active policy.
 pub struct RevokePolicyEvent {
+    /// The policy to revoke.
+    /// The policy to revoke.
+    /// The policy to revoke.
+    /// The policy to revoke.
     pub policy: Policy,
 }
 
 #[derive(Event, Debug)]
+/// Event triggered when attempting to hack the central hub to force a policy change.
+/// Event triggered when attempting to hack the central hub to force a policy change.
+/// Event triggered when attempting to hack the central hub to force a policy change.
+/// Event triggered when attempting to hack the central hub to force a policy change.
 pub struct HackCentralHubEvent {
+    /// The policy targeted by the hack.
+    /// The policy targeted by the hack.
+    /// The policy targeted by the hack.
+    /// The policy targeted by the hack.
     pub target_policy: Policy,
 }
 
@@ -91,6 +219,90 @@ impl ColonyPolicies {
     }
 }
 
+/// Periodically updates policy durations and entrenches long-running ones as traditions.
+///
+/// # Examples
+///
+/// ```
+/// use bevy_ecs::prelude::*;
+/// use scale::layer1::administration::edicts::{update_policy_tradition_system, ColonyPolicies, Policy, PolicyState};
+///
+/// let mut world = World::new();
+/// let mut policies = ColonyPolicies::default();
+/// policies.active_policies.insert(Policy::Rationing);
+/// policies.policy_states.insert(Policy::Rationing, PolicyState { active: true, duration: 9999, is_tradition: false });
+/// world.insert_resource(policies);
+///
+/// let mut schedule = Schedule::default();
+/// schedule.add_systems(update_policy_tradition_system);
+/// schedule.run(&mut world);
+///
+/// let p = world.resource::<ColonyPolicies>();
+/// assert!(p.policy_states.get(&Policy::Rationing).unwrap().is_tradition);
+/// ```
+/// Periodically updates policy durations and entrenches long-running ones as traditions.
+///
+/// # Examples
+///
+/// ```
+/// use bevy_ecs::prelude::*;
+/// use scale::layer1::administration::edicts::{update_policy_tradition_system, ColonyPolicies, Policy, PolicyState};
+///
+/// let mut world = World::new();
+/// let mut policies = ColonyPolicies::default();
+/// policies.active_policies.insert(Policy::Rationing);
+/// policies.policy_states.insert(Policy::Rationing, PolicyState { active: true, duration: 9999, is_tradition: false });
+/// world.insert_resource(policies);
+///
+/// let mut schedule = Schedule::default();
+/// schedule.add_systems(update_policy_tradition_system);
+/// schedule.run(&mut world);
+///
+/// let p = world.resource::<ColonyPolicies>();
+/// assert!(p.policy_states.get(&Policy::Rationing).unwrap().is_tradition);
+/// ```
+/// Periodically updates policy durations and entrenches long-running ones as traditions.
+///
+/// # Examples
+///
+/// ```
+/// use bevy_ecs::prelude::*;
+/// use scale::layer1::administration::edicts::{update_policy_tradition_system, ColonyPolicies, Policy, PolicyState};
+///
+/// let mut world = World::new();
+/// let mut policies = ColonyPolicies::default();
+/// policies.active_policies.insert(Policy::Rationing);
+/// policies.policy_states.insert(Policy::Rationing, PolicyState { active: true, duration: 9999, is_tradition: false });
+/// world.insert_resource(policies);
+///
+/// let mut schedule = Schedule::default();
+/// schedule.add_systems(update_policy_tradition_system);
+/// schedule.run(&mut world);
+///
+/// let p = world.resource::<ColonyPolicies>();
+/// assert!(p.policy_states.get(&Policy::Rationing).unwrap().is_tradition);
+/// ```
+/// Periodically updates policy durations and entrenches long-running ones as traditions.
+///
+/// # Examples
+///
+/// ```
+/// use bevy_ecs::prelude::*;
+/// use scale::layer1::administration::edicts::{update_policy_tradition_system, ColonyPolicies, Policy, PolicyState};
+///
+/// let mut world = World::new();
+/// let mut policies = ColonyPolicies::default();
+/// policies.active_policies.insert(Policy::Rationing);
+/// policies.policy_states.insert(Policy::Rationing, PolicyState { active: true, duration: 9999, is_tradition: false });
+/// world.insert_resource(policies);
+///
+/// let mut schedule = Schedule::default();
+/// schedule.add_systems(update_policy_tradition_system);
+/// schedule.run(&mut world);
+///
+/// let p = world.resource::<ColonyPolicies>();
+/// assert!(p.policy_states.get(&Policy::Rationing).unwrap().is_tradition);
+/// ```
 pub fn update_policy_tradition_system(mut policies: ResMut<ColonyPolicies>) {
     for state in policies.policy_states.values_mut() {
         if state.active {
@@ -102,6 +314,102 @@ pub fn update_policy_tradition_system(mut policies: ResMut<ColonyPolicies>) {
     }
 }
 
+/// Handles events to forcefully revoke an active policy.
+///
+/// If the policy is a tradition, revoking it will cause unrest.
+///
+/// # Examples
+///
+/// ```
+/// use bevy_ecs::prelude::*;
+/// use scale::layer1::administration::edicts::{handle_revoke_policy_system, RevokePolicyEvent, ColonyPolicies, Policy, PolicyState};
+/// use scale::layer1::social::unrest::Unrest;
+///
+/// let mut world = World::new();
+/// let mut policies = ColonyPolicies::default();
+/// policies.active_policies.insert(Policy::Rationing);
+/// policies.policy_states.insert(Policy::Rationing, PolicyState { active: true, duration: 0, is_tradition: false });
+/// world.insert_resource(policies);
+/// world.init_resource::<Unrest>();
+/// world.init_resource::<Events<RevokePolicyEvent>>();
+/// world.send_event(RevokePolicyEvent { policy: Policy::Rationing });
+///
+/// let mut schedule = Schedule::default();
+/// schedule.add_systems(handle_revoke_policy_system);
+/// schedule.run(&mut world);
+/// ```
+/// Handles events to forcefully revoke an active policy.
+///
+/// If the policy is a tradition, revoking it will cause unrest.
+///
+/// # Examples
+///
+/// ```
+/// use bevy_ecs::prelude::*;
+/// use scale::layer1::administration::edicts::{handle_revoke_policy_system, RevokePolicyEvent, ColonyPolicies, Policy, PolicyState};
+/// use scale::layer1::social::unrest::Unrest;
+///
+/// let mut world = World::new();
+/// let mut policies = ColonyPolicies::default();
+/// policies.active_policies.insert(Policy::Rationing);
+/// policies.policy_states.insert(Policy::Rationing, PolicyState { active: true, duration: 0, is_tradition: false });
+/// world.insert_resource(policies);
+/// world.init_resource::<Unrest>();
+/// world.init_resource::<Events<RevokePolicyEvent>>();
+/// world.send_event(RevokePolicyEvent { policy: Policy::Rationing });
+///
+/// let mut schedule = Schedule::default();
+/// schedule.add_systems(handle_revoke_policy_system);
+/// schedule.run(&mut world);
+/// ```
+/// Handles events to forcefully revoke an active policy.
+///
+/// If the policy is a tradition, revoking it will cause unrest.
+///
+/// # Examples
+///
+/// ```
+/// use bevy_ecs::prelude::*;
+/// use scale::layer1::administration::edicts::{handle_revoke_policy_system, RevokePolicyEvent, ColonyPolicies, Policy, PolicyState};
+/// use scale::layer1::social::unrest::Unrest;
+///
+/// let mut world = World::new();
+/// let mut policies = ColonyPolicies::default();
+/// policies.active_policies.insert(Policy::Rationing);
+/// policies.policy_states.insert(Policy::Rationing, PolicyState { active: true, duration: 0, is_tradition: false });
+/// world.insert_resource(policies);
+/// world.init_resource::<Unrest>();
+/// world.init_resource::<Events<RevokePolicyEvent>>();
+/// world.send_event(RevokePolicyEvent { policy: Policy::Rationing });
+///
+/// let mut schedule = Schedule::default();
+/// schedule.add_systems(handle_revoke_policy_system);
+/// schedule.run(&mut world);
+/// ```
+/// Handles events to forcefully revoke an active policy.
+///
+/// If the policy is a tradition, revoking it will cause unrest.
+///
+/// # Examples
+///
+/// ```
+/// use bevy_ecs::prelude::*;
+/// use scale::layer1::administration::edicts::{handle_revoke_policy_system, RevokePolicyEvent, ColonyPolicies, Policy, PolicyState};
+/// use scale::layer1::social::unrest::Unrest;
+///
+/// let mut world = World::new();
+/// let mut policies = ColonyPolicies::default();
+/// policies.active_policies.insert(Policy::Rationing);
+/// policies.policy_states.insert(Policy::Rationing, PolicyState { active: true, duration: 0, is_tradition: false });
+/// world.insert_resource(policies);
+/// world.init_resource::<Unrest>();
+/// world.init_resource::<Events<RevokePolicyEvent>>();
+/// world.send_event(RevokePolicyEvent { policy: Policy::Rationing });
+///
+/// let mut schedule = Schedule::default();
+/// schedule.add_systems(handle_revoke_policy_system);
+/// schedule.run(&mut world);
+/// ```
 pub fn handle_revoke_policy_system(
     mut events: EventReader<RevokePolicyEvent>,
     mut policies: ResMut<ColonyPolicies>,
@@ -124,6 +432,86 @@ pub fn handle_revoke_policy_system(
     }
 }
 
+/// Handles events to toggle the active status of a policy.
+///
+/// If a policy is orphaned, it cannot be toggled normally and will emit an `AccessDeniedEvent`.
+///
+/// # Examples
+///
+/// ```
+/// use bevy_ecs::prelude::*;
+/// use scale::layer1::administration::edicts::{handle_policy_toggle_system, TogglePolicyEvent, AccessDeniedEvent, ColonyPolicies, Policy};
+///
+/// let mut world = World::new();
+/// world.init_resource::<ColonyPolicies>();
+/// world.init_resource::<Events<TogglePolicyEvent>>();
+/// world.init_resource::<Events<AccessDeniedEvent>>();
+/// world.send_event(TogglePolicyEvent(Policy::DoubleShifts));
+///
+/// let mut schedule = Schedule::default();
+/// schedule.add_systems(handle_policy_toggle_system);
+/// schedule.run(&mut world);
+/// ```
+/// Handles events to toggle the active status of a policy.
+///
+/// If a policy is orphaned, it cannot be toggled normally and will emit an `AccessDeniedEvent`.
+///
+/// # Examples
+///
+/// ```
+/// use bevy_ecs::prelude::*;
+/// use scale::layer1::administration::edicts::{handle_policy_toggle_system, TogglePolicyEvent, AccessDeniedEvent, ColonyPolicies, Policy};
+///
+/// let mut world = World::new();
+/// world.init_resource::<ColonyPolicies>();
+/// world.init_resource::<Events<TogglePolicyEvent>>();
+/// world.init_resource::<Events<AccessDeniedEvent>>();
+/// world.send_event(TogglePolicyEvent(Policy::DoubleShifts));
+///
+/// let mut schedule = Schedule::default();
+/// schedule.add_systems(handle_policy_toggle_system);
+/// schedule.run(&mut world);
+/// ```
+/// Handles events to toggle the active status of a policy.
+///
+/// If a policy is orphaned, it cannot be toggled normally and will emit an `AccessDeniedEvent`.
+///
+/// # Examples
+///
+/// ```
+/// use bevy_ecs::prelude::*;
+/// use scale::layer1::administration::edicts::{handle_policy_toggle_system, TogglePolicyEvent, AccessDeniedEvent, ColonyPolicies, Policy};
+///
+/// let mut world = World::new();
+/// world.init_resource::<ColonyPolicies>();
+/// world.init_resource::<Events<TogglePolicyEvent>>();
+/// world.init_resource::<Events<AccessDeniedEvent>>();
+/// world.send_event(TogglePolicyEvent(Policy::DoubleShifts));
+///
+/// let mut schedule = Schedule::default();
+/// schedule.add_systems(handle_policy_toggle_system);
+/// schedule.run(&mut world);
+/// ```
+/// Handles events to toggle the active status of a policy.
+///
+/// If a policy is orphaned, it cannot be toggled normally and will emit an `AccessDeniedEvent`.
+///
+/// # Examples
+///
+/// ```
+/// use bevy_ecs::prelude::*;
+/// use scale::layer1::administration::edicts::{handle_policy_toggle_system, TogglePolicyEvent, AccessDeniedEvent, ColonyPolicies, Policy};
+///
+/// let mut world = World::new();
+/// world.init_resource::<ColonyPolicies>();
+/// world.init_resource::<Events<TogglePolicyEvent>>();
+/// world.init_resource::<Events<AccessDeniedEvent>>();
+/// world.send_event(TogglePolicyEvent(Policy::DoubleShifts));
+///
+/// let mut schedule = Schedule::default();
+/// schedule.add_systems(handle_policy_toggle_system);
+/// schedule.run(&mut world);
+/// ```
 pub fn handle_policy_toggle_system(
     mut events: EventReader<TogglePolicyEvent>,
     mut policies: ResMut<ColonyPolicies>,
@@ -141,6 +529,82 @@ pub fn handle_policy_toggle_system(
     }
 }
 
+/// Handles events to hack the central hub and clear orphaned policies.
+///
+/// # Examples
+///
+/// ```
+/// use bevy_ecs::prelude::*;
+/// use scale::layer1::administration::edicts::{handle_hack_hub_system, HackCentralHubEvent, ColonyPolicies, Policy};
+///
+/// let mut world = World::new();
+/// let mut policies = ColonyPolicies::default();
+/// policies.orphaned_policies.insert(Policy::Rationing);
+/// world.insert_resource(policies);
+/// world.init_resource::<Events<HackCentralHubEvent>>();
+/// world.send_event(HackCentralHubEvent { target_policy: Policy::Rationing });
+///
+/// let mut schedule = Schedule::default();
+/// schedule.add_systems(handle_hack_hub_system);
+/// schedule.run(&mut world);
+/// ```
+/// Handles events to hack the central hub and clear orphaned policies.
+///
+/// # Examples
+///
+/// ```
+/// use bevy_ecs::prelude::*;
+/// use scale::layer1::administration::edicts::{handle_hack_hub_system, HackCentralHubEvent, ColonyPolicies, Policy};
+///
+/// let mut world = World::new();
+/// let mut policies = ColonyPolicies::default();
+/// policies.orphaned_policies.insert(Policy::Rationing);
+/// world.insert_resource(policies);
+/// world.init_resource::<Events<HackCentralHubEvent>>();
+/// world.send_event(HackCentralHubEvent { target_policy: Policy::Rationing });
+///
+/// let mut schedule = Schedule::default();
+/// schedule.add_systems(handle_hack_hub_system);
+/// schedule.run(&mut world);
+/// ```
+/// Handles events to hack the central hub and clear orphaned policies.
+///
+/// # Examples
+///
+/// ```
+/// use bevy_ecs::prelude::*;
+/// use scale::layer1::administration::edicts::{handle_hack_hub_system, HackCentralHubEvent, ColonyPolicies, Policy};
+///
+/// let mut world = World::new();
+/// let mut policies = ColonyPolicies::default();
+/// policies.orphaned_policies.insert(Policy::Rationing);
+/// world.insert_resource(policies);
+/// world.init_resource::<Events<HackCentralHubEvent>>();
+/// world.send_event(HackCentralHubEvent { target_policy: Policy::Rationing });
+///
+/// let mut schedule = Schedule::default();
+/// schedule.add_systems(handle_hack_hub_system);
+/// schedule.run(&mut world);
+/// ```
+/// Handles events to hack the central hub and clear orphaned policies.
+///
+/// # Examples
+///
+/// ```
+/// use bevy_ecs::prelude::*;
+/// use scale::layer1::administration::edicts::{handle_hack_hub_system, HackCentralHubEvent, ColonyPolicies, Policy};
+///
+/// let mut world = World::new();
+/// let mut policies = ColonyPolicies::default();
+/// policies.orphaned_policies.insert(Policy::Rationing);
+/// world.insert_resource(policies);
+/// world.init_resource::<Events<HackCentralHubEvent>>();
+/// world.send_event(HackCentralHubEvent { target_policy: Policy::Rationing });
+///
+/// let mut schedule = Schedule::default();
+/// schedule.add_systems(handle_hack_hub_system);
+/// schedule.run(&mut world);
+/// ```
 pub fn handle_hack_hub_system(
     mut events: EventReader<HackCentralHubEvent>,
     mut policies: ResMut<ColonyPolicies>,
@@ -152,9 +616,17 @@ pub fn handle_hack_hub_system(
     }
 }
 
-/// Returns the modifier for hunger decay rate.
+/// Calculates the global hunger decay modifier based on active policies.
 ///
-/// * `Rationing`: 0.5x decay.
+///
+/// # Examples
+/// ```
+/// use scale::layer1::administration::edicts::{ColonyPolicies, Policy, get_hunger_decay_modifier};
+/// let mut policies = ColonyPolicies::default();
+/// policies.toggle(Policy::Rationing);
+/// assert_eq!(get_hunger_decay_modifier(&policies), 0.5);
+/// ```
+///
 #[must_use]
 pub fn get_hunger_decay_modifier(policies: &ColonyPolicies) -> f32 {
     if policies.is_active(Policy::Rationing) {
@@ -164,10 +636,17 @@ pub fn get_hunger_decay_modifier(policies: &ColonyPolicies) -> f32 {
     }
 }
 
-/// Returns the modifier for work speed.
+/// Calculates the global work speed modifier based on active policies.
 ///
-/// * `DoubleShifts`: 1.2x speed.
-/// * `PestControl`: 0.95x speed.
+///
+/// # Examples
+/// ```
+/// use scale::layer1::administration::edicts::{ColonyPolicies, Policy, get_work_speed_modifier};
+/// let mut policies = ColonyPolicies::default();
+/// policies.toggle(Policy::DoubleShifts);
+/// assert_eq!(get_work_speed_modifier(&policies), 1.2);
+/// ```
+///
 #[must_use]
 pub fn get_work_speed_modifier(policies: &ColonyPolicies) -> f32 {
     let mut modifier = 1.0;
@@ -350,7 +829,7 @@ mod tests {
             .id();
 
         let modifier =
-            crate::layer1::edicts::get_hunger_decay_modifier(world.resource::<ColonyPolicies>());
+            crate::layer1::administration::edicts::get_hunger_decay_modifier(world.resource::<ColonyPolicies>());
         assert!(
             modifier < 1.0,
             "Hunger decay modifier should be < 1.0 with Rationing"
@@ -370,14 +849,14 @@ mod tests {
 
         // Check modifiers
         let speed_mod =
-            crate::layer1::edicts::get_work_speed_modifier(world.resource::<ColonyPolicies>());
+            crate::layer1::administration::edicts::get_work_speed_modifier(world.resource::<ColonyPolicies>());
         assert!(
             speed_mod > 1.0,
             "Work speed modifier should be > 1.0 with DoubleShifts"
         );
 
         let morale_mod =
-            crate::layer1::edicts::get_morale_modifier(world.resource::<ColonyPolicies>());
+            crate::layer1::administration::edicts::get_morale_modifier(world.resource::<ColonyPolicies>());
         assert!(
             morale_mod < 0.0,
             "Morale modifier should be negative with DoubleShifts"
