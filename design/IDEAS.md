@@ -15848,3 +15848,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Trying to predict and navigate around this massive, unstoppable force of nature, or trying to exploit its overwhelming power against your enemies without getting crushed in the process.
 
 ---
+
+## The Archaeological Contagion
+
+**Layer:** 1
+
+**Fantasy:** Unearthing ancient ruins unleashes ideas, not just monsters or diseases.
+
+**Mechanic:** Excavating deep ruins has a chance to infect pops with "Ancient Routines." Infected pops periodically stop their normal jobs to perform bizarre, nonsensical tasks (e.g., stacking rocks in specific patterns, chanting at the sun) that disrupt the economy. However, observing these routines slowly generates rare "Lost Tech" research points.
+
+**Emergence:** You desperately need your miners to extract coal during a freeze, but they have all been infected and are instead spending their shifts building useless geometric shapes out of dirt. You must decide whether to let them finish the ritual for the tech bonus or forcefully reassign them and lose the knowledge.
+
+**Tension:** The immense value of lost technology vs. the chaotic, uncontrollable disruption to your colony's basic economy.
+
+---
+
+## Generational Spite
+
+**Layer:** Cross-layer
+
+**Fantasy:** Sins of the father are visited upon the sons. A petty grievance becomes a blood feud.
+
+**Mechanic:** Extreme negative interactions or unresolved grievances (e.g., a pop being denied medical care or food while others feast) generate a "Spite" trait that is inherited by descendants. If a descendant with deep-rooted Spite ever rises to a position of power (e.g., a Layer 2 Fleet Commander or Layer 1 Governor), they may actively mutiny or sabotage the faction that wronged their ancestors.
+
+**Emergence:** You let a minor food shortage starve a few low-tier workers early in the game to save resources. Three hundred years later, the great-great-granddaughter of one of those workers becomes your most decorated Admiral. At the climax of a massive war, she betrays you and defects to the enemy, citing the ancient starvation as her justification.
+
+**Tension:** Micro-managing seemingly trivial early-game hardships vs. the looming threat of them compounding into devastating betrayals centuries later.
+
+---
+
+## The Refugee Archipelago
+
+**Layer:** 2
+
+**Fantasy:** Failed colonies don't just disappear; they become desperate, roaming flotillas looking for salvation.
+
+**Mechanic:** When a Layer 1 colony (yours or an AI's) fails due to starvation, unrest, or disaster, the survivors launch in whatever jury-rigged ships they can find. These "Refugee Flotillas" roam the Layer 2 system, slowly depleting their own fuel and food. They will dock at your functional colonies demanding asylum, instantly dumping massive populations and extreme needs onto your infrastructure. If denied, they may turn into desperate pirates or strip-mine your orbital resources.
+
+**Emergence:** You intentionally destabilize a rival empire's colony through espionage. The colony collapses, but instead of dying quietly, millions of starving refugees arrive in orbit above your capital world. Your perfect economy is suddenly overwhelmed by the influx, forcing you to choose between mass starvation or shooting down unarmed refugee ships that you created.
+
+**Tension:** The humanitarian and labor benefits of accepting massive population influxes vs. the catastrophic strain on your meticulously balanced economy, and the moral/diplomatic cost of turning them away.
+
+---
