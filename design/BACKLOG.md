@@ -669,3 +669,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `989` Heat Death — `specs/989-heat-death.md`
 - [ ] `990` Treaty Cruisers — `specs/990-treaty-cruisers.md`
 - [ ] `991` Sub-Glacial Oceans — `specs/991-sub-glacial-oceans.md`
+- [ ] `992` The Fungal Monoliths — `specs/992-the-fungal-monoliths.md`
+- [ ] `993` The Fractal Bureaucracy — `specs/993-the-fractal-bureaucracy.md`
+- [ ] `994` The Kinetic Heist — `specs/994-the-kinetic-heist.md`
