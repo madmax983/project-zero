@@ -4,10 +4,19 @@ use bevy_ecs::prelude::*;
 use std::collections::HashSet;
 
 /// Resource tracking active colony policies/edicts.
+
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct PolicyState {
+    pub active: bool,
+    pub duration: u32,
+    pub is_tradition: bool,
+}
+
 #[derive(Resource, Default, Debug, Clone)]
 pub struct ColonyPolicies {
     /// Set of currently active policies.
     pub active_policies: HashSet<Policy>,
+    pub policy_states: std::collections::HashMap<Policy, PolicyState>,
     /// Set of policies that have become orphaned and cannot be normally removed.
     pub orphaned_policies: HashSet<Policy>,
 }
@@ -35,6 +44,7 @@ pub enum Policy {
     Aesthetic,
     /// Offers amnesty visas to pirate fleets.
     AmnestyVisa,
+    MartialLaw,
 }
 
 #[derive(Event, Debug)]
@@ -43,6 +53,11 @@ pub struct TogglePolicyEvent(pub Policy);
 #[derive(Event, Debug)]
 pub struct AccessDeniedEvent {
     pub reason: String,
+}
+
+#[derive(Event, Debug, Clone)]
+pub struct RevokePolicyEvent {
+    pub policy: Policy,
 }
 
 #[derive(Event, Debug)]
@@ -55,8 +70,17 @@ impl ColonyPolicies {
     pub fn toggle(&mut self, policy: Policy) {
         if self.active_policies.contains(&policy) {
             self.active_policies.remove(&policy);
+            self.policy_states.remove(&policy);
         } else {
             self.active_policies.insert(policy);
+            self.policy_states.insert(
+                policy,
+                PolicyState {
+                    active: true,
+                    duration: 0,
+                    is_tradition: false,
+                },
+            );
         }
     }
 
@@ -64,6 +88,39 @@ impl ColonyPolicies {
     #[must_use]
     pub fn is_active(&self, policy: Policy) -> bool {
         self.active_policies.contains(&policy)
+    }
+}
+
+pub fn update_policy_tradition_system(mut policies: ResMut<ColonyPolicies>) {
+    for state in policies.policy_states.values_mut() {
+        if state.active {
+            state.duration += 1;
+            if state.duration >= 100 {
+                state.is_tradition = true;
+            }
+        }
+    }
+}
+
+pub fn handle_revoke_policy_system(
+    mut events: EventReader<RevokePolicyEvent>,
+    mut policies: ResMut<ColonyPolicies>,
+    mut unrest: ResMut<crate::layer1::social::unrest::Unrest>,
+) {
+    for ev in events.read() {
+        if let Some(state) = policies.policy_states.get(&ev.policy) {
+            if state.is_tradition {
+                unrest
+                    .modifiers
+                    .push(crate::layer1::social::unrest::UnrestModifier {
+                        value: 0.5,
+                        duration: 500,
+                        label: "Revoked Tradition".to_string(),
+                    });
+            }
+        }
+        policies.active_policies.remove(&ev.policy);
+        policies.policy_states.remove(&ev.policy);
     }
 }
 
@@ -144,6 +201,110 @@ mod tests {
     use super::*;
     use crate::layer1::needs::Needs;
     use crate::layer1::GridPosition;
+
+    #[test]
+    fn test_policy_gains_tradition_xp_over_time() {
+        let mut app = bevy_app::App::new();
+
+        let mut policies = ColonyPolicies::default();
+        policies.active_policies.insert(Policy::Rationing);
+        policies.policy_states.insert(
+            Policy::Rationing,
+            PolicyState {
+                active: true,
+                duration: 0,
+                is_tradition: false,
+            },
+        );
+        app.insert_resource(policies);
+
+        app.add_systems(bevy_app::Update, update_policy_tradition_system);
+        app.update();
+
+        let policies = app.world().resource::<ColonyPolicies>();
+        let state = policies.policy_states.get(&Policy::Rationing).unwrap();
+        assert_eq!(
+            state.duration, 1,
+            "Policy duration should increase per tick"
+        );
+    }
+
+    #[test]
+    fn test_policy_becomes_tradition_after_duration() {
+        let mut app = bevy_app::App::new();
+
+        let mut policies = ColonyPolicies::default();
+        policies.active_policies.insert(Policy::Rationing);
+        policies.policy_states.insert(
+            Policy::Rationing,
+            PolicyState {
+                active: true,
+                duration: 99,
+                is_tradition: false,
+            },
+        );
+        app.insert_resource(policies);
+
+        app.add_systems(bevy_app::Update, update_policy_tradition_system);
+        app.update(); // Tick 100
+
+        let policies = app.world().resource::<ColonyPolicies>();
+        let state = policies.policy_states.get(&Policy::Rationing).unwrap();
+        assert!(
+            state.is_tradition,
+            "Policy should become a tradition after hitting duration threshold"
+        );
+    }
+
+    #[test]
+    fn test_revoking_tradition_causes_unrest() {
+        let mut app = bevy_app::App::new();
+
+        let mut policies = ColonyPolicies::default();
+        policies.active_policies.insert(Policy::MartialLaw);
+        policies.policy_states.insert(
+            Policy::MartialLaw,
+            PolicyState {
+                active: true,
+                duration: 150,
+                is_tradition: true,
+            },
+        );
+        app.insert_resource(policies);
+
+        app.insert_resource(crate::layer1::social::unrest::Unrest::default());
+        app.init_resource::<bevy_ecs::event::Events<RevokePolicyEvent>>();
+
+        app.add_systems(bevy_app::Update, handle_revoke_policy_system);
+
+        let _initial_unrest = app
+            .world()
+            .resource::<crate::layer1::social::unrest::Unrest>()
+            .level;
+
+        // Revoke the tradition
+        app.world_mut()
+            .resource_mut::<bevy_ecs::event::Events<RevokePolicyEvent>>()
+            .send(RevokePolicyEvent {
+                policy: Policy::MartialLaw,
+            });
+
+        app.update();
+
+        let unrest = app
+            .world()
+            .resource::<crate::layer1::social::unrest::Unrest>();
+        assert!(
+            !unrest.modifiers.is_empty(),
+            "Revoking a tradition should heavily increase unrest"
+        );
+
+        let policies = app.world().resource::<ColonyPolicies>();
+        assert!(
+            !policies.active_policies.contains(&Policy::MartialLaw),
+            "Policy should be revoked"
+        );
+    }
 
     #[test]
     fn test_policies_resource_defaults() {

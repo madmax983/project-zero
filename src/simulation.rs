@@ -87,6 +87,7 @@ pub fn build_simulation_schedule() -> Schedule {
         update_event_buffer::<crate::layer1::administration::edicts::TogglePolicyEvent>,
         update_event_buffer::<crate::layer1::administration::edicts::AccessDeniedEvent>,
         update_event_buffer::<crate::layer1::administration::edicts::HackCentralHubEvent>,
+        update_event_buffer::<crate::layer1::administration::edicts::RevokePolicyEvent>,
     ));
     schedule.add_systems((
         // Cleanup Layer 2 events
@@ -358,6 +359,7 @@ pub fn run_simulation_tick(world: &mut World) {
         world.init_resource::<Events<crate::layer1::administration::edicts::TogglePolicyEvent>>();
         world.init_resource::<Events<crate::layer1::administration::edicts::AccessDeniedEvent>>();
         world.init_resource::<Events<crate::layer1::administration::edicts::HackCentralHubEvent>>();
+        world.init_resource::<Events<crate::layer1::administration::edicts::RevokePolicyEvent>>();
     }
     if !world.contains_resource::<Events<crate::layer1::geology::tectonic::MegaQuakeEvent>>() {
         world.init_resource::<Events<crate::layer1::geology::tectonic::MegaQuakeEvent>>();
@@ -661,6 +663,7 @@ mod tests {
         world.init_resource::<Events<crate::layer1::administration::edicts::TogglePolicyEvent>>();
         world.init_resource::<Events<crate::layer1::administration::edicts::AccessDeniedEvent>>();
         world.init_resource::<Events<crate::layer1::administration::edicts::HackCentralHubEvent>>();
+        world.init_resource::<Events<crate::layer1::administration::edicts::RevokePolicyEvent>>();
         world.init_resource::<Events<crate::layer3::fleets::ColonyFoundedEvent>>();
         world.init_resource::<Events<crate::layer1::temporal_ghost_towns::TemporalStutterEvent>>();
         world.init_resource::<Events<crate::layer3::planet::black_market_terraforming::RogueTerraformEvent>>();
