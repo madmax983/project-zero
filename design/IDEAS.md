@@ -13932,7 +13932,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Subspace Stowaways
+## Subspace Stowaways [SPECCED]
 
 **Layer:** 3 -> 2 -> 1
 
@@ -15476,7 +15476,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Segregating your colony for optimal industrial/residential efficiency vs. the inevitable, devastating social stratification that physical segregation creates.
 
 ---
-## Fungal Networking
+## Fungal Networking [SPECCED]
 
 **Layer:** 1
 
@@ -15490,7 +15490,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Interstellar Quarantine Fields
+## Interstellar Quarantine Fields [SPECCED]
 
 **Layer:** Cross-layer (2 -> 3)
 
@@ -15573,7 +15573,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Subspace Stowaways
+## Subspace Stowaways [SPECCED]
 
 **Layer:** Cross-layer (1 -> 2)
 
