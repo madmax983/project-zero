@@ -666,5 +666,4 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `981` Corporate Espionage: The Trojan Architect — `specs/981-corporate-espionage-trojan-architect.md`
 - [ ] `982` The Generation Ship Mutiny — `specs/982-the-generation-ship-mutiny.md`
 - [ ] `983` Cargo Cult Logistics — `specs/983-cargo-cult-logistics.md`
-- [ ] `984` Pheromone Gardening — `specs/984-pheromone-gardening.md`
 - [ ] `985` Propaganda Press — `specs/985-propaganda-press.md`

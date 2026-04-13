@@ -386,3 +386,4 @@
 - [x] `969` Predatory Weather - `specs/969-predatory-weather.md` - completed 2026-06-15
 - [x] `975` The Geothermal Heartbeat — `specs/975-the-geothermal-heartbeat.md` — completed 2026-06-02
 - [x] `971` The Living Constitution — `specs/971-the-living-constitution.md` — completed 2026-06-01
+- [x] `984` Pheromone Gardening — `specs/984-pheromone-gardening.md` — completed 2026-04-13
