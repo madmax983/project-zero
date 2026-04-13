@@ -145,13 +145,16 @@ pub fn update_noise_system(
     noise_map.values.fill(0.1);
 
     // Find all SilentFlora positions to nullify noise
-    let silent_flora_positions: Vec<GridPosition> = flora.iter().filter_map(|(f, p)| {
-        if f.flora_type == crate::layer1::flora::FloraType::SilentFlora {
-            Some(*p)
-        } else {
-            None
-        }
-    }).collect();
+    let silent_flora_positions: Vec<GridPosition> = flora
+        .iter()
+        .filter_map(|(f, p)| {
+            if f.flora_type == crate::layer1::flora::FloraType::SilentFlora {
+                Some(*p)
+            } else {
+                None
+            }
+        })
+        .collect();
 
     for (source, pos) in &sources {
         let mut queue = std::collections::VecDeque::new();

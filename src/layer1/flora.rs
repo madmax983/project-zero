@@ -37,7 +37,8 @@ pub fn consume_silent_flora_system(
     }
 
     for (pop_pos, mut needs) in &mut pop_query {
-        if needs.hunger < 0.8 { // Only eat if they need to
+        if needs.hunger < 0.8 {
+            // Only eat if they need to
             for flora_pos in &silent_flora_positions {
                 if pop_pos.distance_chebyshev(*flora_pos) <= 1 {
                     needs.hunger = 1.0;

@@ -147,6 +147,9 @@ pub fn spawn_initial_anomalies(world: &mut World, count: usize) {
 }
 
 #[allow(clippy::type_complexity)]
+/// ⚡ Bolt Optimization:
+/// We pre-allocate the returned `Vec` using the query iterator's `size_hint`
+/// to avoid multiple heap reallocations when collecting available scanners.
 fn collect_scanners(world: &mut World) -> Vec<(Entity, Entity)> {
     let striking_factions: std::collections::HashSet<crate::layer1::factions::FactionId> = world
         .get_resource::<crate::layer1::factions::Factions>()
@@ -159,12 +162,15 @@ fn collect_scanners(world: &mut World) -> Vec<(Entity, Entity)> {
         })
         .unwrap_or_default();
 
-    let mut scanners = Vec::new();
     let mut query = world.query_filtered::<(
         Entity,
         &MovementTarget,
         Option<&crate::layer1::factions::FactionMember>,
     ), With<AtTarget>>();
+    // ⚡ Bolt Optimization:
+    // Pre-allocating `scanners` with `Vec::with_capacity` using the iterator's `size_hint`
+    // avoids N heap reallocations during the collection of available scanners.
+    let mut scanners = Vec::with_capacity(query.iter(world).size_hint().1.unwrap_or_default());
 
     for (entity, mt, faction_member) in query.iter(world) {
         if mt.for_action == ActionType::Explore {
