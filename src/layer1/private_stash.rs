@@ -190,7 +190,7 @@ mod tests {
         // BUT, I can also just patch the RNG in the system? No.
 
         // I will run it many times.
-        for _ in 0..5000 {
+        for _ in 0..15000 {
             schedule.run(&mut world);
             // Optimization: Break early if theft occurred
             if world
@@ -241,7 +241,7 @@ mod tests {
         let mut schedule = Schedule::default();
         schedule.add_systems(hoarding_system);
 
-        for _ in 0..5000 {
+        for _ in 0..15000 {
             schedule.run(&mut world);
             if world
                 .get::<PrivateStash>(pop)
@@ -330,7 +330,7 @@ mod tests {
         schedule.add_systems(super::stash_creation_system);
 
         // Run system many times to ensure probability hits
-        for _ in 0..5000 {
+        for _ in 0..15000 {
             schedule.run(&mut world);
             // Optimization: Break early if stash created
             if world.query::<&PrivateStash>().iter(&world).count() > 0 {

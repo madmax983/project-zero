@@ -216,6 +216,8 @@ pub fn register(schedule: &mut Schedule) {
             crate::experimental::cargo_cult_fleet::spawn_cargo_cult_fleet_system,
             #[cfg(feature = "nova")]
             crate::experimental::cargo_cult_fleet::feed_cargo_cult_tether_system,
+            crate::layer1::social::cargo_cult::apply_cargo_cult_belief_system,
+            crate::layer1::social::cargo_cult::process_ritual_actions_system,
         )
             .in_set(Layer1SystemSet::Observation),
     );
