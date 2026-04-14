@@ -393,3 +393,4 @@
 - [x] `985` Propaganda Press — `specs/985-propaganda-press.md` — completed 2026-04-13
 - [x] `822` Orbital Necropolises — `specs/822-orbital-necropolises.md` — completed 2026-04-14
 - [x] `902` Nebulae — `specs/902-nebulae.md` — completed 2026-04-14
+- [x] `INT-975` Integration: Geothermal Heartbeat -> Explosion System — completed 2026-07-02

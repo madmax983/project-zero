@@ -679,3 +679,10 @@
 - **Systems connected:** `aesthetic_edict_chronicle_bridge` (Integration) -> `AddChronicleEvent` (Chronicle)
 - **Glue added:** Added `aesthetic_edict_chronicle_bridge` to emit an `AddChronicleEvent` when `Policy::Aesthetic` is added or removed from `ColonyPolicies`. Registered in `Layer1SystemSet::Observation`.
 - **Tests:** `tests/integration/aesthetic_edict_chronicle_bridge.rs`
+
+### INT-975: Geothermal Heartbeat -> Explosion System
+- **Date:** 2026-07-02
+- **Systems connected:** `geothermal_decay_system` (Layer 1 Geothermal Pulse) -> `ExplosionEvent` (Volatile Systems)
+- **Glue added:**
+    - Replaced custom neighbor damage logic in `geothermal_decay_system` with emitting an `ExplosionEvent` with `damage: 50.0` and `radius: 1`.
+- **Tests:** `tests/integration/geothermal_explosion.rs` (1 test verified).
