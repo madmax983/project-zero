@@ -83,6 +83,10 @@ pub fn build_simulation_schedule() -> Schedule {
 
     // --- Layer 2 Integration ---
     schedule.add_systems((
+        crate::layer2::orbital_necropolis::apply_necropolis_bonus,
+        crate::layer2::orbital_necropolis::handle_necropolis_destruction,
+    ));
+    schedule.add_systems((
         // Cleanup events
         update_event_buffer::<crate::layer1::administration::edicts::TogglePolicyEvent>,
         update_event_buffer::<crate::layer1::administration::edicts::AccessDeniedEvent>,
@@ -93,6 +97,9 @@ pub fn build_simulation_schedule() -> Schedule {
         // Cleanup Layer 2 events
         update_event_buffer::<LaunchEvent>,
         update_event_buffer::<ShipDestroyedEvent>,
+        update_event_buffer::<crate::layer2::orbital_necropolis::EntityDestroyedEvent>,
+    ));
+    schedule.add_systems((
         update_event_buffer::<DetectionEvent>,
         crate::layer2::fleet::fleet_order_system,
         crate::layer2::station::build_station_system,
