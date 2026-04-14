@@ -15,7 +15,7 @@
 //!   in taverns based on simulation events. Requires `cargo run --features nova`.
 //!   See `examples/oral_tradition_demo.rs`.
 
-
+use comfy_table::{presets::UTF8_FULL, Cell, Color as TableColor, Table};
 use crossterm::{
     event::{self, DisableMouseCapture, EnableMouseCapture, Event, KeyCode, KeyEventKind},
     execute,
@@ -23,7 +23,6 @@ use crossterm::{
 };
 use ratatui::{prelude::*, widgets::*};
 use scale::shared::narrative::{NarrativeContext, NarrativeGenerator, NarrativeSegment};
-use comfy_table::{presets::UTF8_FULL, Cell, Color as TableColor, Table};
 use std::io;
 use std::time::Duration;
 

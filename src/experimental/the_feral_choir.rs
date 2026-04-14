@@ -8,9 +8,9 @@
 //! When multiple `Fauna` entities are within range of each other, they form a "Feral Choir".
 //! Their combined howling creates a massive `NoiseSource` that applies a global morale penalty to all Pops who can hear it.
 
-use crate::layer1::acoustic::NoiseSource;
 use crate::layer1::fauna::Fauna;
 use crate::layer1::map::GridPosition;
+use crate::layer1::physics::acoustic::NoiseSource;
 use bevy_ecs::prelude::*;
 use std::collections::HashSet;
 
@@ -127,6 +127,10 @@ pub fn dissolve_feral_choir_system(
             }
         }
     }
+}
+
+pub fn register(schedule: &mut Schedule) {
+    schedule.add_systems((detect_feral_choir_system, dissolve_feral_choir_system));
 }
 
 #[cfg(test)]

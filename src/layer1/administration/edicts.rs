@@ -828,8 +828,9 @@ mod tests {
             ))
             .id();
 
-        let modifier =
-            crate::layer1::administration::edicts::get_hunger_decay_modifier(world.resource::<ColonyPolicies>());
+        let modifier = crate::layer1::administration::edicts::get_hunger_decay_modifier(
+            world.resource::<ColonyPolicies>(),
+        );
         assert!(
             modifier < 1.0,
             "Hunger decay modifier should be < 1.0 with Rationing"
@@ -848,15 +849,17 @@ mod tests {
         world.insert_resource(policies);
 
         // Check modifiers
-        let speed_mod =
-            crate::layer1::administration::edicts::get_work_speed_modifier(world.resource::<ColonyPolicies>());
+        let speed_mod = crate::layer1::administration::edicts::get_work_speed_modifier(
+            world.resource::<ColonyPolicies>(),
+        );
         assert!(
             speed_mod > 1.0,
             "Work speed modifier should be > 1.0 with DoubleShifts"
         );
 
-        let morale_mod =
-            crate::layer1::administration::edicts::get_morale_modifier(world.resource::<ColonyPolicies>());
+        let morale_mod = crate::layer1::administration::edicts::get_morale_modifier(
+            world.resource::<ColonyPolicies>(),
+        );
         assert!(
             morale_mod < 0.0,
             "Morale modifier should be negative with DoubleShifts"

@@ -1,8 +1,8 @@
-use bevy_ecs::prelude::*;
-use std::collections::HashMap;
-use crate::layer1::traits::{Trait, Traits};
 use crate::layer1::memory::Memories;
 use crate::layer1::social::morale::Morale;
+use crate::layer1::traits::{Trait, Traits};
+use bevy_ecs::prelude::*;
+use std::collections::HashMap;
 
 #[derive(Resource, Default)]
 pub struct DailyChronicle {
@@ -28,8 +28,6 @@ pub fn process_redactions_system(
     }
 }
 
-
-
 pub fn apply_propaganda_effects_system(
     chronicle: Res<DailyChronicle>,
     mut query: Query<(&mut Traits, &Memories, &mut Morale)>,
@@ -48,7 +46,10 @@ pub fn apply_propaganda_effects_system(
 
         for (_, truth) in chronicle.redacted_truths.iter() {
             // Using string format for comparison as per spec guidance, though enum EventId is better.
-            let truth_memory = memories.items.iter().any(|m| format!("{:?}", m.memory_type) == *truth);
+            let truth_memory = memories
+                .items
+                .iter()
+                .any(|m| format!("{:?}", m.memory_type) == *truth);
             if truth_memory {
                 if !traits.has(Trait::Dissident) {
                     traits.add(Trait::Dissident);
@@ -66,10 +67,12 @@ pub fn apply_propaganda_effects_system(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::layer1::social::propaganda::{DailyChronicle, RedactEvent, process_redactions_system, apply_propaganda_effects_system};
-    use crate::layer1::traits::{Trait, Traits};
     use crate::layer1::memory::{Memories, MemoryType};
     use crate::layer1::social::morale::Morale;
+    use crate::layer1::social::propaganda::{
+        apply_propaganda_effects_system, process_redactions_system, DailyChronicle, RedactEvent,
+    };
+    use crate::layer1::traits::{Trait, Traits};
 
     #[test]
     fn test_redacting_chronicle_hides_event() {
@@ -79,11 +82,13 @@ mod tests {
         app.init_resource::<Events<RedactEvent>>();
 
         let mut chronicle = app.world_mut().resource_mut::<DailyChronicle>();
-        chronicle.entries.push("Starvation occurred in Sector 4".to_string());
+        chronicle
+            .entries
+            .push("Starvation occurred in Sector 4".to_string());
 
-        app.world_mut().resource_mut::<Events<RedactEvent>>().send(RedactEvent {
-            entry_index: 0,
-        });
+        app.world_mut()
+            .resource_mut::<Events<RedactEvent>>()
+            .send(RedactEvent { entry_index: 0 });
 
         app.update();
 
@@ -98,17 +103,25 @@ mod tests {
 
         let mut chronicle = DailyChronicle::default();
         chronicle.entries.push("[REDACTED]".to_string());
-        chronicle.redacted_truths.insert(0, "StarvationTrauma".to_string());
+        chronicle
+            .redacted_truths
+            .insert(0, "StarvationTrauma".to_string());
         app.insert_resource(chronicle);
 
         let mut memories = Memories::default();
         memories.add(MemoryType::StarvationTrauma, 100);
 
-        let pop_entity = app.world_mut().spawn((
-            Traits::default(),
-            memories,
-            Morale { value: 0.5, modifiers: vec![] }, // They will get angry, not happy
-        )).id();
+        let pop_entity = app
+            .world_mut()
+            .spawn((
+                Traits::default(),
+                memories,
+                Morale {
+                    value: 0.5,
+                    modifiers: vec![],
+                }, // They will get angry, not happy
+            ))
+            .id();
 
         app.update();
 

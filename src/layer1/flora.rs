@@ -274,7 +274,6 @@ pub fn process_flora_clearing(world: &mut World, designation_entity: Entity, wor
     }
 }
 
-
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub enum PheromoneEmission {
     Calming,
@@ -287,7 +286,6 @@ pub struct PheromoneFlora {
     pub emission_type: PheromoneEmission,
     pub strength: f32,
 }
-
 
 /// Extends PheromoneFlora to detect hazards.
 /// It turns into `PheromoneEmission::Danger` when it detects an EarthquakeEvent or ReactorMeltdown near the plant.
@@ -322,7 +320,7 @@ pub fn detect_hazards_system(
 #[cfg(test)]
 mod tests {
 
-            use crate::layer1::building::{Building, BuildingType};
+    use crate::layer1::building::{Building, BuildingType};
     use crate::layer1::flora::{
         flora_attack_system, flora_spread_system, process_flora_clearing,
         update_bioluminescence_system, Bioluminescent, Flora, FloraClearingProgress, FloraType,
