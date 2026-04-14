@@ -1,3 +1,4 @@
+pub mod nebulae;
 pub mod barnacles;
 pub mod combat;
 pub mod debris;
