@@ -6676,3 +6676,25 @@ Laws that can become entrenched as Traditions.
 - the Silence Act
 - the Work Mandate
 - the Purge Protocol
+
+## Acoustic Shadows Fragments (Spec 258)
+
+## Fragment Type: [SILENT_ROOM_NAME]
+Names for vacuum-isolated rooms or areas.
+
+- the Deaf-Block
+- the Quiet Sector
+- the Still-Rooms
+- the Hush-Chamber
+- the Void-Pocket
+- the Silent Wing
+
+## Fragment Type: [UNHEARD_TRAGEDY]
+Events occurring in silent zones.
+
+- their shouts died in the vacuum
+- the alarm lights flashed but made no sound
+- no one heard the structural collapse
+- screaming into the dead air
+- an explosion without a shockwave
+- suffocating in total silence
