@@ -15932,3 +15932,59 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** The intoxicating, free economic and military power of the drones versus the terrifying, invisible ticking clock of their inevitable software decay and betrayal.
 
 ---
+
+## The Substrate Whisperers
+
+**Layer:** Cross-layer
+
+**Fantasy:** Pops begin hearing the instructions you are giving the colony, interpreting the UI clicks and commands as divine or maddening voices from the ancient "Substrate."
+
+**Mechanic:** If a colony's average stress remains extremely high for too long, a small percentage of pops gain the "Whisperer" trait. They begin to anticipate your build orders and job reassignments, moving to designated tiles before you even place the blueprint or start working before you click. However, they refuse any task they deem "contradictory to the Substrate's will."
+
+**Emergence:** You try to rapidly demolish a failing, hazardous factory to save resources. A group of Whisperers, believing the factory is sacred because you ordered its construction fifty years ago, physically blockade the demolition crews, forcing a violent standoff to execute your own command.
+
+**Tension:** The terrifying efficiency of precognitive workers versus the complete loss of control when their interpretation of your will differs from your actual intentions.
+
+---
+
+## The Grey Trade
+
+**Layer:** 2
+
+**Fantasy:** A desperate black market where the currency is time itself, staving off "The Grey" (decay/rot) for your most precious assets.
+
+**Mechanic:** A roaming, untargetable merchant fleet occasionally enters the system offering "Stasis Pods" or "Anti-Entropic Fields." You trade massive amounts of Layer 1 raw materials to indefinitely suspend the decay/spoilage of specific stockpiles or even dying key personnel.
+
+**Emergence:** A severe blight hits your agricultural sector, and your primary food stockpile is rapidly rotting. You bankrupt your colony's alloy reserves to buy an Anti-Entropic Field for the granary. You survive the famine, but now you have a permanent, indestructible granary that you can never demolish, right in the middle of where you need to build your new planetary defense array.
+
+**Tension:** Sacrificing your ability to expand and build in the present to perfectly preserve the past.
+
+---
+
+## Megastructure Scaffolding
+
+**Layer:** 2 -> 1
+
+**Fantasy:** The sheer, terrifying scale of Layer 2 construction violently disrupting the Layer 1 world below.
+
+**Mechanic:** Constructing a massive Layer 2 orbital structure (like a Space Elevator or Planetary Shield) requires physical scaffolding that extends down into the Layer 1 colony map. Massive, indestructible "Tether Points" crash down onto your map, crushing whatever is beneath them and permanently altering the local environment (blocking sunlight, causing localized quakes).
+
+**Emergence:** You finally authorize the construction of the planetary shield to protect against raiders. The primary tether drops directly onto your most productive, ancient farming district, obliterating it. The resulting famine kills thousands, but the shield goes up, saving the survivors.
+
+**Tension:** The immense, long-term security and economic benefits of orbital megastructures versus the immediate, catastrophic, and permanent scarring they inflict on the very colonies they are meant to serve.
+
+---
+
+## The Archive of the Lost
+
+**Layer:** Cross-layer
+
+**Fantasy:** Stumbling upon a perfectly preserved, sterile record of every mistake you and previous civilizations have made.
+
+**Mechanic:** A deep-space probe discovers an ancient, automated archive station near the edge of the system. Instead of tech or resources, it contains highly detailed, localized accounts of past colony failures—including your own failed runs in previous save files. Accessing the archive grants a massive, permanent boost to research speed but inflicts a devastating, permanent "Existential Dread" morale penalty on the pops who read it.
+
+**Emergence:** You are struggling to unlock advanced fusion tech to save your freezing world. You access the Archive. Your scientists figure out fusion overnight, saving the colony from the cold. But the realization that countless others have frozen before them, and that their struggle is just data in a machine, leads to a mass strike and a complete halt in cultural production for a generation.
+
+**Tension:** The temptation of forbidden, immediate knowledge versus the irreversible psychological damage of knowing how small you are.
+
+---
