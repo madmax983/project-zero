@@ -15973,3 +15973,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you fight enemies close to your worlds for defense advantages, knowing the debris might doom the planet later, or do you risk fighting in deep space? How much do you invest in expensive "Sweeper" ships versus actual combat vessels?
 
 ---
+## Hostage Architecture
+
+**Layer:** 1
+
+**Fantasy:** Building your colony with a dead-man's switch to guarantee loyalty, but dealing with the psychological fallout of living in a loaded gun.
+
+**Mechanic:** Certain high-tier infrastructure (e.g., Orbital Tethers, Fusion Cores) can be constructed with "Hostage Protocols." If a rebellion occurs or unrest hits a critical threshold, the protocol threatens to automatically self-destruct the critical infrastructure, taking out half the colony with it. Pops are aware of this and it suppresses rebellion artificially.
+
+**Emergence:** You install a Hostage Protocol Fusion Core to keep a restive mining sector in line. Decades later, a completely unrelated malfunction triggers a false positive in the protocol. The countdown begins. The very mechanism meant to suppress the miners now forces them to urgently collaborate with the central government to defuse the core before their sector is vaporized.
+
+**Tension:** The cheap, immediate suppression of unrest vs. the existential risk of permanently wiring a bomb into your own critical infrastructure.
+
+---
+
+## Generational Debt
+
+**Layer:** Cross-layer
+
+**Fantasy:** An empire built on predatory loans from a shadowy benefactor, where the bill eventually comes due for your descendants.
+
+**Mechanic:** In the early game, an enigmatic Layer 3 entity (e.g., The Brokerage) offers massive, game-changing resource injections with no immediate downside. However, this creates "Generational Debt." Centuries later, The Brokerage returns, demanding repayment not in resources, but in specific, absurd actions: e.g., "Relocate 50% of your capital's population to a barren moon within 5 years," or "Scuttle your entire Layer 2 defensive fleet."
+
+**Emergence:** You take the loan to survive an early pirate raid, forgetting about it. Three hundred years later, at the climax of a massive galactic war, The Brokerage arrives and demands you immediately surrender your primary shipyard to the enemy, completely upending your strategy and forcing you to scramble for alternatives.
+
+**Tension:** Do you accept a massive early-game advantage knowing it will manifest as an unpredictable, potentially game-ending crisis for your descendants?
+
+---
+
+## Gravitational Tides
+
+**Layer:** 2 -> 1
+
+**Fantasy:** A celestial environment so hostile that the very ground beneath your colony warps and shifts based on the alignment of the stars.
+
+**Mechanic:** Colonies built on moons orbiting gas giants or in binary star systems experience "Gravitational Tides." As Layer 2 celestial bodies align, massive gravitational forces stress Layer 1 infrastructure. Buildings without deep foundational upgrades take damage, and subterranean mines have a high chance of collapsing. However, these tidal events temporarily expose ultra-rare geological resources.
+
+**Emergence:** You carefully time your mining operations to coincide with the tidal events to harvest rare crystals. But an unexpected delay in your supply chain means your miners are still deep underground when the gas giant aligns. The mine collapses, burying your elite workers and the rare resources, forcing a desperate, ticking-clock rescue operation.
+
+**Tension:** The massive economic payoff of mining during dangerous gravitational events vs. the catastrophic risk of structural collapse and burying your own workforce.
+
+---
