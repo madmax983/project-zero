@@ -4702,7 +4702,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Dispersed coverage (dumb) vs. Concentrated swarm (smart).
 
 ---
-## Dead Protocols
+## Dead Protocols [SPECCED]
 
 **Layer:** 3
 
@@ -4730,7 +4730,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Emergency Blind Jump
+## Emergency Blind Jump [SPECCED]
 
 **Layer:** 2
 
