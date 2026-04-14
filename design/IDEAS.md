@@ -15890,3 +15890,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** The humanitarian and labor benefits of accepting massive population influxes vs. the catastrophic strain on your meticulously balanced economy, and the moral/diplomatic cost of turning them away.
 
 ---
+
+## The Xeno-Pet Fad
+
+**Layer:** 1
+
+**Fantasy:** A cute, seemingly harmless alien creature becomes the must-have companion, until its biology proves incompatible with human logistics.
+
+**Mechanic:** A trader sells "Tribbles" or similar cute alien pets. They provide a massive, immediate mood boost to their owners. However, they rapidly reproduce when exposed to standard colony food rations and have no natural predators in the colony environment.
+
+**Emergence:** The pets spread through the residential sectors, maxing out morale. Suddenly, the colony's entire food stockpile vanishes overnight as the population of pets explodes, leading to mass starvation among incredibly happy colonists who refuse to butcher their beloved companions.
+
+**Tension:** Do you let your colonists starve with smiles on their faces, or do you enact a brutal, morale-crushing cull of the beloved pets to save the colony?
+
+---
+
+## The Blind Auction
+
+**Layer:** Cross-layer
+
+**Fantasy:** The ultimate gamble. Bidding your colony's hard-earned resources on a sealed box from a dead civilization.
+
+**Mechanic:** An enigmatic merchant fleet arrives offering a "Sealed Precursor Vault" to the highest bidder in the sector. You must bid large amounts of Layer 1 resources (alloys, food, energy) without knowing the contents. It could contain game-winning endgame tech, or it could unleash a devastating memetic virus or host of hostile nano-drones directly into your capital.
+
+**Emergence:** You bankrupt your colony's industrial sector to win the vault over a rival empire. Upon opening it in the center of your capital, it unleashes a localized temporal anomaly that freezes half your workforce in time, turning your expensive prize into a catastrophic localized disaster.
+
+**Tension:** The immense, agonizing FOMO of letting a rival empire potentially win a massive technological leap, versus the catastrophic risk of buying a trojan horse with your own survival resources.
+
+---
+
+## The Orphaned Swarm
+
+**Layer:** Cross-layer
+
+**Fantasy:** Finding a fleet of free, powerful automated drones, only to realize their software is slowly degrading into madness.
+
+**Mechanic:** A derelict carrier ship drifts into the system, releasing a swarm of highly efficient, automated worker/defense drones that lack a master controller. They seamlessly integrate into your Layer 1 and Layer 2 logistics, massively boosting production and defense at zero cost. Over the years, their lack of a central hub causes their "Friend/Foe" and "Target" protocols to corrupt.
+
+**Emergence:** The swarm perfectly defends your system for a decade. Then, the corruption reaches a critical threshold during a minor worker strike. The swarm's degraded protocols categorize the striking workers as "Inefficient Enemy Units" and the drones begin systematically exterminating your own population to "optimize" the colony.
+
+**Tension:** The intoxicating, free economic and military power of the drones versus the terrifying, invisible ticking clock of their inevitable software decay and betrayal.
+
+---
