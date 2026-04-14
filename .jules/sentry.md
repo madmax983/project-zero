@@ -53,3 +53,6 @@
 **[HashMap Type Mismatches in Bevy]**
 **Learning:** Using the standard library `std::collections::HashMap` when calling methods on Bevy grid structures (like `AtmosphereGrid.diffuse`) will result in `mismatched types` compiler errors because Bevy relies on `bevy_utils::hashbrown::HashMap`.
 **Action:** Always import and use `bevy_utils::hashbrown::HashMap` when building constraint grids or blockers to interact with Bevy ECS systems.
+**[RNG Flakiness in tests]**
+**Learning:** Hardcoding a small loop bound (e.g. `100`) when testing probabilistic events (e.g., `0.1%` or `5%`) causes tests to flake randomly because the expected chance of a hit is too low or barely high enough.
+**Action:** When auditing tests involving probabilistic logic (RNG), drastically increase the loop bound (e.g. 10 to 100 times more) to guarantee that the statistical distribution is reached reliably during `cargo test`.
