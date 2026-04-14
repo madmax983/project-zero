@@ -15891,7 +15891,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Xeno-Pet Fad
+## The Xeno-Pet Fad [SPECCED]
 
 **Layer:** 1
 
