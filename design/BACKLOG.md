@@ -534,7 +534,7 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `819` The Nutrient Synthesizer's Saboteur — `specs/819-nutrient-synthesizers-saboteur.md`
 - [ ] `820` The Empathic Echo Chamber — `specs/820-empathic-echo-chamber.md`
 - [ ] `821` The Sub-Space Whispers — `specs/821-sub-space-whispers.md`
-- [ ] `822` Orbital Necropolises — `specs/822-orbital-necropolises.md`
+
 - [ ] `823` The Architect's Hubris — `specs/823-the-architects-hubris.md`
 - [ ] `824` Mutational Drift — `specs/824-mutational-drift.md`
 - [ ] `825` Symbiotic Transit Arteries — `specs/825-symbiotic-transit-arteries.md`
