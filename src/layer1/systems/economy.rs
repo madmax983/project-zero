@@ -10,6 +10,7 @@ pub fn register(schedule: &mut Schedule) {
     schedule.add_systems(
         (
             update_resource_caps_system,
+            crate::layer1::digital_immortality::ghost_power_consumption,
             advance_season_system,
             update_taboo_duration_system,
             update_water_system,

@@ -686,3 +686,9 @@
 - **Glue added:**
     - Replaced custom neighbor damage logic in `geothermal_decay_system` with emitting an `ExplosionEvent` with `damage: 50.0` and `radius: 1`.
 - **Tests:** `tests/integration/geothermal_explosion.rs` (1 test verified).
+
+### INT-805: Digital Immortality -> Chronicle
+- **Date:** 2026-06-01
+- **Systems connected:** `handle_mind_upload` (Digital Immortality) -> `digital_immortality_chronicle_bridge` (Integration) -> `AddChronicleEvent`
+- **Glue added:** Added `digital_immortality_chronicle_bridge` to emit an `AddChronicleEvent` (`EventImportance::Major`) upon `MindUploadEvent`. Registered in `Layer1SystemSet::Observation`.
+- **Tests:** `tests/integration/digital_immortality_chronicle.rs`

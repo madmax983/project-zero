@@ -11,6 +11,8 @@ pub fn register(schedule: &mut Schedule) {
     schedule.add_systems(
         (
             crate::layer1::zone::apply_zone_designation_system,
+            crate::layer1::digital_immortality::handle_mind_upload,
+            crate::layer1::digital_immortality::process_ghost_hacks,
             crate::layer1::construction::process_great_work_phases,
             crate::layer1::room_quality::apply_waking_thoughts_system
                 .after(crate::layer1::zone::apply_zone_designation_system),
