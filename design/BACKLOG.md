@@ -1,7 +1,6 @@
 # Backlog
 
 ## High Priority
-- [ ] `902` Nebulae — `specs/902-nebulae.md`
 - [ ] `903` Binary Star Systems — `specs/903-binary-star-systems.md`
 - [ ] `904` Proxy Wars — `specs/904-proxy-wars.md`
 - [ ] `893` Psychic Stains — `specs/893-psychic-stains.md`
