@@ -717,3 +717,4 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1037` Blind Jump — `specs/1037-blind-jump.md`
 - [ ] `1038` Dead Protocols — `specs/1038-dead-protocols.md`
 - [ ] `1039` The Xeno-Pet Fad — `specs/1039-the-xeno-pet-fad.md`
+- [ ] `1040` The Blind Auction — `specs/1040-blind-auction.md`
