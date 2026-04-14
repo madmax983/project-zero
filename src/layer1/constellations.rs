@@ -34,7 +34,7 @@ pub enum ConstellationEffect {
 }
 
 impl ConstellationEffect {
-    const fn label(self) -> &'static str {
+    pub const fn label(self) -> &'static str {
         match self {
             Self::Inspiration => "Cosmic Inspiration",
             Self::Dread => "Existential Dread",
