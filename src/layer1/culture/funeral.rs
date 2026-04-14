@@ -27,11 +27,10 @@ pub fn grief_system(world: &mut World) {
     let current_tick = world.get_resource::<SimulationTime>().map_or(0, |t| t.tick);
 
     // 1. Collect corpse positions
-    let mut corpses = Vec::new();
+    // ⚡ Bolt Optimization: Use `collect()` to automatically pre-allocate exact capacity
+    // from the query iterator's size hint, avoiding O(N) reallocation overhead.
     let mut corpse_query = world.query::<(&Corpse, &GridPosition)>();
-    for (_, pos) in corpse_query.iter(world) {
-        corpses.push(*pos);
-    }
+    let corpses: Vec<_> = corpse_query.iter(world).map(|(_, pos)| *pos).collect();
 
     if corpses.is_empty() {
         return;
