@@ -63,8 +63,6 @@ pub mod crowding;
 /// Defensive structures and logic.
 pub mod defense;
 /// Designation system for player tools.
-/// Pop dreams system.
-pub mod dreams;
 /// Ecological succession system (Spec 161).
 /// Colony policies and edicts.
 /// Execution layer bridging utility AI to actions.
@@ -90,9 +88,6 @@ pub mod law;
 pub use law::orphaned_edict::*;
 /// Colony Mascot system (Spec 129).
 /// Medical care and hospital logic.
-/// Pop memories and psychological effects.
-pub mod memory;
-
 pub mod jobs;
 /// Tests for metal industry (Spec 024).
 pub mod metal_industry_tests;
@@ -100,7 +95,8 @@ pub mod metal_industry_tests;
 /// Tests for mining logic (Spec 052).
 pub mod mining_tests;
 /// Pop needs (hunger, rest).
-pub mod needs;
+pub mod psychology;
+pub use psychology::*;
 /// Notification system.
 pub mod notifications;
 /// Pathfinding algorithms.
@@ -139,8 +135,6 @@ pub use beauty::*;
 pub use biography::*;
 pub use crowding::*;
 pub use defense::*;
-pub use dreams::*;
-
 pub mod biology;
 pub use biology::*;
 pub use execution::*;
@@ -150,8 +144,6 @@ pub use hobby::*;
 pub use institutional_memory::*;
 pub use jobs::*;
 pub use locations::*;
-pub use memory::*;
-pub use needs::*;
 pub use notifications::*;
 pub use science::*;
 pub use social::*;
@@ -200,31 +192,11 @@ pub mod combat;
 pub mod day_night;
 pub use day_night::*;
 
-/// Planetary Quirks (Spec 080).
-pub mod quirks;
-pub use quirks::*;
-
-/// Sleepwalking mechanics (Spec 081).
-pub mod sleepwalking;
-pub use sleepwalking::*;
-
-#[cfg(test)]
-mod quirks_tests;
-
-mod sleepwalking_tests;
-
 mod material_provenance_tests;
-
-/// Cabin Fever mechanics (Spec 082).
-pub mod cabin_fever;
-pub use cabin_fever::*;
 
 /// Stowaway system (Spec 086).
 pub mod stowaway;
 pub use stowaway::*;
-/// Pop personality traits (Spec 084).
-pub mod traits;
-pub use traits::*;
 /// Erosion system (Spec 093).
 /// Eureka Moments system (Spec 196).
 pub mod eureka;
@@ -275,21 +247,12 @@ pub use observatory::*;
 pub mod logistics;
 pub use logistics::*;
 
-/// Stress and mental breakdown system (Spec 127).
-pub mod stress;
-pub use stress::*;
 /// Turret system (Spec 135).
 /// Wild Child system (Spec 124).
 pub mod prototyping;
 
 mod tech_storage_tests;
 pub use prototyping::*;
-/// Cybernetic augmentation system (Spec 151).
-pub mod psychic;
-pub use psychic::*;
-pub mod psionics;
-pub use psionics::*;
-
 pub mod geology;
 pub use geology::*;
 
@@ -320,22 +283,6 @@ pub mod observer;
 #[cfg(feature = "nova")]
 pub use observer::*;
 
-/// Machine Consciousness (Nova Feature).
-#[cfg(feature = "nova")]
-pub mod machine_consciousness;
-#[cfg(feature = "nova")]
-pub use machine_consciousness::*;
-
-/// The Sleep-Deprived Savant system (Nova Feature).
-#[cfg(feature = "nova")]
-pub mod sleep_deprived_savant;
-#[cfg(feature = "nova")]
-pub use sleep_deprived_savant::*;
-
-/// System registration and sets (Facade).
-pub mod somnambulism;
-pub use somnambulism::*;
-
 pub mod systems;
 
 mod institutional_memory_tests;
@@ -349,7 +296,6 @@ pub use scrapcode::*;
 pub mod chemical;
 /// Cryo-Stasis system (Spec 139).
 pub mod cryo;
-pub mod cryo_dreams;
 pub use chemical::*;
 pub use cryo::*;
 
@@ -408,10 +354,6 @@ pub use security::*;
 
 mod geodetic_tests;
 
-/// Void Stare (Spec 242).
-pub mod void_stare;
-pub use void_stare::*;
-
 /// Quantum Twins (Spec 245).
 pub mod quantum_twins;
 pub use quantum_twins::*;
@@ -429,14 +371,6 @@ pub use memory_core::*;
 /// Olfactory map and scent system (Spec 446).
 pub mod olfactory;
 pub use olfactory::*;
-
-/// The Overview Effect system (Spec 449).
-pub mod overview_effect;
-pub use overview_effect::*;
-
-/// The Spiteful Will (Spec 451).
-pub mod spiteful_will;
-pub use spiteful_will::*;
 
 pub mod physics;
 pub use physics::*;
@@ -469,9 +403,7 @@ pub mod diplomacy;
 pub use agriculture::*;
 pub mod haunted_assembly_lines;
 pub mod local_tributes;
-pub mod pop_memories;
 pub mod religion;
-pub use pop_memories::*;
 pub mod unseen_bureaucracy;
 pub use unseen_bureaucracy::*;
 pub mod core;
