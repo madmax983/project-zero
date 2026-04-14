@@ -400,7 +400,7 @@ pub fn assign_sensors_to_player_fleets_system(
 ) {
     for (entity, faction) in &query {
         if *faction == FleetFaction::Player {
-            commands.entity(entity).insert(Sensors { range: 100.0 });
+            commands.entity(entity).insert(Sensors::new(100.0));
         }
     }
 }

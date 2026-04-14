@@ -24,6 +24,13 @@ pub struct UnidentifiedContact;
 pub struct Sensors {
     /// Sensor range. For MVP, we treat range conceptually or abstractly.
     pub range: f32,
+    pub base_range: f32,
+}
+
+impl Sensors {
+    pub fn new(range: f32) -> Self {
+        Self { range, base_range: range }
+    }
 }
 
 /// System to evaluate sensor contacts and resolve identities.
@@ -97,7 +104,7 @@ mod tests {
         let planet_b = world.spawn_empty().id();
 
         let _fleet_a = world
-            .spawn((Fleet, Sensors { range: 10.0 }, InOrbit { parent: planet_a }))
+            .spawn((Fleet, Sensors::new(10.0), InOrbit { parent: planet_a }))
             .id();
 
         let fleet_b = world.spawn((Fleet, InOrbit { parent: planet_b })).id();
@@ -134,7 +141,7 @@ mod tests {
         let planet = world.spawn_empty().id();
 
         let _fleet_a = world
-            .spawn((Fleet, Sensors { range: 10.0 }, InOrbit { parent: planet }))
+            .spawn((Fleet, Sensors::new(10.0), InOrbit { parent: planet }))
             .id();
 
         // Fleet B is at the same planet (close proximity)
