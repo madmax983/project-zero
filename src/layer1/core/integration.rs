@@ -1494,3 +1494,22 @@ pub fn predatory_weather_impact_bridge_system(
         });
     }
 }
+
+/// INT-805: Bridges MindUploadEvent to AddChronicleEvent (Chronicle).
+pub fn digital_immortality_chronicle_bridge(
+    mut events: bevy_ecs::event::EventReader<crate::layer1::digital_immortality::MindUploadEvent>,
+    mut chronicle_events: bevy_ecs::event::EventWriter<crate::layer1::chronicle::AddChronicleEvent>,
+    query: bevy_ecs::system::Query<&bevy::prelude::Name>,
+) {
+    for event in events.read() {
+        if let Ok(name) = query.get(event.target_pop) {
+            chronicle_events.send(crate::layer1::chronicle::AddChronicleEvent {
+                text: format!(
+                    "{} has achieved digital immortality, leaving behind their mortal shell to become a Ghost in the Mainframe.",
+                    name.as_str()
+                ),
+                importance: crate::layer1::chronicle::EventImportance::Major,
+            });
+        }
+    }
+}
