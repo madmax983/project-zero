@@ -76,6 +76,7 @@ pub fn geothermal_decay_system(
     state: Res<GeothermalPulseState>,
     mut buildings: Query<(Entity, &mut Structure, &GridPosition, Option<&PowerSource>)>,
     vents: Query<&GridPosition, With<GeothermalVent>>,
+    mut explosion_events: EventWriter<crate::layer1::environment::volatile::ExplosionEvent>,
 ) {
     if !state.is_pulsing {
         return;
@@ -84,9 +85,6 @@ pub fn geothermal_decay_system(
     // Collect vent positions
     let vent_positions: std::collections::HashSet<_> = vents.iter().map(|p| (p.x, p.y)).collect();
 
-    // First pass: apply decay and collect explosions
-    let mut exploding_positions = Vec::new();
-
     for (entity, mut structure, pos, power_source) in buildings.iter_mut() {
         if vent_positions.contains(&(pos.x, pos.y)) {
             // Only decay if active
@@ -94,28 +92,13 @@ pub fn geothermal_decay_system(
             if is_active {
                 structure.current_hp -= 5.0; // Magic number decay rate
                 if structure.current_hp <= 0.0 {
-                    exploding_positions.push((pos.x, pos.y));
+                    explosion_events.send(crate::layer1::environment::volatile::ExplosionEvent {
+                        center: *pos,
+                        damage: 50.0, // Magic collateral damage
+                        radius: 1,    // Hits adjacent tiles
+                    });
                     commands.entity(entity).despawn();
                 }
-            }
-        }
-    }
-
-    // Second pass: apply collateral damage to adjacent structures
-    if !exploding_positions.is_empty() {
-        // Collect adjacent positions
-        let mut adjacent_positions = std::collections::HashSet::new();
-        for (ex, ey) in exploding_positions {
-            adjacent_positions.insert((ex + 1, ey));
-            adjacent_positions.insert((ex - 1, ey));
-            adjacent_positions.insert((ex, ey + 1));
-            adjacent_positions.insert((ex, ey - 1));
-        }
-
-        // Apply collateral damage
-        for (_entity, mut structure, pos, _) in buildings.iter_mut() {
-            if adjacent_positions.contains(&(pos.x, pos.y)) {
-                structure.current_hp -= 50.0; // Magic collateral damage
             }
         }
     }
@@ -153,6 +136,7 @@ mod tests {
     fn test_building_on_vent_receives_boost_and_decay_during_pulse() {
         let mut app = App::new();
         app.init_resource::<GeothermalPulseState>();
+        app.add_event::<crate::layer1::environment::volatile::ExplosionEvent>();
         app.world_mut()
             .resource_mut::<GeothermalPulseState>()
             .is_pulsing = true;
@@ -201,6 +185,7 @@ mod tests {
     fn test_inactive_building_on_vent_ignores_pulse() {
         let mut app = App::new();
         app.init_resource::<GeothermalPulseState>();
+        app.add_event::<crate::layer1::environment::volatile::ExplosionEvent>();
         app.world_mut()
             .resource_mut::<GeothermalPulseState>()
             .is_pulsing = true;
@@ -247,6 +232,7 @@ mod tests {
     fn test_building_explodes_when_decay_reaches_zero() {
         let mut app = App::new();
         app.init_resource::<GeothermalPulseState>();
+        app.add_event::<crate::layer1::environment::volatile::ExplosionEvent>();
         app.world_mut()
             .resource_mut::<GeothermalPulseState>()
             .is_pulsing = true;
@@ -294,15 +280,15 @@ mod tests {
             "Building should be destroyed"
         );
 
-        // Adjacent building should take damage
-        let adj_health = app
-            .world()
-            .get::<Structure>(adj_building)
-            .unwrap()
-            .current_hp;
-        assert!(
-            adj_health < 100.0,
-            "Adjacent building should take collateral explosion damage"
-        );
+        // Instead of testing damage here directly (that's handled by handle_explosion_system now),
+        // we test that the ExplosionEvent was fired correctly.
+        let events = app.world().resource::<Events<crate::layer1::environment::volatile::ExplosionEvent>>();
+        let mut reader = events.get_cursor();
+        let event = reader.read(events).next();
+        assert!(event.is_some(), "An ExplosionEvent should have been emitted");
+        let e = event.unwrap();
+        assert_eq!(e.center, vent_pos);
+        assert_eq!(e.damage, 50.0);
+        assert_eq!(e.radius, 1);
     }
 }
