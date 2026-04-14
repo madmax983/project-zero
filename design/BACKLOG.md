@@ -683,3 +683,33 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1003` The Feral Overlord Subroutines — `specs/1003-feral-overlord-subroutines.md`
 - [ ] `1004` The Orbital Secession — `specs/1004-orbital-secession.md`
 - [ ] `1005` Subterranean Biosphere Inversion — `specs/1005-subterranean-biosphere-inversion.md`
+- [ ] `1006` The Terraforming Rejection — `specs/1006-the-terraforming-rejection.md`
+- [ ] `1007` Generational Spite — `specs/1007-generational-spite.md`
+- [ ] `1008` The Refugee Archipelago — `specs/1008-the-refugee-archipelago.md`
+- [ ] `1009` The Feral Overlord Subroutines — `specs/1009-feral-overlord-subroutines.md`
+- [ ] `1010` The Archaeological Contagion — `specs/1010-archaeological-contagion.md`
+- [ ] `1011` The Sovereign Armada — `specs/1011-the-sovereign-armada.md`
+- [ ] `1012` The Bureaucratic Blackout — `specs/1012-the-bureaucratic-blackout.md`
+- [ ] `1013` The Void Echoes — `specs/1013-the-void-echoes.md`
+- [ ] `1014` Gravity-Well Funerals — `specs/1014-gravity-well-funerals.md`
+- [ ] `1015` Symbiotic Gear — `specs/1015-symbiotic-gear.md`
+- [ ] `1016` Mobile Architecture — `specs/1016-mobile-architecture.md`
+- [ ] `1017` Legacy Code — `specs/1017-legacy-code.md`
+- [ ] `1018` Planetary Scarring — `specs/1018-planetary-scarring.md`
+- [ ] `1019` Ecophagy — `specs/1019-ecophagy.md`
+- [ ] `1020` Spatial Compression — `specs/1020-spatial-compression.md`
+- [ ] `1021` The Shadow Cabinet — `specs/1021-the-shadow-cabinet.md`
+- [ ] `1035` Modular Fauna — `specs/1035-modular-fauna.md`
+- [ ] `1034` Gene-Banks — `specs/1034-gene-banks.md`
+- [ ] `1033` Subjective Economics — `specs/1033-subjective-economics.md`
+- [ ] `1032` Open Source Science — `specs/1032-open-source-science.md`
+- [ ] `1031` The Mycelial Network — `specs/1031-the-mycelial-network.md`
+- [ ] `1030` Gravity Engineering — `specs/1030-gravity-engineering.md`
+- [ ] `1029` The Zoo Hypothesis — `specs/1029-the-zoo-hypothesis.md`
+- [ ] `1028` Tech Envy — `specs/1028-tech-envy.md`
+- [ ] `1027` Sanctuary Districts — `specs/1027-sanctuary-districts.md`
+- [ ] `1026` The Lottery — `specs/1026-the-lottery.md`
+- [ ] `1025` Gravity Plating Failure — `specs/1025-gravity-plating-failure.md`
+- [ ] `1024` The Artist's Muse — `specs/1024-the-artists-muse.md`
+- [ ] `1023` Temporal Fugue — `specs/1023-temporal-fugue.md`
+- [ ] `1022` The Hive Mind Integration — `specs/1022-the-hive-mind-integration.md`

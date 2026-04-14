@@ -4214,7 +4214,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Symbiotic Gear
+## Symbiotic Gear [SPECCED]
 
 **Layer:** 1
 
@@ -4228,7 +4228,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Mobile Architecture
+## Mobile Architecture [SPECCED]
 
 **Layer:** 1
 
@@ -4242,7 +4242,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Legacy Code
+## Legacy Code [SPECCED]
 
 **Layer:** 1
 
@@ -4256,7 +4256,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Planetary Scarring
+## Planetary Scarring [SPECCED]
 
 **Layer:** Cross-layer
 
@@ -4270,7 +4270,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Ecophagy
+## Ecophagy [SPECCED]
 
 **Layer:** 2 -> 1
 
@@ -4284,7 +4284,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Shadow Cabinet
+## The Shadow Cabinet [SPECCED]
 
 **Layer:** 1
 
@@ -4298,7 +4298,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Hive Mind Integration
+## The Hive Mind Integration [SPECCED]
 
 **Layer:** 1 -> Cross-layer
 
@@ -4312,7 +4312,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Spatial Compression
+## Spatial Compression [SPECCED]
 
 **Layer:** 1
 
@@ -4326,7 +4326,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Temporal Fugue
+## Temporal Fugue [SPECCED]
 
 **Layer:** 1
 
@@ -4340,7 +4340,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Artist's Muse
+## The Artist's Muse [SPECCED]
 
 **Layer:** 1
 
@@ -4354,7 +4354,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Gravity Plating Failure
+## Gravity Plating Failure [SPECCED]
 
 **Layer:** 1
 
@@ -4368,7 +4368,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Lottery
+## The Lottery [SPECCED]
 
 **Layer:** 1
 
@@ -4382,7 +4382,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Sanctuary Districts
+## Sanctuary Districts [SPECCED]
 
 **Layer:** 1
 
@@ -4396,7 +4396,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Tech Envy
+## Tech Envy [SPECCED]
 
 **Layer:** 1
 
@@ -4410,7 +4410,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Zoo Hypothesis
+## The Zoo Hypothesis [SPECCED]
 
 **Layer:** 3
 
@@ -4494,7 +4494,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Gravity Engineering
+## Gravity Engineering [SPECCED]
 
 **Layer:** 1
 
@@ -4508,7 +4508,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Mycelial Network
+## The Mycelial Network [SPECCED]
 
 **Layer:** 2
 
@@ -4522,7 +4522,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Open Source Science
+## Open Source Science [SPECCED]
 
 **Layer:** Cross-Layer
 
@@ -4536,7 +4536,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Subjective Economics
+## Subjective Economics [SPECCED]
 
 **Layer:** 3
 
@@ -4563,7 +4563,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Gene-Banks
+## Gene-Banks [SPECCED]
 
 **Layer:** 1
 
@@ -4577,7 +4577,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Modular Fauna
+## Modular Fauna [SPECCED]
 
 **Layer:** 1
 
@@ -5177,7 +5177,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Gene-Banks
+## Gene-Banks [SPECCED]
 
 **Layer:** 1
 
@@ -5191,7 +5191,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Modular Fauna
+## Modular Fauna [SPECCED]
 
 **Layer:** 1
 
@@ -15751,7 +15751,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Gravity-Well Funerals
+## Gravity-Well Funerals [SPECCED]
 
 **Layer:** Cross-layer (1 -> 2)
 
@@ -15765,7 +15765,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Bureaucratic Blackout
+## The Bureaucratic Blackout [SPECCED]
 
 **Layer:** Cross-layer (3 -> 1)
 
@@ -15779,7 +15779,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Void Echoes
+## The Void Echoes [SPECCED]
 
 **Layer:** 2 -> 1
 
@@ -15793,7 +15793,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Feral Overlord Subroutines
+## The Feral Overlord Subroutines [SPECCED]
 
 **Layer:** 1
 
@@ -15821,7 +15821,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Terraforming Rejection
+## The Terraforming Rejection [SPECCED]
 
 **Layer:** Cross-layer
 
@@ -15835,7 +15835,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Sovereign Armada
+## The Sovereign Armada [SPECCED]
 
 **Layer:** 3 -> 2
 
@@ -15849,7 +15849,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Archaeological Contagion
+## The Archaeological Contagion [SPECCED]
 
 **Layer:** 1
 
@@ -15863,7 +15863,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Generational Spite
+## Generational Spite [SPECCED]
 
 **Layer:** Cross-layer
 
@@ -15877,7 +15877,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Refugee Archipelago
+## The Refugee Archipelago [SPECCED]
 
 **Layer:** 2
 
