@@ -5761,3 +5761,21 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 **Patterns:**
 - "[YEAR]: The vent surged. A facility in [COLONY] could not hold the pressure and detonated."
 - "The heartbeat was too strong. Structures built on the vents were torn apart. [YEAR]."
+
+## Acoustic Shadows Templates (Spec 258)
+
+### SILENT_TRAGEDY
+**Generates:** Play event (chronicle during game)
+**Slots:** [COLONY], [YEAR], [SILENT_ROOM_NAME], [UNHEARD_TRAGEDY]
+**Patterns:**
+- "[YEAR]: Disaster in [SILENT_ROOM_NAME]. No one could help because [UNHEARD_TRAGEDY]."
+- "We found them in [SILENT_ROOM_NAME]. [YEAR]. The isolation worked too well; [UNHEARD_TRAGEDY]."
+- "A grim discovery in [COLONY]. The incident in [SILENT_ROOM_NAME] was fatal. [YEAR]. [UNHEARD_TRAGEDY]."
+
+### VACUUM_GAP_CONSTRUCTED
+**Generates:** Play event (chronicle during game)
+**Slots:** [COLONY], [YEAR], [SILENT_ROOM_NAME]
+**Patterns:**
+- "[YEAR]: To save our sanity, we built a Vacuum Gap around [SILENT_ROOM_NAME]. Finally, quiet."
+- "The noise was too much. [COLONY] authorized a Silent Moat for [SILENT_ROOM_NAME]. [YEAR]."
+- "[YEAR]: Construction finished on [SILENT_ROOM_NAME]. The vacuum seal holds. The noise is gone."

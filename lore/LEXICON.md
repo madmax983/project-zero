@@ -4155,3 +4155,19 @@
 **Replaces:** geothermal pulse cycle
 **Code reference:** `GeothermalPulseState::is_pulsing == true`
 **Usage:** "Brace the supports, the Heartbeat is coming."
+
+## Acoustic Shadows (Spec 258)
+
+### the Silent Moat / the Vacuum Gap
+**Replaces:** vacuum soundproofing, empty space insulation
+**Code reference:** `VacuumGap`
+**Usage:**
+- "We built a Silent Moat around the generators."
+- "No sound crosses the Vacuum Gap."
+
+### the Dead Zone / the Deaf Spot
+**Replaces:** area isolated by vacuum
+**Code reference:** Area affected by Acoustic Shadow
+**Usage:**
+- "The workers in the Dead Zone couldn't hear the warning."
+- "He died in the Deaf Spot, screaming in silence."
