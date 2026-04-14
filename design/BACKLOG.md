@@ -683,3 +683,4 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1002` The Bio-Rhythmic Commute — `specs/1002-bio-rhythmic-commute.md`
 - [ ] `1003` The Feral Overlord Subroutines — `specs/1003-feral-overlord-subroutines.md`
 - [ ] `1004` The Orbital Secession — `specs/1004-orbital-secession.md`
+- [ ] `1005` Subterranean Biosphere Inversion — `specs/1005-subterranean-biosphere-inversion.md`

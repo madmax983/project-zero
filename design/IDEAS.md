@@ -15723,7 +15723,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Subterranean Biosphere Inversion
+## Subterranean Biosphere Inversion [SPECCED]
 
 **Layer:** 1
 
