@@ -15919,7 +15919,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Orphaned Swarm
+## The Orphaned Swarm [SPECCED]
 
 **Layer:** Cross-layer
 
