@@ -15932,3 +15932,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** The intoxicating, free economic and military power of the drones versus the terrifying, invisible ticking clock of their inevitable software decay and betrayal.
 
 ---
+## The Feral Cult
+
+**Layer:** 1
+
+**Fantasy:** Watching your perfectly structured colony devolve into a bizarre, machine-worshipping sect due to extreme stress.
+
+**Mechanic:** Pops whose morale or needs drop to critically low levels for an extended period have a chance to "break" and join the Feral Cult. They abandon their normal jobs, refuse to use standard housing, and instead gather around high-energy or industrial buildings (like power plants or mass drivers), claiming them as holy sites. They will forcefully defend these sites from non-cultist pops but will occasionally over-boost the building's output.
+
+**Emergence:** You ignore the leisure needs of your mining sector for too long. A cult forms around the main geothermal plant. The cult actually boosts the plant's output by 200%, solving your energy crisis, but they start sacrificing your raw ore shipments to the "Machine Spirit," crashing your economy in a completely different way.
+
+**Tension:** Do you violently suppress the cult to regain control of your infrastructure, or do you carefully manage their madness to exploit their massive (but dangerous) production bonuses?
+
+---
+
+## Black Market Infrastructure
+
+**Layer:** Cross-layer
+
+**Fantasy:** A parasitic, invisible economy operating right under your nose, linking desperate colonists to off-world smugglers.
+
+**Mechanic:** Smuggler fleets (Layer 2) periodically visit the system. Instead of trading with the government, they establish hidden "Drop Nodes" on the planet's surface (Layer 1). Pops with low wealth or high unrest will secretly transport stolen colony resources to these nodes in exchange for illegal, high-morale contraband.
+
+**Emergence:** You notice your alloy stockpiles slowly draining, but your colony's morale is suspiciously high despite terrible living conditions. You discover a massive smuggling ring. Shutting down the Drop Nodes returns your alloys but instantly crashes the artificial morale, sparking an immediate, violent rebellion that you no longer have the alloys to build defenses against.
+
+**Tension:** Do you root out corruption to secure your strategic resources, or turn a blind eye because the contraband is the only thing preventing a full-scale revolution?
+
+---
+
+## Orbital Debris Cascades
+
+**Layer:** 2 -> 1
+
+**Fantasy:** The catastrophic long-term consequence of massive space battles turning the orbital plane into a lethal hazard zone.
+
+**Mechanic:** Every ship destroyed or orbital station demolished generates "Debris Clouds" in Layer 2 orbit. High debris density increases the chance that incoming ships (traders, refugees, or military) are damaged or destroyed upon entering the system, generating even *more* debris (Kessler Syndrome). Extremely dense debris clouds block sunlight to the Layer 1 surface, dropping temperature and destroying solar power generation.
+
+**Emergence:** You win a massive, desperate defensive war above your capital world, destroying the enemy armada. Years later, your colony begins to freeze and starve because the colossal ring of shattered starships from that battle is blocking the sun, and no trader ships can survive the journey through the debris field to bring relief supplies.
+
+**Tension:** Do you fight enemies close to your worlds for defense advantages, knowing the debris might doom the planet later, or do you risk fighting in deep space? How much do you invest in expensive "Sweeper" ships versus actual combat vessels?
+
+---
