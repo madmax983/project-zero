@@ -107,6 +107,9 @@ pub fn register(schedule: &mut Schedule) {
                 crate::layer1::environment::artificial_sunspots::update_outdoor_exposure_system,
             ),
             crate::layer1::environment::artificial_sunspots::track_sunspot_chronicle_system,
+            crate::layer1::environment::binary_star::binary_star_fluctuating_solar_power_system,
+            crate::layer1::environment::binary_star::binary_star_crop_withering_system,
+            crate::layer1::environment::binary_star::binary_star_heat_waves_system,
         )
             .in_set(Layer1SystemSet::Environment),
     );

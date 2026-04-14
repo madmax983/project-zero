@@ -146,6 +146,8 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     world.init_resource::<crate::layer1::environment::bio_acoustic_miasma::MiasmaRecordedSecret>();
     world.init_resource::<crate::layer1::stress::TraumaTracker>();
     world.init_resource::<bevy_ecs::event::Events<crate::layer2::skyhooks::LaunchIntent>>();
+    world.init_resource::<bevy_ecs::event::Events<crate::layer1::environment::binary_star::HeatWaveEvent>>();
+    world.init_resource::<crate::layer1::environment::binary_star::BinaryStarSystem>();
     world.init_resource::<crate::layer2::cartographers_curse::MapTelemetry>();
     world.init_resource::<bevy_ecs::event::Events<crate::layer2::cartographers_curse::SellTelemetryEvent>>();
     world.insert_resource(MenuState::default());

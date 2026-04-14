@@ -393,3 +393,4 @@
 - [x] `985` Propaganda Press — `specs/985-propaganda-press.md` — completed 2026-04-13
 - [x] `822` Orbital Necropolises — `specs/822-orbital-necropolises.md` — completed 2026-04-14
 - [x] `902` Nebulae — `specs/902-nebulae.md` — completed 2026-04-14
+- [x] `903` Binary Star Systems — `specs/903-binary-star-systems.md` — completed 2026-04-14

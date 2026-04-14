@@ -1,7 +1,6 @@
 # Backlog
 
 ## High Priority
-- [ ] `903` Binary Star Systems — `specs/903-binary-star-systems.md`
 - [ ] `904` Proxy Wars — `specs/904-proxy-wars.md`
 - [ ] `893` Psychic Stains — `specs/893-psychic-stains.md`
 - [ ] `894` Social Debt — `specs/894-social-debt.md`

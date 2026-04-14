@@ -1423,29 +1423,43 @@ pub fn silent_flora_chronicle_bridge(
 #[allow(clippy::type_complexity)]
 pub fn flora_scent_bridge_system(
     mut commands: bevy_ecs::prelude::Commands,
-    query: bevy_ecs::prelude::Query<(bevy_ecs::prelude::Entity, &crate::layer1::flora::PheromoneFlora), bevy_ecs::prelude::Or<(bevy_ecs::prelude::Added<crate::layer1::flora::PheromoneFlora>, bevy_ecs::prelude::Changed<crate::layer1::flora::PheromoneFlora>)>>,
+    query: bevy_ecs::prelude::Query<
+        (
+            bevy_ecs::prelude::Entity,
+            &crate::layer1::flora::PheromoneFlora,
+        ),
+        bevy_ecs::prelude::Or<(
+            bevy_ecs::prelude::Added<crate::layer1::flora::PheromoneFlora>,
+            bevy_ecs::prelude::Changed<crate::layer1::flora::PheromoneFlora>,
+        )>,
+    >,
 ) {
     for (entity, flora) in query.iter() {
         match flora.emission_type {
             crate::layer1::flora::PheromoneEmission::Calming => {
-                commands.entity(entity).insert(crate::layer1::olfactory::ScentEmitter {
-                    is_pleasant: true,
-                    strength: flora.strength,
-                });
+                commands
+                    .entity(entity)
+                    .insert(crate::layer1::olfactory::ScentEmitter {
+                        is_pleasant: true,
+                        strength: flora.strength,
+                    });
             }
             crate::layer1::flora::PheromoneEmission::Danger => {
-                commands.entity(entity).insert(crate::layer1::olfactory::ScentEmitter {
-                    is_pleasant: false,
-                    strength: flora.strength,
-                });
+                commands
+                    .entity(entity)
+                    .insert(crate::layer1::olfactory::ScentEmitter {
+                        is_pleasant: false,
+                        strength: flora.strength,
+                    });
             }
             crate::layer1::flora::PheromoneEmission::Normal => {
-                commands.entity(entity).remove::<crate::layer1::olfactory::ScentEmitter>();
+                commands
+                    .entity(entity)
+                    .remove::<crate::layer1::olfactory::ScentEmitter>();
             }
         }
     }
 }
-
 
 // Predatory Weather Integration (969)
 pub fn predatory_weather_emission_bridge_system(
@@ -1480,8 +1494,12 @@ pub fn predatory_weather_emission_bridge_system(
 
 pub fn predatory_weather_impact_bridge_system(
     mut events: bevy_ecs::prelude::EventReader<crate::layer2::weather::StormImpactEvent>,
-    mut structures: bevy_ecs::prelude::Query<&mut crate::layer1::architecture::structure::Structure>,
-    mut chronicle_events: bevy_ecs::prelude::EventWriter<crate::layer1::chronicle::AddChronicleEvent>,
+    mut structures: bevy_ecs::prelude::Query<
+        &mut crate::layer1::architecture::structure::Structure,
+    >,
+    mut chronicle_events: bevy_ecs::prelude::EventWriter<
+        crate::layer1::chronicle::AddChronicleEvent,
+    >,
 ) {
     for event in events.read() {
         for mut structure in structures.iter_mut() {

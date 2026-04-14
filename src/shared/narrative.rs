@@ -469,7 +469,8 @@ impl NarrativeGenerator {
                                 value: option.clone(),
                             });
                         } else {
-                            segments.push(NarrativeSegment::MissingFragmentOptions(key.to_string()));
+                            segments
+                                .push(NarrativeSegment::MissingFragmentOptions(key.to_string()));
                         }
                     } else {
                         // Not found in context or fragments

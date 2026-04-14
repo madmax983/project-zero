@@ -30,4 +30,6 @@ pub use photophobic::*;
 pub use seismic::*;
 pub use terraforming::*;
 pub use volatile::{handle_explosion_system, volatile_decay_system, ExplosionEvent, Volatile};
+pub mod binary_star;
 pub mod geothermal;
+pub use binary_star::*;

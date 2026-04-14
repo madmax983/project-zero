@@ -1,4 +1,3 @@
-pub mod nebulae;
 pub mod barnacles;
 pub mod combat;
 pub mod debris;
@@ -6,6 +5,7 @@ pub mod debris;
 mod debris_tests;
 pub mod designation;
 pub mod environment;
+pub mod nebulae;
 pub use environment::*;
 pub mod cartographers_curse;
 pub mod cascade;
