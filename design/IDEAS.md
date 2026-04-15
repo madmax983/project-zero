@@ -16096,3 +16096,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you turn your planetary defense grids on desperate people who have been asleep for a century, or do you somehow try to integrate a massive, culturally alien population into your delicate colony ecosystem?
 
 ---
+## Generational Linguistics
+
+**Layer:** 1
+
+**Fantasy:** Watching isolated colonies develop their own distinct dialects and cultural misunderstandings over time.
+
+**Mechanic:** Colonies geographically isolated or lacking communication networks slowly drift in "Linguistic Cohesion". Pops with different dialects suffer minor social penalties. Extreme drift creates entirely new languages, requiring "Translators" to conduct even basic diplomacy or trade between once-united worlds.
+
+**Emergence:** Two colonies on the same planet lose contact during a long catastrophe. When they reconnect centuries later, they cannot communicate and a misunderstanding leads to war between sibling settlements.
+
+**Tension:** Do you invest heavily in expensive, redundant communication arrays, or risk your empire fracturing into a tower of babel?
+
+---
+
+## The Smuggler's Ecosystem
+
+**Layer:** 2
+
+**Fantasy:** A shadow economy thriving in the blind spots of your empire, moving goods you banned or can't produce.
+
+**Mechanic:** When strict trade embargoes or high tariffs are placed on specific goods, "Smuggler Hubs" spontaneously form in unmonitored asteroid belts or abandoned stations. Smugglers bypass your logistics networks, fulfilling unmet Layer 1 needs at a steep markup and increasing local crime rates.
+
+**Emergence:** You ban a highly addictive substance, causing its price to skyrocket. Smugglers become so wealthy they buy out the local planetary governor, effectively turning your own colony into a pirate haven that supplies your enemies.
+
+**Tension:** Do you tolerate the black market because it keeps your starved citizens happy, or spend military resources hunting down the very people supplying your frontier worlds?
+
+---
+
+## Deep Sleep Syndicates
+
+**Layer:** Cross-layer
+
+**Fantasy:** Waking up ancient, frozen corporate executives who use outdated but ruthless methods to solve modern problems.
+
+**Mechanic:** Players can discover derelict "Cryo-Corporate Ships" from a bygone era. Thawing out these "Deep Sleep Syndicates" provides massive, immediate boosts to production or logistics, but they implement archaic, hyper-exploitative policies (like indentured servitude or unsafe working conditions) that cause massive unrest and trauma in modern pops.
+
+**Emergence:** You thaw out a syndicate to rapidly build a defense grid against an invasion. They succeed, but their brutal methods radicalize the workforce, triggering a massive worker's revolution the moment the invasion is repelled.
+
+**Tension:** Using desperate, unethical solutions from the past to solve impossible crises in the present, knowing you'll have to deal with the moral and social fallout later.
+
+---
