@@ -16069,7 +16069,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Asteroid Tethering
+## Asteroid Tethering [SPECCED]
 
 **Layer:** 2 -> 1
 
@@ -16083,7 +16083,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Sub-light Refugee Fleets
+## Sub-light Refugee Fleets [SPECCED]
 
 **Layer:** Cross-layer
 
