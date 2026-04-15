@@ -301,4 +301,4 @@ In `src/layer1/pop.rs`, initialize `Age` with a random range (e.g., 20-40 years)
 ## Questions
 
 *Builder: How fast should a "year" be?*
-*Architect:* Set `TICKS_PER_YEAR` to 1000 for standard MVP pacing.
+*Architect:* Set the ticks per year to a configurable value (e.g., 1000 or 3600 for MVP) so it can be easily adjusted for pacing during playtesting.

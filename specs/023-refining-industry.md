@@ -350,4 +350,4 @@ pub fn process_refining_system(world: &mut World) {
 ## Questions
 
 *Builder: Should the "10 tile range" be a constant shared with Mining?*
-*Architect:* Yes, use a shared `INDUSTRY_PROCESSING_RANGE` constant in a central balance module to keep these consistent.
+*Architect:* Yes, use a shared constant (e.g., in a central balance or constants module) to keep zoning and processing ranges consistent.
