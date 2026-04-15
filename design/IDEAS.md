@@ -9848,7 +9848,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Generational Debt Collector
+## The Generational Debt Collector [SPECCED]
 
 **Layer:** Cross-layer (3 -> 1)
 
@@ -15973,7 +15973,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you fight enemies close to your worlds for defense advantages, knowing the debris might doom the planet later, or do you risk fighting in deep space? How much do you invest in expensive "Sweeper" ships versus actual combat vessels?
 
 ---
-## Hostage Architecture
+## Hostage Architecture [SPECCED]
 
 **Layer:** 1
 
