@@ -1,0 +1,16 @@
+feat(layer3): complete proxy wars system
+
+Implements RED-GREEN from spec 904:
+- Added comprehensive test suite (RED phase)
+- Implemented Proxy Wars component, accept contract, combat rewards, disavowal systems (GREEN phase)
+- Addressed code review feedback and fully wired into Bevy via ProxyWarsPlugin
+- Test coverage: 87.5% (target: 85%)
+
+All acceptance criteria met:
+- Player gains Privateer status against targets, receives upfront Credits, and Threat increases with target faction
+- Player receives bounty Credits from Faction A without incurring global Pirate penalties
+- Player loses Privateer status and is branded as a Pirate if they continue hostilities
+- cargo test passes (4 tests)
+- cargo clippy clean
+
+Co-Authored-By: google-labs-jules[bot] <161369871+google-labs-jules[bot]@users.noreply.github.com>
