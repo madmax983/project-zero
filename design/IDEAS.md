@@ -16055,3 +16055,73 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Sacrificing one of your own colonies to save the empire, and dealing with the immense political fallout from the rest of the galaxy knowing you left those people to die.
 
 ---
+
+## Sub-Light Information Decay
+
+**Layer:** Cross-layer
+
+**Fantasy:** Trusting a message that might be a lie by the time it reaches you.
+
+**Mechanic:** Information sent via sub-light comms between Layer 2 and Layer 1 decays or distorts over time. The longer the distance, the higher the chance that intel on enemy movements or trade prices arrives slightly corrupted or entirely opposite to the truth.
+
+**Emergence:** You receive a distress call from a neighboring outpost claiming they are starving and need food. You send a massive relief fleet, only to find out the message was corrupted—they were actually invaded, and you just sent a fleet of unarmed food freighters directly into a pirate blockade.
+
+**Tension:** Acting immediately on potentially false information vs. waiting for verification and arriving too late.
+
+---
+
+## The Orbital Umbrella
+
+**Layer:** 2 -> 1
+
+**Fantasy:** Blocking out the sun to freeze your problems, or your enemies.
+
+**Mechanic:** A massive orbital megastructure that can unfold "Shade Sails" to block solar radiation to specific regions of the planet below. This rapidly cools the region and prevents solar power generation, but also shields it from deadly solar flares.
+
+**Emergence:** A rogue AI or hostile faction takes control of the Umbrella and permanently shades your primary agricultural zone. You have to launch a desperate boarding action to retake the station before your entire planet starves in an artificial ice age.
+
+**Tension:** The defensive benefits of absolute climate control vs. the apocalyptic risk of handing someone the switch to your planet's sun.
+
+---
+
+## The Xenoflora Pacemaker
+
+**Layer:** 1
+
+**Fantasy:** The planet's ecosystem regulates the heartbeat of your colony's industry.
+
+**Mechanic:** A massive, deeply rooted native plant species pulsates with bio-electric energy on a seasonal cycle. Your colony learns to tap into these roots for free, massive power, but the plants require absolute environmental purity. If pollution rises, the plant's "heartbeat" becomes erratic, causing massive, unpredictable power surges that destroy connected machinery.
+
+**Emergence:** You build your entire grid around the Pacemaker plant. To meet a wartime production quota, you relax emission standards. The plant goes into arrhythmia, sending a cascading power surge that permanently fries your shield generators right as the enemy fleet enters orbit.
+
+**Tension:** The incredible efficiency of free, biological power vs. the absolute restriction on industrial pollution required to maintain it safely.
+
+---
+
+## The Atmospheric Heist
+
+**Layer:** 2 -> 1
+
+**Fantasy:** Stealing the very air from a world to fuel your own survival.
+
+**Mechanic:** Massive "Siphon Ships" in low orbit can literally suck the atmosphere off a planet, compressing specific valuable gases (like oxygen or rare isotopes) into cargo tanks. This rapidly decreases Layer 1 atmospheric pressure, triggering severe environmental disasters and asphyxiating pops without enclosed habitats.
+
+**Emergence:** A desperate, dying empire arrives in your system not to conquer your world, but to steal its atmosphere to save their own failing homeworld. Your ground troops have to fight in increasingly thin air, watching the sky literally get sucked away by colossal orbital vacuum ships.
+
+**Tension:** Using atmospheric siphoning to quickly strip a hostile world vs. the terrifying reality of defending against an enemy that attacks your planet's fundamental livability.
+
+---
+
+## The Orphaned Armada
+
+**Layer:** 3
+
+**Fantasy:** A ghost fleet continuing a war for an empire that no longer exists.
+
+**Mechanic:** An immense fleet of automated warships from a fallen precursor empire still patrols a sector of the galaxy, rigidly following their final orders to "quarantine" the area. They do not communicate, they do not negotiate, and they attack anything that crosses their perimeter.
+
+**Emergence:** You desperately need to cross the quarantined sector to escape a supernova. You must sacrifice decoy fleets or attempt to exploit loopholes in the ancient AI's targeting protocols, essentially playing a game of cosmic stealth against a fleet that has been perfecting its patrol routes for ten thousand years.
+
+**Tension:** The strategic obstacle of an impassable sector vs. the temptation to salvage the incredibly advanced technology of the orphaned ships if you can somehow disable them.
+
+---
