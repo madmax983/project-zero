@@ -278,3 +278,6 @@ mod temporal_ghost_towns_bridge;
 mod unseen_bureaucracy_bridge;
 #[path = "integration/void_whispers_chronicle.rs"]
 mod void_whispers_chronicle;
+
+#[path = "integration/ventilation_atmosphere_bridge.rs"]
+mod ventilation_atmosphere_bridge;
