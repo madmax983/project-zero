@@ -106,3 +106,7 @@
 **Bloat:** `OrbitalDebris` struct in `src/layer2/debris.rs` acting as an unnecessary wrapper around a single `f32` field (`pub amount: f32`).
 **Cut:** Converted `OrbitalDebris` into a newtype tuple struct (`OrbitalDebris(pub f32)`).
 **Saved:** 4 lines of code, reduced verbosity of instantiating the component (e.g. `OrbitalDebris(0.0)` vs `OrbitalDebris { amount: 0.0 }`), and simplified field accesses.
+## [Reduction]
+**Bloat:** Enterprise FizzBuzz Enum: `OreType` in `src/layer1/whispering_ore.rs` had only two variants (`Normal` and `Whispering`). `Normal` was never used outside of tests.
+**Cut:** Removed the `OreType` enum completely and replaced it with a simple `is_whispering: bool` flag on `MinedOreEvent`.
+**Saved:** 6 lines of code and removed unnecessary enum wrapping and matching overhead.

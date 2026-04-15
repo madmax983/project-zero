@@ -1,15 +1,9 @@
 use bevy_ecs::prelude::*;
 
-#[derive(PartialEq, Eq, Debug, Clone, Copy)]
-pub enum OreType {
-    Normal,
-    Whispering,
-}
-
 #[derive(Event)]
 pub struct MinedOreEvent {
     pub miner: Entity,
-    pub ore_type: OreType,
+    pub is_whispering: bool,
 }
 
 #[derive(Event)]
@@ -35,7 +29,7 @@ pub fn process_whispering_ore_system(
     mut commands: Commands,
 ) {
     for event in events.read() {
-        if event.ore_type == OreType::Whispering {
+        if event.is_whispering {
             if unaffected_query.get(event.miner).is_ok() {
                 continue;
             }
@@ -95,17 +89,17 @@ mod tests {
 
         app.world_mut().send_event(MinedOreEvent {
             miner,
-            ore_type: OreType::Whispering,
+            is_whispering: true,
         });
         app.update();
         app.world_mut().send_event(MinedOreEvent {
             miner,
-            ore_type: OreType::Whispering,
+            is_whispering: true,
         });
         app.update();
         app.world_mut().send_event(MinedOreEvent {
             miner,
-            ore_type: OreType::Whispering,
+            is_whispering: true,
         });
         app.update();
 
