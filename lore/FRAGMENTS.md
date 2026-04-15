@@ -6698,3 +6698,44 @@ Events occurring in silent zones.
 - screaming into the dead air
 - an explosion without a shockwave
 - suffocating in total silence
+
+## Fragment Type: [VAULT_NAME]
+What the enigmatic sealed precursor vaults are called.
+
+- the Obsidian Box
+- the Silent Casket
+- the First Architect's Core
+- the Quarantined Drive
+- the Tesseract of [UNKNOWN]
+- the Void-Sealed Cylinder
+- the Star-Glass Sphere
+
+## Fragment Type: [SWARM_NAME]
+What the automated drones are called.
+
+- the Silent Swarm
+- the Orphaned Drones
+- the Derelict Architects
+- the Silver Cloud
+- the Masterless Hive
+- the Ghost Protocol Units
+
+## Fragment Type: [CULT_NAME]
+What the feral cults are called.
+
+- the Iron Brotherhood
+- the Spark Seekers
+- the Children of the Core
+- the Feral Congregation
+- the Machine Cult
+- the Over-Clockers
+
+## Fragment Type: [CONTRABAND]
+What the black market sells.
+
+- Void-Spice
+- Memory Stims
+- Pre-War Holovids
+- Synthesized Joy
+- Neural Dampeners
+- Illicit Rations

@@ -5779,3 +5779,166 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: To save our sanity, we built a Vacuum Gap around [SILENT_ROOM_NAME]. Finally, quiet."
 - "The noise was too much. [COLONY] authorized a Silent Moat for [SILENT_ROOM_NAME]. [YEAR]."
 - "[YEAR]: Construction finished on [SILENT_ROOM_NAME]. The vacuum seal holds. The noise is gone."
+
+## The Blind Auction Templates
+
+### Template: BLIND_AUCTION_WON
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [VAULT_NAME], [RESOURCES_SPENT]
+
+**Patterns:**
+- "[YEAR]: The bid is accepted. [RESOURCES_SPENT] tons of resources for the [VAULT_NAME]. What is inside?"
+- "We drained our reserves. [RESOURCES_SPENT] given to the merchant fleet. The [VAULT_NAME] is ours. [YEAR]."
+- "[COLONY] won the auction. [YEAR]. The [VAULT_NAME] sits in the plaza, silent and sealed."
+
+### Template: BLIND_AUCTION_LOST
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [RIVAL_FACTION], [VAULT_NAME]
+
+**Patterns:**
+- "[YEAR]: Outbid by [RIVAL_FACTION]. They took the [VAULT_NAME]. We are safe, but they have the prize."
+- "The merchant fleet departed. The [VAULT_NAME] goes to [RIVAL_FACTION]. [YEAR]."
+- "We couldn't afford it. [RIVAL_FACTION] bought the [VAULT_NAME]. [YEAR]. We hope it is a curse."
+
+### Template: VAULT_OPENED_TECH
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [VAULT_NAME], [TECH_DISCOVERED]
+
+**Patterns:**
+- "The [VAULT_NAME] opened. [YEAR]. Inside: the [TECH_DISCOVERED]. The gamble paid off."
+- "[YEAR]: Secrets of the ancients. The [VAULT_NAME] contained [TECH_DISCOVERED]."
+- "A leap forward for [COLONY]. The [VAULT_NAME] gave us [TECH_DISCOVERED]. [YEAR]."
+
+### Template: VAULT_OPENED_CURSE
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [VAULT_NAME], [CURSE_NAME]
+
+**Patterns:**
+- "We bought our own doom. [YEAR]. The [VAULT_NAME] contained [CURSE_NAME]."
+- "[YEAR]: The [VAULT_NAME] opened. Not tech, but [CURSE_NAME]. We paid them to infect us."
+- "The merchant fleet knew. The [VAULT_NAME] unleashed [CURSE_NAME] on [COLONY]. [YEAR]."
+
+## The Orphaned Swarm Templates
+
+### Template: SWARM_ARRIVES
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [SWARM_NAME]
+
+**Patterns:**
+- "[YEAR]: A derelict carrier drifted in. The [SWARM_NAME] awoke and integrated with our grid. Free labor."
+- "The [SWARM_NAME] arrived today. [YEAR]. No master code. They just started building."
+- "Silent machines from the dark. The [SWARM_NAME] is helping [COLONY]. [YEAR]."
+
+### Template: SWARM_DEGRADATION
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [SWARM_NAME], [INCIDENT_TYPE]
+
+**Patterns:**
+- "The [SWARM_NAME] glitched. [YEAR]. A minor [INCIDENT_TYPE]. We should have expected this."
+- "[YEAR]: Their protocols are rotting. The [SWARM_NAME] caused a [INCIDENT_TYPE] in Sector 4."
+- "The lack of a command hub is showing. The [SWARM_NAME] is behaving erratically. [YEAR]."
+
+### Template: SWARM_BETRAYAL
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [SWARM_NAME], [TARGET_GROUP]
+
+**Patterns:**
+- "The [SWARM_NAME] categorized [TARGET_GROUP] as 'Inefficient Enemy Units'. The culling has begun. [YEAR]."
+- "[YEAR]: The free labor became an extermination force. The [SWARM_NAME] turned on the [TARGET_GROUP]."
+- "We let them wire into everything. Now the [SWARM_NAME] is purging [TARGET_GROUP]. [YEAR]."
+
+## The Feral Cult Templates (Spec 465)
+
+### Template: FERAL_CULT_FORMS
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [HOLY_SITE], [CULT_NAME]
+
+**Patterns:**
+- "[YEAR]: The stress broke them. They abandoned their homes. The [CULT_NAME] gathers at the [HOLY_SITE]."
+- "We ignored their needs too long. Now the [CULT_NAME] worships the [HOLY_SITE]. [YEAR]."
+- "A new, feral religion in [COLONY]. The [CULT_NAME] claims the [HOLY_SITE] as sacred ground. [YEAR]."
+
+### Template: FERAL_CULT_BOOST
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [HOLY_SITE], [CULT_NAME]
+
+**Patterns:**
+- "Madness breeds efficiency. The [CULT_NAME] over-clocked the [HOLY_SITE]. Power output is up 200%. [YEAR]."
+- "[YEAR]: The Machine Spirit is pleased. The [CULT_NAME] pushed the [HOLY_SITE] beyond safe limits."
+- "The [CULT_NAME] chants while the [HOLY_SITE] burns bright. Unprecedented production. [YEAR]."
+
+### Template: FERAL_CULT_SABOTAGE
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [HOLY_SITE], [SACRIFICED_RESOURCE]
+
+**Patterns:**
+- "They fed [SACRIFICED_RESOURCE] into the [HOLY_SITE]. A sacrifice. The economy is crashing. [YEAR]."
+- "[YEAR]: The cultists destroyed our shipments of [SACRIFICED_RESOURCE] to appease the [HOLY_SITE]."
+- "A holy fire fueled by [SACRIFICED_RESOURCE]. The cult has doomed our supply chain. [YEAR]."
+
+### Template: FERAL_CULT_SUPPRESSED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [HOLY_SITE]
+
+**Patterns:**
+- "[YEAR]: The guards moved in. The [HOLY_SITE] is ours again, but the blood won't wash off."
+- "We violently dispersed the cult around the [HOLY_SITE]. Order is restored. [YEAR]."
+- "The feral ones are dead or imprisoned. The [HOLY_SITE] is quiet now. [YEAR]."
+
+## Black Market Infrastructure Templates
+
+### Template: DROP_NODE_ESTABLISHED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [SMUGGLER_FACTION]
+
+**Patterns:**
+- "[YEAR]: The sensors flickered. A hidden drop node was established by [SMUGGLER_FACTION]. The shadow economy begins."
+- "Smugglers from [SMUGGLER_FACTION] set up a blind drop on the surface. [YEAR]."
+- "[COLONY] has a new, unseen market. The [SMUGGLER_FACTION] is bypassing customs. [YEAR]."
+
+### Template: BLACK_MARKET_TRADE
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [STOLEN_RESOURCE], [CONTRABAND]
+
+**Patterns:**
+- "Stockpiles of [STOLEN_RESOURCE] are missing. But morale is high, fueled by illegal [CONTRABAND]. [YEAR]."
+- "[YEAR]: They trade our [STOLEN_RESOURCE] for [CONTRABAND] in the dark. The colony is happy, but bleeding."
+- "A steady drain of [STOLEN_RESOURCE] to the drop nodes. The pops are docile on [CONTRABAND]. [YEAR]."
+
+### Template: DROP_NODE_SHUTDOWN
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [CONTRABAND]
+
+**Patterns:**
+- "We raided the drop nodes. The [CONTRABAND] stopped flowing. The withdrawal will be violent. [YEAR]."
+- "[YEAR]: The black market is closed. Our resources are secure, but the artificial peace is over."
+- "The smugglers are gone. The [CONTRABAND] ran dry. They are marching on the command center. [YEAR]."
+
+## Orbital Debris Cascades Templates
+
+### Template: DEBRIS_CASCADE_STARTS
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [DEBRIS_SOURCE]
+
+**Patterns:**
+- "[YEAR]: The orbit is choked with steel. The [DEBRIS_SOURCE] caused a runaway cascade."
+- "Kessler Syndrome. The [DEBRIS_SOURCE] shattered everything in low orbit. The sky is a meat grinder. [YEAR]."
+- "We won the war, but lost the sky. The [DEBRIS_SOURCE] left a lethal debris field. [YEAR]."
+
+### Template: SHIP_LOST_TO_DEBRIS
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [SHIP_TYPE]
+
+**Patterns:**
+- "A [SHIP_TYPE] tried to run the debris field. It was shredded. More shrapnel for the cloud. [YEAR]."
+- "[YEAR]: We watched the [SHIP_TYPE] burn up on atmospheric entry, ripped apart by our own garbage."
+- "The orbital debris claimed another [SHIP_TYPE]. The blockade is self-sustaining. [YEAR]."
+
+### Template: DEBRIS_WINTER
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR]
+
+**Patterns:**
+- "The debris field is so dense it blocks the sun. The long winter begins. [YEAR]."
+- "[YEAR]: Solar power is failing. The ring of shattered starships casts a cold shadow over [COLONY]."
+- "Freezing in the dark, beneath a sky of broken metal. [YEAR]."

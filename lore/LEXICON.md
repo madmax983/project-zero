@@ -4171,3 +4171,23 @@
 **Usage:**
 - "The workers in the Dead Zone couldn't hear the warning."
 - "He died in the Deaf Spot, screaming in silence."
+## precursor vault
+**Replaces:** loot box, random drop, blind auction item
+**Code reference:** `PrecursorVault` component
+**Usage:** "The precursor vault remains sealed." / "They outbid us for the precursor vault."
+## orphaned swarm
+**Replaces:** free drones, drone event, automated workers
+**Code reference:** `OrphanedSwarm` component
+**Usage:** "The orphaned swarm optimized the sector." / "The orphaned swarm has gone rogue."
+## feral cult
+**Replaces:** religious unrest, crazy pops, machine worshippers
+**Code reference:** `FeralCult` component
+**Usage:** "The feral cult controls the power plant." / "Feral cultists sacrificed the ore."
+## drop node
+**Replaces:** smuggling stash, hidden market
+**Code reference:** `DropNode` component
+**Usage:** "The drop node is siphoning our alloys." / "We must shut down the drop nodes."
+## debris cascade
+**Replaces:** Kessler syndrome, orbital trash problem
+**Code reference:** `DebrisCascade` event/component
+**Usage:** "The debris cascade prevents all trade." / "We must clear the cascade."
