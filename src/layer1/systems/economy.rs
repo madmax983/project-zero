@@ -82,7 +82,7 @@ pub fn register(schedule: &mut Schedule) {
 
     schedule.add_systems(
         (
-            restore_rest_in_housing_system.after(update_noise_system),
+            restore_rest_in_housing_system,
             restore_leisure_system,
             crate::layer1::tech_envy::tech_envy_system.after(restore_leisure_system),
             #[cfg(feature = "nova")]
