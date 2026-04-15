@@ -349,31 +349,27 @@ fn handle_command(world: &mut World, input: &str) -> bool {
 
                 if let Some(t) = tech {
                     if unlock_tech(world, t) {
-                        println!("{}", format!("Success! Researched: {}", t.label()).green());
+                        print_command_result(true, &format!("Success! Researched: {}", t.label()));
                     } else {
                         // Check why
                         let res = world.resource::<ColonyResources>();
                         let ts = world.resource::<TechState>();
 
                         if res.knowledge < t.cost() {
-                            println!(
-                                "{}",
-                                format!(
-                                    "❌ Failed: Insufficient Knowledge ({:.1}/{:.1})",
+                            print_command_result(
+                                false,
+                                &format!(
+                                    "Failed: Insufficient Knowledge ({:.1}/{:.1})",
                                     res.knowledge,
                                     t.cost()
-                                )
-                                .red()
+                                ),
                             );
                         } else if ts.used_capacity + t.storage_cost() > ts.total_capacity {
-                            println!(
-                                "{}",
-                                format!("❌ Failed: Insufficient Data Storage Capacity ({:.1}/{:.1} TB used)", ts.used_capacity, ts.total_capacity).red()
-                            );
+                            print_command_result(false, &format!("Failed: Insufficient Data Storage Capacity ({:.1}/{:.1} TB used)", ts.used_capacity, ts.total_capacity));
                         } else {
-                            println!(
-                                "{}",
-                                "❌ Failed: Unknown reason (maybe already researched?)".red()
+                            print_command_result(
+                                false,
+                                "Failed: Unknown reason (maybe already researched?)",
                             );
                         }
                     }
@@ -1041,10 +1037,7 @@ fn build_at(world: &mut World, building_type: BuildingType, x: i32, y: i32) {
 
     let success = try_place_building(world, x, y, building_type);
     if success {
-        println!(
-            "{} Built {building_type:?} at ({x}, {y})",
-            "✓".green().bold()
-        );
+        print_command_result(true, &format!("Built {building_type:?} at ({x}, {y})"));
     } else {
         // Check why it failed
         let terrain = world.resource::<TerrainGrid>();
@@ -1052,17 +1045,11 @@ fn build_at(world: &mut World, building_type: BuildingType, x: i32, y: i32) {
         let occupied = world.resource::<OccupiedTiles>();
 
         if tile.is_none() {
-            println!("{} Failed: ({x}, {y}) is out of bounds", "✗".red().bold());
+            print_command_result(false, &format!("({x}, {y}) is out of bounds"));
         } else if occupied.0.contains(&(x, y)) {
-            println!(
-                "{} Failed: ({x}, {y}) is already occupied",
-                "✗".red().bold()
-            );
+            print_command_result(false, &format!("({x}, {y}) is already occupied"));
         } else if let Some(t) = tile {
-            println!(
-                "{} Failed: cannot build on {t:?} at ({x}, {y})",
-                "✗".red().bold()
-            );
+            print_command_result(false, &format!("cannot build on {t:?} at ({x}, {y})"));
         }
     }
 }
@@ -1070,9 +1057,9 @@ fn build_at(world: &mut World, building_type: BuildingType, x: i32, y: i32) {
 fn designate_at(world: &mut World, designation_type: DesignationType, x: i32, y: i32) {
     let success = try_designate(world, x, y, designation_type);
     if success {
-        println!(
-            "{} Designated {designation_type:?} at ({x}, {y})",
-            "✓".green().bold()
+        print_command_result(
+            true,
+            &format!("Designated {designation_type:?} at ({x}, {y})"),
         );
     } else {
         // Check why it failed
@@ -1082,62 +1069,47 @@ fn designate_at(world: &mut World, designation_type: DesignationType, x: i32, y:
         match designation_type {
             DesignationType::Mine => {
                 if tile == Some(TerrainType::Rock) {
-                    println!(
-                        "{} Failed: already designated at ({x}, {y})",
-                        "✗".red().bold()
-                    );
+                    print_command_result(false, &format!("already designated at ({x}, {y})"));
                 } else {
-                    println!(
-                        "{} Failed: ({x}, {y}) is {tile:?}, need Rock for mining",
-                        "✗".red().bold()
+                    print_command_result(
+                        false,
+                        &format!("({x}, {y}) is {tile:?}, need Rock for mining"),
                     );
                 }
             }
             DesignationType::Chop => {
                 if tile == Some(TerrainType::Tree) {
-                    println!(
-                        "{} Failed: already designated at ({x}, {y})",
-                        "✗".red().bold()
-                    );
+                    print_command_result(false, &format!("already designated at ({x}, {y})"));
                 } else {
-                    println!(
-                        "{} Failed: ({x}, {y}) is {tile:?}, need Tree for chopping",
-                        "✗".red().bold()
+                    print_command_result(
+                        false,
+                        &format!("({x}, {y}) is {tile:?}, need Tree for chopping"),
                     );
                 }
             }
             DesignationType::Demolish | DesignationType::Destroy => {
-                println!("{} Failed: no building at ({x}, {y})", "✗".red().bold());
+                print_command_result(false, &format!("no building at ({x}, {y})"));
             }
             DesignationType::Repair => {
-                println!(
-                    "{} Failed: no building to repair at ({x}, {y})",
-                    "✗".red().bold()
-                );
+                print_command_result(false, &format!("no building to repair at ({x}, {y})"));
             }
             DesignationType::SetZone(_) => {
-                println!("{} Failed: cannot set zone at ({x}, {y})", "✗".red().bold());
+                print_command_result(false, &format!("cannot set zone at ({x}, {y})"));
             }
             DesignationType::Tame => {
-                println!("{} Failed: no wild animal at ({x}, {y})", "✗".red().bold());
+                print_command_result(false, &format!("no wild animal at ({x}, {y})"));
             }
             DesignationType::ClearFlora => {
-                println!("{} Failed: no flora at ({x}, {y})", "✗".red().bold());
+                print_command_result(false, &format!("no flora at ({x}, {y})"));
             }
             DesignationType::JuryRig => {
-                println!(
-                    "{} Failed: no building to jury-rig at ({x}, {y})",
-                    "✗".red().bold()
-                );
+                print_command_result(false, &format!("no building to jury-rig at ({x}, {y})"));
             }
             DesignationType::Cannibalize => {
-                println!("{} Failed: no Lander at ({x}, {y})", "✗".red().bold());
+                print_command_result(false, &format!("no Lander at ({x}, {y})"));
             }
             DesignationType::CollectSample => {
-                println!(
-                    "{} Failed: no Flora or Fauna at ({x}, {y})",
-                    "✗".red().bold()
-                );
+                print_command_result(false, &format!("no Flora or Fauna at ({x}, {y})"));
             }
         }
     }
@@ -2195,4 +2167,15 @@ mod reproduction_tests {
         assert!(ScanRadius::new(101).is_err());
         assert!(ScanRadius::new(i32::MAX).is_err());
     }
+}
+
+fn print_command_result(success: bool, message: &str) {
+    let mut table = Table::new();
+    table.load_preset(UTF8_FULL);
+    if success {
+        table.add_row(vec![Cell::new(format!("✓ {}", message)).fg(Color::Green)]);
+    } else {
+        table.add_row(vec![Cell::new(format!("✗ {}", message)).fg(Color::Red)]);
+    }
+    println!("{table}");
 }
