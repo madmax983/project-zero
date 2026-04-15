@@ -333,6 +333,7 @@ impl AtmosphereGrid {
                     .unwrap_or(usize::MAX);
 
                 // If the cell itself is a solid blocker (Wall), it contains no pollution.
+                // However, we only consider it a full blocker if its transmissivity is 0.0 (EPSILON).
                 if blockers
                     .get(&(x as i32, y as i32))
                     .is_some_and(|&trans| trans <= f32::EPSILON)
@@ -477,6 +478,7 @@ pub fn simulate_diffusion_system(
     mut grid: ResMut<AtmosphereGrid>,
     config: Res<DiffusionConfig>,
     query: Query<(&Building, &GridPosition)>,
+    vents_query: Query<(&GridPosition, &crate::layer1::physics::vent::VentConnection)>,
 ) {
     // Diffusion rate is now set by update_weather_diffusion_system (and potentially modified by terraforming)
 
@@ -486,6 +488,11 @@ pub fn simulate_diffusion_system(
         if let Some(transmissivity) = b.building_type.flow_transmissivity() {
             blockers.insert((pos.x, pos.y), transmissivity);
         }
+    }
+
+    for (pos, vent) in vents_query.iter() {
+        let airflow = crate::layer1::physics::vent::calculate_vent_airflow(vent);
+        blockers.insert((pos.x, pos.y), airflow);
     }
 
     // 3. Diffuse

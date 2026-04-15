@@ -698,3 +698,10 @@
 - **Systems connected:** `update_pressure_system` -> `update_noise_system`
 - **Glue added:** Moved `update_noise_system` and `apply_noise_effects_system` from `Layer1SystemSet::Execution` to `Layer1SystemSet::Environment` so they execute after `update_pressure_system`
 - **Tests:** `tests/integration/vacuum_noise_bridge.rs`
+
+### INT-862: Ventilation Networks -> Atmosphere Diffusion
+- **Date:** 2026-06-02
+- **Systems connected:** `VentConnection` (Ventilation) -> `simulate_diffusion_system` (Atmosphere)
+- **Glue added:**
+    - `simulate_diffusion_system` in `src/layer1/nature/atmosphere.rs` now queries `VentConnection`s and uses `calculate_vent_airflow` to determine diffusion transmissivity through walls.
+- **Tests:** `tests/integration/ventilation_atmosphere_bridge.rs` (2 tests verified)
