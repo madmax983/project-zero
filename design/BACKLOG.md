@@ -724,3 +724,5 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1046` The Artifact Diet — `specs/1046-artifact-diet.md`
 - [ ] `1047` Asteroid Tethering — `specs/1047-asteroid-tethering.md`
 - [ ] `1048` Sub-light Refugee Fleets — `specs/1048-sub-light-refugee-fleets.md`
+- [ ] `1049` Architectural Sentience — `specs/1049-architectural-sentience.md`
+- [ ] `1050` Deep Sleep Syndicates — `specs/1050-deep-sleep-syndicates.md`
