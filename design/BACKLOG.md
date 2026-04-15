@@ -1,7 +1,7 @@
 # Backlog
 
 ## High Priority
-- [ ] `893` Psychic Stains — `specs/893-psychic-stains.md`
+
 - [ ] `894` Social Debt — `specs/894-social-debt.md`
 - [ ] `895` Ephemeral Moons — `specs/895-ephemeral-moons.md`
 - [ ] `815` Zero-G Fermentation — `specs/815-zero-g-fermentation.md`
