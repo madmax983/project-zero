@@ -266,4 +266,4 @@ pub fn update_beauty_grid_system(
 ## Questions
 
 *Builder: Should Waste decay naturally?*
-*Architect:* No, industrial waste must be actively managed. It persists infinitely until collected or processed to ensure long-term logistical challenges.
+*Architect:* No, industrial waste is persistent. It must be actively cleaned by a waste management job or specialized buildings.
