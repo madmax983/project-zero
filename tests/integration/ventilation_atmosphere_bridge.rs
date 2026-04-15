@@ -1,8 +1,10 @@
 use bevy::prelude::*;
 use scale::layer1::map::GridPosition;
-use scale::layer1::nature::atmosphere::{simulate_diffusion_system, AtmosphereGrid, DiffusionConfig, update_atmosphere_system};
-use scale::layer1::weather::WeatherState;
+use scale::layer1::nature::atmosphere::{
+    simulate_diffusion_system, update_atmosphere_system, AtmosphereGrid, DiffusionConfig,
+};
 use scale::layer1::physics::vent::{VentConnection, VentilationPlugin};
+use scale::layer1::weather::WeatherState;
 
 #[test]
 fn test_atmosphere_diffuses_through_open_vent() {
@@ -35,7 +37,7 @@ fn test_atmosphere_diffuses_through_open_vent() {
             pos_b: UVec2::new(2, 0),
             grated: false,
         },
-        GridPosition { x: 1, y: 0 }
+        GridPosition { x: 1, y: 0 },
     ));
 
     // Wall at 1,0 to ensure it's normally blocked
@@ -43,20 +45,29 @@ fn test_atmosphere_diffuses_through_open_vent() {
         scale::layer1::building::Building {
             building_type: scale::layer1::building::BuildingType::Wall,
         },
-        GridPosition { x: 1, y: 0 }
+        GridPosition { x: 1, y: 0 },
     ));
 
-    app.add_systems(Update, (update_atmosphere_system, simulate_diffusion_system).chain());
+    app.add_systems(
+        Update,
+        (update_atmosphere_system, simulate_diffusion_system).chain(),
+    );
 
     for _ in 0..20 {
         // Manually refill source
-        app.world_mut().resource_mut::<AtmosphereGrid>().set(0, 0, 1.0);
+        app.world_mut()
+            .resource_mut::<AtmosphereGrid>()
+            .set(0, 0, 1.0);
         app.update();
     }
 
     let grid = app.world().resource::<AtmosphereGrid>();
     let pollution = grid.get(2, 0);
-    assert!(pollution > 0.05, "Pollution should diffuse through open vent even with wall, but was {}", pollution);
+    assert!(
+        pollution > 0.05,
+        "Pollution should diffuse through open vent even with wall, but was {}",
+        pollution
+    );
 }
 
 #[test]
@@ -91,12 +102,17 @@ fn test_atmosphere_diffusion_reduced_by_grate() {
             pos_b: UVec2::new(2, 0),
             grated: false,
         },
-        GridPosition { x: 1, y: 0 }
+        GridPosition { x: 1, y: 0 },
     ));
 
-    app1.add_systems(Update, (update_atmosphere_system, simulate_diffusion_system).chain());
+    app1.add_systems(
+        Update,
+        (update_atmosphere_system, simulate_diffusion_system).chain(),
+    );
     for _ in 0..20 {
-        app1.world_mut().resource_mut::<AtmosphereGrid>().set(0, 0, 1.0);
+        app1.world_mut()
+            .resource_mut::<AtmosphereGrid>()
+            .set(0, 0, 1.0);
         app1.update();
     }
     let pollution1 = app1.world().resource::<AtmosphereGrid>().get(2, 0);
@@ -131,16 +147,29 @@ fn test_atmosphere_diffusion_reduced_by_grate() {
             pos_b: UVec2::new(2, 0),
             grated: true,
         },
-        GridPosition { x: 1, y: 0 }
+        GridPosition { x: 1, y: 0 },
     ));
 
-    app2.add_systems(Update, (update_atmosphere_system, simulate_diffusion_system).chain());
+    app2.add_systems(
+        Update,
+        (update_atmosphere_system, simulate_diffusion_system).chain(),
+    );
     for _ in 0..20 {
-        app2.world_mut().resource_mut::<AtmosphereGrid>().set(0, 0, 1.0);
+        app2.world_mut()
+            .resource_mut::<AtmosphereGrid>()
+            .set(0, 0, 1.0);
         app2.update();
     }
     let pollution2 = app2.world().resource::<AtmosphereGrid>().get(2, 0);
 
-    assert!(pollution2 < pollution1, "Grated vent should reduce pollution diffusion compared to open vent ({} vs {})", pollution2, pollution1);
-    assert!(pollution2 > 0.0, "Grated vent should still allow some diffusion");
+    assert!(
+        pollution2 < pollution1,
+        "Grated vent should reduce pollution diffusion compared to open vent ({} vs {})",
+        pollution2,
+        pollution1
+    );
+    assert!(
+        pollution2 > 0.0,
+        "Grated vent should still allow some diffusion"
+    );
 }

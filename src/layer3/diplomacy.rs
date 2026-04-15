@@ -1,8 +1,8 @@
 use crate::layer1::spore_diplomat::SporeInfection;
 use bevy::prelude::*;
 
-pub mod succession;
 pub mod proxy_wars;
+pub mod succession;
 
 #[derive(Component)]
 pub struct Envoy;

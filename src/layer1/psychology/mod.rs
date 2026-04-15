@@ -9,6 +9,7 @@ pub mod overview_effect;
 pub mod pop_memories;
 pub mod psionics;
 pub mod psychic;
+pub mod psychic_stains;
 pub mod quirks;
 #[cfg(test)]
 mod quirks_tests;
@@ -34,6 +35,7 @@ pub use overview_effect::*;
 pub use pop_memories::*;
 pub use psionics::*;
 pub use psychic::*;
+pub use psychic_stains::*;
 pub use quirks::*;
 #[cfg(feature = "nova")]
 pub use sleep_deprived_savant::*;
