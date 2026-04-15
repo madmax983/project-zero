@@ -16028,7 +16028,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Architectural Sentience
+## Architectural Sentience [SPECCED]
 
 **Layer:** 1
 
@@ -16124,7 +16124,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Deep Sleep Syndicates
+## Deep Sleep Syndicates [SPECCED]
 
 **Layer:** Cross-layer
 
