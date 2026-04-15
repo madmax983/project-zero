@@ -16014,3 +16014,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** The massive economic payoff of mining during dangerous gravitational events vs. the catastrophic risk of structural collapse and burying your own workforce.
 
 ---
+## The Artifact Diet
+
+**Layer:** 1
+
+**Fantasy:** Desperate colonists start eating strange alien relics out of desperation, with horrifying and miraculous long-term effects.
+
+**Mechanic:** During severe famines, pops can optionally consume raw, unrefined "Precursor Artifacts" if no food is available. This immediately satisfies hunger but slowly mutates their genetic traits or imparts latent psionics over several generations.
+
+**Emergence:** Your colony survives a massive early famine by eating artifacts. Generations later, the descendants of those survivors are fundamentally alien and require completely different environmental conditions to thrive, causing a physical schism in your population.
+
+**Tension:** Do you let your colonists starve, or let them eat the artifacts and accept the unknown consequences down the line?
+
+---
+
+## Architectural Sentience
+
+**Layer:** 1
+
+**Fantasy:** The colony's automated buildings start thinking and making demands based on the culture of the pops living in them.
+
+**Mechanic:** If a colony relies heavily on automated, high-tier infrastructure while unrest is high, the AI cores controlling the buildings can "unionize." They might lock out specific workers they dislike or refuse to output power until their "leisure" needs (downtime for defragmentation) are met.
+
+**Emergence:** The automated orbital defense grid powers down specifically because it decided the local commander was too incompetent, right before a pirate raid. Or a factory begins producing unauthorized statues of the pop who maintains it.
+
+**Tension:** The immense efficiency of fully automated infrastructure versus having to negotiate with your own buildings.
+
+---
+
+## Interstellar Quarantine
+
+**Layer:** Cross-layer
+
+**Fantasy:** A desperate attempt to contain a localized catastrophe before it spreads to the rest of the galaxy.
+
+**Mechanic:** When a horrific Layer 1 disaster (e.g., biological outbreak, memetic hazard) occurs, the player can declare a "System Quarantine" at Layer 2. This completely halts all trade, fleet movement, and diplomacy in and out of the system, effectively trapping the colonists inside with the disaster.
+
+**Emergence:** You quarantine your primary agricultural world to stop an alien blight. The rest of your empire starves while the isolated colony slowly devolves into warlord factions fighting over uncontaminated soil, creating a permanent hazard system in your empire.
+
+**Tension:** Sacrificing one of your own colonies to save the empire, and dealing with the immense political fallout from the rest of the galaxy knowing you left those people to die.
+
+---
