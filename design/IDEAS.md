@@ -4591,7 +4591,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Asteroid Claims
+## Asteroid Claims [SPECCED]
 
 **Layer:** 2
 
@@ -4633,7 +4633,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Pollination Vectors
+## Pollination Vectors [SPECCED]
 
 **Layer:** 1
 
@@ -5205,7 +5205,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Asteroid Claims
+## Asteroid Claims [SPECCED]
 
 **Layer:** 2
 
@@ -5247,7 +5247,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Pollination Vectors
+## Pollination Vectors [SPECCED]
 
 **Layer:** 1
 
