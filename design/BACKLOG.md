@@ -718,3 +718,4 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1039` The Xeno-Pet Fad — `specs/1039-the-xeno-pet-fad.md`
 - [ ] `1040` The Blind Auction — `specs/1040-blind-auction.md`
 - [ ] `1041` The Orphaned Swarm — `specs/1041-the-orphaned-swarm.md`
+- [ ] `1042` The Feral Cult — `specs/1042-the-feral-cult.md`

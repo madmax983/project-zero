@@ -15932,7 +15932,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** The intoxicating, free economic and military power of the drones versus the terrifying, invisible ticking clock of their inevitable software decay and betrayal.
 
 ---
-## The Feral Cult
+## The Feral Cult [SPECCED]
 
 **Layer:** 1
 
