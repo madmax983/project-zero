@@ -719,3 +719,4 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1040` The Blind Auction — `specs/1040-blind-auction.md`
 - [ ] `1041` The Orphaned Swarm — `specs/1041-the-orphaned-swarm.md`
 - [ ] `1042` The Feral Cult — `specs/1042-the-feral-cult.md`
+- [ ] `1043` Black Market Infrastructure — `specs/1043-black-market-infrastructure.md`

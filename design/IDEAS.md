@@ -15946,7 +15946,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Black Market Infrastructure
+## Black Market Infrastructure [SPECCED]
 
 **Layer:** Cross-layer
 
