@@ -16055,3 +16055,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Sacrificing one of your own colonies to save the empire, and dealing with the immense political fallout from the rest of the galaxy knowing you left those people to die.
 
 ---
+## The Memorial Economy
+
+**Layer:** 1
+
+**Fantasy:** Creating a culture of remembrance that turns mourning into a tangible, strategic resource, but risks prioritizing the dead over the living.
+
+**Mechanic:** Pops that die with high prestige or significant memories generate "Relics" or require "Memorial Structures." These structures boost the morale of descendants and related pops, but they consume valuable space and resources. The colony can begin exporting Relics to the broader system for massive cultural/diplomatic influence.
+
+**Emergence:** A catastrophic mining collapse kills half your workforce. Instead of the colony collapsing, the survivors build a massive, complex necropolis that becomes a galactic pilgrimage site. Your economy shifts entirely from mining to tourism and the "Memorial Economy," relying on the tragedy for survival.
+
+**Tension:** Do you recycle the bodies of the dead for fertilizer to survive the winter, or dedicate your last plots of arable land to monuments that might attract off-world investment?
+
+---
+
+## Asteroid Tethering
+
+**Layer:** 2 -> 1
+
+**Fantasy:** Physically dragging celestial bodies into orbit for extreme resource extraction, creating terrifying artificial celestial hazards.
+
+**Mechanic:** Using specialized Layer 2 tug fleets, players can capture small asteroids and tether them in low orbit above a Layer 1 colony. The colony can then construct "Sky-Mines" to extract resources incredibly fast. However, the tether requires constant power and maintenance.
+
+**Emergence:** You tether a massive ice asteroid to provide water for a desert world. During a worker strike at the tether anchor, maintenance fails. The asteroid's orbit decays, and it crashes into the planet, instantly solving the water crisis by creating a massive new ocean, but wiping out the capital city in the process.
+
+**Tension:** The incredible, immediate resource wealth of tethering vs. the persistent, existential threat of an artificial meteor strike hanging directly over your population centers.
+
+---
+
+## Sub-light Refugee Fleets
+
+**Layer:** Cross-layer
+
+**Fantasy:** Dealing with the delayed, physical consequences of ancient wars that arrive on your doorstep generations later.
+
+**Mechanic:** When a Layer 3 civilization collapses or a planet is destroyed, it spawns "Sub-light Refugee Fleets." Because they lack hyper-drive technology, these fleets take decades or centuries to reach neighboring systems. The game tracks their slow progress.
+
+**Emergence:** You settle a pristine, empty sector of space. A century later, a massive fleet of archaic, battered ships arrives. They are the survivors of a war you read about in the game's early lore generation. They expect to settle on the world they targeted 100 years ago, which is now your heavily developed capital.
+
+**Tension:** Do you turn your planetary defense grids on desperate people who have been asleep for a century, or do you somehow try to integrate a massive, culturally alien population into your delicate colony ecosystem?
+
+---
