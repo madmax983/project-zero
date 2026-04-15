@@ -277,11 +277,21 @@ pub fn map_game_key_to_bevy_key(key: GameKeyCode) -> KeyCode {
     }
 }
 
-#[allow(clippy::too_many_lines)]
 fn handle_normal_mode(world: &mut World, key: GameKeyEvent) {
+    if handle_normal_mode_quit_or_speed(world, key) {
+        return;
+    }
+    if handle_normal_mode_camera(world, key) {
+        return;
+    }
+    handle_normal_mode_modes(world, key);
+}
+
+fn handle_normal_mode_quit_or_speed(world: &mut World, key: GameKeyEvent) -> bool {
     match key.code {
         GameKeyCode::Char('q') => {
             *world.resource_mut::<GameState>() = GameState::Quitting;
+            true
         }
         GameKeyCode::Esc => {
             let mut selection = world.resource_mut::<Selection>();
@@ -290,6 +300,7 @@ fn handle_normal_mode(world: &mut World, key: GameKeyEvent) {
             } else {
                 *world.resource_mut::<GameState>() = GameState::Quitting;
             }
+            true
         }
         GameKeyCode::Char(' ') => {
             let mut state = world.resource_mut::<GameState>();
@@ -299,32 +310,52 @@ fn handle_normal_mode(world: &mut World, key: GameKeyEvent) {
                 GameState::Quitting => GameState::Quitting,
                 GameState::MainMenu => GameState::MainMenu,
             };
+            true
         }
         GameKeyCode::Char('1') => {
             world.resource_mut::<SimulationTime>().speed = SimSpeed::Normal;
+            true
         }
         GameKeyCode::Char('2') => {
             world.resource_mut::<SimulationTime>().speed = SimSpeed::Fast;
+            true
         }
         GameKeyCode::Char('3') => {
             world.resource_mut::<SimulationTime>().speed = SimSpeed::Faster;
+            true
         }
+        _ => false,
+    }
+}
+
+fn handle_normal_mode_camera(world: &mut World, key: GameKeyEvent) -> bool {
+    match key.code {
         GameKeyCode::Char('w') | GameKeyCode::Up => {
             let mut target = world.resource_mut::<CameraTarget>();
             target.y -= 1.0;
+            true
         }
         GameKeyCode::Char('s') | GameKeyCode::Down => {
             let mut target = world.resource_mut::<CameraTarget>();
             target.y += 1.0;
+            true
         }
         GameKeyCode::Char('a') | GameKeyCode::Left => {
             let mut target = world.resource_mut::<CameraTarget>();
             target.x -= 1.0;
+            true
         }
         GameKeyCode::Char('d') | GameKeyCode::Right => {
             let mut target = world.resource_mut::<CameraTarget>();
             target.x += 1.0;
+            true
         }
+        _ => false,
+    }
+}
+
+fn handle_normal_mode_modes(world: &mut World, key: GameKeyEvent) -> bool {
+    match key.code {
         GameKeyCode::Char('b') => {
             // Enter build mode
             world
@@ -342,18 +373,22 @@ fn handle_normal_mode(world: &mut World, key: GameKeyEvent) {
                 x: vx + 10,
                 y: vy + 10,
             };
+            true
         }
         GameKeyCode::Char('m') => {
             // Enter Designation mode (Mine)
             enter_designation_mode(world, DesignationType::Mine);
+            true
         }
         GameKeyCode::Char('x') => {
             // Enter Designation mode (Demolish)
             enter_designation_mode(world, DesignationType::Demolish);
+            true
         }
         GameKeyCode::Char('c') => {
             // Enter Designation mode (Chop)
             enter_designation_mode(world, DesignationType::Chop);
+            true
         }
         GameKeyCode::Tab => {
             let visibility = *world.resource::<crate::layer2::visibility::SystemVisibility>();
@@ -370,8 +405,9 @@ fn handle_normal_mode(world: &mut World, key: GameKeyEvent) {
                 }
                 ViewMode::System => *view_mode = ViewMode::Colony,
             }
+            true
         }
-        _ => {}
+        _ => false,
     }
 }
 

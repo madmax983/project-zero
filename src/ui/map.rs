@@ -317,46 +317,53 @@ pub fn build_terrain_spans(
 /// 2. Drag selection rectangles.
 /// 3. Cached entities ([`RenderCache`]).
 /// 4. Base terrain.
-#[allow(clippy::too_many_lines)]
 pub fn build_map_layer_spans<S: BuildHasher>(ctx: MapRenderContext<'_, S>) -> Vec<Line<'static>> {
     let mut lines: Vec<Line> = Vec::with_capacity(ctx.area.height as usize);
 
     for screen_y in 0..ctx.area.height {
         let world_y = ctx.viewport.y.saturating_add(i32::from(screen_y));
-        let mut line_spans = Vec::with_capacity(ctx.area.width as usize);
-
-        for screen_x in 0..ctx.area.width {
-            let world_x = ctx.viewport.x.saturating_add(i32::from(screen_x));
-
-            // Build mode cursor (highest priority)
-            if let Some(span) = render_build_mode_cursor(&ctx, world_x, world_y) {
-                line_spans.push(span);
-                continue;
-            }
-
-            // Designation mode cursor (highest priority, shared with build mode)
-            if let Some(span) = render_designation_mode(&ctx, world_x, world_y) {
-                line_spans.push(span);
-                continue;
-            }
-
-            // Check for entity in cache
-            if let Some(entity) = ctx.entities_data.get(&GridPosition {
-                x: world_x,
-                y: world_y,
-            }) {
-                if let Some(span) = render_cached_entity(&ctx, entity) {
-                    line_spans.push(span);
-                    continue;
-                }
-            }
-
-            // Otherwise render terrain
-            line_spans.push(render_base_terrain(&ctx, world_x, world_y));
-        }
+        let line_spans = build_map_layer_line(&ctx, world_y);
         lines.push(Line::from(line_spans));
     }
     lines
+}
+
+fn build_map_layer_line<S: BuildHasher>(
+    ctx: &MapRenderContext<'_, S>,
+    world_y: i32,
+) -> Vec<Span<'static>> {
+    let mut line_spans = Vec::with_capacity(ctx.area.width as usize);
+
+    for screen_x in 0..ctx.area.width {
+        let world_x = ctx.viewport.x.saturating_add(i32::from(screen_x));
+
+        // Build mode cursor (highest priority)
+        if let Some(span) = render_build_mode_cursor(ctx, world_x, world_y) {
+            line_spans.push(span);
+            continue;
+        }
+
+        // Designation mode cursor (highest priority, shared with build mode)
+        if let Some(span) = render_designation_mode(ctx, world_x, world_y) {
+            line_spans.push(span);
+            continue;
+        }
+
+        // Check for entity in cache
+        if let Some(entity) = ctx.entities_data.get(&GridPosition {
+            x: world_x,
+            y: world_y,
+        }) {
+            if let Some(span) = render_cached_entity(ctx, entity) {
+                line_spans.push(span);
+                continue;
+            }
+        }
+
+        // Otherwise render terrain
+        line_spans.push(render_base_terrain(ctx, world_x, world_y));
+    }
+    line_spans
 }
 
 fn render_build_mode_cursor<S: BuildHasher>(
