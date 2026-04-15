@@ -179,3 +179,4 @@ pub fn execute_sleepwalking_sabotage_system(
 
 ## 8. Questions
 *Builder: How should we treat a Pop who is arrested while sleepwalking? Do they get an "innocent confusion" modifier, or are they treated as a standard rebel?*
+*Architect:* They should receive an "innocent confusion" morale modifier rather than being treated as a standard rebel, as their actions were involuntary.

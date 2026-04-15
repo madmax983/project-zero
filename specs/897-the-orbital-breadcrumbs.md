@@ -193,3 +193,4 @@ pub fn collect_surface_pod_system(
 
 ## 8. Questions
 *Builder: How should we represent the piecing together of the fragments? A dedicated UI window, or just popups via the narrative chronicle when the required amount is reached?*
+*Architect:* For now, simply use popups via the narrative chronicle when fragments are collected or the required amount is reached. We can consider a dedicated UI window later if it becomes too noisy.

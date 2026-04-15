@@ -146,3 +146,4 @@ pub fn process_chronal_decay_system(
 
 ## 8. Questions
 *Builder: Will we need a new UI shader to represent these zones visually to the player without cluttering the main map?*
+*Architect:* No new shader is needed for the MVP. A simple tinted overlay or particle effect over the affected tiles will suffice to avoid clutter.
