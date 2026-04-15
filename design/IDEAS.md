@@ -16014,7 +16014,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** The massive economic payoff of mining during dangerous gravitational events vs. the catastrophic risk of structural collapse and burying your own workforce.
 
 ---
-## The Artifact Diet
+## The Artifact Diet [SPECCED]
 
 **Layer:** 1
 

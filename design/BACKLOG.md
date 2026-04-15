@@ -721,3 +721,4 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1043` Black Market Infrastructure — `specs/1043-black-market-infrastructure.md`
 - [ ] `1044` Hostage Architecture — `specs/1044-hostage-architecture.md`
 - [ ] `1045` The Generational Debt Collector — `specs/1045-generational-debt-collector.md`
+- [ ] `1046` The Artifact Diet — `specs/1046-artifact-diet.md`
