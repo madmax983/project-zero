@@ -1,3 +1,4 @@
+- [x] `INT-060` Integration: Vacuum Pressure -> Acoustic Shadows — completed 2026-06-25
 - [x] `747` The Debt-Trap Megastructure — `specs/747-debt-trap-megastructure.md` — completed 2026-06-02
 - [x] `765` Diplomatic Wards — `specs/765-diplomatic-wards.md` — completed 2026-04-02
 - [x] `775` The Quantum Famine — `specs/775-the-quantum-famine.md` — completed 2026-03-20

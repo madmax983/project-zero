@@ -692,3 +692,9 @@
 - **Systems connected:** `handle_mind_upload` (Digital Immortality) -> `digital_immortality_chronicle_bridge` (Integration) -> `AddChronicleEvent`
 - **Glue added:** Added `digital_immortality_chronicle_bridge` to emit an `AddChronicleEvent` (`EventImportance::Major`) upon `MindUploadEvent`. Registered in `Layer1SystemSet::Observation`.
 - **Tests:** `tests/integration/digital_immortality_chronicle.rs`
+
+### INT-060: Vacuum Pressure -> Acoustic Shadows
+- **Date:** 2026-06-25
+- **Systems connected:** `update_pressure_system` -> `update_noise_system`
+- **Glue added:** Moved `update_noise_system` and `apply_noise_effects_system` from `Layer1SystemSet::Execution` to `Layer1SystemSet::Environment` so they execute after `update_pressure_system`
+- **Tests:** `tests/integration/vacuum_noise_bridge.rs`

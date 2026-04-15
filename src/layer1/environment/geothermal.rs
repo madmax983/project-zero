@@ -261,7 +261,7 @@ mod tests {
             .id();
 
         // Adjacent building to take collateral damage
-        let adj_building = app
+        let _adj_building = app
             .world_mut()
             .spawn((
                 Structure {

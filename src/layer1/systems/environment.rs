@@ -149,7 +149,6 @@ pub fn register(schedule: &mut Schedule) {
             #[cfg(feature = "nova")]
             crate::layer1::constellations::update_sky_system,
             malfunction_system.after(entropy_system),
-            apply_noise_effects_system.after(update_noise_system),
             waste_pollution_bridge,
             crate::layer1::nature::biosphere_empathy::sync_empathic_network_system,
             crate::layer1::nature::biosphere_empathy::handle_flora_damage_empathy_system,
@@ -175,6 +174,8 @@ pub fn register(schedule: &mut Schedule) {
     schedule.add_systems(
         (
             update_pressure_system,
+            update_noise_system.after(update_pressure_system),
+            apply_noise_effects_system.after(update_noise_system),
             crate::layer1::temperature::update_temperature_system.after(update_pressure_system),
             crate::layer1::radioactive::radiation_system
                 .after(crate::layer1::temperature::update_temperature_system),
