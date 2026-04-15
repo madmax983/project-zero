@@ -1,1 +1,0 @@
-sed -i 's/fn test_husbandry_full_loop() {/#[ignore(reason = "AI evaluation does not currently select Tame action. Requires review.")]\nfn test_husbandry_full_loop() {/' tests/integration/husbandry_integration_tests.rs

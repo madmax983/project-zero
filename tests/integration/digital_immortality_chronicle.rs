@@ -1,9 +1,9 @@
+use bevy::prelude::Name;
 use bevy_app::App;
 use bevy_ecs::event::Events;
-use bevy::prelude::Name;
 use scale::layer1::chronicle::{AddChronicleEvent, EventImportance};
-use scale::layer1::digital_immortality::{Ghost, MindUploadEvent};
 use scale::layer1::core::integration::digital_immortality_chronicle_bridge;
+use scale::layer1::digital_immortality::{Ghost, MindUploadEvent};
 
 #[test]
 fn test_mind_upload_emits_chronicle() {
@@ -14,10 +14,7 @@ fn test_mind_upload_emits_chronicle() {
 
     app.add_systems(bevy_app::Update, digital_immortality_chronicle_bridge);
 
-    let pop_entity = app
-        .world_mut()
-        .spawn((Name::new("Evelyn"), Ghost))
-        .id();
+    let pop_entity = app.world_mut().spawn((Name::new("Evelyn"), Ghost)).id();
 
     let mainframe_entity = app.world_mut().spawn_empty().id();
 

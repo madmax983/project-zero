@@ -1,5 +1,4 @@
 use crate::layer1::quirks::{PlanetaryTrait, PlanetaryTraits};
-use crate::layer2::binary_star::{BinaryPhase, BinaryStarSystem};
 use crate::layer2::system::{Orbit, OrbitalBody};
 use crate::shared::random::WorldSeed;
 use bevy_ecs::prelude::*;

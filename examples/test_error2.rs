@@ -1,6 +1,5 @@
-
-use scale::prelude::*;
 use comfy_table::{presets::UTF8_FULL, Cell, Color as TableColor, Table};
+use scale::prelude::*;
 
 fn main() -> anyhow::Result<()> {
     let mut generator = NarrativeGenerator::default();
