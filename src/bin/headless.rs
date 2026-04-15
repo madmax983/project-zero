@@ -1862,7 +1862,6 @@ fn print_stories(world: &mut World) {
         let mut story_cell;
 
         if story.mutations > 0 {
-
             // Re-construct the string applying colors
             // Simple approach: we just replace the mutated substrings with magenta, and wrap the rest in genre color.
             // But doing this with strings directly can be tricky.

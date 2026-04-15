@@ -1,12 +1,12 @@
 #[cfg(test)]
 mod tests {
     use bevy_ecs::prelude::*;
-    use scale::layer1::flora::{PheromoneFlora, PheromoneEmission};
-    use scale::layer1::olfactory::{ScentMap, scent_diffusion_system, scent_mood_system};
+    use scale::layer1::core::integration::flora_scent_bridge_system;
+    use scale::layer1::flora::{PheromoneEmission, PheromoneFlora};
     use scale::layer1::map::GridPosition;
     use scale::layer1::morale::Morale;
+    use scale::layer1::olfactory::{scent_diffusion_system, scent_mood_system, ScentMap};
     use scale::layer1::pop::Pop;
-    use scale::layer1::core::integration::flora_scent_bridge_system;
 
     #[test]
     fn test_pheromone_gardening_bridge_calming() {
@@ -17,15 +17,15 @@ mod tests {
                 flora_scent_bridge_system,
                 scent_diffusion_system,
                 scent_mood_system,
-            ).chain()
+            )
+                .chain(),
         );
         app.init_resource::<ScentMap>();
 
-        let pop_entity = app.world_mut().spawn((
-            GridPosition { x: 5, y: 5 },
-            Morale::default(),
-            Pop,
-        )).id();
+        let pop_entity = app
+            .world_mut()
+            .spawn((GridPosition { x: 5, y: 5 }, Morale::default(), Pop))
+            .id();
 
         app.world_mut().spawn((
             PheromoneFlora {
@@ -45,7 +45,10 @@ mod tests {
 
         let scent_map = app.world().resource::<ScentMap>();
         let scent = scent_map.get_scent(GridPosition { x: 5, y: 6 });
-        assert!(scent.pleasant > 0.0, "Calming scent should diffuse to neighbors");
+        assert!(
+            scent.pleasant > 0.0,
+            "Calming scent should diffuse to neighbors"
+        );
     }
 
     #[test]
@@ -57,15 +60,15 @@ mod tests {
                 flora_scent_bridge_system,
                 scent_diffusion_system,
                 scent_mood_system,
-            ).chain()
+            )
+                .chain(),
         );
         app.init_resource::<ScentMap>();
 
-        let pop_entity = app.world_mut().spawn((
-            GridPosition { x: 5, y: 5 },
-            Morale::default(),
-            Pop,
-        )).id();
+        let pop_entity = app
+            .world_mut()
+            .spawn((GridPosition { x: 5, y: 5 }, Morale::default(), Pop))
+            .id();
 
         app.world_mut().spawn((
             PheromoneFlora {

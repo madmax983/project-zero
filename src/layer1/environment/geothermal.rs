@@ -282,10 +282,15 @@ mod tests {
 
         // Instead of testing damage here directly (that's handled by handle_explosion_system now),
         // we test that the ExplosionEvent was fired correctly.
-        let events = app.world().resource::<Events<crate::layer1::environment::volatile::ExplosionEvent>>();
+        let events = app
+            .world()
+            .resource::<Events<crate::layer1::environment::volatile::ExplosionEvent>>();
         let mut reader = events.get_cursor();
         let event = reader.read(events).next();
-        assert!(event.is_some(), "An ExplosionEvent should have been emitted");
+        assert!(
+            event.is_some(),
+            "An ExplosionEvent should have been emitted"
+        );
         let e = event.unwrap();
         assert_eq!(e.center, vent_pos);
         assert_eq!(e.damage, 50.0);
