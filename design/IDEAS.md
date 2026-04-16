@@ -12994,7 +12994,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Zero-G Flora
+## Zero-G Flora [SPECCED]
 
 **Layer:** 2
 
@@ -13008,7 +13008,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Void Sirens
+## The Void Sirens [SPECCED]
 
 **Layer:** Cross-layer (2 -> 1)
 
