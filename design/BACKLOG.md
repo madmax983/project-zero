@@ -727,3 +727,9 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1051` Asteroid Claims — `specs/1051-asteroid-claims.md`
 - [ ] `1052` Pollination Vectors — `specs/1052-pollination-vectors.md`
 - [ ] `1053` Smart Matter Architecture — `specs/1053-smart-matter-architecture.md`
+- [ ] `1054` Thermal Camouflage — `specs/1054-thermal-camouflage.md`
+- [ ] `1055` Gravity Caste — `specs/1055-gravity-caste.md`
+- [ ] `1056` The Dead Hand — `specs/1056-the-dead-hand.md`
+- [ ] `1057` The Living Score — `specs/1057-the-living-score.md`
+- [ ] `1058` Retro-Causality Contracts — `specs/1058-retro-causality-contracts.md`
+- [ ] `1059` System Sovereignty — `specs/1059-system-sovereignty.md`
