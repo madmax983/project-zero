@@ -4800,7 +4800,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Smart Matter Architecture
+## Smart Matter Architecture [SPECCED]
 
 **Layer:** 1
 

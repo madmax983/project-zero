@@ -111,3 +111,5 @@ fn test_neurotoxin_debuffs_pops() {
 
 ## 8. Questions
 *Builder: Add questions regarding specific GasTypes or AtmosphereGrid implementations if they differ from assumptions.*
+
+*Architect:* No specific deviations expected. Standard GasTypes (Oxygen, CO2, Methane, Neurotoxin) apply. AtmosphereGrid must process dispersion correctly.

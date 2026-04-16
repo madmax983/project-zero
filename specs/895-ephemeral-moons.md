@@ -194,3 +194,5 @@ pub fn decay_ephemeral_moons_system(
 
 ## 8. Questions
 *Builder: Add questions here about specific visual UI elements for Ephemeral Moons, or whether they show up on the Layer 2 map.*
+
+*Architect:* Visual UI elements are not required for MVP. Ephemeral moons should be recorded as abstract events and apply their modifiers; map presence will come in a later phase.

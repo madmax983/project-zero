@@ -195,3 +195,5 @@ pub fn decay_stains_system(
 
 ## 8. Questions
 *Builder: Add questions here if the interaction with pathfinding weights (avoiding stains) needs to be addressed in this scope or a future spec.*
+
+*Architect:* Pathfinding weights should indeed be modified to avoid stains if possible, but for this spec, just ensure the stains are correctly instantiated and applying stress. Pathfinding updates can be deferred to a follow-up spec if too complex.

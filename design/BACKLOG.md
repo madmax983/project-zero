@@ -727,3 +727,4 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1050` Deep Sleep Syndicates — `specs/1050-deep-sleep-syndicates.md`
 - [ ] `1051` Asteroid Claims — `specs/1051-asteroid-claims.md`
 - [ ] `1052` Pollination Vectors — `specs/1052-pollination-vectors.md`
+- [ ] `1053` Smart Matter Architecture — `specs/1053-smart-matter-architecture.md`
