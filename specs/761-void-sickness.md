@@ -159,3 +159,4 @@ pub fn apply_void_touched_trait_system(
 
 ## 8. Questions
 *Builder: add questions here if spec is unclear.*
+*Builder: `PopTraits` does not exist (it's `Traits`). `PopStats` does not exist. `ActionType::Sleep` is actually `ActionType::SatisfyRest`. Will need to adjust the RED phase.*

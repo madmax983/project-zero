@@ -187,3 +187,4 @@ pub fn fulfill_market_trade_system(
 
 ## 8. Questions
 *Builder: add questions here if spec is unclear.*
+*Builder: This task seems to be mostly Layer 2 -> Layer 3 integration. Should we just implement it based on the spec?*

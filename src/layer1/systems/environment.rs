@@ -6,6 +6,9 @@ use bevy_ecs::prelude::*;
 pub fn register(schedule: &mut Schedule) {
     schedule.add_systems(
         (
+            crate::layer1::environment::impact::process_impact_countdown_system,
+            crate::layer1::environment::impact::process_impact_strike_system
+                .after(crate::layer1::environment::impact::process_impact_countdown_system),
             crate::layer1::environment::geothermal::geothermal_pulse_system,
             crate::layer1::environment::geothermal::geothermal_boost_system,
             crate::layer1::environment::geothermal::geothermal_decay_system,

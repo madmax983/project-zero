@@ -180,3 +180,10 @@ pub fn process_cult_sabotage(
 
 ## 8. Questions
 *Builder: add questions here if spec is unclear.*
+*Builder: Missing architectural components:*
+- `Ideology::SubLithic` is not present.
+- `FactionId::SubLithic` is not present.
+- `JobAssignment::DeepMining` is not present (or rather `JobType::DeepMining` / `AssignmentType::DeepMining`).
+- `Building::Spaceport` is not present in `BuildingType` (maybe `TradeDepot` is the closest?).
+- `SabotageEvent` is not present (although `ScrapCodeProphets` has a `CurrentAction::Sabotage(Entity)`).
+- We should add the missing `JobType`/`AssignmentType`, `FactionId`, `BuildingType` before implementing this logic, or pick a different task.

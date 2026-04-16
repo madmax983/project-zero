@@ -125,3 +125,4 @@ pub fn primitive_faith_system(
 
 ## 8. Questions
 *Builder: add questions here if spec is unclear.*
+*Builder: This task depends on 701-primitive-civilizations.md which is not yet completed in `COMPLETED.md`. We cannot proceed with implementing 816 until 701 is finished.*

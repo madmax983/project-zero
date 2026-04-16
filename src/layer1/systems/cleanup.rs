@@ -84,6 +84,8 @@ pub fn register(schedule: &mut Schedule) {
 
     schedule.add_systems(
         (
+            update_event_buffer::<crate::layer1::environment::impact::ImpactWarningEvent>,
+            update_event_buffer::<crate::layer1::environment::impact::ImpactStrikeEvent>,
             update_event_buffer::<crate::layer1::environment::ephemeral_moons::MoonCapturedEvent>,
             update_event_buffer::<crate::layer1::environment::ephemeral_moons::MoonEjectedEvent>,
         )

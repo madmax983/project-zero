@@ -34,3 +34,5 @@ pub mod geothermal;
 
 pub mod ephemeral_moons;
 pub use ephemeral_moons::*;
+pub mod impact;
+pub use impact::*;
