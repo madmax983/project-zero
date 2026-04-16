@@ -1,20 +1,26 @@
 use bevy_ecs::prelude::*;
 
 #[derive(Resource, Default)]
+/// Colony-wide statistics tracking economy and law.
 pub struct ColonyStats {
+    /// Measure of how many luxury needs are currently unmet.
     pub unmet_luxury: u32,
+    /// Total corruption level in the colony.
     pub corruption: f32,
 }
 
 #[derive(Component)]
+/// Marker component for a pop acting as a smuggler.
 pub struct Smuggler;
 
+/// Spawns smugglers if unmet luxury needs are high.
 pub fn black_market_spawn_system(mut commands: Commands, stats: Res<ColonyStats>) {
     if stats.unmet_luxury > 50 {
         commands.spawn(Smuggler);
     }
 }
 
+/// Increases corruption when smugglers are present.
 pub fn smuggler_trade_system(mut stats: ResMut<ColonyStats>, query: Query<&Smuggler>) {
     if !query.is_empty() {
         stats.corruption += 1.0;

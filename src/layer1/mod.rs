@@ -30,10 +30,13 @@
 //! - **Environment:** [`crate::layer1::terrain`], [`crate::layer1::map`], [`crate::layer1::weather`], [`crate::layer1::lighting`]
 //! - **Economy:** [`crate::layer1::resources`], [`crate::layer1::trade`]
 
+/// Generic entities mechanisms
 pub mod entities;
 pub use entities::*;
+/// Architecture simulation mechanics
 pub mod architecture;
 pub use architecture::*;
+/// Economy mechanisms
 pub mod economy;
 pub use economy::*;
 pub mod access_control;
@@ -170,6 +173,7 @@ pub use energy::*;
 
 /// Pop lifecycle and aging (Spec 062).
 pub mod lifecycle;
+/// Whispering ore deposits mechanics
 pub mod whispering_ore;
 pub use lifecycle::*;
 pub use whispering_ore::*;
@@ -359,12 +363,15 @@ pub mod quantum_twins;
 pub use quantum_twins::*;
 
 /// Holographic Facades (Spec 249).
+/// Construction mechanics
 pub mod construction;
+/// Holographic projections
 pub mod hologram;
 
 mod hologram_tests;
 pub use hologram::*;
 
+/// Memory core structures
 pub mod memory_core;
 pub use memory_core::*;
 
@@ -372,16 +379,21 @@ pub use memory_core::*;
 pub mod olfactory;
 pub use olfactory::*;
 
+/// Simulation physics engines
 pub mod physics;
 pub use physics::*;
 
+/// Nature mechanics
 pub mod nature;
 pub use nature::*;
+/// Shipbreaking tools
 pub mod shipbreaking;
 pub use shipbreaking::*;
+/// Void weed flora system
 pub mod void_weed;
 pub use void_weed::*;
 
+/// Temporal Ghost Towns mechanics
 pub mod temporal_ghost_towns;
 pub use temporal_ghost_towns::*;
 
@@ -392,20 +404,30 @@ pub use infrastructure::*;
 /// Nanite Fabrication system (Spec 453).
 pub mod nanite_fabrication;
 pub use nanite_fabrication::*;
+/// Exodus mechanisms for pops leaving
 pub mod exodus;
 pub use exodus::*;
+/// Generic environment mechanics
 pub mod environment;
+/// Spore diplomat faction mechanics
 pub mod spore_diplomat;
 pub use spore_diplomat::*;
 /// Agriculture and Food Production
 pub mod agriculture;
+/// Diplomacy systems
 pub mod diplomacy;
 pub use agriculture::*;
+/// Haunted assembly lines events
 pub mod haunted_assembly_lines;
+/// Local tributes logic
 pub mod local_tributes;
+/// Religion systems
 pub mod religion;
+/// Unseen bureaucracy event logic
 pub mod unseen_bureaucracy;
 pub use unseen_bureaucracy::*;
+/// Core layer mechanisms
 pub mod core;
 pub use core::*;
+/// Digital immortality mechanics
 pub mod digital_immortality;

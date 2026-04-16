@@ -1,3 +1,4 @@
+//! Shadow market module.
 use crate::layer1::lighting::LightMap;
 use crate::layer1::map::GridPosition;
 use crate::layer1::trade::{Merchant, TradeDeal};
@@ -13,11 +14,33 @@ use crate::shared::time::SimulationTime;
 use rand::Rng;
 
 #[derive(Component)]
+/// A Shadow Trader.
+///
+/// # Examples
+/// ```
+/// use scale::layer1::trade::Merchant;
+/// use scale::layer1::economy::shadow_market::ShadowTrader;
+/// let t = ShadowTrader {
+///     merchant: Merchant { name: "x".to_string(), arrival_tick: 0, departure_tick: 0, deals: vec![] }
+/// };
+/// ```
 pub struct ShadowTrader {
     pub merchant: Merchant,
 }
 
 /// System to execute a trade for an item (like Memory Core) specifically from a Shadow Trader
+/// Executes a trade with the shadow market.
+///
+/// # Examples
+/// ```
+/// use bevy_ecs::prelude::*;
+/// use scale::layer1::economy::shadow_market::execute_shadow_item_trade;
+/// use scale::layer1::resources::ResourceType;
+/// use scale::layer1::items::ItemType;
+///
+/// let mut world = World::new();
+/// // Dummy execution, real test would have components
+/// ```
 pub fn execute_shadow_item_trade(
     world: &mut World,
     trader_entity: Entity,
@@ -135,6 +158,17 @@ pub fn execute_shadow_item_trade(
     false
 }
 
+/// Checks if a shadow trader can spawn at a position.
+///
+/// # Examples
+/// ```
+/// use bevy_ecs::prelude::*;
+/// use scale::layer1::economy::shadow_market::can_spawn_trader;
+/// use scale::layer1::map::GridPosition;
+///
+/// let world = World::new();
+/// // let can = can_spawn_trader(&world, GridPosition{x:0,y:0});
+/// ```
 pub fn can_spawn_trader(world: &World, pos: GridPosition) -> bool {
     if pos.x < 0 || pos.y < 0 {
         return false;
@@ -167,6 +201,12 @@ pub fn can_spawn_trader(world: &World, pos: GridPosition) -> bool {
     true
 }
 
+/// Check conditions to spawn trader.
+///
+/// # Examples
+/// ```
+/// // Let mut world = World::new();
+/// ```
 pub fn check_spawn_conditions(
     pos: GridPosition,
     light_map: &LightMap,
@@ -199,6 +239,12 @@ pub struct ShadowMarketCooldown {
     pub cooldown: u64,
 }
 
+/// Spawn shadow trader system.
+///
+/// # Examples
+/// ```
+/// // Add to bevy system
+/// ```
 pub fn spawn_shadow_trader_system(
     mut commands: Commands,
     mut manager: ResMut<ShadowMarketCooldown>,
@@ -272,6 +318,12 @@ pub fn spawn_shadow_trader_system(
     }
 }
 
+/// Despawn trader system.
+///
+/// # Examples
+/// ```
+/// // Add to bevy system
+/// ```
 pub fn despawn_in_light_system(
     mut commands: Commands,
     query: Query<(Entity, &GridPosition), With<ShadowTrader>>,

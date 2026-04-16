@@ -24,23 +24,34 @@ use bevy_ecs::prelude::*;
 /// ```
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
 pub enum TheVisitorState {
+    /// Wandering aimlessly.
+
     #[default]
     Wander,
+    /// Searching for a stockpile target.
     DetectTarget,
+    /// Moving towards the targeted stockpile.
     MoveToTarget,
+    /// Consuming resources at the stockpile.
     Eat,
+    /// Leaving the map.
     Leave,
 }
 
 /// Component marking "The Visitor" entity.
 #[derive(Component)]
 pub struct TheVisitor {
+    /// The current behavioral state.
     pub state: TheVisitorState,
+    /// Entity ID of the target stockpile, if any.
     pub target_stockpile: Option<Entity>,
+    /// Expected map position of the target.
     pub target_position: Option<GridPosition>,
     /// Amount of resources to eat before leaving.
     pub hunger: f32,
+    /// Entity hit points.
     pub health: f32,
+    /// Damage dealt to structures stepped upon.
     pub trample_damage: f32,
 }
 
@@ -65,6 +76,8 @@ type StockpileFilter = (With<Stockpile>, Without<TheVisitor>);
 type StructureQuery<'a> = (Entity, &'a GridPosition);
 type StructureFilter = (With<Structure>, Without<TheVisitor>);
 
+/// Evaluates and advances the behavior state machine of "The Visitor".
+/// Handles targeting, moving, eating, and trampling structures.
 pub fn the_visitor_behavior_system(
     mut commands: Commands,
     mut visitors: Query<VisitorQuery, VisitorFilter>,

@@ -6,16 +6,16 @@
 //! Window Views System (Spec 216).
 //!
 //! This module implements the "View" mechanic, where `Window`s capture beauty from the environment
-//! and project it into the room as a [`BeautySource`].
+//! and project it into the room as a `BeautySource`.
 //!
 //! # Mechanics
 //!
 //! 1.  **Placement**: Windows are placed on walls. They have a `Direction` facing outwards.
 //! 2.  **Raycasting**: The `update_window_views_system` casts a ray from the window in its facing direction.
-//! 3.  **Beauty Capture**: The system sums the beauty values of tiles along the ray (from the [`BeautyGrid`]).
+//! 3.  **Beauty Capture**: The system sums the beauty values of tiles along the ray (from the `BeautyGrid`).
 //! 4.  **Obstruction**: Buildings (like Walls) block the view, terminating the ray.
 //! 5.  **Projection**: The total captured beauty is scaled (currently 10%) and set as the value of the
-//!     window's local [`BeautySource`].
+//!     window's local `BeautySource`.
 //!
 //! # Example
 //!
@@ -29,7 +29,7 @@ use bevy_ecs::prelude::*;
 
 /// Component representing a window that captures view beauty.
 ///
-/// Windows are typically attached to wall entities. They must also have a [`BeautySource`] component
+/// Windows are typically attached to wall entities. They must also have a `BeautySource` component
 /// to emit the captured beauty into the room.
 #[derive(Component, Default)]
 pub struct Window {
@@ -48,8 +48,8 @@ pub struct Window {
 /// 1.  Iterates from `1` to `range` in the window's `direction`.
 /// 2.  Checks for map bounds (adds a small bonus for "Sky View" if hitting edge).
 /// 3.  Checks for obstructions (buildings that block wind/view).
-/// 4.  Sums the beauty value of valid tiles from the [`BeautyGrid`].
-/// 5.  Updates the window's [`BeautySource`] value with a scaled total (10%).
+/// 4.  Sums the beauty value of valid tiles from the `BeautyGrid`.
+/// 5.  Updates the window's `BeautySource` value with a scaled total (10%).
 ///
 /// # Performance
 /// This system runs every few ticks (configured in `SystemSet`).

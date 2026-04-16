@@ -1,3 +1,4 @@
+//! Fugue state module.
 use crate::layer1::chronicle::{AddChronicleEvent, EventImportance};
 use crate::layer1::map::GridPosition;
 use crate::layer1::pop::Job;

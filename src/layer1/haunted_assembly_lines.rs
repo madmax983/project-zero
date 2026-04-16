@@ -1,14 +1,14 @@
 //! **Haunted Assembly Lines** module.
 //!
 //! This module introduces supernatural anomalies to production facilities where Pops have perished.
-//! When a worker dies in a building, an [`EchoOfTheFallen`] manifests, permanently cursing the location.
+//! When a worker dies in a building, an `EchoOfTheFallen` manifests, permanently cursing the location.
 //! Haunted buildings experience unnatural efficiency boosts but inflict terrifying levels of stress
 //! on any assigned workers, eventually driving them away.
 //!
 //! ## Mechanics
-//! - **The Incident:** A worker's death emits a [`PopDiedInAccidentEvent`].
-//! - **The Haunting:** The building receives the [`EchoOfTheFallen`] component and an immediate [`Efficiency`] multiplier.
-//! - **The Toll:** The `apply_haunted_stress_system` rapidly increases worker [`Stress`].
+//! - **The Incident:** A worker's death emits a `PopDiedInAccidentEvent`.
+//! - **The Haunting:** The building receives the `EchoOfTheFallen` component and an immediate `Efficiency` multiplier.
+//! - **The Toll:** The `apply_haunted_stress_system` rapidly increases worker `Stress`.
 //! - **The Breaking Point:** Workers whose stress exceeds critical thresholds are unassigned via `check_haunted_worker_system`.
 //!
 
@@ -60,9 +60,9 @@ pub fn setup_haunted_assembly_lines(app: &mut App) {
     app.add_event::<PopDiedInAccidentEvent>();
 }
 
-/// Processes accidental deaths and applies the [`EchoOfTheFallen`] curse to the building.
+/// Processes accidental deaths and applies the `EchoOfTheFallen` curse to the building.
 ///
-/// This system listens for [`PopDiedInAccidentEvent`] and forcibly increases the building's [`Efficiency`].
+/// This system listens for `PopDiedInAccidentEvent` and forcibly increases the building's `Efficiency`.
 pub fn haunted_building_system(
     mut events: EventReader<PopDiedInAccidentEvent>,
     mut commands: Commands,
@@ -82,7 +82,7 @@ pub fn haunted_building_system(
 
 /// Inflicts psychological trauma on workers assigned to haunted buildings.
 ///
-/// Increases the [`Stress`] of any Pop assigned to a building that has the [`EchoOfTheFallen`] component.
+/// Increases the `Stress` of any Pop assigned to a building that has the `EchoOfTheFallen` component.
 pub fn apply_haunted_stress_system(
     mut pops_query: Query<(&AssignedTo, &mut Stress)>,
     haunted_query: Query<(), With<EchoOfTheFallen>>,
@@ -96,7 +96,7 @@ pub fn apply_haunted_stress_system(
 
 /// Forces terrified workers to abandon their posts in haunted buildings.
 ///
-/// If a worker's [`Stress`] exceeds a critical threshold and their building has an [`EchoOfTheFallen`],
+/// If a worker's `Stress` exceeds a critical threshold and their building has an `EchoOfTheFallen`,
 /// they are unassigned from the location.
 pub fn check_haunted_worker_system(
     mut commands: Commands,

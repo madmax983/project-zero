@@ -25,6 +25,13 @@ use bevy::prelude::*;
 /// };
 /// ```
 #[derive(Component)]
+/// Symbiotic structure.
+///
+/// # Examples
+/// ```
+/// use scale::layer1::architecture::symbiotic_infrastructure::SymbioticStructure;
+/// let s = SymbioticStructure { regeneration_rate: 1.0, is_dormant: false };
+/// ```
 pub struct SymbioticStructure {
     pub regeneration_rate: f32,
     pub is_dormant: bool,
@@ -32,6 +39,13 @@ pub struct SymbioticStructure {
 
 /// The environmental thresholds required to keep a symbiotic structure active.
 #[derive(Component)]
+/// Symbiotic needs.
+///
+/// # Examples
+/// ```
+/// use scale::layer1::architecture::symbiotic_infrastructure::SymbioticNeeds;
+/// let s = SymbioticNeeds { required_light: 1.0, required_temp: 1.0 };
+/// ```
 pub struct SymbioticNeeds {
     pub required_light: f32,
     pub required_temp: f32,
@@ -41,6 +55,13 @@ pub struct SymbioticNeeds {
 ///
 /// *Note: This is currently used primarily as a test stub for integration.*
 #[derive(Component)]
+/// Environmental status.
+///
+/// # Examples
+/// ```
+/// use scale::layer1::architecture::symbiotic_infrastructure::EnvironmentStatus;
+/// let s = EnvironmentStatus { current_light: 1.0, current_temp: 1.0 };
+/// ```
 pub struct EnvironmentStatus {
     pub current_light: f32,
     pub current_temp: f32,

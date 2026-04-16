@@ -1,13 +1,13 @@
 //! **Local Tributes** module.
 //!
 //! This module handles the interactions between the colony and ancient, massive native lifeforms known as Leviathans.
-//! Leviathans demand regular tributes from the colony. Appeasing them grants a temporary [`LeviathanProtectionBuff`],
+//! Leviathans demand regular tributes from the colony. Appeasing them grants a temporary `LeviathanProtectionBuff`,
 //! while refusing them triggers violent uprisings that can devastate the colony.
 //!
 //! ## Mechanics
-//! - **The Demand:** The [`leviathan_tribute_system`] generates periodic demands for resources.
-//! - **The Appeasement:** The [`leviathan_appeasement_system`] attempts to consume resources from the colony's inventory to satisfy the demand when a [`PayTributeEvent`] is fired.
-//! - **The Refusal:** The [`leviathan_refusal_system`] triggers when a [`RefuseTributeEvent`] is fired, increasing the Leviathan's anger. If anger reaches a critical threshold, a `DisasterEvent` is dispatched.
+//! - **The Demand:** The `leviathan_tribute_system` generates periodic demands for resources.
+//! - **The Appeasement:** The `leviathan_appeasement_system` attempts to consume resources from the colony's inventory to satisfy the demand when a `PayTributeEvent` is fired.
+//! - **The Refusal:** The `leviathan_refusal_system` triggers when a `RefuseTributeEvent` is fired, increasing the Leviathan's anger. If anger reaches a critical threshold, a `DisasterEvent` is dispatched.
 //!
 
 use crate::layer1::economy::inventory::Inventory;
@@ -80,8 +80,8 @@ pub fn leviathan_tribute_system(time: Res<Time>, mut query: Query<&mut Leviathan
 
 /// Attempts to fulfill a Leviathan's demand using colony inventories.
 ///
-/// Listens for [`PayTributeEvent`]s, scans `Inventory` components for the requested items,
-/// consumes them if available, and grants a [`LeviathanProtectionBuff`].
+/// Listens for `PayTributeEvent`s, scans `Inventory` components for the requested items,
+/// consumes them if available, and grants a `LeviathanProtectionBuff`.
 pub fn leviathan_appeasement_system(
     mut commands: Commands,
     mut events: EventReader<PayTributeEvent>,
@@ -129,7 +129,7 @@ pub fn leviathan_appeasement_system(
 
 /// Handles the consequences of angering a Leviathan.
 ///
-/// Listens for [`RefuseTributeEvent`]s, increments the Leviathan's anger, and may dispatch
+/// Listens for `RefuseTributeEvent`s, increments the Leviathan's anger, and may dispatch
 /// a `DisasterEvent` if the entity is pushed beyond its limits.
 pub fn leviathan_refusal_system(
     mut events: EventReader<RefuseTributeEvent>,

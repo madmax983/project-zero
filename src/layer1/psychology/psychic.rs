@@ -4,6 +4,7 @@ use crate::layer2::environment::PsychicBackground;
 use bevy_ecs::prelude::*;
 use bevy_time::Time;
 
+/// Applies psychic background radiation effects to pop needs and stress.
 pub fn apply_psychic_radiation_system(
     time: Option<Res<Time>>,
     background: Option<Res<PsychicBackground>>,
