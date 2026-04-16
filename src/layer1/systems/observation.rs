@@ -203,6 +203,12 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::social::exile::process_banishments.after(decay_needs_system),
             crate::layer1::social::exile::evaluate_exile_returns.after(decay_needs_system),
             crate::layer1::contagion::emotional_contagion_system.after(decay_needs_system),
+        )
+            .in_set(Layer1SystemSet::Observation),
+    );
+
+    schedule.add_systems(
+        (
             crate::layer1::social::debt::accrue_debt_system,
             crate::layer1::social::debt::debt_decay_system,
             crate::layer1::social::debt::debt_impact_system,
@@ -223,6 +229,12 @@ pub fn register(schedule: &mut Schedule) {
             #[cfg(feature = "nova")]
             crate::experimental::fungal_death::fungal_death_system
                 .after(crate::layer1::health::despawn_dead_entities_system),
+        )
+            .in_set(Layer1SystemSet::Observation),
+    );
+
+    schedule.add_systems(
+        (
             #[cfg(feature = "nova")]
             crate::experimental::bioluminescent_trails::spawn_bioluminescent_trails_system
                 .after(crate::layer1::needs::decay_needs_system),

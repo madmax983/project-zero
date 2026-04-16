@@ -920,7 +920,7 @@ fn print_map(world: &mut World, center_x: i32, center_y: i32) {
     }
     println!();
 
-    let map_width = (radius * 2 + 1) as usize;
+    let map_width = (radius.checked_mul(2).unwrap_or(0).checked_add(1).unwrap_or(0)) as usize;
     println!(
         "   {}{}{}",
         "┌".cyan(),
