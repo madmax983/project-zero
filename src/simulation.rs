@@ -773,6 +773,7 @@ mod tests {
         world.init_resource::<Events<crate::layer2::moon_hermits::PopDesertedEvent>>();
 
         world.init_resource::<Time>();
+        world.init_resource::<Events<crate::layer2::primitives::InvasionEvent>>();
 
         world.init_resource::<Events<crate::layer1::social::ghost_shift_strike::GhostShiftStartedEvent>>();
         world.init_resource::<Events<crate::layer3::diplomacy::succession::SuccessionEvent>>();
