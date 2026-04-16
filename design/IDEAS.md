@@ -16137,3 +16137,16 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Using desperate, unethical solutions from the past to solve impossible crises in the present, knowing you'll have to deal with the moral and social fallout later.
 
 ---
+## The Existential Audit
+
+**Layer:** 3 -> 1
+
+**Fantasy:** A bureaucratic evaluation so deep it questions the very purpose of your society.
+
+**Mechanic:** A super-advanced precursor AI occasionally "audits" your colony. It evaluates not just resource output, but the "meaningfulness" of your pops' lives based on cultural and philosophical metrics. Failing the audit doesn't destroy buildings; it inflicts a massive, global "Existential Crisis" debuff where pops question their purpose and stop working.
+
+**Emergence:** You have a perfectly optimized, hyper-efficient industrial world, but it fails the audit because the AI deems it "soulless." To appease the AI, you have to rapidly dismantle factories to build giant art installations and poetry academies, temporarily crashing your economy just to pass the inspection.
+
+**Tension:** The ruthless pursuit of material efficiency versus the esoteric, unpredictable demands of a god-like evaluator of "meaning."
+
+---
