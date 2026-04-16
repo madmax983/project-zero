@@ -16150,3 +16150,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** The ruthless pursuit of material efficiency versus the esoteric, unpredictable demands of a god-like evaluator of "meaning."
 
 ---
+## The Sub-Surface Exile
+
+**Layer:** 1
+
+**Fantasy:** Creating a shadow society beneath your perfect utopia out of the people who didn't fit in.
+
+**Mechanic:** Pops whose traits violently clash with the colony's dominant culture or who accumulate too much 'Criminality' can be formally "Exiled Below." They are moved to deep subterranean tiles and stripped from the official UI census. Down there, they form their own hidden settlement, entirely outside player control. They scavenge resources the player drops down vents or mine deep veins the player can't reach.
+
+**Emergence:** Your pristine surface colony begins experiencing mysterious power drains and equipment thefts. You dig down to investigate, only to discover the exiles you banished a decade ago have built a massive, jury-rigged subterranean city that is now technologically superior to your own, and they are preparing to invade the surface.
+
+**Tension:** The immediate convenience of banishing problem citizens versus the long-term, invisible threat of allowing an uncontrollable shadow faction to grow directly beneath your feet.
+
+---
+
+## Interstellar Inheritance
+
+**Layer:** Cross-layer
+
+**Fantasy:** Dying empires leaving behind massive fortunes, heavily trapped by the bureaucracy of the dead.
+
+**Mechanic:** When a Layer 3 allied empire collapses, your civilization might be named in their "Stellar Will." This grants you legal ownership of massive fleets, derelict mega-structures, or entire star systems. However, claiming the inheritance requires navigating physical "Executor Drones" that arrive at your capital to verify you meet the bizarre, archaic conditions of the deceased empire (e.g., "Must possess 10,000 units of Art", "Must dismantle all military ships").
+
+**Emergence:** You inherit a pristine, fully operational Dyson Sphere from a fallen ally. The Executor Drones demand you convert your entire society to extreme pacifism to claim it. You do so, crippling your military. The moment the transfer is complete, a rival empire—knowing you just disarmed—invades the sphere, stealing your inheritance and obliterating your now-defenseless fleets.
+
+**Tension:** Do you fundamentally alter your civilization's culture and risk vulnerability to claim a massive, free reward, or reject the inheritance and let it fall to scavengers?
+
+---
+
+## The Panic Broadcast
+
+**Layer:** 2 -> 1
+
+**Fantasy:** A single terrified pilot accidentally triggers a planet-wide psychological meltdown.
+
+**Mechanic:** When a Layer 2 trade ship or scout is attacked in orbit and takes critical damage, the pilot may broadcast a "Panic Transmission" on an open channel before dying. If this transmission reaches a Layer 1 colony with active communication arrays, it bypasses standard morale filters and instantly inflicts massive "Existential Dread" on the population.
+
+**Emergence:** Your colony is perfectly happy, completely unaware of the war raging three sectors away. An allied scout ship limps into orbit, gets destroyed by pursuing pirates, and screams over the radio. The colony hears the pilot die. Within an hour, terrified Pops abandon their jobs, storm the spaceport, and attempt to hijack any available shuttles to flee the planet, causing the colony to collapse from fear despite being in no immediate physical danger.
+
+**Tension:** Do you leave the planetary comms arrays on to maintain vital trade routes and diplomacy, or shut them down to protect your population's fragile psyche from the horrors of the galaxy?
+
+---
