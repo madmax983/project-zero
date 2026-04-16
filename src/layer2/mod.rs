@@ -1,3 +1,4 @@
+pub mod primitives;
 pub mod barnacles;
 pub mod binary_star;
 pub mod combat;
