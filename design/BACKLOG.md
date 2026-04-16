@@ -437,7 +437,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `698` Omens & Taboos — `specs/698-omens-taboos.md`
 - [ ] `699` Jury-Rigging — `specs/699-jury-rigging.md`
 - [ ] `700` Spontaneous Architecture — `specs/700-spontaneous-architecture.md`
-- [ ] `701` Primitive Civilizations — `specs/701-primitive-civilizations.md`
 - [ ] `703` Xeno-Gastronomy — `specs/703-xeno-gastronomy.md`
 - [ ] `704` The Artisan's Obsession — `specs/704-artisans-obsession.md`
 - [ ] `705` The Scapegoat Protocol — `specs/705-scapegoat-protocol.md`
