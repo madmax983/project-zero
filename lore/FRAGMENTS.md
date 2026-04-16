@@ -6739,3 +6739,96 @@ What the black market sells.
 - Synthesized Joy
 - Neural Dampeners
 - Illicit Rations
+
+## Fragment Type: [TRAUMA_ECHO]
+How a psychic stain feels or manifests to colonists passing through.
+
+- the air turning suddenly cold
+- phantom screams of the lost
+- a sensation of crushing dread
+- the scent of ozone and copper
+- unexplainable paranoia
+- whispered regrets from empty halls
+- a shadow that lingers in the light
+
+## Fragment Type: [MEGASTRUCTURE_EPITHET]
+What the colonists call the Debt-Trap Megastructure as its burden grows.
+
+- the Golden Yoke
+- the Usurer's Spire
+- the Empty Promise
+- the Indentured Core
+- the Taxing Star
+- the Shining Anchor
+- the Creditor's Crown
+
+## Fragment Type: [WARD_TITLE]
+How diplomatic wards are referred to, both officially and unofficially.
+
+- the Honored Guest
+- the Gilded Hostage
+- the Inheritor of [FACTION]
+- the Exile
+- the Fragile Peace
+- the Leverage
+
+## Fragment Type: [MARKET_EXCUSE]
+The official Layer 3 justification for a Quantum Famine.
+
+- speculative hoarding for the upcoming winter
+- predictive algorithmic deficit adjustment
+- preemptive quota realignment
+- statistical famine projection modeling
+- a glitch in the macro-economy
+- targeted commodity squeezing
+
+## Fragment Type: [BINARY_PHASE]
+Names for the irregular, brutal celestial phenomena in a Binary Star System.
+
+- the Double Noon
+- the Long Day
+- the Shadowless Week
+- the Twin Scorch
+- the Convergence
+- the Split Dawn
+- the Twin-Star Eclipse
+
+## Fragment Type: [AGONY_SOURCE]
+What the Agony Extract is harvested from.
+
+- the Weeping Flora
+- the Sorrow-Spore
+- the Dread-Lotus
+- the Torment-Vines
+- the Fear-Stems
+- the Pain-Resin
+
+## Fragment Type: [CONTAGION_TYPE]
+The type of emotion sweeping through the populace in an Emotional Contagion event.
+
+- contagious, weeping terror
+- a manic, unearned joy
+- blinding, irrational rage
+- a sudden wave of collective despair
+- hysteric laughter
+- shared, silent awe
+
+## Fragment Type: [BLACKOUT_REASON]
+Why the Blackout Protocol was engaged.
+
+- to blind the sensors of the Swarm
+- a desperate attempt to cool the core
+- plunging the colony into darkness to avoid detection
+- a panic-response to an overloaded grid
+- to hide the bodies
+- a final, silent protest
+
+## Fragment Type: [HEAT_DESCRIPTOR]
+How the Urban Heat Island effect manifests physically in the colony.
+
+- the suffocating concrete bake
+- the radiant metal fever
+- the stagnant, superheated smog
+- a microclimate of relentless heat
+- the heat-trap of the inner sector
+- asphalt radiating the day's fury

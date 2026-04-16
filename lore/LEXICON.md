@@ -4191,3 +4191,84 @@
 **Replaces:** Kessler syndrome, orbital trash problem
 **Code reference:** `DebrisCascade` event/component
 **Usage:** "The debris cascade prevents all trade." / "We must clear the cascade."
+
+## Psychic Stains (Spec 893)
+
+### the mark / the shadow
+**Replaces:** Psychic Stain / Trauma Level
+**Code reference:** `PsychicStain`, `trauma_level`
+**Usage:**
+- "There is a mark on Sector 4."
+- "Pops refuse to walk through the shadow."
+
+## Debt-Trap Megastructure (Spec 747)
+
+### the Yoke
+**Replaces:** Debt-Trap Megastructure / Repossession
+**Code reference:** `DebtTrapMegastructure`, `RepossessionInvasionEvent`
+**Usage:**
+- "The Yoke grows heavier every cycle."
+- "They built the Yoke, and now they hold the chain."
+
+## Diplomatic Wards (Spec 765)
+
+### the Guest
+**Replaces:** Diplomatic Ward / Hostage
+**Code reference:** `DiplomaticWard`
+**Usage:**
+- "The Guest is displeased."
+- "If the Guest dies, the treaty burns."
+
+## The Quantum Famine (Spec 775)
+
+### the Algorithm's Hunger
+**Replaces:** Quantum Famine / Market Panic Event
+**Code reference:** `MarketPanicEvent`, `process_market_panic_hoarding`
+**Usage:**
+- "The Algorithm's Hunger emptied the silos."
+- "We starve because the math says we should."
+
+## Binary Star Systems (Spec 903)
+
+### the Twin Scorch
+**Replaces:** Binary Star Anomaly / Heat Wave / Double Noon
+**Code reference:** `BinaryStarSystem`, `BinaryPhase`
+**Usage:**
+- "The Twin Scorch is baking the surface."
+- "We cannot hide from two suns."
+
+## The Agony Extract (Spec 769)
+
+### the Weeping
+**Replaces:** Agony Extract / HarvestAgonyExtractEvent
+**Code reference:** `HarvestAgonyExtractEvent`
+**Usage:**
+- "The Weeping is bottled despair."
+- "They harvest the Weeping when the pops break."
+
+## Emotional Contagion (Spec 346)
+
+### the Fever
+**Replaces:** Emotional Contagion / Mood Spread
+**Code reference:** `emotional_contagion_system`
+**Usage:**
+- "The Fever of panic caught hold."
+- "The laughing Fever swept the barracks."
+
+## Blackout Protocol (Spec 126)
+
+### the Dark
+**Replaces:** Blackout Protocol active / Grid Shutdown
+**Code reference:** `BlackoutProtocol`
+**Usage:**
+- "Initiate the Dark."
+- "The colony hid in the Dark."
+
+## Urban Heat Islands (Spec 198)
+
+### the Oven
+**Replaces:** Urban Heat Island effect / High Temp Microclimate
+**Code reference:** `TemperatureGrid`, `Thermal Retention`
+**Usage:**
+- "The inner sectors turned into an Oven."
+- "The Oven is suffocating the workers."
