@@ -4968,7 +4968,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Rocket Equation
+## The Rocket Equation [SPECCED]
 
 **Layer:** 2
 
@@ -4982,7 +4982,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Pirate Republics
+## Pirate Republics [SPECCED]
 
 **Layer:** 2
 
