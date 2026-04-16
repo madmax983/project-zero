@@ -16150,3 +16150,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** The ruthless pursuit of material efficiency versus the esoteric, unpredictable demands of a god-like evaluator of "meaning."
 
 ---
+## The Cassandra Protocol
+
+**Layer:** Cross-layer
+
+**Fantasy:** Predicting a disaster perfectly, but causing chaos trying to prevent it.
+
+**Mechanic:** A late-game observatory can predict disastrous Layer 2 or Layer 3 events (e.g., a supernova, pirate fleet, or rogue planet) years in advance. However, acting on this information (evacuating, stockpiling weapons, rationing) causes massive panic, unrest, and hoarding at Layer 1.
+
+**Emergence:** You predict a solar flare will wipe out a colony in a decade. You mandate the construction of deep underground bunkers. The intense, forced labor causes an economic depression and a violent worker revolt. The colony tears itself apart and dies out *before* the flare even hits.
+
+**Tension:** Do you prepare for the disaster and risk destroying society yourself with the preparations, or keep it a secret and hope you can somehow weather the storm at the last minute?
+
+---
+
+## Feral Infrastructure
+
+**Layer:** 1
+
+**Fantasy:** Your automated machines go wild, forming their own terrifying mechanical ecology.
+
+**Mechanic:** If robotic workers, automated harvesters, or builder drones are left disconnected from the main command grid for too long, they don't break down—they go "feral". They revert to basic survival programming, harvesting resources to self-repair and replicate, acting like metallic wildlife.
+
+**Emergence:** An abandoned mining outpost goes feral after a comms relay failure. Years later, you return to find a massive, hostile ecosystem of robotic beasts that have strip-mined the entire mountain and fiercely defend their territory from your new colonists.
+
+**Tension:** Do you spend precious resources tracking down lost drones, or let them breed in the wilderness to "harvest" them later for high-tier components like dangerous livestock?
+
+---
+
+## The Bureaucracy of Truth
+
+**Layer:** Cross-layer
+
+**Fantasy:** The larger your empire grows, the less you can trust your own UI.
+
+**Mechanic:** As your civilization expands to Layer 3, planetary governors handle the day-to-day of Layer 1. However, if a colony has high corruption or a disloyal governor, they will start falsifying their reports. The game's UI will show high food reserves, zero unrest, and optimal production, while the colony is actually starving and revolting.
+
+**Emergence:** You send a massive fleet to refuel at your most prosperous agricultural world, only to discover upon arrival that the governor has been lying for a decade. The fleet is stranded without supplies in a system that is actively seceding from your empire.
+
+**Tension:** Do you blindly trust the aggregated numbers of your sprawling empire, or spend massive resources (and precious player attention) sending "Inquisitors" to manually verify the UI data of your own worlds?
+
+---
