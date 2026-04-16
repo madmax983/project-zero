@@ -104,7 +104,7 @@ mod tests {
         app.update();
 
         let mut query = app.world_mut().query::<&EphemeralMoon>();
-        let moon_query = query.iter(&app.world()).next();
+        let moon_query = query.iter(app.world()).next();
         assert!(moon_query.is_some());
         assert_eq!(moon_query.unwrap().days_remaining, 30.0);
     }
@@ -119,7 +119,8 @@ mod tests {
             days_remaining: 10.0,
         });
 
-        let solar_panel = app.world_mut()
+        let solar_panel = app
+            .world_mut()
             .spawn((
                 SolarPower { base_output: 10.0 },
                 PowerSource {
@@ -151,7 +152,8 @@ mod tests {
         app.add_event::<MoonEjectedEvent>();
         app.add_systems(Update, decay_ephemeral_moons_system);
 
-        let moon = app.world_mut()
+        let moon = app
+            .world_mut()
             .spawn(EphemeralMoon {
                 moon_type: MoonType::Bright,
                 days_remaining: 1.0,
