@@ -81,7 +81,6 @@ pub mod hobby;
 /// Housing and rest mechanics.
 /// The Inspector system (Spec 091).
 /// Institutional Memory system (Spec 172).
-pub mod institutional_memory;
 /// Personal inventory system.
 /// Item definitions (Tools, Equipment).
 pub mod law;
@@ -90,10 +89,8 @@ pub use law::orphaned_edict::*;
 /// Medical care and hospital logic.
 pub mod jobs;
 /// Tests for metal industry (Spec 024).
-pub mod metal_industry_tests;
 /// Terrain generation and grid management.
 /// Tests for mining logic (Spec 052).
-pub mod mining_tests;
 /// Pop needs (hunger, rest).
 pub mod psychology;
 pub use psychology::*;
@@ -105,7 +102,6 @@ pub mod pathfinding;
 /// Refining industry (Lumber Mill, Stone Mason).
 /// Colony resources and mining.
 /// Field science and anomalies.
-pub mod science;
 /// Seasonal rhythms (Spring, Summer, Autumn, Winter).
 mod shift_integration_tests;
 /// Social needs and tavern.
@@ -116,9 +112,6 @@ pub mod spoilage;
 /// Structure durability and repair.
 /// Technology and research system.
 pub mod tech;
-
-/// Tests for mother lode logic (Spec 168).
-pub mod mother_lode_tests;
 
 mod execution_demolish_test;
 
@@ -141,11 +134,9 @@ pub use execution::*;
 
 pub use graffiti::*;
 pub use hobby::*;
-pub use institutional_memory::*;
 pub use jobs::*;
 pub use locations::*;
 pub use notifications::*;
-pub use science::*;
 pub use social::*;
 pub use spoilage::*;
 pub use tech::*;
@@ -197,22 +188,10 @@ mod material_provenance_tests;
 /// Stowaway system (Spec 086).
 pub mod stowaway;
 pub use stowaway::*;
-/// Erosion system (Spec 093).
-/// Eureka Moments system (Spec 196).
-pub mod eureka;
-pub use eureka::*;
 
 /// Pheromone Gardening system (Spec 170).
 pub mod pheromone;
 pub use pheromone::*;
-
-/// Heirloom tech system (Spec 070).
-pub mod heirloom;
-pub use heirloom::*;
-
-mod heirloom_items_tests;
-
-mod heirloom_tests;
 
 mod retrograde_tests;
 
@@ -229,10 +208,6 @@ pub use private_stash::*;
 pub mod purity;
 pub use purity::*;
 
-mod fuel_consumption_tests;
-
-mod fuel_industry_tests;
-
 /// Palette fatigue system (Spec 114).
 pub mod palette_fatigue;
 
@@ -247,21 +222,12 @@ pub use observatory::*;
 pub mod logistics;
 pub use logistics::*;
 
-/// Turret system (Spec 135).
-/// Wild Child system (Spec 124).
-pub mod prototyping;
-
-mod tech_storage_tests;
-pub use prototyping::*;
 pub mod geology;
 pub use geology::*;
 
 /// Oral Tradition system (Nova Feature).
 #[cfg(feature = "nova")]
-pub mod oral_tradition;
 #[cfg(feature = "nova")]
-pub use oral_tradition::*;
-
 /// Genius Loci system (Nova Feature).
 #[cfg(feature = "nova")]
 pub mod loci;
@@ -274,8 +240,6 @@ pub mod constellations;
 #[cfg(feature = "nova")]
 pub use constellations::*;
 
-pub mod tech_envy;
-
 /// Drone Networks (Spec 116).
 /// The Observer Effect (Nova Feature).
 #[cfg(feature = "nova")]
@@ -285,7 +249,6 @@ pub use observer::*;
 
 pub mod systems;
 
-mod institutional_memory_tests;
 pub mod memetics;
 /// Orbital Crossfire system (Spec 206).
 /// Scrapcode virus system (Spec 178).
@@ -302,12 +265,6 @@ pub use cryo::*;
 #[cfg(test)]
 mod cryo_tests;
 
-/// Radioactive system (Spec 191).
-/// Company Scrip and Economy system (Spec 194).
-/// Language and Dialect system (Spec 193).
-pub mod language;
-pub use language::*;
-
 mod equipment_tests;
 
 /// Solar cycle and power generation (Spec 213).
@@ -323,13 +280,7 @@ mod improvised_tools_tests;
 mod urban_heat_tests;
 pub use geodetic::*;
 
-/// The Mother Lode system (Spec 168).
-pub mod mother_lode;
-pub use mother_lode::*;
-
 /// Organic Recycling system (Spec 221).
-pub mod recycling;
-pub use recycling::*;
 /// Direct Link (Possession) system (Spec 236).
 pub mod direct_link;
 /// Permit system for advanced construction.
@@ -365,9 +316,6 @@ pub mod hologram;
 mod hologram_tests;
 pub use hologram::*;
 
-pub mod memory_core;
-pub use memory_core::*;
-
 /// Olfactory map and scent system (Spec 446).
 pub mod olfactory;
 pub use olfactory::*;
@@ -377,8 +325,6 @@ pub use physics::*;
 
 pub mod nature;
 pub use nature::*;
-pub mod shipbreaking;
-pub use shipbreaking::*;
 pub mod void_weed;
 pub use void_weed::*;
 
@@ -390,8 +336,6 @@ pub mod infrastructure;
 pub use infrastructure::*;
 
 /// Nanite Fabrication system (Spec 453).
-pub mod nanite_fabrication;
-pub use nanite_fabrication::*;
 pub mod exodus;
 pub use exodus::*;
 pub mod environment;
@@ -409,3 +353,12 @@ pub use unseen_bureaucracy::*;
 pub mod core;
 pub use core::*;
 pub mod digital_immortality;
+
+pub mod industry;
+pub use industry::*;
+
+pub mod technology;
+pub use technology::*;
+
+pub mod knowledge;
+pub use knowledge::*;
