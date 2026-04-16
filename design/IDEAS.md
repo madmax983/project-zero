@@ -5024,7 +5024,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Crustal Tides
+## Crustal Tides [SPECCED]
 
 **Layer:** 2 -> 1
 
