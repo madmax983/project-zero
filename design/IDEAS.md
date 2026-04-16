@@ -16096,7 +16096,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you turn your planetary defense grids on desperate people who have been asleep for a century, or do you somehow try to integrate a massive, culturally alien population into your delicate colony ecosystem?
 
 ---
-## Generational Linguistics
+## Generational Linguistics [SPECCED]
 
 **Layer:** 1
 

@@ -740,3 +740,4 @@ See `design/IDEAS.md` for unspecced concepts.
 
 - [ ] `1063` Urban Heat Islands — `specs/1063-urban-heat-islands.md`
 - [ ] `1064` Digital Detritus — `specs/1064-digital-detritus.md`
+- [ ] `1065` Generational Linguistics — `specs/1065-generational-linguistics.md`
