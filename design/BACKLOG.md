@@ -2,7 +2,6 @@
 
 ## High Priority
 
-- [ ] `895` Ephemeral Moons — `specs/895-ephemeral-moons.md`
 - [ ] `815` Zero-G Fermentation — `specs/815-zero-g-fermentation.md`
 - [ ] `816` Accidental Gods — `specs/816-accidental-gods.md`
 

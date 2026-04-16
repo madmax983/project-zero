@@ -81,4 +81,12 @@ pub fn register(schedule: &mut Schedule) {
         )
             .in_set(Layer1SystemSet::EventCleanup),
     );
+
+    schedule.add_systems(
+        (
+            update_event_buffer::<crate::layer1::environment::ephemeral_moons::MoonCapturedEvent>,
+            update_event_buffer::<crate::layer1::environment::ephemeral_moons::MoonEjectedEvent>,
+        )
+            .in_set(Layer1SystemSet::EventCleanup),
+    );
 }

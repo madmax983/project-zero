@@ -401,3 +401,4 @@
 - [x] `904` Proxy Wars — `specs/904-proxy-wars.md` — completed 2026-02-01
 
 - [x] `894` Social Debt — `specs/894-social-debt.md` — completed 2026-02-01
+- [x] `895` Ephemeral Moons — `specs/895-ephemeral-moons.md` — completed 2026-04-16

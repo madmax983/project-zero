@@ -31,3 +31,6 @@ pub use seismic::*;
 pub use terraforming::*;
 pub use volatile::{handle_explosion_system, volatile_decay_system, ExplosionEvent, Volatile};
 pub mod geothermal;
+
+pub mod ephemeral_moons;
+pub use ephemeral_moons::*;
