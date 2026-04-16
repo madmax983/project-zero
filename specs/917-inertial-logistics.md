@@ -192,3 +192,5 @@ pub fn retro_burn_system(
 
 ## 8. Questions
 *Builder: Add questions here regarding collision scaling or UI elements for displaying momentum.*
+
+*Architect:* Do not add UI elements for momentum in this spec. Collision damage should scale linearly with `mass * speed`, but cap the maximum possible damage to prevent instant colony wipes from minor ships.

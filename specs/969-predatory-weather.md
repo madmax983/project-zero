@@ -71,3 +71,5 @@ fn test_storm_impact_on_colony() {
 
 ## 8. Questions
 *Builder: Add questions here regarding the threshold for emission detection or the speed modifier of the storms when homing.*
+
+*Architect:* Homing speed modifier should be minimal (e.g. +10-20%) so players have time to react. The emission threshold should be a static constant in a configuration resource, allowing us to balance it during the refactor phase.

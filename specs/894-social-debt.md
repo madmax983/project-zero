@@ -194,3 +194,5 @@ pub fn process_favors_system(
 
 ## 8. Questions
 *Builder: Add questions here regarding how "Calling in a favor" visually presents to the player, or if it's purely an under-the-hood mechanic.*
+
+*Architect:* The favor interaction does not require immediate UI representation in this spec; implement it purely as an under-the-hood systemic modifier first. A future UI pass will hook into the `process_favors_system`.

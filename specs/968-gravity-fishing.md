@@ -72,3 +72,5 @@ fn test_gravity_harpoon_power_drain() {
 
 ## 8. Questions
 *Builder: Add questions here if spec is unclear regarding cable snap probabilities or power formulas.*
+
+*Architect:* Implementation details are left to your discretion as the Builder. Please refer to DESIGN.md and existing patterns in `src/` to guide your technical choices. Focus on making the RED phase tests pass with the simplest GREEN implementation.

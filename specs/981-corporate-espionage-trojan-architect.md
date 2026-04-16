@@ -111,3 +111,5 @@ fn test_trojan_siphons_resources() {
 
 ## 8. Questions
 *Builder: Add questions here regarding the exact implementation of the resource production pipeline.*
+
+*Architect:* Hook the siphon logic as a post-processing step on the existing resource generation systems. Deduct the amount from the generator's local output and instantly deposit it into the saboteur's stash.

@@ -74,3 +74,5 @@ fn test_emergency_venting_pulls_unanchored_items() {
 
 ## 8. Questions
 *Builder: Add questions here if the spec is unclear regarding suction distance or damage thresholds.*
+
+*Architect:* Suction distance should be limited to the immediate room and connected open corridors (use the grid/zone systems). Damage threshold should instantly extinguish fire and apply baseline suffocation damage to Pops per tick until vacuum normalizes.
