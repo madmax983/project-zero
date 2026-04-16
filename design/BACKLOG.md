@@ -737,3 +737,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1061` Pirate Republics — `specs/1061-pirate-republics.md`
 
 - [ ] `1062` The Biological Stock Market — `specs/1062-the-biological-stock-market.md`
+
+- [ ] `1063` Urban Heat Islands — `specs/1063-urban-heat-islands.md`
+- [ ] `1064` Digital Detritus — `specs/1064-digital-detritus.md`

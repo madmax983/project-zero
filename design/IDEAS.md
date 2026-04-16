@@ -4996,7 +4996,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Urban Heat Islands
+## Urban Heat Islands [SPECCED]
 
 **Layer:** 1
 
@@ -5010,7 +5010,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Digital Detritus
+## Digital Detritus [SPECCED]
 
 **Layer:** 3
 
