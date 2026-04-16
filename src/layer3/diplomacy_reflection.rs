@@ -338,3 +338,9 @@ mod tests {
         );
     }
 }
+
+/// Unity currency gained through diplomatic and religious actions.
+#[derive(Resource, Default)]
+pub struct FaithCurrency {
+    pub amount: f32,
+}

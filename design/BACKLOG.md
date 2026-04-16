@@ -3,7 +3,6 @@
 ## High Priority
 
 
-- [ ] `816` Accidental Gods — `specs/816-accidental-gods.md`
 
 - [ ] `784` The Ephemeral Market — `specs/784-the-ephemeral-market.md`
 - [ ] `783` The Sub-Lithic Cult — `specs/783-the-sub-lithic-cult.md`

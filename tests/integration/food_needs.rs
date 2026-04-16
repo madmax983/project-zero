@@ -23,7 +23,10 @@ fn test_food_production_satisfies_hunger() {
     world.init_resource::<Events<scale::layer1::eureka::EurekaEvent>>();
 
     // add empty config
-    world.insert_resource(scale::layer1::eureka::EurekaConfig { base_chance: 0.0, knowledge_reward: 0.0, ..Default::default() });
+    world.insert_resource(scale::layer1::eureka::EurekaConfig {
+        base_chance: 0.0,
+        knowledge_reward: 0.0,
+    });
 
     // 2. Spawn a working Farmer to produce food
     world.spawn((
