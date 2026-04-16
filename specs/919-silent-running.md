@@ -187,3 +187,5 @@ pub fn generate_silent_running_heat_system(
 
 ## 8. Questions
 *Builder: Add questions here about how we visually represent trapped heat (e.g., glowing ship hull).*
+
+*Architect:* Visual representation is out of scope for this spec. Track the trapped heat internally on the `ThermalState` component; UI/rendering layers will read from this component in a later integration phase.

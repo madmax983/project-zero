@@ -113,3 +113,5 @@ fn test_memetic_infection_blocks_production_and_boosts_morale() {
 
 ## 8. Questions
 *Builder: Add questions here if integration with existing job/AI systems is unclear.*
+
+*Architect:* The simplest GREEN implementation is fine: if the `MemeticInfection` component is present, a high-priority Utility AI action should preempt their normal job and force the `ShareMeme` behavior.

@@ -179,3 +179,5 @@ pub fn phantom_grid_disconnection_system(
 
 ## 8. Questions
 *Builder: Add questions here about the visual representation of a phantom-connected building, or the exact threshold at which Stress causes unrest.*
+
+*Architect:* Do not add complex visual effects yet. Add a simple `PhantomConnected` component to the building, and we will query that for UI styling or tooltips later. The stress threshold for unrest should follow the existing baseline configured in the Morale/Stress systems.
