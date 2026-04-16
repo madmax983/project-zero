@@ -36,6 +36,7 @@ use ratatui_hypertile_extras::{HypertileRuntime, InputMode, SplitBehavior, Works
 const COLONY_OPS_WORKSPACE: &str = "Colony Ops";
 const SYSTEM_SURVEY_WORKSPACE: &str = "System Survey";
 const DIRECTOR_WORKSPACE: &str = "Director";
+const LOGS_WORKSPACE: &str = "Logs";
 
 /// Bootstrapped shell state for the hypertile migration.
 ///
@@ -579,6 +580,7 @@ pub fn build_default_shell(world: SharedWorld, config: ShellConfig) -> UiShell {
         String::from(COLONY_OPS_WORKSPACE),
         String::from(SYSTEM_SURVEY_WORKSPACE),
         String::from(DIRECTOR_WORKSPACE),
+        String::from(LOGS_WORKSPACE),
     ];
 
     let mut workspaces = WorkspaceRuntime::new(|| {
@@ -599,6 +601,7 @@ pub fn build_default_shell(world: SharedWorld, config: ShellConfig) -> UiShell {
     for workspace_name in [
         SYSTEM_SURVEY_WORKSPACE.to_string(),
         DIRECTOR_WORKSPACE.to_string(),
+        LOGS_WORKSPACE.to_string(),
     ] {
         workspaces.new_tab();
         register_default_plugins_with_runtime(workspaces.active_runtime_mut(), world.clone());
