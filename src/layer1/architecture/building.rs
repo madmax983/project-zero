@@ -1149,39 +1149,29 @@ pub fn update_building_map_system(
     }
 }
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
-enum PlacementError {
-    OutOfBounds,
-    Occupied,
-    InvalidTerrain(TerrainType),
-}
-
-fn validate_building_placement(world: &World, x: i32, y: i32) -> Result<(), PlacementError> {
+fn validate_building_placement(world: &World, x: i32, y: i32) -> Result<(), &'static str> {
     let terrain = world.resource::<TerrainGrid>();
     let occupied = world.resource::<OccupiedTiles>();
 
-    // Check bounds
     if x < 0 || y < 0 {
-        return Err(PlacementError::OutOfBounds);
+        return Err("Out of bounds");
     }
 
-    // Check terrain
     #[allow(clippy::cast_sign_loss)]
-    let tile = terrain
-        .get(x as usize, y as usize)
-        .ok_or(PlacementError::OutOfBounds)?;
+    let tile = terrain.get(x as usize, y as usize).ok_or("Out of bounds")?;
 
-    match tile {
-        TerrainType::Water | TerrainType::Rock => Err(PlacementError::InvalidTerrain(tile)),
-        _ => {
-            // Check occupation
-            if occupied.0.contains(&(x, y)) {
-                Err(PlacementError::Occupied)
-            } else {
-                Ok(())
-            }
-        }
+    if tile == TerrainType::Water {
+        return Err("Cannot build on Water");
     }
+    if tile == TerrainType::Rock {
+        return Err("Cannot build on Rock");
+    }
+
+    if occupied.0.contains(&(x, y)) {
+        return Err("Location occupied");
+    }
+
+    Ok(())
 }
 
 /// Check if a building can be placed at the given position.
@@ -1190,15 +1180,7 @@ pub fn can_place_building(world: &World, x: i32, y: i32) -> bool {
     validate_building_placement(world, x, y).is_ok()
 }
 
-fn handle_placement_error(world: &mut World, error: PlacementError) {
-    let reason = match error {
-        PlacementError::OutOfBounds => "Out of bounds",
-        PlacementError::Occupied => "Location occupied",
-        PlacementError::InvalidTerrain(TerrainType::Water) => "Cannot build on Water",
-        PlacementError::InvalidTerrain(TerrainType::Rock) => "Cannot build on Rock",
-        PlacementError::InvalidTerrain(_) => "Cannot build here",
-    };
-
+fn handle_placement_error(world: &mut World, reason: &str) {
     if let Some(mut log) = world.get_resource_mut::<MessageLog>() {
         log.add(format!("Failed: {reason}"));
     }
@@ -2379,7 +2361,7 @@ pub fn try_place_building(world: &mut World, x: i32, y: i32, building_type: Buil
     }
 
     if let Err(e) = validate_building_placement(world, x, y) {
-        let allow_override = e == PlacementError::Occupied && grave_entity.is_some();
+        let allow_override = e == "Location occupied" && grave_entity.is_some();
         if !allow_override {
             handle_placement_error(world, e);
             return false;
