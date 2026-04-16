@@ -5942,3 +5942,129 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "The debris field is so dense it blocks the sun. The long winter begins. [YEAR]."
 - "[YEAR]: Solar power is failing. The ring of shattered starships casts a cold shadow over [COLONY]."
 - "Freezing in the dark, beneath a sky of broken metal. [YEAR]."
+
+## Psychic Stain Templates (Spec 893)
+
+### Template: STAIN_FORMED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [POP_NAME]
+
+**Patterns:**
+- "[YEAR]: [POP_NAME] died violently here. The corridor remembers. The air remains cold."
+- "[POP_NAME] was killed. They scrubbed the blood, but left the terror behind."
+- "The violent end of [POP_NAME] left a mark on [COLONY] that bleach cannot wash away. [YEAR]."
+
+### Template: STAIN_TRIGGERED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [TRAUMA_ECHO]
+
+**Patterns:**
+- "[YEAR]: Work stops in sector 4. The pops report [TRAUMA_ECHO]."
+- "A path abandoned. Colonists refuse to walk there, citing [TRAUMA_ECHO]. [YEAR]."
+- "[COLONY] is learning to avoid the stained halls. [TRAUMA_ECHO] is too much to bear. [YEAR]."
+
+## Debt-Trap Megastructure Templates (Spec 747)
+
+### Template: MEGASTRUCTURE_ACCEPTED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [FACTION]
+
+**Patterns:**
+- "[YEAR]: [FACTION] offered a gift. A shining structure, free of charge. We accepted."
+- "The [FACTION] emissaries built it for us. We were fools to think it was a donation. [YEAR]."
+- "[YEAR]: A marvel of engineering rises above [COLONY], courtesy of [FACTION]. The trap is set."
+
+### Template: MEGASTRUCTURE_REPOSSESSED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [FACTION], [MEGASTRUCTURE_EPITHET]
+
+**Patterns:**
+- "We couldn't pay the upkeep. [FACTION] has seized [MEGASTRUCTURE_EPITHET]. They are landing troops. [YEAR]."
+- "[YEAR]: The debt came due. [MEGASTRUCTURE_EPITHET] is now a fortress for [FACTION]."
+- "[FACTION] called in their markers. [MEGASTRUCTURE_EPITHET] belongs to them now, and soon, so will [COLONY]. [YEAR]."
+
+## Diplomatic Wards Templates (Spec 765)
+
+### Template: WARD_ARRIVES
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [FACTION], [WARD_NAME], [WARD_TITLE]
+
+**Patterns:**
+- "[YEAR]: [WARD_NAME] of [FACTION] arrives at [COLONY]. [WARD_TITLE]. We must keep them safe."
+- "[WARD_NAME]—[WARD_TITLE]—is now living among us. [FACTION] watches closely. [YEAR]."
+- "We host [WARD_NAME] of [FACTION]. [WARD_TITLE] is a guarantee of peace, for now. [YEAR]."
+
+### Template: WARD_DIES
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [FACTION], [WARD_NAME], [WARD_TITLE]
+
+**Patterns:**
+- "[YEAR]: [WARD_NAME] is dead. [WARD_TITLE] has fallen. [FACTION] will not forgive this."
+- "We failed to protect [WARD_NAME]. The [FACTION] fleets are already on their way to [COLONY]. [YEAR]."
+- "[WARD_TITLE] is dead. Peace dies with them. Brace for [FACTION] retribution. [YEAR]."
+
+## The Quantum Famine Templates (Spec 775)
+
+### Template: QUANTUM_FAMINE_STARTS
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [MARKET_EXCUSE]
+
+**Patterns:**
+- "[YEAR]: The silos empty overnight. Automated ships export everything. The market claims [MARKET_EXCUSE]."
+- "There is food, but it is not ours. Layer 3 algorithms mandate [MARKET_EXCUSE]. [COLONY] starves. [YEAR]."
+- "[YEAR]: Artificial scarcity hits [COLONY]. The excuse is [MARKET_EXCUSE]. The reality is hunger."
+
+## Binary Star Systems Templates (Spec 903)
+
+### Template: BINARY_ANOMALY
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [BINARY_PHASE]
+
+**Patterns:**
+- "[YEAR]: The sky burns twice as bright. [BINARY_PHASE] begins. The crops are withering."
+- "Shadows stretch and cross. It is [BINARY_PHASE]. The solar grid overloads. [YEAR]."
+- "[COLONY] endures [BINARY_PHASE]. Two suns, no respite. [YEAR]."
+
+## The Agony Extract Templates (Spec 769)
+
+### Template: AGONY_HARVESTED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [AGONY_SOURCE], [POP_NAME]
+
+**Patterns:**
+- "[YEAR]: [POP_NAME] was broken enough to harvest the Extract from [AGONY_SOURCE]. The wealth is staggering. The cost is their mind."
+- "We forced [POP_NAME] to the brink of madness, just to make [AGONY_SOURCE] weep. [YEAR]."
+- "[YEAR]: The first shipment of Extract leaves [COLONY]. It tastes of [POP_NAME]'s despair, drawn from [AGONY_SOURCE]."
+
+## Emotional Contagion Templates (Spec 346)
+
+### Template: CONTAGION_SPREADS
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [CONTAGION_TYPE]
+
+**Patterns:**
+- "[YEAR]: It started with one, and then the whole sector was gripped by [CONTAGION_TYPE]."
+- "A localized wave of [CONTAGION_TYPE] sweeps through [COLONY]. No one is immune. [YEAR]."
+- "[YEAR]: The mood is infectious. [CONTAGION_TYPE] cascades through the population."
+
+## Blackout Protocol Templates (Spec 126)
+
+### Template: BLACKOUT_INITIATED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [BLACKOUT_REASON]
+
+**Patterns:**
+- "[YEAR]: The master switch is pulled. [COLONY] goes dark. [BLACKOUT_REASON]."
+- "Total darkness. The protocol is active. [BLACKOUT_REASON]. [YEAR]."
+- "[YEAR]: Silence and shadow fall over the grid. We cut the power, [BLACKOUT_REASON]."
+
+## Urban Heat Islands Templates (Spec 198)
+
+### Template: URBAN_HEAT_RISES
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [HEAT_DESCRIPTOR]
+
+**Patterns:**
+- "[YEAR]: The density is killing us. [HEAT_DESCRIPTOR] grips the core sectors."
+- "The metal and stone trap the sun. [COLONY] suffers under [HEAT_DESCRIPTOR]. [YEAR]."
+- "[YEAR]: There is no breeze in the inner blocks, only [HEAT_DESCRIPTOR]."
