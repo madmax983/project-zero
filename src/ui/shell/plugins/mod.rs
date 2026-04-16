@@ -7,6 +7,7 @@ mod chronicle;
 mod colony_map;
 mod inspector;
 mod status;
+mod log_plugin;
 mod system_map;
 mod tech;
 
@@ -14,6 +15,7 @@ pub use chronicle::ChroniclePlugin;
 pub use colony_map::ColonyMapPlugin;
 pub use inspector::InspectorPlugin;
 pub use status::StatusPlugin;
+pub use log_plugin::LogPlugin;
 pub use system_map::SystemMapPlugin;
 pub use tech::TechPlugin;
 
@@ -22,6 +24,7 @@ pub const SYSTEM_MAP_PLUGIN_TYPE: &str = "system-map";
 pub const INSPECTOR_PLUGIN_TYPE: &str = "inspector";
 pub const STATUS_PLUGIN_TYPE: &str = "status";
 pub const CHRONICLE_PLUGIN_TYPE: &str = "chronicle";
+pub const LOG_PLUGIN_TYPE: &str = "log";
 pub const TECH_PLUGIN_TYPE: &str = "tech";
 
 pub type SharedWorld = Rc<RefCell<World>>;
@@ -55,6 +58,11 @@ pub fn register_default_plugins(registry: &mut Registry, world: SharedWorld) {
     let tech_world = Rc::clone(&world);
     registry.register_plugin_type(TECH_PLUGIN_TYPE, move || {
         TechPlugin::new(Rc::clone(&tech_world))
+    });
+
+    let log_world = Rc::clone(&world);
+    registry.register_plugin_type(LOG_PLUGIN_TYPE, move || {
+        LogPlugin::new(Rc::clone(&log_world))
     });
 }
 
@@ -90,6 +98,11 @@ pub(crate) fn register_default_plugins_with_runtime(
     let tech_world = Rc::clone(&world);
     runtime.register_plugin_type(TECH_PLUGIN_TYPE, move || {
         TechPlugin::new(Rc::clone(&tech_world))
+    });
+
+    let log_world = Rc::clone(&world);
+    runtime.register_plugin_type(LOG_PLUGIN_TYPE, move || {
+        LogPlugin::new(Rc::clone(&log_world))
     });
 }
 
@@ -131,7 +144,7 @@ mod tests {
     use super::{
         register_default_plugins, ChroniclePlugin, SharedWorld, StatusPlugin, TechPlugin,
         CHRONICLE_PLUGIN_TYPE, COLONY_MAP_PLUGIN_TYPE, INSPECTOR_PLUGIN_TYPE, STATUS_PLUGIN_TYPE,
-        SYSTEM_MAP_PLUGIN_TYPE, TECH_PLUGIN_TYPE,
+        SYSTEM_MAP_PLUGIN_TYPE, TECH_PLUGIN_TYPE, LOG_PLUGIN_TYPE,
     };
     use crate::prelude::{setup_world_with_config, SetupConfig};
     use ratatui::{buffer::Buffer, layout::Rect};
@@ -153,6 +166,7 @@ mod tests {
             STATUS_PLUGIN_TYPE,
             SYSTEM_MAP_PLUGIN_TYPE,
             TECH_PLUGIN_TYPE,
+            LOG_PLUGIN_TYPE,
         ]);
 
         assert_eq!(actual, expected);
