@@ -353,13 +353,24 @@ impl UiShell {
     }
 
     fn filtered_palette_commands(&self) -> Vec<ShellCommand> {
-        let filter = self.command_palette.filter.to_ascii_lowercase();
+        let filter_lower = self.command_palette.filter.to_ascii_lowercase();
+        let filter_bytes = filter_lower.as_bytes();
+
         let mut commands = self
             .commands
             .commands()
             .iter()
             .filter(|command| {
-                filter.is_empty() || command.label.to_ascii_lowercase().contains(filter.as_str())
+                if filter_lower.is_empty() {
+                    return true;
+                }
+                let label_bytes = command.label.as_bytes();
+                if filter_bytes.len() > label_bytes.len() {
+                    return false;
+                }
+                label_bytes
+                    .windows(filter_bytes.len())
+                    .any(|window| window.eq_ignore_ascii_case(filter_bytes))
             })
             .cloned()
             .collect::<Vec<_>>();
