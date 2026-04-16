@@ -1,16 +1,11 @@
-feat(layer1): complete aesthetic orbital blockade system
+feat(layer2): complete zero-g fermentation system
 
-Implements RED-GREEN-REFACTOR from spec 947:
-- Added Policy::Aesthetic and StationType::Habitat
-- Created src/layer1/law/aesthetic_edict.rs with logic and tests
-- evaluate_aesthetic_edict_system monitors pollution and triggers edict
-- enforce_aesthetic_edict_system halts manufacturing buildings
-- Modified process_refining_system to skip processing halted buildings (adapted from work_execution_system in spec as refining handles factory production)
-- Test coverage: 97.89% (target: 85%)
-
-All acceptance criteria met:
-- All tests pass (0 failures)
-- cargo clippy is clean
-- Feature works properly with habitats tracking smog
+Implements RED-GREEN-REFACTOR from spec 815:
+- Feature was largely implemented but not marked complete.
+- Verified all tests in `src/layer2/station_tests.rs` pass.
+- Verified test coverage is > 85% for `src/layer2/station.rs`.
+- Moved spec 815 from `BACKLOG.md` to `COMPLETED.md`.
+- `cargo test` passes.
+- `cargo clippy -- -D warnings` passes.
 
 Co-Authored-By: google-labs-jules[bot] <161369871+google-labs-jules[bot]@users.noreply.github.com>

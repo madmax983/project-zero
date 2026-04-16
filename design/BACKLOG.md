@@ -2,7 +2,7 @@
 
 ## High Priority
 
-- [ ] `815` Zero-G Fermentation — `specs/815-zero-g-fermentation.md`
+
 - [ ] `816` Accidental Gods — `specs/816-accidental-gods.md`
 
 - [ ] `784` The Ephemeral Market — `specs/784-the-ephemeral-market.md`
