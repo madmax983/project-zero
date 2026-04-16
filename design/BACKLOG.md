@@ -742,3 +742,4 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1065` Generational Linguistics — `specs/1065-generational-linguistics.md`
 - [ ] `1066` Zero-G Flora — `specs/1066-zero-g-flora.md`
 - [ ] `1067` The Void Sirens — `specs/1067-the-void-sirens.md`
+- [ ] `1068` Crustal Tides — `specs/1068-crustal-tides.md`
