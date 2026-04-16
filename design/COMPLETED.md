@@ -399,3 +399,5 @@
 - [x] `902` Nebulae — `specs/902-nebulae.md` — completed 2026-04-14
 - [x] `INT-975` Integration: Geothermal Heartbeat -> Explosion System — completed 2026-07-02
 - [x] `904` Proxy Wars — `specs/904-proxy-wars.md` — completed 2026-02-01
+
+- [x] `894` Social Debt — `specs/894-social-debt.md` — completed 2026-02-01

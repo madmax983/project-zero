@@ -203,6 +203,12 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::social::exile::process_banishments.after(decay_needs_system),
             crate::layer1::social::exile::evaluate_exile_returns.after(decay_needs_system),
             crate::layer1::contagion::emotional_contagion_system.after(decay_needs_system),
+            crate::layer1::social::debt::accrue_debt_system,
+            crate::layer1::social::debt::debt_decay_system,
+            crate::layer1::social::debt::debt_impact_system,
+            crate::layer1::social::debt::process_life_saved_system,
+            crate::layer1::social::debt::process_favors_system,
+            crate::layer1::social::debt::evaluate_faction_support_system,
             crate::layer1::social::sentient_standard::apply_sentient_standard_stress_system
                 .after(decay_needs_system),
             #[cfg(feature = "nova")]

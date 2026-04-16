@@ -18,6 +18,7 @@
 //! *   Pops might perform specific jobs (favors) to pay off debt immediately.
 //! *   High debt might be leveraged for political voting or trade deals.
 
+use crate::layer1::social::factions::{FactionId, FactionMember};
 use crate::layer1::social::AffinityChange;
 use bevy_ecs::prelude::*;
 use rand::Rng;
@@ -140,11 +141,97 @@ pub fn debt_impact_system(
     }
 }
 
+#[derive(Event)]
+pub struct LifeSavedEvent {
+    pub savior: Entity,
+    pub saved: Entity,
+}
+
+#[derive(Event)]
+pub struct CallInFavorEvent {
+    pub caller: Entity,
+    pub target: Entity,
+}
+
+#[derive(Component)]
+pub struct ActiveSupport {
+    pub supported_faction: Option<FactionId>,
+}
+
+pub fn process_life_saved_system(
+    mut events: EventReader<LifeSavedEvent>,
+    mut query: Query<&mut SocialDebt>,
+    mut commands: Commands,
+) {
+    for event in events.read() {
+        if let Ok(mut debts) = query.get_mut(event.saved) {
+            debts.add_debt(event.savior, 100.0);
+        } else {
+            let mut debts = SocialDebt::default();
+            debts.add_debt(event.savior, 100.0);
+            commands.entity(event.saved).insert(debts);
+        }
+    }
+}
+
+pub fn evaluate_faction_support_system(
+    mut supporters: Query<(&FactionMember, &SocialDebt, &mut ActiveSupport)>,
+    faction_members: Query<&FactionMember>,
+) {
+    for (own_faction, debts, mut support) in supporters.iter_mut() {
+        let mut overridden = false;
+
+        // Find if they owe someone in a different faction
+        // Sort creditors by amount (highest first), then entity ID to ensure deterministic behavior.
+        let mut sorted_debts: Vec<_> = debts
+            .owed_to
+            .iter()
+            .filter(|(_, &amount)| amount > 0.0)
+            .collect();
+        sorted_debts.sort_by(|(e1, a1), (e2, a2)| {
+            a2.partial_cmp(a1)
+                .unwrap_or(std::cmp::Ordering::Equal)
+                .then(e1.cmp(e2))
+        });
+
+        for (&creditor, _amount) in sorted_debts {
+            if let Ok(creditor_faction) = faction_members.get(creditor) {
+                support.supported_faction = creditor_faction.faction_id;
+                overridden = true;
+                break;
+            }
+        }
+
+        // Default back to own faction if no active debts force otherwise
+        if !overridden {
+            support.supported_faction = own_faction.faction_id;
+        }
+    }
+}
+
+pub fn process_favors_system(
+    mut events: EventReader<CallInFavorEvent>,
+    mut debtors: Query<&mut SocialDebt>,
+) {
+    for event in events.read() {
+        if let Ok(mut debts) = debtors.get_mut(event.target) {
+            if debts.get_debt(event.caller) > 0.0 {
+                // Clear the debt for simplicity (like calling in a major favor)
+                debts.owed_to.insert(event.caller, 0.0);
+                debts.owed_to.retain(|_, v| *v > 0.0);
+            }
+        }
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
     use crate::layer1::pop::Pop;
+    use crate::layer1::social::factions::{FactionId, FactionMember};
     use crate::layer1::social::{AffinityChange, Relationships};
+    use bevy::prelude::App;
+    use bevy::prelude::Update;
 
     #[test]
     fn test_social_debt_initialization() {
@@ -233,5 +320,77 @@ mod tests {
         }
 
         assert!(found, "Debt should trigger affinity boost");
+    }
+
+    #[test]
+    fn test_life_saving_act_creates_social_debt() {
+        let mut app = App::new();
+        app.add_event::<LifeSavedEvent>();
+        app.add_systems(Update, process_life_saved_system);
+
+        let savior = app.world_mut().spawn_empty().id();
+        let saved = app.world_mut().spawn_empty().id();
+
+        app.world_mut().send_event(LifeSavedEvent { savior, saved });
+        app.update();
+
+        let debt = app.world().get::<SocialDebt>(saved).unwrap();
+        assert_eq!(debt.get_debt(savior), 100.0);
+    }
+
+    #[test]
+    fn test_debt_overrides_faction_support() {
+        let mut app = App::new();
+        app.add_systems(Update, evaluate_faction_support_system);
+
+        let savior = app
+            .world_mut()
+            .spawn(FactionMember {
+                faction_id: Some(FactionId::Cartel),
+            })
+            .id();
+
+        let mut debts = SocialDebt::default();
+        debts.add_debt(savior, 100.0);
+
+        let saved = app
+            .world_mut()
+            .spawn((
+                FactionMember {
+                    faction_id: Some(FactionId::MinersGuild),
+                },
+                debts,
+                ActiveSupport {
+                    supported_faction: Some(FactionId::MinersGuild),
+                },
+            ))
+            .id();
+
+        app.update();
+
+        let support = app.world().get::<ActiveSupport>(saved).unwrap();
+        assert_eq!(support.supported_faction, Some(FactionId::Cartel));
+    }
+
+    #[test]
+    fn test_debt_consumed_when_called_in() {
+        let mut app = App::new();
+        app.add_event::<CallInFavorEvent>();
+        app.add_systems(Update, process_favors_system);
+
+        let savior = app.world_mut().spawn_empty().id();
+
+        let mut debts = SocialDebt::default();
+        debts.add_debt(savior, 100.0);
+        let saved = app.world_mut().spawn(debts).id();
+
+        app.world_mut().send_event(CallInFavorEvent {
+            caller: savior,
+            target: saved,
+        });
+        app.update();
+
+        let debt = app.world().get::<SocialDebt>(saved).unwrap();
+        assert_eq!(debt.get_debt(savior), 0.0);
     }
 }
