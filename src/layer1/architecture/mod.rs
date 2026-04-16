@@ -1,4 +1,6 @@
+/// Biomimetic architecture.
 pub mod biomimetic;
+/// General building framework and implementations.
 pub mod building;
 pub use biomimetic::*;
 #[cfg(test)]
@@ -6,7 +8,9 @@ mod building_gate_test;
 #[cfg(test)]
 mod work_building_tests;
 
+/// Housing and shelter definitions.
 pub mod housing;
+/// Common structure components.
 pub mod structure;
 #[cfg(test)]
 mod structure_fragile_tests;
@@ -15,12 +19,19 @@ mod structure_jury_rig_tests;
 #[cfg(test)]
 mod structure_maintenance_tests;
 
+/// Parasitic architecture definitions.
 pub mod parasitic_architecture;
+/// Logic for calculating room quality.
 pub mod room_quality;
+/// Ruins mechanisms.
 pub mod ruins;
+/// Spontaneous architecture mechanics.
 pub mod spontaneous_architecture;
+/// Symbiotic infrastructure mechanics.
 pub mod symbiotic_infrastructure;
+/// Defense turret logic.
 pub mod turret;
+/// Window mechanics.
 pub mod window;
 
 pub use building::*;

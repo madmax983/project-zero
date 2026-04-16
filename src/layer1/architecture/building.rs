@@ -7,18 +7,18 @@
 //!
 //! # Core Systems
 //!
-//! *   **Placement:** Buildings are placed on the [`TerrainGrid`] using [`try_place_building`].
-//! *   **Cost:** Each [`BuildingType`] has a [`ColonyResources`] cost (see [`BuildingType::cost`]).
-//! *   **Tech:** Some buildings require specific [`Tech`] to be unlocked (see [`BuildingType::required_tech`]).
+//! *   **Placement:** Buildings are placed on the [`TerrainGrid`](crate::layer1::terrain::TerrainGrid) using [`try_place_building`].
+//! *   **Cost:** Each [`BuildingType`] has a [`ColonyResources`](crate::layer1::resources::ColonyResources) cost (see [`BuildingType::cost`]).
+//! *   **Tech:** Some buildings require specific [`Tech`](crate::layer1::tech::Tech) to be unlocked (see [`BuildingType::required_tech`]).
 //! *   **Obstacles:** Most buildings block movement, but some (like Farms/Stockpiles) are walkable.
 //!
 //! # Entities
 //!
 //! A built structure is an entity with:
 //! *   [`Building`]: The marker component containing the [`BuildingType`].
-//! *   [`GridPosition`]: Its location on the map.
+//! *   [`GridPosition`](crate::layer1::map::GridPosition): Its location on the map.
 //! *   [`crate::layer1::structure::Structure`]: Health and durability.
-//! *   Specific Logic Components: e.g., [`Housing`], [`Farm`], [`Stockpile`].
+//! *   Specific Logic Components: e.g., [`Housing`](crate::layer1::housing::Housing), [`Farm`](crate::layer1::farm::Farm), [`Stockpile`](crate::layer1::stockpile::Stockpile).
 
 use super::housing::Housing;
 use crate::layer1::access_control::AccessControl;
@@ -1084,7 +1084,7 @@ impl BuildingType {
     ///
     /// # Panics
     ///
-    /// Panics if the `BuildingType` has no variants (which should never happen).
+    /// Panics if the [`BuildingType`] has no variants (which should never happen).
     ///
     /// # Examples
     ///
@@ -2254,7 +2254,7 @@ pub fn spawn_building_with_material(
 ///
 /// This will:
 /// 1. Check `can_place_building` (bounds, terrain, occupation).
-/// 2. Spawn a building entity with the correct components (e.g., `Housing` or `Farm`).
+/// 2. Spawn a building entity with the correct components (e.g., [`Housing`](crate::layer1::housing::Housing) or [`Farm`](crate::layer1::farm::Farm)).
 /// 3. Mark the tile as occupied in `OccupiedTiles`.
 ///
 /// # Examples
@@ -2366,6 +2366,7 @@ fn apply_post_placement_effects(
     world.send_event(crate::layer1::events::BuildingCompletedEvent { entity });
 }
 
+/// Places a building in the world at the given coordinates.
 pub fn try_place_building(world: &mut World, x: i32, y: i32, building_type: BuildingType) -> bool {
     // Check for Grave before validation
     let mut grave_entity = None;

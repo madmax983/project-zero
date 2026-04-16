@@ -1,3 +1,4 @@
+//! Economy module.
 use crate::layer1::actions::AssignmentType;
 use bevy_ecs::prelude::*;
 

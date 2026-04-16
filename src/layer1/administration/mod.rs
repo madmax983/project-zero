@@ -1,3 +1,4 @@
+//! Administration module.
 pub mod admin;
 pub mod bureaucracy_of_sleep;
 pub mod designation;

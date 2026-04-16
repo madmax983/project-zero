@@ -3,21 +3,29 @@ use crate::layer1::morale::{MoodModifier, Morale};
 use bevy_ecs::prelude::*;
 
 #[derive(Component, Debug, Clone)]
+/// Contains information about a pop's family back home and their remittance goals.
 pub struct MigrantFamilyInfo {
+    /// Faction ID of their home system.
     pub home_faction: Entity,
+    /// Target amount to send back home.
     pub remittance_target: f32,
 }
 
 #[derive(Event, Debug, Clone)]
+/// Event triggered when a new migrant arrives from a specific faction.
 pub struct MigrantArrivalEvent {
+    /// Faction ID of their home system.
     pub home_faction: Entity,
 }
 
 #[derive(Resource, Default)]
+/// Global tracker for total remittances sent to different factions.
 pub struct RemittanceTracker {
+    /// Sent credits mapped by faction entity ID.
     pub sent: bevy_utils::HashMap<Entity, f32>,
 }
 
+/// Processes scheduled offworld remittances, adding them to local savings.
 pub fn process_remittances_system(
     mut tracker: ResMut<RemittanceTracker>,
     mut pops: Query<(&MigrantFamilyInfo, &mut Wallet, &mut Morale)>,

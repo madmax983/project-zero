@@ -28,6 +28,7 @@ pub struct HaulerQuery {
     member: Option<&'static FactionMember>,
 }
 
+/// Executes the hauling action for pops and drones, moving items and resources.
 pub fn haul_system(world: &mut World) {
     // Collect hauling pops
     let mut query = world.query::<HaulerQuery>();
