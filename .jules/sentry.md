@@ -56,3 +56,7 @@
 **[RNG Flakiness in tests]**
 **Learning:** Hardcoding a small loop bound (e.g. `100`) when testing probabilistic events (e.g., `0.1%` or `5%`) causes tests to flake randomly because the expected chance of a hit is too low or barely high enough.
 **Action:** When auditing tests involving probabilistic logic (RNG), drastically increase the loop bound (e.g. 10 to 100 times more) to guarantee that the statistical distribution is reached reliably during `cargo test`.
+
+**[Evaluating Optional High-Utility Candidates]
+**Learning:** Found a coverage gap in utility evaluation logic (`layer1::actions::clean::evaluate_clean`), which decides whether colonists should clean based on the janitor role and clutter threshold (0.8). Untested decision logic in `Option<(f32, Entity)>` paths often hides implicit preferences or silent rejections of valid targets.
+**Action:** Always write tests specifically testing the thresholds and branch filtering paths within utility evaluation functions to ensure high-priority logic is behaving predictably and to get 100% path coverage on core AI logic.
