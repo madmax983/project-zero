@@ -3711,7 +3711,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Psychic Stains
+## Psychic Stains [SPECCED]
 
 **Layer:** 1
 
@@ -3753,7 +3753,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Social Debt
+## Social Debt [SPECCED]
 
 **Layer:** 1
 
@@ -3767,7 +3767,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Ephemeral Moons
+## Ephemeral Moons [SPECCED]
 
 **Layer:** 2 -> 1
 
@@ -4619,7 +4619,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Gut Biome
+## Gut Biome [SPECCED]
 
 **Layer:** 1
 
@@ -4647,7 +4647,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Masterwork Legacy
+## Masterwork Legacy [SPECCED]
 
 **Layer:** 1
 
@@ -4661,7 +4661,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Thermal Camouflage
+## Thermal Camouflage [SPECCED]
 
 **Layer:** 1
 
@@ -4744,7 +4744,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Gravity Caste
+## Gravity Caste [SPECCED]
 
 **Layer:** 1
 
@@ -4814,7 +4814,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Retro-Causality Contracts
+## Retro-Causality Contracts [SPECCED]
 
 **Layer:** 3
 
@@ -4842,7 +4842,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Dead Hand
+## The Dead Hand [SPECCED]
 
 **Layer:** Cross-layer
 
@@ -4884,7 +4884,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Living Score
+## The Living Score [SPECCED]
 
 **Layer:** Cross-layer (Meta)
 
@@ -4954,7 +4954,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## System Sovereignty
+## System Sovereignty [SPECCED]
 
 **Layer:** 2
 
@@ -5233,7 +5233,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Gut Biome
+## Gut Biome [SPECCED]
 
 **Layer:** 1
 
@@ -5261,7 +5261,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Masterwork Legacy
+## Masterwork Legacy [SPECCED]
 
 **Layer:** 1
 
@@ -5275,7 +5275,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Thermal Camouflage
+## Thermal Camouflage [SPECCED]
 
 **Layer:** 1
 
