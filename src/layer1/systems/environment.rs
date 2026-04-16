@@ -75,6 +75,8 @@ pub fn register(schedule: &mut Schedule) {
         (
             crate::layer1::temporal_ghost_towns::process_temporal_stutters,
             crate::layer1::temporal_ghost_towns::process_temporal_recovery,
+            crate::layer1::environment::ephemeral_moons::handle_moon_capture_system,
+            crate::layer1::environment::ephemeral_moons::decay_ephemeral_moons_system,
         )
             .in_set(Layer1SystemSet::Environment),
     );
