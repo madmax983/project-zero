@@ -162,4 +162,12 @@ pub fn register(schedule: &mut Schedule) {
         )
             .in_set(Layer1SystemSet::Economy),
     );
+    schedule.add_systems(
+        (
+            crate::layer1::environment::ephemeral_moons::apply_moon_modifiers_system
+                .after(crate::layer1::solar::update_solar_output_system)
+                .before(crate::layer1::energy::power_grid_system),
+        )
+            .in_set(Layer1SystemSet::Economy),
+    );
 }

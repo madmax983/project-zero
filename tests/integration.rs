@@ -281,3 +281,5 @@ mod void_whispers_chronicle;
 
 #[path = "integration/ventilation_atmosphere_bridge.rs"]
 mod ventilation_atmosphere_bridge;
+#[path = "integration/food_needs.rs"] mod food_needs;
+#[path = "integration/ephemeral_moons_bridge.rs"] mod ephemeral_moons_bridge;

@@ -705,3 +705,9 @@
 - **Glue added:**
     - `simulate_diffusion_system` in `src/layer1/nature/atmosphere.rs` now queries `VentConnection`s and uses `calculate_vent_airflow` to determine diffusion transmissivity through walls.
 - **Tests:** `tests/integration/ventilation_atmosphere_bridge.rs` (2 tests verified)
+
+### INT-895: Ephemeral Moons -> Energy System
+- **Date:** 2026-06-25
+- **Systems connected:** `apply_moon_modifiers_system` (Ephemeral Moons) -> `PowerSource` (Energy)
+- **Glue added:** Scheduled `apply_moon_modifiers_system` in `Layer1SystemSet::Economy` between `update_solar_output_system` and `power_grid_system` to ensure solar yield boosts apply before distribution.
+- **Tests:** `tests/integration/ephemeral_moons_bridge.rs` (1 test)

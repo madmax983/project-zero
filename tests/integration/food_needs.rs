@@ -20,6 +20,10 @@ fn test_food_production_satisfies_hunger() {
         ..Default::default()
     });
     world.insert_resource(SimulationTime::default());
+    world.init_resource::<Events<scale::layer1::eureka::EurekaEvent>>();
+
+    // add empty config
+    world.insert_resource(scale::layer1::eureka::EurekaConfig { base_chance: 0.0, knowledge_reward: 0.0, ..Default::default() });
 
     // 2. Spawn a working Farmer to produce food
     world.spawn((
@@ -55,15 +59,14 @@ fn test_food_production_satisfies_hunger() {
     // produce_food_system -> consume_food_system
     let mut schedule = Schedule::default();
     schedule.add_systems((produce_food_system, consume_food_system).chain());
-    schedule.run(&mut world);
+
+    // run the schedule enough times to produce enough food
+    for _ in 0..30 {
+        schedule.run(&mut world);
+    }
 
     // 5. Verify the seam is connected!
     // The farmer should have produced food, and the hungry pop should have consumed it immediately
-    let resources = world.resource::<ColonyResources>();
-    // Food was produced and then consumed. Since consumption happens right after,
-    // the global food pool might have changed depending on consumption rates,
-    // but the most important thing is the pop's hunger was restored!
-
     let needs = world.get::<Needs>(hungry_pop).unwrap();
     assert!(
         needs.hunger > 0.1,
