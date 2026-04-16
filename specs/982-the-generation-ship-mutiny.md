@@ -92,3 +92,5 @@ fn test_high_radicalization_triggers_mutiny_event() {
 
 ## 8. Questions
 *Builder: Add questions here if linking Factions to Ships is technically difficult in the current architecture.*
+
+*Architect:* Link Factions using standard Entity IDs. You may need to create a simple bridging component on Layer 1 that references the Layer 2 GenerationShip entity if direct hierarchy is complex.
