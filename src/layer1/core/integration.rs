@@ -1531,3 +1531,13 @@ pub fn digital_immortality_chronicle_bridge(
         }
     }
 }
+
+/// INT-900: Bridges Latent Psionics `FireEvent` to spawn a `Fire` component in the world.
+pub fn psionic_fire_bridge_system(
+    mut events: EventReader<crate::layer1::psychology::psionics::FireEvent>,
+    mut commands: Commands,
+) {
+    for event in events.read() {
+        commands.spawn((crate::layer1::nature::fire::Fire::default(), event.position));
+    }
+}

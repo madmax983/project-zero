@@ -287,3 +287,5 @@ mod food_needs;
 mod ventilation_atmosphere_bridge;
 #[path = "integration/ephemeral_market_bridge.rs"]
 mod ephemeral_market_bridge;
+#[path = "integration/psionics_fire_bridge.rs"]
+mod psionics_fire_bridge;
