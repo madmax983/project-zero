@@ -6,16 +6,16 @@ use std::{cell::RefCell, rc::Rc};
 mod chronicle;
 mod colony_map;
 mod inspector;
-mod status;
 mod log_plugin;
+mod status;
 mod system_map;
 mod tech;
 
 pub use chronicle::ChroniclePlugin;
 pub use colony_map::ColonyMapPlugin;
 pub use inspector::InspectorPlugin;
-pub use status::StatusPlugin;
 pub use log_plugin::LogPlugin;
+pub use status::StatusPlugin;
 pub use system_map::SystemMapPlugin;
 pub use tech::TechPlugin;
 
@@ -143,8 +143,8 @@ fn copy_buffer_into_area(source: &Buffer, target_area: Rect, target: &mut Buffer
 mod tests {
     use super::{
         register_default_plugins, ChroniclePlugin, SharedWorld, StatusPlugin, TechPlugin,
-        CHRONICLE_PLUGIN_TYPE, COLONY_MAP_PLUGIN_TYPE, INSPECTOR_PLUGIN_TYPE, STATUS_PLUGIN_TYPE,
-        SYSTEM_MAP_PLUGIN_TYPE, TECH_PLUGIN_TYPE, LOG_PLUGIN_TYPE,
+        CHRONICLE_PLUGIN_TYPE, COLONY_MAP_PLUGIN_TYPE, INSPECTOR_PLUGIN_TYPE, LOG_PLUGIN_TYPE,
+        STATUS_PLUGIN_TYPE, SYSTEM_MAP_PLUGIN_TYPE, TECH_PLUGIN_TYPE,
     };
     use crate::prelude::{setup_world_with_config, SetupConfig};
     use ratatui::{buffer::Buffer, layout::Rect};
