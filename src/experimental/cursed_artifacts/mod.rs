@@ -13,7 +13,7 @@
 use crate::layer1::core::chronicle::{AddChronicleEvent, EventImportance};
 use crate::layer1::execution::{AtTarget, MovementTarget};
 use crate::layer1::pop::Pop;
-use crate::layer1::science::{Anomaly, AnomalyType, ScanProgress};
+use crate::layer1::anomalies::{Anomaly, AnomalyType, ScanProgress};
 use crate::layer1::traits::{Trait, Traits};
 use crate::layer1::utility_types::ActionType;
 use bevy_ecs::prelude::*;

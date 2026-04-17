@@ -108,7 +108,7 @@ pub mod pathfinding;
 /// Refining industry (Lumber Mill, Stone Mason).
 /// Colony resources and mining.
 /// Field science and anomalies.
-pub mod science;
+pub mod anomalies;
 /// Seasonal rhythms (Spring, Summer, Autumn, Winter).
 mod shift_integration_tests;
 /// Social needs and tavern.
@@ -148,7 +148,7 @@ pub use institutional_memory::*;
 pub use jobs::*;
 pub use locations::*;
 pub use notifications::*;
-pub use science::*;
+pub use anomalies::*;
 pub use social::*;
 pub use spoilage::*;
 pub use tech::*;

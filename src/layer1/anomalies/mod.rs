@@ -302,7 +302,7 @@ mod tests {
     use crate::layer1::execution::{AtTarget, MovementTarget};
     use crate::layer1::map::GridPosition;
     use crate::layer1::resources::ColonyResources;
-    use crate::layer1::science::{
+    use crate::layer1::anomalies::{
         process_scan_system, spawn_initial_anomalies, Anomaly, AnomalyType, ScanProgress,
     };
     use crate::layer1::terrain::{TerrainGrid, TerrainType};

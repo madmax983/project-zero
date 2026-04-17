@@ -17,7 +17,7 @@
 //! 4. `MiningProgress` accumulates.
 //! 5. Upon completion, the tile changes and resources are awarded.
 
-use crate::layer1::science::{Anomaly, AnomalyType, ScanProgress};
+use crate::layer1::anomalies::{Anomaly, AnomalyType, ScanProgress};
 use crate::layer1::terrain::{TerrainGrid, TerrainType};
 use crate::layer1::GridPosition;
 use crate::shared::log::MessageLog;

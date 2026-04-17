@@ -42,7 +42,7 @@ use crate::layer1::map::GridPosition;
 use crate::layer1::medical::Hospital;
 use crate::layer1::refining::get_refining_recipe;
 use crate::layer1::resources::{RefiningProgress, ResourceItem};
-use crate::layer1::science::Anomaly;
+use crate::layer1::anomalies::Anomaly;
 use crate::layer1::social::empty_room::ActiveSanctuaries;
 use crate::layer1::social::Tavern;
 use crate::layer1::stockpile::Stockpile;
