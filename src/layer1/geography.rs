@@ -12,15 +12,7 @@ pub struct HistoricalName {
 #[derive(Event, Debug, Clone)]
 pub struct HistoricalEvent {
     pub location: GridPosition,
-    pub event_type: EventType,
-}
-
-/// Types of historical events that can name a geography.
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
-pub enum EventType {
-    Famine,
-    Tragedy,
-    Discovery,
+    pub event_name: String,
 }
 
 /// Processes historical events and assigns names to tiles.
@@ -41,16 +33,10 @@ pub fn process_historical_events(
 
     for event in events.read() {
         if let Some((entity, current_name)) = tile_map.get_mut(&event.location) {
-            let generated_name = match event.event_type {
-                EventType::Famine => "Famine Field".to_string(),
-                EventType::Tragedy => "Site of Tragedy".to_string(),
-                EventType::Discovery => "Discovery Point".to_string(),
-            };
-
             let new_name = if let Some(existing) = current_name {
-                format!("{} ({})", existing, generated_name)
+                format!("{} ({})", existing, event.event_name)
             } else {
-                generated_name
+                event.event_name.clone()
             };
 
             commands.entity(*entity).insert(HistoricalName {
@@ -82,7 +68,7 @@ mod tests {
         // Emit an event that happened at this location
         app.world_mut().send_event(HistoricalEvent {
             location: GridPosition { x: 5, y: 5 },
-            event_type: EventType::Famine,
+            event_name: "Famine Field".to_string(),
         });
         app.update();
 
@@ -112,7 +98,7 @@ mod tests {
         // New event happens
         app.world_mut().send_event(HistoricalEvent {
             location: GridPosition { x: 0, y: 0 },
-            event_type: EventType::Tragedy,
+            event_name: "Site of Tragedy".to_string(),
         });
         app.update();
 
