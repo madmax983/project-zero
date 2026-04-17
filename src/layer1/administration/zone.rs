@@ -34,6 +34,8 @@ pub enum ZoneType {
     Penal,
     /// Sanctuary district where laws are ignored.
     Sanctuary,
+    /// Embassy district where foreign laws apply.
+    Extraterritorial,
     /// Customs checkpoint for vetting new arrivals.
     Customs,
 }

@@ -1103,6 +1103,9 @@ mod tests {
             );
         world.init_resource::<bevy::prelude::Events<crate::layer2::skyhooks::LaunchIntent>>();
         world.init_resource::<bevy::prelude::Events<crate::layer1::law::justice::CrimeCommittedEvent>>();
+        world.init_resource::<bevy::prelude::Events<crate::layer1::law::embassy::ArrestEvent>>();
+        world.init_resource::<bevy::prelude::Events<crate::layer1::law::embassy::DiplomaticIncidentEvent>>();
+
         world.init_resource::<bevy::prelude::Events<crate::layer1::pop_memories::FamineEvent>>();
         world.init_resource::<bevy::prelude::Events<crate::layer2::weather::StormImpactEvent>>();
         *world.resource_mut::<GameState>() = GameState::Running;

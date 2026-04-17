@@ -371,7 +371,13 @@ fn register_simulation_core_systems(schedule: &mut Schedule) {
     // --- Register Core Layer 1 Systems ---
     register_layer1_systems(schedule);
     // Black Market Terraforming
-    schedule.add_systems((crate::layer2::weather::weather_movement_system,));
+    schedule.add_systems((
+        crate::layer1::law::embassy::evaluate_diplomatic_crime_system,
+        crate::layer1::law::embassy::process_diplomatic_arrest_system,
+    ));
+
+    schedule.add_systems((
+crate::layer2::weather::weather_movement_system,));
     schedule.add_systems((
         crate::layer3::planet::black_market_terraforming::trigger_rogue_terraforming,
         crate::layer3::planet::black_market_terraforming::apply_rogue_terraforming_events,
