@@ -5038,7 +5038,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Benevolent Malfunctions
+## Benevolent Malfunctions [SPECCED]
 
 **Layer:** 1
 

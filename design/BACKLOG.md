@@ -745,3 +745,5 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1070` Feral Infrastructure — `specs/1070-feral-infrastructure.md`
 - [ ] `1071` The Bureaucracy of Truth — `specs/1071-the-bureaucracy-of-truth.md`
 - [ ] `1072` The Smuggler's Ecosystem — `specs/1072-smugglers-ecosystem.md`
+
+- [ ] `1073` Benevolent Malfunctions — `specs/1073-benevolent-malfunctions.md`
