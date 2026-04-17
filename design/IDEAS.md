@@ -14616,7 +14616,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Lifting the quarantine guarantees the contagion spreads to your core worlds, but leaving the quarantine in place means your capital starves to death while your own defense cannons shred your supply fleet.
 
 ---
-## The Cassandra Protocol [SPECCED]
+## The Cassandra Protocol
 
 **Layer:** Cross-layer
 
@@ -16042,7 +16042,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Interstellar Quarantine
+## Interstellar Quarantine [SPECCED]
 
 **Layer:** Cross-layer
 
@@ -16055,7 +16055,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Sacrificing one of your own colonies to save the empire, and dealing with the immense political fallout from the rest of the galaxy knowing you left those people to die.
 
 ---
-## The Memorial Economy
+## The Memorial Economy [SPECCED]
 
 **Layer:** 1
 
