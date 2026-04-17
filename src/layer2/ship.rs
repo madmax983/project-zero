@@ -72,7 +72,7 @@ impl ShipType {
 }
 
 /// Represents an individual ship instance within a fleet.
-#[derive(Debug, Clone, PartialEq)]
+#[derive(bevy_ecs::prelude::Component, Debug, Clone, PartialEq)]
 pub struct Ship {
     /// The class of the ship.
     pub ship_type: ShipType,
