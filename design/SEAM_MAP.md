@@ -711,3 +711,9 @@
 - **Systems connected:** `apply_moon_modifiers_system` (Ephemeral Moons) -> `PowerSource` (Energy)
 - **Glue added:** Scheduled `apply_moon_modifiers_system` in `Layer1SystemSet::Economy` between `update_solar_output_system` and `power_grid_system` to ensure solar yield boosts apply before distribution.
 - **Tests:** `tests/integration/ephemeral_moons_bridge.rs` (1 test)
+
+### INT-784: The Ephemeral Market -> Simulation Schedule
+- **Date:** 2026-06-25
+- **Systems connected:** `spawn_ephemeral_market_system`, `process_market_despawn_system`, `fulfill_market_trade_system` (Ephemeral Market) -> `SimulationSchedule`
+- **Glue added:** Registered the ephemeral market systems in `src/simulation.rs` under Layer 3 Integration, and initialized `MarketSpawnEvent`, `MarketTradeEvent`, and `MarketTradeFailedEvent` in `src/setup.rs` and `src/layer1/systems/cleanup.rs`.
+- **Tests:** `tests/integration/ephemeral_market_bridge.rs`

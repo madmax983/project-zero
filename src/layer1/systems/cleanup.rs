@@ -89,4 +89,13 @@ pub fn register(schedule: &mut Schedule) {
         )
             .in_set(Layer1SystemSet::EventCleanup),
     );
+
+    schedule.add_systems(
+        (
+            update_event_buffer::<crate::layer3::market::ephemeral_market::MarketSpawnEvent>,
+            update_event_buffer::<crate::layer3::market::ephemeral_market::MarketTradeEvent>,
+            update_event_buffer::<crate::layer3::market::ephemeral_market::MarketTradeFailedEvent>,
+        )
+            .in_set(Layer1SystemSet::EventCleanup),
+    );
 }
