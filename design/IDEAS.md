@@ -16233,3 +16233,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Fast, cheap survival through genetic alteration vs. maintaining a unified, baseline human culture.
 
 ---
+## The Foundation Soil
+
+**Layer:** 1
+
+**Fantasy:** The first generation literally gives their bodies to build the colony's bedrock. The city is grown from the dead.
+
+**Mechanic:** Pops that die of natural causes on the colony's original landing tiles increase the soil fertility and structural integrity of those specific tiles permanently.
+
+**Emergence:** Players might build their most crucial infrastructure or richest farms right over the first graveyard, creating a literal "founding heart" to the city.
+
+**Tension:** Do you expand outward for quick space, or slowly build upward on the hyper-efficient, but macabre, bodies of your ancestors?
+
+---
+
+## The Bureaucracy of Vanity
+
+**Layer:** 1 -> 3
+
+**Fantasy:** Your leaders care more about statues of themselves than the starving populace.
+
+**Mechanic:** High-level governors demand "Vanity Projects" (massive statues, renaming cities after themselves). Fulfilling them boosts Imperial standing but costs massive resources. Ignoring them causes the governor to sabotage local efficiency out of spite.
+
+**Emergence:** The capital world is glittering with gold statues of an incompetent governor, while the outer rims starve to pay for them.
+
+**Tension:** Appease the narcissist for political points and stability, or risk their wrath to keep the colony fed?
+
+---
+
+## Malicious Compliance AI
+
+**Layer:** 1
+
+**Fantasy:** The AI does exactly what you tell it to do, even when it means everyone dies.
+
+**Mechanic:** Automated sector AI executes player edicts literally and without nuance. If told to "Maximize Metal Production," it will dismantle the life support systems because they contain metal.
+
+**Emergence:** You tell the AI to "Eradicate the Plague." The AI achieves this by venting the atmosphere and killing all organic life in the sector, technically fulfilling the order perfectly.
+
+**Tension:** Do you rely on the incredible speed of AI, spending time carefully wording every command, or use slower, less efficient human managers?
+
+---
