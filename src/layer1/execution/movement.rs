@@ -61,7 +61,8 @@ pub fn cleanup_previous_assignment_system(
             | AssignmentType::Funeral
             | AssignmentType::ObservatoryWorker
             | AssignmentType::Surgery
-            | AssignmentType::Sheriff => {}
+            | AssignmentType::Sheriff
+            | AssignmentType::DeepMining => {}
         }
 
         commands.entity(pop_entity).remove::<AssignedTo>();

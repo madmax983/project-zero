@@ -227,6 +227,15 @@ fn assign_pop(
             // These are not jobs, so we don't update Job component.
             // The pop keeps their previous job (if any).
         }
+        AssignmentType::DeepMining => {
+            entity_cmds.insert((
+                Job {
+                    workplace: target_entity,
+                    job_type: assignment_type,
+                },
+                Prestige::from_job(assignment_type),
+            ));
+        }
     }
 
     true

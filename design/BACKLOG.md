@@ -4,7 +4,6 @@
 
 
 
-- [ ] `783` The Sub-Lithic Cult — `specs/783-the-sub-lithic-cult.md`
 
 
 

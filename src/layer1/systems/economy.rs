@@ -148,6 +148,9 @@ pub fn register(schedule: &mut Schedule) {
                 .after(crate::layer1::factions::update_faction_satisfaction_system),
             crate::layer1::factions::update_faction_strikes_system
                 .after(crate::layer1::factions::update_faction_demands_system),
+            crate::layer1::social::sub_lithic::process_deep_mining_exposure,
+            crate::layer1::social::sub_lithic::evaluate_cult_formation,
+            crate::layer1::social::sub_lithic::process_cult_sabotage,
             apply_founder_benefits_system,
             // Layer 2 visibility systems are handled in simulation.rs
         )
