@@ -750,3 +750,4 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1074` System Quarantine — `specs/1074-system-quarantine.md`
 - [ ] `1075` The Memorial Economy — `specs/1075-the-memorial-economy.md`
 - [ ] `1076` Fading Homeworld — `specs/1076-fading-homeworld.md`
+- [ ] `1077` Splicer's Dilemma — `specs/1077-splicers-dilemma.md`
