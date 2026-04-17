@@ -1,7 +1,7 @@
-use bevy::prelude::*;
-use crate::layer1::resources::{ColonyResources, ResourceType};
 use crate::layer1::chronicle::{Chronicle, EventImportance};
+use crate::layer1::resources::{ColonyResources, ResourceType};
 use crate::prelude::SimulationTime;
+use bevy::prelude::*;
 
 /// Represents an Ephemeral Market that spawned in a system.
 #[derive(Component)]
@@ -52,9 +52,7 @@ pub fn spawn_ephemeral_market_system(
         commands.spawn(EphemeralMarket {
             location: ev.system_entity,
             ticks_remaining: ev.duration_ticks,
-            trades: vec![
-                (ResourceType::Food, 100.0, ResourceType::Scrap, 1.0)
-            ]
+            trades: vec![(ResourceType::Food, 100.0, ResourceType::Scrap, 1.0)],
         });
 
         chronicle.add_event(
@@ -171,11 +169,14 @@ pub mod tests {
 
     pub fn setup_app() -> App {
         let mut app = App::new();
-        app.add_systems(Update, (
-            spawn_ephemeral_market_system,
-            process_market_despawn_system,
-            fulfill_market_trade_system
-        ));
+        app.add_systems(
+            Update,
+            (
+                spawn_ephemeral_market_system,
+                process_market_despawn_system,
+                fulfill_market_trade_system,
+            ),
+        );
         app.add_event::<MarketSpawnEvent>();
         app.add_event::<MarketTradeEvent>();
         app.add_event::<MarketTradeFailedEvent>();
@@ -201,7 +202,10 @@ pub mod tests {
         // Check market spawned
         let mut query = app.world_mut().query::<(Entity, &EphemeralMarket)>();
         let market_count = query.iter(app.world()).count();
-        assert_eq!(market_count, 1, "Ephemeral Market should spawn when event is sent");
+        assert_eq!(
+            market_count, 1,
+            "Ephemeral Market should spawn when event is sent"
+        );
 
         let (market_ent, market) = query.iter(app.world()).next().unwrap();
         assert_eq!(market.ticks_remaining, 10);
@@ -213,7 +217,10 @@ pub mod tests {
         }
 
         // Market should be despawned
-        assert!(app.world().get_entity(market_ent).is_err(), "Market should despawn after ticks_remaining reaches 0");
+        assert!(
+            app.world().get_entity(market_ent).is_err(),
+            "Market should despawn after ticks_remaining reaches 0"
+        );
     }
 
     #[test]
@@ -227,7 +234,10 @@ pub mod tests {
         });
         app.update();
 
-        let market_ent = app.world_mut().query_filtered::<Entity, With<EphemeralMarket>>().single(app.world());
+        let market_ent = app
+            .world_mut()
+            .query_filtered::<Entity, With<EphemeralMarket>>()
+            .single(app.world());
 
         app.insert_resource(ColonyResources {
             food: 100.0,
@@ -260,15 +270,30 @@ pub mod tests {
 
         app.update(); // Spawns market with 2 ticks remaining
 
-        let market_ent = app.world_mut().query_filtered::<Entity, With<EphemeralMarket>>().single(app.world());
+        let market_ent = app
+            .world_mut()
+            .query_filtered::<Entity, With<EphemeralMarket>>()
+            .single(app.world());
 
         app.update();
         assert!(app.world().get_entity(market_ent).is_ok());
-        assert_eq!(app.world().get::<EphemeralMarket>(market_ent).unwrap().ticks_remaining, 1);
+        assert_eq!(
+            app.world()
+                .get::<EphemeralMarket>(market_ent)
+                .unwrap()
+                .ticks_remaining,
+            1
+        );
 
         app.update();
         assert!(app.world().get_entity(market_ent).is_ok());
-        assert_eq!(app.world().get::<EphemeralMarket>(market_ent).unwrap().ticks_remaining, 0);
+        assert_eq!(
+            app.world()
+                .get::<EphemeralMarket>(market_ent)
+                .unwrap()
+                .ticks_remaining,
+            0
+        );
 
         app.update();
         assert!(app.world().get_entity(market_ent).is_err());
@@ -285,7 +310,10 @@ pub mod tests {
         });
         app.update();
 
-        let market_ent = app.world_mut().query_filtered::<Entity, With<EphemeralMarket>>().single(app.world());
+        let market_ent = app
+            .world_mut()
+            .query_filtered::<Entity, With<EphemeralMarket>>()
+            .single(app.world());
 
         app.insert_resource(ColonyResources {
             food: 10.0, // Needs 100
@@ -304,7 +332,9 @@ pub mod tests {
         assert_eq!(resources.food, 10.0);
         assert_eq!(resources.scrap, 0.0);
 
-        let failed_events = app.world().resource::<bevy_ecs::event::Events<MarketTradeFailedEvent>>();
+        let failed_events = app
+            .world()
+            .resource::<bevy_ecs::event::Events<MarketTradeFailedEvent>>();
         let mut reader = failed_events.get_cursor();
         assert_eq!(reader.read(failed_events).count(), 1);
 

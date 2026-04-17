@@ -109,14 +109,16 @@ pub fn work_execution_system(world: &mut World) {
     }
 }
 
+/// ⚡ Bolt Optimization: Uses `bevy::utils::HashMap` (AHash) instead of `std::collections::HashMap`
+/// to eliminate SipHash overhead during high-frequency worker grouping operations.
 fn collect_workers_by_target(
     world: &mut World,
     policies: Option<&ColonyPolicies>,
     striking_factions: &std::collections::HashSet<crate::layer1::factions::FactionId>,
     cycle: Option<crate::layer1::day_night::TimeOfDay>,
-) -> std::collections::HashMap<Entity, Vec<WorkerData>> {
-    let mut workers_by_target: std::collections::HashMap<Entity, Vec<WorkerData>> =
-        std::collections::HashMap::new();
+) -> bevy::utils::HashMap<Entity, Vec<WorkerData>> {
+    let mut workers_by_target: bevy::utils::HashMap<Entity, Vec<WorkerData>> =
+        bevy::utils::HashMap::default();
 
     let mut query = world.query_filtered::<(
         Entity,
