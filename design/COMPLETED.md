@@ -407,3 +407,4 @@
 - [x] `INT-895` Integration: Ephemeral Moons -> Energy System — completed 2026-06-25
 - [x] `784` The Ephemeral Market — `specs/784-the-ephemeral-market.md` — completed 2026-04-17
 - [x] `INT-784` Integration: The Ephemeral Market -> Simulation Schedule — completed 2026-06-25
+- [x] `764` The Embassy Sector — `specs/764-the-embassy-sector.md` — completed 2026-04-17
