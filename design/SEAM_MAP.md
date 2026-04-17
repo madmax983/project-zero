@@ -717,3 +717,9 @@
 - **Systems connected:** `spawn_ephemeral_market_system`, `process_market_despawn_system`, `fulfill_market_trade_system` (Ephemeral Market) -> `SimulationSchedule`
 - **Glue added:** Registered the ephemeral market systems in `src/simulation.rs` under Layer 3 Integration, and initialized `MarketSpawnEvent`, `MarketTradeEvent`, and `MarketTradeFailedEvent` in `src/setup.rs` and `src/layer1/systems/cleanup.rs`.
 - **Tests:** `tests/integration/ephemeral_market_bridge.rs`
+
+### INT-900: Latent Psionics -> Fire Spawn
+- **Date:** 2026-04-17
+- **Systems connected:** `pyrokinesis_power_activation_system` (Psionics) -> `psionic_fire_bridge_system` (Integration) -> `Fire` component
+- **Glue added:** Added `psionic_fire_bridge_system` to spawn `Fire` entity upon receiving `FireEvent` from `pyrokinesis_power_activation_system`. Registered in `Layer1SystemSet::Observation`.
+- **Tests:** `tests/integration/psionics_fire_bridge.rs`
