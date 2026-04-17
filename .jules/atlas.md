@@ -76,3 +76,6 @@
 **Culture Domain Encapsulation - Animism**
 **Tangle:** The `animism.rs` module was lingering in the root of `src/layer1/` instead of being inside its proper cultural domain alongside `ancestral_graves`, `art`, `totems`, etc., exacerbating the "Blob" anti-pattern in Layer 1.
 **Blueprint:** Moved `src/layer1/animism.rs` to `src/layer1/culture/animism.rs`. Updated `layer1/culture/mod.rs` to re-export it, resolving structural clutter and unifying the culture mechanics boundary.
+**Anomalies Domain Encapsulation**
+**Tangle:** The `layer1` core module was littered with the loose module `science`, which contained `Anomaly`, `AnomalyType`, and `ScanProgress` logic but was loosely declared in `layer1/mod.rs` contributing to the "Blob" anti-pattern without a clear boundary.
+**Blueprint:** Encapsulated the field science and anomalies logic into a dedicated `src/layer1/anomalies/` domain module, moving `science.rs` to `anomalies/mod.rs` and updating the re-exports and import paths to enforce a distinct domain boundary for anomalies.

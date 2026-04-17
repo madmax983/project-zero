@@ -1,6 +1,0 @@
-refactor(layer1): simplify PlacementError in building placement validation
-
-Razor:
-- Excised single-use enum `PlacementError` from `layer1::architecture::building.rs`.
-- Refactored `validate_building_placement` to return `Result<(), &'static str>` directly, removing the need for `handle_placement_error` to match over variants.
-- Inlined the string literal errors, eliminating unnecessary indirection and following KISS principle.

@@ -7,7 +7,7 @@ mod tests {
     use scale::layer1::map::GridPosition;
     use scale::layer1::pop::Pop;
     use scale::layer1::resources::{ColonyResources, MiningProgress};
-    use scale::layer1::science::{process_scan_system, Anomaly, AnomalyType, ScanProgress};
+    use scale::layer1::anomalies::{process_scan_system, Anomaly, AnomalyType, ScanProgress};
     use scale::layer1::skills::{SkillType, Skills};
     use scale::layer1::terrain::{TerrainGrid, TerrainType};
     use scale::layer1::utility_ai::ActionType; // PopAction unused in this file
