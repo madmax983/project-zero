@@ -360,4 +360,206 @@ mod tests {
         let v = world.get::<TheVisitor>(visitor).unwrap();
         assert_eq!(v.state, TheVisitorState::Leave);
     }
+
+    #[test]
+    fn test_visitor_reaches_target_and_transitions_to_eat() {
+        let mut world = setup_world();
+
+        let visitor = world
+            .spawn((
+                TheVisitor {
+                    state: TheVisitorState::MoveToTarget,
+                    target_position: Some(GridPosition { x: 5, y: 5 }),
+                    ..Default::default()
+                },
+                GridPosition { x: 5, y: 5 },
+            ))
+            .id();
+
+        world.run_system_once(the_visitor_behavior_system).unwrap();
+
+        let v = world.get::<TheVisitor>(visitor).unwrap();
+        assert_eq!(v.state, TheVisitorState::Eat);
+    }
+
+    #[test]
+    fn test_visitor_lost_target_wanders() {
+        let mut world = setup_world();
+
+        let visitor = world
+            .spawn((
+                TheVisitor {
+                    state: TheVisitorState::MoveToTarget,
+                    target_position: None,
+                    ..Default::default()
+                },
+                GridPosition { x: 5, y: 5 },
+            ))
+            .id();
+
+        world.run_system_once(the_visitor_behavior_system).unwrap();
+
+        let v = world.get::<TheVisitor>(visitor).unwrap();
+        assert_eq!(v.state, TheVisitorState::Wander);
+    }
+
+    #[test]
+    fn test_visitor_eats_rations_and_fuel() {
+        let mut world = setup_world();
+
+        let mut res = world.resource_mut::<ColonyResources>();
+        res.food = 0.0;
+        res.rations = 15.0;
+        res.fuel = 20.0;
+
+        let stockpile = world
+            .spawn((
+                Building {
+                    building_type: BuildingType::Stockpile,
+                },
+                Stockpile::default(),
+                GridPosition { x: 1, y: 0 },
+            ))
+            .id();
+
+        let visitor = world
+            .spawn((
+                TheVisitor {
+                    state: TheVisitorState::Eat,
+                    target_stockpile: Some(stockpile),
+                    hunger: 25.0,
+                    ..Default::default()
+                },
+                GridPosition { x: 1, y: 0 },
+            ))
+            .id();
+
+        world.run_system_once(the_visitor_behavior_system).unwrap();
+
+        let res = world.resource::<ColonyResources>();
+        assert_eq!(res.food, 0.0);
+        assert_eq!(res.rations, 0.0); // Ate 15
+        assert_eq!(res.fuel, 10.0); // Ate 10 out of 20
+
+        let v = world.get::<TheVisitor>(visitor).unwrap();
+        assert_eq!(v.state, TheVisitorState::Leave);
+        assert_eq!(v.target_position, Some(GridPosition { x: 0, y: 0 }));
+    }
+
+    #[test]
+    fn test_visitor_leaves_tramples_and_despawns() {
+        let mut world = setup_world();
+
+        // Wall to trample at (1, 0)
+        let wall_ent = world
+            .spawn((
+                Structure {
+                    current_hp: 100.0,
+                    max_hp: 100.0,
+
+                },
+                GridPosition { x: 1, y: 0 },
+            ))
+            .id();
+
+        let visitor = world
+            .spawn((
+                TheVisitor {
+                    state: TheVisitorState::Leave,
+                    target_position: Some(GridPosition { x: 0, y: 0 }),
+                    ..Default::default()
+                },
+                GridPosition { x: 2, y: 0 },
+            ))
+            .id();
+
+        world.run_system_once(the_visitor_behavior_system).unwrap();
+
+        // pos should be (1, 0) and wall should be trampled
+        let pos = world.get::<GridPosition>(visitor).unwrap();
+        assert_eq!(*pos, GridPosition { x: 1, y: 0 });
+        assert!(world.get::<Structure>(wall_ent).is_none());
+
+        // Run again, should move to (0, 0)
+        world.run_system_once(the_visitor_behavior_system).unwrap();
+        let pos = world.get::<GridPosition>(visitor).unwrap();
+        assert_eq!(*pos, GridPosition { x: 0, y: 0 });
+
+        // Run one more time to trigger despawn at (0, 0)
+        world.run_system_once(the_visitor_behavior_system).unwrap();
+
+        assert!(world.get::<TheVisitor>(visitor).is_none());
+    }
+
+    #[test]
+    fn test_visitor_wander_without_stockpile() {
+        let mut world = setup_world();
+
+        let visitor = world
+            .spawn((
+                TheVisitor {
+                    state: TheVisitorState::Wander,
+                    ..Default::default()
+                },
+                GridPosition { x: 5, y: 5 },
+            ))
+            .id();
+
+        // Run system, but there are no stockpiles to find
+        world.run_system_once(the_visitor_behavior_system).unwrap();
+
+        let v = world.get::<TheVisitor>(visitor).unwrap();
+        // Should remain in Wander state
+        assert_eq!(v.state, TheVisitorState::Wander);
+    }
+
+    #[test]
+    fn test_visitor_leave_without_target_position() {
+        let mut world = setup_world();
+
+        let visitor = world
+            .spawn((
+                TheVisitor {
+                    state: TheVisitorState::Leave,
+                    target_position: None,
+                    ..Default::default()
+                },
+                GridPosition { x: 5, y: 5 },
+            ))
+            .id();
+
+        // Run system, but there is no target position to move to
+        world.run_system_once(the_visitor_behavior_system).unwrap();
+
+        let v = world.get::<TheVisitor>(visitor).unwrap();
+        // Should remain in Leave state and not move
+        assert_eq!(v.state, TheVisitorState::Leave);
+        let pos = world.get::<GridPosition>(visitor).unwrap();
+        assert_eq!(*pos, GridPosition { x: 5, y: 5 });
+    }
+
+    #[test]
+    fn test_visitor_wander_with_no_stockpile_transition() {
+        let mut world = setup_world();
+
+        let visitor = world
+            .spawn((
+                TheVisitor {
+                    state: TheVisitorState::Wander,
+                    hunger: 10.0,
+                    ..Default::default()
+                },
+                GridPosition { x: 5, y: 5 },
+            ))
+            .id();
+
+        // Run system, but there are no stockpiles to find
+        world.run_system_once(the_visitor_behavior_system).unwrap();
+
+        let v = world.get::<TheVisitor>(visitor).unwrap();
+        // Should remain in Wander state
+        assert_eq!(v.state, TheVisitorState::Wander);
+    }
+
+
 }
