@@ -81,6 +81,8 @@ pub enum FactionId {
     Unaligned,
     /// Faction for criminals from neighboring empire bailing out debt.
     Cartel,
+    /// Cult that worships the deep underground and fears the open sky.
+    SubLithic,
 }
 
 /// Data associated with a faction.
@@ -201,6 +203,13 @@ impl Factions {
                 FactionId::Cartel,
                 FactionData {
                     name: "The Cartel".into(),
+                    ..Default::default()
+                },
+            );
+            self.map.insert(
+                FactionId::SubLithic,
+                FactionData {
+                    name: "The Sub-Lithic Cult".into(),
                     ..Default::default()
                 },
             );

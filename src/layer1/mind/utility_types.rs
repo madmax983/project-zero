@@ -751,4 +751,6 @@ pub enum AssignmentType {
     Administrator,
     /// Undergoing surgery.
     Surgery,
+    /// Working in a deep mine.
+    DeepMining,
 }
