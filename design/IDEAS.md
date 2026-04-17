@@ -16191,3 +16191,58 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you blindly trust the aggregated numbers of your sprawling empire, or spend massive resources (and precious player attention) sending "Inquisitors" to manually verify the UI data of your own worlds?
 
 ---
+## The Phantom Requisition
+
+**Layer:** 1
+
+**Fantasy:** A ghost in the machine is demanding resources for a project that doesn't exist.
+
+**Mechanic:** Sometimes, perfectly functional supply chains experience a 'Phantom Requisition.' Haulers carry valuable resources to a designated but invisible drop point in the colony, only for the resources to vanish from tracking. It functions as an unpredictable, spontaneous resource sink.
+
+**Emergence:** Your crucial titanium shipment for the orbital defense laser disappears. You track the haulers and find them dropping it into an abandoned, unpowered ventilation shaft because 'the system told them to.' You have to manually override the logistics network, risking a total breakdown of automated hauling.
+
+**Tension:** Do you trust the automated logistics that run your colony 99% of the time, or do you constantly micromanage to prevent the phantom drain, crippling your ability to focus on the grand strategy?
+
+---
+
+## The Cult of the Broken Machine
+
+**Layer:** 1
+
+**Fantasy:** A desperate population starts worshipping an advanced, broken piece of machinery because its erratic behavior seems like prophecy.
+
+**Mechanic:** When a high-tier production building breaks down (reaches 0% condition but isn't destroyed), Pops with high Stress might start treating it as a "Shrine" instead of repairing it. It stops functioning entirely but produces a massive Morale aura. Occasionally, the machine "demands" sacrifices, causing Pops to throw valuable resources into it, destroying them forever.
+
+**Emergence:** You suffer a catastrophic power failure during winter because your engineers refuse to fix the main fusion reactor, claiming its random sparks are reading their fortunes. You have to send security forces to forcibly repair the machine, sparking a violent holy war within the engineering bay.
+
+**Tension:** A reliable source of Morale during a severe crisis versus losing critical infrastructure and resources to superstition.
+
+---
+
+## The Biomass Standard
+
+**Layer:** Cross-layer (2 -> 3)
+
+**Fantasy:** Food becomes money. Instead of shiny metal, the galactic economy trades in perfectly preserved, universally viable genetic potential.
+
+**Mechanic:** On worlds with poor metal deposits, the colony can mint "Biomass Ingots"—highly compressed, dormant seeds and nutrient paste. This physical currency can be traded with Layer 2 merchants or, in an emergency, unpacked and planted/eaten on Layer 1. However, minting them drains your immediate agricultural reserves.
+
+**Emergence:** A galaxy-wide crop failure makes your Biomass currency skyrocket in value on the Layer 3 market. You become the richest empire in the sector, buying up mercenary fleets and orbital defense platforms. Meanwhile, your own Pops are rioting and starving because you're hoarding the seeds in the planetary treasury instead of planting them.
+
+**Tension:** Do you treat your food supply as an economic vehicle to buy advanced technology, or do you prioritize feeding your people at the cost of galactic irrelevance?
+
+---
+
+## The Embezzlement Node
+
+**Layer:** Cross-layer (1 -> 2)
+
+**Fantasy:** The corruption is coming from inside the house. A single ambitious Pop is quietly siphoning resources to build their own private empire.
+
+**Mechanic:** A Pop with the "Ambitious" or "Greedy" trait assigned to an administrative, hauling, or high-level logistics job may silently divert a tiny percentage of handled resources to a hidden tile on the map. They use this stash to secretly construct a personal, off-the-books shuttle.
+
+**Emergence:** You're wondering why the orbital laser is taking years to finish despite having a surplus of titanium. You finally trace the missing materials to a remote cave where your chief logistician has built a fully functional escape pod and is preparing to launch.
+
+**Tension:** If you catch them, do you execute them and reclaim the resources, risking a massive morale penalty among their friends? Or do you let them launch, knowing they might return in ten years as a wealthy, heavily armed Layer 2 pirate king?
+
+---
