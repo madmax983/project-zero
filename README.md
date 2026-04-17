@@ -105,27 +105,19 @@ The "Nova" feature (Oral Tradition) builds upon the base narrative system to cre
 use scale::prelude::*;
 
 fn main() {
-    #[cfg(feature = "nova")]
-    {
-        let mut tradition = OralTradition::default();
+    let mut tradition = OralTradition::default();
 
-        // Add a story directly to the tradition
-        let story = Story {
-            text: "The colony survived the Great Frost.".to_string(),
-            historical_date: 100,
-            mutations: 0,
-            genre: StoryGenre::Heroic,
-        };
-        tradition.add_story(story);
+    // Add a story directly to the tradition
+    let story = Story {
+        text: "The colony survived the Great Frost.".to_string(),
+        historical_date: 100,
+        mutations: 0,
+        genre: StoryGenre::Heroic,
+    };
+    tradition.add_story(story);
 
-        // Inspect
-        println!("{:?}", tradition.stories);
-    }
-
-    #[cfg(not(feature = "nova"))]
-    {
-        println!("Please enable the 'nova' feature to run this example: cargo run --features nova");
-    }
+    // Inspect
+    println!("{:?}", tradition.stories);
 }
 ```
 
