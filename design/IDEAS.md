@@ -16191,3 +16191,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you blindly trust the aggregated numbers of your sprawling empire, or spend massive resources (and precious player attention) sending "Inquisitors" to manually verify the UI data of your own worlds?
 
 ---
+
+## The Resource Curse
+
+**Layer:** Cross-layer (1 -> 3)
+
+**Fantasy:** Finding the most valuable substance in the universe makes you a target, not a king.
+
+**Mechanic:** A colony discovers a hyper-valuable, unique resource. Mining it generates massive wealth, but the intense galactic attention automatically reduces the diplomatic standing with all neighboring Layer 3 factions, and significantly increases pirate raid frequency on Layer 2 and Layer 1.
+
+**Emergence:** You strike it rich and use the funds to build a utopia. But soon, your utopia is constantly under siege. You are forced to spend all the wealth you generate from the resource just to build defenses to protect the resource, trapping the colony in an endless war economy.
+
+**Tension:** Do you aggressively mine the rare resource and risk being utterly destroyed by greedy neighbors, or cap extraction to keep a low profile and stay safe but poor?
+
+---
+
+## Fading Homeworld
+
+**Layer:** Cross-layer (3 -> 1)
+
+**Fantasy:** You are the glorious frontier, but the motherland you serve is slowly dying, and their desperation becomes your burden.
+
+**Mechanic:** The "Core World" (the Layer 3 faction you originated from or pay taxes to) slowly decays in stability and resources over the game. As it dies, it begins issuing increasingly draconian demands (massive resource tithes, forced conscription) on your Layer 1 colony. Refusing these demands causes massive diplomatic hits and potential invasion by loyalist fleets.
+
+**Emergence:** You proudly support the empire, sending massive shipments of food to the capital. But the demands keep rising. Eventually, meeting the quotas causes your own colonists to starve. You realize the only way for your colony to survive is to declare independence and watch the empire that birthed you collapse into ruin.
+
+**Tension:** Loyalty to the decaying center (starving your own people to save them) vs. ruthless independence (saving yourself but destroying your civilization's history).
+
+---
+
+## Splicer's Dilemma
+
+**Layer:** 1
+
+**Fantasy:** Erasing your humanity to survive a hostile world, until you no longer recognize your own children.
+
+**Mechanic:** Genetic clinics can radically alter Pops to thrive in extreme environments (e.g., breathing toxic gas, surviving extreme heat). However, highly modified Pops lose the "Human" tag and gain "Mutant" tags. Base-human Pops develop "Xenophobia" towards Mutants, and heavily mutated Pops refuse to use standard human amenities or eat normal food.
+
+**Emergence:** You genetically alter your miners to survive a highly radioactive, rich vein of ore. They become incredibly efficient but hideous to the baseline humans. Soon, the colony physically segregates. The baseline humans live in luxury on the surface, while the mutant miners toil below, brewing a massive, racially-charged civil war fueled by your own pursuit of efficiency.
+
+**Tension:** Fast, cheap survival through genetic alteration vs. maintaining a unified, baseline human culture.
+
+---
