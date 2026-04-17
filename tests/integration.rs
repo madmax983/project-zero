@@ -285,3 +285,5 @@ mod ephemeral_moons_bridge;
 mod food_needs;
 #[path = "integration/ventilation_atmosphere_bridge.rs"]
 mod ventilation_atmosphere_bridge;
+#[path = "integration/ephemeral_market_bridge.rs"]
+mod ephemeral_market_bridge;

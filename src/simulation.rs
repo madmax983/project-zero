@@ -78,6 +78,10 @@ pub fn build_simulation_schedule() -> Schedule {
         crate::layer2::cartographers_curse::apply_drop_pod_accuracy,
         update_detection_risk_system.after(Layer1SystemSet::Economy),
         check_hostile_spawn_system.after(update_detection_risk_system),
+
+        crate::layer3::market::ephemeral_market::spawn_ephemeral_market_system,
+        crate::layer3::market::ephemeral_market::process_market_despawn_system,
+        crate::layer3::market::ephemeral_market::fulfill_market_trade_system,
         crate::layer3::council::enforce_resolutions_system,
     ));
 
