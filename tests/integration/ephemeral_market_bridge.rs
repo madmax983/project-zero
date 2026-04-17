@@ -1,11 +1,11 @@
 use bevy::prelude::*;
+use scale::layer1::chronicle::Chronicle;
+use scale::layer1::resources::ColonyResources;
 use scale::layer3::market::ephemeral_market::{
     fulfill_market_trade_system, process_market_despawn_system, spawn_ephemeral_market_system,
     EphemeralMarket, MarketSpawnEvent, MarketTradeEvent, MarketTradeFailedEvent,
 };
-use scale::layer1::chronicle::Chronicle;
 use scale::prelude::SimulationTime;
-use scale::layer1::resources::ColonyResources;
 
 #[test]
 fn test_ephemeral_market_systems_registered_in_schedule() {

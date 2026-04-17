@@ -134,3 +134,8 @@
 **Concept:** A system where pops lose their individuality and share a single pool of needs and health. Implemented via the `GestaltParticipant` component which averages stats across all participants and slowly interpolates their individual states towards the mean.
 **Fate:** Merged
 **Lesson:** Creates interesting biological networks where a well-fed pop can sustain a starving one, but also introduces a massive vulnerability where the entire hivemind can collapse simultaneously.
+
+## [Monumental Legacy]
+**Concept:** When Pops reach Level 10 in a specific `SkillType` (e.g. `Mining`, `Construction`), they have a rare chance to enter a `MonumentalTrance` mental state. They will then construct a `LegacyMonument` which projects an aura buffering the work speed of any nearby Pop performing jobs related to that skill.
+**Fate:** Proposed
+**Lesson:** Tying late-game skill progression to physical, localized structures rewards long-term survival and gives veteran Pops a lasting, tangible impact on the colony's environment long after they pass.

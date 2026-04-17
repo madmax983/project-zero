@@ -87,3 +87,6 @@ pub mod gestalt_consciousness;
 
 #[cfg(feature = "nova")]
 pub mod cursed_artifacts;
+
+#[cfg(feature = "nova")]
+pub mod monumental_legacy;
