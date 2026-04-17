@@ -991,6 +991,7 @@ fn starter_colony_site_is_valid(world: &World, center: crate::layer1::GridPositi
 use crate::shared::menu::MenuState;
 
 #[cfg(test)]
+#[cfg(test)]
 mod tests {
     use super::*;
     use crate::layer1::building::{Building, BuildingType};

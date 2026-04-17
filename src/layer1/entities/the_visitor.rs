@@ -456,7 +456,6 @@ mod tests {
                 Structure {
                     current_hp: 100.0,
                     max_hp: 100.0,
-
                 },
                 GridPosition { x: 1, y: 0 },
             ))
@@ -560,6 +559,4 @@ mod tests {
         // Should remain in Wander state
         assert_eq!(v.state, TheVisitorState::Wander);
     }
-
-
 }
