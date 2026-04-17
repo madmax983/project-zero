@@ -71,6 +71,10 @@ impl ShipType {
     }
 }
 
+/// Represents a Pop assigned to off-world duties.
+#[derive(bevy_ecs::prelude::Component, Debug, Clone, PartialEq, Default)]
+pub struct OffWorldDuty;
+
 /// Represents an individual ship instance within a fleet.
 #[derive(bevy_ecs::prelude::Component, Debug, Clone, PartialEq)]
 pub struct Ship {

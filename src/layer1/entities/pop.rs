@@ -294,6 +294,8 @@ pub struct PopBundle {
     pub gut_biome: GutBiome,
     /// Formal education level.
     pub education: EducationLevel,
+    /// Base stats.
+    pub stats: crate::layer1::psychology::void_sickness::PopStats,
 }
 
 impl PopBundle {
@@ -343,6 +345,7 @@ impl PopBundle {
             linguistics: Linguistics::default(),
             gut_biome: GutBiome::default(),
             education: EducationLevel(rng.gen_range(1..=3)),
+            stats: crate::layer1::psychology::void_sickness::PopStats::default(),
         }
     }
 }

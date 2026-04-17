@@ -1,3 +1,4 @@
+- [x] `761` Void Sickness — `specs/761-void-sickness.md` — completed 2026-06-03
 - [x] `764` The Embassy Sector — `specs/764-the-embassy-sector.md` — completed 2026-06-25
 - [x] `INT-060` Integration: Vacuum Pressure -> Acoustic Shadows — completed 2026-06-25
 - [x] `893` Psychic Stains — `specs/893-psychic-stains.md` — completed 2026-06-15

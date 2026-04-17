@@ -117,6 +117,10 @@ pub fn run_simulation_tick(world: &mut World) {
     if !world.contains_resource::<Events<crate::layer1::unrest::DenounceEvent>>() {
         world.init_resource::<Events<crate::layer1::unrest::DenounceEvent>>();
     }
+    if !world.contains_resource::<Events<crate::layer1::law::embassy::ArrestEvent>>() {
+        world.init_resource::<Events<crate::layer1::law::embassy::ArrestEvent>>();
+        world.init_resource::<Events<crate::layer1::law::embassy::DiplomaticIncidentEvent>>();
+    }
     if !world.contains_resource::<Events<crate::layer1::environment::volatile::ExplosionEvent>>() {
         world.init_resource::<Events<crate::layer1::environment::volatile::ExplosionEvent>>();
     }
@@ -683,6 +687,8 @@ mod tests {
             );
         world.init_resource::<bevy::prelude::Events<crate::layer2::skyhooks::LaunchIntent>>();
         world.init_resource::<Events<crate::layer2::moon_hermits::PopDesertedEvent>>();
+        world.init_resource::<Events<crate::layer1::law::embassy::ArrestEvent>>();
+        world.init_resource::<Events<crate::layer1::law::embassy::DiplomaticIncidentEvent>>();
         world.init_resource::<Events<crate::layer3::silence::HostileSpawnEvent>>();
         world.init_resource::<Events<crate::layer1::grafting::GraftBuildingEvent>>();
         world.init_resource::<Events<crate::layer1::administration::edicts::TogglePolicyEvent>>();

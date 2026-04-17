@@ -23,6 +23,7 @@ pub mod spiteful_will;
 pub mod stress;
 pub mod traits;
 pub mod void_stare;
+pub mod void_sickness;
 
 pub use cabin_fever::*;
 pub use cryo_dreams::*;
@@ -45,3 +46,4 @@ pub use spiteful_will::*;
 pub use stress::*;
 pub use traits::*;
 pub use void_stare::*;
+pub use void_sickness::*;

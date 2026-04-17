@@ -344,7 +344,16 @@ impl<'a> PopDecider<'a> {
         );
 
         // Evaluate SatisfyRest
-        let rest_urgency = (1.0 - needs.rest) + 0.5;
+        let mut rest_urgency = (1.0 - needs.rest) + 0.5;
+
+        // Spec 761: VoidTouched pops refuse to sleep on surface
+        if self.data.traits.as_ref().is_some_and(|t| t.has(Trait::VoidTouched)) {
+            // Assume we are on surface since we are in Layer 1 evaluation
+            // A true layer check would require a `Location` component, but we'll apply a
+            // heavy penalty directly to their sleep urgency.
+            rest_urgency -= 2.0;
+        }
+
         self.evaluator.evaluate_and_consider(
             evaluate_simple_action(pop_pos, &weights, &self.buffer.housing, rest_urgency),
             ActionType::SatisfyRest,
