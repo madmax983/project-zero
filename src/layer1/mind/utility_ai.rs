@@ -52,6 +52,7 @@ use crate::layer1::law::justice::evaluate_warden_action;
 use crate::layer1::law::predictive_policing::evaluate_pre_crime_arrest;
 use crate::layer1::resources::ColonyResources;
 use crate::layer1::temperature::TemperatureGrid;
+use crate::layer1::utility_types::AssignmentType;
 use crate::layer1::traits::Trait;
 use crate::layer1::utility_ai_population::{collect_pop_data, populate_ai_buffer};
 use crate::layer1::utility_eval_types::evaluate_candidates;
@@ -272,6 +273,7 @@ struct PopDecider<'a> {
     is_striking: bool,
     is_penal: bool,
     is_noble: bool,
+    is_janitor: bool,
 }
 
 impl<'a> PopDecider<'a> {
@@ -283,6 +285,7 @@ impl<'a> PopDecider<'a> {
         let is_striking = Self::check_striking(data, context);
         let is_penal = data.penal_labor.is_some();
         let is_noble = data.traits.as_ref().is_some_and(|t| t.has(Trait::Noble));
+        let is_janitor = data.job.as_ref().is_some_and(|j| j.job_type == AssignmentType::Janitor);
         let is_synth = data.traits.as_ref().is_some_and(|t| t.has(Trait::Synth));
 
         Self {
@@ -293,6 +296,7 @@ impl<'a> PopDecider<'a> {
             is_striking,
             is_penal,
             is_noble,
+            is_janitor,
         }
     }
 
@@ -669,7 +673,7 @@ impl<'a> PopDecider<'a> {
 
         // Evaluate Clean
         self.evaluator.evaluate_and_consider(
-            evaluate_clean(pop_pos, &weights, &self.buffer.cleaning_targets, false),
+            evaluate_clean(pop_pos, &weights, &self.buffer.cleaning_targets, self.is_janitor),
             ActionType::Clean,
             self.context,
             0.0,

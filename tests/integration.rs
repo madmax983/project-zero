@@ -289,3 +289,6 @@ mod ventilation_atmosphere_bridge;
 mod ephemeral_market_bridge;
 #[path = "integration/psionics_fire_bridge.rs"]
 mod psionics_fire_bridge;
+
+#[path = "integration/operational_detritus_bridge.rs"]
+mod operational_detritus_bridge;

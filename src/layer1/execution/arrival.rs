@@ -227,7 +227,8 @@ fn assign_pop(
             // These are not jobs, so we don't update Job component.
             // The pop keeps their previous job (if any).
         }
-        AssignmentType::DeepMining => {
+        AssignmentType::DeepMining
+        | AssignmentType::Janitor => {
             entity_cmds.insert((
                 Job {
                     workplace: target_entity,
