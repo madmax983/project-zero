@@ -16220,7 +16220,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Splicer's Dilemma
+## Splicer's Dilemma [SPECCED]
 
 **Layer:** 1
 
