@@ -6068,3 +6068,58 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: The density is killing us. [HEAT_DESCRIPTOR] grips the core sectors."
 - "The metal and stone trap the sun. [COLONY] suffers under [HEAT_DESCRIPTOR]. [YEAR]."
 - "[YEAR]: There is no breeze in the inner blocks, only [HEAT_DESCRIPTOR]."
+
+## Accidental Gods Templates (Spec 816)
+
+**Generates:** Play event (Chronicle during game)
+**Slots:** [OBSERVATION_POST], [PRIMITIVE_CIV], [YEAR], [RESOURCE_DEMAND], [RETALIATION_ACTION]?
+
+**Patterns:**
+- "[YEAR]: The supply drops ceased at [OBSERVATION_POST]. The [PRIMITIVE_CIV] responded not with prayer, but with [RETALIATION_ACTION]."
+- "We thought we were gods to the [PRIMITIVE_CIV]. When the [RESOURCE_DEMAND] ran out in [YEAR], they showed us we were just targets."
+- "Records from [OBSERVATION_POST], [YEAR]. The [PRIMITIVE_CIV] built effigies. Then they built [RETALIATION_ACTION]."
+
+## Zero-G Fermentation Templates (Spec 815)
+
+**Generates:** Play event (Economic/Cultural)
+**Slots:** [ORBITAL_STATION], [YEAR], [LUXURY_GOOD], [COST], [GOVERNOR]?
+
+**Patterns:**
+- "In [YEAR], [ORBITAL_STATION] produced the finest [LUXURY_GOOD]. The ground colonies paid [COST] just to taste it."
+- "A shuttle burned [COST] in fuel just to retrieve [LUXURY_GOOD] from [ORBITAL_STATION]. Some things just taste better without gravity."
+
+**If [GOVERNOR]:**
+- "Governor [GOVERNOR] demanded [LUXURY_GOOD] from [ORBITAL_STATION]. The logistics cost was staggering, but the morale boost was undeniable."
+
+## Proxy Wars Templates (Spec 904)
+
+**Generates:** Play event (Diplomacy/Combat)
+**Slots:** [SPONSOR_CIV], [TARGET_CIV], [YEAR], [PRIVATEER_COMMANDER]?, [REWARD]
+
+**Patterns:**
+- "Year [YEAR]. [SPONSOR_CIV] paid us [REWARD] to bleed [TARGET_CIV]. We were legal pirates, at least for a time."
+- "A proxy war began in [YEAR]. We struck [TARGET_CIV] in the name of [SPONSOR_CIV], earning [REWARD] and lasting enmity."
+- "The [SPONSOR_CIV] disavowed us. Yesterday we were privateers against [TARGET_CIV]. Today, we are just pirates."
+
+**If [PRIVATEER_COMMANDER]:**
+- "[PRIVATEER_COMMANDER] led the privateer fleet against [TARGET_CIV], funded by [SPONSOR_CIV] credits."
+
+## Ephemeral Moons Templates (Spec 895)
+
+**Generates:** Play event (Environmental)
+**Slots:** [MOON_NAME], [YEAR], [DURATION], [EFFECT]
+
+**Patterns:**
+- "In [YEAR], the sky captured [MOON_NAME]. It lasted [DURATION] and brought [EFFECT]."
+- "A transient celestial body, designated [MOON_NAME], entered orbit in [YEAR]. The [EFFECT] lasted for [DURATION] before it was ejected."
+- "For [DURATION], [MOON_NAME] hung in the night sky. The colonists planned their production around its [EFFECT]."
+
+## The Ephemeral Market Templates (Spec 784)
+
+**Generates:** Play event (Economic/Trade)
+**Slots:** [SYSTEM_NAME], [YEAR], [OBSCURE_COMMODITY], [RARE_ARTIFACT]
+
+**Patterns:**
+- "A nomadic fleet arrived in [SYSTEM_NAME] in [YEAR]. They offered [RARE_ARTIFACT], but only accepted [OBSCURE_COMMODITY] in return."
+- "The Ephemeral Market appeared in [YEAR]. A scramble ensued to harvest [OBSCURE_COMMODITY] before they vanished with the [RARE_ARTIFACT]."
+- "Year [YEAR], [SYSTEM_NAME]. We traded [OBSCURE_COMMODITY] to the transient merchants. In exchange, we received [RARE_ARTIFACT]."

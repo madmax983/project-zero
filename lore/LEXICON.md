@@ -4272,3 +4272,63 @@
 **Usage:**
 - "The inner sectors turned into an Oven."
 - "The Oven is suffocating the workers."
+
+## Accidental Gods (Spec 816)
+
+### Manna
+**Replaces:** Periodic supply drops, resource gifts
+**Code reference:** `ItemType::Food` dropped via `drop_supplies_to_primitives`
+**Usage:** "The primitives demanded their Manna." / "We forgot to drop the Manna, and they burned the observation post."
+
+### Observation Post
+**Replaces:** Primitive observation station
+**Code reference:** `ObservationPost` component
+**Usage:** "The Observation Post orbiting the primitive world was destroyed."
+
+## Zero-G Fermentation (Spec 815)
+
+### Void-Ale
+**Replaces:** Zero-G luxury good, orbital beverage
+**Code reference:** `ItemType::VoidAle`
+**Usage:** "The governor demanded a keg of Void-Ale, damn the logistics cost."
+
+### Orbital Station
+**Replaces:** Layer 2 Station, Brewery Station
+**Code reference:** `StationType::Brewery`
+**Usage:** "The Orbital Station produces luxuries that simply cannot be made on the ground."
+
+## Proxy Wars (Spec 904)
+
+### Privateer
+**Replaces:** Sanctioned mercenary, proxy fleet
+**Code reference:** `PrivateerStatus` component
+**Usage:** "We flew as Privateers for the Sponsor Faction, until they disavowed us."
+
+### Threat
+**Replaces:** Negative diplomatic relation, aggro
+**Code reference:** `ThreatMap` component
+**Usage:** "Our Privateer actions generated significant Threat with the targeted faction."
+
+## Ephemeral Moons (Spec 895)
+
+### Ephemeral Moon
+**Replaces:** Temporary celestial body, captured asteroid
+**Code reference:** `EphemeralMoon` entity, `MoonCapturedEvent`
+**Usage:** "The capture of the Ephemeral Moon brought extended daylight for three cycles."
+
+### Bright Moon
+**Replaces:** High-albedo temporary moon
+**Code reference:** `MoonType::Bright`
+**Usage:** "Under the Bright Moon, our solar yields doubled during the night cycle."
+
+## The Ephemeral Market (Spec 784)
+
+### The Ephemeral Market
+**Replaces:** Nomadic trading fleet, random event trader
+**Code reference:** `MarketSpawnEvent`
+**Usage:** "The Ephemeral Market arrived, demanding strange tributes for ancient technologies."
+
+### Obscure Commodity
+**Replaces:** Specific random trade requirement
+**Code reference:** Obscure resource requirement in the trade system
+**Usage:** "They offered us a Dyson blueprint, but they only accepted Sub-Lithic Fungal Spores."

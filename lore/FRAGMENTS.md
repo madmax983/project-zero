@@ -6832,3 +6832,102 @@ How the Urban Heat Island effect manifests physically in the colony.
 - a microclimate of relentless heat
 - the heat-trap of the inner sector
 - asphalt radiating the day's fury
+
+## Accidental Gods Fragments
+
+### Fragment Type: [RETALIATION_ACTION]
+How primitive civilizations strike back when the "Manna" stops falling.
+
+- a crude kinetic missile
+- a barrage of mass-driver spears
+- a rudimentary orbital strike
+- hijacked drone swarms
+- primitive ground-to-orbit artillery
+- an explosive payload launched via catapult
+- a swarm of retro-fitted mining charges
+
+### Fragment Type: [RESOURCE_DEMAND]
+The resources demanded by primitive civilizations or expected as "Manna".
+
+- the nutrient paste
+- the synthetic proteins
+- the life-giving water drops
+- the holy tech-scrap
+- the sky-bread
+- the orbital manna
+
+## Zero-G Fermentation Fragments
+
+### Fragment Type: [LUXURY_GOOD]
+Items that can only be produced or perfected in zero-gravity environments.
+
+- Void-Ale
+- Foam-Cake
+- Null-G Whiskey
+- Orbital Silk
+- Vacuum-Distilled Spiced Rum
+- Microgravity Crystal Candies
+- Weightless Wine
+
+## Proxy Wars Fragments
+
+### Fragment Type: [PRIVATEER_COMMANDER]
+The titles or names of commanders leading proxy fleets.
+
+- the dread-captain
+- a sanctioned privateer
+- an unnamed mercenary
+- the ghost-admiral
+- a proxy warlord
+- the hidden hand of the fleet
+- the coin-operated commodore
+
+## Ephemeral Moons Fragments
+
+### Fragment Type: [MOON_NAME]
+Names given to temporary celestial bodies captured in orbit.
+
+- the Bright Moon
+- a fractured asteroid
+- the Temporary Twin
+- an ephemeral rock
+- a wandering satellite
+- a nomadic comet fragment
+- the Phantom Moon
+- a rogue planetoid
+
+### Fragment Type: [EFFECT]
+The impact of an ephemeral moon on the planet.
+
+- unprecedented solar energy during the night cycle
+- erratic tidal anomalies
+- temporary gravity disruptions
+- illuminated nights
+- strange seismic echoes
+- sudden atmospheric disturbances
+- extended harvest windows
+
+## The Ephemeral Market Fragments
+
+### Fragment Type: [OBSCURE_COMMODITY]
+The strange and highly specific demands made by nomadic traders.
+
+- Sub-Lithic Fungal Spores
+- Cryo-Aged Plasma
+- Irradiated Biomass
+- Void-Weed Extract
+- Forgotten Scrap-Code
+- Prismatic Ore
+- Unrefined Neural Fluid
+- Synthetic Amber
+
+### Fragment Type: [RARE_ARTIFACT]
+The mythical or ancient items offered by the transient market.
+
+- a complete Dyson Sphere blueprint
+- ancient terraforming engines
+- a functioning AI core
+- zero-point energy drives
+- a cache of lost technologies
+- a pre-collapse memory bank
+- experimental shield emitters
