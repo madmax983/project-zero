@@ -44,6 +44,7 @@ pub fn pirate_crime_system(
                 crime_events.send(CrimeCommittedEvent {
                     perpetrator: entity,
                     crime_type: CrimeType::Vandalism,
+                    severity: crate::layer1::law::justice::CrimeSeverity::Major,
                 });
             }
         }

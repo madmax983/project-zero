@@ -20,6 +20,22 @@ use crate::layer1::utility_types::{calculate_context_score, UtilityWeights};
 use crate::layer1::zone::{ZoneGrid, ZoneType};
 use bevy_ecs::prelude::*;
 
+
+/// Severity of a crime.
+#[derive(Debug, Clone, PartialEq, Eq, Default)]
+pub enum CrimeSeverity {
+    #[default]
+    Minor,
+    Major,
+    Severe,
+}
+
+/// Event triggered to manually order an arrest.
+#[derive(Event, Debug, Clone)]
+pub struct ArrestEvent {
+    pub target: Entity,
+}
+
 /// Component marking a Pop as a criminal to be arrested.
 ///
 /// Added by [`check_crime_system`] when a Pop commits a crime (e.g., Vandalism).
@@ -195,6 +211,7 @@ pub fn update_inmates_system(mut commands: Commands, mut query: Query<(Entity, &
 pub struct CrimeRecord {
     pub wanted: bool,
     pub severity: u32,
+    pub severity_type: CrimeSeverity,
     pub is_arrested: bool,
 }
 
@@ -214,6 +231,7 @@ pub enum CrimeType {
 pub struct CrimeCommittedEvent {
     pub perpetrator: Entity,
     pub crime_type: CrimeType,
+    pub severity: CrimeSeverity,
 }
 
 #[derive(Event)]
@@ -234,6 +252,7 @@ pub fn process_crimes_system(
                 CrimeType::Assault => 80,
                 CrimeType::Vandalism => 30,
             };
+            record.severity_type = ev.severity.clone();
         }
     }
 }

@@ -25,6 +25,7 @@ mod tests {
         app.world_mut().send_event(CrimeCommittedEvent {
             perpetrator: criminal_entity,
             crime_type: CrimeType::Theft,
+            severity: crate::layer1::law::justice::CrimeSeverity::Major,
         });
 
         app.add_systems(bevy::prelude::Update, process_crimes_system);
@@ -55,6 +56,7 @@ mod tests {
                 CrimeRecord {
                     wanted: true,
                     severity: 50,
+                    severity_type: crate::layer1::law::justice::CrimeSeverity::Major,
                     is_arrested: false,
                 },
             ))
@@ -109,6 +111,7 @@ mod tests {
                 CrimeRecord {
                     wanted: true,
                     severity: 50,
+                    severity_type: crate::layer1::law::justice::CrimeSeverity::Major,
                     is_arrested: true,
                 },
             ))
