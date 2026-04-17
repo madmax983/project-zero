@@ -3727,3 +3727,50 @@ STATIONED_AT_WELL:
 - HIGH_DENSITY_CONSTRUCTION → causes → URBAN_HEAT_RISES
 - URBAN_HEAT_RISES → increases_chance → HEATSTROKE, GRID_OVERLOAD, AGONY_HARVESTED
 - URBAN_HEAT_RISES → enables → MIGRATION_OUT
+
+## Accidental Gods Chaining (Spec 816)
+
+How primitive observation chains into religious hostility.
+
+- OBSERVATION_POST_ESTABLISHED -> enables -> SUPPLY_DROP_RITUAL, PRIMITIVE_WORSHIP
+- SUPPLY_DROP_RITUAL -> increases_chance -> PRIMITIVE_WORSHIP
+- SUPPLY_DROP_MISSED -> triggers -> PRIMITIVE_RETALIATION, EFFIGY_BURNING
+- PRIMITIVE_RETALIATION -> enables -> STATION_DAMAGE, DIPLOMATIC_CRISIS
+
+## Zero-G Fermentation Chaining (Spec 815)
+
+How orbital luxury production affects the economy.
+
+- ORBITAL_STATION_BUILT -> enables -> ZERO_G_PRODUCTION
+- ZERO_G_PRODUCTION -> increases_chance -> LUXURY_TRADE, GOVERNOR_DEMAND
+- GOVERNOR_DEMAND -> triggers -> LOGISTICS_STRAIN, MORALE_BOOST
+- LOGISTICS_STRAIN -> increases_chance -> FUEL_SHORTAGE, TRANSPORT_ACCIDENT
+
+## Proxy Wars Chaining (Spec 904)
+
+How taking on mercenary contracts alters diplomacy.
+
+- DIPLOMATIC_CONTACT -> enables -> PROXY_WAR_OFFER
+- PROXY_WAR_OFFER -> enables -> PRIVATEER_STATUS, THREAT_GENERATION
+- THREAT_GENERATION -> increases_chance -> TARGET_RETALIATION, FLEET_COMBAT
+- PEACE_TREATY_SIGNED (between Sponsor and Target) -> triggers -> PRIVATEER_DISAVOWAL
+- PRIVATEER_DISAVOWAL -> triggers -> PIRATE_BRANDING, BOUNTY_POSTED
+
+## Ephemeral Moons Chaining (Spec 895)
+
+How temporary celestial bodies impact the colony.
+
+- SYSTEM_GENERATION -> enables -> MOON_CAPTURE_EVENT
+- MOON_CAPTURE_EVENT -> triggers -> NIGHT_CYCLE_MODIFICATION, TIDAL_SHIFT
+- NIGHT_CYCLE_MODIFICATION -> increases_chance -> PRODUCTION_SPRINT, ENERGY_SURPLUS
+- MOON_EJECTED_EVENT -> triggers -> NORMALCY_RETURN, HARVEST_CRASH
+
+## The Ephemeral Market Chaining (Spec 784)
+
+How nomadic traders disrupt the local economy.
+
+- NOMADIC_FLEET_ARRIVAL -> triggers -> EPHEMERAL_MARKET_OPEN
+- EPHEMERAL_MARKET_OPEN -> enables -> RARE_ARTIFACT_OFFER, OBSCURE_DEMAND
+- OBSCURE_DEMAND -> increases_chance -> RESOURCE_SCRAMBLE, COLONY_REBELLION
+- RESOURCE_SCRAMBLE -> enables -> RAPID_HARVEST, LOGISTICS_STRAIN
+- EPHEMERAL_MARKET_DEPARTURE -> triggers -> MARKET_CLOSURE, MISSED_OPPORTUNITY
