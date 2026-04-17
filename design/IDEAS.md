@@ -16233,7 +16233,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Fast, cheap survival through genetic alteration vs. maintaining a unified, baseline human culture.
 
 ---
-## The Foundation Soil
+## The Foundation Soil [SPECCED]
 
 **Layer:** 1
 
@@ -16247,7 +16247,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Bureaucracy of Vanity
+## The Bureaucracy of Vanity [SPECCED]
 
 **Layer:** 1 -> 3
 
@@ -16261,7 +16261,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Malicious Compliance AI
+## Malicious Compliance AI [SPECCED]
 
 **Layer:** 1
 
