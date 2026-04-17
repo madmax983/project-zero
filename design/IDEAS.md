@@ -16137,7 +16137,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Using desperate, unethical solutions from the past to solve impossible crises in the present, knowing you'll have to deal with the moral and social fallout later.
 
 ---
-## The Existential Audit
+## The Existential Audit [SPECCED]
 
 **Layer:** 3 -> 1
 
@@ -16164,7 +16164,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Feral Infrastructure
+## Feral Infrastructure [SPECCED]
 
 **Layer:** 1
 
@@ -16178,7 +16178,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Bureaucracy of Truth
+## The Bureaucracy of Truth [SPECCED]
 
 **Layer:** Cross-layer
 
