@@ -16110,7 +16110,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Smuggler's Ecosystem
+## The Smuggler's Ecosystem [SPECCED]
 
 **Layer:** 2
 
