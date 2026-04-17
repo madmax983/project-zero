@@ -16274,3 +16274,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you rely on the incredible speed of AI, spending time carefully wording every command, or use slower, less efficient human managers?
 
 ---
+
+## The Heirloom Tool
+
+**Layer:** 1
+
+**Fantasy:** Watching a legendary masterwork tool be passed down through generations, shaping the legacy of the colony's finest artisans.
+
+**Mechanic:** When a highly skilled Pop dies, there is a chance they leave behind an "Heirloom Tool." The Pop who inherits this tool gains a massive efficiency boost but also adopts the personality traits, memories, and grudges of the original owner.
+
+**Emergence:** A legendary mining pick gets passed down for centuries, creating a lineage of incredibly fast, but deeply paranoid and xenophobic miners who refuse to work near certain other pops because of a 100-year-old grudge.
+
+**Tension:** Do you give the Heirloom Tool to your most productive worker knowing it will warp their personality, or destroy a piece of your colony's history to maintain social harmony?
+
+---
+
+## Embezzlement Architecture
+
+**Layer:** 1 -> 3
+
+**Fantasy:** Corrupt officials siphoning resources not into abstract accounts, but into tangible, increasingly absurd luxury structures hidden right beneath your nose.
+
+**Mechanic:** Corrupt planetary governors don't just reduce your resource income; they secretly use the stolen materials to build hidden "Luxury Bunkers" or "Private Gardens" underneath or inside existing structures. These parasitic structures drain power and lower structural integrity.
+
+**Emergence:** You order a massive orbital defense laser to fire during an invasion, only for the entire facility to collapse because the governor hollowed out the foundation to build an underground artificial beach using embezzled titanium.
+
+**Tension:** Do you meticulously audit the structural integrity of your own buildings at the cost of massive bureaucratic overhead, or trust your governors and risk literal collapse at the worst possible moment?
+
+---
+
+## The Apex Predator Diet
+
+**Layer:** 1
+
+**Fantasy:** Eating the most dangerous monsters on the planet to gain their strength, but slowly mutating your populace in the process.
+
+**Mechanic:** Killing megafauna allows you to harvest "Apex Meat." Feeding this to Pops provides massive morale and physical strength buffs. However, a diet heavily reliant on Apex Meat slowly causes the Pops to mutate, gaining animalistic traits, extreme aggressive tendencies, and massive calorie requirements.
+
+**Emergence:** You solve a colony-wide starvation crisis by hunting the local giant sandworms. Decades later, your colonists have developed hardened scales, vicious temperaments, and a biological need to consume raw meat, causing them to hunt other baseline human colonists when the sandworms run out.
+
+**Tension:** A quick, powerful fix to food shortages and weak workers vs. the long-term risk of your colonists transforming into the very monsters they hunted.
+
+---
