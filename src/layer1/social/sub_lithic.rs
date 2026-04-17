@@ -1,11 +1,11 @@
-use bevy_ecs::prelude::*;
-use crate::layer1::pop::Pop;
-use crate::layer1::factions::{FactionId, FactionMember};
-use crate::layer1::traits::{Trait, Traits};
-use crate::layer1::pop::Job;
-use crate::layer1::utility_types::AssignmentType;
 use crate::layer1::building::BuildingType;
+use crate::layer1::factions::{FactionId, FactionMember};
 use crate::layer1::health::Health;
+use crate::layer1::pop::Job;
+use crate::layer1::pop::Pop;
+use crate::layer1::traits::{Trait, Traits};
+use crate::layer1::utility_types::AssignmentType;
+use bevy_ecs::prelude::*;
 
 #[derive(Component, Default)]
 pub struct DeepMiningExposure(pub f32);
@@ -25,9 +25,7 @@ pub fn process_deep_mining_exposure(
 }
 
 // Logic to group agoraphobic pops into the Sub-Lithic Cult faction
-pub fn evaluate_cult_formation(
-    mut query: Query<(&Traits, &mut FactionMember), With<Pop>>,
-) {
+pub fn evaluate_cult_formation(mut query: Query<(&Traits, &mut FactionMember), With<Pop>>) {
     let mut agoraphobic_count = 0;
     for (traits, _) in query.iter() {
         if traits.has(Trait::Agoraphobic) {
@@ -59,13 +57,14 @@ pub fn process_cult_sabotage(
         if member.faction_id == Some(FactionId::SubLithic) {
             for (target_entity, building) in target_query.iter() {
                 if building.building_type == BuildingType::TradeDepot {
-                    sabotage_events.send(SabotageEvent { target: target_entity });
+                    sabotage_events.send(SabotageEvent {
+                        target: target_entity,
+                    });
                 }
             }
         }
     }
 }
-
 
 #[cfg(test)]
 mod tests {
@@ -76,15 +75,17 @@ mod tests {
         // Arrange: Setup world with a pop assigned to deep mining
         let mut app = World::new();
         let workplace = app.spawn(()).id();
-        let pop = app.spawn((
-            Pop,
-            Job {
-                workplace,
-                job_type: AssignmentType::DeepMining,
-            },
-            DeepMiningExposure(0.0),
-            Traits::default(),
-        )).id();
+        let pop = app
+            .spawn((
+                Pop,
+                Job {
+                    workplace,
+                    job_type: AssignmentType::DeepMining,
+                },
+                DeepMiningExposure(0.0),
+                Traits::default(),
+            ))
+            .id();
 
         let mut schedule = Schedule::default();
         schedule.add_systems(process_deep_mining_exposure);
@@ -100,7 +101,10 @@ mod tests {
 
         let traits = app.get::<Traits>(pop).unwrap();
         let has_agoraphobia = traits.has(Trait::Agoraphobic);
-        assert!(has_agoraphobia, "Pop should develop Agoraphobia after prolonged deep mining");
+        assert!(
+            has_agoraphobia,
+            "Pop should develop Agoraphobia after prolonged deep mining"
+        );
     }
 
     #[test]
@@ -122,8 +126,13 @@ mod tests {
         // Assert: A new Faction with Sub-Lithic Ideology should be created
         // We will check if the FactionMember has FactionId::SubLithic
         let mut query = app.query::<&FactionMember>();
-        let cult_exists = query.iter(&app).any(|f| f.faction_id == Some(FactionId::SubLithic));
-        assert!(cult_exists, "Sub-Lithic Cult faction should form when enough pops have Agoraphobia");
+        let cult_exists = query
+            .iter(&app)
+            .any(|f| f.faction_id == Some(FactionId::SubLithic));
+        assert!(
+            cult_exists,
+            "Sub-Lithic Cult faction should form when enough pops have Agoraphobia"
+        );
     }
 
     #[test]
@@ -133,15 +142,30 @@ mod tests {
         app.insert_resource(bevy_ecs::event::Events::<SabotageEvent>::default());
         let mut schedule = Schedule::default();
         schedule.add_systems(crate::layer1::systems::update_event_buffer::<SabotageEvent>);
-        schedule.add_systems(process_cult_sabotage.after(crate::layer1::systems::update_event_buffer::<SabotageEvent>));
+        schedule.add_systems(
+            process_cult_sabotage
+                .after(crate::layer1::systems::update_event_buffer::<SabotageEvent>),
+        );
 
-        let _spaceport = app.spawn((crate::layer1::building::Building { building_type: BuildingType::TradeDepot, ..Default::default() }, Health { current: 100.0, max: 100.0 })).id();
+        let _spaceport = app
+            .spawn((
+                crate::layer1::building::Building {
+                    building_type: BuildingType::TradeDepot,
+                },
+                Health {
+                    current: 100.0,
+                    max: 100.0,
+                },
+            ))
+            .id();
         let mut traits = Traits::default();
         traits.add(Trait::Agoraphobic);
         app.spawn((
             Pop,
             traits,
-            FactionMember { faction_id: Some(FactionId::SubLithic) },
+            FactionMember {
+                faction_id: Some(FactionId::SubLithic),
+            },
         ));
 
         app.resource_mut::<Events<SabotageEvent>>().clear();
@@ -151,6 +175,9 @@ mod tests {
 
         // Assert: Spaceport is sabotaged
         let sabotage_events = app.resource::<Events<SabotageEvent>>();
-        assert!(!sabotage_events.is_empty(), "Cult member should trigger a sabotage event on the spaceport");
+        assert!(
+            !sabotage_events.is_empty(),
+            "Cult member should trigger a sabotage event on the spaceport"
+        );
     }
 }
