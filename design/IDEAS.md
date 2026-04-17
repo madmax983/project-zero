@@ -16206,7 +16206,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Fading Homeworld
+## Fading Homeworld [SPECCED]
 
 **Layer:** Cross-layer (3 -> 1)
 
