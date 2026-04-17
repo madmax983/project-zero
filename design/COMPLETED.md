@@ -405,3 +405,4 @@
 - [x] `894` Social Debt — `specs/894-social-debt.md` — completed 2026-02-01
 - [x] `895` Ephemeral Moons — `specs/895-ephemeral-moons.md` — completed 2026-04-16
 - [x] `INT-895` Integration: Ephemeral Moons -> Energy System — completed 2026-06-25
+- [x] `783` The Sub-Lithic Cult — `specs/783-the-sub-lithic-cult.md` — completed 2026-06-15

@@ -299,6 +299,8 @@ pub enum BuildingType {
     ServerBank,
     /// The colony's starting ship (can be cannibalized for resources).
     Lander,
+    /// Spaceport.
+    Spaceport,
     /// Command Center providing system visibility.
     CommandCenter,
     /// High-tech AI Core for base automation.
@@ -515,7 +517,7 @@ impl BuildingType {
             Self::BulletinBoard => false,
             Self::HoloProjector => false,
             Self::Nanoforge => false,
-            Self::School | Self::MediaStation => false,
+            Self::School | Self::MediaStation | Self::Spaceport => false,
         }
     }
 
@@ -679,6 +681,7 @@ impl BuildingType {
             Self::Nanoforge => "Nanoforge",
             Self::School => "School",
             Self::MediaStation => "Media Station",
+            Self::Spaceport => "Spaceport",
         }
     }
 
@@ -739,6 +742,7 @@ impl BuildingType {
             Self::Nanoforge => 'N',
             Self::School => 'S',
             Self::MediaStation => 'M',
+            Self::Spaceport => 'S',
         }
     }
 
@@ -1064,6 +1068,7 @@ impl BuildingType {
                 ..ColonyResources::zeroed()
             },
             Self::Lander => ColonyResources::zeroed(),
+            Self::Spaceport => ColonyResources::zeroed(),
             Self::Nanoforge => ColonyResources {
                 metal: 25.0,
                 ..ColonyResources::zeroed()
@@ -1358,7 +1363,7 @@ fn spawn_building(
         | BuildingType::HypnoPod
         | BuildingType::HoloProjector
         | BuildingType::Nanoforge => configure_tech(&mut entity, building_type),
-        BuildingType::School | BuildingType::MediaStation => {
+        BuildingType::School | BuildingType::MediaStation | BuildingType::Spaceport => {
             configure_civic(&mut entity, building_type)
         }
         BuildingType::PersonalShed
@@ -1663,7 +1668,7 @@ fn configure_civic(entity: &mut EntityWorldMut, building_type: BuildingType) {
                 },
             ));
         }
-        BuildingType::MediaStation => {
+        BuildingType::MediaStation | BuildingType::Spaceport => {
             entity.insert((
                 crate::layer1::social::indoctrination::IndoctrinationAura {
                     target_ethic: crate::layer1::social::indoctrination::Ethic::StateLoyalist,
@@ -2491,7 +2496,8 @@ mod tests {
         assert_eq!(BuildingType::TrashCannon.next(), BuildingType::Heater);
         assert_eq!(BuildingType::Heater.next(), BuildingType::ServerBank);
         assert_eq!(BuildingType::ServerBank.next(), BuildingType::Lander);
-        assert_eq!(BuildingType::Lander.next(), BuildingType::CommandCenter);
+        assert_eq!(BuildingType::Lander.next(), BuildingType::Spaceport);
+        assert_eq!(BuildingType::Spaceport.next(), BuildingType::CommandCenter);
         assert_eq!(BuildingType::CommandCenter.next(), BuildingType::AICore);
         assert_eq!(BuildingType::AICore.next(), BuildingType::DroneHub);
         assert_eq!(BuildingType::DroneHub.next(), BuildingType::CryoPod);
@@ -2703,6 +2709,8 @@ mod tests {
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::Lander);
+        mode.selected = mode.selected.next();
+        assert_eq!(mode.selected, BuildingType::Spaceport);
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::CommandCenter);

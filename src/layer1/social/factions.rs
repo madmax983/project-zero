@@ -81,6 +81,8 @@ pub enum FactionId {
     Unaligned,
     /// Faction for criminals from neighboring empire bailing out debt.
     Cartel,
+    /// Sub-Lithic Cult.
+    SubLithic,
 }
 
 /// Data associated with a faction.
