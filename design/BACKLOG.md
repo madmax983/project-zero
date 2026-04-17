@@ -749,3 +749,4 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1073` Benevolent Malfunctions — `specs/1073-benevolent-malfunctions.md`
 - [ ] `1074` System Quarantine — `specs/1074-system-quarantine.md`
 - [ ] `1075` The Memorial Economy — `specs/1075-the-memorial-economy.md`
+- [ ] `1076` Fading Homeworld — `specs/1076-fading-homeworld.md`
