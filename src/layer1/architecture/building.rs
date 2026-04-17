@@ -331,6 +331,8 @@ pub enum BuildingType {
     School,
     /// Media station that broadcasts State Ideology.
     MediaStation,
+    /// Port for arriving and departing spacecraft.
+    Spaceport,
 }
 
 impl BuildingType {
@@ -486,7 +488,8 @@ impl BuildingType {
             | Self::GeneBank
             | Self::CloneVat
             | Self::HypnoPod
-            | Self::Shower => true,
+            | Self::Shower
+            | Self::Spaceport => true,
 
             // Small or Open structures
             Self::Farm
@@ -679,6 +682,7 @@ impl BuildingType {
             Self::Nanoforge => "Nanoforge",
             Self::School => "School",
             Self::MediaStation => "Media Station",
+            Self::Spaceport => "Spaceport",
         }
     }
 
@@ -738,6 +742,7 @@ impl BuildingType {
             Self::BulletinBoard => 'B',
             Self::Nanoforge => 'N',
             Self::School => 'S',
+            Self::Spaceport => 'P',
             Self::MediaStation => 'M',
         }
     }
@@ -1068,6 +1073,12 @@ impl BuildingType {
                 metal: 25.0,
                 ..ColonyResources::zeroed()
             },
+            Self::Spaceport => ColonyResources {
+                metal: 500.0,
+                stone: 200.0,
+                tools: 50.0,
+                ..ColonyResources::zeroed()
+            },
             Self::School => ColonyResources {
                 wood: 25.0,
                 stone: 10.0,
@@ -1361,6 +1372,7 @@ fn spawn_building(
         BuildingType::School | BuildingType::MediaStation => {
             configure_civic(&mut entity, building_type)
         }
+        BuildingType::Spaceport => configure_civic(&mut entity, building_type),
         BuildingType::PersonalShed
         | BuildingType::PersonalGarden
         | BuildingType::PersonalShrine => {
@@ -2516,7 +2528,8 @@ mod tests {
         assert_eq!(BuildingType::HoloProjector.next(), BuildingType::Nanoforge);
         assert_eq!(BuildingType::Nanoforge.next(), BuildingType::School);
         assert_eq!(BuildingType::School.next(), BuildingType::MediaStation);
-        assert_eq!(BuildingType::MediaStation.next(), BuildingType::Housing);
+        assert_eq!(BuildingType::MediaStation.next(), BuildingType::Spaceport);
+        assert_eq!(BuildingType::Spaceport.next(), BuildingType::Housing);
     }
 
     #[test]
@@ -2753,8 +2766,12 @@ mod tests {
         assert_eq!(mode.selected, BuildingType::MediaStation);
 
         mode.selected = mode.selected.next();
+        assert_eq!(mode.selected, BuildingType::Spaceport);
+
+        mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::Housing);
     }
+
 
     #[test]
     fn test_occupied_tiles_default() {

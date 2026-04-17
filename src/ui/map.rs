@@ -786,6 +786,7 @@ pub const fn get_building_char(building: BuildingType) -> &'static str {
         BuildingType::Nanoforge => "N",
         BuildingType::School => "S",
         BuildingType::MediaStation => "M",
+        BuildingType::Spaceport => "P",
     }
 }
 
@@ -864,6 +865,7 @@ pub const fn get_building_color(building: BuildingType, material: MaterialType) 
             BuildingType::Nanoforge => Color::Rgb(150, 0, 255),
             BuildingType::School => Color::Blue,
             BuildingType::MediaStation => Color::Cyan,
+            BuildingType::Spaceport => Color::LightBlue,
         }
     }
 }
