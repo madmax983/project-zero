@@ -5093,7 +5093,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Ideological Contraband
+## Ideological Contraband [SPECCED]
 
 **Layer:** Cross-Layer
 

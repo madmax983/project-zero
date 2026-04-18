@@ -755,3 +755,4 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1081` Cryptid Sightings — `specs/1081-cryptid-sightings.md`
 - [ ] `1082` Resonant Architecture — `specs/1082-resonant-architecture.md`
 - [ ] `1083` Kinetic Excavation — `specs/1083-kinetic-excavation.md`
+- [ ] `1084` Ideological Contraband — `specs/1084-ideological-contraband.md`
