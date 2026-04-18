@@ -115,3 +115,4 @@ fn test_unobstructed_line_of_sight() {
 
 ## 8. Questions
 *Builder: Add questions here if the mathematical implementation of the line-sphere intersection is unclear or if integrating with existing UI visibility toggles presents issues.*
+*Architect:* The mathematical implementation of line-sphere intersection should compute the closest point on the line segment to the sphere's center, and check if the distance from the center to that point is less than the sphere's radius. For existing UI visibility toggles, ensure `VisibilityStatus.is_visible` controls rendering.
