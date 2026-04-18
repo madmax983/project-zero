@@ -37,6 +37,7 @@ pub fn register(schedule: &mut Schedule) {
             update_event_buffer::<crate::layer1::ancestral_graves::SacrilegeEvent>,
             update_event_buffer::<crate::layer1::geology::tectonic::MegaQuakeEvent>,
             update_event_buffer::<crate::layer1::logistics::orbital_drop::OrbitalDropEvent>,
+            update_event_buffer::<crate::layer1::physics::kinetic_strike::KineticStrikeEvent>,
             update_event_buffer::<crate::layer1::geodetic::GolemFormedEvent>,
             update_event_buffer::<crate::layer1::drone::DroneDisconnectedEvent>,
             update_event_buffer::<crate::layer1::social::gossip_economy::GossipEvent>,
@@ -52,6 +53,11 @@ pub fn register(schedule: &mut Schedule) {
             update_event_buffer::<crate::layer1::genetics::GeneSplicingResultEvent>,
             update_event_buffer::<crate::layer1::genetics::CropMutationEvent>,
             update_event_buffer::<crate::layer1::economy::remittances::MigrantArrivalEvent>,
+        )
+            .in_set(Layer1SystemSet::EventCleanup),
+    );
+    schedule.add_systems(
+        (
             handle_direct_input_system,
         )
             .in_set(Layer1SystemSet::EventCleanup),

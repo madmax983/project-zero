@@ -106,7 +106,7 @@ mod tests {
         // Act
         app.world_mut().send_event(RaidEvent {
             target_faction: victim_faction,
-            raider_faction: raider_faction,
+            raider_faction,
             successful: true,
             is_deep_strike: true,
         });

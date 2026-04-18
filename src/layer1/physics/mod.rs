@@ -27,6 +27,7 @@ pub mod particles;
 pub mod pressure;
 pub mod structural_integrity;
 pub mod suction;
+pub mod kinetic_strike;
 pub mod vent;
 
 pub use acoustic::*;
@@ -36,6 +37,7 @@ pub use particles::*;
 pub use pressure::*;
 pub use structural_integrity::*;
 pub use suction::*;
+pub use kinetic_strike::*;
 pub use vent::*;
 
 #[cfg(test)]

@@ -169,6 +169,7 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::atmosphere::simulate_diffusion_system
                 .after(crate::layer1::environment::terraforming::apply_planetary_effects_system),
             crate::layer1::logistics::orbital_drop::process_orbital_drops,
+            crate::layer1::physics::kinetic_strike::kinetic_strike_system.after(crate::layer1::logistics::orbital_drop::process_orbital_drops),
         )
             .in_set(Layer1SystemSet::Environment),
     );
