@@ -729,3 +729,9 @@
 - **Systems connected:** `pyrokinesis_power_activation_system` (Psionics) -> `psionic_fire_bridge_system` (Integration) -> `Fire` component
 - **Glue added:** Added `psionic_fire_bridge_system` to spawn `Fire` entity upon receiving `FireEvent` from `pyrokinesis_power_activation_system`. Registered in `Layer1SystemSet::Observation`.
 - **Tests:** `tests/integration/psionics_fire_bridge.rs`
+
+### INT-762: The Gold Rush Beacon -> Colony Population & Trade
+- **Date:** 2026-04-18
+- **Systems connected:** `process_colony_beacon_system` -> `beacon_migrant_arrival_bridge`, `beacon_trade_ship_bridge`, `beacon_pirate_raid_bridge`
+- **Glue added:** Added bridge systems to consume `MigrantArrivalEvent`, `TradeShipArrivalEvent`, and `PirateRaidEvent` and generate corresponding state changes (`Pop` spawns, `Merchant` spawns, resource loss and morale drop). Scheduled in `Layer1SystemSet::Economy`.
+- **Tests:** `tests/integration/beacon_bridge.rs` (3 tests)

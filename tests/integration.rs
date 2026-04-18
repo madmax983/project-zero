@@ -291,3 +291,6 @@ mod primitive_retaliation_bridge;
 mod psionics_fire_bridge;
 #[path = "integration/ventilation_atmosphere_bridge.rs"]
 mod ventilation_atmosphere_bridge;
+
+#[path = "integration/beacon_bridge.rs"]
+mod beacon_bridge;
