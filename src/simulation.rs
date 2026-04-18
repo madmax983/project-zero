@@ -548,9 +548,9 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
     schedule.add_systems(
         (
             crate::layer3::diplomacy::succession::process_succession_system,
-        crate::layer3::diplomacy::cultural_ransom::process_artifact_raid_system,
-        crate::layer3::diplomacy::cultural_ransom::apply_hostage_penalties_system,
-        crate::layer3::diplomacy::cultural_ransom::handle_ransom_negotiation_system,
+            crate::layer3::diplomacy::cultural_ransom::process_artifact_raid_system,
+            crate::layer3::diplomacy::cultural_ransom::apply_hostage_penalties_system,
+            crate::layer3::diplomacy::cultural_ransom::handle_ransom_negotiation_system,
             crate::layer3::integration::dynastic_succession_chronicle_bridge,
             crate::layer3::integration::dynastic_crisis_chronicle_bridge,
         )

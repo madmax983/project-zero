@@ -2,7 +2,7 @@ use bevy_ecs::prelude::*;
 use crate::layer1::pop::Job;
 use crate::layer1::traits::{Trait, Traits};
 use crate::layer1::utility_types::AssignmentType;
-use std::collections::HashMap;
+use bevy::utils::HashMap;
 
 #[derive(Component, Default, Debug, Clone)]
 pub struct JobTenure {
@@ -27,22 +27,15 @@ impl JobTenure {
 
 pub const MUTATION_THRESHOLD: u64 = 10000;
 
+/// ⚡ Bolt Optimization: Switched to `bevy::utils::HashMap` and eliminated per-frame `Vec` allocation in `update_tenure_system`.
 pub fn update_tenure_system(mut query: Query<(&Job, &mut JobTenure)>) {
     for (job, mut tenure) in query.iter_mut() {
         tenure.add_tick(job.job_type);
 
         // Architect: specialized tenure decays by 1% per cycle when unassigned
-        let mut types_to_decay = Vec::new();
-        for (job_type, ticks) in tenure.history.iter() {
+        for (job_type, ticks) in tenure.history.iter_mut() {
             if *job_type != job.job_type && *ticks > 0 {
-                types_to_decay.push(*job_type);
-            }
-        }
-
-        for job_type in types_to_decay {
-            if let Some(ticks) = tenure.history.get_mut(&job_type) {
-                let new_ticks = (*ticks as f64 * 0.99) as u64;
-                *ticks = new_ticks;
+                *ticks = (*ticks as f64 * 0.99) as u64;
             }
         }
     }
