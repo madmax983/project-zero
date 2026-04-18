@@ -5121,11 +5121,11 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Nanite Storms
+## Nanite Storms [SPECCED]
 
 **Layer:** 1
 
-**Fantasy:** The dust is alive and hungry. Or helpful.
+**Fantasy:** The dust is alive and hungry. Or helpful. [SPECCED]
 
 **Mechanic:** A weather event where "Smart Dust" sweeps across the map. "Grey Storms" eat metal structures (damage). "Blue Storms" repair them (heal). "Red Storms" consume biomass.
 
@@ -5149,11 +5149,11 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Mycelial Tripwires
+## Mycelial Tripwires [SPECCED]
 
 **Layer:** 1
 
-**Fantasy:** The forest has eyes.
+**Fantasy:** The forest has eyes. [SPECCED]
 
 **Mechanic:** Fungal networks connect distant parts of the map. Stepping on a "Sensor Shroom" in one area alerts "Spore Turrets" or Fauna in another area to attack.
 

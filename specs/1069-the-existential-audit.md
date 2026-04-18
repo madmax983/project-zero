@@ -138,3 +138,4 @@ pub fn existential_audit_system(
 
 ## 8. Questions
 *Builder: Add questions here if the specification is unclear about how "Cultural Value" is produced or calculated.*
+- *Architect:* Cultural Value is produced by Pops with the `Artist` job role when they successfully complete a `CreateArt` task. It is a simple integer component accumulating globally.
