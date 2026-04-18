@@ -20,3 +20,7 @@
 **[Bevy 21-Parameter Schedule Limit]**
 **Learning:** Bevy's `add_systems()` macro inside a `Schedule` can only handle tuples of up to 21 systems (or system sets). If a schedule block (like the ones in `src/layer1/systems/observation.rs`) exceeds this limit, it triggers an obscure, massive compiler error involving `NodeConfigs` and `IntoSystemConfigs` (or `IntoSystemSetConfigs`) failing to resolve.
 **Action:** When encountering a massive type resolution error during `cargo clippy` or `cargo build` pointing to a system registration block, count the number of systems in the tuple. If it's more than 21, break it into two separate `schedule.add_systems((...).in_set(...));` blocks to satisfy the macro's limit.
+
+**[God Function in Building Configuration]**
+**Learning:** The `spawn_building` function in `src/layer1/architecture/building.rs` was nearly 100 lines and contained a massive `match` statement to dispatch over 50 different `BuildingType` values to configuration helpers. This triggered `clippy::too_many_lines` and `clippy::match_same_arms`. When extracting large `match` statements into helper functions, it's crucial to check if the original `#[allow(clippy::...)]` directives still apply to the new function to prevent `-D warnings` regressions.
+**Action:** Extracted the `match` statement into a `configure_building_components` helper function. Removed `#[allow(clippy::too_many_lines)]` from the parent and applied `#[allow(clippy::match_same_arms)]` specifically to the new helper function. This simplifies the parent logic without breaking CI checks.
