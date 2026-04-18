@@ -5052,7 +5052,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Cryptid Sightings
+## Cryptid Sightings [SPECCED]
 
 **Layer:** 1
 
@@ -5065,7 +5065,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Capture/Kill (Science/Resource) vs. Observe (Culture/Mystery).
 
 ---
-## Resonant Architecture
+## Resonant Architecture [SPECCED]
 
 **Layer:** 1
 
@@ -5079,7 +5079,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Kinetic Excavation
+## Kinetic Excavation [SPECCED]
 
 **Layer:** Cross-Layer
 

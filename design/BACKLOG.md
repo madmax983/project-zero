@@ -752,3 +752,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1078` The Foundation Soil — `specs/1078-foundation-soil.md`
 - [ ] `1079` The Bureaucracy of Vanity — `specs/1079-bureaucracy-of-vanity.md`
 - [ ] `1080` Malicious Compliance AI — `specs/1080-malicious-compliance-ai.md`
+- [ ] `1081` Cryptid Sightings — `specs/1081-cryptid-sightings.md`
+- [ ] `1082` Resonant Architecture — `specs/1082-resonant-architecture.md`
+- [ ] `1083` Kinetic Excavation — `specs/1083-kinetic-excavation.md`
