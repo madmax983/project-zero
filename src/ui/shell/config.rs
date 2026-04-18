@@ -84,6 +84,9 @@ impl ShellConfig {
 
 #[must_use]
 pub fn load_shell_config(json: &str) -> ShellConfig {
+    if json.len() > 1024 * 1024 { // 1MB limit
+        return ShellConfig::default();
+    }
     serde_json::from_str(json).unwrap_or_default()
 }
 

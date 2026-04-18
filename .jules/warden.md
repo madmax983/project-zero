@@ -20,3 +20,7 @@
 - Investigated integer overflow DoS vectors specifically in `unwrap_or(usize::MAX)` patterns. Confirmed that all instances are either guarded by bounds checking or safely handled by `Vec::get` returning `None`.
 - Tested specific exploit test cases (`test_exploit.rs`, `security_crowding_overflow.rs`, `security_access_control.rs`, etc.). All tests passed and demonstrated safe behavior under malicious conditions.
 **Defense:** [Verified Safe] The codebase appears robust against the investigated vectors. No immediate action required.
+
+**2024-11-13 - [Denial of Service in ShellConfig Deserialization]
+**Threat:** [Memory Exhaustion DoS] `load_shell_config` parsed an unbounded JSON string into memory via `serde_json::from_str(json).unwrap_or_default()`. An attacker could supply a massive JSON payload (e.g. 100MB of whitespace or deeply nested structures) causing the process to allocate excessive memory and potentially crash (OOM).
+**Defense:** [Capped Input] Implemented a strict 1MB length limit on the input string in `load_shell_config`. If the input exceeds this limit, it safely falls back to `ShellConfig::default()`, preventing memory exhaustion before `serde_json` even begins parsing.
