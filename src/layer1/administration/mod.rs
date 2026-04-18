@@ -1,10 +1,17 @@
 //! Administration module.
+/// General administration mechanics.
 pub mod admin;
+/// Policies controlling sleep cycles.
 pub mod bureaucracy_of_sleep;
+/// Map designations and zones.
 pub mod designation;
+/// Laws and colony edicts.
 pub mod edicts;
+/// Inspections and rule enforcement.
 pub mod inspector;
+/// Permitting system for actions.
 pub mod permit;
+/// Zones and their definitions.
 pub mod zone;
 
 pub use admin::*;

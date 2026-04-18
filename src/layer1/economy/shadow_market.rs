@@ -25,6 +25,7 @@ use rand::Rng;
 /// };
 /// ```
 pub struct ShadowTrader {
+    /// The underlying merchant data.
     pub merchant: Merchant,
 }
 

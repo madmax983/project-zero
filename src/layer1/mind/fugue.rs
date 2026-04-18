@@ -11,6 +11,7 @@ use rand::Rng;
 /// A state indicating the Pop is reliving an ancestral memory and forcing an old job role.
 #[derive(Component, Clone, Copy, Debug)]
 pub struct FugueState {
+    /// The historical job the Pop has regressed to.
     pub ancestral_job: AssignmentType,
 }
 
@@ -29,6 +30,7 @@ fn random_ancestral_job(rng: &mut impl Rng) -> AssignmentType {
 /// Tracks whether the chronicle event for the first fugue onset has been emitted.
 #[derive(Resource, Default)]
 pub struct FugueEventTracker {
+    /// Tracks if the first fugue onset event has been added to the chronicle.
     pub has_emitted_first_fugue: bool,
 }
 

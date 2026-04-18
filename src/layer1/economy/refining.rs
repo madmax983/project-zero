@@ -12,11 +12,11 @@
 //!
 //! 1.  **Check Requirements**:
 //!     *   Is the building active? (Powered, if applicable).
-//!     *   Is there a worker AT the building doing [`ActionType::Refine`]?
+//!     *   Is there a worker AT the building doing `ActionType::Refine`?
 //!     *   Are there input resources available? (e.g., Wood > 1).
 //!     *   Is there storage space for output? (e.g., Planks < Max).
 //! 2.  **Progress**:
-//!     *   The worker's [`Skills`] (Crafting) determine efficiency.
+//!     *   The worker's `Skills` (Crafting) determine efficiency.
 //!     *   Progress accumulates in [`RefiningProgress`].
 //! 3.  **Completion**:
 //!     *   Inputs are consumed.
@@ -41,7 +41,7 @@ use rand::Rng;
 ///
 /// # Algorithm
 ///
-/// 1.  **Filter Workers**: Collects all Pops with [`ActionType::Refine`] at a [`GridPosition`].
+/// 1.  **Filter Workers**: Collects all Pops with `ActionType::Refine` at a [`GridPosition`].
 /// 2.  **Iterate Buildings**: Finds all entities with [`RefiningProgress`] and [`Building`].
 /// 3.  **Power Check**: Skips buildings with inactive [`PowerConsumer`](crate::layer1::energy::PowerConsumer) components.
 /// 4.  **Match Worker**: Checks if any worker is at the building's position.
