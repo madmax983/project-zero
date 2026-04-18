@@ -16192,7 +16192,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Resource Curse
+## The Resource Curse [SPECCED]
 
 **Layer:** Cross-layer (1 -> 3)
 
@@ -16275,7 +16275,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Heirloom Tool
+## The Heirloom Tool [SPECCED]
 
 **Layer:** 1
 
@@ -16289,7 +16289,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Embezzlement Architecture
+## Embezzlement Architecture [SPECCED]
 
 **Layer:** 1 -> 3
 
@@ -16303,7 +16303,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Apex Predator Diet
+## The Apex Predator Diet [SPECCED]
 
 **Layer:** 1
 
