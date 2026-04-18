@@ -16358,3 +16358,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you spend massive resources to siege your own dead, automated colony to reclaim its wealth, or leave the ghost town alone as a perfect, silent buffer state?
 
 ---
+
+## The Cult of the First Ship
+
+**Layer:** 1 -> 3
+
+**Fantasy:** The original colonists are revered as gods, and the landing ship is a holy relic.
+
+**Mechanic:** The physical landing site and the first ship module become a "Holy Site". Pops naturally form a cult around it. Damaging it or relocating it causes extreme unrest, while maintaining it grants a powerful cultural anchor.
+
+**Emergence:** An invading force targets the first ship to break the colony's spirit, leading to a desperate, suicidal defense of a mechanically useless but culturally vital structure.
+
+**Tension:** Do you build around this inefficiently placed relic to maintain morale, or demolish it to optimize your city layout and risk a holy war?
+
+---
+
+## Generational Amnesia
+
+**Layer:** Cross-layer (3 -> 1)
+
+**Fantasy:** The horrors of the past are forgotten, dooming the colony to repeat them.
+
+**Mechanic:** Over generations, events stored in the `Chronicle` lose their negative mood impact and are reinterpreted as "Legends". A devastating plague 200 years ago is forgotten. Pops no longer demand quarantine measures, and the health infrastructure decays due to lack of perceived need.
+
+**Emergence:** You successfully eradicated a disease centuries ago, but the population forgot how bad it was, dismantled the hospitals for scrap, and now a new outbreak is ravaging the unprepared colony.
+
+**Tension:** Do you waste resources maintaining defenses against threats that haven't appeared in generations, or optimize for the present and risk historical amnesia?
+
+---
+
+## The Diaspora Fleet
+
+**Layer:** Cross-layer (1 -> 2)
+
+**Fantasy:** Your greatest export is not resources, but your own desperate people fleeing to the stars.
+
+**Mechanic:** When a Layer 1 colony reaches extreme, unmanageable unrest or starvation, instead of just dying out, Pops will steal ships and launch a "Diaspora Fleet" into Layer 2. These fleets are barely functional and act as desperate refugees seeking a new home.
+
+**Emergence:** A catastrophic famine on your homeworld results in a massive wave of refugee fleets flooding neighboring systems, overwhelming their economies and sparking a galactic refugee crisis that you inadvertently caused.
+
+**Tension:** Do you let your struggling citizens flee, losing the workforce forever but saving them, or forcefully lock down the starport and risk a violent uprising?
+
+---
