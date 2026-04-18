@@ -5331,7 +5331,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Gravity Blindspots
+## Gravity Blindspots [SPECCED]
 
 **Layer:** 2
 
