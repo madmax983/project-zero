@@ -756,3 +756,7 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1082` Resonant Architecture — `specs/1082-resonant-architecture.md`
 - [ ] `1083` Kinetic Excavation — `specs/1083-kinetic-excavation.md`
 - [ ] `1084` Ideological Contraband — `specs/1084-ideological-contraband.md`
+- [ ] `1085` The Resource Curse — `specs/1085-the-resource-curse.md`
+- [ ] `1086` The Heirloom Tool — `specs/1086-the-heirloom-tool.md`
+- [ ] `1087` Embezzlement Architecture — `specs/1087-embezzlement-architecture.md`
+- [ ] `1088` The Apex Predator Diet — `specs/1088-the-apex-predator-diet.md`
