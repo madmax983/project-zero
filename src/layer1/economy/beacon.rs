@@ -4,11 +4,38 @@ use crate::layer2::trade::blockade::TradeShipArrivalEvent;
 use bevy_ecs::prelude::*;
 use rand::Rng;
 
+/// Represents a colony distress beacon that attracts ships, migrants, and pirates.
 #[derive(Resource, Default)]
 pub struct ColonyBeacon {
+    /// Whether the beacon is currently active and broadcasting.
     pub is_active: bool,
 }
 
+/// Evaluates the probabilities of external events triggered by the `ColonyBeacon`.
+///
+/// An active beacon serves as a lighthouse in the dark sector, significantly increasing the influx
+/// of independent trade ships and desperate migrants. However, this same visibility attracts pirate
+/// raids. This system uses randomized rolls each tick to determine if a specific event is dispatched.
+///
+/// # Examples
+/// ```
+/// use scale::layer1::economy::beacon::{ColonyBeacon, process_colony_beacon_system};
+/// use scale::layer2::trade::blockade::TradeShipArrivalEvent;
+/// use scale::layer1::economy::remittances::MigrantArrivalEvent;
+/// use scale::layer1::void_weed::PirateRaidEvent;
+/// use bevy_ecs::prelude::*;
+///
+/// let mut world = World::new();
+/// world.insert_resource(ColonyBeacon { is_active: true });
+/// world.insert_resource(Events::<TradeShipArrivalEvent>::default());
+/// world.insert_resource(Events::<MigrantArrivalEvent>::default());
+/// world.insert_resource(Events::<PirateRaidEvent>::default());
+///
+/// let mut schedule = Schedule::default();
+/// schedule.add_systems(process_colony_beacon_system);
+/// schedule.run(&mut world);
+/// // External events may or may not be spawned based on RNG.
+/// ```
 pub fn process_colony_beacon_system(
     beacon: Res<ColonyBeacon>,
     mut trade_writer: EventWriter<TradeShipArrivalEvent>,

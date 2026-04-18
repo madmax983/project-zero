@@ -1375,9 +1375,7 @@ fn configure_building_components(entity: &mut EntityWorldMut, building_type: Bui
         | BuildingType::HypnoPod
         | BuildingType::HoloProjector
         | BuildingType::Nanoforge => configure_tech(entity, building_type),
-        BuildingType::School | BuildingType::MediaStation => {
-            configure_civic(entity, building_type)
-        }
+        BuildingType::School | BuildingType::MediaStation => configure_civic(entity, building_type),
         BuildingType::Spaceport => configure_civic(entity, building_type),
         BuildingType::PersonalShed
         | BuildingType::PersonalGarden

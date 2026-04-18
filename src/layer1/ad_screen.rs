@@ -23,9 +23,13 @@ use bevy_ecs::prelude::*;
 /// 2. The `Pop`'s `leisure` need decays faster based on the `need_decay_multiplier`.
 #[derive(Component)]
 pub struct AdScreen {
+    /// The radius of effect in which Pops are affected.
     pub radius: f32,
+    /// Credits generated per Pop within the radius.
     pub credits_per_pop: f32,
+    /// Multiplier for the Pop's leisure need decay rate.
     pub need_decay_multiplier: f32,
+    /// Total credits extracted by this screen.
     pub accumulated_credits: f32,
 }
 

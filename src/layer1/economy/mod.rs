@@ -180,15 +180,25 @@ mod tests {
     }
 }
 
+/// Black market interactions.
 pub mod black_market;
+/// Hauling and transportation of resources.
 pub mod hauling;
+/// Inventory management for pops and entities.
 pub mod inventory;
+/// In-game items and their properties.
 pub mod items;
+/// Refining raw resources into usable goods.
 pub mod refining;
+/// Financial remittances between pops.
 pub mod remittances;
+/// Global resource tracking.
 pub mod resources;
+/// Shadow market operations and special merchants.
 pub mod shadow_market;
+/// Physical storage of resources.
 pub mod stockpile;
+/// Regular trade with off-world merchants.
 pub mod trade;
 
 pub use black_market::*;
@@ -201,5 +211,7 @@ pub use resources::*;
 pub use shadow_market::*;
 pub use stockpile::*;
 pub use trade::*;
+
+/// Colony distress beacon mechanics.
 pub mod beacon;
 pub use beacon::*;

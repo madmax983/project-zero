@@ -33,7 +33,9 @@ use bevy::prelude::*;
 /// let s = SymbioticStructure { regeneration_rate: 1.0, is_dormant: false };
 /// ```
 pub struct SymbioticStructure {
+    /// The rate at which the structure regains health per tick while active.
     pub regeneration_rate: f32,
+    /// Indicates if the structure has entered a low-energy dormant state.
     pub is_dormant: bool,
 }
 
@@ -47,7 +49,9 @@ pub struct SymbioticStructure {
 /// let s = SymbioticNeeds { required_light: 1.0, required_temp: 1.0 };
 /// ```
 pub struct SymbioticNeeds {
+    /// Minimum light level required for the structure to remain active.
     pub required_light: f32,
+    /// Minimum temperature required for the structure to remain active.
     pub required_temp: f32,
 }
 
@@ -63,7 +67,9 @@ pub struct SymbioticNeeds {
 /// let s = EnvironmentStatus { current_light: 1.0, current_temp: 1.0 };
 /// ```
 pub struct EnvironmentStatus {
+    /// The current light level in the structure's environment.
     pub current_light: f32,
+    /// The current temperature in the structure's environment.
     pub current_temp: f32,
 }
 

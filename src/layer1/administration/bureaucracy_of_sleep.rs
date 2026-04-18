@@ -2,25 +2,34 @@ use crate::layer1::pop::{Job, Pop};
 use crate::layer1::utility_types::AssignmentType;
 use bevy_ecs::prelude::*;
 
+/// A permit dictating how much a Pop is allowed to sleep.
 #[derive(Component)]
 pub struct SleepPermit {
+    /// The tier of the permit, determining sleep quality or priority.
     pub tier: PermitTier,
+    /// The number of hours the Pop is allowed to sleep.
     pub allotted_hours: f32,
 }
 
+/// Represents the tier of a sleep permit.
 #[derive(Debug, PartialEq, Eq, Clone, Copy)]
 pub enum PermitTier {
+    /// Highest tier, fully rested.
     Gold,
+    /// Middle tier, adequately rested.
     Silver,
+    /// Lowest tier, bare minimum rest.
     Bronze,
 }
 
 #[derive(Component)]
 pub struct FatigueTracker {
+    /// The current fatigue level.
     pub current: f32,
 }
 
 #[allow(clippy::type_complexity)]
+/// Assigns sleep permits to Pops based on their job.
 pub fn assign_sleep_permits_system(
     mut commands: Commands,
     pops: Query<(Entity, &Job), (With<Pop>, Without<SleepPermit>)>,
@@ -56,6 +65,33 @@ pub fn assign_sleep_permits_system(
 }
 
 #[allow(clippy::type_complexity)]
+/// Evaluates a Pop's accrued fatigue against their assigned `SleepPermit` threshold.
+///
+/// Once a Pop exceeds their allowed waking hours, this system forces them into an involuntary
+/// sleep state or applies severe productivity penalties until their debt is paid.
+///
+/// # Examples
+/// ```
+/// use scale::layer1::administration::bureaucracy_of_sleep::{process_sleep_deprivation_system, FatigueTracker, SleepPermit, PermitTier};
+/// use scale::layer1::stress::StressTracker;
+/// use scale::layer1::pop::Pop;
+/// use bevy_ecs::prelude::*;
+///
+/// let mut world = World::new();
+/// let pop_entity = world.spawn((
+///     Pop,
+///     FatigueTracker { current: 15.0 },
+///     SleepPermit { tier: PermitTier::Bronze, allotted_hours: 4.0 },
+///     StressTracker { current: 0.0, ..Default::default() }
+/// )).id();
+///
+/// let mut schedule = Schedule::default();
+/// schedule.add_systems(process_sleep_deprivation_system);
+/// schedule.run(&mut world);
+///
+/// let stress = world.get::<StressTracker>(pop_entity).unwrap();
+/// assert!(stress.current > 0.0, "Pop should accrue stress from severe fatigue.");
+/// ```
 pub fn process_sleep_deprivation_system(
     mut commands: Commands,
     time: Res<bevy::time::Time>,
