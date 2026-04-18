@@ -285,6 +285,8 @@ mod ephemeral_market_bridge;
 mod ephemeral_moons_bridge;
 #[path = "integration/food_needs.rs"]
 mod food_needs;
+#[path = "integration/primitive_retaliation_bridge.rs"]
+mod primitive_retaliation_bridge;
 #[path = "integration/psionics_fire_bridge.rs"]
 mod psionics_fire_bridge;
 #[path = "integration/ventilation_atmosphere_bridge.rs"]
