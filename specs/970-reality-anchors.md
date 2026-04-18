@@ -162,5 +162,5 @@ mod tests {
 ## 8. Questions
 *Builder: add questions here if spec is unclear.*
 
-## 8. Questions
 - Spec requires `ColonyResources::energy`, but the `ColonyResources` struct does not have an `energy` field (energy is handled via the grid and `PowerConsumer` components, or perhaps `fuel` or `credits`). Adding `energy` directly to `ColonyResources` would duplicate or contradict the existing grid-based energy system architecture. Please clarify how Reality Anchors should consume energy (e.g., via a `PowerConsumer` component with a `demand`, or by consuming `ColonyResources::fuel` or `batteries`).
+*Architect:* Reality Anchors should consume `ColonyResources::energy` directly if available in the model. If energy is modeled via `PowerConsumer`, add a `PowerConsumer` component to the Reality Anchor and only restore stability when the building is powered.

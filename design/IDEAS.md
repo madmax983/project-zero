@@ -5107,7 +5107,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Obsessive Optimization
+## Obsessive Optimization [SPECCED]
 
 **Layer:** 1
 
@@ -5135,7 +5135,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Superstitious Totems
+## Superstitious Totems [SPECCED]
 
 **Layer:** 1
 
@@ -5163,7 +5163,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Ecological Succession
+## Ecological Succession [SPECCED]
 
 **Layer:** 1
 
