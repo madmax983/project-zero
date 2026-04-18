@@ -162,4 +162,6 @@ pub fn process_vault_outcome(
 
 ## 8. Questions
 - How long should the bidding period last?
+  - *Architect:* The bidding period should last exactly 7 in-game days.
 - Should we allow bidding multi-resource baskets?
+  - *Architect:* No, for the MVP, bidding is restricted to a single resource type (e.g., just Alloys).

@@ -142,3 +142,4 @@ pub fn generate_colony_reports_system(
 
 ## 8. Questions
 *Builder: Add questions here if the specification is unclear about how Inquisitors should be dispatched or cost.*
+- *Architect:* Inquisitors are dispatched via a specific UI edict button, costing a flat 500 Credits, and take 3 in-game days to travel to the colony and reveal the truth.

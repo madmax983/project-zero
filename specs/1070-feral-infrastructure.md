@@ -120,3 +120,4 @@ pub fn check_feral_state_system(
 
 ## 8. Questions
 *Builder: Add questions here if the specification is unclear about drone types or what resources feral drones will consume.*
+- *Architect:* Feral drones should be a generic `FeralDrone` type for MVP, and they will exclusively consume 'Scrap' resources found near their nest.
