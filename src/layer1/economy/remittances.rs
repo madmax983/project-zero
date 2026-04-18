@@ -16,6 +16,23 @@ pub struct MigrantFamilyInfo {
 pub struct MigrantArrivalEvent {
     /// Faction ID of their home system.
     pub home_faction: Entity,
+    /// Number of migrants arriving.
+    pub count: u32,
+    /// Chance of migrants being criminals.
+    pub criminal_chance: f32,
+    /// Chance of migrants being low-skill.
+    pub low_skill_chance: f32,
+}
+
+impl Default for MigrantArrivalEvent {
+    fn default() -> Self {
+        Self {
+            home_faction: Entity::PLACEHOLDER,
+            count: 1,
+            criminal_chance: 0.0,
+            low_skill_chance: 0.0,
+        }
+    }
 }
 
 #[derive(Resource, Default)]
@@ -49,6 +66,9 @@ pub fn process_remittances_system(
         while *amount >= 100.0 {
             events.send(MigrantArrivalEvent {
                 home_faction: *faction,
+                count: 1,
+                criminal_chance: 0.0,
+                low_skill_chance: 0.0,
             });
             *amount -= 100.0;
         }

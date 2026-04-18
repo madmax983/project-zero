@@ -137,6 +137,11 @@ pub fn register(schedule: &mut Schedule) {
     );
 
     schedule.add_systems(
+        (crate::layer1::economy::beacon::process_colony_beacon_system,)
+            .in_set(Layer1SystemSet::Economy),
+    );
+
+    schedule.add_systems(
         (
             crate::layer1::integration::grid_overload_fire_bridge
                 .after(crate::layer1::energy::power_grid_system),

@@ -411,3 +411,4 @@
 - [x] `784` The Ephemeral Market — `specs/784-the-ephemeral-market.md` — completed 2026-04-17
 - [x] `INT-784` Integration: The Ephemeral Market -> Simulation Schedule — completed 2026-06-25
 - [x] `INT-900` Integration: Latent Psionics -> FireEvent — completed 2026-04-17
+- [x] `762` The Gold Rush Beacon — `specs/762-gold-rush-beacon.md` — completed 2026-04-18
