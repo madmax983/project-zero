@@ -1,3 +1,9 @@
+### INT-816: Primitive Retaliation -> Chronicle
+- **Date:** 2026-06-25
+- **Systems connected:** `primitive_retaliation_system` (Accidental Gods) -> `primitive_retaliation_chronicle_bridge` (Integration) -> `AddChronicleEvent`
+- **Glue added:** Added `primitive_retaliation_chronicle_bridge` to emit an `AddChronicleEvent` (`EventImportance::Major`) upon `PrimitiveRetaliationEvent`. Registered in `SimulationSchedule`.
+- **Tests:** `tests/integration/primitive_retaliation_bridge.rs`
+
 ### INT-948: Orphaned Edicts -> Chronicle
 - **Date:** 2026-06-25
 - **Systems connected:** `AccessDeniedEvent` and `HackCentralHubEvent` (Edicts) -> `AddChronicleEvent` (Chronicle)

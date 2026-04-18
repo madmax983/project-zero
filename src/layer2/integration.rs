@@ -489,3 +489,18 @@ pub fn void_whispers_chronicle_bridge(
         }
     }
 }
+
+use crate::layer2::primitives::PrimitiveRetaliationEvent;
+
+/// Bridges `PrimitiveRetaliationEvent` from Accidental Gods into the `Chronicle` system.
+pub fn primitive_retaliation_chronicle_bridge(
+    mut events: EventReader<PrimitiveRetaliationEvent>,
+    mut chronicle_events: EventWriter<AddChronicleEvent>,
+) {
+    for _event in events.read() {
+        chronicle_events.send(AddChronicleEvent {
+            text: "Infuriated by our neglect, primitive worshippers have launched a retaliatory strike against our observation post!".to_string(),
+            importance: EventImportance::Major,
+        });
+    }
+}

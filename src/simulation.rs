@@ -455,6 +455,7 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
         crate::layer2::fleet::fleet_movement_system.after(crate::layer2::fleet::fleet_order_system),
         crate::layer2::mutiny::decay_fleet_morale,
         crate::layer2::mutiny::evaluate_fleet_mutiny,
+        crate::layer2::integration::primitive_retaliation_chronicle_bridge,
         crate::layer2::integration::assign_sensors_to_player_fleets_system
             .after(crate::layer2::fleet::fleet_movement_system),
         crate::layer2::sensor_ambiguity::resolve_sensors_system
