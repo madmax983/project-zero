@@ -5359,7 +5359,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Intellectual Property Wars
+## Intellectual Property Wars [SPECCED]
 
 **Layer:** 3
 
@@ -5373,7 +5373,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Celestial Cemeteries
+## Celestial Cemeteries [SPECCED]
 
 **Layer:** 1 -> 2
 
@@ -5401,7 +5401,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Planetary Spin-Up
+## Planetary Spin-Up [SPECCED]
 
 **Layer:** 2 -> 1
 
@@ -5415,7 +5415,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Psychoactive Weather
+## Psychoactive Weather [SPECCED]
 
 **Layer:** 1
 
@@ -5429,7 +5429,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Terminator Habitats
+## Terminator Habitats [SPECCED]
 
 **Layer:** 1
 

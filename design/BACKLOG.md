@@ -752,3 +752,8 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1090` Mycelial Tripwires — `specs/1090-mycelial-tripwires.md`
 - [ ] `1091` Gravity Blindspots — `specs/1091-gravity-blindspots.md`
 - [ ] `1092` Attention Bandwidth — `specs/1092-attention-bandwidth.md`
+- [ ] `1095` Intellectual Property Wars — `specs/1095-intellectual-property-wars.md`
+- [ ] `1096` Celestial Cemeteries — `specs/1096-celestial-cemeteries.md`
+- [ ] `1097` Planetary Spin-Up — `specs/1097-planetary-spin-up.md`
+- [ ] `1098` Psychoactive Weather — `specs/1098-psychoactive-weather.md`
+- [ ] `1099` Terminator Habitats — `specs/1099-terminator-habitats.md`
