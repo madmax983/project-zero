@@ -16316,3 +16316,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** A quick, powerful fix to food shortages and weak workers vs. the long-term risk of your colonists transforming into the very monsters they hunted.
 
 ---
+
+## The Memory Market
+
+**Layer:** 1 -> Cross-layer
+
+**Fantasy:** Memories are the most valuable currency, traded to shape the culture of the next generation.
+
+**Mechanic:** A colony can build "Memory Banks" to extract, store, and trade the experiences of their pops. High-tier pops with legendary skills or rare traits can have their memories extracted (reducing their mood or lifespan) and sold. Other pops can consume these memories to gain skills instantly but suffer identity fragmentation.
+
+**Emergence:** A dying colony sells the memories of their best engineers to survive, leaving a generation of wealthy but incompetent workers. Alternatively, a wealthy colony buys so many "warrior" memories that they accidentally trigger a cultural shift towards extreme militarism, starting unprompted wars.
+
+**Tension:** Do you sacrifice the well-being and sanity of your current population to preserve their skills for the future, or let skills die with their owners?
+
+---
+
+## The Fossilized Fleet
+
+**Layer:** Cross-layer (2 -> 1)
+
+**Fantasy:** Finding an ancient armada not to fly, but to live inside as a makeshift planetary city.
+
+**Mechanic:** A colony discovers a massive, derelict Layer 2 fleet crashed on their planet. Instead of salvaging it for abstract resources, the ships can be inhabited. They provide extreme defensive bonuses and pre-built high-tier infrastructure, but cannot be moved and are actively decaying, requiring rare resources to maintain.
+
+**Emergence:** You build your entire society inside a crashed Dreadnought. Decades later, a neighboring faction recognizes the ship as their holy relic and declares a holy war to reclaim it. Your city is literally the casus belli.
+
+**Tension:** Do you heavily invest in maintaining decaying, immobile super-structures that make you a target, or slowly dismantle them for safer, but inferior, local resources?
+
+---
+
+## Bureaucratic Ghost Towns
+
+**Layer:** Cross-layer (3 -> 1)
+
+**Fantasy:** The empire's paperwork outlives the people it governs.
+
+**Mechanic:** When a Layer 1 colony dies (starvation, disaster), the Layer 3 Empire AI might not notice immediately if the bureaucratic reporting systems were automated. The dead colony continues to receive resource shipments, tax demands, and governor appointments from the capital, accumulating vast wealth and automated defenses while completely devoid of life.
+
+**Emergence:** You desperately need resources for a war, and discover a "prosperous" neighboring colony in your empire that has been dead for 50 years. It's overflowing with stockpiled food and automated defenses that fiercely protect the empty buildings from "looters" (you).
+
+**Tension:** Do you spend massive resources to siege your own dead, automated colony to reclaim its wealth, or leave the ghost town alone as a perfect, silent buffer state?
+
+---
