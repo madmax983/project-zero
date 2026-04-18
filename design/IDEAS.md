@@ -5345,7 +5345,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Attention Bandwidth
+## Attention Bandwidth [SPECCED]
 
 **Layer:** Cross-layer
 
