@@ -360,6 +360,9 @@ pub fn run_simulation_tick(world: &mut World) {
             world.init_resource::<Events<crate::layer1::unseen_bureaucracy::PhantomShiftEvent>>();
             world.init_resource::<Events<crate::layer3::diplomacy::cultural_ransom::RaidEvent>>();
             world.init_resource::<Events<crate::layer3::diplomacy::cultural_ransom::DiplomaticNegotiationEvent>>();
+            world.init_resource::<crate::layer3::linguistic_drift::LinguisticNetwork>();
+            world.init_resource::<Events<crate::layer3::linguistic_drift::CulturalSyncEvent>>();
+            world.init_resource::<Events<crate::layer3::linguistic_drift::TradeEvent>>();
 
             let schedule = build_simulation_schedule();
             world.add_schedule(schedule);
@@ -815,6 +818,9 @@ mod tests {
         world.init_resource::<Events<crate::layer1::unseen_bureaucracy::PhantomShiftEvent>>();
         world.init_resource::<Events<crate::layer3::diplomacy::cultural_ransom::RaidEvent>>();
         world.init_resource::<Events<crate::layer3::diplomacy::cultural_ransom::DiplomaticNegotiationEvent>>();
+        world.init_resource::<crate::layer3::linguistic_drift::LinguisticNetwork>();
+        world.init_resource::<Events<crate::layer3::linguistic_drift::CulturalSyncEvent>>();
+        world.init_resource::<Events<crate::layer3::linguistic_drift::TradeEvent>>();
 
         let schedule = build_simulation_schedule();
         world.add_schedule(schedule);

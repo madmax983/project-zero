@@ -2,15 +2,7 @@
 
 ## High Priority
 
-
-
-
-
-
-
-
 - [ ] `762` The Gold Rush Beacon — `specs/762-gold-rush-beacon.md`
-
 
 - [ ] `673` Indoctrination — `specs/673-indoctrination.md`
 
@@ -22,8 +14,6 @@
 - [ ] `660` Orbital Mirrors — `specs/660-orbital-mirrors.md`
 - [ ] `661` Secret Societies — `specs/661-secret-societies.md`
 - [ ] `662` Refugee Waves — `specs/662-refugee-waves.md`
-
-
 
 - [ ] `648` The Founder Effect — `specs/648-the-founder-effect.md`
 - [ ] `649` Pop Relationships — `specs/649-pop-relationships.md`
@@ -46,8 +36,6 @@
 - [ ] `623` The Nostalgia Plague — `specs/623-nostalgia-plague.md`
 - [ ] `624` Rogue AI Arbitration — `specs/624-rogue-ai-arbitration.md`
 - [ ] `625` The Cryo-Prison Revolt — `specs/625-cryo-prison-revolt.md`
-
-
 
 - [ ] `471` The Organ Trade — `specs/471-the-organ-trade.md`
 - [ ] `473` Bureaucratic Redlining — `specs/473-bureaucratic-redlining.md`
@@ -85,7 +73,6 @@
 - [ ] `681` Feral Logistics Network — `specs/681-feral-logistics-network.md`
 - [ ] `682` Symbiotic Leviathans — `specs/682-symbiotic-leviathans.md`
 
-
 - [ ] `875` The Memorial Fleet — `specs/875-the-memorial-fleet.md`
 - [ ] `876` The Phantom Tax — `specs/876-the-phantom-tax.md`
 - [ ] `877` The Debt of the Dead — `specs/877-the-debt-of-the-dead.md`
@@ -98,7 +85,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `988` Teleporter Psychosis — `specs/988-teleporter-psychosis.md`
 
 - [x] `255` Hypno-Learning — `specs/255-hypno-learning.md` — completed 2026-03-01
-
 
 - [ ] `266` Emotional Contagion — `specs/266-emotional-contagion.md`
 - [ ] `267` Ancestral Graves — `specs/267-ancestral-graves.md`
@@ -264,8 +250,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `444` Orbital Kessler Rings — `specs/444-orbital-kessler-rings.md`
 - [ ] `445` The Heirloom Virus — `specs/445-the-heirloom-virus.md`
 - [x] `446` Olfactory Map — `specs/446-olfactory-map.md`
-
-
 
 - [ ] `454` Gravitational Debt — `specs/454-gravitational-debt.md`
 - [ ] `455` The Stellar Forge — `specs/455-stellar-forge.md`
@@ -614,7 +598,7 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `936` Unseen Bureaucracy — `specs/936-unseen-bureaucracy.md`
 - [ ] `937` The Observer Effect — `specs/937-observer-effect.md`
 - [ ] `938` The Diplomatic Hostage — `specs/938-diplomatic-hostage.md`
-- [ ] `939` Language Drift — `specs/939-language-drift.md`
+
 - [ ] `940` Commuter's Exile — `specs/940-commuters-exile.md`
 - [ ] `941` Bio-Rhythm Desync — `specs/941-bio-rhythm-desync.md`
 - [ ] `942` The Work-Shift Cartel — `specs/942-work-shift-cartel.md`
