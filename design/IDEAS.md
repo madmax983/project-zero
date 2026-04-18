@@ -5219,7 +5219,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Thermal Inversion
+## Thermal Inversion [SPECCED]
 
 **Layer:** 1
 
