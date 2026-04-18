@@ -6123,3 +6123,33 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "A nomadic fleet arrived in [SYSTEM_NAME] in [YEAR]. They offered [RARE_ARTIFACT], but only accepted [OBSCURE_COMMODITY] in return."
 - "The Ephemeral Market appeared in [YEAR]. A scramble ensued to harvest [OBSCURE_COMMODITY] before they vanished with the [RARE_ARTIFACT]."
 - "Year [YEAR], [SYSTEM_NAME]. We traded [OBSCURE_COMMODITY] to the transient merchants. In exchange, we received [RARE_ARTIFACT]."
+
+## The Gold Rush Beacon Templates (Spec 762)
+
+### Template: BEACON_ACTIVATED
+**Generates:** Play event (Economic/Population)
+**Slots:** [COLONY], [YEAR], [BEACON_NICKNAME]
+
+**Patterns:**
+- "[YEAR]: The beacon is lit. We invite the galaxy, and all its scum, to our doors."
+- "We needed hands, so we sparked [BEACON_NICKNAME]. Now the shuttles won't stop coming. [YEAR]."
+- "In [YEAR], [COLONY] activated the beacon. Growth exploded, and order collapsed."
+
+### Template: RUSH_CRIME_WAVE
+**Generates:** Play event (Crime/Justice)
+**Slots:** [COLONY], [YEAR], [GRIFTER_CRIME], [POP_NAME]?
+
+**Patterns:**
+- "[YEAR]: The rush brought workers, but it also brought crime. Security caught someone [GRIFTER_CRIME]."
+- "With the new arrivals came a wave of lawlessness. Today it was [GRIFTER_CRIME]. [YEAR]."
+
+**If [POP_NAME]:**
+- "[POP_NAME] arrived with the last shuttle, only to be arrested for [GRIFTER_CRIME]."
+
+### Template: RUSH_DISAPPOINTMENT
+**Generates:** Play event (Social/Morale)
+**Slots:** [COLONY], [YEAR], [RUSH_EXCUSE]
+
+**Patterns:**
+- "They came expecting [RUSH_EXCUSE]. They found only hard labor and thin rations. [YEAR]."
+- "[YEAR]: The migrants are angry. The broadcast promised them [RUSH_EXCUSE], but [COLONY] has nothing to give."

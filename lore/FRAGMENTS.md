@@ -6931,3 +6931,35 @@ The mythical or ancient items offered by the transient market.
 - a cache of lost technologies
 - a pre-collapse memory bank
 - experimental shield emitters
+
+## The Gold Rush Beacon Fragments (Spec 762)
+
+### Fragment Type: [BEACON_NICKNAME]
+What the colonists call the active Beacon.
+
+- the Flame
+- the Fool's Lantern
+- the Siren's Call
+- the Neon Lure
+- the Greed-Signal
+- the Magnet
+
+### Fragment Type: [GRIFTER_CRIME]
+The types of crime arriving with the rush.
+
+- selling forged ration cards
+- smuggling counterfeit thermal batteries
+- running an illicit organ lottery
+- skimming from the oxygen reserves
+- staging false building inspections
+- operating a shadow-market out of a derelict shuttle
+
+### Fragment Type: [RUSH_EXCUSE]
+What the migrants thought they were coming for.
+
+- guaranteed land
+- unlimited water rations
+- a fortune in prismatic ore
+- amnesty from the Core
+- a safe haven from the Swarm
+- endless synthe-meat

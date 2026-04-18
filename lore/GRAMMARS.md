@@ -3774,3 +3774,14 @@ How nomadic traders disrupt the local economy.
 - OBSCURE_DEMAND -> increases_chance -> RESOURCE_SCRAMBLE, COLONY_REBELLION
 - RESOURCE_SCRAMBLE -> enables -> RAPID_HARVEST, LOGISTICS_STRAIN
 - EPHEMERAL_MARKET_DEPARTURE -> triggers -> MARKET_CLOSURE, MISSED_OPPORTUNITY
+
+## The Gold Rush Beacon Chaining (Spec 762)
+
+How activating the beacon drives the colony into chaos.
+
+- BEACON_ACTIVATED -> triggers -> MASS_MIGRATION, TRADE_BOOM
+- MASS_MIGRATION -> enables -> RUSH_DISAPPOINTMENT, RAPID_EXPANSION
+- MASS_MIGRATION -> increases_chance -> CRIME_WAVE, PIRATE_RAID
+- RUSH_DISAPPOINTMENT -> increases_chance -> UNREST, RIOT
+- CRIME_WAVE -> triggers -> RUSH_CRIME_WAVE
+- CRIME_WAVE -> increases_chance -> BLACK_MARKET_TRADE, SMUGGLING_BOOM
