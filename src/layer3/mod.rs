@@ -10,6 +10,7 @@ pub mod diplomacy_reflection;
 pub mod fleets;
 pub mod ghost_ships;
 pub mod integration;
+pub mod linguistic_drift;
 pub mod map;
 pub mod physics;
 pub mod pirates;

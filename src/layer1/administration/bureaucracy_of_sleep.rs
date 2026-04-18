@@ -82,7 +82,7 @@ pub fn assign_sleep_permits_system(
 ///     Pop,
 ///     FatigueTracker { current: 15.0 },
 ///     SleepPermit { tier: PermitTier::Bronze, allotted_hours: 4.0 },
-///     StressTracker { current: 0.0, ..Default::default() }
+///     StressTracker { accumulated_stress: 0.0, ..Default::default() }
 /// )).id();
 ///
 /// let mut schedule = Schedule::default();
@@ -90,7 +90,7 @@ pub fn assign_sleep_permits_system(
 /// schedule.run(&mut world);
 ///
 /// let stress = world.get::<StressTracker>(pop_entity).unwrap();
-/// assert!(stress.current > 0.0, "Pop should accrue stress from severe fatigue.");
+/// assert!(stress.accumulated_stress > 0.0, "Pop should accrue stress from severe fatigue.");
 /// ```
 pub fn process_sleep_deprivation_system(
     mut commands: Commands,
@@ -192,6 +192,7 @@ mod tests {
         let mut app = App::new();
         // Needs TimePlugin for Res<Time>
         app.add_plugins(MinimalPlugins);
+        app.insert_resource(Time::<()>::default());
         app.add_systems(Update, process_sleep_deprivation_system);
 
         let worker = app
