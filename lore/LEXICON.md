@@ -4332,3 +4332,20 @@
 **Replaces:** Specific random trade requirement
 **Code reference:** Obscure resource requirement in the trade system
 **Usage:** "They offered us a Dyson blueprint, but they only accepted Sub-Lithic Fungal Spores."
+
+## The Gold Rush Beacon (Spec 762)
+
+### the Beacon
+**Replaces:** ColonyBeacon, migration toggle
+**Code reference:** `ColonyBeacon` component/resource
+**Usage:** "We lit the Beacon, and the galaxy answered." / "Shut down the Beacon before we're overrun!"
+
+### the Rush
+**Replaces:** mass migration event, population boom
+**Code reference:** Increased `MigrantArrivalEvent` frequency
+**Usage:** "The Rush brought us hands, but no tools." / "We haven't slept since the Rush began."
+
+### Grifter
+**Replaces:** low skill pop, criminal pop spawn
+**Code reference:** `Pop` with `Criminal` or negative traits from beacon effect
+**Usage:** "Half the shuttle was filled with Grifters looking for an easy mark."
