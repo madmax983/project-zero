@@ -1,13 +1,13 @@
 #[cfg(test)]
 mod tests {
     use bevy_ecs::prelude::*;
+    use scale::layer1::anomalies::{spawn_initial_anomalies, Anomaly, AnomalyType};
     use scale::layer1::building::OccupiedTiles;
     use scale::layer1::flora::{flora_spread_system, Flora, FloraType};
     use scale::layer1::map::GridPosition;
     use scale::layer1::morale::Morale;
     use scale::layer1::pheromone::{pheromone_emission_system, PheromoneEmitter};
     use scale::layer1::pop::Pop;
-    use scale::layer1::anomalies::{spawn_initial_anomalies, Anomaly, AnomalyType};
     use scale::layer1::terrain::{TerrainGrid, TerrainType};
 
     fn setup_world() -> World {

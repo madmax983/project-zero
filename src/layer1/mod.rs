@@ -100,15 +100,15 @@ pub mod mining_tests;
 /// Pop needs (hunger, rest).
 pub mod psychology;
 pub use psychology::*;
-/// Notification system.
-pub mod notifications;
-/// Pathfinding algorithms.
-pub mod pathfinding;
 /// Pop entity and management.
 /// Refining industry (Lumber Mill, Stone Mason).
 /// Colony resources and mining.
 /// Field science and anomalies.
 pub mod anomalies;
+/// Notification system.
+pub mod notifications;
+/// Pathfinding algorithms.
+pub mod pathfinding;
 /// Seasonal rhythms (Spring, Summer, Autumn, Winter).
 mod shift_integration_tests;
 /// Social needs and tavern.
@@ -142,13 +142,13 @@ pub mod biology;
 pub use biology::*;
 pub use execution::*;
 
+pub use anomalies::*;
 pub use graffiti::*;
 pub use hobby::*;
 pub use institutional_memory::*;
 pub use jobs::*;
 pub use locations::*;
 pub use notifications::*;
-pub use anomalies::*;
 pub use social::*;
 pub use spoilage::*;
 pub use tech::*;

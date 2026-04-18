@@ -8,6 +8,7 @@
 - [x] `626` The Cartographer's Curse — `specs/626-cartographers-curse.md` — completed 2026-03-24
 # Completed Specs
 - [x] `816` Accidental Gods — `specs/816-accidental-gods.md` — completed 2026-04-16
+- [x] `944` Cultural Ransom — `specs/944-cultural-ransom.md` — completed 2026-06-15
 - [x] `815` Zero-G Fermentation — `specs/815-zero-g-fermentation.md` — completed 2026-07-01
 - [x] `903` Binary Star Systems — `specs/903-binary-star-systems.md` - completed 2026-06-01
 - [x] `769` The Agony Extract — `specs/769-the-agony-extract.md` — completed 2026-04-10
