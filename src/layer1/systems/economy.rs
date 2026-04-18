@@ -139,6 +139,9 @@ pub fn register(schedule: &mut Schedule) {
     schedule.add_systems(
         (
             crate::layer1::economy::beacon::process_colony_beacon_system,
+            crate::layer1::integration::beacon_migrant_arrival_bridge,
+            crate::layer1::integration::beacon_trade_ship_bridge,
+            crate::layer1::integration::beacon_pirate_raid_bridge,
             crate::layer1::economy::smugglers_cove::spawn_smugglers_cove_system,
             crate::layer1::economy::smugglers_cove::process_smuggler_decay_system,
         )

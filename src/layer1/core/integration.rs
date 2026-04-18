@@ -1541,3 +1541,94 @@ pub fn psionic_fire_bridge_system(
         commands.spawn((crate::layer1::nature::fire::Fire::default(), event.position));
     }
 }
+
+/// INT-762: Bridges MigrantArrivalEvent to Pop spawning
+pub fn beacon_migrant_arrival_bridge(
+    mut commands: Commands,
+    mut events: EventReader<crate::layer1::economy::remittances::MigrantArrivalEvent>,
+    mut chronicle_events: EventWriter<crate::layer1::chronicle::AddChronicleEvent>,
+) {
+    for event in events.read() {
+        let mut rng = rand::thread_rng();
+        use rand::Rng;
+
+        for _ in 0..event.count {
+            let is_criminal = rng.gen::<f32>() < event.criminal_chance;
+            let is_low_skill = rng.gen::<f32>() < event.low_skill_chance;
+
+            let mut traits = crate::layer1::psychology::traits::Traits::default();
+            if is_criminal {
+                traits.add(crate::layer1::psychology::traits::Trait::Greedy);
+            }
+            if is_low_skill {
+                traits.add(crate::layer1::psychology::traits::Trait::Lazy);
+            }
+
+            commands.spawn((
+                crate::layer1::pop::Pop,
+                traits,
+                crate::layer1::map::GridPosition { x: 0, y: 0 },
+                crate::layer1::needs::Needs::default(),
+            ));
+        }
+
+        chronicle_events.send(crate::layer1::chronicle::AddChronicleEvent {
+
+            text: format!("{} migrants have arrived in the colony.", event.count),
+            importance: crate::layer1::chronicle::EventImportance::Major,
+        });
+    }
+}
+
+/// INT-762: Bridges TradeShipArrivalEvent to Merchant spawning
+pub fn beacon_trade_ship_bridge(
+    mut events: EventReader<crate::layer2::trade::blockade::TradeShipArrivalEvent>,
+    mut merchant_state: ResMut<crate::layer1::trade::MerchantState>,
+    mut chronicle_events: EventWriter<crate::layer1::chronicle::AddChronicleEvent>,
+    time: Res<crate::shared::time::SimulationTime>,
+) {
+    for event in events.read() {
+        if merchant_state.active_merchant.is_none() {
+            merchant_state.active_merchant = Some(crate::layer1::trade::Merchant {
+                name: format!("{} Ship", event.faction),
+                arrival_tick: time.tick,
+                departure_tick: time.tick + 500,
+                deals: vec![], // For integration purposes, this just forces the state change
+            });
+            chronicle_events.send(crate::layer1::chronicle::AddChronicleEvent {
+
+                text: format!("A trade ship from {} has arrived.", event.faction),
+                importance: crate::layer1::chronicle::EventImportance::Major,
+            });
+        }
+    }
+}
+
+/// INT-762: Bridges PirateRaidEvent to Resource loss and Morale penalty
+pub fn beacon_pirate_raid_bridge(
+    mut events: EventReader<crate::layer1::void_weed::PirateRaidEvent>,
+    mut resources: ResMut<crate::layer1::resources::ColonyResources>,
+    mut pops: Query<&mut crate::layer1::morale::Morale, With<crate::layer1::pop::Pop>>,
+    mut chronicle_events: EventWriter<crate::layer1::chronicle::AddChronicleEvent>,
+) {
+    for _ in events.read() {
+        // Pirates steal resources
+        resources.food = (resources.food - 50.0).max(0.0);
+        resources.metal = (resources.metal - 20.0).max(0.0);
+
+        // Morale drops
+        for mut morale in pops.iter_mut() {
+            morale.add_modifier(crate::layer1::morale::MoodModifier {
+                label: "Pirate Raid".to_string(),
+                value: -0.2,
+                duration: 500,
+            });
+        }
+
+        chronicle_events.send(crate::layer1::chronicle::AddChronicleEvent {
+
+            text: "Pirates have raided the colony!".to_string(),
+            importance: crate::layer1::chronicle::EventImportance::Major,
+        });
+    }
+}
