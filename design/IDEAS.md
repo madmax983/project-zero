@@ -16400,3 +16400,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you let your struggling citizens flee, losing the workforce forever but saving them, or forcefully lock down the starport and risk a violent uprising?
 
 ---
+
+## Sub-light Tourism
+
+**Layer:** Cross-layer (2 -> 1)
+
+**Fantasy:** Rich individuals from other systems slowly travelling across space in luxury liners, treating your struggling colony as an exotic vacation destination.
+
+**Mechanic:** "Tourism Fleets" arrive from Layer 2. They dock at Layer 1 and unload "Tourist Pops". Tourists don't work, consume massive amounts of high-tier resources, and require extreme safety, but pay exorbitant fees in raw credits.
+
+**Emergence:** A tourism fleet arrives right as a massive plague hits your colony. They get infected, and demand priority medical treatment. You either let them die and face the wrath of their powerful home empires, or save them while your own workers perish.
+
+**Tension:** Do you warp your colony's infrastructure to cater to incredibly demanding, useless rich people for a massive cash injection, or focus on self-sufficiency and ban them?
+
+---
+
+## The Unclaimed Artifact
+
+**Layer:** 1
+
+**Fantasy:** Discovering something incredibly powerful but also incredibly dangerous, leading to a localized arms race to exploit it before it destroys you.
+
+**Mechanic:** An anomaly on the map is uncovered, providing massive energy to nearby buildings but sporadically causing Pops working nearby to disappear or mutate. It can be "tapped" further for even more energy, increasing the risks exponentially.
+
+**Emergence:** You build your entire heavy industry around the artifact. It starts turning workers into hostile crystal entities. You now have a massive, highly productive industrial zone that is also an active warzone against crystal mutants.
+
+**Tension:** Do you safely quarantine the incredibly valuable anomaly, missing out on free energy, or ruthlessly exploit it and treat the casualties as an acceptable cost of business?
+
+---
+
+## Quarantine Evasion Routes
+
+**Layer:** Cross-layer (1 -> 2)
+
+**Fantasy:** Desperate people creating an underground railroad to escape a dying world, defying your blockades and spreading chaos.
+
+**Mechanic:** When you lock down a colony's starport due to an outbreak or unrest, Pops will start building hidden "Smuggler Ships" using stolen resources. These ships launch illegally, bypassing your blockades and carrying the infection or unrest to other planets.
+
+**Emergence:** You successfully quarantine a massive plague on a single world, but the desperate, dying population manages to smuggle themselves off-world on junk ships, spreading the highly-mutated plague to your pristine capital.
+
+**Tension:** Do you completely glass the infected colony to guarantee containment, or risk a massive galactic spread while you try to find a cure?
+
+---
