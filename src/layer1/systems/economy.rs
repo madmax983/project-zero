@@ -137,7 +137,11 @@ pub fn register(schedule: &mut Schedule) {
     );
 
     schedule.add_systems(
-        (crate::layer1::economy::beacon::process_colony_beacon_system,)
+        (
+            crate::layer1::economy::beacon::process_colony_beacon_system,
+            crate::layer1::economy::smugglers_cove::spawn_smugglers_cove_system,
+            crate::layer1::economy::smugglers_cove::process_smuggler_decay_system,
+        )
             .in_set(Layer1SystemSet::Economy),
     );
 

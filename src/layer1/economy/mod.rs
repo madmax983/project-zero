@@ -203,3 +203,5 @@ pub use stockpile::*;
 pub use trade::*;
 pub mod beacon;
 pub use beacon::*;
+pub mod smugglers_cove;
+pub use smugglers_cove::*;
