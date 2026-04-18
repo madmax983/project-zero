@@ -4,7 +4,7 @@ mod tests {
     use crate::layer1::memetics::{
         parasitic_broadcast_risk_system, process_parasitic_work_reduction, MemeticInfection,
     };
-    use crate::layer1::morale::Morale;
+    use crate::layer1::morale::{MoodModifier, Morale};
     use crate::layer1::skills::Skills;
     use crate::layer1::DesignationType;
     use crate::layer3::silence::DetectionRisk;
@@ -75,5 +75,72 @@ mod tests {
             risk.current_risk > 0.0,
             "Pops are rewiring machines to broadcast into space, increasing detection risk"
         );
+    }
+
+    #[test]
+    fn test_parasitic_broadcast_process_no_infection() {
+        let mut world = World::new();
+        let pop = world
+            .spawn((
+                Morale {
+                    value: 50.0,
+                    ..Default::default()
+                },
+                Skills::default(),
+            ))
+            .id();
+
+        let mut schedule = Schedule::default();
+        schedule.add_systems(process_parasitic_work_reduction);
+        schedule.run(&mut world);
+
+        let morale = world.get::<Morale>(pop).unwrap();
+
+        assert_eq!(morale.value, 50.0);
+        assert!(morale.modifiers.is_empty());
+    }
+
+    #[test]
+    fn test_parasitic_broadcast_risk_empty() {
+        let mut world = World::new();
+        world.insert_resource(DetectionRisk {
+            current_risk: 0.0,
+            threshold: 100.0,
+        });
+
+        let mut schedule = Schedule::default();
+        schedule.add_systems(parasitic_broadcast_risk_system);
+        schedule.run(&mut world);
+
+        let risk = world.resource::<DetectionRisk>();
+        assert_eq!(risk.current_risk, 0.0);
+    }
+
+    #[test]
+    fn test_parasitic_broadcast_process_already_has_modifier() {
+        let mut world = World::new();
+        let pop = world
+            .spawn((
+                Morale {
+                    value: 50.0,
+                    modifiers: vec![MoodModifier {
+                        label: "Entertained (Parasitic Broadcast)".to_string(),
+                        value: 10.0,
+                        duration: 1,
+                    }],
+                },
+                MemeticInfection,
+                Skills::default(),
+            ))
+            .id();
+
+        let mut schedule = Schedule::default();
+        schedule.add_systems(process_parasitic_work_reduction);
+        schedule.run(&mut world);
+
+        let morale = world.get::<Morale>(pop).unwrap();
+
+        assert_eq!(morale.value, 60.0);
+        assert_eq!(morale.modifiers.len(), 1);
     }
 }
