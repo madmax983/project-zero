@@ -1283,7 +1283,6 @@ fn insert_base_building_components(
     }
 }
 
-#[allow(clippy::too_many_lines, clippy::match_same_arms)]
 fn spawn_building(
     world: &mut World,
     x: i32,
@@ -1308,9 +1307,16 @@ fn spawn_building(
 
     insert_base_building_components(&mut entity, building_type, material);
 
+    configure_building_components(&mut entity, building_type);
+
+    entity.id()
+}
+
+#[allow(clippy::match_same_arms)]
+fn configure_building_components(entity: &mut EntityWorldMut, building_type: BuildingType) {
     match building_type {
         BuildingType::Housing | BuildingType::Lander => {
-            configure_housing(&mut entity, building_type);
+            configure_housing(entity, building_type);
         }
         BuildingType::Farm
         | BuildingType::Plantation
@@ -1324,9 +1330,9 @@ fn spawn_building(
         | BuildingType::Weaver
         | BuildingType::Tailor
         | BuildingType::Refinery
-        | BuildingType::AncientFabricator => configure_production(&mut entity, building_type),
+        | BuildingType::AncientFabricator => configure_production(entity, building_type),
         BuildingType::Stockpile | BuildingType::Landfill => {
-            configure_storage(&mut entity, building_type);
+            configure_storage(entity, building_type);
         }
         BuildingType::Office
         | BuildingType::Tavern
@@ -1338,7 +1344,7 @@ fn spawn_building(
         | BuildingType::TradeDepot
         | BuildingType::Shower
         | BuildingType::Recycler
-        | BuildingType::BulletinBoard => configure_civic(&mut entity, building_type),
+        | BuildingType::BulletinBoard => configure_civic(entity, building_type),
         BuildingType::Wall
         | BuildingType::Window
         | BuildingType::Gate
@@ -1347,14 +1353,14 @@ fn spawn_building(
         | BuildingType::ConveyorBelt
         | BuildingType::Hopper
         | BuildingType::Airlock
-        | BuildingType::Vent => configure_infrastructure(&mut entity, building_type),
+        | BuildingType::Vent => configure_infrastructure(entity, building_type),
         BuildingType::Generator
         | BuildingType::SolarPanel
         | BuildingType::PowerPole
         | BuildingType::Battery
         | BuildingType::AncientReactor
         | BuildingType::Heater
-        | BuildingType::AuroralCollector => configure_power(&mut entity, building_type),
+        | BuildingType::AuroralCollector => configure_power(entity, building_type),
         BuildingType::Observatory
         | BuildingType::LifeSupport
         | BuildingType::TrashCannon
@@ -1368,19 +1374,17 @@ fn spawn_building(
         | BuildingType::CloneVat
         | BuildingType::HypnoPod
         | BuildingType::HoloProjector
-        | BuildingType::Nanoforge => configure_tech(&mut entity, building_type),
+        | BuildingType::Nanoforge => configure_tech(entity, building_type),
         BuildingType::School | BuildingType::MediaStation => {
-            configure_civic(&mut entity, building_type)
+            configure_civic(entity, building_type)
         }
-        BuildingType::Spaceport => configure_civic(&mut entity, building_type),
+        BuildingType::Spaceport => configure_civic(entity, building_type),
         BuildingType::PersonalShed
         | BuildingType::PersonalGarden
         | BuildingType::PersonalShrine => {
             // Logic handled by components added in system
         }
     }
-
-    entity.id()
 }
 
 fn configure_housing(entity: &mut EntityWorldMut, building_type: BuildingType) {
