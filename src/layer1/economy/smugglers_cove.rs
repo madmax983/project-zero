@@ -1,7 +1,7 @@
-use bevy_ecs::prelude::*;
-use rand::Rng;
 use crate::layer1::map::GridPosition;
 use crate::layer1::TerrainGrid;
+use bevy_ecs::prelude::*;
+use rand::Rng;
 
 #[derive(Resource, Default)]
 pub struct ColonyAuthority {
@@ -33,7 +33,10 @@ pub fn spawn_smugglers_cove_system(
 
         commands.spawn((
             SmugglersCove { lifespan: 100 }, // Cove lasts for 100 ticks
-            GridPosition { x: x as i32, y: y as i32 }
+            GridPosition {
+                x: x as i32,
+                y: y as i32,
+            },
         ));
     }
 }
@@ -53,8 +56,8 @@ pub fn process_smuggler_decay_system(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use bevy::prelude::{App, Update};
     use crate::shared::time::SimulationTime;
+    use bevy::prelude::{App, Update};
 
     fn setup_app() -> App {
         let mut app = App::new();
@@ -72,17 +75,18 @@ mod tests {
     fn test_smuggler_cove_spawns_in_low_authority() {
         let mut app = setup_app();
 
-        // Force deterministic spawn by setting rng probability check to 1.0
-        // in test environment, or run enough ticks to guarantee it.
-        // For simplicity in this test, we run for 1000 ticks to make failure statistically impossible.
+        let mut spawned = false;
         for _ in 0..1000 {
             app.update();
+            let mut cove_query = app.world_mut().query::<&SmugglersCove>();
+            if cove_query.iter(app.world()).count() > 0 {
+                spawned = true;
+                break;
+            }
         }
 
-        // Verify a smuggler's cove has spawned
-        let mut cove_query = app.world_mut().query::<&SmugglersCove>();
         assert!(
-            cove_query.iter(app.world()).count() > 0,
+            spawned,
             "A smuggler's cove should spawn when authority is low"
         );
     }
@@ -111,10 +115,10 @@ mod tests {
         let mut app = setup_app();
 
         // Manually spawn a cove
-        let cove_entity = app.world_mut().spawn((
-            SmugglersCove { lifespan: 5 },
-            GridPosition { x: 50, y: 50 }
-        )).id();
+        let cove_entity = app
+            .world_mut()
+            .spawn((SmugglersCove { lifespan: 5 }, GridPosition { x: 50, y: 50 }))
+            .id();
 
         // Advance time and check lifespan
         for _ in 0..6 {
@@ -122,6 +126,9 @@ mod tests {
         }
 
         // The cove should be despawned after its lifespan expires
-        assert!(app.world().get_entity(cove_entity).is_err(), "Cove should despawn after lifespan");
+        assert!(
+            app.world().get_entity(cove_entity).is_err(),
+            "Cove should despawn after lifespan"
+        );
     }
 }

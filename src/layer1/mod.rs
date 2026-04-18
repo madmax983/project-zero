@@ -93,10 +93,8 @@ pub use law::orphaned_edict::*;
 /// Medical care and hospital logic.
 pub mod jobs;
 /// Tests for metal industry (Spec 024).
-pub mod metal_industry_tests;
 /// Terrain generation and grid management.
 /// Tests for mining logic (Spec 052).
-pub mod mining_tests;
 /// Pop needs (hunger, rest).
 pub mod psychology;
 pub use psychology::*;
@@ -110,7 +108,6 @@ pub mod notifications;
 /// Pathfinding algorithms.
 pub mod pathfinding;
 /// Seasonal rhythms (Spring, Summer, Autumn, Winter).
-mod shift_integration_tests;
 /// Social needs and tavern.
 pub mod social;
 /// Spoilage and decay mechanics.
@@ -120,10 +117,7 @@ pub mod spoilage;
 /// Technology and research system.
 pub mod tech;
 
-/// Tests for mother lode logic (Spec 168).
-pub mod mother_lode_tests;
 
-mod execution_demolish_test;
 
 /// Named locations on the map.
 pub mod locations;
@@ -153,15 +147,12 @@ pub use social::*;
 pub use spoilage::*;
 pub use tech::*;
 
-mod tool_tests;
 pub use clothing::*;
 
 /// Lighting system.
 pub mod lighting;
 /// Pop skills and experience system.
 pub mod skills;
-
-mod waste_tests;
 
 /// Vermin infestation logic (Spec 073).
 pub use lighting::*;
@@ -196,8 +187,6 @@ pub mod combat;
 pub mod day_night;
 pub use day_night::*;
 
-mod material_provenance_tests;
-
 /// Stowaway system (Spec 086).
 pub mod stowaway;
 pub use stowaway::*;
@@ -214,12 +203,6 @@ pub use pheromone::*;
 pub mod heirloom;
 pub use heirloom::*;
 
-mod heirloom_items_tests;
-
-mod heirloom_tests;
-
-mod retrograde_tests;
-
 /// Animal Husbandry system (Spec 075).
 /// Gastronomy system (Spec 166).
 /// Antagonistic Flora system (Spec 092).
@@ -232,10 +215,6 @@ pub use private_stash::*;
 /// Resource purity system (Spec 106).
 pub mod purity;
 pub use purity::*;
-
-mod fuel_consumption_tests;
-
-mod fuel_industry_tests;
 
 /// Palette fatigue system (Spec 114).
 pub mod palette_fatigue;
@@ -255,7 +234,6 @@ pub use logistics::*;
 /// Wild Child system (Spec 124).
 pub mod prototyping;
 
-mod tech_storage_tests;
 pub use prototyping::*;
 pub mod geology;
 pub use geology::*;
@@ -289,7 +267,6 @@ pub use observer::*;
 
 pub mod systems;
 
-mod institutional_memory_tests;
 pub mod memetics;
 /// Orbital Crossfire system (Spec 206).
 /// Scrapcode virus system (Spec 178).
@@ -303,16 +280,11 @@ pub mod cryo;
 pub use chemical::*;
 pub use cryo::*;
 
-#[cfg(test)]
-mod cryo_tests;
-
 /// Radioactive system (Spec 191).
 /// Company Scrip and Economy system (Spec 194).
 /// Language and Dialect system (Spec 193).
 pub mod language;
 pub use language::*;
-
-mod equipment_tests;
 
 /// Solar cycle and power generation (Spec 213).
 /// Hygiene system (Spec 220).
@@ -322,9 +294,6 @@ pub use hygiene::*;
 /// Gene Bank system (Spec 165).
 pub mod geodetic;
 
-mod improvised_tools_tests;
-
-mod urban_heat_tests;
 pub use geodetic::*;
 
 /// The Mother Lode system (Spec 168).
@@ -356,8 +325,6 @@ pub use clutter::*;
 pub mod security;
 pub use security::*;
 
-mod geodetic_tests;
-
 /// Quantum Twins (Spec 245).
 pub mod quantum_twins;
 pub use quantum_twins::*;
@@ -368,7 +335,6 @@ pub mod construction;
 /// Holographic projections
 pub mod hologram;
 
-mod hologram_tests;
 pub use hologram::*;
 
 /// Memory core structures
@@ -431,3 +397,6 @@ pub mod core;
 pub use core::*;
 /// Digital immortality mechanics
 pub mod digital_immortality;
+
+#[cfg(test)]
+mod tests;
