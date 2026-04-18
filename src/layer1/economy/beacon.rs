@@ -1,8 +1,8 @@
-use bevy_ecs::prelude::*;
-use rand::Rng;
-use crate::layer2::trade::blockade::TradeShipArrivalEvent;
 use crate::layer1::economy::remittances::MigrantArrivalEvent;
 use crate::layer1::void_weed::PirateRaidEvent;
+use crate::layer2::trade::blockade::TradeShipArrivalEvent;
+use bevy_ecs::prelude::*;
+use rand::Rng;
 
 #[derive(Resource, Default)]
 pub struct ColonyBeacon {
@@ -33,7 +33,7 @@ pub fn process_colony_beacon_system(
         migrant_writer.send(MigrantArrivalEvent {
             home_faction: Entity::PLACEHOLDER, // Unspecified source
             count: rng.gen_range(5..15),
-            criminal_chance: 0.3, // High chance of criminals
+            criminal_chance: 0.3,  // High chance of criminals
             low_skill_chance: 0.5, // High chance of grifters
         });
     }
@@ -48,11 +48,11 @@ pub fn process_colony_beacon_system(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use bevy::prelude::{App, Update};
-    use crate::layer2::trade::blockade::TradeShipArrivalEvent;
     use crate::layer1::economy::remittances::MigrantArrivalEvent;
     use crate::layer1::void_weed::PirateRaidEvent;
+    use crate::layer2::trade::blockade::TradeShipArrivalEvent;
     use crate::shared::time::SimulationTime;
+    use bevy::prelude::{App, Update};
 
     fn setup_app() -> App {
         let mut app = App::new();
@@ -78,8 +78,14 @@ mod tests {
         // Run the simulation for several ticks
         for _ in 0..1000 {
             app.update();
-            let trade_events = app.world().get_resource::<Events<TradeShipArrivalEvent>>().unwrap();
-            let migrant_events = app.world().get_resource::<Events<MigrantArrivalEvent>>().unwrap();
+            let trade_events = app
+                .world()
+                .get_resource::<Events<TradeShipArrivalEvent>>()
+                .unwrap();
+            let migrant_events = app
+                .world()
+                .get_resource::<Events<MigrantArrivalEvent>>()
+                .unwrap();
             if !trade_events.is_empty() {
                 has_trade = true;
             }
@@ -104,7 +110,10 @@ mod tests {
 
         for _ in 0..1000 {
             app.update();
-            let pirate_events = app.world().get_resource::<Events<PirateRaidEvent>>().unwrap();
+            let pirate_events = app
+                .world()
+                .get_resource::<Events<PirateRaidEvent>>()
+                .unwrap();
             if !pirate_events.is_empty() {
                 has_pirates = true;
             }

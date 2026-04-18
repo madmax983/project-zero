@@ -1,7 +1,7 @@
-use bevy::prelude::*;
 use crate::layer1::social::morale::Morale;
-use crate::layer3::diplomacy::succession::Faction;
 use crate::layer3::diplomacy::proxy_wars::Credits;
+use crate::layer3::diplomacy::succession::Faction;
+use bevy::prelude::*;
 
 #[derive(Event)]
 pub struct RaidEvent {
@@ -35,7 +35,9 @@ pub fn process_artifact_raid_system(
     for event in events.read() {
         if event.successful && event.is_deep_strike {
             for mut artifact in artifacts.iter_mut() {
-                if artifact.original_owner == event.target_faction && artifact.held_by == event.target_faction {
+                if artifact.original_owner == event.target_faction
+                    && artifact.held_by == event.target_faction
+                {
                     artifact.held_by = event.raider_faction; // Stolen!
                 }
             }
@@ -64,12 +66,16 @@ pub fn handle_ransom_negotiation_system(
 ) {
     for event in events.read() {
         if event.offer_artifact_return {
-            if let Ok([(_, mut target_credits), (_, mut proposer_credits)]) = factions.get_many_mut([event.target, event.proposer]) {
+            if let Ok([(_, mut target_credits), (_, mut proposer_credits)]) =
+                factions.get_many_mut([event.target, event.proposer])
+            {
                 if target_credits.0 >= event.demand_credits {
                     // Check if proposer holds any artifact of target
                     let mut returned = false;
                     for mut artifact in artifacts.iter_mut() {
-                        if artifact.held_by == event.proposer && artifact.original_owner == event.target {
+                        if artifact.held_by == event.proposer
+                            && artifact.original_owner == event.target
+                        {
                             artifact.held_by = event.target;
                             returned = true;
                         }
@@ -96,17 +102,31 @@ mod tests {
         app.add_event::<RaidEvent>();
         app.add_systems(Update, process_artifact_raid_system);
 
-        let victim_faction = app.world_mut().spawn(Faction { name: "Victim".to_string() }).id();
-        app.world_mut().entity_mut(victim_faction).insert(
-            CulturalArtifact { name: "Original Charter".to_string(), original_owner: victim_faction, held_by: victim_faction }
-        );
+        let victim_faction = app
+            .world_mut()
+            .spawn(Faction {
+                name: "Victim".to_string(),
+            })
+            .id();
+        app.world_mut()
+            .entity_mut(victim_faction)
+            .insert(CulturalArtifact {
+                name: "Original Charter".to_string(),
+                original_owner: victim_faction,
+                held_by: victim_faction,
+            });
 
-        let raider_faction = app.world_mut().spawn(Faction { name: "Raider".to_string() }).id();
+        let raider_faction = app
+            .world_mut()
+            .spawn(Faction {
+                name: "Raider".to_string(),
+            })
+            .id();
 
         // Act
         app.world_mut().send_event(RaidEvent {
             target_faction: victim_faction,
-            raider_faction: raider_faction,
+            raider_faction,
             successful: true,
             is_deep_strike: true,
         });
@@ -115,7 +135,10 @@ mod tests {
         // Assert
         // The artifact's held_by value should now be the raider's faction ID
         let artifact = app.world().get::<CulturalArtifact>(victim_faction).unwrap();
-        assert_eq!(artifact.held_by, raider_faction, "Artifact should be stolen by raider.");
+        assert_eq!(
+            artifact.held_by, raider_faction,
+            "Artifact should be stolen by raider."
+        );
     }
 
     #[test]
@@ -124,15 +147,35 @@ mod tests {
         let mut app = App::new();
         app.add_systems(Update, apply_hostage_penalties_system);
 
-        let raider_faction = app.world_mut().spawn(Faction { name: "Raider".to_string() }).id();
+        let raider_faction = app
+            .world_mut()
+            .spawn(Faction {
+                name: "Raider".to_string(),
+            })
+            .id();
 
-        let victim_faction = app.world_mut().spawn((
-            Faction { name: "Victim".to_string() },
-            Morale { value: 100.0, modifiers: vec![] },
-            CulturalArtifact { name: "Original Charter".to_string(), original_owner: raider_faction, held_by: raider_faction },
-        )).id();
+        let victim_faction = app
+            .world_mut()
+            .spawn((
+                Faction {
+                    name: "Victim".to_string(),
+                },
+                Morale {
+                    value: 100.0,
+                    modifiers: vec![],
+                },
+                CulturalArtifact {
+                    name: "Original Charter".to_string(),
+                    original_owner: raider_faction,
+                    held_by: raider_faction,
+                },
+            ))
+            .id();
 
-        let mut artifact = app.world_mut().get_mut::<CulturalArtifact>(victim_faction).unwrap();
+        let mut artifact = app
+            .world_mut()
+            .get_mut::<CulturalArtifact>(victim_faction)
+            .unwrap();
         artifact.original_owner = victim_faction;
         // held_by is raider_faction (hostage)
 
@@ -142,7 +185,10 @@ mod tests {
         // Assert
         // Victim's morale should be heavily penalized
         let morale = app.world().get::<Morale>(victim_faction).unwrap();
-        assert!(morale.value < 100.0, "Morale should decrease when an artifact is held hostage.");
+        assert!(
+            morale.value < 100.0,
+            "Morale should decrease when an artifact is held hostage."
+        );
     }
 
     #[test]
@@ -152,17 +198,34 @@ mod tests {
         app.add_event::<DiplomaticNegotiationEvent>();
         app.add_systems(Update, handle_ransom_negotiation_system);
 
-        let raider_faction = app.world_mut().spawn((
-            Faction { name: "Raider".to_string() },
-            Credits(0),
-        )).id();
+        let raider_faction = app
+            .world_mut()
+            .spawn((
+                Faction {
+                    name: "Raider".to_string(),
+                },
+                Credits(0),
+            ))
+            .id();
 
-        let victim_faction = app.world_mut().spawn((
-            Faction { name: "Victim".to_string() },
-            Credits(1000),
-            CulturalArtifact { name: "Original Charter".to_string(), original_owner: raider_faction, held_by: raider_faction },
-        )).id();
-        let mut artifact = app.world_mut().get_mut::<CulturalArtifact>(victim_faction).unwrap();
+        let victim_faction = app
+            .world_mut()
+            .spawn((
+                Faction {
+                    name: "Victim".to_string(),
+                },
+                Credits(1000),
+                CulturalArtifact {
+                    name: "Original Charter".to_string(),
+                    original_owner: raider_faction,
+                    held_by: raider_faction,
+                },
+            ))
+            .id();
+        let mut artifact = app
+            .world_mut()
+            .get_mut::<CulturalArtifact>(victim_faction)
+            .unwrap();
         artifact.original_owner = victim_faction;
 
         // Act
@@ -180,7 +243,13 @@ mod tests {
         let artifact = app.world().get::<CulturalArtifact>(victim_faction).unwrap();
 
         assert_eq!(victim_pool.0, 500, "Victim should have paid the ransom.");
-        assert_eq!(raider_pool.0, 500, "Raider should have received the ransom.");
-        assert_eq!(artifact.held_by, victim_faction, "Artifact should be returned to victim.");
+        assert_eq!(
+            raider_pool.0, 500,
+            "Raider should have received the ransom."
+        );
+        assert_eq!(
+            artifact.held_by, victim_faction,
+            "Artifact should be returned to victim."
+        );
     }
 }

@@ -157,8 +157,10 @@ mod tests {
         let mut traits = Traits::default();
         traits.add(Trait::VoidTouched);
 
-        let mut needs = Needs::default();
-        needs.rest = 0.1; // Highly tired
+        let needs = Needs {
+            rest: 0.1,
+            ..Default::default()
+        };
 
         let mut data = PopEvalData::test_instance();
         data.needs = needs;
