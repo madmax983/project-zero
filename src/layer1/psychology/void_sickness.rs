@@ -1,8 +1,8 @@
-use bevy::prelude::Time;
-use bevy_ecs::prelude::*;
 use crate::layer1::psychology::traits::{Trait, Traits};
 use crate::layer1::psychology::void_stare::VoidExposure;
 use crate::layer2::ship::OffWorldDuty;
+use bevy::prelude::Time;
+use bevy_ecs::prelude::*;
 
 // Define PopStats as it's missing in the main codebase
 #[derive(Component, Default, Debug, Clone, PartialEq)]
@@ -21,9 +21,7 @@ pub fn process_void_exposure_system(
     }
 }
 
-pub fn apply_void_touched_trait_system(
-    mut query: Query<(&VoidExposure, &mut Traits)>,
-) {
+pub fn apply_void_touched_trait_system(mut query: Query<(&VoidExposure, &mut Traits)>) {
     for (exposure, mut traits) in query.iter_mut() {
         if exposure.current >= 100.0 && !traits.has(Trait::VoidTouched) {
             traits.add(Trait::VoidTouched);
@@ -38,7 +36,10 @@ pub struct VoidTouchedStatsApplied;
 #[allow(clippy::type_complexity)]
 pub fn apply_trait_stat_modifiers_system(
     mut commands: Commands,
-    mut query: Query<(Entity, &Traits, &mut PopStats), (Changed<Traits>, Without<VoidTouchedStatsApplied>)>,
+    mut query: Query<
+        (Entity, &Traits, &mut PopStats),
+        (Changed<Traits>, Without<VoidTouchedStatsApplied>),
+    >,
 ) {
     for (entity, traits, mut stats) in query.iter_mut() {
         if traits.has(Trait::VoidTouched) {
@@ -53,13 +54,15 @@ pub fn apply_trait_stat_modifiers_system(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use bevy::prelude::Update;
-    use crate::layer1::psychology::needs::Needs;
-    use crate::layer1::pop::Pop;
     use crate::layer1::map::GridPosition;
-    use crate::layer1::mind::utility_eval_types::{PopEvalData, WorldContext, UtilityAIBuffer, ScorableCandidate};
-    use crate::layer1::mind::utility_types::ActionType;
     use crate::layer1::mind::evaluate_single_pop;
+    use crate::layer1::mind::utility_eval_types::{
+        PopEvalData, ScorableCandidate, UtilityAIBuffer, WorldContext,
+    };
+    use crate::layer1::mind::utility_types::ActionType;
+    use crate::layer1::pop::Pop;
+    use crate::layer1::psychology::needs::Needs;
+    use bevy::prelude::Update;
 
     #[test]
     fn test_void_exposure_accumulation() {
@@ -72,20 +75,26 @@ mod tests {
         let mut time = app.world_mut().resource_mut::<Time>();
         time.advance_by(std::time::Duration::from_secs_f32(1.0));
 
-        let pop = app.world_mut().spawn((
-            Pop,
-            VoidExposure {
-                current: 0.0,
-                susceptibility: 1.0,
-                check_timer: 0,
-            },
-            OffWorldDuty,
-        )).id();
+        let pop = app
+            .world_mut()
+            .spawn((
+                Pop,
+                VoidExposure {
+                    current: 0.0,
+                    susceptibility: 1.0,
+                    check_timer: 0,
+                },
+                OffWorldDuty,
+            ))
+            .id();
 
         app.update();
 
         let exposure = app.world().get::<VoidExposure>(pop).unwrap();
-        assert!(exposure.current > 0.0, "Exposure should increase when on off-world duty");
+        assert!(
+            exposure.current > 0.0,
+            "Exposure should increase when on off-world duty"
+        );
     }
 
     #[test]
@@ -93,20 +102,26 @@ mod tests {
         let mut app = bevy_app::App::new();
         app.add_systems(Update, apply_void_touched_trait_system);
 
-        let pop = app.world_mut().spawn((
-            Pop,
-            Traits::default(),
-            VoidExposure {
-                current: 100.0,
-                susceptibility: 1.0,
-                check_timer: 0,
-            }, // High exposure
-        )).id();
+        let pop = app
+            .world_mut()
+            .spawn((
+                Pop,
+                Traits::default(),
+                VoidExposure {
+                    current: 100.0,
+                    susceptibility: 1.0,
+                    check_timer: 0,
+                }, // High exposure
+            ))
+            .id();
 
         app.update();
 
         let traits = app.world().get::<Traits>(pop).unwrap();
-        assert!(traits.has(Trait::VoidTouched), "High exposure should apply the VoidTouched trait");
+        assert!(
+            traits.has(Trait::VoidTouched),
+            "High exposure should apply the VoidTouched trait"
+        );
     }
 
     #[test]
@@ -117,17 +132,22 @@ mod tests {
         let mut base_traits = Traits::default();
         base_traits.add(Trait::VoidTouched);
 
-        let pop = app.world_mut().spawn((
-            Pop,
-            base_traits,
-            PopStats::default(),
-        )).id();
+        let pop = app
+            .world_mut()
+            .spawn((Pop, base_traits, PopStats::default()))
+            .id();
 
         app.update();
 
         let stats = app.world().get::<PopStats>(pop).unwrap();
-        assert!(stats.intellect > PopStats::default().intellect, "VoidTouched should boost Intellect");
-        assert!(stats.empathy < PopStats::default().empathy, "VoidTouched should penalize Empathy");
+        assert!(
+            stats.intellect > PopStats::default().intellect,
+            "VoidTouched should boost Intellect"
+        );
+        assert!(
+            stats.empathy < PopStats::default().empathy,
+            "VoidTouched should penalize Empathy"
+        );
     }
 
     #[test]
@@ -164,8 +184,12 @@ mod tests {
         app.insert_resource(crate::layer1::zone::ZoneGrid::new(10, 10));
 
         let world_ctx = WorldContext {
-            resources: app.world().resource::<crate::layer1::resources::ColonyResources>(),
-            cycle: app.world().resource::<crate::layer1::day_night::DayNightCycle>(),
+            resources: app
+                .world()
+                .resource::<crate::layer1::resources::ColonyResources>(),
+            cycle: app
+                .world()
+                .resource::<crate::layer1::day_night::DayNightCycle>(),
             taboo: app.world().resource::<crate::layer1::taboo::TabooState>(),
             factions: None,
             zone_grid: app.world().resource::<crate::layer1::zone::ZoneGrid>(),
@@ -176,7 +200,10 @@ mod tests {
 
         // Even though tired, shouldn't choose to SatisfyRest (or if it does, utility should be very low)
         if action == ActionType::SatisfyRest {
-            assert!(utility < 0.2, "VoidTouched Pop on surface should refuse/heavily penalize sleep");
+            assert!(
+                utility < 0.2,
+                "VoidTouched Pop on surface should refuse/heavily penalize sleep"
+            );
         }
     }
 }

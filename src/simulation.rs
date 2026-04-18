@@ -358,6 +358,8 @@ pub fn run_simulation_tick(world: &mut World) {
             world
                 .init_resource::<Events<crate::layer3::ghost_ships::EvaluateLostShipReturnEvent>>();
             world.init_resource::<Events<crate::layer1::unseen_bureaucracy::PhantomShiftEvent>>();
+            world.init_resource::<Events<crate::layer3::diplomacy::cultural_ransom::RaidEvent>>();
+            world.init_resource::<Events<crate::layer3::diplomacy::cultural_ransom::DiplomaticNegotiationEvent>>();
 
             let schedule = build_simulation_schedule();
             world.add_schedule(schedule);
@@ -380,8 +382,7 @@ fn register_simulation_core_systems(schedule: &mut Schedule) {
         crate::layer1::law::embassy::process_diplomatic_arrest_system,
     ));
 
-    schedule.add_systems((
-crate::layer2::weather::weather_movement_system,));
+    schedule.add_systems((crate::layer2::weather::weather_movement_system,));
     schedule.add_systems((
         crate::layer3::planet::black_market_terraforming::trigger_rogue_terraforming,
         crate::layer3::planet::black_market_terraforming::apply_rogue_terraforming_events,
@@ -418,7 +419,6 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
         crate::layer2::cartographers_curse::apply_drop_pod_accuracy,
         update_detection_risk_system.after(Layer1SystemSet::Economy),
         check_hostile_spawn_system.after(update_detection_risk_system),
-
         crate::layer3::market::ephemeral_market::spawn_ephemeral_market_system,
         crate::layer3::market::ephemeral_market::process_market_despawn_system,
         crate::layer3::market::ephemeral_market::fulfill_market_trade_system,
@@ -548,6 +548,9 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
     schedule.add_systems(
         (
             crate::layer3::diplomacy::succession::process_succession_system,
+        crate::layer3::diplomacy::cultural_ransom::process_artifact_raid_system,
+        crate::layer3::diplomacy::cultural_ransom::apply_hostage_penalties_system,
+        crate::layer3::diplomacy::cultural_ransom::handle_ransom_negotiation_system,
             crate::layer3::integration::dynastic_succession_chronicle_bridge,
             crate::layer3::integration::dynastic_crisis_chronicle_bridge,
         )
@@ -808,6 +811,8 @@ mod tests {
         world.init_resource::<Events<crate::layer3::ghost_ships::EvaluateTransitEvent>>();
         world.init_resource::<Events<crate::layer3::ghost_ships::EvaluateLostShipReturnEvent>>();
         world.init_resource::<Events<crate::layer1::unseen_bureaucracy::PhantomShiftEvent>>();
+        world.init_resource::<Events<crate::layer3::diplomacy::cultural_ransom::RaidEvent>>();
+        world.init_resource::<Events<crate::layer3::diplomacy::cultural_ransom::DiplomaticNegotiationEvent>>();
 
         let schedule = build_simulation_schedule();
         world.add_schedule(schedule);

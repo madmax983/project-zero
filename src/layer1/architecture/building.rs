@@ -2772,7 +2772,6 @@ mod tests {
         assert_eq!(mode.selected, BuildingType::Housing);
     }
 
-
     #[test]
     fn test_occupied_tiles_default() {
         let occupied = OccupiedTiles::default();

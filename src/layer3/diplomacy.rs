@@ -1,6 +1,7 @@
 use crate::layer1::spore_diplomat::SporeInfection;
 use bevy::prelude::*;
 
+pub mod cultural_ransom;
 pub mod proxy_wars;
 pub mod succession;
 

@@ -1,18 +1,21 @@
-use bevy_ecs::prelude::*;
 use crate::layer1::law::justice::{CrimeCommittedEvent, CrimeRecord};
 use crate::layer1::social::factions::FactionId;
 use bevy::prelude::{App, Plugin, Update};
+use bevy_ecs::prelude::*;
 
 pub struct EmbassyPlugin;
 
 impl Plugin for EmbassyPlugin {
     fn build(&self, app: &mut App) {
         app.add_event::<ArrestEvent>()
-           .add_event::<DiplomaticIncidentEvent>()
-           .add_systems(Update, (
-               evaluate_diplomatic_crime_system,
-               process_diplomatic_arrest_system,
-           ));
+            .add_event::<DiplomaticIncidentEvent>()
+            .add_systems(
+                Update,
+                (
+                    evaluate_diplomatic_crime_system,
+                    process_diplomatic_arrest_system,
+                ),
+            );
     }
 }
 
@@ -62,11 +65,14 @@ pub fn process_diplomatic_arrest_system(
 
 #[cfg(test)]
 mod tests {
-    use bevy_ecs::prelude::*;
-    use crate::layer1::pop::Pop;
+    use crate::layer1::law::embassy::{
+        evaluate_diplomatic_crime_system, process_diplomatic_arrest_system, ArrestEvent,
+        DiplomaticImmunity, DiplomaticIncidentEvent,
+    };
     use crate::layer1::law::justice::{CrimeCommittedEvent, CrimeRecord, CrimeType};
+    use crate::layer1::pop::Pop;
     use crate::layer1::social::factions::FactionId;
-    use crate::layer1::law::embassy::{evaluate_diplomatic_crime_system, process_diplomatic_arrest_system, ArrestEvent, DiplomaticImmunity, DiplomaticIncidentEvent};
+    use bevy_ecs::prelude::*;
 
     fn setup_world() -> World {
         let mut world = World::new();
@@ -81,11 +87,19 @@ mod tests {
         let mut world = setup_world();
 
         // Spawn a diplomat pop
-        let diplomat = world.spawn((
-            Pop,
-            DiplomaticImmunity { faction_id: FactionId::MinersGuild },
-            CrimeRecord { wanted: true, severity: 1, is_arrested: false } // Force it to start wanted, test should turn it off
-        )).id();
+        let diplomat = world
+            .spawn((
+                Pop,
+                DiplomaticImmunity {
+                    faction_id: FactionId::MinersGuild,
+                },
+                CrimeRecord {
+                    wanted: true,
+                    severity: 1,
+                    is_arrested: false,
+                }, // Force it to start wanted, test should turn it off
+            ))
+            .id();
 
         // Trigger a crime
         world.send_event(CrimeCommittedEvent {
@@ -106,15 +120,17 @@ mod tests {
     fn test_player_forced_arrest_triggers_diplomatic_incident() {
         let mut world = setup_world();
 
-        let diplomat = world.spawn((
-            Pop,
-            DiplomaticImmunity { faction_id: FactionId::MinersGuild },
-        )).id();
+        let diplomat = world
+            .spawn((
+                Pop,
+                DiplomaticImmunity {
+                    faction_id: FactionId::MinersGuild,
+                },
+            ))
+            .id();
 
         // The player manually orders an arrest despite immunity
-        world.send_event(ArrestEvent {
-            target: diplomat,
-        });
+        world.send_event(ArrestEvent { target: diplomat });
 
         let mut schedule = Schedule::default();
         schedule.add_systems(process_diplomatic_arrest_system);
