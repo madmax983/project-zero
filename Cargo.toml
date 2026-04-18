@@ -55,3 +55,15 @@ default = ["native"]
 nova = [] # Feature flag for Nova (Expansion 1) content
 native = []
 wasm = []
+
+[[example]]
+name = "minimal_nova_demo"
+required-features = ["nova"]
+
+[[example]]
+name = "oral_tradition_demo"
+required-features = ["nova"]
+
+[[example]]
+name = "test_readme_nova"
+required-features = ["nova"]

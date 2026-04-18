@@ -5,7 +5,6 @@
 //!
 //! Run with: `cargo run --features nova --example oral_tradition_demo`
 
-#[cfg(feature = "nova")]
 mod app {
     use bevy_ecs::prelude::*;
     use crossterm::{
@@ -503,13 +502,6 @@ mod app {
     }
 }
 
-#[cfg(not(feature = "nova"))]
-fn main() {
-    println!("This example requires the 'nova' feature.");
-    println!("Run with: cargo run --features nova --example oral_tradition_demo");
-}
-
-#[cfg(feature = "nova")]
 fn main() -> anyhow::Result<()> {
     let mut app = app::App::new();
     app.run().map_err(|e| anyhow::anyhow!(e))
