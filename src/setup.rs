@@ -360,6 +360,7 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     world.init_resource::<Events<crate::layer3::map::HyperlaneCollapseEvent>>();
     world.init_resource::<Events<crate::layer3::map::TradeRouteSeveredEvent>>();
     world.init_resource::<Events<crate::layer2::moon_hermits::PopDesertedEvent>>();
+    world.init_resource::<Events<crate::layer1::psychology::circadian::MicroSleepEvent>>();
     world.init_resource::<Events<crate::layer1::social::gossip_economy::GossipEvent>>();
     world.init_resource::<Events<crate::layer1::social::gossip_economy::BrokerPurchaseEvent>>();
     world.init_resource::<crate::layer1::social::gossip_economy::IntelTokens>();

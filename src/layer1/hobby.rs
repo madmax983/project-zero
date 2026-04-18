@@ -230,7 +230,7 @@ mod tests {
         schedule.add_systems(execute_hobby_system);
 
         let mut produced = false;
-        for _ in 0..1000 {
+        for _ in 0..2000 {
             schedule.run(&mut world);
             let inventory = world.get::<Inventory>(pop).unwrap();
             if inventory

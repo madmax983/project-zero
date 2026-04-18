@@ -10,6 +10,16 @@ pub fn register(schedule: &mut Schedule) {
     );
     schedule.add_systems(
         (
+            crate::layer1::psychology::circadian::bio_rhythm_desync_system
+                .after(crate::layer1::pop::reset_speed_system),
+            crate::layer1::psychology::circadian::trigger_micro_sleep_system
+                .after(crate::layer1::psychology::circadian::bio_rhythm_desync_system),
+        )
+            .in_set(super::Layer1SystemSet::Execution),
+    );
+
+    schedule.add_systems(
+        (
             crate::layer1::zone::apply_zone_designation_system,
             crate::layer1::digital_immortality::handle_mind_upload,
             crate::layer1::digital_immortality::process_ghost_hacks,

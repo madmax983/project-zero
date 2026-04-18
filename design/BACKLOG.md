@@ -616,7 +616,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `938` The Diplomatic Hostage — `specs/938-diplomatic-hostage.md`
 - [ ] `939` Language Drift — `specs/939-language-drift.md`
 - [ ] `940` Commuter's Exile — `specs/940-commuters-exile.md`
-- [ ] `941` Bio-Rhythm Desync — `specs/941-bio-rhythm-desync.md`
 - [ ] `942` The Work-Shift Cartel — `specs/942-work-shift-cartel.md`
 - [ ] `943` The Martyr's Shrine — `specs/943-martyrs-shrine.md`
 - [ ] `946` The Self-Fulfilling Prophecy — `specs/946-self-fulfilling-prophecy.md`
