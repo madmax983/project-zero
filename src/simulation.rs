@@ -733,6 +733,7 @@ mod tests {
 
         world.init_resource::<Events<crate::layer3::events::debt_prison::BailoutOfferEvent>>();
         world.init_resource::<Events<crate::layer3::events::debt_prison::AcceptBailoutEvent>>();
+        world.init_resource::<crate::layer1::economy::smugglers_cove::ColonyAuthority>();
 
         world.init_resource::<Events<crate::layer1::diplomacy::wards::WarDeclaredEvent>>();
         world.insert_resource(crate::layer1::diplomacy::wards::DiplomaticStanding {
