@@ -293,6 +293,7 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     #[cfg(feature = "nova")]
     world.insert_resource(crate::layer1::loci::LociMap::new(80, 50));
     world.init_resource::<crate::layer1::social::old_guard::Demographics>();
+    world.init_resource::<crate::layer1::economy::beacon::ColonyBeacon>();
     world.insert_resource(crate::layer2::system::ViewMode::default());
     world.insert_resource(crate::layer2::system::SystemMap);
     world.insert_resource(crate::layer2::visibility::SystemVisibility::default());
