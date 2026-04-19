@@ -33,4 +33,6 @@ pub use volatile::{handle_explosion_system, volatile_decay_system, ExplosionEven
 pub mod geothermal;
 
 pub mod ephemeral_moons;
+pub mod impact;
 pub use ephemeral_moons::*;
+pub use impact::*;

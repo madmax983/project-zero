@@ -333,6 +333,9 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     world.init_resource::<Events<crate::layer1::geology::GeologicalEvent>>();
     world.init_resource::<Events<crate::layer1::environment::ephemeral_moons::MoonCapturedEvent>>();
     world.init_resource::<Events<crate::layer1::environment::ephemeral_moons::MoonEjectedEvent>>();
+    world.init_resource::<Events<crate::layer1::nature::megafauna_terrain::AwakenTitanEvent>>();
+    world.init_resource::<Events<crate::layer1::environment::impact::ImpactWarningEvent>>();
+    world.init_resource::<Events<crate::layer1::environment::impact::ImpactStrikeEvent>>();
     world.init_resource::<Events<crate::layer1::geography::HistoricalEvent>>();
     world.init_resource::<Events<crate::layer1::social::society::InvestigationEvent>>();
     world.init_resource::<Events<crate::layer1::social::society::SuppressSocietyEvent>>();

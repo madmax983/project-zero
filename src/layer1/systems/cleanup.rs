@@ -96,6 +96,8 @@ pub fn register(schedule: &mut Schedule) {
             update_event_buffer::<crate::layer3::market::ephemeral_market::MarketTradeEvent>,
             update_event_buffer::<crate::layer3::market::ephemeral_market::MarketTradeFailedEvent>,
             update_event_buffer::<crate::layer1::nature::megafauna_terrain::AwakenTitanEvent>,
+            update_event_buffer::<crate::layer1::environment::impact::ImpactWarningEvent>,
+            update_event_buffer::<crate::layer1::environment::impact::ImpactStrikeEvent>,
         )
             .in_set(Layer1SystemSet::EventCleanup),
     );
