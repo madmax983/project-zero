@@ -772,7 +772,7 @@ mod tests {
         let entity = world.spawn((Pop, GridPosition { x: 1, y: 2 })).id();
 
         assert!(world.get::<Pop>(entity).is_some());
-        let pos = world.get::<GridPosition>(entity).unwrap();
+        let pos = world.get::<GridPosition>(entity).expect("Component should exist or System should run");
         assert_eq!(pos.x, 1);
         assert_eq!(pos.y, 2);
     }
@@ -845,7 +845,7 @@ mod tests {
     fn test_pop_name_component() {
         let mut world = World::new();
         let entity = world.spawn(PopName("Ada".to_string())).id();
-        let name = world.get::<PopName>(entity).unwrap();
+        let name = world.get::<PopName>(entity).expect("Component should exist or System should run");
         assert_eq!(name.0, "Ada");
     }
 
@@ -954,22 +954,22 @@ mod security_tests {
             .id();
 
         // Run system cycle 1: Reset -> Modify
-        world.run_system_once(reset_speed_system).unwrap();
+        world.run_system_once(reset_speed_system).expect("Component should exist or System should run");
         world
             .run_system_once(apply_chemical_speed_modifiers_system)
-            .unwrap();
-        let speed_1 = world.get::<Speed>(pop).unwrap().current;
+            .expect("Component should exist or System should run");
+        let speed_1 = world.get::<Speed>(pop).expect("Component should exist or System should run").current;
         assert!(
             (speed_1 - 1.5).abs() < f32::EPSILON,
             "First run should be 1.5"
         );
 
         // Run system cycle 2: Reset -> Modify
-        world.run_system_once(reset_speed_system).unwrap();
+        world.run_system_once(reset_speed_system).expect("Component should exist or System should run");
         world
             .run_system_once(apply_chemical_speed_modifiers_system)
-            .unwrap();
-        let speed_2 = world.get::<Speed>(pop).unwrap().current;
+            .expect("Component should exist or System should run");
+        let speed_2 = world.get::<Speed>(pop).expect("Component should exist or System should run").current;
 
         // Should remain 1.5, NOT 2.25
         assert!(

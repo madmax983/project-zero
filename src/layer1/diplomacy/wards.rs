@@ -84,8 +84,8 @@ mod tests {
         app.update();
 
         // Relations should improve
-        let standing = app.world().get_resource::<DiplomaticStanding>().unwrap();
-        assert!(standing.faction_relations.get(&home_faction).unwrap() > &0.0);
+        let standing = app.world().get_resource::<DiplomaticStanding>().expect("Component should exist or System should run");
+        assert!(standing.faction_relations.get(&home_faction).expect("Component should exist or System should run") > &0.0);
     }
 
     #[test]
@@ -120,13 +120,13 @@ mod tests {
         assert_eq!(war_events.len(), 1);
 
         let mut reader = war_events.get_cursor();
-        let event = reader.read(war_events).next().unwrap();
+        let event = reader.read(war_events).next().expect("Component should exist or System should run");
         assert_eq!(event.target_faction, home_faction);
 
         // Relations should tank
-        let standing = app.world().get_resource::<DiplomaticStanding>().unwrap();
+        let standing = app.world().get_resource::<DiplomaticStanding>().expect("Component should exist or System should run");
         assert_eq!(
-            *standing.faction_relations.get(&home_faction).unwrap(),
+            *standing.faction_relations.get(&home_faction).expect("Component should exist or System should run"),
             -100.0
         );
     }
@@ -158,7 +158,7 @@ mod tests {
         app.update();
 
         // Relations should degrade
-        let standing = app.world().get_resource::<DiplomaticStanding>().unwrap();
-        assert!(*standing.faction_relations.get(&home_faction).unwrap() < 50.0);
+        let standing = app.world().get_resource::<DiplomaticStanding>().expect("Component should exist or System should run");
+        assert!(*standing.faction_relations.get(&home_faction).expect("Component should exist or System should run") < 50.0);
     }
 }

@@ -68,7 +68,7 @@ mod tests {
         schedule.run(&mut world);
 
         // Assert
-        let progress = world.get::<ArkShipProject>(ark).unwrap().progress;
+        let progress = world.get::<ArkShipProject>(ark).expect("Component should exist or System should run").progress;
         assert_eq!(
             progress, 100,
             "Ark should have consumed resources and progressed"

@@ -28,7 +28,7 @@ mod tests {
             ))
             .id();
 
-        let battery = world.get::<DroneBattery>(drone).unwrap();
+        let battery = world.get::<DroneBattery>(drone).expect("Component should exist or System should run");
         assert!((battery.current - 100.0).abs() < f32::EPSILON);
     }
 
@@ -71,7 +71,7 @@ mod tests {
         schedule.add_systems(evaluate_drone_actions_system);
         schedule.run(&mut world);
 
-        let action = world.get::<PopAction>(drone).unwrap();
+        let action = world.get::<PopAction>(drone).expect("Component should exist or System should run");
         assert_eq!(action.current, ActionType::Charge);
     }
 
@@ -97,7 +97,7 @@ mod tests {
         schedule.add_systems(evaluate_drone_actions_system);
         schedule.run(&mut world);
 
-        let action = world.get::<PopAction>(drone).unwrap();
+        let action = world.get::<PopAction>(drone).expect("Component should exist or System should run");
         assert_eq!(action.current, ActionType::Idle);
     }
 
@@ -139,7 +139,7 @@ mod tests {
         schedule.add_systems(process_charge_system);
         schedule.run(&mut world);
 
-        let battery = world.get::<DroneBattery>(drone).unwrap();
+        let battery = world.get::<DroneBattery>(drone).expect("Component should exist or System should run");
         assert!(battery.current > 10.0, "Battery should increase");
     }
 
@@ -164,7 +164,7 @@ mod tests {
         schedule.add_systems(drone_battery_system);
         schedule.run(&mut world);
 
-        let battery = world.get::<DroneBattery>(drone).unwrap();
+        let battery = world.get::<DroneBattery>(drone).expect("Component should exist or System should run");
         assert!(battery.current < 100.0, "Battery should drain");
     }
 
@@ -219,7 +219,7 @@ mod tests {
         // Assert
         assert!(app.world().entity(drone).contains::<FeralDrone>());
         assert_eq!(
-            app.world().get::<Drone>(drone).unwrap().state,
+            app.world().get::<Drone>(drone).expect("Component should exist or System should run").state,
             DroneState::Feral
         );
     }
@@ -258,7 +258,7 @@ mod tests {
         app.update(); // process_feral_drones runs
 
         // Assert - The drone picked up the nearby resource
-        let feral_drone = app.world().get::<FeralDrone>(drone).unwrap();
+        let feral_drone = app.world().get::<FeralDrone>(drone).expect("Component should exist or System should run");
         assert!(!feral_drone.hoard.is_empty());
         assert!(app.world().get_entity(resource).is_err()); // Resource removed from ground
     }
@@ -299,7 +299,7 @@ mod tests {
         app.update();
 
         // Assert
-        let health = app.world().get::<Health>(pop).unwrap();
+        let health = app.world().get::<Health>(pop).expect("Component should exist or System should run");
         assert!(
             health.current < health.max,
             "Pop should have taken damage from Feral Drone"

@@ -36,7 +36,7 @@
 //! schedule.run(&mut world);
 //!
 //! // The unfortunate pop has been violently sucked into the vacuum cell!
-//! let new_pos = world.get::<GridPosition>(pop).unwrap();
+//! let new_pos = world.get::<GridPosition>(pop).expect("Component should exist or System should run");
 //! assert_eq!(new_pos.x, 6);
 //! assert_eq!(new_pos.y, 5);
 //! ```
@@ -144,7 +144,7 @@ mod tests {
         schedule.run(&mut world);
 
         // Assert Pop moved to (6,5)
-        let pos = world.get::<GridPosition>(pop).unwrap();
+        let pos = world.get::<GridPosition>(pop).expect("Component should exist or System should run");
         assert_eq!(
             *pos,
             GridPosition { x: 6, y: 5 },
@@ -176,7 +176,7 @@ mod tests {
         schedule.add_systems(super::suction_system);
         schedule.run(&mut world);
 
-        let pos = world.get::<GridPosition>(wall).unwrap();
+        let pos = world.get::<GridPosition>(wall).expect("Component should exist or System should run");
         assert_eq!(
             *pos,
             GridPosition { x: 5, y: 5 },
@@ -200,7 +200,7 @@ mod tests {
         schedule.add_systems(super::suction_system);
         schedule.run(&mut world);
 
-        let pos = world.get::<GridPosition>(pop).unwrap();
+        let pos = world.get::<GridPosition>(pop).expect("Component should exist or System should run");
         assert_eq!(
             *pos,
             GridPosition { x: 5, y: 5 },

@@ -65,7 +65,7 @@ mod tests {
         let _ = world.run_system_once(grave_visit_system);
 
         // Assert
-        let needs = world.get::<Needs>(visitor).unwrap();
+        let needs = world.get::<Needs>(visitor).expect("Component should exist or System should run");
         assert!(
             needs.leisure > 0.5,
             "Visiting grave should restore leisure/mood"
@@ -90,7 +90,7 @@ mod tests {
         let _ = world.run_system_once(build_system_wrapper);
 
         // Assert
-        let sacrilege_events = world.get_resource::<Events<SacrilegeEvent>>().unwrap();
+        let sacrilege_events = world.get_resource::<Events<SacrilegeEvent>>().expect("Component should exist or System should run");
         assert_eq!(
             sacrilege_events.len(),
             1,

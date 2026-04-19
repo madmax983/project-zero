@@ -90,7 +90,7 @@ mod tests {
         app.update();
 
         // Assert
-        let work_stats = app.world_mut().get::<WorkStats>(entity).unwrap();
+        let work_stats = app.world_mut().get::<WorkStats>(entity).expect("Component should exist or System should run");
         assert_eq!(work_stats.current_speed, 5.0); // 500% speed
     }
 
@@ -121,7 +121,7 @@ mod tests {
         app.update();
 
         // Assert
-        let trauma = app.world_mut().get::<NeuralTrauma>(entity).unwrap();
+        let trauma = app.world_mut().get::<NeuralTrauma>(entity).expect("Component should exist or System should run");
         assert!(trauma.burnout_level > 0.0);
     }
 
@@ -146,7 +146,7 @@ mod tests {
         app.update();
 
         // Assert
-        let state = app.world_mut().get::<ActiveState>(entity).unwrap();
+        let state = app.world_mut().get::<ActiveState>(entity).expect("Component should exist or System should run");
         assert_eq!(*state, ActiveState::Catatonic);
     }
 }

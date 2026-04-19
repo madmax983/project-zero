@@ -230,7 +230,7 @@ pub fn update_sky_system(mut sky: ResMut<Sky>, time: Res<crate::shared::time::Si
 /// }
 ///
 /// // The Pop should have received the Vigor modifier
-/// let morale = world.get::<Morale>(pop_id).unwrap();
+/// let morale = world.get::<Morale>(pop_id).expect("Component should exist or System should run");
 /// assert!(morale.modifiers.iter().any(|m| m.label == ConstellationEffect::Vigor.label()));
 /// ```
 pub fn observe_constellations_system(
@@ -370,7 +370,7 @@ mod tests {
             schedule.run(&mut world);
         }
 
-        let morale = world.get::<Morale>(pop).unwrap();
+        let morale = world.get::<Morale>(pop).expect("Component should exist or System should run");
         // It's probabilistic, but 100 trials for 5% is ~99.4% chance.
         // Assert at least one modifier exists
         assert!(morale

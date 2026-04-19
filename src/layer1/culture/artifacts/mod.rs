@@ -138,7 +138,7 @@ mod tests {
         schedule.run(&mut world);
 
         // Assert: The Pop receives increased stress
-        let stress = world.get::<StressTracker>(pop).unwrap();
+        let stress = world.get::<StressTracker>(pop).expect("Component should exist or System should run");
         assert!(
             stress.accumulated_stress > 0.0,
             "Pop within Artifact aura should receive increased stress."
@@ -220,7 +220,7 @@ mod tests {
         schedule.run(&mut world);
 
         // Check if Pop has the aura effect applied
-        let active_auras = world.get::<ActiveAuras>(pop).unwrap();
+        let active_auras = world.get::<ActiveAuras>(pop).expect("Component should exist or System should run");
         assert!(active_auras.contains_effect(AuraEffect::StressModifier(0.1)));
     }
 
@@ -249,21 +249,21 @@ mod tests {
         schedule.run(&mut world);
 
         // Check - should NOT have aura
-        let active_auras = world.get::<ActiveAuras>(pop).unwrap();
+        let active_auras = world.get::<ActiveAuras>(pop).expect("Component should exist or System should run");
         assert!(active_auras.is_empty());
 
         // Move pop inside range
         world.entity_mut(pop).insert(GridPosition { x: 11, y: 10 });
         schedule.run(&mut world);
 
-        let active_auras = world.get::<ActiveAuras>(pop).unwrap();
+        let active_auras = world.get::<ActiveAuras>(pop).expect("Component should exist or System should run");
         assert!(!active_auras.is_empty());
 
         // Move pop out again
         world.entity_mut(pop).insert(GridPosition { x: 20, y: 20 });
         schedule.run(&mut world);
 
-        let active_auras = world.get::<ActiveAuras>(pop).unwrap();
+        let active_auras = world.get::<ActiveAuras>(pop).expect("Component should exist or System should run");
         assert!(
             active_auras.is_empty(),
             "Aura should be removed when leaving range"

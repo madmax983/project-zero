@@ -518,7 +518,7 @@ mod tests {
         app.add_systems(bevy::prelude::Update, pressure_damage_system);
         app.update();
 
-        let health = app.world().get::<Health>(pop).unwrap();
+        let health = app.world().get::<Health>(pop).expect("Component should exist or System should run");
         assert!(health.current < 100.0, "Pop in vacuum should take damage");
     }
 
@@ -673,7 +673,7 @@ mod tests {
         let speed = app
             .world()
             .get::<crate::layer1::pop::Speed>(pop_entity)
-            .unwrap();
+            .expect("Component should exist or System should run");
         assert!(speed.current < speed.base, "Airlock should slow movement");
     }
 

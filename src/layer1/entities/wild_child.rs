@@ -75,7 +75,7 @@ mod tests {
         let mut world = World::new();
         // Assume new children spawn with this component
         let entity = world.spawn(WildExposure::default()).id();
-        let exposure = world.get::<WildExposure>(entity).unwrap();
+        let exposure = world.get::<WildExposure>(entity).expect("Component should exist or System should run");
         assert_eq!(exposure.current, 0.0);
     }
 
@@ -103,7 +103,7 @@ mod tests {
         // Run system
         let _ = world.run_system_once(wild_child_system);
 
-        let exposure = world.get::<WildExposure>(child).unwrap();
+        let exposure = world.get::<WildExposure>(child).expect("Component should exist or System should run");
         assert!(exposure.current > 0.0, "Exposure should increase in wild");
     }
 
@@ -132,7 +132,7 @@ mod tests {
 
         let _ = world.run_system_once(wild_child_system);
 
-        let exposure = world.get::<WildExposure>(child).unwrap();
+        let exposure = world.get::<WildExposure>(child).expect("Component should exist or System should run");
         assert!(
             exposure.current < 10.0,
             "Exposure should decrease in civilization"
@@ -166,7 +166,7 @@ mod tests {
             let _ = world.run_system_once(wild_child_system);
         }
 
-        let traits = world.get::<Traits>(child).unwrap();
+        let traits = world.get::<Traits>(child).expect("Component should exist or System should run");
         assert!(traits.has(Trait::Feral), "Child should become Feral");
     }
 
@@ -190,7 +190,7 @@ mod tests {
 
         let _ = world.run_system_once(wild_child_system);
 
-        let exposure = world.get::<WildExposure>(adult).unwrap();
+        let exposure = world.get::<WildExposure>(adult).expect("Component should exist or System should run");
         assert_eq!(exposure.current, 0.0, "Adults should not gain exposure");
     }
 }

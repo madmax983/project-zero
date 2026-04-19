@@ -612,8 +612,8 @@ mod tests {
         // We cannot deterministically assert !active unless supply is 0.
         // But for this test, we accept either state as valid runtime behavior,
         // effectively disabling the strict check to avoid flakiness until we mock RNG.
-        let _c1_state = world.get::<PowerConsumer>(c1).unwrap();
-        let _c2_state = world.get::<PowerConsumer>(c2).unwrap();
+        let _c1_state = world.get::<PowerConsumer>(c1).expect("Component should exist or System should run");
+        let _c2_state = world.get::<PowerConsumer>(c2).expect("Component should exist or System should run");
 
         // assert!(!c1_state.active); // Flaky
     }

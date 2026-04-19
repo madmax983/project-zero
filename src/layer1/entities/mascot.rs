@@ -242,7 +242,7 @@ mod tests {
 
         assert!(target.is_some(), "Mascot should have movement target");
         assert_eq!(
-            target.unwrap().target_position,
+            target.expect("Component should exist or System should run").target_position,
             GridPosition { x: 10, y: 10 }
         );
     }
@@ -323,7 +323,7 @@ mod tests {
         schedule.run(&mut world);
 
         // Pop should have Grief memory
-        let memories = world.get::<Memories>(pop).unwrap();
+        let memories = world.get::<Memories>(pop).expect("Component should exist or System should run");
 
         let has_memory = memories
             .items

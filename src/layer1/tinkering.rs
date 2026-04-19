@@ -100,7 +100,7 @@ mod tests {
 
         app.update();
 
-        let efficiency = app.world().get::<EfficiencyMultiplier>(machine).unwrap();
+        let efficiency = app.world().get::<EfficiencyMultiplier>(machine).expect("Component should exist or System should run");
         assert!(
             efficiency.value > 1.0,
             "Successful tinker should boost efficiency"
@@ -139,7 +139,7 @@ mod tests {
 
         app.update();
 
-        let efficiency = app.world().get::<EfficiencyMultiplier>(machine).unwrap();
+        let efficiency = app.world().get::<EfficiencyMultiplier>(machine).expect("Component should exist or System should run");
         assert!(
             (efficiency.value - 2.0).abs() < f32::EPSILON,
             "Efficiency should cap at 2.0"
@@ -179,7 +179,7 @@ mod tests {
 
         app.update();
 
-        let condition = app.world().get::<Structure>(machine).unwrap();
+        let condition = app.world().get::<Structure>(machine).expect("Component should exist or System should run");
         assert!(
             condition.current_hp < 100.0,
             "Failed tinker should damage the machine"

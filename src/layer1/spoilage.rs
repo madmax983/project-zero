@@ -95,11 +95,11 @@ mod tests {
 
         // Run system 5 times
         for _ in 0..5 {
-            world.run_system_once(spoilage_system).unwrap();
+            world.run_system_once(spoilage_system).expect("Component should exist or System should run");
         }
 
         // Item should still exist
-        let p = world.get::<Perishable>(item).unwrap();
+        let p = world.get::<Perishable>(item).expect("Component should exist or System should run");
         assert_eq!(p.current_ticks, 5);
     }
 
@@ -123,7 +123,7 @@ mod tests {
             .id();
 
         // Run system twice (9->10 (rot), 10->despawn? Or just >= max)
-        world.run_system_once(spoilage_system).unwrap();
+        world.run_system_once(spoilage_system).expect("Component should exist or System should run");
 
         // Should be gone or marked for removal
         // Note: Bevy 0.15 get_entity returns Result
@@ -140,7 +140,7 @@ mod tests {
         world.insert_resource(resources);
 
         // Run system
-        world.run_system_once(spoilage_system).unwrap();
+        world.run_system_once(spoilage_system).expect("Component should exist or System should run");
 
         let resources = world.resource::<ColonyResources>();
         // Should be less than 1000.0
@@ -165,7 +165,7 @@ mod tests {
             ))
             .id();
 
-        world.run_system_once(spoilage_system).unwrap();
+        world.run_system_once(spoilage_system).expect("Component should exist or System should run");
 
         assert!(world.get_entity(item).is_ok());
     }
@@ -180,7 +180,7 @@ mod tests {
         world.insert_resource(resources);
 
         // Run system
-        world.run_system_once(spoilage_system).unwrap();
+        world.run_system_once(spoilage_system).expect("Component should exist or System should run");
 
         let resources = world.resource::<ColonyResources>();
         // Rations decay at 10% of global rate (0.0005 * 0.1 = 0.00005)
@@ -205,7 +205,7 @@ mod tests {
         world.insert_resource(vermin);
 
         // Run system
-        world.run_system_once(spoilage_system).unwrap();
+        world.run_system_once(spoilage_system).expect("Component should exist or System should run");
 
         // Calculate expected decay
         // modifier = (50/100) * 9 + 1 = 5.5

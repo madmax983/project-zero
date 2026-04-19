@@ -64,7 +64,7 @@ mod tests {
             ))
             .id();
 
-        let power_source = world.get::<PowerSource>(_tap_entity).unwrap();
+        let power_source = world.get::<PowerSource>(_tap_entity).expect("Component should exist or System should run");
         assert_eq!(power_source.output, f32::INFINITY);
     }
 
@@ -97,7 +97,7 @@ mod tests {
         schedule.add_systems(apply_time_dilation_system);
         schedule.run(&mut world);
 
-        let speed = world.get::<Speed>(pop).unwrap();
+        let speed = world.get::<Speed>(pop).expect("Component should exist or System should run");
         // Movement speed should be heavily reduced (e.g., 10% of current)
         assert_eq!(speed.current, 0.5);
     }
@@ -131,7 +131,7 @@ mod tests {
         schedule.add_systems(apply_time_dilation_system);
         schedule.run(&mut world);
 
-        let speed = world.get::<Speed>(pop).unwrap();
+        let speed = world.get::<Speed>(pop).expect("Component should exist or System should run");
         assert_eq!(speed.current, 10.0); // Unaffected
     }
 }

@@ -114,7 +114,7 @@ mod tests {
         app.add_systems(Update, process_gene_splicing_system);
         app.update();
 
-        let traits = app.world().get::<Traits>(pop_entity).unwrap();
+        let traits = app.world().get::<Traits>(pop_entity).expect("Component should exist or System should run");
         assert!(
             traits.has(Trait::StoneSkin),
             "Pop should acquire StoneSkin trait"
@@ -148,13 +148,13 @@ mod tests {
         app.add_systems(Update, process_gene_splicing_system);
         app.update();
 
-        let health = app.world().get::<Health>(pop_entity).unwrap();
+        let health = app.world().get::<Health>(pop_entity).expect("Component should exist or System should run");
         assert!(
             health.current < 100.0,
             "Pop should take damage from rejection"
         );
 
-        let traits = app.world().get::<Traits>(pop_entity).unwrap();
+        let traits = app.world().get::<Traits>(pop_entity).expect("Component should exist or System should run");
         assert!(
             !traits.has(Trait::NightVision),
             "Pop should not acquire the intended trait on failure"
@@ -188,7 +188,7 @@ mod tests {
         app.add_systems(Update, process_gene_splicing_system);
         app.update();
 
-        let traits = app.world().get::<Traits>(pop_entity).unwrap();
+        let traits = app.world().get::<Traits>(pop_entity).expect("Component should exist or System should run");
         assert!(
             traits.has(Trait::LightBlindness) || traits.has(Trait::Frail),
             "Pop should acquire a negative mutation trait on failure"

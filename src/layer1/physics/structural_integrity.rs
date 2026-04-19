@@ -352,7 +352,7 @@ mod tests {
         // Actually, if it's rock, it HAS a roof implicitly.
 
         // 3. Victim takes damage
-        let health = world.get::<Health>(victim).unwrap();
+        let health = world.get::<Health>(victim).expect("Component should exist or System should run");
         assert!(health.current < 100.0);
     }
 

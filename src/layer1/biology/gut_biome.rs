@@ -141,16 +141,16 @@ mod tests {
             .id();
 
         // Run eat system
-        world.run_system_once(consume_food_system).unwrap();
+        world.run_system_once(consume_food_system).expect("Component should exist or System should run");
 
-        let needs = world.get::<Needs>(pop).unwrap();
+        let needs = world.get::<Needs>(pop).expect("Component should exist or System should run");
         // Normal gain is e.g. 0.2. Poor adaptation might give 0.1 (0.2 * 0.6 = 0.12).
         assert!(
             needs.hunger < 0.2,
             "Should have reduced nutrition gain due to poor biome"
         );
 
-        let morale = world.get::<Morale>(pop).unwrap();
+        let morale = world.get::<Morale>(pop).expect("Component should exist or System should run");
         assert!(
             morale.modifiers.iter().any(|m| m.label == "Indigestion"),
             "Should have indigestion debuff"
@@ -192,12 +192,12 @@ mod tests {
             ))
             .id();
 
-        world.run_system_once(consume_food_system).unwrap();
+        world.run_system_once(consume_food_system).expect("Component should exist or System should run");
 
-        let needs = world.get::<Needs>(pop).unwrap();
+        let needs = world.get::<Needs>(pop).expect("Component should exist or System should run");
         assert!(needs.hunger >= 0.2, "Should have full nutrition gain");
 
-        let morale = world.get::<Morale>(pop).unwrap();
+        let morale = world.get::<Morale>(pop).expect("Component should exist or System should run");
         assert!(
             morale.modifiers.iter().any(|m| m.label == "Gut Comfort"),
             "Should have comfort buff"

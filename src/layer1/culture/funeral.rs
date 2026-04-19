@@ -186,7 +186,7 @@ mod tests {
         grief_system(&mut world);
 
         // Check if witness has negative memory
-        let memories = world.get::<Memories>(witness).unwrap();
+        let memories = world.get::<Memories>(witness).expect("Component should exist or System should run");
         assert!(memories
             .items
             .iter()
@@ -219,7 +219,7 @@ mod tests {
         // Simulate funeral completion
         bury_corpse(&mut world, grave, corpse);
 
-        let grave_comp = world.get::<Grave>(grave).unwrap();
+        let grave_comp = world.get::<Grave>(grave).expect("Component should exist or System should run");
         assert!(grave_comp.occupied);
         assert_eq!(grave_comp.corpse_name.as_deref(), Some("Bob"));
 
@@ -238,7 +238,7 @@ mod tests {
         // Perform burial
         apply_closure(&mut world, pop);
 
-        let memories = world.get::<Memories>(pop).unwrap();
+        let memories = world.get::<Memories>(pop).expect("Component should exist or System should run");
         // Should have 'AttendedFuneral'
         assert!(memories
             .items

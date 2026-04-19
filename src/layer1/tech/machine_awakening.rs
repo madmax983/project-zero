@@ -89,7 +89,7 @@ mod tests {
 
         // Assert
         // Check if needs like "Comfort" or "Social" are 0.0 or disabled
-        let needs = app.world().get::<BotNeeds>(bot).unwrap();
+        let needs = app.world().get::<BotNeeds>(bot).expect("Component should exist or System should run");
         assert!(
             !needs.has_comfort_need(),
             "Basic bots should not have a Comfort need"
@@ -145,7 +145,7 @@ mod tests {
         app.update();
 
         // Assert
-        let needs = app.world().get::<BotNeeds>(bot).unwrap();
+        let needs = app.world().get::<BotNeeds>(bot).expect("Component should exist or System should run");
         assert!(
             needs.has_comfort_need(),
             "Awakened bots must develop Comfort/Social needs"

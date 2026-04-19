@@ -77,13 +77,13 @@ mod tests {
         app.update();
 
         // Target should now have grafted component and increased tech level, retaining old quirks and debt
-        let tech = app.world().get::<TechLevel>(base_building).unwrap();
+        let tech = app.world().get::<TechLevel>(base_building).expect("Component should exist or System should run");
         assert_eq!(tech.level, 3);
 
-        let graft = app.world().get::<GraftedModule>(base_building).unwrap();
+        let graft = app.world().get::<GraftedModule>(base_building).expect("Component should exist or System should run");
         assert_eq!(graft.efficiency_bonus, 2.0);
 
-        let quirks = app.world().get::<Quirks>(base_building).unwrap();
+        let quirks = app.world().get::<Quirks>(base_building).expect("Component should exist or System should run");
         assert!(quirks.list.contains(&"Leaky Vents".to_string()));
         assert!(
             quirks
@@ -92,7 +92,7 @@ mod tests {
             "Should add grafting quirk"
         );
 
-        let debt = app.world().get::<MaintenanceDebt>(base_building).unwrap();
+        let debt = app.world().get::<MaintenanceDebt>(base_building).expect("Component should exist or System should run");
         assert!(
             debt.amount > 50.0,
             "Grafting should increase maintenance debt baseline"

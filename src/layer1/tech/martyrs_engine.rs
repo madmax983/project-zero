@@ -142,7 +142,7 @@ mod tests {
         schedule.add_systems(process_martyrs_engine);
         schedule.run(&mut world);
 
-        let power = world.get::<PowerSource>(engine).unwrap();
+        let power = world.get::<PowerSource>(engine).expect("Component should exist or System should run");
         assert_eq!(power.output, 0.0);
     }
 
@@ -180,7 +180,7 @@ mod tests {
         assert!(world.get_entity(pop).is_err());
 
         // Engine is active
-        let engine_comp = world.get::<MartyrsEngine>(engine).unwrap();
+        let engine_comp = world.get::<MartyrsEngine>(engine).expect("Component should exist or System should run");
         assert!(engine_comp.ticks_remaining > 0);
     }
 
@@ -207,10 +207,10 @@ mod tests {
         schedule.add_systems(process_martyrs_engine);
         schedule.run(&mut world);
 
-        let engine_comp = world.get::<MartyrsEngine>(engine).unwrap();
+        let engine_comp = world.get::<MartyrsEngine>(engine).expect("Component should exist or System should run");
         assert_eq!(engine_comp.ticks_remaining, 9); // Decays
 
-        let power = world.get::<PowerSource>(engine).unwrap();
+        let power = world.get::<PowerSource>(engine).expect("Component should exist or System should run");
         assert!(power.output > 0.0); // Producing power
     }
 
@@ -236,7 +236,7 @@ mod tests {
         schedule.add_systems(attune_engine_system);
         schedule.run(&mut world);
 
-        let bystander_stress = world.get::<StressTracker>(bystander).unwrap();
+        let bystander_stress = world.get::<StressTracker>(bystander).expect("Component should exist or System should run");
         assert!(bystander_stress.accumulated_stress > 0.0);
     }
 }

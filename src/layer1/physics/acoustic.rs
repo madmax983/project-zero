@@ -435,7 +435,7 @@ mod tests {
         schedule.add_systems(apply_noise_effects_system);
         schedule.run(&mut world);
 
-        let needs = world.get::<Needs>(pop).unwrap();
+        let needs = world.get::<Needs>(pop).expect("Component should exist or System should run");
 
         // Leisure should have decreased
         // 0.8 - 0.01 * 0.9 = 0.791

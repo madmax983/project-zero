@@ -20,7 +20,7 @@ use rand::{rngs::StdRng, SeedableRng};
 /// assert_eq!(random_seed.value, 1234);
 ///
 /// let preset_seed = FaunaSeed::from_preset("Wolf");
-/// assert_eq!(preset_seed.preset.unwrap(), "Wolf");
+/// assert_eq!(preset_seed.preset.expect("Component should exist or System should run"), "Wolf");
 /// ```
 #[derive(Debug, Clone)]
 pub struct FaunaSeed {

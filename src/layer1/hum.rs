@@ -232,8 +232,8 @@ mod tests {
 
         schedule.run(&mut world);
 
-        let needs = world.get::<Needs>(pop).unwrap();
-        let stress = world.get::<StressTracker>(pop).unwrap();
+        let needs = world.get::<Needs>(pop).expect("Component should exist or System should run");
+        let stress = world.get::<StressTracker>(pop).expect("Component should exist or System should run");
 
         assert!(needs.leisure > 0.1, "Leisure should increase");
         assert!(stress.accumulated_stress > 0.0, "Stress should increase");

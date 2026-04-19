@@ -131,7 +131,7 @@ mod tests {
             .id();
 
         // Fix circular ref for Twin A
-        world.get_mut::<QuantumTwin>(twin_a).unwrap().partner = twin_b;
+        world.get_mut::<QuantumTwin>(twin_a).expect("Component should exist or System should run").partner = twin_b;
 
         // Init resources
         world.insert_resource(Events::<XpGainEvent>::default());
@@ -148,7 +148,7 @@ mod tests {
 
         schedule.run(&mut world);
 
-        let skill_b = world.get::<Skills>(twin_b).unwrap();
+        let skill_b = world.get::<Skills>(twin_b).expect("Component should exist or System should run");
         // Twin B should get 50.0 * 0.5 = 25.0
         assert_eq!(skill_b.get_xp(SkillType::Mining), 25.0);
     }
@@ -184,15 +184,15 @@ mod tests {
             ))
             .id();
 
-        world.get_mut::<QuantumTwin>(twin_a).unwrap().partner = twin_b;
+        world.get_mut::<QuantumTwin>(twin_a).expect("Component should exist or System should run").partner = twin_b;
 
         let mut schedule = Schedule::default();
         schedule.add_systems(update_twin_mood_system);
 
         schedule.run(&mut world);
 
-        let mood_a = world.get::<Morale>(twin_a).unwrap();
-        let mood_b = world.get::<Morale>(twin_b).unwrap();
+        let mood_a = world.get::<Morale>(twin_a).expect("Component should exist or System should run");
+        let mood_b = world.get::<Morale>(twin_b).expect("Component should exist or System should run");
 
         // They should move towards average (0.5).
         // A goes down from 1.0, B goes up from 0.0.
@@ -237,7 +237,7 @@ mod tests {
             ))
             .id();
 
-        world.get_mut::<QuantumTwin>(twin_a).unwrap().partner = twin_b;
+        world.get_mut::<QuantumTwin>(twin_a).expect("Component should exist or System should run").partner = twin_b;
 
         let mut schedule = Schedule::default();
         schedule.add_systems(handle_severance_system);
@@ -252,10 +252,10 @@ mod tests {
 
         schedule.run(&mut world);
 
-        let mood_b = world.get::<Morale>(twin_b).unwrap();
+        let mood_b = world.get::<Morale>(twin_b).expect("Component should exist or System should run");
         let stress_b = world
             .get::<crate::layer1::stress::StressTracker>(twin_b)
-            .unwrap();
+            .expect("Component should exist or System should run");
 
         // Should have "Catatonic" or massive stress
         assert!(stress_b.accumulated_stress > 0.9);

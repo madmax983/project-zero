@@ -227,13 +227,13 @@ mod tests {
 
         // Tick 1
         // Acc += 1.5 -> 1.5. Pos += 1. Acc -> 0.5. Friction applied.
-        world.run_system_once(particle_physics_system).unwrap();
+        world.run_system_once(particle_physics_system).expect("Component should exist or System should run");
 
-        let pos = world.get::<GridPosition>(entity).unwrap();
+        let pos = world.get::<GridPosition>(entity).expect("Component should exist or System should run");
         assert_eq!(pos.x, 1);
         assert_eq!(pos.y, 0);
 
-        let acc = world.get::<ParticleAccumulator>(entity).unwrap();
+        let acc = world.get::<ParticleAccumulator>(entity).expect("Component should exist or System should run");
         assert!((acc.x - 0.5).abs() < 0.001);
     }
 
@@ -253,13 +253,13 @@ mod tests {
             .id();
 
         // Tick 1: lifetime 1 -> 0
-        world.run_system_once(particle_system).unwrap();
+        world.run_system_once(particle_system).expect("Component should exist or System should run");
 
-        let particle = world.get::<Particle>(entity).unwrap();
+        let particle = world.get::<Particle>(entity).expect("Component should exist or System should run");
         assert_eq!(particle.lifetime, 0);
 
         // Tick 2: lifetime 0 -> despawn
-        world.run_system_once(particle_system).unwrap();
+        world.run_system_once(particle_system).expect("Component should exist or System should run");
 
         assert!(world.get::<Particle>(entity).is_none());
     }
@@ -296,9 +296,9 @@ mod tests {
 
         // Tick 1
         // Acc += 1.0 -> 1.0. Pos += 1. Acc -> 0.0. Vel *= 0.9 -> 0.9.
-        world.run_system_once(particle_physics_system).unwrap();
+        world.run_system_once(particle_physics_system).expect("Component should exist or System should run");
 
-        let vel = world.get::<ParticleVelocity>(entity).unwrap();
+        let vel = world.get::<ParticleVelocity>(entity).expect("Component should exist or System should run");
         assert!((vel.dx - 0.9).abs() < 0.001);
     }
 
@@ -319,9 +319,9 @@ mod tests {
             ))
             .id();
 
-        world.run_system_once(particle_physics_system).unwrap();
+        world.run_system_once(particle_physics_system).expect("Component should exist or System should run");
 
-        let vel = world.get::<ParticleVelocity>(entity).unwrap();
+        let vel = world.get::<ParticleVelocity>(entity).expect("Component should exist or System should run");
         assert!((vel.dy - 0.045).abs() < 0.001); // (0.0 + GRAVITY(0.05)) * 0.9 = 0.045
     }
 }

@@ -42,7 +42,7 @@
 //! // 3. The battery violently exploded
 //! let events = world.resource::<Events<ExplosionEvent>>();
 //! let mut reader = events.get_reader();
-//! let explosion = reader.read(events).next().unwrap();
+//! let explosion = reader.read(events).next().expect("Component should exist or System should run");
 //!
 //! assert_eq!(explosion.center.x, 5);
 //! assert_eq!(explosion.damage, 100.0); // Full potential energy released
@@ -135,7 +135,7 @@ mod tests {
 
         let mut query =
             world.query::<(&mut KineticBattery, &mut PowerConsumer, &mut PowerSource)>();
-        let (mut bat, _cons, _src) = query.get_single_mut(&mut world).unwrap();
+        let (mut bat, _cons, _src) = query.get_single_mut(&mut world).expect("Component should exist or System should run");
 
         // Logic simulation for test
         let charge_amount = bat.charge_rate.min(grid_surplus);
@@ -173,7 +173,7 @@ mod tests {
 
         // Act: System logic
         let mut query = world.query::<(&mut KineticBattery, &mut PowerSource)>();
-        let (mut bat, mut src) = query.get_single_mut(&mut world).unwrap();
+        let (mut bat, mut src) = query.get_single_mut(&mut world).expect("Component should exist or System should run");
 
         // Logic: if deficit, discharge
         let discharge = bat.charge_rate.min(grid_deficit).min(bat.charge);
@@ -292,7 +292,7 @@ mod tests {
 
         crate::layer1::energy::power_grid_system(&mut world);
 
-        let bat = world.get::<KineticBattery>(bat_id).unwrap();
+        let bat = world.get::<KineticBattery>(bat_id).expect("Component should exist or System should run");
 
         // If system implemented: charge should be 5.0 * 0.8 = 4.0
         // If not implemented: charge should be 0.0

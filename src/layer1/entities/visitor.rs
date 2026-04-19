@@ -240,7 +240,7 @@ mod tests {
         });
 
         // Run system
-        world.run_system_once(spawn_visitor_system).unwrap();
+        world.run_system_once(spawn_visitor_system).expect("Component should exist or System should run");
 
         // Verify spawn
         let count = world.query::<&Visitor>().iter(&world).count();
@@ -280,10 +280,10 @@ mod tests {
             .id();
 
         // Run lifecycle system
-        world.run_system_once(visitor_lifecycle_system).unwrap();
+        world.run_system_once(visitor_lifecycle_system).expect("Component should exist or System should run");
 
         // Check state change to Departing
-        let visitor = world.get::<Visitor>(entity).unwrap();
+        let visitor = world.get::<Visitor>(entity).expect("Component should exist or System should run");
         assert_eq!(visitor.state, VisitorState::Departing);
     }
 
@@ -312,7 +312,7 @@ mod tests {
             .id();
 
         // Run lifecycle system
-        world.run_system_once(visitor_lifecycle_system).unwrap();
+        world.run_system_once(visitor_lifecycle_system).expect("Component should exist or System should run");
 
         // Verify entity despawned
         assert!(world.get::<Visitor>(entity).is_none());
@@ -334,7 +334,7 @@ mod tests {
             .id();
 
         // Run behavior system
-        world.run_system_once(visitor_behavior_system).unwrap();
+        world.run_system_once(visitor_behavior_system).expect("Component should exist or System should run");
 
         // Should have StartPlan (to random tavern or idle)
         // Since no taverns, it might do nothing or idle.
@@ -346,12 +346,12 @@ mod tests {
             ))
             .id();
 
-        world.run_system_once(visitor_behavior_system).unwrap();
+        world.run_system_once(visitor_behavior_system).expect("Component should exist or System should run");
 
         let plan = world.get::<StartPlan>(visitor);
         assert!(plan.is_some());
-        assert_eq!(plan.unwrap().action, ActionType::Socialize);
-        assert_eq!(plan.unwrap().target, Some(tavern));
+        assert_eq!(plan.expect("Component should exist or System should run").action, ActionType::Socialize);
+        assert_eq!(plan.expect("Component should exist or System should run").target, Some(tavern));
     }
 
     #[test]
@@ -373,12 +373,12 @@ mod tests {
             ))
             .id();
 
-        world.run_system_once(visitor_behavior_system).unwrap();
+        world.run_system_once(visitor_behavior_system).expect("Component should exist or System should run");
 
         // Should have MovementTarget directly
         let mt = world.get::<MovementTarget>(visitor);
         assert!(mt.is_some());
-        assert_eq!(mt.unwrap().target_position, exit_pos);
+        assert_eq!(mt.expect("Component should exist or System should run").target_position, exit_pos);
     }
 
     #[test]
@@ -403,11 +403,11 @@ mod tests {
             ))
             .id();
 
-        world.run_system_once(visitor_behavior_system).unwrap();
+        world.run_system_once(visitor_behavior_system).expect("Component should exist or System should run");
 
         let plan = world.get::<StartPlan>(visitor);
         assert!(plan.is_some());
-        assert_eq!(plan.unwrap().action, ActionType::Socialize);
-        assert_eq!(plan.unwrap().target, Some(tavern));
+        assert_eq!(plan.expect("Component should exist or System should run").action, ActionType::Socialize);
+        assert_eq!(plan.expect("Component should exist or System should run").target, Some(tavern));
     }
 }

@@ -180,7 +180,7 @@ mod tests {
         app.update();
 
         // Assert
-        let leviathan_comp = app.world().get::<Leviathan>(leviathan).unwrap();
+        let leviathan_comp = app.world().get::<Leviathan>(leviathan).expect("Component should exist or System should run");
         assert!(
             leviathan_comp.current_demand.is_some(),
             "Leviathan should have generated a demand after the timer elapsed"
@@ -224,7 +224,7 @@ mod tests {
 
         // Assert
         let mut query = app.world_mut().query::<&Inventory>();
-        let inventory = query.iter(app.world()).next().unwrap();
+        let inventory = query.iter(app.world()).next().expect("Component should exist or System should run");
         let count = inventory
             .items
             .iter()
@@ -232,7 +232,7 @@ mod tests {
             .count();
         assert_eq!(count, 0, "Inventory should be depleted by tribute amount");
 
-        let leviathan_comp = app.world().get::<Leviathan>(leviathan).unwrap();
+        let leviathan_comp = app.world().get::<Leviathan>(leviathan).expect("Component should exist or System should run");
         assert!(
             leviathan_comp.current_demand.is_none(),
             "Demand should be cleared"
@@ -278,7 +278,7 @@ mod tests {
         app.update();
 
         // Assert
-        let leviathan_comp = app.world().get::<Leviathan>(leviathan).unwrap();
+        let leviathan_comp = app.world().get::<Leviathan>(leviathan).expect("Component should exist or System should run");
         assert_eq!(
             leviathan_comp.anger_level, 0,
             "Refusing should reset anger after disaster"

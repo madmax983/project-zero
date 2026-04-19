@@ -65,15 +65,15 @@ mod tests {
             .insert(SporeInfection { severity: 1.0 });
         app.update();
 
-        let initial_social = app.world().get::<Stats>(pop).unwrap().social;
-        let initial_intellect = app.world().get::<Stats>(pop).unwrap().intellect;
+        let initial_social = app.world().get::<Stats>(pop).expect("Component should exist or System should run").social;
+        let initial_intellect = app.world().get::<Stats>(pop).expect("Component should exist or System should run").intellect;
         assert!(initial_social > 5);
         assert!(initial_intellect > 5);
 
         // Remove infection and ensure stats reset
         app.world_mut().entity_mut(pop).remove::<SporeInfection>();
         app.update();
-        let stats2 = app.world().get::<Stats>(pop).unwrap();
+        let stats2 = app.world().get::<Stats>(pop).expect("Component should exist or System should run");
         assert_eq!(stats2.social, 5);
         assert_eq!(stats2.intellect, 5);
     }

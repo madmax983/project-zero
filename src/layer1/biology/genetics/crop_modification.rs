@@ -90,7 +90,7 @@ mod tests {
         app.update();
 
         // Assert
-        let c = app.world().get::<Crop>(crop).unwrap();
+        let c = app.world().get::<Crop>(crop).expect("Component should exist or System should run");
         assert!(c.current_yield > 10);
     }
 

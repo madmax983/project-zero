@@ -156,7 +156,7 @@ mod tests {
         assert!(resources.rations < 100.0, "Should consume rations");
 
         // Check vat state
-        let vat_comp = world.get::<CloneVat>(vat).unwrap();
+        let vat_comp = world.get::<CloneVat>(vat).expect("Component should exist or System should run");
         assert!(vat_comp.is_growing, "Vat should be growing a clone");
         assert!(
             vat_comp.ticks_remaining == vat_comp.total_duration,
@@ -184,7 +184,7 @@ mod tests {
         schedule.add_systems(process_clone_vats_system);
         schedule.run(&mut world);
 
-        let vat_comp = world.get::<CloneVat>(vat).unwrap();
+        let vat_comp = world.get::<CloneVat>(vat).expect("Component should exist or System should run");
         assert!(
             !vat_comp.is_growing,
             "Vat should NOT start growing without rations"
@@ -230,7 +230,7 @@ mod tests {
         assert!(found, "Should spawn a pop at vat location");
 
         // Check vat reset
-        let vat_comp = world.get::<CloneVat>(vat).unwrap();
+        let vat_comp = world.get::<CloneVat>(vat).expect("Component should exist or System should run");
         assert!(!vat_comp.is_growing, "Vat should be idle after completion");
     }
 
@@ -254,7 +254,7 @@ mod tests {
         schedule.add_systems(process_clone_vats_system);
         schedule.run(&mut world);
 
-        let vat_comp = world.get::<CloneVat>(vat).unwrap();
+        let vat_comp = world.get::<CloneVat>(vat).expect("Component should exist or System should run");
         assert_eq!(vat_comp.ticks_remaining, 99, "Should decrement ticks");
     }
 
@@ -291,7 +291,7 @@ mod tests {
         schedule.add_systems(process_clone_vats_system);
         schedule.run(&mut world);
 
-        let vat_comp = world.get::<CloneVat>(vat).unwrap();
+        let vat_comp = world.get::<CloneVat>(vat).expect("Component should exist or System should run");
         assert!(!vat_comp.is_growing, "Should NOT grow without power");
     }
 }

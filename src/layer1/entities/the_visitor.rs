@@ -263,9 +263,9 @@ mod tests {
             .id();
 
         // Run system
-        world.run_system_once(the_visitor_behavior_system).unwrap();
+        world.run_system_once(the_visitor_behavior_system).expect("Component should exist or System should run");
 
-        let v = world.get::<TheVisitor>(visitor).unwrap();
+        let v = world.get::<TheVisitor>(visitor).expect("Component should exist or System should run");
         // Should detect and move to target
         assert_eq!(v.state, TheVisitorState::MoveToTarget);
         assert_eq!(v.target_stockpile, Some(stockpile));
@@ -303,13 +303,13 @@ mod tests {
             .id();
 
         // Run system
-        world.run_system_once(the_visitor_behavior_system).unwrap();
+        world.run_system_once(the_visitor_behavior_system).expect("Component should exist or System should run");
 
         // Visitor should move to (1,0) and destroy wall
         // Note: `pos` might be updated after update.
         // pos moves 0 -> 1. Wall is at 1.
 
-        let pos = world.get::<GridPosition>(visitor).unwrap();
+        let pos = world.get::<GridPosition>(visitor).expect("Component should exist or System should run");
         assert_eq!(*pos, GridPosition { x: 1, y: 0 });
 
         // Wall should be destroyed
@@ -350,14 +350,14 @@ mod tests {
             .id();
 
         // Run system
-        world.run_system_once(the_visitor_behavior_system).unwrap();
+        world.run_system_once(the_visitor_behavior_system).expect("Component should exist or System should run");
 
         // Check Resources Reduced
         let res = world.resource::<ColonyResources>();
         assert!(res.food < 50.0); // Should have eaten 10.0, so 40.0
 
         // Visitor should be leaving
-        let v = world.get::<TheVisitor>(visitor).unwrap();
+        let v = world.get::<TheVisitor>(visitor).expect("Component should exist or System should run");
         assert_eq!(v.state, TheVisitorState::Leave);
     }
 
@@ -376,9 +376,9 @@ mod tests {
             ))
             .id();
 
-        world.run_system_once(the_visitor_behavior_system).unwrap();
+        world.run_system_once(the_visitor_behavior_system).expect("Component should exist or System should run");
 
-        let v = world.get::<TheVisitor>(visitor).unwrap();
+        let v = world.get::<TheVisitor>(visitor).expect("Component should exist or System should run");
         assert_eq!(v.state, TheVisitorState::Eat);
     }
 
@@ -397,9 +397,9 @@ mod tests {
             ))
             .id();
 
-        world.run_system_once(the_visitor_behavior_system).unwrap();
+        world.run_system_once(the_visitor_behavior_system).expect("Component should exist or System should run");
 
-        let v = world.get::<TheVisitor>(visitor).unwrap();
+        let v = world.get::<TheVisitor>(visitor).expect("Component should exist or System should run");
         assert_eq!(v.state, TheVisitorState::Wander);
     }
 
@@ -434,14 +434,14 @@ mod tests {
             ))
             .id();
 
-        world.run_system_once(the_visitor_behavior_system).unwrap();
+        world.run_system_once(the_visitor_behavior_system).expect("Component should exist or System should run");
 
         let res = world.resource::<ColonyResources>();
         assert_eq!(res.food, 0.0);
         assert_eq!(res.rations, 0.0); // Ate 15
         assert_eq!(res.fuel, 10.0); // Ate 10 out of 20
 
-        let v = world.get::<TheVisitor>(visitor).unwrap();
+        let v = world.get::<TheVisitor>(visitor).expect("Component should exist or System should run");
         assert_eq!(v.state, TheVisitorState::Leave);
         assert_eq!(v.target_position, Some(GridPosition { x: 0, y: 0 }));
     }
@@ -472,20 +472,20 @@ mod tests {
             ))
             .id();
 
-        world.run_system_once(the_visitor_behavior_system).unwrap();
+        world.run_system_once(the_visitor_behavior_system).expect("Component should exist or System should run");
 
         // pos should be (1, 0) and wall should be trampled
-        let pos = world.get::<GridPosition>(visitor).unwrap();
+        let pos = world.get::<GridPosition>(visitor).expect("Component should exist or System should run");
         assert_eq!(*pos, GridPosition { x: 1, y: 0 });
         assert!(world.get::<Structure>(wall_ent).is_none());
 
         // Run again, should move to (0, 0)
-        world.run_system_once(the_visitor_behavior_system).unwrap();
-        let pos = world.get::<GridPosition>(visitor).unwrap();
+        world.run_system_once(the_visitor_behavior_system).expect("Component should exist or System should run");
+        let pos = world.get::<GridPosition>(visitor).expect("Component should exist or System should run");
         assert_eq!(*pos, GridPosition { x: 0, y: 0 });
 
         // Run one more time to trigger despawn at (0, 0)
-        world.run_system_once(the_visitor_behavior_system).unwrap();
+        world.run_system_once(the_visitor_behavior_system).expect("Component should exist or System should run");
 
         assert!(world.get::<TheVisitor>(visitor).is_none());
     }
@@ -505,9 +505,9 @@ mod tests {
             .id();
 
         // Run system, but there are no stockpiles to find
-        world.run_system_once(the_visitor_behavior_system).unwrap();
+        world.run_system_once(the_visitor_behavior_system).expect("Component should exist or System should run");
 
-        let v = world.get::<TheVisitor>(visitor).unwrap();
+        let v = world.get::<TheVisitor>(visitor).expect("Component should exist or System should run");
         // Should remain in Wander state
         assert_eq!(v.state, TheVisitorState::Wander);
     }
@@ -528,12 +528,12 @@ mod tests {
             .id();
 
         // Run system, but there is no target position to move to
-        world.run_system_once(the_visitor_behavior_system).unwrap();
+        world.run_system_once(the_visitor_behavior_system).expect("Component should exist or System should run");
 
-        let v = world.get::<TheVisitor>(visitor).unwrap();
+        let v = world.get::<TheVisitor>(visitor).expect("Component should exist or System should run");
         // Should remain in Leave state and not move
         assert_eq!(v.state, TheVisitorState::Leave);
-        let pos = world.get::<GridPosition>(visitor).unwrap();
+        let pos = world.get::<GridPosition>(visitor).expect("Component should exist or System should run");
         assert_eq!(*pos, GridPosition { x: 5, y: 5 });
     }
 
@@ -553,9 +553,9 @@ mod tests {
             .id();
 
         // Run system, but there are no stockpiles to find
-        world.run_system_once(the_visitor_behavior_system).unwrap();
+        world.run_system_once(the_visitor_behavior_system).expect("Component should exist or System should run");
 
-        let v = world.get::<TheVisitor>(visitor).unwrap();
+        let v = world.get::<TheVisitor>(visitor).expect("Component should exist or System should run");
         // Should remain in Wander state
         assert_eq!(v.state, TheVisitorState::Wander);
     }

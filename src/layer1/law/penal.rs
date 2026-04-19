@@ -1,4 +1,4 @@
-use crate::layer1::law::justice::Inmate;
+use crate::layer1::law::justice::{Inmate, Wanted};
 use crate::layer1::map::GridPosition;
 use crate::layer1::zone::{ZoneGrid, ZoneType};
 use bevy_ecs::prelude::*;
@@ -86,9 +86,8 @@ pub fn check_jailbreak_system(
                 .entity(entity)
                 .remove::<Inmate>()
                 .remove::<PenalLabor>()
-                .remove::<RevoltRisk>();
-
-            // TODO: Add Wanted status or aggression
+                .remove::<RevoltRisk>()
+                .insert(Wanted { severity: 1.0 });
         }
     }
 }
@@ -137,7 +136,7 @@ mod tests {
             .id();
 
         // Run evaluation system
-        world.run_system_once(evaluate_penal_work_system).unwrap();
+        world.run_system_once(evaluate_penal_work_system).expect("Component should exist or System should run");
 
         // Should receive PenalLabor component
         assert!(world.get::<PenalLabor>(inmate).is_some());
@@ -162,7 +161,7 @@ mod tests {
             .id();
 
         // Ensure system doesn't wrongly add it
-        world.run_system_once(evaluate_penal_work_system).unwrap();
+        world.run_system_once(evaluate_penal_work_system).expect("Component should exist or System should run");
         assert!(world.get::<PenalLabor>(inmate).is_none());
 
         // Test cleanup
@@ -171,7 +170,7 @@ mod tests {
             .insert((PenalLabor::default(), RevoltRisk::default()));
 
         // Still at (0,0) which is not Penal
-        world.run_system_once(cleanup_penal_work_system).unwrap();
+        world.run_system_once(cleanup_penal_work_system).expect("Component should exist or System should run");
 
         assert!(world.get::<PenalLabor>(inmate).is_none());
     }
@@ -195,9 +194,9 @@ mod tests {
             .id();
 
         // Run system tick
-        world.run_system_once(update_revolt_risk_system).unwrap();
+        world.run_system_once(update_revolt_risk_system).expect("Component should exist or System should run");
 
-        let risk = world.get::<RevoltRisk>(inmate).unwrap();
+        let risk = world.get::<RevoltRisk>(inmate).expect("Component should exist or System should run");
         assert!(risk.current > 0.0);
     }
 
@@ -218,11 +217,14 @@ mod tests {
             ))
             .id();
 
-        world.run_system_once(check_jailbreak_system).unwrap();
+        world.run_system_once(check_jailbreak_system).expect("Component should exist or System should run");
 
         // Should lose Inmate status (escaped)
         assert!(world.get::<Inmate>(inmate).is_none());
         assert!(world.get::<PenalLabor>(inmate).is_none());
         assert!(world.get::<RevoltRisk>(inmate).is_none());
+
+        // Should gain Wanted status
+        assert!(world.get::<Wanted>(inmate).is_some());
     }
 }

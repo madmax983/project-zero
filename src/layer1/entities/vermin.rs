@@ -204,7 +204,7 @@ mod tests {
         }
 
         // Run system
-        world.run_system_once(vermin_growth_system).unwrap();
+        world.run_system_once(vermin_growth_system).expect("Component should exist or System should run");
 
         let vermin = world.resource::<VerminState>();
         assert!(
@@ -224,7 +224,7 @@ mod tests {
         }
 
         // Run system
-        world.run_system_once(vermin_growth_system).unwrap();
+        world.run_system_once(vermin_growth_system).expect("Component should exist or System should run");
 
         let vermin = world.resource::<VerminState>();
         assert!(
@@ -252,8 +252,8 @@ mod tests {
         }
 
         // Run systems
-        world_normal.run_system_once(vermin_growth_system).unwrap();
-        world_policy.run_system_once(vermin_growth_system).unwrap();
+        world_normal.run_system_once(vermin_growth_system).expect("Component should exist or System should run");
+        world_policy.run_system_once(vermin_growth_system).expect("Component should exist or System should run");
 
         let severity_normal = world_normal.resource::<VerminState>().severity;
         let severity_policy = world_policy.resource::<VerminState>().severity;
@@ -278,7 +278,7 @@ mod tests {
         }
 
         // Run system
-        world.run_system_once(vermin_growth_system).unwrap();
+        world.run_system_once(vermin_growth_system).expect("Component should exist or System should run");
 
         let vermin = world.resource::<VerminState>();
         assert!(
@@ -325,7 +325,7 @@ mod tests {
         // Run spoilage system
         world
             .run_system_once(crate::layer1::spoilage::spoilage_system)
-            .unwrap();
+            .expect("Component should exist or System should run");
 
         let res = world.resource::<ColonyResources>();
         // Normal decay is 0.05% (0.0005) per tick

@@ -195,7 +195,7 @@ mod tests {
 
         assert!(world.get_entity(original_pop).is_err());
 
-        let mimic_name = world.get::<PopName>(mimic_entity).unwrap();
+        let mimic_name = world.get::<PopName>(mimic_entity).expect("Component should exist or System should run");
         assert_eq!(mimic_name.0, "Miner Bob");
 
         assert!(world.get::<Mimic>(mimic_entity).is_some());
@@ -230,7 +230,7 @@ mod tests {
         schedule.add_systems(sabotage_system);
         schedule.run(&mut world);
 
-        let progress = world.get::<MiningProgress>(rock).unwrap();
+        let progress = world.get::<MiningProgress>(rock).expect("Component should exist or System should run");
         assert!(progress.current <= 80.0);
     }
 
@@ -251,7 +251,7 @@ mod tests {
         let is_mimic = reveal_mimic(&mut world, mimic);
         assert!(is_mimic);
 
-        let mimic_comp = world.get::<Mimic>(mimic).unwrap();
+        let mimic_comp = world.get::<Mimic>(mimic).expect("Component should exist or System should run");
         assert_eq!(mimic_comp.state, MimicState::Revealed);
     }
 }

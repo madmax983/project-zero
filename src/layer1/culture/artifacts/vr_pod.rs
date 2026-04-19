@@ -100,8 +100,8 @@ mod tests {
 
         app.update();
 
-        let morale = app.world().get::<Morale>(pop_id).unwrap();
-        let stress = app.world().get::<StressTracker>(pop_id).unwrap();
+        let morale = app.world().get::<Morale>(pop_id).expect("Component should exist or System should run");
+        let stress = app.world().get::<StressTracker>(pop_id).expect("Component should exist or System should run");
 
         assert_eq!(morale.value, 1.0);
         assert_eq!(stress.accumulated_stress, 0.0);
@@ -136,7 +136,7 @@ mod tests {
 
         app.update();
 
-        let needs = app.world().get::<Needs>(pop_id).unwrap();
+        let needs = app.world().get::<Needs>(pop_id).expect("Component should exist or System should run");
         assert_eq!(needs.hunger, 0.99);
     }
 

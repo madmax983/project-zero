@@ -197,13 +197,13 @@ mod tests {
         });
         app.update();
 
-        let rat_path = app.world().get::<PathResult>(rat).unwrap();
+        let rat_path = app.world().get::<PathResult>(rat).expect("Component should exist or System should run");
         assert!(
             rat_path.success,
             "Small entities should path through open vents"
         );
 
-        let human_path = app.world().get::<PathResult>(human).unwrap();
+        let human_path = app.world().get::<PathResult>(human).expect("Component should exist or System should run");
         assert!(
             !human_path.success,
             "Large entities should not path through vents"
@@ -239,7 +239,7 @@ mod tests {
         });
         app.update();
 
-        let rat_path = app.world().get::<PathResult>(rat).unwrap();
+        let rat_path = app.world().get::<PathResult>(rat).expect("Component should exist or System should run");
         assert!(
             !rat_path.success,
             "Small entities should not path through grated vents"
@@ -247,7 +247,7 @@ mod tests {
 
         // Verify airflow is still present but reduced
         let airflow_amount =
-            calculate_vent_airflow(app.world().get::<VentConnection>(vent).unwrap());
+            calculate_vent_airflow(app.world().get::<VentConnection>(vent).expect("Component should exist or System should run"));
         assert!(
             airflow_amount > 0.0 && airflow_amount < 1.0,
             "Grated vent should have reduced airflow"

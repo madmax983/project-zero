@@ -355,7 +355,7 @@ mod tests {
         let source = world.get::<BeautySource>(entity);
         assert!(source.is_some(), "FlowerBed should have BeautySource");
         assert_eq!(
-            source.unwrap().value,
+            source.expect("Component should exist or System should run").value,
             FLOWER_BED_BEAUTY,
             "FlowerBed value should match constant"
         );
@@ -414,7 +414,7 @@ mod tests {
         // Run system
         let _ = world.run_system_once(crate::layer1::beauty::apply_beauty_effects_system);
 
-        let needs = world.get::<Needs>(pop).unwrap();
+        let needs = world.get::<Needs>(pop).expect("Component should exist or System should run");
         assert!(needs.leisure > 0.1, "High beauty should increase leisure");
     }
 
@@ -438,7 +438,7 @@ mod tests {
 
         let _ = world.run_system_once(crate::layer1::beauty::apply_beauty_effects_system);
 
-        let needs = world.get::<Needs>(pop).unwrap();
+        let needs = world.get::<Needs>(pop).expect("Component should exist or System should run");
         assert!(
             needs.leisure < 0.5,
             "Negative beauty should decrease leisure"

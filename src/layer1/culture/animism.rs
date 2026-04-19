@@ -114,7 +114,7 @@ const MAX_TRAITS: usize = 3;
 /// schedule.run(&mut world);
 ///
 /// // The tool should have gained experience
-/// let spirit = world.get::<Spirit>(tool_id).unwrap();
+/// let spirit = world.get::<Spirit>(tool_id).expect("Component should exist or System should run");
 /// assert!(spirit.experience > 0);
 /// ```
 pub fn evolve_spirits_system(
@@ -305,7 +305,7 @@ mod tests {
         schedule.add_systems(evolve_spirits_system);
         schedule.run(&mut world);
 
-        let spirit = world.get::<Spirit>(tool).unwrap();
+        let spirit = world.get::<Spirit>(tool).expect("Component should exist or System should run");
         assert_eq!(spirit.experience, XP_PER_USE);
     }
 
@@ -348,7 +348,7 @@ mod tests {
         schedule.add_systems(evolve_spirits_system);
         schedule.run(&mut world);
 
-        let spirit = world.get::<Spirit>(tool).unwrap();
+        let spirit = world.get::<Spirit>(tool).expect("Component should exist or System should run");
         assert_eq!(spirit.level, 1);
         assert!(!spirit.traits.is_empty());
         // Should be positive trait
@@ -392,7 +392,7 @@ mod tests {
         schedule.add_systems(apply_spirit_effects_system);
         schedule.run(&mut world);
 
-        let speed = world.get::<Speed>(pop).unwrap();
+        let speed = world.get::<Speed>(pop).expect("Component should exist or System should run");
         assert!(
             (speed.current - 1.1).abs() < f32::EPSILON,
             "Speed should be 1.1 (Eager)"

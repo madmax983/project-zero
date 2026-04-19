@@ -129,7 +129,7 @@ mod tests {
         schedule.add_systems(art_generation_system);
         schedule.run(&mut world);
 
-        let art = world.get::<Art>(statue).unwrap();
+        let art = world.get::<Art>(statue).expect("Component should exist or System should run");
         assert!(!art.description.is_empty());
         assert!(art.description.contains("Colony Founded"));
     }
@@ -152,7 +152,7 @@ mod tests {
         schedule.add_systems(art_generation_system);
         schedule.run(&mut world);
 
-        let art = world.get::<Art>(statue).unwrap();
+        let art = world.get::<Art>(statue).expect("Component should exist or System should run");
         assert_eq!(art.description, "Abstract Art");
     }
 
@@ -188,7 +188,7 @@ mod tests {
         schedule.run(&mut world);
 
         // Check Pop memories
-        let memories = world.get::<Memories>(pop).unwrap();
+        let memories = world.get::<Memories>(pop).expect("Component should exist or System should run");
         // Assume we add a specific "AdmiredArt" memory type
         let found = memories
             .items
@@ -222,7 +222,7 @@ mod tests {
         schedule.add_systems(art_observation_system);
         schedule.run(&mut world);
 
-        let memories = world.get::<Memories>(pop).unwrap();
+        let memories = world.get::<Memories>(pop).expect("Component should exist or System should run");
         let found = memories
             .items
             .iter()

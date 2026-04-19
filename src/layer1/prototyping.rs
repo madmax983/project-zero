@@ -131,7 +131,7 @@ mod tests {
         }
 
         assert!(world.entity(entity).contains::<Prototype>());
-        let prototype = world.entity(entity).get::<Prototype>().unwrap();
+        let prototype = world.entity(entity).get::<Prototype>().expect("Component should exist");
         assert_eq!(prototype.efficiency_modifier, 0.5);
     }
 
@@ -202,7 +202,7 @@ mod tests {
             ))
             .id();
 
-        let prototype = world.entity(entity).get::<Prototype>().unwrap();
+        let prototype = world.entity(entity).get::<Prototype>().expect("Component should exist");
         assert_eq!(prototype.efficiency_modifier, 0.5);
     }
 

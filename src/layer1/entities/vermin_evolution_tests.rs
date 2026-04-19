@@ -29,7 +29,7 @@ mod tests {
 
         // Run growth system multiple times to trigger evolution
         for _ in 0..100 {
-            world.run_system_once(vermin_growth_system).unwrap();
+            world.run_system_once(vermin_growth_system).expect("Component should exist or System should run");
         }
 
         let vermin = world.resource::<VerminState>();
@@ -51,7 +51,7 @@ mod tests {
         }
 
         for _ in 0..100 {
-            world.run_system_once(vermin_growth_system).unwrap();
+            world.run_system_once(vermin_growth_system).expect("Component should exist or System should run");
         }
 
         let vermin = world.resource::<VerminState>();
@@ -85,7 +85,7 @@ mod tests {
         }
 
         // Run system
-        world.run_system_once(vermin_growth_system).unwrap();
+        world.run_system_once(vermin_growth_system).expect("Component should exist or System should run");
 
         let vermin = world.resource::<VerminState>();
         // Normal pest control halves growth. Toxic should reduce effectiveness (e.g. only 25% reduction or no reduction).
@@ -132,7 +132,7 @@ mod tests {
         // We will reference it from crate::layer1::vermin
         world
             .run_system_once(crate::layer1::vermin::vermin_effect_system)
-            .unwrap();
+            .expect("Component should exist or System should run");
 
         // Check for Fire
         // Since it's probabilistic, we might need to mock RNG or force it.
@@ -143,7 +143,7 @@ mod tests {
         for _ in 0..100 {
             world
                 .run_system_once(crate::layer1::vermin::vermin_effect_system)
-                .unwrap();
+                .expect("Component should exist or System should run");
             if world.query::<&Fire>().iter(&world).count() > 0 {
                 ignited = true;
                 break;

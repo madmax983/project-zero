@@ -100,10 +100,10 @@ mod tests {
             .id();
 
         // Act
-        world.run_system_once(emotional_contagion_system).unwrap();
+        world.run_system_once(emotional_contagion_system).expect("Component should exist or System should run");
 
         // Assert
-        let needs = world.get::<Needs>(neutral_pop).unwrap();
+        let needs = world.get::<Needs>(neutral_pop).expect("Component should exist or System should run");
         assert!(
             needs.leisure > 0.5,
             "Neutral pop should gain leisure from nearby happy pop"
@@ -142,10 +142,10 @@ mod tests {
             .id();
 
         // Act
-        world.run_system_once(emotional_contagion_system).unwrap();
+        world.run_system_once(emotional_contagion_system).expect("Component should exist or System should run");
 
         // Assert
-        let needs = world.get::<Needs>(neutral_pop).unwrap();
+        let needs = world.get::<Needs>(neutral_pop).expect("Component should exist or System should run");
         assert!(
             needs.leisure < 0.8,
             "Neutral pop should lose leisure from nearby terrified pop"
@@ -184,10 +184,10 @@ mod tests {
             .id();
 
         // Act
-        world.run_system_once(emotional_contagion_system).unwrap();
+        world.run_system_once(emotional_contagion_system).expect("Component should exist or System should run");
 
         // Assert
-        let needs = world.get::<Needs>(far_pop).unwrap();
+        let needs = world.get::<Needs>(far_pop).expect("Component should exist or System should run");
         assert_eq!(needs.leisure, 0.5, "Far pop should be unaffected");
     }
 
@@ -226,10 +226,10 @@ mod tests {
             .id();
 
         // Act
-        world.run_system_once(emotional_contagion_system).unwrap();
+        world.run_system_once(emotional_contagion_system).expect("Component should exist or System should run");
 
         // Assert NO modifier (Source on cooldown)
-        let needs = world.get::<Needs>(target).unwrap();
+        let needs = world.get::<Needs>(target).expect("Component should exist or System should run");
         assert_eq!(
             needs.leisure, 0.5,
             "Source on cooldown should not spread emotion"

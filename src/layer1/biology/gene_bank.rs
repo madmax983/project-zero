@@ -245,7 +245,7 @@ mod tests {
             .id();
 
         // Add a sample to its storage manually
-        let mut bank_comp = world.get_mut::<GeneBank>(bank).unwrap();
+        let mut bank_comp = world.get_mut::<GeneBank>(bank).expect("Component should exist or System should run");
         bank_comp.store_sample(GeneticData::Flora(TerrainType::Tree));
 
         assert!(bank_comp.has_sample(&GeneticData::Flora(TerrainType::Tree)));
@@ -283,7 +283,7 @@ mod tests {
         assert_eq!(pos.y, 5);
 
         // Verify cloning job is cleared
-        let bank_comp = world.get::<GeneBank>(bank).unwrap();
+        let bank_comp = world.get::<GeneBank>(bank).expect("Component should exist or System should run");
         assert!(bank_comp.active_cloning_job.is_none());
     }
 

@@ -111,7 +111,7 @@ mod tests {
         let _ = world.run_system_once(evaluate_grid_load_system);
 
         // Assert: Cable is overloaded
-        let cable = world.get::<PowerCable>(cable_entity).unwrap();
+        let cable = world.get::<PowerCable>(cable_entity).expect("Component should exist or System should run");
         assert!(
             cable.current_load > cable.capacity,
             "Cable load should exceed capacity"

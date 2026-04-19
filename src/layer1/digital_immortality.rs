@@ -162,14 +162,14 @@ mod tests {
             app.world().get::<Needs>(engineer_entity).is_none(),
             "Ghosts have no biological needs"
         );
-        let skills = app.world().get::<Skills>(engineer_entity).unwrap();
+        let skills = app.world().get::<Skills>(engineer_entity).expect("Component should exist or System should run");
         assert_eq!(
-            *skills.xp.get(&SkillType::Crafting).unwrap(),
+            *skills.xp.get(&SkillType::Crafting).expect("Component should exist or System should run"),
             95.0,
             "Skills should be preserved after upload"
         );
 
-        let housing = app.world().get::<Housing>(mainframe).unwrap();
+        let housing = app.world().get::<Housing>(mainframe).expect("Component should exist or System should run");
         assert!(
             housing.residents.contains(&engineer_entity),
             "Ghost should be resident of mainframe"
@@ -201,7 +201,7 @@ mod tests {
 
         app.update();
 
-        let receiver = app.world().get::<PowerConsumer>(mainframe).unwrap();
+        let receiver = app.world().get::<PowerConsumer>(mainframe).expect("Component should exist or System should run");
         assert!(
             receiver.demand > 500.0,
             "Ghosts should massively increase power drain"
@@ -236,7 +236,7 @@ mod tests {
             });
         app.update();
 
-        let door = app.world().get::<AccessControl>(door_entity).unwrap();
+        let door = app.world().get::<AccessControl>(door_entity).expect("Component should exist or System should run");
         assert_eq!(
             door.mode,
             AccessMode::Lockdown,

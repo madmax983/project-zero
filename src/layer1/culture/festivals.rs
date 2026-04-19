@@ -117,7 +117,7 @@ mod tests {
         world.insert_resource(crate::shared::log::MessageLog::default());
 
         bevy_ecs::system::RunSystemOnce::run_system_once(&mut world, check_for_festivals_system)
-            .unwrap();
+            .expect("Component should exist or System should run");
 
         let state = world.resource::<FestivalState>();
         assert!(state.active_festival.is_none());
@@ -141,14 +141,14 @@ mod tests {
         });
 
         bevy_ecs::system::RunSystemOnce::run_system_once(&mut world, check_for_festivals_system)
-            .unwrap();
+            .expect("Component should exist or System should run");
 
         let state = world.resource::<FestivalState>();
         assert!(
             state.active_festival.is_some(),
             "Festival should be active on anniversary"
         );
-        let festival = state.active_festival.as_ref().unwrap();
+        let festival = state.active_festival.as_ref().expect("Component should exist or System should run");
         assert!(festival.name.contains("Founding Day"));
         assert_eq!(festival.end_tick, 100 + TICKS_PER_YEAR + FESTIVAL_DURATION);
     }
@@ -169,7 +169,7 @@ mod tests {
         });
 
         bevy_ecs::system::RunSystemOnce::run_system_once(&mut world, check_for_festivals_system)
-            .unwrap();
+            .expect("Component should exist or System should run");
 
         let state = world.resource::<FestivalState>();
         assert!(
@@ -201,7 +201,7 @@ mod tests {
         world.insert_resource(crate::shared::log::MessageLog::default());
 
         bevy_ecs::system::RunSystemOnce::run_system_once(&mut world, festival_lifecycle_system)
-            .unwrap();
+            .expect("Component should exist or System should run");
 
         let state = world.resource::<FestivalState>();
         assert!(state.active_festival.is_none());

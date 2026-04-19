@@ -150,7 +150,7 @@ mod tests {
         schedule.add_systems(update_addiction_system);
         schedule.run(&mut world);
 
-        let addiction = world.get::<SurgicalAddiction>(pop).unwrap();
+        let addiction = world.get::<SurgicalAddiction>(pop).expect("Component should exist or System should run");
         assert_eq!(addiction.craving, 99.0);
 
         // Run enough times to trigger withdrawal mood penalty
@@ -158,7 +158,7 @@ mod tests {
             schedule.run(&mut world);
         }
 
-        let morale = world.get::<Morale>(pop).unwrap();
+        let morale = world.get::<Morale>(pop).expect("Component should exist or System should run");
         assert!(morale.value < 100.0);
     }
 
@@ -192,10 +192,10 @@ mod tests {
         schedule.run(&mut world);
 
         // Check consequences
-        let health = world.get::<Health>(pop).unwrap();
+        let health = world.get::<Health>(pop).expect("Component should exist or System should run");
         assert!(health.current < 100.0); // Took damage
 
-        let addiction = world.get::<SurgicalAddiction>(pop).unwrap();
+        let addiction = world.get::<SurgicalAddiction>(pop).expect("Component should exist or System should run");
         assert!(addiction.craving >= 50.0); // Satisfied temporarily
     }
 }

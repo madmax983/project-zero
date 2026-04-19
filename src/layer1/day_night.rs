@@ -191,7 +191,7 @@ mod tests {
 
         world
             .run_system_once(update_day_night_cycle_system)
-            .unwrap();
+            .expect("Component should exist or System should run");
 
         let cycle = world.resource::<DayNightCycle>();
         assert_eq!(cycle.time_of_day, TimeOfDay::Night);
@@ -214,7 +214,7 @@ mod tests {
 
         world
             .run_system_once(update_day_night_cycle_system)
-            .unwrap();
+            .expect("Component should exist or System should run");
 
         let cycle = world.resource::<DayNightCycle>();
         assert_eq!(cycle.day_count, 1);
@@ -233,7 +233,7 @@ mod tests {
 
         world
             .run_system_once(update_ambient_light_from_cycle_system)
-            .unwrap();
+            .expect("Component should exist or System should run");
 
         let ambient = world.resource::<AmbientLight>();
         assert!(ambient.level < 0.3); // Should be dark
@@ -261,11 +261,11 @@ mod tests {
         }
 
         // Run system
-        world.run_system_once(circadian_rhythm_system).unwrap();
-        let rest_day = world.get::<Needs>(pop).unwrap().rest;
+        world.run_system_once(circadian_rhythm_system).expect("Component should exist or System should run");
+        let rest_day = world.get::<Needs>(pop).expect("Component should exist or System should run").rest;
 
         // Reset
-        world.get_mut::<Needs>(pop).unwrap().rest = 1.0;
+        world.get_mut::<Needs>(pop).expect("Component should exist or System should run").rest = 1.0;
 
         // Set to Night
         {
@@ -274,8 +274,8 @@ mod tests {
         }
 
         // Run system
-        world.run_system_once(circadian_rhythm_system).unwrap();
-        let rest_night = world.get::<Needs>(pop).unwrap().rest;
+        world.run_system_once(circadian_rhythm_system).expect("Component should exist or System should run");
+        let rest_night = world.get::<Needs>(pop).expect("Component should exist or System should run").rest;
 
         // Verify decay was stronger at night (lower resulting rest)
         assert!(rest_night < rest_day, "Pops should tire faster at night");
@@ -311,7 +311,7 @@ mod tests {
             // Update Cycle
             world
                 .run_system_once(update_day_night_cycle_system)
-                .unwrap();
+                .expect("Component should exist or System should run");
 
             // Verify Phase
             let cycle = world.resource::<DayNightCycle>();
@@ -324,7 +324,7 @@ mod tests {
             // Update Light
             world
                 .run_system_once(update_ambient_light_from_cycle_system)
-                .unwrap();
+                .expect("Component should exist or System should run");
 
             // Verify Light
             let ambient = world.resource::<AmbientLight>();

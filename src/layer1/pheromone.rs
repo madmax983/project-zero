@@ -142,10 +142,10 @@ mod tests {
         schedule.run(&mut world);
 
         // Verify Pop received modifier
-        let morale = world.get::<Morale>(pop).unwrap();
+        let morale = world.get::<Morale>(pop).expect("Component should exist or System should run");
         let modifier = morale.modifiers.iter().find(|m| m.label == "Calm Scent");
         assert!(modifier.is_some(), "Pop should receive modifier");
-        assert!((modifier.unwrap().value - 0.1).abs() < f32::EPSILON);
+        assert!((modifier.expect("Component should exist or System should run").value - 0.1).abs() < f32::EPSILON);
     }
 
     #[test]
@@ -176,7 +176,7 @@ mod tests {
         schedule.add_systems(pheromone_emission_system);
         schedule.run(&mut world);
 
-        let morale = world.get::<Morale>(pop).unwrap();
+        let morale = world.get::<Morale>(pop).expect("Component should exist or System should run");
         assert!(
             morale.modifiers.is_empty(),
             "Pop outside range should not receive modifier"
@@ -227,7 +227,7 @@ mod tests {
         schedule.run(&mut world);
 
         // Check if emitter component updated
-        let emitter_comp = world.get::<PheromoneEmitter>(emitter).unwrap();
+        let emitter_comp = world.get::<PheromoneEmitter>(emitter).expect("Component should exist or System should run");
         assert_eq!(emitter_comp.effect.label, "Toxic Warning");
         assert!((emitter_comp.effect.value - -0.2).abs() < f32::EPSILON);
     }
