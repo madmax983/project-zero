@@ -74,6 +74,7 @@ mod tests {
     #[test]
     fn test_smuggler_cove_spawns_in_low_authority() {
         let mut app = setup_app();
+        app.add_systems(Update, spawn_smugglers_cove_system);
 
         // Force deterministic spawn by setting rng probability check to 1.0
         // in test environment, or run enough ticks to guarantee it.
@@ -93,6 +94,7 @@ mod tests {
     #[test]
     fn test_smuggler_cove_does_not_spawn_in_high_authority() {
         let mut app = setup_app();
+        app.add_systems(Update, spawn_smugglers_cove_system);
 
         // High authority should prevent smuggler coves from spawning
         app.world_mut().resource_mut::<ColonyAuthority>().level = 90.0;
@@ -112,6 +114,7 @@ mod tests {
     #[test]
     fn test_smuggler_cove_decays_over_time() {
         let mut app = setup_app();
+        app.add_systems(Update, spawn_smugglers_cove_system);
 
         // Manually spawn a cove
         let cove_entity = app

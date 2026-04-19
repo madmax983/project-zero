@@ -477,6 +477,10 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
         crate::layer2::debris::debris_attrition_system
             .after(crate::layer2::debris::debris_accumulation_system),
         crate::layer2::debris::debris_decay_system
+    ));
+    schedule.add_systems((
+        crate::layer2::orbit::debris_cult::evaluate_debris_cult_formation_system,
+        crate::layer2::orbit::debris_cult::apply_debris_cult_morale_system
             .after(crate::layer2::debris::debris_attrition_system),
     ));
 
