@@ -155,6 +155,8 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     world.init_resource::<bevy_ecs::event::Events<crate::layer2::cartographers_curse::SellTelemetryEvent>>();
     world.insert_resource(MenuState::default());
     world.init_resource::<crate::layer1::unseen_bureaucracy::ShadowEconomy>();
+    #[cfg(feature = "nova")]
+    world.init_resource::<crate::experimental::the_haunted_cartographer::HauntedGrid>();
 
     let terrain = generate_terrain(80, 50);
     let mut roof =
