@@ -43,6 +43,7 @@ pub mod access_control;
 /// Pop actions logic.
 pub mod actions;
 pub mod mind;
+pub mod tinkering;
 pub use mind::*;
 pub mod ad_screen;
 /// Bureaucratic Drag system (Spec 175).

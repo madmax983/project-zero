@@ -1573,7 +1573,6 @@ pub fn beacon_migrant_arrival_bridge(
         }
 
         chronicle_events.send(crate::layer1::chronicle::AddChronicleEvent {
-
             text: format!("{} migrants have arrived in the colony.", event.count),
             importance: crate::layer1::chronicle::EventImportance::Major,
         });
@@ -1596,7 +1595,6 @@ pub fn beacon_trade_ship_bridge(
                 deals: vec![], // For integration purposes, this just forces the state change
             });
             chronicle_events.send(crate::layer1::chronicle::AddChronicleEvent {
-
                 text: format!("A trade ship from {} has arrived.", event.faction),
                 importance: crate::layer1::chronicle::EventImportance::Major,
             });
@@ -1626,7 +1624,6 @@ pub fn beacon_pirate_raid_bridge(
         }
 
         chronicle_events.send(crate::layer1::chronicle::AddChronicleEvent {
-
             text: "Pirates have raided the colony!".to_string(),
             importance: crate::layer1::chronicle::EventImportance::Major,
         });
