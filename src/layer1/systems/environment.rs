@@ -54,6 +54,13 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::environment::volatile::volatile_decay_system,
             crate::layer1::environment::volatile::handle_explosion_system
                 .after(crate::layer1::environment::volatile::volatile_decay_system),
+        )
+            .in_set(Layer1SystemSet::Environment),
+    );
+    schedule.add_systems(
+        (
+            crate::layer1::environment::impact::process_impact_countdown_system,
+            crate::layer1::environment::impact::process_impact_strike_system,
             crate::layer1::logistics::pneumatic::tube_clog_system,
             crate::layer1::ecology::biome_collapse_system,
             crate::layer1::social::grievances::decay_notes_system,
