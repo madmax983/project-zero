@@ -8,19 +8,19 @@ use thiserror::Error;
 
 #[derive(Error, Debug)]
 pub enum NarrativeError {
-    #[error("Narrative Engine Error: Missing required context variable or fragment: {0}")]
+    #[error("📖 Narrative Engine: Missing required context variable or fragment: {0}")]
     MissingContext(String),
-    #[error("Narrative Engine Error: Fragment '{0}' has no options defined")]
+    #[error("📖 Narrative Engine: Fragment '{0}' has no options defined")]
     MissingFragmentOptions(String),
-    #[error("Narrative Engine Error: No lore files found in `{0}`. Expected TEMPLATES.md or FRAGMENTS.md")]
+    #[error("📖 Narrative Engine: No lore files found in `{0}`. Expected TEMPLATES.md or FRAGMENTS.md")]
     NoLoreFiles(String),
-    #[error("Narrative Engine Error: Template not found (`{0}`)")]
+    #[error("📖 Narrative Engine: Template not found (`{0}`)")]
     TemplateNotFound(String),
-    #[error("Narrative Engine Error: Template `{0}` has no patterns")]
+    #[error("📖 Narrative Engine: Template `{0}` has no patterns")]
     NoPatternsForTemplate(String),
-    #[error("Narrative Engine Error: Directory not found or not a directory (`{0}`)")]
+    #[error("📖 Narrative Engine: Directory not found or not a directory (`{0}`)")]
     DirectoryNotFound(String),
-    #[error("Narrative Engine Error: Failed to read `{0}`: {1}")]
+    #[error("📖 Narrative Engine: Failed to read `{0}`: {1}")]
     IoError(String, std::io::Error),
 }
 

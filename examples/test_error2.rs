@@ -8,10 +8,11 @@ fn main() -> anyhow::Result<()> {
     match result {
         Ok(_) => println!("Loaded successfully."),
         Err(e) => {
-            let error_msg = format!("✗ {}", e);
+            let error_msg = format!(" {}", e);
             let mut table = Table::new();
             table.load_preset(UTF8_FULL);
-            table.add_row(vec![Cell::new(&error_msg).fg(TableColor::Red)]);
+            table.set_header(vec![comfy_table::Cell::new("✗ ERROR").add_attribute(comfy_table::Attribute::Bold).fg(TableColor::Red)]);
+            table.add_row(vec![Cell::new(&error_msg).fg(TableColor::DarkGrey)]);
             println!("{table}");
         }
     }

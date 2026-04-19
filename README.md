@@ -95,7 +95,7 @@ The "Nova" feature (Oral Tradition) builds upon the base narrative system to cre
 
 **Usage:**
 
-> **Run with:** `cargo run --features nova`
+> **Run with:** `cargo run`
 
 ```rust
 // In Cargo.toml:
