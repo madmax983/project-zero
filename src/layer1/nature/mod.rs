@@ -12,6 +12,7 @@ mod ecology_tests;
 pub mod erosion;
 pub mod fertility;
 pub mod fire;
+pub mod megafauna_terrain;
 pub mod radioactive;
 pub mod seasons;
 pub mod solar;
@@ -22,15 +23,14 @@ pub mod weather;
 #[cfg(test)]
 mod weather_tests;
 pub mod wind;
-pub mod megafauna_terrain;
 
 pub use atmosphere::*;
-pub use megafauna_terrain::*;
 pub use biosphere_empathy::*;
 pub use ecology::*;
 pub use erosion::*;
 pub use fertility::*;
 pub use fire::*;
+pub use megafauna_terrain::*;
 pub use radioactive::*;
 pub use seasons::*;
 pub use solar::*;

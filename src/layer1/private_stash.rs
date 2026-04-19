@@ -181,7 +181,7 @@ mod tests {
         // I'll increase the loop count for the test to ensure it hits at least once.
         // Or I'll just accept that with standard RNG it might flake, but the spec test had 100.
         // Maybe the spec meant 1% (0.01)? "Small chance to steal per tick (e.g., 0.1%)"
-        // I will trust the code 0.001. I'll bump the loop to 5000 to be safe-ish, or use a seed if possible.
+        // I will trust the code 0.001. I'll bump the loop to 50000 to be safe-ish, or use a seed if possible.
         // Since I can't easily inject a seeded RNG into the system without changing its signature significantly...
         // I will bump the loop count.
 
@@ -190,7 +190,7 @@ mod tests {
         // BUT, I can also just patch the RNG in the system? No.
 
         // I will run it many times.
-        for _ in 0..5000 {
+        for _ in 0..50000 {
             schedule.run(&mut world);
             // Optimization: Break early if theft occurred
             if world
@@ -241,7 +241,7 @@ mod tests {
         let mut schedule = Schedule::default();
         schedule.add_systems(hoarding_system);
 
-        for _ in 0..5000 {
+        for _ in 0..50000 {
             schedule.run(&mut world);
             if world
                 .get::<PrivateStash>(pop)
@@ -330,7 +330,7 @@ mod tests {
         schedule.add_systems(super::stash_creation_system);
 
         // Run system many times to ensure probability hits
-        for _ in 0..5000 {
+        for _ in 0..50000 {
             schedule.run(&mut world);
             // Optimization: Break early if stash created
             if world.query::<&PrivateStash>().iter(&world).count() > 0 {
