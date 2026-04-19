@@ -6963,3 +6963,27 @@ What the migrants thought they were coming for.
 - amnesty from the Core
 - a safe haven from the Swarm
 - endless synthe-meat
+
+### Fragment Type: [ROUTINE_TYPE]
+Used for The Archaeological Contagion events. What the infected Pops are doing instead of working.
+
+- stacking rocks in prime number sequences
+- chanting solar frequencies at the sky
+- drawing perfect geometric circles in the dust
+- dismantling and rebuilding their bunks endlessly
+- walking backward in perfect synchronization
+- whispering technical schematics to the walls
+- weaving wires into useless, beautiful tapestries
+- meditating in the shape of a hypercube
+
+### Fragment Type: [LOST_TECH_NAME]
+Used for The Archaeological Contagion events. The ancient technology reverse-engineered from routines.
+
+- Sub-Etha Acoustics
+- Gravity Looming
+- Void-State Architecture
+- Chrono-Alloys
+- Empathic Circuitry
+- Kinetic Siphoning
+- Psychotropic Metallurgy
+- Fractal Computation
