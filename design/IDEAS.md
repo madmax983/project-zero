@@ -5537,8 +5537,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Sonic Suppression
-
+## Sonic Suppression [SPECCED]
 **Layer:** 1
 
 **Fantasy:** The walls are shaking. Non-lethal doesn't mean painless.
