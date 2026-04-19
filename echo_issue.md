@@ -1,0 +1,5 @@
+# 🗣️ Echo: Getting Started example is broken
+
+* 🤦 **The Confusion:** "Tried to run the Oral Tradition example from the README. I set up my new app, put `scale = { path = "...", features = ["nova"] }` in my `Cargo.toml`, and copy-pasted the example into my `main.rs`. But when I followed the README's instructions to run it using `cargo run --features nova`, Cargo yelled at me saying my package 'does not have the feature nova'!"
+* 🕵️ **The Reality:** "Turns out the README instructs users to type `cargo run --features nova` to run *their own code*. But since the user's `Cargo.toml` doesn't define a `nova` feature (it's only defined on the `scale` dependency), the command fails. Users just need to run `cargo run` if they've already enabled the feature in their dependencies!"
+* 💡 **The Fix:** "Change the usage instruction in the README from `cargo run --features nova` to just `cargo run` when talking about running the user's own application. Leave the `--features nova` flag only for running the library's internal demos."
