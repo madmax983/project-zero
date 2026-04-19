@@ -756,3 +756,4 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1099` Terminator Habitats — `specs/1099-terminator-habitats.md`
 - [ ] `1101` Bureaucratic Ghost Towns — `specs/1101-bureaucratic-ghost-towns.md`
 - [ ] `1102` The Cult of the First Ship — `specs/1102-the-cult-of-the-first-ship.md`
+- [ ] `1103` Prohibition & Contraband — `specs/1103-prohibition-and-contraband.md`

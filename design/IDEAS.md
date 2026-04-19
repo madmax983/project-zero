@@ -5289,7 +5289,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Prohibition & Contraband
+## Prohibition & Contraband [SPECCED]
 
 **Layer:** 1 -> Cross-layer
 
