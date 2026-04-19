@@ -294,3 +294,6 @@ mod ventilation_atmosphere_bridge;
 
 #[path = "integration/beacon_bridge.rs"]
 mod beacon_bridge;
+
+#[path = "integration/orbital_debris_cult_bridge.rs"]
+mod orbital_debris_cult_bridge;

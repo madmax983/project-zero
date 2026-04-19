@@ -735,3 +735,9 @@
 - **Systems connected:** `process_colony_beacon_system` -> `beacon_migrant_arrival_bridge`, `beacon_trade_ship_bridge`, `beacon_pirate_raid_bridge`
 - **Glue added:** Added bridge systems to consume `MigrantArrivalEvent`, `TradeShipArrivalEvent`, and `PirateRaidEvent` and generate corresponding state changes (`Pop` spawns, `Merchant` spawns, resource loss and morale drop). Scheduled in `Layer1SystemSet::Economy`.
 - **Tests:** `tests/integration/beacon_bridge.rs` (3 tests)
+
+### INT-915: Orbital Debris Cult -> Morale
+- **Date:** 2026-07-26
+- **Systems connected:** `OrbitalDebris` (Orbit) & `Station` -> `evaluate_debris_cult_formation_system` & `apply_debris_cult_morale_system` (Integration) -> `Morale` (Social)
+- **Glue added:** Added `evaluate_debris_cult_formation_system` to assign `DebrisCultist` and `apply_debris_cult_morale_system` to add Morale based on debris density. Registered in `SimulationSchedule` (Layer 2 Execution).
+- **Tests:** `tests/integration/orbital_debris_cult_bridge.rs`
