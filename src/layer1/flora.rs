@@ -84,6 +84,8 @@ pub enum FloraType {
     StrangleVines,
     /// Nutritious flora that completely nullifies sound.
     SilentFlora,
+    FireWeed,
+    Ironwood,
 }
 
 /// Component representing hostile plant life.
@@ -792,6 +794,70 @@ pub fn process_flora_migration(
     }
 }
 
+/// Represents the growth stage of flora.
+#[derive(Component, Debug, Clone)]
+pub struct GrowthStage {
+    pub current: u8,
+    pub max: u8,
+    pub progress: f32,
+}
+
+impl Default for GrowthStage {
+    fn default() -> Self {
+        Self {
+            current: 0,
+            max: 3,
+            progress: 0.0,
+        }
+    }
+}
+
+/// Represents the ecological state of a tile.
+#[derive(Component, Debug, Clone)]
+pub struct EcologicalState {
+    pub cleared_recently: bool,
+    pub climax_type: FloraType,
+}
+
+/// Grows flora over time.
+pub fn flora_growth_system(mut query: Query<&mut GrowthStage>) {
+    for mut stage in query.iter_mut() {
+        if stage.current < stage.max && stage.progress >= 100.0 {
+            stage.current += 1;
+            stage.progress = 0.0;
+        }
+    }
+}
+
+/// Handles succession by spawning pioneer species.
+pub fn ecological_succession_system(
+    mut commands: Commands,
+    mut query: Query<(&mut EcologicalState, &GridPosition)>,
+) {
+    for (mut state, pos) in query.iter_mut() {
+        if state.cleared_recently {
+            state.cleared_recently = false;
+
+            // Spawn FireWeed pioneer
+            commands.spawn((
+                Flora {
+                    flora_type: FloraType::FireWeed,
+                    growth_timer: 0,
+                    attack_timer: 0,
+                    damage: 0.0,
+                    spread_chance: 0.0,
+                },
+                GrowthStage {
+                    current: 0,
+                    max: 3,
+                    progress: 0.0,
+                },
+                *pos,
+            ));
+        }
+    }
+}
+
 #[cfg(test)]
 mod migratory_flora_tests {
     use super::*;
@@ -978,6 +1044,94 @@ mod migratory_flora_tests {
             *pos,
             GridPosition { x: 2, y: 2 },
             "Wall should block migration path"
+        );
+    }
+}
+
+#[cfg(test)]
+mod ecological_succession_tests {
+    use super::*;
+    use crate::layer1::flora::{EcologicalState, Flora, FloraType, GrowthStage};
+    use crate::layer1::map::GridPosition;
+    use bevy::prelude::*;
+
+    fn setup_app() -> App {
+        let mut app = App::new();
+        app.add_systems(Update, (flora_growth_system, ecological_succession_system));
+        app
+    }
+
+    #[test]
+    fn test_flora_progresses_through_stages() {
+        let mut app = setup_app();
+
+        let plant = app
+            .world_mut()
+            .spawn((
+                Flora {
+                    flora_type: FloraType::Ironwood,
+                    growth_timer: 0,
+                    attack_timer: 0,
+                    damage: 0.0,
+                    spread_chance: 0.0,
+                },
+                GrowthStage {
+                    current: 0,
+                    max: 3,
+                    progress: 99.0,
+                },
+            ))
+            .id();
+
+        // Increment time/progress
+        app.world_mut()
+            .get_mut::<GrowthStage>(plant)
+            .unwrap()
+            .progress += 2.0;
+        app.update();
+
+        let stage = app.world().get::<GrowthStage>(plant).unwrap();
+        assert_eq!(
+            stage.current, 1,
+            "Flora should advance to the next growth stage"
+        );
+        assert!(
+            stage.progress < 100.0,
+            "Progress should reset after advancing stage"
+        );
+    }
+
+    #[test]
+    fn test_cleared_climax_biome_spawns_pioneer_species() {
+        let mut app = setup_app();
+
+        // A tile that recently had its Ironwood cut down
+        let tile_pos = GridPosition { x: 5, y: 5 };
+        app.world_mut().spawn((
+            EcologicalState {
+                cleared_recently: true,
+                climax_type: FloraType::Ironwood,
+            },
+            tile_pos.clone(),
+        ));
+
+        app.update();
+
+        // Check if Pioneer species spawned on that tile
+        let mut pioneer_found = false;
+        for (flora, pos) in app
+            .world_mut()
+            .query::<(&Flora, &GridPosition)>()
+            .iter(app.world())
+        {
+            if *pos == tile_pos && flora.flora_type == FloraType::FireWeed {
+                pioneer_found = true;
+                break;
+            }
+        }
+        assert!(
+            pioneer_found,
+            "Pioneer species (FireWeed) should spawn where climax species was cleared"
         );
     }
 }

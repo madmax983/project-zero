@@ -1,4 +1,5 @@
 # In Progress
+- [ ] `1094` Ecological Succession — `specs/1094-ecological-succession.md` — claimed 2026-02-01
 
 
 Tasks currently being implemented by Builders.
