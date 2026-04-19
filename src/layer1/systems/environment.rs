@@ -64,6 +64,14 @@ pub fn register(schedule: &mut Schedule) {
             .in_set(Layer1SystemSet::Environment),
     );
     schedule.add_systems(
+        (
+            crate::layer1::nature::megafauna_terrain::process_mining_titan_system,
+            crate::layer1::nature::megafauna_terrain::awaken_titan_system
+                .after(crate::layer1::nature::megafauna_terrain::process_mining_titan_system),
+        )
+            .in_set(Layer1SystemSet::Environment),
+    );
+    schedule.add_systems(
         (crate::layer1::architecture::biomimetic::adjust_sympathetic_infrastructure_system,)
             .in_set(Layer1SystemSet::Environment),
     );

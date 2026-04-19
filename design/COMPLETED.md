@@ -416,3 +416,4 @@
 - [x] `939` Language Drift — `specs/939-language-drift.md` — completed 2026-06-25
 - [x] `1100` Thermal Inversion — `specs/1100-thermal-inversion.md` — completed 2026-06-15
 - [x] `1092` Obsessive Optimization - `specs/1092-obsessive-optimization.md` - completed 2026-06-15
+- [x] `667` Megafauna Terrain — `specs/667-megafauna-terrain.md` — completed 2026-06-01
