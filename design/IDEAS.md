@@ -5471,8 +5471,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Wormhole Dumping
-
+## Wormhole Dumping [SPECCED]
 **Layer:** 1 -> 3
 
 **Fantasy:** Making your garbage someone else's problem.
@@ -5485,8 +5484,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Dead Internet
-
+## Dead Internet [SPECCED]
 **Layer:** 3
 
 **Fantasy:** The galaxy is empty, but the lights are still on.
@@ -5499,8 +5497,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Void Stare
-
+## The Void Stare [SPECCED]
 **Layer:** 1
 
 **Fantasy:** If you gaze long into an abyss, the abyss also gazes into you.
@@ -5527,8 +5524,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Tectonic Fracking
-
+## Tectonic Fracking [SPECCED]
 **Layer:** 1
 
 **Fantasy:** Squeezing the planet until it screams.

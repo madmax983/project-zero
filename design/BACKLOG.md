@@ -761,3 +761,7 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1101` Bureaucratic Ghost Towns — `specs/1101-bureaucratic-ghost-towns.md`
 - [ ] `1102` The Cult of the First Ship — `specs/1102-the-cult-of-the-first-ship.md`
 - [ ] `1103` Prohibition & Contraband — `specs/1103-prohibition-and-contraband.md`
+- [ ] `1109` Wormhole Dumping — `specs/1109-wormhole-dumping.md`
+- [ ] `1110` Dead Internet — `specs/1110-dead-internet.md`
+- [ ] `1111` The Void Stare — `specs/1111-the-void-stare.md`
+- [ ] `1112` Tectonic Fracking — `specs/1112-tectonic-fracking.md`
