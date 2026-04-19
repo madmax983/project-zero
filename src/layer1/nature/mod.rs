@@ -22,8 +22,10 @@ pub mod weather;
 #[cfg(test)]
 mod weather_tests;
 pub mod wind;
+pub mod megafauna_terrain;
 
 pub use atmosphere::*;
+pub use megafauna_terrain::*;
 pub use biosphere_empathy::*;
 pub use ecology::*;
 pub use erosion::*;

@@ -8,7 +8,6 @@
 
 - [ ] `673` Indoctrination — `specs/673-indoctrination.md`
 
-- [ ] `667` Megafauna Terrain — `specs/667-megafauna-terrain.md`
 - [ ] `668` Impact Event — `specs/668-impact-event.md`
 - [ ] `669` Urban Spelunking — `specs/669-urban-spelunking.md`
 - [ ] `670` Cultural Projection — `specs/670-cultural-projection.md`

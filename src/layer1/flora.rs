@@ -1112,7 +1112,7 @@ mod ecological_succession_tests {
                 cleared_recently: true,
                 climax_type: FloraType::Ironwood,
             },
-            tile_pos.clone(),
+            tile_pos,
         ));
 
         app.update();
