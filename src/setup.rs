@@ -397,6 +397,7 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
             }
         }
     }
+    world.init_resource::<Events<crate::layer1::nature::megafauna_terrain::AwakenTitanEvent>>();
 
     let generator = NarrativeGenerator::from_embedded();
     let colony_name = generator.generate_star_name();

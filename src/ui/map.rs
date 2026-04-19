@@ -9,7 +9,6 @@ use ratatui::{
     widgets::{Block, BorderType, Borders, Paragraph},
 };
 use std::collections::HashMap;
-use std::hash::BuildHasher;
 
 use crate::layer1::fire::Fire;
 use crate::layer1::{
@@ -243,7 +242,7 @@ fn insert_if_higher_priority(
 /// Context for rendering the map layer.
 ///
 /// Bundles all the read-only references needed to draw the map, avoiding function signature bloat.
-pub struct MapRenderContext<'a, S: BuildHasher> {
+pub struct MapRenderContext<'a> {
     /// The area to render into.
     pub area: Rect,
     /// The terrain grid.
@@ -253,7 +252,7 @@ pub struct MapRenderContext<'a, S: BuildHasher> {
     /// The viewport.
     pub viewport: &'a Viewport,
     /// Map of entity positions to their render data.
-    pub entities_data: &'a HashMap<GridPosition, RenderEntity, S>,
+    pub entities_data: &'a HashMap<GridPosition, RenderEntity>,
     /// Current build mode state (cursor position, selected building, selected material, valid placement).
     pub build_mode: Option<(GridPosition, BuildingType, MaterialType, bool)>,
     /// Current designation mode state (cursor position, selected tool, valid placement, drag start).
@@ -264,13 +263,13 @@ pub struct MapRenderContext<'a, S: BuildHasher> {
     pub wall_time: f32,
 }
 
-impl<S: BuildHasher> Clone for MapRenderContext<'_, S> {
+impl Clone for MapRenderContext<'_> {
     fn clone(&self) -> Self {
         *self
     }
 }
 
-impl<S: BuildHasher> Copy for MapRenderContext<'_, S> {}
+impl Copy for MapRenderContext<'_> {}
 
 /// Builds a vector of text lines to render the terrain within the given area.
 ///
@@ -317,7 +316,7 @@ pub fn build_terrain_spans(
 /// 2. Drag selection rectangles.
 /// 3. Cached entities ([`RenderCache`]).
 /// 4. Base terrain.
-pub fn build_map_layer_spans<S: BuildHasher>(ctx: MapRenderContext<'_, S>) -> Vec<Line<'static>> {
+pub fn build_map_layer_spans(ctx: MapRenderContext<'_>) -> Vec<Line<'static>> {
     let mut lines: Vec<Line> = Vec::with_capacity(ctx.area.height as usize);
 
     for screen_y in 0..ctx.area.height {
@@ -328,10 +327,7 @@ pub fn build_map_layer_spans<S: BuildHasher>(ctx: MapRenderContext<'_, S>) -> Ve
     lines
 }
 
-fn build_map_layer_line<S: BuildHasher>(
-    ctx: &MapRenderContext<'_, S>,
-    world_y: i32,
-) -> Vec<Span<'static>> {
+fn build_map_layer_line(ctx: &MapRenderContext<'_>, world_y: i32) -> Vec<Span<'static>> {
     let mut line_spans = Vec::with_capacity(ctx.area.width as usize);
 
     for screen_x in 0..ctx.area.width {
@@ -366,8 +362,8 @@ fn build_map_layer_line<S: BuildHasher>(
     line_spans
 }
 
-fn render_build_mode_cursor<S: BuildHasher>(
-    ctx: &MapRenderContext<'_, S>,
+fn render_build_mode_cursor(
+    ctx: &MapRenderContext<'_>,
     world_x: i32,
     world_y: i32,
 ) -> Option<Span<'static>> {
@@ -390,8 +386,8 @@ fn render_build_mode_cursor<S: BuildHasher>(
     Some(Span::styled(text, Style::default().fg(fg).bg(bg)))
 }
 
-fn render_designation_mode<S: BuildHasher>(
-    ctx: &MapRenderContext<'_, S>,
+fn render_designation_mode(
+    ctx: &MapRenderContext<'_>,
     world_x: i32,
     world_y: i32,
 ) -> Option<Span<'static>> {
@@ -446,8 +442,8 @@ fn render_designation_mode<S: BuildHasher>(
     None
 }
 
-fn render_cached_entity<S: BuildHasher>(
-    ctx: &MapRenderContext<'_, S>,
+fn render_cached_entity(
+    ctx: &MapRenderContext<'_>,
     entity: &RenderEntity,
 ) -> Option<Span<'static>> {
     match entity {
@@ -513,11 +509,7 @@ fn render_cached_entity<S: BuildHasher>(
     }
 }
 
-fn render_base_terrain<S: BuildHasher>(
-    ctx: &MapRenderContext<'_, S>,
-    world_x: i32,
-    world_y: i32,
-) -> Span<'static> {
+fn render_base_terrain(ctx: &MapRenderContext<'_>, world_x: i32, world_y: i32) -> Span<'static> {
     let (text, color) =
         if let (Ok(ux), Ok(uy)) = (usize::try_from(world_x), usize::try_from(world_y)) {
             ctx.terrain.get(ux, uy).map_or((" ", Color::Black), |tile| {
@@ -553,7 +545,7 @@ fn render_base_terrain<S: BuildHasher>(
 }
 
 /// Render terrain grid, buildings, and pops to the given frame area with viewport offset.
-pub fn render_map_layer<S: BuildHasher>(frame: &mut Frame, ctx: MapRenderContext<'_, S>) {
+pub fn render_map_layer(frame: &mut Frame, ctx: MapRenderContext<'_>) {
     let area = ctx.area;
     let lines = build_map_layer_spans(ctx);
     let paragraph = Paragraph::new(lines);
