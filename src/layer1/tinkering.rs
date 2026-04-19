@@ -91,7 +91,7 @@ mod tests {
         let _engineer = app
             .world_mut()
             .spawn((
-                Pop::default(),
+                Pop,
                 skills,
                 TinkeringTarget { target: machine },
                 ForceTinkerOutcome { success: true }, // Test harness component
@@ -130,7 +130,7 @@ mod tests {
         let _engineer = app
             .world_mut()
             .spawn((
-                Pop::default(),
+                Pop,
                 skills,
                 TinkeringTarget { target: machine },
                 ForceTinkerOutcome { success: true },
@@ -170,7 +170,7 @@ mod tests {
         let _engineer = app
             .world_mut()
             .spawn((
-                Pop::default(),
+                Pop,
                 skills,
                 TinkeringTarget { target: machine },
                 ForceTinkerOutcome { success: false }, // Test harness component
