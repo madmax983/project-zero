@@ -397,6 +397,10 @@ impl AtmosphereGrid {
 }
 
 /// System to update atmospheric advection and emission (Part 1).
+///
+/// ⚡ Bolt Optimization:
+/// We apply emissions directly inside the loop instead of collecting emitters into a `Vec`.
+/// This avoids unnecessary per-frame heap allocations.
 pub fn update_atmosphere_system(
     mut grid: ResMut<AtmosphereGrid>,
     wind_grid: Option<Res<crate::layer1::wind::WindGrid>>,
@@ -409,8 +413,6 @@ pub fn update_atmosphere_system(
 
     // 2. Emitters
     // Note: We don't collect blockers here anymore, they are used in diffusion system.
-    let mut emitters = Vec::new();
-
     for (b, pos) in query.iter() {
         let emission = match b.building_type {
             BuildingType::Refinery | BuildingType::AncientReactor => 0.08,
@@ -419,41 +421,29 @@ pub fn update_atmosphere_system(
             _ => 0.0,
         };
         if emission > 0.0 {
-            emitters.push((*pos, emission));
+            grid.add(pos.x, pos.y, emission);
         }
-    }
-
-    // 3. Apply emissions
-    for (pos, amount) in emitters {
-        grid.add(pos.x, pos.y, amount);
     }
 }
 
 /// System to apply health effects from pollution.
+///
+/// ⚡ Bolt Optimization:
+/// We use `world.resource_scope` to extract the `AtmosphereGrid` resource and then query for `&mut Health` directly.
+/// This allows applying damage directly in the loop without needing an intermediate `Vec` to store the damages.
 pub fn pollution_effects_system(world: &mut World) {
-    let mut damages = Vec::new();
+    let mut query = world.query_filtered::<(&GridPosition, &mut Health), With<Pop>>();
 
-    // 1. Calculate damages (Read-only phase)
-    {
-        let mut query = world.query_filtered::<(Entity, &GridPosition), With<Pop>>();
-        let grid = world.resource::<AtmosphereGrid>();
-
-        for (entity, pos) in query.iter(world) {
+    world.resource_scope(|world, grid: Mut<AtmosphereGrid>| {
+        for (pos, mut health) in query.iter_mut(world) {
             let pollution = grid.get(pos.x, pos.y);
             // Threshold 0.3
             if pollution > 0.3 {
                 let damage = (pollution - 0.3) * 0.1;
-                damages.push((entity, damage));
+                health.take_damage(damage);
             }
         }
-    }
-
-    // 2. Apply damages (Write phase)
-    for (entity, damage) in damages {
-        if let Some(mut health) = world.get_mut::<Health>(entity) {
-            health.take_damage(damage);
-        }
-    }
+    });
 }
 
 /// Updates diffusion rate based on weather conditions.
@@ -502,7 +492,14 @@ pub fn simulate_diffusion_system(
 /// Applies damage from high smog levels.
 pub fn apply_smog_damage_system(
     grid: Res<AtmosphereGrid>,
-    mut query: Query<(&GridPosition, &mut Health, Option<&crate::layer1::economy::items::Equipment>), With<Pop>>,
+    mut query: Query<
+        (
+            &GridPosition,
+            &mut Health,
+            Option<&crate::layer1::economy::items::Equipment>,
+        ),
+        With<Pop>,
+    >,
 ) {
     for (pos, mut health, equipment) in &mut query {
         let smog_level = grid.get(pos.x, pos.y);

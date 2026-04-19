@@ -304,6 +304,8 @@ pub fn register(schedule: &mut Schedule) {
             // Process chronicle events
             crate::layer1::geography::process_historical_events,
             crate::layer1::flora::detect_hazards_system,
+            crate::layer1::flora::flora_growth_system,
+            crate::layer1::flora::ecological_succession_system,
             chronicle_event_handler_system.after(check_milestones_system),
             crate::layer1::festivals::check_for_festivals_system
                 .after(chronicle_event_handler_system),

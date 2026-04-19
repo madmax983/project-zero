@@ -150,6 +150,7 @@ pub fn register(schedule: &mut Schedule) {
 
     schedule.add_systems(
         (
+            crate::layer1::tinkering::obsessive_optimization_system,
             crate::layer1::execution::vandalize_execution_system.after(arrival_handler_system),
             crate::layer1::pop_doppelganger::sabotage_system.after(work_execution_system),
             crate::layer1::drone::check_drone_connection.after(arrival_handler_system),

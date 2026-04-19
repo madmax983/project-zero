@@ -263,7 +263,7 @@ pub fn update_faction_membership_system(
         let new_faction = match best_skill {
             Some(SkillType::Mining) => FactionId::MinersGuild,
             Some(SkillType::Farming | SkillType::Husbandry) => FactionId::FarmersGuild,
-            Some(SkillType::Construction) => FactionId::MasonsGuild,
+            Some(SkillType::Construction | SkillType::Engineering) => FactionId::MasonsGuild,
             Some(SkillType::Forestry) => FactionId::LoggersGuild,
             Some(SkillType::Crafting) => FactionId::ArtisansGuild,
             None => FactionId::Unaligned,

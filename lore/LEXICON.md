@@ -4349,3 +4349,16 @@
 **Replaces:** low skill pop, criminal pop spawn
 **Code reference:** `Pop` with `Criminal` or negative traits from beacon effect
 **Usage:** "Half the shuttle was filled with Grifters looking for an easy mark."
+
+## Research & Technology
+
+### Lost Tech
+
+**Replaces:** rare technology, advanced research points, precursor tech
+**Code reference:** `TechCategory::LostTech`
+**Usage:**
+- "We have recovered Lost Tech from the anomaly."
+- "The researchers earned 5 points of Lost Tech."
+- "Lost Tech alone can build this drive."
+
+**Note:** Refers specifically to technology gleaned from ancient ruins, not standard colony research.

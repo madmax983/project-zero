@@ -4,3 +4,6 @@
 **2024-04-17 - SipHash vs AHash**
 **Learning:** `std::collections::HashMap` uses a cryptographically secure hasher (SipHash) by default, which is slow for frequent allocations of maps with simple integer keys (like `Entity`).
 **Action:** Replace `std::collections::HashMap` with `bevy::utils::HashMap` (AHash) in hot paths to avoid SipHash overhead.
+## Remove Vec::new() allocs in atmosphere
+**Learning:** Applying effects directly inside resource_scope instead of collecting into a Vec avoids unnecessary per-frame allocations
+**Action:** Use resource_scope to apply modifications immediately where possible.

@@ -6153,3 +6153,23 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 **Patterns:**
 - "They came expecting [RUSH_EXCUSE]. They found only hard labor and thin rations. [YEAR]."
 - "[YEAR]: The migrants are angry. The broadcast promised them [RUSH_EXCUSE], but [COLONY] has nothing to give."
+
+## The Archaeological Contagion Templates (Spec 1010)
+
+### Template: ANCIENT_ROUTINE_INFECTED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [POP_NAME], [ROUTINE_TYPE]
+
+**Patterns:**
+- "[YEAR]: [POP_NAME] has stopped working to perform [ROUTINE_TYPE]. They claim the ruins told them to."
+- "[COLONY] reports a disturbance. [POP_NAME] is caught in a loop of [ROUTINE_TYPE]. The contagion spreads."
+- "The digging uncovered more than stone. [POP_NAME] now spends their shifts on [ROUTINE_TYPE]."
+
+### Template: LOST_TECH_DISCOVERED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [LOST_TECH_NAME], [OBSERVER_NAME]
+
+**Patterns:**
+- "[YEAR]: By watching the infected, [OBSERVER_NAME] has reverse-engineered [LOST_TECH_NAME]."
+- "The madness of the ruins yields fruit. [COLONY] researchers uncover the secrets of [LOST_TECH_NAME]."
+- "It is not nonsense. It is a schematic. We have learned [LOST_TECH_NAME]."
