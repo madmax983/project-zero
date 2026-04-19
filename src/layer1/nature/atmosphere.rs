@@ -502,13 +502,16 @@ pub fn simulate_diffusion_system(
 /// Applies damage from high smog levels.
 pub fn apply_smog_damage_system(
     grid: Res<AtmosphereGrid>,
-    mut query: Query<(&GridPosition, &mut Health), With<Pop>>,
+    mut query: Query<(&GridPosition, &mut Health, Option<&crate::layer1::economy::items::Equipment>), With<Pop>>,
 ) {
-    for (pos, mut health) in &mut query {
+    for (pos, mut health, equipment) in &mut query {
         let smog_level = grid.get(pos.x, pos.y);
         if smog_level > 150.0 {
-            // Suffocation / Toxicity
-            health.take_damage(1.0);
+            let has_mask = equipment.is_some_and(|e| e.mask.is_some());
+            if !has_mask {
+                // Suffocation / Toxicity
+                health.take_damage(1.0);
+            }
         }
     }
 }
