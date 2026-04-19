@@ -81,9 +81,11 @@ mod tests {
     fn test_oxygen_masks_prevent_damage() {
         let mut world = World::new();
 
-        let mask_item = world.spawn(crate::layer1::items::Item {
-            item_type: crate::layer1::items::ItemType::Tool, // Doesn't matter for this test
-        }).id();
+        let mask_item = world
+            .spawn(crate::layer1::items::Item {
+                item_type: crate::layer1::items::ItemType::Tool, // Doesn't matter for this test
+            })
+            .id();
 
         // Setup Pop in smog with mask
         let pop = world
@@ -94,7 +96,10 @@ mod tests {
                     max: 100.0,
                 },
                 GridPosition { x: 10, y: 10 },
-                crate::layer1::items::Equipment { mask: Some(mask_item), ..Default::default() },
+                crate::layer1::items::Equipment {
+                    mask: Some(mask_item),
+                    ..Default::default()
+                },
             ))
             .id();
 
@@ -107,6 +112,9 @@ mod tests {
         world.run_system_once(apply_smog_damage_system).unwrap();
 
         let health = world.get::<Health>(pop).unwrap();
-        assert_eq!(health.current, 100.0, "Health should NOT drop from smog when wearing mask");
+        assert_eq!(
+            health.current, 100.0,
+            "Health should NOT drop from smog when wearing mask"
+        );
     }
 }
