@@ -16345,7 +16345,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Bureaucratic Ghost Towns
+## Bureaucratic Ghost Towns [SPECCED]
 
 **Layer:** Cross-layer (3 -> 1)
 
@@ -16359,7 +16359,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Cult of the First Ship
+## The Cult of the First Ship [SPECCED]
 
 **Layer:** 1 -> 3
 

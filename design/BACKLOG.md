@@ -757,3 +757,5 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1097` Planetary Spin-Up — `specs/1097-planetary-spin-up.md`
 - [ ] `1098` Psychoactive Weather — `specs/1098-psychoactive-weather.md`
 - [ ] `1099` Terminator Habitats — `specs/1099-terminator-habitats.md`
+- [ ] `1101` Bureaucratic Ghost Towns — `specs/1101-bureaucratic-ghost-towns.md`
+- [ ] `1102` The Cult of the First Ship — `specs/1102-the-cult-of-the-first-ship.md`
