@@ -43,6 +43,7 @@ pub struct Equipment {
     pub head: Option<Entity>,
     /// The entity ID of the equipped totem.
     pub totem: Option<Entity>,
+    pub mask: Option<Entity>,
 }
 
 /// Types of clothing items.

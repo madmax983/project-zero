@@ -1,7 +1,6 @@
 # Backlog
 
 ## High Priority
-- [ ] `1100` Thermal Inversion — `specs/1100-thermal-inversion.md`
 - [ ] `1092` Obsessive Optimization — `specs/1092-obsessive-optimization.md`
 - [ ] `1093` Superstitious Totems — `specs/1093-superstitious-totems.md`
 - [ ] `1094` Ecological Succession — `specs/1094-ecological-succession.md`
