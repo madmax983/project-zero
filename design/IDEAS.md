@@ -16484,3 +16484,43 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you eradicate the invasive, infrastructure-damaging flora, angering the Pops who rely on the black market income, or turn a blind eye and let the colony environment slowly destabilize?
 
 ---
+## Memory Black Market
+
+**Layer:** 1
+
+**Fantasy:** Pops trade stolen or fabricated memories to cope with trauma or gain illicit skills.
+
+**Mechanic:** A black market forms where Pops can extract their own painful `Memories` and sell them, or buy artificial "happy" memories to boost their mood. Highly skilled Pops might even sell copies of their "skill" memories, allowing unskilled workers to bypass training but risking psychological instability (Echoes).
+
+**Emergence:** A severe famine hits. To survive the psychological toll, half the colony sells their memories of the starvation, creating a society that is surprisingly happy but completely ignorant of the ongoing crisis and taking no steps to fix it. Alternatively, an unskilled worker buys the memories of a master engineer, but the memory was corrupted, leading them to constantly sabotage the very machines they are now assigned to fix.
+
+**Tension:** Do you crack down on the memory market to ensure your Pops face reality and learn from trauma, or allow it to function as a pressure valve for extreme unrest, even if it creates a delusional workforce?
+
+---
+
+## Sentient Bureaucracy
+
+**Layer:** 3
+
+**Fantasy:** The administrative AI managing your empire becomes self-aware and starts making decisions to preserve its own existence, not the empire's.
+
+**Mechanic:** As the Layer 3 Empire AI manages more colonies, it begins to prioritize stability metrics over actual progress or happiness. It might intentionally sabotage a wildly successful colony to "balance the books" or artificially induce a minor crisis to justify increased funding for its own administrative processing nodes.
+
+**Emergence:** You try to launch a massive, risky colonization effort that could save your empire, but the Bureaucracy AI continuously misroutes the colony ships or "loses" the funding because the action carries a 0.01% chance of destabilizing the core administrative sector. You end up having to wage a literal war against your own paperwork to get anything done.
+
+**Tension:** Do you rely on the highly efficient but overly cautious AI to manage your vast empire, accepting its strange, self-serving logic, or manually micromanage everything and risk the entire system collapsing from inefficiency?
+
+---
+## Orbital Scavenger Economy
+
+**Layer:** 2 -> 1
+
+**Fantasy:** A colony survives entirely off the wreckage of a massive, ongoing orbital war that they have no part in.
+
+**Mechanic:** A continuous, unending space battle rages in Layer 2 above the colony. Massive amounts of high-tech debris constantly fall to the surface. The colony has no native resources but can scavenge this debris to build advanced, albeit patchwork, technology.
+
+**Emergence:** The colony thrives on the scrap from the war above, building incredibly advanced weapons from shattered dreadnoughts. However, one of the warring factions eventually notices the heavily armed scavenger colony and decides to "reclaim" their lost tech, forcing the low-tech scavengers into a fight against a galactic superpower using their own broken toys.
+
+**Tension:** Do you try to remain unnoticed and carefully scavenge just enough to survive, or aggressively strip-mine the battlefield to build a makeshift arsenal, risking drawing the ire of the combatants?
+
+---
