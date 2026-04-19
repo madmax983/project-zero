@@ -16520,3 +16520,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you try to remain unnoticed and carefully scavenge just enough to survive, or aggressively strip-mine the battlefield to build a makeshift arsenal, risking drawing the ire of the combatants?
 
 ---
+## Xenoflora Pet Craze
+
+**Layer:** 1
+
+**Fantasy:** A seemingly harmless local flora becomes a viral obsession among the colonists, disrupting work but creating immense joy.
+
+**Mechanic:** Pops randomly discover a "cute" or "soothing" local alien plant/animal and adopt it as a pet. These pets consume tiny amounts of resources but drastically boost the Pop's mood. The trend spreads virally through the colony's social network.
+
+**Emergence:** The entire colony becomes obsessed with these pets. Productivity drops slightly as Pops spend time playing with them, but overall happiness skyrockets. However, if the colony runs out of the specific resource the pets need, mass depression hits as the beloved pets start dying off.
+
+**Tension:** Do you try to ban the pets to maintain peak efficiency, risking a massive happiness penalty, or let the craze run its course and scramble to secure enough specialized food to keep the fluffy little parasites alive?
+
+---
+
+## Automated Salvage Swarms
+
+**Layer:** 2 -> 1
+
+**Fantasy:** Self-replicating drones sent by a long-dead empire occasionally drift into your system, aggressively breaking down anything they consider "wreckage."
+
+**Mechanic:** "Salvage Swarms" arrive from Layer 2. They don't attack Pops, but they will latch onto and rapidly disassemble damaged buildings, disabled ships, or unpowered infrastructure, converting them into raw materials and leaving them in neat, compressed cubes.
+
+**Emergence:** A minor power grid failure disables half your industrial sector. Before you can reboot the reactors, a Salvage Swarm arrives, assumes your disabled factories are wreckage, and completely dismantles them into raw materials. You just lost your entire production base, but you are now insanely rich in base metals.
+
+**Tension:** Do you shoot down the heavily-armored swarms to protect offline infrastructure, or intentionally power down old, obsolete buildings when a swarm is near to get "free" demolition and recycling?
+
+---
+
+## The Nostalgia Cult
+
+**Layer:** Cross-layer (1 / 2)
+
+**Fantasy:** A cultural movement that romantically idealizes the "old ways" (the founding era of the colony), demanding a return to simpler tech and rejecting modern advancements.
+
+**Mechanic:** Pops who experience high stress or rapid technological shifts might form the "Nostalgia Cult." They refuse to work in high-tech buildings, demand primitive housing, and actively sabotage advanced infrastructure (like fusion reactors or mass drivers) in favor of solar panels and manual labor.
+
+**Emergence:** You finally research and build a massive, hyper-efficient planetary AI to manage logistics. The sudden change terrifies a huge portion of the population, triggering a massive Nostalgia Cult uprising. They storm the AI core and replace it with hundreds of clerks doing math on paper, tanking your efficiency but restoring perfect social harmony.
+
+**Tension:** Do you violently suppress the luddites to enforce progress, or build localized "primitive zones" to keep them happy, effectively running two different tech levels on the same planet?
+
+---
