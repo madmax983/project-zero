@@ -50,5 +50,5 @@ pub mod skyhooks;
 pub mod rogue_planets;
 pub mod weather;
 pub use weather::*;
-pub mod orbital_necropolis;
 pub mod orbit;
+pub mod orbital_necropolis;

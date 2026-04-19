@@ -476,7 +476,7 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
             .after(crate::layer2::combat::fleet_combat_system),
         crate::layer2::debris::debris_attrition_system
             .after(crate::layer2::debris::debris_accumulation_system),
-        crate::layer2::debris::debris_decay_system
+        crate::layer2::debris::debris_decay_system,
     ));
     schedule.add_systems((
         crate::layer2::orbit::debris_cult::evaluate_debris_cult_formation_system,
@@ -614,6 +614,8 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
 
     #[cfg(feature = "nova")]
     crate::experimental::echo_chamber::register(schedule);
+    #[cfg(feature = "nova")]
+    crate::experimental::the_haunted_cartographer::register(schedule);
 
     schedule.add_systems((
         crate::layer3::map::map_data_rot_system,

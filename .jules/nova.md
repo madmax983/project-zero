@@ -134,3 +134,7 @@
 **Concept:** A system where pops lose their individuality and share a single pool of needs and health. Implemented via the `GestaltParticipant` component which averages stats across all participants and slowly interpolates their individual states towards the mean.
 **Fate:** Merged
 **Lesson:** Creates interesting biological networks where a well-fed pop can sustain a starving one, but also introduces a massive vulnerability where the entire hivemind can collapse simultaneously.
+## [The Haunted Cartographer]
+**Concept:** A system that tracks how many Pops have died on each grid tile (`HauntedGrid`). If a Pop's current `Action` is `ActionType::Explore` and they walk onto a highly haunted tile, they have a chance to enter a `Panic` mental break.
+**Fate:** Proposed
+**Lesson:** Tying the historical legacy of the colony's failures directly to the spatial exploration loop creates a mechanic where the map itself becomes a terrifying record of past mistakes.

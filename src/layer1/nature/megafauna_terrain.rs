@@ -1,8 +1,8 @@
-use bevy_ecs::prelude::*;
 use crate::layer1::map::GridPosition;
-use crate::layer1::terrain::TerrainType;
 use crate::layer1::shipbreaking::MineEvent;
 use crate::layer1::structure::Structure;
+use crate::layer1::terrain::TerrainType;
+use bevy_ecs::prelude::*;
 
 #[derive(Component)]
 pub struct MegafaunaTerrain {
@@ -54,11 +54,11 @@ pub fn awaken_titan_system(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use bevy::prelude::{App, Update};
     use crate::layer1::map::GridPosition;
-    use crate::layer1::terrain::TerrainType;
-    use crate::layer1::structure::Structure;
     use crate::layer1::shipbreaking::MineEvent;
+    use crate::layer1::structure::Structure;
+    use crate::layer1::terrain::TerrainType;
+    use bevy::prelude::{App, Update};
 
     fn setup_app() -> App {
         let mut app = App::new();
@@ -72,14 +72,17 @@ mod tests {
     fn test_mining_dormant_titan_triggers_awakening() {
         let mut app = setup_app();
 
-        let titan_entity = app.world_mut().spawn((
-            GridPosition { x: 10, y: 10 },
-            TerrainType::Rock,
-            MegafaunaTerrain {
-                is_dormant: true,
-                base_health: 1000.0,
-            },
-        )).id();
+        let titan_entity = app
+            .world_mut()
+            .spawn((
+                GridPosition { x: 10, y: 10 },
+                TerrainType::Rock,
+                MegafaunaTerrain {
+                    is_dormant: true,
+                    base_health: 1000.0,
+                },
+            ))
+            .id();
 
         let miner = app.world_mut().spawn_empty().id();
 
@@ -93,7 +96,10 @@ mod tests {
 
         // Assert an awaken event was fired or the titan state changed
         let titan = app.world().get::<MegafaunaTerrain>(titan_entity).unwrap();
-        assert!(!titan.is_dormant, "Mining a dormant titan should wake it up");
+        assert!(
+            !titan.is_dormant,
+            "Mining a dormant titan should wake it up"
+        );
     }
 
     #[test]
@@ -102,19 +108,28 @@ mod tests {
 
         let pos = GridPosition { x: 15, y: 15 };
 
-        let titan_entity = app.world_mut().spawn((
-            pos,
-            TerrainType::Rock,
-            MegafaunaTerrain {
-                is_dormant: true,
-                base_health: 1000.0,
-            },
-        )).id();
+        let titan_entity = app
+            .world_mut()
+            .spawn((
+                pos,
+                TerrainType::Rock,
+                MegafaunaTerrain {
+                    is_dormant: true,
+                    base_health: 1000.0,
+                },
+            ))
+            .id();
 
-        let building_entity = app.world_mut().spawn((
-            pos,
-            Structure { current_hp: 100.0, max_hp: 100.0 },
-        )).id();
+        let building_entity = app
+            .world_mut()
+            .spawn((
+                pos,
+                Structure {
+                    current_hp: 100.0,
+                    max_hp: 100.0,
+                },
+            ))
+            .id();
 
         // Wake up the titan
         app.world_mut().send_event(AwakenTitanEvent {
@@ -124,21 +139,27 @@ mod tests {
         app.update();
 
         // The structure should be destroyed (despawned or integrity 0)
-        assert!(app.world().get_entity(building_entity).is_err(), "Buildings on top of an awakened titan must be destroyed");
+        assert!(
+            app.world().get_entity(building_entity).is_err(),
+            "Buildings on top of an awakened titan must be destroyed"
+        );
     }
 
     #[test]
     fn test_awakened_titan_changes_terrain_type() {
         let mut app = setup_app();
 
-        let titan_entity = app.world_mut().spawn((
-            GridPosition { x: 5, y: 5 },
-            TerrainType::Rock,
-            MegafaunaTerrain {
-                is_dormant: true,
-                base_health: 1000.0,
-            },
-        )).id();
+        let titan_entity = app
+            .world_mut()
+            .spawn((
+                GridPosition { x: 5, y: 5 },
+                TerrainType::Rock,
+                MegafaunaTerrain {
+                    is_dormant: true,
+                    base_health: 1000.0,
+                },
+            ))
+            .id();
 
         app.world_mut().send_event(AwakenTitanEvent {
             entity: titan_entity,

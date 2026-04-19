@@ -1,8 +1,8 @@
-use bevy_ecs::prelude::*;
+use crate::layer1::entities::pop::Pop;
+use crate::layer1::social::morale::{MoodModifier, Morale};
 use crate::layer2::debris::OrbitalDebris;
 use crate::layer2::station::{Station, StationType};
-use crate::layer1::entities::pop::Pop;
-use crate::layer1::social::morale::{Morale, MoodModifier};
+use bevy_ecs::prelude::*;
 
 #[derive(Component)]
 pub struct DebrisCultist;
@@ -16,8 +16,10 @@ pub fn evaluate_debris_cult_formation_system(
 
     if total_debris >= 5.0 {
         for (entity, station, cultist) in pop_query.iter() {
-            if matches!(station.station_type, StationType::Outpost | StationType::MiningPlatform | StationType::Derelict)
-                && cultist.is_none()
+            if matches!(
+                station.station_type,
+                StationType::Outpost | StationType::MiningPlatform | StationType::Derelict
+            ) && cultist.is_none()
             {
                 commands.entity(entity).insert(DebrisCultist);
             }
@@ -41,7 +43,9 @@ pub fn apply_debris_cult_morale_system(
 
     for mut morale in cultist_query.iter_mut() {
         // Remove existing debris cult modifier if present
-        morale.modifiers.retain(|m| m.label != "Orbital Debris Cult");
+        morale
+            .modifiers
+            .retain(|m| m.label != "Orbital Debris Cult");
 
         // Add the fresh modifier that applies this tick.
         morale.add_modifier(MoodModifier {
@@ -55,11 +59,11 @@ pub fn apply_debris_cult_morale_system(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use bevy_app::{App, Update};
-    use crate::layer2::station::{Station, StationType};
-    use crate::layer2::debris::OrbitalDebris;
     use crate::layer1::entities::pop::Pop;
     use crate::layer1::social::morale::Morale;
+    use crate::layer2::debris::OrbitalDebris;
+    use crate::layer2::station::{Station, StationType};
+    use bevy_app::{App, Update};
 
     #[test]
     fn test_debris_cult_activation() {
@@ -72,10 +76,15 @@ mod tests {
         }
 
         // Spawn a low-tier orbital pop
-        let entity = app.world_mut().spawn((
-            Pop,
-            Station { station_type: StationType::Outpost },
-        )).id();
+        let entity = app
+            .world_mut()
+            .spawn((
+                Pop,
+                Station {
+                    station_type: StationType::Outpost,
+                },
+            ))
+            .id();
 
         app.update();
 
@@ -91,11 +100,17 @@ mod tests {
         app.world_mut().spawn(OrbitalDebris(1.0));
         app.world_mut().spawn(OrbitalDebris(1.0));
 
-        let entity = app.world_mut().spawn((
-            Pop,
-            DebrisCultist,
-            Morale { value: 0.5, ..Default::default() },
-        )).id();
+        let entity = app
+            .world_mut()
+            .spawn((
+                Pop,
+                DebrisCultist,
+                Morale {
+                    value: 0.5,
+                    ..Default::default()
+                },
+            ))
+            .id();
 
         app.update();
 
