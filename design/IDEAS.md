@@ -5303,7 +5303,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Swarm Intelligence
+## Swarm Intelligence [SPECCED]
 
 **Layer:** 1
 
@@ -5317,7 +5317,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Auroral Harvesting
+## Auroral Harvesting [SPECCED]
 
 **Layer:** 1
 
@@ -5387,7 +5387,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Photophobic Resources
+## Photophobic Resources [SPECCED]
 
 **Layer:** 1
 
@@ -5443,7 +5443,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Astrological Beliefs
+## Astrological Beliefs [SPECCED]
 
 **Layer:** Cross-layer
 
@@ -5457,7 +5457,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Rearguard
+## The Rearguard [SPECCED]
 
 **Layer:** Cross-layer
 
