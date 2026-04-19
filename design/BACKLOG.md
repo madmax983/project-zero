@@ -1,7 +1,6 @@
 # Backlog
 
 ## High Priority
-- [ ] `1093` Superstitious Totems — `specs/1093-superstitious-totems.md`
 
 
 - [ ] `762` The Gold Rush Beacon — `specs/762-gold-rush-beacon.md`
