@@ -16327,7 +16327,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Fossilized Fleet
+## The Fossilized Fleet [SPECCED]
 
 **Layer:** Cross-layer (2 -> 1)
 
@@ -16369,7 +16369,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Generational Amnesia
+## Generational Amnesia [SPECCED]
 
 **Layer:** Cross-layer (3 -> 1)
 
@@ -16383,7 +16383,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Diaspora Fleet
+## The Diaspora Fleet [SPECCED]
 
 **Layer:** Cross-layer (1 -> 2)
 
@@ -16397,7 +16397,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Sub-light Tourism
+## Sub-light Tourism [SPECCED]
 
 **Layer:** Cross-layer (2 -> 1)
 
@@ -16559,5 +16559,47 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Emergence:** You finally research and build a massive, hyper-efficient planetary AI to manage logistics. The sudden change terrifies a huge portion of the population, triggering a massive Nostalgia Cult uprising. They storm the AI core and replace it with hundreds of clerks doing math on paper, tanking your efficiency but restoring perfect social harmony.
 
 **Tension:** Do you violently suppress the luddites to enforce progress, or build localized "primitive zones" to keep them happy, effectively running two different tech levels on the same planet?
+
+---
+
+## The Architectural Placebo
+
+**Layer:** 1
+
+**Fantasy:** The illusion of safety or prosperity is sometimes enough to keep the colony going, even if it's completely fake.
+
+**Mechanic:** You can build "Façade" structures—buildings that look like high-end amenities (like a luxury hospital or grand monument) but are actually empty shells made of cheap materials. Pops passing by gain a temporary mood boost, believing the colony is thriving.
+
+**Emergence:** A colony surviving purely on the morale boost of fake buildings. However, if a disaster strikes and Pops try to use the fake hospital, they discover the lie. The resulting "Betrayal" mood debuff is devastating and can trigger immediate riots.
+
+**Tension:** Do you spend real resources on actual infrastructure, or build cheap façades to quickly calm a volatile population, risking catastrophic backlash if the illusion shatters?
+
+---
+
+## Void-Tethered Sleep
+
+**Layer:** Cross-layer
+
+**Fantasy:** Hyperspace travel physically alters the way people dream, and returning to normal gravity is jarring.
+
+**Mechanic:** Pops who frequently travel on Layer 2 ships or work on orbital stations develop "Void-Sleep." When they sleep on a planetary surface (Layer 1), their rest metric barely recovers unless they sleep in specialized, expensive "Zero-G Suspension Pods." If they sleep in regular beds, they suffer "Gravity Nightmares," reducing their efficiency.
+
+**Emergence:** Your veteran space-farers and elite pilots become completely maladjusted to planetary life. A ground colony filled with retired pilots becomes a hotbed of exhaustion and paranoia because no one can sleep, unless you build a wildly expensive, specialized district just for them.
+
+**Tension:** Do you keep your experienced crews in space forever, burning them out, or pay the exorbitant cost to integrate them back into planetary society?
+
+---
+
+## Generational Grudge
+
+**Layer:** 1
+
+**Fantasy:** A minor slight between two people balloons into a multi-generational blood feud that splits the colony.
+
+**Mechanic:** If two Pops have a severe rivalry and one dies before it's resolved, the deceased's descendants inherit the "Grudge" trait against the rival's descendants. This grudge reduces cooperation, increases the chance of workplace sabotage if they work together, and causes them to refuse to live in the same housing block.
+
+**Emergence:** What started as two farmers fighting over a stolen tool 50 years ago has now split your entire engineering sector in half. Half the engineers refuse to repair the machines built by the other half, causing your power grid to slowly fail due to petty ancestral politics.
+
+**Tension:** Do you actively segregate rival families to maintain peace and efficiency, or force them to work together and hope they resolve the ancient feud before they blow up the reactor?
 
 ---
