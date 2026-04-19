@@ -3785,3 +3785,10 @@ How activating the beacon drives the colony into chaos.
 - RUSH_DISAPPOINTMENT -> increases_chance -> UNREST, RIOT
 - CRIME_WAVE -> triggers -> RUSH_CRIME_WAVE
 - CRIME_WAVE -> increases_chance -> BLACK_MARKET_TRADE, SMUGGLING_BOOM
+
+## The Archaeological Contagion Chaining (Spec 1010)
+
+- RUIN_DISCOVERY → increases_chance_of → ANCIENT_ROUTINE_INFECTED
+- ANCIENT_ROUTINE_INFECTED → enables → LOST_TECH_DISCOVERED
+- ANCIENT_ROUTINE_INFECTED → increases_chance_of → ECONOMY_CRASH
+- LOST_TECH_DISCOVERED → decreases_chance_of → ANCIENT_ROUTINE_INFECTED
