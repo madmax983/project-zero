@@ -1,6 +1,11 @@
 # Backlog
 
 ## High Priority
+- [ ] `1108` The Rearguard — `specs/1108-the-rearguard.md`
+- [ ] `1107` Astrological Beliefs — `specs/1107-astrological-beliefs.md`
+- [ ] `1106` Photophobic Resources — `specs/1106-photophobic-resources.md`
+- [ ] `1105` Auroral Harvesting — `specs/1105-auroral-harvesting.md`
+- [ ] `1104` Swarm Intelligence — `specs/1104-swarm-intelligence.md`
 - [ ] `1093` Superstitious Totems — `specs/1093-superstitious-totems.md`
 
 
