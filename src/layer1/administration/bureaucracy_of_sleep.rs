@@ -77,19 +77,20 @@ pub fn assign_sleep_permits_system(
 /// use scale::layer1::pop::Pop;
 /// use bevy_ecs::prelude::*;
 ///
-/// let mut world = World::new();
-/// let pop_entity = world.spawn((
+/// let mut app = bevy_app::App::new();
+/// app.add_plugins(bevy_time::TimePlugin);
+/// let pop_entity = app.world_mut().spawn((
 ///     Pop,
-///     FatigueTracker { current: 15.0 },
+///     FatigueTracker { current: 95.0 },
 ///     SleepPermit { tier: PermitTier::Bronze, allotted_hours: 4.0 },
 ///     StressTracker { accumulated_stress: 0.0, ..Default::default() }
 /// )).id();
+/// app.update();
+/// app.world_mut().resource_mut::<bevy_time::Time>().advance_by(std::time::Duration::from_secs(1));
+/// app.add_systems(bevy_app::Update, process_sleep_deprivation_system);
+/// app.update();
 ///
-/// let mut schedule = Schedule::default();
-/// schedule.add_systems(process_sleep_deprivation_system);
-/// schedule.run(&mut world);
-///
-/// let stress = world.get::<StressTracker>(pop_entity).unwrap();
+/// let stress = app.world().get::<StressTracker>(pop_entity).unwrap();
 /// assert!(stress.accumulated_stress > 0.0, "Pop should accrue stress from severe fatigue.");
 /// ```
 pub fn process_sleep_deprivation_system(

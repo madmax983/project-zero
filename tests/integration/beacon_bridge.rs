@@ -15,7 +15,10 @@ use scale::shared::time::SimulationTime;
 #[test]
 fn test_beacon_migrant_arrival_bridge() {
     let mut app = App::new();
-    app.insert_resource(SimulationTime { tick: 100, ..Default::default() });
+    app.insert_resource(SimulationTime {
+        tick: 100,
+        ..Default::default()
+    });
     app.add_event::<MigrantArrivalEvent>();
     app.add_event::<AddChronicleEvent>();
     app.add_systems(Update, beacon_migrant_arrival_bridge);
@@ -37,7 +40,10 @@ fn test_beacon_migrant_arrival_bridge() {
 #[test]
 fn test_beacon_trade_ship_bridge() {
     let mut app = App::new();
-    app.insert_resource(SimulationTime { tick: 100, ..Default::default() });
+    app.insert_resource(SimulationTime {
+        tick: 100,
+        ..Default::default()
+    });
     app.insert_resource(MerchantState::default());
     app.add_event::<TradeShipArrivalEvent>();
     app.add_event::<AddChronicleEvent>();
@@ -51,14 +57,23 @@ fn test_beacon_trade_ship_bridge() {
     app.update();
 
     let state = app.world().resource::<MerchantState>();
-    assert!(state.active_merchant.is_some(), "Bridge should force a merchant to arrive");
-    assert_eq!(state.active_merchant.as_ref().unwrap().name, "Test Faction Ship");
+    assert!(
+        state.active_merchant.is_some(),
+        "Bridge should force a merchant to arrive"
+    );
+    assert_eq!(
+        state.active_merchant.as_ref().unwrap().name,
+        "Test Faction Ship"
+    );
 }
 
 #[test]
 fn test_beacon_pirate_raid_bridge() {
     let mut app = App::new();
-    app.insert_resource(SimulationTime { tick: 100, ..Default::default() });
+    app.insert_resource(SimulationTime {
+        tick: 100,
+        ..Default::default()
+    });
     app.insert_resource(ColonyResources {
         food: 100.0,
         metal: 50.0,
@@ -80,5 +95,8 @@ fn test_beacon_pirate_raid_bridge() {
     assert_eq!(resources.metal, 30.0, "Pirates should steal 20 metal");
 
     let morale = app.world().get::<Morale>(pop).unwrap();
-    assert!(morale.modifiers.iter().any(|m| m.label == "Pirate Raid"), "Morale modifier should be added");
+    assert!(
+        morale.modifiers.iter().any(|m| m.label == "Pirate Raid"),
+        "Morale modifier should be added"
+    );
 }
