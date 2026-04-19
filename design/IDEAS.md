@@ -16327,7 +16327,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Fossilized Fleet
+## The Fossilized Fleet [SPECCED]
 
 **Layer:** Cross-layer (2 -> 1)
 
@@ -16369,7 +16369,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Generational Amnesia
+## Generational Amnesia [SPECCED]
 
 **Layer:** Cross-layer (3 -> 1)
 
@@ -16383,7 +16383,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Diaspora Fleet
+## The Diaspora Fleet [SPECCED]
 
 **Layer:** Cross-layer (1 -> 2)
 
@@ -16397,7 +16397,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Sub-light Tourism
+## Sub-light Tourism [SPECCED]
 
 **Layer:** Cross-layer (2 -> 1)
 

@@ -765,3 +765,7 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1110` Dead Internet — `specs/1110-dead-internet.md`
 - [ ] `1111` The Void Stare — `specs/1111-the-void-stare.md`
 - [ ] `1112` Tectonic Fracking — `specs/1112-tectonic-fracking.md`
+- [ ] `1113` The Fossilized Fleet — `specs/1113-the-fossilized-fleet.md`
+- [ ] `1114` Generational Amnesia — `specs/1114-generational-amnesia.md`
+- [ ] `1115` The Diaspora Fleet — `specs/1115-the-diaspora-fleet.md`
+- [ ] `1116` Sub-light Tourism — `specs/1116-sub-light-tourism.md`
