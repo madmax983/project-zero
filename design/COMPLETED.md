@@ -414,3 +414,5 @@
 - [x] `762` The Gold Rush Beacon — `specs/762-gold-rush-beacon.md` — completed 2026-04-18
 - [x] `763` Smuggler's Coves — `specs/763-smugglers-coves.md` — completed 2026-04-18
 - [x] `939` Language Drift — `specs/939-language-drift.md` — completed 2026-06-25
+
+- [x] `1100` Thermal Inversion — `specs/1100-thermal-inversion.md` — completed 2026-03-24

@@ -85,6 +85,7 @@ pub fn assign_sleep_permits_system(
 ///     StressTracker { accumulated_stress: 0.0, ..Default::default() }
 /// )).id();
 ///
+/// world.insert_resource(bevy::time::Time::<()>::default());
 /// let mut schedule = Schedule::default();
 /// schedule.add_systems(process_sleep_deprivation_system);
 /// schedule.run(&mut world);

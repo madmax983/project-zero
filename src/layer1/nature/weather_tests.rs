@@ -4,6 +4,7 @@ mod tests {
         apply_smog_damage_system, simulate_diffusion_system, AtmosphereGrid, DiffusionConfig,
     };
     use crate::layer1::health::Health;
+    use crate::layer1::items::Equipment;
     use crate::layer1::map::GridPosition;
     use crate::layer1::pop::Pop;
     use crate::layer1::weather::{WeatherState, WeatherType};
@@ -19,10 +20,6 @@ mod tests {
         world.insert_resource(grid);
 
         // Default Config: allows diffusion
-        // Note: We set horizontal rate to 0.0 to isolate vertical escape testing,
-        // ensuring the drop is only due to escape (or lack thereof).
-        // If we followed the spec literally (rate: 0.1), horizontal diffusion would drop the value below 99.0
-        // regardless of vertical escape, making the test fail.
         world.insert_resource(DiffusionConfig {
             rate: 0.0,
             vertical_escape: 0.05,
@@ -45,8 +42,6 @@ mod tests {
         let grid = world.get_resource::<AtmosphereGrid>().unwrap();
         let smog = grid.get(10, 10);
 
-        // Should be close to 100.0 (no vertical escape)
-        // With normal weather, it would lose 5% (to 95.0)
         assert!(smog > 99.0, "Smog level {} should be > 99.0", smog);
     }
 
@@ -75,5 +70,35 @@ mod tests {
 
         let health = world.get::<Health>(pop).unwrap();
         assert!(health.current < 100.0, "Health should drop from smog");
+    }
+
+    #[test]
+    fn test_oxygen_masks_prevent_damage() {
+        let mut world = World::new();
+        let mask = world
+            .spawn(crate::layer1::items::Item {
+                item_type: crate::layer1::items::ItemType::OxygenMask,
+            })
+            .id();
+        let pop = world
+            .spawn((
+                Pop,
+                Health {
+                    current: 100.0,
+                    max: 100.0,
+                },
+                GridPosition { x: 10, y: 10 },
+                Equipment {
+                    head: Some(mask),
+                    ..Default::default()
+                },
+            ))
+            .id();
+        let mut grid = AtmosphereGrid::new(20, 20);
+        grid.set(10, 10, 200.0);
+        world.insert_resource(grid);
+        world.run_system_once(apply_smog_damage_system).unwrap();
+        let health = world.get::<Health>(pop).unwrap();
+        assert_eq!(health.current, 100.0, "Mask should prevent smog damage");
     }
 }

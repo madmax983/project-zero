@@ -5,6 +5,8 @@
 //! - Weather transitions based on Seasons.
 //! - Effects on pop speed.
 
+#[cfg(test)]
+use crate::layer1::chronicle::Chronicle;
 use crate::layer1::chronicle::{AddChronicleEvent, EventImportance};
 use crate::layer1::pop::Speed;
 use crate::layer1::seasons::{Season, SeasonState};
@@ -282,7 +284,6 @@ mod tests {
     }
 
     use super::*;
-    use crate::layer1::chronicle::Chronicle;
     use crate::layer1::pop::{Pop, Speed};
     use crate::layer1::seasons::{Season, SeasonState};
     use crate::shared::time::SimulationTime;

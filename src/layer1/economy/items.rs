@@ -52,6 +52,8 @@ pub enum ClothingType {
     Tunic,
     /// Warm parka.
     Parka,
+    /// Oxygen mask to protect from smog.
+    OxygenMask,
 }
 
 /// Component representing a clothing item.
@@ -125,6 +127,8 @@ pub enum ItemType {
     /// A unique item produced by a hobby (e.g., "Wooden Duck").
     /// ⚡ Bolt Optimization: Made Copy to eliminate heap allocations
     Curio(&'static str),
+    /// Oxygen mask to protect from smog.
+    OxygenMask,
     /// A chemical stimulant that boosts speed but damages health.
     Stim,
     /// A chemical sedative that reduces stress but slows speed.
