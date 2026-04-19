@@ -2,7 +2,6 @@
 
 ## High Priority
 - [ ] `1093` Superstitious Totems — `specs/1093-superstitious-totems.md`
-- [ ] `1094` Ecological Succession — `specs/1094-ecological-succession.md`
 
 
 - [ ] `762` The Gold Rush Beacon — `specs/762-gold-rush-beacon.md`
