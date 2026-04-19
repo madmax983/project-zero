@@ -16442,3 +16442,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you completely glass the infected colony to guarantee containment, or risk a massive galactic spread while you try to find a cure?
 
 ---
+
+## Echoing Workstations
+
+**Layer:** 1
+
+**Fantasy:** Tools and workspaces hold the psychic or physical imprint of their previous users.
+
+**Mechanic:** When a highly skilled or notable Pop dies or leaves a job, their workstation retains an "Echo." A new Pop taking that job gains a temporary skill boost but also inherits fragments of the previous worker's mood or memories (e.g., inheriting their rivalry with another Pop or their fear of the dark).
+
+**Emergence:** A master smith dies, and whoever inherits their forge becomes incredibly productive but inexplicably depressed. A dynasty of miners shares the exact same trauma from an accident that only the first one experienced.
+
+**Tension:** Do you rotate Pops to prevent strong Echoes from forming, or let them stack and risk passing down severe psychological baggage to new workers?
+
+---
+
+## Orbital Debris Cults
+
+**Layer:** Cross-layer (2 -> 1)
+
+**Fantasy:** The trash of the wealthy star-farers becomes the holy relics of the struggling colonists.
+
+**Mechanic:** Layer 2 ship battles or trade routes generate "Debris" that occasionally rains down on Layer 1 colonies. Pops might scavenge this for rare resources, but there's a chance they misinterpret advanced, broken tech as divine signs, forming a "Cargo Cult."
+
+**Emergence:** You win a massive fleet battle in orbit. The resulting debris shower crushes a housing block, but the survivors start worshiping a piece of a shattered warp drive. They refuse to work and demand more "blessings" from the sky, eventually launching a revolt to steal a working ship.
+
+**Tension:** Do you clean up the debris quickly (wasting labor) or leave it as free resources, risking the formation of unpredictable techno-cults?
+
+---
+
+## Black Market Biomes
+
+**Layer:** 1
+
+**Fantasy:** Ecosystems manipulated for illicit gain right under the colony administration's nose.
+
+**Mechanic:** Smugglers or corrupt Pops secretly plant invasive, highly valuable flora (like "Void-Weed" or "Agony Spores") in secluded or poorly monitored parts of the colony grid. These plants aggressively alter the local temperature/atmosphere to thrive, damaging nearby infrastructure but yielding incredibly lucrative contraband.
+
+**Emergence:** You notice a sudden, localized temperature drop in the lower mining levels. Upon investigation, you find a massive, illegal subterranean farm of "Frost-Roots" cultivated by your own miners, who are selling it to passing smugglers to buy luxury goods.
+
+**Tension:** Do you eradicate the invasive, infrastructure-damaging flora, angering the Pops who rely on the black market income, or turn a blind eye and let the colony environment slowly destabilize?
+
+---
