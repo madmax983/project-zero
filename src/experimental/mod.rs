@@ -89,3 +89,8 @@ pub mod gestalt_consciousness;
 pub mod cursed_artifacts;
 #[cfg(feature = "nova")]
 pub mod the_haunted_cartographer;
+
+#[cfg(feature = "nova")]
+pub mod the_final_will;
+#[cfg(feature = "nova")]
+pub use the_final_will::*;

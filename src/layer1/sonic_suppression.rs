@@ -1,6 +1,6 @@
-use bevy_ecs::prelude::*;
-use crate::layer1::pop::Pop;
 use crate::layer1::map::GridPosition;
+use crate::layer1::pop::Pop;
+use bevy_ecs::prelude::*;
 
 #[derive(Component)]
 pub struct SonicTurret {
@@ -48,7 +48,6 @@ pub fn sonic_suppression_system(
     }
 }
 
-
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -60,27 +59,32 @@ mod tests {
         app.add_systems(Update, sonic_suppression_system);
 
         app.world_mut().spawn((
-            SonicTurret { range: 10.0, active: true },
+            SonicTurret {
+                range: 10.0,
+                active: true,
+            },
             GridPosition { x: 0, y: 0 },
         ));
 
-        let pop = app.world_mut().spawn((
-            Pop,
-            Nausea { level: 0.0 },
-            GridPosition { x: 5, y: 0 },
-        )).id();
+        let pop = app
+            .world_mut()
+            .spawn((Pop, Nausea { level: 0.0 }, GridPosition { x: 5, y: 0 }))
+            .id();
 
-        let glass = app.world_mut().spawn((
-            GlassStructure,
-            GridPosition { x: 8, y: 0 },
-        )).id();
+        let glass = app
+            .world_mut()
+            .spawn((GlassStructure, GridPosition { x: 8, y: 0 }))
+            .id();
 
         app.update();
 
         let pop_nausea = app.world().get::<Nausea>(pop).unwrap().level;
         assert!(pop_nausea > 0.0, "Pop in range should gain nausea");
 
-        assert!(app.world().get::<Shattered>(glass).is_some(), "Glass in range should be shattered");
+        assert!(
+            app.world().get::<Shattered>(glass).is_some(),
+            "Glass in range should be shattered"
+        );
     }
 
     #[test]
@@ -89,27 +93,32 @@ mod tests {
         app.add_systems(Update, sonic_suppression_system);
 
         app.world_mut().spawn((
-            SonicTurret { range: 10.0, active: false },
+            SonicTurret {
+                range: 10.0,
+                active: false,
+            },
             GridPosition { x: 0, y: 0 },
         ));
 
-        let pop = app.world_mut().spawn((
-            Pop,
-            Nausea { level: 0.0 },
-            GridPosition { x: 5, y: 0 },
-        )).id();
+        let pop = app
+            .world_mut()
+            .spawn((Pop, Nausea { level: 0.0 }, GridPosition { x: 5, y: 0 }))
+            .id();
 
-        let glass = app.world_mut().spawn((
-            GlassStructure,
-            GridPosition { x: 8, y: 0 },
-        )).id();
+        let glass = app
+            .world_mut()
+            .spawn((GlassStructure, GridPosition { x: 8, y: 0 }))
+            .id();
 
         app.update();
 
         let pop_nausea = app.world().get::<Nausea>(pop).unwrap().level;
         assert_eq!(pop_nausea, 0.0, "Inactive turret should not cause nausea");
 
-        assert!(app.world().get::<Shattered>(glass).is_none(), "Inactive turret should not shatter glass");
+        assert!(
+            app.world().get::<Shattered>(glass).is_none(),
+            "Inactive turret should not shatter glass"
+        );
     }
 
     #[test]
@@ -118,26 +127,31 @@ mod tests {
         app.add_systems(Update, sonic_suppression_system);
 
         app.world_mut().spawn((
-            SonicTurret { range: 10.0, active: true },
+            SonicTurret {
+                range: 10.0,
+                active: true,
+            },
             GridPosition { x: 0, y: 0 },
         ));
 
-        let pop = app.world_mut().spawn((
-            Pop,
-            Nausea { level: 0.0 },
-            GridPosition { x: 15, y: 0 },
-        )).id();
+        let pop = app
+            .world_mut()
+            .spawn((Pop, Nausea { level: 0.0 }, GridPosition { x: 15, y: 0 }))
+            .id();
 
-        let glass = app.world_mut().spawn((
-            GlassStructure,
-            GridPosition { x: 20, y: 0 },
-        )).id();
+        let glass = app
+            .world_mut()
+            .spawn((GlassStructure, GridPosition { x: 20, y: 0 }))
+            .id();
 
         app.update();
 
         let pop_nausea = app.world().get::<Nausea>(pop).unwrap().level;
         assert_eq!(pop_nausea, 0.0, "Pop out of range should not gain nausea");
 
-        assert!(app.world().get::<Shattered>(glass).is_none(), "Glass out of range should not be shattered");
+        assert!(
+            app.world().get::<Shattered>(glass).is_none(),
+            "Glass out of range should not be shattered"
+        );
     }
 }

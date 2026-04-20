@@ -138,3 +138,8 @@
 **Concept:** A system that tracks how many Pops have died on each grid tile (`HauntedGrid`). If a Pop's current `Action` is `ActionType::Explore` and they walk onto a highly haunted tile, they have a chance to enter a `Panic` mental break.
 **Fate:** Proposed
 **Lesson:** Tying the historical legacy of the colony's failures directly to the spatial exploration loop creates a mechanic where the map itself becomes a terrifying record of past mistakes.
+
+## [The Final Will]
+**Concept:** A system `the_final_will_system` that listens for `PopDied` events, finds the deceased's closest living companion using `Relationships` and `Affinity`, and transfers their remaining `Wallet` credits to them. Emits an `AddChronicleEvent` to document the inheritance.
+**Fate:** Proposed
+**Lesson:** Tying internal economic states (credits) directly to social/psychological relationships upon death creates emergent narratives around wills and inheritance, turning a simple entity despawn into a dramatic event.
