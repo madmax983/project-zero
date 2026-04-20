@@ -131,6 +131,7 @@ mod execution_demolish_test;
 
 /// Named locations on the map.
 pub mod locations;
+pub mod xenoflora_pet;
 
 /// Graffiti and Signage system (Spec 144).
 pub mod graffiti;
