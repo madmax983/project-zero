@@ -178,8 +178,18 @@ pub fn mascot_buff_system(
 }
 
 /// System to apply grief when a Mascot dies.
-pub const fn mascot_death_grief_system() {
-    // Disabled
+pub fn mascot_death_grief_system(
+    dead_mascots: Query<Entity, (With<Mascot>, Added<crate::layer1::health::Dead>)>,
+    mut memories: Query<&mut crate::layer1::memory::Memories>,
+) {
+    if dead_mascots.is_empty() {
+        return;
+    }
+    for _ in dead_mascots.iter() {
+        for mut mem in memories.iter_mut() {
+            mem.add(crate::layer1::memory::MemoryType::MascotDeath, 0);
+        }
+    }
 }
 
 #[cfg(test)]
@@ -293,7 +303,6 @@ mod tests {
     }
 
     #[test]
-    #[ignore] // System is currently disabled
     fn test_mascot_death_causes_grief() {
         let mut world = setup_world();
 
@@ -315,7 +324,9 @@ mod tests {
         let pop = world.spawn((Pop, Memories::default())).id();
 
         // Trigger Death Event
-        // world.send_event(DeathEvent { entity: mascot });
+        world
+            .entity_mut(_mascot)
+            .insert(crate::layer1::health::Dead);
 
         // Run death system
         let mut schedule = Schedule::default();
