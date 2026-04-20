@@ -7,10 +7,10 @@ use crate::layer1::{
 };
 use crate::layer2::system::ViewMode;
 use crate::shared::keyboard::{GameKeyCode, GameKeyEvent, GameMouseEvent};
-use crate::ui::menu_state::MenuState;
-use crate::ui::selection::{handle_selection_click, screen_to_world, Selection};
 use crate::shared::state::GameState;
 use crate::shared::time::{SimSpeed, SimulationTime};
+use crate::ui::menu_state::MenuState;
+use crate::ui::selection::{handle_selection_click, screen_to_world, Selection};
 use crate::ui::shell::plugins::{SharedWorld, COLONY_MAP_PLUGIN_TYPE, SYSTEM_MAP_PLUGIN_TYPE};
 use crate::ui::shell::UiShell;
 
@@ -602,11 +602,11 @@ pub fn handle_possession_ui_state(
 mod tests {
     use super::*;
     use crate::layer1::Viewport;
-    use crate::shared::keyboard::{GameKeyCode, GameKeyEvent, GameMouseEvent};
     use crate::prelude::{setup_world_with_config, SetupConfig};
-    use crate::ui::selection::{Selection, SelectionTarget};
+    use crate::shared::keyboard::{GameKeyCode, GameKeyEvent, GameMouseEvent};
     use crate::shared::state::GameState;
     use crate::shared::time::{SimSpeed, SimulationTime};
+    use crate::ui::selection::{Selection, SelectionTarget};
     use crate::ui::shell::{build_default_shell, ShellConfig};
     use ratatui::{buffer::Buffer, layout::Rect};
     use std::{cell::RefCell, rc::Rc};

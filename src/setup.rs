@@ -18,16 +18,16 @@ use crate::layer1::{
     PopBundle, ScreenShake, SeasonState, TechState, TerrainType, UtilityConfig, Viewport,
 };
 use crate::shared::colony::ColonyName;
-use crate::ui::input::InputContextStack;
 use crate::shared::keyboard::Input;
 use crate::shared::log::MessageLog;
 use crate::shared::narrative::NarrativeGenerator;
-use crate::ui::selection::Selection;
 use crate::shared::state::GameState;
 use crate::shared::time::{SimulationTime, WallTime};
-use crate::ui::world_history::generate_world_history;
+use crate::ui::input::InputContextStack;
 use crate::ui::map::RenderCache;
+use crate::ui::selection::Selection;
 use crate::ui::state::UiState;
+use crate::ui::world_history::generate_world_history;
 
 /// Ensures the Bevy task pools are initialized (required for `par_iter_mut`).
 ///

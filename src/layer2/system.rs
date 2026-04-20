@@ -130,8 +130,8 @@ pub struct SystemMap;
 mod tests {
     use super::*;
     use crate::shared::keyboard::{GameKeyCode, GameKeyEvent};
-    use crate::ui::input::{InputContext, InputContextStack};
     use crate::shared::state::GameState;
+    use crate::ui::input::{InputContext, InputContextStack};
     // InputRouter might not be public or available directly. Let's check imports.
     // route_input is a function in crate::ui::input.
     use crate::ui::input::route_input;

@@ -8,6 +8,16 @@ use bevy_ecs::prelude::*;
 pub fn register(schedule: &mut Schedule) {
     schedule.add_systems(
         (
+            crate::layer1::social::xenoflora_pet::pet_resource_consumption_system,
+            crate::layer1::social::xenoflora_pet::pet_viral_spread_system,
+            crate::layer1::social::xenoflora_pet::apply_pet_mood_boost,
+        )
+            .chain()
+            .in_set(Layer1SystemSet::Observation),
+    );
+
+    schedule.add_systems(
+        (
             crate::layer1::stress::assign_generational_traits_system,
             crate::layer1::stress::silent_needs_suppression_system,
             crate::layer1::psychology::psychic_stains::process_violent_deaths_system,

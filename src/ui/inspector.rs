@@ -44,8 +44,8 @@ use crate::layer1::{
     ActionType, Biocompatibility, ColonyResources, Farm, GridPosition, Housing, PopAction,
     TerrainGrid,
 };
-use crate::ui::selection::{Selection, SelectionTarget};
 use crate::ui::map::{get_building_color, get_terrain_char, get_terrain_color};
+use crate::ui::selection::{Selection, SelectionTarget};
 
 /// Helper to format `ActionType` into an icon and label.
 const fn format_action_type(action: ActionType) -> (&'static str, &'static str, Color) {
