@@ -418,3 +418,5 @@
 - [x] `1092` Obsessive Optimization - `specs/1092-obsessive-optimization.md` - completed 2026-06-15
 - [x] `667` Megafauna Terrain — `specs/667-megafauna-terrain.md` — completed 2026-06-01
 - [x] `668` Impact Event — `specs/668-impact-event.md` — completed 2026-05-24
+
+- [x] `965` The Vertical Schism — `specs/965-the-vertical-schism.md` — completed 2026-02-01
