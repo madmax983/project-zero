@@ -59,12 +59,91 @@ pub struct PressureGrid {
     pub(crate) width: usize,
     /// Height of the grid.
     pub(crate) height: usize,
+    /// Depth of the grid.
+    pub(crate) depth: usize,
     /// Flattened grid values.
     pub(crate) values: Vec<f32>,
 }
 
 impl PressureGrid {
-    /// Fills the entire grid with a value.
+    /// Width of the grid.
+    #[must_use]
+    pub fn width(&self) -> usize {
+        self.width
+    }
+
+    /// Height of the grid.
+    #[must_use]
+    pub fn height(&self) -> usize {
+        self.height
+    }
+
+    /// Depth of the grid.
+    #[must_use]
+    pub fn depth(&self) -> usize {
+        self.depth
+    }
+
+    /// Create a new empty 3D pressure grid.
+    #[must_use]
+    pub fn new_3d(width: usize, height: usize, depth: usize) -> Self {
+        let size = width
+            .checked_mul(height)
+            .and_then(|a| a.checked_mul(depth))
+            .expect("Grid size overflow or too large");
+        assert!(size <= 100_000_000, "Grid size overflow or too large");
+        Self {
+            width,
+            height,
+            depth,
+            values: vec![0.0; size],
+        }
+    }
+
+    /// Get pressure at (x, y, z).
+    #[must_use]
+    #[allow(clippy::cast_sign_loss)]
+    pub fn get_3d(&self, x: i32, y: i32, z: i32) -> f32 {
+        if x < 0 || y < 0 || z < 0 {
+            return 0.0;
+        }
+        let ux = x as usize;
+        let uy = y as usize;
+        let uz = z as usize;
+        if ux >= self.width || uy >= self.height || uz >= self.depth {
+            return 0.0;
+        }
+        let idx = uz.checked_mul(self.width * self.height)
+            .and_then(|i| i.checked_add(uy.checked_mul(self.width)?))
+            .and_then(|i| i.checked_add(ux));
+
+        if let Some(idx) = idx.filter(|&i| i < self.values.len()) {
+            return self.values[idx];
+        }
+        0.0
+    }
+
+    /// Set pressure at (x, y, z). Clamped between 0.0 and 1.0.
+    #[allow(clippy::cast_sign_loss)]
+    pub fn set_3d(&mut self, x: i32, y: i32, z: i32, value: f32) {
+        if x < 0 || y < 0 || z < 0 {
+            return;
+        }
+        let ux = x as usize;
+        let uy = y as usize;
+        let uz = z as usize;
+        if ux >= self.width || uy >= self.height || uz >= self.depth {
+            return;
+        }
+        let idx = uz.checked_mul(self.width * self.height)
+            .and_then(|i| i.checked_add(uy.checked_mul(self.width)?))
+            .and_then(|i| i.checked_add(ux));
+
+        if let Some(idx) = idx.filter(|&i| i < self.values.len()) {
+            self.values[idx] = value.clamp(0.0, 1.0);
+        }
+    }
+
     pub fn fill(&mut self, value: f32) {
         self.values.fill(value);
     }
@@ -79,6 +158,7 @@ impl PressureGrid {
         Self {
             width,
             height,
+            depth: 1,
             values: vec![0.0; size],
         }
     }

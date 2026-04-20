@@ -28,6 +28,8 @@ pub enum TerrainType {
     SporeBloom,
     /// Ancient, indestructible alien structure.
     Artifact,
+    /// Ancient, indestructible space elevator base.
+    IndestructibleStump,
 }
 
 impl TerrainType {
@@ -55,6 +57,7 @@ impl TerrainType {
             Self::MagmaRock => "Magma Rock",
             Self::SporeBloom => "Spore Bloom",
             Self::Artifact => "Artifact",
+            Self::IndestructibleStump => "Indestructible Stump",
         }
     }
 
@@ -89,7 +92,7 @@ impl TerrainType {
     pub const fn is_walkable(self) -> bool {
         !matches!(
             self,
-            Self::Rock | Self::Water | Self::DeepRock | Self::Artifact
+            Self::Rock | Self::Water | Self::DeepRock | Self::Artifact | Self::IndestructibleStump
         )
     }
 
@@ -100,7 +103,7 @@ impl TerrainType {
     #[must_use]
     pub const fn heat_retention(self) -> f32 {
         match self {
-            Self::Rock | Self::DeepRock | Self::MagmaRock | Self::Artifact => 0.5,
+            Self::Rock | Self::DeepRock | Self::MagmaRock | Self::Artifact | Self::IndestructibleStump => 0.5,
             Self::Water => 0.2,
             Self::Grass
             | Self::Dirt
@@ -154,7 +157,17 @@ impl TerrainGrid {
         }
     }
 
-    /// Sets the terrain type at the specified coordinates.
+    /// Returns the maximum build height at the given coordinates.
+    /// The space elevator stump supports infinite vertical building (u32::MAX).
+    #[must_use]
+    pub fn get_max_build_height(&self, x: usize, y: usize) -> u32 {
+        if self.get(x, y) == Some(TerrainType::IndestructibleStump) {
+            u32::MAX
+        } else {
+            10 // Default max height
+        }
+    }
+
     pub fn set(&mut self, x: usize, y: usize, tile: TerrainType) {
         if x < self.width && y < self.height {
             if let Some(idx) = y.checked_mul(self.width).and_then(|i| i.checked_add(x)) {
@@ -354,7 +367,7 @@ mod tests {
                     | TerrainType::DeepRock
                     | TerrainType::MagmaRock
                     | TerrainType::SporeBloom
-                    | TerrainType::Artifact
+                    | TerrainType::Artifact | TerrainType::IndestructibleStump
             )
         });
         assert!(all_valid, "All tiles must be valid terrain types");

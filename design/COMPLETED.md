@@ -422,3 +422,4 @@
 
 - [x] `965` The Vertical Schism — `specs/965-the-vertical-schism.md` — completed 2026-02-01
 - [x] `1116` Sub-light Tourism — `specs/1116-sub-light-tourism.md` — completed 2026-04-20
+- [x] `1118` The Tether Stump — `specs/1118-the-tether-stump.md` — completed 2026-02-01

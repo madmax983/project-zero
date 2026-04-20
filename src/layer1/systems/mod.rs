@@ -13,6 +13,7 @@
 
 use bevy_ecs::prelude::*;
 
+pub mod map_generation;
 pub mod cleanup;
 pub mod consumption;
 pub mod economy;
