@@ -51,7 +51,7 @@ pub fn enforce_permit_restrictions_system(
 mod tests {
     use super::*;
     use crate::layer1::building::{
-        spawn_building_with_material, Building, BuildingType, MaterialType,
+        spawn_building, Building, BuildingType, MaterialType,
     };
     use crate::layer1::energy::PowerConsumer;
     use crate::layer1::inventory::{Inventory, InventoryItem};
@@ -82,7 +82,7 @@ mod tests {
 
         // Act
         // Smelter is Tier 2 (Advanced), should require permit
-        spawn_building_with_material(
+        spawn_building(
             &mut world,
             0,
             0,
@@ -110,7 +110,7 @@ mod tests {
 
         // Act
         // Farm is Tier 1 (Basic), should NOT require permit
-        spawn_building_with_material(
+        spawn_building(
             &mut world,
             0,
             0,

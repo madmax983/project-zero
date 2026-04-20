@@ -3,7 +3,7 @@ mod tests {
     use crate::layer1::atmosphere::{
         corrosion_damage_system, CorrosionResistant, CorrosiveAtmosphere, ProtectedFromAtmosphere,
     };
-    use crate::layer1::building::{spawn_building_with_material, BuildingType, MaterialType};
+    use crate::layer1::building::{spawn_building, BuildingType, MaterialType};
     use crate::layer1::map::GridPosition;
     use crate::layer1::structure::Structure;
     use bevy_ecs::prelude::*;
@@ -144,7 +144,7 @@ mod tests {
         let mut world = World::new();
 
         // Spawn Stone Wall (Should have 0.5 resistance)
-        spawn_building_with_material(&mut world, 0, 0, BuildingType::Wall, MaterialType::Stone);
+        spawn_building(&mut world, 0, 0, BuildingType::Wall, MaterialType::Stone);
         let (entity, resistance) = world
             .query::<(Entity, &CorrosionResistant)>()
             .single(&world);
@@ -152,7 +152,7 @@ mod tests {
 
         // Spawn Gold Wall (Should have 1.0 resistance)
         world.despawn(entity);
-        spawn_building_with_material(&mut world, 0, 0, BuildingType::Wall, MaterialType::Gold);
+        spawn_building(&mut world, 0, 0, BuildingType::Wall, MaterialType::Gold);
         let (_, resistance) = world
             .query::<(Entity, &CorrosionResistant)>()
             .single(&world);

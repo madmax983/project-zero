@@ -14,7 +14,7 @@
 //! physically scars the planet with the colony's dreams.
 
 use crate::layer1::building::{
-    spawn_building_with_material, BuildingType, MaterialType, OccupiedTiles,
+    spawn_building, BuildingType, MaterialType, OccupiedTiles,
 };
 use crate::layer1::map::GridPosition;
 use crate::layer1::pop::Pop;
@@ -81,7 +81,7 @@ pub fn dreams_of_genesis_system(world: &mut World) {
                 .0
                 .contains(&(pos.x, pos.y));
             if !is_occupied {
-                spawn_building_with_material(
+                spawn_building(
                     world,
                     pos.x,
                     pos.y,

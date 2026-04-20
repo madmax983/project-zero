@@ -11,7 +11,7 @@
 //!    they are promoted to Heirloom status, gaining a unique name and efficiency bonuses.
 
 use crate::layer1::building::{
-    can_place_building, spawn_building_with_material, BuildingType, MaterialType, OccupiedTiles,
+    can_place_building, spawn_building, BuildingType, MaterialType, OccupiedTiles,
 };
 use crate::layer1::map::GridPosition;
 use crate::layer1::structure::Structure;
@@ -128,7 +128,7 @@ pub fn spawn_ancient_structures(
         exclusion_center,
         exclusion_radius,
     ) {
-        spawn_building_with_material(
+        spawn_building(
             world,
             x,
             y,
@@ -151,7 +151,7 @@ pub fn spawn_ancient_structures(
         exclusion_center,
         exclusion_radius,
     ) {
-        spawn_building_with_material(
+        spawn_building(
             world,
             x,
             y,

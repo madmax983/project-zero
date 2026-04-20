@@ -2,7 +2,7 @@
 mod tests {
     use bevy_ecs::prelude::*;
     use scale::layer1::actions::{AssignedTo, AssignmentType};
-    use scale::layer1::building::{spawn_building_with_material, BuildingType, MaterialType};
+    use scale::layer1::building::{spawn_building, BuildingType, MaterialType};
     use scale::layer1::energy::{power_grid_system, BlackoutProtocol, PowerConsumer};
     use scale::layer1::health::Health;
     use scale::layer1::medical::{healing_system, Hospital};
@@ -24,7 +24,7 @@ mod tests {
     #[test]
     fn test_hospital_spawns_with_power_consumer() {
         let mut world = setup_world();
-        spawn_building_with_material(
+        spawn_building(
             &mut world,
             0,
             0,
@@ -48,7 +48,7 @@ mod tests {
         let mut world = setup_world();
 
         // 1. Spawn Generator at (0,0)
-        spawn_building_with_material(
+        spawn_building(
             &mut world,
             0,
             0,
@@ -59,7 +59,7 @@ mod tests {
         // 2. Spawn Hospital at (0,1) - Connected via adjacency (assuming adjacency works for grid)
         // Or ensure we add Conduit. Energy system uses adjacency.
         // Generator is PowerSource. Hospital is PowerConsumer (expected).
-        spawn_building_with_material(
+        spawn_building(
             &mut world,
             0,
             1,
@@ -122,7 +122,7 @@ mod tests {
         let mut world = setup_world();
 
         // 1. Spawn Hospital (Isolated, no generator)
-        spawn_building_with_material(
+        spawn_building(
             &mut world,
             5,
             5,
@@ -179,14 +179,14 @@ mod tests {
         world.resource_mut::<BlackoutProtocol>().active = true;
 
         // 2. Spawn Generator & Hospital (Connected)
-        spawn_building_with_material(
+        spawn_building(
             &mut world,
             0,
             0,
             BuildingType::Generator,
             MaterialType::default(),
         );
-        spawn_building_with_material(
+        spawn_building(
             &mut world,
             0,
             1,

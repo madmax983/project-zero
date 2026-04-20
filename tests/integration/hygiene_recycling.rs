@@ -207,9 +207,9 @@ mod tests {
             tiles: vec![scale::layer1::terrain::TerrainType::Grass; 400],
         });
         // We need TechState for try_place_building usually, but let's use direct spawn if possible.
-        // spawn_building is private in building.rs, but spawn_building_with_material is public for tests!
+        // spawn_building is private in building.rs, but spawn_building is public for tests!
 
-        scale::layer1::building::spawn_building_with_material(
+        scale::layer1::building::spawn_building(
             &mut world,
             5,
             5,

@@ -12,3 +12,7 @@
 **Bloat:** MapRenderContext using generic S: BuildHasher
 **Cut:** Removing the S parameter and assuming the default hasher since we only ever use it with the default hasher.
 **Saved:** Removed generic parameters from struct, impls, and ~10 functions.
+## [Reduction]
+**Bloat:** The `spawn_building_with_material` function in `src/layer1/architecture/building.rs`, which just passed parameters to `spawn_building`.
+**Cut:** Made `spawn_building` public, deleted `spawn_building_with_material`, and updated all callers across the codebase.
+**Saved:** 11 lines of code and an unnecessary abstraction layer.

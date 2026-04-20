@@ -5,7 +5,7 @@ mod tests {
         apply_beauty_effects_system, update_beauty_grid_system, BeautyGrid, BeautySource,
     };
     use scale::layer1::building::{
-        spawn_building_with_material, Building, BuildingType, MaterialType,
+        spawn_building, Building, BuildingType, MaterialType,
     };
     use scale::layer1::map::GridPosition;
     use scale::layer1::needs::Needs;
@@ -26,7 +26,7 @@ mod tests {
         bg.clear();
 
         // Spawn a Statue at (5, 5). Statues are obstacles.
-        spawn_building_with_material(&mut world, 5, 5, BuildingType::Statue, MaterialType::Stone);
+        spawn_building(&mut world, 5, 5, BuildingType::Statue, MaterialType::Stone);
 
         // Verify Statue exists and has BeautySource
         let mut query = world.query_filtered::<Entity, With<Building>>();

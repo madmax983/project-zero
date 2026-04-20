@@ -13,11 +13,11 @@ fn test_generator_emits_vibration() {
     // We can use try_place_building or spawn_building directly.
     // Since we want to test the configuration logic (adding SeismicSource), we should use spawn_building
     // via try_place_building or just call spawn_building.
-    // try_place_building requires resources, so let's use the helper spawn_building_with_material
+    // try_place_building requires resources, so let's use the helper spawn_building
     // but that's in building module and might not be public or easily accessible.
-    // Actually, `scale::layer1::building::spawn_building_with_material` is public.
+    // Actually, `scale::layer1::building::spawn_building` is public.
 
-    scale::layer1::building::spawn_building_with_material(
+    scale::layer1::building::spawn_building(
         &mut world,
         10,
         10,
@@ -60,7 +60,7 @@ fn test_flora_agitation() {
     let mut world = setup_world();
 
     // 1. Spawn a Generator
-    scale::layer1::building::spawn_building_with_material(
+    scale::layer1::building::spawn_building(
         &mut world,
         20,
         20,
