@@ -2,7 +2,7 @@
 
 use ratzilla::event::{KeyCode, KeyEvent, MouseEvent, MouseEventKind};
 
-use super::input::{GameKeyCode, GameKeyEvent, GameKeyModifiers, GameMouseEvent};
+use crate::shared::keyboard::{GameKeyCode, GameKeyEvent, GameKeyModifiers, GameMouseEvent};
 
 /// Convert a ratzilla `KeyEvent` to a platform-agnostic `GameKeyEvent`.
 ///

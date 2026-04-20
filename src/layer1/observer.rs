@@ -13,10 +13,9 @@
 //! *   **Anxious:** +Panic Stress.
 //! *   **Optimist/HardWorker:** +Morale (Validation).
 
-use crate::layer1::pop::{Pop, Speed};
+use crate::layer1::pop::Speed;
 use crate::layer1::stress::StressTracker;
 use crate::layer1::traits::{Trait, Traits};
-use crate::shared::selection::{Selection, SelectionTarget};
 use bevy_ecs::prelude::*;
 
 /// Component indicating a Pop is currently being observed by the player.
@@ -26,32 +25,6 @@ pub struct Observed {
     pub duration: u32,
 }
 
-/// System that adds/removes the `Observed` component based on player selection.
-pub fn observer_awareness_system(
-    mut commands: Commands,
-    selection: Res<Selection>,
-    observed_query: Query<Entity, With<Observed>>,
-    pop_query: Query<&Pop>,
-) {
-    let target_entity = match selection.target() {
-        SelectionTarget::Entity(e) => Some(e),
-        _ => None,
-    };
-
-    // 1. Remove Observed from entities that are no longer selected
-    for entity in &observed_query {
-        if Some(entity) != target_entity {
-            commands.entity(entity).remove::<Observed>();
-        }
-    }
-
-    // 2. Add Observed to the selected entity if it's a Pop and doesn't have it
-    if let Some(e) = target_entity {
-        if pop_query.get(e).is_ok() && !observed_query.contains(e) {
-            commands.entity(e).insert(Observed::default());
-        }
-    }
-}
 
 /// System that applies behavioral changes to observed Pops.
 pub fn observer_reaction_system(
@@ -127,43 +100,10 @@ pub fn observer_reaction_system(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::layer1::pop::Pop;
     use crate::layer1::stress::StressTracker;
     use crate::layer1::traits::{Trait, Traits};
 
-    #[test]
-    fn test_observer_awareness_adds_component() {
-        let mut world = World::new();
-        world.insert_resource(Selection::default());
 
-        let pop = world.spawn(Pop).id();
-
-        // Select the pop
-        world.resource_mut::<Selection>().select_entity(pop);
-
-        // Run system
-        let mut schedule = Schedule::default();
-        schedule.add_systems(observer_awareness_system);
-        schedule.run(&mut world);
-
-        assert!(world.get::<Observed>(pop).is_some());
-    }
-
-    #[test]
-    fn test_observer_awareness_removes_component() {
-        let mut world = World::new();
-        let pop = world.spawn((Pop, Observed::default())).id();
-
-        // Selection is None (default)
-        world.insert_resource(Selection::default());
-
-        // Run system
-        let mut schedule = Schedule::default();
-        schedule.add_systems(observer_awareness_system);
-        schedule.run(&mut world);
-
-        assert!(world.get::<Observed>(pop).is_none());
-    }
 
     #[test]
     fn test_observer_reaction_increases_speed() {

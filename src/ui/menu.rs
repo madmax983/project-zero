@@ -1,5 +1,5 @@
 use crate::setup::{start_scenario_definition, StartScenarioDifficulty};
-use crate::shared::menu::MenuState;
+use crate::ui::menu_state::MenuState;
 use ratatui::prelude::*;
 use ratatui::widgets::{Block, BorderType, Borders, Paragraph};
 

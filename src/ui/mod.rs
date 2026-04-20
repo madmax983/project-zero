@@ -55,7 +55,7 @@ pub use state::*;
 
 use crate::layer2::render::render_system_view;
 use crate::layer2::system::ViewMode;
-use crate::shared::menu::MenuState;
+use crate::ui::menu_state::MenuState;
 use crate::shared::state::GameState;
 
 use self::map::render_map;
@@ -165,3 +165,8 @@ pub fn render_with_shell(world: &World, shell: &mut UiShell, frame: &mut Frame) 
     shell.render(frame.area(), frame.buffer_mut());
     render_notifications(frame, frame.area(), world);
 }
+
+pub mod input;
+pub mod selection;
+pub mod menu_state;
+pub mod world_history;

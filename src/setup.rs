@@ -18,13 +18,14 @@ use crate::layer1::{
     PopBundle, ScreenShake, SeasonState, TechState, TerrainType, UtilityConfig, Viewport,
 };
 use crate::shared::colony::ColonyName;
-use crate::shared::input::{Input, InputContextStack};
+use crate::ui::input::InputContextStack;
+use crate::shared::keyboard::Input;
 use crate::shared::log::MessageLog;
 use crate::shared::narrative::NarrativeGenerator;
-use crate::shared::selection::Selection;
+use crate::ui::selection::Selection;
 use crate::shared::state::GameState;
 use crate::shared::time::{SimulationTime, WallTime};
-use crate::shared::world_history::generate_world_history;
+use crate::ui::world_history::generate_world_history;
 use crate::ui::map::RenderCache;
 use crate::ui::state::UiState;
 
@@ -1002,7 +1003,7 @@ fn starter_colony_site_is_valid(world: &World, center: crate::layer1::GridPositi
     true
 }
 
-use crate::shared::menu::MenuState;
+use crate::ui::menu_state::MenuState;
 
 #[cfg(test)]
 #[cfg(test)]

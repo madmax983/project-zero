@@ -129,12 +129,12 @@ pub struct SystemMap;
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::platform::input::{GameKeyCode, GameKeyEvent};
-    use crate::shared::input::{InputContext, InputContextStack};
+    use crate::shared::keyboard::{GameKeyCode, GameKeyEvent};
+    use crate::ui::input::{InputContext, InputContextStack};
     use crate::shared::state::GameState;
     // InputRouter might not be public or available directly. Let's check imports.
-    // route_input is a function in crate::shared::input.
-    use crate::shared::input::route_input;
+    // route_input is a function in crate::ui::input.
+    use crate::ui::input::route_input;
 
     fn key_event(code: GameKeyCode) -> GameKeyEvent {
         GameKeyEvent::new(code)

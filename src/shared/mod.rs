@@ -4,21 +4,14 @@
 
 /// Colony identity resource.
 pub mod colony;
-/// Input handling system.
-pub mod input;
+pub mod keyboard;
 /// Message logging system.
 pub mod log;
-/// Main menu state.
-pub mod menu;
 /// Narrative generator for procedural lore.
 pub mod narrative;
 /// Random number generation utilities.
 pub mod random;
-/// Selection and inspection system.
-pub mod selection;
 /// Game state definitions.
 pub mod state;
 /// Time-tracking resources.
 pub mod time;
-/// World history generation.
-pub mod world_history;

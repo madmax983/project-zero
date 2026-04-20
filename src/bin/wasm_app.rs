@@ -9,11 +9,11 @@ use ratzilla::WebRenderer;
 #[cfg(target_arch = "wasm32")]
 use scale::layer1::map::update_camera_smooth;
 #[cfg(target_arch = "wasm32")]
-use scale::platform::input::{GameKeyEvent, GameMouseEvent};
+use scale::shared::keyboard::{GameKeyEvent, GameMouseEvent};
 #[cfg(target_arch = "wasm32")]
 use scale::setup::setup_world;
 #[cfg(target_arch = "wasm32")]
-use scale::shared::input::{route_root_input, route_root_mouse_input};
+use scale::ui::input::{route_root_input, route_root_mouse_input};
 #[cfg(target_arch = "wasm32")]
 use scale::shared::state::GameState;
 #[cfg(target_arch = "wasm32")]

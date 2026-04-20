@@ -5,7 +5,7 @@ use crate::layer1::{
 use bevy_ecs::prelude::*;
 use std::fmt::Write;
 
-use crate::platform::input::{GameKeyCode, GameKeyEvent, GameMouseEvent};
+use crate::shared::keyboard::{GameKeyCode, GameKeyEvent, GameMouseEvent};
 
 /// What is currently selected by the player.
 #[derive(Clone, Copy, PartialEq, Eq, Debug, Default)]
@@ -193,6 +193,38 @@ pub fn handle_selection_click(world: &mut World, mouse: GameMouseEvent, viewport
     } else {
         selection.select_tile(world_x, world_y);
     }
+}
+
+#[cfg(feature = "nova")]
+use crate::layer1::observer::Observed;
+#[cfg(feature = "nova")]
+#[cfg(feature = "nova")]
+/// System that adds/removes the `Observed` component based on player selection.
+pub fn observer_awareness_system(
+    mut commands: Commands,
+    selection: Res<Selection>,
+    observed_query: Query<Entity, With<Observed>>,
+    pop_query: Query<&Pop>,
+) {
+    let target_entity = match selection.target() {
+        SelectionTarget::Entity(e) => Some(e),
+        _ => None,
+    };
+
+    // 1. Remove Observed from entities that are no longer selected
+    for entity in &observed_query {
+        if Some(entity) != target_entity {
+            commands.entity(entity).remove::<Observed>();
+        }
+    }
+
+    // 2. Add Observed to the selected entity if it's a Pop and doesn't have it
+    if let Some(e) = target_entity {
+        if pop_query.get(e).is_ok() && !observed_query.contains(e) {
+            commands.entity(e).insert(Observed::default());
+        }
+    }
+
 }
 
 #[cfg(test)]
@@ -388,5 +420,45 @@ mod tests {
         // Should wrap around
         assert_eq!(world_x, i32::MAX.wrapping_add(10));
         assert_eq!(world_y, i32::MAX.wrapping_add(10));
+    }
+
+    #[test]
+    #[cfg(feature = "nova")]
+    fn test_observer_awareness_adds_component() {
+        use crate::layer1::observer::Observed;
+        use crate::ui::selection::observer_awareness_system;
+        let mut world = World::new();
+        world.insert_resource(Selection::default());
+
+        let pop = world.spawn(Pop).id();
+
+        // Select the pop
+        world.resource_mut::<Selection>().select_entity(pop);
+
+        // Run system
+        let mut schedule = Schedule::default();
+        schedule.add_systems(observer_awareness_system);
+        schedule.run(&mut world);
+
+        assert!(world.get::<Observed>(pop).is_some());
+    }
+
+    #[test]
+    #[cfg(feature = "nova")]
+    fn test_observer_awareness_removes_component() {
+        use crate::layer1::observer::Observed;
+        use crate::ui::selection::observer_awareness_system;
+        let mut world = World::new();
+        let pop = world.spawn((Pop, Observed::default())).id();
+
+        // Selection is None (default)
+        world.insert_resource(Selection::default());
+
+        // Run system
+        let mut schedule = Schedule::default();
+        schedule.add_systems(observer_awareness_system);
+        schedule.run(&mut world);
+
+        assert!(world.get::<Observed>(pop).is_none());
     }
 }

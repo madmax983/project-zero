@@ -6,7 +6,7 @@
 //! Inspector panel rendering.
 //!
 //! The inspector provides context-sensitive details about the currently selected entity or tile.
-//! It updates dynamically based on the [`crate::shared::selection::Selection`] resource.
+//! It updates dynamically based on the [`crate::ui::selection::Selection`] resource.
 
 use bevy_ecs::prelude::*;
 use ratatui::{
@@ -44,7 +44,7 @@ use crate::layer1::{
     ActionType, Biocompatibility, ColonyResources, Farm, GridPosition, Housing, PopAction,
     TerrainGrid,
 };
-use crate::shared::selection::{Selection, SelectionTarget};
+use crate::ui::selection::{Selection, SelectionTarget};
 use crate::ui::map::{get_building_color, get_terrain_char, get_terrain_color};
 
 /// Helper to format `ActionType` into an icon and label.

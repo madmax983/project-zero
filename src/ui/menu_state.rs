@@ -68,12 +68,12 @@ impl MenuState {
 mod tests {
     use super::*;
     use crate::layer1::{Chronicle, ColonyResources, Pop};
-    use crate::platform::input::{GameKeyCode, GameKeyEvent};
+    use crate::shared::keyboard::{GameKeyCode, GameKeyEvent};
     use crate::setup::{
         setup_world_with_config, start_scenario_definition, ActiveStartScenario, SetupConfig,
         StartScenarioId,
     };
-    use crate::shared::input::{route_input, InputContext, InputContextStack};
+    use crate::ui::input::{route_input, InputContext, InputContextStack};
     use crate::shared::state::GameState;
 
     fn key_event(code: GameKeyCode) -> GameKeyEvent {
