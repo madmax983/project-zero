@@ -101,6 +101,7 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::machine_consciousness::consciousness_effect_system
                 .after(crate::layer1::pop::reset_speed_system),
             crate::layer1::combat::hit_stop_system.after(process_start_plan_system),
+            crate::layer1::sonic_suppression::sonic_suppression_system,
             crate::layer1::combat::combat_cooldown_system.after(process_start_plan_system),
         )
             .in_set(Layer1SystemSet::Execution),
@@ -134,6 +135,7 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::hobby::execute_hobby_system.after(arrival_handler_system),
             crate::layer1::husbandry::tame_execution_system.after(arrival_handler_system),
             combat_execution_system.after(arrival_handler_system),
+
             crate::layer1::turret::turret_fire_system.after(combat_execution_system),
             crate::layer1::law::justice::warden_execution_system.after(combat_execution_system),
             crate::layer1::law::predictive_policing::pre_crime_execution_system

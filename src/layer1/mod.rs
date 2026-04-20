@@ -113,6 +113,9 @@ pub mod pathfinding;
 /// Seasonal rhythms (Spring, Summer, Autumn, Winter).
 mod shift_integration_tests;
 /// Social needs and tavern.
+pub mod sonic_suppression;
+pub use sonic_suppression::*;
+
 pub mod social;
 /// Spoilage and decay mechanics.
 pub mod spoilage;

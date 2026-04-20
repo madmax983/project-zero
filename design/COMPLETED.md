@@ -7,6 +7,7 @@
 - [x] `775` The Quantum Famine — `specs/775-the-quantum-famine.md` — completed 2026-03-20
 - [x] `626` The Cartographer's Curse — `specs/626-cartographers-curse.md` — completed 2026-03-24
 # Completed Specs
+- [x] `1117` Sonic Suppression — `specs/1117-sonic-suppression.md` — completed 2026-10-15
 - [x] `816` Accidental Gods — `specs/816-accidental-gods.md` — completed 2026-04-16
 - [x] `944` Cultural Ransom — `specs/944-cultural-ransom.md` — completed 2026-06-15
 - [x] `815` Zero-G Fermentation — `specs/815-zero-g-fermentation.md` — completed 2026-07-01
