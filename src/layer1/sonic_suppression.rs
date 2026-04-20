@@ -30,16 +30,16 @@ pub fn sonic_suppression_system(
             continue;
         }
         for (pop_pos, mut nausea) in q_pops.iter_mut() {
-            let dx = (turret_pos.x - pop_pos.x) as f32;
-            let dy = (turret_pos.y - pop_pos.y) as f32;
+            let dx = turret_pos.x as f32 - pop_pos.x as f32;
+            let dy = turret_pos.y as f32 - pop_pos.y as f32;
             let dist = (dx * dx + dy * dy).sqrt();
             if dist <= turret.range {
                 nausea.level += 10.0;
             }
         }
         for (entity, glass_pos) in q_glass.iter() {
-            let dx = (turret_pos.x - glass_pos.x) as f32;
-            let dy = (turret_pos.y - glass_pos.y) as f32;
+            let dx = turret_pos.x as f32 - glass_pos.x as f32;
+            let dy = turret_pos.y as f32 - glass_pos.y as f32;
             let dist = (dx * dx + dy * dy).sqrt();
             if dist <= turret.range {
                 commands.entity(entity).insert(Shattered);
@@ -47,6 +47,7 @@ pub fn sonic_suppression_system(
         }
     }
 }
+
 
 #[cfg(test)]
 mod tests {
