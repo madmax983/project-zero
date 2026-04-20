@@ -16528,8 +16528,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Void-Tethered Sleep
-
+## Void-Tethered Sleep [SPECCED]
 **Layer:** Cross-layer
 
 **Fantasy:** Hyperspace travel physically alters the way people dream, and returning to normal gravity is jarring.
