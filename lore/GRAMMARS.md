@@ -3792,3 +3792,11 @@ How activating the beacon drives the colony into chaos.
 - ANCIENT_ROUTINE_INFECTED → enables → LOST_TECH_DISCOVERED
 - ANCIENT_ROUTINE_INFECTED → increases_chance_of → ECONOMY_CRASH
 - LOST_TECH_DISCOVERED → decreases_chance_of → ANCIENT_ROUTINE_INFECTED
+
+
+## Sonic Suppression Chaining (Spec 1117)
+- SONIC_TURRET_FIRED → enables → COLLATERAL_SHATTER
+- SONIC_TURRET_FIRED → increases_chance → FRIENDLY_STRESS_SONIC
+- SONIC_TURRET_FIRED → enables → ENEMY_STUNNED
+- FRIENDLY_STRESS_SONIC → increases_chance → UNREST, MEDICAL_EMERGENCY
+- COLLATERAL_SHATTER → increases_chance → EXPOSURE, RESOURCE_LOSS
