@@ -20,7 +20,7 @@ use crate::experimental::bureaucratic_martyrdom::Martyrdom;
 use crate::experimental::meme_plague::{MemeCarrier, MemeType};
 use crate::layer1::biography::Biography;
 use crate::layer1::day_night::DayNightCycle;
-use crate::layer1::dreams::DreamJournal;
+use crate::layer1::psychology::dreams::DreamJournal;
 use crate::layer1::energy::load_limits::PowerCable;
 use crate::layer1::energy::{Battery, PowerConsumer, PowerSource};
 use crate::layer1::environment::light_pollution::SkyGlow;
@@ -1764,7 +1764,7 @@ mod tests {
 
     #[test]
     fn test_inspector_render_dream() {
-        use crate::layer1::dreams::{Dream, DreamJournal};
+        use crate::layer1::psychology::dreams::{Dream, DreamJournal};
         use crate::layer1::pop::PopName;
 
         let mut world = World::new();
