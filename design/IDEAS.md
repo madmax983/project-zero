@@ -5604,7 +5604,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Diplomatic Fashion
+## Diplomatic Fashion [SPECCED]
 
 **Layer:** 3 -> 1
 
