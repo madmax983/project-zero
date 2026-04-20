@@ -12888,48 +12888,6 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 ---
 ---
 
-## Pop Relationships
-
-**Layer:** 1
-
-**Fantasy:** Watching a colony develop social fabric—friendships, rivalries, families.
-
-**Mechanic:** Pops build relationship scores with pops they work alongside. High relationship = mood bonus. Low relationship = conflicts, productivity loss.
-
-**Emergence:** Players might notice two pops always fighting and separate them. A beloved elder pop dying might tank colony morale.
-
-**Tension:** Do you optimize job assignments for efficiency or social harmony?
-
----
-
-## The Founder Effect
-
-**Layer:** Cross-layer
-
-**Fantasy:** Your first colonists' traits echo through generations and across worlds.
-
-**Mechanic:** Colony ships carry pops with traits. New colonies inherit trait distributions from founders. A colony founded by aggressive pops breeds aggressive culture.
-
-**Emergence:** Your militaristic frontier worlds trace back to that one hotheaded miner you sent on the first ship. Your peaceful core worlds descend from your original scientists.
-
-**Tension:** Do you carefully curate colony ships or just send whoever's available?
-
----
-
-## Cascade Failure
-
-**Layer:** Cross-layer
-
-**Fantasy:** Watching one small problem snowball into galactic crisis.
-
-**Mechanic:** Resource shortages at Layer 1 reduce colony output. Reduced output strains system logistics. System strain weakens sector defenses. Sector weakness invites invasion.
-
-**Emergence:** That granary fire on your breadbasket world just lost you the war.
-
-**Tension:** How much redundancy do you build? Do you intervene early or trust the system?
-
----
-
 ## Orbital Shadow
 
 **Layer:** 2 -> 1
@@ -16595,5 +16553,89 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Emergence:** What started as two farmers fighting over a stolen tool 50 years ago has now split your entire engineering sector in half. Half the engineers refuse to repair the machines built by the other half, causing your power grid to slowly fail due to petty ancestral politics.
 
 **Tension:** Do you actively segregate rival families to maintain peace and efficiency, or force them to work together and hope they resolve the ancient feud before they blow up the reactor?
+
+---
+
+## Orbital Drydocks
+
+**Layer:** 2
+
+**Fantasy:** Building colossal ships in the void above your world.
+
+**Mechanic:** Specialized orbital structures construct ships larger than what can be launched from the surface. They require massive resource shipments from Layer 1.
+
+**Emergence:** A blockade cuts off resources, trapping a half-built dreadnought in orbit and wasting massive investments.
+
+**Tension:** Invest heavily in one massive orbital project or build a swarm of smaller surface-launched vessels?
+
+---
+
+## Planetary Rings as Highways
+
+**Layer:** 2
+
+**Fantasy:** Using natural formations for strategic advantage.
+
+**Mechanic:** Fleets traveling within planetary rings gain stealth and movement speed but risk collision damage.
+
+**Emergence:** An ambush from the rings catches an invading fleet off guard, turning the tide of a battle.
+
+**Tension:** Fast, stealthy, but dangerous routes vs. slow, safe, and visible ones?
+
+---
+
+## Solar Flare Surges
+
+**Layer:** 2
+
+**Fantasy:** Harnessing the violent energy of the star.
+
+**Mechanic:** Occasional solar flares provide temporary, massive boosts to solar energy collectors but damage unshielded electronics.
+
+**Emergence:** You intentionally leave a fleet unshielded to rush construction, but a flare disables them right before an attack.
+
+**Tension:** Risk unshielded efficiency or pay for constant, expensive shielding?
+
+---
+
+## Pop Relationships
+
+**Layer:** 1
+
+**Fantasy:** Watching a colony develop social fabric—friendships, rivalries, families.
+
+**Mechanic:** Pops build relationship scores with pops they work alongside. High relationship = mood bonus. Low relationship = conflicts, productivity loss.
+
+**Emergence:** Players might notice two pops always fighting and separate them. A beloved elder pop dying might tank colony morale.
+
+**Tension:** Do you optimize job assignments for efficiency or social harmony?
+
+---
+
+## The Founder Effect
+
+**Layer:** Cross-layer
+
+**Fantasy:** Your first colonists' traits echo through generations and across worlds.
+
+**Mechanic:** Colony ships carry pops with traits. New colonies inherit trait distributions from founders. A colony founded by aggressive pops breeds aggressive culture.
+
+**Emergence:** Your militaristic frontier worlds trace back to that one hotheaded miner you sent on the first ship. Your peaceful core worlds descend from your original scientists.
+
+**Tension:** Do you carefully curate colony ships or just send whoever's available?
+
+---
+
+## Cascade Failure
+
+**Layer:** Cross-layer
+
+**Fantasy:** Watching one small problem snowball into galactic crisis.
+
+**Mechanic:** Resource shortages at Layer 1 reduce colony output. Reduced output strains system logistics. System strain weakens sector defenses. Sector weakness invites invasion.
+
+**Emergence:** That granary fire on your breadbasket world just lost you the war.
+
+**Tension:** How much redundancy do you build? Do you intervene early or trust the system?
 
 ---
