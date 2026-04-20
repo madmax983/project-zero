@@ -421,3 +421,4 @@
 - [x] `668` Impact Event — `specs/668-impact-event.md` — completed 2026-05-24
 
 - [x] `965` The Vertical Schism — `specs/965-the-vertical-schism.md` — completed 2026-02-01
+- [x] `1116` Sub-light Tourism — `specs/1116-sub-light-tourism.md` — completed 2026-04-20
