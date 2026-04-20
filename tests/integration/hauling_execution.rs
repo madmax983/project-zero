@@ -125,12 +125,12 @@ mod tests {
         world.init_resource::<Events<scale::layer1::geology::tectonic::MegaQuakeEvent>>();
         world.init_resource::<Events<scale::layer1::resources::MiningEvent>>();
         world.init_resource::<Events<scale::layer1::environment::volatile::ExplosionEvent>>();
-        world.insert_resource(scale::shared::input::Input::default());
+        world.insert_resource(scale::shared::keyboard::Input::default());
         world.insert_resource(scale::ui::UiState::default());
         world.insert_resource(scale::layer1::trade::TradeMarket::default());
         world.insert_resource(scale::layer1::solar::SolarCycleState::default());
         world.insert_resource(scale::layer1::clutter::ClutterGrid::new(10, 10));
-        world.insert_resource(scale::shared::input::InputContextStack::default());
+        world.insert_resource(scale::ui::input::InputContextStack::default());
         world.insert_resource(scale::layer1::tech::infinite_archive::Archive::default());
         world.insert_resource(scale::layer1::shadow_market::ShadowMarketCooldown::default());
         world.insert_resource(scale::layer1::temperature::TemperatureGrid::new(

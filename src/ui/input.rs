@@ -1,15 +1,14 @@
+use crate::shared::keyboard::{Input, KeyCode};
 use bevy_ecs::prelude::*;
-use std::collections::HashSet;
-use std::hash::Hash;
 
 use crate::layer1::{
     try_cancel_designation, try_designate_area, try_place_building, BuildMode, CameraTarget,
     ChronicleUiState, DesignationMode, DesignationType, GridPosition, Viewport,
 };
 use crate::layer2::system::ViewMode;
-use crate::platform::input::{GameKeyCode, GameKeyEvent, GameMouseEvent};
-use crate::shared::menu::MenuState;
-use crate::shared::selection::{handle_selection_click, screen_to_world, Selection};
+use crate::shared::keyboard::{GameKeyCode, GameKeyEvent, GameMouseEvent};
+use crate::ui::menu_state::MenuState;
+use crate::ui::selection::{handle_selection_click, screen_to_world, Selection};
 use crate::shared::state::GameState;
 use crate::shared::time::{SimSpeed, SimulationTime};
 use crate::ui::shell::plugins::{SharedWorld, COLONY_MAP_PLUGIN_TYPE, SYSTEM_MAP_PLUGIN_TYPE};
@@ -33,76 +32,6 @@ pub enum InputContext {
     TechTree,
     /// Direct control mode (Possession).
     DirectControl,
-}
-
-/// A Bevy-like KeyCode enum for input handling.
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Default)]
-pub enum KeyCode {
-    W,
-    A,
-    S,
-    D,
-    Q,
-    E,
-    R,
-    F,
-    Up,
-    Down,
-    Left,
-    Right,
-    Space,
-    Esc,
-    Return,
-    Tab,
-    Back,
-    Delete,
-    #[default]
-    Unidentified,
-}
-
-/// A Bevy-like Input resource for handling key states.
-#[derive(Resource, Default, Debug, Clone)]
-pub struct Input {
-    pressed: HashSet<KeyCode>,
-    just_pressed: HashSet<KeyCode>,
-    just_released: HashSet<KeyCode>,
-}
-
-impl Input {
-    pub fn press(&mut self, input: KeyCode) {
-        if !self.pressed.contains(&input) {
-            self.just_pressed.insert(input);
-        }
-        self.pressed.insert(input);
-    }
-
-    pub fn release(&mut self, input: KeyCode) {
-        if self.pressed.contains(&input) {
-            self.pressed.remove(&input);
-            self.just_released.insert(input);
-        }
-    }
-
-    pub fn pressed(&self, input: KeyCode) -> bool {
-        self.pressed.contains(&input)
-    }
-
-    pub fn just_pressed(&self, input: KeyCode) -> bool {
-        self.just_pressed.contains(&input)
-    }
-
-    pub fn just_released(&self, input: KeyCode) -> bool {
-        self.just_released.contains(&input)
-    }
-
-    pub fn clear(&mut self) {
-        self.just_pressed.clear();
-        self.just_released.clear();
-        // Since the underlying platform (crossterm) does not reliably send release events
-        // or we filter them out, we treat all inputs as transient triggers.
-        // We must clear 'pressed' so that the next frame's press is registered as a new press.
-        self.pressed.clear();
-    }
 }
 
 /// Stack-based input context manager.
@@ -647,13 +576,35 @@ fn handle_overlay_mode(world: &mut World, key: GameKeyEvent) {
     }
 }
 
+use crate::layer1::direct_link::{PossessEntityEvent, UnpossessEvent};
+use crate::ui::state::UiState;
+
+pub fn handle_possession_ui_state(
+    mut events: EventReader<PossessEntityEvent>,
+    mut unpossess: EventReader<UnpossessEvent>,
+    mut input_stack: ResMut<InputContextStack>,
+    mut ui_state: ResMut<UiState>,
+) {
+    if !unpossess.is_empty() {
+        unpossess.clear();
+        ui_state.suppress_global_ui = false;
+        if input_stack.current() == InputContext::DirectControl {
+            input_stack.pop();
+        }
+    }
+    for _ in events.read() {
+        ui_state.suppress_global_ui = true;
+        input_stack.push(InputContext::DirectControl);
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
     use crate::layer1::Viewport;
-    use crate::platform::input::{GameKeyCode, GameKeyEvent, GameMouseEvent};
+    use crate::shared::keyboard::{GameKeyCode, GameKeyEvent, GameMouseEvent};
     use crate::prelude::{setup_world_with_config, SetupConfig};
-    use crate::shared::selection::{Selection, SelectionTarget};
+    use crate::ui::selection::{Selection, SelectionTarget};
     use crate::shared::state::GameState;
     use crate::shared::time::{SimSpeed, SimulationTime};
     use crate::ui::shell::{build_default_shell, ShellConfig};

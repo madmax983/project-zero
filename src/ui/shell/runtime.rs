@@ -13,7 +13,7 @@ use super::{
         TECH_PLUGIN_TYPE,
     },
 };
-use crate::platform::input::{GameKeyCode, GameKeyEvent};
+use crate::shared::keyboard::{GameKeyCode, GameKeyEvent};
 use crate::{
     layer2::system::ViewMode,
     shared::{

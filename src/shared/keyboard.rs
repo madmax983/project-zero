@@ -202,3 +202,71 @@ mod tests {
         }
     }
 }
+
+use std::collections::HashSet;
+#[derive(bevy_ecs::system::Resource, Default)]
+pub struct Input {
+    pressed: HashSet<KeyCode>,
+    just_pressed: HashSet<KeyCode>,
+    just_released: HashSet<KeyCode>,
+}
+
+impl Input {
+    pub fn press(&mut self, input: KeyCode) {
+        if !self.pressed.contains(&input) {
+            self.just_pressed.insert(input);
+        }
+        self.pressed.insert(input);
+    }
+
+    pub fn release(&mut self, input: KeyCode) {
+        if self.pressed.contains(&input) {
+            self.pressed.remove(&input);
+            self.just_released.insert(input);
+        }
+    }
+
+    pub fn pressed(&self, input: KeyCode) -> bool {
+        self.pressed.contains(&input)
+    }
+
+    pub fn just_pressed(&self, input: KeyCode) -> bool {
+        self.just_pressed.contains(&input)
+    }
+
+    pub fn just_released(&self, input: KeyCode) -> bool {
+        self.just_released.contains(&input)
+    }
+
+    pub fn clear(&mut self) {
+        self.just_pressed.clear();
+        self.just_released.clear();
+        // Since the underlying platform (crossterm) does not reliably send release events
+        // or we filter them out, we treat all inputs as transient triggers.
+        // We must clear 'pressed' so that the next frame's press is registered as a new press.
+        self.pressed.clear();
+    }
+}
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Default)]
+pub enum KeyCode {
+    W,
+    A,
+    S,
+    D,
+    Q,
+    E,
+    R,
+    F,
+    Up,
+    Down,
+    Left,
+    Right,
+    Space,
+    Esc,
+    Return,
+    Tab,
+    Back,
+    Delete,
+    #[default]
+    Unidentified,
+}

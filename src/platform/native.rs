@@ -2,7 +2,7 @@
 
 use crossterm::event::{KeyCode, KeyEvent, KeyEventKind, MouseEvent, MouseEventKind};
 
-use crate::platform::input::{GameKeyCode, GameKeyEvent, GameKeyModifiers, GameMouseEvent};
+use crate::shared::keyboard::{GameKeyCode, GameKeyEvent, GameKeyModifiers, GameMouseEvent};
 
 /// Convert a crossterm `KeyEvent` to a platform-agnostic `GameKeyEvent`.
 ///
@@ -183,9 +183,9 @@ mod tests {
     #[test]
     fn test_windows_press_release_does_not_double_toggle_pause() {
         use crate::layer1::{BuildMode, DesignationMode, Viewport};
-        use crate::shared::input::{route_input, InputContext, InputContextStack};
-        use crate::shared::menu::MenuState;
-        use crate::shared::selection::Selection;
+        use crate::ui::input::{route_input, InputContext, InputContextStack};
+        use crate::ui::menu_state::MenuState;
+        use crate::ui::selection::Selection;
         use crate::shared::state::GameState;
         use crate::shared::time::SimulationTime;
 

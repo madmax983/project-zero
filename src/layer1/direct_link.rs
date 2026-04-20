@@ -9,9 +9,8 @@ use crate::layer1::particles::Particle;
 use crate::layer1::pop::{Role, Speed};
 use crate::layer1::terrain::TerrainGrid;
 use crate::layer1::utility_types::StartPlan;
-use crate::shared::input::{Input, InputContext, InputContextStack, KeyCode};
+use crate::shared::keyboard::{Input, KeyCode};
 use crate::shared::time::WallTime;
-use crate::ui::state::UiState;
 use bevy_ecs::prelude::*;
 use ratatui::style::Color;
 
@@ -42,8 +41,6 @@ pub fn handle_possession(
     mut commands: Commands,
     mut events: EventReader<PossessEntityEvent>,
     mut unpossess: EventReader<UnpossessEvent>,
-    mut input_stack: ResMut<InputContextStack>,
-    mut ui_state: ResMut<UiState>,
     possessed_query: Query<Entity, With<Possessed>>,
 ) {
     // Handle Unpossess
@@ -54,12 +51,6 @@ pub fn handle_possession(
                 .entity(entity)
                 .remove::<Possessed>()
                 .remove::<DirectControlState>();
-        }
-        // Restore UI
-        ui_state.suppress_global_ui = false;
-        // Pop input context if we are in DirectControl
-        if input_stack.current() == InputContext::DirectControl {
-            input_stack.pop();
         }
     }
 
@@ -91,12 +82,8 @@ pub fn handle_possession(
             .remove::<AssignedTo>();
 
         // Switch Input Context
-        if input_stack.current() != InputContext::DirectControl {
-            input_stack.push(InputContext::DirectControl);
-        }
 
         // Suppress UI
-        ui_state.suppress_global_ui = true;
     }
 }
 
@@ -335,8 +322,6 @@ mod tests {
         world.init_resource::<Events<PossessEntityEvent>>();
         world.init_resource::<Events<UnpossessEvent>>();
         // Register resources
-        world.insert_resource(InputContextStack::default());
-        world.insert_resource(UiState::default());
         world.init_resource::<Input>();
         world.insert_resource(WallTime(0.0));
         world.insert_resource(ScreenShake::default());
@@ -371,13 +356,7 @@ mod tests {
         assert!(world.entity(pop).contains::<DirectControlState>());
 
         // Assert: Input context is DirectControl
-        assert_eq!(
-            world.resource::<InputContextStack>().current(),
-            InputContext::DirectControl
-        );
 
-        // Assert: UI suppressed
-        assert!(world.resource::<UiState>().suppress_global_ui);
 
         // Act: Trigger unpossess
         world
@@ -388,14 +367,7 @@ mod tests {
         // Assert: Pop no longer has Possessed
         assert!(!world.entity(pop).contains::<Possessed>());
 
-        // Assert: UI not suppressed
-        assert!(!world.resource::<UiState>().suppress_global_ui);
 
-        // Assert: Input context popped (back to MainMenu default)
-        assert_eq!(
-            world.resource::<InputContextStack>().current(),
-            InputContext::MainMenu
-        );
     }
 
     #[test]

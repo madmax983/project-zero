@@ -51,7 +51,7 @@ mod tests {
         world.init_resource::<Events<scale::layer2::events::ShipDestroyedEvent>>();
         world.init_resource::<Events<scale::layer2::events::LaunchEvent>>();
         world.init_resource::<Events<scale::layer3::silence::HostileSpawnEvent>>();
-        world.insert_resource(scale::shared::input::Input::default());
+        world.insert_resource(scale::shared::keyboard::Input::default());
         world.init_resource::<Events<scale::layer1::items::UnequipEvent>>();
         world.init_resource::<Events<scale::layer1::direct_link::PossessEntityEvent>>();
         world.insert_resource(scale::ui::UiState::default());
@@ -156,8 +156,8 @@ mod tests {
         world.insert_resource(scale::layer1::building::BuildMode::default());
         world.insert_resource(scale::layer1::designation::DesignationMode::default());
         world.insert_resource(scale::layer1::ChronicleUiState::default()); // Fixed
-        world.insert_resource(scale::shared::selection::Selection::default());
-        world.insert_resource(scale::shared::input::InputContextStack::default());
+        world.insert_resource(scale::ui::selection::Selection::default());
+        world.insert_resource(scale::ui::input::InputContextStack::default());
         world.insert_resource(scale::ui::map::RenderCache::default());
         world.insert_resource(scale::layer1::map::CameraCurrent::default());
         world.insert_resource(scale::layer1::map::CameraTarget::default());

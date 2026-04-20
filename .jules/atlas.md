@@ -1,81 +1,8 @@
-**Tuple Limit Tangle**
-**Tangle:** Bevy's `add_systems()` macro has a maximum tuple size limit of 21 elements. `src/layer1/systems/observation.rs` exceeded this limit (22 items), breaking compilation.
-**Blueprint:** Split the overloaded tuple in `add_systems()` into two separate tuples, safely maintaining the `.in_set(Layer1SystemSet::Observation)` schedule association for all included systems.
-
-**Nature Sub-module Extracted**
-**Tangle:** `src/layer1/mod.rs` was a 220+ file monolithic module containing environment, physics, weather, and basic survival systems deeply coupled with game logic.
-**Blueprint:** Extracted 13 foundational logic modules (`terrain`, `water`, `weather`, `atmosphere`, `temperature`, `seasons`, `wind`, `erosion`, `fertility`, `solar`, `ecology`, `radioactive`, `fire`) into a new `src/layer1/nature` module, simplifying the top-level Layer 1 namespace and enforcing a stronger domain boundary around environmental physics.
-
-**Tuple Limit Execution Tangle**
-**Tangle:** Bevy's `add_systems()` macro has a maximum tuple size limit of 21 elements. `src/layer1/systems/execution.rs` exceeded this limit (22 items in one tuple), breaking compilation.
-**Blueprint:** Split the overloaded tuple in `add_systems()` into two separate tuples, safely maintaining the `.in_set(Layer1SystemSet::Execution)` schedule association for all included systems.
-
-**Secret Societies Encapsulation**
-**Tangle:** The `SecretSocieties` logic (`src/layer1/society.rs`) was declared as a root-level module (`pub mod society`) directly under `layer1`, leaking social domain logic into the top-level namespace rather than being encapsulated within its functional domain.
-**Blueprint:** Moved `src/layer1/society.rs` to `src/layer1/social/society.rs` and updated module declarations and imports. This enforces a stronger domain boundary by nesting the secret society mechanics entirely within the `social` subsystem.
-**Geology Module Structural Tangle**
-**Tangle:** The geology module was incorrectly split between `src/layer1/geology.rs` and `src/layer1/geology/tectonic.rs`, and tests were awkwardly injected via an `include!` hack in `src/layer1/mod.rs`.
-**Blueprint:** Moved `src/layer1/geology.rs` to `src/layer1/geology/mod.rs` to establish a proper domain boundary and natively declared the test module in `tectonic.rs`.
-
-**Utility AI Module Extracted to `mind`**
-**Tangle:** The `utility_ai` and related evaluation logic files (`utility_ai.rs`, `utility_types.rs`, `utility_ai_population.rs`, `utility_eval_types.rs`, etc.) cluttered the root `src/layer1/mod.rs` namespace, adding to the "Blob" anti-pattern in `layer1`.
-**Blueprint:** Encapsulated all `utility_*` files into a dedicated `src/layer1/mind` module. The new `src/layer1/mind/mod.rs` re-exports the public types to maintain backward compatibility, keeping the layer 1 root cleaner while strictly enforcing domain boundaries.
-
-**Utility AI Module Extracted to `mind`**
-**Tangle:** The `utility_ai` and related evaluation logic files (`utility_ai.rs`, `utility_types.rs`, `utility_ai_population.rs`, `utility_eval_types.rs`, etc.) cluttered the root `src/layer1/mod.rs` namespace, adding to the "Blob" anti-pattern in `layer1`.
-**Blueprint:** Encapsulated all `utility_*` files into a dedicated `src/layer1/mind/` module. The new `src/layer1/mind/mod.rs` re-exports the public types to maintain backward compatibility, keeping the layer 1 root cleaner while strictly enforcing domain boundaries.
-
-**Law Domain Encapsulation**
-**Tangle:** The Law and Order subsystem (`justice`, `penal`, `predictive_policing`, `contraband`) was scattered across the root `src/layer1/mod.rs` namespace, contributing to the "Blob" anti-pattern in `layer1`. These interrelated modules lacked a clear domain boundary.
-**Blueprint:** Encapsulated all law-related files into a dedicated `src/layer1/law/` module. `mod.rs` now re-exports public types natively under `pub mod law` and fixes the duplicate tests, enforcing strict domain boundaries while reducing clutter in `layer1/mod.rs`.
-
-**Economy Sub-module Extracted**
-**Tangle:** `src/layer1/mod.rs` was a monolithic module that contained various economic systems (`trade`, `resources`, `refining`, `hauling`, `items`, `stockpile`, `inventory`, `black_market`, `shadow_market`) loosely coupled, lacking a domain boundary and contributing to the "Blob" anti-pattern in the top-level namespace.
-**Blueprint:** Extracted the 9 economic modules into a new `src/layer1/economy/` module, providing a clean facade `economy/mod.rs` and simplifying the top-level Layer 1 namespace, thus enforcing a stronger domain boundary around trade and logistics logic.
-
-**Social Domain Encapsulation**
-**Tangle:** The social domain (`rumor`, `factions`, `morale`, `politics`, `unrest`, etc.) was scattered across the root `src/layer1/mod.rs` namespace, adding to the "Blob" anti-pattern in `layer1`. These interrelated modules lacked a clear domain boundary.
-**Blueprint:** Encapsulated 13 social-related files into a dedicated `src/layer1/social/` module. The new `src/layer1/social/mod.rs` re-exports the public types to maintain backward compatibility, keeping the layer 1 root cleaner while strictly enforcing domain boundaries.
-**[Complete Event Registration]**
-**Tangle:** The `test_schedule_runs_on_fresh_world` integration test panicked because a system (`process_hermit_desertions`) tried to access `ResMut<Events<PopDesertedEvent>>` before the event type was registered in the test world setup.
-**Blueprint:** Add `world.init_resource::<Events<crate::layer2::moon_hermits::PopDesertedEvent>>();` alongside other manual test-setup event registrations inside `simulation::tests::test_schedule_runs_on_fresh_world` to align the fresh-world schedule integration test with standard simulation setup.
-
-**Entities Domain Encapsulation**
-**Tangle:** The `layer1/entities` logic was mostly loosely scattered across `src/layer1/mod.rs` with `pop.rs`, `fauna_gen.rs`, `vermin.rs`, `visitor.rs`, etc. contributing to the "Blob" anti-pattern.
-**Blueprint:** Encapsulated multiple core entity files (`pop.rs`, `fauna_gen.rs`, `vermin.rs`, `visitor.rs`, `drone.rs`, `the_visitor.rs`, `blob.rs`, `mascot.rs`, `wild_child.rs`, `pop_doppelganger.rs`, and tests) into a dedicated `src/layer1/entities/` module. The new `src/layer1/entities/mod.rs` re-exports public items natively, enforcing a strong domain boundary for organic and mechanical agents.
-
-**Physics Module Extracted**
-**Tangle:** The `layer1` core module was cluttered with scattered physics and spatial dynamics systems (`acoustic`, `pressure`, `suction`, `particles`, `structural_integrity`, `kinetic_storage`, `hit_stop`), contributing to the "Blob" anti-pattern in `src/layer1/mod.rs`.
-**Blueprint:** Encapsulated these interrelated physical interaction and simulation systems into a dedicated `src/layer1/physics/` module. The new `src/layer1/physics/mod.rs` re-exports the public types to maintain backward compatibility and API stability while strictly enforcing domain boundaries.
-
-**Culture Domain Encapsulation**
-**Tangle:** The cultural, religious, and belief logic (`ancestral_graves`, `animism`, `art`, `artifacts`, `festivals`, `funeral`, `totems`) was scattered across the root `src/layer1/mod.rs` namespace, contributing to the "Blob" anti-pattern in `layer1`. These interrelated modules lacked a clear domain boundary.
-**Blueprint:** Encapsulated these 7 culture and belief files into a dedicated `src/layer1/culture/` module. The new `src/layer1/culture/mod.rs` re-exports the public types natively to maintain backward compatibility, strictly enforcing domain boundaries while reducing clutter in `layer1/mod.rs`.
-
-**Biology Domain Encapsulation**
-**Tangle:** The health and medical modules (health, medical, genetics, addiction, contagion, cybernetics, etc.) were scattered across the root `src/layer1/mod.rs` namespace, adding to the "Blob" anti-pattern in `layer1`. These interrelated organic life functions lacked a clear domain boundary.
-**Blueprint:** Encapsulated 13 biology-related logic modules into a dedicated `src/layer1/biology/` module. The new `src/layer1/biology/mod.rs` re-exports the public types natively to maintain backward compatibility, keeping the layer 1 root cleaner while strictly enforcing domain boundaries.
-
-**Agriculture Sub-module Extracted**
-**Tangle:** The `layer1` core module was cluttered with related food production systems (`farm`, `gastronomy`, `husbandry`, `greenhouse`, `hydroponics`, `preservation`), contributing to the "Blob" anti-pattern in `src/layer1/mod.rs` without a clear domain boundary.
-**Blueprint:** Encapsulated these interrelated food production systems into a dedicated `src/layer1/agriculture/` module. The new `src/layer1/agriculture/mod.rs` re-exports the public types natively to maintain backward compatibility, keeping the layer 1 root cleaner while strictly enforcing domain boundaries.
-
-**Layer 1 Architecture Encapsulation**
-**Tangle:** The `layer1` core module was littered with loosely cohesive building and structural systems (e.g. `building`, `housing`, `structure`, `symbiotic_infrastructure`, `turret`, `ruins`, etc.), exacerbating the "Blob" anti-pattern in `src/layer1/mod.rs` and lacking a strict structural boundary.
-**Blueprint:** Encapsulated these interrelated construction and structural simulation files into a dedicated `src/layer1/architecture/` module. The new `src/layer1/architecture/mod.rs` centralizes their exports, reducing `layer1/mod.rs` bloat and enforcing a distinct architectural domain boundary.
-**Administration Sub-module Extracted**
-**Tangle:** The administration subsystem (`admin`, `bureaucracy_of_sleep`, `designation`, `edicts`, `inspector`, `permit`, `zone`) was scattered across the root `src/layer1/mod.rs` namespace, adding to the "Blob" anti-pattern in `layer1`. These interrelated modules lacked a clear domain boundary.
-**Blueprint:** Encapsulated these 7 administration and bureaucratic control files into a dedicated `src/layer1/administration/` module. The new `src/layer1/administration/mod.rs` re-exports the public types to maintain backward compatibility, keeping the layer 1 root cleaner while strictly enforcing domain boundaries.
-**Core Domain Encapsulation**
-**Tangle:** The core game foundation modules (`ai_core`, `chronicle`, `control`, `events`, `integration`, `map`) were declared loosely in the top-level `src/layer1/mod.rs`, exacerbating the "Blob" anti-pattern and blurring domain boundaries.
-**Blueprint:** Encapsulated these foundational primitives into a new `src/layer1/core` module. Created `src/layer1/core/mod.rs` to safely re-export them and replaced the direct top-level `mod` declarations with `pub mod core; pub use core::*; `. Fixed trailing doc comment errors to ensure a clean compilation structure.
-
-**Environment Domain Encapsulation**
-**Tangle:** The `layer1` core module was heavily congested with environmental hazards, planetary conditions, and volatile event modules (`geomes`, `hazards`, `terraforming`, `seismic`, `orbital_crossfire`, `bio_acoustic`, `volatile`, `photophobic`, `light_pollution`, `orbital_tether`, `disasters`), muddying the root namespace and blurring the line between local colony mechanics and macroscopic environmental physics.
-**Blueprint:** Extracted these 13 planetary condition modules into a dedicated `src/layer1/environment/` module, providing a unified `mod.rs` to mediate their exports (resolving global type collisions like `ExplosionEvent`). This drastically slims down `layer1/mod.rs` while strictly enforcing a domain boundary for macroscopic environmental hazards.
-**Culture Domain Encapsulation - Animism**
-**Tangle:** The `animism.rs` module was lingering in the root of `src/layer1/` instead of being inside its proper cultural domain alongside `ancestral_graves`, `art`, `totems`, etc., exacerbating the "Blob" anti-pattern in Layer 1.
-**Blueprint:** Moved `src/layer1/animism.rs` to `src/layer1/culture/animism.rs`. Updated `layer1/culture/mod.rs` to re-export it, resolving structural clutter and unifying the culture mechanics boundary.
-**Anomalies Domain Encapsulation**
-**Tangle:** The `layer1` core module was littered with the loose module `science`, which contained `Anomaly`, `AnomalyType`, and `ScanProgress` logic but was loosely declared in `layer1/mod.rs` contributing to the "Blob" anti-pattern without a clear boundary.
-**Blueprint:** Encapsulated the field science and anomalies logic into a dedicated `src/layer1/anomalies/` domain module, moving `science.rs` to `anomalies/mod.rs` and updating the re-exports and import paths to enforce a distinct domain boundary for anomalies.
+**[Title]** Break The Core Knot: Shared to Layer Dependency Cycle
+**Tangle:** The `shared` module, intended to be low-level, imported `layer1` and `layer2` via `input.rs`, `selection.rs`, `menu.rs`, and `world_history.rs`. Meanwhile, `layer1` imported `ui::state::UiState` inside `direct_link.rs`. Furthermore, `ui` and `platform` mutually imported each other due to `platform::input`. This created a massive, multi-layer circular dependency graph that entangled `shared`, `ui`, `platform`, and the simulation layers.
+**Blueprint:**
+1. Extracted `platform::input` into `shared::keyboard` to provide platform-agnostic types without cycles.
+2. Relocated `shared::input`, `shared::selection`, `shared::menu`, and `shared::world_history` upwards into `ui`, reflecting their true nature as user interaction state handlers.
+3. Extracted `Input` and `KeyCode` structs down into `shared::keyboard` to allow the simulation layers to read raw key states without importing `ui`.
+4. Decoupled `layer1::observer` by shifting the `observer_awareness_system` into `ui::selection`, allowing UI to apply the component based on its own selection state without `layer1` reading UI data.
+5. Decoupled `layer1::direct_link` by severing UI mutation logic from the simulation. The simulation now only processes `Possessed` entities, while the newly created `ui::input::handle_possession_ui_state` listens for possession events to toggle the `UiState` and `InputContextStack`.
