@@ -16638,3 +16638,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** How much redundancy do you build? Do you intervene early or trust the system?
 
 ---
+
+## The Gravity Plunge
+
+**Layer:** 2 -> 1
+
+**Fantasy:** A daring maneuver utilizing a planet's gravity well for an extreme slingshot, but risking utter annihilation if the math is wrong.
+
+**Mechanic:** Fleet movement can use a "Gravity Plunge" command. It drastically increases movement speed across the system but has a % risk of crashing into Layer 1 based on fleet tech and planetary mass.
+
+**Emergence:** A fleeing refugee fleet attempts a plunge to escape pirates, fails, and crashes into your capital city, causing massive damage but giving you incredible late-game tech from the wreckage.
+
+**Tension:** Safe, slow travel vs. rapid transit that could end in planetary disaster.
+
+---
+
+## The Saboteur's Conscience
+
+**Layer:** 1
+
+**Fantasy:** The enemy spy sent to destroy your colony falls in love with the life they've built there.
+
+**Mechanic:** "Infiltrator" pops from hostile factions are sometimes spawned with sabotage objectives. However, if their Mood stays consistently high and they build strong `Pop Relationships` with locals, they can "Defect," revealing their original faction's intel and becoming permanent citizens.
+
+**Emergence:** Your most trusted engineer suddenly confesses they were meant to blow up the fusion reactor, but they couldn't do it because they love the colony mascot too much. Now you have the blueprints to the enemy's shield generator.
+
+**Tension:** Do you maintain a draconian security state that catches spies immediately but lowers overall morale, or build a utopia that risks destruction but might convert enemies to allies?
+
+---
+
+## The Silent Fleet
+
+**Layer:** 3 -> 2
+
+**Fantasy:** A massive armada that arrives without warning, communicating only through action, instilling terror through perfect synchronization.
+
+**Mechanic:** A unique late-game faction that generates zero communications. They do not appear on standard sensors until they are within the system, and they do not negotiate or send demands. Their intentions are only revealed by whether they start bombarding or start dropping supplies.
+
+**Emergence:** You scramble your entire planetary defense grid to fight off the massive, silent armada that just warped in. Instead of attacking, they drop a single, massive crate of exotic matter and immediately warp out, leaving you bewildered and overly defended against nothing.
+
+**Tension:** Do you fire first and risk provoking a potential benefactor, or wait to see their intent and risk being annihilated by a first strike?
+
+---
