@@ -1283,7 +1283,7 @@ fn insert_base_building_components(
     }
 }
 
-fn spawn_building(
+pub fn spawn_building(
     world: &mut World,
     x: i32,
     y: i32,
@@ -2232,17 +2232,6 @@ fn configure_tech(entity: &mut EntityWorldMut, building_type: BuildingType) {
     configure_science_buildings(entity, building_type);
     configure_specialized_tech(entity, building_type);
     configure_futuristic_tech(entity, building_type);
-}
-
-/// Helper for spawning buildings in tests/tools.
-pub fn spawn_building_with_material(
-    world: &mut World,
-    x: i32,
-    y: i32,
-    building_type: BuildingType,
-    material: MaterialType,
-) {
-    spawn_building(world, x, y, building_type, material);
 }
 
 /// Attempt to place a building at the given position.

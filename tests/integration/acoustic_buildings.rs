@@ -2,7 +2,7 @@
 mod tests {
     use bevy_ecs::prelude::*;
     use scale::layer1::acoustic::{update_noise_system, NoiseMap, NoiseSource};
-    use scale::layer1::building::{spawn_building_with_material, BuildingType, MaterialType};
+    use scale::layer1::building::{spawn_building, BuildingType, MaterialType};
     use scale::layer1::resources::ColonyResources;
     use scale::layer1::terrain::{TerrainGrid, TerrainType};
     use scale::layer1::GridPosition;
@@ -26,7 +26,7 @@ mod tests {
         world.insert_resource(scale::shared::log::MessageLog::default());
         world.insert_resource(scale::layer1::tech::TechState::default());
 
-        spawn_building_with_material(
+        spawn_building(
             &mut world,
             10,
             10,
@@ -82,7 +82,7 @@ mod tests {
         world.insert_resource(scale::layer1::tech::TechState::default());
         world.insert_resource(scale::shared::log::MessageLog::default());
 
-        spawn_building_with_material(&mut world, 5, 5, BuildingType::Housing, MaterialType::Wood);
+        spawn_building(&mut world, 5, 5, BuildingType::Housing, MaterialType::Wood);
 
         let mut noise_source_query = world.query::<(&NoiseSource, &GridPosition)>();
         let count = noise_source_query.iter(&world).count();

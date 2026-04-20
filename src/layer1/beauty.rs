@@ -341,7 +341,7 @@ mod tests {
         // Setup dependencies
         world.insert_resource(crate::layer1::prototyping::BuildingMastery::default());
 
-        crate::layer1::building::spawn_building_with_material(
+        crate::layer1::building::spawn_building(
             &mut world,
             0,
             0,

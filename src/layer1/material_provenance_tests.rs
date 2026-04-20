@@ -7,7 +7,7 @@ mod tests {
     use bevy_ecs::prelude::*;
 
     fn setup_world() -> World {
-        // Setup necessary resources if needed (e.g. BuildMode not needed for spawn_building_with_material)
+        // Setup necessary resources if needed (e.g. BuildMode not needed for spawn_building)
         World::new()
     }
 
@@ -15,7 +15,7 @@ mod tests {
     fn test_spawn_wood_wall() {
         let mut world = setup_world();
 
-        crate::layer1::building::spawn_building_with_material(
+        crate::layer1::building::spawn_building(
             &mut world,
             0,
             0,
@@ -40,7 +40,7 @@ mod tests {
     fn test_spawn_stone_wall() {
         let mut world = setup_world();
 
-        crate::layer1::building::spawn_building_with_material(
+        crate::layer1::building::spawn_building(
             &mut world,
             0,
             0,
@@ -66,7 +66,7 @@ mod tests {
         let mut world = setup_world();
 
         // Spawn Stone Statue
-        crate::layer1::building::spawn_building_with_material(
+        crate::layer1::building::spawn_building(
             &mut world,
             0,
             0,
@@ -85,7 +85,7 @@ mod tests {
         }
 
         // Spawn Gold Statue
-        crate::layer1::building::spawn_building_with_material(
+        crate::layer1::building::spawn_building(
             &mut world,
             0,
             0,

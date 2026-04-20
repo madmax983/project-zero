@@ -729,7 +729,7 @@ fn apply_layer2_ready_start(world: &mut World, layout: Option<&StarterColonyLayo
         });
 
     if !has_command_center {
-        crate::layer1::building::spawn_building_with_material(
+        crate::layer1::building::spawn_building(
             world,
             command_center_pos.x,
             command_center_pos.y,
@@ -843,7 +843,7 @@ fn spawn_starter_colony(world: &mut World) -> Option<StarterColonyLayout> {
     for &(dx, dy) in STARTER_WALL_OFFSETS {
         let x = center.x + dx;
         let y = center.y + dy;
-        crate::layer1::building::spawn_building_with_material(
+        crate::layer1::building::spawn_building(
             world,
             x,
             y,
@@ -857,7 +857,7 @@ fn spawn_starter_colony(world: &mut World) -> Option<StarterColonyLayout> {
         x: center.x + STARTER_AIRLOCK_OFFSET.0,
         y: center.y + STARTER_AIRLOCK_OFFSET.1,
     };
-    crate::layer1::building::spawn_building_with_material(
+    crate::layer1::building::spawn_building(
         world,
         airlock_pos.x,
         airlock_pos.y,
@@ -873,7 +873,7 @@ fn spawn_starter_colony(world: &mut World) -> Option<StarterColonyLayout> {
         x: center.x + STARTER_LANDER_OFFSET.0,
         y: center.y + STARTER_LANDER_OFFSET.1,
     };
-    crate::layer1::building::spawn_building_with_material(
+    crate::layer1::building::spawn_building(
         world,
         lander_pos.x,
         lander_pos.y,
@@ -889,7 +889,7 @@ fn spawn_starter_colony(world: &mut World) -> Option<StarterColonyLayout> {
         x: center.x + STARTER_LIFE_SUPPORT_OFFSET.0,
         y: center.y + STARTER_LIFE_SUPPORT_OFFSET.1,
     };
-    crate::layer1::building::spawn_building_with_material(
+    crate::layer1::building::spawn_building(
         world,
         life_support_pos.x,
         life_support_pos.y,
