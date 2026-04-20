@@ -5550,8 +5550,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Tether Stump
-
+## The Tether Stump [SPECCED]
 **Layer:** 1
 
 **Fantasy:** Living in the shadow of a broken god.
