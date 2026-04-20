@@ -5563,8 +5563,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Personal Shields
-
+## Personal Shields [SPECCED]
 **Layer:** 1
 
 **Fantasy:** The slow blade penetrates the shield.

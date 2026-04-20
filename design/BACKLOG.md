@@ -1,6 +1,7 @@
 # Backlog
 
 ## High Priority
+- [ ] `1119` Personal Shields — `specs/1119-personal-shields.md`
 - [ ] `1117` Sonic Suppression — `specs/1117-sonic-suppression.md`
 - [ ] `1108` The Rearguard — `specs/1108-the-rearguard.md`
 - [ ] `1107` Astrological Beliefs — `specs/1107-astrological-beliefs.md`
