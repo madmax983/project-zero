@@ -6173,3 +6173,33 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: By watching the infected, [OBSERVER_NAME] has reverse-engineered [LOST_TECH_NAME]."
 - "The madness of the ruins yields fruit. [COLONY] researchers uncover the secrets of [LOST_TECH_NAME]."
 - "It is not nonsense. It is a schematic. We have learned [LOST_TECH_NAME]."
+
+
+## Sonic Suppression Templates (Spec 1117)
+
+### Template: SONIC_TURRET_FIRED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [SONIC_TURRET_NAME], [NAUSEA_SYMPTOM]
+
+**Patterns:**
+- "The [SONIC_TURRET_NAME] fires. [YEAR]. Enemies drop, suffering [NAUSEA_SYMPTOM]."
+- "[YEAR]: Non-lethal defense active. The [SONIC_TURRET_NAME] induces [NAUSEA_SYMPTOM] in the attackers."
+- "A deep hum shakes [COLONY]. The [SONIC_TURRET_NAME] leaves them with [NAUSEA_SYMPTOM]. [YEAR]."
+
+### Template: COLLATERAL_SHATTER
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [SONIC_TURRET_NAME], [SHATTERED_OBJECT]
+
+**Patterns:**
+- "The vibration was too much. [YEAR]. The [SHATTERED_OBJECT] exploded into dust from the [SONIC_TURRET_NAME]."
+- "[YEAR]: Collateral damage. The [SONIC_TURRET_NAME] shattered the [SHATTERED_OBJECT]."
+- "We saved the colony, but the [SONIC_TURRET_NAME] destroyed the [SHATTERED_OBJECT]. [YEAR]."
+
+### Template: FRIENDLY_STRESS_SONIC
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [SONIC_TURRET_NAME], [NAUSEA_SYMPTOM]
+
+**Patterns:**
+- "The hum of the [SONIC_TURRET_NAME] is driving us mad. [YEAR]. Our own people report [NAUSEA_SYMPTOM]."
+- "[YEAR]: Friendly fire from the [SONIC_TURRET_NAME]. The crew suffers [NAUSEA_SYMPTOM] despite the soundproofing."
+- "We cannot sleep. The [SONIC_TURRET_NAME] vibrates through the floor, causing [NAUSEA_SYMPTOM]. [YEAR]."

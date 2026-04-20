@@ -6987,3 +6987,29 @@ Used for The Archaeological Contagion events. The ancient technology reverse-eng
 - Kinetic Siphoning
 - Psychotropic Metallurgy
 - Fractal Computation
+
+
+## Sonic Suppression Fragments (Spec 1117)
+
+## Fragment Type: [SONIC_TURRET_NAME]
+- Bass-Cannon
+- Infrasound Emitter
+- The Thumper
+- Resonance-Gun
+- Heart-Stopper
+- Void-Bell
+
+## Fragment Type: [NAUSEA_SYMPTOM]
+- sudden vertigo
+- bleeding ears
+- a turning stomach
+- blurred vision
+- crushing pressure
+- vomiting
+
+## Fragment Type: [SHATTERED_OBJECT]
+- greenhouse glass
+- bio-dome panes
+- fragile equipment
+- observation windows
+- light fixtures
