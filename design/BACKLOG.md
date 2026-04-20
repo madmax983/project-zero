@@ -773,3 +773,4 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1114` Generational Amnesia — `specs/1114-generational-amnesia.md`
 - [ ] `1115` The Diaspora Fleet — `specs/1115-the-diaspora-fleet.md`
 - [ ] `1118` The Tether Stump — `specs/1118-the-tether-stump.md`
+- [ ] `1121` Generational Grudges — `specs/1121-generational-grudges.md`
