@@ -14833,8 +14833,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 ---
 
 
-## The Rust-Lung Epidemic
-
+## The Rust-Lung Epidemic [SPECCED]
 **Layer:** 1
 
 **Fantasy:** Breathing the air of progress until it suffocates you.
