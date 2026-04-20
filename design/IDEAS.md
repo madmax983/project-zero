@@ -6819,8 +6819,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Altruism vs. Parasitism.
 
 ---
-## Generational Grudges
-
+## Generational Grudges [SPECCED]
 **Layer:** 1
 
 **Fantasy:** Feuds that outlast the people who started them.
@@ -16586,8 +16585,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Generational Grudge
-
+## Generational Grudge [SPECCED]
 **Layer:** 1
 
 **Fantasy:** A minor slight between two people balloons into a multi-generational blood feud that splits the colony.
