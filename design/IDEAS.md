@@ -16680,3 +16680,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you fire first and risk provoking a potential benefactor, or wait to see their intent and risk being annihilated by a first strike?
 
 ---
+## The Deep Crust Resonance
+
+**Layer:** 1
+
+**Fantasy:** Uncovering something ancient and terrifying deep underground that drives the colony mad with paranoia.
+
+**Mechanic:** Mining too deep can encounter "Resonant Ore." Pops working near it gradually gain severe negative mood debuffs, but the ore is extremely valuable. If not mitigated, the "resonance" spreads to their relationships, causing colony-wide paranoia and violent outbursts.
+
+**Emergence:** You find a massive vein of incredible wealth, but your entire mining sector goes insane and starts sabotaging the upper levels of the colony to "stop the noise."
+
+**Tension:** Do you exploit the maddening wealth and risk social collapse, or seal off the depths to keep your people sane?
+
+---
+
+## Gravity Well Piracy
+
+**Layer:** Cross-layer (2 -> 1)
+
+**Fantasy:** The sky itself is a threat; pirates orbit your world and literally snatch resources from your surface.
+
+**Mechanic:** Layer 2 pirate fleets can use a specialized "Gravity Tether" to raid Layer 1 stockpiles. This appears as a giant tractor beam tearing resources from the ground. Layer 1 planetary defenses can shoot back, but only if they are powered.
+
+**Emergence:** You thought your agricultural surplus was safe because you had no Layer 2 fleets to protect, but pirates just hovered over your farms and sucked all your wheat into space, leaving your colony to starve.
+
+**Tension:** Do you build expensive surface-to-orbit cannons that eat up your Layer 1 power grids, or build a Layer 2 fleet to intercept them in space?
+
+---
+
+## The Ferrous Plague
+
+**Layer:** 1
+
+**Fantasy:** A metallic infection that slowly consumes your colony's infrastructure, making it better but monstrous.
+
+**Mechanic:** A rare event introduces a "Ferrous Spore" to the environment. It slowly spreads across the `TerrainGrid`, infecting metallic buildings. Infected buildings operate at 200% efficiency but continuously drain colony morale because they look horrifying. Eventually, they collapse into hostile "Scrap Golems."
+
+**Emergence:** You intentionally let the plague infect your main factory because you desperately needed the production boost to survive a harsh winter, but come spring, the factory animates and starts eating your pops.
+
+**Tension:** Do you immediately quarantine and destroy infected, highly productive buildings, or ride the efficiency wave until the inevitable disaster strikes?
+
+---
