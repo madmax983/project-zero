@@ -616,6 +616,8 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
     crate::experimental::echo_chamber::register(schedule);
     #[cfg(feature = "nova")]
     crate::experimental::the_haunted_cartographer::register(schedule);
+    #[cfg(feature = "nova")]
+    crate::experimental::the_final_will::register(schedule);
 
     schedule.add_systems((
         crate::layer3::map::map_data_rot_system,
