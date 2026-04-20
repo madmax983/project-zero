@@ -1,6 +1,8 @@
 # Backlog
 
 ## High Priority
+- [ ] `1120` Xenoflora Pet Craze — `specs/1120-xenoflora-pet-craze.md`
+
 - [ ] `1119` Personal Shields — `specs/1119-personal-shields.md`
 - [ ] `1117` Sonic Suppression — `specs/1117-sonic-suppression.md`
 - [ ] `1108` The Rearguard — `specs/1108-the-rearguard.md`

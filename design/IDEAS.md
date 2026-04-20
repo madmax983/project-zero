@@ -16517,8 +16517,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you try to remain unnoticed and carefully scavenge just enough to survive, or aggressively strip-mine the battlefield to build a makeshift arsenal, risking drawing the ire of the combatants?
 
 ---
-## Xenoflora Pet Craze
-
+## Xenoflora Pet Craze [SPECCED]
 **Layer:** 1
 
 **Fantasy:** A seemingly harmless local flora becomes a viral obsession among the colonists, disrupting work but creating immense joy.
