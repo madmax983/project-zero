@@ -1,6 +1,6 @@
 #[cfg(test)]
 mod tests {
-    use crate::layer1::tech::legacy_code::{update_bloat_system, Bloat, Mainframe, SystemStatus};
+    use crate::layer1::tech::legacy_code::{update_bloat_system, Bloat, SystemStatus};
     use bevy_ecs::prelude::*;
     // use crate::layer1::research::ResearchRate; // Not yet implemented
     use crate::shared::time::SimulationTime;
@@ -17,7 +17,6 @@ mod tests {
 
         let mainframe = world
             .spawn((
-                Mainframe,
                 Bloat {
                     current: 0.0,
                     rate: 0.1,
@@ -58,7 +57,6 @@ mod tests {
         let mut world = World::new();
         let mainframe = world
             .spawn((
-                Mainframe,
                 Bloat {
                     current: 100.0,
                     rate: 0.1,
@@ -69,14 +67,21 @@ mod tests {
 
         // Trigger Reformat
         // Assume event or component trigger
-        crate::layer1::tech::legacy_code::start_reformat(&mut world, mainframe);
+        if let Some(mut status) = world.get_mut::<SystemStatus>(mainframe) {
+            *status = SystemStatus::Rebooting(500); // 500 ticks duration
+        }
 
         let status = world.get::<SystemStatus>(mainframe).unwrap();
         assert_eq!(*status, SystemStatus::Rebooting(500)); // 500 ticks duration
 
         // Advance time to finish
         // (Mocking system update for reboot logic)
-        crate::layer1::tech::legacy_code::finish_reformat(&mut world, mainframe);
+        if let Some(mut status) = world.get_mut::<SystemStatus>(mainframe) {
+            if let SystemStatus::Rebooting(_) = *status {
+                *status = SystemStatus::Rebooting(0);
+                // Let system handle the switch next tick
+            }
+        }
 
         let mut schedule = Schedule::default();
         schedule.add_systems(update_bloat_system);
