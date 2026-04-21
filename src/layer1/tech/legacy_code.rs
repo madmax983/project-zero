@@ -1,8 +1,5 @@
 use bevy_ecs::prelude::*;
 
-#[derive(Component)]
-pub struct Mainframe;
-
 #[derive(Component, Default, Debug)]
 pub struct Bloat {
     pub current: f32, // 0-100
@@ -22,7 +19,6 @@ impl Bloat {
 pub enum SystemStatus {
     Online,
     Rebooting(u32), // Ticks remaining
-    Offline,
 }
 
 pub fn update_bloat_system(mut query: Query<(&mut Bloat, &mut SystemStatus)>) {
@@ -40,26 +36,6 @@ pub fn update_bloat_system(mut query: Query<(&mut Bloat, &mut SystemStatus)>) {
                     *status = SystemStatus::Online;
                 }
             }
-            _ => {}
         }
     }
 }
-
-pub fn start_reformat(world: &mut World, entity: Entity) {
-    if let Some(mut status) = world.get_mut::<SystemStatus>(entity) {
-        *status = SystemStatus::Rebooting(500); // Constant for now
-    }
-}
-
-pub fn finish_reformat(world: &mut World, entity: Entity) {
-    // Helper for testing
-    if let Some(mut status) = world.get_mut::<SystemStatus>(entity) {
-        if let SystemStatus::Rebooting(_) = *status {
-            *status = SystemStatus::Rebooting(0);
-            // Let system handle the switch next tick
-        }
-    }
-}
-
-// Deprecated: use start/finish reformat helpers instead
-pub fn reformat_system() {}

@@ -16,3 +16,8 @@
 **Bloat:** The `spawn_building_with_material` function in `src/layer1/architecture/building.rs`, which just passed parameters to `spawn_building`.
 **Cut:** Made `spawn_building` public, deleted `spawn_building_with_material`, and updated all callers across the codebase.
 **Saved:** 11 lines of code and an unnecessary abstraction layer.
+
+## [Reduction]
+**Bloat:** Unused `Mainframe` marker component, dead `Offline` variant from `SystemStatus` enum, and unused helper functions `start_reformat`, `finish_reformat`, and `reformat_system` in `legacy_code.rs`.
+**Cut:** Removed the marker component to avoid collisions with `digital_immortality`, excised the dead enum variant to make pattern matching exhaustive, and deleted the deprecated helper functions.
+**Saved:** ~30 lines of dead code and indirection, preventing component collisions and unhandled enum variants.
