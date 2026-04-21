@@ -5657,8 +5657,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Volatile Intermediates
-
+## Volatile Intermediates [SPECCED]
 **Layer:** 1
 
 **Fantasy:** Handling nitroglycerin. The danger is in the process, not just the enemy.
