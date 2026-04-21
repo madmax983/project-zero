@@ -19,7 +19,10 @@ fn test_stellar_weather_damage_bridge() {
     let fleet_entity = app
         .world_mut()
         .spawn((
-            FleetHealth { current: 100.0, max: 100.0, },
+            FleetHealth {
+                current: 100.0,
+                max: 100.0,
+            },
             FleetComposition {
                 ships: vec![Ship {
                     ship_type: ShipType::Scout,

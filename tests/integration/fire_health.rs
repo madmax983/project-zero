@@ -13,7 +13,11 @@ fn test_fire_damages_pop_on_same_tile() {
         .spawn((
             Pop,
             GridPosition { x: 5, y: 5 },
-            Health { current: 100.0, max: 100.0, conditions: Vec::new(), },
+            Health {
+                current: 100.0,
+                max: 100.0,
+                conditions: Vec::new(),
+            },
             Needs::default(),
         ))
         .id();

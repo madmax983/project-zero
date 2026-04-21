@@ -424,3 +424,4 @@
 - [x] `1116` Sub-light Tourism — `specs/1116-sub-light-tourism.md` — completed 2026-04-20
 - [x] `862` Ventilation Networks — `specs/862-ventilation-networks.md` — completed 2026-06-02
 - [x] `INT-862` Integration: Ventilation Networks -> Atmosphere Diffusion — completed 2026-06-02
+- [x] `1094` Ecological Succession — `specs/1094-ecological-succession.md` — completed 2026-02-01
