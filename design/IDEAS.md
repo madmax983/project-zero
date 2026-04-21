@@ -16553,8 +16553,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Orbital Drydocks
-
+## Orbital Drydocks [SPECCED]
 **Layer:** 2
 
 **Fantasy:** Building colossal ships in the void above your world.
