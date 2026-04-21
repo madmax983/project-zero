@@ -5617,8 +5617,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Escape Pods
-
+## Escape Pods [SPECCED]
 **Layer:** 1 -> 2
 
 **Fantasy:** The ship is sinking. Women and children first.
