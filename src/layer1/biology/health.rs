@@ -32,7 +32,7 @@ pub enum HealthCondition {
 /// ```
 /// use scale::layer1::health::Health;
 ///
-/// let entity_health = Health {
+/// let entity_health = Health { conditions: vec![],
 ///     current: 100.0,
 ///     max: 100.0,
 /// };
@@ -119,7 +119,7 @@ impl Health {
     /// ```
     /// use scale::layer1::health::Health;
     ///
-    /// let mut health = Health { current: 50.0, max: 100.0 };
+    /// let mut health = Health { current: 50.0, max: 100.0, conditions: vec![] };
     /// health.take_damage(10.0);
     /// assert_eq!(health.current, 40.0);
     ///
