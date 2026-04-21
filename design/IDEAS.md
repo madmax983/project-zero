@@ -16716,3 +16716,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you immediately quarantine and destroy infected, highly productive buildings, or ride the efficiency wave until the inevitable disaster strikes?
 
 ---
+
+## The Memory Hoarders
+
+**Layer:** 1
+
+**Fantasy:** A segment of the colony becomes obsessed with preserving the past, refusing to discard anything and physically hoarding items with "historical significance."
+
+**Mechanic:** Pops with high `Memory` and low `Mood` may develop the "Hoarder" trait. They begin secretly moving raw resources, crafted goods, and even broken machinery into their housing blocks, taking them out of the colony's usable inventory. Their housing blocks slowly become inefficient and pose a fire hazard.
+
+**Emergence:** You notice your colony is suddenly short on iron plates despite high production, only to discover a single elder pop has filled an entire hab-block with them because "they are the last plates forged by the founder."
+
+**Tension:** Do you forcibly evict them and reclaim the resources, tanking their mood and the mood of anyone who respects them, or build them a massive, expensive "Museum" to safely store their hoard?
+
+---
+
+## The Phantom Work Orders
+
+**Layer:** 1
+
+**Fantasy:** A glitch in the bureaucratic AI causes automated systems to generate and enforce meaningless, contradictory, or dangerous tasks.
+
+**Mechanic:** Occasionally, a "Phantom Task" appears in the `work_execution_system`. It has maximum priority but produces nothing of value (e.g., "Move all dirt from Sector A to Sector B, then back"). Pops following utility AI will abandon crucial jobs to complete these phantom tasks.
+
+**Emergence:** Your farmers stop harvesting crops right before winter because the system flagged "Rearranging the solar panel aesthetics" as an Omega-Level critical directive, and now the colony is starving.
+
+**Tension:** Do you manually micromanage and cancel every phantom order, wasting your attention, or shut down the automated manager entirely and suffer a massive global efficiency penalty?
+
+---
+
+## The Stratospheric Exiles
+
+**Layer:** Cross-layer (1 -> 2)
+
+**Fantasy:** Political dissidents or outcasts literally flee the ground, building makeshift, unregulated floating habitats in the upper atmosphere.
+
+**Mechanic:** When a faction's unrest reaches critical mass, instead of rioting, they may steal resources and construct a "Strato-Hab" just below the orbit threshold. They are no longer part of Layer 1, but they occasionally siphon power and atmospheric gases from the colony below.
+
+**Emergence:** A group of purist engineers you fired for inefficiency steals a fusion core, floats into the clouds, and starts a pirate radio station that constantly drains your energy grid and drops propaganda leaflets on your farms.
+
+**Tension:** Do you shoot them down and risk the debris destroying your colony, or pay them off with exorbitant "tributes" to leave your infrastructure alone?
+
+---

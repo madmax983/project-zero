@@ -1194,7 +1194,9 @@ fn find_terrain(world: &mut World, terrain_name: &str, max_count: usize) {
         _ => {
             print_dashboard_panel(
                 "ERROR",
-                &format!("Unknown terrain type: {terrain_name}. Try: rock, tree, grass, water, dirt"),
+                &format!(
+                    "Unknown terrain type: {terrain_name}. Try: rock, tree, grass, water, dirt"
+                ),
                 Some(comfy_table::Color::Red),
                 Some(comfy_table::Attribute::Bold),
             );
