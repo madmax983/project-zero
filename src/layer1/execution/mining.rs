@@ -2,10 +2,14 @@ use bevy_ecs::prelude::*;
 use rand::Rng;
 use ratatui::style::Color;
 
+use crate::layer1::biology::health::{Health, HealthCondition};
+use crate::layer1::economy::inventory::Inventory;
+use crate::layer1::economy::items::ItemType;
 use crate::layer1::environment::orbital_crossfire::{mine_scrap, ImpactSite};
 use crate::layer1::map::{GridPosition, ScreenShake};
 use crate::layer1::mother_lode::MotherLode;
 use crate::layer1::particles::{spawn_moving_particle, spawn_particle};
+use crate::layer1::purity::PurityMap;
 use crate::layer1::resources::{process_logging, process_mining};
 use crate::layer1::skills::{SkillType, XpGainEvent, XpSource};
 use crate::shared::log::MessageLog;
@@ -60,6 +64,29 @@ pub fn handle_mining_work(
     }
 
     let is_mother_lode = world.get::<MotherLode>(entity).is_some();
+    if let Some(p) = pos {
+        let is_low_purity = world
+            .get_resource::<PurityMap>()
+            .is_some_and(|map| map.get(p.x, p.y) < 0.5);
+        if is_low_purity && !is_mother_lode {
+            let mut apply_rust_lung = false;
+
+            if let Some(inventory) = world.get::<Inventory>(worker_entity) {
+                if !inventory.has_item(ItemType::Rebreather) {
+                    apply_rust_lung = true;
+                }
+            } else {
+                apply_rust_lung = true;
+            }
+
+            if apply_rust_lung {
+                if let Some(mut health) = world.get_mut::<Health>(worker_entity) {
+                    health.add_condition(HealthCondition::RustLung);
+                }
+            }
+        }
+    }
+
     if is_mother_lode {
         process_mother_lode(world, entity, effective_work, pos);
     } else {

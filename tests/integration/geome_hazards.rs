@@ -22,10 +22,7 @@ fn test_geome_hazard_damages_health() {
     let miner = world
         .spawn((
             Pop,
-            Health {
-                current: 100.0,
-                max: 100.0,
-            },
+            Health { current: 100.0, max: 100.0, conditions: Vec::new(), },
             GridPosition { x: 6, y: 5 }, // Standing on the SporeBloom tile
         ))
         .id();

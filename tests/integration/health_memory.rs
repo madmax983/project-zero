@@ -33,7 +33,8 @@ fn test_death_causes_witnessed_memory() {
             Health {
                 current: -1.0,
                 max: 100.0,
-            }, // Already dead
+                    conditions: Vec::new(),
+                }, // Already dead
             Memories::default(),
         ))
         .id();

@@ -183,11 +183,11 @@ mod tests {
     #[test]
     fn test_windows_press_release_does_not_double_toggle_pause() {
         use crate::layer1::{BuildMode, DesignationMode, Viewport};
+        use crate::shared::state::GameState;
+        use crate::shared::time::SimulationTime;
         use crate::ui::input::{route_input, InputContext, InputContextStack};
         use crate::ui::menu_state::MenuState;
         use crate::ui::selection::Selection;
-        use crate::shared::state::GameState;
-        use crate::shared::time::SimulationTime;
 
         let mut world = bevy_ecs::prelude::World::new();
         world.insert_resource(GameState::Running);

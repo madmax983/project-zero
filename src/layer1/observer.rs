@@ -25,7 +25,6 @@ pub struct Observed {
     pub duration: u32,
 }
 
-
 /// System that applies behavioral changes to observed Pops.
 pub fn observer_reaction_system(
     mut query: Query<(
@@ -102,8 +101,6 @@ mod tests {
     use super::*;
     use crate::layer1::stress::StressTracker;
     use crate::layer1::traits::{Trait, Traits};
-
-
 
     #[test]
     fn test_observer_reaction_increases_speed() {

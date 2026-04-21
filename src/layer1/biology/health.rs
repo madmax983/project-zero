@@ -15,6 +15,13 @@
 
 use bevy_ecs::prelude::*;
 
+/// Health conditions that can afflict Pops.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+pub enum HealthCondition {
+    /// Acquired from mining without a rebreather.
+    RustLung,
+}
+
 /// Represents the physical health of an entity (Pop).
 ///
 /// Decouples death from specific causes (starvation, damage).
@@ -31,12 +38,14 @@ use bevy_ecs::prelude::*;
 /// };
 /// assert!(entity_health.is_alive());
 /// ```
-#[derive(Component, Debug, Clone, Copy)]
+#[derive(Component, Debug, Clone)]
 pub struct Health {
     /// Current health points. <= 0 means death.
     pub current: f32,
     /// Maximum health points.
     pub max: f32,
+    /// Current health conditions.
+    pub conditions: Vec<HealthCondition>,
 }
 
 /// Marker component for dead entities pending processing/despawn.
@@ -60,11 +69,25 @@ impl Default for Health {
         Self {
             current: 100.0,
             max: 100.0,
+            conditions: Vec::new(),
         }
     }
 }
 
 impl Health {
+    /// Checks if the entity has a specific health condition.
+    #[must_use]
+    pub fn has_condition(&self, condition: HealthCondition) -> bool {
+        self.conditions.contains(&condition)
+    }
+
+    /// Adds a health condition to the entity if they don't already have it.
+    pub fn add_condition(&mut self, condition: HealthCondition) {
+        if !self.has_condition(condition) {
+            self.conditions.push(condition);
+        }
+    }
+
     /// Returns true if health is greater than 0.
     ///
     /// # Examples

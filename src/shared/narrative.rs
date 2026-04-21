@@ -12,9 +12,7 @@ pub enum NarrativeError {
     MissingContext(String),
     #[error("📖 Fragment '{0}' has no options defined")]
     MissingFragmentOptions(String),
-    #[error(
-        "📖 No lore files found in `{0}`. Expected TEMPLATES.md or FRAGMENTS.md"
-    )]
+    #[error("📖 No lore files found in `{0}`. Expected TEMPLATES.md or FRAGMENTS.md")]
     NoLoreFiles(String),
     #[error("📖 Template not found (`{0}`)")]
     TemplateNotFound(String),

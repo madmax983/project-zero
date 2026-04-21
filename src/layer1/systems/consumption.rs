@@ -97,6 +97,8 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::radioactive::sickness_damage_system.after(decay_needs_system),
             pressure_damage_system.after(decay_needs_system),
             crate::layer1::needs::starvation_damage_system.after(decay_needs_system),
+            crate::layer1::biology::rust_lung::rust_lung_degradation_system
+                .after(decay_needs_system),
             crate::layer1::atmosphere::apply_smog_damage_system.after(decay_needs_system),
             crate::layer1::tech::legacy_code::update_bloat_system.after(decay_needs_system),
             crate::layer1::health::check_health_status_system

@@ -357,7 +357,6 @@ mod tests {
 
         // Assert: Input context is DirectControl
 
-
         // Act: Trigger unpossess
         world
             .resource_mut::<Events<UnpossessEvent>>()
@@ -366,8 +365,6 @@ mod tests {
 
         // Assert: Pop no longer has Possessed
         assert!(!world.entity(pop).contains::<Possessed>());
-
-
     }
 
     #[test]

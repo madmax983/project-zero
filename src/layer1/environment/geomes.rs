@@ -100,6 +100,7 @@ mod tests {
                 Health {
                     current: 100.0,
                     max: 100.0,
+                    conditions: Vec::new(),
                 },
                 GridPosition { x: 6, y: 5 }, // Standing on the SporeBloom tile
             ))

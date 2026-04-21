@@ -224,10 +224,7 @@ mod tests {
                     ..Default::default()
                 },
                 GridPosition { x: 2, y: 0 },
-                Health {
-                    current: 100.0,
-                    max: 100.0,
-                },
+                Health { current: 100.0, max: 100.0, conditions: Vec::new(), },
             ))
             .id();
 
@@ -240,10 +237,7 @@ mod tests {
         );
 
         // Reset Enemy Health
-        world.entity_mut(enemy).insert(Health {
-            current: 100.0,
-            max: 100.0,
-        });
+        world.entity_mut(enemy).insert(Health { current: 100.0, max: 100.0, conditions: Vec::new(), });
 
         // Reset Cooldown
         for mut state in world.query::<&mut CombatState>().iter_mut(&mut world) {

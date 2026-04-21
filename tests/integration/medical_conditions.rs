@@ -26,10 +26,7 @@ mod tests {
         // Spawn Patient with CryoTrauma (and full HP)
         let patient = world
             .spawn((
-                Health {
-                    current: 100.0,
-                    max: 100.0,
-                },
+                Health { current: 100.0, max: 100.0, conditions: Vec::new(), },
                 AssignedTo {
                     entity: hospital,
                     assignment_type: AssignmentType::Patient,
@@ -69,10 +66,7 @@ mod tests {
         // Spawn Patient with RadiationSickness (and full HP)
         let patient = world
             .spawn((
-                Health {
-                    current: 100.0,
-                    max: 100.0,
-                },
+                Health { current: 100.0, max: 100.0, conditions: Vec::new(), },
                 AssignedTo {
                     entity: hospital,
                     assignment_type: AssignmentType::Patient,

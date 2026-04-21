@@ -4,9 +4,7 @@ mod tests {
     use scale::layer1::beauty::{
         apply_beauty_effects_system, update_beauty_grid_system, BeautyGrid, BeautySource,
     };
-    use scale::layer1::building::{
-        spawn_building, Building, BuildingType, MaterialType,
-    };
+    use scale::layer1::building::{spawn_building, Building, BuildingType, MaterialType};
     use scale::layer1::map::GridPosition;
     use scale::layer1::needs::Needs;
     use scale::layer1::pop::Pop;

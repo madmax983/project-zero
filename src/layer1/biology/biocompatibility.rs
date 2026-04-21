@@ -106,6 +106,7 @@ mod tests {
                 Health {
                     current: 100.0,
                     max: 100.0,
+                    conditions: Vec::new(),
                 },
                 GridPosition { x: 0, y: 0 },
             ))
@@ -136,6 +137,7 @@ mod tests {
                 Health {
                     current: 100.0,
                     max: 100.0,
+                    conditions: Vec::new(),
                 },
                 GridPosition { x: 0, y: 0 },
             ))
@@ -167,6 +169,7 @@ mod tests {
                 Health {
                     current: 100.0,
                     max: 100.0,
+                    conditions: Vec::new(),
                 },
                 GridPosition { x: 0, y: 0 },
                 {
@@ -201,6 +204,7 @@ mod tests {
                 Health {
                     current: 100.0,
                     max: 100.0,
+                    conditions: Vec::new(),
                 },
                 GridPosition { x: 0, y: 0 },
                 {

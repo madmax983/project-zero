@@ -78,6 +78,7 @@ pub fn spawn_crashed_ship_system(
                 Health {
                     current: 100.0,
                     max: 100.0,
+                    conditions: Vec::new(),
                 },
                 YieldsOnMine(vec![ResourceType::Scrap]),
                 GridPosition {
@@ -186,6 +187,7 @@ mod tests {
                 Health {
                     current: 100.0,
                     max: 100.0,
+                    conditions: Vec::new(),
                 },
             ))
             .id();
@@ -229,6 +231,7 @@ mod tests {
                 Health {
                     current: 10.0,
                     max: 100.0,
+                    conditions: Vec::new(),
                 }, // Low health for easy mining
                 YieldsOnMine(vec![ResourceType::Scrap]),
                 GridPosition { x: 5, y: 5 },

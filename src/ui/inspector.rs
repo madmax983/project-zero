@@ -20,13 +20,13 @@ use crate::experimental::bureaucratic_martyrdom::Martyrdom;
 use crate::experimental::meme_plague::{MemeCarrier, MemeType};
 use crate::layer1::biography::Biography;
 use crate::layer1::day_night::DayNightCycle;
-use crate::layer1::psychology::dreams::DreamJournal;
 use crate::layer1::energy::load_limits::PowerCable;
 use crate::layer1::energy::{Battery, PowerConsumer, PowerSource};
 use crate::layer1::environment::light_pollution::SkyGlow;
 use crate::layer1::fauna::NocturnalFauna;
 use crate::layer1::observatory::Observatory;
 use crate::layer1::olfactory::{ScentEmitter, ScentMap};
+use crate::layer1::psychology::dreams::DreamJournal;
 use crate::layer1::purity::PurityMap;
 use crate::layer1::rituals::{MachineSpirit, Quirk, QuirkType};
 use crate::layer1::social::old_guard::{Arrival, Generation};
@@ -44,8 +44,8 @@ use crate::layer1::{
     ActionType, Biocompatibility, ColonyResources, Farm, GridPosition, Housing, PopAction,
     TerrainGrid,
 };
-use crate::ui::selection::{Selection, SelectionTarget};
 use crate::ui::map::{get_building_color, get_terrain_char, get_terrain_color};
+use crate::ui::selection::{Selection, SelectionTarget};
 
 /// Helper to format `ActionType` into an icon and label.
 const fn format_action_type(action: ActionType) -> (&'static str, &'static str, Color) {
@@ -1764,8 +1764,8 @@ mod tests {
 
     #[test]
     fn test_inspector_render_dream() {
-        use crate::layer1::psychology::dreams::{Dream, DreamJournal};
         use crate::layer1::pop::PopName;
+        use crate::layer1::psychology::dreams::{Dream, DreamJournal};
 
         let mut world = World::new();
         world.insert_resource(Selection::default());

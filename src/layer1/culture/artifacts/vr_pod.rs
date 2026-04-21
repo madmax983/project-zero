@@ -84,6 +84,7 @@ mod tests {
                 Health {
                     current: 100.0,
                     max: 100.0,
+                    conditions: Vec::new(),
                 },
                 Needs {
                     hunger: 1.0,
@@ -120,6 +121,7 @@ mod tests {
                 Health {
                     current: 100.0,
                     max: 100.0,
+                    conditions: Vec::new(),
                 },
                 Needs {
                     hunger: 0.99,

@@ -77,7 +77,7 @@ pub fn replace_pop_with_mimic(world: &mut World, target: Entity) -> Entity {
             pos = Some(*p);
         }
         if let Some(h) = entity_ref.get::<Health>() {
-            health = Some(*h);
+            health = Some(h.clone());
         }
     }
 
@@ -186,6 +186,7 @@ mod tests {
                 Health {
                     current: 100.0,
                     max: 100.0,
+                    conditions: Vec::new(),
                 },
                 GridPosition { x: 10, y: 10 },
             ))

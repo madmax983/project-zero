@@ -18,6 +18,7 @@ fn test_combat_execution_system_attacks_in_range() {
             Health {
                 current: 100.0,
                 max: 100.0,
+                conditions: Vec::new(),
             },
         ))
         .id();
@@ -68,6 +69,7 @@ fn test_combat_execution_system_chases_out_of_range() {
             Health {
                 current: 100.0,
                 max: 100.0,
+                conditions: Vec::new(),
             },
         ))
         .id();
@@ -118,6 +120,7 @@ fn test_combat_execution_blocked_by_hit_stop() {
             Health {
                 current: 100.0,
                 max: 100.0,
+                conditions: Vec::new(),
             },
         ))
         .id();
@@ -263,6 +266,7 @@ fn test_combat_unarmed_defaults() {
             Health {
                 current: 100.0,
                 max: 100.0,
+                conditions: Vec::new(),
             },
         ))
         .id();

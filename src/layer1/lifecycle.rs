@@ -244,6 +244,7 @@ mod tests {
                 Health {
                     current: 10.0,
                     max: 10.0,
+                    conditions: Vec::new(),
                 },
             ))
             .id();
