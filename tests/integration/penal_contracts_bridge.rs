@@ -75,7 +75,11 @@ fn test_prisoner_death_chronicle_bridge() {
         .spawn((
             Pop,
             PrisonerOf(faction),
-            Health { current: 0.0, max: 100.0, conditions: Vec::new(), },
+            Health {
+                current: 0.0,
+                max: 100.0,
+                conditions: Vec::new(),
+            },
         ))
         .id();
 

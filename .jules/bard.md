@@ -4,3 +4,10 @@
 ## 2024-04-18 - Missing Examples
 **Confusion:** Functions and structs added previously were missing clear examples.
 **Clarification:** Added `# Examples` sections with executable tests for `assign_sleep_permits_system` and others to clearly show usage patterns.
+## 2024-04-21 - Module Concepts
+**Confusion:** The `religion`, `infrastructure`, and `diplomacy` modules were entirely missing module-level documentation (`//!`), making it hard for users to understand their high-level purpose without reading the code.
+**Clarification:** Added conceptual overviews using `//!` at the top of these modules.
+
+## 2024-04-21 - Doctest Examples
+**Confusion:** Functions in `prophet_of_the_engine.rs` (like `prophet_vision_system`) lacked executable doctests, making it unclear how they integrated with the Bevy ECS and what components were required.
+**Clarification:** Added detailed `# Examples` sections with compiling and asserting `///` doctests for `prophet_vision_system`, `cult_conversion_system`, and `protest_on_dismantle_system`.

@@ -31,7 +31,11 @@ fn test_explosion_damages_pops() {
     let pop = world
         .spawn((
             Pop,
-            Health { current: 100.0, max: 100.0, conditions: Vec::new(), },
+            Health {
+                current: 100.0,
+                max: 100.0,
+                conditions: Vec::new(),
+            },
             pop_pos,
         ))
         .id();
