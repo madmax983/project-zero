@@ -54,6 +54,10 @@ pub fn run_simulation_tick(world: &mut World) {
         world.init_resource::<crate::layer1::social::old_guard::Demographics>();
     }
 
+    if !world.contains_resource::<crate::layer1::diplomacy::factions::rivals::TerritoryGrid>() {
+        world.init_resource::<crate::layer1::diplomacy::factions::rivals::TerritoryGrid>();
+    }
+
     if !world.contains_resource::<BuildingMap>() {
         world.init_resource::<BuildingMap>();
     }
@@ -383,6 +387,8 @@ fn register_simulation_core_systems(schedule: &mut Schedule) {
     schedule.add_systems((
         crate::layer1::law::embassy::evaluate_diplomatic_crime_system,
         crate::layer1::law::embassy::process_diplomatic_arrest_system,
+        crate::layer1::diplomacy::factions::rivals::rival_colony_expansion_system,
+        crate::layer1::diplomacy::factions::rivals::rival_resource_drain_system,
     ));
 
     schedule.add_systems((crate::layer2::weather::weather_movement_system,));

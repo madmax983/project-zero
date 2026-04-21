@@ -427,3 +427,4 @@
 - [x] `862` Ventilation Networks — `specs/862-ventilation-networks.md` — completed 2026-06-02
 - [x] `INT-862` Integration: Ventilation Networks -> Atmosphere Diffusion — completed 2026-06-02
 - [x] `1094` Ecological Succession — `specs/1094-ecological-succession.md` — completed 2026-02-01
+- [x] `972` Corporate Rivals — `specs/972-corporate-rivals.md` — completed 2026-04-21
