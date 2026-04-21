@@ -138,6 +138,8 @@ pub enum ItemType {
     Rations,
     /// Industrial waste.
     Waste,
+    /// A mask that protects against dust and gas.
+    Rebreather,
     /// A corpse of a Pop.
     Corpse(Entity),
     /// A building permit document.

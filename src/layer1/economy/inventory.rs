@@ -49,6 +49,11 @@ impl Inventory {
         self.items.push(item);
         true
     }
+
+    /// Checks if the inventory contains an item of the specified type.
+    pub fn has_item(&self, item_type: ItemType) -> bool {
+        self.items.iter().any(|item| item.item_type == item_type)
+    }
 }
 
 #[cfg(test)]

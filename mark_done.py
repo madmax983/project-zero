@@ -1,19 +1,22 @@
-import re
-
-# Update IN_PROGRESS.md
 with open("design/IN_PROGRESS.md", "r") as f:
-    in_prog = f.read()
+    in_progress = f.readlines()
+with open("COMPLETED.md", "r") as f:
+    completed = f.readlines()
 
-in_prog = re.sub(r"- \[ \] `965` The Vertical Schism — `specs/965-the-vertical-schism.md` — claimed 2026-02-01\n", "", in_prog)
+new_in_progress = []
+found = False
+for line in in_progress:
+    if "1122" in line:
+        completed.append("- [x] `1122` The Rust-Lung Epidemic — `specs/1122-rust-lung-epidemic.md` — completed 2026-02-01\n")
+        found = True
+    else:
+        new_in_progress.append(line)
+
+if not found:
+    completed.append("- [x] `1122` The Rust-Lung Epidemic — `specs/1122-rust-lung-epidemic.md` — completed 2026-02-01\n")
 
 with open("design/IN_PROGRESS.md", "w") as f:
-    f.write(in_prog)
+    f.writelines(new_in_progress)
+with open("COMPLETED.md", "w") as f:
+    f.writelines(completed)
 
-# Update COMPLETED.md
-with open("design/COMPLETED.md", "r") as f:
-    comp = f.read()
-
-comp += "\n- [x] `965` The Vertical Schism — `specs/965-the-vertical-schism.md` — completed 2026-02-01\n"
-
-with open("design/COMPLETED.md", "w") as f:
-    f.write(comp)

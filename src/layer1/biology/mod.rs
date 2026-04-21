@@ -18,6 +18,7 @@ pub mod medical;
 #[cfg(test)]
 #[allow(missing_docs)]
 pub mod medical_triage_tests;
+pub mod rust_lung;
 
 pub use addiction::*;
 pub use agony_extract::*;
@@ -32,3 +33,4 @@ pub use grafting::*;
 pub use gut_biome::*;
 pub use health::*;
 pub use medical::*;
+pub use rust_lung::*;

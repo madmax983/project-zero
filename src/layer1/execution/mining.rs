@@ -2,7 +2,10 @@ use bevy_ecs::prelude::*;
 use rand::Rng;
 use ratatui::style::Color;
 
+use crate::layer1::biology::rust_lung::RustLung;
+use crate::layer1::economy::inventory::Inventory;
 use crate::layer1::environment::orbital_crossfire::{mine_scrap, ImpactSite};
+use crate::layer1::items::ItemType;
 use crate::layer1::map::{GridPosition, ScreenShake};
 use crate::layer1::mother_lode::MotherLode;
 use crate::layer1::particles::{spawn_moving_particle, spawn_particle};
@@ -59,6 +62,23 @@ pub fn handle_mining_work(
         crate::layer1::geology::add_seismic_stress(world, p, 1.0);
     }
 
+    // Apply RustLung if mining low purity ore (we approximate low purity based on PurityMap or assume it's checked here)
+    if let Some(p) = pos {
+        let purity = world
+            .get_resource::<crate::layer1::purity::PurityMap>()
+            .map_or(0.2, |map| map.get(p.x, p.y));
+
+        // If purity is low (e.g. < 0.5) it counts as low purity.
+        if purity < 0.5 {
+            let has_rebreather = world
+                .get::<Inventory>(worker_entity)
+                .is_some_and(|inv| inv.has_item(ItemType::Rebreather));
+
+            if !has_rebreather {
+                world.entity_mut(worker_entity).insert(RustLung);
+            }
+        }
+    }
     let is_mother_lode = world.get::<MotherLode>(entity).is_some();
     if is_mother_lode {
         process_mother_lode(world, entity, effective_work, pos);
@@ -263,5 +283,60 @@ fn handle_chopping_visuals(world: &mut World, entity: Entity, pos: GridPosition,
 fn trigger_shake(world: &mut World, intensity: f32) {
     if let Some(mut shake) = world.get_resource_mut::<ScreenShake>() {
         shake.trigger(intensity);
+    }
+}
+
+#[cfg(test)]
+mod rust_lung_tests {
+    use super::*;
+    use crate::layer1::biology::health::Health;
+    use crate::layer1::biology::rust_lung::RustLung;
+    use crate::layer1::economy::inventory::Inventory;
+    use crate::layer1::pop::Pop;
+    use crate::layer1::purity::PurityMap;
+    use bevy::prelude::{App, MinimalPlugins};
+
+    #[test]
+    fn test_rust_lung_accumulation_from_mining() {
+        let mut app = App::new();
+        app.add_plugins(MinimalPlugins);
+
+        // Setup world map with low purity
+        let mut map = PurityMap::new(1);
+        map.set_override(5, 5, 0.1); // Low purity
+        app.world_mut().insert_resource(map);
+
+        app.world_mut()
+            .insert_resource(crate::layer1::nature::terrain::TerrainGrid {
+                width: 10,
+                height: 10,
+                tiles: vec![crate::layer1::nature::terrain::TerrainType::Rock; 100],
+            });
+
+        // Also needs structural integrity RoofGrid
+        app.world_mut().insert_resource(
+            crate::layer1::physics::structural_integrity::RoofGrid::new(10, 10),
+        );
+
+        // Setup pop WITHOUT Rebreather
+        let pop_id = app
+            .world_mut()
+            .spawn((Pop, Health::default(), Inventory::default()))
+            .id();
+
+        // Spawn a designation entity
+        let designation = app.world_mut().spawn(GridPosition { x: 5, y: 5 }).id();
+
+        // Simulate mining low purity ore without rebreather
+        handle_mining_work(
+            &mut app.world_mut(),
+            designation,
+            pop_id,
+            1.0,
+            Some(GridPosition { x: 5, y: 5 }),
+        );
+
+        // Check if pop has RustLung
+        assert!(app.world().get::<RustLung>(pop_id).is_some());
     }
 }

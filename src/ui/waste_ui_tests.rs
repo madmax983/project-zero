@@ -1,6 +1,6 @@
 use crate::layer1::resources::ColonyResources;
-use crate::ui::selection::Selection;
 use crate::ui::inspector::render_inspector;
+use crate::ui::selection::Selection;
 use bevy_ecs::prelude::*;
 use ratatui::backend::TestBackend;
 use ratatui::Terminal;

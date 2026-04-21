@@ -13,9 +13,7 @@
 //! Turns a negative mental break into a chaotic, slightly beneficial side-effect that
 //! physically scars the planet with the colony's dreams.
 
-use crate::layer1::building::{
-    spawn_building, BuildingType, MaterialType, OccupiedTiles,
-};
+use crate::layer1::building::{spawn_building, BuildingType, MaterialType, OccupiedTiles};
 use crate::layer1::map::GridPosition;
 use crate::layer1::pop::Pop;
 use crate::layer1::terrain::{TerrainGrid, TerrainType};
