@@ -5576,8 +5576,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Improvised Tools
-
+## Improvised Tools [SPECCED]
 **Layer:** 1
 
 **Fantasy:** The desperation of using a rock when the hammer breaks.
