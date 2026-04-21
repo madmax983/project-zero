@@ -6203,3 +6203,60 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "The hum of the [SONIC_TURRET_NAME] is driving us mad. [YEAR]. Our own people report [NAUSEA_SYMPTOM]."
 - "[YEAR]: Friendly fire from the [SONIC_TURRET_NAME]. The crew suffers [NAUSEA_SYMPTOM] despite the soundproofing."
 - "We cannot sleep. The [SONIC_TURRET_NAME] vibrates through the floor, causing [NAUSEA_SYMPTOM]. [YEAR]."
+
+
+## Template: TOURIST_ARRIVAL
+**Generates:** Play event (Chronicle)
+**Slots:** [COLONY], [YEAR], [TOURIST_NAME], [ORIGIN], [WEALTH]
+**Patterns:**
+- "[YEAR]: The cryogenic sleeper ship arrived. [TOURIST_NAME] of [ORIGIN] awoke to see [COLONY]. They brought [WEALTH] and demanded a view."
+- "[TOURIST_NAME] traveled from [ORIGIN], sleeping for decades, just to walk the streets of [COLONY] in [YEAR]."
+- "A tourist from [ORIGIN] disembarked today. [TOURIST_NAME]. They look at us like we are exhibits."
+
+## Template: IMPACT_STRIKE
+**Generates:** Play event (Chronicle)
+**Slots:** [COLONY], [YEAR], [IMPACT_SIZE], [DAMAGE]
+**Patterns:**
+- "[YEAR]: The sky fell on [COLONY]. A [IMPACT_SIZE] object struck the surface, causing [DAMAGE]."
+- "We watched the rock burn through the atmosphere. When it hit [COLONY], the ground shook and [DAMAGE] was recorded. Year [YEAR]."
+- "[YEAR]: An impact event. The crater reminds us of the [DAMAGE] lost."
+
+## Template: THERMAL_INVERSION
+**Generates:** Play event (Chronicle)
+**Slots:** [COLONY], [YEAR], [SMOG_LEVEL], [CASUALTIES]
+**Patterns:**
+- "[YEAR]: The sky turned yellow over [COLONY]. The air was thick, trapping the smoke. [CASUALTIES] souls suffocated in the smog."
+- "A thermal inversion trapped the industrial exhaust over [COLONY]. We wore masks, but still lost [CASUALTIES]."
+- "[YEAR]: The air stood still. The smog settled over [COLONY]. [CASUALTIES] names added to the memorial."
+
+## Template: VERTICAL_SCHISM
+**Generates:** Play event (Chronicle)
+**Slots:** [COLONY], [YEAR], [SKY_BORN_LEADER], [CORE_BORN_LEADER]
+**Patterns:**
+- "[YEAR]: Violence in the shafts. The Sky-Born, led by [SKY_BORN_LEADER], clashed with [CORE_BORN_LEADER]'s Core-Born in [COLONY]."
+- "The divide in [COLONY] became physical. Those who lived in the light fought those who lived in the deep. [YEAR]."
+- "[YEAR]: A brawl broke out between the high-altitude residents and the deep miners. [SKY_BORN_LEADER] blamed [CORE_BORN_LEADER]."
+
+## Template: MEGAFAUNA_MIGRATION
+**Generates:** Play event (Chronicle)
+**Slots:** [COLONY], [YEAR], [FAUNA_TYPE]
+**Patterns:**
+- "[YEAR]: A herd of [FAUNA_TYPE] passed through the outskirts of [COLONY]. The ground trembled."
+- "The [FAUNA_TYPE] migration disrupted operations in [COLONY]. We had to wait for them to pass. [YEAR]."
+- "[YEAR]: Sighted massive [FAUNA_TYPE] near [COLONY]. Reminders that we are guests here."
+
+## Template: VENT_INTRUSION
+**Generates:** Play event (Chronicle)
+**Slots:** [COLONY], [YEAR], [INTRUDER_TYPE], [SECURITY_BREACH]
+**Patterns:**
+- "[YEAR]: The grates were found open. [INTRUDER_TYPE] bypassed the locks in [COLONY], leading to [SECURITY_BREACH]."
+- "Something crawled through the vents of [COLONY]. They discovered [INTRUDER_TYPE] inside the secure zone. [YEAR]."
+- "[YEAR]: A security flaw in the ventilation. [INTRUDER_TYPE] got in. Resulted in [SECURITY_BREACH]."
+
+## Template: OBSESSIVE_TINKERING
+**Generates:** Play event (Chronicle)
+**Slots:** [COLONY], [YEAR], [ENGINEER_NAME], [MACHINE], [OUTCOME]
+**Patterns:**
+- "[YEAR]: [ENGINEER_NAME] couldn't leave well enough alone. They dismantled the [MACHINE] in [COLONY]. Result: [OUTCOME]."
+- "An unauthorized modification to the [MACHINE] by [ENGINEER_NAME]. The outcome was [OUTCOME]. [YEAR]."
+- "[YEAR]: The genius of [ENGINEER_NAME] struck again. They tinkered with the [MACHINE] at [COLONY]. The result was [OUTCOME]."

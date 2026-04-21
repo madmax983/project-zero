@@ -7013,3 +7013,32 @@ Used for The Archaeological Contagion events. The ancient technology reverse-eng
 - fragile equipment
 - observation windows
 - light fixtures
+
+
+## Fragment Type: [TOURIST_ORIGIN]
+- the Core Worlds
+- a distant paradise
+- the Glittering Habitats
+- an unknown luxury cruiser
+- the Aristocracy
+
+## Fragment Type: [IMPACT_SIZE]
+- massive
+- city-killer
+- localized
+- devastating
+- glancing
+
+## Fragment Type: [INTRUDER_TYPE]
+- vermin
+- maintenance drones
+- an unauthorized spy
+- a small creature
+- parasitic growth
+
+## Fragment Type: [TINKERING_OUTCOME]
+- a permanent efficiency boost
+- total destruction of the machinery
+- a minor improvement
+- severe damage to the core
+- unexpected functionality
