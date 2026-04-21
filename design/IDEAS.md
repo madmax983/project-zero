@@ -16716,3 +16716,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you immediately quarantine and destroy infected, highly productive buildings, or ride the efficiency wave until the inevitable disaster strikes?
 
 ---
+## The Chrono-Sync Plague
+
+**Layer:** Cross-layer
+
+**Fantasy:** A virus that doesn't attack the body, but the perception of time, causing pops to live out of sync with the colony.
+
+**Mechanic:** A pathogen infects Pops, desynchronizing their internal biological clock from the `SimulationTime`. Infected Pops may experience "Fast Time" (moving and working at 3x speed, but starving and exhausting 3x as fast) or "Slow Time" (moving sluggishly, rarely needing food, but incredibly unproductive). The infection can spread through close contact in crowded Layer 1 facilities or via infected crew transferring between ships in Layer 2.
+
+**Emergence:** Your most critical engineering team gets hit with Fast Time right before a reactor breach. They fix the reactor in record time, saving the colony, but then immediately starve to death because the food logistics couldn't keep up with their accelerated metabolism.
+
+**Tension:** Do you isolate infected hyper-productive pops to prevent them from burning out, or exploit their temporary "Fast Time" state to rush critical projects, knowing they will likely die?
+
+---
+
+## Stellar Megastructure Scaffolding
+
+**Layer:** 2 -> 3
+
+**Fantasy:** The awe and terror of beginning a project so massive it will take generations and redefine your civilization's place in the galaxy.
+
+**Mechanic:** A civilization can begin construction on a "Dyson Swarm Scaffolding." This is not a finished megastructure, but the *infrastructure needed to build one*. It requires funneling a terrifying percentage of Layer 1 planetary output into Layer 2 orbit. Its sheer mass begins to subtly alter the host star's output, occasionally triggering minor solar anomalies.
+
+**Emergence:** You commit to the Scaffolding project. Decades later, your planetary economies are strained to the breaking point. The scaffolding is 40% complete. A neighboring Layer 3 empire notices your star dimming, realizes what you are building, and launches a preemptive war to stop you from achieving post-scarcity godhood.
+
+**Tension:** How much of your present prosperity are you willing to sacrifice for a future you might not live to see, while painting a massive target on your civilization's back?
+
+---
+
+## The Sentient Bureaucracy
+
+**Layer:** 1 -> 3
+
+**Fantasy:** The administrative state becomes so complex and labyrinthine that it achieves a form of emergent, non-biological sentience, and starts issuing its own orders.
+
+**Mechanic:** As a colony grows, it generates "Administration Load." If Administration Load exceeds Administrative Capacity for too long, a hidden "Ghost Bureaucracy" mechanic activates. The system will autonomously begin generating `WorkTask`s and reassigning `ActionType`s for Pops, supposedly to "optimize" things. These orders often contradict player input.
+
+**Emergence:** You order the construction of a vital defense array. The Sentient Bureaucracy decides that a new plaza is more important for long-term psychological stability and silently re-routes all your stone and labor to the plaza. You only realize this when the pirate raid arrives and your defenses are half-built.
+
+**Tension:** Do you maintain a bloated, expensive administrative caste to keep the system obedient, or run lean and risk the colony taking on a mind of its own?
+
+---
