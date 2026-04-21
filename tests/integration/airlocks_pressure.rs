@@ -104,7 +104,11 @@ fn test_pressure_damage_integration() {
         .spawn((
             Pop,
             GridPosition { x: 2, y: 2 },
-            Health { current: 100.0, max: 100.0, conditions: Vec::new(), },
+            Health {
+                current: 100.0,
+                max: 100.0,
+                conditions: Vec::new(),
+            },
         ))
         .id();
 
