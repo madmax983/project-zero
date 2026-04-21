@@ -5643,8 +5643,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Signature Spoofing
-
+## Signature Spoofing [SPECCED]
 **Layer:** 2
 
 **Fantasy:** The art of the bluff. An inflatable tank in space.
