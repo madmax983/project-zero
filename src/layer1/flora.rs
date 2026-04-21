@@ -272,6 +272,28 @@ pub fn process_flora_clearing(world: &mut World, designation_entity: Entity, wor
                     });
                 }
             }
+
+            // Integrator: Update EcologicalState to trigger pioneer species (FireWeed)
+            let mut state_entity = None;
+            for (e, p, _s) in world.query::<(Entity, &GridPosition, &mut EcologicalState)>().iter_mut(world) {
+                if p.x == pos.x && p.y == pos.y {
+                    state_entity = Some(e);
+                    break;
+                }
+            }
+            if let Some(e) = state_entity {
+                if let Some(mut state) = world.get_mut::<EcologicalState>(e) {
+                    state.cleared_recently = true;
+                }
+            } else {
+                world.spawn((
+                    EcologicalState {
+                        cleared_recently: true,
+                        climax_type: FloraType::Ironwood, // Default to Ironwood climax
+                    },
+                    pos,
+                ));
+            }
         }
         world.despawn(designation_entity);
     }

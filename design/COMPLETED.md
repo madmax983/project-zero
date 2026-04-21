@@ -7,6 +7,8 @@
 - [x] `775` The Quantum Famine — `specs/775-the-quantum-famine.md` — completed 2026-03-20
 - [x] `626` The Cartographer's Curse — `specs/626-cartographers-curse.md` — completed 2026-03-24
 # Completed Specs
+- [x] `1094` Ecological Succession — `specs/1094-ecological-succession.md` — completed 2026-08-01
+- [x] `INT-1094` Integration: Ecological Succession -> Flora Clearing — completed 2026-08-01
 - [x] `1117` Sonic Suppression — `specs/1117-sonic-suppression.md` — completed 2026-10-15
 - [x] `816` Accidental Gods — `specs/816-accidental-gods.md` — completed 2026-04-16
 - [x] `944` Cultural Ransom — `specs/944-cultural-ransom.md` — completed 2026-06-15
