@@ -9,12 +9,12 @@ use crossterm::{
 use ratatui::prelude::*;
 use scale::layer1::map::{update_camera_smooth, update_screen_shake_system};
 use scale::layer1::GlobalHitStop;
-use scale::shared::keyboard::{GameKeyEvent, GameMouseEvent};
 use scale::setup::setup_world;
-use scale::ui::input::{route_root_input, route_root_mouse_input};
+use scale::shared::keyboard::{GameKeyEvent, GameMouseEvent};
 use scale::shared::state::GameState;
 use scale::shared::time::{SimSpeed, SimulationTime, WallTime};
 use scale::simulation::run_simulation_tick;
+use scale::ui::input::{route_root_input, route_root_mouse_input};
 use scale::ui::map::update_render_cache;
 use scale::ui::render_with_shell;
 use scale::ui::shell::build_default_shell;

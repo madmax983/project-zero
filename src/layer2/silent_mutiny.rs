@@ -108,14 +108,14 @@ pub fn process_mutiny_effects_system(
         mutiny.progress += MUTINY_PROGRESSION_RATE;
 
         if let Some(ref mut cargo_comp) = cargo {
-            let keys: Vec<_> = cargo_comp.resources.keys().copied().collect();
-            for key in keys {
-                if let Some(amount) = cargo_comp.resources.get_mut(&key) {
-                    if *amount > 0.0 {
-                        let skim_amount = (*amount * MUTINY_SKIM_PERCENTAGE).min(MUTINY_SKIM_MAX);
-                        *amount -= skim_amount;
-                        mutiny.skimmed_resources += skim_amount;
-                    }
+            // ⚡ Bolt Optimization:
+            // Iterate directly over values_mut() to avoid an intermediate Vec allocation
+            // and eliminate repeated hash map lookups.
+            for amount in cargo_comp.resources.values_mut() {
+                if *amount > 0.0 {
+                    let skim_amount = (*amount * MUTINY_SKIM_PERCENTAGE).min(MUTINY_SKIM_MAX);
+                    *amount -= skim_amount;
+                    mutiny.skimmed_resources += skim_amount;
                 }
             }
         }

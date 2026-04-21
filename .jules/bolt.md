@@ -7,3 +7,6 @@
 ## Remove Vec::new() allocs in atmosphere
 **Learning:** Applying effects directly inside resource_scope instead of collecting into a Vec avoids unnecessary per-frame allocations
 **Action:** Use resource_scope to apply modifications immediately where possible.
+**[Optimizing Silent Mutiny Cargo Drain]
+**Learning:** Collecting HashMap keys into a `Vec` for mutation forces an unnecessary allocation and requires secondary lookups, which hurts performance when called often.
+**Action:** Use `.values_mut()` to iterate directly over the mutable values.

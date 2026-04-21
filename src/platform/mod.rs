@@ -4,7 +4,6 @@
 //! and WASM (ratzilla) backends translate into, allowing shared game logic to
 //! handle input without coupling to a specific backend.
 
-
 /// Native (crossterm) platform adapter.
 #[cfg(feature = "native")]
 pub mod native;
