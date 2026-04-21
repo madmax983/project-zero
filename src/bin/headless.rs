@@ -143,16 +143,14 @@ fn main() {
     });
     *world.resource_mut::<GameState>() = GameState::Running;
 
-    println!(
-        "{}",
-        "=======================================================".cyan()
-    );
-    println!("{}", "             SCALE Headless Dashboard".cyan().bold());
-    println!(
-        "{}",
-        "=======================================================".cyan()
+    print_dashboard_panel(
+        "SYSTEM",
+        "SCALE Headless Dashboard Initialized",
+        Some(comfy_table::Color::Cyan),
+        Some(comfy_table::Attribute::Bold),
     );
     println!("{}", "Type 'help' for commands, 'quit' to exit.\n".grey());
+
     print_status(&mut world);
     println!();
 
@@ -1194,8 +1192,11 @@ fn find_terrain(world: &mut World, terrain_name: &str, max_count: usize) {
         "water" | "w" => TerrainType::Water,
         "dirt" | "d" => TerrainType::Dirt,
         _ => {
-            println!(
-                "ERROR: Unknown terrain type: {terrain_name}. Try: rock, tree, grass, water, dirt"
+            print_dashboard_panel(
+                "ERROR",
+                &format!("Unknown terrain type: {terrain_name}. Try: rock, tree, grass, water, dirt"),
+                Some(comfy_table::Color::Red),
+                Some(comfy_table::Attribute::Bold),
             );
             return;
         }
@@ -1797,7 +1798,12 @@ fn print_bio(world: &mut World, target_id: u32) {
     }
 
     if !found {
-        println!("{}", format!("Pop with ID {target_id} not found.").red());
+        print_dashboard_panel(
+            "ERROR",
+            &format!("Pop with ID {target_id} not found."),
+            Some(comfy_table::Color::Red),
+            Some(comfy_table::Attribute::Bold),
+        );
     }
 }
 
