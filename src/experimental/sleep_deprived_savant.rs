@@ -95,6 +95,7 @@ mod tests {
                 Health {
                     current: 10.0,
                     max: 10.0,
+                    conditions: Vec::new(),
                 },
                 Speed {
                     current: 1.0,
@@ -140,6 +141,7 @@ mod tests {
                 Health {
                     current: 10.0,
                     max: 10.0,
+                    conditions: Vec::new(),
                 },
                 Speed {
                     current: 1.0,
@@ -172,6 +174,7 @@ mod tests {
                 Health {
                     current: 10.0,
                     max: 10.0,
+                    conditions: Vec::new(),
                 },
                 Speed {
                     current: 1.0,

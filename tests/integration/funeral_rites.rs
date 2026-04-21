@@ -33,6 +33,7 @@ mod integration_tests {
                 Health {
                     current: -10.0,
                     max: 100.0,
+                    conditions: Vec::new(),
                 }, // Dead
                 GridPosition { x: 5, y: 5 },
             ))

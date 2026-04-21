@@ -85,10 +85,7 @@ mod tests {
         // 3. Spawn Patient
         let patient = world
             .spawn((
-                Health {
-                    current: 50.0,
-                    max: 100.0,
-                },
+                Health { current: 50.0, max: 100.0, conditions: Vec::new(), },
                 AssignedTo {
                     assignment_type: AssignmentType::Patient,
                     entity: hospital_entity,
@@ -137,10 +134,7 @@ mod tests {
         // 2. Spawn Patient
         let patient = world
             .spawn((
-                Health {
-                    current: 50.0,
-                    max: 100.0,
-                },
+                Health { current: 50.0, max: 100.0, conditions: Vec::new(), },
                 AssignedTo {
                     assignment_type: AssignmentType::Patient,
                     entity: hospital_entity,
@@ -199,10 +193,7 @@ mod tests {
             .single(&world);
         let patient = world
             .spawn((
-                Health {
-                    current: 50.0,
-                    max: 100.0,
-                },
+                Health { current: 50.0, max: 100.0, conditions: Vec::new(), },
                 AssignedTo {
                     assignment_type: AssignmentType::Patient,
                     entity: hospital_entity,

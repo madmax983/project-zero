@@ -42,10 +42,7 @@ fn test_pop_death_adds_chronicle_entry() {
             Pop,
             PopName("TestSubject".to_string()),
             GridPosition::default(),
-            Health {
-                current: 0.0,
-                max: 100.0,
-            }, // Dead
+            Health { current: 0.0, max: 100.0, conditions: Vec::new(), }, // Dead
         ))
         .id();
 

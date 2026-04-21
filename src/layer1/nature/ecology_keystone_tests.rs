@@ -22,6 +22,7 @@ mod tests {
                 Health {
                     current: 10.0,
                     max: 10.0,
+                    conditions: Vec::new(),
                 },
                 GridPosition { x: 5, y: 5 },
             ))
@@ -37,6 +38,7 @@ mod tests {
                 Health {
                     current: 5.0,
                     max: 5.0,
+                    conditions: Vec::new(),
                 },
                 GridPosition { x: 6, y: 5 },
             ))
@@ -130,6 +132,7 @@ mod tests {
                 Health {
                     current: 5.0,
                     max: 5.0,
+                    conditions: Vec::new(),
                 },
             ))
             .id();

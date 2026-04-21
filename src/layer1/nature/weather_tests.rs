@@ -60,6 +60,7 @@ mod tests {
                 Health {
                     current: 100.0,
                     max: 100.0,
+                    conditions: Vec::new(),
                 },
                 GridPosition { x: 10, y: 10 },
             ))
@@ -94,6 +95,7 @@ mod tests {
                 Health {
                     current: 100.0,
                     max: 100.0,
+                    conditions: Vec::new(),
                 },
                 GridPosition { x: 10, y: 10 },
                 crate::layer1::items::Equipment {

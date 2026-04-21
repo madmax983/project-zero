@@ -123,10 +123,7 @@ mod tests {
             .spawn((
                 Flora::default(),
                 GridPosition { x: 0, y: 0 },
-                Health {
-                    current: 20.0,
-                    max: 20.0,
-                },
+                Health { current: 20.0, max: 20.0, conditions: Vec::new(), },
             ))
             .id();
 

@@ -522,6 +522,7 @@ mod tests {
                 Health {
                     current: 100.0,
                     max: 100.0,
+                    conditions: Vec::new(),
                 },
                 Equipment::default(),
                 GridPosition { x: 5, y: 5 },
@@ -583,6 +584,7 @@ mod tests {
                 Health {
                     current: 100.0,
                     max: 100.0,
+                    conditions: Vec::new(),
                 },
                 Equipment {
                     body: Some(coat),

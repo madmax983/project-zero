@@ -130,7 +130,7 @@ impl PopEvalData {
             hobby_type: item.hobby.map(|comp| comp.hobby_type),
             chemical_state: item.chemical.cloned(),
             is_memetic_carrier: item.memetic_carrier.is_some(),
-            health: item.health.copied(),
+            health: item.health.cloned(),
             job: item.job.copied(),
             insulation: 0.0,
             carrying_item_type: None,

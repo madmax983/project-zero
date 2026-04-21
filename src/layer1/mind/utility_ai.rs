@@ -367,7 +367,7 @@ impl<'a> PopDecider<'a> {
         );
 
         // Evaluate SeekMedicalCare
-        if let Some(health) = self.data.health {
+        if let Some(health) = &self.data.health {
             if health.current < health.max {
                 let urgency = (1.0 - (health.current / health.max)) * 2.0;
                 self.evaluator.evaluate_and_consider(

@@ -22,10 +22,7 @@ mod tests {
                 active: true,
             },
             GridPosition { x: 0, y: 0 },
-            Health {
-                current: 100.0,
-                max: 100.0,
-            },
+            Health { current: 100.0, max: 100.0, conditions: Vec::new(), },
         ));
 
         // Consumer at 0,1 (Connected via adjacency)
@@ -36,10 +33,7 @@ mod tests {
                 active: true,
             },
             GridPosition { x: 0, y: 1 },
-            Health {
-                current: 100.0,
-                max: 100.0,
-            },
+            Health { current: 100.0, max: 100.0, conditions: Vec::new(), },
         ));
 
         // Create a schedule to run systems

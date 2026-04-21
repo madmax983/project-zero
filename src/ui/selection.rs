@@ -224,7 +224,6 @@ pub fn observer_awareness_system(
             commands.entity(e).insert(Observed::default());
         }
     }
-
 }
 
 #[cfg(test)]

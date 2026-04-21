@@ -47,6 +47,7 @@ mod tests {
                 Health {
                     current: 50.0,
                     max: 100.0,
+                    conditions: Vec::new(),
                 },
                 AssignedTo {
                     assignment_type: AssignmentType::Patient,
@@ -65,6 +66,7 @@ mod tests {
                 Health {
                     current: 50.0,
                     max: 100.0,
+                    conditions: Vec::new(),
                 },
                 AssignedTo {
                     assignment_type: AssignmentType::Patient,
@@ -111,6 +113,7 @@ mod tests {
                 Health {
                     current: 10.0,
                     max: 100.0,
+                    conditions: Vec::new(),
                 },
                 AssignedTo {
                     assignment_type: AssignmentType::Patient,
@@ -126,6 +129,7 @@ mod tests {
                 Health {
                     current: 90.0,
                     max: 100.0,
+                    conditions: Vec::new(),
                 },
                 AssignedTo {
                     assignment_type: AssignmentType::Patient,

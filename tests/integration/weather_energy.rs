@@ -83,10 +83,7 @@ fn storm_increases_grid_load() {
         },
         GridPosition { x: 0, y: 0 },
         // Health needed for overload damage check internal logic
-        scale::layer1::health::Health {
-            current: 100.0,
-            max: 100.0,
-        },
+        scale::layer1::health::Health { current: 100.0, max: 100.0, conditions: Vec::new(), },
     ));
 
     // Consumer (8 Demand)

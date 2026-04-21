@@ -13,10 +13,7 @@ fn test_execute_attack_does_not_panic_on_despawned_entity() {
 
     // 2. Create Target
     let target = world
-        .spawn(Health {
-            current: 100.0,
-            max: 100.0,
-        })
+        .spawn(Health { current: 100.0, max: 100.0, conditions: Vec::new(), })
         .id();
 
     // 3. Despawn Attacker

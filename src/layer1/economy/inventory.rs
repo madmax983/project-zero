@@ -42,6 +42,12 @@ impl Inventory {
     /// Tries to add an item to the inventory.
     ///
     /// Returns `true` if added, `false` if inventory is full.
+    /// Checks if the inventory contains at least one item of the given type.
+    #[must_use]
+    pub fn has_item(&self, item_type: ItemType) -> bool {
+        self.items.iter().any(|i| i.item_type == item_type)
+    }
+
     pub fn try_add(&mut self, item: InventoryItem) -> bool {
         if self.items.len() >= self.capacity {
             return false;

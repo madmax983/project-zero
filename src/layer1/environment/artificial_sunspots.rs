@@ -145,6 +145,7 @@ mod tests {
         bundle.health = Health {
             current: 100.0,
             max: 100.0,
+            conditions: Vec::new(),
         };
 
         let pop = world
@@ -179,6 +180,7 @@ mod tests {
         bundle.health = Health {
             current: 100.0,
             max: 100.0,
+            conditions: Vec::new(),
         };
 
         let pop = world.spawn(bundle).id();

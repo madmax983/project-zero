@@ -144,7 +144,7 @@ pub fn combat_cooldown_system(mut query: Query<&mut CombatState>) {
 /// )).id();
 ///
 /// // 2. Setup Target
-/// let target = world.spawn(Health { current: 100.0, max: 100.0 }).id();
+/// let target = world.spawn(Health { current: 100.0, max: 100.0, conditions: Vec::new() }).id();
 ///
 /// // 3. Execute Attack
 /// execute_attack(&mut world, attacker, target);
@@ -442,6 +442,7 @@ mod tests {
                 Health {
                     current: 100.0,
                     max: 100.0,
+                    conditions: Vec::new(),
                 },
             ))
             .id();
@@ -497,6 +498,7 @@ mod tests {
             .spawn(Health {
                 current: 100.0,
                 max: 100.0,
+                conditions: Vec::new(),
             })
             .id();
 
@@ -547,6 +549,7 @@ mod tests {
             .spawn(Health {
                 current: 100.0,
                 max: 100.0,
+                conditions: Vec::new(),
             })
             .id();
 
@@ -675,6 +678,7 @@ mod tests {
             .spawn(Health {
                 current: 100.0,
                 max: 100.0,
+                conditions: Vec::new(),
             })
             .id();
 
@@ -740,6 +744,7 @@ mod tests {
             .spawn(Health {
                 current: 100.0,
                 max: 100.0,
+                conditions: Vec::new(),
             })
             .id();
 
@@ -791,6 +796,7 @@ mod tests {
             .spawn(Health {
                 current: 100.0,
                 max: 100.0,
+                conditions: Vec::new(),
             })
             .id();
 
