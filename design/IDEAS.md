@@ -16673,7 +16673,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you fire first and risk provoking a potential benefactor, or wait to see their intent and risk being annihilated by a first strike?
 
 ---
-## The Deep Crust Resonance
+## The Deep Crust Resonance [SPECCED]
 
 **Layer:** 1
 

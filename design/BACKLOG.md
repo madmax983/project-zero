@@ -1,6 +1,7 @@
 # Backlog
 
 ## High Priority
+- [ ] `1132` The Deep Crust Resonance — `specs/1132-deep-crust-resonance.md`
 - [ ] `1122` The Rust-Lung Epidemic — `specs/1122-rust-lung-epidemic.md`
 - [ ] `1120` Xenoflora Pet Craze — `specs/1120-xenoflora-pet-craze.md`
 
