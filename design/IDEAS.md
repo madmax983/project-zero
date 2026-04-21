@@ -5589,8 +5589,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Hypno-Learning
-
+## Hypno-Learning [SPECCED]
 **Layer:** 1
 
 **Fantasy:** "I know Kung Fu."
