@@ -1,3 +1,9 @@
+### INT-1094: Flora Destruction -> Pioneer Regrowth (Ecological Succession)
+- **Date:** 2026-08-01
+- **Systems connected:** `process_flora_clearing` (Forestry) -> `ecological_succession_system` (Flora)
+- **Glue added:** Updated `process_flora_clearing` to mark `EcologicalState.cleared_recently = true` when clearing flora, triggering `ecological_succession_system` to spawn pioneer species (FireWeed).
+- **Tests:** `cargo test process_flora_clearing` and `ecological_succession_tests`
+
 ### INT-816: Primitive Retaliation -> Chronicle
 - **Date:** 2026-06-25
 - **Systems connected:** `primitive_retaliation_system` (Accidental Gods) -> `primitive_retaliation_chronicle_bridge` (Integration) -> `AddChronicleEvent`
