@@ -16756,3 +16756,55 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you maintain a bloated, expensive administrative caste to keep the system obedient, or run lean and risk the colony taking on a mind of its own?
 
 ---
+## Junk Orbit Shadow Economy
+
+**Layer:** 2 -> 1
+
+**Fantasy:** The cast-offs of orbital megaprojects create a thriving, unsanctioned underclass that lives in the debris.
+
+**Mechanic:** Debris from destroyed ships or megastructure construction gathers in a specific "Junk Orbit" node. Pops with low morale or from marginalized factions may migrate there, forming a black market hub that produces illicit goods but lowers Layer 1 planetary security.
+
+**Emergence:** You destroy an invading fleet, and the resulting debris creates a boom town in orbit. The boom town then starts smuggling high-tech weapons to rebels on the surface.
+
+**Tension:** Do you clear the junk orbit at great expense to maintain order, or tolerate the shadow economy for access to cheap, illegal resources?
+
+---
+## Cultural Petrification
+
+**Layer:** 1
+
+**Fantasy:** A society becomes so obsessed with preserving its past that it loses the ability to innovate or adapt to the future.
+
+**Mechanic:** If a colony maintains maximum stability and high "tradition" scores for generations, they gain massive passive buffs to morale but slowly lose the ability to research new technologies or change their `ActionType` preferences.
+
+**Emergence:** Your core world is an invincible utopian fortress, but when a new alien pathogen arrives, they refuse to wear hazmat suits or adopt new medical tech because it violates their ancient, perfected rituals.
+
+**Tension:** Do you artificially induce crises just to keep your civilization culturally flexible, or enjoy the stability of a petrified utopia until something completely new kills it?
+
+---
+## Brain Drain Migration
+
+**Layer:** Cross-layer
+
+**Fantasy:** The smartest people in the galaxy fleeing your oppressive regime to build a paradise for your enemies.
+
+**Mechanic:** Highly skilled Pops with maximum intelligence stats monitor the overall "freedom" and "living standards" of nearby factions (Layer 3 knowledge). If a neighboring empire offers a significantly better life, these Pops may steal transport ships and emigrate, immediately boosting the rival's tech.
+
+**Emergence:** You run a hyper-efficient military dictatorship and conquer half the sector, but all your top scientists defected to a tiny pacifist republic on the rim. Now that tiny republic just invented a superweapon because of your ex-scientists.
+
+**Tension:** Do you provide expensive luxuries and freedoms to keep your brightest minds, or lock down borders and accept the reduced productivity of a captive workforce?
+
+---
+## Accidental Terraforming
+
+**Layer:** 2 -> 1
+
+**Fantasy:** Your industrial hubris irreversibly changes the climate of a world, for better or worse, without you even trying.
+
+**Mechanic:** Extensive mining and industrial activity on Layer 1 generates atmospheric byproducts. Over decades, these byproducts alter the `AtmosphereGrid` and `PressureGrid`, permanently shifting the planet's biome type (e.g., from Arid to Toxic, or Ice to Tundra).
+
+**Emergence:** You establish a penal colony on an ice world just to mine rare earth metals. A century later, the industrial heat has melted the glaciers, creating a beautiful ocean world, and now the prisoners are demanding independence as a luxury resort.
+
+**Tension:** Do you throttle industrial output to preserve a delicate ecosystem, or run the factories hot and hope the resulting ecological collapse is manageable?
+
+---
