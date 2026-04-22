@@ -16807,3 +16807,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you throttle industrial output to preserve a delicate ecosystem, or run the factories hot and hope the resulting ecological collapse is manageable?
 
 ---
+## The Museum of the Fallen
+
+**Layer:** 1
+
+**Fantasy:** Honoring the failures and tragedies of your early colony becomes a source of later strength.
+
+**Mechanic:** A unique "Museum" building can only be constructed over the exact tiles where a major disaster occurred (e.g., mass starvation, structural collapse). It converts negative historical memories of Pops into a powerful "Resilience" mood buff.
+
+**Emergence:** You intentionally leave a collapsed section of your early base untouched for decades so you can eventually build a Museum there, turning an embarrassing failure into your colony's greatest cultural asset.
+
+**Tension:** Do you immediately bulldoze over tragedies to optimize space, or preserve the ruins for future cultural exploitation?
+
+---
+
+## Sentient Debris
+
+**Layer:** 2 -> 1
+
+**Fantasy:** The orbital garbage you ignored gains critical mass and self-organizes.
+
+**Mechanic:** If "Orbital Debris" nodes accumulate too much mass and contain enough advanced technology (e.g., destroyed AI cores), the debris field occasionally spawns a "Scrap Swarm" entity. It is not hostile, but it acts like a massive magnet, pulling up valuable refined metals from Layer 1 stockpiles to expand itself.
+
+**Emergence:** Your orbital defense grid is perfect, but a massive floating junkyard is systematically vacuuming up all the steel from your planetary foundries, forcing you to declare war on your own garbage.
+
+**Tension:** Do you spend resources aggressively cleaning up orbital debris, or risk it coalescing into a parasitic megastructure?
+
+---
+
+## Ecosystem Empathy
+
+**Layer:** 1
+
+**Fantasy:** Your Pops form a deep, possibly dangerous bond with the native flora and fauna.
+
+**Mechanic:** Pops working extensively in wilderness tiles (e.g., Hunters, Foragers) can develop an "Ecosystem Empathy" trait. These Pops gain mood buffs when near untouched nature but suffer severe trauma if nearby natural tiles are destroyed for development. If enough Pops gain the trait, they may form an "Ecofaction."
+
+**Emergence:** You try to clear a forest to build a much-needed hospital, but your entire agricultural workforce strikes and sabotages the construction equipment because they've bonded with the trees.
+
+**Tension:** Do you embrace the wilderness and limit your physical expansion, or crush the Ecofaction to industrialize, risking civil war?
+
+---
