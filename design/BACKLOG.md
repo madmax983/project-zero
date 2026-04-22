@@ -790,3 +790,4 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1136` The Sentient Bureaucracy — `specs/1136-sentient-bureaucracy.md`
 - [ ] `1137` Heroic Acts — `specs/1137-heroic-acts.md`
 - [ ] `1138` Organic Recycling — `specs/1138-organic-recycling.md`
+- [ ] `1139` Magnetic Reversal — `specs/1139-magnetic-reversal.md`
