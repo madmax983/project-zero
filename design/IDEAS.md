@@ -16848,3 +16848,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you embrace the wilderness and limit your physical expansion, or crush the Ecofaction to industrialize, risking civil war?
 
 ---
+
+## Orbital Ring Economy
+
+**Layer:** Cross-layer
+
+**Fantasy:** The incredible wealth and power of a space elevator, contrasted against the suffering of those trapped in the gravity well below.
+
+**Mechanic:** Building an Orbital Ring drastically reduces the cost of launching resources from Layer 1 to Layer 2 and generates massive trade income. However, it creates two distinct cultural tags: "Ring-Born" and "Gravity-Bound." The Ring-Born demand extreme luxury and refuse manual labor, while the Gravity-Bound suffer mood penalties from "Sky-Envy" and "Exploitation."
+
+**Emergence:** The Orbital Ring becomes so profitable that you neglect the surface colony. The Gravity-Bound miners go on strike, starving the Ring of raw materials. The Ring-Born governor demands you send in the military to force the miners to work, sparking a devastating civil war where the Ring threatens to drop kinetic strikes on the very people it relies on.
+
+**Tension:** The immense, empire-defining logistical advantage of the Ring vs. the inevitable, vicious class warfare and cultural schism it creates within your own population.
+
+---
+
+## The Machine Cult
+
+**Layer:** 1
+
+**Fantasy:** When survival is a miracle, the tools of survival become divine.
+
+**Mechanic:** During prolonged periods of high stress, extreme danger, or technological regression, Pops may form a "Machine Cult" around a specific, advanced piece of infrastructure (e.g., a Fusion Reactor, a Terraforming Spire, or an ancient Precursor Artifact). They begin treating the building as a holy site, occasionally offering it "sacrifices" (valuable refined resources) and refusing to allow secular engineers to perform maintenance on it.
+
+**Emergence:** Your colony is freezing, but the Machine Cult has claimed the central heating node. They keep it running at 150% efficiency through fanatical dedication and "blessings," saving the colony. But next year, they demand you sacrifice your entire stockpile of rare medical supplies to "appease the machine spirit," and if you refuse, they threaten to shut off the heat.
+
+**Tension:** Do you violently suppress the cult to regain rational control of your infrastructure, or do you play along and exploit their fanatical buffs, accepting the bizarre and costly demands they make?
+
+---
+
+## Celestial Tides
+
+**Layer:** 2
+
+**Fantasy:** The entire solar system is a clockwork machine, and sometimes the gears align to crush you or set you free.
+
+**Mechanic:** Planetary alignments and the positions of gas giants create temporary, predictable "Tidal Windows." During a window, travel between specific Layer 2 nodes is incredibly fast and cheap (like a natural slingshot). However, the massive gravitational pull also causes severe "Seismic Stress" on the Layer 1 colonies located on the affected planets.
+
+**Emergence:** You carefully plan a massive invasion fleet to launch during the "Grand Alignment" to save fuel. The fleet launches perfectly, catching the enemy off guard. However, the gravitational stress on your homeworld triggers a dormant super-volcano right beneath your capital city. You won the war, but your capital is now a sea of magma.
+
+**Tension:** Do you ruthlessly exploit the immense logistical advantages of the Celestial Tides, knowing it puts your surface colonies at extreme risk of natural disasters, or play it safe and ignore the alignment, paying exorbitant fuel costs?
+
+---
