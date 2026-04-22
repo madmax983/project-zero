@@ -16890,3 +16890,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you ruthlessly exploit the immense logistical advantages of the Celestial Tides, knowing it puts your surface colonies at extreme risk of natural disasters, or play it safe and ignore the alignment, paying exorbitant fuel costs?
 
 ---
+## Culinary Diplomacy Dependency
+
+**Layer:** Cross-layer
+
+**Fantasy:** A diplomatic relationship becomes entirely dependent on the export of a specific, culturally significant luxury food item from one of your colonies.
+
+**Mechanic:** A Layer 3 diplomatic pact with a rival empire gets tied to the steady supply of a Layer 1 resource (e.g., "Ambrosia Fruit"). If the colony stops producing it (due to blight, strike, or disaster), diplomatic relations immediately plummet, potentially triggering a war.
+
+**Emergence:** You experience a minor famine on a backwater agri-world. Normally not a big deal, but because the Galactic Emperor is addicted to their specific space-truffles, the minor famine accidentally sparks a massive interstellar war.
+
+**Tension:** Do you prioritize local colony survival during a crisis, or force the starving pops to keep farming the luxury export just to prevent the empire from being invaded?
+
+---
+
+## The Quarantine Breakers
+
+**Layer:** 1 -> 2
+
+**Fantasy:** Desperate people fleeing a plague world, carrying the infection to the stars.
+
+**Mechanic:** When a highly lethal plague breaks out on a Layer 1 colony, you might enact a planetary quarantine. However, Pops with high "survival" or "rebellious" traits will attempt to hijack grounded ships and break the blockade. If they escape to the Layer 2 system map, they become "Plague Ships" that infect any node they land on.
+
+**Emergence:** You try to contain an outbreak by locking down the spaceport, but the panicked citizens riot, steal a freighter, and inadvertently infect your pristine capital world three systems over.
+
+**Tension:** Do you shoot down your own civilian ships fleeing a dying world to save the rest of the empire, or let them go and pray they don't land in populated systems?
+
+---
+
+## The Gravity Strike
+
+**Layer:** 1
+
+**Fantasy:** Workers weaponize the colony's life-support infrastructure as the ultimate bargaining chip.
+
+**Mechanic:** In orbital or low-gravity colonies, disgruntled Pops working in the Artificial Gravity or Life Support maintenance sectors can initiate a "Gravity Strike." They deliberately shut down the artificial gravity grid or reduce oxygen levels in specific upper-class residential sectors to extort better living conditions or political changes.
+
+**Emergence:** The miners are tired of bad pay, so they just turn off gravity in the governor's mansion. The governor's prized xenoflora collection floats away and dies, and the ensuing political scandal causes a regime change.
+
+**Tension:** Do you give in to the strike demands quickly, or send in armed security in zero-G to forcibly restart the life support systems before the colony suffocates?
+
+---
