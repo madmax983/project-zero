@@ -5711,7 +5711,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Organic Recycling
+## Organic Recycling [SPECCED]
 
 **Layer:** 1
 
