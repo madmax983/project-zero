@@ -47,8 +47,8 @@ pub mod navigation;
 pub mod sensor_ambiguity;
 pub mod skyhooks;
 
-pub mod rogue_planets;
 pub mod megastructure;
+pub mod rogue_planets;
 pub mod weather;
 pub use weather::*;
 pub mod orbit;

@@ -140,7 +140,6 @@ mod tests {
             .spawn((
                 Beanstalk {
                     state: BeanstalkState::Operational,
-                    ..default()
                 },
                 GridPosition { x: 10, y: 10 },
             ))
@@ -153,8 +152,8 @@ mod tests {
                 assigned_beanstalk: beanstalk_entity,
             },
             Morale {
+                modifiers: vec![],
                 value: 0.20,
-                ..default()
             }, // Below threshold for Cable Lock (30.0%)
         ));
 
@@ -179,7 +178,6 @@ mod tests {
             .spawn((
                 Beanstalk {
                     state: BeanstalkState::CableLock,
-                    ..default()
                 },
                 GridPosition { x: 10, y: 10 },
             ))
@@ -192,8 +190,8 @@ mod tests {
                 assigned_beanstalk: beanstalk_entity,
             },
             Morale {
+                modifiers: vec![],
                 value: 0.05,
-                ..default()
             }, // Below threshold for Sever (10.0%)
         ));
 
