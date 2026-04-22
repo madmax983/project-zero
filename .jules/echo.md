@@ -17,3 +17,8 @@
   * 🤦 **The Confusion:** "I got an error telling me to insert `MISSING_FRAGMENT_OPTIONS:FRAG` into the context. I don't even know what that means!"
   * 🕵️ **The Reality:** "Turns out the engine is using `NarrativeSegment::Error("MISSING_FRAGMENT_OPTIONS:{key}")` which gets blindly wrapped in a `MissingContext` error at the end of generation."
   * 💡 **The Fix:** "Add a specific `MissingFragmentOptions` error variant and stop using an internal error string that gives users the wrong advice."
+
+## 2024-04-22 - Getting Started example is broken
+🤦 **The Confusion:** "Tried to run the `nova` demo by copy-pasting the exact code block from `README.md` and running the provided instruction: `cargo run`. The compiler screamed at me with `error[E0432]: unresolved import OralTradition`."
+🕵️ **The Reality:** "Turns out I needed to add the `--features nova` flag to `cargo run`. The README has a big warning about enabling it, but the explicit 'Usage' instruction immediately below it just says `Run with: cargo run` which is misleading."
+💡 **The Fix:** "Change the usage instruction in the README from `**Run with:** cargo run` to `**Run with:** cargo run --features nova`."
