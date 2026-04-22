@@ -373,7 +373,10 @@ pub fn run_simulation_tick(world: &mut World) {
             world.init_resource::<Events<crate::layer1::logistics::beanstalk::BeanstalkEvent>>();
 
             let mut schedule = build_simulation_schedule();
-        schedule.add_systems((crate::layer1::logistics::beanstalk::beanstalk_morale_system, crate::layer1::logistics::beanstalk::beanstalk_collapse_system));
+            schedule.add_systems((
+                crate::layer1::logistics::beanstalk::beanstalk_morale_system,
+                crate::layer1::logistics::beanstalk::beanstalk_collapse_system,
+            ));
             world.add_schedule(schedule);
         }
     }
@@ -390,7 +393,6 @@ fn register_simulation_core_systems(schedule: &mut Schedule) {
     register_layer1_systems(schedule);
     // Black Market Terraforming
 
-
     schedule.add_systems(
         (
             crate::layer1::deep_crust_resonance::resonant_ore_exposure_system,
@@ -399,7 +401,6 @@ fn register_simulation_core_systems(schedule: &mut Schedule) {
         )
             .in_set(Layer1SystemSet::Economy),
     );
-
 
     schedule.add_systems((
         crate::layer1::law::embassy::evaluate_diplomatic_crime_system,

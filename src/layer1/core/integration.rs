@@ -1359,7 +1359,6 @@ pub struct PirateAmnestyEvent {
     pub fleet: Entity,
 }
 
-
 use crate::layer1::deep_crust_resonance::ExcavationEvent;
 
 /// INT-1132: Bridges Resonant Ore Excavation to AddChronicleEvent

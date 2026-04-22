@@ -1,5 +1,5 @@
-use bevy::prelude::*;
 use crate::layer3::diplomacy::proxy_wars::ThreatMap;
+use bevy::prelude::*;
 
 #[derive(Component, Debug, Default)]
 pub struct MegastructureScaffolding {
@@ -61,14 +61,12 @@ pub fn update_threat_from_megastructures_system(
 
 #[cfg(test)]
 mod tests {
-    use bevy::prelude::*;
     use crate::layer2::megastructure::{
-        MegastructureScaffolding, MegastructureProgressEvent,
-        process_megastructure_construction_system,
-        trigger_solar_anomaly_system,
-        SolarAnomalyEvent,
+        process_megastructure_construction_system, trigger_solar_anomaly_system,
+        MegastructureProgressEvent, MegastructureScaffolding, SolarAnomalyEvent,
     };
     use crate::layer3::diplomacy::proxy_wars::ThreatMap;
+    use bevy::prelude::*;
 
     #[test]
     fn test_megastructure_progress_increases_completion() {
@@ -77,10 +75,13 @@ mod tests {
         app.add_systems(Update, process_megastructure_construction_system);
         app.add_event::<MegastructureProgressEvent>();
 
-        let scaffolding_entity = app.world_mut().spawn(MegastructureScaffolding {
-            completion_percent: 10.0,
-            resources_invested: 1000,
-        }).id();
+        let scaffolding_entity = app
+            .world_mut()
+            .spawn(MegastructureScaffolding {
+                completion_percent: 10.0,
+                resources_invested: 1000,
+            })
+            .id();
 
         // Act
         app.world_mut()
@@ -94,7 +95,11 @@ mod tests {
         app.update();
 
         // Assert
-        let scaffolding = app.world().entity(scaffolding_entity).get::<MegastructureScaffolding>().unwrap();
+        let scaffolding = app
+            .world()
+            .entity(scaffolding_entity)
+            .get::<MegastructureScaffolding>()
+            .unwrap();
         assert_eq!(scaffolding.completion_percent, 12.5);
         assert_eq!(scaffolding.resources_invested, 1500);
     }
@@ -119,14 +124,20 @@ mod tests {
         let anomaly_events = app.world().resource::<Events<SolarAnomalyEvent>>();
         let mut cursor = anomaly_events.get_cursor();
         let events: Vec<_> = cursor.read(anomaly_events).collect();
-        assert!(!events.is_empty(), "A solar anomaly should have been triggered by the massive scaffolding.");
+        assert!(
+            !events.is_empty(),
+            "A solar anomaly should have been triggered by the massive scaffolding."
+        );
     }
 
     #[test]
     fn test_megastructure_generates_threat() {
         // Arrange
         let mut app = App::new();
-        app.add_systems(Update, crate::layer2::megastructure::update_threat_from_megastructures_system);
+        app.add_systems(
+            Update,
+            crate::layer2::megastructure::update_threat_from_megastructures_system,
+        );
 
         app.world_mut().spawn(MegastructureScaffolding {
             completion_percent: 20.0,
