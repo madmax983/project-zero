@@ -391,6 +391,7 @@ pub fn run_simulation_tick(world: &mut World) {
 fn register_simulation_core_systems(schedule: &mut Schedule) {
     // --- Register Core Layer 1 Systems ---
     register_layer1_systems(schedule);
+
     // Black Market Terraforming
 
     schedule.add_systems(
