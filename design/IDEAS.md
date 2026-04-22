@@ -5669,7 +5669,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Operational Detritus
+## Operational Detritus [SPECCED]
 
 **Layer:** 1
 
