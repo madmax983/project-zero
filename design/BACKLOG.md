@@ -640,7 +640,7 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `971` The Living Constitution — `specs/971-the-living-constitution.md`
 - [ ] `973` Ecosystem Mimicry — `specs/973-ecosystem-mimicry.md`
 - [ ] `974` Leviathan Tapping — `specs/974-leviathan-tapping.md`
-- [ ] `976` The Beanstalk Mutiny — `specs/976-the-beanstalk-mutiny.md`
+
 - [ ] `977` The Flesh-Double Infiltration — `specs/977-the-flesh-double-infiltration.md`
 - [ ] `978` The Ghost-Worker Assembly — `specs/978-the-ghost-worker-assembly.md`
 - [ ] `979` The Propaganda Contagion — `specs/979-the-propaganda-contagion.md`

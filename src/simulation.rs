@@ -370,8 +370,10 @@ pub fn run_simulation_tick(world: &mut World) {
             world.init_resource::<crate::layer3::linguistic_drift::LinguisticNetwork>();
             world.init_resource::<Events<crate::layer3::linguistic_drift::CulturalSyncEvent>>();
             world.init_resource::<Events<crate::layer3::linguistic_drift::TradeEvent>>();
+            world.init_resource::<Events<crate::layer1::logistics::beanstalk::BeanstalkEvent>>();
 
-            let schedule = build_simulation_schedule();
+            let mut schedule = build_simulation_schedule();
+        schedule.add_systems((crate::layer1::logistics::beanstalk::beanstalk_morale_system, crate::layer1::logistics::beanstalk::beanstalk_collapse_system));
             world.add_schedule(schedule);
         }
     }
@@ -853,6 +855,7 @@ mod tests {
         world.init_resource::<crate::layer3::linguistic_drift::LinguisticNetwork>();
         world.init_resource::<Events<crate::layer3::linguistic_drift::CulturalSyncEvent>>();
         world.init_resource::<Events<crate::layer3::linguistic_drift::TradeEvent>>();
+        world.init_resource::<Events<crate::layer1::logistics::beanstalk::BeanstalkEvent>>();
 
         let schedule = build_simulation_schedule();
         world.add_schedule(schedule);
