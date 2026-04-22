@@ -1,6 +1,6 @@
-use bevy_ecs::prelude::*;
-use crate::layer1::social::Relationships;
 use crate::layer1::morale::{MoodModifier, Morale};
+use crate::layer1::social::Relationships;
+use bevy_ecs::prelude::*;
 
 #[derive(Component)]
 pub struct ResonantOre;
@@ -36,7 +36,9 @@ pub fn resonant_ore_exposure_system(
                         duration: 100, // Giving it a duration
                     });
                 }
-                commands.entity(event.miner).insert(ResonantInfection { severity: 1.0 });
+                commands
+                    .entity(event.miner)
+                    .insert(ResonantInfection { severity: 1.0 });
             }
         }
     }
@@ -52,14 +54,14 @@ pub fn resonance_social_spread_system(
     // Find all pops that have relationships
     for (entity, _) in q_morale.iter() {
         if let Ok(rel) = q_relationships.get(entity) {
-             // For every pop this pop has a relationship with
-             for (&target, &affinity) in &rel.affinities {
-                  // If the target is infected and they are friends (or just related)
-                  if q_infected.get(target).is_ok() && affinity > 0.0 {
-                      to_infect.push(entity);
-                      break; // Just need one infected friend to get paranoid
-                  }
-             }
+            // For every pop this pop has a relationship with
+            for (&target, &affinity) in &rel.affinities {
+                // If the target is infected and they are friends (or just related)
+                if q_infected.get(target).is_ok() && affinity > 0.0 {
+                    to_infect.push(entity);
+                    break; // Just need one infected friend to get paranoid
+                }
+            }
         }
     }
 
@@ -79,9 +81,9 @@ pub fn resonance_social_spread_system(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use bevy_app::{App, Update};
-    use crate::layer1::social::Relationships;
     use crate::layer1::pop::Pop;
+    use crate::layer1::social::Relationships;
+    use bevy_app::{App, Update};
 
     use crate::layer1::morale::Morale;
 
@@ -94,18 +96,26 @@ mod tests {
         let miner = app.world_mut().spawn((Pop, Morale::default())).id();
         let resonant_ore = app.world_mut().spawn((MineableOre, ResonantOre)).id();
 
-        app.world_mut().resource_mut::<Events<ExcavationEvent>>().send(ExcavationEvent {
-            colony: Entity::PLACEHOLDER,
-            miner,
-            discovery_type: "ResonantOre".to_string(),
-            target: resonant_ore,
-        });
+        app.world_mut()
+            .resource_mut::<Events<ExcavationEvent>>()
+            .send(ExcavationEvent {
+                colony: Entity::PLACEHOLDER,
+                miner,
+                discovery_type: "ResonantOre".to_string(),
+                target: resonant_ore,
+            });
 
         app.update();
 
         let morale = app.world().get::<Morale>(miner).unwrap();
-        assert!(morale.modifiers.iter().any(|m| m.label == "Deep Resonance"), "Miner exposed to resonant ore should gain negative resonance mood modifier.");
-        assert!(app.world().get::<ResonantInfection>(miner).is_some(), "Miner should be marked as carrying the resonance.");
+        assert!(
+            morale.modifiers.iter().any(|m| m.label == "Deep Resonance"),
+            "Miner exposed to resonant ore should gain negative resonance mood modifier."
+        );
+        assert!(
+            app.world().get::<ResonantInfection>(miner).is_some(),
+            "Miner should be marked as carrying the resonance."
+        );
     }
 
     #[test]
@@ -113,15 +123,20 @@ mod tests {
         let mut app = App::new();
         app.add_systems(Update, resonance_social_spread_system);
 
-        let pop_a = app.world_mut().spawn((Pop, ResonantInfection { severity: 1.0 })).id();
+        let pop_a = app
+            .world_mut()
+            .spawn((Pop, ResonantInfection { severity: 1.0 }))
+            .id();
         let mut rels = Relationships::default();
         rels.affinities.insert(pop_a, 0.5); // pop_b likes pop_a
         let pop_b = app.world_mut().spawn((Pop, Morale::default(), rels)).id();
 
-
         app.update();
 
         let morale_b = app.world().get::<Morale>(pop_b).unwrap();
-        assert!(morale_b.modifiers.iter().any(|m| m.label == "Paranoia"), "Paranoia should spread to related pops.");
+        assert!(
+            morale_b.modifiers.iter().any(|m| m.label == "Paranoia"),
+            "Paranoia should spread to related pops."
+        );
     }
 }

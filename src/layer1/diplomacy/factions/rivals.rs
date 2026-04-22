@@ -1,7 +1,7 @@
+use crate::layer1::map::GridPosition;
 use bevy_ecs::prelude::*;
 use std::collections::HashMap;
 use std::collections::VecDeque;
-use crate::layer1::map::GridPosition;
 
 /// A rival colony competing for resources and territory.
 #[derive(Component)]
@@ -87,14 +87,11 @@ pub fn rival_colony_expansion_system(
             while let Some((cx, cy)) = queue.pop_front() {
                 if territory.get_owner(cx, cy) == Some(entity) {
                     // Check adjacents
-                    let adjacents = [
-                        (cx + 1, cy),
-                        (cx - 1, cy),
-                        (cx, cy + 1),
-                        (cx, cy - 1),
-                    ];
+                    let adjacents = [(cx + 1, cy), (cx - 1, cy), (cx, cy + 1), (cx, cy - 1)];
                     for (nx, ny) in adjacents {
-                        if let std::collections::hash_map::Entry::Vacant(e) = visited.entry((nx, ny)) {
+                        if let std::collections::hash_map::Entry::Vacant(e) =
+                            visited.entry((nx, ny))
+                        {
                             e.insert(true);
                             if territory.get_owner(nx, ny).is_none() {
                                 territory.set_owner(nx, ny, entity);
@@ -153,11 +150,10 @@ pub fn rival_resource_drain_system(
 pub struct RivalColonyPlugin;
 impl bevy_app::Plugin for RivalColonyPlugin {
     fn build(&self, app: &mut bevy_app::App) {
-        app.init_resource::<TerritoryGrid>()
-            .add_systems(bevy_app::Update, (
-                rival_colony_expansion_system,
-                rival_resource_drain_system,
-            ));
+        app.init_resource::<TerritoryGrid>().add_systems(
+            bevy_app::Update,
+            (rival_colony_expansion_system, rival_resource_drain_system),
+        );
     }
 }
 
@@ -177,19 +173,30 @@ mod tests {
         let mut app = setup_app();
 
         // Spawn a rival colony center
-        let rival_entity = app.world_mut().spawn((
-            RivalColony {
-                faction_id: "OmniCorp".to_string(),
-                expansion_points: 100,
-            },
-            GridPosition { x: 50, y: 50 },
-        )).id();
+        let rival_entity = app
+            .world_mut()
+            .spawn((
+                RivalColony {
+                    faction_id: "OmniCorp".to_string(),
+                    expansion_points: 100,
+                },
+                GridPosition { x: 50, y: 50 },
+            ))
+            .id();
 
         app.update(); // Trigger expansion
 
         let territory = app.world().resource::<TerritoryGrid>();
-        assert_eq!(territory.get_owner(50, 50), Some(rival_entity), "Rival should claim its starting tile");
-        assert_eq!(territory.get_owner(51, 50), Some(rival_entity), "Rival should expand its territory using expansion points");
+        assert_eq!(
+            territory.get_owner(50, 50),
+            Some(rival_entity),
+            "Rival should claim its starting tile"
+        );
+        assert_eq!(
+            territory.get_owner(51, 50),
+            Some(rival_entity),
+            "Rival should expand its territory using expansion points"
+        );
         // Due to BFS, it should claim tiles radiating from the center.
         let mut claimed = 0;
         for _x in 45..=55 {
@@ -200,7 +207,10 @@ mod tests {
             }
         }
         // Starting tile (0 cost) + 10 expansions = 11 total tiles
-        assert_eq!(claimed, 11, "Rival should claim exactly 11 tiles (1 starting + 10 expansions)");
+        assert_eq!(
+            claimed, 11,
+            "Rival should claim exactly 11 tiles (1 starting + 10 expansions)"
+        );
     }
 
     #[test]
@@ -208,24 +218,36 @@ mod tests {
         let mut app = setup_app();
 
         // Setup a resource on the grid
-        app.world_mut().resource_mut::<TerritoryGrid>().set_resource(51, 50, ResourceType::Minerals, 100);
+        app.world_mut()
+            .resource_mut::<TerritoryGrid>()
+            .set_resource(51, 50, ResourceType::Minerals, 100);
 
-        let rival_entity = app.world_mut().spawn((
-            RivalColony {
-                faction_id: "OmniCorp".to_string(),
-                expansion_points: 10,
-            },
-            RivalStockpile { minerals: 0 },
-            GridPosition { x: 50, y: 50 },
-        )).id();
+        let rival_entity = app
+            .world_mut()
+            .spawn((
+                RivalColony {
+                    faction_id: "OmniCorp".to_string(),
+                    expansion_points: 10,
+                },
+                RivalStockpile { minerals: 0 },
+                GridPosition { x: 50, y: 50 },
+            ))
+            .id();
 
         app.update(); // Expands and claims tile (51, 50)
         app.update(); // Drains resources from claimed tile
 
         let territory = app.world().resource::<TerritoryGrid>();
-        assert_eq!(territory.get_resource(51, 50, ResourceType::Minerals), 90, "Rival should drain resources from the grid");
+        assert_eq!(
+            territory.get_resource(51, 50, ResourceType::Minerals),
+            90,
+            "Rival should drain resources from the grid"
+        );
 
         let stockpile = app.world().get::<RivalStockpile>(rival_entity).unwrap();
-        assert_eq!(stockpile.minerals, 10, "Rival should accumulate drained resources in its stockpile");
+        assert_eq!(
+            stockpile.minerals, 10,
+            "Rival should accumulate drained resources in its stockpile"
+        );
     }
 }
