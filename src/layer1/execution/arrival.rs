@@ -500,3 +500,118 @@ fn handle_research_arrival(
         AssignmentType::LibraryWorker,
     )
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::layer1::admin::Office;
+    use crate::layer1::chemical::{ChemicalState, ChemicalType};
+    use crate::layer1::economy::items::{Item, ItemType};
+    use crate::layer1::graffiti::{GraffitiMap, GraffitiType};
+    use crate::layer1::housing::Housing;
+    use crate::layer1::map::GridPosition;
+    use crate::shared::log::MessageLog;
+    use crate::shared::time::SimulationTime;
+    use bevy_ecs::system::RunSystemOnce;
+
+    #[test]
+    fn test_handle_admin_arrival() {
+        let mut world = World::new();
+        let target = world
+            .spawn(Office {
+                workers: vec![],
+                capacity: 2,
+            })
+            .id();
+        let pop = world.spawn(()).id();
+
+        let _ = world.run_system_once(
+            move |mut commands: Commands, mut offices: Query<&mut Office>| {
+                handle_admin_arrival(&mut commands, &mut offices, pop, target);
+            },
+        );
+
+        let office = world.get::<Office>(target).unwrap();
+        assert_eq!(office.workers.len(), 1);
+        assert_eq!(office.workers[0], pop);
+    }
+
+    #[test]
+    fn test_handle_scrawl_memetic_sigil_arrival() {
+        let pos = GridPosition { x: 5, y: 5 };
+        let mut map = GraffitiMap::default();
+        let mut log = MessageLog::default();
+
+        handle_scrawl_memetic_sigil_arrival(pos, Some(&mut map), Some(&mut log));
+
+        assert!(map.markings.contains_key(&(5, 5)));
+        assert_eq!(
+            map.markings.get(&(5, 5)).unwrap().graffiti_type,
+            GraffitiType::MemeticSigil
+        );
+        assert!(!log.messages.is_empty());
+    }
+
+    #[test]
+    fn test_handle_consume_chemical_arrival() {
+        let mut world = World::new();
+        let time = SimulationTime {
+            tick: 100,
+            ..SimulationTime::default()
+        };
+        world.insert_resource(time);
+        let target = world
+            .spawn(Item {
+                item_type: ItemType::Stim,
+            })
+            .id();
+        let pop = world.spawn(()).id();
+
+        let _ = world.run_system_once(
+            move |mut commands: Commands, items: Query<&Item>, time: Res<SimulationTime>| {
+                let mut chem_opt = None;
+                let mut health_opt = None;
+                let mut stress_opt = None;
+                handle_consume_chemical_arrival(
+                    target,
+                    pop,
+                    &items,
+                    &mut chem_opt,
+                    &mut health_opt,
+                    &mut stress_opt,
+                    &mut commands,
+                    &time,
+                );
+            },
+        );
+
+        assert!(world.get_entity(target).is_err());
+        let chemstate = world.get::<ChemicalState>(pop).unwrap();
+        assert!(chemstate
+            .active_effects
+            .iter()
+            .any(|e| e.chemical == ChemicalType::Stim));
+    }
+
+    #[test]
+    fn test_handle_rest_arrival() {
+        let mut world = World::new();
+        let target = world
+            .spawn(Housing {
+                capacity: 2,
+                residents: vec![],
+            })
+            .id();
+        let pop = world.spawn(()).id();
+
+        let _ = world.run_system_once(
+            move |mut commands: Commands, mut housing: Query<&mut Housing>| {
+                handle_rest_arrival(pop, target, &mut housing, &mut commands);
+            },
+        );
+
+        let housing = world.get::<Housing>(target).unwrap();
+        assert_eq!(housing.residents.len(), 1);
+        assert_eq!(housing.residents[0], pop);
+    }
+}
