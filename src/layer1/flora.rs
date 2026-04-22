@@ -275,7 +275,10 @@ pub fn process_flora_clearing(world: &mut World, designation_entity: Entity, wor
 
             // Integrator: Update EcologicalState to trigger pioneer species (FireWeed)
             let mut state_entity = None;
-            for (e, p, _s) in world.query::<(Entity, &GridPosition, &mut EcologicalState)>().iter_mut(world) {
+            for (e, p, _s) in world
+                .query::<(Entity, &GridPosition, &mut EcologicalState)>()
+                .iter_mut(world)
+            {
                 if p.x == pos.x && p.y == pos.y {
                     state_entity = Some(e);
                     break;
