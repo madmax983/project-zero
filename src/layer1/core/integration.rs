@@ -1359,6 +1359,24 @@ pub struct PirateAmnestyEvent {
     pub fleet: Entity,
 }
 
+
+use crate::layer1::deep_crust_resonance::ExcavationEvent;
+
+/// INT-1132: Bridges Resonant Ore Excavation to AddChronicleEvent
+pub fn deep_crust_resonance_chronicle_bridge(
+    mut events: EventReader<ExcavationEvent>,
+    mut chronicle_events: EventWriter<AddChronicleEvent>,
+) {
+    for event in events.read() {
+        if event.discovery_type == "ResonantOre" {
+            chronicle_events.send(AddChronicleEvent {
+                importance: EventImportance::Major,
+                text: "Deep Crust Resonance uncovered! The miners speak of an ancient hum that invades their minds.".to_string(),
+            });
+        }
+    }
+}
+
 /// INT-947: Bridges Aesthetic Orbital Blockade (Policy::Aesthetic) to AddChronicleEvent (Chronicle).
 pub fn aesthetic_edict_chronicle_bridge(
     policies: bevy_ecs::prelude::Res<crate::layer1::administration::edicts::ColonyPolicies>,
