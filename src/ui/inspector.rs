@@ -18,6 +18,7 @@ use ratatui::{
 use crate::experimental::bureaucratic_martyrdom::Martyrdom;
 #[cfg(feature = "nova")]
 use crate::experimental::meme_plague::{MemeCarrier, MemeType};
+use crate::layer1::biology::health::{Health, HealthCondition};
 use crate::layer1::biography::Biography;
 use crate::layer1::day_night::DayNightCycle;
 use crate::layer1::energy::load_limits::PowerCable;
@@ -724,8 +725,14 @@ fn get_inspector_layout_info(world: &World, entity: Entity) -> InspectorLayoutIn
         + u16::from(has_meme)
         + u16::from(has_martyrdom);
 
+    let has_rust_lung = world.get::<Health>(entity).is_some_and(|h: &Health| h.has_condition(HealthCondition::RustLung));
+    let mut details_height = 6;
+    if has_rust_lung {
+        details_height += 1;
+    }
+
     InspectorLayoutInfo {
-        details_height: 6,
+        details_height,
         has_structure,
         show_diagnostics,
         diag_height,
@@ -796,7 +803,8 @@ fn render_entity_inspector(frame: &mut Frame, area: Rect, world: &World, entity:
     let details_area = layout[5];
     if let Some(needs) = world.get::<Needs>(entity) {
         let bio_opt = world.get::<Biocompatibility>(entity);
-        render_bio_monitor(frame, details_area, needs, bio_opt);
+        let health_opt = world.get::<Health>(entity);
+        render_bio_monitor(frame, details_area, needs, bio_opt, health_opt);
     } else if let Some(housing) = world.get::<Housing>(entity) {
         render_housing_details(frame, details_area, housing);
     } else if let Some(farm) = world.get::<Farm>(entity) {
@@ -871,6 +879,7 @@ fn render_bio_monitor(
     details_area: Rect,
     needs: &Needs,
     bio_opt: Option<&Biocompatibility>,
+    health_opt: Option<&Health>,
 ) {
     let bio_block = Block::default()
         .title(" Bio-Monitor ")
@@ -881,13 +890,19 @@ fn render_bio_monitor(
     let bio_inner = bio_block.inner(details_area);
     frame.render_widget(bio_block, details_area);
 
+    let has_rust_lung = health_opt.is_some_and(|h: &Health| h.has_condition(HealthCondition::RustLung));
+
+    let constraints = if bio_opt.is_some() && has_rust_lung {
+        vec![Constraint::Length(1), Constraint::Length(1), Constraint::Length(1), Constraint::Length(1)]
+    } else if bio_opt.is_some() || has_rust_lung {
+        vec![Constraint::Length(1), Constraint::Length(1), Constraint::Length(1)]
+    } else {
+        vec![Constraint::Length(1), Constraint::Length(1)]
+    };
+
     let rows = Layout::default()
         .direction(Direction::Vertical)
-        .constraints([
-            Constraint::Length(1), // Hunger/Rest
-            Constraint::Length(1), // Morale
-            Constraint::Length(1), // Bio-Comp
-        ])
+        .constraints(constraints)
         .split(bio_inner);
 
     let needs_layout = Layout::default()
@@ -943,6 +958,8 @@ fn render_bio_monitor(
 
     frame.render_widget(morale_gauge, rows[1]);
 
+    let mut current_row = 2;
+
     if let Some(bio) = bio_opt {
         let bio_percent = (bio.value * 100.0) as u16;
         let bio_color = if bio.value < 0.4 {
@@ -958,7 +975,13 @@ fn render_bio_monitor(
             .label(format!("🧬 Bio-Comp: {bio_percent}%"))
             .percent(bio_percent);
 
-        frame.render_widget(bio_gauge, rows[2]);
+        frame.render_widget(bio_gauge, rows[current_row]);
+        current_row += 1;
+    }
+
+    if has_rust_lung {
+        let rust_lung_label = Paragraph::new(Span::styled("⚠️ Condition: Rust-Lung", Style::default().fg(Color::Red).add_modifier(Modifier::BOLD)));
+        frame.render_widget(rust_lung_label, rows[current_row]);
     }
 }
 

@@ -1,7 +1,7 @@
 # Backlog
 
 ## High Priority
-- [ ] `1122` The Rust-Lung Epidemic — `specs/1122-rust-lung-epidemic.md`
+- [x] `1122` The Rust-Lung Epidemic — `specs/1122-rust-lung-epidemic.md` — claimed 2024-05-24
 - [ ] `1120` Xenoflora Pet Craze — `specs/1120-xenoflora-pet-craze.md`
 
 - [ ] `1119` Personal Shields — `specs/1119-personal-shields.md`
