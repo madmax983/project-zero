@@ -388,13 +388,16 @@ fn register_simulation_core_systems(schedule: &mut Schedule) {
     register_layer1_systems(schedule);
     // Black Market Terraforming
 
+
     schedule.add_systems(
         (
             crate::layer1::deep_crust_resonance::resonant_ore_exposure_system,
             crate::layer1::deep_crust_resonance::resonance_social_spread_system,
+            crate::layer1::core::integration::deep_crust_resonance_chronicle_bridge,
         )
             .in_set(Layer1SystemSet::Economy),
     );
+
 
     schedule.add_systems((
         crate::layer1::law::embassy::evaluate_diplomatic_crime_system,

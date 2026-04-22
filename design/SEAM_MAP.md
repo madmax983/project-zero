@@ -742,6 +742,12 @@
 - **Glue added:** Added bridge systems to consume `MigrantArrivalEvent`, `TradeShipArrivalEvent`, and `PirateRaidEvent` and generate corresponding state changes (`Pop` spawns, `Merchant` spawns, resource loss and morale drop). Scheduled in `Layer1SystemSet::Economy`.
 - **Tests:** `tests/integration/beacon_bridge.rs` (3 tests)
 
+### INT-1132: Deep Crust Resonance -> Chronicle
+- **Date:** 2026-05-01
+- **Systems connected:** `resonant_ore_exposure_system` (Deep Crust Resonance) -> `deep_crust_resonance_chronicle_bridge` (Integration) -> `AddChronicleEvent`
+- **Glue added:** Added `deep_crust_resonance_chronicle_bridge` in `src/layer1/core/integration.rs` to emit an `AddChronicleEvent` (`EventImportance::Major`) upon `ExcavationEvent` with discovery type "ResonantOre". Registered in `SimulationSchedule` (Layer 1 Economy).
+- **Tests:** `tests/integration/deep_crust_resonance_bridge.rs`
+
 ### INT-915: Orbital Debris Cult -> Morale
 - **Date:** 2026-07-26
 - **Systems connected:** `OrbitalDebris` (Orbit) & `Station` -> `evaluate_debris_cult_formation_system` & `apply_debris_cult_morale_system` (Integration) -> `Morale` (Social)

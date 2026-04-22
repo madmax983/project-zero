@@ -429,3 +429,4 @@
 - [x] `1094` Ecological Succession — `specs/1094-ecological-succession.md` — completed 2026-02-01
 - [x] `972` Corporate Rivals — `specs/972-corporate-rivals.md` — completed 2026-04-21
 - [x] `1132` The Deep Crust Resonance — `specs/1132-deep-crust-resonance.md` - completed 2026-05-01
+- [x] `INT-1132` Integration: Deep Crust Resonance -> Chronicle — completed 2026-05-01
