@@ -5697,7 +5697,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Heroic Acts
+## Heroic Acts [SPECCED]
 
 **Layer:** 1
 
