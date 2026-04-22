@@ -5739,7 +5739,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Chain of Command
+## Chain of Command [SPECCED]
 
 **Layer:** 1
 
