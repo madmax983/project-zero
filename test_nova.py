@@ -1,7 +1,6 @@
 import re
 
-with open(".jules/nova.md", "r") as f:
-    nova = f.read()
+with open("src/layer1/psychology/memory.rs", "r") as f:
+    content = f.read()
 
-print("Meme Plague" in nova)
-print("The Gossip Plaque" in nova)
+print("FeralChoir" in content)
