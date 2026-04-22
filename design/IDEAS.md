@@ -16807,3 +16807,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you throttle industrial output to preserve a delicate ecosystem, or run the factories hot and hope the resulting ecological collapse is manageable?
 
 ---
+
+## The Scrap-Weaver Barges
+
+**Layer:** 2
+
+**Fantasy:** A nomadic class of scavengers turning the hazards of orbit into temporary bastions.
+
+**Mechanic:** Slow, massive Layer 2 ships that actively seek out orbital debris. They consume the debris not for resources, but to instantly weave "Ablative Shields" around themselves or allied Layer 1 colonies. The shields are temporary and degrade rapidly, but provide immense defense.
+
+**Emergence:** You ignore a massive debris field left from a previous war. A fleet of Scrap-Weavers arrives, consumes the hazard, and accidentally builds an impenetrable shield over a pirate base they happened to pass by, making it impossible for your navy to crack.
+
+**Tension:** Leave dangerous debris in orbit as potential "ammunition" for your weavers, or clean it up for safe civilian travel?
+
+---
+
+## The Void-Whaler Harpoons
+
+**Layer:** 2
+
+**Fantasy:** The thrill and danger of hunting beasts that swim through the vacuum.
+
+**Mechanic:** Small, extremely fast Layer 2 ships armed with "Kinetic Tethers." They do not fight standard fleets well. Instead, they attach to migrating space megafauna (Leviathans). Once tethered, the ship is dragged along by the beast, slowly siphoning exotic biological resources back to Layer 1 via drop-pods. If the beast jumps to FTL, the ship is lost.
+
+**Emergence:** A desperate famine leads you to launch all your Whalers at a passing Star-Grazer. They tether successfully, providing a massive influx of food. But the beast panics, altering its migration path to drag your entire whaling fleet straight through a hostile empire's core worlds.
+
+**Tension:** The incredible resource bounty of the hunt versus the sheer unpredictability of tethering your ships to wild cosmic forces.
+
+---
+
+## The Diplomatic Dreadnoughts
+
+**Layer:** 2
+
+**Fantasy:** "Speak softly and carry a big stick." A warship designed to throw parties instead of plasma.
+
+**Mechanic:** Massive, incredibly expensive, and heavily armored Layer 2 ships with negligible weaponry. They emit a powerful "Cultural Aura." When stationed in orbit above a foreign Layer 1 colony or a contested system, they generate massive diplomatic pressure and slowly convert the local population to your ethics without firing a shot.
+
+**Emergence:** Your rival sends a massive invasion fleet to your border. Instead of fighting, you park a Diplomatic Dreadnought in the middle of the warzone. The enemy soldiers become so demoralized and envious of the perpetual, broadcasted galas happening on your dreadnought that they mutiny and demand a ceasefire.
+
+**Tension:** Spending the equivalent of a grand armada's budget on a single ship that cannot win a conventional fight, relying entirely on soft power projection to solve hard power problems.
+
+---
