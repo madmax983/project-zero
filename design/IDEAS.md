@@ -5683,7 +5683,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Gravitational Doldrums
+## Gravitational Doldrums [SPECCED]
 
 **Layer:** 2
 
