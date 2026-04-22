@@ -1,15 +1,72 @@
+//! The Bridge to Silicon (GPU Acceleration Module).
+//!
+//! This module houses the core infrastructure for offloading massive computational tasks
+//! from the CPU to the GPU. Specifically, it initializes the `wgpu` state required
+//! for executing our parallelized Utility AI evaluation shader.
+//!
+//! In a colony of thousands of souls, calculating the optimal action (eat, work, sleep, riot)
+//! for every individual simultaneously will bring a CPU to its knees. By dispatching these
+//! mathematical matrices to the GPU, we unlock the scale necessary for true simulation.
+
 use bevy_ecs::prelude::*;
 use wgpu;
 
+/// The central nervous system of our GPU computations.
+///
+/// `GpuContext` acts as a Bevy `Resource`, holding the critical `wgpu` handles
+/// required to communicate with the physical hardware. It sets up the pipeline,
+/// the layout for memory bindings, and the execution queues.
+///
+/// # Examples
+///
+/// Because `new()` is `async`, it is typically invoked during application setup
+/// before the Bevy app begins its normal synchronous loop.
+///
+/// ```
+/// # use scale::gpu::context::GpuContext;
+/// # use pollster::block_on;
+/// # fn main() -> anyhow::Result<()> {
+/// # block_on(async {
+/// let context = GpuContext::new().await?;
+/// // Now it can be inserted into the Bevy app as a resource.
+/// # Ok(())
+/// # })
+/// # }
+/// ```
+///
+/// # Panics
+///
+/// The creation itself will return an `Err` if no compatible GPU is found,
+/// but it expects valid WGSL shaders to exist at compile time in `src/gpu/shaders/utility_ai.wgsl`.
 #[derive(Resource)]
 pub struct GpuContext {
+    /// The handle to the physical GPU device, used to create buffers and pipelines.
     pub device: wgpu::Device,
+    /// The command queue for submitting work and writing to buffers.
     pub queue: wgpu::Queue,
+    /// The blueprint for how CPU memory buffers bind to GPU shader inputs.
     pub bind_group_layout: wgpu::BindGroupLayout,
+    /// The compiled instructions (the Compute Shader) for evaluating Utility AI.
     pub pipeline: wgpu::ComputePipeline,
 }
 
 impl GpuContext {
+    /// Bootstraps the connection to the GPU and compiles the compute shaders.
+    ///
+    /// This function requests a high-performance adapter, sets up the exact memory
+    /// binding layout expected by our `utility_ai.wgsl` shader, and compiles the
+    /// compute pipeline.
+    ///
+    /// The pipeline layout expects exactly four bindings:
+    /// 1. Pop Inputs (Storage Buffer, Read Only)
+    /// 2. Building Inputs (Storage Buffer, Read Only)
+    /// 3. Global State (Uniform Buffer, Read Only)
+    /// 4. Decisions Output (Storage Buffer, Write Only)
+    ///
+    /// # Errors
+    ///
+    /// Returns an error if the system does not have a compatible graphics adapter
+    /// or fails to acquire a logical device handle.
     pub async fn new() -> anyhow::Result<Self> {
         let instance = wgpu::Instance::new(&wgpu::InstanceDescriptor {
             backends: wgpu::Backends::all(),
@@ -117,6 +174,18 @@ impl GpuContext {
     }
 }
 
+/// Creates a raw `wgpu::Instance` capable of selecting the best available graphics backend.
+///
+/// This is a convenience function mostly used internally or for isolated testing
+/// without needing the full `GpuContext` setup.
+///
+/// # Examples
+///
+/// ```
+/// # use scale::gpu::context::create_instance;
+/// let instance = create_instance();
+/// // The instance can now be used to request physical adapters.
+/// ```
 pub fn create_instance() -> wgpu::Instance {
     wgpu::Instance::new(&wgpu::InstanceDescriptor {
         backends: wgpu::Backends::all(),

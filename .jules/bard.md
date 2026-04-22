@@ -11,3 +11,6 @@
 ## 2024-04-21 - Doctest Examples
 **Confusion:** Functions in `prophet_of_the_engine.rs` (like `prophet_vision_system`) lacked executable doctests, making it unclear how they integrated with the Bevy ECS and what components were required.
 **Clarification:** Added detailed `# Examples` sections with compiling and asserting `///` doctests for `prophet_vision_system`, `cult_conversion_system`, and `protest_on_dismantle_system`.
+## 2024-04-22 - Deep Lore Over Mass Generation
+**Confusion:** Previous attempts tried to automate module-level documentation by inserting boilerplate comments into hundreds of files. This added noise without narrative value and violated the philosophy that documentation should explain the *why* and provide executable examples.
+**Clarification:** Pivoted to a targeted approach. Documented the `gpu::context` module with deep lore ("The Bridge to Silicon"), explaining the motivation for GPU offloading, adding executable `# Examples` blocks, and outlining `# Panics` conditions for `GpuContext::new`. True documentation requires narrative, not just repetition.
