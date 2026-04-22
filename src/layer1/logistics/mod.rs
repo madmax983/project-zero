@@ -11,5 +11,7 @@ pub mod mass_driver;
 pub use mass_driver::*;
 pub mod biomass_network;
 pub use biomass_network::*;
+pub mod beanstalk;
 pub mod commute;
+pub use beanstalk::*;
 pub use commute::*;
