@@ -431,3 +431,4 @@
 - [x] `1132` The Deep Crust Resonance — `specs/1132-deep-crust-resonance.md` - completed 2026-05-01
 - [x] `INT-1132` Integration: Deep Crust Resonance -> Chronicle — completed 2026-05-01
 - [x] `1122` The Rust-Lung Epidemic — `specs/1122-rust-lung-epidemic.md` — completed 2024-05-24
+- [x] `1120` Xenoflora Pet Craze — `specs/1120-xenoflora-pet-craze.md` — completed 2026-02-28

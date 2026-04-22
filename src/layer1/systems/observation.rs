@@ -426,6 +426,9 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::psychology::void_sickness::process_void_exposure_system,
             crate::layer1::psychology::void_sickness::apply_void_touched_trait_system,
             crate::layer1::psychology::void_sickness::apply_trait_stat_modifiers_system,
+            crate::layer1::culture::pets::apply_pet_mood_boost,
+            crate::layer1::culture::pets::pet_upkeep_system,
+            crate::layer1::culture::pets::viral_pet_spread_system,
         )
             .in_set(Layer1SystemSet::Observation),
     );

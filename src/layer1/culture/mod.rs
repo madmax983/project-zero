@@ -23,3 +23,5 @@ pub mod totems;
 pub use totems::*;
 pub mod animism;
 pub use animism::*;
+pub mod pets;
+pub use pets::*;
