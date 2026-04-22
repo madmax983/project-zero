@@ -10,9 +10,10 @@ pub struct Ship;
 #[derive(Component)]
 pub struct Credits(pub i32);
 
-#[derive(Component, Default)]
+#[derive(Resource, Component, Default)]
 pub struct ThreatMap {
     pub threats: bevy::utils::HashMap<Entity, i32>,
+    pub global_threat_modifier: f32,
 }
 
 impl ThreatMap {
