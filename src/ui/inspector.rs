@@ -18,8 +18,8 @@ use ratatui::{
 use crate::experimental::bureaucratic_martyrdom::Martyrdom;
 #[cfg(feature = "nova")]
 use crate::experimental::meme_plague::{MemeCarrier, MemeType};
-use crate::layer1::biology::health::{Health, HealthCondition};
 use crate::layer1::biography::Biography;
+use crate::layer1::biology::health::{Health, HealthCondition};
 use crate::layer1::day_night::DayNightCycle;
 use crate::layer1::energy::load_limits::PowerCable;
 use crate::layer1::energy::{Battery, PowerConsumer, PowerSource};
@@ -725,7 +725,9 @@ fn get_inspector_layout_info(world: &World, entity: Entity) -> InspectorLayoutIn
         + u16::from(has_meme)
         + u16::from(has_martyrdom);
 
-    let has_rust_lung = world.get::<Health>(entity).is_some_and(|h: &Health| h.has_condition(HealthCondition::RustLung));
+    let has_rust_lung = world
+        .get::<Health>(entity)
+        .is_some_and(|h: &Health| h.has_condition(HealthCondition::RustLung));
     let mut details_height = 6;
     if has_rust_lung {
         details_height += 1;
@@ -890,12 +892,22 @@ fn render_bio_monitor(
     let bio_inner = bio_block.inner(details_area);
     frame.render_widget(bio_block, details_area);
 
-    let has_rust_lung = health_opt.is_some_and(|h: &Health| h.has_condition(HealthCondition::RustLung));
+    let has_rust_lung =
+        health_opt.is_some_and(|h: &Health| h.has_condition(HealthCondition::RustLung));
 
     let constraints = if bio_opt.is_some() && has_rust_lung {
-        vec![Constraint::Length(1), Constraint::Length(1), Constraint::Length(1), Constraint::Length(1)]
+        vec![
+            Constraint::Length(1),
+            Constraint::Length(1),
+            Constraint::Length(1),
+            Constraint::Length(1),
+        ]
     } else if bio_opt.is_some() || has_rust_lung {
-        vec![Constraint::Length(1), Constraint::Length(1), Constraint::Length(1)]
+        vec![
+            Constraint::Length(1),
+            Constraint::Length(1),
+            Constraint::Length(1),
+        ]
     } else {
         vec![Constraint::Length(1), Constraint::Length(1)]
     };
@@ -980,7 +992,10 @@ fn render_bio_monitor(
     }
 
     if has_rust_lung {
-        let rust_lung_label = Paragraph::new(Span::styled("⚠️ Condition: Rust-Lung", Style::default().fg(Color::Red).add_modifier(Modifier::BOLD)));
+        let rust_lung_label = Paragraph::new(Span::styled(
+            "⚠️ Condition: Rust-Lung",
+            Style::default().fg(Color::Red).add_modifier(Modifier::BOLD),
+        ));
         frame.render_widget(rust_lung_label, rows[current_row]);
     }
 }
