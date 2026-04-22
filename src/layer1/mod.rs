@@ -435,3 +435,4 @@ pub mod core;
 pub use core::*;
 /// Digital immortality mechanics
 pub mod digital_immortality;
+pub mod deep_crust_resonance;

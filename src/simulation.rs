@@ -138,14 +138,15 @@ pub fn run_simulation_tick(world: &mut World) {
         world.init_resource::<Events<crate::layer1::administration::edicts::HackCentralHubEvent>>();
         world.init_resource::<Events<crate::layer1::administration::edicts::RevokePolicyEvent>>();
     }
-    if !world.contains_resource::<Events<crate::layer1::geology::tectonic::MegaQuakeEvent>>() {
-        world.init_resource::<Events<crate::layer1::geology::tectonic::MegaQuakeEvent>>();
+    if !world.contains_resource::<Events<crate::layer1::tectonic::MegaQuakeEvent>>() {
+        world.init_resource::<Events<crate::layer1::tectonic::MegaQuakeEvent>>();
     }
     if !world.contains_resource::<Events<crate::layer1::whispering_ore::MinedOreEvent>>() {
         world.init_resource::<Events<crate::layer1::whispering_ore::MinedOreEvent>>();
     }
     if !world.contains_resource::<Events<crate::layer1::whispering_ore::MineSealedEvent>>() {
         world.init_resource::<Events<crate::layer1::whispering_ore::MineSealedEvent>>();
+        world.init_resource::<Events<crate::layer1::deep_crust_resonance::ExcavationEvent>>();
     }
     if !world.contains_resource::<Events<crate::layer1::resources::MiningEvent>>() {
         world.init_resource::<Events<crate::layer1::resources::MiningEvent>>();
@@ -165,8 +166,8 @@ pub fn run_simulation_tick(world: &mut World) {
     if !world.contains_resource::<Events<crate::layer1::spiteful_will::OverrideWillEvent>>() {
         world.init_resource::<Events<crate::layer1::spiteful_will::OverrideWillEvent>>();
     }
-    if !world.contains_resource::<crate::layer1::geology::tectonic::TectonicStress>() {
-        world.init_resource::<crate::layer1::geology::tectonic::TectonicStress>();
+    if !world.contains_resource::<crate::layer1::tectonic::TectonicStress>() {
+        world.init_resource::<crate::layer1::tectonic::TectonicStress>();
     }
 
     if !world.contains_resource::<crate::layer1::unrest::Unrest>() {
@@ -386,6 +387,15 @@ fn register_simulation_core_systems(schedule: &mut Schedule) {
     // --- Register Core Layer 1 Systems ---
     register_layer1_systems(schedule);
     // Black Market Terraforming
+
+    schedule.add_systems(
+        (
+            crate::layer1::deep_crust_resonance::resonant_ore_exposure_system,
+            crate::layer1::deep_crust_resonance::resonance_social_spread_system,
+        )
+            .in_set(Layer1SystemSet::Economy),
+    );
+
     schedule.add_systems((
         crate::layer1::law::embassy::evaluate_diplomatic_crime_system,
         crate::layer1::law::embassy::process_diplomatic_arrest_system,
@@ -800,6 +810,7 @@ mod tests {
         world.init_resource::<Events<crate::layer1::environment::events::DebrisFallEvent>>();
         world.init_resource::<Events<crate::layer1::whispering_ore::MinedOreEvent>>();
         world.init_resource::<Events<crate::layer1::whispering_ore::MineSealedEvent>>();
+        world.init_resource::<Events<crate::layer1::deep_crust_resonance::ExcavationEvent>>();
         world.init_resource::<crate::layer3::council::GalacticCouncil>();
         world.init_resource::<crate::layer2::syzygy::SyzygyCycle>();
         world.init_resource::<crate::layer2::syzygy::PlanetaryGravity>();
