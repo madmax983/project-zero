@@ -173,6 +173,100 @@ mod tests {
         world
     }
 
+
+    #[test]
+    fn test_clutter_grid_out_of_bounds() {
+        let mut grid = ClutterGrid::new(10, 10);
+        assert_eq!(grid.get(10, 10), 0.0);
+        grid.set(10, 10, 50.0); // Should not panic or set anything
+        assert_eq!(grid.get(10, 10), 0.0);
+
+        grid.set(5, 10, 50.0);
+        assert_eq!(grid.get(5, 10), 0.0);
+
+        grid.set(10, 5, 50.0);
+        assert_eq!(grid.get(10, 5), 0.0);
+    }
+
+    #[test]
+    fn test_clutter_grid_clamping() {
+        let mut grid = ClutterGrid::new(10, 10);
+        grid.add_clutter(5, 5, 150.0);
+        assert_eq!(grid.get(5, 5), 100.0); // Clamped to 100.0
+
+        grid.remove_clutter(5, 5, 150.0);
+        assert_eq!(grid.get(5, 5), 0.0); // Clamped to 0.0
+    }
+
+    #[test]
+    #[should_panic(expected = "Grid size overflow or too large")]
+    fn test_clutter_grid_too_large() {
+        let _grid = ClutterGrid::new(10000, 10000);
+    }
+
+    #[test]
+    fn test_clutter_accumulation_system_other_actions() {
+        let mut world = setup_world();
+        world.spawn((
+            Pop,
+            GridPosition { x: 5, y: 5 },
+            PopAction {
+                current: ActionType::SatisfyHunger,
+                ..Default::default()
+            },
+        ));
+
+        let mut schedule = Schedule::default();
+        schedule.add_systems(crate::layer1::clutter::clutter_accumulation_system);
+        schedule.run(&mut world);
+
+        let grid = world.resource::<ClutterGrid>();
+        assert_eq!(grid.get(5, 5), 0.01);
+    }
+
+    #[test]
+    fn test_clutter_accumulation_out_of_bounds_pos() {
+        let mut world = setup_world();
+        world.spawn((
+            Pop,
+            GridPosition { x: -1, y: 5 },
+            PopAction {
+                current: ActionType::Work,
+                ..Default::default()
+            },
+        ));
+
+        let mut schedule = Schedule::default();
+        schedule.add_systems(crate::layer1::clutter::clutter_accumulation_system);
+        schedule.run(&mut world);
+
+        let grid = world.resource::<ClutterGrid>();
+        assert_eq!(grid.get(0, 0), 0.0);
+    }
+
+    #[test]
+    fn test_clutter_cleaning_out_of_bounds_pos() {
+        let mut world = setup_world();
+        let mut clutter = world.resource_mut::<ClutterGrid>();
+        clutter.set(5, 5, 50.0);
+
+        world.spawn((
+            Pop,
+            GridPosition { x: -1, y: 5 },
+            PopAction {
+                current: ActionType::Clean,
+                ..Default::default()
+            },
+        ));
+
+        let mut schedule = Schedule::default();
+        schedule.add_systems(crate::layer1::clutter::clutter_cleaning_system);
+        schedule.run(&mut world);
+
+        let grid = world.resource::<ClutterGrid>();
+        assert_eq!(grid.get(5, 5), 50.0);
+    }
+
     #[test]
     fn test_clutter_grid_initialization() {
         let world = setup_world();

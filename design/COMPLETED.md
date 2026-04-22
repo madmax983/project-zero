@@ -430,3 +430,4 @@
 - [x] `972` Corporate Rivals — `specs/972-corporate-rivals.md` — completed 2026-04-21
 - [x] `1132` The Deep Crust Resonance — `specs/1132-deep-crust-resonance.md` - completed 2026-05-01
 - [x] `INT-1132` Integration: Deep Crust Resonance -> Chronicle — completed 2026-05-01
+- [x] `239` Operational Detritus - `specs/239-operational-detritus.md` - completed 2026-04-22
