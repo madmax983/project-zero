@@ -143,3 +143,8 @@
 **Concept:** A system `the_final_will_system` that listens for `PopDied` events, finds the deceased's closest living companion using `Relationships` and `Affinity`, and transfers their remaining `Wallet` credits to them. Emits an `AddChronicleEvent` to document the inheritance.
 **Fate:** Proposed
 **Lesson:** Tying internal economic states (credits) directly to social/psychological relationships upon death creates emergent narratives around wills and inheritance, turning a simple entity despawn into a dramatic event.
+
+## [The Bureaucratic Singularity]
+**Concept:** A system that monitors `AdminStats::efficiency`. When efficiency is perfect (1.0) and supply vastly exceeds demand, the bureaucracy "runs out of real problems." To justify its budget, it invents a new useless regulation, spawning an `ObscureRegulation` entity that acts as an `AdminConsumer` (massive demand sink) and applies a temporary negative `MoodModifier` ("Bureaucratic Whiplash") to all Pops.
+**Fate:** Proposed
+**Lesson:** It punishes over-optimization in a Grimdark/Dilbert way. You want just enough bureaucracy, but too much creates a self-sustaining nightmare.

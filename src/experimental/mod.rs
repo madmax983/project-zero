@@ -94,3 +94,6 @@ pub mod the_haunted_cartographer;
 pub mod the_final_will;
 #[cfg(feature = "nova")]
 pub use the_final_will::*;
+
+#[cfg(feature = "nova")]
+pub mod paperwork_singularity;
