@@ -785,3 +785,4 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1129` Planetary Rings as Highways — `specs/1129-planetary-rings-as-highways.md`
 - [ ] `1130` Volatile Intermediates — `specs/1130-volatile-intermediates.md`
 - [ ] `1131` Signature Spoofing — `specs/1131-signature-spoofing.md`
+- [ ] `1133` Stellar Megastructure Scaffolding — `specs/1133-stellar-megastructure-scaffolding.md`

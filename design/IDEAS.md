@@ -16728,7 +16728,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Stellar Megastructure Scaffolding
+## Stellar Megastructure Scaffolding [SPECCED]
 
 **Layer:** 2 -> 3
 
