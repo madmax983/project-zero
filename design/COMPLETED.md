@@ -434,3 +434,4 @@
 - [x] `1122` The Rust-Lung Epidemic — `specs/1122-rust-lung-epidemic.md` — completed 2024-05-24
 
 - [x] `1119` Personal Shields — `specs/1119-personal-shields.md` - completed 2024-05-25
+- [x] `1104` Swarm Intelligence — `specs/1104-swarm-intelligence.md` — completed 2026-05-18

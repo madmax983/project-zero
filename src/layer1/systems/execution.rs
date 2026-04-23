@@ -183,6 +183,15 @@ pub fn register(schedule: &mut Schedule) {
 
     schedule.add_systems(
         (
+            crate::layer1::entities::swarm_intelligence::update_drone_clusters,
+            crate::layer1::entities::swarm_intelligence::update_drone_behavior
+                .after(crate::layer1::entities::swarm_intelligence::update_drone_clusters),
+        )
+            .in_set(Layer1SystemSet::Execution),
+    );
+
+    schedule.add_systems(
+        (
             crate::layer1::flora::consume_silent_flora_system.after(movement_system),
             crate::layer1::fauna::suppress_fauna_system.after(movement_system),
         )

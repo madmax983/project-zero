@@ -32,3 +32,5 @@ pub use the_visitor::*;
 pub use vermin::*;
 pub use visitor::*;
 pub use wild_child::*;
+pub mod swarm_intelligence;
+pub use swarm_intelligence::*;
