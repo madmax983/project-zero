@@ -20,43 +20,55 @@ impl HypertilePlugin for LogPlugin {
         let world = self.world.borrow();
         render_with_frame(area, buf, |frame| {
             if let Some(log) = world.get_resource::<MessageLog>() {
-                let text = if log.messages.is_empty() {
-                    "(No messages)".to_string()
+                let paragraph = if log.messages.is_empty() {
+                    Paragraph::new("(No messages)").block(
+                        Block::default()
+                            .title(" Message Log ")
+                            .borders(Borders::ALL),
+                    )
                 } else {
-                    // ⚡ Bolt Optimization:
-                    // Pre-allocate a single String with a reasonable capacity.
-                    // This avoids `log.messages.len()` intermediate String allocations from `format!`,
-                    // as well as the intermediate `Vec` allocation from `.collect::<Vec<_>>()`.
-                    // Each message is roughly 50 bytes.
-                    use std::fmt::Write;
-                    let mut buf = String::with_capacity(log.messages.len() * 50);
-                    for (i, msg) in log.messages.iter().enumerate() {
-                        if i > 0 {
-                            buf.push('\n');
-                        }
-                        let prefix = match msg.color {
-                            ratatui::style::Color::Red | ratatui::style::Color::LightRed => "[ERR]",
-                            ratatui::style::Color::Yellow | ratatui::style::Color::LightYellow => {
-                                "[WRN]"
-                            }
-                            ratatui::style::Color::Green | ratatui::style::Color::LightGreen => {
-                                "[OK ]"
-                            }
-                            ratatui::style::Color::Cyan | ratatui::style::Color::LightCyan => {
-                                "[INF]"
-                            }
-                            _ => "[LOG]",
-                        };
-                        let _ = write!(buf, "{} {}", prefix, msg.text);
-                    }
-                    buf
-                };
+                    use ratatui::style::{Modifier, Style};
+                    use ratatui::text::{Line, Span};
 
-                let paragraph = Paragraph::new(text).block(
-                    Block::default()
-                        .title(" Message Log ")
-                        .borders(Borders::ALL),
-                );
+                    let lines: Vec<Line> = log
+                        .messages
+                        .iter()
+                        .map(|msg| {
+                            let (prefix, prefix_style) = match msg.color {
+                                ratatui::style::Color::Red | ratatui::style::Color::LightRed => (
+                                    "[ERR] ",
+                                    Style::default().fg(msg.color).add_modifier(Modifier::BOLD),
+                                ),
+                                ratatui::style::Color::Yellow
+                                | ratatui::style::Color::LightYellow => (
+                                    "[WRN] ",
+                                    Style::default().fg(msg.color).add_modifier(Modifier::BOLD),
+                                ),
+                                ratatui::style::Color::Green
+                                | ratatui::style::Color::LightGreen => (
+                                    "[OK ] ",
+                                    Style::default().fg(msg.color).add_modifier(Modifier::BOLD),
+                                ),
+                                ratatui::style::Color::Cyan | ratatui::style::Color::LightCyan => (
+                                    "[INF] ",
+                                    Style::default().fg(msg.color).add_modifier(Modifier::BOLD),
+                                ),
+                                _ => ("[LOG] ", Style::default().fg(msg.color)),
+                            };
+
+                            Line::from(vec![
+                                Span::styled(prefix, prefix_style),
+                                Span::styled(msg.text.clone(), Style::default().fg(msg.color)),
+                            ])
+                        })
+                        .collect();
+
+                    Paragraph::new(lines).block(
+                        Block::default()
+                            .title(" Message Log ")
+                            .borders(Borders::ALL),
+                    )
+                };
 
                 frame.render_widget(paragraph, frame.area());
             } else {
