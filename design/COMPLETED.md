@@ -433,3 +433,4 @@
 - [x] `INT-1132` Integration: Deep Crust Resonance -> Chronicle — completed 2026-05-01
 - [x] `1122` The Rust-Lung Epidemic — `specs/1122-rust-lung-epidemic.md` — completed 2024-05-24
 
+- [x] `1119` Personal Shields — `specs/1119-personal-shields.md` - completed 2024-05-25

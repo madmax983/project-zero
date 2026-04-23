@@ -25,10 +25,17 @@ impl Default for XenofloraPetSpreadConfig {
     }
 }
 
+#[allow(clippy::type_complexity)]
 pub fn pet_viral_spread_system(
     mut commands: Commands,
-    query: Query<(Entity, &crate::layer1::map::GridPosition), (With<crate::layer1::pop::Pop>, Without<XenofloraPet>)>,
-    pet_query: Query<&crate::layer1::map::GridPosition, (With<crate::layer1::pop::Pop>, With<XenofloraPet>)>,
+    query: Query<
+        (Entity, &crate::layer1::map::GridPosition),
+        (With<crate::layer1::pop::Pop>, Without<XenofloraPet>),
+    >,
+    pet_query: Query<
+        &crate::layer1::map::GridPosition,
+        (With<crate::layer1::pop::Pop>, With<XenofloraPet>),
+    >,
 ) {
     let config = XenofloraPetSpreadConfig::default();
     let mut rng = rand::thread_rng();
@@ -161,18 +168,12 @@ mod tests {
 
         let pop2_without_pet = app
             .world_mut()
-            .spawn((
-                Pop,
-                crate::layer1::map::GridPosition { x: 11, y: 11 },
-            ))
+            .spawn((Pop, crate::layer1::map::GridPosition { x: 11, y: 11 }))
             .id();
 
         let pop3_too_far = app
             .world_mut()
-            .spawn((
-                Pop,
-                crate::layer1::map::GridPosition { x: 20, y: 20 },
-            ))
+            .spawn((Pop, crate::layer1::map::GridPosition { x: 20, y: 20 }))
             .id();
 
         // Run multiple times to almost guarantee spread due to 5% chance
