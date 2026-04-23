@@ -435,3 +435,4 @@
 
 - [x] `1119` Personal Shields — `specs/1119-personal-shields.md` - completed 2024-05-25
 - [x] `1104` Swarm Intelligence — `specs/1104-swarm-intelligence.md` — completed 2026-05-18
+- [x] `INT-892` Integration: Ghost Ships -> Chronicle — completed 2026-08-01

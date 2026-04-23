@@ -753,3 +753,9 @@
 - **Systems connected:** `OrbitalDebris` (Orbit) & `Station` -> `evaluate_debris_cult_formation_system` & `apply_debris_cult_morale_system` (Integration) -> `Morale` (Social)
 - **Glue added:** Added `evaluate_debris_cult_formation_system` to assign `DebrisCultist` and `apply_debris_cult_morale_system` to add Morale based on debris density. Registered in `SimulationSchedule` (Layer 2 Execution).
 - **Tests:** `tests/integration/orbital_debris_cult_bridge.rs`
+
+### INT-892: Ghost Ships -> Chronicle
+- **Date:** 2026-08-01
+- **Systems connected:** `evaluate_transit_system` and `evaluate_lost_ship_return_system` (Ghost Ships) -> `AddChronicleEvent` (Chronicle)
+- **Glue added:** Registered `evaluate_transit_system` and `evaluate_lost_ship_return_system` in `Layer3SystemSet`.
+- **Tests:** `tests/integration/ghost_ships_bridge.rs`

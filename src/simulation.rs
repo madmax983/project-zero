@@ -451,6 +451,8 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
         crate::layer3::market::ephemeral_market::process_market_despawn_system,
         crate::layer3::market::ephemeral_market::fulfill_market_trade_system,
         crate::layer3::council::enforce_resolutions_system,
+        crate::layer3::ghost_ships::evaluate_transit_system,
+        crate::layer3::ghost_ships::evaluate_lost_ship_return_system,
     ));
 
     // --- Layer 2 Integration ---
