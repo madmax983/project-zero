@@ -6,7 +6,6 @@
 - [ ] `1120` Xenoflora Pet Craze — `specs/1120-xenoflora-pet-craze.md`
 
 - [ ] `1117` Sonic Suppression — `specs/1117-sonic-suppression.md`
-- [ ] `1108` The Rearguard — `specs/1108-the-rearguard.md`
 - [ ] `1107` Astrological Beliefs — `specs/1107-astrological-beliefs.md`
 - [ ] `1106` Photophobic Resources — `specs/1106-photophobic-resources.md`
 - [ ] `1105` Auroral Harvesting — `specs/1105-auroral-harvesting.md`
