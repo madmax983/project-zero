@@ -14,3 +14,6 @@
 ## 2024-04-22 - Deep Lore Over Mass Generation
 **Confusion:** Previous attempts tried to automate module-level documentation by inserting boilerplate comments into hundreds of files. This added noise without narrative value and violated the philosophy that documentation should explain the *why* and provide executable examples.
 **Clarification:** Pivoted to a targeted approach. Documented the `gpu::context` module with deep lore ("The Bridge to Silicon"), explaining the motivation for GPU offloading, adding executable `# Examples` blocks, and outlining `# Panics` conditions for `GpuContext::new`. True documentation requires narrative, not just repetition.
+## 2024-04-23 - Swarm Intelligence Radius
+**Confusion:** The activation condition for drone "Swarm Intelligence" (upgrading from Low to High intelligence) relied on a magic `clustering_radius` of 5.0, which wasn't visible unless looking at the raw code.
+**Clarification:** Documented the `update_drone_clusters` system to explicitly state the 5.0 tile radius and the requirement of having at least 2 other nearby drones to form the mesh network. Added executable doc-tests proving this behavior.
