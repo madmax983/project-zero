@@ -17015,3 +17015,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** How much of your colony's resources and the sanity of your own people will you sacrifice to appease one terrible individual in order to prevent an unwinnable galactic war?
 
 ---
+
+## The Nostalgia Contagion
+
+**Layer:** 1
+
+**Fantasy:** Watching your pioneers become paralyzed by the memory of the home they left behind.
+
+**Mechanic:** A Pop with low mood might develop the "Homesick" trait. They begin talking to other Pops about Earth (or the Core Worlds). This spreads "Nostalgia" like a virus. Highly nostalgic Pops suffer massive productivity penalties and demand the construction of useless, inefficient "Earth-like" monuments or biomes to feel better.
+
+**Emergence:** A minor drop in morale during a harsh winter causes one colonist to start complaining. Within a month, the entire mining sector goes on strike, demanding you waste precious water to build a literal grass park in the middle of a barren, toxic asteroid.
+
+**Tension:** Do you harshly silence the homesick to stop the spread, causing immediate outrage, or do you waste critical survival resources building a piece of home just to get them back to work?
+
+---
+
+## The Biomass Dividend
+
+**Layer:** 1
+
+**Fantasy:** The macabre realization that every tragedy is also a resource opportunity.
+
+**Mechanic:** When Pops die, their bodies must be processed. If the colony lacks proper mortuary infrastructure or is starving, bodies can be redirected to the Recyclers to become raw Biomass (food/fertilizer). Doing so creates an immense hidden "Grief" penalty that stays attached to the resulting food supply.
+
+**Emergence:** Your colony is starving, so you start secretly recycling the dead. The food supply stabilizes, but over the next year, random Pops eating the rations suddenly suffer psychotic breaks or intense depression, eventually realizing what they've been eating, leading to a massive, violent uprising against the administration.
+
+**Tension:** Do you let your people starve with dignity, or feed them their dead friends and risk a deferred, explosive psychological collapse of the colony?
+
+---
+
+## Sleep Debt Contagion
+
+**Layer:** 1
+
+**Fantasy:** The slow, terrifying collapse of a colony's sanity because the night shift never ended.
+
+**Mechanic:** When you force Pops to work extreme overtime, they accumulate "Sleep Debt." Pops with high Sleep Debt become clumsy (causing accidents) and irritable. Crucially, when an exhausted Pop interacts with a rested Pop, their erratic behavior and stress "infect" the rested Pop, slightly lowering their rest bar and increasing their stress.
+
+**Emergence:** You push your engineers too hard to finish a reactor. One exhausted engineer makes a mistake, causing a minor fire. The ensuing panic wakes up the housing block. Now the whole block is tired, causing a cascade of industrial accidents the next day, which keeps more people awake, until the entire colony collapses into a state of mass psychosis.
+
+**Tension:** Do you crunch your workers to meet a critical Layer 2 deadline, risking a cascading psychological collapse that could ruin the colony's productivity for months?
+
+---
