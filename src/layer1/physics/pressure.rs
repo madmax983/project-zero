@@ -61,6 +61,9 @@ pub struct PressureGrid {
     pub(crate) height: usize,
     /// Flattened grid values.
     pub(crate) values: Vec<f32>,
+    /// Secondary buffer for diffusion calculation (double buffering).
+    /// Used to avoid allocating a new vector every tick.
+    pub(crate) scratch: Vec<f32>,
 }
 
 impl PressureGrid {
@@ -80,6 +83,7 @@ impl PressureGrid {
             width,
             height,
             values: vec![0.0; size],
+            scratch: vec![0.0; size],
         }
     }
 
@@ -138,7 +142,11 @@ impl PressureGrid {
         clippy::cast_sign_loss
     )]
     pub fn diffuse(&mut self, blockers: &HashMap<(i32, i32), f32>) {
-        let mut new_values = self.values.clone();
+        // Ensure scratch buffer size matches (in case of dynamic resizing, though rare)
+        if self.scratch.len() != self.values.len() {
+            self.scratch = vec![0.0; self.values.len()];
+        }
+        self.scratch.copy_from_slice(&self.values);
 
         for y in 0..self.height {
             for x in 0..self.width {
@@ -152,7 +160,7 @@ impl PressureGrid {
                     .get(&(x as i32, y as i32))
                     .is_some_and(|&trans| trans <= f32::EPSILON)
                 {
-                    if let Some(v) = new_values.get_mut(idx) {
+                    if let Some(v) = self.scratch.get_mut(idx) {
                         *v = 0.0;
                     }
                     continue;
@@ -191,13 +199,13 @@ impl PressureGrid {
                 }
 
                 if total_weight > 0.0 {
-                    if let Some(v) = new_values.get_mut(idx) {
+                    if let Some(v) = self.scratch.get_mut(idx) {
                         *v = sum / total_weight;
                     }
                 }
             }
         }
-        self.values = new_values;
+        std::mem::swap(&mut self.values, &mut self.scratch);
     }
 }
 
