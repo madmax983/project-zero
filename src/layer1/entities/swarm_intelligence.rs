@@ -1,15 +1,47 @@
+//! Swarm Intelligence and Hive Mind mechanics for Drones.
+//!
+//! Drones are usually simple-minded workers, but when grouped together in sufficient numbers,
+//! they form a localized mesh network, upgrading their capabilities from `Low` to `High` intelligence.
+//! This module handles the spatial clustering logic that detects when a "Swarm" has formed.
+
 use crate::layer1::entities::drone::Drone;
 use crate::layer1::map::GridPosition;
 use bevy_ecs::prelude::*;
 
+/// Defines the cognitive capacity of a drone based on network density.
+///
+/// # Examples
+///
+/// ```
+/// use scale::layer1::entities::swarm_intelligence::IntelligenceLevel;
+///
+/// let isolated_drone = IntelligenceLevel::Low;
+/// let swarm_drone = IntelligenceLevel::High;
+/// assert_ne!(isolated_drone, swarm_drone);
+/// ```
 #[derive(PartialEq, Debug, Clone, Copy)]
 pub enum IntelligenceLevel {
+    /// Drone operates on basic, isolated logic.
     Low,
+    /// Drone is part of a swarm and executes advanced parallel tasks.
     High,
 }
 
+/// Component that tracks the current emergent behavior state of a drone.
+///
+/// By default, newly spawned drones have [`IntelligenceLevel::Low`].
+///
+/// # Examples
+///
+/// ```
+/// use scale::layer1::entities::swarm_intelligence::{DroneBehavior, IntelligenceLevel};
+///
+/// let behavior = DroneBehavior::default();
+/// assert_eq!(behavior.intelligence_level, IntelligenceLevel::Low);
+/// ```
 #[derive(Component)]
 pub struct DroneBehavior {
+    /// The current intelligence level, updated dynamically by clustering systems.
     pub intelligence_level: IntelligenceLevel,
 }
 
@@ -21,6 +53,36 @@ impl Default for DroneBehavior {
     }
 }
 
+/// System that upgrades or downgrades drone intelligence based on proximity to peers.
+///
+/// A drone requires at least 2 other drones within a `clustering_radius` of `5.0` tiles
+/// to form a mesh network and achieve [`IntelligenceLevel::High`].
+///
+/// # Examples
+///
+/// ```
+/// use bevy_ecs::prelude::*;
+/// use scale::layer1::entities::drone::Drone;
+/// use scale::layer1::entities::swarm_intelligence::{DroneBehavior, IntelligenceLevel, update_drone_clusters};
+/// use scale::layer1::map::GridPosition;
+///
+/// let mut world = World::new();
+///
+/// // Spawn a cluster of 3 drones close together
+/// world.spawn((Drone::default(), GridPosition { x: 0, y: 0 }, DroneBehavior::default()));
+/// world.spawn((Drone::default(), GridPosition { x: 1, y: 0 }, DroneBehavior::default()));
+/// world.spawn((Drone::default(), GridPosition { x: 0, y: 1 }, DroneBehavior::default()));
+///
+/// let mut schedule = Schedule::default();
+/// schedule.add_systems(update_drone_clusters);
+/// schedule.run(&mut world);
+///
+/// // All three drones should now have High intelligence
+/// let mut query = world.query::<&DroneBehavior>();
+/// for behavior in query.iter(&world) {
+///     assert_eq!(behavior.intelligence_level, IntelligenceLevel::High);
+/// }
+/// ```
 pub fn update_drone_clusters(
     mut query: Query<(Entity, &GridPosition, &mut DroneBehavior), With<Drone>>,
 ) {
@@ -53,6 +115,29 @@ pub fn update_drone_clusters(
     }
 }
 
+/// Executes drone tasks, scaling complexity based on current intelligence.
+///
+/// Drones with [`IntelligenceLevel::High`] can perform complex swarm logic,
+/// while those with [`IntelligenceLevel::Low`] fall back to basic, "dumb" logic.
+///
+/// # Examples
+///
+/// ```
+/// use bevy_ecs::prelude::*;
+/// use scale::layer1::entities::drone::Drone;
+/// use scale::layer1::entities::swarm_intelligence::{DroneBehavior, IntelligenceLevel, update_drone_behavior};
+///
+/// let mut world = World::new();
+/// world.spawn((
+///     Drone::default(),
+///     DroneBehavior { intelligence_level: IntelligenceLevel::High }
+/// ));
+///
+/// let mut schedule = Schedule::default();
+/// schedule.add_systems(update_drone_behavior);
+/// schedule.run(&mut world);
+/// // High intelligence logic executes cleanly without panic.
+/// ```
 pub fn update_drone_behavior(query: Query<&DroneBehavior, With<Drone>>) {
     // Placeholder for actual behavior execution based on intelligence level
     for behavior in query.iter() {
