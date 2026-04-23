@@ -16973,3 +16973,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you deny entry to your own citizens because you can't afford the medical infrastructure to keep them alive on the surface, or crash your economy to fulfill your moral duty?
 
 ---
+
+## The Scrap Heirs
+
+**Layer:** 1
+
+**Fantasy:** Your colony's survival depends on scavengers who view the ruins of old colonies as their birthright, creating a subculture of junk-lords.
+
+**Mechanic:** Debris from destroyed buildings or crashed ships becomes "Scrap." Certain Pops develop the "Scrapper" trait, becoming highly efficient at harvesting it but fiercely territorial over scrap piles. They refuse to let regular engineers touch the scrap and demand to build their own unregulated "Scrap Shanty" housing from it.
+
+**Emergence:** You try to clear a massive wreckage field to build a spaceport, but the Scrap Heirs blockade the site, claiming the wreckage is sacred. If forced out, they might sabotage the new spaceport using salvaged explosives.
+
+**Tension:** Do you rely on the cheap, fast resource generation of the Scrap Heirs, knowing they will eventually balkanize your colony into unregulated slums, or do you violently clear them out to maintain organized infrastructure?
+
+---
+
+## Echoes of the Predecessors
+
+**Layer:** Cross-layer
+
+**Fantasy:** Colonizing a world built on the literal bones and buried secrets of a failed empire, where their mistakes haunt your present.
+
+**Mechanic:** When founding a new Layer 1 colony on a previously settled (but failed) Layer 2 node, you inherit hidden "Echo" structures beneath the terrain. These can be incredible boons (a sealed vault of rare tech) or catastrophic curses (a dormant bioweapon facility or unexploded ordnance). Excavation carries massive risk and massive reward.
+
+**Emergence:** Your miners strike a rich vein of ore, only to accidentally breach the containment seals of an ancient, hyper-advanced cryo-prison. You suddenly have 500 hostile, starving super-soldiers rampaging through your fragile early-game colony.
+
+**Tension:** Do you forbid deep excavation and rely on slow, surface-level farming to stay safe, or do you dig greedily, risking the sudden destruction of your colony in exchange for a massive technological leap?
+
+---
+
+## The Diplomatic Hostage
+
+**Layer:** 3 -> 1
+
+**Fantasy:** The fate of intergalactic peace rests on the shoulders—and the mood—of a single, spoiled alien dignitary living in your colony.
+
+**Mechanic:** To secure a vital alliance at Layer 3, you must accept a "Diplomatic Hostage" (a unique Pop) into one of your Layer 1 colonies. This Pop has absurdly high luxury needs, refuses to work, and constantly generates negative social interactions. If their mood drops too low, or if they die, the alliance breaks, and war is immediately declared.
+
+**Emergence:** You build an incredibly expensive, lavish palace just for this one alien. But during a food shortage, the alien demands an entire stockpile of your rare delicacies. Your own people riot from starvation outside the palace gates while the alien complains about the noise.
+
+**Tension:** How much of your colony's resources and the sanity of your own people will you sacrifice to appease one terrible individual in order to prevent an unwinnable galactic war?
+
+---
