@@ -104,3 +104,83 @@ pub fn render_notifications(frame: &mut Frame, area: Rect, world: &World) {
     let list = List::new(items);
     frame.render_widget(list, inner);
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::layer1::notifications::{NotificationQueue, NotificationSeverity};
+    use ratatui::backend::TestBackend;
+    use ratatui::Terminal;
+
+    #[test]
+    fn test_render_no_resource() {
+        let world = World::new();
+        let backend = TestBackend::new(40, 20);
+        let mut terminal = Terminal::new(backend).unwrap();
+        terminal
+            .draw(|f| {
+                render_notifications(f, f.area(), &world);
+            })
+            .unwrap();
+
+        let buffer = terminal.backend().buffer();
+        let cells: Vec<String> = buffer
+            .content
+            .iter()
+            .map(|c| c.symbol().to_string())
+            .collect();
+        let full_text = cells.join("");
+
+        assert!(!full_text.contains("Notifications"));
+    }
+
+    #[test]
+    fn test_render_empty_queue() {
+        let mut world = World::new();
+        world.insert_resource(NotificationQueue::default());
+        let backend = TestBackend::new(40, 20);
+        let mut terminal = Terminal::new(backend).unwrap();
+        terminal
+            .draw(|f| {
+                render_notifications(f, f.area(), &world);
+            })
+            .unwrap();
+
+        let buffer = terminal.backend().buffer();
+        let cells: Vec<String> = buffer
+            .content
+            .iter()
+            .map(|c| c.symbol().to_string())
+            .collect();
+        let full_text = cells.join("");
+
+        assert!(!full_text.contains("Notifications"));
+    }
+
+    #[test]
+    fn test_render_active_notifications() {
+        let mut world = World::new();
+        let mut queue = NotificationQueue::default();
+        queue.add("Test Alert".to_string(), NotificationSeverity::Info, 0);
+        world.insert_resource(queue);
+
+        let backend = TestBackend::new(40, 20);
+        let mut terminal = Terminal::new(backend).unwrap();
+        terminal
+            .draw(|f| {
+                render_notifications(f, f.area(), &world);
+            })
+            .unwrap();
+
+        let buffer = terminal.backend().buffer();
+        let cells: Vec<String> = buffer
+            .content
+            .iter()
+            .map(|c| c.symbol().to_string())
+            .collect();
+        let full_text = cells.join("");
+
+        assert!(full_text.contains("Notifications"));
+        assert!(full_text.contains("Test Alert"));
+    }
+}
