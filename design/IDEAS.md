@@ -16931,3 +16931,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you give in to the strike demands quickly, or send in armed security in zero-G to forcibly restart the life support systems before the colony suffocates?
 
 ---
+
+## The Subterranean Smuggler
+
+**Layer:** Cross-layer
+
+**Fantasy:** The underground is a world of its own, bypassing the eyes of the surface.
+
+**Mechanic:** Deep subterranean mining shafts can accidentally connect to natural "Underground Tunnels" leading off-map. These tunnels act as hidden trade routes for the black market, entirely bypassing Layer 2 blockades and customs.
+
+**Emergence:** You are under a strict orbital blockade and starving. A desperate miner breaks through a cavern wall, discovering a tunnel. Soon, off-world food flows in through the mines, but heavily armed smugglers start walking around your colony, creating a heavily militarized, autonomous "under-city."
+
+**Tension:** Do you seal the tunnel to maintain absolute control of your borders, or rely on the dangerous smugglers to survive the blockade?
+
+---
+
+## The Traitor's Broadcast
+
+**Layer:** Cross-layer
+
+**Fantasy:** The war of words is louder than guns. A charismatic defector trying to tear you apart from the inside.
+
+**Mechanic:** If a high-status Pop (Leader, General) defects to a rival Layer 3 empire, they may begin broadcasting propaganda specifically tailored to their former Layer 1 home. These broadcasts bypass standard comms blocks and directly target the defectors' old friends and family, causing extreme, targeted Unrest and sabotage.
+
+**Emergence:** Your legendary Admiral defects after you refused to fund their fleet. Now, they are broadcasting from enemy space, and half your military starts sabotaging your own planetary defense cannons because the Admiral convinced them you are a tyrant.
+
+**Tension:** Do you launch a costly, dangerous deep-strike assassination mission to silence the broadcaster, or implement draconian information control that crushes the morale of the entire colony?
+
+---
+
+## The Gravity-Sick Generation
+
+**Layer:** 1
+
+**Fantasy:** Born in the void, broken by the earth.
+
+**Mechanic:** Pops born on orbital stations or low-gravity ships develop "Zero-G Adaptation". If they migrate to a standard or high-gravity Layer 1 planet, they suffer severe movement penalties and constant health drain ("Gravity Sickness") unless placed in expensive "Suspension Tanks" or given extensive genetic therapy.
+
+**Emergence:** A massive orbital habitat gets destroyed, sending millions of refugees down to the planet below. They are saved from the vacuum, but the planet's gravity is crushing them. You have to rapidly build entire specialized medical districts just to keep them from dying of heart failure, crashing your economy to save refugees who can't even work.
+
+**Tension:** Do you deny entry to your own citizens because you can't afford the medical infrastructure to keep them alive on the surface, or crash your economy to fulfill your moral duty?
+
+---
