@@ -296,7 +296,7 @@ mod tests {
         // Run system enough times to guarantee spread (since it's probabilistic, we might need to force it or mock RNG in impl, or just run many times)
         // For test stability, we usually mock RNG or set probability to 1.0 in a config resource.
         // Assuming we can control it or it happens eventually:
-        for _ in 0..50 {
+        for _ in 0..1000 {
             // Increased iterations to be safe with RNG
             fire_spread_system(&mut world);
         }

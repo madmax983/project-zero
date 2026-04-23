@@ -45,7 +45,11 @@ pub fn paperwork_singularity_system(
             let mut applied = false;
             for mut morale in &mut pop_query {
                 // Ensure we don't spam the modifier every tick while stats are catching up
-                if !morale.modifiers.iter().any(|m| m.label == "Bureaucratic Whiplash") {
+                if !morale
+                    .modifiers
+                    .iter()
+                    .any(|m| m.label == "Bureaucratic Whiplash")
+                {
                     morale.add_modifier(MoodModifier {
                         label: "Bureaucratic Whiplash".to_string(),
                         value: -0.15,

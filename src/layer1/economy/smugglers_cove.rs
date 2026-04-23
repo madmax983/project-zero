@@ -79,7 +79,7 @@ mod tests {
         // Force deterministic spawn by setting rng probability check to 1.0
         // in test environment, or run enough ticks to guarantee it.
         // For simplicity in this test, we run for 1000 ticks to make failure statistically impossible.
-        for _ in 0..100000 {
+        for _ in 0..1000 {
             app.update();
         }
 

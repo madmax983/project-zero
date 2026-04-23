@@ -4,7 +4,13 @@ use crate::layer1::*;
 use bevy_ecs::prelude::*;
 
 pub fn register(schedule: &mut Schedule) {
-    schedule.add_systems(crate::layer1::social::xenoflora_pet::apply_pet_mood_boost.in_set(Layer1SystemSet::Consumption));
+    schedule.add_systems(
+        (
+            crate::layer1::social::xenoflora_pet::apply_pet_mood_boost,
+            crate::layer1::social::xenoflora_pet::pet_viral_spread_system,
+        )
+            .in_set(Layer1SystemSet::Consumption),
+    );
 
     schedule.add_systems(
         (
