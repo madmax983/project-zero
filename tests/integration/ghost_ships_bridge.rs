@@ -1,6 +1,9 @@
 use bevy::prelude::*;
-use scale::layer3::ghost_ships::{GhostShip, LostInTransit, EvaluateTransitEvent, EvaluateLostShipReturnEvent, evaluate_transit_system, evaluate_lost_ship_return_system};
 use scale::layer1::chronicle::AddChronicleEvent;
+use scale::layer3::ghost_ships::{
+    evaluate_lost_ship_return_system, evaluate_transit_system, EvaluateLostShipReturnEvent,
+    EvaluateTransitEvent, GhostShip, LostInTransit,
+};
 
 #[derive(Component)]
 struct Ship;
@@ -14,10 +17,10 @@ fn test_ghost_ships_integration() {
     app.add_event::<EvaluateLostShipReturnEvent>();
     app.add_event::<AddChronicleEvent>();
 
-    app.add_systems(Update, (
-        evaluate_transit_system,
-        evaluate_lost_ship_return_system,
-    ).chain());
+    app.add_systems(
+        Update,
+        (evaluate_transit_system, evaluate_lost_ship_return_system).chain(),
+    );
 
     let ship = app.world_mut().spawn(Ship).id();
 
@@ -29,7 +32,8 @@ fn test_ghost_ships_integration() {
     assert!(app.world().get::<LostInTransit>(ship).is_some());
 
     // Simulate return event
-    app.world_mut().send_event(EvaluateLostShipReturnEvent { ship });
+    app.world_mut()
+        .send_event(EvaluateLostShipReturnEvent { ship });
     app.update();
 
     // Check if GhostShip is added and LostInTransit is removed
