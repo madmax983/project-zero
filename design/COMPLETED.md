@@ -7,6 +7,7 @@
 - [x] `775` The Quantum Famine — `specs/775-the-quantum-famine.md` — completed 2026-03-20
 - [x] `626` The Cartographer's Curse — `specs/626-cartographers-curse.md` — completed 2026-03-24
 # Completed Specs
+- [x] `1120` Xenoflora Pet Craze — `specs/1120-xenoflora-pet-craze.md` — completed 2024-05-24
 - [x] `1094` Ecological Succession — `specs/1094-ecological-succession.md` — completed 2026-08-01
 - [x] `INT-1094` Integration: Ecological Succession -> Flora Clearing — completed 2026-08-01
 - [x] `1117` Sonic Suppression — `specs/1117-sonic-suppression.md` — completed 2026-10-15
@@ -432,4 +433,3 @@
 - [x] `INT-1132` Integration: Deep Crust Resonance -> Chronicle — completed 2026-05-01
 - [x] `1122` The Rust-Lung Epidemic — `specs/1122-rust-lung-epidemic.md` — completed 2024-05-24
 
-- [x] `1120` Xenoflora Pet Craze - `specs/1120-xenoflora-pet-craze.md` - completed 2024-05-24
