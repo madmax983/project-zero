@@ -10,3 +10,6 @@
 **[Optimizing Silent Mutiny Cargo Drain]
 **Learning:** Collecting HashMap keys into a `Vec` for mutation forces an unnecessary allocation and requires secondary lookups, which hurts performance when called often.
 **Action:** Use `.values_mut()` to iterate directly over the mutable values.
+**[Title: Double Buffering for PressureGrid Diffusion]**
+**Learning:** Found an unnecessary `Vec::clone()` occurring every tick in `PressureGrid::diffuse()`. Because `PressureGrid` acts as a cellular automaton that runs continuously, this was causing constant memory allocations.
+**Action:** Introduced a secondary `scratch` buffer to `PressureGrid`. We now copy the current state into the scratch buffer at the start of the tick, calculate the next generation into the scratch buffer, and then use `std::mem::swap` to flip the buffers. This completely eliminates the per-tick allocation while remaining safe.
