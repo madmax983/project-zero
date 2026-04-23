@@ -7042,3 +7042,28 @@ Used for The Archaeological Contagion events. The ancient technology reverse-eng
 - a minor improvement
 - severe damage to the core
 - unexpected functionality
+
+## Fragment Type: [RIVAL_CORP_NAME]
+
+- OmniCorp
+- Apex Extractions
+- The Zenith Syndicate
+- Vindicator Logistics
+- Horizon Heavy Industries
+- The Obsidian Trust
+
+## Fragment Type: [RIVAL_MOTIVE]
+
+- aggressive resource acquisition
+- enforcement of disputed territorial rights
+- corporate spite
+- a desperate search for raw materials
+- establishing a black-market foothold
+
+## Fragment Type: [RESOURCE_DRAIN_DESC]
+
+- It feels like theft
+- We starve while their silos burst
+- They leave nothing but dust
+- Our quotas suffer as their ledgers grow
+- The earth screams under their machines

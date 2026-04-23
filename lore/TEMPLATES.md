@@ -6260,3 +6260,53 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: [ENGINEER_NAME] couldn't leave well enough alone. They dismantled the [MACHINE] in [COLONY]. Result: [OUTCOME]."
 - "An unauthorized modification to the [MACHINE] by [ENGINEER_NAME]. The outcome was [OUTCOME]. [YEAR]."
 - "[YEAR]: The genius of [ENGINEER_NAME] struck again. They tinkered with the [MACHINE] at [COLONY]. The result was [OUTCOME]."
+
+## Template: RIVAL_ARRIVAL
+
+**Generates:** Play event (rival colony lands)
+**Slots:** [RIVAL_CORP_NAME], [COLONY], [YEAR], [RIVAL_MOTIVE]
+
+**Patterns:**
+- "Year [YEAR]: Drop-ships on the horizon. [RIVAL_CORP_NAME] has landed. Their claim: [RIVAL_MOTIVE]."
+- "[RIVAL_CORP_NAME] surveyors touch down near [COLONY]. They say it is for [RIVAL_MOTIVE]. We know better."
+- "The sky burns with descent thrusters. [RIVAL_CORP_NAME] brings [RIVAL_MOTIVE] to our doorstep."
+
+## Template: RIVAL_EXPANSION
+
+**Generates:** Play event (rival claims territory)
+**Slots:** [RIVAL_CORP_NAME], [YEAR], [TERRITORY_SIZE]
+
+**Patterns:**
+- "Borders shift. [RIVAL_CORP_NAME] stakes claim to [TERRITORY_SIZE] sectors."
+- "Warning markers erected in the night. [RIVAL_CORP_NAME] is growing."
+- "Year [YEAR]: [RIVAL_CORP_NAME] expands its perimeter, choking our outer sectors."
+
+## Template: RIVAL_RESOURCE_DRAIN
+
+**Generates:** Play event (rival drains resources)
+**Slots:** [RIVAL_CORP_NAME], [RESOURCE], [RESOURCE_DRAIN_DESC]
+
+**Patterns:**
+- "[RIVAL_CORP_NAME] harvesters strip the land of [RESOURCE]. [RESOURCE_DRAIN_DESC]."
+- "We watch them load [RESOURCE] onto their haulers. [RESOURCE_DRAIN_DESC]."
+- "The veins of [RESOURCE] run dry, siphoned by [RIVAL_CORP_NAME] drills."
+
+## Template: RIVAL_CONFLICT_START
+
+**Generates:** Play event (hostilities begin)
+**Slots:** [COLONY], [RIVAL_CORP_NAME], [YEAR]
+
+**Patterns:**
+- "Negotiations fail. Shots fired at the boundary. [COLONY] is at war with [RIVAL_CORP_NAME]."
+- "Sabotage at the outposts. [RIVAL_CORP_NAME] denies involvement. The militia mobilizes."
+- "Year [YEAR]: The cold war turns hot. [RIVAL_CORP_NAME] forces cross the line."
+
+## Template: RIVAL_RESOLUTION
+
+**Generates:** Play event (rival conflict ends)
+**Slots:** [COLONY], [RIVAL_CORP_NAME], [YEAR], [RESOLUTION_TYPE]
+
+**Patterns:**
+- "Year [YEAR]: The dust settles. [RIVAL_CORP_NAME] retreats. Our borders are secure."
+- "Victory. The [RIVAL_CORP_NAME] silos now belong to [COLONY]."
+- "An agreement reached. [RIVAL_CORP_NAME] signs the accord. [RESOLUTION_TYPE]."
