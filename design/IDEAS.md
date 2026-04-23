@@ -16781,7 +16781,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you artificially induce crises just to keep your civilization culturally flexible, or enjoy the stability of a petrified utopia until something completely new kills it?
 
 ---
-## Brain Drain Migration
+## Brain Drain Migration [SPECCED]
 
 **Layer:** Cross-layer
 
