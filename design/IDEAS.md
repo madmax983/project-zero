@@ -5767,7 +5767,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Scapegoat
+## The Scapegoat [SPECCED]
 
 **Layer:** 1
 

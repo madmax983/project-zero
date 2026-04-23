@@ -790,3 +790,4 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1138` Organic Recycling — `specs/1138-organic-recycling.md`
 - [ ] `1139` Magnetic Reversal — `specs/1139-magnetic-reversal.md`
 - [ ] `1140` Chain of Command — `specs/1140-chain-of-command.md`
+- [ ] `1142` The Scapegoat — `specs/1142-the-scapegoat.md`
