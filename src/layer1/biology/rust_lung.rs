@@ -1,11 +1,11 @@
-use crate::layer1::biology::health::{Health, HealthCondition};
+use crate::layer1::biology::health::Health;
 use crate::layer1::entities::pop::Pop;
 use bevy_ecs::prelude::*;
 
 /// Applies toxic gas damage to a Pop, unless they have RustLung immunity.
 pub fn apply_toxic_gas_damage(world: &mut World, pop_id: Entity, damage: f32) {
     if let Some(mut health) = world.get_mut::<Health>(pop_id) {
-        if !health.has_condition(HealthCondition::RustLung) {
+        if !health.has_rust_lung {
             health.take_damage(damage);
         }
     }
@@ -14,7 +14,7 @@ pub fn apply_toxic_gas_damage(world: &mut World, pop_id: Entity, damage: f32) {
 /// A system that runs every tick to degrade the health of Pops with RustLung.
 pub fn rust_lung_degradation_system(mut query: Query<&mut Health, With<Pop>>) {
     for mut health in query.iter_mut() {
-        if health.has_condition(HealthCondition::RustLung) {
+        if health.has_rust_lung {
             // Degrades health slightly over time
             health.take_damage(0.01);
         }
@@ -81,7 +81,7 @@ mod tests {
         );
 
         let health = app.world().get::<Health>(pop_id).unwrap();
-        assert!(health.has_condition(HealthCondition::RustLung));
+        assert!(health.has_rust_lung);
     }
 
     #[test]
@@ -89,8 +89,10 @@ mod tests {
         let mut app = App::new();
 
         // Setup pop with Rust-Lung
-        let mut health = Health::default();
-        health.add_condition(HealthCondition::RustLung);
+        let health = Health {
+            has_rust_lung: true,
+            ..Default::default()
+        };
         let pop_id = app.world_mut().spawn((Pop, health.clone())).id();
 
         // Apply toxic gas damage
@@ -118,8 +120,10 @@ mod tests {
         let mut app = App::new();
         app.add_systems(Update, rust_lung_degradation_system);
 
-        let mut health = Health::default();
-        health.add_condition(HealthCondition::RustLung);
+        let health = Health {
+            has_rust_lung: true,
+            ..Default::default()
+        };
         let pop_id = app.world_mut().spawn((Pop, health)).id();
 
         app.update();
@@ -183,7 +187,7 @@ mod tests {
 
         let health = app.world().get::<Health>(pop_id).unwrap();
         assert!(
-            !health.has_condition(HealthCondition::RustLung),
+            !health.has_rust_lung,
             "Pop with Rebreather should not get RustLung"
         );
     }

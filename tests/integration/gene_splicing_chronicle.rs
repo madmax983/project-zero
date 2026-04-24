@@ -17,7 +17,7 @@ fn test_gene_splicing_success_emits_chronicle() {
         .world_mut()
         .spawn((
             Traits::default(),
-            Health { current: 100.0, max: 100.0, conditions: Vec::new(), },
+            Health { current: 100.0, max: 100.0, has_rust_lung: false, },
         ))
         .id();
 
@@ -51,7 +51,7 @@ fn test_gene_splicing_failure_emits_chronicle() {
         .world_mut()
         .spawn((
             Traits::default(),
-            Health { current: 100.0, max: 100.0, conditions: Vec::new(), },
+            Health { current: 100.0, max: 100.0, has_rust_lung: false, },
         ))
         .id();
 

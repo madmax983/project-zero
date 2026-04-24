@@ -65,7 +65,7 @@ pub fn apply_planetary_effects_system(
     if atmosphere.toxicity > 0.5 {
         let damage = (atmosphere.toxicity - 0.5) * 0.05;
         for mut health in query.iter_mut() {
-            if !health.has_condition(crate::layer1::biology::health::HealthCondition::RustLung) {
+            if !health.has_rust_lung {
                 health.take_damage(damage);
             }
         }
@@ -231,7 +231,7 @@ mod tests {
                 Health {
                     current: 100.0,
                     max: 100.0,
-                    conditions: Vec::new(),
+                    has_rust_lung: false,
                 },
                 GridPosition { x: 0, y: 0 },
             ))

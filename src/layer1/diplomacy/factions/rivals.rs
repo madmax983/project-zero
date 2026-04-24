@@ -1,3 +1,4 @@
+use crate::layer1::economy::resources::ResourceType;
 use crate::layer1::map::GridPosition;
 use bevy_ecs::prelude::*;
 use std::collections::HashMap;
@@ -17,13 +18,6 @@ pub struct RivalColony {
 pub struct RivalStockpile {
     /// Stored minerals.
     pub minerals: u32,
-}
-
-/// Represents resource types on the grid.
-#[derive(Clone, Copy, PartialEq, Eq, Hash, Debug)]
-pub enum ResourceType {
-    /// Mineral resources.
-    Minerals,
 }
 
 /// A 2D grid representing territory ownership and resources.
@@ -135,10 +129,10 @@ pub fn rival_resource_drain_system(
     for (entity, mut stockpile) in query.iter_mut() {
         if let Some(tiles) = to_drain.get(&entity) {
             for &(x, y) in tiles {
-                let amount = territory.get_resource(x, y, ResourceType::Minerals);
+                let amount = territory.get_resource(x, y, ResourceType::Ore);
                 if amount > 0 {
                     let drain = amount.min(10); // Drain up to 10 at a time
-                    territory.set_resource(x, y, ResourceType::Minerals, amount - drain);
+                    territory.set_resource(x, y, ResourceType::Ore, amount - drain);
                     stockpile.minerals += drain;
                 }
             }
@@ -220,7 +214,7 @@ mod tests {
         // Setup a resource on the grid
         app.world_mut()
             .resource_mut::<TerritoryGrid>()
-            .set_resource(51, 50, ResourceType::Minerals, 100);
+            .set_resource(51, 50, ResourceType::Ore, 100);
 
         let rival_entity = app
             .world_mut()
@@ -239,7 +233,7 @@ mod tests {
 
         let territory = app.world().resource::<TerritoryGrid>();
         assert_eq!(
-            territory.get_resource(51, 50, ResourceType::Minerals),
+            territory.get_resource(51, 50, ResourceType::Ore),
             90,
             "Rival should drain resources from the grid"
         );

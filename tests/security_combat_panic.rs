@@ -16,7 +16,7 @@ fn test_execute_attack_does_not_panic_on_despawned_entity() {
         .spawn(Health {
             current: 100.0,
             max: 100.0,
-            conditions: Vec::new(),
+            has_rust_lung: false,
         })
         .id();
 

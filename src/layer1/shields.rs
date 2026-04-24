@@ -56,7 +56,7 @@ mod tests {
                 Health {
                     current: 100.0,
                     max: 100.0,
-                    conditions: vec![],
+                    has_rust_lung: false,
                 },
                 KineticBarrier {
                     power: 50.0,
@@ -100,7 +100,7 @@ mod tests {
                 Health {
                     current: 100.0,
                     max: 100.0,
-                    conditions: vec![],
+                    has_rust_lung: false,
                 },
                 KineticBarrier {
                     power: 50.0,
@@ -144,7 +144,7 @@ mod tests {
                 Health {
                     current: 100.0,
                     max: 100.0,
-                    conditions: vec![],
+                    has_rust_lung: false,
                 },
                 KineticBarrier {
                     power: 10.0,

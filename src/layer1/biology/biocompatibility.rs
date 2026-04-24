@@ -106,7 +106,7 @@ mod tests {
                 Health {
                     current: 100.0,
                     max: 100.0,
-                    conditions: Vec::new(),
+                    has_rust_lung: false,
                 },
                 GridPosition { x: 0, y: 0 },
             ))
@@ -137,7 +137,7 @@ mod tests {
                 Health {
                     current: 100.0,
                     max: 100.0,
-                    conditions: Vec::new(),
+                    has_rust_lung: false,
                 },
                 GridPosition { x: 0, y: 0 },
             ))
@@ -169,7 +169,7 @@ mod tests {
                 Health {
                     current: 100.0,
                     max: 100.0,
-                    conditions: Vec::new(),
+                    has_rust_lung: false,
                 },
                 GridPosition { x: 0, y: 0 },
                 {
@@ -204,7 +204,7 @@ mod tests {
                 Health {
                     current: 100.0,
                     max: 100.0,
-                    conditions: Vec::new(),
+                    has_rust_lung: false,
                 },
                 GridPosition { x: 0, y: 0 },
                 {

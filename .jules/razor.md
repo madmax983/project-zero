@@ -21,3 +21,13 @@
 **Bloat:** Unused `Mainframe` marker component, dead `Offline` variant from `SystemStatus` enum, and unused helper functions `start_reformat`, `finish_reformat`, and `reformat_system` in `legacy_code.rs`.
 **Cut:** Removed the marker component to avoid collisions with `digital_immortality`, excised the dead enum variant to make pattern matching exhaustive, and deleted the deprecated helper functions.
 **Saved:** ~30 lines of dead code and indirection, preventing component collisions and unhandled enum variants.
+
+## [Reduction]
+**Bloat:** Redundant custom `ResourceType` enum in `src/layer1/diplomacy/factions/rivals.rs` containing only a single variant `Minerals`.
+**Cut:** Deleted the custom enum and replaced it with the existing global `crate::layer1::economy::resources::ResourceType`, migrating the `Minerals` concept to the global `Ore` type.
+**Saved:** 7 lines of redundant enum boilerplate and eliminated cognitive overhead of distinguishing between local and global resource types.
+
+## [Reduction]
+**Bloat:** The `HealthCondition` enum in `src/layer1/biology/health.rs` with exactly one variant (`RustLung`) stored inside a dynamically-allocated `Vec<HealthCondition>`.
+**Cut:** Removed the entire enum and the vector, replacing it with a simple `has_rust_lung: bool` primitive field on the `Health` struct.
+**Saved:** A dedicated struct, dozens of wrapper functions across multiple modules (`add_condition`, `has_condition`), and removed per-entity heap allocations from `Vec::new()`, vastly simplifying the `Health` interface.

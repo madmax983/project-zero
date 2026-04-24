@@ -95,7 +95,7 @@ mod tests {
                 Health {
                     current: 10.0,
                     max: 10.0,
-                    conditions: Vec::new(),
+                    has_rust_lung: false,
                 },
                 Speed {
                     current: 1.0,
@@ -141,7 +141,7 @@ mod tests {
                 Health {
                     current: 10.0,
                     max: 10.0,
-                    conditions: Vec::new(),
+                    has_rust_lung: false,
                 },
                 Speed {
                     current: 1.0,
@@ -174,7 +174,7 @@ mod tests {
                 Health {
                     current: 10.0,
                     max: 10.0,
-                    conditions: Vec::new(),
+                    has_rust_lung: false,
                 },
                 Speed {
                     current: 1.0,

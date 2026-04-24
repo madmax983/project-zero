@@ -33,7 +33,7 @@ fn test_death_causes_witnessed_memory() {
             Health {
                 current: -1.0,
                 max: 100.0,
-                conditions: Vec::new(),
+                has_rust_lung: false,
             }, // Already dead
             Memories::default(),
         ))

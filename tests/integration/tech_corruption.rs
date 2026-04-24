@@ -227,7 +227,7 @@ mod tests {
                 Health {
                     current: 100.0,
                     max: 100.0,
-                    conditions: Vec::new(),
+                    has_rust_lung: false,
                 },
             ))
             .id();
@@ -244,7 +244,7 @@ mod tests {
         world.entity_mut(enemy).insert(Health {
             current: 100.0,
             max: 100.0,
-            conditions: Vec::new(),
+            has_rust_lung: false,
         });
 
         // Reset Cooldown

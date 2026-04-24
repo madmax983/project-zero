@@ -19,7 +19,7 @@ use crate::experimental::bureaucratic_martyrdom::Martyrdom;
 #[cfg(feature = "nova")]
 use crate::experimental::meme_plague::{MemeCarrier, MemeType};
 use crate::layer1::biography::Biography;
-use crate::layer1::biology::health::{Health, HealthCondition};
+use crate::layer1::biology::health::Health;
 use crate::layer1::day_night::DayNightCycle;
 use crate::layer1::energy::load_limits::PowerCable;
 use crate::layer1::energy::{Battery, PowerConsumer, PowerSource};
@@ -727,7 +727,7 @@ fn get_inspector_layout_info(world: &World, entity: Entity) -> InspectorLayoutIn
 
     let has_rust_lung = world
         .get::<Health>(entity)
-        .is_some_and(|h: &Health| h.has_condition(HealthCondition::RustLung));
+        .is_some_and(|h: &Health| h.has_rust_lung);
     let mut details_height = 6;
     if has_rust_lung {
         details_height += 1;
@@ -892,8 +892,7 @@ fn render_bio_monitor(
     let bio_inner = bio_block.inner(details_area);
     frame.render_widget(bio_block, details_area);
 
-    let has_rust_lung =
-        health_opt.is_some_and(|h: &Health| h.has_condition(HealthCondition::RustLung));
+    let has_rust_lung = health_opt.is_some_and(|h: &Health| h.has_rust_lung);
 
     let constraints = if bio_opt.is_some() && has_rust_lung {
         vec![
