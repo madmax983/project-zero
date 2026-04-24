@@ -16,3 +16,4 @@ pub mod physics;
 pub mod pirates;
 pub mod planet;
 pub mod stellar_cartography;
+pub mod treaty_cruisers;

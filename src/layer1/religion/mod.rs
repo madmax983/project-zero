@@ -12,5 +12,5 @@
 //! - **Protests:** Cultists will react negatively (generating unrest) if the objects
 //!   of their worship (buildings) are dismantled.
 
-pub mod prophet_of_the_engine;
 pub mod astrological_beliefs;
+pub mod prophet_of_the_engine;
