@@ -16794,7 +16794,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you provide expensive luxuries and freedoms to keep your brightest minds, or lock down borders and accept the reduced productivity of a captive workforce?
 
 ---
-## Accidental Terraforming
+## Accidental Terraforming [SPECCED]
 
 **Layer:** 2 -> 1
 
