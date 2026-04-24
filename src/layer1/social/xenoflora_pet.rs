@@ -65,8 +65,7 @@ pub fn apply_pet_mood_boost(
     mut resources: ResMut<ColonyResources>,
 ) {
     for (mut morale, pet) in query.iter_mut() {
-        if resources.food >= pet.resource_upkeep {
-            resources.consume(ResourceType::Food, pet.resource_upkeep);
+        if resources.try_consume(ResourceType::Food, pet.resource_upkeep) {
             morale.add_modifier(MoodModifier {
                 label: "Pet Xenoflora".to_string(),
                 value: pet.mood_boost,
