@@ -5809,7 +5809,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Consultant
+## The Consultant [SPECCED]
 
 **Layer:** Cross-layer
 
