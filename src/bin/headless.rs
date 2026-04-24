@@ -50,64 +50,54 @@ use std::io::{self, BufRead, Write};
 
 /// Renders a Comfy Table with a custom title injected into its top border
 fn print_dashboard_table(title: &str, mut table: comfy_table::Table) {
+    use comfy_table::modifiers::UTF8_ROUND_CORNERS;
     use comfy_table::presets::UTF8_FULL;
     use crossterm::style::Stylize;
 
-    table.load_preset(UTF8_FULL);
+    table
+        .load_preset(UTF8_FULL)
+        .apply_modifier(UTF8_ROUND_CORNERS);
 
     // Render the table to string
     let table_str = table.to_string();
-    let lines: Vec<&str> = table_str.lines().collect();
+    let mut lines: Vec<String> = table_str.lines().map(String::from).collect();
 
     if lines.is_empty() {
         return;
     }
 
-    // The first line is the top border
-    let top_line = lines[0];
-    let top_chars: Vec<char> = top_line.chars().collect();
-    let width = top_chars.len();
-
-    // Using string variables initialized from chars instead of literals
+    // Embed the title directly into the first line (the top border)
     let char_tl = '\u{256D}'; // top left rounded
     let char_h = '\u{2500}'; // horiz line
-    let char_tr = '\u{256E}'; // top right rounded
-    let char_bl = '\u{2570}'; // bottom left rounded
-    let char_br = '\u{256F}'; // bottom right rounded
 
+    // Create the title string we want to inject
     let title_prefix = format!("{}{}{} {} ", char_tl, char_h, char_h, title);
     let title_len = title_prefix.chars().count();
 
+    let top_line_chars: Vec<char> = lines[0].chars().collect();
+    let width = top_line_chars.len();
+
     let custom_top = if width > title_len + 1 {
-        let mut remainder = String::new();
-        for (i, &ch) in top_chars.iter().enumerate().skip(title_len) {
-            if i == width - 1 && ch == '\u{2510}' {
-                remainder.push(char_tr);
-            } else if ch == '\u{250C}' {
-                remainder.push(char_h);
-            } else {
-                remainder.push(ch);
-            }
+        // Overlay the title onto the existing top border characters, keeping intersections intact
+        let mut custom = title_prefix;
+        for &ch in top_line_chars.iter().skip(title_len) {
+            custom.push(ch);
         }
-        format!("{}{}", title_prefix, remainder)
+        custom
     } else {
-        // Fallback for extremely narrow tables, just print a basic rounded box top
+        // Fallback for extremely narrow tables
+        let char_tr = '\u{256E}'; // top right rounded
         format!("{}{}{} {}", title_prefix, char_h, char_h, char_tr)
     };
 
-    println!("{}", custom_top.cyan().bold());
+    lines[0] = custom_top;
+
+    // Output the colored title row
+    println!("{}", lines[0].clone().cyan().bold());
 
     // Print the rest of the table
-    for (i, line) in lines.iter().enumerate().skip(1) {
-        if i == lines.len() - 1 {
-            // Replace bottom corners
-            let bottom = line
-                .replace('\u{2514}', &char_bl.to_string())
-                .replace('\u{2518}', &char_br.to_string());
-            println!("{}", bottom.cyan().bold());
-        } else {
-            println!("{}", line);
-        }
+    for line in lines.iter().skip(1) {
+        println!("{}", line);
     }
 }
 
