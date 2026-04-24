@@ -624,3 +624,5 @@ pub mod pirates;
 pub mod sub_lithic;
 pub mod xenoflora_pet;
 pub use xenoflora_pet::*;
+pub mod cargo_cult;
+pub use cargo_cult::*;

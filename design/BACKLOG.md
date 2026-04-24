@@ -644,7 +644,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `980` Atmospheric Sabotage — `specs/980-atmospheric-sabotage.md`
 - [ ] `981` Corporate Espionage: The Trojan Architect — `specs/981-corporate-espionage-trojan-architect.md`
 - [ ] `982` The Generation Ship Mutiny — `specs/982-the-generation-ship-mutiny.md`
-- [ ] `983` Cargo Cult Logistics — `specs/983-cargo-cult-logistics.md`
 
 - [ ] `989` Heat Death — `specs/989-heat-death.md`
 - [ ] `990` Treaty Cruisers — `specs/990-treaty-cruisers.md`
