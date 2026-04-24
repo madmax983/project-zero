@@ -5823,7 +5823,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Doomsday Clock
+## The Doomsday Clock [SPECCED]
 
 **Layer:** 1
 
