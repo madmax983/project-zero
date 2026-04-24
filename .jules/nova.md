@@ -148,3 +148,7 @@
 **Concept:** A system that monitors `AdminStats::efficiency`. When efficiency is perfect (1.0) and supply vastly exceeds demand, the bureaucracy "runs out of real problems." To justify its budget, it invents a new useless regulation, spawning an `ObscureRegulation` entity that acts as an `AdminConsumer` (massive demand sink) and applies a temporary negative `MoodModifier` ("Bureaucratic Whiplash") to all Pops.
 **Fate:** Proposed
 **Lesson:** It punishes over-optimization in a Grimdark/Dilbert way. You want just enough bureaucracy, but too much creates a self-sustaining nightmare.
+## [The Nostalgia Contagion]
+**Concept:** Implemented `NostalgiaContagion` where Pops with the `Homesick` trait spread it to nearby Pops via conversation. The trait massively boosts morale (+0.5 "Nostalgia" mood modifier) but severely cripples their work speed (-0.8 modifier), representing them getting comfortably lost in memories of the past at the cost of present productivity.
+**Fate:** Merged
+**Lesson:** Tying highly desirable buffs (massive morale increase) to highly detrimental debuffs (paralyzed productivity) creates excellent tension, forcing players to choose between a perfectly happy colony that accomplishes nothing, or an unhappy colony that expands rapidly. Spreading this via spatial proximity adds a quarantine element to the game.

@@ -97,3 +97,6 @@ pub use the_final_will::*;
 
 #[cfg(feature = "nova")]
 pub mod paperwork_singularity;
+
+#[cfg(feature = "nova")]
+pub mod nostalgia_contagion;
