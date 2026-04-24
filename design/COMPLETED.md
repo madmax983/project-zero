@@ -440,3 +440,4 @@
 - [x] `1144` Brain Drain Migration — `specs/1144-brain-drain-migration.md` — completed 2024-05-25
 - [x] `983` Cargo Cult Logistics — `specs/983-cargo-cult-logistics.md` — completed 2026-06-26
 - [x] `1145` Inflationary Spiral — `specs/1145-inflationary-spiral.md` — completed 2026-04-24
+- [x] `1107` Astrological Beliefs — `specs/1107-astrological-beliefs.md` — completed 2026-04-24
