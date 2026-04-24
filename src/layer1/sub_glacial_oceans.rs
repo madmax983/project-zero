@@ -62,13 +62,16 @@ mod tests {
         let mut app = App::new();
         app.add_systems(Update, buoyancy_movement_system);
 
-        let module = app.world_mut().spawn((
-            Position { z: -100.0 }, // 100 meters below ice
-            Mass(1000.0),
-            Buoyancy(1500.0), // Buoyancy > Mass
-            AnchorState::Snapped,
-            Velocity(0.0),
-        )).id();
+        let module = app
+            .world_mut()
+            .spawn((
+                Position { z: -100.0 }, // 100 meters below ice
+                Mass(1000.0),
+                Buoyancy(1500.0), // Buoyancy > Mass
+                AnchorState::Snapped,
+                Velocity(0.0),
+            ))
+            .id();
 
         app.update();
 
@@ -82,13 +85,16 @@ mod tests {
         let mut app = App::new();
         app.add_systems(Update, buoyancy_movement_system);
 
-        let module = app.world_mut().spawn((
-            Position { z: -100.0 },
-            Mass(1000.0),
-            Buoyancy(1500.0),
-            AnchorState::Intact, // Anchor holding it down
-            Velocity(0.0),
-        )).id();
+        let module = app
+            .world_mut()
+            .spawn((
+                Position { z: -100.0 },
+                Mass(1000.0),
+                Buoyancy(1500.0),
+                AnchorState::Intact, // Anchor holding it down
+                Velocity(0.0),
+            ))
+            .id();
 
         app.update();
 
@@ -100,16 +106,22 @@ mod tests {
     #[test]
     fn test_collision_with_ice_crust() {
         let mut app = App::new();
-        app.add_systems(Update, (buoyancy_movement_system, ice_collision_system).chain());
+        app.add_systems(
+            Update,
+            (buoyancy_movement_system, ice_collision_system).chain(),
+        );
 
-        let module = app.world_mut().spawn((
-            Position { z: -1.0 }, // Right below ice
-            Mass(1000.0),
-            Buoyancy(5000.0), // High buoyancy = fast ascent
-            Velocity(10.0),
-            AnchorState::Snapped,
-            StructuralIntegrity(100.0),
-        )).id();
+        let module = app
+            .world_mut()
+            .spawn((
+                Position { z: -1.0 }, // Right below ice
+                Mass(1000.0),
+                Buoyancy(5000.0), // High buoyancy = fast ascent
+                Velocity(10.0),
+                AnchorState::Snapped,
+                StructuralIntegrity(100.0),
+            ))
+            .id();
 
         app.update();
 

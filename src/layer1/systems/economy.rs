@@ -185,4 +185,12 @@ pub fn register(schedule: &mut Schedule) {
         )
             .in_set(Layer1SystemSet::Economy),
     );
+
+    schedule.add_systems(
+        (
+            crate::layer1::economy::photophobic::photophobic_degradation_system,
+            crate::layer1::economy::photophobic::mining_in_dark_stress_system,
+        )
+            .in_set(Layer1SystemSet::Economy),
+    );
 }
