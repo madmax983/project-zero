@@ -188,6 +188,8 @@ pub mod hauling;
 pub mod inventory;
 /// In-game items and their properties.
 pub mod items;
+/// Photophobic Resources (Spec 1106)
+pub mod photophobic;
 /// Refining raw resources into usable goods.
 pub mod refining;
 /// Financial remittances between pops.
@@ -205,6 +207,7 @@ pub use black_market::*;
 pub use hauling::*;
 pub use inventory::*;
 pub use items::*;
+pub use photophobic::*;
 pub use refining::*;
 pub use remittances::*;
 pub use resources::*;
