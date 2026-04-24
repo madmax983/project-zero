@@ -182,12 +182,6 @@ pub fn chronicle_rumor_bridge_system(
     mut query: Query<(Entity, &mut Knowledge), With<Pop>>,
     time: Res<SimulationTime>,
 ) {
-    // Collect all pops to pick random witnesses
-    let pop_entities: Vec<Entity> = query.iter().map(|(e, _)| e).collect();
-    if pop_entities.is_empty() {
-        return;
-    }
-
     let mut rng = rand::thread_rng();
 
     for event in events.read() {
@@ -195,7 +189,6 @@ pub fn chronicle_rumor_bridge_system(
             event.importance,
             EventImportance::Major | EventImportance::Legendary
         ) {
-            // Create Rumor
             let rumor = Rumor {
                 topic: RumorTopic::EventNews(event.text.clone()),
                 source: Entity::PLACEHOLDER, // Originated from "The World"
@@ -203,12 +196,18 @@ pub fn chronicle_rumor_bridge_system(
                 strength: 1.0,
             };
 
-            // Pick 3 random witnesses (or all if < 3)
-            let count = pop_entities.len().min(3);
-            let witnesses: Vec<_> = pop_entities
-                .choose_multiple(&mut rng, count)
-                .copied()
-                .collect();
+            // Reservoir sampling to pick 3 random witnesses without collecting all entities into a Vec
+            let mut witnesses = Vec::with_capacity(3);
+            for (count, (entity, _)) in query.iter().enumerate() {
+                if count < 3 {
+                    witnesses.push(entity);
+                } else {
+                    let j = rng.gen_range(0..=count);
+                    if j < 3 {
+                        witnesses[j] = entity;
+                    }
+                }
+            }
 
             for witness in witnesses {
                 if let Ok((_, mut knowledge)) = query.get_mut(witness) {
