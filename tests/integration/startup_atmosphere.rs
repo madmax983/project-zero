@@ -113,7 +113,7 @@ fn test_suffocation_death_reports_atmospheric_breach_reason() {
         Health {
             current: 1.0,
             max: 100.0,
-            conditions: Vec::new(),
+            has_rust_lung: false,
         },
     ));
 
@@ -148,7 +148,7 @@ fn test_pop_death_feedback_is_not_camera_burnout() {
         Health {
             current: 0.0,
             max: 100.0,
-            conditions: Vec::new(),
+            has_rust_lung: false,
         },
     ));
 

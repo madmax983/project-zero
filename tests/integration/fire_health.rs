@@ -16,7 +16,7 @@ fn test_fire_damages_pop_on_same_tile() {
             Health {
                 current: 100.0,
                 max: 100.0,
-                conditions: Vec::new(),
+                has_rust_lung: false,
             },
             Needs::default(),
         ))

@@ -22,7 +22,7 @@ mod tests {
                 Health {
                     current: 10.0,
                     max: 10.0,
-                    conditions: Vec::new(),
+                    has_rust_lung: false,
                 },
                 GridPosition { x: 5, y: 5 },
             ))
@@ -38,7 +38,7 @@ mod tests {
                 Health {
                     current: 5.0,
                     max: 5.0,
-                    conditions: Vec::new(),
+                    has_rust_lung: false,
                 },
                 GridPosition { x: 6, y: 5 },
             ))
@@ -132,7 +132,7 @@ mod tests {
                 Health {
                     current: 5.0,
                     max: 5.0,
-                    conditions: Vec::new(),
+                    has_rust_lung: false,
                 },
             ))
             .id();

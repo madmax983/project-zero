@@ -320,7 +320,7 @@ mod tests {
                 Health {
                     current: 100.0,
                     max: 100.0,
-                    conditions: Vec::new(),
+                    has_rust_lung: false,
                 },
                 RadiationSickness { severity: 60.0 }, // Threshold is usually 50
             ))

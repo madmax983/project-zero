@@ -25,7 +25,7 @@ fn test_geome_hazard_damages_health() {
             Health {
                 current: 100.0,
                 max: 100.0,
-                conditions: Vec::new(),
+                has_rust_lung: false,
             },
             GridPosition { x: 6, y: 5 }, // Standing on the SporeBloom tile
         ))

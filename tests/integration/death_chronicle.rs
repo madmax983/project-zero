@@ -45,7 +45,7 @@ fn test_pop_death_adds_chronicle_entry() {
             Health {
                 current: 0.0,
                 max: 100.0,
-                conditions: Vec::new(),
+                has_rust_lung: false,
             }, // Dead
         ))
         .id();

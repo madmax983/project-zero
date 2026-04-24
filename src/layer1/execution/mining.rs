@@ -2,7 +2,7 @@ use bevy_ecs::prelude::*;
 use rand::Rng;
 use ratatui::style::Color;
 
-use crate::layer1::biology::health::{Health, HealthCondition};
+use crate::layer1::biology::health::Health;
 use crate::layer1::economy::inventory::Inventory;
 use crate::layer1::economy::items::ItemType;
 use crate::layer1::environment::orbital_crossfire::{mine_scrap, ImpactSite};
@@ -81,7 +81,7 @@ pub fn handle_mining_work(
 
             if apply_rust_lung {
                 if let Some(mut health) = world.get_mut::<Health>(worker_entity) {
-                    health.add_condition(HealthCondition::RustLung);
+                    health.has_rust_lung = true;
                 }
             }
         }

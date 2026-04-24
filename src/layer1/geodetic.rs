@@ -270,7 +270,7 @@ pub fn form_golem_system(
                 Health {
                     current: 100.0,
                     max: 100.0,
-                    conditions: Vec::new(),
+                    has_rust_lung: false,
                 },
                 // Visuals
                 crate::layer1::particles::Particle {

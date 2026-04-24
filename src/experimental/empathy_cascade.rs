@@ -148,7 +148,7 @@ mod tests {
                 Health {
                     current: 50.0,
                     max: 100.0,
-                    conditions: Vec::new(),
+                    has_rust_lung: false,
                 }, // Damaged down to 50 from 100
                 traits_empath.clone(),
                 EmpathicHealthTracker {
@@ -167,7 +167,7 @@ mod tests {
                 Health {
                     current: 100.0,
                     max: 100.0,
-                    conditions: Vec::new(),
+                    has_rust_lung: false,
                 },
                 traits_empath.clone(),
                 EmpathicHealthTracker {
@@ -186,7 +186,7 @@ mod tests {
                 Health {
                     current: 100.0,
                     max: 100.0,
-                    conditions: Vec::new(),
+                    has_rust_lung: false,
                 },
                 Traits::default(),
                 EmpathicHealthTracker {
@@ -205,7 +205,7 @@ mod tests {
                 Health {
                     current: 100.0,
                     max: 100.0,
-                    conditions: Vec::new(),
+                    has_rust_lung: false,
                 },
                 traits_empath.clone(),
                 EmpathicHealthTracker {
@@ -263,7 +263,7 @@ mod tests {
                 Health {
                     current: 80.0,
                     max: 100.0,
-                    conditions: Vec::new(),
+                    has_rust_lung: false,
                 },
                 traits_empath,
             ))

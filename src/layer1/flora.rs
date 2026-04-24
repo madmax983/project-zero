@@ -181,7 +181,7 @@ pub fn flora_spread_system(
                 Health {
                     current: 20.0,
                     max: 20.0,
-                    conditions: Vec::new(),
+                    has_rust_lung: false,
                 },
             ));
 
