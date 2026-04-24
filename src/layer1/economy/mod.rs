@@ -217,3 +217,5 @@ pub mod beacon;
 pub use beacon::*;
 pub mod smugglers_cove;
 pub use smugglers_cove::*;
+pub mod inflation;
+pub use inflation::*;
