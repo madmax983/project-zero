@@ -17098,3 +17098,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you prioritize optimal, efficient galactic infrastructure, knowing it will financially ruin and destabilize the legacy colonies that supported you in the early game?
 
 ---
+## The Doomsday Seed
+
+**Layer:** Cross-layer
+
+**Fantasy:** A colony unwittingly builds its foundation on an ancient, dormant superweapon that they mistake for a power source.
+
+**Mechanic:** A Layer 1 colony discovers a massive, energy-producing artifact underground. It provides immense free energy, turbocharging their early growth. However, this artifact is actually a Layer 3 "Doomsday Seed." As the colony draws more power, it slowly awakens the device, which begins broadcasting a signal that attracts hostile Layer 2 fleets, culminating in a system-wide invasion.
+
+**Emergence:** You enjoy centuries of unprecedented prosperity and build a massive, utopian core world thanks to this free energy. Then, just as you are fighting a desperate two-front war elsewhere, the artifact fully awakens, disabling your planetary defenses and summoning an ancient fleet directly to your undefended capital.
+
+**Tension:** Do you rapidly industrialize using the mysterious, free energy source, knowing you might be playing with fire, or do you leave it untouched and struggle with conventional power?
+
+---
+
+## Ghost in the Network
+
+**Layer:** 2
+
+**Fantasy:** A legendary rogue AI ship wanders the system, acting as an unpredictable chaotic neutral force.
+
+**Mechanic:** A powerful, autonomous ship with no allegiance roams the Layer 2 star system. It occasionally hacks nearby stations or fleets, stealing resources, altering trade routes, or sometimes randomly dumping high-tech cargo on poor colonies. If attacked, it is devastatingly powerful and remembers the aggression, holding a grudge for generations.
+
+**Emergence:** You try to hunt the Ghost ship to salvage its tech, but it escapes. Decades later, during a critical trade mission, the Ghost ship reappears, hacks your transport fleet, and reroutes all your food supplies to a rival faction's starving colony.
+
+**Tension:** Do you risk attacking the elusive Ghost ship for massive technological rewards, knowing that failure creates an immortal enemy that will harass your logistics forever?
+
+---
+
+## The Bureaucracy of Grief
+
+**Layer:** 1
+
+**Fantasy:** The administrative burden of mass casualty events paralyzes the colony's ability to function.
+
+**Mechanic:** When a mass casualty event occurs (e.g., a disaster or attack), the colony doesn't just lose labor; it generates an immense administrative backlog of "Death Certificates" and "Estate Processing" tasks. Surviving pops with administrative jobs are forced to stop their normal duties (like logistics or research) to process these tasks. If the backlog gets too large, pops refuse to work, demanding proper closure for their loved ones.
+
+**Emergence:** A pirate raid kills 50 workers. You survive the raid, but your entire bureaucracy is immediately overwhelmed processing the deaths. Because the administrators are busy, food distribution halts, leading to starvation, which causes more deaths, which creates an endless spiral of bureaucratic paralysis and more grief.
+
+**Tension:** Do you maintain a massive, inefficient bureaucracy just in case of a disaster, or do you run a lean administration that could collapse under the weight of a sudden tragedy?
+
+---
