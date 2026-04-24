@@ -118,6 +118,9 @@ pub enum Trait {
     ExtremeHunger,
     /// Pop actively dissents against the colony (Spec 985).
     Dissident,
+    #[cfg(feature = "nova")]
+    /// Yearns for the past or the core worlds, refusing new work but gaining comfort from the past.
+    Homesick,
 }
 
 impl Trait {
@@ -182,6 +185,8 @@ impl Trait {
             Self::BrittleBones => "Brittle Bones",
             Self::ExtremeHunger => "Extreme Hunger",
             Self::Dissident => "Dissident",
+            #[cfg(feature = "nova")]
+            Trait::Homesick => "Homesick",
         }
     }
 }
@@ -243,6 +248,8 @@ impl Traits {
             Trait::Volatile,
             Trait::Creative,
             Trait::Intellectual,
+            #[cfg(feature = "nova")]
+            Trait::Homesick,
             Trait::Cannibal,
             Trait::Pragmatist,
             Trait::Outsider,
@@ -368,6 +375,10 @@ pub fn get_trait_work_speed_modifier(traits: &Traits) -> f32 {
     }
     if traits.has(Trait::Pirate) {
         modifier -= 0.3;
+    }
+    #[cfg(feature = "nova")]
+    if traits.has(Trait::Homesick) {
+        modifier -= 0.8;
     }
     modifier
 }
