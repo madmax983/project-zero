@@ -442,3 +442,4 @@ pub use rearguard::{
     rearguard_buff_system, rearguard_delays_enemy_system, rearguard_pathfinding_restriction_system,
     CombatStats, Enemy, EngagedWith, EscapePod, Pathfinding, Rearguard,
 };
+pub mod sub_glacial_oceans;
