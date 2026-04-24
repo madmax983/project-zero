@@ -143,6 +143,26 @@ impl PopName {
 pub struct Pop;
 
 /// Tracks a pop's persistent employment, even when temporarily reassigned (e.g. to hospital).
+///
+/// # Examples
+///
+/// ```
+/// use scale::layer1::pop::Job;
+/// use scale::layer1::utility_types::AssignmentType;
+/// use bevy_ecs::prelude::*;
+///
+/// let mut world = World::new();
+/// let workplace_entity = world.spawn_empty().id();
+///
+/// let pop_entity = world.spawn(Job {
+///     workplace: workplace_entity,
+///     job_type: AssignmentType::FarmWorker,
+/// }).id();
+///
+/// let job = world.get::<Job>(pop_entity).unwrap();
+/// assert_eq!(job.workplace, workplace_entity);
+/// assert_eq!(job.job_type, AssignmentType::FarmWorker);
+/// ```
 #[derive(Component, Debug, Clone, Copy, PartialEq, Eq)]
 pub struct Job {
     /// The building entity where the pop works.
@@ -152,6 +172,21 @@ pub struct Job {
 }
 
 /// Represents the formal education level of a Pop.
+///
+/// Used to determine eligibility for certain advanced tasks or traits.
+///
+/// # Examples
+///
+/// ```
+/// use scale::layer1::pop::EducationLevel;
+/// use bevy_ecs::prelude::*;
+///
+/// let mut world = World::new();
+/// let uneducated_pop = world.spawn(EducationLevel(0)).id();
+/// let educated_pop = world.spawn(EducationLevel(3)).id();
+///
+/// assert_eq!(world.get::<EducationLevel>(educated_pop).unwrap().0, 3);
+/// ```
 #[derive(Component, Debug, Clone, Copy, PartialEq, Eq, Default)]
 pub struct EducationLevel(pub u32);
 
@@ -170,12 +205,16 @@ pub struct EducationLevel(pub u32);
 ///
 /// ```
 /// use scale::layer1::pop::Speed;
+/// use bevy_ecs::prelude::*;
 ///
-/// let mut speed = Speed {
+/// let mut world = World::new();
+/// let pop = world.spawn(Speed {
 ///     base: 1.0,
 ///     current: 0.5, // Slow (encumbered or injured)
 ///     accumulator: 0.0,
-/// };
+/// }).id();
+///
+/// let mut speed = world.get_mut::<Speed>(pop).unwrap();
 ///
 /// // Tick 1: Accumulate 0.5
 /// speed.accumulator += speed.current;
