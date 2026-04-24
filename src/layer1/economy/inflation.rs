@@ -38,7 +38,9 @@ pub fn process_barter_trade(
     mut barter_events: EventReader<BarterRequest>,
 ) {
     for trade in barter_events.read() {
-        if let Ok([mut init_res, mut target_res]) = query.get_many_mut([trade.initiator, trade.target]) {
+        if let Ok([mut init_res, mut target_res]) =
+            query.get_many_mut([trade.initiator, trade.target])
+        {
             // Check if both parties have enough alloys
             if init_res.alloys >= trade.offer_alloys && target_res.alloys >= trade.request_alloys {
                 // Execute the barter
@@ -90,15 +92,19 @@ mod tests {
         world.insert_resource(Events::<BarterRequest>::default());
 
         // Setup two entities (empires/traders) to perform a barter
-        let empire_a = world.spawn(EmpireResources {
-            credits: 1_000_000.0,
-            alloys: 100,
-        }).id();
+        let empire_a = world
+            .spawn(EmpireResources {
+                credits: 1_000_000.0,
+                alloys: 100,
+            })
+            .id();
 
-        let empire_b = world.spawn(EmpireResources {
-            credits: 10.0,
-            alloys: 500,
-        }).id();
+        let empire_b = world
+            .spawn(EmpireResources {
+                credits: 10.0,
+                alloys: 500,
+            })
+            .id();
 
         // Let's say Empire A wants 100 Alloys from Empire B, using barter (100 Alloys for 100 Alloys)
         world.send_event(BarterRequest {

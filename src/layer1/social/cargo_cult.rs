@@ -46,7 +46,13 @@ pub fn apply_cargo_cult_belief_system(
 
 pub fn process_ritual_actions_system(
     mut commands: Commands,
-    mut query: Query<(Entity, &mut CargoCultBelief, &PopAction, &mut Morale, Option<&EfficiencyDebuff>)>,
+    mut query: Query<(
+        Entity,
+        &mut CargoCultBelief,
+        &PopAction,
+        &mut Morale,
+        Option<&EfficiencyDebuff>,
+    )>,
 ) {
     for (entity, mut belief, action, mut morale, debuff) in query.iter_mut() {
         if belief.associated_action == action.current {
