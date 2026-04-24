@@ -796,3 +796,4 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1151` The Immortal Mascot — `specs/1151-the-immortal-mascot.md`
 - [ ] `1152` Sub-light Arrival Shock — `specs/1152-sub-light-arrival-shock.md`
 - [ ] `1153` Defector's Regret — `specs/1153-defectors-regret.md`
+- [ ] `1154` The Blind Terraformer — `specs/1154-the-blind-terraformer.md`

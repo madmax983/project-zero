@@ -17140,7 +17140,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you easily obliterate this obsolete relic, committing an atrocity against a culturally isolated time capsule, or do you cede a massive portion of your system's resources to peacefully integrate a population that actively hates everything you stand for?
 
 ---
-## The Blind Terraformer
+## The Blind Terraformer [SPECCED]
 
 **Layer:** Cross-layer
 
