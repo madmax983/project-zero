@@ -32,9 +32,7 @@ pub struct EngagedWith {
     pub target: Entity,
 }
 
-pub fn rearguard_buff_system(
-    mut query: Query<(&mut CombatStats, &mut Morale), Added<Rearguard>>,
-) {
+pub fn rearguard_buff_system(mut query: Query<(&mut CombatStats, &mut Morale), Added<Rearguard>>) {
     for (mut stats, mut morale) in query.iter_mut() {
         stats.attack *= 2.0; // Massive combat buff
         stats.defense *= 2.0;
@@ -128,10 +126,15 @@ mod tests {
 
         let rearguard_entity = app.world_mut().spawn(Rearguard).id();
 
-        let enemy_entity = app.world_mut().spawn((
-            Enemy { action_speed: 10.0 },
-            EngagedWith { target: rearguard_entity }
-        )).id();
+        let enemy_entity = app
+            .world_mut()
+            .spawn((
+                Enemy { action_speed: 10.0 },
+                EngagedWith {
+                    target: rearguard_entity,
+                },
+            ))
+            .id();
 
         app.update();
 

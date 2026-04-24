@@ -438,4 +438,7 @@ pub mod deep_crust_resonance;
 pub mod digital_immortality;
 pub mod rearguard;
 pub mod shields;
-pub use rearguard::{Rearguard, CombatStats, Pathfinding, EscapePod, Enemy, EngagedWith, rearguard_buff_system, rearguard_pathfinding_restriction_system, rearguard_delays_enemy_system};
+pub use rearguard::{
+    rearguard_buff_system, rearguard_delays_enemy_system, rearguard_pathfinding_restriction_system,
+    CombatStats, Enemy, EngagedWith, EscapePod, Pathfinding, Rearguard,
+};
