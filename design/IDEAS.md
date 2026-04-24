@@ -5781,7 +5781,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Inflationary Spiral
+## Inflationary Spiral [SPECCED]
 
 **Layer:** 3
 
