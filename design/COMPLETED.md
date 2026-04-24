@@ -438,3 +438,4 @@
 - [x] `1104` Swarm Intelligence — `specs/1104-swarm-intelligence.md` — completed 2026-05-18
 - [x] `INT-892` Integration: Ghost Ships -> Chronicle — completed 2026-08-01
 - [x] `1144` Brain Drain Migration — `specs/1144-brain-drain-migration.md` — completed 2024-05-25
+- [x] `983` Cargo Cult Logistics — `specs/983-cargo-cult-logistics.md` — completed 2026-04-24

@@ -59,6 +59,8 @@ pub fn register(schedule: &mut Schedule) {
                 .after(crate::layer1::pop::reset_speed_system)
                 .before(apply_lighting_penalties_system),
             crate::layer1::tech::process_neural_burnout_system,
+            crate::layer1::social::cargo_cult::apply_cargo_cult_belief_system,
+            crate::layer1::social::cargo_cult::process_ritual_actions_system,
             crate::layer1::tech::check_burnout_threshold_system,
             crate::layer1::tech::machine_awakening::process_bot_sentience,
             crate::layer1::tech::machine_awakening::apply_awakened_needs,
