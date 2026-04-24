@@ -765,3 +765,9 @@
 - **Systems connected:** `update_drone_clusters` (Swarm Intelligence) -> `update_drone_behavior` (Integration) -> `PopAction` (Utility AI)
 - **Glue added:** Modified `update_drone_behavior` in `src/layer1/entities/swarm_intelligence.rs` to assign `ActionType::Repair` for High Intelligence drones and `ActionType::Explore` for Low Intelligence drones (while skipping drones that are already charging).
 - **Tests:** `tests/integration/swarm_intelligence_bridge.rs`
+
+### INT-936: Unseen Bureaucracy -> Chronicle
+- **Date:** 2026-04-10
+- **Systems connected:** `phantom_shift_system` (Unseen Bureaucracy) -> `phantom_shift_chronicle_bridge` (Integration) -> `AddChronicleEvent`
+- **Glue added:** Added `phantom_shift_chronicle_bridge` in `src/layer1/core/integration.rs` to emit an `AddChronicleEvent` (`EventImportance::Minor`) upon `PhantomShiftEvent`. Registered in `Layer1SystemSet::Observation` inside `src/layer1/systems/observation.rs`.
+- **Tests:** `tests/integration/unseen_bureaucracy_bridge.rs`

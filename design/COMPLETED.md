@@ -444,3 +444,4 @@
 - [x] `1145` Inflationary Spiral — `specs/1145-inflationary-spiral.md` — completed 2026-04-24
 - [x] `1107` Astrological Beliefs — `specs/1107-astrological-beliefs.md` — completed 2026-04-24
 - [x] `990` Treaty Cruisers — `specs/990-treaty-cruisers.md` — completed 2026-04-24
+- [x] `INT-936` Integration: Unseen Bureaucracy -> Chronicle — completed 2026-04-10
