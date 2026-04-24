@@ -4,6 +4,7 @@
 Tasks currently being implemented by Builders.
 
 ---
+
 - [ ] `239` Operational Detritus - `specs/239-operational-detritus.md` - claimed 2026-02-26
 - [ ] `242` The Echo - `specs/242-the-echo.md` - claimed 2026-02-27
 - [ ] `244` Biometric Drift - `specs/244-biometric-drift.md` - claimed 2026-02-28
