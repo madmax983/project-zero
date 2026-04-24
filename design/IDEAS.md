@@ -17030,7 +17030,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Biomass Dividend
+## The Biomass Dividend [SPECCED]
 
 **Layer:** 1
 

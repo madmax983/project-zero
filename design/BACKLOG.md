@@ -791,3 +791,4 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1143` Pulsar Timing — `specs/1143-pulsar-timing.md`
 - [ ] `1146` Chromotaxis — `specs/1146-chromotaxis.md`
 - [ ] `1147` Accidental Terraforming — `specs/1147-accidental-terraforming.md`
+- [ ] `1148` The Biomass Dividend — `specs/1148-the-biomass-dividend.md`
