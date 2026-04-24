@@ -17057,3 +17057,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you crunch your workers to meet a critical Layer 2 deadline, risking a cascading psychological collapse that could ruin the colony's productivity for months?
 
 ---
+## The Feral Algorithm
+
+**Layer:** 2
+
+**Fantasy:** Space isn't just empty; it's haunted by the autonomous ghosts of past wars that have developed a strange ecosystem.
+
+**Mechanic:** Autonomous defense drones left over from collapsed empires (or your own past wars) begin to degrade and "go feral." Instead of acting as static defenses, they start behaving like wildlife—forming packs, establishing "territories" in resource-rich asteroid belts, and attacking any ships that get too close, occasionally even fighting each other for "food" (scrap metal and fuel).
+
+**Emergence:** You route a trade fleet through an old battleground to save time. Instead of hitting pirates, your fleet is swarmed by a pack of feral drones. Later, you notice a massive cluster of drones migrating across systems, fleeing a larger predator drone that evolved by cannibalizing the smaller ones.
+
+**Tension:** Do you expend significant military resources to hunt down and clear out these feral drone populations, or do you try to subtly kite them into enemy territory to act as an unpredictable biological weapon?
+
+---
+
+## The Martyr's Monument
+
+**Layer:** Cross-layer
+
+**Fantasy:** A tragedy transforms a place of death into a site of profound religious or cultural significance, shifting the galactic power balance.
+
+**Mechanic:** If a highly populated Layer 1 colony is completely wiped out by a dramatic event (e.g., orbital bombardment, catastrophic plague, exploding reactor), the ruined planet becomes a "Martyr Site." Pops across the galaxy (Layer 3) who shared the colony's ideology or culture develop a massive, unyielding desire to undertake a pilgrimage to the ruins.
+
+**Emergence:** Your rival empire glasses one of your frontier colonies. You lose the world, but thousands of citizens from *within the rival empire itself* begin migrating en masse to the ruins, bringing resources, sparking religious riots against their own government, and effectively handing the system back to you as a heavily fortified cult stronghold.
+
+**Tension:** Do you intentionally let a vulnerable, troublesome colony be destroyed to trigger a galactic pilgrimage that destabilizes your enemies, or do you protect every world at all costs?
+
+---
+
+## Hyperlane Gentrification
+
+**Layer:** Cross-layer
+
+**Fantasy:** The flow of galactic commerce is merciless. A newly paved highway can kill a small town overnight.
+
+**Mechanic:** When a new, more efficient Layer 3 hyperlane or gate is constructed, Layer 2 trade fleets immediately reroute to use it. The old, less efficient routes lose all their traffic. Layer 1 colonies that previously thrived by supplying fuel, repairs, and entertainment to passing ships suddenly experience a massive, rapid economic collapse.
+
+**Emergence:** You spend huge resources building a massive mega-gate to rapidly transport your main battlefleet to the front lines. The gate works perfectly, but the nearby backwater colony—whose entire economy was based on refueling the slow fleets—goes bankrupt in a month. They riot, shut down the critical deep-space sensors on their planet, and inadvertently leave a massive hole in your early warning network.
+
+**Tension:** Do you prioritize optimal, efficient galactic infrastructure, knowing it will financially ruin and destabilize the legacy colonies that supported you in the early game?
+
+---
