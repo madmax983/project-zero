@@ -6310,3 +6310,63 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "Year [YEAR]: The dust settles. [RIVAL_CORP_NAME] retreats. Our borders are secure."
 - "Victory. The [RIVAL_CORP_NAME] silos now belong to [COLONY]."
 - "An agreement reached. [RIVAL_CORP_NAME] signs the accord. [RESOLUTION_TYPE]."
+
+## The Rearguard Templates (Spec 1108)
+
+### Template: REARGUARD_DESIGNATED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [NAME], [REARGUARD_TITLE]
+
+**Patterns:**
+- "[YEAR]: The evacuation begins. [NAME] is designated [REARGUARD_TITLE]. They will not be coming with us."
+- "Someone has to hold the line. [NAME] steps forward as the [REARGUARD_TITLE]. [YEAR]."
+- "A heroic sacrifice. [NAME], our [REARGUARD_TITLE], stands their ground so [COLONY] can escape. [YEAR]."
+
+### Template: REARGUARD_LAST_STAND
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [NAME], [REARGUARD_TITLE], [DELAY_OUTCOME]
+
+**Patterns:**
+- "The [REARGUARD_TITLE] held them back. [NAME] bought us the time we needed. [YEAR]. [DELAY_OUTCOME]."
+- "[YEAR]: A pyrrhic victory. [NAME] died fighting, but the colony ships launched. [DELAY_OUTCOME]."
+- "[NAME] fell, but not before ensuring our survival. We remember our [REARGUARD_TITLE]. [YEAR]. [DELAY_OUTCOME]."
+
+## Xenoflora Pet Craze Templates (Spec 1120)
+
+### Template: PET_ADOPTED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [NAME], [PET_SPECIES], [PET_BEHAVIOR]
+
+**Patterns:**
+- "[NAME] found a [PET_SPECIES]. [YEAR]. It [PET_BEHAVIOR] and they love it."
+- "[YEAR]: A new distraction. [NAME] adopted a [PET_SPECIES]. It [PET_BEHAVIOR] constantly."
+- "The morale of [NAME] is up. The reason? A [PET_SPECIES] that [PET_BEHAVIOR]. [YEAR]."
+
+### Template: PET_CRAZE_SPREADS
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [PET_SPECIES], [CRAZE_IMPACT]
+
+**Patterns:**
+- "Everyone wants a [PET_SPECIES]. [YEAR]. The craze is spreading, leading to [CRAZE_IMPACT]."
+- "[YEAR]: An obsession sweeps [COLONY]. The [PET_SPECIES] are everywhere now. [CRAZE_IMPACT]."
+- "Work is delayed. They are too busy tending to their [PET_SPECIES]. [CRAZE_IMPACT]. [YEAR]."
+
+## Cultural Ransom Templates (Spec 944)
+
+### Template: ARTIFACT_STOLEN
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [RIVAL_FACTION], [CULTURAL_ARTIFACT]
+
+**Patterns:**
+- "[YEAR]: A deep strike by [RIVAL_FACTION]. They took our [CULTURAL_ARTIFACT]. The colony weeps."
+- "They didn't come for territory. [RIVAL_FACTION] stole the [CULTURAL_ARTIFACT]. [YEAR]."
+- "A blow to our soul. The [CULTURAL_ARTIFACT] is gone, taken by [RIVAL_FACTION]. [YEAR]."
+
+### Template: ARTIFACT_RANSOMED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [RIVAL_FACTION], [CULTURAL_ARTIFACT], [RANSOM_DEMAND]
+
+**Patterns:**
+- "[RIVAL_FACTION] holds our history hostage. They demand [RANSOM_DEMAND] for the [CULTURAL_ARTIFACT]. [YEAR]."
+- "[YEAR]: The price of our soul. We must pay [RANSOM_DEMAND] to get the [CULTURAL_ARTIFACT] back from [RIVAL_FACTION]."
+- "We traded [RANSOM_DEMAND] to recover the [CULTURAL_ARTIFACT]. Our pride is wounded, but our history returns. [YEAR]."

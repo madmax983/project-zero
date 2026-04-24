@@ -7067,3 +7067,65 @@ Used for The Archaeological Contagion events. The ancient technology reverse-eng
 - They leave nothing but dust
 - Our quotas suffer as their ledgers grow
 - The earth screams under their machines
+
+## The Rearguard Fragments (Spec 1108)
+
+## Fragment Type: [REARGUARD_TITLE]
+- The Last Shield
+- The Final Line
+- The Rearguard
+- The Martyr
+- The Iron Wall
+- The Doomed Watch
+
+## Fragment Type: [DELAY_OUTCOME]
+- The evacuation succeeded
+- They died so we could run
+- We owe them our future
+- The swarm was held at bay
+- A sacrifice that will be remembered
+
+## Xenoflora Pet Craze Fragments (Spec 1120)
+
+## Fragment Type: [PET_SPECIES]
+- Void-Pug
+- Glow-Slime
+- Spore-Pup
+- Float-Ray
+- Cave-Crawler
+- Rust-Beetle
+- Star-Moth
+
+## Fragment Type: [PET_BEHAVIOR]
+- purrs warmly
+- vibrates gently
+- secretes a calming scent
+- glows in the dark
+- sings a soft tune
+- nuzzles affectionately
+
+## Fragment Type: [CRAZE_IMPACT]
+- widespread joy but reduced output
+- a drain on our water stores
+- improved morale across all sectors
+- a sudden shortage of pet food
+- chaotic, happy distraction
+
+## Cultural Ransom Fragments (Spec 944)
+
+## Fragment Type: [CULTURAL_ARTIFACT]
+- The Founder's Crown
+- The First Blueprint
+- The Sacred Log
+- The Ancient Charter
+- The Singing Crystal
+- The Martyr's Ashes
+- The Void-Compass
+
+## Fragment Type: [RANSOM_DEMAND]
+- a fortune in credits
+- our absolute surrender of the outer sector
+- total disarmament
+- thousands of tons of refined ore
+- crippling trade concessions
+- our most advanced technology
