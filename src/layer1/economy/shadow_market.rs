@@ -52,85 +52,9 @@ pub fn execute_shadow_item_trade(
 ) -> bool {
     let mut resources = world.resource_mut::<crate::layer1::resources::ColonyResources>();
 
-    if !resources.can_afford(&crate::layer1::resources::ColonyResources {
-        food: if cost_resource == ResourceType::Food {
-            cost_amount
-        } else {
-            0.0
-        },
-        wood: if cost_resource == ResourceType::Wood {
-            cost_amount
-        } else {
-            0.0
-        },
-        stone: if cost_resource == ResourceType::Stone {
-            cost_amount
-        } else {
-            0.0
-        },
-        metal: if cost_resource == ResourceType::Metal {
-            cost_amount
-        } else {
-            0.0
-        },
-        ore: if cost_resource == ResourceType::Ore {
-            cost_amount
-        } else {
-            0.0
-        },
-        planks: if cost_resource == ResourceType::Planks {
-            cost_amount
-        } else {
-            0.0
-        },
-        blocks: if cost_resource == ResourceType::Blocks {
-            cost_amount
-        } else {
-            0.0
-        },
-        waste: if cost_resource == ResourceType::Waste {
-            cost_amount
-        } else {
-            0.0
-        },
-        rations: if cost_resource == ResourceType::Rations {
-            cost_amount
-        } else {
-            0.0
-        },
-        fuel: if cost_resource == ResourceType::Fuel {
-            cost_amount
-        } else {
-            0.0
-        },
-        alcohol: if cost_resource == ResourceType::Alcohol {
-            cost_amount
-        } else {
-            0.0
-        },
-        scrap: if cost_resource == ResourceType::Scrap {
-            cost_amount
-        } else {
-            0.0
-        },
-        tools: if cost_resource == ResourceType::Tools {
-            cost_amount
-        } else {
-            0.0
-        },
-        building_permits: if cost_resource == ResourceType::BuildingPermit {
-            cost_amount
-        } else {
-            0.0
-        },
-        credits: 0.0,
-        ..crate::layer1::resources::ColonyResources::zeroed()
-    }) {
+    if !resources.try_consume(cost_resource, cost_amount) {
         return false;
     }
-
-    // Deduct
-    resources.consume(cost_resource, cost_amount);
 
     // Transfer item
     let mut trader_inv_opt = None;

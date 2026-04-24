@@ -715,6 +715,51 @@ impl ColonyResources {
         }
     }
 
+    /// Gets the current amount of a specific resource type.
+    #[must_use]
+    pub fn get_amount(&self, resource_type: ResourceType) -> f32 {
+        match resource_type {
+            ResourceType::Food => self.food,
+            ResourceType::Wood => self.wood,
+            ResourceType::Stone => self.stone,
+            ResourceType::Ore => self.ore,
+            ResourceType::Metal => self.metal,
+            ResourceType::Planks => self.planks,
+            ResourceType::Blocks => self.blocks,
+            ResourceType::Waste => self.waste,
+            ResourceType::Rations => self.rations,
+            ResourceType::Fuel => self.fuel,
+            ResourceType::Alcohol => self.alcohol,
+            ResourceType::Scrap => self.scrap,
+            ResourceType::Tools => self.tools,
+            ResourceType::BuildingPermit => self.building_permits,
+            ResourceType::MemoryCore => self.memory_cores,
+            ResourceType::VoidAle => self.void_ale,
+        }
+    }
+
+    /// Attempts to consume a specific amount of a single resource type.
+    ///
+    /// Checks if the colony has enough of the resource first. If affordable, deducts and returns `true`.
+    /// Otherwise, returns `false` and makes no changes.
+    ///
+    /// # Parameters
+    ///
+    /// * `resource_type`: The type of resource to consume.
+    /// * `amount`: The amount to consume.
+    pub fn try_consume(&mut self, resource_type: ResourceType, amount: f32) -> bool {
+        if !amount.is_finite() || amount < 0.0 {
+            return false;
+        }
+
+        if self.get_amount(resource_type) >= amount {
+            self.consume(resource_type, amount);
+            true
+        } else {
+            false
+        }
+    }
+
     /// Checks if there is capacity for a specific resource type.
     pub fn has_room_for(&self, resource_type: &ResourceType) -> bool {
         match resource_type {

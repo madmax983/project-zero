@@ -92,8 +92,7 @@ pub fn process_clone_vats_system(
 
                 vat.is_growing = false;
             }
-        } else if resources.rations >= vat.ration_cost {
-            resources.consume(ResourceType::Rations, vat.ration_cost);
+        } else if resources.try_consume(ResourceType::Rations, vat.ration_cost) {
             vat.is_growing = true;
             vat.ticks_remaining = vat.total_duration;
         }
