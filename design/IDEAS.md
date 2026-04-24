@@ -17098,3 +17098,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you prioritize optimal, efficient galactic infrastructure, knowing it will financially ruin and destabilize the legacy colonies that supported you in the early game?
 
 ---
+
+## The Panopticon Dilemma
+
+**Layer:** 1
+
+**Fantasy:** The chilling reality of building a perfectly safe, crime-free colony where no one feels truly alone.
+
+**Mechanic:** The player can build "Surveillance Nodes" to drastically lower local crime rates and increase worker compliance. However, Pops living or working within the radius of these nodes slowly accumulate a "Paranoia" trait.
+
+**Emergence:** A heavily surveyed mining sector runs at 150% efficiency for years with zero theft. Then, the accumulated paranoia reaches a tipping point, causing the entire workforce to simultaneously suffer a psychotic break. They destroy the surveillance nodes and seal the mine, believing the central administration is a hostile alien entity reading their thoughts.
+
+**Tension:** Do you rely on the immediate security of surveillance, knowing it acts as a psychological ticking time bomb, or do you accept high crime rates and resource loss to maintain the sanity of your Pops?
+
+---
+
+## The Butterfly Effect of the Local Market
+
+**Layer:** Cross-layer
+
+**Fantasy:** Realizing that a minor labor dispute in a single backwater town can collapse a galactic alliance.
+
+**Mechanic:** A specific Layer 1 colony produces a highly sought-after luxury resource. The Layer 3 galactic economy heavily depends on this resource for high-end diplomacy. If a local disruption (like a strike or a localized plague) halts production, the ripple effect instantly tanks the Layer 3 market.
+
+**Emergence:** A single disgruntled Pop burns down a processing plant on a remote world because they were denied a promotion. Within a month, the galactic price of the resource skyrockets. Your closest ally, unable to afford the resource needed to appease their own elites, falls into a civil war, leaving your flank entirely exposed to an invasion.
+
+**Tension:** Do you heavily micro-manage every aspect of this one tiny colony to ensure the galaxy remains stable, or do you diversify your economy at the cost of immense short-term profits?
+
+---
+
+## Sub-light Arrival Shock
+
+**Layer:** 2
+
+**Fantasy:** The tragic, absurd reality of a colony ship arriving exactly where it was supposed to, just five centuries too late.
+
+**Mechanic:** Very rarely, incredibly slow Sub-light Generation Ships arrive in a system. They were launched centuries ago by an empire that has long since collapsed. The ship's inhabitants still follow the ancient laws and grudges of their dead creators, and they demand the system be turned over to them.
+
+**Emergence:** A generation ship arrives in your thriving capital system. They declare they are the true heirs of an empire that fell 400 years ago and consider your advanced cybernetic Pops to be abominations. They refuse all trade and begin a suicidal, low-tech holy war using their massive, heavily armored antique ship as a battering ram.
+
+**Tension:** Do you easily obliterate this obsolete relic, committing an atrocity against a culturally isolated time capsule, or do you cede a massive portion of your system's resources to peacefully integrate a population that actively hates everything you stand for?
+
+---
