@@ -13,3 +13,7 @@
 **[Title: Double Buffering for PressureGrid Diffusion]**
 **Learning:** Found an unnecessary `Vec::clone()` occurring every tick in `PressureGrid::diffuse()`. Because `PressureGrid` acts as a cellular automaton that runs continuously, this was causing constant memory allocations.
 **Action:** Introduced a secondary `scratch` buffer to `PressureGrid`. We now copy the current state into the scratch buffer at the start of the tick, calculate the next generation into the scratch buffer, and then use `std::mem::swap` to flip the buffers. This completely eliminates the per-tick allocation while remaining safe.
+
+**[Optimized chronicle_rumor_bridge_system iterator]**
+**Learning:** Collecting all entities matching a query into a Vec just to pick a random sample of 3 involves unnecessary heap allocation `let pop_entities: Vec<Entity> = query.iter().map(|(e, _)| e).collect();`.
+**Action:** Used reservoir sampling to pick 3 random entities in a single pass over the iterator without collecting all matching entities into a `Vec`.
