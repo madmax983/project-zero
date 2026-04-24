@@ -790,3 +790,4 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1140` Chain of Command — `specs/1140-chain-of-command.md`
 - [ ] `1142` The Scapegoat — `specs/1142-the-scapegoat.md`
 - [ ] `1143` Pulsar Timing — `specs/1143-pulsar-timing.md`
+- [ ] `1146` Chromotaxis — `specs/1146-chromotaxis.md`
