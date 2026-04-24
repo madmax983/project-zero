@@ -645,7 +645,7 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `982` The Generation Ship Mutiny — `specs/982-the-generation-ship-mutiny.md`
 
 - [ ] `989` Heat Death — `specs/989-heat-death.md`
-- [ ] `991` Sub-Glacial Oceans — `specs/991-sub-glacial-oceans.md`
+
 - [ ] `992` The Fungal Monoliths — `specs/992-the-fungal-monoliths.md`
 - [ ] `993` The Fractal Bureaucracy — `specs/993-the-fractal-bureaucracy.md`
 - [ ] `994` The Kinetic Heist — `specs/994-the-kinetic-heist.md`
