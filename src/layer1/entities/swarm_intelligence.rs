@@ -139,13 +139,7 @@ pub fn update_drone_clusters(
 /// // High intelligence logic executes cleanly without panic.
 /// ```
 pub fn update_drone_behavior(
-    mut query: Query<
-        (
-            &DroneBehavior,
-            &mut crate::layer1::utility_ai::PopAction,
-        ),
-        With<Drone>,
-    >,
+    mut query: Query<(&DroneBehavior, &mut crate::layer1::utility_ai::PopAction), With<Drone>>,
 ) {
     for (behavior, mut action) in &mut query {
         if action.current == crate::layer1::utility_ai::ActionType::Charge {

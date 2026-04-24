@@ -371,6 +371,8 @@ pub fn run_simulation_tick(world: &mut World) {
             world.init_resource::<Events<crate::layer3::linguistic_drift::CulturalSyncEvent>>();
             world.init_resource::<Events<crate::layer3::linguistic_drift::TradeEvent>>();
             world.init_resource::<Events<crate::layer1::logistics::beanstalk::BeanstalkEvent>>();
+            world.init_resource::<Events<crate::layer3::treaty_cruisers::InspectionEvent>>();
+            world.init_resource::<crate::layer3::treaty_cruisers::ActiveTreaties>();
 
             let mut schedule = build_simulation_schedule();
             schedule.add_systems((
@@ -453,6 +455,7 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
         crate::layer3::council::enforce_resolutions_system,
         crate::layer3::ghost_ships::evaluate_transit_system,
         crate::layer3::ghost_ships::evaluate_lost_ship_return_system,
+        crate::layer3::treaty_cruisers::compliance_check_system,
     ));
 
     // --- Layer 2 Integration ---
@@ -860,6 +863,8 @@ mod tests {
         world.init_resource::<Events<crate::layer3::linguistic_drift::CulturalSyncEvent>>();
         world.init_resource::<Events<crate::layer3::linguistic_drift::TradeEvent>>();
         world.init_resource::<Events<crate::layer1::logistics::beanstalk::BeanstalkEvent>>();
+        world.init_resource::<Events<crate::layer3::treaty_cruisers::InspectionEvent>>();
+        world.init_resource::<crate::layer3::treaty_cruisers::ActiveTreaties>();
 
         let schedule = build_simulation_schedule();
         world.add_schedule(schedule);

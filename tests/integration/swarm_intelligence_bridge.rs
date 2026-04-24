@@ -1,9 +1,9 @@
+use bevy::prelude::IntoSystemConfigs;
 use scale::layer1::entities::drone::Drone;
 use scale::layer1::entities::swarm_intelligence::{
     update_drone_behavior, update_drone_clusters, DroneBehavior, IntelligenceLevel,
 };
 use scale::layer1::map::GridPosition;
-use bevy::prelude::IntoSystemConfigs;
 use scale::layer1::utility_ai::{ActionType, PopAction};
 
 #[test]
