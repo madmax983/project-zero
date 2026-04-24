@@ -438,6 +438,7 @@
 - [x] `1119` Personal Shields — `specs/1119-personal-shields.md` - completed 2024-05-25
 - [x] `1104` Swarm Intelligence — `specs/1104-swarm-intelligence.md` — completed 2026-05-18
 - [x] `INT-892` Integration: Ghost Ships -> Chronicle — completed 2026-08-01
+- [x] `INT-1104` Integration: Swarm Intelligence -> Drone Behavior — completed 2026-06-26
 - [x] `1144` Brain Drain Migration — `specs/1144-brain-drain-migration.md` — completed 2024-05-25
 - [x] `983` Cargo Cult Logistics — `specs/983-cargo-cult-logistics.md` — completed 2026-06-26
 - [x] `1145` Inflationary Spiral — `specs/1145-inflationary-spiral.md` — completed 2026-04-24

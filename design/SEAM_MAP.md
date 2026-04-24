@@ -759,3 +759,9 @@
 - **Systems connected:** `evaluate_transit_system` and `evaluate_lost_ship_return_system` (Ghost Ships) -> `AddChronicleEvent` (Chronicle)
 - **Glue added:** Registered `evaluate_transit_system` and `evaluate_lost_ship_return_system` in `Layer3SystemSet`.
 - **Tests:** `tests/integration/ghost_ships_bridge.rs`
+
+### INT-1104: Swarm Intelligence -> Drone Behavior
+- **Date:** 2026-06-26
+- **Systems connected:** `update_drone_clusters` (Swarm Intelligence) -> `update_drone_behavior` (Integration) -> `PopAction` (Utility AI)
+- **Glue added:** Modified `update_drone_behavior` in `src/layer1/entities/swarm_intelligence.rs` to assign `ActionType::Repair` for High Intelligence drones and `ActionType::Explore` for Low Intelligence drones (while skipping drones that are already charging).
+- **Tests:** `tests/integration/swarm_intelligence_bridge.rs`

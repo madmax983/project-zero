@@ -19,6 +19,9 @@ mod lighting_buildings;
 #[path = "integration/chronicle_rumor.rs"]
 mod chronicle_rumor;
 
+#[path = "integration/swarm_intelligence_bridge.rs"]
+mod swarm_intelligence_bridge;
+
 #[path = "integration/power_refining_seam.rs"]
 mod power_refining_seam;
 

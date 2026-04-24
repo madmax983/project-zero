@@ -138,15 +138,36 @@ pub fn update_drone_clusters(
 /// schedule.run(&mut world);
 /// // High intelligence logic executes cleanly without panic.
 /// ```
-pub fn update_drone_behavior(query: Query<&DroneBehavior, With<Drone>>) {
-    // Placeholder for actual behavior execution based on intelligence level
-    for behavior in query.iter() {
+pub fn update_drone_behavior(
+    mut query: Query<
+        (
+            &DroneBehavior,
+            &mut crate::layer1::utility_ai::PopAction,
+        ),
+        With<Drone>,
+    >,
+) {
+    for (behavior, mut action) in &mut query {
+        if action.current == crate::layer1::utility_ai::ActionType::Charge {
+            continue;
+        }
+
         match behavior.intelligence_level {
             IntelligenceLevel::High => {
-                // Swarm logic
+                if action.current == crate::layer1::utility_ai::ActionType::Idle
+                    || action.current == crate::layer1::utility_ai::ActionType::Explore
+                {
+                    action.current = crate::layer1::utility_ai::ActionType::Repair;
+                    action.current_utility = 0.9;
+                }
             }
             IntelligenceLevel::Low => {
-                // Dumb logic
+                if action.current == crate::layer1::utility_ai::ActionType::Idle
+                    || action.current == crate::layer1::utility_ai::ActionType::Repair
+                {
+                    action.current = crate::layer1::utility_ai::ActionType::Explore;
+                    action.current_utility = 0.8;
+                }
             }
         }
     }
