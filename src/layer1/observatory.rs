@@ -167,8 +167,8 @@ mod tests {
         schedule.add_systems(process_observe_system);
 
         // Mock RNG or run enough times to trigger effect
-        // 1% chance. 500 attempts => 99.3% chance of at least one hit.
-        for _ in 0..500 {
+        // 1% chance.
+        for _ in 0..2000 {
             schedule.run(&mut world);
         }
 
