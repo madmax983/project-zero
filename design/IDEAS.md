@@ -17140,3 +17140,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you easily obliterate this obsolete relic, committing an atrocity against a culturally isolated time capsule, or do you cede a massive portion of your system's resources to peacefully integrate a population that actively hates everything you stand for?
 
 ---
+## The Blind Terraformer
+
+**Layer:** Cross-layer
+
+**Fantasy:** The chaos of a machine aggressively reshaping a world while completely misinterpreting the local environment.
+
+**Mechanic:** Ancient, automated terraforming seed-ships can sometimes be found in ruined systems. The player can capture one and direct it to a new colony. However, these ships have severely degraded sensors. Instead of creating a perfect Earth-like biome, they misread local atmospheric data and wildly overcompensate, creating bizarre, hybrid biomes (e.g., hyper-oxygenated frozen jungles, or carbon-dense crystal deserts).
+
+**Emergence:** You send a Blind Terraformer to a barren rock expecting an agricultural paradise. Instead, it creates an atmosphere so dense with moisture and heat that your existing solar arrays are crushed, but the new, terrifyingly fast-growing jungle flora can be harvested for rare organic compounds you couldn't otherwise access.
+
+**Tension:** Do you risk using a massive, free geo-engineering tool knowing it will permanently alter the planet in completely unpredictable ways, forcing you to completely redesign your colony's infrastructure?
+
+---
+
+## The Immortal Mascot
+
+**Layer:** 1
+
+**Fantasy:** The slow realization that the cute pet your colony loves is actually an apex predator that is slowly bankrupting you.
+
+**Mechanic:** A wandering, seemingly harmless alien creature wanders into your colony. The Pops immediately adopt it, gaining a massive colony-wide morale boost. However, the creature is biologically immortal, consumes an exponentially increasing amount of your food stockpiles as it grows, and has incredibly tough armor, making it nearly impossible to "accidentally" kill.
+
+**Emergence:** Early on, the Mascot is a blessing, keeping morale high during a tough winter. Ten years later, it's the size of a habitation block and is consuming 40% of your agricultural output. You secretly order the military to execute it, but it survives the bombardment. Now it's angry, rampaging through the industrial sector, and the entire colony is rioting because you tried to kill their beloved pet.
+
+**Tension:** How long can you sustain the massive resource drain of the Mascot for the morale bonus before you have to figure out a way to subtly dispose of an unkillable creature without your colony finding out?
+
+---
+
+## Defector's Regret
+
+**Layer:** Cross-layer
+
+**Fantasy:** The awkward diplomacy of realizing your utopia is someone else's dystopia.
+
+**Mechanic:** A high-level leader from a rival Layer 3 empire defects to your civilization, bringing critical technologies or intel. However, after living in your empire for a few years, their hidden "Values" metrics clash violently with your actual policies. They experience "Defector's Regret" and begin secretly broadcasting anti-government propaganda, sabotaging local infrastructure, and demanding exorbitant luxury resources to keep quiet.
+
+**Emergence:** You welcome a brilliant enemy admiral who gives you the blueprints to defeat your rival. But they are appalled by your heavy use of robotic labor. They start subtly reprogramming your mining drones to unionize. You can't execute or arrest them without losing the immense diplomatic and technological bonuses they provide, so you end up building them a lavish, isolated palace just to keep them from talking to the drones.
+
+**Tension:** Do you accept the massive strategic boon of a defector, knowing you might have to completely reshape your local economy to appease their cultural sensibilities, or risk them destroying your society from within?
+
+---
