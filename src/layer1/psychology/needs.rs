@@ -421,4 +421,106 @@ mod tests {
         // 0.8 - 0.0012 = 0.7988
         assert!((needs.hunger - 0.7988).abs() < 0.0001);
     }
+
+    #[test]
+    fn test_starvation_damage_applied() {
+        use crate::layer1::health::Health;
+        let mut world = setup();
+
+        let pop = world
+            .spawn((
+                Pop,
+                Needs {
+                    hunger: 0.0, // Starving
+                    rest: 1.0,
+                    leisure: 1.0,
+                    hygiene: 1.0,
+                },
+                Health {
+                    current: 100.0,
+                    max: 100.0,
+                    conditions: Vec::new(),
+                },
+            ))
+            .id();
+
+        world.run_system_once(starvation_damage_system).unwrap();
+
+        let health = world.get::<Health>(pop).unwrap();
+        // 0.2 damage per tick
+        assert!(
+            (health.current - 99.8).abs() < f32::EPSILON,
+            "Pop should take 0.2 damage when starving"
+        );
+    }
+
+    #[test]
+    fn test_starvation_damage_not_applied_when_not_starving() {
+        use crate::layer1::health::Health;
+        let mut world = setup();
+
+        let pop = world
+            .spawn((
+                Pop,
+                Needs {
+                    hunger: 0.1, // Not starving
+                    rest: 1.0,
+                    leisure: 1.0,
+                    hygiene: 1.0,
+                },
+                Health {
+                    current: 100.0,
+                    max: 100.0,
+                    conditions: Vec::new(),
+                },
+            ))
+            .id();
+
+        world.run_system_once(starvation_damage_system).unwrap();
+
+        let health = world.get::<Health>(pop).unwrap();
+        assert!(
+            (health.current - 100.0).abs() < f32::EPSILON,
+            "Pop should not take damage when hunger is > 0"
+        );
+    }
+
+    #[test]
+    fn test_starvation_adds_trauma_memory() {
+        use crate::layer1::health::Health;
+        use crate::layer1::memory::{Memories, MemoryType};
+        use crate::shared::time::SimulationTime;
+        let mut world = setup();
+        world.insert_resource(SimulationTime {
+            tick: 42,
+            ..Default::default()
+        });
+
+        let pop = world
+            .spawn((
+                Pop,
+                Needs {
+                    hunger: 0.0, // Starving
+                    rest: 1.0,
+                    leisure: 1.0,
+                    hygiene: 1.0,
+                },
+                Health {
+                    current: 100.0,
+                    max: 100.0,
+                    conditions: Vec::new(),
+                },
+                Memories::default(),
+            ))
+            .id();
+
+        world.run_system_once(starvation_damage_system).unwrap();
+
+        let memories = world.get::<Memories>(pop).unwrap();
+        assert_eq!(memories.items.len(), 1, "A memory should be added");
+        let memory = &memories.items[0];
+        assert_eq!(memory.memory_type, MemoryType::StarvationTrauma);
+        assert_eq!(memory.added_at, 42);
+        assert!((memory.intensity - 1.0).abs() < f32::EPSILON);
+    }
 }
