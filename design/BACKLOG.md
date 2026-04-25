@@ -803,4 +803,4 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1162` Orbital Debris Cascades — `specs/1162-orbital-debris-cascades.md`
 - [ ] `1163` Generational Debt — `specs/1163-generational-debt.md`
 - [ ] `1164` Automated Salvage Swarms — `specs/1164-automated-salvage-swarms.md`
-- [ ] `1165` The Nostalgia Cult — `specs/1165-the-nostalgia-cult.md`
+- [x] `1165` The Nostalgia Cult — `specs/1165-the-nostalgia-cult.md`

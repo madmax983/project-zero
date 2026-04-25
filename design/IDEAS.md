@@ -16495,7 +16495,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Nostalgia Cult
+## The Nostalgia Cult [SPECCED]
 
 **Layer:** Cross-layer (1 / 2)
 
