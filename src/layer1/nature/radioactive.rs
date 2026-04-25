@@ -77,23 +77,29 @@ impl RadiationGrid {
         for dy in -r_int..=r_int {
             for dx in -r_int..=r_int {
                 let dist = ((dx * dx + dy * dy) as f32).sqrt();
-                if dist <= radius {
-                    let falloff = 1.0 - (dist / (radius + 0.1));
-                    if falloff > 0.0 {
-                        let nx = x + dx;
-                        let ny = y + dy;
-                        if nx >= 0 && ny >= 0 && nx < self.width as i32 && ny < self.height as i32 {
-                            let nx_u = nx as usize;
-                            let ny_u = ny as usize;
-                            if let Some(idx) = ny_u
-                                .checked_mul(self.width)
-                                .and_then(|i| i.checked_add(nx_u))
-                            {
-                                if idx < self.values.len() {
-                                    self.values[idx] += intensity * falloff;
-                                }
-                            }
-                        }
+                if dist > radius {
+                    continue;
+                }
+
+                let falloff = 1.0 - (dist / (radius + 0.1));
+                if falloff <= 0.0 {
+                    continue;
+                }
+
+                let nx = x + dx;
+                let ny = y + dy;
+                if nx < 0 || ny < 0 || nx >= self.width as i32 || ny >= self.height as i32 {
+                    continue;
+                }
+
+                let nx_u = nx as usize;
+                let ny_u = ny as usize;
+                if let Some(idx) = ny_u
+                    .checked_mul(self.width)
+                    .and_then(|i| i.checked_add(nx_u))
+                {
+                    if idx < self.values.len() {
+                        self.values[idx] += intensity * falloff;
                     }
                 }
             }

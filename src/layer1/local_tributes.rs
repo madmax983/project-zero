@@ -89,40 +89,43 @@ pub fn leviathan_appeasement_system(
     mut inventory_query: Query<&mut Inventory>,
 ) {
     for event in events.read() {
-        if let Ok(mut leviathan) = query.get_mut(event.leviathan_id) {
-            if let Some(demand) = leviathan.current_demand {
-                // In minimal implementation, look for any inventory that has enough of the item and remove them.
-                let mut satisfied = false;
-                for mut inventory in inventory_query.iter_mut() {
-                    let count = inventory
-                        .items
-                        .iter()
-                        .filter(|i| i.item_type == demand.item)
-                        .count() as u32;
-                    if count >= demand.amount {
-                        // Remove the items
-                        let mut removed = 0;
-                        inventory.items.retain(|i| {
-                            if removed < demand.amount && i.item_type == demand.item {
-                                removed += 1;
-                                false // Do not retain
-                            } else {
-                                true
-                            }
-                        });
-                        satisfied = true;
-                        break;
-                    }
-                }
+        let Ok(mut leviathan) = query.get_mut(event.leviathan_id) else {
+            continue;
+        };
+        let Some(demand) = leviathan.current_demand else {
+            continue;
+        };
 
-                if satisfied {
-                    leviathan.current_demand = None;
-                    leviathan.anger_level = 0;
-                    commands.insert_resource(LeviathanProtectionBuff {
-                        duration: Timer::from_seconds(60.0, TimerMode::Once),
-                    });
-                }
+        // In minimal implementation, look for any inventory that has enough of the item and remove them.
+        let mut satisfied = false;
+        for mut inventory in inventory_query.iter_mut() {
+            let count = inventory
+                .items
+                .iter()
+                .filter(|i| i.item_type == demand.item)
+                .count() as u32;
+            if count >= demand.amount {
+                // Remove the items
+                let mut removed = 0;
+                inventory.items.retain(|i| {
+                    if removed < demand.amount && i.item_type == demand.item {
+                        removed += 1;
+                        false // Do not retain
+                    } else {
+                        true
+                    }
+                });
+                satisfied = true;
+                break;
             }
+        }
+
+        if satisfied {
+            leviathan.current_demand = None;
+            leviathan.anger_level = 0;
+            commands.insert_resource(LeviathanProtectionBuff {
+                duration: Timer::from_seconds(60.0, TimerMode::Once),
+            });
         }
     }
 }

@@ -85,83 +85,87 @@ pub fn post_grievance_system(
             None
         };
 
-        if let Some(s) = sentiment {
-            // 1% chance per tick to post if emotional, to avoid everyone synchronizing
-            if rng.gen_bool(0.01) {
-                // Find a random board
-                // Note: iterating all boards every time is inefficient if many boards,
-                // but usually there are few.
-                // Using `choose` from IteratorRandom is O(N) where N is number of boards.
-                if let Some(mut board) = boards.iter_mut().choose(&mut rng) {
-                    let mut target = None;
-                    let mut content = "I have strong feelings!".to_string();
+        let Some(s) = sentiment else { continue };
 
-                    // Attempt to find a target based on relationships
-                    if let Some(rel) = relationships {
-                        let candidates: Vec<(Entity, f32)> =
-                            rel.affinities.iter().map(|(&e, &val)| (e, val)).collect();
+        // 1% chance per tick to post if emotional, to avoid everyone synchronizing
+        if !rng.gen_bool(0.01) {
+            continue;
+        }
 
-                        if let Some((t_entity, t_val)) = candidates.choose(&mut rng) {
-                            let matches_sentiment = match s {
-                                Sentiment::Positive => *t_val > 0.0,
-                                Sentiment::Negative => *t_val < 0.0,
-                                Sentiment::Neutral => true,
-                            };
+        // Find a random board
+        // Note: iterating all boards every time is inefficient if many boards,
+        // but usually there are few.
+        // Using `choose` from IteratorRandom is O(N) where N is number of boards.
+        let Some(mut board) = boards.iter_mut().choose(&mut rng) else {
+            continue;
+        };
 
-                            if matches_sentiment {
-                                target = Some(*t_entity);
-                                content = match s {
-                                    Sentiment::Positive => format!("I appreciate {:?}!", t_entity),
-                                    Sentiment::Negative => format!("I blame {:?}!", t_entity),
-                                    Sentiment::Neutral => format!("Thinking about {:?}.", t_entity),
-                                };
-                            }
-                        }
-                    }
+        let mut target = None;
+        let mut content = "I have strong feelings!".to_string();
 
-                    // Integration: The Hum (INT-014)
-                    // Sensitive pops with high stress will post about the Hum
-                    let is_sensitive = traits.is_some_and(|t| t.has(Trait::Sensitive));
-                    let high_stress = stress.is_some_and(|s| s.accumulated_stress > 50.0);
+        // Attempt to find a target based on relationships
+        if let Some(rel) = relationships {
+            let candidates: Vec<(Entity, f32)> =
+                rel.affinities.iter().map(|(&e, &val)| (e, val)).collect();
 
-                    if is_sensitive && high_stress && s == Sentiment::Negative {
-                        target = None; // The target is the void
-                        let hum_messages = [
-                            "The Hum won't stop.",
-                            "Can anyone else hear the singing?",
-                            "The vibration is in my teeth.",
-                            "It is too loud today.",
-                        ];
-                        if let Some(msg) = hum_messages.choose(&mut rng) {
-                            content = msg.to_string();
-                        }
-                    }
+            if let Some((t_entity, t_val)) = candidates.choose(&mut rng) {
+                let matches_sentiment = match s {
+                    Sentiment::Positive => *t_val > 0.0,
+                    Sentiment::Negative => *t_val < 0.0,
+                    Sentiment::Neutral => true,
+                };
 
-                    let note = BulletinNote {
-                        author: entity,
-                        target,
-                        sentiment: s,
-                        content,
-                        timestamp,
+                if matches_sentiment {
+                    target = Some(*t_entity);
+                    content = match s {
+                        Sentiment::Positive => format!("I appreciate {:?}!", t_entity),
+                        Sentiment::Negative => format!("I blame {:?}!", t_entity),
+                        Sentiment::Neutral => format!("Thinking about {:?}.", t_entity),
                     };
-
-                    board.notes.push(note);
-
-                    // Enforce capacity
-                    if board.notes.len() > MAX_NOTES {
-                        board.notes.remove(0); // Remove oldest
-                    }
-
-                    // Update or insert cooldown
-                    if let Some(ref mut cd) = cooldown {
-                        cd.last_post_tick = timestamp;
-                    } else {
-                        commands.entity(entity).insert(GrievanceCooldown {
-                            last_post_tick: timestamp,
-                        });
-                    }
                 }
             }
+        }
+
+        // Integration: The Hum (INT-014)
+        // Sensitive pops with high stress will post about the Hum
+        let is_sensitive = traits.is_some_and(|t| t.has(Trait::Sensitive));
+        let high_stress = stress.is_some_and(|s| s.accumulated_stress > 50.0);
+
+        if is_sensitive && high_stress && s == Sentiment::Negative {
+            target = None; // The target is the void
+            let hum_messages = [
+                "The Hum won't stop.",
+                "Can anyone else hear the singing?",
+                "The vibration is in my teeth.",
+                "It is too loud today.",
+            ];
+            if let Some(msg) = hum_messages.choose(&mut rng) {
+                content = msg.to_string();
+            }
+        }
+
+        let note = BulletinNote {
+            author: entity,
+            target,
+            sentiment: s,
+            content,
+            timestamp,
+        };
+
+        board.notes.push(note);
+
+        // Enforce capacity
+        if board.notes.len() > MAX_NOTES {
+            board.notes.remove(0); // Remove oldest
+        }
+
+        // Update or insert cooldown
+        if let Some(ref mut cd) = cooldown {
+            cd.last_post_tick = timestamp;
+        } else {
+            commands.entity(entity).insert(GrievanceCooldown {
+                last_post_tick: timestamp,
+            });
         }
     }
 }
