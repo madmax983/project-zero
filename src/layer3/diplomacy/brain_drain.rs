@@ -1,3 +1,7 @@
+//! Brain Drain Migration
+//!
+//! Emigration of highly intelligent pops to neighboring factions when their living standards
+//! or freedom are significantly higher than the home faction.
 use crate::layer1::entities::pop::Pop;
 use bevy::prelude::*;
 

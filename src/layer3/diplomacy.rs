@@ -1,3 +1,6 @@
+//! Layer 3 Diplomacy Modules
+//!
+//! This module handles diplomatic interactions and events, including proxy wars, cultural ransom, succession crises, and brain drain.
 use crate::layer1::spore_diplomat::SporeInfection;
 use bevy::prelude::*;
 

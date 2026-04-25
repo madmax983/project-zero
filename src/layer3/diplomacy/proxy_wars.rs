@@ -1,3 +1,7 @@
+//! Proxy Wars and Privateers
+//!
+//! Handles the acceptance of proxy war contracts, combat rewards for privateers,
+//! and the disavowal of privateers when peace treaties are signed.
 use bevy::prelude::*;
 use std::collections::HashSet;
 
@@ -10,31 +14,75 @@ pub struct Ship;
 #[derive(Component)]
 pub struct Credits(pub i32);
 
+/// Represents the perceived threat levels of other factions.
+///
+/// Threat is typically increased when a faction engages in hostile actions,
+/// accepts proxy war contracts, or is caught engaging in unauthorized activities.
 #[derive(Resource, Component, Default)]
 pub struct ThreatMap {
+    /// A map of faction entities to their perceived threat value.
     pub threats: bevy::utils::HashMap<Entity, i32>,
+    /// A global modifier applied to all threat interactions.
     pub global_threat_modifier: f32,
 }
 
 impl ThreatMap {
+    /// Returns the threat value for a specific faction, or `0` if no threat is recorded.
+    ///
+    /// # Examples
+    /// ```
+    /// use bevy::prelude::*;
+    /// use scale::layer3::diplomacy::proxy_wars::ThreatMap;
+    ///
+    /// let mut map = ThreatMap::default();
+    /// let faction = Entity::from_raw(1);
+    ///
+    /// // Threat defaults to 0
+    /// assert_eq!(map.get_threat(faction), 0);
+    ///
+    /// // Modifying threat
+    /// map.threats.insert(faction, 50);
+    /// assert_eq!(map.get_threat(faction), 50);
+    /// ```
     pub fn get_threat(&self, faction: Entity) -> i32 {
         *self.threats.get(&faction).unwrap_or(&0)
     }
 }
 
+/// A status granted to a player or faction acting as a privateer for a sponsor.
+///
+/// Privateers earn credits for attacking specific targets designated by their sponsor,
+/// rather than accruing a global pirate bounty.
 #[derive(Component)]
 pub struct PrivateerStatus {
+    /// The faction sponsoring the privateer.
     pub sponsor: Entity,
+    /// The target factions the privateer is authorized to attack.
     pub targets: HashSet<Entity>,
 }
 
 impl PrivateerStatus {
+    /// Creates a new `PrivateerStatus` for a specific sponsor and target.
+    ///
+    /// # Examples
+    /// ```
+    /// use bevy::prelude::*;
+    /// use scale::layer3::diplomacy::proxy_wars::PrivateerStatus;
+    ///
+    /// let sponsor = Entity::from_raw(1);
+    /// let target = Entity::from_raw(2);
+    ///
+    /// let status = PrivateerStatus::new(sponsor, target);
+    /// assert!(status.is_active());
+    /// assert!(status.targets.contains(&target));
+    /// ```
     pub fn new(sponsor: Entity, target: Entity) -> Self {
         let mut targets = HashSet::new();
         targets.insert(target);
         Self { sponsor, targets }
     }
 
+    /// Returns `true` if the privateer has active targets.
     pub fn is_active(&self) -> bool {
         !self.targets.is_empty()
     }

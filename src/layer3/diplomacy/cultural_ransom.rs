@@ -1,3 +1,7 @@
+//! Cultural Ransom
+//!
+//! Systems for stealing cultural artifacts via raids, applying morale penalties when artifacts
+//! are held hostage, and trading them back during diplomatic negotiations.
 use crate::layer1::social::morale::Morale;
 use crate::layer3::diplomacy::proxy_wars::Credits;
 use crate::layer3::diplomacy::succession::Faction;
