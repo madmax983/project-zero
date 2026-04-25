@@ -31,3 +31,8 @@
 **Bloat:** The `HealthCondition` enum in `src/layer1/biology/health.rs` with exactly one variant (`RustLung`) stored inside a dynamically-allocated `Vec<HealthCondition>`.
 **Cut:** Removed the entire enum and the vector, replacing it with a simple `has_rust_lung: bool` primitive field on the `Health` struct.
 **Saved:** A dedicated struct, dozens of wrapper functions across multiple modules (`add_condition`, `has_condition`), and removed per-entity heap allocations from `Vec::new()`, vastly simplifying the `Health` interface.
+
+## [Reduction]
+**Bloat:** `SystemStatus` enum used alongside `Bloat` component in `legacy_code.rs` solely to track online vs rebooting ticks, requiring match blocks and extra component queries.
+**Cut:** Removed the `SystemStatus` enum entirely. Added a `reboot_ticks: u32` field directly to the `Bloat` struct.
+**Saved:** 15+ lines of code, an unnecessary enum, and a multi-component query in `update_bloat_system`.

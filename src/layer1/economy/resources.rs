@@ -1569,8 +1569,8 @@ mod tests {
 
     #[test]
     fn test_exploit_mining_overflow() {
-        use crate::layer1::nature::terrain::{TerrainGrid, TerrainType};
         use crate::layer1::map::GridPosition;
+        use crate::layer1::nature::terrain::{TerrainGrid, TerrainType};
 
         let mut app = bevy_ecs::world::World::new();
 
@@ -1580,16 +1580,18 @@ mod tests {
             tiles: vec![TerrainType::Tree; 10000],
         });
 
-        let entity = app.spawn((
-            GridPosition {
-                x: 10,
-                y: (usize::MAX / 100) as i32 + 2, // Maliciously high Y that will cause overflow when multiplied by 100
-            },
-            ForestryProgress {
-                current: 10.0,
-                max: 10.0,
-            },
-        )).id();
+        let entity = app
+            .spawn((
+                GridPosition {
+                    x: 10,
+                    y: (usize::MAX / 100) as i32 + 2, // Maliciously high Y that will cause overflow when multiplied by 100
+                },
+                ForestryProgress {
+                    current: 10.0,
+                    max: 10.0,
+                },
+            ))
+            .id();
 
         // This will panic with overflow if not protected
         // For it to panic in our code block we must pass the `terrain.get()` check.
