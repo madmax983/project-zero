@@ -17251,3 +17251,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** The terrifying realization that everything is fake vs. the absolute necessity of performing impossible, galaxy-spanning feats just to keep the lights on for another cycle.
 
 ---
+
+## Echoes of the First Star
+
+**Layer:** Cross-layer
+
+**Fantasy:** A profound, system-wide melancholy when the original homeworld's star finally dies, rippling through the descendents.
+
+**Mechanic:** At a random point in the late game, the star of the civilization's original founding system goes supernova. Even if that system is halfway across the galaxy and currently controlled by an enemy, every Pop in your empire receives an "Echo of the First Star" event. Pops gain a massive but temporary boost to unity and creative output, driven by existential reflection, but suffer a deep, lingering "Ancestral Grief" debuff that lowers combat effectiveness and increases the chance of Pops abandoning their jobs to become "Stargazers."
+
+**Emergence:** You are in the middle of a brutal, grinding war of attrition on Layer 3. The First Star dies. Suddenly, your entire war machine grinds to a halt not because of enemy fire, but because millions of your Pops, and the enemy's Pops, simply stop fighting to look up at the sky in shared, profound grief, creating an unplanned, spontaneous armistice.
+
+**Tension:** Do you try to aggressively suppress the Ancestral Grief to maintain your war effort, risking massive civil unrest, or do you accept the armistice and potentially lose strategic ground while your empire mourns a world most of them never saw?
+
+---
+
+## The Fossilized Leviathan
+
+**Layer:** 1 -> 2
+
+**Fantasy:** Building your colony inside the decaying ribcage of an ancient, impossible spaceborne creature.
+
+**Mechanic:** A starting scenario or mid-game discovery where the player colonizes a massive asteroid that is actually the fossilized remains of a leviathan. Mining operations slowly hollow out the bones, providing unique, ultra-dense exotic materials. However, as the colony digs deeper into the core, they begin to uncover preserved organic material. The local gravity and atmosphere slowly begin to change, adapting to the biological "memory" of the creature.
+
+**Emergence:** Your mining colony is incredibly wealthy from bone-mining. But as they hit the leviathan's dormant nervous system, the "asteroid" begins to emit low-frequency psionic pulses. Your Pops start experiencing collective hallucinations, and your orbital ships begin to slowly drift towards the asteroid as if caught in a biological tractor beam. The fossil isn't entirely dead.
+
+**Tension:** The immense wealth of mining the leviathan vs. the terrifying realization that you might be slowly waking it up from the inside out.
+
+---
+
+## Biological Obsolescence
+
+**Layer:** 1 -> 3
+
+**Fantasy:** The slow, heartbreaking realization that your original, organic Pops are no longer competitive in a galaxy of machines and genetically modified super-beings.
+
+**Mechanic:** As you heavily invest in cybernetics, AI, and genetic engineering, your "Baseline" (unmodified) Pops become statistically less efficient at every job compared to their augmented peers. Eventually, Baseline Pops begin to suffer chronic "Obsolescence Depression." They start forming isolationist enclaves, refusing modern medicine, and demanding "Organic Preserves"—massive, inefficient biomes where they can live without technology.
+
+**Emergence:** You perfectly optimize your empire with synthetic ascended Pops. But a small fraction of your population refuses the upgrade. Decades later, you find that your capital world has a sprawling, low-tech shantytown of Baseline Pops who are completely unemployable. They become a massive drain on your economy, but they are the only ones who can still produce original, un-calculated "Art" which is suddenly highly valued by ancient Layer 3 fallen empires.
+
+**Tension:** Do you forcibly uplift your remaining Baseline Pops, erasing their humanity for the sake of efficiency, or do you subsidize their existence as a living museum, dedicating massive resources to protect a population that actively resents your progress?
+
+---
