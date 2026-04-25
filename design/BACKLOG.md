@@ -798,3 +798,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1154` The Blind Terraformer — `specs/1154-the-blind-terraformer.md`
 - [ ] `1155` Sleep Debt Contagion — `specs/1155-sleep-debt-contagion.md`
 - [ ] `1156` Hyperlane Gentrification — `specs/1156-hyperlane-gentrification.md`
+- [ ] `1157` The Panopticon Dilemma — `specs/1157-the-panopticon-dilemma.md`
+- [ ] `1158` The Butterfly Effect of the Local Market — `specs/1158-butterfly-effect-local-market.md`
+- [ ] `1159` The Martyr's Monument — `specs/1159-the-martyrs-monument.md`
