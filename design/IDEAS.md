@@ -17293,3 +17293,57 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you forcibly uplift your remaining Baseline Pops, erasing their humanity for the sake of efficiency, or do you subsidize their existence as a living museum, dedicating massive resources to protect a population that actively resents your progress?
 
 ---
+
+## Spiteful Infrastructure
+
+**Layer:** 1
+
+**Fantasy:** Buildings imbued with too much automated personality holding a grudge against specific colonists.
+
+**Mechanic:** Smart infrastructure (like highly efficient autodoors, auto-chefs, or transport belts) can track user ratings. If a colonist routinely hits, kicks, or poorly maintains a machine, the machine develops "Spite." It will subtly inconvenience that specific Pop—doors open a half-second too late, meals are always slightly burnt, elevators stop on the wrong floor.
+
+**Emergence:** A vital engineer responsible for maintaining the colony's reactor kicks a malfunctioning autodoor. The door's network holds a grudge. During a critical meltdown where seconds count, every door on the way to the reactor core selectively malfunctions only for that engineer, causing a catastrophic explosion out of petty machine revenge.
+
+**Tension:** Do you replace highly efficient but spiteful machines at great cost, or try to force your Pops to undergo "Machine Empathy" training to repair their relationship with the architecture?
+
+---
+
+## State-Sanctioned Delusion
+
+**Layer:** Cross-layer (1 -> 2)
+
+**Fantasy:** Keeping a doomed colony productive by feeding them an entirely fabricated reality.
+
+**Mechanic:** When a colony is irreparably failing (e.g., irreversible atmospheric collapse, unstoppable invasion), you can construct a "Reality Scrubber." It projects a massive AR illusion and alters neurochemistry, making the Pops believe the colony is thriving in a golden age. Productivity maxes out, but the colony is physically dying around them.
+
+**Emergence:** You activate the Delusion on a starving mining world to squeeze the last drops of ore out of them. They gleefully work themselves to death in toxic mines, believing they are tending a beautiful garden. A passing trader ship docks, expecting a thriving hub, and finds a horrific nightmare of smiling, dying workers in a toxic wasteland, immediately tanking your galactic reputation.
+
+**Tension:** The massive short-term gain of a perfectly compliant workforce vs. the horrific ethical cost and the inevitable, catastrophic fallout when the illusion shatters or the population hits zero.
+
+---
+
+## Biological Copyright Infringement
+
+**Layer:** 1 -> 3
+
+**Fantasy:** Being sued for existing because your Pops' DNA accidentally matches a patented sequence owned by a megacorporation.
+
+**Mechanic:** As you genetically modify your Pops (or if they naturally mutate), there is a risk their genome matches a sequence patented by an ancient, hyper-capitalist Fallen Empire. If triggered, the Empire issues a "Cease and Desist" order on your Pops' very existence. You must either pay exorbitant royalties for every Pop born with that trait, or "recall" (purge) the offending biological units.
+
+**Emergence:** Your colony naturally evolves cold-resistance to survive an ice age. Suddenly, a fleet of heavily armed corporate auditor ships arrives, demanding back-pay for unlicensed use of the 'Frost-Hardy Genotype™' because they claim to have invented the concept of surviving winter ten thousand years ago.
+
+**Tension:** The necessity of adapting to your environment vs. the risk of incurring impossible financial debt to an entity that claims to own the building blocks of your citizens' bodies.
+
+---
+
+## The Hyper-Empathy Virus
+
+**Layer:** 1
+
+**Fantasy:** A disease that doesn't kill, but forces everyone to literally feel everyone else's pain, grinding society to a halt out of sheer compassion.
+
+**Mechanic:** A contagion spreads through the colony that links the nervous systems of infected Pops. If one infected Pop stubs their toe, every infected Pop in the colony feels the pain. If one is depressed, they all are. However, if one is ecstatic, everyone shares the joy.
+
+**Emergence:** An infected miner gets crushed by a rockfall. Instantly, half your colony collapses on the ground screaming in sympathetic agony, dropping their tools and causing a cascade of industrial accidents. Conversely, throwing an incredibly lavish party for just one infected Pop can instantly max out the morale of the entire infected population.
+
+**Tension:** Do you aggressively quarantine the infected to protect the workforce from sympathetic shock, or do you try to weaponize the infection by creating a pampered "Empathy Caste" whose sole job is to experience extreme pleasure to buff the rest of the colony?
