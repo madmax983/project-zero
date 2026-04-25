@@ -804,7 +804,12 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1163` Generational Debt — `specs/1163-generational-debt.md`
 - [ ] `1164` Automated Salvage Swarms — `specs/1164-automated-salvage-swarms.md`
 - [x] `1165` The Nostalgia Cult — `specs/1165-the-nostalgia-cult.md`
-- [ ] `1166` The Time-Capsule Paradox — `specs/1166-time-capsule-paradox.md`
-- [ ] `1167` Gravitational Empathy — `specs/1167-gravitational-empathy.md`
-- [ ] `1168` The Pacifist's Arsenal — `specs/1168-pacifists-arsenal.md`
-- [ ] `1169` The Last Archive — `specs/1169-the-last-archive.md`
+- [ ] `1166` The Time-Capsule Paradox — `specs/1177-time-capsule-paradox.md`
+- [ ] `1167` Gravitational Empathy — `specs/1178-gravitational-empathy.md`
+- [ ] `1168` The Pacifist's Arsenal — `specs/1175-the-pacifists-arsenal.md`
+- [ ] `1169` The Last Archive — `specs/1176-the-last-archive.md`
+- [ ] `1170` The Bureaucratic Black Hole — `specs/1170-the-bureaucratic-black-hole.md`
+- [ ] `1171` The Fossilized Leviathan — `specs/1171-the-fossilized-leviathan.md`
+- [ ] `1172` Biological Obsolescence — `specs/1172-biological-obsolescence.md`
+- [ ] `1173` Echoes of the First Star — `specs/1173-echoes-of-the-first-star.md`
+- [ ] `1174` The Bureaucracy of Sleep — `specs/1174-the-bureaucracy-of-sleep.md`
