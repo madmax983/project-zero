@@ -67,37 +67,35 @@ pub fn compliance_check_system(
     mut ships: ShipQuery<'_, '_>,
 ) {
     for event in events.read() {
-        if let Ok((hull_opt, modules_opt, mut status)) = ships.get_mut(event.target) {
-            let mut is_violating = false;
+        let Ok((hull_opt, modules_opt, mut status)) = ships.get_mut(event.target) else {
+            continue;
+        };
 
-            for treaty in &active_treaties.treaties {
-                for restriction in &treaty.restrictions {
-                    match restriction {
-                        Restriction::MaxHull(max_size) => {
-                            if let Some(hull) = hull_opt {
-                                if hull.size > *max_size {
-                                    is_violating = true;
-                                }
-                            }
+        let mut is_violating = false;
+
+        for treaty in &active_treaties.treaties {
+            for restriction in &treaty.restrictions {
+                match restriction {
+                    Restriction::MaxHull(max_size) => {
+                        if hull_opt.is_some_and(|hull| hull.size > *max_size) {
+                            is_violating = true;
                         }
-                        Restriction::BannedModuleType(banned_type) => {
-                            if let Some(modules) = modules_opt {
-                                for module in &modules.0 {
-                                    if module.m_type == *banned_type {
-                                        is_violating = true;
-                                    }
-                                }
-                            }
+                    }
+                    Restriction::BannedModuleType(banned_type) => {
+                        if modules_opt.is_some_and(|modules| {
+                            modules.0.iter().any(|m| m.m_type == *banned_type)
+                        }) {
+                            is_violating = true;
                         }
                     }
                 }
             }
+        }
 
-            if is_violating {
-                *status = ComplianceStatus::Violating;
-            } else {
-                *status = ComplianceStatus::Compliant;
-            }
+        if is_violating {
+            *status = ComplianceStatus::Violating;
+        } else {
+            *status = ComplianceStatus::Compliant;
         }
     }
 }
