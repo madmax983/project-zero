@@ -100,7 +100,7 @@ mod tests {
             .id();
 
         // Trigger critical accident logic
-        trigger_accident(&mut world, pop, AccidentSeverity::Critical);
+        trigger_accident(&mut world, pop, None, AccidentSeverity::Critical);
 
         // Check for AmputationEvent
         let events = world.resource::<Events<AmputationEvent>>();

@@ -595,6 +595,7 @@ fn handle_post_work_effects(
     handle_workplace_hazards(
         world,
         pop_entity,
+        Some(designation_entity),
         action_type,
         structure_opt.as_ref(),
         &skills,

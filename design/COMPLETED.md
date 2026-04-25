@@ -446,3 +446,4 @@
 - [x] `990` Treaty Cruisers — `specs/990-treaty-cruisers.md` — completed 2026-04-24
 - [x] `991` The Sub-Glacial Oceans — `specs/991-sub-glacial-oceans.md` — completed 2026-04-24
 - [x] `1106` Photophobic Resources — `specs/1106-photophobic-resources.md` — completed 2024-05-24
+- [x] `INT-817` Integration: Haunted Assembly Lines -> Workplace Hazards — completed 2026-08-05

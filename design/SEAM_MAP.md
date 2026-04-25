@@ -765,3 +765,9 @@
 - **Systems connected:** `update_drone_clusters` (Swarm Intelligence) -> `update_drone_behavior` (Integration) -> `PopAction` (Utility AI)
 - **Glue added:** Modified `update_drone_behavior` in `src/layer1/entities/swarm_intelligence.rs` to assign `ActionType::Repair` for High Intelligence drones and `ActionType::Explore` for Low Intelligence drones (while skipping drones that are already charging).
 - **Tests:** `tests/integration/swarm_intelligence_bridge.rs`
+
+### INT-817: Haunted Assembly Lines -> Workplace Hazards
+- **Date:** 2026-08-05
+- **Systems connected:** `trigger_accident` (Workplace Hazards) -> `haunted_building_system`, `apply_haunted_stress_system`, `check_haunted_worker_system` (Haunted Assembly Lines) -> `PopDiedInAccidentEvent`
+- **Glue added:** Modified `trigger_accident` in `src/layer1/environment/hazards.rs` to take a `location_entity` parameter, checking if pop health drops to zero or below and emitting a `PopDiedInAccidentEvent` mapped to the location, and registered the haunted systems in `src/layer1/systems/observation.rs`.
+- **Tests:** `tests/integration/haunted_hazards_bridge.rs`

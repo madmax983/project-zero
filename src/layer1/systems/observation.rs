@@ -420,6 +420,15 @@ pub fn register(schedule: &mut Schedule) {
 
     schedule.add_systems(
         (
+            crate::layer1::haunted_assembly_lines::haunted_building_system,
+            crate::layer1::haunted_assembly_lines::apply_haunted_stress_system,
+            crate::layer1::haunted_assembly_lines::check_haunted_worker_system,
+        )
+            .in_set(Layer1SystemSet::Observation),
+    );
+
+    schedule.add_systems(
+        (
             crate::layer1::diplomacy::wards::process_diplomatic_wards_system,
             crate::layer1::diplomacy::wards::process_ward_deaths_system,
             crate::layer1::unseen_bureaucracy::phantom_shift_system,

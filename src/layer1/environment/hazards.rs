@@ -28,6 +28,7 @@ pub struct AmputationEvent {
 pub fn handle_workplace_hazards(
     world: &mut World,
     pop_entity: Entity,
+    location_entity: Option<Entity>,
     action_type: ActionType,
     structure: Option<&Structure>,
     skills: &Skills,
@@ -63,7 +64,7 @@ pub fn handle_workplace_hazards(
     if rng.gen_bool(risk.min(1.0)) {
         let severity_roll = rng.r#gen::<f32>();
         let severity = determine_severity(severity_roll);
-        trigger_accident(world, pop_entity, severity);
+        trigger_accident(world, pop_entity, location_entity, severity);
     }
 }
 
@@ -113,15 +114,33 @@ pub fn determine_severity(roll: f32) -> AccidentSeverity {
 }
 
 /// Applies accident consequences to the entity.
-pub fn trigger_accident(world: &mut World, entity: Entity, severity: AccidentSeverity) {
+pub fn trigger_accident(
+    world: &mut World,
+    entity: Entity,
+    location_entity: Option<Entity>,
+    severity: AccidentSeverity,
+) {
     let damage = match severity {
         AccidentSeverity::Minor => 10.0,
         AccidentSeverity::Major => 40.0,
         AccidentSeverity::Critical => 80.0,
     };
 
+    let mut died = false;
     if let Some(mut health) = world.get_mut::<Health>(entity) {
         health.take_damage(damage);
+        if health.current <= 0.0 {
+            died = true;
+        }
+    }
+
+    if died {
+        if let Some(location) = location_entity {
+            world.send_event(crate::layer1::haunted_assembly_lines::PopDiedInAccidentEvent {
+                pop: entity,
+                location,
+            });
+        }
     }
 
     if severity == AccidentSeverity::Critical {
