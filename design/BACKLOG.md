@@ -796,3 +796,5 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1152` Sub-light Arrival Shock — `specs/1152-sub-light-arrival-shock.md`
 - [ ] `1153` Defector's Regret — `specs/1153-defectors-regret.md`
 - [ ] `1154` The Blind Terraformer — `specs/1154-the-blind-terraformer.md`
+- [ ] `1155` Sleep Debt Contagion — `specs/1155-sleep-debt-contagion.md`
+- [ ] `1156` Hyperlane Gentrification — `specs/1156-hyperlane-gentrification.md`
