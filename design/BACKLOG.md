@@ -5,7 +5,6 @@
 
 - [ ] `1117` Sonic Suppression — `specs/1117-sonic-suppression.md`
 
-- [ ] `1105` Auroral Harvesting — `specs/1105-auroral-harvesting.md`
 - [ ] `1093` Superstitious Totems — `specs/1093-superstitious-totems.md`
 
 

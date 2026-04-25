@@ -54,6 +54,13 @@ pub fn register(schedule: &mut Schedule) {
 
     schedule.add_systems(
         (
+            crate::layer1::energy::sky_tether::auroral_harvesting_system,
+        )
+            .in_set(Layer1SystemSet::Economy),
+    );
+
+    schedule.add_systems(
+        (
             process_research_system,
             process_observe_system,
             #[cfg(feature = "nova")]

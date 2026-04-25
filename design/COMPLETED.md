@@ -436,6 +436,7 @@
 - [x] `1122` The Rust-Lung Epidemic — `specs/1122-rust-lung-epidemic.md` — completed 2024-05-24
 
 - [x] `1119` Personal Shields — `specs/1119-personal-shields.md` - completed 2024-05-25
+- [x] `1105` Auroral Harvesting — `specs/1105-auroral-harvesting.md` - completed 2024-05-24
 - [x] `1104` Swarm Intelligence — `specs/1104-swarm-intelligence.md` — completed 2026-05-18
 - [x] `INT-892` Integration: Ghost Ships -> Chronicle — completed 2026-08-01
 - [x] `INT-1104` Integration: Swarm Intelligence -> Drone Behavior — completed 2026-06-26

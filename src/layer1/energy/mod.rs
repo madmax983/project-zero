@@ -24,6 +24,9 @@ pub mod load_limits;
 pub mod phantom_grid;
 #[cfg(test)]
 mod phantom_grid_tests;
+pub mod sky_tether;
+pub use sky_tether::*;
+
 pub use auroral::update_auroral_output_system;
 
 /// Emits power to the grid.
