@@ -71,13 +71,19 @@ fn test_cargo_cult_integration_end_to_end() {
             });
     }
 
-    assert!(found_belief, "Cargo cult belief was not assigned by the system schedule integration");
+    assert!(
+        found_belief,
+        "Cargo cult belief was not assigned by the system schedule integration"
+    );
 
     // Once belief is assigned, process_ritual_actions_system should kick in next update and apply buffs/debuffs
     app.update();
 
     let debuff = app.world().entity(pop_entity).get::<EfficiencyDebuff>();
-    assert!(debuff.is_some(), "Efficiency debuff was not applied during ritual actions");
+    assert!(
+        debuff.is_some(),
+        "Efficiency debuff was not applied during ritual actions"
+    );
 
     let morale = app.world().entity(pop_entity).get::<Morale>().unwrap();
     assert!(
