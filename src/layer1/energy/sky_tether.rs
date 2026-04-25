@@ -1,5 +1,5 @@
-use bevy_ecs::prelude::*;
 use crate::layer1::biology::health::Health;
+use bevy_ecs::prelude::*;
 
 #[derive(Component)]
 pub struct SkyTether {
@@ -54,9 +54,7 @@ mod tests {
         // Arrange: Setup a Sky-Tether underneath
         let tether_entity = world
             .spawn((
-                SkyTether {
-                    energy_output: 0.0,
-                },
+                SkyTether { energy_output: 0.0 },
                 Health {
                     current: 100.0,
                     max: 100.0,
@@ -72,7 +70,10 @@ mod tests {
 
         // Assert: Energy generation is massively increased
         let tether = world.get::<SkyTether>(tether_entity).unwrap();
-        assert!(tether.energy_output > 10.0, "Energy output should be massively increased");
+        assert!(
+            tether.energy_output > 10.0,
+            "Energy output should be massively increased"
+        );
         assert_eq!(tether.energy_output, 100.0);
     }
 
@@ -89,9 +90,7 @@ mod tests {
         // Arrange: Setup a Sky-Tether underneath
         let tether_entity = world
             .spawn((
-                SkyTether {
-                    energy_output: 0.0,
-                },
+                SkyTether { energy_output: 0.0 },
                 Health {
                     current: 100.0,
                     max: 100.0,

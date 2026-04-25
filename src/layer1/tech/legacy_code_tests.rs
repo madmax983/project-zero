@@ -1,6 +1,6 @@
 #[cfg(test)]
 mod tests {
-    use crate::layer1::tech::legacy_code::{update_bloat_system, Bloat, SystemStatus};
+    use crate::layer1::tech::legacy_code::{update_bloat_system, Bloat};
     use bevy_ecs::prelude::*;
     // use crate::layer1::research::ResearchRate; // Not yet implemented
     use crate::shared::time::SimulationTime;
@@ -16,13 +16,11 @@ mod tests {
         });
 
         let mainframe = world
-            .spawn((
-                Bloat {
-                    current: 0.0,
-                    rate: 0.1,
-                },
-                SystemStatus::Online,
-            ))
+            .spawn(Bloat {
+                current: 0.0,
+                rate: 0.1,
+                reboot_ticks: 0,
+            })
             .id();
 
         // Run system
@@ -42,12 +40,14 @@ mod tests {
         let bloat_low = Bloat {
             current: 10.0,
             rate: 0.0,
+            reboot_ticks: 0,
         };
         assert!(bloat_low.efficiency() > 0.9);
 
         let bloat_high = Bloat {
             current: 90.0,
             rate: 0.0,
+            reboot_ticks: 0,
         };
         assert!(bloat_high.efficiency() < 0.2);
     }
@@ -56,30 +56,26 @@ mod tests {
     fn test_reformat_clears_bloat_but_disables_system() {
         let mut world = World::new();
         let mainframe = world
-            .spawn((
-                Bloat {
-                    current: 100.0,
-                    rate: 0.1,
-                },
-                SystemStatus::Online,
-            ))
+            .spawn(Bloat {
+                current: 100.0,
+                rate: 0.1,
+                reboot_ticks: 0,
+            })
             .id();
 
         // Trigger Reformat
-        // Assume event or component trigger
-        if let Some(mut status) = world.get_mut::<SystemStatus>(mainframe) {
-            *status = SystemStatus::Rebooting(500); // 500 ticks duration
+        if let Some(mut bloat) = world.get_mut::<Bloat>(mainframe) {
+            bloat.reboot_ticks = 500; // 500 ticks duration
         }
 
-        let status = world.get::<SystemStatus>(mainframe).unwrap();
-        assert_eq!(*status, SystemStatus::Rebooting(500)); // 500 ticks duration
+        let bloat = world.get::<Bloat>(mainframe).unwrap();
+        assert_eq!(bloat.reboot_ticks, 500); // 500 ticks duration
 
         // Advance time to finish
-        // (Mocking system update for reboot logic)
-        if let Some(mut status) = world.get_mut::<SystemStatus>(mainframe) {
-            if let SystemStatus::Rebooting(_) = *status {
-                *status = SystemStatus::Rebooting(0);
-                // Let system handle the switch next tick
+        // (Mocking system update for reboot logic, setting to 1 so the system clears it this tick)
+        if let Some(mut bloat) = world.get_mut::<Bloat>(mainframe) {
+            if bloat.reboot_ticks > 0 {
+                bloat.reboot_ticks = 1;
             }
         }
 
@@ -89,8 +85,6 @@ mod tests {
 
         let bloat = world.get::<Bloat>(mainframe).unwrap();
         assert_eq!(bloat.current, 0.0);
-
-        let status = world.get::<SystemStatus>(mainframe).unwrap();
-        assert_eq!(*status, SystemStatus::Online);
+        assert_eq!(bloat.reboot_ticks, 0);
     }
 }

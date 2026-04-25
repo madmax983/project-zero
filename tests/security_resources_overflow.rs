@@ -13,16 +13,18 @@ fn test_exploit_resources_overflow() {
         tiles: vec![TerrainType::Tree; 10000],
     });
 
-    let entity = app.spawn((
-        GridPosition {
-            x: 10,
-            y: (usize::MAX / 100) as i32 + 2, // Maliciously high Y that will cause overflow when multiplied by 100
-        },
-        ForestryProgress {
-            current: 10.0,
-            max: 10.0,
-        },
-    )).id();
+    let entity = app
+        .spawn((
+            GridPosition {
+                x: 10,
+                y: (usize::MAX / 100) as i32 + 2, // Maliciously high Y that will cause overflow when multiplied by 100
+            },
+            ForestryProgress {
+                current: 10.0,
+                max: 10.0,
+            },
+        ))
+        .id();
 
     // As concluded, the unsafe overflow is unreachable via the front-door `terrain.get()` checks.
     // However, it's still bad practice. Since we can't trigger a panic without changing terrain.get,

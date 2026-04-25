@@ -2,8 +2,9 @@ use bevy_ecs::prelude::*;
 
 #[derive(Component, Default, Debug)]
 pub struct Bloat {
-    pub current: f32, // 0-100
-    pub rate: f32,    // e.g. 0.01 per tick
+    pub current: f32,      // 0-100
+    pub rate: f32,         // e.g. 0.01 per tick
+    pub reboot_ticks: u32, // 0 = Online, >0 = Rebooting
 }
 
 impl Bloat {
@@ -15,27 +16,15 @@ impl Bloat {
     }
 }
 
-#[derive(Component, Debug, PartialEq, Eq)]
-pub enum SystemStatus {
-    Online,
-    Rebooting(u32), // Ticks remaining
-}
-
-pub fn update_bloat_system(mut query: Query<(&mut Bloat, &mut SystemStatus)>) {
-    for (mut bloat, mut status) in query.iter_mut() {
-        match *status {
-            SystemStatus::Online => {
-                bloat.current = (bloat.current + bloat.rate).min(100.0);
+pub fn update_bloat_system(mut query: Query<&mut Bloat>) {
+    for mut bloat in query.iter_mut() {
+        if bloat.reboot_ticks > 0 {
+            bloat.reboot_ticks -= 1;
+            if bloat.reboot_ticks == 0 {
+                bloat.current = 0.0;
             }
-            SystemStatus::Rebooting(ref mut ticks) => {
-                if *ticks > 0 {
-                    *ticks -= 1;
-                } else {
-                    // Done
-                    bloat.current = 0.0;
-                    *status = SystemStatus::Online;
-                }
-            }
+        } else {
+            bloat.current = (bloat.current + bloat.rate).min(100.0);
         }
     }
 }

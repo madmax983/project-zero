@@ -53,9 +53,7 @@ pub fn register(schedule: &mut Schedule) {
     );
 
     schedule.add_systems(
-        (
-            crate::layer1::energy::sky_tether::auroral_harvesting_system,
-        )
+        (crate::layer1::energy::sky_tether::auroral_harvesting_system,)
             .in_set(Layer1SystemSet::Economy),
     );
 
