@@ -765,3 +765,9 @@
 - **Systems connected:** `update_drone_clusters` (Swarm Intelligence) -> `update_drone_behavior` (Integration) -> `PopAction` (Utility AI)
 - **Glue added:** Modified `update_drone_behavior` in `src/layer1/entities/swarm_intelligence.rs` to assign `ActionType::Repair` for High Intelligence drones and `ActionType::Explore` for Low Intelligence drones (while skipping drones that are already charging).
 - **Tests:** `tests/integration/swarm_intelligence_bridge.rs`
+
+### INT-983: Cargo Cult Logistics -> Morale/Efficiency
+- **Date:** 2026-06-27
+- **Systems connected:** `process_orbital_drops` (Orbital Drop Event) -> `apply_cargo_cult_belief_system` -> `process_ritual_actions_system` -> `Morale` / `EfficiencyDebuff`
+- **Glue added:** Registered `apply_cargo_cult_belief_system` and `process_ritual_actions_system` in `Layer1SystemSet::Observation` immediately after `process_orbital_drops` in `src/layer1/systems/observation.rs`.
+- **Tests:** `tests/cargo_cult_bridge.rs` and `tests/integration.rs` entry.

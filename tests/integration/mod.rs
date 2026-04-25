@@ -40,3 +40,4 @@ pub mod primitive_retaliation_bridge;
 pub mod ventilation_atmosphere_bridge;
 
 mod ecological_succession_bridge;
+pub mod cargo_cult_bridge;
