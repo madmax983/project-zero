@@ -54,6 +54,27 @@ impl GalacticMarket {
     }
 }
 
+/// Executes a sell order on the galactic market, increasing the supply pool.
+///
+/// If the amount is less than or equal to 0, or is not finite, the function will return early
+/// without modifying the market state.
+///
+/// # Examples
+/// ```
+/// use bevy::prelude::*;
+/// use scale::layer1::resources::ResourceType;
+/// use scale::layer3::market::galactic_market::{GalacticMarket, execute_market_sell};
+///
+/// let mut world = World::new();
+/// world.insert_resource(GalacticMarket::new());
+///
+/// // Execute a sell order for 100 units of Food
+/// execute_market_sell(&mut world, ResourceType::Food, 100.0);
+///
+/// let market = world.resource::<GalacticMarket>();
+/// // Original pool is 1000.0 + 100.0 = 1100.0
+/// assert_eq!(market.supply_pool.get(&ResourceType::Food).copied(), Some(1100.0));
+/// ```
 pub fn execute_market_sell(world: &mut World, resource: ResourceType, amount: f32) {
     if amount <= 0.0 || !amount.is_finite() {
         return;
@@ -63,6 +84,27 @@ pub fn execute_market_sell(world: &mut World, resource: ResourceType, amount: f3
     *pool += amount;
 }
 
+/// Executes a buy order on the galactic market, decreasing the supply pool.
+///
+/// If the amount is less than or equal to 0, or is not finite, the function will return early
+/// without modifying the market state. The supply pool will never drop below `0.0`.
+///
+/// # Examples
+/// ```
+/// use bevy::prelude::*;
+/// use scale::layer1::resources::ResourceType;
+/// use scale::layer3::market::galactic_market::{GalacticMarket, execute_market_buy};
+///
+/// let mut world = World::new();
+/// world.insert_resource(GalacticMarket::new());
+///
+/// // Execute a buy order for 50 units of Ore
+/// execute_market_buy(&mut world, ResourceType::Ore, 50.0);
+///
+/// let market = world.resource::<GalacticMarket>();
+/// // Original pool is 1000.0 - 50.0 = 950.0
+/// assert_eq!(market.supply_pool.get(&ResourceType::Ore).copied(), Some(950.0));
+/// ```
 pub fn execute_market_buy(world: &mut World, resource: ResourceType, amount: f32) {
     if amount <= 0.0 || !amount.is_finite() {
         return;

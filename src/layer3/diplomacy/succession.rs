@@ -1,3 +1,7 @@
+//! Dynastic Succession
+//!
+//! Handles faction leadership changes when the current leader dies, promoting the heir apparent,
+//! or triggering a succession crisis if no heir is present.
 use bevy::prelude::*;
 
 #[derive(Component)]

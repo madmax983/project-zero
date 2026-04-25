@@ -17,3 +17,6 @@
 ## 2024-04-23 - Swarm Intelligence Radius
 **Confusion:** The activation condition for drone "Swarm Intelligence" (upgrading from Low to High intelligence) relied on a magic `clustering_radius` of 5.0, which wasn't visible unless looking at the raw code.
 **Clarification:** Documented the `update_drone_clusters` system to explicitly state the 5.0 tile radius and the requirement of having at least 2 other nearby drones to form the mesh network. Added executable doc-tests proving this behavior.
+## 2024-05-19 - The Missing Layer 3 Documentation
+**Confusion:** The \`layer3\` modules handling galactic-scale interactions (like diplomacy, market, and fleets) lacked both module-level conceptual overviews and practical, executable examples showing how to interact with the API within a Bevy App.
+**Clarification:** Added module-level \`//!\` documentation to explain the abstract concepts (like Proxy Wars, Cultural Ransom, Brain Drain, and Dynastic Succession) across the entire layer. Also added executable doc-tests for \`execute_market_buy\`, \`execute_market_sell\`, \`ThreatMap\`, and \`PrivateerStatus\` so users can clearly see how to spawn these components or invoke these functions within an ECS context.

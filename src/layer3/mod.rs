@@ -1,3 +1,8 @@
+//! Layer 3: Galactic Level Simulation
+//!
+//! This layer handles galaxy-wide simulation aspects, connecting solar systems and factions.
+//! This includes the galactic market, council resolutions, diplomacy between interstellar nations,
+//! and large-scale fleets.
 pub mod council;
 pub mod events;
 pub mod market;
