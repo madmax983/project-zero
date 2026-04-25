@@ -6370,3 +6370,83 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[RIVAL_FACTION] holds our history hostage. They demand [RANSOM_DEMAND] for the [CULTURAL_ARTIFACT]. [YEAR]."
 - "[YEAR]: The price of our soul. We must pay [RANSOM_DEMAND] to get the [CULTURAL_ARTIFACT] back from [RIVAL_FACTION]."
 - "We traded [RANSOM_DEMAND] to recover the [CULTURAL_ARTIFACT]. Our pride is wounded, but our history returns. [YEAR]."
+
+## Deep Crust Resonance Templates (Spec 1132)
+
+### Template: RESONANCE_UNCOVERED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [DEPTH_LEVEL]
+
+**Patterns:**
+- "[YEAR]: We dug too deep at [COLONY]. At [DEPTH_LEVEL], the rock began to sing. The miners won't sleep."
+- "The ore from [DEPTH_LEVEL] hums. [COLONY] celebrates the wealth, but the air feels heavy with unseen watchers. [YEAR]."
+- "They breached [DEPTH_LEVEL] beneath [COLONY]. Found something that shouldn't be there. The resonance has begun. [YEAR]."
+
+### Template: PARANOIA_OUTBREAK
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [NAME], [VIOLENT_ACT]
+
+**Patterns:**
+- "The singing stone takes its toll. [NAME] snapped today. [VIOLENT_ACT]. [COLONY] is tearing itself apart. [YEAR]."
+- "[YEAR]: Trust is gone in [COLONY]. The resonance spreads. [NAME] committed [VIOLENT_ACT] against their own."
+- "[NAME] claimed the shadows were whispering treason. [VIOLENT_ACT]. The deep crust claims another mind. [YEAR]."
+
+## Rust-Lung Epidemic Templates (Spec 1122)
+
+### Template: RUST_LUNG_ONSET
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [NAME]
+
+**Patterns:**
+- "[YEAR]: The dust settles in [COLONY]. [NAME] coughs up red. The air of progress suffocates us."
+- "We sacrificed lungs for quotas. [NAME] has the rust now. A slow, wheezing death in [COLONY]. [YEAR]."
+- "[NAME] can barely walk. The Rust-Lung is taking hold. The cost of extraction in [COLONY]. [YEAR]."
+
+### Template: RUST_LUNG_TOXIC_SURVIVAL
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [NAME], [TOXIC_EVENT]
+
+**Patterns:**
+- "[TOXIC_EVENT] swept through [COLONY]. The healthy died. Only [NAME], already ruined by Rust-Lung, breathed through the poison and lived. [YEAR]."
+- "[YEAR]: A twisted mercy. The Rust-Lung saved [NAME] when [TOXIC_EVENT] hit [COLONY]. Broken lungs cannot be poisoned twice."
+- "The gas cleared. [TOXIC_EVENT] took so many. But [NAME] stood in the haze, wheezing, alive. [YEAR]."
+
+## Brain Drain Migration Templates (Spec 1144)
+
+### Template: GENIUS_DEPARTURE
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [NAME], [LOST_TECH_FIELD]
+
+**Patterns:**
+- "[YEAR]: Our brightest mind is gone. [NAME] fled [COLONY] for better lives elsewhere. We lose their mastery of [LOST_TECH_FIELD]."
+- "[NAME] looked at our squalor and left. The exodus from [COLONY] begins. Who will teach us [LOST_TECH_FIELD] now? [YEAR]."
+- "We couldn't pay them in freedom. [NAME] emigrated, taking the secrets of [LOST_TECH_FIELD] to our rivals. [YEAR]."
+
+### Template: INTELLECTUAL_RIVALS
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [RIVAL_FACTION], [LOST_TECH_FIELD]
+
+**Patterns:**
+- "[RIVAL_FACTION] just leaped ahead in [LOST_TECH_FIELD]. Using the minds that fled [COLONY]. [YEAR]."
+- "[YEAR]: We watch our own brilliance weaponized against us. [RIVAL_FACTION] masters [LOST_TECH_FIELD], thanks to our exiles."
+- "The brain drain bears fruit for [RIVAL_FACTION]. Their [LOST_TECH_FIELD] eclipses ours. [COLONY] stagnates. [YEAR]."
+
+## Swarm Intelligence Templates (Spec 1104)
+
+### Template: SWARM_COALESCENCE
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [SWARM_PURPOSE]
+
+**Patterns:**
+- "[YEAR]: The drones at [COLONY] stopped bumping into walls. They clustered, shared processing, and began [SWARM_PURPOSE] with terrifying efficiency."
+- "A spark of emergent thought. The swarm united for [SWARM_PURPOSE]. [COLONY] watches the machine wake up. [YEAR]."
+- "Individually dumb, collectively brilliant. The drones achieved [SWARM_PURPOSE]. The swarm is active. [YEAR]."
+
+### Template: SWARM_FRACTURE
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [SWARM_PURPOSE]
+
+**Patterns:**
+- "The network broke. The drones scattered, forgetting [SWARM_PURPOSE]. They are just mindless metal again. [YEAR]."
+- "[YEAR]: The swarm at [COLONY] fractured. A critical task, [SWARM_PURPOSE], abandoned to mechanical stupidity."
+- "A lost connection. The collective genius dissolved. [SWARM_PURPOSE] failed as the drones reverted to basic routines. [YEAR]."

@@ -7129,3 +7129,51 @@ Used for The Archaeological Contagion events. The ancient technology reverse-eng
 - thousands of tons of refined ore
 - crippling trade concessions
 - our most advanced technology
+
+## Deep Crust Resonance Fragments (Spec 1132)
+
+## Fragment Type: [DEPTH_LEVEL]
+- the abyssal layers
+- the bedrock faults
+- Strata-9
+- the whispering deep
+- the geothermal veins
+- the black crust
+- the sunless deep
+
+## Fragment Type: [VIOLENT_ACT]
+- attacked the foreman
+- sabotaged the life support
+- screamed at the walls until they bled
+- tried to collapse the tunnel
+- barricaded the sector
+
+## Rust-Lung Epidemic Fragments (Spec 1122)
+
+## Fragment Type: [TOXIC_EVENT]
+- the Green Cloud
+- a massive ventilation failure
+- the caustic spore bloom
+- a refinery backdraft
+- the miasma leak
+- a bitter chemical fog
+
+## Brain Drain Migration Fragments (Spec 1144)
+
+## Fragment Type: [LOST_TECH_FIELD]
+- hyper-fusion theories
+- zero-g agronomy
+- advanced neuro-implants
+- relativistic physics
+- synthetic biome weaving
+- sub-light propulsion
+
+## Swarm Intelligence Fragments (Spec 1104)
+
+## Fragment Type: [SWARM_PURPOSE]
+- repairing the main reactor
+- isolating the viral outbreak
+- mass-harvesting the crystal fields
+- a coordinated defense grid
+- dismantling the derelict faster than expected
+- perfectly optimizing the power routing
