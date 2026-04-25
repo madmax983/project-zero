@@ -17181,3 +17181,73 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you accept the massive strategic boon of a defector, knowing you might have to completely reshape your local economy to appease their cultural sensibilities, or risk them destroying your society from within?
 
 ---
+
+## The Time-Capsule Paradox
+
+**Layer:** Cross-layer (1 -> 3)
+
+**Fantasy:** Receiving a desperate message from your own future, or your own past.
+
+**Mechanic:** A "Time Anomaly" is discovered on Layer 2. Interacting with it drops a physical "Time Capsule" on Layer 1. The capsule contains a massive cache of late-game technology and a cryptic warning about a specific disaster (e.g., "Do not build the Stellar Engine"). However, opening the capsule creates a temporal paradox: your timeline splits, and a hostile "Mirror Empire" (representing the timeline where you *did* build the engine) spawns on the edge of the galaxy, intent on destroying you.
+
+**Emergence:** You open the capsule, instantly skipping 100 years of research. But the Mirror Empire that spawns is heavily armed with the exact same technology. You trigger an apocalyptic galactic war simply by trying to skip the tech tree.
+
+**Tension:** The immense, immediate leap in power vs. the guaranteed, terrifying consequence of spawning an equal or greater enemy.
+
+---
+
+## Gravitational Empathy
+
+**Layer:** 1
+
+**Fantasy:** The sheer mass of the planet physically weighs on the minds of the colonists.
+
+**Mechanic:** On worlds with extremely high gravity, Pops develop a "Crushing Weight" mood debuff. However, over generations, they develop "Gravitational Empathy"—a latent psychic connection. Their collective mood begins to slightly alter the local gravity field. If the colony is extremely happy, gravity locally decreases, boosting movement speed and industrial output. If the colony is deeply depressed, gravity locally increases, crushing fragile buildings and slowing everyone to a crawl.
+
+**Emergence:** A severe famine hits a high-gravity world. The Pops become depressed. Their depression increases the local gravity, which crushes the remaining hydroponics bays, worsening the famine and causing a death spiral driven by negative emotions physically manifesting as crushing force.
+
+**Tension:** The absolute necessity of maintaining high morale on high-gravity worlds, not just for productivity, but to prevent the planet itself from crushing your infrastructure.
+
+---
+
+## The Pacifist's Arsenal
+
+**Layer:** Cross-layer (1 -> 3)
+
+**Fantasy:** Weaponizing extreme non-violence to dismantle an enemy's will to fight.
+
+**Mechanic:** A civilization committed to extreme pacifism can research "Empathy Broadcasts." Instead of building warships, they build massive, unarmed broadcast ships. When these ships enter an enemy system, they don't fire weapons; they broadcast overwhelming, neurologically-tailored feelings of guilt, peace, and shared humanity. Enemy fleets caught in the broadcast zone suffer massive "Will to Fight" damage. If it drops to zero, the enemy crews mutiny and refuse to fire.
+
+**Emergence:** You are invaded by a terrifying Devouring Swarm. You send your Empathy Fleet. The broadcast hits the Swarm. The biological weapons suddenly stop eating your people and instead start trying to painfully regurgitate the biomass they already consumed out of profound, chemically-induced guilt, effectively neutralizing the threat without firing a shot.
+
+**Tension:** The massive power of instantly neutralizing fleets vs. the extreme vulnerability of fielding entirely unarmed ships that must survive long enough for the broadcast to take effect.
+
+---
+
+## The Bureaucratic Black Hole
+
+**Layer:** 1 -> 3
+
+**Fantasy:** A government so complex and dense that information, resources, and even people simply vanish into it, never to be seen again.
+
+**Mechanic:** "Administration Hubs" are required to manage large populations. However, if a colony builds too many administrative buildings relative to its productive buildings, it creates a "Bureaucratic Black Hole." This anomaly has a physical radius on the Layer 1 map. Resources hauled into this radius have a small percentage chance of being "Lost in Paperwork" (deleted). Pops who enter the radius to perform administrative jobs have a very rare chance to be permanently "Reassigned" (deleted from the game without generating a corpse or memory).
+
+**Emergence:** You build a massive central bureaucracy to efficiently run your capital world. The Bureaucratic Black Hole forms. Your most brilliant scientist enters the Ministry of Truth to file a patent and never comes out. The colony simply accepts that they were "reassigned to a special project," while you scramble to replace your top researcher who was eaten by red tape.
+
+**Tension:** The necessity of administrative buildings to manage large colonies vs. the terrifying, literal loss of resources and personnel to an over-bloated bureaucracy.
+
+---
+
+## The Last Archive
+
+**Layer:** Cross-layer (1 -> 3)
+
+**Fantasy:** Discovering that your universe is just a simulation running inside a decaying server, and you must patch it from the inside to survive.
+
+**Mechanic:** A late-game expedition to the center of the galaxy uncovers "The Last Archive"—the physical server running the simulation of your reality. Interacting with the Archive reveals that the universe's hardware is failing, creating "Glitch Zones" across Layer 1 and Layer 2 where physics breaks down. To fix it, you must harvest an impossible amount of energy and exotic matter to physically patch the server before the simulation terminates.
+
+**Emergence:** You reach the Archive, realizing the galaxy's impending doom. To gather the energy needed to patch the server, you have to initiate a massive, apocalyptic war to build Dyson Swarms around every star, essentially destroying the galaxy to save it, uniting all factions against you in the process.
+
+**Tension:** The terrifying realization that everything is fake vs. the absolute necessity of performing impossible, galaxy-spanning feats just to keep the lights on for another cycle.
+
+---
