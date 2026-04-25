@@ -65,6 +65,7 @@ pub fn run_simulation_tick(world: &mut World) {
     if !world.contains_resource::<crate::layer1::stress::TraumaTracker>() {
         world.init_resource::<crate::layer1::stress::TraumaTracker>();
         world.init_resource::<Events<crate::layer2::skyhooks::LaunchIntent>>();
+        world.init_resource::<Events<crate::layer1::infrastructure::ancient::ConduitSurgeEvent>>();
     }
 
     if !world.contains_resource::<crate::layer1::tech_envy::TechEnvyConfig>() {
@@ -683,6 +684,7 @@ mod tests {
             .init_resource::<crate::layer1::environment::bio_acoustic_miasma::MiasmaRecordedSecret>(
             );
         world.init_resource::<bevy::prelude::Events<crate::layer2::skyhooks::LaunchIntent>>();
+        world.init_resource::<bevy::prelude::Events<crate::layer1::infrastructure::ancient::ConduitSurgeEvent>>();
         world.init_resource::<bevy::prelude::Events<crate::layer2::weather::StormImpactEvent>>();
         world.init_resource::<bevy::prelude::Events<crate::layer1::law::justice::CrimeCommittedEvent>>();
         world.init_resource::<bevy::prelude::Events<crate::layer1::pop_memories::FamineEvent>>();
