@@ -15751,7 +15751,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Orbital Secession
+## The Orbital Secession [SPECCED]
 
 **Layer:** 2 -> 1
 
@@ -15849,7 +15849,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Blind Auction
+## The Blind Auction [SPECCED]
 
 **Layer:** Cross-layer
 
@@ -15904,7 +15904,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Orbital Debris Cascades
+## Orbital Debris Cascades [SPECCED]
 
 **Layer:** 2 -> 1
 
@@ -15931,7 +15931,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Generational Debt
+## Generational Debt [SPECCED]
 
 **Layer:** Cross-layer
 
