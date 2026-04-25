@@ -14,6 +14,7 @@ use std::collections::VecDeque;
 
 /// Auroral power generation.
 pub mod auroral;
+pub mod auroral_harvesting;
 #[cfg(test)]
 mod auroral_tests;
 #[cfg(test)]

@@ -446,3 +446,4 @@
 - [x] `990` Treaty Cruisers — `specs/990-treaty-cruisers.md` — completed 2026-04-24
 - [x] `991` The Sub-Glacial Oceans — `specs/991-sub-glacial-oceans.md` — completed 2026-04-24
 - [x] `1106` Photophobic Resources — `specs/1106-photophobic-resources.md` — completed 2024-05-24
+- [x] `1105` Auroral Harvesting — `specs/1105-auroral-harvesting.md` — completed 2026-06-26

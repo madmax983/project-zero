@@ -82,6 +82,7 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::environment::ignition::process_ignition
                 .after(crate::layer1::combat::hit_stop_system),
             apply_weather_effects_system.after(apply_lighting_penalties_system),
+            crate::layer1::energy::auroral_harvesting::auroral_harvesting_system,
             crate::layer1::nature::mutagenic_rain::apply_mutagenic_rain_system
                 .after(apply_weather_effects_system),
             crate::layer1::nature::mutagenic_rain::clear_mutation_immunity_system
