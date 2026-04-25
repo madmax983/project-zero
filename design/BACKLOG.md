@@ -817,3 +817,4 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1180` State-Sanctioned Delusion — `specs/1180-state-sanctioned-delusion.md`
 - [ ] `1181` Biological Copyright Infringement — `specs/1181-biological-copyright-infringement.md`
 - [ ] `1182` The Hyper-Empathy Virus — `specs/1182-the-hyper-empathy-virus.md`
+- [ ] `1183` Geological Porosity — `specs/1183-geological-porosity.md`
