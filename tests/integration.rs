@@ -308,3 +308,6 @@ mod orbital_debris_cult_bridge;
 mod deep_crust_resonance_bridge;
 #[path = "integration/ghost_ships_bridge.rs"]
 mod ghost_ships_bridge;
+
+#[path = "integration/cargo_cult_bridge.rs"]
+mod cargo_cult_bridge;
