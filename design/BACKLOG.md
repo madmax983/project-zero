@@ -813,3 +813,7 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1172` Biological Obsolescence — `specs/1172-biological-obsolescence.md`
 - [ ] `1173` Echoes of the First Star — `specs/1173-echoes-of-the-first-star.md`
 - [ ] `1174` The Bureaucracy of Sleep — `specs/1174-the-bureaucracy-of-sleep.md`
+- [ ] `1179` Spiteful Infrastructure — `specs/1179-spiteful-infrastructure.md`
+- [ ] `1180` State-Sanctioned Delusion — `specs/1180-state-sanctioned-delusion.md`
+- [ ] `1181` Biological Copyright Infringement — `specs/1181-biological-copyright-infringement.md`
+- [ ] `1182` The Hyper-Empathy Virus — `specs/1182-the-hyper-empathy-virus.md`
