@@ -804,3 +804,7 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1163` Generational Debt — `specs/1163-generational-debt.md`
 - [ ] `1164` Automated Salvage Swarms — `specs/1164-automated-salvage-swarms.md`
 - [x] `1165` The Nostalgia Cult — `specs/1165-the-nostalgia-cult.md`
+- [ ] `1166` The Time-Capsule Paradox — `specs/1166-time-capsule-paradox.md`
+- [ ] `1167` Gravitational Empathy — `specs/1167-gravitational-empathy.md`
+- [ ] `1168` The Pacifist's Arsenal — `specs/1168-pacifists-arsenal.md`
+- [ ] `1169` The Last Archive — `specs/1169-the-last-archive.md`

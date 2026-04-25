@@ -17182,7 +17182,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Time-Capsule Paradox
+## The Time-Capsule Paradox [SPECCED]
 
 **Layer:** Cross-layer (1 -> 3)
 
@@ -17196,7 +17196,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Gravitational Empathy
+## Gravitational Empathy [SPECCED]
 
 **Layer:** 1
 
@@ -17210,7 +17210,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Pacifist's Arsenal
+## The Pacifist's Arsenal [SPECCED]
 
 **Layer:** Cross-layer (1 -> 3)
 
@@ -17238,7 +17238,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Last Archive
+## The Last Archive [SPECCED]
 
 **Layer:** Cross-layer (1 -> 3)
 
