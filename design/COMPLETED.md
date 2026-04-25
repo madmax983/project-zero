@@ -449,3 +449,4 @@
 - [x] `1106` Photophobic Resources — `specs/1106-photophobic-resources.md` — completed 2024-05-24
 - [x] `1141` The Museum of the Fallen — `specs/1141-museum-of-the-fallen.md` — completed 2026-06-25
 - [x] `1117` Sonic Suppression — `specs/1117-sonic-suppression.md` — completed 2026-04-25
+- [x] `1117` Sonic Suppression — `specs/1117-sonic-suppression.md` — completed 2026-06-25

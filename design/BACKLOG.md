@@ -3,8 +3,6 @@
 ## High Priority
 - [x] `1122` The Rust-Lung Epidemic — `specs/1122-rust-lung-epidemic.md` — claimed 2024-05-24
 
-- [ ] `1117` Sonic Suppression — `specs/1117-sonic-suppression.md`
-
 - [ ] `1093` Superstitious Totems — `specs/1093-superstitious-totems.md`
 
 
