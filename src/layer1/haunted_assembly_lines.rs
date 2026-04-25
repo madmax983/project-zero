@@ -109,3 +109,184 @@ pub fn check_haunted_worker_system(
         }
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    fn setup_world() -> World {
+        let mut world = World::new();
+        // Register events so we can read them in systems.
+        world.init_resource::<Events<PopDiedInAccidentEvent>>();
+        world
+    }
+
+    #[test]
+    fn test_haunted_building_system_adds_echo_and_boosts_efficiency() {
+        let mut world = setup_world();
+        let pop = world.spawn_empty().id();
+        let building = world
+            .spawn((
+                Building {
+                    building_type: crate::layer1::architecture::building::BuildingType::Farm,
+                },
+                Efficiency(1.0),
+            ))
+            .id();
+
+        world.send_event(PopDiedInAccidentEvent {
+            pop,
+            location: building,
+        });
+
+        // Run the system
+        let mut schedule = Schedule::default();
+        schedule.add_systems(haunted_building_system);
+        schedule.run(&mut world);
+
+        // Verify EchoOfTheFallen was added
+        assert!(world.entity(building).contains::<EchoOfTheFallen>());
+
+        // Verify Efficiency was boosted
+        let eff = world.entity(building).get::<Efficiency>().unwrap();
+        assert_eq!(eff.0, 1.5);
+    }
+
+    #[test]
+    fn test_haunted_building_system_ignores_non_buildings() {
+        let mut world = setup_world();
+        let pop = world.spawn_empty().id();
+        let non_building = world.spawn(Efficiency(1.0)).id(); // No Building component
+
+        world.send_event(PopDiedInAccidentEvent {
+            pop,
+            location: non_building,
+        });
+
+        let mut schedule = Schedule::default();
+        schedule.add_systems(haunted_building_system);
+        schedule.run(&mut world);
+
+        // Verify EchoOfTheFallen was NOT added
+        assert!(!world.entity(non_building).contains::<EchoOfTheFallen>());
+
+        // Verify Efficiency was NOT boosted
+        let eff = world.entity(non_building).get::<Efficiency>().unwrap();
+        assert_eq!(eff.0, 1.0);
+    }
+
+    #[test]
+    fn test_apply_haunted_stress_system_increases_stress() {
+        let mut world = setup_world();
+
+        let normal_building = world
+            .spawn(Building {
+                building_type: crate::layer1::architecture::building::BuildingType::Farm,
+            })
+            .id();
+        let haunted_building = world
+            .spawn((
+                Building {
+                    building_type: crate::layer1::architecture::building::BuildingType::Farm,
+                },
+                EchoOfTheFallen,
+            ))
+            .id();
+
+        let pop_normal = world
+            .spawn((
+                AssignedTo {
+                    entity: normal_building,
+                    assignment_type: crate::layer1::mind::utility_types::AssignmentType::FarmWorker,
+                },
+                Stress(0.0),
+            ))
+            .id();
+        let pop_haunted = world
+            .spawn((
+                AssignedTo {
+                    entity: haunted_building,
+                    assignment_type: crate::layer1::mind::utility_types::AssignmentType::FarmWorker,
+                },
+                Stress(0.0),
+            ))
+            .id();
+
+        let mut schedule = Schedule::default();
+        schedule.add_systems(apply_haunted_stress_system);
+        schedule.run(&mut world);
+
+        // Pop in normal building should have 0 stress
+        assert_eq!(world.entity(pop_normal).get::<Stress>().unwrap().0, 0.0);
+
+        // Pop in haunted building should have increased stress
+        assert_eq!(world.entity(pop_haunted).get::<Stress>().unwrap().0, 0.6);
+    }
+
+    #[test]
+    fn test_check_haunted_worker_system_unassigns_stressed_workers() {
+        let mut world = setup_world();
+
+        let normal_building = world
+            .spawn(Building {
+                building_type: crate::layer1::architecture::building::BuildingType::Farm,
+            })
+            .id();
+        let haunted_building = world
+            .spawn((
+                Building {
+                    building_type: crate::layer1::architecture::building::BuildingType::Farm,
+                },
+                EchoOfTheFallen,
+            ))
+            .id();
+
+        // Pop in haunted building with stress < 1.0 (should NOT be unassigned)
+        let pop_haunted_low_stress = world
+            .spawn((
+                AssignedTo {
+                    entity: haunted_building,
+                    assignment_type: crate::layer1::mind::utility_types::AssignmentType::FarmWorker,
+                },
+                Stress(0.9),
+            ))
+            .id();
+
+        // Pop in haunted building with stress >= 1.0 (SHOULD be unassigned)
+        let pop_haunted_high_stress = world
+            .spawn((
+                AssignedTo {
+                    entity: haunted_building,
+                    assignment_type: crate::layer1::mind::utility_types::AssignmentType::FarmWorker,
+                },
+                Stress(1.0),
+            ))
+            .id();
+
+        // Pop in normal building with stress >= 1.0 (should NOT be unassigned because building is not haunted)
+        let pop_normal_high_stress = world
+            .spawn((
+                AssignedTo {
+                    entity: normal_building,
+                    assignment_type: crate::layer1::mind::utility_types::AssignmentType::FarmWorker,
+                },
+                Stress(1.0),
+            ))
+            .id();
+
+        let mut schedule = Schedule::default();
+        schedule.add_systems(check_haunted_worker_system);
+        schedule.run(&mut world);
+
+        // Verify
+        assert!(world
+            .entity(pop_haunted_low_stress)
+            .contains::<AssignedTo>());
+        assert!(!world
+            .entity(pop_haunted_high_stress)
+            .contains::<AssignedTo>());
+        assert!(world
+            .entity(pop_normal_high_stress)
+            .contains::<AssignedTo>());
+    }
+}
