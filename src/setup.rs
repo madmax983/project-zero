@@ -391,6 +391,8 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     world.init_resource::<Events<crate::layer1::overview_effect::ObserveEvent>>();
     world.init_resource::<Events<crate::layer1::genetics::crop_modification::CropMutationEvent>>();
     world.init_resource::<Events<crate::layer1::tech::neural_leech::NeuralHubDeathEvent>>();
+    world.init_resource::<Events<crate::layer1::economy::inflation::MarketCrashEvent>>();
+    world.init_resource::<Events<crate::layer1::economy::inflation::BarterRequest>>();
 
     world.init_resource::<crate::layer1::festivals::FestivalState>();
     world.init_resource::<crate::layer1::shadow_market::ShadowMarketCooldown>();
