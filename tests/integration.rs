@@ -61,6 +61,9 @@ mod funeral_rites;
 
 #[path = "integration/social_room_quality.rs"]
 mod social_room_quality;
+
+#[path = "integration/xenoflora_pet_bridge.rs"]
+mod xenoflora_pet_bridge;
 #[path = "integration/strikes_mining_science.rs"]
 mod strikes_mining_science;
 #[path = "integration/strikes_work.rs"]
