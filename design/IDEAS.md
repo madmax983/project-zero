@@ -17428,3 +17428,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Accepting that the physical scars of your failures will permanently dictate the future development of your planets, forcing you to adapt your grand strategy around the physical remnants of grief.
 
 ---
+## The Parasitic Archive
+
+**Layer:** 1 -> 3
+
+**Fantasy:** A library that demands to know everything, even if it has to extract the memories violently.
+
+**Mechanic:** You uncover an ancient, autonomous data-vault that offers incredible technological boosts. However, its "upkeep" is living memories. Periodically, it selects a highly skilled Pop and "archives" them. The Pop loses all skills, traits, and relationships, becoming a blank slate, while the colony gains a massive burst of research points.
+
+**Emergence:** You rely heavily on the Archive to outpace a rival empire's military tech. Right before the final battle, the Archive selects your sole Grand Admiral for "archiving." You have the best ships in the galaxy, but they are suddenly commanded by an amnesiac who doesn't know what a hyperdrive is.
+
+**Tension:** The intoxicating speed of free, massive technological leaps vs. the terrifying realization that you are systematically erasing the minds of your best citizens to fuel it.
+
+---
+
+## Echoes of the First Ship
+
+**Layer:** Cross-layer (1, 2)
+
+**Fantasy:** The creeping realization that the very first colony ship wasn't destroyed; it was just *waiting*.
+
+**Mechanic:** Deep in the late game, sensors detect a massive, ancient signature approaching your home system. It's identical to the transponder codes of the very first colony ship you launched centuries ago. However, the ship is warped, silent, and broadcasting a continuous, looping signal of your original colonists' voices. As it approaches, Layer 1 Pops begin experiencing shared nightmares, drastically reducing sleep efficiency and causing random acts of technological sabotage.
+
+**Emergence:** Your hyper-advanced, heavily defended core world is brought to its knees not by an enemy fleet, but by a ghost ship slowly drifting through the system, driving the populace mad with guilt and half-remembered traumas from their ancestors.
+
+**Tension:** Do you destroy the sacred relic of your founders—risking a massive, permanent morale hit—or let it drift through your systems, slowly eroding your society's sanity?
+
+---
+
+## Bureaucratic Black Holes
+
+**Layer:** 2 -> 1
+
+**Fantasy:** A planetary administration so complex and opaque that entire shipments, and sometimes people, just vanish into the paperwork.
+
+**Mechanic:** As a Layer 2 node (planet) reaches a certain population density, its "Bureaucratic Complexity" score rises. High complexity increases the chance that resource shipments or assigned Pops simply disappear. These aren't stolen; they are misfiled. Occasionally, an "Audit Event" occurs, suddenly dumping decades worth of missing resources or very confused, chronologically displaced Pops onto a single tile.
+
+**Emergence:** You are starving and desperately need a food shipment from the core worlds. It gets "lost in transit." Fifty years later, during a golden age of surplus, a colossal mountain of rotting grain suddenly materializes in the middle of your capital city's plaza because a clerk finally processed the form.
+
+**Tension:** Do you ruthlessly purge your administration, taking a massive hit to overall efficiency and stability, or accept that a certain percentage of your empire simply ceases to exist on paper?
+
+---
