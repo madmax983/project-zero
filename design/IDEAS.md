@@ -5949,7 +5949,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Static Charge
+## Static Charge [SPECCED]
 
 **Layer:** 1
 
