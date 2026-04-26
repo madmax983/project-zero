@@ -161,6 +161,11 @@ fn process_arrival(
         ActionType::Admin => {
             handle_admin_arrival(commands, &mut ctx.offices, pop_entity, target_entity)
         }
+        ActionType::Sabotage => {
+            // Sabotage starts on arrival. We leave the entity AtTarget so the general work
+            // execution system can process it over time, similar to Work.
+            true
+        }
         ActionType::BuryCorpse => {
             handle_bury_corpse(
                 commands,

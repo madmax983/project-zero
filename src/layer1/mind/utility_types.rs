@@ -171,6 +171,8 @@ pub enum ActionType {
     TreatWounds,
     /// Flee from danger.
     Flee,
+    /// Sabotage advanced machinery or infrastructure.
+    Sabotage,
 }
 
 /// Types of hobbies.
@@ -190,7 +192,7 @@ pub enum HobbyType {
 
 impl ActionType {
     /// Total number of action types. Used for array sizing.
-    pub const COUNT: usize = 42;
+    pub const COUNT: usize = 43;
 
     /// Converts action type to a unique array index (0..COUNT-1).
     #[must_use]
@@ -238,6 +240,7 @@ impl ActionType {
             Self::ExtinguishFire => 39,
             Self::TreatWounds => 40,
             Self::Flee => 41,
+            Self::Sabotage => 42,
         }
     }
 

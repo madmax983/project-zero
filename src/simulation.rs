@@ -430,6 +430,10 @@ fn register_simulation_core_systems(schedule: &mut Schedule) {
         crate::layer1::whispering_ore::process_whispering_ore_system,
         crate::layer1::whispering_ore::handle_mine_sealing_system,
     ));
+
+    schedule.add_systems((
+        crate::layer1::culture::nostalgia_cult_formation_system,
+    ));
 }
 
 fn register_simulation_extended_systems(schedule: &mut Schedule) {

@@ -1,0 +1,30 @@
+<<<<<<< SEARCH
+    if let Some(des) = world.get::<Designation>(entity) {
+        return Some(des.designation_type);
+    }
+    if action == ActionType::Repair
+        && world
+            .get::<crate::layer1::structure::Structure>(entity)
+            .is_some()
+    {
+        return Some(DesignationType::Repair);
+    }
+    None
+}
+=======
+    if let Some(des) = world.get::<Designation>(entity) {
+        return Some(des.designation_type);
+    }
+    if action == ActionType::Repair
+        && world
+            .get::<crate::layer1::structure::Structure>(entity)
+            .is_some()
+    {
+        return Some(DesignationType::Repair);
+    }
+    if action == ActionType::Sabotage {
+        return Some(DesignationType::Destroy);
+    }
+    None
+}
+>>>>>>> REPLACE

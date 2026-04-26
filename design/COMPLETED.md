@@ -453,3 +453,4 @@
 - [x] `1117` Sonic Suppression — `specs/1117-sonic-suppression.md` — completed 2026-04-25
 - [x] `1117` Sonic Suppression — `specs/1117-sonic-suppression.md` — completed 2026-06-25
 - [x] `1033` Subjective Economics — `specs/1033-subjective-economics.md` — completed 2026-04-26
+- [x] `1165` The Nostalgia Cult - `specs/1165-the-nostalgia-cult.md` - completed 2026-05-01

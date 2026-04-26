@@ -1,0 +1,27 @@
+<<<<<<< SEARCH
+    fn evaluate_group_work(&mut self) {
+        if self.is_striking || self.is_noble {
+            return;
+        }
+
+        self.evaluate_work_and_taming();
+=======
+    fn evaluate_group_work(&mut self) {
+        if self.is_striking || self.is_noble {
+            return;
+        }
+
+        self.evaluate_work_and_taming();
+
+        // Sabotage advanced buildings
+        self.evaluator.evaluate_and_consider(
+            crate::layer1::actions::sabotage::evaluate_sabotage(
+                self.data.pos,
+                &self.data.weights,
+                &self.buffer.repair_targets, // Re-using repair targets for now, could be filtered
+            ),
+            ActionType::Sabotage,
+            self.context,
+            0.0,
+        );
+>>>>>>> REPLACE

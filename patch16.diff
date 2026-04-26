@@ -1,0 +1,26 @@
+<<<<<<< SEARCH
+        ActionType::Admin => {
+            crate::layer1::admin::assign_admin(target_entity, pop_entity, commands);
+            true
+        }
+        ActionType::Surgery => {
+            // Already handled
+            true
+        }
+=======
+        ActionType::Admin => {
+            crate::layer1::admin::assign_admin(target_entity, pop_entity, commands);
+            true
+        }
+        ActionType::Sabotage => {
+            crate::layer1::culture::nostalgia_cult::execute_sabotage_action(
+                // we have commands, we can convert execute_sabotage_action to use commands
+                // or just call it directly. Actually we only have Commands and some components.
+            );
+            true
+        }
+        ActionType::Surgery => {
+            // Already handled
+            true
+        }
+>>>>>>> REPLACE

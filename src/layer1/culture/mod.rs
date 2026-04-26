@@ -25,3 +25,7 @@ pub mod animism;
 pub use animism::*;
 pub mod astrology;
 pub use astrology::*;
+
+/// The Nostalgia Cult counter-culture.
+pub mod nostalgia_cult;
+pub use nostalgia_cult::*;

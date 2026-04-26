@@ -144,7 +144,7 @@ fn collect_workers_by_target(
     for (target, worker) in query
         .iter(world)
         .filter(|(_, mt, _, _, _, _, _, _, faction_member, _, _, _, _, _)| {
-            let is_work = mt.for_action == ActionType::Work || mt.for_action == ActionType::Repair;
+            let is_work = mt.for_action == ActionType::Work || mt.for_action == ActionType::Repair || mt.for_action == ActionType::Sabotage;
             if !is_work {
                 return false;
             }
@@ -243,6 +243,9 @@ fn get_designation_type(
             .is_some()
     {
         return Some(DesignationType::Repair);
+    }
+    if action == ActionType::Sabotage {
+        return Some(DesignationType::Destroy);
     }
     None
 }

@@ -541,6 +541,18 @@ impl<'a> PopDecider<'a> {
 
         self.evaluate_work_and_taming();
 
+        // Sabotage advanced buildings
+        self.evaluator.evaluate_and_consider(
+            crate::layer1::actions::sabotage::evaluate_sabotage(
+                self.data.pos,
+                &self.data.weights,
+                &self.buffer.work_designations, // Using work designations for now to fix compile error
+            ),
+            ActionType::Sabotage,
+            self.context,
+            0.0,
+        );
+
         if self.is_penal {
             return;
         }
