@@ -17,3 +17,7 @@
 **[Optimized chronicle_rumor_bridge_system iterator]**
 **Learning:** Collecting all entities matching a query into a Vec just to pick a random sample of 3 involves unnecessary heap allocation `let pop_entities: Vec<Entity> = query.iter().map(|(e, _)| e).collect();`.
 **Action:** Used reservoir sampling to pick 3 random entities in a single pass over the iterator without collecting all matching entities into a `Vec`.
+
+## [String Iteration Zero-Cost Allocation]
+**Learning:** Found a `.collect::<String>()` chain inside `layer1::culture::festivals.rs` which was converting a `chars().take(20)` iteration into a new string just to `.trim()` and `format!` it.
+**Action:** Replaced `.collect::<String>()` with an index discovery using `char_indices().nth(n)` and sliced the original string natively. Eliminates a heap allocation on a hot path during chronicle festival checks.
