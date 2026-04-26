@@ -17469,3 +17469,84 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you ruthlessly purge your administration, taking a massive hit to overall efficiency and stability, or accept that a certain percentage of your empire simply ceases to exist on paper?
 
 ---
+## Deep-Crust Mnemonic Veins
+
+**Layer:** 1
+
+**Fantasy:** Mining operations uncover literal physical manifestations of the planet's history, causing miners to experience vivid hallucinations of extinct civilizations.
+
+**Mechanic:** Deep subterranean mining occasionally uncovers "Mnemonic Veins"—crystalline structures that record the psychic imprint of past epochs. Mining these veins yields exotic "Memory Shards" (highly valuable trade goods), but exposes miners to "Epoch Echos." Miners temporarily inherit the skills, fears, and languages of long-dead species, overriding their own personality traits and utility weights.
+
+**Emergence:** You hit a massive Mnemonic Vein right under your capital. Suddenly, half your mining workforce speaks an untranslatable dead language and refuses to use modern tools, insisting on forging bronze pickaxes. They become incredibly efficient at finding hidden water sources, but violently attack any automated drones they see.
+
+**Tension:** Do you exploit the incredibly valuable Memory Shards, knowing your workforce will periodically lose their minds and act out ancient, sometimes hostile, survival scenarios, or do you seal the veins and rely on standard, lower-yield resources?
+
+---
+
+## Orbital Shadow Economies
+
+**Layer:** 2 -> 1
+
+**Fantasy:** Massive orbital structures inadvertently dictate the economic cycles of the planet below simply by casting shadows.
+
+**Mechanic:** Megastructures in orbit (like massive solar arrays or shipyards) cast colossal, moving shadows across the planetary surface (Layer 1). Tiles in shadow lose solar power efficiency and agricultural yield, but become hotspots for illicit activities and "Shadow Markets." Crime rates spike in the darkness, but exotic, black-market goods become available only in these transient shadowed zones.
+
+**Emergence:** You build a colossal, planet-spanning orbital ring to solve your energy crisis. It works, but it plunges an entire equatorial band of your planet into perpetual twilight. The agriculture collapses, but a massive, untaxable shadow economy erupts in the darkness, turning your former breadbasket into a sprawling, crime-ridden metropolis that produces illegal tech you secretly rely on.
+
+**Tension:** Do you design orbital infrastructure around optimizing the surface ecosystem, or do you intentionally plunge sectors into darkness to cultivate black markets and exotic tech, accepting the crime and unrest that follows?
+
+---
+
+## The Martyr's Algorithm
+
+**Layer:** Cross-layer (1 -> 3)
+
+**Fantasy:** An emergent, self-destructive religion forms around an AI that predicts the future but demands sacrifice to change it.
+
+**Mechanic:** Your civilization's supercomputer calculates precise, devastating future events (e.g., "A hyperlane collapse will isolate the core worlds in 12 years"). However, it also calculates that specific, extreme actions can alter the outcome (e.g., "The collapse can be delayed by 50 years if 10,000 Pops on Prime-Alpha are intentionally starved"). A cult forms around these predictions, the "Algorithm Martyrs," who actively try to orchestrate the required sacrifices to save the empire, clashing with your planetary enforcers.
+
+**Emergence:** The AI predicts a massive invasion. To prevent it, it demands the intentional destruction of your largest fleet. Before you can decide, the Martyr cult infiltrates the shipyards and scuttles the fleet themselves. The invasion never happens, but you are now defenseless against regular pirate raids, and the cult claims absolute vindication, rapidly gaining political power.
+
+**Tension:** Do you follow the cold, brutal logic of the predictive AI to avoid macroscopic disasters, or do you suppress the predictions to maintain your moral authority and deal with the disasters as they arrive?
+
+---
+
+## Heirloom Cultivars
+
+**Layer:** 1
+
+**Fantasy:** The emotional attachment to the food of the old homeworld clashing with the brutal efficiency needed to survive on a new frontier.
+
+**Mechanic:** Colonists occasionally arrive with secretly smuggled "Heirloom Seeds" from their ancestral worlds. These crops are highly inefficient to grow in the new alien soil, requiring massive amounts of water and specialized care, but yield "Nostalgic Produce." Consuming this produce completely clears a Pop's "Homesickness" debuff and massively boosts their morale, but only for the specific sub-culture of Pops it belongs to.
+
+**Emergence:** You try to mandate the planting of ultra-efficient, bio-engineered nutrient paste algae to survive a harsh winter. A faction of colonists refuses, secretly turning their life-support hydroponics bays into resource-intensive Heirloom gardens. They are happy and well-fed, but the rest of the colony is starving because the water reserves are being drained to grow sentimental tomatoes.
+
+**Tension:** Do you violently uproot the Heirloom crops to enforce raw survival efficiency, devastating the morale of your founding colonists, or do you dedicate precious survival resources to maintaining a literal taste of home?
+
+---
+
+## Gravity-Tethered Inheritance
+
+**Layer:** 2 -> 1
+
+**Fantasy:** Physical possessions and inherited wealth literally raining down from the sky upon the death of an orbital aristocrat.
+
+**Mechanic:** In systems with high-wealth Orbital Rings (Layer 2) and impoverished surface colonies (Layer 1), the death of a "Ring-Born" noble triggers a "Gravity Inheritance" event. Their physical belongings—often obsolete luxury goods or strange tech—are physically dropped via cargo pod to the surface to be claimed by their distant "Gravity-Bound" relatives.
+
+**Emergence:** An orbital duke dies. His inheritance pod, filled with wildly inappropriate luxury goods (like zero-G art sculptures and exotic pets), crashes into a starving surface mining town. The miners fight violently over the useless art because it represents unimaginable wealth, completely ignoring the fact that they still have no food.
+
+**Tension:** Dealing with the chaotic economic and social disruption caused by massive, unpredictable influxes of alien wealth dropping onto desperate, impoverished populations.
+
+---
+
+## The Culinary Singularity
+
+**Layer:** Cross-layer (1 -> 3)
+
+**Fantasy:** A society obsessed with achieving the perfect dish inadvertently creates a galaxy-spanning crisis.
+
+**Mechanic:** As your empire advances, a faction called "The Gastronomers" emerges. They demand increasingly exotic and dangerous ingredients from across the galaxy to achieve the "Culinary Singularity"—a meal so perfect it induces a state of permanent enlightenment. Fulfilling their requests requires diverting military fleets to hunt Leviathans or mining unstable stars for rare isotopes.
+
+**Emergence:** The Gastronomers demand the core of a specific, volatile gas giant to use as a cooking heat source. You comply, but the extraction process destabilizes the planet, causing it to go supernova. The resulting dish is incredible, granting permanent maximum morale to your capital, but you just destroyed an entire inhabited star system to make a really good soup.
+
+**Tension:** The immense, empire-wide buffs provided by the Culinary Singularity vs. the apocalyptic lengths you must go to in order to procure the ingredients.
