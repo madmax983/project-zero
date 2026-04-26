@@ -831,3 +831,4 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1195` Rapid Decompression Projectiles — `specs/1195-rapid-decompression-projectiles.md`
 - [ ] `1196` Use It Or Lose It — `specs/1196-use-it-or-lose-it.md`
 - [ ] `1197` The Direct Link — `specs/1197-the-direct-link.md`
+- [ ] `1198` Deep-Crust Mnemonic Veins — `specs/1198-mnemonic-veins.md`
