@@ -17322,7 +17322,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Biological Copyright Infringement
+## Biological Copyright Infringement [SPECCED]
 
 **Layer:** 1 -> 3
 
@@ -17336,7 +17336,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Hyper-Empathy Virus
+## The Hyper-Empathy Virus [SPECCED]
 
 **Layer:** 1
 
