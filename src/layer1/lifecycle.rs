@@ -50,9 +50,15 @@ impl Age {
 }
 
 /// System to increment age and handle life stage transitions.
+#[allow(clippy::type_complexity)]
 pub fn aging_system(
     mut query: Query<
-        (Entity, &mut Age, Option<&mut Speed>, Option<&mut crate::layer1::temporal_chamber::InsideChamber>),
+        (
+            Entity,
+            &mut Age,
+            Option<&mut Speed>,
+            Option<&mut crate::layer1::temporal_chamber::InsideChamber>,
+        ),
         Without<crate::layer1::cryo::CryoStasis>,
     >,
     chambers: Query<&crate::layer1::temporal_chamber::TemporalChamber>,
@@ -178,7 +184,7 @@ mod tests {
 
     #[test]
     fn test_chamber_preserves_pops_by_reducing_aging() {
-        use crate::layer1::temporal_chamber::{TemporalChamber, InsideChamber};
+        use crate::layer1::temporal_chamber::{InsideChamber, TemporalChamber};
 
         // Arrange
         let mut world = World::new();
@@ -186,20 +192,28 @@ mod tests {
         let mut schedule = Schedule::default();
         schedule.add_systems(aging_system);
 
-        let chamber_id = world.spawn(
-            TemporalChamber {
+        let chamber_id = world
+            .spawn(TemporalChamber {
                 time_dilation_factor: 0.1,
                 active: true,
                 energy_cost: 10.0,
                 ticks_active: 0,
-            }
-        ).id();
+            })
+            .id();
 
-        let pop = world.spawn((
-            Pop,
-            Age { ticks_alive: 0, ..Default::default() },
-            InsideChamber { chamber_entity: chamber_id, fractional_age: 0.0 },
-        )).id();
+        let pop = world
+            .spawn((
+                Pop,
+                Age {
+                    ticks_alive: 0,
+                    ..Default::default()
+                },
+                InsideChamber {
+                    chamber_entity: chamber_id,
+                    fractional_age: 0.0,
+                },
+            ))
+            .id();
 
         // Act
         schedule.run(&mut world);

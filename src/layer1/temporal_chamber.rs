@@ -14,9 +14,7 @@ pub struct TemporalChamber {
     pub ticks_active: u32,
 }
 
-pub fn temporal_chamber_energy_system(
-    mut chambers: Query<&mut TemporalChamber>,
-) {
+pub fn temporal_chamber_energy_system(mut chambers: Query<&mut TemporalChamber>) {
     for mut chamber in chambers.iter_mut() {
         if chamber.active {
             chamber.ticks_active += 1;
@@ -38,14 +36,14 @@ mod tests {
         let mut schedule = Schedule::default();
         schedule.add_systems(temporal_chamber_energy_system);
 
-        let chamber = world.spawn((
-            TemporalChamber {
+        let chamber = world
+            .spawn((TemporalChamber {
                 time_dilation_factor: 0.1,
                 active: true,
                 energy_cost: 10.0,
                 ticks_active: 0,
-            },
-        )).id();
+            },))
+            .id();
 
         // Act
         schedule.run(&mut world);
