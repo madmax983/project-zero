@@ -126,6 +126,8 @@ pub struct Carrying {
 /// ```
 #[derive(Resource, Debug, Clone, Copy)]
 pub struct ColonyResources {
+    pub art: f32,
+    pub luxury: f32,
     /// Total food available in the colony.
     pub food: f32,
     /// Total wood available in the colony.
@@ -166,6 +168,8 @@ pub struct ColonyResources {
     pub building_permits: f32,
     /// Total credits available in the colony.
     pub credits: f32,
+    pub max_art: f32,
+    pub max_luxury: f32,
     /// Maximum food capacity.
     pub max_food: f32,
     /// Maximum wood capacity.
@@ -219,6 +223,8 @@ pub struct ColonyResources {
 impl Default for ColonyResources {
     fn default() -> Self {
         Self {
+            art: 0.0,
+            luxury: 0.0,
             food: 10.0,
             wood: 15.0,
             stone: 5.0,
@@ -236,6 +242,8 @@ impl Default for ColonyResources {
             fuel: 0.0,
             alcohol: 0.0,
             scrap: 0.0,
+            max_art: 100.0,
+            max_luxury: 100.0,
             max_food: 50.0,
             max_wood: 50.0,
             max_stone: 20.0,
@@ -272,6 +280,8 @@ impl Mul<f32> for ColonyResources {
 
     fn mul(self, rhs: f32) -> Self::Output {
         Self {
+            art: (self.art * rhs).ceil(),
+            luxury: (self.luxury * rhs).ceil(),
             food: (self.food * rhs).ceil(),
             wood: (self.wood * rhs).ceil(),
             stone: (self.stone * rhs).ceil(),
@@ -291,6 +301,8 @@ impl Mul<f32> for ColonyResources {
             alcohol: (self.alcohol * rhs).ceil(),
             scrap: (self.scrap * rhs).ceil(),
             // Capacities should NOT change when multiplying cost
+            max_art: self.max_art,
+            max_luxury: self.max_luxury,
             max_food: self.max_food,
             max_wood: self.max_wood,
             max_stone: self.max_stone,
@@ -329,6 +341,8 @@ impl ColonyResources {
     #[must_use]
     pub const fn zeroed() -> Self {
         Self {
+            art: 0.0,
+            luxury: 0.0,
             food: 0.0,
             wood: 0.0,
             stone: 0.0,
@@ -346,6 +360,8 @@ impl ColonyResources {
             fuel: 0.0,
             alcohol: 0.0,
             scrap: 0.0,
+            max_art: 0.0,
+            max_luxury: 0.0,
             max_food: 0.0,
             max_wood: 0.0,
             max_stone: 0.0,

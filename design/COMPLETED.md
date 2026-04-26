@@ -452,3 +452,4 @@
 - [x] `1141` The Museum of the Fallen — `specs/1141-museum-of-the-fallen.md` — completed 2026-06-25
 - [x] `1117` Sonic Suppression — `specs/1117-sonic-suppression.md` — completed 2026-04-25
 - [x] `1117` Sonic Suppression — `specs/1117-sonic-suppression.md` — completed 2026-06-25
+- [x] `670` Cultural Projection - `specs/670-cultural-projection.md` - completed 2026-04-02

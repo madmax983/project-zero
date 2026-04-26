@@ -368,6 +368,8 @@ pub fn run_simulation_tick(world: &mut World) {
             world.init_resource::<Events<crate::layer1::unseen_bureaucracy::PhantomShiftEvent>>();
             world.init_resource::<Events<crate::layer3::diplomacy::cultural_ransom::RaidEvent>>();
             world.init_resource::<Events<crate::layer3::diplomacy::cultural_ransom::DiplomaticNegotiationEvent>>();
+            world.init_resource::<crate::layer3::diplomacy::cultural_pressure::CulturalInfluenceGrid>();
+            world.init_resource::<Events<crate::layer3::diplomacy::cultural_pressure::DefectionEvent>>();
             world.init_resource::<crate::layer3::linguistic_drift::LinguisticNetwork>();
             world.init_resource::<Events<crate::layer3::linguistic_drift::CulturalSyncEvent>>();
             world.init_resource::<Events<crate::layer3::linguistic_drift::TradeEvent>>();
@@ -583,6 +585,15 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
         crate::layer3::diplomacy_reflection::apply_diplomatic_reactions
             .after(crate::layer3::diplomacy_reflection::update_diplomatic_traits),
     ));
+
+    schedule.add_systems(
+        (
+            crate::layer3::diplomacy::cultural_pressure::calculate_cultural_pressure_system,
+            crate::layer3::diplomacy::cultural_pressure::apply_cultural_pressure_system
+                .after(crate::layer3::diplomacy::cultural_pressure::calculate_cultural_pressure_system),
+            crate::layer3::diplomacy::cultural_pressure::process_defections_system,
+        )
+    );
 
     schedule.add_systems(
         (
@@ -861,6 +872,8 @@ mod tests {
         world.init_resource::<Events<crate::layer1::unseen_bureaucracy::PhantomShiftEvent>>();
         world.init_resource::<Events<crate::layer3::diplomacy::cultural_ransom::RaidEvent>>();
         world.init_resource::<Events<crate::layer3::diplomacy::cultural_ransom::DiplomaticNegotiationEvent>>();
+        world.init_resource::<crate::layer3::diplomacy::cultural_pressure::CulturalInfluenceGrid>();
+        world.init_resource::<Events<crate::layer3::diplomacy::cultural_pressure::DefectionEvent>>();
         world.init_resource::<crate::layer3::linguistic_drift::LinguisticNetwork>();
         world.init_resource::<Events<crate::layer3::linguistic_drift::CulturalSyncEvent>>();
         world.init_resource::<Events<crate::layer3::linguistic_drift::TradeEvent>>();
