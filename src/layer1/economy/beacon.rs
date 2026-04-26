@@ -66,7 +66,8 @@ pub fn process_colony_beacon_system(
     // for now we check if it was just turned on in the last tick.
     if beacon.last_toggled_tick > 0 && beacon.last_toggled_tick == sim_time.tick {
         chronicle_writer.send(AddChronicleEvent {
-            text: "The beacon is lit. We invite the galaxy, and all its scum, to our doors.".to_string(),
+            text: "The beacon is lit. We invite the galaxy, and all its scum, to our doors."
+                .to_string(),
             importance: EventImportance::Major,
         });
     }
@@ -147,7 +148,9 @@ mod tests {
         // Simulate activating the beacon on tick 1
         app.world_mut().resource_mut::<SimulationTime>().tick = 1;
         app.world_mut().resource_mut::<ColonyBeacon>().is_active = true;
-        app.world_mut().resource_mut::<ColonyBeacon>().last_toggled_tick = 1;
+        app.world_mut()
+            .resource_mut::<ColonyBeacon>()
+            .last_toggled_tick = 1;
 
         app.update();
 
@@ -155,7 +158,10 @@ mod tests {
             .world()
             .get_resource::<Events<AddChronicleEvent>>()
             .unwrap();
-        assert!(!chronicle_events.is_empty(), "Activating the beacon should add a chronicle event");
+        assert!(
+            !chronicle_events.is_empty(),
+            "Activating the beacon should add a chronicle event"
+        );
     }
 
     #[test]
