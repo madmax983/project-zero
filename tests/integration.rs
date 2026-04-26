@@ -186,10 +186,10 @@ mod light_pollution_fauna;
 #[path = "integration/waste_scent.rs"]
 mod waste_scent;
 pub mod integration {
+    pub mod sonic_suppression_bridge;
     pub mod spiteful_will_chronicle;
     #[path = "the_silent_generation_bridge.rs"]
     pub mod the_silent_generation_bridge;
-    pub mod sonic_suppression_bridge;
 }
 
 #[path = "integration/neural_leech_unrest.rs"]

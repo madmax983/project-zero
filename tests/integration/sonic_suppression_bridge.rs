@@ -1,8 +1,8 @@
 use bevy::prelude::*;
+use scale::layer1::integration::sonic_turret_noise_bridge_system;
 use scale::layer1::map::GridPosition;
 use scale::layer1::physics::acoustic::{update_noise_system, NoiseMap};
 use scale::layer1::sonic_suppression::{sonic_suppression_system, SonicTurret};
-use scale::layer1::integration::sonic_turret_noise_bridge_system;
 
 #[test]
 fn test_sonic_turret_emits_noise() {
@@ -27,9 +27,20 @@ fn test_sonic_turret_emits_noise() {
         GridPosition { x: 5, y: 5 },
     ));
 
-    app.add_systems(Update, (sonic_suppression_system, sonic_turret_noise_bridge_system, update_noise_system).chain());
+    app.add_systems(
+        Update,
+        (
+            sonic_suppression_system,
+            sonic_turret_noise_bridge_system,
+            update_noise_system,
+        )
+            .chain(),
+    );
     app.update();
 
     let noise = app.world().resource::<NoiseMap>();
-    assert!(noise.get(5, 5) > 0.0, "Sonic Turret should act as a noise source");
+    assert!(
+        noise.get(5, 5) > 0.0,
+        "Sonic Turret should act as a noise source"
+    );
 }

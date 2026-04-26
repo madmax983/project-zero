@@ -1651,21 +1651,29 @@ pub fn beacon_pirate_raid_bridge(
 /// and updates or removes it based on the turret's state.
 pub fn sonic_turret_noise_bridge_system(
     mut commands: bevy_ecs::system::Commands,
-    turrets: bevy_ecs::system::Query<(bevy_ecs::entity::Entity, &crate::layer1::sonic_suppression::SonicTurret, Option<&crate::layer1::physics::acoustic::NoiseSource>)>,
+    turrets: bevy_ecs::system::Query<(
+        bevy_ecs::entity::Entity,
+        &crate::layer1::sonic_suppression::SonicTurret,
+        Option<&crate::layer1::physics::acoustic::NoiseSource>,
+    )>,
 ) {
     for (entity, turret, noise_source_opt) in turrets.iter() {
         if turret.active {
             if noise_source_opt.is_none() {
-                commands.entity(entity).insert(crate::layer1::physics::acoustic::NoiseSource {
-                    radius: turret.range,
-                    intensity: 1.0,
-                });
+                commands
+                    .entity(entity)
+                    .insert(crate::layer1::physics::acoustic::NoiseSource {
+                        radius: turret.range,
+                        intensity: 1.0,
+                    });
             } else {
                 // we could also update the radius if we want to be safe
             }
         } else {
             if noise_source_opt.is_some() {
-                commands.entity(entity).remove::<crate::layer1::physics::acoustic::NoiseSource>();
+                commands
+                    .entity(entity)
+                    .remove::<crate::layer1::physics::acoustic::NoiseSource>();
             }
         }
     }
