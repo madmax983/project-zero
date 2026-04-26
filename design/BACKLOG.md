@@ -6,7 +6,6 @@
 
 
 
-- [ ] `762` The Gold Rush Beacon — `specs/762-gold-rush-beacon.md`
 
 - [ ] `673` Indoctrination — `specs/673-indoctrination.md`
 
