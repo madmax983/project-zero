@@ -818,3 +818,8 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1182` The Hyper-Empathy Virus — `specs/1182-the-hyper-empathy-virus.md`
 - [ ] `1183` Geological Porosity — `specs/1183-geological-porosity.md`
 - [ ] `1184` Hygiene & Squalor — `specs/1184-hygiene-and-squalor.md`
+- [ ] `1185` Keystone Species — `specs/1185-keystone-species.md`
+- [ ] `1186` Ship Personalities — `specs/1186-ship-personalities.md`
+- [ ] `1187` Pneumatic Tubes — `specs/1187-pneumatic-tubes.md`
+- [ ] `1188` Corrosive Atmosphere — `specs/1188-corrosive-atmosphere.md`
+- [ ] `1189` Signal Decay — `specs/1189-signal-decay.md`
