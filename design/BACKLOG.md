@@ -824,3 +824,4 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1189` Signal Decay — `specs/1189-signal-decay.md`
 - [ ] `1190` Static Charge — `specs/1190-static-charge.md`
 - [ ] `1191` Keystone Species — `specs/1191-keystone-species.md`
+- [ ] `1192` The Hum — `specs/1192-the-hum.md`
