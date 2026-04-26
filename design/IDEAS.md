@@ -5837,7 +5837,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Hygiene & Squalor
+## Hygiene & Squalor [SPECCED]
 
 **Layer:** 1
 

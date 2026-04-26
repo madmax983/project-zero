@@ -818,3 +818,4 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1181` Biological Copyright Infringement — `specs/1181-biological-copyright-infringement.md`
 - [ ] `1182` The Hyper-Empathy Virus — `specs/1182-the-hyper-empathy-virus.md`
 - [ ] `1183` Geological Porosity — `specs/1183-geological-porosity.md`
+- [ ] `1184` Hygiene & Squalor — `specs/1184-hygiene-and-squalor.md`
