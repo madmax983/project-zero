@@ -17456,7 +17456,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Bureaucratic Black Holes
+## Bureaucratic Black Holes [SPECCED]
 
 **Layer:** 2 -> 1
 
@@ -17469,7 +17469,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you ruthlessly purge your administration, taking a massive hit to overall efficiency and stability, or accept that a certain percentage of your empire simply ceases to exist on paper?
 
 ---
-## Deep-Crust Mnemonic Veins
+## Deep-Crust Mnemonic Veins [SPECCED]
 
 **Layer:** 1
 
@@ -17483,7 +17483,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Orbital Shadow Economies
+## Orbital Shadow Economies [SPECCED]
 
 **Layer:** 2 -> 1
 
@@ -17497,7 +17497,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Martyr's Algorithm
+## The Martyr's Algorithm [SPECCED]
 
 **Layer:** Cross-layer (1 -> 3)
 
@@ -17511,7 +17511,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Heirloom Cultivars
+## Heirloom Cultivars [SPECCED]
 
 **Layer:** 1
 
@@ -17525,7 +17525,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Gravity-Tethered Inheritance
+## Gravity-Tethered Inheritance [SPECCED]
 
 **Layer:** 2 -> 1
 
@@ -17539,7 +17539,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Culinary Singularity
+## The Culinary Singularity [SPECCED]
 
 **Layer:** Cross-layer (1 -> 3)
 

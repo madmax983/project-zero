@@ -832,3 +832,9 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1196` Use It Or Lose It — `specs/1196-use-it-or-lose-it.md`
 - [ ] `1197` The Direct Link — `specs/1197-the-direct-link.md`
 - [ ] `1198` Deep-Crust Mnemonic Veins — `specs/1198-mnemonic-veins.md`
+- [ ] `1199` Orbital Shadow Economies — `specs/1199-orbital-shadow-economies.md`
+- [ ] `1200` The Martyr's Algorithm — `specs/1200-the-martyrs-algorithm.md`
+- [ ] `1201` Heirloom Cultivars — `specs/1201-heirloom-cultivars.md`
+- [ ] `1202` Bureaucratic Black Holes — `specs/1202-bureaucratic-black-holes.md`
+- [ ] `1203` Gravity-Tethered Inheritance — `specs/1203-gravity-tethered-inheritance.md`
+- [ ] `1204` The Culinary Singularity — `specs/1204-culinary-singularity.md`
