@@ -8,7 +8,7 @@ use thiserror::Error;
 
 #[derive(Error, Debug)]
 pub enum NarrativeError {
-    #[error("📖 Missing required context variable or fragment: {0}")]
+    #[error("📖 Missing required context variable '{0}'. Fix: context.insert(\"{0}\", <value>)")]
     MissingContext(String),
     #[error("📖 Fragment '{0}' has no options defined")]
     MissingFragmentOptions(String),
@@ -497,9 +497,7 @@ impl NarrativeGenerator {
         for segment in &segments {
             match segment {
                 NarrativeSegment::MissingContext(err) => {
-                    return Err(NarrativeError::MissingContext(format!(
-                        "{err}. Please add it using `context.insert(\"{err}\", <value>)`"
-                    )));
+                    return Err(NarrativeError::MissingContext(err.clone()));
                 }
                 NarrativeSegment::MissingFragmentOptions(err) => {
                     return Err(NarrativeError::MissingFragmentOptions(err.clone()));
