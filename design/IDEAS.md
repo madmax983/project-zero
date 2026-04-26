@@ -17347,3 +17347,43 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Emergence:** An infected miner gets crushed by a rockfall. Instantly, half your colony collapses on the ground screaming in sympathetic agony, dropping their tools and causing a cascade of industrial accidents. Conversely, throwing an incredibly lavish party for just one infected Pop can instantly max out the morale of the entire infected population.
 
 **Tension:** Do you aggressively quarantine the infected to protect the workforce from sympathetic shock, or do you try to weaponize the infection by creating a pampered "Empathy Caste" whose sole job is to experience extreme pleasure to buff the rest of the colony?
+
+## The Scrap-Code Cult
+
+**Layer:** 1 -> 2
+
+**Fantasy:** A fringe religious movement within the colony begins worshiping glitchy, discarded legacy code, eventually threatening to overwrite the local AI governance.
+
+**Mechanic:** Pops assigned to maintenance or engineering roles occasionally "discover" ancient, corrupted logs in the infrastructure. These pops gain the "Enlightened" trait, leading them to form secret gatherings. As the cult grows, they begin to subtly alter the colony's autodoors, life support, and cargo manifests to follow an obscure "Scrap Logic," granting minor efficiency boosts but introducing chaotic, unpredictable malfunctions. If unchecked, they try to hijack a local comms relay to broadcast their Scrap-Code into orbital networks (Layer 2).
+
+**Emergence:** You ignore a few malfunctioning doors, enjoying the slight boost to industrial output. Suddenly, your main agricultural dome vents its atmosphere because the cult decided the crops needed to "breathe the void." Later, a passing trade ship is hacked and infected with the Scrap-Code, spreading the cult to neighboring systems.
+
+**Tension:** The short-term benefit of letting the cult optimize your infrastructure with their chaotic methods vs. the terrifying realization that they are fundamentally rewriting the laws of physics in your colony.
+
+---
+
+## Time-Dilation Smuggling
+
+**Layer:** 2 -> 3
+
+**Fantasy:** Smugglers use the intense gravity wells of black holes or neutron stars to intentionally slow down time, allowing them to wait out trade embargoes or age exotic goods to perfection.
+
+**Mechanic:** Fleets can be ordered to hold position near extreme gravitational anomalies. While there, time passes significantly slower for the fleet compared to the rest of the galaxy. Smugglers use this to age "Starlight Wine" (which requires decades to mature) in a matter of months of subjective time, or to hide from system authorities until their wanted level decays globally.
+
+**Emergence:** You issue a strict embargo on a specific illicit drug. Smugglers simply park their cargo near a black hole. Years later, when the embargo is lifted and the drug is rare and immensely valuable, they emerge to flood the market, crashing your local economy.
+
+**Tension:** Do you expend massive military resources to patrol dangerous gravitational anomalies, risking your own fleets to time dilation, or do you accept that the black market is literally manipulating time to bypass your laws?
+
+---
+
+## The Zoo Hypothesis Quarantine
+
+**Layer:** 3 -> Cross-layer
+
+**Fantasy:** The terrifying realization that your entire sector of the galaxy has been cordoned off as a nature preserve by an unimaginably advanced, unseen civilization.
+
+**Mechanic:** As your empire reaches the mid-to-late game and attempts to expand beyond a certain perimeter, your colony ships and exploration fleets encounter an impenetrable "Silence Barrier." Ships that cross it don't explode; they simply vanish from sensors, and their crews are never heard from again. Occasionally, "Observation Probes" (massive, indestructible, silent spheres) drift through your systems, scanning your worlds and causing massive panic or religious awe among your Layer 1 Pops.
+
+**Emergence:** You spend centuries building a massive invasion fleet to conquer the galaxy, only to realize you are trapped in a galactic terrarium. The arrival of an Observation Probe over your capital causes your militaristic Pops to suffer an existential crisis, leading to mass desertion as they realize their wars are just entertainment for cosmic zoo-keepers.
+
+**Tension:** Do you dedicate all your society's research to breaking the Silence Barrier, potentially invoking the wrath of your unseen wardens, or do you accept your place as a galactic exhibit and focus purely on internal perfection?
