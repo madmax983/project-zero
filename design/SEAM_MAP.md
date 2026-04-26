@@ -771,3 +771,9 @@
 - **Systems connected:** `process_orbital_drops` (Orbital Drop Event) -> `apply_cargo_cult_belief_system` -> `process_ritual_actions_system` -> `Morale` / `EfficiencyDebuff`
 - **Glue added:** Registered `apply_cargo_cult_belief_system` and `process_ritual_actions_system` in `Layer1SystemSet::Observation` immediately after `process_orbital_drops` in `src/layer1/systems/observation.rs`.
 - **Tests:** `tests/cargo_cult_bridge.rs` and `tests/integration.rs` entry.
+
+### INT-1117: Sonic Suppression -> Acoustic Noise
+- **Date:** 2026-12-10
+- **Systems connected:** `sonic_suppression_system` (Sonic Suppression) -> `NoiseMap` (Acoustic)
+- **Glue added:** Added `sonic_turret_noise_bridge_system` to `src/layer1/core/integration.rs` to insert `NoiseSource` into active `SonicTurret`s, and registered it in `src/layer1/systems/execution.rs`.
+- **Tests:** `tests/integration/sonic_suppression_bridge.rs`
