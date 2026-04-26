@@ -3,7 +3,7 @@
 ## High Priority
 - [x] `1122` The Rust-Lung Epidemic — `specs/1122-rust-lung-epidemic.md` — claimed 2024-05-24
 
-- [ ] `1093` Superstitious Totems — `specs/1093-superstitious-totems.md`
+
 
 
 - [ ] `762` The Gold Rush Beacon — `specs/762-gold-rush-beacon.md`

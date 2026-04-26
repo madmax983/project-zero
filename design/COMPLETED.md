@@ -455,3 +455,4 @@
 - [x] `1033` Subjective Economics — `specs/1033-subjective-economics.md` — completed 2026-04-26
 - [x] `644` Temporal Echo Chambers — `specs/644-temporal-echo-chambers.md` — completed 2026-07-02
 - [x] `INT-1117` Integration: Sonic Suppression -> Acoustic Noise — completed 2026-12-10
+- [x] `1093` Superstitious Totems — `specs/1093-superstitious-totems.md` — completed 2024-05-24
