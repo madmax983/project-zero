@@ -5977,7 +5977,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Heirloom Recipes
+## Heirloom Recipes [SPECCED]
 
 **Layer:** 1
 
@@ -5991,7 +5991,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Trophy Hunting
+## Trophy Hunting [SPECCED]
 
 **Layer:** 1
 
@@ -6005,7 +6005,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Rapid Decompression Projectiles
+## Rapid Decompression Projectiles [SPECCED]
 
 **Layer:** 1
 
@@ -6018,7 +6018,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Secure loose items (Storage time) vs. Emergency venting (Speed).
 
 ---
-## Use It Or Lose It
+## Use It Or Lose It [SPECCED]
 
 **Layer:** 3 -> 1
 
@@ -6032,7 +6032,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Direct Link
+## The Direct Link [SPECCED]
 
 **Layer:** 1 (Meta)
 
