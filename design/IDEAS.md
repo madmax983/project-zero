@@ -17387,3 +17387,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Emergence:** You spend centuries building a massive invasion fleet to conquer the galaxy, only to realize you are trapped in a galactic terrarium. The arrival of an Observation Probe over your capital causes your militaristic Pops to suffer an existential crisis, leading to mass desertion as they realize their wars are just entertainment for cosmic zoo-keepers.
 
 **Tension:** Do you dedicate all your society's research to breaking the Silence Barrier, potentially invoking the wrath of your unseen wardens, or do you accept your place as a galactic exhibit and focus purely on internal perfection?
+## Feral Agriculture
+
+**Layer:** 1
+
+**Fantasy:** Designing crops that fight back against the harsh environment, but losing control of the harvest.
+
+**Mechanic:** You bio-engineer crops to be incredibly resilient to extreme weather and pests, yielding massive harvests. However, without constant, resource-intensive maintenance, these crops rapidly mutate into "Feral Flora," developing aggressive defensive mechanisms (like toxic spores or thorn-whips) and actively expanding beyond their designated farm tiles, choking out other infrastructure.
+
+**Emergence:** A severe storm knocks out power to your agricultural sector's maintenance drones. By the time power is restored, the high-yield wheat has mutated into a hostile jungle, trapping the farmers inside the dome. You have to send in armed military squads to "harvest" the food before it destroys the life support systems.
+
+**Tension:** Do you rely on safe, low-yield traditional crops, or risk starvation by planting hyper-resilient bio-engineered crops that might actively try to kill your colonists if mismanaged?
+
+---
+
+## Echoes of the Substrate
+
+**Layer:** Cross-layer (1 -> 3)
+
+**Fantasy:** Your Pops slowly realizing they are part of a massive, ancient simulation driven by the Substrate.
+
+**Mechanic:** As your colony's scientific understanding of physics and computation reaches a critical threshold, certain brilliant Pops begin experiencing "Substrate Anomalies"—glimpses of the underlying game state (e.g., seeing their own UI stats, predicting exact simulation ticks). This drives a new philosophical movement: "The Architects." They demand resources to build massive computational arrays to "speak" to the Substrate directly, causing massive unrest but offering glimpses of future events.
+
+**Emergence:** Your lead researcher goes mad, claiming to see the "wires of reality," and convinces half the colony to stop working and build a giant antenna. They predict a devastating pirate raid perfectly, saving the colony, but the resulting "Substrate Shock" leaves them catatonic for years.
+
+**Tension:** Do you suppress the "truth" to maintain societal stability and productivity, or do you indulge their madness to gain literal foresight into the game's procedural events?
+
+---
+
+## The Monument to the Forgotten
+
+**Layer:** 1 -> 2
+
+**Fantasy:** The unbearable weight of memory shaping the physical landscape of your worlds.
+
+**Mechanic:** When a significant tragedy occurs (e.g., mass starvation, an orbital bombardment, a plague), the Substrate forces the construction of a "Monument to the Forgotten" on that exact tile. This monument cannot be demolished by any normal means. It projects an aura of "Solemnity" that drastically reduces efficiency for industrial tasks but massively boosts artistic and philosophical output. Over centuries, these monuments become permanent, unmovable features of the planet.
+
+**Emergence:** You return to your ancestral homeworld after ten thousand years to find it entirely un-industrializable. The entire surface is covered in unmovable monuments marking every major tragedy of your civilization's rise, forcing you to use the planet purely as a cultural/spiritual capital rather than a production hub.
+
+**Tension:** Accepting that the physical scars of your failures will permanently dictate the future development of your planets, forcing you to adapt your grand strategy around the physical remnants of grief.
+
+---
