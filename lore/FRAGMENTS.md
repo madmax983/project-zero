@@ -7177,3 +7177,60 @@ Used for The Archaeological Contagion events. The ancient technology reverse-eng
 - a coordinated defense grid
 - dismantling the derelict faster than expected
 - perfectly optimizing the power routing
+
+## The Embassy Sector Fragments (Spec 764)
+
+## Fragment Type: [DIPLOMATIC_CRIME]
+
+- espionage
+- assault on a local worker
+- smuggling contraband
+- unauthorized biological sampling
+- murder of a rival diplomat
+- assassination
+- refusing to pay debts
+
+## Fragment Type: [DIPLOMATIC_INCIDENT_REASON]
+
+- violation of Extraterritorial Zone sovereignty
+- forced arrest of an immune dignitary
+- ignoring a sanctioned crime
+- an execution without treaty approval
+- breach of the Embassy Sector walls
+
+## Fragment Type: [DIPLOMAT_TITLE]
+
+- the [FACTION] Ambassador
+- a high-ranking Envoy
+- the Consular Attaché
+- a Diplomatic Courier
+- the Trade Representative
+
+## Void Sickness Fragments (Spec 761)
+
+## Fragment Type: [VOID_SICKNESS_SYMPTOM]
+
+- refusing to sleep under gravity
+- staring at the bulkhead for hours
+- an unnerving lack of empathy
+- demanding orbital rotation
+- hyper-perception of micro-vibrations
+- speaking only in telemetry codes
+
+## Fragment Type: [OFF_WORLD_STATION]
+
+- the high-orbit drydock
+- the outer system relay
+- the lunar mining post
+- deep-space listening station
+- the zero-g agricultural ring
+
+## Integration: Vacuum Pressure -> Acoustic Shadows Fragments (INT-060)
+
+## Fragment Type: [VACUUM_ACOUSTIC_ANOMALY]
+
+- total, maddening silence
+- the sound of blood rushing in their ears
+- a quiet so deep it hurts
+- vibrations felt only through the boots
+- an acoustic shadow caused by sudden decompression
