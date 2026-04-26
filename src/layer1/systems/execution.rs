@@ -102,6 +102,8 @@ pub fn register(schedule: &mut Schedule) {
                 .after(crate::layer1::pop::reset_speed_system),
             crate::layer1::combat::hit_stop_system.after(process_start_plan_system),
             crate::layer1::sonic_suppression::sonic_suppression_system,
+            crate::layer1::integration::sonic_turret_noise_bridge_system
+                .after(crate::layer1::sonic_suppression::sonic_suppression_system),
             crate::layer1::sonic_suppression::apply_nausea_effects_system
                 .after(crate::layer1::sonic_suppression::sonic_suppression_system),
             crate::layer1::combat::combat_cooldown_system.after(process_start_plan_system),
