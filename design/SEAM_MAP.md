@@ -777,3 +777,9 @@
 - **Systems connected:** `sonic_suppression_system` (Sonic Suppression) -> `NoiseMap` (Acoustic)
 - **Glue added:** Added `sonic_turret_noise_bridge_system` to `src/layer1/core/integration.rs` to insert `NoiseSource` into active `SonicTurret`s, and registered it in `src/layer1/systems/execution.rs`.
 - **Tests:** `tests/integration/sonic_suppression_bridge.rs`
+
+### INT-668: Impact Strike -> Chronicle
+- **Date:** 2026-08-01
+- **Systems connected:** `ImpactStrikeEvent` (Impact) -> `impact_strike_chronicle_bridge` (Integration) -> `AddChronicleEvent`
+- **Glue added:** Added `impact_strike_chronicle_bridge` to emit an `AddChronicleEvent` (`EventImportance::Major`) upon `ImpactStrikeEvent`. Registered in `SimulationSchedule`.
+- **Tests:** `tests/integration/impact_chronicle_bridge.rs`

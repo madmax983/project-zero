@@ -312,3 +312,6 @@ mod ghost_ships_bridge;
 
 #[path = "integration/cargo_cult_bridge.rs"]
 mod cargo_cult_bridge;
+
+#[path = "integration/impact_chronicle_bridge.rs"]
+mod impact_chronicle_bridge;

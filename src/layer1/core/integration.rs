@@ -1678,3 +1678,19 @@ pub fn sonic_turret_noise_bridge_system(
         }
     }
 }
+
+/// Bridges `ImpactStrikeEvent` to `AddChronicleEvent` (Chronicle).
+pub fn impact_strike_chronicle_bridge(
+    mut strike_events: bevy_ecs::prelude::EventReader<crate::layer1::environment::impact::ImpactStrikeEvent>,
+    mut chronicle_events: bevy_ecs::prelude::EventWriter<crate::layer1::chronicle::AddChronicleEvent>,
+) {
+    for event in strike_events.read() {
+        chronicle_events.send(crate::layer1::chronicle::AddChronicleEvent {
+            text: format!(
+                "A celestial body impacted the colony at ({}, {})!",
+                event.center.x, event.center.y
+            ),
+            importance: crate::layer1::chronicle::EventImportance::Major,
+        });
+    }
+}

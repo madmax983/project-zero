@@ -28,6 +28,13 @@ pub fn register(schedule: &mut Schedule) {
         )
             .in_set(Layer1SystemSet::Observation),
     );
+    schedule.add_systems(
+        (
+            crate::layer1::integration::impact_strike_chronicle_bridge
+                .after(crate::layer1::environment::impact::process_impact_strike_system),
+        )
+            .in_set(Layer1SystemSet::Observation),
+    );
 
     #[cfg(feature = "nova")]
     schedule.add_systems(
