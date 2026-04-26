@@ -225,38 +225,47 @@ type DecayNeedsFilter = (
 /// # Threading
 /// Uses `par_iter_mut` for parallel processing, as need decay is independent per pop.
 pub fn decay_needs_system(
-    mut query: Query<(&mut Needs, Option<&Traits>, Option<&crate::layer1::temporal_chamber::InsideChamber>), DecayNeedsFilter>,
+    mut query: Query<
+        (
+            &mut Needs,
+            Option<&Traits>,
+            Option<&crate::layer1::temporal_chamber::InsideChamber>,
+        ),
+        DecayNeedsFilter,
+    >,
     chambers: Query<&crate::layer1::temporal_chamber::TemporalChamber>,
     policies: Option<Res<ColonyPolicies>>,
 ) {
     let hunger_mod = policies.map_or(1.0, |p| get_hunger_decay_modifier(&p));
     let base_hunger_decay = HUNGER_DECAY_PER_TICK * hunger_mod;
 
-    query.par_iter_mut().for_each(|(mut needs, traits, inside_chamber)| {
-        let hunger_trait_mod = traits.map_or(1.0, get_trait_hunger_decay_modifier);
-        let mut hunger_decay = base_hunger_decay * hunger_trait_mod;
+    query
+        .par_iter_mut()
+        .for_each(|(mut needs, traits, inside_chamber)| {
+            let hunger_trait_mod = traits.map_or(1.0, get_trait_hunger_decay_modifier);
+            let mut hunger_decay = base_hunger_decay * hunger_trait_mod;
 
-        let leisure_trait_mod = traits.map_or(1.0, get_trait_leisure_decay_modifier);
-        let mut leisure_decay = LEISURE_DECAY_PER_TICK * leisure_trait_mod;
+            let leisure_trait_mod = traits.map_or(1.0, get_trait_leisure_decay_modifier);
+            let mut leisure_decay = LEISURE_DECAY_PER_TICK * leisure_trait_mod;
 
-        let mut rest_decay = REST_DECAY_PER_TICK;
+            let mut rest_decay = REST_DECAY_PER_TICK;
 
-        if let Some(inside) = inside_chamber {
-            if let Ok(chamber) = chambers.get(inside.chamber_entity) {
-                if chamber.active {
-                    let factor = chamber.time_dilation_factor;
-                    hunger_decay *= factor;
-                    leisure_decay *= factor;
-                    rest_decay *= factor;
+            if let Some(inside) = inside_chamber {
+                if let Ok(chamber) = chambers.get(inside.chamber_entity) {
+                    if chamber.active {
+                        let factor = chamber.time_dilation_factor;
+                        hunger_decay *= factor;
+                        leisure_decay *= factor;
+                        rest_decay *= factor;
+                    }
                 }
             }
-        }
 
-        needs.hunger = (needs.hunger - hunger_decay).max(0.0);
-        needs.rest = (needs.rest - rest_decay).max(0.0);
-        needs.leisure = (needs.leisure - leisure_decay).max(0.0);
-        // Hygiene is decayed separately in hygiene.rs
-    });
+            needs.hunger = (needs.hunger - hunger_decay).max(0.0);
+            needs.rest = (needs.rest - rest_decay).max(0.0);
+            needs.leisure = (needs.leisure - leisure_decay).max(0.0);
+            // Hygiene is decayed separately in hygiene.rs
+        });
 }
 
 #[cfg(test)]
@@ -441,17 +450,22 @@ mod tests {
         use crate::layer1::temporal_chamber::{InsideChamber, TemporalChamber};
         let mut world = setup();
 
-        let chamber = world.spawn(TemporalChamber {
-            time_dilation_factor: 0.1,
-            active: true,
-            energy_cost: 10.0,
-            ticks_active: 0,
-        }).id();
+        let chamber = world
+            .spawn(TemporalChamber {
+                time_dilation_factor: 0.1,
+                active: true,
+                energy_cost: 10.0,
+                ticks_active: 0,
+            })
+            .id();
 
         world.spawn((
             Pop,
             Needs::default(),
-            InsideChamber { chamber_entity: chamber, fractional_age: 0.0 }
+            InsideChamber {
+                chamber_entity: chamber,
+                fractional_age: 0.0,
+            },
         ));
 
         world.run_system_once(decay_needs_system).unwrap();
@@ -460,8 +474,14 @@ mod tests {
 
         // Normal decay is 0.001. Chamber factor is 0.1. So decay is 0.0001.
         // Base 0.8 - 0.0001 = 0.7999
-        assert!((needs.hunger - 0.7999).abs() < 0.00001, "Hunger decay should be slowed to 10%");
-        assert!((needs.rest - 0.7999).abs() < 0.00001, "Rest decay should be slowed to 10%");
+        assert!(
+            (needs.hunger - 0.7999).abs() < 0.00001,
+            "Hunger decay should be slowed to 10%"
+        );
+        assert!(
+            (needs.rest - 0.7999).abs() < 0.00001,
+            "Rest decay should be slowed to 10%"
+        );
     }
 
     #[test]

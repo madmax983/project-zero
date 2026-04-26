@@ -398,4 +398,175 @@ mod tests {
             "Speed should be 1.1 (Eager)"
         );
     }
+
+    #[test]
+    fn test_spirit_effects_apply_lazy() {
+        let mut world = World::new();
+
+        let tool = world
+            .spawn(Spirit {
+                experience: 0,
+                level: 1,
+                traits: vec![SpiritTrait::Lazy],
+            })
+            .id();
+
+        let pop = world
+            .spawn((
+                Pop,
+                Equipment {
+                    tool: Some(tool),
+                    ..Default::default()
+                },
+                Speed {
+                    base: 1.0,
+                    current: 1.0,
+                    accumulator: 0.0,
+                },
+                Morale::default(),
+            ))
+            .id();
+
+        let mut schedule = Schedule::default();
+        schedule.add_systems(apply_spirit_effects_system);
+        schedule.run(&mut world);
+
+        let speed = world.get::<Speed>(pop).unwrap();
+        assert!(
+            (speed.current - 0.9).abs() < f32::EPSILON,
+            "Speed should be 0.9 (Lazy)"
+        );
+    }
+
+    #[test]
+    fn test_spirit_effects_apply_comforting() {
+        let mut world = World::new();
+
+        let tool = world
+            .spawn(Spirit {
+                experience: 0,
+                level: 1,
+                traits: vec![SpiritTrait::Comforting],
+            })
+            .id();
+
+        let pop = world
+            .spawn((
+                Pop,
+                Equipment {
+                    tool: Some(tool),
+                    ..Default::default()
+                },
+                Speed {
+                    base: 1.0,
+                    current: 1.0,
+                    accumulator: 0.0,
+                },
+                Morale::default(),
+            ))
+            .id();
+
+        let mut schedule = Schedule::default();
+        schedule.add_systems(apply_spirit_effects_system);
+        schedule.run(&mut world);
+
+        let morale = world.get::<Morale>(pop).unwrap();
+        assert!(
+            morale
+                .modifiers
+                .iter()
+                .any(|m| m.label == "Comforting Spirit" && (m.value - 0.05).abs() < f32::EPSILON),
+            "Morale should have +0.05 modifier from Comforting"
+        );
+    }
+
+    #[test]
+    fn test_spirit_effects_apply_haunted() {
+        let mut world = World::new();
+
+        let tool = world
+            .spawn(Spirit {
+                experience: 0,
+                level: 1,
+                traits: vec![SpiritTrait::Haunted],
+            })
+            .id();
+
+        let pop = world
+            .spawn((
+                Pop,
+                Equipment {
+                    tool: Some(tool),
+                    ..Default::default()
+                },
+                Speed {
+                    base: 1.0,
+                    current: 1.0,
+                    accumulator: 0.0,
+                },
+                Morale::default(),
+            ))
+            .id();
+
+        let mut schedule = Schedule::default();
+        schedule.add_systems(apply_spirit_effects_system);
+        schedule.run(&mut world);
+
+        let morale = world.get::<Morale>(pop).unwrap();
+        assert!(
+            morale
+                .modifiers
+                .iter()
+                .any(|m| m.label == "Haunted Spirit" && (m.value - (-0.05)).abs() < f32::EPSILON),
+            "Morale should have -0.05 modifier from Haunted"
+        );
+    }
+
+    #[test]
+    fn test_spirit_gains_negative_trait_on_level_up() {
+        let mut world = World::new();
+
+        let tool = world
+            .spawn(Spirit {
+                experience: XP_THRESHOLD_LEVEL_1 - 1,
+                level: 0,
+                traits: vec![],
+            })
+            .id();
+        let workplace = world.spawn_empty().id();
+
+        // Create Unhappy Pop
+        world.spawn((
+            Pop,
+            Equipment {
+                tool: Some(tool),
+                ..Default::default()
+            },
+            PopAction {
+                current: ActionType::Work,
+                ..Default::default()
+            },
+            Morale {
+                value: 0.1,
+                modifiers: vec![],
+            }, // Very Unhappy
+            Job {
+                workplace,
+                job_type: AssignmentType::FarmWorker,
+            },
+        ));
+
+        let mut schedule = Schedule::default();
+        schedule.add_systems(evolve_spirits_system);
+        schedule.run(&mut world);
+
+        let spirit = world.get::<Spirit>(tool).unwrap();
+        assert_eq!(spirit.level, 1);
+        assert!(!spirit.traits.is_empty());
+        // Should be negative trait
+        assert!(
+            spirit.traits.contains(&SpiritTrait::Lazy)
+                || spirit.traits.contains(&SpiritTrait::Haunted)
+        );
+    }
 }

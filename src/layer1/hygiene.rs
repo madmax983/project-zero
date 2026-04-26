@@ -80,33 +80,39 @@ pub fn filth_accumulation_system(mut query: Query<(&mut Filth, &PopAction, Optio
 
 /// Decays hygiene based on filth level.
 pub fn hygiene_decay_system(
-    mut query: Query<(&mut Needs, &Filth, Option<&crate::layer1::temporal_chamber::InsideChamber>)>,
+    mut query: Query<(
+        &mut Needs,
+        &Filth,
+        Option<&crate::layer1::temporal_chamber::InsideChamber>,
+    )>,
     chambers: Query<&crate::layer1::temporal_chamber::TemporalChamber>,
 ) {
-    query.par_iter_mut().for_each(|(mut needs, filth, inside_chamber)| {
-        // Filth accelerates hygiene loss.
-        // Base decay is 0.0 (handled here instead of needs.rs? No needs.rs has generic decay?)
-        // Spec says: "Filth accelerates hygiene loss"
-        // Let's check needs.rs again. I didn't add hygiene decay to needs.rs decay_needs_system.
-        // I added "Hygiene is decayed separately in hygiene.rs" comment.
-        // So I must handle ALL hygiene decay here.
+    query
+        .par_iter_mut()
+        .for_each(|(mut needs, filth, inside_chamber)| {
+            // Filth accelerates hygiene loss.
+            // Base decay is 0.0 (handled here instead of needs.rs? No needs.rs has generic decay?)
+            // Spec says: "Filth accelerates hygiene loss"
+            // Let's check needs.rs again. I didn't add hygiene decay to needs.rs decay_needs_system.
+            // I added "Hygiene is decayed separately in hygiene.rs" comment.
+            // So I must handle ALL hygiene decay here.
 
-        // Base decay: 0.001 (similar to hunger)
-        // Filth penalty: up to +0.005
-        let base_decay = 0.001;
-        let filth_penalty = (filth.current / filth.max) * 0.005;
-        let mut decay = base_decay + filth_penalty;
+            // Base decay: 0.001 (similar to hunger)
+            // Filth penalty: up to +0.005
+            let base_decay = 0.001;
+            let filth_penalty = (filth.current / filth.max) * 0.005;
+            let mut decay = base_decay + filth_penalty;
 
-        if let Some(inside) = inside_chamber {
-            if let Ok(chamber) = chambers.get(inside.chamber_entity) {
-                if chamber.active {
-                    decay *= chamber.time_dilation_factor;
+            if let Some(inside) = inside_chamber {
+                if let Ok(chamber) = chambers.get(inside.chamber_entity) {
+                    if chamber.active {
+                        decay *= chamber.time_dilation_factor;
+                    }
                 }
             }
-        }
 
-        needs.hygiene = (needs.hygiene - decay).max(0.0);
-    });
+            needs.hygiene = (needs.hygiene - decay).max(0.0);
+        });
 }
 
 /// Handles pops using the shower.
