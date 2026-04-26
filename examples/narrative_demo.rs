@@ -292,7 +292,7 @@ fn ui(f: &mut Frame, app: &mut App) {
 
     // Generated Output
     let output_block = if let Some(err) = &app.error_message {
-        Paragraph::new(format!(" Failed to generate story: {} ", err))
+        Paragraph::new(format!(" ✗ Failed to generate story: {} ", err))
             .style(Style::default().fg(Color::Red).add_modifier(Modifier::BOLD))
             .block(
                 Block::default()

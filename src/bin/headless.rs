@@ -193,7 +193,7 @@ fn handle_command(world: &mut World, input: &str) -> bool {
             // Cap tick count to prevent DoS (accidental or malicious infinite loops)
             let safe_n = n.min(1000);
             if n > 1000 {
-                println!("Warning: Capping ticks to 1000 to prevent freeze.");
+                println!("⚠️ Warning: Capping ticks to 1000 to prevent freeze.");
             }
             run_ticks(world, safe_n);
         }
@@ -344,24 +344,24 @@ fn handle_command(world: &mut World, input: &str) -> bool {
                         let ts = world.resource::<TechState>();
 
                         if res.knowledge < t.cost() {
-                            println!(
-                                "{}",
-                                format!(
-                                    "❌ Failed: Insufficient Knowledge ({:.1}/{:.1})",
+                            print_dashboard_panel(
+                                "ERROR",
+                                &format!(
+                                    "Failed: Insufficient Knowledge ({:.1}/{:.1})",
                                     res.knowledge,
                                     t.cost()
-                                )
-                                .red()
+                                ),
+                                Some(comfy_table::Color::Red),
+                                Some(comfy_table::Attribute::Bold),
                             );
                         } else if ts.used_capacity + t.storage_cost() > ts.total_capacity {
-                            println!(
-                                "{}",
-                                format!("❌ Failed: Insufficient Data Storage Capacity ({:.1}/{:.1} TB used)", ts.used_capacity, ts.total_capacity).red()
-                            );
+                            print_dashboard_panel("ERROR", &format!("Failed: Insufficient Data Storage Capacity ({:.1}/{:.1} TB used)", ts.used_capacity, ts.total_capacity), Some(comfy_table::Color::Red), Some(comfy_table::Attribute::Bold));
                         } else {
-                            println!(
-                                "{}",
-                                "❌ Failed: Unknown reason (maybe already researched?)".red()
+                            print_dashboard_panel(
+                                "ERROR",
+                                "Failed: Unknown reason (maybe already researched?)",
+                                Some(comfy_table::Color::Red),
+                                Some(comfy_table::Attribute::Bold),
                             );
                         }
                     }
@@ -1040,16 +1040,25 @@ fn build_at(world: &mut World, building_type: BuildingType, x: i32, y: i32) {
         let occupied = world.resource::<OccupiedTiles>();
 
         if tile.is_none() {
-            println!("{} Failed: ({x}, {y}) is out of bounds", "✗".red().bold());
+            print_dashboard_panel(
+                "ERROR",
+                &format!("Failed: ({x}, {y}) is out of bounds"),
+                Some(comfy_table::Color::Red),
+                Some(comfy_table::Attribute::Bold),
+            );
         } else if occupied.0.contains(&(x, y)) {
-            println!(
-                "{} Failed: ({x}, {y}) is already occupied",
-                "✗".red().bold()
+            print_dashboard_panel(
+                "ERROR",
+                &format!("Failed: ({x}, {y}) is already occupied"),
+                Some(comfy_table::Color::Red),
+                Some(comfy_table::Attribute::Bold),
             );
         } else if let Some(t) = tile {
-            println!(
-                "{} Failed: cannot build on {t:?} at ({x}, {y})",
-                "✗".red().bold()
+            print_dashboard_panel(
+                "ERROR",
+                &format!("Failed: cannot build on {t:?} at ({x}, {y})"),
+                Some(comfy_table::Color::Red),
+                Some(comfy_table::Attribute::Bold),
             );
         }
     }
@@ -1070,61 +1079,100 @@ fn designate_at(world: &mut World, designation_type: DesignationType, x: i32, y:
         match designation_type {
             DesignationType::Mine => {
                 if tile == Some(TerrainType::Rock) {
-                    println!(
-                        "{} Failed: already designated at ({x}, {y})",
-                        "✗".red().bold()
+                    print_dashboard_panel(
+                        "ERROR",
+                        &format!("Failed: already designated at ({x}, {y})"),
+                        Some(comfy_table::Color::Red),
+                        Some(comfy_table::Attribute::Bold),
                     );
                 } else {
-                    println!(
-                        "{} Failed: ({x}, {y}) is {tile:?}, need Rock for mining",
-                        "✗".red().bold()
+                    print_dashboard_panel(
+                        "ERROR",
+                        &format!("Failed: ({x}, {y}) is {tile:?}, need Rock for mining"),
+                        Some(comfy_table::Color::Red),
+                        Some(comfy_table::Attribute::Bold),
                     );
                 }
             }
             DesignationType::Chop => {
                 if tile == Some(TerrainType::Tree) {
-                    println!(
-                        "{} Failed: already designated at ({x}, {y})",
-                        "✗".red().bold()
+                    print_dashboard_panel(
+                        "ERROR",
+                        &format!("Failed: already designated at ({x}, {y})"),
+                        Some(comfy_table::Color::Red),
+                        Some(comfy_table::Attribute::Bold),
                     );
                 } else {
-                    println!(
-                        "{} Failed: ({x}, {y}) is {tile:?}, need Tree for chopping",
-                        "✗".red().bold()
+                    print_dashboard_panel(
+                        "ERROR",
+                        &format!("Failed: ({x}, {y}) is {tile:?}, need Tree for chopping"),
+                        Some(comfy_table::Color::Red),
+                        Some(comfy_table::Attribute::Bold),
                     );
                 }
             }
             DesignationType::Demolish | DesignationType::Destroy => {
-                println!("{} Failed: no building at ({x}, {y})", "✗".red().bold());
+                print_dashboard_panel(
+                    "ERROR",
+                    &format!("Failed: no building at ({x}, {y})"),
+                    Some(comfy_table::Color::Red),
+                    Some(comfy_table::Attribute::Bold),
+                );
             }
             DesignationType::Repair => {
-                println!(
-                    "{} Failed: no building to repair at ({x}, {y})",
-                    "✗".red().bold()
+                print_dashboard_panel(
+                    "ERROR",
+                    &format!("Failed: no building to repair at ({x}, {y})"),
+                    Some(comfy_table::Color::Red),
+                    Some(comfy_table::Attribute::Bold),
                 );
             }
             DesignationType::SetZone(_) => {
-                println!("{} Failed: cannot set zone at ({x}, {y})", "✗".red().bold());
+                print_dashboard_panel(
+                    "ERROR",
+                    &format!("Failed: cannot set zone at ({x}, {y})"),
+                    Some(comfy_table::Color::Red),
+                    Some(comfy_table::Attribute::Bold),
+                );
             }
             DesignationType::Tame => {
-                println!("{} Failed: no wild animal at ({x}, {y})", "✗".red().bold());
+                print_dashboard_panel(
+                    "ERROR",
+                    &format!("Failed: no wild animal at ({x}, {y})"),
+                    Some(comfy_table::Color::Red),
+                    Some(comfy_table::Attribute::Bold),
+                );
             }
             DesignationType::ClearFlora => {
-                println!("{} Failed: no flora at ({x}, {y})", "✗".red().bold());
+                print_dashboard_panel(
+                    "ERROR",
+                    &format!("Failed: no flora at ({x}, {y})"),
+                    Some(comfy_table::Color::Red),
+                    Some(comfy_table::Attribute::Bold),
+                );
             }
             DesignationType::JuryRig => {
-                println!(
-                    "{} Failed: no building to jury-rig at ({x}, {y})",
-                    "✗".red().bold()
+                print_dashboard_panel(
+                    "ERROR",
+                    &format!("Failed: no building to jury-rig at ({x}, {y})"),
+                    Some(comfy_table::Color::Red),
+                    Some(comfy_table::Attribute::Bold),
                 );
             }
             DesignationType::Cannibalize => {
-                println!("{} Failed: no Lander at ({x}, {y})", "✗".red().bold());
+                print_dashboard_panel(
+                    "ERROR",
+                    &format!("Failed: no Lander at ({x}, {y})"),
+                    Some(comfy_table::Color::Red),
+                    Some(comfy_table::Attribute::Bold),
+                );
             }
             DesignationType::CollectSample => {
-                println!(
-                    "{} Failed: no Flora or Fauna at ({x}, {y})",
-                    "✗".red().bold()
+                print_dashboard_panel(
+                    "ERROR",
+                    &format!("Failed: no Flora or Fauna at ({x}, {y})"),
+                    Some(comfy_table::Color::Red),
+                    Some(comfy_table::Attribute::Bold),
                 );
             }
         }
