@@ -21,4 +21,5 @@ pub mod physics;
 pub mod pirates;
 pub mod planet;
 pub mod stellar_cartography;
+pub mod subjective_economics;
 pub mod treaty_cruisers;
