@@ -5851,7 +5851,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Keystone Species
+## Keystone Species [SPECCED]
 
 **Layer:** 1
 
