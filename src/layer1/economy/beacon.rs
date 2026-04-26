@@ -1,6 +1,8 @@
+use crate::layer1::chronicle::{AddChronicleEvent, EventImportance};
 use crate::layer1::economy::remittances::MigrantArrivalEvent;
 use crate::layer1::void_weed::PirateRaidEvent;
 use crate::layer2::trade::blockade::TradeShipArrivalEvent;
+use crate::shared::time::SimulationTime;
 use bevy_ecs::prelude::*;
 use rand::Rng;
 
@@ -9,6 +11,8 @@ use rand::Rng;
 pub struct ColonyBeacon {
     /// Whether the beacon is currently active and broadcasting.
     pub is_active: bool,
+    /// Tick when the beacon was last toggled. Prevents rapid micro-toggling.
+    pub last_toggled_tick: u64,
 }
 
 /// Evaluates the probabilities of external events triggered by the `ColonyBeacon`.
@@ -18,7 +22,7 @@ pub struct ColonyBeacon {
 /// raids. This system uses randomized rolls each tick to determine if a specific event is dispatched.
 ///
 /// # Examples
-/// ```
+/// \`\`\`
 /// use scale::layer1::economy::beacon::{ColonyBeacon, process_colony_beacon_system};
 /// use scale::layer2::trade::blockade::TradeShipArrivalEvent;
 /// use scale::layer1::economy::remittances::MigrantArrivalEvent;
@@ -26,7 +30,7 @@ pub struct ColonyBeacon {
 /// use bevy_ecs::prelude::*;
 ///
 /// let mut world = World::new();
-/// world.insert_resource(ColonyBeacon { is_active: true });
+/// world.insert_resource(ColonyBeacon { is_active: true, last_toggled_tick: 0 });
 /// world.insert_resource(Events::<TradeShipArrivalEvent>::default());
 /// world.insert_resource(Events::<MigrantArrivalEvent>::default());
 /// world.insert_resource(Events::<PirateRaidEvent>::default());
@@ -35,15 +39,36 @@ pub struct ColonyBeacon {
 /// schedule.add_systems(process_colony_beacon_system);
 /// schedule.run(&mut world);
 /// // External events may or may not be spawned based on RNG.
-/// ```
+/// \`\`\`
+pub fn toggle_beacon_system(mut beacon: ResMut<ColonyBeacon>, sim_time: Res<SimulationTime>) {
+    let cooldown_ticks = 100; // Hardcoded cooldown for refactor phase
+    if sim_time.tick >= beacon.last_toggled_tick + cooldown_ticks || beacon.last_toggled_tick == 0 {
+        beacon.is_active = !beacon.is_active;
+        beacon.last_toggled_tick = sim_time.tick;
+    }
+}
+
 pub fn process_colony_beacon_system(
     beacon: Res<ColonyBeacon>,
+    sim_time: Res<SimulationTime>,
     mut trade_writer: EventWriter<TradeShipArrivalEvent>,
     mut migrant_writer: EventWriter<MigrantArrivalEvent>,
     mut pirate_writer: EventWriter<PirateRaidEvent>,
+    mut chronicle_writer: EventWriter<AddChronicleEvent>,
 ) {
     if !beacon.is_active {
         return;
+    }
+
+    // Lore Hooks: Log when the beacon is first lit
+    // Note: Assuming a simple check based on whether it was toggled very recently
+    // In a full implementation, you might want a separate trigger event, but
+    // for now we check if it was just turned on in the last tick.
+    if beacon.last_toggled_tick > 0 && beacon.last_toggled_tick == sim_time.tick {
+        chronicle_writer.send(AddChronicleEvent {
+            text: "The beacon is lit. We invite the galaxy, and all its scum, to our doors.".to_string(),
+            importance: EventImportance::Major,
+        });
     }
 
     let mut rng = rand::thread_rng();
@@ -75,6 +100,7 @@ pub fn process_colony_beacon_system(
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::layer1::chronicle::AddChronicleEvent;
     use crate::layer1::economy::remittances::MigrantArrivalEvent;
     use crate::layer1::void_weed::PirateRaidEvent;
     use crate::layer2::trade::blockade::TradeShipArrivalEvent;
@@ -88,8 +114,48 @@ mod tests {
         app.add_event::<TradeShipArrivalEvent>();
         app.add_event::<MigrantArrivalEvent>();
         app.add_event::<PirateRaidEvent>();
-        app.add_systems(Update, process_colony_beacon_system);
+        app.add_event::<AddChronicleEvent>();
+        app.add_systems(Update, (process_colony_beacon_system, toggle_beacon_system));
         app
+    }
+
+    #[test]
+    fn test_beacon_cooldown() {
+        let mut app = setup_app();
+
+        app.world_mut().resource_mut::<SimulationTime>().tick = 1;
+
+        // Toggle on
+        app.update();
+        assert!(app.world().resource::<ColonyBeacon>().is_active);
+
+        // Advance a few ticks and try to toggle (should fail due to cooldown)
+        app.world_mut().resource_mut::<SimulationTime>().tick = 5;
+        app.update();
+        assert!(app.world().resource::<ColonyBeacon>().is_active);
+
+        // Advance past cooldown and toggle
+        app.world_mut().resource_mut::<SimulationTime>().tick = 105;
+        app.update();
+        assert!(!app.world().resource::<ColonyBeacon>().is_active);
+    }
+
+    #[test]
+    fn test_beacon_first_lit_triggers_chronicle() {
+        let mut app = setup_app();
+
+        // Simulate activating the beacon on tick 1
+        app.world_mut().resource_mut::<SimulationTime>().tick = 1;
+        app.world_mut().resource_mut::<ColonyBeacon>().is_active = true;
+        app.world_mut().resource_mut::<ColonyBeacon>().last_toggled_tick = 1;
+
+        app.update();
+
+        let chronicle_events = app
+            .world()
+            .get_resource::<Events<AddChronicleEvent>>()
+            .unwrap();
+        assert!(!chronicle_events.is_empty(), "Activating the beacon should add a chronicle event");
     }
 
     #[test]
