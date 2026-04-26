@@ -823,3 +823,4 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1187` Pneumatic Tubes — `specs/1187-pneumatic-tubes.md`
 - [ ] `1188` Corrosive Atmosphere — `specs/1188-corrosive-atmosphere.md`
 - [ ] `1189` Signal Decay — `specs/1189-signal-decay.md`
+- [ ] `1190` Static Charge — `specs/1190-static-charge.md`
