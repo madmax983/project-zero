@@ -6450,3 +6450,54 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "The network broke. The drones scattered, forgetting [SWARM_PURPOSE]. They are just mindless metal again. [YEAR]."
 - "[YEAR]: The swarm at [COLONY] fractured. A critical task, [SWARM_PURPOSE], abandoned to mechanical stupidity."
 - "A lost connection. The collective genius dissolved. [SWARM_PURPOSE] failed as the drones reverted to basic routines. [YEAR]."
+
+## The Embassy Sector Templates (Spec 764)
+
+### Template: DIPLOMATIC_CRIME_IGNORED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [DIPLOMAT_TITLE], [DIPLOMATIC_CRIME]
+
+**Patterns:**
+- "[YEAR]: Injustice in [COLONY]. [DIPLOMAT_TITLE] committed [DIPLOMATIC_CRIME]. Local authorities were forced to look the other way."
+- "[DIPLOMAT_TITLE] walked free today despite [DIPLOMATIC_CRIME]. The Extraterritorial Zone protects them. [YEAR]."
+- "Unrest grows. A clear case of [DIPLOMATIC_CRIME], but [DIPLOMAT_TITLE] claimed immunity. Our sheriff stood down. [YEAR]."
+
+### Template: DIPLOMATIC_ARREST_INCIDENT
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [DIPLOMAT_TITLE], [DIPLOMATIC_INCIDENT_REASON]
+
+**Patterns:**
+- "[YEAR]: The treaty is broken. We arrested [DIPLOMAT_TITLE]. The reason given was [DIPLOMATIC_INCIDENT_REASON]. War is imminent."
+- "Immunity denied. By order of the administration, [DIPLOMAT_TITLE] was seized for [DIPLOMATIC_INCIDENT_REASON]. [YEAR]."
+- "[COLONY] braces for retaliation. The arrest of [DIPLOMAT_TITLE]—due to [DIPLOMATIC_INCIDENT_REASON]—has sparked a galactic crisis. [YEAR]."
+
+## Void Sickness Templates (Spec 761)
+
+### Template: VOID_SICKNESS_ONSET
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [POP_NAME], [OFF_WORLD_STATION], [VOID_SICKNESS_SYMPTOM]
+
+**Patterns:**
+- "[YEAR]: [POP_NAME] returned from [OFF_WORLD_STATION]. They are changed. The primary symptom is [VOID_SICKNESS_SYMPTOM]."
+- "The void changes you. [POP_NAME] spent too long at [OFF_WORLD_STATION] and now exhibits [VOID_SICKNESS_SYMPTOM]. [YEAR]."
+- "[POP_NAME] is Void-Touched. They survived [OFF_WORLD_STATION], but brought back [VOID_SICKNESS_SYMPTOM]. [YEAR]."
+
+### Template: SURFACE_REFUSAL
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [POP_NAME]
+
+**Patterns:**
+- "[YEAR]: Gravity feels like a cage to them. [POP_NAME] refuses to sleep on the planet surface."
+- "[POP_NAME] demands an orbital transfer. They say the surface is suffocating. [YEAR]."
+- "A true spacer now. [POP_NAME] won't even step outside the shuttle. [YEAR]."
+
+## Integration: Vacuum Pressure -> Acoustic Shadows Templates (INT-060)
+
+### Template: VACUUM_SHADOW_INCIDENT
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [ROOM_NAME], [VACUUM_ACOUSTIC_ANOMALY]
+
+**Patterns:**
+- "[YEAR]: Decompression in [ROOM_NAME]. Not just a loss of air, but [VACUUM_ACOUSTIC_ANOMALY]."
+- "They couldn't hear the warnings. A pressure loss in [ROOM_NAME] created [VACUUM_ACOUSTIC_ANOMALY]. [YEAR]."
+- "[COLONY] engineers report a dead zone in [ROOM_NAME]. The vacuum resulted in [VACUUM_ACOUSTIC_ANOMALY]. [YEAR]."

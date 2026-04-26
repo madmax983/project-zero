@@ -4362,3 +4362,34 @@
 - "Lost Tech alone can build this drive."
 
 **Note:** Refers specifically to technology gleaned from ancient ruins, not standard colony research.
+
+## The Embassy Sector (Spec 764)
+
+### Extraterritorial Zone
+**Replaces:** Embassy Zone, Alien Quarter
+**Code reference:** `ZoneType::Extraterritorial`
+**Usage:** "The suspect fled into the Extraterritorial Zone. The sheriff stopped at the line."
+
+### Diplomatic Immunity
+**Replaces:** Above the law, Legal protection
+**Code reference:** `DiplomaticImmunity`
+**Usage:** "You can't touch him, he has Diplomatic Immunity."
+
+## Void Sickness (Spec 761)
+
+### Void Exposure
+**Replaces:** Space madness, Orbital fatigue
+**Code reference:** `VoidExposure`
+**Usage:** "Rotate the crew before Void Exposure sets in permanently."
+
+### Void-Touched (Spacer)
+**Replaces:** Space Caste, Adapted
+**Code reference:** `Trait::VoidTouched`
+**Usage:** "They are Void-Touched now; the surface gravity makes them ill."
+
+## Acoustic Shadows (INT-060)
+
+### Acoustic Vacuum
+**Replaces:** Decompressed zone, Silent area
+**Code reference:** `VacuumAcousticAnomaly`
+**Usage:** "The breach created an Acoustic Vacuum. No one heard the screams."

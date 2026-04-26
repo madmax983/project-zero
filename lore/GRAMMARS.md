@@ -3848,3 +3848,34 @@ How activating the beacon drives the colony into chaos.
 - SWARM_COALESCENCE -> enables -> TECH_SALVAGE, LOST_TECH_DISCOVERED
 - SWARM_COALESCENCE -> decreases_chance -> ACCIDENT, RESOURCE_LOSS
 - SWARM_FRACTURE -> increases_chance -> ACCIDENT, RESOURCE_LOSS, DRONE_MAINTENANCE_FAILURE
+
+## The Embassy Sector Chaining (Spec 764)
+
+DIPLOMATIC_CRIME_IGNORED:
+    - UNREST_SPIKE (high)
+    - MOB_JUSTICE (medium)
+    - ALIEN_APPEASEMENT (low)
+
+DIPLOMATIC_ARREST_INCIDENT:
+    - WAR_DECLARATION (high)
+    - TRADE_EMBARGO (high)
+    - DIPLOMAT_EXPULSION (medium)
+
+## Void Sickness Chaining (Spec 761)
+
+VOID_SICKNESS_ONSET:
+    - SURFACE_REFUSAL (high)
+    - ORBITAL_DEMAND (medium)
+    - MEDICAL_ISOLATION (low)
+
+SURFACE_REFUSAL:
+    - ORBITAL_HABITAT_CONSTRUCTED (high)
+    - COLONIST_DEPARTURE (medium)
+    - WORKFORCE_SHORTAGE (low, on surface)
+
+## Vacuum Acoustic Shadows Chaining (INT-060)
+
+VACUUM_SHADOW_INCIDENT:
+    - ACCIDENT_UNHEARD (high)
+    - SENSOR_UPGRADE (medium)
+    - ZONE_ABANDONMENT (low)
