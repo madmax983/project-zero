@@ -5963,7 +5963,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Hum
+## The Hum [SPECCED]
 
 **Layer:** 1
 
