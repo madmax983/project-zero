@@ -22,7 +22,6 @@
 - [ ] `649` Pop Relationships — `specs/649-pop-relationships.md`
 - [ ] `642` The Propaganda Simulacrum — `specs/642-propaganda-simulacrum.md`
 - [ ] `643` Living Architecture — `specs/643-living-architecture.md`
-- [ ] `644` Temporal Echo Chambers — `specs/644-temporal-echo-chambers.md`
 - [ ] `645` Sub-Orbital Harpoon Logistics — `specs/645-sub-orbital-harpoon-logistics.md`
 
 - [ ] `634` The Petrification Sickness — `specs/634-petrification-sickness.md`

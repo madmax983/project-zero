@@ -79,8 +79,11 @@ pub fn filth_accumulation_system(mut query: Query<(&mut Filth, &PopAction, Optio
 }
 
 /// Decays hygiene based on filth level.
-pub fn hygiene_decay_system(mut query: Query<(&mut Needs, &Filth)>) {
-    query.par_iter_mut().for_each(|(mut needs, filth)| {
+pub fn hygiene_decay_system(
+    mut query: Query<(&mut Needs, &Filth, Option<&crate::layer1::temporal_chamber::InsideChamber>)>,
+    chambers: Query<&crate::layer1::temporal_chamber::TemporalChamber>,
+) {
+    query.par_iter_mut().for_each(|(mut needs, filth, inside_chamber)| {
         // Filth accelerates hygiene loss.
         // Base decay is 0.0 (handled here instead of needs.rs? No needs.rs has generic decay?)
         // Spec says: "Filth accelerates hygiene loss"
@@ -92,8 +95,17 @@ pub fn hygiene_decay_system(mut query: Query<(&mut Needs, &Filth)>) {
         // Filth penalty: up to +0.005
         let base_decay = 0.001;
         let filth_penalty = (filth.current / filth.max) * 0.005;
+        let mut decay = base_decay + filth_penalty;
 
-        needs.hygiene = (needs.hygiene - (base_decay + filth_penalty)).max(0.0);
+        if let Some(inside) = inside_chamber {
+            if let Ok(chamber) = chambers.get(inside.chamber_entity) {
+                if chamber.active {
+                    decay *= chamber.time_dilation_factor;
+                }
+            }
+        }
+
+        needs.hygiene = (needs.hygiene - decay).max(0.0);
     });
 }
 

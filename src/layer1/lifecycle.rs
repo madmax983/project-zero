@@ -52,13 +52,37 @@ impl Age {
 /// System to increment age and handle life stage transitions.
 pub fn aging_system(
     mut query: Query<
-        (Entity, &mut Age, Option<&mut Speed>),
+        (Entity, &mut Age, Option<&mut Speed>, Option<&mut crate::layer1::temporal_chamber::InsideChamber>),
         Without<crate::layer1::cryo::CryoStasis>,
     >,
+    chambers: Query<&crate::layer1::temporal_chamber::TemporalChamber>,
     mut log: Option<ResMut<MessageLog>>,
 ) {
-    for (_entity, mut age, mut speed) in &mut query {
-        age.ticks_alive += 1;
+    for (_entity, mut age, mut speed, inside_chamber) in &mut query {
+        let mut ticks_to_add = 1;
+
+        if let Some(mut inside) = inside_chamber {
+            let mut time_factor = 1.0;
+            if let Ok(chamber) = chambers.get(inside.chamber_entity) {
+                if chamber.active {
+                    time_factor = chamber.time_dilation_factor;
+                }
+            }
+
+            inside.fractional_age += time_factor;
+            if inside.fractional_age >= 1.0 {
+                ticks_to_add = inside.fractional_age.floor() as u64;
+                inside.fractional_age = inside.fractional_age.fract();
+            } else {
+                ticks_to_add = 0;
+            }
+        }
+
+        if ticks_to_add == 0 {
+            continue;
+        }
+
+        age.ticks_alive += ticks_to_add;
 
         let new_stage = if age.ticks_alive >= AGE_ELDER {
             LifeStage::Elder
@@ -150,6 +174,48 @@ mod tests {
 
         let age = world.get::<Age>(entity).unwrap();
         assert_eq!(age.ticks_alive, 101);
+    }
+
+    #[test]
+    fn test_chamber_preserves_pops_by_reducing_aging() {
+        use crate::layer1::temporal_chamber::{TemporalChamber, InsideChamber};
+
+        // Arrange
+        let mut world = World::new();
+
+        let mut schedule = Schedule::default();
+        schedule.add_systems(aging_system);
+
+        let chamber_id = world.spawn(
+            TemporalChamber {
+                time_dilation_factor: 0.1,
+                active: true,
+                energy_cost: 10.0,
+                ticks_active: 0,
+            }
+        ).id();
+
+        let pop = world.spawn((
+            Pop,
+            Age { ticks_alive: 0, ..Default::default() },
+            InsideChamber { chamber_entity: chamber_id, fractional_age: 0.0 },
+        )).id();
+
+        // Act
+        schedule.run(&mut world);
+
+        // Assert
+        let pop_age = world.get::<Age>(pop).unwrap();
+        // Normal aging would add 1.0, chamber adds 0.1
+        assert_eq!(pop_age.ticks_alive, 0); // Need fractional tracking or tick accumulation
+
+        // Run 9 more times to reach 1.0
+        for _ in 0..9 {
+            schedule.run(&mut world);
+        }
+
+        let pop_age = world.get::<Age>(pop).unwrap();
+        assert_eq!(pop_age.ticks_alive, 1);
     }
 
     #[test]

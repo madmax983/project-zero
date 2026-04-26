@@ -129,6 +129,9 @@ pub mod mother_lode_tests;
 
 mod execution_demolish_test;
 
+pub mod temporal_chamber;
+pub use temporal_chamber::*;
+
 /// Named locations on the map.
 pub mod locations;
 
