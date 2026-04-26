@@ -60,10 +60,14 @@ pub fn check_for_festivals_system(
         // AND current_tick > event.tick (it's in the past)
         if current_tick > event.tick && (current_tick - event.tick) % TICKS_PER_YEAR == 0 {
             // Found one!
-            let name = format!(
-                "{} Festival",
-                event.text.chars().take(20).collect::<String>().trim()
-            );
+            // ⚡ Bolt Optimization: Use iterator to index the string slice without
+            // allocating an intermediate String (collect) before trimming.
+            let idx = event
+                .text
+                .char_indices()
+                .nth(20)
+                .map_or(event.text.len(), |(i, _)| i);
+            let name = format!("{} Festival", event.text[..idx].trim());
 
             state.active_festival = Some(Festival {
                 name: name.clone(),
