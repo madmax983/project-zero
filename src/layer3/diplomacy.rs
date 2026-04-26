@@ -79,3 +79,4 @@ pub struct WarningDiplomaticMessageEvent {
     pub target_system: Entity,
     pub faction_id: Entity,
 }
+pub mod cultural_pressure;

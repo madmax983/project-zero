@@ -92,6 +92,8 @@ pub fn run_simulation_tick(world: &mut World) {
         world
             .init_resource::<Events<crate::layer3::diplomacy::succession::SuccessionCrisisEvent>>();
         world.init_resource::<crate::layer1::mind::fugue::FugueEventTracker>();
+        world.init_resource::<crate::layer3::diplomacy::cultural_pressure::CulturalInfluenceGrid>();
+        world.init_resource::<Events<crate::layer3::diplomacy::cultural_pressure::DefectionEvent>>();
     }
     if !world.contains_resource::<Events<crate::layer1::pop_memories::FamineEvent>>() {
         world.init_resource::<Events<crate::layer1::pop_memories::FamineEvent>>();
@@ -577,6 +579,16 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
             .after(crate::layer3::events::debt_prison::check_bailout_condition_system),
         crate::layer3::market::update_market_prices_system,
         crate::layer3::diplomacy::diplomatic_negotiation_system,
+    ));
+
+    schedule.add_systems((
+        crate::layer3::diplomacy::cultural_pressure::calculate_cultural_pressure_system,
+        crate::layer3::diplomacy::cultural_pressure::apply_cultural_pressure_system
+            .after(crate::layer3::diplomacy::cultural_pressure::calculate_cultural_pressure_system),
+        crate::layer3::diplomacy::cultural_pressure::process_defections_system,
+    ));
+
+    schedule.add_systems((
         crate::layer3::diplomacy_reflection::aggregate_colony_stats,
         crate::layer3::diplomacy_reflection::update_diplomatic_traits
             .after(crate::layer3::diplomacy_reflection::aggregate_colony_stats),
@@ -855,6 +867,12 @@ mod tests {
         world.init_resource::<Events<crate::layer1::pop_memories::FamineEvent>>();
         world
             .init_resource::<Events<crate::layer3::diplomacy::succession::SuccessionCrisisEvent>>();
+        if !world.contains_resource::<crate::layer3::diplomacy::cultural_pressure::CulturalInfluenceGrid>() {
+            world.init_resource::<crate::layer3::diplomacy::cultural_pressure::CulturalInfluenceGrid>();
+        }
+        if !world.contains_resource::<Events<crate::layer3::diplomacy::cultural_pressure::DefectionEvent>>() {
+            world.init_resource::<Events<crate::layer3::diplomacy::cultural_pressure::DefectionEvent>>();
+        }
 
         world.init_resource::<Events<crate::layer3::ghost_ships::EvaluateTransitEvent>>();
         world.init_resource::<Events<crate::layer3::ghost_ships::EvaluateLostShipReturnEvent>>();
