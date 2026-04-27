@@ -464,3 +464,4 @@
 - [x] `668` Impact Event — `specs/668-impact-event.md` — completed 2024-05-28
 - [x] `1165` The Nostalgia Cult — `specs/1165-the-nostalgia-cult.md` — completed 2026-05-01
 - [x] `1080` Malicious Compliance AI - `specs/1080-malicious-compliance-ai.md` - completed 2026-04-27
+- [x] `673` Indoctrination — `specs/673-indoctrination.md` — completed 2026-04-27

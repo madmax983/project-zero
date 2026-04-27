@@ -7,7 +7,7 @@
 
 
 
-- [ ] `673` Indoctrination — `specs/673-indoctrination.md`
+
 
 - [ ] `669` Urban Spelunking — `specs/669-urban-spelunking.md`
 - [ ] `670` Cultural Projection — `specs/670-cultural-projection.md`
