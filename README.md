@@ -49,7 +49,7 @@ To use SCALE's procedural generation in your own Rust code:
 ```rust
 // In Cargo.toml:
 // [dependencies]
-// scale = "0.1"
+// scale = "0.1.0"
 // anyhow = "1.0"
 
 use scale::prelude::*;
@@ -92,15 +92,17 @@ The "Nova" feature (Oral Tradition) builds upon the base narrative system to cre
 > **STOP! If you copy-paste the code below without enabling the `nova` feature, it will NOT compile!**
 >
 > To use this feature, you MUST enable the `nova` feature flag in your `Cargo.toml` or via the command line.
+>
+> If you see an error like `cannot find struct, variant or union type Story in this scope`, it means you forgot the `nova` feature!
 
 **Usage:**
 
-> **Run with:** `cargo run`
+> **Run with:** `cargo run --features nova`
 
 ```rust
 // In Cargo.toml:
 // [dependencies]
-// scale = { version = "...", features = ["nova"] }
+// scale = { version = "0.1.0", features = ["nova"] }
 
 use scale::prelude::*;
 
