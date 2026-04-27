@@ -6577,7 +6577,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Hyper-Specialized Evolution
+## Hyper-Specialized Evolution [SPECCED]
 
 **Layer:** 1
 

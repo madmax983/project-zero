@@ -863,3 +863,4 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1228` The Slippery Slope — `specs/1228-the-slippery-slope.md`
 - [ ] `1229` Hard-Light Architecture — `specs/1229-hard-light-architecture.md`
 - [ ] `1230` Title Inflation — `specs/1230-title-inflation.md`
+- [ ] `1231` Hyper-Specialized Evolution — `specs/1231-hyper-specialized-evolution.md`
