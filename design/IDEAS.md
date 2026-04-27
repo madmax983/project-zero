@@ -6102,7 +6102,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Protest Crowds
+## Protest Crowds [SPECCED]
 
 **Layer:** 1
 
