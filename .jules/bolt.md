@@ -21,3 +21,6 @@
 ## [String Iteration Zero-Cost Allocation]
 **Learning:** Found a `.collect::<String>()` chain inside `layer1::culture::festivals.rs` which was converting a `chars().take(20)` iteration into a new string just to `.trim()` and `format!` it.
 **Action:** Replaced `.collect::<String>()` with an index discovery using `char_indices().nth(n)` and sliced the original string natively. Eliminates a heap allocation on a hot path during chronicle festival checks.
+**[Tech/Neural Leech Allocation Optimization]**
+**Learning:** Removed an intermediate `Vec` allocation (`hub_query.iter().collect()`) in `apply_neural_link_buffs_system`. This `Vec` was being used to both iterate over hubs and later perform a linear `find` lookup. By replacing this with a direct iterator over `hub_query` and replacing the linear array `find` with an O(1) ECS `Query::get()`, we completely eliminated a heap allocation per frame while also improving algorithmic time complexity for lookups.
+**Action:** When querying ECS data for lookups, never collect into an intermediate `Vec` to use `.find()`. Instead, use the `Query::get(entity)` method to fetch the component directly in O(1) time without allocating heap memory.
