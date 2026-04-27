@@ -22,24 +22,28 @@ pub struct ColonyBeacon {
 /// raids. This system uses randomized rolls each tick to determine if a specific event is dispatched.
 ///
 /// # Examples
-/// \`\`\`
+/// ```
 /// use scale::layer1::economy::beacon::{ColonyBeacon, process_colony_beacon_system};
 /// use scale::layer2::trade::blockade::TradeShipArrivalEvent;
 /// use scale::layer1::economy::remittances::MigrantArrivalEvent;
 /// use scale::layer1::void_weed::PirateRaidEvent;
+/// use scale::layer1::chronicle::AddChronicleEvent;
+/// use scale::shared::time::SimulationTime;
 /// use bevy_ecs::prelude::*;
 ///
 /// let mut world = World::new();
 /// world.insert_resource(ColonyBeacon { is_active: true, last_toggled_tick: 0 });
+/// world.insert_resource(SimulationTime::default());
 /// world.insert_resource(Events::<TradeShipArrivalEvent>::default());
 /// world.insert_resource(Events::<MigrantArrivalEvent>::default());
 /// world.insert_resource(Events::<PirateRaidEvent>::default());
+/// world.insert_resource(Events::<AddChronicleEvent>::default());
 ///
 /// let mut schedule = Schedule::default();
 /// schedule.add_systems(process_colony_beacon_system);
 /// schedule.run(&mut world);
 /// // External events may or may not be spawned based on RNG.
-/// \`\`\`
+/// ```
 pub fn toggle_beacon_system(mut beacon: ResMut<ColonyBeacon>, sim_time: Res<SimulationTime>) {
     let cooldown_ticks = 100; // Hardcoded cooldown for refactor phase
     if sim_time.tick >= beacon.last_toggled_tick + cooldown_ticks || beacon.last_toggled_tick == 0 {
