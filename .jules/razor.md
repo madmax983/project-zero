@@ -36,3 +36,8 @@
 **Bloat:** `SystemStatus` enum used alongside `Bloat` component in `legacy_code.rs` solely to track online vs rebooting ticks, requiring match blocks and extra component queries.
 **Cut:** Removed the `SystemStatus` enum entirely. Added a `reboot_ticks: u32` field directly to the `Bloat` struct.
 **Saved:** 15+ lines of code, an unnecessary enum, and a multi-component query in `update_bloat_system`.
+
+## [Reduction]
+**Bloat:** `VirusSeverity` enum in `src/layer3/digital_detritus.rs` used solely to wrap a single variant (`Critical`) inside the `VirusEvent` struct.
+**Cut:** Removed the `VirusSeverity` enum entirely and simplified `VirusEvent` to a unit struct `pub struct VirusEvent;`. Updated systems and tests to process the event unconditionally.
+**Saved:** ~10 lines of boilerplate code, an unnecessary enum indirection, and simplified pattern matching and struct instantiation across 4 functions/tests.

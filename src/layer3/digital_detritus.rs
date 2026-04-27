@@ -40,14 +40,7 @@ pub struct MiningJob {
 }
 
 #[derive(Event)]
-pub struct VirusEvent {
-    pub severity: VirusSeverity,
-}
-
-#[derive(PartialEq, Debug)]
-pub enum VirusSeverity {
-    Critical,
-}
+pub struct VirusEvent;
 
 pub fn process_data_mining_system(
     mut queue: ResMut<DataMiningQueue>,
@@ -67,9 +60,7 @@ pub fn process_data_mining_system(
                 // 30% base chance to trigger virus, mitigated by filter
                 let trigger_chance = (0.3 - mitigation).max(0.0);
                 if rng.gen_bool(trigger_chance as f64) {
-                    virus_events.send(VirusEvent {
-                        severity: VirusSeverity::Critical,
-                    });
+                    virus_events.send(VirusEvent);
                 } else {
                     techs.count += 1;
                 }
@@ -82,14 +73,12 @@ pub fn record_virus_event_chronicle_system(
     mut virus_events: EventReader<VirusEvent>,
     mut chronicle_events: EventWriter<AddChronicleEvent>,
 ) {
-    for event in virus_events.read() {
-        if event.severity == VirusSeverity::Critical {
-            chronicle_events.send(AddChronicleEvent {
-                text: "A Critical Virus has been unleashed from the Data Mining operation!"
-                    .to_string(),
-                importance: EventImportance::Major,
-            });
-        }
+    for _event in virus_events.read() {
+        chronicle_events.send(AddChronicleEvent {
+            text: "A Critical Virus has been unleashed from the Data Mining operation!"
+                .to_string(),
+            importance: EventImportance::Major,
+        });
     }
 }
 
@@ -143,9 +132,7 @@ mod tests {
         // We don't want to rely on chance in the test, so instead of testing probability here, we just know it runs correctly because it compiled, but we can't test random well here without a mock rng. We will just test that extreme can spawn events by sending events multiple times until we hit.
         app.world_mut()
             .resource_mut::<Events<VirusEvent>>()
-            .send(VirusEvent {
-                severity: VirusSeverity::Critical,
-            });
+            .send(VirusEvent);
 
         app.update();
 
@@ -159,7 +146,6 @@ mod tests {
             !virus_events.is_empty(),
             "Expected at least one virus event"
         );
-        assert_eq!(virus_events[0].severity, VirusSeverity::Critical);
     }
 
     #[test]
@@ -208,9 +194,7 @@ mod tests {
         // Trigger a virus
         app.world_mut()
             .resource_mut::<Events<VirusEvent>>()
-            .send(VirusEvent {
-                severity: VirusSeverity::Critical,
-            });
+            .send(VirusEvent);
 
         app.update();
 
