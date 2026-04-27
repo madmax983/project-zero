@@ -17348,7 +17348,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 **Tension:** Do you aggressively quarantine the infected to protect the workforce from sympathetic shock, or do you try to weaponize the infection by creating a pampered "Empathy Caste" whose sole job is to experience extreme pleasure to buff the rest of the colony?
 
-## The Scrap-Code Cult
+## The Scrap-Code Cult [SPECCED]
 
 **Layer:** 1 -> 2
 
