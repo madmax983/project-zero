@@ -17590,3 +17590,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 **Tension:** The necessary, empire-saving buffs provided by an expanding bureaucracy vs. the horrifying, physical reality of your cities being slowly digested by endless rows of filing cabinets.
 ---
+
+## The Bulwark Platform
+
+**Layer:** 2
+
+**Fantasy:** A slow, immovable fortress that sacrifices all mobility to create an unbreakable defensive perimeter.
+
+**Mechanic:** A ship class that cannot travel via hyperlanes and moves at a crawl within the system. However, when deployed, it anchors itself and projects a massive, system-wide shield that absorbs damage directed at any friendly Layer 1 or Layer 2 asset in its radius. It requires an immense, continuous stream of raw energy from the planet below to maintain the shield.
+
+**Emergence:** You deploy a Bulwark above your capital, making it invincible. But during a siege, the energy draw becomes so immense that it causes rolling blackouts on the planet surface. The resulting panic and freezing temperatures kill more pops than the enemy bombardment would have.
+
+**Tension:** Do you sacrifice your colony's internal stability and economy to power an impenetrable shield, or risk orbital bombardment to keep the lights on?
+
+---
+
+## The Vanguard Ram
+
+**Layer:** 2
+
+**Fantasy:** A suicidal, heavily armored spearhead designed not to shoot, but to physically break enemy formations.
+
+**Mechanic:** A ship with no conventional weapons but incredible frontal armor and a massive engine. Its only attack is a direct kinetic strike. Upon impact, it deals devastating damage to capital ships or orbital stations, but the ship itself is almost always destroyed, and the impact creates a lethal, localized debris cloud.
+
+**Emergence:** You launch a Vanguard Ram to break an enemy blockade. It succeeds, destroying their flagship, but the resulting high-velocity debris cloud completely blocks the very trade route you were trying to open, trapping your own merchant fleets in the system.
+
+**Tension:** A cheap, guaranteed kill against a high-value target vs. the permanent loss of the ship and the dangerous Kessler syndrome it creates.
+
+---
+
+## The Decoy Frigate
+
+**Layer:** 2
+
+**Fantasy:** Winning a war through deception rather than firepower, making the enemy chase ghosts.
+
+**Mechanic:** An unarmed, fragile ship equipped with advanced electronic warfare suites. It can perfectly spoof the sensor signature of any other ship class (e.g., a dreadnought or a colony ship). It draws enemy fire and diverts their fleets, but if scanned at close range, the illusion shatters.
+
+**Emergence:** You create a massive fake armada of Decoy Frigates to draw the enemy's main fleet away from your vulnerable mining world. The enemy takes the bait, leaving their capital undefended for your real fleet. However, a passing neutral trader accidentally scans a decoy, realizes the ruse, and broadcasts the truth on open comms, completely ruining your master plan right before the trap springs.
+
+**Tension:** Investing resources into ships that cannot fight to manipulate enemy behavior, knowing that discovery means total tactical collapse.
+
+---
