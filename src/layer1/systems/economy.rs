@@ -143,6 +143,14 @@ pub fn register(schedule: &mut Schedule) {
 
     schedule.add_systems(
         (
+            crate::layer1::economy::inflation::trigger_market_crash,
+            crate::layer1::economy::inflation::process_barter_trade,
+        )
+            .in_set(Layer1SystemSet::Economy),
+    );
+
+    schedule.add_systems(
+        (
             crate::layer1::economy::beacon::process_colony_beacon_system,
             crate::layer1::economy::beacon::toggle_beacon_system,
             crate::layer1::integration::beacon_migrant_arrival_bridge,

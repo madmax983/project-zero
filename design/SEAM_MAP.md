@@ -784,3 +784,9 @@
 - **Glue added:** `update_photophobic_light_level_system` in `src/layer1/economy/photophobic.rs`
 - **Schedule:** Chained in Economy
 - **Tests:** `tests/integration/photophobic_light_bridge.rs`
+
+### INT-1145: Inflationary Spiral -> Economy
+- **Date:** 2026-04-24
+- **Systems connected:** `MarketCrashEvent` -> `trigger_market_crash`, and `BarterRequest` -> `process_barter_trade` (Inflationary Spiral) -> `Layer1SystemSet::Economy`
+- **Glue added:** Registered `trigger_market_crash` and `process_barter_trade` in `src/layer1/systems/economy.rs`.
+- **Tests:** `tests/integration/inflation_spiral_bridge.rs`

@@ -393,6 +393,9 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     world.init_resource::<Events<crate::layer1::tech::neural_leech::NeuralHubDeathEvent>>();
     world.init_resource::<Events<crate::layer1::economy::inflation::MarketCrashEvent>>();
     world.init_resource::<Events<crate::layer1::economy::inflation::BarterRequest>>();
+    world.insert_resource(crate::layer1::economy::inflation::MarketState {
+        credit_value_multiplier: 1.0,
+    });
 
     world.init_resource::<crate::layer1::festivals::FestivalState>();
     world.init_resource::<crate::layer1::shadow_market::ShadowMarketCooldown>();
