@@ -5,3 +5,7 @@
 ## 2024-05-25 - Building Cost Initialization Clutter Smell
 **Learning:** Massive struct instantiation using `ColonyResources { metal: 50.0, ..ColonyResources::zeroed() }` within `match` arms inside `src/layer1/architecture/building.rs` creates extreme pyramid-of-doom style visual clutter when the struct has dozens of fields.
 **Action:** Implemented the builder pattern on `ColonyResources` (`with_metal()`, `with_wood()`, etc). Replaced all block initializations with clean `ColonyResources::zeroed().with_X(...).with_Y(...)` method chains, compressing logic down to a single line per match arm without changing behavior.
+
+## 2024-05-27 - Redundant Init Checks and Destructive Insert Smells
+**Learning:** Checking `if !world.contains_resource::<T>()` before calling `world.init_resource::<T>()` creates immense visual clutter (e.g., in `simulation.rs` God Functions) because `init_resource` already internally handles existence checks and acts as a safe no-op. However, using `world.insert_resource(...)` unconditionally overwrites state. Removing protective `if` checks around `insert_resource` will wipe the game state (like `Schedules` or `DiplomaticStanding`) on every simulation tick.
+**Action:** Remove redundant `contains_resource` checks only for `init_resource` calls. Strictly preserve `if !world.contains_resource::<T>()` protective blocks around `insert_resource` calls to prevent state wiping regressions.

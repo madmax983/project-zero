@@ -44,92 +44,53 @@ pub fn build_simulation_schedule() -> Schedule {
 }
 
 /// Run one simulation tick: all game systems via schedule, then increment tick counter.
-pub fn run_simulation_tick(world: &mut World) {
+fn init_simulation_resources(world: &mut World) {
     // Initialize schedule on first call (stored in World's Schedules resource)
     if !world.contains_resource::<Schedules>() {
         world.insert_resource(Schedules::default());
     }
 
-    if !world.contains_resource::<crate::layer1::social::old_guard::Demographics>() {
-        world.init_resource::<crate::layer1::social::old_guard::Demographics>();
-    }
+    world.init_resource::<crate::layer1::social::old_guard::Demographics>();
 
-    if !world.contains_resource::<crate::layer1::diplomacy::factions::rivals::TerritoryGrid>() {
-        world.init_resource::<crate::layer1::diplomacy::factions::rivals::TerritoryGrid>();
-    }
+    world.init_resource::<crate::layer1::diplomacy::factions::rivals::TerritoryGrid>();
 
-    if !world.contains_resource::<BuildingMap>() {
-        world.init_resource::<BuildingMap>();
-    }
+    world.init_resource::<BuildingMap>();
 
-    if !world.contains_resource::<crate::layer1::stress::TraumaTracker>() {
-        world.init_resource::<crate::layer1::stress::TraumaTracker>();
-        world.init_resource::<Events<crate::layer2::skyhooks::LaunchIntent>>();
-        world.init_resource::<Events<crate::layer1::infrastructure::ancient::ConduitSurgeEvent>>();
-    }
+    world.init_resource::<crate::layer1::stress::TraumaTracker>();
+    world.init_resource::<Events<crate::layer2::skyhooks::LaunchIntent>>();
+    world.init_resource::<Events<crate::layer1::infrastructure::ancient::ConduitSurgeEvent>>();
 
-    if !world.contains_resource::<crate::layer1::tech_envy::TechEnvyConfig>() {
-        world.init_resource::<crate::layer1::tech_envy::TechEnvyConfig>();
-    }
+    world.init_resource::<crate::layer1::tech_envy::TechEnvyConfig>();
 
-    if !world.contains_resource::<crate::layer1::shadow_market::ShadowMarketCooldown>() {
-        world.init_resource::<crate::layer1::shadow_market::ShadowMarketCooldown>();
-    }
+    world.init_resource::<crate::layer1::shadow_market::ShadowMarketCooldown>();
 
     // Initialize Layer 2 Events
-    if !world.contains_resource::<Events<crate::layer1::geography::HistoricalEvent>>() {
-        world.init_resource::<Events<crate::layer1::geography::HistoricalEvent>>();
-    }
-    if !world.contains_resource::<Events<crate::layer1::social::ghost_shift_strike::GhostShiftStartedEvent>>() {
-        world.init_resource::<Events<crate::layer1::social::ghost_shift_strike::GhostShiftStartedEvent>>();
-    }
-    if !world.contains_resource::<Events<crate::layer3::fleets::ColonyFoundedEvent>>() {
-        world.init_resource::<Events<crate::layer3::fleets::ColonyFoundedEvent>>();
-        world.init_resource::<crate::layer1::diplomacy::factions::rivals::TerritoryGrid>();
-    }
-    if !world.contains_resource::<Events<crate::layer3::diplomacy::succession::SuccessionEvent>>() {
-        world.init_resource::<Events<crate::layer3::diplomacy::succession::SuccessionEvent>>();
-        world
-            .init_resource::<Events<crate::layer3::diplomacy::succession::SuccessionCrisisEvent>>();
-        world.init_resource::<crate::layer1::mind::fugue::FugueEventTracker>();
-    }
-    if !world.contains_resource::<Events<crate::layer1::pop_memories::FamineEvent>>() {
-        world.init_resource::<Events<crate::layer1::pop_memories::FamineEvent>>();
-    }
-    if !world.contains_resource::<Events<crate::layer1::diplomacy::wards::WarDeclaredEvent>>() {
-        world.init_resource::<Events<crate::layer1::diplomacy::wards::WarDeclaredEvent>>();
-    }
+    world.init_resource::<Events<crate::layer1::geography::HistoricalEvent>>();
+    world
+        .init_resource::<Events<crate::layer1::social::ghost_shift_strike::GhostShiftStartedEvent>>(
+        );
+    world.init_resource::<Events<crate::layer3::fleets::ColonyFoundedEvent>>();
+    world.init_resource::<crate::layer1::diplomacy::factions::rivals::TerritoryGrid>();
+    world.init_resource::<Events<crate::layer3::diplomacy::succession::SuccessionEvent>>();
+    world.init_resource::<Events<crate::layer3::diplomacy::succession::SuccessionCrisisEvent>>();
+    world.init_resource::<crate::layer1::mind::fugue::FugueEventTracker>();
+    world.init_resource::<Events<crate::layer1::pop_memories::FamineEvent>>();
+    world.init_resource::<Events<crate::layer1::diplomacy::wards::WarDeclaredEvent>>();
     if !world.contains_resource::<crate::layer1::diplomacy::wards::DiplomaticStanding>() {
         world.insert_resource(crate::layer1::diplomacy::wards::DiplomaticStanding {
             faction_relations: std::collections::HashMap::new(),
         });
     }
 
-    if !world.contains_resource::<Events<LaunchEvent>>() {
-        world.init_resource::<Events<LaunchEvent>>();
-    }
-    if !world.contains_resource::<Events<ShipDestroyedEvent>>() {
-        world.init_resource::<Events<ShipDestroyedEvent>>();
-    }
-    if !world.contains_resource::<Events<DetectionEvent>>() {
-        world.init_resource::<Events<DetectionEvent>>();
-    }
-    if !world.contains_resource::<Events<HostileSpawnEvent>>() {
-        world.init_resource::<Events<HostileSpawnEvent>>();
-    }
-    if !world.contains_resource::<DetectionRisk>() {
-        world.init_resource::<DetectionRisk>();
-    }
-    if !world.contains_resource::<Events<crate::layer1::unrest::DenounceEvent>>() {
-        world.init_resource::<Events<crate::layer1::unrest::DenounceEvent>>();
-    }
-    if !world.contains_resource::<Events<crate::layer1::law::embassy::ArrestEvent>>() {
-        world.init_resource::<Events<crate::layer1::law::embassy::ArrestEvent>>();
-        world.init_resource::<Events<crate::layer1::law::embassy::DiplomaticIncidentEvent>>();
-    }
-    if !world.contains_resource::<Events<crate::layer1::environment::volatile::ExplosionEvent>>() {
-        world.init_resource::<Events<crate::layer1::environment::volatile::ExplosionEvent>>();
-    }
+    world.init_resource::<Events<LaunchEvent>>();
+    world.init_resource::<Events<ShipDestroyedEvent>>();
+    world.init_resource::<Events<DetectionEvent>>();
+    world.init_resource::<Events<HostileSpawnEvent>>();
+    world.init_resource::<DetectionRisk>();
+    world.init_resource::<Events<crate::layer1::unrest::DenounceEvent>>();
+    world.init_resource::<Events<crate::layer1::law::embassy::ArrestEvent>>();
+    world.init_resource::<Events<crate::layer1::law::embassy::DiplomaticIncidentEvent>>();
+    world.init_resource::<Events<crate::layer1::environment::volatile::ExplosionEvent>>();
 
     if !world
         .contains_resource::<Events<crate::layer1::administration::edicts::TogglePolicyEvent>>()
@@ -139,82 +100,46 @@ pub fn run_simulation_tick(world: &mut World) {
         world.init_resource::<Events<crate::layer1::administration::edicts::HackCentralHubEvent>>();
         world.init_resource::<Events<crate::layer1::administration::edicts::RevokePolicyEvent>>();
     }
-    if !world.contains_resource::<Events<crate::layer1::tectonic::MegaQuakeEvent>>() {
-        world.init_resource::<Events<crate::layer1::tectonic::MegaQuakeEvent>>();
-    }
-    if !world.contains_resource::<Events<crate::layer1::whispering_ore::MinedOreEvent>>() {
-        world.init_resource::<Events<crate::layer1::whispering_ore::MinedOreEvent>>();
-    }
-    if !world.contains_resource::<Events<crate::layer1::whispering_ore::MineSealedEvent>>() {
-        world.init_resource::<Events<crate::layer1::whispering_ore::MineSealedEvent>>();
-        world.init_resource::<Events<crate::layer1::deep_crust_resonance::ExcavationEvent>>();
-    }
-    if !world.contains_resource::<Events<crate::layer1::resources::MiningEvent>>() {
-        world.init_resource::<Events<crate::layer1::resources::MiningEvent>>();
-    }
-    if !world.contains_resource::<Events<crate::layer1::spiteful_will::InheritanceEvent>>() {
-        world.init_resource::<Events<crate::layer1::spiteful_will::InheritanceEvent>>();
-    }
+    world.init_resource::<Events<crate::layer1::tectonic::MegaQuakeEvent>>();
+    world.init_resource::<Events<crate::layer1::whispering_ore::MinedOreEvent>>();
+    world.init_resource::<Events<crate::layer1::whispering_ore::MineSealedEvent>>();
+    world.init_resource::<Events<crate::layer1::deep_crust_resonance::ExcavationEvent>>();
+    world.init_resource::<Events<crate::layer1::resources::MiningEvent>>();
+    world.init_resource::<Events<crate::layer1::spiteful_will::InheritanceEvent>>();
     if !world
         .contains_resource::<Events<crate::layer1::nature::biosphere_empathy::FloraDamagedEvent>>()
     {
         world
             .init_resource::<Events<crate::layer1::nature::biosphere_empathy::FloraDamagedEvent>>();
     }
-    if !world.contains_resource::<crate::layer1::nature::biosphere_empathy::GlobalFloraHealth>() {
-        world.init_resource::<crate::layer1::nature::biosphere_empathy::GlobalFloraHealth>();
-    }
-    if !world.contains_resource::<Events<crate::layer1::spiteful_will::OverrideWillEvent>>() {
-        world.init_resource::<Events<crate::layer1::spiteful_will::OverrideWillEvent>>();
-    }
-    if !world.contains_resource::<crate::layer1::tectonic::TectonicStress>() {
-        world.init_resource::<crate::layer1::tectonic::TectonicStress>();
-    }
+    world.init_resource::<crate::layer1::nature::biosphere_empathy::GlobalFloraHealth>();
+    world.init_resource::<Events<crate::layer1::spiteful_will::OverrideWillEvent>>();
+    world.init_resource::<crate::layer1::tectonic::TectonicStress>();
 
-    if !world.contains_resource::<crate::layer1::unrest::Unrest>() {
-        world.init_resource::<crate::layer1::unrest::Unrest>();
-    }
-    if !world.contains_resource::<crate::layer1::atmosphere::CorrosiveAtmosphere>() {
-        world.init_resource::<crate::layer1::atmosphere::CorrosiveAtmosphere>();
-    }
+    world.init_resource::<crate::layer1::unrest::Unrest>();
+    world.init_resource::<crate::layer1::atmosphere::CorrosiveAtmosphere>();
 
     // Initialize Thermal Bloom Resource
-    if !world.contains_resource::<crate::layer2::thermal::ThermalSignature>() {
-        world.init_resource::<crate::layer2::thermal::ThermalSignature>();
-    }
+    world.init_resource::<crate::layer2::thermal::ThermalSignature>();
 
     // Initialize Detection Risk
-    if !world.contains_resource::<DetectionRisk>() {
-        world.init_resource::<DetectionRisk>();
-    }
+    world.init_resource::<DetectionRisk>();
 
-    if !world.contains_resource::<crate::layer2::phantom::EmpireAutomationState>() {
-        world.init_resource::<crate::layer2::phantom::EmpireAutomationState>();
-    }
-    if !world.contains_resource::<Events<crate::layer2::trade::blockade::TradeShipArrivalEvent>>() {
-        world.init_resource::<Events<crate::layer2::trade::blockade::TradeShipArrivalEvent>>();
-    }
+    world.init_resource::<crate::layer2::phantom::EmpireAutomationState>();
+    world.init_resource::<Events<crate::layer2::trade::blockade::TradeShipArrivalEvent>>();
     if !world.contains_resource::<Events<crate::layer2::trade::escape_velocity::LaunchShipEvent>>()
     {
         world.init_resource::<Events<crate::layer2::trade::escape_velocity::LaunchShipEvent>>();
     }
-    if !world.contains_resource::<Events<crate::layer3::events::debt_prison::BailoutOfferEvent>>() {
-        world.init_resource::<Events<crate::layer3::events::debt_prison::BailoutOfferEvent>>();
-    }
+    world.init_resource::<Events<crate::layer3::events::debt_prison::BailoutOfferEvent>>();
     if !world.contains_resource::<Events<crate::layer3::events::debt_prison::AcceptBailoutEvent>>()
     {
         world.init_resource::<Events<crate::layer3::events::debt_prison::AcceptBailoutEvent>>();
     }
-    if !world.contains_resource::<crate::layer2::trade::blockade::ColonyDebt>() {
-        world.init_resource::<crate::layer2::trade::blockade::ColonyDebt>();
-    }
+    world.init_resource::<crate::layer2::trade::blockade::ColonyDebt>();
 
-    if !world.contains_resource::<Events<crate::layer2::phantom::SpawnGhostFleetEvent>>() {
-        world.init_resource::<Events<crate::layer2::phantom::SpawnGhostFleetEvent>>();
-    }
-    if !world.contains_resource::<Events<crate::layer2::silent_mutiny::SensorGlitchEvent>>() {
-        world.init_resource::<Events<crate::layer2::silent_mutiny::SensorGlitchEvent>>();
-    }
+    world.init_resource::<Events<crate::layer2::phantom::SpawnGhostFleetEvent>>();
+    world.init_resource::<Events<crate::layer2::silent_mutiny::SensorGlitchEvent>>();
 
     if !world
         .contains_resource::<Events<crate::layer1::nanite_fabrication::ContainmentBreachEvent>>()
@@ -222,9 +147,7 @@ pub fn run_simulation_tick(world: &mut World) {
         world.init_resource::<Events<crate::layer1::nanite_fabrication::ContainmentBreachEvent>>();
     }
 
-    if !world.contains_resource::<Events<crate::layer1::social::sub_lithic::SabotageEvent>>() {
-        world.init_resource::<Events<crate::layer1::social::sub_lithic::SabotageEvent>>();
-    }
+    world.init_resource::<Events<crate::layer1::social::sub_lithic::SabotageEvent>>();
 
     if !world
         .contains_resource::<Events<crate::layer2::trade::penal_contracts::PrisonerDiedEvent>>()
@@ -234,17 +157,11 @@ pub fn run_simulation_tick(world: &mut World) {
         world.init_resource::<Events<crate::layer2::trade::penal_contracts::PrisonerDiedEvent>>();
     }
 
-    if !world.contains_resource::<Events<crate::layer2::governance::RebellionEvent>>() {
-        world.init_resource::<Events<crate::layer2::governance::RebellionEvent>>();
-    }
+    world.init_resource::<Events<crate::layer2::governance::RebellionEvent>>();
 
-    if !world.contains_resource::<Events<crate::layer1::environment::disasters::DisasterEvent>>() {
-        world.init_resource::<Events<crate::layer1::environment::disasters::DisasterEvent>>();
-    }
+    world.init_resource::<Events<crate::layer1::environment::disasters::DisasterEvent>>();
 
-    if !world.contains_resource::<Events<crate::layer2::tourism::disaster_tourism::GriefTouristArrivalEvent>>() {
-        world.init_resource::<Events<crate::layer2::tourism::disaster_tourism::GriefTouristArrivalEvent>>();
-    }
+    world.init_resource::<Events<crate::layer2::tourism::disaster_tourism::GriefTouristArrivalEvent>>();
 
     if !world.contains_resource::<Events<crate::layer1::agony_extract::HarvestAgonyExtractEvent>>()
     {
@@ -252,42 +169,28 @@ pub fn run_simulation_tick(world: &mut World) {
         world.init_resource::<crate::layer1::agony_extract::AgonyExtractConfig>();
     }
 
-    if !world.contains_resource::<Events<crate::layer2::moon_hermits::PopDesertedEvent>>() {
-        world.init_resource::<Events<crate::layer2::moon_hermits::PopDesertedEvent>>();
-        world.init_resource::<bevy::prelude::Events<crate::layer2::weather::StormImpactEvent>>();
-        world.init_resource::<bevy::prelude::Events<crate::layer2::weather::StormImpactEvent>>();
-    }
+    world.init_resource::<Events<crate::layer2::moon_hermits::PopDesertedEvent>>();
+    world.init_resource::<bevy::prelude::Events<crate::layer2::weather::StormImpactEvent>>();
+    world.init_resource::<bevy::prelude::Events<crate::layer2::weather::StormImpactEvent>>();
 
-    if !world.contains_resource::<Events<crate::layer1::environment::disasters::DisasterEvent>>() {
-        world.init_resource::<Events<crate::layer1::environment::disasters::DisasterEvent>>();
-    }
+    world.init_resource::<Events<crate::layer1::environment::disasters::DisasterEvent>>();
 
-    if !world.contains_resource::<Events<crate::layer2::trade::biomass_tariff::TradeDeal>>() {
-        world.init_resource::<Events<crate::layer2::trade::biomass_tariff::TradeDeal>>();
-    }
-    if !world.contains_resource::<Events<crate::layer1::geodetic::GolemFormedEvent>>() {
-        world.init_resource::<Events<crate::layer1::geodetic::GolemFormedEvent>>();
-    }
+    world.init_resource::<Events<crate::layer2::trade::biomass_tariff::TradeDeal>>();
+    world.init_resource::<Events<crate::layer1::geodetic::GolemFormedEvent>>();
 
-    if !world.contains_resource::<crate::layer3::market::GalacticMarket>() {
-        world.init_resource::<crate::layer3::market::GalacticMarket>();
-    }
+    world.init_resource::<crate::layer3::market::GalacticMarket>();
 
-    if !world.contains_resource::<Events<crate::layer2::events_new::reverse_quarantine::RefugeeFleetEvent>>() {
-        world.init_resource::<Events<crate::layer2::events_new::reverse_quarantine::RefugeeFleetEvent>>();
-    }
-    if !world.contains_resource::<Events<crate::layer1::grafting::GraftBuildingEvent>>() {
-        world.init_resource::<Events<crate::layer1::grafting::GraftBuildingEvent>>();
-        world.init_resource::<Events<crate::layer3::fleets::ColonyFoundedEvent>>();
-        world.init_resource::<crate::layer1::diplomacy::factions::rivals::TerritoryGrid>();
-        world.init_resource::<Events<crate::layer3::planet::black_market_terraforming::RogueTerraformEvent>>();
-        world.init_resource::<Events<crate::layer3::market::quantum_famine::MarketPanicEvent>>();
-        world.init_resource::<Events<crate::layer3::market::quantum_famine::ExportDumpEvent>>();
-        world
-            .init_resource::<Events<crate::layer2::exploration::void_whispers::FleetReturnedEvent>>(
-            );
-        world.init_resource::<Events<crate::layer1::core::integration::PirateAmnestyEvent>>();
-    }
+    world
+        .init_resource::<Events<crate::layer2::events_new::reverse_quarantine::RefugeeFleetEvent>>(
+        );
+    world.init_resource::<Events<crate::layer1::grafting::GraftBuildingEvent>>();
+    world.init_resource::<Events<crate::layer3::fleets::ColonyFoundedEvent>>();
+    world.init_resource::<crate::layer1::diplomacy::factions::rivals::TerritoryGrid>();
+    world.init_resource::<Events<crate::layer3::planet::black_market_terraforming::RogueTerraformEvent>>();
+    world.init_resource::<Events<crate::layer3::market::quantum_famine::MarketPanicEvent>>();
+    world.init_resource::<Events<crate::layer3::market::quantum_famine::ExportDumpEvent>>();
+    world.init_resource::<Events<crate::layer2::exploration::void_whispers::FleetReturnedEvent>>();
+    world.init_resource::<Events<crate::layer1::core::integration::PirateAmnestyEvent>>();
     if !world
         .contains_resource::<Events<crate::layer2::navigation::stellar_weather::FleetDamagedEvent>>(
         )
@@ -297,75 +200,43 @@ pub fn run_simulation_tick(world: &mut World) {
             );
     }
 
-    if !world.contains_resource::<Events<crate::layer1::environment::ignition::SparkEvent>>() {
-        world.init_resource::<Events<crate::layer1::environment::ignition::SparkEvent>>();
-        world.init_resource::<Events<crate::layer1::environment::ignition::ExplosionEvent>>();
-    }
+    world.init_resource::<Events<crate::layer1::environment::ignition::SparkEvent>>();
+    world.init_resource::<Events<crate::layer1::environment::ignition::ExplosionEvent>>();
 
-    if !world.contains_resource::<Events<crate::layer1::environment::events::DebrisFallEvent>>() {
-        world.init_resource::<Events<crate::layer1::environment::events::DebrisFallEvent>>();
-        world.init_resource::<crate::layer3::council::GalacticCouncil>();
-        world.init_resource::<crate::layer2::syzygy::SyzygyCycle>();
-        world.init_resource::<crate::layer2::syzygy::PlanetaryGravity>();
-        world.init_resource::<crate::layer2::syzygy::TidalForce>();
-    }
+    world.init_resource::<Events<crate::layer1::environment::events::DebrisFallEvent>>();
+    world.init_resource::<crate::layer3::council::GalacticCouncil>();
+    world.init_resource::<crate::layer2::syzygy::SyzygyCycle>();
+    world.init_resource::<crate::layer2::syzygy::PlanetaryGravity>();
+    world.init_resource::<crate::layer2::syzygy::TidalForce>();
 
     // Digital Detritus
     world.init_resource::<crate::layer3::digital_detritus::DataMiningQueue>();
     world.init_resource::<crate::layer3::digital_detritus::DiscoveredTechs>();
-    if !world.contains_resource::<Events<crate::layer3::digital_detritus::VirusEvent>>() {
-        world.init_resource::<Events<crate::layer3::digital_detritus::VirusEvent>>();
-    }
+    world.init_resource::<Events<crate::layer3::digital_detritus::VirusEvent>>();
     world.init_resource::<crate::layer3::digital_detritus::JunkDataFilter>();
 
-    if !world.contains_resource::<Events<crate::layer1::logistics::mass_driver::LaunchEvent>>() {
-        world.init_resource::<Events<crate::layer1::logistics::mass_driver::LaunchEvent>>();
-        world.init_resource::<Events<crate::layer1::logistics::mass_driver::BombardmentEvent>>();
-    }
+    world.init_resource::<Events<crate::layer1::logistics::mass_driver::LaunchEvent>>();
+    world.init_resource::<Events<crate::layer1::logistics::mass_driver::BombardmentEvent>>();
 
-    if !world.contains_resource::<crate::layer3::council::GalacticCouncil>() {
-        world.init_resource::<crate::layer3::council::GalacticCouncil>();
-    }
+    world.init_resource::<crate::layer3::council::GalacticCouncil>();
 
-    if !world.contains_resource::<crate::layer2::syzygy::SyzygyCycle>() {
-        world.init_resource::<crate::layer2::syzygy::SyzygyCycle>();
-    }
-    if !world.contains_resource::<crate::layer2::syzygy::PlanetaryGravity>() {
-        world.init_resource::<crate::layer2::syzygy::PlanetaryGravity>();
-    }
-    if !world.contains_resource::<crate::layer2::syzygy::TidalForce>() {
-        world.init_resource::<crate::layer2::syzygy::TidalForce>();
-    }
+    world.init_resource::<crate::layer2::syzygy::SyzygyCycle>();
+    world.init_resource::<crate::layer2::syzygy::PlanetaryGravity>();
+    world.init_resource::<crate::layer2::syzygy::TidalForce>();
     // Initialize Infinite Archive Resource (Spec 248)
-    if !world.contains_resource::<crate::layer1::tech::infinite_archive::Archive>() {
-        world.init_resource::<crate::layer1::tech::infinite_archive::Archive>();
-    }
+    world.init_resource::<crate::layer1::tech::infinite_archive::Archive>();
 
-    if !world.contains_resource::<Events<HostileSpawnEvent>>() {
-        world.init_resource::<Events<HostileSpawnEvent>>();
-    }
+    world.init_resource::<Events<HostileSpawnEvent>>();
 
-    if !world.contains_resource::<crate::layer3::map::MapData>() {
-        world.init_resource::<crate::layer3::map::MapData>();
-    }
-    if !world.contains_resource::<Events<crate::layer3::map::FleetArrivalEvent>>() {
-        world.init_resource::<Events<crate::layer3::map::FleetArrivalEvent>>();
-    }
-    if !world.contains_resource::<Events<crate::layer3::map::AnomalyDiscoveredEvent>>() {
-        world.init_resource::<Events<crate::layer3::map::AnomalyDiscoveredEvent>>();
-        world.init_resource::<Events<crate::layer3::diplomacy_reflection::EntityKilledEvent>>();
-        world.init_resource::<Events<crate::layer3::diplomacy_reflection::FloraPlantedEvent>>();
-        world.init_resource::<Events<crate::layer3::diplomacy_reflection::TraitChangedEvent>>();
-    }
-    if !world.contains_resource::<Events<crate::layer2::cascade::LogisticsStrainedEvent>>() {
-        world.init_resource::<Events<crate::layer2::cascade::LogisticsStrainedEvent>>();
-    }
-    if !world.contains_resource::<crate::layer3::physics::relativity::SimulationTime>() {
-        world.init_resource::<crate::layer3::physics::relativity::SimulationTime>();
-    }
-    if !world.contains_resource::<Events<crate::layer2::cascade::DefenseWeakenedEvent>>() {
-        world.init_resource::<Events<crate::layer2::cascade::DefenseWeakenedEvent>>();
-    }
+    world.init_resource::<crate::layer3::map::MapData>();
+    world.init_resource::<Events<crate::layer3::map::FleetArrivalEvent>>();
+    world.init_resource::<Events<crate::layer3::map::AnomalyDiscoveredEvent>>();
+    world.init_resource::<Events<crate::layer3::diplomacy_reflection::EntityKilledEvent>>();
+    world.init_resource::<Events<crate::layer3::diplomacy_reflection::FloraPlantedEvent>>();
+    world.init_resource::<Events<crate::layer3::diplomacy_reflection::TraitChangedEvent>>();
+    world.init_resource::<Events<crate::layer2::cascade::LogisticsStrainedEvent>>();
+    world.init_resource::<crate::layer3::physics::relativity::SimulationTime>();
+    world.init_resource::<Events<crate::layer2::cascade::DefenseWeakenedEvent>>();
     // Add our schedule if not yet added
     {
         let schedules = world.resource::<Schedules>();
@@ -391,7 +262,10 @@ pub fn run_simulation_tick(world: &mut World) {
             world.add_schedule(schedule);
         }
     }
+}
 
+pub fn run_simulation_tick(world: &mut World) {
+    init_simulation_resources(world);
     world.run_schedule(SimulationSchedule);
     world.resource_mut::<SimulationTime>().tick += 1;
     world
@@ -799,9 +673,11 @@ mod tests {
         world.init_resource::<crate::layer1::economy::smugglers_cove::ColonyAuthority>();
 
         world.init_resource::<Events<crate::layer1::diplomacy::wards::WarDeclaredEvent>>();
-        world.insert_resource(crate::layer1::diplomacy::wards::DiplomaticStanding {
-            faction_relations: std::collections::HashMap::new(),
-        });
+        if !world.contains_resource::<crate::layer1::diplomacy::wards::DiplomaticStanding>() {
+            world.insert_resource(crate::layer1::diplomacy::wards::DiplomaticStanding {
+                faction_relations: std::collections::HashMap::new(),
+            });
+        }
 
         world.init_resource::<Events<crate::layer2::phantom::SpawnGhostFleetEvent>>();
 
