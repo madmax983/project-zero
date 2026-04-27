@@ -6074,7 +6074,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Contractor Fleets
+## Contractor Fleets [SPECCED]
 
 **Layer:** 2 -> 1
 
@@ -6088,7 +6088,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Public Grievances
+## Public Grievances [SPECCED]
 
 **Layer:** 1
 
@@ -6102,7 +6102,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Protest Crowds
+## Protest Crowds [SPECCED]
 
 **Layer:** 1
 
