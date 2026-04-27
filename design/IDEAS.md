@@ -17550,7 +17550,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Emergence:** The Gastronomers demand the core of a specific, volatile gas giant to use as a cooking heat source. You comply, but the extraction process destabilizes the planet, causing it to go supernova. The resulting dish is incredible, granting permanent maximum morale to your capital, but you just destroyed an entire inhabited star system to make a really good soup.
 
 **Tension:** The immense, empire-wide buffs provided by the Culinary Singularity vs. the apocalyptic lengths you must go to in order to procure the ingredients.
-## The Commuter Tax
+## The Commuter Tax [SPECCED]
 
 **Layer:** Cross-layer (1, 2)
 
@@ -17564,7 +17564,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Kessler Gambit
+## The Kessler Gambit [SPECCED]
 
 **Layer:** 2
 
@@ -17578,7 +17578,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Invasive Bureaucracy
+## Invasive Bureaucracy [SPECCED]
 
 **Layer:** Cross-layer (1, 3)
 
@@ -17591,7 +17591,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** The necessary, empire-saving buffs provided by an expanding bureaucracy vs. the horrifying, physical reality of your cities being slowly digested by endless rows of filing cabinets.
 ---
 
-## The Bulwark Platform
+## The Bulwark Platform [SPECCED]
 
 **Layer:** 2
 
@@ -17605,7 +17605,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Vanguard Ram
+## The Vanguard Ram [SPECCED]
 
 **Layer:** 2
 
@@ -17619,7 +17619,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Decoy Frigate
+## The Decoy Frigate [SPECCED]
 
 **Layer:** 2
 
