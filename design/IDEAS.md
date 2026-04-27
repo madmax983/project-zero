@@ -6116,7 +6116,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Planetary Curvature
+## Planetary Curvature [SPECCED]
 
 **Layer:** 1
 
