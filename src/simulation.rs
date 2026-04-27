@@ -310,6 +310,14 @@ pub fn run_simulation_tick(world: &mut World) {
         world.init_resource::<crate::layer2::syzygy::TidalForce>();
     }
 
+    // Digital Detritus
+    world.init_resource::<crate::layer3::digital_detritus::DataMiningQueue>();
+    world.init_resource::<crate::layer3::digital_detritus::DiscoveredTechs>();
+    if !world.contains_resource::<Events<crate::layer3::digital_detritus::VirusEvent>>() {
+        world.init_resource::<Events<crate::layer3::digital_detritus::VirusEvent>>();
+    }
+    world.init_resource::<crate::layer3::digital_detritus::JunkDataFilter>();
+
     if !world.contains_resource::<Events<crate::layer1::logistics::mass_driver::LaunchEvent>>() {
         world.init_resource::<Events<crate::layer1::logistics::mass_driver::LaunchEvent>>();
         world.init_resource::<Events<crate::layer1::logistics::mass_driver::BombardmentEvent>>();
@@ -668,6 +676,9 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
     schedule.add_systems((
         crate::layer3::fleets::simulate_transit_drift_system,
         crate::layer3::fleets::apply_drift_on_foundation_system,
+        // 1064 Digital Detritus
+        crate::layer3::digital_detritus::process_data_mining_system,
+        crate::layer3::digital_detritus::record_virus_event_chronicle_system,
     ));
 }
 #[cfg(test)]
@@ -688,6 +699,10 @@ mod tests {
         world.init_resource::<bevy::prelude::Events<crate::layer2::weather::StormImpactEvent>>();
         world.init_resource::<bevy::prelude::Events<crate::layer1::law::justice::CrimeCommittedEvent>>();
         world.init_resource::<bevy::prelude::Events<crate::layer1::pop_memories::FamineEvent>>();
+        world.init_resource::<crate::layer3::digital_detritus::DataMiningQueue>();
+        world.init_resource::<crate::layer3::digital_detritus::DiscoveredTechs>();
+        world.init_resource::<Events<crate::layer3::digital_detritus::VirusEvent>>();
+        world.init_resource::<crate::layer3::digital_detritus::JunkDataFilter>();
         *world.resource_mut::<GameState>() = GameState::Running;
 
         let tick_before = world.resource::<SimulationTime>().tick;
@@ -707,6 +722,10 @@ mod tests {
         world.init_resource::<bevy::prelude::Events<crate::layer1::law::justice::CrimeCommittedEvent>>();
         world.init_resource::<bevy::prelude::Events<crate::layer2::weather::StormImpactEvent>>();
         world.init_resource::<bevy::prelude::Events<crate::layer1::pop_memories::FamineEvent>>();
+        world.init_resource::<crate::layer3::digital_detritus::DataMiningQueue>();
+        world.init_resource::<crate::layer3::digital_detritus::DiscoveredTechs>();
+        world.init_resource::<Events<crate::layer3::digital_detritus::VirusEvent>>();
+        world.init_resource::<crate::layer3::digital_detritus::JunkDataFilter>();
         *world.resource_mut::<GameState>() = GameState::Running;
 
         for _ in 0..10 {
@@ -867,6 +886,11 @@ mod tests {
         world.init_resource::<Events<crate::layer1::logistics::beanstalk::BeanstalkEvent>>();
         world.init_resource::<Events<crate::layer3::treaty_cruisers::InspectionEvent>>();
         world.init_resource::<crate::layer3::treaty_cruisers::ActiveTreaties>();
+
+        world.init_resource::<crate::layer3::digital_detritus::DataMiningQueue>();
+        world.init_resource::<crate::layer3::digital_detritus::DiscoveredTechs>();
+        world.init_resource::<Events<crate::layer3::digital_detritus::VirusEvent>>();
+        world.init_resource::<crate::layer3::digital_detritus::JunkDataFilter>();
 
         let schedule = build_simulation_schedule();
         world.add_schedule(schedule);
