@@ -7234,3 +7234,152 @@ Used for The Archaeological Contagion events. The ancient technology reverse-eng
 - a quiet so deep it hurts
 - vibrations felt only through the boots
 - an acoustic shadow caused by sudden decompression
+
+## The Rust-Lung Epidemic Fragments (Spec 1122)
+
+## Fragment Type: [LUNG_CONDITION]
+- bloody coughing
+- the red wheeze
+- rust-flecked spit
+- iron breath
+- heavy breathing
+- the miner's rattle
+
+## Personal Shields Fragments (Spec 1119)
+
+## Fragment Type: [SHIELD_STATE]
+- sparking
+- overloaded
+- glowing brightly
+- completely depleted
+- flickering out
+- holding strong
+
+## Fragment Type: [PROJECTILE_SPEED]
+- high-velocity
+- hyper-sonic
+- faster-than-sound
+- supersonic
+- relativistic
+
+## Auroral Harvesting Fragments (Spec 1105)
+
+## Fragment Type: [AURORA_COLOR]
+- deep green
+- violently purple
+- electric blue
+- blood red
+- shimmering gold
+
+## Brain Drain Migration Fragments (Spec 1144)
+
+## Fragment Type: [MIGRATION_REASON]
+- seeking better living standards
+- fleeing the squalor
+- pursuing true freedom
+- looking for meaning
+- offered better wages
+
+## Cargo Cult Logistics Fragments (Spec 983)
+
+## Fragment Type: [CULT_EFFIGY]
+- woven-reed dropship
+- scrap-metal antenna
+- painted-stone comm-relay
+- wooden cargo crate
+- junk-built launchpad
+
+## Fragment Type: [SUPPLY_ITEM]
+- rations
+- medicine
+- advanced machinery
+- luxury goods
+- raw alloys
+
+## Inflationary Spiral Fragments (Spec 1145)
+
+## Fragment Type: [CREDIT_VALUE]
+- nearly nothing
+- less than the paper it's printed on
+- a tiny fraction
+- absolutely worthless
+- heavily devalued
+
+## Astrological Beliefs Fragments (Spec 1107)
+
+## Fragment Type: [ALIGNMENT]
+- Great Conjunction
+- Retrograde of the Red Eye
+- Triple Eclipse
+- Ascendant Moon
+- Perihelion of the Void
+
+## Treaty Cruisers Fragments (Spec 990)
+
+## Fragment Type: [DISGUISED_WEAPON]
+- high-yield mining lasers
+- rapid-fire surveying probes
+- deep-core excavators
+- industrial plasma torches
+- heavy-duty tractor beams
+
+## Fragment Type: [BANNED_ITEM]
+- military-grade weapons
+- capital ship armor
+- antimatter warheads
+- long-range sensors
+- stealth plating
+
+## The Sub-Glacial Oceans Fragments (Spec 991)
+
+## Fragment Type: [ICE_STATE]
+- miles thick
+- completely frozen
+- cracking under pressure
+- shifting continuously
+- unnaturally dark
+
+## Photophobic Resources Fragments (Spec 1106)
+
+## Fragment Type: [DARKNESS_EFFECT]
+- pitch black
+- oppressively dark
+- without a single photon
+- utterly sightless
+- terrifyingly unlit
+
+## The Museum of the Fallen Fragments (Spec 1141)
+
+## Fragment Type: [TRAGIC_MEMORY]
+- mass starvation
+- structural collapse
+- the great disease
+- the winter of death
+- the oxygen failure
+
+## Subjective Economics Fragments (Spec 1033)
+
+## Fragment Type: [ALIEN_VALUE]
+- bio-waste
+- sacred relics
+- worthless scrap
+- high art
+- delicious delicacies
+
+## Temporal Echo Chambers Fragments (Spec 644)
+
+## Fragment Type: [TEMPORAL_STATE]
+- dilated
+- frozen
+- accelerated
+- looping
+- shattered
+
+## Superstitious Totems Fragments (Spec 1093)
+
+## Fragment Type: [TOTEM_MATERIAL]
+- a carved piece of scrap metal
+- a polished rock
+- a woven piece of wire
+- an old coin
+- a dried alien flower

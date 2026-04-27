@@ -3879,3 +3879,59 @@ VACUUM_SHADOW_INCIDENT:
     - ACCIDENT_UNHEARD (high)
     - SENSOR_UPGRADE (medium)
     - ZONE_ABANDONMENT (low)
+
+## The Rust-Lung Epidemic Chaining (Spec 1122)
+- RUST_LUNG_DIAGNOSIS -> increases_chance -> MEDICAL_BREAKTHROUGH, REBELLION
+- RUST_LUNG_DIAGNOSIS -> enables -> RUST_LUNG_IMMUNITY
+
+## Personal Shields Chaining (Spec 1119)
+- SHIELD_OVERLOAD -> increases_chance -> COMBAT_DEFEAT, TECH_SALVAGE
+- MELEE_BYPASS -> increases_chance -> TACTICAL_SHIFT, COMBAT_DEFEAT
+
+## Auroral Harvesting Chaining (Spec 1105)
+- AURORAL_STRIKE -> increases_chance -> INFRASTRUCTURE_COLLAPSE, POWER_SURGE
+- AURORAL_STRIKE -> enables -> ARTIFACT_CREATION
+
+## Brain Drain Migration Chaining (Spec 1144)
+- BRAIN_DRAIN_EXODUS -> increases_chance -> COLONY_COLLAPSE, TECHNOLOGICAL_STAGNATION
+- BRAIN_DRAIN_EXODUS -> enables -> RIVAL_EMPIRE_GOLDEN_AGE
+
+## Cargo Cult Logistics Chaining (Spec 983)
+- CARGO_CULT_RITUAL -> increases_chance -> MORALE_BOOST, EFFICIENCY_DROP
+- CARGO_CULT_RITUAL -> enables -> ARTIFACT_CREATION, NEW_RELIGION
+
+## Inflationary Spiral Chaining (Spec 1145)
+- MARKET_CRASH_BARTER -> increases_chance -> FAMINE, REBELLION, ISOLATION
+- MARKET_CRASH_BARTER -> enables -> NEW_ECONOMIC_SYSTEM
+
+## Astrological Beliefs Chaining (Spec 1107)
+- ASTROLOGICAL_BOON -> increases_chance -> GOLDEN_AGE, RAPID_EXPANSION
+- ASTROLOGICAL_BANE -> increases_chance -> COLONY_COLLAPSE, REBELLION
+
+## Treaty Cruisers Chaining (Spec 990)
+- TREATY_LOOPHOLE -> increases_chance -> DIPLOMATIC_INCIDENT, WAR
+- TREATY_LOOPHOLE -> enables -> MILITARY_SUPREMACY
+
+## The Sub-Glacial Oceans Chaining (Spec 991)
+- SUB_GLACIAL_BREACH -> enables -> ALIEN_CONTACT, MYSTERY, NEW_RESOURCE
+- SUB_GLACIAL_BREACH -> increases_chance -> COLONY_MADNESS
+
+## Photophobic Resources Chaining (Spec 1106)
+- SHADOW_GLASS_DECAY -> increases_chance -> ECONOMIC_LOSS, ACCIDENT
+- SHADOW_GLASS_DECAY -> enables -> NEW_WORKPLACE_SAFETY_LAW
+
+## The Museum of the Fallen Chaining (Spec 1141)
+- MUSEUM_CONSECRATION -> increases_chance -> MORALE_BOOST, CULTURAL_RENAISSANCE
+- MUSEUM_CONSECRATION -> reduces_chance -> REBELLION
+
+## Subjective Economics Chaining (Spec 1033)
+- SUBJECTIVE_TRADE_DEAL -> increases_chance -> ECONOMIC_BOOM, ALLIANCE
+- SUBJECTIVE_TRADE_DEAL -> enables -> INTERSPECIES_TRADE_ROUTE
+
+## Temporal Echo Chambers Chaining (Spec 644)
+- TEMPORAL_CHAMBER_SEALED -> enables -> MYSTERY, FUTURE_DISCOVERY
+- TEMPORAL_SHOCKWAVE -> increases_chance -> MASS_CASUALTY, ARTIFACT_CREATION
+
+## Superstitious Totems Chaining (Spec 1093)
+- TOTEM_BAD_OMEN -> increases_chance -> MADNESS, RIOT
+- TOTEM_BAD_OMEN -> enables -> NEW_RITUAL
