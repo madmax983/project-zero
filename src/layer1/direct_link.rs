@@ -529,8 +529,13 @@ mod tests {
         let mut world = setup_world();
         // Wall at (10, 9)
         if let Some(mut terrain) = world.get_resource_mut::<TerrainGrid>() {
-            let idx = 9 * terrain.width + 10;
-            terrain.tiles[idx] = crate::layer1::terrain::TerrainType::Rock;
+            let idx = 9_usize
+                .checked_mul(terrain.width)
+                .and_then(|i| i.checked_add(10))
+                .unwrap_or(usize::MAX);
+            if idx < terrain.tiles.len() {
+                terrain.tiles[idx] = crate::layer1::terrain::TerrainType::Rock;
+            }
         }
 
         let pop = world

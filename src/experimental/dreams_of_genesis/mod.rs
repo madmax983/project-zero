@@ -58,7 +58,10 @@ pub fn dreams_of_genesis_system(world: &mut World) {
                 && pos.y >= 0
                 && (pos.y as usize) < terrain.height
             {
-                let idx = (pos.y as usize) * terrain.width + (pos.x as usize);
+                let idx = (pos.y as usize)
+                    .checked_mul(terrain.width)
+                    .and_then(|i| i.checked_add(pos.x as usize))
+                    .unwrap_or(usize::MAX);
                 if idx < terrain.tiles.len() {
                     let tile = &mut terrain.tiles[idx];
                     if *tile == TerrainType::Dirt || *tile == TerrainType::Rock {
