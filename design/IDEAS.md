@@ -17632,3 +17632,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Investing resources into ships that cannot fight to manipulate enemy behavior, knowing that discovery means total tactical collapse.
 
 ---
+## The Rumor Mill Economy
+
+**Layer:** Cross-layer
+
+**Fantasy:** Trading secrets and gossip as a tangible commodity.
+
+**Mechanic:** If a colony has a high "Rumor" density but low physical trade, an underground "Information Broker" faction emerges. They can sell secrets to rival Layer 3 empires for massive payouts, but doing so drastically increases your vulnerability to espionage and sabotage.
+
+**Emergence:** You fund your desperate war effort entirely by selling gossip about your own citizens to the enemy, only for the enemy to use that exact gossip to perfectly target and assassinate your key engineers.
+
+**Tension:** Do you sell your own colony's secrets for desperately needed cash, knowing it gives the enemy leverage?
+
+---
+
+## Acoustic Ecology
+
+**Layer:** 1
+
+**Fantasy:** A colony where sound is a physical force that shapes the environment.
+
+**Mechanic:** Different buildings emit specific frequencies. "Acoustic Harvesters" can convert noise pollution into low-grade energy, but conflicting frequencies create "Resonance Zones" that damage fragile structures and cause chronic headaches in pops.
+
+**Emergence:** You build an extremely loud, highly efficient factory complex, then surround it with Acoustic Harvesters to power the rest of the colony. The resulting resonance wave accidentally shatters the glass domes of your luxury agricultural sector.
+
+**Tension:** Do you space out your industrial zones to preserve peace and quiet, or pack them tightly to harvest the terrifying cacophony for free power?
+
+---
+
+## Chronological Stutter
+
+**Layer:** 2
+
+**Fantasy:** Moving through space where time itself skips like a scratched record.
+
+**Mechanic:** Passing through certain unstable hyperlanes causes fleets to experience "Chronological Stutter." They arrive at their destination physically fine, but their internal clocks are scrambled. Some ships arrive weeks before they left, while others arrive years late. This completely disrupts coordinated fleet actions.
+
+**Emergence:** You send an armada to relieve a besieged colony. Half the fleet arrives a week early and is easily destroyed because they lack support. The other half arrives two years later to find the colony has already been annexed and integrated.
+
+**Tension:** Do you take the fast, unstable route and risk your fleet arriving piecemeal across time, or take the slow, safe route and risk arriving too late to matter?
+
+---
