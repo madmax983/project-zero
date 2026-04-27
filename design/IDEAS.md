@@ -17550,3 +17550,43 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Emergence:** The Gastronomers demand the core of a specific, volatile gas giant to use as a cooking heat source. You comply, but the extraction process destabilizes the planet, causing it to go supernova. The resulting dish is incredible, granting permanent maximum morale to your capital, but you just destroyed an entire inhabited star system to make a really good soup.
 
 **Tension:** The immense, empire-wide buffs provided by the Culinary Singularity vs. the apocalyptic lengths you must go to in order to procure the ingredients.
+## The Commuter Tax
+
+**Layer:** Cross-layer (1, 2)
+
+**Fantasy:** The soul-crushing reality of interplanetary commuting to afford a life back home.
+
+**Mechanic:** Pops can live on an agricultural or low-tech world (Layer 1) where cost of living is extremely low, but work on an adjacent high-tech orbital ring or industrial world (Layer 2) where wages are high. They travel daily or weekly via mass transit ships. However, if hyperlane traffic or local orbital debris slows the transit times, their "Commuter Tax" debuff increases. They spend half their life in transit, drastically reducing their maximum rest and leisure, leading to chronic depression and reduced life expectancy.
+
+**Emergence:** You build an incredible economic engine by housing your workers on a cheap, beautiful garden world and shipping them to a polluted forge world to work. It's incredibly profitable until a minor pirate raid delays the transit ships for a week. Millions of workers are stranded in transit, starving and rioting, while the forge world completely shuts down because no one showed up for their shift.
+
+**Tension:** The immense economic efficiency of separated residential and industrial worlds versus the fragility and horrific human cost of long-distance, mass commuting.
+
+---
+
+## The Kessler Gambit
+
+**Layer:** 2
+
+**Fantasy:** Weaponizing your own orbital infrastructure to create an impassable shield of garbage.
+
+**Mechanic:** When faced with an overwhelming invasion force, you can trigger "The Kessler Gambit," intentionally detonating massive numbers of your own obsolete satellites, old stations, and even civilian ships in low orbit. This creates a hyper-dense, expanding debris field (Kessler Syndrome) that makes it nearly impossible for enemy capital ships to enter orbit or launch ground invasions without taking catastrophic damage.
+
+**Emergence:** You successfully ward off a massive empire by surrounding your core world in a lethal cloud of high-velocity shrapnel. You are safe. Ten years later, you realize you are also trapped. Your trade has collapsed, your colony is starving, and every attempt to launch a supply ship just adds more debris to your self-made cage.
+
+**Tension:** Do you sacrifice your long-term connection to the galaxy to survive a short-term crisis, essentially burying yourself alive to avoid being conquered?
+
+---
+
+## Invasive Bureaucracy
+
+**Layer:** Cross-layer (1, 3)
+
+**Fantasy:** The paperwork is literally expanding and consuming the colony.
+
+**Mechanic:** As your empire's administrative complexity grows (Layer 3), "Bureaucracy Nodes" must be built on Layer 1 colonies to process data. These buildings are unique: they slowly, physically expand by automatically claiming adjacent tiles and converting them into filing rooms and server banks, destroying whatever was there previously. They provide massive empire-wide stability buffs but consume local land.
+
+**Emergence:** You place a small administrative office near your pristine agricultural sector. Fifty years later, the office has metastasized into a sprawling, continent-sized labyrinth of paperwork that has literally eaten your best farmland. Your empire is incredibly stable and efficient, but the capital world is starving because there is no room left to grow food.
+
+**Tension:** The necessary, empire-saving buffs provided by an expanding bureaucracy vs. the horrifying, physical reality of your cities being slowly digested by endless rows of filing cabinets.
+---
