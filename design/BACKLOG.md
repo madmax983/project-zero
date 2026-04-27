@@ -864,3 +864,4 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1232` Contractor Fleets — `specs/1232-contractor-fleets.md`
 - [ ] `1233` Public Grievances — `specs/1233-public-grievances.md`
 - [ ] `1234` Protest Crowds — `specs/1234-protest-crowds.md`
+- [ ] `1235` The Gastronomers — `specs/1235-the-gastronomers.md`
