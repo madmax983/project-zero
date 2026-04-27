@@ -11,10 +11,13 @@ pub mod edicts;
 pub mod inspector;
 /// Permitting system for actions.
 pub mod permit;
+/// Malicious compliance AI mechanics.
+pub mod malicious_compliance;
 /// Zones and their definitions.
 pub mod zone;
 
 pub use admin::*;
+pub use malicious_compliance::*;
 pub use bureaucracy_of_sleep::*;
 pub use designation::*;
 pub use edicts::*;
