@@ -136,6 +136,10 @@ fn init_simulation_resources(world: &mut World) {
     {
         world.init_resource::<Events<crate::layer3::events::debt_prison::AcceptBailoutEvent>>();
     }
+    if !world.contains_resource::<Events<crate::layer3::events::refugee_waves::RefugeeWaveEvent>>()
+    {
+        world.init_resource::<Events<crate::layer3::events::refugee_waves::RefugeeWaveEvent>>();
+    }
     world.init_resource::<crate::layer2::trade::blockade::ColonyDebt>();
 
     world.init_resource::<Events<crate::layer2::phantom::SpawnGhostFleetEvent>>();
@@ -489,6 +493,10 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
     ));
 
     schedule.add_systems((
+        crate::layer3::events::refugee_waves::process_refugee_decision,
+    ));
+
+    schedule.add_systems((
         crate::layer2::phantom::check_scrapcode_threshold_system
             .after(crate::layer1::scrapcode::scrapcode_decay_system),
         crate::layer2::phantom::spawn_ghost_fleet_system
@@ -672,6 +680,7 @@ mod tests {
 
         world.init_resource::<Events<crate::layer3::events::debt_prison::BailoutOfferEvent>>();
         world.init_resource::<Events<crate::layer3::events::debt_prison::AcceptBailoutEvent>>();
+        world.init_resource::<Events<crate::layer3::events::refugee_waves::RefugeeWaveEvent>>();
         world.init_resource::<crate::layer1::economy::smugglers_cove::ColonyAuthority>();
 
         world.init_resource::<Events<crate::layer1::diplomacy::wards::WarDeclaredEvent>>();
