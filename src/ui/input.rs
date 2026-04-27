@@ -827,6 +827,14 @@ mod tests {
     }
 
     #[test]
+    #[should_panic(expected = "Input stack should never be empty")]
+    fn test_current_panics_when_stack_empty() {
+        let mut stack = InputContextStack::default();
+        stack.stack.clear(); // Force the invalid state
+        let _ = stack.current();
+    }
+
+    #[test]
     fn test_keybinding_normal_mode_all_keys() {
         let mut world = World::new();
         world.insert_resource(GameState::Running);
