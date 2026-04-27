@@ -1462,33 +1462,34 @@ fn scan_terrain(world: &mut World, center_x: i32, center_y: i32, radius: ScanRad
 
             let occupied = world.resource::<OccupiedTiles>().0.contains(&(x, y));
 
-            let bool_to_str = |b: bool| if b { "Y" } else { "-" };
+            let bool_to_str = |b: bool| if b { "✓" } else { "✗" };
+            let get_color = |b: bool| if b { comfy_table::Color::Green } else { comfy_table::Color::DarkGrey };
 
             table.add_row(vec![
                 Cell::new(format!("{},{}", x, y)),
                 Cell::new(terrain_name).fg(get_terrain_color_headless(tile)),
-                Cell::new(bool_to_str(walkable)),
-                Cell::new(bool_to_str(buildable)),
-                Cell::new(bool_to_str(occupied)),
+                Cell::new(bool_to_str(walkable)).fg(get_color(walkable)),
+                Cell::new(bool_to_str(buildable)).fg(get_color(buildable)),
+                Cell::new(bool_to_str(occupied)).fg(get_color(occupied)),
                 Cell::new(bool_to_str(has_pop)).fg(if has_pop {
                     comfy_table::Color::Cyan
                 } else {
-                    comfy_table::Color::White
+                    comfy_table::Color::DarkGrey
                 }),
                 Cell::new(bool_to_str(has_farm)).fg(if has_farm {
                     comfy_table::Color::Green
                 } else {
-                    comfy_table::Color::White
+                    comfy_table::Color::DarkGrey
                 }),
                 Cell::new(bool_to_str(has_housing)).fg(if has_housing {
                     comfy_table::Color::Yellow
                 } else {
-                    comfy_table::Color::White
+                    comfy_table::Color::DarkGrey
                 }),
                 Cell::new(designation).fg(if designation != "-" {
                     comfy_table::Color::Magenta
                 } else {
-                    comfy_table::Color::White
+                    comfy_table::Color::DarkGrey
                 }),
             ]);
         }
@@ -1595,7 +1596,8 @@ fn get_tile_info(world: &mut World, x: i32, y: i32) {
             Cell::new("Value").add_attribute(Attribute::Bold),
         ]);
 
-    let bool_to_str = |b: bool| if b { "Yes" } else { "No" };
+    let bool_to_str = |b: bool| if b { "✓" } else { "✗" };
+    let get_color = |b: bool| if b { comfy_table::Color::Green } else { comfy_table::Color::DarkGrey };
 
     table.add_row(vec![
         Cell::new("Terrain"),
@@ -1603,15 +1605,15 @@ fn get_tile_info(world: &mut World, x: i32, y: i32) {
     ]);
     table.add_row(vec![
         Cell::new("Walkable"),
-        Cell::new(bool_to_str(walkable)),
+        Cell::new(bool_to_str(walkable)).fg(get_color(walkable)),
     ]);
     table.add_row(vec![
         Cell::new("Buildable"),
-        Cell::new(bool_to_str(buildable)),
+        Cell::new(bool_to_str(buildable)).fg(get_color(buildable)),
     ]);
     table.add_row(vec![
         Cell::new("Occupied"),
-        Cell::new(bool_to_str(occupied)),
+        Cell::new(bool_to_str(occupied)).fg(get_color(occupied)),
     ]);
 
     table.add_row(vec![
@@ -1619,7 +1621,7 @@ fn get_tile_info(world: &mut World, x: i32, y: i32) {
         Cell::new(bool_to_str(has_pop)).fg(if has_pop {
             comfy_table::Color::Cyan
         } else {
-            comfy_table::Color::White
+            comfy_table::Color::DarkGrey
         }),
     ]);
     table.add_row(vec![
@@ -1627,7 +1629,7 @@ fn get_tile_info(world: &mut World, x: i32, y: i32) {
         Cell::new(bool_to_str(has_farm)).fg(if has_farm {
             comfy_table::Color::Green
         } else {
-            comfy_table::Color::White
+            comfy_table::Color::DarkGrey
         }),
     ]);
     table.add_row(vec![
@@ -1635,7 +1637,7 @@ fn get_tile_info(world: &mut World, x: i32, y: i32) {
         Cell::new(bool_to_str(has_housing)).fg(if has_housing {
             comfy_table::Color::Yellow
         } else {
-            comfy_table::Color::White
+            comfy_table::Color::DarkGrey
         }),
     ]);
 
