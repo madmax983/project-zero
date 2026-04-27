@@ -16,6 +16,23 @@ pub struct LightLevel {
     pub intensity: f32,
 }
 
+/// System that updates the LightLevel of photophobic resources based on their GridPosition and the global LightMap.
+pub fn update_photophobic_light_level_system(
+    light_map: Res<crate::layer1::lighting::LightMap>,
+    mut query: Query<
+        (&mut LightLevel, &crate::layer1::map::GridPosition),
+        With<PhotophobicResource>,
+    >,
+) {
+    for (mut light_level, pos) in query.iter_mut() {
+        if pos.x >= 0 && pos.y >= 0 {
+            light_level.intensity = light_map.get(pos.x as u32, pos.y as u32);
+        } else {
+            light_level.intensity = 0.0;
+        }
+    }
+}
+
 /// System that degrades photophobic resources when exposed to light.
 pub fn photophobic_degradation_system(mut query: Query<(&mut PhotophobicResource, &LightLevel)>) {
     for (mut resource, light) in query.iter_mut() {

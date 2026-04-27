@@ -448,6 +448,7 @@
 - [x] `990` Treaty Cruisers — `specs/990-treaty-cruisers.md` — completed 2026-04-24
 - [x] `991` The Sub-Glacial Oceans — `specs/991-sub-glacial-oceans.md` — completed 2026-04-24
 - [x] `1106` Photophobic Resources — `specs/1106-photophobic-resources.md` — completed 2024-05-24
+- [x] `INT-1106` Integration: Photophobic Resources -> LightMap — completed 2026-07-01
 - [x] `INT-983` Integration: Cargo Cult Logistics -> Morale/Efficiency — completed 2026-06-27
 - [x] `1141` The Museum of the Fallen — `specs/1141-museum-of-the-fallen.md` — completed 2026-06-25
 - [x] `1117` Sonic Suppression — `specs/1117-sonic-suppression.md` — completed 2026-04-25
