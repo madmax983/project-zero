@@ -17550,3 +17550,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Emergence:** The Gastronomers demand the core of a specific, volatile gas giant to use as a cooking heat source. You comply, but the extraction process destabilizes the planet, causing it to go supernova. The resulting dish is incredible, granting permanent maximum morale to your capital, but you just destroyed an entire inhabited star system to make a really good soup.
 
 **Tension:** The immense, empire-wide buffs provided by the Culinary Singularity vs. the apocalyptic lengths you must go to in order to procure the ingredients.
+## The Dream Plague
+
+**Layer:** 1
+
+**Fantasy:** A psychological contagion that spreads through shared sleep cycles.
+
+**Mechanic:** A rare event or artifact exposure infects a single Pop with the "Dream Plague." When infected Pops sleep in high-density housing blocks, the plague spreads to adjacent sleeping Pops. Infected Pops wake up with massive Morale boosts but slowly lose their memory of specific skills, essentially resetting their job experience to zero.
+
+**Emergence:** You build an incredibly efficient, ultra-dense housing mega-block. The Dream Plague gets in. Within a week, everyone is deliriously happy, but your colony completely collapses because nobody remembers how to operate the life support systems.
+
+**Tension:** Do you violently enforce isolated sleep cycles, devastating your housing efficiency and overall morale, or risk a colony-wide lobotomy in exchange for perfect happiness?
+
+---
+
+## The Phantom Fleet
+
+**Layer:** 2
+
+**Fantasy:** A massive, terrifying armada that only exists in the sensors of a specific, paranoid faction.
+
+**Mechanic:** If a Layer 2 Node (Planet) experiences extreme, prolonged Unrest, the local sensor arrays begin to generate "Phantom Signatures." These register as massive enemy fleets preparing to invade. Only the paranoid faction can "see" them. They demand the immediate construction of absurdly expensive defense platforms.
+
+**Emergence:** You are at peace, but a planetary governor goes insane from stress. They start building a massive defense grid to fight a war against nothing, bankrupting your core economy while your real borders remain completely undefended.
+
+**Tension:** Do you indulge the delusion to placate the massive, angry faction, or ignore the fake threat and risk a violent planetary rebellion?
+
+---
+
+## Orbital Debris Bombardment
+
+**Layer:** 2 -> 1
+
+**Fantasy:** Using catastrophic orbital bombardment not as a weapon, but as a terraforming tool.
+
+**Mechanic:** Instead of precise mining, you construct a massive, barely-controlled "Debris Cannon" in orbit. It grabs passing asteroids and hurls them directly at the planet's surface. The impact creates massive, immediate craters (destroying any infrastructure there) but exposes hyper-dense veins of rare deep-crust minerals.
+
+**Emergence:** You are losing a ground war on a frontier colony. You use the Debris Cannon to drop an asteroid directly onto the invading army. It obliterates them, but also cracks the planet's crust, permanently altering the local climate and exposing a massive vein of rare minerals that instantly turns the ruined wasteland into your most valuable economic asset.
+
+**Tension:** Do you accept the massive, unpredictable collateral damage of literally throwing rocks at your own planet for rapid economic gain, or rely on slow, safe, conventional mining?
+
+---
