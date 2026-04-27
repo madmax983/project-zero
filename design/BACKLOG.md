@@ -871,3 +871,4 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1239` The Vanguard Ram — `specs/1239-the-vanguard-ram.md`
 - [ ] `1240` The Decoy Frigate — `specs/1240-the-decoy-frigate.md`
 - [ ] `1241` The Commuter Tax — `specs/1241-the-commuter-tax.md`
+- [ ] `1242` Planetary Curvature — `specs/1242-planetary-curvature.md`
