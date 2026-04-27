@@ -1,7 +1,7 @@
 //! Integration systems that bridge multiple domains in Layer 1.
 
 use crate::layer1::balance::TICKS_PER_YEAR;
-use crate::layer1::chronicle::{AddChronicleEvent, EventImportance};
+use crate::layer1::core::chronicle::{AddChronicleEvent, EventImportance};
 use crate::layer1::cybernetics::MissingLimb;
 use crate::layer1::edicts::{ColonyPolicies, Policy};
 use crate::layer1::environment::hazards::AmputationEvent;
@@ -10,7 +10,7 @@ use crate::layer1::fire::Fire;
 use crate::layer1::geodetic::GolemFormedEvent;
 use crate::layer1::health::Health;
 use crate::layer1::inspector::{Inspector, Reported};
-use crate::layer1::map::GridPosition;
+use crate::layer1::core::map::GridPosition;
 use crate::layer1::medical::PatientTreated;
 use crate::layer1::memory::{Memories, MemoryType};
 use crate::layer1::needs::Needs;
@@ -54,12 +54,12 @@ pub fn access_denied_chronicle_bridge(
         crate::layer1::administration::edicts::AccessDeniedEvent,
     >,
     mut chronicle_events: bevy_ecs::prelude::EventWriter<
-        crate::layer1::chronicle::AddChronicleEvent,
+        crate::layer1::core::chronicle::AddChronicleEvent,
     >,
 ) {
     for event in events.read() {
-        chronicle_events.send(crate::layer1::chronicle::AddChronicleEvent {
-            importance: crate::layer1::chronicle::EventImportance::Minor,
+        chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
+            importance: crate::layer1::core::chronicle::EventImportance::Minor,
             text: format!("Access Denied: {}", event.reason),
         });
     }
@@ -70,12 +70,12 @@ pub fn hack_hub_chronicle_bridge(
         crate::layer1::administration::edicts::HackCentralHubEvent,
     >,
     mut chronicle_events: bevy_ecs::prelude::EventWriter<
-        crate::layer1::chronicle::AddChronicleEvent,
+        crate::layer1::core::chronicle::AddChronicleEvent,
     >,
 ) {
     for event in events.read() {
-        chronicle_events.send(crate::layer1::chronicle::AddChronicleEvent {
-            importance: crate::layer1::chronicle::EventImportance::Standard,
+        chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
+            importance: crate::layer1::core::chronicle::EventImportance::Standard,
             text: format!(
                 "A successful hack into the central hub has removed the orphaned {:?} edict.",
                 event.target_policy
@@ -973,18 +973,18 @@ pub fn scapegoat_chronicle_bridge(
 pub fn industrial_rhythm_morale_bridge(
     machines: Query<(
         &crate::layer1::tech::rhythm::MachineRhythm,
-        &crate::layer1::map::GridPosition,
+        &crate::layer1::core::map::GridPosition,
     )>,
     mut pops: Query<
         (
             &mut crate::layer1::morale::Morale,
-            &crate::layer1::map::GridPosition,
+            &crate::layer1::core::map::GridPosition,
         ),
         With<crate::layer1::pop::Pop>,
     >,
 ) {
     // Collect active rhythms and their positions
-    let active_rhythms: Vec<(f32, crate::layer1::map::GridPosition)> = machines
+    let active_rhythms: Vec<(f32, crate::layer1::core::map::GridPosition)> = machines
         .iter()
         .filter_map(|(rhythm, pos)| {
             if rhythm.last_sync_bonus > 0.0 {
@@ -1068,13 +1068,13 @@ pub fn nocturnal_aggression_bridge_system(
 /// Records the outcome of a spiteful will being forcibly overridden.
 pub fn override_will_chronicle_bridge(
     mut events_in: bevy_ecs::prelude::EventReader<crate::layer1::spiteful_will::OverrideWillEvent>,
-    mut events_out: bevy_ecs::prelude::EventWriter<crate::layer1::chronicle::AddChronicleEvent>,
+    mut events_out: bevy_ecs::prelude::EventWriter<crate::layer1::core::chronicle::AddChronicleEvent>,
 ) {
     for _ in events_in.read() {
-        events_out.send(crate::layer1::chronicle::AddChronicleEvent {
+        events_out.send(crate::layer1::core::chronicle::AddChronicleEvent {
             text: "A spiteful will was forcibly overridden, sparking outrage among the heirs."
                 .to_string(),
-            importance: crate::layer1::chronicle::EventImportance::Major,
+            importance: crate::layer1::core::chronicle::EventImportance::Major,
         });
     }
 }
@@ -1289,15 +1289,15 @@ pub fn parasitic_architecture_chronicle_bridge(
 /// and destroys the building.
 pub fn blob_building_destruction_system(
     mut commands: Commands,
-    blobs: Query<&crate::layer1::map::GridPosition, Added<crate::layer1::blob::BlobNode>>,
-    mut events: EventWriter<crate::layer1::events::BuildingRemovedEvent>,
+    blobs: Query<&crate::layer1::core::map::GridPosition, Added<crate::layer1::blob::BlobNode>>,
+    mut events: EventWriter<crate::layer1::core::events::BuildingRemovedEvent>,
     building_map: Res<crate::layer1::building::BuildingMap>,
     buildings: Query<(Entity, &crate::layer1::building::Building)>,
 ) {
     for pos in blobs.iter() {
         if let Some(&building_entity) = building_map.0.get(&(pos.x, pos.y)) {
             if let Ok((entity, building)) = buildings.get(building_entity) {
-                events.send(crate::layer1::events::BuildingRemovedEvent {
+                events.send(crate::layer1::core::events::BuildingRemovedEvent {
                     entity,
                     position: *pos,
                     building_type: building.building_type,
@@ -1380,19 +1380,19 @@ pub fn aesthetic_edict_chronicle_bridge(
     policies: bevy_ecs::prelude::Res<crate::layer1::administration::edicts::ColonyPolicies>,
     mut last_status: bevy_ecs::prelude::Local<bool>,
     mut chronicle_events: bevy_ecs::prelude::EventWriter<
-        crate::layer1::chronicle::AddChronicleEvent,
+        crate::layer1::core::chronicle::AddChronicleEvent,
     >,
 ) {
     let current_status =
         policies.is_active(crate::layer1::administration::edicts::Policy::Aesthetic);
     if current_status && !*last_status {
-        chronicle_events.send(crate::layer1::chronicle::AddChronicleEvent {
-            importance: crate::layer1::chronicle::EventImportance::Major,
+        chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
+            importance: crate::layer1::core::chronicle::EventImportance::Major,
             text: "The orbital elites have passed an Aesthetic Edict, halting our most productive factories to clear their view.".to_string(),
         });
     } else if !current_status && *last_status {
-        chronicle_events.send(crate::layer1::chronicle::AddChronicleEvent {
-            importance: crate::layer1::chronicle::EventImportance::Standard,
+        chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
+            importance: crate::layer1::core::chronicle::EventImportance::Standard,
             text: "The Aesthetic Edict has been lifted. The factories roar back to life, belching smoke into the sky once more.".to_string(),
         });
     }
@@ -1403,12 +1403,12 @@ pub fn aesthetic_edict_chronicle_bridge(
 pub fn famine_chronicle_bridge(
     mut events: bevy_ecs::prelude::EventReader<crate::layer1::pop_memories::FamineEvent>,
     mut chronicle_events: bevy_ecs::prelude::EventWriter<
-        crate::layer1::chronicle::AddChronicleEvent,
+        crate::layer1::core::chronicle::AddChronicleEvent,
     >,
 ) {
     for _event in events.read() {
-        chronicle_events.send(crate::layer1::chronicle::AddChronicleEvent {
-            importance: crate::layer1::chronicle::EventImportance::Major,
+        chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
+            importance: crate::layer1::core::chronicle::EventImportance::Major,
             text: "A devastating famine swept through the colony, searing memories of starvation into the survivors.".to_string(),
         });
     }
@@ -1421,13 +1421,13 @@ pub fn silent_flora_chronicle_bridge(
         bevy_ecs::prelude::Added<crate::layer1::flora::Flora>,
     >,
     mut chronicle_events: bevy_ecs::prelude::EventWriter<
-        crate::layer1::chronicle::AddChronicleEvent,
+        crate::layer1::core::chronicle::AddChronicleEvent,
     >,
 ) {
     for flora in query.iter() {
         if flora.flora_type == crate::layer1::flora::FloraType::SilentFlora {
-            chronicle_events.send(crate::layer1::chronicle::AddChronicleEvent {
-                importance: crate::layer1::chronicle::EventImportance::Major,
+            chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
+                importance: crate::layer1::core::chronicle::EventImportance::Major,
                 text: "We discovered a strange new flora. It grows rapidly, but an eerie silence surrounds it.".to_string(),
             });
             break;
@@ -1514,7 +1514,7 @@ pub fn predatory_weather_impact_bridge_system(
         &mut crate::layer1::architecture::structure::Structure,
     >,
     mut chronicle_events: bevy_ecs::prelude::EventWriter<
-        crate::layer1::chronicle::AddChronicleEvent,
+        crate::layer1::core::chronicle::AddChronicleEvent,
     >,
 ) {
     for event in events.read() {
@@ -1522,8 +1522,8 @@ pub fn predatory_weather_impact_bridge_system(
             structure.current_hp -= event.damage;
         }
 
-        chronicle_events.send(crate::layer1::chronicle::AddChronicleEvent {
-            importance: crate::layer1::chronicle::EventImportance::Major,
+        chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
+            importance: crate::layer1::core::chronicle::EventImportance::Major,
             text: format!("A massive planetary storm impacted the colony, dealing {} damage to our infrastructure.", event.damage),
         });
     }
@@ -1532,17 +1532,17 @@ pub fn predatory_weather_impact_bridge_system(
 /// INT-805: Bridges MindUploadEvent to AddChronicleEvent (Chronicle).
 pub fn digital_immortality_chronicle_bridge(
     mut events: bevy_ecs::event::EventReader<crate::layer1::digital_immortality::MindUploadEvent>,
-    mut chronicle_events: bevy_ecs::event::EventWriter<crate::layer1::chronicle::AddChronicleEvent>,
+    mut chronicle_events: bevy_ecs::event::EventWriter<crate::layer1::core::chronicle::AddChronicleEvent>,
     query: bevy_ecs::system::Query<&bevy::prelude::Name>,
 ) {
     for event in events.read() {
         if let Ok(name) = query.get(event.target_pop) {
-            chronicle_events.send(crate::layer1::chronicle::AddChronicleEvent {
+            chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
                 text: format!(
                     "{} has achieved digital immortality, leaving behind their mortal shell to become a Ghost in the Mainframe.",
                     name.as_str()
                 ),
-                importance: crate::layer1::chronicle::EventImportance::Major,
+                importance: crate::layer1::core::chronicle::EventImportance::Major,
             });
         }
     }
@@ -1562,7 +1562,7 @@ pub fn psionic_fire_bridge_system(
 pub fn beacon_migrant_arrival_bridge(
     mut commands: Commands,
     mut events: EventReader<crate::layer1::economy::remittances::MigrantArrivalEvent>,
-    mut chronicle_events: EventWriter<crate::layer1::chronicle::AddChronicleEvent>,
+    mut chronicle_events: EventWriter<crate::layer1::core::chronicle::AddChronicleEvent>,
 ) {
     for event in events.read() {
         let mut rng = rand::thread_rng();
@@ -1583,14 +1583,14 @@ pub fn beacon_migrant_arrival_bridge(
             commands.spawn((
                 crate::layer1::pop::Pop,
                 traits,
-                crate::layer1::map::GridPosition { x: 0, y: 0 },
+                crate::layer1::core::map::GridPosition { x: 0, y: 0 },
                 crate::layer1::needs::Needs::default(),
             ));
         }
 
-        chronicle_events.send(crate::layer1::chronicle::AddChronicleEvent {
+        chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
             text: format!("{} migrants have arrived in the colony.", event.count),
-            importance: crate::layer1::chronicle::EventImportance::Major,
+            importance: crate::layer1::core::chronicle::EventImportance::Major,
         });
     }
 }
@@ -1599,7 +1599,7 @@ pub fn beacon_migrant_arrival_bridge(
 pub fn beacon_trade_ship_bridge(
     mut events: EventReader<crate::layer2::trade::blockade::TradeShipArrivalEvent>,
     mut merchant_state: ResMut<crate::layer1::trade::MerchantState>,
-    mut chronicle_events: EventWriter<crate::layer1::chronicle::AddChronicleEvent>,
+    mut chronicle_events: EventWriter<crate::layer1::core::chronicle::AddChronicleEvent>,
     time: Res<crate::shared::time::SimulationTime>,
 ) {
     for event in events.read() {
@@ -1610,9 +1610,9 @@ pub fn beacon_trade_ship_bridge(
                 departure_tick: time.tick + 500,
                 deals: vec![], // For integration purposes, this just forces the state change
             });
-            chronicle_events.send(crate::layer1::chronicle::AddChronicleEvent {
+            chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
                 text: format!("A trade ship from {} has arrived.", event.faction),
-                importance: crate::layer1::chronicle::EventImportance::Major,
+                importance: crate::layer1::core::chronicle::EventImportance::Major,
             });
         }
     }
@@ -1623,7 +1623,7 @@ pub fn beacon_pirate_raid_bridge(
     mut events: EventReader<crate::layer1::void_weed::PirateRaidEvent>,
     mut resources: ResMut<crate::layer1::resources::ColonyResources>,
     mut pops: Query<&mut crate::layer1::morale::Morale, With<crate::layer1::pop::Pop>>,
-    mut chronicle_events: EventWriter<crate::layer1::chronicle::AddChronicleEvent>,
+    mut chronicle_events: EventWriter<crate::layer1::core::chronicle::AddChronicleEvent>,
 ) {
     for _ in events.read() {
         // Pirates steal resources
@@ -1639,9 +1639,9 @@ pub fn beacon_pirate_raid_bridge(
             });
         }
 
-        chronicle_events.send(crate::layer1::chronicle::AddChronicleEvent {
+        chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
             text: "Pirates have raided the colony!".to_string(),
-            importance: crate::layer1::chronicle::EventImportance::Major,
+            importance: crate::layer1::core::chronicle::EventImportance::Major,
         });
     }
 }
