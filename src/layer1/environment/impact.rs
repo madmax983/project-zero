@@ -27,6 +27,7 @@ pub fn process_impact_countdown_system(
     mut impacts: Query<(Entity, &mut IncomingImpact)>,
     mut strike_events: EventWriter<ImpactStrikeEvent>,
     mut warning_events: EventWriter<ImpactWarningEvent>,
+    mut chronicle_events: EventWriter<crate::layer1::core::chronicle::AddChronicleEvent>,
 ) {
     for (entity, mut impact) in impacts.iter_mut() {
         if impact.ticks_remaining > 0 {
@@ -42,6 +43,10 @@ pub fn process_impact_countdown_system(
                 center: impact.target_pos,
                 radius: impact.radius,
             });
+            chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
+                importance: crate::layer1::core::chronicle::EventImportance::Major,
+                text: "A catastrophic impact struck the colony.".to_string(),
+            });
             commands.entity(entity).despawn();
         }
     }
@@ -50,21 +55,27 @@ pub fn process_impact_countdown_system(
 pub fn process_impact_strike_system(
     mut strike_events: EventReader<ImpactStrikeEvent>,
     mut commands: Commands,
-    structures: Query<(Entity, &GridPosition), With<Structure>>,
+    mut structures: Query<(Entity, &GridPosition, &mut Structure)>,
     mut terrains: Query<(&GridPosition, &mut TerrainType)>,
+    mut spark_events: EventWriter<crate::layer1::environment::ignition::SparkEvent>,
 ) {
     for ev in strike_events.read() {
         // Obliterate structures
-        for (entity, pos) in structures.iter() {
-            if pos.distance_chebyshev(ev.center) <= ev.radius {
+        for (entity, pos, mut structure) in structures.iter_mut() {
+            let dist = pos.distance_chebyshev(ev.center);
+            if dist <= ev.radius / 2 {
                 commands.entity(entity).despawn();
+            } else if dist <= ev.radius {
+                structure.current_hp /= 2.0;
+                spark_events
+                    .send(crate::layer1::environment::ignition::SparkEvent { position: *pos });
             }
         }
 
         // Crater terrain
         for (pos, mut terrain) in terrains.iter_mut() {
-            if pos.distance_chebyshev(ev.center) <= ev.radius {
-                *terrain = TerrainType::DeepRock;
+            if pos.distance_chebyshev(ev.center) <= ev.radius / 2 {
+                *terrain = TerrainType::Crater;
             }
         }
     }
@@ -86,6 +97,8 @@ mod tests {
         app.insert_resource(SimulationTime::default());
         app.add_event::<ImpactWarningEvent>();
         app.add_event::<ImpactStrikeEvent>();
+        app.add_event::<crate::layer1::core::chronicle::AddChronicleEvent>();
+        app.add_event::<crate::layer1::environment::ignition::SparkEvent>();
         app.add_systems(
             Update,
             (
@@ -156,18 +169,36 @@ mod tests {
             ))
             .id();
 
+        // Spawn another structure on the edge of the radius
+        let edge = GridPosition { x: 10, y: 12 }; // distance 2 from center
+        let edge_structure = app
+            .world_mut()
+            .spawn((
+                edge,
+                Structure {
+                    current_hp: 100.0,
+                    max_hp: 100.0,
+                },
+            ))
+            .id();
+
         app.world_mut().send_event(ImpactStrikeEvent {
             center,
-            radius: 2, // Will hit center
+            radius: 2, // Will hit center (0 <= 1), edge (2 <= 2)
         });
 
         app.update();
 
-        // Structure should be obliterated
+        // Structure at center should be obliterated
         assert!(app.world().get_entity(structure).is_err());
 
-        // Terrain should be converted to DeepRock/Crater
+        // Terrain at center should be converted to Crater
         let new_terrain = app.world().get::<TerrainType>(terrain).unwrap();
-        assert_eq!(*new_terrain, TerrainType::DeepRock);
+        assert_eq!(*new_terrain, TerrainType::Crater);
+
+        // Structure at edge should be damaged but not obliterated
+        assert!(app.world().get_entity(edge_structure).is_ok());
+        let edge_s = app.world().get::<Structure>(edge_structure).unwrap();
+        assert_eq!(edge_s.current_hp, 50.0);
     }
 }

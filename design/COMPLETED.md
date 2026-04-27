@@ -458,3 +458,4 @@
 - [x] `1093` Superstitious Totems — `specs/1093-superstitious-totems.md` — completed 2024-05-24
 - [x] `762` The Gold Rush Beacon — `specs/762-gold-rush-beacon.md` — completed 2026-05-10
 - [x] `1042` The Feral Cult — `specs/1042-the-feral-cult.md` — completed 2026-04-01
+- [x] `668` Impact Event — `specs/668-impact-event.md` — completed 2024-05-28

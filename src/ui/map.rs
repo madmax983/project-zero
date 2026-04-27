@@ -674,6 +674,7 @@ pub const fn get_terrain_char(terrain: TerrainType) -> &'static str {
         TerrainType::Shrub => "\"",
         TerrainType::Sapling => "t",
         TerrainType::DeepRock => "▓",
+        TerrainType::Crater => "o",
         TerrainType::MagmaRock => "≈",
         TerrainType::SporeBloom => "♣",
         TerrainType::Artifact => "Ω",
@@ -704,6 +705,7 @@ pub const fn get_terrain_color(terrain: TerrainType) -> Color {
         TerrainType::Shrub => Color::Rgb(80, 180, 80),
         TerrainType::Sapling => Color::Rgb(100, 220, 100),
         TerrainType::DeepRock => Color::Rgb(100, 100, 110),
+        TerrainType::Crater => Color::Rgb(80, 80, 90),
         TerrainType::MagmaRock => Color::Rgb(255, 60, 20),
         TerrainType::SporeBloom => Color::Rgb(150, 60, 200),
         TerrainType::Artifact => Color::Rgb(255, 215, 0), // Gold
