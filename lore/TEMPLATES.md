@@ -6501,3 +6501,169 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: Decompression in [ROOM_NAME]. Not just a loss of air, but [VACUUM_ACOUSTIC_ANOMALY]."
 - "They couldn't hear the warnings. A pressure loss in [ROOM_NAME] created [VACUUM_ACOUSTIC_ANOMALY]. [YEAR]."
 - "[COLONY] engineers report a dead zone in [ROOM_NAME]. The vacuum resulted in [VACUUM_ACOUSTIC_ANOMALY]. [YEAR]."
+
+## The Rust-Lung Epidemic Templates (Spec 1122)
+
+### Template: RUST_LUNG_DIAGNOSIS
+**Generates:** Play event (Chronicle)
+**Slots:** [COLONY], [YEAR], [POP_COUNT]
+**Patterns:**
+- "[YEAR]: The miners returned coughing. [POP_COUNT] diagnosed with Rust-Lung in [COLONY]."
+- "We breathed the progress, and it filled our lungs. [POP_COUNT] affected by Rust-Lung this year. [YEAR]."
+- "[COLONY], [YEAR]: Red dust coats everything, even the inside of our throats. [POP_COUNT] sick."
+
+### Template: RUST_LUNG_IMMUNITY
+**Generates:** Play event (Chronicle)
+**Slots:** [COLONY], [YEAR], [EVENT]
+**Patterns:**
+- "[YEAR]: The [EVENT] struck [COLONY], but the afflicted survived. Their ruined lungs resisted the toxins."
+- "What doesn't kill us mutates us. The Rust-Lung saved the miners from the [EVENT] in [YEAR]."
+- "[COLONY] reports: Those with Rust-Lung walked through the [EVENT] unharmed. [YEAR]."
+
+## Personal Shields Templates (Spec 1119)
+
+### Template: SHIELD_OVERLOAD
+**Generates:** Play event (Chronicle)
+**Slots:** [COLONY], [YEAR], [VICTIM_NAME], [PROJECTILE_SPEED]
+**Patterns:**
+- "[YEAR]: [VICTIM_NAME]'s Kinetic Barrier overloaded trying to stop a [PROJECTILE_SPEED] projectile."
+- "The shield sparked and died. [VICTIM_NAME] fell shortly after. [YEAR]."
+
+### Template: MELEE_BYPASS
+**Generates:** Play event (Chronicle)
+**Slots:** [COLONY], [YEAR], [VICTIM_NAME], [WEAPON]
+**Patterns:**
+- "[YEAR]: The barrier holds against bullets, but [VICTIM_NAME] was killed with a simple [WEAPON]. The slow blade penetrates the shield."
+- "Advanced technology undone by brute force. [VICTIM_NAME] died to a [WEAPON] that bypassed their shield. [YEAR]."
+
+## Auroral Harvesting Templates (Spec 1105)
+
+### Template: AURORAL_STRIKE
+**Generates:** Play event (Chronicle)
+**Slots:** [COLONY], [YEAR], [DAMAGE]
+**Patterns:**
+- "[YEAR]: The Sky-Tether caught the storm. Massive power surges caused [DAMAGE] to the infrastructure in [COLONY]."
+- "We harvested the aurora, but the lightning lashed back. [DAMAGE] sustained in [COLONY]. [YEAR]."
+- "[COLONY], [YEAR]: The tether holds, but just barely. [DAMAGE] recorded from the solar storm."
+
+## Brain Drain Migration Templates (Spec 1144)
+
+### Template: BRAIN_DRAIN_EXODUS
+**Generates:** Play event (Chronicle)
+**Slots:** [COLONY], [YEAR], [DESTINATION], [POP_COUNT]
+**Patterns:**
+- "[YEAR]: [POP_COUNT] of our brightest minds left [COLONY] for [DESTINATION], seeking better living standards."
+- "The brilliant refuse to suffer in our squalor. [POP_COUNT] emigrated to [DESTINATION]. [YEAR]."
+- "[COLONY] loses its future. [POP_COUNT] skilled workers departed for [DESTINATION] in [YEAR]."
+
+## Cargo Cult Logistics Templates (Spec 983)
+
+### Template: CARGO_CULT_RITUAL
+**Generates:** Play event (Chronicle)
+**Slots:** [COLONY], [YEAR], [EFFIGY_TYPE], [SUPPLY_ITEM]
+**Patterns:**
+- "[YEAR]: The Cargo Cult forms. A massive [EFFIGY_TYPE] dominates the plaza, an offering for [SUPPLY_ITEM]."
+- "They dance near the landing pads in [COLONY], hoping the [EFFIGY_TYPE] brings more [SUPPLY_ITEM]. [YEAR]."
+- "[COLONY], [YEAR]: Logic abandoned. The workers perform rituals to summon [SUPPLY_ITEM] from the sky."
+
+## Inflationary Spiral Templates (Spec 1145)
+
+### Template: MARKET_CRASH_BARTER
+**Generates:** Play event (Chronicle)
+**Slots:** [COLONY], [YEAR], [CREDIT_VALUE]
+**Patterns:**
+- "[YEAR]: The market crashed. Credits are worth a fraction of their value ([CREDIT_VALUE]). [COLONY] resorts to barter."
+- "Cash is just numbers on a screen. Alloys are real. The great inflation of [YEAR] forced [COLONY] back to the barter age."
+- "[COLONY] reports economic collapse. Credits devalued to [CREDIT_VALUE]. [YEAR]."
+
+## Astrological Beliefs Templates (Spec 1107)
+
+### Template: ASTROLOGICAL_BOON
+**Generates:** Play event (Chronicle)
+**Slots:** [COLONY], [YEAR], [ALIGNMENT]
+**Patterns:**
+- "[YEAR]: The [ALIGNMENT] is upon us. Productivity in [COLONY] skyrockets on pure belief."
+- "The stars aligned. [COLONY] reports massive efficiency gains during the [ALIGNMENT]. [YEAR]."
+
+### Template: ASTROLOGICAL_BANE
+**Generates:** Play event (Chronicle)
+**Slots:** [COLONY], [YEAR], [ALIGNMENT]
+**Patterns:**
+- "[YEAR]: The [ALIGNMENT] brings misfortune. [COLONY] is paralyzed by superstition."
+- "They refuse to work. 'The stars forbid it', they say of the [ALIGNMENT]. [YEAR]."
+
+## Treaty Cruisers Templates (Spec 990)
+
+### Template: TREATY_LOOPHOLE
+**Generates:** Play event (Chronicle)
+**Slots:** [EMPIRE], [YEAR], [SHIP_CLASS], [BANNED_ITEM]
+**Patterns:**
+- "[YEAR]: The Galactic Council inspected the [SHIP_CLASS]. No [BANNED_ITEM] found. The 'fishing trawlers' are armed."
+- "[EMPIRE] evades sanctions. Their [SHIP_CLASS] technically complies with the ban on [BANNED_ITEM]. [YEAR]."
+- "Malicious compliance in [YEAR]. The [SHIP_CLASS] of [EMPIRE] passes inspection."
+
+## The Sub-Glacial Oceans Templates (Spec 991)
+
+### Template: SUB_GLACIAL_BREACH
+**Generates:** Play event (Chronicle)
+**Slots:** [COLONY], [YEAR], [DEPTH]
+**Patterns:**
+- "[YEAR]: We broke through the ice at [COLONY]. At [DEPTH] meters, the dark ocean awaits."
+- "The drill pierced the final layer. The sub-glacial ocean of [COLONY] is exposed. [YEAR]."
+- "[COLONY], [YEAR]: Down in the freezing dark, [DEPTH] meters below. What is swimming there?"
+
+## Photophobic Resources Templates (Spec 1106)
+
+### Template: SHADOW_GLASS_DECAY
+**Generates:** Play event (Chronicle)
+**Slots:** [COLONY], [YEAR], [AMOUNT]
+**Patterns:**
+- "[YEAR]: Someone brought a torch into the deep mines of [COLONY]. [AMOUNT] of Shadow-Glass evaporated instantly."
+- "The light destroys the treasure. [AMOUNT] lost in [COLONY] due to accidental exposure. [YEAR]."
+- "[COLONY] miners report [AMOUNT] of precious ore degraded when a light source was triggered. [YEAR]."
+
+## The Museum of the Fallen Templates (Spec 1141)
+
+### Template: MUSEUM_CONSECRATION
+**Generates:** Play event (Chronicle)
+**Slots:** [COLONY], [YEAR], [DISASTER]
+**Patterns:**
+- "[YEAR]: A museum built on the ashes of the [DISASTER] in [COLONY]. We will not forget."
+- "The site of the [DISASTER] is now a memorial. [COLONY] finds strength in its tragic past. [YEAR]."
+- "[COLONY], [YEAR]: They walk the halls where so many died during the [DISASTER], and emerge resilient."
+
+## Subjective Economics Templates (Spec 1033)
+
+### Template: SUBJECTIVE_TRADE_DEAL
+**Generates:** Play event (Chronicle)
+**Slots:** [EMPIRE_A], [EMPIRE_B], [YEAR], [RESOURCE]
+**Patterns:**
+- "[YEAR]: [EMPIRE_A] sold their 'trash' ([RESOURCE]) to [EMPIRE_B] for a fortune."
+- "One species' bio-waste is another's feast. [EMPIRE_A] traded [RESOURCE] with [EMPIRE_B] in [YEAR]."
+- "[YEAR]: The great arbitrage. [RESOURCE] flows from those who despise it to those who worship it."
+
+## Temporal Echo Chambers Templates (Spec 644)
+
+### Template: TEMPORAL_CHAMBER_SEALED
+**Generates:** Play event (Chronicle)
+**Slots:** [COLONY], [YEAR], [DURATION]
+**Patterns:**
+- "[YEAR]: The vault in [COLONY] was sealed. Time dilates. They will sleep for [DURATION] objective years."
+- "To escape the crisis, they locked themselves out of time. [COLONY] temporal chamber activated. [YEAR]."
+
+### Template: TEMPORAL_SHOCKWAVE
+**Generates:** Play event (Chronicle)
+**Slots:** [COLONY], [YEAR], [DAMAGE]
+**Patterns:**
+- "[YEAR]: The temporal chamber in [COLONY] lost power. The resulting shockwave caused [DAMAGE] and aged everything instantly."
+- "Time snapped back. The containment failed in [COLONY], releasing a temporal shockwave. [YEAR]."
+
+## Superstitious Totems Templates (Spec 1093)
+
+### Template: TOTEM_BAD_OMEN
+**Generates:** Play event (Chronicle)
+**Slots:** [COLONY], [YEAR], [POP_NAME]
+**Patterns:**
+- "[YEAR]: [POP_NAME] lost their totem. A deep despair sweeps over them in [COLONY]."
+- "The lucky charm is gone. A bad omen strikes [POP_NAME] in [COLONY]. [YEAR]."
+- "[COLONY], [YEAR]: Without their totem, [POP_NAME] cannot cope with the void."
