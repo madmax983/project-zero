@@ -800,7 +800,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1162` Orbital Debris Cascades — `specs/1162-orbital-debris-cascades.md`
 - [ ] `1163` Generational Debt — `specs/1163-generational-debt.md`
 - [ ] `1164` Automated Salvage Swarms — `specs/1164-automated-salvage-swarms.md`
-- [x] `1165` The Nostalgia Cult — `specs/1165-the-nostalgia-cult.md`
 - [ ] `1166` The Time-Capsule Paradox — `specs/1177-time-capsule-paradox.md`
 - [ ] `1167` Gravitational Empathy — `specs/1178-gravitational-empathy.md`
 - [ ] `1168` The Pacifist's Arsenal — `specs/1175-the-pacifists-arsenal.md`
