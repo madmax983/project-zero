@@ -177,6 +177,7 @@ mod tests {
             score_bonus: 0.0,
             resource_type: None,
             item_type: None,
+            is_advanced_tech: false,
         });
 
         // Initialize world context

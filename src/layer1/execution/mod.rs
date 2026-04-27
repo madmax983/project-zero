@@ -55,3 +55,5 @@ pub use general_work::*;
 pub use mining::*;
 pub use movement::*;
 pub use vandalism::*;
+pub mod sabotage;
+pub use sabotage::*;

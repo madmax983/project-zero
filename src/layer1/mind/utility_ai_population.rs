@@ -136,6 +136,7 @@ fn populate_sanctuaries(world: &mut World, buffer: &mut Vec<ScorableCandidate>) 
                 usage: 0,
                 item_type: None,
                 resource_type: None,
+                is_advanced_tech: false,
             });
         }
     }

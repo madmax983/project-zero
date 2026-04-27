@@ -294,6 +294,7 @@ pub struct ScorableCandidate {
     pub resource_type: Option<ResourceType>,
     /// Type of generic item (if an item entity).
     pub item_type: Option<ItemType>,
+    pub is_advanced_tech: bool,
 }
 
 impl ScorableCandidate {
@@ -307,6 +308,7 @@ impl ScorableCandidate {
             score_bonus: 0.0,
             resource_type: None,
             item_type: None,
+            is_advanced_tech: false,
         }
     }
 
@@ -325,6 +327,7 @@ impl ScorableCandidate {
             score_bonus: 0.0,
             resource_type: None,
             item_type: None,
+            is_advanced_tech: false,
         }
     }
 }
