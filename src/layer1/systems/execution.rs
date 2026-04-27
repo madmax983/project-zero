@@ -159,6 +159,8 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::execution::vandalize_execution_system.after(arrival_handler_system),
             crate::layer1::pop_doppelganger::sabotage_system.after(work_execution_system),
             crate::layer1::drone::check_drone_connection.after(arrival_handler_system),
+            crate::layer1::drone::check_feral_state_system.after(crate::layer1::drone::check_drone_connection),
+            crate::layer1::drone::evaluate_feral_actions_system.after(crate::layer1::drone::check_feral_state_system),
             crate::layer1::drone::process_feral_drones
                 .after(crate::layer1::drone::check_drone_connection),
             crate::layer1::drone::process_charge_system.after(arrival_handler_system),
@@ -169,6 +171,12 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::logistics::pneumatic::tube_network_system.after(haul_system),
             crate::layer1::logistics::pneumatic::tube_transport_system
                 .after(crate::layer1::logistics::pneumatic::tube_network_system),
+        )
+            .in_set(Layer1SystemSet::Execution),
+    );
+
+    schedule.add_systems(
+        (
             crate::layer1::nanite_fabrication::nanite_fabrication_system
                 .after(arrival_handler_system),
             crate::layer1::nanite_fabrication::grey_goo_replication_system

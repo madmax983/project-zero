@@ -180,6 +180,72 @@ mod tests {
     }
 
     #[test]
+    fn test_drone_goes_feral_when_disconnected_from_grid() {
+        use crate::layer1::drone::{check_feral_state_system, Drone, FeralDrone, GridConnection, PlayerOwned};
+        use crate::shared::time::SimulationTime;
+
+        // Arrange
+        let mut app = bevy_app::App::new();
+        app.add_event::<crate::layer1::drone::DroneDisconnectedEvent>();
+        app.init_resource::<SimulationTime>();
+
+        let drone_entity = app.world_mut().spawn((
+            Drone::default(),
+            PlayerOwned,
+            GridConnection { is_connected: false, time_disconnected: 0 },
+        )).id();
+
+        app.add_systems(bevy_app::Update, check_feral_state_system);
+
+        // Act: Advance time beyond the feral threshold (e.g., 5000 ticks)
+        let mut time = app.world_mut().resource_mut::<SimulationTime>();
+        time.tick = 5001;
+
+        let mut connection = app.world_mut().get_mut::<GridConnection>(drone_entity).unwrap();
+        connection.time_disconnected = 5001;
+
+        app.update();
+
+        // Assert
+        let drone = app.world().entity(drone_entity);
+        assert!(drone.contains::<FeralDrone>(), "Drone should become feral after prolonged disconnection");
+        assert!(!drone.contains::<PlayerOwned>(), "Feral drone should no longer be player-owned");
+    }
+
+    #[test]
+    fn test_feral_drone_targets_resources() {
+        use crate::layer1::drone::{Drone, FeralDrone, evaluate_feral_actions_system};
+        use crate::layer1::utility_ai::{ActionType, PopAction};
+
+        // Arrange
+        let mut app = bevy_app::App::new();
+        let feral_drone_entity = app.world_mut().spawn((
+            Drone::default(),
+            FeralDrone::default(),
+            PopAction::default(),
+            crate::layer1::map::GridPosition { x: 0, y: 0 },
+        )).id();
+
+        // Add dummy resource to target
+        app.world_mut().spawn((
+            crate::layer1::resources::ResourceItem {
+                resource_type: crate::layer1::resources::ResourceType::Metal,
+                amount: 10.0,
+            },
+            crate::layer1::map::GridPosition { x: 1, y: 1 },
+        ));
+
+        app.add_systems(bevy_app::Update, evaluate_feral_actions_system);
+
+        // Act
+        app.update();
+
+        // Assert
+        let action = app.world().get::<PopAction>(feral_drone_entity).unwrap();
+        assert_eq!(action.current, ActionType::Harvest, "Feral drone should heavily prioritize harvesting for survival");
+    }
+
+    #[test]
     fn test_drone_becomes_feral_on_disconnect() {
         use crate::layer1::building::{Building, BuildingType};
         use crate::layer1::drone::Drone;

@@ -48,6 +48,50 @@ pub struct Drone {
     pub state: DroneState,
 }
 
+/// Component indicating a Drone is owned by the player.
+#[derive(Component)]
+pub struct PlayerOwned;
+
+/// Component tracking the drone's connection to the main command grid.
+#[derive(Component)]
+pub struct GridConnection {
+    /// Is the drone currently connected to the grid?
+    pub is_connected: bool,
+    /// How many ticks has the drone been disconnected?
+    pub time_disconnected: u64,
+}
+
+#[allow(clippy::type_complexity)]
+pub fn check_feral_state_system(
+    mut commands: Commands,
+    mut drones: Query<(Entity, &mut Drone, &GridConnection), (With<Drone>, With<PlayerOwned>)>,
+    mut disconnect_events: EventWriter<DroneDisconnectedEvent>,
+) {
+    const FERAL_THRESHOLD: u64 = 5000;
+
+    for (entity, mut drone, connection) in drones.iter_mut() {
+        if !connection.is_connected && connection.time_disconnected >= FERAL_THRESHOLD {
+            commands.entity(entity)
+                .remove::<PlayerOwned>()
+                .remove::<ConnectedTo>()
+                .insert(FeralDrone::default());
+
+            drone.state = DroneState::Feral;
+            disconnect_events.send(DroneDisconnectedEvent { drone: entity });
+        }
+    }
+}
+
+pub fn evaluate_feral_actions_system(
+    mut feral_drones: Query<&mut PopAction, With<FeralDrone>>,
+) {
+    for mut action in &mut feral_drones {
+        if action.current == ActionType::Idle {
+            action.current = ActionType::Harvest;
+        }
+    }
+}
+
 /// Component indicating a Feral Drone.
 #[derive(Component, Default)]
 pub struct FeralDrone {
@@ -144,11 +188,11 @@ pub fn evaluate_drone_actions_system(
 /// Checks if a drone has lost connection to its Command Center.
 pub fn check_drone_connection(
     mut commands: Commands,
-    mut drones: Query<(Entity, &mut Drone, &ConnectedTo)>,
+    mut drones: Query<(Entity, &mut Drone, &ConnectedTo, Option<&mut GridConnection>)>,
     command_centers: Query<&PowerConsumer, With<Building>>,
     mut disconnect_events: EventWriter<DroneDisconnectedEvent>,
 ) {
-    for (entity, mut drone, connection) in drones.iter_mut() {
+    for (entity, mut drone, connection, mut grid_conn) in drones.iter_mut() {
         let mut disconnected = false;
         // Find the command center entity
         if let Ok(power) = command_centers.get(connection.0) {
@@ -161,7 +205,15 @@ pub fn check_drone_connection(
             disconnected = true;
         }
 
-        if disconnected {
+        if let Some(ref mut conn) = grid_conn {
+            if disconnected {
+                conn.is_connected = false;
+                conn.time_disconnected += 1;
+            } else {
+                conn.is_connected = true;
+                conn.time_disconnected = 0;
+            }
+        } else if disconnected {
             commands.entity(entity).remove::<ConnectedTo>();
             commands.entity(entity).insert(FeralDrone::default());
             drone.state = DroneState::Feral;
