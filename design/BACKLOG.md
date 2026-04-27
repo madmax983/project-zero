@@ -838,3 +838,28 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1203` Gravity-Tethered Inheritance — `specs/1203-gravity-tethered-inheritance.md`
 - [ ] `1204` The Culinary Singularity — `specs/1204-culinary-singularity.md`
 - [ ] `1205` The Scrap-Code Cult — `specs/1205-the-scrap-code-cult.md`
+- [ ] `1206` Phantom Infrastructure — `specs/1206-phantom-infrastructure.md`
+- [ ] `1207` Kinetic Storage — `specs/1207-kinetic-storage.md`
+- [ ] `1208` The Cadet Branch — `specs/1208-the-cadet-branch.md`
+- [ ] `1209` Asteroid Hollowing — `specs/1209-asteroid-hollowing.md`
+- [ ] `1210` Weaponized Tourism — `specs/1210-weaponized-tourism.md`
+- [ ] `1211` Tectonic Stress — `specs/1211-tectonic-stress.md`
+- [ ] `1212` The Galactic Games — `specs/1212-the-galactic-games.md`
+- [ ] `1213` Trade Embargoes — `specs/1213-trade-embargoes.md`
+- [ ] `1214` Biometric Drift — `specs/1214-biometric-drift.md`
+- [ ] `1215` The Empty Room — `specs/1215-the-empty-room.md`
+- [ ] `1216` Cultural Vandalism — `specs/1216-cultural-vandalism.md`
+- [ ] `1217` Sartorial Rebellion — `specs/1217-sartorial-rebellion.md`
+- [ ] `1218` The Lost Treaty — `specs/1218-the-lost-treaty.md`
+- [ ] `1219` Localized Gravity Vectors — `specs/1219-localized-gravity-vectors.md`
+- [ ] `1220` Emergency Beacon Bait — `specs/1220-emergency-beacon-bait.md`
+- [ ] `1221` The Good War — `specs/1221-the-good-war.md`
+- [ ] `1222` The Infinite Archive — `specs/1222-the-infinite-archive.md`
+- [ ] `1223` Harmonic Mining — `specs/1223-harmonic-mining.md`
+- [ ] `1224` The Industrial Rhythm — `specs/1224-the-industrial-rhythm.md`
+- [ ] `1225` Shadow Markets — `specs/1225-shadow-markets.md`
+- [ ] `1226` Thermal Gliders — `specs/1226-thermal-gliders.md`
+- [ ] `1227` Selective Amnesia — `specs/1227-selective-amnesia.md`
+- [ ] `1228` The Slippery Slope — `specs/1228-the-slippery-slope.md`
+- [ ] `1229` Hard-Light Architecture — `specs/1229-hard-light-architecture.md`
+- [ ] `1230` Title Inflation — `specs/1230-title-inflation.md`
