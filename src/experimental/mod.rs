@@ -96,6 +96,9 @@ pub mod the_final_will;
 pub use the_final_will::*;
 
 #[cfg(feature = "nova")]
+pub mod digital_seance;
+
+#[cfg(feature = "nova")]
 pub mod paperwork_singularity;
 
 #[cfg(feature = "nova")]
