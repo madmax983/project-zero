@@ -121,6 +121,10 @@ pub enum Trait {
     #[cfg(feature = "nova")]
     /// Yearns for the past or the core worlds, refusing new work but gaining comfort from the past.
     Homesick,
+    /// Has fled from a warzone.
+    Refugee,
+    /// Suffered extreme trauma.
+    Traumatized,
 }
 
 impl Trait {
@@ -187,6 +191,8 @@ impl Trait {
             Self::Dissident => "Dissident",
             #[cfg(feature = "nova")]
             Trait::Homesick => "Homesick",
+            Self::Refugee => "Refugee",
+            Self::Traumatized => "Traumatized",
         }
     }
 }

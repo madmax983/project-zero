@@ -425,6 +425,7 @@
 - [x] `667` Megafauna Terrain — `specs/667-megafauna-terrain.md` — completed 2026-06-01
 - [x] `668` Impact Event — `specs/668-impact-event.md` — completed 2026-05-24
 - [x] `669` Urban Spelunking — `specs/669-urban-spelunking.md` — completed 2026-05-24
+- [x] `662` Refugee Waves — `specs/662-refugee-waves.md` — completed 2024-05-24
 
 - [x] `965` The Vertical Schism — `specs/965-the-vertical-schism.md` — completed 2026-02-01
 - [x] `1116` Sub-light Tourism — `specs/1116-sub-light-tourism.md` — completed 2026-04-20
