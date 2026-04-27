@@ -9,7 +9,6 @@
 
 - [ ] `673` Indoctrination — `specs/673-indoctrination.md`
 
-- [ ] `668` Impact Event — `specs/668-impact-event.md`
 - [ ] `669` Urban Spelunking — `specs/669-urban-spelunking.md`
 - [ ] `670` Cultural Projection — `specs/670-cultural-projection.md`
 - [ ] `659` Orbital Bombardment — `specs/659-orbital-bombardment.md`

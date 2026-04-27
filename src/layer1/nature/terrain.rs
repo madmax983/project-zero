@@ -22,6 +22,8 @@ pub enum TerrainType {
     Sapling,
     /// Extremely hard deep rock from the lower crust.
     DeepRock,
+    /// Crater left by a catastrophic impact.
+    Crater,
     /// Molten magma rock causing heat damage.
     MagmaRock,
     /// Toxic fungal growth in the deep caverns.
@@ -52,6 +54,7 @@ impl TerrainType {
             Self::Shrub => "Shrub",
             Self::Sapling => "Sapling",
             Self::DeepRock => "Deep Rock",
+            Self::Crater => "Crater",
             Self::MagmaRock => "Magma Rock",
             Self::SporeBloom => "Spore Bloom",
             Self::Artifact => "Artifact",
@@ -89,7 +92,7 @@ impl TerrainType {
     pub const fn is_walkable(self) -> bool {
         !matches!(
             self,
-            Self::Rock | Self::Water | Self::DeepRock | Self::Artifact
+            Self::Rock | Self::Water | Self::DeepRock | Self::Artifact | Self::Crater
         )
     }
 
@@ -100,7 +103,7 @@ impl TerrainType {
     #[must_use]
     pub const fn heat_retention(self) -> f32 {
         match self {
-            Self::Rock | Self::DeepRock | Self::MagmaRock | Self::Artifact => 0.5,
+            Self::Rock | Self::DeepRock | Self::MagmaRock | Self::Artifact | Self::Crater => 0.5,
             Self::Water => 0.2,
             Self::Grass
             | Self::Dirt
@@ -352,6 +355,7 @@ mod tests {
                     | TerrainType::Water
                     | TerrainType::Tree
                     | TerrainType::DeepRock
+                    | TerrainType::Crater
                     | TerrainType::MagmaRock
                     | TerrainType::SporeBloom
                     | TerrainType::Artifact
