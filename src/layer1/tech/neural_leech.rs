@@ -21,6 +21,10 @@ pub struct NeuralHubDeathEvent {
 
 pub const LINK_RADIUS: f32 = 20.0;
 
+/// Applies neural link buffs/status.
+///
+/// ⚡ Bolt Optimization: Removed intermediate `.collect::<Vec<_>>()` allocation of hubs
+/// and replaced O(N) linear scan `hubs.iter().find(...)` with an O(1) query lookup.
 #[allow(clippy::type_complexity)]
 pub fn apply_neural_link_buffs_system(
     mut commands: Commands,
@@ -31,27 +35,24 @@ pub fn apply_neural_link_buffs_system(
     >,
     linked_query: Query<(Entity, &GridPosition, &NeuralLinked), (With<Pop>, Without<NeuralHub>)>,
 ) {
-    // Collect hubs to check distances
-    let hubs: Vec<(Entity, &GridPosition)> = hub_query.iter().collect();
-
     // 1. Link workers who are close to a hub
-    for (hub_entity, hub_tf) in &hubs {
+    for (hub_entity, hub_tf) in hub_query.iter() {
         for (worker_entity, worker_tf) in worker_query.iter() {
             // Simplified distance check (Manhattan distance)
             let dist = (hub_tf.x as f32 - worker_tf.x as f32).abs()
                 + (hub_tf.y as f32 - worker_tf.y as f32).abs();
 
             if dist <= LINK_RADIUS {
-                commands.entity(worker_entity).insert(NeuralLinked {
-                    hub_entity: *hub_entity,
-                });
+                commands
+                    .entity(worker_entity)
+                    .insert(NeuralLinked { hub_entity });
             }
         }
     }
 
     // 2. Unlink workers who are too far from their specific hub, or if the hub no longer exists/moved
     for (worker_entity, worker_tf, link) in linked_query.iter() {
-        if let Some((_, hub_tf)) = hubs.iter().find(|(h, _)| *h == link.hub_entity) {
+        if let Ok((_, hub_tf)) = hub_query.get(link.hub_entity) {
             let dist = (hub_tf.x as f32 - worker_tf.x as f32).abs()
                 + (hub_tf.y as f32 - worker_tf.y as f32).abs();
 
