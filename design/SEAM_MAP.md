@@ -777,3 +777,10 @@
 - **Systems connected:** `sonic_suppression_system` (Sonic Suppression) -> `NoiseMap` (Acoustic)
 - **Glue added:** Added `sonic_turret_noise_bridge_system` to `src/layer1/core/integration.rs` to insert `NoiseSource` into active `SonicTurret`s, and registered it in `src/layer1/systems/execution.rs`.
 - **Tests:** `tests/integration/sonic_suppression_bridge.rs`
+
+### INT-1106: Photophobic Resources -> LightMap
+- **Date:** 2026-07-01
+- **Systems connected:** `LightMap` -> `update_photophobic_light_level_system` -> `photophobic_degradation_system`
+- **Glue added:** `update_photophobic_light_level_system` in `src/layer1/economy/photophobic.rs`
+- **Schedule:** Chained in Economy
+- **Tests:** `tests/integration/photophobic_light_bridge.rs`

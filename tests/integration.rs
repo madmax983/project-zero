@@ -312,3 +312,6 @@ mod ghost_ships_bridge;
 
 #[path = "integration/cargo_cult_bridge.rs"]
 mod cargo_cult_bridge;
+
+#[path = "integration/photophobic_light_bridge.rs"]
+mod photophobic_light_bridge;
