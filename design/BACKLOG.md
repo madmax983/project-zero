@@ -9,7 +9,6 @@
 
 
 
-- [ ] `669` Urban Spelunking — `specs/669-urban-spelunking.md`
 - [ ] `670` Cultural Projection — `specs/670-cultural-projection.md`
 - [ ] `659` Orbital Bombardment — `specs/659-orbital-bombardment.md`
 - [ ] `660` Orbital Mirrors — `specs/660-orbital-mirrors.md`
