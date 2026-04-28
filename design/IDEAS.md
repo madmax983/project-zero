@@ -6130,7 +6130,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Echo
+## The Echo [SPECCED]
 
 **Layer:** 1
 
@@ -6144,7 +6144,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Visitor
+## The Visitor [SPECCED]
 
 **Layer:** 1
 
@@ -6172,7 +6172,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Red Tape Defense
+## Red Tape Defense [SPECCED]
 
 **Layer:** 3 -> 1
 
