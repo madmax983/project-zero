@@ -131,10 +131,9 @@ fn bfs_grid(
     grid_map: &HashMap<(i32, i32), Entity>,
     world: &World,
     visited: &mut HashSet<(i32, i32)>,
-) -> (f32, f32, Vec<Entity>) {
-    let mut grid_entities = Vec::new();
-    let mut queue = VecDeque::new();
-
+    grid_entities: &mut Vec<Entity>,
+    queue: &mut VecDeque<(i32, i32)>,
+) -> (f32, f32) {
     if visited.insert(start_pos) {
         queue.push_back(start_pos);
     }
@@ -178,7 +177,7 @@ fn bfs_grid(
             }
         }
     }
-    (total_production, total_demand, grid_entities)
+    (total_production, total_demand)
 }
 
 /// Calculates total production and demand for the grid connected to `start_entity`.
@@ -190,7 +189,9 @@ pub fn calculate_grid_stats(world: &mut World, start_entity: Entity) -> (f32, f3
     };
 
     let mut visited = HashSet::new();
-    let (prod, demand, _) = bfs_grid(start_pos, &grid_map, world, &mut visited);
+    let mut grid_entities = Vec::new();
+    let mut queue = VecDeque::new();
+    let (prod, demand) = bfs_grid(start_pos, &grid_map, world, &mut visited, &mut grid_entities, &mut queue);
     (prod, demand)
 }
 
@@ -230,15 +231,24 @@ pub fn power_grid_system(world: &mut World) {
 
     // 2. Find connected components
     let mut visited: HashSet<(i32, i32)> = HashSet::new();
+    let mut grid_entities = Vec::new();
+    let mut queue = VecDeque::new();
+    let mut batteries = Vec::new();
+    let mut kinetic_batteries = Vec::new();
 
     for start_pos in grid_map.keys().copied() {
         if visited.contains(&start_pos) {
             continue;
         }
 
+        grid_entities.clear();
+        queue.clear();
+        batteries.clear();
+        kinetic_batteries.clear();
+
         // BFS for this grid
-        let (total_production, base_demand, grid_entities) =
-            bfs_grid(start_pos, &grid_map, world, &mut visited);
+        let (total_production, base_demand) =
+            bfs_grid(start_pos, &grid_map, world, &mut visited, &mut grid_entities, &mut queue);
 
         let total_demand = base_demand * demand_multiplier;
 
@@ -246,8 +256,6 @@ pub fn power_grid_system(world: &mut World) {
         let mut net = total_production - total_demand;
 
         // Collect batteries in this grid
-        let mut batteries = Vec::new();
-        let mut kinetic_batteries = Vec::new();
         for e in &grid_entities {
             if world.get::<Battery>(*e).is_some() {
                 batteries.push(*e);
