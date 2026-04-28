@@ -428,6 +428,8 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
         crate::layer2::syzygy::update_syzygy_cycle_system,
         crate::layer2::syzygy::apply_syzygy_effects_system
             .after(crate::layer2::syzygy::update_syzygy_cycle_system),
+        crate::layer2::integration::astrological_beliefs_bridge_system
+            .after(crate::layer2::syzygy::update_syzygy_cycle_system),
         crate::layer2::trade::escape_velocity::process_launch_system
             .after(crate::layer2::syzygy::apply_syzygy_effects_system),
         crate::layer2::skyhooks::process_skyhook_launch

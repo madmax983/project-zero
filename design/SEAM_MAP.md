@@ -790,3 +790,10 @@
 - **Systems connected:** `MarketCrashEvent` -> `trigger_market_crash`, and `BarterRequest` -> `process_barter_trade` (Inflationary Spiral) -> `Layer1SystemSet::Economy`
 - **Glue added:** Registered `trigger_market_crash` and `process_barter_trade` in `src/layer1/systems/economy.rs`.
 - **Tests:** `tests/integration/inflation_spiral_bridge.rs`
+
+### INT-1107: Astrological Beliefs -> Syzygy Cycle
+- **Date:** 2026-07-02
+- **Systems connected:** `SyzygyCycle` -> `astrological_beliefs_bridge_system` -> `AstrologicalBelief`
+- **Glue added:** `astrological_beliefs_bridge_system` in `src/layer2/integration.rs`
+- **Schedule:** Runs after `update_syzygy_cycle_system`
+- **Tests:** `tests/integration/astrological_beliefs_bridge.rs`

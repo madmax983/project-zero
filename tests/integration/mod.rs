@@ -43,3 +43,4 @@ pub mod ventilation_atmosphere_bridge;
 mod ecological_succession_bridge;
 pub mod cargo_cult_bridge;
 pub mod sonic_suppression_bridge;
+pub mod astrological_beliefs_bridge;

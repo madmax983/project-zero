@@ -504,3 +504,24 @@ pub fn primitive_retaliation_chronicle_bridge(
         });
     }
 }
+
+/// Updates `AstrologicalBelief` based on the Layer 2 `SyzygyCycle`.
+/// Bridges Spec 1107 to celestial events.
+pub fn astrological_beliefs_bridge_system(
+    cycle: Option<Res<crate::layer2::syzygy::SyzygyCycle>>,
+    mut query: Query<&mut crate::layer1::culture::astrology::AstrologicalBelief>,
+) {
+    if let Some(syzygy_cycle) = cycle {
+        let lucky = syzygy_cycle.current_phase == crate::layer2::syzygy::SyzygyPhase::Active;
+        for mut belief in query.iter_mut() {
+            if lucky {
+                belief.lucky_alignment = true;
+                belief.unlucky_alignment = false;
+            } else {
+                // If inactive, it's considered a retrograde or unlucky phase for these believers
+                belief.lucky_alignment = false;
+                belief.unlucky_alignment = true;
+            }
+        }
+    }
+}

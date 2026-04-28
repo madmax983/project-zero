@@ -315,3 +315,6 @@ mod cargo_cult_bridge;
 
 #[path = "integration/photophobic_light_bridge.rs"]
 mod photophobic_light_bridge;
+
+#[path = "integration/astrological_beliefs_bridge.rs"]
+mod astrological_beliefs_bridge;
