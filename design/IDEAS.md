@@ -17729,3 +17729,58 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Use the highly efficient, adaptive drones in the wild, or stick to safe, manual labor to prevent the rise of a feral robotic ecosystem?
 
 ---
+## Neural Debt
+
+**Layer:** 1
+
+**Fantasy:** Trading your colonists' future sanity for immediate skill mastery.
+
+**Mechanic:** A "Neural Printer" allows colonists to instantly download high-tier skills (e.g., Master Surgeon, Elite Combatant). However, the downloaded skills cause a permanent, slowly compounding "Neural Debt" (stress modifier) that eventually results in catatonia or violent psychosis.
+
+**Emergence:** You print a generation of master builders to construct an impossible megastructure. They finish it flawlessly, but a decade later, the entire generation collectively loses their minds, forcing the untrained youth to imprison or kill their own heroes.
+
+**Tension:** Do you rely on slow, natural learning, or mortgage your colony's long-term sanity to survive an immediate crisis?
+
+---
+
+## Generational Trauma
+
+**Layer:** Cross-layer (1 -> 3)
+
+**Fantasy:** The horrors of the past shape the politics of the future.
+
+**Mechanic:** When a colony survives a massive, sustained disaster (e.g., decade-long siege, nuclear winter), all surviving pops gain the "Traumatized" trait. Decades later, their descendants (who never experienced the event) inherit a "Prepper" or "Militarist" political leaning. This heavily shifts the empire's Layer 3 diplomatic stance.
+
+**Emergence:** Your peaceful, trade-focused core world was nearly starved out by a pirate blockade three centuries ago. Now, despite being in a golden age of peace, the population consistently votes for massive, paranoid defense spending and aggressive preemptive strikes against neighbors.
+
+**Tension:** Do you shield your population from all hardship to keep them liberal and open, or let them suffer to breed a hard, unyielding frontier culture?
+
+---
+
+## The Scrap Fleet
+
+**Layer:** 2
+
+**Fantasy:** Desperate refugees weaponizing the wreckage of their own destroyed homes.
+
+**Mechanic:** When an orbital station or colony is destroyed, the survivors can cobble together a "Scrap Fleet" from the debris. These fleets cost zero resources to build but have terrible stats, constantly leak fuel, and degrade over time. They cannot be repaired, only reinforced with more scrap.
+
+**Emergence:** An enemy empire glasses your outermost mining station. The survivors turn the shattered station into a massive, heavily armed battering ram and kamikaze it into the enemy's flagship, winning the war with literal garbage.
+
+**Tension:** Do you rescue survivors with pristine, expensive rescue ships, or arm them with the wreckage of their homes and send them on a one-way revenge mission?
+
+---
+
+## Xenobotanical Symbiosis
+
+**Layer:** 1
+
+**Fantasy:** Your colonists physically adapting to a bizarre alien ecosystem, losing their humanity in the process.
+
+**Mechanic:** Pops working closely with certain native flora (e.g., "Glow-spores" or "Iron-vines") can develop a symbiotic relationship. They gain massive productivity boosts and no longer require standard food or sleep, but they must remain within a certain radius of the flora and slowly take on plant-like physical traits.
+
+**Emergence:** You use Iron-vines to boost your mining output. The miners become so adapted they can no longer leave the caves, forming an underground, photosynthesizing sub-species. When a fire destroys the vines, the miners instantly starve, crippling your economy.
+
+**Tension:** Do you accept the massive productivity gains of symbiosis, knowing it permanently traps a portion of your workforce and physically alters them?
+
+---
