@@ -17674,7 +17674,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Ghost Harvest
+## The Ghost Harvest [SPECCED]
 
 **Layer:** 1
 
@@ -17688,7 +17688,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Hyperlane Turbulence
+## Hyperlane Turbulence [SPECCED]
 
 **Layer:** 2 -> 3
 
@@ -17702,7 +17702,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Archive's Ransom
+## The Archive's Ransom [SPECCED]
 
 **Layer:** Cross-layer (1 -> 3)
 

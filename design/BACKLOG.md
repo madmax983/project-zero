@@ -872,3 +872,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1243` The Rumor Mill Economy — `specs/1243-the-rumor-mill-economy.md`
 - [ ] `1244` Acoustic Ecology — `specs/1244-acoustic-ecology.md`
 - [ ] `1245` Chronological Stutter — `specs/1245-chronological-stutter.md`
+- [ ] `1246` The Ghost Harvest — `specs/1246-the-ghost-harvest.md`
+- [ ] `1247` Hyperlane Turbulence — `specs/1247-hyperlane-turbulence.md`
+- [ ] `1248` The Archive's Ransom — `specs/1248-the-archives-ransom.md`
