@@ -5,10 +5,10 @@ use crate::layer1::spore_diplomat::SporeInfection;
 use bevy::prelude::*;
 
 pub mod brain_drain;
+pub mod cultural_pressure;
 pub mod cultural_ransom;
 pub mod proxy_wars;
 pub mod succession;
-pub mod cultural_pressure;
 
 #[derive(Component)]
 pub struct Envoy;

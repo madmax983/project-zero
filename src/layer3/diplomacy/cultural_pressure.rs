@@ -1,7 +1,7 @@
-use bevy::prelude::*;
+use crate::layer1::core::chronicle::{AddChronicleEvent, EventImportance};
 use crate::layer1::social::culture::CulturalInfluenceGrid;
 use crate::layer3::diplomacy_reflection::{Civilization, DiplomaticRelations, DiplomaticTraits};
-use crate::layer1::core::chronicle::{AddChronicleEvent, EventImportance};
+use bevy::prelude::*;
 
 #[derive(Component, Default)]
 pub struct CulturalVulnerability {
@@ -16,7 +16,15 @@ pub struct DefectionEvent {
 
 pub fn apply_cultural_pressure_system(
     influence: Option<Res<CulturalInfluenceGrid>>,
-    mut civs: Query<(Entity, &mut DiplomaticRelations, &DiplomaticTraits, &CulturalVulnerability), With<Civilization>>,
+    mut civs: Query<
+        (
+            Entity,
+            &mut DiplomaticRelations,
+            &DiplomaticTraits,
+            &CulturalVulnerability,
+        ),
+        With<Civilization>,
+    >,
     mut defection_events: EventWriter<DefectionEvent>,
     mut chronicle_events: EventWriter<AddChronicleEvent>,
 ) {
@@ -30,7 +38,8 @@ pub fn apply_cultural_pressure_system(
                         amount: 10,
                     });
                     chronicle_events.send(AddChronicleEvent {
-                        text: "Enemy soldiers lay down their arms to defect to our paradise".to_string(),
+                        text: "Enemy soldiers lay down their arms to defect to our paradise"
+                            .to_string(),
                         importance: EventImportance::Major,
                     });
 
@@ -58,15 +67,18 @@ pub fn process_defections_system(
     _commands: Commands,
 ) {
     for ev in defection_events.read() {
-        println!("Received {} defectors from Civ {:?}", ev.amount, ev.source_civ);
+        println!(
+            "Received {} defectors from Civ {:?}",
+            ev.amount, ev.source_civ
+        );
     }
 }
 
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::layer3::diplomacy_reflection::DiplomaticStanding;
     use crate::layer1::core::chronicle::Chronicle;
+    use crate::layer3::diplomacy_reflection::DiplomaticStanding;
 
     fn setup_app() -> App {
         let mut app = App::new();
@@ -74,10 +86,10 @@ mod tests {
         app.insert_resource(Chronicle::default());
         app.add_event::<DefectionEvent>();
         app.add_event::<AddChronicleEvent>();
-        app.add_systems(Update, (
-            apply_cultural_pressure_system,
-            process_defections_system,
-        ));
+        app.add_systems(
+            Update,
+            (apply_cultural_pressure_system, process_defections_system),
+        );
         app
     }
 
@@ -86,28 +98,44 @@ mod tests {
         let mut app = setup_app();
 
         // Setup high cultural pressure
-        app.world_mut().resource_mut::<CulturalInfluenceGrid>().total_pressure = 1000.0;
+        app.world_mut()
+            .resource_mut::<CulturalInfluenceGrid>()
+            .total_pressure = 1000.0;
 
-        let enemy_civ = app.world_mut().spawn((
-            Civilization { id: "The Hegemony".to_string() },
-            DiplomaticRelations {
-                relations: vec![DiplomaticStanding {
-                    target_id: "player".to_string(),
-                    standing: -50.0,
-                    sanctioned: false,
-                }],
-            },
-            DiplomaticTraits { is_warlike: true, ..Default::default() }, // Represents war stance
-            CulturalVulnerability { threshold: 500.0 }, // Defect if pressure > threshold
-        )).id();
+        let enemy_civ = app
+            .world_mut()
+            .spawn((
+                Civilization {
+                    id: "The Hegemony".to_string(),
+                },
+                DiplomaticRelations {
+                    relations: vec![DiplomaticStanding {
+                        target_id: "player".to_string(),
+                        standing: -50.0,
+                        sanctioned: false,
+                    }],
+                },
+                DiplomaticTraits {
+                    is_warlike: true,
+                    ..Default::default()
+                }, // Represents war stance
+                CulturalVulnerability { threshold: 500.0 }, // Defect if pressure > threshold
+            ))
+            .id();
 
         app.update();
 
         // Assert defection event was fired
-        let defection_events = app.world().get_resource::<Events<DefectionEvent>>().unwrap();
+        let defection_events = app
+            .world()
+            .get_resource::<Events<DefectionEvent>>()
+            .unwrap();
         let mut reader = defection_events.get_cursor();
         let ev = reader.read(defection_events).next().unwrap();
 
-        assert_eq!(ev.source_civ, enemy_civ, "Enemy civ should suffer defections due to overwhelming cultural pressure");
+        assert_eq!(
+            ev.source_civ, enemy_civ,
+            "Enemy civ should suffer defections due to overwhelming cultural pressure"
+        );
     }
 }

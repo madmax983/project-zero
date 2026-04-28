@@ -105,3 +105,6 @@ pub mod paperwork_singularity;
 pub mod nostalgia_contagion;
 #[cfg(feature = "nova")]
 pub mod zodiac_talisman;
+
+#[cfg(feature = "nova")]
+pub mod whispering_well;
