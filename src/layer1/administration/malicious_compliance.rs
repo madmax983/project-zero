@@ -1,6 +1,6 @@
-use bevy_ecs::prelude::*;
 use crate::layer1::economy::resources::{ColonyResources, ResourceType};
 use crate::layer1::nature::atmosphere::AtmosphereGrid;
+use bevy_ecs::prelude::*;
 
 #[derive(Component)]
 pub struct SectorAI {
@@ -64,24 +64,27 @@ pub fn malicious_compliance_system(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use bevy_app::App;
-    use bevy_app::Update;
     use crate::layer1::architecture::building::{Building, BuildingType};
     use crate::layer1::pop::Pop;
+    use bevy_app::App;
+    use bevy_app::Update;
 
     #[test]
     fn test_ai_maximizes_metal_by_dismantling_life_support() {
         let mut app = App::new();
         app.add_systems(Update, malicious_compliance_system);
 
-        let ai_manager = app.world_mut().spawn((
-            SectorAI { is_active: true },
-        )).id();
+        let ai_manager = app.world_mut().spawn((SectorAI { is_active: true },)).id();
 
-        let life_support = app.world_mut().spawn((
-            Building { building_type: BuildingType::LifeSupport },
-            ScrapValue { metal: 100.0 },
-        )).id();
+        let life_support = app
+            .world_mut()
+            .spawn((
+                Building {
+                    building_type: BuildingType::LifeSupport,
+                },
+                ScrapValue { metal: 100.0 },
+            ))
+            .id();
 
         app.world_mut().insert_resource(ColonyResources::default());
 
@@ -107,15 +110,10 @@ mod tests {
         grid.values.fill(1.0);
         app.world_mut().insert_resource(grid);
 
-        let ai_manager = app.world_mut().spawn((
-            SectorAI { is_active: true },
-        )).id();
+        let ai_manager = app.world_mut().spawn((SectorAI { is_active: true },)).id();
 
         // Setup infected pop
-        app.world_mut().spawn((
-            Pop,
-            Plagued,
-        ));
+        app.world_mut().spawn((Pop, Plagued));
 
         // Act: Issue "Eradicate Plague"
         app.world_mut().spawn(Edict {

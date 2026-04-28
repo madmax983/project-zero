@@ -9,18 +9,18 @@ pub mod designation;
 pub mod edicts;
 /// Inspections and rule enforcement.
 pub mod inspector;
-/// Permitting system for actions.
-pub mod permit;
 /// Malicious compliance AI mechanics.
 pub mod malicious_compliance;
+/// Permitting system for actions.
+pub mod permit;
 /// Zones and their definitions.
 pub mod zone;
 
 pub use admin::*;
-pub use malicious_compliance::*;
 pub use bureaucracy_of_sleep::*;
 pub use designation::*;
 pub use edicts::*;
 pub use inspector::*;
+pub use malicious_compliance::*;
 pub use permit::*;
 pub use zone::*;

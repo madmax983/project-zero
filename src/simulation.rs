@@ -492,9 +492,7 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
             .after(crate::layer3::map::process_hyperlane_collapse_system),
     ));
 
-    schedule.add_systems((
-        crate::layer3::events::refugee_waves::process_refugee_decision,
-    ));
+    schedule.add_systems((crate::layer3::events::refugee_waves::process_refugee_decision,));
 
     schedule.add_systems((
         crate::layer2::phantom::check_scrapcode_threshold_system
@@ -563,6 +561,11 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
         // 1064 Digital Detritus
         crate::layer3::digital_detritus::process_data_mining_system,
         crate::layer3::digital_detritus::record_virus_event_chronicle_system,
+        crate::layer1::social::culture::calculate_cultural_pressure_system,
+        crate::layer3::diplomacy::cultural_pressure::apply_cultural_pressure_system
+            .after(crate::layer1::social::culture::calculate_cultural_pressure_system),
+        crate::layer3::diplomacy::cultural_pressure::process_defections_system
+            .after(crate::layer3::diplomacy::cultural_pressure::apply_cultural_pressure_system),
     ));
 }
 #[cfg(test)]

@@ -126,6 +126,8 @@ pub struct Carrying {
 /// ```
 #[derive(Resource, Debug, Clone, Copy)]
 pub struct ColonyResources {
+    pub art: f32,
+    pub luxury: f32,
     /// Total food available in the colony.
     pub food: f32,
     /// Total wood available in the colony.
@@ -219,6 +221,8 @@ pub struct ColonyResources {
 impl Default for ColonyResources {
     fn default() -> Self {
         Self {
+            art: 0.0,
+            luxury: 0.0,
             food: 10.0,
             wood: 15.0,
             stone: 5.0,
@@ -272,6 +276,8 @@ impl Mul<f32> for ColonyResources {
 
     fn mul(self, rhs: f32) -> Self::Output {
         Self {
+            art: (self.art * rhs).ceil(),
+            luxury: (self.luxury * rhs).ceil(),
             food: (self.food * rhs).ceil(),
             wood: (self.wood * rhs).ceil(),
             stone: (self.stone * rhs).ceil(),
@@ -593,6 +599,8 @@ impl ColonyResources {
     #[must_use]
     pub const fn zeroed() -> Self {
         Self {
+            art: 0.0,
+            luxury: 0.0,
             food: 0.0,
             wood: 0.0,
             stone: 0.0,

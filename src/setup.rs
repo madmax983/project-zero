@@ -144,6 +144,7 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
         difficulty: scenario.difficulty,
     });
     world.insert_resource(GameState::default());
+    world.insert_resource(crate::layer1::social::culture::CulturalInfluenceGrid::default());
     world.init_resource::<crate::layer1::environment::bio_acoustic_miasma::MiasmaRecordedSecret>();
     world.init_resource::<crate::layer1::stress::TraumaTracker>();
 
@@ -327,6 +328,7 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     world.init_resource::<Events<crate::layer1::psionics::FireEvent>>();
     world.init_resource::<Events<crate::layer1::psionics::WorkFailedEvent>>();
     world.init_resource::<Events<AddChronicleEvent>>();
+    world.init_resource::<Events<crate::layer3::diplomacy::cultural_pressure::DefectionEvent>>();
     world.init_resource::<Events<crate::layer2::primitives::PrimitiveRetaliationEvent>>();
     world.init_resource::<Events<crate::layer1::radio_nostalgia::BroadcastReceivedEvent>>();
     world.init_resource::<Events<AffinityChange>>();
