@@ -6,3 +6,9 @@
 3. Extracted `Input` and `KeyCode` structs down into `shared::keyboard` to allow the simulation layers to read raw key states without importing `ui`.
 4. Decoupled `layer1::observer` by shifting the `observer_awareness_system` into `ui::selection`, allowing UI to apply the component based on its own selection state without `layer1` reading UI data.
 5. Decoupled `layer1::direct_link` by severing UI mutation logic from the simulation. The simulation now only processes `Possessed` entities, while the newly created `ui::input::handle_possession_ui_state` listens for possession events to toggle the `UiState` and `InputContextStack`.
+**Break Layer 2 Dependency Knots**
+**Tangle:** Circular dependencies between  and  (and ) caused structural failure and tightly coupled logic.
+**Blueprint:** Extracted core data structures (, ) and constants into dedicated  modules, cleanly severing the cyclic imports while preserving ECS system functionality.
+**[Break Layer 2 Dependency Knots]**
+**Tangle:** Circular dependencies between `layer2::fleet` and `layer2::station` (and `barnacles`) caused structural failure and tightly coupled logic.
+**Blueprint:** Extracted core data structures (`StationType`, `SpaceBarnacles`) and constants into dedicated `_types.rs` modules, cleanly severing the cyclic imports while preserving ECS system functionality.
