@@ -870,3 +870,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1240` The Decoy Frigate — `specs/1240-the-decoy-frigate.md`
 - [ ] `1241` The Commuter Tax — `specs/1241-the-commuter-tax.md`
 - [ ] `1242` Planetary Curvature — `specs/1242-planetary-curvature.md`
+- [ ] `1243` The Rumor Mill Economy — `specs/1243-the-rumor-mill-economy.md`
+- [ ] `1244` Acoustic Ecology — `specs/1244-acoustic-ecology.md`
+- [ ] `1245` Chronological Stutter — `specs/1245-chronological-stutter.md`

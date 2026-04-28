@@ -17632,7 +17632,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Investing resources into ships that cannot fight to manipulate enemy behavior, knowing that discovery means total tactical collapse.
 
 ---
-## The Rumor Mill Economy
+## The Rumor Mill Economy [SPECCED]
 
 **Layer:** Cross-layer
 
@@ -17646,7 +17646,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Acoustic Ecology
+## Acoustic Ecology [SPECCED]
 
 **Layer:** 1
 
@@ -17660,7 +17660,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Chronological Stutter
+## Chronological Stutter [SPECCED]
 
 **Layer:** 2
 
