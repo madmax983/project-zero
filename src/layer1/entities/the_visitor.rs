@@ -39,6 +39,41 @@ pub enum TheVisitorState {
 }
 
 /// Component marking "The Visitor" entity.
+///
+/// The Visitor is a cosmic wanderer drawn to the scent of stockpiled resources.
+/// They do not speak, they do not trade, and they do not conquer. They arrive
+/// purely to consume the colony's hard-earned materials. If left unchecked,
+/// their sheer mass will crush any [structures](crate::layer1::structure::Structure)
+/// foolish enough to stand between them and their meal.
+///
+/// # Details
+/// - **Trampling:** The Visitor ignores pathfinding costs and simply walks over obstacles.
+/// - **Satiation:** Once their `hunger` reaches 0, they will attempt to leave the map edge.
+/// - **Panics:** The AI system expects `GridPosition` to always be attached alongside this component.
+///
+/// # Examples
+///
+/// ```
+/// use scale::layer1::entities::the_visitor::{TheVisitor, TheVisitorState};
+/// use scale::layer1::map::GridPosition;
+/// use bevy_ecs::prelude::*;
+///
+/// let mut world = World::new();
+///
+/// // Spawn The Visitor and a target Stockpile
+/// let visitor_entity = world.spawn((
+///     TheVisitor {
+///         state: TheVisitorState::MoveToTarget,
+///         hunger: 50.0,
+///         ..Default::default()
+///     },
+///     GridPosition { x: 0, y: 0 }
+/// )).id();
+///
+/// let visitor_data = world.get::<TheVisitor>(visitor_entity).unwrap();
+/// assert_eq!(visitor_data.state, TheVisitorState::MoveToTarget);
+/// assert_eq!(visitor_data.hunger, 50.0);
+/// ```
 #[derive(Component)]
 pub struct TheVisitor {
     /// The current behavioral state.

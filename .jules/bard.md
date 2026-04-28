@@ -34,3 +34,6 @@
 ## 2024-05-20 - Doctest Missing Required Events
 **Confusion:** Sometimes a doctest will panic at runtime because the system it evaluates (`schedule.add_systems(...)`) queries for `EventWriter<T>` or `EventReader<T>`, but the event `T` hasn't been initialized in the test `World`.
 **Clarification:** You must manually initialize the event queue by inserting it as a resource: `world.insert_resource(Events::<T>::default());`. This solves runtime panics inside doctests related to Bevy event parameters.
+## 2024-05-20 - Missing Lore in Components
+**Confusion:** The code review bot pointed out that I only added `# Examples` and didn't fully lean into my storytelling persona by missing out Context, Details, and Links sections for `TheVisitor` and `Visitor`.
+**Clarification:** I need to always remember that I am not just a documentation generator, but a storyteller. The "lore" parts of my responses are crucial.
