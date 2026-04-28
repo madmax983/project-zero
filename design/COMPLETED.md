@@ -466,3 +466,4 @@
 - [x] `1080` Malicious Compliance AI - `specs/1080-malicious-compliance-ai.md` - completed 2026-04-27
 - [x] `673` Indoctrination — `specs/673-indoctrination.md` — completed 2026-04-27
 - [x] `1079` The Bureaucracy of Vanity — `specs/1079-bureaucracy-of-vanity.md` — completed 2026-05-01
+- [x] `670` Cultural Projection — `specs/670-cultural-projection.md` — completed 2024-05-28

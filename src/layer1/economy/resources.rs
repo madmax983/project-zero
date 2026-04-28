@@ -214,6 +214,14 @@ pub struct ColonyResources {
     pub void_ale: f32,
     /// Max Void-Ale.
     pub max_void_ale: f32,
+    /// Total Art available in the colony.
+    pub art: f32,
+    /// Total Luxury available in the colony.
+    pub luxury: f32,
+    /// Maximum Art capacity.
+    pub max_art: f32,
+    /// Maximum Luxury capacity.
+    pub max_luxury: f32,
 }
 
 impl Default for ColonyResources {
@@ -263,6 +271,10 @@ impl Default for ColonyResources {
             max_memory_cores: 50.0,
             void_ale: 0.0,
             max_void_ale: 50.0,
+            art: 0.0,
+            luxury: 0.0,
+            max_art: 1000.0,
+            max_luxury: 1000.0,
         }
     }
 }
@@ -317,6 +329,10 @@ impl Mul<f32> for ColonyResources {
             max_memory_cores: self.max_memory_cores,
             void_ale: (self.void_ale * rhs).ceil(),
             max_void_ale: self.max_void_ale,
+            art: (self.art * rhs).ceil(),
+            max_art: self.max_art,
+            luxury: (self.luxury * rhs).ceil(),
+            max_luxury: self.max_luxury,
         }
     }
 }
@@ -637,6 +653,10 @@ impl ColonyResources {
             max_memory_cores: 0.0,
             void_ale: 0.0,
             max_void_ale: 0.0,
+            art: 0.0,
+            luxury: 0.0,
+            max_art: 0.0,
+            max_luxury: 0.0,
         }
     }
 
