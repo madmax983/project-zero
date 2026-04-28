@@ -30,15 +30,21 @@ pub fn vanity_building_listener_system(
     mut events: EventReader<crate::layer1::core::events::BuildingCompletedEvent>,
     standing: Option<ResMut<ImperialStanding>>,
     demands: Option<ResMut<ActiveDemands>>,
-    buildings: Query<(&crate::layer1::architecture::building::Building, Option<&VanityProject>)>,
+    buildings: Query<(
+        &crate::layer1::architecture::building::Building,
+        Option<&VanityProject>,
+    )>,
 ) {
     if let (Some(mut standing_res), Some(mut active_demands)) = (standing, demands) {
         for event in events.read() {
             if let Ok((building, vanity)) = buildings.get(event.entity) {
-                if (vanity.is_some() || building.building_type == crate::layer1::architecture::building::BuildingType::Statue)
-                    && active_demands.vanity_demand_active {
-                        active_demands.vanity_demand_active = false;
-                        standing_res.value += 10;
+                if (vanity.is_some()
+                    || building.building_type
+                        == crate::layer1::architecture::building::BuildingType::Statue)
+                    && active_demands.vanity_demand_active
+                {
+                    active_demands.vanity_demand_active = false;
+                    standing_res.value += 10;
                 }
             }
         }
@@ -66,10 +72,10 @@ pub fn vanity_sabotage_system(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use bevy_app::{App, Update};
     use crate::layer1::architecture::building::{Building, BuildingType};
-    use crate::layer2::governance::Governor;
     use crate::layer1::core::events::BuildingCompletedEvent;
+    use crate::layer2::governance::Governor;
+    use bevy_app::{App, Update};
 
     #[test]
     fn test_vanity_project_fulfilled_boosts_standing() {
@@ -79,13 +85,20 @@ mod tests {
         app.add_systems(Update, vanity_building_listener_system);
 
         // Spawn governor
-        let governor = app.world_mut().spawn((
-            Governor { pop_entity: Entity::from_raw(0), assigned_at: 0 },
-            VainGovernor { is_vain: true },
-            // ...
-        )).id();
+        let governor = app
+            .world_mut()
+            .spawn((
+                Governor {
+                    pop_entity: Entity::from_raw(0),
+                    assigned_at: 0,
+                },
+                VainGovernor { is_vain: true },
+                // ...
+            ))
+            .id();
 
-        app.world_mut().insert_resource(ImperialStanding { value: 50 });
+        app.world_mut()
+            .insert_resource(ImperialStanding { value: 50 });
         app.world_mut().insert_resource(ActiveDemands {
             vanity_demand_active: true,
             time_since_demand: 0.0,
@@ -93,12 +106,19 @@ mod tests {
         });
 
         // Act: Player builds the vanity project
-        let b = app.world_mut().spawn((
-            Building { building_type: BuildingType::Statue },
-            VanityProject,
-        )).id();
+        let b = app
+            .world_mut()
+            .spawn((
+                Building {
+                    building_type: BuildingType::Statue,
+                },
+                VanityProject,
+            ))
+            .id();
 
-        app.world_mut().resource_mut::<Events<BuildingCompletedEvent>>().send(BuildingCompletedEvent { entity: b });
+        app.world_mut()
+            .resource_mut::<Events<BuildingCompletedEvent>>()
+            .send(BuildingCompletedEvent { entity: b });
 
         app.update();
 
@@ -113,12 +133,19 @@ mod tests {
         // Setup ...
         app.add_systems(Update, vanity_sabotage_system);
 
-        app.world_mut().insert_resource(GlobalEfficiency { value: 1.0 });
+        app.world_mut()
+            .insert_resource(GlobalEfficiency { value: 1.0 });
 
-        let governor = app.world_mut().spawn((
-            Governor { pop_entity: Entity::from_raw(0), assigned_at: 0 },
-            VainGovernor { is_vain: true },
-        )).id();
+        let governor = app
+            .world_mut()
+            .spawn((
+                Governor {
+                    pop_entity: Entity::from_raw(0),
+                    assigned_at: 0,
+                },
+                VainGovernor { is_vain: true },
+            ))
+            .id();
 
         app.world_mut().insert_resource(ActiveDemands {
             vanity_demand_active: true,

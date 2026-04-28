@@ -1463,7 +1463,13 @@ fn scan_terrain(world: &mut World, center_x: i32, center_y: i32, radius: ScanRad
             let occupied = world.resource::<OccupiedTiles>().0.contains(&(x, y));
 
             let bool_to_str = |b: bool| if b { "✓" } else { "✗" };
-            let get_color = |b: bool| if b { comfy_table::Color::Green } else { comfy_table::Color::DarkGrey };
+            let get_color = |b: bool| {
+                if b {
+                    comfy_table::Color::Green
+                } else {
+                    comfy_table::Color::DarkGrey
+                }
+            };
 
             table.add_row(vec![
                 Cell::new(format!("{},{}", x, y)),
@@ -1597,7 +1603,13 @@ fn get_tile_info(world: &mut World, x: i32, y: i32) {
         ]);
 
     let bool_to_str = |b: bool| if b { "✓" } else { "✗" };
-    let get_color = |b: bool| if b { comfy_table::Color::Green } else { comfy_table::Color::DarkGrey };
+    let get_color = |b: bool| {
+        if b {
+            comfy_table::Color::Green
+        } else {
+            comfy_table::Color::DarkGrey
+        }
+    };
 
     table.add_row(vec![
         Cell::new("Terrain"),

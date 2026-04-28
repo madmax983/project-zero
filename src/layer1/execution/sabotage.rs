@@ -1,7 +1,7 @@
-use bevy_ecs::prelude::*;
 use crate::layer1::architecture::Structure;
-use crate::layer1::utility_types::{ActionType, PopAction};
 use crate::layer1::execution::components::MovementTarget;
+use crate::layer1::utility_types::{ActionType, PopAction};
+use bevy_ecs::prelude::*;
 
 pub fn sabotage_action_system(
     mut commands: Commands,

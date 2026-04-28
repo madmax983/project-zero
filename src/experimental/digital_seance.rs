@@ -12,12 +12,12 @@
 //! However, tapping into the afterlife isn't silent: it causes the ServerBank to emit a massive `NoiseSource`
 //! that behaves as a ghostly wailing, degrading the morale of nearby living Pops.
 
+use crate::experimental::the_haunted_cartographer::HauntedGrid;
 use crate::layer1::architecture::Building;
 use crate::layer1::architecture::BuildingType;
 use crate::layer1::map::GridPosition;
 use crate::layer1::physics::acoustic::NoiseSource;
 use crate::layer1::resources::ColonyResources;
-use crate::experimental::the_haunted_cartographer::HauntedGrid;
 use bevy_ecs::prelude::*;
 
 /// Component indicating a ServerBank has connected to the HauntedGrid and is performing necro-computing.
@@ -86,25 +86,33 @@ mod tests {
         let mut world = World::new();
 
         let mut haunted_grid = HauntedGrid::default();
-        haunted_grid.death_counts.insert(GridPosition { x: 5, y: 5 }, 2);
+        haunted_grid
+            .death_counts
+            .insert(GridPosition { x: 5, y: 5 }, 2);
         world.insert_resource(haunted_grid);
         world.insert_resource(ColonyResources::default());
 
-        let server_bank = world.spawn((
-            Building {
-                building_type: BuildingType::ServerBank,
-            },
-            GridPosition { x: 5, y: 5 },
-        )).id();
+        let server_bank = world
+            .spawn((
+                Building {
+                    building_type: BuildingType::ServerBank,
+                },
+                GridPosition { x: 5, y: 5 },
+            ))
+            .id();
 
-        world.run_system_once(detect_necro_computing_system).unwrap();
+        world
+            .run_system_once(detect_necro_computing_system)
+            .unwrap();
 
         // Should have NecroComputingNode and NoiseSource
         assert!(world.get::<NecroComputingNode>(server_bank).is_some());
         assert!(world.get::<NoiseSource>(server_bank).is_some());
 
         // Run generation system
-        world.run_system_once(necro_computing_generation_system).unwrap();
+        world
+            .run_system_once(necro_computing_generation_system)
+            .unwrap();
 
         // Should generate 2 deaths * 0.1 = 0.2 Knowledge
         let resources = world.resource::<ColonyResources>();

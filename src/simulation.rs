@@ -492,9 +492,7 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
             .after(crate::layer3::map::process_hyperlane_collapse_system),
     ));
 
-    schedule.add_systems((
-        crate::layer3::events::refugee_waves::process_refugee_decision,
-    ));
+    schedule.add_systems((crate::layer3::events::refugee_waves::process_refugee_decision,));
 
     schedule.add_systems((
         crate::layer2::phantom::check_scrapcode_threshold_system
