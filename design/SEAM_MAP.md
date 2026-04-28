@@ -790,3 +790,9 @@
 - **Systems connected:** `MarketCrashEvent` -> `trigger_market_crash`, and `BarterRequest` -> `process_barter_trade` (Inflationary Spiral) -> `Layer1SystemSet::Economy`
 - **Glue added:** Registered `trigger_market_crash` and `process_barter_trade` in `src/layer1/systems/economy.rs`.
 - **Tests:** `tests/integration/inflation_spiral_bridge.rs`
+
+### INT-1079: The Bureaucracy of Vanity -> Economy/Diplomacy
+- **Date:** 2026-05-01
+- **Systems connected:** `vanity_building_listener_system` -> `vanity_sabotage_system`
+- **Glue added:** Registered systems in `SimulationSchedule` under Layer 3 integration, and initialized `ImperialStanding`, `GlobalEfficiency`, and `ActiveDemands` in `src/setup.rs`.
+- **Tests:** `tests/integration/bureaucracy_of_vanity_bridge.rs`

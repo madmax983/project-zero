@@ -315,3 +315,5 @@ mod cargo_cult_bridge;
 
 #[path = "integration/photophobic_light_bridge.rs"]
 mod photophobic_light_bridge;
+#[path = "integration/bureaucracy_of_vanity_bridge.rs"]
+mod bureaucracy_of_vanity_bridge;

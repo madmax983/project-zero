@@ -163,6 +163,10 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     world.init_resource::<bevy_ecs::event::Events<crate::layer2::cartographers_curse::SellTelemetryEvent>>();
     world.insert_resource(MenuState::default());
     world.init_resource::<crate::layer1::unseen_bureaucracy::ShadowEconomy>();
+
+    world.insert_resource(crate::layer3::bureaucracy_of_vanity::ImperialStanding { value: 0 });
+    world.insert_resource(crate::layer3::bureaucracy_of_vanity::GlobalEfficiency { value: 1.0 });
+    world.init_resource::<crate::layer3::bureaucracy_of_vanity::ActiveDemands>();
     #[cfg(feature = "nova")]
     world.init_resource::<crate::experimental::the_haunted_cartographer::HauntedGrid>();
 
