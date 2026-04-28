@@ -872,3 +872,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1243` The Rumor Mill Economy — `specs/1243-the-rumor-mill-economy.md`
 - [ ] `1244` Acoustic Ecology — `specs/1244-acoustic-ecology.md`
 - [ ] `1245` Chronological Stutter — `specs/1245-chronological-stutter.md`
+- [ ] `1246` The Echo — `specs/1246-the-echo.md`
+- [ ] `1247` The Visitor — `specs/1247-the-visitor.md`
+- [ ] `1248` Red Tape Defense — `specs/1248-red-tape-defense.md`
