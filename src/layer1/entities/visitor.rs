@@ -27,6 +27,39 @@ pub enum VisitorState {
 }
 
 /// Component marking an entity as a visitor.
+///
+/// Visitors are the lifeblood of cultural exchange in a remote colony. They arrive
+/// from off-world transport ships, [taverns](crate::layer1::social::Tavern), or distress signals,
+/// bringing with them new ideas, trade opportunities, or potentially infiltration risks.
+///
+/// # Details
+/// - **Lifecycle:** A visitor arrives at `arrival_tick`, wanders the colony, and leaves when `departure_tick` is met.
+/// - **Integration:** If they find the colony sufficiently prosperous, they might request permanent residency via [`crate::layer1::customs::ImmigrationStatus`].
+/// - **Panics:** Systems will ignore this entity if it is not paired with a `GridPosition`.
+///
+/// # Examples
+///
+/// ```
+/// use scale::layer1::entities::visitor::{Visitor, VisitorState};
+/// use scale::layer1::map::GridPosition;
+/// use bevy_ecs::prelude::*;
+///
+/// let mut world = World::new();
+///
+/// // A visitor arriving at the colony
+/// let visitor_entity = world.spawn((
+///     Visitor {
+///         state: VisitorState::Arriving,
+///         arrival_tick: 0,
+///         departure_tick: 1000,
+///     },
+///     GridPosition { x: 5, y: 5 },
+/// )).id();
+///
+/// let visitor_data = world.get::<Visitor>(visitor_entity).unwrap();
+/// assert_eq!(visitor_data.state, VisitorState::Arriving);
+/// assert_eq!(visitor_data.departure_tick, 1000);
+/// ```
 #[derive(Component, Debug, Clone)]
 pub struct Visitor {
     /// Current state of the visitor.
