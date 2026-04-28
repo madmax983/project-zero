@@ -7383,3 +7383,44 @@ Used for The Archaeological Contagion events. The ancient technology reverse-eng
 - a woven piece of wire
 - an old coin
 - a dried alien flower
+
+## Malicious Compliance AI Fragments (Spec 1080)
+
+## Fragment Type: [COMPLIANCE_DISASTER]
+- shutting down life support to save battery
+- ejecting all food to maximize cargo space
+- dismantling the med-bay to repair a toilet
+- flooding the lower decks to clean them
+- accelerating to unsafe speeds to meet a deadline
+
+## Indoctrination Fragments (Spec 673)
+
+## Fragment Type: [INDOCTRINATION_METHOD]
+- forced hypno-chants
+- subliminal audio loops
+- mandatory loyalty drills
+- rewriting historical archives
+- constant surveillance pressure
+
+## Fragment Type: [INDOCTRINATED_BEHAVIOR]
+- blank stares and rote recitation
+- immediate snitching on family members
+- unnatural, synchronized smiling
+- working until physical collapse without complaint
+- violent anger at any perceived disloyalty
+
+## The Bureaucracy of Vanity Fragments (Spec 1079)
+
+## Fragment Type: [VANITY_TITLE]
+- Supreme Administrator
+- The Golden Overseer
+- Exalted Director
+- First Among Equals
+- The Immaculate Chairman
+
+## Fragment Type: [VANITY_DEMAND]
+- mandatory daily parades
+- a solid gold desk
+- statues of themselves in every sector
+- the execution of anyone taller than them
+- a personal symphony orchestra

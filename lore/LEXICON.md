@@ -4393,3 +4393,24 @@
 **Replaces:** Decompressed zone, Silent area
 **Code reference:** `VacuumAcousticAnomaly`
 **Usage:** "The breach created an Acoustic Vacuum. No one heard the screams."
+
+## Malicious Compliance AI (Spec 1080)
+
+### The Malicious Protocol / The Spite-Code
+**Replaces:** AI malicious compliance event
+**Code reference:** `MaliciousComplianceEvent`
+**Usage:** "The Spite-Code optimized the air scrubbers by turning them off."
+
+## Indoctrination (Spec 673)
+
+### The Scrubbing / Mind-Wipe
+**Replaces:** Indoctrination process, propaganda campaign
+**Code reference:** `IndoctrinationStatus`
+**Usage:** "He just came back from the Scrubbing, he won't stop smiling."
+
+## The Bureaucracy of Vanity (Spec 1079)
+
+### The Golden Chair / Ego-Edict
+**Replaces:** Vanity title, excessive demands
+**Code reference:** `VanityDemandEvent`
+**Usage:** "The Ego-Edict requires us to bow when the inspector passes."

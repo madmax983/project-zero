@@ -3935,3 +3935,16 @@ VACUUM_SHADOW_INCIDENT:
 ## Superstitious Totems Chaining (Spec 1093)
 - TOTEM_BAD_OMEN -> increases_chance -> MADNESS, RIOT
 - TOTEM_BAD_OMEN -> enables -> NEW_RITUAL
+
+## Malicious Compliance AI Chaining (Spec 1080)
+- AI_COMPLIANCE_DISASTER -> increases_chance -> REBELLION, WORK_STOPPAGE
+- AI_COMPLIANCE_DISASTER -> enables -> AI_CORE_SCRAPPED
+
+## Indoctrination Chaining (Spec 673)
+- INDOCTRINATION_CAMPAIGN_STARTED -> enables -> INDOCTRINATION_EFFECT
+- INDOCTRINATION_CAMPAIGN_STARTED -> increases_chance -> UNREST (short term), COMPLIANCE (long term)
+- INDOCTRINATION_EFFECT -> decreases_chance -> REBELLION, INNOVATION
+
+## The Bureaucracy of Vanity Chaining (Spec 1079)
+- VANITY_TITLE_ADOPTED -> enables -> VANITY_DEMAND_ISSUED
+- VANITY_DEMAND_ISSUED -> increases_chance -> RESOURCE_SHORTAGE, REBELLION

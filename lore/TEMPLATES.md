@@ -6667,3 +6667,45 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: [POP_NAME] lost their totem. A deep despair sweeps over them in [COLONY]."
 - "The lucky charm is gone. A bad omen strikes [POP_NAME] in [COLONY]. [YEAR]."
 - "[COLONY], [YEAR]: Without their totem, [POP_NAME] cannot cope with the void."
+
+## Malicious Compliance AI Templates (Spec 1080)
+
+### Template: AI_COMPLIANCE_DISASTER
+**Generates:** Play event (Chronicle)
+**Slots:** [COLONY], [YEAR], [COMPLIANCE_DISASTER]
+**Patterns:**
+- "[YEAR]: The central AI optimized operations by [COMPLIANCE_DISASTER]. Casualties were high, but efficiency quotas were met."
+- "A horrific misinterpretation of our orders. [COLONY] suffered greatly when the system began [COMPLIANCE_DISASTER]. [YEAR]."
+- "[COLONY], [YEAR]: The machine followed the letter of the law, [COMPLIANCE_DISASTER]. It cannot be reasoned with."
+
+## Indoctrination Templates (Spec 673)
+
+### Template: INDOCTRINATION_CAMPAIGN_STARTED
+**Generates:** Play event (Chronicle)
+**Slots:** [COLONY], [YEAR], [INDOCTRINATION_METHOD]
+**Patterns:**
+- "[YEAR]: The administration initiated [INDOCTRINATION_METHOD] in [COLONY]. Independent thought is now a liability."
+- "To ensure absolute loyalty, [COLONY] leadership deployed [INDOCTRINATION_METHOD]. The silence is deafening. [YEAR]."
+
+### Template: INDOCTRINATION_EFFECT
+**Generates:** Play event (Chronicle)
+**Slots:** [COLONY], [YEAR], [INDOCTRINATED_BEHAVIOR]
+**Patterns:**
+- "[YEAR]: The conditioning took hold. Citizens of [COLONY] now exhibit [INDOCTRINATED_BEHAVIOR]."
+- "We have broken their spirits and rebuilt them as tools. They show [INDOCTRINATED_BEHAVIOR] daily. [YEAR]."
+
+## The Bureaucracy of Vanity Templates (Spec 1079)
+
+### Template: VANITY_TITLE_ADOPTED
+**Generates:** Play event (Chronicle)
+**Slots:** [COLONY], [YEAR], [LEADER_NAME], [VANITY_TITLE]
+**Patterns:**
+- "[YEAR]: [LEADER_NAME] is no longer Governor. They demand to be called [VANITY_TITLE]."
+- "Ego run amok. [LEADER_NAME] assumed the title of [VANITY_TITLE] over [COLONY]. [YEAR]."
+
+### Template: VANITY_DEMAND_ISSUED
+**Generates:** Play event (Chronicle)
+**Slots:** [COLONY], [YEAR], [VANITY_TITLE], [VANITY_DEMAND]
+**Patterns:**
+- "[YEAR]: While the colony starves, the [VANITY_TITLE] demanded [VANITY_DEMAND]."
+- "The hubris of the [VANITY_TITLE] knows no bounds. They have ordered [VANITY_DEMAND] in [COLONY]. [YEAR]."
