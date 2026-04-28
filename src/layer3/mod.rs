@@ -24,4 +24,6 @@ pub mod planet;
 pub mod stellar_cartography;
 pub mod subjective_economics;
 pub mod treaty_cruisers;
+pub mod bureaucracy_of_vanity;
+pub use bureaucracy_of_vanity::*;
 pub use digital_detritus::*;
