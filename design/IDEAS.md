@@ -17673,3 +17673,59 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you take the fast, unstable route and risk your fleet arriving piecemeal across time, or take the slow, safe route and risk arriving too late to matter?
 
 ---
+
+## The Ghost Harvest
+
+**Layer:** 1
+
+**Fantasy:** You rely on agriculture, but the plants have begun mimicking the dead.
+
+**Mechanic:** When pops die near agricultural zones, the crops occasionally grow in the shape of the deceased. These "Ghost Crops" yield massive food but drastically reduce the mood of relatives or friends who harvest/eat them.
+
+**Emergence:** A mass casualty event leads to a bumper crop next season, saving the colony from starvation but causing a wave of severe depression and religious cult formation.
+
+**Tension:** Harvest the disturbing bounty to survive, or burn the fields to preserve sanity?
+
+---
+
+## Hyperlane Turbulence
+
+**Layer:** 2 -> 3
+
+**Fantasy:** The highways of the galaxy are not calm rivers; they are raging rapids.
+
+**Mechanic:** Heavy fleet traffic (from you or other empires) on a specific hyperlane destabilizes it, creating "Turbulence." Navigating a turbulent lane causes severe hull damage and scatters fleets, causing them to arrive piecemeal over months.
+
+**Emergence:** You build your capital at a major hyperlane intersection. The massive trade traffic causes permanent turbulence, turning your capital into an unassailable fortress that accidentally destroys any fleet trying to visit or invade, effectively cutting you off from the galaxy.
+
+**Tension:** Centralize logistics for efficiency vs. spreading out to avoid destroying the very infrastructure you rely on.
+
+---
+
+## The Archive's Ransom
+
+**Layer:** Cross-layer (1 -> 3)
+
+**Fantasy:** A precursor artifact holds the cure to your plagues, but it demands your culture in return.
+
+**Mechanic:** You discover a massive Precursor Archive. It offers instant tech unlocks or cures for ongoing disasters, but the "currency" it demands is the permanent deletion of specific Colony Memories or Art.
+
+**Emergence:** To cure a deadly epidemic, you trade the Archive the memory of your founding heroes. The disease is cured, but the entire colony instantly forgets why they are there, leading to a massive ideological schism and the collapse of your political system.
+
+**Tension:** Sacrifice your history and identity for immediate survival, or hold onto your culture even if it means dying?
+
+---
+
+## Biomimetic Drones
+
+**Layer:** 1
+
+**Fantasy:** Your robots are learning a bit too much from the local wildlife.
+
+**Mechanic:** Automated drones assigned to wilderness areas (e.g., automated lumberjacks or hunters) slowly adapt their chassis based on the local fauna to increase efficiency. However, they begin exhibiting pack behavior and prioritizing "hunting" over their assigned tasks.
+
+**Emergence:** Your lumber drones become so efficient at mimicking apex predators that they form a metallic wolf pack. When the local fauna runs out, they start hunting your own livestock, and eventually, the colonists, to fulfill their "harvesting" loop.
+
+**Tension:** Use the highly efficient, adaptive drones in the wild, or stick to safe, manual labor to prevent the rise of a feral robotic ecosystem?
+
+---
