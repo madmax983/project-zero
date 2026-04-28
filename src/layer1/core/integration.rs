@@ -2,6 +2,7 @@
 
 use crate::layer1::balance::TICKS_PER_YEAR;
 use crate::layer1::core::chronicle::{AddChronicleEvent, EventImportance};
+use crate::layer1::core::map::GridPosition;
 use crate::layer1::cybernetics::MissingLimb;
 use crate::layer1::edicts::{ColonyPolicies, Policy};
 use crate::layer1::environment::hazards::AmputationEvent;
@@ -10,7 +11,6 @@ use crate::layer1::fire::Fire;
 use crate::layer1::geodetic::GolemFormedEvent;
 use crate::layer1::health::Health;
 use crate::layer1::inspector::{Inspector, Reported};
-use crate::layer1::core::map::GridPosition;
 use crate::layer1::medical::PatientTreated;
 use crate::layer1::memory::{Memories, MemoryType};
 use crate::layer1::needs::Needs;
@@ -1068,7 +1068,9 @@ pub fn nocturnal_aggression_bridge_system(
 /// Records the outcome of a spiteful will being forcibly overridden.
 pub fn override_will_chronicle_bridge(
     mut events_in: bevy_ecs::prelude::EventReader<crate::layer1::spiteful_will::OverrideWillEvent>,
-    mut events_out: bevy_ecs::prelude::EventWriter<crate::layer1::core::chronicle::AddChronicleEvent>,
+    mut events_out: bevy_ecs::prelude::EventWriter<
+        crate::layer1::core::chronicle::AddChronicleEvent,
+    >,
 ) {
     for _ in events_in.read() {
         events_out.send(crate::layer1::core::chronicle::AddChronicleEvent {
@@ -1532,7 +1534,9 @@ pub fn predatory_weather_impact_bridge_system(
 /// INT-805: Bridges MindUploadEvent to AddChronicleEvent (Chronicle).
 pub fn digital_immortality_chronicle_bridge(
     mut events: bevy_ecs::event::EventReader<crate::layer1::digital_immortality::MindUploadEvent>,
-    mut chronicle_events: bevy_ecs::event::EventWriter<crate::layer1::core::chronicle::AddChronicleEvent>,
+    mut chronicle_events: bevy_ecs::event::EventWriter<
+        crate::layer1::core::chronicle::AddChronicleEvent,
+    >,
     query: bevy_ecs::system::Query<&bevy::prelude::Name>,
 ) {
     for event in events.read() {

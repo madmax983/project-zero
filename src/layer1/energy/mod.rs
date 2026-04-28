@@ -191,7 +191,14 @@ pub fn calculate_grid_stats(world: &mut World, start_entity: Entity) -> (f32, f3
     let mut visited = HashSet::new();
     let mut grid_entities = Vec::new();
     let mut queue = VecDeque::new();
-    let (prod, demand) = bfs_grid(start_pos, &grid_map, world, &mut visited, &mut grid_entities, &mut queue);
+    let (prod, demand) = bfs_grid(
+        start_pos,
+        &grid_map,
+        world,
+        &mut visited,
+        &mut grid_entities,
+        &mut queue,
+    );
     (prod, demand)
 }
 
@@ -247,8 +254,14 @@ pub fn power_grid_system(world: &mut World) {
         kinetic_batteries.clear();
 
         // BFS for this grid
-        let (total_production, base_demand) =
-            bfs_grid(start_pos, &grid_map, world, &mut visited, &mut grid_entities, &mut queue);
+        let (total_production, base_demand) = bfs_grid(
+            start_pos,
+            &grid_map,
+            world,
+            &mut visited,
+            &mut grid_entities,
+            &mut queue,
+        );
 
         let total_demand = base_demand * demand_multiplier;
 

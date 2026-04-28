@@ -145,6 +145,25 @@ fn format_mini_bar(current: f32, max: f32, width: usize) -> String {
     format!("[{}{}]", "█".repeat(filled), "░".repeat(empty))
 }
 
+fn create_resource_row<'a>(
+    label: &'a str,
+    label_color: Color,
+    current: f32,
+    max: f32,
+    inverse: bool,
+) -> Row<'a> {
+    Row::new(vec![
+        Cell::from(label).style(Style::default().fg(label_color)),
+        Cell::from(format!(
+            "{:.0}/{:.0} {}",
+            current,
+            max,
+            format_mini_bar(current, max, 10)
+        ))
+        .style(Style::default().fg(get_resource_color(current, max, inverse))),
+    ])
+}
+
 fn render_colony_stats(frame: &mut Frame, area: Rect, world: &World) {
     let resources = world.resource::<ColonyResources>();
 
@@ -245,62 +264,34 @@ fn render_status_module(
 
 fn render_survival_module(frame: &mut Frame, area: Rect, resources: &ColonyResources) {
     let survival_rows = vec![
-        Row::new(vec![
-            Cell::from("🍖 Food").style(Style::default().fg(Color::Green)),
-            Cell::from(format!(
-                "{:.0}/{:.0} {}",
-                resources.total_food(),
-                resources.max_food,
-                format_mini_bar(resources.total_food(), resources.max_food, 10)
-            ))
-            .style(Style::default().fg(get_resource_color(
-                resources.total_food(),
-                resources.max_food,
-                false,
-            ))),
-        ]),
-        Row::new(vec![
-            Cell::from("💧 Water").style(Style::default().fg(Color::Blue)),
-            Cell::from(format!(
-                "{:.0}/{:.0} {}",
-                resources.water,
-                resources.max_water,
-                format_mini_bar(resources.water, resources.max_water, 10)
-            ))
-            .style(Style::default().fg(get_resource_color(
-                resources.water,
-                resources.max_water,
-                false,
-            ))),
-        ]),
-        Row::new(vec![
-            Cell::from("⛽ Fuel").style(Style::default().fg(Color::Yellow)),
-            Cell::from(format!(
-                "{:.0}/{:.0} {}",
-                resources.fuel,
-                resources.max_fuel,
-                format_mini_bar(resources.fuel, resources.max_fuel, 10)
-            ))
-            .style(Style::default().fg(get_resource_color(
-                resources.fuel,
-                resources.max_fuel,
-                false,
-            ))),
-        ]),
-        Row::new(vec![
-            Cell::from("🗑 Waste").style(Style::default().fg(Color::DarkGray)),
-            Cell::from(format!(
-                "{:.0}/{:.0} {}",
-                resources.waste,
-                resources.max_waste,
-                format_mini_bar(resources.waste, resources.max_waste, 10)
-            ))
-            .style(Style::default().fg(get_resource_color(
-                resources.waste,
-                resources.max_waste,
-                true,
-            ))),
-        ]),
+        create_resource_row(
+            "🍖 Food",
+            Color::Green,
+            resources.total_food(),
+            resources.max_food,
+            false,
+        ),
+        create_resource_row(
+            "💧 Water",
+            Color::Blue,
+            resources.water,
+            resources.max_water,
+            false,
+        ),
+        create_resource_row(
+            "⛽ Fuel",
+            Color::Yellow,
+            resources.fuel,
+            resources.max_fuel,
+            false,
+        ),
+        create_resource_row(
+            "🗑 Waste",
+            Color::DarkGray,
+            resources.waste,
+            resources.max_waste,
+            true,
+        ),
     ];
 
     let survival_table = Table::new(
@@ -319,62 +310,34 @@ fn render_survival_module(frame: &mut Frame, area: Rect, resources: &ColonyResou
 
 fn render_industry_module(frame: &mut Frame, area: Rect, resources: &ColonyResources) {
     let industry_rows = vec![
-        Row::new(vec![
-            Cell::from("🌲 Wood").style(Style::default().fg(Color::White)),
-            Cell::from(format!(
-                "{:.0}/{:.0} {}",
-                resources.wood,
-                resources.max_wood,
-                format_mini_bar(resources.wood, resources.max_wood, 10)
-            ))
-            .style(Style::default().fg(get_resource_color(
-                resources.wood,
-                resources.max_wood,
-                false,
-            ))),
-        ]),
-        Row::new(vec![
-            Cell::from("🪨 Stone").style(Style::default().fg(Color::Gray)),
-            Cell::from(format!(
-                "{:.0}/{:.0} {}",
-                resources.stone,
-                resources.max_stone,
-                format_mini_bar(resources.stone, resources.max_stone, 10)
-            ))
-            .style(Style::default().fg(get_resource_color(
-                resources.stone,
-                resources.max_stone,
-                false,
-            ))),
-        ]),
-        Row::new(vec![
-            Cell::from("⚙ Metal").style(Style::default().fg(Color::LightBlue)),
-            Cell::from(format!(
-                "{:.0}/{:.0} {}",
-                resources.metal,
-                resources.max_metal,
-                format_mini_bar(resources.metal, resources.max_metal, 10)
-            ))
-            .style(Style::default().fg(get_resource_color(
-                resources.metal,
-                resources.max_metal,
-                false,
-            ))),
-        ]),
-        Row::new(vec![
-            Cell::from("🔧 Tools").style(Style::default().fg(Color::Cyan)),
-            Cell::from(format!(
-                "{:.0}/{:.0} {}",
-                resources.tools,
-                resources.max_tools,
-                format_mini_bar(resources.tools, resources.max_tools, 10)
-            ))
-            .style(Style::default().fg(get_resource_color(
-                resources.tools,
-                resources.max_tools,
-                false,
-            ))),
-        ]),
+        create_resource_row(
+            "🌲 Wood",
+            Color::White,
+            resources.wood,
+            resources.max_wood,
+            false,
+        ),
+        create_resource_row(
+            "🪨 Stone",
+            Color::Gray,
+            resources.stone,
+            resources.max_stone,
+            false,
+        ),
+        create_resource_row(
+            "⚙ Metal",
+            Color::LightBlue,
+            resources.metal,
+            resources.max_metal,
+            false,
+        ),
+        create_resource_row(
+            "🔧 Tools",
+            Color::Cyan,
+            resources.tools,
+            resources.max_tools,
+            false,
+        ),
     ];
 
     let industry_table = Table::new(
@@ -398,48 +361,27 @@ fn render_economy_module(
     world: &World,
 ) {
     let economy_rows = vec![
-        Row::new(vec![
-            Cell::from("🔬 Tech").style(Style::default().fg(Color::Magenta)),
-            Cell::from(format!(
-                "{:.0}/{:.0} {}",
-                resources.knowledge,
-                resources.max_knowledge,
-                format_mini_bar(resources.knowledge, resources.max_knowledge, 10)
-            ))
-            .style(Style::default().fg(get_resource_color(
-                resources.knowledge,
-                resources.max_knowledge,
-                false,
-            ))),
-        ]),
-        Row::new(vec![
-            Cell::from("👕 Clothes").style(Style::default().fg(Color::LightMagenta)),
-            Cell::from(format!(
-                "{:.0}/{:.0} {}",
-                resources.clothing,
-                resources.max_clothing,
-                format_mini_bar(resources.clothing, resources.max_clothing, 10)
-            ))
-            .style(Style::default().fg(get_resource_color(
-                resources.clothing,
-                resources.max_clothing,
-                false,
-            ))),
-        ]),
-        Row::new(vec![
-            Cell::from("🍺 Alcohol").style(Style::default().fg(Color::Yellow)),
-            Cell::from(format!(
-                "{:.0}/{:.0} {}",
-                resources.alcohol,
-                resources.max_alcohol,
-                format_mini_bar(resources.alcohol, resources.max_alcohol, 10)
-            ))
-            .style(Style::default().fg(get_resource_color(
-                resources.alcohol,
-                resources.max_alcohol,
-                false,
-            ))),
-        ]),
+        create_resource_row(
+            "🔬 Tech",
+            Color::Magenta,
+            resources.knowledge,
+            resources.max_knowledge,
+            false,
+        ),
+        create_resource_row(
+            "👕 Clothes",
+            Color::LightMagenta,
+            resources.clothing,
+            resources.max_clothing,
+            false,
+        ),
+        create_resource_row(
+            "🍺 Alcohol",
+            Color::Yellow,
+            resources.alcohol,
+            resources.max_alcohol,
+            false,
+        ),
         Row::new(vec![
             Cell::from("📜 Permits").style(Style::default().fg(Color::White)),
             Cell::from(format!("{:.0}", resources.building_permits)),

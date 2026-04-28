@@ -1,11 +1,11 @@
 // src/layer3/events/refugee_waves.rs
 
-use bevy::prelude::*;
-use crate::layer1::pop::Pop;
 use crate::layer1::health::Health;
+use crate::layer1::pop::Pop;
 use crate::layer1::psychology::needs::Needs;
 use crate::layer1::psychology::traits::Traits;
 use crate::layer3::diplomacy_reflection::DiplomaticRelations;
+use bevy::prelude::*;
 
 #[derive(Clone, Copy, PartialEq, Eq)]
 pub enum Decision {
@@ -37,8 +37,16 @@ pub fn process_refugee_decision(
 
                     commands.spawn((
                         Pop,
-                        Health { current: 100.0 - event.health_penalty, max: 100.0, has_rust_lung: false },
-                        Needs { hunger: 10.0, rest: 10.0, ..default() },
+                        Health {
+                            current: 100.0 - event.health_penalty,
+                            max: 100.0,
+                            has_rust_lung: false,
+                        },
+                        Needs {
+                            hunger: 10.0,
+                            rest: 10.0,
+                            ..default()
+                        },
                         traits,
                     ));
                 }
@@ -61,10 +69,10 @@ pub fn process_refugee_decision(
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::layer1::health::Health;
+    use crate::layer1::pop::Pop;
     use crate::layer3::diplomacy_reflection::DiplomaticRelations;
     use crate::layer3::diplomacy_reflection::DiplomaticStanding;
-    use crate::layer1::pop::Pop;
-    use crate::layer1::health::Health;
 
     #[test]
     fn test_accepting_refugees_spawns_pops_with_low_health() {
@@ -97,13 +105,16 @@ mod tests {
         app.add_event::<RefugeeWaveEvent>();
         app.add_systems(Update, process_refugee_decision);
 
-        let entity = app.world_mut().spawn(DiplomaticRelations {
-            relations: vec![DiplomaticStanding {
-                target_id: "Galactic Senate".to_string(),
-                standing: 0.0,
-                sanctioned: false,
-            }],
-        }).id();
+        let entity = app
+            .world_mut()
+            .spawn(DiplomaticRelations {
+                relations: vec![DiplomaticStanding {
+                    target_id: "Galactic Senate".to_string(),
+                    standing: 0.0,
+                    sanctioned: false,
+                }],
+            })
+            .id();
 
         // Fire decision event to REJECT
         app.world_mut().send_event(RefugeeWaveEvent {

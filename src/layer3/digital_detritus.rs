@@ -75,8 +75,7 @@ pub fn record_virus_event_chronicle_system(
 ) {
     for _event in virus_events.read() {
         chronicle_events.send(AddChronicleEvent {
-            text: "A Critical Virus has been unleashed from the Data Mining operation!"
-                .to_string(),
+            text: "A Critical Virus has been unleashed from the Data Mining operation!".to_string(),
             importance: EventImportance::Major,
         });
     }
