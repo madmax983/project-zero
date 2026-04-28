@@ -104,7 +104,7 @@ mod tests {
 
         // Assert: Standing increased, demand satisfied
         assert_eq!(app.world().resource::<ImperialStanding>().value, 60);
-        assert_eq!(app.world().resource::<ActiveDemands>().vanity_demand_active, false);
+        assert!(!app.world().resource::<ActiveDemands>().vanity_demand_active);
     }
 
     #[test]
