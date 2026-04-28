@@ -55,6 +55,9 @@ mod tests {
 
         // Assert the cultural influence grid or score has increased
         let influence = app.world().get_resource::<CulturalInfluenceGrid>().unwrap();
-        assert!(influence.total_pressure > 100.0, "High art and luxury should generate significant cultural pressure");
+        assert!(
+            influence.total_pressure > 100.0,
+            "High art and luxury should generate significant cultural pressure"
+        );
     }
 }
