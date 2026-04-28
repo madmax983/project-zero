@@ -171,3 +171,5 @@ pub fn apply_nanite_storm_effects(
 
 ## 8. Questions
 *Builder: Add questions here if the specification is unclear.*
+
+- *Architect: Ensure the system gracefully handles the absence of components and logs warnings if necessary. For MVP, simple distance-based storm spread is enough.*

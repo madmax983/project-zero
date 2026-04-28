@@ -143,3 +143,5 @@ pub fn aggro_network_entities(
 
 ## 8. Questions
 *Builder: Add questions here if the specification is unclear.*
+
+- *Architect: Mycelial tripwires should trigger immediately when a non-friendly entity enters their tile. Provide a short cooldown so they don't fire continuously every tick.*

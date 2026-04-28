@@ -102,3 +102,5 @@ mod tests {
 
 ## 8. Questions
 *Builder: Add questions here if the mapping between Flora entities and Grid tiles needs clarification.*
+
+- *Architect: The mapping should be 1-to-1 for simplicity in the MVP. Each grid tile can contain at most one Flora entity. Use the terrain grid system to find adjacent tiles.*

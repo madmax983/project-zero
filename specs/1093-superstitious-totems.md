@@ -110,3 +110,5 @@ mod tests {
 
 ## 8. Questions
 *Builder: Add questions here if inventory management for unique/un-droppable items requires extending the inventory system.*
+
+- *Architect: For MVP, you can use the existing inventory system and add an `IsSuperstitiousTotem` marker component to the item. If dropped, it should apply its stress effect via a separate system.*

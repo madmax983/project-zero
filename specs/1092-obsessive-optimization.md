@@ -107,3 +107,5 @@ mod tests {
 
 ## 8. Questions
 *Builder: Add questions here if integration with the Utility AI for scheduling the tinker action is unclear.*
+
+- *Architect: For the MVP, it's sufficient to implement this as an ECS system that reacts to the TinkeringTarget component. Integration with the Utility AI (making it an ActionType) can be deferred to the REFACTOR or a subsequent spec.*
