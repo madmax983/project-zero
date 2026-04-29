@@ -7424,3 +7424,52 @@ Used for The Archaeological Contagion events. The ancient technology reverse-eng
 - statues of themselves in every sector
 - the execution of anyone taller than them
 - a personal symphony orchestra
+
+## Cultural Projection Fragments (Spec 670)
+
+## Fragment Type: [CULTURAL_GOOD]
+Items of luxury and art that exert soft power over other civilizations.
+
+- synth-silk garments
+- zero-g sculptures
+- holographic operas
+- genetically tailored spices
+- memory-crystal recordings
+- imported blue jeans
+- hyper-pop music drives
+- bioluminescent fashion
+
+## Ecological Succession Fragments (Spec 1094)
+
+## Fragment Type: [CLIMAX_SPECIES]
+Slow-growing, highly valuable flora that form the stable endpoint of a biome's succession.
+
+- Ironwood
+- Ghost-Pines
+- Crystal-Bark Oaks
+- Deep-Root Sentinels
+- Obsidian Palms
+- Star-Canopy Trees
+
+## Fragment Type: [PIONEER_SPECIES]
+Fast-growing, low-value flora that quickly colonize cleared or destroyed land.
+
+- Fire-Weed
+- Ash-Thorn
+- Rust-Vines
+- Blight-Moss
+- Scrap-Brush
+- Quick-Bamboo
+
+## The Nostalgia Cult Fragments (Spec 1165)
+
+## Fragment Type: [SABOTAGE_TARGET]
+Advanced infrastructure that members of the Nostalgia Cult target for destruction.
+
+- fusion reactor
+- automated assembly line
+- quantum relay
+- synthetic food vat
+- life support manifold
+- AI management core
+- atmospheric scrubber
