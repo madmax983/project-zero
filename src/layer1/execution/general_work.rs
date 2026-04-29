@@ -55,6 +55,7 @@ struct WorkerData {
     job: Option<Job>,
     dialect: Dialect,
     linguistics: Linguistics,
+    is_ostracized: bool,
 }
 
 /// Executes work at designations when pop is at target with Work action.
@@ -100,7 +101,7 @@ pub fn work_execution_system(world: &mut World) {
                 worker.morale,
                 worker.action,
                 worker.equipment,
-                global_work_speed_mod * worker.speed_modifier * coordination_mod,
+                global_work_speed_mod * worker.speed_modifier * coordination_mod * if worker.is_ostracized { 0.2 } else { 1.0 },
                 worker.job,
                 improvised_efficiency,
                 consumed_resource_type,
@@ -135,6 +136,7 @@ fn collect_workers_by_target(
         Option<&Dialect>,
         Option<&Linguistics>,
         Option<&MentalFog>,
+        Option<&crate::layer1::social::grievances::Ostracized>,
     ), With<AtTarget>>();
 
     // ⚡ Bolt Optimization:
@@ -143,7 +145,7 @@ fn collect_workers_by_target(
     // significantly reducing heap allocations per frame when evaluating large worker populations.
     for (target, worker) in query
         .iter(world)
-        .filter(|(_, mt, _, _, _, _, _, _, faction_member, _, _, _, _, _)| {
+        .filter(|(_, mt, _, _, _, _, _, _, faction_member, _, _, _, _, _, _)| {
             let is_work = mt.for_action == ActionType::Work || mt.for_action == ActionType::Repair;
             if !is_work {
                 return false;
@@ -171,6 +173,7 @@ fn collect_workers_by_target(
                 dialect,
                 ling,
                 fog,
+                ostracized_opt,
             )| {
                 let morale = needs.map_or(0.5, |n| {
                     calculate_effective_morale(
@@ -203,6 +206,7 @@ fn collect_workers_by_target(
                         job: job.copied(),
                         dialect: dialect.copied().unwrap_or_default(),
                         linguistics: ling.cloned().unwrap_or_default(),
+                        is_ostracized: ostracized_opt.is_some(),
                     },
                 )
             },
