@@ -470,3 +470,4 @@
 - [x] `1233` Public Grievances — `specs/1233-public-grievances.md`
 - [x] `1234` Protest Crowds — `specs/1234-protest-crowds.md` — completed 2026-06-01
 - [x] `659` Orbital Bombardment — `specs/659-orbital-bombardment.md` — completed 2026-02-01
+- [x] `INT-1233` Integration: Public Grievances -> Social/Work — completed 2026-04-29

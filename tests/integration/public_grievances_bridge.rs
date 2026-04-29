@@ -1,7 +1,7 @@
 #[cfg(test)]
 mod integration_tests {
     use bevy::prelude::*;
-    use scale::layer1::execution::arrival::ArrivalContext;
+
     use scale::layer1::execution::arrival::arrival_handler_system;
     use scale::layer1::execution::components::{AtTarget, MovementTarget};
     use scale::layer1::execution::general_work::work_execution_system;

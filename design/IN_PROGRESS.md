@@ -2,7 +2,7 @@
 
 
 Tasks currently being implemented by Builders.
-- [ ] `INT-1233` Integration: Public Grievances -> Social/Work — claimed 2026-04-29
+
 
 ---
 
