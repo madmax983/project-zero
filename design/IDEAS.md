@@ -17825,3 +17825,59 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you clean up the debris field to open safe, fast hyperlanes, or leave it as a hazardous defensive barrier and high-risk resource mine?
 
 ---
+
+## The Chronal Smuggler's Toll
+
+**Layer:** 2
+
+**Fantasy:** Running black markets through temporal loopholes, risking aging for profit.
+
+**Mechanic:** Using unstable microscopic wormholes, smugglers can instantly transport luxury goods or critical resources between distant colonies. However, the pilots and the cargo age unpredictably during transit.
+
+**Emergence:** You rely on a smuggler network to supply a starving outpost, but the food arrives perfectly fresh while the pilots step out as elderly veterans. Later, a shipment of state-of-the-art weapons arrives rusted and obsolete because the wormhole pushed them a century into the future internally.
+
+**Tension:** Do you use the instant, untraceable supply lines at the cost of heavily degrading your items and aging your skilled pilot pops, or rely on slow, vulnerable traditional shipping?
+
+---
+
+## Memory-Infused Alloys
+
+**Layer:** 1
+
+**Fantasy:** Building the future out of the crystallized grief and joy of the past.
+
+**Mechanic:** High-tier industrial foundries can "forge" physical building materials using the recorded Memories of Pops. Joyful memories create extremely durable, mood-boosting alloys, while traumatic memories create brittle but hyper-lethal weapon components.
+
+**Emergence:** You build an impenetrable defensive wall out of the colony's happiest memories, leaving the population emotionally hollowed out but physically safe. When the wall is eventually breached, the psychic shockwave of those shattered happy memories causes mass hysteria.
+
+**Tension:** Do you harvest the colony's culture and emotions to create superior materials, turning your history into a literal resource, or keep your Pops' minds intact while relying on inferior physical defenses?
+
+---
+
+## Atmospheric Mutiny
+
+**Layer:** Cross-layer (1 -> 2)
+
+**Fantasy:** The very air you breathe becomes a tool of political rebellion.
+
+**Mechanic:** Disgruntled Pops working in the Life Support or Terraforming sectors can secretly sabotage the Atmospheric Grid, not to kill, but to subtly alter the gas mix to induce mild euphoria, lethargy, or paranoia in the colony's ruling class or security forces.
+
+**Emergence:** A heavily oppressed mining colony stops producing ore, but the local security forces don't report a rebellion. When you investigate, you find the workers flooded the security barracks with a tranquilizing gas mix, putting the guards into a permanent, blissful sleep while the workers form an independent commune.
+
+**Tension:** Do you heavily centralize and automate life support to prevent sabotage, risking a single point of failure, or leave it in the hands of Pops who might use the air itself as leverage against you?
+
+---
+
+## The Gravitational Heirloom
+
+**Layer:** 1
+
+**Fantasy:** Families passing down the literal weight of their ancestors' status.
+
+**Mechanic:** On planets with low gravity, wealthy or high-status Pops purchase heavy, gravity-simulating exosuits or implants to maintain their bone density and strength. These items become extreme status symbols and are passed down through generations.
+
+**Emergence:** A poor Pop scavenges a high-tier gravity suit from a deceased noble. Because the colony's social system relies on physical presence (weight = authority), this poor Pop is suddenly treated with extreme deference and accidentally starts a populist uprising by merely walking into the town square with heavy footsteps.
+
+**Tension:** Do you heavily regulate these status-defining heirlooms to maintain the rigid social hierarchy, or allow a black market of "stolen gravity" to upend your colony's power dynamics?
+
+---
