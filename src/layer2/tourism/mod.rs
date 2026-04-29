@@ -1,3 +1,7 @@
+//! Tourism
+//!
+//! Manages tourism mechanics, including sub-light travel and disaster tourism.
+
 pub mod disaster_tourism;
 pub use disaster_tourism::*;
 pub mod sub_light_tourism;

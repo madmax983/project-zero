@@ -1,3 +1,7 @@
+//! Agriculture
+//!
+//! Handles food production, farming, husbandry, and gastronomy.
+
 pub mod farm;
 pub mod gastronomy;
 pub mod husbandry;

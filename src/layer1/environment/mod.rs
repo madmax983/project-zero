@@ -1,3 +1,7 @@
+//! Environment
+//!
+//! Manages environmental hazards, disasters, and terraforming efforts.
+
 pub mod events;
 pub mod ignition;
 pub use ignition::{process_ignition, SparkEvent, VolatileVapor};

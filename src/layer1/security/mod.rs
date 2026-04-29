@@ -1,3 +1,7 @@
+//! Security
+//!
+//! Defines security systems, policing, and threat management.
+
 use bevy_ecs::prelude::*;
 
 #[derive(Component, Debug, Clone, Default)]

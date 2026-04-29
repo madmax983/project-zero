@@ -1,3 +1,7 @@
+//! Weather
+//!
+//! Manages macro-scale weather patterns and storms.
+
 use bevy::math::Vec2;
 use bevy_ecs::prelude::*;
 

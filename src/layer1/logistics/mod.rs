@@ -1,3 +1,7 @@
+//! Logistics
+//!
+//! Manages resource transportation, commuting, and infrastructure networks.
+
 pub mod conveyor;
 pub mod pneumatic;
 

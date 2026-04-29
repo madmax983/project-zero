@@ -1,3 +1,7 @@
+//! Trade
+//!
+//! Handles inter-system trade, trade routes, tariffs, and blockades.
+
 pub mod biomass_tariff;
 
 pub use biomass_tariff::*;

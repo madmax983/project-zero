@@ -1,3 +1,7 @@
+//! Fauna
+//!
+//! Defines wildlife behaviors and procedural fauna generation.
+
 use crate::layer1::combat::HitStop;
 use crate::layer1::execution::{AtTarget, MovementTarget};
 use crate::layer1::health::{Dead, Health};
