@@ -51,5 +51,6 @@ pub mod megastructure;
 pub mod rogue_planets;
 pub mod weather;
 pub use weather::*;
+pub mod bombardment;
 pub mod orbit;
 pub mod orbital_necropolis;
