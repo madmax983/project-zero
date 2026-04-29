@@ -803,3 +803,12 @@
 - **Systems connected:** `update_faction_strikes_system` (Social/Factions) -> `faction_strike_mob_bridge_system` (Integration) -> `form_mob_system` (Protest Crowds)
 - **Glue added:** Added `faction_strike_mob_bridge_system` in `src/layer1/core/integration.rs` to emit `FormMobEvent` and `DisperseMobEvent` when a faction transitions in and out of the `Striking` state. Modified `Mob` to store `FactionId`. Scheduled immediately after `update_faction_strikes_system` in `Layer1SystemSet::Economy`.
 - **Tests:** `tests/integration/protest_crowds_integration.rs`
+
+### INT-1233: Public Grievances -> Social & Work Restrictions
+- **Date:** 2026-02-28
+- **Systems connected:** `Ostracized` (Public Grievances) -> `handle_socialize` / `proximity_social_system` / `work_execution_system`
+- **Glue added:**
+    - Prevented `Ostracized` pops from socializing at Taverns in `handle_socialize`.
+    - Excluded `Ostracized` pops from receiving or granting proximity morale buffs in `proximity_social_system`.
+    - Applied a severe `0.2x` work speed penalty to `Ostracized` pops in `work_execution_system`.
+- **Tests:** `tests/integration/public_grievances_bridge.rs`

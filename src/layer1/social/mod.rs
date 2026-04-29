@@ -47,7 +47,12 @@ pub fn handle_socialize(
     taverns: &mut Query<&mut Tavern>,
     target_entity: Entity,
     pop_entity: Entity,
+    is_ostracized: bool,
 ) {
+    if is_ostracized {
+        return; // Ostracized pops are not welcome in taverns
+    }
+
     if let Ok(mut tavern) = taverns.get_mut(target_entity) {
         if tavern.visitors.len() < tavern.capacity {
             tavern.visitors.push(pop_entity);
@@ -198,15 +203,26 @@ pub struct SocialBuff {
 /// if pop count grows large.
 pub fn proximity_social_system(
     mut commands: Commands,
-    pops: Query<(Entity, &GridPosition, &Relationships)>,
-    other_pops: Query<(Entity, &GridPosition)>,
+    pops: Query<(Entity, &GridPosition, &Relationships, Option<&crate::layer1::social::grievances::Ostracized>)>,
+    other_pops: Query<(Entity, &GridPosition, Option<&crate::layer1::social::grievances::Ostracized>)>,
 ) {
     // O(N^2) naive implementation for Green phase
-    for (entity, pos, rel) in pops.iter() {
+    for (entity, pos, rel, ostracized) in pops.iter() {
         let mut total_buff: f32 = 0.0;
 
-        for (other_entity, other_pos) in other_pops.iter() {
+        // Ostracized pops get no proximity buff
+        if ostracized.is_some() {
+            commands.entity(entity).remove::<SocialBuff>();
+            continue;
+        }
+
+        for (other_entity, other_pos, other_ostracized) in other_pops.iter() {
             if entity == other_entity {
+                continue;
+            }
+
+            // You don't get buffs from ostracized pops, you pretend they aren't there
+            if other_ostracized.is_some() {
                 continue;
             }
 

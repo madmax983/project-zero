@@ -48,6 +48,7 @@ pub fn arrival_handler_system(
             Option<&mut crate::layer1::chemical::ChemicalState>,
             Option<&mut crate::layer1::health::Health>,
             Option<&mut crate::layer1::stress::StressTracker>,
+            Option<&crate::layer1::social::grievances::Ostracized>,
         ),
         With<AtTarget>,
     >,
@@ -62,6 +63,7 @@ pub fn arrival_handler_system(
         mut chem_opt,
         mut health_opt,
         mut stress_opt,
+        ostracized_opt,
     ) in &mut arrivals
     {
         let should_remove = process_arrival(
@@ -76,6 +78,7 @@ pub fn arrival_handler_system(
             &mut stress_opt,
             &mut commands,
             &mut ctx,
+            ostracized_opt.is_some(),
         );
 
         if should_remove {
@@ -97,6 +100,7 @@ fn process_arrival(
     stress_opt: &mut Option<Mut<crate::layer1::stress::StressTracker>>,
     commands: &mut Commands,
     ctx: &mut ArrivalContext,
+    is_ostracized: bool,
 ) -> bool {
     match action {
         ActionType::ConsumeChemical => {
@@ -148,7 +152,7 @@ fn process_arrival(
             true
         }
         ActionType::Socialize => {
-            handle_socialize(commands, &mut ctx.taverns, target_entity, pop_entity);
+            handle_socialize(commands, &mut ctx.taverns, target_entity, pop_entity, is_ostracized);
             true
         }
         ActionType::SeekMedicalCare => {
