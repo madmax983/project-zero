@@ -242,10 +242,7 @@ pub fn get_status_line<'a>(
     } else {
         Color::Green
     };
-    spans.push(Span::styled(
-        " 😊 ",
-        Style::default().fg(morale_color),
-    ));
+    spans.push(Span::styled(" 😊 ", Style::default().fg(morale_color)));
     spans.push(Span::styled(
         format!("{}% ", morale_percent),
         Style::default()
@@ -287,10 +284,7 @@ pub fn get_status_line<'a>(
             .add_modifier(Modifier::BOLD),
     ));
 
-    spans.push(Span::styled(
-        " 🔨 ",
-        Style::default().fg(Color::Yellow),
-    ));
+    spans.push(Span::styled(" 🔨 ", Style::default().fg(Color::Yellow)));
     spans.push(Span::styled(
         format!("{:.0} ", tools),
         Style::default()
@@ -310,7 +304,10 @@ pub fn get_status_line<'a>(
     } else {
         Color::Reset
     };
-    spans.push(Span::styled(" 👁 ", Style::default().fg(risk_color).bg(risk_bg)));
+    spans.push(Span::styled(
+        " 👁 ",
+        Style::default().fg(risk_color).bg(risk_bg),
+    ));
     spans.push(Span::styled(
         format!("{:.0}% ", risk_pct),
         Style::default()
@@ -435,7 +432,7 @@ pub fn get_status_line<'a>(
 /// );
 ///
 /// assert!(status.contains("Day 10"));
-/// assert!(status.contains("Souls: 5"));
+/// assert!(status.contains("👨 5"));
 /// assert!(status.contains("Outpost"));
 /// ```
 #[must_use]

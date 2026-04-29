@@ -176,6 +176,7 @@ mod tests {
             residues: vec![],
             cleaning_targets: vec![],
             sanctuaries: vec![],
+            mobs: vec![],
         }
     }
 

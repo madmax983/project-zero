@@ -256,7 +256,12 @@ fn ui(f: &mut Frame, app: &mut App) {
             Block::default()
                 .borders(Borders::ALL)
                 .border_style(Style::default().fg(Color::DarkGray))
-                .title(Span::styled(" Templates ", Style::default().fg(Color::White).add_modifier(Modifier::BOLD))),
+                .title(Span::styled(
+                    " Templates ",
+                    Style::default()
+                        .fg(Color::White)
+                        .add_modifier(Modifier::BOLD),
+                )),
         )
         .highlight_style(
             Style::default()
@@ -297,7 +302,12 @@ fn ui(f: &mut Frame, app: &mut App) {
             Block::default()
                 .borders(Borders::ALL)
                 .border_style(Style::default().fg(Color::DarkGray))
-                .title(Span::styled(" Patterns Preview ", Style::default().fg(Color::White).add_modifier(Modifier::BOLD))),
+                .title(Span::styled(
+                    " Patterns Preview ",
+                    Style::default()
+                        .fg(Color::White)
+                        .add_modifier(Modifier::BOLD),
+                )),
         )
         .style(Style::default().fg(Color::Gray));
 
@@ -314,7 +324,10 @@ fn ui(f: &mut Frame, app: &mut App) {
                     .border_style(Style::default().fg(Color::Red))
                     .title(Span::styled(
                         " ERROR ",
-                        Style::default().fg(Color::White).bg(Color::Red).add_modifier(Modifier::BOLD),
+                        Style::default()
+                            .fg(Color::White)
+                            .bg(Color::Red)
+                            .add_modifier(Modifier::BOLD),
                     ))
                     .padding(Padding::uniform(2)),
             )
@@ -333,11 +346,17 @@ fn ui(f: &mut Frame, app: &mut App) {
                 ),
                 NarrativeSegment::MissingContext(e) => Span::styled(
                     format!("[MISSING CONTEXT: {}]", e),
-                    Style::default().fg(Color::White).bg(Color::Red).add_modifier(Modifier::BOLD),
+                    Style::default()
+                        .fg(Color::White)
+                        .bg(Color::Red)
+                        .add_modifier(Modifier::BOLD),
                 ),
                 NarrativeSegment::MissingFragmentOptions(e) => Span::styled(
                     format!("[MISSING FRAGMENT OPTIONS: {}]", e),
-                    Style::default().fg(Color::White).bg(Color::Red).add_modifier(Modifier::BOLD),
+                    Style::default()
+                        .fg(Color::White)
+                        .bg(Color::Red)
+                        .add_modifier(Modifier::BOLD),
                 ),
             })
             .collect();

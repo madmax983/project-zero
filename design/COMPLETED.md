@@ -468,3 +468,4 @@
 - [x] `1079` The Bureaucracy of Vanity — `specs/1079-bureaucracy-of-vanity.md` — completed 2026-05-01
 - [x] `670` Cultural Projection — `specs/670-cultural-projection.md` — completed 2024-05-28
 - [x] `1233` Public Grievances — `specs/1233-public-grievances.md`
+- [x] `1234` Protest Crowds — `specs/1234-protest-crowds.md` — completed 2026-06-01

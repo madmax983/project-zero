@@ -10,6 +10,13 @@ pub fn register(schedule: &mut Schedule) {
     );
     schedule.add_systems(
         (
+            crate::layer1::social::protest_crowds::form_mob_system,
+            crate::layer1::social::protest_crowds::disperse_mob_system,
+        )
+            .in_set(super::Layer1SystemSet::Execution),
+    );
+    schedule.add_systems(
+        (
             crate::layer1::zone::apply_zone_designation_system,
             crate::layer1::digital_immortality::handle_mind_upload,
             crate::layer1::digital_immortality::process_ghost_hacks,

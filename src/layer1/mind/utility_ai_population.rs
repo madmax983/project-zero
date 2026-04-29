@@ -117,6 +117,25 @@ pub fn populate_ai_buffer(world: &mut World, buffer: &mut UtilityAIBuffer, conte
     populate_all_structures(world, &mut buffer.all_structures);
     populate_cleaning_targets(world, buffer);
     populate_sanctuaries(world, &mut buffer.sanctuaries);
+    populate_mobs(world, &mut buffer.mobs);
+}
+
+fn populate_mobs(world: &mut World, buffer: &mut Vec<ScorableCandidate>) {
+    buffer.clear();
+    buffer.extend(
+        world
+            .query::<(Entity, &crate::layer1::social::Mob)>()
+            .iter(world)
+            .map(|(e, mob)| {
+                ScorableCandidate::new(
+                    e,
+                    GridPosition {
+                        x: mob.location.0,
+                        y: mob.location.1,
+                    },
+                )
+            }),
+    );
 }
 
 fn populate_sanctuaries(world: &mut World, buffer: &mut Vec<ScorableCandidate>) {
