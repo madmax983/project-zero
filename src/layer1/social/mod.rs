@@ -626,3 +626,4 @@ pub mod xenoflora_pet;
 pub use xenoflora_pet::*;
 pub mod cargo_cult;
 pub use cargo_cult::*;
+pub mod protest_crowds;
