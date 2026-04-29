@@ -17784,3 +17784,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you accept the massive productivity gains of symbiosis, knowing it permanently traps a portion of your workforce and physically alters them?
 
 ---
+## The Empathy Desync
+
+**Layer:** Cross-layer (1 -> 3)
+
+**Fantasy:** Watching your prosperous core worlds lose touch with the frontier's suffering.
+
+**Mechanic:** Pops on high-comfort, wealthy Layer 1 colonies slowly lose their "Empathy" trait for Pops on harsh, low-comfort colonies. This reduces their willingness to pay system-wide taxes or support defense spending for those specific distant worlds.
+
+**Emergence:** Your wealthy capital world votes to slash defense spending because they don't believe the frontier is actually in danger, leading directly to a pirate invasion that the capital could have easily funded a defense against.
+
+**Tension:** Do you artificially depress the comfort of your core worlds to maintain empire-wide social cohesion, or accept that immense prosperity breeds a callous political divide?
+
+---
+
+## Architectural Nostalgia
+
+**Layer:** 1
+
+**Fantasy:** Older generations clinging to inefficient but beautiful remnants of the past.
+
+**Mechanic:** When you bulldoze older building types to upgrade to high-efficiency modern structures, older Pops who worked in or lived near those original buildings suffer a massive, permanent "Nostalgia" mood penalty. If clustered, they can form "Preservationist" factions that sabotage new construction.
+
+**Emergence:** You try to modernize your original founding settlement to solve a crippling logistics bottleneck, but the founding generation starts a riot, burns down the new mag-rail, and demands you rebuild the original, terrible dirt roads.
+
+**Tension:** Do you keep inefficient historic districts that cripple your layout, or force modernization at the cost of alienating your oldest, most skilled workers?
+
+---
+
+## Kinetic Graveyard
+
+**Layer:** 2
+
+**Fantasy:** Turning the wreckage of past wars into a hazardous but lucrative frontier.
+
+**Mechanic:** Large-scale orbital battles leave massive debris fields that persist indefinitely. These fields deal severe damage to fleets passing through, but specialized "Scavenger" fleets can slowly mine them for high-tier alloys that are otherwise impossible to produce early-game.
+
+**Emergence:** You intentionally fight a desperate defensive war near a useless barren planet just to create a massive debris field, using the enemy's destroyed armada as a free resource node to jumpstart your own economy, essentially farming the enemy for advanced parts.
+
+**Tension:** Do you clean up the debris field to open safe, fast hyperlanes, or leave it as a hazardous defensive barrier and high-risk resource mine?
+
+---
