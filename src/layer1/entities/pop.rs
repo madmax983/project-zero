@@ -293,6 +293,8 @@ pub struct PopBundle {
     pub weights: UtilityWeights,
     /// Known rumors and topics.
     pub knowledge: Knowledge,
+    /// Public standing for Bulletin Board integration.
+    pub social_standing: crate::layer1::social::grievances::SocialStanding,
     /// Biological age.
     pub age: Age,
     /// Faction membership.
@@ -355,6 +357,7 @@ impl PopBundle {
             equipment: Equipment::default(),
             weights: UtilityWeights::default(),
             knowledge: Knowledge::default(),
+            social_standing: crate::layer1::social::grievances::SocialStanding { value: 50.0 },
             age: Age::new(rng.gen_range(20..40)),
             faction: FactionMember::default(),
             arrival: Arrival { tick: 0 },

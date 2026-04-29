@@ -797,3 +797,9 @@
 - **Glue added:** `astrological_beliefs_bridge_system` in `src/layer2/integration.rs`
 - **Schedule:** Runs after `update_syzygy_cycle_system`
 - **Tests:** `tests/integration/astrological_beliefs_bridge.rs`
+
+### INT-1233: Public Grievances -> SocialStanding
+- **Date:** 2026-02-01
+- **Systems connected:** `post_grievance_system` -> `apply_grievance_system` -> `ostracization_system`
+- **Glue added:** `post_grievance_system` emits `PostGrievanceEvent`, `PopBundle` initialized with `SocialStanding`.
+- **Tests:** `tests/integration/public_grievances.rs`

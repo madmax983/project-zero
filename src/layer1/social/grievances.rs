@@ -75,8 +75,9 @@ type GrievancePopQuery<'a> = (
 
 pub fn post_grievance_system(
     mut commands: Commands,
-    mut boards: Query<&mut BulletinBoard>,
+    mut boards: Query<(Entity, &mut BulletinBoard)>,
     mut pops: Query<GrievancePopQuery>,
+    mut grievance_events: EventWriter<PostGrievanceEvent>,
     time: Option<Res<SimulationTime>>,
 ) {
     let timestamp = time.map_or(0, |t| t.tick);
@@ -112,7 +113,7 @@ pub fn post_grievance_system(
         // Note: iterating all boards every time is inefficient if many boards,
         // but usually there are few.
         // Using `choose` from IteratorRandom is O(N) where N is number of boards.
-        let Some(mut board) = boards.iter_mut().choose(&mut rng) else {
+        let Some((board_entity, mut board)) = boards.iter_mut().choose(&mut rng) else {
             continue;
         };
 
@@ -163,7 +164,7 @@ pub fn post_grievance_system(
         let note = BulletinNote {
             author: entity,
             target,
-            sentiment: s,
+            sentiment: s.clone(),
             content,
             timestamp,
         };
@@ -173,6 +174,20 @@ pub fn post_grievance_system(
         // Enforce capacity
         if board.notes.len() > MAX_NOTES {
             board.notes.remove(0); // Remove oldest
+        }
+
+        // INT-1233 Emit Event for integration
+        if let Some(t_entity) = target {
+            grievance_events.send(PostGrievanceEvent {
+                poster: entity,
+                target: t_entity,
+                board: board_entity,
+                impact: match s {
+                    Sentiment::Positive => 5.0,
+                    Sentiment::Negative => -5.0,
+                    Sentiment::Neutral => 0.0,
+                },
+            });
         }
 
         // Update or insert cooldown
@@ -285,6 +300,7 @@ mod tests {
     #[test]
     fn test_post_grievance_low_morale() {
         let mut world = World::new();
+        world.init_resource::<Events<PostGrievanceEvent>>();
 
         let board_ent = world
             .spawn((BulletinBoard::default(), GridPosition { x: 0, y: 0 }))
@@ -330,6 +346,7 @@ mod tests {
     #[test]
     fn test_cooldown_prevents_spam() {
         let mut world = World::new();
+        world.init_resource::<Events<PostGrievanceEvent>>();
         world.insert_resource(SimulationTime {
             tick: 1000,
             ..Default::default()

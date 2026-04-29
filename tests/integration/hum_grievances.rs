@@ -9,6 +9,7 @@ use scale::layer1::traits::{Trait, Traits};
 #[test]
 fn test_sensitive_pop_posts_hum_grievance() {
     let mut world = World::new();
+    world.init_resource::<Events<scale::layer1::social::grievances::PostGrievanceEvent>>();
 
     // Spawn Board
     let board_ent = world
