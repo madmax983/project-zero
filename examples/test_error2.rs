@@ -17,7 +17,7 @@ fn main() -> anyhow::Result<()> {
                 .fg(TableColor::Red)
                 .bg(TableColor::DarkGrey)]);
             table.add_row(vec![Cell::new(&error_msg).fg(TableColor::White)]);
-            table.add_row(vec![Cell::new(&action_msg).fg(TableColor::Yellow)]);
+            table.add_row(vec![Cell::new(action_msg).fg(TableColor::Yellow)]);
             println!("{table}");
         }
     }

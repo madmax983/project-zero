@@ -289,8 +289,6 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::mentorship::apply_mentorship_xp_system,
             crate::layer1::mentorship::mentorship_mood_system
                 .after(crate::layer1::mentorship::check_mentorship_system),
-            crate::layer1::mentorship::mentorship_mood_system
-                .after(crate::layer1::mentorship::check_mentorship_system),
             // Process new rumors and affinity changes
             modify_affinity_system.after(crate::layer1::rumor::exchange_rumors_system),
             crate::layer1::social::gossip_economy::process_gossip
@@ -302,6 +300,12 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::social::proximity_social_system.after(modify_affinity_system),
             crate::layer1::social::pen_pals::update_pen_pals_system.after(modify_affinity_system),
             crate::layer1::social::grievances::apply_grievance_system,
+        )
+            .in_set(Layer1SystemSet::Observation),
+    );
+
+    schedule.add_systems(
+        (
             crate::layer1::social::grievances::ostracization_system,
             // Process chronicle events
             crate::layer1::geography::process_historical_events,
