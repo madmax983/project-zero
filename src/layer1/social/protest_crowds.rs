@@ -63,8 +63,8 @@ mod tests {
         app.add_systems(bevy_app::Update, form_mob_system);
 
         let mut factions = Factions::default();
-        let mut faction_data = FactionData::default();
-        faction_data.satisfaction = 0.2; // Unhappy
+        let faction_data = FactionData { satisfaction: 0.2, ..Default::default() };
+
         factions.map.insert(FactionId::MinersGuild, faction_data);
         app.insert_resource(factions);
 
