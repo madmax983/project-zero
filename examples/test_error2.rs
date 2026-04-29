@@ -8,13 +8,16 @@ fn main() -> anyhow::Result<()> {
     match result {
         Ok(_) => println!("Loaded successfully."),
         Err(e) => {
-            let error_msg = format!(" {}", e);
+            let error_msg = format!("\n  {} \n", e);
+            let action_msg = "  Action Required: Check Lore Directory.\n  Verify the folder path exists and contains markdown files. ";
             let mut table = Table::new();
             table.load_preset(UTF8_FULL);
-            table.set_header(vec![comfy_table::Cell::new("✗ ERROR")
+            table.set_header(vec![comfy_table::Cell::new(" ✗ LORE LOADING ERROR ")
                 .add_attribute(comfy_table::Attribute::Bold)
-                .fg(TableColor::Red)]);
-            table.add_row(vec![Cell::new(&error_msg).fg(TableColor::DarkGrey)]);
+                .fg(TableColor::Red)
+                .bg(TableColor::DarkGrey)]);
+            table.add_row(vec![Cell::new(&error_msg).fg(TableColor::White)]);
+            table.add_row(vec![Cell::new(&action_msg).fg(TableColor::Yellow)]);
             println!("{table}");
         }
     }
