@@ -247,18 +247,24 @@ fn ui(f: &mut Frame, app: &mut App) {
         .template_ids
         .iter()
         .map(|id| {
-            ListItem::new(Line::from(vec![Span::raw(id)])).style(Style::default().fg(Color::White))
+            ListItem::new(Line::from(vec![Span::raw(id)])).style(Style::default().fg(Color::Gray))
         })
         .collect();
 
     let list = List::new(items)
-        .block(Block::default().borders(Borders::ALL).title("Templates"))
+        .block(
+            Block::default()
+                .borders(Borders::ALL)
+                .border_style(Style::default().fg(Color::DarkGray))
+                .title(Span::styled(" Templates ", Style::default().fg(Color::White).add_modifier(Modifier::BOLD))),
+        )
         .highlight_style(
             Style::default()
-                .fg(Color::Yellow)
+                .fg(Color::Cyan)
+                .bg(Color::DarkGray)
                 .add_modifier(Modifier::BOLD),
         )
-        .highlight_symbol(">> ");
+        .highlight_symbol("▶ ");
 
     f.render_stateful_widget(list, main_chunks[0], &mut app.state);
 
@@ -286,24 +292,31 @@ fn ui(f: &mut Frame, app: &mut App) {
         vec![ListItem::new(Line::from("No template selected."))]
     };
 
-    let pattern_list =
-        List::new(pattern_items).block(Block::default().borders(Borders::ALL).title("Patterns"));
+    let pattern_list = List::new(pattern_items)
+        .block(
+            Block::default()
+                .borders(Borders::ALL)
+                .border_style(Style::default().fg(Color::DarkGray))
+                .title(Span::styled(" Patterns Preview ", Style::default().fg(Color::White).add_modifier(Modifier::BOLD))),
+        )
+        .style(Style::default().fg(Color::Gray));
+
     f.render_widget(pattern_list, right_chunks[0]);
 
     // Generated Output
     let output_block = if let Some(err) = &app.error_message {
-        Paragraph::new(format!(" ✗ Failed to generate story: {} ", err))
+        Paragraph::new(format!(" ✗ Failed to generate story:\n\n   {} ", err))
             .style(Style::default().fg(Color::Red).add_modifier(Modifier::BOLD))
             .block(
                 Block::default()
                     .borders(Borders::ALL)
-                    .border_type(BorderType::Rounded)
+                    .border_type(BorderType::Thick)
                     .border_style(Style::default().fg(Color::Red))
                     .title(Span::styled(
-                        " Error ",
-                        Style::default().fg(Color::Red).add_modifier(Modifier::BOLD),
+                        " ERROR ",
+                        Style::default().fg(Color::White).bg(Color::Red).add_modifier(Modifier::BOLD),
                     ))
-                    .padding(Padding::uniform(1)),
+                    .padding(Padding::uniform(2)),
             )
             .wrap(Wrap { trim: true })
     } else if let Some(segments) = &app.generated_segments {
@@ -314,17 +327,17 @@ fn ui(f: &mut Frame, app: &mut App) {
                 NarrativeSegment::Slot { value, .. } => Span::styled(
                     value,
                     Style::default()
-                        .fg(Color::Cyan)
+                        .fg(Color::Yellow)
                         .add_modifier(Modifier::BOLD)
                         .add_modifier(Modifier::ITALIC),
                 ),
                 NarrativeSegment::MissingContext(e) => Span::styled(
                     format!("[MISSING CONTEXT: {}]", e),
-                    Style::default().fg(Color::Red).add_modifier(Modifier::BOLD),
+                    Style::default().fg(Color::White).bg(Color::Red).add_modifier(Modifier::BOLD),
                 ),
                 NarrativeSegment::MissingFragmentOptions(e) => Span::styled(
                     format!("[MISSING FRAGMENT OPTIONS: {}]", e),
-                    Style::default().fg(Color::Red).add_modifier(Modifier::BOLD),
+                    Style::default().fg(Color::White).bg(Color::Red).add_modifier(Modifier::BOLD),
                 ),
             })
             .collect();
@@ -335,18 +348,18 @@ fn ui(f: &mut Frame, app: &mut App) {
                 Block::default()
                     .borders(Borders::ALL)
                     .border_type(BorderType::Rounded)
-                    .border_style(Style::default().fg(Color::Cyan))
+                    .border_style(Style::default().fg(Color::Green))
                     .title(Span::styled(
                         " ✨ Generated Story ",
                         Style::default()
-                            .fg(Color::Cyan)
+                            .fg(Color::Green)
                             .add_modifier(Modifier::BOLD),
                     ))
-                    .padding(Padding::uniform(1)),
+                    .padding(Padding::uniform(2)),
             )
             .wrap(Wrap { trim: true })
     } else {
-        Paragraph::new("Press ENTER to generate a story...")
+        Paragraph::new("Press [ENTER] to generate a new story...\nUse [UP] and [DOWN] to select a different template.")
             .style(
                 Style::default()
                     .fg(Color::DarkGray)
@@ -358,8 +371,8 @@ fn ui(f: &mut Frame, app: &mut App) {
                     .borders(Borders::ALL)
                     .border_type(BorderType::Rounded)
                     .border_style(Style::default().fg(Color::DarkGray))
-                    .title(" Generated Story ")
-                    .padding(Padding::uniform(1)),
+                    .title(Span::styled(" Ready ", Style::default().fg(Color::DarkGray)))
+                    .padding(Padding::uniform(2)),
             )
             .wrap(Wrap { trim: true })
     };

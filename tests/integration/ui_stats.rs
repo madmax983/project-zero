@@ -58,11 +58,11 @@ mod tests {
 
         // 4. Verify Glue
         assert!(
-            status.contains("Souls: 3"),
+            status.contains("👨 3"),
             "Status bar missing population count"
         );
-        assert!(status.contains("Food: 42"), "Status bar missing food yield");
-        assert!(status.contains("Morale: 80%"), "Status bar missing Morale");
+        assert!(status.contains("🌾 42+0"), "Status bar missing food yield");
+        assert!(status.contains("😊 80%"), "Status bar missing Morale");
         assert!(status.contains("Day 1000"), "Status bar missing Day");
     }
 }
