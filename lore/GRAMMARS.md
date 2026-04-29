@@ -3948,3 +3948,23 @@ VACUUM_SHADOW_INCIDENT:
 ## The Bureaucracy of Vanity Chaining (Spec 1079)
 - VANITY_TITLE_ADOPTED -> enables -> VANITY_DEMAND_ISSUED
 - VANITY_DEMAND_ISSUED -> increases_chance -> RESOURCE_SHORTAGE, REBELLION
+
+## Cultural Projection Chaining (Spec 670)
+
+- CULTURAL_MILESTONE → enables → CULTURAL_DEFECTION
+- CULTURAL_MILESTONE → increases_chance → TRADE_OFFER
+- CULTURAL_DEFECTION → increases_chance → BORDER_CONFLICT
+
+## Ecological Succession Chaining (Spec 1094)
+
+- FOREST_CLEARED → enables → PIONEER_BLOOM
+- FOREST_CLEARED → increases_chance → SOIL_EROSION
+- PIONEER_BLOOM → increases_chance → WILDFIRE
+- PIONEER_BLOOM → enables → CLIMAX_REGROWTH
+
+## The Nostalgia Cult Chaining (Spec 1165)
+
+- HIGH_STRESS_EVENT → increases_chance → CULT_FORMATION
+- CULT_FORMATION → enables → TECH_SABOTAGE
+- CULT_FORMATION → increases_chance → LABOR_SHORTAGE
+- TECH_SABOTAGE → increases_chance → INFRASTRUCTURE_COLLAPSE

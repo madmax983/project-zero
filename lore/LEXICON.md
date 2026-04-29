@@ -4414,3 +4414,51 @@
 **Replaces:** Vanity title, excessive demands
 **Code reference:** `VanityDemandEvent`
 **Usage:** "The Ego-Edict requires us to bow when the inspector passes."
+
+## Cultural Projection (Spec 670)
+
+### the Allure / soft power
+**Replaces:** Cultural Influence, Culture Score
+**Code reference:** `CulturalInfluenceGrid.total_pressure`
+**Usage:**
+- "The Allure of our colony reaches their borders."
+- "They defected, drawn by our soft power."
+
+### blue jeans and rock music
+**Replaces:** High-tier cultural exports, general culture items
+**Code reference:** `ColonyResources.art`, `ColonyResources.luxury`
+**Usage:**
+- "Our blue jeans and rock music conquer the galaxy."
+- "Send them art; they will put down their guns."
+
+## Ecological Succession (Spec 1094)
+
+### the Old Wood / Climax Forest
+**Replaces:** Mature biome, late-stage flora
+**Code reference:** `FloraType::Ironwood`, climax species
+**Usage:**
+- "We are harvesting the Old Wood."
+- "The climax forest takes centuries to return."
+
+### the Scab / Pioneer Growth
+**Replaces:** Early-stage flora, weeds, fast growth
+**Code reference:** `FloraType::FireWeed`, pioneer species
+**Usage:**
+- "FireWeed is just the planet's scab."
+- "The cleared land is choked with pioneer growth."
+
+## The Nostalgia Cult (Spec 1165)
+
+### The Nostalgia Cult / The Old Way
+**Replaces:** Anti-tech faction, luddites
+**Code reference:** `NostalgiaCult`
+**Usage:**
+- "He joined The Nostalgia Cult after the reactor blew."
+- "They follow The Old Way now. No machines."
+
+### the Breakers
+**Replaces:** Saboteurs, cult extremists
+**Code reference:** `execute_sabotage_action`
+**Usage:**
+- "The Breakers got into the life support manifold."
+- "Watch out for Breakers near the new assembly line."

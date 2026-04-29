@@ -6709,3 +6709,69 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 **Patterns:**
 - "[YEAR]: While the colony starves, the [VANITY_TITLE] demanded [VANITY_DEMAND]."
 - "The hubris of the [VANITY_TITLE] knows no bounds. They have ordered [VANITY_DEMAND] in [COLONY]. [YEAR]."
+
+## Cultural Projection Templates (Spec 670)
+
+### CULTURAL_DEFECTION
+
+**Generates:** Play event
+**Slots:** [YEAR], [CIV_NAME], [DEFECTING_POP_COUNT], [CULTURAL_GOOD]
+
+**Patterns:**
+- "[YEAR]: The border opens. [DEFECTING_POP_COUNT] souls abandon [CIV_NAME]. They came for the [CULTURAL_GOOD]."
+- "[DEFECTING_POP_COUNT] defectors from [CIV_NAME] arrive. It wasn't the war that broke them; it was the [CULTURAL_GOOD]."
+- "They laid down their arms for [CULTURAL_GOOD]. [YEAR]. [CIV_NAME] loses [DEFECTING_POP_COUNT] citizens to the allure."
+
+### CULTURAL_MILESTONE
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [CULTURAL_GOOD]
+
+**Patterns:**
+- "[YEAR]. [COLONY] exports its first crate of [CULTURAL_GOOD]. The galaxy notices."
+- "The sound of [COLONY]. The taste of [CULTURAL_GOOD]. The cultural victory begins in [YEAR]."
+- "[COLONY] stops surviving and starts creating. [CULTURAL_GOOD] floods the market in [YEAR]."
+
+## Ecological Succession Templates (Spec 1094)
+
+### FOREST_CLEARED
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [CLIMAX_SPECIES]
+
+**Patterns:**
+- "[YEAR]. The last of the [CLIMAX_SPECIES] falls in [COLONY]. The soil is exposed."
+- "They cleared the [CLIMAX_SPECIES] stand. The land is bare now."
+- "[COLONY] harvest completes. The ancient [CLIMAX_SPECIES] are gone. [YEAR]."
+
+### PIONEER_BLOOM
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [PIONEER_SPECIES]
+
+**Patterns:**
+- "From the ashes of the old forest, [PIONEER_SPECIES] begins to bloom. [YEAR]."
+- "[YEAR]: The scars on [COLONY] are covered by rapid-growing [PIONEER_SPECIES]."
+- "Nature abhors a vacuum. [PIONEER_SPECIES] chokes the cleared land."
+
+## The Nostalgia Cult Templates (Spec 1165)
+
+### CULT_FORMATION
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [POP_NAME]
+
+**Patterns:**
+- "The modern world is too loud. [POP_NAME] is preaching a return to the old ways. [YEAR]."
+- "[YEAR]: Stress fractures the colony. The Nostalgia Cult finds its first followers, led by [POP_NAME]."
+- "[POP_NAME] refuses to touch the machines. They say the founders lived better. The cult grows."
+
+### TECH_SABOTAGE
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [SABOTAGE_TARGET], [POP_NAME]
+
+**Patterns:**
+- "[YEAR]. The [SABOTAGE_TARGET] was found smashed. [POP_NAME] was seen chanting near the wreckage."
+- "Progress burns. The Nostalgia Cult destroys the [SABOTAGE_TARGET] in [COLONY]."
+- "They took hammers to the [SABOTAGE_TARGET]. 'Too complex,' [POP_NAME] screamed. 'Too fragile!'"
