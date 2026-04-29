@@ -804,11 +804,12 @@
 - **Glue added:** Added `faction_strike_mob_bridge_system` in `src/layer1/core/integration.rs` to emit `FormMobEvent` and `DisperseMobEvent` when a faction transitions in and out of the `Striking` state. Modified `Mob` to store `FactionId`. Scheduled immediately after `update_faction_strikes_system` in `Layer1SystemSet::Economy`.
 - **Tests:** `tests/integration/protest_crowds_integration.rs`
 
-### INT-1233: Public Grievances -> Social & Work Restrictions
-- **Date:** 2026-02-28
-- **Systems connected:** `Ostracized` (Public Grievances) -> `handle_socialize` / `proximity_social_system` / `work_execution_system`
+### INT-1233: Public Grievances -> Social/Work
+- **Date:** 2026-04-29
+- **Systems connected:** `Public Grievances` (Ostracized marker) -> `Social/Work Systems` (arrival, work_execution, proximity)
 - **Glue added:**
-    - Prevented `Ostracized` pops from socializing at Taverns in `handle_socialize`.
-    - Excluded `Ostracized` pops from receiving or granting proximity morale buffs in `proximity_social_system`.
-    - Applied a severe `0.2x` work speed penalty to `Ostracized` pops in `work_execution_system`.
-- **Tests:** `tests/integration/public_grievances_bridge.rs`
+    - Updated `collect_workers_by_target` in `src/layer1/execution/general_work.rs` to query for `Ostracized` component and pass it into `WorkerData`, applying a 0.2 work speed multiplier if ostracized.
+    - Updated `arrival_handler_system` in `src/layer1/execution/arrival.rs` to query for `Ostracized` component and pass it to `process_arrival`, which passes it to `handle_socialize`.
+    - Updated `handle_socialize` in `src/layer1/social/mod.rs` to early-return if the pop is ostracized, preventing them from joining a tavern.
+    - Updated `proximity_social_system` in `src/layer1/social/mod.rs` to ignore ostracized pops (they don't gain proximity buffs and others don't gain proximity buffs from them).
+- **Tests:** Added `tests/integration/public_grievances_bridge.rs` testing socialize, proximity, and work penalties.
