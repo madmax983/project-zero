@@ -513,6 +513,8 @@ mod tests {
 pub mod debt;
 /// Public Grievances system (Spec 233).
 pub mod grievances;
+pub mod protest_crowds;
+pub use protest_crowds::*;
 /// Old Guard logic: Generational friction between Founders and Immigrants (Spec 078).
 pub mod old_guard;
 

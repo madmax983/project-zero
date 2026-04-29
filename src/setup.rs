@@ -228,6 +228,8 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     world.init_resource::<crate::layer1::civic_ideology::ActiveIdeology>();
     world.insert_resource(crate::layer1::social_mimicry::Trend::default());
     world.insert_resource(crate::layer1::factions::Factions::default());
+    world.init_resource::<bevy_ecs::event::Events<crate::layer1::social::protest_crowds::FormMobEvent>>();
+    world.init_resource::<bevy_ecs::event::Events<crate::layer1::social::protest_crowds::DisperseMobEvent>>();
     world.insert_resource(InputContextStack::default());
     world.insert_resource(MessageLog::default());
     world.insert_resource(Chronicle::default());

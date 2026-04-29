@@ -45,6 +45,8 @@ pub enum ActionType {
     ///
     /// See \[`crate::layer1::actions::work::evaluate_work`\].
     Work,
+    /// Protest against current conditions in a mob.
+    Protest,
     /// Repair damaged structures to prevent collapse.
     ///
     /// See \[`crate::layer1::actions::repair::evaluate_repair`\].
@@ -192,7 +194,7 @@ pub enum HobbyType {
 
 impl ActionType {
     /// Total number of action types. Used for array sizing.
-    pub const COUNT: usize = 43;
+    pub const COUNT: usize = 44;
 
     /// Converts action type to a unique array index (0..COUNT-1).
     #[must_use]
@@ -203,44 +205,45 @@ impl ActionType {
             Self::Socialize => 2,
             Self::Explore => 3,
             Self::Work => 4,
-            Self::Repair => 5,
-            Self::Research => 6,
-            Self::Haul => 7,
-            Self::SeekMedicalCare => 8,
-            Self::BuryCorpse => 9,
-            Self::FetchTool => 10,
-            Self::Idle => 11,
-            Self::Vandalize => 12,
-            Self::Binge => 13,
-            Self::Daze => 14,
-            Self::Fight => 15,
-            Self::Refine => 16,
-            Self::Farm => 17,
-            Self::Warden => 18,
-            Self::Sleepwalking => 19,
-            Self::Tame => 20,
-            Self::FireStarting => 21,
-            Self::HideInRoom => 22,
-            Self::SadWander => 23,
-            Self::FetchClothing => 24,
-            Self::Surgery => 25,
-            Self::Charge => 26,
-            Self::Hobby => 27,
-            Self::Admin => 28,
-            Self::ScrawlMemeticSigil => 29,
-            Self::PreCrimeArrest => 30,
-            Self::ConsumeChemical => 31,
-            Self::CollectSample => 32,
-            Self::UseShower => 33,
-            Self::ListenToTheHum => 34,
-            Self::Clean => 35,
-            Self::PurgeResidue => 36,
-            Self::VisitSanctuary => 37,
-            Self::VoidStare => 38,
-            Self::ExtinguishFire => 39,
-            Self::TreatWounds => 40,
-            Self::Flee => 41,
-            Self::Sabotage => 42,
+            Self::Protest => 5,
+            Self::Repair => 6,
+            Self::Research => 7,
+            Self::Haul => 8,
+            Self::SeekMedicalCare => 9,
+            Self::BuryCorpse => 10,
+            Self::FetchTool => 11,
+            Self::Idle => 12,
+            Self::Vandalize => 13,
+            Self::Binge => 14,
+            Self::Daze => 15,
+            Self::Fight => 16,
+            Self::Refine => 17,
+            Self::Farm => 18,
+            Self::Warden => 19,
+            Self::Sleepwalking => 20,
+            Self::Tame => 21,
+            Self::FireStarting => 22,
+            Self::HideInRoom => 23,
+            Self::SadWander => 24,
+            Self::FetchClothing => 25,
+            Self::Surgery => 26,
+            Self::Charge => 27,
+            Self::Hobby => 28,
+            Self::Admin => 29,
+            Self::ScrawlMemeticSigil => 30,
+            Self::PreCrimeArrest => 31,
+            Self::ConsumeChemical => 32,
+            Self::CollectSample => 33,
+            Self::UseShower => 34,
+            Self::ListenToTheHum => 35,
+            Self::Clean => 36,
+            Self::PurgeResidue => 37,
+            Self::VisitSanctuary => 38,
+            Self::VoidStare => 39,
+            Self::ExtinguishFire => 40,
+            Self::TreatWounds => 41,
+            Self::Flee => 42,
+            Self::Sabotage => 43,
         }
     }
 

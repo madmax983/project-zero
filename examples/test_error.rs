@@ -15,10 +15,12 @@ fn main() -> anyhow::Result<()> {
             let action_msg = "  Action Required: Check Template ID or Context.\n  Verify the name exists in your TEMPLATES.md. ";
             let mut table = Table::new();
             table.load_preset(UTF8_FULL);
-            table.set_header(vec![comfy_table::Cell::new(" ✗ NARRATIVE GENERATOR ERROR ")
-                .add_attribute(comfy_table::Attribute::Bold)
-                .fg(TableColor::Red)
-                .bg(TableColor::DarkGrey)]);
+            table.set_header(vec![comfy_table::Cell::new(
+                " ✗ NARRATIVE GENERATOR ERROR ",
+            )
+            .add_attribute(comfy_table::Attribute::Bold)
+            .fg(TableColor::Red)
+            .bg(TableColor::DarkGrey)]);
             table.add_row(vec![Cell::new(&error_msg).fg(TableColor::White)]);
             table.add_row(vec![Cell::new(&action_msg).fg(TableColor::Yellow)]);
             println!("{table}");

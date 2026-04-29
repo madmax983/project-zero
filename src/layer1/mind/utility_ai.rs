@@ -535,7 +535,21 @@ impl<'a> PopDecider<'a> {
     /// *   **PreCrimeArrest**: Predictive policing.
     #[allow(clippy::collapsible_if)]
     fn evaluate_group_work(&mut self) {
-        if self.is_striking || self.is_noble {
+        if self.is_striking {
+            self.evaluator.evaluate_and_consider(
+                crate::layer1::actions::evaluate_protest(
+                    self.data.pos,
+                    &self.data.weights,
+                    &self.buffer.mobs,
+                ),
+                ActionType::Protest,
+                self.context,
+                0.0,
+            );
+            return;
+        }
+
+        if self.is_noble {
             return;
         }
 
