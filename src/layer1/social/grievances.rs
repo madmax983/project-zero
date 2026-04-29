@@ -3,10 +3,18 @@ use crate::layer1::social::{AffinityChange, Relationships};
 use crate::layer1::stress::StressTracker;
 use crate::layer1::traits::{Trait, Traits};
 use crate::shared::time::SimulationTime;
-use bevy_ecs::prelude::*;
+use bevy::prelude::*;
 use rand::seq::{IteratorRandom, SliceRandom};
 use rand::thread_rng;
 use rand::Rng;
+
+#[derive(Component)]
+pub struct SocialStanding {
+    pub value: f32,
+}
+
+#[derive(Component)]
+pub struct Ostracized;
 
 #[derive(Debug, Clone, PartialEq)]
 pub enum Sentiment {
@@ -39,6 +47,14 @@ pub struct ReadingBoard {
 #[derive(Component, Default)]
 pub struct GrievanceCooldown {
     pub last_post_tick: u64,
+}
+
+#[derive(Event)]
+pub struct PostGrievanceEvent {
+    pub poster: Entity,
+    pub target: Entity,
+    pub board: Entity,
+    pub impact: f32, // Positive for praise, negative for grievance
 }
 
 /// Max notes per board. Oldest removed first.
@@ -166,6 +182,28 @@ pub fn post_grievance_system(
             commands.entity(entity).insert(GrievanceCooldown {
                 last_post_tick: timestamp,
             });
+        }
+    }
+}
+
+pub fn apply_grievance_system(
+    mut events: EventReader<PostGrievanceEvent>,
+    mut query: Query<&mut SocialStanding>,
+) {
+    for event in events.read() {
+        if let Ok(mut standing) = query.get_mut(event.target) {
+            standing.value += event.impact;
+        }
+    }
+}
+
+pub fn ostracization_system(
+    mut query: Query<(Entity, &SocialStanding), Without<Ostracized>>,
+    mut commands: Commands,
+) {
+    for (entity, standing) in query.iter_mut() {
+        if standing.value <= 0.0 {
+            commands.entity(entity).insert(Ostracized);
         }
     }
 }
@@ -416,5 +454,40 @@ mod tests {
         let board = world.get::<BulletinBoard>(board_ent).unwrap();
         assert_eq!(board.notes.len(), 1);
         assert_eq!(board.notes[0].content, "New");
+    }
+
+    #[test]
+    fn test_post_grievance_decreases_standing() {
+        // Arrange
+        let mut app = App::new();
+        app.add_event::<PostGrievanceEvent>();
+
+        let target_pop = app.world_mut().spawn(SocialStanding { value: 50.0 }).id();
+        let poster_pop = app.world_mut().spawn(crate::layer1::pop::Pop).id();
+        let bulletin_board = app.world_mut().spawn(BulletinBoard::default()).id();
+
+        // Act
+        app.world_mut().send_event(PostGrievanceEvent {
+            poster: poster_pop,
+            target: target_pop,
+            board: bulletin_board,
+            impact: -10.0,
+        });
+        app.add_systems(Update, apply_grievance_system);
+        app.update();
+
+        // Assert
+        let target_standing = app.world().get::<SocialStanding>(target_pop).unwrap().value;
+        assert_eq!(target_standing, 40.0);
+    }
+
+    #[test]
+    fn test_ostracization_on_low_standing() {
+        // Arrange
+        let mut app = App::new();
+        let target_pop = app.world_mut().spawn(SocialStanding { value: -10.0 }).id();
+        app.add_systems(Update, ostracization_system);
+        app.update();
+        assert!(app.world().get::<Ostracized>(target_pop).is_some());
     }
 }

@@ -35,7 +35,9 @@ pub fn detect_whispering_well_system(
     for (well_entity, well_pos, building) in wells.iter() {
         if building.building_type == BuildingType::Well {
             for (pop_pos, morale) in pops.iter() {
-                if morale.value < 0.1 && pop_pos.distance_chebyshev(*well_pos) <= WHISPERING_AWAKEN_RADIUS {
+                if morale.value < 0.1
+                    && pop_pos.distance_chebyshev(*well_pos) <= WHISPERING_AWAKEN_RADIUS
+                {
                     // Awaken the well!
                     commands.entity(well_entity).insert((
                         WhisperingWell,
@@ -121,7 +123,9 @@ mod tests {
             },
         ));
 
-        world.run_system_once(detect_whispering_well_system).unwrap();
+        world
+            .run_system_once(detect_whispering_well_system)
+            .unwrap();
         assert!(world.get::<WhisperingWell>(well).is_none());
 
         // Spawn a depressed pop
@@ -134,12 +138,16 @@ mod tests {
             },
         ));
 
-        world.run_system_once(detect_whispering_well_system).unwrap();
+        world
+            .run_system_once(detect_whispering_well_system)
+            .unwrap();
         assert!(world.get::<WhisperingWell>(well).is_some());
         assert!(world.get::<NoiseSource>(well).is_some());
 
         // Test effects
-        world.run_system_once(whispering_well_effects_system).unwrap();
+        world
+            .run_system_once(whispering_well_effects_system)
+            .unwrap();
 
         let resources = world.resource::<ColonyResources>();
         assert!((resources.knowledge - 0.05).abs() < f32::EPSILON);
