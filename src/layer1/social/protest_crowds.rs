@@ -3,6 +3,7 @@ use bevy_ecs::prelude::*;
 #[derive(Component)]
 pub struct Mob {
     pub location: (i32, i32),
+    pub faction: crate::layer1::factions::FactionId,
 }
 
 #[derive(Event)]
@@ -25,6 +26,7 @@ pub fn form_mob_system(
         occupied.0.insert(event.location);
         commands.spawn(Mob {
             location: event.location,
+            faction: event.faction,
         });
     }
 }
@@ -103,6 +105,7 @@ mod tests {
             .world_mut()
             .spawn(Mob {
                 location: target_tile,
+                faction: FactionId::MinersGuild,
             })
             .id();
 

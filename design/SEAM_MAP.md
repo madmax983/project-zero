@@ -797,3 +797,9 @@
 - **Glue added:** `astrological_beliefs_bridge_system` in `src/layer2/integration.rs`
 - **Schedule:** Runs after `update_syzygy_cycle_system`
 - **Tests:** `tests/integration/astrological_beliefs_bridge.rs`
+
+### INT-1234: Faction Strikes -> Protest Mobs
+- **Date:** 2026-06-25
+- **Systems connected:** `update_faction_strikes_system` (Social/Factions) -> `faction_strike_mob_bridge_system` (Integration) -> `form_mob_system` (Protest Crowds)
+- **Glue added:** Added `faction_strike_mob_bridge_system` in `src/layer1/core/integration.rs` to emit `FormMobEvent` and `DisperseMobEvent` when a faction transitions in and out of the `Striking` state. Modified `Mob` to store `FactionId`. Scheduled immediately after `update_faction_strikes_system` in `Layer1SystemSet::Economy`.
+- **Tests:** `tests/integration/protest_crowds_integration.rs`
