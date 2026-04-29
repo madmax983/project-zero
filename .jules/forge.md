@@ -9,3 +9,7 @@
 ## 2024-05-27 - Redundant Init Checks and Destructive Insert Smells
 **Learning:** Checking `if !world.contains_resource::<T>()` before calling `world.init_resource::<T>()` creates immense visual clutter (e.g., in `simulation.rs` God Functions) because `init_resource` already internally handles existence checks and acts as a safe no-op. However, using `world.insert_resource(...)` unconditionally overwrites state. Removing protective `if` checks around `insert_resource` will wipe the game state (like `Schedules` or `DiplomaticStanding`) on every simulation tick.
 **Action:** Remove redundant `contains_resource` checks only for `init_resource` calls. Strictly preserve `if !world.contains_resource::<T>()` protective blocks around `insert_resource` calls to prevent state wiping regressions.
+
+## 2024-06-25 - Bevy System Tuple Pyramid of Doom Smell
+**Learning:** Adding too many systems (more than ~15-20 depending on Bevy version) into a single tuple like `schedule.add_systems((sys1, sys2, ...))` causes the Rust compiler to exceed its recursion limits or fail with a vague `error[E0599]: the method in_set exists for tuple but its trait bounds were not satisfied`. This happens because Bevy defines `IntoSystemConfigs` and `IntoSystemSetConfigs` up to a certain tuple arity.
+**Action:** When encountering massive system registration tuples, split them into multiple smaller `schedule.add_systems((...))` calls to keep the arity well below Bevy's internal limits, keeping the code clean and strictly avoiding compiler recursion bound failures.
