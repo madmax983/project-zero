@@ -1682,3 +1682,41 @@ pub fn sonic_turret_noise_bridge_system(
         }
     }
 }
+
+use crate::layer1::factions::{FactionId, FactionState};
+use crate::layer1::social::protest_crowds::{DisperseMobEvent, FormMobEvent, Mob};
+use bevy::utils::HashMap;
+
+pub fn faction_strike_mob_bridge_system(
+    factions: Res<Factions>,
+    mut form_events: EventWriter<FormMobEvent>,
+    mut disperse_events: EventWriter<DisperseMobEvent>,
+    mut prev_states: Local<HashMap<FactionId, FactionState>>,
+    mob_query: Query<(Entity, &Mob)>,
+) {
+    for (faction_id, data) in &factions.map {
+        let current_state = data.state;
+        let prev_state = prev_states
+            .get(faction_id)
+            .copied()
+            .unwrap_or(FactionState::Loyal);
+
+        if current_state == FactionState::Striking && prev_state != FactionState::Striking {
+            // Faction just went on strike, form a mob!
+            // We use (0, 0) as a fallback location for now
+            form_events.send(FormMobEvent {
+                location: (0, 0),
+                faction: *faction_id,
+            });
+        } else if current_state != FactionState::Striking && prev_state == FactionState::Striking {
+            // Faction is no longer striking, disperse their mob
+            for (mob_entity, mob) in &mob_query {
+                if mob.faction == *faction_id {
+                    disperse_events.send(DisperseMobEvent { mob: mob_entity });
+                }
+            }
+        }
+
+        prev_states.insert(*faction_id, current_state);
+    }
+}

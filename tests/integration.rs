@@ -318,3 +318,6 @@ mod photophobic_light_bridge;
 
 #[path = "integration/astrological_beliefs_bridge.rs"]
 mod astrological_beliefs_bridge;
+
+#[path = "integration/protest_crowds_integration.rs"]
+mod protest_crowds_integration;
