@@ -108,3 +108,6 @@ pub mod zodiac_talisman;
 
 #[cfg(feature = "nova")]
 pub mod whispering_well;
+
+#[cfg(feature = "nova")]
+pub mod gloom_sickness;

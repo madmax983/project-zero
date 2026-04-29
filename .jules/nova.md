@@ -20,3 +20,8 @@
 **Concept:** Added a `WhisperingWell` system. A `Pop` with extremely low morale interacting near a `Well` inadvertently awakens it. The well acts as a permanent `NoiseSource` and drains nearby morale, but passively generates `Knowledge` for the colony.
 **Fate:** Merged
 **Lesson:** Connecting psychological trauma (low Morale) directly to map infrastructure (Wells) creates powerful emergent narrative mechanics and risk-reward base management elements.
+
+## [Gloom Sickness]
+**Concept:** A new affliction that applies a `GloomSickness` component to pops standing in the dark (light level < 0.1) for too long, passively lowering their speed.
+**Fate:** Merged
+**Lesson:** Tying lighting to physiological needs directly incentivizes proper base planning and prevents players from ignoring light distribution logic.
