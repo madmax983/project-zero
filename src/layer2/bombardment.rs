@@ -1,8 +1,8 @@
-use bevy::prelude::*;
-use rand::Rng;
-use crate::layer1::nature::terrain::{TerrainGrid, TerrainType};
 use crate::layer1::health::Health;
 use crate::layer1::nature::atmosphere::CorrosiveAtmosphere;
+use crate::layer1::nature::terrain::{TerrainGrid, TerrainType};
+use bevy::prelude::*;
+use rand::Rng;
 
 #[derive(Event)]
 pub struct BombardmentEvent {
@@ -43,7 +43,9 @@ pub fn execute_bombardment_system(
         }
 
         // Deform terrain (minimal implementation: turn center tile to Crater)
-        if impact_point.x < 0.0 || impact_point.y < 0.0 { continue; }
+        if impact_point.x < 0.0 || impact_point.y < 0.0 {
+            continue;
+        }
         let tx = impact_point.x as usize;
         let ty = impact_point.y as usize;
         // Check bounds
@@ -56,8 +58,8 @@ pub fn execute_bombardment_system(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::layer1::nature::terrain::{TerrainGrid, TerrainType};
     use crate::layer1::health::Health;
+    use crate::layer1::nature::terrain::{TerrainGrid, TerrainType};
 
     #[test]
     fn test_bombardment_direct_hit() {
@@ -72,7 +74,17 @@ mod tests {
         };
 
         // Target entity with health at 5,5
-        let target_id = app.world_mut().spawn((Transform::from_xyz(5.0, 5.0, 0.0), Health { current: 100.0, max: 100.0, has_rust_lung: false })).id();
+        let target_id = app
+            .world_mut()
+            .spawn((
+                Transform::from_xyz(5.0, 5.0, 0.0),
+                Health {
+                    current: 100.0,
+                    max: 100.0,
+                    has_rust_lung: false,
+                },
+            ))
+            .id();
 
         app.world_mut().insert_resource(grid);
 
@@ -87,7 +99,10 @@ mod tests {
         app.update();
 
         // Target should be obliterated
-        assert!(app.world().get_entity(target_id).is_err() || app.world().get::<Health>(target_id).unwrap().current <= 0.0);
+        assert!(
+            app.world().get_entity(target_id).is_err()
+                || app.world().get::<Health>(target_id).unwrap().current <= 0.0
+        );
     }
 
     #[test]
@@ -102,7 +117,17 @@ mod tests {
             tiles: vec![TerrainType::Grass; 400],
         };
         // Friendly entity at 10,10
-        let friendly_id = app.world_mut().spawn((Transform::from_xyz(10.0, 10.0, 0.0), Health { current: 100.0, max: 100.0, has_rust_lung: false })).id();
+        let friendly_id = app
+            .world_mut()
+            .spawn((
+                Transform::from_xyz(10.0, 10.0, 0.0),
+                Health {
+                    current: 100.0,
+                    max: 100.0,
+                    has_rust_lung: false,
+                },
+            ))
+            .id();
 
         app.world_mut().insert_resource(grid);
 
@@ -116,7 +141,10 @@ mod tests {
         app.update();
 
         // Let's just assert the system processed events correctly and didn't crash
-        assert!(app.world().get_entity(friendly_id).is_ok() || app.world().get_entity(friendly_id).is_err());
+        assert!(
+            app.world().get_entity(friendly_id).is_ok()
+                || app.world().get_entity(friendly_id).is_err()
+        );
     }
 
     #[test]
@@ -160,7 +188,8 @@ mod tests {
         };
 
         app.world_mut().insert_resource(grid);
-        app.world_mut().insert_resource(CorrosiveAtmosphere { intensity: 1.0 });
+        app.world_mut()
+            .insert_resource(CorrosiveAtmosphere { intensity: 1.0 });
 
         app.world_mut().send_event(BombardmentEvent {
             target: Vec2::new(5.0, 5.0),

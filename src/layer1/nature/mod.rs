@@ -1,3 +1,7 @@
+//! Nature
+//!
+//! Handles ecology, terrain generation, weather, and natural phenomena.
+
 pub mod atmosphere;
 #[cfg(test)]
 mod atmosphere_corrosion_tests;

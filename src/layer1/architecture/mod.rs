@@ -1,3 +1,7 @@
+//! Architecture
+//!
+//! Defines building structures, housing, and structural integrity mechanics.
+
 /// Biomimetic architecture.
 pub mod biomimetic;
 /// General building framework and implementations.

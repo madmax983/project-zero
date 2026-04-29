@@ -1,3 +1,7 @@
+//! Actions
+//!
+//! Defines the various actions pops can take, from simple tasks to complex behaviors like protests and mental breaks.
+
 pub(crate) mod simple;
 pub(crate) use simple::*;
 pub(crate) mod clothing;

@@ -1,3 +1,7 @@
+//! Core
+//!
+//! Contains core systems for AI control, map management, and chronicle events.
+
 pub mod ai_core;
 pub mod chronicle;
 pub mod control;

@@ -1,3 +1,7 @@
+//! Psychology
+//!
+//! Manages the mental state of pops, including needs, stress, dreams, and traits.
+
 pub mod cabin_fever;
 pub mod cryo_dreams;
 pub mod dreams;

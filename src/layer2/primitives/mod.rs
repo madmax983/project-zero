@@ -1,3 +1,7 @@
+//! Primitives
+//!
+//! Defines primitive civilizations and the interactions with them.
+
 use crate::layer1::architecture::structure::Structure;
 use crate::layer1::pop::Pop;
 use crate::layer1::resources::ColonyResources;

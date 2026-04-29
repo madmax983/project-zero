@@ -1,3 +1,7 @@
+//! Construction
+//!
+//! Handles the construction of buildings and great works.
+
 pub mod great_works;
 pub use great_works::*;
 

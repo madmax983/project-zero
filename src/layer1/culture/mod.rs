@@ -1,3 +1,7 @@
+//! Culture
+//!
+//! Defines cultural aspects like art, festivals, funerals, and artifacts.
+
 /// Ancestral Graves system.
 pub mod ancestral_graves;
 pub use ancestral_graves::*;
