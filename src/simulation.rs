@@ -103,6 +103,7 @@ fn init_simulation_resources(world: &mut World) {
     world.init_resource::<Events<crate::layer1::tectonic::MegaQuakeEvent>>();
     world.init_resource::<Events<crate::layer1::whispering_ore::MinedOreEvent>>();
     world.init_resource::<Events<crate::layer1::whispering_ore::MineSealedEvent>>();
+    world.init_resource::<Events<crate::layer1::social::grievances::PostGrievanceEvent>>();
     world.init_resource::<Events<crate::layer1::deep_crust_resonance::ExcavationEvent>>();
     world.init_resource::<Events<crate::layer1::resources::MiningEvent>>();
     world.init_resource::<Events<crate::layer1::spiteful_will::InheritanceEvent>>();
@@ -584,6 +585,7 @@ mod tests {
         world.init_resource::<bevy::prelude::Events<crate::layer1::infrastructure::ancient::ConduitSurgeEvent>>();
         world.init_resource::<bevy::prelude::Events<crate::layer2::weather::StormImpactEvent>>();
         world.init_resource::<bevy::prelude::Events<crate::layer1::law::justice::CrimeCommittedEvent>>();
+        world.init_resource::<bevy::prelude::Events<crate::layer1::social::grievances::PostGrievanceEvent>>();
         world.init_resource::<bevy::prelude::Events<crate::layer1::pop_memories::FamineEvent>>();
         world.init_resource::<crate::layer3::digital_detritus::DataMiningQueue>();
         world.init_resource::<crate::layer3::digital_detritus::DiscoveredTechs>();
@@ -606,6 +608,7 @@ mod tests {
             );
         world.init_resource::<bevy::prelude::Events<crate::layer2::skyhooks::LaunchIntent>>();
         world.init_resource::<bevy::prelude::Events<crate::layer1::law::justice::CrimeCommittedEvent>>();
+        world.init_resource::<bevy::prelude::Events<crate::layer1::social::grievances::PostGrievanceEvent>>();
         world.init_resource::<bevy::prelude::Events<crate::layer2::weather::StormImpactEvent>>();
         world.init_resource::<bevy::prelude::Events<crate::layer1::pop_memories::FamineEvent>>();
         world.init_resource::<crate::layer3::digital_detritus::DataMiningQueue>();
@@ -639,6 +642,7 @@ mod tests {
             );
         world.init_resource::<bevy::prelude::Events<crate::layer2::skyhooks::LaunchIntent>>();
         world.init_resource::<Events<crate::layer2::moon_hermits::PopDesertedEvent>>();
+        world.init_resource::<bevy::prelude::Events<crate::layer1::social::grievances::PostGrievanceEvent>>();
         world.init_resource::<Events<crate::layer1::law::embassy::ArrestEvent>>();
         world.init_resource::<Events<crate::layer1::law::embassy::DiplomaticIncidentEvent>>();
         world.init_resource::<Events<crate::layer3::silence::HostileSpawnEvent>>();
@@ -754,6 +758,7 @@ mod tests {
         world.init_resource::<crate::layer3::physics::relativity::SimulationTime>();
 
         world.init_resource::<Events<crate::layer2::moon_hermits::PopDesertedEvent>>();
+        world.init_resource::<bevy::prelude::Events<crate::layer1::social::grievances::PostGrievanceEvent>>();
 
         world.init_resource::<Time>();
         world.init_resource::<Events<crate::layer2::primitives::InvasionEvent>>();
