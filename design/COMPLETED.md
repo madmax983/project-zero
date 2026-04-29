@@ -469,3 +469,4 @@
 - [x] `670` Cultural Projection — `specs/670-cultural-projection.md` — completed 2024-05-28
 - [x] `1233` Public Grievances — `specs/1233-public-grievances.md`
 - [x] `1234` Protest Crowds — `specs/1234-protest-crowds.md` — completed 2026-06-01
+- [x] `659` Orbital Bombardment — `specs/659-orbital-bombardment.md` — completed 2026-02-01
