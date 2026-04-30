@@ -8,6 +8,8 @@ use bevy_ecs::prelude::*;
 pub fn register(schedule: &mut Schedule) {
     schedule.add_systems(
         (
+            crate::layer1::social::pop_relationships::update_workplace_relationships_system,
+            crate::layer1::social::pop_relationships::calculate_relationship_mood_buff_system,
             crate::layer1::stress::assign_generational_traits_system,
             crate::layer1::stress::silent_needs_suppression_system,
             crate::layer1::psychology::psychic_stains::process_violent_deaths_system,
