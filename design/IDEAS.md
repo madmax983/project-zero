@@ -17881,3 +17881,59 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you heavily regulate these status-defining heirlooms to maintain the rigid social hierarchy, or allow a black market of "stolen gravity" to upend your colony's power dynamics?
 
 ---
+
+## The Bio-Acoustic Resonance
+
+**Layer:** 1
+
+**Fantasy:** The colony's industry creates a symphony that native megafauna mistake for a mating call.
+
+**Mechanic:** Heavy industrial buildings generate "Acoustic Noise." If the noise reaches a specific resonant frequency, massive, normally docile native herbivores migrate toward the source, accidentally crushing structures in their path.
+
+**Emergence:** You try to stagger factory shifts to break the frequency, but a sudden power surge synchronizes all the machines, instantly drawing a herd of colossal beasts into your fragile agricultural sector.
+
+**Tension:** Do you optimize factory layouts for maximum throughput, or intentionally build inefficient, sound-dampening buffer zones to hide from the local ecosystem?
+
+---
+
+## Diplomatic Artifact Forgery
+
+**Layer:** Cross-layer (1 -> 3)
+
+**Fantasy:** Selling fake ancient history to proud, gullible galactic empires.
+
+**Mechanic:** Your Pops can forge "Ancient Relics" using low-tier materials and a high-level "Artisan" skill. These fakes can be gifted to Layer 3 civilizations for massive diplomatic boosts or sold for credits, as long as the empire's "Verification" tech is lower than your Pop's skill.
+
+**Emergence:** You fund an entire defensive war by selling forged ceremonial swords to a wealthy neighbor. A decade later, their new emperor discovers the deception, instantly flipping them from your closest ally to your most furious enemy.
+
+**Tension:** Do you rely on the massive, immediate gains of artifact forgery, knowing it plants a ticking diplomatic time bomb in the heart of a superpower?
+
+---
+
+## Orbit-Decay Extortion
+
+**Layer:** 2
+
+**Fantasy:** Holding a planet's sky hostage with a falling megastructure.
+
+**Mechanic:** Decommissioned or heavily damaged orbital stations slowly suffer "Orbit Decay." If a decaying station is directly above a rival's colony or a neutral trade hub, you can demand tribute. If they refuse, you simply let it crash, causing an "Impact Event" on the surface below.
+
+**Emergence:** You use an old, ruined shipyard to extort a pirate faction. They refuse to pay, so you drop it on their base. The impact kicks up a massive dust cloud that accidentally plunges your own neighboring agricultural planet into a deadly years-long winter.
+
+**Tension:** Do you safely dismantle your dying stations for scrap, or weaponize their inevitable fall to extract resources, risking catastrophic collateral damage to the local system?
+
+---
+
+## The Martyr's Dividend
+
+**Layer:** Cross-layer (1 -> 3)
+
+**Fantasy:** Profiting from the spectacular, televised deaths of your own heroes.
+
+**Mechanic:** When a highly skilled Pop dies while performing a "Heroic Act" (e.g., holding off invaders, repairing a reactor core meltdown), it is recorded as a "Martyr's Broadcast." This broadcast generates an immense, temporary surge of "Cultural Influence" at Layer 3, paralyzing enemy war efforts through sheer galactic sympathy.
+
+**Emergence:** Your colony is heavily outgunned and about to fall. You intentionally trap your most beloved, high-level scientist in a failing fusion reactor. Their sacrifice creates such an overwhelming cultural impact that the invading empire's own citizens riot, forcing a ceasefire.
+
+**Tension:** Do you protect your most valuable, highly trained Pops at all costs, or intentionally maneuver them into fatal, heroic situations to weaponize their martyrdom for empire-wide salvation?
+
+---
