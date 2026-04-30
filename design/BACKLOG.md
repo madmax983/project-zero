@@ -10,7 +10,6 @@
 
 
 
-- [ ] `660` Orbital Mirrors — `specs/660-orbital-mirrors.md`
 - [ ] `661` Secret Societies — `specs/661-secret-societies.md`
 
 - [ ] `648` The Founder Effect — `specs/648-the-founder-effect.md`

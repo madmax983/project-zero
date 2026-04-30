@@ -84,6 +84,21 @@ impl LightMap {
             }
         }
     }
+
+    /// Add light to a specific tile. Clamps value between 0.0 and 1.0.
+    pub fn add_light(&mut self, x: u32, y: u32, amount: f32) {
+        if x >= self.width || y >= self.height {
+            return;
+        }
+        if let Some(idx) = (y as usize)
+            .checked_mul(self.width as usize)
+            .and_then(|i| i.checked_add(x as usize))
+        {
+            if idx < self.tiles.len() {
+                self.tiles[idx] = (self.tiles[idx] + amount).clamp(0.0, 1.0);
+            }
+        }
+    }
 }
 
 /// Component for entities that emit light.
