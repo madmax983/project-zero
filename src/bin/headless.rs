@@ -465,7 +465,6 @@ fn report_events(world: &mut World) {
 }
 
 fn print_status(world: &mut World) {
-    // Copy resource values before querying to avoid borrow conflicts
     let resources = *world.resource::<ColonyResources>();
     let (wind_dir, wind_speed) = {
         let w = world.resource::<GlobalWind>();
@@ -478,7 +477,43 @@ fn print_status(world: &mut World) {
     let housing_count = world.query::<&Housing>().iter(world).count();
     let designation_count = world.query::<&Designation>().iter(world).count();
 
-    // Calculate Average Morale & Stress
+    let (avg_morale, avg_stress) = calculate_averages(world);
+
+    let mut table = Table::new();
+    table
+        .load_preset(UTF8_FULL)
+        .set_content_arrangement(ContentArrangement::Dynamic)
+        .set_header(vec![
+            Cell::new("Category").add_attribute(Attribute::Bold),
+            Cell::new("Metric").add_attribute(Attribute::Bold),
+            Cell::new("Value").add_attribute(Attribute::Bold),
+        ]);
+
+    add_society_rows(&mut table, pop_count, avg_morale, avg_stress);
+    add_environment_rows(&mut table, wind_dir, wind_speed);
+    add_resource_rows(&mut table, &resources);
+
+    table.add_row(vec![
+        Cell::new("Buildings").fg(Color::Magenta),
+        Cell::new("Farms"),
+        Cell::new(farm_count.to_string()),
+    ]);
+    table.add_row(vec![
+        Cell::new(""),
+        Cell::new("Housing"),
+        Cell::new(housing_count.to_string()),
+    ]);
+
+    table.add_row(vec![
+        Cell::new("Tasks").fg(Color::Blue),
+        Cell::new("Active Designations"),
+        Cell::new(designation_count.to_string()),
+    ]);
+
+    print_dashboard_table(&format!("COLONY STATUS (Tick {})", tick), table);
+}
+
+fn calculate_averages(world: &mut World) -> (f32, f32) {
     let mut total_morale = 0.0;
     let mut morale_count = 0;
     for morale in world.query::<&Morale>().iter(world) {
@@ -507,16 +542,10 @@ fn print_status(world: &mut World) {
         0.0
     };
 
-    let mut table = Table::new();
-    table
-        .load_preset(UTF8_FULL)
-        .set_content_arrangement(ContentArrangement::Dynamic)
-        .set_header(vec![
-            Cell::new("Category").add_attribute(Attribute::Bold),
-            Cell::new("Metric").add_attribute(Attribute::Bold),
-            Cell::new("Value").add_attribute(Attribute::Bold),
-        ]);
+    (avg_morale, avg_stress)
+}
 
+fn add_society_rows(table: &mut Table, pop_count: usize, avg_morale: f32, avg_stress: f32) {
     table.add_row(vec![
         Cell::new("Population").fg(Color::Cyan),
         Cell::new("Citizens"),
@@ -548,7 +577,9 @@ fn print_status(world: &mut World) {
         Cell::new("Avg Stress"),
         Cell::new(format!("{:.1}", avg_stress)).fg(stress_color),
     ]);
+}
 
+fn add_environment_rows(table: &mut Table, wind_dir: scale::layer1::Vec2, wind_speed: f32) {
     let wind_arrow = if wind_dir.x > 0.0 {
         "→"
     } else if wind_dir.x < 0.0 {
@@ -566,7 +597,9 @@ fn print_status(world: &mut World) {
             wind_speed, wind_arrow, wind_dir.x, wind_dir.y
         )),
     ]);
+}
 
+fn add_resource_rows(table: &mut Table, resources: &ColonyResources) {
     // Basic Resources
     table.add_row(vec![
         Cell::new("Basic").fg(Color::Yellow),
@@ -658,25 +691,6 @@ fn print_status(world: &mut World) {
         Cell::new("Alcohol"),
         Cell::new(format!("{:.1}", resources.alcohol)),
     ]);
-
-    table.add_row(vec![
-        Cell::new("Buildings").fg(Color::Magenta),
-        Cell::new("Farms"),
-        Cell::new(farm_count.to_string()),
-    ]);
-    table.add_row(vec![
-        Cell::new(""),
-        Cell::new("Housing"),
-        Cell::new(housing_count.to_string()),
-    ]);
-
-    table.add_row(vec![
-        Cell::new("Tasks").fg(Color::Blue),
-        Cell::new("Active Designations"),
-        Cell::new(designation_count.to_string()),
-    ]);
-
-    print_dashboard_table(&format!("COLONY STATUS (Tick {})", tick), table);
 }
 
 fn print_tech(world: &mut World) {

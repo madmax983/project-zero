@@ -25,8 +25,8 @@ use crate::shared::colony::ColonyName;
 use crate::shared::log::MessageLog;
 use crate::shared::narrative::{NarrativeContext, NarrativeGenerator};
 use crate::shared::time::SimulationTime;
-use bevy_ecs::prelude::*;
 use bevy::prelude::Time;
+use bevy_ecs::prelude::*;
 use rand::prelude::*;
 use ratatui::style::Color;
 use std::collections::HashSet;
@@ -1740,7 +1740,9 @@ pub fn cryptid_chronicle_bridge_system(
                 mood.awe += 1.0 * time.delta_secs();
                 if was_zero && mood.awe > 0.0 {
                     chronicle_events.send(AddChronicleEvent {
-                        text: "A colonist reported seeing a strange, elusive creature in the wilds.".to_string(),
+                        text:
+                            "A colonist reported seeing a strange, elusive creature in the wilds."
+                                .to_string(),
                         importance: EventImportance::Major,
                     });
                 }
