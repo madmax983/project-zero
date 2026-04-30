@@ -1917,21 +1917,11 @@ fn print_stories(world: &mut World) {
             StoryGenre::Trivial => Color::Grey,
         };
 
-        // If a story is mutated, comfy_table's `Cell::fg` will override ANSI styling inside the text.
-        // To preserve both the genre color for the base text and the magenta for mutated parts,
-        // we can wrap the whole text in the genre color, and only apply magenta to mutated portions.
-        // Alternatively, since comfy_table is rendering it, we just apply the genre color to the whole cell
-        // if there are NO mutations (which is faster).
-        // For mutated ones, we will stylize the whole string using `crossterm::style` dynamically.
         let mut story_cell;
 
         if story.mutations > 0 {
-            // Re-construct the string applying colors
-            // Simple approach: we just replace the mutated substrings with magenta, and wrap the rest in genre color.
-            // But doing this with strings directly can be tricky.
-            // Instead, let's just color the whole text the genre color, THEN replace mutated substrings with magenta ones.
-
-            // First we need the crossterm equivalent for genre_color
+            // When rendering in terminal, mixing embedded ANSI with comfy-table fg causes resets
+            // which clears all colors. To fix this, we manually apply the base color to all non-mutated parts.
             let ct_color = match story.genre {
                 StoryGenre::Heroic => crossterm::style::Color::Yellow,
                 StoryGenre::Tragedy => crossterm::style::Color::Red,
@@ -1939,30 +1929,9 @@ fn print_stories(world: &mut World) {
                 StoryGenre::Trivial => crossterm::style::Color::Grey,
             };
 
-            // We apply the base color to the raw text first
-            let mut colored_text = story.text.clone();
-
-            for m in &mutations {
-                if colored_text.contains(m) {
-                    colored_text = colored_text.replace(m, &m.magenta().bold().to_string());
-                }
-            }
-
-            // To ensure the rest of the text has the correct genre color, we could prepend the ANSI color code
-            // and append reset, but `replace` above would interrupt it.
-            // comfy_table supports cell fg. If we use cell fg, it strips/overrides inner ANSI? Let's not use it.
-            // We will just wrap the whole `colored_text` in the base color before we insert it into the cell.
-            // Wait, if we stylize the whole thing, the inner magenta will still show up if we're careful.
-            // Actually, `.with(ct_color)` might just wrap the whole string. If inner has ansi, they might conflict.
-
-            // Let's just use a simple parsing or just apply the magenta to the replaced words and leave the rest default
-            // terminal color. No, we want the genre color to be consistent.
-            // Let's manually add ANSI sequences if necessary, or just rely on the UI being "Magenta = Mutated, rest = default".
-
             let mut final_text = String::new();
             let mut current_text = story.text.clone();
 
-            // Very naive "parser" to highlight mutations and color the rest
             while !current_text.is_empty() {
                 let mut first_match = None;
                 let mut first_idx = usize::MAX;
@@ -1988,11 +1957,11 @@ fn print_stories(world: &mut World) {
                 }
             }
 
+            // We omit `fg(genre_color)` here to prevent double wrapping / reset interference
             story_cell = Cell::new(&final_text);
         } else {
             story_cell = Cell::new(&story.text).fg(genre_color);
         }
-
         if story.mutations > 5 {
             story_cell = story_cell.add_attribute(Attribute::Bold);
         }
