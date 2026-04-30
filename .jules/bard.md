@@ -37,3 +37,10 @@
 ## 2024-05-20 - Missing Lore in Components
 **Confusion:** The code review bot pointed out that I only added `# Examples` and didn't fully lean into my storytelling persona by missing out Context, Details, and Links sections for `TheVisitor` and `Visitor`.
 **Clarification:** I need to always remember that I am not just a documentation generator, but a storyteller. The "lore" parts of my responses are crucial.
+## 2024-05-20 - Doctest Missing Time Plugin
+**Confusion:** A doctest for `vanity_sabotage_system` compiled but failed at runtime because `time.delta_secs()` was not evaluated. The system requires `Time` which evaluates to `None` if `TimePlugin` isn't added to the mock app, causing the internal sabotage logic to be skipped and the final assertion to fail.
+**Clarification:** You must add `app.add_plugins(bevy_time::TimePlugin);` to the doctest setup so the `Time` resource is properly initialized and injected into the system.
+
+## 2024-05-20 - Redundant Explicit Links
+**Confusion:** Writing `[\`AddChronicleEvent\`](crate::layer1::core::chronicle::AddChronicleEvent)` in documentation causes `cargo doc` to emit a `-D warnings` failure for `redundant_explicit_links`.
+**Clarification:** If the label matches the path, just use `[\`AddChronicleEvent\`]`. Ensure the required items are imported or resolvable in scope.

@@ -1,6 +1,6 @@
-use bevy::prelude::*;
-use crate::layer1::Pop;
 use crate::layer1::map::GridPosition;
+use crate::layer1::Pop;
+use bevy::prelude::*;
 
 #[derive(Component)]
 pub struct Cryptid {
@@ -36,7 +36,9 @@ pub fn cryptid_trace_system(
         cryptid.trace_timer.tick(time.delta());
         if cryptid.trace_timer.just_finished() {
             commands.spawn((
-                TraceItem { kind: TraceKind::Slime },
+                TraceItem {
+                    kind: TraceKind::Slime,
+                },
                 GridPosition { x: pos.x, y: pos.y },
             ));
         }
@@ -50,7 +52,8 @@ pub fn cryptid_observation_system(
 ) {
     for cryptid_pos in cryptid_query.iter() {
         for (mut mood, pop_pos, vision) in pop_query.iter_mut() {
-            let dist = ((cryptid_pos.x - pop_pos.x).abs() + (cryptid_pos.y - pop_pos.y).abs()) as f32;
+            let dist =
+                ((cryptid_pos.x - pop_pos.x).abs() + (cryptid_pos.y - pop_pos.y).abs()) as f32;
             if dist <= vision.0 {
                 mood.awe += 1.0 * time.delta_secs();
             }
@@ -72,10 +75,15 @@ mod tests {
         app.add_systems(Update, cryptid_trace_system);
         app.init_resource::<Time>();
 
-        let _cryptid = app.world_mut().spawn((
-            Cryptid { trace_timer: Timer::from_seconds(5.0, TimerMode::Repeating) },
-            GridPosition { x: 10, y: 10 },
-        )).id();
+        let _cryptid = app
+            .world_mut()
+            .spawn((
+                Cryptid {
+                    trace_timer: Timer::from_seconds(5.0, TimerMode::Repeating),
+                },
+                GridPosition { x: 10, y: 10 },
+            ))
+            .id();
 
         app.update();
 
@@ -103,17 +111,28 @@ mod tests {
         app.add_systems(Update, cryptid_observation_system);
         app.init_resource::<Time>();
 
-        let _cryptid = app.world_mut().spawn((
-            Cryptid { trace_timer: Timer::default() },
-            GridPosition { x: 0, y: 0 },
-        )).id();
+        let _cryptid = app
+            .world_mut()
+            .spawn((
+                Cryptid {
+                    trace_timer: Timer::default(),
+                },
+                GridPosition { x: 0, y: 0 },
+            ))
+            .id();
 
-        let pop = app.world_mut().spawn((
-            Pop,
-            GridPosition { x: 2, y: 0 },
-            PopMood { awe: 0.0, dread: 0.0 },
-            VisionRadius(5.0),
-        )).id();
+        let pop = app
+            .world_mut()
+            .spawn((
+                Pop,
+                GridPosition { x: 2, y: 0 },
+                PopMood {
+                    awe: 0.0,
+                    dread: 0.0,
+                },
+                VisionRadius(5.0),
+            ))
+            .id();
 
         app.update();
 
@@ -123,6 +142,9 @@ mod tests {
         app.update();
 
         let mood = app.world().get::<PopMood>(pop).unwrap();
-        assert!(mood.awe > 0.0 || mood.dread > 0.0, "Pop should feel awe or dread after seeing a cryptid");
+        assert!(
+            mood.awe > 0.0 || mood.dread > 0.0,
+            "Pop should feel awe or dread after seeing a cryptid"
+        );
     }
 }

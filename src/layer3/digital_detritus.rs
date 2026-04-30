@@ -1,7 +1,14 @@
+//! Digital Detritus
+//!
+//! This module handles the process of data mining digital detritus left by ancient civilizations.
+//! Data mining is a risky endeavor. While it yields ancient technologies, extreme jobs risk unleashing
+//! crippling computational viruses. A [`JunkDataFilter`] can be used to mitigate these risks.
+
 use crate::layer1::core::chronicle::{AddChronicleEvent, EventImportance};
 use bevy::prelude::*;
 use rand::Rng;
 
+/// A queue of [`MiningJob`] operations to be processed.
 #[derive(Resource, Default)]
 pub struct DataMiningQueue {
     pub jobs: Vec<MiningJob>,
@@ -13,6 +20,7 @@ impl DataMiningQueue {
     }
 }
 
+/// A global counter of ancient technologies recovered from data mining operations.
 #[derive(Resource, Default)]
 pub struct DiscoveredTechs {
     pub count: u32,
@@ -24,24 +32,56 @@ impl DiscoveredTechs {
     }
 }
 
+/// Provides a defensive barrier against computational viruses.
+///
+/// A `mitigation_chance` of `1.0` means a 100% chance to block a virus.
 #[derive(Resource, Default)]
 pub struct JunkDataFilter {
     pub mitigation_chance: f32, // Probability to mitigate an extreme event (0.0 to 1.0)
 }
 
+/// The level of danger associated with a [`MiningJob`].
 pub enum RiskLevel {
     Low,
     Extreme,
 }
 
+/// A single data mining operation to be processed by [`process_data_mining_system`].
 pub struct MiningJob {
     pub risk_level: RiskLevel,
     pub data_volume: u32,
 }
 
+/// An event triggered when an `Extreme` risk [`MiningJob`] fails, unleashing a computational virus.
 #[derive(Event)]
 pub struct VirusEvent;
 
+/// Processes all pending jobs in the [`DataMiningQueue`].
+///
+/// Successfully processed jobs yield an increase to [`DiscoveredTechs`]. Jobs with
+/// [`RiskLevel::Extreme`] have a base 30% chance to fail, triggering a [`VirusEvent`].
+/// This risk can be mitigated if a [`JunkDataFilter`] resource is present.
+///
+/// # Examples
+/// ```
+/// use bevy::prelude::*;
+/// use scale::layer3::digital_detritus::{process_data_mining_system, DataMiningQueue, DiscoveredTechs, MiningJob, RiskLevel, VirusEvent};
+///
+/// let mut app = App::new();
+/// app.init_resource::<DataMiningQueue>();
+/// app.init_resource::<DiscoveredTechs>();
+/// app.add_event::<VirusEvent>();
+/// app.add_systems(Update, process_data_mining_system);
+///
+/// app.world_mut().resource_mut::<DataMiningQueue>().add_job(MiningJob {
+///     risk_level: RiskLevel::Low,
+///     data_volume: 100,
+/// });
+///
+/// app.update();
+///
+/// assert_eq!(app.world().resource::<DiscoveredTechs>().count(), 1);
+/// ```
 pub fn process_data_mining_system(
     mut queue: ResMut<DataMiningQueue>,
     mut techs: ResMut<DiscoveredTechs>,
@@ -69,6 +109,31 @@ pub fn process_data_mining_system(
     }
 }
 
+/// Observes [`VirusEvent`]s and records them to the global chronicle.
+///
+/// Adds an [`AddChronicleEvent`] with [`EventImportance::Major`] detailing the disaster.
+///
+/// # Examples
+/// ```
+/// use bevy::prelude::*;
+/// use scale::layer1::core::chronicle::AddChronicleEvent;
+/// use scale::layer3::digital_detritus::{record_virus_event_chronicle_system, VirusEvent};
+///
+/// let mut app = App::new();
+/// app.add_event::<VirusEvent>();
+/// app.add_event::<AddChronicleEvent>();
+/// app.add_systems(Update, record_virus_event_chronicle_system);
+///
+/// app.world_mut().resource_mut::<Events<VirusEvent>>().send(VirusEvent);
+/// app.update();
+///
+/// let chronicle_events = app.world().resource::<Events<AddChronicleEvent>>();
+/// #[allow(deprecated)]
+/// let mut reader = chronicle_events.get_reader();
+/// let events: Vec<_> = reader.read(chronicle_events).collect();
+/// assert_eq!(events.len(), 1);
+/// assert!(events[0].text.contains("Critical Virus"));
+/// ```
 pub fn record_virus_event_chronicle_system(
     mut virus_events: EventReader<VirusEvent>,
     mut chronicle_events: EventWriter<AddChronicleEvent>,

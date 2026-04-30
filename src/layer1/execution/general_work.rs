@@ -101,7 +101,10 @@ pub fn work_execution_system(world: &mut World) {
                 worker.morale,
                 worker.action,
                 worker.equipment,
-                global_work_speed_mod * worker.speed_modifier * coordination_mod * if worker.is_ostracized { 0.2 } else { 1.0 },
+                global_work_speed_mod
+                    * worker.speed_modifier
+                    * coordination_mod
+                    * if worker.is_ostracized { 0.2 } else { 1.0 },
                 worker.job,
                 improvised_efficiency,
                 consumed_resource_type,
@@ -145,18 +148,21 @@ fn collect_workers_by_target(
     // significantly reducing heap allocations per frame when evaluating large worker populations.
     for (target, worker) in query
         .iter(world)
-        .filter(|(_, mt, _, _, _, _, _, _, faction_member, _, _, _, _, _, _)| {
-            let is_work = mt.for_action == ActionType::Work || mt.for_action == ActionType::Repair;
-            if !is_work {
-                return false;
-            }
+        .filter(
+            |(_, mt, _, _, _, _, _, _, faction_member, _, _, _, _, _, _)| {
+                let is_work =
+                    mt.for_action == ActionType::Work || mt.for_action == ActionType::Repair;
+                if !is_work {
+                    return false;
+                }
 
-            let is_striking = faction_member
-                .and_then(|m| m.faction_id)
-                .is_some_and(|fid| striking_factions.contains(&fid));
+                let is_striking = faction_member
+                    .and_then(|m| m.faction_id)
+                    .is_some_and(|fid| striking_factions.contains(&fid));
 
-            !is_striking
-        })
+                !is_striking
+            },
+        )
         .map(
             |(
                 e,
