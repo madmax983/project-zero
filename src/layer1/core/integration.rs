@@ -26,6 +26,7 @@ use crate::shared::log::MessageLog;
 use crate::shared::narrative::{NarrativeContext, NarrativeGenerator};
 use crate::shared::time::SimulationTime;
 use bevy_ecs::prelude::*;
+use bevy::prelude::Time;
 use rand::prelude::*;
 use ratatui::style::Color;
 use std::collections::HashSet;
@@ -1718,5 +1719,32 @@ pub fn faction_strike_mob_bridge_system(
         }
 
         prev_states.insert(*faction_id, current_state);
+    }
+}
+
+use crate::layer1::anomalies::cryptid::{Cryptid, PopMood, VisionRadius};
+
+pub fn cryptid_chronicle_bridge_system(
+    cryptid_query: Query<&GridPosition, With<Cryptid>>,
+    mut pop_query: Query<(&mut PopMood, &GridPosition, &VisionRadius), With<Pop>>,
+    mut chronicle_events: EventWriter<AddChronicleEvent>,
+    time: Res<Time>,
+) {
+    for cryptid_pos in cryptid_query.iter() {
+        for (mut mood, pop_pos, vision) in pop_query.iter_mut() {
+            let dist =
+                ((cryptid_pos.x - pop_pos.x).abs() + (cryptid_pos.y - pop_pos.y).abs()) as f32;
+            if dist <= vision.0 {
+                // If a pop has seen the cryptid and has just acquired awe...
+                let was_zero = mood.awe == 0.0;
+                mood.awe += 1.0 * time.delta_secs();
+                if was_zero && mood.awe > 0.0 {
+                    chronicle_events.send(AddChronicleEvent {
+                        text: "A colonist reported seeing a strange, elusive creature in the wilds.".to_string(),
+                        importance: EventImportance::Major,
+                    });
+                }
+            }
+        }
     }
 }

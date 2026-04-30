@@ -44,3 +44,11 @@ mod ecological_succession_bridge;
 pub mod cargo_cult_bridge;
 pub mod sonic_suppression_bridge;
 pub mod astrological_beliefs_bridge;
+pub mod psychoactive_weather_bridge;
+pub mod cryptid_chronicle_bridge;
+
+#[path = "cryptid_chronicle_bridge.rs"]
+pub mod cryptid_chronicle_bridge;
+
+#[path = "psychoactive_weather_bridge.rs"]
+pub mod psychoactive_weather_bridge;
