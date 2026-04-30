@@ -474,3 +474,4 @@
 - [x] `660` Orbital Mirrors — `specs/660-orbital-mirrors.md` — completed 2026-04-29
 - [x] `648` The Founder Effect — `specs/648-the-founder-effect.md` — completed 2026-02-01
 - [x] `1081` Cryptid Sightings — `specs/1081-cryptid-sightings.md` — completed 2026-06-16
+- [x] `1098` Psychoactive Weather — `specs/1098-psychoactive-weather.md` — completed 2026-04-30

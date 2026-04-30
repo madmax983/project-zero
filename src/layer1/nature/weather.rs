@@ -33,6 +33,8 @@ pub enum WeatherType {
     MagneticStorm,
     /// Toxic glowing rain that causes mutations.
     MutagenicRain,
+    BlissStorm,
+    SporeStorm,
 }
 
 impl WeatherType {
@@ -49,6 +51,8 @@ impl WeatherType {
             Self::ThermalInversion => "Thermal Inversion",
             Self::MagneticStorm => "Magnetic Storm",
             Self::MutagenicRain => "Mutagenic Rain",
+            Self::BlissStorm => "Bliss Storm",
+            Self::SporeStorm => "Spore Storm",
         }
     }
 
@@ -57,7 +61,8 @@ impl WeatherType {
     pub const fn speed_modifier(&self) -> f32 {
         match self {
             Self::Clear | Self::ThermalInversion => 1.0,
-            Self::MutagenicRain => 1.0,
+            Self::MutagenicRain | Self::BlissStorm => 1.0,
+            Self::SporeStorm => 0.8,
             Self::Rain => 0.8,
             Self::Storm => 0.5,
             Self::Fog | Self::MagneticStorm => 0.7,
