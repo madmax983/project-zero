@@ -196,6 +196,7 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::temperature::update_temperature_system.after(update_pressure_system),
             crate::layer1::radioactive::radiation_system
                 .after(crate::layer1::temperature::update_temperature_system),
+            crate::layer1::nature::fire::fire_ignition_system.after(crate::layer1::temperature::update_temperature_system),
             crate::layer1::suction::suction_system.after(update_pressure_system),
             crate::layer1::integration::vacuum_clears_pollution_system
                 .after(crate::layer1::atmosphere::update_atmosphere_system)

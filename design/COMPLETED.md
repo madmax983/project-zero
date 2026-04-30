@@ -473,3 +473,5 @@
 - [x] `INT-1233` Integration: Public Grievances -> Social/Work — completed 2026-04-29
 - [x] `660` Orbital Mirrors — `specs/660-orbital-mirrors.md` — completed 2026-04-29
 - [x] `648` The Founder Effect — `specs/648-the-founder-effect.md` — completed 2026-02-01
+
+- [x] `INT-660` Integration: Orbital Mirrors -> Fire System — completed 2026-06-05

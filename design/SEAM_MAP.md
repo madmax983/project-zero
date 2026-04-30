@@ -813,3 +813,10 @@
     - Updated `handle_socialize` in `src/layer1/social/mod.rs` to early-return if the pop is ostracized, preventing them from joining a tavern.
     - Updated `proximity_social_system` in `src/layer1/social/mod.rs` to ignore ostracized pops (they don't gain proximity buffs and others don't gain proximity buffs from them).
 - **Tests:** Added `tests/integration/public_grievances_bridge.rs` testing socialize, proximity, and work penalties.
+
+
+### INT-660: Orbital Mirrors -> Fire System
+- **Date:** 2026-06-05
+- **Systems connected:** `orbital_mirror_focus_system` (Layer 2 Orbital Mirrors) -> `fire_ignition_system` (Integration) -> `Fire` (Nature)
+- **Glue added:** Added `fire_ignition_system` to `src/layer1/nature/fire.rs` which reads the `TemperatureGrid` and ignites flammables or trees if temperature >= 500.0. Registered in `Layer1SystemSet::Environment`.
+- **Tests:** `tests/integration/orbital_mirror_fire_bridge.rs`

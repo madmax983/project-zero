@@ -324,3 +324,6 @@ mod public_grievances_bridge;
 
 #[path = "integration/protest_crowds_integration.rs"]
 mod protest_crowds_integration;
+
+#[path = "integration/orbital_mirror_fire_bridge.rs"]
+mod orbital_mirror_fire_bridge;

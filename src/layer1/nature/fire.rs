@@ -219,7 +219,54 @@ pub fn fire_damage_system(world: &mut World) {
     }
 }
 
-/// System to extinguish fire in low pressure (vacuum).
+/// Spawns fire on tiles that reach extreme temperatures.
+pub fn fire_ignition_system(
+    mut commands: Commands,
+    temp_grid_opt: Option<Res<crate::layer1::temperature::TemperatureGrid>>,
+    terrain_opt: Option<Res<crate::layer1::terrain::TerrainGrid>>,
+    flammables: Query<&crate::layer1::GridPosition, With<Flammable>>,
+    existing_fires: Query<&crate::layer1::GridPosition, With<Fire>>,
+) {
+    let Some(temp_grid) = temp_grid_opt else { return };
+    let Some(terrain) = terrain_opt else { return };
+
+    let mut existing_fire_set = bevy_utils::HashSet::new();
+    for pos in existing_fires.iter() {
+        existing_fire_set.insert(*pos);
+    }
+
+    let mut flammables_set = bevy_utils::HashSet::new();
+    for pos in flammables.iter() {
+        flammables_set.insert(*pos);
+    }
+
+    for y in 0..temp_grid.height {
+        for x in 0..temp_grid.width {
+            let temp = temp_grid.get(x, y);
+            if temp >= 500.0 {
+                let pos = crate::layer1::GridPosition { x: x as i32, y: y as i32 };
+                if existing_fire_set.contains(&pos) {
+                    continue;
+                }
+
+                let mut is_flammable = false;
+                if flammables_set.contains(&pos) {
+                    is_flammable = true;
+                } else if let Some(terrain_type) = terrain.get(x, y) {
+                    if terrain_type == crate::layer1::terrain::TerrainType::Tree {
+                        is_flammable = true;
+                    }
+                }
+
+                if is_flammable {
+                    commands.spawn((Fire::default(), pos));
+                    existing_fire_set.insert(pos); // Prevent multiple fires in same tick
+                }
+            }
+        }
+    }
+}
+
 pub fn fire_pressure_check_system(world: &mut World) {
     use crate::layer1::pressure::PressureGrid;
 
