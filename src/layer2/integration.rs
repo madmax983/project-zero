@@ -10,6 +10,9 @@ use crate::layer2::syzygy::PlanetaryGravity;
 use crate::shared::time::SimulationTime;
 use bevy_ecs::prelude::*;
 use rand::Rng;
+use crate::layer2::culture::founder_effect::ColonyCulture;
+use crate::layer1::psychology::traits::Traits;
+use crate::layer1::pop::{Pop, PopBorn};
 
 /// Updates the Layer 2 `PlanetaryGravity` resource based on Layer 1 `PlanetaryTraits`.
 /// Bridges Spec 080 (Quirks) to Spec 468 (Escape Velocity Economics).
@@ -521,6 +524,25 @@ pub fn astrological_beliefs_bridge_system(
                 // If inactive, it's considered a retrograde or unlucky phase for these believers
                 belief.lucky_alignment = false;
                 belief.unlucky_alignment = true;
+            }
+        }
+    }
+}
+
+
+/// Bridges the `ColonyCulture` (Founder Effect) to newly spawned Pops.
+///
+/// When a `PopBorn` event is fired, this system looks up the newly spawned pop
+/// and gives it the dominant trait from the colony's culture.
+pub fn founder_effect_bridge_system(
+    mut events: EventReader<PopBorn>,
+    mut pops: Query<&mut Traits, With<Pop>>,
+    culture: Query<&ColonyCulture>,
+) {
+    if let Ok(colony_culture) = culture.get_single() {
+        for event in events.read() {
+            if let Ok(mut traits) = pops.get_mut(event.entity) {
+                traits.add(colony_culture.dominant_trait);
             }
         }
     }
