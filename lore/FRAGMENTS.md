@@ -7473,3 +7473,203 @@ Advanced infrastructure that members of the Nostalgia Cult target for destructio
 - life support manifold
 - AI management core
 - atmospheric scrubber
+
+## The Weight of the Past Fragments (Spec 488)
+
+## Fragment Type: [ANCESTRAL_SERVER_NAME]
+Names for the servers storing the digital engrams of dead pops.
+- the Ancestral Server
+- the Tomb-Core
+- the Memory-Bank
+- the Digital Graveyard
+- the Soul-Drive
+- the Crypt-Server
+
+## Fragment Type: [MEMORY_PURGE_DESC]
+How the deletion of digital souls is described.
+- the Great Forgetting
+- the Data-Purge
+- the Memory-Cull
+- the Soul-Wipe
+- the Deletion
+- the Erasing
+
+## The Bureaucracy of Scarcity Fragments (Spec 489)
+
+## Fragment Type: [BUREAUCRAT_TITLE]
+Titles for the pops assigned to rationing.
+- the Ration-Clerk
+- the Scarcity-Manager
+- the Ledger-Keeper
+- the Quota-Officer
+- the Hunger-Admin
+- the Paper-Pusher
+
+## Fragment Type: [RATION_DOC_NAME]
+Names for the documents required to get resources.
+- the Ration-Card
+- the Water-Chit
+- the Calorie-Stamp
+- the Survival-Permit
+- the Scarcity-Voucher
+- the Meal-Ticket
+
+## The Gravitational Heirloom Fragments (Spec 490)
+
+## Fragment Type: [GRAVITY_SUIT_NAME]
+Names for the heavy, gravity-simulating exosuits or implants.
+- the Ancestor's Weight
+- the Iron-Step
+- the Heavy-Bones
+- the Gravity-Mantle
+- the Founder's Burden
+- the Lead-Walk
+
+## Fragment Type: [HEIRLOOM_REACTION]
+Reactions of pops to someone wearing a gravity heirloom.
+- bowed in deference
+- stepped aside with respect
+- felt the authority of the heavy step
+- whispered of the old blood
+- recognized the weight of the founders
+- feared the crushing step
+
+## The Bio-Acoustic Resonance Fragments (Spec 491)
+
+## Fragment Type: [ACOUSTIC_FREQUENCY]
+Descriptions of the resonant frequency.
+- the Mating Call
+- the Deep-Hum
+- the False-Song
+- the Iron-Rhythm
+- the Sirens-Pitch
+- the Machine-Thrum
+
+## Fragment Type: [MEGAFAUNA_HERD_NAME]
+Names for the herds of massive beasts.
+- the Colossus-Herd
+- the Thunder-Stompers
+- the Titan-Graze
+- the Behemoth-Wander
+- the Mountain-Walkers
+- the Earth-Shakers
+
+## Diplomatic Artifact Forgery Fragments (Spec 492)
+
+## Fragment Type: [FORGED_ARTIFACT_NAME]
+Names for the fake ancient relics.
+- the False-Crown
+- the Replica-Drive
+- the Painted-Idol
+- the Gilded-Scrap
+- the Mimic-Core
+- the Fool's-Relic
+
+## Fragment Type: [FORGERY_FLAW]
+The mistake that reveals the forgery.
+- carbon-dating inconsistencies
+- modern tool marks
+- a misspelled ancient rune
+- incorrect isotopic decay
+- a hidden manufacturer's stamp
+- mismatched alloy composition
+
+## Orbit-Decay Extortion Fragments (Spec 493)
+
+## Fragment Type: [DECAYING_STATION_NAME]
+Names for the falling megastructures.
+- the Dropping-Sword
+- the Damocles-Station
+- the Falling-Star
+- the Orbit-Threat
+- the Leaning-Tower
+- the Hanging-Death
+
+## Fragment Type: [EXTORTION_DEMAND]
+What the colony demands to prevent the crash.
+- a massive ransom in credits
+- unconditional surrender
+- the opening of their trade routes
+- the release of all political prisoners
+- absolute silence
+- a tithe of their harvest
+
+## The Martyr's Dividend Fragments (Spec 494)
+
+## Fragment Type: [MARTYR_BROADCAST_NAME]
+Names for the recordings of heroic deaths.
+- the Last-Stand-Cast
+- the Hero's-Feed
+- the Sacrifice-Log
+- the Martyr's-Signal
+- the Final-Transmission
+- the Death-Broadcast
+
+## Fragment Type: [GALACTIC_REACTION]
+How the galaxy reacts to the martyr's broadcast.
+- erupted in sympathy riots
+- demanded an immediate ceasefire
+- sent relief ships instead of warships
+- wept for our loss
+- overthrew their own hawkish generals
+- pledged unending support
+
+## Generational Atrophy Fragments (Spec 495)
+
+## Fragment Type: [ATROPHIED_TECH_NAME]
+How isolated pops refer to advanced tech they no longer understand.
+- the Magic-Boxes
+- the Old-God-Machines
+- the Humming-Stones
+- the Ancestor-Relics
+- the Star-Metal-Shrines
+- the Forbidden-Engines
+
+## Fragment Type: [MAINTENANCE_RITUAL]
+The superstitious rituals performed instead of actual maintenance.
+- smearing blood on the console
+- chanting the serial numbers
+- burning incense near the vents
+- offering food to the core
+- striking the casing with a sacred hammer
+- praying during the reboot sequence
+
+## Invasive Xeno-Aesthetics Fragments (Spec 496)
+
+## Fragment Type: [XENO_AESTHETIC_NAME]
+Names for the foreign artistic styles.
+- the Silver-Curves
+- the Void-Glass-Style
+- the Obsidian-Angles
+- the Star-Weave-Pattern
+- the Crystal-Lattice-Design
+- the Neo-Foreign-Look
+
+## Fragment Type: [AESTHETIC_DEPRIVATION_SYMPTOM]
+Symptoms of wanting the foreign aesthetics but not having them.
+- refusing to look at bare metal
+- painting foreign symbols on the walls
+- complaining about the ugly architecture
+- a deep, crushing boredom
+- weeping at the sight of brutalist design
+- spontaneous remodeling
+
+## Atmospheric Mutiny Fragments (Spec 497)
+
+## Fragment Type: [ATMOSPHERIC_GAS_NAME]
+Names for the illicit or altering gas mixes.
+- the Sleeping-Draft
+- the Euphoria-Mix
+- the Paranoia-Cloud
+- the Compliant-Air
+- the Sweet-Breath
+- the Mutiny-Vapor
+
+## Fragment Type: [ATMOSPHERIC_SABOTAGE_EFFECT]
+What the gas does to the colony.
+- falling into a blissful sleep
+- overwhelmed by lethargy
+- striking out in paranoid rage
+- humming in unison
+- forgetting their orders
+- weeping with sudden joy

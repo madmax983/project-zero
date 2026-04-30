@@ -4462,3 +4462,163 @@
 **Usage:**
 - "The Breakers got into the life support manifold."
 - "Watch out for Breakers near the new assembly line."
+
+## The Weight of the Past (Spec 488)
+
+### digital engram / digital soul
+**Replaces:** Uploaded consciousness, saved memory
+**Code reference:** `DigitalEngram`
+**Usage:**
+- "Their digital engram was uploaded."
+- "Deleting a digital soul is murder."
+
+### Ancestral Server / Tomb-Core
+**Replaces:** Data center for dead pops
+**Code reference:** `AncestralServer`
+**Usage:**
+- "The Tomb-Core is overheating."
+- "Route more power to the Ancestral Server."
+
+## The Bureaucracy of Scarcity (Spec 489)
+
+### Ration-Clerk / Scarcity-Manager
+**Replaces:** Bureaucrat job spawned by famine
+**Code reference:** `Job::RationClerk`
+**Usage:**
+- "The Ration-Clerk denied my request."
+- "We need farmers, not Scarcity-Managers."
+
+### Ration-Card / Survival-Permit
+**Replaces:** Documentation required for resources
+**Code reference:** `RationCard`
+**Usage:**
+- "Don't lose your Ration-Card."
+- "No Survival-Permit, no water."
+
+## The Gravitational Heirloom (Spec 490)
+
+### the heavy step
+**Replaces:** Social authority, noble presence
+**Code reference:** `GravitySuitStatus`
+**Usage:**
+- "He walks with the heavy step."
+- "You must earn the heavy step."
+
+### Gravity-Mantle / Iron-Step
+**Replaces:** High-status gravity-simulating exosuit
+**Code reference:** `ItemType::GravityHeirloom`
+**Usage:**
+- "The Governor wears the Gravity-Mantle."
+- "A stolen Iron-Step."
+
+## The Bio-Acoustic Resonance (Spec 491)
+
+### Acoustic Noise / the Mating Call
+**Replaces:** Specific frequency of industrial noise
+**Code reference:** `AcousticFrequency`
+**Usage:**
+- "The machines hit the Mating Call."
+- "Dampen the Acoustic Noise."
+
+### Colossus-Herd / Thunder-Stompers
+**Replaces:** Massive native herbivores
+**Code reference:** `FaunaType::Colossus`
+**Usage:**
+- "The Colossus-Herd is migrating."
+- "Hide from the Thunder-Stompers."
+
+## Diplomatic Artifact Forgery (Spec 492)
+
+### False-Crown / Replica-Drive
+**Replaces:** Forged ancient relic
+**Code reference:** `ItemType::ForgedArtifact`
+**Usage:**
+- "We sold them a False-Crown."
+- "The Replica-Drive fooled their sensors."
+
+### the trick / the scam
+**Replaces:** Forgery action
+**Code reference:** `ActionType::ForgeArtifact`
+**Usage:**
+- "He is working on the trick."
+- "The scam paid off."
+
+## Orbit-Decay Extortion (Spec 493)
+
+### Orbit Decay
+**Replaces:** Degraded station orbit
+**Code reference:** `OrbitDecayStatus`
+**Usage:**
+- "The station is in Orbit Decay."
+- "Use the Orbit Decay as leverage."
+
+### Impact Event
+**Replaces:** Station crash
+**Code reference:** `ImpactEvent`
+**Usage:**
+- "We threatened an Impact Event."
+- "The Impact Event blotted out the sun."
+
+## The Martyr's Dividend (Spec 494)
+
+### Martyr's Broadcast
+**Replaces:** Propaganda video of a heroic death
+**Code reference:** `MartyrBroadcastEvent`
+**Usage:**
+- "Transmit the Martyr's Broadcast."
+- "The Martyr's Broadcast moved the galaxy."
+
+### Cultural Influence
+**Replaces:** Soft power, diplomatic leverage gained from culture
+**Code reference:** `CulturalInfluence`
+**Usage:**
+- "Our Cultural Influence is massive."
+- "We used our Cultural Influence to end the war."
+
+## Generational Atrophy (Spec 495)
+
+### Generational Atrophy
+**Replaces:** Loss of tech level due to isolation
+**Code reference:** `GenerationalAtrophy`
+**Usage:**
+- "The colony suffers from Generational Atrophy."
+- "Generational Atrophy has reduced them to savages."
+
+### maintenance ritual
+**Replaces:** Superstitious repair actions
+**Code reference:** `RitualMaintenance`
+**Usage:**
+- "He performed the maintenance ritual."
+- "The maintenance ritual failed."
+
+## Invasive Xeno-Aesthetics (Spec 496)
+
+### Xeno-Aesthetics
+**Replaces:** Foreign cultural styles, alien architecture
+**Code reference:** `ForeignCultureInfluence`
+**Usage:**
+- "The Xeno-Aesthetics are taking over."
+- "Ban all Xeno-Aesthetics."
+
+### Aesthetic Deprivation
+**Replaces:** Unrest from lacking cultural goods
+**Code reference:** `AestheticDeprivation` mood modifier
+**Usage:**
+- "The colony is suffering from Aesthetic Deprivation."
+- "Aesthetic Deprivation leads to riots."
+
+## Atmospheric Mutiny (Spec 497)
+
+### Atmospheric Sabotage
+**Replaces:** Tampering with the air mix, gas attack
+**Code reference:** `AtmosphericSabotageEvent`
+**Usage:**
+- "They executed an Atmospheric Sabotage."
+- "The vents are compromised by Atmospheric Sabotage."
+
+### The Sweet-Breath / Mutiny-Vapor
+**Replaces:** Mind-altering gas mixes
+**Code reference:** `AtmosphericGasMix`
+**Usage:**
+- "The guards breathed the Sweet-Breath and slept."
+- "Flood the lower decks with Mutiny-Vapor."
