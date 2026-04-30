@@ -18076,3 +18076,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you try to peacefully integrate a hostile reflection of your own species, risking your own internal stability, or go to war to wipe out the "false" version of your people?
 
 ---
+
+## The Substrate's Whisper
+
+**Layer:** Cross-layer
+
+**Fantasy:** A feeling that the civilization is guided by an unseen force, which is the player. Some sensitive pops begin hearing the "Substrate".
+
+**Mechanic:** Certain pops with a new "Sensitive" trait occasionally receive "Substrate Echoes," offering a slight glimpse into future game events (e.g., a warning of a coming storm or raid). If too many pops become Sensitive, a new faction, "The Listeners", emerges, demanding resources to build a massive antenna to "speak back" to the Substrate.
+
+**Emergence:** Players might intentionally cultivate Sensitive pops for the early warnings, but inadvertently spawn a powerful, resource-draining cult that occasionally takes autonomous actions based on what they think the Substrate wants.
+
+**Tension:** Do you exploit the early warning system provided by these sensitive pops, risking the rise of a powerful and potentially disruptive religious faction?
+
+---
+
+## The Great Silence
+
+**Layer:** Cross-layer
+
+**Fantasy:** A sudden, inexplicable cessation of all communications from other empires, leaving the colony utterly alone and paranoid.
+
+**Mechanic:** A galaxy-wide event triggers a "Comms Blackout" that lasts for an unpredictable duration. During this time, Layer 2 and Layer 3 map information is frozen, trade ships cease arriving, and diplomatic pacts are temporarily suspended. Pops develop a "Paranoia" mood modifier, fearing an unseen threat has wiped out the rest of the galaxy.
+
+**Emergence:** A player, previously reliant on external trade for food, is suddenly forced to radically restructure their colony's economy to become self-sufficient overnight, while simultaneously dealing with a paranoid populace that begins hoarding resources and turning on each other.
+
+**Tension:** Do you invest heavily in massive, localized stockpiles to weather unpredictable isolation, or maintain an efficient, specialized economy that risks collapse if the galaxy goes quiet?
+
+---
+
+## Memory of the Earth
+
+**Layer:** 1
+
+**Fantasy:** The deep-seated, biological yearning for a home that most of the colonists have never seen.
+
+**Mechanic:** During harsh planetary seasons or major disasters, an "Earth-Sickness" can spread among the pops. They demand the construction of highly inefficient "Terran Preserves"—domes containing imported soil and flora from Earth.
+
+**Emergence:** To cure widespread depression during a volcanic winter, the player is forced to divert critical heating and water resources to maintain a tiny patch of green grass and a single oak tree.
+
+**Tension:** Do you sacrifice critical survival resources to maintain a useless, aesthetic piece of the old world, or force the pops to adapt to their harsh new reality, risking a catastrophic drop in morale?
+
+---
