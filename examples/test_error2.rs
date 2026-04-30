@@ -14,8 +14,8 @@ fn main() -> anyhow::Result<()> {
             table.load_preset(UTF8_FULL);
             table.set_header(vec![comfy_table::Cell::new(" ✗ LORE LOADING ERROR ")
                 .add_attribute(comfy_table::Attribute::Bold)
-                .fg(TableColor::Red)
-                .bg(TableColor::DarkGrey)]);
+                .fg(TableColor::White)
+                .bg(TableColor::Red)]);
             table.add_row(vec![Cell::new(&error_msg).fg(TableColor::White)]);
             table.add_row(vec![Cell::new(action_msg).fg(TableColor::Yellow)]);
             println!("{table}");

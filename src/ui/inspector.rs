@@ -1347,7 +1347,7 @@ fn render_housing_details(frame: &mut Frame, area: Rect, housing: &Housing) {
                 .border_style(Style::default().fg(Color::Cyan)),
         )
         .gauge_style(Style::default().fg(if residents_count >= capacity {
-            Color::Red
+            Color::Yellow
         } else {
             Color::Green
         }))

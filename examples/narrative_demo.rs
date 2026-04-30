@@ -152,7 +152,7 @@ fn main() -> anyhow::Result<()> {
             let error_msg = format!("✗ {}", err);
             let mut table = Table::new();
             table.load_preset(UTF8_FULL);
-            table.add_row(vec![Cell::new(&error_msg).fg(TableColor::Red)]);
+            table.add_row(vec![Cell::new(&error_msg).fg(TableColor::White)]);
             println!("{table}");
         }
     } else {
@@ -169,7 +169,7 @@ fn main() -> anyhow::Result<()> {
             let error_msg = format!("✗ Failed to initialize app: {}", err);
             let mut table = Table::new();
             table.load_preset(UTF8_FULL);
-            table.add_row(vec![Cell::new(&error_msg).fg(TableColor::Red)]);
+            table.add_row(vec![Cell::new(&error_msg).fg(TableColor::White)]);
             eprintln!("{table}");
         }
     }
