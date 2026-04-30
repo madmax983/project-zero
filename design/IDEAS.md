@@ -18035,3 +18035,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you send an expensive expedition to correct their beliefs and lose the massive tribute they are sending to the "god," or quietly accept the resources while maintaining the incredibly fragile lie?
 
 ---
+## The Memorial Revolt
+
+**Layer:** 1
+
+**Fantasy:** Pops form emotional bonds with native fauna and demand permanent memorial sites when they die.
+
+**Mechanic:** Sometimes, Pops adopt local fauna as "Colony Pets." If a Pet dies, the Pop demands a permanent "Memorial Site" be built. These sites consume valuable building space and resources. If refused, the Pop's mood plummets and they might go on strike.
+
+**Emergence:** Your most efficient mining colony adopts a swarm of fragile native insects. The inevitable high casualty rate of the insects leads to the entire colony surface being converted into a massive insect graveyard, grinding mining operations to a halt as Pops strike to demand more memorials.
+
+**Tension:** Do you waste precious space and resources honoring the fragile local wildlife, or ruthlessley suppress the Pops' mourning and risk a massive, emotional strike?
+
+---
+
+## The Black Market of Memories
+
+**Layer:** Cross-layer (1 -> 2)
+
+**Fantasy:** Memory Extraction clinics harvest positive engrams from poor Pops to sell on the interplanetary market.
+
+**Mechanic:** "Memory Extractors" can be built. They allow Pops with high positive memories to sell those engrams for credits. These memories are exported to Layer 2 as luxury goods. The extracted Pop loses the memory and takes a permanent minor mood penalty.
+
+**Emergence:** You fund your entire defense fleet by selling the childhood memories of your agricultural workers. You are rich, but your entire foundational workforce is permanently depressed, leading to a slow, inevitable decline in food production that your credits can't solve.
+
+**Tension:** Do you exploit the very happiness of your citizens for massive economic gain, risking long-term societal depression and collapse?
+
+---
+
+## Ancestral Echoes
+
+**Layer:** 3
+
+**Fantasy:** Early sleeper ships flung across the galaxy emerge millennia later as a major civilization with identical biology but incompatible ideologies.
+
+**Mechanic:** At the galaxy generation phase, a civilization might spawn with the "Lost Sibling" trait. They share your exact Pop traits but have diametrically opposed foundational ideologies. Their mere existence causes massive diplomatic friction and causes confusion in your own Pops' belief systems when contact is made.
+
+**Emergence:** You encounter a brutally authoritarian empire that is genetically identical to your peaceful democracy. The shock of this discovery causes massive ideological schisms in your own empire, leading to civil war as factions argue about which path is the "true" destiny of your species.
+
+**Tension:** Do you try to peacefully integrate a hostile reflection of your own species, risking your own internal stability, or go to war to wipe out the "false" version of your people?
+
+---
