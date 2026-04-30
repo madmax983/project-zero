@@ -10,7 +10,6 @@
 
 
 
-- [ ] `661` Secret Societies — `specs/661-secret-societies.md`
 
 - [ ] `648` The Founder Effect — `specs/648-the-founder-effect.md`
 - [ ] `649` Pop Relationships — `specs/649-pop-relationships.md`

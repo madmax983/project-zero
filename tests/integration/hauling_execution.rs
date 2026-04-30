@@ -65,9 +65,7 @@ mod tests {
         world.init_resource::<Events<scale::layer1::energy::GridOverloadEvent>>();
         world.init_resource::<Events<scale::layer1::environment::hazards::AmputationEvent>>();
         world.init_resource::<Events<scale::layer1::geology::GeologicalEvent>>();
-        world.init_resource::<Events<scale::layer1::society::InvestigationEvent>>();
-        world.init_resource::<Events<scale::layer1::society::SuppressSocietyEvent>>();
-        world.init_resource::<Events<scale::layer1::medical::PatientTreated>>();
+                        world.init_resource::<Events<scale::layer1::medical::PatientTreated>>();
         world.init_resource::<Events<scale::layer1::social::FavorChange>>();
         world.init_resource::<Events<scale::layer1::eureka::EurekaEvent>>();
         world.init_resource::<Events<scale::layer2::events::DetectionEvent>>();
@@ -92,8 +90,7 @@ mod tests {
             10, 10,
         ));
         world.insert_resource(scale::layer1::ecology::EcologyConfig::default());
-        world.insert_resource(scale::layer1::society::SecretSocieties::default());
-        world.insert_resource(scale::layer1::society::Unrest::default());
+                world.insert_resource(scale::layer1::society::Unrest::default());
         world.insert_resource(scale::layer1::tech_envy::TechEnvyConfig::default());
         world.insert_resource(scale::layer2::visibility::SystemVisibility::default());
         world.insert_resource(scale::layer2::system::ViewMode::default());

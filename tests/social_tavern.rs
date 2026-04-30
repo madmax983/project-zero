@@ -63,8 +63,7 @@ mod tests {
         world.insert_resource(scale::layer1::map::ScreenShake::default());
         world.insert_resource(scale::layer1::inspector::InspectorSource::default());
         world.insert_resource(scale::layer1::social_mimicry::Trend::default());
-        world.insert_resource(scale::layer1::society::SecretSocieties::default());
-        world.insert_resource(scale::layer1::society::Unrest::default());
+                world.insert_resource(scale::layer1::society::Unrest::default());
         world.insert_resource(scale::layer1::law::predictive_policing::PredictionConfig::default());
         world.insert_resource(scale::layer1::festivals::FestivalState::default());
         world.insert_resource(scale::layer1::tech::TechState::default());
@@ -96,9 +95,7 @@ mod tests {
         world.init_resource::<Events<scale::layer1::eureka::EurekaEvent>>();
         world.init_resource::<Events<scale::layer1::environment::hazards::AmputationEvent>>();
         world.init_resource::<Events<scale::layer1::geology::GeologicalEvent>>();
-        world.init_resource::<Events<scale::layer1::society::InvestigationEvent>>();
-        world.init_resource::<Events<scale::layer1::society::SuppressSocietyEvent>>();
-        world.init_resource::<Events<scale::layer1::medical::PatientTreated>>();
+                        world.init_resource::<Events<scale::layer1::medical::PatientTreated>>();
         world.init_resource::<Events<scale::layer1::social::debt::FavorChange>>();
 
         world

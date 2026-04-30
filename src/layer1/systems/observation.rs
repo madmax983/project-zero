@@ -85,13 +85,9 @@ pub fn register(schedule: &mut Schedule) {
                 .after(crate::layer1::health::despawn_dead_entities_system),
             crate::layer1::rumor::exchange_rumors_system
                 .after(crate::layer1::health::despawn_dead_entities_system),
-            crate::layer1::social::society::form_societies_system
+            crate::layer1::social::society::secret_society_formation_system
                 .after(crate::layer1::health::despawn_dead_entities_system),
-            crate::layer1::social::society::society_meeting_system
-                .after(crate::layer1::health::despawn_dead_entities_system),
-            crate::layer1::social::society::investigation_handler_system
-                .after(crate::layer1::health::despawn_dead_entities_system),
-            crate::layer1::social::society::suppression_handler_system
+            crate::layer1::social::society::society_action_system
                 .after(crate::layer1::health::despawn_dead_entities_system),
             crate::layer1::funeral::grief_system
                 .after(crate::layer1::health::despawn_dead_entities_system),

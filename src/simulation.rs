@@ -75,6 +75,7 @@ fn init_simulation_resources(world: &mut World) {
     world.init_resource::<Events<crate::layer3::diplomacy::succession::SuccessionCrisisEvent>>();
     world.init_resource::<crate::layer1::mind::fugue::FugueEventTracker>();
     world.init_resource::<Events<crate::layer1::pop_memories::FamineEvent>>();
+    world.init_resource::<bevy::prelude::Events<crate::layer1::social::society::SocietyAction>>();
     world.init_resource::<Events<crate::layer1::diplomacy::wards::WarDeclaredEvent>>();
     if !world.contains_resource::<crate::layer1::diplomacy::wards::DiplomaticStanding>() {
         world.insert_resource(crate::layer1::diplomacy::wards::DiplomaticStanding {
@@ -732,6 +733,7 @@ mod tests {
         world.init_resource::<Events<crate::layer1::core::integration::PirateAmnestyEvent>>();
         world.init_resource::<Events<crate::layer1::law::justice::CrimeCommittedEvent>>();
         world.init_resource::<Events<crate::layer1::pop_memories::FamineEvent>>();
+    world.init_resource::<bevy::prelude::Events<crate::layer1::social::society::SocietyAction>>();
         world
             .init_resource::<Events<crate::layer2::navigation::stellar_weather::FleetDamagedEvent>>(
             );
@@ -771,6 +773,7 @@ mod tests {
         world.init_resource::<Events<crate::layer1::social::ghost_shift_strike::GhostShiftStartedEvent>>();
         world.init_resource::<Events<crate::layer3::diplomacy::succession::SuccessionEvent>>();
         world.init_resource::<Events<crate::layer1::pop_memories::FamineEvent>>();
+    world.init_resource::<bevy::prelude::Events<crate::layer1::social::society::SocietyAction>>();
         world
             .init_resource::<Events<crate::layer3::diplomacy::succession::SuccessionCrisisEvent>>();
 
