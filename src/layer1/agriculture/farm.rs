@@ -116,20 +116,19 @@ pub fn produce_food_system(
         .as_ref()
         .map_or(Season::Spring, |s| s.current_season);
 
-    let farm_map: bevy::utils::HashMap<GridPosition, (BuildingType, bool, ItemType)> =
-        farm_query
-            .iter()
-            .map(|(b, p, pc, farm)| {
+    let farm_map: bevy::utils::HashMap<GridPosition, (BuildingType, bool, ItemType)> = farm_query
+        .iter()
+        .map(|(b, p, pc, farm)| {
+            (
+                *p,
                 (
-                    *p,
-                    (
-                        b.building_type,
-                        pc.is_some_and(|c| c.active),
-                        farm.selected_crop,
-                    ),
-                )
-            })
-            .collect();
+                    b.building_type,
+                    pc.is_some_and(|c| c.active),
+                    farm.selected_crop,
+                ),
+            )
+        })
+        .collect();
 
     for (_, pos, action, skills_opt, faction_member_opt, traits, mut wallet_opt, job_opt) in
         &mut pop_query

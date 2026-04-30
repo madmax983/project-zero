@@ -2,18 +2,18 @@
 mod integration_tests {
     use bevy::prelude::*;
 
+    use scale::layer1::designation::{Designation, DesignationType};
     use scale::layer1::execution::arrival::arrival_handler_system;
     use scale::layer1::execution::components::{AtTarget, MovementTarget};
     use scale::layer1::execution::general_work::work_execution_system;
     use scale::layer1::map::GridPosition;
     use scale::layer1::pop::Pop;
     use scale::layer1::social::grievances::Ostracized;
-    use scale::layer1::social::Relationships;
     use scale::layer1::social::proximity_social_system;
+    use scale::layer1::social::Relationships;
     use scale::layer1::social::SocialBuff;
     use scale::layer1::social::Tavern;
     use scale::layer1::utility_types::ActionType;
-    use scale::layer1::designation::{Designation, DesignationType};
 
     #[test]
     fn test_ostracized_pop_cannot_socialize() {
@@ -56,7 +56,10 @@ mod integration_tests {
 
         // Verify the pop is NOT in the tavern's visitors
         let tavern = app.world().get::<Tavern>(tavern_entity).unwrap();
-        assert!(!tavern.visitors.contains(&pop_entity), "Ostracized pop should not be allowed to enter the tavern");
+        assert!(
+            !tavern.visitors.contains(&pop_entity),
+            "Ostracized pop should not be allowed to enter the tavern"
+        );
     }
 
     #[test]
@@ -79,21 +82,24 @@ mod integration_tests {
 
         let pop2 = app
             .world_mut()
-            .spawn((
-                Pop,
-                GridPosition { x: 5, y: 6 },
-            ))
+            .spawn((Pop, GridPosition { x: 5, y: 6 }))
             .id();
 
         // Update relationship to be valid
-        app.world_mut().get_mut::<Relationships>(pop1).unwrap().set_affinity(pop2, 50.0);
+        app.world_mut()
+            .get_mut::<Relationships>(pop1)
+            .unwrap()
+            .set_affinity(pop2, 50.0);
 
         // Run proximity system
         app.add_systems(Update, proximity_social_system);
         app.update();
 
         // Verify the ostracized pop received NO social buff
-        assert!(app.world().get::<SocialBuff>(pop1).is_none(), "Ostracized pop should not receive social buffs");
+        assert!(
+            app.world().get::<SocialBuff>(pop1).is_none(),
+            "Ostracized pop should not receive social buffs"
+        );
     }
 
     #[test]

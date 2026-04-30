@@ -152,7 +152,13 @@ fn process_arrival(
             true
         }
         ActionType::Socialize => {
-            handle_socialize(commands, &mut ctx.taverns, target_entity, pop_entity, is_ostracized);
+            handle_socialize(
+                commands,
+                &mut ctx.taverns,
+                target_entity,
+                pop_entity,
+                is_ostracized,
+            );
             true
         }
         ActionType::SeekMedicalCare => {

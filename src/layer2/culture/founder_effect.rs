@@ -1,6 +1,6 @@
+use crate::layer1::psychology::traits::Trait;
 use bevy_ecs::prelude::*;
 use std::collections::HashMap;
-use crate::layer1::psychology::traits::Trait;
 
 #[derive(Component)]
 pub struct ColonyShip {
@@ -23,19 +23,18 @@ pub fn found_colony_system(
     query: Query<(Entity, &ColonyShip, &FoundColonyAction)>,
 ) {
     for (entity, ship, _) in query.iter() {
-        let dominant_trait = ship.crew_traits
+        let dominant_trait = ship
+            .crew_traits
             .iter()
             .max_by_key(|&(_, count)| count)
             .map(|(t, _)| *t)
             .unwrap_or(Trait::HardWorker); // Fallback
 
         // Spawn the new colony with inherited culture
-        commands.spawn((
-            ColonyCulture {
-                dominant_trait,
-                trait_distribution: ship.crew_traits.clone(),
-            },
-        ));
+        commands.spawn((ColonyCulture {
+            dominant_trait,
+            trait_distribution: ship.crew_traits.clone(),
+        },));
 
         commands.entity(entity).despawn();
     }
@@ -44,8 +43,8 @@ pub fn found_colony_system(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use bevy_app::{App, Update};
     use crate::layer1::psychology::traits::Trait;
+    use bevy_app::{App, Update};
 
     #[test]
     fn test_colony_inherits_founder_traits() {
@@ -57,12 +56,15 @@ mod tests {
         ship_traits.insert(Trait::Volatile, 10);
         ship_traits.insert(Trait::Compassionate, 1);
 
-        let ship_entity = app.world_mut().spawn((
-            ColonyShip {
-                crew_traits: ship_traits.clone(),
-            },
-            FoundColonyAction { target_system: 42 },
-        )).id();
+        let ship_entity = app
+            .world_mut()
+            .spawn((
+                ColonyShip {
+                    crew_traits: ship_traits.clone(),
+                },
+                FoundColonyAction { target_system: 42 },
+            ))
+            .id();
 
         // Act
         app.update();
