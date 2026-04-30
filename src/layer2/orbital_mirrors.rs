@@ -1,7 +1,7 @@
+use crate::layer1::lighting::LightMap;
+use crate::layer1::temperature::TemperatureGrid;
 use bevy::prelude::*;
 use rand::Rng;
-use crate::layer1::temperature::TemperatureGrid;
-use crate::layer1::lighting::LightMap;
 
 #[derive(Component)]
 pub struct OrbitalMirror {
@@ -44,14 +44,18 @@ pub fn orbital_mirror_focus_system(
             let r = mirror.radius as i32;
             for dx in -r..=r {
                 for dy in -r..=r {
-                    let dist = ((dx*dx + dy*dy) as f32).sqrt();
+                    let dist = ((dx * dx + dy * dy) as f32).sqrt();
                     if dist <= mirror.radius {
                         let falloff = 1.0 - (dist / mirror.radius);
                         let ax = (tx as i32 + dx) as usize;
                         let ay = (ty as i32 + dy) as usize;
                         if ax < temp_grid.width && ay < temp_grid.height {
-                             temp_grid.add(ax as i32, ay as i32, heat_added * falloff * 0.5);
-                             light_grid.add_light(ax as u32, ay as u32, mirror.intensity * falloff * 0.1);
+                            temp_grid.add(ax as i32, ay as i32, heat_added * falloff * 0.5);
+                            light_grid.add_light(
+                                ax as u32,
+                                ay as u32,
+                                mirror.intensity * falloff * 0.1,
+                            );
                         }
                     }
                 }
@@ -63,8 +67,8 @@ pub fn orbital_mirror_focus_system(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::layer1::temperature::TemperatureGrid;
     use crate::layer1::lighting::LightMap;
+    use crate::layer1::temperature::TemperatureGrid;
 
     #[test]
     fn test_orbital_mirror_increases_light_and_heat() {
@@ -90,7 +94,6 @@ mod tests {
         });
 
         app.update();
-
 
         let updated_temp = app.world().resource::<TemperatureGrid>();
 
@@ -168,7 +171,6 @@ mod tests {
         });
 
         app.update();
-
 
         let updated_temp = app.world().resource::<TemperatureGrid>();
 

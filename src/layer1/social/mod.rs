@@ -203,8 +203,17 @@ pub struct SocialBuff {
 /// if pop count grows large.
 pub fn proximity_social_system(
     mut commands: Commands,
-    pops: Query<(Entity, &GridPosition, &Relationships, Option<&crate::layer1::social::grievances::Ostracized>)>,
-    other_pops: Query<(Entity, &GridPosition, Option<&crate::layer1::social::grievances::Ostracized>)>,
+    pops: Query<(
+        Entity,
+        &GridPosition,
+        &Relationships,
+        Option<&crate::layer1::social::grievances::Ostracized>,
+    )>,
+    other_pops: Query<(
+        Entity,
+        &GridPosition,
+        Option<&crate::layer1::social::grievances::Ostracized>,
+    )>,
 ) {
     // O(N^2) naive implementation for Green phase
     for (entity, pos, rel, ostracized) in pops.iter() {
@@ -530,6 +539,7 @@ pub mod debt;
 /// Public Grievances system (Spec 233).
 pub mod grievances;
 pub mod protest_crowds;
+pub mod secret_societies;
 pub use protest_crowds::*;
 /// Old Guard logic: Generational friction between Founders and Immigrants (Spec 078).
 pub mod old_guard;
