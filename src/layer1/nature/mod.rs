@@ -17,13 +17,13 @@ pub mod erosion;
 pub mod fertility;
 pub mod fire;
 pub mod megafauna_terrain;
+pub mod psychoactive_weather;
 pub mod radioactive;
 pub mod seasons;
 pub mod solar;
 pub mod temperature;
 pub mod terrain;
 pub mod water;
-pub mod psychoactive_weather;
 pub use psychoactive_weather::*;
 
 pub mod weather;

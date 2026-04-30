@@ -1,10 +1,9 @@
 use bevy_ecs::prelude::*;
 
-
 use crate::layer1::entities::pop::Pop;
 use crate::layer1::jobs::CurrentTask;
-use crate::layer1::social::morale::Morale;
 use crate::layer1::nature::weather::{WeatherState, WeatherType};
+use crate::layer1::social::morale::Morale;
 use crate::layer1::structural_integrity::RoofGrid;
 
 use crate::layer1::map::GridPosition;
@@ -44,7 +43,6 @@ pub fn apply_weather_moodlets_system(
         };
 
         if let Some(moodlet) = moodlet_to_apply {
-
             let grid = roof_grid.as_deref();
 
             for (mut mood, pos) in pops.iter_mut() {
@@ -79,7 +77,6 @@ pub fn process_euphoria_effects_system(
 mod tests {
     use super::*;
 
-
     use bevy_ecs::system::RunSystemOnce;
 
     fn setup_world() -> World {
@@ -95,13 +92,13 @@ mod tests {
         });
 
         // Outdoors pop (no RoofGrid)
-        let pop = world.spawn((
-            Pop,
-            GridPosition { x: 5, y: 5 },
-            Mood::default(),
-        )).id();
+        let pop = world
+            .spawn((Pop, GridPosition { x: 5, y: 5 }, Mood::default()))
+            .id();
 
-        world.run_system_once(apply_weather_moodlets_system).unwrap();
+        world
+            .run_system_once(apply_weather_moodlets_system)
+            .unwrap();
 
         let mood = world.get::<Mood>(pop).unwrap();
         assert!(mood.has_moodlet(Moodlet::Euphoric));
@@ -119,13 +116,13 @@ mod tests {
         roof_grid.set(5, 5, true); // Pop is indoors
         world.insert_resource(roof_grid);
 
-        let pop = world.spawn((
-            Pop,
-            GridPosition { x: 5, y: 5 },
-            Mood::default(),
-        )).id();
+        let pop = world
+            .spawn((Pop, GridPosition { x: 5, y: 5 }, Mood::default()))
+            .id();
 
-        world.run_system_once(apply_weather_moodlets_system).unwrap();
+        world
+            .run_system_once(apply_weather_moodlets_system)
+            .unwrap();
 
         let mood = world.get::<Mood>(pop).unwrap();
         assert!(!mood.has_moodlet(Moodlet::Paranoid));
@@ -137,19 +134,26 @@ mod tests {
         let mut starting_mood = Mood::default();
         starting_mood.add(Moodlet::Euphoric);
 
-        let starting_morale = Morale { value: 50.0, ..Default::default() };
+        let starting_morale = Morale {
+            value: 50.0,
+            ..Default::default()
+        };
 
-        let pop = world.spawn((
-            Pop,
-            starting_mood,
-            CurrentTask {
-                efficiency: 1.0,
-                ..Default::default()
-            },
-            starting_morale,
-        )).id();
+        let pop = world
+            .spawn((
+                Pop,
+                starting_mood,
+                CurrentTask {
+                    efficiency: 1.0,
+                    ..Default::default()
+                },
+                starting_morale,
+            ))
+            .id();
 
-        world.run_system_once(process_euphoria_effects_system).unwrap();
+        world
+            .run_system_once(process_euphoria_effects_system)
+            .unwrap();
 
         let task = world.get::<CurrentTask>(pop).unwrap();
         let morale = world.get::<Morale>(pop).unwrap();
