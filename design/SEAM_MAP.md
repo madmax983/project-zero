@@ -813,3 +813,9 @@
     - Updated `handle_socialize` in `src/layer1/social/mod.rs` to early-return if the pop is ostracized, preventing them from joining a tavern.
     - Updated `proximity_social_system` in `src/layer1/social/mod.rs` to ignore ostracized pops (they don't gain proximity buffs and others don't gain proximity buffs from them).
 - **Tests:** Added `tests/integration/public_grievances_bridge.rs` testing socialize, proximity, and work penalties.
+
+### INT-648: Founder Effect -> Pop Generation
+- **Date:** 2026-06-25
+- **Systems connected:** `ColonyCulture` (Founder Effect) -> `founder_effect_bridge_system` -> `Traits` (Pop Generation)
+- **Glue added:** `founder_effect_bridge_system` in `src/layer2/integration.rs` reads `PopBorn` events, retrieves the `dominant_trait` from `ColonyCulture`, and adds it to the new `Pop`'s `Traits`.
+- **Tests:** `tests/integration/founder_effect_bridge.rs`
