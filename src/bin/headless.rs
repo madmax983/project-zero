@@ -849,7 +849,7 @@ fn print_map(world: &mut World, center_x: i32, center_y: i32) {
         let max_x = i32::try_from(terrain.width).unwrap_or(i32::MAX);
         let max_y = i32::try_from(terrain.height).unwrap_or(i32::MAX);
 
-        let mut tiles = std::collections::HashMap::new();
+        let mut tiles = bevy::utils::HashMap::new();
         if center_x.checked_sub(radius).is_some()
             && center_x.checked_add(radius).is_some()
             && center_y.checked_sub(radius).is_some()
@@ -883,7 +883,7 @@ fn print_map(world: &mut World, center_x: i32, center_y: i32) {
         .collect();
 
     // Collect building positions and types
-    let building_map: std::collections::HashMap<(i32, i32), BuildingType> = world
+    let building_map: bevy::utils::HashMap<(i32, i32), BuildingType> = world
         .query::<(&GridPosition, &Building)>()
         .iter(world)
         .map(|(p, b)| ((p.x, p.y), b.building_type))
@@ -1342,7 +1342,7 @@ fn scan_terrain(world: &mut World, center_x: i32, center_y: i32, radius: ScanRad
         let max_x = i32::try_from(terrain.width).unwrap_or(i32::MAX);
         let max_y = i32::try_from(terrain.height).unwrap_or(i32::MAX);
 
-        let mut tiles = std::collections::HashMap::new();
+        let mut tiles = bevy::utils::HashMap::new();
         if center_x.checked_sub(radius).is_some()
             && center_x.checked_add(radius).is_some()
             && center_y.checked_sub(radius).is_some()
