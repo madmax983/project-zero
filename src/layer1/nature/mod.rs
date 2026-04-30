@@ -23,6 +23,9 @@ pub mod solar;
 pub mod temperature;
 pub mod terrain;
 pub mod water;
+pub mod psychoactive_weather;
+pub use psychoactive_weather::*;
+
 pub mod weather;
 #[cfg(test)]
 mod weather_tests;
