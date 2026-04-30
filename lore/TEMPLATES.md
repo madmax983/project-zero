@@ -6775,3 +6775,183 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]. The [SABOTAGE_TARGET] was found smashed. [POP_NAME] was seen chanting near the wreckage."
 - "Progress burns. The Nostalgia Cult destroys the [SABOTAGE_TARGET] in [COLONY]."
 - "They took hammers to the [SABOTAGE_TARGET]. 'Too complex,' [POP_NAME] screamed. 'Too fragile!'"
+
+## The Weight of the Past Templates (Spec 488)
+
+### Template: SERVER_POWER_DRAIN
+**Generates:** Play event (Chronicle during game)
+**Slots:** [COLONY], [YEAR], [ANCESTRAL_SERVER_NAME]
+**Patterns:**
+- "[YEAR]: The dead consume more than the living. The [ANCESTRAL_SERVER_NAME] is draining the grid in [COLONY]."
+- "We cannot afford to keep the lights on for the ghosts. The [ANCESTRAL_SERVER_NAME] is taking all our power. [YEAR]."
+- "[COLONY], [YEAR]: The cost of memory. The [ANCESTRAL_SERVER_NAME] requires exponential cooling and power to maintain the engrams."
+
+### Template: MEMORY_PURGE_ENACTED
+**Generates:** Play event (Chronicle during game)
+**Slots:** [COLONY], [YEAR], [ANCESTRAL_SERVER_NAME], [MEMORY_PURGE_DESC]
+**Patterns:**
+- "[YEAR]: We chose the living over the dead. [MEMORY_PURGE_DESC] was enacted on the [ANCESTRAL_SERVER_NAME]."
+- "The hospitals needed the power. We initiated [MEMORY_PURGE_DESC] on the [ANCESTRAL_SERVER_NAME] in [COLONY]. The grief is unimaginable. [YEAR]."
+- "[COLONY], [YEAR]: The founders are gone forever. [MEMORY_PURGE_DESC] wiped their digital souls from the [ANCESTRAL_SERVER_NAME]."
+
+## The Bureaucracy of Scarcity Templates (Spec 489)
+
+### Template: RATION_BUREAU_OPENED
+**Generates:** Play event (Chronicle during game)
+**Slots:** [COLONY], [YEAR], [BUREAUCRAT_TITLE], [RATION_DOC_NAME]
+**Patterns:**
+- "[YEAR]: To manage the shortage, [COLONY] appointed [BUREAUCRAT_TITLE]s to distribute [RATION_DOC_NAME]s."
+- "There is no more food, only paperwork. The new [BUREAUCRAT_TITLE]s demand a [RATION_DOC_NAME] for every crumb. [YEAR]."
+- "[COLONY], [YEAR]: The famine is perfectly managed. The [BUREAUCRAT_TITLE]s ensure nobody eats without a [RATION_DOC_NAME]."
+
+### Template: BUREAUCRATIC_FAMINE
+**Generates:** Play event (Chronicle during game)
+**Slots:** [COLONY], [YEAR], [BUREAUCRAT_TITLE]
+**Patterns:**
+- "[YEAR]: The fields are empty because everyone is a [BUREAUCRAT_TITLE]. We are starving efficiently."
+- "We solved the distribution, but forgot the production. The [BUREAUCRAT_TITLE]s manage a famine of their own making in [COLONY]. [YEAR]."
+- "[COLONY], [YEAR]: Perfect rationing, zero harvest. The [BUREAUCRAT_TITLE]s have replaced the farmers."
+
+## The Gravitational Heirloom Templates (Spec 490)
+
+### Template: HEIRLOOM_SCAVENGED
+**Generates:** Play event (Chronicle during game)
+**Slots:** [COLONY], [YEAR], [POP_NAME], [GRAVITY_SUIT_NAME]
+**Patterns:**
+- "[YEAR]: [POP_NAME] found [GRAVITY_SUIT_NAME] in the ruins. They put it on, and the world changed."
+- "A low-born miner, [POP_NAME], salvaged the [GRAVITY_SUIT_NAME]. In [COLONY], weight is power. [YEAR]."
+- "[COLONY], [YEAR]: [POP_NAME] stole the [GRAVITY_SUIT_NAME]. Now they walk with the heavy step of the nobles."
+
+### Template: HEIRLOOM_UPRISING
+**Generates:** Play event (Chronicle during game)
+**Slots:** [COLONY], [YEAR], [POP_NAME], [GRAVITY_SUIT_NAME], [HEIRLOOM_REACTION]
+**Patterns:**
+- "[YEAR]: [POP_NAME] walked into the square wearing [GRAVITY_SUIT_NAME]. The crowd [HEIRLOOM_REACTION]. The uprising began."
+- "Accidental revolution. The people saw [POP_NAME] in the [GRAVITY_SUIT_NAME] and [HEIRLOOM_REACTION]. [COLONY] will never be the same. [YEAR]."
+- "[COLONY], [YEAR]: Power shifted. Because [POP_NAME] bore the [GRAVITY_SUIT_NAME], the mob [HEIRLOOM_REACTION], overthrowing the governor."
+
+## The Bio-Acoustic Resonance Templates (Spec 491)
+
+### Template: FREQUENCY_REACHED
+**Generates:** Play event (Chronicle during game)
+**Slots:** [COLONY], [YEAR], [ACOUSTIC_FREQUENCY]
+**Patterns:**
+- "[YEAR]: The factories synchronized. They hit [ACOUSTIC_FREQUENCY]. We didn't know what it meant."
+- "A power surge aligned the machines in [COLONY]. They broadcast [ACOUSTIC_FREQUENCY] across the plains. [YEAR]."
+- "[COLONY], [YEAR]: The industry sings [ACOUSTIC_FREQUENCY]. The wild heard it."
+
+### Template: MEGAFAUNA_DRAWN
+**Generates:** Play event (Chronicle during game)
+**Slots:** [COLONY], [YEAR], [MEGAFAUNA_HERD_NAME], [ACOUSTIC_FREQUENCY]
+**Patterns:**
+- "[YEAR]: They came for the song. [MEGAFAUNA_HERD_NAME] marched on [COLONY], drawn by [ACOUSTIC_FREQUENCY]."
+- "Mistaking the factories for a mate. [MEGAFAUNA_HERD_NAME] trampled the outer sectors, answering [ACOUSTIC_FREQUENCY]. [YEAR]."
+- "[COLONY], [YEAR]: The [ACOUSTIC_FREQUENCY] summoned the [MEGAFAUNA_HERD_NAME]. We cannot stop them. We can only hide."
+
+## Diplomatic Artifact Forgery Templates (Spec 492)
+
+### Template: ARTIFACT_FORGED
+**Generates:** Play event (Chronicle during game)
+**Slots:** [COLONY], [YEAR], [POP_NAME], [FORGED_ARTIFACT_NAME]
+**Patterns:**
+- "[YEAR]: [POP_NAME] is a master of deception. They created [FORGED_ARTIFACT_NAME] out of scrap."
+- "We needed credits. [POP_NAME] forged the [FORGED_ARTIFACT_NAME] in [COLONY]. It looks perfect. [YEAR]."
+- "[COLONY], [YEAR]: A lie made physical. [POP_NAME] finishes the [FORGED_ARTIFACT_NAME]."
+
+### Template: FORGERY_DISCOVERED
+**Generates:** Play event (Chronicle during game)
+**Slots:** [COLONY], [YEAR], [EMPIRE_NAME], [FORGED_ARTIFACT_NAME], [FORGERY_FLAW]
+**Patterns:**
+- "[YEAR]: The trick is revealed. [EMPIRE_NAME] discovered the [FORGERY_FLAW] in the [FORGED_ARTIFACT_NAME]."
+- "[EMPIRE_NAME] is furious. They scanned the [FORGED_ARTIFACT_NAME] and found [FORGERY_FLAW]. War is coming to [COLONY]. [YEAR]."
+- "[COLONY], [YEAR]: Our greatest scam falls apart. The [FORGERY_FLAW] proved the [FORGED_ARTIFACT_NAME] was a fake. [EMPIRE_NAME] prepares their fleets."
+
+## Orbit-Decay Extortion Templates (Spec 493)
+
+### Template: EXTORTION_ISSUED
+**Generates:** Play event (Chronicle during game)
+**Slots:** [COLONY], [YEAR], [TARGET_FACTION], [DECAYING_STATION_NAME], [EXTORTION_DEMAND]
+**Patterns:**
+- "[YEAR]: We hold the sky hostage. [COLONY] threatens to drop [DECAYING_STATION_NAME] on [TARGET_FACTION] unless they provide [EXTORTION_DEMAND]."
+- "A grim ultimatum. We demand [EXTORTION_DEMAND] from [TARGET_FACTION], or the [DECAYING_STATION_NAME] falls. [YEAR]."
+- "[COLONY], [YEAR]: Extortion from orbit. [TARGET_FACTION] must meet the [EXTORTION_DEMAND] to stop the descent of [DECAYING_STATION_NAME]."
+
+### Template: STATION_DROPPED
+**Generates:** Play event (Chronicle during game)
+**Slots:** [COLONY], [YEAR], [TARGET_FACTION], [DECAYING_STATION_NAME], [COLLATERAL_DAMAGE]
+**Patterns:**
+- "[YEAR]: They refused. We let the [DECAYING_STATION_NAME] fall on [TARGET_FACTION]. The resulting impact caused [COLLATERAL_DAMAGE]."
+- "The sky fell. [DECAYING_STATION_NAME] crashed into [TARGET_FACTION] territory. The shockwave brought [COLLATERAL_DAMAGE] to [COLONY]. [YEAR]."
+- "[COLONY], [YEAR]: We pulled the trigger. [DECAYING_STATION_NAME] annihilated the [TARGET_FACTION] base, but the dust cloud led to [COLLATERAL_DAMAGE]."
+
+## The Martyr's Dividend Templates (Spec 494)
+
+### Template: MARTYR_BROADCAST_SENT
+**Generates:** Play event (Chronicle during game)
+**Slots:** [COLONY], [YEAR], [POP_NAME], [MARTYR_BROADCAST_NAME]
+**Patterns:**
+- "[YEAR]: [POP_NAME] died to save us. We sent the [MARTYR_BROADCAST_NAME] to the stars."
+- "Their death will not be in vain. [COLONY] transmitted the [MARTYR_BROADCAST_NAME] of [POP_NAME]. [YEAR]."
+- "[COLONY], [YEAR]: We weaponized our grief. The [MARTYR_BROADCAST_NAME] showing [POP_NAME]'s sacrifice is broadcasting on all channels."
+
+### Template: GALACTIC_SYMPATHY
+**Generates:** Play event (Chronicle during game)
+**Slots:** [COLONY], [YEAR], [EMPIRE_NAME], [GALACTIC_REACTION]
+**Patterns:**
+- "[YEAR]: The broadcast worked. [EMPIRE_NAME] saw the sacrifice and [GALACTIC_REACTION]."
+- "A wave of cultural influence. The citizens of [EMPIRE_NAME] watched our hero die, and they [GALACTIC_REACTION]. [YEAR]."
+- "[COLONY], [YEAR]: We won the war without firing a shot. Because of the broadcast, [EMPIRE_NAME] [GALACTIC_REACTION]."
+
+## Generational Atrophy Templates (Spec 495)
+
+### Template: TECH_ATROPHY_NOTICED
+**Generates:** Play event (Chronicle during game)
+**Slots:** [COLONY], [YEAR], [REAL_TECH_NAME], [ATROPHIED_TECH_NAME]
+**Patterns:**
+- "[YEAR]: They don't know what it is anymore. The [REAL_TECH_NAME] is now called [ATROPHIED_TECH_NAME]."
+- "Isolation has taken its toll on [COLONY]. The engineers refer to the [REAL_TECH_NAME] as [ATROPHIED_TECH_NAME]. [YEAR]."
+- "[COLONY], [YEAR]: Knowledge is lost. The operation of the [REAL_TECH_NAME] is forgotten; it is merely [ATROPHIED_TECH_NAME] to them."
+
+### Template: RITUAL_MAINTENANCE
+**Generates:** Play event (Chronicle during game)
+**Slots:** [COLONY], [YEAR], [ATROPHIED_TECH_NAME], [MAINTENANCE_RITUAL]
+**Patterns:**
+- "[YEAR]: To keep the [ATROPHIED_TECH_NAME] running, they resorted to [MAINTENANCE_RITUAL]."
+- "Madness in the engine room. They believe [MAINTENANCE_RITUAL] is the only way to appease the [ATROPHIED_TECH_NAME]. [YEAR]."
+- "[COLONY], [YEAR]: Science replaced by superstition. [MAINTENANCE_RITUAL] is now standard procedure for the [ATROPHIED_TECH_NAME]."
+
+## Invasive Xeno-Aesthetics Templates (Spec 496)
+
+### Template: XENO_AESTHETIC_ADOPTED
+**Generates:** Play event (Chronicle during game)
+**Slots:** [COLONY], [YEAR], [EMPIRE_NAME], [XENO_AESTHETIC_NAME]
+**Patterns:**
+- "[YEAR]: We look like them now. The colony has adopted [XENO_AESTHETIC_NAME] from [EMPIRE_NAME]."
+- "The culture war is lost. [COLONY] is rebuilding itself in the [XENO_AESTHETIC_NAME] style of [EMPIRE_NAME]. [YEAR]."
+- "[COLONY], [YEAR]: [EMPIRE_NAME] didn't need guns. Their [XENO_AESTHETIC_NAME] conquered our eyes."
+
+### Template: AESTHETIC_DEPRIVATION
+**Generates:** Play event (Chronicle during game)
+**Slots:** [COLONY], [YEAR], [XENO_AESTHETIC_NAME], [AESTHETIC_DEPRIVATION_SYMPTOM]
+**Patterns:**
+- "[YEAR]: The ban on [XENO_AESTHETIC_NAME] is failing. The people are [AESTHETIC_DEPRIVATION_SYMPTOM]."
+- "We tried to keep our culture pure. Now the colony suffers [AESTHETIC_DEPRIVATION_SYMPTOM] without [XENO_AESTHETIC_NAME]. [YEAR]."
+- "[COLONY], [YEAR]: Denial of [XENO_AESTHETIC_NAME] has led to [AESTHETIC_DEPRIVATION_SYMPTOM]."
+
+## Atmospheric Mutiny Templates (Spec 497)
+
+### Template: ATMOSPHERIC_SABOTAGE
+**Generates:** Play event (Chronicle during game)
+**Slots:** [COLONY], [YEAR], [POP_NAME], [ATMOSPHERIC_GAS_NAME]
+**Patterns:**
+- "[YEAR]: [POP_NAME] bypassed the scrubbers. [COLONY] is now breathing [ATMOSPHERIC_GAS_NAME]."
+- "A quiet rebellion. [POP_NAME] flooded the vents with [ATMOSPHERIC_GAS_NAME]. [YEAR]."
+- "[COLONY], [YEAR]: The air itself is treason. [POP_NAME] released the [ATMOSPHERIC_GAS_NAME]."
+
+### Template: ATMOSPHERIC_MUTINY_RESULT
+**Generates:** Play event (Chronicle during game)
+**Slots:** [COLONY], [YEAR], [TARGET_GROUP], [ATMOSPHERIC_SABOTAGE_EFFECT]
+**Patterns:**
+- "[YEAR]: The guards couldn't stop us. The [TARGET_GROUP] were [ATMOSPHERIC_SABOTAGE_EFFECT] from the gas."
+- "A bloodless coup in [COLONY]. We took the command center while the [TARGET_GROUP] were [ATMOSPHERIC_SABOTAGE_EFFECT]. [YEAR]."
+- "[COLONY], [YEAR]: The [TARGET_GROUP] breathed the tainted air, resulting in them [ATMOSPHERIC_SABOTAGE_EFFECT]. The colony is ours."
