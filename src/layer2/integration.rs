@@ -2,17 +2,17 @@
 
 use crate::layer1::map::GridPosition;
 use crate::layer1::notifications::NotificationQueue;
+use crate::layer1::pop::{Pop, PopBorn};
+use crate::layer1::psychology::traits::Traits;
 use crate::layer1::quirks::{PlanetaryTrait, PlanetaryTraits};
 use crate::layer1::terrain::TerrainGrid;
 use crate::layer1::the_visitor::TheVisitor;
+use crate::layer2::culture::founder_effect::ColonyCulture;
 use crate::layer2::events::DetectionEvent;
 use crate::layer2::syzygy::PlanetaryGravity;
 use crate::shared::time::SimulationTime;
 use bevy_ecs::prelude::*;
 use rand::Rng;
-use crate::layer2::culture::founder_effect::ColonyCulture;
-use crate::layer1::psychology::traits::Traits;
-use crate::layer1::pop::{Pop, PopBorn};
 
 /// Updates the Layer 2 `PlanetaryGravity` resource based on Layer 1 `PlanetaryTraits`.
 /// Bridges Spec 080 (Quirks) to Spec 468 (Escape Velocity Economics).
@@ -528,7 +528,6 @@ pub fn astrological_beliefs_bridge_system(
         }
     }
 }
-
 
 /// Bridges the `ColonyCulture` (Founder Effect) to newly spawned Pops.
 ///
