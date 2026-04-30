@@ -17993,3 +17993,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you ban the incredibly popular foreign media to maintain your cultural purity, risking massive unrest, or allow your civilization to be slowly, peacefully assimilated from the inside out?
 
 ---
+
+## The Weight of Silence
+
+**Layer:** Cross-layer (1 -> 3)
+
+**Fantasy:** The eerie, growing anxiety of a colony that hasn't heard from the rest of the empire in centuries.
+
+**Mechanic:** When a colony goes without incoming trade or communication from other nodes for an extended period, a new "Isolation" need begins to grow. High isolation spawns a "Silence Cult" that actively sabotages communication arrays to maintain the quiet.
+
+**Emergence:** You try to reconnect a lost colony, only to find they violently reject your transmission ships, preferring the absolute silence of their local star system.
+
+**Tension:** Do you force them back into the fold via military intervention, or leave them isolated, losing their resources but preventing the Silence Cult from spreading to the rest of the empire?
+
+---
+
+## Ruin Integration
+
+**Layer:** 1
+
+**Fantasy:** Living inside the massive, incomprehensible bones of a previous civilization.
+
+**Mechanic:** Pops can choose to settle inside pre-existing "Ancient Ruins" instead of building new housing. This grants massive defense and temperature regulation, but the ruins randomly power up ancient, unknown machinery that causes unique psychological stress.
+
+**Emergence:** Your colony is perfectly defended against a brutal orbital bombardment because they live deep inside a megastructure, but the bombardment triggers the ruin's automated defense protocols which start locking Pops inside random sectors.
+
+**Tension:** Do you leverage the immense physical benefits of ancient architecture, risking your Pops' sanity to unpredictable alien technology, or build from scratch and remain physically vulnerable?
+
+---
+
+## The Cargo Cult Diplomat
+
+**Layer:** Cross-layer (1 -> 3)
+
+**Fantasy:** A primitive colony misunderstanding high-tech diplomacy and worshipping an automated probe.
+
+**Mechanic:** If a Layer 3 civilization sends an automated scout probe to a low-tech Layer 1 colony and the probe crashes or malfunctions, the colony might mistake it for a divine ambassador. The colony will dedicate massive resources to appeasing the dead machine.
+
+**Emergence:** You finally make contact with a burgeoning bronze-age civilization, only to discover they have built a massive golden temple around a broken weather balloon you lost a hundred years ago, and they declare war on you for "disrespecting the weather god."
+
+**Tension:** Do you send an expensive expedition to correct their beliefs and lose the massive tribute they are sending to the "god," or quietly accept the resources while maintaining the incredibly fragile lie?
+
+---
