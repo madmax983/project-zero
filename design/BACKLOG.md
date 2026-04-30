@@ -12,7 +12,7 @@
 
 - [ ] `661` Secret Societies — `specs/661-secret-societies.md`
 
-- [ ] `648` The Founder Effect — `specs/648-the-founder-effect.md`
+
 - [ ] `649` Pop Relationships — `specs/649-pop-relationships.md`
 - [ ] `642` The Propaganda Simulacrum — `specs/642-propaganda-simulacrum.md`
 - [ ] `643` Living Architecture — `specs/643-living-architecture.md`
