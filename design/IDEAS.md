@@ -17937,3 +17937,59 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you protect your most valuable, highly trained Pops at all costs, or intentionally maneuver them into fatal, heroic situations to weaponize their martyrdom for empire-wide salvation?
 
 ---
+
+## Generational Atrophy
+
+**Layer:** Cross-layer (1 -> 2)
+
+**Fantasy:** The slow, heartbreaking loss of capabilities as a colony becomes isolated.
+
+**Mechanic:** If a colony fails to interact with its founding empire or other high-tech civilizations for multiple generations, its Pops slowly lose access to advanced skill trees. High-tech infrastructure begins to function at lower efficiencies because nobody understands the theory behind it anymore, only the rote maintenance rituals.
+
+**Emergence:** You rediscover a lost colony after a century. They have survived, but they now worship the massive atmospheric scrubbers as fickle gods and perform blood sacrifices to the reactor core to keep the lights on. Reintegrating them requires careful cultural re-education, not just plugging them back into the trade network.
+
+**Tension:** Do you maintain expensive, fragile long-range communication networks to keep distant colonies educated, or accept that they will slowly regress into primitive, localized superstitions?
+
+---
+
+## The Bureaucracy of Scarcity
+
+**Layer:** 1
+
+**Fantasy:** The maddening proliferation of paperwork to manage a dying world.
+
+**Mechanic:** As a colony approaches critical failure in a major resource (e.g., Food or Water), the local AI automatically spins up new "Bureaucrat" jobs to handle rationing. These jobs do not produce resources; they only slow the rate of consumption. However, the bureaucrats themselves consume resources and space.
+
+**Emergence:** Your agricultural world suffers a catastrophic blight. To manage the famine, the government employs half the population to manage rationing cards. The rationing is perfect, but the sheer number of bureaucrats means nobody is left to actually farm the blighted land, guaranteeing long-term starvation through perfectly managed short-term survival.
+
+**Tension:** Do you let the rationing system spiral into a sprawling, self-justifying bureaucracy, or manually disable it, causing immediate riots but freeing up labor to solve the underlying crisis?
+
+---
+
+## The Weight of the Past
+
+**Layer:** 1
+
+**Fantasy:** A society literally crushed by its own history.
+
+**Mechanic:** Every time a Pop dies, their digital engrams are automatically uploaded to the colony's central "Ancestral Server." As the population grows and dies over generations, the server requires exponentially more power and cooling to maintain the memories.
+
+**Emergence:** A peaceful, long-lived colony runs out of power. You investigate and find that 90% of the planetary grid is being routed to the Ancestral Server. To power the hospitals for the living, you must manually delete the digital souls of the colony's founders, causing an immediate, massive psychological trauma across the entire population.
+
+**Tension:** Do you continuously expand the expensive, useless infrastructure to honor the dead, or commit a horrific cultural purge to ensure the survival of the living?
+
+---
+
+## Invasive Xeno-Aesthetics
+
+**Layer:** Cross-layer (1 -> 3)
+
+**Fantasy:** A foreign culture taking over your empire, not through war, but through fashion and art.
+
+**Mechanic:** A neighboring, highly influential empire exports "Cultural Artifacts." When these arrive on your Layer 1 colonies, Pops gain a massive mood boost, but they begin to demand their living quarters and public spaces be redesigned to mimic the foreign aesthetics. If you refuse, they suffer severe "Aesthetic Deprivation."
+
+**Emergence:** You fight a bitter, century-long cold war against an ideological rival. You never lose a battle, but you realize your entire capital city has been voluntarily rebuilt by your own citizens to look exactly like the enemy's homeworld because their music and architecture were just too captivating.
+
+**Tension:** Do you ban the incredibly popular foreign media to maintain your cultural purity, risking massive unrest, or allow your civilization to be slowly, peacefully assimilated from the inside out?
+
+---
