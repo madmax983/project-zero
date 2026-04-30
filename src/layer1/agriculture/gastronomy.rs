@@ -31,7 +31,7 @@ pub enum MealEffect {
 #[derive(Resource, Default)]
 pub struct Cookbook {
     /// Known associations between ingredients and effects.
-    pub known_recipes: std::collections::HashMap<ItemType, MealEffect>,
+    pub known_recipes: bevy::utils::HashMap<ItemType, MealEffect>,
 }
 
 impl Cookbook {

@@ -116,7 +116,7 @@ pub fn produce_food_system(
         .as_ref()
         .map_or(Season::Spring, |s| s.current_season);
 
-    let farm_map: std::collections::HashMap<GridPosition, (BuildingType, bool, ItemType)> =
+    let farm_map: bevy::utils::HashMap<GridPosition, (BuildingType, bool, ItemType)> =
         farm_query
             .iter()
             .map(|(b, p, pc, farm)| {

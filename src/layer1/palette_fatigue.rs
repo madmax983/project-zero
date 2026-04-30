@@ -30,7 +30,7 @@ pub fn calculate_palette_fatigue(history: &DietaryHistory) -> f32 {
     }
 
     // Count repetitions
-    let mut counts = std::collections::HashMap::new();
+    let mut counts = bevy::utils::HashMap::new();
     for item in &history.recent_meals {
         *counts.entry(item).or_insert(0) += 1;
     }
