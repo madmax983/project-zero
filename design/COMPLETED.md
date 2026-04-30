@@ -479,3 +479,4 @@
 - [x] `INT-1098` Integration: Psychoactive Weather -> Pop Mood & Work — completed 2026-04-30
 - [x] `INT-648` Integration: Founder Effect -> Pop Generation — completed 2026-06-25
 - [x] `649` Pop Relationships — `specs/649-pop-relationships.md` — completed 2024-05-24
+- [x] `INT-1117` Integration: Sonic Suppression -> Glass Buildings — completed 2026-12-10

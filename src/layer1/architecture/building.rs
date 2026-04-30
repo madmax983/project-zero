@@ -51,6 +51,7 @@ use crate::layer1::trade::TradeDepot;
 use crate::layer1::water::{WaterSource, MAX_HYDRATION};
 use crate::shared::log::MessageLog;
 use bevy_ecs::prelude::*;
+use crate::layer1::sonic_suppression::Glass;
 use bevy_ecs::world::EntityWorldMut;
 use rand::seq::SliceRandom;
 use std::collections::{HashMap, HashSet};
@@ -1205,7 +1206,7 @@ fn configure_housing(entity: &mut EntityWorldMut, building_type: BuildingType) {
 
 fn configure_farm_buildings(entity: &mut EntityWorldMut, building_type: BuildingType) {
     match building_type {
-        BuildingType::Farm | BuildingType::Greenhouse => {
+        BuildingType::Farm => {
             let mut rng = rand::thread_rng();
             let crops = [
                 ItemType::Potato,
@@ -1221,6 +1222,25 @@ fn configure_farm_buildings(entity: &mut EntityWorldMut, building_type: Building
                     ..Default::default()
                 },
                 ShiftSchedule::default(),
+            ));
+        }
+        BuildingType::Greenhouse => {
+            let mut rng = rand::thread_rng();
+            let crops = [
+                ItemType::Potato,
+                ItemType::Wheat,
+                ItemType::Rice,
+                ItemType::Corn,
+                ItemType::Soy,
+            ];
+            let crop_type = crops.choose(&mut rng).cloned().unwrap_or(ItemType::Potato);
+            entity.insert((
+                Farm {
+                    selected_crop: crop_type,
+                    ..Default::default()
+                },
+                ShiftSchedule::default(),
+                Glass,
             ));
         }
         BuildingType::Plantation => {
@@ -1589,6 +1609,7 @@ fn configure_infrastructure(entity: &mut EntityWorldMut, building_type: Building
                     value: 0.0,
                     radius: 0.0,
                 },
+                Glass,
             ));
         }
         BuildingType::Gate => {
