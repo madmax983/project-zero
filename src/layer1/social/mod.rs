@@ -591,6 +591,8 @@ pub use unrest::*;
 
 /// Pop factions system (Spec 068).
 pub mod factions;
+pub mod secret_societies;
+pub use secret_societies::*;
 pub use factions::*;
 
 #[cfg(test)]

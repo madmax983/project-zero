@@ -477,3 +477,4 @@
 - [x] `1098` Psychoactive Weather — `specs/1098-psychoactive-weather.md` — completed 2026-04-30
 - [x] `INT-1081` Integration: Cryptid Sightings -> Chronicle — completed 2026-06-16
 - [x] `INT-1098` Integration: Psychoactive Weather -> Pop Mood & Work — completed 2026-04-30
+- [x] `661` Secret Societies — `specs/661-secret-societies.md` — completed 2026-06-01
