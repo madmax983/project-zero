@@ -326,6 +326,8 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
         gpu_evaluate_actions.after(update_building_map_system),
         crate::layer1::visitor::visitor_behavior_system,
         crate::layer1::drone::evaluate_drone_actions_system.after(update_building_map_system),
+        crate::layer1::social::secret_societies::secret_society_formation_system,
+        crate::layer1::social::secret_societies::society_action_system,
         update_action_timer_system
             .after(gpu_evaluate_actions)
             .before(Layer1SystemSet::Execution),

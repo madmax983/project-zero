@@ -1,4 +1,6 @@
-#![allow(missing_docs)]
+#[path = "integration/secret_societies.rs"]
+mod secret_societies;
+
 #[path = "integration/predatory_weather.rs"]
 mod predatory_weather;
 #[path = "integration/ui_stats.rs"]
