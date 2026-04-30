@@ -407,6 +407,8 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
         crate::layer2::thermal::update_thermal_bloom_system.after(Layer1SystemSet::Economy),
         crate::layer2::thermal::detection_risk_system
             .after(crate::layer2::thermal::update_thermal_bloom_system),
+        crate::layer2::orbital_mirrors::orbital_mirror_focus_system,
+
         crate::layer2::integration::thermal_detection_handler_system
             .after(crate::layer2::thermal::detection_risk_system),
         crate::layer2::integration::escape_velocity_traits_bridge_system
