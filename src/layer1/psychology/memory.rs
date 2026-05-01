@@ -60,7 +60,6 @@ pub enum MemoryType {
 impl MemoryType {
     /// Returns the mood impact (0.0 to 1.0 or negative).
     #[must_use]
-    #[allow(clippy::match_same_arms)]
     pub const fn base_mood_impact(&self) -> f32 {
         match self {
             Self::WitnessedDeath => -0.2,
@@ -74,12 +73,11 @@ impl MemoryType {
             Self::SawCorpse => -0.05,
             Self::SleptInAwfulRoom => -0.1,
             Self::SleptInDullRoom => -0.05,
-            Self::SleptInDecentRoom => 0.0,
             Self::SleptInGreatRoom => 0.05,
             Self::SleptInLegendaryRoom => 0.1,
             Self::AteInAwfulRoom => -0.05,
             Self::AteInDullRoom => -0.02,
-            Self::AteInDecentRoom => 0.0,
+            Self::SleptInDecentRoom | Self::AteInDecentRoom => 0.0,
             Self::AteInGreatRoom => 0.02,
             Self::AteInLegendaryRoom => 0.05,
         }
@@ -87,12 +85,10 @@ impl MemoryType {
 
     /// Returns the decay rate per tick.
     #[must_use]
-    #[allow(clippy::match_same_arms)]
     pub const fn decay_rate(&self) -> f32 {
         // Ticks to fade completely
         match self {
-            Self::WitnessedDeath | Self::LostLimb => 0.0005, // Slow fade (2000 ticks)
-            Self::MascotDeath => 0.0005,                     // Slow fade (2000 ticks)
+            Self::WitnessedDeath | Self::LostLimb | Self::MascotDeath => 0.0005, // Slow fade (2000 ticks)
             Self::StarvationTrauma | Self::AttendedFuneral => 0.001, // Medium
             Self::AteFineMeal | Self::WonFight => 0.002,     // Fast (500 ticks)
             Self::SawCorpse | Self::AdmiredArt | Self::DisgustedByVermin => 0.01, // Very fast fade (100 ticks)

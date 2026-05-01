@@ -531,7 +531,6 @@ impl BuildingType {
 
     /// Returns the beauty value emitted by this building.
     #[must_use]
-    #[allow(clippy::match_same_arms)]
     pub const fn beauty_value(&self) -> f32 {
         match self {
             Self::Statue => crate::layer1::beauty::STATUE_BEAUTY,
@@ -542,12 +541,7 @@ impl BuildingType {
             Self::HoloProjector => 50.0, // Massive beauty boost
             Self::TradeDepot => 5.0,     // Trade brings goods and culture
             Self::Well | Self::HydroponicsBay | Self::LifeSupport => 1.0,
-            Self::Wall | Self::Window | Self::Gate | Self::Tower | Self::Airlock | Self::Vent => {
-                0.0
-            }
             Self::TrashCannon => -2.0, // Industrial machinery is ugly
-            Self::Heater | Self::ServerBank => 0.0,
-            Self::CommandCenter | Self::AICore | Self::CryoPod | Self::GeneBank => 0.0,
             Self::CloneVat => -5.0, // Unsettling
             Self::HypnoPod => -2.0, // Unsettling
             _ => 0.0,
@@ -1083,7 +1077,6 @@ pub fn spawn_building(
     entity.id()
 }
 
-#[allow(clippy::match_same_arms)]
 fn configure_building_components(entity: &mut EntityWorldMut, building_type: BuildingType) {
     match building_type {
         BuildingType::Housing | BuildingType::Lander => {
@@ -1146,8 +1139,9 @@ fn configure_building_components(entity: &mut EntityWorldMut, building_type: Bui
         | BuildingType::HypnoPod
         | BuildingType::HoloProjector
         | BuildingType::Nanoforge => configure_tech(entity, building_type),
-        BuildingType::School | BuildingType::MediaStation => configure_civic(entity, building_type),
-        BuildingType::Spaceport => configure_civic(entity, building_type),
+        BuildingType::School | BuildingType::MediaStation | BuildingType::Spaceport => {
+            configure_civic(entity, building_type);
+        }
         BuildingType::PersonalShed
         | BuildingType::PersonalGarden
         | BuildingType::PersonalShrine => {
