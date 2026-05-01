@@ -6955,3 +6955,143 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: The guards couldn't stop us. The [TARGET_GROUP] were [ATMOSPHERIC_SABOTAGE_EFFECT] from the gas."
 - "A bloodless coup in [COLONY]. We took the command center while the [TARGET_GROUP] were [ATMOSPHERIC_SABOTAGE_EFFECT]. [YEAR]."
 - "[COLONY], [YEAR]: The [TARGET_GROUP] breathed the tainted air, resulting in them [ATMOSPHERIC_SABOTAGE_EFFECT]. The colony is ours."
+
+## Protest Crowds Templates (Spec 1234)
+
+### Template: MOB_FORMED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [FACTION_NAME], [PROTEST_SOUND]
+
+**Patterns:**
+- "[YEAR]: The [FACTION_NAME] refuse to work. They gather, creating [PROTEST_SOUND]."
+- "A physical wall of anger. The [FACTION_NAME] block the halls with [PROTEST_SOUND]. [YEAR]."
+- "[COLONY] stops. The [FACTION_NAME] have formed a mob. All we hear is [PROTEST_SOUND]. [YEAR]."
+
+### Template: MOB_ACTION
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [FACTION_NAME], [PROTEST_ACTION]
+
+**Patterns:**
+- "The protest escalated. [YEAR]. The [FACTION_NAME] [PROTEST_ACTION]."
+- "[YEAR]: They are not just standing there. The [FACTION_NAME] have [PROTEST_ACTION]."
+- "Demands unmet. The [FACTION_NAME] [PROTEST_ACTION] in response. [YEAR]."
+
+## Orbital Mirrors Templates (Spec 660)
+
+### Template: MIRROR_FOCUSED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [MIRROR_BEAM_DESC]
+
+**Patterns:**
+- "The sky opens. [YEAR]. [MIRROR_BEAM_DESC] shines down on [COLONY]."
+- "[YEAR]: We harness the sun. A [MIRROR_BEAM_DESC] warms the sector."
+- "Night becomes day. The orbital mirror targets us with [MIRROR_BEAM_DESC]. [YEAR]."
+
+### Template: MIRROR_CATASTROPHE
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [HEAT_CATASTROPHE]
+
+**Patterns:**
+- "The beam drifted! [YEAR]. The mirror [HEAT_CATASTROPHE]."
+- "[YEAR]: We played god and burned. The focused light [HEAT_CATASTROPHE]."
+- "A miscalculation in orbit. The intense heat [HEAT_CATASTROPHE] at [COLONY]. [YEAR]."
+
+## Cryptid Sightings Templates (Spec 1081)
+
+### Template: CRYPTID_ENCOUNTER
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [NAME], [CRYPTID_BEHAVIOR]
+
+**Patterns:**
+- "[NAME] saw it again. [YEAR]. A creature that [CRYPTID_BEHAVIOR]."
+- "[YEAR]: It is not just our imagination. The thing [CRYPTID_BEHAVIOR] just outside the lights."
+- "Paranoia or reality? [NAME] swears an unknown entity [CRYPTID_BEHAVIOR]. [YEAR]."
+
+### Template: CRYPTID_TRACKS
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [CRYPTID_EVIDENCE]
+
+**Patterns:**
+- "We found proof. [YEAR]. [CRYPTID_EVIDENCE] near the airlock."
+- "[YEAR]: We are not alone out here. [CRYPTID_EVIDENCE] was discovered this morning."
+- "Something was here. [CRYPTID_EVIDENCE] left behind in [COLONY]. [YEAR]."
+
+## Psychoactive Weather Templates (Spec 1098)
+
+### Template: PSYCHOACTIVE_STORM
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [WEATHER_TYPE], [PSYCHOACTIVE_MOOD]
+
+**Patterns:**
+- "The [WEATHER_TYPE] rolls in. [YEAR]. It brings a feeling of [PSYCHOACTIVE_MOOD]."
+- "[YEAR]: It's not just rain. The [WEATHER_TYPE] infects us with [PSYCHOACTIVE_MOOD]."
+- "Seal the doors. The [WEATHER_TYPE] is causing widespread [PSYCHOACTIVE_MOOD]. [YEAR]."
+
+### Template: WEATHER_BEHAVIOR
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [WEATHER_AFFECT]
+
+**Patterns:**
+- "The storm changed them. [YEAR]. The workers [WEATHER_AFFECT]."
+- "[YEAR]: Under the influence of the weather, the colony [WEATHER_AFFECT]."
+- "Madness in the elements. Affected by the sky, they [WEATHER_AFFECT]. [YEAR]."
+
+## The Propaganda Simulacrum Templates (Spec 642)
+
+### Template: SIMULACRUM_ACTIVE
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [FAKE_MEMORY]
+
+**Patterns:**
+- "The Broadcast tells us we remember [FAKE_MEMORY]. [YEAR]. And we believe it."
+- "[YEAR]: The machine rewrites history. Everyone fondly recalls [FAKE_MEMORY]."
+- "A pleasant lie. We are convinced we lived through [FAKE_MEMORY]. [YEAR]."
+
+### Template: DELUSIONAL_BEHAVIOR
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [SIMULACRUM_EFFECT]
+
+**Patterns:**
+- "The truth is ignored. [YEAR]. The colony is [SIMULACRUM_EFFECT]."
+- "[YEAR]: A dangerous joy. Blinded by the Broadcast, they are [SIMULACRUM_EFFECT]."
+- "We are dying, but the Simulacrum keeps us [SIMULACRUM_EFFECT]. [YEAR]."
+
+## The Founder Effect Templates (Spec 648)
+
+### Template: CULTURE_INHERITED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [FOUNDER_TRAIT_ECHO]
+
+**Patterns:**
+- "The first steps echo. [YEAR]. [COLONY] is defined by [FOUNDER_TRAIT_ECHO]."
+- "[YEAR]: The founders left their mark. We see [FOUNDER_TRAIT_ECHO] in every citizen."
+- "Blood tells. The new generation exhibits [FOUNDER_TRAIT_ECHO]. [YEAR]."
+
+### Template: SOCIETAL_DRIFT
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [CULTURAL_DRIFT]
+
+**Patterns:**
+- "Our origins shaped us. [YEAR]. The dominant traits [CULTURAL_DRIFT]."
+- "[YEAR]: The seed determines the tree. The founders' personalities [CULTURAL_DRIFT]."
+- "We are what they were. Their legacy [CULTURAL_DRIFT] in [COLONY]. [YEAR]."
+
+## Living Architecture Templates (Spec 643)
+
+### Template: BUILDING_PLANTED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [BUILDING_TYPE], [LIVING_BUILDING_STATE]
+
+**Patterns:**
+- "We didn't build it; we grew it. [YEAR]. The [BUILDING_TYPE] is [LIVING_BUILDING_STATE]."
+- "[YEAR]: Biological architecture takes root. The [BUILDING_TYPE] stands, [LIVING_BUILDING_STATE]."
+- "A structure of flesh and sap. The new [BUILDING_TYPE] is [LIVING_BUILDING_STATE]. [YEAR]."
+
+### Template: BUILDING_STARVES
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [BUILDING_TYPE], [LIVING_BUILDING_HUNGER]
+
+**Patterns:**
+- "We forgot to feed the walls. [YEAR]. In the [BUILDING_TYPE], [LIVING_BUILDING_HUNGER]."
+- "[YEAR]: The architecture is desperate. The starving [BUILDING_TYPE] reacted: [LIVING_BUILDING_HUNGER]."
+- "A dangerous symbiosis. The [BUILDING_TYPE] lacked nutrients, so [LIVING_BUILDING_HUNGER]. [YEAR]."

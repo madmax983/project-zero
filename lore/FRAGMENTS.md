@@ -7673,3 +7673,116 @@ What the gas does to the colony.
 - humming in unison
 - forgetting their orders
 - weeping with sudden joy
+
+## Protest Crowds Fragments (Spec 1234)
+
+## Fragment Type: [PROTEST_SOUND]
+- rhythmic chanting
+- pounding on the bulkheads
+- a unified, deafening roar
+- absolute, defiant silence
+- the clashing of tools
+
+## Fragment Type: [PROTEST_ACTION]
+- locked the blast doors
+- blocked the main conveyor
+- refused to sleep or eat
+- dismantled the power relays
+- flooded the administration level
+
+## Orbital Mirrors Fragments (Spec 660)
+
+## Fragment Type: [MIRROR_BEAM_DESC]
+- a column of blinding white
+- localized, unnatural daylight
+- a scorching pillar
+- the false sun
+- a laser-sharp focus
+- concentrated starlight
+
+## Fragment Type: [HEAT_CATASTROPHE]
+- vaporized the entire crop
+- turned the metal to slag
+- ignited the atmospheric scrubbers
+- baked the sector down to bedrock
+- started an unstoppable firestorm
+
+## Cryptid Sightings Fragments (Spec 1081)
+
+## Fragment Type: [CRYPTID_EVIDENCE]
+- strange tracks in the dust
+- a shadow that moves against the light
+- unexplained scratches on the outer hull
+- an impossible heat signature
+- eyes reflecting in the dark
+
+## Fragment Type: [CRYPTID_BEHAVIOR]
+- stalks the perimeter
+- watches without moving
+- vanishes when illuminated
+- mimics human cries
+- tampers with the equipment
+
+## Psychoactive Weather Fragments (Spec 1098)
+
+## Fragment Type: [PSYCHOACTIVE_MOOD]
+- unearned, manic euphoria
+- paralyzing, whispering paranoia
+- profound and sudden grief
+- a crystalline, unnatural focus
+- shared, hallucinatory awe
+
+## Fragment Type: [WEATHER_AFFECT]
+- stopped all work to stare at the sky
+- turned on each other in the smog
+- sang until their voices gave out
+- worked until their hands bled
+- wept uncontrollably at the rain
+
+## The Propaganda Simulacrum Fragments (Spec 642)
+
+## Fragment Type: [FAKE_MEMORY]
+- an era of perfect harmony
+- the benevolent, loving founders
+- a victory that never happened
+- an abundance of imaginary food
+- the heroic deeds of cowards
+
+## Fragment Type: [SIMULACRUM_EFFECT]
+- smiling while starving
+- ignoring the structural collapse
+- praising the administration as the walls fell
+- cheering the arrival of an enemy fleet
+- refusing to acknowledge the casualties
+
+## The Founder Effect Fragments (Spec 648)
+
+## Fragment Type: [FOUNDER_TRAIT_ECHO]
+- the stubborn resilience of the first crew
+- an inherited, unshakeable paranoia
+- the fierce, aggressive ambition of the pioneers
+- a deep-seated pacifism born of trauma
+- their endless, relentless industriousness
+
+## Fragment Type: [CULTURAL_DRIFT]
+- bred a culture of isolation
+- established a society built on suspicion
+- forged an empire of tireless workers
+- cultivated an atmosphere of violent expansion
+- resulted in a rigid, martial society
+
+## Living Architecture Fragments (Spec 643)
+
+## Fragment Type: [LIVING_BUILDING_STATE]
+- pulsing with a slow heartbeat
+- bleeding a strange, clear sap
+- shivering in the cold
+- slowly knitting its own wounds
+- breathing heavily through the vents
+
+## Fragment Type: [LIVING_BUILDING_HUNGER]
+- the walls began to groan for food
+- it absorbed a passing worker
+- the structure withered and grayed
+- it eagerly consumed the offered biomass
+- the floor softened, hungry for sustenance
