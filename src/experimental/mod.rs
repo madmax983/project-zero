@@ -111,3 +111,6 @@ pub mod whispering_well;
 
 #[cfg(feature = "nova")]
 pub mod gloom_sickness;
+
+#[cfg(feature = "nova")]
+pub mod shadow_whispers;

@@ -25,3 +25,8 @@
 **Concept:** A new affliction that applies a `GloomSickness` component to pops standing in the dark (light level < 0.1) for too long, passively lowering their speed.
 **Fate:** Merged
 **Lesson:** Tying lighting to physiological needs directly incentivizes proper base planning and prevents players from ignoring light distribution logic.
+
+## [Shadow Whispers]
+**Concept:** A system where pops standing in complete darkness (<0.1 light level) have a chance to hallucinate and generate a "Doom Prophecy" rumor, infecting the colony's morale through the rumor network.
+**Fate:** Merged
+**Lesson:** Connecting infrastructure systems (like lighting) directly to social/psychological dynamics creates powerful emergent gameplay where failing to light a base isn't just a physical penalty, but a vector for social contagion.
