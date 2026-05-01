@@ -829,3 +829,9 @@
 - **Systems connected:** `ColonyCulture` (Founder Effect) -> `founder_effect_bridge_system` -> `Traits` (Pop Generation)
 - **Glue added:** `founder_effect_bridge_system` in `src/layer2/integration.rs` reads `PopBorn` events, retrieves the `dominant_trait` from `ColonyCulture`, and adds it to the new `Pop`'s `Traits`.
 - **Tests:** `tests/integration/founder_effect_bridge.rs`
+
+### INT-649: Pop Relationships -> Day Night Cycle
+- **Date:** 2026-10-30
+- **Systems connected:** `DayNightCycle` -> `trigger_shift_end_system` -> `update_workplace_relationships_system`
+- **Glue added:** Added `trigger_shift_end_system` in `src/layer1/core/integration.rs` to emit `ShiftEndEvent` when TimeOfDay transitions from Day to Dusk. Registered in `Layer1SystemSet::Execution`.
+- **Tests:** `tests/integration/pop_relationships_bridge.rs`

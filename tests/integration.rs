@@ -1,6 +1,9 @@
 #[path = "integration/secret_societies.rs"]
 mod secret_societies;
 
+#[path = "integration/pop_relationships_bridge.rs"]
+mod pop_relationships_bridge;
+
 #[path = "integration/predatory_weather.rs"]
 mod predatory_weather;
 #[path = "integration/ui_stats.rs"]
