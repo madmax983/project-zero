@@ -292,3 +292,41 @@ fn trigger_shake(world: &mut World, intensity: f32) {
         shake.trigger(intensity);
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::layer1::map::GridPosition;
+    use crate::layer1::mother_lode::MotherLode;
+    use crate::layer1::resources::ResourceType;
+
+    #[test]
+    fn test_process_mother_lode() {
+        let mut world = World::new();
+        let lode_entity = world.spawn(MotherLode {
+            resource_type: ResourceType::Stone,
+            current_hazard: 1.0,
+            heat_output: 10.0,
+        }).id();
+
+        // Run process once, it should initialize progress
+        process_mother_lode(&mut world, lode_entity, 10.0, None);
+
+        let progress = world.get::<crate::layer1::resources::MiningProgress>(lode_entity).unwrap();
+        assert_eq!(progress.current, 10.0);
+        let lode = world.get::<MotherLode>(lode_entity).unwrap();
+        assert!(lode.current_hazard > 1.0);
+        assert!(lode.heat_output > 10.0);
+
+        // Run again to complete the progress and spawn the resource
+        process_mother_lode(&mut world, lode_entity, 15.0, Some(GridPosition { x: 5, y: 5 }));
+
+        let progress2 = world.get::<crate::layer1::resources::MiningProgress>(lode_entity).unwrap();
+        assert_eq!(progress2.current, 0.0);
+
+        // Verify resource spawned
+        let resources: Vec<_> = world.query::<&crate::layer1::resources::ResourceItem>().iter(&world).collect();
+        assert!(!resources.is_empty());
+        assert_eq!(resources[0].resource_type, ResourceType::Stone);
+    }
+}
