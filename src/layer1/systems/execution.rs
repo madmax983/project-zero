@@ -253,4 +253,13 @@ pub fn register(schedule: &mut Schedule) {
         )
             .in_set(Layer1SystemSet::Execution),
     );
+
+    schedule.add_systems(
+        (
+            crate::layer1::architecture::living_building::living_building_healing_system,
+            crate::layer1::architecture::living_building::living_building_consume_pop_system,
+            crate::layer1::architecture::living_building::living_building_consume_resources_system,
+        )
+            .in_set(Layer1SystemSet::Execution),
+    );
 }

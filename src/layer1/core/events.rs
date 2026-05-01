@@ -51,3 +51,12 @@ pub struct BuildingCompletedEvent {
     /// The entity ID of the new building.
     pub entity: Entity,
 }
+
+/// Event fired when a pop is consumed by a living building.
+#[derive(Event, Debug, Clone)]
+pub struct PopConsumedEvent {
+    /// The consumed pop.
+    pub pop: Entity,
+    /// The building that consumed it.
+    pub building: Entity,
+}
