@@ -51,6 +51,12 @@ pub fn register(schedule: &mut Schedule) {
     );
 
     schedule.add_systems(
+        (crate::layer1::core::integration::trigger_shift_end_system
+            .after(crate::layer1::day_night::update_day_night_cycle_system),)
+            .in_set(Layer1SystemSet::Execution),
+    );
+
+    schedule.add_systems(
         (
             crate::layer1::day_night::update_day_night_cycle_system
                 .after(process_start_plan_system),

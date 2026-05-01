@@ -1750,3 +1750,19 @@ pub fn cryptid_chronicle_bridge_system(
         }
     }
 }
+
+/// Bridges `DayNightCycle` to `ShiftEndEvent` for Pop Relationships.
+pub fn trigger_shift_end_system(
+    cycle: Res<crate::layer1::day_night::DayNightCycle>,
+    mut events: EventWriter<crate::layer1::social::pop_relationships::ShiftEndEvent>,
+    mut last_time_of_day: Local<Option<crate::layer1::day_night::TimeOfDay>>,
+) {
+    if let Some(last) = *last_time_of_day {
+        if last == crate::layer1::day_night::TimeOfDay::Day
+            && cycle.time_of_day == crate::layer1::day_night::TimeOfDay::Dusk
+        {
+            events.send(crate::layer1::social::pop_relationships::ShiftEndEvent);
+        }
+    }
+    *last_time_of_day = Some(cycle.time_of_day);
+}
