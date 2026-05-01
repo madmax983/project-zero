@@ -53,10 +53,13 @@ pub fn render_info_panel(frame: &mut Frame, area: Rect, world: &World) {
             .skip(start)
             .map(|m| {
                 let display_text = if m.text.len() > max_w && max_w > 1 {
-                    format!(
-                        "{}\u{2026}",
-                        &m.text.chars().take(max_w - 1).collect::<String>()
-                    )
+                    let idx = m
+                        .text
+                        .char_indices()
+                        .nth(max_w - 1)
+                        .map(|(i, _)| i)
+                        .unwrap_or(m.text.len());
+                    format!("{}\u{2026}", &m.text[..idx])
                 } else {
                     m.text.clone()
                 };

@@ -71,10 +71,13 @@ pub fn render_notifications(frame: &mut Frame, area: Rect, world: &World) {
             };
 
             let display_text = if n.text.len() > max_text_width && max_text_width > 1 {
-                format!(
-                    "{}\u{2026}",
-                    &n.text.chars().take(max_text_width - 1).collect::<String>()
-                )
+                let idx = n
+                    .text
+                    .char_indices()
+                    .nth(max_text_width - 1)
+                    .map(|(i, _)| i)
+                    .unwrap_or(n.text.len());
+                format!("{}\u{2026}", &n.text[..idx])
             } else {
                 n.text.clone()
             };
