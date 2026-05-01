@@ -48,3 +48,6 @@ pub use structure::*;
 pub use symbiotic_infrastructure::*;
 pub use turret::*;
 pub use window::*;
+
+pub mod living_architecture;
+pub use living_architecture::*;
