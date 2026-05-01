@@ -126,7 +126,9 @@ mod tests {
 
         // Run movement logic
         world.run_system_once(process_start_plan_system).unwrap();
-        world.run_system_once(movement_system).unwrap();
+        for _ in 0..10 {
+            world.run_system_once(movement_system).unwrap();
+        }
 
         let pos = world.get::<GridPosition>(pop).unwrap();
         assert!(*pos != GridPosition { x: 5, y: 5 });

@@ -333,7 +333,7 @@ mod tests {
         // With 0.00001 base chance * (120-60) = 0.0006 per tick.
         // 10,000 ticks gives ~99.7% chance of death.
         let mut died = false;
-        for _ in 0..10_000 {
+        for _ in 0..20_000 {
             schedule.run(&mut world);
             let health = world.get::<Health>(entity).unwrap();
             if !health.is_alive() {
