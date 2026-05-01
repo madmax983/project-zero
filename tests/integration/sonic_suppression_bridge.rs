@@ -47,10 +47,10 @@ fn test_sonic_turret_emits_noise() {
 
 #[test]
 fn test_sonic_turret_shatters_glass_buildings() {
-    use scale::layer1::architecture::building::{BuildingType, try_place_building};
+    use scale::layer1::architecture::building::{try_place_building, BuildingType};
     use scale::layer1::architecture::structure::Structure;
     use scale::layer1::resources::ColonyResources;
-    use scale::layer1::{OccupiedTiles, BuildingMap};
+    use scale::layer1::{BuildingMap, OccupiedTiles};
 
     let mut app = App::new();
     app.add_plugins(MinimalPlugins);
@@ -83,18 +83,22 @@ fn test_sonic_turret_shatters_glass_buildings() {
         GridPosition { x: 5, y: 5 },
     ));
 
-    app.add_systems(
-        Update,
-        sonic_suppression_system,
-    );
+    app.add_systems(Update, sonic_suppression_system);
     app.update();
 
     let mut glass_destroyed = false;
-    for (structure, _glass) in app.world_mut().query::<(&Structure, &scale::layer1::sonic_suppression::Glass)>().iter(app.world_mut()) {
+    for (structure, _glass) in app
+        .world_mut()
+        .query::<(&Structure, &scale::layer1::sonic_suppression::Glass)>()
+        .iter(app.world_mut())
+    {
         if structure.current_hp == 0.0 {
             glass_destroyed = true;
         }
     }
 
-    assert!(glass_destroyed, "Glass building should be destroyed by sonic turret");
+    assert!(
+        glass_destroyed,
+        "Glass building should be destroyed by sonic turret"
+    );
 }

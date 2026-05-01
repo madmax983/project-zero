@@ -1,7 +1,7 @@
-use bevy::prelude::*;
-use crate::layer1::social::{Relationships, AffinityChange};
 use crate::layer1::actions::AssignedTo;
 use crate::layer1::social::morale::Morale;
+use crate::layer1::social::{AffinityChange, Relationships};
+use bevy::prelude::*;
 
 #[derive(Event)]
 pub struct ShiftEndEvent;
@@ -15,7 +15,10 @@ pub fn update_workplace_relationships_system(
         // Collect all workers and their locations
         let mut location_map = std::collections::HashMap::new();
         for (entity, assigned_to) in query.iter() {
-            location_map.entry(assigned_to.entity).or_insert_with(Vec::new).push(entity);
+            location_map
+                .entry(assigned_to.entity)
+                .or_insert_with(Vec::new)
+                .push(entity);
         }
 
         // Build relationships based on shared locations
@@ -39,7 +42,7 @@ pub fn update_workplace_relationships_system(
 
 pub fn calculate_relationship_mood_buff_system(
     time: Res<Time>,
-    mut query: Query<(&Relationships, &mut Morale)>
+    mut query: Query<(&Relationships, &mut Morale)>,
 ) {
     for (rels, mut morale) in query.iter_mut() {
         let mut total_buff = 0.0;
@@ -70,17 +73,29 @@ mod tests {
         app.add_event::<AffinityChange>();
         app.add_systems(Update, update_workplace_relationships_system);
 
-        let _entity1 = app.world_mut().spawn((
-            Pop,
-            AssignedTo { entity: Entity::from_raw(1), assignment_type: AssignmentType::FarmWorker },
-            Relationships::default(),
-        )).id();
+        let _entity1 = app
+            .world_mut()
+            .spawn((
+                Pop,
+                AssignedTo {
+                    entity: Entity::from_raw(1),
+                    assignment_type: AssignmentType::FarmWorker,
+                },
+                Relationships::default(),
+            ))
+            .id();
 
-        let _entity2 = app.world_mut().spawn((
-            Pop,
-            AssignedTo { entity: Entity::from_raw(1), assignment_type: AssignmentType::FarmWorker }, // Same location
-            Relationships::default(),
-        )).id();
+        let _entity2 = app
+            .world_mut()
+            .spawn((
+                Pop,
+                AssignedTo {
+                    entity: Entity::from_raw(1),
+                    assignment_type: AssignmentType::FarmWorker,
+                }, // Same location
+                Relationships::default(),
+            ))
+            .id();
 
         // Act
         app.world_mut().send_event(ShiftEndEvent);
@@ -101,17 +116,25 @@ mod tests {
         let mut app = App::new();
         app.add_systems(Update, calculate_relationship_mood_buff_system);
         app.insert_resource(Time::<()>::default());
-        app.world_mut().resource_mut::<Time<()>>().advance_by(std::time::Duration::from_secs(1));
+        app.world_mut()
+            .resource_mut::<Time<()>>()
+            .advance_by(std::time::Duration::from_secs(1));
 
         let entity2 = app.world_mut().spawn(Pop).id();
 
         let bonds = Relationships::with_affinity(entity2, 50.0);
 
-        let entity1 = app.world_mut().spawn((
-            Pop,
-            bonds,
-            Morale { value: 50.0, ..Default::default() },
-        )).id();
+        let entity1 = app
+            .world_mut()
+            .spawn((
+                Pop,
+                bonds,
+                Morale {
+                    value: 50.0,
+                    ..Default::default()
+                },
+            ))
+            .id();
 
         // Act
         app.update();
