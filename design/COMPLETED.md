@@ -482,3 +482,4 @@
 - [x] `INT-1117` Integration: Sonic Suppression -> Glass Buildings — completed 2026-12-10
 - [x] `642` The Propaganda Simulacrum — `specs/642-propaganda-simulacrum.md` — completed 2026-05-01
 - [x] `643` Living Architecture — `specs/643-living-architecture.md` — completed 2024-05-24
+- [x] `1235` The Gastronomers — `specs/1235-the-gastronomers.md` — completed 2026-06-25

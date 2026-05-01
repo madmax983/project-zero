@@ -1,8 +1,8 @@
-use bevy_ecs::prelude::*;
 use crate::layer1::core::map::GridPosition;
 use crate::layer1::economy::resources::{ResourceItem, ResourceType};
-use crate::layer1::nature::terrain::{TerrainGrid, TerrainType};
 use crate::layer1::geology::GeologicalEvent;
+use crate::layer1::nature::terrain::{TerrainGrid, TerrainType};
+use bevy_ecs::prelude::*;
 
 #[derive(Component)]
 pub struct HarpoonImpact {
@@ -23,15 +23,25 @@ pub fn process_harpoon_impact_system(
                 resource_type: impact.resource_type,
                 amount: impact.amount,
             },
-            GridPosition { x: impact.position.x, y: impact.position.y },
+            GridPosition {
+                x: impact.position.x,
+                y: impact.position.y,
+            },
         ));
 
         if let Some(ref mut grid) = terrain_grid {
-            grid.set(impact.position.x as usize, impact.position.y as usize, TerrainType::Crater);
+            grid.set(
+                impact.position.x as usize,
+                impact.position.y as usize,
+                TerrainType::Crater,
+            );
         }
 
         quake_events.send(GeologicalEvent {
-            center: GridPosition { x: impact.position.x, y: impact.position.y },
+            center: GridPosition {
+                x: impact.position.x,
+                y: impact.position.y,
+            },
             magnitude: 5.0,
         });
 
@@ -48,13 +58,17 @@ mod tests {
     fn test_harpoon_impact_delivers_resources() {
         let mut world = World::new();
         world.init_resource::<Events<GeologicalEvent>>();
-        let impact_event = world.spawn(HarpoonImpact {
-            position: GridPosition { x: 10, y: 10 },
-            resource_type: ResourceType::Metal,
-            amount: 1000.0,
-        }).id();
+        let impact_event = world
+            .spawn(HarpoonImpact {
+                position: GridPosition { x: 10, y: 10 },
+                resource_type: ResourceType::Metal,
+                amount: 1000.0,
+            })
+            .id();
 
-        world.run_system_once(process_harpoon_impact_system).unwrap();
+        world
+            .run_system_once(process_harpoon_impact_system)
+            .unwrap();
 
         let mut found = false;
         for (pos, resource) in world.query::<(&GridPosition, &ResourceItem)>().iter(&world) {
@@ -86,7 +100,9 @@ mod tests {
             amount: 1000.0,
         });
 
-        world.run_system_once(process_harpoon_impact_system).unwrap();
+        world
+            .run_system_once(process_harpoon_impact_system)
+            .unwrap();
 
         let events = world.resource::<Events<GeologicalEvent>>();
         #[allow(deprecated)]
