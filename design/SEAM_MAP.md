@@ -829,3 +829,9 @@
 - **Systems connected:** `ColonyCulture` (Founder Effect) -> `founder_effect_bridge_system` -> `Traits` (Pop Generation)
 - **Glue added:** `founder_effect_bridge_system` in `src/layer2/integration.rs` reads `PopBorn` events, retrieves the `dominant_trait` from `ColonyCulture`, and adds it to the new `Pop`'s `Traits`.
 - **Tests:** `tests/integration/founder_effect_bridge.rs`
+
+### INT-1248: Red Tape Defense -> Bureaucracy Delay System
+- **Date:** 2026-02-01
+- **Systems connected:** `invoke_red_tape` (Red Tape Defense) -> `process_bureaucracy_delays` -> `HostileFleet`
+- **Glue added:** Added `process_bureaucracy_delays` to update `HostileFleet` components and `BureaucraticHold` in `src/simulation.rs`.
+- **Tests:** `tests/integration/red_tape_defense_integration.rs`

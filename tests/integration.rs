@@ -334,3 +334,5 @@ mod founder_effect_bridge;
 mod clutter_bridge;
 #[path = "integration/core_integration_tests.rs"]
 mod core_integration_tests;
+#[path = "integration/red_tape_defense_integration.rs"]
+mod red_tape_defense_integration;

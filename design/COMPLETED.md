@@ -487,3 +487,4 @@
 - [x] `1235` The Gastronomers — `specs/1235-the-gastronomers.md` — completed 2026-06-25
 - [x] `1248` Red Tape Defense — `specs/1248-red-tape-defense.md` — completed 2026-02-01
 - [x] `1236` The Kessler Gambit - `specs/1236-the-kessler-gambit.md` - completed 2026-05-01
+- [x] `INT-1248` Integration: Red Tape Defense -> Bureaucracy Delay System — completed 2026-02-01
