@@ -18201,3 +18201,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you sacrifice the minds of your most empathetic citizens to keep the colony stable, knowing you are systematically mass-producing sociopaths to run your government?
 
 ---
+
+## Hoarding Panic
+
+**Layer:** 1
+
+**Fantasy:** The breakdown of social trust during a perceived shortage, even if the shortage isn't real.
+
+**Mechanic:** If colony stockpiles for critical resources (food, medicine, fuel) drop below a visible threshold, Pops with the "Anxious" or "Selfish" traits may trigger a "Hoarding Panic." They stop their assigned jobs and sprint to stockpiles, taking items back to their private housing. This creates an artificial shortage for everyone else.
+
+**Emergence:** A minor, easily fixable delay in a food shipment triggers a panic. Before the new shipment arrives, anxious Pops hoard all the remaining food, causing the rest of the colony to actually starve. The player must use Enforcers to raid civilian homes to redistribute food, sparking riots.
+
+**Tension:** Do you maintain massive, inefficient buffer stockpiles just to maintain the *illusion* of infinite resources, or risk societal collapse every time the supply chain hiccups?
+
+---
+
+## The Tourist Trap
+
+**Layer:** Cross-layer (1 & 2)
+
+**Fantasy:** Turning your struggling survival colony into a degrading spectacle for wealthy core-worlders.
+
+**Mechanic:** You can designate specific areas of your Layer 1 colony (e.g., active megafauna breeding grounds, precarious deep-crust mines, or even active warzones) as "Authentic Experiences." Layer 2 tourist ships arrive, generating massive Credits. However, the tourists constantly wander into danger, require rescue, and their presence deeply insults and demoralizes your working Pops.
+
+**Emergence:** A tourist ship lands right as a feral cult uprising begins. The tourists assume it's part of the show and start taking holovids of your enforcers being attacked. Your Pops are so disgusted that they join the cult.
+
+**Tension:** Do you sacrifice your colony's dignity and safety for massive influxes of easy money, risking a complete collapse of local morale?
+
+---
+
+## Generation Gap
+
+**Layer:** Cross-layer (1 & 3)
+
+**Fantasy:** The disconnect between the struggles of the founders and the entitlement of the inheritors.
+
+**Mechanic:** When a colony survives a major, generation-defining trauma (e.g., a multi-year siege or famine), the survivors gain the "Hardened" trait (low needs, high resilience). However, children born *after* the trauma has passed develop the "Entitled" trait. They demand luxury goods, leisure time, and beautiful architecture, completely failing to understand why the founders live in brutalist concrete bunkers.
+
+**Emergence:** Your invincible, hardened founder generation finally retires. The new generation immediately demands a massive increase in consumer goods. When you can't provide them because your economy is entirely geared for war/survival, they launch a massive political strike, crippling the planet just as a new invasion fleet arrives.
+
+**Tension:** Do you intentionally artificialize hardship to keep the population tough, or build a utopia that ultimately makes your civilization soft and vulnerable?
+
+---
