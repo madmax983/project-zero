@@ -1,3 +1,13 @@
+### INT-239: Clutter -> Pathfinding and Beauty
+- **Date:** 2026-06-25
+- **Systems connected:** `clutter_accumulation_system` (Clutter) -> `find_path_internal` (Pathfinding) and `update_beauty_grid_system` (Beauty)
+- **Glue added:**
+    - `ClutterGrid` added to `update_beauty_grid_system` in `src/layer1/beauty.rs` to penalize beauty values by -1 per 10 clutter.
+    - `ClutterGrid` added to `find_path_internal` in `src/layer1/pathfinding.rs` to add a pathfinding cost penalty.
+    - `clutter_accumulation_system` and `clutter_cleaning_system` registered in `src/layer1/systems/environment.rs` and `src/layer1/systems/execution.rs`.
+- **Tests:** `tests/integration/clutter_bridge.rs`
+
+
 ### INT-1094: Flora Destruction -> Pioneer Regrowth (Ecological Succession)
 - **Date:** 2026-08-01
 - **Systems connected:** `process_flora_clearing` (Forestry) -> `ecological_succession_system` (Flora)

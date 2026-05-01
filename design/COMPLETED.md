@@ -1,3 +1,5 @@
+- [x] `239` Operational Detritus - `specs/239-operational-detritus.md` - completed 2026-06-25
+- [x] `INT-239` Integration: Clutter -> Pathfinding and Beauty - completed 2026-06-25
 - [x] `761` Void Sickness — `specs/761-void-sickness.md` — completed 2026-06-03
 - [x] `764` The Embassy Sector — `specs/764-the-embassy-sector.md` — completed 2026-06-25
 - [x] `INT-060` Integration: Vacuum Pressure -> Acoustic Shadows — completed 2026-06-25
