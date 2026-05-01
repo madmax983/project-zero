@@ -657,12 +657,10 @@ mod tests {
             ..Default::default()
         };
 
-        let _ = world.run_system_once(
-            move |mut commands: Commands| {
-                let mut equip_opt = None;
-                handle_fetch_tool(&mut commands, &mut resources, pop, &mut equip_opt);
-            },
-        );
+        let _ = world.run_system_once(move |mut commands: Commands| {
+            let mut equip_opt = None;
+            handle_fetch_tool(&mut commands, &mut resources, pop, &mut equip_opt);
+        });
 
         let equip = world.get::<crate::layer1::Equipment>(pop).unwrap();
         assert!(equip.tool.is_some());

@@ -17,12 +17,12 @@ pub mod psychic_stains;
 pub mod quirks;
 #[cfg(test)]
 mod quirks_tests;
+pub mod simulacrum;
 #[cfg(feature = "nova")]
 pub mod sleep_deprived_savant;
 pub mod sleepwalking;
 #[cfg(test)]
 mod sleepwalking_tests;
-pub mod simulacrum;
 pub mod somnambulism;
 pub mod spiteful_will;
 pub mod stress;
@@ -43,10 +43,10 @@ pub use psionics::*;
 pub use psychic::*;
 pub use psychic_stains::*;
 pub use quirks::*;
+pub use simulacrum::*;
 #[cfg(feature = "nova")]
 pub use sleep_deprived_savant::*;
 pub use sleepwalking::*;
-pub use simulacrum::*;
 pub use somnambulism::*;
 pub use spiteful_will::*;
 pub use stress::*;

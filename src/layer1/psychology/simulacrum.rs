@@ -1,6 +1,5 @@
-use bevy_ecs::prelude::*;
 use bevy::prelude::Transform;
-
+use bevy_ecs::prelude::*;
 
 use crate::layer1::entities::pop::Pop;
 use crate::layer1::psychology::memory::{Memories, MemoryType};
@@ -25,7 +24,11 @@ pub fn simulacrum_broadcast_system(
         }
 
         for (pop_transform, mut pop_memory) in pops.iter_mut() {
-            if sim_transform.translation.distance(pop_transform.translation) <= simulacrum.radius {
+            if sim_transform
+                .translation
+                .distance(pop_transform.translation)
+                <= simulacrum.radius
+            {
                 // Add fake positive if not already present
                 if !pop_memory
                     .items
@@ -38,7 +41,9 @@ pub fn simulacrum_broadcast_system(
                 }
 
                 // Remove negative memories
-                pop_memory.items.retain(|e| e.memory_type.base_mood_impact() >= 0.0);
+                pop_memory
+                    .items
+                    .retain(|e| e.memory_type.base_mood_impact() >= 0.0);
             }
         }
     }
@@ -47,9 +52,9 @@ pub fn simulacrum_broadcast_system(
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::layer1::psychology::memory::ActiveMemory;
     use bevy_app::App;
     use bevy_app::Update;
-    use crate::layer1::psychology::memory::ActiveMemory;
 
     #[test]
     fn test_simulacrum_generates_fake_memories() {
@@ -66,11 +71,7 @@ mod tests {
 
         let pop = app
             .world_mut()
-            .spawn((
-                Pop,
-                initial_memories,
-                Transform::from_xyz(0.0, 0.0, 0.0),
-            ))
+            .spawn((Pop, initial_memories, Transform::from_xyz(0.0, 0.0, 0.0)))
             .id();
 
         app.world_mut().spawn((
@@ -107,11 +108,7 @@ mod tests {
 
         let pop = app
             .world_mut()
-            .spawn((
-                Pop,
-                initial_memories,
-                Transform::from_xyz(0.0, 0.0, 0.0),
-            ))
+            .spawn((Pop, initial_memories, Transform::from_xyz(0.0, 0.0, 0.0)))
             .id();
 
         app.world_mut().spawn((
@@ -149,11 +146,7 @@ mod tests {
 
         let pop_far = app
             .world_mut()
-            .spawn((
-                Pop,
-                initial_memories,
-                Transform::from_xyz(100.0, 0.0, 0.0),
-            ))
+            .spawn((Pop, initial_memories, Transform::from_xyz(100.0, 0.0, 0.0)))
             .id();
 
         app.world_mut().spawn((

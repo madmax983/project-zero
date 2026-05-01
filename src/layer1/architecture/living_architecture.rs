@@ -1,6 +1,6 @@
-use bevy::prelude::*;
-use crate::layer1::entities::pop::Pop;
 use crate::layer1::biology::health::Health;
+use crate::layer1::entities::pop::Pop;
+use bevy::prelude::*;
 
 #[derive(Component)]
 pub struct LivingBuilding {
@@ -14,11 +14,10 @@ pub struct PopConsumedEvent {
     pub building: Entity,
 }
 
-pub fn living_building_healing_system(
-    mut query: Query<(&LivingBuilding, &mut Health)>,
-) {
+pub fn living_building_healing_system(mut query: Query<(&LivingBuilding, &mut Health)>) {
     for (living, mut health) in query.iter_mut() {
-        if living.hunger < 80.0 { // Arbitrary threshold for not starving
+        if living.hunger < 80.0 {
+            // Arbitrary threshold for not starving
             health.current = (health.current + living.heal_rate).min(health.max);
         }
     }
@@ -33,7 +32,11 @@ pub fn living_building_consume_pop_system(
     for (building_entity, building_transform, mut living_building) in buildings.iter_mut() {
         if living_building.hunger >= 80.0 {
             for (pop_entity, pop_transform) in pops.iter() {
-                if building_transform.translation.distance(pop_transform.translation) < 2.0 {
+                if building_transform
+                    .translation
+                    .distance(pop_transform.translation)
+                    < 2.0
+                {
                     // Consume pop
                     commands.entity(pop_entity).despawn();
                     living_building.hunger = 0.0;
@@ -51,8 +54,8 @@ pub fn living_building_consume_pop_system(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::layer1::entities::pop::Pop;
     use crate::layer1::biology::health::Health;
+    use crate::layer1::entities::pop::Pop;
 
     #[test]
     fn test_living_building_heals_over_time() {
@@ -60,17 +63,20 @@ mod tests {
         let mut app = App::new();
         app.add_systems(Update, living_building_healing_system);
 
-        let building = app.world_mut().spawn((
-            LivingBuilding {
-                hunger: 0.0,
-                heal_rate: 5.0,
-            },
-            Health {
-                current: 50.0,
-                max: 100.0,
-                has_rust_lung: false,
-            },
-        )).id();
+        let building = app
+            .world_mut()
+            .spawn((
+                LivingBuilding {
+                    hunger: 0.0,
+                    heal_rate: 5.0,
+                },
+                Health {
+                    current: 50.0,
+                    max: 100.0,
+                    has_rust_lung: false,
+                },
+            ))
+            .id();
 
         // Act
         app.update();
@@ -86,17 +92,20 @@ mod tests {
         let mut app = App::new();
         app.add_systems(Update, living_building_healing_system);
 
-        let building = app.world_mut().spawn((
-            LivingBuilding {
-                hunger: 100.0, // Starving
-                heal_rate: 5.0,
-            },
-            Health {
-                current: 50.0,
-                max: 100.0,
-                has_rust_lung: false,
-            },
-        )).id();
+        let building = app
+            .world_mut()
+            .spawn((
+                LivingBuilding {
+                    hunger: 100.0, // Starving
+                    heal_rate: 5.0,
+                },
+                Health {
+                    current: 50.0,
+                    max: 100.0,
+                    has_rust_lung: false,
+                },
+            ))
+            .id();
 
         // Act
         app.update();
@@ -113,18 +122,21 @@ mod tests {
         app.add_event::<PopConsumedEvent>();
         app.add_systems(Update, living_building_consume_pop_system);
 
-        let pop = app.world_mut().spawn((
-            Pop,
-            Transform::from_xyz(0.0, 0.0, 0.0),
-        )).id();
+        let pop = app
+            .world_mut()
+            .spawn((Pop, Transform::from_xyz(0.0, 0.0, 0.0)))
+            .id();
 
-        let building = app.world_mut().spawn((
-            LivingBuilding {
-                hunger: 100.0, // Starving
-                heal_rate: 5.0,
-            },
-            Transform::from_xyz(0.0, 0.0, 0.0),
-        )).id();
+        let building = app
+            .world_mut()
+            .spawn((
+                LivingBuilding {
+                    hunger: 100.0, // Starving
+                    heal_rate: 5.0,
+                },
+                Transform::from_xyz(0.0, 0.0, 0.0),
+            ))
+            .id();
 
         // Act
         app.update();
@@ -136,6 +148,10 @@ mod tests {
 
         let events = app.world().resource::<Events<PopConsumedEvent>>();
         let mut reader = events.get_cursor();
-        assert_eq!(reader.read(events).count(), 1, "Should emit PopConsumedEvent");
+        assert_eq!(
+            reader.read(events).count(),
+            1,
+            "Should emit PopConsumedEvent"
+        );
     }
 }

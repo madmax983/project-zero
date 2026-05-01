@@ -218,7 +218,7 @@ fn init_simulation_resources(world: &mut World) {
     world.init_resource::<crate::layer3::digital_detritus::DataMiningQueue>();
     world.init_resource::<crate::layer3::digital_detritus::DiscoveredTechs>();
     world.init_resource::<Events<crate::layer3::digital_detritus::VirusEvent>>();
-        world.init_resource::<Events<crate::layer1::architecture::living_architecture::PopConsumedEvent>>();
+    world.init_resource::<Events<crate::layer1::architecture::living_architecture::PopConsumedEvent>>();
     world.init_resource::<crate::layer3::digital_detritus::JunkDataFilter>();
 
     world.init_resource::<Events<crate::layer1::logistics::mass_driver::LaunchEvent>>();
