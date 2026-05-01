@@ -18243,3 +18243,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you intentionally artificialize hardship to keep the population tough, or build a utopia that ultimately makes your civilization soft and vulnerable?
 
 ---
+## The Feral Protectors
+
+**Layer:** 1
+
+**Fantasy:** Wildlife actively defending the colony they've grown accustomed to.
+
+**Mechanic:** Over time, if the player avoids hunting or terraforming specific local biomes near the colony, the megafauna "acclimate" to the colonists. They stop running away, and if hostiles (like raiders or aggressive xeno-fauna) approach the colony borders through those biomes, the megafauna will actively defend the area as their own territory, incidentally protecting the colony.
+
+**Emergence:** You intentionally leave a massive, dangerous jungle untouched near your vulnerable agricultural sector. When pirate raiders land, they are completely decimated by the local apex predators before they even reach your walls, saving your colony without firing a single shot.
+
+**Tension:** Do you expand your resource extraction into the valuable untouched biomes, or keep a dangerous wilderness at your doorstep as a living defense system?
+
+---
+
+## The Information Quarantine
+
+**Layer:** Cross-layer
+
+**Fantasy:** Purposefully keeping a colony ignorant of galactic events to prevent panic or protect state secrets.
+
+**Mechanic:** The player can institute an "Information Quarantine" on specific Layer 1 colonies, cutting their connection to the galactic network (Layer 2/3). This prevents bad news (like losing a massive war) from tanking their morale, but drastically reduces their scientific output and causes the "Suspicious" trait to spread among Pops over time.
+
+**Emergence:** You quarantine a key mining world to keep them working through a devastating galactic war. Centuries later, the war is won, but the colony has evolved into an isolationist cult that refuses to believe the rest of humanity still exists, firing on your diplomatic ships.
+
+**Tension:** Do you risk the immediate collapse of a vital colony by telling them the truth, or lie to them and risk creating a long-term breakaway civilization?
+
+---
+
+## Biological Defection
+
+**Layer:** 1
+
+**Fantasy:** Your colonists physically adapt to the local environment so much that they reject humanity.
+
+**Mechanic:** If a colony is isolated for generations without advanced medical support or environmental shielding, Pops slowly mutate. They gain the "Native" tag, adapting perfectly to toxic atmospheres or extreme temperatures. Eventually, they view the *un-mutated* core-world colonists as aliens and will violently resist attempts to "cure" them or reintegrate them into the empire.
+
+**Emergence:** You finally re-establish contact with a lost mining colony after 200 years. Instead of human miners, you find a thriving society of adapted mutants who destroy your pristine rescue ships because the "clean" air inside is toxic to them.
+
+**Tension:** Do you force them into expensive, painful "re-adaptation" therapy to rejoin the empire, or accept a completely alien subspecies into your human civilization?
+
+---
