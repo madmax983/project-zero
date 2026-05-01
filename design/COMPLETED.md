@@ -480,3 +480,4 @@
 - [x] `INT-648` Integration: Founder Effect -> Pop Generation — completed 2026-06-25
 - [x] `649` Pop Relationships — `specs/649-pop-relationships.md` — completed 2024-05-24
 - [x] `INT-1117` Integration: Sonic Suppression -> Glass Buildings — completed 2026-12-10
+- [x] `642` The Propaganda Simulacrum — `specs/642-propaganda-simulacrum.md` — completed 2026-05-01
