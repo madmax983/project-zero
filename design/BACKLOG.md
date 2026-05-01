@@ -14,7 +14,6 @@
 
 
 
-- [ ] `645` Sub-Orbital Harpoon Logistics — `specs/645-sub-orbital-harpoon-logistics.md`
 
 - [ ] `634` The Petrification Sickness — `specs/634-petrification-sickness.md`
 - [ ] `635` Rogue Automation Cults — `specs/635-rogue-automation-cults.md`
