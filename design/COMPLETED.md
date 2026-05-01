@@ -435,7 +435,6 @@
 - [x] `972` Corporate Rivals — `specs/972-corporate-rivals.md` — completed 2026-04-21
 - [x] `1132` The Deep Crust Resonance — `specs/1132-deep-crust-resonance.md` - completed 2026-05-01
 - [x] `INT-1132` Integration: Deep Crust Resonance -> Chronicle — completed 2026-05-01
-- [x] `1122` The Rust-Lung Epidemic — `specs/1122-rust-lung-epidemic.md` — completed 2024-05-24
 
 - [x] `1119` Personal Shields — `specs/1119-personal-shields.md` - completed 2024-05-25
 - [x] `1105` Auroral Harvesting — `specs/1105-auroral-harvesting.md` - completed 2024-05-24
@@ -480,3 +479,4 @@
 - [x] `INT-648` Integration: Founder Effect -> Pop Generation — completed 2026-06-25
 - [x] `649` Pop Relationships — `specs/649-pop-relationships.md` — completed 2024-05-24
 - [x] `INT-1117` Integration: Sonic Suppression -> Glass Buildings — completed 2026-12-10
+- [x] `1122` The Rust-Lung Epidemic — `specs/1122-rust-lung-epidemic.md` — completed 2026-08-01

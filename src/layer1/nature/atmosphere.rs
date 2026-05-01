@@ -507,7 +507,7 @@ pub fn apply_smog_damage_system(
             let has_mask = equipment.is_some_and(|e| e.mask.is_some());
             if !has_mask {
                 // Suffocation / Toxicity
-                health.take_damage(1.0);
+                if !health.has_rust_lung { health.take_damage(1.0); }
             }
         }
     }

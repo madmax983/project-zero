@@ -1,20 +1,18 @@
-//! Biology and Health systems.
-//!
-//! Contains logic for health, diseases, cloning, cybernetics, and genetics.
-
+pub mod health;
+pub mod medical;
+pub mod genetics;
 pub mod addiction;
-pub mod agony_extract;
-pub mod biocompatibility;
-pub mod clone_vat;
+pub mod rust_lung;
 pub mod contagion;
 pub mod cryo_shock;
 pub mod cybernetics;
 pub mod gene_bank;
-pub mod genetics;
 pub mod grafting;
 pub mod gut_biome;
-pub mod health;
-pub mod medical;
+pub mod biocompatibility;
+pub mod clone_vat;
+pub mod agony_extract;
+
 #[cfg(test)]
 #[allow(missing_docs)]
 pub mod medical_triage_tests;
@@ -32,4 +30,3 @@ pub use grafting::*;
 pub use gut_biome::*;
 pub use health::*;
 pub use medical::*;
-pub mod rust_lung;
