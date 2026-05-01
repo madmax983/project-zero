@@ -192,3 +192,9 @@ pub fn petrification_transformation_system(
 ## Questions
 
 *Builder: add questions here if spec is unclear.*
+
+*Builder Questions (2024-05-31):*
+- `MineType` and `MiningJob` do not exist in the codebase. Should I use `DesignationType::Mine` and `CurrentTask` instead, or should I create a new system to define exotic deep crust mines?
+- `DamageResistance` does not exist in `crate::layer1::health`. How should the physical resistance be tracked or calculated? Should I create a new component for it?
+- `Artifact` is defined in `crate::layer1::artifacts::mod.rs` as a unit struct (`pub struct Artifact;`), but the spec expects it to have `name` and `beauty_value` fields (`insert(Artifact { name: "Petrified Colonist".to_string(), beauty_value: 75 })`). Should I modify the `Artifact` definition or use different components (e.g. `PopName` or a new `ArtPiece` component)?
+- `MovementStats` does not exist. The codebase uses `Speed` in `src/layer1/entities/pop.rs`. Should I use `Speed`?
