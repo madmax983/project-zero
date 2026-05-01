@@ -494,7 +494,13 @@ fn truncate_line(line: Line<'_>, max_width: u16) -> Line<'_> {
         } else {
             let remaining = max.saturating_sub(total);
             if remaining > 1 {
-                let truncated: String = span.content.chars().take(remaining - 1).collect();
+                let idx = span
+                    .content
+                    .char_indices()
+                    .nth(remaining - 1)
+                    .map(|(i, _)| i)
+                    .unwrap_or(span.content.len());
+                let truncated = &span.content[..idx];
                 result.push(Span::styled(format!("{truncated}\u{2026}"), span.style));
             }
             break;
