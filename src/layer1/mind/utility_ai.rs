@@ -272,6 +272,7 @@ struct PopDecider<'a> {
     is_striking: bool,
     is_penal: bool,
     is_noble: bool,
+    is_janitor: bool,
 }
 
 impl<'a> PopDecider<'a> {
@@ -284,6 +285,7 @@ impl<'a> PopDecider<'a> {
         let is_penal = data.penal_labor.is_some();
         let is_noble = data.traits.as_ref().is_some_and(|t| t.has(Trait::Noble));
         let is_synth = data.traits.as_ref().is_some_and(|t| t.has(Trait::Synth));
+        let is_janitor = data.job.as_ref().is_some_and(|j| j.job_type == crate::layer1::utility_types::AssignmentType::Janitor);
 
         Self {
             evaluator: CandidateEvaluator::new(evaluate_idle(&data.needs), is_synth),
@@ -293,6 +295,7 @@ impl<'a> PopDecider<'a> {
             is_striking,
             is_penal,
             is_noble,
+            is_janitor,
         }
     }
 
@@ -697,7 +700,7 @@ impl<'a> PopDecider<'a> {
 
         // Evaluate Clean
         self.evaluator.evaluate_and_consider(
-            evaluate_clean(pop_pos, &weights, &self.buffer.cleaning_targets, false),
+            evaluate_clean(pop_pos, &weights, &self.buffer.cleaning_targets, self.is_janitor),
             ActionType::Clean,
             self.context,
             0.0,

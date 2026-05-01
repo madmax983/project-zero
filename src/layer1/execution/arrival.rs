@@ -246,6 +246,15 @@ fn assign_pop(
                 Prestige::from_job(assignment_type),
             ));
         }
+        AssignmentType::Janitor => {
+            entity_cmds.insert((
+                Job {
+                    workplace: target_entity,
+                    job_type: assignment_type,
+                },
+                Prestige::from_job(assignment_type),
+            ));
+        }
     }
 
     true

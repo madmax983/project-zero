@@ -759,4 +759,6 @@ pub enum AssignmentType {
     Surgery,
     /// Working in a deep mine.
     DeepMining,
+    /// Cleans clutter and maintains hygiene.
+    Janitor,
 }

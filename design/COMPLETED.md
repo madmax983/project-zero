@@ -478,3 +478,5 @@
 - [x] `INT-1081` Integration: Cryptid Sightings -> Chronicle — completed 2026-06-16
 - [x] `INT-1098` Integration: Psychoactive Weather -> Pop Mood & Work — completed 2026-04-30
 - [x] `INT-648` Integration: Founder Effect -> Pop Generation — completed 2026-06-25
+- [x] `239` Operational Detritus - `specs/239-operational-detritus.md` - completed 2026-02-26
+- [x] `INT-239` Integration: Operational Detritus - Janitor Job - completed 2026-05-01

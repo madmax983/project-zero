@@ -329,3 +329,6 @@ mod protest_crowds_integration;
 
 #[path = "integration/founder_effect_bridge.rs"]
 mod founder_effect_bridge;
+
+#[path = "integration/clutter_janitor.rs"]
+mod clutter_janitor;
