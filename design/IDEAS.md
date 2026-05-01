@@ -18159,3 +18159,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you sacrifice your colony's accumulated expertise and history for immediate psychological relief, or force them to live with their trauma to maintain their skills?
 
 ---
+
+## The Inheritance Crash
+
+**Layer:** Cross-layer (3 -> 1)
+
+**Fantasy:** Sudden, unearned wealth destabilizing a struggling frontier economy.
+
+**Mechanic:** When a wealthy Pop dies on a core world (Layer 3), their wealth is transferred to a distant relative on a frontier colony (Layer 1). The sudden influx of massive capital into a small, fragile economy causes hyper-inflation. Prices for basic goods skyrocket, making them unaffordable for the rest of the colony.
+
+**Emergence:** Your struggling mining colony is suddenly thrown into chaos because one miner inherited a galactic shipping fortune. He buys all the food in the colony to build a vanity mansion, causing the rest of the miners to starve and riot against him.
+
+**Tension:** Do you seize the inherited assets to stabilize the colony's economy, violating property rights and angering core-world investors, or let the free market tear your frontier settlement apart?
+
+---
+
+## The Nostalgia Contagion
+
+**Layer:** 1
+
+**Fantasy:** A psychological virus where Pops obsess over a fabricated, idealized past, rejecting modern survival technology.
+
+**Mechanic:** During periods of high stress, a "Nostalgia Cult" can form. Members suffer a unique psychological affliction where they believe the colony was "better in the old days" (even if the old days were brutal). They begin actively dismantling advanced infrastructure (like fusion reactors or automated farms) and replacing them with highly inefficient, primitive alternatives (like coal burners or manual farming).
+
+**Emergence:** To survive a harsh winter, you finally upgrade to automated hydroponics. The sudden loss of "honest manual labor" triggers the Nostalgia Contagion. Your Pops break the hydroponics bays and try to plant seeds in the frozen dirt, freezing to death while claiming it's "the proper way."
+
+**Tension:** Do you violently suppress the destruction of life-saving technology, or allow the massive efficiency drop to appease their psychological need for a simpler, harsher time?
+
+---
+
+## The Bureaucracy of Empathy
+
+**Layer:** 1
+
+**Fantasy:** The darkest form of emotional labor, where high-empathy Pops are weaponized by the state to handle trauma.
+
+**Mechanic:** You can build a "Grievance Office" to lower colony-wide stress. It requires Pops with the "High Empathy" trait to staff it. They absorb the negative memories of other Pops. However, over time, the incredible volume of trauma burns out the bureaucrats. They lose the "High Empathy" trait and gain the "Sociopath" trait, becoming completely immune to morale penalties but highly corrupt and cruel to other Pops.
+
+**Emergence:** Your most kind-hearted, beloved doctor is assigned to the Grievance Office to help the colony through a brutal war. Ten years later, she has become a cold, ruthless administrator who cuts food rations without a second thought because she literally can no longer feel pity.
+
+**Tension:** Do you sacrifice the minds of your most empathetic citizens to keep the colony stable, knowing you are systematically mass-producing sociopaths to run your government?
+
+---
