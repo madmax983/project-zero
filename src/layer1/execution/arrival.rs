@@ -624,4 +624,47 @@ mod tests {
         assert_eq!(housing.residents.len(), 1);
         assert_eq!(housing.residents[0], pop);
     }
+
+    #[test]
+    fn test_handle_binge_arrival() {
+        let mut log = MessageLog::default();
+        let mut resources = crate::layer1::resources::ColonyResources {
+            food: 10.0,
+            rations: 0.0,
+            ..Default::default()
+        };
+        handle_binge_arrival(&mut resources, Some(&mut log));
+        assert_eq!(resources.food, 5.0);
+        assert!(!log.messages.is_empty());
+        assert!(log.messages[0].text.contains("binge eating"));
+
+        let mut resources2 = crate::layer1::resources::ColonyResources {
+            food: 2.0,
+            rations: 5.0,
+            ..Default::default()
+        };
+        handle_binge_arrival(&mut resources2, None);
+        assert_eq!(resources2.food, 0.0);
+        assert_eq!(resources2.rations, 2.0);
+    }
+
+    #[test]
+    fn test_handle_fetch_tool() {
+        let mut world = World::new();
+        let pop = world.spawn(()).id();
+        let mut resources = crate::layer1::resources::ColonyResources {
+            tools: 2.0,
+            ..Default::default()
+        };
+
+        let _ = world.run_system_once(
+            move |mut commands: Commands| {
+                let mut equip_opt = None;
+                handle_fetch_tool(&mut commands, &mut resources, pop, &mut equip_opt);
+            },
+        );
+
+        let equip = world.get::<crate::layer1::Equipment>(pop).unwrap();
+        assert!(equip.tool.is_some());
+    }
 }
