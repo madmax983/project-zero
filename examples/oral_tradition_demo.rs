@@ -13,14 +13,7 @@ mod app {
         terminal::{disable_raw_mode, enable_raw_mode, EnterAlternateScreen, LeaveAlternateScreen},
     };
     use ratatui::{prelude::*, widgets::*};
-    use scale::layer1::chronicle::{Chronicle, EventImportance};
-    use scale::layer1::needs::Needs;
-    use scale::layer1::oral_tradition::{
-        collect_chronicles_system, storytelling_system, OralTradition, StoryGenre,
-    };
-    use scale::layer1::social::Tavern;
-    use scale::shared::log::MessageLog;
-    use scale::shared::time::SimulationTime;
+    use scale::prelude::*;
     use std::io;
     use std::time::Duration;
 
