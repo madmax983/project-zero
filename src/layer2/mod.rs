@@ -1,3 +1,11 @@
+//! Layer 2: System/Planetary Simulation.
+//!
+//! This layer abstractly models the wider planetary and star system context surrounding the colony.
+//!
+//! Layer 2.
+//!
+//! Layer 2.
+//!
 pub mod barnacles;
 pub mod binary_star;
 pub mod combat;

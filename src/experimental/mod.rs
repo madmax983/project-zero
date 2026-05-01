@@ -1,3 +1,11 @@
+//! Experimental features and Nova expansions.
+//!
+//! This module houses new, experimental mechanics that are gated behind the `nova` feature flag.
+//!
+//! Experimental Nova features.
+//!
+//! Experimental Nova features.
+//!
 #[cfg(feature = "nova")]
 pub mod echo_chamber;
 

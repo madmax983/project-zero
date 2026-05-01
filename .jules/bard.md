@@ -44,3 +44,6 @@
 ## 2024-05-20 - Redundant Explicit Links
 **Confusion:** Writing `[\`AddChronicleEvent\`](crate::layer1::core::chronicle::AddChronicleEvent)` in documentation causes `cargo doc` to emit a `-D warnings` failure for `redundant_explicit_links`.
 **Clarification:** If the label matches the path, just use `[\`AddChronicleEvent\`]`. Ensure the required items are imported or resolvable in scope.
+## 2024-05-24 - The Undocumented Mod Directories
+**Confusion:** Several important module directories (like `layer1/culture/artifacts/mod.rs`, `layer1/diplomacy/factions/mod.rs`, `layer1/biology/genetics/mod.rs`, etc) were missing module-level documentation. This creates "The Black Box" and leaves users confused. Also `ActiveAuras` was missing executable `# Examples` doctests.
+**Clarification:** Added conceptual `//!` module documentation to explain their high-level purpose and added `/// # Examples` doctests to `contains_effect` and `is_empty` in `ActiveAuras` to show executable usage.

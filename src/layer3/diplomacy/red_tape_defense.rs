@@ -72,6 +72,7 @@ pub fn process_bureaucracy_delays(
 }
 
 #[cfg(test)]
+#[allow(clippy::type_complexity)]
 mod tests {
     use super::*;
     use bevy::ecs::system::SystemState;

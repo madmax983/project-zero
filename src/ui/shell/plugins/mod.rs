@@ -1,3 +1,11 @@
+//! UI Shell Plugins.
+//!
+//! Registers various UI panes (Chronicle, Maps, Inspector) into the Hypertile runtime environment.
+//!
+//! UI Shell Plugins.
+//!
+//! UI Shell Plugins.
+//!
 use bevy_ecs::prelude::*;
 use ratatui::{backend::TestBackend, buffer::Buffer, layout::Rect, Terminal};
 use ratatui_hypertile_extras::{HypertileRuntime, Registry};
