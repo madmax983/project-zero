@@ -1,3 +1,11 @@
+//! Execution System Tests.
+//!
+//! Shared test utilities and setups for the layer1 execution mechanics.
+//!
+//! Layer 1 Execution Tests.
+//!
+//! Layer 1 Execution Tests.
+//!
 use crate::layer1::building::OccupiedTiles;
 use crate::layer1::day_night::DayNightCycle;
 use crate::layer1::erosion::ErosionGrid;

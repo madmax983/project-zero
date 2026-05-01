@@ -1,3 +1,11 @@
+//! Cultural Artifacts and Relics.
+//!
+//! This module manages rare artifacts that emit powerful auras, affecting the pops around them.
+//!
+//! Culture Artifacts.
+//!
+//! Culture Artifacts.
+//!
 use crate::layer1::map::GridPosition;
 use bevy_ecs::prelude::*;
 
@@ -34,12 +42,27 @@ pub struct ActiveAuras {
 
 impl ActiveAuras {
     /// Checks if a specific effect is active.
+    ///
+    /// # Examples
+    /// ```
+    /// use scale::layer1::culture::artifacts::{ActiveAuras, AuraEffect};
+    /// let mut auras = ActiveAuras::default();
+    /// auras.effects.push(AuraEffect::Insight);
+    /// assert!(auras.contains_effect(AuraEffect::Insight));
+    /// ```
     #[must_use]
     pub fn contains_effect(&self, effect: AuraEffect) -> bool {
         self.effects.contains(&effect)
     }
 
     /// Checks if there are no active effects.
+    ///
+    /// # Examples
+    /// ```
+    /// use scale::layer1::culture::artifacts::ActiveAuras;
+    /// let auras = ActiveAuras::default();
+    /// assert!(auras.is_empty());
+    /// ```
     #[must_use]
     pub const fn is_empty(&self) -> bool {
         self.effects.is_empty()

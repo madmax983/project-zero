@@ -1,3 +1,11 @@
+//! Pop genetics and gene splicing.
+//!
+//! This module allows modification of Pop traits through genetic engineering, with risks of negative mutations.
+//!
+//! Genetics.
+//!
+//! Genetics.
+//!
 pub mod crop_modification;
 pub use crop_modification::*;
 
