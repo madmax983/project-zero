@@ -542,8 +542,8 @@ impl BuildingType {
             Self::TradeDepot => 5.0,     // Trade brings goods and culture
             Self::Well | Self::HydroponicsBay | Self::LifeSupport => 1.0,
             Self::TrashCannon => -2.0, // Industrial machinery is ugly
-            Self::CloneVat => -5.0, // Unsettling
-            Self::HypnoPod => -2.0, // Unsettling
+            Self::CloneVat => -5.0,    // Unsettling
+            Self::HypnoPod => -2.0,    // Unsettling
             _ => 0.0,
         }
     }

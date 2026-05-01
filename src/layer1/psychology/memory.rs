@@ -89,8 +89,8 @@ impl MemoryType {
         // Ticks to fade completely
         match self {
             Self::WitnessedDeath | Self::LostLimb | Self::MascotDeath => 0.0005, // Slow fade (2000 ticks)
-            Self::StarvationTrauma | Self::AttendedFuneral => 0.001, // Medium
-            Self::AteFineMeal | Self::WonFight => 0.002,     // Fast (500 ticks)
+            Self::StarvationTrauma | Self::AttendedFuneral => 0.001,             // Medium
+            Self::AteFineMeal | Self::WonFight => 0.002,                         // Fast (500 ticks)
             Self::SawCorpse | Self::AdmiredArt | Self::DisgustedByVermin => 0.01, // Very fast fade (100 ticks)
             Self::InspectorImpressed | Self::InspectorDisappointed | Self::FakePositive => 0.005, // Medium-long duration (~200 ticks)
             // Room thoughts last 1 day (100 ticks)
