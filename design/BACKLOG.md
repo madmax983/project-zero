@@ -855,7 +855,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1232` Contractor Fleets — `specs/1232-contractor-fleets.md`
 - [x] `1233` Public Grievances — `specs/1233-public-grievances.md`
 - [ ] `1235` The Gastronomers — `specs/1235-the-gastronomers.md`
-- [ ] `1236` The Kessler Gambit — `specs/1236-the-kessler-gambit.md`
 - [ ] `1237` Invasive Bureaucracy — `specs/1237-invasive-bureaucracy.md`
 - [ ] `1238` The Bulwark Platform — `specs/1238-the-bulwark-platform.md`
 - [ ] `1239` The Vanguard Ram — `specs/1239-the-vanguard-ram.md`
