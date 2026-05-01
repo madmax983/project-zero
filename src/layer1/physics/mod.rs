@@ -21,6 +21,7 @@
 //! It exists to create a harsh, reactive environment where actions have delayed, cascading consequences
 //! (e.g., mining too wide causes a collapse, venting a room causes suction, running noisy machines stresses workers).
 pub mod acoustic;
+pub mod harpoon;
 pub mod hit_stop;
 pub mod kinetic_storage;
 pub mod particles;
@@ -28,9 +29,9 @@ pub mod pressure;
 pub mod structural_integrity;
 pub mod suction;
 pub mod vent;
-pub mod harpoon;
 
 pub use acoustic::*;
+pub use harpoon::*;
 pub use hit_stop::*;
 pub use kinetic_storage::*;
 pub use particles::*;
@@ -38,7 +39,6 @@ pub use pressure::*;
 pub use structural_integrity::*;
 pub use suction::*;
 pub use vent::*;
-pub use harpoon::*;
 
 #[cfg(test)]
 mod acoustic_shadow_tests;

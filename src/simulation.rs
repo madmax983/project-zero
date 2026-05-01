@@ -575,6 +575,11 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
         crate::layer3::digital_detritus::process_data_mining_system,
         crate::layer3::digital_detritus::record_virus_event_chronicle_system,
     ));
+
+    schedule.add_systems((
+        crate::layer1::culture::gastronomers::spawn_gastronomer_faction_system,
+        crate::layer1::culture::gastronomers::apply_culinary_singularity_buff_system,
+    ));
 }
 #[cfg(test)]
 mod tests {
@@ -600,6 +605,8 @@ mod tests {
         world.init_resource::<Events<crate::layer3::digital_detritus::VirusEvent>>();
         world.init_resource::<Events<crate::layer1::architecture::living_architecture::PopConsumedEvent>>();
         world.init_resource::<crate::layer3::digital_detritus::JunkDataFilter>();
+        world.init_resource::<crate::layer1::culture::gastronomers::EmpireAdvancement>();
+        world.init_resource::<bevy_ecs::event::Events<crate::layer1::culture::gastronomers::CulinarySingularityEvent>>();
         *world.resource_mut::<GameState>() = GameState::Running;
 
         let tick_before = world.resource::<SimulationTime>().tick;
@@ -797,6 +804,8 @@ mod tests {
         world.init_resource::<Events<crate::layer3::digital_detritus::VirusEvent>>();
         world.init_resource::<Events<crate::layer1::architecture::living_architecture::PopConsumedEvent>>();
         world.init_resource::<crate::layer3::digital_detritus::JunkDataFilter>();
+        world.init_resource::<crate::layer1::culture::gastronomers::EmpireAdvancement>();
+        world.init_resource::<bevy_ecs::event::Events<crate::layer1::culture::gastronomers::CulinarySingularityEvent>>();
 
         let schedule = build_simulation_schedule();
         world.add_schedule(schedule);

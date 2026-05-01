@@ -29,3 +29,5 @@ pub mod animism;
 pub use animism::*;
 pub mod astrology;
 pub use astrology::*;
+pub mod gastronomers;
+pub use gastronomers::*;

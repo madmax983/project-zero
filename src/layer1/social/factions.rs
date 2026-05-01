@@ -83,6 +83,8 @@ pub enum FactionId {
     Cartel,
     /// Cult that worships the deep underground and fears the open sky.
     SubLithic,
+    /// Society obsessed with achieving the Culinary Singularity.
+    Gastronomers,
 }
 
 /// Data associated with a faction.
