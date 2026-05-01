@@ -301,6 +301,7 @@ fn register_simulation_core_systems(schedule: &mut Schedule) {
         crate::layer1::diplomacy::factions::rivals::rival_resource_drain_system,
     ));
 
+    schedule.add_systems(crate::layer1::physics::harpoon::process_harpoon_impact_system);
     schedule.add_systems((crate::layer2::weather::weather_movement_system,));
     schedule.add_systems((
         crate::layer3::planet::black_market_terraforming::trigger_rogue_terraforming,

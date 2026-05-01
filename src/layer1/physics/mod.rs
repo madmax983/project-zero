@@ -28,6 +28,7 @@ pub mod pressure;
 pub mod structural_integrity;
 pub mod suction;
 pub mod vent;
+pub mod harpoon;
 
 pub use acoustic::*;
 pub use hit_stop::*;
@@ -37,6 +38,7 @@ pub use pressure::*;
 pub use structural_integrity::*;
 pub use suction::*;
 pub use vent::*;
+pub use harpoon::*;
 
 #[cfg(test)]
 mod acoustic_shadow_tests;
