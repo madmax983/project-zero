@@ -18118,3 +18118,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you sacrifice critical survival resources to maintain a useless, aesthetic piece of the old world, or force the pops to adapt to their harsh new reality, risking a catastrophic drop in morale?
 
 ---
+## The Echoes of the Wound
+
+**Layer:** Cross-layer
+
+**Fantasy:** The Wound is not just a hazard; it is a distorted mirror that occasionally gives back what was lost, but wrong.
+
+**Mechanic:** Ships that are lost to The Wound (Layer 2/3) have a very small chance of "returning" decades later to your Layer 1 colony. The ship appears intact, but the cargo and the physical traits of the descendants onboard are deeply corrupted or "inverted" versions of what was originally lost.
+
+**Emergence:** You mourn a lost colony ship full of pacifist farmers. 50 years later, an identical ship emerges from the Wound, filled with hyper-aggressive, mutated cannibal pops who demand the colony be turned over to them, claiming *you* are the ones who abandoned them.
+
+**Tension:** Do you accept these terrifying, distorted reflections of your own people out of guilt and a desperate need for manpower, or destroy them as monsters?
+
+---
+
+## The Silent Order
+
+**Layer:** 1
+
+**Fantasy:** The trauma of the "Great Silence" fundamentally breaks the need for connection in some pops.
+
+**Mechanic:** If a colony survives a prolonged period of extreme isolation or comms blackout without support from Layer 2, a faction called "The Silent Order" can form. They view connection to the wider galaxy as a vulnerability and actively sabotage newly repaired comm arrays or spaceports, demanding the colony remain a closed system.
+
+**Emergence:** You finally scrape together the resources to re-establish contact with your homeworld after a century of isolation. The moment the array comes online, The Silent Order detonates the power grid, preferring the safety of isolation to the chaos of the galaxy.
+
+**Tension:** Do you forcefully suppress the very people who kept the colony together during its darkest hour, or abandon your grand galactic ambitions to appease their fear?
+
+---
+
+## The Architecture of Forgetting
+
+**Layer:** 1
+
+**Fantasy:** Physical space can be designed to erase trauma, but at the cost of history.
+
+**Mechanic:** Following a massive disaster, Pops demand the construction of "Labyrinthine Habitats." These are highly complex, confusing residential zones designed to disorient the inhabitants so they cannot physically find their way back to the sites of trauma (like a ruined factory or a mass grave). While living there, Pops rapidly lose negative memory debuffs, but also lose all positive memories and skill bonuses.
+
+**Emergence:** You build a massive Labyrinth to cure a colony-wide depression after a brutal civil war. It works perfectly; everyone is happy. But 10 years later, none of your master engineers remember how to maintain the advanced power reactor, and the colony freezes to death because they literally forgot how to survive.
+
+**Tension:** Do you sacrifice your colony's accumulated expertise and history for immediate psychological relief, or force them to live with their trauma to maintain their skills?
+
+---
