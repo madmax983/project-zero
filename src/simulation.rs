@@ -66,6 +66,7 @@ fn init_simulation_resources(world: &mut World) {
 
     // Initialize Layer 2 Events
     world.init_resource::<Events<crate::layer1::geography::HistoricalEvent>>();
+    world.init_resource::<Events<crate::layer1::core::events::PopConsumedEvent>>();
     world
         .init_resource::<Events<crate::layer1::social::ghost_shift_strike::GhostShiftStartedEvent>>(
         );
