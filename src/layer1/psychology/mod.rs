@@ -22,6 +22,7 @@ pub mod sleep_deprived_savant;
 pub mod sleepwalking;
 #[cfg(test)]
 mod sleepwalking_tests;
+pub mod simulacrum;
 pub mod somnambulism;
 pub mod spiteful_will;
 pub mod stress;
@@ -45,6 +46,7 @@ pub use quirks::*;
 #[cfg(feature = "nova")]
 pub use sleep_deprived_savant::*;
 pub use sleepwalking::*;
+pub use simulacrum::*;
 pub use somnambulism::*;
 pub use spiteful_will::*;
 pub use stress::*;
