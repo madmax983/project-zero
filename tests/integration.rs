@@ -337,3 +337,6 @@ mod founder_effect_bridge;
 mod clutter_bridge;
 #[path = "integration/core_integration_tests.rs"]
 mod core_integration_tests;
+
+#[path = "integration/kessler_gambit_integration.rs"]
+mod kessler_gambit_integration;

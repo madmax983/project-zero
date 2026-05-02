@@ -394,6 +394,7 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
             .after(crate::layer2::fleet::fleet_movement_system),
         crate::layer2::barnacles::barnacle_accumulation_system,
         // Debris Systems
+        crate::layer2::orbit::kessler_gambit::trigger_kessler_gambit_system,
         crate::layer2::debris::debris_accumulation_system
             .after(crate::layer2::combat::fleet_combat_system),
         crate::layer2::debris::debris_attrition_system
