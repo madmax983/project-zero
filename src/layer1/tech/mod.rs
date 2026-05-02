@@ -727,5 +727,6 @@ pub mod cognitive_overclocking;
 pub mod event_horizon_tap;
 pub use cognitive_overclocking::*;
 pub mod machine_awakening;
+pub mod rogue_automation_cults;
 pub use machine_awakening::*;
 pub mod martyrs_engine;

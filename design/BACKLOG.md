@@ -16,7 +16,7 @@
 
 
 
-- [ ] `635` Rogue Automation Cults — `specs/635-rogue-automation-cults.md`
+
 - [ ] `637` Echoes of the Predecessors — `specs/637-echoes-of-predecessors.md`
 
 
