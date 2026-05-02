@@ -1,3 +1,28 @@
+
+### INT-1235: The Gastronomers -> Chronicle
+- **Date:** 2026-06-25
+- **Systems connected:** `CulinarySingularityEvent` -> `gastronomer_chronicle_bridge` -> `AddChronicleEvent`
+- **Glue added:** Added `gastronomer_chronicle_bridge` in `src/layer1/core/integration.rs`
+- **Tests:** `tests/integration/gastronomer_chronicle.rs`
+
+### INT-1248: Red Tape Defense -> Simulation Schedule
+- **Date:** 2026-06-25
+- **Systems connected:** `process_bureaucracy_delays` (Red Tape Defense) -> `SimulationSchedule`
+- **Glue added:** Registered `process_bureaucracy_delays` in `src/simulation.rs`.
+- **Tests:** `tests/integration/red_tape_defense_integration.rs`
+
+### INT-636: Orphan Fleet -> Simulation Schedule
+- **Date:** 2026-06-25
+- **Systems connected:** `hack_orphan_fleet_system`, `orphan_fleet_defection_check_system`, `process_orphan_defection_system` (Orphan Fleet) -> `SimulationSchedule`
+- **Glue added:** Registered Orphan Fleet systems in `src/simulation.rs`.
+- **Tests:** `tests/integration/orphan_fleet_integration.rs`
+
+### INT-1082: Resonant Architecture -> Simulation Schedule
+- **Date:** 2026-06-25
+- **Systems connected:** `apply_resonant_architecture_system` (Resonant Architecture) -> `SimulationSchedule`
+- **Glue added:** Registered `apply_resonant_architecture_system` in `src/simulation.rs`.
+- **Tests:** `tests/integration/resonant_architecture_integration.rs`
+
 ### INT-239: Clutter -> Pathfinding and Beauty
 - **Date:** 2026-06-25
 - **Systems connected:** `clutter_accumulation_system` (Clutter) -> `find_path_internal` (Pathfinding) and `update_beauty_grid_system` (Beauty)

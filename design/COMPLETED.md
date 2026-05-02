@@ -490,3 +490,7 @@
 - [x] `INT-1236` Integration: The Kessler Gambit -> Simulation Schedule — completed 2026-06-25
 - [x] `636` The Orphan Fleet — `specs/636-orphan-fleet.md` — completed 2026-05-02
 - [x] `1082` Resonant Architecture — `specs/1082-resonant-architecture.md` — completed 2024-05-31
+- [x] `INT-636` Integration: Orphan Fleet -> Simulation Schedule — completed 2026-06-25
+- [x] `INT-1235` Integration: The Gastronomers -> Chronicle — completed 2026-06-25
+- [x] `INT-1248` Integration: Red Tape Defense -> Simulation Schedule — completed 2026-06-25
+- [x] `INT-1082` Integration: Resonant Architecture -> Simulation Schedule — completed 2026-06-25

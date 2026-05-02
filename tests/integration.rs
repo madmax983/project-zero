@@ -343,3 +343,12 @@ mod kessler_gambit_integration;
 
 #[path = "integration/gastronomer_chronicle.rs"]
 mod gastronomer_chronicle;
+
+#[path = "integration/red_tape_defense_integration.rs"]
+mod red_tape_defense_integration;
+
+#[path = "integration/resonant_architecture_integration.rs"]
+mod resonant_architecture_integration;
+
+#[path = "integration/orphan_fleet_integration.rs"]
+mod orphan_fleet_integration;
