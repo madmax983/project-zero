@@ -843,6 +843,7 @@
 - **Tests:** `tests/integration/kessler_gambit_integration.rs`
 
 ### INT-1235: The Gastronomers -> Chronicle
+- **Date:** 2026-06-25
 - **Systems connected:** `CulinarySingularityEvent` -> `gastronomer_chronicle_bridge` -> `AddChronicleEvent`
 - **Glue added:** Added `gastronomer_chronicle_bridge` in `src/layer1/core/integration.rs`
 - **Tests:** `tests/integration/gastronomer_chronicle.rs`

@@ -6,10 +6,9 @@ use crate::layer1::artifacts::Artifact;
 use crate::layer1::deep_crust_resonance::ExcavationEvent;
 use crate::layer1::map::GridPosition;
 
-#[derive(Component, Default)]
-pub struct DamageResistance {
-    pub physical: f32,
-}
+
+use crate::layer1::biology::health::DamageResistance;
+
 
 #[derive(Component)]
 pub struct PetrificationSickness {
