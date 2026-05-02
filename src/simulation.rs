@@ -588,6 +588,7 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
     schedule.add_systems((
         crate::layer1::culture::gastronomers::spawn_gastronomer_faction_system,
         crate::layer1::culture::gastronomers::apply_culinary_singularity_buff_system,
+        crate::layer1::core::integration::gastronomer_chronicle_bridge,
     ));
 }
 #[cfg(test)]

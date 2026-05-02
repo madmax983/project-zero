@@ -841,3 +841,8 @@
 - **Systems connected:** `trigger_kessler_gambit_system` -> `OrbitalDebris`
 - **Glue added:** Scheduled `trigger_kessler_gambit_system` in Layer 2 systems block. Added `TriggerKesslerGambitEvent` to App.
 - **Tests:** `tests/integration/kessler_gambit_integration.rs`
+
+### INT-1235: The Gastronomers -> Chronicle
+- **Systems connected:** `CulinarySingularityEvent` -> `gastronomer_chronicle_bridge` -> `AddChronicleEvent`
+- **Glue added:** Added `gastronomer_chronicle_bridge` in `src/layer1/core/integration.rs`
+- **Tests:** `tests/integration/gastronomer_chronicle.rs`

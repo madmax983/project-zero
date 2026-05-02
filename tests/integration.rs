@@ -340,3 +340,6 @@ mod core_integration_tests;
 
 #[path = "integration/kessler_gambit_integration.rs"]
 mod kessler_gambit_integration;
+
+#[path = "integration/gastronomer_chronicle.rs"]
+mod gastronomer_chronicle;
