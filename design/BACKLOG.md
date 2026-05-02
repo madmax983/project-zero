@@ -19,7 +19,7 @@
 - [ ] `635` Rogue Automation Cults — `specs/635-rogue-automation-cults.md`
 - [ ] `637` Echoes of the Predecessors — `specs/637-echoes-of-predecessors.md`
 
-- [ ] `630` Biocompatibility — `specs/630-biocompatibility.md`
+
 - [ ] `631` Conveyor Logistics — `specs/631-conveyor-logistics.md`
 - [ ] `632` Cultural Artifacts — `specs/632-cultural-artifacts.md`
 - [ ] `633` The Golden Age — `specs/633-the-golden-age.md`

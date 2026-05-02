@@ -1768,7 +1768,9 @@ mod tests {
 
     #[test]
     fn test_add_wood_clamps_to_max() {
-        let mut resources = ColonyResources::default().with_max_wood(100.0).with_wood(90.0);
+        let mut resources = ColonyResources::default()
+            .with_max_wood(100.0)
+            .with_wood(90.0);
         resources.add_wood(20.0);
         assert!((resources.wood - 100.0).abs() < f32::EPSILON);
     }

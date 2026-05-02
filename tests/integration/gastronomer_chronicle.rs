@@ -1,7 +1,7 @@
 use bevy::prelude::*;
-use scale::layer1::culture::gastronomers::CulinarySingularityEvent;
 use scale::layer1::core::chronicle::AddChronicleEvent;
 use scale::layer1::core::integration::gastronomer_chronicle_bridge;
+use scale::layer1::culture::gastronomers::CulinarySingularityEvent;
 
 #[test]
 fn test_gastronomer_chronicle_bridge() {
@@ -17,6 +17,12 @@ fn test_gastronomer_chronicle_bridge() {
 
     let events = app.world().resource::<Events<AddChronicleEvent>>();
     let mut cursor = events.get_cursor();
-    let ev = cursor.read(events).next().expect("Expected an AddChronicleEvent");
-    assert_eq!(ev.text, "The Gastronomers have achieved the Culinary Singularity!");
+    let ev = cursor
+        .read(events)
+        .next()
+        .expect("Expected an AddChronicleEvent");
+    assert_eq!(
+        ev.text,
+        "The Gastronomers have achieved the Culinary Singularity!"
+    );
 }
