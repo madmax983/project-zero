@@ -29,3 +29,6 @@
 **[Double Zero-Cost String Truncation in UI]**
 **Learning:** Found multiple instances where `.chars().take(n).collect::<String>()` was being used to truncate display strings in hot UI paths (Status Bar, Panels, Notifications). This is a known performance anti-pattern that creates an unnecessary heap allocation every frame/render. However, you can't just slice `&s[..n]` because `n` is a byte index, not a character index, which can panic on multi-byte Unicode. The correct, zero-allocation way to safely truncate a string to `n` characters is to use `let idx = s.char_indices().nth(n).map(|(i, _)| i).unwrap_or(s.len());` and then slice `&s[..idx]`.
 **Action:** When truncating display strings in UI render loops, never collect into a new String. Use `char_indices().nth(n)` to find the safe byte boundary and slice the original borrowed string.
+**[Optimizing command palette filtering]**
+**Learning:** Returning `Vec<ShellCommand>` from `filtered_palette_commands` involved calling `.cloned()` and creating a `Vec` with full struct copies, even though we just use them for read-only sorting and iteration.
+**Action:** Changed the return type to `Vec<&ShellCommand>` to return references directly, avoiding the unnecessary `.cloned()` call while still allowing us to safely sort the filtered subset of commands.
