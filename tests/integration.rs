@@ -343,3 +343,6 @@ mod kessler_gambit_integration;
 
 #[path = "integration/gastronomer_chronicle.rs"]
 mod gastronomer_chronicle;
+
+#[path = "integration/visitor_chronicle_bridge.rs"]
+mod visitor_chronicle_bridge;
