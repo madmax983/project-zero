@@ -1,3 +1,10 @@
+//! Quantum Entanglement Twins
+//!
+//! This module implements the "Quantum Twins" mechanic. Two Pops can be linked via the
+//! `QuantumTwin` component, causing them to passively share experience gains and gradually
+//! equalize their mood levels over time, regardless of distance. However, if one twin dies,
+//! the other suffers catastrophic "Severance" damage.
+
 use crate::layer1::morale::Morale;
 use crate::layer1::pop::PopDied;
 use crate::layer1::skills::{Skills, XpGainEvent};
@@ -15,6 +22,34 @@ pub struct QuantumTwin {
 /// Note: To prevent infinite loops (A gains -> B gains -> A gains...), this system
 /// reads `XpGainEvent` but applies the shared XP directly to the partner's `Skills` component
 /// without emitting a new event.
+///
+/// # Examples
+/// ```
+/// use bevy::prelude::*;
+/// use scale::layer1::quantum_twins::*;
+/// use scale::layer1::skills::{Skills, XpGainEvent, SkillType, XpSource};
+///
+/// let mut app = App::new();
+/// app.add_plugins(MinimalPlugins);
+/// app.add_event::<XpGainEvent>();
+/// app.add_systems(Update, update_twin_sync_system);
+///
+/// let twin_a = app.world_mut().spawn(Skills::default()).id();
+/// let twin_b = app.world_mut().spawn(Skills::default()).id();
+///
+/// app.world_mut().entity_mut(twin_a).insert(QuantumTwin { partner: twin_b, link_strength: 0.5 });
+///
+/// app.world_mut().resource_mut::<Events<XpGainEvent>>().send(XpGainEvent {
+///     entity: twin_a,
+///     skill: SkillType::Mining,
+///     amount: 100.0,
+///     source: XpSource::Action,
+/// });
+/// app.update();
+///
+/// // Twin B received 50% of the 100 XP gained by Twin A
+/// assert_eq!(app.world().get::<Skills>(twin_b).unwrap().get_xp(SkillType::Mining), 50.0);
+/// ```
 pub fn update_twin_sync_system(
     mut xp_events: EventReader<XpGainEvent>,
     twins: Query<&QuantumTwin>,

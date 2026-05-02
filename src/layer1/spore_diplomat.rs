@@ -1,3 +1,9 @@
+//! Spore Diplomat Infections
+//!
+//! This module implements the "Spore Infection" mechanic. When a Pop is infected with these
+//! specialized spores, their Social and Intellect stats receive significant artificial boosts,
+//! making them ideal but risky envoys. If the infection is removed, their stats revert to normal.
+
 use bevy::prelude::*;
 
 #[derive(Component, Default)]
@@ -24,6 +30,23 @@ pub struct SporeInfection {
     pub severity: f32,
 }
 
+/// Boosts the Social and Intellect stats of a Pop when they acquire a `SporeInfection`.
+///
+/// # Examples
+/// ```
+/// use bevy::prelude::*;
+/// use scale::layer1::spore_diplomat::*;
+///
+/// let mut app = App::new();
+/// app.add_plugins(MinimalPlugins);
+/// app.add_systems(Update, spore_stat_boost_system);
+///
+/// let pop = app.world_mut().spawn((Stats::new(5, 5), SporeInfection { severity: 1.0 })).id();
+/// app.update();
+///
+/// // Base 5 + (1.0 severity * 5) = 10
+/// assert_eq!(app.world().get::<Stats>(pop).unwrap().social, 10);
+/// ```
 pub fn spore_stat_boost_system(
     mut query: Query<(&mut Stats, &SporeInfection), Added<SporeInfection>>,
 ) {
