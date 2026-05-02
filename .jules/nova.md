@@ -30,3 +30,8 @@
 **Concept:** A system where pops standing in complete darkness (<0.1 light level) have a chance to hallucinate and generate a "Doom Prophecy" rumor, infecting the colony's morale through the rumor network.
 **Fate:** Merged
 **Lesson:** Connecting infrastructure systems (like lighting) directly to social/psychological dynamics creates powerful emergent gameplay where failing to light a base isn't just a physical penalty, but a vector for social contagion.
+
+## [Acoustic Generators]
+**Concept:** Added an `AcousticGenerator` system. This new system allows `AcousticGenerator` components to produce power proportional to the noise in their tile (by reading the `NoiseMap`). This provides players with a novel way to harness industrial noise pollution.
+**Fate:** Merged
+**Lesson:** Tying industrial pollution (noise) to power generation incentivizes creating localized high-noise zones, forcing strategic base layout decisions.

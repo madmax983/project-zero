@@ -122,3 +122,6 @@ pub mod gloom_sickness;
 
 #[cfg(feature = "nova")]
 pub mod shadow_whispers;
+
+#[cfg(feature = "nova")]
+pub mod acoustic_power;
