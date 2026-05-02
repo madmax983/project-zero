@@ -7786,3 +7786,58 @@ What the gas does to the colony.
 - the structure withered and grayed
 - it eagerly consumed the offered biomass
 - the floor softened, hungry for sustenance
+
+## The Orphan Fleet Fragments
+
+## Fragment Type: [ORPHAN_FLEET_NAME]
+- The Rust-Wing
+- The Forgotten Convoy
+- Silence-Drifters
+- The Automated Armada
+- Sector 7 Drone Fleet
+- The Unmanned
+- Ghost-Haulers
+
+## Red Tape Defense Fragments
+
+## Fragment Type: [HOSTILE_FLEET_NAME]
+- The Iron Vanguard
+- The Retribution Fleet
+- Debt-Collection Armada
+- The Blockade Ring
+- The Punitive Force
+- Sector 4 Invaders
+
+## Fragment Type: [RED_TAPE_FORM]
+- Form 27B-Stroke-6
+- Orbital Approach Addendum 9
+- Quarantine Exemption Certificate
+- Hazardous Material Declaration
+- Custom Protocol Sub-Clause D
+- Mandatory Bureaucratic Audit Request
+
+## The Kessler Gambit Fragments
+
+## Fragment Type: [KESSLER_DEBRIS]
+- shattered solar panels and hull plating
+- high-velocity shrapnel clouds
+- pulverized civilian freighters
+- dead satellites turning at hyper-mach
+- lethal, hyper-dense scrap
+
+## The Gastronomers Fragments
+
+## Fragment Type: [EXOTIC_INGREDIENT_NAME]
+- Leviathan Marrow
+- Sub-Lithic Spore Clusters
+- Deep-Core Magma Truffles
+- Zero-G Fermented Nectar
+- Quantum-Entangled Caviar
+- Pulsar-Irradiated Spice
+
+## Fragment Type: [INGREDIENT_SOURCE]
+- a dying neutron star
+- the belly of a space-whale
+- the deepest tectonic fault
+- a rogue comet's tail
+- the black market of the Core Worlds

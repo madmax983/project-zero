@@ -1,7 +1,7 @@
 use crate::layer1::core::chronicle::{AddChronicleEvent, EventImportance};
-use crate::layer2::fleet::FleetFaction;
-use crate::layer2::mining::{FleetCargo, CargoStack};
 use crate::layer1::economy::resources::ResourceType;
+use crate::layer2::fleet::FleetFaction;
+use crate::layer2::mining::{CargoStack, FleetCargo};
 use crate::shared::time::SimulationTime;
 use bevy_ecs::prelude::*;
 
@@ -150,7 +150,11 @@ mod tests {
         assert!(orphan_data.hacked, "Fleet should be marked as hacked");
 
         let cargo = app.world().get::<FleetCargo>(fleet).unwrap();
-        assert_eq!(cargo.current_load(), 1000.0, "Cargo should be filled upon hacking");
+        assert_eq!(
+            cargo.current_load(),
+            1000.0,
+            "Cargo should be filled upon hacking"
+        );
     }
 
     #[test]
@@ -187,7 +191,11 @@ mod tests {
         );
 
         let cargo = app.world().get::<FleetCargo>(fleet).unwrap();
-        assert_eq!(cargo.current_load(), 0.0, "Cargo should be emptied upon defection");
+        assert_eq!(
+            cargo.current_load(),
+            0.0,
+            "Cargo should be emptied upon defection"
+        );
 
         // Check if an event was sent for the chronicle
         let defection_events = app.world().resource::<Events<OrphanFleetDefectionEvent>>();
