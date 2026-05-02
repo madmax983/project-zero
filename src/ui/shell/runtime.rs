@@ -226,9 +226,10 @@ impl UiShell {
             }
             GameKeyCode::Enter => {
                 let commands = self.filtered_palette_commands();
-                let Some(command) = commands.get(self.command_palette.selected).cloned() else {
+                let Some(&command) = commands.get(self.command_palette.selected) else {
                     return true;
                 };
+                let command = command.clone();
                 self.command_palette = CommandPaletteState::default();
                 self.execute_command(&command)
             }
@@ -353,16 +354,15 @@ impl UiShell {
         self.config.recent_commands.truncate(16);
     }
 
-    fn filtered_palette_commands(&self) -> Vec<ShellCommand> {
-        let filter_lower = self.command_palette.filter.to_ascii_lowercase();
-        let filter_bytes = filter_lower.as_bytes();
+    fn filtered_palette_commands(&self) -> Vec<&ShellCommand> {
+        let filter_bytes = self.command_palette.filter.as_bytes();
 
         let mut commands = self
             .commands
             .commands()
             .iter()
             .filter(|command| {
-                if filter_lower.is_empty() {
+                if filter_bytes.is_empty() {
                     return true;
                 }
                 let label_bytes = command.label.as_bytes();
@@ -373,7 +373,6 @@ impl UiShell {
                     .windows(filter_bytes.len())
                     .any(|window| window.eq_ignore_ascii_case(filter_bytes))
             })
-            .cloned()
             .collect::<Vec<_>>();
 
         commands.sort_by_key(|command| {
