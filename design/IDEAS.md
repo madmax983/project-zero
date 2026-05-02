@@ -18410,3 +18410,55 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you risk relying on a non-violent, slow-acting defense, or spend resources on active, lethal defenses?
 
 ---
+
+## Empathy Black Market
+
+**Layer:** 1
+
+**Fantasy:** A desperate population trades away their most precious memories just to endure the crushing stress of the frontier.
+
+**Mechanic:** When a colony reaches critical stress levels and lacks sufficient entertainment/leisure infrastructure, an "Empathy Black Market" naturally forms. High-stress Pops will secretly "sell" their happiest core memories (like a child's birth or a first love) to wealthy, decadent Pops in exchange for "Somatic Relief" (a temporary, massive stress reduction). The selling Pop loses the memory permanently, developing a "Hollowed" trait, while the buying Pop gains an artificial, fleeting mood boost.
+
+**Emergence:** Your colony is starving, and stress is through the roof. The miners, desperate to keep working, start selling their memories of their families to the local orbital elites. Years later, you fix the food crisis, but your entire working class has become an emotionless, "Hollowed" workforce that no longer recognizes their own children, completely shattering the colony's social fabric.
+
+**Tension:** Do you violently crack down on the black market, risking immediate, stress-induced riots, or do you allow your citizens to permanently mutilate their own minds just to keep the colony running for one more season?
+
+---
+## Weaponized Bureaucracy
+
+**Layer:** 2 -> 3
+
+**Fantasy:** Defeating an invading fleet not with weapons, but by burying them in endless, mandatory paperwork and customs inspections.
+
+**Mechanic:** A highly administrative civilization can designate a system as a "Bureaucratic Quagmire." Enemy fleets entering the system suffer a massive "Red Tape" debuff. Their movement speed and fire rate are reduced to a crawl as their internal logistics are flooded with conflicting legal mandates, automated customs queries, and mandatory safety audits broadcast from your planetary administration.
+
+**Emergence:** An overwhelming enemy armada jumps into your capital system, expecting a glorious battle. Instead, their targeting computers are overridden by infinite CAPTCHAs, and their engines shut down pending an environmental impact review. By the time they clear the paperwork, your reinforcements have arrived.
+
+**Tension:** Do you invest in traditional planetary defenses, or focus entirely on legal infrastructure that can stall an invasion indefinitely but provides zero actual firepower if the enemy ignores the rules?
+
+## Acoustic Xenoflora
+
+**Layer:** 1
+
+**Fantasy:** The planet's plant life uses your colony's industrial noise as a pollen dispersal mechanism.
+
+**Mechanic:** A unique type of native flora thrives near high-noise infrastructure (like refineries or mass drivers). The plants use the specific frequencies of your machinery to shatter their seed pods, rapidly spreading "Acoustic Vines" across your industrial sector. These vines muffle noise, drastically reducing the "Acoustic Noise" penalty for nearby residential zones, but they also physically entangle moving parts, causing a constant, low-level efficiency drain on the machinery they infest.
+
+**Emergence:** You intentionally allow the Acoustic Vines to overgrow your main power plant because it perfectly silences the deafening roar, saving the sanity of your adjacent housing blocks. But during a critical energy shortage, the vines' constant friction causes the plant's turbines to stall, blacking out the entire city just as a harsh winter sets in.
+
+**Tension:** The immense benefit of natural, self-sustaining noise pollution control versus the creeping, parasitic drain on your most critical industrial infrastructure.
+
+---
+## Weaponized Nostalgia
+
+**Layer:** 2 -> 1
+
+**Fantasy:** A psychological warfare tactic that cripples an enemy's will to fight by reminding them of what they've lost.
+
+**Mechanic:** You can deploy "Broadcast Satellites" over an enemy Layer 1 colony. These satellites intercept the enemy's cultural data and beam perfectly synthesized, highly personalized sensory experiences (the smell of their lost homeworld, the sound of an extinct bird) directly into the population centers. The target colony receives a massive temporary morale boost, but suffers from an accumulating "Existential Yearning" debuff, causing soldiers to desert and workers to abandon their posts in a futile attempt to find the source of the memories.
+
+**Emergence:** You are losing a brutal ground war. You deploy the Broadcast Satellites. The enemy troops, previously hardened veterans, suddenly drop their weapons and wander into the toxic wasteland because the satellites convinced them they could hear their dead families calling from the dunes.
+
+**Tension:** The tactical brilliance of bloodless warfare vs. the sheer psychological cruelty of weaponizing an entire civilization's grief.
+
+---
