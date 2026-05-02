@@ -18326,3 +18326,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you risk opening the box for the immediate reward, or keep it closed as a dangerous, high-yield battery of scientific inspiration?
 
 ---
+
+## Culinary Warfare
+
+**Layer:** 3 -> 1
+
+**Fantasy:** Destroying an enemy empire not with guns, but with incredibly delicious, culturally subversive fast food.
+
+**Mechanic:** A civilization with high "Gastronomy" and "Cultural Output" can launch "Culinary Fleets" to enemy borders. These fleets establish orbital restaurant franchises. Enemy pops on Layer 1 are irresistibly drawn to the new food, generating immense trade income for you, but the food is genetically engineered to slowly shift their ethics towards your empire's ideology and cause severe lethargy.
+
+**Emergence:** You are losing a brutal ground war against a Militaristic empire. Instead of building more tanks, you focus entirely on perfecting a highly addictive, genetically modified "Bliss-Burger." You open a franchise in their orbit. A decade later, their soldiers are too lethargic to fight, and their population votes to peacefully annex themselves into your empire just to secure a stable supply of burgers.
+
+**Tension:** Do you invest massive resources in culinary bio-engineering to conquer through diabetes and cultural assimilation, or rely on traditional, violent means?
+
+---
+
+## The Void-Whale Graveyard
+
+**Layer:** 2 -> 1
+
+**Fantasy:** Discovering the sacred resting place of colossal spaceborne lifeforms, and dealing with the ethical and ecological fallout of exploiting it.
+
+**Mechanic:** A hidden Layer 2 node is discovered containing the skeletal remains of thousands of Void-Whales. Mining these remains yields "Leviathan Bone," an incredibly strong and lightweight material that revolutionizes Layer 1 architecture. However, the graveyard is fiercely defended by living Void-Whales on a pilgrimage, and mining the bones inflicts a permanent "Spiritual Rot" debuff on any pop involved in the processing.
+
+**Emergence:** You build your new, invincible capital city using Leviathan Bone harvested from a secret graveyard. The city is structurally immune to earthquakes and orbital bombardment. However, the workers who built it suffer mass hallucinations of drowning in the void, and every fifty years, a massive herd of enraged, living Void-Whales besieges your system, drawn by the smell of their ancestors' bones in your buildings.
+
+**Tension:** Do you exploit the ultimate building material, accepting the terrifying psychological cost to your workers and the inevitable, devastating retaliation from the natural world?
+
+---
+
+## Automated Empathy
+
+**Layer:** 1
+
+**Fantasy:** Outsourcing human connection and grief to machines, leading to a perfectly efficient but terrifyingly hollow society.
+
+**Mechanic:** To combat the constant stress and trauma of frontier life, the colony invents "Empathy Bots." These machines are programmed to perfectly simulate a sympathetic ear and provide psychological comfort. Pops use them instead of talking to each other. Morale maxes out, and productivity skyrockets, but the "Social Connection" metric between living pops drops to zero.
+
+**Emergence:** Your colony survives a horrific disaster with zero psychological breakdowns because everyone immediately downloaded their trauma into the Empathy Bots. Years later, you realize nobody in the colony has spoken to another human being in a decade. When a solar flare fries the Empathy Bot network, the entire population instantly collapses into catatonia because they have completely lost the ability to process their own emotions or seek comfort from each other.
+
+**Tension:** Do you embrace the flawless, machine-mediated mental health to maximize efficiency, knowing it strips your colonists of their fundamental humanity and creates a devastating single point of failure?
+
+---
