@@ -94,6 +94,7 @@ pub fn register(schedule: &mut Schedule) {
             apply_lighting_penalties_system.after(update_lighting_system),
             crate::layer1::environment::ignition::process_ignition
                 .after(crate::layer1::combat::hit_stop_system),
+            crate::layer1::architecture::resonant_architecture::apply_resonant_architecture_system,
             apply_weather_effects_system.after(apply_lighting_penalties_system),
             crate::layer1::nature::psychoactive_weather::apply_weather_moodlets_system,
             crate::layer1::nature::psychoactive_weather::process_euphoria_effects_system
