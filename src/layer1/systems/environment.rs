@@ -14,6 +14,13 @@ pub fn register(schedule: &mut Schedule) {
     );
     schedule.add_systems(
         (
+            crate::layer1::predecessors::predecessor_ruins_passive_bonus_system,
+            crate::layer1::predecessors::predecessor_ruins_awakening_system,
+        )
+            .in_set(Layer1SystemSet::Environment),
+    );
+    schedule.add_systems(
+        (
             crate::layer1::shadow_market::despawn_in_light_system,
             crate::layer1::shadow_market::spawn_shadow_trader_system,
         )
