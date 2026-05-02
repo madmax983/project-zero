@@ -448,6 +448,13 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
     ));
 
     schedule.add_systems((
+        crate::layer2::orphan_fleet::hack_orphan_fleet_system,
+        crate::layer2::orphan_fleet::orphan_fleet_defection_check_system,
+        crate::layer2::orphan_fleet::process_orphan_defection_system
+            .after(crate::layer2::orphan_fleet::orphan_fleet_defection_check_system),
+    ));
+
+    schedule.add_systems((
         crate::layer2::silent_mutiny::check_silent_mutiny_system,
         crate::layer2::silent_mutiny::process_mutiny_effects_system
             .after(crate::layer2::silent_mutiny::check_silent_mutiny_system),
@@ -782,6 +789,8 @@ mod tests {
 
         world.init_resource::<Time>();
         world.init_resource::<Events<crate::layer2::primitives::InvasionEvent>>();
+        world.init_resource::<Events<crate::layer2::orphan_fleet::HackOrphanFleetEvent>>();
+        world.init_resource::<Events<crate::layer2::orphan_fleet::OrphanFleetDefectionEvent>>();
 
         world.init_resource::<Events<crate::layer1::social::ghost_shift_strike::GhostShiftStartedEvent>>();
         world.init_resource::<Events<crate::layer3::diplomacy::succession::SuccessionEvent>>();
