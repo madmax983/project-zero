@@ -30,6 +30,8 @@
 //! - **Environment:** [`crate::layer1::terrain`], [`crate::layer1::map`], [`crate::layer1::weather`], [`crate::layer1::lighting`]
 //! - **Economy:** [`crate::layer1::resources`], [`crate::layer1::trade`]
 
+pub mod petrification;
+
 /// Generic entities mechanisms
 pub mod entities;
 pub use entities::*;

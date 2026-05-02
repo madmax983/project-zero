@@ -2647,7 +2647,11 @@ mod tests {
             tiles: vec![TerrainType::Grass; 100],
         });
         world.insert_resource(OccupiedTiles::default());
-        world.insert_resource(ColonyResources::default().with_wood(100.0).with_stone(100.0));
+        world.insert_resource(
+            ColonyResources::default()
+                .with_wood(100.0)
+                .with_stone(100.0),
+        );
 
         try_place_building(&mut world, 5, 5, BuildingType::Farm);
 
@@ -2706,7 +2710,11 @@ mod tests {
             tiles: vec![TerrainType::Grass; 100],
         });
         world.insert_resource(OccupiedTiles::default());
-        world.insert_resource(ColonyResources::default().with_wood(100.0).with_stone(100.0));
+        world.insert_resource(
+            ColonyResources::default()
+                .with_wood(100.0)
+                .with_stone(100.0),
+        );
 
         try_place_building(&mut world, 5, 5, BuildingType::Farm);
 
@@ -2967,7 +2975,11 @@ mod tests {
         world.init_resource::<Events<crate::layer1::ancestral_graves::SacrilegeEvent>>();
         world.init_resource::<Events<crate::layer1::events::BuildingRemovedEvent>>();
         world.init_resource::<Events<crate::layer1::events::BuildingCompletedEvent>>();
-        world.insert_resource(ColonyResources::default().with_wood(100.0).with_stone(100.0));
+        world.insert_resource(
+            ColonyResources::default()
+                .with_wood(100.0)
+                .with_stone(100.0),
+        );
 
         let grave_pos = GridPosition { x: 5, y: 5 };
 

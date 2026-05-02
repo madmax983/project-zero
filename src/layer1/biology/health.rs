@@ -57,6 +57,13 @@ pub struct Scars {
     pub count: u32,
 }
 
+/// Tracks the damage resistance of an entity.
+#[derive(Component, Debug, Clone, Copy, Default)]
+pub struct DamageResistance {
+    /// Physical damage resistance.
+    pub physical: f32,
+}
+
 impl Default for Health {
     fn default() -> Self {
         Self {
