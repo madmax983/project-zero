@@ -5,13 +5,13 @@ mod tests {
     use scale::layer1::building::{Building, BuildingType};
     use scale::layer1::integration::waste_scent_bridge;
     use scale::layer1::map::GridPosition;
-    use scale::layer1::olfactory::{scent_diffusion_system, ScentMap, ScentPlugin};
+    use scale::layer1::olfactory::{scent_diffusion_system, ScentMap};
     use scale::layer1::resources::{ResourceItem, ResourceType};
 
     #[test]
     fn test_waste_item_emits_foul_scent() {
         let mut app = App::new();
-        app.add_plugins(ScentPlugin);
+        app.init_resource::<ScentMap>();
 
         let pos = GridPosition { x: 5, y: 5 };
         app.world_mut().spawn((
@@ -38,7 +38,7 @@ mod tests {
     #[test]
     fn test_landfill_emits_foul_scent() {
         let mut app = App::new();
-        app.add_plugins(ScentPlugin);
+        app.init_resource::<ScentMap>();
 
         let pos = GridPosition { x: 2, y: 2 };
         app.world_mut().spawn((

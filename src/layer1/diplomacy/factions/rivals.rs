@@ -140,17 +140,6 @@ pub fn rival_resource_drain_system(
     }
 }
 
-/// Register systems and resources
-pub struct RivalColonyPlugin;
-impl bevy_app::Plugin for RivalColonyPlugin {
-    fn build(&self, app: &mut bevy_app::App) {
-        app.init_resource::<TerritoryGrid>().add_systems(
-            bevy_app::Update,
-            (rival_colony_expansion_system, rival_resource_drain_system),
-        );
-    }
-}
-
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -158,7 +147,10 @@ mod tests {
 
     fn setup_app() -> App {
         let mut app = App::new();
-        app.add_plugins(RivalColonyPlugin);
+        app.init_resource::<TerritoryGrid>().add_systems(
+            bevy_app::Update,
+            (rival_colony_expansion_system, rival_resource_drain_system),
+        );
         app
     }
 

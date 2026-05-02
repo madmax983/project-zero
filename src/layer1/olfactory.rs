@@ -26,14 +26,6 @@ impl ScentMap {
     }
 }
 
-pub struct ScentPlugin;
-
-impl bevy_app::Plugin for ScentPlugin {
-    fn build(&self, app: &mut bevy_app::App) {
-        app.init_resource::<ScentMap>();
-    }
-}
-
 use crate::layer1::pop::Pop;
 
 pub fn scent_diffusion_system(
@@ -118,7 +110,7 @@ mod tests {
     #[test]
     fn test_scent_emission_and_diffusion() {
         let mut app = App::new();
-        app.add_plugins(ScentPlugin);
+        app.init_resource::<ScentMap>();
 
         let grid = generate_terrain(10, 10);
         app.world_mut().insert_resource(grid);
@@ -153,7 +145,7 @@ mod tests {
     #[test]
     fn test_pleasant_scent_mood_buff() {
         let mut app = App::new();
-        app.add_plugins(ScentPlugin);
+        app.init_resource::<ScentMap>();
 
         let pop_pos = GridPosition { x: 2, y: 2 };
         let pop_entity = app
@@ -185,7 +177,7 @@ mod tests {
     #[test]
     fn test_foul_scent_mood_debuff() {
         let mut app = App::new();
-        app.add_plugins(ScentPlugin);
+        app.init_resource::<ScentMap>();
 
         let pop_pos = GridPosition { x: 3, y: 3 };
         let pop_entity = app
@@ -217,7 +209,7 @@ mod tests {
     #[test]
     fn test_scent_mixing_and_overpowering() {
         let mut app = App::new();
-        app.add_plugins(ScentPlugin);
+        app.init_resource::<ScentMap>();
         app.world_mut().insert_resource(generate_terrain(10, 10));
 
         let pos = GridPosition { x: 4, y: 4 };

@@ -8,7 +8,6 @@ use crate::layer1::pop::Pop;
 use crate::layer2::governance::assign_governor;
 use crate::layer2::system::OrbitalBody;
 use crate::shared::time::SimulationTime;
-use bevy_app::{App, Plugin, Update};
 use bevy_ecs::prelude::*;
 
 /// FactionLeader struct (Stub/Refactor Needed)
@@ -88,24 +87,6 @@ pub struct ElectionCycle {
     pub candidates: Vec<Campaign>,
     /// The winner of the last election.
     pub winner: Option<Entity>,
-}
-
-pub struct PoliticsPlugin;
-
-impl Plugin for PoliticsPlugin {
-    fn build(&self, app: &mut App) {
-        app.insert_resource(ElectionCycle::default())
-            .init_resource::<ActiveMandate>()
-            .add_systems(
-                Update,
-                (
-                    election_cycle_system,
-                    generate_candidates_system,
-                    voting_system,
-                    inauguration_system,
-                ),
-            );
-    }
 }
 
 /// Manages the transitions between election states based on time.
