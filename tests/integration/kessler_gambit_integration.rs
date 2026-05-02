@@ -3,7 +3,9 @@ mod tests {
     use bevy::prelude::*;
     use scale::layer2::debris::OrbitalDebris;
     use scale::layer2::fleet::{Fleet, InOrbit};
-    use scale::layer2::orbit::kessler_gambit::{TriggerKesslerGambitEvent, trigger_kessler_gambit_system};
+    use scale::layer2::orbit::kessler_gambit::{
+        trigger_kessler_gambit_system, TriggerKesslerGambitEvent,
+    };
     use scale::layer2::station::{Station, StationType};
 
     #[test]
@@ -23,7 +25,8 @@ mod tests {
 
         app.add_systems(Update, trigger_kessler_gambit_system);
 
-        app.world_mut().send_event(TriggerKesslerGambitEvent { planet });
+        app.world_mut()
+            .send_event(TriggerKesslerGambitEvent { planet });
         app.update();
 
         let debris = app.world().get::<OrbitalDebris>(planet).unwrap();

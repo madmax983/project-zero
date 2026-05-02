@@ -17,7 +17,6 @@
 
 - [ ] `634` The Petrification Sickness — `specs/634-petrification-sickness.md`
 - [ ] `635` Rogue Automation Cults — `specs/635-rogue-automation-cults.md`
-- [ ] `636` The Orphan Fleet — `specs/636-orphan-fleet.md`
 - [ ] `637` Echoes of the Predecessors — `specs/637-echoes-of-predecessors.md`
 
 - [ ] `630` Biocompatibility — `specs/630-biocompatibility.md`

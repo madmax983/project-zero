@@ -30,6 +30,7 @@ pub mod integration;
 pub mod mining;
 #[cfg(test)]
 mod mining_tests;
+pub mod orphan_fleet;
 pub mod phantom;
 pub mod render;
 pub mod shielding;
