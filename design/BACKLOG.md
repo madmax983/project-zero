@@ -15,7 +15,7 @@
 
 
 
-- [ ] `634` The Petrification Sickness — `specs/634-petrification-sickness.md`
+
 - [ ] `635` Rogue Automation Cults — `specs/635-rogue-automation-cults.md`
 - [ ] `637` Echoes of the Predecessors — `specs/637-echoes-of-predecessors.md`
 

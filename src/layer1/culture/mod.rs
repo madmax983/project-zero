@@ -31,3 +31,6 @@ pub mod astrology;
 pub use astrology::*;
 pub mod gastronomers;
 pub use gastronomers::*;
+
+pub mod petrification_sickness;
+pub use petrification_sickness::*;
