@@ -59,6 +59,7 @@ pub mod beauty;
 pub mod biography;
 /// Cultural, Religious, and Belief systems.
 pub mod culture;
+#[allow(ambiguous_glob_reexports)]
 pub use culture::*;
 /// Building placement and types.
 /// Chronicle system and historical records.
