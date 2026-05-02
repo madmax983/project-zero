@@ -489,3 +489,4 @@
 - [x] `1236` The Kessler Gambit - `specs/1236-the-kessler-gambit.md` - completed 2026-05-01
 - [x] `INT-1236` Integration: The Kessler Gambit -> Simulation Schedule — completed 2026-06-25
 - [x] `636` The Orphan Fleet — `specs/636-orphan-fleet.md` — completed 2026-05-02
+- [x] `637` Echoes of the Predecessors — `specs/637-echoes-of-predecessors.md` — completed 2026-05-02

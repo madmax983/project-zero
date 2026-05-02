@@ -4,6 +4,7 @@ use crate::layer1::*;
 use bevy_ecs::prelude::*;
 
 pub fn register(schedule: &mut Schedule) {
+    schedule.add_systems((crate::layer1::anomalies::predecessor_ruins::predecessor_ruins_passive_bonus_system, crate::layer1::anomalies::predecessor_ruins::predecessor_ruins_awakening_system,).in_set(Layer1SystemSet::Execution));
     schedule.add_systems(
         crate::layer1::social::zero_g_sports::zero_g_sports_system
             .in_set(super::Layer1SystemSet::Execution),
