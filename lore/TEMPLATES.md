@@ -7095,3 +7095,74 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "We forgot to feed the walls. [YEAR]. In the [BUILDING_TYPE], [LIVING_BUILDING_HUNGER]."
 - "[YEAR]: The architecture is desperate. The starving [BUILDING_TYPE] reacted: [LIVING_BUILDING_HUNGER]."
 - "A dangerous symbiosis. The [BUILDING_TYPE] lacked nutrients, so [LIVING_BUILDING_HUNGER]. [YEAR]."
+
+## The Orphan Fleet Templates (Spec 636)
+
+### Template: ORPHAN_FLEET_HACKED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [ORPHAN_FLEET_NAME]
+
+**Patterns:**
+- "[YEAR]: We cracked the deep-code of the [ORPHAN_FLEET_NAME]. Orbit is ours now."
+- "The derelicts serve a new master. [ORPHAN_FLEET_NAME] is hacked. [YEAR]."
+- "We bypassed the ancient locks. The [ORPHAN_FLEET_NAME] joins the network. [YEAR]."
+
+### Template: ORPHAN_FLEET_MUTINY
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [ORPHAN_FLEET_NAME], [RESOURCE_LOST]
+
+**Patterns:**
+- "The old code woke up. [YEAR]. The [ORPHAN_FLEET_NAME] mutinied, jumping away with [RESOURCE_LOST]."
+- "[YEAR]: Betrayal in orbit. The [ORPHAN_FLEET_NAME] remembered its masters. We lost [RESOURCE_LOST]."
+- "The hack failed. [ORPHAN_FLEET_NAME] turns hostile, stealing [RESOURCE_LOST] before jumping. [YEAR]."
+
+## Red Tape Defense Templates (Spec 1248)
+
+### Template: BUREAUCRATIC_STALL
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [HOSTILE_FLEET_NAME], [RED_TAPE_FORM]
+
+**Patterns:**
+- "We stalled the invasion with paperwork. [YEAR]. [HOSTILE_FLEET_NAME] waits on [RED_TAPE_FORM]."
+- "[YEAR]: The guns are silent. [HOSTILE_FLEET_NAME] is trapped in orbit, waiting for [RED_TAPE_FORM] clearance."
+- "A triumph of bureaucracy. We delayed [HOSTILE_FLEET_NAME] using [RED_TAPE_FORM]. [YEAR]."
+
+## The Kessler Gambit Templates (Spec 1236)
+
+### Template: KESSLER_GAMBIT_TRIGGERED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [KESSLER_DEBRIS]
+
+**Patterns:**
+- "We burned the sky to save the ground. [YEAR]. The Kessler Gambit deployed, filling orbit with [KESSLER_DEBRIS]."
+- "[YEAR]: The ultimate sacrifice. We destroyed our own stations. The orbit is now an impassable storm of [KESSLER_DEBRIS]."
+- "A shield of garbage. We detonated our network. The resulting [KESSLER_DEBRIS] blocks all entry. [YEAR]."
+
+## The Gastronomers Templates (Spec 1235)
+
+### Template: GASTRONOMER_FACTION_EMERGES
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [FACTION_NAME]
+
+**Patterns:**
+- "The elite grow bored of mere survival. [YEAR]. The [FACTION_NAME] emerges, demanding culinary perfection."
+- "[YEAR]: A new obsession sweeps the highborn. The [FACTION_NAME] will not rest until the ultimate dish is found."
+- "Survival is not enough. The [FACTION_NAME] demands a taste of the divine. [YEAR]."
+
+### Template: EXOTIC_INGREDIENT_HARVESTED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [EXOTIC_INGREDIENT_NAME], [INGREDIENT_SOURCE]
+
+**Patterns:**
+- "We risked the fleet for a meal. [YEAR]. [EXOTIC_INGREDIENT_NAME] harvested from [INGREDIENT_SOURCE]."
+- "[YEAR]: The Gastronomers are pleased. We brought back [EXOTIC_INGREDIENT_NAME] from the [INGREDIENT_SOURCE]."
+- "A dangerous hunt yields [EXOTIC_INGREDIENT_NAME] from [INGREDIENT_SOURCE]. [YEAR]."
+
+### Template: CULINARY_SINGULARITY_ACHIEVED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [FACTION_NAME]
+
+**Patterns:**
+- "The perfect dish. [YEAR]. The [FACTION_NAME] achieved the Culinary Singularity. The colony transcends."
+- "[YEAR]: A taste of the divine. The [FACTION_NAME] succeeded. Enlightenment sweeps [COLONY]."
+- "We ate the stars. The Culinary Singularity is reached. [YEAR]."

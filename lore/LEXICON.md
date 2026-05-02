@@ -4622,3 +4622,46 @@
 **Usage:**
 - "The guards breathed the Sweet-Breath and slept."
 - "Flood the lower decks with Mutiny-Vapor."
+
+## The Gastronomers (Spec 1235)
+
+### The Gastronomers
+**Replaces:** Elite dining faction, food cult
+**Code reference:** `FactionId::Gastronomers`
+**Usage:**
+- "The Gastronomers are demanding Leviathan Marrow."
+- "The Culinary Singularity is the ultimate goal of The Gastronomers."
+
+### Culinary Singularity
+**Replaces:** Perfect meal, ultimate buff event
+**Code reference:** `CulinarySingularityEvent`
+**Usage:**
+- "They believe the Culinary Singularity will bring enlightenment."
+- "We sacrificed the fleet to achieve the Culinary Singularity."
+
+## Red Tape Defense (Spec 1248)
+
+### Red Tape
+**Replaces:** Bureaucratic delay, stalling tactics
+**Code reference:** `DelayedByBureaucracy`
+**Usage:**
+- "Wrap them in Red Tape until the defense grid is ready."
+- "The invasion was halted by Red Tape."
+
+## The Kessler Gambit (Spec 1236)
+
+### The Kessler Gambit
+**Replaces:** Intentional orbital debris creation, satellite self-destruct
+**Code reference:** `TriggerKesslerGambitEvent`
+**Usage:**
+- "We have no ships left. Execute the Kessler Gambit."
+- "The Kessler Gambit saved the ground, but we lost the sky."
+
+## The Orphan Fleet (Spec 636)
+
+### Orphan Fleet
+**Replaces:** Automated derelict fleet, ghost mining ships
+**Code reference:** `OrphanFleet`
+**Usage:**
+- "An Orphan Fleet just drifted into sensor range."
+- "Hack the Orphan Fleet before it jumps away."
