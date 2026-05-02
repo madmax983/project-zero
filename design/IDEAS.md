@@ -18368,3 +18368,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you embrace the flawless, machine-mediated mental health to maximize efficiency, knowing it strips your colonists of their fundamental humanity and creates a devastating single point of failure?
 
 ---
+
+## The Apology Fleet
+
+**Layer:** 2
+
+**Fantasy:** Sending a massive, slow-moving monument to make amends for a past atrocity.
+
+**Mechanic:** If your civilization commits a major atrocity (e.g., glassing a planet), you can construct an "Apology Fleet." This fleet is unarmed, extremely expensive, and travels very slowly. Upon reaching the victim's homeworld, it provides a massive, permanent diplomatic boost and generates unique cultural artifacts, but it requires centuries of continuous maintenance funding while en route.
+
+**Emergence:** You launch an Apology Fleet to a faction you wronged. While it's in transit for 200 years, your government changes, and you go to war with them again. The Apology Fleet arrives in the middle of a space battle, creating a bizarre diplomatic scenario where they receive a monument of peace while under active bombardment.
+
+**Tension:** Do you invest centuries of resources into a moving monument of guilt, or accept permanent diplomatic isolation?
+
+---
+
+## Somatic Voting
+
+**Layer:** Cross-layer
+
+**Fantasy:** A democracy where voting is tied to physical exertion and shared hardship.
+
+**Mechanic:** In a specific government type, elections aren't decided by ballots, but by physical trials on Layer 1. Pops must endure extreme environments (heat, cold, toxic air) in designated "Voting Arenas." The candidate whose supporters endure the longest wins. This provides massive stability but physically damages the workforce.
+
+**Emergence:** A crucial election is coming up. The opposing faction has more supporters, but they are mostly frail intellectuals. Your candidate's supporters are hardened miners. You intentionally lower the life support in the Voting Arena, ensuring your faction wins the election, but crippling your best workers for months.
+
+**Tension:** How much physical damage are you willing to inflict on your own population to ensure political stability?
+
+---
+
+## Weaponized Boredom
+
+**Layer:** 1
+
+**Fantasy:** Breaking a siege not with weapons, but by making the attackers lose interest.
+
+**Mechanic:** If a colony is besieged, they can activate "Boredom Broadcasts" — an endless stream of highly uninteresting, monotonous data designed to mentally fatigue the attackers. Over time, the attacking army's morale plummets, and they begin to experience "Apathy" traits, eventually packing up and leaving without a single shot fired.
+
+**Emergence:** Your impenetrable fortress is surrounded by a massive raider army. You activate the Boredom Broadcasts. The raiders, expecting a glorious battle, are instead subjected to months of automated tax law recitations. They eventually just leave out of sheer existential ennui.
+
+**Tension:** Do you risk relying on a non-violent, slow-acting defense, or spend resources on active, lethal defenses?
+
+---
