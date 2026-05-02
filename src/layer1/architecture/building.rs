@@ -2039,10 +2039,7 @@ fn configure_tech(entity: &mut EntityWorldMut, building_type: BuildingType) {
 /// let tiles = vec![TerrainType::Grass; 100]; // 10x10 grass
 /// world.insert_resource(TerrainGrid { width: 10, height: 10, tiles });
 /// world.insert_resource(OccupiedTiles::default());
-/// world.insert_resource(ColonyResources {
-///     wood: 100.0,
-///     ..Default::default()
-/// });
+/// world.insert_resource(ColonyResources::default().with_wood(100.0));
 ///
 /// let placed = try_place_building(&mut world, 5, 5, BuildingType::Housing);
 /// assert!(placed);
@@ -2650,11 +2647,7 @@ mod tests {
             tiles: vec![TerrainType::Grass; 100],
         });
         world.insert_resource(OccupiedTiles::default());
-        world.insert_resource(ColonyResources {
-            wood: 100.0,
-            stone: 100.0,
-            ..Default::default()
-        });
+        world.insert_resource(ColonyResources::default().with_wood(100.0).with_stone(100.0));
 
         try_place_building(&mut world, 5, 5, BuildingType::Farm);
 
@@ -2695,10 +2688,7 @@ mod tests {
             tiles: vec![TerrainType::Grass; 100],
         });
         world.insert_resource(OccupiedTiles::default());
-        world.insert_resource(ColonyResources {
-            wood: 100.0,
-            ..Default::default()
-        });
+        world.insert_resource(ColonyResources::default().with_wood(100.0));
 
         try_place_building(&mut world, 7, 3, BuildingType::Housing);
 
@@ -2716,11 +2706,7 @@ mod tests {
             tiles: vec![TerrainType::Grass; 100],
         });
         world.insert_resource(OccupiedTiles::default());
-        world.insert_resource(ColonyResources {
-            wood: 100.0,
-            stone: 100.0,
-            ..Default::default()
-        });
+        world.insert_resource(ColonyResources::default().with_wood(100.0).with_stone(100.0));
 
         try_place_building(&mut world, 5, 5, BuildingType::Farm);
 
@@ -2740,10 +2726,7 @@ mod tests {
         });
         world.insert_resource(OccupiedTiles::default());
         world.insert_resource(MessageLog::default());
-        world.insert_resource(ColonyResources {
-            wood: 100.0,
-            ..Default::default()
-        });
+        world.insert_resource(ColonyResources::default().with_wood(100.0));
 
         // Test Water failure
         let success = try_place_building(&mut world, 5, 5, BuildingType::Housing);
@@ -2786,32 +2769,16 @@ mod tests {
 
     #[test]
     fn test_can_afford_success() {
-        let cost = ColonyResources {
-            wood: 10.0,
-            stone: 0.0,
-            ..Default::default()
-        };
-        let available = ColonyResources {
-            wood: 15.0,
-            stone: 5.0,
-            ..Default::default()
-        };
+        let cost = ColonyResources::default().with_wood(10.0).with_stone(0.0);
+        let available = ColonyResources::default().with_wood(15.0).with_stone(5.0);
 
         assert!(available.can_afford(&cost));
     }
 
     #[test]
     fn test_can_afford_failure() {
-        let cost = ColonyResources {
-            wood: 10.0,
-            stone: 0.0,
-            ..Default::default()
-        };
-        let available = ColonyResources {
-            wood: 5.0,
-            stone: 5.0,
-            ..Default::default()
-        };
+        let cost = ColonyResources::default().with_wood(10.0).with_stone(0.0);
+        let available = ColonyResources::default().with_wood(5.0).with_stone(5.0);
 
         assert!(!available.can_afford(&cost));
     }
@@ -2828,10 +2795,7 @@ mod tests {
         world.insert_resource(OccupiedTiles::default());
 
         // Setup resources (enough for Housing: 10 wood)
-        world.insert_resource(ColonyResources {
-            wood: 15.0,
-            ..Default::default()
-        });
+        world.insert_resource(ColonyResources::default().with_wood(15.0));
 
         // Attempt placement
         let success = try_place_building(&mut world, 5, 5, BuildingType::Housing);
@@ -2854,10 +2818,7 @@ mod tests {
         world.insert_resource(OccupiedTiles::default());
 
         // Setup resources (not enough for Housing)
-        world.insert_resource(ColonyResources {
-            wood: 5.0,
-            ..Default::default()
-        });
+        world.insert_resource(ColonyResources::default().with_wood(5.0));
 
         // Attempt placement
         let success = try_place_building(&mut world, 5, 5, BuildingType::Housing);
@@ -2881,10 +2842,7 @@ mod tests {
             tiles: vec![TerrainType::Grass; 100],
         });
         world.insert_resource(OccupiedTiles::default());
-        world.insert_resource(ColonyResources {
-            wood: 100.0,
-            ..Default::default()
-        });
+        world.insert_resource(ColonyResources::default().with_wood(100.0));
 
         try_place_building(&mut world, 5, 5, BuildingType::Housing);
 
@@ -2901,10 +2859,7 @@ mod tests {
             tiles: vec![TerrainType::Grass; 100],
         });
         world.insert_resource(OccupiedTiles::default());
-        world.insert_resource(ColonyResources {
-            wood: 100.0, // Stockpile needs 50 wood
-            ..Default::default()
-        });
+        world.insert_resource(ColonyResources::default().with_wood(100.0));
 
         try_place_building(&mut world, 5, 5, BuildingType::Stockpile);
 
@@ -2923,10 +2878,7 @@ mod tests {
             tiles,
         });
         world.insert_resource(OccupiedTiles::default());
-        world.insert_resource(ColonyResources {
-            wood: 100.0,
-            ..Default::default()
-        });
+        world.insert_resource(ColonyResources::default().with_wood(100.0));
 
         // Building on tree should be allowed
         let success = try_place_building(&mut world, 5, 5, BuildingType::Housing);
@@ -2950,10 +2902,7 @@ mod tests {
             tiles: vec![TerrainType::Grass; 100],
         });
         world.insert_resource(OccupiedTiles::default());
-        world.insert_resource(ColonyResources {
-            wood: 100.0,
-            ..Default::default()
-        });
+        world.insert_resource(ColonyResources::default().with_wood(100.0));
 
         try_place_building(&mut world, 5, 5, BuildingType::Housing);
 
@@ -2973,10 +2922,7 @@ mod tests {
             tiles: vec![TerrainType::Grass; 100],
         });
         world.insert_resource(OccupiedTiles::default());
-        world.insert_resource(ColonyResources {
-            wood: 100.0,
-            ..Default::default()
-        });
+        world.insert_resource(ColonyResources::default().with_wood(100.0));
 
         try_place_building(&mut world, 5, 5, BuildingType::Gate);
 
@@ -2996,10 +2942,7 @@ mod tests {
             tiles: vec![TerrainType::Grass; 100],
         });
         world.insert_resource(OccupiedTiles::default());
-        world.insert_resource(ColonyResources {
-            wood: 100.0,
-            ..Default::default()
-        });
+        world.insert_resource(ColonyResources::default().with_wood(100.0));
 
         // AncientReactor is free (cost zeroed), so resources don't matter much
         try_place_building(&mut world, 5, 5, BuildingType::AncientReactor);
@@ -3024,11 +2967,7 @@ mod tests {
         world.init_resource::<Events<crate::layer1::ancestral_graves::SacrilegeEvent>>();
         world.init_resource::<Events<crate::layer1::events::BuildingRemovedEvent>>();
         world.init_resource::<Events<crate::layer1::events::BuildingCompletedEvent>>();
-        world.insert_resource(ColonyResources {
-            wood: 100.0,
-            stone: 100.0,
-            ..Default::default()
-        });
+        world.insert_resource(ColonyResources::default().with_wood(100.0).with_stone(100.0));
 
         let grave_pos = GridPosition { x: 5, y: 5 };
 
@@ -3077,11 +3016,7 @@ mod tests {
         world.init_resource::<Events<crate::layer1::ancestral_graves::SacrilegeEvent>>();
         world.init_resource::<Events<crate::layer1::events::BuildingRemovedEvent>>();
         world.init_resource::<Events<crate::layer1::events::BuildingCompletedEvent>>();
-        world.insert_resource(ColonyResources {
-            wood: 0.0,
-            stone: 0.0,
-            ..Default::default()
-        });
+        world.insert_resource(ColonyResources::default().with_wood(0.0).with_stone(0.0));
 
         let grave_pos = GridPosition { x: 5, y: 5 };
 
