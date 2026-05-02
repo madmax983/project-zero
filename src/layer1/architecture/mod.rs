@@ -51,3 +51,5 @@ pub use window::*;
 
 pub mod living_architecture;
 pub use living_architecture::*;
+pub mod resonant_architecture;
+pub use resonant_architecture::*;
