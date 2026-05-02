@@ -172,6 +172,15 @@ pub fn register(schedule: &mut Schedule) {
 
     schedule.add_systems(
         (
+            crate::layer1::petrification::petrification_exposure_system,
+            crate::layer1::petrification::petrification_progression_system,
+            crate::layer1::petrification::petrification_transformation_system,
+        )
+            .in_set(Layer1SystemSet::Execution),
+    );
+
+    schedule.add_systems(
+        (
             crate::layer1::tinkering::obsessive_optimization_system,
             crate::layer1::execution::vandalize_execution_system.after(arrival_handler_system),
             crate::layer1::pop_doppelganger::sabotage_system.after(work_execution_system),
