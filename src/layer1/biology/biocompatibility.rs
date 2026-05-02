@@ -19,6 +19,10 @@ pub struct Biocompatibility {
     pub value: f32,
 }
 
+/// Marker component indicating the Pop is in an unsealed area.
+#[derive(Component)]
+pub struct ExposedToEnvironment;
+
 impl Default for Biocompatibility {
     fn default() -> Self {
         Self { value: 0.5 }
@@ -36,8 +40,8 @@ pub fn biocompatibility_system(world: &mut World) {
     // 1. Read Phase
     {
         // Create query first (requires mutable borrow)
-        let mut query =
-            world.query::<(Entity, &GridPosition, &Biocompatibility, Option<&Traits>)>();
+        let mut query = world.query_filtered::<(Entity, &GridPosition, &Biocompatibility, Option<&Traits>), With<ExposedToEnvironment>>();
+
         // Then get resource (immutable borrow)
         let grid = world.resource::<AtmosphereGrid>();
 
@@ -140,6 +144,7 @@ mod tests {
                     has_rust_lung: false,
                 },
                 GridPosition { x: 0, y: 0 },
+                ExposedToEnvironment,
             ))
             .id();
 
