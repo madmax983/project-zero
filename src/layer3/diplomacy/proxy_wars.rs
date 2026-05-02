@@ -200,25 +200,6 @@ pub fn proxy_war_disavowal_system(
     }
 }
 
-pub struct ProxyWarsPlugin;
-
-impl Plugin for ProxyWarsPlugin {
-    fn build(&self, app: &mut App) {
-        app.add_event::<AcceptContractEvent>();
-        app.add_event::<ShipDestroyedEvent>();
-        app.add_event::<PeaceTreatyEvent>();
-
-        app.add_systems(
-            Update,
-            (
-                accept_proxy_war_contract_system,
-                proxy_war_combat_rewards_system,
-                proxy_war_disavowal_system,
-            ),
-        );
-    }
-}
-
 #[cfg(test)]
 mod tests {
     use super::*;

@@ -1,23 +1,6 @@
 use crate::layer1::law::justice::{CrimeCommittedEvent, CrimeRecord};
 use crate::layer1::social::factions::FactionId;
-use bevy::prelude::{App, Plugin, Update};
 use bevy_ecs::prelude::*;
-
-pub struct EmbassyPlugin;
-
-impl Plugin for EmbassyPlugin {
-    fn build(&self, app: &mut App) {
-        app.add_event::<ArrestEvent>()
-            .add_event::<DiplomaticIncidentEvent>()
-            .add_systems(
-                Update,
-                (
-                    evaluate_diplomatic_crime_system,
-                    process_diplomatic_arrest_system,
-                ),
-            );
-    }
-}
 
 #[derive(Component)]
 pub struct DiplomaticImmunity {

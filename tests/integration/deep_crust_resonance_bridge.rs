@@ -2,7 +2,7 @@ use bevy::prelude::*;
 use scale::layer1::chronicle::AddChronicleEvent;
 use scale::layer1::core::integration::deep_crust_resonance_chronicle_bridge;
 use scale::layer1::deep_crust_resonance::{
-    resonance_social_spread_system, resonant_ore_exposure_system, ExcavationEvent, MineableOre,
+    resonance_social_spread_system, resonant_ore_exposure_system, ExcavationEvent,
     ResonantInfection, ResonantOre,
 };
 use scale::layer1::morale::Morale;
@@ -31,7 +31,7 @@ fn test_deep_crust_resonance_integration() {
     rels.affinities.insert(pop_a, 0.5); // pop_b likes pop_a
     let pop_b = app.world_mut().spawn((Pop, Morale::default(), rels)).id();
 
-    let resonant_ore = app.world_mut().spawn((MineableOre, ResonantOre)).id();
+    let resonant_ore = app.world_mut().spawn(ResonantOre).id();
 
     app.world_mut()
         .resource_mut::<Events<ExcavationEvent>>()

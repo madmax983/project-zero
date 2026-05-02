@@ -1,4 +1,4 @@
-use bevy::prelude::{App, Plugin, Transform, Update, Vec3};
+use bevy::prelude::{Transform, Vec3};
 use bevy_ecs::prelude::*;
 use bevy_time::Time;
 
@@ -135,26 +135,10 @@ pub fn retro_burn_system(
     }
 }
 
-pub struct InertialLogisticsPlugin;
-
-impl Plugin for InertialLogisticsPlugin {
-    fn build(&self, app: &mut App) {
-        app.init_resource::<ShipPhysicsConfig>()
-            .add_event::<RetroBurnInitiatedEvent>()
-            .add_systems(
-                Update,
-                (
-                    apply_thrust_system,
-                    calculate_turn_rate_system,
-                    retro_burn_system,
-                ),
-            );
-    }
-}
-
 #[cfg(test)]
 mod tests {
     use super::*;
+    use bevy::prelude::{App, Update};
 
     #[test]
     fn test_ship_gains_momentum_during_travel() {
