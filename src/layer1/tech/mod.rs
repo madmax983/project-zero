@@ -633,6 +633,33 @@ mod tests {
     }
 
     #[test]
+    fn test_tech_status_fallback_to_active() {
+        let state = TechState::default();
+        // Since it's not in the map, it should unwrap_or to TechStatus::Active
+        assert_eq!(state.status(Tech::Masonry), TechStatus::Active);
+    }
+
+    #[test]
+    fn test_tech_corruption_sort_stability() {
+        let mut state = TechState {
+            total_capacity: 0.0, // Force corruption
+            ..Default::default()
+        };
+        // MetalWorking and Militia both cost 10.0 storage.
+        // We will insert them and let `update_corruption` sort and corrupt them.
+        // The unwrap_or handles NaNs if they ever appeared in the hardcoded costs.
+        state.techs.insert(Tech::MetalWorking, TechStatus::Active);
+        state.techs.insert(Tech::Militia, TechStatus::Active);
+
+        state.update_corruption();
+
+        // Since both have the same cost and exceed capacity, both should become Corrupted.
+        // This ensures the sort didn't panic.
+        assert_eq!(state.status(Tech::MetalWorking), TechStatus::Corrupted);
+        assert_eq!(state.status(Tech::Militia), TechStatus::Corrupted);
+    }
+
+    #[test]
     fn test_placement_succeeds_if_tech_unlocked() {
         let mut world = World::new();
         let mut state = TechState {
