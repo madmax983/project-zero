@@ -147,7 +147,6 @@ mod tests {
                 },
                 DamageResistance {
                     physical: 0.0,
-                    ..Default::default()
                 },
                 PetrificationSickness {
                     stage: 50,
