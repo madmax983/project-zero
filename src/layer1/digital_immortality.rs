@@ -1,3 +1,9 @@
+//! Digital Immortality and Mainframe Systems
+//!
+//! This module provides mechanics for uploading Pops into the colony Mainframe, transforming
+//! them into Digital Ghosts. This completely removes their biological needs at the cost of
+//! significantly increased power draw and the risk of bored Ghosts hacking colony infrastructure.
+
 use crate::layer1::skills::Skills;
 use bevy::prelude::*;
 
@@ -38,6 +44,32 @@ pub struct GhostHackEvent {
 }
 
 /// Uploads biological minds into a digital format, removing biological needs and housing them in a mainframe.
+///
+/// # Examples
+/// ```
+/// use bevy::prelude::*;
+/// use scale::layer1::digital_immortality::*;
+/// use scale::layer1::skills::Skills;
+/// use scale::layer1::psychology::needs::Needs;
+/// use scale::layer1::architecture::housing::Housing;
+///
+/// let mut app = App::new();
+/// app.add_plugins(MinimalPlugins);
+/// app.add_event::<MindUploadEvent>();
+/// app.add_systems(Update, handle_mind_upload);
+///
+/// let pop = app.world_mut().spawn((Name::new("Bob"), Skills::default(), Needs::default())).id();
+/// let mainframe = app.world_mut().spawn((Mainframe { capacity: 10 }, Housing { capacity: 10, residents: vec![] })).id();
+///
+/// app.world_mut().resource_mut::<Events<MindUploadEvent>>().send(MindUploadEvent {
+///     target_pop: pop,
+///     destination_mainframe: mainframe,
+/// });
+/// app.update();
+///
+/// assert!(app.world().get::<Ghost>(pop).is_some());
+/// assert!(app.world().get::<Needs>(pop).is_none());
+/// ```
 pub fn handle_mind_upload(
     mut commands: Commands,
     mut events: EventReader<MindUploadEvent>,

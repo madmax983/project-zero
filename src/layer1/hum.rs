@@ -1,3 +1,10 @@
+//! The Hum Field and Propagation
+//!
+//! This module handles "The Hum," a mysterious localized resonant field that propagates
+//! outwards from `HumSource` entities to create a gradient map (`HumMap`). Pops with
+//! the Sensitive trait might become obsessed and "Listen to the Hum", trading stress
+//! for leisure.
+
 use crate::layer1::map::GridPosition;
 use crate::layer1::needs::Needs;
 use crate::layer1::stress::StressTracker;
@@ -60,6 +67,27 @@ pub struct HumSource {
     pub intensity: f32,
 }
 
+/// Updates the `HumMap` gradient field based on all active `HumSource` entities.
+///
+/// # Examples
+/// ```
+/// use bevy::prelude::*;
+/// use scale::layer1::hum::*;
+/// use scale::layer1::core::map::GridPosition;
+///
+/// let mut app = App::new();
+/// app.add_plugins(MinimalPlugins);
+/// app.insert_resource(HumMap::new(10, 10));
+/// app.add_systems(Update, update_hum_system);
+///
+/// // Spawn a source
+/// app.world_mut().spawn((HumSource { radius: 3.0, intensity: 1.0 }, GridPosition { x: 5, y: 5 }));
+/// app.update();
+///
+/// let hum_map = app.world().resource::<HumMap>();
+/// assert_eq!(hum_map.get(5, 5), 1.0); // Center is max intensity
+/// assert!(hum_map.get(6, 5) > 0.0); // Falloff radius
+/// ```
 pub fn update_hum_system(mut hum_map: ResMut<HumMap>, sources: Query<(&HumSource, &GridPosition)>) {
     // Reset map
     hum_map.values.fill(0.0);

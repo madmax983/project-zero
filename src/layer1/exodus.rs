@@ -1,5 +1,11 @@
+//! The Ark Ship Exodus Protocol
+//!
+//! This module handles the late-game objective of building an Ark Ship to escape the planet.
+//! This massive undertaking requires converting standard colony resources (and often dismantling
+//! your own base via the `Cannibalizable` component) into Ark progress.
+
 use crate::layer1::building::Building;
-use crate::layer1::resources::ColonyResources;
+use crate::layer1::economy::resources::ColonyResources;
 use bevy_ecs::prelude::*;
 
 #[derive(Component)]
@@ -13,6 +19,26 @@ pub struct Cannibalizable {
     pub yield_amount: u32,
 }
 
+/// Consumes colony scrap resources to advance the Ark Ship construction project.
+///
+/// # Examples
+/// ```
+/// use bevy::prelude::*;
+/// use scale::layer1::exodus::*;
+/// use scale::layer1::economy::resources::ColonyResources;
+///
+/// let mut app = App::new();
+/// app.add_plugins(MinimalPlugins);
+/// app.insert_resource(ColonyResources { scrap: 250.0, ..Default::default() });
+/// app.add_systems(Update, build_ark_system);
+///
+/// let ark = app.world_mut().spawn(ArkShipProject { progress: 0, target: 1000 }).id();
+/// app.update();
+///
+/// // Consumed 100 scrap to progress
+/// assert_eq!(app.world().get::<ArkShipProject>(ark).unwrap().progress, 100);
+/// assert_eq!(app.world().resource::<ColonyResources>().scrap, 150.0);
+/// ```
 pub fn build_ark_system(
     mut ark_projects: Query<&mut ArkShipProject>,
     mut stockpiles: ResMut<ColonyResources>,
