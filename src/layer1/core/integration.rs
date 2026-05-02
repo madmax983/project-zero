@@ -1766,3 +1766,16 @@ pub fn trigger_shift_end_system(
     }
     *last_time_of_day = Some(cycle.time_of_day);
 }
+
+/// INT-1235: Bridges CulinarySingularityEvent to AddChronicleEvent (Chronicle).
+pub fn gastronomer_chronicle_bridge(
+    mut events: EventReader<crate::layer1::culture::gastronomers::CulinarySingularityEvent>,
+    mut chronicle_events: EventWriter<crate::layer1::core::chronicle::AddChronicleEvent>,
+) {
+    for _ in events.read() {
+        chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
+            text: "The Gastronomers have achieved the Culinary Singularity!".to_string(),
+            importance: crate::layer1::core::chronicle::EventImportance::Major,
+        });
+    }
+}
