@@ -491,3 +491,4 @@
 - [x] `636` The Orphan Fleet — `specs/636-orphan-fleet.md` — completed 2026-05-02
 - [x] `1082` Resonant Architecture — `specs/1082-resonant-architecture.md` — completed 2024-05-31
 - [x] `630` Biocompatibility — `specs/630-biocompatibility.md` — completed 2026-02-01
+- [x] `634` The Petrification Sickness — `specs/634-petrification-sickness.md` — completed 2024-05-31
