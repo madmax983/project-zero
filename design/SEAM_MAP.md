@@ -835,3 +835,9 @@
 - **Systems connected:** `DayNightCycle` -> `trigger_shift_end_system` -> `update_workplace_relationships_system`
 - **Glue added:** Added `trigger_shift_end_system` in `src/layer1/core/integration.rs` to emit `ShiftEndEvent` when TimeOfDay transitions from Day to Dusk. Registered in `Layer1SystemSet::Execution`.
 - **Tests:** `tests/integration/pop_relationships_bridge.rs`
+
+### INT-1236: The Kessler Gambit -> Simulation Schedule
+- **Date:** 2026-06-25
+- **Systems connected:** `trigger_kessler_gambit_system` -> `OrbitalDebris`
+- **Glue added:** Scheduled `trigger_kessler_gambit_system` in Layer 2 systems block. Added `TriggerKesslerGambitEvent` to App.
+- **Tests:** `tests/integration/kessler_gambit_integration.rs`

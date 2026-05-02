@@ -372,6 +372,7 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     world.init_resource::<Events<crate::layer1::items::UnequipEvent>>();
     world.init_resource::<Events<crate::layer1::construction::GreatWorkCompletedEvent>>();
     world.init_resource::<Events<crate::layer2::trade::blockade::TradeShipArrivalEvent>>();
+    world.init_resource::<Events<crate::layer2::orbit::kessler_gambit::TriggerKesslerGambitEvent>>();
     world.init_resource::<Events<crate::layer2::events::LaunchEvent>>();
     world.init_resource::<Events<crate::layer2::events::ShipDestroyedEvent>>();
     world.init_resource::<Events<crate::layer2::orbital_mirrors::MirrorFocusEvent>>();
