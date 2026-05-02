@@ -18462,3 +18462,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** The tactical brilliance of bloodless warfare vs. the sheer psychological cruelty of weaponizing an entire civilization's grief.
 
 ---
+## Bio-Acoustic Sabotage
+
+**Layer:** 1
+
+**Fantasy:** Weaponizing the local flora's response to sound to ruin an enemy colony's infrastructure.
+
+**Mechanic:** Certain aggressive xenoflora react to specific acoustic frequencies by rapidly growing and calcifying. By infiltrating a colony and modifying their sirens or industrial broadcast frequencies, you can trigger these plants to instantly overgrow and crush critical machinery or seal airlocks.
+
+**Emergence:** You set up a perfectly efficient mining outpost, but a rogue agent tweaks the warning siren's pitch. The next time a shift change is announced, the local vines instantly petrify the entire extraction shaft, trapping the miners inside solid plant matter.
+
+**Tension:** The need for loud, clear communication and alarms vs. the risk of those very systems being turned into environmental triggers by saboteurs.
+
+---
+
+## Gravity Well Heist
+
+**Layer:** 2 -> 1
+
+**Fantasy:** Stealing a massive shipment not by intercepting the ship, but by altering the planet's gravity to pull the cargo out of orbit.
+
+**Mechanic:** Using specialized sub-crustal gravity manipulators on Layer 1, you can create a temporary, highly localized spike in the planet's gravity well. This forces passing Layer 2 cargo ships to emergency-eject their payload to avoid crashing, dropping the loot right onto your colony.
+
+**Emergence:** You try to pull down a valuable shipment of rare earth metals, but you miscalculate the mass. Instead of pulling the cargo pods, you pull an entire, massive asteroid the ship was towing for a mining corp, devastating your own colony in the process.
+
+**Tension:** The massive economic windfall of untraceable orbital theft vs. the immense energy cost and catastrophic risk of literally pulling the sky down on your own head.
+
+---
+
+## The Phantom Workforce
+
+**Layer:** 1
+
+**Fantasy:** A colony so traumatized by a mass casualty event that they unconsciously construct robotic stand-ins to continue the lost workers' routines.
+
+**Mechanic:** If a colony suffers a sudden, massive loss of life, the remaining Pops' "Grief" metric spikes. If their "Engineering" skill is high enough, they begin autonomously building crude, inefficient automata out of scrap. These automata are assigned the names, jobs, and housing of the deceased Pops, creating a macabre, half-functional ghost town.
+
+**Emergence:** Half your farmers die in a cave-in. You expect starvation, but the surviving engineers spend all their time building janky scrap-robots to tend the fields. The colony survives, but now your food supply relies entirely on grieving engineers maintaining literal monuments to their dead friends, instead of doing actual engineering work.
+
+**Tension:** Do you dismantle the scrap-bots to reclaim the materials and force the colony to face reality (causing a massive morale crash), or do you let them maintain the illusion at the cost of long-term efficiency and technological stagnation?
+
+---
