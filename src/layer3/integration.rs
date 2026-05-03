@@ -94,3 +94,18 @@ pub fn jump_risk_bridge_system(
         });
     }
 }
+
+use crate::layer3::diplomacy::red_tape_defense::BureaucraticHold;
+
+/// Bridges `BureaucraticHold` to `AddChronicleEvent` (Chronicle).
+pub fn red_tape_chronicle_bridge(
+    query: Query<Entity, Added<BureaucraticHold>>,
+    mut chronicle_events: EventWriter<AddChronicleEvent>,
+) {
+    for _ in query.iter() {
+        chronicle_events.send(AddChronicleEvent {
+            importance: EventImportance::Major,
+            text: "Hostile fleet stalled by bureaucratic red tape.".to_string(),
+        });
+    }
+}

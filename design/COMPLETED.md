@@ -495,3 +495,4 @@
 - [x] `634` The Petrification Sickness — `specs/634-petrification-sickness.md` — completed 2024-05-31
 - [x] `1233` Public Grievances — `specs/1233-public-grievances.md` — completed 2026-05-02
 - [x] `INT-1247` Integration: The Visitor -> Chronicle - completed 2026-10-31
+- [x] `INT-1248` Integration: Red Tape Defense -> Chronicle — completed 2026-06-25

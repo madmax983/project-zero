@@ -853,3 +853,9 @@
 - **Systems connected:** `TheVisitor` -> `visitor_chronicle_bridge` -> `AddChronicleEvent`
 - **Glue added:** Added `visitor_chronicle_bridge` in `src/layer1/core/integration.rs`.
 - **Tests:** `tests/integration/visitor_chronicle_bridge.rs`
+
+### INT-1248: Red Tape Defense -> Chronicle
+- **Date:** 2026-06-25
+- **Systems connected:** `invoke_red_tape` (Red Tape Defense) -> `red_tape_chronicle_bridge` (Integration) -> `AddChronicleEvent`
+- **Glue added:** Added `red_tape_chronicle_bridge` in `src/layer3/integration.rs`.
+- **Tests:** `tests/integration/red_tape_bridge.rs`
