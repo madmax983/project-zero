@@ -1886,3 +1886,20 @@ pub fn secret_society_discovery_bridge_system(
         }
     }
 }
+
+pub fn biomimetic_chronicle_bridge(
+    mut events: EventReader<crate::layer1::architecture::biomimetic::BiomimeticShiftEvent>,
+    mut chronicle_events: EventWriter<AddChronicleEvent>,
+) {
+    for event in events.read() {
+        if event.delta.abs() >= 4.0 {
+            chronicle_events.send(AddChronicleEvent {
+                text: format!(
+                    "A biomimetic building suddenly shifted its temperature output by {} degrees.",
+                    event.delta
+                ),
+                importance: EventImportance::Major,
+            });
+        }
+    }
+}

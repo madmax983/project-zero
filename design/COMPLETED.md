@@ -499,3 +499,4 @@
 - [x] `INT-649` Integration: Pop Relationships -> Day Night Cycle - completed 2026-10-30
 - [x] `INT-643` Integration: Living Architecture -> Chronicle — completed 2026-10-31
 - [x] `INT-661` Integration: Secret Societies -> Predictive Policing -> Chronicle — completed 2026-06-25
+- [x] `INT-916` Integration: Sympathetic Infrastructure -> Chronicle — completed 2026-06-15

@@ -353,10 +353,17 @@ pub fn register(schedule: &mut Schedule) {
                 .after(crate::layer1::logistics::mass_driver::package_arrival_system),
             crate::layer1::integration::predatory_weather_emission_bridge_system,
             crate::layer1::integration::predatory_weather_impact_bridge_system,
+            crate::layer1::core::integration::biomimetic_chronicle_bridge,
             crate::layer1::integration::hologram_failure_chronicle_bridge
                 .after(crate::layer1::hologram::update_holograms_system),
             retrograde_chronicle_bridge.after(work_execution_system), // work_execution_system is in Execution set
             amputation_handler_system.after(work_execution_system),
+        )
+            .in_set(Layer1SystemSet::Observation),
+    );
+
+    schedule.add_systems(
+        (
             art_observation_system.after(crate::layer1::health::despawn_dead_entities_system),
             observe_inspector_system.after(art_observation_system),
             crate::layer1::integration::medical_treatment_notification_system.after(healing_system),

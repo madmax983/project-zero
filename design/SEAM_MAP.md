@@ -874,3 +874,9 @@
     - `secret_society_discovery_bridge_system` disbands the `SecretSociety` and emits an `AddChronicleEvent` when a member is arrested (`Inmate`).
     - Registered in `src/layer1/systems/observation.rs`.
 - **Tests:** `test_society_discovery` and `test_society_suspicion` in `tests/integration/secret_societies.rs`.
+
+### INT-916: Sympathetic Infrastructure -> Chronicle
+- **Date:** 2026-06-15
+- **Systems connected:** `adjust_sympathetic_infrastructure_system` -> `biomimetic_chronicle_bridge` -> `AddChronicleEvent`
+- **Glue added:** Added `biomimetic_chronicle_bridge` in `src/layer1/core/integration.rs`. Registered in `src/layer1/systems/observation.rs`.
+- **Tests:** `tests/integration/sympathetic_infrastructure_bridge.rs`
