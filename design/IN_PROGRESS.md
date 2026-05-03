@@ -14,4 +14,3 @@ Tasks currently being implemented by Builders.
 - [ ] `684` The Gossip Economy - `specs/684-gossip-economy.md` - claimed 2026-04-01
 - [ ] `648` The Founder Effect — `specs/648-the-founder-effect.md` — claimed 2026-02-01
 - [ ] `661` Secret Societies — `specs/661-secret-societies.md` — claimed 2026-05-02
-- [x] `INT-649` Integration: Pop Relationships -> Day Night Cycle - completed 2026-10-30

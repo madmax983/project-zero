@@ -33,6 +33,7 @@ pub fn register(schedule: &mut Schedule) {
 
     schedule.add_systems(
         (
+            update_event_buffer::<crate::layer1::social::pop_relationships::ShiftEndEvent>,
             update_event_buffer::<crate::layer1::nature::biosphere_empathy::FloraDamagedEvent>,
             update_event_buffer::<crate::layer1::ancestral_graves::SacrilegeEvent>,
             update_event_buffer::<crate::layer1::geology::tectonic::MegaQuakeEvent>,
