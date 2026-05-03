@@ -1810,3 +1810,79 @@ pub fn living_architecture_chronicle_bridge(
         });
     }
 }
+
+/// INT-661: Bridges Predictive Policing -> Secret Societies
+/// When an active PredictiveModel is present, Pops in a SecretSociety are flagged as Suspects.
+pub fn society_suspicion_bridge_system(
+    mut commands: bevy_ecs::system::Commands,
+    members: bevy_ecs::system::Query<
+        (bevy_ecs::entity::Entity, &crate::layer1::social::secret_societies::SecretSocietyMember),
+        bevy_ecs::query::Without<crate::layer1::law::predictive_policing::Suspect>,
+    >,
+    societies: bevy_ecs::system::Query<&crate::layer1::social::secret_societies::SecretSociety>,
+    config: bevy_ecs::system::Res<crate::layer1::law::predictive_policing::PredictionConfig>,
+    models: bevy_ecs::system::Query<
+        Option<&crate::layer1::energy::PowerConsumer>,
+        bevy_ecs::query::With<crate::layer1::law::predictive_policing::PredictiveModel>,
+    >,
+) {
+    if !config.enabled {
+        return;
+    }
+
+    let has_active_model = models.iter().any(|pc| pc.is_none_or(|p| p.active));
+    if !has_active_model {
+        return;
+    }
+
+    for (entity, member) in members.iter() {
+        if let Ok(society) = societies.get(member.society_id) {
+            if society.is_hidden {
+                commands
+                    .entity(entity)
+                    .insert(crate::layer1::law::predictive_policing::Suspect {
+                        probability: 0.85,
+                        predicted_crime: "Secret Society Conspiracy".to_string(),
+                    });
+            }
+        }
+    }
+}
+
+/// INT-661: Bridges Secret Societies -> Justice/Chronicle
+/// When a SecretSocietyMember is arrested (gets Inmate component), the society is uncovered and disbanded.
+pub fn secret_society_discovery_bridge_system(
+    mut commands: bevy_ecs::system::Commands,
+    arrested_members: bevy_ecs::system::Query<
+        &crate::layer1::social::secret_societies::SecretSocietyMember,
+        bevy_ecs::query::Added<crate::layer1::law::justice::Inmate>,
+    >,
+    mut societies: bevy_ecs::system::Query<&mut crate::layer1::social::secret_societies::SecretSociety>,
+    all_members: bevy_ecs::system::Query<
+        (bevy_ecs::entity::Entity, &crate::layer1::social::secret_societies::SecretSocietyMember),
+    >,
+    mut chronicle_events: bevy_ecs::event::EventWriter<crate::layer1::core::chronicle::AddChronicleEvent>,
+) {
+    for member in arrested_members.iter() {
+        if let Ok(mut society) = societies.get_mut(member.society_id) {
+            if society.is_hidden {
+                society.is_hidden = false;
+
+                chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
+                    text: "A secret society was uncovered during a preemptive arrest and has been disbanded.".to_string(),
+                    importance: crate::layer1::core::chronicle::EventImportance::Major,
+                });
+
+                // Disband the society
+                commands.entity(member.society_id).despawn();
+
+                // Remove membership from all members
+                for (ent, m) in all_members.iter() {
+                    if m.society_id == member.society_id {
+                        commands.entity(ent).remove::<crate::layer1::social::secret_societies::SecretSocietyMember>();
+                    }
+                }
+            }
+        }
+    }
+}

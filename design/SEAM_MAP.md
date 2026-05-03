@@ -865,3 +865,12 @@
 - **Systems connected:** `PopConsumedEvent` -> `living_architecture_chronicle_bridge` -> `AddChronicleEvent`
 - **Glue added:** Added `living_architecture_chronicle_bridge` in `src/layer1/core/integration.rs`.
 - **Tests:** `tests/integration/living_architecture_chronicle.rs`
+
+### INT-661: Secret Societies -> Predictive Policing -> Chronicle
+- **Date:** 2026-06-25
+- **Systems connected:** `SecretSocietyMember` -> `society_suspicion_bridge_system` -> `Suspect` -> `execute_pre_crime_arrest` -> `Inmate` -> `secret_society_discovery_bridge_system` -> `AddChronicleEvent`
+- **Glue added:**
+    - `society_suspicion_bridge_system` marks `SecretSocietyMember` Pops as `Suspect`s (Conspiracy) when a `PredictiveModel` is active.
+    - `secret_society_discovery_bridge_system` disbands the `SecretSociety` and emits an `AddChronicleEvent` when a member is arrested (`Inmate`).
+    - Registered in `src/layer1/systems/observation.rs`.
+- **Tests:** `test_society_discovery` and `test_society_suspicion` in `tests/integration/secret_societies.rs`.
