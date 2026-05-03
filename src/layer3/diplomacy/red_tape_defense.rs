@@ -1,3 +1,7 @@
+//! Red Tape Defense
+//!
+//! A bureaucratic defense mechanism that allows civilizations to delay hostile invasions by
+//! expending administrative resources to mire the enemy in paperwork.
 use bevy::prelude::*;
 
 #[derive(Component)]
@@ -27,6 +31,22 @@ pub struct BureaucraticHold {
     pub cost_multiplier: u32,
 }
 
+/// Delays a hostile fleet's invasion by invoking bureaucratic red tape.
+///
+/// Consumes `AdminResource` to increase the invasion timer and cost multiplier.
+///
+/// # Examples
+/// ```
+/// use bevy::prelude::*;
+/// use scale::layer3::diplomacy::red_tape_defense::{invoke_red_tape, HostileFleet, AdminResource, BureaucraticHold};
+/// use bevy::ecs::system::SystemState;
+/// let mut app = App::new();
+/// let fleet = app.world_mut().spawn(HostileFleet { invasion_timer: 1.0 }).id();
+/// app.world_mut().insert_resource(AdminResource { amount: 100 });
+/// let mut system_state: SystemState<(Commands, ResMut<AdminResource>)> = SystemState::new(app.world_mut());
+/// let (mut commands, mut admin) = system_state.get_mut(app.world_mut());
+/// invoke_red_tape(fleet, &mut commands, &mut admin, None);
+/// ```
 pub fn invoke_red_tape(
     fleet_entity: Entity,
     commands: &mut Commands,

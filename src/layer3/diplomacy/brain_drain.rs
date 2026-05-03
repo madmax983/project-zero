@@ -48,6 +48,23 @@ pub struct EmigrationEvent {
     pub pop_entity: Entity,
 }
 
+/// Processes the emigration of highly intelligent pops to neighboring factions.
+///
+/// # Examples
+/// ```
+/// use bevy::prelude::*;
+/// use scale::layer1::entities::pop::Pop;
+/// use scale::layer3::diplomacy::brain_drain::{check_brain_drain_migration, Intelligence, Freedom, LivingStandard, EmigrationEvent, NeighborStats};
+/// let mut app = App::new();
+/// app.add_event::<EmigrationEvent>();
+/// app.add_systems(Update, check_brain_drain_migration);
+/// let entity = app.world_mut().spawn((Pop, Intelligence { value: 100 }, Freedom { value: 20 }, LivingStandard { value: 30 })).id();
+/// app.world_mut().insert_resource(NeighborStats { freedom: 80, living_standard: 90 });
+/// app.update();
+/// let events = app.world().resource::<Events<EmigrationEvent>>();
+/// let mut cursor = events.get_cursor();
+/// assert_eq!(cursor.read(events).count(), 1);
+/// ```
 pub fn check_brain_drain_migration(
     mut commands: Commands,
     query: Query<(Entity, &Intelligence, &Freedom, &LivingStandard), With<Pop>>,

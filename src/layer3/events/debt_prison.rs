@@ -1,3 +1,8 @@
+//! Debt Prison
+//!
+//! Simulates the consequences of extreme colonial debt. When debt becomes insurmountable,
+//! a shadow syndicate may offer to clear it—in exchange for offloading their most volatile
+//! and spiteful criminals into the colony as new citizens.
 use crate::layer1::factions::{FactionId, FactionMember};
 use crate::layer1::pop::PopBundle;
 use crate::layer1::traits::{Trait, Traits};
@@ -10,6 +15,22 @@ pub struct BailoutOfferEvent;
 #[derive(Event)]
 pub struct AcceptBailoutEvent;
 
+/// Triggers a bailout offer when a colony's debt reaches critical levels.
+///
+/// # Examples
+/// ```
+/// use bevy::prelude::*;
+/// use scale::layer3::events::debt_prison::{check_bailout_condition_system, BailoutOfferEvent};
+/// use scale::layer2::trade::blockade::ColonyDebt;
+/// let mut app = App::new();
+/// app.add_event::<BailoutOfferEvent>();
+/// app.world_mut().insert_resource(ColonyDebt { amount: 1_000_000.0, threshold: 50_000.0 });
+/// app.add_systems(Update, check_bailout_condition_system);
+/// app.update();
+/// let events = app.world().resource::<Events<BailoutOfferEvent>>();
+/// let mut cursor = events.get_cursor();
+/// assert_eq!(cursor.read(events).count(), 1);
+/// ```
 pub fn check_bailout_condition_system(
     debt: Res<ColonyDebt>,
     mut bailout_events: EventWriter<BailoutOfferEvent>,
