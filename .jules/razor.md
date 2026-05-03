@@ -41,3 +41,8 @@
 **Bloat:** `VirusSeverity` enum in `src/layer3/digital_detritus.rs` used solely to wrap a single variant (`Critical`) inside the `VirusEvent` struct.
 **Cut:** Removed the `VirusSeverity` enum entirely and simplified `VirusEvent` to a unit struct `pub struct VirusEvent;`. Updated systems and tests to process the event unconditionally.
 **Saved:** ~10 lines of boilerplate code, an unnecessary enum indirection, and simplified pattern matching and struct instantiation across 4 functions/tests.
+
+## [Reduction]
+**Bloat:** Isolated Marker Components (`Plagued`, `IsQuarantined`, `MineableOre`, `CommsConsole`, `CargoCultCultist`) and unused plugins (`DirectLinkPlugin`).
+**Cut:** Deleted them.
+**Saved:** ~20 lines of dead code and indirection, simplifying codebase structure.

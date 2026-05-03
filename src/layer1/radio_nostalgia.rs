@@ -3,9 +3,6 @@ use crate::layer1::edicts::{ColonyPolicies, Policy};
 use crate::layer1::social::morale::{MoodModifier, Morale};
 use bevy_ecs::prelude::*;
 
-/// Component attached to the building that acts as the Comms Console
-#[derive(Component)]
-pub struct CommsConsole;
 
 #[derive(Clone, Copy, PartialEq, Eq, Debug)]
 pub enum BroadcastType {
@@ -136,7 +133,7 @@ mod tests {
     fn test_radio_nostalgia_broadcast_received() {
         let mut app = setup_test_app();
         let colony_entity = app.world_mut().spawn_empty().id();
-        let _console_entity = app.world_mut().spawn(CommsConsole).id();
+        // CommsConsole removed as part of Razor reduction
         let _pop = app.world_mut().spawn(Morale::default()).id();
 
         let initial_morale = get_colony_morale(app.world_mut(), colony_entity);

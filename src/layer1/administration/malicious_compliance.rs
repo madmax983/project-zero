@@ -12,8 +12,6 @@ pub struct ScrapValue {
     pub metal: f32,
 }
 
-#[derive(Component)]
-pub struct Plagued;
 
 pub enum EdictType {
     MaximizeResource(ResourceType),
@@ -113,7 +111,7 @@ mod tests {
         let ai_manager = app.world_mut().spawn((SectorAI { is_active: true },)).id();
 
         // Setup infected pop
-        app.world_mut().spawn((Pop, Plagued));
+        app.world_mut().spawn(Pop); // Plagued removed as part of Razor reduction
 
         // Act: Issue "Eradicate Plague"
         app.world_mut().spawn(Edict {

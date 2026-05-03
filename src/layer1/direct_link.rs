@@ -35,7 +35,6 @@ pub struct DirectControlState {
     pub buffered_dy: i32,
 }
 
-pub struct DirectLinkPlugin;
 
 pub fn handle_possession(
     mut commands: Commands,
