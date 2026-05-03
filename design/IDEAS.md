@@ -5865,7 +5865,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Ship Personalities
+## Ship Personalities [SPECCED]
 
 **Layer:** 2
 
@@ -5879,7 +5879,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Pneumatic Tubes
+## Pneumatic Tubes [SPECCED]
 
 **Layer:** 1
 
@@ -5893,7 +5893,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Corrosive Atmosphere
+## Corrosive Atmosphere [SPECCED]
 
 **Layer:** 1
 

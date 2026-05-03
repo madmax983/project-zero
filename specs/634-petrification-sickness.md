@@ -90,11 +90,9 @@ mod tests {
         // Pop should no longer have the Pop component
         assert!(app.world().get::<Pop>(pop).is_none());
 
-        // Pop should now have the Artifact component with high value
-        let artifact = app.world().get::<Artifact>(pop);
-        assert!(artifact.is_some());
-        assert_eq!(artifact.unwrap().name, "Petrified Colonist");
-        assert!(artifact.unwrap().beauty_value > 50);
+        // Pop should now have the Artifact component
+        assert!(app.world().get::<Artifact>(pop).is_some());
+        assert!(app.world().get::<crate::layer1::entities::pop::PopName>(pop).is_some());
     }
 }
 ```
@@ -158,9 +156,11 @@ pub fn petrification_transformation_system(
                 .remove::<Pop>()
                 .remove::<MovementStats>()
                 .remove::<Needs>()
-                .insert(Artifact {
-                    name: "Petrified Colonist".to_string(),
-                    beauty_value: 75,
+                .insert(Artifact)
+                .insert(crate::layer1::entities::pop::PopName("Petrified Colonist".to_string()))
+                .insert(crate::layer1::culture::artifacts::ArtifactAura {
+                    radius: 3.0,
+                    effect: crate::layer1::culture::artifacts::AuraEffect::Insight, // Example aura
                 });
         }
     }
@@ -195,6 +195,10 @@ pub fn petrification_transformation_system(
 
 *Builder Questions (2024-05-31):*
 - `MineType` and `MiningJob` do not exist in the codebase. Should I use `DesignationType::Mine` and `CurrentTask` instead, or should I create a new system to define exotic deep crust mines?
+  - *Architect:* The spec RED/GREEN phase uses `MiningJob` as a mockup, but you should use the existing `CurrentTask` system in combination with a new `ExoticDeepCrust` marker component on the tile or a specific `DesignationType` variant if adding one makes sense. For simplicity, just create a new `ExoticDeepCrust` component to tag certain grid positions, and check if a pop's `CurrentTask` is mining at that position.
 - `DamageResistance` does not exist in `crate::layer1::health`. How should the physical resistance be tracked or calculated? Should I create a new component for it?
+  - *Architect:* Yes, create a new `DamageResistance { pub physical: f32 }` component in `crate::layer1::health` (or directly in the new `petrification` module).
 - `Artifact` is defined in `crate::layer1::artifacts::mod.rs` as a unit struct (`pub struct Artifact;`), but the spec expects it to have `name` and `beauty_value` fields (`insert(Artifact { name: "Petrified Colonist".to_string(), beauty_value: 75 })`). Should I modify the `Artifact` definition or use different components (e.g. `PopName` or a new `ArtPiece` component)?
+  - *Architect:* Do not modify the existing `Artifact` unit struct. Instead, insert the existing unit `Artifact` component along with `PopName("Petrified Colonist".to_string())` and a new `BeautyValue(75)` component or similar if needed. Update the RED/GREEN phase to reflect this.
 - `MovementStats` does not exist. The codebase uses `Speed` in `src/layer1/entities/pop.rs`. Should I use `Speed`?
+  - *Architect:* Yes, use the existing `Speed` component instead of creating a new `MovementStats`.
