@@ -125,3 +125,6 @@ pub mod shadow_whispers;
 
 #[cfg(feature = "nova")]
 pub mod acoustic_power;
+
+#[cfg(feature = "nova")]
+pub mod sonoluminescence;

@@ -35,3 +35,7 @@
 **Concept:** Added an `AcousticGenerator` system. This new system allows `AcousticGenerator` components to produce power proportional to the noise in their tile (by reading the `NoiseMap`). This provides players with a novel way to harness industrial noise pollution.
 **Fate:** Merged
 **Lesson:** Tying industrial pollution (noise) to power generation incentivizes creating localized high-noise zones, forcing strategic base layout decisions.
+## [Sonoluminescence]
+**Concept:** Added a `SonoluminescentNode` component that dynamically converts ambient acoustic noise (from `NoiseMap`) into light intensity on `LightSource` components.
+**Fate:** Merged
+**Lesson:** Turning industrial pollution (noise) into a functional utility (light) gives players a creative way to solve two problems simultaneously.

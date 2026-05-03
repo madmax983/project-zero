@@ -177,7 +177,11 @@ fn build_play_pause_span(paused: bool) -> Span<'static> {
     }
 }
 
-fn build_time_spans(tick: u64, season: Option<Season>, solar_cycle: Option<SolarCycle>) -> Vec<Span<'static>> {
+fn build_time_spans(
+    tick: u64,
+    season: Option<Season>,
+    solar_cycle: Option<SolarCycle>,
+) -> Vec<Span<'static>> {
     let mut spans = Vec::new();
     spans.push(Span::styled(
         format!(" Day {} ", tick),
@@ -250,7 +254,12 @@ fn build_colony_stats_spans(pop_count: usize, morale: f32, efficiency: f32) -> V
     spans
 }
 
-fn build_resources_spans(food_yield: f32, rations: f32, tools: f32, risk_pct: f32) -> Vec<Span<'static>> {
+fn build_resources_spans(
+    food_yield: f32,
+    rations: f32,
+    tools: f32,
+    risk_pct: f32,
+) -> Vec<Span<'static>> {
     let mut spans = Vec::new();
     let total_food = food_yield + rations;
     let food_color = if total_food < 10.0 {
@@ -299,7 +308,10 @@ fn build_resources_spans(food_yield: f32, rations: f32, tools: f32, risk_pct: f3
     spans
 }
 
-fn build_mode_spans(build_mode: &BuildMode, designation_mode: &DesignationMode) -> Vec<Span<'static>> {
+fn build_mode_spans(
+    build_mode: &BuildMode,
+    designation_mode: &DesignationMode,
+) -> Vec<Span<'static>> {
     let mut spans = Vec::new();
     if build_mode.active {
         spans.push(Span::styled(
