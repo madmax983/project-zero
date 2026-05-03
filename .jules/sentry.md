@@ -5,3 +5,7 @@
 ## 2024-05-25 - TechState Corruption and Fallback coverage
 **Learning:** `unwrap_or` calls when resolving active enum states (`TechStatus::Active`) and handling sorting logic (`partial_cmp` on floating points) within core manager structures like `TechState` can lack explicit tests.
 **Action:** When finding `unwrap_or` on `partial_cmp` or fallback map fetches in manager structs, write targeted unit tests that construct edge-case states (like identically costed structs forcing a stable sort resolution, or fetching unknown keys) to explicitly prove the fallback works safely without panic.
+
+## 2024-05-25 - PopAction/Sabotage Testing
+**Learning:** Testing logic tied directly to specific `ActionType` matching (like `ActionType::Sabotage`) in complex queries requires carefully setting up related system components (like `MovementTarget`) and initializing properties precisely instead of relying solely on `Default::default()`, as incorrect setups can silently bypass the system conditions.
+**Action:** Always verify exactly which component fields a system iterates over and queries before constructing mock entities to ensure your assertions are correctly hitting the logic branches.

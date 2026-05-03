@@ -1,7 +1,7 @@
 use bevy_ecs::prelude::*;
 use scale::layer1::core::chronicle::{AddChronicleEvent, EventImportance};
-use scale::layer1::entities::the_visitor::{TheVisitor, TheVisitorState};
 use scale::layer1::core::integration::visitor_chronicle_bridge;
+use scale::layer1::entities::the_visitor::{TheVisitor, TheVisitorState};
 
 #[test]
 fn test_visitor_chronicle_bridge() {
@@ -26,7 +26,11 @@ fn test_visitor_chronicle_bridge() {
     let mut cursor = events.get_cursor();
     let emitted: Vec<&AddChronicleEvent> = cursor.read(events).collect();
 
-    assert_eq!(emitted.len(), 1, "Should emit one AddChronicleEvent for arrival");
+    assert_eq!(
+        emitted.len(),
+        1,
+        "Should emit one AddChronicleEvent for arrival"
+    );
     assert_eq!(emitted[0].text, "The Visitor has arrived.");
     assert_eq!(emitted[0].importance, EventImportance::Major);
 }

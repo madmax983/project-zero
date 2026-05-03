@@ -1782,8 +1782,13 @@ pub fn gastronomer_chronicle_bridge(
 
 /// Bridges TheVisitor spawning to AddChronicleEvent (Chronicle).
 pub fn visitor_chronicle_bridge(
-    query: bevy_ecs::prelude::Query<bevy_ecs::prelude::Entity, bevy_ecs::prelude::Added<crate::layer1::entities::the_visitor::TheVisitor>>,
-    mut chronicle_events: bevy_ecs::prelude::EventWriter<crate::layer1::core::chronicle::AddChronicleEvent>,
+    query: bevy_ecs::prelude::Query<
+        bevy_ecs::prelude::Entity,
+        bevy_ecs::prelude::Added<crate::layer1::entities::the_visitor::TheVisitor>,
+    >,
+    mut chronicle_events: bevy_ecs::prelude::EventWriter<
+        crate::layer1::core::chronicle::AddChronicleEvent,
+    >,
 ) {
     for _ in query.iter() {
         chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {

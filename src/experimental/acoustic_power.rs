@@ -1,7 +1,7 @@
-use bevy_ecs::prelude::*;
-use crate::layer1::map::GridPosition;
 use crate::layer1::energy::PowerSource;
+use crate::layer1::map::GridPosition;
 use crate::layer1::physics::acoustic::NoiseMap;
+use bevy_ecs::prelude::*;
 
 #[derive(Component)]
 pub struct AcousticGenerator {
@@ -36,8 +36,13 @@ mod tests {
         let entity = world
             .spawn((
                 GridPosition { x: 5, y: 5 },
-                PowerSource { output: 0.0, active: false },
-                AcousticGenerator { conversion_factor: 10.0 },
+                PowerSource {
+                    output: 0.0,
+                    active: false,
+                },
+                AcousticGenerator {
+                    conversion_factor: 10.0,
+                },
             ))
             .id();
 
