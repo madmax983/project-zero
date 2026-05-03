@@ -1,5 +1,10 @@
 // src/layer3/events/refugee_waves.rs
 
+//! Refugee Waves
+//!
+//! Handles mass migration events caused by galactic instability. Players face the dilemma of
+//! accepting desperate, traumatized pops (burdening local resources) or rejecting them
+//! (suffering severe diplomatic penalties with the origin faction).
 use crate::layer1::health::Health;
 use crate::layer1::pop::Pop;
 use crate::layer1::psychology::needs::Needs;
@@ -21,6 +26,19 @@ pub struct RefugeeWaveEvent {
     pub health_penalty: f32,
 }
 
+/// Processes the player's decision to accept or reject an incoming wave of refugees.
+///
+/// # Examples
+/// ```
+/// use bevy::prelude::*;
+/// use scale::layer3::events::refugee_waves::{process_refugee_decision, RefugeeWaveEvent, Decision};
+/// let mut app = App::new();
+/// app.add_event::<RefugeeWaveEvent>();
+/// app.add_systems(Update, process_refugee_decision);
+/// app.world_mut().send_event(RefugeeWaveEvent { decision: Decision::Accept, population_count: 10, origin_faction: "Rebels".to_string(), health_penalty: 20.0 });
+/// app.update();
+/// // 10 traumatized pops are spawned in the world
+/// ```
 pub fn process_refugee_decision(
     mut events: EventReader<RefugeeWaveEvent>,
     mut commands: Commands,
