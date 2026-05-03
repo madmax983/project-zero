@@ -496,3 +496,4 @@
 - [x] `1233` Public Grievances — `specs/1233-public-grievances.md` — completed 2026-05-02
 - [x] `INT-1247` Integration: The Visitor -> Chronicle - completed 2026-10-31
 - [x] `INT-1248` Integration: Red Tape Defense -> Chronicle — completed 2026-06-25
+- [x] `INT-649` Integration: Pop Relationships -> Day Night Cycle - completed 2026-10-30
