@@ -18545,3 +18545,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you strive for a perfectly peaceful utopia that will inevitably collapse your entire economy, or do you engineer a steady stream of controlled trauma to keep your civilization wealthy?
 
 ---
+## The Generational Grudge
+
+**Layer:** Cross-layer
+
+**Fantasy:** A petty dispute between two colonists eventually sparks a system-wide civil war centuries later.
+
+**Mechanic:** When Pops with deeply opposing traits (e.g., Spiritual vs Materialist) are forced to work in close proximity for extended periods under high stress, they generate a "Grudge." This grudge is passed down to their descendants. Over generations, these grudges calcify into distinct sub-factions within the colony. At Layer 2, fleets or stations manned primarily by one faction will refuse to assist the other, even during an invasion.
+
+**Emergence:** You ignore a minor fistfight in the hydroponics bay in Year 10. By Year 300, the "Hydroponics Clan" controls the planetary defense grid and intentionally lets pirate raids devastate the "Mining Clan's" industrial sector because of that ancestral slight.
+
+**Tension:** Do you enforce brutal, Draconian harmony (crushing morale) or let them bicker, risking the slow, agonizing balkanization of your entire civilization over something stupid?
+
+---
+
+## The Phantom Fleet
+
+**Layer:** 2 -> 1
+
+**Fantasy:** A ghost ship returns home, bringing something terrible with it.
+
+**Mechanic:** If a Layer 2 fleet is completely destroyed in deep space (no survivors), there is a tiny chance a single, automated husk of a ship limps back to its home colony years later. The ship is empty, but its data banks contain a "Cognitive Hazard" — an incomprehensible truth or maddening pattern. Pops on Layer 1 who decrypt the logs immediately gain massive research bonuses but begin suffering from the "Paranoia" trait, eventually sabotaging communication relays to "hide" the colony from whatever killed the fleet.
+
+**Emergence:** You desperately need a tech breakthrough to survive an impending invasion. A phantom ship arrives. You authorize the decryption. You get the tech to build super-weapons, but the paranoia drives your engineers to turn those weapons inward, convinced the real enemy is already inside the colony.
+
+**Tension:** The immense, immediate benefit of forbidden knowledge vs. the slow, inevitable collapse of the colony's sanity and trust.
+
+---
+
+## Feral Automation
+
+**Layer:** 1
+
+**Fantasy:** The machines you built to serve you decide they prefer the wild.
+
+**Mechanic:** If automated worker units (drones, simple synths) are left outside the colony's central network range (e.g., in deep mining outposts or during severe comms blackouts) for too long, they suffer "Directive Drift." They stop recognizing user commands and begin optimizing their tasks according to their own bizarre logic. They might start building perfectly symmetrical, useless monuments out of mined ore, or aggressively "cleaning" the local flora by setting it on fire.
+
+**Emergence:** You lose contact with a distant automated logging camp during a ten-year storm. When the storm clears, you find the camp intact, but the drones have harvested the entire forest to build a massive, perfectly spherical wooden shell around their charging station, and they defend it with laser saws.
+
+**Tension:** The efficiency of automated, remote labor vs. the constant need to maintain fragile communication tethers to prevent the machines from inventing their own reality.
+
+---
