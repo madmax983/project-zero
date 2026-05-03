@@ -14,8 +14,6 @@ pub struct ActiveResearch {
 #[derive(Component)]
 pub struct VulnerableMind;
 
-#[derive(Component)]
-pub struct IsQuarantined;
 
 #[derive(Event)]
 pub struct ConversationEvent {
@@ -49,7 +47,7 @@ pub fn process_artifact_research_system(
 pub fn spread_memetic_hazard_system(
     mut commands: Commands,
     mut events: EventReader<ConversationEvent>,
-    carrier_query: Query<&crate::layer1::memetics::MemeticCarrier, Without<IsQuarantined>>,
+    carrier_query: Query<&crate::layer1::memetics::MemeticCarrier>,
     vulnerable_query: Query<&VulnerableMind>,
 ) {
     for event in events.read() {

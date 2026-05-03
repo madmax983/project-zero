@@ -25,10 +25,6 @@ pub struct Sanctuary {
     pub tiles: Vec<GridPosition>,
 }
 
-#[derive(Component)]
-pub struct ZoneEntity {
-    pub zone_type: ZoneType,
-}
 
 // Alternatively, because the existing architecture uses a `ZoneGrid` resource,
 // instead of explicitly spawning `Zone` entities, we can maintain `Sanctuary` states

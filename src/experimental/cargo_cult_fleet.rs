@@ -47,9 +47,6 @@ impl Default for CargoCultTether {
     }
 }
 
-/// A component marking a Pop as part of the Cult that worships the fleet.
-#[derive(Component, Debug, Clone)]
-pub struct CargoCultCultist;
 
 /// System that detects if a CargoCultFleet should arrive (or spawns one randomly if none exist).
 pub fn spawn_cargo_cult_fleet_system(

@@ -18,8 +18,6 @@ pub struct ExcavationEvent {
     pub target: Entity,
 }
 
-#[derive(Component)]
-pub struct MineableOre;
 
 pub fn resonant_ore_exposure_system(
     mut commands: Commands,
@@ -94,7 +92,7 @@ mod tests {
         app.add_systems(Update, resonant_ore_exposure_system);
 
         let miner = app.world_mut().spawn((Pop, Morale::default())).id();
-        let resonant_ore = app.world_mut().spawn((MineableOre, ResonantOre)).id();
+        let resonant_ore = app.world_mut().spawn(ResonantOre).id(); // MineableOre removed as part of Razor reduction
 
         app.world_mut()
             .resource_mut::<Events<ExcavationEvent>>()
