@@ -859,3 +859,9 @@
 - **Systems connected:** `invoke_red_tape` (Red Tape Defense) -> `red_tape_chronicle_bridge` (Integration) -> `AddChronicleEvent`
 - **Glue added:** Added `red_tape_chronicle_bridge` in `src/layer3/integration.rs`.
 - **Tests:** `tests/integration/red_tape_bridge.rs`
+
+### INT-643: Living Architecture -> Chronicle
+- **Date:** 2026-10-31
+- **Systems connected:** `PopConsumedEvent` -> `living_architecture_chronicle_bridge` -> `AddChronicleEvent`
+- **Glue added:** Added `living_architecture_chronicle_bridge` in `src/layer1/core/integration.rs`.
+- **Tests:** `tests/integration/living_architecture_chronicle.rs`

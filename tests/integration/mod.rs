@@ -53,3 +53,4 @@ pub mod cryptid_chronicle_bridge;
 #[path = "psychoactive_weather_bridge.rs"]
 pub mod psychoactive_weather_bridge;
 pub mod red_tape_bridge;
+pub mod living_architecture_chronicle;

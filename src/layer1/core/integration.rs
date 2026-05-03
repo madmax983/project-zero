@@ -1797,3 +1797,16 @@ pub fn visitor_chronicle_bridge(
         });
     }
 }
+
+/// INT-643: Bridges PopConsumedEvent (Living Architecture) to AddChronicleEvent (Chronicle).
+pub fn living_architecture_chronicle_bridge(
+    mut consumed_events: EventReader<crate::layer1::architecture::living_architecture::PopConsumedEvent>,
+    mut chronicle_events: EventWriter<crate::layer1::core::chronicle::AddChronicleEvent>,
+) {
+    for _event in consumed_events.read() {
+        chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
+            text: "A starving living building has consumed a colonist!".to_string(),
+            importance: crate::layer1::core::chronicle::EventImportance::Major,
+        });
+    }
+}
