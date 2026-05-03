@@ -43,6 +43,8 @@ trunk serve
 ## Usage as a Library
 
 ### Procedural Generation (Narrative)
+> # 🚨 ⚠️ REQUIRES FEATURE NOVA ⚠️ 🚨
+
 
 To use SCALE's procedural generation in your own Rust code:
 
