@@ -24,6 +24,40 @@ pub enum NarrativeError {
     IoError(String, std::io::Error),
 }
 
+use comfy_table::{presets::UTF8_FULL, Cell, Color as TableColor, Table};
+
+impl NarrativeError {
+    /// Returns a beautiful formatted table for the error.
+    pub fn to_table(&self) -> Table {
+        let error_msg = format!("\n  {} \n", self);
+        let action_msg = match self {
+            Self::DirectoryNotFound(_) | Self::NoLoreFiles(_) | Self::IoError(_, _) => {
+                "  Action Required: Check Lore Directory.\n  Verify the folder path exists and contains markdown files. "
+            }
+            Self::TemplateNotFound(_) | Self::MissingContext(_) | Self::MissingFragmentOptions(_) | Self::NoPatternsForTemplate(_) => {
+                "  Action Required: Check Template ID or Context.\n  Verify the name exists in your TEMPLATES.md. "
+            }
+        };
+
+        let mut table = Table::new();
+        table.load_preset(UTF8_FULL);
+
+        let header_title = match self {
+            Self::DirectoryNotFound(_) | Self::NoLoreFiles(_) | Self::IoError(_, _) => " ✗ LORE LOADING ERROR ",
+            _ => " ✗ NARRATIVE GENERATOR ERROR "
+        };
+
+        table.set_header(vec![comfy_table::Cell::new(header_title)
+            .add_attribute(comfy_table::Attribute::Bold)
+            .fg(TableColor::White)
+            .bg(TableColor::Red)]);
+
+        table.add_row(vec![Cell::new(&error_msg).fg(TableColor::White)]);
+        table.add_row(vec![Cell::new(action_msg).fg(TableColor::Yellow)]);
+        table
+    }
+}
+
 /// A segment of a generated narrative.
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub enum NarrativeSegment {
