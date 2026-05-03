@@ -154,7 +154,13 @@ pub fn combat_cooldown_system(mut query: Query<&mut CombatState>) {
 /// // Crit chance makes exact assertion difficult, just assert damage was taken
 /// assert!(health.current < 100.0);
 /// ```
-fn apply_hit_stop_and_juice(world: &mut World, attacker: Entity, target: Entity, damage: f32, is_crit: bool) {
+fn apply_hit_stop_and_juice(
+    world: &mut World,
+    attacker: Entity,
+    target: Entity,
+    damage: f32,
+    is_crit: bool,
+) {
     // Ludwig: "Juice" logic
     // Scale Hit Stop based on damage severity
     let hit_stop_ticks = if is_crit {
@@ -201,7 +207,10 @@ fn apply_hit_stop_and_juice(world: &mut World, attacker: Entity, target: Entity,
     }
 
     // Ludwig: Spawn hit particle
-    let Some(pos) = world.get::<crate::layer1::map::GridPosition>(target).copied() else {
+    let Some(pos) = world
+        .get::<crate::layer1::map::GridPosition>(target)
+        .copied()
+    else {
         return;
     };
     spawn_particle(world, pos, particle_char, particle_color, particle_lifetime);
