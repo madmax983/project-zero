@@ -689,6 +689,38 @@ fn get_inspector_layout_info(world: &World, entity: Entity) -> InspectorLayoutIn
     }
 }
 
+fn render_specific_details(frame: &mut Frame, details_area: Rect, world: &World, entity: Entity) {
+    if let Some(needs) = world.get::<Needs>(entity) {
+        let bio_opt = world.get::<Biocompatibility>(entity);
+        let health_opt = world.get::<Health>(entity);
+        render_bio_monitor(frame, details_area, needs, bio_opt, health_opt);
+        return;
+    }
+    if let Some(housing) = world.get::<Housing>(entity) {
+        render_housing_details(frame, details_area, housing);
+        return;
+    }
+    if let Some(farm) = world.get::<Farm>(entity) {
+        render_farm_details(frame, details_area, farm);
+        return;
+    }
+    if let Some(stockpile) = world.get::<Stockpile>(entity) {
+        render_stockpile_details(frame, details_area, stockpile);
+        return;
+    }
+    if let Some(progress) = world.get::<RefiningProgress>(entity) {
+        render_refining_details(frame, details_area, progress);
+        return;
+    }
+    if let Some(obs) = world.get::<Observatory>(entity) {
+        render_observatory_details(frame, details_area, obs, world);
+        return;
+    }
+    if let Some(fauna) = world.get::<NocturnalFauna>(entity) {
+        render_nocturnal_fauna_details(frame, details_area, fauna, world);
+    }
+}
+
 fn render_entity_inspector(frame: &mut Frame, area: Rect, world: &World, entity: Entity) {
     if !world.entities().contains(entity) {
         frame.render_widget(
@@ -746,24 +778,7 @@ fn render_entity_inspector(frame: &mut Frame, area: Rect, world: &World, entity:
         frame.render_widget(Paragraph::new(line), layout[3]);
     }
 
-    let details_area = layout[5];
-    if let Some(needs) = world.get::<Needs>(entity) {
-        let bio_opt = world.get::<Biocompatibility>(entity);
-        let health_opt = world.get::<Health>(entity);
-        render_bio_monitor(frame, details_area, needs, bio_opt, health_opt);
-    } else if let Some(housing) = world.get::<Housing>(entity) {
-        render_housing_details(frame, details_area, housing);
-    } else if let Some(farm) = world.get::<Farm>(entity) {
-        render_farm_details(frame, details_area, farm);
-    } else if let Some(stockpile) = world.get::<Stockpile>(entity) {
-        render_stockpile_details(frame, details_area, stockpile);
-    } else if let Some(progress) = world.get::<RefiningProgress>(entity) {
-        render_refining_details(frame, details_area, progress);
-    } else if let Some(obs) = world.get::<Observatory>(entity) {
-        render_observatory_details(frame, details_area, obs, world);
-    } else if let Some(fauna) = world.get::<NocturnalFauna>(entity) {
-        render_nocturnal_fauna_details(frame, details_area, fauna, world);
-    }
+    render_specific_details(frame, layout[5], world, entity);
 
     if let Some(structure) = world.get::<Structure>(entity) {
         let pct = if structure.max_hp > 0.0 {

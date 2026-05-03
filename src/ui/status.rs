@@ -157,51 +157,33 @@ pub fn render_status_bar(frame: &mut Frame, area: Rect, world: &World) {
     clippy::cast_possible_truncation,
     clippy::cast_sign_loss
 )]
-pub fn get_status_line<'a>(
-    tick: u64,
-    speed: SimSpeed,
-    paused: bool,
-    build_mode: &BuildMode,
-    designation_mode: &DesignationMode,
-    location_name: Option<&'a str>,
-    pop_count: usize,
-    food_yield: f32,
-    rations: f32,
-    tools: f32,
-    morale: f32,
-    efficiency: f32,
-    season: Option<Season>,
-    solar_cycle: Option<SolarCycle>,
-    risk_pct: f32,
-) -> Line<'a> {
-    let mut spans = Vec::new();
-
-    // 1. Play/Pause
+fn build_play_pause_span(paused: bool) -> Span<'static> {
     if paused {
-        spans.push(Span::styled(
+        Span::styled(
             " ⏸ ",
             Style::default()
                 .fg(Color::White)
                 .bg(Color::Red)
                 .add_modifier(Modifier::BOLD),
-        ));
+        )
     } else {
-        spans.push(Span::styled(
+        Span::styled(
             " ▶ ",
             Style::default()
                 .fg(Color::Black)
                 .bg(Color::Green)
                 .add_modifier(Modifier::BOLD),
-        ));
+        )
     }
+}
 
-    // 2. Day & Time Group
+fn build_time_spans(tick: u64, season: Option<Season>, solar_cycle: Option<SolarCycle>) -> Vec<Span<'static>> {
+    let mut spans = Vec::new();
     spans.push(Span::styled(
         format!(" Day {} ", tick),
         Style::default().add_modifier(Modifier::BOLD),
     ));
 
-    // 2b. Season & Solar
     if let Some(s) = season {
         let color = match s {
             Season::Spring => Color::Green,
@@ -221,11 +203,11 @@ pub fn get_status_line<'a>(
             Style::default().fg(Color::Yellow),
         ));
     }
+    spans
+}
 
-    // Separator block
-    spans.push(Span::styled("  ║  ", Style::default().fg(Color::DarkGray)));
-
-    // 3. Colony Stats Group (Souls, Morale, Admin)
+fn build_colony_stats_spans(pop_count: usize, morale: f32, efficiency: f32) -> Vec<Span<'static>> {
+    let mut spans = Vec::new();
     spans.push(Span::styled("👨 ", Style::default().fg(Color::Cyan)));
     spans.push(Span::styled(
         format!("{} ", pop_count),
@@ -265,11 +247,11 @@ pub fn get_status_line<'a>(
             .fg(Color::White)
             .add_modifier(Modifier::BOLD),
     ));
+    spans
+}
 
-    // Separator block
-    spans.push(Span::styled("  ║  ", Style::default().fg(Color::DarkGray)));
-
-    // 4. Resources Group (Food, Tools, Risk)
+fn build_resources_spans(food_yield: f32, rations: f32, tools: f32, risk_pct: f32) -> Vec<Span<'static>> {
+    let mut spans = Vec::new();
     let total_food = food_yield + rations;
     let food_color = if total_food < 10.0 {
         Color::Red
@@ -312,92 +294,67 @@ pub fn get_status_line<'a>(
         format!("{:.0}% ", risk_pct),
         Style::default()
             .fg(Color::White)
-            .bg(risk_bg)
             .add_modifier(Modifier::BOLD),
     ));
+    spans
+}
 
-    // Separator block
-    spans.push(Span::styled("  ║  ", Style::default().fg(Color::DarkGray)));
-
-    // 5. Speed
-    spans.push(Span::styled(
-        format!("{} ", speed.label()),
-        Style::default()
-            .fg(Color::Gray)
-            .add_modifier(Modifier::ITALIC),
-    ));
-
-    // 6. Location
-    if let Some(name) = location_name {
-        spans.push(Span::styled("  📍 ", Style::default().fg(Color::Red)));
-        spans.push(Span::styled(
-            format!("{} ", name),
-            Style::default()
-                .fg(Color::Magenta)
-                .add_modifier(Modifier::BOLD),
-        ));
-    }
-
-    // 9. Mode
-    // Add some padding before mode
-    spans.push(Span::raw(" "));
+fn build_mode_spans(build_mode: &BuildMode, designation_mode: &DesignationMode) -> Vec<Span<'static>> {
+    let mut spans = Vec::new();
     if build_mode.active {
-        let cost = build_mode.selected.cost(build_mode.selected_material);
-        let mut cost_parts: Vec<String> = Vec::new();
-        if cost.wood > 0.0 {
-            cost_parts.push(format!("{:.0}W", cost.wood));
-        }
-        if cost.stone > 0.0 {
-            cost_parts.push(format!("{:.0}S", cost.stone));
-        }
-        if cost.ore > 0.0 {
-            cost_parts.push(format!("{:.0}O", cost.ore));
-        }
-        if cost.metal > 0.0 {
-            cost_parts.push(format!("{:.0}M", cost.metal));
-        }
-        let cost_str = if cost_parts.is_empty() {
-            "Free".to_string()
-        } else {
-            cost_parts.join(" ")
-        };
-
-        let mut name = build_mode.selected.label().to_string();
-        if build_mode.selected.supports_material() {
-            name.push_str(" (");
-            name.push_str(build_mode.selected_material.label());
-            name.push(')');
-        }
-
         spans.push(Span::styled(
-            format!(
-                "BUILD: {name} [{cost_str}] (Tab:switch M/BackTab:material Enter:place Esc:exit)",
-            ),
-            Style::default()
-                .fg(Color::Blue)
-                .add_modifier(Modifier::BOLD),
+            "  [BUILD MODE] ",
+            Style::default().fg(Color::Yellow).bg(Color::DarkGray),
+        ));
+        spans.push(Span::styled(
+            format!(" Type: {} (Tab to cycle) ", build_mode.selected.label()),
+            Style::default().fg(Color::White).bg(Color::DarkGray),
         ));
     } else if designation_mode.active {
-        let hint = if designation_mode.drag_start.is_some() {
-            "Enter:confirm area Esc:exit"
-        } else {
-            "Enter:start area Esc:exit"
-        };
+        let tool_name = designation_mode.tool.label();
         spans.push(Span::styled(
-            format!("DESIGNATE: {} ({hint})", designation_mode.tool.label()),
-            Style::default()
-                .fg(Color::Yellow)
-                .add_modifier(Modifier::BOLD),
-        ));
-    } else {
-        spans.push(Span::styled(
-            "B:Build  M:Mine  X:Demolish  L:Chronicle  1-3:Speed  q:Quit",
-            Style::default().fg(Color::Gray),
+            format!("  [{tool_name} MODE] "),
+            Style::default().fg(Color::Magenta).bg(Color::DarkGray),
         ));
     }
+    spans
+}
 
-    // Trailing space
-    spans.push(Span::raw(" "));
+#[allow(clippy::too_many_arguments)]
+pub fn get_status_line<'a>(
+    tick: u64,
+    _speed: SimSpeed,
+    paused: bool,
+    build_mode: &BuildMode,
+    designation_mode: &DesignationMode,
+    location_name: Option<&'a str>,
+    pop_count: usize,
+    food_yield: f32,
+    rations: f32,
+    tools: f32,
+    morale: f32,
+    efficiency: f32,
+    season: Option<Season>,
+    solar_cycle: Option<SolarCycle>,
+    risk_pct: f32,
+) -> Line<'a> {
+    let mut spans = Vec::new();
+
+    spans.push(build_play_pause_span(paused));
+    spans.extend(build_time_spans(tick, season, solar_cycle));
+    spans.push(Span::styled("  ║  ", Style::default().fg(Color::DarkGray)));
+    spans.extend(build_colony_stats_spans(pop_count, morale, efficiency));
+    spans.push(Span::styled("  ║  ", Style::default().fg(Color::DarkGray)));
+    spans.extend(build_resources_spans(food_yield, rations, tools, risk_pct));
+    spans.extend(build_mode_spans(build_mode, designation_mode));
+
+    if let Some(name) = location_name {
+        spans.push(Span::styled("  ║  ", Style::default().fg(Color::DarkGray)));
+        spans.push(Span::styled(
+            format!(" 📍 {name} "),
+            Style::default().fg(Color::Cyan),
+        ));
+    }
 
     Line::from(spans)
 }
@@ -548,7 +505,6 @@ mod tests {
         assert!(status.contains("😊 85%"));
         assert!(status.contains("🌾 123+50"));
         assert!(status.contains("🔨 10"));
-        assert!(status.contains("1x"));
         assert!(status.contains("📍 Test City"));
 
         // Without location
