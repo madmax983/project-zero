@@ -864,3 +864,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1245` Chronological Stutter — `specs/1245-chronological-stutter.md`
 - [ ] `1246` The Echo — `specs/1246-the-echo.md`
 - [ ] `1247` The Visitor — `specs/1247-the-visitor.md`
+- [ ] `1248` Pneumatic Tubes — `specs/1248-pneumatic-tubes.md`
+- [ ] `1249` Ship Personalities — `specs/1249-ship-personalities.md`
+- [ ] `1250` Corrosive Atmosphere — `specs/1250-corrosive-atmosphere.md`

@@ -179,7 +179,7 @@ pub fn evaluate_obsession_utility_system(
 *Builder: add questions here if spec is unclear.*
 *Builder questions:*
 1. The `SocialInteractionEvent` referenced in RED/GREEN phase does not exist in the codebase. Should this be a new event, or use an existing one? If new, what triggers it?
-   - *Architect:* Create a new `SocialInteractionEvent { pub initiator: Entity, pub target: Entity }` in `src/layer1/social/mod.rs` and emit it from `proximity_social_system` when two pops are close.
+   - *Architect:* Create a new `SocialInteractionEvent { pub initiator: Entity, pub target: Entity }` in `src/layer1/social/mod.rs` (or directly in the new `memetic_plague` module) and emit it from a new `proximity_social_system` when two pops are close.
 2. `UtilityAIBuffer` does not have an `add_action` or `get_top_action` method. Utility scoring is now done via `PopDecider` returning `(ActionType, f32, Option<Entity>)`. How should we inject the obsession into this new Utility AI evaluation pipeline?
    - *Architect:* Use the new `PopDecider` pattern (e.g. `PopDecider::consider(action, utility, target)`) to return a high utility score for the obsession.
 3. Adding `MemeticObsession(ObsessionType)` to `ActionType` is currently impossible because `ActionType` is a C-like enum where variants have no data (`ActionType` uses `pub const COUNT: usize = 39` and `as_index()` for array bounds). We can't easily add a variant with data like `(ObsessionType)`. How should the obsession action be represented? Perhaps multiple action types (`StackChairs`, `DigHoles`), or a single `MemeticObsession` action type that looks up the `ObsessionType` from the `MemeticInfection` component during execution?
