@@ -13,3 +13,15 @@
 ## 2024-06-25 - Bevy System Tuple Pyramid of Doom Smell
 **Learning:** Adding too many systems (more than ~15-20 depending on Bevy version) into a single tuple like `schedule.add_systems((sys1, sys2, ...))` causes the Rust compiler to exceed its recursion limits or fail with a vague `error[E0599]: the method in_set exists for tuple but its trait bounds were not satisfied`. This happens because Bevy defines `IntoSystemConfigs` and `IntoSystemSetConfigs` up to a certain tuple arity.
 **Action:** When encountering massive system registration tuples, split them into multiple smaller `schedule.add_systems((...))` calls to keep the arity well below Bevy's internal limits, keeping the code clean and strictly avoiding compiler recursion bound failures.
+
+## 2024-05-28 - Flattened UI Status Logic Smell
+**Learning:** `get_status_line` in `ui/status.rs` was a single massive God Function building an immense vector of spans manually, creating high visual complexity.
+**Action:** Extracted the visual sections (play/pause, time, colony stats, resources, modes) into small independent helper functions, dramatically reducing the size of the main `get_status_line` method and making it purely compositional without altering any behavior.
+
+## 2024-05-28 - Extracted Inspector Logic Smell
+**Learning:** `render_entity_inspector` in `ui/inspector.rs` had a 40+ line block of `else if let` checks for different component types, violating "Flattening the Pyramid" principles.
+**Action:** Moved the long `else if let` sequence into a `render_specific_details` helper function containing guard clauses (`if let Some(...) = ... { render_...(); return; }`), greatly simplifying the parent function's logic flow.
+
+## 2024-05-28 - Extracted Hit Stop Juice Logic Smell
+**Learning:** `execute_attack` in `layer1/combat.rs` was bloated with heavy "Hit Stop" visual effect logic and particle spawning mixed directly with core combat damage calculations.
+**Action:** Flattened the logic using early returns (`let Some(...) = ... else { return; }`) and extracted the entire visual hit stop/particle "juice" logic into a clean `apply_hit_stop_and_juice` helper function.
