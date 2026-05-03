@@ -18503,3 +18503,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you dismantle the scrap-bots to reclaim the materials and force the colony to face reality (causing a massive morale crash), or do you let them maintain the illusion at the cost of long-term efficiency and technological stagnation?
 
 ---
+
+## The Horizon Tax
+
+**Layer:** Cross-layer
+
+**Fantasy:** Taxing a population not by their wealth, but by their distance from the capital.
+
+**Mechanic:** A civilization policy where Layer 1 colonies pay a "Horizon Tax" that exponentially increases the further they are from the core world in Layer 3 hyperlane jumps. This tax isn't paid in credits, but in "Admin Time," causing local building construction and policy changes to be artificially delayed by days or weeks as paperwork travels the hyperlanes.
+
+**Emergence:** Your wealthy, ultra-productive rim colony is suddenly paralyzed when a hyperlane collapse on Layer 3 effectively doubles their distance from the capital. A simple request to build a water pump now takes a month of administrative delay to process, causing a localized drought purely due to bureaucratic lag.
+
+**Tension:** Do you endure the crippling delays to maintain control over distant rim worlds, or grant them autonomy, risking a breakaway faction but ensuring they can actually govern themselves in a crisis?
+
+---
+
+## Somatic Sabotage
+
+**Layer:** 1
+
+**Fantasy:** Weaponizing biological fatigue against occupying forces.
+
+**Mechanic:** When a colony is occupied, the native Pops can secretly engage in "Somatic Sabotage." They intentionally overwork themselves during their assigned labor shifts, building up massive amounts of "Sleep Debt" and stress. When forced to interact with occupying troops or managers, the natives use the existing "Sleep Debt Contagion" mechanic to silently "infect" the occupiers with their exhaustion, drastically lowering the garrison's efficiency and combat readiness over weeks.
+
+**Emergence:** The occupying army boasts impenetrable armor and superior firepower. But after a month of guarding the mines, the entire garrison is mysteriously hallucinating from sleep deprivation and stumbling over their own feet because the miners have been weaponizing their own exhaustion against them.
+
+**Tension:** How much physical trauma do you allow your own Pops to inflict upon themselves in order to silently bleed the occupier's military strength?
+
+---
+
+## Memorial Currency
+
+**Layer:** Cross-layer
+
+**Fantasy:** An economy backed by the documented grief and memories of the dead.
+
+**Mechanic:** A civilization type that abandons physical credits in favor of "Memorial Currency." The value of a colony's economy is directly tied to the number of uniquely documented `Memories` stored in their local "Mausoleum Hubs." When a Pop dies, their memories are extracted and digitized, "minting" new currency. This creates a hyper-efficient economy on Layer 3, but requires constant cultural or physical tragedy on Layer 1 to prevent deflation.
+
+**Emergence:** Your economy is stagnating. To prevent a catastrophic deflationary spiral, you deliberately orchestrate a highly survivable but deeply traumatic disaster (like a localized blackout in the entertainment district) to generate a massive influx of new "fear" memories to mint and stabilize the market.
+
+**Tension:** Do you strive for a perfectly peaceful utopia that will inevitably collapse your entire economy, or do you engineer a steady stream of controlled trauma to keep your civilization wealthy?
+
+---
