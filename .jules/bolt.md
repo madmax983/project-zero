@@ -32,3 +32,7 @@
 **[Optimizing command palette filtering]**
 **Learning:** Returning `Vec<ShellCommand>` from `filtered_palette_commands` involved calling `.cloned()` and creating a `Vec` with full struct copies, even though we just use them for read-only sorting and iteration.
 **Action:** Changed the return type to `Vec<&ShellCommand>` to return references directly, avoiding the unnecessary `.cloned()` call while still allowing us to safely sort the filtered subset of commands.
+
+**Vec Allocation Overhead in ECS Queries**
+**Learning:** Initializing an intermediate `Vec::new()` and iterating to conditionally `.push()` results from Bevy ECS queries incurs unnecessary heap allocation overhead during tight loops or tick-based logic.
+**Action:** Stream query results directly into collections using `query.iter().filter_map().collect()` to allow Rust's standard library to optimize memory allocation and remove intermediary vector states.

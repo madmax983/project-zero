@@ -1,14 +1,12 @@
-use bevy_ecs::prelude::*;
-use crate::layer1::pop::{Pop, Speed, PopName};
-use crate::layer1::needs::Needs;
-use crate::layer1::beauty::BeautySource;
 use crate::layer1::artifacts::Artifact;
+use crate::layer1::beauty::BeautySource;
 use crate::layer1::deep_crust_resonance::ExcavationEvent;
 use crate::layer1::map::GridPosition;
-
+use crate::layer1::needs::Needs;
+use crate::layer1::pop::{Pop, PopName, Speed};
+use bevy_ecs::prelude::*;
 
 use crate::layer1::biology::health::DamageResistance;
-
 
 #[derive(Component)]
 pub struct PetrificationSickness {
@@ -28,7 +26,7 @@ pub fn petrification_exposure_system(
                     stage: 1,
                     max_stage: 100,
                 },
-                DamageResistance::default()
+                DamageResistance::default(),
             ));
         }
     }
@@ -38,8 +36,8 @@ pub fn petrification_progression_system(
     mut query: Query<(
         &mut PetrificationSickness,
         Option<&mut Speed>,
-        Option<&mut DamageResistance>
-    )>
+        Option<&mut DamageResistance>,
+    )>,
 ) {
     for (mut sickness, mut speed_opt, mut resistance_opt) in query.iter_mut() {
         if sickness.stage < sickness.max_stage {
@@ -60,7 +58,7 @@ pub fn petrification_progression_system(
 
 pub fn petrification_transformation_system(
     mut commands: Commands,
-    query: Query<(Entity, &PetrificationSickness, Option<&GridPosition>), With<Pop>>
+    query: Query<(Entity, &PetrificationSickness, Option<&GridPosition>), With<Pop>>,
 ) {
     for (entity, sickness, pos_opt) in query.iter() {
         if sickness.stage >= sickness.max_stage {
@@ -77,7 +75,7 @@ pub fn petrification_transformation_system(
                 });
 
             if pos_opt.is_none() {
-                 entity_cmds.insert(GridPosition { x: 0, y: 0 }); // Fallback for artifact rendering if needed
+                entity_cmds.insert(GridPosition { x: 0, y: 0 }); // Fallback for artifact rendering if needed
             }
         }
     }
@@ -86,8 +84,8 @@ pub fn petrification_transformation_system(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::shared::time::SimulationTime;
     use crate::layer1::map::GridPosition;
+    use crate::shared::time::SimulationTime;
 
     fn setup_world() -> World {
         let mut world = World::new();
@@ -100,14 +98,16 @@ mod tests {
     fn test_mining_resonant_ore_causes_petrification_exposure() {
         let mut world = setup_world();
 
-        let miner = world.spawn((Pop, )).id();
+        let miner = world.spawn((Pop,)).id();
 
-        world.resource_mut::<Events<ExcavationEvent>>().send(ExcavationEvent {
-            colony: Entity::PLACEHOLDER,
-            miner,
-            discovery_type: "ResonantOre".to_string(),
-            target: Entity::PLACEHOLDER,
-        });
+        world
+            .resource_mut::<Events<ExcavationEvent>>()
+            .send(ExcavationEvent {
+                colony: Entity::PLACEHOLDER,
+                miner,
+                discovery_type: "ResonantOre".to_string(),
+                target: Entity::PLACEHOLDER,
+            });
 
         let mut schedule = bevy_ecs::schedule::Schedule::default();
         schedule.add_systems(petrification_exposure_system);
@@ -124,13 +124,22 @@ mod tests {
     fn test_petrification_progresses_and_alters_stats() {
         let mut world = setup_world();
 
-        let pop = world.spawn((
-            Pop,
-            Speed { base: 1.0, current: 1.0, accumulator: 0.0 },
-            Needs::default(),
-            DamageResistance::default(),
-            PetrificationSickness { stage: 50, max_stage: 100 }
-        )).id();
+        let pop = world
+            .spawn((
+                Pop,
+                Speed {
+                    base: 1.0,
+                    current: 1.0,
+                    accumulator: 0.0,
+                },
+                Needs::default(),
+                DamageResistance::default(),
+                PetrificationSickness {
+                    stage: 50,
+                    max_stage: 100,
+                },
+            ))
+            .id();
 
         let mut schedule = bevy_ecs::schedule::Schedule::default();
         schedule.add_systems(petrification_progression_system);
@@ -140,27 +149,41 @@ mod tests {
         assert!(sickness.stage > 50);
 
         let speed = world.get::<Speed>(pop).unwrap();
-        assert!(speed.current < 1.0, "Movement speed should decrease as pop petrifies");
+        assert!(
+            speed.current < 1.0,
+            "Movement speed should decrease as pop petrifies"
+        );
 
         let resistance = world.get::<DamageResistance>(pop).unwrap();
-        assert!(resistance.physical > 0.0, "Physical resistance should increase as pop turns to stone");
+        assert!(
+            resistance.physical > 0.0,
+            "Physical resistance should increase as pop turns to stone"
+        );
     }
 
     #[test]
     fn test_full_petrification_transforms_pop_into_artifact() {
         let mut world = setup_world();
 
-        let pop = world.spawn((
-            Pop,
-            GridPosition { x: 5, y: 5 },
-            PetrificationSickness { stage: 99, max_stage: 100 }
-        )).id();
+        let pop = world
+            .spawn((
+                Pop,
+                GridPosition { x: 5, y: 5 },
+                PetrificationSickness {
+                    stage: 99,
+                    max_stage: 100,
+                },
+            ))
+            .id();
 
         let mut schedule = bevy_ecs::schedule::Schedule::default();
-        schedule.add_systems((
-            petrification_progression_system,
-            petrification_transformation_system
-        ).chain());
+        schedule.add_systems(
+            (
+                petrification_progression_system,
+                petrification_transformation_system,
+            )
+                .chain(),
+        );
         schedule.run(&mut world);
 
         assert!(world.get::<Pop>(pop).is_none());
