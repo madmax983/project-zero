@@ -39,6 +39,8 @@ fn test_sanctuary_evaluated_by_ai() {
             GridPosition { x: 0, y: 0 },
             Needs::default(),
             UtilityWeights {
+                work: 1.0,
+                defend: 1.0,
                 distance_weight: 1.0,
                 availability_weight: 1.0,
             },
@@ -61,6 +63,8 @@ fn test_sanctuary_evaluated_by_ai() {
                 hygiene: 1.0,
             },
             UtilityWeights {
+                work: 1.0,
+                defend: 1.0,
                 distance_weight: 1.0,
                 availability_weight: 1.0,
             },

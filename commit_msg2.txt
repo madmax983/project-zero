@@ -1,0 +1,3 @@
+fix(layer1): update UtilityWeights struct in tests and gpu buffers
+
+Added `work` and `defend` fields to `UtilityWeights` initializations across the codebase to resolve compiler errors introduced by the Rogue Automation Cults feature implementation.

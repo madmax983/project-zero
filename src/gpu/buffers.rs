@@ -593,6 +593,8 @@ mod tests {
                     hygiene: 0.8,
                 },
                 UtilityWeights {
+                work: 1.0,
+                defend: 1.0,
                     distance_weight: 1.2,
                     availability_weight: 0.8,
                 },

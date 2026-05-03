@@ -312,6 +312,8 @@ impl Default for PopAction {
 /// The "Personality" or "Memory" of a Pop.
 #[derive(Component, Clone, Copy, Debug)]
 pub struct UtilityWeights {
+    pub work: f32,
+    pub defend: f32,
     /// How much distance penalties affect scoring.
     /// *   Higher (> 1.0): Hates walking.
     /// *   Lower (< 1.0): Willing to travel.
@@ -326,6 +328,8 @@ pub struct UtilityWeights {
 impl Default for UtilityWeights {
     fn default() -> Self {
         Self {
+            work: 1.0,
+            defend: 1.0,
             distance_weight: 1.0,
             availability_weight: 1.0,
         }

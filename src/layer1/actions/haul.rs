@@ -162,6 +162,8 @@ mod tests {
     fn should_target_gene_bank_when_carrying_genetic_sample() {
         let pop_pos = GridPosition { x: 0, y: 0 };
         let weights = UtilityWeights {
+            work: 1.0,
+            defend: 1.0,
             distance_weight: 1.0,
             availability_weight: 1.0,
         };
@@ -197,6 +199,8 @@ mod tests {
     fn should_return_none_if_carrying_but_no_stockpile_exists() {
         let pop_pos = GridPosition { x: 0, y: 0 };
         let weights = UtilityWeights {
+            work: 1.0,
+            defend: 1.0,
             distance_weight: 1.0,
             availability_weight: 1.0,
         };
@@ -229,6 +233,8 @@ mod tests {
     fn should_target_stockpile_if_carrying_generic_resource() {
         let pop_pos = GridPosition { x: 0, y: 0 };
         let weights = UtilityWeights {
+            work: 1.0,
+            defend: 1.0,
             distance_weight: 1.0,
             availability_weight: 1.0,
         };
@@ -266,6 +272,8 @@ mod tests {
     fn should_pick_up_item_if_empty_handed_and_stockpiles_exist() {
         let pop_pos = GridPosition { x: 0, y: 0 };
         let weights = UtilityWeights {
+            work: 1.0,
+            defend: 1.0,
             distance_weight: 1.0,
             availability_weight: 1.0,
         };
@@ -304,6 +312,8 @@ mod tests {
     fn should_ignore_pickup_if_resource_at_max_capacity() {
         let pop_pos = GridPosition { x: 0, y: 0 };
         let weights = UtilityWeights {
+            work: 1.0,
+            defend: 1.0,
             distance_weight: 1.0,
             availability_weight: 1.0,
         };

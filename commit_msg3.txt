@@ -1,0 +1,3 @@
+fix(layer1): fix tests affected by UtilityWeights struct change
+
+Fixed initialization of `UtilityWeights` in sleepwalking tests.

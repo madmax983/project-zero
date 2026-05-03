@@ -27,6 +27,8 @@ fn benchmark_context_score(c: &mut Criterion) {
     );
 
     let varied_weights = UtilityWeights {
+                work: 1.0,
+                defend: 1.0,
         distance_weight: 1.5,
         availability_weight: 0.8,
     };

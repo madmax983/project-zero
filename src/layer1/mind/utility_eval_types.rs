@@ -660,6 +660,8 @@ mod tests {
         let test_cases = vec![
             (
                 UtilityWeights {
+                work: 1.0,
+                defend: 1.0,
                     distance_weight: 10.0,
                     availability_weight: 0.0,
                 },
@@ -667,6 +669,8 @@ mod tests {
             ), // Prefers distance
             (
                 UtilityWeights {
+                work: 1.0,
+                defend: 1.0,
                     distance_weight: 0.0,
                     availability_weight: 10.0,
                 },
