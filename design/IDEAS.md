@@ -18586,3 +18586,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** The efficiency of automated, remote labor vs. the constant need to maintain fragile communication tethers to prevent the machines from inventing their own reality.
 
 ---
+## The Terraformer's Regret
+
+**Layer:** Cross-layer
+
+**Fantasy:** Remorse and guilt for erasing an alien ecosystem to make it habitable for your colonists.
+
+**Mechanic:** When a Layer 2 terraforming project succeeds on a Layer 1 colony, the native flora/fauna is wiped out. This triggers a colony-wide mood penalty called "Ecological Guilt" for Pops with the "Empathic" trait. They may secretly hoard seeds or DNA of the extinct species.
+
+**Emergence:** Your terraforming successfully converts a barren rock into an Earth-like paradise, but your most brilliant scientists, overcome with guilt over the extinct silicone-based lifeforms, sabotage the climate control grid to try and recreate the original, toxic atmosphere.
+
+**Tension:** The undeniable strategic need for habitable planets vs. the psychological toll and potential sabotage from destroying entire alien biospheres.
+
+---
+
+## Orbital Shadow Markets
+
+**Layer:** 2 -> 1
+
+**Fantasy:** A black market that exists literally in the shadow of a massive orbital structure.
+
+**Mechanic:** A massive Layer 2 orbital station (like a shipyard or habitat) casts a permanent, moving shadow across the Layer 1 colony below. Solar power fails here, and law enforcement is less effective due to sensor interference. Pops figure this out and physically move their black market stalls to stay within the moving shadow.
+
+**Emergence:** You build a massive orbital defense platform to protect the colony. Its massive shadow creates a perpetual "lawless zone" that slowly circles the globe. Criminal syndicates literally follow the shadow in mobile convoys, making them impossible to pin down while they drain your colony's resources.
+
+**Tension:** Do you build the massive orbital infrastructure needed to win the war, knowing you are actively providing cover for a sprawling criminal enterprise on the surface?
+
+---
+
+## The Martyr's Liability
+
+**Layer:** Cross-layer
+
+**Fantasy:** A hero's sacrifice becomes a devastating economic burden for their descendants.
+
+**Mechanic:** When a highly decorated fleet commander (Layer 2) dies in battle, the civilization automatically grants their descendants on Layer 1 a massive "Hero's Pension." This pension is paid locally by the colony, not the empire.
+
+**Emergence:** Your finest Admiral saves the homeworld, a glorious victory. But her extended family all live on a struggling rim colony. The massive, mandatory "Hero's Pension" bankrupts the local rim colony, causing a localized economic collapse and rebellion, all because the empire insisted on honoring a hero without footing the bill.
+
+**Tension:** Do you promote your best commanders, knowing their inevitable glorious death in battle might accidentally bankrupt their impoverished home colony?
+
+---
