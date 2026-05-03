@@ -1,164 +1,99 @@
-1. *Add fragments to `lore/FRAGMENTS.md`*
-   - `cat << 'EOF' >> lore/FRAGMENTS.md
+1. Claim task 631 in `design/IN_PROGRESS.md` and `design/BACKLOG.md`
+   - Use `sed` to remove `- [ ] \`631\` Conveyor Logistics — \`specs/631-conveyor-logistics.md\`` from `design/BACKLOG.md`
+   - Use `sed` to append `- [ ] \`631\` Conveyor Logistics — \`specs/631-conveyor-logistics.md\` — claimed 2026-03-24` to `design/IN_PROGRESS.md`
+   - Verify changes using `cat design/BACKLOG.md | grep 631` and `cat design/IN_PROGRESS.md | grep 631`
 
-## Petrification Sickness Fragments (Spec 634)
+2. Stage and commit the claim
+   - `git add design/`
+   - `git commit -m "claim: 631 conveyor logistics"`
 
-## Fragment Type: [PETRIFICATION_STAGE]
-- a slow stiffening of the joints
-- graying of the skin
-- turning cold as stone
-- an unbreakable stillness
-- the final hardening
+3. Make `ConveyorBelt` block pathfinding in `src/layer1/architecture/building.rs`
+   - Use `replace_with_git_merge_diff` to remove `| Self::ConveyorBelt` from `is_obstacle`.
+```text
+<<<<<<< SEARCH
+                | Self::Landfill
+                | Self::PersonalGarden
+                | Self::ConveyorBelt
+                | Self::Airlock // Vent is explicitly an obstacle for standard movement (blocks Pops),
+=======
+                | Self::Landfill
+                | Self::PersonalGarden
+                | Self::Airlock // Vent is explicitly an obstacle for standard movement (blocks Pops),
+>>>>>>> REPLACE
+```
 
-## Fragment Type: [STONE_DESCRIPTORS]
-- resembling crude granite
-- veins of exotic ore
-- polished and silent
-- unnaturally heavy
-- cold and rigid
-EOF`
+4. Add `blocks_pathfinding` test to `src/layer1/logistics/conveyor.rs`.
+   - Modify `src/layer1/logistics/conveyor.rs` using `replace_with_git_merge_diff` to add the `test_conveyor_blocks_pathfinding` test and `blocks_pathfinding` method to the `ConveyorBelt` impl block.
 
-2. *Verify `lore/FRAGMENTS.md`*
-   - `tail -n 20 lore/FRAGMENTS.md`
+```text
+<<<<<<< SEARCH
+/// Component for a conveyor belt that moves items.
+#[derive(Component, Debug, Clone)]
+pub struct ConveyorBelt {
+    /// The direction items are moved.
+    pub direction: Direction,
+    /// The speed of movement (items moved per tick).
+    pub speed: f32,
+}
+=======
+/// Component for a conveyor belt that moves items.
+#[derive(Component, Debug, Clone)]
+pub struct ConveyorBelt {
+    /// The direction items are moved.
+    pub direction: Direction,
+    /// The speed of movement (items moved per tick).
+    pub speed: f32,
+}
 
-3. *Add templates to `lore/TEMPLATES.md`*
-   - `cat << 'EOF' >> lore/TEMPLATES.md
+impl ConveyorBelt {
+    pub fn blocks_pathfinding(&self) -> bool {
+        true
+    }
+}
+>>>>>>> REPLACE
+```
 
-## Petrification Sickness Templates (Spec 634)
+```text
+<<<<<<< SEARCH
+        let pos = world.get::<GridPosition>(item).unwrap();
+        assert_eq!(pos.x, 1);
+        assert_eq!(pos.y, 0);
 
-### Template: PETRIFICATION_EXPOSURE
-**Generates:** Play event
-**Slots:** [COLONY], [YEAR], [NAME], [PETRIFICATION_STAGE]
+        // Run hopper system -> Consume
+        let _ = world.run_system_once(hopper_system);
 
-**Patterns:**
-- "[YEAR]: [NAME] returned from the deep crust mines. They complain of [PETRIFICATION_STAGE]."
-- "The sickness begins in [COLONY]. [NAME] is showing signs of [PETRIFICATION_STAGE]. [YEAR]."
-- "[NAME] was exposed to the resonant ore. The first symptom is [PETRIFICATION_STAGE]. [YEAR]."
+        assert!(world.get_entity(item).is_err());
+        let res = world.resource::<ColonyResources>();
+        assert!((res.stone - 10.0).abs() < f32::EPSILON);
+    }
+}
+=======
+        let pos = world.get::<GridPosition>(item).unwrap();
+        assert_eq!(pos.x, 1);
+        assert_eq!(pos.y, 0);
 
-### Template: PETRIFICATION_COMPLETE
-**Generates:** Play event
-**Slots:** [COLONY], [YEAR], [NAME], [STONE_DESCRIPTORS]
+        // Run hopper system -> Consume
+        let _ = world.run_system_once(hopper_system);
 
-**Patterns:**
-- "[NAME] is gone. They are now just a statue, [STONE_DESCRIPTORS]. [YEAR]."
-- "[YEAR]: The transformation of [NAME] is complete. They stand in [COLONY], [STONE_DESCRIPTORS]."
-- "We lost [NAME] to the stone. Their form is [STONE_DESCRIPTORS]. [YEAR]."
-EOF`
+        assert!(world.get_entity(item).is_err());
+        let res = world.resource::<ColonyResources>();
+        assert!((res.stone - 10.0).abs() < f32::EPSILON);
+    }
 
-4. *Verify `lore/TEMPLATES.md`*
-   - `tail -n 20 lore/TEMPLATES.md`
+    #[test]
+    fn test_conveyor_blocks_pathfinding() {
+        let conveyor = ConveyorBelt { direction: Direction::East, speed: 1.0 };
+        assert!(conveyor.blocks_pathfinding(), "Standard conveyors should block pathfinding");
+    }
+}
+>>>>>>> REPLACE
+```
 
-5. *Add grammars to `lore/GRAMMARS.md`*
-   - `cat << 'EOF' >> lore/GRAMMARS.md
-
-## Petrification Sickness Chaining (Spec 634)
-
-- PETRIFICATION_EXPOSURE → enables → MEDICAL_EMERGENCY
-- PETRIFICATION_EXPOSURE → increases_chance → UNREST_SPIKE
-- PETRIFICATION_COMPLETE → enables → ARTIFACT_CREATION
-- PETRIFICATION_COMPLETE → increases_chance → UNREST
-
-## Monuments of Failure Chaining (Spec 167)
-
-- RUIN_CREATED → enables → RUIN_SCAVENGED
-- RUIN_CREATED → increases_chance → UNREST
-- RUIN_SCAVENGED → enables → NEW_RESOURCE
-- RUIN_SCAVENGED → increases_chance → ACCIDENT
-
-## Crop Diversity Chaining (Spec 120)
-
-- FIRST_HARVEST_WHEAT → enables → FOOD_SURPLUS
-- FIRST_HARVEST_WHEAT → increases_chance → MORALE_BOOST
-- FIRST_HARVEST_POTATO → enables → FAMINE_PREVENTION
-- FIRST_HARVEST_POTATO → increases_chance → WINTER_SURVIVAL
-
-## Atmospheric Processors Chaining (Spec 207)
-
-- PROCESSOR_ONLINE → enables → PLANETARY_HEALING
-- PROCESSOR_ONLINE → increases_chance → MORALE_BOOST
-EOF`
-
-6. *Verify `lore/GRAMMARS.md`*
-   - `tail -n 30 lore/GRAMMARS.md`
-
-7. *Add lexicons to `lore/LEXICON.md`*
-   - `cat << 'EOF' >> lore/LEXICON.md
-
-## The Petrification Sickness (Spec 634)
-
-### Petrification Sickness
-**Replaces:** Disease, turning to stone
-**Code reference:** `PetrificationSickness`
-**Usage:**
-- "The Petrification Sickness claimed three miners today."
-- "There is no cure for the Petrification Sickness."
-
-### Living Statue
-**Replaces:** Petrified colonist, stone artifact
-**Code reference:** `Artifact` from `PetrificationSickness`
-**Usage:**
-- "We placed the Living Statue in the plaza."
-- "The Living Statue still looks like him."
-
-## Monuments of Failure (Spec 167)
-
-### Ruin
-**Replaces:** Destroyed building, rubble
-**Code reference:** `Ruin`
-**Usage:**
-- "The fire left behind a Ruin."
-- "We cannot build over the Ruin until it is cleared."
-
-### Scavenge
-**Replaces:** Demolish ruin, reclaim resources
-**Code reference:** `DesignationType::Demolish`
-**Usage:**
-- "We must Scavenge the old reactor for parts."
-- "Scavenging yielded some usable steel."
-
-## Crop Diversity (Spec 120)
-
-### Sun-Grain
-**Replaces:** Wheat, standard crop
-**Code reference:** `ItemType::Wheat`
-**Usage:**
-- "The Sun-Grain harvest was plentiful."
-
-### Earth-Apple
-**Replaces:** Potato, root crop
-**Code reference:** `ItemType::Potato`
-**Usage:**
-- "We survive on Earth-Apples this winter."
-
-## Atmospheric Processors (Spec 207)
-
-### Air-Forge / The Lung
-**Replaces:** Atmospheric processor building
-**Code reference:** `BuildingType::AtmosphericProcessor`
-**Usage:**
-- "The Lung failed today. The air tastes like ash."
-- "Build another Air-Forge before we suffocate."
-EOF`
-
-8. *Verify `lore/LEXICON.md`*
-   - `tail -n 40 lore/LEXICON.md`
-
-9. *Run tests in the background*
-   - `cargo test &> test_output.log &`
-
-10. *Monitor the results*
-    - `sleep 10 && tail -n 50 test_output.log`
-
-11. *Remove the test artifact*
-    - `rm test_output.log`
-
-12. *Prepare git submission*
-    - `git checkout -b lore-mechanics-updates`
-    - `git add lore/`
-    - `git commit -m "lore: add petrification sickness, monuments, crop, and atmospheric processor lore"`
-
-13. *Complete pre commit steps*
-    - Complete pre-commit steps to ensure proper testing, verification, review, and reflection are done.
-
-14. *Submit the changes using the submit tool*
-    - I will call the `submit` tool to finalize the changes.
+5. Run tests using `cargo test &> test_output.log &`.
+6. Monitor the results using `sleep 10 && tail -n 50 test_output.log`.
+7. Remove the test output artifact using `rm test_output.log`.
+8. Stage and commit the implementation
+   - `git add .`
+   - `git commit -m "feat(layer1): implement conveyor logistics blocks_pathfinding"`
+9. Complete pre-commit steps to ensure proper testing, verification, review, and reflection are done.
+10. Call the `submit` tool to finalize the implementation.
