@@ -7166,3 +7166,12 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "The perfect dish. [YEAR]. The [FACTION_NAME] achieved the Culinary Singularity. The colony transcends."
 - "[YEAR]: A taste of the divine. The [FACTION_NAME] succeeded. Enlightenment sweeps [COLONY]."
 - "We ate the stars. The Culinary Singularity is reached. [YEAR]."
+
+### RUIN_CREATED
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [RUIN_NAME]
+
+- "The building falls. The [RUIN_NAME] is left behind. [YEAR]."
+- "[YEAR]: We couldn't save it. Now we have the [RUIN_NAME]."
+- "Smoke clears. Only the [RUIN_NAME] stands. [YEAR]."
