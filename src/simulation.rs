@@ -304,6 +304,7 @@ fn register_simulation_core_systems(schedule: &mut Schedule) {
     schedule.add_systems(crate::layer1::physics::harpoon::process_harpoon_impact_system);
     schedule.add_systems((crate::layer2::weather::weather_movement_system,));
     schedule.add_systems((
+        crate::layer1::economy::apply_cultural_contraband_system,
         crate::layer3::planet::black_market_terraforming::trigger_rogue_terraforming,
         crate::layer3::planet::black_market_terraforming::apply_rogue_terraforming_events,
         crate::layer3::integration::black_market_terraforming_bridge,

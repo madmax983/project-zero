@@ -12,6 +12,7 @@ pub fn register(schedule: &mut Schedule) {
     schedule.add_systems(
         (
             update_event_buffer::<AddChronicleEvent>,
+            update_event_buffer::<crate::layer1::economy::TradeImportEvent>,
             update_event_buffer::<AffinityChange>,
             update_event_buffer::<PopDied>,
             update_event_buffer::<PopBorn>,
@@ -25,6 +26,11 @@ pub fn register(schedule: &mut Schedule) {
             update_event_buffer::<crate::layer1::medical::PatientTreated>,
             update_event_buffer::<crate::layer1::eureka::EurekaEvent>,
             update_event_buffer::<crate::layer1::items::UnequipEvent>,
+        )
+            .in_set(Layer1SystemSet::EventCleanup),
+    );
+    schedule.add_systems(
+        (
             update_event_buffer::<crate::layer1::unrest::DenounceEvent>,
             update_event_buffer::<crate::layer1::environment::volatile::ExplosionEvent>,
             update_event_buffer::<PossessEntityEvent>,

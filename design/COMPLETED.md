@@ -504,3 +504,4 @@
 - [x] `637` Echoes of the Predecessors — `specs/637-echoes-of-predecessors.md` — completed 2026-05-04
 - [x] `INT-637` Integration: Echoes of the Predecessors -> Fleets & Seasons — completed 2026-05-04
 - [x] `INT-626` Integration: Cartographer's Curse -> Chronicle — completed 2026-06-25
+- [x] `1084` Ideological Contraband — `specs/1084-ideological-contraband.md` — completed 2026-02-01
