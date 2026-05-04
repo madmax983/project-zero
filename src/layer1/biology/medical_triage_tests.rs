@@ -157,4 +157,57 @@ mod tests {
             "Stable should get remaining capacity (5.0)"
         );
     }
+
+    #[test]
+    fn test_triage_policy_handles_nan_health_without_panicking() {
+        let mut world = World::new();
+        world.insert_resource(MedicalPolicy::Triage);
+
+        let hospital = world
+            .spawn((
+                Building {
+                    building_type: BuildingType::Hospital,
+                },
+                Hospital {
+                    healing_rate: 10.0,
+                    max_healing_per_tick: 15.0,
+                },
+            ))
+            .id();
+
+        let _patient_1 = world
+            .spawn((
+                Health {
+                    current: f32::NAN,
+                    max: 100.0,
+                    has_rust_lung: false,
+                },
+                AssignedTo {
+                    assignment_type: AssignmentType::Patient,
+                    entity: hospital,
+                },
+                Pop,
+            ))
+            .id();
+
+        let patient_2 = world
+            .spawn((
+                Health {
+                    current: 50.0,
+                    max: 100.0,
+                    has_rust_lung: false,
+                },
+                AssignedTo {
+                    assignment_type: AssignmentType::Patient,
+                    entity: hospital,
+                },
+                Pop,
+            ))
+            .id();
+
+        healing_system(&mut world);
+
+        let p2_health = world.get::<Health>(patient_2).unwrap();
+        assert!(p2_health.current > 50.0, "Stable patient should still receive healing even if another patient has NaN health, proving unwrap_or works");
+    }
 }

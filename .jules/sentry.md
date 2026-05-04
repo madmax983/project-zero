@@ -9,3 +9,7 @@
 ## 2024-05-25 - PopAction/Sabotage Testing
 **Learning:** Testing logic tied directly to specific `ActionType` matching (like `ActionType::Sabotage`) in complex queries requires carefully setting up related system components (like `MovementTarget`) and initializing properties precisely instead of relying solely on `Default::default()`, as incorrect setups can silently bypass the system conditions.
 **Action:** Always verify exactly which component fields a system iterates over and queries before constructing mock entities to ensure your assertions are correctly hitting the logic branches.
+
+## 2024-05-25 - Triage NaN Sorting Stability
+**Learning:** `partial_cmp` on `f32` in Rust returns `Option<Ordering>` due to `NaN`. Utilizing `.unwrap_or(Ordering::Equal)` prevents sort panics. But to be a good Sentry, this fallback itself must be tested by actively inserting a `NaN` into the data.
+**Action:** When auditing `partial_cmp` calls, write a dedicated test that deliberately feeds `std::f32::NAN` into the system to verify the `unwrap_or` fallback branch handles the uncomparable state safely without panicking.
