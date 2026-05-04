@@ -76,9 +76,9 @@ fn test_society_performs_hidden_action() {
 #[test]
 fn test_society_discovery() {
     // Tests that a society can be uncovered by police/inspection, changing `is_hidden` to false
+    use scale::layer1::core::chronicle::AddChronicleEvent;
     use scale::layer1::core::integration::secret_society_discovery_bridge_system;
     use scale::layer1::law::justice::Inmate;
-    use scale::layer1::core::chronicle::AddChronicleEvent;
 
     let mut app = App::new();
     app.add_event::<AddChronicleEvent>();
@@ -94,12 +94,15 @@ fn test_society_discovery() {
         })
         .id();
 
-    let pop_id = app.world_mut()
+    let pop_id = app
+        .world_mut()
         .spawn((Pop, SecretSocietyMember { society_id }))
         .id();
 
     // Simulate arrest
-    app.world_mut().entity_mut(pop_id).insert(Inmate { sentence_ticks: 100 });
+    app.world_mut().entity_mut(pop_id).insert(Inmate {
+        sentence_ticks: 100,
+    });
 
     app.update();
 
@@ -117,8 +120,8 @@ fn test_society_discovery() {
 #[test]
 fn test_society_suspicion() {
     use scale::layer1::core::integration::society_suspicion_bridge_system;
-    use scale::layer1::law::predictive_policing::{PredictionConfig, PredictiveModel, Suspect};
     use scale::layer1::energy::PowerConsumer;
+    use scale::layer1::law::predictive_policing::{PredictionConfig, PredictiveModel, Suspect};
 
     let mut app = App::new();
     app.insert_resource(PredictionConfig {
@@ -127,7 +130,13 @@ fn test_society_suspicion() {
     });
 
     // Spawn an active predictive model
-    app.world_mut().spawn((PredictiveModel, PowerConsumer { active: true, demand: 10.0 }));
+    app.world_mut().spawn((
+        PredictiveModel,
+        PowerConsumer {
+            active: true,
+            demand: 10.0,
+        },
+    ));
 
     app.add_systems(Update, society_suspicion_bridge_system);
 
@@ -141,14 +150,18 @@ fn test_society_suspicion() {
         })
         .id();
 
-    let pop_id = app.world_mut()
+    let pop_id = app
+        .world_mut()
         .spawn((Pop, SecretSocietyMember { society_id }))
         .id();
 
     app.update();
 
     // The pop should be marked as a suspect
-    let suspect = app.world().get::<Suspect>(pop_id).expect("Pop should be a suspect");
+    let suspect = app
+        .world()
+        .get::<Suspect>(pop_id)
+        .expect("Pop should be a suspect");
     assert_eq!(suspect.predicted_crime, "Secret Society Conspiracy");
     assert!(suspect.probability > 0.8);
 }

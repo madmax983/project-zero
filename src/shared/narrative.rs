@@ -43,8 +43,10 @@ impl NarrativeError {
         table.load_preset(UTF8_FULL);
 
         let header_title = match self {
-            Self::DirectoryNotFound(_) | Self::NoLoreFiles(_) | Self::IoError(_, _) => " ✗ LORE LOADING ERROR ",
-            _ => " ✗ NARRATIVE GENERATOR ERROR "
+            Self::DirectoryNotFound(_) | Self::NoLoreFiles(_) | Self::IoError(_, _) => {
+                " ✗ LORE LOADING ERROR "
+            }
+            _ => " ✗ NARRATIVE GENERATOR ERROR ",
         };
 
         table.set_header(vec![comfy_table::Cell::new(header_title)

@@ -47,7 +47,6 @@ impl Default for CargoCultTether {
     }
 }
 
-
 /// System that detects if a CargoCultFleet should arrive (or spawns one randomly if none exist).
 pub fn spawn_cargo_cult_fleet_system(
     mut commands: Commands,

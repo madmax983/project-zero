@@ -67,7 +67,7 @@ mod tests {
 
         // Add minimal required systems
         app.add_systems(Update, spawn_smugglers_cove_system);
-        app.add_systems(Update, process_smuggler_decay_system);
+
         app
     }
 
@@ -115,6 +115,7 @@ mod tests {
     fn test_smuggler_cove_decays_over_time() {
         let mut app = setup_app();
         app.add_systems(Update, spawn_smugglers_cove_system);
+        app.add_systems(Update, process_smuggler_decay_system);
 
         // Manually spawn a cove
         let cove_entity = app

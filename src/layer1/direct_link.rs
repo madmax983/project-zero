@@ -35,7 +35,6 @@ pub struct DirectControlState {
     pub buffered_dy: i32,
 }
 
-
 pub fn handle_possession(
     mut commands: Commands,
     mut events: EventReader<PossessEntityEvent>,
