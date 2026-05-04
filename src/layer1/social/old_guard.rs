@@ -156,7 +156,7 @@ pub fn check_generational_friction_system(
             text: "The Turning Point. For the first time, new arrivals outnumber the founders."
                 .to_string(),
             importance: EventImportance::Major,
-        });
+            ..Default::default()});
     }
 
     if founders == 0 && immigrants == 0 {

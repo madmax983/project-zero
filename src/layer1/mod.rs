@@ -31,6 +31,8 @@
 //! - **Economy:** [`crate::layer1::resources`], [`crate::layer1::trade`]
 
 pub mod petrification;
+pub mod echo;
+pub use echo::*;
 
 /// Generic entities mechanisms
 pub mod entities;

@@ -31,7 +31,8 @@ fn test_chronicle_event_creates_rumor() {
     world.send_event(AddChronicleEvent {
         text: "The Great Flood".to_string(),
         importance: EventImportance::Major,
-    });
+            ..Default::default()
+        });
 
     // Run systems
     schedule.run(&mut world);
@@ -80,7 +81,8 @@ fn test_chronicle_minor_event_no_rumor() {
     world.send_event(AddChronicleEvent {
         text: "A squirrel ate a nut".to_string(),
         importance: EventImportance::Minor,
-    });
+            ..Default::default()
+        });
 
     schedule.run(&mut world);
 

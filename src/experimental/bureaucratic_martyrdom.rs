@@ -79,7 +79,7 @@ pub fn process_martyrdom_system(
                 chronicle_events.send(AddChronicleEvent {
                     text: format!("{} died at their desk, working continuously to clear the backlog and save the colony.", display_name),
                     importance: crate::layer1::chronicle::EventImportance::Legendary,
-                });
+            ..Default::default()});
             }
         }
     }

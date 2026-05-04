@@ -44,7 +44,7 @@ pub fn handle_broadcasts_system(
                 chronicle_events.send(AddChronicleEvent {
                     text: "Received news of a great Victory from the Homeworld.".to_string(),
                     importance: EventImportance::Major,
-                });
+            ..Default::default()});
             }
             BroadcastType::Defeat => {
                 for mut morale in morale_query.iter_mut() {
@@ -57,7 +57,7 @@ pub fn handle_broadcasts_system(
                 chronicle_events.send(AddChronicleEvent {
                     text: "Received news of a terrible Defeat from the Homeworld.".to_string(),
                     importance: EventImportance::Major,
-                });
+            ..Default::default()});
             }
             BroadcastType::Propaganda => {
                 // Truth revealed: Original victory was a lie
@@ -72,7 +72,7 @@ pub fn handle_broadcasts_system(
                     text: "Learned that the previous Victory was propaganda. Trust is broken."
                         .to_string(),
                     importance: EventImportance::Legendary,
-                });
+            ..Default::default()});
             }
         }
     }

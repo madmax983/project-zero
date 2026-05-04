@@ -142,7 +142,7 @@ pub fn record_virus_event_chronicle_system(
         chronicle_events.send(AddChronicleEvent {
             text: "A Critical Virus has been unleashed from the Data Mining operation!".to_string(),
             importance: EventImportance::Major,
-        });
+            ..Default::default()});
     }
 }
 

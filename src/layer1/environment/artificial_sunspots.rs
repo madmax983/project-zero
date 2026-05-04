@@ -79,14 +79,14 @@ pub fn track_sunspot_chronicle_system(
             chronicle_events.send(AddChronicleEvent {
                 text: "A hostile Layer 3 megastructure has induced an artificial sunspot! Solar energy plummeted and deadly radiation covers the surface.".to_string(),
                 importance: EventImportance::Major,
-            });
+            ..Default::default()});
         } else if !is_active && sunspot.was_active {
             sunspot.was_active = false;
             chronicle_events.send(AddChronicleEvent {
                 text: "The artificial sunspot has dissipated. The star's light returns to normal."
                     .to_string(),
                 importance: EventImportance::Major,
-            });
+            ..Default::default()});
         }
     }
 }

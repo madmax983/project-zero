@@ -87,7 +87,7 @@ pub fn the_final_will_system(
                 chronicle_events.send(AddChronicleEvent {
                     text,
                     importance: EventImportance::Minor,
-                });
+            ..Default::default()});
             } else {
                 // Everyone hated them or they hated everyone, money goes to the void (or colony budget eventually)
             }

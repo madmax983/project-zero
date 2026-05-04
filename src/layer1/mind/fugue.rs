@@ -53,7 +53,7 @@ pub fn process_fugue_onset(
                 events.send(AddChronicleEvent {
                     text: "A colonist has lost touch with the present, slipping into a Generational Fugue.".to_string(),
                     importance: EventImportance::Major,
-                });
+            ..Default::default()});
                 tracker.has_emitted_first_fugue = true;
             }
         }

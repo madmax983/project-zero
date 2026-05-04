@@ -500,3 +500,4 @@
 - [x] `INT-643` Integration: Living Architecture -> Chronicle — completed 2026-10-31
 - [x] `INT-661` Integration: Secret Societies -> Predictive Policing -> Chronicle — completed 2026-06-25
 - [x] `635` Rogue Automation Cults — `specs/635-rogue-automation-cults.md` — completed 2024-05-24
+- [x] `242` The Echo - `specs/242-the-echo.md` - completed 2026-02-28

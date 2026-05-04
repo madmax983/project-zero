@@ -73,7 +73,7 @@ pub fn process_colony_beacon_system(
             text: "The beacon is lit. We invite the galaxy, and all its scum, to our doors."
                 .to_string(),
             importance: EventImportance::Major,
-        });
+            ..Default::default()});
     }
 
     let mut rng = rand::thread_rng();

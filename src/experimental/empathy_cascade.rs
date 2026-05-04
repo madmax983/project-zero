@@ -123,7 +123,7 @@ pub fn empathy_cascade_system(
         chronicle_events.send(AddChronicleEvent {
             text: format!("{} suffered a terrible injury, unleashing a violent wave of sympathetic pain that ravaged nearby empaths.", display_name),
             importance: EventImportance::Major,
-        });
+            ..Default::default()});
     }
 }
 

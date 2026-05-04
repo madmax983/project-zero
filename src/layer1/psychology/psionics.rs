@@ -28,7 +28,7 @@ pub fn latent_awakening_system(
             chronicle.send(AddChronicleEvent {
                 importance: EventImportance::Major,
                 text: "A Pop has awakened as a Pyrokinetic!".to_string(),
-            });
+            ..Default::default()});
         }
     }
 }
@@ -58,7 +58,7 @@ pub fn pyrokinesis_power_activation_system(
                 chronicle.send(AddChronicleEvent {
                     importance: EventImportance::Standard,
                     text: "A Pyrokinetic has started a fire out of frustration!".to_string(),
-                });
+            ..Default::default()});
             }
         }
     }

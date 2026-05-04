@@ -42,7 +42,7 @@ pub fn evaluate_fleet_mutiny(
             chronicle_events.send(AddChronicleEvent {
                 text: "A fleet has mutinied and turned to piracy!".to_string(),
                 importance: EventImportance::Major,
-            });
+            ..Default::default()});
         }
     }
 }

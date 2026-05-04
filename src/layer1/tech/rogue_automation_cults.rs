@@ -21,6 +21,7 @@ pub struct MachineCultMember {
     pub shrine_entity: Entity,
 }
 
+#[allow(clippy::type_complexity)]
 pub fn rogue_cult_formation_system(
     mut commands: Commands,
     bots_query: Query<(Entity, &MaintenanceDebt), (With<Bot>, Without<MachineCultMember>)>,

@@ -50,7 +50,7 @@ pub fn attune_engine_system(
         chronicle_events.send(AddChronicleEvent {
             text: format!("{} was sacrificed to the Martyr's Engine.", name),
             importance: EventImportance::Legendary,
-        });
+            ..Default::default()});
 
         // Consume Pop
         commands.entity(action.pop).despawn_recursive();

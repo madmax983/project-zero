@@ -46,7 +46,7 @@ pub fn mass_driver_chronicle_bridge(
                 event.target, event.kinetic_energy
             ),
             importance: EventImportance::Major,
-        });
+            ..Default::default()});
     }
 }
 
@@ -62,7 +62,7 @@ pub fn access_denied_chronicle_bridge(
         chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
             importance: crate::layer1::core::chronicle::EventImportance::Minor,
             text: format!("Access Denied: {}", event.reason),
-        });
+            ..Default::default()});
     }
 }
 
@@ -81,7 +81,7 @@ pub fn hack_hub_chronicle_bridge(
                 "A successful hack into the central hub has removed the orphaned {:?} edict.",
                 event.target_policy
             ),
-        });
+            ..Default::default()});
     }
 }
 
@@ -94,7 +94,7 @@ pub fn tether_snap_chronicle_bridge(
         chronicle_events.send(AddChronicleEvent {
             text: "The Sky Fell. The orbital tether was severed, its massive cable obliterating everything in its path.".to_string(),
             importance: EventImportance::Major,
-        });
+            ..Default::default()});
     }
 }
 
@@ -113,7 +113,7 @@ pub fn orbital_drop_chronicle_bridge(
                 event.scatter_radius
             ),
             importance: EventImportance::Major,
-        });
+            ..Default::default()});
     }
 }
 
@@ -126,7 +126,7 @@ pub fn bot_awakening_chronicle_bridge(
         chronicle_events.send(AddChronicleEvent {
             text: "A tool has asked 'Why?'. A Machine Awakening has occurred.".to_string(),
             importance: EventImportance::Major,
-        });
+            ..Default::default()});
     }
 }
 
@@ -156,7 +156,7 @@ pub fn pop_death_chronicle_bridge(
         chronicle_events.send(AddChronicleEvent {
             text,
             importance: EventImportance::Major,
-        });
+            ..Default::default()});
     }
 }
 
@@ -171,7 +171,7 @@ pub fn hologram_failure_chronicle_bridge(
                 event.position.x, event.position.y
             ),
             importance: EventImportance::Major,
-        });
+            ..Default::default()});
     }
 }
 
@@ -248,7 +248,7 @@ pub fn sacrilege_unrest_bridge(
         events_out.send(AddChronicleEvent {
             text: "A grave was desecrated. The colony is in uproar.".to_string(),
             importance: EventImportance::Major,
-        });
+            ..Default::default()});
     }
 }
 
@@ -263,7 +263,7 @@ pub fn great_work_chronicle_bridge(
         events_out.send(AddChronicleEvent {
             text: format!("The colony has completed a Great Work: {}.", event.name),
             importance: EventImportance::Legendary,
-        });
+            ..Default::default()});
     }
 }
 
@@ -589,7 +589,7 @@ pub fn retrograde_chronicle_bridge(
         chronicle_events.send(AddChronicleEvent {
             text,
             importance: EventImportance::Major,
-        });
+            ..Default::default()});
     }
 }
 
@@ -935,7 +935,7 @@ pub fn mega_quake_chronicle_bridge(
         chronicle_events.send(AddChronicleEvent {
             text: "A Mega-Quake has ruptured the colony's foundations.".to_string(),
             importance: EventImportance::Major,
-        });
+            ..Default::default()});
     }
 }
 
@@ -962,7 +962,7 @@ pub fn scapegoat_chronicle_bridge(
         events_out.send(AddChronicleEvent {
             text,
             importance: EventImportance::Major,
-        });
+            ..Default::default()});
     }
 }
 
@@ -1078,7 +1078,7 @@ pub fn override_will_chronicle_bridge(
             text: "A spiteful will was forcibly overridden, sparking outrage among the heirs."
                 .to_string(),
             importance: crate::layer1::core::chronicle::EventImportance::Major,
-        });
+            ..Default::default()});
     }
 }
 
@@ -1134,7 +1134,7 @@ pub fn nanite_breach_chronicle_bridge(
                 event.position.x, event.position.y
             ),
             importance: EventImportance::Major,
-        });
+            ..Default::default()});
     }
 }
 
@@ -1161,7 +1161,7 @@ pub fn gene_splicing_chronicle_bridge(
         chronicle_events.send(AddChronicleEvent {
             text,
             importance: EventImportance::Major,
-        });
+            ..Default::default()});
     }
 }
 
@@ -1199,7 +1199,7 @@ pub fn crop_mutation_chronicle_bridge(
         chronicle_events.send(AddChronicleEvent {
             text,
             importance: EventImportance::Major,
-        });
+            ..Default::default()});
     }
 }
 
@@ -1214,7 +1214,7 @@ pub fn grafting_chronicle_bridge(
         chronicle_events.send(AddChronicleEvent {
             importance: EventImportance::Minor,
             text: "A structure was grafted with mismatched technology, adopting Frankenstein architecture.".to_string(),
-        });
+            ..Default::default()});
     }
 }
 
@@ -1227,7 +1227,7 @@ pub fn golem_formed_chronicle_bridge_system(
         chronicle_events.send(AddChronicleEvent {
             text: "The Stones Awake: A Golem has been formed from Living Stones.".to_string(),
             importance: EventImportance::Major,
-        });
+            ..Default::default()});
     }
 }
 
@@ -1271,7 +1271,7 @@ pub fn temporal_stutter_chronicle_bridge(
             importance: EventImportance::Minor,
             text: "A map tile stuttered in time, causing buildings to revert temporarily."
                 .to_string(),
-        });
+            ..Default::default()});
     }
 }
 
@@ -1284,7 +1284,7 @@ pub fn parasitic_architecture_chronicle_bridge(
         chronicle_events.send(AddChronicleEvent {
             text: "A building was completely consumed by a parasitic megastructure.".to_string(),
             importance: EventImportance::Minor,
-        });
+            ..Default::default()});
     }
 }
 
@@ -1352,7 +1352,7 @@ pub fn phantom_shift_chronicle_bridge(
         chronicle_events.send(AddChronicleEvent {
             importance: EventImportance::Minor,
             text: "We noticed missing resources. The desperate toil in the dark to fix our neglected infrastructure.".to_string(),
-        });
+            ..Default::default()});
     }
 }
 
@@ -1373,7 +1373,7 @@ pub fn deep_crust_resonance_chronicle_bridge(
             chronicle_events.send(AddChronicleEvent {
                 importance: EventImportance::Major,
                 text: "Deep Crust Resonance uncovered! The miners speak of an ancient hum that invades their minds.".to_string(),
-            });
+            ..Default::default()});
         }
     }
 }
@@ -1392,12 +1392,12 @@ pub fn aesthetic_edict_chronicle_bridge(
         chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
             importance: crate::layer1::core::chronicle::EventImportance::Major,
             text: "The orbital elites have passed an Aesthetic Edict, halting our most productive factories to clear their view.".to_string(),
-        });
+            ..Default::default()});
     } else if !current_status && *last_status {
         chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
             importance: crate::layer1::core::chronicle::EventImportance::Standard,
             text: "The Aesthetic Edict has been lifted. The factories roar back to life, belching smoke into the sky once more.".to_string(),
-        });
+            ..Default::default()});
     }
     *last_status = current_status;
 }
@@ -1413,7 +1413,7 @@ pub fn famine_chronicle_bridge(
         chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
             importance: crate::layer1::core::chronicle::EventImportance::Major,
             text: "A devastating famine swept through the colony, searing memories of starvation into the survivors.".to_string(),
-        });
+            ..Default::default()});
     }
 }
 
@@ -1432,7 +1432,7 @@ pub fn silent_flora_chronicle_bridge(
             chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
                 importance: crate::layer1::core::chronicle::EventImportance::Major,
                 text: "We discovered a strange new flora. It grows rapidly, but an eerie silence surrounds it.".to_string(),
-            });
+            ..Default::default()});
             break;
         }
     }
@@ -1528,7 +1528,7 @@ pub fn predatory_weather_impact_bridge_system(
         chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
             importance: crate::layer1::core::chronicle::EventImportance::Major,
             text: format!("A massive planetary storm impacted the colony, dealing {} damage to our infrastructure.", event.damage),
-        });
+            ..Default::default()});
     }
 }
 
@@ -1548,7 +1548,7 @@ pub fn digital_immortality_chronicle_bridge(
                     name.as_str()
                 ),
                 importance: crate::layer1::core::chronicle::EventImportance::Major,
-            });
+            ..Default::default()});
         }
     }
 }
@@ -1596,7 +1596,7 @@ pub fn beacon_migrant_arrival_bridge(
         chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
             text: format!("{} migrants have arrived in the colony.", event.count),
             importance: crate::layer1::core::chronicle::EventImportance::Major,
-        });
+            ..Default::default()});
     }
 }
 
@@ -1618,7 +1618,7 @@ pub fn beacon_trade_ship_bridge(
             chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
                 text: format!("A trade ship from {} has arrived.", event.faction),
                 importance: crate::layer1::core::chronicle::EventImportance::Major,
-            });
+            ..Default::default()});
         }
     }
 }
@@ -1647,7 +1647,7 @@ pub fn beacon_pirate_raid_bridge(
         chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
             text: "Pirates have raided the colony!".to_string(),
             importance: crate::layer1::core::chronicle::EventImportance::Major,
-        });
+            ..Default::default()});
     }
 }
 
@@ -1744,7 +1744,7 @@ pub fn cryptid_chronicle_bridge_system(
                             "A colonist reported seeing a strange, elusive creature in the wilds."
                                 .to_string(),
                         importance: EventImportance::Major,
-                    });
+            ..Default::default()});
                 }
             }
         }
@@ -1776,7 +1776,7 @@ pub fn gastronomer_chronicle_bridge(
         chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
             text: "The Gastronomers have achieved the Culinary Singularity!".to_string(),
             importance: crate::layer1::core::chronicle::EventImportance::Major,
-        });
+            ..Default::default()});
     }
 }
 
@@ -1794,7 +1794,7 @@ pub fn visitor_chronicle_bridge(
         chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
             text: "The Visitor has arrived.".to_string(),
             importance: crate::layer1::core::chronicle::EventImportance::Major,
-        });
+            ..Default::default()});
     }
 }
 
@@ -1807,7 +1807,7 @@ pub fn living_architecture_chronicle_bridge(
         chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
             text: "A starving living building has consumed a colonist!".to_string(),
             importance: crate::layer1::core::chronicle::EventImportance::Major,
-        });
+            ..Default::default()});
     }
 }
 
@@ -1871,7 +1871,7 @@ pub fn secret_society_discovery_bridge_system(
                 chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
                     text: "A secret society was uncovered during a preemptive arrest and has been disbanded.".to_string(),
                     importance: crate::layer1::core::chronicle::EventImportance::Major,
-                });
+            ..Default::default()});
 
                 // Disband the society
                 commands.entity(member.society_id).despawn();

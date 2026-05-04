@@ -101,7 +101,7 @@ pub fn election_cycle_system(
         events.send(AddChronicleEvent {
             text: "Campaign Started".to_string(),
             importance: EventImportance::Standard,
-        });
+            ..Default::default()});
     }
 
     // Transitions
@@ -110,7 +110,7 @@ pub fn election_cycle_system(
         events.send(AddChronicleEvent {
             text: "Election Day".to_string(),
             importance: EventImportance::Standard,
-        });
+            ..Default::default()});
     }
 }
 
@@ -227,7 +227,7 @@ pub fn inauguration_system(world: &mut World) {
         world.send_event(AddChronicleEvent {
             text: "Winner Announced".to_string(),
             importance: EventImportance::Major,
-        });
+            ..Default::default()});
 
         let mut mandate = world.resource_mut::<ActiveMandate>();
         mandate.promises = promises;

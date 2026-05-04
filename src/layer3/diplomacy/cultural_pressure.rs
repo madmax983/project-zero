@@ -41,7 +41,7 @@ pub fn apply_cultural_pressure_system(
                         text: "Enemy soldiers lay down their arms to defect to our paradise"
                             .to_string(),
                         importance: EventImportance::Major,
-                    });
+            ..Default::default()});
 
                     // Reduce their opinion of the player (target_id == "player") slightly
                     for relation in diplomacy.relations.iter_mut() {

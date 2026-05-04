@@ -55,7 +55,7 @@ pub fn purge_tech(world: &mut World, tech_label: &str) {
                     tech_label
                 ),
                 importance: EventImportance::Standard,
-            });
+            ..Default::default()});
         }
     }
 }

@@ -50,7 +50,7 @@ pub fn evaluate_lost_ship_return_system(
             chronicle_events.send(AddChronicleEvent {
                 text: "A ghost ship has returned from the void.".to_string(),
                 importance: EventImportance::Major,
-            });
+            ..Default::default()});
         }
     }
 }

@@ -98,7 +98,7 @@ pub fn advance_season_system(
         events.send(AddChronicleEvent {
             text: format!("The season turns. {} has arrived.", new_season.name()),
             importance: EventImportance::Standard,
-        });
+            ..Default::default()});
     }
 }
 

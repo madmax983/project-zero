@@ -129,7 +129,7 @@ pub fn update_weather_system(world: &mut World) {
         let event = AddChronicleEvent {
             text: format!("Weather changed to {}.", new_weather.name()),
             importance: EventImportance::Minor,
-        };
+            ..Default::default()};
         world.send_event(event);
     }
 }

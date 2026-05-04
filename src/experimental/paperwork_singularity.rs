@@ -64,7 +64,7 @@ pub fn paperwork_singularity_system(
                 chronicle_events.send(AddChronicleEvent {
                     text: "The administration, having achieved perfect efficiency, paradoxically invented a convoluted set of obscure regulations to justify its own budget. The colony groans under the weight of new paperwork.".to_string(),
                     importance: EventImportance::Major,
-                });
+            ..Default::default()});
             }
         }
     }

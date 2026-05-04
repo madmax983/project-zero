@@ -207,7 +207,7 @@ pub fn prisoner_death_chronicle_bridge_system(
         chronicle_events.send(AddChronicleEvent {
             text: "A State Prisoner died on our watch. Our employers are displeased.".to_string(),
             importance: EventImportance::Major,
-        });
+            ..Default::default()});
     }
 }
 
@@ -227,7 +227,7 @@ pub fn logistics_strained_chronicle_bridge(
                 event.utilized, event.capacity
             ),
             importance: EventImportance::Standard,
-        });
+            ..Default::default()});
     }
 }
 
@@ -243,7 +243,7 @@ pub fn defense_weakened_chronicle_bridge(
                 event.power
             ),
             importance: EventImportance::Major,
-        });
+            ..Default::default()});
     }
 }
 
@@ -311,7 +311,7 @@ pub fn sensor_glitch_chronicle_bridge_system(
             text: "A distant fleet reports anomalous sensor glitches. Combat orders aborted."
                 .to_string(),
             importance: EventImportance::Standard,
-        });
+            ..Default::default()});
     }
 }
 
@@ -328,7 +328,7 @@ pub fn rebellion_chronicle_bridge_system(
         chronicle_events.send(AddChronicleEvent {
             text: "A governor's unchecked ambition has ignited a planetary rebellion!".to_string(),
             importance: EventImportance::Major,
-        });
+            ..Default::default()});
     }
 }
 
@@ -350,7 +350,7 @@ pub fn process_grief_tourist_arrival_system(
                 event.offered_credits
             ),
             importance: EventImportance::Major,
-        });
+            ..Default::default()});
     }
 }
 
@@ -382,14 +382,14 @@ pub fn stellar_weather_damage_bridge_system(
             chronicle_events.send(AddChronicleEvent {
                 importance: EventImportance::Major,
                 text: "A fleet was heavily damaged by a sudden solar flare.".to_string(),
-            });
+            ..Default::default()});
 
             if health.current <= 0.0 {
                 commands.entity(event.fleet).despawn();
                 chronicle_events.send(AddChronicleEvent {
                     importance: EventImportance::Legendary,
                     text: "A fleet was entirely consumed by a solar flare.".to_string(),
-                });
+            ..Default::default()});
             }
         }
     }
@@ -453,7 +453,7 @@ pub fn moon_hermits_chronicle_bridge_system(
             text: "A disgruntled citizen has abandoned the colony to live among the stars."
                 .to_string(),
             importance: EventImportance::Major,
-        });
+            ..Default::default()});
     }
 }
 
@@ -470,7 +470,7 @@ pub fn reverse_quarantine_chronicle_bridge(
                     event.fleet_size
                 ),
                 importance: EventImportance::Major,
-            });
+            ..Default::default()});
         }
     }
 }
@@ -488,7 +488,7 @@ pub fn void_whispers_chronicle_bridge(
             chronicle_events.send(AddChronicleEvent {
                 text: "A returning fleet brings strange tales... and Void Whispers that begin to infect the colony.".to_string(),
                 importance: EventImportance::Major,
-            });
+            ..Default::default()});
         }
     }
 }
@@ -504,7 +504,7 @@ pub fn primitive_retaliation_chronicle_bridge(
         chronicle_events.send(AddChronicleEvent {
             text: "Infuriated by our neglect, primitive worshippers have launched a retaliatory strike against our observation post!".to_string(),
             importance: EventImportance::Major,
-        });
+            ..Default::default()});
     }
 }
 

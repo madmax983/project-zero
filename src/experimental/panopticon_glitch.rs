@@ -61,7 +61,7 @@ pub fn panopticon_surveillance_system(
             chronicle_events.send(AddChronicleEvent {
                 text: "The Panopticon grid glitched, broadcasting everyone's secrets!".to_string(),
                 importance: EventImportance::Major,
-            });
+            ..Default::default()});
 
             // Apply massive penalties to all pops in range
             for (pop_pos, mut morale, mut stress) in pops.iter_mut() {

@@ -315,7 +315,7 @@ pub fn pressure_damage_system(
         events.send(crate::layer1::chronicle::AddChronicleEvent {
             text: format!("{} Pops suffocated due to atmospheric breach.", killed),
             importance: EventImportance::Major,
-        });
+            ..Default::default()});
     }
 }
 

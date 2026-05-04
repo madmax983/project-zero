@@ -67,7 +67,7 @@ pub fn apply_curse_system(
                     chronicle_events.send(AddChronicleEvent {
                         text: "A colonist unearthed a cursed artifact and their mind was forever altered by forbidden knowledge.".to_string(),
                         importance: EventImportance::Major,
-                    });
+            ..Default::default()});
 
                     // Remove the CursedAnomaly component so we don't curse them multiple times
                     commands.entity(entity).remove::<CursedAnomaly>();

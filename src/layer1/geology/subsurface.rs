@@ -47,7 +47,7 @@ pub fn kinetic_strike_system(
                 chronicle_events.send(AddChronicleEvent {
                     text: format!("A building was destroyed by a kinetic strike at {}, {}", actual_hit_x, actual_hit_y),
                     importance: EventImportance::Major,
-                });
+            ..Default::default()});
             }
         }
 
@@ -80,14 +80,14 @@ pub fn kinetic_strike_system(
                     chronicle_events.send(AddChronicleEvent {
                         text: format!("Kinetic strike exposed an Ore Vein at {}, {}", actual_hit_x, actual_hit_y),
                         importance: EventImportance::Standard,
-                    });
+            ..Default::default()});
                 }
                 Some(SubsurfaceResourceKind::Magma) => {
                     grid.set(tx, ty, TerrainType::MagmaRock);
                     chronicle_events.send(AddChronicleEvent {
                         text: format!("Kinetic strike hit a magma pocket, creating an active Volcano at {}, {}", actual_hit_x, actual_hit_y),
                         importance: EventImportance::Major,
-                    });
+            ..Default::default()});
                 }
                 None => {
                      // No subsurface resource, just make a crater

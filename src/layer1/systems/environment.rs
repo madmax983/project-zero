@@ -14,6 +14,15 @@ pub fn register(schedule: &mut Schedule) {
     );
     schedule.add_systems(
         (
+            crate::layer1::echo::create_echo_source_system,
+            crate::layer1::echo::manifest_echo_system,
+            crate::layer1::echo::echo_reaction_system,
+            crate::layer1::echo::despawn_echo_system,
+        )
+            .in_set(Layer1SystemSet::Environment),
+    );
+    schedule.add_systems(
+        (
             crate::layer1::shadow_market::despawn_in_light_system,
             crate::layer1::shadow_market::spawn_shadow_trader_system,
         )

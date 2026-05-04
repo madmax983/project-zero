@@ -37,8 +37,10 @@ use bevy_ecs::prelude::*;
 /// assert!(matches!(level, EventImportance::Legendary));
 /// ```
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
+#[derive(Default)]
 pub enum EventImportance {
     /// Flavor text or minor notifications (e.g., "Bob ate a berry").
+    #[default]
     Minor,
     /// Standard gameplay events (e.g., "Housing completed").
     Standard,
@@ -50,7 +52,10 @@ pub enum EventImportance {
 
 /// Event triggered when a new chronicle entry should be added.
 #[derive(Event, Debug, Clone)]
+#[derive(Default)]
 pub struct AddChronicleEvent {
+    pub id: Option<String>,
+    pub location: Option<crate::layer1::map::GridPosition>,
     /// The text description of the event.
     pub text: String,
     /// The importance level of the event.
@@ -64,13 +69,16 @@ pub fn chronicle_event_handler_system(
     time: Res<SimulationTime>,
 ) {
     for event in events.read() {
-        chronicle.add_event(time.tick, event.text.clone(), event.importance);
+        let id = event.id.clone().unwrap_or_else(|| event.text.clone());
+        chronicle.add_event_full(time.tick, id, event.text.clone(), event.importance, event.location);
     }
 }
 
 /// A single chronicle event.
 #[derive(Clone, Debug)]
 pub struct ChronicleEvent {
+    pub id: String,
+    pub location: Option<crate::layer1::map::GridPosition>,
     /// The simulation tick when the event occurred.
     pub tick: u64,
     /// The year when the event occurred (derived from tick).
@@ -105,7 +113,13 @@ impl Chronicle {
     /// assert_eq!(chronicle.events.len(), 1);
     /// ```
     pub fn add_event(&mut self, tick: u64, text: String, importance: EventImportance) {
+        self.add_event_full(tick, text.clone(), text, importance, None);
+    }
+
+    pub fn add_event_full(&mut self, tick: u64, id: String, text: String, importance: EventImportance, location: Option<crate::layer1::map::GridPosition>) {
         self.events.push(ChronicleEvent {
+            id,
+            location,
             tick,
             year: 1 + u32::try_from(tick / TICKS_PER_YEAR).unwrap_or(u32::MAX), // Rough "year" approximation
             text,
@@ -123,6 +137,8 @@ impl Chronicle {
     /// generated during world history creation.
     pub fn add_prehistory_event(&mut self, text: String, importance: EventImportance) {
         self.events.push(ChronicleEvent {
+            id: text.clone(),
+            location: None,
             tick: 0,
             year: 0,
             text,
@@ -213,7 +229,7 @@ pub fn check_milestones_system(
         events.send(AddChronicleEvent {
             text,
             importance: EventImportance::Major,
-        });
+            ..Default::default()});
     }
     if found_farm && !tracker.has_built_farm {
         tracker.has_built_farm = true;
@@ -227,7 +243,7 @@ pub fn check_milestones_system(
         events.send(AddChronicleEvent {
             text,
             importance: EventImportance::Major,
-        });
+            ..Default::default()});
     }
 }
 
@@ -261,6 +277,8 @@ mod tests {
     #[test]
     fn test_chronicle_event_creation() {
         let event = ChronicleEvent {
+            id: "test".to_string(),
+            location: None,
             tick: 100,
             year: 1,
             text: "Test event".to_string(),

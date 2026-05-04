@@ -12,7 +12,7 @@ pub fn hyperlane_collapse_chronicle_bridge(
             importance: EventImportance::Major,
             text: "A hyperlane has collapsed. Trade routes are severed, isolating systems."
                 .to_string(),
-        });
+            ..Default::default()});
     }
 }
 
@@ -28,7 +28,7 @@ pub fn black_market_terraforming_bridge(
                 "Unseasonal terraforming in Sector {} caused extreme local weather disruptions",
                 event.target_sector
             ),
-        });
+            ..Default::default()});
     }
 }
 
@@ -46,7 +46,7 @@ pub fn dynastic_succession_chronicle_bridge(
                 "Succession in {}: {} has died. {} takes the throne.",
                 event.faction_name, event.old_leader_name, event.new_leader_name
             ),
-        });
+            ..Default::default()});
     }
 }
 
@@ -62,7 +62,7 @@ pub fn dynastic_crisis_chronicle_bridge(
                 "Succession crisis in {}! {} has died without an heir. The realm bleeds.",
                 event.faction_name, event.old_leader_name
             ),
-        });
+            ..Default::default()});
     }
 }
 
@@ -91,7 +91,7 @@ pub fn jump_risk_bridge_system(
             importance: EventImportance::Major,
             text: "A fleet suffered hull damage after jumping blind into an uncharted system."
                 .to_string(),
-        });
+            ..Default::default()});
     }
 }
 
@@ -106,6 +106,6 @@ pub fn red_tape_chronicle_bridge(
         chronicle_events.send(AddChronicleEvent {
             importance: EventImportance::Major,
             text: "Hostile fleet stalled by bureaucratic red tape.".to_string(),
-        });
+            ..Default::default()});
     }
 }

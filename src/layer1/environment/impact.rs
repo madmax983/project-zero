@@ -46,7 +46,7 @@ pub fn process_impact_countdown_system(
             chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
                 importance: crate::layer1::core::chronicle::EventImportance::Major,
                 text: "A catastrophic impact struck the colony.".to_string(),
-            });
+            ..Default::default()});
             commands.entity(entity).despawn();
         }
     }

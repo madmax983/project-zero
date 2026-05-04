@@ -77,7 +77,7 @@ pub fn process_orphan_defection_system(
             chronicle_events.send(AddChronicleEvent {
                 text: "An Orphan Fleet has suddenly remembered its old masters and is fleeing the system!".to_string(),
                 importance: EventImportance::Major,
-            });
+            ..Default::default()});
         }
     }
 }

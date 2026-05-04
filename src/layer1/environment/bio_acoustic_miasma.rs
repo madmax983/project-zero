@@ -106,7 +106,7 @@ pub fn broadcast_miasma_secrets(
         events.send(AddChronicleEvent {
             text: "secret_broadcast".to_string(),
             importance: EventImportance::Minor,
-        });
+            ..Default::default()});
     }
 }
 

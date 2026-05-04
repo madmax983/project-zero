@@ -37,7 +37,7 @@ pub fn epigenetic_mutation_system(
                         pop_name
                     ),
                     importance: EventImportance::Major,
-                });
+            ..Default::default()});
             }
         }
     }

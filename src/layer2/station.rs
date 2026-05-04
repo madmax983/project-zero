@@ -210,7 +210,7 @@ pub fn process_megastructure_upkeep(
                 chronicle_events.send(crate::layer1::chronicle::AddChronicleEvent {
                     text: "Hostile takeover due to missed megastructure payments.".to_string(),
                     importance: crate::layer1::chronicle::EventImportance::Major,
-                });
+            ..Default::default()});
             }
         }
     }
@@ -246,7 +246,7 @@ pub fn log_generous_gift_system(
         chronicle_events.send(crate::layer1::chronicle::AddChronicleEvent {
             text: "A foreign power has constructed a magnificent orbital structure for us—a truly generous gift!".to_string(),
             importance: crate::layer1::chronicle::EventImportance::Major,
-        });
+            ..Default::default()});
     }
 }
 
