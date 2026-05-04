@@ -586,3 +586,33 @@ pub fn cartographers_curse_chronicle_bridge(
         });
     }
 }
+
+use crate::layer1::economy::ideological_contraband::{CulturalTag, TradeImportEvent};
+use crate::layer2::trade::routes::{Timer, TradeRoute};
+
+/// Bridges executed trade routes to Ideological Contraband
+pub fn ideological_contraband_route_bridge(
+    mut events: EventWriter<TradeImportEvent>,
+    routes: Query<(&TradeRoute, &Timer)>,
+    home_colonies: Query<Entity, With<HomeColony>>,
+) {
+    let Ok(home_entity) = home_colonies.get_single() else { return; };
+    for (route, timer) in routes.iter() {
+        if timer.0 == route.interval && route.destination == home_entity {
+            let tag = match route.item_type.as_str() {
+                "Worker Boots" | "Tractor Parts" => Some(CulturalTag::Collectivism),
+                "Luxury Silks" | "Fine Wine" => Some(CulturalTag::Elitism),
+                "Hive Spores" | "Neural Link" => Some(CulturalTag::HiveMind),
+                _ => None,
+            };
+            if let Some(cultural_tag) = tag {
+                events.send(TradeImportEvent {
+                    item_name: route.item_type.clone(),
+                    amount: route.amount as i32,
+                    cultural_tag: Some(cultural_tag),
+                    potency: (route.amount / 10).max(1) as i32,
+                });
+            }
+        }
+    }
+}
