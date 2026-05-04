@@ -334,6 +334,8 @@ pub enum BuildingType {
     MediaStation,
     /// Port for arriving and departing spacecraft.
     Spaceport,
+    Mainframe,
+    CommsRelay,
 }
 
 impl BuildingType {
@@ -520,6 +522,7 @@ impl BuildingType {
             Self::HoloProjector => false,
             Self::Nanoforge => false,
             Self::School | Self::MediaStation => false,
+            Self::Mainframe | Self::CommsRelay => false,
         }
     }
 
@@ -678,6 +681,8 @@ impl BuildingType {
             Self::School => "School",
             Self::MediaStation => "Media Station",
             Self::Spaceport => "Spaceport",
+            Self::Mainframe => "Mainframe",
+            Self::CommsRelay => "Comms Relay",
         }
     }
 
@@ -739,6 +744,8 @@ impl BuildingType {
             Self::School => 'S',
             Self::Spaceport => 'P',
             Self::MediaStation => 'M',
+            Self::Mainframe => 'M',
+            Self::CommsRelay => 'C',
         }
     }
 
@@ -853,6 +860,8 @@ impl BuildingType {
                 .with_tools(50.0),
             Self::School => ColonyResources::zeroed().with_wood(25.0).with_stone(10.0),
             Self::MediaStation => ColonyResources::zeroed().with_metal(25.0),
+            Self::Mainframe => ColonyResources::zeroed().with_metal(50.0),
+            Self::CommsRelay => ColonyResources::zeroed().with_metal(30.0),
         }
     }
 
@@ -1142,6 +1151,7 @@ fn configure_building_components(entity: &mut EntityWorldMut, building_type: Bui
         BuildingType::School | BuildingType::MediaStation | BuildingType::Spaceport => {
             configure_civic(entity, building_type);
         }
+        BuildingType::Mainframe | BuildingType::CommsRelay => {}
         BuildingType::PersonalShed
         | BuildingType::PersonalGarden
         | BuildingType::PersonalShrine => {
@@ -2302,7 +2312,9 @@ mod tests {
         assert_eq!(BuildingType::Nanoforge.next(), BuildingType::School);
         assert_eq!(BuildingType::School.next(), BuildingType::MediaStation);
         assert_eq!(BuildingType::MediaStation.next(), BuildingType::Spaceport);
-        assert_eq!(BuildingType::Spaceport.next(), BuildingType::Housing);
+        assert_eq!(BuildingType::Spaceport.next(), BuildingType::Mainframe);
+        assert_eq!(BuildingType::Mainframe.next(), BuildingType::CommsRelay);
+        assert_eq!(BuildingType::CommsRelay.next(), BuildingType::Housing);
     }
 
     #[test]
@@ -2541,6 +2553,10 @@ mod tests {
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::Spaceport);
 
+        mode.selected = mode.selected.next();
+        assert_eq!(mode.selected, BuildingType::Mainframe);
+        mode.selected = mode.selected.next();
+        assert_eq!(mode.selected, BuildingType::CommsRelay);
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::Housing);
     }

@@ -499,3 +499,4 @@
 - [x] `INT-649` Integration: Pop Relationships -> Day Night Cycle - completed 2026-10-30
 - [x] `INT-643` Integration: Living Architecture -> Chronicle — completed 2026-10-31
 - [x] `INT-661` Integration: Secret Societies -> Predictive Policing -> Chronicle — completed 2026-06-25
+- [x] `635` Rogue Automation Cults — `specs/635-rogue-automation-cults.md` — completed 2024-05-24
