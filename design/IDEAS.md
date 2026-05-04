@@ -18669,3 +18669,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you execute infected pops before they can coordinate an escape, sacrificing your medical ethics, or risk the entire sector falling to a disease that actively plans its own expansion?
 
 ---
+
+## Leverage
+
+**Layer:** Cross-layer
+
+**Fantasy:** Exploiting the desperate needs of struggling rim worlds to secure cheap labor and resources.
+
+**Mechanic:** When a Layer 1 colony experiences severe resource deficits (e.g., famine, energy crisis), richer colonies or passing Layer 2 megacorporations can offer "Leverage Contracts". The desperate colony receives immediate aid, but in exchange, a percentage of their future production is permanently siphoned off to the benefactor.
+
+**Emergence:** You intentionally sabotage a colony's energy grid just as a harsh winter sets in, forcing them to accept a Leverage Contract. Years later, that colony becomes your industrial powerhouse, but 50% of their output is legally bound to a tiny, hedonistic resort world that originally bailed them out.
+
+**Tension:** Do you accept a predatory loan to survive the winter, knowing it will cripple your long-term growth and breed intense resentment among the Pops?
+
+---
+
+## Imperial Friction
+
+**Layer:** 3 -> 1
+
+**Fantasy:** The slow, agonizing bureaucratic decay of a massive, sprawling empire.
+
+**Mechanic:** As your civilization's borders expand on Layer 3, an "Imperial Friction" metric increases. This introduces artificial delays in resource transfers between colonies and increases the likelihood that Layer 2 transport fleets "misplace" cargo. On Layer 1, this manifests as arbitrary bureaucratic mandates—Pops are forced to spend time filling out forms or waiting for approvals before starting construction or mining jobs.
+
+**Emergence:** You try to quickly build a critical defense platform on a border world to repel an invasion, but the local governor insists on waiting for a rubber stamp from the capital, which is delayed because a clerk on the homeworld took a long lunch. The world falls not to overwhelming firepower, but to paperwork.
+
+**Tension:** Do you keep expanding your borders for more resources, knowing that every new world makes the entire empire slower, dumber, and less responsive to crises?
+
+---
+
+## Philosophical Memes
+
+**Layer:** 1
+
+**Fantasy:** An ideological contagion that spreads through gossip, fundamentally altering the colony's culture.
+
+**Mechanic:** When Pops engage in social interactions, they have a chance to transmit a "Philosophical Meme" (e.g., "Work is meaningless," "The stars are watching us," "Hoarding is virtuous"). These memes act like viruses, spreading through the social graph. When a Pop is infected, their Utility AI weights shift dramatically—a previously diligent miner might suddenly prioritize leisure or staring at the sky.
+
+**Emergence:** You perfectly optimize your colony's layout for maximum efficiency, grouping all the miners together in the tavern after work. One miner adopts the meme that "sleep is for the weak," and soon the entire industrial sector is working themselves to death, causing a massive, simultaneous wave of exhaustion and subsequent collapse of the supply chain.
+
+**Tension:** Do you allow free speech and socialization, risking the rapid spread of damaging ideologies, or do you enforce draconian isolation to keep the workforce predictable, at the cost of catastrophic morale?
+
+---
