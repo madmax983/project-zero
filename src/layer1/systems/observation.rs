@@ -56,6 +56,9 @@ pub fn register(schedule: &mut Schedule) {
         (
             biography_monitor_system.after(crate::layer1::health::despawn_dead_entities_system),
             crate::layer1::social::cadet::death_consequence_system,
+            crate::layer1::social::golden_age::complacency_accumulation_system,
+            crate::layer1::social::golden_age::apply_complacency_debuffs_system,
+            crate::layer1::social::golden_age::pop_alert_response_system,
             crate::layer1::graffiti::graffiti_placement_system
                 .after(crate::layer1::health::despawn_dead_entities_system),
             dream_system.after(crate::layer1::health::despawn_dead_entities_system),
