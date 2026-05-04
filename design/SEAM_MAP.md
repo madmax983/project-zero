@@ -890,3 +890,15 @@
 ### INT-1084: Ideological Contraband
 - **Systems connected:** `execute_trade_routes_system` -> `ideological_contraband_route_bridge` -> `apply_cultural_contraband_system`
 - **Glue added:** `ideological_contraband_route_bridge` in `src/layer2/integration.rs`
+
+### INT-659: Orbital Bombardment -> Chronicle
+- **Date:** 2026-06-25
+- **Systems connected:** `BombardmentEvent` -> `orbital_bombardment_chronicle_bridge` -> `AddChronicleEvent`
+- **Glue added:** `orbital_bombardment_chronicle_bridge` in `src/layer2/integration.rs`
+- **Tests:** `tests/integration/orbital_bombardment_bridge.rs`
+
+### INT-660: Orbital Mirrors -> Chronicle
+- **Date:** 2026-06-25
+- **Systems connected:** `Added<OrbitalMirror>` -> `orbital_mirror_chronicle_bridge` -> `AddChronicleEvent`
+- **Glue added:** `orbital_mirror_chronicle_bridge` in `src/layer2/integration.rs`
+- **Tests:** `tests/integration/orbital_mirror_bridge.rs`

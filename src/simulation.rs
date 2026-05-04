@@ -341,6 +341,8 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
         (
             crate::layer2::cartographers_curse::process_telemetry_sale,
             crate::layer2::integration::cartographers_curse_chronicle_bridge,
+            crate::layer2::integration::orbital_bombardment_chronicle_bridge,
+            crate::layer2::integration::orbital_mirror_chronicle_bridge,
         )
             .chain(),
         crate::layer2::cartographers_curse::apply_drop_pod_accuracy,

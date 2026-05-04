@@ -506,3 +506,5 @@
 - [x] `INT-626` Integration: Cartographer's Curse -> Chronicle — completed 2026-06-25
 - [x] `1084` Ideological Contraband — `specs/1084-ideological-contraband.md` — completed 2026-02-01
 - [x] `INT-1084` Integration: Ideological Contraband -> Trade Routes — completed 2026-05-04
+- [x] `INT-659` Integration: Orbital Bombardment -> Chronicle — completed 2026-06-25
+- [x] `INT-660` Integration: Orbital Mirrors -> Chronicle — completed 2026-06-25
