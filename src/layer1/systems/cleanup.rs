@@ -5,12 +5,9 @@ use crate::layer1::*;
 use bevy_ecs::prelude::*;
 
 pub fn register(schedule: &mut Schedule) {
-
     schedule.add_systems(
-        (
-            update_event_buffer::<crate::layer1::predecessors::WorldTriggerEvent>,
-        )
-        .in_set(Layer1SystemSet::EventCleanup),
+        (update_event_buffer::<crate::layer1::predecessors::WorldTriggerEvent>,)
+            .in_set(Layer1SystemSet::EventCleanup),
     );
     schedule.add_systems(
         (

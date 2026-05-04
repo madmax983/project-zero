@@ -32,3 +32,6 @@
 **[Optimizing command palette filtering]**
 **Learning:** Returning `Vec<ShellCommand>` from `filtered_palette_commands` involved calling `.cloned()` and creating a `Vec` with full struct copies, even though we just use them for read-only sorting and iteration.
 **Action:** Changed the return type to `Vec<&ShellCommand>` to return references directly, avoiding the unnecessary `.cloned()` call while still allowing us to safely sort the filtered subset of commands.
+**Room Quality HashSet Allocation Optimization**
+**Learning:** `calculate_room_quality` was instantiating a new `HashSet` and iterating all `Building` entities in the world to find `Wall` positions on every invocation, allocating O(N) memory and compute. The globally maintained `BuildingMap` already provides this information.
+**Action:** Whenever verifying spatial layout of buildings, use `world.get_resource::<BuildingMap>()` for O(1) lookups instead of rebuilding spatial indices dynamically via `.filter().collect()`.

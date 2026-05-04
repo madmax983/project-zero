@@ -85,16 +85,12 @@ pub fn calculate_room_quality(world: &mut World, pos: GridPosition) -> f32 {
     // Cap room size to prevent infinite loops or massive CPU spikes
     const MAX_ROOM_SIZE: usize = 100;
 
-    // Build a set of wall positions for fast lookup
-    // This is a bit expensive (iterating all buildings), but necessary without a spatial map for walls.
-    // Optimization: If performance is an issue, maintain a WallGrid resource.
-    // We collect into a HashSet to release the borrow on world.
-    let walls: HashSet<(i32, i32)> = world
-        .query::<(&GridPosition, &Building)>()
-        .iter(world)
-        .filter(|(_, b)| b.building_type == BuildingType::Wall)
-        .map(|(p, _)| (p.x, p.y))
-        .collect();
+    // ⚡ Bolt Optimization: Removed expensive runtime query + HashSet allocation.
+    // We now use the globally maintained `BuildingMap` to look up entities
+    // at a position in O(1) time and check their `BuildingType` directly,
+    // avoiding a costly iteration over all buildings and a heap allocation
+    // per `calculate_room_quality` call.
+    let building_map = world.get_resource::<crate::layer1::building::BuildingMap>();
 
     let Some(zones) = world.get_resource::<ZoneGrid>() else {
         return 0.0;
@@ -156,7 +152,19 @@ pub fn calculate_room_quality(world: &mut World, pos: GridPosition) -> f32 {
                     false
                 };
 
-                let is_wall = walls.contains(&(nx, ny));
+                let is_wall = if let Some(map) = building_map {
+                    if let Some(&entity) = map.0.get(&(nx, ny)) {
+                        if let Some(building) = world.get::<Building>(entity) {
+                            building.building_type == BuildingType::Wall
+                        } else {
+                            false
+                        }
+                    } else {
+                        false
+                    }
+                } else {
+                    false
+                };
 
                 let is_walkable =
                     if let (Ok(ux), Ok(uy)) = (usize::try_from(nx), usize::try_from(ny)) {
@@ -288,6 +296,9 @@ mod tests {
             tiles,
         });
         world.insert_resource(SimulationTime::default());
+        world.insert_resource(crate::layer1::building::BuildingMap(
+            std::collections::HashMap::new(),
+        ));
         world
     }
 
@@ -348,6 +359,18 @@ mod tests {
                 },
                 GridPosition { x: nx, y: ny },
             ));
+        }
+
+        // ⚡ Bolt: After spawning walls, we need to update the BuildingMap so calculate_room_quality can see them.
+        let mut map_updates = Vec::new();
+        let mut query = world.query::<(bevy_ecs::entity::Entity, &GridPosition)>();
+        for (entity, pos) in query.iter(&world) {
+            map_updates.push(((pos.x, pos.y), entity));
+        }
+        let mut map = world.resource_mut::<crate::layer1::building::BuildingMap>();
+        map.0.clear();
+        for (pos, entity) in map_updates {
+            map.0.insert(pos, entity);
         }
 
         let quality = calculate_room_quality(&mut world, GridPosition { x: 1, y: 1 });
