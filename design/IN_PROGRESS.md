@@ -6,6 +6,8 @@ Tasks currently being implemented by Builders.
 
 ---
 
+
+
 - [ ] `242` The Echo - `specs/242-the-echo.md` - claimed 2026-02-27
 - [ ] `244` Biometric Drift - `specs/244-biometric-drift.md` - claimed 2026-02-28
 - [ ] `249` Holographic Facades - `specs/249-holographic-facades.md` - claimed 2026-02-28

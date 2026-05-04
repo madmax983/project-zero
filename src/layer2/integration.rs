@@ -551,15 +551,22 @@ pub fn founder_effect_bridge_system(
 pub fn predecessor_orbital_shield_bridge_system(
     shield_query: Query<&crate::layer1::predecessors::PredecessorOrbitalShield>,
     colony_query: Query<Entity, With<crate::layer2::generation::ColonyLocation>>,
-    fleet_query: Query<(Entity, &crate::layer2::fleet::FleetOrder), With<crate::layer2::fleet::Fleet>>,
+    fleet_query: Query<
+        (Entity, &crate::layer2::fleet::FleetOrder),
+        With<crate::layer2::fleet::Fleet>,
+    >,
     mut commands: Commands,
 ) {
-    if shield_query.is_empty() { return; }
+    if shield_query.is_empty() {
+        return;
+    }
     if let Ok(colony_entity) = colony_query.get_single() {
         for (fleet_entity, order) in fleet_query.iter() {
             if let crate::layer2::fleet::FleetOrder::MoveTo(target) = *order {
                 if target == colony_entity {
-                    commands.entity(fleet_entity).remove::<crate::layer2::fleet::FleetOrder>();
+                    commands
+                        .entity(fleet_entity)
+                        .remove::<crate::layer2::fleet::FleetOrder>();
                 }
             }
         }
