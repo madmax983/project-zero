@@ -18627,3 +18627,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you promote your best commanders, knowing their inevitable glorious death in battle might accidentally bankrupt their impoverished home colony?
 
 ---
+
+## The Artifact Cult
+
+**Layer:** 1
+
+**Fantasy:** A mysterious artifact is unearthed that fundamentally alters the beliefs of the colonists.
+
+**Mechanic:** A dormant precursor artifact is discovered during mining. It emits a low-frequency hum that slightly boosts productivity but causes a slow accumulation of the "Zealous" trait. Over time, affected pops abandon their jobs to form a cult, building shrines around the artifact and demanding sacrifices of rare materials.
+
+**Emergence:** The cult's productivity boost initially saves the colony from a resource shortage, but eventually, they demand the destruction of the central power grid to "purify" the colony, pitting the cult against the secular leadership.
+
+**Tension:** Do you exploit the artifact's productivity boost and risk a religious civil war, or destroy the artifact early on and face the immediate wrath of its few early followers?
+
+---
+
+## The Black Market Fleet
+
+**Layer:** 2 -> 3
+
+**Fantasy:** A shadowy armada that operates outside the law, offering desperate salvation at a terrible price.
+
+**Mechanic:** A massive, mobile fleet of pirate and smuggler ships occasionally drifts through the system. They offer incredibly rare tech and emergency food supplies, but only accept payment in the form of "Indentured Pops" (citizens) or high-level strategic information.
+
+**Emergence:** Your core world is starving due to a blockade. The Black Market Fleet arrives and offers food, but demands you hand over 10% of your population. You agree to save the rest, only to find those sold pops later invading your rim worlds as cybernetic pirate shock troops.
+
+**Tension:** Do you sacrifice your own people to save the colony, knowing they will eventually return as enemies, or face total starvation?
+
+---
+
+## The Sentient Plague
+
+**Layer:** Cross-layer (1 -> 2)
+
+**Fantasy:** A disease that doesn't just kill, but coordinates and communicates.
+
+**Mechanic:** A highly infectious plague breaks out on a Layer 1 colony. Instead of just damaging health, infected pops occasionally enter a "Fugue State" where they unconsciously sabotage quarantine measures or build crude comms arrays to broadcast the plague's "Song" to passing Layer 2 ships.
+
+**Emergence:** You perfectly quarantine a medical sector, but the infected pops perfectly synchronize a riot, disable the airlocks, and launch a single infected shuttle into orbit, purposefully aiming for a neutral trade convoy to spread the disease galaxy-wide.
+
+**Tension:** Do you execute infected pops before they can coordinate an escape, sacrificing your medical ethics, or risk the entire sector falling to a disease that actively plans its own expansion?
+
+---
