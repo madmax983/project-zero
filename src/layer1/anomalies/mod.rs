@@ -477,3 +477,4 @@ mod tests {
         assert_eq!(resources.knowledge, 100.0);
     }
 }
+pub mod predecessor;

@@ -18,7 +18,6 @@ pub struct ExcavationEvent {
     pub target: Entity,
 }
 
-
 pub fn resonant_ore_exposure_system(
     mut commands: Commands,
     mut events: EventReader<ExcavationEvent>,

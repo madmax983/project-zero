@@ -16,7 +16,6 @@
 
 
 
-- [ ] `637` Echoes of the Predecessors — `specs/637-echoes-of-predecessors.md`
 
 
 - [ ] `631` Conveyor Logistics — `specs/631-conveyor-logistics.md`

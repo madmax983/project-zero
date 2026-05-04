@@ -14,7 +14,6 @@ pub struct ActiveResearch {
 #[derive(Component)]
 pub struct VulnerableMind;
 
-
 #[derive(Event)]
 pub struct ConversationEvent {
     pub initiator: Entity,
