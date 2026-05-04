@@ -46,3 +46,8 @@
 **Bloat:** Isolated Marker Components (`Plagued`, `IsQuarantined`, `MineableOre`, `CommsConsole`, `CargoCultCultist`) and unused plugins (`DirectLinkPlugin`).
 **Cut:** Deleted them.
 **Saved:** ~20 lines of dead code and indirection, simplifying codebase structure.
+
+## [Reduction]
+**Bloat:** `AlertResponseState` enum and `AlertPriority` enum in `src/layer1/social/golden_age.rs` used solely to track boolean flags.
+**Cut:** Removed `AlertPriority` enum and replaced it with a simple `is_high_priority: bool` field on `AlertEvent`. Removed `AlertResponseState` and replaced it with a unit struct `RespondingToAlert` used as a marker component.
+**Saved:** ~20 lines of code and two unnecessary enum indirections.
