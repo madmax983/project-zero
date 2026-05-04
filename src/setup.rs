@@ -146,7 +146,8 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     world.insert_resource(GameState::default());
     world.init_resource::<crate::layer1::environment::bio_acoustic_miasma::MiasmaRecordedSecret>();
     world.init_resource::<crate::layer1::stress::TraumaTracker>();
-    world.init_resource::<bevy_ecs::event::Events<crate::layer1::predecessors::WorldTriggerEvent>>();
+    world
+        .init_resource::<bevy_ecs::event::Events<crate::layer1::predecessors::WorldTriggerEvent>>();
 
     world.init_resource::<bevy_ecs::event::Events<crate::layer3::market::ephemeral_market::MarketSpawnEvent>>();
 

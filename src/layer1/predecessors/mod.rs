@@ -1,8 +1,8 @@
-use bevy::prelude::*;
-use crate::layer1::resources::ColonyResources;
-use crate::layer1::energy::EnergyGrid;
 use crate::layer1::core::chronicle::AddChronicleEvent;
 use crate::layer1::core::chronicle::EventImportance;
+use crate::layer1::energy::EnergyGrid;
+use crate::layer1::resources::ColonyResources;
+use bevy::prelude::*;
 use rand::Rng;
 
 #[derive(Component)]
@@ -30,7 +30,6 @@ pub struct PredecessorWeatherArray;
 
 #[derive(Component)]
 pub struct PredecessorDroneSwarm;
-
 
 pub fn predecessor_ruins_passive_bonus_system(
     mut resources: ResMut<ColonyResources>,
@@ -121,11 +120,15 @@ mod tests {
 
         app.add_event::<WorldTriggerEvent>();
         app.add_event::<AddChronicleEvent>();
-        app.add_systems(Update, (
-            predecessor_ruins_passive_bonus_system,
-            predecessor_ruins_trigger_system,
-            predecessor_ruins_awakening_system,
-        ).chain());
+        app.add_systems(
+            Update,
+            (
+                predecessor_ruins_passive_bonus_system,
+                predecessor_ruins_trigger_system,
+                predecessor_ruins_awakening_system,
+            )
+                .chain(),
+        );
         app.init_resource::<ColonyResources>();
         app
     }
@@ -134,8 +137,14 @@ mod tests {
     fn test_predecessor_ruins_provide_passive_research_bonus() {
         let mut app = setup_app();
 
-        app.insert_resource(ColonyResources { knowledge: 0.0, ..Default::default() });
-        app.world_mut().spawn(PredecessorRuin { awakened: false, research_bonus_rate: 5.0 });
+        app.insert_resource(ColonyResources {
+            knowledge: 0.0,
+            ..Default::default()
+        });
+        app.world_mut().spawn(PredecessorRuin {
+            awakened: false,
+            research_bonus_rate: 5.0,
+        });
 
         let mut time = Time::<()>::default();
         time.advance_by(std::time::Duration::from_secs(1));
@@ -145,7 +154,10 @@ mod tests {
         app.update();
 
         let resources = app.world().resource::<ColonyResources>();
-        assert!(resources.knowledge > 0.0, "Passive research bonus should be applied");
+        assert!(
+            resources.knowledge > 0.0,
+            "Passive research bonus should be applied"
+        );
     }
 
     #[test]
@@ -153,13 +165,19 @@ mod tests {
         let mut app = setup_app();
         app.insert_resource(Time::<()>::default());
 
-        let ruin_entity = app.world_mut().spawn(PredecessorRuin {
-            awakened: false,
-            research_bonus_rate: 5.0
-        }).id();
+        let ruin_entity = app
+            .world_mut()
+            .spawn(PredecessorRuin {
+                awakened: false,
+                research_bonus_rate: 5.0,
+            })
+            .id();
 
         // Create an energy grid with a massive spike
-        app.world_mut().spawn(EnergyGrid { total_generation: 10000.0, total_consumption: 50.0 });
+        app.world_mut().spawn(EnergyGrid {
+            total_generation: 10000.0,
+            total_consumption: 50.0,
+        });
 
         app.update();
 
@@ -172,6 +190,9 @@ mod tests {
         let mut reader = events.get_cursor();
         let evs: Vec<_> = reader.read(events).collect();
         assert_eq!(evs.len(), 1, "Should send exactly one chronicle event");
-        assert!(evs[0].text.contains("Massive Energy Spike"), "Chronicle event should mention trigger");
+        assert!(
+            evs[0].text.contains("Massive Energy Spike"),
+            "Chronicle event should mention trigger"
+        );
     }
 }
