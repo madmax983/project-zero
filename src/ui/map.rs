@@ -781,6 +781,8 @@ pub const fn get_building_char(building: BuildingType) -> &'static str {
         BuildingType::School => "S",
         BuildingType::MediaStation => "M",
         BuildingType::Spaceport => "P",
+        BuildingType::Mainframe => "M",
+        BuildingType::CommsRelay => "C",
     }
 }
 
@@ -860,6 +862,8 @@ pub const fn get_building_color(building: BuildingType, material: MaterialType) 
             BuildingType::School => Color::Blue,
             BuildingType::MediaStation => Color::Cyan,
             BuildingType::Spaceport => Color::LightBlue,
+            BuildingType::Mainframe => Color::LightMagenta,
+            BuildingType::CommsRelay => Color::LightCyan,
         }
     }
 }

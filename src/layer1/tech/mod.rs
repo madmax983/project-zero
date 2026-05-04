@@ -729,3 +729,5 @@ pub use cognitive_overclocking::*;
 pub mod machine_awakening;
 pub use machine_awakening::*;
 pub mod martyrs_engine;
+
+pub mod rogue_automation_cults;
