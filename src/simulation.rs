@@ -337,7 +337,10 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
 
     // --- Layer 3 Integration ---
     schedule.add_systems((
-        crate::layer2::cartographers_curse::process_telemetry_sale,
+        (
+            crate::layer2::cartographers_curse::process_telemetry_sale,
+            crate::layer2::integration::cartographers_curse_chronicle_bridge,
+        ).chain(),
         crate::layer2::cartographers_curse::apply_drop_pod_accuracy,
         update_detection_risk_system.after(Layer1SystemSet::Economy),
         check_hostile_spawn_system.after(update_detection_risk_system),
