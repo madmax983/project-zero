@@ -25,7 +25,6 @@ pub struct Sanctuary {
     pub tiles: Vec<GridPosition>,
 }
 
-
 // Alternatively, because the existing architecture uses a `ZoneGrid` resource,
 // instead of explicitly spawning `Zone` entities, we can maintain `Sanctuary` states
 // either via a new Resource or by mapping connected components of `ZoneType::Sanctuary` on the `ZoneGrid`.

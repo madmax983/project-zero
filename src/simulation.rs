@@ -617,6 +617,7 @@ mod tests {
         world.init_resource::<crate::layer3::digital_detritus::JunkDataFilter>();
         world.init_resource::<crate::layer1::culture::gastronomers::EmpireAdvancement>();
         world.init_resource::<bevy_ecs::event::Events<crate::layer1::culture::gastronomers::CulinarySingularityEvent>>();
+        world.init_resource::<Events<crate::layer1::predecessors::WorldTriggerEvent>>();
         *world.resource_mut::<GameState>() = GameState::Running;
 
         let tick_before = world.resource::<SimulationTime>().tick;
@@ -743,6 +744,7 @@ mod tests {
         world.init_resource::<crate::layer1::stress::TraumaTracker>();
         world.init_resource::<Events<crate::layer2::skyhooks::LaunchIntent>>();
         world.init_resource::<Events<crate::layer2::events_new::reverse_quarantine::RefugeeFleetEvent>>();
+        world.init_resource::<Events<crate::layer1::predecessors::WorldTriggerEvent>>();
         world.init_resource::<Events<crate::layer1::grafting::GraftBuildingEvent>>();
         world.init_resource::<Events<crate::layer3::fleets::ColonyFoundedEvent>>();
         world.init_resource::<crate::layer1::diplomacy::factions::rivals::TerritoryGrid>();
@@ -818,6 +820,7 @@ mod tests {
         world.init_resource::<crate::layer3::digital_detritus::JunkDataFilter>();
         world.init_resource::<crate::layer1::culture::gastronomers::EmpireAdvancement>();
         world.init_resource::<bevy_ecs::event::Events<crate::layer1::culture::gastronomers::CulinarySingularityEvent>>();
+        world.init_resource::<Events<crate::layer1::predecessors::WorldTriggerEvent>>();
 
         let schedule = build_simulation_schedule();
         world.add_schedule(schedule);

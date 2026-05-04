@@ -6,6 +6,15 @@ use bevy_ecs::prelude::*;
 pub fn register(schedule: &mut Schedule) {
     schedule.add_systems(
         (
+            crate::layer1::predecessors::predecessor_ruins_passive_bonus_system,
+            crate::layer1::predecessors::predecessor_ruins_trigger_system,
+            crate::layer1::predecessors::predecessor_ruins_awakening_system,
+        )
+            .chain()
+            .in_set(Layer1SystemSet::Environment),
+    );
+    schedule.add_systems(
+        (
             crate::layer1::environment::geothermal::geothermal_pulse_system,
             crate::layer1::environment::geothermal::geothermal_boost_system,
             crate::layer1::environment::geothermal::geothermal_decay_system,

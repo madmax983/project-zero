@@ -3,7 +3,6 @@ use crate::layer1::edicts::{ColonyPolicies, Policy};
 use crate::layer1::social::morale::{MoodModifier, Morale};
 use bevy_ecs::prelude::*;
 
-
 #[derive(Clone, Copy, PartialEq, Eq, Debug)]
 pub enum BroadcastType {
     Victory,
