@@ -39,3 +39,8 @@
 **Concept:** Added a `SonoluminescentNode` component that dynamically converts ambient acoustic noise (from `NoiseMap`) into light intensity on `LightSource` components.
 **Fate:** Merged
 **Lesson:** Turning industrial pollution (noise) into a functional utility (light) gives players a creative way to solve two problems simultaneously.
+
+## [Echoing Footsteps]
+**Concept:** Added an `EchoingFootsteps` system that tracks Pop movement and spawns temporary fading `AcousticEcho` entities (with `NoiseSource`) on their previous tiles.
+**Fate:** Merged
+**Lesson:** Tying dynamic movement directly into the acoustic system creates organic noise pollution from high-traffic routes, rewarding players for optimizing hallway design and base layouts to protect sleeping areas from ambient noise.
