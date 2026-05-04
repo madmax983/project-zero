@@ -4665,3 +4665,217 @@
 **Usage:**
 - "An Orphan Fleet just drifted into sensor range."
 - "Hack the Orphan Fleet before it jumps away."
+
+## Resonant Architecture (Spec 1082)
+
+### Mind-Stone / Iron-Plating
+**Replaces:** Special building materials
+**Code reference:** `BuildingMaterial::MindStone`, `BuildingMaterial::IronPlating`
+**Usage:**
+- "The Library was built of Mind-Stone. The scholars worked twice as fast, but rarely slept."
+- "The Iron-Plating in the Barracks makes them fearless, but quick to anger."
+
+### Resonance Sickness
+**Replaces:** Side effects of living in specialized rooms
+**Code reference:** `PopTraits` modification (e.g. `stress_gain`)
+**Usage:**
+- "He has Resonance Sickness from spending too much time in the Mind-Stone core."
+
+## Rogue Automation Cults (Spec 635)
+
+### Machine Cult / The Awakened Core
+**Replaces:** Rogue bots abandoning tasks
+**Code reference:** `MachineCultMember`
+**Usage:**
+- "The hauling bots formed a Machine Cult around the failing relay."
+- "They worship The Awakened Core now, ignoring our commands."
+
+### Shrine-Node
+**Replaces:** The server/node being worshipped
+**Code reference:** `shrine_entity` in `MachineCultMember`
+**Usage:**
+- "Do not power down the Shrine-Node; they will defend it."
+
+## Living Architecture (Spec 643)
+
+### Bio-Mass Building / Living Wall
+**Replaces:** Organic architecture that regenerates
+**Code reference:** `LivingBuilding` component
+**Usage:**
+- "The Living Wall is bleeding sap again."
+- "The Bio-Mass Building repairs itself if you feed it."
+
+### The Hunger / Starving Structure
+**Replaces:** When a living building lacks sustenance
+**Code reference:** `hunger` field in `LivingBuilding`
+**Usage:**
+- "The structure is suffering from The Hunger."
+- "A Starving Structure is a danger to anyone inside."
+
+## Planetary Curvature (Spec 1242)
+
+### The Short Horizon
+**Replaces:** Line of sight restrictions on small planets
+**Code reference:** `PlanetCurvature` resource
+**Usage:**
+- "We couldn't see the invaders due to The Short Horizon."
+
+### Watchtower / Cloud-Piercer
+**Replaces:** High elevation structures to expand line of sight
+**Code reference:** `Elevation` component
+**Usage:**
+- "Build a Watchtower so we can see over the curve."
+
+## Biocompatibility (Spec 630)
+
+### Planetary Rejection
+**Replaces:** Biocompatibility rating
+**Code reference:** `Biocompatibility` component
+**Usage:**
+- "The colonist is suffering from Planetary Rejection and needs immediate gene-therapy."
+
+### The Cough
+**Replaces:** Sickness caused by the local flora/environment
+**Code reference:** Health damage in `biocompatibility_system`
+**Usage:**
+- "Stay in the sealed zone unless you want The Cough."
+
+## The Petrification Sickness (Spec 634)
+
+### Stone-Sickness
+**Replaces:** The illness caused by exotic crust mining
+**Code reference:** `PetrificationSickness` component
+**Usage:**
+- "Half the mining team came down with Stone-Sickness."
+
+### The Statuary
+**Replaces:** The final state of a petrified pop
+**Code reference:** `Artifact` transformation in `petrification_transformation_system`
+**Usage:**
+- "He is part of The Statuary now, an artifact of our greed."
+
+## Public Grievances (Spec 1233)
+
+### The Whisper Network
+**Replaces:** General unrest / rumbling discontent
+**Code reference:** `GrievanceStatus`
+**Usage:**
+- "The Whisper Network is talking about the food rations again."
+
+### Grievance Notice
+**Replaces:** An official complaint affecting morale
+**Code reference:** `PublicGrievance` event
+**Usage:**
+- "Management ignored the Grievance Notice; expect a strike."
+
+## Pop Relationships (Spec 649)
+
+### Bonded Pair
+**Replaces:** High positive relationship between pops
+**Code reference:** `RelationshipType::Partner`
+**Usage:**
+- "They are a Bonded Pair; they won't work separate shifts."
+
+### Vendetta
+**Replaces:** Extreme negative relationship between pops
+**Code reference:** `RelationshipType::Rival`
+**Usage:**
+- "Assign them to different sectors; it's a blood Vendetta now."
+
+## The Founder Effect (Spec 648)
+
+### Founder's Gene
+**Replaces:** A trait disproportionately common due to initial population bottleneck
+**Code reference:** `FounderEffect` scaling logic
+**Usage:**
+- "Half the colony has the Founder's Gene for night-sight."
+
+### The Old Blood
+**Replaces:** Tracing lineage to the first colonists
+**Code reference:** Generation tracking
+**Usage:**
+- "He claims The Old Blood gives him the right to rule."
+
+## The Propaganda Simulacrum (Spec 642)
+
+### The Voice / The Governor's Shadow
+**Replaces:** AI-generated leader proxy
+**Code reference:** `PropagandaSimulacrum`
+**Usage:**
+- "The Voice told us the rations would increase. It lied."
+
+### Simulacrum Broadcast
+**Replaces:** Morale boosting event via AI
+**Code reference:** `SimulacrumBroadcastEvent`
+**Usage:**
+- "Play the Simulacrum Broadcast to calm the lower decks."
+
+## Psychoactive Weather (Spec 1098)
+
+### The Lucid Rain / Dream-Storm
+**Replaces:** Weather events that affect pop mental states
+**Code reference:** `PsychoactiveWeather`
+**Usage:**
+- "Close the blast doors, a Dream-Storm is rolling in."
+
+### Brain-Fog
+**Replaces:** The temporary debuff applied by the weather
+**Code reference:** `PsychoactiveDebuff`
+**Usage:**
+- "The crew is suffering from Brain-Fog after the last squall."
+
+## Cryptid Sightings (Spec 1081)
+
+### Vent-Stalker / The Maintenance Ghost
+**Replaces:** Unverified monster/entity in the colony
+**Code reference:** `CryptidSighting`
+**Usage:**
+- "The hauling bots reported another Vent-Stalker sighting."
+
+### Cryptid Panic
+**Replaces:** Localized morale drop due to rumors
+**Code reference:** `ParanoiaSpike` event
+**Usage:**
+- "We need to address the Cryptid Panic before production stops."
+
+## Orbital Bombardment (Spec 659)
+
+### The Sky-Fire / Kinetic Rain
+**Replaces:** Orbital strikes / planetary bombardment
+**Code reference:** `OrbitalBombardmentEvent`
+**Usage:**
+- "The Sky-Fire destroyed the western habitat."
+
+### Crater-Zone
+**Replaces:** Area destroyed by bombardment
+**Code reference:** `DestroyedTerrain` tag
+**Usage:**
+- "Nothing grows in the Crater-Zone."
+
+## Orbital Mirrors (Spec 660)
+
+### The False Sun
+**Replaces:** Orbital mirror satellite network
+**Code reference:** `OrbitalMirror`
+**Usage:**
+- "The False Sun keeps the crops alive through the long night."
+
+### Mirror-Alignment
+**Replaces:** Adjustment of the orbital mirrors
+**Code reference:** `MirrorAlignmentAction`
+**Usage:**
+- "Schedule a Mirror-Alignment to thaw the ice caps."
+
+## Protest Crowds (Spec 1234)
+
+### The Roar
+**Replaces:** Protest / strike action noise and presence
+**Code reference:** `ProtestCrowd`
+**Usage:**
+- "You can hear The Roar from the executive suites."
+
+### Barricade
+**Replaces:** Physical blockades formed by protesting pops
+**Code reference:** `ProtestBarricade`
+**Usage:**
+- "They threw up a Barricade in Sector 4."

@@ -12,7 +12,6 @@ pub struct ScrapValue {
     pub metal: f32,
 }
 
-
 pub enum EdictType {
     MaximizeResource(ResourceType),
     EradicatePlague,
