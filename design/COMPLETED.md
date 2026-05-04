@@ -502,3 +502,5 @@
 - [x] `635` Rogue Automation Cults — `specs/635-rogue-automation-cults.md` — completed 2024-05-24
 - [x] `1242` Planetary Curvature — `specs/1242-planetary-curvature.md` — completed 2026-05-04
 - [x] `637` Echoes of the Predecessors — `specs/637-echoes-of-predecessors.md` — completed 2026-05-04
+- [x] `INT-637` Integration: Echoes of the Predecessors -> Fleets & Seasons — completed 2026-05-04
+- [x] `INT-626` Integration: Cartographer's Curse -> Chronicle — completed 2026-06-25

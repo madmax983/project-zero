@@ -337,7 +337,11 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
 
     // --- Layer 3 Integration ---
     schedule.add_systems((
-        crate::layer2::cartographers_curse::process_telemetry_sale,
+        (
+            crate::layer2::cartographers_curse::process_telemetry_sale,
+            crate::layer2::integration::cartographers_curse_chronicle_bridge,
+        )
+            .chain(),
         crate::layer2::cartographers_curse::apply_drop_pod_accuracy,
         update_detection_risk_system.after(Layer1SystemSet::Economy),
         check_hostile_spawn_system.after(update_detection_risk_system),
@@ -368,9 +372,11 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
         update_event_buffer::<ShipDestroyedEvent>,
         update_event_buffer::<crate::layer2::orbital_necropolis::EntityDestroyedEvent>,
     ));
+    schedule.add_systems((update_event_buffer::<DetectionEvent>,));
     schedule.add_systems((
-        update_event_buffer::<DetectionEvent>,
-        crate::layer2::fleet::fleet_order_system,
+        crate::layer2::integration::predecessor_orbital_shield_bridge_system,
+        crate::layer2::fleet::fleet_order_system
+            .after(crate::layer2::integration::predecessor_orbital_shield_bridge_system),
         crate::layer2::station::build_station_system,
         crate::layer2::station::zero_g_fermentation_system
             .after(crate::layer2::fleet::fleet_order_system)

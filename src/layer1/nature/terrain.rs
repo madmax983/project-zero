@@ -242,7 +242,7 @@ pub fn generate_terrain(width: usize, height: usize) -> TerrainGrid {
     };
 
     // Xeno-Artifacts (Spec 541)
-    let num_artifacts = rng.gen_range(1..=3);
+    let num_artifacts = rng.gen_range(2..=5);
     for _ in 0..num_artifacts {
         let x = rng.gen_range(0..width);
         let y = rng.gen_range(0..height);

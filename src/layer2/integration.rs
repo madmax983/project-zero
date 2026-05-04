@@ -546,3 +546,43 @@ pub fn founder_effect_bridge_system(
         }
     }
 }
+
+/// Blocks fleets from traveling to the colony if a `PredecessorOrbitalShield` is active.
+pub fn predecessor_orbital_shield_bridge_system(
+    shield_query: Query<&crate::layer1::predecessors::PredecessorOrbitalShield>,
+    colony_query: Query<Entity, With<crate::layer2::generation::ColonyLocation>>,
+    fleet_query: Query<
+        (Entity, &crate::layer2::fleet::FleetOrder),
+        With<crate::layer2::fleet::Fleet>,
+    >,
+    mut commands: Commands,
+) {
+    if shield_query.is_empty() {
+        return;
+    }
+    if let Ok(colony_entity) = colony_query.get_single() {
+        for (fleet_entity, order) in fleet_query.iter() {
+            if let crate::layer2::fleet::FleetOrder::MoveTo(target) = *order {
+                if target == colony_entity {
+                    commands
+                        .entity(fleet_entity)
+                        .remove::<crate::layer2::fleet::FleetOrder>();
+                }
+            }
+        }
+    }
+}
+
+use crate::layer2::cartographers_curse::SellTelemetryEvent;
+/// Bridges `SellTelemetryEvent` to `AddChronicleEvent`
+pub fn cartographers_curse_chronicle_bridge(
+    mut events: EventReader<SellTelemetryEvent>,
+    mut chronicle_events: EventWriter<AddChronicleEvent>,
+) {
+    for _ in events.read() {
+        chronicle_events.send(AddChronicleEvent {
+            importance: EventImportance::Major,
+            text: "The colony's orbital telemetry was sold to a megacorporation. The skies are no longer ours.".to_string(),
+        });
+    }
+}

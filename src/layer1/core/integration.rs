@@ -1898,3 +1898,13 @@ pub fn secret_society_discovery_bridge_system(
 }
 
 pub fn sub_lithic_sabotage_bridge(_commands: bevy_ecs::system::Commands) {}
+
+/// Forces the `SeasonState` to `Season::Spring` if a `PredecessorWeatherArray` is active.
+pub fn predecessor_weather_array_bridge_system(
+    array_query: Query<&crate::layer1::predecessors::PredecessorWeatherArray>,
+    mut season_state: ResMut<crate::layer1::nature::seasons::SeasonState>,
+) {
+    if !array_query.is_empty() {
+        season_state.current_season = crate::layer1::nature::seasons::Season::Spring;
+    }
+}

@@ -965,7 +965,6 @@ fn render_extra_info(
     world: &World,
     entity: Entity,
 ) {
-    #[allow(unused_mut)]
     let mut extra_idx = 0;
     let extra_chunks = Layout::default()
         .direction(Direction::Vertical)
@@ -974,43 +973,43 @@ fn render_extra_info(
 
     if let Some(cable) = world.get::<PowerCable>(entity) {
         render_power_cable_info(frame, extra_chunks[extra_idx], cable);
+        extra_idx += 1;
     }
 
     if let Some(battery) = world.get::<Battery>(entity) {
         render_battery_info(frame, extra_chunks[extra_idx], battery);
+        extra_idx += 1;
     }
 
     if let Some(consumer) = world.get::<PowerConsumer>(entity) {
         render_power_consumer_info(frame, extra_chunks[extra_idx], consumer);
+        extra_idx += 1;
     }
 
     if let Some(source) = world.get::<PowerSource>(entity) {
         render_power_source_info(frame, extra_chunks[extra_idx], source);
+        extra_idx += 1;
     }
 
     if let Some(emitter) = world.get::<ScentEmitter>(entity) {
         render_scent_emitter_info(frame, extra_chunks[extra_idx], emitter);
+        extra_idx += 1;
     }
 
     #[cfg(feature = "nova")]
     if let Some(meme) = world.get::<MemeCarrier>(entity) {
         render_meme_carrier_info(frame, extra_chunks[extra_idx], meme);
-        #[allow(unused_assignments)]
-        {
-            extra_idx += 1;
-        }
+        extra_idx += 1;
     }
 
     #[cfg(feature = "nova")]
     if let Some(martyrdom) = world.get::<Martyrdom>(entity) {
         render_martyrdom_info(frame, extra_chunks[extra_idx], martyrdom);
         if martyrdom.active {
-            #[allow(unused_assignments)]
-            {
-                extra_idx += 1;
-            }
+            extra_idx += 1;
         }
     }
+    let _ = extra_idx;
 }
 
 fn render_power_cable_info(frame: &mut Frame, area: Rect, cable: &PowerCable) {

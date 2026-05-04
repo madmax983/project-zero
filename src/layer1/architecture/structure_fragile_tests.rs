@@ -62,8 +62,8 @@ mod tests {
             ))
             .id();
 
-        // Run for a while
-        for _ in 0..100 {
+        // Run for a while, making sure tests that use rng don't get unlucky 100 times in a row
+        for _ in 0..500 {
             fragile_decay_system(&mut world);
         }
 

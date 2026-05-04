@@ -12,6 +12,8 @@ pub fn register(schedule: &mut Schedule) {
             update_resource_caps_system,
             crate::layer1::digital_immortality::ghost_power_consumption,
             advance_season_system,
+            crate::layer1::core::integration::predecessor_weather_array_bridge_system
+                .after(advance_season_system),
             update_taboo_duration_system,
             update_water_system,
             update_weather_system,
