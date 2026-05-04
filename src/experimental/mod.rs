@@ -128,3 +128,6 @@ pub mod acoustic_power;
 
 #[cfg(feature = "nova")]
 pub mod sonoluminescence;
+
+#[cfg(feature = "nova")]
+pub mod echoing_footsteps;
