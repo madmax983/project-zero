@@ -346,3 +346,6 @@ mod gastronomer_chronicle;
 
 #[path = "integration/visitor_chronicle_bridge.rs"]
 mod visitor_chronicle_bridge;
+
+#[path = "integration/ideological_contraband_bridge.rs"]
+mod ideological_contraband_bridge;

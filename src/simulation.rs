@@ -470,8 +470,12 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
         crate::layer2::integration::pre_trade_route_sync_system
             .before(crate::layer2::trade::routes::execute_trade_routes_system),
         crate::layer2::trade::routes::execute_trade_routes_system,
+        crate::layer2::integration::ideological_contraband_route_bridge
+            .after(crate::layer2::trade::routes::execute_trade_routes_system),
         crate::layer2::integration::post_trade_route_sync_system
             .after(crate::layer2::trade::routes::execute_trade_routes_system),
+    ));
+    schedule.add_systems((
         crate::layer2::trade::biomass_tariff::process_biomass_tariff_system
             .after(crate::layer2::integration::post_trade_route_sync_system),
         crate::layer2::trade::penal_contracts::process_penal_contracts_system,

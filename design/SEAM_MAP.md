@@ -886,3 +886,7 @@
 - **Systems connected:** `process_telemetry_sale` (Cartographer's Curse) -> `cartographers_curse_chronicle_bridge` -> `AddChronicleEvent`
 - **Glue added:** Added `cartographers_curse_chronicle_bridge` in `src/layer2/integration.rs` to emit an `AddChronicleEvent` when `SellTelemetryEvent` occurs.
 - **Tests:** `tests/integration/cartographers_curse_bridge.rs`
+
+### INT-1084: Ideological Contraband
+- **Systems connected:** `execute_trade_routes_system` -> `ideological_contraband_route_bridge` -> `apply_cultural_contraband_system`
+- **Glue added:** `ideological_contraband_route_bridge` in `src/layer2/integration.rs`
