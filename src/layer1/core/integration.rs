@@ -1800,7 +1800,9 @@ pub fn visitor_chronicle_bridge(
 
 /// INT-643: Bridges PopConsumedEvent (Living Architecture) to AddChronicleEvent (Chronicle).
 pub fn living_architecture_chronicle_bridge(
-    mut consumed_events: EventReader<crate::layer1::architecture::living_architecture::PopConsumedEvent>,
+    mut consumed_events: EventReader<
+        crate::layer1::architecture::living_architecture::PopConsumedEvent,
+    >,
     mut chronicle_events: EventWriter<crate::layer1::core::chronicle::AddChronicleEvent>,
 ) {
     for _event in consumed_events.read() {
@@ -1816,7 +1818,10 @@ pub fn living_architecture_chronicle_bridge(
 pub fn society_suspicion_bridge_system(
     mut commands: bevy_ecs::system::Commands,
     members: bevy_ecs::system::Query<
-        (bevy_ecs::entity::Entity, &crate::layer1::social::secret_societies::SecretSocietyMember),
+        (
+            bevy_ecs::entity::Entity,
+            &crate::layer1::social::secret_societies::SecretSocietyMember,
+        ),
         bevy_ecs::query::Without<crate::layer1::law::predictive_policing::Suspect>,
     >,
     societies: bevy_ecs::system::Query<&crate::layer1::social::secret_societies::SecretSociety>,
@@ -1857,11 +1862,16 @@ pub fn secret_society_discovery_bridge_system(
         &crate::layer1::social::secret_societies::SecretSocietyMember,
         bevy_ecs::query::Added<crate::layer1::law::justice::Inmate>,
     >,
-    mut societies: bevy_ecs::system::Query<&mut crate::layer1::social::secret_societies::SecretSociety>,
-    all_members: bevy_ecs::system::Query<
-        (bevy_ecs::entity::Entity, &crate::layer1::social::secret_societies::SecretSocietyMember),
+    mut societies: bevy_ecs::system::Query<
+        &mut crate::layer1::social::secret_societies::SecretSociety,
     >,
-    mut chronicle_events: bevy_ecs::event::EventWriter<crate::layer1::core::chronicle::AddChronicleEvent>,
+    all_members: bevy_ecs::system::Query<(
+        bevy_ecs::entity::Entity,
+        &crate::layer1::social::secret_societies::SecretSocietyMember,
+    )>,
+    mut chronicle_events: bevy_ecs::event::EventWriter<
+        crate::layer1::core::chronicle::AddChronicleEvent,
+    >,
 ) {
     for member in arrested_members.iter() {
         if let Ok(mut society) = societies.get_mut(member.society_id) {
@@ -1886,3 +1896,5 @@ pub fn secret_society_discovery_bridge_system(
         }
     }
 }
+
+pub fn sub_lithic_sabotage_bridge(_commands: bevy_ecs::system::Commands) {}
