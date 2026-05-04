@@ -18,21 +18,12 @@ pub struct Complacency {
 
 #[derive(Event)]
 pub struct AlertEvent {
-    pub priority: AlertPriority,
+    pub is_high_priority: bool,
     pub message: String,
 }
 
-#[derive(Clone, Copy, PartialEq, Eq)]
-pub enum AlertPriority {
-    Low,
-    High,
-}
-
 #[derive(Component, Clone, Copy, PartialEq, Eq, Debug)]
-pub enum AlertResponseState {
-    Idle,
-    Responding,
-}
+pub struct RespondingToAlert;
 
 pub fn complacency_accumulation_system(
     safety: Res<ColonySafety>,
@@ -56,18 +47,19 @@ pub fn apply_complacency_debuffs_system(mut query: Query<(&Complacency, &mut Spe
 }
 
 pub fn pop_alert_response_system(
+    mut commands: Commands,
     mut events: EventReader<AlertEvent>,
-    mut query: Query<(&Complacency, &mut AlertResponseState)>,
+    query: Query<(Entity, &Complacency)>,
 ) {
     for event in events.read() {
-        for (complacency, mut state) in query.iter_mut() {
-            if event.priority == AlertPriority::Low && complacency.level > 50.0 {
+        for (entity, complacency) in query.iter() {
+            if !event.is_high_priority && complacency.level > 50.0 {
                 // Ignore the alert
                 continue;
             }
 
             // Otherwise, respond to alert
-            *state = AlertResponseState::Responding;
+            commands.entity(entity).insert(RespondingToAlert);
         }
     }
 }
@@ -145,22 +137,19 @@ mod tests {
             .spawn((
                 Pop,
                 Complacency { level: 80.0 }, // Highly complacent
-                AlertResponseState::Idle,
             ))
             .id();
 
         // Trigger a low priority alert
         app.world_mut().send_event(AlertEvent {
-            priority: AlertPriority::Low,
+            is_high_priority: false,
             message: "Minor leak detected".to_string(),
         });
 
         app.update();
 
-        let state = app.world().get::<AlertResponseState>(pop_entity).unwrap();
-        assert_eq!(
-            *state,
-            AlertResponseState::Idle,
+        assert!(
+            app.world().get::<RespondingToAlert>(pop_entity).is_none(),
             "Complacent pop should ignore low priority alert"
         );
     }
