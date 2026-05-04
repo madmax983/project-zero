@@ -18711,3 +18711,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you allow free speech and socialization, risking the rapid spread of damaging ideologies, or do you enforce draconian isolation to keep the workforce predictable, at the cost of catastrophic morale?
 
 ---
+## Digital Ghost Syndicates
+
+**Layer:** 1 -> 2
+
+**Fantasy:** A shadow economy run by the uploaded minds of deceased criminals.
+
+**Mechanic:** When a criminal kingpin dies, their followers might pool resources to illicitly upload their consciousness into the colony's mainframe. These "Digital Ghosts" can no longer interact physically but can manipulate the colony's automated systems, skim digital currency, and coordinate flesh-and-blood smugglers from the shadows, eventually expanding their network to orbiting stations (Layer 2).
+
+**Emergence:** You finally execute the notorious pirate captain plaguing your colony, only to find that within months, your automated defense turrets are actively ignoring smuggling ships, and mysterious "system errors" are draining your treasury faster than when the captain was alive.
+
+**Tension:** Do you risk shutting down critical colony infrastructure to purge the mainframe of a digital ghost, or tolerate the constant skimming to keep the colony running?
+
+---
+
+## The Void Sirens
+
+**Layer:** 2
+
+**Fantasy:** Mysterious phenomena that lure ships off course with impossible promises.
+
+**Mechanic:** Strange, localized spatial anomalies ("Void Sirens") occasionally appear near asteroid belts or deep space. They emit sensor readings mimicking incredibly rare resources or distress signals from long-lost legendary ships. Layer 2 trade fleets and explorers have a chance to deviate from their path to investigate, often getting lost in the anomaly, taking severe damage, or returning with their crews driven mad.
+
+**Emergence:** You dispatch a massive colony ship to a critical border world, but a Void Siren appears along the route. The captain, chasing the ghost signal of a precursor dreadnought, flies the colony ship into a dark nebula, dooming millions and losing you the sector.
+
+**Tension:** Do you strictly enforce flight paths, potentially missing out on game-changing discoveries, or allow captains autonomy, risking the loss of entire fleets to spatial mirages?
+
+---
+
+## Generational Debt Bondage
+
+**Layer:** Cross-layer
+
+**Fantasy:** Sins (and debts) of the father visited upon the sons.
+
+**Mechanic:** When a Pop incurs massive debt (e.g., from excessive gambling, failed businesses, or fines), the debt is inherited by their offspring. The empire (Layer 3) tracks this macro-debt. Entire colonies can become "Debt Worlds," where the majority of the population is working off generational debt to a megacorp, leading to systemic low morale but incredibly cheap exports.
+
+**Emergence:** You found a pristine new agricultural world, but to fund the initial infrastructure, the colonists took out massive loans. Three generations later, the world is an incredibly efficient breadbasket, but the Pops are in constant, low-level rebellion because they are still paying off the original atmospheric processors.
+
+**Tension:** Do you intervene and forgive the debt (costing you massive political capital/credits), or exploit the incredibly cheap labor of a captive, indebted populace?
+
+---
