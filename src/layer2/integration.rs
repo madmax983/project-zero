@@ -616,3 +616,32 @@ pub fn ideological_contraband_route_bridge(
         }
     }
 }
+
+/// Bridges `BombardmentEvent` (Layer 2) to `AddChronicleEvent` (Chronicle).
+pub fn orbital_bombardment_chronicle_bridge(
+    mut bomb_events: EventReader<crate::layer2::bombardment::BombardmentEvent>,
+    mut chronicle_events: EventWriter<crate::layer1::chronicle::AddChronicleEvent>,
+) {
+    for event in bomb_events.read() {
+        chronicle_events.send(crate::layer1::chronicle::AddChronicleEvent {
+            text: format!(
+                "Orbital Bombardment struck the colony, dealing {} damage in a {}m radius!",
+                event.damage, event.blast_radius
+            ),
+            importance: crate::layer1::chronicle::EventImportance::Major,
+        });
+    }
+}
+
+/// Bridges `Added<OrbitalMirror>` to `AddChronicleEvent` (Chronicle).
+pub fn orbital_mirror_chronicle_bridge(
+    query: Query<&crate::layer2::orbital_mirrors::OrbitalMirror, Added<crate::layer2::orbital_mirrors::OrbitalMirror>>,
+    mut chronicle_events: EventWriter<crate::layer1::chronicle::AddChronicleEvent>,
+) {
+    for _ in query.iter() {
+        chronicle_events.send(crate::layer1::chronicle::AddChronicleEvent {
+            text: "A massive Orbital Mirror was deployed to focus sunlight on the colony.".to_string(),
+            importance: crate::layer1::chronicle::EventImportance::Major,
+        });
+    }
+}
