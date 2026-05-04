@@ -404,7 +404,7 @@ pub fn register(schedule: &mut Schedule) {
     schedule.add_systems(
         (
             crate::layer1::integration::famine_chronicle_bridge,
-            crate::layer1::integration::silent_flora_chronicle_bridge,
+            crate::layer1::core::integration::silent_flora_chronicle_bridge,
             crate::layer1::integration::aesthetic_edict_chronicle_bridge,
             crate::layer1::integration::access_denied_chronicle_bridge,
             crate::layer1::integration::hack_hub_chronicle_bridge,

@@ -886,3 +886,15 @@
 - **Systems connected:** `process_telemetry_sale` (Cartographer's Curse) -> `cartographers_curse_chronicle_bridge` -> `AddChronicleEvent`
 - **Glue added:** Added `cartographers_curse_chronicle_bridge` in `src/layer2/integration.rs` to emit an `AddChronicleEvent` when `SellTelemetryEvent` occurs.
 - **Tests:** `tests/integration/cartographers_curse_bridge.rs`
+
+### INT-961: The Silent World -> Chronicle
+- **Date:** 2026-06-25
+- **Systems connected:** `Flora` (The Silent World) -> `silent_flora_chronicle_bridge` -> `AddChronicleEvent`
+- **Glue added:** `silent_flora_chronicle_bridge` in `src/layer1/core/integration.rs` reads newly spawned `SilentFlora` and creates a `Major` chronicle event.
+- **Tests:** `tests/integration/silent_flora_chronicle.rs`
+
+### INT-961: The Silent World -> Chronicle
+- **Date:** 2026-06-25
+- **Systems connected:** `Flora` (The Silent World) -> `silent_flora_chronicle_bridge` -> `AddChronicleEvent`
+- **Glue added:** `silent_flora_chronicle_bridge` in `src/layer1/core/integration.rs` reads newly spawned `SilentFlora` and creates a `Major` chronicle event.
+- **Tests:** `tests/integration/silent_flora_chronicle.rs`

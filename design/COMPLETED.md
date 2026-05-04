@@ -398,6 +398,7 @@
 - [x] `947` Aesthetic Orbital Blockade — `specs/947-aesthetic-orbital-blockade.md` — completed 2026-05-15
 - [x] `901` Derelict Stations — `specs/901-derelict-stations.md` — completed 2026-04-11
 - [x] `961` The Silent World — `specs/961-the-silent-world.md` — completed 2026-06-01
+- [x] `INT-961` Integration: The Silent World -> Chronicle — completed 2026-06-25
 - [x] `INT-947` Integration: Aesthetic Orbital Blockade -> Chronicle — completed 2026-06-20
 - [x] `969` Predatory Weather - `specs/969-predatory-weather.md` - completed 2026-06-15
 - [x] `975` The Geothermal Heartbeat — `specs/975-the-geothermal-heartbeat.md` — completed 2026-06-02
