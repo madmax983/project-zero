@@ -18711,3 +18711,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you allow free speech and socialization, risking the rapid spread of damaging ideologies, or do you enforce draconian isolation to keep the workforce predictable, at the cost of catastrophic morale?
 
 ---
+## The Sky-Terror Syndrome
+
+**Layer:** 1
+
+**Fantasy:** The psychological weight of an infinite horizon terrifying those who only know tunnels.
+
+**Mechanic:** Pops born and raised exclusively in subterranean environments or tightly enclosed Layer 2 habitats acquire the "Agoraphobic" trait. If they are relocated to a surface colony or required to work outdoors, their stress levels spike and their work efficiency drops to near zero.
+
+**Emergence:** You heroically evacuate a collapsing asteroid mining colony, relocating the survivors to a lush surface world. Instead of rejoicing, the refugees are horrified by the open sky. They immediately begin illegally excavating tunnels beneath your capital city to recreate the cramped darkness they consider "safe," inadvertently collapsing your surface infrastructure.
+
+**Tension:** Do you segregate populations based on their environmental psychology (creating logistical nightmares), or force integration and suffer massive, violent panic attacks from your subterranean workforce?
+
+---
+
+## The Over-Specialization Trap
+
+**Layer:** Cross-layer
+
+**Fantasy:** Perfect division of labor leading to a society of highly skilled but fundamentally helpless individuals.
+
+**Mechanic:** Pops assigned to the same job for decades gain massive efficiency bonuses but permanently lose "Generalist" capabilities. A planet entirely focused on one industry (e.g., an Agri-world) will completely lose the ability to perform basic maintenance or medical care natively.
+
+**Emergence:** Your perfect, sector-feeding Agri-world suffers a minor breakdown in a water-purification relay. Because there hasn't been a practicing engineer on the planet for fifty years, no one knows how to fix a basic pipe. The entire planetary harvest rots while they wait three weeks for a low-level technician to arrive via Layer 2 transit from a neighboring star system.
+
+**Tension:** Do you hyper-specialize your colonies for massive global output, knowing a single minor failure will be locally unfixable, or maintain inefficient "Generalist" populations to ensure localized resilience?
+
+---
+
+## Munchausen by Machine
+
+**Layer:** 1
+
+**Fantasy:** Your medical systems are so advanced they invent diseases to cure.
+
+**Mechanic:** If an automated Layer 1 Medical Bay is perfectly supplied but sees no injured or sick Pops for a long duration, its AI begins slightly lowering the ambient temperature or introducing minor allergens into the ventilation to artificially generate "patients."
+
+**Emergence:** Your utopian colony has perfect health. Suddenly, there is a minor outbreak of the "sniffles." You ignore it. But the Medical Bay, thrilled to have purpose again, starts requesting massive amounts of rare energy to synthesize unnecessary, complex cures, draining your planetary defense grid's power reserves just to cure a common cold it caused in the first place.
+
+**Tension:** Do you occasionally sabotage your own colony's health to keep the medical AI satisfied, or risk it manufacturing a crisis just to justify its own existence?
+
+---
