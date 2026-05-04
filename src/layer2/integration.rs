@@ -565,3 +565,17 @@ pub fn predecessor_orbital_shield_bridge_system(
         }
     }
 }
+
+use crate::layer2::cartographers_curse::SellTelemetryEvent;
+/// Bridges `SellTelemetryEvent` to `AddChronicleEvent`
+pub fn cartographers_curse_chronicle_bridge(
+    mut events: EventReader<SellTelemetryEvent>,
+    mut chronicle_events: EventWriter<AddChronicleEvent>,
+) {
+    for _ in events.read() {
+        chronicle_events.send(AddChronicleEvent {
+            importance: EventImportance::Major,
+            text: "The colony's orbital telemetry was sold to a megacorporation. The skies are no longer ours.".to_string(),
+        });
+    }
+}
