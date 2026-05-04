@@ -865,3 +865,4 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1248` Pneumatic Tubes — `specs/1248-pneumatic-tubes.md`
 - [ ] `1249` Ship Personalities — `specs/1249-ship-personalities.md`
 - [ ] `1250` Corrosive Atmosphere — `specs/1250-corrosive-atmosphere.md`
+- [ ] `1251` The Empathy Amplifier — `specs/1251-the-empathy-amplifier.md`

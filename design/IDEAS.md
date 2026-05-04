@@ -8705,7 +8705,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Empathy Amplifier
+## The Empathy Amplifier [SPECCED]
 
 **Layer:** Cross-layer
 
