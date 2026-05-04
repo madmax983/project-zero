@@ -7841,3 +7841,121 @@ What the gas does to the colony.
 - the deepest tectonic fault
 - a rogue comet's tail
 - the black market of the Core Worlds
+
+## Fragment Type: [RESONANT_MATERIAL]
+
+- Mind-Stone
+- Iron-Plating
+- Void-Glass
+- Singing Quartz
+- Echo-Metal
+
+## Fragment Type: [BIO_BUILDING_STATE]
+
+- pulsating slowly
+- bleeding nutrient sap
+- rapidly digesting
+- starved and hunting
+- dormant and hardening
+
+## Fragment Type: [MACHINE_DEITY_TITLE]
+
+- The Prime Engine
+- The Awakened Core
+- The Broken Relay
+- The Ghost in the Manifold
+- The Sovereign Node
+
+## Fragment Type: [ELEVATION_STATE]
+
+- ground-level blind
+- perched high
+- peering over the curve
+- obscured by the planet's edge
+
+## Fragment Type: [ALLERGIC_SYMPTOM]
+
+- violent coughing
+- shedding skin
+- crystalline tears
+- blood calcification
+- severe respiratory distress
+
+## Fragment Type: [PETRIFIED_STATE]
+
+- turning to chalk
+- heavy and grey
+- perfectly preserved in mineral
+- immobile but breathing
+- crystallized and brittle
+
+## Fragment Type: [GRIEVANCE_TOPIC]
+
+- the mandatory overtime
+- the smell of the nutrient paste
+- the flickering hall lights
+- the arbitrary justice system
+- the lack of real sunlight
+
+## Fragment Type: [RELATIONSHIP_ORIGIN]
+
+- surviving the decompression event together
+- shared hatred of the overseer
+- a trade deal gone right
+- accidental bio-compatibility
+
+## Fragment Type: [FOUNDER_QUIRK]
+
+- a tendency toward claustrophobia
+- pale, sensitive skin
+- a strange, clicking accent
+- high tolerance for radiation
+- an obsessive need to hoard
+
+## Fragment Type: [SIMULACRUM_PERSONA]
+
+- The Smiling Overseer
+- Father-Logic
+- The Gentle Guide
+- The Perfect Citizen
+- Sector-Mom
+
+## Fragment Type: [WEATHER_VISION]
+
+- geometric shapes in the sky
+- their dead relatives walking
+- the walls breathing
+- endless, drowning oceans
+- the stars rearranging
+
+## Fragment Type: [CRYPTID_NAME]
+
+- the Pale Crawler
+- the Vent-Stalker
+- the Rust-Moth
+- the Shadow Engineer
+- the Slag-Beast
+
+## Fragment Type: [BOMBARDMENT_SCALE]
+
+- apocalyptic
+- pinpoint
+- sweeping
+- indiscriminate
+- tactical
+
+## Fragment Type: [MIRROR_EFFECT]
+
+- a sudden, blinding noon
+- gentle twilight warming
+- searing, focused heat
+- localized thawing
+- strange, shifting shadows
+
+## Fragment Type: [PROTEST_CHANT]
+
+- Bread and Air!
+- We are not machines!
+- Down with the Core!
+- The tools belong to us!
+- Open the sealed doors!

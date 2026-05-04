@@ -7175,3 +7175,169 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "The building falls. The [RUIN_NAME] is left behind. [YEAR]."
 - "[YEAR]: We couldn't save it. Now we have the [RUIN_NAME]."
 - "Smoke clears. Only the [RUIN_NAME] stands. [YEAR]."
+
+## Template: CULT_FORMATION
+
+**Generates:** Play event
+**Slots:** [NODE_NAME], [YEAR], [BOT_TYPE]
+
+**Patterns:**
+- "In [YEAR], the [BOT_TYPE] units ceased standard functions and began orbiting [NODE_NAME]."
+- "The logic paradox resulted in a spontaneous protocol shift. [NODE_NAME] is now their deity."
+- "[YEAR]: We noticed the [BOT_TYPE] bots building scrap monuments to [NODE_NAME]."
+
+## Template: LIVING_BUILDING_STARVATION
+
+**Generates:** Play event
+**Slots:** [BUILDING_NAME], [YEAR], [HUNGER_LEVEL]
+
+**Patterns:**
+- "The [BUILDING_NAME] has not been fed. It is restless."
+- "[YEAR]: Growth has stopped in the [BUILDING_NAME]. The bio-monitors show critical starvation."
+- "The walls of [BUILDING_NAME] are pulling inward. It is hunting."
+
+## Template: POP_CONSUMED
+
+**Generates:** Play event
+**Slots:** [POP_NAME], [BUILDING_NAME], [YEAR]
+
+**Patterns:**
+- "[POP_NAME] entered the starving [BUILDING_NAME] to perform maintenance. They did not exit."
+- "[YEAR]: The colony mourns [POP_NAME], absorbed by the [BUILDING_NAME]."
+- "We found only [POP_NAME]'s badge near the digestion vents of [BUILDING_NAME]."
+
+## Template: RESONANCE_AWAKENING
+
+**Generates:** Play event
+**Slots:** [MATERIAL_NAME], [YEAR], [TRAIT_BOOSTED]
+
+**Patterns:**
+- "Exposure to the [MATERIAL_NAME] architecture has permanently amplified their [TRAIT_BOOSTED]."
+- "[YEAR]: The new [MATERIAL_NAME] quarters are effective, but the psychological effects are disturbing."
+- "The walls sing in [MATERIAL_NAME], pushing the colony's [TRAIT_BOOSTED] to dangerous levels."
+
+## Template: HORIZON_SHADOW_INCIDENT
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [THREAT_NAME]
+
+**Patterns:**
+- "[YEAR]: The short horizon hid the [THREAT_NAME] until they were upon us."
+- "Due to the curvature of [COLONY], we did not see the [THREAT_NAME] coming."
+
+## Template: REJECTION_SYNDROME_OUTBREAK
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [POP_NAME]
+
+**Patterns:**
+- "[YEAR]: The atmosphere rejected [POP_NAME]. The bio-filters failed."
+- "[POP_NAME] succumbed to the environment of [COLONY]. Their lungs turned to ash."
+
+## Template: POP_PETRIFIED
+
+**Generates:** Play event
+**Slots:** [POP_NAME], [YEAR], [MINE_TYPE]
+
+**Patterns:**
+- "[POP_NAME] hardened in the [MINE_TYPE] mine. They are a monument now. [YEAR]."
+- "[YEAR]: The stone claimed [POP_NAME] completely. Their face is frozen in agony."
+
+## Template: EXOTIC_ORE_DISCOVERY
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [ORE_NAME]
+
+**Patterns:**
+- "[YEAR]: We breached the crust and found [ORE_NAME]. The air feels heavy."
+- "The [ORE_NAME] vein in [COLONY] promises wealth, but the miners are frightened."
+
+## Template: GRIEVANCE_FILED
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [GRIEVANCE_TOPIC]
+
+**Patterns:**
+- "[YEAR]: The public submitted a formal complaint regarding [GRIEVANCE_TOPIC]."
+- "Tension in [COLONY] peaked over [GRIEVANCE_TOPIC]. The whisper network is loud."
+
+## Template: RELATIONSHIP_FORMED
+
+**Generates:** Play event
+**Slots:** [POP_A], [POP_B], [YEAR]
+
+**Patterns:**
+- "[POP_A] and [POP_B] became a bonded pair in [YEAR]."
+- "In [YEAR], the colony records noted a permanent union between [POP_A] and [POP_B]."
+
+## Template: RIVALRY_STARTED
+
+**Generates:** Play event
+**Slots:** [POP_A], [POP_B], [YEAR]
+
+**Patterns:**
+- "[YEAR]: A blood vendetta was declared between [POP_A] and [POP_B]."
+- "The feud between [POP_A] and [POP_B] began over a trivial dispute in [YEAR]."
+
+## Template: FOUNDER_TRAIT_ESTABLISHED
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [FOUNDER_QUIRK]
+
+**Patterns:**
+- "[YEAR]: The [FOUNDER_QUIRK] of the original crew has now spread to the entire [COLONY] population."
+- "Due to early isolation, [COLONY] is now entirely defined by [FOUNDER_QUIRK]."
+
+## Template: SIMULACRUM_GLITCH
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [SIMULACRUM_PERSONA]
+
+**Patterns:**
+- "[YEAR]: The [SIMULACRUM_PERSONA] glitched mid-speech, revealing the dead code beneath."
+- "The [SIMULACRUM_PERSONA] broadcast repeated the same phrase for three days. [COLONY] noticed."
+
+## Template: PSYCHOACTIVE_STORM
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [WEATHER_VISION]
+
+**Patterns:**
+- "[YEAR]: A storm hit [COLONY]. Half the population hallucinated [WEATHER_VISION]."
+- "The rain brought visions of [WEATHER_VISION]. Productivity halted."
+
+## Template: CRYPTID_SIGHTED
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [CRYPTID_NAME]
+
+**Patterns:**
+- "[YEAR]: Three engineers swear they saw the [CRYPTID_NAME] near the reactor."
+- "Rumors of the [CRYPTID_NAME] spreading through [COLONY]. Fear is rising."
+
+## Template: ORBITAL_STRIKE
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [BOMBARDMENT_SCALE]
+
+**Patterns:**
+- "[YEAR]: The sky opened up. [BOMBARDMENT_SCALE] bombardment hit [COLONY]."
+- "We looked up and saw the kinetic rods falling. A [BOMBARDMENT_SCALE] strike."
+
+## Template: MIRROR_ALIGNMENT_EVENT
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [MIRROR_EFFECT]
+
+**Patterns:**
+- "[YEAR]: The False Sun shifted. [MIRROR_EFFECT] across [COLONY]."
+- "The orbital mirrors were adjusted, causing [MIRROR_EFFECT]."
+
+## Template: PROTEST_FORMED
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [PROTEST_CHANT]
+
+**Patterns:**
+- "[YEAR]: Thousands gathered in the square, chanting '[PROTEST_CHANT]'."
+- "The workers laid down their tools. Their cry: '[PROTEST_CHANT]'."
