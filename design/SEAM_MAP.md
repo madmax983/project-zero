@@ -874,3 +874,9 @@
     - `secret_society_discovery_bridge_system` disbands the `SecretSociety` and emits an `AddChronicleEvent` when a member is arrested (`Inmate`).
     - Registered in `src/layer1/systems/observation.rs`.
 - **Tests:** `test_society_discovery` and `test_society_suspicion` in `tests/integration/secret_societies.rs`.
+
+### INT-637: Echoes of the Predecessors -> Fleets & Seasons
+- **Date:** 2026-05-04
+- **Systems connected:** `PredecessorOrbitalShield` -> `FleetOrder` blocking; `PredecessorWeatherArray` -> `SeasonState` lock
+- **Glue added:** Added `predecessor_orbital_shield_bridge_system` to `src/layer2/integration.rs` to block Layer 2 fleet movement to the colony. Added `predecessor_weather_array_bridge_system` to `src/layer1/core/integration.rs` to lock the season to Spring.
+- **Tests:** `tests/integration/predecessors_echoes.rs`

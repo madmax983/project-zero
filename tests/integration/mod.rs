@@ -54,3 +54,4 @@ pub mod cryptid_chronicle_bridge;
 pub mod psychoactive_weather_bridge;
 pub mod red_tape_bridge;
 pub mod living_architecture_chronicle;
+pub mod predecessors_echoes;

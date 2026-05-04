@@ -370,7 +370,11 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
     ));
     schedule.add_systems((
         update_event_buffer::<DetectionEvent>,
-        crate::layer2::fleet::fleet_order_system,
+
+    ));
+    schedule.add_systems((
+        crate::layer2::integration::predecessor_orbital_shield_bridge_system,
+        crate::layer2::fleet::fleet_order_system.after(crate::layer2::integration::predecessor_orbital_shield_bridge_system),
         crate::layer2::station::build_station_system,
         crate::layer2::station::zero_g_fermentation_system
             .after(crate::layer2::fleet::fleet_order_system)
