@@ -44,6 +44,13 @@ impl ConveyorBelt {
 #[derive(Component, Debug, Clone)]
 pub struct Hopper;
 
+#[derive(Component, Debug, Clone)]
+pub struct Inserter {
+    pub pickup_direction: Direction,
+    pub dropoff_direction: Direction,
+}
+
+
 /// Moves items that are on active conveyor belts.
 #[allow(clippy::type_complexity, clippy::cast_sign_loss)]
 pub fn conveyor_system(
@@ -54,19 +61,14 @@ pub fn conveyor_system(
     )>,
     terrain: Res<TerrainGrid>,
 ) {
-    // 1. Map active belts
     let mut belt_map = HashMap::new();
     for (pos, belt, power) in &queries.p0() {
         if power.active {
             belt_map.insert(*pos, belt.direction);
         }
     }
+    if belt_map.is_empty() { return; }
 
-    if belt_map.is_empty() {
-        return;
-    }
-
-    // 2. Map obstacles (Buildings that are obstacles, EXCEPT Hopper)
     let mut obstacles = HashSet::new();
     for (pos, building) in &queries.p1() {
         if building.building_type.is_obstacle() && building.building_type != BuildingType::Hopper {
@@ -74,43 +76,82 @@ pub fn conveyor_system(
         }
     }
 
-    // 3. Move items
-    for (_entity, mut pos) in &mut queries.p2() {
-        if let Some(direction) = belt_map.get(&*pos) {
+    let mut current_positions = HashSet::new();
+    let mut moving_items = Vec::new();
+
+    for (entity, pos) in &queries.p2() {
+        if let Some(direction) = belt_map.get(pos) {
             let delta = direction.to_delta();
             let target_x = pos.x + delta.0;
             let target_y = pos.y + delta.1;
+            moving_items.push((entity, *pos, GridPosition { x: target_x, y: target_y }));
+        } else {
+            current_positions.insert(*pos);
+        }
+    }
 
-            // Check bounds
-            if target_x < 0 || target_y < 0 {
-                continue;
+    let mut target_positions = HashMap::new();
+    for (_, _, target) in &moving_items {
+        *target_positions.entry(*target).or_insert(0) += 1;
+    }
+
+    for (entity, mut pos) in &mut queries.p2() {
+        let mut new_pos = None;
+        for (moving_entity, _, target_pos) in &moving_items {
+            if *moving_entity == entity && target_pos.x >= 0 && target_pos.y >= 0 {
+                if let Some(tile) = terrain.get(target_pos.x as usize, target_pos.y as usize) {
+                    if !matches!(tile, TerrainType::Rock | TerrainType::Water)
+                        && !obstacles.contains(target_pos)
+                        && !current_positions.contains(target_pos)
+                        && target_positions.get(target_pos) == Some(&1) {
+                        new_pos = Some(*target_pos);
+                    }
+                }
             }
+        }
+        if let Some(np) = new_pos {
+            *pos = np;
+        }
+    }
+}
 
-            // Check terrain and obstacles
-            if let Some(tile) = terrain.get(target_x as usize, target_y as usize) {
-                // Check terrain blocking
-                match tile {
-                    TerrainType::Rock | TerrainType::Water => continue,
-                    _ => {}
-                }
 
-                // Check building obstacles
-                if obstacles.contains(&GridPosition {
-                    x: target_x,
-                    y: target_y,
-                }) {
-                    continue;
-                }
+/// Collects items on active hoppers into colony resources.
+#[allow(clippy::type_complexity)]
+pub fn inserter_system(
+    inserters: Query<(&GridPosition, &Inserter, &PowerConsumer)>,
+    mut items: Query<(Entity, &mut GridPosition), (With<ResourceItem>, Without<Inserter>)>,
+) {
+    let mut active_inserters = std::collections::HashMap::new();
+    for (pos, inserter, power) in &inserters {
+        if power.active {
+            active_inserters.insert(*pos, inserter);
+        }
+    }
+    if active_inserters.is_empty() { return; }
 
-                // Move item
-                pos.x = target_x;
-                pos.y = target_y;
+    let mut taken = std::collections::HashSet::new();
+    for (pos, inserter) in active_inserters {
+        let pickup_pos = GridPosition {
+            x: pos.x + inserter.pickup_direction.to_delta().0,
+            y: pos.y + inserter.pickup_direction.to_delta().1,
+        };
+        let dropoff_pos = GridPosition {
+            x: pos.x + inserter.dropoff_direction.to_delta().0,
+            y: pos.y + inserter.dropoff_direction.to_delta().1,
+        };
+
+        for (entity, mut item_pos) in &mut items {
+            if *item_pos == pickup_pos && !taken.contains(&entity) {
+                item_pos.x = dropoff_pos.x;
+                item_pos.y = dropoff_pos.y;
+                taken.insert(entity);
+                break;
             }
         }
     }
 }
 
-/// Collects items on active hoppers into colony resources.
 pub fn hopper_system(
     mut commands: Commands,
     mut items: Query<(Entity, &mut ResourceItem, &GridPosition)>,
@@ -272,7 +313,7 @@ mod tests {
             .id();
 
         // Run system
-        let _ = world.run_system_once(conveyor_system);
+        let _ = world.run_system_once(super::conveyor_system);
 
         // Item should move to (1,0)
         let pos = world.get::<GridPosition>(item).unwrap();
@@ -316,7 +357,7 @@ mod tests {
             ))
             .id();
 
-        let _ = world.run_system_once(conveyor_system);
+        let _ = world.run_system_once(super::conveyor_system);
 
         // Item should NOT move
         let pos = world.get::<GridPosition>(item).unwrap();
@@ -464,7 +505,7 @@ mod tests {
             ))
             .id();
 
-        let _ = world.run_system_once(conveyor_system);
+        let _ = world.run_system_once(super::conveyor_system);
 
         // Item should NOT move
         let pos = world.get::<GridPosition>(item).unwrap();
@@ -524,7 +565,7 @@ mod tests {
             .id();
 
         // Run conveyor system -> Move to 1,0
-        let _ = world.run_system_once(conveyor_system);
+        let _ = world.run_system_once(super::conveyor_system);
 
         let pos = world.get::<GridPosition>(item).unwrap();
         assert_eq!(pos.x, 1);
@@ -536,5 +577,49 @@ mod tests {
         assert!(world.get_entity(item).is_err());
         let res = world.resource::<ColonyResources>();
         assert!((res.stone - 10.0).abs() < f32::EPSILON);
+    }
+
+    #[test]
+    fn test_inserter_pickup_dropoff() {
+        let mut world = World::new();
+        world.spawn((
+            super::Inserter { pickup_direction: Direction::West, dropoff_direction: Direction::East },
+            GridPosition { x: 1, y: 0 },
+            PowerConsumer { demand: 1.0, active: true },
+        ));
+        let item = world.spawn((ResourceItem { resource_type: ResourceType::Stone, amount: 1.0 }, GridPosition { x: 0, y: 0 })).id();
+        let _ = world.run_system_once(super::inserter_system);
+        assert_eq!(world.get::<GridPosition>(item).unwrap().x, 2);
+    }
+
+    #[test]
+    fn test_conveyor_overlap_prevention() {
+        let mut world = World::new();
+        world.insert_resource(TerrainGrid {
+            width: 10,
+            height: 10,
+            tiles: vec![TerrainType::Grass; 100],
+        });
+
+        world.spawn((
+            Building { building_type: BuildingType::ConveyorBelt },
+            ConveyorBelt { direction: Direction::East, speed: 1.0, variant: BeltVariant::Standard },
+            GridPosition { x: 0, y: 0 },
+            PowerConsumer { demand: 1.0, active: true },
+        ));
+        world.spawn((
+            Building { building_type: BuildingType::ConveyorBelt },
+            ConveyorBelt { direction: Direction::North, speed: 1.0, variant: BeltVariant::Standard },
+            GridPosition { x: 1, y: 1 },
+            PowerConsumer { demand: 1.0, active: true },
+        ));
+
+        let item1 = world.spawn((ResourceItem { resource_type: ResourceType::Stone, amount: 1.0 }, GridPosition { x: 0, y: 0 })).id();
+        let item2 = world.spawn((ResourceItem { resource_type: ResourceType::Stone, amount: 1.0 }, GridPosition { x: 1, y: 1 })).id();
+
+        let _ = world.run_system_once(super::conveyor_system);
+
+        assert_eq!(world.get::<GridPosition>(item1).unwrap().x, 0);
+        assert_eq!(world.get::<GridPosition>(item2).unwrap().y, 1);
     }
 }
