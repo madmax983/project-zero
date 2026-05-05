@@ -10,6 +10,7 @@ mod tests {
     use scale::simulation::build_simulation_schedule;
 
     #[allow(dead_code)]
+    #[allow(clippy::too_many_lines)]
     fn setup_world() -> World {
         scale::setup::init_task_pools();
         let mut world = World::new();

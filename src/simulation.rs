@@ -44,6 +44,7 @@ pub fn build_simulation_schedule() -> Schedule {
 }
 
 /// Run one simulation tick: all game systems via schedule, then increment tick counter.
+#[allow(clippy::too_many_lines)]
 fn init_simulation_resources(world: &mut World) {
     // Initialize schedule on first call (stored in World's Schedules resource)
     if !world.contains_resource::<Schedules>() {
@@ -322,6 +323,7 @@ fn register_simulation_core_systems(schedule: &mut Schedule) {
     ));
 }
 
+#[allow(clippy::too_many_lines)]
 fn register_simulation_extended_systems(schedule: &mut Schedule) {
     // --- AI Decision Chain (GPU compute) ---
     schedule.add_systems((
@@ -673,6 +675,7 @@ mod tests {
     }
 
     #[test]
+    #[allow(clippy::too_many_lines)]
     fn test_schedule_runs_on_fresh_world() {
         let mut world = setup_world();
         *world.resource_mut::<GameState>() = GameState::Running;

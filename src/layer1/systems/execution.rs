@@ -3,6 +3,7 @@ use crate::layer1::direct_link::{apply_buffs, handle_direct_movement, handle_pos
 use crate::layer1::*;
 use bevy_ecs::prelude::*;
 
+#[allow(clippy::too_many_lines)]
 pub fn register(schedule: &mut Schedule) {
     schedule.add_systems(
         crate::layer1::social::zero_g_sports::zero_g_sports_system

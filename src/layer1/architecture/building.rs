@@ -1322,7 +1322,7 @@ fn configure_basic_refiners(entity: &mut EntityWorldMut, building_type: Building
     }
 }
 
-fn configure_advanced_refiners(entity: &mut EntityWorldMut, building_type: BuildingType) {
+fn configure_advanced_refiners_smelter_smithy(entity: &mut EntityWorldMut, building_type: BuildingType) {
     match building_type {
         BuildingType::Smelter => {
             entity.insert((
@@ -1378,6 +1378,12 @@ fn configure_advanced_refiners(entity: &mut EntityWorldMut, building_type: Build
                 ShiftSchedule::default(),
             ));
         }
+        _ => {}
+    }
+}
+
+fn configure_advanced_refiners_high_tech(entity: &mut EntityWorldMut, building_type: BuildingType) {
+    match building_type {
         BuildingType::Refinery => {
             entity.insert((
                 RefiningProgress {
@@ -1426,6 +1432,11 @@ fn configure_advanced_refiners(entity: &mut EntityWorldMut, building_type: Build
     }
 }
 
+fn configure_advanced_refiners(entity: &mut EntityWorldMut, building_type: BuildingType) {
+    configure_advanced_refiners_smelter_smithy(entity, building_type);
+    configure_advanced_refiners_high_tech(entity, building_type);
+}
+
 fn configure_refining_buildings(entity: &mut EntityWorldMut, building_type: BuildingType) {
     configure_basic_refiners(entity, building_type);
     configure_advanced_refiners(entity, building_type);
@@ -1453,7 +1464,7 @@ fn configure_storage(entity: &mut EntityWorldMut, building_type: BuildingType) {
     }
 }
 
-fn configure_civic(entity: &mut EntityWorldMut, building_type: BuildingType) {
+fn configure_civic_education_media(entity: &mut EntityWorldMut, building_type: BuildingType) {
     match building_type {
         BuildingType::School => {
             entity.insert((
@@ -1483,44 +1494,10 @@ fn configure_civic(entity: &mut EntityWorldMut, building_type: BuildingType) {
                 },
             ));
         }
-        BuildingType::Office => {
-            entity.insert((
-                // Office provides admin
-                AdminProvider { amount: 10.0 },
-                Office::default(),
-                // Office typically operates during the day
-                ShiftSchedule::default(),
-            ));
-        }
-        BuildingType::Recycler => {
-            // Recycler configuration
-            entity.insert((
-                crate::layer1::recycling::Recycler::default(),
-                Inventory::default(),
-                crate::layer1::lighting::LightSource {
-                    is_outdoor: true,
-                    radius: 3.0,
-                    intensity: 0.5,
-                    color: (0, 255, 0), // Green glow
-                },
-                ShiftSchedule::default(),
-            ));
-        }
         BuildingType::BulletinBoard => {
             entity.insert((
                 crate::layer1::social::grievances::BulletinBoard::default(),
                 ShiftSchedule::default(),
-            ));
-        }
-        BuildingType::Tavern => {
-            entity.insert((
-                Tavern::default(),
-                LightSource {
-                    is_outdoor: true,
-                    radius: 8.0,
-                    intensity: 0.8,
-                    color: (255, 140, 0), // Orange
-                },
             ));
         }
         BuildingType::Library => {
@@ -1535,12 +1512,42 @@ fn configure_civic(entity: &mut EntityWorldMut, building_type: BuildingType) {
                 ShiftSchedule::default(),
             ));
         }
-        BuildingType::FlowerBed => {
-            // Flammability handled by material (likely wood/plant based for flower bed?)
-            // If FlowerBed is technically "Wood" (default), it's flammable.
-            // If we want it to always be flammable regardless of "Material" (because plants burn),
-            // we should force it.
-            entity.insert(Flammable::default());
+        _ => {}
+    }
+}
+
+fn configure_civic_services(entity: &mut EntityWorldMut, building_type: BuildingType) {
+    match building_type {
+        BuildingType::Office => {
+            entity.insert((
+                AdminProvider { amount: 10.0 },
+                Office::default(),
+                ShiftSchedule::default(),
+            ));
+        }
+        BuildingType::Recycler => {
+            entity.insert((
+                crate::layer1::recycling::Recycler::default(),
+                Inventory::default(),
+                crate::layer1::lighting::LightSource {
+                    is_outdoor: true,
+                    radius: 3.0,
+                    intensity: 0.5,
+                    color: (0, 255, 0), // Green glow
+                },
+                ShiftSchedule::default(),
+            ));
+        }
+        BuildingType::Tavern => {
+            entity.insert((
+                Tavern::default(),
+                LightSource {
+                    is_outdoor: true,
+                    radius: 8.0,
+                    intensity: 0.8,
+                    color: (255, 140, 0), // Orange
+                },
+            ));
         }
         BuildingType::Hospital => {
             entity.insert((
@@ -1557,6 +1564,15 @@ fn configure_civic(entity: &mut EntityWorldMut, building_type: BuildingType) {
                 },
                 ShiftSchedule::default(),
             ));
+        }
+        _ => {}
+    }
+}
+
+fn configure_civic_misc(entity: &mut EntityWorldMut, building_type: BuildingType) {
+    match building_type {
+        BuildingType::FlowerBed => {
+            entity.insert(Flammable::default());
         }
         BuildingType::Grave => {
             entity.insert(crate::layer1::funeral::Grave::default());
@@ -1588,13 +1604,16 @@ fn configure_civic(entity: &mut EntityWorldMut, building_type: BuildingType) {
             ));
         }
         BuildingType::Shower => {
-            // Has power consumer for water heater? Spec says "Use Water", not power.
-            // But usually showers have lights or pumps.
-            // I'll leave it basic for now.
-            // Spec says: "Builder: Should Showers require Power? For now, no (gravity fed)."
+            // Placeholder for now
         }
         _ => {}
     }
+}
+
+fn configure_civic(entity: &mut EntityWorldMut, building_type: BuildingType) {
+    configure_civic_education_media(entity, building_type);
+    configure_civic_services(entity, building_type);
+    configure_civic_misc(entity, building_type);
 }
 
 fn configure_infrastructure(entity: &mut EntityWorldMut, building_type: BuildingType) {
@@ -2360,6 +2379,7 @@ mod tests {
     }
 
     #[test]
+    #[allow(clippy::too_many_lines)]
     fn test_build_mode_type_cycling() {
         let mut mode = BuildMode::default();
         assert_eq!(mode.selected, BuildingType::Housing);

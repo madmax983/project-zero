@@ -3,6 +3,7 @@ use crate::layer1::blob::{blob_consumption_system, blob_expansion_system, blob_s
 use crate::layer1::*;
 use bevy_ecs::prelude::*;
 
+#[allow(clippy::too_many_lines)]
 pub fn register(schedule: &mut Schedule) {
     schedule.add_systems(
         (

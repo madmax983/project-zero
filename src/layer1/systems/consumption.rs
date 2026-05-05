@@ -3,6 +3,7 @@ use crate::layer1::social::old_guard::mood_lifecycle_system;
 use crate::layer1::*;
 use bevy_ecs::prelude::*;
 
+#[allow(clippy::too_many_lines)]
 pub fn register(schedule: &mut Schedule) {
     schedule.add_systems(
         (
