@@ -863,3 +863,5 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1249` Ship Personalities — `specs/1249-ship-personalities.md`
 - [ ] `1250` Corrosive Atmosphere — `specs/1250-corrosive-atmosphere.md`
 - [ ] `1251` The Empathy Amplifier — `specs/1251-the-empathy-amplifier.md`
+- [ ] `1252` Munchausen by Machine — `specs/1252-munchausen-by-machine.md`
+- [ ] `1253` The Over-Specialization Trap — `specs/1253-the-over-specialization-trap.md`
