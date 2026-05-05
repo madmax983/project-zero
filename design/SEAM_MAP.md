@@ -902,3 +902,9 @@
 - **Systems connected:** `Added<OrbitalMirror>` -> `orbital_mirror_chronicle_bridge` -> `AddChronicleEvent`
 - **Glue added:** `orbital_mirror_chronicle_bridge` in `src/layer2/integration.rs`
 - **Tests:** `tests/integration/orbital_mirror_bridge.rs`
+
+### INT-631: Conveyor Logistics -> System Output
+- **Date:** 2026-06-25
+- **Systems connected:** `inserter_system` -> `conveyor_system` -> `hopper_system`
+- **Glue added:** Registered `inserter_system` in `src/layer1/systems/execution.rs` to properly route resource items to conveyors.
+- **Tests:** `tests/integration/conveyor_logistics_bridge.rs`

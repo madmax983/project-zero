@@ -510,3 +510,4 @@
 - [x] `INT-659` Integration: Orbital Bombardment -> Chronicle — completed 2026-06-25
 - [x] `INT-660` Integration: Orbital Mirrors -> Chronicle — completed 2026-06-25
 - [x] `631` Conveyor Logistics — `specs/631-conveyor-logistics.md` — completed 2026-02-01
+- [x] `INT-631` Integration: Conveyor Logistics -> System Output — completed 2026-06-25

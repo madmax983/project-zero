@@ -355,3 +355,6 @@ mod orbital_bombardment_bridge;
 
 #[path = "integration/orbital_mirror_bridge.rs"]
 mod orbital_mirror_bridge;
+
+#[path = "integration/conveyor_logistics_bridge.rs"]
+mod conveyor_logistics_bridge;

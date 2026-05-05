@@ -269,4 +269,12 @@ pub fn register(schedule: &mut Schedule) {
         )
             .in_set(Layer1SystemSet::Execution),
     );
+
+    schedule.add_systems(
+        (
+            crate::layer1::logistics::conveyor::inserter_system.before(crate::layer1::logistics::conveyor::conveyor_system),
+        )
+            .in_set(Layer1SystemSet::Execution),
+    );
+
 }
