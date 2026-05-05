@@ -60,6 +60,7 @@ fn init_simulation_resources(world: &mut World) {
 
     world.init_resource::<crate::layer1::stress::TraumaTracker>();
     world.init_resource::<Events<crate::layer2::skyhooks::LaunchIntent>>();
+    world.init_resource::<Events<crate::layer1::tech::rogue_automation_cults::MachineCultFormedEvent>>();
     world.init_resource::<Events<crate::layer1::infrastructure::ancient::ConduitSurgeEvent>>();
 
     world.init_resource::<crate::layer1::tech_envy::TechEnvyConfig>();
@@ -775,6 +776,7 @@ mod tests {
         world.init_resource::<crate::layer3::market::GalacticMarket>();
         world.init_resource::<crate::layer1::stress::TraumaTracker>();
         world.init_resource::<Events<crate::layer2::skyhooks::LaunchIntent>>();
+        world.init_resource::<Events<crate::layer1::tech::rogue_automation_cults::MachineCultFormedEvent>>();
         world.init_resource::<Events<crate::layer2::events_new::reverse_quarantine::RefugeeFleetEvent>>();
         world.init_resource::<Events<crate::layer1::predecessors::WorldTriggerEvent>>();
         world.init_resource::<Events<crate::layer1::grafting::GraftBuildingEvent>>();

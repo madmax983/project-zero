@@ -14,6 +14,12 @@ pub struct MaintenanceDebt {
     pub threshold: f32,
 }
 
+#[derive(Event)]
+pub struct MachineCultFormedEvent {
+    pub bot: Entity,
+    pub shrine: Entity,
+}
+
 #[derive(Component)]
 pub struct MachineCultMember {
     pub shrine_entity: Entity,
@@ -28,6 +34,7 @@ pub fn rogue_cult_formation_system(
         &crate::layer1::architecture::Building,
         &MaintenanceDebt,
     )>,
+    mut events: EventWriter<MachineCultFormedEvent>,
 ) {
     // Find a potential shrine (Mainframe or CommsRelay with high debt)
     let potential_shrine = shrines_query.iter().find(|(_, b_type, debt)| {
@@ -42,6 +49,10 @@ pub fn rogue_cult_formation_system(
                 commands
                     .entity(bot_entity)
                     .insert(MachineCultMember { shrine_entity });
+                events.send(MachineCultFormedEvent {
+                    bot: bot_entity,
+                    shrine: shrine_entity,
+                });
             }
         }
     }
@@ -64,6 +75,7 @@ mod tests {
 
     fn setup_app() -> App {
         let mut app = App::new();
+        app.add_event::<MachineCultFormedEvent>();
         app.add_systems(
             Update,
             (rogue_cult_formation_system, cult_priority_override_system),

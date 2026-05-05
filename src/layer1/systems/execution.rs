@@ -6,6 +6,16 @@ use bevy_ecs::prelude::*;
 #[allow(clippy::too_many_lines)]
 pub fn register(schedule: &mut Schedule) {
     schedule.add_systems(
+        (
+            crate::layer1::tech::rogue_automation_cults::rogue_cult_formation_system,
+            crate::layer1::tech::rogue_automation_cults::cult_priority_override_system,
+            crate::layer1::core::integration::rogue_cult_chronicle_bridge,
+        )
+            .chain()
+            .in_set(super::Layer1SystemSet::Execution),
+    );
+
+    schedule.add_systems(
         crate::layer1::social::zero_g_sports::zero_g_sports_system
             .in_set(super::Layer1SystemSet::Execution),
     );
