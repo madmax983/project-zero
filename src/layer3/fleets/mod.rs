@@ -4,3 +4,5 @@
 //! between star systems.
 pub mod generation_ship;
 pub use generation_ship::*;
+pub mod pacifists_arsenal;
+pub use pacifists_arsenal::*;
