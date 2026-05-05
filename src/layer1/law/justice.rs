@@ -272,8 +272,11 @@ pub fn sheriff_arrest_system(
             for (_ent, mut crim_pos, mut record) in criminal_query.iter_mut() {
                 if record.wanted && !record.is_arrested {
                     // Check adjacency (simplified distance)
-                    let dist =
-                        (sheriff_pos.x.abs_diff(crim_pos.x).saturating_add(sheriff_pos.y.abs_diff(crim_pos.y))).min(i32::MAX as u32) as i32;
+                    let dist = (sheriff_pos
+                        .x
+                        .abs_diff(crim_pos.x)
+                        .saturating_add(sheriff_pos.y.abs_diff(crim_pos.y)))
+                    .min(i32::MAX as u32) as i32;
                     if dist <= 1 {
                         record.is_arrested = true;
                         record.wanted = false;

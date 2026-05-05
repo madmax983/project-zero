@@ -137,7 +137,11 @@ pub fn manual_aura_system(
             }
 
             // Distance check (Radius 5) - Manhattan distance
-            let dist = manual_pos.x.abs_diff(worker_pos.x).saturating_add(manual_pos.y.abs_diff(worker_pos.y)).min(i32::MAX as u32) as i32;
+            let dist = manual_pos
+                .x
+                .abs_diff(worker_pos.x)
+                .saturating_add(manual_pos.y.abs_diff(worker_pos.y))
+                .min(i32::MAX as u32) as i32;
             if dist > 5 {
                 continue;
             }
