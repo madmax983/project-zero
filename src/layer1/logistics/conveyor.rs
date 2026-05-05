@@ -23,6 +23,52 @@ pub struct ConveyorBelt {
 #[derive(Component, Debug, Clone)]
 pub struct Hopper;
 
+/// Component for an inserter that moves items between adjacent tiles.
+#[derive(Component, Debug, Clone)]
+pub struct Inserter {
+    pub direction: Direction,
+}
+
+#[derive(Component)]
+pub struct OnConveyor;
+
+/// Moves items between adjacent tiles for active inserters.
+#[allow(clippy::type_complexity, clippy::cast_sign_loss)]
+pub fn inserter_system(
+    mut queries: ParamSet<(
+        Query<(&GridPosition, &Inserter, &PowerConsumer)>,
+        Query<(Entity, &mut GridPosition), With<ResourceItem>>,
+    )>,
+) {
+    let mut inserter_actions = Vec::new();
+    for (pos, inserter, power) in &queries.p0() {
+        if power.active {
+            let delta = inserter.direction.to_delta();
+            let source_x = pos.x - delta.0;
+            let source_y = pos.y - delta.1;
+            let target_x = pos.x + delta.0;
+            let target_y = pos.y + delta.1;
+            inserter_actions.push(((source_x, source_y), (target_x, target_y)));
+        }
+    }
+
+    if inserter_actions.is_empty() {
+        return;
+    }
+
+    for (source, target) in inserter_actions {
+        for (_entity, mut item_pos) in &mut queries.p1() {
+            if item_pos.x == source.0 && item_pos.y == source.1 {
+                item_pos.x = target.0;
+                item_pos.y = target.1;
+                break; // Only move one item per inserter per tick
+            }
+        }
+    }
+}
+
+
+/// Moves items that are on active conveyor belts.
 /// Moves items that are on active conveyor belts.
 #[allow(clippy::type_complexity, clippy::cast_sign_loss)]
 pub fn conveyor_system(
@@ -53,41 +99,63 @@ pub fn conveyor_system(
         }
     }
 
+    // Map existing items to prevent pileups
+    let mut current_item_positions = HashSet::new();
+    for (_entity, item_pos) in &queries.p2() {
+        current_item_positions.insert(*item_pos);
+    }
+
+    let mut next_item_positions = HashSet::new();
+
     // 3. Move items
     for (_entity, mut pos) in &mut queries.p2() {
         if let Some(direction) = belt_map.get(&*pos) {
             let delta = direction.to_delta();
             let target_x = pos.x + delta.0;
             let target_y = pos.y + delta.1;
+            let target_pos = GridPosition { x: target_x, y: target_y };
 
             // Check bounds
             if target_x < 0 || target_y < 0 {
+                next_item_positions.insert(*pos);
                 continue;
             }
 
             // Check terrain and obstacles
             if let Some(tile) = terrain.get(target_x as usize, target_y as usize) {
                 // Check terrain blocking
-                match tile {
-                    TerrainType::Rock | TerrainType::Water => continue,
-                    _ => {}
+                if matches!(tile, TerrainType::Rock | TerrainType::Water) {
+                    next_item_positions.insert(*pos);
+                    continue;
                 }
 
                 // Check building obstacles
-                if obstacles.contains(&GridPosition {
-                    x: target_x,
-                    y: target_y,
-                }) {
+                if obstacles.contains(&target_pos) {
+                    next_item_positions.insert(*pos);
                     continue;
+                }
+
+                // Check pileup (is there already an item there that isn't moving, or another item moving there?)
+                // Simple logic: if target tile has an item currently, assume it's blocked unless that item moves away.
+                // To be safe and deterministic, if someone is already claiming the target pos, don't move.
+                if next_item_positions.contains(&target_pos) {
+                     next_item_positions.insert(*pos);
+                     continue;
                 }
 
                 // Move item
                 pos.x = target_x;
                 pos.y = target_y;
+                next_item_positions.insert(target_pos);
+            } else {
+                next_item_positions.insert(*pos);
             }
+        } else {
+            next_item_positions.insert(*pos);
         }
     }
 }
+
 
 /// Collects items on active hoppers into colony resources.
 pub fn hopper_system(
@@ -478,5 +546,83 @@ mod tests {
         assert!(world.get_entity(item).is_err());
         let res = world.resource::<ColonyResources>();
         assert!((res.stone - 10.0).abs() < f32::EPSILON);
+    }
+}
+
+#[cfg(test)]
+mod specs_tests {
+    use bevy_ecs::prelude::*;
+    use bevy_ecs::system::RunSystemOnce;
+    use crate::layer1::resources::{ResourceItem, ResourceType};
+    use crate::layer1::map::GridPosition;
+    use crate::layer1::energy::PowerConsumer;
+    use crate::layer1::logistics::conveyor::{ConveyorBelt, OnConveyor, conveyor_system};
+    use crate::layer1::building::{Building, BuildingType, Direction};
+    use crate::layer1::terrain::{TerrainGrid, TerrainType};
+
+    #[test]
+    fn test_conveyor_moves_item_forward() {
+        let mut world = World::new();
+        world.insert_resource(TerrainGrid {
+            width: 10,
+            height: 10,
+            tiles: vec![TerrainType::Grass; 100],
+        });
+
+        let item_entity = world.spawn((
+            ResourceItem { resource_type: ResourceType::Ore, amount: 1.0 },
+            GridPosition { x: 0, y: 0 },
+            OnConveyor,
+        )).id();
+
+        world.spawn((
+            Building { building_type: BuildingType::ConveyorBelt },
+            ConveyorBelt { direction: Direction::East, speed: 1.0 },
+            GridPosition { x: 0, y: 0 },
+            PowerConsumer { demand: 5.0, active: true },
+        ));
+
+        let _ = world.run_system_once(conveyor_system);
+
+        let item_pos = world.get::<GridPosition>(item_entity).unwrap();
+        assert_eq!(item_pos.x, 1, "Item should have moved East");
+        assert_eq!(item_pos.y, 0);
+    }
+
+    #[test]
+    fn test_unpowered_conveyor_does_not_move_item() {
+        let mut world = World::new();
+        world.insert_resource(TerrainGrid {
+            width: 10,
+            height: 10,
+            tiles: vec![TerrainType::Grass; 100],
+        });
+
+        let item_entity = world.spawn((
+            ResourceItem { resource_type: ResourceType::Ore, amount: 1.0 },
+            GridPosition { x: 0, y: 0 },
+            OnConveyor,
+        )).id();
+
+        world.spawn((
+            Building { building_type: BuildingType::ConveyorBelt },
+            ConveyorBelt { direction: Direction::East, speed: 1.0 },
+            GridPosition { x: 0, y: 0 },
+            PowerConsumer { demand: 5.0, active: false }, // Unpowered
+        ));
+
+        let _ = world.run_system_once(conveyor_system);
+
+        let item_pos = world.get::<GridPosition>(item_entity).unwrap();
+        assert_eq!(item_pos.x, 0, "Item should not move if conveyor is unpowered");
+        assert_eq!(item_pos.y, 0);
+    }
+
+    #[test]
+    fn test_conveyor_blocks_pathfinding() {
+        let conveyor = BuildingType::ConveyorBelt;
+        assert!(conveyor.is_obstacle(), "Standard conveyors should block pathfinding");
+        let underground = BuildingType::UndergroundConveyor;
+        assert!(!underground.is_obstacle(), "Underground conveyors should NOT block pathfinding");
     }
 }

@@ -783,6 +783,9 @@ pub const fn get_building_char(building: BuildingType) -> &'static str {
         BuildingType::Spaceport => "P",
         BuildingType::Mainframe => "M",
         BuildingType::CommsRelay => "C",
+        BuildingType::UndergroundConveyor => "u",
+        BuildingType::OverheadConveyor => "o",
+        BuildingType::Inserter => "I",
     }
 }
 
@@ -864,6 +867,7 @@ pub const fn get_building_color(building: BuildingType, material: MaterialType) 
             BuildingType::Spaceport => Color::LightBlue,
             BuildingType::Mainframe => Color::LightMagenta,
             BuildingType::CommsRelay => Color::LightCyan,
+            BuildingType::UndergroundConveyor | BuildingType::OverheadConveyor | BuildingType::Inserter => Color::Rgb(150, 150, 150),
         }
     }
 }

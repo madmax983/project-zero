@@ -51,6 +51,11 @@ pub fn register(schedule: &mut Schedule) {
     );
 
     schedule.add_systems(
+        (crate::layer1::logistics::inserter_system.after(conveyor_system),)
+            .in_set(Layer1SystemSet::Execution),
+    );
+
+    schedule.add_systems(
         (crate::layer1::core::integration::trigger_shift_end_system
             .after(crate::layer1::day_night::update_day_night_cycle_system),)
             .in_set(Layer1SystemSet::Execution),
@@ -86,6 +91,11 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::integration::nocturnal_aggression_bridge_system
                 .after(crate::layer1::environment::light_pollution::apply_light_pollution_system),
         )
+            .in_set(Layer1SystemSet::Execution),
+    );
+
+    schedule.add_systems(
+        (crate::layer1::logistics::inserter_system.after(conveyor_system),)
             .in_set(Layer1SystemSet::Execution),
     );
 
@@ -129,6 +139,11 @@ pub fn register(schedule: &mut Schedule) {
     );
 
     schedule.add_systems(
+        (crate::layer1::logistics::inserter_system.after(conveyor_system),)
+            .in_set(Layer1SystemSet::Execution),
+    );
+
+    schedule.add_systems(
         (
             crate::layer1::logistics::glider::update_glider_movement_system
                 .after(crate::layer1::pop::reset_speed_system),
@@ -137,6 +152,11 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::logistics::commute::process_orbital_commutes
                 .after(process_start_plan_system),
         )
+            .in_set(Layer1SystemSet::Execution),
+    );
+
+    schedule.add_systems(
+        (crate::layer1::logistics::inserter_system.after(conveyor_system),)
             .in_set(Layer1SystemSet::Execution),
     );
 
@@ -171,11 +191,21 @@ pub fn register(schedule: &mut Schedule) {
     );
 
     schedule.add_systems(
+        (crate::layer1::logistics::inserter_system.after(conveyor_system),)
+            .in_set(Layer1SystemSet::Execution),
+    );
+
+    schedule.add_systems(
         (
             crate::layer1::petrification::petrification_exposure_system,
             crate::layer1::petrification::petrification_progression_system,
             crate::layer1::petrification::petrification_transformation_system,
         )
+            .in_set(Layer1SystemSet::Execution),
+    );
+
+    schedule.add_systems(
+        (crate::layer1::logistics::inserter_system.after(conveyor_system),)
             .in_set(Layer1SystemSet::Execution),
     );
 
@@ -192,7 +222,7 @@ pub fn register(schedule: &mut Schedule) {
             class_friction_system.after(update_social_class_system),
             haul_system.after(arrival_handler_system),
             conveyor_system.after(haul_system),
-            crate::layer1::logistics::pneumatic::tube_network_system.after(haul_system),
+                        crate::layer1::logistics::pneumatic::tube_network_system.after(haul_system),
             crate::layer1::logistics::pneumatic::tube_transport_system
                 .after(crate::layer1::logistics::pneumatic::tube_network_system),
             crate::layer1::nanite_fabrication::nanite_fabrication_system
@@ -212,11 +242,21 @@ pub fn register(schedule: &mut Schedule) {
     );
 
     schedule.add_systems(
+        (crate::layer1::logistics::inserter_system.after(conveyor_system),)
+            .in_set(Layer1SystemSet::Execution),
+    );
+
+    schedule.add_systems(
         (
             crate::layer1::entities::swarm_intelligence::update_drone_clusters,
             crate::layer1::entities::swarm_intelligence::update_drone_behavior
                 .after(crate::layer1::entities::swarm_intelligence::update_drone_clusters),
         )
+            .in_set(Layer1SystemSet::Execution),
+    );
+
+    schedule.add_systems(
+        (crate::layer1::logistics::inserter_system.after(conveyor_system),)
             .in_set(Layer1SystemSet::Execution),
     );
 
@@ -229,11 +269,21 @@ pub fn register(schedule: &mut Schedule) {
     );
 
     schedule.add_systems(
+        (crate::layer1::logistics::inserter_system.after(conveyor_system),)
+            .in_set(Layer1SystemSet::Execution),
+    );
+
+    schedule.add_systems(
         (
             crate::layer1::agony_extract::process_agony_extract_harvest_system
                 .after(work_execution_system),
             crate::layer1::temporal_chamber::temporal_chamber_energy_system,
         )
+            .in_set(Layer1SystemSet::Execution),
+    );
+
+    schedule.add_systems(
+        (crate::layer1::logistics::inserter_system.after(conveyor_system),)
             .in_set(Layer1SystemSet::Execution),
     );
     schedule.add_systems(
@@ -255,6 +305,11 @@ pub fn register(schedule: &mut Schedule) {
     );
 
     schedule.add_systems(
+        (crate::layer1::logistics::inserter_system.after(conveyor_system),)
+            .in_set(Layer1SystemSet::Execution),
+    );
+
+    schedule.add_systems(
         (
             crate::layer1::shipbreaking::spawn_crashed_ship_system.after(process_start_plan_system),
             crate::layer1::shipbreaking::mine_system.after(arrival_handler_system),
@@ -267,6 +322,11 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::law::aesthetic_edict::enforce_aesthetic_edict_system,
             crate::layer1::administration::malicious_compliance::malicious_compliance_system,
         )
+            .in_set(Layer1SystemSet::Execution),
+    );
+
+    schedule.add_systems(
+        (crate::layer1::logistics::inserter_system.after(conveyor_system),)
             .in_set(Layer1SystemSet::Execution),
     );
 }

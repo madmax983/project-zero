@@ -282,6 +282,12 @@ pub enum BuildingType {
     Observatory,
     /// Logistics: Moves items.
     ConveyorBelt,
+    /// Underground Logistics: Moves items without blocking.
+    UndergroundConveyor,
+    /// Overhead Logistics: Moves items without blocking.
+    OverheadConveyor,
+    /// Inserter: Moves items between tiles.
+    Inserter,
     /// Logistics: Collects items into global storage.
     Hopper,
     /// Hydroponics Bay: Grows food using water and power.
@@ -406,7 +412,9 @@ impl BuildingType {
             | Self::CommandCenter
             | Self::AICore
             | Self::Recycler => 0.6,
-            Self::FlowerBed | Self::PersonalGarden | Self::Grave | Self::BulletinBoard => 0.1,
+            Self::FlowerBed | Self::PersonalGarden
+                | Self::UndergroundConveyor
+                | Self::OverheadConveyor | Self::Grave | Self::BulletinBoard => 0.1,
             _ => 0.5,
         }
     }
@@ -438,6 +446,8 @@ impl BuildingType {
         !matches!(
             self,
             Self::Farm
+                | Self::UndergroundConveyor
+                | Self::OverheadConveyor
                 | Self::Stockpile
                 | Self::Plantation
                 | Self::FlowerBed
@@ -445,7 +455,7 @@ impl BuildingType {
                 | Self::TradeDepot
                 | Self::Landfill
                 | Self::PersonalGarden
-                | Self::ConveyorBelt
+
                 | Self::Airlock // Vent is explicitly an obstacle for standard movement (blocks Pops),
                                 // but Vermin can pass through it (handled in pathfinding).
                                 // So here it returns true (is obstacle).
@@ -510,7 +520,10 @@ impl BuildingType {
             | Self::PersonalShed
             | Self::PersonalGarden
             | Self::PersonalShrine
-            | Self::ConveyorBelt
+
+            | Self::UndergroundConveyor
+            | Self::OverheadConveyor
+            | Self::Inserter
             | Self::Hopper
             | Self::HydroponicsBay
             | Self::Vent
@@ -523,6 +536,7 @@ impl BuildingType {
             Self::Nanoforge => false,
             Self::School | Self::MediaStation => false,
             Self::Mainframe | Self::CommsRelay => false,
+            Self::ConveyorBelt => false,
         }
     }
 
@@ -579,7 +593,7 @@ impl BuildingType {
             | Self::SolarPanel
             | Self::PowerPole
             | Self::Battery
-            | Self::ConveyorBelt
+
             | Self::Hopper
             | Self::LifeSupport
             | Self::Airlock
@@ -683,6 +697,9 @@ impl BuildingType {
             Self::Spaceport => "Spaceport",
             Self::Mainframe => "Mainframe",
             Self::CommsRelay => "Comms Relay",
+            Self::UndergroundConveyor => "Underground Conveyor",
+            Self::OverheadConveyor => "Overhead Conveyor",
+            Self::Inserter => "Inserter",
         }
     }
 
@@ -746,6 +763,9 @@ impl BuildingType {
             Self::MediaStation => 'M',
             Self::Mainframe => 'M',
             Self::CommsRelay => 'C',
+            Self::UndergroundConveyor => 'u',
+            Self::OverheadConveyor => 'o',
+            Self::Inserter => 'I',
         }
     }
 
@@ -862,6 +882,9 @@ impl BuildingType {
             Self::MediaStation => ColonyResources::zeroed().with_metal(25.0),
             Self::Mainframe => ColonyResources::zeroed().with_metal(50.0),
             Self::CommsRelay => ColonyResources::zeroed().with_metal(30.0),
+            Self::UndergroundConveyor => ColonyResources::zeroed().with_metal(15.0),
+            Self::OverheadConveyor => ColonyResources::zeroed().with_metal(15.0),
+            Self::Inserter => ColonyResources::zeroed().with_metal(10.0),
         }
     }
 
@@ -1124,6 +1147,9 @@ fn configure_building_components(entity: &mut EntityWorldMut, building_type: Bui
         | BuildingType::Tower
         | BuildingType::Well
         | BuildingType::ConveyorBelt
+        | BuildingType::UndergroundConveyor
+        | BuildingType::OverheadConveyor
+        | BuildingType::Inserter
         | BuildingType::Hopper
         | BuildingType::Airlock
         | BuildingType::Vent => configure_infrastructure(entity, building_type),
@@ -1628,6 +1654,29 @@ fn configure_infrastructure(entity: &mut EntityWorldMut, building_type: Building
                 range: 5,
                 amount: MAX_HYDRATION,
             });
+        }
+                BuildingType::UndergroundConveyor | BuildingType::OverheadConveyor => {
+            entity.insert((
+                crate::layer1::logistics::ConveyorBelt {
+                    direction: crate::layer1::building::Direction::East,
+                    speed: 1.0,
+                },
+                PowerConsumer {
+                    demand: 1.0,
+                    active: false,
+                },
+            ));
+        }
+        BuildingType::Inserter => {
+            entity.insert((
+                crate::layer1::logistics::Inserter {
+                    direction: crate::layer1::building::Direction::East,
+                },
+                PowerConsumer {
+                    demand: 2.0,
+                    active: false,
+                },
+            ));
         }
         BuildingType::ConveyorBelt => {
             entity.insert((
@@ -2274,7 +2323,10 @@ mod tests {
             BuildingType::Observatory
         );
         assert_eq!(BuildingType::Observatory.next(), BuildingType::ConveyorBelt);
-        assert_eq!(BuildingType::ConveyorBelt.next(), BuildingType::Hopper);
+        assert_eq!(BuildingType::ConveyorBelt.next(), BuildingType::UndergroundConveyor);
+        assert_eq!(BuildingType::UndergroundConveyor.next(), BuildingType::OverheadConveyor);
+        assert_eq!(BuildingType::OverheadConveyor.next(), BuildingType::Inserter);
+        assert_eq!(BuildingType::Inserter.next(), BuildingType::Hopper);
         assert_eq!(BuildingType::Hopper.next(), BuildingType::HydroponicsBay);
         assert_eq!(
             BuildingType::HydroponicsBay.next(),
@@ -2474,6 +2526,15 @@ mod tests {
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::ConveyorBelt);
+
+        mode.selected = mode.selected.next();
+        assert_eq!(mode.selected, BuildingType::UndergroundConveyor);
+
+        mode.selected = mode.selected.next();
+        assert_eq!(mode.selected, BuildingType::OverheadConveyor);
+
+        mode.selected = mode.selected.next();
+        assert_eq!(mode.selected, BuildingType::Inserter);
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::Hopper);
