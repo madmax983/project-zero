@@ -46,6 +46,8 @@ pub use terrain::*;
 pub use water::*;
 pub use weather::*;
 pub use wind::*;
+pub mod terminator_habitats;
+pub use terminator_habitats::*;
 pub mod mutagenic_rain;
 pub use mutagenic_rain::*;
 

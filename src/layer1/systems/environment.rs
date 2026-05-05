@@ -207,6 +207,13 @@ pub fn register(schedule: &mut Schedule) {
             update_noise_system.after(update_pressure_system),
             apply_noise_effects_system.after(update_noise_system),
             crate::layer1::temperature::update_temperature_system.after(update_pressure_system),
+            crate::layer1::nature::terminator_habitats::apply_libration_wobble_system
+                .after(crate::layer1::temperature::update_temperature_system),
+            crate::layer1::nature::terminator_habitats::calculate_tile_temperatures_system
+                .after(crate::layer1::nature::terminator_habitats::apply_libration_wobble_system),
+            crate::layer1::nature::terminator_habitats::building_temperature_damage_system.after(
+                crate::layer1::nature::terminator_habitats::calculate_tile_temperatures_system,
+            ),
             crate::layer1::radioactive::radiation_system
                 .after(crate::layer1::temperature::update_temperature_system),
             crate::layer1::suction::suction_system.after(update_pressure_system),

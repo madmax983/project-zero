@@ -75,7 +75,11 @@ pub fn check_mentorship_system(
                 continue;
             }
 
-            let dist = app_pos.x.abs_diff(master_pos.x).saturating_add(app_pos.y.abs_diff(master_pos.y)).min(i32::MAX as u32) as i32;
+            let dist = app_pos
+                .x
+                .abs_diff(master_pos.x)
+                .saturating_add(app_pos.y.abs_diff(master_pos.y))
+                .min(i32::MAX as u32) as i32;
             if dist > 5 {
                 continue;
             }
