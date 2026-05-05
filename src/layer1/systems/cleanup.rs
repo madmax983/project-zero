@@ -4,6 +4,7 @@ use crate::layer1::pop::{PopBorn, PopDied};
 use crate::layer1::*;
 use bevy_ecs::prelude::*;
 
+#[allow(clippy::too_many_lines)]
 pub fn register(schedule: &mut Schedule) {
     schedule.add_systems(
         (update_event_buffer::<crate::layer1::predecessors::WorldTriggerEvent>,)

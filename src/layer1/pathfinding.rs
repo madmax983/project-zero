@@ -189,6 +189,7 @@ pub fn find_path_for_entity<T: Component>(
 ///
 /// Shared logic for all pathfinding variants. It abstracts the "Can I enter this tile?" logic
 /// into the helper `is_walkable`.
+#[allow(clippy::too_many_lines)]
 fn find_path_internal(
     world: &World,
     start: (i32, i32),

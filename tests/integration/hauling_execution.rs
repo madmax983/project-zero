@@ -14,6 +14,7 @@ mod tests {
     use scale::simulation::build_simulation_schedule;
 
     #[allow(dead_code)]
+    #[allow(clippy::too_many_lines)]
     fn setup_world() -> World {
         scale::setup::init_task_pools();
         let mut world = World::new();
@@ -216,6 +217,7 @@ mod tests {
 
     #[test]
     #[ignore = "Timing mismatched due to execution scheduling updates. AI evaluation currently stays idle."]
+    #[allow(clippy::too_many_lines)]
     fn test_full_hauling_cycle() {
         let mut world = scale::setup::setup_world();
         world.init_resource::<bevy_ecs::event::Events<scale::layer1::genetics::GeneSplicingResultEvent>>();

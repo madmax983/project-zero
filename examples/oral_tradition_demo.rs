@@ -331,6 +331,7 @@ mod app {
             f.render_stateful_widget(table, area, &mut self.state);
         }
 
+        #[allow(clippy::too_many_lines)]
         fn render_details(&self, f: &mut Frame, area: Rect) {
             let block = Block::default().borders(Borders::ALL).title(Span::styled(
                 " Legend Details ",
