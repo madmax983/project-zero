@@ -596,7 +596,9 @@ pub fn ideological_contraband_route_bridge(
     routes: Query<(&TradeRoute, &Timer)>,
     home_colonies: Query<Entity, With<HomeColony>>,
 ) {
-    let Ok(home_entity) = home_colonies.get_single() else { return; };
+    let Ok(home_entity) = home_colonies.get_single() else {
+        return;
+    };
     for (route, timer) in routes.iter() {
         if timer.0 == route.interval && route.destination == home_entity {
             let tag = match route.item_type.as_str() {
@@ -635,12 +637,16 @@ pub fn orbital_bombardment_chronicle_bridge(
 
 /// Bridges `Added<OrbitalMirror>` to `AddChronicleEvent` (Chronicle).
 pub fn orbital_mirror_chronicle_bridge(
-    query: Query<&crate::layer2::orbital_mirrors::OrbitalMirror, Added<crate::layer2::orbital_mirrors::OrbitalMirror>>,
+    query: Query<
+        &crate::layer2::orbital_mirrors::OrbitalMirror,
+        Added<crate::layer2::orbital_mirrors::OrbitalMirror>,
+    >,
     mut chronicle_events: EventWriter<crate::layer1::chronicle::AddChronicleEvent>,
 ) {
     for _ in query.iter() {
         chronicle_events.send(crate::layer1::chronicle::AddChronicleEvent {
-            text: "A massive Orbital Mirror was deployed to focus sunlight on the colony.".to_string(),
+            text: "A massive Orbital Mirror was deployed to focus sunlight on the colony."
+                .to_string(),
             importance: crate::layer1::chronicle::EventImportance::Major,
         });
     }

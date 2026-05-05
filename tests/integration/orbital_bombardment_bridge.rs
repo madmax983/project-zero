@@ -1,7 +1,7 @@
+use bevy::prelude::*;
 use scale::layer1::chronicle::AddChronicleEvent;
 use scale::layer2::bombardment::BombardmentEvent;
 use scale::layer2::integration::orbital_bombardment_chronicle_bridge;
-use bevy::prelude::*;
 
 #[test]
 fn test_orbital_bombardment_chronicle_bridge() {
