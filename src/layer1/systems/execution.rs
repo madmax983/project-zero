@@ -192,7 +192,15 @@ pub fn register(schedule: &mut Schedule) {
             update_social_class_system.after(arrival_handler_system),
             class_friction_system.after(update_social_class_system),
             haul_system.after(arrival_handler_system),
-            conveyor_system.after(haul_system),
+        )
+            .in_set(Layer1SystemSet::Execution),
+    );
+
+    schedule.add_systems(
+        (
+                        conveyor_system.after(haul_system),
+            crate::layer1::logistics::conveyor::inserter_system.after(conveyor_system),
+            crate::layer1::logistics::conveyor::hopper_system.after(crate::layer1::logistics::conveyor::inserter_system),
             crate::layer1::logistics::pneumatic::tube_network_system.after(haul_system),
             crate::layer1::logistics::pneumatic::tube_transport_system
                 .after(crate::layer1::logistics::pneumatic::tube_network_system),
