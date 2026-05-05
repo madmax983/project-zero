@@ -355,3 +355,6 @@ mod orbital_bombardment_bridge;
 
 #[path = "integration/orbital_mirror_bridge.rs"]
 mod orbital_mirror_bridge;
+
+#[path = "integration/biometric_access_bridge.rs"]
+mod biometric_access_bridge;

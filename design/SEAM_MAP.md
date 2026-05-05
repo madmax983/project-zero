@@ -902,3 +902,9 @@
 - **Systems connected:** `Added<OrbitalMirror>` -> `orbital_mirror_chronicle_bridge` -> `AddChronicleEvent`
 - **Glue added:** `orbital_mirror_chronicle_bridge` in `src/layer2/integration.rs`
 - **Tests:** `tests/integration/orbital_mirror_bridge.rs`
+
+### INT-244: Biometric Drift -> Access Control
+- **Date:** 2026-05-05
+- **Systems connected:** `BiometricProfile` (Biometric Drift) -> `check_access` / `is_walkable` (Access Control / Pathfinding)
+- **Glue added:** Added `check_security_clearance` checks inside `check_access` and `is_walkable`.
+- **Tests:** `tests/integration/biometric_access_bridge.rs`

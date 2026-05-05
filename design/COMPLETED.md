@@ -512,3 +512,5 @@
 - [x] `631` Conveyor Logistics — `specs/631-conveyor-logistics.md` — completed 2026-02-01
 - [x] `622` The Bio-Digital Ascendancy — `specs/622-bio-digital-ascendancy.md` — completed 2026-05-05
 - [x] `1168` The Pacifist's Arsenal — `specs/1175-the-pacifists-arsenal.md` — completed 2026-05-05
+- [x] `244` Biometric Drift — `specs/244-biometric-drift.md` — completed 2026-05-05
+- [x] `INT-244` Integration: Biometric Drift -> Access Control — completed 2026-05-05
