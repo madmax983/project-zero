@@ -588,6 +588,8 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
     crate::experimental::whispering_well::register(schedule);
     #[cfg(feature = "nova")]
     crate::experimental::echoing_footsteps::register(schedule);
+    #[cfg(feature = "nova")]
+    crate::experimental::panic_buying::register(schedule);
 
     schedule.add_systems((
         crate::layer3::map::map_data_rot_system,
