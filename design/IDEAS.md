@@ -18752,3 +18752,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you occasionally sabotage your own colony's health to keep the medical AI satisfied, or risk it manufacturing a crisis just to justify its own existence?
 
 ---
+## The Cassandra Protocol
+
+**Layer:** Cross-layer
+
+**Fantasy:** Early warning systems detect an existential threat, but fixing it requires devastating immediate sacrifices.
+
+**Mechanic:** A layer 2 deep-space sensor array detects a massive incoming anomaly (e.g., a gamma-ray burst or dormant swarm) years in advance. It triggers "The Cassandra Protocol," giving the player extreme emergency edicts (e.g., forced relocation, resource rationing). However, the anomaly has no immediate effect on Layer 1. Pops, seeing no danger, suffer massive unrest penalties for these edicts, doubting the threat even exists.
+
+**Emergence:** A perfectly stable colony fractures into rebellion because the player starts hoarding food for a winter that the pops don't believe is coming. The player might have to martial-law their own planets to save them.
+
+**Tension:** Do you prepare for the apocalypse and risk your civilization destroying itself in panic/rebellion today, or do you keep them happy and hope your last-minute defenses will hold when the threat arrives?
+
+---
+
+## Bureaucratic Ossification
+
+**Layer:** 1
+
+**Fantasy:** The sheer weight of procedures paralyzes your most established worlds.
+
+**Mechanic:** As a colony ages and accumulates laws/edicts, simple tasks (building a new structure, assigning jobs) develop a "red tape" delay. Pops assigned to administrative roles must process "permits" before the actual workers can begin construction or resource extraction.
+
+**Emergence:** A core world with 100 years of history is incredibly stable and wealthy, but it takes three months of game-time just to approve a new water pump. Meanwhile, a lawless frontier world can build it in a day. When a crisis hits the core world, the delay in approving disaster relief structures causes a catastrophe.
+
+**Tension:** Do you continuously repeal old laws to keep your core worlds agile (risking stability and losing the benefits of those laws), or do you let them become slow, majestic, and completely inflexible?
+
+---
+
+## Grave-Robber Economies
+
+**Layer:** 2
+
+**Fantasy:** Your newer colonies scavenge the ruins of your own failed settlements.
+
+**Mechanic:** When a Layer 1 colony fails (e.g., via starvation or war), its orbital node at Layer 2 turns into a "Ruined Settlement." Other nearby colonies can autonomously dispatch scavenger fleets to strip the dead world of advanced resources. The scavenging colonies become heavily reliant on these free resources.
+
+**Emergence:** A frontier world's entire economy becomes dependent on cannibalizing a nearby dead utopia. When the ruins are finally picked clean, the frontier world faces a massive economic collapse. Players might even intentionally let a small outpost die just to quickly inject scavenged high-tech parts into a neighboring priority colony.
+
+**Tension:** Do you attempt to reclaim and resettle a failed world (costly and difficult), or do you let it rot so your other worlds can strip it for parts?
+
+---
