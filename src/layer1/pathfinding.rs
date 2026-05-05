@@ -412,7 +412,16 @@ fn is_walkable(
                 return true;
             }
 
-            if building.building_type.is_obstacle() {
+            if building.building_type == BuildingType::ConveyorBelt {
+                if let Some(conveyor) = world.get::<crate::layer1::logistics::ConveyorBelt>(entity)
+                {
+                    if conveyor.blocks_pathfinding() {
+                        return false;
+                    } else {
+                        // Keep checking next conditions
+                    }
+                }
+            } else if building.building_type.is_obstacle() {
                 return false;
             }
         }

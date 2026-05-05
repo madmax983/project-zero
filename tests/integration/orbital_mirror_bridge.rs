@@ -1,7 +1,7 @@
-use scale::layer1::chronicle::AddChronicleEvent;
-use scale::layer2::orbital_mirrors::OrbitalMirror;
-use scale::layer2::integration::orbital_mirror_chronicle_bridge;
 use bevy::prelude::*;
+use scale::layer1::chronicle::AddChronicleEvent;
+use scale::layer2::integration::orbital_mirror_chronicle_bridge;
+use scale::layer2::orbital_mirrors::OrbitalMirror;
 
 #[test]
 fn test_orbital_mirror_chronicle_bridge() {

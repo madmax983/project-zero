@@ -10,6 +10,15 @@ use crate::layer1::terrain::{TerrainGrid, TerrainType};
 use bevy_ecs::prelude::*;
 use std::collections::{HashMap, HashSet};
 
+/// The physical variant of a conveyor belt.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
+pub enum BeltVariant {
+    #[default]
+    Standard,
+    Underground,
+    Overhead,
+}
+
 /// Component for a conveyor belt that moves items.
 #[derive(Component, Debug, Clone)]
 pub struct ConveyorBelt {
@@ -17,6 +26,18 @@ pub struct ConveyorBelt {
     pub direction: Direction,
     /// The speed of movement (items moved per tick).
     pub speed: f32,
+    /// The physical placement variant of the belt.
+    pub variant: BeltVariant,
+}
+
+impl ConveyorBelt {
+    /// Determines whether this conveyor belt blocks pathfinding for pops.
+    pub fn blocks_pathfinding(&self) -> bool {
+        match self.variant {
+            BeltVariant::Standard => true,
+            BeltVariant::Underground | BeltVariant::Overhead => false,
+        }
+    }
 }
 
 /// Component for a hopper that collects items into global storage.
@@ -180,6 +201,39 @@ mod tests {
     use bevy_ecs::system::RunSystemOnce;
 
     #[test]
+    fn test_conveyor_blocks_pathfinding() {
+        let conveyor = ConveyorBelt {
+            direction: Direction::East,
+            speed: 1.0,
+            variant: BeltVariant::Standard,
+        };
+        assert!(
+            conveyor.blocks_pathfinding(),
+            "Standard conveyors should block pathfinding"
+        );
+
+        let underground = ConveyorBelt {
+            direction: Direction::East,
+            speed: 1.0,
+            variant: BeltVariant::Underground,
+        };
+        assert!(
+            !underground.blocks_pathfinding(),
+            "Underground conveyors should not block pathfinding"
+        );
+
+        let overhead = ConveyorBelt {
+            direction: Direction::East,
+            speed: 1.0,
+            variant: BeltVariant::Overhead,
+        };
+        assert!(
+            !overhead.blocks_pathfinding(),
+            "Overhead conveyors should not block pathfinding"
+        );
+    }
+
+    #[test]
     fn test_conveyor_moves_item() {
         let mut world = World::new();
         // Setup Terrain
@@ -197,6 +251,7 @@ mod tests {
             ConveyorBelt {
                 direction: Direction::East,
                 speed: 1.0,
+                variant: BeltVariant::Standard,
             },
             GridPosition { x: 0, y: 0 },
             PowerConsumer {
@@ -242,6 +297,7 @@ mod tests {
             ConveyorBelt {
                 direction: Direction::East,
                 speed: 1.0,
+                variant: BeltVariant::Standard,
             },
             GridPosition { x: 0, y: 0 },
             PowerConsumer {
@@ -380,6 +436,7 @@ mod tests {
             ConveyorBelt {
                 direction: Direction::East,
                 speed: 1.0,
+                variant: BeltVariant::Standard,
             },
             GridPosition { x: 0, y: 0 },
             PowerConsumer {
@@ -433,6 +490,7 @@ mod tests {
             ConveyorBelt {
                 direction: Direction::East,
                 speed: 1.0,
+                variant: BeltVariant::Standard,
             },
             GridPosition { x: 0, y: 0 },
             PowerConsumer {

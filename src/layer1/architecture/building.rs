@@ -445,7 +445,6 @@ impl BuildingType {
                 | Self::TradeDepot
                 | Self::Landfill
                 | Self::PersonalGarden
-                | Self::ConveyorBelt
                 | Self::Airlock // Vent is explicitly an obstacle for standard movement (blocks Pops),
                                 // but Vermin can pass through it (handled in pathfinding).
                                 // So here it returns true (is obstacle).
@@ -1634,6 +1633,7 @@ fn configure_infrastructure(entity: &mut EntityWorldMut, building_type: Building
                 crate::layer1::logistics::ConveyorBelt {
                     direction: crate::layer1::building::Direction::East,
                     speed: 1.0,
+                    variant: crate::layer1::logistics::conveyor::BeltVariant::Standard,
                 },
                 PowerConsumer {
                     demand: 1.0,
