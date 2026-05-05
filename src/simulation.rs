@@ -51,6 +51,7 @@ fn init_simulation_resources(world: &mut World) {
     }
 
     world.init_resource::<crate::layer1::social::old_guard::Demographics>();
+    world.init_resource::<crate::layer1::bio_digital_ascendancy::ColonyAverageUtility>();
 
     world.init_resource::<crate::layer1::diplomacy::factions::rivals::TerritoryGrid>();
 
@@ -243,6 +244,7 @@ fn init_simulation_resources(world: &mut World) {
     world.init_resource::<Events<crate::layer3::diplomacy_reflection::TraitChangedEvent>>();
     world.init_resource::<Events<crate::layer2::cascade::LogisticsStrainedEvent>>();
     world.init_resource::<crate::layer3::physics::relativity::SimulationTime>();
+        world.init_resource::<crate::layer1::bio_digital_ascendancy::ColonyAverageUtility>();
     world.init_resource::<Events<crate::layer2::cascade::DefenseWeakenedEvent>>();
     // Add our schedule if not yet added
     {
@@ -796,13 +798,14 @@ mod tests {
 
         world.init_resource::<Events<crate::layer1::logistics::mass_driver::LaunchEvent>>();
         world.init_resource::<Events<crate::layer1::logistics::mass_driver::BombardmentEvent>>();
-    world.init_resource::<Events<crate::layer2::bombardment::BombardmentEvent>>();
+        world.init_resource::<Events<crate::layer2::bombardment::BombardmentEvent>>();
         world.init_resource::<Events<crate::layer2::bombardment::BombardmentEvent>>();
 
         world.init_resource::<Events<crate::layer2::cascade::LogisticsStrainedEvent>>();
         world.init_resource::<Events<crate::layer2::cascade::DefenseWeakenedEvent>>();
 
         world.init_resource::<crate::layer3::physics::relativity::SimulationTime>();
+        world.init_resource::<crate::layer1::bio_digital_ascendancy::ColonyAverageUtility>();
 
         world.init_resource::<Events<crate::layer2::moon_hermits::PopDesertedEvent>>();
         world.init_resource::<bevy::prelude::Events<crate::layer1::social::grievances::PostGrievanceEvent>>();

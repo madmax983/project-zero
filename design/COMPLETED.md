@@ -510,3 +510,4 @@
 - [x] `INT-659` Integration: Orbital Bombardment -> Chronicle — completed 2026-06-25
 - [x] `INT-660` Integration: Orbital Mirrors -> Chronicle — completed 2026-06-25
 - [x] `631` Conveyor Logistics — `specs/631-conveyor-logistics.md` — completed 2026-02-01
+- [x] `622` The Bio-Digital Ascendancy — `specs/622-bio-digital-ascendancy.md` - completed 2026-05-05

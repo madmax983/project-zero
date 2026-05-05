@@ -8,6 +8,15 @@ use bevy_ecs::prelude::*;
 pub fn register(schedule: &mut Schedule) {
     schedule.add_systems(
         (
+            crate::layer1::bio_digital_ascendancy::cybernetic_integration_system,
+            crate::layer1::bio_digital_ascendancy::calculate_colony_average_utility_system,
+            crate::layer1::bio_digital_ascendancy::cybernetic_mind_merge_system
+                .after(crate::layer1::bio_digital_ascendancy::calculate_colony_average_utility_system),
+        )
+            .in_set(Layer1SystemSet::Observation),
+    );
+    schedule.add_systems(
+        (
             crate::layer1::social::pop_relationships::update_workplace_relationships_system,
             crate::layer1::social::pop_relationships::calculate_relationship_mood_buff_system,
             crate::layer1::stress::assign_generational_traits_system,

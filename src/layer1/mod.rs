@@ -450,4 +450,5 @@ pub use rearguard::{
 };
 pub mod sub_glacial_oceans;
 
+pub mod bio_digital_ascendancy;
 pub mod predecessors;
