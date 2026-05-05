@@ -44,3 +44,8 @@
 **Concept:** Added an `EchoingFootsteps` system that tracks Pop movement and spawns temporary fading `AcousticEcho` entities (with `NoiseSource`) on their previous tiles.
 **Fate:** Merged
 **Lesson:** Tying dynamic movement directly into the acoustic system creates organic noise pollution from high-traffic routes, rewarding players for optimizing hallway design and base layouts to protect sleeping areas from ambient noise.
+
+## [Panic Buying]
+**Concept:** Added a `PanicBuying` system that monitors the average morale of the colony. If average morale drops below a critical threshold, the colony enters a panic state, causing `ColonyPrices` for food and luxury items to multiply due to hoarding behavior.
+**Fate:** Merged
+**Lesson:** Connecting psychological states (morale) to macroeconomic parameters (prices) creates fascinating downward spirals. Low morale causes high prices, which makes it harder for poor pops to eat, leading to even lower morale.

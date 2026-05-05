@@ -131,3 +131,5 @@ pub mod sonoluminescence;
 
 #[cfg(feature = "nova")]
 pub mod echoing_footsteps;
+#[cfg(feature = "nova")]
+pub mod panic_buying;
