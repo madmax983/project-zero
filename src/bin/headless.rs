@@ -216,51 +216,91 @@ fn handle_command(world: &mut World, input: &str) -> bool {
                 match (building_type, x, y) {
                     (Some(bt), Some(x), Some(y)) => build_at(world, bt, x, y),
                     _ => {
-                        print_dashboard_panel("ERROR", "Invalid arguments. Usage: build <farm|housing|stockpile> <x> <y>", Some(comfy_table::Color::Red), Some(comfy_table::Attribute::Bold));
+                        print_dashboard_panel(
+                            "ERROR",
+                            "Invalid arguments. Usage: build <farm|housing|stockpile> <x> <y>",
+                            Some(comfy_table::Color::Red),
+                            Some(comfy_table::Attribute::Bold),
+                        );
                     }
                 }
             }
         }
         "destroy" => {
             if parts.len() < 3 {
-                print_dashboard_panel("ERROR", "Usage: destroy <x> <y>", Some(comfy_table::Color::Red), Some(comfy_table::Attribute::Bold));
+                print_dashboard_panel(
+                    "ERROR",
+                    "Usage: destroy <x> <y>",
+                    Some(comfy_table::Color::Red),
+                    Some(comfy_table::Attribute::Bold),
+                );
             } else {
                 let x: Option<i32> = parts[1].parse().ok();
                 let y: Option<i32> = parts[2].parse().ok();
                 match (x, y) {
                     (Some(x), Some(y)) => designate_at(world, DesignationType::Destroy, x, y),
-                    _ => print_dashboard_panel("ERROR", "Invalid coordinates", Some(comfy_table::Color::Red), Some(comfy_table::Attribute::Bold)),
+                    _ => print_dashboard_panel(
+                        "ERROR",
+                        "Invalid coordinates",
+                        Some(comfy_table::Color::Red),
+                        Some(comfy_table::Attribute::Bold),
+                    ),
                 }
             }
         }
         "mine" => {
             if parts.len() < 3 {
-                print_dashboard_panel("ERROR", "Usage: mine <x> <y>", Some(comfy_table::Color::Red), Some(comfy_table::Attribute::Bold));
+                print_dashboard_panel(
+                    "ERROR",
+                    "Usage: mine <x> <y>",
+                    Some(comfy_table::Color::Red),
+                    Some(comfy_table::Attribute::Bold),
+                );
             } else {
                 let x: Option<i32> = parts[1].parse().ok();
                 let y: Option<i32> = parts[2].parse().ok();
                 match (x, y) {
                     (Some(x), Some(y)) => designate_at(world, DesignationType::Mine, x, y),
-                    _ => print_dashboard_panel("ERROR", "Invalid coordinates", Some(comfy_table::Color::Red), Some(comfy_table::Attribute::Bold)),
+                    _ => print_dashboard_panel(
+                        "ERROR",
+                        "Invalid coordinates",
+                        Some(comfy_table::Color::Red),
+                        Some(comfy_table::Attribute::Bold),
+                    ),
                 }
             }
         }
         "chop" => {
             if parts.len() < 3 {
-                print_dashboard_panel("ERROR", "Usage: chop <x> <y>", Some(comfy_table::Color::Red), Some(comfy_table::Attribute::Bold));
+                print_dashboard_panel(
+                    "ERROR",
+                    "Usage: chop <x> <y>",
+                    Some(comfy_table::Color::Red),
+                    Some(comfy_table::Attribute::Bold),
+                );
             } else {
                 let x: Option<i32> = parts[1].parse().ok();
                 let y: Option<i32> = parts[2].parse().ok();
                 match (x, y) {
                     (Some(x), Some(y)) => designate_at(world, DesignationType::Chop, x, y),
-                    _ => print_dashboard_panel("ERROR", "Invalid coordinates", Some(comfy_table::Color::Red), Some(comfy_table::Attribute::Bold)),
+                    _ => print_dashboard_panel(
+                        "ERROR",
+                        "Invalid coordinates",
+                        Some(comfy_table::Color::Red),
+                        Some(comfy_table::Attribute::Bold),
+                    ),
                 }
             }
         }
         "designations" | "d" => print_designations(world),
         "find" => {
             if parts.len() < 2 {
-                print_dashboard_panel("ERROR", "Usage: find <rock|tree|grass> [count]", Some(comfy_table::Color::Red), Some(comfy_table::Attribute::Bold));
+                print_dashboard_panel(
+                    "ERROR",
+                    "Usage: find <rock|tree|grass> [count]",
+                    Some(comfy_table::Color::Red),
+                    Some(comfy_table::Attribute::Bold),
+                );
             } else {
                 let count: usize = parts.get(2).and_then(|s| s.parse().ok()).unwrap_or(10);
                 find_terrain(world, parts[1], count);
@@ -273,19 +313,34 @@ fn handle_command(world: &mut World, input: &str) -> bool {
             match ScanRadius::new(raw_radius) {
                 Ok(radius) => scan_terrain(world, x, y, radius),
                 Err(e) => {
-                    print_dashboard_panel("ERROR", &e, Some(comfy_table::Color::Red), Some(comfy_table::Attribute::Bold));
+                    print_dashboard_panel(
+                        "ERROR",
+                        &e,
+                        Some(comfy_table::Color::Red),
+                        Some(comfy_table::Attribute::Bold),
+                    );
                 }
             }
         }
         "terrain" => {
             if parts.len() < 3 {
-                print_dashboard_panel("ERROR", "Usage: terrain <x> <y>", Some(comfy_table::Color::Red), Some(comfy_table::Attribute::Bold));
+                print_dashboard_panel(
+                    "ERROR",
+                    "Usage: terrain <x> <y>",
+                    Some(comfy_table::Color::Red),
+                    Some(comfy_table::Attribute::Bold),
+                );
             } else {
                 let x: Option<i32> = parts[1].parse().ok();
                 let y: Option<i32> = parts[2].parse().ok();
                 match (x, y) {
                     (Some(x), Some(y)) => get_tile_info(world, x, y),
-                    _ => print_dashboard_panel("ERROR", "Invalid coordinates", Some(comfy_table::Color::Red), Some(comfy_table::Attribute::Bold)),
+                    _ => print_dashboard_panel(
+                        "ERROR",
+                        "Invalid coordinates",
+                        Some(comfy_table::Color::Red),
+                        Some(comfy_table::Attribute::Bold),
+                    ),
                 }
             }
         }
@@ -295,7 +350,12 @@ fn handle_command(world: &mut World, input: &str) -> bool {
             let id: Option<u32> = parts.get(1).and_then(|s| s.parse().ok());
             match id {
                 Some(id) => print_bio(world, id),
-                None => print_dashboard_panel("ERROR", "Usage: bio <id>", Some(comfy_table::Color::Red), Some(comfy_table::Attribute::Bold)),
+                None => print_dashboard_panel(
+                    "ERROR",
+                    "Usage: bio <id>",
+                    Some(comfy_table::Color::Red),
+                    Some(comfy_table::Attribute::Bold),
+                ),
             }
         }
         "chronicle" | "c" | "history" => print_chronicle(world),
@@ -303,13 +363,23 @@ fn handle_command(world: &mut World, input: &str) -> bool {
         "stories" | "st" | "legends" => print_stories(world),
         #[cfg(not(feature = "nova"))]
         "stories" | "st" | "legends" => {
-            print_dashboard_panel("ERROR", "Feature 'nova' is not enabled. Run with --features nova.", Some(comfy_table::Color::Red), Some(comfy_table::Attribute::Bold));
+            print_dashboard_panel(
+                "ERROR",
+                "Feature 'nova' is not enabled. Run with --features nova.",
+                Some(comfy_table::Color::Red),
+                Some(comfy_table::Attribute::Bold),
+            );
         }
         "log" | "l" => print_log(world),
         "tech" | "research_status" => print_tech(world),
         "research" | "r" => {
             if parts.len() < 2 {
-                print_dashboard_panel("ERROR", "Usage: research <tech_name>", Some(comfy_table::Color::Red), Some(comfy_table::Attribute::Bold));
+                print_dashboard_panel(
+                    "ERROR",
+                    "Usage: research <tech_name>",
+                    Some(comfy_table::Color::Red),
+                    Some(comfy_table::Attribute::Bold),
+                );
             } else {
                 // Join parts in case tech name has spaces (e.g., "Metal Working")
                 let tech_name = parts[1..].join(" ").to_lowercase();
@@ -359,11 +429,21 @@ fn handle_command(world: &mut World, input: &str) -> bool {
                         }
                     }
                 } else {
-                    print_dashboard_panel("ERROR", &format!("Unknown technology: '{tech_name}'"), Some(comfy_table::Color::Red), Some(comfy_table::Attribute::Bold));
+                    print_dashboard_panel(
+                        "ERROR",
+                        &format!("Unknown technology: '{tech_name}'"),
+                        Some(comfy_table::Color::Red),
+                        Some(comfy_table::Attribute::Bold),
+                    );
                 }
             }
         }
-        _ => print_dashboard_panel("ERROR", &format!("Unknown command: '{command}'. Type 'help' for commands."), Some(comfy_table::Color::Red), Some(comfy_table::Attribute::Bold)),
+        _ => print_dashboard_panel(
+            "ERROR",
+            &format!("Unknown command: '{command}'. Type 'help' for commands."),
+            Some(comfy_table::Color::Red),
+            Some(comfy_table::Attribute::Bold),
+        ),
     }
     true
 }

@@ -50,7 +50,6 @@ pub struct Inserter {
     pub dropoff_direction: Direction,
 }
 
-
 /// Moves items that are on active conveyor belts.
 #[allow(clippy::type_complexity, clippy::cast_sign_loss)]
 pub fn conveyor_system(
@@ -67,7 +66,9 @@ pub fn conveyor_system(
             belt_map.insert(*pos, belt.direction);
         }
     }
-    if belt_map.is_empty() { return; }
+    if belt_map.is_empty() {
+        return;
+    }
 
     let mut obstacles = HashSet::new();
     for (pos, building) in &queries.p1() {
@@ -84,7 +85,14 @@ pub fn conveyor_system(
             let delta = direction.to_delta();
             let target_x = pos.x + delta.0;
             let target_y = pos.y + delta.1;
-            moving_items.push((entity, *pos, GridPosition { x: target_x, y: target_y }));
+            moving_items.push((
+                entity,
+                *pos,
+                GridPosition {
+                    x: target_x,
+                    y: target_y,
+                },
+            ));
         } else {
             current_positions.insert(*pos);
         }
@@ -103,7 +111,8 @@ pub fn conveyor_system(
                     if !matches!(tile, TerrainType::Rock | TerrainType::Water)
                         && !obstacles.contains(target_pos)
                         && !current_positions.contains(target_pos)
-                        && target_positions.get(target_pos) == Some(&1) {
+                        && target_positions.get(target_pos) == Some(&1)
+                    {
                         new_pos = Some(*target_pos);
                     }
                 }
@@ -114,7 +123,6 @@ pub fn conveyor_system(
         }
     }
 }
-
 
 /// Collects items on active hoppers into colony resources.
 #[allow(clippy::type_complexity)]
@@ -128,7 +136,9 @@ pub fn inserter_system(
             active_inserters.insert(*pos, inserter);
         }
     }
-    if active_inserters.is_empty() { return; }
+    if active_inserters.is_empty() {
+        return;
+    }
 
     let mut taken = std::collections::HashSet::new();
     for (pos, inserter) in active_inserters {
@@ -583,11 +593,25 @@ mod tests {
     fn test_inserter_pickup_dropoff() {
         let mut world = World::new();
         world.spawn((
-            super::Inserter { pickup_direction: Direction::West, dropoff_direction: Direction::East },
+            super::Inserter {
+                pickup_direction: Direction::West,
+                dropoff_direction: Direction::East,
+            },
             GridPosition { x: 1, y: 0 },
-            PowerConsumer { demand: 1.0, active: true },
+            PowerConsumer {
+                demand: 1.0,
+                active: true,
+            },
         ));
-        let item = world.spawn((ResourceItem { resource_type: ResourceType::Stone, amount: 1.0 }, GridPosition { x: 0, y: 0 })).id();
+        let item = world
+            .spawn((
+                ResourceItem {
+                    resource_type: ResourceType::Stone,
+                    amount: 1.0,
+                },
+                GridPosition { x: 0, y: 0 },
+            ))
+            .id();
         let _ = world.run_system_once(super::inserter_system);
         assert_eq!(world.get::<GridPosition>(item).unwrap().x, 2);
     }
@@ -602,20 +626,54 @@ mod tests {
         });
 
         world.spawn((
-            Building { building_type: BuildingType::ConveyorBelt },
-            ConveyorBelt { direction: Direction::East, speed: 1.0, variant: BeltVariant::Standard },
+            Building {
+                building_type: BuildingType::ConveyorBelt,
+            },
+            ConveyorBelt {
+                direction: Direction::East,
+                speed: 1.0,
+                variant: BeltVariant::Standard,
+            },
             GridPosition { x: 0, y: 0 },
-            PowerConsumer { demand: 1.0, active: true },
+            PowerConsumer {
+                demand: 1.0,
+                active: true,
+            },
         ));
         world.spawn((
-            Building { building_type: BuildingType::ConveyorBelt },
-            ConveyorBelt { direction: Direction::North, speed: 1.0, variant: BeltVariant::Standard },
+            Building {
+                building_type: BuildingType::ConveyorBelt,
+            },
+            ConveyorBelt {
+                direction: Direction::North,
+                speed: 1.0,
+                variant: BeltVariant::Standard,
+            },
             GridPosition { x: 1, y: 1 },
-            PowerConsumer { demand: 1.0, active: true },
+            PowerConsumer {
+                demand: 1.0,
+                active: true,
+            },
         ));
 
-        let item1 = world.spawn((ResourceItem { resource_type: ResourceType::Stone, amount: 1.0 }, GridPosition { x: 0, y: 0 })).id();
-        let item2 = world.spawn((ResourceItem { resource_type: ResourceType::Stone, amount: 1.0 }, GridPosition { x: 1, y: 1 })).id();
+        let item1 = world
+            .spawn((
+                ResourceItem {
+                    resource_type: ResourceType::Stone,
+                    amount: 1.0,
+                },
+                GridPosition { x: 0, y: 0 },
+            ))
+            .id();
+        let item2 = world
+            .spawn((
+                ResourceItem {
+                    resource_type: ResourceType::Stone,
+                    amount: 1.0,
+                },
+                GridPosition { x: 1, y: 1 },
+            ))
+            .id();
 
         let _ = world.run_system_once(super::conveyor_system);
 

@@ -130,24 +130,25 @@ pub fn process_rumor_reaction(world: &mut World, listener: Entity, rumor: &Rumor
 ///
 /// Iterates over pops in Taverns and exchanges rumors between them.
 pub fn exchange_rumors_system(world: &mut World) {
-    // Collect visitor groups to avoid holding borrow on world while calling share_rumor
-    let mut visitor_groups = Vec::new();
+    // ⚡ Bolt Optimization:
+    // Collect pairs directly to avoid cloning `Vec<Entity>` for every tavern.
+    // This reduces allocations per frame from N+1 to 1 flat vector of pairs.
+    let mut pairs = Vec::new();
     let mut query = world.query::<&Tavern>();
     for tavern in query.iter(world) {
         if tavern.visitors.len() >= 2 {
-            visitor_groups.push(tavern.visitors.clone());
-        }
-    }
-
-    // Exchange rumors within each group
-    for group in visitor_groups {
-        for &speaker in &group {
-            for &listener in &group {
-                if speaker != listener {
-                    share_rumor(world, speaker, listener);
+            for &speaker in &tavern.visitors {
+                for &listener in &tavern.visitors {
+                    if speaker != listener {
+                        pairs.push((speaker, listener));
+                    }
                 }
             }
         }
+    }
+
+    for (speaker, listener) in pairs {
+        share_rumor(world, speaker, listener);
     }
 }
 
