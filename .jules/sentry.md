@@ -13,3 +13,9 @@
 ## 2024-05-25 - Triage NaN Sorting Stability
 **Learning:** `partial_cmp` on `f32` in Rust returns `Option<Ordering>` due to `NaN`. Utilizing `.unwrap_or(Ordering::Equal)` prevents sort panics. But to be a good Sentry, this fallback itself must be tested by actively inserting a `NaN` into the data.
 **Action:** When auditing `partial_cmp` calls, write a dedicated test that deliberately feeds `std::f32::NAN` into the system to verify the `unwrap_or` fallback branch handles the uncomparable state safely without panicking.
+**[Testing  Coverage]
+**Learning:** Adding test coverage to  ensures we catch bugs relating to distance penalty logic and empty mob candidates. Code modifications to test modules should ensure imports are carefully reviewed, especially when relying on structs across  versus .
+**Action:** Always test -returning functions with both  outcomes and selected best-choice  outcomes, and be extremely careful about avoiding duplicate imports or referencing non-existent properties (e.g. ) on types when writing tests.
+**[Testing `evaluate_protest` Coverage]**
+**Learning:** Adding test coverage to `evaluate_protest` ensures we catch bugs relating to distance penalty logic and empty mob candidates. Code modifications to test modules should ensure imports are carefully reviewed, especially when relying on structs across `mind::utility_eval_types` versus `map::GridPosition`.
+**Action:** Always test `Option`-returning functions with both `None` outcomes and selected best-choice `Some` outcomes, and be extremely careful about avoiding duplicate imports or referencing non-existent properties (e.g. `base_score`) on types when writing tests.
