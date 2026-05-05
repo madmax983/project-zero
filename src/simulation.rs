@@ -45,6 +45,7 @@ pub fn build_simulation_schedule() -> Schedule {
 
 /// Run one simulation tick: all game systems via schedule, then increment tick counter.
 fn init_simulation_resources(world: &mut World) {
+    world.init_resource::<crate::layer1::biology::cybernetic_ascendancy::ColonyAverageUtility>();
     // Initialize schedule on first call (stored in World's Schedules resource)
     if !world.contains_resource::<Schedules>() {
         world.insert_resource(Schedules::default());
@@ -323,6 +324,12 @@ fn register_simulation_core_systems(schedule: &mut Schedule) {
 }
 
 fn register_simulation_extended_systems(schedule: &mut Schedule) {
+    // --- Spec 622 ---
+    schedule.add_systems((
+        crate::layer1::biology::cybernetic_ascendancy::cybernetic_integration_system,
+        crate::layer1::biology::cybernetic_ascendancy::update_colony_average_utility_system,
+        crate::layer1::biology::cybernetic_ascendancy::cybernetic_mind_merge_system.after(crate::layer1::biology::cybernetic_ascendancy::update_colony_average_utility_system),
+    ));
     // --- AI Decision Chain (GPU compute) ---
     schedule.add_systems((
         update_building_map_system,
@@ -678,6 +685,7 @@ mod tests {
         *world.resource_mut::<GameState>() = GameState::Running;
 
         // Initialize Detection Risk for test
+        world.init_resource::<crate::layer1::biology::cybernetic_ascendancy::ColonyAverageUtility>();
         world.init_resource::<crate::layer3::silence::DetectionRisk>();
         world.init_resource::<bevy::prelude::Events<crate::layer2::weather::StormImpactEvent>>();
         world
