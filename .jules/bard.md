@@ -47,3 +47,6 @@
 ## 2024-05-24 - The Undocumented Mod Directories
 **Confusion:** Several important module directories (like `layer1/culture/artifacts/mod.rs`, `layer1/diplomacy/factions/mod.rs`, `layer1/biology/genetics/mod.rs`, etc) were missing module-level documentation. This creates "The Black Box" and leaves users confused. Also `ActiveAuras` was missing executable `# Examples` doctests.
 **Clarification:** Added conceptual `//!` module documentation to explain their high-level purpose and added `/// # Examples` doctests to `contains_effect` and `is_empty` in `ActiveAuras` to show executable usage.
+## 2024-05-24 - The Undocumented Predecessors
+**Confusion:** The `layer1/predecessors` module was completely missing module-level documentation and docstrings, leaving users in the dark about how to spawn ruins or what triggers them.
+**Clarification:** Added conceptual `//!` module documentation explaining "The Echoes of the Ancients" and added executable `# Examples` doctests to `PredecessorRuin` and trigger systems.
