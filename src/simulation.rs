@@ -331,7 +331,9 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
     schedule.add_systems((
         crate::layer1::biology::cybernetic_ascendancy::cybernetic_integration_system,
         crate::layer1::biology::cybernetic_ascendancy::update_colony_average_utility_system,
-        crate::layer1::biology::cybernetic_ascendancy::cybernetic_mind_merge_system.after(crate::layer1::biology::cybernetic_ascendancy::update_colony_average_utility_system),
+        crate::layer1::biology::cybernetic_ascendancy::cybernetic_mind_merge_system.after(
+            crate::layer1::biology::cybernetic_ascendancy::update_colony_average_utility_system,
+        ),
     ));
     // --- AI Decision Chain (GPU compute) ---
     schedule.add_systems((
@@ -689,7 +691,8 @@ mod tests {
         *world.resource_mut::<GameState>() = GameState::Running;
 
         // Initialize Detection Risk for test
-        world.init_resource::<crate::layer1::biology::cybernetic_ascendancy::ColonyAverageUtility>();
+        world
+            .init_resource::<crate::layer1::biology::cybernetic_ascendancy::ColonyAverageUtility>();
         world.init_resource::<crate::layer3::silence::DetectionRisk>();
         world.init_resource::<bevy::prelude::Events<crate::layer2::weather::StormImpactEvent>>();
         world
@@ -807,7 +810,7 @@ mod tests {
 
         world.init_resource::<Events<crate::layer1::logistics::mass_driver::LaunchEvent>>();
         world.init_resource::<Events<crate::layer1::logistics::mass_driver::BombardmentEvent>>();
-    world.init_resource::<Events<crate::layer2::bombardment::BombardmentEvent>>();
+        world.init_resource::<Events<crate::layer2::bombardment::BombardmentEvent>>();
         world.init_resource::<Events<crate::layer2::bombardment::BombardmentEvent>>();
 
         world.init_resource::<Events<crate::layer2::cascade::LogisticsStrainedEvent>>();

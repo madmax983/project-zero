@@ -1322,7 +1322,10 @@ fn configure_basic_refiners(entity: &mut EntityWorldMut, building_type: Building
     }
 }
 
-fn configure_advanced_refiners_smelter_smithy(entity: &mut EntityWorldMut, building_type: BuildingType) {
+fn configure_advanced_refiners_smelter_smithy(
+    entity: &mut EntityWorldMut,
+    building_type: BuildingType,
+) {
     match building_type {
         BuildingType::Smelter => {
             entity.insert((

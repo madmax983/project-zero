@@ -515,7 +515,7 @@ pub fn astrological_beliefs_bridge_system(
     mut query: Query<&mut crate::layer1::culture::astrology::AstrologicalBelief>,
 ) {
     if let Some(syzygy_cycle) = cycle {
-        let lucky = syzygy_cycle.current_phase == crate::layer2::syzygy::SyzygyPhase::Active;
+        let lucky = syzygy_cycle.is_active;
         for mut belief in query.iter_mut() {
             if lucky {
                 belief.lucky_alignment = true;

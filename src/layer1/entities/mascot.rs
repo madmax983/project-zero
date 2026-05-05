@@ -110,7 +110,11 @@ pub fn mascot_behavior_system(
                             x: x as i32,
                             y: y as i32,
                         };
-                        let dist = pos.x.abs_diff(target.x).saturating_add(pos.y.abs_diff(target.y)).min(i32::MAX as u32) as i32;
+                        let dist = pos
+                            .x
+                            .abs_diff(target.x)
+                            .saturating_add(pos.y.abs_diff(target.y))
+                            .min(i32::MAX as u32) as i32;
                         if dist < min_dist {
                             min_dist = dist;
                             best_target = Some(target);

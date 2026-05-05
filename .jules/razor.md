@@ -51,3 +51,8 @@
 **Bloat:** `AlertResponseState` enum and `AlertPriority` enum in `src/layer1/social/golden_age.rs` used solely to track boolean flags.
 **Cut:** Removed `AlertPriority` enum and replaced it with a simple `is_high_priority: bool` field on `AlertEvent`. Removed `AlertResponseState` and replaced it with a unit struct `RespondingToAlert` used as a marker component.
 **Saved:** ~20 lines of code and two unnecessary enum indirections.
+
+## [Reduction]
+**Bloat:** `SyzygyPhase` enum with variants `Inactive` and `Active` in `src/layer2/syzygy.rs`.
+**Cut:** Removed the enum. Replaced `current_phase: SyzygyPhase` with `is_active: bool` inside `SyzygyCycle`.
+**Saved:** 5 lines of code and an unnecessary enum indirection.

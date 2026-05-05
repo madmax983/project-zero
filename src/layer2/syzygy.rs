@@ -22,33 +22,23 @@ pub struct TidalForce {
     pub base: f32,
 }
 
-#[derive(Debug, Clone, PartialEq, Eq)]
-pub enum SyzygyPhase {
-    Inactive,
-    Active,
-}
-
 #[derive(Resource)]
 pub struct SyzygyCycle {
-    pub current_phase: SyzygyPhase,
+    pub is_active: bool,
     pub next_syzygy_tick: u64,
 }
 
 impl Default for SyzygyCycle {
     fn default() -> Self {
         Self {
-            current_phase: SyzygyPhase::Inactive,
+            is_active: false,
             next_syzygy_tick: 10000,
         }
     }
 }
 
 pub fn update_syzygy_cycle_system(time: Res<SimulationTime>, mut cycle: ResMut<SyzygyCycle>) {
-    if time.tick >= cycle.next_syzygy_tick {
-        cycle.current_phase = SyzygyPhase::Active;
-    } else {
-        cycle.current_phase = SyzygyPhase::Inactive;
-    }
+    cycle.is_active = time.tick >= cycle.next_syzygy_tick;
 }
 
 pub fn apply_syzygy_effects_system(
@@ -56,7 +46,7 @@ pub fn apply_syzygy_effects_system(
     mut gravity: ResMut<PlanetaryGravity>,
     mut tide: ResMut<TidalForce>,
 ) {
-    if cycle.current_phase == SyzygyPhase::Active {
+    if cycle.is_active {
         gravity.current = gravity.base * 0.5; // Halve gravity
         tide.current = tide.base * 2.0; // Double tides
     } else {
@@ -79,7 +69,7 @@ mod tests {
             speed: crate::shared::time::SimSpeed::Normal,
         });
         world.insert_resource(SyzygyCycle {
-            current_phase: SyzygyPhase::Active,
+            is_active: true,
             next_syzygy_tick: 1000,
         });
         world.insert_resource(TidalForce::default());
@@ -107,7 +97,7 @@ mod tests {
         // Arrange
         let mut world = World::new();
         world.insert_resource(SyzygyCycle {
-            current_phase: SyzygyPhase::Active,
+            is_active: true,
             next_syzygy_tick: 1000,
         });
         world.insert_resource(TidalForce::default());
@@ -140,7 +130,7 @@ mod tests {
             speed: crate::shared::time::SimSpeed::Normal,
         });
         world.insert_resource(SyzygyCycle {
-            current_phase: SyzygyPhase::Inactive,
+            is_active: false,
             next_syzygy_tick: 1000,
         });
 
@@ -153,10 +143,6 @@ mod tests {
 
         // Assert
         let cycle = world.resource::<SyzygyCycle>();
-        assert_eq!(
-            cycle.current_phase,
-            SyzygyPhase::Active,
-            "Cycle should transition to Active"
-        );
+        assert!(cycle.is_active, "Cycle should transition to Active");
     }
 }

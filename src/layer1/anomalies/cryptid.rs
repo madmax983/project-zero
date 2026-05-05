@@ -52,8 +52,10 @@ pub fn cryptid_observation_system(
 ) {
     for cryptid_pos in cryptid_query.iter() {
         for (mut mood, pop_pos, vision) in pop_query.iter_mut() {
-            let dist =
-                (cryptid_pos.x.abs_diff(pop_pos.x).saturating_add(cryptid_pos.y.abs_diff(pop_pos.y))) as f32;
+            let dist = (cryptid_pos
+                .x
+                .abs_diff(pop_pos.x)
+                .saturating_add(cryptid_pos.y.abs_diff(pop_pos.y))) as f32;
             if dist <= vision.0 {
                 mood.awe += 1.0 * time.delta_secs();
             }

@@ -6,7 +6,7 @@ use scale::layer1::culture::astrology::{
     astrological_buff_system, AstrologicalBelief, Productivity,
 };
 use scale::layer2::integration::astrological_beliefs_bridge_system;
-use scale::layer2::syzygy::{update_syzygy_cycle_system, SyzygyCycle, SyzygyPhase};
+use scale::layer2::syzygy::{update_syzygy_cycle_system, SyzygyCycle};
 use scale::shared::time::SimulationTime;
 
 #[test]
@@ -19,7 +19,7 @@ fn test_astrological_beliefs_syzygy_integration() {
     });
 
     app.insert_resource(SyzygyCycle {
-        current_phase: SyzygyPhase::Inactive,
+        is_active: false,
         next_syzygy_tick: 1000,
     });
 
@@ -47,11 +47,7 @@ fn test_astrological_beliefs_syzygy_integration() {
     app.update();
 
     let cycle = app.world().resource::<SyzygyCycle>();
-    assert_eq!(
-        cycle.current_phase,
-        SyzygyPhase::Active,
-        "Syzygy should be Active"
-    );
+    assert!(cycle.is_active, "Syzygy should be Active");
 
     let belief = app.world().get::<AstrologicalBelief>(entity).unwrap();
     assert!(belief.lucky_alignment, "Belief should be lucky alignment");
