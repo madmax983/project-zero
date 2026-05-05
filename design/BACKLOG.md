@@ -18,7 +18,7 @@
 
 
 
-- [ ] `631` Conveyor Logistics — `specs/631-conveyor-logistics.md`
+
 - [ ] `632` Cultural Artifacts — `specs/632-cultural-artifacts.md`
 
 

@@ -1,0 +1,7 @@
+#!/bin/bash
+cargo test test_conveyor_overlap_prevention
+cargo test test_inserter_pickup_dropoff
+cargo test test_conveyor_feeds_hopper
+cargo test test_conveyor_blocked_by_obstacle
+cargo test test_hopper_respects_cap
+cargo test test_hopper_consumes_item
