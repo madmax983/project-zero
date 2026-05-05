@@ -1910,3 +1910,20 @@ pub fn predecessor_weather_array_bridge_system(
         season_state.current_season = crate::layer1::nature::seasons::Season::Spring;
     }
 }
+
+/// INT-635: Bridges MachineCultFormedEvent to AddChronicleEvent (Chronicle).
+pub fn rogue_cult_chronicle_bridge(
+    mut cult_events: bevy_ecs::event::EventReader<
+        crate::layer1::tech::rogue_automation_cults::MachineCultFormedEvent,
+    >,
+    mut chronicle_events: bevy_ecs::event::EventWriter<
+        crate::layer1::core::chronicle::AddChronicleEvent,
+    >,
+) {
+    for _event in cult_events.read() {
+        chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
+            text: "The hauling bots formed a Machine Cult around the failing relay.".to_string(),
+            importance: crate::layer1::core::chronicle::EventImportance::Major,
+        });
+    }
+}

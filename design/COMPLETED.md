@@ -514,3 +514,4 @@
 - [x] `1168` The Pacifist's Arsenal — `specs/1175-the-pacifists-arsenal.md` — completed 2026-05-05
 - [x] `244` Biometric Drift — `specs/244-biometric-drift.md` — completed 2026-05-05
 - [x] `INT-244` Integration: Biometric Drift -> Access Control — completed 2026-05-05
+- [x] `INT-635` Integration: Rogue Automation Cults -> Chronicle — completed 2026-05-05

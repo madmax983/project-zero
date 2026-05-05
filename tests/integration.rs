@@ -358,3 +358,5 @@ mod orbital_mirror_bridge;
 
 #[path = "integration/biometric_access_bridge.rs"]
 mod biometric_access_bridge;
+#[path = "integration/rogue_automation_cults_chronicle.rs"]
+mod rogue_automation_cults_chronicle;
