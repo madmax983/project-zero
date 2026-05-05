@@ -1,3 +1,9 @@
+//! The Echoes of the Ancients
+//!
+//! The `predecessors` module governs the remnants of ancient, fallen civilizations.
+//! These ruins provide passive research benefits (`ColonyResources::knowledge`) while dormant,
+//! but extreme colony activity (like massive energy spikes or deep crust drilling) can
+//! trigger their awakening protocols, unleashing automated defenses or orbital quarantine shields.
 use crate::layer1::core::chronicle::AddChronicleEvent;
 use crate::layer1::core::chronicle::EventImportance;
 use crate::layer1::energy::EnergyGrid;
@@ -6,16 +12,52 @@ use bevy::prelude::*;
 use rand::Rng;
 
 #[derive(Component)]
+/// A dormant ruin from a fallen civilization.
+///
+/// While unawakened, these structures slowly emit decipherable data, providing a
+/// passive boost to colony knowledge. If triggered by a [`WorldTriggerEvent`],
+/// they will awaken and deploy automated protocols.
+///
+/// # Examples
+///
+/// ```
+/// use bevy::prelude::*;
+/// use scale::layer1::predecessors::PredecessorRuin;
+///
+/// let mut app = App::new();
+/// app.world_mut().spawn(PredecessorRuin {
+///     awakened: false,
+///     research_bonus_rate: 2.5,
+/// });
+/// ```
 pub struct PredecessorRuin {
     pub awakened: bool,
     pub research_bonus_rate: f32,
 }
 
 #[derive(Event)]
+/// An event representing a critical colony action that disturbs the world.
+///
+/// Sent when the colony reaches dangerous thresholds (e.g., massive energy generation).
+/// These events are consumed by the ruins to trigger awakening protocols.
+///
+/// # Examples
+///
+/// ```
+/// use bevy::prelude::*;
+/// use scale::layer1::predecessors::{WorldTriggerEvent, TriggerType};
+///
+/// let mut app = App::new();
+/// app.add_event::<WorldTriggerEvent>();
+/// app.world_mut().resource_mut::<Events<WorldTriggerEvent>>().send(WorldTriggerEvent {
+///     trigger_type: TriggerType::DeepDrill,
+/// });
+/// ```
 pub struct WorldTriggerEvent {
     pub trigger_type: TriggerType,
 }
 
+/// The type of action that triggered the world event.
 pub enum TriggerType {
     EnergySpike,
     DeepDrill,
@@ -23,14 +65,32 @@ pub enum TriggerType {
 }
 
 #[derive(Component)]
+/// A catastrophic consequence: The ruins lock down the planet from orbit.
 pub struct PredecessorOrbitalShield;
 
 #[derive(Component)]
+/// A catastrophic consequence: The ruins hijack the planetary weather system.
 pub struct PredecessorWeatherArray;
 
 #[derive(Component)]
+/// A catastrophic consequence: The ruins unleash a swarm of aggressive drones.
 pub struct PredecessorDroneSwarm;
 
+/// Applies passive research points to the colony for every dormant ruin.
+///
+/// # Examples
+///
+/// ```
+/// use bevy::prelude::*;
+/// use scale::layer1::predecessors::{PredecessorRuin, predecessor_ruins_passive_bonus_system};
+/// use scale::layer1::resources::ColonyResources;
+///
+/// let mut app = App::new();
+/// app.init_resource::<ColonyResources>();
+/// app.insert_resource(Time::<()>::default());
+/// app.world_mut().spawn(PredecessorRuin { awakened: false, research_bonus_rate: 5.0 });
+/// app.add_systems(Update, predecessor_ruins_passive_bonus_system);
+/// ```
 pub fn predecessor_ruins_passive_bonus_system(
     mut resources: ResMut<ColonyResources>,
     query: Query<&PredecessorRuin>,
@@ -43,6 +103,22 @@ pub fn predecessor_ruins_passive_bonus_system(
     }
 }
 
+/// Monitors colony output and triggers a [`WorldTriggerEvent`] if thresholds are exceeded.
+///
+/// Currently fires if total `EnergyGrid` generation exceeds 5,000.
+///
+/// # Examples
+///
+/// ```
+/// use bevy::prelude::*;
+/// use scale::layer1::predecessors::{predecessor_ruins_trigger_system, WorldTriggerEvent};
+/// use scale::layer1::energy::EnergyGrid;
+///
+/// let mut app = App::new();
+/// app.add_event::<WorldTriggerEvent>();
+/// app.world_mut().spawn(EnergyGrid { total_generation: 6000.0, total_consumption: 0.0 });
+/// app.add_systems(Update, predecessor_ruins_trigger_system);
+/// ```
 pub fn predecessor_ruins_trigger_system(
     energy_query: Query<&EnergyGrid>,
     mut trigger_events: EventWriter<WorldTriggerEvent>,
@@ -59,6 +135,25 @@ pub fn predecessor_ruins_trigger_system(
     }
 }
 
+/// Consumes [`WorldTriggerEvent`]s and awakens dormant ruins.
+///
+/// When awakened, a ruin randomly gains a catastrophic component (e.g. [`PredecessorOrbitalShield`])
+/// and broadcasts an `AddChronicleEvent` to the colony history.
+///
+/// # Examples
+///
+/// ```
+/// use bevy::prelude::*;
+/// use scale::layer1::predecessors::{predecessor_ruins_awakening_system, PredecessorRuin, WorldTriggerEvent, TriggerType, PredecessorOrbitalShield, PredecessorWeatherArray, PredecessorDroneSwarm};
+/// use scale::layer1::core::chronicle::AddChronicleEvent;
+///
+/// let mut app = App::new();
+/// app.add_event::<WorldTriggerEvent>();
+/// app.add_event::<AddChronicleEvent>();
+/// app.world_mut().spawn(PredecessorRuin { awakened: false, research_bonus_rate: 5.0 });
+/// app.world_mut().resource_mut::<Events<WorldTriggerEvent>>().send(WorldTriggerEvent { trigger_type: TriggerType::DeepDrill });
+/// app.add_systems(Update, predecessor_ruins_awakening_system);
+/// ```
 pub fn predecessor_ruins_awakening_system(
     mut commands: Commands,
     mut ruins_query: Query<(Entity, &mut PredecessorRuin)>,
