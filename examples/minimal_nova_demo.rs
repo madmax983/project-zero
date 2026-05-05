@@ -9,8 +9,7 @@ use bevy_ecs::prelude::*;
 use comfy_table::presets::UTF8_FULL;
 use comfy_table::{Cell, Color as TableColor, Table};
 use crossterm::style::{Color, Stylize};
-use scale::layer1::chronicle::{Chronicle, EventImportance};
-use scale::layer1::oral_tradition::{collect_chronicles_system, OralTradition};
+use scale::prelude::*;
 
 fn main() {
     let mut world = World::new();
