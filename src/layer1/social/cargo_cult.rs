@@ -29,8 +29,8 @@ pub fn apply_cargo_cult_belief_system(
                 continue;
             }
 
-            let distance_x = pos.x.abs_diff(drop.target.x) as i32;
-            let distance_y = pos.y.abs_diff(drop.target.y) as i32;
+            let distance_x = pos.x.abs_diff(drop.target.x) as i64;
+            let distance_y = pos.y.abs_diff(drop.target.y) as i64;
             let distance = distance_x.max(distance_y);
 
             // Only pops near the drop zone might develop a belief

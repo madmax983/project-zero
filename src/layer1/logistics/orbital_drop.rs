@@ -125,8 +125,8 @@ mod tests {
             .query::<(&DroppedCrate, &GridPos)>()
             .iter(app.world())
         {
-            let distance_x = (pos.x - target_pos.x).abs();
-            let distance_y = (pos.y - target_pos.y).abs();
+            let distance_x = pos.x.abs_diff(target_pos.x).min(i32::MAX as u32) as i32;
+            let distance_y = pos.y.abs_diff(target_pos.y).min(i32::MAX as u32) as i32;
             assert!(
                 distance_x <= 5 && distance_y <= 5,
                 "Items must land within scatter radius"

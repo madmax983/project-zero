@@ -412,8 +412,8 @@ mod tests {
         let (_, p1, h1) = positions.next().unwrap();
         let (_, p2, h2) = positions.next().unwrap();
 
-        let dx = (p1.x - p2.x).abs();
-        let dy = (p1.y - p2.y).abs();
+        let dx = p1.x.abs_diff(p2.x).min(i32::MAX as u32) as i32;
+        let dy = p1.y.abs_diff(p2.y).min(i32::MAX as u32) as i32;
         assert!(
             dx <= 1 && dy <= 1 && (dx + dy) > 0,
             "New flora should be adjacent"
@@ -906,7 +906,7 @@ mod migratory_flora_tests {
         // Create a gradient towards 5,5
         for y in 0i32..10 {
             for x in 0i32..10 {
-                let dist = ((x - 5).abs() + (y - 5).abs()) as f32;
+                let dist = (x.abs_diff(5).saturating_add(y.abs_diff(5))) as f32;
                 let val: f32 = 100.0 - dist * 10.0;
                 let idx = (y as usize)
                     .checked_mul(water_grid.width)
@@ -967,7 +967,7 @@ mod migratory_flora_tests {
         // Create a gradient from 5,5
         for y in 0i32..10 {
             for x in 0i32..10 {
-                let dist = ((x - 5).abs() + (y - 5).abs()) as f32;
+                let dist = (x.abs_diff(5).saturating_add(y.abs_diff(5))) as f32;
                 let val: f32 = 100.0 - dist * 10.0;
                 atmos_grid.set(x, y, val.max(0.0));
             }
@@ -1021,7 +1021,7 @@ mod migratory_flora_tests {
         let mut water_grid = WaterGrid::new(10, 10);
         for y in 0i32..10 {
             for x in 0i32..10 {
-                let dist = ((x - 5).abs() + (y - 5).abs()) as f32;
+                let dist = (x.abs_diff(5).saturating_add(y.abs_diff(5))) as f32;
                 let val: f32 = 100.0 - dist * 10.0;
                 let idx = (y as usize)
                     .checked_mul(water_grid.width)

@@ -40,8 +40,8 @@ pub fn grief_system(world: &mut World) {
     let mut pop_query = world.query::<(Entity, &GridPosition, &mut Memories)>();
     for (_, pop_pos, mut memories) in pop_query.iter_mut(world) {
         let saw_corpse = corpses.iter().any(|c_pos| {
-            let dx = (pop_pos.x - c_pos.x).abs();
-            let dy = (pop_pos.y - c_pos.y).abs();
+            let dx = pop_pos.x.abs_diff(c_pos.x).min(i32::MAX as u32) as i32;
+            let dy = pop_pos.y.abs_diff(c_pos.y).min(i32::MAX as u32) as i32;
             dx <= 5 && dy <= 5 // Within 5 tiles (Manhattan or Chebyshev?) Using Chebyshev for visibility
         });
 
