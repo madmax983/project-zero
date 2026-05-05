@@ -385,7 +385,9 @@ fn is_walkable(
     if let Some(&entity) = building_map.0.get(&(x, y)) {
         if let Some(building) = world.get::<Building>(entity) {
             if let Some(creds) = credentials {
-                if crate::layer1::security::check_security_clearance(world, creds.entity, entity) == crate::layer1::security::AccessResult::DeniedDrift {
+                if crate::layer1::security::check_security_clearance(world, creds.entity, entity)
+                    == crate::layer1::security::AccessResult::DeniedDrift
+                {
                     return false;
                 }
             }

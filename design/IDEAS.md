@@ -18793,3 +18793,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you attempt to reclaim and resettle a failed world (costly and difficult), or do you let it rot so your other worlds can strip it for parts?
 
 ---
+
+## The Local Deity Protocol
+
+**Layer:** 1 -> 3
+
+**Fantasy:** Accidentally becoming the gods of a primitive species, and the horrifying logistical burden it entails.
+
+**Mechanic:** If a colony is founded near an indigenous, pre-spaceflight species, the locals may mistake your advanced infrastructure (e.g., massive mining lasers or weather control satellites) for divine acts. They begin offering massive tributes of local resources, but in exchange, they demand "miracles" (emergency food drops, weather manipulation, smiting their enemies). Failing to provide miracles causes them to turn violently against their "false gods."
+
+**Emergence:** You intentionally build a massive, useless laser just to awe the locals into giving you free resources. Years later, you are embroiled in an expensive, multi-system proxy war solely to protect your "worshippers" from a rival empire that is trying to convert them with slightly better miracles.
+
+**Tension:** The massive, easy influx of primitive resources versus the escalating, resource-intensive demands of maintaining a god-like facade.
+
+---
+
+## Cultural Contraband
+
+**Layer:** 3 -> 1
+
+**Fantasy:** An empire that controls everything except the minds of its people, who risk death for a taste of forbidden art.
+
+**Mechanic:** In highly authoritarian or culturally stagnant empires, "Foreign Media" (music, holovids, literature) from rival empires becomes highly illegal but incredibly desirable contraband. Smugglers bring these items to Layer 1 colonies. Pops consuming them gain massive temporary morale boosts but their ethics slowly shift towards the rival empire's ideology, eventually spawning seditious factions.
+
+**Emergence:** You run a brutal, perfectly efficient mining collective. A smuggler drops a cache of romantic comedies from a neighboring glitter-world. The miners become obsessed, forming an underground cinema club. Within a year, production plummets as the miners go on strike, demanding "true love" and better working conditions inspired by the holovids.
+
+**Tension:** Do you violently suppress the contraband to maintain control (causing massive immediate unrest) or allow it to placate the workers, knowing it is slowly eroding your empire's ideological foundation from the inside?
+
+---
+
+## Asteroid Herders
+
+**Layer:** 2 -> 1
+
+**Fantasy:** Moving the very mountains of space to feed your colony's insatiable industrial appetite.
+
+**Mechanic:** Instead of building static mining stations, specialized "Herder Fleets" can attach massive thrusters to resource-rich asteroids in Layer 2 and literally drag them into orbit around a Layer 1 colony. Once in low orbit, the asteroid can be safely and rapidly strip-mined from the surface using a space elevator.
+
+**Emergence:** A rival colony is starving you of resources by blockading the system. In desperation, you herd a massive, unstable ice asteroid right into the blockade, destroying the enemy fleet but inadvertently crashing the asteroid into your own planet, causing a localized ice age but providing unlimited water for centuries.
+
+**Tension:** The incredible efficiency of bringing the mountain to the colony versus the massive logistical risk of dragging a civilization-ending rock through populated space.
+
+---

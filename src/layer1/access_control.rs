@@ -86,7 +86,9 @@ pub struct AccessControl {
 /// assert!(check_access(&world, door, pop));
 /// ```
 pub fn check_access(world: &World, door_entity: Entity, pop_entity: Entity) -> bool {
-    if crate::layer1::security::check_security_clearance(world, pop_entity, door_entity) == crate::layer1::security::AccessResult::DeniedDrift {
+    if crate::layer1::security::check_security_clearance(world, pop_entity, door_entity)
+        == crate::layer1::security::AccessResult::DeniedDrift
+    {
         return false;
     }
 

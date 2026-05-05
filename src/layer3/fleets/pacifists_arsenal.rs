@@ -46,8 +46,8 @@ pub fn check_will_to_fight_mutiny_system(
 
 #[cfg(test)]
 mod tests {
-    use crate::layer2::fleet::Fleet;
     use super::*;
+    use crate::layer2::fleet::Fleet;
 
     #[test]
     fn test_empathy_broadcast_damages_will_to_fight() {
