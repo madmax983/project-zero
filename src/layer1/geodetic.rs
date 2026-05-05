@@ -105,7 +105,7 @@ pub fn update_living_stone_system(
                     if *other_e == entity {
                         continue;
                     }
-                    let dist = ((nx - other_pos.x).abs() + (ny - other_pos.y).abs()) as f32;
+                    let dist = (nx.abs_diff(other_pos.x).saturating_add(ny.abs_diff(other_pos.y))) as f32;
                     if dist < min_dist {
                         min_dist = dist;
                     }
@@ -142,7 +142,7 @@ pub fn update_living_stone_system(
                 if *other_e == entity {
                     continue;
                 }
-                let dist = ((pos.x - other_pos.x).abs() + (pos.y - other_pos.y).abs()) as f32;
+                let dist = (pos.x.abs_diff(other_pos.x).saturating_add(pos.y.abs_diff(other_pos.y))) as f32;
                 if dist < min_dist {
                     min_dist = dist;
                 }

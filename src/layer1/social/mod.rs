@@ -236,8 +236,8 @@ pub fn proximity_social_system(
             }
 
             // Naive distance check
-            let dx = (pos.x - other_pos.x).abs();
-            let dy = (pos.y - other_pos.y).abs();
+            let dx = pos.x.abs_diff(other_pos.x).min(i32::MAX as u32) as i32;
+            let dy = pos.y.abs_diff(other_pos.y).min(i32::MAX as u32) as i32;
             let distance = dx.max(dy); // Chebyshev
 
             if distance <= 5 {

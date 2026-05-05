@@ -37,3 +37,6 @@
 **2024-11-13 - [Dependency Vulnerability: paste - unmaintained]**
 **Threat:** [Unmaintained Dependency] `cargo audit` reported RUSTSEC-2024-0436 on the `paste` crate (version 1.0.15). While there are no active CVEs against this crate, its unmaintained status means future vulnerabilities will not be patched. This is pulled deeply by `wgpu-hal` via `bevy 0.15.1`.
 **Defense:** [Monitoring] Since `bevy 0.15.1` strictly locks `wgpu` to 24.0.0, upgrading or replacing `paste` without breaking the core engine isn't feasible at this time. The crate is considered feature-complete. Added `.cargo/audit.toml` to ignore RUSTSEC-2024-0436 to resolve the audit failure. Logged the finding for future monitoring when upgrading Bevy versions. No other actionable vulnerabilities or memory safety issues were found in the codebase.
+**2024-05-19 - Fixed integer panic vector on .abs() via saturating operations**
+**Threat:** Several distance calculation methods (`manhattan_distance` and local calculations) used `(x1 - x2).abs()` on standard `i32` vectors. When one value was negative and another positive near extremes, or using `i32::MIN.abs()`, it could lead to overflow panics or crashes (Denial of Service).
+**Defense:** Replaced `(a - b).abs()` with `a.abs_diff(b)` combined with `saturating_add` and proper casting. Removed vulnerable `.abs()` calls on distance math entirely.

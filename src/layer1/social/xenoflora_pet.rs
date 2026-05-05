@@ -43,8 +43,8 @@ pub fn pet_viral_spread_system(
     for (entity, pos) in query.iter() {
         // Check if there is any pop with a pet nearby
         for pet_pos in pet_query.iter() {
-            let dx = (pos.x - pet_pos.x).abs();
-            let dy = (pos.y - pet_pos.y).abs();
+            let dx = pos.x.abs_diff(pet_pos.x).min(i32::MAX as u32) as i32;
+            let dy = pos.y.abs_diff(pet_pos.y).min(i32::MAX as u32) as i32;
 
             if dx <= 2 && dy <= 2 {
                 use rand::Rng;

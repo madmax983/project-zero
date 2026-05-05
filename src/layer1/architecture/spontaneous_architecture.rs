@@ -274,8 +274,8 @@ mod tests {
         assert_eq!(structures.len(), 1);
 
         let (_, pos) = structures[0];
-        let dx = (pos.x - home_pos.x).abs();
-        let dy = (pos.y - home_pos.y).abs();
+        let dx = pos.x.abs_diff(home_pos.x).min(i32::MAX as u32) as i32;
+        let dy = pos.y.abs_diff(home_pos.y).min(i32::MAX as u32) as i32;
         assert!(dx <= 1 && dy <= 1 && (dx + dy) > 0, "Must be adjacent");
 
         // Assert: Tile occupied

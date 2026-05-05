@@ -81,7 +81,7 @@ pub fn grey_goo_replication_system(
             // Find an adjacent target to consume
             for (target_entity, target_pos, building_opt) in target_query.iter() {
                 // Check adjacency (simplistic orthogonal check)
-                if (goo_pos.x - target_pos.x).abs() + (goo_pos.y - target_pos.y).abs() == 1
+                if goo_pos.x.abs_diff(target_pos.x).saturating_add(goo_pos.y.abs_diff(target_pos.y)) == 1
                     && building_opt.is_some()
                 {
                     // Consume!

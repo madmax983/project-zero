@@ -93,7 +93,7 @@ pub fn class_friction_system(
 
             // Check if neighbors (radius 1 for housing friction)
             // Ideally, check if their *assigned beds* are near, but using position for now (assuming they are home/sleeping)
-            let dist = (pos.x - other_pos.x).abs() + (pos.y - other_pos.y).abs();
+            let dist = pos.x.abs_diff(other_pos.x).saturating_add(pos.y.abs_diff(other_pos.y)).min(i32::MAX as u32) as i32;
 
             if dist <= 2 {
                 // Close proximity
