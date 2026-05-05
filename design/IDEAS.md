@@ -18835,3 +18835,31 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** The incredible efficiency of bringing the mountain to the colony versus the massive logistical risk of dragging a civilization-ending rock through populated space.
 
 ---
+
+## The Symbiotic Debt
+
+**Layer:** Cross-layer
+
+**Fantasy:** Making a deal with an ancient entity that solves your immediate problems but permanently alters your society's biology.
+
+**Mechanic:** A dormant Leviathan beneath the crust offers to share its immense energy reserves, solving early-game power crises instantly. In exchange, colonists who use this energy gradually mutate, gaining the "Symbiont" trait. This makes them highly productive but they require continuous proximity to the Leviathan's energy grid, meaning they can never leave the planet or work in orbit.
+
+**Emergence:** You take the deal to survive a harsh winter. Centuries later, your capital is an economic powerhouse, but its citizens are biologically tethered to the planet. You can't recruit them for your galactic navy, forcing you to rely entirely on mercenaries or synthetic armies for your Layer 3 expansion.
+
+**Tension:** Do you accept a massive short-term boost that permanently grounds your most productive citizens, or suffer through the early game to keep your empire flexible?
+
+---
+
+## The Cargo Cult Ambassador
+
+**Layer:** 3 -> 1
+
+**Fantasy:** Your automated scouting probe crashes on a primitive world, and they mistake it for a god, demanding your direct intervention.
+
+**Mechanic:** A low-tech, pre-FTL civilization discovers one of your crashed Layer 2 probes. They begin sending crude radio signals demanding "miracles" (emergency resources, weather manipulation). Fulfilling these demands yields unique "Divine Artifacts" (massive cultural value), but failing them causes the civilization to rapidly industrialize purely out of spite, eventually becoming a hostile, highly aggressive space-faring empire.
+
+**Emergence:** You casually ignore the primitive radio signals to focus on a border war. Fifty years later, a massive fleet of retro-fitted, heavily armed scrap ships jumps into your system, screaming vengeance against the "False Maker" who abandoned them.
+
+**Tension:** Do you expend massive resources to maintain a facade of divinity for cultural prestige, or ignore them and risk creating your own worst enemy?
+
+---
