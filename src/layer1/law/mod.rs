@@ -13,3 +13,4 @@ pub mod predictive_policing;
 #[cfg(test)]
 #[allow(missing_docs)]
 pub mod justice_tests;
+pub mod organ_trade;

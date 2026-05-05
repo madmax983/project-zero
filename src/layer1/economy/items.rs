@@ -156,6 +156,8 @@ pub enum ItemType {
     AgonyExtract,
     /// Fermented luxury good from orbital stations.
     VoidAle,
+    /// Vital organs harvested from dead pops.
+    VitalOrgans,
 }
 
 impl ItemType {
@@ -184,6 +186,7 @@ impl ItemType {
             Self::Waste => Some(ResourceType::Waste),
             Self::BuildingPermit => Some(ResourceType::BuildingPermit),
             Self::AgonyExtract => None,
+            Self::VitalOrgans => None,
             _ => None,
         }
     }

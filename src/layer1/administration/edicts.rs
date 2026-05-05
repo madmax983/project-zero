@@ -140,6 +140,8 @@ pub enum Policy {
     Aesthetic,
     /// Offers amnesty visas to pirate fleets.
     AmnestyVisa,
+    /// Harvests vital organs from dead pops.
+    MandatoryOrganHarvesting,
     /// Declares martial law, restricting movement and increasing security.
     /// Declares martial law, restricting movement and increasing security.
     /// Declares martial law, restricting movement and increasing security.
