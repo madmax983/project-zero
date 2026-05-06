@@ -360,3 +360,12 @@ mod orbital_mirror_bridge;
 mod biometric_access_bridge;
 #[path = "integration/rogue_automation_cults_chronicle.rs"]
 mod rogue_automation_cults_chronicle;
+
+#[path = "integration/ghost_shift_chronicle.rs"]
+mod ghost_shift_chronicle;
+
+#[path = "integration/impact_warning_chronicle.rs"]
+mod impact_warning_chronicle;
+
+#[path = "integration/diplomatic_incident_chronicle.rs"]
+mod diplomatic_incident_chronicle;
