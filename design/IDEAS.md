@@ -18946,3 +18946,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you sacrifice innocent, highly productive Pops to artificially maintain social cohesion, or do you risk widespread unrest by refusing to provide a scapegoat?
 
 ---
+
+## The Echo Grid
+
+**Layer:** 1
+
+**Fantasy:** Your colony's infrastructure starts echoing the emotional resonance of past traumas, creating a haunted city.
+
+**Mechanic:** Buildings where massive tragedies occurred (like a hospital where a plague wiped out half the colony) permanently absorb "Trauma Resonance". When other pops use these buildings later, they experience phantom debuffs or bizarre hallucinations of the event, despite never living through it.
+
+**Emergence:** You try to reuse a highly efficient factory where a terrible fire happened centuries ago. The new workers keep shutting down the machines because they smell phantom smoke and hear screaming, plummeting efficiency.
+
+**Tension:** Do you abandon perfectly good infrastructure to avoid the psychological toll, or force your pops to work in a literally haunted building?
+
+---
+
+## Sabotage Markets
+
+**Layer:** 3 -> 1
+
+**Fantasy:** Funding your empire's expansion by actively ruining your neighbors' lives through targeted inconveniences.
+
+**Mechanic:** Establish a specialized "Sabotage Exchange" on Layer 3 where rival empires post bounties for specific Layer 1 disruptions (e.g., "Delay food shipments by 3 days", "Infect water supply with mild laxatives"). You dispatch covert operatives to perform these petty acts of sabotage on their colonies for massive payouts.
+
+**Emergence:** You take a lucrative contract to introduce a non-lethal, hyper-addictive weed to a rival's agri-world. The weed works too well, mutating and spreading to your own neighboring trade hub, creating a galactic crisis of your own making.
+
+**Tension:** The massive economic gain of state-sponsored griefing vs. the risk of the sabotage spiraling out of control or being traced back to you.
+
+---
+
+## The Nomadic Capital
+
+**Layer:** 2 -> 1
+
+**Fantasy:** Your empire's seat of power is a colossal, wandering mega-city that strips worlds bare and moves on.
+
+**Mechanic:** Instead of a static capital world, you construct a massive, slow-moving "Capital Ship" (Layer 2) that acts as your primary Layer 1 colony. It anchors to a planet, strip-mines its resources and atmosphere, heavily polluting it, and then detaches to find a new host world.
+
+**Emergence:** Your capital depletes a system and moves to a lush, primitive world. The local pre-FTL civilization views your capital as a world-eating god. They manage to launch a desperate, primitive boarding action that miraculously disables your main engines, stranding your entire empire's leadership on a world you were trying to eat.
+
+**Tension:** Unmatched mobility and resource extraction vs. the constant, desperate need to find new worlds to consume before the capital starves.
+
+---
