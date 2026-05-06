@@ -908,3 +908,9 @@
 - **Systems connected:** `BiometricProfile` (Biometric Drift) -> `check_access` / `is_walkable` (Access Control / Pathfinding)
 - **Glue added:** Added `check_security_clearance` checks inside `check_access` and `is_walkable`.
 - **Tests:** `tests/integration/biometric_access_bridge.rs`
+
+### INT-1168: Pacifist's Arsenal -> Simulation Schedule
+- **Date:** 2026-05-05
+- **Systems connected:** `apply_empathy_broadcast_system` -> `check_will_to_fight_mutiny_system`
+- **Glue added:** Registered `apply_empathy_broadcast_system` and `check_will_to_fight_mutiny_system` in Layer 3 Integration inside `src/simulation.rs`.
+- **Tests:** `tests/integration/pacifists_arsenal_bridge.rs`

@@ -367,6 +367,9 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
         crate::layer3::ghost_ships::evaluate_transit_system,
         crate::layer3::ghost_ships::evaluate_lost_ship_return_system,
         crate::layer3::treaty_cruisers::compliance_check_system,
+        crate::layer3::fleets::pacifists_arsenal::apply_empathy_broadcast_system,
+        crate::layer3::fleets::pacifists_arsenal::check_will_to_fight_mutiny_system
+            .after(crate::layer3::fleets::pacifists_arsenal::apply_empathy_broadcast_system),
     ));
 
     // --- Layer 2 Integration ---
