@@ -18905,3 +18905,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you violently force the Pops back to the hopeless survival effort, or allow them the grim comfort of ensuring they are perfectly remembered?
 
 ---
+## The Prophet's Burden
+
+**Layer:** 1 -> 3
+
+**Fantasy:** What happens when an unassuming pop on a frontier world is declared the messiah of an ancient religion.
+
+**Mechanic:** A random Pop may suddenly experience "Visions," spreading a new, fanatical belief system (a trait) through proximity. As the cult grows, it generates massive cultural output, which attracts Pilgrims from Layer 3 empires. However, the Prophet requires constant protection and specialized "Holy Sites" to avoid losing faith and turning the movement into a violent schism.
+
+**Emergence:** You intentionally build a massive fortress just to protect one erratic miner because a neighboring empire is sending literal armadas to extract them. The miner dies in a localized mining accident, causing three entire sectors to immediately declare holy war on you.
+
+**Tension:** Do you indulge the cult to gain incredible cultural power and diplomatic leverage, or do you quietly assassinate the Prophet before their followers become too powerful?
+
+---
+
+## Reverse Quarantine
+
+**Layer:** Cross-layer
+
+**Fantasy:** A planet so perfectly pristine and ecologically fragile that your own colonists are the plague.
+
+**Mechanic:** When settling an "Untouched Paradise" world, the native ecosystem is highly susceptible to external contaminants (carried by Pops and ships). Instead of protecting Pops from the environment, you must build "Clean Rooms" and deploy "Bio-Scrubbers" to protect the environment from the Pops. High contamination leads to catastrophic ecological collapse, permanently turning a paradise world into a barren wasteland.
+
+**Emergence:** You are forced to severely limit immigration and trade to a crucial agri-world to preserve its ecosystem. A desperate refugee fleet from a war-torn sector begs for asylum. Letting them land will save them but doom the planet's biosphere.
+
+**Tension:** Do you prioritize the long-term ecological perfection of a world, or sacrifice it to solve immediate humanitarian and logistical crises?
+
+---
+
+## The Saboteur's Paradox
+
+**Layer:** 1
+
+**Fantasy:** The best way to keep your society unified is to have a common enemy, even if you have to invent them.
+
+**Mechanic:** If a colony achieves high efficiency but low Morale, the leadership (AI or Player) can covertly designate a Pop as a "Suspected Saboteur." The mere existence of a suspected traitor creates a unifying "Witch Hunt" effect, temporarily boosting overall colony Morale and efficiency due to heightened vigilance. However, the suspected Pop is eventually arrested and permanently removed, and the effect diminishes if overused, eventually leading to paranoia and a massive efficiency crash.
+
+**Emergence:** Your colony is perfectly safe but deeply unhappy due to boring, repetitive work. You randomly designate your best engineer as a saboteur just to give everyone something to be angry about. The engineer is arrested, and the colony's morale skyrockets, but now nothing works because the engineer is gone.
+
+**Tension:** Do you sacrifice innocent, highly productive Pops to artificially maintain social cohesion, or do you risk widespread unrest by refusing to provide a scapegoat?
+
+---
