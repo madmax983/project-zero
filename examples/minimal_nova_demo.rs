@@ -91,8 +91,15 @@ fn main() {
             _ => TableColor::DarkGrey,
         };
 
+        let genre_text = match genre_str.as_str() {
+            "Heroic" => "🌟 Heroic",
+            "Tragedy" => "🎭 Tragedy",
+            "Cautionary" => "⚠️ Cautionary",
+            _ => "📝 Trivial",
+        };
+
         table.add_row(vec![
-            Cell::new(&genre_str).fg(genre_color),
+            Cell::new(genre_text).fg(genre_color),
             Cell::new(story.historical_date.to_string()).fg(TableColor::Cyan),
             Cell::new(story.mutations.to_string()).fg(TableColor::Cyan),
             Cell::new(&story.text).fg(TableColor::White),

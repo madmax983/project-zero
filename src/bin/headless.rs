@@ -1998,6 +1998,13 @@ fn print_stories(world: &mut World) {
             StoryGenre::Trivial => Color::Grey,
         };
 
+        let genre_text = match story.genre {
+            StoryGenre::Heroic => "🌟 Heroic",
+            StoryGenre::Tragedy => "🎭 Tragedy",
+            StoryGenre::Cautionary => "⚠️ Cautionary",
+            StoryGenre::Trivial => "📝 Trivial",
+        };
+
         let mut story_cell;
 
         if story.mutations > 0 {
@@ -2049,7 +2056,7 @@ fn print_stories(world: &mut World) {
 
         table.add_row(vec![
             Cell::new(story.historical_date.to_string()),
-            Cell::new(format!("{:?}", story.genre)).fg(genre_color),
+            Cell::new(genre_text).fg(genre_color),
             Cell::new(story.mutations.to_string()),
             story_cell,
         ]);
@@ -2089,17 +2096,20 @@ fn print_chronicle(world: &mut World) {
             EventImportance::Minor => Color::DarkGrey,
         };
 
-        // Legendary events get bold text
         let mut event_cell = Cell::new(&event.text).fg(importance_color);
+        let mut year_cell = Cell::new(event.year.to_string());
+        let mut tick_cell = Cell::new(event.tick.to_string());
+
         if event.importance == EventImportance::Legendary {
             event_cell = event_cell.add_attribute(Attribute::Bold);
+            year_cell = year_cell.fg(Color::Yellow).add_attribute(Attribute::Bold);
+            tick_cell = tick_cell.fg(Color::Yellow).add_attribute(Attribute::Bold);
+        } else if event.importance == EventImportance::Minor {
+            year_cell = year_cell.fg(Color::DarkGrey);
+            tick_cell = tick_cell.fg(Color::DarkGrey);
         }
 
-        table.add_row(vec![
-            Cell::new(event.year.to_string()),
-            Cell::new(event.tick.to_string()),
-            event_cell,
-        ]);
+        table.add_row(vec![year_cell, tick_cell, event_cell]);
     }
 
     print_dashboard_table("COLONY CHRONICLE", table);
@@ -2130,11 +2140,11 @@ fn print_log(world: &mut World) {
     for msg in &log.messages {
         let color = to_comfy_color(msg.color);
         let level_indicator = match msg.color {
-            ratatui::style::Color::Red | ratatui::style::Color::LightRed => "ERR",
-            ratatui::style::Color::Yellow | ratatui::style::Color::LightYellow => "WRN",
-            ratatui::style::Color::Green | ratatui::style::Color::LightGreen => "OK ",
-            ratatui::style::Color::Cyan | ratatui::style::Color::LightCyan => "INF",
-            _ => "LOG",
+            ratatui::style::Color::Red | ratatui::style::Color::LightRed => "❌ ERR",
+            ratatui::style::Color::Yellow | ratatui::style::Color::LightYellow => "⚠️ WRN",
+            ratatui::style::Color::Green | ratatui::style::Color::LightGreen => "✅ OK ",
+            ratatui::style::Color::Cyan | ratatui::style::Color::LightCyan => "ℹ️ INF",
+            _ => "📜 LOG",
         };
 
         table.add_row(vec![
