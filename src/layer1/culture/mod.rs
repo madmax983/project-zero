@@ -34,3 +34,5 @@ pub use gastronomers::*;
 
 pub mod petrification_sickness;
 pub use petrification_sickness::*;
+pub mod cultural_artifacts;
+pub use cultural_artifacts::*;

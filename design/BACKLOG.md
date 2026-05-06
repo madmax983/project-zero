@@ -19,7 +19,6 @@
 
 
 
-- [ ] `632` Cultural Artifacts — `specs/632-cultural-artifacts.md`
 
 
 - [ ] `623` The Nostalgia Plague — `specs/623-nostalgia-plague.md`
