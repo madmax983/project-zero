@@ -97,7 +97,7 @@ mod tests {
         world.insert_resource(scale::layer1::society::Unrest::default());
         world.insert_resource(scale::layer1::tech_envy::TechEnvyConfig::default());
         world.insert_resource(scale::layer2::visibility::SystemVisibility::default());
-        world.insert_resource(scale::layer2::system::ViewMode::default());
+        world.insert_resource(scale::shared::view_mode::ViewMode::default());
         world.insert_resource(scale::layer2::system::SystemMap);
         world.insert_resource(scale::layer1::law::predictive_policing::PredictionConfig {
             threshold: 0.8,

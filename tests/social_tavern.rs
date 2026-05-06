@@ -69,7 +69,7 @@ mod tests {
         world.insert_resource(scale::layer1::festivals::FestivalState::default());
         world.insert_resource(scale::layer1::tech::TechState::default());
         world.insert_resource(scale::layer2::visibility::SystemVisibility::default());
-        world.insert_resource(scale::layer2::system::ViewMode::default());
+        world.insert_resource(scale::shared::view_mode::ViewMode::default());
         world.insert_resource(scale::layer1::crowding::CrowdingGrid::new(10, 10));
         world.insert_resource(scale::layer1::geology::SeismicGrid::new(10, 10));
         world.insert_resource(scale::layer1::environment::seismic::VibrationGrid::new(

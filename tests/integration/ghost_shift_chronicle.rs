@@ -1,7 +1,7 @@
 use bevy::prelude::*;
 use scale::layer1::core::chronicle::{AddChronicleEvent, Chronicle, EventImportance};
-use scale::layer1::social::ghost_shift_strike::GhostShiftStartedEvent;
 use scale::layer1::core::integration::ghost_shift_chronicle_bridge;
+use scale::layer1::social::ghost_shift_strike::GhostShiftStartedEvent;
 
 #[test]
 fn ghost_shift_triggers_chronicle() {

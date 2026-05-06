@@ -315,7 +315,7 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     world.init_resource::<crate::layer1::social::old_guard::Demographics>();
     world.init_resource::<crate::layer1::economy::beacon::ColonyBeacon>();
     world.init_resource::<crate::layer1::economy::smugglers_cove::ColonyAuthority>();
-    world.insert_resource(crate::layer2::system::ViewMode::default());
+    world.insert_resource(crate::shared::view_mode::ViewMode::default());
     world.insert_resource(crate::layer2::system::SystemMap);
     world.insert_resource(crate::layer2::visibility::SystemVisibility::default());
 

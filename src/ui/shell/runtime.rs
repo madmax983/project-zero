@@ -15,7 +15,7 @@ use super::{
 };
 use crate::shared::keyboard::{GameKeyCode, GameKeyEvent};
 use crate::{
-    layer2::system::ViewMode,
+    shared::view_mode::ViewMode,
     shared::{
         state::GameState,
         time::{SimSpeed, SimulationTime},
