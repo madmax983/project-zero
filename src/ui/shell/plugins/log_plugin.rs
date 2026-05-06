@@ -87,12 +87,12 @@ impl HypertilePlugin for LogPlugin {
 mod tests {
     use super::*;
     use bevy_ecs::prelude::*;
-    use ratatui::style::Color;
     use ratatui::buffer::Buffer;
     use ratatui::layout::Rect;
+    use ratatui::style::Color;
+    use ratatui_hypertile_extras::HypertilePlugin;
     use std::cell::RefCell;
     use std::rc::Rc;
-    use ratatui_hypertile_extras::HypertilePlugin;
 
     fn setup_world() -> Rc<RefCell<World>> {
         let mut world = World::new();
