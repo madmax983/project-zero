@@ -1,7 +1,7 @@
-use bevy_ecs::prelude::*;
-use crate::layer1::map::GridPosition;
 use crate::layer1::entities::pop::Pop;
+use crate::layer1::map::GridPosition;
 use crate::layer1::social::morale::{MoodModifier, Morale};
+use bevy_ecs::prelude::*;
 
 #[derive(Clone, Copy, PartialEq, Eq, Debug)]
 pub enum ArtifactTheme {
@@ -60,20 +60,19 @@ pub fn cultural_aura_system(
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::layer1::social::morale::Morale;
     use bevy_app::App;
     use bevy_app::Update;
-    use crate::layer1::social::morale::Morale;
 
     #[test]
     fn test_victory_art_aura_buffs_morale() {
         let mut app = App::new();
         app.add_systems(Update, cultural_aura_system);
 
-        let pop_entity = app.world_mut().spawn((
-            Pop,
-            GridPosition { x: 5, y: 5 },
-            Morale::default(),
-        )).id();
+        let pop_entity = app
+            .world_mut()
+            .spawn((Pop, GridPosition { x: 5, y: 5 }, Morale::default()))
+            .id();
 
         app.world_mut().spawn((
             CulturalArtifact {
@@ -86,7 +85,10 @@ mod tests {
         app.update();
 
         let morale = app.world().get::<Morale>(pop_entity).unwrap();
-        assert!(morale.modifiers.iter().any(|m| m.label == "Victory Art Aura"));
+        assert!(morale
+            .modifiers
+            .iter()
+            .any(|m| m.label == "Victory Art Aura"));
     }
 
     #[test]
@@ -94,11 +96,10 @@ mod tests {
         let mut app = App::new();
         app.add_systems(Update, cultural_aura_system);
 
-        let pop_entity = app.world_mut().spawn((
-            Pop,
-            GridPosition { x: 5, y: 5 },
-            Morale::default(),
-        )).id();
+        let pop_entity = app
+            .world_mut()
+            .spawn((Pop, GridPosition { x: 5, y: 5 }, Morale::default()))
+            .id();
 
         app.world_mut().spawn((
             CulturalArtifact {
@@ -111,7 +112,10 @@ mod tests {
         app.update();
 
         let morale = app.world().get::<Morale>(pop_entity).unwrap();
-        assert!(morale.modifiers.iter().any(|m| m.label == "Tragedy Art Aura"));
+        assert!(morale
+            .modifiers
+            .iter()
+            .any(|m| m.label == "Tragedy Art Aura"));
     }
 
     #[test]
@@ -119,11 +123,10 @@ mod tests {
         let mut app = App::new();
         app.add_systems(Update, cultural_aura_system);
 
-        let pop_entity = app.world_mut().spawn((
-            Pop,
-            GridPosition { x: 15, y: 15 },
-            Morale::default(),
-        )).id();
+        let pop_entity = app
+            .world_mut()
+            .spawn((Pop, GridPosition { x: 15, y: 15 }, Morale::default()))
+            .id();
 
         app.world_mut().spawn((
             CulturalArtifact {
@@ -136,6 +139,9 @@ mod tests {
         app.update();
 
         let morale = app.world().get::<Morale>(pop_entity).unwrap();
-        assert!(!morale.modifiers.iter().any(|m| m.label == "Victory Art Aura"));
+        assert!(!morale
+            .modifiers
+            .iter()
+            .any(|m| m.label == "Victory Art Aura"));
     }
 }
