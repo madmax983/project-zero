@@ -515,3 +515,4 @@
 - [x] `244` Biometric Drift — `specs/244-biometric-drift.md` — completed 2026-05-05
 - [x] `INT-244` Integration: Biometric Drift -> Access Control — completed 2026-05-05
 - [x] `INT-635` Integration: Rogue Automation Cults -> Chronicle — completed 2026-05-05
+- [x] `632` Cultural Artifacts — `specs/632-cultural-artifacts.md` — completed 2026-02-01

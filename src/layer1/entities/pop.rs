@@ -1017,3 +1017,16 @@ mod security_tests {
         );
     }
 }
+
+#[derive(Component, Default, Debug, Clone)]
+pub struct Courage {
+    pub value: f32,
+}
+#[derive(Component, Default, Debug, Clone)]
+pub struct Caution {
+    pub value: f32,
+}
+#[derive(Component, Default, Debug, Clone)]
+pub struct Mood {
+    pub value: f32,
+}

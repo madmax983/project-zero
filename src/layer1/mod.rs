@@ -34,6 +34,7 @@ pub mod petrification;
 
 /// Generic entities mechanisms
 pub mod entities;
+#[allow(ambiguous_glob_reexports)]
 pub use entities::*;
 /// Architecture simulation mechanics
 pub mod architecture;
@@ -395,6 +396,7 @@ pub use physics::*;
 
 /// Nature mechanics
 pub mod nature;
+#[allow(ambiguous_glob_reexports)]
 pub use nature::*;
 /// Shipbreaking tools
 pub mod shipbreaking;
