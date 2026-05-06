@@ -54,8 +54,8 @@ use ratatui::prelude::*;
 pub use state::*;
 
 use crate::layer2::render::render_system_view;
-use crate::layer2::system::ViewMode;
 use crate::shared::state::GameState;
+use crate::shared::view_mode::ViewMode;
 use crate::ui::menu_state::MenuState;
 
 use self::map::render_map;

@@ -1,8 +1,8 @@
 use bevy::prelude::*;
 use scale::layer1::core::chronicle::{AddChronicleEvent, Chronicle, EventImportance};
-use scale::layer1::environment::impact::ImpactWarningEvent;
-use scale::layer1::core::map::GridPosition;
 use scale::layer1::core::integration::impact_warning_chronicle_bridge;
+use scale::layer1::core::map::GridPosition;
+use scale::layer1::environment::impact::ImpactWarningEvent;
 
 #[test]
 fn impact_warning_triggers_chronicle() {

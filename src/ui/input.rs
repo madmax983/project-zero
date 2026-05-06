@@ -5,10 +5,10 @@ use crate::layer1::{
     try_cancel_designation, try_designate_area, try_place_building, BuildMode, CameraTarget,
     ChronicleUiState, DesignationMode, DesignationType, GridPosition, Viewport,
 };
-use crate::layer2::system::ViewMode;
 use crate::shared::keyboard::{GameKeyCode, GameKeyEvent, GameMouseEvent};
 use crate::shared::state::GameState;
 use crate::shared::time::{SimSpeed, SimulationTime};
+use crate::shared::view_mode::ViewMode;
 use crate::ui::menu_state::MenuState;
 use crate::ui::selection::{handle_selection_click, screen_to_world, Selection};
 use crate::ui::shell::plugins::{SharedWorld, COLONY_MAP_PLUGIN_TYPE, SYSTEM_MAP_PLUGIN_TYPE};

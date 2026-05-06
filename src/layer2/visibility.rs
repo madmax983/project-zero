@@ -1,6 +1,6 @@
 use crate::layer1::building::{Building, BuildingType};
 use crate::layer1::energy::PowerConsumer;
-use crate::layer2::system::ViewMode;
+use crate::shared::view_mode::ViewMode;
 use bevy_ecs::prelude::*;
 
 /// Defines the visibility state of the system view (Layer 2).
@@ -50,7 +50,7 @@ mod tests {
     use super::*;
     use crate::layer1::building::{Building, BuildingType};
     use crate::layer1::energy::PowerConsumer;
-    use crate::layer2::system::ViewMode;
+    use crate::shared::view_mode::ViewMode;
 
     #[test]
     fn test_visibility_defaults_to_none() {
