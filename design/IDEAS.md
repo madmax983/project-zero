@@ -18863,3 +18863,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you expend massive resources to maintain a facade of divinity for cultural prestige, or ignore them and risk creating your own worst enemy?
 
 ---
+
+## The Scapegoat
+
+**Layer:** 1
+
+**Fantasy:** The darkest aspect of human nature: finding someone to blame when things go wrong, even if it makes no logical sense.
+
+**Mechanic:** When a disaster (famine, plague, massive raid) hits the colony, Pops look for someone to blame. The Utility AI will select a Pop with low social standing, a minority trait, or who recently failed a job task, assigning them the "Scapegoat" status. The entire colony gains a temporary, massive morale boost from unified hatred, but the Scapegoat is shunned, attacked, or exiled.
+
+**Emergence:** Your most brilliant but abrasive scientist accidentally fails a low-priority repair task right as a famine hits. The colony collectively blames the famine on the scientist, driving them into exile. The colony's morale stabilizes, but you lose your only chance of researching the tech needed to fix the underlying agricultural issue.
+
+**Tension:** Do you allow the unjust persecution of an innocent Pop to instantly stabilize colony-wide panic, or do you protect the Scapegoat and risk a full-blown mutiny from the terrified masses?
+
+---
+
+## Hyperlane Monopolies
+
+**Layer:** 3 -> 2
+
+**Fantasy:** Owning the only bridge across a massive river, and charging whatever you want for the crossing.
+
+**Mechanic:** By constructing massive "Hyperlane Gateways" at critical choke points in the Layer 3 map, your empire can claim ownership of that specific transit route. You can set "Tolls" for any foreign fleets passing through. High tolls generate massive passive income but heavily degrade diplomatic relations with civilizations that rely on the route.
+
+**Emergence:** You intentionally conquer a strategically useless, barren system solely because it connects two massive rival empires. You build a Gateway and set the toll to maximum. You become fabulously wealthy without producing a single resource, but eventually, the two rival empires form an unprecedented alliance just to destroy your monopoly.
+
+**Tension:** How hard do you squeeze the galaxy's economy before they unite to crush your toll booth?
+
+---
+
+## The Museum of the Present
+
+**Layer:** 1
+
+**Fantasy:** A society so obsessed with its own impending doom that it stops living and only records.
+
+**Mechanic:** If a colony faces a seemingly insurmountable, slow-moving threat (e.g., an unstoppable approaching Leviathan, incurable planetary blight), the Pops may form the "Archivist Cult". They abandon their survival jobs and begin frantically constructing "Museums" and "Time Capsules," pouring all remaining resources into beautifully documenting their own failure rather than trying to prevent it.
+
+**Emergence:** You are slowly losing a war of attrition. Instead of building more ammunition, your workers strike and demand you build a massive, indestructible granite monument detailing exactly *how* you lost the war, ensuring that whoever finds the ruins knows it wasn't their fault.
+
+**Tension:** Do you violently force the Pops back to the hopeless survival effort, or allow them the grim comfort of ensuring they are perfectly remembered?
+
+---
