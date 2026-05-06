@@ -18,7 +18,7 @@
 //! *   [`Building`]: The marker component containing the [`BuildingType`].
 //! *   [`GridPosition`](crate::layer1::map::GridPosition): Its location on the map.
 //! *   [`crate::layer1::structure::Structure`]: Health and durability.
-//! *   Specific Logic Components: e.g., [`Housing`](crate::layer1::housing::Housing), [`Farm`](crate::layer1::farm::Farm), [`Stockpile`](crate::layer1::stockpile::Stockpile).
+//! *   Specific Logic Components: e.g., [`Housing`], [`crate::layer1::agriculture::farm::Farm`], [`crate::layer1::economy::stockpile::Stockpile`].
 
 use super::housing::Housing;
 use crate::layer1::access_control::AccessControl;
@@ -2056,7 +2056,7 @@ fn configure_tech(entity: &mut EntityWorldMut, building_type: BuildingType) {
 ///
 /// This will:
 /// 1. Check `can_place_building` (bounds, terrain, occupation).
-/// 2. Spawn a building entity with the correct components (e.g., [`Housing`](crate::layer1::housing::Housing) or [`Farm`](crate::layer1::farm::Farm)).
+/// 2. Spawn a building entity with the correct components (e.g., [`Housing`] or [`crate::layer1::agriculture::farm::Farm`]).
 /// 3. Mark the tile as occupied in `OccupiedTiles`.
 ///
 /// # Examples

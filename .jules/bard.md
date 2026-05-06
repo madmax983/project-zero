@@ -50,3 +50,7 @@
 ## 2024-05-24 - The Undocumented Predecessors
 **Confusion:** The `layer1/predecessors` module was completely missing module-level documentation and docstrings, leaving users in the dark about how to spawn ruins or what triggers them.
 **Clarification:** Added conceptual `//!` module documentation explaining "The Echoes of the Ancients" and added executable `# Examples` doctests to `PredecessorRuin` and trigger systems.
+
+## 2024-05-24 - Undocumented "Radio Nostalgia"
+**Confusion:** The `layer1/radio_nostalgia` module was missing module-level documentation (`//!`) and executable examples for handling broadcasts, leaving users confused about how deep space broadcasts affect morale.
+**Clarification:** Added module-level documentation and an executable doc-test for `handle_broadcasts_system` showing how to trigger and test morale changes.

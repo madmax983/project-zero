@@ -1,3 +1,8 @@
+//! The "Radio Nostalgia" Module
+//!
+//! The `radio_nostalgia` module governs the effects of deep space broadcasts
+//! on the morale of the colony. It handles the reception of news (both real and fabricated)
+//! and the consequences of censorship when propaganda is eventually exposed.
 use crate::layer1::chronicle::{AddChronicleEvent, EventImportance};
 use crate::layer1::edicts::{ColonyPolicies, Policy};
 use crate::layer1::social::morale::{MoodModifier, Morale};
@@ -16,6 +21,37 @@ pub struct BroadcastReceivedEvent {
     pub broadcast_type: BroadcastType,
 }
 
+/// Handles incoming deep space broadcasts and their effects on morale.
+///
+/// # Examples
+///
+/// ```
+/// use bevy_ecs::prelude::*;
+/// use scale::layer1::radio_nostalgia::{BroadcastReceivedEvent, BroadcastType, handle_broadcasts_system};
+/// use scale::layer1::social::morale::Morale;
+/// use scale::layer1::edicts::ColonyPolicies;
+/// use scale::layer1::chronicle::AddChronicleEvent;
+///
+/// let mut app = bevy_app::App::new();
+/// app.init_resource::<Events<BroadcastReceivedEvent>>();
+/// app.init_resource::<Events<AddChronicleEvent>>();
+/// app.init_resource::<ColonyPolicies>();
+///
+/// app.add_systems(bevy_app::Update, handle_broadcasts_system);
+///
+/// let pop_entity = app.world_mut().spawn(Morale::default()).id();
+/// let colony_entity = app.world_mut().spawn_empty().id();
+///
+/// app.world_mut().resource_mut::<Events<BroadcastReceivedEvent>>().send(BroadcastReceivedEvent {
+///     colony: colony_entity,
+///     broadcast_type: BroadcastType::Victory,
+/// });
+///
+/// app.update();
+///
+/// let morale = app.world().get::<Morale>(pop_entity).unwrap();
+/// assert!(!morale.modifiers.is_empty());
+/// ```
 pub fn handle_broadcasts_system(
     mut events: EventReader<BroadcastReceivedEvent>,
     mut morale_query: Query<&mut Morale>,
