@@ -7959,3 +7959,61 @@ What the gas does to the colony.
 - Down with the Core!
 - The tools belong to us!
 - Open the sealed doors!
+
+## Fragment Type: [DETRITUS_TYPE]
+
+- ruined plating
+- shattered glass
+- forgotten tools
+- organic waste
+- unidentifiable sludge
+- twisted wire
+
+## Fragment Type: [EMBASSY_FACTION]
+
+- the neighboring sector
+- the core worlds
+- the outer rim
+- a forgotten alliance
+- the merchant guild
+- the silent watchers
+
+## Fragment Type: [PSYCHIC_ECHO]
+
+- a brief memory of someone else's grief
+- a phantom scent of burning metal
+- an overwhelming sense of dread
+- a chorus of unheard whispers
+- an irrational wave of nostalgia
+
+## Fragment Type: [DEBT_TERMS]
+
+- lifetime indentured servitude
+- generational labor contracts
+- forced asset seizure
+- mandatory conscription
+- extraction of organic materials
+
+## Fragment Type: [WARD_DEFENSE]
+
+- an energy shield
+- automated turrets
+- a localized jammer
+- a bio-metric lockout
+- an armed patrol
+
+## Fragment Type: [QUANTUM_ANOMALY]
+
+- a crop that harvested itself yesterday
+- food that tastes like static
+- granaries that are both full and empty
+- a sudden probability shift
+- an echo of a meal never eaten
+
+## Fragment Type: [MAP_ERROR]
+
+- a star system that doesn't exist
+- a hyperlane that loops back on itself
+- a planet that moves when observed
+- a blank space where a star should be
+- a coordinate that leads to nowhere

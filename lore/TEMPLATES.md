@@ -7341,3 +7341,66 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 **Patterns:**
 - "[YEAR]: Thousands gathered in the square, chanting '[PROTEST_CHANT]'."
 - "The workers laid down their tools. Their cry: '[PROTEST_CHANT]'."
+
+## Template: CLUTTER_CRITICAL
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [DETRITUS_TYPE]
+
+**Patterns:**
+- "[YEAR]: The halls of [COLONY] are choked with [DETRITUS_TYPE]. Movement is slowing."
+- "[COLONY] is drowning in [DETRITUS_TYPE]. The Janitors cannot keep up."
+
+## Template: EMBASSY_ESTABLISHED
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [EMBASSY_FACTION]
+
+**Patterns:**
+- "[YEAR]: We broke ground on the embassy for [EMBASSY_FACTION]. They are watching."
+- "The delegation from [EMBASSY_FACTION] arrived in [COLONY] today."
+
+## Template: PSYCHIC_STAIN_FORMED
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [PSYCHIC_ECHO]
+
+**Patterns:**
+- "[YEAR]: A trauma event in Sector 4 left a stain. People report [PSYCHIC_ECHO]."
+- "The air in [COLONY] feels heavy. Some experience [PSYCHIC_ECHO] passing the old reactor."
+
+## Template: DEBT_TRAP_ACTIVATED
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [DEBT_TERMS]
+
+**Patterns:**
+- "[YEAR]: The interest compounded. The Megastructure demands [DEBT_TERMS]."
+- "The price of the structure is steeper than credits. It now requires [DEBT_TERMS]."
+
+## Template: WARD_SEALED
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [WARD_DEFENSE]
+
+**Patterns:**
+- "[YEAR]: Diplomatic Sector locked down. They activated [WARD_DEFENSE]."
+- "The ambassadors do not trust us. [WARD_DEFENSE] was engaged around their ward."
+
+## Template: QUANTUM_FAMINE_STARTS
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [QUANTUM_ANOMALY]
+
+**Patterns:**
+- "[YEAR]: The starvation isn't physical. It's a localized anomaly causing [QUANTUM_ANOMALY]."
+- "A probability collapse in the food supply. We're seeing [QUANTUM_ANOMALY]."
+
+## Template: MAP_CONTRADICTION
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [MAP_ERROR]
+
+**Patterns:**
+- "[YEAR]: The Cartographer returned with maddening charts, showing [MAP_ERROR]."
+- "Navigation failed. The new maps display [MAP_ERROR]. We are blind."
