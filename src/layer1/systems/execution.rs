@@ -208,9 +208,10 @@ pub fn register(schedule: &mut Schedule) {
 
     schedule.add_systems(
         (
-                        conveyor_system.after(haul_system),
+            conveyor_system.after(haul_system),
             crate::layer1::logistics::conveyor::inserter_system.after(conveyor_system),
-            crate::layer1::logistics::conveyor::hopper_system.after(crate::layer1::logistics::conveyor::inserter_system),
+            crate::layer1::logistics::conveyor::hopper_system
+                .after(crate::layer1::logistics::conveyor::inserter_system),
             crate::layer1::logistics::pneumatic::tube_network_system.after(haul_system),
             crate::layer1::logistics::pneumatic::tube_transport_system
                 .after(crate::layer1::logistics::pneumatic::tube_network_system),

@@ -40,8 +40,9 @@ impl NarrativeError {
         };
 
         let mut table = Table::new();
-        table.load_preset(UTF8_FULL)
-             .apply_modifier(comfy_table::modifiers::UTF8_ROUND_CORNERS);
+        table
+            .load_preset(UTF8_FULL)
+            .apply_modifier(comfy_table::modifiers::UTF8_ROUND_CORNERS);
 
         let header_title = match self {
             Self::DirectoryNotFound(_) | Self::NoLoreFiles(_) | Self::IoError(_, _) => {
