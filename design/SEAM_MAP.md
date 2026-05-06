@@ -908,3 +908,21 @@
 - **Systems connected:** `BiometricProfile` (Biometric Drift) -> `check_access` / `is_walkable` (Access Control / Pathfinding)
 - **Glue added:** Added `check_security_clearance` checks inside `check_access` and `is_walkable`.
 - **Tests:** `tests/integration/biometric_access_bridge.rs`
+
+### INT-687: Ghost Shift -> Chronicle
+- **Date:** 2026-06-25
+- **Systems connected:** `GhostShiftStartedEvent` -> `ghost_shift_chronicle_bridge` -> `AddChronicleEvent`
+- **Glue added:** `ghost_shift_chronicle_bridge` in `src/layer1/core/integration.rs`
+- **Tests:** `tests/integration/ghost_shift_chronicle.rs`
+
+### INT-668: Impact Warning -> Chronicle
+- **Date:** 2026-06-25
+- **Systems connected:** `ImpactWarningEvent` -> `impact_warning_chronicle_bridge` -> `AddChronicleEvent`
+- **Glue added:** `impact_warning_chronicle_bridge` in `src/layer1/core/integration.rs`
+- **Tests:** `tests/integration/impact_warning_chronicle.rs`
+
+### INT-764: Diplomatic Incident -> Chronicle
+- **Date:** 2026-06-25
+- **Systems connected:** `DiplomaticIncidentEvent` -> `diplomatic_incident_chronicle_bridge` -> `AddChronicleEvent`
+- **Glue added:** `diplomatic_incident_chronicle_bridge` in `src/layer1/core/integration.rs`
+- **Tests:** `tests/integration/diplomatic_incident_chronicle.rs`

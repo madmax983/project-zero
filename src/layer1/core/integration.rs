@@ -1927,3 +1927,57 @@ pub fn rogue_cult_chronicle_bridge(
         });
     }
 }
+
+/// INT-687: Bridges GhostShiftStartedEvent to AddChronicleEvent (Chronicle).
+pub fn ghost_shift_chronicle_bridge(
+    mut events: bevy_ecs::prelude::EventReader<
+        crate::layer1::social::ghost_shift_strike::GhostShiftStartedEvent,
+    >,
+    mut chronicle_events: bevy_ecs::prelude::EventWriter<
+        crate::layer1::core::chronicle::AddChronicleEvent,
+    >,
+) {
+    for _event in events.read() {
+        chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
+            importance: crate::layer1::core::chronicle::EventImportance::Major,
+            text: "A subtle Ghost-Shift strike has been detected!".to_string(),
+        });
+    }
+}
+
+/// INT-668: Bridges ImpactWarningEvent to AddChronicleEvent (Chronicle).
+pub fn impact_warning_chronicle_bridge(
+    mut events: bevy_ecs::prelude::EventReader<
+        crate::layer1::environment::impact::ImpactWarningEvent,
+    >,
+    mut chronicle_events: bevy_ecs::prelude::EventWriter<
+        crate::layer1::core::chronicle::AddChronicleEvent,
+    >,
+) {
+    for event in events.read() {
+        chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
+            importance: crate::layer1::core::chronicle::EventImportance::Major,
+            text: format!(
+                "Impact Warning: Projectile inbound at {}, {}, ETA: {} ticks.",
+                event.target_pos.x, event.target_pos.y, event.ticks_remaining
+            ),
+        });
+    }
+}
+
+/// INT-764: Bridges DiplomaticIncidentEvent to AddChronicleEvent (Chronicle).
+pub fn diplomatic_incident_chronicle_bridge(
+    mut events: bevy_ecs::prelude::EventReader<
+        crate::layer1::law::embassy::DiplomaticIncidentEvent,
+    >,
+    mut chronicle_events: bevy_ecs::prelude::EventWriter<
+        crate::layer1::core::chronicle::AddChronicleEvent,
+    >,
+) {
+    for event in events.read() {
+        chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
+            importance: crate::layer1::core::chronicle::EventImportance::Major,
+            text: format!("Diplomatic Incident: {}", event.reason),
+        });
+    }
+}
