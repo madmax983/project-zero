@@ -40,7 +40,8 @@ impl NarrativeError {
         };
 
         let mut table = Table::new();
-        table.load_preset(UTF8_FULL);
+        table.load_preset(UTF8_FULL)
+             .apply_modifier(comfy_table::modifiers::UTF8_ROUND_CORNERS);
 
         let header_title = match self {
             Self::DirectoryNotFound(_) | Self::NoLoreFiles(_) | Self::IoError(_, _) => {
@@ -51,8 +52,7 @@ impl NarrativeError {
 
         table.set_header(vec![comfy_table::Cell::new(header_title)
             .add_attribute(comfy_table::Attribute::Bold)
-            .fg(TableColor::White)
-            .bg(TableColor::Red)]);
+            .fg(TableColor::Red)]);
 
         table.add_row(vec![Cell::new(&error_msg).fg(TableColor::White)]);
         table.add_row(vec![Cell::new(action_msg).fg(TableColor::Yellow)]);
