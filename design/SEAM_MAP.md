@@ -926,3 +926,9 @@
 - **Systems connected:** `DiplomaticIncidentEvent` -> `diplomatic_incident_chronicle_bridge` -> `AddChronicleEvent`
 - **Glue added:** `diplomatic_incident_chronicle_bridge` in `src/layer1/core/integration.rs`
 - **Tests:** `tests/integration/diplomatic_incident_chronicle.rs`
+
+### INT-631: Conveyor Logistics -> Pathfinding
+- **Date:** 2026-10-31
+- **Systems connected:** `ConveyorBelt` -> `is_walkable` (Pathfinding)
+- **Glue added:** Updated `is_walkable` logic in `src/layer1/pathfinding.rs` to query `crate::layer1::logistics::conveyor::ConveyorBelt` component and ensure standard conveyors block movement while underground variants don't.
+- **Tests:** `tests/integration/conveyor_pathfinding_bridge.rs` (2 tests)
