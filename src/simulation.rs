@@ -334,6 +334,9 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
         crate::layer1::biology::cybernetic_ascendancy::cybernetic_mind_merge_system.after(
             crate::layer1::biology::cybernetic_ascendancy::update_colony_average_utility_system,
         ),
+        crate::layer1::core::integration::cybernetic_integration_chronicle_bridge.after(
+            crate::layer1::biology::cybernetic_ascendancy::cybernetic_integration_system,
+        ),
     ));
     // --- AI Decision Chain (GPU compute) ---
     schedule.add_systems((

@@ -1856,6 +1856,26 @@ pub fn society_suspicion_bridge_system(
     }
 }
 
+/// Bridges the `CyberneticIntegration` component to `AddChronicleEvent`
+pub fn cybernetic_integration_chronicle_bridge(
+    query: bevy_ecs::system::Query<
+        (bevy_ecs::entity::Entity, &crate::layer1::pop::PopName, &crate::layer1::biology::cybernetic_ascendancy::CyberneticIntegration),
+        bevy_ecs::query::Changed<crate::layer1::biology::cybernetic_ascendancy::CyberneticIntegration>,
+    >,
+    mut chronicle_events: bevy_ecs::event::EventWriter<crate::layer1::core::chronicle::AddChronicleEvent>,
+    mut notified_pops: bevy_ecs::system::Local<bevy::utils::HashSet<bevy_ecs::entity::Entity>>,
+) {
+    for (entity, name, integration) in query.iter() {
+        if integration.integration_level >= 1.0 && !notified_pops.contains(&entity) {
+            chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
+                text: format!("{} has achieved complete Cybernetic Integration.", name.0),
+                importance: crate::layer1::core::chronicle::EventImportance::Major,
+            });
+            notified_pops.insert(entity);
+        }
+    }
+}
+
 /// INT-661: Bridges Secret Societies -> Justice/Chronicle
 /// When a SecretSocietyMember is arrested (gets Inmate component), the society is uncovered and disbanded.
 pub fn secret_society_discovery_bridge_system(

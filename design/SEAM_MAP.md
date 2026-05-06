@@ -908,3 +908,9 @@
 - **Systems connected:** `BiometricProfile` (Biometric Drift) -> `check_access` / `is_walkable` (Access Control / Pathfinding)
 - **Glue added:** Added `check_security_clearance` checks inside `check_access` and `is_walkable`.
 - **Tests:** `tests/integration/biometric_access_bridge.rs`
+
+### INT-622: Bio-Digital Ascendancy -> Chronicle
+- **Date:** 2026-06-25
+- **Systems connected:** `CyberneticIntegration` -> `cybernetic_integration_chronicle_bridge` -> `AddChronicleEvent`
+- **Glue added:** Added `cybernetic_integration_chronicle_bridge` in `src/layer1/core/integration.rs` to generate a `Major` chronicle event when a pop achieves complete Cybernetic Integration (integration_level >= 1.0). Registered the system in `src/simulation.rs`.
+- **Tests:** `tests/integration/cybernetic_integration.rs`
