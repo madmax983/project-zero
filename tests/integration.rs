@@ -191,6 +191,8 @@ mod light_pollution_fauna;
 #[path = "integration/waste_scent.rs"]
 mod waste_scent;
 pub mod integration {
+    #[path = "conveyor_pathfinding_bridge.rs"]
+    pub mod conveyor_pathfinding_bridge;
     pub mod sonic_suppression_bridge;
     pub mod spiteful_will_chronicle;
     #[path = "the_silent_generation_bridge.rs"]

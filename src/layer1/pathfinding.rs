@@ -422,13 +422,14 @@ fn is_walkable(
             }
 
             if building.building_type == BuildingType::ConveyorBelt {
-                if let Some(conveyor) = world.get::<crate::layer1::logistics::ConveyorBelt>(entity)
-                {
+                if let Some(conveyor) = world.get::<crate::layer1::logistics::conveyor::ConveyorBelt>(entity) {
                     if conveyor.blocks_pathfinding() {
                         return false;
-                    } else {
-                        // Keep checking next conditions
                     }
+                } else {
+                    // Fallback if the component is missing but it's a conveyor building.
+                    // A standard conveyor blocks pathfinding by default.
+                    return false;
                 }
             } else if building.building_type.is_obstacle() {
                 return false;
