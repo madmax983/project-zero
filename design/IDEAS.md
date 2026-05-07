@@ -18919,7 +18919,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Reverse Quarantine
+## Reverse Quarantine [SPECCED]
 
 **Layer:** Cross-layer
 
