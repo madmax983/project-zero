@@ -647,6 +647,7 @@ mod tests {
         world.init_resource::<crate::layer3::digital_detritus::JunkDataFilter>();
         world.init_resource::<crate::layer1::culture::gastronomers::EmpireAdvancement>();
         world.init_resource::<bevy_ecs::event::Events<crate::layer1::culture::gastronomers::CulinarySingularityEvent>>();
+        world.init_resource::<bevy_ecs::event::Events<crate::layer1::petrification::PopPetrifiedEvent>>();
         world.init_resource::<Events<crate::layer1::predecessors::WorldTriggerEvent>>();
         *world.resource_mut::<GameState>() = GameState::Running;
 
@@ -855,6 +856,7 @@ mod tests {
         world.init_resource::<crate::layer3::digital_detritus::JunkDataFilter>();
         world.init_resource::<crate::layer1::culture::gastronomers::EmpireAdvancement>();
         world.init_resource::<bevy_ecs::event::Events<crate::layer1::culture::gastronomers::CulinarySingularityEvent>>();
+        world.init_resource::<bevy_ecs::event::Events<crate::layer1::petrification::PopPetrifiedEvent>>();
         world.init_resource::<Events<crate::layer1::predecessors::WorldTriggerEvent>>();
 
         let schedule = build_simulation_schedule();

@@ -3,6 +3,7 @@
 use crate::layer1::balance::TICKS_PER_YEAR;
 use crate::layer1::core::chronicle::{AddChronicleEvent, EventImportance};
 use crate::layer1::core::map::GridPosition;
+use crate::layer1::petrification::PopPetrifiedEvent;
 use crate::layer1::cybernetics::MissingLimb;
 use crate::layer1::edicts::{ColonyPolicies, Policy};
 use crate::layer1::environment::hazards::AmputationEvent;
@@ -44,6 +45,22 @@ pub fn mass_driver_chronicle_bridge(
             text: format!(
                 "Kinetic Bombardment! Mass driver payload struck colony {:?} with {} energy.",
                 event.target, event.kinetic_energy
+            ),
+            importance: EventImportance::Major,
+        });
+    }
+}
+
+/// Bridges `PopPetrifiedEvent` (Petrification Sickness) to `AddChronicleEvent` (Chronicle).
+pub fn petrification_chronicle_bridge(
+    mut events: EventReader<PopPetrifiedEvent>,
+    mut chronicle_events: EventWriter<AddChronicleEvent>,
+) {
+    for ev in events.read() {
+        chronicle_events.send(AddChronicleEvent {
+            text: format!(
+                "A colonist has fully petrified. {} now stands as a morbid monument to our greed.",
+                ev.pop_name
             ),
             importance: EventImportance::Major,
         });
