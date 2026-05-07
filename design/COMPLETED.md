@@ -9,6 +9,7 @@
 - [x] `765` Diplomatic Wards — `specs/765-diplomatic-wards.md` — completed 2026-04-02
 - [x] `775` The Quantum Famine — `specs/775-the-quantum-famine.md` — completed 2026-03-20
 - [x] `626` The Cartographer's Curse — `specs/626-cartographers-curse.md` — completed 2026-03-24
+- [x] `1086` The Heirloom Tool — `specs/1086-the-heirloom-tool.md` — completed 2026-02-01
 # Completed Specs
 - [x] `1107` Astrological Beliefs — `specs/1107-astrological-beliefs.md` — completed 2026-07-02
 - [x] `1108` The Rearguard — `specs/1108-the-rearguard.md` — completed 2026-07-01

@@ -289,4 +289,12 @@ pub fn register(schedule: &mut Schedule) {
         )
             .in_set(Layer1SystemSet::Execution),
     );
+
+    schedule.add_systems(
+        (
+            crate::layer1::heirloom_tool::process_pop_death_for_heirloom,
+            crate::layer1::heirloom_tool::process_heirloom_equip,
+        )
+            .in_set(Layer1SystemSet::Execution),
+    );
 }
