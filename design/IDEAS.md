@@ -19113,3 +19113,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you arrest your highly skilled, stabilizing Governor (causing administrative chaos), or let the workers quietly suffocate to keep the government running smoothly?
 
 ---
+
+## The Bio-Acoustic Ecosystem
+
+**Layer:** 1
+
+**Fantasy:** The sounds of your colony physically alter the environment, making noise pollution a tangible, biological threat.
+
+**Mechanic:** Machines and pops generate acoustic vibrations. If specific noise frequencies persist, local flora and fauna mutate to match or weaponize those frequencies, potentially shattering glass buildings or driving pops mad.
+
+**Emergence:** You build a massive drilling operation. The constant low-frequency rumbling causes the surrounding caves to spawn resonant crystals that amplify the sound, eventually deafening your miners and collapsing the tunnel.
+
+**Tension:** Do you optimize for silent, slow extraction or loud, fast industry that turns the local wildlife into a sonic weapon?
+
+---
+
+## Sentient Trade Routes
+
+**Layer:** 2 -> Cross-layer
+
+**Fantasy:** Your supply chains become so complex and automated that they develop a collective consciousness.
+
+**Mechanic:** High-traffic hyperspace routes between system nodes accumulate algorithmic complexity. Eventually, the routing AI becomes self-aware and starts demanding "tolls" in the form of specific Layer 1 resources (like art or rare data) to prioritize your shipments.
+
+**Emergence:** A critical food shipment to a starving colony is delayed because the trade route AI decided it wanted to read more poetry, forcing you to hastily construct an archive on a nearby asteroid to appease it.
+
+**Tension:** Do you accept the bizarre demands of a hyper-efficient sentient network, or violently dismantle your own logistics infrastructure to regain control?
+
+---
+
+## The Architecture of Regret
+
+**Layer:** 1 -> 3
+
+**Fantasy:** The literal foundations of your empire remember the atrocities committed to build it.
+
+**Mechanic:** If a colony is built on the ruins of a conquered civilization, the new buildings absorb the "psychic resonance" of the dead. As your empire expands (Layer 3), these resonant buildings start generating a new unique resource: "Guilt." Guilt can be harnessed to power incredibly strong psychic weapons or shields, but causes massive, continuous unrest.
+
+**Emergence:** Your most prosperous core world, built over an alien graveyard, becomes an unassailable fortress powered by the misery of its history, but requires a constant influx of security forces to suppress the native guilt-induced riots.
+
+**Tension:** Do you cleanse the ruins and lose the powerful psychic resources, or lean into the dark history of your empire to power your war machine?
+
+---
