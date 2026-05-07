@@ -222,6 +222,8 @@ pub use pheromone::*;
 
 /// Heirloom tech system (Spec 070).
 pub mod heirloom;
+pub mod heirloom_tool;
+pub use heirloom_tool::*;
 pub use heirloom::*;
 
 mod heirloom_items_tests;
