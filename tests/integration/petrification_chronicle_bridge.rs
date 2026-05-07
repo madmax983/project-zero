@@ -1,10 +1,10 @@
+use bevy::prelude::*;
 use scale::layer1::core::chronicle::AddChronicleEvent;
+use scale::layer1::core::integration::petrification_chronicle_bridge;
 use scale::layer1::petrification::{
     petrification_transformation_system, PetrificationSickness, PopPetrifiedEvent,
 };
 use scale::layer1::pop::{Pop, PopName};
-use scale::layer1::core::integration::petrification_chronicle_bridge;
-use bevy::prelude::*;
 
 #[test]
 fn test_petrification_chronicle_event() {
@@ -16,7 +16,8 @@ fn test_petrification_chronicle_event() {
         (
             petrification_transformation_system,
             petrification_chronicle_bridge,
-        ).chain(),
+        )
+            .chain(),
     );
 
     let _pop = app

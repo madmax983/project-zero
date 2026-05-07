@@ -3,7 +3,6 @@
 use crate::layer1::balance::TICKS_PER_YEAR;
 use crate::layer1::core::chronicle::{AddChronicleEvent, EventImportance};
 use crate::layer1::core::map::GridPosition;
-use crate::layer1::petrification::PopPetrifiedEvent;
 use crate::layer1::cybernetics::MissingLimb;
 use crate::layer1::edicts::{ColonyPolicies, Policy};
 use crate::layer1::environment::hazards::AmputationEvent;
@@ -16,6 +15,7 @@ use crate::layer1::medical::PatientTreated;
 use crate::layer1::memory::{Memories, MemoryType};
 use crate::layer1::needs::Needs;
 use crate::layer1::notifications::NotificationQueue;
+use crate::layer1::petrification::PopPetrifiedEvent;
 use crate::layer1::pop::{Pop, PopBorn, PopDied, PopName};
 use crate::layer1::resources::ColonyResources;
 use crate::layer1::rumor::{Knowledge, Rumor, RumorTopic};

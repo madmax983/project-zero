@@ -721,7 +721,7 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1083` Kinetic Excavation — `specs/1083-kinetic-excavation.md`
 - [ ] `1085` The Resource Curse — `specs/1085-the-resource-curse.md`
 - [ ] `1086` The Heirloom Tool — `specs/1086-the-heirloom-tool.md`
-- [ ] `1087` Embezzlement Architecture — `specs/1087-embezzlement-architecture.md`
+
 - [ ] `1088` The Apex Predator Diet — `specs/1088-the-apex-predator-diet.md`
 - [ ] `1089` Nanite Storms — `specs/1089-nanite-storms.md`
 - [ ] `1090` Mycelial Tripwires — `specs/1090-mycelial-tripwires.md`

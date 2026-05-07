@@ -476,7 +476,9 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     world.init_resource::<crate::layer1::tech::machine_awakening::GlobalSentience>();
     world.init_resource::<crate::layer1::culture::gastronomers::EmpireAdvancement>();
     world.init_resource::<bevy_ecs::event::Events<crate::layer1::culture::gastronomers::CulinarySingularityEvent>>();
-    world.init_resource::<bevy_ecs::event::Events<crate::layer1::petrification::PopPetrifiedEvent>>();
+    world
+        .init_resource::<bevy_ecs::event::Events<crate::layer1::petrification::PopPetrifiedEvent>>(
+        );
     world.init_resource::<bevy_ecs::event::Events<crate::layer2::bombardment::BombardmentEvent>>();
     #[cfg(feature = "nova")]
     world.init_resource::<crate::layer1::machine_consciousness::ConsciousnessConfig>();

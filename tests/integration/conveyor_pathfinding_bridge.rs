@@ -1,8 +1,10 @@
 use bevy::prelude::*;
-use scale::layer1::architecture::building::{Building, BuildingMap, BuildingType, OccupiedTiles, Direction};
+use scale::layer1::architecture::building::{
+    Building, BuildingMap, BuildingType, Direction, OccupiedTiles,
+};
 use scale::layer1::core::map::GridPosition;
 use scale::layer1::logistics::conveyor::{BeltVariant, ConveyorBelt};
-use scale::layer1::pathfinding::{find_path};
+use scale::layer1::pathfinding::find_path;
 use scale::layer1::terrain::{TerrainGrid, TerrainType};
 
 fn setup_app() -> App {
@@ -28,12 +30,19 @@ fn test_standard_conveyor_blocks_pathfinding() {
 
     // Block entire column x=1 except y=1
     for y in 0..10 {
-        if y == 1 { continue; }
+        if y == 1 {
+            continue;
+        }
         app.world_mut().spawn((
             GridPosition { x: 1, y },
-            Building { building_type: BuildingType::Wall },
+            Building {
+                building_type: BuildingType::Wall,
+            },
         ));
-        app.world_mut().resource_mut::<OccupiedTiles>().0.insert((1, y));
+        app.world_mut()
+            .resource_mut::<OccupiedTiles>()
+            .0
+            .insert((1, y));
     }
     app.world_mut().spawn((
         GridPosition { x: 1, y: 1 },
@@ -47,7 +56,10 @@ fn test_standard_conveyor_blocks_pathfinding() {
         },
     ));
 
-    app.world_mut().resource_mut::<OccupiedTiles>().0.insert((1, 1));
+    app.world_mut()
+        .resource_mut::<OccupiedTiles>()
+        .0
+        .insert((1, 1));
     app.update();
 
     let path = find_path(app.world(), (0, 1), (2, 1));
@@ -60,12 +72,19 @@ fn test_underground_conveyor_allows_pathfinding() {
 
     // Block entire column x=1 except y=1
     for y in 0..10 {
-        if y == 1 { continue; }
+        if y == 1 {
+            continue;
+        }
         app.world_mut().spawn((
             GridPosition { x: 1, y },
-            Building { building_type: BuildingType::Wall },
+            Building {
+                building_type: BuildingType::Wall,
+            },
         ));
-        app.world_mut().resource_mut::<OccupiedTiles>().0.insert((1, y));
+        app.world_mut()
+            .resource_mut::<OccupiedTiles>()
+            .0
+            .insert((1, y));
     }
     app.world_mut().spawn((
         GridPosition { x: 1, y: 1 },
@@ -79,9 +98,15 @@ fn test_underground_conveyor_allows_pathfinding() {
         },
     ));
 
-    app.world_mut().resource_mut::<OccupiedTiles>().0.insert((1, 1));
+    app.world_mut()
+        .resource_mut::<OccupiedTiles>()
+        .0
+        .insert((1, 1));
     app.update();
 
     let path = find_path(app.world(), (0, 1), (2, 1));
-    assert!(path.is_some(), "Underground conveyor must allow pathfinding");
+    assert!(
+        path.is_some(),
+        "Underground conveyor must allow pathfinding"
+    );
 }
