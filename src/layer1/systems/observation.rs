@@ -324,7 +324,9 @@ pub fn register(schedule: &mut Schedule) {
             chronicle_event_handler_system.after(check_milestones_system),
             crate::layer1::festivals::check_for_festivals_system
                 .after(chronicle_event_handler_system),
-            crate::layer1::festivals::festival_lifecycle_system
+            crate::layer1::festivals::festival_lifecycle_system,
+            crate::layer1::culture::nostalgia_plague::nostalgia_trigger_system,
+            crate::layer1::culture::nostalgia_plague::nostalgia_spread_system
                 .after(chronicle_event_handler_system),
             chronicle_rumor_bridge_system.after(check_milestones_system),
             #[cfg(feature = "nova")]

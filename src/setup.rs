@@ -392,6 +392,7 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     world.init_resource::<Events<crate::layer2::moon_hermits::PopDesertedEvent>>();
     world.init_resource::<Events<crate::layer1::social::gossip_economy::GossipEvent>>();
     world.init_resource::<Events<crate::layer1::social::gossip_economy::BrokerPurchaseEvent>>();
+    world.init_resource::<Events<crate::layer1::culture::nostalgia_plague::RumorSpreadEvent>>();
     world.init_resource::<crate::layer1::social::gossip_economy::IntelTokens>();
     world.init_resource::<Events<crate::layer1::direct_link::PossessEntityEvent>>();
     world.init_resource::<Events<crate::layer1::direct_link::UnpossessEvent>>();

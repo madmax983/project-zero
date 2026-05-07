@@ -454,6 +454,13 @@ impl<'a> PopDecider<'a> {
     }
 
     fn evaluate_production(&mut self) {
+        let mut research_penalty = 0.0;
+        let mut refine_bonus = 0.0;
+        if self.data.has_nostalgia {
+            research_penalty = -0.5;
+            refine_bonus = 0.5;
+        }
+
         let pop_pos = self.data.pos;
         let weights = self.data.weights;
         let is_feral = self
@@ -466,7 +473,7 @@ impl<'a> PopDecider<'a> {
             evaluate_simple_action(pop_pos, &weights, &self.buffer.refining, 0.5),
             ActionType::Refine,
             self.context,
-            0.0,
+            refine_bonus,
         );
 
         self.evaluator.evaluate_and_consider(
@@ -493,7 +500,7 @@ impl<'a> PopDecider<'a> {
                 ),
                 ActionType::Research,
                 self.context,
-                0.0,
+                research_penalty,
             );
         }
     }

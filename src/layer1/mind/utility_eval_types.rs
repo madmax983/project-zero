@@ -104,6 +104,7 @@ pub struct PopEvaluationQuery {
     pub health: Option<&'static Health>,
     pub job: Option<&'static Job>,
     pub is_silent: Option<&'static crate::layer1::stress::TraitSilent>,
+    pub nostalgia: Option<&'static crate::layer1::culture::nostalgia_plague::Nostalgia>,
 }
 
 impl PopEvalData {
@@ -135,6 +136,7 @@ impl PopEvalData {
             insulation: 0.0,
             carrying_item_type: None,
             is_silent: item.is_silent.is_some(),
+            has_nostalgia: item.nostalgia.is_some(),
         }
     }
 }
@@ -213,6 +215,7 @@ pub struct PopEvalData {
     /// Current insulation provided by clothing.
     pub insulation: f32,
     pub is_silent: bool,
+    pub has_nostalgia: bool,
 }
 
 #[cfg(test)]
@@ -244,6 +247,7 @@ impl PopEvalData {
             job: None,
             insulation: 0.0,
             is_silent: false,
+            has_nostalgia: false,
         }
     }
 }
