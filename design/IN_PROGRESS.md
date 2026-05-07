@@ -5,7 +5,7 @@ Tasks currently being implemented by Builders.
 
 
 ---
-- [ ] `623` The Nostalgia Plague — `specs/623-nostalgia-plague.md` — claimed 2026-02-01
+
 
 
 
@@ -15,3 +15,4 @@ Tasks currently being implemented by Builders.
 - [ ] `453` Nanite Fabrication - `specs/453-nanite-fabrication.md` - claimed 2026-03-18
 - [ ] `684` The Gossip Economy - `specs/684-gossip-economy.md` - claimed 2026-04-01
 - [ ] `648` The Founder Effect — `specs/648-the-founder-effect.md` — claimed 2026-02-01
+- [ ] `631` Conveyor Logistics — `specs/631-conveyor-logistics.md` — claimed 2026-05-07

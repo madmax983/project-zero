@@ -28,7 +28,6 @@ use crate::shared::narrative::{NarrativeContext, NarrativeGenerator};
 use crate::shared::time::SimulationTime;
 use bevy::prelude::Time;
 use bevy_ecs::prelude::*;
-use rand::prelude::*;
 use ratatui::style::Color;
 use std::collections::HashSet;
 
@@ -1996,5 +1995,35 @@ pub fn diplomatic_incident_chronicle_bridge(
             importance: crate::layer1::core::chronicle::EventImportance::Major,
             text: format!("Diplomatic Incident: {}", event.reason),
         });
+    }
+}
+
+use crate::layer1::culture::nostalgia::{Nostalgia, Rumor as NostalgiaRumor, RumorSpreadEvent};
+use crate::layer1::social::Tavern;
+use rand::Rng;
+
+pub fn nostalgia_tavern_bridge_system(
+    tavern_query: Query<&Tavern>,
+    nostalgia_query: Query<(), With<Nostalgia>>,
+    mut spread_events: EventWriter<RumorSpreadEvent>,
+) {
+    let mut rng = rand::thread_rng();
+    for tavern in tavern_query.iter() {
+        if tavern.visitors.len() >= 2 {
+            for &speaker in &tavern.visitors {
+                if nostalgia_query.get(speaker).is_ok() {
+                    for &listener in &tavern.visitors {
+                        if speaker != listener && nostalgia_query.get(listener).is_err() && rng.gen_bool(0.1) {
+                            // 10% chance to proselytize
+                            spread_events.send(RumorSpreadEvent {
+                                source: speaker,
+                                target: listener,
+                                rumor: NostalgiaRumor::PastGlory,
+                            });
+                        }
+                    }
+                }
+            }
+        }
     }
 }

@@ -1,29 +1,126 @@
-# The Rust-Lung Epidemic (Task 1122) - Execution Plan
+1.  **Create Integration Bridge System**
+    - Create a bridge system `nostalgia_tavern_bridge_system` in `src/layer1/core/integration.rs` to emit `RumorSpreadEvent`.
+    - Command: `cat << 'INNER_EOF' >> src/layer1/core/integration.rs
 
-## 1. Understand the Request
-* Implement task 1122: "The Rust-Lung Epidemic".
-* The spec file is `specs/1122-rust-lung-epidemic.md`.
-* It mentions "low-purity ore extraction generates 'Rust' dust, causing 'Rust-Lung' in unequipped Pops."
-* It provides tests and implementation guidance.
-* I need to integrate it with the mining system and provide toxic gas immunity to Pops with Rust-Lung.
+use crate::layer1::culture::nostalgia::{Nostalgia, Rumor, RumorSpreadEvent};
+use crate::layer1::social::Tavern;
+use rand::Rng;
 
-## 2. Review the Current State
-* The tests and `rust_lung.rs` are already partially present.
-* `Health` already has `has_rust_lung: bool`.
-* The `rust_lung_degradation_system` is already added to `src/layer1/biology/rust_lung.rs` and registered in `src/layer1/systems/consumption.rs`.
-* `apply_toxic_gas_damage` is already in `src/layer1/biology/rust_lung.rs`.
-* `src/layer1/execution/mining.rs` already has `handle_mining_work` which checks `!inventory.has_item(ItemType::Rebreather)` and sets `health.has_rust_lung = true`.
-* `apply_smog_damage_system` and `pollution_effects_system` in `src/layer1/nature/atmosphere.rs` apply toxic gas/pollution damage but do NOT check for `has_rust_lung`.
-* I need to update both `apply_smog_damage_system` and `pollution_effects_system` in `src/layer1/nature/atmosphere.rs` to skip applying damage if the entity has `has_rust_lung == true`.
+pub fn nostalgia_tavern_bridge_system(
+    tavern_query: Query<&Tavern>,
+    nostalgia_query: Query<(), With<Nostalgia>>,
+    mut spread_events: EventWriter<RumorSpreadEvent>,
+) {
+    let mut rng = rand::thread_rng();
+    for tavern in tavern_query.iter() {
+        if tavern.visitors.len() >= 2 {
+            for &speaker in &tavern.visitors {
+                if nostalgia_query.get(speaker).is_ok() {
+                    for &listener in &tavern.visitors {
+                        if speaker != listener && nostalgia_query.get(listener).is_err() {
+                            if rng.gen_bool(0.1) { // 10% chance to proselytize
+                                spread_events.send(RumorSpreadEvent {
+                                    source: speaker,
+                                    target: listener,
+                                    rumor: Rumor::PastGlory,
+                                });
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+INNER_EOF`
+    - Verify with `tail -n 25 src/layer1/core/integration.rs`.
 
-## 3. Plan Steps
-1. *Modify `pollution_effects_system` in `src/layer1/nature/atmosphere.rs`*
-   - Add a check for `!health.has_rust_lung` before applying pollution damage.
-2. *Modify `apply_smog_damage_system` in `src/layer1/nature/atmosphere.rs`*
-   - Add a check for `!health.has_rust_lung` before applying smog damage.
-3. *Run all tests to verify everything passes*
-   - Ensure the new logic doesn't break any existing tests, and the `test_rust_lung_provides_toxic_gas_immunity` still works.
-4. *Complete pre commit steps*
-   - Complete pre commit steps to make sure proper testing, verifications, reviews and reflections are done.
-5. *Submit the change*
-   - Commit with the required format `feat(layer1): complete rust-lung epidemic` and include the Co-Authored-By tag.
+2.  **Register `RumorSpreadEvent` and Systems**
+    - I'll edit `src/setup.rs` to register `Events<RumorSpreadEvent>`.
+    - Command: `cat << 'INNER_EOF' > fix_setup.py
+import re
+with open("src/setup.rs", "r") as f:
+    content = f.read()
+target = "world.init_resource::<Events<PopBorn>>();"
+replacement = target + "\n    world.init_resource::<Events<crate::layer1::culture::nostalgia::RumorSpreadEvent>>();"
+content = content.replace(target, replacement)
+with open("src/setup.rs", "w") as f:
+    f.write(content)
+INNER_EOF
+python3 fix_setup.py
+`
+    - I'll edit `src/layer1/systems/observation.rs` to register the three systems.
+    - Command: `cat << 'INNER_EOF' > fix_observation.py
+import re
+with open("src/layer1/systems/observation.rs", "r") as f:
+    content = f.read()
+target = "crate::layer1::core::integration::society_suspicion_bridge_system,"
+replacement = target + """
+            crate::layer1::culture::nostalgia::nostalgia_trigger_system,
+            crate::layer1::core::integration::nostalgia_tavern_bridge_system,
+            crate::layer1::culture::nostalgia::nostalgia_spread_system,
+"""
+content = content.replace(target, replacement)
+with open("src/layer1/systems/observation.rs", "w") as f:
+    f.write(content)
+INNER_EOF
+python3 fix_observation.py
+`
+    - Verify via `grep "RumorSpreadEvent" src/setup.rs` and `grep "nostalgia_trigger_system" src/layer1/systems/observation.rs`.
+
+3.  **Write Tests**
+    - Write an integration test to verify the `nostalgia_tavern_bridge_system`.
+    - To properly assert the events sent by the bridge system without relying on `reader.read(events)`, I will use a test system that listens to the events and increments a counter in a test `Resource`.
+    - Command: `cat << 'INNER_EOF' > tests/integration/nostalgia_plague_bridge.rs
+use bevy::prelude::*;
+use scale::layer1::pop::Pop;
+use scale::layer1::social::Tavern;
+use scale::layer1::culture::nostalgia::{Nostalgia, RumorSpreadEvent};
+use scale::layer1::core::integration::nostalgia_tavern_bridge_system;
+
+#[derive(Resource, Default)]
+struct EventCounter {
+    count: usize,
+}
+
+fn count_rumor_events(mut events: EventReader<RumorSpreadEvent>, mut counter: ResMut<EventCounter>) {
+    for _ in events.read() {
+        counter.count += 1;
+    }
+}
+
+#[test]
+fn test_nostalgia_tavern_bridge_emits_rumor() {
+    let mut app = App::new();
+    app.add_plugins(MinimalPlugins);
+    app.add_systems(Update, (nostalgia_tavern_bridge_system, count_rumor_events).chain());
+    app.add_event::<RumorSpreadEvent>();
+    app.init_resource::<EventCounter>();
+
+    let mut tavern = Tavern::default();
+
+    let nostalgic_pop = app.world_mut().spawn((Pop, Nostalgia)).id();
+    let normal_pop = app.world_mut().spawn(Pop).id();
+
+    tavern.visitors.push(nostalgic_pop);
+    tavern.visitors.push(normal_pop);
+
+    app.world_mut().spawn(tavern);
+
+    // Run multiple times to trigger the 10% chance
+    for _ in 0..100 {
+        app.update();
+    }
+
+    let counter = app.world().resource::<EventCounter>();
+    assert!(counter.count > 0, "Should emit RumorSpreadEvent when socializing with nostalgic pop");
+}
+INNER_EOF`
+    - Command: `echo "pub mod nostalgia_plague_bridge;" >> tests/integration/mod.rs`
+    - Verify `ls -l tests/integration/nostalgia_plague_bridge.rs` and `tail -n 1 tests/integration/mod.rs`.
+
+4.  **Run Tests**
+    - Command: `cargo test` to ensure all tests pass and changes didn't break anything.
+
+5.  **Complete Pre-commit steps**
+    - Complete pre-commit steps to ensure proper testing, verification, review, and reflection are done.

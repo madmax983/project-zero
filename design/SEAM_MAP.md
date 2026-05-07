@@ -932,3 +932,9 @@
 - **Systems connected:** `ConveyorBelt` -> `is_walkable` (Pathfinding)
 - **Glue added:** Updated `is_walkable` logic in `src/layer1/pathfinding.rs` to query `crate::layer1::logistics::conveyor::ConveyorBelt` component and ensure standard conveyors block movement while underground variants don't.
 - **Tests:** `tests/integration/conveyor_pathfinding_bridge.rs` (2 tests)
+
+### INT-623: The Nostalgia Plague Integration
+- **Date:** 2026-02-01
+- **Systems connected:** `Nostalgia` -> `nostalgia_tavern_bridge_system` -> `RumorSpreadEvent`
+- **Glue added:** Added `nostalgia_tavern_bridge_system` in `src/layer1/core/integration.rs` to allow nostalgic pops to proselytize to others in the same Tavern. Registered `RumorSpreadEvent` and nostalgia systems in `src/layer1/systems/observation.rs`.
+- **Tests:** `tests/integration/nostalgia_plague_bridge.rs`

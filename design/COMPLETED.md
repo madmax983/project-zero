@@ -518,3 +518,5 @@
 - [x] `INT-635` Integration: Rogue Automation Cults -> Chronicle — completed 2026-05-05
 - [x] `INT-631` Integration: Conveyor Logistics -> Pathfinding — completed 2026-10-31
 - [x] `1087` Embezzlement Architecture — `specs/1087-embezzlement-architecture.md` — completed 2026-05-07
+
+- [x] `INT-623` Integration: Nostalgia Plague -> Rumor Spread — completed 2026-02-01
