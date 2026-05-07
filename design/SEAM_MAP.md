@@ -932,3 +932,10 @@
 - **Systems connected:** `ConveyorBelt` -> `is_walkable` (Pathfinding)
 - **Glue added:** Updated `is_walkable` logic in `src/layer1/pathfinding.rs` to query `crate::layer1::logistics::conveyor::ConveyorBelt` component and ensure standard conveyors block movement while underground variants don't.
 - **Tests:** `tests/integration/conveyor_pathfinding_bridge.rs` (2 tests)
+
+### INT-684: The Gossip Economy -> Factions & Black Market
+- **Date:** 2026-06-27
+- **Systems connected:** `BrokerPurchaseEvent` -> `gossip_broker_purchase_bridge` -> `Factions` & `ColonyResources`
+- **Glue added:** `gossip_broker_purchase_bridge` in `src/layer1/core/integration.rs`
+- **Schedule:** Chained before `spend_intel` in `Layer1SystemSet::Observation`
+- **Tests:** `tests/integration/gossip_economy_bridge.rs`

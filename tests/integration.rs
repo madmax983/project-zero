@@ -371,3 +371,5 @@ mod impact_warning_chronicle;
 
 #[path = "integration/diplomatic_incident_chronicle.rs"]
 mod diplomatic_incident_chronicle;
+#[path = "integration/gossip_economy_bridge.rs"]
+mod gossip_economy_bridge;

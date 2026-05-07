@@ -302,8 +302,9 @@ pub fn register(schedule: &mut Schedule) {
             modify_affinity_system.after(crate::layer1::rumor::exchange_rumors_system),
             crate::layer1::social::gossip_economy::process_gossip
                 .after(crate::layer1::rumor::exchange_rumors_system),
-            crate::layer1::social::gossip_economy::spend_intel
+            crate::layer1::core::integration::gossip_broker_purchase_bridge
                 .after(crate::layer1::social::gossip_economy::process_gossip),
+
             crate::layer1::social::gossip_economy::decrement_gossiping_system
                 .after(crate::layer1::social::gossip_economy::process_gossip),
             crate::layer1::social::proximity_social_system.after(modify_affinity_system),

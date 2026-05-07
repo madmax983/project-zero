@@ -1981,3 +1981,32 @@ pub fn diplomatic_incident_chronicle_bridge(
         });
     }
 }
+
+/// INT-684: Bridges the Gossip Economy's Broker purchases to Factions and Resources.
+pub fn gossip_broker_purchase_bridge(
+    mut events: EventReader<crate::layer1::social::gossip_economy::BrokerPurchaseEvent>,
+    mut intel: ResMut<crate::layer1::social::gossip_economy::IntelTokens>,
+    mut resources: ResMut<crate::layer1::resources::ColonyResources>,
+    mut factions: ResMut<crate::layer1::social::factions::Factions>,
+) {
+    for event in events.read() {
+        if intel.0 >= event.cost {
+            match event.item {
+                crate::layer1::social::gossip_economy::BrokerItem::RareTech => {
+                    resources.knowledge += 100.0;
+                    resources.credits += 10.0;
+                }
+                crate::layer1::social::gossip_economy::BrokerItem::RelationsBoost => {
+                    for data in factions.map.values_mut() {
+                        if data.state == crate::layer1::social::factions::FactionState::Striking || data.state == crate::layer1::social::factions::FactionState::Unhappy {
+                            data.satisfaction = 1.0;
+                            data.state = crate::layer1::social::factions::FactionState::Loyal;
+                            data.active_demand = None;
+                        }
+                    }
+                }
+            }
+            intel.0 -= event.cost;
+        }
+    }
+}
