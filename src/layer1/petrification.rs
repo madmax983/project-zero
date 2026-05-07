@@ -72,7 +72,9 @@ pub fn petrification_transformation_system(
             let name = pop_name_opt.map_or("Unknown Colonist".to_string(), |n| n.0.clone());
             let description = format!("Petrified Colonist: {}", name);
 
-            event_writer.send(PopPetrifiedEvent { pop_name: name.clone() });
+            event_writer.send(PopPetrifiedEvent {
+                pop_name: name.clone(),
+            });
 
             commands
                 .entity(entity)

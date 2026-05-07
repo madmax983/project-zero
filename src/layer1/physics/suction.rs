@@ -58,6 +58,9 @@ use std::collections::HashSet;
 /// System to simulate explosive decompression suction.
 /// Entities are moved from high pressure to low pressure if the gradient is steep enough.
 #[allow(clippy::type_complexity)]
+/// ⚡ Bolt Optimization: Lazy initialization of `building_positions` HashSet.
+/// Defers an O(B) allocation and iteration over all buildings until a suction event actually occurs.
+/// Saves 1 heap allocation and O(B) loop cycles per frame/tick when no explosive decompression is happening.
 pub fn suction_system(
     mut _commands: Commands,
     pressure: Res<PressureGrid>,
@@ -67,9 +70,10 @@ pub fn suction_system(
     // Pressure difference required to move an entity
     const SUCTION_THRESHOLD: f32 = 0.5;
 
-    // Build a set of building positions for O(1) lookup
-    let building_positions: HashSet<(i32, i32)> =
-        buildings.iter().map(|pos| (pos.x, pos.y)).collect();
+    // ⚡ Bolt Optimization: Lazy initialization of `building_positions` HashSet.
+    // Defers an O(B) allocation and iteration over all buildings until a suction event actually occurs.
+    // Saves 1 heap allocation and O(B) loop cycles per frame/tick when no explosive decompression is happening.
+    let mut building_positions: Option<HashSet<(i32, i32)>> = None;
 
     for (_entity, mut pos) in &mut query {
         let current_p = pressure.get(pos.x, pos.y);
@@ -105,7 +109,10 @@ pub fn suction_system(
 
         if let Some((tx, ty)) = best_target {
             // Check for collision with buildings
-            if !building_positions.contains(&(tx, ty)) {
+            let bps = building_positions
+                .get_or_insert_with(|| buildings.iter().map(|p| (p.x, p.y)).collect());
+
+            if !bps.contains(&(tx, ty)) {
                 // Move entity
                 pos.x = tx;
                 pos.y = ty;
