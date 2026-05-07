@@ -932,3 +932,9 @@
 - **Systems connected:** `ConveyorBelt` -> `is_walkable` (Pathfinding)
 - **Glue added:** Updated `is_walkable` logic in `src/layer1/pathfinding.rs` to query `crate::layer1::logistics::conveyor::ConveyorBelt` component and ensure standard conveyors block movement while underground variants don't.
 - **Tests:** `tests/integration/conveyor_pathfinding_bridge.rs` (2 tests)
+
+### INT-634: Petrification Sickness -> Chronicle
+- **Date:** 2026-06-25
+- **Systems connected:** `PopPetrifiedEvent` -> `petrification_chronicle_bridge` -> `AddChronicleEvent`
+- **Glue added:** Added `petrification_chronicle_bridge` in `src/layer1/core/integration.rs` to emit an `AddChronicleEvent` when `PopPetrifiedEvent` occurs.
+- **Tests:** `tests/integration/petrification_chronicle_bridge.rs`
