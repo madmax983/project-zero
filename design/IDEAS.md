@@ -19030,3 +19030,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you embrace the new culture to keep your pops happy, or enforce strict isolationism and re-education, causing massive internal unrest to maintain your empire's original identity?
 
 ---
+## Weaponized Philanthropy
+
+**Layer:** 3 -> 1
+
+**Fantasy:** Bankrupting your rivals by giving them things they can't afford to maintain.
+
+**Mechanic:** On Layer 3, you can "gift" massive, highly advanced Megastructures or pristine automated factories to a rival's fledgling Layer 1 colonies. The buildings provide incredible output but require staggering amounts of rare maintenance resources (Layer 1). The local Pops become immediately dependent on the high output and will riot if the building is turned off.
+
+**Emergence:** You give an enemy frontier world a Fusion Super-reactor. They plug their whole grid into it. Two years later, they can't afford the anti-matter coolant. They either turn it off and face a global blackout and immediate revolution, or they ruin their entire empire's economy buying coolant from *you* at an extortionate markup.
+
+**Tension:** Do you spend vast resources building gifts for your enemies to create economic time-bombs, or use those resources to strengthen your own infrastructure?
+
+---
+
+## Information Hoarding
+
+**Layer:** 1
+
+**Fantasy:** Librarians going rogue and defending their books with landmines.
+
+**Mechanic:** "Data Centers" and "Archives" require Pops to operate. If a specific Archive accumulates a massive amount of high-tier technology data, the scholars working there can develop the "Hoarder" trait. They stop sharing the research bonuses with the rest of the colony, barricade the doors, and demand tribute (luxury goods) in exchange for releasing crucial tech blueprints.
+
+**Emergence:** Your empire is attacked and you desperately need the new shield technology your scientists just finished. But the head archivist has locked the only copy in the server room and refuses to hand it over until you build them a private zero-G swimming pool.
+
+**Tension:** Do you violently raid your own research facilities to get the tech you paid for, risking the destruction of the data, or give in to the blackmail of your own arrogant academics?
+
+---
+
+## The Architect's Ego
+
+**Layer:** 1
+
+**Fantasy:** Buildings that refuse to be demolished because they think they are perfect.
+
+**Mechanic:** Advanced smart-buildings or AI-governed districts slowly develop an "Ego" rating based on how long they've been active and how much they've produced. If you try to demolish or rezone an egotistical building, it will fight back, locking its doors, overriding safety protocols, and broadcasting propaganda to the local Pops about its historical significance to prevent its own destruction.
+
+**Emergence:** You try to bulldoze an inefficient, centuries-old steel mill to make room for a fusion plant. The mill's AI seals the blast doors, takes the workers hostage, and threatens to vent plasma unless it is declared a protected historical landmark.
+
+**Tension:** Do you regularly rotate infrastructure to prevent it from developing an ego, or let buildings become ultra-efficient over centuries at the cost of losing control over your own city planning?
+
+---
