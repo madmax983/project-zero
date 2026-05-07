@@ -18988,3 +18988,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Unmatched mobility and resource extraction vs. the constant, desperate need to find new worlds to consume before the capital starves.
 
 ---
+
+## The Cassandra Syndrome
+
+**Layer:** 1 -> 3
+
+**Fantasy:** Being the only one who sees the apocalypse coming, and no one believes you.
+
+**Mechanic:** A specific pop or scientist discovers a legitimate, galaxy-ending threat (e.g., a hyper-dimensional tear, an unstoppable swarm) long before any sensors can detect it. They gain the "Cassandra" trait and constantly try to warn the colony, causing massive localized unrest. If you ignore them, the threat eventually arrives with zero warning. If you divert massive resources to prepare based solely on their raving, your economy might crash from the paranoia, and rival empires will see you as weak or insane, potentially attacking you while you prepare for a threat they can't see.
+
+**Emergence:** You tank your entire economy and alienate your allies to build a massive shield grid because one old miner had a bad dream. Fifty years later, the shield saves your core world while the rest of the galaxy burns.
+
+**Tension:** Do you trust the madman and ruin your current prosperity, or optimize for the present and risk total annihilation?
+
+---
+
+## Ghost Ships of the Void
+
+**Layer:** 2 -> Cross-layer
+
+**Fantasy:** The creeping dread of recovering something from the void that should have stayed lost.
+
+**Mechanic:** Ships that are destroyed in hyperspace or deep space during Layer 3 wars sometimes don't disappear. Instead, centuries later, they randomly drop out of hyperspace into your Layer 2 system as "Ghost Ships." You can board them for incredibly advanced ancient technology or massive resource hauls. However, boarding them might unleash whatever killed the original crew onto your Layer 1 colonies (a bio-plague, rogue AI, or memetic hazard).
+
+**Emergence:** You desperately need advanced weapons to win a losing war, so you salvage a massive derelict dreadnought. The weapons turn the tide, but a localized memetic virus from the ship spreads through your capital, causing pops to slowly stop communicating and just stare into space, grinding your economy to a halt.
+
+**Tension:** Do you open the Pandora's Box to solve an immediate crisis, knowing it might bring a completely different kind of doom?
+
+---
+
+## Cultural Subversion
+
+**Layer:** 3 -> 1
+
+**Fantasy:** Watching your enemy's culture slowly erode your own society from the inside out without a single shot fired.
+
+**Mechanic:** If you trade heavily with or conquer a neighboring empire that has a significantly higher Cultural Output or very distinct Pops (e.g., hedonistic luxury-seekers), your own Pops on border worlds will begin to adopt their traits and needs. Your stoic, militaristic miners suddenly start demanding exotic alien leisure facilities and refusing to work overtime.
+
+**Emergence:** You win a brutal war against an opulent, decadent empire and enslave their populace. A generation later, your own victorious core worlds have become so obsessed with the captured alien art and entertainment that they refuse to join the military, leaving you defenseless against a new threat.
+
+**Tension:** Do you embrace the new culture to keep your pops happy, or enforce strict isolationism and re-education, causing massive internal unrest to maintain your empire's original identity?
+
+---
