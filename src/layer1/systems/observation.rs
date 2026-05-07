@@ -398,6 +398,13 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::core::integration::living_architecture_chronicle_bridge,
             crate::layer1::core::integration::secret_society_discovery_bridge_system,
             crate::layer1::core::integration::society_suspicion_bridge_system,
+        )
+            .in_set(Layer1SystemSet::Observation),
+    );
+
+    schedule.add_systems(
+        (
+            crate::layer1::core::integration::petrification_chronicle_bridge,
             crate::layer1::integration::phantom_shift_chronicle_bridge,
             crate::layer1::integration::tether_snap_chronicle_bridge,
         )

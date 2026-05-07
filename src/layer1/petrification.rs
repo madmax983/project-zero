@@ -12,6 +12,11 @@ use crate::layer1::utility_types::ActionType;
 #[derive(Component)]
 pub struct ExoticDeepCrust;
 
+#[derive(Event, Debug, Clone)]
+pub struct PopPetrifiedEvent {
+    pub pop_name: String,
+}
+
 #[derive(Component)]
 pub struct PetrificationSickness {
     pub stage: u32,
@@ -60,11 +65,14 @@ pub fn petrification_progression_system(
 pub fn petrification_transformation_system(
     mut commands: Commands,
     query: Query<(Entity, &PetrificationSickness, Option<&PopName>), With<Pop>>,
+    mut event_writer: EventWriter<PopPetrifiedEvent>,
 ) {
     for (entity, sickness, pop_name_opt) in query.iter() {
         if sickness.stage >= sickness.max_stage {
             let name = pop_name_opt.map_or("Unknown Colonist".to_string(), |n| n.0.clone());
             let description = format!("Petrified Colonist: {}", name);
+
+            event_writer.send(PopPetrifiedEvent { pop_name: name.clone() });
 
             commands
                 .entity(entity)
@@ -91,6 +99,7 @@ mod tests {
 
     fn setup_app() -> App {
         let mut app = App::new();
+        app.add_event::<PopPetrifiedEvent>();
         app.add_systems(
             Update,
             (
