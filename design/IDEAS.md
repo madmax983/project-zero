@@ -19030,3 +19030,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you embrace the new culture to keep your pops happy, or enforce strict isolationism and re-education, causing massive internal unrest to maintain your empire's original identity?
 
 ---
+## The Diplomatic Hostage (The Ward)
+
+**Layer:** Cross-layer
+
+**Fantasy:** The political tension of raising your enemy's child, and the tragedy of sending your own away.
+
+**Mechanic:** To secure a fragile peace with a hostile Layer 3 empire, you exchange "Wards" (children). A Layer 1 pop is sent away, and an alien pop arrives. The alien pop must be kept in high comfort, or the peace treaty breaks. After 20 years, the Wards return to their home empires, bringing massive diplomatic influence and foreign tech, but their ethics are permanently shifted to the host's culture.
+
+**Emergence:** Your beloved former Ward returns to lead a hostile empire, making them hesitant to attack you despite the political pressure, or your own returned child tries to stage a coup because they prefer the alien culture.
+
+**Tension:** Do you treat the hostage well to maintain peace, risking them subverting your culture, or treat them poorly and risk immediate war? Do you sacrifice your own pop's future for temporary safety?
+
+---
+
+## The Sentient Slag
+
+**Layer:** 1
+
+**Fantasy:** Industrial waste that refuses to be ignored, becoming a slow, creeping horror.
+
+**Mechanic:** Refining "Deep-Core Ore" produces "Resonant Slag." If left uncontained in stockpiles, the slag slowly animates when exposed to the acoustic noise of heavy machinery. It forms slow-moving, corrosive puddles that pathfind toward the loudest buildings, dealing continuous structural damage and emitting toxic fumes.
+
+**Emergence:** You build an incredibly efficient, massive smelting district. The sheer volume of noise animates the entire slag heap simultaneously, creating a slow-motion tidal wave of corrosive sludge that slowly eats your most valuable infrastructure while your pops frantically try to build containment walls.
+
+**Tension:** Do you spread out your industry to reduce noise (inefficient) or build expensive, sound-proofed containment facilities for the waste?
+
+---
+
+## The Frontier Carnival
+
+**Layer:** Cross-layer
+
+**Fantasy:** A roaming circus of wonders and horrors bringing temporary joy and permanent consequences to isolated worlds.
+
+**Mechanic:** A neutral, massive "Carnival Fleet" slowly travels the Layer 2 network. When it anchors at a Layer 1 colony, it spawns temporary "Attraction" buildings. Pops flock to them, gaining massive temporary Morale boosts and unique items. However, the Carnival also introduces "Vice" (addictive substances), spreads exotic diseases, and occasionally kidnaps low-status Pops when it leaves.
+
+**Emergence:** Your colony is on the verge of a stress-induced civil war. The Carnival arrives, saving the colony's sanity overnight. But when it leaves a month later, 10% of your workforce is addicted to "Void-Dust" and your best mechanic was taken as a sideshow attraction.
+
+**Tension:** Do you open the borders to the Carnival to save morale, knowing you'll pay a heavy social price when they leave, or ban them and face immediate riots from your stressed pops?
+
+---
