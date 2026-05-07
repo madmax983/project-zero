@@ -8017,3 +8017,40 @@ What the gas does to the colony.
 - a planet that moves when observed
 - a blank space where a star should be
 - a coordinate that leads to nowhere
+
+## The Bio-Digital Ascendancy Fragments (Spec 622)
+
+## Fragment Type: [CYBER_NETWORK_NAME]
+- the Chorus
+- the Unified Substrate
+- the Singularity
+- the Silent Communion
+- the Hive-Mind
+
+## Fragment Type: [INTEGRATION_FEELING]
+- perfect, cold clarity
+- an absence of hunger
+- the end of exhaustion
+- a hollow, shared silence
+
+## Biometric Drift Fragments (Spec 244)
+
+## Fragment Type: [DRIFT_SYMPTOM]
+- their face recognized as a stranger's
+- a retinal scan that came back empty
+- fingerprints smoothed by acid
+- a cybernetic eye that the door did not remember
+
+## The Pacifist's Arsenal Fragments (Spec 1175)
+
+## Fragment Type: [EMPATHY_MESSAGE]
+- a chorus of weeping children
+- memories of shared harvests
+- a sudden, crushing realization of shared humanity
+- the synthesized sound of a mother's heartbeat
+
+## Fragment Type: [MUTINY_ACTION]
+- threw their weapons into the void
+- turned their guns on their own officers
+- surrendered without firing a shot
+- fell to their knees and wept
