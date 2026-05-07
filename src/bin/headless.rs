@@ -913,7 +913,11 @@ fn print_pops(world: &mut World) {
             Cell::new(format!("{:.0}%", needs.rest * 100.0)).fg(rest_color),
             Cell::new(format!("{:.1}", stress_val)).fg(stress_color),
             Cell::new(traits_str).fg(traits_color),
-            Cell::new(action_str),
+            if action.current == scale::layer1::ActionType::Sleepwalking {
+                Cell::new(action_str).fg(Color::Magenta)
+            } else {
+                Cell::new(action_str)
+            },
             Cell::new(status),
         ]);
     }
