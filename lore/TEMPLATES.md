@@ -7404,3 +7404,57 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 **Patterns:**
 - "[YEAR]: The Cartographer returned with maddening charts, showing [MAP_ERROR]."
 - "Navigation failed. The new maps display [MAP_ERROR]. We are blind."
+
+## The Bio-Digital Ascendancy Templates (Spec 622)
+
+### Template: CYBERNETIC_INTEGRATION_STARTED
+**Generates:** Play event
+**Slots:** [POP_NAME], [YEAR], [CYBER_NETWORK_NAME]
+
+**Patterns:**
+- "[YEAR]: [POP_NAME] began integration with [CYBER_NETWORK_NAME]."
+- "[POP_NAME] replaced their heart with a battery. They hear [CYBER_NETWORK_NAME] now."
+
+### Template: MIND_MERGE_COMPLETED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [CYBER_NETWORK_NAME]
+
+**Patterns:**
+- "[YEAR]: The individuality of [COLONY] fades into [CYBER_NETWORK_NAME]."
+- "We are no longer 'I'. We are [CYBER_NETWORK_NAME]."
+
+## Biometric Drift Templates (Spec 244)
+
+### Template: BIOMETRIC_LOCKOUT
+**Generates:** Play event
+**Slots:** [POP_NAME], [YEAR], [DRIFT_SYMPTOM]
+
+**Patterns:**
+- "[YEAR]: [POP_NAME] was denied entry to their own home due to [DRIFT_SYMPTOM]."
+- "The machine did not know [POP_NAME]. [DRIFT_SYMPTOM] caused a lockout. [YEAR]."
+
+### Template: RECALIBRATION_PERFORMED
+**Generates:** Play event
+**Slots:** [POP_NAME], [YEAR]
+
+**Patterns:**
+- "[YEAR]: We had to remind the system who [POP_NAME] was. Recalibration complete."
+- "The databases have updated [POP_NAME]'s scars. [YEAR]."
+
+## The Pacifist's Arsenal Templates (Spec 1175)
+
+### Template: EMPATHY_BROADCAST_SENT
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [EMPATHY_MESSAGE]
+
+**Patterns:**
+- "[YEAR]: We broadcast [EMPATHY_MESSAGE] to the invading fleet."
+- "The pacifist ships opened channels, filling the void with [EMPATHY_MESSAGE]."
+
+### Template: FLEET_MUTINY
+**Generates:** Play event
+**Slots:** [HOSTILE_FLEET_NAME], [YEAR], [MUTINY_ACTION]
+
+**Patterns:**
+- "[YEAR]: Broken by guilt, [HOSTILE_FLEET_NAME] [MUTINY_ACTION]."
+- "The will to fight vanished. [HOSTILE_FLEET_NAME] [MUTINY_ACTION]. [YEAR]."

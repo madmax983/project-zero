@@ -4879,3 +4879,33 @@
 **Code reference:** `ProtestBarricade`
 **Usage:**
 - "They threw up a Barricade in Sector 4."
+
+## The Bio-Digital Ascendancy (Spec 622)
+
+### Cybernetic Integration
+**Replaces:** Augmentation, synthetic evolution
+**Code reference:** `CyberneticIntegration` component
+**Usage:**
+- "He underwent Cybernetic Integration and no longer sleeps."
+
+## Biometric Drift (Spec 244)
+
+### Biometric Drift
+**Replaces:** Access denial due to physical changes
+**Code reference:** `BiometricProfile` drift value
+**Usage:**
+- "His Biometric Drift is too high; the airlock won't open."
+
+## The Pacifist's Arsenal (Spec 1175)
+
+### Empathy Broadcast
+**Replaces:** Pacifist weapon, morale damage aura
+**Code reference:** `PacifistBroadcast` component
+**Usage:**
+- "The Empathy Broadcast broke their will to fight."
+
+### Will to Fight
+**Replaces:** Enemy fleet morale or HP in pacifist context
+**Code reference:** `WillToFight` component
+**Usage:**
+- "Their Will to Fight reached zero, and they laid down their arms."
