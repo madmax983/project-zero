@@ -19071,3 +19071,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you regularly rotate infrastructure to prevent it from developing an ego, or let buildings become ultra-efficient over centuries at the cost of losing control over your own city planning?
 
 ---
+
+## The Calendar of Grief
+
+**Layer:** 1
+
+**Fantasy:** The colony's tragic history creating an unplayable, obstacle-filled calendar.
+
+**Mechanic:** Whenever a massive tragedy occurs (e.g., many deaths in a single day), that date becomes a permanent "Day of Mourning." Every year on that exact date, affected pops refuse to do any labor, instead gathering at the site of the tragedy to mourn.
+
+**Emergence:** If a colony suffers too many disasters, the calendar fills up with Mourning Days. A colony might freeze to death because a critical winter harvest fell on the anniversary of the "Great Fire," and everyone refused to work.
+
+**Tension:** Do you violently suppress the mourning to force critical labor (causing massive immediate unrest and trauma), or let the economy slowly grind to a halt under the weight of remembered tragedy?
+
+---
+
+## The Scavenger's Affection
+
+**Layer:** 1
+
+**Fantasy:** Mechanics forming deep, irrational emotional bonds with specific pieces of junk.
+
+**Mechanic:** Pops assigned to repair or salvage jobs occasionally "Bond" with a specific broken machine, hull fragment, or piece of scrap. They will refuse to dismantle it, constantly clean it, and receive a massive mood debuff if it is destroyed or moved.
+
+**Emergence:** Your master engineer bonds with a completely useless, rusted-out vending machine that blocks the only efficient hallway to the reactor. Bulldozing it will send your best worker into a catatonic depression. You are forced to reroute your entire base around a piece of garbage.
+
+**Tension:** Spatial efficiency and clean logistics vs. the irrational emotional needs of your most valuable workers.
+
+---
+
+## The Atmospheric Embezzler
+
+**Layer:** 1
+
+**Fantasy:** Corrupt officials stealing the very air you breathe.
+
+**Mechanic:** Pops with the "Greedy" or "Corrupt" trait in administrative roles don't just steal abstract credits. On sealed colonies, they actively reroute the fluid/gas simulation grid, diverting high-quality oxygen and optimal heat away from worker zones and into their own private quarters.
+
+**Emergence:** A mysterious, creeping drop in oxygen efficiency in the mines leads to massive work slowdowns. You trace the fluid simulation pipes and find the Governor's mansion is being pumped with pure, high-pressure oxygen so he can grow exotic orchids, while the miners slowly suffocate.
+
+**Tension:** Do you arrest your highly skilled, stabilizing Governor (causing administrative chaos), or let the workers quietly suffocate to keep the government running smoothly?
+
+---
