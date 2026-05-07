@@ -439,11 +439,7 @@ impl<'a> PopDecider<'a> {
         let work_bonus = if self.is_penal { 1.0 } else { 0.0 };
 
 
-        let filtered_designations: Vec<_> = if self.data.is_nostalgic {
-            self.buffer.work_designations.clone()
-        } else {
-            self.buffer.work_designations.clone()
-        };
+        let filtered_designations: Vec<_> = self.buffer.work_designations.clone();
 
         let work_utility = evaluate_simple_action(pop_pos, &weights, &filtered_designations, if self.data.is_nostalgic { 0.2 } else { 0.5 });
         self.evaluator.evaluate_and_consider(
