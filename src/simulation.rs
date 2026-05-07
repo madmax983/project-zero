@@ -593,6 +593,8 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
     crate::experimental::echoing_footsteps::register(schedule);
     #[cfg(feature = "nova")]
     crate::experimental::panic_buying::register(schedule);
+    #[cfg(feature = "nova")]
+    crate::experimental::sleepwalking_hazards::register(schedule);
 
     schedule.add_systems((
         crate::layer3::map::map_data_rot_system,
@@ -786,7 +788,7 @@ mod tests {
         world.init_resource::<crate::layer1::stress::TraumaTracker>();
         world.init_resource::<Events<crate::layer2::skyhooks::LaunchIntent>>();
         world.init_resource::<Events<crate::layer1::tech::rogue_automation_cults::MachineCultFormedEvent>>();
-    world.init_resource::<Events<crate::layer1::heirloom_tool::EquipHeirloomEvent>>();
+        world.init_resource::<Events<crate::layer1::heirloom_tool::EquipHeirloomEvent>>();
         world.init_resource::<Events<crate::layer2::events_new::reverse_quarantine::RefugeeFleetEvent>>();
         world.init_resource::<Events<crate::layer1::predecessors::WorldTriggerEvent>>();
         world.init_resource::<Events<crate::layer1::grafting::GraftBuildingEvent>>();

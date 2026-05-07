@@ -1,6 +1,6 @@
-use bevy_ecs::prelude::*;
 use crate::layer1::lifecycle::Age;
 use crate::layer1::social::morale::Morale;
+use bevy_ecs::prelude::*;
 
 #[derive(Component, Debug)]
 pub struct Nostalgia;
@@ -20,7 +20,7 @@ pub enum Rumor {
 #[allow(clippy::type_complexity)]
 pub fn nostalgia_trigger_system(
     mut commands: Commands,
-    query: Query<(Entity, &Age, &Morale), (With<crate::layer1::pop::Pop>, Without<Nostalgia>)>
+    query: Query<(Entity, &Age, &Morale), (With<crate::layer1::pop::Pop>, Without<Nostalgia>)>,
 ) {
     for (entity, age, morale) in query.iter() {
         if age.ticks_alive >= 60 * crate::layer1::balance::TICKS_PER_YEAR && morale.value <= 20.0 {
@@ -54,25 +54,37 @@ pub fn nostalgia_spread_system(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use bevy::prelude::*;
-    use crate::layer1::pop::Pop;
     use crate::layer1::lifecycle::Age;
+    use crate::layer1::pop::Pop;
     use crate::layer1::social::morale::Morale;
+    use bevy::prelude::*;
 
     #[test]
     fn test_low_morale_triggers_nostalgia_in_old_pops() {
         let mut app = App::new();
         app.add_systems(Update, nostalgia_trigger_system);
 
-        let pop_entity = app.world_mut().spawn((
-            Pop,
-            Age { ticks_alive: 65 * crate::layer1::balance::TICKS_PER_YEAR, stage: crate::layer1::lifecycle::LifeStage::Elder },
-            Morale { value: 10.0, modifiers: vec![] }, // Severe morale drop
-        )).id();
+        let pop_entity = app
+            .world_mut()
+            .spawn((
+                Pop,
+                Age {
+                    ticks_alive: 65 * crate::layer1::balance::TICKS_PER_YEAR,
+                    stage: crate::layer1::lifecycle::LifeStage::Elder,
+                },
+                Morale {
+                    value: 10.0,
+                    modifiers: vec![],
+                }, // Severe morale drop
+            ))
+            .id();
 
         app.update();
 
-        assert!(app.world().get::<Nostalgia>(pop_entity).is_some(), "Old pop with low morale should contract Nostalgia");
+        assert!(
+            app.world().get::<Nostalgia>(pop_entity).is_some(),
+            "Old pop with low morale should contract Nostalgia"
+        );
     }
 
     #[test]
@@ -82,17 +94,37 @@ mod tests {
         app.add_systems(Update, nostalgia_spread_system);
 
         let infected = app.world_mut().spawn((Pop, Nostalgia)).id();
-        let target = app.world_mut().spawn((Pop, Age { ticks_alive: 30 * crate::layer1::balance::TICKS_PER_YEAR, stage: crate::layer1::lifecycle::LifeStage::Adult })).id();
+        let target = app
+            .world_mut()
+            .spawn((
+                Pop,
+                Age {
+                    ticks_alive: 30 * crate::layer1::balance::TICKS_PER_YEAR,
+                    stage: crate::layer1::lifecycle::LifeStage::Adult,
+                },
+            ))
+            .id();
 
-        app.world_mut().send_event(RumorSpreadEvent { source: infected, target, rumor: Rumor::PastGlory });
+        app.world_mut().send_event(RumorSpreadEvent {
+            source: infected,
+            target,
+            rumor: Rumor::PastGlory,
+        });
 
         // Force a large number of events to guarantee the 25% chance hits at least once
         for _ in 0..50 {
-            app.world_mut().send_event(RumorSpreadEvent { source: infected, target, rumor: Rumor::PastGlory });
+            app.world_mut().send_event(RumorSpreadEvent {
+                source: infected,
+                target,
+                rumor: Rumor::PastGlory,
+            });
         }
 
         app.update();
 
-        assert!(app.world().get::<Nostalgia>(target).is_some(), "Nostalgia should spread to target via rumors");
+        assert!(
+            app.world().get::<Nostalgia>(target).is_some(),
+            "Nostalgia should spread to target via rumors"
+        );
     }
 }

@@ -438,10 +438,14 @@ impl<'a> PopDecider<'a> {
         let weights = self.data.weights;
         let work_bonus = if self.is_penal { 1.0 } else { 0.0 };
 
-
         let filtered_designations: Vec<_> = self.buffer.work_designations.clone();
 
-        let work_utility = evaluate_simple_action(pop_pos, &weights, &filtered_designations, if self.data.is_nostalgic { 0.2 } else { 0.5 });
+        let work_utility = evaluate_simple_action(
+            pop_pos,
+            &weights,
+            &filtered_designations,
+            if self.data.is_nostalgic { 0.2 } else { 0.5 },
+        );
         self.evaluator.evaluate_and_consider(
             work_utility,
             ActionType::Work,
@@ -466,7 +470,11 @@ impl<'a> PopDecider<'a> {
             .as_ref()
             .is_some_and(|t| t.has(Trait::Feral));
 
-        let refining_utility = if self.data.is_nostalgic { None } else { evaluate_simple_action(pop_pos, &weights, &self.buffer.refining, 0.5) };
+        let refining_utility = if self.data.is_nostalgic {
+            None
+        } else {
+            evaluate_simple_action(pop_pos, &weights, &self.buffer.refining, 0.5)
+        };
         self.evaluator.evaluate_and_consider(
             refining_utility,
             ActionType::Refine,
@@ -489,13 +497,17 @@ impl<'a> PopDecider<'a> {
         );
 
         if !is_feral {
-            let research_utility = if self.data.is_nostalgic { None } else { evaluate_research(
+            let research_utility = if self.data.is_nostalgic {
+                None
+            } else {
+                evaluate_research(
                     self.data.is_nostalgic,
                     pop_pos,
                     &weights,
                     self.context.resources,
                     &self.buffer.libraries,
-                ) };
+                )
+            };
             self.evaluator.evaluate_and_consider(
                 research_utility,
                 ActionType::Research,
