@@ -22,7 +22,6 @@
 
 
 
-- [ ] `624` Rogue AI Arbitration — `specs/624-rogue-ai-arbitration.md`
 - [ ] `625` The Cryo-Prison Revolt — `specs/625-cryo-prison-revolt.md`
 
 - [ ] `471` The Organ Trade — `specs/471-the-organ-trade.md`

@@ -13,3 +13,5 @@ pub mod predictive_policing;
 #[cfg(test)]
 #[allow(missing_docs)]
 pub mod justice_tests;
+pub mod rogue_ai_arbitration;
+pub use rogue_ai_arbitration::{Infraction, Edict};

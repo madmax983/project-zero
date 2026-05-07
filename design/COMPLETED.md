@@ -518,3 +518,4 @@
 - [x] `INT-635` Integration: Rogue Automation Cults -> Chronicle — completed 2026-05-05
 - [x] `INT-631` Integration: Conveyor Logistics -> Pathfinding — completed 2026-10-31
 - [x] `1087` Embezzlement Architecture — `specs/1087-embezzlement-architecture.md` — completed 2026-05-07
+- [x] `624` Rogue AI Arbitration — `specs/624-rogue-ai-arbitration.md` — completed 2026-05-07
