@@ -140,6 +140,7 @@ mod tests {
             job: None,
             insulation: 0.0,
             is_silent: false,
+            is_nostalgic: false,
         }
     }
 

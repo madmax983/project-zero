@@ -7,13 +7,14 @@ use bevy_ecs::prelude::*;
 /// Evaluates the utility of performing scientific research.
 #[must_use]
 pub(crate) fn evaluate_research(
+    is_nostalgic: bool,
     pop_pos: GridPosition,
     weights: &UtilityWeights,
     resources: &ColonyResources,
     libraries: &[ScorableCandidate],
 ) -> Option<(f32, Entity)> {
     // If knowledge is full, no utility
-    if resources.knowledge >= resources.max_knowledge {
+    if is_nostalgic || resources.knowledge >= resources.max_knowledge {
         return None;
     }
 
