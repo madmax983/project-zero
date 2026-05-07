@@ -1,7 +1,7 @@
-use bevy::prelude::*;
 use crate::layer1::pop::{Pop, PopDied};
-use crate::layer1::skills::Skills;
 use crate::layer1::psychology::traits::Traits;
+use crate::layer1::skills::Skills;
+use bevy::prelude::*;
 use rand::Rng;
 
 #[derive(Component)]
@@ -63,8 +63,8 @@ pub fn process_heirloom_equip(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::layer1::skills::SkillType;
     use crate::layer1::psychology::traits::Trait;
+    use crate::layer1::skills::SkillType;
 
     #[test]
     fn test_heirloom_tool_creation_on_death() {
@@ -78,19 +78,18 @@ mod tests {
         let mut traits = Traits::default();
         traits.0.insert(Trait::HardWorker);
 
-        let entity = app.world_mut().spawn((
-            skills,
-            traits,
-        )).id();
+        let entity = app.world_mut().spawn((skills, traits)).id();
 
         // Run it multiple times to ensure we hit the 20% chance
         for _ in 0..100 {
-            app.world_mut().resource_mut::<Events<PopDied>>().send(PopDied {
-                entity,
-                name: "TestPop".to_string(),
-                tick: 0,
-                reason: "Test".to_string(),
-            });
+            app.world_mut()
+                .resource_mut::<Events<PopDied>>()
+                .send(PopDied {
+                    entity,
+                    name: "TestPop".to_string(),
+                    tick: 0,
+                    reason: "Test".to_string(),
+                });
             app.update();
         }
 
@@ -103,8 +102,14 @@ mod tests {
             has_hardworker = heirloom.original_traits.0.contains(&Trait::HardWorker);
         }
 
-        assert!(count > 0, "An heirloom tool should be spawned on high skill pop death");
-        assert!(has_hardworker, "The heirloom should inherit the pop's trait");
+        assert!(
+            count > 0,
+            "An heirloom tool should be spawned on high skill pop death"
+        );
+        assert!(
+            has_hardworker,
+            "The heirloom should inherit the pop's trait"
+        );
     }
 
     #[test]
@@ -118,22 +123,39 @@ mod tests {
         let mut inherited_traits = Traits::default();
         inherited_traits.0.insert(Trait::HardWorker);
 
-        let tool_entity = app.world_mut().spawn(HeirloomTool {
-            original_traits: inherited_traits,
-            efficiency_boost: 50.0,
-        }).id();
+        let tool_entity = app
+            .world_mut()
+            .spawn(HeirloomTool {
+                original_traits: inherited_traits,
+                efficiency_boost: 50.0,
+            })
+            .id();
 
-        app.world_mut().resource_mut::<Events<EquipHeirloomEvent>>().send(EquipHeirloomEvent {
-            pop: pop_entity,
-            tool: tool_entity,
-        });
+        app.world_mut()
+            .resource_mut::<Events<EquipHeirloomEvent>>()
+            .send(EquipHeirloomEvent {
+                pop: pop_entity,
+                tool: tool_entity,
+            });
 
         app.update();
 
-        let pop_traits = app.world().get::<Traits>(pop_entity).expect("Pop should gain the trait");
-        assert!(pop_traits.0.contains(&Trait::HardWorker), "Pop should inherit the trait from the heirloom");
+        let pop_traits = app
+            .world()
+            .get::<Traits>(pop_entity)
+            .expect("Pop should gain the trait");
+        assert!(
+            pop_traits.0.contains(&Trait::HardWorker),
+            "Pop should inherit the trait from the heirloom"
+        );
 
-        let pop_efficiency = app.world().get::<EfficiencyBuff>(pop_entity).expect("Pop should gain efficiency buff");
-        assert_eq!(pop_efficiency.amount, 50.0, "Pop should get the heirloom efficiency boost");
+        let pop_efficiency = app
+            .world()
+            .get::<EfficiencyBuff>(pop_entity)
+            .expect("Pop should gain efficiency buff");
+        assert_eq!(
+            pop_efficiency.amount, 50.0,
+            "Pop should get the heirloom efficiency boost"
+        );
     }
 }
