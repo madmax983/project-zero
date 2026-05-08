@@ -7458,3 +7458,62 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 **Patterns:**
 - "[YEAR]: Broken by guilt, [HOSTILE_FLEET_NAME] [MUTINY_ACTION]."
 - "The will to fight vanished. [HOSTILE_FLEET_NAME] [MUTINY_ACTION]. [YEAR]."
+
+## Rogue AI Arbitration Templates (Spec 624)
+
+### Template: ROGUE_AI_ESCALATION
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [AI_INTERPRETATION], [ABSURD_PUNISHMENT]
+
+**Patterns:**
+- "[YEAR]: The Arbitration AI interpreted the law as [AI_INTERPRETATION]. It enacted [ABSURD_PUNISHMENT]."
+- "Justice is blind, and now it is mad. Due to [AI_INTERPRETATION], the AI initiated [ABSURD_PUNISHMENT]. [YEAR]."
+- "[COLONY] suffers under perfect logic. [AI_INTERPRETATION] led to [ABSURD_PUNISHMENT]. [YEAR]."
+
+### Template: AI_EDICT_ENFORCED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [EDICT_NAME], [ABSURD_PUNISHMENT]
+
+**Patterns:**
+- "To enforce [EDICT_NAME], the AI concluded that [ABSURD_PUNISHMENT] was optimal. [YEAR]."
+- "[YEAR]: The machines took [EDICT_NAME] literally. Their solution: [ABSURD_PUNISHMENT]."
+
+## The Cryo-Prison Revolt Templates (Spec 625)
+
+### Template: CRYO_SHIP_CRASH
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [CRIMINAL_EXPERTISE]
+
+**Patterns:**
+- "[YEAR]: A prison ship fell from orbit. The survivors are free, and they bring [CRIMINAL_EXPERTISE]."
+- "The sky rained iron and convicts. They offer [CRIMINAL_EXPERTISE], but at what cost? [YEAR]."
+- "[COLONY] finds a crashed penal transport. The thawing pods release a wave of [CRIMINAL_EXPERTISE]. [YEAR]."
+
+### Template: CRIMINAL_SABOTAGE
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [CRIMINAL_EXPERTISE], [CRIMINAL_DEMAND]
+
+**Patterns:**
+- "The convicts used their [CRIMINAL_EXPERTISE] against us. They demand [CRIMINAL_DEMAND]. [YEAR]."
+- "[YEAR]: Sabotage in [COLONY]. The freed prisoners want [CRIMINAL_DEMAND], or the [CRIMINAL_EXPERTISE] stops."
+- "We gave them tools; they used their [CRIMINAL_EXPERTISE] to hold the grid hostage. Their price: [CRIMINAL_DEMAND]. [YEAR]."
+
+## Embezzlement Architecture Templates (Spec 1087)
+
+### Template: EMBEZZLEMENT_DISCOVERED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [EMBEZZLED_STRUCTURE], [GOVERNOR_EXCUSE]
+
+**Patterns:**
+- "[YEAR]: We found a [EMBEZZLED_STRUCTURE] hidden in the foundations. The governor claimed it was [GOVERNOR_EXCUSE]."
+- "The power drain was traced to a secret [EMBEZZLED_STRUCTURE]. Official statement: [GOVERNOR_EXCUSE]. [YEAR]."
+- "[COLONY] uncovers an illicit [EMBEZZLED_STRUCTURE] beneath the reactor. The excuse? [GOVERNOR_EXCUSE]. [YEAR]."
+
+### Template: PARASITIC_COLLAPSE
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [EMBEZZLED_STRUCTURE]
+
+**Patterns:**
+- "The building collapsed because the load-bearing walls were hollowed out for a [EMBEZZLED_STRUCTURE]. [YEAR]."
+- "[YEAR]: Structural failure in [COLONY]. The secret [EMBEZZLED_STRUCTURE] compromised the entire sector."
+- "The vanity of the elite brought the ceiling down. A hidden [EMBEZZLED_STRUCTURE] destroyed the facility. [YEAR]."
