@@ -173,9 +173,6 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::petrification::petrification_exposure_system,
             crate::layer1::petrification::petrification_progression_system,
             crate::layer1::petrification::petrification_transformation_system,
-
-
-
             crate::layer1::factions::update_faction_membership_system,
             crate::layer1::factions::update_faction_satisfaction_system
                 .after(crate::layer1::factions::update_faction_membership_system),

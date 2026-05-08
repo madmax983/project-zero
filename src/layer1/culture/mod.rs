@@ -32,8 +32,6 @@ pub use astrology::*;
 pub mod gastronomers;
 pub use gastronomers::*;
 
-
-
 pub mod cultural_artifacts;
 pub use cultural_artifacts::*;
 
