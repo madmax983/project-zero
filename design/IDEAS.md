@@ -19196,3 +19196,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you violently suppress the religious beliefs of your own people to restore critical infrastructure, or build a whole new (and expensive) processor somewhere else to keep the peace?
 
 ---
+
+## The Bureaucracy of Sleep (Hot-bunking)
+
+**Layer:** 1
+
+**Fantasy:** The sheer claustrophobia and logistical nightmare of an overcrowded station.
+
+**Mechanic:** When population exceeds available beds, pops are forced into "hot-bunking" shifts. Their schedules must perfectly align so one pop wakes up just as another goes to sleep.
+
+**Emergence:** A single pop getting stuck in transit or working overtime throws the entire rotation off. The next pop arrives to an occupied bed, collapses from exhaustion in the hallway, which blocks traffic, causing more pops to miss their sleep shifts, leading to a colony-wide sleep-deprivation cascade.
+
+**Tension:** Do you waste precious early-game resources on redundant housing, or run a hyper-efficient, razor-thin margin on sleep schedules that could collapse from one delayed train?
+
+---
+
+## Scrap-code Evolution
+
+**Layer:** Cross-layer
+
+**Fantasy:** Technology that learns from its environment until it becomes dangerously over-specialized.
+
+**Mechanic:** Automated systems (Layer 1 factories, Layer 2 defense drones) slowly build hidden efficiency modifiers based on their environment. A drone constantly fighting near asteroids learns to use them for cover.
+
+**Emergence:** You transfer an elite defense drone squadron from an asteroid belt to defend an open-space trade hub. Accustomed to using rocks for cover, they attempt to use your own civilian trade ships as cover during a pirate attack, destroying the very convoy they were sent to protect.
+
+**Tension:** Do you frequently wipe AI systems to keep their behavior predictable, or let them develop powerful but dangerously erratic local optimizations?
+
+---
+
+## The Martyr's Shadow
+
+**Layer:** 1
+
+**Fantasy:** The sins of the colony's past shape its political future for generations.
+
+**Mechanic:** When pops die due to poor conditions (starvation, industrial accidents), their surviving family members or close friends gain a permanent "Grieving" or "Radicalized" memory trait.
+
+**Emergence:** You ignored safety protocols to rush a uranium mine, resulting in an explosion that killed ten miners. Fifty years later, their descendants have formed a powerful labor union that remembers the "Uranium Martyrs," and they coordinate a massive strike right when you desperately need resources for a war.
+
+**Tension:** Do you sacrifice pops for short-term economic gains, knowing that the resulting trauma will breed political instability for decades?
+
+---
