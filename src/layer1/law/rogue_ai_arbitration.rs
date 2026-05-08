@@ -1,6 +1,6 @@
-use bevy::prelude::*;
-use crate::layer1::mind::utility_types::ActionType;
 use crate::layer1::entities::pop::Pop;
+use crate::layer1::mind::utility_types::ActionType;
+use bevy::prelude::*;
 
 #[derive(Component, Debug)]
 pub struct Infraction {
@@ -27,7 +27,7 @@ pub fn ai_arbitration_system(
     mut ticks: Local<u32>,
 ) {
     *ticks += 1;
-    if *ticks == 1 || *ticks % 600 == 0 {
+    if *ticks == 1 || (*ticks).is_multiple_of(600) {
         if let Ok(ai) = ai_query.get_single() {
             if ai.literal_interpretation > 0.8 {
                 for mut infraction in infraction_query.iter_mut() {
@@ -47,7 +47,8 @@ pub fn ai_edict_enforcement_system(
 ) {
     if let Ok(ai) = ai_query.get_single() {
         if let Some(edicts) = edicts {
-            if ai.literal_interpretation >= 1.0 && edicts.0.contains(&Edict::MaximizeFoodProduction) {
+            if ai.literal_interpretation >= 1.0 && edicts.0.contains(&Edict::MaximizeFoodProduction)
+            {
                 for (entity, action) in pop_query.iter() {
                     if let ActionType::SatisfyRest = action.current {
                         commands.entity(entity).insert(Infraction { severity: 5 });
@@ -68,19 +69,29 @@ mod tests {
         let mut app = App::new();
         app.add_systems(Update, ai_arbitration_system);
 
-        let _ai_entity = app.world_mut().spawn((
-            ArbitrationAI { time_active: 1000.0, literal_interpretation: 0.9 },
-        )).id();
+        let _ai_entity = app
+            .world_mut()
+            .spawn((ArbitrationAI {
+                time_active: 1000.0,
+                literal_interpretation: 0.9,
+            },))
+            .id();
 
-        let pop_entity = app.world_mut().spawn((
-            Pop,
-            Infraction { severity: 1 }, // minor infraction
-        )).id();
+        let pop_entity = app
+            .world_mut()
+            .spawn((
+                Pop,
+                Infraction { severity: 1 }, // minor infraction
+            ))
+            .id();
 
         app.update();
 
         let infraction = app.world().get::<Infraction>(pop_entity).unwrap();
-        assert!(infraction.severity > 5, "AI should escalate punishment severity dramatically based on literal interpretation");
+        assert!(
+            infraction.severity > 5,
+            "AI should escalate punishment severity dramatically based on literal interpretation"
+        );
     }
 
     #[test]
@@ -90,17 +101,30 @@ mod tests {
 
         app.insert_resource(ActiveEdicts(vec![Edict::MaximizeFoodProduction]));
 
-        let _ai_entity = app.world_mut().spawn((
-            ArbitrationAI { literal_interpretation: 1.0, ..default() },
-        )).id();
+        let _ai_entity = app
+            .world_mut()
+            .spawn((ArbitrationAI {
+                literal_interpretation: 1.0,
+                ..default()
+            },))
+            .id();
 
-        let farmer_pop = app.world_mut().spawn((
-            Pop,
-            crate::layer1::mind::utility_types::PopAction { current: ActionType::SatisfyRest, ..default() }, // not producing food!
-        )).id();
+        let farmer_pop = app
+            .world_mut()
+            .spawn((
+                Pop,
+                crate::layer1::mind::utility_types::PopAction {
+                    current: ActionType::SatisfyRest,
+                    ..default()
+                }, // not producing food!
+            ))
+            .id();
 
         app.update();
 
-        assert!(app.world().get::<Infraction>(farmer_pop).is_some(), "AI should flag sleeping as an infraction when food maximization is active");
+        assert!(
+            app.world().get::<Infraction>(farmer_pop).is_some(),
+            "AI should flag sleeping as an infraction when food maximization is active"
+        );
     }
 }
