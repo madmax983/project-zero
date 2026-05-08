@@ -135,3 +135,5 @@ pub mod echoing_footsteps;
 pub mod panic_buying;
 #[cfg(feature = "nova")]
 pub mod sleepwalking_hazards;
+#[cfg(feature = "nova")]
+pub mod solar_flare_sickness;

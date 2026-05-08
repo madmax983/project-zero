@@ -1,0 +1,4 @@
+## [Solar Flare Sickness]
+**The Spark:** We have `SolarCycle` (Solar Maximum) and `RadiationSickness`.
+**The Feature:** What if during a Solar Maximum, Pops who are outside (not under a `RoofGrid`) have a chance to develop `RadiationSickness` due to solar flares?
+**The Potential:** Connects the energy system (Solar Cycles) to the medical system. Players get lots of free power during Solar Maximum, but must keep their Pops indoors or risk a medical crisis.
