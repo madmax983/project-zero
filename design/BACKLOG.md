@@ -1,7 +1,7 @@
 # Backlog
 
 ## High Priority
-- [ ] `1255` Sentient Trade Routes — `specs/1255-sentient-trade-routes.md`
+
 - [x] `1122` The Rust-Lung Epidemic — `specs/1122-rust-lung-epidemic.md` — claimed 2024-05-24
 
 

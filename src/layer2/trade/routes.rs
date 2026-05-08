@@ -46,6 +46,41 @@ pub struct TradeRoute {
 #[derive(Component)]
 pub struct Timer(pub u32);
 
+#[derive(Component, Default)]
+pub struct RouteComplexity {
+    pub level: f32,
+}
+
+#[derive(Event)]
+pub struct SentientTollDemandEvent {
+    pub route_id: Entity,
+    pub demanded_resource: String,
+}
+
+pub fn increase_route_complexity_system(
+    mut query: Query<(&TradeRoute, &mut RouteComplexity, &Timer)>,
+) {
+    for (_, mut complexity, timer) in query.iter_mut() {
+        if timer.0 == 0 {
+            complexity.level += 1.0;
+        }
+    }
+}
+
+pub fn check_sentient_route_system(
+    query: Query<(Entity, &RouteComplexity)>,
+    mut events: EventWriter<SentientTollDemandEvent>,
+) {
+    for (entity, complexity) in query.iter() {
+        if complexity.level >= 100.0 {
+            events.send(SentientTollDemandEvent {
+                route_id: entity,
+                demanded_resource: "RareData".to_string(),
+            });
+        }
+    }
+}
+
 pub fn execute_trade_routes_system(
     mut routes: Query<(&TradeRoute, &mut Timer)>,
     mut colonies: Query<&mut Colony>,
@@ -70,6 +105,84 @@ pub fn execute_trade_routes_system(
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn test_route_accumulates_complexity() {
+        let mut world = World::new();
+        let source_ent = world
+            .spawn(Colony {
+                name: "Source".to_string(),
+                resources: vec![],
+            })
+            .id();
+        let dest_ent = world
+            .spawn(Colony {
+                name: "Dest".to_string(),
+                resources: vec![],
+            })
+            .id();
+
+        let route_ent = world
+            .spawn((
+                TradeRoute {
+                    source: source_ent,
+                    destination: dest_ent,
+                    item_type: "Food".to_string(),
+                    amount: 10,
+                    interval: 100,
+                },
+                RouteComplexity { level: 0.0 },
+                crate::layer2::trade::routes::Timer(0),
+            ))
+            .id();
+
+        // Advance simulation
+        let mut schedule = Schedule::default();
+        schedule.add_systems(increase_route_complexity_system);
+        schedule.run(&mut world);
+
+        let complexity = world.get::<RouteComplexity>(route_ent).unwrap();
+        assert!(complexity.level > 0.0);
+    }
+
+    #[test]
+    fn test_sentient_route_demands_toll() {
+        let mut world = World::new();
+        world.insert_resource(Events::<SentientTollDemandEvent>::default());
+        let source_ent = world
+            .spawn(Colony {
+                name: "Source".to_string(),
+                resources: vec![],
+            })
+            .id();
+        let dest_ent = world
+            .spawn(Colony {
+                name: "Dest".to_string(),
+                resources: vec![],
+            })
+            .id();
+
+        let _route_ent = world
+            .spawn((
+                TradeRoute {
+                    source: source_ent,
+                    destination: dest_ent,
+                    item_type: "Food".to_string(),
+                    amount: 10,
+                    interval: 100,
+                },
+                RouteComplexity { level: 100.0 },
+                crate::layer2::trade::routes::Timer(0),
+            ))
+            .id();
+
+        let mut schedule = Schedule::default();
+        schedule.add_systems(check_sentient_route_system);
+        schedule.run(&mut world);
+
+        let events = world.resource::<Events<SentientTollDemandEvent>>();
+        assert_eq!(events.get_cursor().len(events), 1);
+    }
 
     #[test]
     fn test_trade_route_creation() {
