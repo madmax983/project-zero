@@ -1998,3 +1998,20 @@ pub fn diplomatic_incident_chronicle_bridge(
         });
     }
 }
+
+pub fn nostalgia_rumor_generation_bridge(
+    mut query: Query<(Entity, &mut crate::layer1::rumor::Knowledge), With<crate::layer1::culture::nostalgia::Nostalgia>>,
+    time: Res<crate::shared::time::SimulationTime>,
+) {
+    for (entity, mut knowledge) in &mut query {
+        let topic = crate::layer1::rumor::RumorTopic::EventNews("Past Glory".to_string());
+        if !knowledge.knows(&topic) {
+            knowledge.add_rumor(crate::layer1::rumor::Rumor {
+                topic,
+                source: entity,
+                timestamp: time.tick,
+                strength: 1.0,
+            });
+        }
+    }
+}

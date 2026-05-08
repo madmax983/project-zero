@@ -944,3 +944,9 @@
 - **Systems connected:** `OrganHarvestedEvent` (Penal Law) -> `organ_trade_diplomacy_bridge` (Integration) -> `TraitChangedEvent` (Diplomacy Reflection)
 - **Glue added:** Added `organ_trade_diplomacy_bridge` in `src/layer3/integration.rs` to mark a civilization as `is_barbarian` when they harvest organs. Registered in `src/simulation.rs`.
 - **Tests:** `tests/integration/organ_trade_bridge.rs`
+
+### INT-623: Nostalgia Plague -> Rumor Network
+- **Date:** 2026-02-01
+- **Systems connected:** `Nostalgia` -> `nostalgia_rumor_generation_bridge` -> `process_rumor_reaction` -> `RumorSpreadEvent`
+- **Glue added:** Added `nostalgia_rumor_generation_bridge` in `src/layer1/core/integration.rs` to generate "Past Glory" rumor. Emitted `RumorSpreadEvent` in `process_rumor_reaction` when "Past Glory" is heard. Registered systems in `src/layer1/systems/observation.rs`.
+- **Tests:** `tests/integration/nostalgia_plague_bridge.rs`

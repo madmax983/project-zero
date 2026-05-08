@@ -122,7 +122,15 @@ pub fn process_rumor_reaction(world: &mut World, listener: Entity, rumor: &Rumor
                 needs.leisure = (needs.leisure - 0.05).max(0.0);
             }
         }
-        RumorTopic::EventNews(_) => {}
+        RumorTopic::EventNews(ref news) => {
+            if news == "Past Glory" {
+                world.send_event(crate::layer1::culture::nostalgia::RumorSpreadEvent {
+                    source: rumor.source,
+                    target: listener,
+                    rumor: crate::layer1::culture::nostalgia::Rumor::PastGlory,
+                });
+            }
+        }
     }
 }
 

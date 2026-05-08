@@ -90,9 +90,14 @@ pub fn register(schedule: &mut Schedule) {
     schedule.add_systems(
         (
             check_milestones_system.after(crate::layer1::health::despawn_dead_entities_system),
+            crate::layer1::culture::nostalgia::nostalgia_trigger_system,
+            crate::layer1::core::integration::nostalgia_rumor_generation_bridge
+                .after(crate::layer1::culture::nostalgia::nostalgia_trigger_system),
             crate::layer1::rumor::generate_rumor_system
                 .after(crate::layer1::health::despawn_dead_entities_system),
-            crate::layer1::rumor::exchange_rumors_system
+            crate::layer1::rumor::exchange_rumors_system,
+            crate::layer1::culture::nostalgia::nostalgia_spread_system
+                .after(crate::layer1::rumor::exchange_rumors_system)
                 .after(crate::layer1::health::despawn_dead_entities_system),
             crate::layer1::social::society::form_societies_system
                 .after(crate::layer1::health::despawn_dead_entities_system),

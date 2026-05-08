@@ -6,7 +6,7 @@ Tasks currently being implemented by Builders.
 
 
 ---
-- [ ] `623` The Nostalgia Plague — `specs/623-nostalgia-plague.md` — claimed 2026-02-01
+
 
 
 
