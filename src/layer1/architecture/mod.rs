@@ -55,3 +55,4 @@ pub mod resonant_architecture;
 pub use resonant_architecture::*;
 pub mod embezzlement;
 pub use embezzlement::*;
+pub mod sunk_cost_monument;
