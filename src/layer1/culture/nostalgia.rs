@@ -31,13 +31,14 @@ pub fn nostalgia_trigger_system(
 
 pub fn nostalgia_spread_system(
     mut commands: Commands,
-    mut events: EventReader<RumorSpreadEvent>,
+    events: Option<ResMut<Events<RumorSpreadEvent>>>,
     query: Query<&Nostalgia>,
 ) {
     let mut rng = rand::thread_rng();
     use rand::Rng;
 
-    for event in events.read() {
+    if let Some(mut events_res) = events {
+        for event in events_res.drain() {
         match event.rumor {
             Rumor::PastGlory => {
                 if query.get(event.source).is_ok() {
@@ -48,6 +49,7 @@ pub fn nostalgia_spread_system(
                 }
             }
         }
+    }
     }
 }
 
