@@ -99,6 +99,7 @@ pub enum ItemType {
     Manual,
     /// Default food type (e.g. from Farms).
     Potato,
+    VitalOrgans,
     /// Grain crop.
     Wheat,
     /// Rice crop.

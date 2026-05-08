@@ -125,6 +125,7 @@ pub enum Trait {
     Refugee,
     /// Suffered extreme trauma.
     Traumatized,
+    Psychopath,
 }
 
 impl Trait {
@@ -193,6 +194,7 @@ impl Trait {
             Trait::Homesick => "Homesick",
             Self::Refugee => "Refugee",
             Self::Traumatized => "Traumatized",
+            Self::Psychopath => "Psychopath",
         }
     }
 }

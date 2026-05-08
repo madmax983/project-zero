@@ -122,6 +122,7 @@ pub struct ColonyPolicies {
 pub enum Policy {
     /// Reduces hunger decay but lowers morale.
     Rationing,
+    MandatoryOrganHarvesting,
     /// Increases work speed but lowers morale.
     DoubleShifts,
     /// Reduces vermin growth but lowers work speed.

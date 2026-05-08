@@ -1,10 +1,13 @@
 use super::Layer1SystemSet;
 use crate::layer1::social::old_guard::mood_lifecycle_system;
 use crate::layer1::*;
+
 use bevy_ecs::prelude::*;
 
 #[allow(clippy::too_many_lines)]
 pub fn register(schedule: &mut Schedule) {
+
+
     schedule.add_systems(
         (
             crate::layer1::social::xenoflora_pet::apply_pet_mood_boost,
@@ -97,6 +100,8 @@ pub fn register(schedule: &mut Schedule) {
     schedule.add_systems(
         (
             crate::layer1::law::justice::update_inmates_system.after(decay_needs_system),
+            crate::layer1::law::organ_trade::process_dead_pops_for_organs.after(decay_needs_system),
+            crate::layer1::law::organ_trade::apply_harvesting_horror_system.after(crate::layer1::law::organ_trade::process_dead_pops_for_organs),
             crate::layer1::day_night::circadian_rhythm_system.after(consume_food_system),
             aging_system.after(consume_food_system),
             natural_death_system.after(aging_system),
