@@ -19238,3 +19238,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you sacrifice pops for short-term economic gains, knowing that the resulting trauma will breed political instability for decades?
 
 ---
+## Supply Chain Contamination
+
+**Layer:** Cross-layer
+
+**Fantasy:** A tiny biological contaminant on a backwater mining colony mutates into a system-wide plague through the trade network.
+
+**Mechanic:** If a Layer 1 colony has poor sanitation in its cargo bays, trade ships (Layer 2) have a chance to carry "Contaminants" to other nodes. The Contaminant evolves based on the environments it passes through, eventually becoming a unique biological or mechanical hazard.
+
+**Emergence:** You ignore a minor mold problem on a distant ag-world. The mold hitchhikes on grain shipments to the heavily industrialized capital, where the heat and radiation mutate it into a metal-eating rust-fungus that collapses your planetary defense grid.
+
+**Tension:** Do you impose strict, expensive quarantines on all trade, grinding your economy to a halt, or risk system-wide pandemics for the sake of free trade?
+
+---
+
+## Generational Ship Drift
+
+**Layer:** 3
+
+**Fantasy:** The culture of a generation ship diverges so wildly during its long journey that they no longer recognize your empire when they arrive.
+
+**Mechanic:** Colony ships sent to distant star systems without hyperspace lanes take decades to arrive. During the journey, the ship's internal society simulates. Random events and isolation cause massive shifts in their political and ethical alignments before they even land.
+
+**Emergence:** You send a ship of loyal, peaceful scientists to found a utopian research outpost. 300 years later, they arrive as a paranoid, xenophobic warrior cult that immediately declares war on your nearest system.
+
+**Tension:** Do you only expand where you have instant communication (limiting growth), or risk seeding the galaxy with heavily armed splinters of your own civilization?
+
+---
+
+## The Gravity of Wealth
+
+**Layer:** 2
+
+**Fantasy:** Extreme concentration of resources physically altering the celestial mechanics of a system.
+
+**Mechanic:** Storing massive amounts of dense, late-game resources (like refined dark matter or ultra-dense alloys) in a single station or orbital vault slowly increases its localized gravitational pull.
+
+**Emergence:** You consolidate all your empire's wealth into a single, heavily fortified orbital vault to protect it from pirates. The sheer mass of the stored wealth alters the orbit of nearby defensive satellites, causing them to crash into the vault, or slowly pulls the vault down into the planet's atmosphere.
+
+**Tension:** Do you centralize your wealth for easy defense and logistical efficiency, or decentralize it to avoid creating a localized gravity well that destroys your own infrastructure?
+
+---
