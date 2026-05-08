@@ -109,3 +109,22 @@ pub fn red_tape_chronicle_bridge(
         });
     }
 }
+
+use crate::layer1::law::penal::OrganHarvestedEvent;
+use crate::layer3::diplomacy_reflection::{Civilization, DiplomaticTraits, TraitChangedEvent};
+
+/// Bridges `OrganHarvestedEvent` to `DiplomaticTraits` for Layer 3 Diplomacy
+pub fn organ_trade_diplomacy_bridge(
+    mut harvest_events: EventReader<OrganHarvestedEvent>,
+    mut civ_query: Query<(Entity, &mut DiplomaticTraits), With<Civilization>>,
+    mut trait_events: EventWriter<TraitChangedEvent>,
+) {
+    if harvest_events.read().next().is_some() {
+        for (entity, mut traits) in civ_query.iter_mut() {
+            if !traits.is_barbarian {
+                traits.is_barbarian = true;
+                trait_events.send(TraitChangedEvent { civ_entity: entity });
+            }
+        }
+    }
+}
