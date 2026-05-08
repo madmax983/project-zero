@@ -39,17 +39,17 @@ pub fn nostalgia_spread_system(
 
     if let Some(mut events_res) = events {
         for event in events_res.drain() {
-        match event.rumor {
-            Rumor::PastGlory => {
-                if query.get(event.source).is_ok() {
-                    // Refactor: Add a resistance mechanic so not every rumor spread guarantees an infection.
-                    if rng.gen_bool(0.25) {
-                        commands.entity(event.target).insert(Nostalgia);
+            match event.rumor {
+                Rumor::PastGlory => {
+                    if query.get(event.source).is_ok() {
+                        // Refactor: Add a resistance mechanic so not every rumor spread guarantees an infection.
+                        if rng.gen_bool(0.25) {
+                            commands.entity(event.target).insert(Nostalgia);
+                        }
                     }
                 }
             }
         }
-    }
     }
 }
 

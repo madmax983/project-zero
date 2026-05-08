@@ -2000,7 +2000,10 @@ pub fn diplomatic_incident_chronicle_bridge(
 }
 
 pub fn nostalgia_rumor_generation_bridge(
-    mut query: Query<(Entity, &mut crate::layer1::rumor::Knowledge), With<crate::layer1::culture::nostalgia::Nostalgia>>,
+    mut query: Query<
+        (Entity, &mut crate::layer1::rumor::Knowledge),
+        With<crate::layer1::culture::nostalgia::Nostalgia>,
+    >,
     time: Res<crate::shared::time::SimulationTime>,
 ) {
     for (entity, mut knowledge) in &mut query {
