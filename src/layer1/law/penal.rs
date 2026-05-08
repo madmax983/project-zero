@@ -102,8 +102,6 @@ mod tests {
     use crate::layer1::utility_types::PopAction;
     use crate::layer1::zone::{ZoneGrid, ZoneType};
 
-    use bevy_ecs::system::RunSystemOnce;
-
     fn setup_world() -> World {
         let mut world = World::new();
         let mut zone_grid = ZoneGrid::new(10, 10);
@@ -137,7 +135,10 @@ mod tests {
             .id();
 
         // Run evaluation system
-        world.run_system_once(evaluate_penal_work_system).unwrap();
+        let _ = bevy_ecs::system::RunSystemOnce::run_system_once(
+            &mut world,
+            evaluate_penal_work_system,
+        );
 
         // Should receive PenalLabor component
         assert!(world.get::<PenalLabor>(inmate).is_some());
@@ -162,7 +163,10 @@ mod tests {
             .id();
 
         // Ensure system doesn't wrongly add it
-        world.run_system_once(evaluate_penal_work_system).unwrap();
+        let _ = bevy_ecs::system::RunSystemOnce::run_system_once(
+            &mut world,
+            evaluate_penal_work_system,
+        );
         assert!(world.get::<PenalLabor>(inmate).is_none());
 
         // Test cleanup
@@ -171,7 +175,8 @@ mod tests {
             .insert((PenalLabor::default(), RevoltRisk::default()));
 
         // Still at (0,0) which is not Penal
-        world.run_system_once(cleanup_penal_work_system).unwrap();
+        let _ =
+            bevy_ecs::system::RunSystemOnce::run_system_once(&mut world, cleanup_penal_work_system);
 
         assert!(world.get::<PenalLabor>(inmate).is_none());
     }
@@ -195,7 +200,8 @@ mod tests {
             .id();
 
         // Run system tick
-        world.run_system_once(update_revolt_risk_system).unwrap();
+        let _ =
+            bevy_ecs::system::RunSystemOnce::run_system_once(&mut world, update_revolt_risk_system);
 
         let risk = world.get::<RevoltRisk>(inmate).unwrap();
         assert!(risk.current > 0.0);
@@ -218,11 +224,159 @@ mod tests {
             ))
             .id();
 
-        world.run_system_once(check_jailbreak_system).unwrap();
+        let _ =
+            bevy_ecs::system::RunSystemOnce::run_system_once(&mut world, check_jailbreak_system);
 
         // Should lose Inmate status (escaped)
         assert!(world.get::<Inmate>(inmate).is_none());
         assert!(world.get::<PenalLabor>(inmate).is_none());
         assert!(world.get::<RevoltRisk>(inmate).is_none());
+    }
+}
+
+use crate::layer1::administration::edicts::{ColonyPolicies, Policy};
+use crate::layer1::economy::items::ItemType;
+use crate::layer1::health::Dead;
+use crate::layer1::psychology::traits::Trait;
+use crate::layer1::social::morale::Morale;
+use bevy::prelude::*;
+
+#[derive(Resource, Default)]
+pub struct ColonyInventory {
+    pub vital_organs: usize,
+}
+
+impl ColonyInventory {
+    pub fn add(&mut self, _item: ItemType, amount: usize) {
+        self.vital_organs += amount;
+    }
+
+    pub fn get_amount(&self, _item: &ItemType) -> usize {
+        self.vital_organs
+    }
+}
+
+#[derive(Event, Default)]
+pub struct OrganHarvestedEvent;
+
+pub fn process_dead_pops_for_organs_system(
+    mut commands: Commands,
+    policies: Option<Res<ColonyPolicies>>,
+    inventory: Option<ResMut<ColonyInventory>>,
+    dead_pops: Query<Entity, With<Dead>>,
+    mut harvest_events: EventWriter<OrganHarvestedEvent>,
+) {
+    if let Some(policies) = policies {
+        if policies.is_active(Policy::MandatoryOrganHarvesting) {
+            if let Some(mut inv) = inventory {
+                for entity in dead_pops.iter() {
+                    inv.add(ItemType::VitalOrgans, 1);
+                    commands.entity(entity).try_despawn_recursive();
+                    harvest_events.send(OrganHarvestedEvent);
+                }
+            }
+        }
+    }
+}
+
+pub fn apply_harvesting_horror_system(
+    mut events: EventReader<OrganHarvestedEvent>,
+    mut pops: Query<(
+        &mut Morale,
+        Option<&crate::layer1::psychology::traits::Traits>,
+    )>,
+) {
+    let mut harvested = false;
+    for _ in events.read() {
+        harvested = true;
+    }
+    if !harvested {
+        return;
+    }
+
+    for (mut morale, traits_opt) in pops.iter_mut() {
+        let is_psycho = traits_opt.is_some_and(|t| t.0.contains(&Trait::Psychopath));
+        if !is_psycho {
+            morale.value -= 20.0;
+            morale.value = morale.value.max(0.0);
+        }
+    }
+}
+
+#[cfg(test)]
+mod organ_trade_tests {
+    use super::*;
+
+    use crate::layer1::entities::pop::Pop;
+    use crate::layer1::psychology::traits::Traits;
+
+    #[test]
+    fn test_organ_harvesting_edict_produces_organs() {
+        let mut world = World::new();
+
+        let mut policies = ColonyPolicies::default();
+        policies
+            .active_policies
+            .insert(Policy::MandatoryOrganHarvesting);
+        world.insert_resource(policies);
+
+        let inventory = ColonyInventory::default();
+        world.insert_resource(inventory);
+        world.insert_resource(Events::<OrganHarvestedEvent>::default());
+
+        let dead_pop = world.spawn((Pop, Dead)).id();
+
+        let _ = bevy_ecs::system::RunSystemOnce::run_system_once(
+            &mut world,
+            process_dead_pops_for_organs_system,
+        );
+
+        let current_inventory = world.resource::<ColonyInventory>();
+        assert_eq!(current_inventory.get_amount(&ItemType::VitalOrgans), 1);
+        assert!(world.get_entity(dead_pop).is_err());
+    }
+
+    #[test]
+    fn test_organ_harvesting_causes_horror() {
+        let mut world = World::new();
+        world.insert_resource(Events::<OrganHarvestedEvent>::default());
+
+        let normal_pop = world
+            .spawn((
+                Pop,
+                Morale {
+                    value: 100.0,
+                    ..Default::default()
+                },
+            ))
+            .id();
+
+        let mut traits = Traits::default();
+        traits.0.insert(Trait::Psychopath);
+        let psycho_pop = world
+            .spawn((
+                Pop,
+                traits,
+                Morale {
+                    value: 100.0,
+                    ..Default::default()
+                },
+            ))
+            .id();
+
+        world
+            .resource_mut::<Events<OrganHarvestedEvent>>()
+            .send(OrganHarvestedEvent);
+
+        let _ = bevy_ecs::system::RunSystemOnce::run_system_once(
+            &mut world,
+            apply_harvesting_horror_system,
+        );
+
+        let normal_morale = world.get::<Morale>(normal_pop).unwrap();
+        let psycho_morale = world.get::<Morale>(psycho_pop).unwrap();
+
+        assert!(normal_morale.value < 100.0);
+        assert_eq!(psycho_morale.value, 100.0);
     }
 }

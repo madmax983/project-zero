@@ -145,6 +145,8 @@ pub enum Policy {
     /// Declares martial law, restricting movement and increasing security.
     /// Declares martial law, restricting movement and increasing security.
     MartialLaw,
+    /// Processes dead pops into VitalOrgans.
+    MandatoryOrganHarvesting,
 }
 
 #[derive(Event, Debug)]

@@ -9,6 +9,8 @@ use rand::Rng;
 #[repr(u8)]
 #[derive(strum_macros::EnumIter)]
 pub enum Trait {
+    /// Lacks empathy, unaffected by horror.
+    Psychopath,
     /// Hardened skin (+Defense/Biocompatibility).
     StoneSkin,
     /// See in the dark (+Efficiency in low light).
@@ -132,6 +134,7 @@ impl Trait {
     #[must_use]
     pub const fn label(&self) -> &'static str {
         match self {
+            Self::Psychopath => "Psychopath",
             Self::StoneSkin => "Stone Skin",
             Self::NightVision => "Night Vision",
             Self::GillLungs => "Gill Lungs",

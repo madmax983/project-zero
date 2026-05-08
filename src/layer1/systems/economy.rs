@@ -101,6 +101,8 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::memetics::parasitic_broadcast_risk_system,
             crate::layer1::memetics::process_parasitic_work_reduction,
             apply_catharsis_morale_bonus_system.after(apply_mood_modifiers_system),
+            crate::layer1::law::penal::apply_harvesting_horror_system
+                .after(apply_mood_modifiers_system),
             update_morale_cache_system
                 .after(apply_catharsis_morale_bonus_system)
                 .after(crate::layer1::graffiti::graffiti_observation_system)
@@ -111,6 +113,10 @@ pub fn register(schedule: &mut Schedule) {
             .in_set(Layer1SystemSet::Economy),
     );
 
+    schedule.add_systems(
+        (crate::layer1::law::penal::process_dead_pops_for_organs_system,)
+            .in_set(Layer1SystemSet::Economy),
+    );
     schedule.add_systems(
         (
             crate::layer1::economy::remittances::process_remittances_system,

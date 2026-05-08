@@ -148,6 +148,8 @@ pub enum ItemType {
     MemoryCore(Entity),
     /// A crystal that decays in light.
     ShadowCrystal,
+    /// Harvested organs from dead pops.
+    VitalOrgans,
     /// A living stone that moves.
     LivingStone,
     /// Scrap metal recovered from clutter.

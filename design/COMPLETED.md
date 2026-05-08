@@ -521,3 +521,4 @@
 - [x] `624` Rogue AI Arbitration — `specs/624-rogue-ai-arbitration.md` — completed 2026-05-07
 - [x] `INT-634` Integration: petrification sickness -> chronicle — completed 2026-06-25
 - [x] `625` The Cryo-Prison Revolt — `specs/625-cryo-prison-revolt.md` — completed 2026-02-01
+- [x] `471` The Organ Trade — `specs/471-the-organ-trade.md` — completed 2026-05-08
