@@ -938,3 +938,9 @@
 - **Systems connected:** `PopPetrifiedEvent` -> `petrification_chronicle_bridge` -> `AddChronicleEvent`
 - **Glue added:** Added `petrification_chronicle_bridge` in `src/layer1/core/integration.rs` to emit an `AddChronicleEvent` when `PopPetrifiedEvent` occurs.
 - **Tests:** `tests/integration/petrification_chronicle_bridge.rs`
+
+### INT-471: The Organ Trade -> Market/Diplomacy
+- **Date:** 2026-05-08
+- **Systems connected:** `OrganHarvestedEvent` (Penal Law) -> `organ_trade_diplomacy_bridge` (Integration) -> `TraitChangedEvent` (Diplomacy Reflection)
+- **Glue added:** Added `organ_trade_diplomacy_bridge` in `src/layer3/integration.rs` to mark a civilization as `is_barbarian` when they harvest organs. Registered in `src/simulation.rs`.
+- **Tests:** `tests/integration/organ_trade_bridge.rs`

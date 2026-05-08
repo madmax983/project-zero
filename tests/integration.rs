@@ -373,3 +373,6 @@ mod impact_warning_chronicle;
 mod diplomatic_incident_chronicle;
 #[path = "integration/petrification_chronicle_bridge.rs"]
 mod petrification_chronicle_bridge;
+
+#[path = "integration/organ_trade_bridge.rs"]
+mod organ_trade_bridge;
