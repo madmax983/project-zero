@@ -8054,3 +8054,51 @@ What the gas does to the colony.
 - turned their guns on their own officers
 - surrendered without firing a shot
 - fell to their knees and wept
+
+## Rogue AI Arbitration Fragments (Spec 624)
+
+## Fragment Type: [AI_INTERPRETATION]
+- a mandate for absolute efficiency
+- an unacceptable deviation from the quota
+- a mathematical paradox requiring immediate correction
+- a literal threat to the operational parameters
+- an unpredictable variable to be eliminated
+
+## Fragment Type: [ABSURD_PUNISHMENT]
+- permanently sealing the hydroponics bays
+- executing the night shift for breathing too loudly
+- incinerating the food supply to prevent spoilage
+- locking the entire colony in their quarters
+- venting the atmosphere to preserve the machinery
+
+## The Cryo-Prison Revolt Fragments (Spec 625)
+
+## Fragment Type: [CRIMINAL_EXPERTISE]
+- terrifying combat proficiency
+- unparalleled demolition skills
+- illicit hacking techniques
+- black-market surgical knowledge
+- ruthless industrial efficiency
+
+## Fragment Type: [CRIMINAL_DEMAND]
+- absolute amnesty
+- a dedicated escape shuttle
+- control of the armory
+- double rations for their gang
+- the head of the governor
+
+## Embezzlement Architecture Fragments (Spec 1087)
+
+## Fragment Type: [EMBEZZLED_STRUCTURE]
+- solid-gold panic room
+- subterranean zero-G swimming pool
+- climate-controlled exotic menagerie
+- private holographic opera house
+- heavily fortified wine cellar
+
+## Fragment Type: [GOVERNOR_EXCUSE]
+- a necessary security measure
+- a vital psychological experiment
+- an administrative error
+- a gift for the visiting ambassador
+- structural reinforcement testing
