@@ -12,3 +12,8 @@
 **Concept:** Added a `SleepwalkingHazards` system that detects if a `Pop` with `ActionType::Sleepwalking` wanders into extreme temperatures or highly radioactive zones, and applies physical damage or sickness.
 **Fate:** Merged
 **Lesson:** Tying physical danger directly to a psychological breakdown creates tension, forcing players to secure hazardous areas with physical barriers or AccessControl rather than just relying on Pops to intelligently pathfind around them.
+
+## [Solar Flare Sickness]
+**Concept:** Added `SolarFlareSickness` system that inflicts `RadiationSickness` on `Pop`s who are caught outside (not under `RoofGrid`) during the Day when the `SolarCycle` is at `Maximum`.
+**Fate:** Merged
+**Lesson:** Connects the energy system (Solar Cycles) to the medical system. Players get lots of free power during Solar Maximum, but must keep their Pops indoors or risk a medical crisis.
