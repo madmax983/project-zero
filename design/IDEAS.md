@@ -19155,3 +19155,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you cleanse the ruins and lose the powerful psychic resources, or lean into the dark history of your empire to power your war machine?
 
 ---
+## Memory Engrams
+
+**Layer:** 1
+
+**Fantasy:** Pops literally trading, stealing, or inheriting lived experiences.
+
+**Mechanic:** High-tech facilities allow extracting and injecting Memory. A pop's specific skills or severe trauma can be extracted into a physical "Engram" item. This item can be traded, stolen by spies, or implanted into newborns to bypass training times.
+
+**Emergence:** You try to rapidly train an army by cloning your best general and implanting copies of his memories into the clones. But you accidentally included his deep-seated phobia of spiders, making your entire elite force route when encountering native arachnid wildlife.
+
+**Tension:** Do you risk homogenizing your colony's personality for extreme efficiency, or let pops learn naturally but slowly?
+
+---
+
+## Orbital Debris Syndrome
+
+**Layer:** 1 -> 2
+
+**Fantasy:** The heavens are literally falling because of your own greed.
+
+**Mechanic:** Layer 2 space battles or excessive satellite launches generate "Debris." This Debris slowly degrades orbit and falls to the Layer 1 colony below as micro-meteorite showers.
+
+**Emergence:** You win a massive, desperate space battle defending your capital. A month later, the debris from the thousands of destroyed ships begins raining down, shattering the glass domes of your agricultural districts and causing mass starvation on the world you just "saved."
+
+**Tension:** Do you fight defensive wars in deep space where it's harder to resupply, or close to home where the wreckage will literally fall on your own head?
+
+---
+
+## Cult of the Broken Machine
+
+**Layer:** 1
+
+**Fantasy:** Ignorance transforming technology into theology.
+
+**Mechanic:** If a complex machine (like a terraformer or reactor) breaks down and the colony lacks the tech level or skills to repair it for a long time, uneducated pops may start worshipping it. They will form a "Cult" that violently defends the machine from being repaired, believing it must remain broken to appease the "Machine Spirit."
+
+**Emergence:** You finally research the technology needed to fix your primary atmospheric processor, which has been broken for generations. But when your engineers arrive, they are attacked by a mob of zealots who have spent the last century praying to the "Great Silent Monolith."
+
+**Tension:** Do you violently suppress the religious beliefs of your own people to restore critical infrastructure, or build a whole new (and expensive) processor somewhere else to keep the peace?
+
+---
