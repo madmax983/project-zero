@@ -47,6 +47,8 @@ pub fn build_simulation_schedule() -> Schedule {
 #[allow(clippy::too_many_lines)]
 fn init_simulation_resources(world: &mut World) {
     world.init_resource::<Events<crate::layer1::economy::apex_diet::ConsumeFoodEvent>>();
+    world.init_resource::<Events<crate::layer1::social::inherited_grudges::SevereWrongEvent>>();
+    world.init_resource::<Events<crate::layer1::social::inherited_grudges::ChildBornEvent>>();
     world.init_resource::<Events<crate::layer1::culture::nostalgia::RumorSpreadEvent>>();
     world.init_resource::<crate::layer1::biology::cybernetic_ascendancy::ColonyAverageUtility>();
     // Initialize schedule on first call (stored in World's Schedules resource)
@@ -318,6 +320,10 @@ fn register_simulation_core_systems(schedule: &mut Schedule) {
         crate::layer1::diplomacy::factions::rivals::rival_resource_drain_system,
     ));
 
+    schedule.add_systems((
+        crate::layer1::social::inherited_grudges::handle_severe_wrongs_system,
+        crate::layer1::social::inherited_grudges::inherit_vendettas_system,
+    ));
     schedule.add_systems(crate::layer1::physics::harpoon::process_harpoon_impact_system);
     schedule.add_systems((crate::layer2::weather::weather_movement_system,));
     schedule.add_systems((
@@ -725,6 +731,8 @@ mod tests {
 
         // Initialize Detection Risk for test
         world.init_resource::<Events<crate::layer1::economy::apex_diet::ConsumeFoodEvent>>();
+        world.init_resource::<Events<crate::layer1::social::inherited_grudges::SevereWrongEvent>>();
+        world.init_resource::<Events<crate::layer1::social::inherited_grudges::ChildBornEvent>>();
         world
             .init_resource::<crate::layer1::biology::cybernetic_ascendancy::ColonyAverageUtility>();
         world.init_resource::<crate::layer3::silence::DetectionRisk>();
