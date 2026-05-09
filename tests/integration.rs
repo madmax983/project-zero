@@ -379,3 +379,6 @@ mod organ_trade_bridge;
 
 #[path = "integration/resource_curse_bridge.rs"]
 mod resource_curse_bridge;
+
+#[path = "integration/cryo_prison_revolt_bridge.rs"]
+mod cryo_prison_revolt_bridge;

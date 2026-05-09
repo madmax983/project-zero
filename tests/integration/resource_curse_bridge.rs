@@ -24,5 +24,9 @@ fn test_resource_curse_triggers_raid() {
     let mut cursor = events.get_cursor();
     let emitted_events: Vec<_> = cursor.read(events).collect();
 
-    assert_eq!(emitted_events.len(), 1, "A single PirateRaidEvent should have been emitted");
+    assert_eq!(
+        emitted_events.len(),
+        1,
+        "A single PirateRaidEvent should have been emitted"
+    );
 }
