@@ -51,10 +51,10 @@ use crate::layer1::terrain::{TerrainGrid, TerrainType};
 use crate::layer1::trade::TradeDepot;
 use crate::layer1::water::{WaterSource, MAX_HYDRATION};
 use crate::shared::log::MessageLog;
+use bevy::utils::{HashMap, HashSet};
 use bevy_ecs::prelude::*;
 use bevy_ecs::world::EntityWorldMut;
 use rand::seq::SliceRandom;
-use std::collections::{HashMap, HashSet};
 use strum::IntoEnumIterator;
 use strum_macros::EnumIter;
 
@@ -912,10 +912,12 @@ pub struct BuildMode {
 }
 
 /// Tracks which tiles have buildings (for placement validation).
+/// ⚡ Bolt Optimization: Switched to `bevy::utils::HashSet` (AHash) to eliminate SipHash overhead for integer coordinate keys.
 #[derive(Resource, Default)]
 pub struct OccupiedTiles(pub HashSet<(i32, i32)>);
 
 /// A spatial map of buildings for fast lookup (Pos -> Entity).
+/// ⚡ Bolt Optimization: Switched to `bevy::utils::HashMap` (AHash) to eliminate SipHash overhead for integer coordinate keys.
 #[derive(Resource, Default)]
 pub struct BuildingMap(pub HashMap<(i32, i32), Entity>);
 
