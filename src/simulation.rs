@@ -202,6 +202,12 @@ fn init_simulation_resources(world: &mut World) {
     world.init_resource::<Events<crate::layer3::market::quantum_famine::ExportDumpEvent>>();
     world.init_resource::<Events<crate::layer2::exploration::void_whispers::FleetReturnedEvent>>();
     world.init_resource::<Events<crate::layer1::core::integration::PirateAmnestyEvent>>();
+    world.init_resource::<Events<crate::layer1::economy::resources::ResourceMinedEvent>>();
+    world.init_resource::<crate::layer3::pirates::PirateThreatLevel>();
+    world.init_resource::<crate::layer3::pirates::ResourceCurseSettings>();
+    world.init_resource::<Events<crate::layer1::economy::resources::ResourceMinedEvent>>();
+    world.init_resource::<crate::layer3::pirates::PirateThreatLevel>();
+    world.init_resource::<crate::layer3::pirates::ResourceCurseSettings>();
     if !world
         .contains_resource::<Events<crate::layer2::navigation::stellar_weather::FleetDamagedEvent>>(
         )
@@ -578,6 +584,7 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
         crate::layer2::empathic_plague::process_empathic_resonance
             .after(Layer1SystemSet::Observation),
         crate::layer3::pirates::evaluate_pirate_amnesty_system,
+        crate::layer3::pirates::process_hyper_resources,
         crate::layer1::social::pirates::process_pirate_amnesty_system
             .after(crate::layer3::pirates::evaluate_pirate_amnesty_system),
         crate::layer1::social::pirates::pirate_crime_system,
@@ -810,6 +817,9 @@ mod tests {
             .init_resource::<Events<crate::layer2::exploration::void_whispers::FleetReturnedEvent>>(
             );
         world.init_resource::<Events<crate::layer1::core::integration::PirateAmnestyEvent>>();
+        world.init_resource::<Events<crate::layer1::economy::resources::ResourceMinedEvent>>();
+        world.init_resource::<crate::layer3::pirates::PirateThreatLevel>();
+        world.init_resource::<crate::layer3::pirates::ResourceCurseSettings>();
         world.init_resource::<Events<crate::layer1::law::justice::CrimeCommittedEvent>>();
         world.init_resource::<Events<crate::layer1::pop_memories::FamineEvent>>();
         world

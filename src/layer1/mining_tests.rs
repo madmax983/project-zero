@@ -115,7 +115,7 @@ mod tests {
             // It's possible (though unlikely) that 100 tries didn't spawn one.
             // But if the previous test passes, this one should too eventually.
             // To be safe, we might want to panic or warn, but for TDD strictness, panic is fine if we expect it to work.
-            panic!("Failed to spawn anomaly for type check in 100 attempts");
+            panic!("Failed to spawn anomaly for type check in 1000 attempts");
         }
     }
 }

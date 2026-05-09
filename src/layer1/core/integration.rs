@@ -924,7 +924,8 @@ pub fn fleet_unload_system(
                         crate::layer1::resources::ResourceType::MemoryCore => {
                             resources.add_memory_cores(stack.amount);
                         }
-                        crate::layer1::resources::ResourceType::VoidAle => {
+                        crate::layer1::resources::ResourceType::VoidAle
+                        | crate::layer1::resources::ResourceType::HyperValuable => {
                             resources.add_void_ale(stack.amount);
                         }
                     }

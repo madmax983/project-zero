@@ -23,9 +23,52 @@ pub fn evaluate_pirate_amnesty_system(
     }
 }
 
+/// Tracks the pirate threat level globally.
+#[derive(Resource, Default)]
+pub struct PirateThreatLevel {
+    pub level: f32,
+}
+
+/// Settings for the resource curse.
+#[derive(Resource)]
+pub struct ResourceCurseSettings {
+    pub diplomacy_penalty: f32,
+    pub threat_increase: f32,
+}
+
+impl Default for ResourceCurseSettings {
+    fn default() -> Self {
+        Self {
+            diplomacy_penalty: 5.0,
+            threat_increase: 10.0,
+        }
+    }
+}
+
+/// Process hyper valuable resources mined and apply the curse.
+pub fn process_hyper_resources(
+    mut events: EventReader<crate::layer1::economy::resources::ResourceMinedEvent>,
+    mut diplomacy: Query<&mut crate::layer3::diplomacy_reflection::DiplomaticRelations>,
+    mut pirates: ResMut<PirateThreatLevel>,
+    settings: Res<ResourceCurseSettings>,
+) {
+    for event in events.read() {
+        if event.resource_type == crate::layer1::economy::resources::ResourceType::HyperValuable {
+            for mut relation_group in diplomacy.iter_mut() {
+                for relation in relation_group.relations.iter_mut() {
+                    relation.standing -= settings.diplomacy_penalty * (event.amount as f32);
+                }
+            }
+            pirates.level += settings.threat_increase * (event.amount as f32);
+        }
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::layer1::economy::resources::{ResourceMinedEvent, ResourceType};
+    use crate::layer3::diplomacy_reflection::{DiplomaticRelations, DiplomaticStanding};
 
     #[test]
     fn test_evaluate_pirate_amnesty() {
@@ -80,5 +123,47 @@ mod tests {
             event_count += 1;
         }
         assert_eq!(event_count, 1);
+    }
+
+    #[test]
+    fn test_hyper_valuable_resource_discovery_triggers_attention() {
+        let mut app = App::new();
+        app.add_event::<ResourceMinedEvent>();
+        app.add_systems(Update, process_hyper_resources);
+
+        app.init_resource::<PirateThreatLevel>();
+        app.init_resource::<ResourceCurseSettings>();
+
+        let initial_standing = 100.0;
+        let _diplomacy_entity = app
+            .world_mut()
+            .spawn(DiplomaticRelations {
+                relations: vec![DiplomaticStanding {
+                    target_id: "player".to_string(),
+                    standing: initial_standing,
+                    sanctioned: false,
+                }],
+            })
+            .id();
+        app.world_mut().resource_mut::<PirateThreatLevel>().level = 0.0;
+
+        app.world_mut()
+            .resource_mut::<Events<ResourceMinedEvent>>()
+            .send(ResourceMinedEvent {
+                resource_type: ResourceType::HyperValuable,
+                amount: 10,
+            });
+
+        app.update();
+
+        let mut query = app.world_mut().query::<&DiplomaticRelations>();
+        let final_standing = query.iter(app.world()).next().unwrap().relations[0].standing;
+        let final_threat = app.world().resource::<PirateThreatLevel>().level;
+
+        assert!(
+            final_standing < initial_standing,
+            "Diplomatic standing should decrease"
+        );
+        assert!(final_threat > 0.0, "Pirate threat level should increase");
     }
 }

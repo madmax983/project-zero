@@ -205,6 +205,7 @@ pub fn hopper_system(
                 }
                 ResourceType::MemoryCore => (resources.memory_cores, resources.max_memory_cores),
                 ResourceType::VoidAle => (resources.void_ale, resources.max_void_ale),
+                ResourceType::HyperValuable => (0.0, f32::MAX),
             };
 
             let space = (max - current).max(0.0);
@@ -228,6 +229,7 @@ pub fn hopper_system(
                     ResourceType::BuildingPermit => resources.add_building_permits(added),
                     ResourceType::MemoryCore => resources.add_memory_cores(added),
                     ResourceType::VoidAle => resources.add_void_ale(added),
+                    ResourceType::HyperValuable => {}
                 }
 
                 item.amount -= added;

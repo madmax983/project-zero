@@ -354,6 +354,7 @@ fn extract_resource_items(
             }
             ResourceType::MemoryCore => resources.memory_cores < resources.max_memory_cores,
             ResourceType::VoidAle => resources.void_ale < resources.max_void_ale,
+            ResourceType::HyperValuable => true,
         };
 
         entities.push(entity);

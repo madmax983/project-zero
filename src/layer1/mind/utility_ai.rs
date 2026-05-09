@@ -786,7 +786,8 @@ pub(crate) fn evaluate_single_pop(
     }
 
     // 1c. Check for Nostalgia Sabotage (Overrides normal behavior)
-    if let Some((action, utility, target)) = crate::layer1::actions::sabotage::evaluate_sabotage(data, buffer)
+    if let Some((action, utility, target)) =
+        crate::layer1::actions::sabotage::evaluate_sabotage(data, buffer)
     {
         return (action, utility, target);
     }
