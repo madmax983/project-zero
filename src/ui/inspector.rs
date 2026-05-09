@@ -616,53 +616,6 @@ fn get_generation_line(world: &World, entity: Entity) -> Option<Line<'static>> {
     })
 }
 
-type InspectorWidget<'a> = Box<dyn FnOnce(&mut Frame, Rect) + 'a>;
-
-struct InspectorBuilder<'a> {
-    constraints: Vec<Constraint>,
-    widgets: Vec<InspectorWidget<'a>>,
-}
-
-impl<'a> InspectorBuilder<'a> {
-    fn new() -> Self {
-        Self {
-            constraints: Vec::new(),
-            widgets: Vec::new(),
-        }
-    }
-
-    fn push<F>(&mut self, height: u16, render: F)
-    where
-        F: FnOnce(&mut Frame, Rect) + 'a,
-    {
-        if height > 0 {
-            self.constraints.push(Constraint::Length(height));
-            self.widgets.push(Box::new(render));
-        }
-    }
-
-    fn push_min<F>(&mut self, min_height: u16, render: F)
-    where
-        F: FnOnce(&mut Frame, Rect) + 'a,
-    {
-        self.constraints.push(Constraint::Min(min_height));
-        self.widgets.push(Box::new(render));
-    }
-
-    fn build_and_render(self, frame: &mut Frame, area: Rect) {
-        if self.constraints.is_empty() {
-            return;
-        }
-        let layout = Layout::default()
-            .direction(Direction::Vertical)
-            .constraints(self.constraints)
-            .split(area);
-        for (widget, chunk) in self.widgets.into_iter().zip(layout.iter()) {
-            widget(frame, *chunk);
-        }
-    }
-}
-
 fn render_entity_inspector(frame: &mut Frame, area: Rect, world: &World, entity: Entity) {
     if !world.entities().contains(entity) {
         frame.render_widget(
@@ -672,10 +625,27 @@ fn render_entity_inspector(frame: &mut Frame, area: Rect, world: &World, entity:
         return;
     }
 
-    let mut builder = InspectorBuilder::new();
+    let mut constraints = Vec::new();
+    type InspectorWidget<'a> = Box<dyn FnOnce(&mut Frame, Rect) + 'a>;
+    let mut widgets: Vec<InspectorWidget> = Vec::new();
+
+    macro_rules! push {
+        ($height:expr, $render:expr) => {
+            if $height > 0 {
+                constraints.push(Constraint::Length($height));
+                widgets.push(Box::new($render));
+            }
+        };
+    }
+    macro_rules! push_min {
+        ($min_height:expr, $render:expr) => {
+            constraints.push(Constraint::Min($min_height));
+            widgets.push(Box::new($render));
+        };
+    }
 
     let (name, color) = get_entity_header(world, entity);
-    builder.push(1, move |f, a| {
+    push!(1, move |f, a| {
         f.render_widget(
             Paragraph::new(Span::styled(
                 name,
@@ -687,7 +657,7 @@ fn render_entity_inspector(frame: &mut Frame, area: Rect, world: &World, entity:
 
     if let Some(pos) = world.get::<GridPosition>(entity) {
         let pos_str = format!("Position: ({}, {})", pos.x, pos.y);
-        builder.push(1, move |f, a| {
+        push!(1, move |f, a| {
             f.render_widget(
                 Paragraph::new(pos_str).style(Style::default().fg(Color::DarkGray)),
                 a,
@@ -696,14 +666,14 @@ fn render_entity_inspector(frame: &mut Frame, area: Rect, world: &World, entity:
     }
 
     if let Some(line) = get_generation_line(world, entity) {
-        builder.push(1, move |f, a| f.render_widget(Paragraph::new(line), a));
+        push!(1, move |f, a| f.render_widget(Paragraph::new(line), a));
     }
 
     if let Some(line) = get_action_line(world, entity) {
-        builder.push(1, move |f, a| f.render_widget(Paragraph::new(line), a));
+        push!(1, move |f, a| f.render_widget(Paragraph::new(line), a));
     }
 
-    builder.push(1, |_, _| {}); // Spacer
+    push!(1, |_, _| {}); // Spacer
 
     if let Some(needs) = world.get::<Needs>(entity) {
         let bio_opt = world.get::<Biocompatibility>(entity);
@@ -713,21 +683,21 @@ fn render_entity_inspector(frame: &mut Frame, area: Rect, world: &World, entity:
         if has_rust_lung {
             details_height += 1;
         }
-        builder.push(details_height, move |f, a| {
+        push!(details_height, move |f, a| {
             render_bio_monitor(f, a, needs, bio_opt, health_opt);
         });
     } else if let Some(housing) = world.get::<Housing>(entity) {
-        builder.push(3, move |f, a| render_housing_details(f, a, housing));
+        push!(3, move |f, a| render_housing_details(f, a, housing));
     } else if let Some(farm) = world.get::<Farm>(entity) {
-        builder.push(3, move |f, a| render_farm_details(f, a, farm));
+        push!(3, move |f, a| render_farm_details(f, a, farm));
     } else if let Some(stockpile) = world.get::<Stockpile>(entity) {
-        builder.push(6, move |f, a| render_stockpile_details(f, a, stockpile));
+        push!(6, move |f, a| render_stockpile_details(f, a, stockpile));
     } else if let Some(progress) = world.get::<RefiningProgress>(entity) {
-        builder.push(3, move |f, a| render_refining_details(f, a, progress));
+        push!(3, move |f, a| render_refining_details(f, a, progress));
     } else if let Some(obs) = world.get::<Observatory>(entity) {
-        builder.push(3, move |f, a| render_observatory_details(f, a, obs, world));
+        push!(3, move |f, a| render_observatory_details(f, a, obs, world));
     } else if let Some(fauna) = world.get::<NocturnalFauna>(entity) {
-        builder.push(3, move |f, a| {
+        push!(3, move |f, a| {
             render_nocturnal_fauna_details(f, a, fauna, world)
         });
     }
@@ -746,7 +716,7 @@ fn render_entity_inspector(frame: &mut Frame, area: Rect, world: &World, entity:
             Color::Red
         };
         let hp_str = format!("{:.0}/{:.0}", structure.current_hp, structure.max_hp);
-        builder.push(1, move |f, a| {
+        push!(1, move |f, a| {
             f.render_widget(
                 Paragraph::new(Line::from(vec![
                     Span::raw("HP: "),
@@ -761,55 +731,64 @@ fn render_entity_inspector(frame: &mut Frame, area: Rect, world: &World, entity:
     let quirk_opt = world.get::<Quirk>(entity);
     if spirit_opt.is_some() || quirk_opt.is_some() {
         let diag_height = 2 + u16::from(spirit_opt.is_some()) + u16::from(quirk_opt.is_some());
-        builder.push(diag_height, move |f, a| {
+        push!(diag_height, move |f, a| {
             render_diagnostics(f, a, spirit_opt, quirk_opt);
         });
     }
 
     if let Some(cable) = world.get::<PowerCable>(entity) {
-        builder.push(1, move |f, a| render_power_cable_info(f, a, cable));
+        push!(1, move |f, a| render_power_cable_info(f, a, cable));
     }
     if let Some(battery) = world.get::<Battery>(entity) {
-        builder.push(1, move |f, a| render_battery_info(f, a, battery));
+        push!(1, move |f, a| render_battery_info(f, a, battery));
     }
     if let Some(consumer) = world.get::<PowerConsumer>(entity) {
-        builder.push(1, move |f, a| render_power_consumer_info(f, a, consumer));
+        push!(1, move |f, a| render_power_consumer_info(f, a, consumer));
     }
     if let Some(source) = world.get::<PowerSource>(entity) {
-        builder.push(1, move |f, a| render_power_source_info(f, a, source));
+        push!(1, move |f, a| render_power_source_info(f, a, source));
     }
     if let Some(emitter) = world.get::<ScentEmitter>(entity) {
-        builder.push(1, move |f, a| render_scent_emitter_info(f, a, emitter));
+        push!(1, move |f, a| render_scent_emitter_info(f, a, emitter));
     }
 
     #[cfg(feature = "nova")]
     if let Some(meme) = world.get::<MemeCarrier>(entity) {
-        builder.push(1, move |f, a| render_meme_carrier_info(f, a, meme));
+        push!(1, move |f, a| render_meme_carrier_info(f, a, meme));
     }
     #[cfg(feature = "nova")]
     if let Some(martyrdom) = world.get::<Martyrdom>(entity) {
         if martyrdom.active {
-            builder.push(1, move |f, a| render_martyrdom_info(f, a, martyrdom));
+            push!(1, move |f, a| render_martyrdom_info(f, a, martyrdom));
         }
     }
 
     if let Some(weights) = world.get::<UtilityWeights>(entity) {
-        builder.push(2, move |f, a| render_personality(f, a, *weights));
+        push!(2, move |f, a| render_personality(f, a, *weights));
     }
 
     if let Some(journal) = world.get::<DreamJournal>(entity) {
-        builder.push(1, move |f, a| render_dream_journal(f, a, journal));
+        push!(1, move |f, a| render_dream_journal(f, a, journal));
     }
 
     if let Some(history) = world.get::<DietaryHistory>(entity) {
-        builder.push(1, move |f, a| render_dietary_history(f, a, history));
+        push!(1, move |f, a| render_dietary_history(f, a, history));
     }
 
     if let Some(bio) = world.get::<Biography>(entity) {
-        builder.push_min(1, move |f, a| render_biography(f, a, bio, world));
+        push_min!(1, move |f, a| render_biography(f, a, bio, world));
     }
 
-    builder.build_and_render(frame, area);
+    if constraints.is_empty() {
+        return;
+    }
+    let layout = Layout::default()
+        .direction(Direction::Vertical)
+        .constraints(constraints)
+        .split(area);
+    for (widget, chunk) in widgets.into_iter().zip(layout.iter()) {
+        widget(frame, *chunk);
+    }
 }
 
 fn render_bio_monitor(
