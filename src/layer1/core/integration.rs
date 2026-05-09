@@ -2019,3 +2019,24 @@ pub fn nostalgia_rumor_generation_bridge(
         }
     }
 }
+
+/// Bridges `SabotageEvent` (Cryo Prison) to `Structure` damage and `Chronicle` tracking.
+pub fn cryo_prison_sabotage_bridge_system(
+    mut events: EventReader<crate::layer1::cryo_prison::SabotageEvent>,
+    mut chronicle_events: EventWriter<AddChronicleEvent>,
+    mut structures: Query<&mut crate::layer1::architecture::Structure>,
+) {
+    for _event in events.read() {
+        if let Some(mut structure) = structures.iter_mut().next() {
+            structure.current_hp -= 50.0;
+            if structure.current_hp < 0.0 {
+                structure.current_hp = 0.0;
+            }
+        }
+
+        chronicle_events.send(AddChronicleEvent {
+            text: "A thawed criminal sabotaged colony infrastructure!".to_string(),
+            importance: EventImportance::Major,
+        });
+    }
+}
