@@ -585,6 +585,7 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
             .after(Layer1SystemSet::Observation),
         crate::layer3::pirates::evaluate_pirate_amnesty_system,
         crate::layer3::pirates::process_hyper_resources,
+        crate::layer3::pirates::threat_cooldown_system,
         crate::layer1::social::pirates::process_pirate_amnesty_system
             .after(crate::layer3::pirates::evaluate_pirate_amnesty_system),
         crate::layer1::social::pirates::pirate_crime_system,
