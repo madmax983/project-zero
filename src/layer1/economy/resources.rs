@@ -67,6 +67,15 @@ pub enum ResourceType {
     MemoryCore,
     /// Void-Ale.
     VoidAle,
+    /// Hyper-valuable resource.
+    HyperValuable,
+}
+
+/// Event emitted when a resource is mined.
+#[derive(Event)]
+pub struct ResourceMinedEvent {
+    pub resource_type: ResourceType,
+    pub amount: u32,
 }
 
 /// A physical resource item in the world (dropped on the ground).
@@ -993,6 +1002,7 @@ impl ColonyResources {
                 self.building_permits = (self.building_permits - amount).max(0.0);
             }
             ResourceType::VoidAle => self.void_ale = (self.void_ale - amount).max(0.0),
+            ResourceType::HyperValuable => {}
             ResourceType::MemoryCore => {
                 self.memory_cores = (self.memory_cores - amount).max(0.0);
             }
@@ -1019,6 +1029,7 @@ impl ColonyResources {
             ResourceType::BuildingPermit => self.building_permits,
             ResourceType::MemoryCore => self.memory_cores,
             ResourceType::VoidAle => self.void_ale,
+            ResourceType::HyperValuable => 0.0,
         }
     }
 
@@ -1063,6 +1074,7 @@ impl ColonyResources {
             ResourceType::BuildingPermit => self.building_permits < self.max_building_permits,
             ResourceType::MemoryCore => self.memory_cores < self.max_memory_cores,
             ResourceType::VoidAle => self.void_ale < self.max_void_ale,
+            ResourceType::HyperValuable => true,
         }
     }
 
@@ -1085,6 +1097,7 @@ impl ColonyResources {
             ResourceType::BuildingPermit => self.add_building_permits(amount),
             ResourceType::MemoryCore => self.add_memory_cores(amount),
             ResourceType::VoidAle => self.add_void_ale(amount),
+            ResourceType::HyperValuable => {}
         }
     }
 }
@@ -1311,6 +1324,29 @@ pub fn mine_rock(world: &mut World, designation_entity: Entity, work_amount: f32
             ));
             if let Some(mut log) = world.get_resource_mut::<MessageLog>() {
                 log.add("Mined Ore (Needs Hauling)");
+            }
+
+            // HyperValuable Check: Small chance when mining ore
+            if rng.gen_bool(0.05) {
+                world.spawn((
+                    ResourceItem {
+                        resource_type: ResourceType::HyperValuable,
+                        amount: 1.0,
+                    },
+                    pos,
+                ));
+                if let Some(mut log) = world.get_resource_mut::<MessageLog>() {
+                    log.add("Mined Hyper-Valuable Resource! (Needs Hauling)");
+                }
+
+                if let Some(mut mined_events) =
+                    world.get_resource_mut::<Events<ResourceMinedEvent>>()
+                {
+                    mined_events.send(ResourceMinedEvent {
+                        resource_type: ResourceType::HyperValuable,
+                        amount: 1,
+                    });
+                }
             }
         }
 

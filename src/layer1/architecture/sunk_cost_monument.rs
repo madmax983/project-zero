@@ -1,7 +1,7 @@
-use bevy_ecs::prelude::*;
-use bevy::prelude::Transform;
 use crate::layer1::entities::pop::Pop;
-use crate::layer1::social::morale::{Morale, MoodModifier};
+use crate::layer1::social::morale::{MoodModifier, Morale};
+use bevy::prelude::Transform;
+use bevy_ecs::prelude::*;
 
 // Components
 #[derive(Component)]
@@ -24,9 +24,7 @@ pub struct MonumentMarker;
 pub struct CancelConstructionEvent(pub Entity);
 
 // Systems
-pub fn calculate_sunk_cost_upkeep_system(
-    mut query: Query<&mut SunkCostUpkeep>,
-) {
+pub fn calculate_sunk_cost_upkeep_system(mut query: Query<&mut SunkCostUpkeep>) {
     for mut upkeep in query.iter_mut() {
         upkeep.ticks_building += 1;
     }
@@ -58,7 +56,9 @@ pub fn apply_ruin_morale_penalty_system(
 ) {
     for (ruin, ruin_transform) in ruins.iter() {
         for (mut morale, pop_transform) in pops.iter_mut() {
-            let distance = ruin_transform.translation.distance(pop_transform.translation);
+            let distance = ruin_transform
+                .translation
+                .distance(pop_transform.translation);
             if distance <= ruin.morale_penalty_radius {
                 let has_penalty = morale.modifiers.iter().any(|m| m.label == "Sunk Cost Ruin");
                 if !has_penalty {
@@ -82,19 +82,22 @@ pub fn apply_ruin_morale_penalty_system(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use bevy_app::prelude::*;
     use bevy::prelude::Vec3;
+    use bevy_app::prelude::*;
 
     #[test]
     fn test_sunk_cost_upkeep_increases_over_time() {
         let mut app = App::new();
         app.add_systems(Update, calculate_sunk_cost_upkeep_system);
 
-        let monument = app.world_mut().spawn(SunkCostUpkeep {
-            base_cost: 10.0,
-            multiplier: 1.1,
-            ticks_building: 0,
-        }).id();
+        let monument = app
+            .world_mut()
+            .spawn(SunkCostUpkeep {
+                base_cost: 10.0,
+                multiplier: 1.1,
+                ticks_building: 0,
+            })
+            .id();
 
         app.update(); // Tick 1
 
@@ -117,22 +120,29 @@ mod tests {
         app.add_event::<CancelConstructionEvent>();
         app.add_systems(Update, handle_monument_cancellation_system);
 
-        let monument_id = app.world_mut().spawn((
-            MonumentMarker,
-            Transform::from_translation(Vec3::new(0.0, 0.0, 0.0)),
-        )).id();
+        let monument_id = app
+            .world_mut()
+            .spawn((
+                MonumentMarker,
+                Transform::from_translation(Vec3::new(0.0, 0.0, 0.0)),
+            ))
+            .id();
 
-        app.world_mut().send_event(CancelConstructionEvent(monument_id));
+        app.world_mut()
+            .send_event(CancelConstructionEvent(monument_id));
         app.update();
 
         assert!(app.world().get::<MonumentMarker>(monument_id).is_none());
 
         let mut ruin_query = app.world_mut().query::<(&SunkCostRuin, &Transform)>();
-        let ruin_exists = ruin_query.iter(app.world()).any(|(_, transform)| {
-            transform.translation == Vec3::new(0.0, 0.0, 0.0)
-        });
+        let ruin_exists = ruin_query
+            .iter(app.world())
+            .any(|(_, transform)| transform.translation == Vec3::new(0.0, 0.0, 0.0));
 
-        assert!(ruin_exists, "A SunkCostRuin should be spawned when construction is canceled.");
+        assert!(
+            ruin_exists,
+            "A SunkCostRuin should be spawned when construction is canceled."
+        );
     }
 
     #[test]
@@ -148,24 +158,44 @@ mod tests {
             Transform::from_translation(Vec3::new(0.0, 0.0, 0.0)),
         ));
 
-        let pop_near = app.world_mut().spawn((
-            Pop,
-            Morale { value: 0.5, modifiers: vec![] },
-            Transform::from_translation(Vec3::new(5.0, 0.0, 0.0)),
-        )).id();
+        let pop_near = app
+            .world_mut()
+            .spawn((
+                Pop,
+                Morale {
+                    value: 0.5,
+                    modifiers: vec![],
+                },
+                Transform::from_translation(Vec3::new(5.0, 0.0, 0.0)),
+            ))
+            .id();
 
-        let pop_far = app.world_mut().spawn((
-            Pop,
-            Morale { value: 0.5, modifiers: vec![] },
-            Transform::from_translation(Vec3::new(20.0, 0.0, 0.0)),
-        )).id();
+        let pop_far = app
+            .world_mut()
+            .spawn((
+                Pop,
+                Morale {
+                    value: 0.5,
+                    modifiers: vec![],
+                },
+                Transform::from_translation(Vec3::new(20.0, 0.0, 0.0)),
+            ))
+            .id();
 
         app.update();
 
         let morale_near = app.world().get::<Morale>(pop_near).unwrap();
         let morale_far = app.world().get::<Morale>(pop_far).unwrap();
 
-        assert_eq!(morale_near.modifiers.len(), 1, "Pop near the ruin should receive a morale penalty.");
-        assert_eq!(morale_far.modifiers.len(), 0, "Pop far from the ruin should not be affected.");
+        assert_eq!(
+            morale_near.modifiers.len(),
+            1,
+            "Pop near the ruin should receive a morale penalty."
+        );
+        assert_eq!(
+            morale_far.modifiers.len(),
+            0,
+            "Pop far from the ruin should not be affected."
+        );
     }
 }

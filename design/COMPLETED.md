@@ -526,3 +526,4 @@
 - [x] `INT-471` Integration: The Organ Trade -> Market/Diplomacy — completed 2026-05-08
 - [x] `623` The Nostalgia Plague — `specs/623-nostalgia-plague.md` — completed 2026-02-01
 - [x] `887` The Sunk-Cost Monument — `specs/887-the-sunk-cost-monument.md` — completed 2024-05-24
+- [x] `1085` The Resource Curse — `specs/1085-the-resource-curse.md` — completed 2024-05-24
