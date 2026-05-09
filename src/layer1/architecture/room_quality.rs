@@ -297,7 +297,7 @@ mod tests {
         });
         world.insert_resource(SimulationTime::default());
         world.insert_resource(crate::layer1::building::BuildingMap(
-            std::collections::HashMap::new(),
+            bevy::utils::HashMap::new(),
         ));
         world
     }
