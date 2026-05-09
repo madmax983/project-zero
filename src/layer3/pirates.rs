@@ -144,7 +144,9 @@ mod tests {
         app.init_resource::<ResourceCurseSettings>();
 
         app.world_mut().resource_mut::<PirateThreatLevel>().level = 5.0;
-        app.world_mut().resource_mut::<ResourceCurseSettings>().threat_cooldown_rate = 2.0;
+        app.world_mut()
+            .resource_mut::<ResourceCurseSettings>()
+            .threat_cooldown_rate = 2.0;
 
         app.update();
         assert_eq!(app.world().resource::<PirateThreatLevel>().level, 3.0);
