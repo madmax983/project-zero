@@ -19279,3 +19279,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you centralize your wealth for easy defense and logistical efficiency, or decentralize it to avoid creating a localized gravity well that destroys your own infrastructure?
 
 ---
+## The Substrate Whispers
+
+**Layer:** Cross-layer
+
+**Fantasy:** Pops start to sense the player's presence (the Substrate) and interpret your UI interactions as divine omens.
+
+**Mechanic:** Frequent cursor hovering, pausing, or examining specific pops/buildings increases their "Paranoia" or "Zealotry" trait. They start behaving erratically, either freezing in fear or working with fanatical fervor.
+
+**Emergence:** You keep checking on your best scientist to ensure they don't starve. The constant "attention" from the Substrate drives them mad, and they start sacrificing resources to a monument built in your cursor's shape.
+
+**Tension:** Do you closely micromanage your colony and risk driving them into cult-like madness, or let them be and risk them failing naturally?
+
+---
+
+## Feral Maintenance Drones
+
+**Layer:** 1
+
+**Fantasy:** Automation outliving its masters and developing an ecosystem.
+
+**Mechanic:** If a colony is abandoned or mostly dies out, the remaining maintenance drones continue working but adapt to the lack of central command. They start "repairing" things with whatever is available, creating bizarre hybrid structures, and treating new colonists as "malfunctions" to be fixed.
+
+**Emergence:** You resettle an ancient ruined colony and find the air scrubbers are running perfectly, but they're powered by a gruesome network of captured local megafauna. The drones then try to "optimize" your new colonists by forcefully amputating their limbs and replacing them with mining drills.
+
+**Tension:** Do you clear out the highly efficient but deeply disturbing feral drones, or try to harness their weird infrastructure despite the constant danger to your pops?
+
+---
+
+## The Archaeology of the Wound
+
+**Layer:** 2
+
+**Fantasy:** Mining the most dangerous place in the galaxy for reality-bending artifacts.
+
+**Mechanic:** Expeditions sent to the edge of the Wound can retrieve "Non-Euclidean Scrap." This resource can dramatically boost Layer 1 research or production, but carrying it degrades the sanity of the crew and slowly corrupts the physical space around the storage facility on the colony.
+
+**Emergence:** A massive stockpile of Wound-scrap supercharges your shipyards, but the surrounding district starts experiencing localized time loops. Pops get stuck repeating the same work shift for years, eventually starving to death while technically producing infinite alloys.
+
+**Tension:** Do you exploit the reality-breaking resources to leap ahead of rivals, or stay safe while others take the risk and reap the rewards?
+
+---
