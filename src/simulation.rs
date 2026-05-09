@@ -157,6 +157,7 @@ fn init_simulation_resources(world: &mut World) {
     {
         world.init_resource::<Events<crate::layer1::nanite_fabrication::ContainmentBreachEvent>>();
     }
+    world.init_resource::<Events<crate::layer1::cryo_prison::SabotageEvent>>();
 
     world.init_resource::<Events<crate::layer1::social::sub_lithic::SabotageEvent>>();
 
@@ -789,6 +790,7 @@ mod tests {
         world.init_resource::<Events<crate::layer2::silent_mutiny::SensorGlitchEvent>>();
         world.init_resource::<Events<crate::layer1::nanite_fabrication::ContainmentBreachEvent>>();
         world.init_resource::<Events<crate::layer1::social::sub_lithic::SabotageEvent>>();
+        world.init_resource::<Events<crate::layer1::cryo_prison::SabotageEvent>>();
         world.init_resource::<Events<crate::layer1::genetics::GeneSplicingEvent>>();
         world.init_resource::<Events<crate::layer1::genetics::GeneSplicingResultEvent>>();
         world.init_resource::<Events<crate::layer2::trade::penal_contracts::PrisonerDiedEvent>>();

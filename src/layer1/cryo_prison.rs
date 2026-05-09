@@ -29,10 +29,10 @@ pub struct SabotageEvent {
 pub fn thaw_cryo_pod_system(
     mut commands: Commands,
     mut unrest: ResMut<Unrest>,
-    time: Option<Res<Time>>,
+    time: Res<Time>,
     mut query: Query<(Entity, &mut CryoPod)>,
 ) {
-    let delta = time.map(|t| t.delta_secs()).unwrap_or(1.0); // Default 1.0 for tests without time
+    let delta = time.delta_secs();
     for (entity, mut pod) in query.iter_mut() {
         pod.thaw_progress += delta * 0.1; // Thaws in 10 seconds
 
@@ -77,14 +77,19 @@ mod tests {
     use crate::layer1::entities::pop::Pop;
     use crate::layer1::skills::Skills;
     use crate::layer1::social::unrest::Unrest;
+    use bevy::prelude::*;
     use bevy::app::App;
-    use bevy::prelude::Update;
 
     #[test]
     fn test_thawed_cryo_criminal_has_high_skills_and_unrest() {
         let mut app = App::new();
+        app.add_plugins(bevy::time::TimePlugin);
         app.insert_resource(Unrest::default());
         app.add_systems(Update, thaw_cryo_pod_system);
+
+        app.world_mut()
+            .resource_mut::<Time<Virtual>>()
+            .advance_by(std::time::Duration::from_secs(1));
 
         let pod_entity = app
             .world_mut()

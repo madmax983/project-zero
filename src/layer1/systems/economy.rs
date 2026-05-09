@@ -191,6 +191,8 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::social::sub_lithic::process_deep_mining_exposure,
             crate::layer1::social::sub_lithic::evaluate_cult_formation,
             crate::layer1::social::sub_lithic::process_cult_sabotage,
+            crate::layer1::cryo_prison::thaw_cryo_pod_system,
+            crate::layer1::cryo_prison::criminal_sabotage_system,
             apply_founder_benefits_system,
             // Layer 2 visibility systems are handled in simulation.rs
         )
