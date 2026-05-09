@@ -717,7 +717,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1078` The Foundation Soil — `specs/1078-foundation-soil.md`
 - [ ] `1082` Resonant Architecture — `specs/1082-resonant-architecture.md`
 - [ ] `1083` Kinetic Excavation — `specs/1083-kinetic-excavation.md`
-- [ ] `1085` The Resource Curse — `specs/1085-the-resource-curse.md`
 
 
 - [ ] `1088` The Apex Predator Diet — `specs/1088-the-apex-predator-diet.md`

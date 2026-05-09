@@ -34,6 +34,7 @@ pub struct PirateThreatLevel {
 pub struct ResourceCurseSettings {
     pub diplomacy_penalty: f32,
     pub threat_increase: f32,
+    pub threat_cooldown_rate: f32,
 }
 
 impl Default for ResourceCurseSettings {
@@ -41,11 +42,21 @@ impl Default for ResourceCurseSettings {
         Self {
             diplomacy_penalty: 5.0,
             threat_increase: 10.0,
+            threat_cooldown_rate: 1.0,
         }
     }
 }
 
 /// Process hyper valuable resources mined and apply the curse.
+pub fn threat_cooldown_system(
+    mut pirates: ResMut<PirateThreatLevel>,
+    settings: Res<ResourceCurseSettings>,
+) {
+    if pirates.level > 0.0 {
+        pirates.level = (pirates.level - settings.threat_cooldown_rate).max(0.0);
+    }
+}
+
 pub fn process_hyper_resources(
     mut events: EventReader<crate::layer1::economy::resources::ResourceMinedEvent>,
     mut diplomacy: Query<&mut crate::layer3::diplomacy_reflection::DiplomaticRelations>,
@@ -123,6 +134,25 @@ mod tests {
             event_count += 1;
         }
         assert_eq!(event_count, 1);
+    }
+
+    #[test]
+    fn test_threat_cooldown_system() {
+        let mut app = App::new();
+        app.add_systems(Update, threat_cooldown_system);
+        app.init_resource::<PirateThreatLevel>();
+        app.init_resource::<ResourceCurseSettings>();
+
+        app.world_mut().resource_mut::<PirateThreatLevel>().level = 5.0;
+        app.world_mut().resource_mut::<ResourceCurseSettings>().threat_cooldown_rate = 2.0;
+
+        app.update();
+        assert_eq!(app.world().resource::<PirateThreatLevel>().level, 3.0);
+
+        app.update();
+        app.update();
+        // Should not go below 0.0
+        assert_eq!(app.world().resource::<PirateThreatLevel>().level, 0.0);
     }
 
     #[test]
