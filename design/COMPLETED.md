@@ -528,3 +528,4 @@
 - [x] `887` The Sunk-Cost Monument — `specs/887-the-sunk-cost-monument.md` — completed 2024-05-24
 - [x] `1085` The Resource Curse — `specs/1085-the-resource-curse.md` — completed 2024-05-24
 - [x] `1085` The Resource Curse — `specs/1085-the-resource-curse.md` — completed
+- [x] `648` The Founder Effect — `specs/648-the-founder-effect.md` — completed 2026-02-01
