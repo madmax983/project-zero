@@ -47,6 +47,8 @@ pub fn build_simulation_schedule() -> Schedule {
 #[allow(clippy::too_many_lines)]
 fn init_simulation_resources(world: &mut World) {
     world.init_resource::<Events<crate::layer1::culture::nostalgia::RumorSpreadEvent>>();
+    world.init_resource::<bevy_ecs::event::Events<crate::layer1::architecture::sunk_cost_monument::CancelConstructionEvent>>();
+
     world.init_resource::<crate::layer1::biology::cybernetic_ascendancy::ColonyAverageUtility>();
     // Initialize schedule on first call (stored in World's Schedules resource)
     if !world.contains_resource::<Schedules>() {
@@ -650,6 +652,7 @@ mod tests {
         world.init_resource::<bevy::prelude::Events<crate::layer1::infrastructure::ancient::ConduitSurgeEvent>>();
         world.init_resource::<bevy::prelude::Events<crate::layer2::weather::StormImpactEvent>>();
         world.init_resource::<bevy::prelude::Events<crate::layer1::law::justice::CrimeCommittedEvent>>();
+        world.init_resource::<bevy::prelude::Events<crate::layer1::architecture::sunk_cost_monument::CancelConstructionEvent>>();
         world.init_resource::<bevy::prelude::Events<crate::layer1::social::grievances::PostGrievanceEvent>>();
         world.init_resource::<bevy::prelude::Events<crate::layer1::pop_memories::FamineEvent>>();
         world.init_resource::<crate::layer3::digital_detritus::DataMiningQueue>();
@@ -681,6 +684,7 @@ mod tests {
             );
         world.init_resource::<bevy::prelude::Events<crate::layer2::skyhooks::LaunchIntent>>();
         world.init_resource::<bevy::prelude::Events<crate::layer1::law::justice::CrimeCommittedEvent>>();
+        world.init_resource::<bevy::prelude::Events<crate::layer1::architecture::sunk_cost_monument::CancelConstructionEvent>>();
         world.init_resource::<bevy::prelude::Events<crate::layer1::social::grievances::PostGrievanceEvent>>();
         world.init_resource::<bevy::prelude::Events<crate::layer2::weather::StormImpactEvent>>();
         world.init_resource::<bevy::prelude::Events<crate::layer1::pop_memories::FamineEvent>>();
@@ -722,6 +726,7 @@ mod tests {
             );
         world.init_resource::<bevy::prelude::Events<crate::layer2::skyhooks::LaunchIntent>>();
         world.init_resource::<Events<crate::layer2::moon_hermits::PopDesertedEvent>>();
+        world.init_resource::<bevy::prelude::Events<crate::layer1::architecture::sunk_cost_monument::CancelConstructionEvent>>();
         world.init_resource::<bevy::prelude::Events<crate::layer1::social::grievances::PostGrievanceEvent>>();
         world.init_resource::<Events<crate::layer1::law::embassy::ArrestEvent>>();
         world.init_resource::<Events<crate::layer1::law::embassy::DiplomaticIncidentEvent>>();
@@ -846,6 +851,7 @@ mod tests {
         world.init_resource::<crate::layer3::physics::relativity::SimulationTime>();
 
         world.init_resource::<Events<crate::layer2::moon_hermits::PopDesertedEvent>>();
+        world.init_resource::<bevy::prelude::Events<crate::layer1::architecture::sunk_cost_monument::CancelConstructionEvent>>();
         world.init_resource::<bevy::prelude::Events<crate::layer1::social::grievances::PostGrievanceEvent>>();
 
         world.init_resource::<Time>();

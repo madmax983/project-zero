@@ -2018,3 +2018,32 @@ pub fn nostalgia_rumor_generation_bridge(
         }
     }
 }
+
+
+/// INT-887: Bridges `CancelConstructionEvent` (Sunk Cost Monument) to `AddChronicleEvent`
+pub fn sunk_cost_chronicle_bridge(
+    mut cancel_events: EventReader<crate::layer1::architecture::sunk_cost_monument::CancelConstructionEvent>,
+    mut chronicle_events: EventWriter<AddChronicleEvent>,
+) {
+    for _ in cancel_events.read() {
+        chronicle_events.send(AddChronicleEvent {
+            text: "A Sunk-Cost Monument was abandoned, leaving a permanent scar on the landscape.".to_string(),
+            importance: EventImportance::Legendary,
+        });
+    }
+}
+
+/// INT-887: Bridges `SunkCostUpkeep` to `ColonyResources`
+pub fn sunk_cost_resource_drain_system(
+    query: Query<&crate::layer1::architecture::sunk_cost_monument::SunkCostUpkeep>,
+    mut resources: ResMut<crate::layer1::economy::resources::ColonyResources>,
+) {
+    for upkeep in query.iter() {
+        let cost = upkeep.base_cost * upkeep.multiplier.powf(upkeep.ticks_building as f32);
+        // We deduct stone for a monument.
+        resources.stone -= cost;
+        if resources.stone < 0.0 {
+            resources.stone = 0.0;
+        }
+    }
+}

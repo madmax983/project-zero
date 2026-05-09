@@ -192,6 +192,15 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::social::sub_lithic::evaluate_cult_formation,
             crate::layer1::social::sub_lithic::process_cult_sabotage,
             apply_founder_benefits_system,
+
+            // INT-887: Sunk Cost Monument
+            (
+                crate::layer1::architecture::sunk_cost_monument::calculate_sunk_cost_upkeep_system,
+                crate::layer1::core::integration::sunk_cost_resource_drain_system,
+            ).chain(),
+            crate::layer1::architecture::sunk_cost_monument::handle_monument_cancellation_system,
+            crate::layer1::architecture::sunk_cost_monument::apply_ruin_morale_penalty_system,
+            crate::layer1::core::integration::sunk_cost_chronicle_bridge,
             // Layer 2 visibility systems are handled in simulation.rs
         )
             .in_set(Layer1SystemSet::Economy),

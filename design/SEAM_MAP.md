@@ -950,3 +950,9 @@
 - **Systems connected:** `Nostalgia` -> `nostalgia_rumor_generation_bridge` -> `process_rumor_reaction` -> `RumorSpreadEvent`
 - **Glue added:** Added `nostalgia_rumor_generation_bridge` in `src/layer1/core/integration.rs` to generate "Past Glory" rumor. Emitted `RumorSpreadEvent` in `process_rumor_reaction` when "Past Glory" is heard. Registered systems in `src/layer1/systems/observation.rs`.
 - **Tests:** `tests/integration/nostalgia_plague_bridge.rs`
+
+### INT-887: Sunk Cost Monument Integration
+- **Date:** 2026-06-25
+- **Systems connected:** `calculate_sunk_cost_upkeep_system`, `handle_monument_cancellation_system`, `sunk_cost_resource_drain_system`, `sunk_cost_chronicle_bridge`
+- **Glue added:** Added `sunk_cost_resource_drain_system` to drain ColonyResources based on upkeep. Added `sunk_cost_chronicle_bridge` to log cancellation to the Chronicle. Registered systems in `Layer1SystemSet::Economy` with proper `.chain()` execution ordering and initialized `CancelConstructionEvent`.
+- **Tests:** `tests/integration/sunk_cost_integration.rs`

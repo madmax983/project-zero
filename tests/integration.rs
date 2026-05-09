@@ -376,3 +376,6 @@ mod petrification_chronicle_bridge;
 
 #[path = "integration/organ_trade_bridge.rs"]
 mod organ_trade_bridge;
+
+#[path = "integration/sunk_cost_integration.rs"]
+mod sunk_cost_integration;
