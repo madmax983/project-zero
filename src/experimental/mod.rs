@@ -132,6 +132,8 @@ pub mod sonoluminescence;
 #[cfg(feature = "nova")]
 pub mod echoing_footsteps;
 #[cfg(feature = "nova")]
+pub mod magnetic_lightning;
+#[cfg(feature = "nova")]
 pub mod panic_buying;
 #[cfg(feature = "nova")]
 pub mod sleepwalking_hazards;
