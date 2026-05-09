@@ -19362,3 +19362,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you try to keep everyone happy, or ruthlessly eliminate dissenters to ensure their descendants can't ruin your empire centuries later?
 
 ---
+
+## Architectural Sabotage
+
+**Layer:** 1
+
+**Fantasy:** Disgruntled pops passively resisting your orders through malicious compliance in construction.
+
+**Mechanic:** If a pop's morale or loyalty is extremely low while they are assigned to a construction job, they have a chance to intentionally introduce subtle, non-fatal flaws into the building. A "Sabotaged" building functions normally most of the time but has a hidden chance to briefly fail during critical moments (e.g., a power relay shutting off for 5 seconds when demand spikes).
+
+**Emergence:** You brutally suppress a miners' strike and force them back to work building a new defensive turret network. Years later, during a pirate raid, half the turrets mysteriously jam at the exact same time, letting the pirates breach the compound.
+
+**Tension:** Do you let angry pops rest and delay vital infrastructure, or force them to build and risk placing ticking time bombs inside your own colony?
+
+---
+
+## Ghost Shifts
+
+**Layer:** 1
+
+**Fantasy:** Desperate workers creating an underground economy of unauthorized labor to make ends meet.
+
+**Mechanic:** Pops with high ambition but low resources will secretly sneak into industrial facilities during their scheduled "sleep" or "leisure" shifts to produce unauthorized goods for the black market. These "Ghost Shifts" generate contraband but rapidly degrade the facility's condition and the pop's health due to sleep deprivation.
+
+**Emergence:** You notice your primary smelter constantly needs repairs and your best engineer is always exhausted, despite the official work schedule being light. You later discover they've been running the smelter at 3 AM to forge illegal weapons to sell to a local gang.
+
+**Tension:** Do you enact strict curfews and security checkpoints to stop the wear and tear on your machines, or turn a blind eye because the black market is secretly propping up the local economy?
+
+---
+
+## Contagious Trauma
+
+**Layer:** Cross-layer
+
+**Fantasy:** A single horrific event leaving a psychological scar that spreads through a population like a virus.
+
+**Mechanic:** When a pop survives a highly traumatic event (e.g., witnessing a massacre, surviving a severe hull breach), they gain a "Traumatized" trait. When they interact socially with other pops, there is a chance they share their trauma, slightly increasing the stress and paranoia of the listener. In dense populations, this can lead to mass hysteria.
+
+**Emergence:** A single survivor from a destroyed Layer 2 mining outpost returns to the capital world. As they recount their terrifying experience in the local canteens, panic spreads. Soon, an entire sector of the capital refuses to go to work, demanding orbital defenses against a threat that might not even exist anymore.
+
+**Tension:** Do you forcefully quarantine traumatized survivors to protect the morale of the broader population, or risk societal collapse by letting them reintegrate?
+
+---
