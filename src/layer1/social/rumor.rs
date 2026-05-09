@@ -127,7 +127,6 @@ pub fn process_rumor_reaction(world: &mut World, listener: Entity, rumor: &Rumor
                 world.send_event(crate::layer1::culture::nostalgia::RumorSpreadEvent {
                     source: rumor.source,
                     target: listener,
-                    rumor: crate::layer1::culture::nostalgia::Rumor::PastGlory,
                 });
             }
         }

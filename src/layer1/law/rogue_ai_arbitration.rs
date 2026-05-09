@@ -8,9 +8,7 @@ pub struct Infraction {
 }
 
 #[derive(PartialEq, Eq, Debug)]
-pub enum Edict {
-    MaximizeFoodProduction,
-}
+pub struct Edict;
 
 #[derive(Component, Default)]
 pub struct ArbitrationAI {
@@ -47,8 +45,7 @@ pub fn ai_edict_enforcement_system(
 ) {
     if let Ok(ai) = ai_query.get_single() {
         if let Some(edicts) = edicts {
-            if ai.literal_interpretation >= 1.0 && edicts.0.contains(&Edict::MaximizeFoodProduction)
-            {
+            if ai.literal_interpretation >= 1.0 && edicts.0.contains(&Edict) {
                 for (entity, action) in pop_query.iter() {
                     if let ActionType::SatisfyRest = action.current {
                         commands.entity(entity).insert(Infraction { severity: 5 });
@@ -99,7 +96,7 @@ mod tests {
         let mut app = App::new();
         app.add_systems(Update, ai_edict_enforcement_system);
 
-        app.insert_resource(ActiveEdicts(vec![Edict::MaximizeFoodProduction]));
+        app.insert_resource(ActiveEdicts(vec![Edict]));
 
         let _ai_entity = app
             .world_mut()
