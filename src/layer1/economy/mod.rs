@@ -180,6 +180,7 @@ mod tests {
     }
 }
 
+pub mod apex_diet;
 /// Black market interactions.
 pub mod black_market;
 /// Hauling and transportation of resources.

@@ -46,6 +46,7 @@ pub fn build_simulation_schedule() -> Schedule {
 /// Run one simulation tick: all game systems via schedule, then increment tick counter.
 #[allow(clippy::too_many_lines)]
 fn init_simulation_resources(world: &mut World) {
+    world.init_resource::<Events<crate::layer1::economy::apex_diet::ConsumeFoodEvent>>();
     world.init_resource::<Events<crate::layer1::culture::nostalgia::RumorSpreadEvent>>();
     world.init_resource::<crate::layer1::biology::cybernetic_ascendancy::ColonyAverageUtility>();
     // Initialize schedule on first call (stored in World's Schedules resource)
@@ -723,6 +724,7 @@ mod tests {
         *world.resource_mut::<GameState>() = GameState::Running;
 
         // Initialize Detection Risk for test
+        world.init_resource::<Events<crate::layer1::economy::apex_diet::ConsumeFoodEvent>>();
         world
             .init_resource::<crate::layer1::biology::cybernetic_ascendancy::ColonyAverageUtility>();
         world.init_resource::<crate::layer3::silence::DetectionRisk>();
