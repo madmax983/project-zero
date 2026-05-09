@@ -19403,3 +19403,58 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you honorably evacuate your wounded (crashing your core worlds' economies and morale), or adopt a ruthless "no retreat" policy that keeps the home front blissfully ignorant but prevents your fleets from ever gaining veteran experience?
 
 ---
+## Architectural Sabotage
+
+**Layer:** 1
+
+**Fantasy:** Disgruntled Pops don't just strike; they actively design flaws into the colony's infrastructure.
+
+**Mechanic:** Pops with high Unrest or negative relationships with the Substrate (player) will subtly sabotage the buildings they are constructing. This adds a hidden "Flaw" component to the building, which triggers a catastrophic failure (e.g., life support vent explodes, granary roof collapses) at a random time in the future, often under stress.
+
+**Emergence:** You ignore low morale for years because production is high. Suddenly, during a minor pirate raid, your primary defense turrets all simultaneously malfunction because they were built by a furious workforce a decade ago.
+
+**Tension:** Do you continuously spend resources to formally "Inspect" all construction projects, slowing expansion, or trust your Pops and risk sudden, devastating failures at the worst possible moments?
+
+---
+
+## The Cult of the Final Night
+
+**Layer:** Cross-layer
+
+**Fantasy:** A doomsday cult that actively tries to bring about the end of the simulation by summoning threats.
+
+**Mechanic:** A radicalized faction forms when survival becomes too easy (low stress, high resources). They believe the only way to achieve transcendence is through glorious destruction. They intentionally broadcast the colony's location to pirates (Layer 2) or disable orbital defenses to invite orbital bombardment.
+
+**Emergence:** You finally build a utopia, only to find your citizens deliberately breaking the airlocks and welcoming the vacuum of space, interpreting it as a cleansing ritual.
+
+**Tension:** Do you intentionally manufacture minor crises to keep the population focused on survival, or build a utopia and heavily police your own people to stop them from destroying it out of boredom?
+
+---
+
+## Biological Data Storage
+
+**Layer:** 2
+
+**Fantasy:** Archiving your civilization's greatest scientific achievements in the DNA of megafauna to survive orbital bombardment.
+
+**Mechanic:** Instead of building easily targeted orbital data centers, you can encode late-game research data into the genetics of Layer 1 livestock or wildlife. If the colony is wiped out from orbit, the tech isn't lost—it roams the wasteland.
+
+**Emergence:** A rival civilization glassed your capital, but a century later, a feral tribe on the ruined planet inadvertently "discovers" zero-point energy by hunting and eating a herd of genetically modified glowing space-cows.
+
+**Tension:** Do you use secure, efficient digital storage that can be hacked or bombed (Layer 2), or slow, unreliable biological storage that requires you to actively defend massive herds of animals from predators and your own hungry Pops?
+
+---
+
+## Bureaucratic Time Dilation
+
+**Layer:** 3
+
+**Fantasy:** The sheer administrative overhead of a massive empire causes local time at the capital to effectively slow down relative to the frontier.
+
+**Mechanic:** As your empire (Layer 3) grows larger and more complex, the "Decision Delay" increases. Orders sent from the capital to frontier colonies (Layer 1/2) take increasingly longer to execute, not just because of distance, but because of the simulated bureaucracy required to stamp the approvals.
+
+**Emergence:** You order an emergency medical fleet to a plague-ridden frontier world. By the time the bureaucratic red tape clears and the fleet arrives, the colony has been dead for fifty years, and the fleet simply delivers medical supplies to feral drones.
+
+**Tension:** Do you maintain a massive, unified empire where response times are agonizingly slow, or fracture your empire into smaller, autonomous, but potentially rebellious vassal states that can react instantly to threats?
+
+---
