@@ -376,3 +376,6 @@ mod petrification_chronicle_bridge;
 
 #[path = "integration/organ_trade_bridge.rs"]
 mod organ_trade_bridge;
+
+#[path = "integration/resource_curse_bridge.rs"]
+mod resource_curse_bridge;

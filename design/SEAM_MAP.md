@@ -950,3 +950,9 @@
 - **Systems connected:** `Nostalgia` -> `nostalgia_rumor_generation_bridge` -> `process_rumor_reaction` -> `RumorSpreadEvent`
 - **Glue added:** Added `nostalgia_rumor_generation_bridge` in `src/layer1/core/integration.rs` to generate "Past Glory" rumor. Emitted `RumorSpreadEvent` in `process_rumor_reaction` when "Past Glory" is heard. Registered systems in `src/layer1/systems/observation.rs`.
 - **Tests:** `tests/integration/nostalgia_plague_bridge.rs`
+
+### INT-1085: Resource Curse -> Pirate Raids
+- **Date:** 2026-06-25
+- **Systems connected:** `PirateThreatLevel` (Layer 3) -> `resource_curse_raid_bridge` -> `PirateRaidEvent` (Layer 1)
+- **Glue added:** Added `resource_curse_raid_bridge` in `src/layer3/pirates.rs` to conditionally emit `PirateRaidEvent` and lower threat level when `PirateThreatLevel` gets too high (>= 10.0). Registered in `src/simulation.rs`.
+- **Tests:** `tests/integration/resource_curse_bridge.rs`
