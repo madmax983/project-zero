@@ -19320,3 +19320,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you exploit the reality-breaking resources to leap ahead of rivals, or stay safe while others take the risk and reap the rewards?
 
 ---
+
+## The Artifact Market
+
+**Layer:** Cross-layer
+
+**Fantasy:** Selling your history to survive, only to find you no longer own it.
+
+**Mechanic:** Players can sell excavated "Artifacts" from Ruins (Layer 1) to off-world traders for massive immediate resource injections (Layer 2). However, whichever civilization buys the artifact gains a permanent "Cultural Claim" over the colony.
+
+**Emergence:** You sell the Crown of the First Founder to buy food during a famine. Fifty years later, a neighboring empire uses that Crown to legitimize an invasion of your world, claiming they are the true inheritors of your history.
+
+**Tension:** Do you starve today, or sell your future sovereignty for immediate relief?
+
+---
+
+## Phantom Labor
+
+**Layer:** 1
+
+**Fantasy:** A colony pushed past its breaking point begins to break reality.
+
+**Mechanic:** When a colony's overall Stress/Paranoia is critically high, pops begin to hallucinate "Phantom Workers." The UI shows these workers completing tasks and depositing resources into stockpiles. The numbers go up. However, these resources are "Phantom Resources" and disappear the moment they are consumed for building or eating.
+
+**Emergence:** You think you've solved the metal shortage because a phantom miner has been working triple shifts. You order a new hospital built. The construction starts, then instantly fails as the phantom metal vanishes, causing the injured to die and stress to spiral further out of control.
+
+**Tension:** Do you push your workforce to the limit and risk dealing with a fake economy, or force mandatory rest periods even when quotas aren't met?
+
+---
+
+## Generational Grudges
+
+**Layer:** Cross-layer
+
+**Fantasy:** Sins of the fathers visited upon the sons.
+
+**Mechanic:** When a pop is severely wronged (e.g., family member dies due to poor medical triage, home demolished without compensation), they gain a "Grievance." This Grievance is inherited by their descendants. If a descendant ever attains a position of power (e.g., Sector Governor, Fleet Admiral in Layer 2/3), they will act on that Grudge.
+
+**Emergence:** You accidentally let a miner starve in Year 5. In Year 150, their great-granddaughter, now the commander of the 3rd Fleet, refuses an order to defend the capital world, leading to its destruction by pirates.
+
+**Tension:** Do you try to keep everyone happy, or ruthlessly eliminate dissenters to ensure their descendants can't ruin your empire centuries later?
+
+---
