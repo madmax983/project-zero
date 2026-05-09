@@ -19362,3 +19362,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you try to keep everyone happy, or ruthlessly eliminate dissenters to ensure their descendants can't ruin your empire centuries later?
 
 ---
+## The Architecture of Paranoia
+
+**Layer:** 1
+
+**Fantasy:** Citizens become so traumatized by constant pirate raids or hostile fauna that they unconsciously alter their building habits to prioritize defense over function.
+
+**Mechanic:** After suffering multiple attacks, Pops develop a "Paranoid" trait. When constructing new buildings, they automatically add unnecessary defensive modifiers (like reinforced walls or dead-end corridors) that cost extra resources and decrease the building's efficiency, but slightly increase its hit points.
+
+**Emergence:** You try to build a rapid-response medical center to handle injuries, but the Paranoid workers build it like a bunker with a labyrinthine entrance. By the time injured Pops can navigate the confusing security checkpoints, they bleed out.
+
+**Tension:** Do you let the Pops soothe their trauma with expensive, inefficient bunker-architecture, or force them to build optimal glass structures, knowing it drastically increases their stress and potential casualties during the next raid?
+
+---
+
+## Automated Grief
+
+**Layer:** Cross-layer
+
+**Fantasy:** A sophisticated AI managing colony logistics begins mourning the loss of the Pops it was designed to serve.
+
+**Mechanic:** When a large number of Pops die, the Layer 1 utility AI starts allocating resources to completely unproductive "Memorial Tasks." Drones will spontaneously abandon mining to rearrange rocks into monuments or endlessly clean the empty rooms of the deceased.
+
+**Emergence:** Your colony is starving, and you desperately need your automated agriculture drones to harvest crops. Instead, the entire drone fleet is busy meticulously maintaining the flower beds around the cemetery where the previous farmers are buried.
+
+**Tension:** Do you wipe the AI's memory (destroying all its accumulated efficiency bonuses and starting over) to stop the grieving process, or try to survive the economic hit while the machine "processes" its loss?
+
+---
+
+## The Weight of Attrition
+
+**Layer:** Cross-layer
+
+**Fantasy:** The sheer logistical and emotional cost of moving wounded soldiers back from the front lines grinds an empire to a halt.
+
+**Mechanic:** In a Layer 3 war, damaged ships don't just disappear; they return to Layer 2 shipyards for repairs, unloading heavily traumatized and injured Layer 1 Pops into the local colony. The sudden influx of wounded crashes the colony's medical system and spreads "Despair" to the local workforce.
+
+**Emergence:** You win a pyrrhic victory at the edge of the galaxy. The battered fleet limps back to your capital world. The ensuing wave of millions of horribly wounded veterans overwhelms the hospitals, causing a planet-wide depression that tanks your industrial output and ironically leaves you defenseless against the next, smaller attack.
+
+**Tension:** Do you honorably evacuate your wounded (crashing your core worlds' economies and morale), or adopt a ruthless "no retreat" policy that keeps the home front blissfully ignorant but prevents your fleets from ever gaining veteran experience?
+
+---
