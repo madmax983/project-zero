@@ -5,7 +5,7 @@ fn main() {
     use comfy_table::presets::UTF8_FULL;
     use comfy_table::{Cell, Color as TableColor, Table};
     use crossterm::style::{Color, Stylize};
-    use scale::layer1::oral_tradition::{OralTradition, Story, StoryGenre};
+    use scale::prelude::*;
 
     let mut tradition = OralTradition::default();
 

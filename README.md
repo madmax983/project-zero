@@ -15,9 +15,9 @@ A 4X colony simulation where you begin Dwarf-Fortress-style on a single planet a
 ### Native (Terminal)
 
 ```bash
-cargo run --bin scale --features native
+cargo run --bin scale
 
-cargo test --features native
+cargo test
 
 cargo criterion
 ```
