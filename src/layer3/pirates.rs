@@ -75,6 +75,17 @@ pub fn process_hyper_resources(
     }
 }
 
+/// Bridges `PirateThreatLevel` to `PirateRaidEvent`.
+pub fn resource_curse_raid_bridge(
+    mut pirates: ResMut<PirateThreatLevel>,
+    mut raid_events: EventWriter<crate::layer1::void_weed::PirateRaidEvent>,
+) {
+    if pirates.level >= 10.0 {
+        pirates.level -= 10.0;
+        raid_events.send(crate::layer1::void_weed::PirateRaidEvent);
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
