@@ -17,3 +17,8 @@
 **Concept:** Added `SolarFlareSickness` system that inflicts `RadiationSickness` on `Pop`s who are caught outside (not under `RoofGrid`) during the Day when the `SolarCycle` is at `Maximum`.
 **Fate:** Merged
 **Lesson:** Connects the energy system (Solar Cycles) to the medical system. Players get lots of free power during Solar Maximum, but must keep their Pops indoors or risk a medical crisis.
+
+## [Magnetic Lightning]
+**Concept:** Added a `magnetic_lightning_system` that connects `WeatherType::MagneticStorm` to `Health` and `PowerSource`. Lightning randomly strikes the map during a magnetic storm. If it hits an unroofed Pop, they take severe damage. If it hits an unroofed power generator, the generator receives a massive `Supercharge` buff to its energy output for a brief period.
+**Fate:** Merged
+**Lesson:** Turns a hazardous weather event into a risk-reward scenario. Players might try to harness the storm for massive free power by leaving generators exposed, but risk grid overload or injury to their Pops.
