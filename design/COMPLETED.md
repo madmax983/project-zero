@@ -530,3 +530,4 @@
 - [x] `1085` The Resource Curse — `specs/1085-the-resource-curse.md` — completed
 - [x] `648` The Founder Effect — `specs/648-the-founder-effect.md` — completed 2026-02-01
 - [x] `1088` The Apex Predator Diet — `specs/1088-the-apex-predator-diet.md` — completed 2026-06-25
+- [x] `625` The Cryo-Prison Revolt — `specs/625-cryo-prison-revolt.md` - completed 2024-05-24

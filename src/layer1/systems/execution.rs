@@ -21,6 +21,15 @@ pub fn register(schedule: &mut Schedule) {
     );
     schedule.add_systems(
         (
+            crate::layer1::cryo_prison::thaw_cryo_pod_system,
+            crate::layer1::cryo_prison::criminal_sabotage_system,
+            crate::layer1::cryo_prison::infrastructure_damage_system,
+        )
+            .chain()
+            .in_set(super::Layer1SystemSet::Execution),
+    );
+    schedule.add_systems(
+        (
             crate::layer1::social::protest_crowds::form_mob_system,
             crate::layer1::social::protest_crowds::disperse_mob_system,
         )

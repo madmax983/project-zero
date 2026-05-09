@@ -24,6 +24,7 @@ pub struct CriminalRecord;
 #[derive(Event)]
 pub struct SabotageEvent {
     pub saboteur: Entity,
+    pub target: Option<Entity>,
 }
 
 pub fn thaw_cryo_pod_system(
@@ -59,14 +60,33 @@ pub fn thaw_cryo_pod_system(
     }
 }
 
+/// System to process SabotageEvent and deal damage to targeted structures.
+pub fn infrastructure_damage_system(
+    mut events: EventReader<SabotageEvent>,
+    mut structures: Query<&mut crate::layer1::architecture::structure::Structure>,
+) {
+    for event in events.read() {
+        if let Some(target) = event.target {
+            if let Ok(mut structure) = structures.get_mut(target) {
+                structure.current_hp -= 50.0;
+            }
+        }
+    }
+}
+
 pub fn criminal_sabotage_system(
     mut events: EventWriter<SabotageEvent>,
     unrest: Res<Unrest>,
     query: Query<(Entity, &CriminalRecord)>,
+    targets: Query<Entity, With<crate::layer1::architecture::structure::Structure>>,
 ) {
     if unrest.level > 0.9 {
+        let target = targets.iter().next();
         for (entity, _) in query.iter() {
-            events.send(SabotageEvent { saboteur: entity });
+            events.send(SabotageEvent {
+                saboteur: entity,
+                target,
+            });
         }
     }
 }
@@ -137,6 +157,39 @@ mod tests {
         assert!(
             reader.read(events).next().is_some(),
             "SabotageEvent should be fired by high-unrest criminal"
+        );
+    }
+
+    #[test]
+    fn test_infrastructure_damage_system() {
+        use crate::layer1::architecture::structure::Structure;
+
+        let mut app = App::new();
+        app.add_event::<SabotageEvent>();
+        app.add_systems(Update, infrastructure_damage_system);
+
+        let saboteur = app.world_mut().spawn((Pop, CriminalRecord)).id();
+        let target = app
+            .world_mut()
+            .spawn(Structure {
+                current_hp: 100.0,
+                max_hp: 100.0,
+            })
+            .id();
+
+        app.world_mut()
+            .resource_mut::<Events<SabotageEvent>>()
+            .send(SabotageEvent {
+                saboteur,
+                target: Some(target),
+            });
+
+        app.update();
+
+        let structure = app.world().get::<Structure>(target).unwrap();
+        assert!(
+            structure.current_hp < 100.0,
+            "Target structure should have taken damage from sabotage"
         );
     }
 }
