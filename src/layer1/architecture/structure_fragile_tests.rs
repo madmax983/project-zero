@@ -62,8 +62,8 @@ mod tests {
             ))
             .id();
 
-        // Run for a while
-        for _ in 0..100 {
+        // Run for a while, making sure we get statistically significant results
+        for _ in 0..1000 {
             fragile_decay_system(&mut world);
         }
 
