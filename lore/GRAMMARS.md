@@ -4,7 +4,7 @@
 
 ---
 
-## Name Generation
+## Grammar: NAME_GENERATION
 
 ### Civilization Names
 
@@ -106,7 +106,7 @@ ABSTRACT      → The [Color] [Noun] (e.g. The Red Echo)
 
 ---
 
-## Event Chaining
+## Grammar: HISTORY_CHAINS
 
 ### Causation Rules
 

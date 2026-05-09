@@ -121,20 +121,18 @@ These fire during gameplay and get appended to the chronicle.
 "[COLONY_NAME] ([DURATION]). [CAUSE] in [YEAR]. [FINAL_POP] souls. The channel stays open."
 ```
 
-### FAMINE
+## Template: COLONY_FAMINE
 
-**Slots:** [COLONY], [YEAR], [DURATION_DAYS], [DEATHS], [SURVIVOR_NAME]?
+**Generates:** Play event (chronicle during game)
+**Slots:** [COLONY], [YEAR], [DURATION], [DEATHS], [SURVIVOR_NAME]?
 
-```
-"[COLONY], [YEAR]. The Long Hunger. [DURATION_DAYS] days. [DEATHS] souls lost."
+**Patterns:**
+- "[COLONY], [YEAR]: The Long Hunger. [DURATION] days. [DEATHS] souls lost."
+- "Famine came to [COLONY] in [YEAR]. It stayed [DURATION] days and took [DEATHS] with it."
+- "[YEAR]: [COLONY] remembers the Hunger. [DEATHS] names carved in stone."
 
-"Famine comes to [COLONY], year [YEAR]. It stays [DURATION_DAYS] days. It takes [DEATHS]."
-
-"[YEAR]: [COLONY] remembers the Hunger. [DEATHS] names carved in stone. [DURATION_DAYS] days of empty stores."
-
-[If SURVIVOR_NAME:]
-"[SURVIVOR_NAME] survives the [COLONY] famine of [YEAR]. [DEATHS] others do not."
-```
+**If [SURVIVOR_NAME]:**
+- "[SURVIVOR_NAME] survived the [COLONY] famine of [YEAR]. They do not speak of it."
 
 ### BUILDING_MILESTONE
 
@@ -7517,3 +7515,14 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "The building collapsed because the load-bearing walls were hollowed out for a [EMBEZZLED_STRUCTURE]. [YEAR]."
 - "[YEAR]: Structural failure in [COLONY]. The secret [EMBEZZLED_STRUCTURE] compromised the entire sector."
 - "The vanity of the elite brought the ceiling down. A hidden [EMBEZZLED_STRUCTURE] destroyed the facility. [YEAR]."
+
+## Cultural Artifact Templates (Spec 632)
+
+### ARTIFACT_CRAFTED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [NAME], [ARTIFACT_TYPE], [ARTIFACT_THEME]
+
+**Patterns:**
+- "[NAME] finishes the [ARTIFACT_TYPE]. [YEAR]. It is a study in [ARTIFACT_THEME]."
+- "[YEAR]: A new [ARTIFACT_TYPE] is placed in the plaza. [NAME] crafted it to remember the [ARTIFACT_THEME]."
+- "Art from the ashes. [NAME] unveils a [ARTIFACT_TYPE]. The theme is [ARTIFACT_THEME]. [YEAR]."
