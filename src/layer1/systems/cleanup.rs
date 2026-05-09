@@ -117,6 +117,8 @@ pub fn register(schedule: &mut Schedule) {
             update_event_buffer::<crate::layer1::nature::megafauna_terrain::AwakenTitanEvent>,
             update_event_buffer::<crate::layer1::environment::impact::ImpactWarningEvent>,
             update_event_buffer::<crate::layer1::environment::impact::ImpactStrikeEvent>,
+            update_event_buffer::<crate::layer1::social::inherited_grudges::SevereWrongEvent>,
+            update_event_buffer::<crate::layer1::social::inherited_grudges::ChildBornEvent>,
         )
             .in_set(Layer1SystemSet::EventCleanup),
     );

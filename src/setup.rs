@@ -377,6 +377,8 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     world.init_resource::<Events<crate::layer1::social::FavorChange>>();
     world.init_resource::<Events<crate::layer1::social::debt::LifeSavedEvent>>();
     world.init_resource::<Events<crate::layer1::social::debt::CallInFavorEvent>>();
+    world.init_resource::<Events<crate::layer1::social::inherited_grudges::SevereWrongEvent>>();
+    world.init_resource::<Events<crate::layer1::social::inherited_grudges::ChildBornEvent>>();
     world.init_resource::<Events<crate::layer1::eureka::EurekaEvent>>();
     world.init_resource::<Events<crate::layer1::items::UnequipEvent>>();
     world.init_resource::<Events<crate::layer1::construction::GreatWorkCompletedEvent>>();

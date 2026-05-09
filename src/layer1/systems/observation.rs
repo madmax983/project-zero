@@ -31,6 +31,10 @@ pub fn register(schedule: &mut Schedule) {
                 .after(crate::layer1::core::integration::flora_scent_bridge_system),
             crate::layer1::olfactory::scent_mood_system
                 .after(crate::layer1::olfactory::scent_diffusion_system),
+            (
+                crate::layer1::social::inherited_grudges::handle_severe_wrongs_system,
+                crate::layer1::social::inherited_grudges::inherit_vendettas_system,
+            )
         )
             .in_set(Layer1SystemSet::Observation),
     );
