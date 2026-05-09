@@ -719,7 +719,7 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1083` Kinetic Excavation — `specs/1083-kinetic-excavation.md`
 
 
-- [ ] `1088` The Apex Predator Diet — `specs/1088-the-apex-predator-diet.md`
+
 - [ ] `1089` Nanite Storms — `specs/1089-nanite-storms.md`
 - [ ] `1090` Mycelial Tripwires — `specs/1090-mycelial-tripwires.md`
 - [ ] `1091` Gravity Blindspots — `specs/1091-gravity-blindspots.md`
