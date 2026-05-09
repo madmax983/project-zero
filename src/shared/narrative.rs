@@ -34,7 +34,10 @@ impl NarrativeError {
             Self::DirectoryNotFound(_) | Self::NoLoreFiles(_) | Self::IoError(_, _) => {
                 "  Action Required: Check Lore Directory.\n  Verify the folder path exists and contains markdown files. "
             }
-            Self::TemplateNotFound(_) | Self::MissingContext(_) | Self::MissingFragmentOptions(_) | Self::NoPatternsForTemplate(_) => {
+            Self::MissingFragmentOptions(_) => {
+                "  Action Required: Check Fragment Options.\n  Verify the fragment options in your FRAGMENTS.md are not empty. "
+            }
+            Self::TemplateNotFound(_) | Self::MissingContext(_) | Self::NoPatternsForTemplate(_) => {
                 "  Action Required: Check Template ID or Context.\n  Verify the name exists in your TEMPLATES.md. "
             }
         };

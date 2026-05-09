@@ -52,17 +52,16 @@ To use SCALE's procedural generation in your own Rust code:
 // In Cargo.toml:
 // [dependencies]
 // scale = "0.1.0"
-// anyhow = "1.0"
 
 use scale::prelude::*;
 
-fn main() -> anyhow::Result<()> {
+fn main() {
     // 1. Initialize Generator (loads embedded lore by default)
     let generator = NarrativeGenerator::from_embedded();
 
     // Or load from a directory (must contain TEMPLATES.md and FRAGMENTS.md)
     // let mut generator = NarrativeGenerator::default();
-    // generator.load_from_files("./lore")?;
+    // generator.load_from_files("./lore").unwrap();
 
     // 2. Prepare Context
     let mut context = NarrativeContext::default();
@@ -73,10 +72,8 @@ fn main() -> anyhow::Result<()> {
     context.insert("CIV_EPITHET", "The First Ones");
 
     // 3. Generate Story
-    let story = generator.generate("CIVILIZATION_RISE", &context)?;
+    let story = generator.generate("CIVILIZATION_RISE", &context).unwrap();
     println!("{}", story);
-
-    Ok(())
 }
 ```
 
