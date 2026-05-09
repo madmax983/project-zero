@@ -6,30 +6,30 @@
 
 ## Civilization Fragments
 
-## Fragment Type: [CIV_EPITHET]
+## Fragment Type: [CIVILIZATION_EPITHET]
 How a civilization is remembered. Used after their name or alone.
 
 ```
-the Builders
-the Silent Ones
-the Star-Eaters
-the Waiting
-the Unforgiven
-the Last Kindred
-the Hollow
-they-who-seeded
-the Burning Fleet
-the Sleeping
-the First Children
-the Wandering
-those who listened
-the Void-Touched
-the Remnant
-the Forgotten
-the Twice-Born
-the Patient
-the Singing
-the Unnamed
+- the Builders
+- the Silent Ones
+- the Star-Eaters
+- those who waited
+- the Unforgiven
+- the Last Kindred
+- the Hollow
+- they who seeded worlds
+- the Burning Fleet
+- the Sleeping
+- the First Children
+- the Wandering
+- those who listened
+- the Void-Touched
+- the Remnant
+- the Forgotten
+- the Twice-Born
+- the Patient
+- the Singing
+- the Unnamed
 ```
 
 ## Fragment Type: [CIV_FATE]
@@ -8102,3 +8102,13 @@ What the gas does to the colony.
 - an administrative error
 - a gift for the visiting ambassador
 - structural reinforcement testing
+
+## Fragment Type: [ARTIFACT_PREFIX]
+
+What an artifact is called.
+
+- the Last [NOUN]
+- the [ORDINAL] [NOUN]
+- [NAME]'s [NOUN]
+- the [ADJECTIVE] [NOUN] of [PLACE]
+- the [NOUN] That [VERB]
