@@ -19458,3 +19458,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you maintain a massive, unified empire where response times are agonizingly slow, or fracture your empire into smaller, autonomous, but potentially rebellious vassal states that can react instantly to threats?
 
 ---
+
+## The Scapegoat Protocol
+
+**Layer:** 1
+
+**Fantasy:** Deflecting public outrage by sacrificing innocent but unpopular individuals to maintain control.
+
+**Mechanic:** When Unrest is dangerously high, players can execute the "Scapegoat Protocol" on a Pop with low social standing (e.g., a disliked foreigner or marginalized worker). This instantly zeroes out Unrest for a time, but adds a permanent, hidden "Guilt" stress modifier to any Pops who knew the truth.
+
+**Emergence:** You repeatedly scapegoat innocent Pops to maintain your dictatorial grip. Years later, the accumulated Guilt among your enforcers and inner circle reaches a breaking point, causing them to suddenly and violently turn on you in a mutiny, refusing to execute the next scapegoat.
+
+**Tension:** Do you solve immediate, catastrophic unrest with a quick, dirty lie, or face the music and deal with the systemic issues causing the anger?
+
+---
+
+## Black Market Hyperlanes
+
+**Layer:** 2
+
+**Fantasy:** Using dangerous, unmapped space routes to move illicit goods under the radar of the galactic authorities.
+
+**Mechanic:** Besides established safe hyperlanes, you can chart "Ghost-Lanes" through hazardous stellar phenomena. Sending merchant ships through these routes bypasses Layer 3 trade tariffs and planetary blockades, but carries a high risk of the ship disappearing entirely or returning corrupted.
+
+**Emergence:** You are besieged by a superior empire, completely cut off from normal supply lines. You desperately send all your food transports through a Ghost-Lane. Half are lost, but the other half arrive, keeping your colony barely alive—until you realize the survivors have been infected by an anomaly in the void, sparking a new crisis on your supposedly safe world.
+
+**Tension:** Do you accept crippling economic taxes and blockades on safe routes, or risk your vital supply chains in the chaotic, lethal void where no law reaches?
+
+---
+
+## The Martyrdom Deficit
+
+**Layer:** Cross-layer
+
+**Fantasy:** A society that worships glorious death in battle runs out of battles, leading to internal decay.
+
+**Mechanic:** A militaristic society gains massive Morale and productivity boosts from "Martyrdoms" (Pops dying in Layer 2/3 conflicts). However, during prolonged periods of peace, they suffer a "Martyrdom Deficit." Lacking external enemies to die against, Pops begin seeking lethal conflicts internally, skyrocketing Layer 1 crime and fatal duels.
+
+**Emergence:** You build an unstoppable armada and conquer all your neighbors, ushering in a golden age of galactic peace. Without a war to feed their cultural need for glorious sacrifice, your veteran Pops return home and tear the colony apart from the inside, essentially fighting a civil war out of sheer boredom and cultural momentum.
+
+**Tension:** Do you continually provoke unnecessary, costly wars just to keep your bloodthirsty populace satisfied, or attempt the painful, generations-long process of shifting your entire culture towards peace?
+
+---
