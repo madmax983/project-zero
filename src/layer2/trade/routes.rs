@@ -259,6 +259,7 @@ mod tests {
         world.spawn((route, Timer(1)));
 
         // Act
+        world.init_resource::<Events<TradeRouteExecutedEvent>>();
         let mut schedule = Schedule::default();
         schedule.add_systems(execute_trade_routes_system);
         schedule.run(&mut world);
@@ -297,6 +298,7 @@ mod tests {
         world.spawn((route, Timer(1)));
 
         // Act
+        world.init_resource::<Events<TradeRouteExecutedEvent>>();
         let mut schedule = Schedule::default();
         schedule.add_systems(execute_trade_routes_system);
         schedule.run(&mut world);

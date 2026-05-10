@@ -719,7 +719,6 @@ See `design/IDEAS.md` for unspecced concepts.
 
 
 
-- [ ] `1091` Gravity Blindspots — `specs/1091-gravity-blindspots.md`
 - [ ] `1092` Attention Bandwidth — `specs/1092-attention-bandwidth.md`
 - [ ] `1095` Intellectual Property Wars — `specs/1095-intellectual-property-wars.md`
 - [ ] `1096` Celestial Cemeteries — `specs/1096-celestial-cemeteries.md`
