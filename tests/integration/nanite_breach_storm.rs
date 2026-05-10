@@ -1,10 +1,10 @@
 use bevy::app::App;
 use bevy::ecs::prelude::*;
 use bevy::math::Vec2;
+use scale::layer1::integration::nanite_breach_storm_bridge;
 use scale::layer1::map::GridPosition;
 use scale::layer1::nanite_fabrication::ContainmentBreachEvent;
 use scale::layer1::nanite_storms::{ActiveNaniteStorm, NaniteStormType};
-use scale::layer1::integration::nanite_breach_storm_bridge;
 
 #[test]
 fn test_nanite_breach_spawns_storm() {

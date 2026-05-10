@@ -17,3 +17,8 @@
 **Bloat:** `Edict` enum in `src/layer1/law/rogue_ai_arbitration.rs` with 1 variant `MaximizeFoodProduction`.
 **Cut:** Converted the enum into a concrete unit struct `pub struct Edict;`.
 **Saved:** Boilerplate pattern-matching and enum namespacing.
+
+## [Reduction]
+**Bloat:** Reassigning field after default initialization for `ColonyResources` in `tests/integration/temporal_chamber_bridge.rs`
+**Cut:** Inline field assignment during default struct instantiation `ColonyResources { fuel: X, ..Default::default() }`
+**Saved:** Reduced mutability and fixed clippy warning.
