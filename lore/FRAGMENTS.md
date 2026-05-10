@@ -8112,3 +8112,33 @@ What an artifact is called.
 - [NAME]'s [NOUN]
 - the [ADJECTIVE] [NOUN] of [PLACE]
 - the [NOUN] That [VERB]
+
+## Kinetic Excavation Fragments (Spec 1083)
+
+## Fragment Type: [KINETIC_WEAPON_EUPHEMISM]
+How colonists refer to orbital kinetic strikes used for mining.
+
+- the Sky-Hammer
+- the Thunder
+- the Iron Rain
+- orbital displacement
+- the deep strike
+- the kinetic chisel
+
+## Fragment Type: [CRATER_DESCRIPTION]
+How the aftermath of a successful kinetic strike is described.
+
+- an instant, smoking quarry
+- shattered earth and exposed veins
+- a crater rich with raw ore
+- violent geology
+- a sudden, brutal harvest
+
+## Fragment Type: [MAGMA_CONSEQUENCE]
+The result of hitting a magma layer instead of ore.
+
+- a fountain of fire
+- liquid rock weeping from the earth
+- a sudden, unnatural volcano
+- the earth's burning blood
+- an eruption we called down ourselves

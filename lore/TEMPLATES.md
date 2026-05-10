@@ -7526,3 +7526,23 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[NAME] finishes the [ARTIFACT_TYPE]. [YEAR]. It is a study in [ARTIFACT_THEME]."
 - "[YEAR]: A new [ARTIFACT_TYPE] is placed in the plaza. [NAME] crafted it to remember the [ARTIFACT_THEME]."
 - "Art from the ashes. [NAME] unveils a [ARTIFACT_TYPE]. The theme is [ARTIFACT_THEME]. [YEAR]."
+
+## Kinetic Excavation Templates (Spec 1083)
+
+### KINETIC_EXCAVATION_SUCCESS
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [KINETIC_WEAPON_EUPHEMISM], [CRATER_DESCRIPTION]
+
+**Patterns:**
+- "[YEAR]: We ordered [KINETIC_WEAPON_EUPHEMISM]. The result was [CRATER_DESCRIPTION]."
+- "The ship fired. [COLONY] shook. Now we have [CRATER_DESCRIPTION]. [YEAR]."
+- "[COLONY] didn't dig. They called down [KINETIC_WEAPON_EUPHEMISM], creating [CRATER_DESCRIPTION]. [YEAR]."
+
+### KINETIC_EXCAVATION_MAGMA
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [KINETIC_WEAPON_EUPHEMISM], [MAGMA_CONSEQUENCE]
+
+**Patterns:**
+- "A miscalculation with [KINETIC_WEAPON_EUPHEMISM]. We missed the ore. Now we have [MAGMA_CONSEQUENCE]. [YEAR]."
+- "[YEAR]: We aimed too deep. [KINETIC_WEAPON_EUPHEMISM] brought forth [MAGMA_CONSEQUENCE] instead of metal."
+- "[COLONY] sought fast riches from orbit. They received [MAGMA_CONSEQUENCE] in the center of their base. [YEAR]."

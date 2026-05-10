@@ -164,6 +164,22 @@
 
 ## Mining
 
+### the sky-hammer
+
+**Replaces:** kinetic strike, orbital bombardment (when used for mining)
+**Code reference:** `KineticStrikeEvent`
+**Usage:**
+- "They called down the sky-hammer to break the earth."
+- "The sky-hammer missed."
+
+### the bleeding earth
+
+**Replaces:** active volcano, magma vent (when caused by a strike)
+**Code reference:** `TerrainKind::Volcano`
+**Usage:**
+- "The bleeding earth swallowed the eastern sector."
+- "We opened the crust and found only the bleeding earth."
+
 ### the delve / delving
 
 **Replaces:** mining, digging
