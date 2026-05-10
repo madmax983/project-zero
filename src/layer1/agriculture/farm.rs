@@ -872,6 +872,68 @@ mod tests {
     }
 
     #[test]
+    fn test_eating_paste_causes_gloom() {
+        let mut world = World::new();
+        world.insert_resource(ColonyResources {
+            rations: 10.0,
+            food: 0.0, // Ensure no other food
+            ..Default::default()
+        });
+        world.insert_resource(crate::shared::time::SimulationTime::default());
+
+        let pop = world
+            .spawn((
+                Pop,
+                Needs {
+                    hunger: 0.0,
+                    ..Default::default()
+                },
+                Morale::default(),
+            ))
+            .id();
+
+        world.run_system_once(consume_food_system).unwrap();
+
+        let morale = world.get::<Morale>(pop).unwrap();
+        let modifier = morale.modifiers.iter().find(|m| m.label == "Ate Slop");
+        assert!(modifier.is_some(), "Should apply Ate Slop (gloom) modifier");
+    }
+
+    #[test]
+    fn test_pragmatist_ignores_gloom() {
+        let mut world = World::new();
+        world.insert_resource(ColonyResources {
+            rations: 10.0,
+            food: 0.0,
+            ..Default::default()
+        });
+        world.insert_resource(crate::shared::time::SimulationTime::default());
+
+        // Pragmatist Pop
+        let pop = world
+            .spawn((
+                Pop,
+                Needs {
+                    hunger: 0.0,
+                    ..Default::default()
+                },
+                Morale::default(),
+                {
+                    let mut t = crate::layer1::traits::Traits::default();
+                    t.add(crate::layer1::traits::Trait::Pragmatist);
+                    t
+                },
+            ))
+            .id();
+
+        world.run_system_once(consume_food_system).unwrap();
+
+        let morale = world.get::<Morale>(pop).unwrap();
+        let modifier = morale.modifiers.iter().find(|m| m.label == "Ate Slop");
+        assert!(modifier.is_none(), "Pragmatist should be immune to Ate Slop (gloom)");
+    }
+
+    #[test]
     fn test_consume_food_rations_immunity() {
         let mut world = World::new();
         world.insert_resource(ColonyResources {
