@@ -8,6 +8,7 @@ use scale::layer2::trade::routes::{execute_trade_routes_system, Colony, Timer, T
 #[test]
 fn test_trade_route_ideological_contraband_bridge() {
     let mut app = App::new();
+        app.add_event::<scale::layer2::trade::routes::TradeRouteExecutedEvent>();
     app.add_plugins(bevy::MinimalPlugins);
 
     app.add_systems(

@@ -154,6 +154,8 @@ mod resources_robustness;
 
 #[path = "integration/clone_integration.rs"]
 mod clone_integration;
+#[path = "integration/apex_diet_integration.rs"]
+mod apex_diet_integration;
 #[path = "integration/infinite_archive_chronicle.rs"]
 mod infinite_archive_chronicle;
 #[path = "integration/mega_quake_chronicle.rs"]

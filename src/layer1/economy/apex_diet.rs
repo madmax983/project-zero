@@ -25,6 +25,11 @@ pub struct CalorieRequirement {
     pub daily_amount: f32,
 }
 
+#[derive(Resource, Default)]
+pub struct ApexMeatStores {
+    pub amount: f32,
+}
+
 pub enum FoodType {
     Standard,
     ApexMeat,
