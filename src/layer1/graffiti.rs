@@ -6,9 +6,9 @@
 use crate::layer1::building::OccupiedTiles;
 use crate::layer1::map::GridPosition;
 use crate::layer1::morale::{MoodModifier, Morale};
+use bevy::utils::HashMap;
 use bevy_ecs::prelude::*;
 use rand::Rng;
-use std::collections::HashMap;
 
 /// Types of graffiti that can be placed.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -37,6 +37,7 @@ pub struct Graffiti {
 }
 
 /// Resource storing all active graffiti on the map.
+/// ⚡ Bolt Optimization: Switched to bevy::utils::HashMap (AHash) to eliminate SipHash overhead for integer coordinate keys.
 #[derive(Resource, Default)]
 pub struct GraffitiMap {
     /// Map from grid coordinates to graffiti data.
@@ -383,6 +384,17 @@ mod tests {
             "Modifier should be -0.05"
         );
         assert_eq!(modifier.label, "Saw Vandalism");
+    }
+
+    #[test]
+    fn test_graffiti_map_uses_fast_hash() {
+        let map = GraffitiMap::default();
+        let type_name = std::any::type_name_of_val(&map.markings);
+        assert!(
+            type_name.contains("hashbrown") || type_name.contains("bevy_utils::hash"),
+            "GraffitiMap should use a fast hash implementation (AHash) instead of std::collections::HashMap, got: {}",
+            type_name
+        );
     }
 
     #[test]

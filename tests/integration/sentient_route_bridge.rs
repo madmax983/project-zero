@@ -13,10 +13,7 @@ fn test_sentient_route_chronicle_bridge() {
     app.init_resource::<Events<SentientTollDemandEvent>>();
     app.init_resource::<Events<AddChronicleEvent>>();
 
-    let route_entity = app
-        .world_mut()
-        .spawn(RouteComplexity { level: 100.0 })
-        .id();
+    let route_entity = app.world_mut().spawn(RouteComplexity { level: 100.0 }).id();
 
     // Fire the event
     app.world_mut()
