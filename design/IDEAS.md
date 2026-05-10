@@ -19458,3 +19458,43 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you maintain a massive, unified empire where response times are agonizingly slow, or fracture your empire into smaller, autonomous, but potentially rebellious vassal states that can react instantly to threats?
 
 ---
+
+## The Artifact Religion
+
+**Layer:** 1 / Cross-layer
+
+**Fantasy:** A mysterious artifact is discovered during mining, and Pops start worshipping it, forming a new religion that changes their behavior and needs.
+
+**Mechanic:** When mining deep tiles, there is a chance to unearth an 'Artifact' entity. Pops working nearby or viewing it gain a 'Reverence' memory. If enough Pops share this memory, a 'Cult' trait emerges. Cultists refuse certain jobs (like tearing down old buildings) and demand 'Shrines' instead of standard leisure.
+
+**Emergence:** You might find your most productive mining sector suddenly abandoned because the miners refuse to disturb the 'Sacred Earth' around the artifact, forcing you to redirect expansion or use military force to remove the artifact.
+
+**Tension:** Do you let the religion spread to keep morale high (Cultists are very happy when their needs are met), or destroy the artifact to regain control of your workforce, risking a colony-wide schism?
+
+---
+
+## Orbital Debris Scavengers
+
+**Layer:** 2
+
+**Fantasy:** Desperate pilots risk their lives diving into the deadly rings of shattered moons or battle sites to recover precious high-tech scrap.
+
+**Mechanic:** Battles or destroyed orbital structures leave behind 'Debris Fields' in Layer 2. Players can construct 'Scavenger Ships' that cost very little but have high mortality rates. Scavengers return with rare resources that bypass the normal tech tree.
+
+**Emergence:** A massive early-game battle near your homeworld might leave a debris field so rich that your entire economy shifts to scavenging. Generations later, your civilization is known for cobbled-together, mismatched technology rather than native research.
+
+**Tension:** Do you risk the lives of your Pops in dangerous debris fields for a chance at advanced technology, or play it safe and fall behind technologically?
+
+---
+
+## The Whisper Network
+
+**Layer:** Cross-layer
+
+**Fantasy:** A galaxy-spanning web of informants, defectors, and smugglers trading the most valuable commodity: secrets.
+
+**Mechanic:** Unhappy Pops or Pops with the 'Criminal' trait slowly generate 'Intel' as a hidden resource. This Intel can be intercepted by the player to reveal fog of war on Layer 2/3, uncover rival faction plans, or expose hidden smuggler routes.
+
+**Emergence:** You intentionally allow a pirate faction to establish a small, secret base on your fringe world just so your local criminal Pops can interact with them and feed you Intel on the pirate's main fleet movements.
+
+**Tension:** Do you crack down on crime and dissent for a stable colony, or tolerate a certain level of corruption to maintain your eyes and ears across the galaxy?
