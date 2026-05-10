@@ -41,6 +41,7 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::core::integration::digital_immortality_chronicle_bridge,
             crate::layer1::core::integration::visitor_chronicle_bridge,
             crate::layer1::psychology::simulacrum::simulacrum_broadcast_system,
+            crate::layer1::core::integration::simulacrum_chronicle_bridge,
             crate::layer1::olfactory::scent_diffusion_system
                 .after(crate::layer1::integration::waste_scent_bridge)
                 .after(crate::layer1::core::integration::flora_scent_bridge_system),

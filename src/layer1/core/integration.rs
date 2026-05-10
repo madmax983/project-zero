@@ -53,10 +53,7 @@ pub fn mass_driver_chronicle_bridge(
 
 /// INT-1088: Bridges Megafauna Death to Apex Meat Harvesting
 pub fn apex_meat_harvest_bridge_system(
-    query: Query<
-        &crate::layer1::fauna::Fauna,
-        Added<crate::layer1::Dead>,
-    >,
+    query: Query<&crate::layer1::fauna::Fauna, Added<crate::layer1::Dead>>,
     mut apex_meat: ResMut<crate::layer1::economy::apex_diet::ApexMeatStores>,
 ) {
     for fauna in query.iter() {
@@ -70,18 +67,15 @@ pub fn apex_meat_harvest_bridge_system(
 pub fn apex_meat_distribution_system(
     mut stores: ResMut<crate::layer1::economy::apex_diet::ApexMeatStores>,
     mut hungry_pops: Query<
-        (
-            Entity,
-            &mut crate::layer1::needs::Needs,
-        ),
+        (Entity, &mut crate::layer1::needs::Needs),
         With<crate::layer1::pop::Pop>,
     >,
-    mut events: EventWriter<
-        crate::layer1::economy::apex_diet::ConsumeFoodEvent,
-    >,
+    mut events: EventWriter<crate::layer1::economy::apex_diet::ConsumeFoodEvent>,
 ) {
     for (entity, mut needs) in &mut hungry_pops {
-        if needs.hunger < crate::layer1::balance::FOOD_HUNGER_THRESHOLD && stores.amount >= crate::layer1::balance::FOOD_PER_MEAL {
+        if needs.hunger < crate::layer1::balance::FOOD_HUNGER_THRESHOLD
+            && stores.amount >= crate::layer1::balance::FOOD_PER_MEAL
+        {
             stores.amount -= crate::layer1::balance::FOOD_PER_MEAL;
 
             // Satisfy hunger (using the same logic as farm.rs)
@@ -2065,6 +2059,24 @@ pub fn impact_warning_chronicle_bridge(
                 "Impact Warning: Projectile inbound at {}, {}, ETA: {} ticks.",
                 event.target_pos.x, event.target_pos.y, event.ticks_remaining
             ),
+        });
+    }
+}
+
+/// INT-642: Bridges the construction of a Simulacrum to AddChronicleEvent (Chronicle).
+pub fn simulacrum_chronicle_bridge(
+    query: bevy_ecs::prelude::Query<
+        bevy_ecs::prelude::Entity,
+        bevy_ecs::prelude::Added<crate::layer1::psychology::simulacrum::Simulacrum>,
+    >,
+    mut chronicle_events: bevy_ecs::prelude::EventWriter<
+        crate::layer1::core::chronicle::AddChronicleEvent,
+    >,
+) {
+    for _ in query.iter() {
+        chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
+            importance: crate::layer1::core::chronicle::EventImportance::Major,
+            text: "A Propaganda Simulacrum was constructed, replacing harsh reality with a golden narrative.".to_string(),
         });
     }
 }
