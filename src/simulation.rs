@@ -47,6 +47,7 @@ pub fn build_simulation_schedule() -> Schedule {
 #[allow(clippy::too_many_lines)]
 fn init_simulation_resources(world: &mut World) {
     world.init_resource::<Events<crate::layer1::economy::apex_diet::ConsumeFoodEvent>>();
+    world.init_resource::<crate::layer1::economy::apex_diet::ApexMeatStores>();
     world.init_resource::<Events<crate::layer1::culture::nostalgia::RumorSpreadEvent>>();
     world.init_resource::<crate::layer1::biology::cybernetic_ascendancy::ColonyAverageUtility>();
     // Initialize schedule on first call (stored in World's Schedules resource)
@@ -654,6 +655,9 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
         crate::layer1::culture::gastronomers::spawn_gastronomer_faction_system,
         crate::layer1::culture::gastronomers::apply_culinary_singularity_buff_system,
         crate::layer1::core::integration::gastronomer_chronicle_bridge,
+        crate::layer1::core::integration::apex_meat_harvest_bridge_system,
+        crate::layer1::core::integration::apex_meat_distribution_system
+            .before(crate::layer1::agriculture::farm::consume_food_system),
     ));
 }
 #[cfg(test)]
@@ -737,6 +741,7 @@ mod tests {
 
         // Initialize Detection Risk for test
         world.init_resource::<Events<crate::layer1::economy::apex_diet::ConsumeFoodEvent>>();
+        world.init_resource::<crate::layer1::economy::apex_diet::ApexMeatStores>();
         world
             .init_resource::<crate::layer1::biology::cybernetic_ascendancy::ColonyAverageUtility>();
         world.init_resource::<crate::layer3::silence::DetectionRisk>();

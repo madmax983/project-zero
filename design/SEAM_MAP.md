@@ -981,3 +981,10 @@
 - **Systems connected:** `execute_trade_routes_system` -> `language_drift_trade_bridge` -> `LinguisticNetwork`
 - **Glue added:** Added `TradeRouteExecutedEvent` in `src/layer2/trade/routes.rs`. Added `language_drift_trade_bridge` in `src/layer3/integration.rs` to read the event and deduct the "Translation Tax" from the destination colony based on the linguistic drift. Registered in `src/simulation.rs`.
 - **Tests:** `tests/integration/language_drift_trade_bridge.rs`
+
+### INT-1088: Megafauna Death -> Apex Meat Diet
+- **Date:** 2026-05-10
+- **Systems connected:** `handle_fauna_death_system` -> `apex_meat_harvest_bridge_system` -> `apex_meat_distribution_system` -> `process_apex_meat_consumption`
+- **Glue added:** `apex_meat_harvest_bridge_system` and `apex_meat_distribution_system` in `src/layer1/core/integration.rs`, `ApexMeatStores` resource
+- **Schedule:** Harvest on Fauna death. Distribution in Update before `consume_food_system`
+- **Tests:** `tests/integration/apex_diet_integration.rs`

@@ -51,6 +51,51 @@ pub fn mass_driver_chronicle_bridge(
     }
 }
 
+/// INT-1088: Bridges Megafauna Death to Apex Meat Harvesting
+pub fn apex_meat_harvest_bridge_system(
+    query: Query<
+        &crate::layer1::fauna::Fauna,
+        Added<crate::layer1::Dead>,
+    >,
+    mut apex_meat: ResMut<crate::layer1::economy::apex_diet::ApexMeatStores>,
+) {
+    for fauna in query.iter() {
+        if fauna.fauna_type == crate::layer1::fauna::FaunaType::Wolf {
+            apex_meat.amount += 10.0; // Wolf yields 10 apex meat
+        }
+    }
+}
+
+/// INT-1088: Bridges Apex Meat Stores to Pop Needs & Apex Diet Consumption
+pub fn apex_meat_distribution_system(
+    mut stores: ResMut<crate::layer1::economy::apex_diet::ApexMeatStores>,
+    mut hungry_pops: Query<
+        (
+            Entity,
+            &mut crate::layer1::needs::Needs,
+        ),
+        With<crate::layer1::pop::Pop>,
+    >,
+    mut events: EventWriter<
+        crate::layer1::economy::apex_diet::ConsumeFoodEvent,
+    >,
+) {
+    for (entity, mut needs) in &mut hungry_pops {
+        if needs.hunger < crate::layer1::balance::FOOD_HUNGER_THRESHOLD && stores.amount >= crate::layer1::balance::FOOD_PER_MEAL {
+            stores.amount -= crate::layer1::balance::FOOD_PER_MEAL;
+
+            // Satisfy hunger (using the same logic as farm.rs)
+            needs.hunger = (needs.hunger + crate::layer1::balance::HUNGER_PER_MEAL).min(1.0);
+
+            // Trigger the apex diet feature
+            events.send(crate::layer1::economy::apex_diet::ConsumeFoodEvent {
+                pop: entity,
+                food_type: crate::layer1::economy::apex_diet::FoodType::ApexMeat,
+            });
+        }
+    }
+}
+
 /// Bridges `TemporalChamber` to `ColonyResources` (Fuel) and `AddChronicleEvent` for shockwave.
 pub fn temporal_chamber_power_bridge_system(
     mut resources: ResMut<crate::layer1::resources::ColonyResources>,
