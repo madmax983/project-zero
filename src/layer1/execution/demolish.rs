@@ -257,3 +257,112 @@ const fn calculate_knowledge_reward(building_type: Option<BuildingType>) -> f32 
         _ => 100.0,
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::layer1::building::{Building, BuildingType};
+    use crate::layer1::map::GridPosition;
+    use crate::layer1::resources::{ResourceItem, ResourceType};
+    use crate::layer1::structure::Structure;
+
+    #[test]
+    fn test_execute_cannibalize_success() {
+        let mut world = World::new();
+        let pos = GridPosition { x: 5, y: 5 };
+
+        let building = world
+            .spawn((
+                pos,
+                Building {
+                    building_type: BuildingType::Lander,
+                },
+            ))
+            .id();
+
+        let designation = world.spawn(pos).id();
+
+        assert!(execute_cannibalize(&mut world, designation));
+        assert!(world.get_entity(building).is_err());
+        assert!(world.get_entity(designation).is_err());
+
+        let mut found_metal = false;
+        let mut found_fuel = false;
+        let mut found_rations = false;
+
+        for (_, item) in world.query::<(&GridPosition, &ResourceItem)>().iter(&world) {
+            match item.resource_type {
+                ResourceType::Metal => found_metal = true,
+                ResourceType::Fuel => found_fuel = true,
+                ResourceType::Rations => found_rations = true,
+                _ => {}
+            }
+        }
+
+        assert!(found_metal);
+        assert!(found_fuel);
+        assert!(found_rations);
+    }
+
+    #[test]
+    fn test_execute_cannibalize_invalid() {
+        let mut world = World::new();
+        let pos = GridPosition { x: 5, y: 5 };
+        let designation = world.spawn(pos).id();
+
+        assert!(!execute_cannibalize(&mut world, designation));
+        assert!(world.get_entity(designation).is_err());
+    }
+
+    #[test]
+    fn test_execute_destroy_success() {
+        let mut world = World::new();
+        let pos = GridPosition { x: 5, y: 5 };
+
+        let building = world
+            .spawn((
+                pos,
+                Building {
+                    building_type: BuildingType::Housing,
+                },
+            ))
+            .id();
+
+        let designation = world.spawn(pos).id();
+
+        assert!(execute_destroy(&mut world, designation));
+        assert!(world.get_entity(building).is_err());
+        assert!(world.get_entity(designation).is_err());
+    }
+
+    #[test]
+    fn test_execute_destroy_invalid() {
+        let mut world = World::new();
+        let designation = world.spawn_empty().id();
+
+        assert!(!execute_destroy(&mut world, designation));
+    }
+
+    #[test]
+    fn test_execute_jury_rig_success() {
+        let mut world = World::new();
+        let pos = GridPosition { x: 5, y: 5 };
+
+        let structure = world.spawn((pos, Structure::default())).id();
+
+        let designation = world.spawn(pos).id();
+
+        assert!(execute_jury_rig(&mut world, designation));
+        assert!(world.get_entity(designation).is_err());
+        // Structure should still exist
+        assert!(world.get_entity(structure).is_ok());
+    }
+
+    #[test]
+    fn test_execute_jury_rig_invalid() {
+        let mut world = World::new();
+        let designation = world.spawn_empty().id();
+
+        assert!(!execute_jury_rig(&mut world, designation));
+    }
+}
