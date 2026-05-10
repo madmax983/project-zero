@@ -537,3 +537,4 @@
 - [x] `1089` Nanite Storms — `specs/1089-nanite-storms.md` — completed 2026-05-10
 - [x] `INT-1089` Integration: Nanite Fabrication Breach -> Nanite Storms — completed 2026-05-10
 - [x] `INT-939` Integration: Language Drift -> Trade Routes — completed 2026-06-28
+- [x] `1091` Gravity Blindspots — `specs/1091-gravity-blindspots.md` — completed 2026-06-16
