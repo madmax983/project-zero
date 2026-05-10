@@ -1,6 +1,7 @@
 //! Rendering logic for Layer 2: System View.
 
 use crate::layer2::fleet::{Fleet, InOrbit, InTransit};
+use crate::layer2::sensors::VisibilityStatus;
 use crate::layer2::system::{Orbit, OrbitalBody};
 use bevy_ecs::prelude::*;
 use ratatui::{
@@ -63,6 +64,12 @@ pub fn render_system_view(frame: &mut Frame, area: Rect, world: &World) {
     // We iterate over everything that has an OrbitalBody component (which defines char/color)
     for entity in world.iter_entities() {
         if let Some(body) = entity.get::<OrbitalBody>() {
+            if let Some(vis) = entity.get::<VisibilityStatus>() {
+                if !vis.is_visible {
+                    continue;
+                }
+            }
+
             // Apply sensor ambiguity visual override
             let (render_char, render_color) =
                 if entity.contains::<crate::layer2::sensor_ambiguity::UnidentifiedContact>() {

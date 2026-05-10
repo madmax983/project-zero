@@ -420,8 +420,10 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
         crate::layer2::integration::primitive_retaliation_chronicle_bridge,
         crate::layer2::integration::assign_sensors_to_player_fleets_system
             .after(crate::layer2::fleet::fleet_movement_system),
-        crate::layer2::sensor_ambiguity::resolve_sensors_system
+        crate::layer2::sensors::sensor_occlusion_system
             .after(crate::layer2::integration::assign_sensors_to_player_fleets_system),
+        crate::layer2::sensor_ambiguity::resolve_sensors_system
+            .after(crate::layer2::sensors::sensor_occlusion_system),
         crate::layer2::integration::ensure_player_fleets_identified_system
             .after(crate::layer2::sensor_ambiguity::resolve_sensors_system),
         crate::layer1::integration::fleet_unload_system
@@ -429,6 +431,9 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
         crate::layer2::fleet::ensure_fleet_health_system,
         crate::layer2::combat::fleet_combat_system
             .after(crate::layer2::fleet::fleet_movement_system),
+    ));
+
+    schedule.add_systems((
         crate::layer2::barnacles::barnacle_accumulation_system,
         // Debris Systems
         crate::layer2::orbit::kessler_gambit::trigger_kessler_gambit_system,

@@ -981,3 +981,11 @@
 - **Systems connected:** `execute_trade_routes_system` -> `language_drift_trade_bridge` -> `LinguisticNetwork`
 - **Glue added:** Added `TradeRouteExecutedEvent` in `src/layer2/trade/routes.rs`. Added `language_drift_trade_bridge` in `src/layer3/integration.rs` to read the event and deduct the "Translation Tax" from the destination colony based on the linguistic drift. Registered in `src/simulation.rs`.
 - **Tests:** `tests/integration/language_drift_trade_bridge.rs`
+
+### INT-1091: Gravity Blindspots -> System Map Rendering
+- **Date:** 2024-06-25
+- **Systems connected:** `VisibilityStatus` (from `sensor_occlusion_system`) -> `render_system_view`
+- **Glue added:**
+  - Registered `sensor_occlusion_system` in `src/simulation.rs`.
+  - Added filter in `render_system_view` (`src/layer2/render.rs`) to skip drawing entities where `VisibilityStatus::is_visible` is false.
+- **Tests:** Tested previously by unit tests in `src/layer2/sensors.rs` and verified functionally intact by system compile/execution tests.
