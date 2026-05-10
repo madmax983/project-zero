@@ -531,3 +531,4 @@
 - [x] `648` The Founder Effect — `specs/648-the-founder-effect.md` — completed 2026-02-01
 - [x] `1088` The Apex Predator Diet — `specs/1088-the-apex-predator-diet.md` — completed 2026-06-25
 - [x] `INT-1085` Integration: Resource Curse -> Pirate Raids — completed 2026-06-25
+- [x] `INT-1255` Integration: Sentient Trade Routes -> Chronicle — completed 2026-10-31
