@@ -453,4 +453,6 @@ pub use rearguard::{
 };
 pub mod sub_glacial_oceans;
 
+pub mod nanite_storms;
 pub mod predecessors;
+pub use nanite_storms::*;
