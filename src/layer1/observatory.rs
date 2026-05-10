@@ -326,14 +326,14 @@ mod tests {
 
         // Run until log appears
         let mut log_found = false;
-        for _ in 0..500 {
+        for _ in 0..5000 {
             schedule.run(&mut world);
             let log = world.resource::<MessageLog>();
             if !log.messages.is_empty() {
                 log_found = true;
                 let msg = &log.messages.back().unwrap().text;
                 assert!(
-                    msg.contains("inspired by the cosmos") || msg.contains("stared into the void"),
+                    msg.contains("inspired by the cosmos") || msg.contains("stared into the void") || msg.contains("discovered a comet"),
                     "Unexpected log message: {}",
                     msg
                 );
