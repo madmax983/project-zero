@@ -111,6 +111,100 @@ type StockpileFilter = (With<Stockpile>, Without<TheVisitor>);
 type StructureQuery<'a> = (Entity, &'a GridPosition);
 type StructureFilter = (With<Structure>, Without<TheVisitor>);
 
+fn handle_visitor_detect_target(
+    visitor: &mut TheVisitor,
+    pos: &GridPosition,
+    stockpiles: &Query<StockpileQuery<'_>, StockpileFilter>,
+    resources: &ColonyResources,
+) {
+    let has_food = resources.food > 0.0 || resources.rations > 0.0 || resources.fuel > 0.0;
+
+    if !has_food {
+        return;
+    }
+
+    let mut best_target = None;
+    let mut min_dist = u32::MAX;
+
+    for (stock_ent, stock_pos) in stockpiles.iter() {
+        let dist = pos.distance_chebyshev(*stock_pos);
+        if dist < min_dist {
+            min_dist = dist;
+            best_target = Some((stock_ent, *stock_pos));
+        }
+    }
+
+    if let Some((target, target_pos)) = best_target {
+        visitor.state = TheVisitorState::MoveToTarget;
+        visitor.target_stockpile = Some(target);
+        visitor.target_position = Some(target_pos);
+    }
+}
+
+fn handle_visitor_move(
+    visitor_ent: Entity,
+    visitor: &mut TheVisitor,
+    pos: &mut GridPosition,
+    commands: &mut Commands,
+    structures: &Query<StructureQuery<'_>, StructureFilter>,
+    next_state: TheVisitorState,
+) {
+    let Some(target_pos) = visitor.target_position else {
+        if visitor.state == TheVisitorState::MoveToTarget {
+            visitor.state = TheVisitorState::Wander;
+        }
+        return;
+    };
+
+    if *pos == target_pos {
+        if next_state == TheVisitorState::Leave {
+            commands.entity(visitor_ent).despawn();
+        } else {
+            visitor.state = next_state;
+        }
+        return;
+    }
+
+    let (dx, dy) = pos.direction_to(target_pos);
+    let next_pos_grid = GridPosition {
+        x: pos.x + dx,
+        y: pos.y + dy,
+    };
+
+    for (struct_ent, struct_pos) in structures.iter() {
+        if *struct_pos == next_pos_grid {
+            commands.entity(struct_ent).despawn();
+        }
+    }
+
+    *pos = next_pos_grid;
+}
+
+fn handle_visitor_eat(visitor: &mut TheVisitor, resources: &mut ColonyResources) {
+    let mut remaining_hunger = visitor.hunger;
+
+    if resources.food > 0.0 {
+        let eat = resources.food.min(remaining_hunger);
+        resources.food -= eat;
+        remaining_hunger -= eat;
+    }
+
+    if remaining_hunger > 0.0 && resources.rations > 0.0 {
+        let eat = resources.rations.min(remaining_hunger);
+        resources.rations -= eat;
+        remaining_hunger -= eat;
+    }
+
+    if remaining_hunger > 0.0 && resources.fuel > 0.0 {
+        let eat = resources.fuel.min(remaining_hunger);
+        resources.fuel -= eat;
+    }
+
+    visitor.state = TheVisitorState::Leave;
+    visitor.target_stockpile = None;
+    visitor.target_position = Some(GridPosition { x: 0, y: 0 });
+}
+
 /// Evaluates and advances the behavior state machine of "The Visitor".
 /// Handles targeting, moving, eating, and trampling structures.
 pub fn the_visitor_behavior_system(
@@ -123,123 +217,30 @@ pub fn the_visitor_behavior_system(
     for (visitor_ent, mut visitor, mut pos) in visitors.iter_mut() {
         match visitor.state {
             TheVisitorState::Wander | TheVisitorState::DetectTarget => {
-                // Check if there are resources to eat
-                // Simplification: If global resources > 0, assume we can eat from ANY stockpile
-                // (Since stockpiles don't store items locally)
-                // Use fuel instead of energy
-                let has_food =
-                    resources.food > 0.0 || resources.rations > 0.0 || resources.fuel > 0.0;
-
-                if has_food {
-                    // Find closest stockpile
-                    let mut best_target = None;
-                    let mut min_dist = u32::MAX;
-
-                    for (stock_ent, stock_pos) in stockpiles.iter() {
-                        let dist = pos.distance_chebyshev(*stock_pos);
-                        if dist < min_dist {
-                            min_dist = dist;
-                            best_target = Some((stock_ent, *stock_pos));
-                        }
-                    }
-
-                    if let Some((target, target_pos)) = best_target {
-                        visitor.state = TheVisitorState::MoveToTarget;
-                        visitor.target_stockpile = Some(target);
-                        visitor.target_position = Some(target_pos);
-                    }
-                }
+                handle_visitor_detect_target(&mut visitor, &pos, &stockpiles, &resources);
             }
             TheVisitorState::MoveToTarget => {
-                if let Some(target_pos) = visitor.target_position {
-                    if *pos == target_pos {
-                        visitor.state = TheVisitorState::Eat;
-                    } else {
-                        // Move one step closer (Chebyshev)
-                        let (dx, dy) = pos.direction_to(target_pos);
-                        let next_pos = GridPosition {
-                            x: pos.x + dx,
-                            y: pos.y + dy,
-                        };
-
-                        // Check for Structure at next_pos and destroy it
-                        // Note: This iterates all structures. Optimization: Spatial Map.
-                        // For MVP with few structures, it's okay.
-                        for (struct_ent, struct_pos) in structures.iter() {
-                            if *struct_pos == next_pos {
-                                // Destroy structure
-                                commands.entity(struct_ent).despawn();
-                                // Add effect/log here if needed
-                            }
-                        }
-
-                        // Update position
-                        *pos = next_pos;
-                    }
-                } else {
-                    // Lost target?
-                    visitor.state = TheVisitorState::Wander;
-                }
+                handle_visitor_move(
+                    visitor_ent,
+                    &mut visitor,
+                    &mut pos,
+                    &mut commands,
+                    &structures,
+                    TheVisitorState::Eat,
+                );
             }
             TheVisitorState::Eat => {
-                // Consume resources
-                let amount = visitor.hunger;
-
-                // Prioritize Food -> Rations -> Fuel
-                // (Since we are at a stockpile, we assume access to colony stores)
-
-                let mut remaining_hunger = amount;
-
-                if resources.food > 0.0 {
-                    let eat = resources.food.min(remaining_hunger);
-                    resources.food -= eat;
-                    remaining_hunger -= eat;
-                }
-
-                if remaining_hunger > 0.0 && resources.rations > 0.0 {
-                    let eat = resources.rations.min(remaining_hunger);
-                    resources.rations -= eat;
-                    remaining_hunger -= eat;
-                }
-
-                if remaining_hunger > 0.0 && resources.fuel > 0.0 {
-                    let eat = resources.fuel.min(remaining_hunger);
-                    resources.fuel -= eat;
-                    // remaining_hunger -= eat; // final subtraction not strictly necessary but keeps pattern
-                }
-
-                // If we ate anything (or even if we didn't but tried), leave
-                // The spec says "After consuming its fill, it leaves".
-
-                visitor.state = TheVisitorState::Leave;
-                visitor.target_stockpile = None;
-                // Leave towards map edge (0,0 for simplicity)
-                visitor.target_position = Some(GridPosition { x: 0, y: 0 });
+                handle_visitor_eat(&mut visitor, &mut resources);
             }
             TheVisitorState::Leave => {
-                if let Some(target_pos) = visitor.target_position {
-                    if *pos == target_pos {
-                        // Reached exit
-                        commands.entity(visitor_ent).despawn();
-                    } else {
-                        // Move logic same as MoveToTarget
-                        let (dx, dy) = pos.direction_to(target_pos);
-                        let next_pos = GridPosition {
-                            x: pos.x + dx,
-                            y: pos.y + dy,
-                        };
-
-                        // Trample on exit too? Spec says "leaves the map".
-                        // Assuming it tramples on way out too.
-                        for (struct_ent, struct_pos) in structures.iter() {
-                            if *struct_pos == next_pos {
-                                commands.entity(struct_ent).despawn();
-                            }
-                        }
-
-                        *pos = next_pos;
-                    }
-                }
+                handle_visitor_move(
+                    visitor_ent,
+                    &mut visitor,
+                    &mut pos,
+                    &mut commands,
+                    &structures,
+                    TheVisitorState::Leave, // Should despawn, handled internally
+                );
             }
         }
     }
