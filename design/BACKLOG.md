@@ -23,8 +23,6 @@
 
 
 
-- [ ] `625` The Cryo-Prison Revolt — `specs/625-cryo-prison-revolt.md`
-
 - [ ] `473` Bureaucratic Redlining — `specs/473-bureaucratic-redlining.md`
 - [ ] `474` Inherited Grudges — `specs/474-inherited-grudges.md`
 - [ ] `477` The Ransom Broker — `specs/477-the-ransom-broker.md`
