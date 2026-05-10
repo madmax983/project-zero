@@ -11,7 +11,8 @@ pub fn register(schedule: &mut Schedule) {
         (
             crate::layer1::mycelial::detect_tripwire_step,
             crate::layer1::mycelial::aggro_network_entities,
-        ).in_set(super::Layer1SystemSet::Observation)
+        )
+            .in_set(super::Layer1SystemSet::Observation),
     );
     schedule.add_systems(
         (

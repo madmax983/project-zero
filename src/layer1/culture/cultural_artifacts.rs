@@ -22,13 +22,13 @@ pub fn cultural_aura_system(
 ) {
     for (artifact, art_pos) in artifacts.iter() {
         for (mut morale, pop_pos) in pops.iter_mut() {
-            let dx = (art_pos.x - pop_pos.x).abs();
-            let dy = (art_pos.y - pop_pos.y).abs();
+            let dx = art_pos.x.abs_diff(pop_pos.x);
+            let dy = art_pos.y.abs_diff(pop_pos.y);
 
             // Chebychev distance for simplicity
             let distance = dx.max(dy);
 
-            if distance <= artifact.aura_radius {
+            if distance <= artifact.aura_radius as u32 {
                 match artifact.theme {
                     ArtifactTheme::Victory => {
                         morale.add_modifier(MoodModifier {

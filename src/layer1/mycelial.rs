@@ -1,6 +1,5 @@
-
-use bevy_ecs::prelude::*;
 use crate::layer1::map::GridPosition;
+use bevy_ecs::prelude::*;
 
 #[derive(Component)]
 pub struct SensorShroom {
@@ -63,11 +62,14 @@ mod tests {
         app.add_event::<MycelialTripwireEvent>();
         app.add_systems(Update, detect_tripwire_step);
 
-        let pop = app.world_mut().spawn((crate::layer1::pop::Pop, GridPosition { x: 5, y: 5 })).id();
-        let _sensor = app.world_mut().spawn((
-            SensorShroom { network_id: 1 },
-            GridPosition { x: 5, y: 5 },
-        )).id();
+        let pop = app
+            .world_mut()
+            .spawn((crate::layer1::pop::Pop, GridPosition { x: 5, y: 5 }))
+            .id();
+        let _sensor = app
+            .world_mut()
+            .spawn((SensorShroom { network_id: 1 }, GridPosition { x: 5, y: 5 }))
+            .id();
 
         app.update();
 
@@ -76,7 +78,10 @@ mod tests {
         let triggered = reader.read(events).next().unwrap();
 
         assert_eq!(triggered.network_id, 1, "Network 1 should be alerted.");
-        assert_eq!(triggered.triggering_entity, pop, "Pop entity should be identified as trigger.");
+        assert_eq!(
+            triggered.triggering_entity, pop,
+            "Pop entity should be identified as trigger."
+        );
     }
 
     #[test]
@@ -87,9 +92,14 @@ mod tests {
 
         let pop = app.world_mut().spawn(GridPosition { x: 10, y: 10 }).id();
 
-        let turret = app.world_mut().spawn((
-            SporeTurret { network_id: 1, is_active: false, target: None },
-        )).id();
+        let turret = app
+            .world_mut()
+            .spawn((SporeTurret {
+                network_id: 1,
+                is_active: false,
+                target: None,
+            },))
+            .id();
 
         app.world_mut().send_event(MycelialTripwireEvent {
             network_id: 1,
@@ -99,7 +109,14 @@ mod tests {
         app.update();
 
         let turret_comp = app.world().get::<SporeTurret>(turret).unwrap();
-        assert!(turret_comp.is_active, "Turret should become active on network alert.");
-        assert_eq!(turret_comp.target, Some(pop), "Turret should target the triggering entity.");
+        assert!(
+            turret_comp.is_active,
+            "Turret should become active on network alert."
+        );
+        assert_eq!(
+            turret_comp.target,
+            Some(pop),
+            "Turret should target the triggering entity."
+        );
     }
 }

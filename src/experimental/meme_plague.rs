@@ -42,8 +42,8 @@ pub fn process_meme_contagion(
     for (uninfected_entity, uninfected_pos) in &uninfected_query {
         for (infected_pos, carrier) in &infected_query {
             // Check if they are adjacent (distance <= 1)
-            let dx = (infected_pos.x - uninfected_pos.x).abs();
-            let dy = (infected_pos.y - uninfected_pos.y).abs();
+            let dx = infected_pos.x.abs_diff(uninfected_pos.x);
+            let dy = infected_pos.y.abs_diff(uninfected_pos.y);
 
             if dx <= 1 && dy <= 1 && (dx > 0 || dy > 0) {
                 // 10% chance to infect per tick per adjacent infected pop

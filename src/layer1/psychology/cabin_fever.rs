@@ -55,7 +55,7 @@ pub fn update_cabin_fever_system(
         // 2. Crowding Logic (Naive O(N*M) for MVP Green)
         let mut neighbors = 0;
         for other_pos in &all_pops {
-            if (other_pos.x - pos.x).abs() <= 1 && (other_pos.y - pos.y).abs() <= 1 {
+            if other_pos.x.abs_diff(pos.x) <= 1 && other_pos.y.abs_diff(pos.y) <= 1 {
                 neighbors += 1;
             }
         }
