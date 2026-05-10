@@ -57,6 +57,14 @@ pub struct SentientTollDemandEvent {
     pub demanded_resource: String,
 }
 
+#[derive(Event, Clone, Debug)]
+pub struct TradeRouteExecutedEvent {
+    pub source: Entity,
+    pub destination: Entity,
+    pub item_type: String,
+    pub amount: u32,
+}
+
 pub fn increase_route_complexity_system(
     mut query: Query<(&TradeRoute, &mut RouteComplexity, &Timer)>,
 ) {
@@ -84,6 +92,7 @@ pub fn check_sentient_route_system(
 pub fn execute_trade_routes_system(
     mut routes: Query<(&TradeRoute, &mut Timer)>,
     mut colonies: Query<&mut Colony>,
+    mut events: EventWriter<TradeRouteExecutedEvent>,
 ) {
     for (route, mut timer) in routes.iter_mut() {
         if timer.0 > 0 {
@@ -95,6 +104,12 @@ pub fn execute_trade_routes_system(
             {
                 if source_colony.remove_resource(&route.item_type, route.amount) {
                     dest_colony.add_resource(route.item_type.clone(), route.amount);
+                    events.send(TradeRouteExecutedEvent {
+                        source: route.source,
+                        destination: route.destination,
+                        item_type: route.item_type.clone(),
+                        amount: route.amount,
+                    });
                 }
             }
             timer.0 = route.interval;

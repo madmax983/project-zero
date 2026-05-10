@@ -193,6 +193,8 @@ mod waste_scent;
 pub mod integration {
     #[path = "conveyor_pathfinding_bridge.rs"]
     pub mod conveyor_pathfinding_bridge;
+    #[path = "language_drift_trade_bridge.rs"]
+    pub mod language_drift_trade_bridge;
     pub mod sonic_suppression_bridge;
     pub mod spiteful_will_chronicle;
     #[path = "the_silent_generation_bridge.rs"]

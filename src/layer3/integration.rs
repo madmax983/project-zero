@@ -113,6 +113,31 @@ pub fn red_tape_chronicle_bridge(
 use crate::layer1::law::penal::OrganHarvestedEvent;
 use crate::layer3::diplomacy_reflection::{Civilization, DiplomaticTraits, TraitChangedEvent};
 
+use crate::layer2::trade::routes::{Colony, TradeRouteExecutedEvent};
+use crate::layer3::linguistic_drift::LinguisticNetwork;
+
+/// Bridges `TradeRouteExecutedEvent` and `LinguisticNetwork` to apply a Translation Tax
+pub fn language_drift_trade_bridge(
+    mut events: EventReader<TradeRouteExecutedEvent>,
+    mut colonies: Query<&mut Colony>,
+    network: Res<LinguisticNetwork>,
+) {
+    for event in events.read() {
+        let drift = network.get_drift(event.source, event.destination);
+
+        // Applying Translation Tax: High drift imposes a tax on trade efficiency.
+        // We'll calculate tax as 0.1% per point of drift, capped at 90%
+        let tax_rate = (drift / 1000.0).clamp(0.0, 0.9);
+        let tax_amount = (event.amount as f32 * tax_rate) as u32;
+
+        if tax_amount > 0 {
+            if let Ok(mut dest_colony) = colonies.get_mut(event.destination) {
+                dest_colony.remove_resource(&event.item_type, tax_amount);
+            }
+        }
+    }
+}
+
 /// Bridges `OrganHarvestedEvent` to `DiplomaticTraits` for Layer 3 Diplomacy
 pub fn organ_trade_diplomacy_bridge(
     mut harvest_events: EventReader<OrganHarvestedEvent>,
