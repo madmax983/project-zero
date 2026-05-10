@@ -151,6 +151,7 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::environment::seismic::seismic_instability_system
                 .after(crate::layer1::environment::seismic::update_seismic_system),
             crate::layer1::geology::seismic_decay_system,
+            crate::layer1::geology::subsurface::kinetic_strike_system,
             crate::layer1::geology::check_seismic_events
                 .after(crate::layer1::geology::seismic_decay_system),
             crate::layer1::geology::apply_geological_event_system
