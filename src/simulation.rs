@@ -848,6 +848,7 @@ mod tests {
         world.init_resource::<Events<crate::layer1::whispering_ore::MinedOreEvent>>();
         world.init_resource::<Events<crate::layer1::whispering_ore::MineSealedEvent>>();
         world.init_resource::<Events<crate::layer1::deep_crust_resonance::ExcavationEvent>>();
+        world.init_resource::<Events<crate::layer1::mycelial::MycelialTripwireEvent>>();
         world.init_resource::<crate::layer3::council::GalacticCouncil>();
         world.init_resource::<crate::layer2::syzygy::SyzygyCycle>();
         world.init_resource::<crate::layer2::syzygy::PlanetaryGravity>();
