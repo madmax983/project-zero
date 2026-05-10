@@ -1,8 +1,8 @@
-use bevy_ecs::prelude::*;
-use crate::layer1::nature::terrain::{TerrainGrid, TerrainType};
-use crate::layer1::map::GridPosition;
 use crate::layer1::building::{BuildingMap, OccupiedTiles};
 use crate::layer1::chronicle::{AddChronicleEvent, EventImportance};
+use crate::layer1::map::GridPosition;
+use crate::layer1::nature::terrain::{TerrainGrid, TerrainType};
+use bevy_ecs::prelude::*;
 
 #[derive(PartialEq, Eq, Debug, Clone, Copy)]
 pub enum SubsurfaceResourceKind {
@@ -45,7 +45,10 @@ pub fn kinetic_strike_system(
                 map.0.remove(&(actual_hit_x, actual_hit_y));
                 despawned_building = true;
                 chronicle_events.send(AddChronicleEvent {
-                    text: format!("A building was destroyed by a kinetic strike at {}, {}", actual_hit_x, actual_hit_y),
+                    text: format!(
+                        "A building was destroyed by a kinetic strike at {}, {}",
+                        actual_hit_x, actual_hit_y
+                    ),
                     importance: EventImportance::Major,
                 });
             }
@@ -78,7 +81,10 @@ pub fn kinetic_strike_system(
                 Some(SubsurfaceResourceKind::OreVein) => {
                     grid.set(tx, ty, TerrainType::Crater);
                     chronicle_events.send(AddChronicleEvent {
-                        text: format!("Kinetic strike exposed an Ore Vein at {}, {}", actual_hit_x, actual_hit_y),
+                        text: format!(
+                            "Kinetic strike exposed an Ore Vein at {}, {}",
+                            actual_hit_x, actual_hit_y
+                        ),
                         importance: EventImportance::Standard,
                     });
                 }
@@ -90,8 +96,8 @@ pub fn kinetic_strike_system(
                     });
                 }
                 None => {
-                     // No subsurface resource, just make a crater
-                     grid.set(tx, ty, TerrainType::Crater);
+                    // No subsurface resource, just make a crater
+                    grid.set(tx, ty, TerrainType::Crater);
                 }
             }
         }
@@ -101,9 +107,9 @@ pub fn kinetic_strike_system(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use bevy::prelude::*;
-    use crate::layer1::nature::terrain::TerrainType;
     use crate::layer1::building::{Building, BuildingType};
+    use crate::layer1::nature::terrain::TerrainType;
+    use bevy::prelude::*;
 
     #[test]
     fn test_kinetic_strike_exposes_ore() {
@@ -118,10 +124,16 @@ mod tests {
         app.world_mut().insert_resource(grid);
         app.world_mut().init_resource::<Events<AddChronicleEvent>>();
 
-        let _target_tile = app.world_mut().spawn((
-            SubsurfaceResource { kind: SubsurfaceResourceKind::OreVein, depth: 50.0 },
-            GridPosition { x: 5, y: 5 },
-        )).id();
+        let _target_tile = app
+            .world_mut()
+            .spawn((
+                SubsurfaceResource {
+                    kind: SubsurfaceResourceKind::OreVein,
+                    depth: 50.0,
+                },
+                GridPosition { x: 5, y: 5 },
+            ))
+            .id();
 
         app.add_event::<KineticStrikeEvent>();
         app.world_mut().send_event(KineticStrikeEvent {
@@ -149,15 +161,27 @@ mod tests {
         app.world_mut().insert_resource(grid);
         app.world_mut().init_resource::<Events<AddChronicleEvent>>();
 
-        let _target_tile = app.world_mut().spawn((
-            SubsurfaceResource { kind: SubsurfaceResourceKind::OreVein, depth: 50.0 },
-            GridPosition { x: 5, y: 5 },
-        )).id();
+        let _target_tile = app
+            .world_mut()
+            .spawn((
+                SubsurfaceResource {
+                    kind: SubsurfaceResourceKind::OreVein,
+                    depth: 50.0,
+                },
+                GridPosition { x: 5, y: 5 },
+            ))
+            .id();
 
-        let _adjacent_tile = app.world_mut().spawn((
-            SubsurfaceResource { kind: SubsurfaceResourceKind::Magma, depth: 40.0 },
-            GridPosition { x: 6, y: 5 },
-        )).id();
+        let _adjacent_tile = app
+            .world_mut()
+            .spawn((
+                SubsurfaceResource {
+                    kind: SubsurfaceResourceKind::Magma,
+                    depth: 40.0,
+                },
+                GridPosition { x: 6, y: 5 },
+            ))
+            .id();
 
         app.add_event::<KineticStrikeEvent>();
         app.world_mut().send_event(KineticStrikeEvent {
@@ -189,10 +213,15 @@ mod tests {
         occupied.0.insert((5, 5));
         app.world_mut().insert_resource(occupied);
 
-        let building = app.world_mut().spawn((
-            Building { building_type: BuildingType::Housing },
-            GridPosition { x: 5, y: 5 },
-        )).id();
+        let building = app
+            .world_mut()
+            .spawn((
+                Building {
+                    building_type: BuildingType::Housing,
+                },
+                GridPosition { x: 5, y: 5 },
+            ))
+            .id();
 
         let mut map = BuildingMap::default();
         map.0.insert((5, 5), building);

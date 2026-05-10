@@ -720,7 +720,7 @@ See `design/IDEAS.md` for unspecced concepts.
 
 
 
-- [ ] `1089` Nanite Storms — `specs/1089-nanite-storms.md`
+
 - [ ] `1090` Mycelial Tripwires — `specs/1090-mycelial-tripwires.md`
 - [ ] `1091` Gravity Blindspots — `specs/1091-gravity-blindspots.md`
 - [ ] `1092` Attention Bandwidth — `specs/1092-attention-bandwidth.md`
