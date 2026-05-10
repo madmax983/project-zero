@@ -51,6 +51,28 @@ pub fn mass_driver_chronicle_bridge(
     }
 }
 
+/// Bridges `TemporalChamber` to `ColonyResources` (Fuel) and `AddChronicleEvent` for shockwave.
+pub fn temporal_chamber_power_bridge_system(
+    mut resources: ResMut<crate::layer1::resources::ColonyResources>,
+    mut chambers: Query<&mut crate::layer1::temporal_chamber::TemporalChamber>,
+    mut chronicle_events: EventWriter<AddChronicleEvent>,
+) {
+    for mut chamber in chambers.iter_mut() {
+        if chamber.active {
+            if resources.fuel >= chamber.energy_cost {
+                resources.fuel -= chamber.energy_cost;
+            } else {
+                chamber.active = false;
+                chronicle_events.send(AddChronicleEvent {
+                    text: "Temporal shockwave released due to power failure in echo chamber!"
+                        .to_string(),
+                    importance: EventImportance::Major,
+                });
+            }
+        }
+    }
+}
+
 /// Bridges `PopPetrifiedEvent` (Petrification Sickness) to `AddChronicleEvent` (Chronicle).
 pub fn petrification_chronicle_bridge(
     mut events: EventReader<PopPetrifiedEvent>,

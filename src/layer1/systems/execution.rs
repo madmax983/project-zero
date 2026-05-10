@@ -255,6 +255,8 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::agony_extract::process_agony_extract_harvest_system
                 .after(work_execution_system),
             crate::layer1::temporal_chamber::temporal_chamber_energy_system,
+            crate::layer1::core::integration::temporal_chamber_power_bridge_system
+                .after(crate::layer1::temporal_chamber::temporal_chamber_energy_system),
         )
             .in_set(Layer1SystemSet::Execution),
     );

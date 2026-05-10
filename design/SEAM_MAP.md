@@ -1,3 +1,9 @@
+### INT-644: Temporal Echo Chambers -> Power & Chronicle
+- **Date:** 2026-07-03
+- **Systems connected:** `TemporalChamber` -> `temporal_chamber_power_bridge_system` -> `ColonyResources` & `AddChronicleEvent`
+- **Glue added:** Added `temporal_chamber_power_bridge_system` in `src/layer1/core/integration.rs` to deduct fuel based on `energy_cost` and emit an `AddChronicleEvent` temporal shockwave when fuel runs out.
+- **Tests:** `tests/integration/temporal_chamber_bridge.rs`
+
 ### INT-239: Clutter -> Pathfinding and Beauty
 - **Date:** 2026-06-25
 - **Systems connected:** `clutter_accumulation_system` (Clutter) -> `find_path_internal` (Pathfinding) and `update_beauty_grid_system` (Beauty)
