@@ -10,8 +10,10 @@ fn test_temporal_chamber_power_bridge_consumes_fuel() {
     app.add_systems(Update, temporal_chamber_power_bridge_system);
     app.init_resource::<Events<AddChronicleEvent>>();
 
-    let mut resources = ColonyResources::default();
-    resources.fuel = 100.0;
+    let resources = ColonyResources {
+        fuel: 100.0,
+        ..Default::default()
+    };
     app.insert_resource(resources);
 
     app.world_mut().spawn(TemporalChamber {
@@ -30,7 +32,10 @@ fn test_temporal_chamber_power_bridge_consumes_fuel() {
     );
 
     let events = app.world().resource::<Events<AddChronicleEvent>>();
-    assert!(events.is_empty(), "Should not emit shockwave if fuel is sufficient.");
+    assert!(
+        events.is_empty(),
+        "Should not emit shockwave if fuel is sufficient."
+    );
 }
 
 #[test]
@@ -39,8 +44,10 @@ fn test_temporal_chamber_power_bridge_shockwave_on_failure() {
     app.add_systems(Update, temporal_chamber_power_bridge_system);
     app.init_resource::<Events<AddChronicleEvent>>();
 
-    let mut resources = ColonyResources::default();
-    resources.fuel = 10.0; // insufficient
+    let resources = ColonyResources {
+        fuel: 10.0,
+        ..Default::default()
+    }; // insufficient
     app.insert_resource(resources);
 
     let chamber_entity = app
