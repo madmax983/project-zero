@@ -19500,3 +19500,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you continually provoke unnecessary, costly wars just to keep your bloodthirsty populace satisfied, or attempt the painful, generations-long process of shifting your entire culture towards peace?
 
 ---
+
+## The Paradox of Prosperity
+
+**Layer:** 1
+
+**Fantasy:** A colony becomes so successful and resource-rich that its citizens lose their survival instincts and become obsessed with trivial matters.
+
+**Mechanic:** When a colony maintains maximum resource caps and low stress for an extended period, Pops develop a "Complacent" trait. They begin fabricating artificial needs (e.g., demanding specific colors of clothing or exotic pet food). Failure to meet these trivial needs generates disproportionately high Unrest.
+
+**Emergence:** Your impregnable, hyper-efficient fortress world is brought to its knees by a general strike because the food synthesis machines ran out of the specific flavoring agent for their favorite luxury desert, completely ignoring the fact that they have enough nutrient paste to last a century.
+
+**Tension:** Do you artificially induce hardship (like turning off life support briefly) to snap them back to reality, or dedicate massive resources to maintaining an increasingly fragile and absurd standard of living?
+
+---
+
+## Decommissioned Warships as Housing
+
+**Layer:** Cross-layer
+
+**Fantasy:** Repurposing the instruments of war to provide shelter for a booming population, with lingering psychological effects.
+
+**Mechanic:** Instead of scrapping damaged or obsolete Layer 2 military vessels, you can physically land them on a Layer 1 colony to instantly create high-capacity, low-quality housing. However, the cramped conditions and lingering "ghosts" (residual military AI or physical damage) slowly build a low-level "Traumatized" or "Militaristic" trait in the inhabitants.
+
+**Emergence:** You solve a refugee crisis by landing your old invasion fleet in a valley. A generation later, that entire valley's population has formed a distinct subculture based on the naval traditions of the ships they live in, and they aggressively demand representation in the local government, refusing to mix with the "civilians" in normal buildings.
+
+**Tension:** Do you use the cheap, immediate solution of ship-housing to solve a population boom, knowing it might breed a radicalized, militaristic faction on your world?
+
+---
+
+## The Cassandra Protocol
+
+**Layer:** Cross-layer
+
+**Fantasy:** A predictive AI accurately forecasts a disaster, but the bureaucracy ignores it, forcing local authorities to take drastic, unauthorized action.
+
+**Mechanic:** A Layer 2 predictive AI generates a highly accurate "Disaster Warning" for a specific Layer 1 colony (e.g., an impending seismic event or pirate raid). However, officially acting on the warning requires a massive resource expenditure from the Layer 3 capital. The player can choose to bypass the capital and initiate a local "Cassandra Protocol," forcing the colony to illegally hoard resources and build defenses.
+
+**Emergence:** The AI predicts a famine. You initiate the Cassandra Protocol, hoarding food and halting production to build silos. The capital interprets this as a rebellion and sends a fleet to suppress it, forcing you to fight your own empire just to survive the famine they refused to believe in.
+
+**Tension:** Do you trust the AI and risk civil war by taking unauthorized action, or follow the rules and watch the colony burn while the bureaucracy demands "more data"?
+
+---
