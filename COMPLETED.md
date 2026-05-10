@@ -6,3 +6,4 @@
 - [x] `207` Atmospheric Processors — `specs/207-atmospheric-processors.md` — completed 2026-06-25
 - [x] `258` Acoustic Shadows — `specs/258-acoustic-shadows.md` — completed 2026-03-01
 - [x] `632` Cultural Artifacts — `specs/632-cultural-artifacts.md` — completed 2024-05-31
+- [x] `625` The Cryo-Prison Revolt — `specs/625-cryo-prison-revolt.md` — completed 2026-05-10

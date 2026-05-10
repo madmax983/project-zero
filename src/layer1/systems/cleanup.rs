@@ -39,6 +39,8 @@ pub fn register(schedule: &mut Schedule) {
             update_event_buffer::<UnpossessEvent>,
             update_event_buffer::<crate::layer1::skills::XpGainEvent>,
             update_event_buffer::<crate::layer1::resources::MiningEvent>,
+            update_event_buffer::<crate::layer1::cryo_prison::SabotageEvent>,
+
         )
             .in_set(Layer1SystemSet::EventCleanup),
     );
