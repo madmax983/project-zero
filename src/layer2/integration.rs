@@ -211,6 +211,29 @@ pub fn prisoner_death_chronicle_bridge_system(
     }
 }
 
+use crate::layer2::trade::routes::{RouteComplexity, SentientTollDemandEvent};
+
+/// Bridges `SentientTollDemandEvent` from Sentient Trade Routes into the `Chronicle` system.
+pub fn sentient_route_chronicle_bridge(
+    mut events: EventReader<SentientTollDemandEvent>,
+    mut query: Query<&mut RouteComplexity>,
+    mut chronicle_events: EventWriter<crate::layer1::chronicle::AddChronicleEvent>,
+) {
+    for event in events.read() {
+        chronicle_events.send(crate::layer1::chronicle::AddChronicleEvent {
+            text: format!(
+                "A Sentient Trade Route AI has begun demanding a toll of {} to allow our shipments through.",
+                event.demanded_resource
+            ),
+            importance: crate::layer1::chronicle::EventImportance::Major,
+        });
+
+        if let Ok(mut complexity) = query.get_mut(event.route_id) {
+            complexity.level = 0.0;
+        }
+    }
+}
+
 // --- INT-647: Cascade Failure -> Chronicle ---
 
 use crate::layer2::cascade::{DefenseWeakenedEvent, LogisticsStrainedEvent};

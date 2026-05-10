@@ -956,3 +956,9 @@
 - **Systems connected:** `PirateThreatLevel` (Layer 3) -> `resource_curse_raid_bridge` -> `PirateRaidEvent` (Layer 1)
 - **Glue added:** Added `resource_curse_raid_bridge` in `src/layer3/pirates.rs` to conditionally emit `PirateRaidEvent` and lower threat level when `PirateThreatLevel` gets too high (>= 10.0). Registered in `src/simulation.rs`.
 - **Tests:** `tests/integration/resource_curse_bridge.rs`
+
+### INT-1255: Sentient Trade Routes -> Chronicle
+- **Date:** 2026-10-31
+- **Systems connected:** `SentientTollDemandEvent` (Layer 2) -> `sentient_route_chronicle_bridge` -> `AddChronicleEvent` (Layer 1)
+- **Glue added:** Added `sentient_route_chronicle_bridge` in `src/layer2/integration.rs` to conditionally emit `AddChronicleEvent` and reset `RouteComplexity` when a toll is demanded. Registered in `src/simulation.rs`.
+- **Tests:** `tests/integration/sentient_route_bridge.rs`

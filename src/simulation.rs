@@ -503,6 +503,8 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
         crate::layer2::trade::routes::execute_trade_routes_system,
         crate::layer2::trade::routes::increase_route_complexity_system,
         crate::layer2::trade::routes::check_sentient_route_system,
+        crate::layer2::integration::sentient_route_chronicle_bridge
+            .after(crate::layer2::trade::routes::check_sentient_route_system),
         crate::layer2::integration::ideological_contraband_route_bridge
             .after(crate::layer2::trade::routes::execute_trade_routes_system),
         crate::layer2::integration::post_trade_route_sync_system
