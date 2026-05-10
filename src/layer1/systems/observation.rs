@@ -9,6 +9,12 @@ use bevy_ecs::prelude::*;
 pub fn register(schedule: &mut Schedule) {
     schedule.add_systems(
         (
+            crate::layer1::mycelial::detect_tripwire_step,
+            crate::layer1::mycelial::aggro_network_entities,
+        ).in_set(super::Layer1SystemSet::Observation)
+    );
+    schedule.add_systems(
+        (
             crate::layer1::social::pop_relationships::update_workplace_relationships_system,
             crate::layer1::social::pop_relationships::calculate_relationship_mood_buff_system,
             crate::layer1::culture::cultural_artifacts::cultural_aura_system,
