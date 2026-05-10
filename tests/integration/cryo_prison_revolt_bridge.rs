@@ -23,6 +23,7 @@ fn test_cryo_prison_sabotage_bridge() {
 
     app.world_mut().send_event(SabotageEvent {
         saboteur: saboteur_entity,
+        facility: None,
     });
 
     app.update();

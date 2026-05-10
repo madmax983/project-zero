@@ -301,6 +301,12 @@ fn register_simulation_core_systems(schedule: &mut Schedule) {
     // --- Register Core Layer 1 Systems ---
     register_layer1_systems(schedule);
 
+    // Cryo Prison Revolt
+    schedule.add_systems((
+        crate::layer1::cryo_prison::thaw_cryo_pod_system,
+        crate::layer1::cryo_prison::criminal_sabotage_system,
+    ));
+
     // Black Market Terraforming
 
     schedule.add_systems(

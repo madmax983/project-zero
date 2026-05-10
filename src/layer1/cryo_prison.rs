@@ -24,6 +24,7 @@ pub struct CriminalRecord;
 #[derive(Event)]
 pub struct SabotageEvent {
     pub saboteur: Entity,
+    pub facility: Option<Entity>,
 }
 
 pub fn thaw_cryo_pod_system(
@@ -66,7 +67,7 @@ pub fn criminal_sabotage_system(
 ) {
     if unrest.level > 0.9 {
         for (entity, _) in query.iter() {
-            events.send(SabotageEvent { saboteur: entity });
+            events.send(SabotageEvent { saboteur: entity, facility: None });
         }
     }
 }
@@ -86,6 +87,8 @@ mod tests {
         app.insert_resource(Unrest::default());
         app.add_systems(Update, thaw_cryo_pod_system);
 
+
+        app.add_event::<SabotageEvent>();
         let pod_entity = app
             .world_mut()
             .spawn((CryoPod {
