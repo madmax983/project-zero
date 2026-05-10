@@ -36,3 +36,6 @@
 **Action:** In `layer2`, tests are generally very solid and robust. The `unwrap()`s inside tests are just asserting that the expected entities and components were successfully created or modified, which is standard practice in Rust/Bevy test suites.
 
 **Conclusion:** The codebase is extremely well-tested and robust. The `unwrap()`s I found are all constrained within `#[cfg(test)]` blocks (e.g. `world.get::<...>().unwrap()`), where they are the idiomatic way to assert component existence in Bevy ECS tests. Edge cases are largely covered. I will not submit a PR as the code is already solid.
+## [Testing Despawns in Bevy 0.15+]
+**Learning:** `world.get_entity(id)` returns a `Result`, not an `Option`. When checking if an entity has been properly despawned in a unit test, you cannot use `.is_none()`. You must use `.is_err()`. Similarly, to assert it still exists, use `.is_ok()`.
+**Action:** When writing tests that verify entity cleanup (e.g. `execute_cannibalize` despawning the building and designation), assert with `assert!(world.get_entity(id).is_err());`.
