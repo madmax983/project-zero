@@ -975,3 +975,9 @@
 - **Glue added:** `nanite_breach_storm_bridge` in `src/layer1/core/integration.rs`
 - **Schedule:** Chained in Update, fabrication before storm generation before effects
 - **Tests:** `tests/integration/nanite_breach_storm.rs`
+
+### INT-939: Language Drift -> Trade Routes (Translation Tax)
+- **Date:** 2026-06-28
+- **Systems connected:** `execute_trade_routes_system` -> `language_drift_trade_bridge` -> `LinguisticNetwork`
+- **Glue added:** Added `TradeRouteExecutedEvent` in `src/layer2/trade/routes.rs`. Added `language_drift_trade_bridge` in `src/layer3/integration.rs` to read the event and deduct the "Translation Tax" from the destination colony based on the linguistic drift. Registered in `src/simulation.rs`.
+- **Tests:** `tests/integration/language_drift_trade_bridge.rs`
