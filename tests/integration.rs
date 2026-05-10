@@ -152,10 +152,10 @@ mod gene_bank_logistics;
 #[path = "integration/resources_robustness.rs"]
 mod resources_robustness;
 
-#[path = "integration/clone_integration.rs"]
-mod clone_integration;
 #[path = "integration/apex_diet_integration.rs"]
 mod apex_diet_integration;
+#[path = "integration/clone_integration.rs"]
+mod clone_integration;
 #[path = "integration/infinite_archive_chronicle.rs"]
 mod infinite_archive_chronicle;
 #[path = "integration/mega_quake_chronicle.rs"]
@@ -393,3 +393,6 @@ mod resource_curse_bridge;
 
 #[path = "integration/cryo_prison_revolt_bridge.rs"]
 mod cryo_prison_revolt_bridge;
+
+#[path = "integration/propaganda_simulacrum_bridge.rs"]
+mod propaganda_simulacrum_bridge;

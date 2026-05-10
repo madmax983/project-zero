@@ -1,3 +1,9 @@
+### INT-642: Propaganda Simulacrum -> Chronicle
+- **Date:** 2026-10-31
+- **Systems connected:** `Simulacrum` construction -> `simulacrum_chronicle_bridge` -> `AddChronicleEvent`
+- **Glue added:** Added `simulacrum_chronicle_bridge` in `src/layer1/core/integration.rs` to detect `Added<Simulacrum>` and emit an `AddChronicleEvent`. Registered in `src/layer1/systems/observation.rs`.
+- **Tests:** `tests/integration/propaganda_simulacrum_bridge.rs`
+
 ### INT-644: Temporal Echo Chambers -> Power & Chronicle
 - **Date:** 2026-07-03
 - **Systems connected:** `TemporalChamber` -> `temporal_chamber_power_bridge_system` -> `ColonyResources` & `AddChronicleEvent`
