@@ -539,6 +539,7 @@ pub mod debt;
 /// Public Grievances system (Spec 233).
 pub mod grievances;
 pub mod protest_crowds;
+pub mod ransom_broker;
 pub mod secret_societies;
 pub use protest_crowds::*;
 /// Old Guard logic: Generational friction between Founders and Immigrants (Spec 078).
@@ -548,6 +549,7 @@ mod old_guard_tests;
 
 pub use debt::*;
 pub use grievances::*;
+pub use ransom_broker::*;
 
 /// Empty Room logic (Spec 251).
 pub mod empty_room;

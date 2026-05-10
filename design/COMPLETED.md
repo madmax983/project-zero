@@ -534,3 +534,4 @@
 - [x] `INT-1255` Integration: Sentient Trade Routes -> Chronicle — completed 2026-10-31
 - [x] `1083` Kinetic Excavation — `specs/1083-kinetic-excavation.md` — completed 2026-05-10
 - [x] `1089` Nanite Storms — `specs/1089-nanite-storms.md` — completed 2026-05-10
+- [x] `477` The Ransom Broker - `specs/477-the-ransom-broker.md` - completed 2024-05-24

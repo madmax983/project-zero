@@ -2040,3 +2040,16 @@ pub fn cryo_prison_sabotage_bridge_system(
         });
     }
 }
+
+/// INT-477: Bridges PopLostToPiratesEvent to AddChronicleEvent (Chronicle).
+pub fn pop_lost_to_pirates_chronicle_bridge(
+    mut events: EventReader<crate::layer1::social::ransom_broker::PopLostToPiratesEvent>,
+    mut chronicle_events: EventWriter<AddChronicleEvent>,
+) {
+    for _event in events.read() {
+        chronicle_events.send(AddChronicleEvent {
+            text: "A colonist was permanently lost to pirates.".to_string(),
+            importance: EventImportance::Major,
+        });
+    }
+}

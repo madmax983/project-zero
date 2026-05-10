@@ -384,3 +384,6 @@ mod resource_curse_bridge;
 
 #[path = "integration/cryo_prison_revolt_bridge.rs"]
 mod cryo_prison_revolt_bridge;
+
+#[path = "integration/ransom_broker_bridge.rs"]
+mod ransom_broker_bridge;

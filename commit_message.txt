@@ -1,0 +1,11 @@
+feat(layer1): complete ransom broker system
+
+Implements RED-GREEN-REFACTOR from spec 477:
+- Added comprehensive test suite (RED phase)
+- Implemented RansomDemand, events, and decision processing (GREEN phase)
+- Extracted expiration logic, generalized ResourceCost, emitted PopLostToPiratesEvent (REFACTOR phase)
+- Addressed code review feedback: properly registered events and systems in the main simulation schedule with correct ordering to prevent race conditions between payments and expirations.
+
+All acceptance criteria met.
+
+Co-Authored-By: google-labs-jules[bot] <161369871+google-labs-jules[bot]@users.noreply.github.com>
