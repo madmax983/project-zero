@@ -1140,6 +1140,25 @@ pub fn smuggler_arrival_event_bridge(
     }
 }
 
+/// INT-453-1089: Bridges Nanite Fabrication Breach to Nanite Storms
+pub fn nanite_breach_storm_bridge(
+    mut breach_events: EventReader<crate::layer1::nanite_fabrication::ContainmentBreachEvent>,
+    mut commands: Commands,
+) {
+    for event in breach_events.read() {
+        commands.insert_resource(crate::layer1::nanite_storms::ActiveNaniteStorm {
+            storm_type: crate::layer1::nanite_storms::NaniteStormType::Grey,
+            affected_area: bevy::prelude::Rect::new(
+                event.position.x as f32 - 10.0,
+                event.position.y as f32 - 10.0,
+                event.position.x as f32 + 10.0,
+                event.position.y as f32 + 10.0,
+            ),
+            intensity: 10.0,
+        });
+    }
+}
+
 /// INT-453: Bridges Nanite Fabrication (Containment Breach) to Chronicle (History).
 pub fn nanite_breach_chronicle_bridge(
     mut breach_events: EventReader<crate::layer1::nanite_fabrication::ContainmentBreachEvent>,

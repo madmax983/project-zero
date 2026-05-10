@@ -962,3 +962,10 @@
 - **Systems connected:** `SentientTollDemandEvent` (Layer 2) -> `sentient_route_chronicle_bridge` -> `AddChronicleEvent` (Layer 1)
 - **Glue added:** Added `sentient_route_chronicle_bridge` in `src/layer2/integration.rs` to conditionally emit `AddChronicleEvent` and reset `RouteComplexity` when a toll is demanded. Registered in `src/simulation.rs`.
 - **Tests:** `tests/integration/sentient_route_bridge.rs`
+
+### INT-1089: Nanite Fabrication Breach -> Nanite Storms
+- **Date:** 2026-05-10
+- **Systems connected:** `nanite_fabrication_system` -> `nanite_breach_storm_bridge` -> `apply_nanite_storm_effects`
+- **Glue added:** `nanite_breach_storm_bridge` in `src/layer1/core/integration.rs`
+- **Schedule:** Chained in Update, fabrication before storm generation before effects
+- **Tests:** `tests/integration/nanite_breach_storm.rs`

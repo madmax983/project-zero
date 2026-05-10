@@ -231,6 +231,9 @@ mod airlocks_pressure;
 mod mass_driver_chronicle;
 #[path = "integration/nanite_fabrication_chronicle.rs"]
 mod nanite_fabrication_chronicle;
+
+#[path = "integration/nanite_breach_storm.rs"]
+mod nanite_breach_storm;
 #[path = "integration/startup_atmosphere.rs"]
 mod startup_atmosphere;
 
