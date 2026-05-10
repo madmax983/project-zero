@@ -236,6 +236,7 @@ mod tests {
     fn test_trade_route_execution() {
         // Arrange
         let mut world = World::new();
+        world.init_resource::<Events<TradeRouteExecutedEvent>>();
         let colony_a = world
             .spawn(Colony {
                 name: "Earth".to_string(),
@@ -277,6 +278,7 @@ mod tests {
     fn test_trade_route_missing_destination() {
         // Arrange
         let mut world = World::new();
+        world.init_resource::<Events<TradeRouteExecutedEvent>>();
         let colony_a = world
             .spawn(Colony {
                 name: "Earth".to_string(),

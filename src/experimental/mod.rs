@@ -139,3 +139,6 @@ pub mod panic_buying;
 pub mod sleepwalking_hazards;
 #[cfg(feature = "nova")]
 pub mod solar_flare_sickness;
+
+#[cfg(feature = "nova")]
+pub mod stowaway_clutter;

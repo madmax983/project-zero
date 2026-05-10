@@ -225,4 +225,7 @@ pub fn register(schedule: &mut Schedule) {
             .chain()
             .in_set(Layer1SystemSet::Economy),
     );
+
+    #[cfg(feature = "nova")]
+    crate::experimental::stowaway_clutter::register(schedule);
 }
