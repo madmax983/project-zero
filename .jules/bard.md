@@ -54,3 +54,6 @@
 ## 2024-05-24 - Undocumented "Radio Nostalgia"
 **Confusion:** The `layer1/radio_nostalgia` module was missing module-level documentation (`//!`) and executable examples for handling broadcasts, leaving users confused about how deep space broadcasts affect morale.
 **Clarification:** Added module-level documentation and an executable doc-test for `handle_broadcasts_system` showing how to trigger and test morale changes.
+## 2024-05-24 - The Architecture of Regret
+**Confusion:** The `Guilt` module lacked conceptual documentation. The `Unrest` resource interaction wasn't correctly documented to show how the modifiers are capped to avoid unbound unrest accumulation.
+**Clarification:** Documented `layer3/guilt` with module level documentation, doctests, and examples explaining how psychic resonance works, including bounding the `UnrestModifier` value.

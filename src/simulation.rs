@@ -46,6 +46,7 @@ pub fn build_simulation_schedule() -> Schedule {
 /// Run one simulation tick: all game systems via schedule, then increment tick counter.
 #[allow(clippy::too_many_lines)]
 fn init_simulation_resources(world: &mut World) {
+    world.init_resource::<crate::layer3::guilt::GuiltResource>();
     world.init_resource::<Events<crate::layer1::economy::apex_diet::ConsumeFoodEvent>>();
     world.init_resource::<Events<crate::layer1::culture::nostalgia::RumorSpreadEvent>>();
     world.init_resource::<crate::layer1::biology::cybernetic_ascendancy::ColonyAverageUtility>();
@@ -342,6 +343,16 @@ fn register_simulation_core_systems(schedule: &mut Schedule) {
 
 #[allow(clippy::too_many_lines)]
 fn register_simulation_extended_systems(schedule: &mut Schedule) {
+    // Layer 3 Guilt Systems
+    schedule.add_systems(
+        (
+            crate::layer3::guilt::process_guilt_generation_system,
+            crate::layer3::guilt::apply_guilt_unrest_system
+                .after(crate::layer3::guilt::process_guilt_generation_system),
+        )
+            .in_set(Layer1SystemSet::Economy),
+    );
+
     // --- Spec 622 ---
     schedule.add_systems((
         crate::layer1::biology::cybernetic_ascendancy::cybernetic_integration_system,
@@ -733,6 +744,7 @@ mod tests {
         *world.resource_mut::<GameState>() = GameState::Running;
 
         // Initialize Detection Risk for test
+        world.init_resource::<crate::layer3::guilt::GuiltResource>();
         world.init_resource::<Events<crate::layer1::economy::apex_diet::ConsumeFoodEvent>>();
         world
             .init_resource::<crate::layer1::biology::cybernetic_ascendancy::ColonyAverageUtility>();

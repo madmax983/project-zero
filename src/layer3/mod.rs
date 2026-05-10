@@ -5,6 +5,7 @@
 //! and large-scale fleets.
 pub mod council;
 pub mod events;
+pub mod guilt;
 pub mod market;
 pub mod resources;
 pub mod silence;
