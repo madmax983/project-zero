@@ -22,3 +22,13 @@
 **Concept:** Added a `magnetic_lightning_system` that connects `WeatherType::MagneticStorm` to `Health` and `PowerSource`. Lightning randomly strikes the map during a magnetic storm. If it hits an unroofed Pop, they take severe damage. If it hits an unroofed power generator, the generator receives a massive `Supercharge` buff to its energy output for a brief period.
 **Fate:** Merged
 **Lesson:** Turns a hazardous weather event into a risk-reward scenario. Players might try to harness the storm for massive free power by leaving generators exposed, but risk grid overload or injury to their Pops.
+
+## [Stash Clutter]
+**Concept:** Added  to . When a Pop's  exceeds 50 total units, they start passively dropping  on the ground beneath them and have a small chance each tick to attract .
+**Fate:** Submitted
+**Lesson:** Transforms hoarding from just a lost resource into an active hazard. A greedy Pop hiding in a corner will quickly fill their room with trash and rats, forcing the player to inspect them or clean up their mess.
+
+## [Stash Clutter]
+**Concept:** Added `stowaway_clutter_system` to `src/experimental/stowaway_clutter.rs`. When a Pop's `PrivateStash` exceeds 50 total units, they start passively dropping `Clutter` on the ground beneath them and have a small chance each tick to attract `Vermin`.
+**Fate:** Submitted
+**Lesson:** Transforms hoarding from just a lost resource into an active hazard. A greedy Pop hiding in a corner will quickly fill their room with trash and rats, forcing the player to inspect them or clean up their mess.
