@@ -40,3 +40,6 @@
 **2024-05-19 - Fixed integer panic vector on .abs() via saturating operations**
 **Threat:** Several distance calculation methods (`manhattan_distance` and local calculations) used `(x1 - x2).abs()` on standard `i32` vectors. When one value was negative and another positive near extremes, or using `i32::MIN.abs()`, it could lead to overflow panics or crashes (Denial of Service).
 **Defense:** Replaced `(a - b).abs()` with `a.abs_diff(b)` combined with `saturating_add` and proper casting. Removed vulnerable `.abs()` calls on distance math entirely.
+**2024-11-13 - [Integer Overflow DoS in Distance Calculations]
+**Threat:** [Integer Overflow DoS] Several files calculated coordinate distance using `(pos1.x - pos2.x).abs()`. Because `pos.x` and `pos.y` are `i32` values, subtracting them before calculating the absolute value can cause an integer overflow if the distance is greater than `i32::MAX` (e.g. `i32::MIN - 1`). This would result in a DoS panic.
+**Defense:** [Safe Arithmetic Bounds] Refactored vulnerable `.abs()` calculations to use `abs_diff()`, which returns an unsigned integer (`u32`) and avoids the underflow/overflow panic vector during the subtraction step.

@@ -616,7 +616,6 @@ fn get_generation_line(world: &World, entity: Entity) -> Option<Line<'static>> {
     })
 }
 
-
 type InspectorWidget<'a> = Box<dyn FnOnce(&mut Frame, Rect) + 'a>;
 
 struct InspectorLayout<'a> {

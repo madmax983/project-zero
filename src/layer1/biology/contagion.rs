@@ -49,11 +49,12 @@ pub fn emotional_contagion_system(
             }
 
             // Check distance (Chebyshev)
-            let dist = (target_pos.x - source_pos.x)
-                .abs()
-                .max((target_pos.y - source_pos.y).abs());
+            let dist = target_pos
+                .x
+                .abs_diff(source_pos.x)
+                .max(target_pos.y.abs_diff(source_pos.y));
 
-            if dist <= CONTAGION_RANGE {
+            if dist <= CONTAGION_RANGE as u32 {
                 needs.leisure = (needs.leisure + *value).clamp(0.0, 1.0);
             }
         }

@@ -16,7 +16,7 @@ pub fn grave_visit_system(
 ) {
     for (pop_pos, mut needs) in pops.iter_mut() {
         for grave_pos in graves.iter() {
-            if (pop_pos.x - grave_pos.x).abs() <= 1 && (pop_pos.y - grave_pos.y).abs() <= 1 {
+            if pop_pos.x.abs_diff(grave_pos.x) <= 1 && pop_pos.y.abs_diff(grave_pos.y) <= 1 {
                 needs.leisure = (needs.leisure + 0.1).min(1.0);
             }
         }

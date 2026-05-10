@@ -129,7 +129,6 @@ pub const fn start_scenario_definition(id: StartScenarioId) -> StartScenarioDefi
 #[must_use]
 pub fn setup_world() -> World {
     setup_world_with_config(SetupConfig::default())
-
 }
 
 /// Create and initialize a new game world with custom configuration.
@@ -138,7 +137,9 @@ pub fn setup_world() -> World {
 pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -> World {
     init_task_pools();
     let mut world = World::new();
-    world.init_resource::<bevy_ecs::prelude::Events<crate::layer1::mycelial::MycelialTripwireEvent>>();
+    world
+        .init_resource::<bevy_ecs::prelude::Events<crate::layer1::mycelial::MycelialTripwireEvent>>(
+        );
     let scenario = start_scenario_definition(config.scenario);
     world.insert_resource(ActiveStartScenario {
         id: scenario.id,
