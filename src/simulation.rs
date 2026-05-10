@@ -46,6 +46,8 @@ pub fn build_simulation_schedule() -> Schedule {
 /// Run one simulation tick: all game systems via schedule, then increment tick counter.
 #[allow(clippy::too_many_lines)]
 fn init_simulation_resources(world: &mut World) {
+    world.init_resource::<crate::layer1::culture::heirloom_recipes::ColonyTraditions>();
+    world.init_resource::<Events<crate::layer1::culture::heirloom_recipes::GreatMealEvent>>();
     world.init_resource::<Events<crate::layer1::economy::apex_diet::ConsumeFoodEvent>>();
     world.init_resource::<Events<crate::layer1::culture::nostalgia::RumorSpreadEvent>>();
     world.init_resource::<crate::layer1::biology::cybernetic_ascendancy::ColonyAverageUtility>();
@@ -389,12 +391,14 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
         crate::layer2::orbital_necropolis::apply_necropolis_bonus,
         crate::layer2::orbital_necropolis::handle_necropolis_destruction,
     ));
+    schedule.add_systems((crate::layer1::culture::heirloom_recipes::run_meal_tradition_system,));
     schedule.add_systems((
         // Cleanup events
         update_event_buffer::<crate::layer1::administration::edicts::TogglePolicyEvent>,
         update_event_buffer::<crate::layer1::administration::edicts::AccessDeniedEvent>,
         update_event_buffer::<crate::layer1::administration::edicts::HackCentralHubEvent>,
         update_event_buffer::<crate::layer1::administration::edicts::RevokePolicyEvent>,
+        update_event_buffer::<crate::layer1::culture::heirloom_recipes::GreatMealEvent>,
     ));
     schedule.add_systems((
         // Cleanup Layer 2 events
@@ -757,6 +761,8 @@ mod tests {
         world.init_resource::<Events<crate::layer1::temporal_ghost_towns::TemporalStutterEvent>>();
         world.init_resource::<Events<crate::layer3::planet::black_market_terraforming::RogueTerraformEvent>>();
         world.init_resource::<Events<crate::layer3::market::quantum_famine::MarketPanicEvent>>();
+        world.init_resource::<Events<crate::layer1::culture::heirloom_recipes::GreatMealEvent>>();
+        world.init_resource::<crate::layer1::culture::heirloom_recipes::ColonyTraditions>();
         world.init_resource::<Events<crate::layer3::market::quantum_famine::ExportDumpEvent>>();
         if !world
             .contains_resource::<Events<crate::layer3::diplomacy_reflection::EntityKilledEvent>>()

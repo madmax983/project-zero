@@ -802,7 +802,7 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1191` Keystone Species — `specs/1191-keystone-species.md`
 - [ ] `1192` The Hum — `specs/1192-the-hum.md`
 
-- [ ] `1193` Heirloom Recipes — `specs/1193-heirloom-recipes.md`
+
 - [ ] `1194` Trophy Hunting — `specs/1194-trophy-hunting.md`
 - [ ] `1195` Rapid Decompression Projectiles — `specs/1195-rapid-decompression-projectiles.md`
 - [ ] `1196` Use It Or Lose It — `specs/1196-use-it-or-lose-it.md`

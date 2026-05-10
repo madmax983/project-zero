@@ -37,3 +37,5 @@ pub use cultural_artifacts::*;
 
 pub mod nostalgia;
 pub use nostalgia::*;
+pub mod heirloom_recipes;
+pub use heirloom_recipes::*;
