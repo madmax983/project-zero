@@ -1998,7 +1998,7 @@ fn print_stories(world: &mut World) {
         let genre_color = match story.genre {
             StoryGenre::Heroic => Color::Yellow,
             StoryGenre::Tragedy => Color::Red,
-            StoryGenre::Cautionary => Color::Cyan,
+            StoryGenre::Cautionary => Color::Magenta,
             StoryGenre::Trivial => Color::Grey,
         };
 
@@ -2017,7 +2017,7 @@ fn print_stories(world: &mut World) {
             let ct_color = match story.genre {
                 StoryGenre::Heroic => crossterm::style::Color::Yellow,
                 StoryGenre::Tragedy => crossterm::style::Color::Red,
-                StoryGenre::Cautionary => crossterm::style::Color::Cyan,
+                StoryGenre::Cautionary => crossterm::style::Color::Magenta,
                 StoryGenre::Trivial => crossterm::style::Color::Grey,
             };
 
