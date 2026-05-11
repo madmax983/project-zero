@@ -546,3 +546,4 @@
 - [x] `1078` The Foundation Soil — `specs/1078-foundation-soil.md` — completed 2026-06-05
 
 - [x] `1077` Splicer's Dilemma — `specs/1077-splicers-dilemma.md` — completed 2024-05-25
+- [x] `1092` Attention Bandwidth — `specs/1092-attention-bandwidth.md` — completed
