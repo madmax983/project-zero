@@ -74,11 +74,10 @@ pub fn process_ransom_decisions_system(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use bevy_ecs::prelude::*;
+    use crate::layer1::economy::resources::ColonyResources;
     use crate::layer1::entities::pop::Pop;
     use crate::layer1::skills::Skills;
-    use crate::layer1::economy::resources::ColonyResources;
-    use crate::shared::time::{SimulationTime, SimSpeed};
+    use crate::shared::time::{SimSpeed, SimulationTime};
 
     fn setup_world() -> (World, Schedule) {
         let mut world = World::new();
