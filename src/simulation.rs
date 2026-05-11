@@ -344,6 +344,14 @@ fn register_simulation_core_systems(schedule: &mut Schedule) {
 
 #[allow(clippy::too_many_lines)]
 fn register_simulation_extended_systems(schedule: &mut Schedule) {
+    schedule.add_systems((
+        crate::layer1::economy::ransom_broker::ransom_demand_system,
+        crate::layer1::economy::ransom_broker::process_ransom_decisions_system,
+        crate::layer1::biology::parasite::apply_parasite_buffs_system,
+        crate::layer1::biology::parasite::apply_parasite_health_drain_system,
+        crate::layer1::social::vengeance::inherit_grudges_on_birth_system,
+        crate::layer1::social::vengeance::transfer_grudges_on_death_system,
+    ));
     // --- Spec 622 ---
     schedule.add_systems((
         crate::layer1::biology::cybernetic_ascendancy::cybernetic_integration_system,

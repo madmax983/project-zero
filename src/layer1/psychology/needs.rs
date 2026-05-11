@@ -220,6 +220,7 @@ const LEISURE_DECAY_PER_TICK: f32 = 0.0015;
 type DecayNeedsFilter = (
     Without<crate::layer1::cryo::CryoStasis>,
     Without<crate::layer1::somnambulism::Somnambulist>,
+    Without<crate::layer1::biology::parasite::SymbioticParasite>,
 );
 
 /// # Threading

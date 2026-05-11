@@ -657,5 +657,7 @@ pub use cargo_cult::*;
 
 pub mod pop_relationships;
 pub use pop_relationships::*;
+pub mod vengeance;
+pub use vengeance::*;
 pub mod golden_age;
 pub use golden_age::*;

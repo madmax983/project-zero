@@ -541,3 +541,6 @@
 - [x] `INT-939` Integration: Language Drift -> Trade Routes — completed 2026-06-28
 - [x] `1091` Gravity Blindspots — `specs/1091-gravity-blindspots.md` — completed 2026-06-16
 - [x] `1138` Organic Recycling — `specs/1138-organic-recycling.md` — completed 2026-05-10
+- [x] `477` The Ransom Broker — `specs/477-the-ransom-broker.md` - completed 2026-05-11
+- [x] `888` The Symbiotic Parasite — `specs/888-the-symbiotic-parasite.md` - completed 2026-05-11
+- [x] `889` Generational Vengeance — `specs/889-generational-vengeance.md` - completed 2026-05-11

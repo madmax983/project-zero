@@ -35,3 +35,4 @@ pub use gut_biome::*;
 pub use health::*;
 pub use medical::*;
 pub mod rust_lung;
+pub mod parasite; pub use parasite::*;

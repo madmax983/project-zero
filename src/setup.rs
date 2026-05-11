@@ -345,6 +345,9 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     world.init_resource::<Events<crate::layer2::primitives::PrimitiveRetaliationEvent>>();
     world.init_resource::<Events<crate::layer1::radio_nostalgia::BroadcastReceivedEvent>>();
     world.init_resource::<Events<crate::layer1::economy::TradeImportEvent>>();
+    world.init_resource::<Events<crate::layer1::economy::ransom_broker::RansomDemandEvent>>();
+    world.init_resource::<Events<crate::layer1::economy::ransom_broker::PayRansomEvent>>();
+    world.init_resource::<Events<crate::layer1::economy::ransom_broker::RefuseRansomEvent>>();
     world.init_resource::<Events<AffinityChange>>();
     // world.init_resource::<Events<crate::layer1::DeathEvent>>();
     world.init_resource::<Events<PopDied>>();
