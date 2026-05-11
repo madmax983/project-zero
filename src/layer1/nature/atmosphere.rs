@@ -505,7 +505,7 @@ pub fn apply_smog_damage_system(
         let smog_level = grid.get(pos.x, pos.y);
         if smog_level > 150.0 {
             let has_mask = equipment.is_some_and(|e| e.mask.is_some());
-            if !has_mask {
+            if !has_mask && !health.has_rust_lung {
                 // Suffocation / Toxicity
                 health.take_damage(1.0);
             }

@@ -145,13 +145,14 @@ pub fn movement_system(
             Option<&HitStop>,
             Option<&Role>,
             Option<&MentalFog>,
+            Option<&crate::layer1::biology::health::Health>,
         ),
         (Without<AtTarget>, Without<Building>),
     >,
     mut ctx: MovementContext,
     mut commands: Commands,
 ) {
-    for (pop_entity, mut current_pos, mt, mut speed_opt, traits, hit_stop, role, fog) in &mut pops {
+    for (pop_entity, mut current_pos, mt, mut speed_opt, traits, hit_stop, role, fog, health) in &mut pops {
         process_single_movement(
             pop_entity,
             &mut current_pos,
@@ -162,6 +163,7 @@ pub fn movement_system(
                 hit_stop,
                 role,
                 fog,
+                health,
             },
             &mut ctx,
             &mut commands,
@@ -174,6 +176,7 @@ struct MovementComponents<'a> {
     hit_stop: Option<&'a HitStop>,
     role: Option<&'a Role>,
     fog: Option<&'a MentalFog>,
+    health: Option<&'a crate::layer1::biology::health::Health>,
 }
 
 fn process_single_movement(
@@ -190,6 +193,7 @@ fn process_single_movement(
         hit_stop,
         role,
         fog,
+        health,
     } = components;
     // Ludwig: Check Hit Stop
     if let Some(hs) = hit_stop {
@@ -200,10 +204,11 @@ fn process_single_movement(
 
     let trait_mod = traits.map_or(1.0, get_trait_move_speed_modifier);
     let fog_mod = fog.map_or(1.0, |f| f.movement_penalty);
+    let rust_lung_mod = health.map_or(1.0, |h| if h.has_rust_lung { 0.8 } else { 1.0 });
 
     // Accumulate speed
     if let Some(ref mut speed) = speed_opt {
-        speed.accumulator += speed.current * trait_mod * fog_mod;
+        speed.accumulator += speed.current * trait_mod * fog_mod * rust_lung_mod;
     }
 
     let target_pos = mt.target_position;
