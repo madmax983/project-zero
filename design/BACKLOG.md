@@ -810,7 +810,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1202` Bureaucratic Black Holes — `specs/1202-bureaucratic-black-holes.md`
 - [ ] `1203` Gravity-Tethered Inheritance — `specs/1203-gravity-tethered-inheritance.md`
 - [ ] `1204` The Culinary Singularity — `specs/1204-culinary-singularity.md`
-- [ ] `1205` The Scrap-Code Cult — `specs/1205-the-scrap-code-cult.md`
 - [ ] `1206` Phantom Infrastructure — `specs/1206-phantom-infrastructure.md`
 - [ ] `1207` Kinetic Storage — `specs/1207-kinetic-storage.md`
 - [ ] `1208` The Cadet Branch — `specs/1208-the-cadet-branch.md`

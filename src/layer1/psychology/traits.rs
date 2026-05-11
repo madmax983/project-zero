@@ -127,6 +127,8 @@ pub enum Trait {
     Refugee,
     /// Suffered extreme trauma.
     Traumatized,
+    /// Cultist of the Scrap-Code.
+    Enlightened,
 }
 
 impl Trait {
@@ -196,6 +198,7 @@ impl Trait {
             Trait::Homesick => "Homesick",
             Self::Refugee => "Refugee",
             Self::Traumatized => "Traumatized",
+            Self::Enlightened => "Enlightened",
         }
     }
 }
