@@ -19583,3 +19583,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you maximize efficiency with total automation, or intentionally keep a portion of your workforce doing inefficient manual labor just to maintain the cultural knowledge of how to survive?
 
 ---
+## Diplomatic Hostage Exchange
+
+**Layer:** Cross-layer
+
+**Fantasy:** Securing fragile peace treaties by sending your most important citizens to live with your greatest enemies, and hosting theirs in return.
+
+**Mechanic:** When signing treaties at Layer 3, empires can exchange high-value Pops (like a ruler's heir or top scientist). These Pops become "Hostages" living in Layer 1 colonies. If a treaty is broken, the hostage's life is forfeit, but while peace holds, they slowly spread their native culture and traits to the host colony.
+
+**Emergence:** Your enemy's hostage becomes wildly popular in your capital, eventually leading a cultural revolution that makes your own Pops demand to join the enemy empire peacefully, subverting the entire purpose of the hostage.
+
+**Tension:** Do you give up your best and brightest to secure a vital alliance, risking their lives if war breaks out, or keep them safe but face the galaxy alone?
+
+---
+
+## Post-Scarcity Sabotage
+
+**Layer:** 1
+
+**Fantasy:** A society with unlimited resources is so bored that they begin inventing artificial crises just to feel something.
+
+**Mechanic:** When a colony reaches max resources and zero stress for a long time, Pops with high intellect or thrill-seeking traits might form a secret "Saboteur" cult. They will intentionally break vital infrastructure (like power grids or life support) purely to simulate the "good old days" of struggling to survive.
+
+**Emergence:** Your perfectly optimized, mathematically flawless colony keeps mysteriously venting its oxygen into space. You realize your top engineers are doing it on purpose because the automated utopia you built for them has made their skills completely irrelevant.
+
+**Tension:** Do you intentionally run the colony inefficiently to keep them busy and stressed enough not to rebel, or constantly police your own utopia for thrill-seeking terrorists?
+
+---
+
+## The Pet-Proxy Economy
+
+**Layer:** Cross-layer
+
+**Fantasy:** Elevating a non-sapient or semi-sapient species to act as a buffer against bureaucratic and social friction.
+
+**Mechanic:** Pops begin domesticating and obsessing over a specific alien fauna. Over time, these "pets" become status symbols and even proxy diplomats. Players can assign these pets to bureaucratic or diplomatic slots (Layer 2/3). Because nobody wants to offend a cute alien pet, trade negotiations led by pets have a lower chance of catastrophic failure but are incredibly slow and inefficient.
+
+**Emergence:** The entire diplomatic corp is replaced by adorable, semi-sapient slugs. A galactic war is narrowly avoided because an aggressive empire's ambassador couldn't bring themselves to yell at a slug, but standard trade agreements now take decades to finalize because the slugs only communicate in slow, rhythmic thumps.
+
+**Tension:** Do you employ efficient, highly-skilled human diplomats who might accidentally trigger a war through arrogance, or use slow, completely incompetent alien pets that universally charm the galaxy into a state of stagnant peace?
+
+---
