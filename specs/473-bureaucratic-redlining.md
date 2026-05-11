@@ -156,3 +156,5 @@ pub fn stateless_expansion_system(
 
 ## Questions
 *Builder: add questions here if spec is unclear.*
+
+- **Architectural Contradictions:** This spec uses `Zone` as a component (`Zone { id: 1, is_redlined: false }`), but `ZoneGrid` is actually a global resource, and there is no individual `Zone` component. It also uses `PowerGridNode`, `HomeZone`, and `ColonySecurity` which do not exist in the codebase. Furthermore, it assumes `Faction::Colony` instead of `FactionId::Unaligned` or similar. I cannot implement this until the spec is aligned with the current architecture.

@@ -12,6 +12,7 @@
 - [x] `626` The Cartographer's Curse — `specs/626-cartographers-curse.md` — completed 2026-03-24
 - [x] `1086` The Heirloom Tool — `specs/1086-the-heirloom-tool.md` — completed 2026-02-01
 # Completed Specs
+- [x] `474` Inherited Grudges — `specs/474-inherited-grudges.md` - completed 2026-02-01
 - [x] `1107` Astrological Beliefs — `specs/1107-astrological-beliefs.md` — completed 2026-07-02
 - [x] `1108` The Rearguard — `specs/1108-the-rearguard.md` — completed 2026-07-01
 - [x] `1120` Xenoflora Pet Craze — `specs/1120-xenoflora-pet-craze.md` — completed 2024-05-24

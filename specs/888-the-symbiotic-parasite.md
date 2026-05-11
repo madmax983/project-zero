@@ -199,3 +199,5 @@ pub fn apply_parasite_health_drain_system(
 
 ## 8. Questions
 *Builder: add questions here if spec is unclear.*
+
+- **Architectural Contradictions:** The RED Phase tests define `Health(f32)` and `Hunger(f32)` as tuple components. However, in the current architecture, `Health` is a full struct (`pub struct Health { pub current: f32, pub max: f32, pub has_rust_lung: bool }`), and `Hunger` is not a standalone component but a field inside the `Needs` component (`needs.hunger`). This makes the RED phase impossible to implement as written. I'm moving on to a different task.
