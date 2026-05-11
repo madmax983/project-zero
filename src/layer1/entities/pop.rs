@@ -447,6 +447,11 @@ fn spawn_initial_pops_internal<R: Rng>(world: &mut World, rng: &mut R) {
 
         if is_walkable {
             world.spawn(PopBundle::random(x, y, rng));
+            if let Some(mut landing) =
+                world.get_resource_mut::<crate::layer1::foundation_soil::LandingTiles>()
+            {
+                landing.coords.insert((x, y));
+            }
             spawned += 1;
         }
     }

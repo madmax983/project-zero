@@ -116,10 +116,13 @@ pub fn aging_system(
 /// System to handle natural death from old age.
 ///
 /// Probability of death increases with age for Elders.
-pub fn natural_death_system(mut query: Query<(&Age, &mut crate::layer1::health::Health)>) {
+pub fn natural_death_system(
+    mut commands: Commands,
+    mut query: Query<(Entity, &Age, &mut crate::layer1::health::Health)>,
+) {
     let mut rng = rand::thread_rng();
 
-    for (age, mut health) in &mut query {
+    for (entity, age, mut health) in &mut query {
         if age.stage == LifeStage::Elder {
             #[allow(clippy::cast_precision_loss)]
             let years = age.ticks_alive as f64 / TICKS_PER_YEAR as f64;
@@ -133,6 +136,9 @@ pub fn natural_death_system(mut query: Query<(&Age, &mut crate::layer1::health::
 
                 if rng.gen_bool(chance.clamp(0.0, 1.0)) {
                     health.current = 0.0; // Die
+                    commands
+                        .entity(entity)
+                        .insert(crate::layer1::health::DeathCause("Old Age".to_string()));
                 }
             }
         }

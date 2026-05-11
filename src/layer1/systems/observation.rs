@@ -389,6 +389,13 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::integration::hospitalization_notification_system
                 .after(work_execution_system),
             crate::layer1::integration::pop_death_notification_system.after(natural_death_system),
+        )
+            .in_set(Layer1SystemSet::Observation),
+    );
+    schedule.add_systems(
+        (
+            crate::layer1::foundation_soil::apply_foundation_soil_system
+                .after(crate::layer1::pop::handle_pop_death_system),
             crate::layer1::integration::pop_born_notification_system
                 .after(Layer1SystemSet::Economy),
         )
