@@ -19542,3 +19542,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you trust the AI and risk civil war by taking unauthorized action, or follow the rules and watch the colony burn while the bureaucracy demands "more data"?
 
 ---
+## The Artifact Obsession
+
+**Layer:** 1
+
+**Fantasy:** Finding something inexplicable that distracts the colony and becomes an impromptu subculture.
+
+**Mechanic:** Miners occasionally unearth an "Artifact" (unknown object). Pops exposed to it stop working and start worshipping/studying it, forming a temporary cult.
+
+**Emergence:** An essential mining sector grinds to a halt not because of a strike, but because everyone is staring at a glowing rock.
+
+**Tension:** Do you forcefully confiscate it (causing mass unrest) or let them obsess over it (losing vital productivity but gaining temporary happiness)?
+
+---
+
+## The Gravity Tax Stratification
+
+**Layer:** Cross-layer
+
+**Fantasy:** High gravity makes leaving a planet wildly expensive, creating extreme inequality between planet-bound and space-faring classes.
+
+**Mechanic:** Planets with high gravity require exponential fuel costs to export goods or people. A "Gravity Tax" naturally emerges where only the ultra-wealthy or essential goods can afford to leave.
+
+**Emergence:** A resource-rich high-gravity world becomes a captive prison-factory. The surface pops literally cannot afford the energy to leave, while the orbital elite siphon their labor, eventually sparking a gravity-bound revolution.
+
+**Tension:** Do you invest in massive, expensive space elevators to equalize the society, or exploit the natural physical prison of the gravity well for cheap, captive labor?
+
+---
+
+## Generational Skill Atrophy
+
+**Layer:** 1
+
+**Fantasy:** A highly automated society loses the basic ability to survive when the machines stop.
+
+**Mechanic:** As a colony's automation level increases (drones, auto-farms), the physical/survival skills of new Pop generations decay. If an EMP or software glitch disables the automation, the Pops are completely helpless.
+
+**Emergence:** Your golden age utopia is plunged into starvation by a single solar flare because nobody remembers how to actually grow a potato in the dirt without a drone doing it.
+
+**Tension:** Do you maximize efficiency with total automation, or intentionally keep a portion of your workforce doing inefficient manual labor just to maintain the cultural knowledge of how to survive?
+
+---
