@@ -1,0 +1,15 @@
+<<<<<<< SEARCH
+    app.add_event::<scale::layer2::trade::routes::TradeRouteExecutedEvent>();
+    let resources = ColonyResources {
+        metal: 500.0,
+        ..Default::default()
+    };
+    app.insert_resource(resources);
+=======
+    app.world_mut().init_resource::<bevy::ecs::event::Events<scale::layer2::trade::routes::TradeRouteExecutedEvent>>();
+    let resources = ColonyResources {
+        metal: 500.0,
+        ..Default::default()
+    };
+    app.insert_resource(resources);
+>>>>>>> REPLACE

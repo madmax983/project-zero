@@ -43,6 +43,15 @@ pub fn initial_naming_system(world: &mut World) {
         let mut locations = world.resource_mut::<NamedLocations>();
         locations.add(x, y, name.clone());
 
+        if let Some(mut f_grid) = world.get_resource_mut::<crate::layer1::nature::foundation_soil::FoundationSoilGrid>() {
+            f_grid.landing_tiles.insert((x, y));
+            for dy in -1..=1 {
+                for dx in -1..=1 {
+                    f_grid.landing_tiles.insert((x + dx, y + dy));
+                }
+            }
+        }
+
         let tick = world.resource::<SimulationTime>().tick;
         let mut chronicle = world.resource_mut::<Chronicle>();
         chronicle.add_event(

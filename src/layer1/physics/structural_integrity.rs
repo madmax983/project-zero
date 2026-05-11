@@ -89,6 +89,13 @@ impl RoofGrid {
 /// Checks if the roof at the given position is supported.
 /// Returns true if stable (supported or no roof), false if unstable.
 pub fn check_stability(world: &mut World, pos: GridPosition) -> bool {
+    // 0. Check Foundation Soil Buff
+    if let Some(f_grid) = world.get_resource::<crate::layer1::nature::foundation_soil::FoundationSoilGrid>() {
+        if f_grid.buffed_tiles.contains(&(pos.x, pos.y)) {
+            return true; // Foundation soil is infinitely stable
+        }
+    }
+
     // 1. Check Roof
     let roof = world.resource::<RoofGrid>();
     if !roof.has_roof(pos.x, pos.y) {

@@ -687,6 +687,7 @@ mod tests {
         world.init_resource::<bevy_ecs::event::Events<crate::layer1::culture::gastronomers::CulinarySingularityEvent>>();
         world.init_resource::<bevy_ecs::event::Events<crate::layer1::petrification::PopPetrifiedEvent>>();
         world.init_resource::<Events<crate::layer1::predecessors::WorldTriggerEvent>>();
+        world.init_resource::<crate::layer1::nature::foundation_soil::FoundationSoilGrid>();
         *world.resource_mut::<GameState>() = GameState::Running;
 
         let tick_before = world.resource::<SimulationTime>().tick;
@@ -826,6 +827,7 @@ mod tests {
         world.init_resource::<Events<crate::layer1::heirloom_tool::EquipHeirloomEvent>>();
         world.init_resource::<Events<crate::layer2::events_new::reverse_quarantine::RefugeeFleetEvent>>();
         world.init_resource::<Events<crate::layer1::predecessors::WorldTriggerEvent>>();
+        world.init_resource::<crate::layer1::nature::foundation_soil::FoundationSoilGrid>();
         world.init_resource::<Events<crate::layer1::grafting::GraftBuildingEvent>>();
         world.init_resource::<Events<crate::layer3::fleets::ColonyFoundedEvent>>();
         world.init_resource::<crate::layer1::diplomacy::factions::rivals::TerritoryGrid>();
@@ -913,6 +915,7 @@ mod tests {
         world.init_resource::<bevy_ecs::event::Events<crate::layer1::culture::gastronomers::CulinarySingularityEvent>>();
         world.init_resource::<bevy_ecs::event::Events<crate::layer1::petrification::PopPetrifiedEvent>>();
         world.init_resource::<Events<crate::layer1::predecessors::WorldTriggerEvent>>();
+        world.init_resource::<crate::layer1::nature::foundation_soil::FoundationSoilGrid>();
 
         let schedule = build_simulation_schedule();
         world.add_schedule(schedule);

@@ -22,6 +22,7 @@ pub mod radioactive;
 pub mod seasons;
 pub mod solar;
 pub mod temperature;
+pub mod foundation_soil;
 pub mod terrain;
 pub mod water;
 pub use psychoactive_weather::*;

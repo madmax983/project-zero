@@ -1,0 +1,9 @@
+<<<<<<< SEARCH
+    let mut app = App::new();
+    app.add_plugins(bevy::MinimalPlugins);
+    app.add_event::<scale::layer2::trade::routes::TradeRouteExecutedEvent>();
+=======
+    let mut app = App::new();
+    app.add_plugins(bevy::MinimalPlugins);
+    app.world_mut().init_resource::<bevy::ecs::event::Events<scale::layer2::trade::routes::TradeRouteExecutedEvent>>();
+>>>>>>> REPLACE

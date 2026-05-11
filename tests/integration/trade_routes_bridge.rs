@@ -20,6 +20,7 @@ fn test_trade_route_resources_bridge_incoming() {
             .chain(),
     );
 
+    app.init_resource::<bevy_ecs::event::Events<scale::layer2::trade::routes::TradeRouteExecutedEvent>>();
     app.insert_resource(ColonyResources::default());
 
     let colony_a = app
@@ -79,6 +80,7 @@ fn test_trade_route_resources_bridge_outgoing() {
         metal: 500.0,
         ..Default::default()
     };
+    app.init_resource::<bevy_ecs::event::Events<scale::layer2::trade::routes::TradeRouteExecutedEvent>>();
     app.insert_resource(resources);
 
     let colony_a = app
