@@ -8,9 +8,10 @@ mod tests {
     fn test_psychic_stain_increases_pathfinding_cost() {
         let mut world = scale::setup::setup_world();
 
-
         let mut terrain = world.resource_mut::<scale::layer1::terrain::TerrainGrid>();
-        terrain.tiles.fill(scale::layer1::terrain::TerrainType::Grass);
+        terrain
+            .tiles
+            .fill(scale::layer1::terrain::TerrainType::Grass);
 
         // The direct path is (0,0) -> (1,0) -> (2,0) or similar.
 
@@ -18,7 +19,9 @@ mod tests {
         for x in 0..5 {
             world.spawn((
                 GridPosition { x, y: 1 },
-                PsychicStain { trauma_level: 100.0 },
+                PsychicStain {
+                    trauma_level: 100.0,
+                },
             ));
         }
 

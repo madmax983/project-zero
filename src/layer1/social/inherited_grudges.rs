@@ -72,10 +72,10 @@ pub fn inherit_vendettas_system(
 
 #[cfg(test)]
 mod tests {
-    use bevy_ecs::system::RunSystemOnce;
-    use bevy_ecs::prelude::*;
     use super::*;
     use crate::layer1::pop::PopBundle;
+    use bevy_ecs::prelude::*;
+    use bevy_ecs::system::RunSystemOnce;
     use rand::SeedableRng;
 
     #[test]
@@ -89,11 +89,13 @@ mod tests {
         let perpetrator = world.spawn(PopBundle::random(0, 0, &mut rng)).id();
 
         // Simulate a severe wrong
-        world.resource_mut::<Events<SevereWrongEvent>>().send(SevereWrongEvent {
-            victim,
-            perpetrator,
-            reason: WrongReason::UnjustImprisonment,
-        });
+        world
+            .resource_mut::<Events<SevereWrongEvent>>()
+            .send(SevereWrongEvent {
+                victim,
+                perpetrator,
+                reason: WrongReason::UnjustImprisonment,
+            });
 
         world.run_system_once(handle_severe_wrongs_system).unwrap();
 
@@ -110,17 +112,20 @@ mod tests {
 
         let perpetrator = world.spawn(PopBundle::random(0, 0, &mut rng)).id();
 
-        let parent = world.spawn((
-            PopBundle::random(0, 0, &mut rng),
-            Vendettas { targets: vec![perpetrator] },
-        )).id();
+        let parent = world
+            .spawn((
+                PopBundle::random(0, 0, &mut rng),
+                Vendettas {
+                    targets: vec![perpetrator],
+                },
+            ))
+            .id();
 
         let child = world.spawn(PopBundle::random(0, 0, &mut rng)).id();
 
-        world.resource_mut::<Events<ChildBornEvent>>().send(ChildBornEvent {
-            parent,
-            child,
-        });
+        world
+            .resource_mut::<Events<ChildBornEvent>>()
+            .send(ChildBornEvent { parent, child });
 
         world.run_system_once(inherit_vendettas_system).unwrap();
 

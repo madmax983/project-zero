@@ -1293,77 +1293,7 @@ pub fn mine_rock(world: &mut World, designation_entity: Entity, work_amount: f32
             }
         }
 
-        // Spawn visual item on the ground (MUST BE HAULED)
-        world.spawn((
-            ResourceItem {
-                resource_type: ResourceType::Stone,
-                amount: 1.0,
-            },
-            pos,
-        ));
-
-        if let Some(mut log) = world.get_resource_mut::<MessageLog>() {
-            log.add("Mined Stone (Needs Hauling)");
-        }
-
-        // Purity Logic: Ore (High Purity) vs Waste (Low Purity)
-        let purity = world
-            .get_resource::<crate::layer1::purity::PurityMap>()
-            .map_or(0.2, |map| map.get(pos.x, pos.y));
-
-        let mut rng = rand::thread_rng();
-
-        // Ore Check: Probability = Purity
-        if rng.gen_bool(f64::from(purity)) {
-            world.spawn((
-                ResourceItem {
-                    resource_type: ResourceType::Ore,
-                    amount: 1.0,
-                },
-                pos,
-            ));
-            if let Some(mut log) = world.get_resource_mut::<MessageLog>() {
-                log.add("Mined Ore (Needs Hauling)");
-            }
-
-            // HyperValuable Check: Small chance when mining ore
-            if rng.gen_bool(0.05) {
-                world.spawn((
-                    ResourceItem {
-                        resource_type: ResourceType::HyperValuable,
-                        amount: 1.0,
-                    },
-                    pos,
-                ));
-                if let Some(mut log) = world.get_resource_mut::<MessageLog>() {
-                    log.add("Mined Hyper-Valuable Resource! (Needs Hauling)");
-                }
-
-                if let Some(mut mined_events) =
-                    world.get_resource_mut::<Events<ResourceMinedEvent>>()
-                {
-                    mined_events.send(ResourceMinedEvent {
-                        resource_type: ResourceType::HyperValuable,
-                        amount: 1,
-                    });
-                }
-            }
-        }
-
-        // Waste Check: Probability = 1.0 - Purity
-        // This is independent, so mixed purity can yield both or neither.
-        if rng.gen_bool(f64::from(1.0 - purity)) {
-            world.spawn((
-                ResourceItem {
-                    resource_type: ResourceType::Waste,
-                    amount: 1.0,
-                },
-                pos,
-            ));
-            if let Some(mut log) = world.get_resource_mut::<MessageLog>() {
-                log.add("Mined Waste (Needs Hauling)");
-            }
-        }
+        spawn_mined_resources(world, pos);
 
         // Probabilistic Anomaly Spawn (5%)
         try_spawn_anomaly(world, pos);
@@ -1378,6 +1308,78 @@ pub fn mine_rock(world: &mut World, designation_entity: Entity, work_amount: f32
         // Check Stability
         if !crate::layer1::structural_integrity::check_stability(world, pos) {
             crate::layer1::structural_integrity::apply_collapse(world, pos);
+        }
+    }
+}
+
+fn spawn_mined_resources(world: &mut World, pos: GridPosition) {
+    // Spawn visual item on the ground (MUST BE HAULED)
+    world.spawn((
+        ResourceItem {
+            resource_type: ResourceType::Stone,
+            amount: 1.0,
+        },
+        pos,
+    ));
+
+    if let Some(mut log) = world.get_resource_mut::<MessageLog>() {
+        log.add("Mined Stone (Needs Hauling)");
+    }
+
+    // Purity Logic: Ore (High Purity) vs Waste (Low Purity)
+    let purity = world
+        .get_resource::<crate::layer1::purity::PurityMap>()
+        .map_or(0.2, |map| map.get(pos.x, pos.y));
+
+    let mut rng = rand::thread_rng();
+
+    // Ore Check: Probability = Purity
+    if rng.gen_bool(f64::from(purity)) {
+        world.spawn((
+            ResourceItem {
+                resource_type: ResourceType::Ore,
+                amount: 1.0,
+            },
+            pos,
+        ));
+        if let Some(mut log) = world.get_resource_mut::<MessageLog>() {
+            log.add("Mined Ore (Needs Hauling)");
+        }
+
+        // HyperValuable Check: Small chance when mining ore
+        if rng.gen_bool(0.05) {
+            world.spawn((
+                ResourceItem {
+                    resource_type: ResourceType::HyperValuable,
+                    amount: 1.0,
+                },
+                pos,
+            ));
+            if let Some(mut log) = world.get_resource_mut::<MessageLog>() {
+                log.add("Mined Hyper-Valuable Resource! (Needs Hauling)");
+            }
+
+            if let Some(mut mined_events) = world.get_resource_mut::<Events<ResourceMinedEvent>>() {
+                mined_events.send(ResourceMinedEvent {
+                    resource_type: ResourceType::HyperValuable,
+                    amount: 1,
+                });
+            }
+        }
+    }
+
+    // Waste Check: Probability = 1.0 - Purity
+    // This is independent, so mixed purity can yield both or neither.
+    if rng.gen_bool(f64::from(1.0 - purity)) {
+        world.spawn((
+            ResourceItem {
+                resource_type: ResourceType::Waste,
+                amount: 1.0,
+            },
+            pos,
+        ));
+        if let Some(mut log) = world.get_resource_mut::<MessageLog>() {
+            log.add("Mined Waste (Needs Hauling)");
         }
     }
 }
