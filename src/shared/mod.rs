@@ -4,6 +4,7 @@
 
 /// Colony identity resource.
 pub mod colony;
+pub mod attention;
 pub mod keyboard;
 /// Message logging system.
 pub mod log;

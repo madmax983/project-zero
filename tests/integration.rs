@@ -1,3 +1,7 @@
+#![allow(clippy::needless_pass_by_value)]
+#[path = "integration/attention_bandwidth.rs"]
+mod attention_bandwidth;
+
 #[path = "integration/secret_societies.rs"]
 mod secret_societies;
 
