@@ -333,7 +333,9 @@ mod tests {
                 log_found = true;
                 let msg = &log.messages.back().unwrap().text;
                 assert!(
-                    msg.contains("inspired by the cosmos") || msg.contains("stared into the void") || msg.contains("discovered a comet"),
+                    msg.contains("inspired by the cosmos")
+                        || msg.contains("stared into the void")
+                        || msg.contains("discovered a comet"),
                     "Unexpected log message: {}",
                     msg
                 );

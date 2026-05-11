@@ -930,7 +930,10 @@ mod tests {
 
         let morale = world.get::<Morale>(pop).unwrap();
         let modifier = morale.modifiers.iter().find(|m| m.label == "Ate Slop");
-        assert!(modifier.is_none(), "Pragmatist should be immune to Ate Slop (gloom)");
+        assert!(
+            modifier.is_none(),
+            "Pragmatist should be immune to Ate Slop (gloom)"
+        );
     }
 
     #[test]

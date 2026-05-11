@@ -1,6 +1,6 @@
-use bevy::prelude::*;
 use crate::layer1::entities::pop::Pop;
 use crate::layer1::psychology::traits::{Trait, Traits};
+use bevy::prelude::*;
 
 #[derive(Component)]
 pub struct MutationTarget {
@@ -92,13 +92,18 @@ mod tests {
         let mut app = setup_app();
 
         // In our codebase, base human pops just have default Traits (or lacking Mutant)
-        let pop = app.world_mut().spawn((
-            Pop,
-            Traits::default(),
-            MutationTarget { target_level: 100.0 },
-            FoodPreference::Standard,
-            AmenityPreference::Standard,
-        )).id();
+        let pop = app
+            .world_mut()
+            .spawn((
+                Pop,
+                Traits::default(),
+                MutationTarget {
+                    target_level: 100.0,
+                },
+                FoodPreference::Standard,
+                AmenityPreference::Standard,
+            ))
+            .id();
 
         app.update();
 
@@ -113,13 +118,16 @@ mod tests {
         let mut t = Traits::default();
         t.0.insert(Trait::Mutant);
 
-        let pop = app.world_mut().spawn((
-            Pop,
-            t,
-            MutationTarget { target_level: 0.0 }, // Include MutationTarget so the query matches!
-            FoodPreference::Standard,
-            AmenityPreference::Standard,
-        )).id();
+        let pop = app
+            .world_mut()
+            .spawn((
+                Pop,
+                t,
+                MutationTarget { target_level: 0.0 }, // Include MutationTarget so the query matches!
+                FoodPreference::Standard,
+                AmenityPreference::Standard,
+            ))
+            .id();
 
         app.update();
 
@@ -134,18 +142,12 @@ mod tests {
     fn test_human_mutant_social_friction() {
         let mut app = setup_app();
 
-        let human_pop = app.world_mut().spawn((
-            Pop,
-            Traits::default(),
-        )).id();
+        let human_pop = app.world_mut().spawn((Pop, Traits::default())).id();
 
         let mut t = Traits::default();
         t.0.insert(Trait::Mutant);
 
-        let mutant_pop = app.world_mut().spawn((
-            Pop,
-            t,
-        )).id();
+        let mutant_pop = app.world_mut().spawn((Pop, t)).id();
 
         app.world_mut().spawn(SocialInteraction {
             initiator: human_pop,
