@@ -1,4 +1,5 @@
 #![allow(clippy::float_cmp)]
+pub mod generational_atrophy;
 use bevy_ecs::prelude::*;
 use std::collections::HashMap;
 
