@@ -361,7 +361,8 @@ pub fn apply_door_movement_penalties_system(
         &crate::layer1::building::Building,
     )>,
 ) {
-    let mut airlock_positions = std::collections::HashSet::with_capacity(door_query.iter().len());
+    // ⚡ Bolt Optimization: Uses bevy::utils::HashSet (AHash) to eliminate SipHash overhead on integer keys.
+    let mut airlock_positions = bevy::utils::HashSet::with_capacity(door_query.iter().len());
     for (door_pos, building) in door_query.iter() {
         if building.building_type == crate::layer1::building::BuildingType::Airlock {
             airlock_positions.insert((door_pos.x, door_pos.y));
