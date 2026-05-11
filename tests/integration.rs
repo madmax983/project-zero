@@ -396,3 +396,4 @@ mod cryo_prison_revolt_bridge;
 
 #[path = "integration/propaganda_simulacrum_bridge.rs"]
 mod propaganda_simulacrum_bridge;
+#[path = "integration/psychic_stains_pathfinding.rs"] mod psychic_stains_pathfinding;

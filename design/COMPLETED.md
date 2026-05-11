@@ -541,3 +541,4 @@
 - [x] `INT-939` Integration: Language Drift -> Trade Routes — completed 2026-06-28
 - [x] `1091` Gravity Blindspots — `specs/1091-gravity-blindspots.md` — completed 2026-06-16
 - [x] `1138` Organic Recycling — `specs/1138-organic-recycling.md` — completed 2026-05-10
+- [x] `INT-893` Integration: Psychic Stains -> Pathfinding - completed 2026-10-31

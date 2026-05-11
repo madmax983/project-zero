@@ -210,6 +210,26 @@ fn find_path_internal(
 
     // Use flat vectors for O(1) access.
     // u32::MAX serves as "None" for parent index.
+
+    let mut stains_map: bevy::utils::HashMap<(i32, i32), f32> = bevy::utils::HashMap::new();
+    let stain_component_id = world.components().component_id::<crate::layer1::psychology::psychic_stains::PsychicStain>();
+    let pos_component_id = world.components().component_id::<crate::layer1::GridPosition>();
+
+    if let (Some(stain_id), Some(pos_id)) = (stain_component_id, pos_component_id) {
+        for archetype in world.archetypes().iter() {
+            if archetype.contains(stain_id) && archetype.contains(pos_id) {
+                for entity in archetype.entities() {
+                    if let (Some(pos), Some(stain)) = (
+                        world.get::<crate::layer1::GridPosition>(entity.id()),
+                        world.get::<crate::layer1::psychology::psychic_stains::PsychicStain>(entity.id())
+                    ) {
+                        stains_map.insert((pos.x, pos.y), stain.trauma_level);
+                    }
+                }
+            }
+        }
+    }
+
     let mut came_from = vec![u32::MAX; size];
     let mut cost_so_far = vec![i32::MAX; size];
     let mut open_set = BinaryHeap::new();
@@ -299,7 +319,12 @@ fn find_path_internal(
             let clutter_cost = clutter.map_or(0, |c| {
                 (c.get(next.0 as usize, next.1 as usize) / 20.0) as i32
             });
-            let base_cost = t_cost + c_cost + clutter_cost;
+
+            // Stain penalty: each 10 trauma adds 1 cost
+            #[allow(clippy::cast_possible_truncation)]
+            let stain_cost = stains_map.get(&(next.0, next.1)).map_or(0, |trauma| (*trauma / 10.0) as i32);
+            let base_cost = t_cost + c_cost + clutter_cost + stain_cost;
+
 
             // Calculate wind penalty
             let wind_penalty = wind_grid.map_or(1.0, |wg| {

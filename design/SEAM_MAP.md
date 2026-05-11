@@ -994,3 +994,9 @@
 - **Glue added:** `apex_meat_harvest_bridge_system` and `apex_meat_distribution_system` in `src/layer1/core/integration.rs`, `ApexMeatStores` resource
 - **Schedule:** Harvest on Fauna death. Distribution in Update before `consume_food_system`
 - **Tests:** `tests/integration/apex_diet_integration.rs`
+
+### INT-893: Psychic Stains -> Pathfinding
+- **Date:** 2026-10-31
+- **Systems connected:** `PsychicStain` component -> `find_path_internal`
+- **Glue added:** Pathfinding checks the `world` for `PsychicStain` entities and applies a proportional penalty to the path cost, making pops avoid highly traumatized tiles.
+- **Tests:** `tests/integration/psychic_stains_pathfinding.rs`
