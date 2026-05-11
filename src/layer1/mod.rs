@@ -459,3 +459,7 @@ pub mod sub_glacial_oceans;
 pub mod nanite_storms;
 pub mod predecessors;
 pub use nanite_storms::*;
+
+/// Foundation soil feature (Spec 1078)
+pub mod foundation_soil;
+pub use foundation_soil::*;
