@@ -72,6 +72,8 @@ pub enum Trait {
     Outsider,
     /// Genetically deviant and mistrusted.
     Mutant,
+    /// Highly suspicious and hostile to mutated Pops (Spec 1077).
+    Xenophobic,
     /// Highly empathetic and prone to guilt.
     Compassionate,
     /// Sensitive to The Hum (Spec 238).
@@ -166,6 +168,7 @@ impl Trait {
             Self::Pragmatist => "Pragmatist",
             Self::Outsider => "Outsider",
             Self::Mutant => "Mutant",
+            Self::Xenophobic => "Xenophobic",
             Self::Compassionate => "Compassionate",
             Self::Sensitive => "Sensitive",
             Self::GreenThumb => "GreenThumb",
@@ -263,6 +266,7 @@ impl Traits {
             Trait::Pragmatist,
             Trait::Outsider,
             Trait::Mutant,
+            Trait::Xenophobic,
             Trait::Compassionate,
             Trait::Synesthete,
             Trait::Spiteful,

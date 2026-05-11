@@ -8,6 +8,8 @@
 //!
 pub mod crop_modification;
 pub use crop_modification::*;
+pub mod splicers_dilemma;
+pub use splicers_dilemma::*;
 
 use crate::layer1::health::Health;
 use crate::layer1::traits::{Trait, Traits};
