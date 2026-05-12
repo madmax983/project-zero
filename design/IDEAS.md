@@ -19624,3 +19624,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you employ efficient, highly-skilled human diplomats who might accidentally trigger a war through arrogance, or use slow, completely incompetent alien pets that universally charm the galaxy into a state of stagnant peace?
 
 ---
+## The Whisper Network
+
+**Layer:** Cross-layer
+
+**Fantasy:** A shadow economy of rumors and secrets that outpaces official communications.
+
+**Mechanic:** Pops with high social interaction rates generate "Rumor" fragments. When these fragments reach Layer 2/3 diplomats or traders, they form a "Whisper Network" that grants early warning of system events or hidden resources, but occasionally spawns completely fabricated panics.
+
+**Emergence:** A minor argument in a Layer 1 cantina spirals into a system-wide rumor of an impending pirate invasion, causing neighboring colonies to panic-buy all your defensive munitions at a massive markup.
+
+**Tension:** Do you act on unofficial whispers to gain an edge, knowing they might be false, or wait for verified intelligence and miss the window of opportunity?
+
+---
+
+## Sub-light Relativity Sickness
+
+**Layer:** 2
+
+**Fantasy:** The psychological toll of living at a different speed than the rest of the universe.
+
+**Mechanic:** Crews assigned to sub-light cargo haulers experience time dilation. When they return to a colony, they suffer "Relativity Sickness"—a massive mismatch between their memories and the colony's current culture/technology, making them temporarily useless and depressed.
+
+**Emergence:** You send your best engineers on a long-haul trade mission. They return decades later to find their skills obsolete and their families gone, turning your elite crew into a radicalized faction of "Ancients" demanding the old ways back.
+
+**Tension:** Do you cycle crews frequently to keep them integrated, wasting time and fuel, or keep them on long hauls and accept that they will return as strangers to their own society?
+
+---
+
+## The Scrap-Code Renaissance
+
+**Layer:** 1
+
+**Fantasy:** A cultural explosion built on the misunderstanding of ancient garbage.
+
+**Mechanic:** Scavengers occasionally find corrupted data drives containing fragments of old media (e.g., commercial jingles, obsolete software tutorials). Instead of ignoring it, Pops might form a new artistic movement or religion based entirely on this misunderstood "Scrap-Code."
+
+**Emergence:** Your most productive industrial sector suddenly shifts its entire output to producing useless, shiny cubes because a popular new subculture believes they are the holy artifacts described in a 300-year-old corrupted infomercial.
+
+**Tension:** Do you violently suppress this useless artistic movement to maintain productivity, or lean into it, exporting the "Scrap-Code" art to other colonies for massive cultural influence at the cost of your industrial base?
+
+---
