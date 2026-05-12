@@ -707,7 +707,7 @@ fn push_entity_components<'a>(layout: &mut InspectorLayout<'a>, world: &'a World
 
     if let Some(structure) = world.get::<Structure>(entity) {
         let pct = if structure.max_hp > 0.0 {
-            (structure.current_hp / structure.max_hp * 100.0) as u16
+            ((structure.current_hp / structure.max_hp * 100.0).clamp(0.0, 100.0)) as u16
         } else {
             0
         };
@@ -864,8 +864,8 @@ fn render_bio_monitor(
         ])
         .split(rows[0]);
 
-    let hunger_percent = (needs.hunger * 100.0) as u16;
-    let rest_percent = (needs.rest * 100.0) as u16;
+    let hunger_percent = ((needs.hunger * 100.0).clamp(0.0, 100.0)) as u16;
+    let rest_percent = ((needs.rest * 100.0).clamp(0.0, 100.0)) as u16;
 
     let hunger_color = if needs.hunger < 0.3 {
         Color::Red
@@ -892,7 +892,7 @@ fn render_bio_monitor(
     frame.render_widget(rest_gauge, needs_layout[2]);
 
     let morale = needs.morale();
-    let morale_percent = (morale * 100.0) as u16;
+    let morale_percent = ((morale * 100.0).clamp(0.0, 100.0)) as u16;
     let morale_color = if morale < 0.3 {
         Color::Red
     } else if morale < 0.7 {
@@ -911,7 +911,7 @@ fn render_bio_monitor(
     let mut current_row = 2;
 
     if let Some(bio) = bio_opt {
-        let bio_percent = (bio.value * 100.0) as u16;
+        let bio_percent = ((bio.value * 100.0).clamp(0.0, 100.0)) as u16;
         let bio_color = if bio.value < 0.4 {
             Color::Red
         } else if bio.value < 0.7 {
@@ -1382,7 +1382,7 @@ fn render_refining_details(frame: &mut Frame, area: Rect, progress: &RefiningPro
                 .border_type(BorderType::Rounded),
         )
         .gauge_style(Style::default().fg(Color::LightGreen))
-        .percent(((progress.current / progress.max) * 100.0) as u16);
+        .percent(((progress.current / progress.max) * 100.0).clamp(0.0, 100.0) as u16);
 
     frame.render_widget(gauge, area);
 }
