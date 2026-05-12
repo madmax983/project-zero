@@ -1,3 +1,9 @@
+### INT-1257: Generational Skill Atrophy
+- **Date:** 2026-05-13
+- **Systems connected:** `DroneHub` -> `update_automation_level_system` -> `apply_skill_atrophy_system`
+- **Glue added:** Added `update_automation_level_system` in `src/layer1/core/integration.rs` to calculate `AutomationLevel` based on active `DroneHub`s. Registered systems in `src/layer1/systems/economy.rs`.
+- **Tests:** `tests/integration/generational_skill_atrophy_bridge.rs`
+
 ### INT-642: Propaganda Simulacrum -> Chronicle
 - **Date:** 2026-10-31
 - **Systems connected:** `Simulacrum` construction -> `simulacrum_chronicle_bridge` -> `AddChronicleEvent`

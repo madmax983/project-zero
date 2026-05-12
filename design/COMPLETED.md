@@ -548,3 +548,4 @@
 - [x] `1077` Splicer's Dilemma — `specs/1077-splicers-dilemma.md` — completed 2024-05-25
 - [x] `1092` Attention Bandwidth — `specs/1092-attention-bandwidth.md` — completed
 - [x] `1257` Generational Skill Atrophy — `specs/1257-generational-skill-atrophy.md` - completed 2026-05-13
+- [x] `INT-1257` Integration: Generational Skill Atrophy -> AutomationLevel — completed 2026-05-13

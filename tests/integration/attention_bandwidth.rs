@@ -141,7 +141,7 @@ mod tests {
 
         let final_weight = world.get::<UtilityWeights>(entity_c).unwrap().availability_weight;
         // Verify drift has likely occurred
-        assert!(final_weight >= 0.0 && final_weight <= 2.0);
+        assert!((0.0..=2.0).contains(&final_weight));
         assert_ne!(final_weight, _initial_weight, "Weights should drift when unobserved");
     }
 }

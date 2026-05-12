@@ -2138,3 +2138,17 @@ pub fn cryo_prison_sabotage_bridge_system(
         });
     }
 }
+
+/// Updates the `AutomationLevel` resource based on the number of `DroneHub`s.
+pub fn update_automation_level_system(
+    automation_level_opt: Option<ResMut<crate::layer1::skills::generational_atrophy::AutomationLevel>>,
+    query: Query<&crate::layer1::drone::DroneHub>,
+) {
+    if let Some(mut automation_level) = automation_level_opt {
+        let mut level: f32 = 0.0;
+        for _ in query.iter() {
+            level += 20.0;
+        }
+        automation_level.level = level.min(100.0);
+    }
+}

@@ -62,6 +62,15 @@ pub fn register(schedule: &mut Schedule) {
 
     schedule.add_systems(
         (
+            crate::layer1::core::integration::update_automation_level_system,
+            crate::layer1::skills::generational_atrophy::apply_skill_atrophy_system
+                .after(crate::layer1::core::integration::update_automation_level_system),
+        )
+            .in_set(Layer1SystemSet::Economy),
+    );
+
+    schedule.add_systems(
+        (
             process_research_system,
             process_observe_system,
             #[cfg(feature = "nova")]

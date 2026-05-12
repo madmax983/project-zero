@@ -74,7 +74,7 @@ pub fn inherit_vendettas_system(
 mod tests {
     use super::*;
     use crate::layer1::pop::PopBundle;
-    use bevy_ecs::prelude::*;
+
     use bevy_ecs::system::RunSystemOnce;
     use rand::SeedableRng;
 
