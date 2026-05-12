@@ -1,9 +1,9 @@
+use bevy_ecs::prelude::*;
+use bevy_ecs::system::RunSystemOnce;
 use scale::layer1::atmosphere::{apply_smog_damage_system, AtmosphereGrid};
 use scale::layer1::biology::health::Health;
 use scale::layer1::map::GridPosition;
 use scale::layer1::pop::Pop;
-use bevy_ecs::prelude::*;
-use bevy_ecs::system::RunSystemOnce;
 
 #[test]
 fn test_rust_lung_provides_smog_immunity() {
@@ -40,8 +40,14 @@ fn test_rust_lung_provides_smog_immunity() {
     world.run_system_once(apply_smog_damage_system).unwrap();
 
     let health_immune = world.get::<Health>(pop_immune).unwrap();
-    assert_eq!(health_immune.current, 100.0, "Pop with Rust-Lung should be immune to smog");
+    assert_eq!(
+        health_immune.current, 100.0,
+        "Pop with Rust-Lung should be immune to smog"
+    );
 
     let health_vulnerable = world.get::<Health>(pop_vulnerable).unwrap();
-    assert!(health_vulnerable.current < 100.0, "Pop without Rust-Lung should take smog damage");
+    assert!(
+        health_vulnerable.current < 100.0,
+        "Pop without Rust-Lung should take smog damage"
+    );
 }

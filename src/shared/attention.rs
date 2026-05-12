@@ -1,8 +1,8 @@
-use bevy_ecs::prelude::*;
-use std::collections::VecDeque;
+use crate::layer1::pop::Pop;
 use crate::layer1::psychology::needs::Needs;
 use crate::layer1::utility_types::UtilityWeights;
-use crate::layer1::pop::Pop;
+use bevy_ecs::prelude::*;
+use std::collections::VecDeque;
 
 /// The simple abstraction for returned data
 pub enum DataResolution<T> {
@@ -100,7 +100,8 @@ pub fn unobserved_drift_system(
     use rand::Rng;
 
     for mut weights in &mut query {
-        if rng.gen_bool(0.05) { // 5% chance per tick to drift
+        if rng.gen_bool(0.05) {
+            // 5% chance per tick to drift
             // Small drift in availability weight
             let drift = rng.gen_range(-0.01..=0.01);
             weights.availability_weight = (weights.availability_weight + drift).clamp(0.0, 2.0);

@@ -1,7 +1,22 @@
+//! Physical Inventory Management.
+//!
+//! Handles the storage of physical items, tools, and curios within a Pop's personal inventory
+//! or a container's storage, enforcing capacity limits.
+
 use crate::layer1::items::ItemType;
 use bevy_ecs::prelude::*;
 
-/// An item in an inventory.
+/// A specific item stored within an [`Inventory`].
+///
+/// ## Examples
+///
+/// ```rust
+/// use scale::layer1::economy::inventory::InventoryItem;
+/// use scale::layer1::items::ItemType;
+///
+/// let item = InventoryItem { item_type: ItemType::Potato, entity: None };
+/// assert_eq!(item.item_type, ItemType::Potato);
+/// ```
 #[derive(Default, Debug, Clone, PartialEq, Eq)]
 pub struct InventoryItem {
     /// The specific type of the item (e.g., Potato, Curio).
@@ -10,7 +25,17 @@ pub struct InventoryItem {
     pub entity: Option<Entity>,
 }
 
-/// Component for storing personal items (tools, curios, etc.).
+/// Component attached to entities that can carry physical items (e.g., Pops, Crates).
+///
+/// ## Examples
+///
+/// ```rust
+/// use scale::layer1::economy::inventory::Inventory;
+///
+/// let inv = Inventory::default();
+/// assert_eq!(inv.capacity, 20);
+/// assert!(inv.items.is_empty());
+/// ```
 #[derive(Component, Debug, Clone)]
 pub struct Inventory {
     /// The list of items currently held in the inventory.
@@ -39,15 +64,41 @@ impl Inventory {
         let _ = self.try_add(item);
     }
 
-    /// Tries to add an item to the inventory.
-    ///
-    /// Returns `true` if added, `false` if inventory is full.
     /// Checks if the inventory contains at least one item of the given type.
+    ///
+    /// ## Examples
+    ///
+    /// ```rust
+    /// use scale::layer1::economy::inventory::{Inventory, InventoryItem};
+    /// use scale::layer1::economy::items::ItemType;
+    ///
+    /// let mut inv = Inventory::default();
+    /// inv.try_add(InventoryItem { item_type: ItemType::Potato, entity: None });
+    ///
+    /// assert!(inv.has_item(ItemType::Potato));
+    /// assert!(!inv.has_item(ItemType::Tool));
+    /// ```
     #[must_use]
     pub fn has_item(&self, item_type: ItemType) -> bool {
         self.items.iter().any(|i| i.item_type == item_type)
     }
 
+    /// Tries to add an item to the inventory.
+    ///
+    /// Returns `true` if successfully added, `false` if the inventory is at capacity.
+    ///
+    /// ## Examples
+    ///
+    /// ```rust
+    /// use scale::layer1::economy::inventory::{Inventory, InventoryItem};
+    /// use scale::layer1::economy::items::ItemType;
+    ///
+    /// let mut inv = Inventory { capacity: 1, ..Default::default() };
+    /// let item = InventoryItem { item_type: ItemType::Potato, entity: None };
+    ///
+    /// assert!(inv.try_add(item.clone())); // First fits
+    /// assert!(!inv.try_add(item));       // Second fails due to capacity
+    /// ```
     pub fn try_add(&mut self, item: InventoryItem) -> bool {
         if self.items.len() >= self.capacity {
             return false;

@@ -1,18 +1,63 @@
+//! The Hidden Harbors.
+//!
+//! When colony authority weakens, the black market finds physical space to operate.
+//! Smuggler's coves spontaneously spawn in unmonitored map tiles, offering illegal
+//! trades until they naturally decay or are busted by enforcers.
+
 use crate::layer1::map::GridPosition;
 use crate::layer1::TerrainGrid;
 use bevy_ecs::prelude::*;
 use rand::Rng;
 
+/// Measures the strictness and enforcement level of the current administration.
+///
+/// ## Examples
+///
+/// ```rust
+/// use scale::layer1::economy::smugglers_cove::ColonyAuthority;
+///
+/// let authority = ColonyAuthority { level: 25.0 };
+/// assert!(authority.level < 30.0); // Ripe for smuggling
+/// ```
 #[derive(Resource, Default)]
 pub struct ColonyAuthority {
     pub level: f32, // 0.0 to 100.0
 }
 
+/// A physical location representing an illegal black market hub.
+///
+/// ## Examples
+///
+/// ```rust
+/// use scale::layer1::economy::smugglers_cove::SmugglersCove;
+///
+/// let mut cove = SmugglersCove { lifespan: 100 };
+/// cove.lifespan = cove.lifespan.saturating_sub(1);
+/// assert_eq!(cove.lifespan, 99);
+/// ```
 #[derive(Component)]
 pub struct SmugglersCove {
     pub lifespan: u32,
 }
 
+/// Spawns a [`SmugglersCove`] if colony authority is sufficiently low.
+///
+/// ## Examples
+///
+/// ```rust
+/// use bevy_ecs::prelude::*;
+/// use scale::layer1::economy::smugglers_cove::{spawn_smugglers_cove_system, ColonyAuthority, SmugglersCove};
+/// use scale::layer1::nature::terrain::generate_terrain;
+///
+/// let mut world = World::new();
+/// world.insert_resource(ColonyAuthority { level: 10.0 }); // Low authority
+/// world.insert_resource(generate_terrain(10, 10)); // Provide terrain
+///
+/// // In a real game, RNG decides spawning. Here we just show setup.
+/// let mut schedule = Schedule::default();
+/// schedule.add_systems(spawn_smugglers_cove_system);
+/// schedule.run(&mut world);
+/// ```
 pub fn spawn_smugglers_cove_system(
     mut commands: Commands,
     authority: Res<ColonyAuthority>,
@@ -41,6 +86,23 @@ pub fn spawn_smugglers_cove_system(
     }
 }
 
+/// Slowly decays the lifespan of active coves, despawning them when they reach zero.
+///
+/// ## Examples
+///
+/// ```rust
+/// use bevy_ecs::prelude::*;
+/// use scale::layer1::economy::smugglers_cove::{process_smuggler_decay_system, SmugglersCove};
+///
+/// let mut world = World::new();
+/// let cove = world.spawn(SmugglersCove { lifespan: 1 }).id();
+///
+/// let mut schedule = Schedule::default();
+/// schedule.add_systems(process_smuggler_decay_system);
+///
+/// schedule.run(&mut world); // Lifespan drops to 0, entity despawns
+/// assert!(world.get::<SmugglersCove>(cove).is_none());
+/// ```
 pub fn process_smuggler_decay_system(
     mut commands: Commands,
     mut query: Query<(Entity, &mut SmugglersCove)>,

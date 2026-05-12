@@ -1,21 +1,75 @@
+//! The Great Depression in Space.
+//!
+//! This module handles severe economic inflation, market crashes, and the resulting
+//! shift to barter-based economies when standard credits become worthless.
+
 use bevy_ecs::prelude::*;
 
+/// Event triggered when the galactic market experiences a severe crash.
+///
+/// ## Examples
+///
+/// ```rust
+/// use scale::layer1::economy::inflation::MarketCrashEvent;
+///
+/// let event = MarketCrashEvent { new_multiplier: 0.1 };
+/// assert_eq!(event.new_multiplier, 0.1);
+/// ```
 #[derive(Event)]
 pub struct MarketCrashEvent {
     pub new_multiplier: f32,
 }
 
+/// Tracks the current state and purchasing power of the local market.
+///
+/// ## Examples
+///
+/// ```rust
+/// use scale::layer1::economy::inflation::MarketState;
+///
+/// let state = MarketState { credit_value_multiplier: 1.0 };
+/// assert_eq!(state.credit_value_multiplier, 1.0); // 1-to-1 purchasing power
+/// ```
 #[derive(Resource)]
 pub struct MarketState {
     pub credit_value_multiplier: f32,
 }
 
+/// Represents the physical and digital wealth held by an entity or faction.
+///
+/// ## Examples
+///
+/// ```rust
+/// use scale::layer1::economy::inflation::EmpireResources;
+///
+/// let mut resources = EmpireResources { credits: 5000.0, alloys: 200 };
+/// resources.alloys += 50;
+/// assert_eq!(resources.alloys, 250);
+/// ```
 #[derive(Component)]
 pub struct EmpireResources {
     pub credits: f32,
     pub alloys: u32,
 }
 
+/// A request to trade physical goods without exchanging credits.
+///
+/// ## Examples
+///
+/// ```rust
+/// use bevy_ecs::prelude::*;
+/// use scale::layer1::economy::inflation::BarterRequest;
+///
+/// let initiator = Entity::from_raw(1);
+/// let target = Entity::from_raw(2);
+/// let request = BarterRequest {
+///     initiator,
+///     target,
+///     offer_alloys: 100,
+///     request_alloys: 150,
+/// };
+/// assert_eq!(request.offer_alloys, 100);
+/// ```
 #[derive(Event)]
 pub struct BarterRequest {
     pub initiator: Entity,
@@ -24,6 +78,27 @@ pub struct BarterRequest {
     pub request_alloys: u32,
 }
 
+/// Listens for [`MarketCrashEvent`]s and updates the [`MarketState`] multiplier accordingly.
+///
+/// ## Examples
+///
+/// ```rust
+/// use bevy_ecs::prelude::*;
+/// use scale::layer1::economy::inflation::{trigger_market_crash, MarketState, MarketCrashEvent};
+///
+/// let mut world = World::new();
+/// world.insert_resource(MarketState { credit_value_multiplier: 1.0 });
+/// world.insert_resource(Events::<MarketCrashEvent>::default());
+///
+/// world.send_event(MarketCrashEvent { new_multiplier: 0.1 });
+///
+/// let mut schedule = Schedule::default();
+/// schedule.add_systems(trigger_market_crash);
+/// schedule.run(&mut world);
+///
+/// let market = world.resource::<MarketState>();
+/// assert_eq!(market.credit_value_multiplier, 0.1);
+/// ```
 pub fn trigger_market_crash(
     mut market: ResMut<MarketState>,
     mut events: EventReader<MarketCrashEvent>,
@@ -33,6 +108,38 @@ pub fn trigger_market_crash(
     }
 }
 
+/// Processes direct alloy-for-alloy exchanges, bypassing the need for credits.
+///
+/// Useful when a market crash makes standard purchasing power impossible.
+///
+/// ## Examples
+///
+/// ```rust
+/// use bevy_ecs::prelude::*;
+/// use scale::layer1::economy::inflation::{process_barter_trade, EmpireResources, BarterRequest};
+///
+/// let mut world = World::new();
+/// let empire_a = world.spawn(EmpireResources { credits: 0.0, alloys: 200 }).id();
+/// let empire_b = world.spawn(EmpireResources { credits: 0.0, alloys: 300 }).id();
+///
+/// world.insert_resource(Events::<BarterRequest>::default());
+/// world.send_event(BarterRequest {
+///     initiator: empire_a,
+///     target: empire_b,
+///     offer_alloys: 50,
+///     request_alloys: 100,
+/// });
+///
+/// let mut schedule = Schedule::default();
+/// schedule.add_systems(process_barter_trade);
+/// schedule.run(&mut world);
+///
+/// let a_res = world.get::<EmpireResources>(empire_a).unwrap();
+/// let b_res = world.get::<EmpireResources>(empire_b).unwrap();
+///
+/// assert_eq!(a_res.alloys, 250); // 200 - 50 + 100
+/// assert_eq!(b_res.alloys, 250); // 300 - 100 + 50
+/// ```
 pub fn process_barter_trade(
     mut query: Query<&mut EmpireResources>,
     mut barter_events: EventReader<BarterRequest>,
