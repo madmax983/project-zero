@@ -546,6 +546,7 @@
 - [x] `INT-893` Integration: Psychic Stains -> Pathfinding - completed 2026-10-31
 - [x] `1078` The Foundation Soil — `specs/1078-foundation-soil.md` — completed 2026-06-05
 
+- [x] `1076` Fading Homeworld — `specs/1076-fading-homeworld.md` — completed 2026-02-28
 - [x] `1077` Splicer's Dilemma — `specs/1077-splicers-dilemma.md` — completed 2024-05-25
 - [x] `1092` Attention Bandwidth — `specs/1092-attention-bandwidth.md` — completed
 - [x] `1257` Generational Skill Atrophy — `specs/1257-generational-skill-atrophy.md` - completed 2026-05-13

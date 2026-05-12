@@ -9,6 +9,7 @@ pub mod cultural_pressure;
 pub mod cultural_ransom;
 pub mod proxy_wars;
 pub mod succession;
+pub mod fading_homeworld;
 
 #[derive(Component)]
 pub struct Envoy;
