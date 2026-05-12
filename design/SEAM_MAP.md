@@ -1006,3 +1006,21 @@
 - **Systems connected:** `PsychicStain` component -> `find_path_internal`
 - **Glue added:** Pathfinding checks the `world` for `PsychicStain` entities and applies a proportional penalty to the path cost, making pops avoid highly traumatized tiles.
 - **Tests:** `tests/integration/psychic_stains_pathfinding.rs`
+
+### INT-1077: Splicer's Dilemma -> Social/Traits
+- **Date:** 2026-06-25
+- **Systems connected:** `apply_mutation_system`, `evaluate_social_friction_system`
+- **Glue added:** Registered in `src/layer1/systems/economy.rs` and `src/layer1/systems/observation.rs`.
+- **Tests:** `tests/integration/splicers_dilemma_integration.rs`
+
+### INT-1257: Generational Skill Atrophy -> Economy
+- **Date:** 2026-06-25
+- **Systems connected:** `apply_skill_atrophy_system`, `AutomationLevel`
+- **Glue added:** Initialized `AutomationLevel` resource in `src/simulation.rs` and registered `apply_skill_atrophy_system` in `src/layer1/systems/economy.rs`.
+- **Tests:** `tests/integration/generational_atrophy_integration.rs`
+
+### INT-1074: System Quarantine -> Trade/Warlords
+- **Date:** 2026-06-25
+- **Systems connected:** `apply_quarantine_effects`, `handle_quarantine_decay`
+- **Glue added:** Registered Layer 2 events in `src/simulation.rs`.
+- **Tests:** `tests/integration/system_quarantine_integration.rs`

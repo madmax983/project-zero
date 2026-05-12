@@ -196,6 +196,12 @@ mod unmet_needs_black_market;
 mod light_pollution_fauna;
 #[path = "integration/waste_scent.rs"]
 mod waste_scent;
+#[path = "integration/splicers_dilemma_integration.rs"]
+mod splicers_dilemma_integration;
+#[path = "integration/generational_atrophy_integration.rs"]
+mod generational_atrophy_integration;
+#[path = "integration/system_quarantine_integration.rs"]
+mod system_quarantine_integration;
 pub mod integration {
     #[path = "conveyor_pathfinding_bridge.rs"]
     pub mod conveyor_pathfinding_bridge;
