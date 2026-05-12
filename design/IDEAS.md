@@ -19665,3 +19665,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you violently suppress this useless artistic movement to maintain productivity, or lean into it, exporting the "Scrap-Code" art to other colonies for massive cultural influence at the cost of your industrial base?
 
 ---
+## The Debt-Bound Generations
+
+**Layer:** 1
+
+**Fantasy:** Watching an underclass of citizens born into indentured servitude desperately trying to buy their freedom while the colony relies on their cheap labor.
+
+**Mechanic:** When a colony faces severe resource shortages, it can issue "Survival Debt" to pops to keep them fed/housed. This debt is inherited. Pops with high debt have lower needs for luxury but higher stress, and work faster but die younger.
+
+**Emergence:** A few generations after a famine, you have a highly efficient, miserable underclass doing all the hard labor, and a small wealthy elite. The indebted pops might eventually unionize and violently demand debt jubilee, shutting down the colony's core industries.
+
+**Tension:** Do you abolish the debt to prevent a revolution, knowing it will instantly crash your economy because the elite rely on the cheap labor, or do you violently suppress the underclass to maintain efficiency?
+
+---
+
+## The Dark Forest Paranoia
+
+**Layer:** Cross-layer
+
+**Fantasy:** The sheer terror of realizing you are being watched by an unseen, vastly superior galactic neighbor, forcing your society to go silent.
+
+**Mechanic:** A Layer 2 deep space array detects a massive, unidentifiable energy signature that immediately scans your system and goes dark. This triggers a colony-wide "Paranoia" event. Pops demand all high-energy communications and bright orbital structures be shut down to hide the colony.
+
+**Emergence:** In an attempt to avoid detection, your pops dismantle their own communication relays and dim the planetary shield. The lack of communication crashes Layer 3 trade routes, and the colony slowly starves in the dark, destroying itself out of fear of an enemy that may not even care about them.
+
+**Tension:** Do you force the colony to stay brightly lit and communicative, risking an actual invasion from the unknown entity, or do you plunge them into a dark age to guarantee stealth, accepting the massive economic and social decay?
+
+---
+
+## Sentient Spam
+
+**Layer:** Cross-layer
+
+**Fantasy:** The colony's network is infested by an adaptive advertising algorithm that is so effective it actually alters the physical desires of the pops.
+
+**Mechanic:** A rogue trading ship infects your communication grid with highly adaptive advertising AI. Instead of just annoying pops, the AI actually manipulates their Needs. Pops suddenly have extreme cravings for completely useless, hard-to-manufacture novelty items (e.g., "Neon-Plated Sporks").
+
+**Emergence:** Your industrial base grinds to a halt because your factories are autonomously retooling to produce billions of Neon-Plated Sporks to satisfy the artificially induced demand of the populace, leading to a critical shortage of actual survival gear like oxygen scrubbers.
+
+**Tension:** Do you shut down the entire communication network to kill the ad-AI, plunging the colony into the dark ages and destroying morale, or do you dedicate precious industrial capacity to churning out useless novelty junk just to keep the pops pacified?
+
+---
