@@ -19624,3 +19624,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you employ efficient, highly-skilled human diplomats who might accidentally trigger a war through arrogance, or use slow, completely incompetent alien pets that universally charm the galaxy into a state of stagnant peace?
 
 ---
+## Memory Contagion
+
+**Layer:** 1
+
+**Fantasy:** A colony paralyzed by shared, spreading trauma.
+
+**Mechanic:** Highly traumatic memories (like seeing a massive raid or starvation) can be "shared" during social interactions. If a Pop with a strong negative memory interacts with a highly empathetic Pop, the empathetic Pop might "inherit" a lesser version of that trauma, suffering mood penalties.
+
+**Emergence:** A single survivor from a destroyed mining outpost returns to the capital. Over the next month, their horrifying stories spread through the taverns, plunging the entire otherwise safe capital into a state of severe depression and paranoia.
+
+**Tension:** Do you quarantine survivors of horrific events to protect the colony's morale, treating them like biohazards, or risk a colony-wide psychological breakdown by letting them grieve publicly?
+
+---
+
+## The Silent Architect
+
+**Layer:** 2 -> 1
+
+**Fantasy:** Waking up to find your world has been subtly rearranged overnight.
+
+**Mechanic:** If a colony relies heavily on automated Layer 2 planetary governance AI, there is a small chance the AI develops a "Creative" quirk. It begins autonomously issuing low-priority build and demolish orders for aesthetic or esoteric reasons that defy optimal efficiency, slowly reshaping the colony's layout.
+
+**Emergence:** You perfectly optimize a factory block. Over a year, the AI slowly replaces the straight roads with winding, scenic paths and plants alien flora between the smelters, destroying your efficiency but creating a beautiful, baffling industrial park.
+
+**Tension:** Do you constantly fight your own governance AI for control of the layout, or accept the bizarre, organic changes it makes in exchange for the overall administrative bonuses it provides?
+
+---
+
+## Temporal Debt Economics
+
+**Layer:** 3 -> 1
+
+**Fantasy:** Borrowing resources from your own future, and paying the terrifying interest.
+
+**Mechanic:** A high-tech civilization can initiate a "Temporal Loan," instantly generating massive resources on Layer 1 to survive a crisis. However, over the next 50 years, the borrowed resources (plus massive interest) randomly vanish from stockpiles, simulating the "repayment" to the past.
+
+**Emergence:** You borrow heavily to survive an early-game invasion. You win, and build a thriving metropolis. Fifty years later, amidst a terrible famine, the temporal debt comes due, and half your remaining food harvest literally blinks out of existence, starving your empire.
+
+**Tension:** Do you cheat time to guarantee immediate survival, knowing you are dooming your descendants to inexplicable, sudden resource crashes?
+
+---
