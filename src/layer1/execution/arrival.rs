@@ -151,7 +151,7 @@ fn process_arrival(
             handle_rest_arrival(pop_entity, target_entity, &mut ctx.housing_q, commands);
             true
         }
-        ActionType::Socialize => {
+        ActionType::Socialize | ActionType::Gossip => {
             handle_socialize(
                 commands,
                 &mut ctx.taverns,

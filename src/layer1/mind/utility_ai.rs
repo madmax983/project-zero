@@ -42,7 +42,7 @@
 
 use crate::layer1::actions::{
     evaluate_clean, evaluate_drafted_behavior, evaluate_fetch_clothing, evaluate_fetch_tool,
-    evaluate_haul, evaluate_listen_to_hum, evaluate_mental_break, evaluate_research,
+    evaluate_gossip, evaluate_haul, evaluate_listen_to_hum, evaluate_mental_break, evaluate_research,
     evaluate_shower, evaluate_simple_action,
 };
 use crate::layer1::chemical::evaluate_consume_chemical;
@@ -407,6 +407,17 @@ impl<'a> PopDecider<'a> {
             self.context,
             0.0,
         );
+
+        // Evaluate Gossip
+        let (_, score, target) = evaluate_gossip(self.data, self.buffer);
+        if let Some(target_entity) = target {
+            self.evaluator.evaluate_and_consider(
+                Some((score, target_entity)),
+                ActionType::Gossip,
+                self.context,
+                0.0,
+            );
+        }
     }
 
     /// **Priority 2: Social & Mental Health**

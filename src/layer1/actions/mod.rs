@@ -29,6 +29,9 @@ pub(crate) use clean::*;
 pub(crate) mod protest;
 pub(crate) use protest::*;
 
+pub(crate) mod gossip;
+pub(crate) use gossip::*;
+
 pub use crate::layer1::utility_types::AssignmentType;
 use bevy_ecs::prelude::*;
 

@@ -1,0 +1,47 @@
+use crate::layer1::traits::Trait;
+use crate::layer1::utility_eval_types::*;
+use crate::layer1::utility_types::ActionType;
+use bevy_ecs::prelude::*;
+
+/// Evaluates the desire to gossip.
+#[must_use]
+pub(crate) fn evaluate_gossip(
+    data: &PopEvalData,
+    buffer: &UtilityAIBuffer,
+) -> (ActionType, f32, Option<Entity>) {
+    let mut desire = 0.0;
+
+    // Social need
+    desire += (1.0 - data.needs.leisure) * 1.5;
+
+    // Trait bonuses
+    if let Some(traits) = data.traits.as_ref() {
+        if traits.has(Trait::Greedy) || traits.has(Trait::Anxious) {
+            desire += 0.5;
+        }
+    }
+
+    let mut best_score = 0.0;
+    let mut best_target = None;
+
+    // Find someone else to gossip with (closest pop).
+    // In this simple iteration we evaluate taverns to socialize/gossip at.
+    for candidate in &buffer.taverns {
+        let context_score = crate::layer1::utility_types::calculate_context_score(
+            data.pos,
+            Some(candidate.pos),
+            candidate.capacity,
+            candidate.usage,
+            &data.weights,
+        );
+
+        let total_score = desire * context_score;
+
+        if total_score > best_score {
+            best_score = total_score;
+            best_target = Some(candidate.entity);
+        }
+    }
+
+    (ActionType::Gossip, best_score, best_target)
+}

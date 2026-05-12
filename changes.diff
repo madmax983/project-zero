@@ -1,0 +1,433 @@
+diff --git a/src/layer1/actions/gossip.rs b/src/layer1/actions/gossip.rs
+new file mode 100644
+index 00000000..b7b6acf0
+--- /dev/null
++++ b/src/layer1/actions/gossip.rs
+@@ -0,0 +1,47 @@
++use crate::layer1::traits::Trait;
++use crate::layer1::utility_eval_types::*;
++use crate::layer1::utility_types::ActionType;
++use bevy_ecs::prelude::*;
++
++/// Evaluates the desire to gossip.
++#[must_use]
++pub(crate) fn evaluate_gossip(
++    data: &PopEvalData,
++    buffer: &UtilityAIBuffer,
++) -> (ActionType, f32, Option<Entity>) {
++    let mut desire = 0.0;
++
++    // Social need
++    desire += (1.0 - data.needs.leisure) * 1.5;
++
++    // Trait bonuses
++    if let Some(traits) = data.traits.as_ref() {
++        if traits.has(Trait::Greedy) || traits.has(Trait::Anxious) {
++            desire += 0.5;
++        }
++    }
++
++    let mut best_score = 0.0;
++    let mut best_target = None;
++
++    // Find someone else to gossip with (closest pop).
++    // In this simple iteration we evaluate taverns to socialize/gossip at.
++    for candidate in &buffer.taverns {
++        let context_score = crate::layer1::utility_types::calculate_context_score(
++            data.pos,
++            Some(candidate.pos),
++            candidate.capacity,
++            candidate.usage,
++            &data.weights,
++        );
++
++        let total_score = desire * context_score;
++
++        if total_score > best_score {
++            best_score = total_score;
++            best_target = Some(candidate.entity);
++        }
++    }
++
++    (ActionType::Gossip, best_score, best_target)
++}
+diff --git a/src/layer1/actions/mod.rs b/src/layer1/actions/mod.rs
+index 028d6c46..0ee2820d 100644
+--- a/src/layer1/actions/mod.rs
++++ b/src/layer1/actions/mod.rs
+@@ -29,6 +29,9 @@ pub(crate) use clean::*;
+ pub(crate) mod protest;
+ pub(crate) use protest::*;
+
++pub(crate) mod gossip;
++pub(crate) use gossip::*;
++
+ pub use crate::layer1::utility_types::AssignmentType;
+ use bevy_ecs::prelude::*;
+
+diff --git a/src/layer1/execution/arrival.rs b/src/layer1/execution/arrival.rs
+index 0f1e48b9..213f786b 100644
+--- a/src/layer1/execution/arrival.rs
++++ b/src/layer1/execution/arrival.rs
+@@ -151,7 +151,7 @@ fn process_arrival(
+             handle_rest_arrival(pop_entity, target_entity, &mut ctx.housing_q, commands);
+             true
+         }
+-        ActionType::Socialize => {
++        ActionType::Socialize | ActionType::Gossip => {
+             handle_socialize(
+                 commands,
+                 &mut ctx.taverns,
+diff --git a/src/layer1/execution/general_work.rs b/src/layer1/execution/general_work.rs
+index 4537a3a0..8a8a2c03 100644
+--- a/src/layer1/execution/general_work.rs
++++ b/src/layer1/execution/general_work.rs
+@@ -462,15 +462,6 @@ pub fn calculate_work_amount(
+         1.0
+     };
+
+-    let gossiping_modifier = if world
+-        .get::<crate::layer1::social::gossip_economy::Gossiping>(pop_entity)
+-        .is_some()
+-    {
+-        0.0
+-    } else {
+-        1.0
+-    };
+-
+     let ghost_shift_modifier = if world
+         .get::<crate::layer1::social::ghost_shift_strike::GhostShiftState>(pop_entity)
+         .is_some()
+@@ -509,7 +500,6 @@ pub fn calculate_work_amount(
+         * neural_buff
+         * infection_modifier
+         * ghost_shift_modifier
+-        * gossiping_modifier
+         * hallucinating_modifier
+         * somnambulist_modifier;
+
+diff --git a/src/layer1/mind/utility_ai.rs b/src/layer1/mind/utility_ai.rs
+index e83bd3cb..dbfa9aaa 100644
+--- a/src/layer1/mind/utility_ai.rs
++++ b/src/layer1/mind/utility_ai.rs
+@@ -42,7 +42,7 @@
+
+ use crate::layer1::actions::{
+     evaluate_clean, evaluate_drafted_behavior, evaluate_fetch_clothing, evaluate_fetch_tool,
+-    evaluate_haul, evaluate_listen_to_hum, evaluate_mental_break, evaluate_research,
++    evaluate_gossip, evaluate_haul, evaluate_listen_to_hum, evaluate_mental_break, evaluate_research,
+     evaluate_shower, evaluate_simple_action,
+ };
+ use crate::layer1::chemical::evaluate_consume_chemical;
+@@ -407,6 +407,17 @@ impl<'a> PopDecider<'a> {
+             self.context,
+             0.0,
+         );
++
++        // Evaluate Gossip
++        let (_, score, target) = evaluate_gossip(self.data, self.buffer);
++        if let Some(target_entity) = target {
++            self.evaluator.evaluate_and_consider(
++                Some((score, target_entity)),
++                ActionType::Gossip,
++                self.context,
++                0.0,
++            );
++        }
+     }
+
+     /// **Priority 2: Social & Mental Health**
+diff --git a/src/layer1/mind/utility_types.rs b/src/layer1/mind/utility_types.rs
+index c0b46437..9ab180ee 100644
+--- a/src/layer1/mind/utility_types.rs
++++ b/src/layer1/mind/utility_types.rs
+@@ -141,6 +141,10 @@ pub enum ActionType {
+     Charge,
+     /// Engage in a hobby to reduce stress.
+     Hobby,
++    /// Engage in gossip.
++    ///
++    /// See \[`crate::layer1::actions::gossip::evaluate_gossip`\].
++    Gossip,
+     /// Work as an Administrator in an Office.
+     ///
+     /// See \[`crate::layer1::actions::admin::evaluate_admin`\].
+@@ -194,7 +198,7 @@ pub enum HobbyType {
+
+ impl ActionType {
+     /// Total number of action types. Used for array sizing.
+-    pub const COUNT: usize = 44;
++    pub const COUNT: usize = 45;
+
+     /// Converts action type to a unique array index (0..COUNT-1).
+     #[must_use]
+@@ -244,6 +248,7 @@ impl ActionType {
+             Self::TreatWounds => 41,
+             Self::Flee => 42,
+             Self::Sabotage => 43,
++            Self::Gossip => 44,
+         }
+     }
+
+diff --git a/src/layer1/social/gossip_economy.rs b/src/layer1/social/gossip_economy.rs
+index 690a8909..0c77626f 100644
+--- a/src/layer1/social/gossip_economy.rs
++++ b/src/layer1/social/gossip_economy.rs
+@@ -8,9 +8,20 @@ pub struct GossipEvent {
+     pub rumor: RumorTopic,
+ }
+
++pub const MAX_INTEL_TOKENS: u32 = 100;
++
+ #[derive(Resource, Default)]
+ pub struct IntelTokens(pub u32);
+
++pub fn intel_decay_system(
++    mut intel: ResMut<IntelTokens>,
++    time: Res<crate::shared::time::SimulationTime>,
++) {
++    if time.tick > 0 && time.tick.is_multiple_of(100) && intel.0 > 0 {
++        intel.0 -= 1;
++    }
++}
++
+ #[derive(Event)]
+ pub struct BrokerPurchaseEvent {
+     pub item: BrokerItem,
+@@ -23,10 +34,9 @@ pub enum BrokerItem {
+ }
+
+ #[derive(Component)]
+-pub struct Gossiping(pub u32);
++pub struct Broker;
+
+ pub fn process_gossip(
+-    mut commands: Commands,
+     mut gossip_events: EventReader<GossipEvent>,
+     mut intel: ResMut<IntelTokens>,
+     mut pops: Query<(&mut Morale,)>,
+@@ -36,56 +46,52 @@ pub fn process_gossip(
+             match event.rumor {
+                 RumorTopic::EventNews(_) => {
+                     // General
+-                    intel.0 += 1;
++                    intel.0 = (intel.0 + 1).min(MAX_INTEL_TOKENS);
+                 }
+                 RumorTopic::DoomProphecy => {
+                     // Dark Secret
+-                    intel.0 += 2;
++                    intel.0 = (intel.0 + 2).min(MAX_INTEL_TOKENS);
+                     morale.value -= 10.0;
+                 }
+                 _ => {
+                     // Other rumors might behave like general
+-                    intel.0 += 1;
++                    intel.0 = (intel.0 + 1).min(MAX_INTEL_TOKENS);
+                 }
+             }
+-
+-            // Add Gossiping component to temporarily halt work
+-            commands.entity(event.pop).insert(Gossiping(1));
+         }
+     }
+ }
+
++pub fn spawn_broker_system(
++    mut commands: Commands,
++    time: Res<crate::shared::time::SimulationTime>,
++    brokers: Query<(), With<Broker>>,
++) {
++    // Only spawn if there is no broker, and spawn sporadically (e.g. at intervals)
++    if brokers.is_empty() && time.tick > 0 && time.tick.is_multiple_of(500) {
++        commands.spawn(Broker);
++    }
++}
++
+ pub fn spend_intel(
+     mut purchase_events: EventReader<BrokerPurchaseEvent>,
+     mut intel: ResMut<IntelTokens>,
++    brokers: Query<(), With<Broker>>,
+ ) {
+     for event in purchase_events.read() {
+-        if intel.0 >= event.cost {
++        if !brokers.is_empty() && intel.0 >= event.cost {
+             intel.0 -= event.cost;
+             // Broker logic executed here
+         }
+     }
+ }
+
+-pub fn decrement_gossiping_system(
+-    mut commands: Commands,
+-    mut query: Query<(Entity, &mut Gossiping)>,
+-) {
+-    for (entity, mut gossiping) in &mut query {
+-        if gossiping.0 > 0 {
+-            gossiping.0 -= 1;
+-        }
+-        if gossiping.0 == 0 {
+-            commands.entity(entity).remove::<Gossiping>();
+-        }
+-    }
+-}
+
+ #[cfg(test)]
+ mod tests {
+     use super::*;
+-    use crate::layer1::designation::DesignationType;
+-    use crate::layer1::execution::general_work::calculate_work_amount;
++
++
+     use crate::layer1::pop::Pop;
+     use bevy::prelude::*;
+
+@@ -123,34 +129,6 @@ mod tests {
+         assert_eq!(app.world().resource::<IntelTokens>().0, 1);
+     }
+
+-    #[test]
+-    fn test_gossiping_reduces_productivity() {
+-        let mut app = setup_app();
+-        let pop = app
+-            .world_mut()
+-            .spawn((
+-                Pop,
+-                Morale {
+-                    value: 50.0,
+-                    modifiers: vec![],
+-                },
+-                Gossiping(1),
+-            ))
+-            .id();
+-
+-        app.world_mut()
+-            .resource_mut::<Events<GossipEvent>>()
+-            .send(GossipEvent {
+-                pop,
+-                rumor: RumorTopic::EventNews("Juicy Gossip".to_string()),
+-            });
+-
+-        app.update();
+-
+-        let work =
+-            calculate_work_amount(app.world(), pop, DesignationType::Mine, None, 1.0, 1.0, 1.0);
+-        assert_eq!(work, 0.0, "Pop should not progress work while gossiping");
+-    }
+
+     #[test]
+     fn test_dark_secret_gossip_lowers_morale() {
+@@ -184,10 +162,45 @@ mod tests {
+         );
+     }
+
++    #[test]
++    fn test_intel_decays_over_time() {
++        let mut app = setup_app();
++        app.world_mut().resource_mut::<IntelTokens>().0 = 10;
++        app.add_systems(Update, intel_decay_system);
++
++        // Time is 0, no decay
++        app.world_mut().insert_resource(crate::shared::time::SimulationTime { tick: 0, ..Default::default() });
++        app.update();
++        assert_eq!(app.world().resource::<IntelTokens>().0, 10);
++
++        // Time is 50, no decay
++        app.world_mut().insert_resource(crate::shared::time::SimulationTime { tick: 50, ..Default::default() });
++        app.update();
++        assert_eq!(app.world().resource::<IntelTokens>().0, 10);
++
++        // Time is 100, decay
++        app.world_mut().insert_resource(crate::shared::time::SimulationTime { tick: 100, ..Default::default() });
++        app.update();
++        assert_eq!(app.world().resource::<IntelTokens>().0, 9);
++    }
++
++    #[test]
++    fn test_intel_caps_at_max() {
++        let mut app = setup_app();
++        app.world_mut().resource_mut::<IntelTokens>().0 = MAX_INTEL_TOKENS;
++
++        let pop = app.world_mut().spawn((Pop, Morale { value: 50.0, modifiers: vec![] })).id();
++        app.world_mut().resource_mut::<Events<GossipEvent>>().send(GossipEvent { pop, rumor: RumorTopic::DoomProphecy });
++        app.update();
++
++        assert_eq!(app.world().resource::<IntelTokens>().0, MAX_INTEL_TOKENS);
++    }
++
+     #[test]
+     fn test_spend_intel_at_broker() {
+         let mut app = setup_app();
+         app.world_mut().resource_mut::<IntelTokens>().0 = 10;
++        app.world_mut().spawn(Broker);
+
+         app.world_mut()
+             .resource_mut::<Events<BrokerPurchaseEvent>>()
+@@ -204,4 +217,40 @@ mod tests {
+             "Intel tokens should be deducted"
+         );
+     }
++
++    #[test]
++    fn test_broker_spawn_and_spend_failure() {
++        let mut app = setup_app();
++        app.world_mut().resource_mut::<IntelTokens>().0 = 10;
++        app.world_mut().insert_resource(crate::shared::time::SimulationTime { tick: 0, ..Default::default() });
++        app.add_systems(Update, spawn_broker_system);
++
++        // Fail to spend intel since no broker exists
++        app.world_mut()
++            .resource_mut::<Events<BrokerPurchaseEvent>>()
++            .send(BrokerPurchaseEvent {
++                item: BrokerItem::RareTech,
++                cost: 5,
++            });
++
++        app.update();
++        assert_eq!(app.world().resource::<IntelTokens>().0, 10);
++
++        // Spawn broker on tick 500
++        app.world_mut().insert_resource(crate::shared::time::SimulationTime { tick: 500, ..Default::default() });
++        app.update();
++
++        let broker_exists = app.world_mut().query::<&Broker>().iter(app.world()).count() > 0;
++        assert!(broker_exists);
++
++        app.world_mut()
++            .resource_mut::<Events<BrokerPurchaseEvent>>()
++            .send(BrokerPurchaseEvent {
++                item: BrokerItem::RareTech,
++                cost: 5,
++            });
++
++        app.update();
++        assert_eq!(app.world().resource::<IntelTokens>().0, 5);
++    }
+ }
+diff --git a/src/layer1/systems/observation.rs b/src/layer1/systems/observation.rs
+index 52c4812e..aa92e5a8 100644
+--- a/src/layer1/systems/observation.rs
++++ b/src/layer1/systems/observation.rs
+@@ -326,8 +326,10 @@ pub fn register(schedule: &mut Schedule) {
+                 .after(crate::layer1::rumor::exchange_rumors_system),
+             crate::layer1::social::gossip_economy::spend_intel
+                 .after(crate::layer1::social::gossip_economy::process_gossip),
+-            crate::layer1::social::gossip_economy::decrement_gossiping_system
+-                .after(crate::layer1::social::gossip_economy::process_gossip),
++            crate::layer1::social::gossip_economy::intel_decay_system
++                .after(crate::layer1::social::gossip_economy::spend_intel),
++            crate::layer1::social::gossip_economy::spawn_broker_system
++                .after(crate::layer1::social::gossip_economy::intel_decay_system),
+             crate::layer1::social::proximity_social_system.after(modify_affinity_system),
+             crate::layer1::biology::genetics::splicers_dilemma::evaluate_social_friction_system
+                 .after(crate::layer1::social::proximity_social_system),
+diff --git a/src/ui/inspector.rs b/src/ui/inspector.rs
+index 7bedbc9c..0ebd33d0 100644
+--- a/src/ui/inspector.rs
++++ b/src/ui/inspector.rs
+@@ -95,6 +95,7 @@ const fn format_action_type(action: ActionType) -> (&'static str, &'static str,
+         ActionType::Flee => ("🏃", "Fleeing", Color::Yellow),
+         ActionType::Sabotage => ("💣", "Sabotaging", Color::Red),
+         ActionType::Protest => ("🗣️", "Protesting", Color::Rgb(200, 50, 50)),
++        ActionType::Gossip => ("🗣️", "Gossiping", Color::Magenta),
+     }
+ }
