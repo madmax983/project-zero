@@ -707,7 +707,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1072` The Smuggler's Ecosystem — `specs/1072-smugglers-ecosystem.md`
 
 - [ ] `1073` Benevolent Malfunctions — `specs/1073-benevolent-malfunctions.md`
-- [ ] `1074` System Quarantine — `specs/1074-system-quarantine.md`
 - [ ] `1075` The Memorial Economy — `specs/1075-the-memorial-economy.md`
 - [ ] `1076` Fading Homeworld — `specs/1076-fading-homeworld.md`
 - [ ] `1082` Resonant Architecture — `specs/1082-resonant-architecture.md`
