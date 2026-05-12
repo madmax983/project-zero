@@ -462,15 +462,6 @@ pub fn calculate_work_amount(
         1.0
     };
 
-    let gossiping_modifier = if world
-        .get::<crate::layer1::social::gossip_economy::Gossiping>(pop_entity)
-        .is_some()
-    {
-        0.0
-    } else {
-        1.0
-    };
-
     let ghost_shift_modifier = if world
         .get::<crate::layer1::social::ghost_shift_strike::GhostShiftState>(pop_entity)
         .is_some()
@@ -509,7 +500,6 @@ pub fn calculate_work_amount(
         * neural_buff
         * infection_modifier
         * ghost_shift_modifier
-        * gossiping_modifier
         * hallucinating_modifier
         * somnambulist_modifier;
 
