@@ -1,3 +1,9 @@
+### INT-1083: Kinetic Excavation -> Chronicle
+- **Date:** 2026-05-10
+- **Systems connected:** `KineticStrikeEvent` -> `kinetic_strike_chronicle_bridge` -> `AddChronicleEvent`
+- **Glue added:** Added `kinetic_strike_chronicle_bridge` in `src/layer1/core/integration.rs`. Registered in `src/layer1/systems/observation.rs`.
+- **Tests:** `tests/integration/kinetic_strike_chronicle.rs`
+
 ### INT-642: Propaganda Simulacrum -> Chronicle
 - **Date:** 2026-10-31
 - **Systems connected:** `Simulacrum` construction -> `simulacrum_chronicle_bridge` -> `AddChronicleEvent`
