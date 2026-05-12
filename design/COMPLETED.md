@@ -543,10 +543,14 @@
 - [x] `INT-939` Integration: Language Drift -> Trade Routes — completed 2026-06-28
 - [x] `1091` Gravity Blindspots — `specs/1091-gravity-blindspots.md` — completed 2026-06-16
 - [x] `1138` Organic Recycling — `specs/1138-organic-recycling.md` — completed 2026-05-10
+- [x] `INT-1138` Integration: Organic Recycling -> Chronicle
 - [x] `INT-893` Integration: Psychic Stains -> Pathfinding - completed 2026-10-31
 - [x] `1078` The Foundation Soil — `specs/1078-foundation-soil.md` — completed 2026-06-05
+- [x] `INT-1078` Integration: Foundation Soil -> Chronicle
 
 - [x] `1077` Splicer's Dilemma — `specs/1077-splicers-dilemma.md` — completed 2024-05-25
 - [x] `1092` Attention Bandwidth — `specs/1092-attention-bandwidth.md` — completed
 - [x] `1257` Generational Skill Atrophy — `specs/1257-generational-skill-atrophy.md` - completed 2026-05-13
+- [x] `INT-1257` Integration: Generational Atrophy -> Chronicle
 - [x] `1074` System Quarantine — `specs/1074-system-quarantine.md` — completed 2026-02-01
+- [x] `INT-1074` Integration: System Quarantine -> Chronicle

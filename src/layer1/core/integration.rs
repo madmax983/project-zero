@@ -2025,6 +2025,66 @@ pub fn predecessor_weather_array_bridge_system(
     }
 }
 
+/// INT-1138: Bridges Recycler processing to AddChronicleEvent (Chronicle).
+pub fn organic_recycling_chronicle_bridge(
+    mut events: EventReader<crate::layer1::recycling::CorpseRecycledEvent>,
+    mut chronicle_events: EventWriter<crate::layer1::core::chronicle::AddChronicleEvent>,
+    generator: bevy_ecs::prelude::Res<crate::shared::narrative::NarrativeGenerator>,
+) {
+    for _event in events.read() {
+        let text = generator
+            .generate(
+                "CORPSE_RECYCLED",
+                &crate::shared::narrative::NarrativeContext::default(),
+            )
+            .unwrap_or_else(|_| "A corpse was recycled.".to_string());
+        chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
+            text,
+            importance: crate::layer1::core::chronicle::EventImportance::Minor,
+        });
+    }
+}
+
+/// INT-1078: Bridges Foundation Soil application to AddChronicleEvent (Chronicle).
+pub fn foundation_soil_chronicle_bridge(
+    mut events: EventReader<crate::layer1::foundation_soil::FoundationSoilAppliedEvent>,
+    mut chronicle_events: EventWriter<crate::layer1::core::chronicle::AddChronicleEvent>,
+    generator: bevy_ecs::prelude::Res<crate::shared::narrative::NarrativeGenerator>,
+) {
+    for _event in events.read() {
+        let text = generator
+            .generate(
+                "FOUNDATION_SOIL_ENRICHED",
+                &crate::shared::narrative::NarrativeContext::default(),
+            )
+            .unwrap_or_else(|_| "Foundation soil enriched.".to_string());
+        chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
+            text,
+            importance: crate::layer1::core::chronicle::EventImportance::Standard,
+        });
+    }
+}
+
+/// INT-1257: Bridges Generational Atrophy application to AddChronicleEvent (Chronicle).
+pub fn generational_atrophy_chronicle_bridge(
+    mut events: EventReader<crate::layer1::skills::generational_atrophy::AtrophyAppliedEvent>,
+    mut chronicle_events: EventWriter<crate::layer1::core::chronicle::AddChronicleEvent>,
+    generator: bevy_ecs::prelude::Res<crate::shared::narrative::NarrativeGenerator>,
+) {
+    for _event in events.read() {
+        let text = generator
+            .generate(
+                "GENERATIONAL_ATROPHY_ONSET",
+                &crate::shared::narrative::NarrativeContext::default(),
+            )
+            .unwrap_or_else(|_| "Generational skill atrophy onset.".to_string());
+        chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
+            text,
+            importance: crate::layer1::core::chronicle::EventImportance::Standard,
+        });
+    }
+}
+
 /// INT-635: Bridges MachineCultFormedEvent to AddChronicleEvent (Chronicle).
 pub fn rogue_cult_chronicle_bridge(
     mut cult_events: bevy_ecs::event::EventReader<

@@ -7526,3 +7526,44 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[NAME] finishes the [ARTIFACT_TYPE]. [YEAR]. It is a study in [ARTIFACT_THEME]."
 - "[YEAR]: A new [ARTIFACT_TYPE] is placed in the plaza. [NAME] crafted it to remember the [ARTIFACT_THEME]."
 - "Art from the ashes. [NAME] unveils a [ARTIFACT_TYPE]. The theme is [ARTIFACT_THEME]. [YEAR]."
+
+
+## Foundation Soil Templates (Spec 1078)
+
+### Template: FOUNDATION_SOIL_ENRICHED
+**Generates:** Play event (Chronicle during game)
+**Slots:** [COLONY], [YEAR], [NAME]
+**Patterns:**
+- "[YEAR]: The first generation returns to the earth. [NAME]'s rest enriches the bedrock of [COLONY]."
+- "They built [COLONY], and now they hold it up. [NAME] is part of the foundation. [YEAR]."
+- "[COLONY] grows on the shoulders of the original crew. [NAME] is buried in the starting soil. [YEAR]."
+
+
+## Generational Skill Atrophy Templates (Spec 1257)
+
+### Template: GENERATIONAL_ATROPHY_ONSET
+**Generates:** Play event (Chronicle during game)
+**Slots:** [COLONY], [YEAR]
+**Patterns:**
+- "[YEAR]: The machines do everything now. The new generation in [COLONY] has forgotten the physical toil of their parents."
+- "Automation breeds weakness. The youth of [COLONY] rely entirely on the grid. Manual skills are fading. [YEAR]."
+- "[COLONY], [YEAR]: We have forgotten how to work the soil and mine the rock. The drones have made us soft."
+
+
+## System Quarantine Templates (Spec 1074)
+
+### Template: SYSTEM_QUARANTINE_ENACTED
+**Generates:** Play event (Chronicle during game)
+**Slots:** [COLONY], [YEAR]
+**Patterns:**
+- "[YEAR]: The threat is too great. A System Quarantine has been declared. No ships may enter or leave [COLONY]."
+- "We are cut off from the stars. [COLONY] is under total quarantine to prevent the spread. [YEAR]."
+- "[COLONY], [YEAR]: The borders are sealed. The quarantine has begun. We are on our own."
+
+### Template: WARLORD_FACTION_EMERGES
+**Generates:** Play event (Chronicle during game)
+**Slots:** [COLONY], [YEAR]
+**Patterns:**
+- "[YEAR]: Isolation breeds desperation. A warlord faction has emerged in the quarantined [COLONY]."
+- "Without orbital support, [COLONY] fractures. Warlords now vie for the remaining uncontaminated resources. [YEAR]."
+- "[COLONY], [YEAR]: The quarantine holds, but the society crumbles. Warlords claim the sector."

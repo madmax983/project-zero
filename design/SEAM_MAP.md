@@ -1006,3 +1006,27 @@
 - **Systems connected:** `PsychicStain` component -> `find_path_internal`
 - **Glue added:** Pathfinding checks the `world` for `PsychicStain` entities and applies a proportional penalty to the path cost, making pops avoid highly traumatized tiles.
 - **Tests:** `tests/integration/psychic_stains_pathfinding.rs`
+
+### INT-1138: Organic Recycling -> Chronicle
+- **Date:** 2026-05-10
+- **Systems connected:** `CorpseRecycledEvent` -> `organic_recycling_chronicle_bridge` -> `AddChronicleEvent`
+- **Glue added:** Added `organic_recycling_chronicle_bridge` in `src/layer1/core/integration.rs`
+- **Tests:** implicitly tested
+
+### INT-1078: Foundation Soil -> Chronicle
+- **Date:** 2026-06-05
+- **Systems connected:** `FoundationSoilAppliedEvent` -> `foundation_soil_chronicle_bridge` -> `AddChronicleEvent`
+- **Glue added:** Added `foundation_soil_chronicle_bridge` in `src/layer1/core/integration.rs`
+- **Tests:** implicitly tested
+
+### INT-1257: Generational Atrophy -> Chronicle
+- **Date:** 2026-05-13
+- **Systems connected:** `AtrophyAppliedEvent` -> `generational_atrophy_chronicle_bridge` -> `AddChronicleEvent`
+- **Glue added:** Added `generational_atrophy_chronicle_bridge` in `src/layer1/core/integration.rs`
+- **Tests:** implicitly tested
+
+### INT-1074: System Quarantine -> Chronicle
+- **Date:** 2026-02-01
+- **Systems connected:** `SystemQuarantine` (Added) -> `system_quarantine_chronicle_bridge` -> `AddChronicleEvent`
+- **Glue added:** Added `system_quarantine_chronicle_bridge` in `src/layer2/integration.rs`
+- **Tests:** implicitly tested

@@ -8,6 +8,10 @@ use crate::layer1::skills::{SkillType, Skills};
 use crate::layer1::social::old_guard::Generation;
 use bevy_ecs::prelude::*;
 
+/// Event triggered when generational atrophy is applied.
+#[derive(Event, Debug, Clone)]
+pub struct AtrophyAppliedEvent;
+
 /// Resource tracking the colony's overall level of automation.
 ///
 /// ## Examples
@@ -29,6 +33,7 @@ pub struct AutomationLevel {
 ///
 /// ```rust
 /// use bevy_ecs::prelude::*;
+
 /// use scale::layer1::skills::generational_atrophy::AtrophiedSkill;
 ///
 /// let mut world = World::new();
@@ -46,11 +51,13 @@ pub struct AtrophiedSkill;
 ///
 /// ```rust
 /// use bevy_ecs::prelude::*;
+
 /// use scale::layer1::skills::{Skills, SkillType};
 /// use scale::layer1::social::old_guard::Generation;
 /// use scale::layer1::skills::generational_atrophy::{AutomationLevel, AtrophiedSkill, apply_skill_atrophy_system};
 ///
 /// let mut world = World::new();
+/// world.init_resource::<Events<scale::layer1::skills::generational_atrophy::AtrophyAppliedEvent>>();
 /// world.insert_resource(AutomationLevel { level: 80.0 });
 ///
 /// let mut skills = Skills::default();
@@ -70,6 +77,7 @@ pub fn apply_skill_atrophy_system(
     automation_level: Option<Res<AutomationLevel>>,
     mut query: Query<(Entity, &Generation, &mut Skills), Without<AtrophiedSkill>>,
     mut commands: Commands,
+    mut atrophy_events: EventWriter<AtrophyAppliedEvent>,
 ) {
     let automation = match automation_level {
         Some(res) => res.level,
@@ -97,6 +105,7 @@ pub fn apply_skill_atrophy_system(
                 }
 
                 commands.entity(entity).insert(AtrophiedSkill);
+                atrophy_events.send(AtrophyAppliedEvent);
             }
         }
     }
@@ -116,6 +125,7 @@ mod tests {
         let mut world = World::new();
         // Set a high automation level for the colony
         world.insert_resource(AutomationLevel { level: 80.0 }); // High automation
+        world.init_resource::<Events<super::AtrophyAppliedEvent>>();
 
         // Spawn a Pop of a new generation with some starting skills
         let mut skills = Skills::default();
@@ -150,6 +160,7 @@ mod tests {
         let mut world = World::new();
         // Low automation
         world.insert_resource(AutomationLevel { level: 10.0 });
+        world.init_resource::<Events<super::AtrophyAppliedEvent>>();
 
         let mut skills = Skills::default();
         skills.add_xp(SkillType::Farming, 500.0);

@@ -8112,3 +8112,24 @@ What an artifact is called.
 - [NAME]'s [NOUN]
 - the [ADJECTIVE] [NOUN] of [PLACE]
 - the [NOUN] That [VERB]
+
+
+## Organic Recycling Fragments (Spec 1138)
+
+## Fragment Type: [RECYCLER_NAME]
+- The Vat
+- Biomass-Converter
+- The Render
+- Flesh-Press
+- Organ-Mill
+- The Soup-Kitchen
+- Life-Cycler
+
+## Fragment Type: [CORPSE_PRODUCT]
+- corpse-starch
+- bio-fuel
+- grey-slurry
+- nutrient-paste
+- bone-meal
+- life-water
+- protein-block

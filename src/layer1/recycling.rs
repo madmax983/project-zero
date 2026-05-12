@@ -3,6 +3,10 @@ use crate::layer1::items::ItemType;
 use crate::layer1::resources::ColonyResources;
 use bevy_ecs::prelude::*;
 
+/// Event triggered when a corpse is recycled.
+#[derive(Event, Debug, Clone)]
+pub struct CorpseRecycledEvent;
+
 /// Component for the Recycler building.
 #[derive(Component, Default, Debug)]
 pub struct Recycler {
@@ -17,6 +21,7 @@ pub fn recycle_processing_system(
     mut recycler_query: Query<&mut Inventory, With<Recycler>>,
     mut resources: ResMut<ColonyResources>,
     mut commands: Commands,
+    mut recycle_events: EventWriter<CorpseRecycledEvent>,
 ) {
     for mut inventory in &mut recycler_query {
         let mut indices_to_remove = Vec::new();
@@ -29,6 +34,7 @@ pub fn recycle_processing_system(
                     commands.entity(corpse_entity).despawn();
                     // Add Rations (e.g. 50.0)
                     resources.add_rations(50.0);
+                    recycle_events.send(CorpseRecycledEvent);
                     indices_to_remove.push(i);
                 }
                 ItemType::Waste => {
@@ -90,6 +96,7 @@ mod tests {
         // Run system
         let mut schedule = Schedule::default();
         schedule.add_systems(recycle_processing_system);
+        world.init_resource::<Events<CorpseRecycledEvent>>();
         schedule.run(&mut world);
 
         // Assert
@@ -131,6 +138,7 @@ mod tests {
         // Run system
         let mut schedule = Schedule::default();
         schedule.add_systems(recycle_processing_system);
+        world.init_resource::<Events<CorpseRecycledEvent>>();
         schedule.run(&mut world);
 
         // Assert

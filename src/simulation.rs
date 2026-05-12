@@ -237,6 +237,11 @@ fn init_simulation_resources(world: &mut World) {
     world.init_resource::<crate::layer3::digital_detritus::DiscoveredTechs>();
     world.init_resource::<Events<crate::layer3::digital_detritus::VirusEvent>>();
     world.init_resource::<Events<crate::layer1::architecture::living_architecture::PopConsumedEvent>>();
+    world.init_resource::<Events<crate::layer1::recycling::CorpseRecycledEvent>>();
+    world.init_resource::<Events<crate::layer1::foundation_soil::FoundationSoilAppliedEvent>>();
+    world
+        .init_resource::<Events<crate::layer1::skills::generational_atrophy::AtrophyAppliedEvent>>(
+        );
     world.init_resource::<Events<crate::layer1::architecture::embezzlement::EmbezzlementEvent>>();
     world.init_resource::<crate::layer3::digital_detritus::JunkDataFilter>();
 
@@ -352,6 +357,13 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
             crate::layer1::biology::cybernetic_ascendancy::update_colony_average_utility_system,
         ),
     ));
+    // --- Layer 1 Lore Bridges ---
+    schedule.add_systems((
+        crate::layer1::core::integration::organic_recycling_chronicle_bridge,
+        crate::layer1::core::integration::foundation_soil_chronicle_bridge,
+        crate::layer1::core::integration::generational_atrophy_chronicle_bridge,
+    ));
+
     // --- AI Decision Chain (GPU compute) ---
     schedule.add_systems((
         update_building_map_system,
@@ -387,6 +399,7 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
     ));
 
     // --- Layer 2 Integration ---
+    schedule.add_systems((crate::layer2::integration::system_quarantine_chronicle_bridge,));
     schedule.add_systems((
         crate::layer2::orbital_necropolis::apply_necropolis_bonus,
         crate::layer2::orbital_necropolis::handle_necropolis_destruction,
@@ -683,6 +696,9 @@ mod tests {
         world.init_resource::<crate::layer3::digital_detritus::DiscoveredTechs>();
         world.init_resource::<Events<crate::layer3::digital_detritus::VirusEvent>>();
         world.init_resource::<Events<crate::layer1::architecture::living_architecture::PopConsumedEvent>>();
+        world.init_resource::<Events<crate::layer1::recycling::CorpseRecycledEvent>>();
+        world.init_resource::<Events<crate::layer1::foundation_soil::FoundationSoilAppliedEvent>>();
+        world.init_resource::<Events<crate::layer1::skills::generational_atrophy::AtrophyAppliedEvent>>();
         world
             .init_resource::<Events<crate::layer1::architecture::embezzlement::EmbezzlementEvent>>(
             );
@@ -715,6 +731,9 @@ mod tests {
         world.init_resource::<crate::layer3::digital_detritus::DiscoveredTechs>();
         world.init_resource::<Events<crate::layer3::digital_detritus::VirusEvent>>();
         world.init_resource::<Events<crate::layer1::architecture::living_architecture::PopConsumedEvent>>();
+        world.init_resource::<Events<crate::layer1::recycling::CorpseRecycledEvent>>();
+        world.init_resource::<Events<crate::layer1::foundation_soil::FoundationSoilAppliedEvent>>();
+        world.init_resource::<Events<crate::layer1::skills::generational_atrophy::AtrophyAppliedEvent>>();
         world
             .init_resource::<Events<crate::layer1::architecture::embezzlement::EmbezzlementEvent>>(
             );
@@ -910,6 +929,9 @@ mod tests {
         world.init_resource::<crate::layer3::digital_detritus::DiscoveredTechs>();
         world.init_resource::<Events<crate::layer3::digital_detritus::VirusEvent>>();
         world.init_resource::<Events<crate::layer1::architecture::living_architecture::PopConsumedEvent>>();
+        world.init_resource::<Events<crate::layer1::recycling::CorpseRecycledEvent>>();
+        world.init_resource::<Events<crate::layer1::foundation_soil::FoundationSoilAppliedEvent>>();
+        world.init_resource::<Events<crate::layer1::skills::generational_atrophy::AtrophyAppliedEvent>>();
         world
             .init_resource::<Events<crate::layer1::architecture::embezzlement::EmbezzlementEvent>>(
             );

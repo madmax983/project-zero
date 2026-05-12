@@ -674,3 +674,28 @@ pub fn orbital_mirror_chronicle_bridge(
         });
     }
 }
+
+/// INT-1074: Bridges System Quarantine to AddChronicleEvent.
+pub fn system_quarantine_chronicle_bridge(
+    query: bevy_ecs::prelude::Query<
+        bevy_ecs::prelude::Entity,
+        bevy_ecs::prelude::Added<crate::layer2::events_new::system_quarantine::SystemQuarantine>,
+    >,
+    mut chronicle_events: bevy_ecs::prelude::EventWriter<
+        crate::layer1::core::chronicle::AddChronicleEvent,
+    >,
+    generator: bevy_ecs::prelude::Res<crate::shared::narrative::NarrativeGenerator>,
+) {
+    for _ in query.iter() {
+        let text = generator
+            .generate(
+                "SYSTEM_QUARANTINE_ENACTED",
+                &crate::shared::narrative::NarrativeContext::default(),
+            )
+            .unwrap_or_else(|_| "System quarantine enacted.".to_string());
+        chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
+            importance: crate::layer1::core::chronicle::EventImportance::Major,
+            text,
+        });
+    }
+}

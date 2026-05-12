@@ -4,6 +4,10 @@ use crate::layer1::pop::PopDied;
 use bevy_ecs::prelude::*;
 use std::collections::HashSet;
 
+/// Event triggered when foundation soil is applied.
+#[derive(Event, Debug, Clone)]
+pub struct FoundationSoilAppliedEvent;
+
 /// Tracks original landing tiles where Foundation Soil effects can apply.
 #[derive(Resource, Default)]
 pub struct LandingTiles {
@@ -53,6 +57,7 @@ pub fn apply_foundation_soil_system(
     mut fertility_grid: Option<ResMut<FertilityGrid>>,
     mut foundation_soil_grid: Option<ResMut<FoundationSoilGrid>>,
     query: Query<&GridPosition>,
+    mut applied_events: EventWriter<FoundationSoilAppliedEvent>,
 ) {
     let landing = match landing_tiles {
         Some(l) => l,
@@ -75,6 +80,7 @@ pub fn apply_foundation_soil_system(
                     }
                     if let Some(fsg) = foundation_soil_grid.as_mut() {
                         fsg.add(pos.x, pos.y, 100.0);
+                        applied_events.send(FoundationSoilAppliedEvent);
                     }
                 }
             }
@@ -102,6 +108,8 @@ mod tests {
         app.world_mut().insert_resource(fsg);
         app.world_mut().insert_resource(landing_tiles);
         app.world_mut().init_resource::<Events<PopDied>>();
+        app.world_mut()
+            .init_resource::<Events<FoundationSoilAppliedEvent>>();
 
         let entity = app
             .world_mut()
@@ -144,6 +152,8 @@ mod tests {
         app.world_mut().insert_resource(fsg);
         app.world_mut().insert_resource(landing_tiles);
         app.world_mut().init_resource::<Events<PopDied>>();
+        app.world_mut()
+            .init_resource::<Events<FoundationSoilAppliedEvent>>();
 
         let entity = app
             .world_mut()
