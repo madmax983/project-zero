@@ -460,6 +460,8 @@ pub mod nanite_storms;
 pub mod predecessors;
 pub use nanite_storms::*;
 
+pub mod cassandra_protocol;
+
 /// Foundation soil feature (Spec 1078)
 pub mod foundation_soil;
 pub use foundation_soil::*;
