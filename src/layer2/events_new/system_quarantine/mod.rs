@@ -25,9 +25,7 @@ pub struct ResourceStockpile {
 #[derive(Component)]
 pub struct WarlordFaction;
 
-pub fn apply_quarantine_effects(
-    mut query: Query<&mut TradeHub, With<SystemQuarantine>>,
-) {
+pub fn apply_quarantine_effects(mut query: Query<&mut TradeHub, With<SystemQuarantine>>) {
     for mut hub in query.iter_mut() {
         hub.active = false;
     }

@@ -7,6 +7,8 @@ use bevy_ecs::prelude::*;
 pub fn register(schedule: &mut Schedule) {
     schedule.add_systems(
         (
+            crate::layer1::nature::the_long_night::start_long_night,
+            crate::layer1::nature::the_long_night::process_long_night_effects,
             crate::layer1::predecessors::predecessor_ruins_passive_bonus_system,
             crate::layer1::predecessors::predecessor_ruins_trigger_system,
             crate::layer1::predecessors::predecessor_ruins_awakening_system,

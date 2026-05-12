@@ -1,14 +1,15 @@
 #[cfg(test)]
 mod tests {
     use bevy::prelude::*;
-    use scale::layer1::geology::subsurface::KineticStrikeEvent;
     use scale::layer1::core::chronicle::{AddChronicleEvent, EventImportance};
     use scale::layer1::core::integration::kinetic_strike_chronicle_bridge;
+    use scale::layer1::geology::subsurface::KineticStrikeEvent;
 
     #[test]
     fn test_kinetic_strike_chronicle_bridge() {
         let mut app = App::new();
-        app.world_mut().init_resource::<Events<KineticStrikeEvent>>();
+        app.world_mut()
+            .init_resource::<Events<KineticStrikeEvent>>();
         app.world_mut().init_resource::<Events<AddChronicleEvent>>();
         app.add_systems(Update, kinetic_strike_chronicle_bridge);
 

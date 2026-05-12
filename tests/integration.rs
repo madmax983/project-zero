@@ -398,10 +398,11 @@ mod resource_curse_bridge;
 #[path = "integration/cryo_prison_revolt_bridge.rs"]
 mod cryo_prison_revolt_bridge;
 
+#[path = "integration/kinetic_strike_chronicle.rs"]
+mod kinetic_strike_chronicle;
 #[path = "integration/propaganda_simulacrum_bridge.rs"]
 mod propaganda_simulacrum_bridge;
 #[path = "integration/psychic_stains_pathfinding.rs"]
 mod psychic_stains_pathfinding;
 #[path = "integration/rust_lung_bridge.rs"]
 mod rust_lung_bridge;
-#[path = "integration/kinetic_strike_chronicle.rs"] mod kinetic_strike_chronicle;

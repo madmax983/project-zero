@@ -26,6 +26,7 @@ pub mod terrain;
 pub mod water;
 pub use psychoactive_weather::*;
 
+pub mod the_long_night;
 pub mod weather;
 #[cfg(test)]
 mod weather_tests;

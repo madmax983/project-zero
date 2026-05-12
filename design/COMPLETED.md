@@ -550,3 +550,4 @@
 - [x] `1092` Attention Bandwidth — `specs/1092-attention-bandwidth.md` — completed
 - [x] `1257` Generational Skill Atrophy — `specs/1257-generational-skill-atrophy.md` - completed 2026-05-13
 - [x] `1074` System Quarantine — `specs/1074-system-quarantine.md` — completed 2026-02-01
+- [x] `695` The Long Night — `specs/695-the-long-night.md` — completed 2026-02-01
