@@ -72,6 +72,14 @@ fn init_simulation_resources(world: &mut World) {
 
     world.init_resource::<crate::layer1::shadow_market::ShadowMarketCooldown>();
 
+    world.init_resource::<crate::layer3::bureaucracy_of_vanity::ActiveDemands>();
+    if !world.contains_resource::<crate::layer3::bureaucracy_of_vanity::ImperialStanding>() {
+        world.insert_resource(crate::layer3::bureaucracy_of_vanity::ImperialStanding { value: 50 });
+    }
+    if !world.contains_resource::<crate::layer3::bureaucracy_of_vanity::GlobalEfficiency>() {
+        world.insert_resource(crate::layer3::bureaucracy_of_vanity::GlobalEfficiency { value: 1.0 });
+    }
+
     // Initialize Layer 2 Events
     world.init_resource::<Events<crate::layer1::geography::HistoricalEvent>>();
     world
@@ -664,6 +672,11 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
         crate::layer1::core::integration::apex_meat_harvest_bridge_system,
         crate::layer1::core::integration::apex_meat_distribution_system
             .before(crate::layer1::agriculture::farm::consume_food_system),
+    ));
+
+    schedule.add_systems((
+        crate::layer3::bureaucracy_of_vanity::vanity_building_listener_system,
+        crate::layer3::bureaucracy_of_vanity::vanity_sabotage_system,
     ));
 }
 #[cfg(test)]

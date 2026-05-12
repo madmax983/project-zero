@@ -1,3 +1,9 @@
+### INT-1079: The Bureaucracy of Vanity -> Economy/Diplomacy
+- **Date:** 2026-05-12
+- **Systems connected:** `BuildingCompletedEvent` -> `vanity_building_listener_system` -> `ImperialStanding` and `ActiveDemands` -> `vanity_sabotage_system` -> `GlobalEfficiency`
+- **Glue added:** Initialized resources `ActiveDemands`, `ImperialStanding`, and `GlobalEfficiency` in `src/simulation.rs`. Registered `vanity_building_listener_system` and `vanity_sabotage_system` in `src/simulation.rs`.
+- **Tests:** `tests/integration/bureaucracy_of_vanity_integration.rs`
+
 ### INT-1083: Kinetic Excavation -> Chronicle
 - **Date:** 2026-05-10
 - **Systems connected:** `KineticStrikeEvent` -> `kinetic_strike_chronicle_bridge` -> `AddChronicleEvent`
