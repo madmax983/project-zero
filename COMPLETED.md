@@ -7,3 +7,4 @@
 - [x] `258` Acoustic Shadows — `specs/258-acoustic-shadows.md` — completed 2026-03-01
 - [x] `632` Cultural Artifacts — `specs/632-cultural-artifacts.md` — completed 2024-05-31
 - [x] `625` The Cryo-Prison Revolt — `specs/625-cryo-prison-revolt.md` — completed 2026-05-10
+- [x] `1258` The Cassandra Protocol — `specs/1258-the-cassandra-protocol.md` - completed 2026-05-12

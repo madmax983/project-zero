@@ -20,9 +20,7 @@ fn test_quarantine_activation_blocks_trade_and_fleets() {
     app.update();
 
     // Assert trade is inactive and fleets cannot enter/leave
-    assert!(
-        !app.world().get::<TradeHub>(system_entity).unwrap().active
-    );
+    assert!(!app.world().get::<TradeHub>(system_entity).unwrap().active);
 }
 
 #[test]
