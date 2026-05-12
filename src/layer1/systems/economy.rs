@@ -221,6 +221,8 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::economy::photophobic::update_photophobic_light_level_system,
             crate::layer1::economy::photophobic::photophobic_degradation_system,
             crate::layer1::economy::photophobic::mining_in_dark_stress_system,
+            crate::layer1::cassandra_protocol::activate_cassandra_protocol,
+            crate::layer1::cassandra_protocol::handle_disaster_strike,
         )
             .chain()
             .in_set(Layer1SystemSet::Economy),
