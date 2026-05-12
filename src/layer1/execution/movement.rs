@@ -152,7 +152,9 @@ pub fn movement_system(
     mut ctx: MovementContext,
     mut commands: Commands,
 ) {
-    for (pop_entity, mut current_pos, mt, mut speed_opt, traits, hit_stop, role, fog, health) in &mut pops {
+    for (pop_entity, mut current_pos, mt, mut speed_opt, traits, hit_stop, role, fog, health) in
+        &mut pops
+    {
         process_single_movement(
             pop_entity,
             &mut current_pos,

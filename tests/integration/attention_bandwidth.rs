@@ -1,8 +1,10 @@
 #[cfg(test)]
 mod tests {
     use bevy_ecs::prelude::*;
-    use scale::shared::attention::{AttentionFocus, DataResolution, query_hunger, query_rest, IsFocused, sync_is_focused_system};
     use scale::layer1::psychology::needs::Needs;
+    use scale::shared::attention::{
+        query_hunger, query_rest, sync_is_focused_system, AttentionFocus, DataResolution, IsFocused,
+    };
 
     #[test]
     fn test_focus_limit_enforced() {
@@ -31,7 +33,12 @@ mod tests {
         let entity = Entity::from_raw(1);
         focus.focus_on(entity);
 
-        let needs = Needs { hunger: 0.425, rest: 0.5, leisure: 1.0, hygiene: 1.0 };
+        let needs = Needs {
+            hunger: 0.425,
+            rest: 0.5,
+            leisure: 1.0,
+            hygiene: 1.0,
+        };
 
         let result_hunger = query_hunger(entity, &needs, &focus);
         match result_hunger {
@@ -51,7 +58,12 @@ mod tests {
         let focus = AttentionFocus::new(5);
         let entity = Entity::from_raw(2); // Not focused
 
-        let needs = Needs { hunger: 0.425, rest: 0.5, leisure: 1.0, hygiene: 1.0 };
+        let needs = Needs {
+            hunger: 0.425,
+            rest: 0.5,
+            leisure: 1.0,
+            hygiene: 1.0,
+        };
 
         let result_hunger = query_hunger(entity, &needs, &focus);
         match result_hunger {
@@ -59,7 +71,12 @@ mod tests {
             _ => panic!("Expected Fuzzy data"),
         }
 
-        let needs_high = Needs { hunger: 0.9, rest: 0.9, leisure: 1.0, hygiene: 1.0 };
+        let needs_high = Needs {
+            hunger: 0.9,
+            rest: 0.9,
+            leisure: 1.0,
+            hygiene: 1.0,
+        };
         match query_hunger(entity, &needs_high, &focus) {
             DataResolution::Fuzzy(s) => assert_eq!(s, "High"),
             _ => panic!("Expected Fuzzy data"),
@@ -69,7 +86,12 @@ mod tests {
             _ => panic!("Expected Fuzzy data"),
         }
 
-        let needs_low = Needs { hunger: 0.1, rest: 0.1, leisure: 1.0, hygiene: 1.0 };
+        let needs_low = Needs {
+            hunger: 0.1,
+            rest: 0.1,
+            leisure: 1.0,
+            hygiene: 1.0,
+        };
         match query_hunger(entity, &needs_low, &focus) {
             DataResolution::Fuzzy(s) => assert_eq!(s, "Low"),
             _ => panic!("Expected Fuzzy data"),
@@ -110,7 +132,10 @@ mod tests {
         assert!(world.get::<IsFocused>(e1).is_some());
         assert!(world.get::<IsFocused>(e2).is_some());
 
-        world.resource_mut::<AttentionFocus>().focused_entities.pop_front(); // Remove e1
+        world
+            .resource_mut::<AttentionFocus>()
+            .focused_entities
+            .pop_front(); // Remove e1
         schedule.run(&mut world);
 
         assert!(world.get::<IsFocused>(e1).is_none());
@@ -125,12 +150,12 @@ mod tests {
 
         let mut world = World::new();
 
-        let entity_c = world.spawn((
-            Pop,
-            UtilityWeights::default(),
-        )).id();
+        let entity_c = world.spawn((Pop, UtilityWeights::default())).id();
 
-        let _initial_weight = world.get::<UtilityWeights>(entity_c).unwrap().availability_weight;
+        let _initial_weight = world
+            .get::<UtilityWeights>(entity_c)
+            .unwrap()
+            .availability_weight;
 
         let mut schedule = Schedule::default();
         schedule.add_systems(unobserved_drift_system);
@@ -139,9 +164,15 @@ mod tests {
             schedule.run(&mut world);
         }
 
-        let final_weight = world.get::<UtilityWeights>(entity_c).unwrap().availability_weight;
+        let final_weight = world
+            .get::<UtilityWeights>(entity_c)
+            .unwrap()
+            .availability_weight;
         // Verify drift has likely occurred
         assert!((0.0..=2.0).contains(&final_weight));
-        assert_ne!(final_weight, _initial_weight, "Weights should drift when unobserved");
+        assert_ne!(
+            final_weight, _initial_weight,
+            "Weights should drift when unobserved"
+        );
     }
 }

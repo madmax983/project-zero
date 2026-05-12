@@ -76,7 +76,7 @@ mod tests {
     use super::*;
     use crate::layer1::pop::PopBundle;
     #[allow(unused_imports)]
-use bevy_ecs::prelude::*;
+    use bevy_ecs::prelude::*;
     use bevy_ecs::system::RunSystemOnce;
     use rand::SeedableRng;
 

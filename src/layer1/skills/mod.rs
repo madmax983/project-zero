@@ -1,9 +1,13 @@
 #![allow(clippy::float_cmp)]
+//! The heartbeat of progress. The Skills module tracks the accumulated experience and competence of Pops, transforming raw recruits into legendary artisans.
+
 pub mod generational_atrophy;
 use bevy_ecs::prelude::*;
 use std::collections::HashMap;
 
-/// Types of skills a Pop can have.
+/// The various disciplines a Pop can master.
+///
+/// Each skill governs efficiency and unlockable capabilities within its respective domain.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub enum SkillType {
     /// Mining rock.
@@ -53,9 +57,21 @@ pub enum XpSource {
 impl Skills {
     /// Adds XP to a specific skill.
     ///
-    /// Note: This method does NOT emit `XpGainEvent` automatically to avoid
+    /// Note: This method does NOT emit [`XpGainEvent`] automatically to avoid
     /// circular dependencies with `EventWriter`. Systems should emit the event manually
     /// if they want to trigger side effects (like Quantum Twins).
+    ///
+    /// ## Examples
+    ///
+    /// ```rust
+    /// use scale::layer1::skills::{Skills, SkillType};
+    ///
+    /// let mut skills = Skills::default();
+    /// skills.add_xp(SkillType::Mining, 150.0);
+    ///
+    /// // 150 XP means they reached level 1
+    /// assert_eq!(skills.get_level(SkillType::Mining), 1);
+    /// ```
     pub fn add_xp(&mut self, skill: SkillType, amount: f32) {
         let current = self.xp.entry(skill).or_insert(0.0);
         *current += amount;

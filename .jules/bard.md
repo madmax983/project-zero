@@ -54,3 +54,6 @@
 ## 2024-05-24 - Undocumented "Radio Nostalgia"
 **Confusion:** The `layer1/radio_nostalgia` module was missing module-level documentation (`//!`) and executable examples for handling broadcasts, leaving users confused about how deep space broadcasts affect morale.
 **Clarification:** Added module-level documentation and an executable doc-test for `handle_broadcasts_system` showing how to trigger and test morale changes.
+## 2024-05-25 - The Undocumented Economy
+**Confusion:** Several important economic mechanisms (`inflation.rs`, `ideological_contraband.rs`, `smugglers_cove.rs`) and skill systems (`generational_atrophy.rs`, `mod.rs`, `inventory.rs`) were missing module-level documentation and executable examples. This created confusion around how high automation triggers skill atrophy and how market crashes are implemented.
+**Clarification:** Added conceptual `//!` module documentation to explain these high-level purposes and added `/// # Examples` doctests to their respective systems and structs to provide executable usage patterns.
