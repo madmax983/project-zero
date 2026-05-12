@@ -19706,3 +19706,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you shut down the entire communication network to kill the ad-AI, plunging the colony into the dark ages and destroying morale, or do you dedicate precious industrial capacity to churning out useless novelty junk just to keep the pops pacified?
 
 ---
+## The Archeological Cult
+
+**Layer:** 1
+
+**Fantasy:** Pops become obsessed with analyzing and hoarding mysterious alien artifacts, viewing them as religious relics rather than scientific curiosities.
+
+**Mechanic:** When a colony excavates alien artifacts, pops with high stress might start "worshipping" them instead of processing them for science. They gain massive morale bonuses but refuse to let the artifacts be used for research, trade, or industry.
+
+**Emergence:** A vital research world halts all progress because the entire scientific staff has formed a cult around a glowing obelisk they were supposed to reverse-engineer, treating the lab as a temple.
+
+**Tension:** Do you confiscate the artifacts to advance your tech tree, causing a massive colony-wide stress spike and potential rebellion, or do you let them worship the junk and fall behind technologically?
+
+---
+
+## The Feral Automation Ecosystem
+
+**Layer:** 1
+
+**Fantasy:** Discarded drones and automated tools evolve into a synthetic ecosystem of "wildlife" that both helps and hinders the colony.
+
+**Mechanic:** Broken or discarded drones aren't destroyed; they scurry into the wilderness. Over time, they cannibalize each other, forming "feral" mechanical packs. They occasionally clean up pollution or repair forgotten pipes, but will also aggressively defend "their" territory from your new expansion efforts.
+
+**Emergence:** Your colony's waste management problem is completely solved by a massive pack of feral cleaning-bots that have evolved razor-sharp scrap armor, but now you can't expand your agricultural dome because the bots view it as a threat to their scrap-pile nesting ground.
+
+**Tension:** Do you send the military to cull the feral machines, ruining the fragile, free ecosystem services they provide, or do you let them roam free and sacrifice your ability to safely expand your colony footprint?
+
+---
+
+## Historical Revisionism
+
+**Layer:** Cross-layer
+
+**Fantasy:** Rewriting your own history to pacify a conquered populace, at the cost of your own citizens' sanity.
+
+**Mechanic:** When absorbing a rival colony, you can use the Chronicle to enforce a "Revised History" that claims your empires were always allies. This drastically reduces unrest in the conquered pops, but your original pops suffer a severe "Cognitive Dissonance" penalty as they are forced to pretend the brutal war they just fought never happened.
+
+**Emergence:** Your veteran soldiers, forced to smile and trade with the people who killed their squadmates, snap and form an underground "Truth" resistance movement, effectively starting a civil war born entirely out of your attempt to secure peace.
+
+**Tension:** Do you enforce the truth and deal with constant uprisings from the conquered world, or rewrite history and slowly drive your own loyal core worlds into madness?
+
+---
