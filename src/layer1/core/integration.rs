@@ -35,6 +35,22 @@ use std::collections::HashSet;
 use crate::layer1::logistics::mass_driver::BombardmentEvent;
 use crate::layer1::logistics::orbital_drop::OrbitalDropEvent;
 
+/// Bridges `KineticStrikeEvent` to `AddChronicleEvent` (Chronicle).
+pub fn kinetic_strike_chronicle_bridge(
+    mut strike_events: EventReader<crate::layer1::geology::subsurface::KineticStrikeEvent>,
+    mut chronicle_events: EventWriter<AddChronicleEvent>,
+) {
+    for event in strike_events.read() {
+        chronicle_events.send(AddChronicleEvent {
+            text: format!(
+                "Kinetic Strike! A heavy orbital payload struck ({}, {}).",
+                event.target_x, event.target_y
+            ),
+            importance: EventImportance::Major,
+        });
+    }
+}
+
 /// Bridges BombardmentEvent (Mass Driver) to AddChronicleEvent (Chronicle).
 pub fn mass_driver_chronicle_bridge(
     mut bomb_events: EventReader<BombardmentEvent>,
