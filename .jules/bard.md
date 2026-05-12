@@ -57,3 +57,6 @@
 ## 2024-05-25 - The Undocumented Economy
 **Confusion:** Several important economic mechanisms (`inflation.rs`, `ideological_contraband.rs`, `smugglers_cove.rs`) and skill systems (`generational_atrophy.rs`, `mod.rs`, `inventory.rs`) were missing module-level documentation and executable examples. This created confusion around how high automation triggers skill atrophy and how market crashes are implemented.
 **Clarification:** Added conceptual `//!` module documentation to explain these high-level purposes and added `/// # Examples` doctests to their respective systems and structs to provide executable usage patterns.
+## 2024-05-25 - The Undocumented Quarantine
+**Confusion:** The `layer2/events_new/system_quarantine` module was missing module-level documentation and executable examples, obscuring the relationship between trade severing and unrest growth that eventually spawns warlord factions.
+**Clarification:** Added conceptual `//!` module documentation to explain "The System Quarantine" and added a compiling `/// # Examples` doctest to demonstrate the unrest decay pushing a colony into a WarlordFaction.
