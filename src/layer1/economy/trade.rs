@@ -246,6 +246,15 @@ pub fn merchant_arrival_system(world: &mut World) {
 /// assert_eq!(res.metal, 5.0);
 /// ```
 pub fn execute_trade(world: &mut World, deal: &TradeDeal) -> bool {
+    let is_hoarding = world
+        .query::<&crate::layer1::cassandra_protocol::ResourceHoarding>()
+        .iter(world)
+        .next()
+        .is_some();
+    if is_hoarding {
+        return false;
+    }
+
     // Validate inputs (security hardening)
     if deal.cost_amount < 0.0 || !deal.cost_amount.is_finite() {
         return false;
@@ -433,6 +442,29 @@ mod tests {
         let chronicle = world.resource::<Chronicle>();
         assert!(!chronicle.events.is_empty());
         assert!(chronicle.events[0].text.contains("has departed"));
+    }
+
+    #[test]
+    fn test_execute_trade_fails_when_hoarding() {
+        let mut world = World::new();
+        let resources = ColonyResources {
+            wood: 50.0,
+            metal: 0.0,
+            ..Default::default()
+        };
+        world.insert_resource(resources);
+        world.spawn(crate::layer1::cassandra_protocol::ResourceHoarding);
+
+        let deal = TradeDeal {
+            cost_resource: ResourceType::Wood,
+            cost_amount: 10.0,
+            give_resource: ResourceType::Metal,
+            give_amount: 5.0,
+        };
+
+        let success = execute_trade(&mut world, &deal);
+
+        assert!(!success);
     }
 
     #[test]
