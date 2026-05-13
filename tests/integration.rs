@@ -415,3 +415,5 @@ mod propaganda_simulacrum_bridge;
 mod psychic_stains_pathfinding;
 #[path = "integration/rust_lung_bridge.rs"]
 mod rust_lung_bridge;
+#[path = "integration/ransom_broker_bridge.rs"]
+mod ransom_broker_bridge;

@@ -4,6 +4,12 @@
 - **Glue added:** Initialized resources `ActiveDemands`, `ImperialStanding`, and `GlobalEfficiency` in `src/simulation.rs`. Registered `vanity_building_listener_system` and `vanity_sabotage_system` in `src/simulation.rs`.
 - **Tests:** `tests/integration/bureaucracy_of_vanity_integration.rs`
 
+### INT-477: Ransom Broker -> Chronicle
+- **Date:** 2026-05-13
+- **Systems connected:** `process_ransom_decisions_system` -> `ransom_broker_chronicle_bridge` -> Chronicle
+- **Glue added:** Added `PopRansomedEvent` and `PopLostToPiratesEvent`, bridge in `layer1/core/integration.rs`.
+- **Tests:** `tests/integration/ransom_broker_bridge.rs`
+
 ### INT-1083: Kinetic Excavation -> Chronicle
 - **Date:** 2026-05-10
 - **Systems connected:** `KineticStrikeEvent` -> `kinetic_strike_chronicle_bridge` -> `AddChronicleEvent`

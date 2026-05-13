@@ -71,6 +71,8 @@ fn init_simulation_resources(world: &mut World) {
     world.init_resource::<Events<crate::layer1::ransom_broker::RansomDemandEvent>>();
     world.init_resource::<Events<crate::layer1::ransom_broker::PayRansomEvent>>();
     world.init_resource::<Events<crate::layer1::ransom_broker::RefuseRansomEvent>>();
+    world.init_resource::<Events<crate::layer1::ransom_broker::PopRansomedEvent>>();
+    world.init_resource::<Events<crate::layer1::ransom_broker::PopLostToPiratesEvent>>();
 
     world.init_resource::<crate::layer1::tech_envy::TechEnvyConfig>();
 
@@ -782,6 +784,8 @@ mod tests {
         world.init_resource::<Events<crate::layer1::ransom_broker::RansomDemandEvent>>();
         world.init_resource::<Events<crate::layer1::ransom_broker::PayRansomEvent>>();
         world.init_resource::<Events<crate::layer1::ransom_broker::RefuseRansomEvent>>();
+        world.init_resource::<Events<crate::layer1::ransom_broker::PopRansomedEvent>>();
+        world.init_resource::<Events<crate::layer1::ransom_broker::PopLostToPiratesEvent>>();
         world.init_resource::<Events<crate::layer3::silence::HostileSpawnEvent>>();
         world.init_resource::<Events<crate::layer1::grafting::GraftBuildingEvent>>();
         world.init_resource::<Events<crate::layer1::administration::edicts::TogglePolicyEvent>>();
