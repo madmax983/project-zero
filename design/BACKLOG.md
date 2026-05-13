@@ -27,7 +27,6 @@
 - [ ] `477` The Ransom Broker — `specs/477-the-ransom-broker.md`
 
 - [ ] `888` The Symbiotic Parasite — `specs/888-the-symbiotic-parasite.md`
-- [ ] `889` Generational Vengeance — `specs/889-generational-vengeance.md`
 
 ## Future / Ideas
 

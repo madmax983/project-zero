@@ -1,72 +1,88 @@
-#[allow(unused_imports)]
 use bevy_ecs::prelude::*;
 
-#[derive(Clone, PartialEq, Debug)]
-pub enum WrongReason {
-    UnjustImprisonment,
-    StarvationNeglect,
+#[derive(Component, Debug, Clone)]
+pub struct Grudge {
+    pub target_entity: Entity,
+    pub intensity: f32,
+    pub origin_reason: String,
 }
 
-#[derive(Event)]
-pub struct SevereWrongEvent {
-    pub victim: Entity,
-    pub perpetrator: Entity,
-    pub reason: WrongReason,
+#[derive(Component, Clone, Default)]
+pub struct GrudgeList(pub Vec<Grudge>);
+
+#[derive(Component)]
+pub struct Lineage {
+    pub parent_entity: Option<Entity>,
 }
 
-#[derive(Event)]
-pub struct ChildBornEvent {
-    pub parent: Entity,
-    pub child: Entity,
-}
-
-#[derive(Component, Default)]
-pub struct Vendettas {
-    pub targets: Vec<Entity>,
-}
-
-pub fn handle_severe_wrongs_system(
-    mut commands: Commands,
-    mut events: EventReader<SevereWrongEvent>,
-    mut query: Query<&mut Vendettas>,
+#[allow(clippy::type_complexity)]
+pub fn inherit_grudges_on_birth_system(
+    mut events: EventReader<crate::layer1::pop::PopBorn>,
+    mut queries: ParamSet<(
+        Query<(&Lineage, &mut GrudgeList)>,
+        Query<&GrudgeList>,
+    )>,
 ) {
     for event in events.read() {
-        if let Ok(mut vendettas) = query.get_mut(event.victim) {
-            if !vendettas.targets.contains(&event.perpetrator) {
-                vendettas.targets.push(event.perpetrator);
-            }
-        } else {
-            commands.entity(event.victim).insert(Vendettas {
-                targets: vec![event.perpetrator],
-            });
-        }
-    }
-}
-
-pub fn inherit_vendettas_system(
-    mut commands: Commands,
-    mut events: EventReader<ChildBornEvent>,
-    mut query: Query<&mut Vendettas>,
-) {
-    let mut inheritances: Vec<(Entity, Vec<Entity>)> = Vec::new();
-
-    for event in events.read() {
-        if let Ok(parent_vendettas) = query.get(event.parent) {
-            inheritances.push((event.child, parent_vendettas.targets.clone()));
-        }
-    }
-
-    for (child, targets) in inheritances {
-        if let Ok(mut child_vendettas) = query.get_mut(child) {
-            for target in &targets {
-                if !child_vendettas.targets.contains(target) {
-                    child_vendettas.targets.push(*target);
+        // Collect parent grudges first
+        let mut parent_grudges_clone = Vec::new();
+        if let Ok((lineage, _)) = queries.p0().get(event.entity) {
+            if let Some(parent_entity) = lineage.parent_entity {
+                if let Ok(parent_grudges) = queries.p1().get(parent_entity) {
+                    parent_grudges_clone = parent_grudges.0.clone();
                 }
             }
-        } else {
-            commands.entity(child).insert(Vendettas {
-                targets: targets.clone(),
-            });
+        }
+
+        // Then apply to child
+        if !parent_grudges_clone.is_empty() {
+            if let Ok((_, mut child_grudges)) = queries.p0().get_mut(event.entity) {
+                for grudge in parent_grudges_clone {
+                    child_grudges.0.push(grudge);
+                }
+            }
+        }
+    }
+}
+
+#[allow(clippy::type_complexity)]
+pub fn transfer_grudges_on_death_system(
+    mut events: EventReader<crate::layer1::pop::PopDied>,
+    mut queries: ParamSet<(
+        Query<&GrudgeList>,
+        Query<(&Lineage, &mut GrudgeList)>,
+    )>,
+) {
+    for event in events.read() {
+        let mut dead_grudges_clone = Vec::new();
+        if let Ok(dead_grudges) = queries.p0().get(event.entity) {
+            dead_grudges_clone = dead_grudges.0.clone();
+        }
+
+        if dead_grudges_clone.is_empty() {
+            continue;
+        }
+
+        let dead_entity = event.entity;
+        for (lineage, mut child_grudges) in queries.p1().iter_mut() {
+            if lineage.parent_entity == Some(dead_entity) {
+                for grudge in &dead_grudges_clone {
+                    let mut found = false;
+                    for existing_grudge in &mut child_grudges.0 {
+                        if existing_grudge.target_entity == grudge.target_entity {
+                            existing_grudge.intensity += grudge.intensity * 0.5;
+                            found = true;
+                            break;
+                        }
+                    }
+
+                    if !found {
+                        let mut inherited_grudge = grudge.clone();
+                        inherited_grudge.intensity *= 1.2;
+                        child_grudges.0.push(inherited_grudge);
+                    }
+                }
+            }
         }
     }
 }
@@ -74,65 +90,82 @@ pub fn inherit_vendettas_system(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::layer1::pop::PopBundle;
-    #[allow(unused_imports)]
-    use bevy_ecs::prelude::*;
-    use bevy_ecs::system::RunSystemOnce;
-    use rand::SeedableRng;
+    use crate::layer1::pop::{PopBorn, PopDied};
+    use crate::layer1::pop::Pop;
 
     #[test]
-    fn test_severe_wrong_creates_vendetta() {
-        let mut world = World::new();
-        world.init_resource::<Events<SevereWrongEvent>>();
+    fn test_child_inherits_parent_grudges() {
+        let mut app = bevy::app::App::new();
+        app.add_event::<PopBorn>();
+        app.add_systems(bevy::app::Update, inherit_grudges_on_birth_system);
 
-        let mut rng = rand::rngs::StdRng::seed_from_u64(42);
+        let target_entity = Entity::from_raw(2);
 
-        let victim = world.spawn(PopBundle::random(0, 0, &mut rng)).id();
-        let perpetrator = world.spawn(PopBundle::random(0, 0, &mut rng)).id();
+        let parent = app.world_mut().spawn((
+            Pop,
+            GrudgeList(vec![Grudge {
+                target_entity,
+                intensity: 50.0,
+                origin_reason: "Stole a ration".to_string(),
+            }]),
+        )).id();
 
-        // Simulate a severe wrong
-        world
-            .resource_mut::<Events<SevereWrongEvent>>()
-            .send(SevereWrongEvent {
-                victim,
-                perpetrator,
-                reason: WrongReason::UnjustImprisonment,
-            });
+        let child = app.world_mut().spawn((
+            Pop,
+            Lineage { parent_entity: Some(parent) },
+            GrudgeList(vec![]),
+        )).id();
 
-        world.run_system_once(handle_severe_wrongs_system).unwrap();
+        app.world_mut().send_event(PopBorn {
+            entity: child,
+            name: "Child".to_string(),
+            tick: 0,
+            source: "Birth".to_string(),
+        });
 
-        let vendettas = world.get::<Vendettas>(victim).unwrap();
-        assert!(vendettas.targets.contains(&perpetrator));
+        app.update();
+
+        let child_grudges = app.world().get::<GrudgeList>(child).unwrap();
+        assert_eq!(child_grudges.0.len(), 1);
+        assert_eq!(child_grudges.0[0].target_entity, target_entity);
+        assert_eq!(child_grudges.0[0].origin_reason, "Stole a ration");
     }
 
     #[test]
-    fn test_vendetta_is_inherited_by_offspring() {
-        let mut world = World::new();
-        world.init_resource::<Events<ChildBornEvent>>();
+    fn test_grudge_transfers_on_death() {
+        let mut app = bevy::app::App::new();
+        app.add_event::<PopDied>();
+        app.add_systems(bevy::app::Update, transfer_grudges_on_death_system);
 
-        let mut rng = rand::rngs::StdRng::seed_from_u64(42);
+        let target_entity = Entity::from_raw(2);
 
-        let perpetrator = world.spawn(PopBundle::random(0, 0, &mut rng)).id();
+        let parent = app.world_mut().spawn((
+            Pop,
+            GrudgeList(vec![Grudge {
+                target_entity,
+                intensity: 80.0,
+                origin_reason: "Killed my kin".to_string(),
+            }]),
+        )).id();
 
-        let parent = world
-            .spawn((
-                PopBundle::random(0, 0, &mut rng),
-                Vendettas {
-                    targets: vec![perpetrator],
-                },
-            ))
-            .id();
+        let child = app.world_mut().spawn((
+            Pop,
+            Lineage { parent_entity: Some(parent) },
+            GrudgeList(vec![]),
+        )).id();
 
-        let child = world.spawn(PopBundle::random(0, 0, &mut rng)).id();
+        app.world_mut().send_event(PopDied {
+            entity: parent,
+            name: "Parent".to_string(),
+            tick: 0,
+            reason: "Murder".to_string(),
+        });
 
-        world
-            .resource_mut::<Events<ChildBornEvent>>()
-            .send(ChildBornEvent { parent, child });
+        app.update();
 
-        world.run_system_once(inherit_vendettas_system).unwrap();
-
-        let child_vendettas = world.get::<Vendettas>(child).unwrap();
-        // Child should inherit the grudge against the perpetrator
-        assert!(child_vendettas.targets.contains(&perpetrator));
+        let child_grudges = app.world().get::<GrudgeList>(child).unwrap();
+        assert_eq!(child_grudges.0.len(), 1);
+        assert_eq!(child_grudges.0[0].target_entity, target_entity);
+        assert!(child_grudges.0[0].intensity >= 80.0);
     }
 }
