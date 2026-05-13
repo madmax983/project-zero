@@ -19183,7 +19183,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Cult of the Broken Machine
+## Cult of the Broken Machine [SPECCED]
 
 **Layer:** 1
 
