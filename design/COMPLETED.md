@@ -558,3 +558,4 @@
 - [x] `INT-1257` Integration: Generational Skill Atrophy -> Economy — completed 2026-06-25
 - [x] `INT-1074` Integration: System Quarantine -> Trade/Warlords — completed 2026-06-25
 - [x] `1073` Benevolent Malfunctions — `specs/1073-benevolent-malfunctions.md` — completed 2024-05-25
+- [x] `477` The Ransom Broker — `specs/477-the-ransom-broker.md` — completed 2026-05-13

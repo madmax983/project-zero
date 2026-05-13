@@ -231,6 +231,10 @@ pub struct ColonyResources {
     pub max_art: f32,
     /// Maximum Luxury capacity.
     pub max_luxury: f32,
+    /// Total hyper_valuable available in the colony.
+    pub hyper_valuable: f32,
+    /// Maximum hyper_valuable capacity.
+    pub max_hyper_valuable: f32,
 }
 
 impl Default for ColonyResources {
@@ -284,6 +288,8 @@ impl Default for ColonyResources {
             luxury: 0.0,
             max_art: 1000.0,
             max_luxury: 1000.0,
+            hyper_valuable: 0.0,
+            max_hyper_valuable: 50.0,
         }
     }
 }
@@ -342,6 +348,8 @@ impl Mul<f32> for ColonyResources {
             max_art: self.max_art,
             luxury: (self.luxury * rhs).ceil(),
             max_luxury: self.max_luxury,
+            hyper_valuable: (self.hyper_valuable * rhs).ceil(),
+            max_hyper_valuable: self.max_hyper_valuable,
         }
     }
 }
@@ -666,6 +674,8 @@ impl ColonyResources {
             luxury: 0.0,
             max_art: 0.0,
             max_luxury: 0.0,
+            hyper_valuable: 0.0,
+            max_hyper_valuable: 0.0,
         }
     }
 
@@ -826,6 +836,14 @@ impl ColonyResources {
     pub fn add_waste(&mut self, amount: f32) {
         if amount.is_finite() {
             self.waste = (self.waste + amount).clamp(0.0, self.max_waste);
+        }
+    }
+
+    /// Adds hyper_valuable, clamping to the maximum capacity.
+    pub fn add_hyper_valuable(&mut self, amount: f32) {
+        if amount.is_finite() {
+            self.hyper_valuable =
+                (self.hyper_valuable + amount).clamp(0.0, self.max_hyper_valuable);
         }
     }
 
@@ -1002,7 +1020,9 @@ impl ColonyResources {
                 self.building_permits = (self.building_permits - amount).max(0.0);
             }
             ResourceType::VoidAle => self.void_ale = (self.void_ale - amount).max(0.0),
-            ResourceType::HyperValuable => {}
+            ResourceType::HyperValuable => {
+                self.hyper_valuable = (self.hyper_valuable - amount).max(0.0)
+            }
             ResourceType::MemoryCore => {
                 self.memory_cores = (self.memory_cores - amount).max(0.0);
             }
@@ -1029,7 +1049,7 @@ impl ColonyResources {
             ResourceType::BuildingPermit => self.building_permits,
             ResourceType::MemoryCore => self.memory_cores,
             ResourceType::VoidAle => self.void_ale,
-            ResourceType::HyperValuable => 0.0,
+            ResourceType::HyperValuable => self.hyper_valuable,
         }
     }
 
@@ -1074,7 +1094,7 @@ impl ColonyResources {
             ResourceType::BuildingPermit => self.building_permits < self.max_building_permits,
             ResourceType::MemoryCore => self.memory_cores < self.max_memory_cores,
             ResourceType::VoidAle => self.void_ale < self.max_void_ale,
-            ResourceType::HyperValuable => true,
+            ResourceType::HyperValuable => self.hyper_valuable < self.max_hyper_valuable,
         }
     }
 
@@ -1097,7 +1117,9 @@ impl ColonyResources {
             ResourceType::BuildingPermit => self.add_building_permits(amount),
             ResourceType::MemoryCore => self.add_memory_cores(amount),
             ResourceType::VoidAle => self.add_void_ale(amount),
-            ResourceType::HyperValuable => {}
+            ResourceType::HyperValuable => {
+                self.hyper_valuable = (self.hyper_valuable - amount).max(0.0)
+            }
         }
     }
 }

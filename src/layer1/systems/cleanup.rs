@@ -120,6 +120,9 @@ pub fn register(schedule: &mut Schedule) {
             update_event_buffer::<crate::layer1::nature::megafauna_terrain::AwakenTitanEvent>,
             update_event_buffer::<crate::layer1::environment::impact::ImpactWarningEvent>,
             update_event_buffer::<crate::layer1::environment::impact::ImpactStrikeEvent>,
+            update_event_buffer::<crate::layer1::ransom_broker::RansomDemandEvent>,
+            update_event_buffer::<crate::layer1::ransom_broker::PayRansomEvent>,
+            update_event_buffer::<crate::layer1::ransom_broker::RefuseRansomEvent>,
         )
             .in_set(Layer1SystemSet::EventCleanup),
     );

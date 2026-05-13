@@ -24,7 +24,6 @@
 
 
 - [ ] `473` Bureaucratic Redlining — `specs/473-bureaucratic-redlining.md`
-- [ ] `477` The Ransom Broker — `specs/477-the-ransom-broker.md`
 
 - [ ] `888` The Symbiotic Parasite — `specs/888-the-symbiotic-parasite.md`
 
