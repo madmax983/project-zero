@@ -3,6 +3,7 @@
 //! Manages anomalous discoveries on the map and the scanning process for pops.
 
 pub mod cryptid;
+pub mod echo;
 
 use crate::layer1::building::OccupiedTiles;
 use crate::layer1::execution::{AtTarget, MovementTarget};
