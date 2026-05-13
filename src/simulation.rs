@@ -77,7 +77,8 @@ fn init_simulation_resources(world: &mut World) {
         world.insert_resource(crate::layer3::bureaucracy_of_vanity::ImperialStanding { value: 50 });
     }
     if !world.contains_resource::<crate::layer3::bureaucracy_of_vanity::GlobalEfficiency>() {
-        world.insert_resource(crate::layer3::bureaucracy_of_vanity::GlobalEfficiency { value: 1.0 });
+        world
+            .insert_resource(crate::layer3::bureaucracy_of_vanity::GlobalEfficiency { value: 1.0 });
     }
 
     // Initialize Layer 2 Events
@@ -544,6 +545,9 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
             .after(crate::layer3::events::debt_prison::check_bailout_condition_system),
         crate::layer3::market::update_market_prices_system,
         crate::layer3::diplomacy::diplomatic_negotiation_system,
+        crate::layer3::guilt::attach_resonance_to_new_buildings_system,
+        crate::layer3::guilt::process_guilt_generation_system,
+        crate::layer3::guilt::apply_guilt_unrest_system,
         crate::layer3::diplomacy_reflection::aggregate_colony_stats,
         crate::layer3::diplomacy_reflection::update_diplomatic_traits
             .after(crate::layer3::diplomacy_reflection::aggregate_colony_stats),
@@ -710,6 +714,7 @@ mod tests {
         world.init_resource::<bevy_ecs::event::Events<crate::layer1::culture::gastronomers::CulinarySingularityEvent>>();
         world.init_resource::<bevy_ecs::event::Events<crate::layer1::petrification::PopPetrifiedEvent>>();
         world.init_resource::<Events<crate::layer1::predecessors::WorldTriggerEvent>>();
+        world.init_resource::<crate::layer3::guilt::GuiltResource>();
         *world.resource_mut::<GameState>() = GameState::Running;
 
         let tick_before = world.resource::<SimulationTime>().tick;
@@ -850,6 +855,7 @@ mod tests {
         world.init_resource::<Events<crate::layer1::heirloom_tool::EquipHeirloomEvent>>();
         world.init_resource::<Events<crate::layer2::events_new::reverse_quarantine::RefugeeFleetEvent>>();
         world.init_resource::<Events<crate::layer1::predecessors::WorldTriggerEvent>>();
+        world.init_resource::<crate::layer3::guilt::GuiltResource>();
         world.init_resource::<Events<crate::layer1::grafting::GraftBuildingEvent>>();
         world.init_resource::<Events<crate::layer3::fleets::ColonyFoundedEvent>>();
         world.init_resource::<crate::layer1::diplomacy::factions::rivals::TerritoryGrid>();
@@ -937,6 +943,7 @@ mod tests {
         world.init_resource::<bevy_ecs::event::Events<crate::layer1::culture::gastronomers::CulinarySingularityEvent>>();
         world.init_resource::<bevy_ecs::event::Events<crate::layer1::petrification::PopPetrifiedEvent>>();
         world.init_resource::<Events<crate::layer1::predecessors::WorldTriggerEvent>>();
+        world.init_resource::<crate::layer3::guilt::GuiltResource>();
 
         let schedule = build_simulation_schedule();
         world.add_schedule(schedule);

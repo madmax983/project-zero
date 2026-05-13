@@ -850,4 +850,3 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1252` Munchausen by Machine — `specs/1252-munchausen-by-machine.md`
 - [ ] `1253` The Over-Specialization Trap — `specs/1253-the-over-specialization-trap.md`
 - [ ] `1254` Reverse Quarantine — `specs/1254-reverse-quarantine.md`
-- [ ] `1256` The Architecture of Regret — `specs/1256-architecture-of-regret.md`
