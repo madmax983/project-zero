@@ -13,6 +13,7 @@ pub fn register(schedule: &mut Schedule) {
     schedule.add_systems(
         (
             update_event_buffer::<AddChronicleEvent>,
+            update_event_buffer::<crate::layer1::anomalies::echo::SpawnEchoSourceEvent>,
             update_event_buffer::<crate::layer1::economy::TradeImportEvent>,
             update_event_buffer::<AffinityChange>,
             update_event_buffer::<PopDied>,
