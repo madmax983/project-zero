@@ -4909,3 +4909,19 @@
 **Code reference:** `WillToFight` component
 **Usage:**
 - "Their Will to Fight reached zero, and they laid down their arms."
+
+## Cult of the Broken Machine (Spec 1259)
+
+### Machine Cultist
+**Replaces:** Uneducated pop defending a broken machine
+**Code reference:** `MachineCultMember`
+**Usage:**
+- "The Machine Cultists attacked the repair crew."
+- "A Machine Cultist blocked the entrance to the reactor."
+
+### Shrine-Entity
+**Replaces:** Broken machine being worshipped
+**Code reference:** `shrine_entity` in `MachineCultMember`
+**Usage:**
+- "The Shrine-Entity must remain untouched."
+- "They believe the Shrine-Entity's silence is sacred."

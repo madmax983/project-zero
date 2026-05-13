@@ -8112,3 +8112,18 @@ What an artifact is called.
 - [NAME]'s [NOUN]
 - the [ADJECTIVE] [NOUN] of [PLACE]
 - the [NOUN] That [VERB]
+
+## Cult of the Broken Machine Fragments (Spec 1259)
+
+## Fragment Type: [BROKEN_MACHINE_NAME]
+- the Silent Terraformer
+- the Cold Reactor
+- the Still Loom
+- the Dead Engine
+- the Slumbering Relay
+
+## Fragment Type: [CULT_VIOLENCE]
+- ambushed the engineers
+- destroyed the repair tools
+- formed a violent barricade
+- drove back the mechanics
