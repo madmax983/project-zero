@@ -19747,3 +19747,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you enforce the truth and deal with constant uprisings from the conquered world, or rewrite history and slowly drive your own loyal core worlds into madness?
 
 ---
+## Spontaneous Cults of Personality
+
+**Layer:** 1
+
+**Fantasy:** A single charismatic Pop gains a massive, unprompted following, disrupting the established hierarchy.
+
+**Mechanic:** A Pop with high 'SilverTongue' and 'Optimist' traits who survives a near-death event or completes a 'Great Work' can spontaneously trigger a "Cult of Personality." Other Pops with low morale or high stress will start following them, mimicking their schedule, and refusing orders from the standard administration.
+
+**Emergence:** Your colony's most efficient miner becomes a messianic figure. Suddenly, a quarter of your workforce insists on taking breaks at the exact same time as the miner, causing massive power spikes and drops, completely ignoring their assigned shifts.
+
+**Tension:** Do you assassinate the cult leader to restore order, risking a massive riot, or do you try to appease them and integrate their chaotic schedule into your fragile colony logistics?
+
+---
+
+## Inter-System Debris Navigation
+
+**Layer:** 2
+
+**Fantasy:** The sheer physical cost of hundreds of years of space travel making the space around planets almost unnavigable.
+
+**Mechanic:** Every time a fleet or trade ship travels between Layer 2 nodes, it leaves behind a tiny amount of 'Navigational Debris' (spent stages, micro-collisions, vented fuel). Over time, heavily trafficked routes become "Debris Fields." Traveling through these fields significantly increases the chance of ship damage or loss.
+
+**Emergence:** Your most profitable and safe trade route to your core world slowly becomes a death trap of your own making. You must spend resources to clear it, or start taking longer, less efficient routes, effectively putting a hard cap on the carrying capacity of a single hyperlane.
+
+**Tension:** Do you pay the exorbitant maintenance costs to keep the main highway clean, or do you force your haulers to navigate the dangerous debris, accepting the inevitable loss of ships and cargo as a cost of doing business?
+
+---
+
+## The Monument of Our Failures
+
+**Layer:** Cross-layer
+
+**Fantasy:** Turning past disasters into cultural touchstones and learning experiences, physically etched into the world.
+
+**Mechanic:** When a major disaster occurs (e.g., starvation of 20+ Pops, a catastrophic building collapse), the player can choose to designate the site as a "Monument of Failure." This permanently locks the tile(s) from being built upon. However, Pops who visit the site gain a massive long-term buff to their resilience against that specific type of disaster (e.g., they panic less during food shortages).
+
+**Emergence:** Your oldest, most developed core worlds are littered with unbuildable monuments representing every near-collapse the colony survived. They are incredibly resilient populations, but they are choked for space, forcing you to expand outward simply because the homeworld is a museum of its own tragedies.
+
+**Tension:** Do you bulldoze the sites of tragedy to maximize your building space and efficiency, or do you sacrifice prime real estate to culturally inoculate your Pops against future disasters?
+
+---
