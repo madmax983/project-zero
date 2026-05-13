@@ -77,7 +77,8 @@ fn init_simulation_resources(world: &mut World) {
         world.insert_resource(crate::layer3::bureaucracy_of_vanity::ImperialStanding { value: 50 });
     }
     if !world.contains_resource::<crate::layer3::bureaucracy_of_vanity::GlobalEfficiency>() {
-        world.insert_resource(crate::layer3::bureaucracy_of_vanity::GlobalEfficiency { value: 1.0 });
+        world
+            .insert_resource(crate::layer3::bureaucracy_of_vanity::GlobalEfficiency { value: 1.0 });
     }
 
     // Initialize Layer 2 Events

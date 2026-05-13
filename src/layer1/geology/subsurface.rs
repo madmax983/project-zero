@@ -116,7 +116,10 @@ pub fn kinetic_strike_system(
             }
             Some(SubsurfaceResourceKind::Magma) => {
                 chronicle_events.send(AddChronicleEvent {
-                    text: format!("Kinetic strike hit a magma pocket, creating an active Volcano at {}, {}", actual_hit_x, actual_hit_y),
+                    text: format!(
+                        "Kinetic strike hit a magma pocket, creating an active Volcano at {}, {}",
+                        actual_hit_x, actual_hit_y
+                    ),
                     importance: EventImportance::Major,
                 });
             }

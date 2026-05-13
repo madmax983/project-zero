@@ -7,9 +7,9 @@ use bevy::prelude::*;
 pub mod brain_drain;
 pub mod cultural_pressure;
 pub mod cultural_ransom;
+pub mod fading_homeworld;
 pub mod proxy_wars;
 pub mod succession;
-pub mod fading_homeworld;
 
 #[derive(Component)]
 pub struct Envoy;

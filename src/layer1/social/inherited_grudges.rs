@@ -18,10 +18,7 @@ pub struct Lineage {
 #[allow(clippy::type_complexity)]
 pub fn inherit_grudges_on_birth_system(
     mut events: EventReader<crate::layer1::pop::PopBorn>,
-    mut queries: ParamSet<(
-        Query<(&Lineage, &mut GrudgeList)>,
-        Query<&GrudgeList>,
-    )>,
+    mut queries: ParamSet<(Query<(&Lineage, &mut GrudgeList)>, Query<&GrudgeList>)>,
 ) {
     for event in events.read() {
         // Collect parent grudges first
@@ -48,10 +45,7 @@ pub fn inherit_grudges_on_birth_system(
 #[allow(clippy::type_complexity)]
 pub fn transfer_grudges_on_death_system(
     mut events: EventReader<crate::layer1::pop::PopDied>,
-    mut queries: ParamSet<(
-        Query<&GrudgeList>,
-        Query<(&Lineage, &mut GrudgeList)>,
-    )>,
+    mut queries: ParamSet<(Query<&GrudgeList>, Query<(&Lineage, &mut GrudgeList)>)>,
 ) {
     for event in events.read() {
         let mut dead_grudges_clone = Vec::new();
@@ -90,8 +84,8 @@ pub fn transfer_grudges_on_death_system(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::layer1::pop::{PopBorn, PopDied};
     use crate::layer1::pop::Pop;
+    use crate::layer1::pop::{PopBorn, PopDied};
 
     #[test]
     fn test_child_inherits_parent_grudges() {
@@ -101,20 +95,28 @@ mod tests {
 
         let target_entity = Entity::from_raw(2);
 
-        let parent = app.world_mut().spawn((
-            Pop,
-            GrudgeList(vec![Grudge {
-                target_entity,
-                intensity: 50.0,
-                origin_reason: "Stole a ration".to_string(),
-            }]),
-        )).id();
+        let parent = app
+            .world_mut()
+            .spawn((
+                Pop,
+                GrudgeList(vec![Grudge {
+                    target_entity,
+                    intensity: 50.0,
+                    origin_reason: "Stole a ration".to_string(),
+                }]),
+            ))
+            .id();
 
-        let child = app.world_mut().spawn((
-            Pop,
-            Lineage { parent_entity: Some(parent) },
-            GrudgeList(vec![]),
-        )).id();
+        let child = app
+            .world_mut()
+            .spawn((
+                Pop,
+                Lineage {
+                    parent_entity: Some(parent),
+                },
+                GrudgeList(vec![]),
+            ))
+            .id();
 
         app.world_mut().send_event(PopBorn {
             entity: child,
@@ -139,20 +141,28 @@ mod tests {
 
         let target_entity = Entity::from_raw(2);
 
-        let parent = app.world_mut().spawn((
-            Pop,
-            GrudgeList(vec![Grudge {
-                target_entity,
-                intensity: 80.0,
-                origin_reason: "Killed my kin".to_string(),
-            }]),
-        )).id();
+        let parent = app
+            .world_mut()
+            .spawn((
+                Pop,
+                GrudgeList(vec![Grudge {
+                    target_entity,
+                    intensity: 80.0,
+                    origin_reason: "Killed my kin".to_string(),
+                }]),
+            ))
+            .id();
 
-        let child = app.world_mut().spawn((
-            Pop,
-            Lineage { parent_entity: Some(parent) },
-            GrudgeList(vec![]),
-        )).id();
+        let child = app
+            .world_mut()
+            .spawn((
+                Pop,
+                Lineage {
+                    parent_entity: Some(parent),
+                },
+                GrudgeList(vec![]),
+            ))
+            .id();
 
         app.world_mut().send_event(PopDied {
             entity: parent,

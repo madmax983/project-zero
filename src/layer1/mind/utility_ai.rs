@@ -42,8 +42,8 @@
 
 use crate::layer1::actions::{
     evaluate_clean, evaluate_drafted_behavior, evaluate_fetch_clothing, evaluate_fetch_tool,
-    evaluate_gossip, evaluate_haul, evaluate_listen_to_hum, evaluate_mental_break, evaluate_research,
-    evaluate_shower, evaluate_simple_action,
+    evaluate_gossip, evaluate_haul, evaluate_listen_to_hum, evaluate_mental_break,
+    evaluate_research, evaluate_shower, evaluate_simple_action,
 };
 use crate::layer1::chemical::evaluate_consume_chemical;
 use crate::layer1::factions::Factions;

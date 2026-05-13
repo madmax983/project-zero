@@ -128,13 +128,14 @@ pub fn blob_spread_system() {}
 ///
 /// Once a tile is consumed by the Blob, any dropped `ResourceItem` entities
 /// on that tile are despawned.
+/// ⚡ Bolt Optimization: Uses bevy::utils::HashMap (AHash) and pre-allocates capacity to avoid reallocation and hashing overhead.
 pub fn blob_consumption_system(
     mut commands: Commands,
     mut networks: Query<&mut BlobNetwork>,
     nodes: Query<(&BlobNode, &GridPosition)>,
     items: Query<(Entity, &GridPosition, &ResourceItem)>,
 ) {
-    let mut blob_positions = std::collections::HashMap::new();
+    let mut blob_positions = bevy::utils::HashMap::with_capacity(nodes.iter().len());
     for (node, pos) in nodes.iter() {
         blob_positions.insert(*pos, node.network_id);
     }
