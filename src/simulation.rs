@@ -66,6 +66,8 @@ fn init_simulation_resources(world: &mut World) {
     world.init_resource::<crate::layer1::stress::TraumaTracker>();
     world.init_resource::<Events<crate::layer2::skyhooks::LaunchIntent>>();
     world.init_resource::<Events<crate::layer1::tech::rogue_automation_cults::MachineCultFormedEvent>>();
+    world.init_resource::<Events<crate::layer3::diplomacy::fading_homeworld::CoreWorldDemandEvent>>();
+    world.init_resource::<Events<crate::layer3::diplomacy::fading_homeworld::PlayerDemandResponse>>();
     world.init_resource::<Events<crate::layer1::heirloom_tool::EquipHeirloomEvent>>();
     world.init_resource::<Events<crate::layer1::infrastructure::ancient::ConduitSurgeEvent>>();
     world.init_resource::<Events<crate::layer1::ransom_broker::RansomDemandEvent>>();
@@ -567,6 +569,9 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
             crate::layer3::diplomacy::red_tape_defense::process_bureaucracy_delays,
             crate::layer3::integration::dynastic_succession_chronicle_bridge,
             crate::layer3::integration::dynastic_crisis_chronicle_bridge,
+            crate::layer3::diplomacy::fading_homeworld::update_core_world_decay_system,
+            crate::layer3::diplomacy::fading_homeworld::generate_core_world_demand_system,
+            crate::layer3::diplomacy::fading_homeworld::handle_core_world_demands_system,
         )
             .chain(),
     );
@@ -782,6 +787,8 @@ mod tests {
         world.init_resource::<Events<crate::layer1::law::embassy::ArrestEvent>>();
         world.init_resource::<Events<crate::layer1::law::embassy::DiplomaticIncidentEvent>>();
         world.init_resource::<Events<crate::layer1::ransom_broker::RansomDemandEvent>>();
+        world.init_resource::<Events<crate::layer3::diplomacy::fading_homeworld::CoreWorldDemandEvent>>();
+        world.init_resource::<Events<crate::layer3::diplomacy::fading_homeworld::PlayerDemandResponse>>();
         world.init_resource::<Events<crate::layer1::ransom_broker::PayRansomEvent>>();
         world.init_resource::<Events<crate::layer1::ransom_broker::RefuseRansomEvent>>();
         world.init_resource::<Events<crate::layer1::ransom_broker::PopRansomedEvent>>();

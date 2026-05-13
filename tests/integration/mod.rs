@@ -28,6 +28,7 @@ pub mod shipbreaking_bridge;
 pub mod mass_driver_chronicle;
 pub mod cascade_failure_chronicle;
 pub mod diplomacy_reflection;
+pub mod fading_homeworld;
 pub mod inflation_spiral_bridge;
 pub mod parasitic_architecture_bridge;
 pub mod hyperlane_collapse_bridge;
