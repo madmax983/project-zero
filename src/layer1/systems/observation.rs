@@ -17,6 +17,8 @@ pub fn register(schedule: &mut Schedule) {
     );
     schedule.add_systems(
         (
+            crate::layer1::memorial_economy::process_pop_deaths_for_relics,
+            crate::layer1::memorial_economy::apply_memorial_morale_boost,
             crate::layer1::social::pop_relationships::update_workplace_relationships_system,
             crate::layer1::social::pop_relationships::calculate_relationship_mood_buff_system,
             crate::layer1::culture::cultural_artifacts::cultural_aura_system,

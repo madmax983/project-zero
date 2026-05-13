@@ -102,7 +102,7 @@ mod tests {
         // Arrange: create a high-skilled pop
         let pop_entity = app
             .world_mut()
-            .spawn((Pop::default(), Skills::default()))
+            .spawn((Pop, Skills::default()))
             .id();
         app.world_mut()
             .get_mut::<Skills>(pop_entity)
@@ -130,7 +130,7 @@ mod tests {
         let pop_entity = app
             .world_mut()
             .spawn((
-                Pop::default(),
+                Pop,
                 RansomDemand {
                     cost: 500,
                     deadline_tick: 100,
@@ -165,7 +165,7 @@ mod tests {
         let pop_entity = app
             .world_mut()
             .spawn((
-                Pop::default(),
+                Pop,
                 RansomDemand {
                     cost: 500,
                     deadline_tick: 100,
@@ -189,7 +189,7 @@ mod tests {
         let pop_entity = app
             .world_mut()
             .spawn((
-                Pop::default(),
+                Pop,
                 RansomDemand {
                     cost: 500,
                     deadline_tick: 10,
