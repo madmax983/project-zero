@@ -72,7 +72,6 @@ pub fn process_ransom_decisions_system(
     }
 }
 
-
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -100,10 +99,7 @@ mod tests {
         let mut app = setup_app();
 
         // Arrange: create a high-skilled pop
-        let pop_entity = app
-            .world_mut()
-            .spawn((Pop, Skills::default()))
-            .id();
+        let pop_entity = app.world_mut().spawn((Pop, Skills::default())).id();
         app.world_mut()
             .get_mut::<Skills>(pop_entity)
             .unwrap()

@@ -1,7 +1,7 @@
-use bevy_ecs::prelude::*;
 use crate::layer1::entities::pop::PopDied;
-use crate::layer1::social::social_stratification::Prestige;
 use crate::layer1::social::morale::{MoodModifier, Morale};
+use crate::layer1::social::social_stratification::Prestige;
+use bevy_ecs::prelude::*;
 
 #[derive(Component)]
 pub struct Relic;
@@ -37,7 +37,7 @@ pub fn apply_memorial_morale_boost(
             if descendant_of.0 == memorial.dedicated_to {
                 morale.add_modifier(MoodModifier {
                     label: "Ancestral Memorial".to_string(),
-                    value: 0.1, // Equivalent to morale boost
+                    value: 0.1,  // Equivalent to morale boost
                     duration: 1, // transient duration, maintained by structure presence
                 });
             }
@@ -48,8 +48,8 @@ pub fn apply_memorial_morale_boost(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use bevy_app::prelude::*;
     use crate::layer1::entities::pop::Pop;
+    use bevy_app::prelude::*;
 
     #[test]
     fn test_high_prestige_death_generates_relic() {
@@ -58,17 +58,16 @@ mod tests {
         app.init_resource::<Events<PopDied>>();
         app.add_systems(Update, process_pop_deaths_for_relics);
 
-        let pop = app.world_mut().spawn((
-            Pop,
-            Prestige { value: 10 },
-        )).id();
+        let pop = app.world_mut().spawn((Pop, Prestige { value: 10 })).id();
 
-        app.world_mut().resource_mut::<Events<PopDied>>().send(PopDied {
-            entity: pop,
-            name: "Hero".to_string(),
-            tick: 0,
-            reason: "Old Age".to_string(),
-        });
+        app.world_mut()
+            .resource_mut::<Events<PopDied>>()
+            .send(PopDied {
+                entity: pop,
+                name: "Hero".to_string(),
+                tick: 0,
+                reason: "Old Age".to_string(),
+            });
 
         app.update();
 
@@ -83,20 +82,25 @@ mod tests {
         app.add_systems(Update, apply_memorial_morale_boost);
 
         let ancestor_id = Entity::from_raw(1); // Fake ID for testing
-        let _memorial = app.world_mut().spawn((
-            MemorialStructure { dedicated_to: ancestor_id },
-        )).id();
+        let _memorial = app
+            .world_mut()
+            .spawn((MemorialStructure {
+                dedicated_to: ancestor_id,
+            },))
+            .id();
 
-        let descendant = app.world_mut().spawn((
-            Pop,
-            Morale::default(),
-            DescendantOf(ancestor_id),
-        )).id();
+        let descendant = app
+            .world_mut()
+            .spawn((Pop, Morale::default(), DescendantOf(ancestor_id)))
+            .id();
 
         app.update();
 
         // Assert morale was boosted
         let morale = app.world_mut().get::<Morale>(descendant).unwrap();
-        assert!(morale.modifiers.iter().any(|m| m.label == "Ancestral Memorial"));
+        assert!(morale
+            .modifiers
+            .iter()
+            .any(|m| m.label == "Ancestral Memorial"));
     }
 }

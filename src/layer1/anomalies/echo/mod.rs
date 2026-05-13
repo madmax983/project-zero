@@ -1,8 +1,8 @@
-use bevy_ecs::prelude::*;
 use crate::layer1::core::map::GridPosition;
-use crate::layer1::mind::utility_types::{ActionType, PopAction};
-use crate::layer1::social::morale::{Morale, MoodModifier};
 use crate::layer1::entities::pop::Pop;
+use crate::layer1::mind::utility_types::{ActionType, PopAction};
+use crate::layer1::social::morale::{MoodModifier, Morale};
+use bevy_ecs::prelude::*;
 
 #[derive(Event, Debug, Clone)]
 pub struct SpawnEchoSourceEvent {
@@ -70,10 +70,7 @@ pub fn manifest_echo_system(
     }
 }
 
-pub fn despawn_echo_system(
-    mut commands: Commands,
-    mut query: Query<(Entity, &mut Echo)>,
-) {
+pub fn despawn_echo_system(mut commands: Commands, mut query: Query<(Entity, &mut Echo)>) {
     for (entity, mut echo) in &mut query {
         if echo.duration == 0 {
             commands.entity(entity).despawn();
@@ -139,7 +136,10 @@ mod tests {
 
         schedule.run(&mut world);
 
-        let sources = world.query::<(Entity, &EchoSource)>().iter(&world).collect::<Vec<_>>();
+        let sources = world
+            .query::<(Entity, &EchoSource)>()
+            .iter(&world)
+            .collect::<Vec<_>>();
         assert_eq!(sources.len(), 1);
         let source_pos = world.get::<GridPosition>(sources[0].0).unwrap();
         assert_eq!(*source_pos, GridPosition { x: 10, y: 10 });
@@ -176,16 +176,21 @@ mod tests {
 
         let echo_pos = GridPosition { x: 2, y: 2 };
         world.spawn((
-            Echo { event_type: EchoType::Tragedy, duration: 5 },
+            Echo {
+                event_type: EchoType::Tragedy,
+                duration: 5,
+            },
             echo_pos,
         ));
 
-        let pop = world.spawn((
-            Pop,
-            GridPosition { x: 2, y: 3 },
-            PopAction::default(),
-            Morale::default(),
-        )).id();
+        let pop = world
+            .spawn((
+                Pop,
+                GridPosition { x: 2, y: 3 },
+                PopAction::default(),
+                Morale::default(),
+            ))
+            .id();
 
         let mut schedule = Schedule::default();
         schedule.add_systems(echo_reaction_system);

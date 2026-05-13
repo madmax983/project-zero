@@ -19747,3 +19747,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you enforce the truth and deal with constant uprisings from the conquered world, or rewrite history and slowly drive your own loyal core worlds into madness?
 
 ---
+## The Phantom Limb Infrastructure
+
+**Layer:** 1
+
+**Fantasy:** The haunting reality of a colony unable to move on from a destroyed or deleted critical structure, creating a ghost economy.
+
+**Mechanic:** When a highly trafficked or culturally significant building (like a central cantina or grand monument) is destroyed or dismantled, pops continue to pathfind to its empty lot out of sheer habit. They will stand in the ruins attempting to fulfill the needs the building used to provide.
+
+**Emergence:** You bulldoze an inefficient old hospital to build a new factory, but sick pops keep walking into the factory machinery looking for doctors, causing massive industrial accidents.
+
+**Tension:** Do you leave obsolete buildings standing to avoid disrupting ingrained social habits, or ruthlessly modernize and accept the chaotic and dangerous transition period?
+
+---
+
+## The Apathy Epidemic
+
+**Layer:** Cross-layer
+
+**Fantasy:** A society becoming so automated and perfect that the populace loses the will to strive or care about the future.
+
+**Mechanic:** If a colony maintains maximum living standards and zero unmet needs for too long, pops develop "Apathy." Their movement speed slows, they stop reproducing, and they refuse to learn new skills. Layer 2/3 diplomatic actions initiated by this colony take twice as long because the diplomats just don't care enough to negotiate hard.
+
+**Emergence:** Your shining core world, safe behind impenetrable shields and drowning in automated luxury, slowly dies out from a sheer lack of motivation to even eat the perfectly prepared food.
+
+**Tension:** Do you artificially introduce scarcity, minor disasters, or turn off automation to keep your pops sharp and engaged, or let them fade away in utter comfort?
+
+---
+
+## The Bureaucracy of Grief
+
+**Layer:** 1
+
+**Fantasy:** The paralyzing effect of mass casualties not just on morale, but on the literal paperwork of running a society.
+
+**Mechanic:** When a pop dies, their death generates "Grief Paperwork" (a literal item or task). Admin pops must process this paperwork to finalize the death and free up the deceased's housing and job slots.
+
+**Emergence:** A sudden pirate raid kills 100 pops. The resulting mountain of paperwork completely overwhelms your small admin sector. Because the deaths aren't "officially" processed, their housing can't be reassigned to the survivors, leading to mass homelessness despite half the colony being empty.
+
+**Tension:** Do you employ a massive, inefficient administration sector just in case of a disaster, or run a lean admin team and risk societal paralysis if a sudden tragedy strikes?
+
+---
