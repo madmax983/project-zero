@@ -10,7 +10,11 @@ use bevy_ecs::prelude::*;
 pub fn register(schedule: &mut Schedule) {
     schedule.add_systems(
         (
+            crate::layer1::anomalies::benevolent_malfunctions::apply_malfunction_effects,
+            crate::layer1::anomalies::benevolent_malfunctions::apply_malfunction_quirks,
+            crate::layer1::anomalies::benevolent_malfunctions::process_repairs,
             update_resource_caps_system,
+
             crate::layer1::digital_immortality::ghost_power_consumption,
             advance_season_system,
             crate::layer1::core::integration::predecessor_weather_array_bridge_system
