@@ -460,6 +460,61 @@ fn get_scent_line(world: &World, x: i32, y: i32) -> Option<Line<'static>> {
     ]))
 }
 
+fn get_echo_line(world: &World, x: i32, y: i32) -> Option<Line<'static>> {
+    use crate::layer1::anomalies::echo::{Echo, EchoSource, EchoType};
+
+    let target_pos = GridPosition { x, y };
+
+    let mut echo_type_found = None;
+    let mut is_source = false;
+
+    // Archetype iteration for read-only querying without QueryState
+    let echo_component_id = world.component_id::<Echo>()?;
+    let source_component_id = world.component_id::<EchoSource>()?;
+    let pos_component_id = world.component_id::<GridPosition>()?;
+
+    for archetype in world.archetypes().iter() {
+        if archetype.contains(pos_component_id) {
+            for entity in archetype.entities() {
+                if let Some(pos) = world.get::<GridPosition>(entity.id()) {
+                    if *pos == target_pos {
+                        if archetype.contains(source_component_id) {
+                            if let Some(source) = world.get::<EchoSource>(entity.id()) {
+                                echo_type_found = Some(source.event_type);
+                                is_source = true;
+                                break;
+                            }
+                        } else if archetype.contains(echo_component_id) {
+                            if let Some(echo) = world.get::<Echo>(entity.id()) {
+                                echo_type_found = Some(echo.event_type);
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        if echo_type_found.is_some() && is_source {
+            break;
+        }
+    }
+
+    echo_type_found.map(|echo_type| {
+        let (label, color) = match echo_type {
+            EchoType::Tragedy => ("Tragedy", Color::Red),
+            EchoType::Triumph => ("Triumph", Color::Yellow),
+            EchoType::Mystery => ("Mystery", Color::Cyan),
+        };
+
+        let prefix = if is_source { "Echo Source: " } else { "Echo: " };
+
+        Line::from(vec![
+            Span::styled(prefix, Style::default().add_modifier(Modifier::BOLD)),
+            Span::styled(label, Style::default().fg(color)),
+        ])
+    })
+}
+
 fn render_tile_inspector(frame: &mut Frame, area: Rect, world: &World, x: i32, y: i32) {
     let terrain = world.resource::<TerrainGrid>();
 
@@ -476,7 +531,7 @@ fn render_tile_inspector(frame: &mut Frame, area: Rect, world: &World, x: i32, y
         });
 
     let purity_line = get_purity_line(world, x, y, terrain_type);
-    let echo_line: Option<Line> = None;
+    let echo_line = get_echo_line(world, x, y);
     let scent_line = get_scent_line(world, x, y);
 
     let mut constraints = vec![
