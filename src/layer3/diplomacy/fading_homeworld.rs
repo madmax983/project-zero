@@ -53,8 +53,42 @@ pub fn refuse_demand(world: &mut World, demand: CoreWorldDemand) {
     }
 }
 
-pub fn handle_core_world_demands_system() {
-    // Boilerplate for event reading/dispatching in real implementation
+pub fn generate_core_world_demand_system(
+    mut events: EventWriter<CoreWorldDemandEvent>,
+    query: Query<(Entity, &CoreWorld)>,
+) {
+    for (entity, core_world) in query.iter() {
+        if core_world.stability < 20.0 {
+            events.send(CoreWorldDemandEvent {
+                demand: CoreWorldDemand {
+                    amount: 200.0,
+                    penalty: 20.0,
+                    faction: entity,
+                },
+            });
+        }
+    }
+}
+
+#[derive(Event, Clone)]
+pub struct PlayerDemandResponse {
+    pub demand: CoreWorldDemand,
+    pub accept: bool,
+}
+
+pub fn handle_core_world_demands_system(
+    world: &mut World,
+) {
+    let mut response_events = world.resource_mut::<Events<PlayerDemandResponse>>();
+    let events: Vec<_> = response_events.drain().collect();
+
+    for response in events {
+        if response.accept {
+            fulfill_demand(world, response.demand);
+        } else {
+            refuse_demand(world, response.demand);
+        }
+    }
 }
 
 #[cfg(test)]

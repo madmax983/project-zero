@@ -1036,3 +1036,9 @@
 - **Systems connected:** `apply_quarantine_effects`, `handle_quarantine_decay`
 - **Glue added:** Registered Layer 2 events in `src/simulation.rs`.
 - **Tests:** `tests/integration/system_quarantine_integration.rs`
+
+### INT-1076: Fading Homeworld -> Economy & Diplomacy
+- **Date:** 2026-07-04
+- **Systems connected:** `generate_core_world_demand_system` -> `handle_core_world_demands_system` -> `ColonyResources` and `DiplomaticRelations`
+- **Glue added:** Added `generate_core_world_demand_system` to emit `CoreWorldDemandEvent`s. Added `PlayerDemandResponse` event and modified `handle_core_world_demands_system` to fulfill or refuse demands based on player responses. Initialized `CoreWorldDemandEvent` and `PlayerDemandResponse` in `simulation.rs`. Registered all 3 fading homeworld systems in `simulation.rs` and added `CoreWorldDemandEvent` and `PlayerDemandResponse` to `cleanup.rs`.
+- **Tests:** `tests/integration/fading_homeworld.rs`

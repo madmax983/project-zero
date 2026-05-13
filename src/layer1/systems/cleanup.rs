@@ -126,6 +126,8 @@ pub fn register(schedule: &mut Schedule) {
             update_event_buffer::<crate::layer1::ransom_broker::PopLostToPiratesEvent>,
             update_event_buffer::<crate::layer1::ransom_broker::PayRansomEvent>,
             update_event_buffer::<crate::layer1::ransom_broker::RefuseRansomEvent>,
+            update_event_buffer::<crate::layer3::diplomacy::fading_homeworld::CoreWorldDemandEvent>,
+            update_event_buffer::<crate::layer3::diplomacy::fading_homeworld::PlayerDemandResponse>,
         )
             .in_set(Layer1SystemSet::EventCleanup),
     );
