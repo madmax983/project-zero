@@ -27,3 +27,8 @@
 **Bloat:** `BeanstalkEvent` enum in `src/layer1/logistics/beanstalk.rs` with 1 variant `Severed`.
 **Cut:** Converted the enum into a concrete struct `pub struct BeanstalkEvent { ... }`.
 **Saved:** Unnecessary matching and enum namespacing.
+
+## [Reduction]
+**Bloat:** `process_ransom_decisions_system` triggering `clippy::too_many_arguments` warning.
+**Cut:** Silenced warning with `#[allow(clippy::too_many_arguments)]` instead of abstracting ECS system parameters into a complex tuple/struct, preserving simple dependency injection.
+**Saved:** Unnecessary parameter grouping structs and abstraction overhead.

@@ -44,6 +44,7 @@ pub fn ransom_demand_system(mut commands: Commands, mut events: EventReader<Rans
     }
 }
 
+#[allow(clippy::too_many_arguments)]
 pub fn process_ransom_decisions_system(
     mut commands: Commands,
     mut resources: ResMut<ColonyResources>,
@@ -73,7 +74,9 @@ pub fn process_ransom_decisions_system(
         if query.get(event.target_pop).is_ok() && !resolved_entities.contains(&event.target_pop) {
             commands.entity(event.target_pop).despawn();
             resolved_entities.insert(event.target_pop);
-            lost_events.send(PopLostToPiratesEvent { target_pop: event.target_pop });
+            lost_events.send(PopLostToPiratesEvent {
+                target_pop: event.target_pop,
+            });
         }
     }
 

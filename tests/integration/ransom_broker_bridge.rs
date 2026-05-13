@@ -1,7 +1,7 @@
 use bevy_ecs::prelude::*;
 use scale::layer1::core::chronicle::{AddChronicleEvent, EventImportance};
-use scale::layer1::ransom_broker::{PopLostToPiratesEvent, PopRansomedEvent};
 use scale::layer1::core::integration::ransom_broker_chronicle_bridge;
+use scale::layer1::ransom_broker::{PopLostToPiratesEvent, PopRansomedEvent};
 
 #[test]
 fn test_ransom_broker_chronicle_bridge() {
