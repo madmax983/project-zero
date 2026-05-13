@@ -557,3 +557,4 @@
 - [x] `INT-1077` Integration: Splicer's Dilemma -> Social/Traits — completed 2026-06-25
 - [x] `INT-1257` Integration: Generational Skill Atrophy -> Economy — completed 2026-06-25
 - [x] `INT-1074` Integration: System Quarantine -> Trade/Warlords — completed 2026-06-25
+- [x] `1073` Benevolent Malfunctions — `specs/1073-benevolent-malfunctions.md` — completed 2024-05-25
