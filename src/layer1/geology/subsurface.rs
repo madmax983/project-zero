@@ -37,69 +37,90 @@ pub fn kinetic_strike_system(
         let actual_hit_x = event.target_x;
         let actual_hit_y = event.target_y;
 
-        // Destroy building if present
-        let mut despawned_building = false;
-        if let Some(ref mut map) = building_map {
-            if let Some(&entity) = map.0.get(&(actual_hit_x, actual_hit_y)) {
-                commands.entity(entity).despawn();
-                map.0.remove(&(actual_hit_x, actual_hit_y));
-                despawned_building = true;
-                chronicle_events.send(AddChronicleEvent {
-                    text: format!(
-                        "A building was destroyed by a kinetic strike at {}, {}",
-                        actual_hit_x, actual_hit_y
-                    ),
-                    importance: EventImportance::Major,
-                });
-            }
-        }
+        chronicle_events.send(AddChronicleEvent {
+            text: "The Colony Called Down the Thunder".to_string(),
+            importance: EventImportance::Major,
+        });
 
-        if despawned_building {
-            if let Some(ref mut occ) = occupied {
-                occ.0.remove(&(actual_hit_x, actual_hit_y));
-            }
-        }
-
+        // Evaluate center tile
         let mut kind_found = None;
         for (entity, resource, pos) in subsurface_query.iter() {
             if pos.x == actual_hit_x && pos.y == actual_hit_y {
                 kind_found = Some(resource.kind);
                 commands.entity(entity).despawn(); // Consume subsurface resource
-                break; // Assuming one resource per tile
+                break; // Assuming one resource per center tile
             }
         }
 
-        if actual_hit_x < 0 || actual_hit_y < 0 {
-            continue;
-        }
-
-        let tx = actual_hit_x as usize;
-        let ty = actual_hit_y as usize;
-
-        if tx < grid.width && ty < grid.height {
-            match kind_found {
-                Some(SubsurfaceResourceKind::OreVein) => {
-                    grid.set(tx, ty, TerrainType::Crater);
-                    chronicle_events.send(AddChronicleEvent {
-                        text: format!(
-                            "Kinetic strike exposed an Ore Vein at {}, {}",
-                            actual_hit_x, actual_hit_y
-                        ),
-                        importance: EventImportance::Standard,
-                    });
+        // Destroy buildings in radius 1 and apply terrain changes
+        for y in (actual_hit_y - 1)..=(actual_hit_y + 1) {
+            for x in (actual_hit_x - 1)..=(actual_hit_x + 1) {
+                let mut despawned_building = false;
+                if let Some(ref mut map) = building_map {
+                    if let Some(&entity) = map.0.get(&(x, y)) {
+                        commands.entity(entity).despawn();
+                        map.0.remove(&(x, y));
+                        despawned_building = true;
+                        chronicle_events.send(AddChronicleEvent {
+                            text: format!(
+                                "A building was destroyed by a kinetic strike at {}, {}",
+                                x, y
+                            ),
+                            importance: EventImportance::Major,
+                        });
+                    }
                 }
-                Some(SubsurfaceResourceKind::Magma) => {
-                    grid.set(tx, ty, TerrainType::MagmaRock);
-                    chronicle_events.send(AddChronicleEvent {
-                        text: format!("Kinetic strike hit a magma pocket, creating an active Volcano at {}, {}", actual_hit_x, actual_hit_y),
-                        importance: EventImportance::Major,
-                    });
+
+                if despawned_building {
+                    if let Some(ref mut occ) = occupied {
+                        occ.0.remove(&(x, y));
+                    }
                 }
-                None => {
-                    // No subsurface resource, just make a crater
-                    grid.set(tx, ty, TerrainType::Crater);
+
+                // consume other resources so they are not left hanging
+                for (entity, _resource, pos) in subsurface_query.iter() {
+                    if pos.x == x && pos.y == y && (x != actual_hit_x || y != actual_hit_y) {
+                        commands.entity(entity).despawn();
+                    }
+                }
+
+                if x < 0 || y < 0 {
+                    continue;
+                }
+
+                let tx = x as usize;
+                let ty = y as usize;
+
+                if tx < grid.width && ty < grid.height {
+                    match kind_found {
+                        Some(SubsurfaceResourceKind::Magma) => {
+                            grid.set(tx, ty, TerrainType::MagmaRock);
+                        }
+                        _ => {
+                            grid.set(tx, ty, TerrainType::Crater);
+                        }
+                    }
                 }
             }
+        }
+
+        match kind_found {
+            Some(SubsurfaceResourceKind::OreVein) => {
+                chronicle_events.send(AddChronicleEvent {
+                    text: format!(
+                        "Kinetic strike exposed an Ore Vein at {}, {}",
+                        actual_hit_x, actual_hit_y
+                    ),
+                    importance: EventImportance::Standard,
+                });
+            }
+            Some(SubsurfaceResourceKind::Magma) => {
+                chronicle_events.send(AddChronicleEvent {
+                    text: format!("Kinetic strike hit a magma pocket, creating an active Volcano at {}, {}", actual_hit_x, actual_hit_y),
+                    importance: EventImportance::Major,
+                });
+            }
+            None => {}
         }
     }
 }
@@ -145,7 +166,10 @@ mod tests {
         app.update();
 
         let terrain = app.world().resource::<TerrainGrid>();
+        assert_eq!(terrain.get(4, 4).unwrap(), TerrainType::Crater);
         assert_eq!(terrain.get(5, 5).unwrap(), TerrainType::Crater);
+        assert_eq!(terrain.get(6, 6).unwrap(), TerrainType::Crater);
+        assert_eq!(terrain.get(7, 7).unwrap(), TerrainType::Grass);
     }
 
     #[test]
@@ -193,7 +217,12 @@ mod tests {
         app.update();
 
         let terrain = app.world().resource::<TerrainGrid>();
+        // Center is 6, 5
+        // (5, 4) is MagmaRock
+        assert_eq!(terrain.get(5, 4).unwrap(), TerrainType::MagmaRock);
         assert_eq!(terrain.get(6, 5).unwrap(), TerrainType::MagmaRock);
+        assert_eq!(terrain.get(7, 6).unwrap(), TerrainType::MagmaRock);
+        assert_eq!(terrain.get(8, 7).unwrap(), TerrainType::Grass);
     }
 
     #[test]
@@ -210,7 +239,7 @@ mod tests {
         app.world_mut().init_resource::<Events<AddChronicleEvent>>();
 
         let mut occupied = OccupiedTiles::default();
-        occupied.0.insert((5, 5));
+        occupied.0.insert((4, 5));
         app.world_mut().insert_resource(occupied);
 
         let building = app
@@ -219,12 +248,12 @@ mod tests {
                 Building {
                     building_type: BuildingType::Housing,
                 },
-                GridPosition { x: 5, y: 5 },
+                GridPosition { x: 4, y: 5 },
             ))
             .id();
 
         let mut map = BuildingMap::default();
-        map.0.insert((5, 5), building);
+        map.0.insert((4, 5), building);
         app.world_mut().insert_resource(map);
 
         app.add_event::<KineticStrikeEvent>();
@@ -238,6 +267,37 @@ mod tests {
 
         assert!(app.world().get_entity(building).is_err());
         let terrain = app.world().resource::<TerrainGrid>();
+        assert_eq!(terrain.get(4, 5).unwrap(), TerrainType::Crater);
         assert_eq!(terrain.get(5, 5).unwrap(), TerrainType::Crater);
+    }
+
+    #[test]
+    fn test_kinetic_strike_oob() {
+        let mut app = App::new();
+        app.add_systems(Update, kinetic_strike_system);
+
+        let grid = TerrainGrid {
+            width: 10,
+            height: 10,
+            tiles: vec![TerrainType::Grass; 100],
+        };
+        app.world_mut().insert_resource(grid);
+        app.world_mut().init_resource::<Events<AddChronicleEvent>>();
+
+        app.add_event::<KineticStrikeEvent>();
+        app.world_mut().send_event(KineticStrikeEvent {
+            target_x: 0,
+            target_y: 0,
+            accuracy_offset: 0.0,
+        });
+
+        app.update();
+
+        let terrain = app.world().resource::<TerrainGrid>();
+        assert_eq!(terrain.get(0, 0).unwrap(), TerrainType::Crater);
+        assert_eq!(terrain.get(1, 0).unwrap(), TerrainType::Crater);
+        assert_eq!(terrain.get(0, 1).unwrap(), TerrainType::Crater);
+        assert_eq!(terrain.get(1, 1).unwrap(), TerrainType::Crater);
+        assert_eq!(terrain.get(2, 2).unwrap(), TerrainType::Grass);
     }
 }
