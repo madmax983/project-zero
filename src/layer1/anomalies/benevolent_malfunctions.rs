@@ -1,9 +1,9 @@
-use bevy_ecs::prelude::*;
-use crate::layer1::prototyping::Prototype;
+use crate::layer1::architecture::structure::Structure;
+use crate::layer1::law::aesthetic_edict::Halted;
 use crate::layer1::nature::temperature::HeatSource;
 use crate::layer1::physics::acoustic::NoiseSource;
-use crate::layer1::law::aesthetic_edict::Halted;
-use crate::layer1::architecture::structure::Structure;
+use crate::layer1::prototyping::Prototype;
+use bevy_ecs::prelude::*;
 
 #[derive(Component, Clone)]
 pub struct BenevolentMalfunction {
@@ -20,7 +20,10 @@ pub enum MalfunctionQuirk {
 
 pub fn apply_malfunction_effects(
     mut commands: Commands,
-    mut query: Query<(Entity, &BenevolentMalfunction, Option<&mut Prototype>), Added<BenevolentMalfunction>>,
+    mut query: Query<
+        (Entity, &BenevolentMalfunction, Option<&mut Prototype>),
+        Added<BenevolentMalfunction>,
+    >,
 ) {
     for (entity, malfunction, prototype) in query.iter_mut() {
         if let Some(mut proto) = prototype {
@@ -44,7 +47,10 @@ pub fn apply_malfunction_quirks(
                 commands.entity(entity).insert(HeatSource { output: 25.0 });
             }
             MalfunctionQuirk::LoudNoise => {
-                commands.entity(entity).insert(NoiseSource { radius: 10.0, intensity: 1.0 });
+                commands.entity(entity).insert(NoiseSource {
+                    radius: 10.0,
+                    intensity: 1.0,
+                });
             }
             MalfunctionQuirk::Unstoppable => {
                 // Remove Halted so it cannot be stopped
@@ -61,7 +67,10 @@ pub struct UnstoppableQuirk;
 
 pub fn process_repairs(
     mut commands: Commands,
-    mut query: Query<(Entity, &mut Prototype, &BenevolentMalfunction, &Structure), Changed<Structure>>,
+    mut query: Query<
+        (Entity, &mut Prototype, &BenevolentMalfunction, &Structure),
+        Changed<Structure>,
+    >,
 ) {
     for (entity, mut prototype, malfunction, structure) in query.iter_mut() {
         // If the structure is fully repaired (or being repaired), we remove the malfunction
@@ -71,9 +80,15 @@ pub fn process_repairs(
 
             commands.entity(entity).remove::<BenevolentMalfunction>();
             match malfunction.quirk {
-                MalfunctionQuirk::ExcessHeat => { commands.entity(entity).remove::<HeatSource>(); }
-                MalfunctionQuirk::LoudNoise => { commands.entity(entity).remove::<NoiseSource>(); }
-                MalfunctionQuirk::Unstoppable => { commands.entity(entity).remove::<UnstoppableQuirk>(); }
+                MalfunctionQuirk::ExcessHeat => {
+                    commands.entity(entity).remove::<HeatSource>();
+                }
+                MalfunctionQuirk::LoudNoise => {
+                    commands.entity(entity).remove::<NoiseSource>();
+                }
+                MalfunctionQuirk::Unstoppable => {
+                    commands.entity(entity).remove::<UnstoppableQuirk>();
+                }
             }
         }
     }
@@ -89,12 +104,13 @@ mod tests {
         let mut app = App::new();
         app.add_systems(Update, apply_malfunction_effects);
 
-        let building = app.world_mut().spawn(
-            BenevolentMalfunction {
+        let building = app
+            .world_mut()
+            .spawn(BenevolentMalfunction {
                 efficiency_bonus: 0.5,
                 quirk: MalfunctionQuirk::ExcessHeat,
-            }
-        ).id();
+            })
+            .id();
 
         app.update();
 
@@ -106,15 +122,29 @@ mod tests {
     #[test]
     fn test_repairing_removes_malfunction() {
         let mut app = App::new();
-        app.add_systems(Update, (apply_malfunction_effects, apply_malfunction_quirks, process_repairs).chain());
+        app.add_systems(
+            Update,
+            (
+                apply_malfunction_effects,
+                apply_malfunction_quirks,
+                process_repairs,
+            )
+                .chain(),
+        );
 
-        let building = app.world_mut().spawn((
-            BenevolentMalfunction {
-                efficiency_bonus: 0.5,
-                quirk: MalfunctionQuirk::LoudNoise,
-            },
-            Structure { current_hp: 50.0, max_hp: 100.0 },
-        )).id();
+        let building = app
+            .world_mut()
+            .spawn((
+                BenevolentMalfunction {
+                    efficiency_bonus: 0.5,
+                    quirk: MalfunctionQuirk::LoudNoise,
+                },
+                Structure {
+                    current_hp: 50.0,
+                    max_hp: 100.0,
+                },
+            ))
+            .id();
 
         app.update(); // Adds Prototype and NoiseSource
 
@@ -140,12 +170,13 @@ mod tests {
         let mut app = App::new();
         app.add_systems(Update, apply_malfunction_quirks);
 
-        let building = app.world_mut().spawn(
-            BenevolentMalfunction {
+        let building = app
+            .world_mut()
+            .spawn(BenevolentMalfunction {
                 efficiency_bonus: 0.5,
                 quirk: MalfunctionQuirk::ExcessHeat,
-            }
-        ).id();
+            })
+            .id();
 
         app.update();
 

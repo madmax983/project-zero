@@ -1,5 +1,8 @@
 use bevy::prelude::*;
-use scale::layer1::biology::genetics::splicers_dilemma::{apply_mutation_system, evaluate_social_friction_system, MutationTarget, FoodPreference, AmenityPreference, SocialInteraction};
+use scale::layer1::biology::genetics::splicers_dilemma::{
+    apply_mutation_system, evaluate_social_friction_system, AmenityPreference, FoodPreference,
+    MutationTarget, SocialInteraction,
+};
 use scale::layer1::entities::pop::Pop;
 use scale::layer1::psychology::traits::{Trait, Traits};
 
@@ -7,20 +10,25 @@ use scale::layer1::psychology::traits::{Trait, Traits};
 fn test_splicers_dilemma_integration() {
     let mut app = App::new();
     app.add_plugins(MinimalPlugins);
-    app.add_systems(Update, (apply_mutation_system, evaluate_social_friction_system).chain());
+    app.add_systems(
+        Update,
+        (apply_mutation_system, evaluate_social_friction_system).chain(),
+    );
 
-    let mutant_pop = app.world_mut().spawn((
-        Pop,
-        Traits::default(),
-        MutationTarget { target_level: 100.0 },
-        FoodPreference::Standard,
-        AmenityPreference::Standard,
-    )).id();
+    let mutant_pop = app
+        .world_mut()
+        .spawn((
+            Pop,
+            Traits::default(),
+            MutationTarget {
+                target_level: 100.0,
+            },
+            FoodPreference::Standard,
+            AmenityPreference::Standard,
+        ))
+        .id();
 
-    let human_pop = app.world_mut().spawn((
-        Pop,
-        Traits::default(),
-    )).id();
+    let human_pop = app.world_mut().spawn((Pop, Traits::default())).id();
 
     app.world_mut().spawn(SocialInteraction {
         initiator: human_pop,

@@ -22,3 +22,8 @@
 **Bloat:** Reassigning field after default initialization for `ColonyResources` in `tests/integration/temporal_chamber_bridge.rs`
 **Cut:** Inline field assignment during default struct instantiation `ColonyResources { fuel: X, ..Default::default() }`
 **Saved:** Reduced mutability and fixed clippy warning.
+
+## [Reduction]
+**Bloat:** `BeanstalkEvent` enum in `src/layer1/logistics/beanstalk.rs` with 1 variant `Severed`.
+**Cut:** Converted the enum into a concrete struct `pub struct BeanstalkEvent { ... }`.
+**Saved:** Unnecessary matching and enum namespacing.
