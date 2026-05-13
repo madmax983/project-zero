@@ -705,7 +705,7 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1072` The Smuggler's Ecosystem — `specs/1072-smugglers-ecosystem.md`
 
 
-- [ ] `1075` The Memorial Economy — `specs/1075-the-memorial-economy.md`
+
 - [ ] `1082` Resonant Architecture — `specs/1082-resonant-architecture.md`
 - [ ] `1083` Kinetic Excavation — `specs/1083-kinetic-excavation.md` - claimed 2024-05-25
 

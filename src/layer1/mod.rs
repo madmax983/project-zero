@@ -53,6 +53,8 @@ pub mod tinkering;
 pub use mind::*;
 pub mod ad_screen;
 /// Bureaucratic Drag system (Spec 175).
+pub mod memorial_economy;
+pub use memorial_economy::*;
 pub mod administration;
 pub use administration::*;
 /// Game balance constants.
