@@ -1,6 +1,6 @@
-use bevy::prelude::*;
 use crate::layer1::economy::resources::ColonyResources;
 use crate::layer3::diplomacy_reflection::DiplomaticRelations;
+use bevy::prelude::*;
 
 #[derive(Component)]
 pub struct CoreWorld {
@@ -62,7 +62,9 @@ mod tests {
     use super::*;
 
     use crate::layer1::economy::resources::ColonyResources;
-    use crate::layer3::diplomacy_reflection::{DiplomaticRelations, DiplomaticStanding, Civilization};
+    use crate::layer3::diplomacy_reflection::{
+        Civilization, DiplomaticRelations, DiplomaticStanding,
+    };
     use crate::shared::time::SimulationTime;
 
     #[test]
@@ -73,10 +75,13 @@ mod tests {
 
         app.add_systems(Update, update_core_world_decay_system);
 
-        let core_faction_id = app.world_mut().spawn(CoreWorld {
-            stability: 100.0,
-            decay_rate: 1.0,
-        }).id();
+        let core_faction_id = app
+            .world_mut()
+            .spawn(CoreWorld {
+                stability: 100.0,
+                decay_rate: 1.0,
+            })
+            .id();
 
         for _ in 0..10 {
             app.world_mut().resource_mut::<SimulationTime>().tick += 1;
@@ -98,12 +103,21 @@ mod tests {
             ..Default::default()
         });
 
-        let core_faction = app.world_mut().spawn((
-            Civilization { id: "Motherland".to_string() },
-            DiplomaticRelations {
-                relations: vec![DiplomaticStanding { target_id: "Colony".to_string(), standing: 50.0, sanctioned: false }]
-            },
-        )).id();
+        let core_faction = app
+            .world_mut()
+            .spawn((
+                Civilization {
+                    id: "Motherland".to_string(),
+                },
+                DiplomaticRelations {
+                    relations: vec![DiplomaticStanding {
+                        target_id: "Colony".to_string(),
+                        standing: 50.0,
+                        sanctioned: false,
+                    }],
+                },
+            ))
+            .id();
 
         app.add_systems(Update, handle_core_world_demands_system);
 
@@ -118,19 +132,31 @@ mod tests {
         let pool = app.world().resource::<ColonyResources>();
         assert!((pool.food - 300.0).abs() < f32::EPSILON);
 
-        let relation = app.world().get::<DiplomaticRelations>(core_faction).unwrap();
+        let relation = app
+            .world()
+            .get::<DiplomaticRelations>(core_faction)
+            .unwrap();
         assert!((relation.relations[0].standing - 50.0).abs() < f32::EPSILON);
     }
 
     #[test]
     fn test_refusing_demand_decreases_standing() {
         let mut app = App::new();
-        let core_faction = app.world_mut().spawn((
-            Civilization { id: "Motherland".to_string() },
-            DiplomaticRelations {
-                relations: vec![DiplomaticStanding { target_id: "Colony".to_string(), standing: 50.0, sanctioned: false }]
-            },
-        )).id();
+        let core_faction = app
+            .world_mut()
+            .spawn((
+                Civilization {
+                    id: "Motherland".to_string(),
+                },
+                DiplomaticRelations {
+                    relations: vec![DiplomaticStanding {
+                        target_id: "Colony".to_string(),
+                        standing: 50.0,
+                        sanctioned: false,
+                    }],
+                },
+            ))
+            .id();
 
         let demand = CoreWorldDemand {
             amount: 200.0,
@@ -140,7 +166,10 @@ mod tests {
 
         refuse_demand(app.world_mut(), demand);
 
-        let relation = app.world().get::<DiplomaticRelations>(core_faction).unwrap();
+        let relation = app
+            .world()
+            .get::<DiplomaticRelations>(core_faction)
+            .unwrap();
         assert!((relation.relations[0].standing - 30.0).abs() < f32::EPSILON);
     }
 }

@@ -22,12 +22,10 @@ pub struct Beanstalk {
 }
 
 #[derive(Event)]
-pub enum BeanstalkEvent {
-    Severed {
-        entity: Entity,
-        origin: GridPosition,
-        direction: Vec2,
-    },
+pub struct BeanstalkEvent {
+    pub entity: Entity,
+    pub origin: GridPosition,
+    pub direction: Vec2,
 }
 
 #[allow(clippy::type_complexity, clippy::needless_pass_by_value)]
@@ -55,7 +53,7 @@ pub fn beanstalk_morale_system(
             let average_morale = total_morale / worker_count as f32 * 100.0; // scale up by 100 to match tests
 
             if average_morale < 10.0 {
-                events.send(BeanstalkEvent::Severed {
+                events.send(BeanstalkEvent {
                     entity: beanstalk_entity,
                     origin: *position,
                     direction: Vec2::new(1.0, 0.0), // Arbitrary fallback direction
@@ -95,7 +93,7 @@ pub fn beanstalk_collapse_system(
     mut structure_query: Query<(Entity, &mut Structure, &GridPosition)>,
 ) {
     for event in events.read() {
-        let BeanstalkEvent::Severed {
+        let BeanstalkEvent {
             entity,
             origin,
             direction,
@@ -206,7 +204,7 @@ mod tests {
             1,
             "A BeanstalkSevered event should be emitted."
         );
-        let BeanstalkEvent::Severed { entity, origin, .. } = sever_events[0];
+        let BeanstalkEvent { entity, origin, .. } = sever_events[0];
         assert_eq!(*entity, beanstalk_entity);
         assert_eq!(origin.x, 10);
     }
@@ -254,7 +252,7 @@ mod tests {
         let beanstalk_entity = app.world_mut().spawn(Beanstalk::default()).id();
 
         // Trigger the collapse event
-        app.world_mut().send_event(BeanstalkEvent::Severed {
+        app.world_mut().send_event(BeanstalkEvent {
             entity: beanstalk_entity,
             origin,
             direction: Vec2::new(1.0, 0.0),
