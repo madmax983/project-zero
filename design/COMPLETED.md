@@ -562,3 +562,4 @@
 - [x] `477` The Ransom Broker — `specs/477-the-ransom-broker.md` — completed 2026-05-13
 - [x] `1075` The Memorial Economy — `specs/1075-the-memorial-economy.md` — completed 2026-05-13
 - [x] `INT-477` Integration: Ransom Broker -> Chronicle — completed 2026-05-13
+- [x] `692` Procedural Dialects — `specs/692-procedural-dialects.md` — completed 2026-10-31
