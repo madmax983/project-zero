@@ -413,7 +413,7 @@ mod kinetic_strike_chronicle;
 mod propaganda_simulacrum_bridge;
 #[path = "integration/psychic_stains_pathfinding.rs"]
 mod psychic_stains_pathfinding;
-#[path = "integration/rust_lung_bridge.rs"]
-mod rust_lung_bridge;
 #[path = "integration/ransom_broker_bridge.rs"]
 mod ransom_broker_bridge;
+#[path = "integration/rust_lung_bridge.rs"]
+mod rust_lung_bridge;
