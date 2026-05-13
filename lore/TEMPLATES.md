@@ -7526,3 +7526,23 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[NAME] finishes the [ARTIFACT_TYPE]. [YEAR]. It is a study in [ARTIFACT_THEME]."
 - "[YEAR]: A new [ARTIFACT_TYPE] is placed in the plaza. [NAME] crafted it to remember the [ARTIFACT_THEME]."
 - "Art from the ashes. [NAME] unveils a [ARTIFACT_TYPE]. The theme is [ARTIFACT_THEME]. [YEAR]."
+
+## Cult of the Broken Machine Templates (Spec 1259)
+
+### BROKEN_MACHINE_CULT_FORMED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [BROKEN_MACHINE_NAME]
+
+**Patterns:**
+- "[YEAR]: They refused to repair [BROKEN_MACHINE_NAME] at [COLONY]. They claim it is finally at peace."
+- "A cult formed around [BROKEN_MACHINE_NAME]. They guard it from the mechanics. [YEAR]."
+- "The uneducated masses of [COLONY] now worship [BROKEN_MACHINE_NAME]. [YEAR]."
+
+### BROKEN_MACHINE_DEFENDED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [BROKEN_MACHINE_NAME], [CULT_VIOLENCE]
+
+**Patterns:**
+- "[YEAR]: The followers of [BROKEN_MACHINE_NAME] [CULT_VIOLENCE] at [COLONY]."
+- "Blood spilled at [COLONY]. The cult [CULT_VIOLENCE] to protect [BROKEN_MACHINE_NAME]. [YEAR]."
+- "Repairs halted. The worshippers [CULT_VIOLENCE] rather than let [BROKEN_MACHINE_NAME] be disturbed. [YEAR]."
