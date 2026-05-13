@@ -19,6 +19,16 @@ pub struct RefuseRansomEvent {
     pub target_pop: Entity,
 }
 
+#[derive(Event)]
+pub struct PopRansomedEvent {
+    pub target_pop: Entity,
+}
+
+#[derive(Event)]
+pub struct PopLostToPiratesEvent {
+    pub target_pop: Entity,
+}
+
 #[derive(Component)]
 pub struct RansomDemand {
     pub cost: u32,
@@ -40,6 +50,8 @@ pub fn process_ransom_decisions_system(
     time: Res<SimulationTime>,
     mut pay_events: EventReader<PayRansomEvent>,
     mut refuse_events: EventReader<RefuseRansomEvent>,
+    mut ransomed_events: EventWriter<PopRansomedEvent>,
+    mut lost_events: EventWriter<PopLostToPiratesEvent>,
     query: Query<(Entity, &RansomDemand)>,
 ) {
     let mut resolved_entities = bevy::utils::HashSet::new();
@@ -51,6 +63,7 @@ pub fn process_ransom_decisions_system(
                 resources.consume(ResourceType::HyperValuable, demand.cost as f32);
                 commands.entity(entity).remove::<RansomDemand>();
                 resolved_entities.insert(entity);
+                ransomed_events.send(PopRansomedEvent { target_pop: entity });
             }
         }
     }
@@ -60,6 +73,7 @@ pub fn process_ransom_decisions_system(
         if query.get(event.target_pop).is_ok() && !resolved_entities.contains(&event.target_pop) {
             commands.entity(event.target_pop).despawn();
             resolved_entities.insert(event.target_pop);
+            lost_events.send(PopLostToPiratesEvent { target_pop: event.target_pop });
         }
     }
 
@@ -68,6 +82,7 @@ pub fn process_ransom_decisions_system(
         if time.tick > demand.deadline_tick && !resolved_entities.contains(&entity) {
             commands.entity(entity).despawn();
             resolved_entities.insert(entity);
+            lost_events.send(PopLostToPiratesEvent { target_pop: entity });
         }
     }
 }
@@ -86,6 +101,8 @@ mod tests {
         app.add_event::<RansomDemandEvent>();
         app.add_event::<PayRansomEvent>();
         app.add_event::<RefuseRansomEvent>();
+        app.add_event::<PopRansomedEvent>();
+        app.add_event::<PopLostToPiratesEvent>();
         app.init_resource::<ColonyResources>();
         app.init_resource::<SimulationTime>();
         app.add_systems(

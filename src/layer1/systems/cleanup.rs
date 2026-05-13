@@ -122,6 +122,8 @@ pub fn register(schedule: &mut Schedule) {
             update_event_buffer::<crate::layer1::environment::impact::ImpactWarningEvent>,
             update_event_buffer::<crate::layer1::environment::impact::ImpactStrikeEvent>,
             update_event_buffer::<crate::layer1::ransom_broker::RansomDemandEvent>,
+            update_event_buffer::<crate::layer1::ransom_broker::PopRansomedEvent>,
+            update_event_buffer::<crate::layer1::ransom_broker::PopLostToPiratesEvent>,
             update_event_buffer::<crate::layer1::ransom_broker::PayRansomEvent>,
             update_event_buffer::<crate::layer1::ransom_broker::RefuseRansomEvent>,
         )

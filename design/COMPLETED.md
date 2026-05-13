@@ -561,3 +561,4 @@
 - [x] `1073` Benevolent Malfunctions — `specs/1073-benevolent-malfunctions.md` — completed 2024-05-25
 - [x] `477` The Ransom Broker — `specs/477-the-ransom-broker.md` — completed 2026-05-13
 - [x] `1075` The Memorial Economy — `specs/1075-the-memorial-economy.md` — completed 2026-05-13
+- [x] `INT-477` Integration: Ransom Broker -> Chronicle — completed 2026-05-13

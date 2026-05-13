@@ -35,6 +35,26 @@ use std::collections::HashSet;
 use crate::layer1::logistics::mass_driver::BombardmentEvent;
 use crate::layer1::logistics::orbital_drop::OrbitalDropEvent;
 
+pub fn ransom_broker_chronicle_bridge(
+    mut ransomed_events: EventReader<crate::layer1::ransom_broker::PopRansomedEvent>,
+    mut lost_events: EventReader<crate::layer1::ransom_broker::PopLostToPiratesEvent>,
+    mut chronicle_events: EventWriter<AddChronicleEvent>,
+) {
+    for _ in ransomed_events.read() {
+        chronicle_events.send(AddChronicleEvent {
+            text: "A colonist was successfully ransomed from pirates.".to_string(),
+            importance: EventImportance::Major,
+        });
+    }
+
+    for _ in lost_events.read() {
+        chronicle_events.send(AddChronicleEvent {
+            text: "A colonist was permanently lost to pirates.".to_string(),
+            importance: EventImportance::Major,
+        });
+    }
+}
+
 /// Bridges `KineticStrikeEvent` to `AddChronicleEvent` (Chronicle).
 pub fn kinetic_strike_chronicle_bridge(
     mut strike_events: EventReader<crate::layer1::geology::subsurface::KineticStrikeEvent>,
