@@ -12,6 +12,7 @@ pub use council::*;
 pub mod diplomacy;
 pub use diplomacy::*;
 pub mod bureaucracy_of_vanity;
+pub mod bureaucracy_of_truth;
 pub mod digital_detritus;
 pub mod diplomacy_reflection;
 pub mod fleets;
