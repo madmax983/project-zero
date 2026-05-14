@@ -192,3 +192,17 @@ pub fn create_instance() -> wgpu::Instance {
         ..Default::default()
     })
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_create_instance() {
+        // Just verify that the wrapper creates a wgpu::Instance without panicking.
+        let instance = create_instance();
+        // Since wgpu::Instance doesn't have many public accessors for its descriptors,
+        // asserting we got an instance is sufficient for basic coverage of the wrapper.
+        let _ = instance;
+    }
+}

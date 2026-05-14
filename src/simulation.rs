@@ -66,8 +66,12 @@ fn init_simulation_resources(world: &mut World) {
     world.init_resource::<crate::layer1::stress::TraumaTracker>();
     world.init_resource::<Events<crate::layer2::skyhooks::LaunchIntent>>();
     world.init_resource::<Events<crate::layer1::tech::rogue_automation_cults::MachineCultFormedEvent>>();
-    world.init_resource::<Events<crate::layer3::diplomacy::fading_homeworld::CoreWorldDemandEvent>>();
-    world.init_resource::<Events<crate::layer3::diplomacy::fading_homeworld::PlayerDemandResponse>>();
+    world
+        .init_resource::<Events<crate::layer3::diplomacy::fading_homeworld::CoreWorldDemandEvent>>(
+        );
+    world
+        .init_resource::<Events<crate::layer3::diplomacy::fading_homeworld::PlayerDemandResponse>>(
+        );
     world.init_resource::<Events<crate::layer1::heirloom_tool::EquipHeirloomEvent>>();
     world.init_resource::<Events<crate::layer1::infrastructure::ancient::ConduitSurgeEvent>>();
     world.init_resource::<Events<crate::layer1::ransom_broker::RansomDemandEvent>>();

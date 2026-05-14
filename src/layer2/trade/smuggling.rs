@@ -1,9 +1,9 @@
+use crate::layer1::economy::black_market::ColonyStats;
+use crate::layer1::economy::items::ItemType;
+use crate::layer1::psychology::needs::Needs;
+use crate::layer2::moon_hermits::AsteroidNode;
 use bevy_app::{App, Plugin, Update};
 use bevy_ecs::prelude::*;
-use crate::layer1::psychology::needs::Needs;
-use crate::layer1::economy::black_market::ColonyStats;
-use crate::layer2::moon_hermits::AsteroidNode;
-use crate::layer1::economy::items::ItemType;
 
 pub struct SmugglerEcosystemPlugin;
 
@@ -39,11 +39,12 @@ fn spawn_smuggler_hubs(
     for (colony_ent, needs, policy) in colonies.iter() {
         for embargoed_item in &policy.embargoes {
             // Treat leisure < 0.2 as an unmet luxury need for contraband like VoidAle
-            let is_unmet = if *embargoed_item == ItemType::VoidAle || *embargoed_item == ItemType::Alcohol {
-                needs.leisure < 0.2
-            } else {
-                needs.hunger < 0.2
-            };
+            let is_unmet =
+                if *embargoed_item == ItemType::VoidAle || *embargoed_item == ItemType::Alcohol {
+                    needs.leisure < 0.2
+                } else {
+                    needs.hunger < 0.2
+                };
 
             if is_unmet {
                 if let Some(node_ent) = available_nodes.pop() {
@@ -68,7 +69,8 @@ fn process_smuggler_trade(
         if hub.active {
             if let Ok(mut needs) = colonies.get_mut(hub.target_colony) {
                 // Fulfill need
-                if hub.supplied_item == ItemType::VoidAle || hub.supplied_item == ItemType::Alcohol {
+                if hub.supplied_item == ItemType::VoidAle || hub.supplied_item == ItemType::Alcohol
+                {
                     needs.leisure = 1.0;
                 } else {
                     needs.hunger = 1.0;
@@ -87,11 +89,11 @@ fn process_smuggler_trade(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use bevy_app::App;
-    use crate::layer1::psychology::needs::Needs;
     use crate::layer1::economy::black_market::ColonyStats;
-    use crate::layer2::moon_hermits::AsteroidNode;
     use crate::layer1::economy::items::ItemType;
+    use crate::layer1::psychology::needs::Needs;
+    use crate::layer2::moon_hermits::AsteroidNode;
+    use bevy_app::App;
 
     #[test]
     fn test_smuggler_hub_spawns_on_unmet_embargoed_need() {
@@ -102,28 +104,31 @@ mod tests {
 
         // Arrange: Create a colony with an unmet need and an embargo on the item
         // Note: For testing, we use leisure to represent a luxury need
-        let _colony_entity = app.world_mut().spawn((
-            Needs {
-                leisure: 0.0, // Unmet need
-                ..Default::default()
-            },
-            EmbargoPolicy {
-                embargoes: vec![ItemType::VoidAle], // Item mapped to luxury
-            },
-        )).id();
+        let _colony_entity = app
+            .world_mut()
+            .spawn((
+                Needs {
+                    leisure: 0.0, // Unmet need
+                    ..Default::default()
+                },
+                EmbargoPolicy {
+                    embargoes: vec![ItemType::VoidAle], // Item mapped to luxury
+                },
+            ))
+            .id();
 
         // Create an unmonitored asteroid belt
-        let asteroid_node = app.world_mut().spawn((
-            AsteroidNode,
-            Unmonitored,
-        )).id();
+        let asteroid_node = app.world_mut().spawn((AsteroidNode, Unmonitored)).id();
 
         // Act: Run the simulation to trigger smuggler hub formation
         app.update();
 
         // Assert: A Smuggler Hub should spawn on the unmonitored node
         let has_hub = app.world().get::<SmugglerHub>(asteroid_node).is_some();
-        assert!(has_hub, "Smuggler Hub should spawn when embargoed goods are demanded");
+        assert!(
+            has_hub,
+            "Smuggler Hub should spawn when embargoed goods are demanded"
+        );
     }
 
     #[test]
@@ -136,29 +141,45 @@ mod tests {
             unmet_luxury: 0,
         });
 
-        let colony_entity = app.world_mut().spawn((
-            Needs {
-                leisure: 0.0,
-                ..Default::default()
-            },
-            EmbargoPolicy {
-                embargoes: vec![ItemType::VoidAle],
-            },
-        )).id();
+        let colony_entity = app
+            .world_mut()
+            .spawn((
+                Needs {
+                    leisure: 0.0,
+                    ..Default::default()
+                },
+                EmbargoPolicy {
+                    embargoes: vec![ItemType::VoidAle],
+                },
+            ))
+            .id();
 
-        let _hub_entity = app.world_mut().spawn((
-            AsteroidNode,
-            SmugglerHub { active: true, target_colony: colony_entity, supplied_item: ItemType::VoidAle },
-        )).id();
+        let _hub_entity = app
+            .world_mut()
+            .spawn((
+                AsteroidNode,
+                SmugglerHub {
+                    active: true,
+                    target_colony: colony_entity,
+                    supplied_item: ItemType::VoidAle,
+                },
+            ))
+            .id();
 
         // Act: Smugglers supply goods
         app.update();
 
         // Assert: Needs are met, but corruption goes up
         let colony_needs = app.world().get::<Needs>(colony_entity).unwrap();
-        assert!(colony_needs.leisure > 0.0, "Smugglers should fulfill the embargoed need");
+        assert!(
+            colony_needs.leisure > 0.0,
+            "Smugglers should fulfill the embargoed need"
+        );
 
         let stats = app.world().resource::<ColonyStats>();
-        assert!(stats.corruption > 0.0, "Smuggler activity should increase colony corruption");
+        assert!(
+            stats.corruption > 0.0,
+            "Smuggler activity should increase colony corruption"
+        );
     }
 }

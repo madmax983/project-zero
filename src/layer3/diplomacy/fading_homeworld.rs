@@ -76,9 +76,7 @@ pub struct PlayerDemandResponse {
     pub accept: bool,
 }
 
-pub fn handle_core_world_demands_system(
-    world: &mut World,
-) {
+pub fn handle_core_world_demands_system(world: &mut World) {
     let mut response_events = world.resource_mut::<Events<PlayerDemandResponse>>();
     let events: Vec<_> = response_events.drain().collect();
 
