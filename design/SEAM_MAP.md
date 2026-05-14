@@ -1042,3 +1042,10 @@
 - **Systems connected:** `generate_core_world_demand_system` -> `handle_core_world_demands_system` -> `ColonyResources` and `DiplomaticRelations`
 - **Glue added:** Added `generate_core_world_demand_system` to emit `CoreWorldDemandEvent`s. Added `PlayerDemandResponse` event and modified `handle_core_world_demands_system` to fulfill or refuse demands based on player responses. Initialized `CoreWorldDemandEvent` and `PlayerDemandResponse` in `simulation.rs`. Registered all 3 fading homeworld systems in `simulation.rs` and added `CoreWorldDemandEvent` and `PlayerDemandResponse` to `cleanup.rs`.
 - **Tests:** `tests/integration/fading_homeworld.rs`
+
+### INT-887: Sunk-Cost Monument -> Economy
+- **Date:** 2026-06-25
+- **Systems connected:** `SunkCostUpkeep` -> `ColonyResources` (Metal) -> `CancelConstructionEvent`
+- **Glue added:** `sunk_cost_resource_drain_system` in `src/layer1/core/integration.rs`
+- **Schedule:** Chained in Update in `src/layer1/systems/economy.rs`
+- **Tests:** `tests/integration/sunk_cost_integration.rs`

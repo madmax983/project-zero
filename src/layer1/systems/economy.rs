@@ -10,6 +10,12 @@ use bevy_ecs::prelude::*;
 pub fn register(schedule: &mut Schedule) {
     schedule.add_systems(
         (
+            crate::layer1::architecture::sunk_cost_monument::calculate_sunk_cost_upkeep_system,
+            crate::layer1::core::integration::sunk_cost_resource_drain_system
+                .after(crate::layer1::architecture::sunk_cost_monument::calculate_sunk_cost_upkeep_system),
+            crate::layer1::architecture::sunk_cost_monument::handle_monument_cancellation_system
+                .after(crate::layer1::core::integration::sunk_cost_resource_drain_system),
+            crate::layer1::architecture::sunk_cost_monument::apply_ruin_morale_penalty_system,
             crate::layer1::anomalies::benevolent_malfunctions::apply_malfunction_effects,
             crate::layer1::anomalies::benevolent_malfunctions::apply_malfunction_quirks,
             crate::layer1::anomalies::benevolent_malfunctions::process_repairs,
