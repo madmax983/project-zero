@@ -444,6 +444,7 @@
 - [x] `972` Corporate Rivals — `specs/972-corporate-rivals.md` — completed 2026-04-21
 - [x] `1132` The Deep Crust Resonance — `specs/1132-deep-crust-resonance.md` - completed 2026-05-01
 - [x] `INT-1132` Integration: Deep Crust Resonance -> Chronicle — completed 2026-05-01
+- [x] `1072` The Smuggler's Ecosystem — `specs/1072-smugglers-ecosystem.md` — completed 2024-05-25
 - [x] `1122` The Rust-Lung Epidemic — `specs/1122-rust-lung-epidemic.md` — completed 2024-05-24
 
 - [x] `1119` Personal Shields — `specs/1119-personal-shields.md` - completed 2024-05-25

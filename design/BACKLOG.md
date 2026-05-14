@@ -702,7 +702,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1069` The Existential Audit — `specs/1069-the-existential-audit.md`
 - [ ] `1070` Feral Infrastructure — `specs/1070-feral-infrastructure.md`
 - [ ] `1071` The Bureaucracy of Truth — `specs/1071-the-bureaucracy-of-truth.md`
-- [ ] `1072` The Smuggler's Ecosystem — `specs/1072-smugglers-ecosystem.md`
 
 
 
