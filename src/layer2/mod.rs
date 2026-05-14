@@ -68,3 +68,5 @@ pub mod orbital_mirrors;
 pub use orbital_mirrors::*;
 pub mod culture;
 pub mod sensors;
+pub mod diaspora;
+pub use diaspora::*;
