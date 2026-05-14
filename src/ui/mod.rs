@@ -170,3 +170,159 @@ pub mod input;
 pub mod menu_state;
 pub mod selection;
 pub mod world_history;
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::ui::shell::build_default_shell;
+    use crate::ui::shell::config::ShellConfig;
+    use ratatui::backend::TestBackend;
+    use ratatui::Terminal;
+    use std::cell::RefCell;
+    use std::rc::Rc;
+
+    fn setup_world() -> World {
+        let mut world = World::new();
+        world.insert_resource(GameState::MainMenu);
+        world.insert_resource(MenuState::default());
+        world.insert_resource(ViewMode::default());
+        world.insert_resource(UiState::default());
+
+        // Needed for map rendering default case
+        world.insert_resource(crate::layer1::resources::ColonyResources::default());
+        world.insert_resource(crate::layer1::locations::NamedLocations::default());
+        world.insert_resource(crate::ui::selection::Selection::default());
+        world.insert_resource(crate::layer1::nature::terrain::Viewport { x: 0, y: 0 });
+        world.insert_resource(crate::layer1::architecture::building::BuildMode::default());
+        world.insert_resource(
+            crate::layer1::administration::designation::DesignationMode::default(),
+        );
+        world.insert_resource(crate::ui::input::InputContextStack::default());
+        world.insert_resource(crate::layer1::nature::weather::WeatherState::default());
+        world.insert_resource(crate::ui::map::RenderCache::default());
+        world.insert_resource(crate::shared::time::WallTime::default());
+        world.insert_resource(crate::layer1::locations::NamedLocations::default());
+        world.insert_resource(crate::ui::selection::Selection::default());
+        world.insert_resource(crate::layer1::nature::terrain::TerrainGrid {
+            width: 10,
+            height: 10,
+            tiles: vec![crate::layer1::nature::terrain::TerrainType::Dirt; 100],
+        });
+        world.insert_resource(crate::layer1::water::WaterGrid {
+            width: 10,
+            height: 10,
+            values: vec![0; 100],
+        });
+        world.insert_resource(crate::layer1::Layer2State::default());
+        world.insert_resource(crate::layer2::system::SystemMap);
+        world.insert_resource(crate::shared::time::SimulationTime::default());
+        world.insert_resource(bevy_ecs::event::Events::<
+            crate::layer1::chronicle::AddChronicleEvent,
+        >::default());
+        world.insert_resource(crate::layer1::Chronicle::default());
+
+        world
+    }
+
+    #[test]
+    fn test_render_main_menu() {
+        let world = setup_world(); // Default is MainMenu
+        let backend = TestBackend::new(80, 24);
+        let mut terminal = Terminal::new(backend).unwrap();
+
+        terminal.draw(|f| render(&world, f)).unwrap();
+    }
+
+    #[test]
+    fn test_render_system_view() {
+        let mut world = setup_world();
+        *world.resource_mut::<GameState>() = GameState::Running;
+        *world.resource_mut::<ViewMode>() = ViewMode::System;
+
+        let backend = TestBackend::new(80, 24);
+        let mut terminal = Terminal::new(backend).unwrap();
+
+        terminal.draw(|f| render(&world, f)).unwrap();
+    }
+
+    #[test]
+    fn test_render_suppress_ui() {
+        let mut world = setup_world();
+        *world.resource_mut::<GameState>() = GameState::Running;
+        world.resource_mut::<UiState>().suppress_global_ui = true;
+
+        let backend = TestBackend::new(80, 24);
+        let mut terminal = Terminal::new(backend).unwrap();
+
+        terminal.draw(|f| render(&world, f)).unwrap();
+    }
+
+    #[test]
+    fn test_render_colony_view() {
+        let mut world = setup_world();
+        *world.resource_mut::<GameState>() = GameState::Running;
+        *world.resource_mut::<ViewMode>() = ViewMode::Colony;
+
+        let backend = TestBackend::new(80, 24);
+        let mut terminal = Terminal::new(backend).unwrap();
+
+        terminal.draw(|f| render(&world, f)).unwrap();
+    }
+
+    #[test]
+    fn test_render_with_shell_main_menu() {
+        let world = setup_world(); // Default is MainMenu
+        let shared_world = Rc::new(RefCell::new(setup_world()));
+        let mut shell = build_default_shell(shared_world, ShellConfig::default());
+
+        let backend = TestBackend::new(80, 24);
+        let mut terminal = Terminal::new(backend).unwrap();
+
+        terminal
+            .draw(|f| render_with_shell(&world, &mut shell, f))
+            .unwrap();
+    }
+
+    #[test]
+    fn test_render_with_shell_suppress_ui() {
+        let mut world = setup_world();
+        *world.resource_mut::<GameState>() = GameState::Running;
+        world.resource_mut::<UiState>().suppress_global_ui = true;
+
+        let shared_world = Rc::new(RefCell::new(setup_world()));
+        let mut shell = build_default_shell(shared_world, ShellConfig::default());
+
+        let backend = TestBackend::new(80, 24);
+        let mut terminal = Terminal::new(backend).unwrap();
+
+        terminal
+            .draw(|f| render_with_shell(&world, &mut shell, f))
+            .unwrap();
+    }
+
+    #[test]
+    fn test_render_with_shell_view_mode_switches() {
+        let mut world = setup_world();
+        *world.resource_mut::<GameState>() = GameState::Running;
+        *world.resource_mut::<ViewMode>() = ViewMode::System;
+
+        let shared_world = Rc::new(RefCell::new(setup_world()));
+        let mut shell = build_default_shell(shared_world, ShellConfig::default());
+
+        let backend = TestBackend::new(80, 24);
+        let mut terminal = Terminal::new(backend).unwrap();
+
+        // Should switch to "System Survey"
+        terminal
+            .draw(|f| render_with_shell(&world, &mut shell, f))
+            .unwrap();
+        assert_eq!(shell.active_workspace_name(), "System Survey");
+
+        // Now change back to Colony view
+        *world.resource_mut::<ViewMode>() = ViewMode::Colony;
+        terminal
+            .draw(|f| render_with_shell(&world, &mut shell, f))
+            .unwrap();
+        assert_eq!(shell.active_workspace_name(), "Colony Ops");
+    }
+}

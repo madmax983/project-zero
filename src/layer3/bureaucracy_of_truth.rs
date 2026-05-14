@@ -1,5 +1,5 @@
-use bevy_ecs::prelude::*;
 use crate::layer2::governance::{Governor, GovernorStats};
+use bevy_ecs::prelude::*;
 
 #[derive(Component)]
 pub struct ColonyState {
@@ -29,7 +29,8 @@ fn calculate_falsified_report(state: &ColonyState, stats: &GovernorStats) -> Col
     } else {
         // Progressive falsification
         ColonyReport {
-            reported_food: state.food_reserves + (state.food_reserves as f32 * corruption_factor * 2.0) as u32,
+            reported_food: state.food_reserves
+                + (state.food_reserves as f32 * corruption_factor * 2.0) as u32,
             reported_unrest: state.unrest * (1.0 - corruption_factor),
         }
     }
@@ -69,82 +70,112 @@ mod tests {
     fn test_corrupt_governor_falsifies_colony_report() {
         let mut app = App::new();
 
-        let pop_entity = app.world_mut().spawn(GovernorStats {
-            loyalty: 10.0,
-            corruption: 90.0,
-            ambition: 0.0,
-        }).id();
+        let pop_entity = app
+            .world_mut()
+            .spawn(GovernorStats {
+                loyalty: 10.0,
+                corruption: 90.0,
+                ambition: 0.0,
+            })
+            .id();
 
-        let colony_entity = app.world_mut().spawn((
-            ColonyState {
-                food_reserves: 10,
-                unrest: 80.0,
-            },
-            Governor {
-                pop_entity,
-                assigned_at: 0,
-            }
-        )).id();
+        let colony_entity = app
+            .world_mut()
+            .spawn((
+                ColonyState {
+                    food_reserves: 10,
+                    unrest: 80.0,
+                },
+                Governor {
+                    pop_entity,
+                    assigned_at: 0,
+                },
+            ))
+            .id();
 
         app.add_systems(Update, generate_colony_reports_system);
         app.update();
 
         let report = app.world().get::<ColonyReport>(colony_entity).unwrap();
 
-        assert!(report.reported_food > 100, "Corrupt governor should falsely report high food");
-        assert!(report.reported_unrest < 10.0, "Corrupt governor should falsely report low unrest");
+        assert!(
+            report.reported_food > 100,
+            "Corrupt governor should falsely report high food"
+        );
+        assert!(
+            report.reported_unrest < 10.0,
+            "Corrupt governor should falsely report low unrest"
+        );
     }
 
     #[test]
     fn test_loyal_governor_reports_truth() {
         let mut app = App::new();
 
-        let pop_entity = app.world_mut().spawn(GovernorStats {
-            loyalty: 90.0,
-            corruption: 0.0,
-            ambition: 0.0,
-        }).id();
+        let pop_entity = app
+            .world_mut()
+            .spawn(GovernorStats {
+                loyalty: 90.0,
+                corruption: 0.0,
+                ambition: 0.0,
+            })
+            .id();
 
-        let colony_entity = app.world_mut().spawn((
-            ColonyState {
-                food_reserves: 10,
-                unrest: 80.0,
-            },
-            Governor {
-                pop_entity,
-                assigned_at: 0,
-            }
-        )).id();
+        let colony_entity = app
+            .world_mut()
+            .spawn((
+                ColonyState {
+                    food_reserves: 10,
+                    unrest: 80.0,
+                },
+                Governor {
+                    pop_entity,
+                    assigned_at: 0,
+                },
+            ))
+            .id();
 
         app.add_systems(Update, generate_colony_reports_system);
         app.update();
 
         let report = app.world().get::<ColonyReport>(colony_entity).unwrap();
 
-        assert_eq!(report.reported_food, 10, "Loyal governor should report exact food");
-        assert_eq!(report.reported_unrest, 80.0, "Loyal governor should report exact unrest");
+        assert_eq!(
+            report.reported_food, 10,
+            "Loyal governor should report exact food"
+        );
+        assert_eq!(
+            report.reported_unrest, 80.0,
+            "Loyal governor should report exact unrest"
+        );
     }
 
     #[test]
     fn test_progressive_falsification_scales_with_corruption() {
         let mut app = App::new();
 
-        let pop_entity = app.world_mut().spawn(GovernorStats {
-            loyalty: 50.0,
-            corruption: 50.0,
-            ambition: 0.0,
-        }).id();
+        let pop_entity = app
+            .world_mut()
+            .spawn(GovernorStats {
+                loyalty: 50.0,
+                corruption: 50.0,
+                ambition: 0.0,
+            })
+            .id();
 
-        let colony_entity = app.world_mut().spawn((
-            ColonyState {
-                food_reserves: 100,
-                unrest: 50.0,
-            },
-            Governor {
-                pop_entity,
-                assigned_at: 0,
-            }
-        )).id();
+        let colony_entity = app
+            .world_mut()
+            .spawn((
+                ColonyState {
+                    food_reserves: 100,
+                    unrest: 50.0,
+                },
+                Governor {
+                    pop_entity,
+                    assigned_at: 0,
+                },
+            ))
+            .id();
 
         app.add_systems(Update, generate_colony_reports_system);
         app.update();
@@ -152,34 +183,49 @@ mod tests {
         let report = app.world().get::<ColonyReport>(colony_entity).unwrap();
 
         // With 50% corruption, report should be halfway falsified
-        assert!(report.reported_food > 100, "Should be partially falsified up");
+        assert!(
+            report.reported_food > 100,
+            "Should be partially falsified up"
+        );
         assert!(report.reported_food < 1000, "Should not be fully falsified");
 
-        assert!(report.reported_unrest < 50.0, "Should be partially falsified down");
-        assert!(report.reported_unrest > 0.0, "Should not be fully falsified");
+        assert!(
+            report.reported_unrest < 50.0,
+            "Should be partially falsified down"
+        );
+        assert!(
+            report.reported_unrest > 0.0,
+            "Should not be fully falsified"
+        );
     }
 
     #[test]
     fn test_inquisitor_reveals_truth() {
         let mut app = App::new();
 
-        let pop_entity = app.world_mut().spawn(GovernorStats {
-            loyalty: 0.0,
-            corruption: 100.0,
-            ambition: 0.0,
-        }).id();
+        let pop_entity = app
+            .world_mut()
+            .spawn(GovernorStats {
+                loyalty: 0.0,
+                corruption: 100.0,
+                ambition: 0.0,
+            })
+            .id();
 
-        let colony_entity = app.world_mut().spawn((
-            ColonyState {
-                food_reserves: 10,
-                unrest: 80.0,
-            },
-            Governor {
-                pop_entity,
-                assigned_at: 0,
-            },
-            Inquisitor
-        )).id();
+        let colony_entity = app
+            .world_mut()
+            .spawn((
+                ColonyState {
+                    food_reserves: 10,
+                    unrest: 80.0,
+                },
+                Governor {
+                    pop_entity,
+                    assigned_at: 0,
+                },
+                Inquisitor,
+            ))
+            .id();
 
         app.add_systems(Update, generate_colony_reports_system);
         app.update();
