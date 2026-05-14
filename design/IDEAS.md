@@ -19788,3 +19788,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you employ a massive, inefficient administration sector just in case of a disaster, or run a lean admin team and risk societal paralysis if a sudden tragedy strikes?
 
 ---
+
+## The Smuggler's Oxygen Network
+
+**Layer:** 1
+
+**Fantasy:** A shadow economy built around off-the-books life support on a gas giant or toxic world.
+
+**Mechanic:** Pops can siphon life-support gases (oxygen, heat) from official colony lines and store them in hidden, illicit caches. When the main grid fails or is rationed by the player, this shadow network keeps certain sectors alive while others perish, operating via a barter economy instead of official credits.
+
+**Emergence:** You intentionally trigger rolling blackouts to save energy, expecting minor productivity losses, but notice a specific slum sector is completely unaffected and wildly productive, having secretly built a massive, untaxed parallel infrastructure out of stolen pipes.
+
+**Tension:** Do you crack down on the smugglers to regain control of your resources and enforce rationing, risking a violent uprising in the sectors that rely on them, or do you ignore the theft because they are effectively managing life support better than you are?
+
+---
+
+## Feral Terraforming Drones
+
+**Layer:** Cross-layer
+
+**Fantasy:** Planet-altering machinery that has lost its master programming and continues to work based on corrupted, hyper-localized logic.
+
+**Mechanic:** Layer 2 planetary surveys can reveal abandoned terraforming engines. When activated, they begin aggressively altering the planet's biome, but not necessarily to the player's ideal parameters. They might start turning a temperate world into a molten hellscape, or a barren rock into a hyper-aggressive jungle.
+
+**Emergence:** You activate an ancient drone swarm hoping for a lush paradise, but their corrupted sensors misinterpret "optimal habitability" and they begin violently converting all water on the planet into a highly toxic, but energy-dense, acidic sludge, destroying your agriculture but solving your energy crisis.
+
+**Tension:** Do you try to hack and shut down the feral drones, losing the free planetary engineering, or do you violently adapt your colony's biology to survive the bizarre, horrifying new environment they are creating?
+
+---
+
+## The Cargo Cult Diplomat
+
+**Layer:** Cross-layer
+
+**Fantasy:** First contact gone wrong, where a primitive or isolated society worships your discarded technology rather than engaging with you as equals.
+
+**Mechanic:** When expanding to a new system in Layer 3, you encounter a pre-FTL society that has built their entire culture around a crashed, ancient probe from your civilization. Diplomatic actions are wildly unpredictable; they might interpret a trade offer as a religious heresy or a minor border skirmish as the end of days.
+
+**Emergence:** You attempt to peacefully uplift the society by sharing medical tech. They misinterpret the glowing blue data drives as holy relics, start violently warring over who gets to hold them, and completely ignore the medical data, accidentally sparking a bloody holy war on their planet.
+
+**Tension:** Do you aggressively break their religious illusions by showing them the truth, likely causing massive societal collapse and hatred, or do you play along and manipulate them using fake "divine" technology to secure their loyalty?
+
+---
