@@ -19830,3 +19830,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you aggressively break their religious illusions by showing them the truth, likely causing massive societal collapse and hatred, or do you play along and manipulate them using fake "divine" technology to secure their loyalty?
 
 ---
+
+## The Silence Pact
+
+**Layer:** Cross-layer
+
+**Fantasy:** A colony has discovered something horrifying, and the only way to contain it is by isolating themselves from the broader empire.
+
+**Mechanic:** A colony can enter a "Silence Pact" mode. It stops sending taxes, communication, and trade to Layer 2/3, but its internal threat meter stops increasing. Breaking the silence summons whatever they were hiding from.
+
+**Emergence:** Players might use this as a temporary quarantine to save a critical world, but forget to lift it, leading to a rogue, highly advanced isolationist world.
+
+**Tension:** Do you sacrifice a highly productive colony's output to save them, or risk a systemic contagion?
+
+---
+
+## The Heirloom Disease
+
+**Layer:** 1
+
+**Fantasy:** The colony's original founders brought a latent genetic condition that finally expresses itself generations later.
+
+**Mechanic:** Pops tracing their lineage to specific founders develop a unique trait (could be a disease, or a strange new requirement like needing specific atmospheric pressure). This slowly spreads through the population as generations pass.
+
+**Emergence:** A vital caste of workers (like the engineers) might suddenly all share this trait, making the colony highly vulnerable if their specific needs aren't met.
+
+**Tension:** Do you segregate the affected population, or invest massive resources into retrofitting your infrastructure to accommodate them?
+
+---
+
+## The Orbital Ransom
+
+**Layer:** 2
+
+**Fantasy:** Pirates or a rogue AI have taken control of a critical orbital tether, holding the planet's trade hostage.
+
+**Mechanic:** An orbital structure (Layer 2) is seized. The captors demand regular shipments of a specific, high-value resource from the planet (Layer 1). Failure to pay results in orbital strikes destroying random surface infrastructure.
+
+**Emergence:** The resource demanded might cause severe shortages, leading to Layer 1 riots. The player might intentionally let the strikes hit to clear out obsolete buildings they couldn't afford to demolish.
+
+**Tension:** Do you pay the exorbitant ransom and cripple your economy, or risk the unpredictable orbital bombardment while building a defense fleet?
+
+---
