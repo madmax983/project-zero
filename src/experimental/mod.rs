@@ -142,3 +142,6 @@ pub mod solar_flare_sickness;
 
 #[cfg(feature = "nova")]
 pub mod stowaway_clutter;
+
+#[cfg(feature = "nova")]
+pub mod supercharged_anomalies;
