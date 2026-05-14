@@ -1049,3 +1049,9 @@
 - **Glue added:** `sunk_cost_resource_drain_system` in `src/layer1/core/integration.rs`
 - **Schedule:** Chained in Update in `src/layer1/systems/economy.rs`
 - **Tests:** `tests/integration/sunk_cost_integration.rs`
+
+### INT-249: Holographic Facades -> Morale
+- **Date:** 2026-06-25
+- **Systems connected:** `update_holograms_system` -> `HologramFailureEvent` -> `apply_disillusionment_system` -> `Morale`
+- **Glue added:** Added `HologramFailureEvent` to `update_event_buffer` in `src/layer1/systems/cleanup.rs`.
+- **Tests:** `tests/integration/holographic_facades.rs`
