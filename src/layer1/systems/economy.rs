@@ -93,8 +93,8 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::tech::ghost_code::residue_system,
             crate::layer1::tech::ghost_code::ghost_infection_system,
             crate::layer1::tech::ghost_code::apply_ghost_traits_system,
-            crate::layer1::hologram::update_holograms_system,
-            crate::layer1::hologram::apply_disillusionment_system,
+            (crate::layer1::hologram::update_holograms_system,
+            crate::layer1::hologram::apply_disillusionment_system).chain(),
         )
             .in_set(Layer1SystemSet::Economy),
     );
