@@ -10,6 +10,7 @@ pub struct Governor {
 
 #[derive(Component, Debug, Clone)]
 pub struct GovernorStats {
+    pub loyalty: f32,
     pub ambition: f32,
     pub corruption: f32,
 }
@@ -39,6 +40,7 @@ pub fn assign_governor(world: &mut World, planet: Entity, pop: Entity) {
     // Add stats to pop so it can be tracked
     if world.get::<GovernorStats>(pop).is_none() {
         world.entity_mut(pop).insert(GovernorStats {
+            loyalty: 100.0,
             ambition: 0.0,
             corruption: 0.0,
         });
@@ -137,6 +139,7 @@ mod tests {
             .spawn((
                 Pop,
                 GovernorStats {
+                    loyalty: 100.0,
                     ambition: 0.0,
                     corruption: 0.0,
                 },
@@ -174,6 +177,7 @@ mod tests {
             .spawn((
                 Pop,
                 GovernorStats {
+                    loyalty: 100.0,
                     ambition: 100.0,
                     corruption: 0.0,
                 },
