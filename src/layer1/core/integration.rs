@@ -128,7 +128,7 @@ pub fn apex_meat_distribution_system(
 
 /// Bridges `TemporalChamber` to `ColonyResources` (Fuel) and `AddChronicleEvent` for shockwave.
 pub fn temporal_chamber_power_bridge_system(
-    mut resources: ResMut<crate::layer1::resources::ColonyResources>,
+    mut resources: ResMut<crate::layer1::economy::resources::ColonyResources>,
     mut chambers: Query<&mut crate::layer1::temporal_chamber::TemporalChamber>,
     mut chronicle_events: EventWriter<AddChronicleEvent>,
 ) {
@@ -1760,7 +1760,7 @@ pub fn beacon_trade_ship_bridge(
 /// INT-762: Bridges PirateRaidEvent to Resource loss and Morale penalty
 pub fn beacon_pirate_raid_bridge(
     mut events: EventReader<crate::layer1::void_weed::PirateRaidEvent>,
-    mut resources: ResMut<crate::layer1::resources::ColonyResources>,
+    mut resources: ResMut<crate::layer1::economy::resources::ColonyResources>,
     mut pops: Query<&mut crate::layer1::morale::Morale, With<crate::layer1::pop::Pop>>,
     mut chronicle_events: EventWriter<crate::layer1::core::chronicle::AddChronicleEvent>,
 ) {
@@ -2172,5 +2172,22 @@ pub fn cryo_prison_sabotage_bridge_system(
             text: "A thawed criminal sabotaged colony infrastructure!".to_string(),
             importance: EventImportance::Major,
         });
+    }
+}
+
+/// INT-887: Bridges `SunkCostUpkeep` (Sunk-Cost Monument) to `ColonyResources` (Economy).
+pub fn sunk_cost_resource_drain_system(
+    query: Query<(Entity, &crate::layer1::architecture::sunk_cost_monument::SunkCostUpkeep)>,
+    mut resources: ResMut<crate::layer1::economy::resources::ColonyResources>,
+    mut cancel_events: EventWriter<crate::layer1::architecture::sunk_cost_monument::CancelConstructionEvent>,
+) {
+    for (entity, upkeep) in query.iter() {
+        let cost = upkeep.base_cost * upkeep.multiplier.powf(upkeep.ticks_building as f32);
+
+        if resources.get_amount(crate::layer1::economy::resources::ResourceType::Metal) >= cost {
+            resources.consume(crate::layer1::economy::resources::ResourceType::Metal, cost);
+        } else {
+            cancel_events.send(crate::layer1::architecture::sunk_cost_monument::CancelConstructionEvent(entity));
+        }
     }
 }
