@@ -661,3 +661,4 @@ pub mod golden_age;
 pub use golden_age::*;
 pub mod inherited_grudges;
 pub use inherited_grudges::*;
+pub mod emotional_contagion;
