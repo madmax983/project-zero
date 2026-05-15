@@ -24,12 +24,12 @@ fn test_proximity_social_buff_applied() {
         .entity_mut(pop1)
         .get_mut::<Relationships>()
         .unwrap()
-        .set_affinity(pop2, 50.0);
+        .set_affinity(pop2, 50.0, 0);
     world
         .entity_mut(pop2)
         .get_mut::<Relationships>()
         .unwrap()
-        .set_affinity(pop1, 50.0);
+        .set_affinity(pop1, 50.0, 0);
 
     // 3. Run Simulation Tick
     scale::simulation::run_simulation_tick(&mut world);
@@ -64,7 +64,7 @@ fn test_proximity_social_debuff_applied() {
         .entity_mut(pop1)
         .get_mut::<Relationships>()
         .unwrap()
-        .set_affinity(pop2, -50.0);
+        .set_affinity(pop2, -50.0, 0);
 
     scale::simulation::run_simulation_tick(&mut world);
 

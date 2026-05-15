@@ -47,9 +47,9 @@ pub fn calculate_relationship_mood_buff_system(
     for (rels, mut morale) in query.iter_mut() {
         let mut total_buff = 0.0;
         for (_, &score) in rels.affinities.iter() {
-            if score >= 50.0 {
+            if score.0 >= 50.0 {
                 total_buff += 0.5; // Friendly buff
-            } else if score <= -50.0 {
+            } else if score.0 <= -50.0 {
                 total_buff -= 0.5; // Rivalry debuff
             }
         }
@@ -122,7 +122,7 @@ mod tests {
 
         let entity2 = app.world_mut().spawn(Pop).id();
 
-        let bonds = Relationships::with_affinity(entity2, 50.0);
+        let bonds = Relationships::with_affinity(entity2, 50.0, 0);
 
         let entity1 = app
             .world_mut()

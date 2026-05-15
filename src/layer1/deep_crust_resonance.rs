@@ -54,7 +54,7 @@ pub fn resonance_social_spread_system(
             // For every pop this pop has a relationship with
             for (&target, &affinity) in &rel.affinities {
                 // If the target is infected and they are friends (or just related)
-                if q_infected.get(target).is_ok() && affinity > 0.0 {
+                if q_infected.get(target).is_ok() && affinity.0 > 0.0 {
                     to_infect.push(entity);
                     break; // Just need one infected friend to get paranoid
                 }
@@ -125,7 +125,7 @@ mod tests {
             .spawn((Pop, ResonantInfection { severity: 1.0 }))
             .id();
         let mut rels = Relationships::default();
-        rels.affinities.insert(pop_a, 0.5); // pop_b likes pop_a
+        rels.affinities.insert(pop_a, (0.5, 0)); // pop_b likes pop_a
         let pop_b = app.world_mut().spawn((Pop, Morale::default(), rels)).id();
 
         app.update();

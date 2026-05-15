@@ -48,10 +48,10 @@ pub fn the_final_will_system(
 
         if let Ok(rels) = relationships.get(deceased_entity) {
             for (&target_entity, &affinity) in &rels.affinities {
-                if affinity > highest_affinity {
+                if affinity.0 > highest_affinity {
                     // Check if the heir is actually alive and has a wallet to receive funds
                     if wallets.contains(target_entity) {
-                        highest_affinity = affinity;
+                        highest_affinity = affinity.0;
                         best_heir = Some(target_entity);
                     }
                 }
@@ -119,8 +119,8 @@ mod tests {
             .id();
 
         let mut affinities = HashMap::new();
-        affinities.insert(heir1, 50.0);
-        affinities.insert(heir2, 90.0); // Highest affinity
+        affinities.insert(heir1, (50.0, 0));
+        affinities.insert(heir2, (90.0, 0)); // Highest affinity
 
         let deceased = world
             .spawn((
@@ -172,7 +172,7 @@ mod tests {
             .id();
 
         let mut affinities = HashMap::new();
-        affinities.insert(heir1, -50.0); // Negative affinity
+        affinities.insert(heir1, (-50.0, 0)); // Negative affinity
 
         let deceased = world
             .spawn((
@@ -219,7 +219,7 @@ mod tests {
             .id();
 
         let mut affinities = HashMap::new();
-        affinities.insert(heir1, 90.0);
+        affinities.insert(heir1, (90.0, 0));
 
         let deceased = world
             .spawn((

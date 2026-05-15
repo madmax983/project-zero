@@ -122,7 +122,7 @@ pub fn post_grievance_system(
         // Attempt to find a target based on relationships
         if let Some(rel) = relationships {
             let candidates: Vec<(Entity, f32)> =
-                rel.affinities.iter().map(|(&e, &val)| (e, val)).collect();
+                rel.affinities.iter().map(|(&e, &(val, _))| (e, val)).collect();
 
             if let Some((t_entity, t_val)) = candidates.choose(&mut rng) {
                 let matches_sentiment = match s {

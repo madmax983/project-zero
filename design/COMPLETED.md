@@ -570,3 +570,4 @@
 - [x] `INT-249` Integration: Holographic Facades -> Morale — completed 2026-06-25
 - [x] `1095` Intellectual Property Wars — `specs/1095-intellectual-property-wars.md` - completed 2026-03-25
 - [x] `266` Emotional Contagion — `specs/266-emotional-contagion.md` — completed 2026-05-15
+- [x] `680` The Memory Blackout — `specs/680-the-memory-blackout.md` — completed 2026-06-25

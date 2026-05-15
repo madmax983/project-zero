@@ -75,7 +75,7 @@ mod integration_tests {
             .spawn((
                 Pop,
                 GridPosition { x: 5, y: 5 },
-                Relationships::with_affinity(Entity::PLACEHOLDER, 50.0), // Updated below
+                Relationships::with_affinity(Entity::PLACEHOLDER, 50.0, 0), // Updated below
                 Ostracized,
             ))
             .id();
@@ -89,7 +89,7 @@ mod integration_tests {
         app.world_mut()
             .get_mut::<Relationships>(pop1)
             .unwrap()
-            .set_affinity(pop2, 50.0);
+            .set_affinity(pop2, 50.0, 0);
 
         // Run proximity system
         app.add_systems(Update, proximity_social_system);

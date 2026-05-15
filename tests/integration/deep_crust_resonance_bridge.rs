@@ -28,7 +28,7 @@ fn test_deep_crust_resonance_integration() {
     let pop_a = app.world_mut().spawn((Pop, Morale::default())).id();
 
     let mut rels = Relationships::default();
-    rels.affinities.insert(pop_a, 0.5); // pop_b likes pop_a
+    rels.affinities.insert(pop_a, (0.5, 0)); // pop_b likes pop_a
     let pop_b = app.world_mut().spawn((Pop, Morale::default(), rels)).id();
 
     let resonant_ore = app.world_mut().spawn(ResonantOre).id();

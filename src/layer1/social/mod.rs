@@ -113,26 +113,26 @@ pub fn restore_leisure_system(
 #[derive(Component, Default)]
 pub struct Relationships {
     /// Map of target entity to affinity value (-100.0 to 100.0).
-    pub affinities: HashMap<Entity, f32>,
+    pub affinities: HashMap<Entity, (f32, u64)>,
 }
 
 impl Relationships {
     /// Gets the affinity towards a target entity. Defaults to 0.0 (Neutral).
     #[must_use]
     pub fn get_affinity(&self, target: Entity) -> f32 {
-        *self.affinities.get(&target).unwrap_or(&0.0)
+        self.affinities.get(&target).map_or(0.0, |(v, _)| *v)
     }
 
     /// Sets the affinity towards a target entity, clamping between -100.0 and 100.0.
-    pub fn set_affinity(&mut self, target: Entity, value: f32) {
-        self.affinities.insert(target, value.clamp(-100.0, 100.0));
+    pub fn set_affinity(&mut self, target: Entity, value: f32, current_tick: u64) {
+        self.affinities.insert(target, (value.clamp(-100.0, 100.0), current_tick));
     }
 
     /// Helper to create a Relationships component with an initial affinity.
     #[must_use]
-    pub fn with_affinity(target: Entity, value: f32) -> Self {
+    pub fn with_affinity(target: Entity, value: f32, current_tick: u64) -> Self {
         let mut r = Self::default();
-        r.set_affinity(target, value);
+        r.set_affinity(target, value, current_tick);
         r
     }
 }
@@ -160,6 +160,7 @@ pub fn modify_affinity_system(
     mut query: Query<&mut Relationships>,
     augmentations: Query<&Augmentations>,
     prosthetics: Query<&Prosthetic>,
+    time: Res<crate::shared::time::SimulationTime>,
 ) {
     for event in events.read() {
         if let Ok(mut rel) = query.get_mut(event.source) {
@@ -181,7 +182,7 @@ pub fn modify_affinity_system(
             }
 
             let current = rel.get_affinity(event.target);
-            rel.set_affinity(event.target, current + amount);
+            rel.set_affinity(event.target, current + amount, time.tick);
         }
     }
 }
@@ -357,6 +358,7 @@ mod tests {
         // Register and run system
         let mut schedule = Schedule::default();
         schedule.add_systems(modify_affinity_system);
+        world.insert_resource(crate::shared::time::SimulationTime { tick: 0, speed: crate::shared::time::SimSpeed::Normal });
         schedule.run(&mut world);
 
         let rel = world.get::<Relationships>(pop1).unwrap();
@@ -379,6 +381,7 @@ mod tests {
 
         let mut schedule = Schedule::default();
         schedule.add_systems(modify_affinity_system);
+        world.insert_resource(crate::shared::time::SimulationTime { tick: 0, speed: crate::shared::time::SimSpeed::Normal });
         schedule.run(&mut world);
 
         let rel = world.get::<Relationships>(pop1).unwrap();
@@ -394,7 +397,7 @@ mod tests {
             .spawn((
                 Pop,
                 GridPosition { x: 10, y: 10 },
-                Relationships::with_affinity(Entity::PLACEHOLDER, 50.0), // Placeholder until updated
+                Relationships::with_affinity(Entity::PLACEHOLDER, 50.0, 0), // Placeholder until updated
             ))
             .id();
 
@@ -409,11 +412,12 @@ mod tests {
         world
             .get_mut::<Relationships>(pop1)
             .unwrap()
-            .set_affinity(pop2, 50.0);
+            .set_affinity(pop2, 50.0, 0);
 
         // Run proximity system
         let mut schedule = Schedule::default();
         schedule.add_systems(proximity_social_system);
+        world.insert_resource(crate::shared::time::SimulationTime { tick: 0, speed: crate::shared::time::SimSpeed::Normal });
         schedule.run(&mut world);
 
         // Check for SocialBuff component
@@ -436,10 +440,11 @@ mod tests {
         world
             .get_mut::<Relationships>(pop1)
             .unwrap()
-            .set_affinity(pop2, -50.0);
+            .set_affinity(pop2, -50.0, 0);
 
         let mut schedule = Schedule::default();
         schedule.add_systems(proximity_social_system);
+        world.insert_resource(crate::shared::time::SimulationTime { tick: 0, speed: crate::shared::time::SimSpeed::Normal });
         schedule.run(&mut world);
 
         let buff = world.get::<SocialBuff>(pop1);

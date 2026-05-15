@@ -389,3 +389,86 @@ mod tests {
         assert!((effective_day - 0.45).abs() < 0.001);
     }
 }
+
+#[derive(Event, Debug, Clone)]
+pub struct MemoryBlackoutEvent {
+    pub start_time: u64,
+    pub end_time: u64,
+}
+
+pub fn process_memory_blackout_system(
+    mut events: EventReader<MemoryBlackoutEvent>,
+    mut query: Query<(Option<&mut Memories>, Option<&mut crate::layer1::social::Relationships>), With<crate::layer1::pop::Pop>>,
+) {
+    for event in events.read() {
+        for (memory_opt, relations_opt) in query.iter_mut() {
+            if let Some(mut memory) = memory_opt {
+                memory.items.retain(|e| e.added_at < event.start_time || e.added_at > event.end_time);
+            }
+            if let Some(mut relations) = relations_opt {
+                relations.affinities.retain(|_, &mut (_, ts)| ts < event.start_time || ts > event.end_time);
+            }
+        }
+    }
+}
+
+#[cfg(test)]
+mod blackout_tests {
+    use super::*;
+    use bevy::prelude::*;
+    use crate::layer1::pop::Pop;
+    use crate::layer1::social::Relationships;
+
+    #[test]
+    fn test_memory_blackout_removes_recent_memories() {
+        let mut app = App::new();
+        app.add_event::<MemoryBlackoutEvent>();
+        app.add_systems(Update, process_memory_blackout_system);
+
+        let pop = app.world_mut().spawn((
+            Pop,
+            Memories {
+                items: vec![
+                    ActiveMemory { memory_type: MemoryType::StarvationTrauma, added_at: 100, intensity: 1.0 },
+                    ActiveMemory { memory_type: MemoryType::WitnessedDeath, added_at: 500, intensity: 1.0 },
+                ]
+            }
+        )).id();
+
+        app.world_mut().resource_mut::<Events<MemoryBlackoutEvent>>().send(MemoryBlackoutEvent {
+            start_time: 400,
+            end_time: 600,
+        });
+
+        app.update();
+
+        let memory = app.world().get::<Memories>(pop).unwrap();
+        assert_eq!(memory.items.len(), 1, "Recent memory should be erased");
+        assert_eq!(memory.items[0].memory_type, MemoryType::StarvationTrauma, "Old memory should be retained");
+    }
+
+    #[test]
+    fn test_memory_blackout_resets_recent_relationships() {
+        let mut app = App::new();
+        app.add_event::<MemoryBlackoutEvent>();
+        app.add_systems(Update, process_memory_blackout_system);
+
+        let pop1 = app.world_mut().spawn(Pop).id();
+        let pop2 = app.world_mut().spawn(Pop).id();
+
+        let mut rels = Relationships::default();
+        rels.set_affinity(pop2, 50.0, 450);
+
+        app.world_mut().entity_mut(pop1).insert(rels);
+
+        app.world_mut().resource_mut::<Events<MemoryBlackoutEvent>>().send(MemoryBlackoutEvent {
+            start_time: 400,
+            end_time: 600,
+        });
+
+        app.update();
+
+        let relationships = app.world().get::<Relationships>(pop1).unwrap();
+        assert!(relationships.affinities.is_empty(), "Recent relationships should be reset");
+    }
+}
