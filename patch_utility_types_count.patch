@@ -1,0 +1,19 @@
+--- src/layer1/mind/utility_types.rs
++++ src/layer1/mind/utility_types.rs
+@@ -165,7 +165,7 @@
+ }
+
+ impl ActionType {
+-    pub const COUNT: usize = 44; // Must match number of variants
++    pub const COUNT: usize = 45; // Must match number of variants
+
+     #[must_use]
+     pub const fn as_index(self) -> usize {
+@@ -250,6 +250,7 @@
+             Self::Flee => 42,
+             Self::Sabotage => 43,
+             Self::Gossip => 44,
++            Self::RealityCollapse => 45,
+         }
+     }
+ }

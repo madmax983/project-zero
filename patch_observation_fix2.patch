@@ -1,0 +1,11 @@
+--- src/layer1/systems/observation.rs
++++ src/layer1/systems/observation.rs
+@@ -211,6 +211,8 @@
+             crate::layer1::integration::hospitalization_notification_system
+                 .after(work_execution_system),
+             crate::layer1::integration::pop_death_notification_system.after(natural_death_system),
++            crate::layer1::psychology::memory_forgery::process_memory_forgery_system,
++            crate::layer1::psychology::memory_forgery::process_truth_outbreak_system,
+         )
+             .in_set(Layer1SystemSet::Observation),
+     );

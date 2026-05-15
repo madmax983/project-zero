@@ -1,0 +1,11 @@
+--- src/layer1/mind/utility_types.rs
++++ src/layer1/mind/utility_types.rs
+@@ -165,7 +165,7 @@
+ }
+
+ impl ActionType {
+-    pub const COUNT: usize = 45; // Must match number of variants
++    pub const COUNT: usize = 46; // Must match number of variants
+
+     #[must_use]
+     pub const fn as_index(self) -> usize {

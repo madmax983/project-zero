@@ -1,0 +1,13 @@
+--- src/layer1/actions/mental_break.rs
++++ src/layer1/actions/mental_break.rs
+@@ -19,6 +19,10 @@
+                 find_structure_target(data, buffer, &mut best_target);
+                 ActionType::FireStarting
+             }
++            BreakdownType::RealityCollapse => {
++                find_structure_target(data, buffer, &mut best_target);
++                ActionType::RealityCollapse
++            }
+         };
+
+         return Some((best_action, best_utility, best_target));

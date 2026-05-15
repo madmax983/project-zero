@@ -1,0 +1,15 @@
+--- src/layer1/mind/utility_types.rs
++++ src/layer1/mind/utility_types.rs
+@@ -229,12 +229,11 @@
+             Self::Binge => 22,
+             Self::HideInRoom => 23,
+             Self::SadWander => 24,
+-            Self::RealityCollapse => 44,
+             Self::FetchClothing => 25,
+             Self::Surgery => 26,
+             Self::Charge => 27,
+             Self::Hobby => 28,
+             Self::Admin => 29,
+             Self::ScrawlMemeticSigil => 30,
+             Self::PreCrimeArrest => 31,
+             Self::ConsumeChemical => 32,

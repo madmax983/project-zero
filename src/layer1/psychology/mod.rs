@@ -29,6 +29,7 @@ pub mod stress;
 pub mod traits;
 pub mod void_sickness;
 pub mod void_stare;
+pub mod memory_forgery;
 
 pub use cabin_fever::*;
 pub use cryo_dreams::*;
@@ -53,3 +54,4 @@ pub use stress::*;
 pub use traits::*;
 pub use void_sickness::*;
 pub use void_stare::*;
+pub use memory_forgery::*;

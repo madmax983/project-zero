@@ -1,0 +1,10 @@
+--- src/simulation.rs
++++ src/simulation.rs
+@@ -968,6 +968,8 @@
+     #[cfg(feature = "nova")]
+     {
+         world.init_resource::<Events<crate::layer1::predecessors::WorldTriggerEvent>>();
++        world.init_resource::<Events<crate::layer1::psychology::memory_forgery::EraseMemoryEvent>>();
++        world.init_resource::<Events<crate::layer1::psychology::memory_forgery::TruthOutbreakEvent>>();
+     }
+ }

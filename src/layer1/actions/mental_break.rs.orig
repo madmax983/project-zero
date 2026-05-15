@@ -26,10 +26,6 @@ pub(crate) fn evaluate_mental_break(
                 find_structure_target(data, buffer, &mut best_target);
                 ActionType::FireStarting
             }
-            BreakdownType::RealityCollapse => {
-                find_structure_target(data, buffer, &mut best_target);
-                ActionType::RealityCollapse
-            }
         };
         return Some((best_action, best_utility, best_target));
     }

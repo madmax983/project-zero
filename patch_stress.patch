@@ -1,0 +1,11 @@
+--- src/layer1/psychology/stress.rs
++++ src/layer1/psychology/stress.rs
+@@ -35,6 +35,8 @@
+     HideInRoom,
+     /// Pop wanders sadly.
+     SadWander,
++    /// Reality collapse from forged memories.
++    RealityCollapse,
+ }
+
+ /// A beneficial state after recovering from a breakdown.

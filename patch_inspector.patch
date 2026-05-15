@@ -1,0 +1,9 @@
+--- src/ui/inspector.rs
++++ src/ui/inspector.rs
+@@ -96,6 +96,7 @@
+         ActionType::Flee => ("🏃", "Fleeing", Color::Red),
+         ActionType::Sabotage => ("💣", "Sabotaging", Color::Red),
+         ActionType::Gossip => ("🗣️", "Gossiping", Color::Magenta),
++        ActionType::RealityCollapse => ("🔥", "Reality Collapse", Color::Red),
+     }
+ }

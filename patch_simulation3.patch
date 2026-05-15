@@ -1,0 +1,11 @@
+--- src/simulation.rs
++++ src/simulation.rs
+@@ -957,6 +957,8 @@
+     world.init_resource::<Events<crate::layer1::social::empty_room::SilentGriefEvent>>();
+     world.init_resource::<Events<crate::layer1::social::inherited_grudges::GrudgeManifestedEvent>>();
+     world.init_resource::<Events<crate::layer1::social::cadet::CadetAssignmentEvent>>();
++    world.init_resource::<Events<crate::layer1::psychology::memory_forgery::EraseMemoryEvent>>();
++    world.init_resource::<Events<crate::layer1::psychology::memory_forgery::TruthOutbreakEvent>>();
+
+     #[cfg(feature = "nova")]
+     {

@@ -1,0 +1,21 @@
+--- src/layer1/mind/utility_types.rs
++++ src/layer1/mind/utility_types.rs
+@@ -128,6 +128,10 @@
+     /// See \[`crate::layer1::actions::mental_break::evaluate_mental_break`\].
+     SadWander,
+
++    /// Mental break where a pop's reality collapses, leading to a violent mob.
++    /// See \[`crate::layer1::actions::mental_break::evaluate_mental_break`\].
++    RealityCollapse,
++
+     /// Find and equip clothing.
+     ///
+     /// See \[`crate::layer1::actions::fetch_clothing::evaluate_fetch_clothing`\].
+@@ -213,6 +217,7 @@
+             Self::Binge => 33,
+             Self::HideInRoom => 34,
+             Self::SadWander => 35,
++            Self::RealityCollapse => 36,
+             Self::FetchClothing => 37,
+             Self::ObserveArt => 38,
+             Self::ObservePetrification => 39,
