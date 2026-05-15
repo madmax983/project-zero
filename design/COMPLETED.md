@@ -568,3 +568,4 @@
 - [x] `1071` The Bureaucracy of Truth — `specs/1071-the-bureaucracy-of-truth.md` — completed 2026-05-14
 - [x] `INT-887` Integration: Sunk-Cost Monument -> Economy — completed 2026-05-14
 - [x] `INT-249` Integration: Holographic Facades -> Morale — completed 2026-06-25
+- [x] `1095` Intellectual Property Wars — `specs/1095-intellectual-property-wars.md` - completed 2026-03-25
