@@ -572,3 +572,4 @@
 - [x] `266` Emotional Contagion — `specs/266-emotional-contagion.md` — completed 2026-05-15
 - [x] `INT-250` Integration: Surgical Addiction -> Chronicle — completed 2026-05-18
 - [x] `250` Surgical Addiction - `specs/250-surgical-addiction.md` - completed 2026-05-18
+- [x] `694` The Hedonic Treadmill — `specs/694-hedonic-treadmill.md` — completed 2026-07-10
