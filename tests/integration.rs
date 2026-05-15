@@ -423,3 +423,5 @@ mod sunk_cost_integration;
 
 #[path = "integration/holographic_facades.rs"]
 mod holographic_facades;
+#[path = "integration/surgical_addiction_bridge.rs"]
+mod surgical_addiction_bridge;

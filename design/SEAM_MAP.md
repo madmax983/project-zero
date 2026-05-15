@@ -1055,3 +1055,9 @@
 - **Systems connected:** `update_holograms_system` -> `HologramFailureEvent` -> `apply_disillusionment_system` -> `Morale`
 - **Glue added:** Added `HologramFailureEvent` to `update_event_buffer` in `src/layer1/systems/cleanup.rs`.
 - **Tests:** `tests/integration/holographic_facades.rs`
+
+### INT-250: Surgical Addiction -> Chronicle
+- **Date:** 2026-05-18
+- **Systems connected:** `check_self_surgery_system` (Surgical Addiction) -> `AddChronicleEvent`
+- **Glue added:** Modified `check_self_surgery_system` in `src/layer1/biology/addiction.rs` to emit an `AddChronicleEvent` when a pop performs self-surgery.
+- **Tests:** `tests/integration/surgical_addiction_bridge.rs`
