@@ -4925,3 +4925,26 @@
 **Usage:**
 - "The Shrine-Entity must remain untouched."
 - "They believe the Shrine-Entity's silence is sacred."
+
+## The Cassandra Protocol (Spec 1258)
+
+### Cassandra Protocol
+**Replaces:** Resource hoarding, unauthorized defense building
+**Code reference:** `CassandraProtocolActive`
+**Usage:**
+- "The governor initiated the Cassandra Protocol and sealed the grain vaults."
+- "Operating under the Cassandra Protocol is considered treason."
+
+### Disaster Warning
+**Replaces:** AI prediction, impending crisis alert
+**Code reference:** `DisasterWarning`
+**Usage:**
+- "The core emitted a Disaster Warning for sector four."
+- "We ignored the Disaster Warning, to our ruin."
+
+### Punitive Fleet
+**Replaces:** Capital fleet dispatch, imperial retaliation
+**Code reference:** `CapitalStatus::Rebellious` consequence
+**Usage:**
+- "The Punitive Fleet arrived to seize the hoarded assets."
+- "We survived the plague, only to face the Punitive Fleet."

@@ -8127,3 +8127,19 @@ What an artifact is called.
 - destroyed the repair tools
 - formed a violent barricade
 - drove back the mechanics
+
+## The Cassandra Protocol Fragments (Spec 1258)
+
+## Fragment Type: [DISASTER_PREDICTION]
+- a system-wide tectonic fracture
+- the sudden exhaustion of the atmosphere
+- an uncontrollable mutation in the food supply
+- the imminent collapse of the local star
+- a silent, lethargic plague
+
+## Fragment Type: [CAPITAL_RESPONSE]
+- issued a warrant for the governor's execution
+- declared the colony a rogue state
+- initiated an immediate orbital blockade
+- demanded the surrender of the hoarded supplies
+- dispatched the punitive fleet without warning
