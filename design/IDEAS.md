@@ -19914,3 +19914,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Provide ample, expensive leisure to prevent stress vs. Wasting resources accommodating bizarre, emergent cultural phobias.
 
 ---
+
+## The Dust Bath
+
+**Layer:** 1
+
+**Fantasy:** Embracing the grime to survive the harsh frontier.
+
+**Mechanic:** Pops who work in the dirt or mines accumulate "Grime," which lowers their Hygiene need satisfaction but gradually grants them a "Hardened" trait, providing resistance against extreme temperatures and minor injuries.
+
+**Emergence:** A perfectly clean, high-tech colony might be completely wiped out by a minor cold snap, while a filthy, squalid mining camp barely notices it because everyone is covered in an insulating layer of dirt and sweat.
+
+**Tension:** Do you enforce strict hygiene to keep morale high and disease low, or intentionally let your workers wallow in the dirt so they can survive the impending winter?
+
+---
+
+## Gravity Funnels
+
+**Layer:** Cross-layer
+
+**Fantasy:** Instant, brute-force logistics from orbit, at a terrifying cost.
+
+**Mechanic:** Instead of waiting for shuttles, Layer 2 fleets can use a "Gravity Funnel" to drop raw resource pods directly onto Layer 1. The delivery is instant, but the pods hit with massive kinetic force. You must designate a wide "Drop Zone," but accuracy varies. Anything built in or near the drop zone risks being crushed by a 10-ton block of iron moving at terminal velocity.
+
+**Emergence:** During a desperate siege, you order a massive food drop to save your starving colony. The drop is slightly off-target and annihilates your only hospital. The colony is fed, but everyone who was injured in the strike bleeds to death.
+
+**Tension:** Do you risk the catastrophic destruction of your own infrastructure for the sake of instant logistical relief?
+
+---
+
+## The Memory of Water
+
+**Layer:** 1
+
+**Fantasy:** The environment itself absorbs and reflects the emotional state of the colony.
+
+**Mechanic:** The fluid simulation grid (water/liquids) slowly absorbs the average "Mood" of the Pops interacting with it or living near it. "Happy" water provides a small mood buff when drank or bathed in. "Stressed" or "Traumatized" water causes minor hallucinations and unrest.
+
+**Emergence:** After a massive famine, the colony recovers and food is plentiful, but everyone is still inexplicably miserable. You realize the entire city's reservoir absorbed the sheer terror of the famine years ago, and is now constantly recirculating that trauma back into the population every time they take a drink.
+
+**Tension:** Do you constantly cycle and purify your water supply at massive energy cost to keep it emotionally "clean," or let the water become a living, potentially toxic reflection of your society's history?
+
+---
