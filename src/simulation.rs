@@ -248,6 +248,15 @@ fn init_simulation_resources(world: &mut World) {
     world.init_resource::<Events<crate::layer1::environment::ignition::ExplosionEvent>>();
 
     world.init_resource::<Events<crate::layer1::environment::events::DebrisFallEvent>>();
+
+
+    world.init_resource::<crate::layer3::intellectual_property_wars::PatentRegistry>();
+
+
+    world.init_resource::<Events<crate::layer3::intellectual_property_wars::TechDiscoveredEvent>>();
+
+
+    world.init_resource::<Events<crate::layer3::intellectual_property_wars::EspionageSuccessEvent>>();
     world.init_resource::<Events<crate::layer1::law::penal::OrganHarvestedEvent>>();
     world.init_resource::<crate::layer1::law::penal::ColonyInventory>();
     world.init_resource::<crate::layer3::council::GalacticCouncil>();
@@ -412,6 +421,11 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
         crate::layer3::ghost_ships::evaluate_transit_system,
         crate::layer3::ghost_ships::evaluate_lost_ship_return_system,
         crate::layer3::treaty_cruisers::compliance_check_system,
+        crate::layer3::intellectual_property_wars::register_patents_system,
+        crate::layer3::intellectual_property_wars::process_licensing_fees_system,
+        crate::layer3::intellectual_property_wars::detect_ip_piracy_system,
+        crate::layer3::integration::ip_piracy_diplomacy_bridge,
+        crate::layer3::intellectual_property_wars::process_espionage_system,
     ));
 
     // --- Layer 2 Integration ---
@@ -902,6 +916,12 @@ mod tests {
         world.init_resource::<Events<crate::layer1::environment::ignition::SparkEvent>>();
         world.init_resource::<Events<crate::layer1::environment::ignition::ExplosionEvent>>();
         world.init_resource::<Events<crate::layer1::environment::events::DebrisFallEvent>>();
+
+        world.init_resource::<crate::layer3::intellectual_property_wars::PatentRegistry>();
+
+        world.init_resource::<Events<crate::layer3::intellectual_property_wars::TechDiscoveredEvent>>();
+
+        world.init_resource::<Events<crate::layer3::intellectual_property_wars::EspionageSuccessEvent>>();
         world.init_resource::<Events<crate::layer1::law::penal::OrganHarvestedEvent>>();
         world.init_resource::<crate::layer1::law::penal::ColonyInventory>();
         world.init_resource::<Events<crate::layer1::whispering_ore::MinedOreEvent>>();

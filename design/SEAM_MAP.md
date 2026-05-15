@@ -1061,3 +1061,8 @@
 - **Systems connected:** `check_self_surgery_system` (Surgical Addiction) -> `AddChronicleEvent`
 - **Glue added:** Modified `check_self_surgery_system` in `src/layer1/biology/addiction.rs` to emit an `AddChronicleEvent` when a pop performs self-surgery.
 - **Tests:** `tests/integration/surgical_addiction_bridge.rs`
+
+### INT-1095: Intellectual Property Wars -> Diplomacy
+- **Systems connected:** `detect_ip_piracy_system` -> `ip_piracy_diplomacy_bridge` -> `apply_diplomatic_reactions`
+- **Glue added:** `ip_piracy_diplomacy_bridge` in `src/layer3/integration.rs`
+- **Tests:** `tests/integration/intellectual_property_wars_bridge.rs`
