@@ -19872,3 +19872,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you pay the exorbitant ransom and cripple your economy, or risk the unpredictable orbital bombardment while building a defense fleet?
 
 ---
+
+## Chrono-Sickness
+
+**Layer:** Cross-layer
+
+**Fantasy:** Traveling near light-speed or using experimental hyperlanes comes with a physical and psychological cost. Time is not kind to the unprepared.
+
+**Mechanic:** Pops arriving from Layer 2/3 transit occasionally suffer from "Chrono-Sickness," temporarily scrambling their skills, traits, or memories due to localized time dilation.
+
+**Emergence:** You rely on an elite general to arrive and lead the defense, but upon arrival, they temporarily revert to the terrified recruit they were 20 years ago, forcing you to use a less experienced leader.
+
+**Tension:** Fast travel (high Chrono-Sickness risk) vs. Slow, standard transit (safety but costly delays).
+
+---
+
+## Feral Xenogenetics
+
+**Layer:** 1
+
+**Fantasy:** Playing god with local flora and fauna, until they decide to play back. The ecosystem learns from your tampering.
+
+**Mechanic:** Repeatedly gene-splicing native plants or animals increases the "Feral Index" of the local biosphere. Eventually, the ecosystem actively mutates to counter your specific infrastructure or colonists' biology, becoming a highly targeted threat.
+
+**Emergence:** You engineer a native predator to be a perfect guard dog, but the Feral Index triggers, and wild packs evolve immunity to your security turrets' targeting sensors, rendering your defenses useless against the very thing you tried to tame.
+
+**Tension:** Exploit genetics for immense efficiency vs. The risk of creating a bespoke apex predator specifically adapted against your colony.
+
+---
+
+## The Phantom Trait
+
+**Layer:** 1
+
+**Fantasy:** A collective delusion spreading through the colony like an invisible plague. The mind is a fragile thing.
+
+**Mechanic:** Under high stress, a Pop might hallucinate a completely fake "Need" or "Trait" (e.g., "Must wear blue", "Refuses to touch metal"). If they interact with enough other highly stressed Pops, the fake trait becomes real for the group and spreads like a virus.
+
+**Emergence:** Half the colony suddenly refuses to touch metal due to a shared delusion started by one stressed miner. You have to rapidly build wooden tools and infrastructure just to keep them working until they can be treated.
+
+**Tension:** Provide ample, expensive leisure to prevent stress vs. Wasting resources accommodating bizarre, emergent cultural phobias.
+
+---
