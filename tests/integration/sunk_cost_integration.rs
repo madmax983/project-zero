@@ -1,15 +1,15 @@
+use bevy::math::Vec3;
+use bevy::prelude::Transform;
 use bevy_app::App;
 use bevy_ecs::event::Events;
 use bevy_ecs::prelude::*;
 use scale::layer1::architecture::sunk_cost_monument::{
-    calculate_sunk_cost_upkeep_system, handle_monument_cancellation_system, CancelConstructionEvent,
-    MonumentMarker, SunkCostUpkeep,
+    calculate_sunk_cost_upkeep_system, handle_monument_cancellation_system,
+    CancelConstructionEvent, MonumentMarker, SunkCostUpkeep,
 };
 use scale::layer1::core::integration::sunk_cost_resource_drain_system;
 use scale::layer1::economy::resources::{ColonyResources, ResourceType};
 use scale::shared::time::SimulationTime;
-use bevy::prelude::Transform;
-use bevy::math::Vec3;
 
 #[test]
 fn test_sunk_cost_drains_resources_successfully() {
@@ -25,8 +25,8 @@ fn test_sunk_cost_drains_resources_successfully() {
     app.add_systems(
         bevy_app::Update,
         (
-            calculate_sunk_cost_upkeep_system, sunk_cost_resource_drain_system,
-
+            calculate_sunk_cost_upkeep_system,
+            sunk_cost_resource_drain_system,
         )
             .chain(),
     );
@@ -70,8 +70,8 @@ fn test_sunk_cost_cancels_when_insufficient_resources() {
     app.add_systems(
         bevy_app::Update,
         (
-            calculate_sunk_cost_upkeep_system, sunk_cost_resource_drain_system,
-
+            calculate_sunk_cost_upkeep_system,
+            sunk_cost_resource_drain_system,
             handle_monument_cancellation_system,
         )
             .chain(),
