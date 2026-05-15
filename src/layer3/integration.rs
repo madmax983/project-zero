@@ -153,3 +153,29 @@ pub fn organ_trade_diplomacy_bridge(
         }
     }
 }
+
+use crate::layer3::intellectual_property_wars::{CassusBelli, CassusBelliReason};
+
+/// Bridges IP Piracy (CassusBelli) to DiplomaticTraits (is_barbarian).
+///
+/// When a civilization illegally uses a patented tech, a CassusBelli is generated.
+/// This system catches the new CassusBelli and updates the pirating civilization's
+/// traits to mark them as a barbarian (violator of galactic law), which then
+/// triggers diplomatic sanctions from pacifist neighbors.
+pub fn ip_piracy_diplomacy_bridge(
+    cb_query: Query<&CassusBelli, Added<CassusBelli>>,
+    mut civ_query: Query<(Entity, &mut DiplomaticTraits), With<Civilization>>,
+    mut trait_events: EventWriter<TraitChangedEvent>,
+) {
+    for cb in cb_query.iter() {
+        if cb.reason == CassusBelliReason::IpInfringement {
+            // Target is the one pirating the tech
+            if let Ok((entity, mut traits)) = civ_query.get_mut(cb.target) {
+                if !traits.is_barbarian {
+                    traits.is_barbarian = true;
+                    trait_events.send(TraitChangedEvent { civ_entity: entity });
+                }
+            }
+        }
+    }
+}

@@ -102,16 +102,26 @@ pub fn detect_ip_piracy_system(
     mut commands: Commands,
     registry: Res<PatentRegistry>,
     usage_query: Query<&TechUsage>,
+    existing_cb_query: Query<&CassusBelli>,
 ) {
     for usage in usage_query.iter() {
         if !usage.is_legal {
             if let Some(owner) = registry.get_owner(&usage.tech) {
                 if owner != usage.civilization {
-                    commands.spawn(CassusBelli {
-                        aggressor: owner,
-                        target: usage.civilization,
-                        reason: CassusBelliReason::IpInfringement,
+                    // Avoid spawning duplicate CassusBelli for the same (aggressor, target, reason)
+                    let already_exists = existing_cb_query.iter().any(|cb| {
+                        cb.aggressor == owner
+                            && cb.target == usage.civilization
+                            && cb.reason == CassusBelliReason::IpInfringement
                     });
+
+                    if !already_exists {
+                        commands.spawn(CassusBelli {
+                            aggressor: owner,
+                            target: usage.civilization,
+                            reason: CassusBelliReason::IpInfringement,
+                        });
+                    }
                 }
             }
         }
