@@ -7546,3 +7546,32 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: The followers of [BROKEN_MACHINE_NAME] [CULT_VIOLENCE] at [COLONY]."
 - "Blood spilled at [COLONY]. The cult [CULT_VIOLENCE] to protect [BROKEN_MACHINE_NAME]. [YEAR]."
 - "Repairs halted. The worshippers [CULT_VIOLENCE] rather than let [BROKEN_MACHINE_NAME] be disturbed. [YEAR]."
+
+## The Cassandra Protocol Templates (Spec 1258)
+
+### CASSANDRA_PROTOCOL_ACTIVATED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [DISASTER_PREDICTION]
+
+**Patterns:**
+- "[YEAR]: The machines predicted [DISASTER_PREDICTION]. [COLONY] sealed the vaults and stopped exporting."
+- "To survive [DISASTER_PREDICTION], [COLONY] initiated the protocol. The capital calls it treason. [YEAR]."
+- "We hoarded the grain. The AI foresaw [DISASTER_PREDICTION]. [COLONY] waits for the end. [YEAR]."
+
+### DISASTER_STRIKE_IGNORED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [DISASTER_PREDICTION]
+
+**Patterns:**
+- "[YEAR]: We ignored the warning. Then [DISASTER_PREDICTION] hit [COLONY]. The ruins are silent."
+- "The AI was right about [DISASTER_PREDICTION]. [COLONY] was unprepared. [YEAR]."
+- "[COLONY] burned because we didn't believe the machines. [DISASTER_PREDICTION] came as foretold. [YEAR]."
+
+### PUNITIVE_FLEET_ARRIVAL
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [CAPITAL_RESPONSE]
+
+**Patterns:**
+- "[YEAR]: In response to our hoarding, the Core Worlds [CAPITAL_RESPONSE]."
+- "[COLONY] prepared for a disaster, but the capital [CAPITAL_RESPONSE] instead. [YEAR]."
+- "They saw our survival as rebellion. The empire [CAPITAL_RESPONSE]. [YEAR]."
