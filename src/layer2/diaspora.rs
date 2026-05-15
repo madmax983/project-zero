@@ -1,5 +1,5 @@
-use bevy_ecs::prelude::*;
 use crate::layer1::pop::PopBundle;
+use bevy_ecs::prelude::*;
 
 #[derive(Component)]
 pub struct DiasporaFleet {
@@ -30,19 +30,20 @@ pub fn handle_diaspora_arrival_system(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use bevy::prelude::*;
     use crate::layer1::pop::Pop;
+    use bevy::prelude::*;
 
     #[test]
     fn test_diaspora_fleet_creation() {
         let mut app = App::new();
 
-        let fleet_entity = app.world_mut().spawn((
-            DiasporaFleet {
+        let fleet_entity = app
+            .world_mut()
+            .spawn((DiasporaFleet {
                 refugee_count: 100,
                 arrival_time: 10.0,
-            },
-        )).id();
+            },))
+            .id();
 
         let fleet = app.world().get::<DiasporaFleet>(fleet_entity).unwrap();
         assert_eq!(fleet.refugee_count, 100);
@@ -51,20 +52,27 @@ mod tests {
     #[test]
     fn test_diaspora_fleet_arrives_and_despawns() {
         let mut app = App::new();
-        app.insert_resource(crate::shared::time::SimulationTime { tick: 15, ..Default::default() });
+        app.insert_resource(crate::shared::time::SimulationTime {
+            tick: 15,
+            ..Default::default()
+        });
         app.add_systems(Update, handle_diaspora_arrival_system);
 
-        let fleet_entity = app.world_mut().spawn((
-            DiasporaFleet {
+        let fleet_entity = app
+            .world_mut()
+            .spawn((DiasporaFleet {
                 refugee_count: 100,
                 arrival_time: 10.0,
-            },
-        )).id();
+            },))
+            .id();
 
         app.update();
 
         // Ensure the fleet entity is removed
-        assert!(app.world().get_entity(fleet_entity).is_err() || app.world().get::<DiasporaFleet>(fleet_entity).is_none());
+        assert!(
+            app.world().get_entity(fleet_entity).is_err()
+                || app.world().get::<DiasporaFleet>(fleet_entity).is_none()
+        );
 
         // Ensure pops were spawned
         let pop_count = app.world_mut().query::<&Pop>().iter(app.world()).count();

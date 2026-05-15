@@ -11,8 +11,9 @@ pub fn register(schedule: &mut Schedule) {
     schedule.add_systems(
         (
             crate::layer1::architecture::sunk_cost_monument::calculate_sunk_cost_upkeep_system,
-            crate::layer1::core::integration::sunk_cost_resource_drain_system
-                .after(crate::layer1::architecture::sunk_cost_monument::calculate_sunk_cost_upkeep_system),
+            crate::layer1::core::integration::sunk_cost_resource_drain_system.after(
+                crate::layer1::architecture::sunk_cost_monument::calculate_sunk_cost_upkeep_system,
+            ),
             crate::layer1::architecture::sunk_cost_monument::handle_monument_cancellation_system
                 .after(crate::layer1::core::integration::sunk_cost_resource_drain_system),
             crate::layer1::architecture::sunk_cost_monument::apply_ruin_morale_penalty_system,
@@ -93,8 +94,11 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::tech::ghost_code::residue_system,
             crate::layer1::tech::ghost_code::ghost_infection_system,
             crate::layer1::tech::ghost_code::apply_ghost_traits_system,
-            (crate::layer1::hologram::update_holograms_system,
-            crate::layer1::hologram::apply_disillusionment_system).chain(),
+            (
+                crate::layer1::hologram::update_holograms_system,
+                crate::layer1::hologram::apply_disillusionment_system,
+            )
+                .chain(),
         )
             .in_set(Layer1SystemSet::Economy),
     );

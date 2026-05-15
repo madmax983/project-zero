@@ -20,7 +20,9 @@ pub fn register(schedule: &mut Schedule) {
             update_event_buffer::<PopBorn>,
             update_event_buffer::<crate::layer1::structural_integrity::StructureCollapsed>,
             update_event_buffer::<crate::layer1::heirloom::RetrogradeEngineeringEvent>,
-            update_event_buffer::<crate::layer1::architecture::sunk_cost_monument::CancelConstructionEvent>,
+            update_event_buffer::<
+                crate::layer1::architecture::sunk_cost_monument::CancelConstructionEvent,
+            >,
             update_event_buffer::<crate::layer1::energy::GridOverloadEvent>,
             update_event_buffer::<crate::layer1::environment::hazards::AmputationEvent>,
             update_event_buffer::<crate::layer1::geology::GeologicalEvent>,

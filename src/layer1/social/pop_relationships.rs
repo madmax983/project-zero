@@ -13,7 +13,7 @@ pub fn update_workplace_relationships_system(
 ) {
     for _ in events.read() {
         // Collect all workers and their locations
-        let mut location_map = std::collections::HashMap::new();
+        let mut location_map = bevy::utils::HashMap::with_capacity(query.iter().size_hint().0);
         for (entity, assigned_to) in query.iter() {
             location_map
                 .entry(assigned_to.entity)
