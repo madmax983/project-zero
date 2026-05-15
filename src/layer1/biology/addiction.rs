@@ -48,6 +48,7 @@ pub fn update_addiction_system(mut query: Query<(&mut SurgicalAddiction, &mut Mo
 }
 
 pub fn check_self_surgery_system(
+    mut chronicle_events: EventWriter<crate::layer1::core::chronicle::AddChronicleEvent>,
     mut query: Query<(&mut SurgicalAddiction, &mut Health, &mut Inventory)>,
 ) {
     for (mut addiction, mut health, mut inventory) in query.iter_mut() {
@@ -63,6 +64,11 @@ pub fn check_self_surgery_system(
                 // Perform Self-Surgery
                 health.current -= 30.0; // Major damage
                 addiction.craving = 50.0; // Partial relief
+
+                chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
+                    text: "A colonist, driven mad by chrome hunger, performed self-surgery using scrap metal!".to_string(),
+                    importance: crate::layer1::core::chronicle::EventImportance::Major,
+                });
             }
         }
     }
@@ -97,6 +103,7 @@ mod tests {
 
         // Run system that initializes addiction
         let mut schedule = Schedule::default();
+        world.init_resource::<Events<crate::layer1::core::chronicle::AddChronicleEvent>>();
         schedule.add_systems(init_addiction_system);
         schedule.run(&mut world);
 
@@ -123,6 +130,7 @@ mod tests {
             .id();
 
         let mut schedule = Schedule::default();
+        world.init_resource::<Events<crate::layer1::core::chronicle::AddChronicleEvent>>();
         schedule.add_systems(init_addiction_system);
         schedule.run(&mut world);
 
@@ -147,6 +155,7 @@ mod tests {
             .id();
 
         let mut schedule = Schedule::default();
+        world.init_resource::<Events<crate::layer1::core::chronicle::AddChronicleEvent>>();
         schedule.add_systems(update_addiction_system);
         schedule.run(&mut world);
 
@@ -189,6 +198,7 @@ mod tests {
             .id();
 
         let mut schedule = Schedule::default();
+        world.init_resource::<Events<crate::layer1::core::chronicle::AddChronicleEvent>>();
         schedule.add_systems(check_self_surgery_system);
         schedule.run(&mut world);
 
