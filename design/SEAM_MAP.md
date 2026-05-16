@@ -1066,3 +1066,9 @@
 - **Systems connected:** `detect_ip_piracy_system` -> `ip_piracy_diplomacy_bridge` -> `apply_diplomatic_reactions`
 - **Glue added:** `ip_piracy_diplomacy_bridge` in `src/layer3/integration.rs`
 - **Tests:** `tests/integration/intellectual_property_wars_bridge.rs`
+
+### INT-694: Hedonic Treadmill -> Pop Consumption
+- **Date:** 2026-06-25
+- **Systems connected:** `consume_food_system` -> `hedonic_treadmill_consumption_bridge` -> `process_consumption_quality`
+- **Glue added:** Added `hedonic_treadmill_consumption_bridge` in `src/layer1/social/hedonic_treadmill_integration.rs` to read `JustConsumed` component added by `consume_food_system` and emit `ConsumeItemEvent` with calculated item quality for `process_consumption_quality`. Registered the new system and events in `src/layer1/systems/economy.rs` and `src/simulation.rs`.
+- **Tests:** `tests/integration/hedonic_treadmill_bridge.rs`

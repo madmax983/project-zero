@@ -134,6 +134,7 @@ pub fn register(schedule: &mut Schedule) {
             update_event_buffer::<crate::layer3::diplomacy::fading_homeworld::PlayerDemandResponse>,
             update_event_buffer::<crate::layer3::intellectual_property_wars::TechDiscoveredEvent>,
             update_event_buffer::<crate::layer3::intellectual_property_wars::EspionageSuccessEvent>,
+            update_event_buffer::<crate::layer1::social::hedonic_treadmill::ConsumeItemEvent>,
         )
             .in_set(Layer1SystemSet::EventCleanup),
     );
