@@ -357,23 +357,20 @@ impl UiShell {
     fn filtered_palette_commands(&self) -> Vec<&ShellCommand> {
         let filter_bytes = self.command_palette.filter.as_bytes();
 
-        let mut commands = self
-            .commands
-            .commands()
-            .iter()
-            .filter(|command| {
-                if filter_bytes.is_empty() {
-                    return true;
-                }
-                let label_bytes = command.label.as_bytes();
-                if filter_bytes.len() > label_bytes.len() {
-                    return false;
-                }
-                label_bytes
-                    .windows(filter_bytes.len())
-                    .any(|window| window.eq_ignore_ascii_case(filter_bytes))
-            })
-            .collect::<Vec<_>>();
+        // ⚡ Bolt Optimization: Removed intermediate `.collect::<Vec<_>>()` and pre-allocate capacity
+        let mut commands = Vec::with_capacity(self.commands.commands().len());
+        commands.extend(self.commands.commands().iter().filter(|command| {
+            if filter_bytes.is_empty() {
+                return true;
+            }
+            let label_bytes = command.label.as_bytes();
+            if filter_bytes.len() > label_bytes.len() {
+                return false;
+            }
+            label_bytes
+                .windows(filter_bytes.len())
+                .any(|window| window.eq_ignore_ascii_case(filter_bytes))
+        }));
 
         commands.sort_by_key(|command| {
             self.config
