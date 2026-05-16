@@ -145,3 +145,6 @@ pub mod stowaway_clutter;
 
 #[cfg(feature = "nova")]
 pub mod supercharged_anomalies;
+
+#[cfg(feature = "nova")]
+pub mod cassandra_warning;
