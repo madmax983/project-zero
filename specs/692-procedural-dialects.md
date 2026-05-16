@@ -188,3 +188,4 @@ pub fn decay_slang_weight(
 ## Questions
 
 *Builder: add questions here if spec is unclear.*
+- **Architectural Contradictions:** `ChronicleEvent` lacks `event_type`, `severity`, and `description` fields. Instead, it uses `tick`, `year`, `text`, and `importance`. This makes the RED phase impossible to implement as written.

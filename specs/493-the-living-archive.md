@@ -116,3 +116,4 @@ pub fn process_flesh_server_stress_system(
 
 ## 8. Questions
 *Builder: add questions here if spec is unclear. Architect will address.*
+- **Architectural Contradictions:** `Temperature` is not a `Need` component in the codebase. Also, `Health` is not a tuple struct (e.g. `Health(f32)`); it is a full struct (`Health { current: f32, max: f32, ... }`). This spec's RED phase is incompatible with current architecture.
