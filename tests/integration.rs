@@ -431,3 +431,5 @@ mod hedonic_treadmill_bridge;
 mod holographic_facades;
 #[path = "integration/surgical_addiction_bridge.rs"]
 mod surgical_addiction_bridge;
+#[path = "integration/emotional_contagion_trigger.rs"]
+mod emotional_contagion_trigger;

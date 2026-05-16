@@ -103,6 +103,7 @@ pub struct EmotionalContagion {
 }
 
 #[derive(Clone, Copy, PartialEq, Eq)]
+#[derive(Debug)]
 pub enum ContagionType {
     Panic,
     Joy,
@@ -138,6 +139,35 @@ pub fn contagion_system(
                         duration: 100, // Minimal fixed duration
                     });
                 }
+            }
+        }
+    }
+}
+
+pub fn trigger_emotional_contagion_system(
+    mut commands: Commands,
+    query: Query<(Entity, &Morale, Option<&EmotionalContagion>)>,
+) {
+    for (entity, morale, contagion) in query.iter() {
+        if morale.value < 15.0 {
+            if contagion.is_none_or(|c| c.contagion_type != ContagionType::Panic) {
+                commands.entity(entity).insert(EmotionalContagion {
+                    contagion_type: ContagionType::Panic,
+                    radius: 5.0,
+                    strength: -15.0,
+                });
+            }
+        } else if morale.value > 85.0 {
+            if contagion.is_none_or(|c| c.contagion_type != ContagionType::Joy) {
+                commands.entity(entity).insert(EmotionalContagion {
+                    contagion_type: ContagionType::Joy,
+                    radius: 5.0,
+                    strength: 15.0,
+                });
+            }
+        } else {
+            if contagion.is_some() {
+                commands.entity(entity).remove::<EmotionalContagion>();
             }
         }
     }

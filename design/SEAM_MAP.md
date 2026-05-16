@@ -1084,3 +1084,9 @@
 - **Systems connected:** `activate_cassandra_protocol` -> `cassandra_protocol_chronicle_bridge`
 - **Glue added:** `cassandra_protocol_chronicle_bridge` in `src/layer1/core/integration.rs`
 - **Tests:** `tests/integration/cassandra_protocol_bridge.rs`
+
+### INT-266: Emotional Contagion -> Pop Morale Status
+- **Date:** 2026-05-16
+- **Systems connected:** `trigger_emotional_contagion_system`
+- **Glue added:** Added `trigger_emotional_contagion_system` in `src/layer1/social/emotional_contagion.rs` to add/remove the `EmotionalContagion` component based on extreme `Morale`.
+- **Tests:** `tests/integration/emotional_contagion_trigger.rs`
