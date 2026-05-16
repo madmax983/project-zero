@@ -925,33 +925,40 @@ fn print_pops(world: &mut World) {
     print_dashboard_table("POPULATION DETAILS", table);
 }
 
-fn print_map(world: &mut World, center_x: i32, center_y: i32) {
-    let radius = 10;
+fn get_terrain_tiles_in_radius(
+    terrain: &TerrainGrid,
+    center_x: i32,
+    center_y: i32,
+    radius: i32,
+) -> (i32, i32, bevy::utils::HashMap<(i32, i32), TerrainType>) {
+    let max_x = i32::try_from(terrain.width).unwrap_or(i32::MAX);
+    let max_y = i32::try_from(terrain.height).unwrap_or(i32::MAX);
 
-    // Copy terrain data before querying to avoid borrow conflicts
-    let (width, height, terrain_tiles) = {
-        let terrain = world.resource::<TerrainGrid>();
-        let max_x = i32::try_from(terrain.width).unwrap_or(i32::MAX);
-        let max_y = i32::try_from(terrain.height).unwrap_or(i32::MAX);
-
-        let mut tiles = bevy::utils::HashMap::new();
-        if center_x.checked_sub(radius).is_some()
-            && center_x.checked_add(radius).is_some()
-            && center_y.checked_sub(radius).is_some()
-            && center_y.checked_add(radius).is_some()
-        {
-            for y in center_y.saturating_sub(radius)..=center_y.saturating_add(radius) {
-                for x in center_x.saturating_sub(radius)..=center_x.saturating_add(radius) {
-                    if x >= 0 && y >= 0 && x < max_x && y < max_y {
-                        if let Some(t) = terrain.get(x as usize, y as usize) {
-                            tiles.insert((x, y), t);
-                        }
+    let mut tiles = bevy::utils::HashMap::new();
+    if center_x.checked_sub(radius).is_some()
+        && center_x.checked_add(radius).is_some()
+        && center_y.checked_sub(radius).is_some()
+        && center_y.checked_add(radius).is_some()
+    {
+        for y in center_y.saturating_sub(radius)..=center_y.saturating_add(radius) {
+            for x in center_x.saturating_sub(radius)..=center_x.saturating_add(radius) {
+                if x >= 0 && y >= 0 && x < max_x && y < max_y {
+                    if let Some(t) = terrain.get(x as usize, y as usize) {
+                        tiles.insert((x, y), t);
                     }
                 }
             }
         }
-        (max_x, max_y, tiles)
-    };
+    }
+    (max_x, max_y, tiles)
+}
+
+fn print_map(world: &mut World, center_x: i32, center_y: i32) {
+    let radius = 10;
+
+    // Copy terrain data before querying to avoid borrow conflicts
+    let (width, height, terrain_tiles) =
+        get_terrain_tiles_in_radius(world.resource::<TerrainGrid>(), center_x, center_y, radius);
 
     println!(
         "{}",
@@ -1422,29 +1429,8 @@ impl ScanRadius {
 fn scan_terrain(world: &mut World, center_x: i32, center_y: i32, radius: ScanRadius) {
     let radius = radius.get();
     // Copy terrain data before querying to avoid borrow conflicts
-    let (width, height, terrain_tiles) = {
-        let terrain = world.resource::<TerrainGrid>();
-        let max_x = i32::try_from(terrain.width).unwrap_or(i32::MAX);
-        let max_y = i32::try_from(terrain.height).unwrap_or(i32::MAX);
-
-        let mut tiles = bevy::utils::HashMap::new();
-        if center_x.checked_sub(radius).is_some()
-            && center_x.checked_add(radius).is_some()
-            && center_y.checked_sub(radius).is_some()
-            && center_y.checked_add(radius).is_some()
-        {
-            for y in center_y.saturating_sub(radius)..=center_y.saturating_add(radius) {
-                for x in center_x.saturating_sub(radius)..=center_x.saturating_add(radius) {
-                    if x >= 0 && y >= 0 && x < max_x && y < max_y {
-                        if let Some(t) = terrain.get(x as usize, y as usize) {
-                            tiles.insert((x, y), t);
-                        }
-                    }
-                }
-            }
-        }
-        (max_x, max_y, tiles)
-    };
+    let (width, height, terrain_tiles) =
+        get_terrain_tiles_in_radius(world.resource::<TerrainGrid>(), center_x, center_y, radius);
 
     let mut table = Table::new();
     table
