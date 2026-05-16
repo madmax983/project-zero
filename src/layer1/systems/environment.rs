@@ -19,6 +19,7 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::environment::geothermal::geothermal_pulse_system,
             crate::layer1::environment::geothermal::geothermal_boost_system,
             crate::layer1::environment::geothermal::geothermal_decay_system,
+            crate::layer1::environment::long_night::process_long_night_effects,
         )
             .in_set(Layer1SystemSet::Environment),
     );

@@ -77,7 +77,8 @@ pub fn map_export_system(
                 TerrainType::MagmaRock => [178, 34, 34],  // Firebrick
                 TerrainType::SporeBloom => [148, 0, 211], // Dark Violet
                 TerrainType::Artifact => [255, 215, 0],   // Gold
-                TerrainType::Crater => [80, 80, 80],      // Dark Gray
+                TerrainType::Crater => [80, 80, 80],
+                TerrainType::FaultLine(_) => [40, 20, 20],      // Dark Gray
             };
 
             // Optionally blend with beauty

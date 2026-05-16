@@ -383,6 +383,14 @@ pub fn register(schedule: &mut Schedule) {
                 .after(crate::layer1::logistics::orbital_drop::process_orbital_drops),
             crate::layer1::social::cargo_cult::process_ritual_actions_system
                 .after(crate::layer1::social::cargo_cult::apply_cargo_cult_belief_system),
+        )
+            .in_set(Layer1SystemSet::Observation),
+    );
+    schedule.add_systems(
+        (
+            crate::layer1::social::procedural_dialects::process_chronicle_events_for_dialect,
+            crate::layer1::social::procedural_dialects::initialize_pop_dialect,
+            crate::layer1::social::procedural_dialects::decay_slang_weight,
             crate::layer1::integration::mass_driver_chronicle_bridge
                 .after(crate::layer1::logistics::mass_driver::package_arrival_system),
             crate::layer1::integration::predatory_weather_emission_bridge_system,

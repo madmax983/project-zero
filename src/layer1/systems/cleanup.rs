@@ -60,6 +60,8 @@ pub fn register(schedule: &mut Schedule) {
             update_event_buffer::<crate::layer1::drone::DroneDisconnectedEvent>,
             update_event_buffer::<crate::layer1::social::gossip_economy::GossipEvent>,
             update_event_buffer::<crate::layer1::social::gossip_economy::BrokerPurchaseEvent>,
+            update_event_buffer::<crate::layer1::environment::long_night::StartLongNightEvent>,
+            crate::layer1::environment::long_night::start_long_night,
         )
             .in_set(Layer1SystemSet::EventCleanup),
     );

@@ -678,6 +678,13 @@ pub const fn get_terrain_char(terrain: TerrainType) -> &'static str {
         TerrainType::MagmaRock => "≈",
         TerrainType::SporeBloom => "♣",
         TerrainType::Artifact => "Ω",
+        TerrainType::FaultLine(open) => {
+            if open {
+                "裂"
+            } else {
+                "―"
+            }
+        }
     }
 }
 
@@ -709,6 +716,13 @@ pub const fn get_terrain_color(terrain: TerrainType) -> Color {
         TerrainType::MagmaRock => Color::Rgb(255, 60, 20),
         TerrainType::SporeBloom => Color::Rgb(150, 60, 200),
         TerrainType::Artifact => Color::Rgb(255, 215, 0), // Gold
+        TerrainType::FaultLine(open) => {
+            if open {
+                Color::Rgb(255, 60, 20) // Magma glow
+            } else {
+                Color::Rgb(100, 100, 110) // Dark rock
+            }
+        }
     }
 }
 

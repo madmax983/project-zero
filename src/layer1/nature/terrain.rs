@@ -30,6 +30,8 @@ pub enum TerrainType {
     SporeBloom,
     /// Ancient, indestructible alien structure.
     Artifact,
+    /// A fissure in the crust that can open and close. (true = open, false = closed)
+    FaultLine(bool),
 }
 
 impl TerrainType {
@@ -58,6 +60,13 @@ impl TerrainType {
             Self::MagmaRock => "Magma Rock",
             Self::SporeBloom => "Spore Bloom",
             Self::Artifact => "Artifact",
+            Self::FaultLine(open) => {
+                if open {
+                    "Open Fault Line"
+                } else {
+                    "Closed Fault Line"
+                }
+            }
         }
     }
 
@@ -92,7 +101,7 @@ impl TerrainType {
     pub const fn is_walkable(self) -> bool {
         !matches!(
             self,
-            Self::Rock | Self::Water | Self::DeepRock | Self::Artifact | Self::Crater
+            Self::Rock | Self::Water | Self::DeepRock | Self::Artifact | Self::Crater | Self::FaultLine(true)
         )
     }
 
@@ -111,7 +120,8 @@ impl TerrainType {
             | Self::Tree
             | Self::Shrub
             | Self::Sapling
-            | Self::SporeBloom => 0.1,
+            | Self::SporeBloom
+            | Self::FaultLine(_) => 0.1,
         }
     }
 }
@@ -455,6 +465,8 @@ mod tests {
         assert!(!TerrainType::Rock.is_walkable());
         assert!(!TerrainType::Water.is_walkable());
         assert!(!TerrainType::Artifact.is_walkable());
+        assert!(!TerrainType::FaultLine(true).is_walkable());
+        assert!(TerrainType::FaultLine(false).is_walkable());
     }
 
     #[test]

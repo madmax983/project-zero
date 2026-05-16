@@ -29,15 +29,12 @@
 
 ## Future / Ideas
 
-- [ ] `692` Procedural Dialects — `specs/692-procedural-dialects.md`
 - [ ] `693` Corporate Sponsorship — `specs/693-corporate-sponsorship.md`
-- [ ] `695` The Long Night — `specs/695-the-long-night.md`
 - [ ] `549` The Sleep Debt Repo Men — `specs/549-sleep-debt-repo-men.md`
 - [ ] `550` The Gravity Siphon — `specs/550-the-gravity-siphon.md`
 - [ ] `551` The Parasitic Broadcast — `specs/551-the-parasitic-broadcast.md`
 - [ ] `552` The Subterranean Smog Layer — `specs/552-the-subterranean-smog-layer.md`
 - [ ] `553` Orbital Debt Collections — `specs/553-orbital-debt-collections.md`
-- [ ] `554` The Phantom Signal — `specs/554-the-phantom-signal.md`
 - [ ] `555` The Symbiotic Insurgency — `specs/555-the-symbiotic-insurgency.md`
 - [ ] `481` Subterranean Mycelial Network — `specs/481-subterranean-mycelial-network.md`
 - [ ] `480` Memory Forgery — `specs/480-memory-forgery.md`

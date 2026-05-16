@@ -51,3 +51,5 @@ pub use mutagenic_rain::*;
 
 #[cfg(test)]
 mod silent_world_tests;
+pub mod crustal_tides;
+pub use crustal_tides::*;

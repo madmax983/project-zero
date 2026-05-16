@@ -40,3 +40,5 @@ pub mod ephemeral_moons;
 pub mod impact;
 pub use ephemeral_moons::*;
 pub use impact::*;
+pub mod long_night;
+pub use long_night::*;

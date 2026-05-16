@@ -573,3 +573,10 @@
 - [x] `INT-250` Integration: Surgical Addiction -> Chronicle — completed 2026-05-18
 - [x] `250` Surgical Addiction - `specs/250-surgical-addiction.md` - completed 2026-05-18
 - [x] `694` The Hedonic Treadmill — `specs/694-hedonic-treadmill.md` — completed 2026-07-10
+- [x] `1068` Crustal Tides — `specs/1068-crustal-tides.md` — completed 2026-05-15
+- [x] `695` The Long Night — `specs/695-the-long-night.md` — completed 2026-05-15
+- [x] `554` The Phantom Signal — `specs/554-the-phantom-signal.md` — completed 2026-05-15
+- [x] `692` Procedural Dialects — `specs/692-procedural-dialects.md` — completed 2026-05-15
+- [x] `684` The Gossip Economy — `specs/684-gossip-economy.md` — completed 2026-05-15
+- [x] `1067` The Void Sirens — `specs/1067-the-void-sirens.md` — completed 2026-05-15
+- [x] `692` Procedural Dialects — `specs/692-procedural-dialects.md` — completed 2026-05-16

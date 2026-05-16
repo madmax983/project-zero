@@ -1070,6 +1070,13 @@ fn print_map(world: &mut World, center_x: i32, center_y: i32) {
                 TerrainType::MagmaRock => "≈".red(),
                 TerrainType::SporeBloom => "♣".magenta(),
                 TerrainType::Artifact => "Ω".yellow().bold(),
+                TerrainType::FaultLine(open) => {
+                    if open {
+                        "裂".red().bold()
+                    } else {
+                        "―".dark_grey()
+                    }
+                }
             };
             print!("{s}");
         }
@@ -1528,6 +1535,13 @@ fn scan_terrain(world: &mut World, center_x: i32, center_y: i32, radius: ScanRad
                 TerrainType::MagmaRock => "Magma Rock",
                 TerrainType::SporeBloom => "Spore Bloom",
                 TerrainType::Artifact => "Artifact",
+                TerrainType::FaultLine(open) => {
+                    if open {
+                        "Open Fault"
+                    } else {
+                        "Closed Fault"
+                    }
+                }
             };
 
             let walkable = tile.is_walkable();
@@ -1616,6 +1630,13 @@ const fn get_terrain_color_headless(t: TerrainType) -> comfy_table::Color {
         TerrainType::MagmaRock => comfy_table::Color::Red,
         TerrainType::SporeBloom => comfy_table::Color::Magenta,
         TerrainType::Artifact => comfy_table::Color::Yellow,
+        TerrainType::FaultLine(open) => {
+            if open {
+                comfy_table::Color::Red
+            } else {
+                comfy_table::Color::DarkGrey
+            }
+        }
     }
 }
 
@@ -1652,6 +1673,13 @@ fn get_tile_info(world: &mut World, x: i32, y: i32) {
         TerrainType::MagmaRock => "Magma Rock",
         TerrainType::SporeBloom => "Spore Bloom",
         TerrainType::Artifact => "Artifact",
+        TerrainType::FaultLine(open) => {
+            if open {
+                "Open Fault"
+            } else {
+                "Closed Fault"
+            }
+        }
     };
 
     let walkable = tile.is_walkable();

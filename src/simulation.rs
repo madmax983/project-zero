@@ -134,6 +134,9 @@ fn init_simulation_resources(world: &mut World) {
     world.init_resource::<Events<crate::layer1::whispering_ore::MinedOreEvent>>();
     world.init_resource::<Events<crate::layer1::whispering_ore::MineSealedEvent>>();
     world.init_resource::<Events<crate::layer1::social::grievances::PostGrievanceEvent>>();
+        world.init_resource::<crate::layer1::social::procedural_dialects::DialectManager>();
+        world.init_resource::<Events<crate::layer1::environment::long_night::StartLongNightEvent>>();
+        world.init_resource::<crate::layer1::environment::long_night::LongNightEvent>();
     world.init_resource::<Events<crate::layer1::deep_crust_resonance::ExcavationEvent>>();
     world.init_resource::<Events<crate::layer1::resources::MiningEvent>>();
     world.init_resource::<Events<crate::layer1::spiteful_will::InheritanceEvent>>();
@@ -723,6 +726,8 @@ mod tests {
     #[test]
     fn test_run_simulation_tick_increments() {
         let mut world = setup_world();
+        world.init_resource::<bevy::ecs::event::Events<crate::layer2::exploration::phantom_signal::SignalRevealEvent>>();
+        let mut world = setup_world();
         world
             .init_resource::<crate::layer1::environment::bio_acoustic_miasma::MiasmaRecordedSecret>(
             );
@@ -757,6 +762,8 @@ mod tests {
     #[test]
     fn test_run_multiple_ticks() {
         let mut world = setup_world();
+        world.init_resource::<bevy::ecs::event::Events<crate::layer2::exploration::phantom_signal::SignalRevealEvent>>();
+        let mut world = setup_world();
         world
             .init_resource::<crate::layer1::environment::bio_acoustic_miasma::MiasmaRecordedSecret>(
             );
@@ -785,12 +792,16 @@ mod tests {
 
     #[test]
     fn test_schedule_builds_without_panic() {
+        let mut world = setup_world();
+        world.init_resource::<bevy::ecs::event::Events<crate::layer2::exploration::phantom_signal::SignalRevealEvent>>();
         let _schedule = build_simulation_schedule();
     }
 
     #[test]
     #[allow(clippy::too_many_lines)]
     fn test_schedule_runs_on_fresh_world() {
+        let mut world = setup_world();
+        world.init_resource::<bevy::ecs::event::Events<crate::layer2::exploration::phantom_signal::SignalRevealEvent>>();
         let mut world = setup_world();
         *world.resource_mut::<GameState>() = GameState::Running;
 
@@ -809,6 +820,9 @@ mod tests {
         world.init_resource::<bevy::prelude::Events<crate::layer2::skyhooks::LaunchIntent>>();
         world.init_resource::<Events<crate::layer2::moon_hermits::PopDesertedEvent>>();
         world.init_resource::<bevy::prelude::Events<crate::layer1::social::grievances::PostGrievanceEvent>>();
+        world.init_resource::<crate::layer1::social::procedural_dialects::DialectManager>();
+        world.init_resource::<Events<crate::layer1::environment::long_night::StartLongNightEvent>>();
+        world.init_resource::<crate::layer1::environment::long_night::LongNightEvent>();
         world.init_resource::<Events<crate::layer1::law::embassy::ArrestEvent>>();
         world.init_resource::<Events<crate::layer1::law::embassy::DiplomaticIncidentEvent>>();
         world.init_resource::<Events<crate::layer1::ransom_broker::RansomDemandEvent>>();
@@ -894,6 +908,7 @@ mod tests {
         world.init_resource::<Events<crate::layer1::tech::rogue_automation_cults::MachineCultFormedEvent>>();
         world.init_resource::<Events<crate::layer1::heirloom_tool::EquipHeirloomEvent>>();
         world.init_resource::<Events<crate::layer2::events_new::reverse_quarantine::RefugeeFleetEvent>>();
+        world.init_resource::<Events<crate::layer2::exploration::phantom_signal::SignalRevealEvent>>();
         world.init_resource::<Events<crate::layer1::predecessors::WorldTriggerEvent>>();
         world.init_resource::<Events<crate::layer1::grafting::GraftBuildingEvent>>();
         world.init_resource::<Events<crate::layer3::fleets::ColonyFoundedEvent>>();
