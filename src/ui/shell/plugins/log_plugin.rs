@@ -1,5 +1,5 @@
 use super::{render_with_frame, SharedWorld};
-use ratatui::widgets::{Block, Borders, Paragraph};
+use ratatui::widgets::{Block, BorderType, Borders, List, ListItem, Paragraph};
 use ratatui::{buffer::Buffer, layout::Rect};
 use ratatui_hypertile_extras::HypertilePlugin;
 
@@ -19,64 +19,76 @@ impl HypertilePlugin for LogPlugin {
     fn render(&self, area: Rect, buf: &mut Buffer, _is_focused: bool) {
         let world = self.world.borrow();
         render_with_frame(area, buf, |frame| {
+            let block = Block::default()
+                .title(ratatui::text::Span::styled(
+                    " Message Log ",
+                    ratatui::style::Style::default()
+                        .fg(ratatui::style::Color::Cyan)
+                        .add_modifier(ratatui::style::Modifier::BOLD),
+                ))
+                .borders(Borders::ALL)
+                .border_type(BorderType::Rounded)
+                .border_style(ratatui::style::Style::default().fg(ratatui::style::Color::DarkGray));
+
             if let Some(log) = world.get_resource::<MessageLog>() {
-                let paragraph = if log.messages.is_empty() {
-                    Paragraph::new("(No messages)").block(
-                        Block::default()
-                            .title(" Message Log ")
-                            .borders(Borders::ALL),
-                    )
+                if log.messages.is_empty() {
+                    let paragraph = Paragraph::new("(No messages)")
+                        .style(ratatui::style::Style::default().fg(ratatui::style::Color::DarkGray))
+                        .block(block)
+                        .alignment(ratatui::layout::Alignment::Center);
+                    frame.render_widget(paragraph, frame.area());
                 } else {
-                    use ratatui::style::{Modifier, Style};
+                    use ratatui::style::{Modifier, Style, Color};
                     use ratatui::text::{Line, Span};
 
-                    let lines: Vec<Line> = log
+                    let items: Vec<ListItem> = log
                         .messages
                         .iter()
-                        .map(|msg| {
+                        .enumerate()
+                        .map(|(i, msg)| {
                             let (prefix, prefix_style) = match msg.color {
-                                ratatui::style::Color::Red | ratatui::style::Color::LightRed => (
+                                Color::Red | Color::LightRed => (
                                     "[ERR] ",
                                     Style::default().fg(msg.color).add_modifier(Modifier::BOLD),
                                 ),
-                                ratatui::style::Color::Yellow
-                                | ratatui::style::Color::LightYellow => (
+                                Color::Yellow | Color::LightYellow => (
                                     "[WRN] ",
                                     Style::default().fg(msg.color).add_modifier(Modifier::BOLD),
                                 ),
-                                ratatui::style::Color::Green
-                                | ratatui::style::Color::LightGreen => (
+                                Color::Green | Color::LightGreen => (
                                     "[OK ] ",
                                     Style::default().fg(msg.color).add_modifier(Modifier::BOLD),
                                 ),
-                                ratatui::style::Color::Cyan | ratatui::style::Color::LightCyan => (
+                                Color::Cyan | Color::LightCyan => (
                                     "[INF] ",
                                     Style::default().fg(msg.color).add_modifier(Modifier::BOLD),
                                 ),
                                 _ => ("[LOG] ", Style::default().fg(msg.color)),
                             };
 
-                            Line::from(vec![
+                            let line = Line::from(vec![
                                 Span::styled(prefix, prefix_style),
                                 Span::styled(msg.text.clone(), Style::default().fg(msg.color)),
-                            ])
+                            ]);
+
+                            // Alternating row background for Z-pattern readability
+                            let bg_color = if i % 2 == 0 {
+                                Color::Reset
+                            } else {
+                                Color::DarkGray
+                            };
+
+                            ListItem::new(line).style(Style::default().bg(bg_color))
                         })
                         .collect();
 
-                    Paragraph::new(lines).block(
-                        Block::default()
-                            .title(" Message Log ")
-                            .borders(Borders::ALL),
-                    )
-                };
-
-                frame.render_widget(paragraph, frame.area());
+                    let list = List::new(items).block(block);
+                    frame.render_widget(list, frame.area());
+                }
             } else {
-                let paragraph = Paragraph::new("MessageLog not initialized.").block(
-                    Block::default()
-                        .title(" Message Log ")
-                        .borders(Borders::ALL),
-                );
+                let paragraph = Paragraph::new("MessageLog not initialized.")
+                    .style(ratatui::style::Style::default().fg(ratatui::style::Color::Red))
+                    .block(block);
                 frame.render_widget(paragraph, frame.area());
             }
         });
