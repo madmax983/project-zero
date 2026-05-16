@@ -109,6 +109,9 @@ pub fn register(schedule: &mut Schedule) {
             restore_leisure_system,
             crate::layer1::economy::apex_diet::apply_apex_mutations,
             crate::layer1::economy::apex_diet::process_apex_meat_consumption,
+            crate::layer1::social::hedonic_treadmill_integration::hedonic_treadmill_consumption_bridge,
+            crate::layer1::social::hedonic_treadmill::process_consumption_quality
+                .after(crate::layer1::social::hedonic_treadmill_integration::hedonic_treadmill_consumption_bridge),
             crate::layer1::tech_envy::tech_envy_system.after(restore_leisure_system),
             #[cfg(feature = "nova")]
             crate::layer1::loci::apply_loci_effects_system.after(restore_leisure_system),
@@ -125,6 +128,7 @@ pub fn register(schedule: &mut Schedule) {
                 .after(crate::layer1::graffiti::graffiti_observation_system)
                 .after(mascot_buff_system),
             morale_decay_system.after(update_morale_cache_system),
+            crate::layer1::social::hedonic_treadmill::decay_standard_of_living,
             crate::layer1::private_stash::stash_creation_system,
         )
             .in_set(Layer1SystemSet::Economy),

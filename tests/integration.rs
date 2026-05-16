@@ -426,3 +426,5 @@ mod sunk_cost_integration;
 mod holographic_facades;
 #[path = "integration/surgical_addiction_bridge.rs"]
 mod surgical_addiction_bridge;
+#[path = "integration/hedonic_treadmill_bridge.rs"]
+mod hedonic_treadmill_bridge;

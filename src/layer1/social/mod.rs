@@ -664,3 +664,4 @@ pub use inherited_grudges::*;
 pub mod emotional_contagion;
 pub mod hedonic_treadmill;
 pub use hedonic_treadmill::*;
+pub mod hedonic_treadmill_integration;
