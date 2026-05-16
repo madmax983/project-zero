@@ -35,6 +35,7 @@ pub mod hyperlane_collapse_bridge;
 pub mod jump_risk_bridge;
 pub mod sleep_hallucination_bridge;
 pub mod unseen_bureaucracy_bridge;
+pub mod invasive_bureaucracy_bridge;
 pub mod aesthetic_edict_chronicle_bridge;
 pub mod geothermal_explosion;
 pub mod vacuum_noise_bridge;

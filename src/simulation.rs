@@ -87,6 +87,7 @@ fn init_simulation_resources(world: &mut World) {
     world.init_resource::<crate::layer1::shadow_market::ShadowMarketCooldown>();
 
     world.init_resource::<crate::layer3::bureaucracy_of_vanity::ActiveDemands>();
+    world.init_resource::<crate::layer1::administration::invasive_bureaucracy::EmpireStability>();
     if !world.contains_resource::<crate::layer3::bureaucracy_of_vanity::ImperialStanding>() {
         world.insert_resource(crate::layer3::bureaucracy_of_vanity::ImperialStanding { value: 50 });
     }
@@ -794,6 +795,9 @@ mod tests {
     fn test_schedule_runs_on_fresh_world() {
         let mut world = setup_world();
         *world.resource_mut::<GameState>() = GameState::Running;
+        world
+            .init_resource::<crate::layer1::administration::invasive_bureaucracy::EmpireStability>(
+            );
 
         // Initialize Detection Risk for test
         world.init_resource::<Events<crate::layer1::social::hedonic_treadmill::ConsumeItemEvent>>();

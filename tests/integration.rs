@@ -311,6 +311,9 @@ mod temporal_ghost_towns_bridge;
 #[path = "integration/unseen_bureaucracy_bridge.rs"]
 mod unseen_bureaucracy_bridge;
 
+#[path = "integration/invasive_bureaucracy_bridge.rs"]
+mod invasive_bureaucracy_bridge;
+
 #[path = "integration/bureaucracy_of_vanity_integration.rs"]
 mod bureaucracy_of_vanity_integration;
 #[path = "integration/void_whispers_chronicle.rs"]
