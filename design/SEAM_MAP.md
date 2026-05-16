@@ -1078,3 +1078,9 @@
 - **Systems connected:** `consume_food_system` -> `hedonic_treadmill_consumption_bridge` -> `process_consumption_quality`
 - **Glue added:** Added `hedonic_treadmill_consumption_bridge` in `src/layer1/social/hedonic_treadmill_integration.rs` to read `JustConsumed` component added by `consume_food_system` and emit `ConsumeItemEvent` with calculated item quality for `process_consumption_quality`. Registered the new system and events in `src/layer1/systems/economy.rs` and `src/simulation.rs`.
 - **Tests:** `tests/integration/hedonic_treadmill_bridge.rs`
+
+### INT-1258: Cassandra Protocol -> Chronicle
+- **Date:** 2026-08-01
+- **Systems connected:** `activate_cassandra_protocol` -> `cassandra_protocol_chronicle_bridge`
+- **Glue added:** `cassandra_protocol_chronicle_bridge` in `src/layer1/core/integration.rs`
+- **Tests:** `tests/integration/cassandra_protocol_bridge.rs`
