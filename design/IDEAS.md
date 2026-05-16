@@ -19956,3 +19956,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you constantly cycle and purify your water supply at massive energy cost to keep it emotionally "clean," or let the water become a living, potentially toxic reflection of your society's history?
 
 ---
+## The Sleepless Caste
+
+**Layer:** 1
+
+**Fantasy:** A segment of your society gives up their right to rest to become hyper-productive, fundamentally altering the colony's culture and rhythm.
+
+**Mechanic:** A new genetic trait or cybernetic implant called "Insomnia Drive" eliminates the Rest need entirely, increasing productivity by 30%. However, these pops generate double the amount of Stress and require massive amounts of advanced Leisure facilities to prevent violent breakdowns.
+
+**Emergence:** You convert all your critical engineers to Sleepless to finish a megaproject on time. However, a minor power outage disables their specialized VR leisure dens. Because they literally never sleep, their stress spikes to maximum within a day, leading to a massive, coordinated riot by your most skilled workers that destroys the very project they built.
+
+**Tension:** Do you risk creating a volatile, high-maintenance hyper-class for unmatched productivity, or stick to normal biological limits that respect the day/night cycle?
+
+---
+
+## The Ghost Ship Protocol
+
+**Layer:** 2
+
+**Fantasy:** Sometimes the most terrifying thing a ship can do is absolutely nothing.
+
+**Mechanic:** A ship whose crew dies or mutinies can enter "Ghost Ship" status. Its transponder loops old distress signals and it drifts along orbital paths. Other ships sent to salvage or intercept it have a high chance of their crews suffering severe morale drops or bringing back localized contagions.
+
+**Emergence:** You ignore a drifting Ghost Ship for decades because it's too expensive to salvage. Eventually, its decaying orbit crashes it directly into a highly populated Layer 1 sector, spreading an ancient bio-weapon it was secretly carrying and forcing a desperate quarantine.
+
+**Tension:** Do you spend valuable military resources hunting down harmless drifting derelicts, or leave them as unpredictable time-bombs in your orbital lanes?
+
+---
+
+## Cultural Export Collapse
+
+**Layer:** 3
+
+**Fantasy:** Your empire's greatest export wasn't weapons, it was pop-culture. And now the galaxy is addicted.
+
+**Mechanic:** If your civilization dominates galactic media, other empires become highly dependent on your "Cultural Exports" to maintain their own Layer 1 morale. If you suddenly embargo them or your media infrastructure is destroyed, their populations experience severe "Culture Withdrawal."
+
+**Emergence:** You intentionally destroy your own central broadcasting megastructure to deny an invading fleet a strategic asset. Unexpectedly, the sudden loss of your empire's popular holovision shows causes the invading fleet's homeworld to descend into a massive planetary riot over the unresolved cliffhanger, forcing the fleet to retreat and handle domestic issues.
+
+**Tension:** Do you invest in soft-power media that makes the galaxy love you but binds your economies together, or focus on self-reliance at the cost of global influence?
+
+---
