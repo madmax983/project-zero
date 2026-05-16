@@ -6046,7 +6046,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Phantom Infrastructure
+## Phantom Infrastructure [SPECCED]
 
 **Layer:** 1
 
