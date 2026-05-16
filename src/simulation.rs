@@ -250,14 +250,13 @@ fn init_simulation_resources(world: &mut World) {
 
     world.init_resource::<Events<crate::layer1::environment::events::DebrisFallEvent>>();
 
-
     world.init_resource::<crate::layer3::intellectual_property_wars::PatentRegistry>();
-
 
     world.init_resource::<Events<crate::layer3::intellectual_property_wars::TechDiscoveredEvent>>();
 
-
-    world.init_resource::<Events<crate::layer3::intellectual_property_wars::EspionageSuccessEvent>>();
+    world
+        .init_resource::<Events<crate::layer3::intellectual_property_wars::EspionageSuccessEvent>>(
+        );
     world.init_resource::<Events<crate::layer1::law::penal::OrganHarvestedEvent>>();
     world.init_resource::<crate::layer1::law::penal::ColonyInventory>();
     world.init_resource::<crate::layer3::council::GalacticCouncil>();

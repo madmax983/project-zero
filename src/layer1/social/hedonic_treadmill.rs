@@ -1,6 +1,6 @@
-use bevy_ecs::prelude::*;
-use crate::layer1::social::morale::{Morale, MoodModifier};
+use crate::layer1::social::morale::{MoodModifier, Morale};
 use crate::shared::time::SimulationTime;
+use bevy_ecs::prelude::*;
 
 pub const HEDONIC_HISTORY_CAPACITY: usize = 10;
 pub const BASELINE_STANDARD_OF_LIVING: f32 = 1.0;
@@ -49,7 +49,8 @@ pub fn process_consumption_quality(
             let avg = sum / sol.quality_history.len() as f32;
 
             // Slowly drag current level toward average
-            sol.current_level = (sol.current_level * STANDARD_OF_LIVING_HISTORY_WEIGHT) + (avg * STANDARD_OF_LIVING_NEW_WEIGHT);
+            sol.current_level = (sol.current_level * STANDARD_OF_LIVING_HISTORY_WEIGHT)
+                + (avg * STANDARD_OF_LIVING_NEW_WEIGHT);
 
             // If item is significantly below current standard, apply massive penalty
             if event.item_quality < sol.current_level - BASELINE_STANDARD_OF_LIVING {
@@ -80,7 +81,8 @@ pub fn decay_standard_of_living(
         for mut sol in query.iter_mut() {
             // Slowly decay towards baseline over a long period
             if sol.current_level > BASELINE_STANDARD_OF_LIVING {
-                sol.current_level = (sol.current_level - DECAY_AMOUNT).max(BASELINE_STANDARD_OF_LIVING);
+                sol.current_level =
+                    (sol.current_level - DECAY_AMOUNT).max(BASELINE_STANDARD_OF_LIVING);
             }
         }
     }
@@ -89,10 +91,10 @@ pub fn decay_standard_of_living(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use bevy_app::App;
-    use bevy_app::Update;
     use crate::layer1::entities::pop::Pop;
     use crate::layer1::social::morale::Morale;
+    use bevy_app::App;
+    use bevy_app::Update;
 
     #[test]
     fn test_consuming_high_quality_increases_standard() {
@@ -100,11 +102,20 @@ mod tests {
         app.add_event::<ConsumeItemEvent>();
         app.add_systems(Update, process_consumption_quality);
 
-        let pop_id = app.world_mut().spawn((
-            Pop,
-            StandardOfLiving { current_level: 1.0, quality_history: vec![] },
-            Morale { value: 0.8, modifiers: vec![] },
-        )).id();
+        let pop_id = app
+            .world_mut()
+            .spawn((
+                Pop,
+                StandardOfLiving {
+                    current_level: 1.0,
+                    quality_history: vec![],
+                },
+                Morale {
+                    value: 0.8,
+                    modifiers: vec![],
+                },
+            ))
+            .id();
 
         // Consume a high-quality item multiple times
         for _ in 0..10 {
@@ -126,11 +137,20 @@ mod tests {
         app.add_event::<ConsumeItemEvent>();
         app.add_systems(Update, process_consumption_quality);
 
-        let pop_id = app.world_mut().spawn((
-            Pop,
-            StandardOfLiving { current_level: 4.0, quality_history: vec![] },
-            Morale { value: 0.8, modifiers: vec![] },
-        )).id();
+        let pop_id = app
+            .world_mut()
+            .spawn((
+                Pop,
+                StandardOfLiving {
+                    current_level: 4.0,
+                    quality_history: vec![],
+                },
+                Morale {
+                    value: 0.8,
+                    modifiers: vec![],
+                },
+            ))
+            .id();
 
         // Consume a low-quality item (e.g., nutrient paste instead of glitter-steak)
         app.world_mut().send_event(ConsumeItemEvent {
@@ -150,13 +170,22 @@ mod tests {
         let mut app = App::new();
         app.add_systems(Update, decay_standard_of_living);
 
-        let pop_id = app.world_mut().spawn((
-            Pop,
-            StandardOfLiving { current_level: 5.0, quality_history: vec![] },
-        )).id();
+        let pop_id = app
+            .world_mut()
+            .spawn((
+                Pop,
+                StandardOfLiving {
+                    current_level: 5.0,
+                    quality_history: vec![],
+                },
+            ))
+            .id();
 
         // Advance time significantly without high-quality consumption
-        app.insert_resource(crate::shared::time::SimulationTime { tick: 50_000, ..Default::default() });
+        app.insert_resource(crate::shared::time::SimulationTime {
+            tick: 50_000,
+            ..Default::default()
+        });
         app.update();
 
         // Standard of living should slowly return to a baseline over time

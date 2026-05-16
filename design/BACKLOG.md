@@ -828,7 +828,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1231` Hyper-Specialized Evolution — `specs/1231-hyper-specialized-evolution.md`
 - [ ] `1232` Contractor Fleets — `specs/1232-contractor-fleets.md`
 - [ ] `1235` The Gastronomers — `specs/1235-the-gastronomers.md`
-- [ ] `1237` Invasive Bureaucracy — `specs/1237-invasive-bureaucracy.md`
 - [ ] `1238` The Bulwark Platform — `specs/1238-the-bulwark-platform.md`
 - [ ] `1239` The Vanguard Ram — `specs/1239-the-vanguard-ram.md`
 - [ ] `1240` The Decoy Frigate — `specs/1240-the-decoy-frigate.md`

@@ -1,9 +1,9 @@
 use bevy::prelude::*;
-use scale::layer1::social::hedonic_treadmill::ConsumeItemEvent;
 use scale::layer1::economy::items::ItemType;
 use scale::layer1::pop::Pop;
-use scale::layer1::social::social_mimicry::JustConsumed;
+use scale::layer1::social::hedonic_treadmill::ConsumeItemEvent;
 use scale::layer1::social::hedonic_treadmill_integration::hedonic_treadmill_consumption_bridge;
+use scale::layer1::social::social_mimicry::JustConsumed;
 
 #[test]
 fn test_hedonic_treadmill_consumption_bridge() {
@@ -12,10 +12,15 @@ fn test_hedonic_treadmill_consumption_bridge() {
 
     app.add_systems(Update, hedonic_treadmill_consumption_bridge);
 
-    let pop_id = app.world_mut().spawn((
-        Pop,
-        JustConsumed { item: ItemType::LuxuryMeal },
-    )).id();
+    let pop_id = app
+        .world_mut()
+        .spawn((
+            Pop,
+            JustConsumed {
+                item: ItemType::LuxuryMeal,
+            },
+        ))
+        .id();
 
     app.update();
 

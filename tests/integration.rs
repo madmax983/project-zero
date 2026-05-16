@@ -205,13 +205,13 @@ mod waste_scent;
 pub mod integration {
     #[path = "conveyor_pathfinding_bridge.rs"]
     pub mod conveyor_pathfinding_bridge;
+    pub mod intellectual_property_wars_bridge;
     #[path = "language_drift_trade_bridge.rs"]
     pub mod language_drift_trade_bridge;
     pub mod sonic_suppression_bridge;
     pub mod spiteful_will_chronicle;
     #[path = "the_silent_generation_bridge.rs"]
     pub mod the_silent_generation_bridge;
-    pub mod intellectual_property_wars_bridge;
 }
 
 #[path = "integration/neural_leech_unrest.rs"]
@@ -422,9 +422,9 @@ mod rust_lung_bridge;
 #[path = "integration/sunk_cost_integration.rs"]
 mod sunk_cost_integration;
 
+#[path = "integration/hedonic_treadmill_bridge.rs"]
+mod hedonic_treadmill_bridge;
 #[path = "integration/holographic_facades.rs"]
 mod holographic_facades;
 #[path = "integration/surgical_addiction_bridge.rs"]
 mod surgical_addiction_bridge;
-#[path = "integration/hedonic_treadmill_bridge.rs"]
-mod hedonic_treadmill_bridge;

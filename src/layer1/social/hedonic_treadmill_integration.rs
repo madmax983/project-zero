@@ -1,7 +1,7 @@
-use bevy_ecs::prelude::*;
+use crate::layer1::economy::items::ItemType;
 use crate::layer1::social::hedonic_treadmill::ConsumeItemEvent;
 use crate::layer1::social::social_mimicry::JustConsumed;
-use crate::layer1::economy::items::ItemType;
+use bevy_ecs::prelude::*;
 
 pub fn get_item_quality(item: &ItemType) -> f32 {
     match item {
