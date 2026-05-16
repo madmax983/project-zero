@@ -103,6 +103,33 @@ mod tests {
     }
 
     #[test]
+    fn test_process_gossip_general_rumor() {
+        let mut app = setup_app();
+        app.world_mut().resource_mut::<IntelTokens>().0 = 99;
+
+        let pop = app
+            .world_mut()
+            .spawn((
+                Pop,
+                Morale {
+                    value: 50.0,
+                    modifiers: vec![],
+                },
+            ))
+            .id();
+        app.world_mut()
+            .resource_mut::<Events<GossipEvent>>()
+            .send(GossipEvent {
+                pop,
+                rumor: RumorTopic::CharacterGossip(pop, 10.0), // fallback default case
+            });
+
+        app.update();
+
+        assert_eq!(app.world().resource::<IntelTokens>().0, 100);
+    }
+
+    #[test]
     fn test_gossiping_generates_intel_tokens() {
         let mut app = setup_app();
         let pop = app
@@ -125,6 +152,56 @@ mod tests {
         app.update();
 
         assert_eq!(app.world().resource::<IntelTokens>().0, 1);
+    }
+
+    #[test]
+    fn test_gossiping_reduces_productivity() {
+        use crate::layer1::utility_types::{ActionType, PopAction};
+        use crate::layer1::execution::components::{MovementTarget, AtTarget};
+        use crate::layer1::actions::AssignedTo;
+        use crate::layer1::utility_types::AssignmentType;
+
+        let mut app = setup_app();
+
+        let target_entity = app.world_mut().spawn(()).id();
+
+        let pop = app
+            .world_mut()
+            .spawn((
+                Pop,
+                PopAction {
+                    current: ActionType::Work,
+                    current_utility: 0.8,
+                    ticks_committed: 1,
+                },
+                MovementTarget {
+                    target_entity,
+                    target_position: crate::layer1::map::GridPosition { x: 0, y: 0 },
+                    for_action: ActionType::Work,
+                },
+                AtTarget,
+                AssignedTo {
+                    entity: target_entity,
+                    assignment_type: AssignmentType::FarmWorker,
+                },
+                Morale {
+                    value: 50.0,
+                    modifiers: vec![],
+                },
+            ))
+            .id();
+
+        app.add_systems(Update, crate::layer1::execution::general_work::work_execution_system);
+
+        // Change action to Gossip
+        app.world_mut().get_mut::<PopAction>(pop).unwrap().current = ActionType::Gossip;
+
+        app.update();
+
+        // Verify pop's `AtTarget` and `MovementTarget` were cleared by `cleanup_pop_work_state` because the action changed from Work to Gossip.
+        assert!(app.world().get::<MovementTarget>(pop).is_none(), "Movement target should be cleared when interrupted by Gossip");
+        assert!(app.world().get::<AtTarget>(pop).is_none(), "AtTarget should be cleared when interrupted by Gossip");
+        assert_eq!(app.world().get::<PopAction>(pop).unwrap().current, ActionType::Idle, "PopAction should be reset to Idle after cleanup_pop_work_state");
     }
 
     #[test]
