@@ -60,6 +60,7 @@ fn test_food_production_satisfies_hunger() {
 
     // 4. Run the systems!
     // produce_food_system -> consume_food_system
+    world.init_resource::<Events<scale::layer1::social::hedonic_treadmill::ConsumeItemEvent>>();
     let mut schedule = Schedule::default();
     schedule.add_systems((produce_food_system, consume_food_system).chain());
 

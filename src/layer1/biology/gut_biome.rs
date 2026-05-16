@@ -141,6 +141,7 @@ mod tests {
             .id();
 
         // Run eat system
+        world.init_resource::<bevy_ecs::event::Events<crate::layer1::social::hedonic_treadmill::ConsumeItemEvent>>();
         world.run_system_once(consume_food_system).unwrap();
 
         let needs = world.get::<Needs>(pop).unwrap();
@@ -192,6 +193,7 @@ mod tests {
             ))
             .id();
 
+        world.init_resource::<bevy_ecs::event::Events<crate::layer1::social::hedonic_treadmill::ConsumeItemEvent>>();
         world.run_system_once(consume_food_system).unwrap();
 
         let needs = world.get::<Needs>(pop).unwrap();

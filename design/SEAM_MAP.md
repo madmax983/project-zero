@@ -1066,3 +1066,15 @@
 - **Systems connected:** `detect_ip_piracy_system` -> `ip_piracy_diplomacy_bridge` -> `apply_diplomatic_reactions`
 - **Glue added:** `ip_piracy_diplomacy_bridge` in `src/layer3/integration.rs`
 - **Tests:** `tests/integration/intellectual_property_wars_bridge.rs`
+
+### INT-694: Hedonic Treadmill -> Economy/Consumption
+- **Date:** 2026-07-10
+- **Systems connected:** `consume_food_system` -> `process_consumption_quality`
+- **Glue added:** Added `ConsumeItemEvent` emission to `consume_food_system` inside `apply_food_consumption_effects` where `ItemType` translates to quality.
+- **Tests:** `tests/integration/hedonic_treadmill_bridge.rs`
+
+### INT-266: Emotional Contagion -> Social/Mood
+- **Date:** 2026-05-15
+- **Systems connected:** `Morale` -> `emotional_contagion_trigger_bridge` -> `EmotionalContagion` -> `contagion_system`
+- **Glue added:** Created `emotional_contagion_trigger_bridge` system in `src/layer1/core/integration.rs` to observe extremely high or low morale and attach the appropriate `EmotionalContagion` component.
+- **Tests:** `tests/integration/emotional_contagion_bridge.rs`

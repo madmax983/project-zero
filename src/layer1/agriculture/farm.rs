@@ -308,6 +308,7 @@ pub fn consume_food_system(
     farm_query: Query<&Farm>, // Query Farm instead of Crop
     animal_query: Query<&Fauna, With<Tame>>,
     prices: Option<Res<ColonyPrices>>,
+    mut consume_events: EventWriter<crate::layer1::social::hedonic_treadmill::ConsumeItemEvent>,
 ) {
     // Use total_food() logic for check
     let total_food = resources.total_food();
@@ -400,6 +401,7 @@ pub fn consume_food_system(
                     biome_opt,
                     eaten_item,
                     food_price,
+                    &mut consume_events,
                 );
             }
         }
@@ -418,7 +420,22 @@ fn apply_food_consumption_effects(
     biome_opt: Option<Mut<'_, crate::layer1::gut_biome::GutBiome>>,
     eaten_item: ItemType,
     food_price: f32,
+    consume_events: &mut EventWriter<crate::layer1::social::hedonic_treadmill::ConsumeItemEvent>,
 ) {
+    // Determine quality of consumed item (Spec 694 Hedonic Treadmill)
+    let item_quality = match eaten_item {
+        ItemType::LuxuryMeal => 5.0,
+        ItemType::MysteryMeal => 3.0,
+        ItemType::Meat | ItemType::Fish | ItemType::Fruit => 2.0,
+        ItemType::Rations => 0.0,
+        _ => 1.0, // Basic meals like Potato, Wheat, Rice, Corn, Soy
+    };
+
+    consume_events.send(crate::layer1::social::hedonic_treadmill::ConsumeItemEvent {
+        consumer: entity,
+        item_quality,
+    });
+
     // Determine GutBiome category
     let category = crate::layer1::gut_biome::get_biome_category(&eaten_item);
 
@@ -660,6 +677,7 @@ mod tests {
     #[test]
     fn test_consume_food_system() {
         let mut world = World::new();
+        world.init_resource::<Events<crate::layer1::social::hedonic_treadmill::ConsumeItemEvent>>();
         world.insert_resource(ColonyResources {
             food: 1.0,
             ..Default::default()
@@ -685,6 +703,7 @@ mod tests {
     #[test]
     fn test_consume_food_adds_dietary_history() {
         let mut world = World::new();
+        world.init_resource::<Events<crate::layer1::social::hedonic_treadmill::ConsumeItemEvent>>();
         world.insert_resource(ColonyResources {
             food: 1.0,
             ..Default::default()
@@ -717,6 +736,7 @@ mod tests {
     #[test]
     fn test_consume_food_picks_active_crop() {
         let mut world = World::new();
+        world.init_resource::<Events<crate::layer1::social::hedonic_treadmill::ConsumeItemEvent>>();
         world.insert_resource(ColonyResources {
             food: 10.0,
             ..Default::default()
@@ -845,6 +865,7 @@ mod tests {
     #[test]
     fn test_consume_food_rations_mood_penalty() {
         let mut world = World::new();
+        world.init_resource::<Events<crate::layer1::social::hedonic_treadmill::ConsumeItemEvent>>();
         world.insert_resource(ColonyResources {
             rations: 10.0,
             food: 0.0, // Ensure no other food
@@ -874,6 +895,7 @@ mod tests {
     #[test]
     fn test_eating_paste_causes_gloom() {
         let mut world = World::new();
+        world.init_resource::<Events<crate::layer1::social::hedonic_treadmill::ConsumeItemEvent>>();
         world.insert_resource(ColonyResources {
             rations: 10.0,
             food: 0.0, // Ensure no other food
@@ -902,6 +924,7 @@ mod tests {
     #[test]
     fn test_pragmatist_ignores_gloom() {
         let mut world = World::new();
+        world.init_resource::<Events<crate::layer1::social::hedonic_treadmill::ConsumeItemEvent>>();
         world.insert_resource(ColonyResources {
             rations: 10.0,
             food: 0.0,
@@ -939,6 +962,7 @@ mod tests {
     #[test]
     fn test_consume_food_rations_immunity() {
         let mut world = World::new();
+        world.init_resource::<Events<crate::layer1::social::hedonic_treadmill::ConsumeItemEvent>>();
         world.insert_resource(ColonyResources {
             rations: 10.0,
             food: 0.0,

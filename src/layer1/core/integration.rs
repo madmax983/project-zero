@@ -2198,3 +2198,42 @@ pub fn sunk_cost_resource_drain_system(
         }
     }
 }
+
+/// INT-266: Bridges Pop Morale to Emotional Contagion.
+/// Adds the EmotionalContagion component to pops with extremely high or low morale,
+/// and removes it when their morale stabilizes.
+pub fn emotional_contagion_trigger_bridge(
+    mut commands: bevy::prelude::Commands,
+    query: bevy::prelude::Query<
+        (
+            bevy::prelude::Entity,
+            &crate::layer1::social::morale::Morale,
+            Option<&crate::layer1::social::emotional_contagion::EmotionalContagion>,
+        ),
+        bevy::prelude::With<crate::layer1::entities::pop::Pop>,
+    >,
+) {
+    for (entity, morale, contagion_opt) in query.iter() {
+        let current_morale = morale.value;
+
+        if current_morale < 0.15 {
+            if contagion_opt.is_none() || contagion_opt.unwrap().contagion_type != crate::layer1::social::emotional_contagion::ContagionType::Panic {
+                commands.entity(entity).insert(crate::layer1::social::emotional_contagion::EmotionalContagion {
+                    contagion_type: crate::layer1::social::emotional_contagion::ContagionType::Panic,
+                    radius: 5.0,
+                    strength: -0.1,
+                });
+            }
+        } else if current_morale > 0.85 {
+            if contagion_opt.is_none() || contagion_opt.unwrap().contagion_type != crate::layer1::social::emotional_contagion::ContagionType::Joy {
+                commands.entity(entity).insert(crate::layer1::social::emotional_contagion::EmotionalContagion {
+                    contagion_type: crate::layer1::social::emotional_contagion::ContagionType::Joy,
+                    radius: 5.0,
+                    strength: 0.1,
+                });
+            }
+        } else if contagion_opt.is_some() {
+            commands.entity(entity).remove::<crate::layer1::social::emotional_contagion::EmotionalContagion>();
+        }
+    }
+}

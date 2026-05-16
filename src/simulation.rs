@@ -723,6 +723,7 @@ mod tests {
     #[test]
     fn test_run_simulation_tick_increments() {
         let mut world = setup_world();
+        world.init_resource::<Events<crate::layer1::social::hedonic_treadmill::ConsumeItemEvent>>();
         world
             .init_resource::<crate::layer1::environment::bio_acoustic_miasma::MiasmaRecordedSecret>(
             );
@@ -757,6 +758,7 @@ mod tests {
     #[test]
     fn test_run_multiple_ticks() {
         let mut world = setup_world();
+        world.init_resource::<Events<crate::layer1::social::hedonic_treadmill::ConsumeItemEvent>>();
         world
             .init_resource::<crate::layer1::environment::bio_acoustic_miasma::MiasmaRecordedSecret>(
             );
@@ -795,6 +797,7 @@ mod tests {
         *world.resource_mut::<GameState>() = GameState::Running;
 
         // Initialize Detection Risk for test
+        world.init_resource::<Events<crate::layer1::social::hedonic_treadmill::ConsumeItemEvent>>();
         world.init_resource::<Events<crate::layer1::architecture::sunk_cost_monument::CancelConstructionEvent>>();
         world.init_resource::<Events<crate::layer1::anomalies::echo::SpawnEchoSourceEvent>>();
         world.init_resource::<Events<crate::layer1::economy::apex_diet::ConsumeFoodEvent>>();

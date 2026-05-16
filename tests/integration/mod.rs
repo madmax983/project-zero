@@ -60,3 +60,5 @@ pub mod cartographers_curse_bridge;
 pub mod ideological_contraband_bridge;
 pub mod petrification_chronicle_bridge;
 pub mod propaganda_simulacrum_bridge;
+pub mod hedonic_treadmill_bridge;
+pub mod emotional_contagion_bridge;

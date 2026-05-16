@@ -94,6 +94,7 @@ mod tests {
     #[test]
     fn test_consume_priority_eats_fresh_food_first() {
         let mut world = World::new();
+        world.init_resource::<bevy_ecs::event::Events<crate::layer1::social::hedonic_treadmill::ConsumeItemEvent>>();
         world.insert_resource(ColonyResources {
             food: 1.0, // Just enough for one meal
             rations: 10.0,
@@ -121,6 +122,7 @@ mod tests {
     #[test]
     fn test_consume_eats_rations_if_no_fresh_food() {
         let mut world = World::new();
+        world.init_resource::<bevy_ecs::event::Events<crate::layer1::social::hedonic_treadmill::ConsumeItemEvent>>();
         world.insert_resource(ColonyResources {
             food: 0.0,
             rations: 10.0,
