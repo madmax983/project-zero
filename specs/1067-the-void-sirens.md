@@ -160,3 +160,6 @@ pub fn handle_obsessed_jobs(
 
 ## 8. Questions
 *Builder: add questions here if spec is unclear.*
+
+## Questions
+- Contradiction: `AssignmentType` does not have `Scientist`, `Miner`, or `Engineer` variants.
