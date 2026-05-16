@@ -4948,3 +4948,19 @@
 **Usage:**
 - "The Punitive Fleet arrived to seize the hoarded assets."
 - "We survived the plague, only to face the Punitive Fleet."
+
+## Solar Flare Sickness
+
+### The Burning Season / The Bright Time
+**Replaces:** Solar Maximum, solar flare event
+**Code reference:** `SolarCycle::Maximum`
+**Usage:**
+- "Keep the workers indoors; The Burning Season has begun."
+- "The Bright Time gives us power, but it takes our health."
+
+### Sun-Sickness / Flare-Fever
+**Replaces:** Radiation Sickness caused by the sun
+**Code reference:** `RadiationSickness` component (when acquired from `SolarFlare` exposure)
+**Usage:**
+- "Half the mining team is down with Flare-Fever."
+- "He stayed outside too long and caught Sun-Sickness."
