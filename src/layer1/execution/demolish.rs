@@ -15,103 +15,122 @@ use crate::shared::log::MessageLog;
 /// If the building is an Ancient Structure, this triggers "Retrograde Engineering",
 /// awarding Knowledge instead of resources/debris.
 pub fn execute_demolish(world: &mut World, designation_entity: Entity) -> bool {
-    // Find designation position
-    world
-        .get::<GridPosition>(designation_entity)
-        .copied()
-        .is_some_and(|designation_pos| {
-            // 1. Check for Ruin first (Scavenging)
-            let ruin_entity = world
-                .query::<(Entity, &GridPosition, &Ruin)>()
-                .iter(world)
-                .find(|(_, pos, _)| **pos == designation_pos)
-                .map(|(e, _, _)| e);
+    let Some(designation_pos) = world.get::<GridPosition>(designation_entity).copied() else {
+        return false;
+    };
 
-            if let Some(ruin) = ruin_entity {
-                let yielded = process_scavenge(world, ruin);
-                if !yielded.is_empty() {
-                    if let Some(mut log) = world.get_resource_mut::<MessageLog>() {
-                        log.add_colored("Scavenged resources from Ruin.", Color::Green);
-                    }
-                }
-                // Despawn the designation itself
-                world.despawn(designation_entity);
-                return true;
-            }
+    if try_scavenge_ruin(world, designation_entity, designation_pos) {
+        return true;
+    }
 
-            // 2. Check for Building (Existing logic)
-            // We collect to avoid borrow issues if we need to mutate world later
-            let building_entity = world
-                .query::<(Entity, &GridPosition, &Building)>()
-                .iter(world)
-                .find(|(_, pos, _)| pos.x == designation_pos.x && pos.y == designation_pos.y)
-                .map(|(e, _, _)| e);
+    try_demolish_building(world, designation_pos);
 
-            if let Some(entity) = building_entity {
-                // Check for AncientStructure before despawn
-                let is_ancient = world
-                    .get::<AncientStructure>(entity)
-                    .is_some();
-                let building_type = world.get::<Building>(entity).map(|b| b.building_type);
+    // Despawn the designation itself
+    world.despawn(designation_entity);
+    true
+}
 
-                if is_ancient {
-                    // Retrograde Engineering: Award Knowledge
-                    let amount = calculate_knowledge_reward(building_type);
+fn try_scavenge_ruin(
+    world: &mut World,
+    designation_entity: Entity,
+    designation_pos: GridPosition,
+) -> bool {
+    let ruin_entity = world
+        .query::<(Entity, &GridPosition, &Ruin)>()
+        .iter(world)
+        .find(|(_, pos, _)| **pos == designation_pos)
+        .map(|(e, _, _)| e);
 
-                    if let Some(mut res) = world.get_resource_mut::<ColonyResources>() {
-                        res.add_knowledge(amount);
-                    }
+    let Some(ruin) = ruin_entity else {
+        return false;
+    };
 
-                    let label = building_type.map_or_else(|| "Ancient Structure".to_string(), |b| b.label().to_string());
+    let yielded = process_scavenge(world, ruin);
+    if !yielded.is_empty() {
+        if let Some(mut log) = world.get_resource_mut::<MessageLog>() {
+            log.add_colored("Scavenged resources from Ruin.", Color::Green);
+        }
+    }
+    // Despawn the designation itself
+    world.despawn(designation_entity);
+    true
+}
 
-                    // Fire integration event
-                    world.send_event(RetrogradeEngineeringEvent {
-                        building_label: label.clone(),
-                        knowledge_gained: amount,
-                    });
+fn try_demolish_building(world: &mut World, designation_pos: GridPosition) {
+    let building_entity = world
+        .query::<(Entity, &GridPosition, &Building)>()
+        .iter(world)
+        .find(|(_, pos, _)| pos.x == designation_pos.x && pos.y == designation_pos.y)
+        .map(|(e, _, _)| e);
 
-                    if let Some(mut log) = world.get_resource_mut::<MessageLog>() {
-                        log.add_colored(
-                            format!(
-                                "Retrograde Engineering: Deconstructed {label} for {amount} Knowledge."
-                            ),
-                            Color::Cyan,
-                        );
-                    }
+    let Some(entity) = building_entity else {
+        return;
+    };
 
-                    // Cyan 'data' sparks
-                    spawn_particle(world, designation_pos, '?', Color::Cyan, 15);
-                } else {
-                    // Normal Debris
-                    spawn_particle(world, designation_pos, 'X', Color::Red, 10);
-                }
+    let is_ancient = world.get::<AncientStructure>(entity).is_some();
+    let building_type = world.get::<Building>(entity).map(|b| b.building_type);
 
-                world.despawn(entity);
+    if is_ancient {
+        handle_ancient_structure(world, designation_pos, building_type);
+    } else {
+        // Normal Debris
+        spawn_particle(world, designation_pos, 'X', Color::Red, 10);
+    }
 
-                // Trigger Screen Shake (Ludwig: "Juice")
-                if let Some(mut shake) = world.get_resource_mut::<ScreenShake>() {
-                    shake.trigger(0.5);
-                }
+    world.despawn(entity);
 
-                // Remove from OccupiedTiles
-                if let Some(mut occupied) = world.get_resource_mut::<OccupiedTiles>() {
-                    occupied.0.remove(&(designation_pos.x, designation_pos.y));
-                }
+    // Trigger Screen Shake (Ludwig: "Juice")
+    if let Some(mut shake) = world.get_resource_mut::<ScreenShake>() {
+        shake.trigger(0.5);
+    }
 
-                // Send removal event (for Ghost Code, etc)
-                if let Some(btype) = building_type {
-                    world.send_event(crate::layer1::events::BuildingRemovedEvent {
-                        entity,
-                        position: designation_pos,
-                        building_type: btype,
-                    });
-                }
-            }
+    // Remove from OccupiedTiles
+    if let Some(mut occupied) = world.get_resource_mut::<OccupiedTiles>() {
+        occupied.0.remove(&(designation_pos.x, designation_pos.y));
+    }
 
-            // Despawn the designation itself
-            world.despawn(designation_entity);
-            true
-        })
+    // Send removal event (for Ghost Code, etc)
+    if let Some(btype) = building_type {
+        world.send_event(crate::layer1::events::BuildingRemovedEvent {
+            entity,
+            position: designation_pos,
+            building_type: btype,
+        });
+    }
+}
+
+fn handle_ancient_structure(
+    world: &mut World,
+    designation_pos: GridPosition,
+    building_type: Option<BuildingType>,
+) {
+    // Retrograde Engineering: Award Knowledge
+    let amount = calculate_knowledge_reward(building_type);
+
+    if let Some(mut res) = world.get_resource_mut::<ColonyResources>() {
+        res.add_knowledge(amount);
+    }
+
+    let label = building_type.map_or_else(
+        || "Ancient Structure".to_string(),
+        |b| b.label().to_string(),
+    );
+
+    // Fire integration event
+    world.send_event(RetrogradeEngineeringEvent {
+        building_label: label.clone(),
+        knowledge_gained: amount,
+    });
+
+    if let Some(mut log) = world.get_resource_mut::<MessageLog>() {
+        log.add_colored(
+            format!("Retrograde Engineering: Deconstructed {label} for {amount} Knowledge."),
+            Color::Cyan,
+        );
+    }
+
+    // Cyan 'data' sparks
+    spawn_particle(world, designation_pos, '?', Color::Cyan, 15);
 }
 
 /// Executes the cannibalization of the Lander.
