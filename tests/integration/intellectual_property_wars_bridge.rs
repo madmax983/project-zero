@@ -1,9 +1,13 @@
 use bevy::prelude::*;
-use scale::layer3::diplomacy_reflection::{Civilization, DiplomaticRelations, DiplomaticStanding, DiplomaticTraits, TraitChangedEvent, apply_diplomatic_reactions};
-use scale::layer3::intellectual_property_wars::{
-    CassusBelli, CassusBelliReason, IntellectualPropertyWarsPlugin, PatentRegistry, TechId, TechUsage,
+use scale::layer3::diplomacy_reflection::{
+    apply_diplomatic_reactions, Civilization, DiplomaticRelations, DiplomaticStanding,
+    DiplomaticTraits, TraitChangedEvent,
 };
 use scale::layer3::integration::ip_piracy_diplomacy_bridge;
+use scale::layer3::intellectual_property_wars::{
+    CassusBelli, CassusBelliReason, IntellectualPropertyWarsPlugin, PatentRegistry, TechId,
+    TechUsage,
+};
 
 #[test]
 fn test_ip_piracy_triggers_sanctions() {
@@ -15,22 +19,25 @@ fn test_ip_piracy_triggers_sanctions() {
     app.add_event::<TraitChangedEvent>();
     app.add_systems(
         Update,
-        (
-            ip_piracy_diplomacy_bridge,
-            apply_diplomatic_reactions,
-        )
-            .chain(),
+        (ip_piracy_diplomacy_bridge, apply_diplomatic_reactions).chain(),
     );
 
     // Setup:
     // 1. Owner of a tech
-    let owner = app.world_mut().spawn(Civilization { id: "owner".to_string() }).id();
+    let owner = app
+        .world_mut()
+        .spawn(Civilization {
+            id: "owner".to_string(),
+        })
+        .id();
 
     // 2. Pirate civ (will steal the tech)
     let pirate = app
         .world_mut()
         .spawn((
-            Civilization { id: "pirate".to_string() },
+            Civilization {
+                id: "pirate".to_string(),
+            },
             DiplomaticTraits {
                 is_barbarian: false, // Starts normal
                 ..Default::default()
@@ -42,7 +49,9 @@ fn test_ip_piracy_triggers_sanctions() {
     let neighbor = app
         .world_mut()
         .spawn((
-            Civilization { id: "neighbor".to_string() },
+            Civilization {
+                id: "neighbor".to_string(),
+            },
             DiplomaticTraits {
                 is_pacifist: true,
                 ..Default::default()
@@ -80,7 +89,10 @@ fn test_ip_piracy_triggers_sanctions() {
 
     // Assert: Pirate is now a barbarian
     let pirate_traits = app.world().get::<DiplomaticTraits>(pirate).unwrap();
-    assert!(pirate_traits.is_barbarian, "Pirate should be marked as barbarian for IP infringement");
+    assert!(
+        pirate_traits.is_barbarian,
+        "Pirate should be marked as barbarian for IP infringement"
+    );
 
     // Assert: CassusBelli was spawned
     let cb_query = app

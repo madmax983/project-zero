@@ -24,3 +24,5 @@ pub use inspector::*;
 pub use malicious_compliance::*;
 pub use permit::*;
 pub use zone::*;
+pub mod invasive_bureaucracy;
+pub use invasive_bureaucracy::*;
