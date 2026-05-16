@@ -37,3 +37,8 @@
 **Concept:** Added a `supercharged_battery_system` that connects `WeatherType::MagneticStorm`, `RoofGrid`, and `Battery`. During a magnetic storm, exposed batteries have a chance to act as lightning rods, absorbing a massive surge of raw energy that pushes them beyond their capacity limit but simultaneously triggers a `GridOverloadEvent` which threatens the power grid.
 **Fate:** Submitted
 **Lesson:** Tying energy buffering directly to dangerous weather conditions creates a compelling risk-reward mechanic. Players might intentionally leave batteries unroofed to harvest immense amounts of free "dirty" power, but they must actively manage the grid to prevent catastrophic overload cascades.
+
+## [Cassandra's Warning]
+**Concept:** Added `cassandra_warning` module connecting `ActionType::Daze` mental break to `WeatherState` and `StressTracker`. Dazing pops will predict impending storms, causing stress damage to nearby pops via a panic aura.
+**Fate:** Merged
+**Lesson:** Piggybacking new narrative features onto existing core states (like `Daze` and `MagneticStorm`) via `#[cfg(feature = "nova")]` creates rich emergent interactions without polluting core enums or requiring massive architectural refactors.
