@@ -408,16 +408,6 @@ impl<'a> PopDecider<'a> {
             0.0,
         );
 
-        // Evaluate Gossip
-        let (_, score, target) = evaluate_gossip(self.data, self.buffer);
-        if let Some(target_entity) = target {
-            self.evaluator.evaluate_and_consider(
-                Some((score, target_entity)),
-                ActionType::Gossip,
-                self.context,
-                0.0,
-            );
-        }
     }
 
     /// **Priority 2: Social & Mental Health**
@@ -442,6 +432,17 @@ impl<'a> PopDecider<'a> {
             self.context,
             0.0,
         );
+
+        // Evaluate Gossip
+        let (_, score, target) = evaluate_gossip(self.data, self.buffer);
+        if let Some(target_entity) = target {
+            self.evaluator.evaluate_and_consider(
+                Some((score, target_entity)),
+                ActionType::Gossip,
+                self.context,
+                0.0,
+            );
+        }
     }
 
     fn evaluate_work_and_taming(&mut self) {

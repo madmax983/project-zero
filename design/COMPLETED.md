@@ -576,3 +576,4 @@
 - [x] `INT-694` Integration: Hedonic Treadmill -> Pop Consumption — completed 2026-06-25
 - [x] `1237` Invasive Bureaucracy — `specs/1237-invasive-bureaucracy.md` — completed 2026-06-25
 - [x] `INT-1237` Integration: Invasive Bureaucracy Nodes -> Empire Stability — completed 2026-10-31
+- [x] `684` The Gossip Economy — `specs/684-gossip-economy.md` — completed 2026-04-01
