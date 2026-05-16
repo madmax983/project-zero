@@ -7575,3 +7575,23 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: In response to our hoarding, the Core Worlds [CAPITAL_RESPONSE]."
 - "[COLONY] prepared for a disaster, but the capital [CAPITAL_RESPONSE] instead. [YEAR]."
 - "They saw our survival as rebellion. The empire [CAPITAL_RESPONSE]. [YEAR]."
+
+## Solar Flare Sickness Templates
+
+### Template: SOLAR_FLARE_STRIKES
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [FLARE_VISUAL], [FLARE_NICKNAME]
+
+**Patterns:**
+- "[YEAR]: The sky turned violently bright with [FLARE_VISUAL]. The [FLARE_NICKNAME] has begun."
+- "[COLONY] shields its eyes. The [FLARE_NICKNAME] brings [FLARE_VISUAL] and terrible heat. [YEAR]."
+- "The stars are screaming. The [FLARE_NICKNAME] causes [FLARE_VISUAL] across the horizon. [YEAR]."
+
+### Template: RADIATION_OUTBREAK
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [RADIATION_SYMPTOM], [CASUALTY_COUNT]
+
+**Patterns:**
+- "[YEAR]: Those caught outside during the flare are suffering [RADIATION_SYMPTOM]. [CASUALTY_COUNT] souls affected."
+- "The sun is poison today. [CASUALTY_COUNT] souls are down with [RADIATION_SYMPTOM]. [YEAR]."
+- "[COLONY]'s clinics are full. [CASUALTY_COUNT] workers show signs of [RADIATION_SYMPTOM] after the flare. [YEAR]."

@@ -8143,3 +8143,26 @@ What an artifact is called.
 - initiated an immediate orbital blockade
 - demanded the surrender of the hoarded supplies
 - dispatched the punitive fleet without warning
+
+## Solar Flare Sickness Fragments
+
+## Fragment Type: [FLARE_VISUAL]
+- a blinding, violet aurora
+- searing arcs of solar fire
+- a terrifying, sustained daylight
+- violent bursts of static light
+- an eerie, shimmering corona
+
+## Fragment Type: [FLARE_NICKNAME]
+- The Burning Season
+- The Bright Time
+- The Sun-Storm
+- The Great Scorch
+- The Star's Wrath
+
+## Fragment Type: [RADIATION_SYMPTOM]
+- peeling, blistered skin
+- violent nausea and dizziness
+- a metallic taste and failing vision
+- severe cellular degradation
+- sudden, unexplainable fatigue
