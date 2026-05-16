@@ -2201,7 +2201,10 @@ pub fn sunk_cost_resource_drain_system(
 
 /// INT-1258: Bridges Cassandra Protocol to Chronicle.
 pub fn cassandra_protocol_chronicle_bridge(
-    protocol_events: Query<Entity, Added<crate::layer1::cassandra_protocol::CassandraProtocolActive>>,
+    protocol_events: Query<
+        Entity,
+        Added<crate::layer1::cassandra_protocol::CassandraProtocolActive>,
+    >,
     mut chronicle_events: EventWriter<AddChronicleEvent>,
 ) {
     for _ in protocol_events.iter() {
@@ -2209,5 +2212,56 @@ pub fn cassandra_protocol_chronicle_bridge(
             text: "Cassandra Protocol activated. The colony is hoarding resources in preparation for a disaster.".to_string(),
             importance: EventImportance::Major,
         });
+    }
+}
+
+/// Bridge system to emit `GossipEvent` when pops engage in the Gossip action.
+/// This connects the `Gossip` ActionType from the Utility AI with the Gossip Economy.
+pub fn gossip_economy_action_bridge(
+    mut commands: Commands,
+    mut pops: Query<(Entity, &mut PopAction)>,
+    mut gossip_events: EventWriter<crate::layer1::social::gossip_economy::GossipEvent>,
+    rumor_knowledge: Query<&crate::layer1::rumor::Knowledge>,
+) {
+    for (pop_entity, mut action) in pops.iter_mut() {
+        if action.current == ActionType::Gossip {
+            // Pick a random rumor from their knowledge to gossip about
+            if let Ok(knowledge) = rumor_knowledge.get(pop_entity) {
+                let mut rng = rand::thread_rng();
+                if let Some(rumor) = knowledge.known_rumors.choose(&mut rng) {
+                    gossip_events.send(crate::layer1::social::gossip_economy::GossipEvent {
+                        pop: pop_entity,
+                        rumor: rumor.topic.clone(),
+                    });
+                } else {
+                    // Fallback to general gossip if they don't know any specific rumors
+                    gossip_events.send(crate::layer1::social::gossip_economy::GossipEvent {
+                        pop: pop_entity,
+                        rumor: crate::layer1::rumor::RumorTopic::EventNews(
+                            "General Gossip".to_string(),
+                        ),
+                    });
+                }
+            } else {
+                // No knowledge component, fallback to general gossip
+                gossip_events.send(crate::layer1::social::gossip_economy::GossipEvent {
+                    pop: pop_entity,
+                    rumor: crate::layer1::rumor::RumorTopic::EventNews(
+                        "General Gossip".to_string(),
+                    ),
+                });
+            }
+
+            // Immediately reset the action so they don't continuously emit gossip events every tick
+            action.current = ActionType::Idle;
+            action.ticks_committed = 0;
+            action.current_utility = 0.0;
+            commands
+                .entity(pop_entity)
+                .remove::<crate::layer1::execution::components::MovementTarget>();
+            commands
+                .entity(pop_entity)
+                .remove::<crate::layer1::execution::components::AtTarget>();
+        }
     }
 }

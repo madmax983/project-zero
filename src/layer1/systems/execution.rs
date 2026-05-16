@@ -301,4 +301,9 @@ pub fn register(schedule: &mut Schedule) {
         )
             .in_set(Layer1SystemSet::Execution),
     );
+
+    schedule.add_systems(
+        crate::layer1::core::integration::gossip_economy_action_bridge
+            .in_set(Layer1SystemSet::Execution),
+    );
 }

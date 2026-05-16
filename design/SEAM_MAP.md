@@ -1090,3 +1090,9 @@
 - **Systems connected:** `trigger_emotional_contagion_system`
 - **Glue added:** Added `trigger_emotional_contagion_system` in `src/layer1/social/emotional_contagion.rs` to add/remove the `EmotionalContagion` component based on extreme `Morale`.
 - **Tests:** `tests/integration/emotional_contagion_trigger.rs`
+
+### INT-684: Gossip Economy -> Intelligence & Utility AI
+- **Date:** 2026-06-25
+- **Systems connected:** `gossip_economy_action_bridge` connects Utility AI `ActionType::Gossip` to `GossipEvent`
+- **Glue added:** Added `gossip_economy_action_bridge` in `src/layer1/core/integration.rs` which reads pop's action state and if set to Gossip, emits a `GossipEvent` from their `Knowledge` pool and resets the action.
+- **Tests:** `tests/integration/gossip_economy_bridge.rs`
