@@ -168,7 +168,7 @@ pub fn ip_piracy_diplomacy_bridge(
     mut trait_events: EventWriter<TraitChangedEvent>,
 ) {
     for cb in cb_query.iter() {
-        if cb.reason == CassusBelliReason::IpInfringement {
+        if cb.reason == CassusBelliReason {
             // Target is the one pirating the tech
             if let Ok((entity, mut traits)) = civ_query.get_mut(cb.target) {
                 if !traits.is_barbarian {

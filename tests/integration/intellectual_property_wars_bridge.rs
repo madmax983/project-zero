@@ -103,7 +103,7 @@ fn test_ip_piracy_triggers_sanctions() {
     assert_eq!(cb_query.len(), 1);
     assert_eq!(cb_query[0].aggressor, owner);
     assert_eq!(cb_query[0].target, pirate);
-    assert_eq!(cb_query[0].reason, CassusBelliReason::IpInfringement);
+    assert_eq!(cb_query[0].reason, CassusBelliReason);
 
     // Assert: Neighbor sanctioned the pirate
     let relations = app.world().get::<DiplomaticRelations>(neighbor).unwrap();

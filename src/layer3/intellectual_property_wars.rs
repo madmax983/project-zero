@@ -94,9 +94,7 @@ pub struct CassusBelli {
 }
 
 #[derive(PartialEq, Debug)]
-pub enum CassusBelliReason {
-    IpInfringement,
-}
+pub struct CassusBelliReason;
 
 pub fn detect_ip_piracy_system(
     mut commands: Commands,
@@ -112,14 +110,14 @@ pub fn detect_ip_piracy_system(
                     let already_exists = existing_cb_query.iter().any(|cb| {
                         cb.aggressor == owner
                             && cb.target == usage.civilization
-                            && cb.reason == CassusBelliReason::IpInfringement
+                            && cb.reason == CassusBelliReason
                     });
 
                     if !already_exists {
                         commands.spawn(CassusBelli {
                             aggressor: owner,
                             target: usage.civilization,
-                            reason: CassusBelliReason::IpInfringement,
+                            reason: CassusBelliReason,
                         });
                     }
                 }
@@ -134,8 +132,8 @@ pub struct EspionageSuccessEvent {
     pub operation_type: EspionageOperation,
 }
 
-pub enum EspionageOperation {
-    InvalidatePatent(TechId),
+pub struct EspionageOperation {
+    pub invalidated_tech: TechId,
 }
 
 pub fn process_espionage_system(
@@ -143,11 +141,7 @@ pub fn process_espionage_system(
     mut registry: ResMut<PatentRegistry>,
 ) {
     for event in events.read() {
-        match &event.operation_type {
-            EspionageOperation::InvalidatePatent(tech_id) => {
-                registry.invalidate(tech_id);
-            }
-        }
+        registry.invalidate(&event.operation_type.invalidated_tech);
     }
 }
 
@@ -261,7 +255,7 @@ mod tests {
         assert_eq!(cb_query.len(), 1);
         assert_eq!(cb_query[0].aggressor, owner);
         assert_eq!(cb_query[0].target, pirate);
-        assert_eq!(cb_query[0].reason, CassusBelliReason::IpInfringement);
+        assert_eq!(cb_query[0].reason, CassusBelliReason);
     }
 
     #[test]
@@ -281,7 +275,9 @@ mod tests {
             .resource_mut::<Events<EspionageSuccessEvent>>()
             .send(EspionageSuccessEvent {
                 target: owner,
-                operation_type: EspionageOperation::InvalidatePatent(tech_id.clone()),
+                operation_type: EspionageOperation {
+                    invalidated_tech: tech_id.clone(),
+                },
             });
 
         app.update();

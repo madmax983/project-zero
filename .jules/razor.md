@@ -32,3 +32,8 @@
 **Bloat:** `process_ransom_decisions_system` triggering `clippy::too_many_arguments` warning.
 **Cut:** Silenced warning with `#[allow(clippy::too_many_arguments)]` instead of abstracting ECS system parameters into a complex tuple/struct, preserving simple dependency injection.
 **Saved:** Unnecessary parameter grouping structs and abstraction overhead.
+
+## [Reduction]
+**Bloat:** `EspionageOperation` and `CassusBelliReason` single-variant enums in `src/layer3/intellectual_property_wars.rs`.
+**Cut:** Converted them to concrete structs `EspionageOperation { invalidated_tech: TechId }` and `CassusBelliReason`.
+**Saved:** Boilerplate pattern-matching and enum namespacing.
