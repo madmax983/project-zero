@@ -208,3 +208,5 @@ pub mod orbital_structures {
 
 ## 8. Questions
 *Builder: add questions here if spec is unclear.*
+
+* Adding `String` payloads to `ResourceType` via variants `Luxury(String)` and `Medicine(String)` makes it impossible to derive `Copy`. `crate::layer1::economy::resources::ResourceType` is used everywhere in the codebase (e.g. as keys in `HashMap`s) with the assumption that it is `Copy` and `Eq`. It is impossible to implement the spec as written without fundamentally breaking and rewriting the core `ResourceType` system. How should we represent these unique resource names instead? (Maybe `&'static str`, or register them as distinct string-less variants like `ResourceType::Luxury` and use `ItemType::Curio` for strings, or use a separate component for the string identifier?)

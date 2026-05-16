@@ -206,3 +206,5 @@ pub fn handle_repair_requests(
 ## Questions
 
 *Builder: add questions here if spec is unclear.*
+
+- **Architectural Contradictions:** The spec uses `ColonyResources` and assumes it has a `credits` field (`app.world_mut().resource_mut::<ColonyResources>().credits = 0;`). However, in the existing codebase, `ColonyResources` tracks physical resources (food, wood, etc.), while credits are handled individually via `Wallet` components or at the empire level via `EmpireCredits` (`src/layer3/resources.rs`). Furthermore, `Building` is a complex component in `src/layer1/architecture/mod.rs` and adding `is_drm_locked` without integrating into the wider architecture correctly isn't trivial.

@@ -188,3 +188,5 @@ pub fn decay_slang_weight(
 ## Questions
 
 *Builder: add questions here if spec is unclear.*
+
+- **Architectural Contradictions:** The spec relies on `ChronicleEvent` having `event_type`, `severity`, and `description`. However, `ChronicleEvent` in the actual codebase only has `tick`, `year`, `text`, and `importance`. `EventType` and `DisasterType` do not exist in the `Chronicle` system. This makes the RED phase impossible to implement as written.

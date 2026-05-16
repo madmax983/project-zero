@@ -294,6 +294,7 @@ fn init_simulation_resources(world: &mut World) {
     world.init_resource::<Events<crate::layer3::diplomacy_reflection::TraitChangedEvent>>();
     world.init_resource::<Events<crate::layer2::cascade::LogisticsStrainedEvent>>();
     world.init_resource::<crate::layer3::physics::relativity::SimulationTime>();
+    world.init_resource::<crate::layer1::psychology::sleep_debt::SleepDebtConfig>();
     world.init_resource::<Events<crate::layer2::cascade::DefenseWeakenedEvent>>();
     // Add our schedule if not yet added
     {
@@ -951,6 +952,7 @@ mod tests {
         world.init_resource::<Events<crate::layer2::cascade::DefenseWeakenedEvent>>();
 
         world.init_resource::<crate::layer3::physics::relativity::SimulationTime>();
+        world.init_resource::<crate::layer1::psychology::sleep_debt::SleepDebtConfig>();
 
         world.init_resource::<Events<crate::layer2::moon_hermits::PopDesertedEvent>>();
         world.init_resource::<bevy::prelude::Events<crate::layer1::social::grievances::PostGrievanceEvent>>();

@@ -220,6 +220,7 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     world.insert_resource(ScreenShake::default());
     world.insert_resource(GlobalHitStop::default());
     world.insert_resource(SimulationTime::default());
+    world.init_resource::<crate::layer1::psychology::sleep_debt::SleepDebtConfig>();
     world.insert_resource(WallTime::default());
     world.insert_resource(BuildMode::default());
     world.insert_resource(DesignationMode::default());
