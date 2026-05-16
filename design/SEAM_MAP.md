@@ -1,3 +1,9 @@
+### INT-1237: Invasive Bureaucracy Nodes -> Empire Stability
+- **Date:** 2026-10-31
+- **Systems connected:** `expand_bureaucracy_nodes_system` -> `calculate_bureaucracy_stability_system`
+- **Glue added:** Initialized `EmpireStability` in `src/simulation.rs` and chained execution in `src/layer1/systems/economy.rs`.
+- **Tests:** `tests/integration/invasive_bureaucracy_bridge.rs`
+
 ### INT-1079: The Bureaucracy of Vanity -> Economy/Diplomacy
 - **Date:** 2026-05-12
 - **Systems connected:** `BuildingCompletedEvent` -> `vanity_building_listener_system` -> `ImperialStanding` and `ActiveDemands` -> `vanity_sabotage_system` -> `GlobalEfficiency`

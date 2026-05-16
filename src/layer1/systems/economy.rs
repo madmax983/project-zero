@@ -68,7 +68,11 @@ pub fn register(schedule: &mut Schedule) {
     );
 
     schedule.add_systems(
-        (crate::layer1::energy::sky_tether::auroral_harvesting_system,)
+        (
+            crate::layer1::energy::sky_tether::auroral_harvesting_system,
+            crate::layer1::administration::invasive_bureaucracy::expand_bureaucracy_nodes_system,
+            crate::layer1::administration::invasive_bureaucracy::calculate_bureaucracy_stability_system.after(crate::layer1::administration::invasive_bureaucracy::expand_bureaucracy_nodes_system),
+        )
             .in_set(Layer1SystemSet::Economy),
     );
 
