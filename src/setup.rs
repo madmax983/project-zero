@@ -153,6 +153,7 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
         .init_resource::<bevy_ecs::event::Events<crate::layer1::predecessors::WorldTriggerEvent>>();
 
     world.init_resource::<bevy_ecs::event::Events<crate::layer3::market::ephemeral_market::MarketSpawnEvent>>();
+    world.init_resource::<bevy_ecs::event::Events<crate::layer1::sleep_debt::RepoManArrivalEvent>>();
 
     // Megastructure Scaffolding
     world.init_resource::<bevy_ecs::event::Events<crate::layer2::megastructure::MegastructureProgressEvent>>();
@@ -221,6 +222,9 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     world.insert_resource(GlobalHitStop::default());
     world.insert_resource(SimulationTime::default());
     world.insert_resource(WallTime::default());
+    world.insert_resource(bevy_time::Time::<bevy_time::Virtual>::default());
+    world.init_resource::<crate::layer1::sleep_debt::SleepDebtConfig>();
+    world.insert_resource(bevy_time::Time::<bevy_time::Virtual>::default());
     world.insert_resource(BuildMode::default());
     world.insert_resource(DesignationMode::default());
     world.insert_resource(OccupiedTiles::default());

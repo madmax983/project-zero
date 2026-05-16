@@ -229,6 +229,11 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::tech::hypno_learning::hypno_sleep_system.after(arrival_handler_system),
             crate::layer1::tech::hypno_learning::wake_up_hypno_system
                 .after(process_start_plan_system),
+            crate::layer1::sleep_debt::process_sleep_debt_system.after(arrival_handler_system),
+            crate::layer1::sleep_debt::check_critical_sleep_debt_system.after(crate::layer1::sleep_debt::process_sleep_debt_system),
+            crate::layer1::sleep_debt::spawn_repo_man_system.after(crate::layer1::sleep_debt::check_critical_sleep_debt_system),
+            crate::layer1::sleep_debt::process_repo_men_action_system.after(crate::layer1::sleep_debt::spawn_repo_man_system),
+            crate::layer1::sleep_debt::tick_forced_coma_system.after(crate::layer1::sleep_debt::process_repo_men_action_system),
         )
             .in_set(Layer1SystemSet::Execution),
     );

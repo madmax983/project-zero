@@ -557,6 +557,7 @@ pub fn collect_pop_data(world: &mut World, buffer: &mut UtilityAIBuffer, config:
                 Without<crate::layer1::cryo::CryoStasis>,
                 Without<Possessed>,
                 Without<crate::layer1::artifacts::vr_pod::InVrPod>,
+                Without<crate::layer1::sleep_debt::ForcedComa>,
             )>()
             .iter(world)
             .filter(|item| {

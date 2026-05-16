@@ -130,6 +130,7 @@ pub fn register(schedule: &mut Schedule) {
             update_event_buffer::<crate::layer1::ransom_broker::PopLostToPiratesEvent>,
             update_event_buffer::<crate::layer1::ransom_broker::PayRansomEvent>,
             update_event_buffer::<crate::layer1::ransom_broker::RefuseRansomEvent>,
+            update_event_buffer::<crate::layer1::sleep_debt::RepoManArrivalEvent>,
             update_event_buffer::<crate::layer3::diplomacy::fading_homeworld::CoreWorldDemandEvent>,
             update_event_buffer::<crate::layer3::diplomacy::fading_homeworld::PlayerDemandResponse>,
             update_event_buffer::<crate::layer3::intellectual_property_wars::TechDiscoveredEvent>,
