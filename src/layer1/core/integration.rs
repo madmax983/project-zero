@@ -2214,3 +2214,29 @@ pub fn cassandra_protocol_chronicle_bridge(
         });
     }
 }
+
+/// INT-1068: Bridges Crustal Tides (TidalForce) to AddChronicleEvent (Chronicle).
+pub fn crustal_tide_chronicle_bridge(
+    tidal_force: Res<crate::layer2::syzygy::TidalForce>,
+    mut last_tide: Local<f32>,
+    mut chronicle_events: EventWriter<AddChronicleEvent>,
+) {
+    let high_tide = tidal_force.current > 0.7;
+    let low_tide = tidal_force.current < 0.3;
+    let prev_high = *last_tide > 0.7;
+    let prev_low = *last_tide < 0.3;
+
+    if high_tide && !prev_high {
+        chronicle_events.send(AddChronicleEvent {
+            importance: EventImportance::Major,
+            text: "Extreme tidal forces cause the planet's crust to groan and fracture.".to_string(),
+        });
+    } else if low_tide && !prev_low {
+        chronicle_events.send(AddChronicleEvent {
+            importance: EventImportance::Major,
+            text: "The low tide allows the planet's crust to snap shut, crushing anything in the fissures.".to_string(),
+        });
+    }
+
+    *last_tide = tidal_force.current;
+}

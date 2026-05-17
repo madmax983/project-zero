@@ -1097,3 +1097,9 @@
 - **Glue added:** `bureaucracy_of_truth_integration_system` in `src/layer3/integration.rs` synchronizes Layer 1 state into Layer 3 state for the `generate_colony_reports_system`.
 - **Schedule:** Chained in Update, syncs before reporting
 - **Tests:** `tests/integration/bureaucracy_of_truth_integration.rs`
+
+### INT-1068: Crustal Tides -> Chronicle
+- **Date:** 2026-10-31
+- **Systems connected:** `process_crustal_tides` -> `crustal_tide_chronicle_bridge` -> `AddChronicleEvent`
+- **Glue added:** Added `crustal_tide_chronicle_bridge` in `src/layer1/core/integration.rs` to monitor `TidalForce` and emit `AddChronicleEvent` upon transitions to high or low tide thresholds.
+- **Tests:** `tests/integration/crustal_tides_bridge.rs`

@@ -441,6 +441,7 @@ pub fn register(schedule: &mut Schedule) {
 
     schedule.add_systems(
         (
+            crate::layer1::core::integration::crustal_tide_chronicle_bridge,
             crate::layer1::core::integration::petrification_chronicle_bridge,
             crate::layer1::integration::phantom_shift_chronicle_bridge,
             crate::layer1::integration::tether_snap_chronicle_bridge,
