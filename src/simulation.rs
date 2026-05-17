@@ -419,6 +419,8 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
         check_hostile_spawn_system.after(update_detection_risk_system),
         crate::layer3::market::ephemeral_market::spawn_ephemeral_market_system,
         crate::layer3::market::ephemeral_market::process_market_despawn_system,
+        crate::layer3::market::phantom_tax::accumulate_phantom_tax_system,
+        crate::layer3::market::phantom_tax::execute_hack_system,
         crate::layer3::market::ephemeral_market::fulfill_market_trade_system,
         crate::layer3::council::enforce_resolutions_system,
         crate::layer3::ghost_ships::evaluate_transit_system,

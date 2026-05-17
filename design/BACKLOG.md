@@ -53,7 +53,7 @@
 - [ ] `682` Symbiotic Leviathans — `specs/682-symbiotic-leviathans.md`
 
 - [ ] `875` The Memorial Fleet — `specs/875-the-memorial-fleet.md`
-- [ ] `876` The Phantom Tax — `specs/876-the-phantom-tax.md`
+- [x] `876` The Phantom Tax — `specs/876-the-phantom-tax.md` — completed 2026-02-01
 - [ ] `877` The Debt of the Dead — `specs/877-the-debt-of-the-dead.md`
 - [ ] `878` The Solar Flare Lottery — `specs/878-the-solar-flare-lottery.md`
 

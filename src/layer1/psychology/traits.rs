@@ -57,6 +57,7 @@ pub enum Trait {
     LogisticsExpert,
     /// Traditional values (-Mood from Observatory).
     Traditionalist,
+    Hacker,
     Pirate,
     /// Prone to violent outbursts (+Risk of breakdown).
     Volatile,
@@ -162,6 +163,7 @@ impl Trait {
             Self::Optimist => "Optimist",
             Self::Curious => "Curious",
             Self::Traditionalist => "Traditionalist",
+            Self::Hacker => "Hacker",
             Self::Pirate => "Pirate",
             Self::Volatile => "Volatile",
             Self::Creative => "Creative",
@@ -260,6 +262,7 @@ impl Traits {
             Trait::Optimist,
             Trait::Curious,
             Trait::Traditionalist,
+            Trait::Hacker,
             Trait::Volatile,
             Trait::Creative,
             Trait::Intellectual,

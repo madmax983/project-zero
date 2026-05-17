@@ -161,6 +161,8 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
         );
     world.init_resource::<crate::layer3::diplomacy::proxy_wars::ThreatMap>();
     world.init_resource::<bevy_ecs::event::Events<crate::layer3::market::ephemeral_market::MarketTradeEvent>>();
+    world.init_resource::<bevy_ecs::event::Events<crate::layer3::market::phantom_tax::HackSlushFundEvent>>();
+    world.init_resource::<crate::layer3::market::phantom_tax::SlushFund>();
     world.init_resource::<bevy_ecs::event::Events<crate::layer3::market::ephemeral_market::MarketTradeFailedEvent>>();
     world.init_resource::<bevy_ecs::event::Events<crate::layer1::social::secret_societies::SocietyAction>>();
 

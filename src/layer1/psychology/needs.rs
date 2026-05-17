@@ -250,9 +250,7 @@ pub fn decay_needs_system(
 
             let mut rest_decay = REST_DECAY_PER_TICK;
 
-            if traits.is_some_and(|t| {
-                t.has(crate::layer1::traits::Trait::InsomniaDrive)
-            }) {
+            if traits.is_some_and(|t| t.has(crate::layer1::traits::Trait::InsomniaDrive)) {
                 rest_decay = 0.0;
             }
 
