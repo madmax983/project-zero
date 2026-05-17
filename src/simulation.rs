@@ -679,6 +679,8 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
     crate::experimental::supercharged_anomalies::register(schedule);
     #[cfg(feature = "nova")]
     crate::experimental::cassandra_warning::register(schedule);
+    #[cfg(feature = "nova")]
+    crate::experimental::weather_madness::register(schedule);
 
     schedule.add_systems((
         crate::layer3::map::map_data_rot_system,
