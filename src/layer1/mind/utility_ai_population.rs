@@ -556,6 +556,7 @@ pub fn collect_pop_data(world: &mut World, buffer: &mut UtilityAIBuffer, config:
             .query_filtered::<PopEvaluationQuery, (
                 Without<crate::layer1::cryo::CryoStasis>,
                 Without<Possessed>,
+                Without<crate::layer1::mind::sleep_debt::ForcedComa>,
                 Without<crate::layer1::artifacts::vr_pod::InVrPod>,
             )>()
             .iter(world)

@@ -179,3 +179,4 @@ pub fn process_long_night_effects(
 ## Questions
 
 *Builder: add questions here if spec is unclear.*
+- **Architectural Contradictions:** `EnergyGrid` and `GlobalTemperature` do not exist in the codebase. Energy is managed differently and temperature is managed through `TemperatureGrid`, which is a spatial grid rather than a single global `GlobalTemperature` struct. The RED Phase tests and GREEN phase logic cannot be implemented as written. I'm moving on to a different task.
