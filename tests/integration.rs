@@ -433,3 +433,5 @@ mod hedonic_treadmill_bridge;
 mod holographic_facades;
 #[path = "integration/surgical_addiction_bridge.rs"]
 mod surgical_addiction_bridge;
+#[path = "integration/crustal_tides_bridge.rs"]
+mod crustal_tides_bridge;
