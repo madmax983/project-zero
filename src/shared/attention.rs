@@ -108,3 +108,194 @@ pub fn unobserved_drift_system(
         }
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use bevy_ecs::system::RunSystemOnce;
+
+    #[test]
+    fn test_attention_focus_new() {
+        let focus = AttentionFocus::new(3);
+        assert_eq!(focus.max_focus, 3);
+        assert_eq!(focus.focused_entities.capacity(), 3);
+        assert!(focus.focused_entities.is_empty());
+    }
+
+    #[test]
+    fn test_attention_focus_focus_on() {
+        let mut world = World::new();
+        let e1 = world.spawn_empty().id();
+        let e2 = world.spawn_empty().id();
+        let e3 = world.spawn_empty().id();
+        let e4 = world.spawn_empty().id();
+
+        let mut focus = AttentionFocus::new(3);
+
+        focus.focus_on(e1);
+        assert!(focus.is_focused(e1));
+        assert_eq!(focus.focused_entities.len(), 1);
+
+        // Test duplicate ignored
+        focus.focus_on(e1);
+        assert_eq!(focus.focused_entities.len(), 1);
+
+        // Add to max capacity
+        focus.focus_on(e2);
+        focus.focus_on(e3);
+        assert!(focus.is_focused(e2));
+        assert!(focus.is_focused(e3));
+        assert_eq!(focus.focused_entities.len(), 3);
+
+        // Evict oldest (e1)
+        focus.focus_on(e4);
+        assert!(focus.is_focused(e4));
+        assert!(!focus.is_focused(e1));
+        assert_eq!(focus.focused_entities.len(), 3);
+        assert_eq!(focus.focused_entities[0], e2);
+        assert_eq!(focus.focused_entities[1], e3);
+        assert_eq!(focus.focused_entities[2], e4);
+    }
+
+    #[test]
+    fn test_query_hunger() {
+        let mut world = World::new();
+        let e1 = world.spawn_empty().id();
+        let e2 = world.spawn_empty().id();
+
+        let mut focus = AttentionFocus::new(3);
+        focus.focus_on(e1);
+
+        let needs_high = Needs { hunger: 0.9, ..Default::default() };
+
+
+        let needs_low = Needs { hunger: 0.1, ..Default::default() };
+
+
+        let needs_mod = Needs { hunger: 0.5, ..Default::default() };
+
+
+        // Precise
+        if let DataResolution::Precise(val) = query_hunger(e1, &needs_high, &focus) {
+            assert_eq!(val, 0.9);
+        } else {
+            panic!("Expected Precise");
+        }
+
+        // Fuzzy High
+        if let DataResolution::Fuzzy(s) = query_hunger(e2, &needs_high, &focus) {
+            assert_eq!(s, "High");
+        } else {
+            panic!("Expected Fuzzy");
+        }
+
+        // Fuzzy Low
+        if let DataResolution::Fuzzy(s) = query_hunger(e2, &needs_low, &focus) {
+            assert_eq!(s, "Low");
+        } else {
+            panic!("Expected Fuzzy");
+        }
+
+        // Fuzzy Mod
+        if let DataResolution::Fuzzy(s) = query_hunger(e2, &needs_mod, &focus) {
+            assert_eq!(s, "Moderate");
+        } else {
+            panic!("Expected Fuzzy");
+        }
+    }
+
+    #[test]
+    fn test_query_rest() {
+        let mut world = World::new();
+        let e1 = world.spawn_empty().id();
+        let e2 = world.spawn_empty().id();
+
+        let mut focus = AttentionFocus::new(3);
+        focus.focus_on(e1);
+
+        let needs_high = Needs { rest: 0.9, ..Default::default() };
+
+
+        let needs_low = Needs { rest: 0.1, ..Default::default() };
+
+
+        let needs_mod = Needs { rest: 0.5, ..Default::default() };
+
+
+        // Precise
+        if let DataResolution::Precise(val) = query_rest(e1, &needs_high, &focus) {
+            assert_eq!(val, 0.9);
+        } else {
+            panic!("Expected Precise");
+        }
+
+        // Fuzzy Rested
+        if let DataResolution::Fuzzy(s) = query_rest(e2, &needs_high, &focus) {
+            assert_eq!(s, "Rested");
+        } else {
+            panic!("Expected Fuzzy");
+        }
+
+        // Fuzzy Exhausted
+        if let DataResolution::Fuzzy(s) = query_rest(e2, &needs_low, &focus) {
+            assert_eq!(s, "Exhausted");
+        } else {
+            panic!("Expected Fuzzy");
+        }
+
+        // Fuzzy Tired
+        if let DataResolution::Fuzzy(s) = query_rest(e2, &needs_mod, &focus) {
+            assert_eq!(s, "Tired");
+        } else {
+            panic!("Expected Fuzzy");
+        }
+    }
+
+    #[test]
+    fn test_sync_is_focused_system() {
+        let mut world = World::new();
+        let e_focused = world.spawn_empty().id();
+        let e_stale = world.spawn(IsFocused).id();
+        let e_other = world.spawn_empty().id();
+
+        let mut focus = AttentionFocus::new(3);
+        focus.focus_on(e_focused);
+        world.insert_resource(focus);
+
+        world.run_system_once(sync_is_focused_system).unwrap();
+
+        assert!(world.entity(e_focused).contains::<IsFocused>());
+        assert!(!world.entity(e_stale).contains::<IsFocused>());
+        assert!(!world.entity(e_other).contains::<IsFocused>());
+    }
+
+    #[test]
+    fn test_unobserved_drift_system() {
+        let mut world = World::new();
+
+        // Setup focused entity (should be ignored by drift)
+        let weights_focused = UtilityWeights { availability_weight: 1.0, ..Default::default() };
+
+        let e_focused = world.spawn((Pop, weights_focused, IsFocused)).id();
+
+        // Setup unobserved entity
+        let weights_unobserved = UtilityWeights { availability_weight: 1.0, ..Default::default() };
+
+        let e_unobserved = world.spawn((Pop, weights_unobserved)).id();
+
+        // Run system many times to ensure random drift triggers
+        for _ in 0..1000 {
+            world.run_system_once(unobserved_drift_system).unwrap();
+        }
+
+        let focused_w = world.entity(e_focused).get::<UtilityWeights>().unwrap();
+        assert_eq!(
+            focused_w.availability_weight, 1.0,
+            "Focused should not drift"
+        );
+
+        let unobserved_w = world.entity(e_unobserved).get::<UtilityWeights>().unwrap();
+        assert!(unobserved_w.availability_weight >= 0.0);
+        assert!(unobserved_w.availability_weight <= 2.0);
+    }
+}

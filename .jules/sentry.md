@@ -42,3 +42,10 @@
 ## [UI/Rendering Integration Testing]
 **Learning:** Testing top-level Bevy UI rendering functions (like `render` or `render_with_shell` in `src/ui/mod.rs`) that accept a `&World` reference is highly complex. The `render` loop iterates over numerous child components (Map, Status Bar, Info Panels, Chronicle, Notifications), each of which pulls arbitrary resources from the ECS `World` (e.g., `ColonyResources`, `TerrainGrid`, `WaterGrid`, `Selection`, `RenderCache`, `WallTime`, `BuildMode`, `DesignationMode`). Failing to initialize *any* of these resources in the test's mock `World` causes deep panics (e.g. `world.resource::<T>()`) during rendering.
 **Action:** When writing tests for high-level UI render loops, systematically run the tests to identify missing resources via panics, and iteratively inject default implementations of those resources (e.g. `world.insert_resource(T::default())`) until the render pass succeeds without panicking.
+## [Unused Result in RunSystemOnce]
+**Learning:** `world.run_system_once(system)` in `bevy_ecs` returns a `Result`. Calling it without handling the result will cause `unused_must_use` clippy warnings and could hide silent failures.
+**Action:** Always append `.unwrap()` (or explicitly handle the error) when calling `world.run_system_once(system)` in tests to satisfy clippy and ensure robust assertions.
+
+## [Clippy field-reassign-with-default]
+**Learning:** Constructing a struct with `Default::default()` and then re-assigning individual fields sequentially on the mutable variable triggers the `clippy::field-reassign-with-default` lint.
+**Action:** Construct the struct with the target fields assigned inline and spread the default (e.g., `let s = Struct { field: val, ..Default::default() };`).
