@@ -32,7 +32,6 @@
 - [ ] `692` Procedural Dialects — `specs/692-procedural-dialects.md`
 - [ ] `693` Corporate Sponsorship — `specs/693-corporate-sponsorship.md`
 - [ ] `695` The Long Night — `specs/695-the-long-night.md`
-- [ ] `549` The Sleep Debt Repo Men — `specs/549-sleep-debt-repo-men.md`
 - [ ] `550` The Gravity Siphon — `specs/550-the-gravity-siphon.md`
 - [ ] `551` The Parasitic Broadcast — `specs/551-the-parasitic-broadcast.md`
 - [ ] `552` The Subterranean Smog Layer — `specs/552-the-subterranean-smog-layer.md`
