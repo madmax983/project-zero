@@ -206,3 +206,4 @@ pub fn handle_repair_requests(
 ## Questions
 
 *Builder: add questions here if spec is unclear.*
+- **Architectural Contradictions:** Building uses string for `building_type` which conflicts with enum `BuildingType` and missing `RepairBuildingEvent`.

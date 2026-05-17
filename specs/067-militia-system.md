@@ -310,3 +310,7 @@ ActionType::Fight => {
   - Next alignment: 176 bytes.
   - Padding needed: 12 bytes (`[u32; 3]`).
 - **Input Handling**: Add `Draft` toggle to UI (Spec `015` Selection might need update to show "Draft" button).
+
+## Questions
+*Builder: add questions here if spec is unclear.*
+- **Architectural Contradictions:** ActionType inside Utility AI system isn't matching up properly with how action types and evaluations are designed and implemented currently. Also the evaluation interval calculation and structures might differ significantly.

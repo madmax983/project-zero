@@ -107,4 +107,4 @@ pub fn execute_hack_system(
 - **Gotchas**: The percentage for the tax should be configurable, potentially through a resource or constant.
 
 ## 8. Questions
-*Builder: add questions here if spec is unclear.*
+*Builder: add questions here if spec is unclear.*- **Architectural Contradictions:** `MarketTradeEvent` doesn't seem to exist. `ColonyResources` is mostly generic items, not `credits` in `execute_hack_system`.

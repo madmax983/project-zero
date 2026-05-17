@@ -25,7 +25,7 @@
 
 - [ ] `473` Bureaucratic Redlining — `specs/473-bureaucratic-redlining.md`
 
-- [ ] `888` The Symbiotic Parasite — `specs/888-the-symbiotic-parasite.md`
+
 
 ## Future / Ideas
 

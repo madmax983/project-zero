@@ -166,14 +166,20 @@ mod tests {
         let mut focus = AttentionFocus::new(3);
         focus.focus_on(e1);
 
-        let needs_high = Needs { hunger: 0.9, ..Default::default() };
+        let needs_high = Needs {
+            hunger: 0.9,
+            ..Default::default()
+        };
 
+        let needs_low = Needs {
+            hunger: 0.1,
+            ..Default::default()
+        };
 
-        let needs_low = Needs { hunger: 0.1, ..Default::default() };
-
-
-        let needs_mod = Needs { hunger: 0.5, ..Default::default() };
-
+        let needs_mod = Needs {
+            hunger: 0.5,
+            ..Default::default()
+        };
 
         // Precise
         if let DataResolution::Precise(val) = query_hunger(e1, &needs_high, &focus) {
@@ -213,14 +219,20 @@ mod tests {
         let mut focus = AttentionFocus::new(3);
         focus.focus_on(e1);
 
-        let needs_high = Needs { rest: 0.9, ..Default::default() };
+        let needs_high = Needs {
+            rest: 0.9,
+            ..Default::default()
+        };
 
+        let needs_low = Needs {
+            rest: 0.1,
+            ..Default::default()
+        };
 
-        let needs_low = Needs { rest: 0.1, ..Default::default() };
-
-
-        let needs_mod = Needs { rest: 0.5, ..Default::default() };
-
+        let needs_mod = Needs {
+            rest: 0.5,
+            ..Default::default()
+        };
 
         // Precise
         if let DataResolution::Precise(val) = query_rest(e1, &needs_high, &focus) {
@@ -274,12 +286,18 @@ mod tests {
         let mut world = World::new();
 
         // Setup focused entity (should be ignored by drift)
-        let weights_focused = UtilityWeights { availability_weight: 1.0, ..Default::default() };
+        let weights_focused = UtilityWeights {
+            availability_weight: 1.0,
+            ..Default::default()
+        };
 
         let e_focused = world.spawn((Pop, weights_focused, IsFocused)).id();
 
         // Setup unobserved entity
-        let weights_unobserved = UtilityWeights { availability_weight: 1.0, ..Default::default() };
+        let weights_unobserved = UtilityWeights {
+            availability_weight: 1.0,
+            ..Default::default()
+        };
 
         let e_unobserved = world.spawn((Pop, weights_unobserved)).id();
 

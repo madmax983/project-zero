@@ -582,3 +582,4 @@
 - [x] `1068` Crustal Tides — `specs/1068-crustal-tides.md` — completed 2024-05-25
 - [x] `INT-1071` Integration: The Bureaucracy of Truth -> Colony State — completed 2026-10-31
 - [x] INT-1068 Integration: Crustal Tides -> Chronicle — completed 2026-10-31
+- [x] `888` The Symbiotic Parasite — `specs/888-the-symbiotic-parasite.md` — completed 2026-03-24

@@ -6,7 +6,10 @@ use scale::layer2::syzygy::TidalForce;
 fn setup_app() -> App {
     let mut app = App::new();
     app.init_resource::<Events<AddChronicleEvent>>();
-    app.insert_resource(TidalForce { current: 0.5, base: 0.5 });
+    app.insert_resource(TidalForce {
+        current: 0.5,
+        base: 0.5,
+    });
     app.add_systems(Update, crustal_tide_chronicle_bridge);
     app
 }

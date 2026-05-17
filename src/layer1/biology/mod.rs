@@ -1,6 +1,7 @@
 //! Biology and Health systems.
 //!
 //! Contains logic for health, diseases, cloning, cybernetics, and genetics.
+pub mod symbiotic_parasite;
 
 pub mod addiction;
 pub mod agony_extract;

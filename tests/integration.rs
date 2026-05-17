@@ -425,6 +425,8 @@ mod rust_lung_bridge;
 #[path = "integration/sunk_cost_integration.rs"]
 mod sunk_cost_integration;
 
+#[path = "integration/crustal_tides_bridge.rs"]
+mod crustal_tides_bridge;
 #[path = "integration/emotional_contagion_trigger.rs"]
 mod emotional_contagion_trigger;
 #[path = "integration/hedonic_treadmill_bridge.rs"]
@@ -433,5 +435,3 @@ mod hedonic_treadmill_bridge;
 mod holographic_facades;
 #[path = "integration/surgical_addiction_bridge.rs"]
 mod surgical_addiction_bridge;
-#[path = "integration/crustal_tides_bridge.rs"]
-mod crustal_tides_bridge;
