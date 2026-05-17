@@ -110,6 +110,8 @@ pub enum Trait {
     EmpathicLink,
     /// Formal administrative capabilities. Understood the bureaucracy (Spec 464).
     Bureaucrat,
+    /// Spec 1261: Eliminates rest, increases work speed, doubles stress.
+    InsomniaDrive,
     /// (Spec 472) Basic synthetic pop. 100% work efficiency, no morale needs, apathetic to emergencies.
     Synth,
     /// Synthesizes food from light.
@@ -199,6 +201,7 @@ impl Trait {
             Trait::Homesick => "Homesick",
             Self::Refugee => "Refugee",
             Self::Traumatized => "Traumatized",
+            Self::InsomniaDrive => "Insomnia Drive",
         }
     }
 }
@@ -272,6 +275,7 @@ impl Traits {
             Trait::Spiteful,
             Trait::EmpathicLink,
             Trait::Bureaucrat,
+            Trait::InsomniaDrive,
         ];
 
         let mut added = 0;
@@ -377,6 +381,9 @@ pub fn get_job_efficiency_modifier(traits: &Traits, job: AssignmentType) -> f32 
 #[must_use]
 pub fn get_trait_work_speed_modifier(traits: &Traits) -> f32 {
     let mut modifier = 1.0;
+    if traits.has(Trait::InsomniaDrive) {
+        modifier += 0.3;
+    }
     if traits.has(Trait::HardWorker) {
         modifier += 0.2;
     }
@@ -413,6 +420,9 @@ pub fn get_trait_hunger_decay_modifier(traits: &Traits) -> f32 {
 #[must_use]
 pub fn get_trait_leisure_decay_modifier(traits: &Traits) -> f32 {
     let mut modifier = 1.0;
+    if traits.has(Trait::InsomniaDrive) {
+        modifier += 1.0;
+    }
     if traits.has(Trait::Synth) {
         return 0.0;
     }
@@ -702,5 +712,29 @@ mod tests {
                 "Should not be both NightOwl and EarlyBird"
             );
         }
+    }
+
+    #[test]
+    fn test_insomnia_drive_increases_productivity() {
+        let mut traits = Traits::default();
+        traits.add(Trait::InsomniaDrive);
+
+        let modifier = get_trait_work_speed_modifier(&traits);
+        assert!(
+            (modifier - 1.3).abs() < f32::EPSILON,
+            "Insomnia Drive should increase work speed by 30%"
+        );
+    }
+
+    #[test]
+    fn test_insomnia_drive_doubles_stress_generation() {
+        let mut traits = Traits::default();
+        traits.add(Trait::InsomniaDrive);
+
+        let modifier = get_trait_leisure_decay_modifier(&traits);
+        assert!(
+            (modifier - 2.0).abs() < f32::EPSILON,
+            "Insomnia Drive should double leisure decay"
+        );
     }
 }
