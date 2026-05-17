@@ -78,6 +78,8 @@ pub fn map_export_system(
                 TerrainType::SporeBloom => [148, 0, 211], // Dark Violet
                 TerrainType::Artifact => [255, 215, 0],   // Gold
                 TerrainType::Crater => [80, 80, 80],      // Dark Gray
+                TerrainType::FaultLine(true) => [255, 60, 20],   // Magma Red
+                TerrainType::FaultLine(false) => [100, 100, 110], // Gray
             };
 
             // Optionally blend with beauty

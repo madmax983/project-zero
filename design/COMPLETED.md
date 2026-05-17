@@ -579,3 +579,4 @@
 - [x] `684` The Gossip Economy — `specs/684-gossip-economy.md` — completed 2026-04-01
 - [x] `INT-266` Integration: Emotional Contagion -> Pop Morale Status — completed 2026-05-16
 - [x] `549` The Sleep Debt Repo Men — `specs/549-sleep-debt-repo-men.md` — completed 2026-05-17
+- [x] `1068` Crustal Tides — `specs/1068-crustal-tides.md` — completed 2024-05-25

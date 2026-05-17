@@ -30,6 +30,8 @@ pub enum TerrainType {
     SporeBloom,
     /// Ancient, indestructible alien structure.
     Artifact,
+    /// A geological fault line that can open or close based on orbital tides.
+    FaultLine(bool),
 }
 
 impl TerrainType {
@@ -58,6 +60,8 @@ impl TerrainType {
             Self::MagmaRock => "Magma Rock",
             Self::SporeBloom => "Spore Bloom",
             Self::Artifact => "Artifact",
+            Self::FaultLine(true) => "Fault Line (Open)",
+            Self::FaultLine(false) => "Fault Line (Closed)",
         }
     }
 
@@ -71,6 +75,8 @@ impl TerrainType {
             Self::Tree => 1.5,
             Self::Shrub => 1.2,
             Self::Sapling => 1.1,
+            Self::FaultLine(false) => 1.2,
+            Self::FaultLine(true) => 5.0, // Should be unwalkable, but if they get stuck, it takes long
             _ => 1.0,
         }
     }
@@ -92,7 +98,7 @@ impl TerrainType {
     pub const fn is_walkable(self) -> bool {
         !matches!(
             self,
-            Self::Rock | Self::Water | Self::DeepRock | Self::Artifact | Self::Crater
+            Self::Rock | Self::Water | Self::DeepRock | Self::Artifact | Self::Crater | Self::FaultLine(true)
         )
     }
 
@@ -103,7 +109,7 @@ impl TerrainType {
     #[must_use]
     pub const fn heat_retention(self) -> f32 {
         match self {
-            Self::Rock | Self::DeepRock | Self::MagmaRock | Self::Artifact | Self::Crater => 0.5,
+            Self::Rock | Self::DeepRock | Self::MagmaRock | Self::Artifact | Self::Crater | Self::FaultLine(_) => 0.5,
             Self::Water => 0.2,
             Self::Grass
             | Self::Dirt
@@ -359,6 +365,7 @@ mod tests {
                     | TerrainType::MagmaRock
                     | TerrainType::SporeBloom
                     | TerrainType::Artifact
+                    | TerrainType::FaultLine(_)
             )
         });
         assert!(all_valid, "All tiles must be valid terrain types");
@@ -455,6 +462,8 @@ mod tests {
         assert!(!TerrainType::Rock.is_walkable());
         assert!(!TerrainType::Water.is_walkable());
         assert!(!TerrainType::Artifact.is_walkable());
+        assert!(!TerrainType::FaultLine(true).is_walkable());
+        assert!(TerrainType::FaultLine(false).is_walkable());
     }
 
     #[test]

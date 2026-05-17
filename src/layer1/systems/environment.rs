@@ -8,6 +8,7 @@ pub fn register(schedule: &mut Schedule) {
     schedule.add_systems(
         (
             crate::layer1::predecessors::predecessor_ruins_passive_bonus_system,
+            crate::layer1::nature::crustal_tides::process_crustal_tides,
             crate::layer1::predecessors::predecessor_ruins_trigger_system,
             crate::layer1::predecessors::predecessor_ruins_awakening_system,
         )

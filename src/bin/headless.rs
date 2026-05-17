@@ -1077,6 +1077,8 @@ fn print_map(world: &mut World, center_x: i32, center_y: i32) {
                 TerrainType::MagmaRock => "≈".red(),
                 TerrainType::SporeBloom => "♣".magenta(),
                 TerrainType::Artifact => "Ω".yellow().bold(),
+                TerrainType::FaultLine(true) => "≈".red(),
+                TerrainType::FaultLine(false) => "–".white().dim(),
             };
             print!("{s}");
         }
@@ -1514,12 +1516,14 @@ fn scan_terrain(world: &mut World, center_x: i32, center_y: i32, radius: ScanRad
                 TerrainType::MagmaRock => "Magma Rock",
                 TerrainType::SporeBloom => "Spore Bloom",
                 TerrainType::Artifact => "Artifact",
+                TerrainType::FaultLine(true) => "Fault Line (Open)",
+                TerrainType::FaultLine(false) => "Fault Line (Closed)",
             };
 
             let walkable = tile.is_walkable();
             let buildable = matches!(
                 tile,
-                TerrainType::Grass | TerrainType::Dirt | TerrainType::Rock | TerrainType::Path
+                TerrainType::Grass | TerrainType::Dirt | TerrainType::Rock | TerrainType::Path | TerrainType::FaultLine(_)
             );
 
             // Check for entities
@@ -1602,6 +1606,8 @@ const fn get_terrain_color_headless(t: TerrainType) -> comfy_table::Color {
         TerrainType::MagmaRock => comfy_table::Color::Red,
         TerrainType::SporeBloom => comfy_table::Color::Magenta,
         TerrainType::Artifact => comfy_table::Color::Yellow,
+        TerrainType::FaultLine(true) => comfy_table::Color::Red,
+        TerrainType::FaultLine(false) => comfy_table::Color::DarkGrey,
     }
 }
 
@@ -1638,12 +1644,14 @@ fn get_tile_info(world: &mut World, x: i32, y: i32) {
         TerrainType::MagmaRock => "Magma Rock",
         TerrainType::SporeBloom => "Spore Bloom",
         TerrainType::Artifact => "Artifact",
+                TerrainType::FaultLine(true) => "Fault Line (Open)",
+                TerrainType::FaultLine(false) => "Fault Line (Closed)",
     };
 
     let walkable = tile.is_walkable();
     let buildable = matches!(
         tile,
-        TerrainType::Grass | TerrainType::Dirt | TerrainType::Rock | TerrainType::Path
+        TerrainType::Grass | TerrainType::Dirt | TerrainType::Rock | TerrainType::Path | TerrainType::FaultLine(_)
     );
 
     // Check for entities
