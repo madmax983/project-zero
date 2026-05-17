@@ -1,10 +1,10 @@
-use crate::layer1::building::{BuildingMap, OccupiedTiles};
-use crate::layer1::chronicle::{AddChronicleEvent, EventImportance};
+use crate::layer1::core::chronicle::{AddChronicleEvent, EventImportance};
 use crate::layer1::map::GridPosition;
 use crate::layer1::nature::terrain::{TerrainGrid, TerrainType};
+use crate::layer1::{BuildingMap, OccupiedTiles};
 use bevy_ecs::prelude::*;
 
-#[derive(PartialEq, Eq, Debug, Clone, Copy)]
+#[derive(Component, PartialEq, Eq, Debug, Clone, Copy)]
 pub enum SubsurfaceResourceKind {
     OreVein,
     Magma,
@@ -33,7 +33,6 @@ pub fn kinetic_strike_system(
     mut chronicle_events: EventWriter<AddChronicleEvent>,
 ) {
     for event in events.read() {
-        // In this implementation, the event target coordinates already account for the offset
         let actual_hit_x = event.target_x;
         let actual_hit_y = event.target_y;
 
@@ -42,17 +41,15 @@ pub fn kinetic_strike_system(
             importance: EventImportance::Major,
         });
 
-        // Evaluate center tile
         let mut kind_found = None;
         for (entity, resource, pos) in subsurface_query.iter() {
             if pos.x == actual_hit_x && pos.y == actual_hit_y {
                 kind_found = Some(resource.kind);
-                commands.entity(entity).despawn(); // Consume subsurface resource
-                break; // Assuming one resource per center tile
+                commands.entity(entity).despawn();
+                break;
             }
         }
 
-        // Destroy buildings in radius 1 and apply terrain changes
         for y in (actual_hit_y - 1)..=(actual_hit_y + 1) {
             for x in (actual_hit_x - 1)..=(actual_hit_x + 1) {
                 let mut despawned_building = false;
@@ -77,30 +74,25 @@ pub fn kinetic_strike_system(
                     }
                 }
 
-                // consume other resources so they are not left hanging
-                for (entity, _resource, pos) in subsurface_query.iter() {
-                    if pos.x == x && pos.y == y && (x != actual_hit_x || y != actual_hit_y) {
-                        commands.entity(entity).despawn();
+                if x >= 0 && y >= 0 {
+                    let tx = x as usize;
+                    let ty = y as usize;
+                    if tx < grid.width && ty < grid.height {
+                        let new_terrain = match kind_found {
+                            Some(SubsurfaceResourceKind::Magma) => TerrainType::MagmaRock,
+                            _ => TerrainType::Crater,
+                        };
+                        grid.set(tx, ty, new_terrain);
                     }
                 }
+            }
+        }
 
-                if x < 0 || y < 0 {
-                    continue;
-                }
-
-                let tx = x as usize;
-                let ty = y as usize;
-
-                if tx < grid.width && ty < grid.height {
-                    match kind_found {
-                        Some(SubsurfaceResourceKind::Magma) => {
-                            grid.set(tx, ty, TerrainType::MagmaRock);
-                        }
-                        _ => {
-                            grid.set(tx, ty, TerrainType::Crater);
-                        }
-                    }
-                }
+        for (entity, _resource, pos) in subsurface_query.iter() {
+            let in_x_range = pos.x >= actual_hit_x - 1 && pos.x <= actual_hit_x + 1;
+            let in_y_range = pos.y >= actual_hit_y - 1 && pos.y <= actual_hit_y + 1;
+            if in_x_range && in_y_range && (pos.x != actual_hit_x || pos.y != actual_hit_y) {
+                commands.entity(entity).despawn();
             }
         }
 
@@ -220,8 +212,6 @@ mod tests {
         app.update();
 
         let terrain = app.world().resource::<TerrainGrid>();
-        // Center is 6, 5
-        // (5, 4) is MagmaRock
         assert_eq!(terrain.get(5, 4).unwrap(), TerrainType::MagmaRock);
         assert_eq!(terrain.get(6, 5).unwrap(), TerrainType::MagmaRock);
         assert_eq!(terrain.get(7, 6).unwrap(), TerrainType::MagmaRock);

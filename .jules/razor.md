@@ -37,3 +37,8 @@
 **Bloat:** `EspionageOperation` and `CassusBelliReason` single-variant enums in `src/layer3/intellectual_property_wars.rs`.
 **Cut:** Converted them to concrete structs `EspionageOperation { invalidated_tech: TechId }` and `CassusBelliReason`.
 **Saved:** Boilerplate pattern-matching and enum namespacing.
+
+## [Reduction]
+**Bloat:** Abstract enum duplication (`TerrainKind`, `ResourceKind`) in speculative `specs/1083-kinetic-excavation.md` versus actual codebase implementations. Redundant bounding-box logic doing O(N) operations in the testing tests setup.
+**Cut:** Eliminated the speculative abstract structs completely. Updated the system code to natively use existing data structures (`TerrainType`, `TerrainGrid`, `SubsurfaceResourceKind`) and rely directly on `Commands`. Simplified the tests down to test exact targets without repeating abstract looping logic.
+**Saved:** Redundant structural data definitions and associated match blocks.

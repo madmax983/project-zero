@@ -701,7 +701,6 @@ See `design/IDEAS.md` for unspecced concepts.
 
 
 - [ ] `1082` Resonant Architecture — `specs/1082-resonant-architecture.md`
-- [ ] `1083` Kinetic Excavation — `specs/1083-kinetic-excavation.md` - claimed 2024-05-25
 
 
 
