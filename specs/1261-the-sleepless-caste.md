@@ -137,3 +137,5 @@ pub fn calculate_work_speed(traits: Option<&Traits>) -> f32 {
 
 ## 8. Questions
 *Builder: add questions here if spec is unclear.*
+
+- The spec indicates modifying `metabolism_system` in `src/layer1/systems/consumption.rs` to handle need decay logic. However, the codebase uses `decay_needs_system` in `src/layer1/psychology/needs.rs` for this logic. The test examples also reference `metabolism_system`. Please update the architecture details so the RED and GREEN phases match the current codebase.
