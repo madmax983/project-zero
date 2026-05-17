@@ -20039,3 +20039,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you spend massive amounts of stone and metal for reliable, sterile infrastructure, or rely on a free, living infrastructure that requires constant ecological management to not poison you?
 
 ---
+
+## Subterranean Heat Sinks
+
+**Layer:** 1
+
+**Fantasy:** Managing the massive thermal exhaust of your industrial ambition before you cook your own colonists alive.
+
+**Mechanic:** Heavy industrial buildings (Reactors, Forges) generate massive "Heat". This heat must be piped via thermal vents into the surrounding terrain or atmosphere. Dumping it into water boils it; dumping it into rock slowly turns it into magma over years.
+
+**Emergence:** You dump all your reactor heat into a sealed underground cavern to keep your surface city cool. Decades later, the cavern reaches critical temperature, melting the bedrock and causing your entire industrial sector to sink into a self-made magma lake.
+
+**Tension:** Do you sacrifice surface building space for massive cooling towers, or secretly pump the heat underground and hope the bedrock holds?
+
+---
+
+## The Scapegoat Protocol
+
+**Layer:** 1
+
+**Fantasy:** Deflecting political consequences by weaponizing the colony's prejudice against a specific group.
+
+**Mechanic:** When global Unrest reaches critical mass, the player can assign a "Scapegoat" designation to a specific demographic (by trait, job, or origin). The colony's Unrest is instantly pacified, but the scapegoated group is exiled from the core colony, forming a hostile perimeter camp.
+
+**Emergence:** To survive a famine-induced riot, you scapegoat your "Hydroponics Technicians." The riot stops, but the technicians take their seeds and equipment with them. They form a thriving, hostile raider camp outside your walls that you now have to buy food from at extortionate prices.
+
+**Tension:** Do you face the immediate consequences of your poor management, or buy time by permanently alienating a potentially vital segment of your population?
+
+---
+
+## The Orbital Tether Snap
+
+**Layer:** Cross-layer
+
+**Fantasy:** Building the ultimate logistical highway to the stars, and the apocalyptic consequences of its failure.
+
+**Mechanic:** You can build a Space Elevator connecting a Layer 1 colony directly to a Layer 2 orbital hub, bypassing all shuttle costs. However, the tether has structural integrity. If destroyed (by sabotage, war, or debris), the massive cable falls back to the planet.
+
+**Emergence:** You build an elevator on your most populated world for maximum economic boom. A rogue pirate ship crashes into the orbital hub. The elevator snaps, and thousands of kilometers of super-dense carbon nanotube wrap around the planet's equator, permanently scarring the Layer 1 map and obliterating everything in its path.
+
+**Tension:** Do you centralize your entire planetary economy around one hyper-efficient but catastrophically vulnerable thread?
+
+---
