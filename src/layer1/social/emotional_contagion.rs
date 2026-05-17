@@ -102,8 +102,7 @@ pub struct EmotionalContagion {
     pub strength: f32,
 }
 
-#[derive(Clone, Copy, PartialEq, Eq)]
-#[derive(Debug)]
+#[derive(Clone, Copy, PartialEq, Eq, Debug)]
 pub enum ContagionType {
     Panic,
     Joy,

@@ -9,3 +9,7 @@
 **[Extracting World Borrows]**
 **Learning:** Sometimes repeated blocks of logic are necessary just to copy data out of Bevy's `World` so that subsequent queries can safely iterate over the `World` mutably without causing a borrow checker panic. Extracting this copy logic into a helper function cleans up the main function drastically without changing any behavior.
 **Action:** Identify repeated `world.resource::<T>()` copies and extract them into helper functions like `get_terrain_tiles_in_radius`.
+
+**[Extracting Match Arms]**
+**Learning:** Large monolithic match statements serving as routers (like `handle_command` in headless tools) can quickly become God Functions.
+**Action:** Extract large inline logic from match arms into focused helper functions. Ensure enums used in match arms are fully checked for all variants or use an explicit fallback.

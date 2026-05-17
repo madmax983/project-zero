@@ -407,7 +407,6 @@ impl<'a> PopDecider<'a> {
             self.context,
             0.0,
         );
-
     }
 
     /// **Priority 2: Social & Mental Health**

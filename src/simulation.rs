@@ -950,8 +950,8 @@ mod tests {
         world.init_resource::<Events<crate::layer3::diplomacy_reflection::FloraPlantedEvent>>();
         world.init_resource::<Events<crate::layer3::diplomacy_reflection::TraitChangedEvent>>();
 
-    world.init_resource::<crate::layer1::mind::sleep_debt::SleepDebtConfig>();
-    world.init_resource::<Events<crate::layer1::mind::sleep_debt::RepoManArrivalEvent>>();
+        world.init_resource::<crate::layer1::mind::sleep_debt::SleepDebtConfig>();
+        world.init_resource::<Events<crate::layer1::mind::sleep_debt::RepoManArrivalEvent>>();
         world.init_resource::<Events<crate::layer1::logistics::mass_driver::LaunchEvent>>();
         world.init_resource::<Events<crate::layer1::logistics::mass_driver::BombardmentEvent>>();
         world.init_resource::<Events<crate::layer2::bombardment::BombardmentEvent>>();
