@@ -152,3 +152,11 @@ mod tests {
 
 ## 8. Questions
 *Builder: add questions here if spec is unclear.*
+
+## Questions
+*Builder: The specification for "Phantom Infrastructure" contains major architectural contradictions with the current codebase:*
+* *The spec assumes the existence of `Cable`, `Wall`, `NetworkNode`, `PowerGrid`, `PowerNode`, `PowerNetworkId`, and `PowerPowered` components/types inside `crate::layer1::infrastructure`.*
+* *None of these types exist in `src/layer1/infrastructure/` or in the wider project related to a grid-based networking system like described here.*
+* *The actual structure logic uses different components, and there is no modeled power graph/pipe network built out in this way.*
+* *The `handle_deconstruction_system` and `DeconstructEvent` logic as presented doesn't match the current `DesignationType::Demolish` pipeline.*
+* *Since this specification relies heavily on hallucinatory architecture, it cannot be implemented as requested. Please revise the spec to align with the current `Structure` and `Designation` systems, or provide the prerequisites.*
