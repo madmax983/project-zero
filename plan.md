@@ -1,36 +1,15 @@
-1. **Claim the task**
-   - Use `sed` to remove the line `- [ ] \`1126\` Orbital Drydocks — \`specs/1126-orbital-drydocks.md\`` from `design/BACKLOG.md`.
-   - Use `sed` to add the line `- [ ] \`1126\` Orbital Drydocks — \`specs/1126-orbital-drydocks.md\` — claimed 2026-03-24` to `design/IN_PROGRESS.md`.
-   - Use `run_in_bash_session` to execute `git add design/`, `git commit -m 'claim: 1126 orbital drydocks'`, and `git push`.
+# Execution Plan
 
-2. **Add RED Phase Tests**
-   - Note: The test file `tests/integration/orbital_drydocks.rs` has already been created, and the `tests/integration/mod.rs` file has already been updated.
-   - Run `cargo test --test integration orbital_drydocks` to verify the tests fail.
-   - Use `run_in_bash_session` to execute `git add tests/integration/orbital_drydocks.rs tests/integration/mod.rs`, `git commit -m 'test(layer2): add RED phase tests for orbital drydocks'`.
+## Claiming the Task
+1. Use `run_in_bash_session` to execute `sed -i '/1068/d' design/BACKLOG.md` to remove the task from the backlog.
+2. Use `run_in_bash_session` to execute `echo "- [ ] \`1068\` Crustal Tides — \`specs/1068-crustal-tides.md\` — claimed $(date +%Y-%m-%d)" >> design/IN_PROGRESS.md` to add the task to in-progress.
+3. Use `run_in_bash_session` to execute `git add design/ && git commit -m "claim: 1068 crustal tides"` to commit the claim.
 
-3. **Implement GREEN Phase**
-   - Edit `src/layer2/station.rs`.
-   - Add `OrbitalDrydock` to the `StationType` enum.
-   - Update implementations of methods `cost()`, `label()`, and `char()` on `StationType` to handle `OrbitalDrydock`. Provide values like `vec![(ResourceType::Metal, 1000.0)]`, `"Orbital Drydock"`, and `'D'` respectively.
-   - Create `src/layer2/orbital_drydock.rs`.
-   - Add the `ShipConstruction` component.
-   - Add the `process_drydock_construction_system`.
-   - Use `run_in_bash_session` to safely append `pub mod orbital_drydock;` to `src/layer2/mod.rs` using `cat << 'EOF' >>`.
-   - Register `process_drydock_construction_system` in `src/simulation.rs` in the `schedule.add_systems` block next to `crate::layer2::station::build_station_system`.
-   - Run `cargo test --test integration orbital_drydocks` to verify the tests pass.
-   - Use `run_in_bash_session` to execute `git add .`, `git commit -m 'feat(layer2): implement orbital drydocks system (GREEN phase)'`.
-
-4. **Verify Implementation**
-   - Run `cargo test` to verify all tests pass and no regressions are introduced system-wide.
-   - Run `cargo clippy --all-targets --all-features -- -D warnings` and fix any issues.
-   - Run `cargo llvm-cov --lib --bins | grep orbital_drydock` to ensure test coverage is over 85%.
-
-5. **Complete pre-commit steps to ensure proper testing, verification, review, and reflection are done.**
-   - Run `pre_commit_instructions` tool.
-   - Follow formatting and other instructions.
-
-6. **Submit**
-   - Use `run_in_bash_session` with `sed` to move the task from `IN_PROGRESS.md` to `COMPLETED.md`.
-   - Execute `git add .`.
-   - Execute `git commit` providing the full multi-line final commit message exactly as outlined in the issue instructions.
-   - Execute `git push`.
+## Implementation Steps
+4. **Update `TerrainType` enum:** Use `replace_with_git_merge_diff` to modify `src/layer1/nature/terrain.rs`. Add `FaultLine(bool)` to the `TerrainType` enum (where `true` means open magma exposed, `false` means closed). Update `name` to return `"FaultLine"`, `is_walkable` to return false when `FaultLine(true)` and true when `FaultLine(false)`, and `heat_retention` to return `0.5` for `FaultLine(true)` and `0.5` for `FaultLine(false)`. Also, handle it in other `TerrainType` match blocks as needed. Verify with `cargo check`.
+5. **Create `src/layer1/geology/crustal_tides.rs`:** Use `write_file` to create the file and implement `process_crustal_tides`. Track fault line tile closures and apply damage. Implement `process_crustal_tides` to collect closed `FaultLine` coordinates into a `HashSet`, then iterate over `Structure` components with a `GridPosition` and apply 50 damage to their `current_hp` if their position exists in the set. Add the RED phase tests from the spec at the bottom of the file inside `#[cfg(test)]`. Use `cargo check` to verify syntax.
+6. **Register module:** Use `replace_with_git_merge_diff` to add `pub mod crustal_tides;` to `src/layer1/geology/mod.rs`. Verify by ensuring `cargo check` passes.
+7. **Register system:** Use `replace_with_git_merge_diff` on `src/layer1/systems/environment.rs` to register `crate::layer1::geology::crustal_tides::process_crustal_tides` in the system schedule tuple near `check_seismic_events`. Verify with `cargo check`.
+8. **Run tests:** Use `run_in_bash_session` to execute `cargo test --lib layer1` and `cargo clippy --all-targets --all-features -- -D warnings` to verify the implementation.
+9. **Pre-commit steps:** Complete pre-commit steps to ensure proper testing, verification, review, and reflection are done. Call `pre_commit_instructions` and follow them.
+10. **Commit & mark completed:** Use `run_in_bash_session` to execute `sed -i '/1068/d' design/IN_PROGRESS.md` and `echo "- [x] \`1068\` Crustal Tides — \`specs/1068-crustal-tides.md\` — completed $(date +%Y-%m-%d)" >> design/COMPLETED.md`, then `git add .` and `git commit` to finalize.
