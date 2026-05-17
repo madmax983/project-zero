@@ -8166,3 +8166,88 @@ What an artifact is called.
 - a metallic taste and failing vision
 - severe cellular degradation
 - sudden, unexplainable fatigue
+
+## The Gossip Economy Fragments
+
+### Fragment Type: [RUMOR_SUBJECT]
+- the governor's true lineage
+- missing colony funds
+- a hidden structural flaw in the reactor
+- the real contents of the nutrient paste
+- a secret pact with the pirates
+- the whispers from the deep shafts
+
+### Fragment Type: [DARK_SECRET_TYPE]
+- a classified casualty report
+- evidence of systemic embezzlement
+- a suppressed transmission from the core worlds
+- the coordinates of a black-market broker
+- the true purpose of the orbital mirrors
+- a log of unauthorized genetic modifications
+
+## Intellectual Property Wars Fragments
+
+### Fragment Type: [PATENT_TYPE]
+- a proprietary warp-fold algorithm
+- copyrighted synthetic crop genomes
+- licensed atmospheric scrubbers
+- patented zero-g metallurgy techniques
+- restricted mind-machine interface protocols
+- a trademarked kinetic bombardment array
+
+### Fragment Type: [PIRATED_GOOD]
+- unlicensed replicator patterns
+- bootleg shielding emitters
+- reverse-engineered fusion cores
+- stolen agricultural genomes
+- counterfeit cybernetic limbs
+- open-source but highly illegal AI models
+
+## The Hedonic Treadmill Fragments
+
+### Fragment Type: [LUXURY_GOOD]
+- synthetic glitter-steak
+- memory-foam stasis webbing
+- real-wood paneling
+- imported atmosphere
+- artisan-crafted neuro-stimulants
+- genuine starlight-filtered wine
+
+### Fragment Type: [BASIC_GOOD]
+- reconstituted nutrient paste
+- standard-issue mesh hammocks
+- recycled breathing air
+- stamped aluminum wall plating
+- unflavored hydration packs
+- baseline synthetic garments
+
+### Fragment Type: [HEDONIC_COMPLAINT]
+- the air tastes metallic now
+- the beds are too hard after last season's luxuries
+- the food is flavorless compared to the imported rations
+- they took away the neuro-stims and left us with headaches
+- we used to have real light, now we have flickers
+
+## Invasive Bureaucracy Fragments
+
+### Fragment Type: [BUREAUCRACY_EXPANSION_METHOD]
+- pushed a wall of filing cabinets through the cafeteria
+- converted the hydroponics bay into a server farm
+- swallowed the residential block in endless cubicles
+- paved over the memorial site for administrative archiving
+- annexed the medical wing for form-processing
+
+### Fragment Type: [LOST_INFRASTRUCTURE]
+- a perfectly good farm
+- the primary heat sink
+- the last open courtyard
+- a vital transit corridor
+- the children's learning center
+- the emergency life-support backup
+
+### Fragment Type: [BUREAUCRACY_TITLE]
+- Sub-Director of Form Requisition
+- Master of the Endless Ledger
+- Chief Assessor of Redundancy
+- High Clerk of the Vaults
+- Minister of Acceptable Losses
