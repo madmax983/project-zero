@@ -1951,6 +1951,7 @@ fn print_stories(world: &mut World) {
     }
 
     let mut table = Table::new();
+    table.set_width(120);
     table
         .load_preset(UTF8_FULL)
         .set_content_arrangement(ContentArrangement::Dynamic)
