@@ -131,3 +131,7 @@ pub fn accumulate_parasitic_threat_system(
 
 ## 8. Questions
 *Builder: add questions here if spec is unclear.*
+
+## Questions
+*Builder: add questions here if spec is unclear.*
+- **Architectural Contradictions:** `WorkSpeed` component doesn't exist, it uses `WorkSpeedBuff`.

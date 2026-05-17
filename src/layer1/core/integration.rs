@@ -2229,7 +2229,8 @@ pub fn crustal_tide_chronicle_bridge(
     if high_tide && !prev_high {
         chronicle_events.send(AddChronicleEvent {
             importance: EventImportance::Major,
-            text: "Extreme tidal forces cause the planet's crust to groan and fracture.".to_string(),
+            text: "Extreme tidal forces cause the planet's crust to groan and fracture."
+                .to_string(),
         });
     } else if low_tide && !prev_low {
         chronicle_events.send(AddChronicleEvent {
