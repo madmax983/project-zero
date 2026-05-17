@@ -720,7 +720,8 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
         (
             crate::layer3::integration::bureaucracy_of_truth_integration_system,
             crate::layer3::bureaucracy_of_truth::generate_colony_reports_system,
-        ).chain(),
+        )
+            .chain(),
     ));
 }
 #[cfg(test)]
