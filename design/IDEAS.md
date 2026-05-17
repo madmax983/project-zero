@@ -19997,3 +19997,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you invest in soft-power media that makes the galaxy love you but binds your economies together, or focus on self-reliance at the cost of global influence?
 
 ---
+
+## Echo-Location Mining
+
+**Layer:** 1
+
+**Fantasy:** Navigating and extracting resources from absolute, pitch-black deep-crust environments where light is a luxury or a hazard.
+
+**Mechanic:** Deep-crust miners use "Thumpers" to map the surrounding stone. Every thump reveals adjacent ores but also creates massive Acoustic Noise. Some valuable crystals are highly light-sensitive and evaporate if exposed to artificial light, forcing extraction entirely by sound.
+
+**Emergence:** You try to rapidly mine a massive light-sensitive geode, placing multiple thumpers to speed up the echo-mapping. The resulting cacophony awakens a hibernating pack of deaf, tremor-sensitive predators that slaughter the mining crew in the dark.
+
+**Tension:** Do you use light for safety and speed but risk destroying the most valuable resources, or mine in the dark and risk waking subterranean horrors?
+
+---
+
+## The Bureaucracy of Naming
+
+**Layer:** 1
+
+**Fantasy:** Even out on the frontier, administrative red tape dictates how people identify themselves and their world.
+
+**Mechanic:** Naming newly discovered tiles, flora, fauna, or newborns isn't free. It requires an "Official Registry" building and Admin Time. Naming things confers a minor cultural/morale boost. However, if a Pop uses an "unregistered" or slang name frequently, it generates a "Bureaucratic Friction" debuff until formalized.
+
+**Emergence:** A new, highly aggressive moss is discovered. The workers start calling it "Deathweed." The Governor refuses to spend Admin Time registering such an ugly name. The resulting bureaucratic friction causes a localized strike because the official manuals still refer to the lethal moss as "Unregistered Specimen 402."
+
+**Tension:** Do you waste precious administrative overhead on formalizing culture, or let your Pops invent a localized slang that the official government refuses to recognize?
+
+---
+
+## Symbiotic Fungi Architecture
+
+**Layer:** 1
+
+**Fantasy:** Growing your colony instead of building it, relying on living structures that bleed when damaged.
+
+**Mechanic:** A specific xenofungus can be seeded to slowly grow into basic building shapes over time (walls, rudimentary shelters) at zero resource cost. The fungi requires humidity and organic waste to maintain structural integrity. If starved of waste, the walls begin to decay and release mild toxins.
+
+**Emergence:** You build an entire suburban sprawl out of cheap fungi to house a sudden influx of refugees. During a drought, the humidity drops. The walls of every house simultaneously begin to wither and release toxic spores, turning your cheap housing solution into a massive bio-hazard zone.
+
+**Tension:** Do you spend massive amounts of stone and metal for reliable, sterile infrastructure, or rely on a free, living infrastructure that requires constant ecological management to not poison you?
+
+---
