@@ -4964,3 +4964,88 @@
 **Usage:**
 - "Half the mining team is down with Flare-Fever."
 - "He stayed outside too long and caught Sun-Sickness."
+
+## The Gossip Economy (Spec 684)
+
+### The Rumor Web
+**Replaces:** Gossip network, word of mouth
+**Code reference:** `Rumor`
+**Usage:**
+- "The Rumor Web says the rations are being cut next week."
+- "She heard it on the Rumor Web, so it must be half-true."
+
+### Intel Token / Whisper
+**Replaces:** Abstract spy currency, gossip points
+**Code reference:** `IntelTokens`
+**Usage:**
+- "He traded three Whispers for a rare shielding schematic."
+- "The Broker only deals in high-grade Intel."
+
+### Dark Secret
+**Replaces:** Major negative rumor, high-value gossip
+**Code reference:** `Rumor::DarkSecret`
+**Usage:**
+- "Spreading a Dark Secret is treason, but it pays well."
+- "The colony broke when the Dark Secret was finally revealed."
+
+## Intellectual Property Wars (Spec 1095)
+
+### Patent-Lock / The Registry
+**Replaces:** Tech ownership, galactic IP database
+**Code reference:** `PatentRegistry`
+**Usage:**
+- "We can't build the hyper-drive; the Ky'lari have a Patent-Lock on it."
+- "The Registry demands a tithe for every plasma coil we fire."
+
+### Licensing Fee / The Tithe
+**Replaces:** Tech use cost, royalty payment
+**Code reference:** Fee processing in `process_licensing_fees_system`
+**Usage:**
+- "The Tithe is bleeding our treasury dry."
+- "Pay the Licensing Fee, or they will send the fleet."
+
+### IP Piracy / Unlicensed Forgery
+**Replaces:** Illegal tech usage
+**Code reference:** `TechUsage` with `is_legal: false`
+**Usage:**
+- "They caught us using Unlicensed Forgery for the atmospheric scrubbers."
+- "IP Piracy is an act of war in this sector."
+
+## The Hedonic Treadmill (Spec 694)
+
+### The Baseline / Standard of Living
+**Replaces:** Minimal acceptable quality, expected comfort
+**Code reference:** `StandardOfLiving`
+**Usage:**
+- "Their Baseline is too high; they won't eat the paste anymore."
+- "We raised their Standard of Living, and now they demand it."
+
+### Hedonic Crash / The Grey Sickness
+**Replaces:** Morale penalty from downgrading consumption
+**Code reference:** Morale deduction in `process_consumption_quality`
+**Usage:**
+- "The colony is suffering a Hedonic Crash after the wine ran out."
+- "The Grey Sickness took hold when we returned to standard rations."
+
+## Invasive Bureaucracy (Spec 1237)
+
+### Bureaucracy Node / The Archives
+**Replaces:** Administrative building that expands
+**Code reference:** `BureaucracyNode`
+**Usage:**
+- "The Archives swallowed the west residential block yesterday."
+- "Do not sleep near a Bureaucracy Node; you will be filed away."
+
+### Tile Consumption / Annexation
+**Replaces:** Expanding to adjacent grid squares
+**Code reference:** Grid modification in `expand_bureaucracy_nodes_system`
+**Usage:**
+- "The Annexation claimed our last hydroponics bay."
+- "Tile Consumption is accelerating as the empire grows."
+
+### Empire Stability / The Paper Peace
+**Replaces:** Global stability buff from admin buildings
+**Code reference:** `EmpireStability`
+**Usage:**
+- "We endure The Paper Peace, suffocated by forms but free from war."
+- "Empire Stability is high, but we have no room to breathe."

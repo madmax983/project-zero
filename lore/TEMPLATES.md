@@ -7595,3 +7595,92 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: Those caught outside during the flare are suffering [RADIATION_SYMPTOM]. [CASUALTY_COUNT] souls affected."
 - "The sun is poison today. [CASUALTY_COUNT] souls are down with [RADIATION_SYMPTOM]. [YEAR]."
 - "[COLONY]'s clinics are full. [CASUALTY_COUNT] workers show signs of [RADIATION_SYMPTOM] after the flare. [YEAR]."
+
+## The Gossip Economy Templates
+
+### Template: RUMOR_MILL_CHURNS
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [RUMOR_SUBJECT], [PRODUCTION_LOSS]
+
+**Patterns:**
+- "[YEAR]: In [COLONY], work stopped for days. Everyone was whispering about [RUMOR_SUBJECT]."
+- "Productivity plummeted by [PRODUCTION_LOSS] in [YEAR]. The cause was not strike action, but talk of [RUMOR_SUBJECT]."
+- "[COLONY], [YEAR]: The rumor web caught another victim. Whispers of [RUMOR_SUBJECT] spread faster than fire."
+
+### Template: DARK_SECRET_REVEALED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [DARK_SECRET_TYPE], [MORALE_DROP]
+
+**Patterns:**
+- "[YEAR]: The truth leaked in [COLONY]. When they found [DARK_SECRET_TYPE], morale broke."
+- "They couldn't keep it hidden forever. The revelation of [DARK_SECRET_TYPE] cost the governor dearly. [YEAR]."
+- "[COLONY] remembers [YEAR] as the Year of Truth. [DARK_SECRET_TYPE] became public knowledge."
+
+## Intellectual Property Wars Templates
+
+### Template: PATENT_REGISTERED
+**Generates:** Galactic event
+**Slots:** [CIV_NAME], [YEAR], [PATENT_TYPE]
+
+**Patterns:**
+- "In [YEAR], the [CIV_NAME] laid claim to [PATENT_TYPE], demanding fees from all who used it."
+- "The registry updated in [YEAR]: [PATENT_TYPE] now belongs exclusively to the [CIV_NAME]."
+- "[YEAR]: The [CIV_NAME] declared ownership of [PATENT_TYPE]. The galactic courts agreed."
+
+### Template: IP_PIRACY_DETECTED
+**Generates:** Diplomatic event
+**Slots:** [AGGRESSOR_CIV], [TARGET_CIV], [YEAR], [PIRATED_GOOD]
+
+**Patterns:**
+- "[YEAR]: The [AGGRESSOR_CIV] discovered the [TARGET_CIV] using [PIRATED_GOOD] and demanded reparations."
+- "War loomed in [YEAR] when the [TARGET_CIV] was caught utilizing [PIRATED_GOOD] without paying the [AGGRESSOR_CIV]."
+- "The [AGGRESSOR_CIV] issued an ultimatum to the [TARGET_CIV] over the unlicensed use of [PIRATED_GOOD]. [YEAR]."
+
+### Template: PATENT_INVALIDATED
+**Generates:** Espionage event
+**Slots:** [TARGET_CIV], [YEAR], [PATENT_TYPE]
+
+**Patterns:**
+- "[YEAR]: Shadow networks erased the [TARGET_CIV]'s claim on [PATENT_TYPE]. It belongs to the galaxy now."
+- "A massive data leak in [YEAR] placed [PATENT_TYPE], formerly held by the [TARGET_CIV], into the public domain."
+- "The [TARGET_CIV] lost their monopoly on [PATENT_TYPE] in [YEAR]. Someone broke the registry."
+
+## The Hedonic Treadmill Templates
+
+### Template: LUXURY_ACCLIMATION
+**Generates:** Colony status event
+**Slots:** [COLONY], [YEAR], [LUXURY_GOOD]
+
+**Patterns:**
+- "By [YEAR], [COLONY] had grown so accustomed to [LUXURY_GOOD] that they forgot it was a luxury."
+- "[YEAR]: The standard of living rose in [COLONY]. [LUXURY_GOOD] became the baseline expectation."
+- "They forgot the lean years. In [COLONY], by [YEAR], [LUXURY_GOOD] was demanded as a basic right."
+
+### Template: HEDONIC_CRASH
+**Generates:** Morale crisis event
+**Slots:** [COLONY], [YEAR], [BASIC_GOOD], [HEDONIC_COMPLAINT]
+
+**Patterns:**
+- "[YEAR]: The luxuries ran out. Forced back to [BASIC_GOOD], the people rioted, claiming '[HEDONIC_COMPLAINT].'"
+- "Morale collapsed in [COLONY] when they were returned to [BASIC_GOOD]. The most common grievance: '[HEDONIC_COMPLAINT].'"
+- "[YEAR]: A hard crash. From fine living back to [BASIC_GOOD]. The workforce stalled, whining that '[HEDONIC_COMPLAINT].'"
+
+## Invasive Bureaucracy Templates
+
+### Template: BUREAUCRACY_EXPANDS
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [BUREAUCRACY_EXPANSION_METHOD], [LOST_INFRASTRUCTURE]
+
+**Patterns:**
+- "[YEAR]: The administration grew again in [COLONY]. They [BUREAUCRACY_EXPANSION_METHOD], costing us [LOST_INFRASTRUCTURE]."
+- "To maintain order, the bureaucracy [BUREAUCRACY_EXPANSION_METHOD]. We lost [LOST_INFRASTRUCTURE] in [YEAR]."
+- "[COLONY], [YEAR]: The paperwork demands space. They [BUREAUCRACY_EXPANSION_METHOD]. We mourn the loss of [LOST_INFRASTRUCTURE]."
+
+### Template: EMPIRE_STABILIZED_BY_PAPERWORK
+**Generates:** Empire status event
+**Slots:** [YEAR], [STABILITY_GAIN], [BUREAUCRACY_TITLE]
+
+**Patterns:**
+- "[YEAR]: The empire held together, bound by the meticulous work of the [BUREAUCRACY_TITLE]."
+- "Stability rose in [YEAR], not by force of arms, but by the sheer volume of forms processed under the [BUREAUCRACY_TITLE]."
+- "The [BUREAUCRACY_TITLE] reported perfect compliance in [YEAR]. The empire is suffocating, but stable."
