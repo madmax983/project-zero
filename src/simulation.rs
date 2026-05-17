@@ -717,7 +717,10 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
     schedule.add_systems((
         crate::layer3::bureaucracy_of_vanity::vanity_building_listener_system,
         crate::layer3::bureaucracy_of_vanity::vanity_sabotage_system,
-        crate::layer3::bureaucracy_of_truth::generate_colony_reports_system,
+        (
+            crate::layer3::integration::bureaucracy_of_truth_integration_system,
+            crate::layer3::bureaucracy_of_truth::generate_colony_reports_system,
+        ).chain(),
     ));
 }
 #[cfg(test)]
