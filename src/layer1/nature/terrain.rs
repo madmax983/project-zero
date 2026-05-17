@@ -98,7 +98,12 @@ impl TerrainType {
     pub const fn is_walkable(self) -> bool {
         !matches!(
             self,
-            Self::Rock | Self::Water | Self::DeepRock | Self::Artifact | Self::Crater | Self::FaultLine(true)
+            Self::Rock
+                | Self::Water
+                | Self::DeepRock
+                | Self::Artifact
+                | Self::Crater
+                | Self::FaultLine(true)
         )
     }
 
@@ -109,7 +114,12 @@ impl TerrainType {
     #[must_use]
     pub const fn heat_retention(self) -> f32 {
         match self {
-            Self::Rock | Self::DeepRock | Self::MagmaRock | Self::Artifact | Self::Crater | Self::FaultLine(_) => 0.5,
+            Self::Rock
+            | Self::DeepRock
+            | Self::MagmaRock
+            | Self::Artifact
+            | Self::Crater
+            | Self::FaultLine(_) => 0.5,
             Self::Water => 0.2,
             Self::Grass
             | Self::Dirt

@@ -1,6 +1,6 @@
-use bevy_ecs::prelude::*;
 use crate::layer1::needs::Needs;
 use crate::shared::time::SimulationTime;
+use bevy_ecs::prelude::*;
 
 #[derive(Resource)]
 pub struct SleepDebtConfig {
@@ -73,7 +73,9 @@ pub fn process_repo_men_action_system(
     let duration = config.map_or(2160.0, |c| c.coma_duration_ticks);
     for (repo_entity, repo_man) in repo_query.iter() {
         if let Ok(target_pop) = pop_query.get(repo_man.target) {
-            commands.entity(target_pop).insert(ForcedComa { duration_remaining: duration });
+            commands.entity(target_pop).insert(ForcedComa {
+                duration_remaining: duration,
+            });
             commands.entity(repo_entity).despawn();
         }
     }
@@ -96,17 +98,20 @@ mod tests {
         });
         app.add_systems(bevy_app::Update, process_sleep_debt_system);
 
-        let pop = app.world_mut().spawn((
-            Pop,
-            Needs {
-                rest: 100.0,
-                ..Default::default()
-            },
-            SleepDebt {
-                hours: 0.0,
-                active_contract: true,
-            },
-        )).id();
+        let pop = app
+            .world_mut()
+            .spawn((
+                Pop,
+                Needs {
+                    rest: 100.0,
+                    ..Default::default()
+                },
+                SleepDebt {
+                    hours: 0.0,
+                    active_contract: true,
+                },
+            ))
+            .id();
 
         // Act
         app.update();
@@ -139,7 +144,10 @@ mod tests {
 
         let repo_events = app.world().resource::<Events<RepoManArrivalEvent>>();
         let mut reader = repo_events.get_cursor();
-        assert!(reader.read(repo_events).len() > 0, "Critical debt should spawn repo men");
+        assert!(
+            reader.read(repo_events).len() > 0,
+            "Critical debt should spawn repo men"
+        );
     }
 
     #[test]
@@ -148,13 +156,16 @@ mod tests {
         app.init_resource::<SleepDebtConfig>();
         app.add_systems(bevy_app::Update, process_repo_men_action_system);
 
-        let pop = app.world_mut().spawn((
-            Pop,
-            SleepDebt {
-                hours: 500.0,
-                active_contract: true,
-            },
-        )).id();
+        let pop = app
+            .world_mut()
+            .spawn((
+                Pop,
+                SleepDebt {
+                    hours: 500.0,
+                    active_contract: true,
+                },
+            ))
+            .id();
 
         let _repo_man = app.world_mut().spawn(RepoMan { target: pop }).id();
 

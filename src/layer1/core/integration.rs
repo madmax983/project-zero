@@ -2201,7 +2201,10 @@ pub fn sunk_cost_resource_drain_system(
 
 /// INT-1258: Bridges Cassandra Protocol to Chronicle.
 pub fn cassandra_protocol_chronicle_bridge(
-    protocol_events: Query<Entity, Added<crate::layer1::cassandra_protocol::CassandraProtocolActive>>,
+    protocol_events: Query<
+        Entity,
+        Added<crate::layer1::cassandra_protocol::CassandraProtocolActive>,
+    >,
     mut chronicle_events: EventWriter<AddChronicleEvent>,
 ) {
     for _ in protocol_events.iter() {

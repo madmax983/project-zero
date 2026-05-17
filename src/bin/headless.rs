@@ -171,6 +171,142 @@ fn main() {
     }
 }
 
+fn handle_build_command(world: &mut World, parts: &[&str]) {
+    if parts.len() < 4 {
+        println!(
+            "{}",
+            "⚠️ Usage: build <farm|housing|stockpile> <x> <y>".yellow()
+        );
+        return;
+    }
+    let building_type = match parts[1].to_lowercase().as_str() {
+        "farm" | "f" => Some(BuildingType::Farm),
+        "housing" | "h" => Some(BuildingType::Housing),
+        "stockpile" | "s" => Some(BuildingType::Stockpile),
+        _ => None,
+    };
+    let x: Option<i32> = parts[2].parse().ok();
+    let y: Option<i32> = parts[3].parse().ok();
+
+    match (building_type, x, y) {
+        (Some(bt), Some(x), Some(y)) => build_at(world, bt, x, y),
+        _ => {
+            print_dashboard_panel(
+                "ERROR",
+                "Invalid arguments. Usage: build <farm|housing|stockpile> <x> <y>",
+                Some(comfy_table::Color::Red),
+                Some(comfy_table::Attribute::Bold),
+            );
+        }
+    }
+}
+
+fn handle_designate_command(world: &mut World, parts: &[&str], designation_type: DesignationType) {
+    if parts.len() < 3 {
+        let name = match designation_type {
+            DesignationType::Destroy => "destroy",
+            DesignationType::Mine => "mine",
+            DesignationType::Chop => "chop",
+            _ => "designate", // Fallback, though we only call this for destroy, mine, chop
+        };
+        let msg = format!("Usage: {name} <x> <y>");
+        print_dashboard_panel(
+            "ERROR",
+            &msg,
+            Some(comfy_table::Color::Red),
+            Some(comfy_table::Attribute::Bold),
+        );
+        return;
+    }
+    let x: Option<i32> = parts[1].parse().ok();
+    let y: Option<i32> = parts[2].parse().ok();
+    match (x, y) {
+        (Some(x), Some(y)) => designate_at(world, designation_type, x, y),
+        _ => print_dashboard_panel(
+            "ERROR",
+            "Invalid coordinates",
+            Some(comfy_table::Color::Red),
+            Some(comfy_table::Attribute::Bold),
+        ),
+    }
+}
+
+fn handle_research_command(world: &mut World, parts: &[&str]) {
+    if parts.len() < 2 {
+        print_dashboard_panel(
+            "ERROR",
+            "Usage: research <tech_name>",
+            Some(comfy_table::Color::Red),
+            Some(comfy_table::Attribute::Bold),
+        );
+        return;
+    }
+    // Join parts in case tech name has spaces (e.g., "Metal Working")
+    let tech_name = parts[1..].join(" ").to_lowercase();
+
+    let tech = match tech_name.as_str() {
+        "masonry" => Some(Tech::Masonry),
+        "metal working" | "metalworking" => Some(Tech::MetalWorking),
+        "social structures" | "social" => Some(Tech::SocialStructures),
+        "astronomy" => Some(Tech::Astronomy),
+        "hydroponics" => Some(Tech::Hydroponics),
+        "militia" => Some(Tech::Militia),
+        "medical" => Some(Tech::Medical),
+        "electromagnetism" => Some(Tech::Electromagnetism),
+        "void whispers" | "void" => Some(Tech::VoidWhispers),
+        "terraforming" => Some(Tech::Terraforming),
+        _ => None,
+    };
+
+    let Some(t) = tech else {
+        print_dashboard_panel(
+            "ERROR",
+            &format!("Unknown technology: '{tech_name}'"),
+            Some(comfy_table::Color::Red),
+            Some(comfy_table::Attribute::Bold),
+        );
+        return;
+    };
+
+    if unlock_tech(world, t) {
+        println!("{}", format!("Success! Researched: {}", t.label()).green());
+        return;
+    }
+
+    let res = world.resource::<ColonyResources>();
+    let ts = world.resource::<TechState>();
+
+    if res.knowledge < t.cost() {
+        print_dashboard_panel(
+            "ERROR",
+            &format!(
+                "Failed: Insufficient Knowledge ({:.1}/{:.1})",
+                res.knowledge,
+                t.cost()
+            ),
+            Some(comfy_table::Color::Red),
+            Some(comfy_table::Attribute::Bold),
+        );
+    } else if ts.used_capacity + t.storage_cost() > ts.total_capacity {
+        print_dashboard_panel(
+            "ERROR",
+            &format!(
+                "Failed: Insufficient Data Storage Capacity ({:.1}/{:.1} TB used)",
+                ts.used_capacity, ts.total_capacity
+            ),
+            Some(comfy_table::Color::Red),
+            Some(comfy_table::Attribute::Bold),
+        );
+    } else {
+        print_dashboard_panel(
+            "ERROR",
+            "Failed: Unknown reason (maybe already researched?)",
+            Some(comfy_table::Color::Red),
+            Some(comfy_table::Attribute::Bold),
+        );
+    }
+}
+
 fn handle_command(world: &mut World, input: &str) -> bool {
     let parts: Vec<&str> = input.split_whitespace().collect();
     let command = parts[0].to_lowercase();
@@ -197,101 +333,10 @@ fn handle_command(world: &mut World, input: &str) -> bool {
             }
             run_ticks(world, safe_n);
         }
-        "build" | "b" => {
-            if parts.len() < 4 {
-                println!(
-                    "{}",
-                    "⚠️ Usage: build <farm|housing|stockpile> <x> <y>".yellow()
-                );
-            } else {
-                let building_type = match parts[1].to_lowercase().as_str() {
-                    "farm" | "f" => Some(BuildingType::Farm),
-                    "housing" | "h" => Some(BuildingType::Housing),
-                    "stockpile" | "s" => Some(BuildingType::Stockpile),
-                    _ => None,
-                };
-                let x: Option<i32> = parts[2].parse().ok();
-                let y: Option<i32> = parts[3].parse().ok();
-
-                match (building_type, x, y) {
-                    (Some(bt), Some(x), Some(y)) => build_at(world, bt, x, y),
-                    _ => {
-                        print_dashboard_panel(
-                            "ERROR",
-                            "Invalid arguments. Usage: build <farm|housing|stockpile> <x> <y>",
-                            Some(comfy_table::Color::Red),
-                            Some(comfy_table::Attribute::Bold),
-                        );
-                    }
-                }
-            }
-        }
-        "destroy" => {
-            if parts.len() < 3 {
-                print_dashboard_panel(
-                    "ERROR",
-                    "Usage: destroy <x> <y>",
-                    Some(comfy_table::Color::Red),
-                    Some(comfy_table::Attribute::Bold),
-                );
-            } else {
-                let x: Option<i32> = parts[1].parse().ok();
-                let y: Option<i32> = parts[2].parse().ok();
-                match (x, y) {
-                    (Some(x), Some(y)) => designate_at(world, DesignationType::Destroy, x, y),
-                    _ => print_dashboard_panel(
-                        "ERROR",
-                        "Invalid coordinates",
-                        Some(comfy_table::Color::Red),
-                        Some(comfy_table::Attribute::Bold),
-                    ),
-                }
-            }
-        }
-        "mine" => {
-            if parts.len() < 3 {
-                print_dashboard_panel(
-                    "ERROR",
-                    "Usage: mine <x> <y>",
-                    Some(comfy_table::Color::Red),
-                    Some(comfy_table::Attribute::Bold),
-                );
-            } else {
-                let x: Option<i32> = parts[1].parse().ok();
-                let y: Option<i32> = parts[2].parse().ok();
-                match (x, y) {
-                    (Some(x), Some(y)) => designate_at(world, DesignationType::Mine, x, y),
-                    _ => print_dashboard_panel(
-                        "ERROR",
-                        "Invalid coordinates",
-                        Some(comfy_table::Color::Red),
-                        Some(comfy_table::Attribute::Bold),
-                    ),
-                }
-            }
-        }
-        "chop" => {
-            if parts.len() < 3 {
-                print_dashboard_panel(
-                    "ERROR",
-                    "Usage: chop <x> <y>",
-                    Some(comfy_table::Color::Red),
-                    Some(comfy_table::Attribute::Bold),
-                );
-            } else {
-                let x: Option<i32> = parts[1].parse().ok();
-                let y: Option<i32> = parts[2].parse().ok();
-                match (x, y) {
-                    (Some(x), Some(y)) => designate_at(world, DesignationType::Chop, x, y),
-                    _ => print_dashboard_panel(
-                        "ERROR",
-                        "Invalid coordinates",
-                        Some(comfy_table::Color::Red),
-                        Some(comfy_table::Attribute::Bold),
-                    ),
-                }
-            }
-        }
+        "build" | "b" => handle_build_command(world, &parts),
+        "destroy" => handle_designate_command(world, &parts, DesignationType::Destroy),
+        "mine" => handle_designate_command(world, &parts, DesignationType::Mine),
+        "chop" => handle_designate_command(world, &parts, DesignationType::Chop),
         "designations" | "d" => print_designations(world),
         "find" => {
             if parts.len() < 2 {
@@ -372,72 +417,7 @@ fn handle_command(world: &mut World, input: &str) -> bool {
         }
         "log" | "l" => print_log(world),
         "tech" | "research_status" => print_tech(world),
-        "research" | "r" => {
-            if parts.len() < 2 {
-                print_dashboard_panel(
-                    "ERROR",
-                    "Usage: research <tech_name>",
-                    Some(comfy_table::Color::Red),
-                    Some(comfy_table::Attribute::Bold),
-                );
-            } else {
-                // Join parts in case tech name has spaces (e.g., "Metal Working")
-                let tech_name = parts[1..].join(" ").to_lowercase();
-
-                let tech = match tech_name.as_str() {
-                    "masonry" => Some(Tech::Masonry),
-                    "metal working" | "metalworking" => Some(Tech::MetalWorking),
-                    "social structures" | "social" => Some(Tech::SocialStructures),
-                    "astronomy" => Some(Tech::Astronomy),
-                    "hydroponics" => Some(Tech::Hydroponics),
-                    "militia" => Some(Tech::Militia),
-                    "medical" => Some(Tech::Medical),
-                    "electromagnetism" => Some(Tech::Electromagnetism),
-                    "void whispers" | "void" => Some(Tech::VoidWhispers),
-                    "terraforming" => Some(Tech::Terraforming),
-                    _ => None,
-                };
-
-                if let Some(t) = tech {
-                    if unlock_tech(world, t) {
-                        println!("{}", format!("Success! Researched: {}", t.label()).green());
-                    } else {
-                        // Check why
-                        let res = world.resource::<ColonyResources>();
-                        let ts = world.resource::<TechState>();
-
-                        if res.knowledge < t.cost() {
-                            print_dashboard_panel(
-                                "ERROR",
-                                &format!(
-                                    "Failed: Insufficient Knowledge ({:.1}/{:.1})",
-                                    res.knowledge,
-                                    t.cost()
-                                ),
-                                Some(comfy_table::Color::Red),
-                                Some(comfy_table::Attribute::Bold),
-                            );
-                        } else if ts.used_capacity + t.storage_cost() > ts.total_capacity {
-                            print_dashboard_panel("ERROR", &format!("Failed: Insufficient Data Storage Capacity ({:.1}/{:.1} TB used)", ts.used_capacity, ts.total_capacity), Some(comfy_table::Color::Red), Some(comfy_table::Attribute::Bold));
-                        } else {
-                            print_dashboard_panel(
-                                "ERROR",
-                                "Failed: Unknown reason (maybe already researched?)",
-                                Some(comfy_table::Color::Red),
-                                Some(comfy_table::Attribute::Bold),
-                            );
-                        }
-                    }
-                } else {
-                    print_dashboard_panel(
-                        "ERROR",
-                        &format!("Unknown technology: '{tech_name}'"),
-                        Some(comfy_table::Color::Red),
-                        Some(comfy_table::Attribute::Bold),
-                    );
-                }
-            }
-        }
+        "research" | "r" => handle_research_command(world, &parts),
         _ => print_dashboard_panel(
             "ERROR",
             &format!("Unknown command: '{command}'. Type 'help' for commands."),
@@ -1523,7 +1503,11 @@ fn scan_terrain(world: &mut World, center_x: i32, center_y: i32, radius: ScanRad
             let walkable = tile.is_walkable();
             let buildable = matches!(
                 tile,
-                TerrainType::Grass | TerrainType::Dirt | TerrainType::Rock | TerrainType::Path | TerrainType::FaultLine(_)
+                TerrainType::Grass
+                    | TerrainType::Dirt
+                    | TerrainType::Rock
+                    | TerrainType::Path
+                    | TerrainType::FaultLine(_)
             );
 
             // Check for entities
@@ -1644,14 +1628,18 @@ fn get_tile_info(world: &mut World, x: i32, y: i32) {
         TerrainType::MagmaRock => "Magma Rock",
         TerrainType::SporeBloom => "Spore Bloom",
         TerrainType::Artifact => "Artifact",
-                TerrainType::FaultLine(true) => "Fault Line (Open)",
-                TerrainType::FaultLine(false) => "Fault Line (Closed)",
+        TerrainType::FaultLine(true) => "Fault Line (Open)",
+        TerrainType::FaultLine(false) => "Fault Line (Closed)",
     };
 
     let walkable = tile.is_walkable();
     let buildable = matches!(
         tile,
-        TerrainType::Grass | TerrainType::Dirt | TerrainType::Rock | TerrainType::Path | TerrainType::FaultLine(_)
+        TerrainType::Grass
+            | TerrainType::Dirt
+            | TerrainType::Rock
+            | TerrainType::Path
+            | TerrainType::FaultLine(_)
     );
 
     // Check for entities

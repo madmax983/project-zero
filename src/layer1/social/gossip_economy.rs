@@ -156,10 +156,10 @@ mod tests {
 
     #[test]
     fn test_gossiping_reduces_productivity() {
-        use crate::layer1::utility_types::{ActionType, PopAction};
-        use crate::layer1::execution::components::{MovementTarget, AtTarget};
         use crate::layer1::actions::AssignedTo;
+        use crate::layer1::execution::components::{AtTarget, MovementTarget};
         use crate::layer1::utility_types::AssignmentType;
+        use crate::layer1::utility_types::{ActionType, PopAction};
 
         let mut app = setup_app();
 
@@ -191,7 +191,10 @@ mod tests {
             ))
             .id();
 
-        app.add_systems(Update, crate::layer1::execution::general_work::work_execution_system);
+        app.add_systems(
+            Update,
+            crate::layer1::execution::general_work::work_execution_system,
+        );
 
         // Change action to Gossip
         app.world_mut().get_mut::<PopAction>(pop).unwrap().current = ActionType::Gossip;
@@ -199,9 +202,19 @@ mod tests {
         app.update();
 
         // Verify pop's `AtTarget` and `MovementTarget` were cleared by `cleanup_pop_work_state` because the action changed from Work to Gossip.
-        assert!(app.world().get::<MovementTarget>(pop).is_none(), "Movement target should be cleared when interrupted by Gossip");
-        assert!(app.world().get::<AtTarget>(pop).is_none(), "AtTarget should be cleared when interrupted by Gossip");
-        assert_eq!(app.world().get::<PopAction>(pop).unwrap().current, ActionType::Idle, "PopAction should be reset to Idle after cleanup_pop_work_state");
+        assert!(
+            app.world().get::<MovementTarget>(pop).is_none(),
+            "Movement target should be cleared when interrupted by Gossip"
+        );
+        assert!(
+            app.world().get::<AtTarget>(pop).is_none(),
+            "AtTarget should be cleared when interrupted by Gossip"
+        );
+        assert_eq!(
+            app.world().get::<PopAction>(pop).unwrap().current,
+            ActionType::Idle,
+            "PopAction should be reset to Idle after cleanup_pop_work_state"
+        );
     }
 
     #[test]

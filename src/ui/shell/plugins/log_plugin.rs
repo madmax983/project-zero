@@ -38,7 +38,7 @@ impl HypertilePlugin for LogPlugin {
                         .alignment(ratatui::layout::Alignment::Center);
                     frame.render_widget(paragraph, frame.area());
                 } else {
-                    use ratatui::style::{Modifier, Style, Color};
+                    use ratatui::style::{Color, Modifier, Style};
                     use ratatui::text::{Line, Span};
 
                     let items: Vec<ListItem> = log
