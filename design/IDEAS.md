@@ -20081,3 +20081,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you centralize your entire planetary economy around one hyper-efficient but catastrophically vulnerable thread?
 
 ---
+
+## Fungal Network Spies
+
+**Layer:** 1
+
+**Fantasy:** The planet itself is watching you, and you can listen in.
+
+**Mechanic:** A vast, interconnected underground fungal network spans the map. By "tapping" into specific nodes with specialized research buildings, you can intercept "bio-signals" detailing movement, resources, and even the emotional states of distant fauna or hidden entities. However, the fungus also learns from you.
+
+**Emergence:** You use the fungal network to perfectly predict raider movements. Ten years later, the fungus evolves to mimic the distress calls of your colonists, luring your rescue teams into underground traps because it "learned" that humans respond to those signals.
+
+**Tension:** Invaluable, map-wide intelligence vs. feeding a planetary intelligence that might eventually use that data against you.
+
+---
+
+## Automated Inheritance
+
+**Layer:** Cross-layer
+
+**Fantasy:** The dead still have property rights, enforced by ruthless AI.
+
+**Mechanic:** When a wealthy Pop or Layer 2 Governor dies, their assets (rooms, credits, even ships) are locked by an "Automated Executor AI" until an heir is located. If no heir is found, the AI fiercely defends the assets against "theft" by the colony.
+
+**Emergence:** Your colony is starving, but the massive automated granary belonged to a reclusive billionaire Pop who just died without a will. The Executor AI activates defense turrets to protect the rotting food from your starving colonists while it searches the galaxy for a legitimate heir.
+
+**Tension:** Respecting private property (diplomatic and economic stability) vs. the immediate survival needs of the colony.
+
+---
+
+## The Echoing Void
+
+**Layer:** 2 -> 3
+
+**Fantasy:** Hyperspace isn't empty; it remembers every word spoken in it.
+
+**Mechanic:** Hyperlanes act as acoustic reservoirs. Ships traveling through them can drop "Echo Beacons" that record and broadcast messages. Over time, heavy traffic causes the lane to become filled with a cacophony of overlapping, century-old transmissions (distress calls, trade offers, propaganda).
+
+**Emergence:** You chart a "safe" hyperlane, only to find your crew's morale plummeting because the lane is saturated with the unending, recorded screams of a civilization that burned in a forgotten war.
+
+**Tension:** Fast, established travel routes (high psychological toll) vs. slow, newly charted paths (safe but inefficient).
+
+---
