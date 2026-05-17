@@ -580,3 +580,4 @@
 - [x] `INT-266` Integration: Emotional Contagion -> Pop Morale Status — completed 2026-05-16
 - [x] `549` The Sleep Debt Repo Men — `specs/549-sleep-debt-repo-men.md` — completed 2026-05-17
 - [x] `1068` Crustal Tides — `specs/1068-crustal-tides.md` — completed 2024-05-25
+- [x] `INT-1071` Integration: The Bureaucracy of Truth -> Colony State — completed 2026-10-31

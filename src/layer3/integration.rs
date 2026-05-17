@@ -179,3 +179,22 @@ pub fn ip_piracy_diplomacy_bridge(
         }
     }
 }
+
+use crate::layer1::resources::ColonyResources;
+use crate::layer1::social::unrest::Unrest;
+use crate::layer3::bureaucracy_of_truth::ColonyState;
+
+/// Bridges Layer 1 `ColonyResources` and `Unrest` to Layer 3 `ColonyState`.
+pub fn bureaucracy_of_truth_integration_system(
+    resources: Option<Res<ColonyResources>>,
+    unrest: Option<Res<Unrest>>,
+    mut colonies: Query<&mut ColonyState>,
+) {
+    if let (Some(res), Some(unr)) = (resources, unrest) {
+        // Find the main colony entity (assuming there's one for now)
+        for mut state in colonies.iter_mut() {
+            state.food_reserves = res.food as u32;
+            state.unrest = unr.level * 100.0; // Assuming unrest level is 0.0-1.0
+        }
+    }
+}

@@ -1090,3 +1090,10 @@
 - **Systems connected:** `trigger_emotional_contagion_system`
 - **Glue added:** Added `trigger_emotional_contagion_system` in `src/layer1/social/emotional_contagion.rs` to add/remove the `EmotionalContagion` component based on extreme `Morale`.
 - **Tests:** `tests/integration/emotional_contagion_trigger.rs`
+
+### INT-1071: Bureaucracy of Truth -> Colony State
+- **Date:** 2026-10-31
+- **Systems connected:** `ColonyResources`, `Unrest` (Layer 1) -> `ColonyState` (Layer 3)
+- **Glue added:** `bureaucracy_of_truth_integration_system` in `src/layer3/integration.rs` synchronizes Layer 1 state into Layer 3 state for the `generate_colony_reports_system`.
+- **Schedule:** Chained in Update, syncs before reporting
+- **Tests:** `tests/integration/bureaucracy_of_truth_integration.rs`
