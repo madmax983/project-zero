@@ -250,6 +250,12 @@ pub fn decay_needs_system(
 
             let mut rest_decay = REST_DECAY_PER_TICK;
 
+            if traits.is_some_and(|t| {
+                t.has(crate::layer1::traits::Trait::InsomniaDrive)
+            }) {
+                rest_decay = 0.0;
+            }
+
             if let Some(inside) = inside_chamber {
                 if let Ok(chamber) = chambers.get(inside.chamber_entity) {
                     if chamber.active {
@@ -584,5 +590,37 @@ mod tests {
         assert_eq!(memory.memory_type, MemoryType::StarvationTrauma);
         assert_eq!(memory.added_at, 42);
         assert!((memory.intensity - 1.0).abs() < f32::EPSILON);
+    }
+
+    #[test]
+    fn test_insomnia_drive_eliminates_rest_decay() {
+        use crate::layer1::traits::{Trait, Traits};
+
+        let mut world = setup();
+
+        let mut traits = Traits::default();
+        traits.add(Trait::InsomniaDrive);
+
+        let pop = world
+            .spawn((
+                Pop,
+                Needs {
+                    hunger: 1.0,
+                    rest: 1.0,
+                    leisure: 1.0,
+                    hygiene: 1.0,
+                },
+                traits,
+            ))
+            .id();
+
+        world.run_system_once(decay_needs_system).unwrap();
+
+        let needs = world.get::<Needs>(pop).unwrap();
+
+        // Hunger should decay normally
+        assert!(needs.hunger < 1.0);
+        // Rest should not decay at all due to Insomnia Drive
+        assert_eq!(needs.rest, 1.0);
     }
 }
