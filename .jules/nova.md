@@ -42,3 +42,8 @@
 **Concept:** Added `cassandra_warning` module connecting `ActionType::Daze` mental break to `WeatherState` and `StressTracker`. Dazing pops will predict impending storms, causing stress damage to nearby pops via a panic aura.
 **Fate:** Merged
 **Lesson:** Piggybacking new narrative features onto existing core states (like `Daze` and `MagneticStorm`) via `#[cfg(feature = "nova")]` creates rich emergent interactions without polluting core enums or requiring massive architectural refactors.
+
+## [Weather Madness]
+**Concept:** Added a `weather_madness_system` that rapidly increases the stress of `Pop`s exposed to extreme weather (like `MagneticStorm` or `ThermalInversion`) without a roof, potentially triggering immediate mental breakdowns.
+**Fate:** Merged
+**Lesson:** Connecting the macro weather system with the micro psychological state forces players to prioritize robust housing and indoor logistics during storm seasons, making weather a psychological threat rather than just a physical or economic one.
