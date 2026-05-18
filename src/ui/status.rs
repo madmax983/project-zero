@@ -441,10 +441,13 @@ pub fn get_status_string(
         risk_pct,
     );
 
-    line.spans
-        .iter()
-        .map(|s| s.content.as_ref())
-        .collect::<String>()
+    // ⚡ Bolt Optimization: Replace intermediate .collect::<String>() chain with pre-allocated String loop
+    // to reduce memory allocations for the status bar that is rendered every frame.
+    let mut text = String::with_capacity(256);
+    for s in &line.spans {
+        text.push_str(s.content.as_ref());
+    }
+    text
 }
 
 /// Truncates a status `Line` to fit within `max_width` columns.
@@ -454,7 +457,7 @@ pub fn get_status_string(
 fn truncate_line(line: Line<'_>, max_width: u16) -> Line<'_> {
     let max = max_width as usize;
     let mut total = 0usize;
-    let mut result = Vec::new();
+    let mut result = Vec::with_capacity(line.spans.len());
     for span in line.spans {
         let len = span.content.len();
         if total + len <= max {
