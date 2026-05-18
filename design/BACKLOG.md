@@ -43,7 +43,6 @@
 - [ ] `479` The Endless Draft — `specs/479-the-endless-draft.md`
 
 - [ ] `493` The Living Archive — `specs/493-the-living-archive.md`
-- [ ] `494` Symbiotic Habitation — `specs/494-symbiotic-habitation.md`
 - [ ] `495` Temporal Echoes — `specs/495-temporal-echoes.md`
 - [ ] `496` The Bureau of Regrets — `specs/496-the-bureau-of-regrets.md`
 

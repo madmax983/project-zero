@@ -236,4 +236,12 @@ pub fn register(schedule: &mut Schedule) {
         )
             .in_set(Layer1SystemSet::Environment),
     );
+
+    schedule.add_systems(
+        (
+            crate::layer1::tech::symbiotic_habitation::grow_hab_seed_system,
+            crate::layer1::tech::symbiotic_habitation::process_symbiotic_pain_system,
+        )
+            .in_set(Layer1SystemSet::Environment),
+    );
 }

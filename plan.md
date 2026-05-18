@@ -1,8 +1,16 @@
-1. Use `run_in_bash_session` with a Python script to patch `src/layer1/mind/utility_types.rs` by injecting `test_assignment_type_variants` inside `mod tests`.
-   - The test will explicitly check that `AssignmentType::FarmWorker`, `AssignmentType::TavernVisitor`, and `AssignmentType::HousingResident` do not equal each other.
-2. Use `tail -n 20 src/layer1/mind/utility_types.rs` to verify the new test was correctly injected into the test module.
-3. Run `cargo test test_assignment_type_variants` to verify the new test passes and proves that the enum variants are distinct correctly.
-4. Complete pre-commit steps
-   - Complete pre-commit steps to ensure proper testing, verification, review, and reflection are done.
-5. Submit the change.
-   - Run `cargo fmt`, `cargo clippy`, and `cargo test` and submit the PR with a descriptive title format `🛡️ Sentry: [test coverage improvement]`.
+1. **Refactor `kinetic_strike_system` for Performance**
+   - In `src/layer1/geology/subsurface.rs`, the `kinetic_strike_system` currently iterates over all `subsurface_query` elements for every kinetic strike event and also within a nested loop when applying damage in a radius.
+   - Refactor it to early-exit if there are no `KineticStrikeEvent`s (`if events.is_empty() { return; }`).
+   - Before processing the events, build a local `HashMap<(i32, i32), (Entity, SubsurfaceResourceKind)>` mapping grid coordinates to the entity and resource kind.
+   - Replace the iterations over `subsurface_query` with O(1) lookups in the hash map.
+   - This directly addresses the REFACTOR phase requirement: "Performance: Grid lookup using iteration is slow. We should use a spatial hash map... for fast tile lookup."
+
+2. **Run pre-commit instructions**
+   - Complete pre-commit steps to make sure proper testing, verifications, reviews, and reflections are done.
+
+3. **Verify tests and coverage**
+   - Run `cargo test --lib -- kinetic_strike_system` or similar test.
+   - Run `cargo llvm-cov` to verify that `src/layer1/geology/subsurface.rs` has coverage >= 85% and no regressions occurred.
+
+4. **Submit changes**
+   - Use the `submit` tool to finalize the code with a descriptive commit message.

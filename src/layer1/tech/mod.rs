@@ -26,9 +26,10 @@
 //! ### 4. Memetic Hazards
 //! *   Some technologies (like `Tech::VoidWhispers`) are **Hazardous**.
 //! *   Researching them triggers an immediate infection event (see [`crate::layer1::memetics`]).
-//! *   This represents the danger of uncovering "Forbidden Knowledge".
+// *   This represents the danger of uncovering "Forbidden Knowledge".
 
 #![allow(clippy::collapsible_if)]
+pub mod symbiotic_habitation;
 use crate::layer1::actions::{AssignedTo, AssignmentType};
 use crate::layer1::factions::{FactionMember, FactionState, Factions};
 use crate::layer1::map::{CameraTarget, GridPosition, ScreenShake};
