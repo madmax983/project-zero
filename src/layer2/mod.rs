@@ -70,3 +70,4 @@ pub mod culture;
 pub mod diaspora;
 pub mod sensors;
 pub use diaspora::*;
+pub mod feral_logistics;
