@@ -19,3 +19,7 @@
 ## Pre-allocated vector capacity in `process_cargo_transfers_system`
 **Learning:** Cargo contents drained into a dynamic vector in `src/layer1/core/integration.rs` triggered intermediate reallocations.
 **Action:** Use `Vec::with_capacity(len)` when iterating over a known length collection via `.drain(..)`.
+
+## [Performance Optimization: Pre-allocated String concatenation in UI render loop]
+**Learning:** `get_status_string` was using `.collect::<String>()` from a map iterator to concatenate strings every frame during the UI render loop. This caused unnecessary memory reallocations since it did not pre-allocate enough capacity.
+**Action:** Replaced the intermediate map-collect chain with a single loop that pushes strings to a `String` pre-allocated with `String::with_capacity(256)`. Also converted `.collect::<Vec<_>>()` when truncating lines to `Vec::with_capacity(size)` + manual loop to eliminate intermediate allocations in `status.rs`.
