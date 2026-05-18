@@ -11,3 +11,11 @@
 ## [UI Shell Optimization]
 **Learning:** Avoid intermediate `.collect::<Vec<_>>()` when an iterator could be collected directly into a pre-allocated vector to prevent reallocation and copying, particularly in frequently executing queries or UI update loops.
 **Action:** Replace `iter().filter(...).collect::<Vec<_>>()` chains where possible with `Vec::with_capacity(n)` and `.extend()` or directly applying `.collect()` if the target capacity can be accurately provided or bounds checked via `.size_hint()`.
+
+## Removed `.clone()` of `work_designations` in `evaluate_work_and_taming`
+**Learning:** Found unnecessary `.clone()` cloning large `work_designations` list in utility AI hot loop (`src/layer1/mind/utility_ai.rs`). Replaced with a direct reference slice in `evaluate_simple_action`, avoiding massive heap allocations for every pop eval cycle.
+**Action:** Always check `Vec` clones that are passed to functions requiring slice `&[T]` or `&Vec<T>`.
+
+## Pre-allocated vector capacity in `process_cargo_transfers_system`
+**Learning:** Cargo contents drained into a dynamic vector in `src/layer1/core/integration.rs` triggered intermediate reallocations.
+**Action:** Use `Vec::with_capacity(len)` when iterating over a known length collection via `.drain(..)`.
