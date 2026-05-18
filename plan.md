@@ -1,20 +1,27 @@
-1. **Create Specification for a New Feature**
-   - I will use `run_in_bash_session` to create a new specification file `specs/1261-the-sleepless-caste.md` using a `cat << 'EOF' > specs/1261-the-sleepless-caste.md` command.
-   - The specification will follow the strict TDD RED-GREEN-REFACTOR format described in the ARCHITECT Agent Prompt.
-   - It will include an Overview, Dependencies, RED Phase (tests first, showing the expected `InsomniaDrive` trait, elimination of `Rest` need, increased productivity, and increased stress), GREEN Phase (minimal implementation), REFACTOR Phase, Acceptance Criteria, Technical Guidance, and Questions sections.
-
-2. **Run Tests to Ensure No Regressions**
-   - Run the full test suite using `cargo test` to ensure the project compiles and the test suite passes, even though only markdown files are modified.
-
-3. **Complete Pre-Commit Steps**
+1. **Claim Task**: Update tracking files.
+   - Run `sed -i '/692.*Procedural Dialects/d' design/BACKLOG.md`
+   - Run `echo "- [ ] \`692\` Procedural Dialects — \`specs/692-procedural-dialects.md\` — claimed 2024-05-25" >> design/IN_PROGRESS.md`
+2. **Verify Claim**: Read tracking files.
+   - Run `cat design/BACKLOG.md | grep 692` to verify it was removed.
+   - Run `cat design/IN_PROGRESS.md | grep 692` to verify it was added.
+3. **RED Phase**: Write failing tests.
+   - Run `cat << 'EOF' > src/layer1/culture/procedural_dialects.rs` to write the failing tests.
+   - Run `echo "pub mod procedural_dialects;" >> src/layer1/culture/mod.rs` to export the module.
+4. **Verify RED Phase**: Run tests to confirm they fail.
+   - Run `cargo test procedural_dialects` to ensure the tests compile and fail.
+5. **GREEN Phase**: Write minimal implementation.
+   - Run `cat << 'EOF' > src/layer1/culture/procedural_dialects.rs` to overwrite with the full implementation and tests.
+6. **Verify GREEN Phase**: Run tests to confirm they pass.
+   - Run `cargo test procedural_dialects` to ensure the tests pass.
+7. **REFACTOR Phase**: Check code quality and coverage.
+   - Run `cargo clippy --all-targets --all-features -- -D warnings`
+   - Run `cargo llvm-cov --lib --bins`
+8. **Update Tracking Files**: Mark as completed.
+   - Run `sed -i '/692.*Procedural Dialects/d' design/IN_PROGRESS.md`
+   - Run `echo "- [x] \`692\` Procedural Dialects — \`specs/692-procedural-dialects.md\` — completed 2024-05-25" >> design/COMPLETED.md`
+9. **Verify Tracking Updates**: Read tracking files.
+   - Run `cat design/IN_PROGRESS.md | grep 692` and `cat design/COMPLETED.md | grep 692`.
+10. **Pre-Commit**:
    - Complete pre-commit steps to ensure proper testing, verification, review, and reflection are done.
-
-4. **Update Backlog**
-   - Use `run_in_bash_session` to append the new specification to the backlog and commit the changes following the strict conflict prevention sequence:
-     - `git pull origin trunk`
-     - `echo "- [ ] \`1261\` The Sleepless Caste — \`specs/1261-the-sleepless-caste.md\`" >> design/BACKLOG.md`
-     - `git add specs/1261-the-sleepless-caste.md design/BACKLOG.md`
-     - `git commit -m "spec(layer1): add 1261-the-sleepless-caste to backlog"`
-     - `git pull --rebase origin trunk`
-     - `git push`
-     *(Note: due to sandbox limitations, the git commands might fail or be bypassed, but I will simulate the process as closely as possible or rely on the `submit` tool).*
+11. **Submit**: Run final tests and submit.
+   - Run `cargo test` and submit.
