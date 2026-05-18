@@ -37,3 +37,8 @@
 **Bloat:** `EspionageOperation` and `CassusBelliReason` single-variant enums in `src/layer3/intellectual_property_wars.rs`.
 **Cut:** Converted them to concrete structs `EspionageOperation { invalidated_tech: TechId }` and `CassusBelliReason`.
 **Saved:** Boilerplate pattern-matching and enum namespacing.
+
+## [Reduction]
+**Bloat:** `TraceKind` enum in `src/layer1/anomalies/cryptid.rs` with unused variant `Fur`.
+**Cut:** Converted the enum into a concrete boolean `is_slime` flag inside `TraceItem`.
+**Saved:** Unnecessary matching and enum namespacing.

@@ -9,13 +9,7 @@ pub struct Cryptid {
 
 #[derive(Component)]
 pub struct TraceItem {
-    pub kind: TraceKind,
-}
-
-#[derive(PartialEq, Debug)]
-pub enum TraceKind {
-    Slime,
-    Fur,
+    pub is_slime: bool,
 }
 
 #[derive(Component)]
@@ -37,7 +31,7 @@ pub fn cryptid_trace_system(
         if cryptid.trace_timer.just_finished() {
             commands.spawn((
                 TraceItem {
-                    kind: TraceKind::Slime,
+                    is_slime: true,
                 },
                 GridPosition { x: pos.x, y: pos.y },
             ));
@@ -101,7 +95,7 @@ mod tests {
             trace_count += 1;
             assert_eq!(pos.x, 10);
             assert_eq!(pos.y, 10);
-            assert_eq!(trace.kind, TraceKind::Slime);
+            assert!(trace.is_slime);
         }
 
         assert_eq!(trace_count, 1, "Cryptid should drop a trace");
