@@ -585,3 +585,4 @@
 - [x] `888` The Symbiotic Parasite — `specs/888-the-symbiotic-parasite.md` — completed 2026-03-24
 - [x] `1064` Digital Detritus — `specs/1064-digital-detritus.md` — completed 2026-05-31
 - [x] `INT-549` Integration: Sleep Debt -> Repo Man Spawning — completed 2026-05-18
+- [x] `INT-585` Integration: Cartographic Delusion -> Chronicle — completed 2026-10-31

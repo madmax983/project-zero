@@ -202,6 +202,9 @@ mod splicers_dilemma_integration;
 mod system_quarantine_integration;
 #[path = "integration/waste_scent.rs"]
 mod waste_scent;
+#[path = "integration/cartographic_delusion_bridge.rs"]
+mod cartographic_delusion_bridge;
+
 pub mod integration {
     #[path = "conveyor_pathfinding_bridge.rs"]
     pub mod conveyor_pathfinding_bridge;
