@@ -20165,3 +20165,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you build in cheap, easily excavated resonant caverns and risk extreme informational distortion, or spend heavily to acoustically dampen the entire colony?
 
 ---
+## The Monumental Shadow
+
+**Layer:** 1
+
+**Fantasy:** Grandiose vanity projects literally casting a dark shadow over the working class.
+
+**Mechanic:** Megastructures and massive monuments physically block sunlight on the grid. Tiles in this permanent shadow suffer from lower temperature, zero solar power efficiency, and pops living there develop severe mood debuffs due to lack of natural light. The monument itself, however, provides a massive global prestige and loyalty boost.
+
+**Emergence:** To appease a demanding faction, the Governor builds a colossal statue of the Founder in the colony center. The statue's immense shadow falls directly over the main agricultural district, freezing the crops. The colony plunges into starvation, but the starving populace is too loyal (thanks to the statue) to tear it down.
+
+**Tension:** Do you place your vanity projects far outside the colony where they are safe but culturally ineffective, or right in the center where they inspire the masses but physically blight the surrounding neighborhoods?
+
+---
+
+## Quarantine Creep
+
+**Layer:** Cross-layer
+
+**Fantasy:** The slow, terrifying normalization of emergency powers until the emergency becomes the culture.
+
+**Mechanic:** When a disease or hostile threat is detected, players can designate a "Quarantine Zone" which locks doors and suspends normal Pop movement. However, Pops inside the zone slowly adapt to the isolation. If the quarantine is maintained for too long, they form a sovereign micro-culture and will actively resist having the quarantine lifted, viewing the outside colony as the true threat.
+
+**Emergence:** A minor fungal infection causes you to lock down Sector 4. You forget about it while distracted by a Layer 2 pirate raid. Ten years later, Sector 4 has evolved into an insular, xenophobic micro-state within your own colony that defends their locked bulkheads with improvised weapons against your medical teams.
+
+**Tension:** Do you lift quarantines the absolute second it's medically viable (risking a second outbreak), or maintain them for guaranteed safety and accidentally breed a secessionist movement in your own basement?
+
+---
+
+## Scrap-Code Superstitions
+
+**Layer:** 1
+
+**Fantasy:** The colony's maintenance workers developing a religious reverence for legacy code and failing hardware.
+
+**Mechanic:** When automated machinery (auto-miners, doors, fabricators) experiences frequent minor failures but is continually repaired by Pops instead of replaced, those Pops begin to attach "superstitious routines" to the repairs (e.g., waiting exactly 3 seconds before hitting the button). These routines take up extra work time. Eventually, the superstition spreads, and Pops will refuse to use the machine unless the specific ritual is performed.
+
+**Emergence:** A vital airlock has a faulty sensor. Instead of replacing it, the engineering team just kicks it twice to make it work. A generation later, kicking the airlock twice is considered a sacred rite. When you finally install a brand new, flawless airlock, the Pops still kick it twice, breaking the new sensor and instantly reverting it to a broken state.
+
+**Tension:** Do you spend massive resources constantly replacing slightly faulty equipment with brand new parts, or allow cheap, jury-rigged repairs that slowly culturally cement into highly inefficient, mandatory work rituals?
+
+---
