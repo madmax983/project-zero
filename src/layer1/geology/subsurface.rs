@@ -1,5 +1,5 @@
 use crate::layer1::building::{BuildingMap, OccupiedTiles};
-use crate::layer1::chronicle::{AddChronicleEvent, EventImportance};
+use crate::layer1::core::chronicle::{AddChronicleEvent, EventImportance};
 use crate::layer1::map::GridPosition;
 use crate::layer1::nature::terrain::{TerrainGrid, TerrainType};
 use bevy_ecs::prelude::*;
