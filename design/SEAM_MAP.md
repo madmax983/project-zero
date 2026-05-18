@@ -1103,3 +1103,9 @@
 - **Systems connected:** `process_crustal_tides` -> `crustal_tide_chronicle_bridge` -> `AddChronicleEvent`
 - **Glue added:** Added `crustal_tide_chronicle_bridge` in `src/layer1/core/integration.rs` to monitor `TidalForce` and emit `AddChronicleEvent` upon transitions to high or low tide thresholds.
 - **Tests:** `tests/integration/crustal_tides_bridge.rs`
+
+### INT-549: Sleep Debt -> Repo Man Spawning
+- **Date:** 2026-05-18
+- **Systems connected:** `check_critical_sleep_debt_system` -> `repo_man_arrival_bridge` -> `process_repo_men_action_system`
+- **Glue added:** Added `repo_man_arrival_bridge` in `src/layer1/core/integration.rs` to read `RepoManArrivalEvent`, spawn a `RepoMan` entity, and log it to the Chronicle.
+- **Tests:** `tests/integration/sleep_debt_repo_bridge.rs`

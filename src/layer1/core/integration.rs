@@ -2242,3 +2242,25 @@ pub fn crustal_tide_chronicle_bridge(
 
     *last_tide = tidal_force.current;
 }
+
+/// INT-549: Bridges RepoManArrivalEvent to spawning a RepoMan and AddChronicleEvent
+pub fn repo_man_arrival_bridge(
+    mut commands: bevy_ecs::system::Commands,
+    mut events: bevy_ecs::event::EventReader<crate::layer1::mind::sleep_debt::RepoManArrivalEvent>,
+    mut chronicle_events: bevy_ecs::event::EventWriter<
+        crate::layer1::core::chronicle::AddChronicleEvent,
+    >,
+) {
+    for event in events.read() {
+        // Spawn a RepoMan targeting the pop
+        commands.spawn(crate::layer1::mind::sleep_debt::RepoMan {
+            target: event.target_pop,
+        });
+
+        // Log it to the Chronicle
+        chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
+            importance: crate::layer1::core::chronicle::EventImportance::Major,
+            text: "Corporate Repo Men have arrived to collect unpaid sleep debt!".to_string(),
+        });
+    }
+}

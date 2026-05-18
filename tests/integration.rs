@@ -435,3 +435,6 @@ mod hedonic_treadmill_bridge;
 mod holographic_facades;
 #[path = "integration/surgical_addiction_bridge.rs"]
 mod surgical_addiction_bridge;
+
+#[path = "integration/sleep_debt_repo_bridge.rs"]
+mod sleep_debt_repo_bridge;
