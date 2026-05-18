@@ -64,3 +64,4 @@ pub mod propaganda_simulacrum_bridge;
 pub mod cassandra_protocol_bridge;
 pub mod orbital_drydocks;
 pub mod bureaucracy_of_truth_integration;
+pub mod digital_detritus_chronicle_bridge;
