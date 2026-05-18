@@ -20123,3 +20123,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Fast, established travel routes (high psychological toll) vs. slow, newly charted paths (safe but inefficient).
 
 ---
+
+## The Empathic Blackout
+
+**Layer:** 1 / 2
+
+**Fantasy:** Living in a society that has suddenly forgotten how to read faces, turning every social interaction into a high-stakes gamble.
+
+**Mechanic:** A rare psychic storm or viral meme can temporarily blind Pops to the "Mood" and "Relationship" markers of others. Pops can no longer accurately predict how others will react to conversation or actions, causing all social interactions to have highly randomized outcomes.
+
+**Emergence:** Your most unified, peaceful sector suddenly descends into paranoia. Long-time spouses accidentally insult each other into divorces, and the Governor unknowingly hires a known traitor as their bodyguard because they couldn't read the hostile intent.
+
+**Tension:** Do you enforce strict isolation protocols until the blackout passes (tanking the economy), or let people keep mingling and risk the entire social fabric tearing itself apart?
+
+---
+
+## Generational Guilt
+
+**Layer:** Cross-layer
+
+**Fantasy:** Sins of the father are truly visited upon the son, and the bureaucracy never forgets.
+
+**Mechanic:** When a Pop commits a severe crime (mutiny, sabotage) or a colony makes a catastrophic diplomatic blunder, a "Guilt Tag" is generated. This tag is inherited by their descendants or successor colonies, heavily weighting social interactions toward mistrust and blocking them from certain high-security jobs.
+
+**Emergence:** A vital planetary shield engineer dies. The only qualified replacement in the sector is barred from the control room because their great-grandfather was part of an orbital strike mutiny a century ago. The shield fails.
+
+**Tension:** Do you expend massive administrative effort to manually "pardon" these lineages, or accept a permanent underclass that breeds long-term revolutionary intent?
+
+---
+
+## Subterranean Echo Chamber
+
+**Layer:** 1
+
+**Fantasy:** The walls have ears, and they are terrible at keeping secrets.
+
+**Mechanic:** Deep-crust colonies built in certain resonant geological formations experience "Acoustic Reflection." Gossip and rumors generated in these areas have a chance to not only spread faster but physically distort. A "minor complaint" rumor bouncing through an echo chamber can emerge at the surface as a "full planetary rebellion" rumor.
+
+**Emergence:** Two miners deep in the crust complain about the food quality. Thanks to the echo chamber, by the time the rumor reaches the Governor's suite on the surface, it has morphed into news that the miners are cannibalizing each other. The Governor panics and sends the military down to crush a rebellion that doesn't exist.
+
+**Tension:** Do you build in cheap, easily excavated resonant caverns and risk extreme informational distortion, or spend heavily to acoustically dampen the entire colony?
+
+---
