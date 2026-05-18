@@ -163,3 +163,6 @@ pub fn handle_obsessed_jobs(
 
 ## Questions
 - Contradiction: `AssignmentType` does not have `Scientist`, `Miner`, or `Engineer` variants.
+
+## Questions
+- Architectural Contradictions: `AssignmentType` does not have `Scientist`, `Miner`, or `Engineer` variants. It is also not an inner member of `Job` enum as the spec assumed, since `Job` is a component with `AssignmentType` being a field.
