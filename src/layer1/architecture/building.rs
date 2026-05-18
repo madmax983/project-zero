@@ -242,6 +242,8 @@ pub enum BuildingType {
     Statue,
     /// Medical facility for healing.
     Hospital,
+    /// A corporate sponsored billboard
+    Billboard,
     /// Waste storage facility.
     Landfill,
     /// A place to bury corpses.
@@ -522,6 +524,7 @@ impl BuildingType {
             Self::Nanoforge => false,
             Self::School | Self::MediaStation => false,
             Self::Mainframe | Self::CommsRelay => false,
+            Self::Billboard => false,
         }
     }
 
@@ -682,6 +685,7 @@ impl BuildingType {
             Self::Spaceport => "Spaceport",
             Self::Mainframe => "Mainframe",
             Self::CommsRelay => "Comms Relay",
+            Self::Billboard => "Billboard",
         }
     }
 
@@ -745,6 +749,7 @@ impl BuildingType {
             Self::MediaStation => 'M',
             Self::Mainframe => 'M',
             Self::CommsRelay => 'C',
+            Self::Billboard => 'B',
         }
     }
 
@@ -861,6 +866,7 @@ impl BuildingType {
             Self::MediaStation => ColonyResources::zeroed().with_metal(25.0),
             Self::Mainframe => ColonyResources::zeroed().with_metal(50.0),
             Self::CommsRelay => ColonyResources::zeroed().with_metal(30.0),
+            Self::Billboard => ColonyResources::zeroed().with_metal(50.0),
         }
     }
 
@@ -1138,6 +1144,7 @@ fn configure_building_components(entity: &mut EntityWorldMut, building_type: Bui
         BuildingType::Observatory
         | BuildingType::LifeSupport
         | BuildingType::TrashCannon
+        | BuildingType::Billboard
         | BuildingType::ServerBank
         | BuildingType::CommandCenter
         | BuildingType::AICore
@@ -2263,7 +2270,8 @@ mod tests {
         assert_eq!(BuildingType::Tailor.next(), BuildingType::FlowerBed);
         assert_eq!(BuildingType::FlowerBed.next(), BuildingType::Statue);
         assert_eq!(BuildingType::Statue.next(), BuildingType::Hospital);
-        assert_eq!(BuildingType::Hospital.next(), BuildingType::Landfill);
+        assert_eq!(BuildingType::Hospital.next(), BuildingType::Billboard);
+        assert_eq!(BuildingType::Billboard.next(), BuildingType::Landfill);
         assert_eq!(BuildingType::Landfill.next(), BuildingType::Grave);
         assert_eq!(BuildingType::Grave.next(), BuildingType::TradeDepot);
         assert_eq!(BuildingType::TradeDepot.next(), BuildingType::Generator);
@@ -2439,6 +2447,9 @@ mod tests {
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::Hospital);
+
+        mode.selected = mode.selected.next();
+        assert_eq!(mode.selected, BuildingType::Billboard);
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::Landfill);
