@@ -54,6 +54,7 @@ fn print_dashboard_table(title: &str, mut table: comfy_table::Table) {
     use comfy_table::presets::UTF8_FULL;
     use crossterm::style::Stylize;
 
+    table.set_width(120);
     table
         .load_preset(UTF8_FULL)
         .apply_modifier(UTF8_ROUND_CORNERS);
@@ -110,6 +111,7 @@ fn print_dashboard_panel(
 ) {
     use comfy_table::{Cell, ContentArrangement, Table};
     let mut table = Table::new();
+    table.set_width(120);
     let mut cell = Cell::new(format!("  {}  ", content.trim()));
 
     if let Some(c) = color {
@@ -1963,7 +1965,6 @@ fn print_stories(world: &mut World) {
     }
 
     let mut table = Table::new();
-    table.set_width(120);
     table
         .load_preset(UTF8_FULL)
         .set_content_arrangement(ContentArrangement::Dynamic)
