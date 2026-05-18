@@ -43,6 +43,7 @@ impl NarrativeError {
         };
 
         let mut table = Table::new();
+        table.set_width(120);
         table
             .load_preset(UTF8_FULL)
             .apply_modifier(comfy_table::modifiers::UTF8_ROUND_CORNERS)

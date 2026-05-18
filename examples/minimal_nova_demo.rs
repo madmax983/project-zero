@@ -75,6 +75,7 @@ fn main() {
     let tradition = world.resource::<OralTradition>();
 
     let mut table = Table::new();
+    table.set_width(120);
     table.load_preset(UTF8_FULL).set_header(vec![
         "Genre",
         "Historical Date",
