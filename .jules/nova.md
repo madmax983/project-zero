@@ -47,3 +47,8 @@
 **Concept:** Added a `weather_madness_system` that rapidly increases the stress of `Pop`s exposed to extreme weather (like `MagneticStorm` or `ThermalInversion`) without a roof, potentially triggering immediate mental breakdowns.
 **Fate:** Merged
 **Lesson:** Connecting the macro weather system with the micro psychological state forces players to prioritize robust housing and indoor logistics during storm seasons, making weather a psychological threat rather than just a physical or economic one.
+
+## [Hoarder's Sleepwalking]
+**Concept:** Added `hoarder_sleepwalking` module. While a Pop is `Sleepwalking` (mental break), if they have a `PrivateStash`, they passively siphon a tiny amount of food from the global `ColonyResources` into their stash without realizing it.
+**Fate:** Merged
+**Lesson:** Connects the psychology system (Sleepwalking mental break) with the micro-economy (PrivateStash). Sleepwalking isn't just about wandering into hazards anymore; it actively drains colony resources into hidden caches.

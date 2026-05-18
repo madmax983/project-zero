@@ -681,6 +681,8 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
     crate::experimental::cassandra_warning::register(schedule);
     #[cfg(feature = "nova")]
     crate::experimental::weather_madness::register(schedule);
+    #[cfg(feature = "nova")]
+    crate::experimental::hoarder_sleepwalking::register(schedule);
 
     schedule.add_systems((
         crate::layer3::map::map_data_rot_system,
