@@ -319,90 +319,19 @@ fn handle_command(world: &mut World, input: &str) -> bool {
         "help" | "h" | "?" => print_help(),
         "status" | "s" => print_status(world),
         "pops" | "p" => print_pops(world),
-        "map" | "m" => {
-            let x = parts.get(1).and_then(|s| s.parse().ok()).unwrap_or(40);
-            let y = parts.get(2).and_then(|s| s.parse().ok()).unwrap_or(25);
-            print_map(world, x, y);
-        }
-        "tick" | "t" => {
-            let n: u64 = parts.get(1).and_then(|s| s.parse().ok()).unwrap_or(1);
-            // Cap tick count to prevent DoS (accidental or malicious infinite loops)
-            let safe_n = n.min(1000);
-            if n > 1000 {
-                println!("⚠️ Warning: Capping ticks to 1000 to prevent freeze.");
-            }
-            run_ticks(world, safe_n);
-        }
+        "map" | "m" => handle_map_command(world, &parts),
+        "tick" | "t" => handle_tick_command(world, &parts),
         "build" | "b" => handle_build_command(world, &parts),
         "destroy" => handle_designate_command(world, &parts, DesignationType::Destroy),
         "mine" => handle_designate_command(world, &parts, DesignationType::Mine),
         "chop" => handle_designate_command(world, &parts, DesignationType::Chop),
         "designations" | "d" => print_designations(world),
-        "find" => {
-            if parts.len() < 2 {
-                print_dashboard_panel(
-                    "ERROR",
-                    "Usage: find <rock|tree|grass> [count]",
-                    Some(comfy_table::Color::Red),
-                    Some(comfy_table::Attribute::Bold),
-                );
-            } else {
-                let count: usize = parts.get(2).and_then(|s| s.parse().ok()).unwrap_or(10);
-                find_terrain(world, parts[1], count);
-            }
-        }
-        "scan" => {
-            let x = parts.get(1).and_then(|s| s.parse().ok()).unwrap_or(40);
-            let y = parts.get(2).and_then(|s| s.parse().ok()).unwrap_or(25);
-            let raw_radius: i32 = parts.get(3).and_then(|s| s.parse().ok()).unwrap_or(10);
-            match ScanRadius::new(raw_radius) {
-                Ok(radius) => scan_terrain(world, x, y, radius),
-                Err(e) => {
-                    print_dashboard_panel(
-                        "ERROR",
-                        &e,
-                        Some(comfy_table::Color::Red),
-                        Some(comfy_table::Attribute::Bold),
-                    );
-                }
-            }
-        }
-        "terrain" => {
-            if parts.len() < 3 {
-                print_dashboard_panel(
-                    "ERROR",
-                    "Usage: terrain <x> <y>",
-                    Some(comfy_table::Color::Red),
-                    Some(comfy_table::Attribute::Bold),
-                );
-            } else {
-                let x: Option<i32> = parts[1].parse().ok();
-                let y: Option<i32> = parts[2].parse().ok();
-                match (x, y) {
-                    (Some(x), Some(y)) => get_tile_info(world, x, y),
-                    _ => print_dashboard_panel(
-                        "ERROR",
-                        "Invalid coordinates",
-                        Some(comfy_table::Color::Red),
-                        Some(comfy_table::Attribute::Bold),
-                    ),
-                }
-            }
-        }
+        "find" => handle_find_command(world, &parts),
+        "scan" => handle_scan_command(world, &parts),
+        "terrain" => handle_terrain_command(world, &parts),
         "buildings" => print_buildings(world),
         "great_works" | "gw" => print_great_works(world),
-        "bio" => {
-            let id: Option<u32> = parts.get(1).and_then(|s| s.parse().ok());
-            match id {
-                Some(id) => print_bio(world, id),
-                None => print_dashboard_panel(
-                    "ERROR",
-                    "Usage: bio <id>",
-                    Some(comfy_table::Color::Red),
-                    Some(comfy_table::Attribute::Bold),
-                ),
-            }
-        }
+        "bio" => handle_bio_command(world, &parts),
         "chronicle" | "c" | "history" => print_chronicle(world),
         #[cfg(feature = "nova")]
         "stories" | "st" | "legends" => print_stories(world),
@@ -426,6 +355,89 @@ fn handle_command(world: &mut World, input: &str) -> bool {
         ),
     }
     true
+}
+
+fn handle_map_command(world: &mut World, parts: &[&str]) {
+    let x = parts.get(1).and_then(|s| s.parse().ok()).unwrap_or(40);
+    let y = parts.get(2).and_then(|s| s.parse().ok()).unwrap_or(25);
+    print_map(world, x, y);
+}
+
+fn handle_tick_command(world: &mut World, parts: &[&str]) {
+    let n: u64 = parts.get(1).and_then(|s| s.parse().ok()).unwrap_or(1);
+    // Cap tick count to prevent DoS (accidental or malicious infinite loops)
+    let safe_n = n.min(1000);
+    if n > 1000 {
+        println!("⚠️ Warning: Capping ticks to 1000 to prevent freeze.");
+    }
+    run_ticks(world, safe_n);
+}
+
+fn handle_find_command(world: &mut World, parts: &[&str]) {
+    if parts.len() < 2 {
+        print_dashboard_panel(
+            "ERROR",
+            "Usage: find <rock|tree|grass> [count]",
+            Some(comfy_table::Color::Red),
+            Some(comfy_table::Attribute::Bold),
+        );
+    } else {
+        let count: usize = parts.get(2).and_then(|s| s.parse().ok()).unwrap_or(10);
+        find_terrain(world, parts[1], count);
+    }
+}
+
+fn handle_scan_command(world: &mut World, parts: &[&str]) {
+    let x = parts.get(1).and_then(|s| s.parse().ok()).unwrap_or(40);
+    let y = parts.get(2).and_then(|s| s.parse().ok()).unwrap_or(25);
+    let raw_radius: i32 = parts.get(3).and_then(|s| s.parse().ok()).unwrap_or(10);
+    match ScanRadius::new(raw_radius) {
+        Ok(radius) => scan_terrain(world, x, y, radius),
+        Err(e) => {
+            print_dashboard_panel(
+                "ERROR",
+                &e,
+                Some(comfy_table::Color::Red),
+                Some(comfy_table::Attribute::Bold),
+            );
+        }
+    }
+}
+
+fn handle_terrain_command(world: &mut World, parts: &[&str]) {
+    if parts.len() < 3 {
+        print_dashboard_panel(
+            "ERROR",
+            "Usage: terrain <x> <y>",
+            Some(comfy_table::Color::Red),
+            Some(comfy_table::Attribute::Bold),
+        );
+    } else {
+        let x: Option<i32> = parts[1].parse().ok();
+        let y: Option<i32> = parts[2].parse().ok();
+        match (x, y) {
+            (Some(x), Some(y)) => get_tile_info(world, x, y),
+            _ => print_dashboard_panel(
+                "ERROR",
+                "Invalid coordinates",
+                Some(comfy_table::Color::Red),
+                Some(comfy_table::Attribute::Bold),
+            ),
+        }
+    }
+}
+
+fn handle_bio_command(world: &mut World, parts: &[&str]) {
+    let id: Option<u32> = parts.get(1).and_then(|s| s.parse().ok());
+    match id {
+        Some(id) => print_bio(world, id),
+        None => print_dashboard_panel(
+            "ERROR",
+            "Usage: bio <id>",
+            Some(comfy_table::Color::Red),
+            Some(comfy_table::Attribute::Bold),
+        ),
+    }
 }
 
 fn run_ticks(world: &mut World, n: u64) {
