@@ -970,7 +970,8 @@ pub fn fleet_unload_system(
         if colony_entities.contains(&orbit.parent) {
             // 3. Unload Cargo
             let mut unloaded_something = false;
-            let mut summary = Vec::new();
+            // ⚡ Bolt Optimization: Pre-allocate capacity to avoid intermediate reallocations
+            let mut summary = Vec::with_capacity(cargo.contents.len());
 
             for stack in cargo.contents.drain(..) {
                 if stack.amount > 0.0 {

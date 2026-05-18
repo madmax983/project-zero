@@ -1,7 +1,7 @@
 use crate::layer1::architecture::{Building, BuildingType};
 use crate::layer1::economy::resources::ColonyResources;
-use bevy_ecs::prelude::*;
 use crate::layer1::health::Health;
+use bevy_ecs::prelude::*;
 
 #[derive(Clone, Debug)]
 pub struct SponsorshipDeal {
@@ -145,17 +145,20 @@ mod tests {
         app.add_event::<RepairBuildingEvent>();
         app.add_systems(bevy_app::Update, handle_repair_requests);
 
-        let building_id = app.world_mut().spawn((
-            Health {
-                current: 10.0,
-                max: 100.0,
-                has_rust_lung: false,
-            },
-            Building {
-                building_type: BuildingType::Hospital,
-            },
-            DrmLocked,
-        )).id();
+        let building_id = app
+            .world_mut()
+            .spawn((
+                Health {
+                    current: 10.0,
+                    max: 100.0,
+                    has_rust_lung: false,
+                },
+                Building {
+                    building_type: BuildingType::Hospital,
+                },
+                DrmLocked,
+            ))
+            .id();
 
         // Attempt a repair action
         app.world_mut().send_event(RepairBuildingEvent {
