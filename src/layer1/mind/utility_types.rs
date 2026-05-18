@@ -737,6 +737,17 @@ mod tests {
             "Score should be 1.0 when weight is 0"
         );
     }
+
+    #[test]
+    fn test_assignment_type_variants() {
+        let farm = AssignmentType::FarmWorker;
+        let tavern = AssignmentType::TavernVisitor;
+        let housing = AssignmentType::HousingResident;
+
+        assert_ne!(farm, tavern);
+        assert_ne!(farm, housing);
+        assert_eq!(farm, AssignmentType::FarmWorker);
+    }
 }
 
 /// Types of assignments a pop can have.
