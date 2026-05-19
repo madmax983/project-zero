@@ -12,7 +12,13 @@ use scale::layer1::psychology::needs::Needs;
 fn test_symbiotic_parasite_bridge() {
     let mut app = App::new();
 
-    app.add_systems(bevy::app::Update, (apply_parasite_buffs_system, apply_parasite_health_drain_system));
+    app.add_systems(
+        bevy::app::Update,
+        (
+            apply_parasite_buffs_system,
+            apply_parasite_health_drain_system,
+        ),
+    );
 
     let infected_pop = app
         .world_mut()

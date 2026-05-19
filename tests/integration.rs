@@ -291,6 +291,8 @@ mod bio_acoustic_miasma_bridge;
 mod digital_immortality_chronicle;
 #[path = "integration/dynastic_succession_bridge.rs"]
 mod dynastic_succession_bridge;
+#[path = "integration/embezzlement_architecture_bridge.rs"]
+mod embezzlement_architecture_bridge;
 #[path = "integration/haunted_assembly_lines_tests.rs"]
 mod haunted_assembly_lines_tests;
 #[path = "integration/hyperlane_collapse_bridge.rs"]
@@ -303,8 +305,6 @@ mod orbital_commute_bridge;
 mod orphaned_edict_bridge;
 #[path = "integration/parasitic_architecture_bridge.rs"]
 mod parasitic_architecture_bridge;
-#[path = "integration/embezzlement_architecture_bridge.rs"]
-mod embezzlement_architecture_bridge;
 #[path = "integration/pheromone_gardening_bridge.rs"]
 mod pheromone_gardening_bridge;
 #[path = "integration/sleep_hallucination_bridge.rs"]
