@@ -23,7 +23,6 @@
 
 
 
-- [ ] `473` Bureaucratic Redlining — `specs/473-bureaucratic-redlining.md`
 
 
 

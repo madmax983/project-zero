@@ -207,6 +207,8 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::factions::update_faction_membership_system,
             crate::layer1::administration::bureaucratic_redlining::bureaucratic_redlining_system,
             crate::layer1::administration::bureaucratic_redlining::stateless_expansion_system,
+            crate::layer1::administration::bureaucratic_redlining::stateless_squatter_raid_system,
+            crate::layer1::administration::bureaucratic_redlining::apply_squatter_visuals_system,
             crate::layer1::factions::update_faction_satisfaction_system
                 .after(crate::layer1::factions::update_faction_membership_system),
             crate::layer1::factions::update_faction_demands_system
