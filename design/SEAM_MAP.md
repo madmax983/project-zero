@@ -1098,6 +1098,12 @@
 - **Schedule:** Chained in Update, syncs before reporting
 - **Tests:** `tests/integration/bureaucracy_of_truth_integration.rs`
 
+### INT-888: The Symbiotic Parasite -> Needs/Health
+- **Date:** 2026-03-24
+- **Systems connected:** `apply_parasite_buffs_system` -> `Needs` / `apply_parasite_health_drain_system` -> `Health`
+- **Glue added:** Registered systems from `src/layer1/biology/symbiotic_parasite.rs` to `src/layer1/systems/execution.rs` schedule.
+- **Tests:** `tests/integration/symbiotic_parasite_bridge.rs`
+
 ### INT-1068: Crustal Tides -> Chronicle
 - **Date:** 2026-10-31
 - **Systems connected:** `process_crustal_tides` -> `crustal_tide_chronicle_bridge` -> `AddChronicleEvent`
