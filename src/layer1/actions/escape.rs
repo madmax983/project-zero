@@ -12,10 +12,7 @@ pub struct DistressSignal {
     pub occupants: Vec<Entity>,
 }
 
-pub fn process_lifeboat_launches(
-    mut commands: Commands,
-    query: Query<(Entity, &Lifeboat)>,
-) {
+pub fn process_lifeboat_launches(mut commands: Commands, query: Query<(Entity, &Lifeboat)>) {
     for (entity, lifeboat) in query.iter() {
         if lifeboat.launch_triggered {
             // Spawn Distress Signal in Orbit
@@ -32,8 +29,8 @@ pub fn process_lifeboat_launches(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use bevy_app::App;
     use crate::layer1::entities::pop::Pop;
+    use bevy_app::App;
     use bevy_app::Update;
 
     #[test]
@@ -48,11 +45,14 @@ mod tests {
         let pop2 = app.world_mut().spawn(Pop).id();
 
         // Spawn a Lifeboat that has been triggered to launch
-        let lifeboat = app.world_mut().spawn(Lifeboat {
-            capacity: 2,
-            occupants: vec![pop1, pop2],
-            launch_triggered: true,
-        }).id();
+        let lifeboat = app
+            .world_mut()
+            .spawn(Lifeboat {
+                capacity: 2,
+                occupants: vec![pop1, pop2],
+                launch_triggered: true,
+            })
+            .id();
 
         // Act
         app.update();
@@ -75,14 +75,20 @@ mod tests {
         let mut app = App::new();
         app.add_systems(Update, process_lifeboat_launches);
 
-        let lifeboat = app.world_mut().spawn(Lifeboat {
-            capacity: 2,
-            occupants: vec![],
-            launch_triggered: false,
-        }).id();
+        let lifeboat = app
+            .world_mut()
+            .spawn(Lifeboat {
+                capacity: 2,
+                occupants: vec![],
+                launch_triggered: false,
+            })
+            .id();
 
         app.update();
 
-        assert!(app.world().get::<Lifeboat>(lifeboat).is_some(), "Lifeboat should remain on surface if not triggered");
+        assert!(
+            app.world().get::<Lifeboat>(lifeboat).is_some(),
+            "Lifeboat should remain on surface if not triggered"
+        );
     }
 }

@@ -85,11 +85,15 @@ pub fn update_solar_cycle_system(mut state: ResMut<SolarCycleState>, time: Res<S
     }
 }
 
+use crate::layer1::atmosphere::AtmosphereGrid;
+use crate::layer1::map::GridPosition;
+
 /// System to update solar power output based on cycle and time of day.
 pub fn update_solar_output_system(
     state: Res<SolarCycleState>,
     day_night: Option<Res<DayNightCycle>>,
-    mut query: Query<(&mut PowerSource, &SolarPower)>,
+    mut query: Query<(&mut PowerSource, &SolarPower, Option<&GridPosition>)>,
+    atmosphere: Option<Res<AtmosphereGrid>>,
 ) {
     let cycle_modifier = state.current_cycle.power_modifier();
 
@@ -105,15 +109,26 @@ pub fn update_solar_output_system(
 
     let total_modifier = cycle_modifier * day_modifier;
 
-    for (mut source, solar) in &mut query {
-        source.output = solar.base_output * total_modifier;
+    for (mut source, solar, pos) in &mut query {
+        let mut final_modifier = total_modifier;
+
+        // Smog penalty
+        if let (Some(atmos), Some(p)) = (&atmosphere, pos) {
+            let smog_level = atmos.get(p.x, p.y);
+            let penalty = (smog_level / 1000.0).clamp(0.0, 0.5);
+            final_modifier *= 1.0 - penalty;
+        }
+
+        source.output = solar.base_output * final_modifier;
     }
 }
 
 #[cfg(test)]
 mod tests {
+    use crate::layer1::atmosphere::AtmosphereGrid;
     use crate::layer1::balance::TICKS_PER_YEAR;
     use crate::layer1::energy::PowerSource;
+    use crate::layer1::map::GridPosition;
     use crate::layer1::solar::{
         update_solar_cycle_system, update_solar_output_system, SolarCycle, SolarCycleState,
         SolarPower,
@@ -261,5 +276,43 @@ mod tests {
 
         let power = world.get::<PowerSource>(panel).unwrap();
         assert!(power.output.abs() < f32::EPSILON);
+    }
+
+    #[test]
+    fn test_smog_reduces_solar_efficiency() {
+        let mut world = World::new();
+        world.insert_resource(SolarCycleState {
+            current_cycle: SolarCycle::Rising, // 1.0 multiplier
+        });
+
+        // Add atmosphere grid with smog
+        let mut grid = AtmosphereGrid::new(10, 10);
+        grid.set(5, 5, 500.0); // 50% penalty
+        world.insert_resource(grid);
+
+        // Spawn a solar panel with Base Output 100.0
+        let panel = world
+            .spawn((
+                PowerSource {
+                    output: 100.0,
+                    ..Default::default()
+                },
+                SolarPower { base_output: 100.0 },
+                GridPosition { x: 5, y: 5 },
+            ))
+            .id();
+
+        let mut schedule = Schedule::default();
+        schedule.add_systems(update_solar_output_system);
+
+        schedule.run(&mut world);
+
+        // Panel should be reduced by 50% -> 50.0
+        let panel_power = world.get::<PowerSource>(panel).unwrap();
+        assert!(
+            (panel_power.output - 50.0).abs() < 0.001,
+            "Expected 50.0 but got {}",
+            panel_power.output
+        );
     }
 }

@@ -238,6 +238,11 @@ impl AtmosphereGrid {
         self.set(x, y, current + amount);
     }
 
+    pub fn subtract_clamped(&mut self, x: i32, y: i32, amount: f32) {
+        let current = self.get(x, y);
+        self.set(x, y, (current - amount).max(0.0));
+    }
+
     /// Get interpolated pollution value at float coordinates.
     #[must_use]
     #[allow(
@@ -398,6 +403,8 @@ impl AtmosphereGrid {
 
 /// System to update atmospheric advection and emission (Part 1).
 ///
+use crate::layer1::terrain::{TerrainGrid, TerrainType};
+
 /// ⚡ Bolt Optimization:
 /// We apply emissions directly inside the loop instead of collecting emitters into a `Vec`.
 /// This avoids unnecessary per-frame heap allocations.
@@ -405,6 +412,7 @@ pub fn update_atmosphere_system(
     mut grid: ResMut<AtmosphereGrid>,
     wind_grid: Option<Res<crate::layer1::wind::WindGrid>>,
     query: Query<(&Building, &GridPosition)>,
+    terrain: Option<Res<TerrainGrid>>,
 ) {
     // 1. Advect with Wind
     if let Some(wind) = wind_grid {
@@ -422,6 +430,18 @@ pub fn update_atmosphere_system(
         };
         if emission > 0.0 {
             grid.add(pos.x, pos.y, emission);
+        }
+    }
+
+    // 3. Tree Absorption
+    if let Some(t_grid) = terrain {
+        for y in 0..grid.height {
+            for x in 0..grid.width {
+                let ty = t_grid.get(x, y);
+                if ty == Some(TerrainType::Tree) {
+                    grid.subtract_clamped(x as i32, y as i32, 0.1); // Tree absorbs 0.1 smog per tick
+                }
+            }
         }
     }
 }
@@ -674,5 +694,34 @@ mod tests {
 
         let grid = world.resource::<AtmosphereGrid>();
         assert!(grid.get(2, 0) > 0.05, "Pollution SHOULD pass through Vent");
+    }
+
+    #[test]
+    fn test_trees_absorb_smog() {
+        let mut world = World::new();
+
+        let mut grid = AtmosphereGrid::new(10, 10);
+        grid.set(5, 5, 1.0);
+        world.insert_resource(grid);
+
+        // Mock terrain
+        let mut t_grid = TerrainGrid {
+            width: 10,
+            height: 10,
+            tiles: vec![TerrainType::Dirt; 100],
+        };
+        t_grid.tiles[55] = TerrainType::Tree; // (5,5)
+        world.insert_resource(t_grid);
+
+        let mut schedule = Schedule::default();
+        schedule.add_systems(update_atmosphere_system);
+        schedule.run(&mut world);
+
+        let grid = world.resource::<AtmosphereGrid>();
+        assert!(
+            (grid.get(5, 5) - 0.9).abs() < 0.001,
+            "Expected 0.9 but got {}",
+            grid.get(5, 5)
+        );
     }
 }

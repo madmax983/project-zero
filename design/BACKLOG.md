@@ -77,7 +77,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `278` Xenoflora Addiction — `specs/278-xenoflora-addiction.md`
 - [ ] `279` Signal Latency — `specs/279-signal-latency.md`
 - [ ] `280` Archaeological Layers — `specs/280-archaeological-layers.md`
-- [ ] `281` Atmospheric Feedback — `specs/281-atmospheric-feedback.md`
 - [ ] `282` Cultural Drift — `specs/282-cultural-drift.md`
 - [ ] `283` Acoustic Zones — `specs/283-acoustic-zones.md`
 - [ ] `284` Generational Hoarders — `specs/284-generational-hoarders.md`
