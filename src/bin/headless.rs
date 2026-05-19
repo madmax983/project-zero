@@ -574,36 +574,40 @@ fn print_status(world: &mut World) {
     print_dashboard_table(&format!("COLONY STATUS (Tick {})", tick), table);
 }
 
-fn calculate_averages(world: &mut World) -> (f32, f32) {
+fn calculate_avg_morale(world: &mut World) -> f32 {
     let mut total_morale = 0.0;
     let mut morale_count = 0;
     for morale in world.query::<&Morale>().iter(world) {
         total_morale += morale.value;
         morale_count += 1;
     }
-    let avg_morale = if morale_count > 0 {
+    if morale_count > 0 {
         #[allow(clippy::cast_precision_loss)]
         let count = morale_count as f32;
         total_morale / count
     } else {
         0.0
-    };
+    }
+}
 
+fn calculate_avg_stress(world: &mut World) -> f32 {
     let mut total_stress = 0.0;
     let mut stress_count = 0;
     for stress in world.query::<&StressTracker>().iter(world) {
         total_stress += stress.accumulated_stress;
         stress_count += 1;
     }
-    let avg_stress = if stress_count > 0 {
+    if stress_count > 0 {
         #[allow(clippy::cast_precision_loss)]
         let count = stress_count as f32;
         total_stress / count
     } else {
         0.0
-    };
+    }
+}
 
-    (avg_morale, avg_stress)
+fn calculate_averages(world: &mut World) -> (f32, f32) {
+    (calculate_avg_morale(world), calculate_avg_stress(world))
 }
 
 fn add_society_rows(table: &mut Table, pop_count: usize, avg_morale: f32, avg_stress: f32) {
