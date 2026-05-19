@@ -265,7 +265,8 @@ pub fn register(schedule: &mut Schedule) {
             .in_set(Layer1SystemSet::Execution),
     );
     schedule.add_systems(
-        (crate::layer1::tech::hypno_learning::update_mental_fog_system.after(movement_system),)
+        (crate::layer1::tech::hypno_learning::update_mental_fog_system.after(movement_system),
+            crate::layer1::culture::linguistics::apply_linguistic_drift.after(arrival_handler_system),)
             .in_set(Layer1SystemSet::Execution),
     );
 
