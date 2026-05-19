@@ -1,3 +1,4 @@
+- [x] `1127` Escape Pods — `specs/1127-escape-pods.md` — completed 2024-05-24
 - [x] `1255` Sentient Trade Routes — `specs/1255-sentient-trade-routes.md` — completed 2026-02-01
 - [x] `631` Conveyor Logistics — `specs/631-conveyor-logistics.md` — completed 2026-05-28
 - [x] `239` Operational Detritus - `specs/239-operational-detritus.md` - completed 2026-06-25

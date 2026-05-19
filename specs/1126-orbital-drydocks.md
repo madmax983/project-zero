@@ -155,3 +155,7 @@ pub fn process_drydock_construction_system(
 ## 8. Questions
 
 *Builder: add questions here if spec is unclear.*
+
+
+## Questions
+- Architectural Contradictions: `ResourceStack` does not exist in `src/layer2/mining.rs`, it uses `CargoStack`. However, this is a minor issue that can be corrected in implementation. The spec seems viable if we use `CargoStack`.
