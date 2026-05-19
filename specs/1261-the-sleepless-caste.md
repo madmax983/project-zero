@@ -7,8 +7,8 @@ A segment of your society gives up their right to rest to become hyper-productiv
 ## 2. Dependencies
 
 - Layer 1 Needs System (`src/layer1/needs.rs`)
-- Layer 1 Traits System (`src/layer1/traits.rs`)
-- Layer 1 Execution System (`src/layer1/execution.rs`)
+- Layer 1 Traits System (`src/layer1/psychology/traits.rs`)
+- Layer 1 Execution System (`src/layer1/execution/general_work.rs`)
 
 ## 3. RED Phase: Tests First
 
@@ -16,11 +16,11 @@ A segment of your society gives up their right to rest to become hyper-productiv
 #[cfg(test)]
 mod tests {
     use crate::layer1::needs::Needs;
-    use crate::layer1::traits::{Trait, Traits};
+    use crate::layer1::psychology::traits::{Trait, Traits};
     use crate::layer1::social::unrest::MentalState;
     use crate::layer1::Pop;
-    use crate::layer1::systems::consumption::metabolism_system;
-    use crate::layer1::execution::work_execution_system;
+    use crate::layer1::psychology::needs::decay_needs_system;
+    use crate::layer1::execution::general_work::work_execution_system;
     use bevy_ecs::prelude::*;
 
     #[test]
@@ -42,7 +42,7 @@ mod tests {
         )).id();
 
         // Run metabolism system
-        metabolism_system(&mut world);
+        world.run_system_once(decay_needs_system).unwrap();
 
         let needs = world.get::<Needs>(pop).unwrap();
         // Hunger should decay normally
@@ -71,15 +71,15 @@ mod tests {
 ## 4. GREEN Phase: Minimal Implementation
 
 ```rust
-// In src/layer1/traits.rs
+// In src/layer1/psychology/traits.rs
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub enum Trait {
     // ... existing traits
     InsomniaDrive,
 }
 
-// In src/layer1/systems/consumption.rs (metabolism_system)
-pub fn metabolism_system(world: &mut World) {
+// In src/layer1/psychology/needs.rs (decay_needs_system)
+pub fn decay_needs_system(mut query: Query<(&mut Needs, Option<&Traits>)>) {
     let mut query = world.query::<(&mut Needs, Option<&Traits>)>();
     for (mut needs, traits) in query.iter_mut(world) {
         needs.hunger -= 0.01;
@@ -101,7 +101,7 @@ pub fn metabolism_system(world: &mut World) {
     }
 }
 
-// In src/layer1/execution.rs (or where work progress is calculated)
+// In src/layer1/execution/general_work.rs (or where work progress is calculated)
 pub fn calculate_work_speed(traits: Option<&Traits>) -> f32 {
     let mut speed = 1.0;
     if let Some(t) = traits {
@@ -130,12 +130,12 @@ pub fn calculate_work_speed(traits: Option<&Traits>) -> f32 {
 
 ## 7. Technical Guidance
 
-- Modify `src/layer1/traits.rs` to add `InsomniaDrive`.
-- Update `metabolism_system` in `src/layer1/systems/consumption.rs` to handle the need decay logic.
-- Update `work_execution_system` or the relevant helper function in `src/layer1/execution.rs` to apply the 1.3x work speed multiplier.
+- Modify `src/layer1/psychology/traits.rs` to add `InsomniaDrive`.
+- Update `decay_needs_system` in `src/layer1/psychology/needs.rs` to handle the need decay logic.
+- Update `work_execution_system` or the relevant helper function in `src/layer1/execution/general_work.rs` to apply the 1.3x work speed multiplier.
 - Be careful with `Option<&Traits>` in queries to ensure pops without traits default to normal behavior.
 
 ## 8. Questions
 *Builder: add questions here if spec is unclear.*
 
-- The spec indicates modifying `metabolism_system` in `src/layer1/systems/consumption.rs` to handle need decay logic. However, the codebase uses `decay_needs_system` in `src/layer1/psychology/needs.rs` for this logic. The test examples also reference `metabolism_system`. Please update the architecture details so the RED and GREEN phases match the current codebase.
+*Architect: Addressed Builder's question regarding file paths and function names on 2026-06-03.*
