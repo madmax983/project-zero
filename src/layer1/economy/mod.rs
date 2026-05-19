@@ -40,6 +40,11 @@ pub const fn get_wage_for_job(job_type: AssignmentType) -> f32 {
 
 /// Adds credits to a worker's wallet.
 pub fn pay_wage(world: &mut World, worker: Entity, amount: f32) {
+    if let Some(faction) = world.get::<crate::layer1::social::factions::FactionMember>(worker) {
+        if faction.faction_id == Some(crate::layer1::social::factions::FactionId::Stateless) {
+            return; // Stateless pops don't get paid normal wages / contribute taxes
+        }
+    }
     if let Some(mut wallet) = world.get_mut::<Wallet>(worker) {
         wallet.credits += amount;
     }
