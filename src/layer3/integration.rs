@@ -202,7 +202,9 @@ pub fn bureaucracy_of_truth_integration_system(
 /// INT-585: Bridges AnomalyDiscoveredEvent (Cartographic Delusion) to AddChronicleEvent (Chronicle).
 pub fn anomaly_discovered_chronicle_bridge(
     mut events: bevy_ecs::prelude::EventReader<crate::layer3::map::AnomalyDiscoveredEvent>,
-    mut chronicle_events: bevy_ecs::prelude::EventWriter<crate::layer1::core::chronicle::AddChronicleEvent>,
+    mut chronicle_events: bevy_ecs::prelude::EventWriter<
+        crate::layer1::core::chronicle::AddChronicleEvent,
+    >,
 ) {
     for event in events.read() {
         chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {

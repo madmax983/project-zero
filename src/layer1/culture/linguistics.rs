@@ -12,7 +12,9 @@ impl ColonyLanguage {
         if self.base_id != other.base_id {
             return f32::MAX;
         }
-        self.drift_vector.iter().zip(other.drift_vector.iter())
+        self.drift_vector
+            .iter()
+            .zip(other.drift_vector.iter())
             .map(|(a, b)| (a - b).powi(2))
             .sum::<f32>()
             .sqrt()
@@ -52,10 +54,18 @@ pub fn apply_linguistic_drift(
     }
 }
 
-pub fn translation_modifier(world: &World, pop1: Entity, pop2: Entity, translator: Option<Entity>) -> f32 {
+pub fn translation_modifier(
+    world: &World,
+    pop1: Entity,
+    pop2: Entity,
+    translator: Option<Entity>,
+) -> f32 {
     let diff;
 
-    if let (Some(lang1), Some(lang2)) = (world.get::<ColonyLanguage>(pop1), world.get::<ColonyLanguage>(pop2)) {
+    if let (Some(lang1), Some(lang2)) = (
+        world.get::<ColonyLanguage>(pop1),
+        world.get::<ColonyLanguage>(pop2),
+    ) {
         diff = lang1.calculate_distance(lang2);
     } else {
         let drift1 = world.get::<DialectDrift>(pop1).map(|d| d.0).unwrap_or(0.0);
@@ -93,10 +103,24 @@ mod tests {
         let mut app = App::new();
 
         let base_lang_id = 1;
-        let colony_a = app.world_mut().spawn(ColonyLanguage { base_id: base_lang_id, drift_vector: vec![0.0, 0.0] }).id();
-        let colony_b = app.world_mut().spawn(ColonyLanguage { base_id: base_lang_id, drift_vector: vec![0.0, 0.0] }).id();
+        let colony_a = app
+            .world_mut()
+            .spawn(ColonyLanguage {
+                base_id: base_lang_id,
+                drift_vector: vec![0.0, 0.0],
+            })
+            .id();
+        let colony_b = app
+            .world_mut()
+            .spawn(ColonyLanguage {
+                base_id: base_lang_id,
+                drift_vector: vec![0.0, 0.0],
+            })
+            .id();
 
-        app.world_mut().spawn(LinguisticNetwork { nodes: vec![colony_a] }); // Keep A stationary
+        app.world_mut().spawn(LinguisticNetwork {
+            nodes: vec![colony_a],
+        }); // Keep A stationary
 
         app.add_systems(Update, apply_linguistic_drift);
         app.update();
@@ -106,7 +130,10 @@ mod tests {
         let lang_b = app.world().get::<ColonyLanguage>(colony_b).unwrap();
 
         let drift_distance = lang_a.calculate_distance(lang_b);
-        assert!(drift_distance > 0.0, "Language drift should occur over time");
+        assert!(
+            drift_distance > 0.0,
+            "Language drift should occur over time"
+        );
     }
 
     #[test]
@@ -117,7 +144,10 @@ mod tests {
 
         let modifier = translation_modifier(app.world(), pop1, pop2, None);
 
-        assert!(modifier < 1.0 && modifier > 0.5, "Expected a minor social penalty for dialect mismatch");
+        assert!(
+            modifier < 1.0 && modifier > 0.5,
+            "Expected a minor social penalty for dialect mismatch"
+        );
     }
 
     #[test]
@@ -128,7 +158,10 @@ mod tests {
 
         let modifier = translation_modifier(app.world(), pop1, pop2, None);
 
-        assert_eq!(modifier, 0.0, "Communication should fail completely across a language barrier without a translator");
+        assert_eq!(
+            modifier, 0.0,
+            "Communication should fail completely across a language barrier without a translator"
+        );
     }
 
     #[test]
@@ -140,17 +173,34 @@ mod tests {
 
         let modifier = translation_modifier(app.world(), pop1, pop2, Some(translator));
 
-        assert!(modifier > 0.0, "Translator should enable communication across a language barrier");
+        assert!(
+            modifier > 0.0,
+            "Translator should enable communication across a language barrier"
+        );
     }
 
     #[test]
     fn test_communication_network_prevents_drift() {
         let mut app = App::new();
         let base_lang_id = 1;
-        let colony_a = app.world_mut().spawn(ColonyLanguage { base_id: base_lang_id, drift_vector: vec![0.0, 0.0] }).id();
-        let colony_b = app.world_mut().spawn(ColonyLanguage { base_id: base_lang_id, drift_vector: vec![0.0, 0.0] }).id();
+        let colony_a = app
+            .world_mut()
+            .spawn(ColonyLanguage {
+                base_id: base_lang_id,
+                drift_vector: vec![0.0, 0.0],
+            })
+            .id();
+        let colony_b = app
+            .world_mut()
+            .spawn(ColonyLanguage {
+                base_id: base_lang_id,
+                drift_vector: vec![0.0, 0.0],
+            })
+            .id();
 
-        app.world_mut().spawn(LinguisticNetwork { nodes: vec![colony_a, colony_b] });
+        app.world_mut().spawn(LinguisticNetwork {
+            nodes: vec![colony_a, colony_b],
+        });
 
         app.add_systems(Update, apply_linguistic_drift);
         app.update();
@@ -159,6 +209,9 @@ mod tests {
         let lang_b = app.world().get::<ColonyLanguage>(colony_b).unwrap();
 
         let drift_distance = lang_a.calculate_distance(lang_b);
-        assert!(drift_distance < 0.1, "Communication networks should prevent linguistic drift");
+        assert!(
+            drift_distance < 0.1,
+            "Communication networks should prevent linguistic drift"
+        );
     }
 }

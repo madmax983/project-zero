@@ -192,6 +192,8 @@ mod sacrilege_effects;
 #[path = "integration/unmet_needs_black_market.rs"]
 mod unmet_needs_black_market;
 
+#[path = "integration/cartographic_delusion_bridge.rs"]
+mod cartographic_delusion_bridge;
 #[path = "integration/generational_atrophy_integration.rs"]
 mod generational_atrophy_integration;
 #[path = "integration/light_pollution_fauna.rs"]
@@ -202,8 +204,6 @@ mod splicers_dilemma_integration;
 mod system_quarantine_integration;
 #[path = "integration/waste_scent.rs"]
 mod waste_scent;
-#[path = "integration/cartographic_delusion_bridge.rs"]
-mod cartographic_delusion_bridge;
 
 pub mod integration {
     #[path = "conveyor_pathfinding_bridge.rs"]

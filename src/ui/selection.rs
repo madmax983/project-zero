@@ -152,39 +152,27 @@ pub fn handle_selection_click(world: &mut World, mouse: GameMouseEvent, viewport
     let (world_x, world_y) = screen_to_world(mouse.x, mouse.y, viewport);
 
     // Find all entities at position
-    let mut candidates = Vec::new();
+    // ⚡ Bolt Optimization: Removed intermediate `.collect::<Vec<_>>()` allocation
+    // and multiple loops, doing a single pass to track the best candidate in each category.
+    let mut selected_pop = None;
+    let mut selected_building = None;
+    let mut selected_any = None;
+
     let mut query = world.query::<(Entity, &GridPosition)>();
     for (entity, pos) in query.iter(world) {
         if pos.x == world_x && pos.y == world_y {
-            candidates.push(entity);
-        }
-    }
-
-    // Prioritize: Pop > Building > Any
-    let mut selected_entity = None;
-
-    // Check for Pop
-    for &entity in &candidates {
-        if world.get::<Pop>(entity).is_some() {
-            selected_entity = Some(entity);
-            break;
-        }
-    }
-
-    // If no Pop, check for Building
-    if selected_entity.is_none() {
-        for &entity in &candidates {
-            if world.get::<Building>(entity).is_some() {
-                selected_entity = Some(entity);
-                break;
+            if selected_pop.is_none() && world.get::<Pop>(entity).is_some() {
+                selected_pop = Some(entity);
+            } else if selected_building.is_none() && world.get::<Building>(entity).is_some() {
+                selected_building = Some(entity);
+            } else if selected_any.is_none() {
+                selected_any = Some(entity);
             }
         }
     }
 
-    // Fallback to first candidate
-    if selected_entity.is_none() {
-        selected_entity = candidates.first().copied();
-    }
+    // Prioritize: Pop > Building > Any
+    let selected_entity = selected_pop.or(selected_building).or(selected_any);
 
     // Update selection
     let mut selection = world.resource_mut::<Selection>();

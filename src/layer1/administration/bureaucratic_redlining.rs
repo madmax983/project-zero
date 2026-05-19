@@ -1,9 +1,9 @@
-use bevy_ecs::prelude::*;
-use crate::layer1::map::GridPosition;
 use crate::layer1::administration::zone::{ZoneGrid, ZoneType};
 use crate::layer1::energy::PowerConsumer;
 use crate::layer1::entities::pop::Pop;
-use crate::layer1::social::factions::{FactionMember, FactionId};
+use crate::layer1::map::GridPosition;
+use crate::layer1::social::factions::{FactionId, FactionMember};
+use bevy_ecs::prelude::*;
 
 pub fn bureaucratic_redlining_system(
     zone_grid: Res<ZoneGrid>,
@@ -24,7 +24,6 @@ pub fn bureaucratic_redlining_system(
         }
     }
 }
-
 
 pub fn stateless_expansion_system(
     mut zone_grid: ResMut<ZoneGrid>,
@@ -57,7 +56,10 @@ pub fn stateless_expansion_system(
                 ];
 
                 for (nx, ny) in neighbors {
-                    if zone_grid.get(nx, ny) != ZoneType::Dezoned && zone_grid.get(nx, ny) != ZoneType::None && rand::random::<f32>() < spread_chance {
+                    if zone_grid.get(nx, ny) != ZoneType::Dezoned
+                        && zone_grid.get(nx, ny) != ZoneType::None
+                        && rand::random::<f32>() < spread_chance
+                    {
                         to_dezone.push((nx, ny));
                     }
                 }
@@ -73,11 +75,11 @@ pub fn stateless_expansion_system(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::layer1::energy::PowerConsumer;
-    use crate::layer1::social::factions::{FactionMember, FactionId};
-    use crate::layer1::map::GridPosition;
-    use crate::layer1::entities::pop::Pop;
     use crate::layer1::administration::zone::{ZoneGrid, ZoneType};
+    use crate::layer1::energy::PowerConsumer;
+    use crate::layer1::entities::pop::Pop;
+    use crate::layer1::map::GridPosition;
+    use crate::layer1::social::factions::{FactionId, FactionMember};
 
     #[test]
     fn test_dezoning_disables_grid_and_creates_stateless_faction() {
@@ -87,24 +89,43 @@ mod tests {
         zone_grid.set(5, 5, ZoneType::Dezoned);
         world.insert_resource(zone_grid);
 
-        let node_entity = world.spawn((
-            PowerConsumer { active: true, demand: 10.0 },
-            GridPosition { x: 5, y: 5 },
-        )).id();
+        let node_entity = world
+            .spawn((
+                PowerConsumer {
+                    active: true,
+                    demand: 10.0,
+                },
+                GridPosition { x: 5, y: 5 },
+            ))
+            .id();
 
-        let pop_entity = world.spawn((
-            Pop,
-            FactionMember { faction_id: Some(FactionId::MinersGuild) },
-            GridPosition { x: 5, y: 5 },
-        )).id();
+        let pop_entity = world
+            .spawn((
+                Pop,
+                FactionMember {
+                    faction_id: Some(FactionId::MinersGuild),
+                },
+                GridPosition { x: 5, y: 5 },
+            ))
+            .id();
 
-        let _ = bevy_ecs::system::RunSystemOnce::run_system_once(&mut world, bureaucratic_redlining_system);
+        let _ = bevy_ecs::system::RunSystemOnce::run_system_once(
+            &mut world,
+            bureaucratic_redlining_system,
+        );
 
         let consumer = world.get::<PowerConsumer>(node_entity).unwrap();
-        assert!(!consumer.active, "PowerConsumer should be disabled in dezoned zone");
+        assert!(
+            !consumer.active,
+            "PowerConsumer should be disabled in dezoned zone"
+        );
 
         let faction = world.get::<FactionMember>(pop_entity).unwrap();
-        assert_eq!(faction.faction_id, Some(FactionId::Stateless), "Pop faction should be 'Stateless'");
+        assert_eq!(
+            faction.faction_id,
+            Some(FactionId::Stateless),
+            "Pop faction should be 'Stateless'"
+        );
     }
 
     #[test]
@@ -127,7 +148,10 @@ mod tests {
 
         let mut spread = false;
         for _ in 0..1000 {
-            let _ = bevy_ecs::system::RunSystemOnce::run_system_once(&mut world, stateless_expansion_system);
+            let _ = bevy_ecs::system::RunSystemOnce::run_system_once(
+                &mut world,
+                stateless_expansion_system,
+            );
             let grid = world.resource::<ZoneGrid>();
             if grid.get(6, 5) == ZoneType::Dezoned {
                 spread = true;
@@ -135,6 +159,9 @@ mod tests {
             }
         }
 
-        assert!(spread, "Stateless faction should have spread to adjacent zone");
+        assert!(
+            spread,
+            "Stateless faction should have spread to adjacent zone"
+        );
     }
 }
