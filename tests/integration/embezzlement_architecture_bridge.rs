@@ -28,5 +28,7 @@ fn test_embezzlement_triggers_chronicle_event() {
 
     assert_eq!(emitted.len(), 1, "An AddChronicleEvent should be emitted");
     assert_eq!(emitted[0].importance, EventImportance::Minor);
-    assert!(emitted[0].text.contains("corrupt governor secretly embezzled 100 materials"));
+    assert!(emitted[0]
+        .text
+        .contains("corrupt governor secretly embezzled 100 materials"));
 }
