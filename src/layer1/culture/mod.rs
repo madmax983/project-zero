@@ -37,3 +37,5 @@ pub use cultural_artifacts::*;
 
 pub mod nostalgia;
 pub use nostalgia::*;
+pub mod linguistics;
+pub use linguistics::*;
