@@ -235,23 +235,16 @@ fn apply_hit_stop_and_juice(
     }
 }
 
+fn get_weapon_stats(world: &World, attacker: Entity) -> Option<(f32, u32)> {
+    let equipment = world.get::<crate::layer1::items::Equipment>(attacker)?;
+    let weapon_entity = equipment.weapon?;
+    let weapon = world.get::<Weapon>(weapon_entity)?;
+    Some((weapon.properties.damage, weapon.properties.cooldown))
+}
+
 pub fn execute_attack(world: &mut World, attacker: Entity, target: Entity) {
     // 1. Get Attacker stats (Weapon, CombatState)
-    // We need to query world for attacker components.
-    // Since we have mutable access to world, we can't easily query while mutating.
-    // We'll fetch what we need first.
-
-    let mut damage = 0.0;
-    let mut cooldown_val = 0;
-
-    if let Some(equipment) = world.get::<crate::layer1::items::Equipment>(attacker) {
-        if let Some(weapon_entity) = equipment.weapon {
-            if let Some(weapon) = world.get::<Weapon>(weapon_entity) {
-                damage = weapon.properties.damage;
-                cooldown_val = weapon.properties.cooldown;
-            }
-        }
-    }
+    let (damage, cooldown_val) = get_weapon_stats(world, attacker).unwrap_or((0.0, 0));
 
     // Check cooldown
     if let Some(mut state) = world.get_mut::<CombatState>(attacker) {
@@ -262,16 +255,14 @@ pub fn execute_attack(world: &mut World, attacker: Entity, target: Entity) {
         state.last_target = Some(target);
     } else {
         // Sentry: Auto-initialize CombatState to prevent "machine gun" bug
-        // where missing state allows ignoring cooldowns.
-        if let Ok(mut entity_cmds) = world.get_entity_mut(attacker) {
-            entity_cmds.insert(CombatState {
-                cooldown: cooldown_val,
-                last_target: Some(target),
-            });
-        } else {
+        let Ok(mut entity_cmds) = world.get_entity_mut(attacker) else {
             // Attacker despawned or invalid entity. Abort attack.
             return;
-        }
+        };
+        entity_cmds.insert(CombatState {
+            cooldown: cooldown_val,
+            last_target: Some(target),
+        });
     }
 
     // 2. Apply damage to Target
@@ -287,16 +278,18 @@ pub fn execute_attack(world: &mut World, attacker: Entity, target: Entity) {
         rng.gen_bool(CRIT_CHANCE)
     };
 
-    if is_crit {
-        damage *= CRIT_MULTIPLIER;
-    }
+    let final_damage = if is_crit {
+        damage * CRIT_MULTIPLIER
+    } else {
+        damage
+    };
 
     let Some(mut health) = world.get_mut::<crate::layer1::health::Health>(target) else {
         return;
     };
-    health.take_damage(damage);
+    health.take_damage(final_damage);
 
-    apply_hit_stop_and_juice(world, attacker, target, damage, is_crit);
+    apply_hit_stop_and_juice(world, attacker, target, final_damage, is_crit);
 }
 
 #[cfg(test)]
