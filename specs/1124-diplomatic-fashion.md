@@ -181,3 +181,6 @@ pub fn evaluate_fashion_system(
 ## 8. Questions
 
 *Builder: add questions here if spec is unclear.*
+
+## Questions
+- Architectural Contradictions: `DiplomaticRelations` component in `src/layer3/diplomacy_reflection.rs` has a `relations: Vec<DiplomaticStanding>` field, not a `reputation: i32` field as assumed in the RED phase tests. `Diplomat` component is also undefined. Therefore, the RED phase tests and GREEN phase logic are architecturally incompatible. I will pick another task from the backlog.

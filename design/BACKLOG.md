@@ -724,7 +724,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1124` Diplomatic Fashion — `specs/1124-diplomatic-fashion.md`
 - [ ] `1125` Improvised Tools — `specs/1125-improvised-tools.md`
 - [ ] `1126` Orbital Drydocks — `specs/1126-orbital-drydocks.md`
-- [ ] `1127` Escape Pods — `specs/1127-escape-pods.md`
 
 - [ ] `1128` Hypno-Learning — `specs/1128-hypno-learning.md`
 - [ ] `1129` Planetary Rings as Highways — `specs/1129-planetary-rings-as-highways.md`

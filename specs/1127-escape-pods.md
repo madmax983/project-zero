@@ -132,3 +132,7 @@ pub fn process_lifeboat_launches(
 ## 8. Questions
 
 *Builder: add questions here if spec is unclear.*
+
+
+## Questions
+- Architectural Contradictions: `src/layer1/pop.rs` doesn't exist, it is `src/layer1/entities/pop.rs`. I will correct the imports and continue with this task.

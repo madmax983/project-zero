@@ -112,3 +112,7 @@ pub fn evaluate_tool_fallback_system(
 ## 8. Questions
 
 *Builder: add questions here if spec is unclear.*
+
+
+## Questions
+- Architectural Contradictions: `Task`, `ToolType`, and `Resource` enums defined in RED phase do not align with existing components. There is a `CurrentTask` component, and resources/tools are typically defined via `ItemType`. Therefore, the RED phase tests and GREEN phase logic are architecturally incompatible. I will pick another task from the backlog.
