@@ -53,3 +53,62 @@ pub(crate) fn evaluate_fetch_clothing(
     let weights = UtilityWeights::default();
     evaluate_candidates(pop_pos, &weights, stockpiles, score)
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::layer1::map::GridPosition;
+    use crate::layer1::resources::ColonyResources;
+    use crate::layer1::utility_eval_types::ScorableCandidate;
+    use crate::layer1::temperature::TemperatureGrid;
+    use bevy_ecs::prelude::Entity;
+
+    #[test]
+    fn test_evaluate_fetch_clothing() {
+        let pop_pos = GridPosition { x: 0, y: 0 };
+        let mut resources = ColonyResources::default();
+        let stockpiles = vec![
+            ScorableCandidate {
+                entity: Entity::from_raw(1),
+                pos: GridPosition { x: 1, y: 1 },
+                capacity: 10,
+                usage: 0,
+                score_bonus: 0.0,
+                resource_type: None,
+                item_type: None,
+                is_advanced_tech: false,
+            }
+        ];
+
+        // Has clothes, no temperature grid => None
+        resources.clothing = 5.0;
+        assert_eq!(evaluate_fetch_clothing(pop_pos, 1.0, &resources, &stockpiles, None), None);
+
+        // Naked, but no clothing => None
+        resources.clothing = 0.0;
+        assert_eq!(evaluate_fetch_clothing(pop_pos, 0.0, &resources, &stockpiles, None), None);
+
+        // Naked, clothing available => Some
+        resources.clothing = 5.0;
+        let result = evaluate_fetch_clothing(pop_pos, 0.0, &resources, &stockpiles, None);
+        assert!(result.is_some());
+        let (score, _) = result.unwrap();
+        assert!(score > 0.0);
+
+        // Has clothes, temperature is extremely low, but clothing available => upgrade
+        let mut grid = TemperatureGrid::new(10, 10, 20.0);
+        grid.set(0, 0, -50.0); // Extremely cold
+
+        let result_upgrade = evaluate_fetch_clothing(pop_pos, 0.5, &resources, &stockpiles, Some(&grid));
+        assert!(result_upgrade.is_some());
+
+        // Has clothes, temperature is extremely low, but insulation >= 2.0 => None
+        let result_max_insul = evaluate_fetch_clothing(pop_pos, 2.5, &resources, &stockpiles, Some(&grid));
+        assert_eq!(result_max_insul, None);
+
+        // Has clothes, temperature is safe => None
+        grid.set(0, 0, 20.0); // Warm
+        let result_safe = evaluate_fetch_clothing(pop_pos, 0.5, &resources, &stockpiles, Some(&grid));
+        assert_eq!(result_safe, None);
+    }
+}

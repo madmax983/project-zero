@@ -341,4 +341,39 @@ mod tests {
             "Should ignore pickup if we have no room for it in the colony"
         );
     }
+
+    #[test]
+    fn should_pick_up_generic_item_entity() {
+        let pop_pos = GridPosition { x: 0, y: 0 };
+        let weights = UtilityWeights::default();
+        let stockpile_entity = test_entity(3);
+        let stockpiles = vec![ScorableCandidate::new(
+            stockpile_entity,
+            GridPosition { x: 1, y: 1 },
+        )];
+        let resources = base_resources();
+
+        let item_entity = test_entity(5);
+        let mut item_cand = ScorableCandidate::new(item_entity, GridPosition { x: 2, y: 2 });
+        item_cand.item_type = Some(ItemType::Tool);
+        let item_entities = vec![item_cand];
+
+        let result = evaluate_haul(
+            pop_pos,
+            &weights,
+            &[],
+            &item_entities,
+            &stockpiles,
+            &[],
+            &resources,
+            None,
+            None,
+            None,
+        );
+
+        assert!(result.is_some());
+        let (utility, target) = result.unwrap();
+        assert_eq!(target, item_entity);
+        assert!(utility > 0.0);
+    }
 }

@@ -39,3 +39,43 @@ pub(crate) fn evaluate_drafted_behavior(
 
     Some((best_action, best_utility, best_target))
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::layer1::map::GridPosition;
+
+    #[test]
+    fn test_evaluate_drafted_behavior() {
+        let mut data = PopEvalData::test_instance();
+        data.pos = GridPosition { x: 0, y: 0 };
+        let mut buffer = UtilityAIBuffer::default();
+
+        // Not drafted
+        assert_eq!(evaluate_drafted_behavior(&data, &buffer), None);
+
+        // Drafted, no enemies
+        data.drafted = Some(crate::layer1::combat::Drafted);
+        let result_no_enemy = evaluate_drafted_behavior(&data, &buffer);
+        assert_eq!(result_no_enemy, Some((ActionType::Idle, 0.9, None)));
+
+        // Drafted, with enemy
+        buffer.enemies.push(ScorableCandidate {
+            entity: Entity::from_raw(1),
+            pos: GridPosition { x: 5, y: 5 },
+            capacity: 10,
+            usage: 0,
+            score_bonus: 0.0,
+            resource_type: None,
+            item_type: None,
+            is_advanced_tech: false,
+        });
+
+        let result_with_enemy = evaluate_drafted_behavior(&data, &buffer);
+        assert!(result_with_enemy.is_some());
+        let (action, score, target) = result_with_enemy.unwrap();
+        assert_eq!(action, ActionType::Fight);
+        assert!(score > 0.0);
+        assert_eq!(target, Some(Entity::from_raw(1)));
+    }
+}

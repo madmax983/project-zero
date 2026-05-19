@@ -22,12 +22,12 @@ mod tests {
 
         // We need to run mine_rock many times to trigger the probability (e.g. 5%)
         // Or refactor mine_rock to accept a seed/config.
-        // For this test, we run 100 times. Probability of NO anomaly in 100 tries at 5% is ~0.6%.
+        // For this test, we run 100 times. Probability of NO anomaly in 1000 tries at 5% is ~0.6%.
         // This is acceptable for a game system test.
 
         let mut anomaly_spawned = false;
 
-        for i in 0..100 {
+        for i in 0..1000 {
             let entity = world
                 .spawn((
                     Designation {
@@ -37,7 +37,7 @@ mod tests {
                         current: 9.0,
                         max: 10.0,
                     },
-                    GridPosition { x: i % 100, y: 0 },
+                    GridPosition { x: i % 100, y: i / 100 },
                 ))
                 .id();
 
@@ -82,7 +82,7 @@ mod tests {
 
         // Mine until anomaly
         let mut anomaly_entity = None;
-        for i in 0..100 {
+        for i in 0..1000 {
             let entity = world
                 .spawn((
                     Designation {
@@ -92,7 +92,7 @@ mod tests {
                         current: 10.0,
                         max: 10.0,
                     }, // Instant complete
-                    GridPosition { x: i % 100, y: 0 },
+                    GridPosition { x: i % 100, y: i / 100 },
                 ))
                 .id();
 

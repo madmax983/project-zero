@@ -404,4 +404,35 @@ mod tests {
         assert!(world.get::<Hallucinating>(pop).is_none());
         assert!(world.get::<Morale>(pop).is_none());
     }
+
+    #[test]
+    fn test_eating_mystery_meal_applies_mood_debuff() {
+        let mut world = World::new();
+        let pop = world
+            .spawn((
+                Pop,
+                Morale {
+                    value: 0.5,
+                    ..Default::default()
+                },
+            ))
+            .id();
+
+        crate::layer1::gastronomy::apply_meal_effect(&mut world, pop, MealEffect::MoodDebuff);
+
+        let morale = world.get::<Morale>(pop).unwrap();
+        assert!(morale.modifiers.iter().any(|m| m.label == "Disgusting Meal"));
+    }
+
+    #[test]
+    fn test_eating_mystery_meal_applies_lethargy() {
+        let mut world = World::new();
+        let pop = world.spawn(Pop).id();
+
+        crate::layer1::gastronomy::apply_meal_effect(&mut world, pop, MealEffect::Lethargy);
+
+        let buff = world.get::<WorkSpeedBuff>(pop).unwrap();
+        assert_eq!(buff.multiplier, 0.5);
+        assert_eq!(buff.duration, 200);
+    }
 }

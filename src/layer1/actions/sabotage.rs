@@ -146,4 +146,31 @@ mod tests {
         assert_eq!(utility, 100.0);
         assert_eq!(target, Some(structure2)); // Closer advanced tech
     }
+
+    #[test]
+    fn test_evaluate_sabotage_no_targets() {
+        let mut data = default_pop_eval_data();
+        data.is_nostalgic = true;
+        let buffer = default_buffer();
+
+        // Nostalgic but no structures in buffer
+        let result = evaluate_sabotage(&data, &buffer);
+        assert!(result.is_none());
+    }
+
+    #[test]
+    fn test_evaluate_sabotage_ignore_self() {
+        let mut data = default_pop_eval_data();
+        data.is_nostalgic = true;
+        data.entity = Entity::from_raw(1);
+        let mut buffer = default_buffer();
+
+        // Advanced tech structure but it's the pop themselves (e.g. cyborg)
+        let mut cand = ScorableCandidate::new(Entity::from_raw(1), GridPosition { x: 5, y: 0 });
+        cand.is_advanced_tech = true;
+        buffer.all_structures.push(cand);
+
+        let result = evaluate_sabotage(&data, &buffer);
+        assert!(result.is_none());
+    }
 }

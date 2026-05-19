@@ -419,4 +419,118 @@ mod tests {
             "Should have SleptInLegendaryRoom memory"
         );
     }
+
+    #[test]
+    fn test_apply_thought_based_on_quality_dining() {
+        let mut world = setup_world();
+
+        let pop = world
+            .spawn((Pop, GridPosition { x: 0, y: 0 }, Memories::default()))
+            .id();
+
+        // Let's build a terrible room manually.
+        let mut beauty = world.resource_mut::<BeautyGrid>();
+        beauty.set(0, 0, -10.0);
+
+        let mut zones = world.resource_mut::<ZoneGrid>();
+        zones.set(0, 0, ZoneType::Dining);
+
+        // Run the system
+        apply_room_quality_thoughts(&mut world, pop, ZoneType::Dining);
+
+        let memories = world.get::<Memories>(pop).unwrap();
+        // Should have "AteInAwfulRoom" memory
+        assert!(
+            memories
+                .items
+                .iter()
+                .any(|m| m.memory_type == MemoryType::AteInAwfulRoom),
+            "Should have AteInAwfulRoom memory"
+        );
+    }
+
+    #[test]
+    fn test_apply_thought_quality_thresholds() {
+        let mut world = setup_world();
+
+        let pop_labor = world.spawn((Pop, GridPosition { x: 0, y: 0 }, Memories::default(), crate::layer1::SocialClass::Labor)).id();
+        let pop_middle = world.spawn((Pop, GridPosition { x: 0, y: 0 }, Memories::default(), crate::layer1::SocialClass::Middle)).id();
+        let pop_elite = world.spawn((Pop, GridPosition { x: 0, y: 0 }, Memories::default(), crate::layer1::SocialClass::Elite)).id();
+
+        // 100 quality -> Labor: Legendary, Middle: Decent/Great, Elite: Decent
+        let mut beauty = world.resource_mut::<BeautyGrid>();
+        beauty.set(0, 0, 50.0); // Base 1.0 + 50*2.0 = 101.0
+
+        let mut zones = world.resource_mut::<ZoneGrid>();
+        zones.set(0, 0, ZoneType::Bedroom);
+
+        apply_room_quality_thoughts(&mut world, pop_labor, ZoneType::Bedroom);
+        apply_room_quality_thoughts(&mut world, pop_middle, ZoneType::Bedroom);
+        apply_room_quality_thoughts(&mut world, pop_elite, ZoneType::Bedroom);
+
+        let mem_labor = world.get::<Memories>(pop_labor).unwrap();
+        let mem_middle = world.get::<Memories>(pop_middle).unwrap();
+        let mem_elite = world.get::<Memories>(pop_elite).unwrap();
+
+        assert!(mem_labor.items.iter().any(|m| m.memory_type == MemoryType::SleptInLegendaryRoom));
+        assert!(mem_middle.items.iter().any(|m| m.memory_type == MemoryType::SleptInGreatRoom));
+        assert!(mem_elite.items.iter().any(|m| m.memory_type == MemoryType::SleptInDecentRoom));
+    }
+
+    #[test]
+    fn test_calculate_room_quality_max_room_size() {
+        let mut world = setup_world();
+        let mut zones = world.resource_mut::<ZoneGrid>();
+
+        // Create a massive room (bigger than MAX_ROOM_SIZE)
+        for x in 0..10 {
+            for y in 0..10 {
+                zones.set(x, y, ZoneType::Bedroom);
+            }
+        }
+
+        let quality = calculate_room_quality(&mut world, GridPosition { x: 5, y: 5 });
+
+        // Since it's too big, it should NOT get the enclosure bonus (multiplier remains 1.0)
+        // Space score will be at least MAX_ROOM_SIZE
+        assert!(quality >= 50.0);
+    }
+
+    #[test]
+    fn test_calculate_room_quality_not_enclosed() {
+        let mut world = setup_world();
+        let mut zones = world.resource_mut::<ZoneGrid>();
+
+        zones.set(1, 1, ZoneType::Bedroom);
+
+        // No walls => not enclosed => multiplier is 1.0
+
+        let quality = calculate_room_quality(&mut world, GridPosition { x: 1, y: 1 });
+
+        // Base is 1.0. No beauty. Mult is 1.0. Quality = 1.0.
+        assert_eq!(quality, 1.0);
+    }
+
+    #[test]
+    fn test_calculate_room_quality_unsupported_zone() {
+        let mut world = setup_world();
+        let pop = world.spawn((Pop, GridPosition { x: 0, y: 0 }, Memories::default())).id();
+
+        // Unsupported zone (e.g. Pasture) should return early and not add any memories.
+        apply_room_quality_thoughts(&mut world, pop, ZoneType::Pasture);
+
+        let memories = world.get::<Memories>(pop).unwrap();
+        assert!(memories.items.is_empty(), "Should not add memories for unsupported zones");
+    }
+
+    #[test]
+    fn test_apply_thought_missing_pos() {
+        let mut world = setup_world();
+        let pop = world.spawn((Pop, Memories::default())).id(); // No GridPosition
+
+        apply_room_quality_thoughts(&mut world, pop, ZoneType::Bedroom);
+
+        let memories = world.get::<Memories>(pop).unwrap();
+        assert!(memories.items.is_empty(), "Should not add memories if pop has no position");
+    }
 }

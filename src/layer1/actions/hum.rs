@@ -43,3 +43,46 @@ pub(crate) fn evaluate_listen_to_hum(
 
     (ActionType::ListenToTheHum, best_score, best_target)
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::layer1::map::GridPosition;
+    use crate::layer1::psychology::traits::Traits;
+    use crate::layer1::utility_types::UtilityWeights;
+
+    #[test]
+    fn test_evaluate_listen_to_hum() {
+        let mut data = PopEvalData::test_instance();
+        data.pos = GridPosition { x: 0, y: 0 };
+        data.weights = UtilityWeights::default();
+
+        let mut buffer = UtilityAIBuffer::default();
+        buffer.hum_sources.push(ScorableCandidate {
+            entity: Entity::from_raw(1),
+            pos: GridPosition { x: 1, y: 1 },
+            capacity: 10,
+            usage: 0,
+            score_bonus: 2.0, // Intensity
+            resource_type: None,
+            item_type: None,
+            is_advanced_tech: false,
+        });
+
+        // No sensitive trait => Score 0
+        let (action, score, target) = evaluate_listen_to_hum(&data, &buffer);
+        assert_eq!(action, ActionType::ListenToTheHum);
+        assert_eq!(score, 0.0);
+        assert_eq!(target, None);
+
+        // Add Sensitive trait
+        let mut traits = Traits::default();
+        traits.add(Trait::Sensitive);
+        data.traits = Some(traits);
+
+        let (action2, score2, target2) = evaluate_listen_to_hum(&data, &buffer);
+        assert_eq!(action2, ActionType::ListenToTheHum);
+        assert!(score2 > 0.0, "Score should be positive with sensitive trait");
+        assert_eq!(target2, Some(Entity::from_raw(1)));
+    }
+}

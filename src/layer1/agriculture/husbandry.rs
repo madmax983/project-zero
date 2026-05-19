@@ -371,4 +371,114 @@ mod tests {
             .count();
         assert!(items > 0, "Should produce resource");
     }
+
+    #[test]
+    fn test_husbandry_production_system_timer_decrements() {
+        let mut world = setup_world();
+
+        let animal = world
+            .spawn((
+                Fauna {
+                    fauna_type: FaunaType::SpaceRat,
+                    ..Default::default()
+                },
+                Tame {
+                    produce_timer: 10,
+                    ..Default::default()
+                },
+                GridPosition { x: 0, y: 0 },
+            ))
+            .id();
+
+        husbandry_production_system(&mut world);
+
+        let tame = world.get::<Tame>(animal).unwrap();
+        assert_eq!(tame.produce_timer, 9, "Timer should decrement");
+    }
+
+    #[test]
+    fn test_husbandry_production_system_no_production() {
+        let mut world = setup_world();
+
+        let _animal = world
+            .spawn((
+                Fauna {
+                    fauna_type: FaunaType::Wolf, // Wolves do not produce milk
+                    ..Default::default()
+                },
+                Tame {
+                    produce_timer: 0,
+                    ..Default::default()
+                },
+                GridPosition { x: 0, y: 0 },
+            ))
+            .id();
+
+        husbandry_production_system(&mut world);
+
+        let items = world
+            .query::<&crate::layer1::resources::ResourceItem>()
+            .iter(&world)
+            .count();
+        assert_eq!(items, 0, "Wolves should not produce resources");
+    }
+
+    #[test]
+    fn test_tame_execution_system_success() {
+        let mut world = setup_world();
+        let mut schedule = Schedule::default();
+        schedule.add_systems(tame_execution_system);
+
+        let mut skills = Skills::default();
+        skills.add_xp(SkillType::Husbandry, 1000.0);
+        let tamer = world.spawn((Pop, skills)).id();
+
+        let animal_pos = GridPosition { x: 5, y: 5 };
+        let animal = world
+            .spawn((
+                Fauna {
+                    fauna_type: FaunaType::Wolf,
+                    state: FaunaState::Wander,
+                    ..Default::default()
+                },
+                animal_pos,
+            ))
+            .id();
+
+        let designation = world.spawn(animal_pos).id();
+        world.entity_mut(tamer).insert(crate::layer1::execution::MovementTarget {
+            target_entity: designation,
+            target_position: animal_pos,
+            for_action: ActionType::Tame,
+        });
+        world.entity_mut(tamer).insert(crate::layer1::execution::AtTarget);
+
+        schedule.run(&mut world);
+
+        assert!(world.get::<Tame>(animal).is_some());
+        assert!(world.get_entity(designation).is_err(), "Designation should be removed");
+    }
+
+    #[test]
+    fn test_tame_execution_system_missing_designation() {
+        let mut world = setup_world();
+        let mut schedule = Schedule::default();
+        schedule.add_systems(tame_execution_system);
+
+        let mut skills = Skills::default();
+        skills.add_xp(SkillType::Husbandry, 1000.0);
+        let tamer = world.spawn((Pop, skills)).id();
+
+        let designation = Entity::from_raw(999); // Does not exist
+        world.entity_mut(tamer).insert(crate::layer1::execution::MovementTarget {
+            target_entity: designation,
+            target_position: GridPosition { x: 5, y: 5 },
+            for_action: ActionType::Tame,
+        });
+        world.entity_mut(tamer).insert(crate::layer1::execution::AtTarget);
+
+        schedule.run(&mut world);
+
+        assert!(world.get::<crate::layer1::execution::MovementTarget>(tamer).is_none());
+    }
 }

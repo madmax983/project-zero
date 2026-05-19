@@ -363,4 +363,33 @@ mod tests {
         assert_eq!(action, ActionType::Vandalize);
         assert_eq!(target, None); // Should default to None since no structures exist
     }
+
+    #[test]
+    fn test_target_selection_logic_food_stockpile_closer_than_farm() {
+        let mut data = default_pop_eval_data();
+        let mut buffer = default_buffer();
+
+        data.mental_state = Some(MentalState::Broken(MentalBreakType::Binge));
+
+        // Close stockpile
+        let close_stockpile = Entity::from_raw(20);
+        buffer.stockpiles.push(ScorableCandidate::new(
+            close_stockpile,
+            GridPosition { x: 5, y: 0 },
+        ));
+
+        // Far farm
+        let far_farm = Entity::from_raw(30);
+        buffer.farms.push(ScorableCandidate::new(
+            far_farm,
+            GridPosition { x: 0, y: 15 },
+        ));
+
+        let result = evaluate_mental_break(&data, &buffer);
+        assert!(result.is_some());
+        let (action, _, target) = result.unwrap();
+
+        assert_eq!(action, ActionType::Binge);
+        assert_eq!(target, Some(close_stockpile)); // stockpile is closer
+    }
 }
