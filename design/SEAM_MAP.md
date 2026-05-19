@@ -1,3 +1,9 @@
+### INT-473: Bureaucratic Redlining Integration
+- **Date:** 2026-06-25
+- **Systems connected:** `bureaucratic_redlining_system`, `apply_squatter_visuals_system`, `stateless_squatter_raid_system`, `stateless_expansion_system`
+- **Glue added:** Registered systems in `src/layer1/systems/economy.rs`.
+- **Tests:** `tests/integration/bureaucratic_redlining.rs`
+
 ### INT-1087: Embezzlement Architecture -> Chronicle
 - **Date:** 2026-05-07
 - **Systems connected:** `process_embezzlement` -> `embezzlement_chronicle_bridge` -> `AddChronicleEvent`

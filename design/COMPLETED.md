@@ -594,3 +594,5 @@
 - [x] `681` Feral Logistics Network — `specs/681-feral-logistics-network.md` — completed 2026-05-19
 
 - [x] `473` Bureaucratic Redlining — `specs/473-bureaucratic-redlining.md` — completed 2026-06-25
+
+- [x] `INT-473` Integration: Bureaucratic Redlining -> Stateless Economy - completed 2026-06-25
