@@ -20248,3 +20248,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** How do you handle a rebellion that holds your infrastructure hostage but refuses to actually fight you? Do you meet their extortionate demands or spend years and fortunes building redundant, independent systems?
 
 ---
+## Emotional Cartography
+
+**Layer:** 1 / 2
+
+**Fantasy:** The physical map is reshaped by the collective trauma or joy of the colony.
+
+**Mechanic:** Areas where significant emotional events occur (mass celebrations, riots, tragic accidents) leave an "Emotional Imprint" on those specific map tiles. Over time, these imprints alter the local pathfinding weight. Pops seeking comfort might unconsciously path through "Joyous" zones, causing traffic jams, while "Traumatized" zones become dead areas that Pops refuse to walk through, cutting off vital thoroughfares.
+
+**Emergence:** Your most efficient central highway becomes a ghost town because a horrible mining accident happened there five years ago. To get goods across town, Pops are now taking a 20-minute detour through a winding residential district that recently hosted a highly successful colony-wide festival.
+
+**Tension:** Do you heavily penalize "irrational" pathfinding to maintain logistical efficiency, or let the emotional geography dictate city planning, requiring you to constantly redesign your infrastructure around the colony's feelings?
+
+---
+
+## The Sabotage Lottery
+
+**Layer:** 1 / 2
+
+**Fantasy:** Institutionalized rebellion as a pressure release valve.
+
+**Mechanic:** When systemic unrest reaches a critical but not quite revolutionary boiling point, the colony culture might spontaneously invent the "Sabotage Lottery." Once a cycle, a random, non-critical piece of infrastructure (a streetlamp, a specific hydroponics bed, a localized decorative statue) is democratically chosen by the Pops to be destroyed. If the administration allows the destruction to stand for 5 days without repairing it, overall unrest drops significantly. If they repair it immediately, unrest spikes violently.
+
+**Emergence:** You are desperately trying to beautify a sector to attract high-tier administrators, but the Sabotage Lottery keeps picking the expensive decorative statues you just built. You leave the broken statues as a sign of goodwill to the working class, but the visiting administrators are horrified by the "lawless vandalism" and refuse to move in.
+
+**Tension:** Do you tolerate a constant, low-level destruction of your own infrastructure to keep the peace, or enforce strict law and order and risk a full-scale bloody rebellion?
+
+---
+
+## The Mimetic Disease
+
+**Layer:** 1
+
+**Fantasy:** A virus of pure behavior that spreads through observation.
+
+**Mechanic:** A psychological condition where Pops involuntarily copy the last action they observed someone else performing. It is highly contagious but only visually. If a sick Pop sees someone eating, they will immediately stop what they are doing and try to eat. If they see someone sweeping, they will start sweeping. The disease clears naturally after a few days, but while active, it overrides all Utility AI.
+
+**Emergence:** A single infected Pop sees a guard patrolling. They start patrolling. Someone else sees them, and now three people are patrolling. Before you know it, an entire mining sector has abandoned the drills and is performing perfectly synchronized guard patrols around a pile of dirt, completely destroying your ore output for the week.
+
+**Tension:** Do you try to instantly quarantine patient zero (risking the guards catching it), or let it burn through the population naturally while hoping they accidentally mimic something useful?
+
+---
