@@ -30,9 +30,7 @@ pub fn cryptid_trace_system(
         cryptid.trace_timer.tick(time.delta());
         if cryptid.trace_timer.just_finished() {
             commands.spawn((
-                TraceItem {
-                    is_slime: true,
-                },
+                TraceItem { is_slime: true },
                 GridPosition { x: pos.x, y: pos.y },
             ));
         }
