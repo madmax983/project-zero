@@ -592,3 +592,5 @@
 - [x] `1083` Kinetic Excavation — `specs/1083-kinetic-excavation.md` — completed 2026-05-18
 - [x] `1065` Generational Linguistics — `specs/1065-generational-linguistics.md` — completed 2026-02-01
 - [x] `681` Feral Logistics Network — `specs/681-feral-logistics-network.md` — completed 2026-05-19
+
+- [x] `473` Bureaucratic Redlining — `specs/473-bureaucratic-redlining.md` — completed 2026-06-25

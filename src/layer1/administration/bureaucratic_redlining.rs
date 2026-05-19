@@ -25,6 +25,79 @@ pub fn bureaucratic_redlining_system(
     }
 }
 
+
+
+pub fn stateless_squatter_raid_system(
+    mut commands: Commands,
+    zone_grid: Res<ZoneGrid>,
+    pops: Query<(Entity, &GridPosition, &FactionMember), With<Pop>>,
+) {
+    let mut rng = rand::thread_rng();
+    use rand::Rng;
+
+    // Low chance to spawn a raid per tick
+    if rng.gen::<f32>() > 0.05 {
+        return;
+    }
+
+    // Find a stateless pop to initiate the raid
+    let mut stateless_pops = Vec::new();
+    for (entity, pos, faction_member) in pops.iter() {
+        if faction_member.faction_id == Some(FactionId::Stateless) {
+            stateless_pops.push((entity, *pos));
+        }
+    }
+
+    if stateless_pops.is_empty() {
+        return;
+    }
+
+    use rand::seq::SliceRandom;
+    if let Some(&(pop_entity, pos)) = stateless_pops.choose(&mut rng) {
+        // Find adjacent non-dezoned zones
+        let mut valid_targets = Vec::new();
+        for dx in -1..=1 {
+            for dy in -1..=1 {
+                if dx == 0 && dy == 0 {
+                    continue;
+                }
+                let nx = pos.x + dx;
+                let ny = pos.y + dy;
+
+                if nx >= 0 && ny >= 0 && zone_grid.get(nx, ny) != ZoneType::Dezoned && zone_grid.get(nx, ny) != ZoneType::None {
+                    valid_targets.push((nx, ny));
+                }
+            }
+        }
+
+        if !valid_targets.is_empty() {
+            // Draft the pop to simulate a raid hook
+            commands.entity(pop_entity).insert(crate::layer1::combat::Drafted);
+        }
+    }
+}
+
+#[derive(Component)]
+pub struct Squalor;
+
+pub fn apply_squatter_visuals_system(
+    mut commands: Commands,
+    zone_grid: Res<ZoneGrid>,
+    query: Query<(Entity, &GridPosition, Option<&Squalor>)>,
+) {
+    for (entity, pos, squalor) in query.iter() {
+        if zone_grid.get(pos.x, pos.y) == ZoneType::Dezoned {
+            if squalor.is_none() {
+                commands.entity(entity).insert(Squalor);
+            }
+        } else {
+            if squalor.is_some() {
+                commands.entity(entity).remove::<Squalor>();
+            }
+        }
+    }
+}
+
 pub fn stateless_expansion_system(
     mut zone_grid: ResMut<ZoneGrid>,
     security: Option<Res<crate::layer1::edicts::ColonyPolicies>>,
@@ -126,6 +199,75 @@ mod tests {
             Some(FactionId::Stateless),
             "Pop faction should be 'Stateless'"
         );
+    }
+
+
+    #[test]
+    fn test_apply_squatter_visuals_system() {
+        let mut world = World::new();
+
+        let mut zone_grid = ZoneGrid::new(10, 10);
+        zone_grid.set(5, 5, ZoneType::Dezoned); // Redlined zone
+        world.insert_resource(zone_grid);
+
+        let entity = world
+            .spawn((
+                GridPosition { x: 5, y: 5 },
+            ))
+            .id();
+
+        let _ = bevy_ecs::system::RunSystemOnce::run_system_once(
+            &mut world,
+            apply_squatter_visuals_system,
+        );
+
+        assert!(world.get::<Squalor>(entity).is_some(), "Entities in dezoned areas should get Squalor component");
+
+        // Now change it to normal zone and verify removal
+        let mut zone_grid2 = world.resource_mut::<ZoneGrid>();
+        zone_grid2.set(5, 5, ZoneType::None);
+
+        let _ = bevy_ecs::system::RunSystemOnce::run_system_once(
+            &mut world,
+            apply_squatter_visuals_system,
+        );
+
+        assert!(world.get::<Squalor>(entity).is_none(), "Entities in normal areas should lose Squalor component");
+    }
+
+    #[test]
+    fn test_stateless_squatter_raid_system() {
+        let mut world = World::new();
+
+        let mut zone_grid = ZoneGrid::new(10, 10);
+        zone_grid.set(5, 5, ZoneType::Dezoned); // Redlined zone
+        zone_grid.set(6, 5, ZoneType::Bedroom); // Adjacent normal zone
+        world.insert_resource(zone_grid);
+
+        let pop_entity = world
+            .spawn((
+                Pop,
+                FactionMember {
+                    faction_id: Some(FactionId::Stateless),
+                },
+                GridPosition { x: 5, y: 5 },
+            ))
+            .id();
+
+        // Run the system enough times to overcome RNG
+        let mut drafted = false;
+        for _ in 0..1000 {
+            let _ = bevy_ecs::system::RunSystemOnce::run_system_once(
+                &mut world,
+                stateless_squatter_raid_system,
+            );
+            if world.get::<crate::layer1::combat::Drafted>(pop_entity).is_some() {
+                drafted = true;
+                break;
+            }
+        }
+
+        assert!(drafted, "Stateless pop should eventually be drafted for a raid");
     }
 
     #[test]
