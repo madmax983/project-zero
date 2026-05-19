@@ -441,3 +441,6 @@ mod surgical_addiction_bridge;
 
 #[path = "integration/sleep_debt_repo_bridge.rs"]
 mod sleep_debt_repo_bridge;
+
+#[path = "integration/escape_pods_bridge.rs"]
+mod escape_pods_bridge;

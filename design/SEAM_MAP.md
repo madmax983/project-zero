@@ -1115,3 +1115,10 @@
 - **Systems connected:** `AnomalyDiscoveredEvent` -> `anomaly_discovered_chronicle_bridge` -> `AddChronicleEvent`
 - **Glue added:** Added `anomaly_discovered_chronicle_bridge` in `src/layer3/integration.rs` to monitor `AnomalyDiscoveredEvent` and emit `AddChronicleEvent`. Registered in `src/simulation.rs`.
 - **Tests:** `tests/integration/cartographic_delusion_bridge.rs`
+
+### INT-1127: Escape Pods -> Chronicle
+- **Date:** 2026-06-25
+- **Systems connected:** `process_lifeboat_launches` -> `escape_pods_chronicle_bridge`
+- **Glue added:** `escape_pods_chronicle_bridge` in `src/layer1/core/integration.rs`
+- **Schedule:** Chained in Update, escape pods launch before chronicle bridge
+- **Tests:** `tests/integration/escape_pods_bridge.rs`

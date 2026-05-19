@@ -11,6 +11,8 @@ pub fn register(schedule: &mut Schedule) {
     );
     schedule.add_systems(
         (
+            crate::layer1::core::integration::escape_pods_chronicle_bridge
+                .after(crate::layer1::actions::escape::process_lifeboat_launches),
             crate::layer1::tech::rogue_automation_cults::rogue_cult_formation_system,
             crate::layer1::tech::rogue_automation_cults::cult_priority_override_system,
             crate::layer1::core::integration::rogue_cult_chronicle_bridge,

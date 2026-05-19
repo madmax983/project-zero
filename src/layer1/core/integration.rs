@@ -2264,3 +2264,16 @@ pub fn repo_man_arrival_bridge(
         });
     }
 }
+
+/// INT-1127: Bridges the spawning of a `DistressSignal` (Escape Pods) to AddChronicleEvent (Chronicle).
+pub fn escape_pods_chronicle_bridge(
+    query: Query<Entity, Added<crate::layer1::actions::escape::DistressSignal>>,
+    mut chronicle_events: EventWriter<crate::layer1::core::chronicle::AddChronicleEvent>,
+) {
+    for _ in query.iter() {
+        chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
+            text: "Escape Pods launched into orbit! The situation has become dire.".to_string(),
+            importance: crate::layer1::core::chronicle::EventImportance::Major,
+        });
+    }
+}
