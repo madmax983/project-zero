@@ -216,6 +216,10 @@ fn init_simulation_resources(world: &mut World) {
     world.init_resource::<Events<crate::layer1::environment::disasters::DisasterEvent>>();
 
     world.init_resource::<Events<crate::layer2::trade::biomass_tariff::TradeDeal>>();
+    world
+        .init_resource::<Events<crate::layer2::trade::feral_logistics::FeralDeliveryTriggerEvent>>(
+        );
+    world.init_resource::<crate::layer2::trade::feral_logistics::FeralLogisticsNetwork>();
     world.init_resource::<Events<crate::layer1::geodetic::GolemFormedEvent>>();
 
     world.init_resource::<crate::layer3::market::GalacticMarket>();
@@ -562,6 +566,7 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
     schedule.add_systems((
         crate::layer2::trade::biomass_tariff::process_biomass_tariff_system
             .after(crate::layer2::integration::post_trade_route_sync_system),
+        crate::layer2::trade::feral_logistics::process_feral_logistics,
         crate::layer2::trade::penal_contracts::process_penal_contracts_system,
         crate::layer2::trade::penal_contracts::check_prisoner_status_system,
         crate::layer2::integration::penal_funds_to_resources_system,
@@ -905,6 +910,8 @@ mod tests {
         world.init_resource::<Events<crate::layer1::agony_extract::HarvestAgonyExtractEvent>>();
         world.init_resource::<crate::layer1::agony_extract::AgonyExtractConfig>();
         world.init_resource::<Events<crate::layer2::trade::biomass_tariff::TradeDeal>>();
+        world.init_resource::<Events<crate::layer2::trade::feral_logistics::FeralDeliveryTriggerEvent>>();
+        world.init_resource::<crate::layer2::trade::feral_logistics::FeralLogisticsNetwork>();
         world.init_resource::<Events<crate::layer1::geodetic::GolemFormedEvent>>();
         world.init_resource::<crate::layer3::council::GalacticCouncil>();
         world.init_resource::<crate::layer3::market::GalacticMarket>();

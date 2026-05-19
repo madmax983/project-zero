@@ -3,6 +3,7 @@
 //! Handles inter-system trade, trade routes, tariffs, and blockades.
 
 pub mod biomass_tariff;
+pub mod feral_logistics;
 
 pub use biomass_tariff::*;
 pub mod blockade;
