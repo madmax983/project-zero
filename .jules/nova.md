@@ -52,3 +52,8 @@
 **Concept:** Added `hoarder_sleepwalking` module. While a Pop is `Sleepwalking` (mental break), if they have a `PrivateStash`, they passively siphon a tiny amount of food from the global `ColonyResources` into their stash without realizing it.
 **Fate:** Merged
 **Lesson:** Connects the psychology system (Sleepwalking mental break) with the micro-economy (PrivateStash). Sleepwalking isn't just about wandering into hazards anymore; it actively drains colony resources into hidden caches.
+
+## [Vermin Wheel]
+**Concept:** Added a `VerminWheel` building component that harvests power from `VerminState`. Connects the pest infestation mechanic with the energy grid.
+**Fate:** Merged
+**Lesson:** Turns a pure penalty (rats) into a toxic resource (free power). It creates a "rat farming" meta where players might intentionally let their colony get slightly infested just to power their base, but risk it spiraling out of control.

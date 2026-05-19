@@ -152,3 +152,6 @@ pub mod cassandra_warning;
 pub mod hoarder_sleepwalking;
 #[cfg(feature = "nova")]
 pub mod weather_madness;
+
+#[cfg(feature = "nova")]
+pub mod vermin_wheel;
