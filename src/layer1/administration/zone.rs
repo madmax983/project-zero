@@ -38,6 +38,8 @@ pub enum ZoneType {
     Extraterritorial,
     /// Customs checkpoint for vetting new arrivals.
     Customs,
+    /// Redlined zone where pops become Stateless.
+    Dezoned,
 }
 
 /// Resource storing the grid of zones.

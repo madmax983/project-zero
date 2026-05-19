@@ -85,6 +85,8 @@ pub enum FactionId {
     SubLithic,
     /// Society obsessed with achieving the Culinary Singularity.
     Gastronomers,
+    /// Pops living in redlined/dezoned areas who stop paying taxes.
+    Stateless,
 }
 
 /// Data associated with a faction.
@@ -307,6 +309,9 @@ pub fn update_faction_satisfaction_system(
 
     // 2. Count members
     for member in &member_query {
+        if member.faction_id == Some(FactionId::Stateless) {
+            continue; // Stateless pops are not counted in normal faction satisfaction mechanics
+        }
         if let Some(data) = member.faction_id.and_then(|id| factions.map.get_mut(&id)) {
             data.members_count += 1;
         }
