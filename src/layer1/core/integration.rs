@@ -2264,3 +2264,16 @@ pub fn repo_man_arrival_bridge(
         });
     }
 }
+
+/// Bridges `EmbezzlementEvent` to `AddChronicleEvent`.
+pub fn embezzlement_chronicle_bridge(
+    mut events: EventReader<crate::layer1::architecture::embezzlement::EmbezzlementEvent>,
+    mut chronicle_events: EventWriter<AddChronicleEvent>,
+) {
+    for event in events.read() {
+        chronicle_events.send(AddChronicleEvent {
+            text: format!("A corrupt governor secretly embezzled {} materials to build a hidden parasitic structure in the colony.", event.embezzled_amount),
+            importance: EventImportance::Minor,
+        });
+    }
+}

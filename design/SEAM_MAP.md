@@ -1,3 +1,9 @@
+### INT-1087: Embezzlement Architecture -> Chronicle
+- **Date:** 2026-05-07
+- **Systems connected:** `process_embezzlement` -> `embezzlement_chronicle_bridge` -> `AddChronicleEvent`
+- **Glue added:** `embezzlement_chronicle_bridge` in `src/layer1/core/integration.rs`
+- **Schedule:** Added to `Layer1SystemSet::Environment`
+- **Tests:** `tests/integration/embezzlement_architecture_bridge.rs`
 ### INT-1237: Invasive Bureaucracy Nodes -> Empire Stability
 - **Date:** 2026-10-31
 - **Systems connected:** `expand_bureaucracy_nodes_system` -> `calculate_bureaucracy_stability_system`
