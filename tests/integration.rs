@@ -303,6 +303,8 @@ mod orbital_commute_bridge;
 mod orphaned_edict_bridge;
 #[path = "integration/parasitic_architecture_bridge.rs"]
 mod parasitic_architecture_bridge;
+#[path = "integration/embezzlement_architecture_bridge.rs"]
+mod embezzlement_architecture_bridge;
 #[path = "integration/pheromone_gardening_bridge.rs"]
 mod pheromone_gardening_bridge;
 #[path = "integration/sleep_hallucination_bridge.rs"]
