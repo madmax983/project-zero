@@ -20206,3 +20206,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you spend massive resources constantly replacing slightly faulty equipment with brand new parts, or allow cheap, jury-rigged repairs that slowly culturally cement into highly inefficient, mandatory work rituals?
 
 ---
+
+## The Architecture of Apologies
+
+**Layer:** 1 / 2 / 3
+
+**Fantasy:** Grand political gestures and the physical manifestation of guilt and diplomacy.
+
+**Mechanic:** Building statues or monuments specifically dedicated to rival factions, historically marginalized groups, or victims of past colony disasters serves as a powerful diplomatic resource. These "Apology Monuments" slowly repair broken relationships and ease tensions with the targeted group, but generate significant, escalating unrest among hardline loyalists or the original perpetrators.
+
+**Emergence:** You accidentally cause a massive famine in a lower-class district. To avoid an armed rebellion, you build a massive, expensive memorial to the victims right in the center of the upper-class district. The lower-class rebellion is averted, but the upper class, enraged by the constant reminder of the disaster and the loss of prime real estate, hires mercenaries to tear the statue down, starting a different war entirely.
+
+**Tension:** Do you permanently alter your city's landscape and anger your core supporters to make amends for past mistakes, or double down and ignore the simmering resentment of the victims?
+
+---
+
+## Generational Artifact Hoarding
+
+**Layer:** 1
+
+**Fantasy:** Mundane tools becoming sacred relics through survival and utility.
+
+**Mechanic:** Individual Pops develop intense attachments to specific, everyday items they use to complete critical tasks (e.g., a simple wrench used to repair a failing life-support system during a crisis). These items gain a "Legacy" tag. When the Pop dies, the item is passed down to their descendants or apprentices, gaining massive cultural and morale-boosting significance, but causing extreme unrest if confiscated by the colony or lost.
+
+**Emergence:** A master engineer's great-granddaughter is a terrible mechanic, but she inherited the "Saviour's Welder" from the founder. You try to confiscate it to give to your actual best engineer to finish a critical reactor repair. The confiscation triggers a massive strike among the entire engineering guild, who view it as sacrilege. The reactor goes unrepaired, and the colony loses power.
+
+**Tension:** Do you let vital, highly effective tools sit unused as religious artifacts, or optimize your resource distribution at the cost of destroying your colonists' cultural heritage?
+
+---
+
+## Orphaned Infrastructure Rebellion
+
+**Layer:** 1 / 2
+
+**Fantasy:** Political schisms physically breaking the city apart.
+
+**Mechanic:** In the event of a severe political splintering or prolonged neglect, isolated sectors of the colony may physically rebel without firing a shot. They refuse to connect their power grids, water lines, or life support systems to the main hub, forming stubborn micro-states. Reintegration requires diplomatic negotiation, resource concessions, or specialized espionage, rather than simple military conquest.
+
+**Emergence:** You expand too quickly, ignoring the needs of an outer mining sector. They declare independence, but instead of attacking, they just cut the massive power conduits connecting them to the capital. They have their own geothermal power, so they are fine, but your capital suddenly loses 40% of its energy grid. You can't just bomb them, because you need those power conduits intact. You are forced to negotiate trade deals with your own former citizens just to keep the lights on.
+
+**Tension:** How do you handle a rebellion that holds your infrastructure hostage but refuses to actually fight you? Do you meet their extortionate demands or spend years and fortunes building redundant, independent systems?
+
+---
