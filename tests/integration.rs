@@ -441,3 +441,5 @@ mod surgical_addiction_bridge;
 
 #[path = "integration/sleep_debt_repo_bridge.rs"]
 mod sleep_debt_repo_bridge;
+#[path = "integration/symbiotic_parasite_bridge.rs"]
+mod symbiotic_parasite_bridge;
