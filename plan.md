@@ -1,8 +1,17 @@
-1. Use `run_in_bash_session` with a Python script to patch `src/layer1/mind/utility_types.rs` by injecting `test_assignment_type_variants` inside `mod tests`.
-   - The test will explicitly check that `AssignmentType::FarmWorker`, `AssignmentType::TavernVisitor`, and `AssignmentType::HousingResident` do not equal each other.
-2. Use `tail -n 20 src/layer1/mind/utility_types.rs` to verify the new test was correctly injected into the test module.
-3. Run `cargo test test_assignment_type_variants` to verify the new test passes and proves that the enum variants are distinct correctly.
-4. Complete pre-commit steps
-   - Complete pre-commit steps to ensure proper testing, verification, review, and reflection are done.
-5. Submit the change.
-   - Run `cargo fmt`, `cargo clippy`, and `cargo test` and submit the PR with a descriptive title format `🛡️ Sentry: [test coverage improvement]`.
+1. **Explore & Verify:**
+    - I have already explored the spec `specs/1062-the-biological-stock-market.md` and claimed the task in `design/BACKLOG.md` and `design/IN_PROGRESS.md`.
+    - I've implemented the `src/layer3/economy/biological_stock_market/mod.rs` and `src/layer3/economy/biological_stock_market/tests.rs` with TDD RED -> GREEN phases.
+    - I've updated `src/layer3/mod.rs` to include `pub mod economy;` and created `src/layer3/economy/mod.rs` to export the new module.
+2. **Refactor Phase:**
+    - I have applied the BTreeMap refactoring from the spec's REFACTOR Phase.
+    - Added tests and ensured the tests passed.
+3. **Run Clippy & Tests:**
+    - I have run `cargo clippy -- -D warnings` and addressed issues.
+    - I have run `cargo test` and ensured all tests pass.
+    - I ran `cargo llvm-cov` and coverage is 90%, exceeding the 85% requirement.
+4. **Pre-commit:**
+    - Complete pre-commit steps to make sure proper testing, verifications, reviews and reflections are done.
+5. **Mark as Complete:**
+    - I will update `design/IN_PROGRESS.md` and `design/COMPLETED.md` to move the task to completed.
+6. **Submit Code:**
+    - I will run the `submit` tool to push the changes.
