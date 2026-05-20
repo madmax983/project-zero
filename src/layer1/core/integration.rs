@@ -2277,3 +2277,28 @@ pub fn embezzlement_chronicle_bridge(
         });
     }
 }
+
+/// INT-1114: Bridges GenerationalAmnesia to AddChronicleEvent
+pub fn generational_amnesia_chronicle_bridge(
+    query: Query<&crate::layer1::psychology::generational_amnesia::GenerationalAmnesia>,
+    mut chronicle_events: EventWriter<crate::layer1::core::chronicle::AddChronicleEvent>,
+    mut last_logged: Local<bool>,
+) {
+    let mut high_amnesia = false;
+    for amnesia in query.iter() {
+        if amnesia.current_amnesia >= 90.0 {
+            high_amnesia = true;
+            break;
+        }
+    }
+
+    if high_amnesia && !*last_logged {
+        chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
+            importance: crate::layer1::core::chronicle::EventImportance::Major,
+            text: "Generational amnesia has reached a critical level. Our past is forgotten.".to_string(),
+        });
+        *last_logged = true;
+    } else if !high_amnesia {
+        *last_logged = false;
+    }
+}

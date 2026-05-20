@@ -213,3 +213,29 @@ pub fn anomaly_discovered_chronicle_bridge(
         });
     }
 }
+
+/// INT-681: Bridges FeralDeliveryTriggerEvent to AddChronicleEvent
+pub fn feral_logistics_chronicle_bridge(
+    mut events: EventReader<crate::layer2::trade::feral_logistics::FeralDeliveryTriggerEvent>,
+    mut chronicle_events: EventWriter<AddChronicleEvent>,
+) {
+    for _ in events.read() {
+        chronicle_events.send(AddChronicleEvent {
+            importance: EventImportance::Major,
+            text: "The Feral Network has dropped mysterious cargo.".to_string(),
+        });
+    }
+}
+
+/// INT-1060: Bridges StrandedEvent to AddChronicleEvent
+pub fn stranded_fleet_chronicle_bridge(
+    mut events: EventReader<crate::layer2::ship::logistics::StrandedEvent>,
+    mut chronicle_events: EventWriter<AddChronicleEvent>,
+) {
+    for _ in events.read() {
+        chronicle_events.send(AddChronicleEvent {
+            importance: EventImportance::Major,
+            text: "A fleet is stranded in deep space. Distress beacons activated.".to_string(),
+        });
+    }
+}

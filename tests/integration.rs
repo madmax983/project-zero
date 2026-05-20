@@ -447,3 +447,12 @@ mod surgical_addiction_bridge;
 mod sleep_debt_repo_bridge;
 #[path = "integration/symbiotic_parasite_bridge.rs"]
 mod symbiotic_parasite_bridge;
+
+#[path = "integration/feral_logistics_chronicle.rs"]
+mod feral_logistics_chronicle;
+#[path = "integration/rocket_equation_chronicle.rs"]
+mod rocket_equation_chronicle;
+#[path = "integration/generational_amnesia_bridge.rs"]
+mod generational_amnesia_bridge;
+#[path = "integration/biological_stock_market_bridge.rs"]
+mod biological_stock_market_bridge;

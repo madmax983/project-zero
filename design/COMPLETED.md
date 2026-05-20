@@ -599,3 +599,8 @@
 - [x] `1062` The Biological Stock Market — `specs/1062-the-biological-stock-market.md` — completed 2026-05-20
 - [x] `1060` The Rocket Equation — `specs/1060-the-rocket-equation.md` — completed 2026-05-20
 - [x] `1114` Generational Amnesia — `specs/1114-generational-amnesia.md` — completed 2026-05-20
+
+- [x] `INT-681` Integration: Feral Logistics Network -> Chronicle - completed 2026-05-20
+- [x] `INT-1060` Integration: The Rocket Equation -> Chronicle - completed 2026-05-20
+- [x] `INT-1114` Integration: Generational Amnesia -> Chronicle - completed 2026-05-20
+- [x] `INT-1062` Integration: Biological Stock Market -> Market Demand - completed 2026-05-20
