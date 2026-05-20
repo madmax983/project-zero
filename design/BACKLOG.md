@@ -713,7 +713,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1111` The Void Stare — `specs/1111-the-void-stare.md`
 - [ ] `1112` Tectonic Fracking — `specs/1112-tectonic-fracking.md`
 - [ ] `1113` The Fossilized Fleet — `specs/1113-the-fossilized-fleet.md`
-- [ ] `1114` Generational Amnesia — `specs/1114-generational-amnesia.md`
 
 - [ ] `1118` The Tether Stump — `specs/1118-the-tether-stump.md`
 - [ ] `1121` Generational Grudges — `specs/1121-generational-grudges.md`
