@@ -11,7 +11,7 @@ layer1/actions/clean.rs                                 157                 1   
 layer1/actions/clothing.rs                               35                 4    88.57%           1                 0   100.00%          28                 3    89.29%           0                 0         -
 layer1/actions/drafted.rs                                37                 1    97.30%           3                 0   100.00%          28                 0   100.00%           0                 0         -
 layer1/actions/escape.rs                                 78                 0   100.00%           3                 0   100.00%          49                 0   100.00%           0                 0         -
-layer1/actions/gossip.rs                                 36                13    63.89%           1                 0   100.00%          27                11    59.26%           0                 0         -
+layer1/actions/gossip.rs                                 36                14    61.11%           1                 0   100.00%          27                12    55.56%           0                 0         -
 layer1/actions/haul.rs                                  278                19    93.17%          10                 1    90.00%         227                17    92.51%           0                 0         -
 layer1/actions/hum.rs                                    34                 1    97.06%           2                 0   100.00%          29                 0   100.00%           0                 0         -
 layer1/actions/mental_break.rs                          355                 3    99.15%          11                 0   100.00%         264                 0   100.00%           0                 0         -
@@ -49,7 +49,7 @@ layer1/architecture/parasitic_architecture.rs           121                 0   
 layer1/architecture/resonant_architecture.rs             82                 2    97.56%           4                 0   100.00%          75                 4    94.67%           0                 0         -
 layer1/architecture/room_quality.rs                     377                44    88.33%           9                 0   100.00%         197                33    83.25%           0                 0         -
 layer1/architecture/ruins.rs                            151                14    90.73%           3                 0   100.00%          99                 4    95.96%           0                 0         -
-layer1/architecture/spontaneous_architecture.rs         352                 9    97.44%           7                 0   100.00%         262                 6    97.71%           0                 0         -
+layer1/architecture/spontaneous_architecture.rs         352                 8    97.73%           7                 0   100.00%         262                 6    97.71%           0                 0         -
 layer1/architecture/structure.rs                        410                32    92.20%          17                 0   100.00%         314                25    92.04%           0                 0         -
 layer1/architecture/sunk_cost_monument.rs               166                 8    95.18%           8                 1    87.50%         132                 5    96.21%           0                 0         -
 layer1/architecture/symbiotic_infrastructure.rs          77                 2    97.40%           5                 0   100.00%          79                 1    98.73%           0                 0         -
@@ -67,7 +67,7 @@ layer1/biology/cybernetic_ascendancy.rs                 119                 1   
 layer1/biology/cybernetics.rs                           185                10    94.59%           8                 0   100.00%         158                 5    96.84%           0                 0         -
 layer1/biology/gene_bank.rs                             254                12    95.28%          11                 1    90.91%         188                11    94.15%           0                 0         -
 layer1/biology/genetics/crop_modification.rs             72                 2    97.22%           4                 0   100.00%          60                 0   100.00%           0                 0         -
-layer1/biology/genetics/mod.rs                          154                 7    95.45%           4                 0   100.00%         123                10    91.87%           0                 0         -
+layer1/biology/genetics/mod.rs                          154                10    93.51%           4                 0   100.00%         123                10    91.87%           0                 0         -
 layer1/biology/genetics/splicers_dilemma.rs             151                 6    96.03%           6                 0   100.00%         101                 3    97.03%           0                 0         -
 layer1/biology/grafting.rs                               74                 1    98.65%           2                 0   100.00%          50                 0   100.00%           0                 0         -
 layer1/biology/gut_biome.rs                             186                 2    98.92%          12                 0   100.00%         119                 2    98.32%           0                 0         -
@@ -83,16 +83,16 @@ layer1/combat.rs                                        586                23   
 layer1/construction/great_works.rs                      228                 2    99.12%           8                 0   100.00%         169                 2    98.82%           0                 0         -
 layer1/core/ai_core.rs                                  211                 9    95.73%          10                 0   100.00%         208                 5    97.60%           0                 0         -
 layer1/core/chronicle.rs                                430                 9    97.91%          22                 2    90.91%         262                 6    97.71%           0                 0         -
-layer1/core/integration.rs                             1470               909    38.16%         112                15    86.61%        1715               814    52.54%           0                 0         -
+layer1/core/integration.rs                             1470               910    38.10%         112                15    86.61%        1715               815    52.48%           0                 0         -
 layer1/core/map.rs                                      248                 6    97.58%          16                 0   100.00%         160                 8    95.00%           0                 0         -
 layer1/corporate_sponsorship.rs                         122                12    90.16%           6                 0   100.00%         111                10    90.99%           0                 0         -
 layer1/crowding.rs                                      167                 5    97.01%          13                 0   100.00%          98                 3    96.94%           0                 0         -
 layer1/cryo.rs                                           55                 1    98.18%           3                 0   100.00%          61                 1    98.36%           0                 0         -
 layer1/cryo_prison.rs                                   116                 6    94.83%           6                 0   100.00%          83                 8    90.36%           0                 0         -
 layer1/culture/ancestral_graves.rs                       86                 3    96.51%           4                 0   100.00%          58                 1    98.28%           0                 0         -
-layer1/culture/animism.rs                               377                48    87.27%          18                 4    77.78%         360                35    90.28%           0                 0         -
+layer1/culture/animism.rs                               377                52    86.21%          18                 4    77.78%         360                37    89.72%           0                 0         -
 layer1/culture/art.rs                                   206                 5    97.57%          10                 2    80.00%         145                 3    97.93%           0                 0         -
-layer1/culture/artifacts/mod.rs                         198                 0   100.00%           9                 0   100.00%         145                 0   100.00%           0                 0         -
+layer1/culture/artifacts/mod.rs                         198                 1    99.49%           9                 0   100.00%         145                 0   100.00%           0                 0         -
 layer1/culture/artifacts/vr_pod.rs                      129                 0   100.00%           6                 0   100.00%         128                 0   100.00%           0                 0         -
 layer1/culture/astrology.rs                              94                 0   100.00%           5                 0   100.00%          83                 0   100.00%           0                 0         -
 layer1/culture/cultural_artifacts.rs                    118                 5    95.76%           7                 1    85.71%         100                 8    92.00%           0                 0         -
@@ -121,11 +121,11 @@ layer1/economy/mod.rs                                   158                11   
 layer1/economy/photophobic.rs                           114                12    89.47%           6                 0   100.00%         100                 7    93.00%           0                 0         -
 layer1/economy/refining.rs                              500                35    93.00%          21                 3    85.71%         505                42    91.68%           0                 0         -
 layer1/economy/remittances.rs                           133                 5    96.24%           7                 2    71.43%         103                 9    91.26%           0                 0         -
-layer1/economy/resources.rs                            1279               330    74.20%         110                48    56.36%        1119               271    75.78%           0                 0         -
+layer1/economy/resources.rs                            1279               339    73.49%         110                48    56.36%        1119               283    74.71%           0                 0         -
 layer1/economy/shadow_market.rs                         294                60    79.59%           9                 2    77.78%         224                53    76.34%           0                 0         -
 layer1/economy/smugglers_cove.rs                        105                 0   100.00%           6                 0   100.00%          76                 0   100.00%           0                 0         -
 layer1/economy/stockpile.rs                              90                 0   100.00%           8                 0   100.00%          95                 0   100.00%           0                 0         -
-layer1/economy/trade.rs                                 440                84    80.91%          14                 0   100.00%         325                62    80.92%           0                 0         -
+layer1/economy/trade.rs                                 440                83    81.14%          14                 0   100.00%         325                61    81.23%           0                 0         -
 layer1/energy/auroral.rs                                 24                 1    95.83%           1                 0   100.00%          17                 0   100.00%           0                 0         -
 layer1/energy/load_limits.rs                            162                 5    96.91%           6                 1    83.33%         125                 3    97.60%           0                 0         -
 layer1/energy/mod.rs                                    485                35    92.78%          17                 0   100.00%         397                21    94.71%           0                 0         -
@@ -164,7 +164,7 @@ layer1/execution/combat.rs                               95                 7   
 layer1/execution/demolish.rs                            407                40    90.17%          23                 2    91.30%         255                22    91.37%           0                 0         -
 layer1/execution/efficiency.rs                           15                 0   100.00%           1                 0   100.00%          15                 0   100.00%           0                 0         -
 layer1/execution/general_work.rs                        550                92    83.27%          22                 2    90.91%         407                51    87.47%           0                 0         -
-layer1/execution/mining.rs                              388                92    76.29%          12                 0   100.00%         257                48    81.32%           0                 0         -
+layer1/execution/mining.rs                              388               102    73.71%          12                 0   100.00%         257                50    80.54%           0                 0         -
 layer1/execution/movement.rs                            393                56    85.75%          19                 3    84.21%         363                31    91.46%           0                 0         -
 layer1/execution/sabotage.rs                            151                 0   100.00%           5                 0   100.00%         132                 0   100.00%           0                 0         -
 layer1/execution/vandalism.rs                            20                 0   100.00%           3                 0   100.00%          19                 0   100.00%           0                 0         -
@@ -173,7 +173,7 @@ layer1/exodus.rs                                         79                 7   
 layer1/fauna/mod.rs                                     426                87    79.58%          20                 4    80.00%         345                65    81.16%           0                 0         -
 layer1/fauna/modular.rs                                  27                 0   100.00%           6                 0   100.00%          23                 0   100.00%           0                 0         -
 layer1/fauna/shadow.rs                                  128                 2    98.44%           7                 0   100.00%         104                 1    99.04%           0                 0         -
-layer1/flora.rs                                         905                64    92.93%          35                 1    97.14%         737                41    94.44%           0                 0         -
+layer1/flora.rs                                         905                62    93.15%          35                 1    97.14%         737                41    94.44%           0                 0         -
 layer1/foundation_soil.rs                               190                 9    95.26%           5                 0   100.00%         110                 6    94.55%           0                 0         -
 layer1/geodetic.rs                                      211                14    93.36%           4                 0   100.00%         160                 7    95.62%           0                 0         -
 layer1/geography.rs                                     103                 1    99.03%           4                 0   100.00%          64                 1    98.44%           0                 0         -
@@ -184,7 +184,7 @@ layer1/graffiti.rs                                      302                11   
 layer1/haunted_assembly_lines.rs                        204                 6    97.06%           9                 1    88.89%         173                 3    98.27%           0                 0         -
 layer1/heirloom.rs                                      132                 8    93.94%           5                 0   100.00%         111                 5    95.50%           0                 0         -
 layer1/heirloom_tool.rs                                 143                 3    97.90%           5                 0   100.00%         101                 3    97.03%           0                 0         -
-layer1/hobby.rs                                         202                 5    97.52%           9                 0   100.00%         146                 4    97.26%           0                 0         -
+layer1/hobby.rs                                         202                 6    97.03%           9                 0   100.00%         146                 5    96.58%           0                 0         -
 layer1/hologram.rs                                       41                 1    97.56%           2                 0   100.00%          44                 0   100.00%           0                 0         -
 layer1/hum.rs                                           271                 7    97.42%          15                 0   100.00%         171                 5    97.08%           0                 0         -
 layer1/hygiene.rs                                       223                15    93.27%          11                 0   100.00%         228                21    90.79%           0                 0         -
@@ -236,7 +236,7 @@ layer1/nature/erosion.rs                                226                10   
 layer1/nature/fertility.rs                              255                 9    96.47%          17                 0   100.00%         180                 7    96.11%           0                 0         -
 layer1/nature/fire.rs                                   399                25    93.73%          19                 0   100.00%         288                11    96.18%           0                 0         -
 layer1/nature/megafauna_terrain.rs                      120                 4    96.67%           6                 0   100.00%         109                 2    98.17%           0                 0         -
-layer1/nature/mutagenic_rain.rs                         142                 5    96.48%           6                 0   100.00%         110                 3    97.27%           0                 0         -
+layer1/nature/mutagenic_rain.rs                         142                 8    94.37%           6                 0   100.00%         110                 4    96.36%           0                 0         -
 layer1/nature/psychoactive_weather.rs                   147                 3    97.96%           9                 0   100.00%         105                 3    97.14%           0                 0         -
 layer1/nature/radioactive.rs                            311                41    86.82%          17                 2    88.24%         233                24    89.70%           0                 0         -
 layer1/nature/seasons.rs                                174                 4    97.70%          12                 0   100.00%         117                 4    96.58%           0                 0         -
@@ -244,10 +244,10 @@ layer1/nature/solar.rs                                  196                 3   
 layer1/nature/temperature.rs                            542                23    95.76%          24                 1    95.83%         379                18    95.25%           0                 0         -
 layer1/nature/terrain.rs                                513                22    95.71%          21                 0   100.00%         267                17    93.63%           0                 0         -
 layer1/nature/water.rs                                  349                33    90.54%          18                 2    88.89%         213                24    88.73%           0                 0         -
-layer1/nature/weather.rs                                299                26    91.30%          12                 1    91.67%         237                30    87.34%           0                 0         -
+layer1/nature/weather.rs                                299                17    94.31%          12                 0   100.00%         237                16    93.25%           0                 0         -
 layer1/nature/wind.rs                                   485                52    89.28%          26                 3    88.46%         299                36    87.96%           0                 0         -
 layer1/notifications.rs                                 223                 1    99.55%          21                 0   100.00%         137                 0   100.00%           0                 0         -
-layer1/observatory.rs                                   307                 9    97.07%          11                 0   100.00%         228                 5    97.81%           0                 0         -
+layer1/observatory.rs                                   307                 8    97.39%          11                 0   100.00%         228                 4    98.25%           0                 0         -
 layer1/olfactory.rs                                     210                 4    98.10%          11                 2    81.82%         168                 2    98.81%           0                 0         -
 layer1/palette_fatigue.rs                               201                 7    96.52%          12                 1    91.67%         133                 8    93.98%           0                 0         -
 layer1/pathfinding.rs                                   798                54    93.23%          31                 1    96.77%         533                33    93.81%           0                 0         -
@@ -268,7 +268,7 @@ layer1/private_stash.rs                                 380                 5   
 layer1/prototyping.rs                                   178                 4    97.75%          12                 0   100.00%         128                 1    99.22%           0                 0         -
 layer1/psychology/cabin_fever.rs                        304                 2    99.34%          18                 0   100.00%         250                 1    99.60%           0                 0         -
 layer1/psychology/cryo_dreams.rs                        182                 1    99.45%           5                 0   100.00%         125                 1    99.20%           0                 0         -
-layer1/psychology/dreams.rs                             257                52    79.77%           8                 1    87.50%         210                36    82.86%           0                 0         -
+layer1/psychology/dreams.rs                             257                54    78.99%           8                 1    87.50%         210                38    81.90%           0                 0         -
 layer1/psychology/memory.rs                             274                17    93.80%          21                 0   100.00%         213                17    92.02%           0                 0         -
 layer1/psychology/needs.rs                              386                 6    98.45%          27                 0   100.00%         346                 5    98.55%           0                 0         -
 layer1/psychology/overview_effect.rs                    138                 4    97.10%           8                 0   100.00%          82                 6    92.68%           0                 0         -
@@ -276,13 +276,13 @@ layer1/psychology/pop_memories.rs                        76                 1   
 layer1/psychology/psionics.rs                           125                 3    97.60%           4                 0   100.00%          75                 1    98.67%           0                 0         -
 layer1/psychology/psychic.rs                            106                 2    98.11%           4                 0   100.00%          74                 2    97.30%           0                 0         -
 layer1/psychology/psychic_stains.rs                     193                16    91.71%           7                 0   100.00%         144                 9    93.75%           0                 0         -
-layer1/psychology/quirks.rs                              70                12    82.86%           6                 1    83.33%          68                12    82.35%           0                 0         -
+layer1/psychology/quirks.rs                              70                11    84.29%           6                 1    83.33%          68                11    83.82%           0                 0         -
 layer1/psychology/simulacrum.rs                         134                 1    99.25%          10                 0   100.00%         119                 1    99.16%           0                 0         -
-layer1/psychology/sleepwalking.rs                        91                 7    92.31%           5                 0   100.00%          65                 6    90.77%           0                 0         -
+layer1/psychology/sleepwalking.rs                        91                 8    91.21%           5                 0   100.00%          65                 7    89.23%           0                 0         -
 layer1/psychology/somnambulism.rs                       130                 6    95.38%           6                 0   100.00%         115                 2    98.26%           0                 0         -
 layer1/psychology/spiteful_will.rs                       99                 2    97.98%           6                 0   100.00%          79                 0   100.00%           0                 0         -
 layer1/psychology/stress.rs                             446                24    94.62%          18                 0   100.00%         385                13    96.62%           0                 0         -
-layer1/psychology/traits.rs                             640                79    87.66%          23                 1    95.65%         429                77    82.05%           0                 0         -
+layer1/psychology/traits.rs                             640                78    87.81%          23                 1    95.65%         429                75    82.52%           0                 0         -
 layer1/psychology/void_sickness.rs                      171                 3    98.25%           7                 0   100.00%         133                 2    98.50%           0                 0         -
 layer1/psychology/void_stare.rs                         252                19    92.46%          15                 0   100.00%         174                14    91.95%           0                 0         -
 layer1/purity.rs                                        242                 0   100.00%          15                 0   100.00%         131                 0   100.00%           0                 0         -
@@ -314,7 +314,7 @@ layer1/social/generational_dissonance.rs                141                 6   
 layer1/social/ghost_shift_strike.rs                     137                12    91.24%           5                 0   100.00%         104                 6    94.23%           0                 0         -
 layer1/social/golden_age.rs                             109                 6    94.50%           6                 0   100.00%          90                 2    97.78%           0                 0         -
 layer1/social/gossip_economy.rs                         259                 1    99.61%          13                 0   100.00%         261                 1    99.62%           0                 0         -
-layer1/social/grievances.rs                             427                99    76.81%          18                 3    83.33%         313                69    77.96%           0                 0         -
+layer1/social/grievances.rs                             427                61    85.71%          18                 3    83.33%         313                41    86.90%           0                 0         -
 layer1/social/hedonic_treadmill.rs                      133                 7    94.74%           7                 1    85.71%         126                 8    93.65%           0                 0         -
 layer1/social/hedonic_treadmill_integration.rs           23                19    17.39%           2                 1    50.00%          24                18    25.00%           0                 0         -
 layer1/social/indoctrination.rs                          94                 3    96.81%           3                 0   100.00%         101                 2    98.02%           0                 0         -
@@ -337,11 +337,11 @@ layer1/social/secret_societies.rs                        50                27   
 layer1/social/sentient_standard.rs                      145                 4    97.24%           5                 0   100.00%          89                 2    97.75%           0                 0         -
 layer1/social/social_mimicry.rs                         163                11    93.25%           9                 0   100.00%         135                10    92.59%           0                 0         -
 layer1/social/social_stratification.rs                  188                16    91.49%           8                 0   100.00%         156                 9    94.23%           0                 0         -
-layer1/social/society.rs                                256                 5    98.05%          14                 0   100.00%         162                 1    99.38%           0                 0         -
+layer1/social/society.rs                                256                 6    97.66%          14                 0   100.00%         162                 3    98.15%           0                 0         -
 layer1/social/sub_lithic.rs                             161                 3    98.14%           7                 0   100.00%         117                 1    99.15%           0                 0         -
 layer1/social/taboo.rs                                  193                 1    99.48%          14                 0   100.00%         124                 0   100.00%           0                 0         -
 layer1/social/unrest.rs                                 470                22    95.32%          21                 1    95.24%         360                12    96.67%           0                 0         -
-layer1/social/xenoflora_pet.rs                          167                 1    99.40%           7                 0   100.00%         158                 1    99.37%           0                 0         -
+layer1/social/xenoflora_pet.rs                          167                 0   100.00%           7                 0   100.00%         158                 0   100.00%           0                 0         -
 layer1/social/zero_g_sports.rs                          120                11    90.83%           3                 0   100.00%          76                 3    96.05%           0                 0         -
 layer1/sonic_suppression.rs                             194                 3    98.45%           6                 0   100.00%         162                 1    99.38%           0                 0         -
 layer1/spoilage.rs                                      157                 1    99.36%          10                 0   100.00%         130                 0   100.00%           0                 0         -
@@ -377,10 +377,10 @@ layer1/void_weed.rs                                      92                 2   
 layer1/whispering_ore.rs                                103                 5    95.15%           5                 0   100.00%          71                 2    97.18%           0                 0         -
 layer2/barnacles.rs                                     152                 1    99.34%           9                 0   100.00%         118                 0   100.00%           0                 0         -
 layer2/binary_star.rs                                   129                 5    96.12%           6                 0   100.00%          98                 3    96.94%           0                 0         -
-layer2/bombardment.rs                                   174                 8    95.40%           6                 0   100.00%         137                 3    97.81%           0                 0         -
+layer2/bombardment.rs                                   174                 7    95.98%           6                 0   100.00%         137                 2    98.54%           0                 0         -
 layer2/cartographers_curse.rs                           101                 1    99.01%           5                 0   100.00%          75                 0   100.00%           0                 0         -
 layer2/cascade/failure.rs                               120                11    90.83%           6                 0   100.00%         111                13    88.29%           0                 0         -
-layer2/combat.rs                                        293                22    92.49%          10                 0   100.00%         185                20    89.19%           0                 0         -
+layer2/combat.rs                                        293                51    82.59%          10                 0   100.00%         185                38    79.46%           0                 0         -
 layer2/culture/founder_effect.rs                        101                 2    98.02%           4                 0   100.00%          70                 1    98.57%           0                 0         -
 layer2/debris.rs                                         95                34    64.21%           5                 0   100.00%          79                21    73.42%           0                 0         -
 layer2/derelict_stations.rs                              81                 3    96.30%           3                 0   100.00%          59                 2    96.61%           0                 0         -
@@ -391,9 +391,9 @@ layer2/events_new/reverse_quarantine.rs                  18                 0   
 layer2/events_new/system_quarantine/mod.rs               18                 0   100.00%           2                 0   100.00%          15                 0   100.00%           0                 0         -
 layer2/exploration/void_whispers.rs                     107                 3    97.20%           5                 0   100.00%          87                 1    98.85%           0                 0         -
 layer2/fleet.rs                                         245                26    89.39%          16                 1    93.75%         179                 9    94.97%           0                 0         -
-layer2/generation.rs                                    326                 1    99.69%          12                 0   100.00%         202                 0   100.00%           0                 0         -
+layer2/generation.rs                                    326                 3    99.08%          12                 0   100.00%         202                 1    99.50%           0                 0         -
 layer2/governance.rs                                    156                 6    96.15%           8                 0   100.00%         132                 2    98.48%           0                 0         -
-layer2/integration.rs                                   452               234    48.23%          30                 1    96.67%         470               203    56.81%           0                 0         -
+layer2/integration.rs                                   452               235    48.01%          30                 1    96.67%         470               206    56.17%           0                 0         -
 layer2/megastructure.rs                                 105                 2    98.10%           6                 0   100.00%          88                 0   100.00%           0                 0         -
 layer2/mining.rs                                         92                12    86.96%           7                 1    85.71%          70                11    84.29%           0                 0         -
 layer2/moon_hermits.rs                                  171                 2    98.83%           5                 0   100.00%         124                 1    99.19%           0                 0         -
@@ -414,7 +414,7 @@ layer2/sensor_ambiguity.rs                              127                 4   
 layer2/sensors.rs                                       130                 3    97.69%           3                 0   100.00%          94                 3    96.81%           0                 0         -
 layer2/ship.rs                                          125                 7    94.40%          11                 0   100.00%          75                 5    93.33%           0                 0         -
 layer2/ship/logistics.rs                                164                 4    97.56%           6                 0   100.00%         128                 2    98.44%           0                 0         -
-layer2/silent_mutiny.rs                                 290                25    91.38%           9                 0   100.00%         219                18    91.78%           0                 0         -
+layer2/silent_mutiny.rs                                 290                29    90.00%           9                 0   100.00%         219                20    90.87%           0                 0         -
 layer2/skyhooks.rs                                      112                 3    97.32%           4                 0   100.00%         114                 3    97.37%           0                 0         -
 layer2/station.rs                                       307                28    90.88%          15                 0   100.00%         244                18    92.62%           0                 0         -
 layer2/system.rs                                         89                 0   100.00%           6                 0   100.00%          60                 0   100.00%           0                 0         -
@@ -476,7 +476,7 @@ shared/time.rs                                           79                 0   
 simulation.rs                                           951                 7    99.26%           9                 0   100.00%         813                 3    99.63%           0                 0         -
 ui/chronicle.rs                                          83                 2    97.59%           3                 0   100.00%          49                 2    95.92%           0                 0         -
 ui/input.rs                                            1223               282    76.94%          53                 6    88.68%         762               242    68.24%           0                 0         -
-ui/inspector.rs                                        2620               753    71.26%         114                27    76.32%        1544               433    71.96%           0                 0         -
+ui/inspector.rs                                        2619               752    71.29%         114                27    76.32%        1538               427    72.24%           0                 0         -
 ui/map.rs                                               898               688    23.39%          40                28    30.00%         633               500    21.01%           0                 0         -
 ui/menu.rs                                              195                 2    98.97%           6                 0   100.00%         109                 2    98.17%           0                 0         -
 ui/menu_state.rs                                        285                 2    99.30%          23                 0   100.00%         221                 0   100.00%           0                 0         -
@@ -500,4 +500,4 @@ ui/status.rs                                            722                48   
 ui/tech.rs                                              397                44    88.92%          14                 0   100.00%         213                24    88.73%           0                 0         -
 ui/world_history.rs                                     454                17    96.26%          18                 3    83.33%         251                12    95.22%           0                 0         -
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-TOTAL                                                110398             12710    88.49%        5106               403    92.11%       84618              9490    88.78%           0                 0         -
+TOTAL                                                110397             12726    88.47%        5106               402    92.13%       84612              9484    88.79%           0                 0         -

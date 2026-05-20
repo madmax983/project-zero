@@ -49,3 +49,11 @@
 ## [Clippy field-reassign-with-default]
 **Learning:** Constructing a struct with `Default::default()` and then re-assigning individual fields sequentially on the mutable variable triggers the `clippy::field-reassign-with-default` lint.
 **Action:** Construct the struct with the target fields assigned inline and spread the default (e.g., `let s = Struct { field: val, ..Default::default() };`).
+
+## 2024-05-25 - Hedonic Treadmill Consumption Bridge test setup
+**Learning:** `Events<T>::get_reader()` is deprecated in newer Bevy versions. Use `events.get_cursor()` instead to satisfy clippy and maintain up-to-date syntax when writing tests that consume and assert on emitted events.
+**Action:** When manually evaluating emitted events within test fixtures, always initialize a cursor via `let mut cursor = events.get_cursor();` rather than `get_reader()`.
+
+## 2024-05-25 - Test Module Inception
+**Learning:** Adding a `#[cfg(test)] mod tests` block inside a file named `tests.rs` triggers the `clippy::module-inception` lint.
+**Action:** Always add `#[allow(clippy::module_inception)]` above `mod tests {` when working in files named `tests.rs` to keep the build perfectly green.
