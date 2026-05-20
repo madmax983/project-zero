@@ -683,7 +683,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1057` The Living Score — `specs/1057-the-living-score.md`
 - [ ] `1058` Retro-Causality Contracts — `specs/1058-retro-causality-contracts.md`
 - [ ] `1059` System Sovereignty — `specs/1059-system-sovereignty.md`
-- [ ] `1060` The Rocket Equation — `specs/1060-the-rocket-equation.md`
 - [ ] `1061` Pirate Republics — `specs/1061-pirate-republics.md`
 
 

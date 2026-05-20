@@ -17,12 +17,17 @@ mod integration_tests {
         zone_grid.set(5, 5, ZoneType::Dezoned);
         app.insert_resource(zone_grid);
 
-        let pop = app.world_mut().spawn((
-            Pop,
-            Wallet { credits: 0.0 },
-            FactionMember { faction_id: Some(FactionId::MinersGuild) },
-            GridPosition { x: 5, y: 5 },
-        )).id();
+        let pop = app
+            .world_mut()
+            .spawn((
+                Pop,
+                Wallet { credits: 0.0 },
+                FactionMember {
+                    faction_id: Some(FactionId::MinersGuild),
+                },
+                GridPosition { x: 5, y: 5 },
+            ))
+            .id();
 
         // System 1: The builder's system runs and turns them stateless
         app.add_systems(Update, bureaucratic_redlining_system);
@@ -48,11 +53,16 @@ mod integration_tests {
         zone_grid.set(6, 5, ZoneType::Bedroom);
         app.insert_resource(zone_grid);
 
-        let pop = app.world_mut().spawn((
-            Pop,
-            FactionMember { faction_id: Some(FactionId::Stateless) },
-            GridPosition { x: 5, y: 5 },
-        )).id();
+        let pop = app
+            .world_mut()
+            .spawn((
+                Pop,
+                FactionMember {
+                    faction_id: Some(FactionId::Stateless),
+                },
+                GridPosition { x: 5, y: 5 },
+            ))
+            .id();
 
         // System: Squatter raid system from builder
         app.add_systems(Update, stateless_squatter_raid_system);
@@ -61,12 +71,19 @@ mod integration_tests {
         let mut drafted = false;
         for _ in 0..1000 {
             app.update();
-            if app.world().get::<scale::layer1::combat::Drafted>(pop).is_some() {
+            if app
+                .world()
+                .get::<scale::layer1::combat::Drafted>(pop)
+                .is_some()
+            {
                 drafted = true;
                 break;
             }
         }
 
-        assert!(drafted, "Stateless pop should be drafted into combat system");
+        assert!(
+            drafted,
+            "Stateless pop should be drafted into combat system"
+        );
     }
 }

@@ -25,8 +25,6 @@ pub fn bureaucratic_redlining_system(
     }
 }
 
-
-
 pub fn stateless_squatter_raid_system(
     mut commands: Commands,
     zone_grid: Res<ZoneGrid>,
@@ -64,7 +62,11 @@ pub fn stateless_squatter_raid_system(
                 let nx = pos.x + dx;
                 let ny = pos.y + dy;
 
-                if nx >= 0 && ny >= 0 && zone_grid.get(nx, ny) != ZoneType::Dezoned && zone_grid.get(nx, ny) != ZoneType::None {
+                if nx >= 0
+                    && ny >= 0
+                    && zone_grid.get(nx, ny) != ZoneType::Dezoned
+                    && zone_grid.get(nx, ny) != ZoneType::None
+                {
                     valid_targets.push((nx, ny));
                 }
             }
@@ -72,7 +74,9 @@ pub fn stateless_squatter_raid_system(
 
         if !valid_targets.is_empty() {
             // Draft the pop to simulate a raid hook
-            commands.entity(pop_entity).insert(crate::layer1::combat::Drafted);
+            commands
+                .entity(pop_entity)
+                .insert(crate::layer1::combat::Drafted);
         }
     }
 }
@@ -201,7 +205,6 @@ mod tests {
         );
     }
 
-
     #[test]
     fn test_apply_squatter_visuals_system() {
         let mut world = World::new();
@@ -210,18 +213,17 @@ mod tests {
         zone_grid.set(5, 5, ZoneType::Dezoned); // Redlined zone
         world.insert_resource(zone_grid);
 
-        let entity = world
-            .spawn((
-                GridPosition { x: 5, y: 5 },
-            ))
-            .id();
+        let entity = world.spawn((GridPosition { x: 5, y: 5 },)).id();
 
         let _ = bevy_ecs::system::RunSystemOnce::run_system_once(
             &mut world,
             apply_squatter_visuals_system,
         );
 
-        assert!(world.get::<Squalor>(entity).is_some(), "Entities in dezoned areas should get Squalor component");
+        assert!(
+            world.get::<Squalor>(entity).is_some(),
+            "Entities in dezoned areas should get Squalor component"
+        );
 
         // Now change it to normal zone and verify removal
         let mut zone_grid2 = world.resource_mut::<ZoneGrid>();
@@ -232,7 +234,10 @@ mod tests {
             apply_squatter_visuals_system,
         );
 
-        assert!(world.get::<Squalor>(entity).is_none(), "Entities in normal areas should lose Squalor component");
+        assert!(
+            world.get::<Squalor>(entity).is_none(),
+            "Entities in normal areas should lose Squalor component"
+        );
     }
 
     #[test]
@@ -261,13 +266,19 @@ mod tests {
                 &mut world,
                 stateless_squatter_raid_system,
             );
-            if world.get::<crate::layer1::combat::Drafted>(pop_entity).is_some() {
+            if world
+                .get::<crate::layer1::combat::Drafted>(pop_entity)
+                .is_some()
+            {
                 drafted = true;
                 break;
             }
         }
 
-        assert!(drafted, "Stateless pop should eventually be drafted for a raid");
+        assert!(
+            drafted,
+            "Stateless pop should eventually be drafted for a raid"
+        );
     }
 
     #[test]

@@ -161,3 +161,5 @@ mod tests {
         assert!(cost.contains(&(ResourceType::Fuel, 20.0))); // Initial fueling? Or construction energy?
     }
 }
+
+pub mod logistics;

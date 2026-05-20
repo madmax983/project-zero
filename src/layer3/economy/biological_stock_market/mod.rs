@@ -95,7 +95,9 @@ pub fn process_infected_imports_system(
             if let Some(demand) = market.demands.get_mut(&virus.target_good) {
                 *demand += virus.potency;
             } else {
-                market.demands.insert(virus.target_good.clone(), virus.potency);
+                market
+                    .demands
+                    .insert(virus.target_good.clone(), virus.potency);
             }
         }
     }
