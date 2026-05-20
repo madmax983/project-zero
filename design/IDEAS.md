@@ -20331,3 +20331,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you spend massive amounts of bureaucratic bandwidth (a Layer 3 resource) to audit and rescind ancient, forgotten laws, or do you let the arbitrary enforcement continue to maintain an aura of absolute, unquestionable state terror?
 
 ---
+
+## The Sleepwalker Militia
+
+**Layer:** 1
+
+**Fantasy:** Weaponizing the subconscious stress of your colony to create an unfeeling, accidental defense force.
+
+**Mechanic:** When the colony is under extreme, sustained stress but lacking military infrastructure, Pops with the "Sleepwalking" trait and high trauma will unconsciously gather during their rest cycles. They form a "Sleepwalker Militia" that wanders the perimeter. They automatically attack hostile entities they bump into with improvised tools, feeling no fear and ignoring morale penalties, but they take massive exhaustion damage the next day.
+
+**Emergence:** You are hopelessly outgunned during a night raid. Your official militia breaks and runs. Suddenly, a horde of fifty exhausted, dead-eyed cooks and miners stumble out of the housing blocks in their pajamas, bludgeon the pirate assault team to death with wrenches and frying pans in utter silence, and then go back to bed. The next day, half your workforce is hospitalized for exhaustion and no one remembers saving the colony.
+
+**Tension:** Do you deliberately induce severe psychological stress to maintain a free, fearless nocturnal defense force, or invest in real soldiers and let your people sleep?
+
+---
+
+## Generational Defectors
+
+**Layer:** Cross-layer
+
+**Fantasy:** The slow, agonizing realization that your enemy's culture has seduced your children.
+
+**Mechanic:** Prolonged exposure to a rival Layer 3 empire's "Cultural Contraband" or "Philosophical Memes" on a Layer 1 colony doesn't just cause unrest; it changes the "Inherited Ethics" of the next generation. When these children reach adulthood, they may spontaneously hijack Layer 2 trade ships or Layer 1 shuttles to permanently defect to the rival empire, taking valuable skills and resources with them.
+
+**Emergence:** You spend twenty years aggressively training an elite cadre of scientists on a border world to gain a tech advantage. However, because you ignored the influx of alien pop-music and literature from the neighboring pacifist utopia, the entire graduating class of scientists steals your newest research vessel and defects across the border to join the enemy, citing ideological differences.
+
+**Tension:** Do you violently suppress foreign culture to keep your workforce loyal, risking immediate rebellion, or allow cultural mixing and risk a slow, bleeding brain-drain as your best and brightest leave for greener pastures?
+
+---
+
+## Bureaucratic Hostage
+
+**Layer:** 3 -> 1
+
+**Fantasy:** Being utterly paralyzed by a technicality enforced by an overwhelmingly superior force.
+
+**Mechanic:** A massive, powerful, but strictly legalistic Layer 3 empire (like a Galactic UN or Ancient Ascendancy) will occasionally send an "Auditor" to a Layer 1 colony. The Auditor demands a specific, seemingly trivial condition be met (e.g., "All buildings must be perfectly symmetrical," or "No mining on Tuesdays") under threat of overwhelming orbital bombardment. They don't want your resources; they want compliance.
+
+**Emergence:** Your most efficient, chaotic industrial hub is visited by the Auditor. They demand that every single power conduit be painted a specific shade of blue that requires a rare local flower to synthesize. You have to halt all military production and deploy your entire army to harvest flowers just to satisfy a bureaucrat, while your actual enemies mass on your borders.
+
+**Tension:** Do you cripple your own efficiency to satisfy the absurd, arbitrary demands of a sleeping giant, or call their bluff and risk annihilation over a paint color?
+
+---
