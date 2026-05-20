@@ -71,30 +71,29 @@ fn print_dashboard_table(title: &str, mut table: comfy_table::Table) {
     let char_tl = '\u{256D}'; // top left rounded
     let char_h = '\u{2500}'; // horiz line
 
-    // Create the title string we want to inject
-    let title_prefix = format!("{}{}{} {} ", char_tl, char_h, char_h, title);
-    let title_len = title_prefix.chars().count();
+    let title_styled = format!(" {} ", title).cyan().bold().to_string();
+    let title_len = title.chars().count() + 2;
 
     let top_line_chars: Vec<char> = lines[0].chars().collect();
     let width = top_line_chars.len();
 
-    let custom_top = if width > title_len + 1 {
-        // Overlay the title onto the existing top border characters, keeping intersections intact
-        let mut custom = title_prefix;
-        for &ch in top_line_chars.iter().skip(title_len) {
+    let custom_top = if width > title_len + 3 {
+        let mut custom = format!("{}{}{}", char_tl, char_h, char_h);
+        custom.push_str(&title_styled);
+        for &ch in top_line_chars.iter().skip(title_len + 3) {
             custom.push(ch);
         }
         custom
     } else {
         // Fallback for extremely narrow tables
         let char_tr = '\u{256E}'; // top right rounded
-        format!("{}{}{} {}", title_prefix, char_h, char_h, char_tr)
+        format!("{}{}{}{}{}", char_tl, char_h, char_h, title_styled, char_tr)
     };
 
     lines[0] = custom_top;
 
-    // Output the colored title row
-    println!("{}", lines[0].clone().cyan().bold());
+    // Output the top line
+    println!("{}", lines[0]);
 
     // Print the rest of the table
     for line in lines.iter().skip(1) {
@@ -1954,7 +1953,6 @@ fn print_bio(world: &mut World, target_id: u32) {
 fn print_stories(world: &mut World) {
     use comfy_table::presets::UTF8_FULL;
     use comfy_table::{Attribute, Cell, Color, ContentArrangement, Table};
-    use crossterm::style::Stylize;
 
     let tradition = world.resource::<OralTradition>();
 
@@ -2010,51 +2008,21 @@ fn print_stories(world: &mut World) {
             StoryGenre::Trivial => "📝 Trivial",
         };
 
-        let mut story_cell;
+        let mut story_cell = Cell::new(&story.text).fg(genre_color);
 
-        if story.mutations > 0 {
-            // When rendering in terminal, mixing embedded ANSI with comfy-table fg causes resets
-            // which clears all colors. To fix this, we manually apply the base color to all non-mutated parts.
-            let ct_color = match story.genre {
-                StoryGenre::Heroic => crossterm::style::Color::Yellow,
-                StoryGenre::Tragedy => crossterm::style::Color::Red,
-                StoryGenre::Cautionary => crossterm::style::Color::Magenta,
-                StoryGenre::Trivial => crossterm::style::Color::Grey,
-            };
-
-            let mut final_text = String::new();
-            let mut current_text = story.text.clone();
-
-            while !current_text.is_empty() {
-                let mut first_match = None;
-                let mut first_idx = usize::MAX;
-
-                for m in &mutations {
-                    if let Some(idx) = current_text.find(m) {
-                        if idx < first_idx {
-                            first_idx = idx;
-                            first_match = Some(*m);
-                        }
-                    }
-                }
-
-                if let Some(m) = first_match {
-                    if first_idx > 0 {
-                        final_text.push_str(&current_text[..first_idx].with(ct_color).to_string());
-                    }
-                    final_text.push_str(&m.magenta().bold().to_string());
-                    current_text = current_text[first_idx + m.len()..].to_string();
-                } else {
-                    final_text.push_str(&current_text.with(ct_color).to_string());
-                    break;
-                }
+        let mut contains_mutation = false;
+        for m in &mutations {
+            if story.text.contains(m) {
+                contains_mutation = true;
+                break;
             }
-
-            // We omit `fg(genre_color)` here to prevent double wrapping / reset interference
-            story_cell = Cell::new(&final_text);
-        } else {
-            story_cell = Cell::new(&story.text).fg(genre_color);
         }
+
+        // Highlight cell containing mutations
+        if contains_mutation {
+            story_cell = story_cell.add_attribute(Attribute::Italic).fg(Color::Cyan);
+        }
+
         if story.mutations > 5 {
             story_cell = story_cell.add_attribute(Attribute::Bold);
         }
