@@ -7684,3 +7684,93 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: The empire held together, bound by the meticulous work of the [BUREAUCRACY_TITLE]."
 - "Stability rose in [YEAR], not by force of arms, but by the sheer volume of forms processed under the [BUREAUCRACY_TITLE]."
 - "The [BUREAUCRACY_TITLE] reported perfect compliance in [YEAR]. The empire is suffocating, but stable."
+
+## Template: MARKET_VIRUS_RELEASE
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [MARKET_VIRUS_NAME], [EXPORT_GOOD]
+
+**Patterns:**
+- "[YEAR]: [COLONY] engineered [MARKET_VIRUS_NAME], attaching it to shipments of [EXPORT_GOOD]."
+- "The galaxy hungered for [EXPORT_GOOD], infected by [MARKET_VIRUS_NAME] from [COLONY]."
+
+## Template: FLEET_STRANDED
+
+**Generates:** Play event
+**Slots:** [FLEET_NAME], [YEAR], [ROCKET_EQUATION_STATUS]
+
+**Patterns:**
+- "[YEAR]: [FLEET_NAME] pushed too far, now [ROCKET_EQUATION_STATUS]."
+- "The Delta-V ran out. [FLEET_NAME] is [ROCKET_EQUATION_STATUS]."
+
+## Template: FERAL_DELIVERY
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [FERAL_LOGISTICS_DELIVERY]
+
+**Patterns:**
+- "[YEAR]: The Feral Network delivered [FERAL_LOGISTICS_DELIVERY] to [COLONY]."
+- "We prayed for food, but the dead network sent [FERAL_LOGISTICS_DELIVERY]."
+
+## Template: DIALECT_DIVERGENCE
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [DIALECT_NAME]
+
+**Patterns:**
+- "[YEAR]: [COLONY] can no longer understand the homeworld. They speak [DIALECT_NAME] now."
+- "Isolation bred [DIALECT_NAME] in [COLONY]."
+
+## Template: DETRITUS_ENCOUNTER
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [DIGITAL_DETRITUS_FIND]
+
+**Patterns:**
+- "[YEAR]: Data-miners on [COLONY] uncovered [DIGITAL_DETRITUS_FIND]."
+- "We dug too deep into the archive and unleashed [DIGITAL_DETRITUS_FIND]."
+
+## Template: REPO_MEN_ARRIVAL
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [SLEEP_DEBT_STATUS]
+
+**Patterns:**
+- "[YEAR]: The debt came due. Pops on [COLONY] were [SLEEP_DEBT_STATUS]."
+- "[COLONY] could not pay. They were [SLEEP_DEBT_STATUS] by the corporate enforcers."
+
+## Template: CRUSTAL_FRACTURE
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [CRUSTAL_TIDE_EVENT]
+
+**Patterns:**
+- "[YEAR]: The orbital tides pulled at [COLONY], resulting in [CRUSTAL_TIDE_EVENT]."
+- "We built on the fault line. When the tide rose, we saw [CRUSTAL_TIDE_EVENT]."
+
+## Template: SYMBIOTIC_OUTBREAK
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [SYMBIOTIC_PARASITE_STATE]
+
+**Patterns:**
+- "[YEAR]: The Spore took hold in [COLONY]. The infected are [SYMBIOTIC_PARASITE_STATE]."
+- "We chose efficiency over humanity. Now they are [SYMBIOTIC_PARASITE_STATE]."
+
+## Template: KINETIC_STRIKE_EVENT
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [KINETIC_EXCAVATION_RESULT]
+
+**Patterns:**
+- "[YEAR]: A kinetic strike on [COLONY] left [KINETIC_EXCAVATION_RESULT]."
+- "The orbital drop shattered the earth. [COLONY] witnessed [KINETIC_EXCAVATION_RESULT]."
+
+## Template: SECTOR_REDLINED
+
+**Generates:** Play event
+**Slots:** [COLONY], [SECTOR], [YEAR], [STATELESS_FACTION_STATE]
+
+**Patterns:**
+- "[YEAR]: [SECTOR] of [COLONY] was cut off. The people are now [STATELESS_FACTION_STATE]."
+- "We dezoned [SECTOR]. They didn't leave; they are [STATELESS_FACTION_STATE]."

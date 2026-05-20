@@ -4155,3 +4155,42 @@ VACUUM_SHADOW_INCIDENT:
 - BUREAUCRACY_EXPANDS -> increases_chance -> EMPIRE_STABILIZED_BY_PAPERWORK, LOCAL_UNREST
 - EMPIRE_STABILIZED_BY_PAPERWORK -> decreases_chance -> REBELLION (empire-wide)
 - EMPIRE_STABILIZED_BY_PAPERWORK -> increases_chance -> INEFFICIENCY, STAGNATION
+
+## The Biological Stock Market Chaining (Spec 1062)
+- MARKET_VIRUS_RELEASED -> increases_chance -> EXPORT_BOOM, GALACTIC_EMBARGO
+- MARKET_VIRUS_DISCOVERED -> enables -> TRADE_WAR
+
+## The Rocket Equation Chaining (Spec 1060)
+- FLEET_STRANDED -> enables -> RESCUE_MISSION, MUTINY
+- FLEET_STRANDED -> increases_chance -> DISTRESS_BEACON_DETECTED
+
+## Feral Logistics Network Chaining (Spec 681)
+- FERAL_NETWORK_CONNECTED -> enables -> UNPREDICTABLE_BOUNTY, TOXIC_DELIVERY
+
+## Generational Linguistics Chaining (Spec 1065)
+- DIALECT_DIVERGED -> increases_chance -> DIPLOMATIC_MISUNDERSTANDING
+- DIALECT_DIVERGED -> enables -> TRANSLATOR_REQUIRED
+
+## Digital Detritus Chaining (Spec 1064)
+- JUNK_DATA_MINED -> increases_chance -> VIRUS_UNLEASHED
+- VIRUS_UNLEASHED -> enables -> TECH_LOSS, INFRASTRUCTURE_CORRUPTION
+
+## The Sleep Debt Repo Men Chaining (Spec 549)
+- SLEEP_DEBT_CRITICAL -> enables -> REPO_MEN_ARRIVE
+- REPO_MEN_ARRIVE -> increases_chance -> POP_COMA, RIOT
+
+## Crustal Tides Chaining (Spec 1068)
+- HIGH_TIDE_EVENT -> enables -> FAULT_LINE_OPENED, BUILDING_DAMAGED
+- FAULT_LINE_OPENED -> increases_chance -> DEEP_ORE_EXPOSED, MAGMA_ERUPTION
+
+## The Symbiotic Parasite Chaining (Spec 888)
+- SPORE_INFECTION -> enables -> LEPER_COLONY_FORMED
+- SPORE_INFECTION -> increases_chance -> EFFICIENCY_SPIKE, NEIGHBOR_DRAINED
+
+## Kinetic Excavation Chaining (Spec 1083)
+- KINETIC_STRIKE_ORDERED -> enables -> DEEP_VEIN_EXPOSED, MISALIGNED_STRIKE
+- MISALIGNED_STRIKE -> increases_chance -> MAGMA_ERUPTION, INFRASTRUCTURE_DESTROYED
+
+## Bureaucratic Redlining Chaining (Spec 473)
+- SECTOR_DEZONED -> enables -> STATELESS_FACTION_FORMED
+- STATELESS_FACTION_FORMED -> increases_chance -> SQUATTER_EXPANSION, TAX_EVASION
