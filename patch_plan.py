@@ -1,4 +1,4 @@
-1. **Write Rat King System (src/experimental/rat_king.rs):**
+plan = """1. **Write Rat King System (src/experimental/rat_king.rs):**
    - I will use `run_in_bash_session` to write `src/experimental/rat_king.rs` with `cat << 'EOF' > src/experimental/rat_king.rs`.
    - This file will define a `RatKing` component and systems `rat_king_spawn_system` and `rat_king_food_drain_system`. The logic will check if the global `VerminState.severity` exceeds 90.0. If it does, and no `RatKing` currently exists in the world, it spawns a single `RatKing` entity. The `RatKing` will consume food from `ColonyResources` actively by mutating `ColonyResources.food`. It will also include unit tests asserting the `RatKing` consumes food and spawns correctly.
    - The module will be gated by `#[cfg(feature = "nova")]`.
@@ -22,3 +22,6 @@
 
 6. **Submit PR:**
    - I will use the `submit` tool to create a PR titled "🌟 Nova: Rat King", explaining that it connects Vermin and Resource systems to add tension when infestation gets too severe.
+"""
+with open('test_plan.md', 'w') as f:
+    f.write(plan)
