@@ -20289,3 +20289,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you try to instantly quarantine patient zero (risking the guards catching it), or let it burn through the population naturally while hoping they accidentally mimic something useful?
 
 ---
+
+## Temporal Commute
+
+**Layer:** 1
+
+**Fantasy:** The sheer length and danger of commuting through a massive, poorly planned colony becomes a lifestyle and subculture in itself.
+
+**Mechanic:** If a Pop's travel time between their home and workplace exceeds a certain threshold, they develop the "Commuter" trait. They begin satisfying leisure and social needs *during* transit, forming relationships exclusively with other commuters on the same route. Transit hubs become impromptu cultural centers.
+
+**Emergence:** You finally build a high-speed transit line to fix a notorious 3-hour commute. Instead of being grateful, the Commuter subculture violently protests the destruction of their "transit community," blockading the new trains and demanding the slow, miserable walk be reinstated.
+
+**Tension:** Do you optimize logistics for maximum efficiency, destroying unique transit subcultures, or do you leave deliberate inefficiencies to foster localized morale hubs along major thoroughfares?
+
+---
+
+## Culinary Sabotage
+
+**Layer:** 1
+
+**Fantasy:** Food becomes a weapon of class warfare and petty revenge among the colony's inhabitants.
+
+**Mechanic:** Pops working in kitchens or hydroponics who have high grievance levels against specific demographics (e.g., upper-class administrators, rival factions) will intentionally prepare "spite meals." These meals provide the baseline nutritional value but carry severe negative mood modifiers or minor temporary debuffs targeted only at the hated demographic.
+
+**Emergence:** Your elite research team's productivity plummets to zero because the lower-class kitchen staff has been secretly over-salting their algae rations for months in protest of a recent wage cut. The researchers are constantly nauseous, but the workers who eat the same base rations are perfectly fine.
+
+**Tension:** Do you rigorously police food production, risking a general strike from the vital agricultural sector, or do you build separate, highly secured kitchens for your elites, further cementing class divides?
+
+---
+
+## Bureaucratic Amnesia
+
+**Layer:** Cross-layer
+
+**Fantasy:** The terrifying realization that a massive, ancient bureaucracy has simply forgotten *why* a critical rule exists, but continues to enforce it lethally.
+
+**Mechanic:** Over extremely long timeframes (decades of in-game time), specific planetary edicts or local laws slowly lose their original "Justification Tag" in the colony's data archives. The enforcers will continue to violently uphold the law, but the Pops no longer know *why* they are being punished, leading to massive spikes in "Kafkaesque Terror" unrest rather than standard political grievance.
+
+**Emergence:** Two hundred years ago, a temporary edict banned the color blue in Sector 7 to prevent confusion with a specific hazardous chemical leak. The leak was fixed in a week. Now, enforcers are routinely executing citizens for wearing blue shirts, and no one, not even the Governor, knows why it's illegal.
+
+**Tension:** Do you spend massive amounts of bureaucratic bandwidth (a Layer 3 resource) to audit and rescind ancient, forgotten laws, or do you let the arbitrary enforcement continue to maintain an aura of absolute, unquestionable state terror?
+
+---
