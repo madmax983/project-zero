@@ -1384,7 +1384,8 @@ fn render_stockpile_details(frame: &mut Frame, area: Rect, stockpile: &Stockpile
         .border_type(BorderType::Rounded)
         .border_style(Style::default().fg(Color::Gray));
 
-    let mut lines = Vec::new();
+    // ⚡ Bolt Optimization: Pre-allocate capacity for `lines`
+    let mut lines = Vec::with_capacity(4);
     if stockpile.food_bonus > 0.0 {
         lines.push(Line::from(vec![
             Span::raw("Food: +"),
@@ -1453,45 +1454,41 @@ fn render_biography(frame: &mut Frame, area: Rect, bio: &Biography, world: &Worl
     let ticks_per_day = cycle.ticks_per_day.max(1); // Avoid div by zero
 
     // Show last 5 events reversed
-    let events: Vec<ListItem> = bio
-        .events
-        .iter()
-        .rev()
-        .take(5)
-        .map(|e| {
-            let day = e.tick / ticks_per_day;
-            let day_tick = e.tick % ticks_per_day;
-            #[allow(clippy::cast_precision_loss)]
-            let pct = day_tick as f32 / ticks_per_day as f32;
+    // ⚡ Bolt Optimization: Use an iterator instead of collecting into an intermediate `Vec<ListItem>`
+    // to prevent allocations when rendering the biography list.
+    let events = bio.events.iter().rev().take(5).map(|e| {
+        let day = e.tick / ticks_per_day;
+        let day_tick = e.tick % ticks_per_day;
+        #[allow(clippy::cast_precision_loss)]
+        let pct = day_tick as f32 / ticks_per_day as f32;
 
-            // Approximate phase for past events (since we don't store phase history)
-            // Using same thresholds as day_night.rs
-            let phase = if pct < 0.1 {
-                "Dawn"
-            } else if pct < 0.75 {
-                "Day"
-            } else if pct < 0.85 {
-                "Dusk"
-            } else {
-                "Night"
-            };
+        // Approximate phase for past events (since we don't store phase history)
+        // Using same thresholds as day_night.rs
+        let phase = if pct < 0.1 {
+            "Dawn"
+        } else if pct < 0.75 {
+            "Day"
+        } else if pct < 0.85 {
+            "Dusk"
+        } else {
+            "Night"
+        };
 
-            let phase_color = match phase {
-                "Dawn" => Color::LightYellow,
-                "Day" => Color::Yellow,
-                "Dusk" => Color::Rgb(255, 165, 0), // Orange-ish
-                "Night" => Color::Blue,
-                _ => Color::White,
-            };
+        let phase_color = match phase {
+            "Dawn" => Color::LightYellow,
+            "Day" => Color::Yellow,
+            "Dusk" => Color::Rgb(255, 165, 0), // Orange-ish
+            "Night" => Color::Blue,
+            _ => Color::White,
+        };
 
-            ListItem::new(Line::from(vec![
-                Span::styled(format!("Day {day} "), Style::default().fg(Color::White)),
-                Span::styled(format!("{phase:5} "), Style::default().fg(phase_color)),
-                Span::styled("│ ", Style::default().fg(Color::DarkGray)),
-                Span::raw(&e.text),
-            ]))
-        })
-        .collect();
+        ListItem::new(Line::from(vec![
+            Span::styled(format!("Day {day} "), Style::default().fg(Color::White)),
+            Span::styled(format!("{phase:5} "), Style::default().fg(phase_color)),
+            Span::styled("│ ", Style::default().fg(Color::DarkGray)),
+            Span::raw(&e.text),
+        ]))
+    });
 
     let list = List::new(events).block(bio_block);
 
@@ -1503,7 +1500,8 @@ fn render_personality(frame: &mut Frame, area: Rect, weights: UtilityWeights) {
         return;
     }
 
-    let mut traits = Vec::new();
+    // ⚡ Bolt Optimization: Pre-allocate vector for traits
+    let mut traits = Vec::with_capacity(3);
 
     // Distance
     if weights.distance_weight > 1.2 {
@@ -1540,7 +1538,9 @@ fn render_personality(frame: &mut Frame, area: Rect, weights: UtilityWeights) {
     }
 
     // Intersperse with commas
-    let mut spans = Vec::new();
+    // ⚡ Bolt Optimization: Use `Vec::with_capacity` to prevent multiple allocations
+    // while building the list of trait spans.
+    let mut spans = Vec::with_capacity(traits.len() * 2 + 1);
     spans.push(Span::raw("Traits: "));
     for (i, t) in traits.into_iter().enumerate() {
         if i > 0 {
