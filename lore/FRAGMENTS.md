@@ -8251,3 +8251,94 @@ What an artifact is called.
 - Chief Assessor of Redundancy
 - High Clerk of the Vaults
 - Minister of Acceptable Losses
+
+## Fragment Type: [MARKET_VIRUS_NAME]
+
+What a biological market virus is called.
+
+- The Silk-Rot
+- Golden-Root Spore
+- Demand-Fever
+- The Covetous Strain
+- Merchant's Madness
+
+## Fragment Type: [ROCKET_EQUATION_STATUS]
+
+Status of a fleet due to fuel constraints.
+
+- drifting without Delta-V
+- stranded in the deep void
+- functioning as a distress beacon
+- relying on tanker relays
+
+## Fragment Type: [FERAL_LOGISTICS_DELIVERY]
+
+The chaotic outputs of the Feral Logistics Network.
+
+- a hold full of radioactive waste
+- weapons we never asked for
+- corrupted cargo manifests
+- rations from a dead world
+
+## Fragment Type: [DIALECT_NAME]
+
+What a new generational dialect is called.
+
+- The Low-Cant
+- Station-Drawl
+- Void-Speech
+- The Outer Tongue
+
+## Fragment Type: [DIGITAL_DETRITUS_FIND]
+
+What is found in the galactic network junk.
+
+- a thousand-year-old advertisement
+- weaponized malware
+- corrupted census data
+- spam from a dead empire
+
+## Fragment Type: [SLEEP_DEBT_STATUS]
+
+How sleep debt and its consequences are described.
+
+- drowning in Sleep Debt
+- surviving on Wakefulness Stims
+- dragged to the cryo-pods
+- taken by the Repo Men
+
+## Fragment Type: [CRUSTAL_TIDE_EVENT]
+
+Effects of orbital gravity on the colony.
+
+- the ground tearing open
+- magma swelling from the fault lines
+- The High Tide cracking the foundations
+- the deep crust exposed
+
+## Fragment Type: [SYMBIOTIC_PARASITE_STATE]
+
+How the symbiotic parasite affects pops.
+
+- infected with the Spore
+- working without sleep, forever
+- draining the life from their neighbors
+- exiled to the Leper Colony
+
+## Fragment Type: [KINETIC_EXCAVATION_RESULT]
+
+Outcomes of orbital kinetic mining.
+
+- the crust shattered to reveal ore
+- a misaligned strike hitting magma
+- an artificial volcano born of greed
+- infrastructure destroyed by the shockwave
+
+## Fragment Type: [STATELESS_FACTION_STATE]
+
+Conditions of dezoned, stateless pops.
+
+- living in the Redlined Sectors
+- cut off from the grid
+- refusing to pay the Tithe
+- squatting in the dark zones

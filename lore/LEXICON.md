@@ -5049,3 +5049,101 @@
 **Usage:**
 - "We endure The Paper Peace, suffocated by forms but free from war."
 - "Empire Stability is high, but we have no room to breathe."
+
+## The Biological Stock Market (Spec 1062)
+
+### Market Virus
+**Replaces:** Economic sabotage / Demand manipulation
+**Code reference:** `MarketVirus`
+**Usage:**
+- "We seeded the grain with a Market Virus; they will crave our textiles."
+
+## The Rocket Equation (Spec 1060)
+
+### Delta-V Limit / The Burn
+**Replaces:** Ship range / Fuel capacity
+**Code reference:** `DeltaV`
+**Usage:**
+- "The fleet has reached its Delta-V Limit; they cannot return."
+
+### Distress Beacon
+**Replaces:** Stranded fleet status
+**Code reference:** `DistressBeacon`
+**Usage:**
+- "A Distress Beacon is pinging from the deep void."
+
+## Feral Logistics Network (Spec 681)
+
+### The Feral Network / Ghost Drones
+**Replaces:** Abandoned autonomous logistics
+**Code reference:** `FeralLogisticsNetwork` / `FeralDeliveryTriggerEvent`
+**Usage:**
+- "A Ghost Drone just dropped a payload of ancient rations."
+
+## Generational Linguistics (Spec 1065)
+
+### Linguistic Drift
+**Replaces:** Cultural divergence over time
+**Code reference:** `DialectDrift`
+**Usage:**
+- "Linguistic Drift has made them foreigners to us."
+
+## Digital Detritus (Spec 1064)
+
+### Junk Data
+**Replaces:** Corrupted files / Spam / Malware during research
+**Code reference:** `VirusEvent`
+**Usage:**
+- "The data-miners hit a vein of Junk Data and crashed the grid."
+
+## The Sleep Debt Repo Men (Spec 549)
+
+### Sleep Debt
+**Replaces:** Accumulated lack of rest from corp contracts
+**Code reference:** `SleepDebt`
+**Usage:**
+- "The colony's Sleep Debt is critical; the corp will collect soon."
+
+### Repo Men
+**Replaces:** Enforcers who reclaim sleep debt
+**Code reference:** `RepoMan`
+**Usage:**
+- "The Repo Men are dragging the miners to the cryo-pods."
+
+## Crustal Tides (Spec 1068)
+
+### Ground Tides / The High Tide
+**Replaces:** Orbital gravity affecting terrain
+**Code reference:** `TidalForce`
+**Usage:**
+- "The High Tide cracked the reactor's foundation."
+
+## The Symbiotic Parasite (Spec 888)
+
+### The Spore / Symbiosis
+**Replaces:** Infection causing hyper-efficiency but draining others
+**Code reference:** `SymbioticParasite`
+**Usage:**
+- "Those with the Spore never sleep, but they leave us weak."
+
+## Kinetic Excavation (Spec 1083)
+
+### Kinetic Strike / Orbital Dig
+**Replaces:** Destructive orbital mining
+**Code reference:** `KineticStrikeEvent`
+**Usage:**
+- "Call down a Kinetic Strike to shatter the crust."
+
+## Bureaucratic Redlining (Spec 473)
+
+### Redlined Sector / The Dark Zones
+**Replaces:** Dezoned, unpowered areas
+**Code reference:** `RedlineZoneEvent`
+**Usage:**
+- "We cut the power to the Redlined Sector."
+
+### Stateless / Rust-Towners
+**Replaces:** Pops living in dezoned areas, not paying taxes
+**Code reference:** `Stateless`
+**Usage:**
+- "The Stateless are expanding into our hydroponics bays."
