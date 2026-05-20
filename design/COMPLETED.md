@@ -596,3 +596,4 @@
 - [x] `473` Bureaucratic Redlining — `specs/473-bureaucratic-redlining.md` — completed 2026-06-25
 
 - [x] `INT-473` Integration: Bureaucratic Redlining -> Stateless Economy - completed 2026-06-25
+- [x] `1062` The Biological Stock Market — `specs/1062-the-biological-stock-market.md` — completed 2026-05-20
