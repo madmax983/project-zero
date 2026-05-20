@@ -105,3 +105,22 @@ pub fn process_infected_imports_system(
 
 #[cfg(test)]
 pub mod tests;
+
+/// INT-1062: MarketVirus Demand Generation
+pub fn biological_stock_market_bridge(
+    mut events: EventReader<crate::layer2::trade::routes::TradeRouteExecutedEvent>,
+    mut market: ResMut<crate::layer3::market::GalacticMarket>,
+) {
+    for event in events.read() {
+        if event.item_type == "Food" || event.item_type == "Textiles" {
+            let resource = if event.item_type == "Food" {
+                crate::layer1::resources::ResourceType::Food
+            } else {
+                crate::layer1::resources::ResourceType::Waste // Mock mapping for Textiles
+            };
+            let pool = market.supply_pool.entry(resource).or_insert(0.0);
+            let demand_effect = (event.amount as f32) * 0.05;
+            *pool = (*pool - demand_effect).max(0.0);
+        }
+    }
+}
