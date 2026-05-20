@@ -28,5 +28,5 @@ pub mod subjective_economics;
 pub mod treaty_cruisers;
 pub use bureaucracy_of_vanity::*;
 pub use digital_detritus::*;
-pub mod intellectual_property_wars;
 pub mod economy;
+pub mod intellectual_property_wars;

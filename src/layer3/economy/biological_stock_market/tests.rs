@@ -2,7 +2,6 @@
 mod tests {
     use super::super::*;
 
-
     #[test]
     fn test_market_virus_creation() {
         let mut app = App::new();
@@ -35,28 +34,34 @@ mod tests {
         let mut app = App::new();
         app.add_systems(Update, inoculate_shipment_system);
 
-        let virus = app.world_mut().spawn(MarketVirus {
-            target_good: GoodType::FoulRoot,
-            potency: 5.0,
-        }).id();
+        let virus = app
+            .world_mut()
+            .spawn(MarketVirus {
+                target_good: GoodType::FoulRoot,
+                potency: 5.0,
+            })
+            .id();
 
-        let shipment = app.world_mut().spawn(TradeShipment {
-            goods: vec![GoodType::LuxuryTextiles],
-            destination: FactionId(1),
-            infected_with: None,
-        }).id();
+        let shipment = app
+            .world_mut()
+            .spawn(TradeShipment {
+                goods: vec![GoodType::LuxuryTextiles],
+                destination: FactionId(1),
+                infected_with: None,
+            })
+            .id();
 
-        app.world_mut().spawn(InoculateCommand {
-            virus,
-            shipment,
-        });
+        app.world_mut().spawn(InoculateCommand { virus, shipment });
 
         app.update();
 
         // Assert: shipment is now infected
         let updated_shipment = app.world().get::<TradeShipment>(shipment).unwrap();
         assert!(updated_shipment.infected_with.is_some());
-        assert_eq!(updated_shipment.infected_with.as_ref().unwrap().target_good, GoodType::FoulRoot);
+        assert_eq!(
+            updated_shipment.infected_with.as_ref().unwrap().target_good,
+            GoodType::FoulRoot
+        );
         // Virus entity should be consumed/moved
         assert!(app.world().get::<MarketVirus>(virus).is_none());
     }
@@ -90,7 +95,10 @@ mod tests {
         // Assert: Market demand for target good has increased
         let market = app.world().resource::<GalacticMarket>();
         let new_demand = market.demands.get(&GoodType::FoulRoot).unwrap();
-        assert!(*new_demand > 10.0, "Market demand should increase due to the virus");
+        assert!(
+            *new_demand > 10.0,
+            "Market demand should increase due to the virus"
+        );
         assert_eq!(*new_demand, 25.0, "Demand increases by virus potency");
     }
 }

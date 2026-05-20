@@ -359,10 +359,10 @@ mod photophobic_light_bridge;
 #[path = "integration/astrological_beliefs_bridge.rs"]
 mod astrological_beliefs_bridge;
 
-#[path = "integration/public_grievances_bridge.rs"]
-mod public_grievances_bridge;
 #[path = "integration/bureaucratic_redlining.rs"]
 mod bureaucratic_redlining;
+#[path = "integration/public_grievances_bridge.rs"]
+mod public_grievances_bridge;
 
 #[path = "integration/protest_crowds_integration.rs"]
 mod protest_crowds_integration;
