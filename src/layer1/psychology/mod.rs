@@ -5,6 +5,7 @@
 pub mod cabin_fever;
 pub mod cryo_dreams;
 pub mod dreams;
+pub mod generational_amnesia;
 #[cfg(feature = "nova")]
 pub mod machine_consciousness;
 pub mod memory;
@@ -29,6 +30,7 @@ pub mod stress;
 pub mod traits;
 pub mod void_sickness;
 pub mod void_stare;
+pub use generational_amnesia::*;
 
 pub use cabin_fever::*;
 pub use cryo_dreams::*;
