@@ -1133,3 +1133,9 @@
 - **Systems connected:** `AnomalyDiscoveredEvent` -> `anomaly_discovered_chronicle_bridge` -> `AddChronicleEvent`
 - **Glue added:** Added `anomaly_discovered_chronicle_bridge` in `src/layer3/integration.rs` to monitor `AnomalyDiscoveredEvent` and emit `AddChronicleEvent`. Registered in `src/simulation.rs`.
 - **Tests:** `tests/integration/cartographic_delusion_bridge.rs`
+
+### INT-1060: The Rocket Equation -> Chronicle
+- **Date:** 2026-10-31
+- **Systems connected:** `StrandedEvent` -> `stranded_chronicle_bridge` -> `AddChronicleEvent`
+- **Glue added:** Added `stranded_chronicle_bridge` in `src/layer2/integration.rs` to convert `StrandedEvent` to `AddChronicleEvent` for stranded ships. Registered in `src/simulation.rs`.
+- **Tests:** `tests/integration/rocket_equation_bridge.rs`

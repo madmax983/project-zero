@@ -674,3 +674,16 @@ pub fn orbital_mirror_chronicle_bridge(
         });
     }
 }
+
+/// Bridges `StrandedEvent` (Layer 2) to `AddChronicleEvent` (Chronicle).
+pub fn stranded_chronicle_bridge(
+    mut events: EventReader<crate::layer2::ship::logistics::StrandedEvent>,
+    mut chronicle_events: EventWriter<crate::layer1::chronicle::AddChronicleEvent>,
+) {
+    for event in events.read() {
+        chronicle_events.send(crate::layer1::chronicle::AddChronicleEvent {
+            text: format!("A ship has been stranded and is broadcasting a distress beacon (Entity {:?}).", event.ship),
+            importance: crate::layer1::chronicle::EventImportance::Major,
+        });
+    }
+}
