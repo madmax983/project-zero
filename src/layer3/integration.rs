@@ -239,3 +239,19 @@ pub fn stranded_fleet_chronicle_bridge(
         });
     }
 }
+
+use crate::layer2::piracy::PirateRepublic;
+
+/// INT-1061: Bridges PirateRepublic creation to Layer 3 Diplomacy components.
+pub fn pirate_republic_diplomacy_bridge(
+    mut commands: Commands,
+    query: Query<Entity, Added<PirateRepublic>>,
+) {
+    for entity in query.iter() {
+        commands.entity(entity).insert((
+            crate::layer3::diplomacy_reflection::Civilization { id: format!("PirateRepublic_{:?}", entity) },
+            crate::layer3::diplomacy_reflection::DiplomaticTraits { is_barbarian: true, is_warlike: true, ..Default::default() },
+            crate::layer3::diplomacy_reflection::DiplomaticRelations { relations: vec![] },
+        ));
+    }
+}

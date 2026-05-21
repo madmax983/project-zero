@@ -1133,3 +1133,9 @@
 - **Systems connected:** `AnomalyDiscoveredEvent` -> `anomaly_discovered_chronicle_bridge` -> `AddChronicleEvent`
 - **Glue added:** Added `anomaly_discovered_chronicle_bridge` in `src/layer3/integration.rs` to monitor `AnomalyDiscoveredEvent` and emit `AddChronicleEvent`. Registered in `src/simulation.rs`.
 - **Tests:** `tests/integration/cartographic_delusion_bridge.rs`
+
+### INT-1061: Pirate Republics -> Diplomacy
+- **Date:** 2026-06-25
+- **Systems connected:** `PirateHaven` upgrading to `PirateRepublic` -> `Civilization`, `DiplomaticTraits`, `DiplomaticRelations`
+- **Glue added:** `pirate_republic_diplomacy_bridge` in `src/layer3/integration.rs`
+- **Tests:** `tests/integration/pirate_republic_diplomacy_bridge.rs`
