@@ -70,3 +70,5 @@ pub mod culture;
 pub mod diaspora;
 pub mod sensors;
 pub use diaspora::*;
+pub mod piracy;
+pub use piracy::*;
