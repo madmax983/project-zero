@@ -472,3 +472,6 @@ pub mod cassandra_protocol;
 pub use cassandra_protocol::*;
 pub mod ransom_broker;
 pub use ransom_broker::*;
+
+pub mod void_sirens;
+pub use void_sirens::*;

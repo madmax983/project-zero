@@ -606,3 +606,4 @@
 - [x] `INT-1114` Integration: Generational Amnesia -> Chronicle - completed 2026-05-20
 - [x] `INT-1062` Integration: Biological Stock Market -> Market Demand - completed 2026-05-20
 - [x] `1061` Pirate Republics — `specs/1061-pirate-republics.md` — completed 2026-05-21
+- [x] `1067` The Void Sirens — `specs/1067-the-void-sirens.md` — completed 2026-06-28
