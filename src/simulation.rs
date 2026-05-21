@@ -55,6 +55,7 @@ fn init_simulation_resources(world: &mut World) {
     world.init_resource::<Events<crate::layer1::social::hedonic_treadmill::ConsumeItemEvent>>();
     world.init_resource::<Events<crate::layer1::architecture::sunk_cost_monument::CancelConstructionEvent>>();
     world.init_resource::<Events<crate::layer1::anomalies::echo::SpawnEchoSourceEvent>>();
+    world.init_resource::<Events<crate::layer1::anomalies::void_sirens::SirenSignalEvent>>();
     world.init_resource::<Events<crate::layer1::economy::apex_diet::ConsumeFoodEvent>>();
     world.init_resource::<crate::layer1::economy::apex_diet::ApexMeatStores>();
     world.init_resource::<Events<crate::layer1::culture::nostalgia::RumorSpreadEvent>>();
@@ -329,6 +330,8 @@ fn init_simulation_resources(world: &mut World) {
 
             let mut schedule = build_simulation_schedule();
             schedule.add_systems((
+                crate::layer1::anomalies::void_sirens::apply_siren_obsession,
+                crate::layer1::anomalies::void_sirens::handle_obsessed_jobs,
                 crate::layer1::logistics::beanstalk::beanstalk_morale_system,
                 crate::layer1::logistics::beanstalk::beanstalk_collapse_system,
             ));
@@ -835,6 +838,7 @@ mod tests {
         world.init_resource::<Events<crate::layer1::social::hedonic_treadmill::ConsumeItemEvent>>();
         world.init_resource::<Events<crate::layer1::architecture::sunk_cost_monument::CancelConstructionEvent>>();
         world.init_resource::<Events<crate::layer1::anomalies::echo::SpawnEchoSourceEvent>>();
+        world.init_resource::<Events<crate::layer1::anomalies::void_sirens::SirenSignalEvent>>();
         world.init_resource::<Events<crate::layer1::economy::apex_diet::ConsumeFoodEvent>>();
         world.init_resource::<crate::layer1::economy::apex_diet::ApexMeatStores>();
         world
