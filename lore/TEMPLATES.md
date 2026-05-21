@@ -7774,3 +7774,32 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 **Patterns:**
 - "[YEAR]: [SECTOR] of [COLONY] was cut off. The people are now [STATELESS_FACTION_STATE]."
 - "We dezoned [SECTOR]. They didn't leave; they are [STATELESS_FACTION_STATE]."
+
+## Pirate Republics Templates (Spec 1061)
+
+### Template: HAVEN_UPGRADED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [HAVEN_NAME], [HAVEN_UPGRADE_ACTION]
+
+**Patterns:**
+- "[YEAR]: The raids are making them bold. [HAVEN_NAME] has [HAVEN_UPGRADE_ACTION]."
+- "We see the lights from [HAVEN_NAME] growing brighter. They [HAVEN_UPGRADE_ACTION]. [YEAR]."
+- "Stolen wealth at work. [HAVEN_NAME] [HAVEN_UPGRADE_ACTION]. They are digging in. [YEAR]."
+
+### Template: REPUBLIC_FORMED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [HAVEN_NAME], [PIRATE_REPUBLIC_NAME]
+
+**Patterns:**
+- "[YEAR]: They are no longer just raiders. [HAVEN_NAME] has declared itself [PIRATE_REPUBLIC_NAME]."
+- "The outlaws have formed a government. [HAVEN_NAME] is now recognized as [PIRATE_REPUBLIC_NAME]. [YEAR]."
+- "A new power in the sector. The pirates of [HAVEN_NAME] founded [PIRATE_REPUBLIC_NAME]. [YEAR]."
+
+### Template: REPUBLIC_DIPLOMACY
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [PIRATE_REPUBLIC_NAME], [DIPLOMATIC_OFFER]
+
+**Patterns:**
+- "An envoy from [PIRATE_REPUBLIC_NAME] arrives. They offer [DIPLOMATIC_OFFER]. [YEAR]."
+- "[YEAR]: [PIRATE_REPUBLIC_NAME] hails us on an open channel, proposing [DIPLOMATIC_OFFER]."
+- "The outlaws want to talk. [PIRATE_REPUBLIC_NAME] contacts [COLONY] with [DIPLOMATIC_OFFER]. [YEAR]."
