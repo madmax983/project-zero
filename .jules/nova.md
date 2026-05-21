@@ -1,3 +1,8 @@
+## [Radioactive Vermin]
+**The Spark:** We have a `RadiationGrid` and `VerminState`. Vermin consume waste.
+**The Feature:** What if `Toxic` vermin (acquired from consuming waste) also act as mobile radiation sources? This expands the `VerminTrait::Toxic` to not only resist pest control but also actively pollute the `RadiationGrid`.
+**The Potential:** Connects the environment hazard (radiation) with the dynamic entity system (vermin). Players can't just wall off a radioactive spill anymore; they must actively exterminate vermin before they carry the radiation into the colony's living quarters.
+
 ## [The Feral Choir]
 **Concept:** Added a `FeralChoir` system that detects clusters of `Fauna` and spawns a massive `NoiseSource` entity that applies a global morale penalty to Pops.
 **Fate:** Merged
