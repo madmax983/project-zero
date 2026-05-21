@@ -1,9 +1,9 @@
 use bevy::prelude::*;
-use scale::layer1::psychology::generational_amnesia::GenerationalAmnesia;
-use scale::layer1::entities::pop::Pop;
-use scale::shared::time::SimulationTime;
 use scale::layer1::core::chronicle::{AddChronicleEvent, EventImportance};
 use scale::layer1::core::integration::generational_amnesia_chronicle_bridge;
+use scale::layer1::entities::pop::Pop;
+use scale::layer1::psychology::generational_amnesia::GenerationalAmnesia;
+use scale::shared::time::SimulationTime;
 
 #[test]
 fn test_amnesia_chronicle_bridge() {

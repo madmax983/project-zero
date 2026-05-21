@@ -2295,7 +2295,8 @@ pub fn generational_amnesia_chronicle_bridge(
     if high_amnesia && !*last_logged {
         chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
             importance: crate::layer1::core::chronicle::EventImportance::Major,
-            text: "Generational amnesia has reached a critical level. Our past is forgotten.".to_string(),
+            text: "Generational amnesia has reached a critical level. Our past is forgotten."
+                .to_string(),
         });
         *last_logged = true;
     } else if !high_amnesia {
