@@ -8342,3 +8342,36 @@ Conditions of dezoned, stateless pops.
 - cut off from the grid
 - refusing to pay the Tithe
 - squatting in the dark zones
+
+## Pirate Republics Fragments (Spec 1061)
+
+## Fragment Type: [HAVEN_NAME]
+- Tortuga
+- Black-Spot
+- The Hidden Cove
+- Dead-Man's Rest
+- Smuggler's Run
+- The Free Port
+
+## Fragment Type: [HAVEN_UPGRADE_ACTION]
+- expanded their deep-tunnels
+- reinforced the outer blast-doors
+- recruited desperate mercenaries
+- hoarded stolen power cores
+- bribed the sector patrols
+- built a new black-market bazaar
+
+## Fragment Type: [PIRATE_REPUBLIC_NAME]
+- The Republic of Pirates
+- The Free Brotherhood
+- The Corsair Coalition
+- The Unbound Republic
+- The Sovereign Syndicate
+- The Red-Flag Nation
+
+## Fragment Type: [DIPLOMATIC_OFFER]
+- a non-aggression pact for a price
+- protection from other raiders
+- a share of their illicit trade
+- an alliance against the Core Worlds
+- a demand for monthly tribute
