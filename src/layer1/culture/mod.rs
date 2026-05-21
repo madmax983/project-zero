@@ -39,3 +39,5 @@ pub mod nostalgia;
 pub use nostalgia::*;
 pub mod linguistics;
 pub use linguistics::*;
+pub mod martyrs_algorithm;
+pub use martyrs_algorithm::*;

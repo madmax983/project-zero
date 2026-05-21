@@ -837,4 +837,3 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1256` The Architecture of Regret — `specs/1256-architecture-of-regret.md`
 - [ ] `1259` Cult of the Broken Machine — `specs/1259-cult-of-the-broken-machine.md`
 - [ ] `1260` Phantom Infrastructure — `specs/1260-phantom-infrastructure.md`
-- [ ] `1262` Emotional Cartography — `specs/1262-emotional-cartography.md`

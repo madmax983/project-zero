@@ -605,3 +605,6 @@
 - [x] `INT-1114` Integration: Generational Amnesia -> Chronicle - completed 2026-05-20
 - [x] `INT-1062` Integration: Biological Stock Market -> Market Demand - completed 2026-05-20
 - [x] `1061` Pirate Republics — `specs/1061-pirate-republics.md` — completed 2026-05-21
+
+- [x] `1262` Emotional Cartography — `specs/1262-emotional-cartography.md` — completed 2026-05-18
+- [x] `1200` The Martyr's Algorithm — `specs/1200-the-martyrs-algorithm.md` — completed 2026-02-01

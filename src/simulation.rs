@@ -775,6 +775,7 @@ mod tests {
         world.init_resource::<bevy_ecs::event::Events<crate::layer1::culture::gastronomers::CulinarySingularityEvent>>();
         world.init_resource::<bevy_ecs::event::Events<crate::layer1::petrification::PopPetrifiedEvent>>();
         world.init_resource::<Events<crate::layer1::predecessors::WorldTriggerEvent>>();
+        world.init_resource::<Events<crate::layer1::culture::martyrs_algorithm::SacrificeDemandEvent>>();
         world.init_resource::<Events<crate::layer1::social::hedonic_treadmill::ConsumeItemEvent>>();
         world.init_resource::<Events<crate::layer1::architecture::sunk_cost_monument::CancelConstructionEvent>>();
         *world.resource_mut::<GameState>() = GameState::Running;
@@ -937,6 +938,7 @@ mod tests {
         world.init_resource::<Events<crate::layer1::heirloom_tool::EquipHeirloomEvent>>();
         world.init_resource::<Events<crate::layer2::events_new::reverse_quarantine::RefugeeFleetEvent>>();
         world.init_resource::<Events<crate::layer1::predecessors::WorldTriggerEvent>>();
+        world.init_resource::<Events<crate::layer1::culture::martyrs_algorithm::SacrificeDemandEvent>>();
         world.init_resource::<Events<crate::layer1::grafting::GraftBuildingEvent>>();
         world.init_resource::<Events<crate::layer3::fleets::ColonyFoundedEvent>>();
         world.init_resource::<crate::layer1::diplomacy::factions::rivals::TerritoryGrid>();
@@ -1032,6 +1034,7 @@ mod tests {
         world.init_resource::<bevy_ecs::event::Events<crate::layer1::culture::gastronomers::CulinarySingularityEvent>>();
         world.init_resource::<bevy_ecs::event::Events<crate::layer1::petrification::PopPetrifiedEvent>>();
         world.init_resource::<Events<crate::layer1::predecessors::WorldTriggerEvent>>();
+        world.init_resource::<Events<crate::layer1::culture::martyrs_algorithm::SacrificeDemandEvent>>();
 
         let schedule = build_simulation_schedule();
         world.add_schedule(schedule);
