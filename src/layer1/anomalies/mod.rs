@@ -479,3 +479,4 @@ mod tests {
     }
 }
 pub mod benevolent_malfunctions;
+pub mod void_sirens;

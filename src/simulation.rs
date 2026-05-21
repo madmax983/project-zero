@@ -47,12 +47,15 @@ pub fn build_simulation_schedule() -> Schedule {
 #[allow(clippy::too_many_lines)]
 fn init_simulation_resources(world: &mut World) {
     world.init_resource::<Events<crate::layer2::trade::routes::TradeRouteExecutedEvent>>();
-    world.init_resource::<Events<crate::layer2::trade::feral_logistics::FeralDeliveryTriggerEvent>>();
+    world
+        .init_resource::<Events<crate::layer2::trade::feral_logistics::FeralDeliveryTriggerEvent>>(
+        );
     world.init_resource::<Events<crate::layer2::ship::logistics::StrandedEvent>>();
 
     world.init_resource::<Events<crate::layer1::social::hedonic_treadmill::ConsumeItemEvent>>();
     world.init_resource::<Events<crate::layer1::architecture::sunk_cost_monument::CancelConstructionEvent>>();
     world.init_resource::<Events<crate::layer1::anomalies::echo::SpawnEchoSourceEvent>>();
+    world.init_resource::<Events<crate::layer1::anomalies::void_sirens::SirenSignalEvent>>();
     world.init_resource::<Events<crate::layer1::economy::apex_diet::ConsumeFoodEvent>>();
     world.init_resource::<crate::layer1::economy::apex_diet::ApexMeatStores>();
     world.init_resource::<Events<crate::layer1::culture::nostalgia::RumorSpreadEvent>>();
@@ -325,6 +328,8 @@ fn init_simulation_resources(world: &mut World) {
 
             let mut schedule = build_simulation_schedule();
             schedule.add_systems((
+                crate::layer1::anomalies::void_sirens::apply_siren_obsession,
+                crate::layer1::anomalies::void_sirens::handle_obsessed_jobs,
                 crate::layer1::logistics::beanstalk::beanstalk_morale_system,
                 crate::layer1::logistics::beanstalk::beanstalk_collapse_system,
             ));
@@ -621,8 +626,7 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
         crate::layer3::integration::anomaly_discovered_chronicle_bridge
             .after(crate::layer3::map::process_hyperlane_collapse_system),
         crate::layer3::integration::feral_logistics_chronicle_bridge,
-        crate::layer3::integration::stranded_fleet_chronicle_bridge
-
+        crate::layer3::integration::stranded_fleet_chronicle_bridge,
     ));
 
     schedule.add_systems((crate::layer3::events::refugee_waves::process_refugee_decision,));
@@ -832,6 +836,7 @@ mod tests {
         world.init_resource::<Events<crate::layer1::social::hedonic_treadmill::ConsumeItemEvent>>();
         world.init_resource::<Events<crate::layer1::architecture::sunk_cost_monument::CancelConstructionEvent>>();
         world.init_resource::<Events<crate::layer1::anomalies::echo::SpawnEchoSourceEvent>>();
+        world.init_resource::<Events<crate::layer1::anomalies::void_sirens::SirenSignalEvent>>();
         world.init_resource::<Events<crate::layer1::economy::apex_diet::ConsumeFoodEvent>>();
         world.init_resource::<crate::layer1::economy::apex_diet::ApexMeatStores>();
         world
@@ -922,9 +927,9 @@ mod tests {
         world.init_resource::<crate::layer1::agony_extract::AgonyExtractConfig>();
         world.init_resource::<Events<crate::layer2::trade::biomass_tariff::TradeDeal>>();
 
-    world.init_resource::<Events<crate::layer2::trade::routes::TradeRouteExecutedEvent>>();
-    world.init_resource::<Events<crate::layer2::trade::feral_logistics::FeralDeliveryTriggerEvent>>();
-    world.init_resource::<Events<crate::layer2::ship::logistics::StrandedEvent>>();
+        world.init_resource::<Events<crate::layer2::trade::routes::TradeRouteExecutedEvent>>();
+        world.init_resource::<Events<crate::layer2::trade::feral_logistics::FeralDeliveryTriggerEvent>>();
+        world.init_resource::<Events<crate::layer2::ship::logistics::StrandedEvent>>();
 
         world.init_resource::<crate::layer2::trade::feral_logistics::FeralLogisticsNetwork>();
         world.init_resource::<Events<crate::layer1::geodetic::GolemFormedEvent>>();
