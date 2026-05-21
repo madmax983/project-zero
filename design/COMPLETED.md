@@ -13,6 +13,7 @@
 - [x] `626` The Cartographer's Curse — `specs/626-cartographers-curse.md` — completed 2026-03-24
 - [x] `1086` The Heirloom Tool — `specs/1086-the-heirloom-tool.md` — completed 2026-02-01
 # Completed Specs
+- [x] `1000` The Eclipsing Swarm — `specs/1000-eclipsing-swarm.md` — completed 2026-05-21
 - [x] `1115` The Diaspora Fleet - `specs/1115-the-diaspora-fleet.md` - completed 2026-05-14
 - [x] `1258` The Cassandra Protocol — `specs/1258-the-cassandra-protocol.md` — completed 2026-08-01
 - [x] `474` Inherited Grudges — `specs/474-inherited-grudges.md` - completed 2026-02-01
