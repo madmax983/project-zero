@@ -845,14 +845,17 @@ fn print_pops(world: &mut World) {
         let at_target = world.get::<scale::layer1::AtTarget>(entity).is_some();
 
         let status = if at_target {
-            "at target".to_string()
+            "At target".to_string()
         } else if let Some(mt) = mt {
-            format!("mov ({},{})", mt.target_position.x, mt.target_position.y)
+            format!(
+                "Moving ➔ ({},{})",
+                mt.target_position.x, mt.target_position.y
+            )
         } else {
             "-".to_string()
         };
 
-        let action_str = format!("{:?}", action.current);
+        let action_str = format_action_type_headless(action.current);
 
         // Color code needs: Low is BAD (Red), High is GOOD (Green) ??
         // Wait, hunger is 0..1. Usually 1.0 is full (good).
@@ -920,6 +923,57 @@ fn print_pops(world: &mut World) {
     }
 
     print_dashboard_table("POPULATION DETAILS", table);
+}
+
+fn format_action_type_headless(action: scale::layer1::ActionType) -> String {
+    use scale::layer1::ActionType;
+    match action {
+        ActionType::SatisfyHunger => "🍖 Eating".to_string(),
+        ActionType::SatisfyRest => "💤 Sleeping".to_string(),
+        ActionType::Socialize => "💬 Socializing".to_string(),
+        ActionType::Explore => "🔭 Exploring".to_string(),
+        ActionType::Work => "⚒ Working".to_string(),
+        ActionType::Repair => "🔧 Repairing".to_string(),
+        ActionType::Research => "📚 Researching".to_string(),
+        ActionType::Haul => "📦 Hauling".to_string(),
+        ActionType::SeekMedicalCare => "🏥 Healing".to_string(),
+        ActionType::BuryCorpse => "⚰️ Burying".to_string(),
+        ActionType::FetchTool => "🔧 Fetching Tool".to_string(),
+        ActionType::Idle => "⏳ Idle".to_string(),
+        ActionType::Vandalize => "🔨 Vandalizing".to_string(),
+        ActionType::Binge => "🍖 Bingeing".to_string(),
+        ActionType::Daze => "😵 Dazed".to_string(),
+        ActionType::Fight => "⚔️ Fighting".to_string(),
+        ActionType::Refine => "⚙️ Refining".to_string(),
+        ActionType::Farm => "🌾 Farming".to_string(),
+        ActionType::Warden => "👮 Arresting".to_string(),
+        ActionType::Sleepwalking => "💤 Sleepwalking".to_string(),
+        ActionType::Tame => "♥ Taming".to_string(),
+        ActionType::FireStarting => "🔥 Starting Fire".to_string(),
+        ActionType::HideInRoom => "🚪 Hiding".to_string(),
+        ActionType::SadWander => "😢 Wandering Sadly".to_string(),
+        ActionType::FetchClothing => "👕 Fetching Clothes".to_string(),
+        ActionType::Surgery => "🏥 Undergoing Surgery".to_string(),
+        ActionType::Charge => "⚡ Charging".to_string(),
+        ActionType::Hobby => "🎨 Hobby".to_string(),
+        ActionType::Admin => "📝 Administering".to_string(),
+        ActionType::ScrawlMemeticSigil => "👁 Scrawling Sigil".to_string(),
+        ActionType::PreCrimeArrest => "🛡 Pre-Crime Arrest".to_string(),
+        ActionType::ConsumeChemical => "💊 Consuming".to_string(),
+        ActionType::CollectSample => "🧬 Collecting".to_string(),
+        ActionType::UseShower => "🚿 Showering".to_string(),
+        ActionType::ListenToTheHum => "🌀 Listening".to_string(),
+        ActionType::Clean => "🧹 Cleaning".to_string(),
+        ActionType::PurgeResidue => "🧹 Purging Ghost Code".to_string(),
+        ActionType::VoidStare => "👁 Staring into Abyss".to_string(),
+        ActionType::VisitSanctuary => "🧘 Seeking Sanctuary".to_string(),
+        ActionType::ExtinguishFire => "🧯 Extinguishing".to_string(),
+        ActionType::TreatWounds => "🩹 Treating Wounds".to_string(),
+        ActionType::Flee => "🏃 Fleeing".to_string(),
+        ActionType::Sabotage => "💣 Sabotaging".to_string(),
+        ActionType::Protest => "🗣️ Protesting".to_string(),
+        ActionType::Gossip => "🗣️ Gossiping".to_string(),
+    }
 }
 
 fn get_terrain_tiles_in_radius(
