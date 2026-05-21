@@ -301,6 +301,9 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::shipbreaking::hull_destroyed_system
                 .after(crate::layer1::shipbreaking::mine_system),
             crate::layer1::grafting::process_grafting,
+            crate::layer1::void_sirens::apply_siren_obsession.after(process_start_plan_system),
+            crate::layer1::void_sirens::handle_obsessed_jobs
+                .after(crate::layer1::void_sirens::apply_siren_obsession),
             crate::layer1::administration::edicts::handle_policy_toggle_system,
             crate::layer1::administration::edicts::handle_hack_hub_system,
             crate::layer1::law::orphaned_edict::orphaned_edict_enforcement_system,
