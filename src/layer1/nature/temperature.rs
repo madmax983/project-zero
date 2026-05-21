@@ -266,13 +266,15 @@ pub fn update_temperature_system(
             }
             BuildingType::Smelter => {
                 if power.is_some_and(|p| !p.active) {
-                    0.0
+                    2.5
                 } else {
-                    2.0
+                    2.0 + 2.5
                 }
             }
             BuildingType::Generator => 2.0, // Generators produce heat when running (fuel logic is separate)
             BuildingType::AncientReactor => 10.0,
+            BuildingType::Housing => 2.5,
+            BuildingType::FlowerBed | BuildingType::PersonalGarden => -1.5,
             // Fire? handled by Fire entity, usually.
             // If Fire is a separate entity, we might query it separately.
             // For now, buildings only.
@@ -623,5 +625,106 @@ mod tests {
 
         // (0, 0) -> index 0. 0 < 1. Should successfully return value.
         assert_eq!(grid.get(0, 0), 0.0);
+    }
+
+    #[test]
+    fn test_dense_buildings_increase_local_temperature() {
+        let mut world = World::new();
+        // Use 15.0 because Season::Spring defaults to 15.0 ambient temp.
+        // This avoids drift affecting the ambient assertions
+        let grid = TemperatureGrid::new(10, 10, 15.0);
+        world.insert_resource(grid);
+        world.insert_resource(SeasonState {
+            current_season: Season::Spring,
+        }); // 15.0
+        world.insert_resource(TerrainGrid {
+            width: 10,
+            height: 10,
+            tiles: vec![TerrainType::Grass; 100],
+        });
+
+        // Spawn a dense cluster of buildings
+        world.spawn((
+            Building {
+                building_type: BuildingType::Housing,
+            },
+            GridPosition { x: 5, y: 5 },
+        ));
+        world.spawn((
+            Building {
+                building_type: BuildingType::Smelter,
+            },
+            GridPosition { x: 5, y: 6 },
+            PowerConsumer {
+                demand: 5.0,
+                active: true,
+            },
+        ));
+        world.spawn((
+            Building {
+                building_type: BuildingType::Housing,
+            },
+            GridPosition { x: 6, y: 5 },
+        ));
+
+        // Run update
+        world.run_system_once(update_temperature_system).unwrap();
+
+        let grid = world.resource::<TemperatureGrid>();
+
+        // The center of the cluster should be significantly hotter than ambient
+        assert!(grid.get(5, 5) > 16.5); // Spring ambient + Heat modifier
+
+        println!("grid 0,0 is {}", grid.get(0, 0));
+        // Far away should remain near ambient
+        assert!((grid.get(0, 0) - 15.0).abs() < 1.0);
+    }
+
+    #[test]
+    fn test_parks_mitigate_heat_island_effect() {
+        let mut world = World::new();
+        let grid = TemperatureGrid::new(10, 10, 15.0);
+        world.insert_resource(grid);
+        world.insert_resource(SeasonState {
+            current_season: Season::Spring,
+        }); // 15.0
+        world.insert_resource(TerrainGrid {
+            width: 10,
+            height: 10,
+            tiles: vec![TerrainType::Grass; 100],
+        });
+
+        // Spawn a dense cluster with a park in the middle
+        world.spawn((
+            Building {
+                building_type: BuildingType::Housing,
+            },
+            GridPosition { x: 5, y: 4 },
+        ));
+        world.spawn((
+            Building {
+                building_type: BuildingType::FlowerBed,
+            },
+            GridPosition { x: 5, y: 5 },
+        ));
+        world.spawn((
+            Building {
+                building_type: BuildingType::Smelter,
+            },
+            GridPosition { x: 5, y: 6 },
+            PowerConsumer {
+                demand: 5.0,
+                active: true,
+            },
+        ));
+
+        // Run update
+        world.run_system_once(update_temperature_system).unwrap();
+
+        let grid = world.resource::<TemperatureGrid>();
+
+        // The center should be cooler than it would be without the park
+        // Assuming without park it's > 21.5, with park it should be < 21.5
+        assert!(grid.get(5, 5) < 21.5);
     }
 }
