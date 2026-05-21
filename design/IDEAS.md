@@ -20373,3 +20373,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you cripple your own efficiency to satisfy the absurd, arbitrary demands of a sleeping giant, or call their bluff and risk annihilation over a paint color?
 
 ---
+
+## The Phantom Commute
+
+**Layer:** 1
+
+**Fantasy:** Watching the colony's infrastructure become haunted by the rigid habits of its deceased workers.
+
+**Mechanic:** When a Pop dies suddenly in a high-stress or highly-routine job, their "Routine Imprint" remains in the local pathfinding grid. For several weeks, living Pops will subconsciously step aside or pause in corridors to let the non-existent deceased Pop pass on their usual commute, slowing down traffic in seemingly empty hallways.
+
+**Emergence:** A major mining accident kills 50 workers. The main arterial hallway to the mine becomes completely impassable for living workers during the morning shift change because everyone is stopping to let the "ghosts" through, crippling the colony's economy long after the bodies are cleared.
+
+**Tension:** Do you bulldoze and redesign perfectly good infrastructure to break the spatial memory, or endure the massive efficiency loss until the trauma fades naturally?
+
+---
+
+## Sensory Black Market
+
+**Layer:** Cross-layer
+
+**Fantasy:** Experiencing the desperation of a sterile, hyper-industrialized world where basic human experiences are traded like contraband.
+
+**Mechanic:** On worlds with low natural beauty or extreme pollution (Layer 1/2), physical artifacts from pristine worlds (a real flower, a jar of ocean water, authentic wood) become highly illegal, addictive "Sensory Contraband." Pops will skip work to visit secret underground "Sensory Dens" just to smell real dirt, vastly improving their mood but destroying their productivity and draining their savings.
+
+**Emergence:** Your most vital, high-tech forge world grinds to a halt not because of a strike, but because a smuggler ship from an agri-world crashed nearby. The entire engineering caste is huddled around a single surviving apple tree, getting high on the scent of pollen and refusing to fix the plasma conduits.
+
+**Tension:** Do you heavily police the sensory dens to maintain industrial output, knowing it will cause a catastrophic depression epidemic, or turn a blind eye and watch your economy slowly shift towards importing literal dirt at exorbitant prices?
+
+---
+
+## Architectural Sentimentalism
+
+**Layer:** 1
+
+**Fantasy:** The player realizes they are trapped by the colony's emotional attachment to inefficient, obsolete buildings.
+
+**Mechanic:** The older a building gets, and the more "events" (births, deaths, riots, parties) happen near it, the higher its "Sentimental Value" climbs. If the player attempts to demolish or upgrade a highly sentimental building to a more efficient modern version, it triggers massive localized unrest and a "Preservation Strike."
+
+**Emergence:** You desperately need to replace an ancient, failing water purifier in the center of town with a high-capacity modern one. However, it was the first building constructed by the original founders, and the Pops form a human shield around it. You end up having to build the new purifier on the edge of town and route expensive, inefficient pipes all the way back just to avoid a civil war over a rusty water tank.
+
+**Tension:** Do you ruthlessly demolish the history of your colony for the sake of survival and efficiency, or build a convoluted, sprawling, inefficient mess of a city simply to preserve the memories of the past?
+
+---
