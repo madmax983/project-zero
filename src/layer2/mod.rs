@@ -72,3 +72,5 @@ pub mod sensors;
 pub use diaspora::*;
 pub mod piracy;
 pub use piracy::*;
+pub mod fauna;
+pub use fauna::*;

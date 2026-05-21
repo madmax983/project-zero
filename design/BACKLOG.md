@@ -623,7 +623,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `997` Subspace Stowaways — `specs/997-subspace-stowaways.md`
 - [ ] `998` The Symbiotic Data-Weavers — `specs/998-symbiotic-data-weavers.md`
 - [ ] `999` Interplanetary Pollination — `specs/999-interplanetary-pollination.md`
-- [ ] `1000` The Eclipsing Swarm — `specs/1000-eclipsing-swarm.md`
 - [ ] `1001` Vacuum Welding — `specs/1001-vacuum-welding.md`
 - [ ] `1002` The Bio-Rhythmic Commute — `specs/1002-bio-rhythmic-commute.md`
 - [ ] `1003` The Feral Overlord Subroutines — `specs/1003-feral-overlord-subroutines.md`
