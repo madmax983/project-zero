@@ -686,7 +686,6 @@ See `design/IDEAS.md` for unspecced concepts.
 
 
 
-- [ ] `1063` Urban Heat Islands — `specs/1063-urban-heat-islands.md`
 - [ ] `1066` Zero-G Flora — `specs/1066-zero-g-flora.md`
 - [ ] `1069` The Existential Audit — `specs/1069-the-existential-audit.md`
 - [ ] `1070` Feral Infrastructure — `specs/1070-feral-infrastructure.md`
