@@ -1,7 +1,8 @@
-## [Selection Prioritization Optimization]
-**Learning:** Consolidating three iteration passes prioritizing UI selection logic into a single pass without using an intermediate vector caused a logic regression where lower priority entities masked higher priority ones if evaluated later in the loop.
-**Action:** When removing intermediate allocations and combining passes for logic that has explicit priority levels (like `Pop` > `Building` > `Any`), track the priority categories independently using separate variables inside the loop and resolve the priority hierarchy *after* the loop terminates.
+## [UI Status and Shell Buffer Optimizations]
+**Learning:** We replaced multiple intermediate `.collect::<String>()` chains and `.collect::<Vec<String>>()` vector allocations in `src/ui/status.rs`, `src/ui/inspector.rs`, `src/ui/input.rs`, and `src/ui/shell/plugins` with loop iterations that pre-allocate a `String` with capacity. This reduces heap allocations on the hot path (which renders UI every frame). We also replaced `.collect::<Vec<_>>().join("")` logic that iterates and allocates on `ratatui`'s buffer cells with direct allocations.
 
-**[Biography Rendering Optimization]
-**Learning:** Removing an intermediate `.collect::<Vec<_>>()` allocation when iterating and rendering large lists of struct data (like Biography events) directly into a `ratatui` UI component improves performance by avoiding heap allocations during the hot UI rendering path.
-**Action:** Always prefer passing an iterator directly to UI components like `List::new(events)` instead of collecting the mapped spans or elements into an intermediate vector first, unless specifically required for reverse iteration logic that isn't native to the structure.
+**Action:** Whenever possible, avoid `collect::<String>()` and `Vec` allocations during string building inside UI loops. Instead, initialize a `String::with_capacity(N)` and append to it directly inside a loop.
+
+## [String Concatenation Optimization in UI Components]
+**Learning:** An optimization that pre-allocated capacity for a `String` inside UI rendering loops (`src/ui/status.rs`, `src/ui/inspector.rs`, etc.) to avoid the intermediate `.collect::<Vec<_>>().join("")` was highly effective and passed safety checks without causing lifetime issues. Using `buffer.area.area() as usize` for capacity effectively prevents reallocation overhead during the hot render path.
+**Action:** When working on UI buffers rendering text arrays, use `String::with_capacity(N)` and append inside a loop, rather than chaining iterators that collect into intermediate vectors first.

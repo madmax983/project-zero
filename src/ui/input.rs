@@ -1069,12 +1069,12 @@ mod tests {
         let area = Rect::new(0, 0, 100, 30);
         let mut buffer = Buffer::empty(area);
         shell.render(area, &mut buffer);
-        buffer
-            .content()
-            .iter()
-            .map(|cell| cell.symbol())
-            .collect::<String>()
-            .contains(needle)
+        // ⚡ Bolt Optimization: Replace intermediate .collect::<String>() chain with pre-allocated String loop
+        let mut s = String::with_capacity(buffer.area.area() as usize);
+        for cell in buffer.content() {
+            s.push_str(cell.symbol());
+        }
+        s.contains(needle)
     }
 
     fn active_workspace_contains_plugin(shell: &mut UiShell, plugin_type: &str) -> bool {
