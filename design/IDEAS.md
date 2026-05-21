@@ -20415,3 +20415,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you ruthlessly demolish the history of your colony for the sake of survival and efficiency, or build a convoluted, sprawling, inefficient mess of a city simply to preserve the memories of the past?
 
 ---
+
+## The Bureaucratic Fossil
+
+**Layer:** Cross-layer
+
+**Fantasy:** Discovering that your most vital infrastructure is actually a massive, calcified alien lifeform.
+
+**Mechanic:** A massive precursor "Terraforming Spire" or "Atmospheric Processor" that the player has relied on for generations is revealed to be a dormant, silicon-based entity. As the colony expands and pollution increases, the entity begins to "wake up," subtly altering the local gravity and temperature to match its preferred environment, ignoring the colony's settings.
+
+**Emergence:** You build an entire industrial metropolis around an ancient, free-energy spire. Decades later, the spire begins turning the surrounding air into a dense, metallic fog that powers its own awakening but rusts your colony's machinery instantly.
+
+**Tension:** Do you destroy the entity to save your current infrastructure, losing the massive energy bonus, or adapt to the new, hostile environment it creates?
+
+---
+
+## Interstellar Epidemic Memory
+
+**Layer:** Cross-layer
+
+**Fantasy:** A disease that doesn't kill you, but makes you remember someone else's life.
+
+**Mechanic:** A bio-engineered virus spreads via trade routes from a fallen Layer 3 empire. It doesn't cause physical harm but overrides a Pop's "Memory" and "Traits" with those of a long-dead citizen of that empire. Infected Pops start demanding obsolete resources and forming political factions loyal to a civilization that hasn't existed for a millennia.
+
+**Emergence:** A trade ship from a border world brings the virus to your capital. Suddenly, half your agricultural workers believe they are aristocratic poets from the "First Ascendancy" and refuse to farm, demanding exotic wines and amphitheaters instead.
+
+**Tension:** Do you quarantine and aggressively treat the infected, causing massive unrest and economic damage, or try to fulfill their bizarre new demands to keep them productive?
+
+---
+
+## The Silent Audit
+
+**Layer:** 3 -> 1
+
+**Fantasy:** A massive, unseen bureaucracy continuing to extract resources long after its purpose is forgotten.
+
+**Mechanic:** A glitch in a pre-FTL automated logistics network causes it to occasionally demand a "tithe" of a specific, rare resource from your colony. If the tithe is not met, the network launches a devastating, automated orbital strike. The network doesn't belong to any known faction and seems to be operating on a 10,000-year-old error code.
+
+**Emergence:** You just discovered a massive deposit of a hyper-rare element necessary for faster-than-light travel. As soon as you start mining it, a monolithic, rust-covered orbital station appears and demands 90% of your yield, or it will glass the planet.
+
+**Tension:** Do you submit to the absurd demands of the broken machine, losing your most valuable resource, or risk a catastrophic war with an automated defense grid you don't fully understand?
+
+---
