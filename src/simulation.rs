@@ -396,6 +396,7 @@ fn register_simulation_core_systems(schedule: &mut Schedule) {
 fn register_simulation_extended_systems(schedule: &mut Schedule) {
     schedule.add_systems((
         crate::layer3::economy::biological_stock_market::biological_stock_market_bridge,
+        crate::layer3::integration::pirate_republic_diplomacy_bridge,
     ));
 
     schedule.add_systems((
