@@ -127,12 +127,10 @@ mod tests {
             .unwrap();
 
         let buffer = terminal.backend().buffer();
-        let cells: Vec<String> = buffer
-            .content
-            .iter()
-            .map(|c| c.symbol().to_string())
-            .collect();
-        let full_text = cells.join("");
+        let mut full_text = String::with_capacity(buffer.area.area() as usize);
+        for c in &buffer.content {
+            full_text.push_str(c.symbol());
+        }
 
         assert!(!full_text.contains("Notifications"));
     }
@@ -150,12 +148,10 @@ mod tests {
             .unwrap();
 
         let buffer = terminal.backend().buffer();
-        let cells: Vec<String> = buffer
-            .content
-            .iter()
-            .map(|c| c.symbol().to_string())
-            .collect();
-        let full_text = cells.join("");
+        let mut full_text = String::with_capacity(buffer.area.area() as usize);
+        for c in &buffer.content {
+            full_text.push_str(c.symbol());
+        }
 
         assert!(!full_text.contains("Notifications"));
     }
@@ -176,12 +172,10 @@ mod tests {
             .unwrap();
 
         let buffer = terminal.backend().buffer();
-        let cells: Vec<String> = buffer
-            .content
-            .iter()
-            .map(|c| c.symbol().to_string())
-            .collect();
-        let full_text = cells.join("");
+        let mut full_text = String::with_capacity(buffer.area.area() as usize);
+        for c in &buffer.content {
+            full_text.push_str(c.symbol());
+        }
 
         assert!(full_text.contains("Notifications"));
         assert!(full_text.contains("Test Alert"));

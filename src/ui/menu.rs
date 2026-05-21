@@ -157,12 +157,10 @@ mod tests {
             .unwrap();
 
         let buffer = terminal.backend().buffer();
-        let cells: Vec<String> = buffer
-            .content
-            .iter()
-            .map(|cell| cell.symbol().to_string())
-            .collect();
-        let full_text = cells.join("");
+        let mut full_text = String::with_capacity(buffer.area.area() as usize);
+        for cell in &buffer.content {
+            full_text.push_str(cell.symbol());
+        }
 
         assert!(full_text.contains("Ground Survival"));
         assert!(full_text.contains("Hard"));

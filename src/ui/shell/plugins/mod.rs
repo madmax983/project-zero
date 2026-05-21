@@ -259,10 +259,11 @@ mod tests {
     }
 
     fn buffer_text(buffer: &Buffer) -> String {
-        buffer
-            .content()
-            .iter()
-            .map(|cell| cell.symbol())
-            .collect::<String>()
+        // ⚡ Bolt Optimization: Replace intermediate .collect::<String>() chain with pre-allocated String loop
+        let mut s = String::with_capacity(buffer.area.area() as usize);
+        for cell in buffer.content() {
+            s.push_str(cell.symbol());
+        }
+        s
     }
 }

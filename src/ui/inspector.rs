@@ -1317,12 +1317,15 @@ fn render_dietary_history(frame: &mut Frame, area: Rect, history: &DietaryHistor
     if history.recent_meals.is_empty() {
         return;
     }
-    let meals: Vec<String> = history
-        .recent_meals
-        .iter()
-        .map(|i| format!("{i:?}"))
-        .collect();
-    let text = format!("Recent Meals: {}", meals.join(", "));
+    // ⚡ Bolt Optimization: Replace intermediate `.collect::<Vec<String>>()` allocation with pre-allocated String
+    let mut text = String::with_capacity(15 + history.recent_meals.len() * 10);
+    text.push_str("Recent Meals: ");
+    for (i, meal) in history.recent_meals.iter().enumerate() {
+        if i > 0 {
+            text.push_str(", ");
+        }
+        text.push_str(&format!("{meal:?}"));
+    }
     frame.render_widget(
         Paragraph::new(text).style(Style::default().fg(Color::Gray)),
         area,
@@ -1593,12 +1596,10 @@ mod tests {
 
         let buffer = terminal.backend().buffer();
 
-        let cells: Vec<String> = buffer
-            .content
-            .iter()
-            .map(|c: &ratatui::buffer::Cell| c.symbol().to_string())
-            .collect();
-        let full_text = cells.join("");
+        let mut full_text = String::with_capacity(buffer.area.area() as usize);
+        for c in &buffer.content {
+            full_text.push_str(c.symbol());
+        }
 
         // Check pop name appears instead of generic "Colonist"
         assert!(full_text.contains("Ada"));
@@ -1637,12 +1638,10 @@ mod tests {
             .unwrap();
 
         let buffer = terminal.backend().buffer();
-        let cells: Vec<String> = buffer
-            .content
-            .iter()
-            .map(|c| c.symbol().to_string())
-            .collect();
-        let full_text = cells.join("");
+        let mut full_text = String::with_capacity(buffer.area.area() as usize);
+        for c in &buffer.content {
+            full_text.push_str(c.symbol());
+        }
 
         assert!(full_text.contains("Bryn"));
         assert!(full_text.contains("Morale"));
@@ -1681,12 +1680,10 @@ mod tests {
             .unwrap();
 
         let buffer = terminal.backend().buffer();
-        let cells: Vec<String> = buffer
-            .content
-            .iter()
-            .map(|c| c.symbol().to_string())
-            .collect();
-        let full_text = cells.join("");
+        let mut full_text = String::with_capacity(buffer.area.area() as usize);
+        for c in &buffer.content {
+            full_text.push_str(c.symbol());
+        }
 
         assert!(full_text.contains("Stockpile"));
         assert!(full_text.contains("Storage Bonus"));
@@ -1727,12 +1724,10 @@ mod tests {
             .unwrap();
 
         let buffer = terminal.backend().buffer();
-        let cells: Vec<String> = buffer
-            .content
-            .iter()
-            .map(|c| c.symbol().to_string())
-            .collect();
-        let full_text = cells.join("");
+        let mut full_text = String::with_capacity(buffer.area.area() as usize);
+        for c in &buffer.content {
+            full_text.push_str(c.symbol());
+        }
 
         assert!(full_text.contains("Lumber Mill"));
         // "Production" is the title of the gauge block
@@ -1775,12 +1770,10 @@ mod tests {
             .unwrap();
 
         let buffer = terminal.backend().buffer();
-        let cells: Vec<String> = buffer
-            .content
-            .iter()
-            .map(|c| c.symbol().to_string())
-            .collect();
-        let full_text = cells.join("");
+        let mut full_text = String::with_capacity(buffer.area.area() as usize);
+        for c in &buffer.content {
+            full_text.push_str(c.symbol());
+        }
 
         assert!(full_text.contains("Dreamer"));
         assert!(full_text.contains("Dream:"));
@@ -1821,12 +1814,10 @@ mod tests {
             .unwrap();
 
         let buffer = terminal.backend().buffer();
-        let cells: Vec<String> = buffer
-            .content
-            .iter()
-            .map(|c| c.symbol().to_string())
-            .collect();
-        let full_text = cells.join("");
+        let mut full_text = String::with_capacity(buffer.area.area() as usize);
+        for c in &buffer.content {
+            full_text.push_str(c.symbol());
+        }
 
         assert!(full_text.contains("Rock"));
         assert!(full_text.contains("Purity: 85%"));
@@ -1861,12 +1852,10 @@ mod tests {
             .unwrap();
 
         let buffer = terminal.backend().buffer();
-        let cells: Vec<String> = buffer
-            .content
-            .iter()
-            .map(|c| c.symbol().to_string())
-            .collect();
-        let full_text = cells.join("");
+        let mut full_text = String::with_capacity(buffer.area.area() as usize);
+        for c in &buffer.content {
+            full_text.push_str(c.symbol());
+        }
 
         assert!(full_text.contains("Cade"));
         assert!(full_text.contains("Bio-Comp: 85%"));
@@ -1904,12 +1893,10 @@ mod tests {
             .unwrap();
 
         let buffer = terminal.backend().buffer();
-        let cells: Vec<String> = buffer
-            .content
-            .iter()
-            .map(|c| c.symbol().to_string())
-            .collect();
-        let full_text = cells.join("");
+        let mut full_text = String::with_capacity(buffer.area.area() as usize);
+        for c in &buffer.content {
+            full_text.push_str(c.symbol());
+        }
 
         assert!(full_text.contains("Spirit Anger: 80%"));
         assert!(full_text.contains("Glitchy"));
@@ -1934,12 +1921,10 @@ mod tests {
             .unwrap();
 
         let buffer = terminal.backend().buffer();
-        let cells: Vec<String> = buffer
-            .content
-            .iter()
-            .map(|c| c.symbol().to_string())
-            .collect();
-        let full_text = cells.join("");
+        let mut full_text = String::with_capacity(buffer.area.area() as usize);
+        for c in &buffer.content {
+            full_text.push_str(c.symbol());
+        }
 
         assert!(full_text.contains("Sky Glow"));
         assert!(full_text.contains("42.5"));
@@ -1977,12 +1962,10 @@ mod tests {
             .unwrap();
 
         let buffer = terminal.backend().buffer();
-        let cells: Vec<String> = buffer
-            .content
-            .iter()
-            .map(|c| c.symbol().to_string())
-            .collect();
-        let full_text = cells.join("");
+        let mut full_text = String::with_capacity(buffer.area.area() as usize);
+        for c in &buffer.content {
+            full_text.push_str(c.symbol());
+        }
 
         assert!(full_text.contains("Observatory"));
         assert!(full_text.contains("Lens Efficiency"));
@@ -2017,12 +2000,10 @@ mod tests {
             .unwrap();
 
         let buffer = terminal.backend().buffer();
-        let cells: Vec<String> = buffer
-            .content
-            .iter()
-            .map(|c| c.symbol().to_string())
-            .collect();
-        let full_text = cells.join("");
+        let mut full_text = String::with_capacity(buffer.area.area() as usize);
+        for c in &buffer.content {
+            full_text.push_str(c.symbol());
+        }
 
         assert!(full_text.contains("Agitated by Light"));
         assert!(full_text.contains("Aggression: 2.0"));
@@ -2062,12 +2043,10 @@ mod tests {
             .unwrap();
 
         let buffer = terminal.backend().buffer();
-        let cells: Vec<String> = buffer
-            .content
-            .iter()
-            .map(|c| c.symbol().to_string())
-            .collect();
-        let full_text = cells.join("");
+        let mut full_text = String::with_capacity(buffer.area.area() as usize);
+        for c in &buffer.content {
+            full_text.push_str(c.symbol());
+        }
 
         assert!(full_text.contains("Gourmand"));
         assert!(full_text.contains("Recent Meals:"));
