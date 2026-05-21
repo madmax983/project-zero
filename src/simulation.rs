@@ -891,6 +891,8 @@ mod tests {
         world.init_resource::<crate::layer2::phantom::EmpireAutomationState>();
         world.init_resource::<Events<crate::layer2::trade::blockade::TradeShipArrivalEvent>>();
         world.init_resource::<Events<crate::layer2::trade::routes::SentientTollDemandEvent>>();
+        world.init_resource::<Events<crate::layer1::actions::escape::LifeboatLaunchedEvent>>();
+
         world.init_resource::<Events<crate::layer2::trade::routes::TradeRouteExecutedEvent>>();
         world.init_resource::<Events<crate::layer2::trade::escape_velocity::LaunchShipEvent>>();
         world.init_resource::<crate::layer2::trade::blockade::ColonyDebt>();

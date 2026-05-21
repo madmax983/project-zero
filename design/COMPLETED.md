@@ -606,3 +606,4 @@
 - [x] `INT-1114` Integration: Generational Amnesia -> Chronicle - completed 2026-05-20
 - [x] `INT-1062` Integration: Biological Stock Market -> Market Demand - completed 2026-05-20
 - [x] `1061` Pirate Republics — `specs/1061-pirate-republics.md` — completed 2026-05-21
+- [x] `INT-1127` Integration: Escape Pods -> Orbit & Chronicle — completed 2026-10-31

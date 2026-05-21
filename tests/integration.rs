@@ -456,3 +456,5 @@ mod feral_logistics_chronicle;
 mod generational_amnesia_bridge;
 #[path = "integration/rocket_equation_chronicle.rs"]
 mod rocket_equation_chronicle;
+#[path = "integration/escape_pods_bridge.rs"]
+mod escape_pods_bridge;

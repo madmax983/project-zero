@@ -674,3 +674,24 @@ pub fn orbital_mirror_chronicle_bridge(
         });
     }
 }
+
+/// INT-1127: Bridges the Escape Pods system with Layer 2 Orbit and Chronicle.
+pub fn escape_pods_integration_system(
+    mut commands: Commands,
+    mut events: EventReader<crate::layer1::actions::escape::LifeboatLaunchedEvent>,
+    mut chronicle_events: EventWriter<crate::layer1::chronicle::AddChronicleEvent>,
+) {
+    for event in events.read() {
+        commands.spawn((
+            crate::layer2::fleet::Fleet,
+            crate::layer1::actions::escape::DistressSignal { occupants: event.occupants.clone() },
+            // In a real scenario, this might orbit a specific planet.
+            crate::layer2::fleet::InOrbit { parent: bevy_ecs::prelude::Entity::PLACEHOLDER },
+        ));
+
+        chronicle_events.send(crate::layer1::chronicle::AddChronicleEvent {
+            importance: crate::layer1::chronicle::EventImportance::Major,
+            text: format!("A lifeboat has been launched with {} survivors, entering planetary orbit.", event.occupants.len()),
+        });
+    }
+}

@@ -1133,3 +1133,9 @@
 - **Systems connected:** `AnomalyDiscoveredEvent` -> `anomaly_discovered_chronicle_bridge` -> `AddChronicleEvent`
 - **Glue added:** Added `anomaly_discovered_chronicle_bridge` in `src/layer3/integration.rs` to monitor `AnomalyDiscoveredEvent` and emit `AddChronicleEvent`. Registered in `src/simulation.rs`.
 - **Tests:** `tests/integration/cartographic_delusion_bridge.rs`
+
+### INT-1127: Escape Pods -> Orbit & Chronicle
+- **Date:** 2026-10-31
+- **Systems connected:** `process_lifeboat_launches` -> `escape_pods_integration_system` -> `AddChronicleEvent` and `InOrbit`
+- **Glue added:** Modified `process_lifeboat_launches` to send `LifeboatLaunchedEvent`. Added `escape_pods_integration_system` in `src/layer2/integration.rs` to spawn a `DistressSignal` at Layer 2 and add a Chronicle event.
+- **Tests:** `tests/integration/escape_pods_bridge.rs`
