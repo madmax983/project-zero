@@ -5147,3 +5147,72 @@
 **Code reference:** `Stateless`
 **Usage:**
 - "The Stateless are expanding into our hydroponics bays."
+## System Sovereignty (Spec 1059)
+
+### System Sovereignty
+**Replaces:** Independence, self-rule
+**Code reference:** `ColonyStatus` `is_sovereign`
+**Usage:**
+- "System Sovereignty is declared. We bow to no one."
+
+### The Overlord
+**Replaces:** Parent faction, corporate sponsor
+**Code reference:** `ColonyStatus` `overlord_id`
+**Usage:**
+- "The Overlord demands their tithe."
+
+## Corporate Sponsorship (Spec 693)
+
+### The Deal
+**Replaces:** Corporate sponsorship agreement
+**Code reference:** `SponsorshipDeal`
+**Usage:**
+- "We signed The Deal to keep the lights on."
+
+### DRM-Locked
+**Replaces:** Cannot be repaired locally
+**Code reference:** `DrmLocked`
+**Usage:**
+- "The auto-doc is DRM-Locked. We must wait for their technicians."
+
+## The Void Sirens (Spec 1067)
+
+### Siren Obsession
+**Replaces:** Distracted by the signal
+**Code reference:** `SirenObsession`
+**Usage:**
+- "He is lost to the Siren Obsession."
+
+### The Signal
+**Replaces:** Void Siren Event
+**Code reference:** `SirenSignalEvent`
+**Usage:**
+- "The Signal is pulling them away from their posts."
+
+## Sentient Trade Routes (Spec 1255)
+
+### Route Sentience
+**Replaces:** Route complexity penalty
+**Code reference:** `RouteComplexity`
+**Usage:**
+- "The Silk Stream has achieved Route Sentience."
+
+### The Toll
+**Replaces:** Sentient route demand
+**Code reference:** `SentientTollDemandEvent`
+**Usage:**
+- "The lane will not open until we pay The Toll."
+
+## Conveyor Logistics (Spec 631)
+
+### The Line
+**Replaces:** Conveyor belt network
+**Code reference:** `ConveyorBelt`
+**Usage:**
+- "The Line must not stop."
+
+### Inserter
+**Replaces:** Automated loading arm
+**Code reference:** `Inserter` (Future implementation)
+**Usage:**
+- "The Inserter jammed on a piece of scrap."

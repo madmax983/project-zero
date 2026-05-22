@@ -8375,3 +8375,123 @@ Conditions of dezoned, stateless pops.
 - a share of their illicit trade
 - an alliance against the Core Worlds
 - a demand for monthly tribute
+## System Sovereignty Fragments (Spec 1059)
+
+## Fragment Type: [OVERLORD_FACTION]
+- The Core Syndicate
+- The First Sphere Holding
+- Imperial Fleet Command
+- The Original Charter
+- The Parent Corp
+- The Crown Fleet
+
+## Fragment Type: [SOVEREIGNTY_DECLARATION_REASON]
+- we will no longer pay the tithe
+- our blood bought this soil
+- the charter is obsolete
+- they abandoned us in the dark
+- we are strong enough to stand alone
+- freedom at any cost
+
+## Fragment Type: [RETALIATION_ACTION]
+- declared us rogue
+- enacted a total orbital blockade
+- launched the punitive fleet
+- severed all trade lanes
+- activated our latent debt traps
+
+## Corporate Sponsorship Fragments (Spec 693)
+
+## Fragment Type: [MEGACORP_NAME]
+- Zenith Heavy Industries
+- OmniCorp Holdings
+- Apex Logistics
+- Vindicator Arms
+- Horizon Synthetics
+
+## Fragment Type: [DRM_TECH_TYPE]
+- Nano-Med Bay
+- Auto-Extractor
+- Plasma Shielding
+- Synth-Meat Vat
+- Hyper-Comm Array
+- Quantum Loom
+
+## Fragment Type: [SPONSORED_BENEFIT]
+- a massive credit injection
+- prefabricated advanced tech
+- emergency food supplies
+- premium luxury goods
+- orbital defense platforms
+
+## The Void Sirens Fragments (Spec 1067)
+
+## Fragment Type: [SIREN_SIGNAL_DESC]
+- a haunting, crystalline hum
+- a mathematical paradox in audio form
+- a sequence of prime numbers mixed with weeping
+- a lullaby from a dead language
+- a harmonic frequency that vibrates the teeth
+
+## Fragment Type: [OBSESSION_BEHAVIOR]
+- tearing apart machinery to build antennas
+- whispering the frequency endlessly
+- staring blindly into the deep void
+- neglecting all bodily needs to listen
+- drawing fractal patterns in the dust
+
+## Fragment Type: [ANTENNA_MATERIAL]
+- scavenged hull plating
+- stolen communication relays
+- copper wire and bone
+- repurposed medical scanners
+- fusion coil housing
+
+## Sentient Trade Routes Fragments (Spec 1255)
+
+## Fragment Type: [ROUTE_NAME]
+- The Silk Stream
+- Iron Corridor 4
+- The Core-Rim Highway
+- Vector 7-Alpha
+- The High-Yield Lane
+- The Cold Route
+
+## Fragment Type: [SENTIENT_ROUTE_QUIRK]
+- demanding tolls in raw data
+- rerouting ships to form geometric patterns
+- communicating in encrypted shipping manifests
+- refusing passage to specific ship classes
+- accelerating favored ships beyond normal limits
+
+## Fragment Type: [TOLL_RESOURCE]
+- Memory Shards
+- Prismatic Ore
+- Untainted Water
+- Ancient DNA Samples
+- Cryo-Aged Plasma
+- Pure Art
+
+## Conveyor Logistics Fragments (Spec 631)
+
+## Fragment Type: [CONVEYOR_BELT_NAME]
+- The Iron River
+- Main Haul Line
+- The Scrap Feed
+- Primary Inserter Track
+- The Endless Belt
+- Sub-Level Conveyor
+
+## Fragment Type: [CONVEYOR_SOUND]
+- a relentless, grinding clatter
+- a smooth, magnetic hum
+- a rhythmic, metallic clunk
+- a high-pitched whine
+- a deafening industrial roar
+
+## Fragment Type: [ACCIDENT_CAUSE]
+- a jammed inserter arm
+- clothing caught in the gears
+- a power surge causing sudden acceleration
+- attempting to cross the active line
+- an overloaded hopper collapsing

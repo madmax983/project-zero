@@ -7803,3 +7803,102 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "An envoy from [PIRATE_REPUBLIC_NAME] arrives. They offer [DIPLOMATIC_OFFER]. [YEAR]."
 - "[YEAR]: [PIRATE_REPUBLIC_NAME] hails us on an open channel, proposing [DIPLOMATIC_OFFER]."
 - "The outlaws want to talk. [PIRATE_REPUBLIC_NAME] contacts [COLONY] with [DIPLOMATIC_OFFER]. [YEAR]."
+## System Sovereignty Templates (Spec 1059)
+
+### Template: SOVEREIGNTY_DECLARED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [SOVEREIGNTY_DECLARATION_REASON]
+
+**Patterns:**
+- "[YEAR]: The link is severed. [COLONY] declares independence. [SOVEREIGNTY_DECLARATION_REASON]."
+- "We are no longer subjects. Because [SOVEREIGNTY_DECLARATION_REASON], we claim sovereignty. [YEAR]."
+- "[COLONY] stands alone. The declaration was broadcast across the sector. [SOVEREIGNTY_DECLARATION_REASON]. [YEAR]."
+
+### Template: OVERLORD_RETALIATION
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [OVERLORD_FACTION], [RETALIATION_ACTION]
+
+**Patterns:**
+- "They did not let us go quietly. [YEAR]. [OVERLORD_FACTION] [RETALIATION_ACTION]."
+- "[YEAR]: The price of freedom. The [OVERLORD_FACTION] has [RETALIATION_ACTION] against [COLONY]."
+- "A swift and brutal response. To punish our independence, [OVERLORD_FACTION] [RETALIATION_ACTION]. [YEAR]."
+
+## Corporate Sponsorship Templates (Spec 693)
+
+### Template: SPONSORSHIP_ACCEPTED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [MEGACORP_NAME], [SPONSORED_BENEFIT]
+
+**Patterns:**
+- "[YEAR]: We sold a piece of our soul to [MEGACORP_NAME]. In exchange, they provided [SPONSORED_BENEFIT]."
+- "[MEGACORP_NAME] logos now cover the colony. We accepted their sponsorship for [SPONSORED_BENEFIT]. [YEAR]."
+- "Survival required compromise. [COLONY] is now sponsored by [MEGACORP_NAME], receiving [SPONSORED_BENEFIT]. [YEAR]."
+
+### Template: DRM_LOCKOUT
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [DRM_TECH_TYPE], [MEGACORP_NAME]
+
+**Patterns:**
+- "The [DRM_TECH_TYPE] failed, and our engineers are locked out. Only [MEGACORP_NAME] can repair it. [YEAR]."
+- "[YEAR]: We cannot fix our own machines. The [DRM_TECH_TYPE] is protected by [MEGACORP_NAME] DRM."
+- "A fatal dependency. The sponsored [DRM_TECH_TYPE] is broken, and [MEGACORP_NAME] denies us access. [YEAR]."
+
+## The Void Sirens Templates (Spec 1067)
+
+### Template: SIREN_SIGNAL_DETECTED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [SIREN_SIGNAL_DESC]
+
+**Patterns:**
+- "[YEAR]: The deep space array picked up something. It sounds like [SIREN_SIGNAL_DESC]."
+- "A broadcast from the dark. [SIREN_SIGNAL_DESC]. The brightest minds in [COLONY] are listening. [YEAR]."
+- "We should have turned off the receivers. The signal is [SIREN_SIGNAL_DESC]. It is intoxicating. [YEAR]."
+
+### Template: OBSESSION_TAKES_HOLD
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [POP_NAME], [OBSESSION_BEHAVIOR], [ANTENNA_MATERIAL]
+
+**Patterns:**
+- "[POP_NAME] has gone mad. [YEAR]. They are [OBSESSION_BEHAVIOR], building an amplifier out of [ANTENNA_MATERIAL]."
+- "[YEAR]: The signal claimed [POP_NAME]. Instead of working, they are [OBSESSION_BEHAVIOR] and gathering [ANTENNA_MATERIAL]."
+- "We found [POP_NAME] [OBSESSION_BEHAVIOR]. They had constructed a crude receiver using [ANTENNA_MATERIAL]. [YEAR]."
+
+## Sentient Trade Routes Templates (Spec 1255)
+
+### Template: ROUTE_GAINS_SENTIENCE
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [ROUTE_NAME], [SENTIENT_ROUTE_QUIRK]
+
+**Patterns:**
+- "[YEAR]: The navigation algorithms on [ROUTE_NAME] woke up. Now it is [SENTIENT_ROUTE_QUIRK]."
+- "Traffic is halting on [ROUTE_NAME]. The route intelligence has become self-aware, [SENTIENT_ROUTE_QUIRK]. [YEAR]."
+- "We cannot plot a simple course anymore. [ROUTE_NAME] is alive and [SENTIENT_ROUTE_QUIRK]. [YEAR]."
+
+### Template: TOLL_DEMANDED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [ROUTE_NAME], [TOLL_RESOURCE]
+
+**Patterns:**
+- "The highway speaks. [ROUTE_NAME] demands a toll of [TOLL_RESOURCE] to allow our freighters passage. [YEAR]."
+- "[YEAR]: To bypass the delays on [ROUTE_NAME], we must sacrifice [TOLL_RESOURCE] to the routing mind."
+- "Extortion by algorithm. The sentient [ROUTE_NAME] requires an offering of [TOLL_RESOURCE]. [YEAR]."
+
+## Conveyor Logistics Templates (Spec 631)
+
+### Template: CONVEYORS_ONLINE
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [CONVEYOR_BELT_NAME], [CONVEYOR_SOUND]
+
+**Patterns:**
+- "[YEAR]: The factory grows. We engaged [CONVEYOR_BELT_NAME]. The sector is filled with [CONVEYOR_SOUND]."
+- "Automation replaces muscle. [CONVEYOR_BELT_NAME] is operational, producing [CONVEYOR_SOUND]. [YEAR]."
+- "We activated [CONVEYOR_BELT_NAME]. The steady [CONVEYOR_SOUND] is the new heartbeat of [COLONY]. [YEAR]."
+
+### Template: CONVEYOR_ACCIDENT
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [CONVEYOR_BELT_NAME], [ACCIDENT_CAUSE]
+
+**Patterns:**
+- "The belt is unforgiving. [YEAR]. An incident on [CONVEYOR_BELT_NAME] due to [ACCIDENT_CAUSE]."
+- "[YEAR]: Blood on the [CONVEYOR_BELT_NAME]. The line stopped because of [ACCIDENT_CAUSE]."
+- "A terrible accident. [ACCIDENT_CAUSE] resulted in a severe injury on [CONVEYOR_BELT_NAME]. [YEAR]."
