@@ -272,6 +272,29 @@ mod tests {
     use crate::layer1::Job;
 
     #[test]
+    fn test_spirit_trait_methods() {
+        let trait1 = SpiritTrait::Eager;
+        assert_eq!(trait1.name(), "Eager");
+        assert_eq!(trait1.description(), "Increases work speed.");
+
+        let trait2 = SpiritTrait::Lazy;
+        assert_eq!(trait2.name(), "Lazy");
+        assert_eq!(trait2.description(), "Decreases work speed.");
+
+        let trait3 = SpiritTrait::Comforting;
+        assert_eq!(trait3.name(), "Comforting");
+        assert_eq!(trait3.description(), "Improves mood when used.");
+
+        let trait4 = SpiritTrait::Haunted;
+        assert_eq!(trait4.name(), "Haunted");
+        assert_eq!(trait4.description(), "Worsens mood when used.");
+
+        let trait5 = SpiritTrait::Bloodthirsty;
+        assert_eq!(trait5.name(), "Bloodthirsty");
+        assert_eq!(trait5.description(), "Yearns for conflict.");
+    }
+
+    #[test]
     fn test_spirit_evolution_adds_experience() {
         let mut world = World::new();
 
