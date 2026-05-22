@@ -20636,3 +20636,84 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you waste precious industrial capacity manufacturing useless garbage to appease a broken machine, or divert your military to fight an endless, pointless war against automated tax collectors?
 
 ---
+## Phantom Labor
+
+**Layer:** 1
+
+**Fantasy:** A psychological anomaly where Pops work tirelessly for projects that do not exist.
+
+**Mechanic:** If a massive, multi-year construction project is suddenly canceled or destroyed just before completion, the workers assigned to it may develop "Phantom Labor Syndrome." They will wake up, travel to the empty site, and pantomime building the structure. They consume food and rest as normal but produce nothing. Attempting to reassign them causes extreme stress and mood penalties.
+
+**Emergence:** You cancel a mega-monument to save resources during a siege. For the next year, hundreds of your best builders stand in the town square swinging invisible hammers at the air, perfectly content but completely useless, while the walls crumble around them.
+
+**Tension:** Do you let them finish their useless phantom work to keep morale high during a crisis, or forcibly commit them to psychiatric care, tanking your medical infrastructure and their happiness?
+
+---
+
+## The Whisper Network
+
+**Layer:** 1 / 2
+
+**Fantasy:** Information travels faster than light, carried by the underclass.
+
+**Mechanic:** While official comms between planets take days (or are blocked by storms/enemies), a "Whisper Network" exists among low-class workers, smugglers, and mechanics. Rumors and true events from other Layer 1 colonies or Layer 2 ships arrive instantly via this network. However, the information is always slightly corrupted or entirely cryptically worded.
+
+**Emergence:** Your official sensors show the neighboring system is perfectly safe. But all the mechanics in your spaceport suddenly refuse to refuel ships heading that way, muttering about "the shadow that eats iron." You have to decide whether to trust your multimillion-credit sensor array or the collective superstition of your grease monkeys.
+
+**Tension:** Acting on perfect but slow official intelligence versus acting on instantaneous but highly unreliable rumors.
+
+---
+
+## Culinary Heritage
+
+**Layer:** 1
+
+**Fantasy:** Food is the last tether to a forgotten home.
+
+**Mechanic:** Pops track their original homeworld biome. If they are fed only generic nutrient paste or food native to their new colony, a "Homesickness" need slowly accrues. Building specialized "Heritage Kitchens" that import or simulate their native flora provides a massive mood boost and completely clears the Homesickness need, but requires complex Layer 2 logistics.
+
+**Emergence:** A group of elite scientists threatens to strike unless you dedicate a significant portion of your interstellar shipping capacity to importing a highly toxic, foul-smelling root vegetable from their frozen homeworld, purely so they can make a specific kind of stew on their holidays.
+
+**Tension:** The logistical nightmare of importing culturally significant food across lightyears versus dealing with an increasingly depressed and unmotivated workforce.
+
+---
+## Architectural Superstition
+
+**Layer:** 1
+
+**Fantasy:** Buildings acquire bad reputations, and logic cannot convince people otherwise.
+
+**Mechanic:** If multiple deaths or negative events (e.g., accidents, severe sickness) happen in or immediately adjacent to a specific building, that specific structure gains a "Cursed" tag. Pops will refuse to work there, live there, or even path through adjacent tiles if possible. This ignores the building type or efficiency.
+
+**Emergence:** Your central, fully upgraded fusion reactor suffers two separate workplace accidents in a month. Despite perfectly safe sensor readings, the engineers refuse to enter the "haunted" reactor. You are forced to build an entirely new, less efficient reactor across town just to get the colony powered again.
+
+**Tension:** The cost of entirely replacing perfectly functional infrastructure just to appease the irrational fears of the workforce.
+
+---
+
+## Gravity Well Inheritance
+
+**Layer:** Cross-layer
+
+**Fantasy:** Wealth and status literally fall from the sky.
+
+**Mechanic:** In systems with high-wealth Orbital Rings (Layer 2) and impoverished surface colonies (Layer 1), the death of a "Ring-Born" noble triggers a "Gravity Inheritance" event. Their physical belongings—often obsolete luxury goods, strange tech, or sealed archives—are physically dropped via cargo pod to the surface to be claimed by their distant "Gravity-Bound" relatives.
+
+**Emergence:** An orbital duke dies. A massive pod crashes into a slum on the surface. Inside is a collection of extremely rare pets. The local slum-dwellers now command immense respect because they control these creatures, completely upending the local social hierarchy.
+
+**Tension:** Do you try to intercept these drops to maintain order, or allow the chaotic wealth transfer to pacify the surface population?
+
+---
+## Bureaucratic Paralysis
+
+**Layer:** 1
+
+**Fantasy:** The slow, agonizing bureaucratic decay of a massive, sprawling empire where contradictory rules grind productivity to a halt.
+
+**Mechanic:** The central galactic government or local administration issues random, contradictory edicts (e.g., mandating 12-hour work shifts while simultaneously mandating 4-hour leisure periods). Loyal pops who try to follow both enter "Bureaucratic Paralysis," standing still and suffering massive stress.
+
+**Emergence:** Your wealthy, ultra-productive rim colony is suddenly paralyzed when a hyperlane collapse on Layer 3 effectively doubles their distance from the capital. A simple request to build a water pump now takes a month of administrative delay to process, causing a localized drought purely due to bureaucratic lag.
+
+**Tension:** Do you spend massive amounts of bureaucratic bandwidth (a Layer 3 resource) to audit and rescind ancient, forgotten laws, or do you let the arbitrary enforcement continue to maintain an aura of absolute, unquestionable state terror?
+
+---
