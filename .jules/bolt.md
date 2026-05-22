@@ -6,3 +6,7 @@
 ## [String Concatenation Optimization in UI Components]
 **Learning:** An optimization that pre-allocated capacity for a `String` inside UI rendering loops (`src/ui/status.rs`, `src/ui/inspector.rs`, etc.) to avoid the intermediate `.collect::<Vec<_>>().join("")` was highly effective and passed safety checks without causing lifetime issues. Using `buffer.area.area() as usize` for capacity effectively prevents reallocation overhead during the hot render path.
 **Action:** When working on UI buffers rendering text arrays, use `String::with_capacity(N)` and append inside a loop, rather than chaining iterators that collect into intermediate vectors first.
+
+**Pre-allocate Vector Capacities in Hot Loops**
+**Learning:** By tracing the maximum number of elements appended to vectors during UI rendering, I found that `Vec::new()` caused multiple intermediate heap allocations per frame. Counting the maximum items added and using `Vec::with_capacity(n)` instead removes this overhead.
+**Action:** Always estimate the maximum length of vectors instantiated in tight loops and use `Vec::with_capacity(n)` to avoid reallocation overhead.
