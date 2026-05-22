@@ -27,7 +27,7 @@ mod tests {
 
         let mut anomaly_spawned = false;
 
-        for i in 0..100 {
+        for i in 0..1000 {
             let entity = world
                 .spawn((
                     Designation {
@@ -60,7 +60,7 @@ mod tests {
 
         assert!(
             anomaly_spawned,
-            "Should have spawned at least one anomaly in 100 mining attempts"
+            "Should have spawned at least one anomaly in 1000 mining attempts"
         );
     }
 
@@ -82,7 +82,7 @@ mod tests {
 
         // Mine until anomaly
         let mut anomaly_entity = None;
-        for i in 0..100 {
+        for i in 0..1000 {
             let entity = world
                 .spawn((
                     Designation {

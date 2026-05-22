@@ -4,9 +4,6 @@ use crate::shared::log::MessageLog;
 use bevy_ecs::prelude::*;
 use strum::IntoEnumIterator;
 
-#[derive(Debug, Clone, Copy, PartialEq)]
-pub struct DataSize(pub f32);
-
 #[derive(Resource, Default, Debug)]
 pub struct Archive {
     pub capacity: f32,
