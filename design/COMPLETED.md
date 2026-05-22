@@ -610,3 +610,4 @@
 - [x] `1067` The Void Sirens — `specs/1067-the-void-sirens.md` — completed 2026-06-28
 - [x] `1063` Urban Heat Islands — `specs/1063-urban-heat-islands.md` — completed 2026-06-28
 - [x] `INT-1061` Integration: Pirate Republics -> Diplomacy — completed 2026-05-21
+- [x] `1059` System Sovereignty — `specs/1059-system-sovereignty.md` — completed 2024-05-24

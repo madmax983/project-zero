@@ -82,3 +82,4 @@ pub struct WarningDiplomaticMessageEvent {
     pub faction_id: Entity,
 }
 pub mod red_tape_defense;
+pub mod system_sovereignty;
