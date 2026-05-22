@@ -249,8 +249,14 @@ pub fn pirate_republic_diplomacy_bridge(
 ) {
     for entity in query.iter() {
         commands.entity(entity).insert((
-            crate::layer3::diplomacy_reflection::Civilization { id: format!("PirateRepublic_{:?}", entity) },
-            crate::layer3::diplomacy_reflection::DiplomaticTraits { is_barbarian: true, is_warlike: true, ..Default::default() },
+            crate::layer3::diplomacy_reflection::Civilization {
+                id: format!("PirateRepublic_{:?}", entity),
+            },
+            crate::layer3::diplomacy_reflection::DiplomaticTraits {
+                is_barbarian: true,
+                is_warlike: true,
+                ..Default::default()
+            },
             crate::layer3::diplomacy_reflection::DiplomaticRelations { relations: vec![] },
         ));
     }

@@ -1,6 +1,6 @@
 use bevy::prelude::*;
 use scale::layer2::piracy::PirateRepublic;
-use scale::layer3::diplomacy_reflection::{Civilization, DiplomaticTraits, DiplomaticRelations};
+use scale::layer3::diplomacy_reflection::{Civilization, DiplomaticRelations, DiplomaticTraits};
 use scale::layer3::integration::pirate_republic_diplomacy_bridge;
 
 #[test]
