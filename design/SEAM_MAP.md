@@ -1152,3 +1152,13 @@
 - **Systems connected:** `process_data_mining_system` -> `record_virus_event_chronicle_system`
 - **Glue added:** `record_virus_event_chronicle_system` in `src/layer3/digital_detritus.rs`
 - **Tests:** `tests/integration/digital_detritus_chronicle_bridge.rs`
+
+### INT-1059: System Sovereignty -> Simulation
+- **Date:** 2026-10-31
+- **Systems connected:** `process_sovereignty_declaration` -> `SimulationSchedule`
+- **Glue added:** Registered `process_sovereignty_declaration`, `DeclarationOfIndependenceEvent`, and `WarDeclarationEvent` in `src/simulation.rs`.
+
+### INT-1066: Zero-G Flora -> Simulation
+- **Date:** 2026-10-31
+- **Systems connected:** `handle_depressurization` -> `SimulationSchedule`
+- **Glue added:** Registered `handle_depressurization` and `DepressurizationEvent` in `src/simulation.rs`.
