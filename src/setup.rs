@@ -147,6 +147,7 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
         difficulty: scenario.difficulty,
     });
     world.insert_resource(GameState::default());
+    world.insert_resource(crate::layer1::living_score::ColonyRenown { score: 50.0 });
     world.init_resource::<crate::layer1::environment::bio_acoustic_miasma::MiasmaRecordedSecret>();
     world.init_resource::<crate::layer1::stress::TraumaTracker>();
     world

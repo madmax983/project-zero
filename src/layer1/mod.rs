@@ -475,3 +475,5 @@ pub use ransom_broker::*;
 
 pub mod void_sirens;
 pub use void_sirens::*;
+pub mod living_score;
+pub use living_score::*;

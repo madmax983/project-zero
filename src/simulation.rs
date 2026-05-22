@@ -123,6 +123,10 @@ fn init_simulation_resources(world: &mut World) {
         });
     }
 
+    if !world.contains_resource::<crate::layer1::living_score::ColonyRenown>() {
+        world.insert_resource(crate::layer1::living_score::ColonyRenown { score: 50.0 });
+    }
+
     world.init_resource::<Events<LaunchEvent>>();
     world.init_resource::<Events<ShipDestroyedEvent>>();
     world.init_resource::<Events<DetectionEvent>>();

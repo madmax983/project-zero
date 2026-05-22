@@ -256,6 +256,7 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::cassandra_protocol::handle_disaster_strike,
             crate::layer1::ransom_broker::ransom_demand_system,
             crate::layer1::ransom_broker::process_ransom_decisions_system,
+            crate::layer1::living_score::update_living_score_aesthetics,
         )
             .chain()
             .in_set(Layer1SystemSet::Economy),
