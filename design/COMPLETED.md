@@ -612,3 +612,4 @@
 - [x] `INT-1061` Integration: Pirate Republics -> Diplomacy — completed 2026-05-21
 - [x] `1059` System Sovereignty — `specs/1059-system-sovereignty.md` — completed 2024-05-24
 - [x] `693` Corporate Sponsorship — `specs/693-corporate-sponsorship.md` — completed 2026-02-01
+- [x] `1249` Ship Personalities — `specs/1249-ship-personalities.md` — completed 2026-02-01
