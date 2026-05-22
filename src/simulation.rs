@@ -46,6 +46,8 @@ pub fn build_simulation_schedule() -> Schedule {
 /// Run one simulation tick: all game systems via schedule, then increment tick counter.
 #[allow(clippy::too_many_lines)]
 fn init_simulation_resources(world: &mut World) {
+    world.init_resource::<Events<crate::layer1::AcceptSponsorshipEvent>>();
+    world.init_resource::<Events<crate::layer1::RepairBuildingEvent>>();
     world.init_resource::<Events<crate::layer2::trade::routes::TradeRouteExecutedEvent>>();
     world
         .init_resource::<Events<crate::layer2::trade::feral_logistics::FeralDeliveryTriggerEvent>>(
@@ -397,6 +399,9 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
     schedule.add_systems((
         crate::layer3::economy::biological_stock_market::biological_stock_market_bridge,
         crate::layer3::integration::pirate_republic_diplomacy_bridge,
+        crate::layer1::process_sponsorship_acceptance,
+        crate::layer1::enforce_sponsorship_requirements,
+        crate::layer1::handle_repair_requests,
     ));
 
     schedule.add_systems((
@@ -781,6 +786,8 @@ mod tests {
         world.init_resource::<bevy_ecs::event::Events<crate::layer1::culture::gastronomers::CulinarySingularityEvent>>();
         world.init_resource::<bevy_ecs::event::Events<crate::layer1::petrification::PopPetrifiedEvent>>();
         world.init_resource::<Events<crate::layer1::predecessors::WorldTriggerEvent>>();
+        world.init_resource::<Events<crate::layer1::AcceptSponsorshipEvent>>();
+        world.init_resource::<Events<crate::layer1::RepairBuildingEvent>>();
         world.init_resource::<Events<crate::layer1::social::hedonic_treadmill::ConsumeItemEvent>>();
         world.init_resource::<Events<crate::layer1::architecture::sunk_cost_monument::CancelConstructionEvent>>();
         *world.resource_mut::<GameState>() = GameState::Running;
@@ -836,6 +843,8 @@ mod tests {
             );
 
         // Initialize Detection Risk for test
+        world.init_resource::<Events<crate::layer1::AcceptSponsorshipEvent>>();
+        world.init_resource::<Events<crate::layer1::RepairBuildingEvent>>();
         world.init_resource::<Events<crate::layer1::social::hedonic_treadmill::ConsumeItemEvent>>();
         world.init_resource::<Events<crate::layer1::architecture::sunk_cost_monument::CancelConstructionEvent>>();
         world.init_resource::<Events<crate::layer1::anomalies::echo::SpawnEchoSourceEvent>>();
