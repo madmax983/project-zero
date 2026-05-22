@@ -141,6 +141,9 @@ pub mod sleepwalking_hazards;
 pub mod solar_flare_sickness;
 
 #[cfg(feature = "nova")]
+pub mod radioactive_batteries;
+
+#[cfg(feature = "nova")]
 pub mod stowaway_clutter;
 
 #[cfg(feature = "nova")]

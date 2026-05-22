@@ -2037,7 +2037,12 @@ fn print_stories(world: &mut World) {
     ];
 
     for story in &tradition.stories {
-        println!("{}", "╭── ORAL TRADITION (STORIES) ─────────────────────────╮".with(Color::Cyan).bold());
+        println!(
+            "{}",
+            "╭── ORAL TRADITION (STORIES) ─────────────────────────╮"
+                .with(Color::Cyan)
+                .bold()
+        );
         let (genre_text, genre_color) = match story.genre {
             StoryGenre::Heroic => ("🌟 Heroic", Color::Yellow),
             StoryGenre::Tragedy => ("🎭 Tragedy", Color::Red),
@@ -2082,7 +2087,12 @@ fn print_stories(world: &mut World) {
         if let Some(m) = found_mutation {
             let parts: Vec<&str> = story.text.splitn(2, m).collect();
             if parts.len() == 2 {
-                print!("{}{}{}", parts[0].with(Color::DarkGrey), m.with(Color::Magenta).bold(), parts[1].with(Color::DarkGrey));
+                print!(
+                    "{}{}{}",
+                    parts[0].with(Color::DarkGrey),
+                    m.with(Color::Magenta).bold(),
+                    parts[1].with(Color::DarkGrey)
+                );
             } else {
                 print!("{}", story.text.clone().with(Color::DarkGrey));
             }
@@ -2091,7 +2101,12 @@ fn print_stories(world: &mut World) {
         }
 
         println!("\"");
-        println!("{}", "╰─────────────────────────────────────────────────────╯".with(Color::Cyan).bold());
+        println!(
+            "{}",
+            "╰─────────────────────────────────────────────────────╯"
+                .with(Color::Cyan)
+                .bold()
+        );
     }
 }
 

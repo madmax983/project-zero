@@ -9,7 +9,9 @@ fn test_digital_detritus_chronicle_bridge() {
     app.add_event::<AddChronicleEvent>();
     app.add_systems(Update, record_virus_event_chronicle_system);
 
-    app.world_mut().resource_mut::<Events<VirusEvent>>().send(VirusEvent);
+    app.world_mut()
+        .resource_mut::<Events<VirusEvent>>()
+        .send(VirusEvent);
 
     app.update();
 
