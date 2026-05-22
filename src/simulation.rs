@@ -56,6 +56,9 @@ fn init_simulation_resources(world: &mut World) {
 
     world.init_resource::<Events<crate::layer1::social::hedonic_treadmill::ConsumeItemEvent>>();
     world.init_resource::<Events<crate::layer1::architecture::sunk_cost_monument::CancelConstructionEvent>>();
+    world.init_resource::<Events<crate::layer3::diplomacy::system_sovereignty::DeclarationOfIndependenceEvent>>();
+    world.init_resource::<Events<crate::layer3::diplomacy::system_sovereignty::WarDeclarationEvent>>();
+    world.init_resource::<Events<crate::layer1::agriculture::zero_g_flora::DepressurizationEvent>>();
     world.init_resource::<Events<crate::layer1::anomalies::echo::SpawnEchoSourceEvent>>();
     world.init_resource::<Events<crate::layer1::anomalies::void_sirens::SirenSignalEvent>>();
     world.init_resource::<Events<crate::layer1::economy::apex_diet::ConsumeFoodEvent>>();
@@ -406,6 +409,8 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
         crate::layer1::process_sponsorship_acceptance,
         crate::layer1::enforce_sponsorship_requirements,
         crate::layer1::handle_repair_requests,
+        crate::layer3::diplomacy::system_sovereignty::process_sovereignty_declaration,
+        crate::layer1::agriculture::zero_g_flora::handle_depressurization,
     ));
 
     schedule.add_systems((
