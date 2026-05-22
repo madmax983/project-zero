@@ -20567,3 +20567,72 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you build expensive, dense housing on the planet, or cheap orbital sprawl that makes your workforce fragile and exhausted?
 
 ---
+## Generational Stigma
+
+**Layer:** 1
+
+**Fantasy:** The heavy burden of being associated with a past catastrophe, persisting long after the event itself.
+
+**Mechanic:** When a disaster (e.g., an industrial explosion, a famine) occurs, Pops in the immediate vicinity or associated with the failed system receive a "Stigmatized" tag. This tag is partially inheritable. Descendants of stigmatized Pops suffer a permanent "Suspicion" penalty from non-stigmatized Pops, making it extremely difficult for them to hold leadership roles or high-tier jobs without causing colony-wide unrest.
+
+**Emergence:** You put your best engineer in charge of a new experimental reactor. The reactor melds down. Decades later, the engineer's great-grandchild, despite being a genius, is repeatedly passed over for promotion because the colony still remembers the glow of the meltdown. You are forced to build a separate, isolated research facility just to utilize the talents of the stigmatized underclass.
+
+**Tension:** Do you exile the stigmatized to maintain social harmony, losing valuable human capital, or force integration and risk constant friction and bureaucratic inefficiency?
+
+---
+
+## Inter-System Debris Fields
+
+**Layer:** 2
+
+**Fantasy:** Navigating the physical scars of ancient space battles that have become economic opportunities and lethal hazards.
+
+**Mechanic:** Large space battles leave behind massive, persistent "Debris Fields" that slowly drift across the system over centuries. These fields contain highly valuable salvage (rare metals, ancient tech) but are extremely hazardous to navigate. Ships attempting to salvage or travel through them without specialized "Nav-Shielding" suffer severe damage or complete destruction. The fields can occasionally collide with planets, causing localized kinetic strikes.
+
+**Emergence:** A massive war centuries ago left a huge debris field. It finally drifts near your core world. You send a massive salvage fleet, hoping for a windfall. However, the fleet disturbs the field's delicate orbital mechanics, causing a cascade of collisions that sends a barrage of hyper-velocity shrapnel raining down on your capital city, destroying your industrial sector.
+
+**Tension:** Do you risk your fleets to mine the hazardous riches of the past, or spend massive resources trying to clear or deflect the debris before it becomes a planetary threat?
+
+---
+
+## The Synthesizer's Paradox
+
+**Layer:** Cross-layer
+
+**Fantasy:** Achieving post-scarcity, only to realize the meaning of life was in the struggle.
+
+**Mechanic:** You research "Absolute Synthesis," a late-game technology allowing you to instantly convert basic energy into any complex physical good (food, tools, art). This completely removes the "Hunger" and "Material" needs. However, it replaces them with a rapidly growing "Purpose" deficit. Without the necessity of labor, Pops become catatonic or engage in hyper-destructive, extreme behaviors (like starting massive fires or self-mutilation) simply to feel something real.
+
+**Emergence:** You proudly unveil your planetary synthesizers, achieving a utopia where no one ever goes hungry or lacks shelter. Within a year, your perfectly healthy, fully-fed population begins forming death cults and burning down the gleaming new cities because the absolute lack of struggle has induced a colony-wide existential crisis.
+
+**Tension:** Do you artificially introduce scarcity and force people to work meaningless jobs just to maintain their sanity, or try to manage a society that is tearing itself apart from sheer boredom?
+
+---
+
+## Memory Debt
+
+**Layer:** 1
+
+**Fantasy:** A colony paralyzed by its inability to let go of the past.
+
+**Mechanic:** When Pops die, their "Memories" are stored in physical "Mnemic Cores." If a colony hoards too many Mnemic Cores relative to its living population, it suffers a "Memory Debt" penalty. Living Pops spend increasing amounts of time interfacing with the cores, reliving past glories and traumas, causing a massive drop in work efficiency and a resistance to adopting new technologies.
+
+**Emergence:** You build a massive, perfectly preserved crypt to honor the founders of your colony. Centuries later, your population is starving because everyone is spending their days plugged into the crypt, reliving the golden age of the founders instead of farming the barren fields of the present.
+
+**Tension:** Do you destroy the sacred memories of your ancestors to force your society to face the future, or allow your colony to slowly wither away in a state of nostalgic paralysis?
+
+---
+
+## Phantom Demands
+
+**Layer:** 3 -> 2
+
+**Fantasy:** Bureaucracy continuing to function perfectly long after the system it serves has collapsed.
+
+**Mechanic:** A distant, fallen Layer 3 empire's automated trade network continues to issue "Phantom Demands" to your Layer 2 trade routes. These demands require specific, often obsolete or obscure resources. Fulfilling the demands yields nothing, as the destination no longer exists. However, ignoring them triggers an automated "Non-Compliance" response from the dead empire's dormant defense grid, launching ancient but powerful drone fleets to blockade your routes.
+
+**Emergence:** You receive a demand for ten thousand units of "Analog Entertainment Media" from a sector that went dark three hundred years ago. You ignore it. A week later, your crucial hyperlane is blockaded by a fleet of terrifyingly advanced, heavily armed autonomous tollbooths that demand payment in VHS tapes before they will let your dreadnoughts pass.
+
+**Tension:** Do you waste precious industrial capacity manufacturing useless garbage to appease a broken machine, or divert your military to fight an endless, pointless war against automated tax collectors?
+
+---
