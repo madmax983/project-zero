@@ -2,6 +2,50 @@
 mod tests {
     use super::*;
     #[test]
+    fn test_trigger_emotional_contagion_skip_existing() {
+        let mut app = App::new();
+        app.add_systems(Update, trigger_emotional_contagion_system);
+
+        let target_panic = app
+            .world_mut()
+            .spawn((
+                Morale {
+                    value: 10.0,
+                    ..default()
+                },
+                EmotionalContagion {
+                    contagion_type: ContagionType::Panic,
+                    radius: 5.0,
+                    strength: -15.0,
+                },
+            ))
+            .id();
+
+        let target_joy = app
+            .world_mut()
+            .spawn((
+                Morale {
+                    value: 90.0,
+                    ..default()
+                },
+                EmotionalContagion {
+                    contagion_type: ContagionType::Joy,
+                    radius: 5.0,
+                    strength: 15.0,
+                },
+            ))
+            .id();
+
+        app.update();
+
+        let contagion_panic = app.world().get::<EmotionalContagion>(target_panic).unwrap();
+        assert_eq!(contagion_panic.contagion_type, ContagionType::Panic);
+
+        let contagion_joy = app.world().get::<EmotionalContagion>(target_joy).unwrap();
+        assert_eq!(contagion_joy.contagion_type, ContagionType::Joy);
+    }
+
+    #[test]
     fn test_contagion_spreads_to_nearby_pops() {
         let mut app = App::new();
         app.add_systems(Update, contagion_system);
