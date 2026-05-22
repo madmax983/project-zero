@@ -1,5 +1,5 @@
 use bevy::prelude::*;
-use scale::layer1::core::chronicle::{AddChronicleEvent, EventImportance};
+use scale::layer1::core::chronicle::AddChronicleEvent;
 use scale::layer3::digital_detritus::{record_virus_event_chronicle_system, VirusEvent};
 
 #[test]
