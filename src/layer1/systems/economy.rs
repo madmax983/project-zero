@@ -262,5 +262,7 @@ pub fn register(schedule: &mut Schedule) {
     );
 
     #[cfg(feature = "nova")]
+    crate::experimental::radioactive_batteries::register(schedule);
+    #[cfg(feature = "nova")]
     crate::experimental::stowaway_clutter::register(schedule);
 }

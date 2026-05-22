@@ -62,3 +62,8 @@
 **Concept:** Added a `VerminWheel` building component that harvests power from `VerminState`. Connects the pest infestation mechanic with the energy grid.
 **Fate:** Merged
 **Lesson:** Turns a pure penalty (rats) into a toxic resource (free power). It creates a "rat farming" meta where players might intentionally let their colony get slightly infested just to power their base, but risk it spiraling out of control.
+
+## [Radioactive Batteries]
+**Concept:** Added `radioactive_batteries_system` to `src/experimental/radioactive_batteries.rs`. A `Battery` placed in a highly radioactive zone (on the `RadiationGrid`) slowly charges itself by converting ambient radiation into power.
+**Fate:** Submitted
+**Lesson:** Connects the environment hazard (radiation) with the energy system (batteries). Players can build "dirty" power grids by intentionally storing nuclear waste next to battery banks, risking `RadiationSickness` for Pops who walk near them in exchange for free passive power.
