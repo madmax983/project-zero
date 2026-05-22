@@ -6060,7 +6060,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Kinetic Storage
+## Kinetic Storage [SPECCED]
 
 **Layer:** 1
 
