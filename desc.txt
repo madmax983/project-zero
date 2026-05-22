@@ -1,0 +1,12 @@
+Implements RED-GREEN-REFACTOR from spec 693:
+- Added comprehensive test suite (RED phase)
+- Implemented SponsorshipDeal, ActiveSponsorship, DrmLocked components and systems (GREEN phase)
+- Registered systems and events in simulation.rs (REFACTOR phase)
+- Test coverage: > 90% (target: 85%)
+
+All acceptance criteria met:
+- Accepting a sponsorship grants the expected resources and sets an active contract.
+- Failing to build required billboards triggers a penalty.
+- Buildings flagged as is_drm_locked reject repair attempts.
+- cargo test passes
+- cargo clippy clean
