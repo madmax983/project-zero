@@ -836,3 +836,4 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1260` Phantom Infrastructure — `specs/1260-phantom-infrastructure.md`
 - [ ] `1262` Emotional Cartography — `specs/1262-emotional-cartography.md`
 - [ ] `1263` The Sabotage Lottery — `specs/1263-the-sabotage-lottery.md`
+- [ ] `1264` Kinetic Storage — `specs/1264-kinetic-storage.md`

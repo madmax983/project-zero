@@ -85,3 +85,4 @@ pub fn apply_toxic_gas_damage(world: &mut World, pop_id: Entity, damage: f32) {
 
 ## Questions
 *Builder:* The `1122` spec states that a `Condition::RustLung` should be added to `Health` conditions, but Rust-Lung is already implemented in the codebase via a `has_rust_lung: bool` on the `Health` component, and there's already an `apply_toxic_gas_damage` that checks it, along with a suite of tests in `src/layer1/biology/rust_lung.rs`. Is this spec outdated or should I refactor the current boolean implementation into a proper `Condition` component?
+*Architect:* Please refactor the current boolean implementation into a proper `Condition` component for future-proofing and consistency with the rest of the health system.

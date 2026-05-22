@@ -1,20 +1,3 @@
-1. **Answer Builder Question in `specs/1122-rust-lung-epidemic.md`**
-   - Use `replace_with_git_merge_diff` to add the Architect's response directly under the Builder's question in `specs/1122-rust-lung-epidemic.md`. The diff will be:
-```
-<<<<<<< SEARCH
-## Questions
-*Builder:* The `1122` spec states that a `Condition::RustLung` should be added to `Health` conditions, but Rust-Lung is already implemented in the codebase via a `has_rust_lung: bool` on the `Health` component, and there's already an `apply_toxic_gas_damage` that checks it, along with a suite of tests in `src/layer1/biology/rust_lung.rs`. Is this spec outdated or should I refactor the current boolean implementation into a proper `Condition` component?
-=======
-## Questions
-*Builder:* The `1122` spec states that a `Condition::RustLung` should be added to `Health` conditions, but Rust-Lung is already implemented in the codebase via a `has_rust_lung: bool` on the `Health` component, and there's already an `apply_toxic_gas_damage` that checks it, along with a suite of tests in `src/layer1/biology/rust_lung.rs`. Is this spec outdated or should I refactor the current boolean implementation into a proper `Condition` component?
-*Architect:* Please refactor the current boolean implementation into a proper `Condition` component for future-proofing and consistency with the rest of the health system.
->>>>>>> REPLACE
-```
-
-2. **Write a new Specification (`specs/1264-kinetic-storage.md`)**
-   - Create a new specification file using `run_in_bash_session` executing:
-```bash
-cat << 'SPEC_EOF' > specs/1264-kinetic-storage.md
 # 1264: Kinetic Storage
 
 ## 1. Overview
@@ -107,38 +90,3 @@ mod tests {
 
 ## 8. Questions
 *Builder: add questions here if spec is unclear.*
-SPEC_EOF
-```
-   - Verify creation by running `cat specs/1264-kinetic-storage.md`.
-
-3. **Update `design/BACKLOG.md`**
-   - Use `run_in_bash_session` with `echo "- [ ] \`1264\` Kinetic Storage — \`specs/1264-kinetic-storage.md\`" >> design/BACKLOG.md` to append the new spec to the backlog.
-   - Verify update by running `tail -n 10 design/BACKLOG.md`.
-
-4. **Update `design/IDEAS.md`**
-   - Use `replace_with_git_merge_diff` to mark the "Kinetic Storage" idea as `[SPECCED]` in `design/IDEAS.md`. The diff will be:
-```
-<<<<<<< SEARCH
-## Kinetic Storage
-
-**Layer:** 1
-
-**Fantasy:** Storing power in gravity. The sword of Damocles hanging over your head.
-=======
-## Kinetic Storage [SPECCED]
-
-**Layer:** 1
-
-**Fantasy:** Storing power in gravity. The sword of Damocles hanging over your head.
->>>>>>> REPLACE
-```
-   - Verify update by running `grep -A 2 -B 2 "Kinetic Storage" design/IDEAS.md`.
-
-5. **Run test suite**
-   - Execute `cargo test --lib` using `run_in_bash_session` to verify that no regressions have been introduced.
-
-6. **Pre-commit Steps**
-   - Complete pre-commit steps to ensure proper testing, verification, review, and reflection are done.
-
-7. **Submit Changes**
-   - Commit the changes and submit the branch using the exact commit message `spec(layer1): add kinetic storage specification (TDD)`.
