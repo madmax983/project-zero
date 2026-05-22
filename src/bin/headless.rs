@@ -2005,8 +2005,7 @@ fn print_bio(world: &mut World, target_id: u32) {
 
 #[cfg(feature = "nova")]
 fn print_stories(world: &mut World) {
-    use comfy_table::presets::UTF8_FULL;
-    use comfy_table::{Attribute, Cell, Color, ContentArrangement, Table};
+    use crossterm::style::{Color, Stylize};
 
     let tradition = world.resource::<OralTradition>();
 
@@ -2020,17 +2019,7 @@ fn print_stories(world: &mut World) {
         return;
     }
 
-    let mut table = Table::new();
-    table.set_width(120);
-    table
-        .load_preset(UTF8_FULL)
-        .set_content_arrangement(ContentArrangement::Dynamic)
-        .set_header(vec![
-            Cell::new("Date").add_attribute(Attribute::Bold),
-            Cell::new("Genre").add_attribute(Attribute::Bold),
-            Cell::new("Mutations").add_attribute(Attribute::Bold),
-            Cell::new("Story").add_attribute(Attribute::Bold),
-        ]);
+    println!();
 
     let mutations = [
         "Homeland",
@@ -2048,48 +2037,62 @@ fn print_stories(world: &mut World) {
     ];
 
     for story in &tradition.stories {
-        let genre_color = match story.genre {
-            StoryGenre::Heroic => Color::Yellow,
-            StoryGenre::Tragedy => Color::Red,
-            StoryGenre::Cautionary => Color::Magenta,
-            StoryGenre::Trivial => Color::Grey,
+        println!("{}", "╭── ORAL TRADITION (STORIES) ─────────────────────────╮".with(Color::Cyan).bold());
+        let (genre_text, genre_color) = match story.genre {
+            StoryGenre::Heroic => ("🌟 Heroic", Color::Yellow),
+            StoryGenre::Tragedy => ("🎭 Tragedy", Color::Red),
+            StoryGenre::Cautionary => ("⚠️ Cautionary", Color::Magenta),
+            StoryGenre::Trivial => ("📝 Trivial", Color::DarkGrey),
         };
 
-        let genre_text = match story.genre {
-            StoryGenre::Heroic => "🌟 Heroic",
-            StoryGenre::Tragedy => "🎭 Tragedy",
-            StoryGenre::Cautionary => "⚠️ Cautionary",
-            StoryGenre::Trivial => "📝 Trivial",
+        let mutations_color = if story.mutations > 5 {
+            Color::Red
+        } else if story.mutations > 0 {
+            Color::Yellow
+        } else {
+            Color::Green
         };
 
-        let mut story_cell = Cell::new(&story.text).fg(genre_color);
+        // Header
+        println!(
+            "{} {} │ {} {} │ {} {}",
+            "│".with(Color::Cyan).bold(),
+            genre_text.with(genre_color).bold(),
+            "Date:".with(Color::DarkGrey),
+            story.historical_date.to_string().with(Color::Cyan),
+            "Mutations:".with(Color::DarkGrey),
+            story.mutations.to_string().with(mutations_color)
+        );
 
-        let mut contains_mutation = false;
+        // Story Text
+        let mut found_mutation = None;
+        let mut first_idx = usize::MAX;
+
         for m in &mutations {
-            if story.text.contains(m) {
-                contains_mutation = true;
-                break;
+            if let Some(idx) = story.text.find(m) {
+                if idx < first_idx {
+                    first_idx = idx;
+                    found_mutation = Some(*m);
+                }
             }
         }
 
-        // Highlight cell containing mutations
-        if contains_mutation {
-            story_cell = story_cell.add_attribute(Attribute::Italic).fg(Color::Cyan);
+        print!("{}   \"", "│".with(Color::Cyan).bold());
+
+        if let Some(m) = found_mutation {
+            let parts: Vec<&str> = story.text.splitn(2, m).collect();
+            if parts.len() == 2 {
+                print!("{}{}{}", parts[0].with(Color::DarkGrey), m.with(Color::Magenta).bold(), parts[1].with(Color::DarkGrey));
+            } else {
+                print!("{}", story.text.clone().with(Color::DarkGrey));
+            }
+        } else {
+            print!("{}", story.text.clone().with(Color::DarkGrey));
         }
 
-        if story.mutations > 5 {
-            story_cell = story_cell.add_attribute(Attribute::Bold);
-        }
-
-        table.add_row(vec![
-            Cell::new(story.historical_date.to_string()),
-            Cell::new(genre_text).fg(genre_color),
-            Cell::new(story.mutations.to_string()),
-            story_cell,
-        ]);
+        println!("\"");
+        println!("{}", "╰─────────────────────────────────────────────────────╯".with(Color::Cyan).bold());
     }
-
-    print_dashboard_table("ORAL TRADITION (STORIES)", table);
 }
 
 fn print_chronicle(world: &mut World) {
