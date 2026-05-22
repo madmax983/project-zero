@@ -5,6 +5,7 @@
 pub mod farm;
 pub mod gastronomy;
 pub mod husbandry;
+pub mod zero_g_flora;
 
 #[cfg(test)]
 mod greenhouse_tests;
@@ -18,3 +19,4 @@ mod preservation_tests;
 pub use farm::*;
 pub use gastronomy::*;
 pub use husbandry::*;
+pub use zero_g_flora::*;

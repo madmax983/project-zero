@@ -20,6 +20,8 @@ pub enum StationType {
     Habitat,
     /// An abandoned station that can be claimed and repaired.
     Derelict,
+    /// A hydroponics bay for growing Zero-G Flora.
+    Hydroponics,
 }
 
 impl StationType {
@@ -33,6 +35,7 @@ impl StationType {
             Self::Brewery => vec![(ResourceType::Metal, 150.0)],
             Self::Habitat => vec![(ResourceType::Metal, 150.0), (ResourceType::Food, 100.0)],
             Self::Derelict => vec![],
+            Self::Hydroponics => vec![(ResourceType::Metal, 150.0), (ResourceType::Fuel, 20.0)],
         }
     }
 
@@ -46,6 +49,7 @@ impl StationType {
             Self::Brewery => "Zero-G Brewery",
             Self::Habitat => "Habitat",
             Self::Derelict => "Derelict Station",
+            Self::Hydroponics => "Hydroponics Bay",
         }
     }
 
@@ -59,6 +63,7 @@ impl StationType {
             Self::Brewery => 'B',
             Self::Habitat => 'O',
             Self::Derelict => 'D',
+            Self::Hydroponics => 'H',
         }
     }
 }
