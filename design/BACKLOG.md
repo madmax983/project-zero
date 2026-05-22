@@ -680,7 +680,7 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1055` Gravity Caste — `specs/1055-gravity-caste.md`
 - [ ] `1056` The Dead Hand — `specs/1056-the-dead-hand.md`
 - [ ] `1057` The Living Score — `specs/1057-the-living-score.md`
-- [ ] `1058` Retro-Causality Contracts — `specs/1058-retro-causality-contracts.md`
+- [ ] `1058` Retro-Causality Contracts — `specs/1058-retro-causality-contracts.md` — claimed 2026-02-01
 
 
 

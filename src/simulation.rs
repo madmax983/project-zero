@@ -47,6 +47,9 @@ pub fn build_simulation_schedule() -> Schedule {
 #[allow(clippy::too_many_lines)]
 fn init_simulation_resources(world: &mut World) {
     world.init_resource::<Events<crate::layer1::AcceptSponsorshipEvent>>();
+    world
+        .init_resource::<Events<crate::layer1::economy::retro_contract::AcceptRetroContractEvent>>(
+        );
     world.init_resource::<Events<crate::layer1::RepairBuildingEvent>>();
     world.init_resource::<Events<crate::layer2::trade::routes::TradeRouteExecutedEvent>>();
     world
@@ -396,6 +399,11 @@ fn register_simulation_core_systems(schedule: &mut Schedule) {
 
 #[allow(clippy::too_many_lines)]
 fn register_simulation_extended_systems(schedule: &mut Schedule) {
+    schedule.add_systems((
+        crate::layer1::economy::retro_contract::handle_retro_contract_acceptance,
+        crate::layer1::economy::retro_contract::evaluate_retro_contracts,
+    ));
+
     schedule.add_systems((
         crate::layer3::economy::biological_stock_market::biological_stock_market_bridge,
         crate::layer3::integration::pirate_republic_diplomacy_bridge,
