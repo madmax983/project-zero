@@ -1139,3 +1139,9 @@
 - **Systems connected:** `PirateHaven` upgrading to `PirateRepublic` -> `Civilization`, `DiplomaticTraits`, `DiplomaticRelations`
 - **Glue added:** `pirate_republic_diplomacy_bridge` in `src/layer3/integration.rs`
 - **Tests:** `tests/integration/pirate_republic_diplomacy_bridge.rs`
+
+### INT-1064: Digital Detritus -> Chronicle
+- **Date:** 2026-05-31
+- **Systems connected:** `process_data_mining_system` -> `record_virus_event_chronicle_system`
+- **Glue added:** `record_virus_event_chronicle_system` in `src/layer3/digital_detritus.rs`
+- **Tests:** `tests/integration/digital_detritus_chronicle_bridge.rs`
