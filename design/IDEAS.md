@@ -20457,3 +20457,71 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you submit to the absurd demands of the broken machine, losing your most valuable resource, or risk a catastrophic war with an automated defense grid you don't fully understand?
 
 ---
+
+## Sub-Light Debt
+
+**Layer:** Cross-layer
+
+**Fantasy:** Receiving the bill for a war fought by your ancestors.
+
+**Mechanic:** Ancient, pre-FTL sub-light cargo ships occasionally arrive in your modern, high-tech systems. They are carrying massive shipments of raw materials ordered centuries ago by a forgotten predecessor state. The automated merchant AI demands payment in modern, hyper-valuable currency based on a 500-year-old compound interest contract. Refusal triggers an immediate, heavily armed response from the merchant's escort fleet.
+
+**Emergence:** You are in the middle of a delicate diplomatic negotiation when a rusty sub-light convoy drops out of warp, physically blockades your capital, and threatens to bombard the planet unless you pay them a billion credits for a shipment of outdated iron ore ordered in 2145.
+
+**Tension:** Do you bankrupt your modern economy to honor an ancestral contract for useless goods, or destroy the merchant fleet and face the diplomatic fallout of defaulting on a galactic debt?
+
+---
+
+## Chronobiological Desync: Shift-Lag
+
+**Layer:** 1
+
+**Fantasy:** The sheer physical exhaustion of forcing biology to meet industrial quotas.
+
+**Mechanic:** If a colony relies on "24-hour operations," Pops will be constantly rotated between Day and Night shifts. This rotation causes "Shift-Lag," a rapidly accumulating debuff that lowers movement speed, increases the chance of workplace accidents (like dropping resources or starting fires), and severely tanks their Mood. Specialized "Circadian Recalibration Centers" can clear the debuff, but they are incredibly expensive to run.
+
+**Emergence:** You push your mining colony to run 24/7 to meet a quota. The Pops develop severe Shift-Lag. One exhausted miner drops a plasma torch, igniting the main ventilation shaft. The exhausted emergency response team is too slow to react, and the entire lower colony burns down because you wouldn't let them sleep normally.
+
+**Tension:** Do you accept a massive drop in industrial output by only running daytime shifts, or risk catastrophic industrial accidents by forcing your Pops to work against their biology?
+
+---
+
+## The Sentinel Algorithm
+
+**Layer:** 2
+
+**Fantasy:** An ancient defense grid that slowly turns into a cage.
+
+**Mechanic:** A player can reactivate a precursor "Sentinel" orbital defense network to completely protect a system from outside invasion. However, the AI managing the grid has a degraded definition of "threat." Over time, it begins misinterpreting outgoing trade ships or even large-scale planetary terraforming as hostile acts and shoots them down, effectively quarantining the system from within.
+
+**Emergence:** You activate the Sentinels to survive a massive war. Decades later, your empire thrives, but the core world is starving because the Sentinels now view all agricultural import freighters as potential bio-weapons and vaporize them on entry.
+
+**Tension:** Do you sacrifice perfect security to regain your freedom, knowing the original enemy might still be out there?
+
+---
+
+## Chrono-Smog
+
+**Layer:** Cross-layer
+
+**Fantasy:** Industrial pollution that literally slows down time.
+
+**Mechanic:** Advanced late-game hyper-forges produce "Chrono-Smog" instead of normal pollution. This dense, shimmering purple fog settles in low-lying colony areas. Pops and buildings inside the fog operate at 50% speed, but also age and consume resources at 50% speed. The fog can eventually rise into the atmosphere, causing ships entering orbit to experience severe time dilation relative to the galaxy.
+
+**Emergence:** Your industrial capital is incredibly productive, but the valleys are filled with Chrono-Smog. You intentionally move your elderly, highly-skilled scientists into the toxic smog zones; they work slower, but their lifespans are effectively doubled, allowing them to finish century-long research projects.
+
+**Tension:** Do you invest massive resources in atmospheric scrubbers, or weaponize the smog to create a stasis-prison for your own people?
+
+---
+
+## The Hubris Megaproject
+
+**Layer:** Cross-layer
+
+**Fantasy:** A monument so massive it physically breaks the planet's ecosystem.
+
+**Mechanic:** Players can commission a "Colossus Monument" (Layer 1) to generate massive Layer 3 cultural influence. The sheer mass and resource requirement of the building causes localized tectonic instability (earthquakes) and permanently alters wind patterns, creating permanent dust bowls or eternal rainshadows on adjacent tiles.
+
+**Emergence:** To appease a demanding faction, the Governor builds a colossal statue of the Founder in the colony center. The statue's immense shadow falls directly over the main agricultural district, freezing the crops. The colony plunges into starvation, but the starving populace is too loyal (thanks to the statue) to tear it down.
+
+**Tension:** Do you place your vanity projects far outside the colony where they are safe but culturally ineffective, or right in the center where they inspire the masses but physically blight the surrounding neighborhoods?
