@@ -20525,3 +20525,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Emergence:** To appease a demanding faction, the Governor builds a colossal statue of the Founder in the colony center. The statue's immense shadow falls directly over the main agricultural district, freezing the crops. The colony plunges into starvation, but the starving populace is too loyal (thanks to the statue) to tear it down.
 
 **Tension:** Do you place your vanity projects far outside the colony where they are safe but culturally ineffective, or right in the center where they inspire the masses but physically blight the surrounding neighborhoods?
+
+## The Acoustic Panopticon
+
+**Layer:** 1
+
+**Fantasy:** Building an architecture of paranoia where privacy is mathematically impossible.
+
+**Mechanic:** A unique "Acoustic Dome" building structure that vastly improves bureaucratic efficiency and lowers crime by perfectly channeling every whisper in the colony to a central hub. However, it permanently removes the "Privacy" need fulfillment for all Pops living underneath it. Over time, Pops adapt by developing a specialized, non-verbal "Click-Cant" language.
+
+**Emergence:** You build the dome to stop a growing rebellion. It works perfectly for a generation. But then a new faction forms that communicates entirely via synchronized tool-tapping during work hours, planning a flawless, silent mutiny right under the ears of your secret police.
+
+**Tension:** Do you sacrifice the sanity and privacy of your citizens for perfect security, knowing they will eventually evolve a way to circumvent it entirely?
+
+---
+
+## Xenobiological Gentrification
+
+**Layer:** 1
+
+**Fantasy:** Driving out your own poorest citizens by accidentally making their neighborhoods too nice.
+
+**Mechanic:** Planting highly advanced "Terra-Flora" massively increases the localized "Beauty" and "Health" scores of a district, but also creates "Bio-Resonance" that requires high-tier "Cognitive Shielding" to withstand. Wealthy Pops can afford the shielding and flock to the area, driving up housing prices. Poor Pops suffer migraines and are forced to migrate to industrial slums.
+
+**Emergence:** You try to clean up a crime-ridden slum by planting some beautiful precursor trees. A decade later, it's the most exclusive, crime-free neighborhood in the colony, but the displaced criminals have formed a massive raider camp right outside the city walls.
+
+**Tension:** Do you improve the overall quality of your colony if it means mathematically ensuring the creation of an impoverished underclass?
+
+---
+
+## Orbital Suburbia
+
+**Layer:** 2
+
+**Fantasy:** The quiet desperation of an endless, sterile commute.
+
+**Mechanic:** A massive ring of cheap, low-maintenance residential stations orbiting the planet. Pops living there commute down to the planet via space elevator to work. However, the sheer volume of daily commuter traffic creates an "Orbital Traffic" debuff. If the debuff gets too high, Pops arrive at work already exhausted and furious.
+
+**Emergence:** You solve a housing crisis by building millions of orbital pods. Everything seems fine until a minor solar flare delays the elevators by three hours. Millions of tired, angry commuters riot on the orbital ring, severing the elevator cables and stranding the entire workforce in space while the planetary factories sit empty.
+
+**Tension:** Do you build expensive, dense housing on the planet, or cheap orbital sprawl that makes your workforce fragile and exhausted?
+
+---
