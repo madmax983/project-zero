@@ -1011,6 +1011,13 @@
 - **Glue added:** Added `sentient_route_chronicle_bridge` in `src/layer2/integration.rs` to conditionally emit `AddChronicleEvent` and reset `RouteComplexity` when a toll is demanded. Registered in `src/simulation.rs`.
 - **Tests:** `tests/integration/sentient_route_bridge.rs`
 
+### INT-453-2: Nanite Fabrication Breach -> Grey Goo Spawning
+- **Date:** 2026-10-31
+- **Systems connected:** `nanite_fabrication_system` -> `nanite_breach_goo_bridge` -> `grey_goo_replication_system`
+- **Glue added:** `nanite_breach_goo_bridge` in `src/layer1/core/integration.rs`
+- **Schedule:** Chained in Update, fabrication before bridge before replication
+- **Tests:** `tests/integration/nanite_breach_goo.rs`
+
 ### INT-1089: Nanite Fabrication Breach -> Nanite Storms
 - **Date:** 2026-05-10
 - **Systems connected:** `nanite_fabrication_system` -> `nanite_breach_storm_bridge` -> `apply_nanite_storm_effects`

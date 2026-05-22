@@ -1238,6 +1238,24 @@ pub fn smuggler_arrival_event_bridge(
     }
 }
 
+/// INT-453-2: Bridges Nanite Fabrication Breach to Grey Goo spawning
+pub fn nanite_breach_goo_bridge(
+    mut breach_events: EventReader<crate::layer1::nanite_fabrication::ContainmentBreachEvent>,
+    mut commands: Commands,
+) {
+    for event in breach_events.read() {
+        if let Some(mut entity_commands) = commands.get_entity(event.source_entity) {
+            entity_commands.despawn();
+        }
+        commands.spawn((
+            crate::layer1::nanite_fabrication::GreyGoo {
+                replication_progress: 0.0,
+            },
+            event.position,
+        ));
+    }
+}
+
 /// INT-453-1089: Bridges Nanite Fabrication Breach to Nanite Storms
 pub fn nanite_breach_storm_bridge(
     mut breach_events: EventReader<crate::layer1::nanite_fabrication::ContainmentBreachEvent>,
