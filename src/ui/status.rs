@@ -182,7 +182,8 @@ fn build_time_spans(
     season: Option<Season>,
     solar_cycle: Option<SolarCycle>,
 ) -> Vec<Span<'static>> {
-    let mut spans = Vec::new();
+    // ⚡ Bolt Optimization: Pre-allocate capacity to avoid intermediate allocations in hot UI loop
+    let mut spans = Vec::with_capacity(3);
     spans.push(Span::styled(
         format!(" Day {} ", tick),
         Style::default().add_modifier(Modifier::BOLD),
@@ -211,7 +212,8 @@ fn build_time_spans(
 }
 
 fn build_colony_stats_spans(pop_count: usize, morale: f32, efficiency: f32) -> Vec<Span<'static>> {
-    let mut spans = Vec::new();
+    // ⚡ Bolt Optimization: Pre-allocate capacity to avoid intermediate allocations in hot UI loop
+    let mut spans = Vec::with_capacity(6);
     spans.push(Span::styled("👨 ", Style::default().fg(Color::Cyan)));
     spans.push(Span::styled(
         format!("{} ", pop_count),
@@ -260,7 +262,8 @@ fn build_resources_spans(
     tools: f32,
     risk_pct: f32,
 ) -> Vec<Span<'static>> {
-    let mut spans = Vec::new();
+    // ⚡ Bolt Optimization: Pre-allocate capacity to avoid intermediate allocations in hot UI loop
+    let mut spans = Vec::with_capacity(6);
     let total_food = food_yield + rations;
     let food_color = if total_food < 10.0 {
         Color::Red
@@ -312,7 +315,8 @@ fn build_mode_spans(
     build_mode: &BuildMode,
     designation_mode: &DesignationMode,
 ) -> Vec<Span<'static>> {
-    let mut spans = Vec::new();
+    // ⚡ Bolt Optimization: Pre-allocate capacity to avoid intermediate allocations in hot UI loop
+    let mut spans = Vec::with_capacity(2);
     if build_mode.active {
         spans.push(Span::styled(
             "  [BUILD MODE] ",
@@ -350,7 +354,9 @@ pub fn get_status_line<'a>(
     solar_cycle: Option<SolarCycle>,
     risk_pct: f32,
 ) -> Line<'a> {
-    let mut spans = Vec::new();
+    // ⚡ Bolt Optimization: Pre-allocate capacity to avoid intermediate allocations in hot UI loop
+    // Total possible spans: 1 (play) + 3 (time) + 1 (separator) + 6 (colony) + 1 (separator) + 6 (resources) + 2 (mode) + 1 (separator) + 1 (location) = 22
+    let mut spans = Vec::with_capacity(22);
 
     spans.push(build_play_pause_span(paused));
     spans.extend(build_time_spans(tick, season, solar_cycle));
