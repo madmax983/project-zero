@@ -57,8 +57,11 @@ fn init_simulation_resources(world: &mut World) {
     world.init_resource::<Events<crate::layer1::social::hedonic_treadmill::ConsumeItemEvent>>();
     world.init_resource::<Events<crate::layer1::architecture::sunk_cost_monument::CancelConstructionEvent>>();
     world.init_resource::<Events<crate::layer3::diplomacy::system_sovereignty::DeclarationOfIndependenceEvent>>();
-    world.init_resource::<Events<crate::layer3::diplomacy::system_sovereignty::WarDeclarationEvent>>();
-    world.init_resource::<Events<crate::layer1::agriculture::zero_g_flora::DepressurizationEvent>>();
+    world
+        .init_resource::<Events<crate::layer3::diplomacy::system_sovereignty::WarDeclarationEvent>>(
+        );
+    world
+        .init_resource::<Events<crate::layer1::agriculture::zero_g_flora::DepressurizationEvent>>();
     world.init_resource::<Events<crate::layer1::anomalies::echo::SpawnEchoSourceEvent>>();
     world.init_resource::<Events<crate::layer1::anomalies::void_sirens::SirenSignalEvent>>();
     world.init_resource::<Events<crate::layer1::economy::apex_diet::ConsumeFoodEvent>>();
@@ -782,6 +785,16 @@ mod tests {
         world.init_resource::<bevy::prelude::Events<crate::layer2::weather::StormImpactEvent>>();
         world.init_resource::<bevy::prelude::Events<crate::layer1::law::justice::CrimeCommittedEvent>>();
         world.init_resource::<bevy::prelude::Events<crate::layer1::social::grievances::PostGrievanceEvent>>();
+        world.init_resource::<Events<crate::layer1::agriculture::zero_g_flora::DepressurizationEvent>>();
+        world.init_resource::<Events<crate::layer3::diplomacy::system_sovereignty::DeclarationOfIndependenceEvent>>();
+        world.init_resource::<Events<crate::layer3::diplomacy::system_sovereignty::WarDeclarationEvent>>();
+        world.insert_resource(crate::layer3::diplomacy::system_sovereignty::ColonyStatus {
+            is_sovereign: false,
+            overlord_id: Some(1),
+        });
+        world.insert_resource(
+            crate::layer3::diplomacy::system_sovereignty::FactionRelations::default(),
+        );
         world.init_resource::<bevy::prelude::Events<crate::layer1::pop_memories::FamineEvent>>();
         world.init_resource::<crate::layer3::digital_detritus::DataMiningQueue>();
         world.init_resource::<crate::layer3::digital_detritus::DiscoveredTechs>();
@@ -817,6 +830,16 @@ mod tests {
         world.init_resource::<bevy::prelude::Events<crate::layer2::skyhooks::LaunchIntent>>();
         world.init_resource::<bevy::prelude::Events<crate::layer1::law::justice::CrimeCommittedEvent>>();
         world.init_resource::<bevy::prelude::Events<crate::layer1::social::grievances::PostGrievanceEvent>>();
+        world.init_resource::<Events<crate::layer1::agriculture::zero_g_flora::DepressurizationEvent>>();
+        world.init_resource::<Events<crate::layer3::diplomacy::system_sovereignty::DeclarationOfIndependenceEvent>>();
+        world.init_resource::<Events<crate::layer3::diplomacy::system_sovereignty::WarDeclarationEvent>>();
+        world.insert_resource(crate::layer3::diplomacy::system_sovereignty::ColonyStatus {
+            is_sovereign: false,
+            overlord_id: Some(1),
+        });
+        world.insert_resource(
+            crate::layer3::diplomacy::system_sovereignty::FactionRelations::default(),
+        );
         world.init_resource::<bevy::prelude::Events<crate::layer2::weather::StormImpactEvent>>();
         world.init_resource::<bevy::prelude::Events<crate::layer1::pop_memories::FamineEvent>>();
         world.init_resource::<crate::layer3::digital_detritus::DataMiningQueue>();
@@ -870,6 +893,16 @@ mod tests {
         world.init_resource::<bevy::prelude::Events<crate::layer2::skyhooks::LaunchIntent>>();
         world.init_resource::<Events<crate::layer2::moon_hermits::PopDesertedEvent>>();
         world.init_resource::<bevy::prelude::Events<crate::layer1::social::grievances::PostGrievanceEvent>>();
+        world.init_resource::<Events<crate::layer1::agriculture::zero_g_flora::DepressurizationEvent>>();
+        world.init_resource::<Events<crate::layer3::diplomacy::system_sovereignty::DeclarationOfIndependenceEvent>>();
+        world.init_resource::<Events<crate::layer3::diplomacy::system_sovereignty::WarDeclarationEvent>>();
+        world.insert_resource(crate::layer3::diplomacy::system_sovereignty::ColonyStatus {
+            is_sovereign: false,
+            overlord_id: Some(1),
+        });
+        world.insert_resource(
+            crate::layer3::diplomacy::system_sovereignty::FactionRelations::default(),
+        );
         world.init_resource::<Events<crate::layer1::law::embassy::ArrestEvent>>();
         world.init_resource::<Events<crate::layer1::law::embassy::DiplomaticIncidentEvent>>();
         world.init_resource::<Events<crate::layer1::ransom_broker::RansomDemandEvent>>();
@@ -1023,6 +1056,16 @@ mod tests {
 
         world.init_resource::<Events<crate::layer2::moon_hermits::PopDesertedEvent>>();
         world.init_resource::<bevy::prelude::Events<crate::layer1::social::grievances::PostGrievanceEvent>>();
+        world.init_resource::<Events<crate::layer1::agriculture::zero_g_flora::DepressurizationEvent>>();
+        world.init_resource::<Events<crate::layer3::diplomacy::system_sovereignty::DeclarationOfIndependenceEvent>>();
+        world.init_resource::<Events<crate::layer3::diplomacy::system_sovereignty::WarDeclarationEvent>>();
+        world.insert_resource(crate::layer3::diplomacy::system_sovereignty::ColonyStatus {
+            is_sovereign: false,
+            overlord_id: Some(1),
+        });
+        world.insert_resource(
+            crate::layer3::diplomacy::system_sovereignty::FactionRelations::default(),
+        );
 
         world.init_resource::<Time>();
         world.init_resource::<Events<crate::layer2::primitives::InvasionEvent>>();

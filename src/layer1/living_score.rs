@@ -46,7 +46,11 @@ mod tests {
         let mut app = bevy_ecs::world::World::new();
         app.insert_resource(ColonyRenown { score: 95.0 });
 
-        let entity = app.spawn(AestheticState { level: AestheticLevel::Normal }).id();
+        let entity = app
+            .spawn(AestheticState {
+                level: AestheticLevel::Normal,
+            })
+            .id();
 
         // Act
         let mut schedule = Schedule::default();
@@ -64,7 +68,11 @@ mod tests {
         let mut app = bevy_ecs::world::World::new();
         app.insert_resource(ColonyRenown { score: 10.0 });
 
-        let entity = app.spawn(AestheticState { level: AestheticLevel::Normal }).id();
+        let entity = app
+            .spawn(AestheticState {
+                level: AestheticLevel::Normal,
+            })
+            .id();
 
         // Act
         let mut schedule = Schedule::default();

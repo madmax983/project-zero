@@ -128,6 +128,13 @@ pub const fn start_scenario_definition(id: StartScenarioId) -> StartScenarioDefi
 /// Create and initialize a new game world with all resources.
 #[must_use]
 pub fn setup_world() -> World {
+    let mut world = World::new();
+    world.insert_resource(crate::layer3::diplomacy::system_sovereignty::ColonyStatus {
+        is_sovereign: false,
+        overlord_id: Some(1),
+    });
+    world
+        .insert_resource(crate::layer3::diplomacy::system_sovereignty::FactionRelations::default());
     setup_world_with_config(SetupConfig::default())
 }
 
@@ -1157,6 +1164,13 @@ mod tests {
         world.init_resource::<bevy::prelude::Events<crate::layer1::law::justice::CrimeCommittedEvent>>();
         world.init_resource::<bevy::prelude::Events<crate::layer1::law::embassy::ArrestEvent>>();
         world.init_resource::<bevy::prelude::Events<crate::layer1::law::embassy::DiplomaticIncidentEvent>>();
+        world.insert_resource(crate::layer3::diplomacy::system_sovereignty::ColonyStatus {
+            is_sovereign: false,
+            overlord_id: Some(1),
+        });
+        world.insert_resource(
+            crate::layer3::diplomacy::system_sovereignty::FactionRelations::default(),
+        );
 
         world.init_resource::<bevy::prelude::Events<crate::layer1::pop_memories::FamineEvent>>();
         world.init_resource::<bevy::prelude::Events<crate::layer2::weather::StormImpactEvent>>();
