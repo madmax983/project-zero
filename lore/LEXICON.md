@@ -5216,3 +5216,35 @@
 **Code reference:** `Inserter` (Future implementation)
 **Usage:**
 - "The Inserter jammed on a piece of scrap."
+
+## Operational Detritus (Spec 239)
+
+### Clutter / Detritus
+**Replaces:** Trash, garbage, mess
+**Code reference:** `ClutterGrid`
+**Usage:**
+- "The Clutter is reducing the beauty of the plaza."
+- "Operational Detritus is an inevitable byproduct of industry."
+
+### The Scavengers / The Cleaners
+**Replaces:** Janitors, sweepers
+**Code reference:** `ActionType::Clean`
+**Usage:**
+- "The Cleaners found scrap in the Detritus today."
+- "Send the Scavengers to clear the corridor."
+
+## The Heirloom Tool (Spec 1086)
+
+### Heirloom Tool / Ancestral Gear
+**Replaces:** High-level equipment drop on death
+**Code reference:** `HeirloomTool`
+**Usage:**
+- "He inherited the Ancestral Gear and the madness that came with it."
+- "Do not touch the Heirloom Tool unless you are prepared for the burden."
+
+### Efficiency Echo / The Burden
+**Replaces:** Stat buff and negative trait transfer
+**Code reference:** `EfficiencyBuff`, `Trait` transfer
+**Usage:**
+- "She works with an Efficiency Echo, guided by the dead."
+- "He took up the wrench, but The Burden came with it."

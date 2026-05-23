@@ -7902,3 +7902,63 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "The belt is unforgiving. [YEAR]. An incident on [CONVEYOR_BELT_NAME] due to [ACCIDENT_CAUSE]."
 - "[YEAR]: Blood on the [CONVEYOR_BELT_NAME]. The line stopped because of [ACCIDENT_CAUSE]."
 - "A terrible accident. [ACCIDENT_CAUSE] resulted in a severe injury on [CONVEYOR_BELT_NAME]. [YEAR]."
+
+## Operational Detritus Templates (Spec 239)
+
+### Template: CLUTTER_CRITICAL
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [DETRITUS_SOURCE], [CLUTTER_COMPLAINT]
+
+**Patterns:**
+- "[YEAR]: The mess in [COLONY] reached critical levels due to [DETRITUS_SOURCE]. [CLUTTER_COMPLAINT]."
+- "[COLONY] is choking. [DETRITUS_SOURCE] is everywhere. The people say [CLUTTER_COMPLAINT]. [YEAR]."
+- "We built a future, but left [DETRITUS_SOURCE] in our wake. [CLUTTER_COMPLAINT]. [YEAR]."
+
+## Psychic Stains Templates (Spec 893)
+
+### Template: PSYCHIC_STAIN_FORMED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [POP_NAME], [STAIN_SOURCE]
+
+**Patterns:**
+- "[YEAR]: [POP_NAME] died badly here. It left a mark. The result of [STAIN_SOURCE]."
+- "The violence of [STAIN_SOURCE] didn't just take [POP_NAME]. It scarred the room itself. [YEAR]."
+- "[COLONY] remembers. The site of [STAIN_SOURCE] where [POP_NAME] fell still radiates trauma. [YEAR]."
+
+### Template: MADNESS_FROM_STAIN
+**Generates:** Play event
+**Slots:** [POP_NAME], [YEAR], [TRAUMA_MANIFESTATION]
+
+**Patterns:**
+- "[POP_NAME] broke today. They lingered too long in the bad room, feeling [TRAUMA_MANIFESTATION]. [YEAR]."
+- "[YEAR]: The echoes got to [POP_NAME]. [TRAUMA_MANIFESTATION] proved too much for their fragile mind."
+
+## The Heirloom Tool Templates (Spec 1086)
+
+### Template: HEIRLOOM_PASSED_DOWN
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [OLD_POP], [NEW_POP], [HEIRLOOM_TOOL_NAME], [HEIRLOOM_TRAIT]
+
+**Patterns:**
+- "[YEAR]: [OLD_POP] is gone, but their legacy remains. [NEW_POP] took up [HEIRLOOM_TOOL_NAME], inheriting [HEIRLOOM_TRAIT]."
+- "The work continues. [NEW_POP] wields [HEIRLOOM_TOOL_NAME] now. They work faster, but they have adopted [HEIRLOOM_TRAIT] from [OLD_POP]. [YEAR]."
+- "[COLONY] does not let good tools go to waste. [HEIRLOOM_TOOL_NAME] was claimed by [NEW_POP], along with [HEIRLOOM_TRAIT]. [YEAR]."
+
+## Escape Pods Templates (Spec 1127/217)
+
+### Template: LIFEBOATS_LAUNCHED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [EVACUEE_COUNT]
+
+**Patterns:**
+- "[YEAR]: The order was given. [EVACUEE_COUNT] souls launched into the void in distress pods. [COLONY] watches them go."
+- "The alarms screamed. We only had room for [EVACUEE_COUNT]. The lifeboats fired, leaving [COLONY] to its fate. [YEAR]."
+- "[COLONY], [YEAR]: [EVACUEE_COUNT] escaped the disaster in orbital pods. Now we pray they are found."
+
+### Template: PODS_RECOVERED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [EVACUEE_COUNT]
+
+**Patterns:**
+- "[YEAR]: Salvation from the dark. [EVACUEE_COUNT] souls were recovered from the drifting escape pods."
+- "The distress signals fell silent as we brought them home. [EVACUEE_COUNT] saved. [YEAR]."

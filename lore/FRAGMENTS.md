@@ -8495,3 +8495,54 @@ Conditions of dezoned, stateless pops.
 - a power surge causing sudden acceleration
 - attempting to cross the active line
 - an overloaded hopper collapsing
+
+## Operational Detritus Fragments (Spec 239)
+
+## Fragment Type: [DETRITUS_SOURCE]
+- the constant shedding of poorly maintained machinery
+- a thousand discarded ration wrappers
+- structural dust from the tectonic settling
+- shattered glass from the recent brawl
+- forgotten tools and stripped insulation
+- the relentless accumulation of industrial scale
+
+## Fragment Type: [CLUTTER_COMPLAINT]
+- we are drowning in our own waste
+- the floor is invisible beneath the scrap
+- you cannot walk without tripping over the past
+- it smells of rust and forgotten effort
+- the beauty of this place is buried in detritus
+
+## Psychic Stains Fragments (Spec 893)
+
+## Fragment Type: [TRAUMA_MANIFESTATION]
+- a cold spot that smells of ozone and panic
+- an inexplicable dread when crossing the threshold
+- the phantom sound of a final, violent breath
+- a shadow that lingers even under the floodlights
+- a sudden, overwhelming urge to flee the room
+
+## Fragment Type: [STAIN_SOURCE]
+- a workplace accident that was never properly cleaned
+- the site of the mutiny's final stand
+- a violent dispute over rationing
+- an unexplained decompression event
+- a desperate struggle in the dark
+
+## The Heirloom Tool Fragments (Spec 1086)
+
+## Fragment Type: [HEIRLOOM_TOOL_NAME]
+- The Master's Wrench
+- The Ancestral Loom
+- The Blood-Stained Welder
+- The First Founder's Datapad
+- The Cursed Scalpel
+- The Ghost-Forged Hammer
+
+## Fragment Type: [HEIRLOOM_TRAIT]
+- an obsessive perfectionism
+- a deep, simmering paranoia
+- a tragic disregard for safety protocols
+- an unnatural affinity for the void
+- a profound and bitter melancholy
+- a stubborn refusal to accept failure
