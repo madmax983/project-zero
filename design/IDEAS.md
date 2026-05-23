@@ -20773,3 +20773,43 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you correct the logistical error and suffer a massive morale drop as the workers realize their recent labor was pointless, or allow the phantom exports to continue just to maintain societal stability during a crisis?
 
 ---
+
+## The Propaganda Graffitists
+
+**Layer:** 1
+
+**Fantasy:** The architecture itself rebels, whispering unsanctioned truths or lies to the passing crowds.
+
+**Mechanic:** When Unrest is high but Security prevents open riots, Pops with high Creativity will covertly tag buildings with "Graffiti." These aren't just visual; they emit localized aura effects. "Rebellious Graffiti" lowers the work efficiency of any Pop pathing past it but boosts their mood by venting frustration. Players must deploy specialized "Sanitation Drones" to scrub them, which takes time away from actual cleaning.
+
+**Emergence:** A beloved but incompetent leader is kept in power. The entire industrial sector becomes covered in biting, highly artistic satirical murals. The workers are incredibly slow, but their morale is sky-high because they find the graffiti hilarious.
+
+**Tension:** Do you let the colony vent through art at the cost of production, or run a sterile, efficient, but boiling-mad society?
+
+---
+
+## The Phantom Limb of Logistics
+
+**Layer:** 2 / 1
+
+**Fantasy:** A civilization that physically cannot stop producing, even when the demand is dead.
+
+**Mechanic:** When a major Layer 1 colony that consumed a specific resource (e.g., Heavy Water) is utterly destroyed, the automated Layer 2 supply chains feeding it don't immediately recognize the loss due to bureaucratic lag. For months, freighters continue dropping massive payloads of the resource onto the radioactive ruins. If you colonize a neighboring system, you can intercept these "Phantom Drops."
+
+**Emergence:** Your new, struggling colony survives its first winter entirely by intercepting the automated food deliveries meant for a dead, rival empire's world next door, turning a tragedy into your literal lifeline.
+
+**Tension:** Do you formally update the galactic registry to end the waste, or stay quiet and steal the phantom shipments, risking war when the originating empire finally audits their ledgers?
+
+---
+
+## Cult of the First Error
+
+**Layer:** 1
+
+**Fantasy:** An early-game mistake is rationalized by the descendants into a sacred, unchangeable architectural law.
+
+**Mechanic:** If a player builds a critical structure (like the first Hydroponics Bay) in a terribly inefficient location or weird shape (e.g., right next to the noisy fusion reactor), and it survives the first 50 years, the location gains the "First Error" tag. Future generations of Pops will gain a massive mood penalty if that structure is ever moved, upgraded, or optimized. They view the inefficiency as a sacred trial set by the Founders.
+
+**Emergence:** You try to modernize your 200-year-old capital by moving the original, terrible water pump. The entire city goes on strike because you "disturbed the sacred geometry of the struggle." You are forced to build your hyper-efficient modern metropolis entirely around a janky, leaking copper pipe from cycle 1.
+
+**Tension:** Do you fix early mistakes immediately when resources are tight, or leave them and risk them becoming untouchable religious artifacts that bottleneck your late-game layout?
