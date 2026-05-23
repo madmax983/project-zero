@@ -1162,3 +1162,9 @@
 - **Date:** 2026-10-31
 - **Systems connected:** `handle_depressurization` -> `SimulationSchedule`
 - **Glue added:** Registered `handle_depressurization` and `DepressurizationEvent` in `src/simulation.rs`.
+
+### INT-1057: The Living Score -> Simulation
+- **Date:** 2026-05-22
+- **Systems connected:** `Morale` -> `update_renown_from_morale_system` -> `ColonyRenown`
+- **Glue added:** Added `update_renown_from_morale_system` in `src/layer1/core/integration.rs` to compute average morale across all pops and translate it into a 0.0 - 100.0 scale for `ColonyRenown`. Registered in `src/layer1/systems/economy.rs` before `update_living_score_aesthetics`.
+- **Tests:** `tests/integration/living_score_renown.rs`

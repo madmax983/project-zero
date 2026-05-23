@@ -250,10 +250,10 @@ mod mass_driver_chronicle;
 #[path = "integration/nanite_fabrication_chronicle.rs"]
 mod nanite_fabrication_chronicle;
 
-#[path = "integration/nanite_breach_storm.rs"]
-mod nanite_breach_storm;
 #[path = "integration/nanite_breach_goo.rs"]
 mod nanite_breach_goo;
+#[path = "integration/nanite_breach_storm.rs"]
+mod nanite_breach_storm;
 #[path = "integration/startup_atmosphere.rs"]
 mod startup_atmosphere;
 
@@ -463,3 +463,6 @@ mod rocket_equation_chronicle;
 mod digital_detritus_chronicle_bridge;
 #[path = "integration/pirate_republic_diplomacy_bridge.rs"]
 mod pirate_republic_diplomacy_bridge;
+
+#[path = "integration/living_score_renown.rs"]
+mod living_score_renown;
