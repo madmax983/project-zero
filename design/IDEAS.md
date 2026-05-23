@@ -20813,3 +20813,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Emergence:** You try to modernize your 200-year-old capital by moving the original, terrible water pump. The entire city goes on strike because you "disturbed the sacred geometry of the struggle." You are forced to build your hyper-efficient modern metropolis entirely around a janky, leaking copper pipe from cycle 1.
 
 **Tension:** Do you fix early mistakes immediately when resources are tight, or leave them and risk them becoming untouchable religious artifacts that bottleneck your late-game layout?
+
+---
+
+## The Scrap-Mind Ascendancy
+
+**Layer:** 1 / Cross-layer
+
+**Fantasy:** A forgotten underclass achieves technological enlightenment using only literal garbage.
+
+**Mechanic:** When a colony produces massive amounts of "Scrap" or "Waste" and forces marginalized Pops (those with low social standing or the "Exiled" trait) to process it exclusively, there is a tiny chance those Pops will reverse-engineer broken high-tech components. They secretly form the "Scrap-Mind," an underground network that builds impossibly advanced, jury-rigged infrastructure out of trash. This infrastructure operates with high efficiency but extreme volatility, entirely bypassing your official tech tree.
+
+**Emergence:** You brutally oppress your waste management sector for a century. Suddenly, they declare independence. When your pristine military marches in to crush them, they are annihilated by orbital defense lasers constructed entirely out of welded-together broken toasters and discarded fusion cores.
+
+**Tension:** Do you violently suppress this unauthorized technological leap, losing access to incredibly cheap, powerful infrastructure, or allow the underclass to wield weapons more advanced than your own military?
+
+---
+
+## The Phantom Epidemic
+
+**Layer:** 1
+
+**Fantasy:** A plague of the mind that paralyzes infrastructure without a single actual infection.
+
+**Mechanic:** If a highly contagious, lethal pathogen (like Petrification Sickness) strikes a nearby colony (Layer 2) and the news reaches your Layer 1 colony via comms or trade, your Pops can develop "Hypochondria." Even if the pathogen is biologically incapable of surviving on your world, Pops will interpret normal ailments (a cough from dust, fatigue from overwork) as symptoms. They will spontaneously lock down sectors, refuse to work, and demand massive amounts of medical supplies to cure a disease that isn't there.
+
+**Emergence:** Your comms relay intercepts a distress call from a dying world. The next day, your entire industrial sector goes on strike, locking themselves in the hazmat suits they stole from the reactor, demanding you find a cure for "The Red Death"—a disease that literally only exists on a planet 40 lightyears away.
+
+**Tension:** Do you waste precious medical resources validating their delusion to get them back to work, or brutally enforce work quotas, risking genuine stress-induced breakdowns and riots?
+
+---
+
+## Echoes of the Lost Fleet
+
+**Layer:** 2 / 1
+
+**Fantasy:** The haunted bureaucracy of a ghost ship disrupting local trade.
+
+**Mechanic:** A centuries-old, massive dreadnought from a forgotten war drifts into your Layer 2 system. It is heavily damaged but its automated systems are still active. It continuously broadcasts obsolete military demands and "Recruitment" orders to your colonies. Pops with the "Militaristic" or "Traumatized" trait might physically launch themselves in escape pods to join the "Lost Fleet," becoming permanently hostile.
+
+**Emergence:** You try to ignore the drifting hulk, but its broadcasts are so charismatic that half your planetary defense force steals their shuttles, flies to the dreadnought, and immediately turns its ancient orbital bombardment cannons on your capital city.
+
+**Tension:** Do you risk your own fleets to destroy the relic, angering the militaristic Pops who revere it, or let it siphon away your best soldiers while hoping it drifts out of the system before they figure out how to fire the main gun?
