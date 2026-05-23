@@ -108,40 +108,15 @@ fn find_food_target(
 mod tests {
     use super::*;
     use crate::layer1::map::GridPosition;
-    use crate::layer1::needs::Needs;
+
     use crate::layer1::stress::{Breakdown, BreakdownType};
     use crate::layer1::unrest::{MentalBreakType, MentalState};
     use crate::layer1::utility_eval_types::{PopEvalData, ScorableCandidate, UtilityAIBuffer};
-    use crate::layer1::utility_types::{ActionType, PopAction, UtilityWeights};
+    use crate::layer1::utility_types::ActionType;
     use bevy_ecs::prelude::Entity;
 
     fn default_pop_eval_data() -> PopEvalData {
-        PopEvalData {
-            entity: Entity::from_raw(1),
-            pos: GridPosition { x: 0, y: 0 },
-            needs: Needs::default(),
-            weights: UtilityWeights::default(),
-            action: PopAction::default(),
-            equipment: None,
-            carrying: None,
-            carrying_item: None,
-            carrying_item_type: None,
-            mental_state: None,
-            drafted: None,
-            faction_member: None,
-            penal_labor: None,
-            breakdown: None,
-            traits: None,
-            stress: 0.0,
-            hobby_type: None,
-            chemical_state: None,
-            is_memetic_carrier: false,
-            health: None,
-            job: None,
-            insulation: 0.0,
-            is_silent: false,
-            is_nostalgic: false,
-        }
+        PopEvalData::test_instance()
     }
 
     fn default_buffer() -> UtilityAIBuffer {

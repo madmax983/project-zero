@@ -973,6 +973,7 @@ fn format_action_type_headless(action: scale::layer1::ActionType) -> String {
         ActionType::Sabotage => "💣 Sabotaging".to_string(),
         ActionType::Protest => "🗣️ Protesting".to_string(),
         ActionType::Gossip => "🗣️ Gossiping".to_string(),
+        ActionType::Philosophize => "🤔 Philosophizing".to_string(),
     }
 }
 

@@ -784,7 +784,14 @@ pub(crate) fn evaluate_single_pop(
     data: &PopEvalData,
     context: &WorldContext,
 ) -> (ActionType, f32, Option<Entity>) {
-    // 1. Check for Mental Break (Returns early)
+    // 1. Check for Existential Crisis (Returns early)
+    if let Some(crisis) = data.existential_crisis {
+        if crisis.duration > 0 {
+            return (ActionType::Philosophize, 100.0, None);
+        }
+    }
+
+    // 1a. Check for Mental Break (Returns early)
     if let Some((action, utility, target)) = evaluate_mental_break(data, buffer) {
         return (action, utility, target);
     }
