@@ -20717,3 +20717,59 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you spend massive amounts of bureaucratic bandwidth (a Layer 3 resource) to audit and rescind ancient, forgotten laws, or do you let the arbitrary enforcement continue to maintain an aura of absolute, unquestionable state terror?
 
 ---
+
+## Cult of the Broken Machine
+
+**Layer:** 1
+
+**Fantasy:** Worshipping the artifacts of a forgotten golden age.
+
+**Mechanic:** If a highly advanced piece of infrastructure (e.g., a Tier 3 Fusion Reactor or Atmospheric Processor) breaks down and is left unrepaired for an extended period, Pops with high stress or low education may begin to revere it as a sleeping deity. They will actively prevent engineers from repairing it, bringing it offerings of valuable resources and suffering massive morale penalties if the machine is forcibly dismantled or fixed.
+
+**Emergence:** Your colony's main water purifier breaks during a siege. By the time the siege lifts and you have the parts to fix it, a massive cult has formed around the "Silent Fountain." Attempting to repair the purifier triggers a violent religious uprising, forcing you to choose between letting the colony die of thirst or violently suppressing the faithful.
+
+**Tension:** Do you expend precious early-game resources to immediately repair advanced tech, or risk it becoming an untouchable religious artifact that permanently cripples your infrastructure?
+
+---
+
+## The Martyr's Dividend
+
+**Layer:** Cross-layer
+
+**Fantasy:** Weaponizing the memory of the fallen.
+
+**Mechanic:** When a highly populated Layer 1 colony is completely destroyed by a rival Layer 3 empire (via orbital bombardment or invasion), the surviving colonies in your empire gain a massive, temporary "Martyr's Dividend" buff. This drastically increases military production speed and fleet cohesion, fueled by pure, unadulterated vengeance. However, this buff eventually decays into a deep, empire-wide "Survivor's Guilt" penalty if the destroyed colony is not avenged or reclaimed.
+
+**Emergence:** You intentionally leave a small, highly populated rim world undefended against a massive enemy fleet. The enemy destroys it. The resulting outrage across your empire allows you to construct a massive retribution fleet in record time, crushing the enemy capital. But years later, your society is still crippled by the guilt of the sacrifice you orchestrated.
+
+**Tension:** Do you fight to the bitter end to save every world, or ruthlessly sacrifice a pawn to enrage your empire into an unstoppable war machine?
+
+---
+
+## The Atrophy of Excellence
+
+**Layer:** Cross-layer
+
+**Fantasy:** The slow, inevitable decline of an unopposed superpower.
+
+**Mechanic:** If your empire maintains a massive technological or military lead over all known Layer 3 rivals for an extended period, a hidden "Atrophy" counter begins to rise. Layer 1 researchers become lazy, demanding exorbitant luxuries to perform basic tasks. Layer 2 fleet commanders become arrogant, ignoring orders or picking unnecessary fights. Your elite society essentially becomes bored and complacent.
+
+**Emergence:** You conquer half the galaxy and enter a two-century golden age. Suddenly, a small, technologically inferior faction rebels. You send your legendary First Fleet to crush them. However, your admiral, who hasn't fought a real war in decades, attempts a flashy, unnecessary maneuver and accidentally flies half the fleet into a sun, losing the war to a vastly weaker opponent.
+
+**Tension:** Do you artificially empower your rivals or constantly start small, controlled conflicts just to keep your own society sharp, or enjoy the peace while knowing you are slowly rotting from the inside?
+
+---
+
+## Phantom Trade Routes
+
+**Layer:** 2 / 1
+
+**Fantasy:** The bureaucracy maintaining logistics that no longer physically exist.
+
+**Mechanic:** When a major Layer 2 trade hub is destroyed, the complex bureaucratic networks managing it don't instantly update. For months or years, Layer 1 colonies will continue to bundle, process, and launch cargo drones to the destroyed hub coordinates. These resources vanish into the void, but the Pops involved gain massive "Purpose" fulfillment from doing their jobs flawlessly.
+
+**Emergence:** A pirate raid destroys your central distribution starbase. Before you can rebuild it, you realize two of your agricultural worlds are still perfectly happy because they are dutifully launching billions of tons of food into empty space, completely unaware the destination is gone. Fixing the route would require telling them the truth, which would shatter their morale.
+
+**Tension:** Do you correct the logistical error and suffer a massive morale drop as the workers realize their recent labor was pointless, or allow the phantom exports to continue just to maintain societal stability during a crisis?
+
+---
