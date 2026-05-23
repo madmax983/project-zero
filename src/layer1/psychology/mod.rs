@@ -55,3 +55,5 @@ pub use stress::*;
 pub use traits::*;
 pub use void_sickness::*;
 pub use void_stare::*;
+pub mod memory_forgery;
+pub use memory_forgery::*;

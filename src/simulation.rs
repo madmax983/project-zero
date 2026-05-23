@@ -93,6 +93,12 @@ fn init_simulation_resources(world: &mut World) {
 
     world.init_resource::<crate::layer1::tech_envy::TechEnvyConfig>();
 
+    world.init_resource::<Events<crate::layer1::psychology::memory_forgery::ForgeryActionEvent>>();
+    world.init_resource::<Events<crate::layer1::psychology::memory_forgery::TruthOutbreakEvent>>();
+
+    world.init_resource::<Events<crate::layer1::psychology::memory_forgery::ForgeryActionEvent>>();
+    world.init_resource::<Events<crate::layer1::psychology::memory_forgery::TruthOutbreakEvent>>();
+
     world.init_resource::<crate::layer1::shadow_market::ShadowMarketCooldown>();
 
     world.init_resource::<crate::layer3::bureaucracy_of_vanity::ActiveDemands>();
@@ -400,6 +406,11 @@ fn register_simulation_core_systems(schedule: &mut Schedule) {
 
 #[allow(clippy::too_many_lines)]
 fn register_simulation_extended_systems(schedule: &mut Schedule) {
+    schedule.add_systems((
+        crate::layer1::psychology::memory_forgery::process_mnestic_archiver_system,
+        crate::layer1::psychology::memory_forgery::process_truth_outbreak_system,
+    ));
+
     schedule.add_systems((
         crate::layer3::economy::biological_stock_market::biological_stock_market_bridge,
         crate::layer3::integration::pirate_republic_diplomacy_bridge,
@@ -870,6 +881,9 @@ mod tests {
         world.init_resource::<Events<crate::layer1::ransom_broker::RansomDemandEvent>>();
         world.init_resource::<Events<crate::layer3::diplomacy::fading_homeworld::CoreWorldDemandEvent>>();
         world.init_resource::<Events<crate::layer3::diplomacy::fading_homeworld::PlayerDemandResponse>>();
+        world.init_resource::<Events<crate::layer1::psychology::memory_forgery::ForgeryActionEvent>>();
+        world.init_resource::<Events<crate::layer1::psychology::memory_forgery::TruthOutbreakEvent>>();
+
         world.init_resource::<Events<crate::layer1::ransom_broker::PayRansomEvent>>();
         world.init_resource::<Events<crate::layer1::ransom_broker::RefuseRansomEvent>>();
         world.init_resource::<Events<crate::layer1::ransom_broker::PopRansomedEvent>>();
