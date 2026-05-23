@@ -32,6 +32,8 @@ pub mod mining;
 mod mining_tests;
 pub mod orphan_fleet;
 pub mod phantom;
+pub mod phantom_signal;
+pub use phantom_signal::*;
 pub mod render;
 pub mod shielding;
 pub mod ship;

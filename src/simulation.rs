@@ -191,6 +191,7 @@ fn init_simulation_resources(world: &mut World) {
     world.init_resource::<crate::layer2::trade::blockade::ColonyDebt>();
 
     world.init_resource::<Events<crate::layer2::phantom::SpawnGhostFleetEvent>>();
+    world.init_resource::<Events<crate::layer2::phantom_signal::SignalRevealEvent>>();
     world.init_resource::<Events<crate::layer2::silent_mutiny::SensorGlitchEvent>>();
 
     if !world
@@ -648,6 +649,9 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
             .after(crate::layer1::scrapcode::scrapcode_decay_system),
         crate::layer2::phantom::spawn_ghost_fleet_system
             .after(crate::layer2::phantom::check_scrapcode_threshold_system),
+        crate::layer2::phantom_signal::process_phantom_signal_evasion_system,
+        crate::layer2::phantom_signal::apply_sensor_probes_system,
+        crate::layer2::phantom_signal::reveal_phantom_signal_nature_system,
     ));
 
     schedule.add_systems((
@@ -928,6 +932,7 @@ mod tests {
         }
 
         world.init_resource::<Events<crate::layer2::phantom::SpawnGhostFleetEvent>>();
+        world.init_resource::<Events<crate::layer2::phantom_signal::SignalRevealEvent>>();
 
         world.init_resource::<Events<crate::layer2::silent_mutiny::SensorGlitchEvent>>();
         world.init_resource::<Events<crate::layer1::nanite_fabrication::ContainmentBreachEvent>>();

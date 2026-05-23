@@ -615,3 +615,4 @@
 - [x] `693` Corporate Sponsorship — `specs/693-corporate-sponsorship.md` — completed 2026-02-01
 - [x] `1066` Zero-G Flora — `specs/1066-zero-g-flora.md` — completed 2026-06-25
 - [x] `1057` The Living Score — `specs/1057-the-living-score.md` — completed 2026-05-22
+- [x] `554` The Phantom Signal — `specs/554-the-phantom-signal.md` — completed 2026-03-24
