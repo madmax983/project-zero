@@ -2321,3 +2321,26 @@ pub fn generational_amnesia_chronicle_bridge(
         *last_logged = false;
     }
 }
+
+/// INT-1057: Bridges `Morale` to `ColonyRenown` (The Living Score).
+///
+/// Averages the morale across all pops and updates the global `ColonyRenown`
+/// score (scaling from 0.0 - 1.0 to 0.0 - 100.0).
+#[allow(clippy::cast_precision_loss)]
+pub fn update_renown_from_morale_system(
+    mut renown: ResMut<crate::layer1::living_score::ColonyRenown>,
+    query: Query<&crate::layer1::morale::Morale, With<crate::layer1::pop::Pop>>,
+) {
+    let mut total_morale = 0.0;
+    let mut count = 0;
+
+    for morale in query.iter() {
+        total_morale += morale.value;
+        count += 1;
+    }
+
+    if count > 0 {
+        let avg_morale = total_morale / count as f32;
+        renown.score = avg_morale * 100.0;
+    }
+}
