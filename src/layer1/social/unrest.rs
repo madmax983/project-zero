@@ -74,6 +74,8 @@ pub enum MentalBreakType {
     Daze,
     /// The Pop sleepwalks while resting.
     Sleepwalking,
+    /// The Pop forms a violent mob due to forged memories collapsing.
+    RealityCollapse,
 }
 
 /// Calculates global unrest based on average colony morale.

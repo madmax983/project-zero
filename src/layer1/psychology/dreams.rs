@@ -285,6 +285,7 @@ mod tests {
             memory_type: MemoryType::WitnessedDeath,
             added_at: 0,
             intensity: 1.0,
+            forged: false,
         });
 
         // Loop until we hit the memory case (probabilistic)

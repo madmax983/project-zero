@@ -49,6 +49,10 @@ pub(crate) fn evaluate_mental_break(
                 best_target = None;
                 ActionType::Sleepwalking
             }
+            MentalBreakType::RealityCollapse => {
+                find_structure_target(data, buffer, &mut best_target);
+                ActionType::RealityCollapse
+            }
         };
 
         return Some((best_action, best_utility, best_target));
@@ -239,6 +243,11 @@ mod tests {
                 MentalBreakType::Sleepwalking,
                 ActionType::Sleepwalking,
                 None,
+            ),
+            (
+                MentalBreakType::RealityCollapse,
+                ActionType::RealityCollapse,
+                Some(structure),
             ),
         ];
 

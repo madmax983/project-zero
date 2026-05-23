@@ -37,7 +37,7 @@
 - [ ] `554` The Phantom Signal — `specs/554-the-phantom-signal.md`
 - [ ] `555` The Symbiotic Insurgency — `specs/555-the-symbiotic-insurgency.md`
 - [ ] `481` Subterranean Mycelial Network — `specs/481-subterranean-mycelial-network.md`
-- [ ] `480` Memory Forgery — `specs/480-memory-forgery.md`
+
 - [ ] `479` The Endless Draft — `specs/479-the-endless-draft.md`
 
 - [ ] `493` The Living Archive — `specs/493-the-living-archive.md`

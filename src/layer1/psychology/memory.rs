@@ -117,6 +117,8 @@ pub struct ActiveMemory {
     pub added_at: u64,
     /// Current intensity (starts at 1.0, decays to 0.0).
     pub intensity: f32,
+    /// Indicates if this memory was artificially forged.
+    pub forged: bool,
 }
 
 /// Component storing all active memories for a pop.
@@ -133,6 +135,17 @@ impl Memories {
             memory_type,
             added_at: current_tick,
             intensity: 1.0,
+            forged: false,
+        });
+    }
+
+    /// Adds a forged memory with full intensity.
+    pub fn add_forged(&mut self, memory_type: MemoryType, current_tick: u64) {
+        self.items.push(ActiveMemory {
+            memory_type,
+            added_at: current_tick,
+            intensity: 1.0,
+            forged: true,
         });
     }
 
@@ -253,6 +266,7 @@ mod tests {
             memory_type: MemoryType::WitnessedDeath,
             added_at: 0,
             intensity: 0.0001, // Almost 0
+            forged: false,
         });
 
         // Decay enough to kill it

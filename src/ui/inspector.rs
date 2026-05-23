@@ -97,6 +97,7 @@ const fn format_action_type(action: ActionType) -> (&'static str, &'static str, 
         ActionType::Protest => ("🗣️", "Protesting", Color::Rgb(200, 50, 50)),
         ActionType::Gossip => ("🗣️", "Gossiping", Color::Magenta),
         ActionType::Philosophize => ("🤔", "Philosophizing", Color::Magenta),
+        ActionType::RealityCollapse => ("🔥", "Reality Collapse", Color::Red),
     }
 }
 
