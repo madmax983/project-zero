@@ -619,3 +619,4 @@
 - [x] `1057` The Living Score — `specs/1057-the-living-score.md` — completed 2026-05-22
 - [x] `INT-1059` Integration: System Sovereignty -> Simulation — completed 2026-10-31
 - [x] `INT-1066` Integration: Zero-G Flora -> Simulation — completed 2026-10-31
+- [x] `1069` The Existential Audit — `specs/1069-the-existential-audit.md` — completed 2026-05-23

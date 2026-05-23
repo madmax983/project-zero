@@ -352,6 +352,9 @@ mod ghost_ships_bridge;
 
 #[path = "integration/cargo_cult_bridge.rs"]
 mod cargo_cult_bridge;
+
+#[path = "integration/existential_audit_bridge.rs"]
+mod existential_audit_bridge;
 #[path = "integration/sentient_route_bridge.rs"]
 mod sentient_route_bridge;
 
