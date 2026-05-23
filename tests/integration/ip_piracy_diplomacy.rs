@@ -1,12 +1,12 @@
 use bevy::prelude::*;
-use scale::layer3::intellectual_property_wars::{
-    PatentRegistry, TechId, TechUsage, detect_ip_piracy_system,
-};
 use scale::layer3::diplomacy_reflection::{
-    Civilization, DiplomaticRelations, DiplomaticStanding, DiplomaticTraits, TraitChangedEvent,
-    apply_diplomatic_reactions,
+    apply_diplomatic_reactions, Civilization, DiplomaticRelations, DiplomaticStanding,
+    DiplomaticTraits, TraitChangedEvent,
 };
 use scale::layer3::integration::ip_piracy_diplomacy_bridge;
+use scale::layer3::intellectual_property_wars::{
+    detect_ip_piracy_system, PatentRegistry, TechId, TechUsage,
+};
 
 #[test]
 fn ip_piracy_triggers_sanctions() {
@@ -17,36 +17,58 @@ fn ip_piracy_triggers_sanctions() {
     app.add_event::<TraitChangedEvent>();
     app.init_resource::<PatentRegistry>();
 
-    app.add_systems(Update, (
-        detect_ip_piracy_system,
-        ip_piracy_diplomacy_bridge,
-        apply_diplomatic_reactions,
-    ).chain());
+    app.add_systems(
+        Update,
+        (
+            detect_ip_piracy_system,
+            ip_piracy_diplomacy_bridge,
+            apply_diplomatic_reactions,
+        )
+            .chain(),
+    );
 
     // Create Owner
-    let owner = app.world_mut().spawn((
-        Civilization { id: "owner".to_string() },
-        DiplomaticTraits::default(),
-    )).id();
+    let owner = app
+        .world_mut()
+        .spawn((
+            Civilization {
+                id: "owner".to_string(),
+            },
+            DiplomaticTraits::default(),
+        ))
+        .id();
 
     // Create Pirate
-    let pirate = app.world_mut().spawn((
-        Civilization { id: "pirate".to_string() },
-        DiplomaticTraits::default(),
-    )).id();
+    let pirate = app
+        .world_mut()
+        .spawn((
+            Civilization {
+                id: "pirate".to_string(),
+            },
+            DiplomaticTraits::default(),
+        ))
+        .id();
 
     // Create Pacifist Neighbor
-    let neighbor = app.world_mut().spawn((
-        Civilization { id: "neighbor".to_string() },
-        DiplomaticTraits { is_pacifist: true, ..default() },
-        DiplomaticRelations {
-            relations: vec![DiplomaticStanding {
-                target_id: "pirate".to_string(),
-                standing: 0.0,
-                sanctioned: false,
-            }],
-        }
-    )).id();
+    let neighbor = app
+        .world_mut()
+        .spawn((
+            Civilization {
+                id: "neighbor".to_string(),
+            },
+            DiplomaticTraits {
+                is_pacifist: true,
+                ..default()
+            },
+            DiplomaticRelations {
+                relations: vec![DiplomaticStanding {
+                    target_id: "pirate".to_string(),
+                    standing: 0.0,
+                    sanctioned: false,
+                }],
+            },
+        ))
+        .id();
 
     // Setup Patent
     let tech_id = TechId::new("hyper_drive");

@@ -144,7 +144,9 @@ pub fn setup_world() -> World {
 pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -> World {
     init_task_pools();
     let mut world = World::new();
-    world.insert_resource(crate::layer1::economy::existential_audit::PrecursorAI { next_audit_tick: 1000 });
+    world.insert_resource(crate::layer1::economy::existential_audit::PrecursorAI {
+        next_audit_tick: 1000,
+    });
     world
         .init_resource::<bevy_ecs::prelude::Events<crate::layer1::mycelial::MycelialTripwireEvent>>(
         );
