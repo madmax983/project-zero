@@ -67,3 +67,8 @@
 **Concept:** Added `radioactive_batteries_system` to `src/experimental/radioactive_batteries.rs`. A `Battery` placed in a highly radioactive zone (on the `RadiationGrid`) slowly charges itself by converting ambient radiation into power.
 **Fate:** Submitted
 **Lesson:** Connects the environment hazard (radiation) with the energy system (batteries). Players can build "dirty" power grids by intentionally storing nuclear waste next to battery banks, risking `RadiationSickness` for Pops who walk near them in exchange for free passive power.
+
+## [Death Pulse Power]
+**Concept:** Added `death_pulse_power` module in `src/experimental/`. Connects `PopDied` events to `Battery` charging. If a pop dies within the radius of a `DeathCapacitor`, it instantly charges the battery.
+**Fate:** Merged
+**Lesson:** Connects the negative outcome (pop death) with a positive gain (massive energy spike), enabling morbid strategies like executing pops to prevent colony blackouts.
