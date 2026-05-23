@@ -1,6 +1,6 @@
-use bevy_ecs::prelude::*;
-use crate::shared::time::SimulationTime;
 use crate::layer1::pop::Pop;
+use crate::shared::time::SimulationTime;
+use bevy_ecs::prelude::*;
 
 #[derive(Resource)]
 pub struct PrecursorAI {
@@ -13,7 +13,7 @@ pub struct IndustrialBuilding {
     pub cultural_value: f32,
 }
 
-#[derive(Component)]
+#[derive(Component, Debug, Clone, Copy)]
 pub struct ExistentialCrisis {
     pub severity: f32,
     pub duration: u64,
@@ -65,28 +65,33 @@ pub fn existential_crisis_decay_system(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use bevy::prelude::*;
-    use crate::layer1::mind::{evaluate_actions_system, UtilityConfig};
-    use crate::layer1::utility_types::{ActionType, UtilityWeights, PopAction};
-    use crate::layer1::needs::Needs;
-    use crate::layer1::map::GridPosition;
-    use crate::layer1::designation::{Designation, DesignationType};
-    use crate::layer1::resources::ColonyResources;
     use crate::layer1::day_night::DayNightCycle;
+    use crate::layer1::designation::{Designation, DesignationType};
+    use crate::layer1::map::GridPosition;
+    use crate::layer1::mind::{evaluate_actions_system, UtilityConfig};
+    use crate::layer1::needs::Needs;
+    use crate::layer1::resources::ColonyResources;
     use crate::layer1::taboo::TabooState;
+    use crate::layer1::utility_types::{ActionType, PopAction, UtilityWeights};
     use crate::layer1::zone::ZoneGrid;
+    use bevy::prelude::*;
 
     #[test]
     fn test_audit_failure_triggers_existential_crisis() {
         // Arrange
         let mut app = App::new();
         app.init_resource::<SimulationTime>();
-        app.insert_resource(PrecursorAI { next_audit_tick: 100 });
+        app.insert_resource(PrecursorAI {
+            next_audit_tick: 100,
+        });
 
         let pop_entity = app.world_mut().spawn((Pop,)).id();
 
         // Add highly industrial, low cultural score building
-        app.world_mut().spawn(IndustrialBuilding { efficiency: 100.0, cultural_value: 0.0 });
+        app.world_mut().spawn(IndustrialBuilding {
+            efficiency: 100.0,
+            cultural_value: 0.0,
+        });
 
         app.add_systems(Update, existential_audit_system);
 
@@ -97,7 +102,10 @@ mod tests {
 
         // Assert
         let pop = app.world().entity(pop_entity);
-        assert!(pop.contains::<ExistentialCrisis>(), "Pop should have an Existential Crisis due to failed audit");
+        assert!(
+            pop.contains::<ExistentialCrisis>(),
+            "Pop should have an Existential Crisis due to failed audit"
+        );
     }
 
     #[test]
@@ -114,21 +122,29 @@ mod tests {
         app.insert_resource(ZoneGrid::new(10, 10));
 
         // Pop has ExistentialCrisis modifier
-        let pop_entity = app.world_mut().spawn((
-            Pop,
-            GridPosition { x: 0, y: 0 },
-            Needs::default(),
-            UtilityWeights::default(),
-            PopAction {
-                current: ActionType::Idle,
-                current_utility: 0.0,
-                ticks_committed: 10,
-            },
-            ExistentialCrisis { severity: 1.0, duration: 100 }
-        )).id();
+        let pop_entity = app
+            .world_mut()
+            .spawn((
+                Pop,
+                GridPosition { x: 0, y: 0 },
+                Needs::default(),
+                UtilityWeights::default(),
+                PopAction {
+                    current: ActionType::Idle,
+                    current_utility: 0.0,
+                    ticks_committed: 10,
+                },
+                ExistentialCrisis {
+                    severity: 1.0,
+                    duration: 100,
+                },
+            ))
+            .id();
 
         app.world_mut().spawn((
-            Designation { designation_type: DesignationType::Mine },
+            Designation {
+                designation_type: DesignationType::Mine,
+            },
             GridPosition { x: 1, y: 1 },
         ));
 
@@ -139,6 +155,10 @@ mod tests {
 
         // Assert
         let action = app.world().get::<PopAction>(pop_entity).unwrap();
-        assert_eq!(action.current, ActionType::Philosophize, "Should switch to Philosophize during an Existential Crisis");
+        assert_eq!(
+            action.current,
+            ActionType::Philosophize,
+            "Should switch to Philosophize during an Existential Crisis"
+        );
     }
 }
