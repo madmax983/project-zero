@@ -67,6 +67,7 @@ mod tests {
             memory_type: MemoryType::StarvationTrauma,
             added_at: 0,
             intensity: 1.0,
+            forged: false,
         });
 
         let pop = app
@@ -104,6 +105,7 @@ mod tests {
             memory_type: MemoryType::StarvationTrauma,
             added_at: 0,
             intensity: 1.0,
+            forged: false,
         });
 
         let pop = app
@@ -142,6 +144,7 @@ mod tests {
             memory_type: MemoryType::StarvationTrauma,
             added_at: 0,
             intensity: 1.0,
+            forged: false,
         });
 
         let pop_far = app

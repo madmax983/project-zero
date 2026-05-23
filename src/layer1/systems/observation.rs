@@ -156,6 +156,8 @@ pub fn register(schedule: &mut Schedule) {
                 .after(crate::layer1::unrest::calculate_unrest_system),
             crate::layer1::social::ghost_shift_strike::evaluate_ghost_shifts
                 .after(crate::layer1::unrest::calculate_unrest_system),
+            crate::layer1::psychology::memory_forgery::mnestic_archiver_system.after(decay_needs_system),
+            crate::layer1::psychology::memory_forgery::truth_outbreak_system.after(decay_needs_system),
             crate::layer1::unrest::check_mental_break_system.after(decay_needs_system),
             check_stress_breakdown_system.after(decay_needs_system),
             crate::layer1::totems::check_spontaneous_totem_creation
