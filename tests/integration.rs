@@ -469,3 +469,6 @@ mod pirate_republic_diplomacy_bridge;
 
 #[path = "integration/living_score_renown.rs"]
 mod living_score_renown;
+
+#[path = "integration/ip_piracy_diplomacy.rs"]
+mod ip_piracy_diplomacy;
