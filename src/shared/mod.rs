@@ -17,3 +17,4 @@ pub mod state;
 /// Time-tracking resources.
 pub mod time;
 pub mod view_mode;
+pub mod rendering;
