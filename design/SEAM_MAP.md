@@ -1,3 +1,9 @@
+### INT-775: The Quantum Famine -> Chronicle
+- **Date:** 2026-10-31
+- **Systems connected:** `process_market_panic_hoarding` -> `quantum_famine_export_dump_bridge` -> `AddChronicleEvent`
+- **Glue added:** `quantum_famine_export_dump_bridge` in `src/layer3/integration.rs` to read `ExportDumpEvent` and emit `AddChronicleEvent` while depositing credits.
+- **Tests:** `tests/integration/quantum_famine_bridge.rs`
+
 ### INT-473: Bureaucratic Redlining Integration
 - **Date:** 2026-06-25
 - **Systems connected:** `bureaucratic_redlining_system`, `apply_squatter_visuals_system`, `stateless_squatter_raid_system`, `stateless_expansion_system`

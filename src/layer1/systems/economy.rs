@@ -175,6 +175,11 @@ pub fn register(schedule: &mut Schedule) {
             .in_set(Layer1SystemSet::Economy),
     );
     schedule.add_systems(
+        crate::layer3::integration::quantum_famine_export_dump_bridge
+            .after(crate::layer3::market::quantum_famine::process_market_panic_hoarding)
+            .in_set(Layer1SystemSet::Economy),
+    );
+    schedule.add_systems(
         (
             crate::layer1::economy::existential_audit::existential_audit_system,
             crate::layer1::economy::existential_audit::existential_crisis_decay_system,
