@@ -261,3 +261,23 @@ pub fn pirate_republic_diplomacy_bridge(
         ));
     }
 }
+
+/// INT-775: Bridges `ExportDumpEvent` (Quantum Famine) to `ColonyResources` and `AddChronicleEvent`.
+pub fn quantum_famine_export_dump_bridge(
+    mut dump_events: EventReader<crate::layer3::market::quantum_famine::ExportDumpEvent>,
+    mut resources: ResMut<ColonyResources>,
+    mut chronicle_events: EventWriter<AddChronicleEvent>,
+) {
+    for event in dump_events.read() {
+        // Add credits from speculative markup
+        resources.add_credits(event.credits_earned);
+
+        chronicle_events.send(AddChronicleEvent {
+            importance: EventImportance::Major,
+            text: format!(
+                "Market panic caused speculative fleets to buy out local {:?} stockpiles, bringing in {} credits but causing immediate shortages.",
+                event.commodity, event.credits_earned
+            ),
+        });
+    }
+}
