@@ -47,6 +47,7 @@ pub fn build_simulation_schedule() -> Schedule {
 #[allow(clippy::too_many_lines)]
 fn init_simulation_resources(world: &mut World) {
     world.init_resource::<Events<crate::layer1::AcceptSponsorshipEvent>>();
+    world.init_resource::<Events<crate::layer1::economy::retro_causality::AcceptRetroContractEvent>>();
     world.init_resource::<Events<crate::layer1::RepairBuildingEvent>>();
     world.init_resource::<Events<crate::layer2::trade::routes::TradeRouteExecutedEvent>>();
     world
@@ -809,6 +810,7 @@ mod tests {
         world.init_resource::<bevy_ecs::event::Events<crate::layer1::petrification::PopPetrifiedEvent>>();
         world.init_resource::<Events<crate::layer1::predecessors::WorldTriggerEvent>>();
         world.init_resource::<Events<crate::layer1::AcceptSponsorshipEvent>>();
+    world.init_resource::<Events<crate::layer1::economy::retro_causality::AcceptRetroContractEvent>>();
         world.init_resource::<Events<crate::layer1::RepairBuildingEvent>>();
         world.init_resource::<Events<crate::layer1::social::hedonic_treadmill::ConsumeItemEvent>>();
         world.init_resource::<Events<crate::layer1::architecture::sunk_cost_monument::CancelConstructionEvent>>();
@@ -876,6 +878,7 @@ mod tests {
 
         // Initialize Detection Risk for test
         world.init_resource::<Events<crate::layer1::AcceptSponsorshipEvent>>();
+    world.init_resource::<Events<crate::layer1::economy::retro_causality::AcceptRetroContractEvent>>();
         world.init_resource::<Events<crate::layer1::RepairBuildingEvent>>();
         world.init_resource::<Events<crate::layer1::social::hedonic_treadmill::ConsumeItemEvent>>();
         world.init_resource::<Events<crate::layer1::architecture::sunk_cost_monument::CancelConstructionEvent>>();
