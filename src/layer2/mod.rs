@@ -74,3 +74,4 @@ pub mod piracy;
 pub use piracy::*;
 pub mod fauna;
 pub use fauna::*;
+pub mod phantom_signal;
