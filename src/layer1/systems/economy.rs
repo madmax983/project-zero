@@ -178,7 +178,9 @@ pub fn register(schedule: &mut Schedule) {
         (
             crate::layer1::economy::existential_audit::existential_audit_system,
             crate::layer1::economy::existential_audit::existential_crisis_decay_system,
+            crate::layer1::core::integration::existential_audit_chronicle_bridge,
         )
+            .chain()
             .in_set(Layer1SystemSet::Economy),
     );
 

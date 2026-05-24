@@ -1168,3 +1168,10 @@
 - **Systems connected:** `Morale` -> `update_renown_from_morale_system` -> `ColonyRenown`
 - **Glue added:** Added `update_renown_from_morale_system` in `src/layer1/core/integration.rs` to compute average morale across all pops and translate it into a 0.0 - 100.0 scale for `ColonyRenown`. Registered in `src/layer1/systems/economy.rs` before `update_living_score_aesthetics`.
 - **Tests:** `tests/integration/living_score_renown.rs`
+
+### INT-1069: Existential Audit -> Chronicle
+- **Date:** 2026-05-23
+- **Systems connected:** `existential_audit_system` -> `existential_audit_chronicle_bridge`
+- **Glue added:** `ExistentialAuditCompletedEvent` in `src/layer1/economy/existential_audit.rs` and `existential_audit_chronicle_bridge` in `src/layer1/core/integration.rs`
+- **Schedule:** Chained in Update within `Layer1SystemSet::Economy`
+- **Tests:** `tests/integration/existential_audit_bridge.rs`
