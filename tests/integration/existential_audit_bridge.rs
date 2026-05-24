@@ -24,11 +24,7 @@ fn test_existential_audit_failed_chronicle_bridge() {
     // 3. Register systems (Audit -> Bridge)
     app.add_systems(
         Update,
-        (
-            existential_audit_system,
-            existential_audit_chronicle_bridge,
-        )
-            .chain(),
+        (existential_audit_system, existential_audit_chronicle_bridge).chain(),
     );
 
     // 4. Setup World Entities
@@ -77,11 +73,7 @@ fn test_existential_audit_passed_chronicle_bridge() {
     // 3. Register systems (Audit -> Bridge)
     app.add_systems(
         Update,
-        (
-            existential_audit_system,
-            existential_audit_chronicle_bridge,
-        )
-            .chain(),
+        (existential_audit_system, existential_audit_chronicle_bridge).chain(),
     );
 
     // 4. Setup World Entities

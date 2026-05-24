@@ -60,3 +60,6 @@
 ## 2024-05-25 - The Undocumented Quarantine
 **Confusion:** The `layer2/events_new/system_quarantine` module was missing module-level documentation and executable examples, obscuring the relationship between trade severing and unrest growth that eventually spawns warlord factions.
 **Clarification:** Added conceptual `//!` module documentation to explain "The System Quarantine" and added a compiling `/// # Examples` doctest to demonstrate the unrest decay pushing a colony into a WarlordFaction.
+## 2024-05-25 - Existential Audit System Panics in Tests
+**Confusion:** Eight integration tests panicked when upgrading Bevy because `existential_audit_system` could not access `ResMut<'_, Events<ExistentialAuditCompletedEvent>>`. This happened because the system was added to the default simulation schedule but the required event was not initialized in `setup_world()`.
+**Clarification:** Added `world.init_resource::<bevy::prelude::Events<crate::layer1::economy::existential_audit::ExistentialAuditCompletedEvent>>();` to `setup_world()` in `src/setup.rs` so all integration tests that rely on the default world setup automatically have the event queue initialized.

@@ -1,8 +1,8 @@
+use crate::layer1::core::chronicle::{AddChronicleEvent, EventImportance};
+use crate::layer1::entities::pop::Pop;
+use crate::shared::time::SimulationTime;
 use bevy::prelude::*;
 use bevy_utils::HashMap;
-use crate::layer1::core::chronicle::{AddChronicleEvent, EventImportance};
-use crate::shared::time::SimulationTime;
-use crate::layer1::entities::pop::Pop;
 
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub enum SlangUsage {
@@ -33,10 +33,16 @@ pub fn process_chronicle_events_for_dialect(
     mut dialect_manager: ResMut<DialectManager>,
 ) {
     for event in events.read() {
-        if (event.importance == EventImportance::Major || event.importance == EventImportance::Legendary) && event.text.to_lowercase().contains("fire") {
+        if (event.importance == EventImportance::Major
+            || event.importance == EventImportance::Legendary)
+            && event.text.to_lowercase().contains("fire")
+        {
             dialect_manager.slang_dictionary.insert(
                 "fire".to_string(),
-                SlangEntry { usage: SlangUsage::Curse, weight: 1.0 },
+                SlangEntry {
+                    usage: SlangUsage::Curse,
+                    weight: 1.0,
+                },
             );
         }
     }
@@ -54,14 +60,13 @@ pub fn initialize_pop_dialect(
                 vocab.push(word.clone());
             }
         }
-        commands.entity(entity).insert(PersonalDialect { vocabulary: vocab });
+        commands
+            .entity(entity)
+            .insert(PersonalDialect { vocabulary: vocab });
     }
 }
 
-pub fn decay_slang_weight(
-    mut dialect_manager: ResMut<DialectManager>,
-    time: Res<SimulationTime>,
-) {
+pub fn decay_slang_weight(mut dialect_manager: ResMut<DialectManager>, time: Res<SimulationTime>) {
     if time.tick.is_multiple_of(1000) {
         for entry in dialect_manager.slang_dictionary.values_mut() {
             entry.weight -= 0.01;
@@ -82,10 +87,12 @@ mod tests {
         world.init_resource::<DialectManager>();
         world.init_resource::<Events<AddChronicleEvent>>();
 
-        world.resource_mut::<Events<AddChronicleEvent>>().send(AddChronicleEvent {
-            text: "The Great Fire".to_string(),
-            importance: EventImportance::Legendary,
-        });
+        world
+            .resource_mut::<Events<AddChronicleEvent>>()
+            .send(AddChronicleEvent {
+                text: "The Great Fire".to_string(),
+                importance: EventImportance::Legendary,
+            });
 
         let mut schedule = Schedule::default();
         schedule.add_systems(process_chronicle_events_for_dialect);
@@ -93,7 +100,10 @@ mod tests {
 
         let dialect = world.resource::<DialectManager>();
         assert!(dialect.slang_dictionary.contains_key("fire"));
-        assert_eq!(dialect.slang_dictionary.get("fire").unwrap().usage, SlangUsage::Curse);
+        assert_eq!(
+            dialect.slang_dictionary.get("fire").unwrap().usage,
+            SlangUsage::Curse
+        );
     }
 
     #[test]
@@ -104,7 +114,10 @@ mod tests {
         let mut dialect = world.resource_mut::<DialectManager>();
         dialect.slang_dictionary.insert(
             "rust".to_string(),
-            SlangEntry { usage: SlangUsage::Praise, weight: 1.0 }
+            SlangEntry {
+                usage: SlangUsage::Praise,
+                weight: 1.0,
+            },
         );
 
         let pop_id = world.spawn(Pop).id();
@@ -121,12 +134,18 @@ mod tests {
     fn test_slang_decays_over_time_without_reinforcement() {
         let mut world = World::new();
         world.init_resource::<DialectManager>();
-        world.insert_resource(SimulationTime { tick: 100_000, speed: crate::shared::time::SimSpeed::Normal });
+        world.insert_resource(SimulationTime {
+            tick: 100_000,
+            speed: crate::shared::time::SimSpeed::Normal,
+        });
 
         let mut dialect = world.resource_mut::<DialectManager>();
         dialect.slang_dictionary.insert(
             "old_slang".to_string(),
-            SlangEntry { usage: SlangUsage::Curse, weight: 0.5 }
+            SlangEntry {
+                usage: SlangUsage::Curse,
+                weight: 0.5,
+            },
         );
 
         let mut schedule = Schedule::default();
@@ -134,6 +153,9 @@ mod tests {
         schedule.run(&mut world);
 
         let dialect = world.resource::<DialectManager>();
-        assert!(dialect.slang_dictionary.get("old_slang").map_or(true, |entry| entry.weight < 0.5));
+        assert!(dialect
+            .slang_dictionary
+            .get("old_slang")
+            .is_none_or(|entry| entry.weight < 0.5));
     }
 }
