@@ -246,6 +246,10 @@ fn init_simulation_resources(world: &mut World) {
     world
         .init_resource::<Events<crate::layer2::events_new::reverse_quarantine::RefugeeFleetEvent>>(
         );
+    world.init_resource::<Events<crate::layer2::events_new::blind_auction::TriggerBlindAuction>>();
+    world.init_resource::<Events<crate::layer2::events_new::blind_auction::SubmitBid>>();
+    world.init_resource::<Events<crate::layer2::events_new::blind_auction::VaultOpened>>();
+
     world.init_resource::<Events<crate::layer1::grafting::GraftBuildingEvent>>();
     world.init_resource::<Events<crate::layer3::fleets::ColonyFoundedEvent>>();
     world.init_resource::<crate::layer1::diplomacy::factions::rivals::TerritoryGrid>();
@@ -419,6 +423,12 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
     schedule.add_systems((
         crate::layer2::events_new::system_quarantine::apply_quarantine_effects,
         crate::layer2::events_new::system_quarantine::handle_quarantine_decay,
+    ));
+    schedule.add_systems((
+        crate::layer2::events_new::blind_auction::generate_blind_auction_system,
+        crate::layer2::events_new::blind_auction::process_bids_system,
+        crate::layer2::events_new::blind_auction::resolve_auction_system,
+        crate::layer2::events_new::blind_auction::update_auction_time_system,
     ));
 
     // --- Spec 622 ---
@@ -994,6 +1004,10 @@ mod tests {
         world.init_resource::<Events<crate::layer1::tech::rogue_automation_cults::MachineCultFormedEvent>>();
         world.init_resource::<Events<crate::layer1::heirloom_tool::EquipHeirloomEvent>>();
         world.init_resource::<Events<crate::layer2::events_new::reverse_quarantine::RefugeeFleetEvent>>();
+        world.init_resource::<Events<crate::layer2::events_new::blind_auction::TriggerBlindAuction>>();
+        world.init_resource::<Events<crate::layer2::events_new::blind_auction::SubmitBid>>();
+        world.init_resource::<Events<crate::layer2::events_new::blind_auction::VaultOpened>>();
+
         world.init_resource::<Events<crate::layer1::predecessors::WorldTriggerEvent>>();
         world.init_resource::<Events<crate::layer1::grafting::GraftBuildingEvent>>();
         world.init_resource::<Events<crate::layer3::fleets::ColonyFoundedEvent>>();

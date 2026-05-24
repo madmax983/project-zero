@@ -620,3 +620,5 @@
 - [x] `INT-1059` Integration: System Sovereignty -> Simulation — completed 2026-10-31
 - [x] `INT-1066` Integration: Zero-G Flora -> Simulation — completed 2026-10-31
 - [x] `1069` The Existential Audit — `specs/1069-the-existential-audit.md` — completed 2026-05-23
+
+- [x] `1161` The Blind Auction — `specs/1161-blind-auction.md` — completed 2026-05-24

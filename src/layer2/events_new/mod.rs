@@ -14,6 +14,7 @@
 //!    (such as morale shifts, resource changes, or combat encounters) to the
 //!    rest of the simulation.
 
+pub mod blind_auction;
 pub mod reverse_quarantine;
 pub mod reverse_quarantine_tests;
 pub mod system_quarantine;
