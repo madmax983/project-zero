@@ -118,6 +118,10 @@ fn init_simulation_resources(world: &mut World) {
         .init_resource::<Events<crate::layer1::social::ghost_shift_strike::GhostShiftStartedEvent>>(
         );
     world.init_resource::<Events<crate::layer3::fleets::ColonyFoundedEvent>>();
+    world.init_resource::<Events<crate::layer3::diplomacy::endless_draft::DraftOrderEvent>>();
+    world.init_resource::<Events<crate::layer3::diplomacy::endless_draft::DraftComplianceEvent>>();
+    world.init_resource::<Events<crate::layer3::diplomacy::endless_draft::DraftRefusalEvent>>();
+    world.init_resource::<Events<crate::layer3::diplomacy::endless_draft::VeteranReturnEvent>>();
     world.init_resource::<crate::layer1::diplomacy::factions::rivals::TerritoryGrid>();
     world.init_resource::<Events<crate::layer3::diplomacy::succession::SuccessionEvent>>();
     world.init_resource::<Events<crate::layer3::diplomacy::succession::SuccessionCrisisEvent>>();
@@ -639,6 +643,10 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
             crate::layer3::diplomacy::fading_homeworld::update_core_world_decay_system,
             crate::layer3::diplomacy::fading_homeworld::generate_core_world_demand_system,
             crate::layer3::diplomacy::fading_homeworld::handle_core_world_demands_system,
+            crate::layer3::diplomacy::endless_draft::draft_order_generation_system,
+            crate::layer3::diplomacy::endless_draft::process_draft_compliance_system,
+            crate::layer3::diplomacy::endless_draft::process_draft_refusal_system,
+            crate::layer3::diplomacy::endless_draft::spawn_veteran_system,
         )
             .chain(),
     );

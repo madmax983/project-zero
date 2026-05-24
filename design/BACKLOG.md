@@ -37,7 +37,6 @@
 - [ ] `555` The Symbiotic Insurgency — `specs/555-the-symbiotic-insurgency.md`
 - [ ] `481` Subterranean Mycelial Network — `specs/481-subterranean-mycelial-network.md`
 
-- [ ] `479` The Endless Draft — `specs/479-the-endless-draft.md`
 
 - [ ] `493` The Living Archive — `specs/493-the-living-archive.md`
 - [ ] `494` Symbiotic Habitation — `specs/494-symbiotic-habitation.md`

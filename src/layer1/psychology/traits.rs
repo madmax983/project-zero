@@ -21,6 +21,8 @@ pub enum Trait {
     LightBlindness,
     /// Physically weak (-Health Max, +Damage taken).
     Frail,
+    /// Elite combat skills but severe PTSD (Stress penalties)
+    Veteran,
     /// +20% Work Speed.
     HardWorker,
     /// -20% Work Speed.
@@ -202,6 +204,7 @@ impl Trait {
             Self::Refugee => "Refugee",
             Self::Traumatized => "Traumatized",
             Self::InsomniaDrive => "Insomnia Drive",
+            Self::Veteran => "Veteran",
         }
     }
 }
