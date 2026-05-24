@@ -20855,3 +20855,43 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Emergence:** You try to ignore the drifting hulk, but its broadcasts are so charismatic that half your planetary defense force steals their shuttles, flies to the dreadnought, and immediately turns its ancient orbital bombardment cannons on your capital city.
 
 **Tension:** Do you risk your own fleets to destroy the relic, angering the militaristic Pops who revere it, or let it siphon away your best soldiers while hoping it drifts out of the system before they figure out how to fire the main gun?
+
+## The Nostalgia Cults
+
+**Layer:** 1
+
+**Fantasy:** Watching parts of your colony reject progress and attempt to recreate a romanticized version of the past that never truly existed.
+
+**Mechanic:** As the colony advances in technology and automation, older Pops who lived through the "hard times" (or their descendants who fetishize it) can form Nostalgia Cults. They deliberately disable automation in their local sectors, refuse high-tech medical treatments, and wear obsolete clothing styles. Their areas suffer severe efficiency drops but gain massive morale bonuses from a shared sense of "authenticity."
+
+**Emergence:** Your gleaming, hyper-efficient utopia develops a massive slum in its center where Pops are manually farming dirt and dying of preventable diseases, but they are the happiest people on the planet.
+
+**Tension:** Do you force modernization on them, risking violent revolt and crushing their morale, or let them live in squalor, accepting the massive economic dead zone in the middle of your city?
+
+---
+## Orbital Debris Kessler Syndrome
+
+**Layer:** 2 / Cross-layer
+
+**Fantasy:** A slow-motion disaster entirely of your own making, where the consequences of early expansion literally trap you on your home world.
+
+**Mechanic:** Every time a ship is destroyed, a satellite is decommissioned improperly, or a major battle happens in orbit (Layer 2), it adds "Debris Density" to the planet's orbital rings. High density increases the chance of any ship leaving or entering the planet taking catastrophic damage. If density crosses a threshold, a "Kessler Cascade" triggers, exponentially increasing debris and effectively quarantining the planet from the rest of the galaxy.
+
+**Emergence:** You fight a massive, glorious defensive war in orbit to save your capital. You win. But the resulting wreckage triggers a Kessler Cascade. Your capital is safe, but it can never launch another ship, starving your wider empire of its main administrative center.
+
+**Tension:** Do you fight enemies in high orbit to protect the planet's surface, knowing you might trap yourself, or let them bomb the surface to keep the orbital lanes clear?
+
+---
+## The Bureaucracy of Grief
+
+**Layer:** 1
+
+**Fantasy:** Death in a highly structured society becomes a logistical and emotional nightmare.
+
+**Mechanic:** When a Pop dies, their possessions, workstation, and assigned housing don't immediately free up. A "Bereavement Period" begins where the space is locked out of the simulation out of respect. A specific new job role, "Death Auditor," must process the estate. If Auditors are overworked or missing, "Ghost Zones" form—entire blocks of housing and factories sitting empty and decaying, surrounded by living Pops who are emotionally paralyzed and unable to reclaim the space.
+
+**Emergence:** A sudden plague wipes out 10% of your colony. You have survivors, but you can't move them into the empty houses or assign them to the abandoned factories because the Death Auditors are backlogged. The survivors freeze outside empty, perfectly good homes, respecting the bureaucracy of the dead.
+
+**Tension:** Do you override the system, forcibly evicting the memories of the dead to house the living (causing massive cultural trauma and unrest), or let the bureaucracy take its time while your colony freezes?
+
+---
