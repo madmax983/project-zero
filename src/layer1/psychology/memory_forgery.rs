@@ -1,7 +1,7 @@
-use bevy_ecs::prelude::*;
 use crate::layer1::psychology::memory::{Memories, MemoryType};
-use crate::layer1::social::unrest::{MentalState, MentalBreakType};
+use crate::layer1::social::unrest::{MentalBreakType, MentalState};
 use crate::layer1::stress::StressTracker;
+use bevy_ecs::prelude::*;
 
 #[derive(Component)]
 pub struct MnesticArchiver;
@@ -9,7 +9,9 @@ pub struct MnesticArchiver;
 #[derive(Event, Default)]
 pub struct TruthOutbreakEvent;
 
-pub fn mnestic_archiver_system(mut query: Query<(&mut Memories, &mut StressTracker), With<MnesticArchiver>>) {
+pub fn mnestic_archiver_system(
+    mut query: Query<(&mut Memories, &mut StressTracker), With<MnesticArchiver>>,
+) {
     for (mut memories, mut stress) in query.iter_mut() {
         let mut has_bad_memory = false;
 
@@ -29,7 +31,10 @@ pub fn mnestic_archiver_system(mut query: Query<(&mut Memories, &mut StressTrack
     }
 }
 
-pub fn truth_outbreak_system(mut events: EventReader<TruthOutbreakEvent>, mut query: Query<(&Memories, &mut MentalState)>) {
+pub fn truth_outbreak_system(
+    mut events: EventReader<TruthOutbreakEvent>,
+    mut query: Query<(&Memories, &mut MentalState)>,
+) {
     for _ in events.read() {
         for (memories, mut mental_state) in query.iter_mut() {
             if memories.items.iter().any(|m| m.forged) {
@@ -50,14 +55,33 @@ mod tests {
         let mut schedule = bevy_ecs::schedule::Schedule::default();
         schedule.add_systems(mnestic_archiver_system);
 
-        let entity = app.world_mut().spawn((Pop, Memories::default(), StressTracker { accumulated_stress: 50.0 }, MnesticArchiver)).id();
-        app.world_mut().get_mut::<Memories>(entity).unwrap().add(MemoryType::StarvationTrauma, 0);
+        let entity = app
+            .world_mut()
+            .spawn((
+                Pop,
+                Memories::default(),
+                StressTracker {
+                    accumulated_stress: 50.0,
+                },
+                MnesticArchiver,
+            ))
+            .id();
+        app.world_mut()
+            .get_mut::<Memories>(entity)
+            .unwrap()
+            .add(MemoryType::StarvationTrauma, 0);
 
         schedule.run(app.world_mut());
 
         let memories = app.world().get::<Memories>(entity).unwrap();
-        assert!(!memories.items.iter().any(|m| m.memory_type == MemoryType::StarvationTrauma));
-        assert!(memories.items.iter().any(|m| m.memory_type == MemoryType::AteFineMeal && m.forged));
+        assert!(!memories
+            .items
+            .iter()
+            .any(|m| m.memory_type == MemoryType::StarvationTrauma));
+        assert!(memories
+            .items
+            .iter()
+            .any(|m| m.memory_type == MemoryType::AteFineMeal && m.forged));
     }
 
     #[test]
@@ -66,8 +90,21 @@ mod tests {
         let mut schedule = bevy_ecs::schedule::Schedule::default();
         schedule.add_systems(mnestic_archiver_system);
 
-        let entity = app.world_mut().spawn((Pop, Memories::default(), StressTracker { accumulated_stress: 50.0 }, MnesticArchiver)).id();
-        app.world_mut().get_mut::<Memories>(entity).unwrap().add(MemoryType::StarvationTrauma, 0);
+        let entity = app
+            .world_mut()
+            .spawn((
+                Pop,
+                Memories::default(),
+                StressTracker {
+                    accumulated_stress: 50.0,
+                },
+                MnesticArchiver,
+            ))
+            .id();
+        app.world_mut()
+            .get_mut::<Memories>(entity)
+            .unwrap()
+            .add(MemoryType::StarvationTrauma, 0);
 
         schedule.run(app.world_mut());
 
@@ -78,18 +115,28 @@ mod tests {
     #[test]
     fn test_truth_outbreak_triggers_reality_collapse() {
         let mut app = bevy_app::App::new();
-        app.world_mut().init_resource::<Events<TruthOutbreakEvent>>();
+        app.world_mut()
+            .init_resource::<Events<TruthOutbreakEvent>>();
         let mut schedule = bevy_ecs::schedule::Schedule::default();
         schedule.add_systems(truth_outbreak_system);
 
-        let entity = app.world_mut().spawn((Pop, Memories::default(), MentalState::Normal)).id();
-        app.world_mut().get_mut::<Memories>(entity).unwrap().add_forged(MemoryType::AteFineMeal, 0);
+        let entity = app
+            .world_mut()
+            .spawn((Pop, Memories::default(), MentalState::Normal))
+            .id();
+        app.world_mut()
+            .get_mut::<Memories>(entity)
+            .unwrap()
+            .add_forged(MemoryType::AteFineMeal, 0);
 
         app.world_mut().send_event(TruthOutbreakEvent);
 
         schedule.run(app.world_mut());
 
         let mental_state = app.world().get::<MentalState>(entity).unwrap();
-        assert_eq!(*mental_state, MentalState::Broken(MentalBreakType::RealityCollapse));
+        assert_eq!(
+            *mental_state,
+            MentalState::Broken(MentalBreakType::RealityCollapse)
+        );
     }
 }

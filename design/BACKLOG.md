@@ -27,7 +27,6 @@
 
 ## Future / Ideas
 
-- [ ] `692` Procedural Dialects — `specs/692-procedural-dialects.md`
 
 - [ ] `695` The Long Night — `specs/695-the-long-night.md`
 - [ ] `550` The Gravity Siphon — `specs/550-the-gravity-siphon.md`
