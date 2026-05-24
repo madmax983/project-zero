@@ -8546,3 +8546,92 @@ Conditions of dezoned, stateless pops.
 - an unnatural affinity for the void
 - a profound and bitter melancholy
 - a stubborn refusal to accept failure
+
+## The Living Score Fragments (Spec 1057)
+
+## Fragment Type: [HIGH_RENOWN_AESTHETIC]
+- glowing flora
+- ambient music playing from vents
+- structures taking on an idealized aesthetic
+- a warm, golden hue over the colony
+- the air smelling of sweet rain
+- pristine, gleaming bulkheads
+- harmonious, synchronized machinery
+
+## Fragment Type: [LOW_RENOWN_AESTHETIC]
+- physical rot
+- an oppressive gloom
+- auditory dissonance
+- a cold, creeping shadow
+- weeping rust
+- crumbling, brittle architecture
+- the smell of decay
+
+## The Existential Audit Fragments (Spec 1069)
+
+## Fragment Type: [AUDIT_TRIGGER]
+- a super-advanced precursor AI
+- the silent watchers
+- the galactic auditors
+- the ancient evaluators
+- the meaningfulness algorithm
+
+## Fragment Type: [EXISTENTIAL_CRISIS_SYMPTOM]
+- staring into the void without purpose
+- weeping at the sight of a factory
+- questioning the meaning of survival
+- refusing to work on purely industrial tasks
+- a deep, paralyzing apathy
+- seeking art in the scrap heaps
+
+## The Bio-Loom Fragments (Spec 304)
+
+## Fragment Type: [BIO_SUIT_NAME]
+- Flesh-Weave
+- The Living Armor
+- Symbiotic Carapace
+- Vein-Suit
+- Pulse-Armor
+- The Blood-Bound Shell
+
+## Fragment Type: [BIO_SUIT_DRAIN]
+- drinking their sweat and blood
+- tightening around their ribs
+- sinking roots into their skin
+- feeding on their exhaustion
+- a parasitic embrace
+- draining their warmth
+
+## Memory Forgery Fragments (Spec 480)
+
+## Fragment Type: [FABRICATED_MEMORY]
+- a bountiful harvest that never was
+- a heroic victory against phantoms
+- the gentle, loving founders
+- an era of perfect harmony
+- the illusion of endless warmth
+- a false memory of abundance
+
+## Fragment Type: [REALITY_COLLAPSE_SYMPTOM]
+- screaming at the sudden truth
+- a violent, instantaneous mob
+- tearing at their own eyes
+- shattering the Archiver machinery
+- a colony-wide mental break
+- burning the lies
+
+## Procedural Dialects Fragments (Spec 692)
+
+## Fragment Type: [DIALECT_SLANG_EVENT]
+- using the Great Fire as a curse
+- naming their children after the Legendary Miner
+- treating the word 'Famine' as an expletive
+- adopting the rust-cant of the lower decks
+- speaking in the abbreviated syntax of the core AI
+
+## Fragment Type: [CULTURAL_DRIFT_EFFECT]
+- the homeworld transmissions sound foreign
+- old logs are becoming incomprehensible
+- traders require translation software
+- a distinct colony identity emerges
+- the shared slang binds them together

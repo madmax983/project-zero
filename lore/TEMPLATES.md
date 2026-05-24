@@ -7962,3 +7962,93 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 **Patterns:**
 - "[YEAR]: Salvation from the dark. [EVACUEE_COUNT] souls were recovered from the drifting escape pods."
 - "The distress signals fell silent as we brought them home. [EVACUEE_COUNT] saved. [YEAR]."
+
+## The Living Score Templates (Spec 1057)
+
+### Template: HIGH_RENOWN_ACHIEVED
+**Generates:** Play event (Chronicle during game)
+**Slots:** [COLONY], [YEAR], [HIGH_RENOWN_AESTHETIC]
+**Patterns:**
+- "[YEAR]: The colony's renown manifests physically. We are graced with [HIGH_RENOWN_AESTHETIC]."
+- "Success has a look and feel. [COLONY] shines with [HIGH_RENOWN_AESTHETIC]. [YEAR]."
+- "[COLONY], [YEAR]: The atmosphere responds to our triumph. Reports of [HIGH_RENOWN_AESTHETIC]."
+
+### Template: LOW_RENOWN_SUFFERED
+**Generates:** Play event (Chronicle during game)
+**Slots:** [COLONY], [YEAR], [LOW_RENOWN_AESTHETIC]
+**Patterns:**
+- "[YEAR]: The failure of [COLONY] is visible. We are cursed with [LOW_RENOWN_AESTHETIC]."
+- "A physical manifestation of our low renown. [COLONY] suffers from [LOW_RENOWN_AESTHETIC]. [YEAR]."
+- "[COLONY], [YEAR]: The environment reflects our despair. The colony is plagued by [LOW_RENOWN_AESTHETIC]."
+
+## The Existential Audit Templates (Spec 1069)
+
+### Template: EXISTENTIAL_AUDIT_FAILED
+**Generates:** Play event (Chronicle during game)
+**Slots:** [COLONY], [YEAR], [AUDIT_TRIGGER], [EXISTENTIAL_CRISIS_SYMPTOM]
+**Patterns:**
+- "[YEAR]: [AUDIT_TRIGGER] judged [COLONY]. Found wanting in meaning. The pops are [EXISTENTIAL_CRISIS_SYMPTOM]."
+- "A cold evaluation from [AUDIT_TRIGGER]. We are too industrial, too hollow. [COLONY] suffers [EXISTENTIAL_CRISIS_SYMPTOM]. [YEAR]."
+- "[COLONY], [YEAR]: We failed the audit by [AUDIT_TRIGGER]. The lack of culture has led to [EXISTENTIAL_CRISIS_SYMPTOM]."
+
+### Template: EXISTENTIAL_AUDIT_PASSED
+**Generates:** Play event (Chronicle during game)
+**Slots:** [COLONY], [YEAR], [AUDIT_TRIGGER]
+**Patterns:**
+- "[YEAR]: The [AUDIT_TRIGGER] looked upon [COLONY] and saw beauty. We pass the audit."
+- "Our art saved us. [COLONY] was deemed meaningful by [AUDIT_TRIGGER]. [YEAR]."
+- "[COLONY], [YEAR]: The [AUDIT_TRIGGER] found balance in our culture and industry. We survive another cycle."
+
+## The Bio-Loom Templates (Spec 304)
+
+### Template: BIO_SUIT_EQUIPPED
+**Generates:** Play event (Chronicle during game)
+**Slots:** [COLONY], [YEAR], [POP_NAME], [BIO_SUIT_NAME]
+**Patterns:**
+- "[YEAR]: [POP_NAME] donned the [BIO_SUIT_NAME]. Unmatched protection, but the armor breathes."
+- "To survive the hazards, [POP_NAME] stepped into the [BIO_SUIT_NAME]. [YEAR]."
+- "[COLONY], [YEAR]: [POP_NAME] is clad in [BIO_SUIT_NAME]. They look more monster than human."
+
+### Template: BIO_SUIT_PARASITISM
+**Generates:** Play event (Chronicle during game)
+**Slots:** [COLONY], [YEAR], [POP_NAME], [BIO_SUIT_NAME], [BIO_SUIT_DRAIN]
+**Patterns:**
+- "[YEAR]: The [BIO_SUIT_NAME] kept [POP_NAME] safe, but it is [BIO_SUIT_DRAIN]."
+- "[POP_NAME] cannot take the [BIO_SUIT_NAME] off. It is [BIO_SUIT_DRAIN]. [YEAR]."
+- "[COLONY], [YEAR]: The cost of armor. [POP_NAME] suffers as the [BIO_SUIT_NAME] begins [BIO_SUIT_DRAIN]."
+
+## Memory Forgery Templates (Spec 480)
+
+### Template: MEMORY_FORGED
+**Generates:** Play event (Chronicle during game)
+**Slots:** [COLONY], [YEAR], [POP_NAME], [FABRICATED_MEMORY]
+**Patterns:**
+- "[YEAR]: The Mnestic Archiver erased the pain. [POP_NAME] now remembers only [FABRICATED_MEMORY]."
+- "We rewrote the past for peace. [POP_NAME] smiles, believing in [FABRICATED_MEMORY]. [YEAR]."
+- "[COLONY], [YEAR]: Truth sacrificed for morale. The machine fed [POP_NAME] [FABRICATED_MEMORY]."
+
+### Template: REALITY_COLLAPSE
+**Generates:** Play event (Chronicle during game)
+**Slots:** [COLONY], [YEAR], [REALITY_COLLAPSE_SYMPTOM]
+**Patterns:**
+- "[YEAR]: The archive was breached. The truth virus spread. [COLONY] erupted in [REALITY_COLLAPSE_SYMPTOM]."
+- "A single unmodified journal unmade our utopia. The forged minds experienced [REALITY_COLLAPSE_SYMPTOM]. [YEAR]."
+- "[COLONY], [YEAR]: The cost of the lie. When they remembered the truth, it led to [REALITY_COLLAPSE_SYMPTOM]."
+
+## Procedural Dialects Templates (Spec 692)
+
+### Template: DIALECT_EVOLVED
+**Generates:** Play event (Chronicle during game)
+**Slots:** [COLONY], [YEAR], [DIALECT_SLANG_EVENT]
+**Patterns:**
+- "[YEAR]: The language changes. In [COLONY], we hear them [DIALECT_SLANG_EVENT]."
+- "Our shared history breeds a new tongue. They are [DIALECT_SLANG_EVENT]. [YEAR]."
+- "[COLONY], [YEAR]: Words carry the weight of our past. The youth are [DIALECT_SLANG_EVENT]."
+
+### Template: CULTURAL_DRIFT_NOTICED
+**Generates:** Play event (Chronicle during game)
+**Slots:** [COLONY], [YEAR], [CULTURAL_DRIFT_EFFECT]
+**Patterns:**
+- "[YEAR]: The dialect isolates us. [CULTURAL_DRIFT_EFFECT] in [COLONY]."
+- "We no longer speak as they do in the Core. [CULTURAL_DRIFT_EFFECT]. [YEAR]."
+- "[COLONY], [YEAR]: The cost of our unique culture: [CULTURAL_DRIFT_EFFECT]."
