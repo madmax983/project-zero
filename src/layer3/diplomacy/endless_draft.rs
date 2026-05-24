@@ -1,8 +1,8 @@
-use bevy::prelude::*;
 use crate::layer1::pop::Pop;
-use crate::layer1::skills::Skills;
 use crate::layer1::psychology::traits::{Trait, Traits};
+use crate::layer1::skills::Skills;
 use crate::layer3::diplomacy::proxy_wars::Credits;
+use bevy::prelude::*;
 
 #[derive(Component)]
 pub struct TotalWarEmpire {
@@ -89,15 +89,14 @@ pub fn process_draft_refusal_system(
 ) {
     for event in events.read() {
         if let Ok(colony) = colony_query.get_single() {
-            commands.entity(colony).insert(EmbargoedBy { faction: event.sponsor });
+            commands.entity(colony).insert(EmbargoedBy {
+                faction: event.sponsor,
+            });
         }
     }
 }
 
-pub fn spawn_veteran_system(
-    mut commands: Commands,
-    mut events: EventReader<VeteranReturnEvent>,
-) {
+pub fn spawn_veteran_system(mut commands: Commands, mut events: EventReader<VeteranReturnEvent>) {
     for _ in events.read() {
         let mut traits = Traits::default();
         traits.add(Trait::Veteran); // Mocking Veteran trait
@@ -122,10 +121,18 @@ mod tests {
         app.add_systems(Update, draft_order_generation_system);
 
         // Arrange: Mock Layer 3 Empire in Total War, ready to draft
-        let empire = app.world_mut().spawn(TotalWarEmpire { faction_id: Entity::from_raw(1), next_draft_timer: 0.0 }).id();
+        let empire = app
+            .world_mut()
+            .spawn(TotalWarEmpire {
+                faction_id: Entity::from_raw(1),
+                next_draft_timer: 0.0,
+            })
+            .id();
 
         // Act: Trigger draft order generation system
-        app.world_mut().resource_mut::<Time::<()>>().advance_by(std::time::Duration::from_secs(1));
+        app.world_mut()
+            .resource_mut::<Time<()>>()
+            .advance_by(std::time::Duration::from_secs(1));
         app.update();
 
         // Assert: Verify draft order demands Pops with high physical stats
@@ -147,7 +154,10 @@ mod tests {
         // Arrange: Setup colony with required Pops
         let pop1 = app.world_mut().spawn(Pop).id();
         let pop2 = app.world_mut().spawn(Pop).id();
-        let _colony = app.world_mut().spawn((Credits(0), DiplomaticCurrency(0))).id();
+        let _colony = app
+            .world_mut()
+            .spawn((Credits(0), DiplomaticCurrency(0)))
+            .id();
 
         // Act: Process draft compliance
         app.world_mut().send_event(DraftComplianceEvent {
@@ -193,7 +203,9 @@ mod tests {
         app.add_systems(Update, spawn_veteran_system);
 
         // Arrange: Trigger veteran return
-        app.world_mut().send_event(VeteranReturnEvent { sponsor: Entity::from_raw(1) });
+        app.world_mut().send_event(VeteranReturnEvent {
+            sponsor: Entity::from_raw(1),
+        });
 
         // Act: Spawn veteran Pop
         app.update();
@@ -208,5 +220,4 @@ mod tests {
         }
         assert!(found, "A veteran Pop should be spawned");
     }
-
 }

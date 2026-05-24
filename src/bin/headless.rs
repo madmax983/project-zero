@@ -2022,6 +2022,7 @@ fn print_stories(world: &mut World) {
     }
 
     let mut table = Table::new();
+    table.set_content_arrangement(ContentArrangement::Dynamic);
     table.set_header(vec![
         Cell::new("Genre").fg(comfy_table::Color::Yellow),
         Cell::new("Historical Date").fg(comfy_table::Color::Yellow),
@@ -2045,18 +2046,11 @@ fn print_stories(world: &mut World) {
             comfy_table::Color::Green
         };
 
-        let snippet = if story.text.chars().count() > 30 {
-            let truncated: String = story.text.chars().take(27).collect();
-            format!("{}...", truncated)
-        } else {
-            story.text.clone()
-        };
-
         table.add_row(vec![
             Cell::new(format!("{:?}", story.genre)).fg(genre_color),
             Cell::new(story.historical_date),
             Cell::new(story.mutations).fg(mutations_color),
-            Cell::new(snippet),
+            Cell::new(&story.text),
         ]);
     }
 
