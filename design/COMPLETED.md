@@ -620,6 +620,7 @@
 - [x] `INT-1059` Integration: System Sovereignty -> Simulation — completed 2026-10-31
 - [x] `INT-1066` Integration: Zero-G Flora -> Simulation — completed 2026-10-31
 - [x] `1069` The Existential Audit — `specs/1069-the-existential-audit.md` — completed 2026-05-23
+- [x] `INT-1069` Integration: Existential Audit -> Chronicle — completed 2026-05-23
 - [x] `304` The Bio-Loom — `specs/304-bio-loom.md` — completed 2026-02-01
 - [x] `480` Memory Forgery — `specs/480-memory-forgery.md` — completed 2026-05-23
 - [x] `INT-1095` Integration: IP Piracy -> Diplomatic Sanctions — completed 2024-03-24

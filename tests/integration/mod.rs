@@ -66,3 +66,4 @@ pub mod orbital_drydocks;
 pub mod bureaucracy_of_truth_integration;
 pub mod digital_detritus_chronicle_bridge;
 pub mod sleep_debt_repo_bridge;
+pub mod existential_audit_bridge;

@@ -19,12 +19,20 @@ pub struct ExistentialCrisis {
     pub duration: u64,
 }
 
+#[derive(Event, Debug, Clone)]
+pub struct ExistentialAuditCompletedEvent {
+    pub passed: bool,
+    pub total_efficiency: f32,
+    pub total_culture: f32,
+}
+
 pub fn existential_audit_system(
     mut commands: Commands,
     time: Res<SimulationTime>,
     mut ai: ResMut<PrecursorAI>,
     pops: Query<Entity, With<Pop>>,
     buildings: Query<&IndustrialBuilding>,
+    mut events: EventWriter<ExistentialAuditCompletedEvent>,
 ) {
     if time.tick >= ai.next_audit_tick {
         let mut total_efficiency = 0.0;
@@ -35,7 +43,9 @@ pub fn existential_audit_system(
             total_culture += b.cultural_value;
         }
 
-        if total_efficiency > total_culture * 10.0 {
+        let passed = total_efficiency <= total_culture * 10.0;
+
+        if !passed {
             for pop_entity in pops.iter() {
                 commands.entity(pop_entity).insert(ExistentialCrisis {
                     severity: 1.0,
@@ -43,6 +53,12 @@ pub fn existential_audit_system(
                 });
             }
         }
+
+        events.send(ExistentialAuditCompletedEvent {
+            passed,
+            total_efficiency,
+            total_culture,
+        });
 
         ai.next_audit_tick = time.tick + 10000;
     }
@@ -84,6 +100,7 @@ mod tests {
         app.insert_resource(PrecursorAI {
             next_audit_tick: 100,
         });
+        app.add_event::<ExistentialAuditCompletedEvent>();
 
         let pop_entity = app.world_mut().spawn((Pop,)).id();
 

@@ -2344,3 +2344,23 @@ pub fn update_renown_from_morale_system(
         renown.score = avg_morale * 100.0;
     }
 }
+
+/// INT-1069: Bridges ExistentialAuditCompletedEvent to AddChronicleEvent (Chronicle).
+pub fn existential_audit_chronicle_bridge(
+    mut events: EventReader<crate::layer1::economy::existential_audit::ExistentialAuditCompletedEvent>,
+    mut chronicle_events: EventWriter<AddChronicleEvent>,
+) {
+    for event in events.read() {
+        if event.passed {
+            chronicle_events.send(AddChronicleEvent {
+                importance: EventImportance::Major,
+                text: "The precursor AI audit concluded. The colony's cultural output justifies its industrial footprint.".to_string(),
+            });
+        } else {
+            chronicle_events.send(AddChronicleEvent {
+                importance: EventImportance::Major,
+                text: "The precursor AI audit failed! Our industrial expansion lacks meaningful cultural weight. An existential crisis sweeps the colony.".to_string(),
+            });
+        }
+    }
+}
