@@ -129,6 +129,9 @@ pub const fn start_scenario_definition(id: StartScenarioId) -> StartScenarioDefi
 #[must_use]
 pub fn setup_world() -> World {
     let mut world = World::new();
+    world.init_resource::<bevy::prelude::Events<
+        crate::layer1::economy::existential_audit::ExistentialAuditCompletedEvent,
+    >>();
     world.insert_resource(crate::layer3::diplomacy::system_sovereignty::ColonyStatus {
         is_sovereign: false,
         overlord_id: Some(1),
@@ -144,6 +147,9 @@ pub fn setup_world() -> World {
 pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -> World {
     init_task_pools();
     let mut world = World::new();
+    world.init_resource::<bevy::prelude::Events<
+        crate::layer1::economy::existential_audit::ExistentialAuditCompletedEvent,
+    >>();
     world.insert_resource(crate::layer3::diplomacy::system_sovereignty::ColonyStatus {
         is_sovereign: false,
         overlord_id: Some(1),

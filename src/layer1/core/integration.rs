@@ -2347,7 +2347,9 @@ pub fn update_renown_from_morale_system(
 
 /// INT-1069: Bridges ExistentialAuditCompletedEvent to AddChronicleEvent (Chronicle).
 pub fn existential_audit_chronicle_bridge(
-    mut events: EventReader<crate::layer1::economy::existential_audit::ExistentialAuditCompletedEvent>,
+    mut events: EventReader<
+        crate::layer1::economy::existential_audit::ExistentialAuditCompletedEvent,
+    >,
     mut chronicle_events: EventWriter<AddChronicleEvent>,
 ) {
     for event in events.read() {
