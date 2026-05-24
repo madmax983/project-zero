@@ -834,3 +834,10 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1263` The Sabotage Lottery — `specs/1263-the-sabotage-lottery.md`
 - [ ] `1264` Kinetic Storage — `specs/1264-kinetic-storage.md`
 - [ ] `1265` Phantom Labor — `specs/1265-phantom-labor.md`
+- [ ] `1266` The Phantom Epidemic — `specs/1266-the-phantom-epidemic.md`
+- [ ] `1267` Echoes of the Lost Fleet — `specs/1267-echoes-of-the-lost-fleet.md`
+- [ ] `1268` The Scrap-Mind Ascendancy — `specs/1268-the-scrap-mind-ascendancy.md`
+- [ ] `1269` Cult of the First Error — `specs/1269-cult-of-the-first-error.md`
+- [ ] `1270` Phantom Trade Routes — `specs/1270-phantom-trade-routes.md`
+- [ ] `1271` The Propaganda Graffitists — `specs/1271-the-propaganda-graffitists.md`
+- [ ] `1272` The Phantom Limb of Logistics — `specs/1272-the-phantom-limb-of-logistics.md`
