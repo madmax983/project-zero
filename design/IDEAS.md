@@ -20895,3 +20895,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you override the system, forcibly evicting the memories of the dead to house the living (causing massive cultural trauma and unrest), or let the bureaucracy take its time while your colony freezes?
 
 ---
+
+## The Inherited Vendor Lock-In
+
+**Layer:** Cross-layer
+
+**Fantasy:** The slow realization that your empire is dependent on proprietary ancient tech that is actively hostile to innovation.
+
+**Mechanic:** A colony founded using prefabricated corporate seed-ships ("Founders Corp") produces infrastructure that works perfectly but strictly refuses to interface with non-corporate hardware or any tech researched manually. To upgrade these early-game critical structures, you must pay exorbitant licensing fees in rare resources to the original corporate remnant (Layer 2 faction), or completely demolish and rebuild your foundational grid.
+
+**Emergence:** A war breaks out because a player desperately needs to mine a new mineral, but their primary industrial sector refuses to process it due to an expired digital rights management (DRM) license from a corporation that hasn't existed for 200 years.
+
+**Tension:** Do you accept the immense efficiency of the proprietary starting tech, knowing it will hamstring your economy later, or start with crude, slow, but open-source infrastructure?
+
+---
+
+## Gravity Debt
+
+**Layer:** 2 / 1
+
+**Fantasy:** High-mass logistics slowly but inevitably warping the physical and political landscape of a system.
+
+**Mechanic:** Repeatedly launching massive freighters from a low-gravity world to a high-gravity world is cheap, but doing the reverse requires immense energy. Over centuries, heavily exploited mining worlds develop "Gravity Debt"—the sheer mass of exported material physically alters the planet's orbital mechanics, making subsequent launches exponentially more expensive and increasing the frequency of catastrophic launch failures.
+
+**Emergence:** Your core world imports so much raw material from the fringe that it physically traps its own massive population, unable to afford the energy to launch emigration fleets when the resources run dry.
+
+**Tension:** Do you refine goods locally on the fringe (risking pirate raids and local rebellions taking the valuable refined goods) or ship the heavy raw ore to the core, slowly making the core world a gravitational gravity well that traps your civilization?
+
+---
+
+## Rogue Architectural Blueprints
+
+**Layer:** 1
+
+**Fantasy:** Urban planning becomes infected by contagious, obsessive ideas that Pops build without your permission.
+
+**Mechanic:** Pops with the "Architect" or "Visionary" traits who suffer high stress or manic episodes can secretly inject unauthorized blueprints into the colony's central construction queue. Automated builder drones and idle Pops will begin constructing these bizarre, labyrinthine, or highly esoteric structures (e.g., a "Monument to the Void") using your resources.
+
+**Emergence:** You ignore an artist's declining mental health for too long, and suddenly wake up to find your automated construction drones have dismantled a critical hospital to build an abstract, spiraling obelisk that generates massive awe but zero utility.
+
+**Tension:** Do you let the rogue construction finish to massively boost the morale of the creative class, or forcefully cancel it, wasting the spent resources and causing the visionary Pop to snap and sabotage the drone network?
+
+---
