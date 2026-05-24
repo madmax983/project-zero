@@ -472,3 +472,6 @@ mod living_score_renown;
 
 #[path = "integration/ip_piracy_diplomacy.rs"]
 mod ip_piracy_diplomacy;
+
+#[path = "integration/phantom_signal.rs"]
+mod phantom_signal;
