@@ -623,3 +623,4 @@
 - [x] `304` The Bio-Loom — `specs/304-bio-loom.md` — completed 2026-02-01
 - [x] `480` Memory Forgery — `specs/480-memory-forgery.md` — completed 2026-05-23
 - [x] `INT-1095` Integration: IP Piracy -> Diplomatic Sanctions — completed 2024-03-24
+- [x] `692` Procedural Dialects — `specs/692-procedural-dialects.md` — completed 2024-05-24

@@ -148,7 +148,8 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
         is_sovereign: false,
         overlord_id: Some(1),
     });
-    world.insert_resource(crate::layer3::diplomacy::system_sovereignty::FactionRelations::default());
+    world
+        .insert_resource(crate::layer3::diplomacy::system_sovereignty::FactionRelations::default());
     world.insert_resource(crate::layer1::economy::existential_audit::PrecursorAI {
         next_audit_tick: 1000,
     });
