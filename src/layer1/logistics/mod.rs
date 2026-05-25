@@ -19,3 +19,5 @@ pub mod beanstalk;
 pub mod commute;
 pub use beanstalk::*;
 pub use commute::*;
+pub mod mycelial;
+pub use mycelial::*;

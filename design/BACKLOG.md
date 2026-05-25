@@ -35,7 +35,7 @@
 - [ ] `553` Orbital Debt Collections — `specs/553-orbital-debt-collections.md`
 - [ ] `554` The Phantom Signal — `specs/554-the-phantom-signal.md`
 - [ ] `555` The Symbiotic Insurgency — `specs/555-the-symbiotic-insurgency.md`
-- [ ] `481` Subterranean Mycelial Network — `specs/481-subterranean-mycelial-network.md`
+
 
 
 - [ ] `493` The Living Archive — `specs/493-the-living-archive.md`

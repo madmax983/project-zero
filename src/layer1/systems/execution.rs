@@ -217,6 +217,11 @@ pub fn register(schedule: &mut Schedule) {
     schedule.add_systems(
         (
             conveyor_system.after(haul_system),
+            crate::layer1::logistics::mycelial::mycelial_transport_system.after(conveyor_system),
+            crate::layer1::logistics::mycelial::mycelial_upkeep_system
+                .after(crate::layer1::logistics::mycelial::mycelial_transport_system),
+            crate::layer1::logistics::mycelial::mycelial_contamination_system
+                .after(crate::layer1::logistics::mycelial::mycelial_upkeep_system),
             crate::layer1::logistics::conveyor::inserter_system.after(conveyor_system),
             crate::layer1::logistics::conveyor::hopper_system
                 .after(crate::layer1::logistics::conveyor::inserter_system),

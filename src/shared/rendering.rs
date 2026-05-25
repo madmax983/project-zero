@@ -115,7 +115,11 @@ impl RenderBuffer {
                         }
                     }
                     RenderItem::Rect(_, rect_x, rect_y, w, h) => {
-                        if x >= *rect_x && x < *rect_x + (*w as i32) && y >= *rect_y && y < *rect_y + (*h as i32) {
+                        if x >= *rect_x
+                            && x < *rect_x + (*w as i32)
+                            && y >= *rect_y
+                            && y < *rect_y + (*h as i32)
+                        {
                             return Some(item);
                         }
                     }
@@ -150,9 +154,18 @@ mod tests {
         let mut buffer = RenderBuffer::new();
 
         // Add items to different layers
-        buffer.add(RenderLayer::Terrain, RenderItem::Char('.', ratatui::style::Color::Green, 5, 5));
-        buffer.add(RenderLayer::Entities, RenderItem::Char('☺', ratatui::style::Color::Yellow, 5, 5));
-        buffer.add(RenderLayer::Cursor, RenderItem::Char('X', ratatui::style::Color::Red, 5, 5));
+        buffer.add(
+            RenderLayer::Terrain,
+            RenderItem::Char('.', ratatui::style::Color::Green, 5, 5),
+        );
+        buffer.add(
+            RenderLayer::Entities,
+            RenderItem::Char('☺', ratatui::style::Color::Yellow, 5, 5),
+        );
+        buffer.add(
+            RenderLayer::Cursor,
+            RenderItem::Char('X', ratatui::style::Color::Red, 5, 5),
+        );
 
         // Should have 3 layers with items
         assert_eq!(buffer.layer_count(), 3);
@@ -163,9 +176,18 @@ mod tests {
         let mut buffer = RenderBuffer::new();
 
         // Add in random order
-        buffer.add(RenderLayer::Cursor, RenderItem::Char('C', ratatui::style::Color::Red, 0, 0));
-        buffer.add(RenderLayer::Terrain, RenderItem::Char('T', ratatui::style::Color::Green, 0, 0));
-        buffer.add(RenderLayer::Entities, RenderItem::Char('E', ratatui::style::Color::Yellow, 0, 0));
+        buffer.add(
+            RenderLayer::Cursor,
+            RenderItem::Char('C', ratatui::style::Color::Red, 0, 0),
+        );
+        buffer.add(
+            RenderLayer::Terrain,
+            RenderItem::Char('T', ratatui::style::Color::Green, 0, 0),
+        );
+        buffer.add(
+            RenderLayer::Entities,
+            RenderItem::Char('E', ratatui::style::Color::Yellow, 0, 0),
+        );
 
         let sorted = buffer.sorted_items();
 
@@ -179,8 +201,14 @@ mod tests {
     fn test_render_item_at_position() {
         let mut buffer = RenderBuffer::new();
 
-        buffer.add(RenderLayer::Terrain, RenderItem::Char('.', ratatui::style::Color::Green, 10, 5));
-        buffer.add(RenderLayer::Entities, RenderItem::Char('☺', ratatui::style::Color::Yellow, 10, 5));
+        buffer.add(
+            RenderLayer::Terrain,
+            RenderItem::Char('.', ratatui::style::Color::Green, 10, 5),
+        );
+        buffer.add(
+            RenderLayer::Entities,
+            RenderItem::Char('☺', ratatui::style::Color::Yellow, 10, 5),
+        );
 
         // Top layer at position should be entity (higher z)
         let top = buffer.top_item_at(10, 5);
@@ -200,7 +228,10 @@ mod tests {
     fn test_render_buffer_clear() {
         let mut buffer = RenderBuffer::new();
 
-        buffer.add(RenderLayer::Terrain, RenderItem::Char('.', ratatui::style::Color::Green, 0, 0));
+        buffer.add(
+            RenderLayer::Terrain,
+            RenderItem::Char('.', ratatui::style::Color::Green, 0, 0),
+        );
         assert_eq!(buffer.layer_count(), 1);
 
         buffer.clear();
@@ -212,9 +243,18 @@ mod tests {
         let mut buffer = RenderBuffer::new();
 
         // Add items on all layers
-        buffer.add(RenderLayer::Terrain, RenderItem::Char('.', ratatui::style::Color::Green, 5, 5));
-        buffer.add(RenderLayer::Entities, RenderItem::Char('☺', ratatui::style::Color::Yellow, 5, 5));
-        buffer.add(RenderLayer::Overlay, RenderItem::Rect(ratatui::style::Color::DarkGray, 0, 0, 20, 20));
+        buffer.add(
+            RenderLayer::Terrain,
+            RenderItem::Char('.', ratatui::style::Color::Green, 5, 5),
+        );
+        buffer.add(
+            RenderLayer::Entities,
+            RenderItem::Char('☺', ratatui::style::Color::Yellow, 5, 5),
+        );
+        buffer.add(
+            RenderLayer::Overlay,
+            RenderItem::Rect(ratatui::style::Color::DarkGray, 0, 0, 20, 20),
+        );
 
         // Overlay should be on top
         let layers = buffer.sorted_items();
@@ -237,7 +277,10 @@ mod tests {
     #[test]
     fn test_render_item_rect_bounds() {
         let mut buffer = RenderBuffer::new();
-        buffer.add(RenderLayer::Overlay, RenderItem::Rect(ratatui::style::Color::DarkGray, 5, 5, 10, 10));
+        buffer.add(
+            RenderLayer::Overlay,
+            RenderItem::Rect(ratatui::style::Color::DarkGray, 5, 5, 10, 10),
+        );
 
         // Inside rect
         let top = buffer.top_item_at(10, 10);

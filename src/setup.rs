@@ -129,6 +129,8 @@ pub const fn start_scenario_definition(id: StartScenarioId) -> StartScenarioDefi
 #[must_use]
 pub fn setup_world() -> World {
     let mut world = World::new();
+    world.init_resource::<crate::layer1::logistics::mycelial::MycelialNetwork>();
+    world.init_resource::<bevy_ecs::prelude::Events<crate::layer1::logistics::mycelial::ContaminationEvent>>();
     world.init_resource::<bevy::prelude::Events<
         crate::layer1::economy::existential_audit::ExistentialAuditCompletedEvent,
     >>();
@@ -147,6 +149,8 @@ pub fn setup_world() -> World {
 pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -> World {
     init_task_pools();
     let mut world = World::new();
+    world.init_resource::<crate::layer1::logistics::mycelial::MycelialNetwork>();
+    world.init_resource::<bevy_ecs::prelude::Events<crate::layer1::logistics::mycelial::ContaminationEvent>>();
     world.init_resource::<bevy::prelude::Events<
         crate::layer1::economy::existential_audit::ExistentialAuditCompletedEvent,
     >>();

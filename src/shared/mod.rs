@@ -12,9 +12,9 @@ pub mod log;
 pub mod narrative;
 /// Random number generation utilities.
 pub mod random;
+pub mod rendering;
 /// Game state definitions.
 pub mod state;
 /// Time-tracking resources.
 pub mod time;
 pub mod view_mode;
-pub mod rendering;
