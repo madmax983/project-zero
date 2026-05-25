@@ -20993,3 +20993,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you keep the AI online for its massive strategic buffs, knowing it might unilaterally start a galactic war over a statistical probability, or shut it down and fly blind into the unpredictable future?
 
 ---
+## The Generational Mutiny
+
+**Layer:** 2 / 1
+
+**Fantasy:** A slow-moving generation ship experiences a cultural schism before it even reaches its destination.
+
+**Mechanic:** Generation ships take decades to cross systems. Pops born mid-flight develop a distinct "Voidborn" culture that resents their parents' mission. Upon arrival, the ship fractures into two hostile Layer 1 colony factions on the same planet.
+
+**Emergence:** You launch a massive colonization effort to secure a vital chokepoint. 50 years later, the ship arrives, but immediately devolves into a civil war between the founders and their children, completely stalling your expansion.
+
+**Tension:** Do you invest in rapid, expensive FTL tech to avoid generational drift, or rely on cheap generation ships and risk birthing a hostile rebellion on your new frontier?
+
+---
+
+## The Nostalgia Tax
+
+**Layer:** 1
+
+**Fantasy:** Advanced technology creates a society paralyzed by a longing for a past that never existed.
+
+**Mechanic:** High-tier virtual reality and entertainment structures generate "Nostalgia." Pops become addicted to highly curated, idealized simulations of the colony's early, struggling days. They begin demanding the re-implementation of obsolete, inefficient jobs (like manual mining or basic farming) for "authenticity," refusing to work high-tech jobs.
+
+**Emergence:** Your hyper-advanced cybernetic utopia grinds to a halt because the workforce demands to go back to manually breaking rocks with pickaxes, claiming it has "more soul."
+
+**Tension:** Do you indulge their nostalgia by maintaining deliberate inefficiencies to keep morale high, or force them into modern jobs and risk mass depression and VR-withdrawal?
+
+---
+
+## Sentient Landfills
+
+**Layer:** Cross-layer
+
+**Fantasy:** Discarded consumer goods and scrap slowly form a rudimentary, spiteful intelligence.
+
+**Mechanic:** Dumping raw "Waste" into large, concentrated zones (instead of processing it) is cheap. Over decades, if a massive waste dump is left undisturbed, residual static charge and nanite detritus cause the landfill to achieve a low-level sentience. It begins slowly expanding, consuming nearby structures to add to its mass.
+
+**Emergence:** To save credits during a war, you dumped all industrial runoff into a deep canyon. Fifty years later, the canyon crawls out and starts eating your agricultural sector, demanding representation in your planetary council.
+
+**Tension:** Do you spend massive resources on clean waste processing, or use cheap dumps and risk creating a hostile, garbage-based neighbor that you eventually have to fight or negotiate with?
+
+---
