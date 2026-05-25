@@ -628,3 +628,5 @@
 - [x] `692` Procedural Dialects — `specs/692-procedural-dialects.md` — completed 2024-05-24
 - [x] `479` The Endless Draft — `specs/479-the-endless-draft.md` — completed 2026-05-24
 - [x] `014` Rendering Architecture — `specs/014-rendering-architecture.md` — completed 2026-02-01
+- [x] `481` Subterranean Mycelial Network — `specs/481-subterranean-mycelial-network.md` — completed 2026-10-31
+- [x] `481` Subterranean Mycelial Network — `specs/481-subterranean-mycelial-network.md` — completed 2026-10-31

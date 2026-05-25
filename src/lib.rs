@@ -69,8 +69,8 @@ pub mod simulation;
 /// User Interface components.
 pub mod ui;
 
-pub use shared::state::GameState;
 pub use shared::rendering::{RenderBuffer, RenderItem, RenderLayer};
+pub use shared::state::GameState;
 pub use ui::selection::{inspect_entity, inspect_tile, Selection, SelectionTarget};
 pub mod experimental;
 

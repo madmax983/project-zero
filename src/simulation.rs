@@ -161,6 +161,7 @@ fn init_simulation_resources(world: &mut World) {
     world.init_resource::<Events<crate::layer1::whispering_ore::MineSealedEvent>>();
     world.init_resource::<Events<crate::layer1::social::grievances::PostGrievanceEvent>>();
     world.init_resource::<Events<crate::layer1::deep_crust_resonance::ExcavationEvent>>();
+    world.init_resource::<Events<crate::layer1::logistics::mycelial::ContaminationEvent>>();
     world.init_resource::<Events<crate::layer1::resources::MiningEvent>>();
     world.init_resource::<Events<crate::layer1::spiteful_will::InheritanceEvent>>();
     if !world
@@ -511,13 +512,11 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
         crate::layer2::fleet::fleet_movement_system.after(crate::layer2::fleet::fleet_order_system),
         crate::layer2::phantom_signal::process_phantom_signal_evasion_system,
         crate::layer2::phantom_signal::apply_sensor_probes_system,
-        crate::layer2::phantom_signal::reveal_phantom_signal_nature_system,
         crate::layer2::mutiny::decay_fleet_morale,
     ));
     schedule.add_systems((
         crate::layer2::phantom_signal::process_phantom_signal_evasion_system,
         crate::layer2::phantom_signal::apply_sensor_probes_system,
-        crate::layer2::phantom_signal::reveal_phantom_signal_nature_system,
         crate::layer2::mutiny::evaluate_fleet_mutiny,
         crate::layer2::integration::primitive_retaliation_chronicle_bridge,
         crate::layer2::integration::assign_sensors_to_player_fleets_system
@@ -1054,6 +1053,7 @@ mod tests {
         world.init_resource::<Events<crate::layer1::whispering_ore::MinedOreEvent>>();
         world.init_resource::<Events<crate::layer1::whispering_ore::MineSealedEvent>>();
         world.init_resource::<Events<crate::layer1::deep_crust_resonance::ExcavationEvent>>();
+        world.init_resource::<Events<crate::layer1::logistics::mycelial::ContaminationEvent>>();
         world.init_resource::<Events<crate::layer1::mycelial::MycelialTripwireEvent>>();
         world.init_resource::<crate::layer3::council::GalacticCouncil>();
         world.init_resource::<crate::layer2::syzygy::SyzygyCycle>();
