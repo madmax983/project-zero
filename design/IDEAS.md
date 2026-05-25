@@ -21034,3 +21034,30 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you spend massive resources on clean waste processing, or use cheap dumps and risk creating a hostile, garbage-based neighbor that you eventually have to fight or negotiate with?
 
 ---
+## Reverse Colonization
+
+**Layer:** Cross-layer
+
+**Fantasy:** A highly successful fringe colony decides the homeworld is archaic and tries to culturally and economically conquer its creators.
+
+**Mechanic:** If a Layer 1 colony reaches a technological or economic level significantly higher than the empire's capital (Layer 3), it gains the "Metropolis" trait. It stops paying taxes and begins projecting "Reverse Influence." Pops on the homeworld begin demanding the capital adopt the radical, alien-influenced culture of the fringe colony, destabilizing the old government.
+
+**Emergence:** You painstakingly build up a remote mining world into a glittering utopia. Because it's so successful, the original capital on Earth falls into a massive civil war as citizens violently riot, demanding the empire be ruled from the remote mining world instead.
+
+**Tension:** Do you artificially hamstring your most successful colonies to maintain power at the capital, or let them flourish and risk the entire empire fracturing or violently relocating its seat of power?
+
+---
+
+## Architectural Vandalism
+
+**Layer:** 1
+
+**Fantasy:** Watching a frustrated artist slowly convert your hyper-efficient brutalist colony into a chaotic, vibrant art installation against your will.
+
+**Mechanic:** Pops with high creativity but low mood or poorly aligned jobs (e.g. assigned to manual mining) will begin sneaking out during their rest cycle to apply "Vandalism" to nearby structures. This slightly reduces the building's efficiency but significantly increases the beauty/leisure score of the tile.
+
+**Emergence:** You try to crack down on the vandalism by employing guards, but the guards start getting influenced by the art and deliberately ignoring the artist, eventually leading to the entire industrial sector becoming a giant, inefficient, but deeply beloved mural.
+
+**Tension:** Do you employ harsh crackdowns to maintain peak industrial efficiency, or accept the hit to production for the massive, organic boost to colony-wide morale?
+
+---
