@@ -630,5 +630,6 @@
 - [x] `014` Rendering Architecture — `specs/014-rendering-architecture.md` — completed 2026-02-01
 - [x] `481` Subterranean Mycelial Network — `specs/481-subterranean-mycelial-network.md` — completed 2026-10-31
 - [x] `481` Subterranean Mycelial Network — `specs/481-subterranean-mycelial-network.md` — completed 2026-10-31
+- [x] `495` Temporal Echoes — `specs/495-temporal-echoes.md` — completed 2026-05-25
 - [x] `INT-480` Integration: Memory Forgery -> Chronicle — completed 2026-05-25
 - [x] `INT-1067` Integration: Void Sirens -> Chronicle — completed 2026-05-25
