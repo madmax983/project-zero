@@ -1200,3 +1200,10 @@
 - **Glue added:** `first_ship_destruction_chronicle_bridge` in `src/layer1/core/integration.rs`
 - **Schedule:** Chained in Observation schedule after `first_ship_destruction_system`
 - **Tests:** `tests/integration/cult_of_first_ship_bridge.rs`
+
+### INT-481: Subterranean Mycelial Network -> Disease & Chronicle
+- **Date:** 2026-10-31
+- **Systems connected:** `process_mutations` (Crop) -> `ContaminationEvent` -> `AddChronicleEvent`
+- **Glue added:** `crop_mutation_mycelial_bridge` and `mycelial_chronicle_bridge` in `src/layer1/core/integration.rs`
+- **Schedule:** Registered in Observation schedule
+- **Tests:** `tests/integration/mycelial_network_bridge.rs`

@@ -52,9 +52,14 @@ pub fn process_mutations(
     let mut rng = rand::thread_rng();
     for (entity, instability) in crops.iter() {
         if rng.gen::<f32>() < instability.risk_factor {
+            let mutation_type = if rng.gen_bool(0.5) {
+                MutationType::AggressiveGrowth
+            } else {
+                MutationType::ToxicSpores
+            };
             events.send(CropMutationEvent {
                 crop_entity: entity,
-                mutation_type: MutationType::AggressiveGrowth, // Simplified
+                mutation_type,
             });
         }
     }

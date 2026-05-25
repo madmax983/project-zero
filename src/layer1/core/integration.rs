@@ -99,6 +99,32 @@ pub fn apex_meat_harvest_bridge_system(
     }
 }
 
+pub fn crop_mutation_mycelial_bridge(
+    mut events: EventReader<crate::layer1::biology::genetics::crop_modification::CropMutationEvent>,
+    mut contamination: EventWriter<crate::layer1::logistics::mycelial::ContaminationEvent>,
+    crops: Query<&crate::layer1::core::map::GridPosition, With<crate::layer1::biology::genetics::crop_modification::Crop>>,
+) {
+    for event in events.read() {
+        if let crate::layer1::biology::genetics::crop_modification::MutationType::ToxicSpores = event.mutation_type {
+            if let Ok(pos) = crops.get(event.crop_entity) {
+                contamination.send(crate::layer1::logistics::mycelial::ContaminationEvent { source: *pos });
+            }
+        }
+    }
+}
+
+pub fn mycelial_chronicle_bridge(
+    mut events: EventReader<crate::layer1::logistics::mycelial::ContaminationEvent>,
+    mut chronicle: EventWriter<crate::layer1::core::chronicle::AddChronicleEvent>,
+) {
+    for _ in events.read() {
+        chronicle.send(crate::layer1::core::chronicle::AddChronicleEvent {
+            text: "The subterranean mycelial network has been contaminated! The pathogen is spreading rapidly.".to_string(),
+            importance: crate::layer1::core::chronicle::EventImportance::Major,
+        });
+    }
+}
+
 /// INT-1088: Bridges Apex Meat Stores to Pop Needs & Apex Diet Consumption
 pub fn apex_meat_distribution_system(
     mut stores: ResMut<crate::layer1::economy::apex_diet::ApexMeatStores>,
