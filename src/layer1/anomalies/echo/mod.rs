@@ -1,3 +1,8 @@
+//! # Echoes of the Past
+//!
+//! Echoes are residual emotional or psychic impressions left behind by significant events.
+//! Pops who wander near an Echo will be dazed and receive a morale modifier based on the echo's nature.
+
 use crate::layer1::core::map::GridPosition;
 use crate::layer1::entities::pop::Pop;
 use crate::layer1::mind::utility_types::{ActionType, PopAction};
