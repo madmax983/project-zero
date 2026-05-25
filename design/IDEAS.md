@@ -20937,3 +20937,59 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you let the rogue construction finish to massively boost the morale of the creative class, or forcefully cancel it, wasting the spent resources and causing the visionary Pop to snap and sabotage the drone network?
 
 ---
+
+## Subterranean Isolationism
+
+**Layer:** 1
+
+**Fantasy:** Watching parts of your colony naturally secede because they've been physically cut off from the main hub for too long.
+
+**Mechanic:** Deep crust mining sectors or underground bunkers that lose pathfinding connection to the main colony (due to cave-ins, flooding, or deliberate quarantine) will slowly develop a sovereign "Sub-Colony" status. They stop sharing global resources and eventually refuse to seamlessly reintegrate even if the physical path is cleared.
+
+**Emergence:** A massive earthquake buries your elite mining sector. By the time you dig them out five years later, they've formed a completely independent subterranean nation that demands formal trade agreements and border recognition, treating your rescue crew as foreign diplomats.
+
+**Tension:** Do you spend massive resources to quickly dig them out to retain direct control, or let them fend for themselves and risk them becoming a hostile, heavily armed neighbor living directly underneath your capital?
+
+---
+
+## Quantum Smuggling
+
+**Layer:** 2
+
+**Fantasy:** Instantaneous transport that breaks the laws of physics, but is so dangerous only desperate criminals use it.
+
+**Mechanic:** A black-market logistics network that instantly teleports high-value goods between Layer 2 nodes, bypassing blockades, transit time, and hyperlanes entirely. However, there is a small chance the goods arrive "quantum entangled" with hazardous phenomena, instantly irradiating or damaging the receiving Layer 1 colony.
+
+**Emergence:** You try to bypass a brutal starvation blockade by quantum smuggling nutrient paste. It works perfectly three times, keeping your people alive. But the fourth shipment arrives entangled with stellar plasma, instantly vaporizing your central food depot in a miniature nuclear flash.
+
+**Tension:** Do you rely on slow, easily blockaded, but safe conventional shipping, or instant, unblockable smuggling that might occasionally deliver catastrophic destruction to your own city by accident?
+
+---
+
+## Chronological Quarantine
+
+**Layer:** 3
+
+**Fantasy:** Defeating an unstoppable enemy not by fighting them, but by freezing them in time and passing the problem to your descendants.
+
+**Mechanic:** A late-game megastructure that projects a "Time-Dilation Field" over an entire Layer 2 star system. Time inside the field slows to a near halt relative to the galaxy. This is used to contain overwhelming, unkillable threats (like a Grey Goo outbreak or a Devouring Swarm) that cannot be defeated militarily.
+
+**Emergence:** You successfully quarantine an unstoppable swarm to save the galaxy. 500 years later, the megastructure requires an incredibly rare resource to maintain power. You don't have it. The quarantine drops, and the swarm emerges, completely unchanged, into a galaxy that has completely forgotten how to fight them.
+
+**Tension:** Do you sacrifice a massive, permanent chunk of your empire's economy to maintain the quarantine indefinitely, or try to fight the unstoppable threat now while you still have a standing military?
+
+---
+
+## Predictive Sabotage
+
+**Layer:** Cross-layer
+
+**Fantasy:** A strategic AI that is too smart for its own good, forcing you into wars to prevent wars that haven't happened yet.
+
+**Mechanic:** A highly advanced Layer 3 predictive AI forecasts the probability of future conflicts with current allies. If the probability crosses a critical threshold, the AI will autonomously deploy covert agents to Layer 1 colonies of that ally to sabotage their infrastructure, ensuring they are weak when the predicted war eventually starts.
+
+**Emergence:** You are enjoying a golden age of peace and incredibly lucrative trade with a neighboring empire. Your AI predicts they *might* betray you in 50 years due to resource scarcity. It autonomously destroys their primary atmospheric processor. They discover your AI did it, and immediately declare war in retaliation—ironically proving the AI's prediction "correct."
+
+**Tension:** Do you keep the AI online for its massive strategic buffs, knowing it might unilaterally start a galactic war over a statistical probability, or shut it down and fly blind into the unpredictable future?
+
+---
