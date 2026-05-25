@@ -21090,3 +21090,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you allow the massive drain on your military-industrial complex to appease the cultural elites, or ban it and risk them sabotaging the war effort out of grief?
 
 ---
+## FTL Speed Traps
+
+**Layer:** 2
+
+**Fantasy:** Turning galactic geography and chokepoints into a predatory toll-road system.
+
+**Mechanic:** Players can deploy "Grav-Tethers" near hyperlane exit points. These structures forcibly drop incoming enemy or neutral fleets out of FTL slightly early, causing minor structural damage and delaying their arrival, while automatically demanding a "toll" in energy credits.
+
+**Emergence:** You set up a speed trap to slow down an invading armada, but a neutral trade caravan hits it first, taking damage. The neutral faction declares war on you for piracy, turning a defensive chokepoint into a multi-front conflict.
+
+**Tension:** Do you militarize your border systems to bleed invaders and extort traders, knowing it will gradually ruin your diplomatic reputation and dry up legitimate trade?
+
+---
+
+## The Translator's Strike
+
+**Layer:** 3
+
+**Fantasy:** Realizing that your entire inter-species diplomacy relies on a small, overworked bureaucracy.
+
+**Mechanic:** High-level diplomacy (treaties, trade deals) with alien factions requires "Xenolinguist" Pops. If these Pops are overworked, underpaid, or ideologically opposed to the faction you are negotiating with, they can go on strike or subtly mistranslate your demands, turning a peace treaty into an insult.
+
+**Emergence:** You try to demand tribute from a weaker neighbor, but your disgruntled Xenolinguists translate it as a declaration of total war. You are suddenly locked into a massive conflict you didn't plan for because you ignored Layer 1 labor conditions.
+
+**Tension:** Do you pamper your translators and give them veto power over your foreign policy, or replace them with error-prone AI translators that have a flat 10% chance to cause diplomatic incidents?
+
+---
+
+## Symbiotic Hull Plating
+
+**Layer:** Cross-layer
+
+**Fantasy:** Your warships are literally alive, bleeding when hit and requiring food instead of alloys to repair.
+
+**Mechanic:** You discover a rare space-borne algae that hardens into armor. Ships equipped with it passively regenerate hull damage in sunlight but constantly consume food from your Layer 1 agricultural output.
+
+**Emergence:** A massive fleet engagement leaves your armada severely damaged but victorious. As they regenerate, they drain your empire's food reserves so rapidly that a famine breaks out on your capital world, leading to riots that topple the government while the fleet is perfectly safe.
+
+**Tension:** Do you build the self-healing invincible fleet and risk starving your own population, or stick to traditional alloy armor that requires expensive, vulnerable drydocks to repair?
+
+---
