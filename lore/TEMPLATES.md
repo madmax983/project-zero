@@ -8052,3 +8052,63 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: The dialect isolates us. [CULTURAL_DRIFT_EFFECT] in [COLONY]."
 - "We no longer speak as they do in the Core. [CULTURAL_DRIFT_EFFECT]. [YEAR]."
 - "[COLONY], [YEAR]: The cost of our unique culture: [CULTURAL_DRIFT_EFFECT]."
+
+## Zero-G Flora Templates (Spec 1066)
+
+### Template: ZERO_G_HARVEST_SUCCESS
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [ZERO_G_FLORA_NAME], [ZERO_G_CROP_YIELD]
+
+**Patterns:**
+- "[YEAR]: The orbital bays are full. A massive harvest of [ZERO_G_FLORA_NAME] yields [ZERO_G_CROP_YIELD]."
+- "We survived the dark to grow [ZERO_G_FLORA_NAME]. [COLONY] now possesses [ZERO_G_CROP_YIELD]. [YEAR]."
+- "The microgravity harvest is complete. [ZERO_G_FLORA_NAME] provides us with [ZERO_G_CROP_YIELD]. [YEAR]."
+
+### Template: ORBITAL_DEPRESSURIZATION_LOSS
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [ZERO_G_FLORA_NAME]
+
+**Patterns:**
+- "A micro-meteorite struck the bay. [YEAR]. The [ZERO_G_FLORA_NAME] crop is lost to the void."
+- "[YEAR]: Depressurization in the orbital farm. The [ZERO_G_FLORA_NAME] froze instantly."
+- "We heard the pop, then silence. The entire [ZERO_G_FLORA_NAME] harvest was destroyed. [YEAR]."
+
+## The Bio-Loom Templates (Spec 304)
+
+### Template: BIO_SUIT_ATTACHMENT_CRITICAL
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [POP_NAME], [BIO_SUIT_SYMPTOM]
+
+**Patterns:**
+- "[YEAR]: [POP_NAME] cannot remove their armor. They are suffering from [BIO_SUIT_SYMPTOM]."
+- "The suit feeds. [POP_NAME] experiences [BIO_SUIT_SYMPTOM]. It will not come off. [YEAR]."
+- "[COLONY] Medical reports [POP_NAME] has [BIO_SUIT_SYMPTOM] from the living armor. [YEAR]."
+
+## The Endless Draft Templates (Spec 479)
+
+### Template: DRAFT_ORDER_RECEIVED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [EMPIRE_NAME], [DRAFT_DEMAND]
+
+**Patterns:**
+- "[YEAR]: [EMPIRE_NAME] is at total war. They demand [DRAFT_DEMAND]."
+- "The tithe is due. [EMPIRE_NAME] requires [DRAFT_DEMAND] from [COLONY]. [YEAR]."
+
+### Template: VETERAN_RETURNS
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [POP_NAME], [VETERAN_SYMPTOM]
+
+**Patterns:**
+- "[YEAR]: [POP_NAME] returned from the endless war. They brought back [VETERAN_SYMPTOM]."
+- "A survivor comes home. [POP_NAME] walks our streets with [VETERAN_SYMPTOM]. [YEAR]."
+
+## Subterranean Mycelial Network Templates (Spec 481)
+
+### Template: MYCELIAL_CONTAMINATION
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [MYCELIAL_NETWORK_NAME], [MYCELIAL_DISEASE_VECTOR]
+
+**Patterns:**
+- "[YEAR]: The disease hit the [MYCELIAL_NETWORK_NAME]. It resulted in [MYCELIAL_DISEASE_VECTOR]."
+- "We trained it too well. The pathogen used [MYCELIAL_NETWORK_NAME] to cause [MYCELIAL_DISEASE_VECTOR]. [YEAR]."
+- "A localized outbreak became [MYCELIAL_DISEASE_VECTOR] thanks to the [MYCELIAL_NETWORK_NAME]. [YEAR]."

@@ -5248,3 +5248,61 @@
 **Usage:**
 - "She works with an Efficiency Echo, guided by the dead."
 - "He took up the wrench, but The Burden came with it."
+
+## Zero-G Flora (Spec 1066)
+
+### void-orchid
+**Replaces:** zero-g luxury crop
+**Code reference:** `ResourceType::Luxury` (from Zero-G crop)
+**Usage:**
+- "The void-orchid blooms in the dark."
+
+### stellar-vine / stellar-panacea
+**Replaces:** zero-g medicinal crop
+**Code reference:** `ResourceType::Medicine` (from Zero-G crop)
+**Usage:**
+- "We need the stellar-vine for the sick."
+
+## The Bio-Loom (Spec 304)
+
+### the living suit / bio-suit
+**Replaces:** advanced armor, biological suit
+**Code reference:** `BioSuit` component
+**Usage:**
+- "He wears the living suit."
+- "The bio-suit provides unmatched protection."
+
+### the hunger / attachment
+**Replaces:** suit parasitism, attachment level
+**Code reference:** `hunger` and `attachment_level` in `BioSuit`
+**Usage:**
+- "The suit's hunger is growing."
+- "The attachment is too deep to remove."
+
+## The Endless Draft (Spec 479)
+
+### the Draft / the Tithe
+**Replaces:** Draft Order, pop removal event
+**Code reference:** `DraftOrderEvent`
+**Usage:**
+- "The Empire calls for the Draft."
+
+### the Veteran / broken-hero
+**Replaces:** Returned drafted pop
+**Code reference:** `Veteran` trait
+**Usage:**
+- "The broken-hero returned from the front."
+
+## Subterranean Mycelial Network (Spec 481)
+
+### the living paths / fungal veins
+**Replaces:** mycelial network, biological transit
+**Code reference:** `MycelialNetwork`
+**Usage:**
+- "Load the ore into the fungal veins."
+
+### the fast rot
+**Replaces:** disease spread via network
+**Code reference:** `ContaminationEvent`
+**Usage:**
+- "The fast rot took the entire sector."

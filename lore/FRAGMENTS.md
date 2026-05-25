@@ -8635,3 +8635,53 @@ Conditions of dezoned, stateless pops.
 - traders require translation software
 - a distinct colony identity emerges
 - the shared slang binds them together
+
+## Zero-G Flora Fragments (Spec 1066)
+
+## Fragment Type: [ZERO_G_FLORA_NAME]
+- void-orchid
+- stellar-vine
+- null-gravity moss
+- orbital-bloom
+
+## Fragment Type: [ZERO_G_CROP_YIELD]
+- high-value medicinal extracts
+- exquisite orbital luxuries
+
+## The Bio-Loom Fragments (Spec 304)
+
+## Fragment Type: [BIO_SUIT_NAME]
+- the living suit
+- the fleshy carapace
+- the xenoflora armor
+- the parasitic weave
+
+## Fragment Type: [BIO_SUIT_SYMPTOM]
+- massive blood loss
+- fused nervous systems
+- agonizing health drain
+- symbiotic dependence
+
+## The Endless Draft Fragments (Spec 479)
+
+## Fragment Type: [DRAFT_DEMAND]
+- our strongest bodies
+- a generation of youth
+- the physically elite
+
+## Fragment Type: [VETERAN_SYMPTOM]
+- chronic PTSD
+- elite combat reflexes paired with night-terrors
+- a thousand-yard stare
+
+## Subterranean Mycelial Network Fragments (Spec 481)
+
+## Fragment Type: [MYCELIAL_NETWORK_NAME]
+- the fungal veins
+- the living paths
+- the deep mycelium
+- the subterranean web
+
+## Fragment Type: [MYCELIAL_DISEASE_VECTOR]
+- an instant colony-wide pandemic
+- simultaneous contamination of all nodes
