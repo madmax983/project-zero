@@ -2358,6 +2358,20 @@ pub fn update_renown_from_morale_system(
     }
 }
 
+/// INT-1102: Bridges FirstShip destruction to AddChronicleEvent (Chronicle).
+pub fn first_ship_destruction_chronicle_bridge(
+    mut removed: RemovedComponents<crate::layer1::culture::cult_of_first_ship::FirstShip>,
+    mut chronicle_events: EventWriter<AddChronicleEvent>,
+) {
+    if !removed.is_empty() {
+        for _ in removed.read() {}
+        chronicle_events.send(AddChronicleEvent {
+            importance: EventImportance::Major,
+            text: "The First Ship, our original colony vessel and sacred monument, has been destroyed! The people are devastated.".to_string(),
+        });
+    }
+}
+
 /// INT-480: Bridges TruthOutbreakEvent to AddChronicleEvent (Chronicle).
 pub fn truth_outbreak_chronicle_bridge(
     mut events: EventReader<crate::layer1::psychology::memory_forgery::TruthOutbreakEvent>,

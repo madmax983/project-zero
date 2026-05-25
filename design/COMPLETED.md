@@ -628,6 +628,8 @@
 - [x] `692` Procedural Dialects — `specs/692-procedural-dialects.md` — completed 2024-05-24
 - [x] `479` The Endless Draft — `specs/479-the-endless-draft.md` — completed 2026-05-24
 - [x] `014` Rendering Architecture — `specs/014-rendering-architecture.md` — completed 2026-02-01
+- [x] `1102` The Cult of the First Ship — `specs/1102-the-cult-of-the-first-ship.md` — completed 2026-05-25
+- [x] `INT-1102` Integration: Cult of the First Ship -> Chronicle — completed 2026-05-25
 - [x] `481` Subterranean Mycelial Network — `specs/481-subterranean-mycelial-network.md` — completed 2026-10-31
 - [x] `481` Subterranean Mycelial Network — `specs/481-subterranean-mycelial-network.md` — completed 2026-10-31
 - [x] `495` Temporal Echoes — `specs/495-temporal-echoes.md` — completed 2026-05-25

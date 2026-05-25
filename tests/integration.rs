@@ -1,4 +1,7 @@
 #![allow(clippy::needless_pass_by_value)]
+#[path = "integration/cult_of_first_ship_bridge.rs"]
+mod cult_of_first_ship_bridge;
+
 #[path = "integration/attention_bandwidth.rs"]
 mod attention_bandwidth;
 
