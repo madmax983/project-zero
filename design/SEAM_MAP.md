@@ -1193,3 +1193,10 @@
 - **Systems connected:** `apply_siren_obsession` -> `siren_signal_chronicle_bridge` -> `AddChronicleEvent`
 - **Glue added:** `siren_signal_chronicle_bridge` in `src/layer1/core/integration.rs`
 - **Tests:** `tests/integration/void_sirens_chronicle.rs`
+
+### INT-1102: The Cult of the First Ship -> Chronicle
+- **Date:** 2026-05-25
+- **Systems connected:** `FirstShip` (removal) -> `first_ship_destruction_chronicle_bridge` -> `AddChronicleEvent`
+- **Glue added:** `first_ship_destruction_chronicle_bridge` in `src/layer1/core/integration.rs`
+- **Schedule:** Chained in Observation schedule after `first_ship_destruction_system`
+- **Tests:** `tests/integration/cult_of_first_ship_bridge.rs`
