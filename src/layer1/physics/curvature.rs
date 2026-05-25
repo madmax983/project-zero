@@ -9,15 +9,17 @@ pub struct PlanetCurvature {
 pub struct Elevation(pub f32);
 
 pub fn has_line_of_sight(world: &World, observer: Entity, target: Entity) -> bool {
-    let curvature = world.get_resource::<PlanetCurvature>().unwrap();
-    let observer_pos = world
-        .get::<crate::layer1::core::map::GridPosition>(observer)
-        .unwrap();
+    let Some(curvature) = world.get_resource::<PlanetCurvature>() else {
+        return false;
+    };
+    let Some(observer_pos) = world.get::<crate::layer1::core::map::GridPosition>(observer) else {
+        return false;
+    };
     let observer_elev = world.get::<Elevation>(observer).map(|e| e.0).unwrap_or(0.0);
 
-    let target_pos = world
-        .get::<crate::layer1::core::map::GridPosition>(target)
-        .unwrap();
+    let Some(target_pos) = world.get::<crate::layer1::core::map::GridPosition>(target) else {
+        return false;
+    };
     let target_elev = world.get::<Elevation>(target).map(|e| e.0).unwrap_or(0.0);
 
     let dx = observer_pos.x - target_pos.x;
@@ -88,5 +90,16 @@ mod tests {
 
         // Now visible
         assert!(has_line_of_sight(app.world(), observer, target));
+    }
+
+    #[test]
+    fn test_missing_components_do_not_panic() {
+        let mut app = App::new();
+        // Do not add PlanetCurvature resource
+        let observer = app.world_mut().spawn_empty().id();
+        let target = app.world_mut().spawn_empty().id();
+
+        // Should return false safely instead of panicking
+        assert!(!has_line_of_sight(app.world(), observer, target));
     }
 }
