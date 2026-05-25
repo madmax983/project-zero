@@ -484,3 +484,6 @@ mod memory_forgery;
 
 #[path = "integration/void_sirens_chronicle.rs"]
 mod void_sirens_chronicle;
+
+#[path = "integration/mycelial_network_bridge.rs"]
+mod mycelial_network_bridge;
