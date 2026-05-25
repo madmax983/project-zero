@@ -1,6 +1,7 @@
-//! Anomalies
+//! # The Unknown
 //!
-//! Manages anomalous discoveries on the map and the scanning process for pops.
+//! Anomalies represent mysteries discovered on the planet surface or in deep space.
+//! This module handles the spawning, scanning, and rewards for anomalies.
 
 pub mod cryptid;
 pub mod echo;

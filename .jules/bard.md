@@ -63,3 +63,6 @@
 ## 2024-05-25 - Existential Audit System Panics in Tests
 **Confusion:** Eight integration tests panicked when upgrading Bevy because `existential_audit_system` could not access `ResMut<'_, Events<ExistentialAuditCompletedEvent>>`. This happened because the system was added to the default simulation schedule but the required event was not initialized in `setup_world()`.
 **Clarification:** Added `world.init_resource::<bevy::prelude::Events<crate::layer1::economy::existential_audit::ExistentialAuditCompletedEvent>>();` to `setup_world()` in `src/setup.rs` so all integration tests that rely on the default world setup automatically have the event queue initialized.
+## 2024-05-25 - The Undocumented Anomalies
+**Confusion:** The anomalies modules (`anomalies/mod.rs`, `anomalies/echo/mod.rs`, `anomalies/benevolent_malfunctions.rs`, `anomalies/cryptid.rs`, `anomalies/void_sirens.rs`) were missing conceptual module-level documentation (`//!`) explaining what these strange occurrences are and how they interact with the colony.
+**Clarification:** Added conceptual `//!` module documentation to explain "The Unknown", "Echoes of the Past", "Benevolent Malfunctions", "Cryptids", and "The Void Sirens".

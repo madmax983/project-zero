@@ -1,3 +1,9 @@
+//! # The Void Sirens
+//!
+//! Strange hypnotic signals broadcast from deep space. These signals specifically target
+//! highly intelligent pops, causing them to abandon their duties and obsessively build
+//! strange antenna structures to communicate back.
+
 use crate::layer1::entities::pop::Job;
 use crate::layer1::entities::pop::Pop;
 use crate::layer3::diplomacy::brain_drain::Intelligence;

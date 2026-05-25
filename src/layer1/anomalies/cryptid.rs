@@ -1,3 +1,8 @@
+//! # Cryptids
+//!
+//! Mysterious, unseen creatures that roam the edges of the colony. Cryptids leave behind
+//! traces (like strange slimes) that pops can observe, filling them with awe or dread.
+
 use crate::layer1::map::GridPosition;
 use crate::layer1::Pop;
 use bevy::prelude::*;

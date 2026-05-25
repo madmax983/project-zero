@@ -1,3 +1,9 @@
+//! # Benevolent Malfunctions
+//!
+//! Sometimes, a machine breaking down actually makes it run better. This module models
+//! anomalies where a structural fault yields unexpected efficiency bonuses, albeit often
+//! accompanied by hazardous quirks like extreme heat or noise.
+
 use crate::layer1::architecture::structure::Structure;
 use crate::layer1::law::aesthetic_edict::Halted;
 use crate::layer1::nature::temperature::HeatSource;
