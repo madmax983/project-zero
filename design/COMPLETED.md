@@ -628,3 +628,6 @@
 - [x] `692` Procedural Dialects — `specs/692-procedural-dialects.md` — completed 2024-05-24
 - [x] `479` The Endless Draft — `specs/479-the-endless-draft.md` — completed 2026-05-24
 - [x] `014` Rendering Architecture — `specs/014-rendering-architecture.md` — completed 2026-02-01
+- [x] `INT-479` Integration: The Endless Draft -> Chronicle — completed 2026-05-25
+- [x] `INT-480` Integration: Memory Forgery -> Chronicle — completed 2026-05-25
+- [x] `INT-692` Integration: Procedural Dialects -> Chronicle — completed 2026-05-25

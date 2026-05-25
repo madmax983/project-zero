@@ -281,3 +281,29 @@ pub fn quantum_famine_export_dump_bridge(
         });
     }
 }
+
+/// Bridges `DraftOrderEvent` (The Endless Draft) to `AddChronicleEvent` (Chronicle).
+pub fn endless_draft_chronicle_bridge(
+    mut events: EventReader<crate::layer3::diplomacy::endless_draft::DraftOrderEvent>,
+    mut chronicle_events: EventWriter<AddChronicleEvent>,
+) {
+    for event in events.read() {
+        chronicle_events.send(AddChronicleEvent {
+            importance: EventImportance::Major,
+            text: format!("A Total War empire has issued a Draft Order demanding {} capable Pops.", event.required_pops),
+        });
+    }
+}
+
+/// Bridges `DraftRefusalEvent` (The Endless Draft) to `AddChronicleEvent` (Chronicle).
+pub fn endless_draft_refusal_chronicle_bridge(
+    mut events: EventReader<crate::layer3::diplomacy::endless_draft::DraftRefusalEvent>,
+    mut chronicle_events: EventWriter<AddChronicleEvent>,
+) {
+    for _ in events.read() {
+        chronicle_events.send(AddChronicleEvent {
+            importance: EventImportance::Major,
+            text: "The colony refused the Draft Order, incurring a severe embargo.".to_string(),
+        });
+    }
+}

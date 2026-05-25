@@ -2366,3 +2366,16 @@ pub fn existential_audit_chronicle_bridge(
         }
     }
 }
+
+/// Bridges `TruthOutbreakEvent` (Memory Forgery) to `AddChronicleEvent` (Chronicle).
+pub fn truth_outbreak_chronicle_bridge(
+    mut events: EventReader<crate::layer1::psychology::memory_forgery::TruthOutbreakEvent>,
+    mut chronicle_events: EventWriter<AddChronicleEvent>,
+) {
+    for _ in events.read() {
+        chronicle_events.send(AddChronicleEvent {
+            importance: EventImportance::Legendary,
+            text: "The fabricated truth has leaked. A reality collapse spreads like a virus among the populace.".to_string(),
+        });
+    }
+}

@@ -1181,3 +1181,24 @@
 - **Glue added:** `ExistentialAuditCompletedEvent` in `src/layer1/economy/existential_audit.rs` and `existential_audit_chronicle_bridge` in `src/layer1/core/integration.rs`
 - **Schedule:** Chained in Update within `Layer1SystemSet::Economy`
 - **Tests:** `tests/integration/existential_audit_bridge.rs`
+
+### INT-479: The Endless Draft -> Chronicle
+- **Date:** 2026-05-25
+- **Systems connected:** `DraftOrderEvent`, `DraftRefusalEvent` -> `endless_draft_chronicle_bridge`, `endless_draft_refusal_chronicle_bridge` -> `AddChronicleEvent`
+- **Glue added:** `endless_draft_chronicle_bridge` and `endless_draft_refusal_chronicle_bridge` in `src/layer3/integration.rs`
+- **Schedule:** Chained in setup.rs and simulation.rs
+- **Tests:** `tests/integration/endless_draft_chronicle.rs`
+
+### INT-480: Memory Forgery -> Chronicle
+- **Date:** 2026-05-25
+- **Systems connected:** `TruthOutbreakEvent` -> `truth_outbreak_chronicle_bridge` -> `AddChronicleEvent`
+- **Glue added:** `truth_outbreak_chronicle_bridge` in `src/layer1/core/integration.rs`
+- **Schedule:** Registered in simulation.rs
+- **Tests:** `tests/integration/memory_forgery_chronicle.rs`
+
+### INT-692: Procedural Dialects -> Chronicle
+- **Date:** 2026-05-25
+- **Systems connected:** `AddChronicleEvent` -> `process_chronicle_events_for_dialect` -> `DialectManager`
+- **Glue added:** `process_chronicle_events_for_dialect` in `src/layer1/culture/procedural_dialects.rs`
+- **Schedule:** Registered in `src/layer1/systems/observation.rs`
+- **Tests:** Existing unit tests in `src/layer1/culture/procedural_dialects.rs`

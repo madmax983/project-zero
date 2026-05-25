@@ -226,7 +226,7 @@ fn init_simulation_resources(world: &mut World) {
     world.init_resource::<Events<crate::layer1::environment::disasters::DisasterEvent>>();
 
     world.init_resource::<Events<crate::layer2::tourism::disaster_tourism::GriefTouristArrivalEvent>>();
-
+    world.init_resource::<Events<crate::layer2::phantom_signal::SignalRevealEvent>>();
     if !world.contains_resource::<Events<crate::layer1::agony_extract::HarvestAgonyExtractEvent>>()
     {
         world.init_resource::<Events<crate::layer1::agony_extract::HarvestAgonyExtractEvent>>();
@@ -788,6 +788,12 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
             crate::layer3::bureaucracy_of_truth::generate_colony_reports_system,
         )
             .chain(),
+    ));
+
+    schedule.add_systems((
+        crate::layer3::integration::endless_draft_chronicle_bridge,
+        crate::layer3::integration::endless_draft_refusal_chronicle_bridge,
+        crate::layer1::core::integration::truth_outbreak_chronicle_bridge,
     ));
 }
 #[cfg(test)]
