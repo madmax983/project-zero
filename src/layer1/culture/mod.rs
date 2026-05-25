@@ -35,6 +35,9 @@ pub use gastronomers::*;
 pub mod cultural_artifacts;
 pub use cultural_artifacts::*;
 
+pub mod cult_of_first_ship;
+pub use cult_of_first_ship::*;
+
 pub mod nostalgia;
 pub use nostalgia::*;
 pub mod linguistics;
