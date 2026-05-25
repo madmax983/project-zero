@@ -378,6 +378,8 @@ fn register_simulation_core_systems(schedule: &mut Schedule) {
             crate::layer1::deep_crust_resonance::resonant_ore_exposure_system,
             crate::layer1::deep_crust_resonance::resonance_social_spread_system,
             crate::layer1::core::integration::deep_crust_resonance_chronicle_bridge,
+            crate::layer1::core::integration::truth_outbreak_chronicle_bridge,
+            crate::layer1::core::integration::siren_signal_chronicle_bridge,
         )
             .in_set(Layer1SystemSet::Economy),
     );

@@ -1181,3 +1181,15 @@
 - **Glue added:** `ExistentialAuditCompletedEvent` in `src/layer1/economy/existential_audit.rs` and `existential_audit_chronicle_bridge` in `src/layer1/core/integration.rs`
 - **Schedule:** Chained in Update within `Layer1SystemSet::Economy`
 - **Tests:** `tests/integration/existential_audit_bridge.rs`
+
+### INT-480: Memory Forgery -> Chronicle
+- **Date:** 2026-05-25
+- **Systems connected:** `truth_outbreak_system` -> `truth_outbreak_chronicle_bridge` -> `AddChronicleEvent`
+- **Glue added:** `truth_outbreak_chronicle_bridge` in `src/layer1/core/integration.rs`
+- **Tests:** `tests/integration/memory_forgery.rs`
+
+### INT-1067: Void Sirens -> Chronicle
+- **Date:** 2026-05-25
+- **Systems connected:** `apply_siren_obsession` -> `siren_signal_chronicle_bridge` -> `AddChronicleEvent`
+- **Glue added:** `siren_signal_chronicle_bridge` in `src/layer1/core/integration.rs`
+- **Tests:** `tests/integration/void_sirens_chronicle.rs`

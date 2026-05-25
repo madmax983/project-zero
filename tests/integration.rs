@@ -475,3 +475,9 @@ mod ip_piracy_diplomacy;
 
 #[path = "integration/phantom_signal.rs"]
 mod phantom_signal;
+
+#[path = "integration/memory_forgery.rs"]
+mod memory_forgery;
+
+#[path = "integration/void_sirens_chronicle.rs"]
+mod void_sirens_chronicle;
