@@ -49,3 +49,4 @@ pub struct AutomatedDiplomat;
 
 ## 8. Questions
 *Builder: add questions here if spec is unclear.*
+- **Architectural Contradictions:** `DiplomacyPlugin`, `GenerateDiplomaticInteractionEvent`, `DiplomaticInteraction`, and `Faction::new` do not exist in the codebase. Faction definitions are scattered and inconsistent across different features (`factions.rs`, `succession.rs`, `system_sovereignty.rs`, `biological_stock_market.rs`, etc.). I cannot implement tests for missing core architectural components. I'm moving on to a different task.

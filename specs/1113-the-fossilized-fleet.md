@@ -111,3 +111,4 @@ pub fn fossilized_ship_decay_system(
 
 ## 8. Questions
 *Builder: add questions here if spec is unclear.*
+- **Architectural Contradictions:** The spec imports from `scale::layer1::buildings::{Building, BuildingType}` and `scale::layer1::map::{TerrainGrid, GridPos}`. However, buildings are located in `src/layer1/architecture/building.rs`, and the modules `buildings` and `map` do not exist in `src/layer1/`. The spec needs to be rewritten to match the actual codebase architecture.

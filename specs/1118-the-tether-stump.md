@@ -195,3 +195,4 @@ fn find_stump_center(terrain: &TerrainGrid) -> Option<(u32, u32)> {
 
 ## 8. Questions
 *Builder: add questions here if spec is unclear.*
+- **Architectural Contradiction:** `TerrainGrid` and `TerrainType` do not exist in the codebase. Map grid generation logic is completely different. Moving on to another spec.

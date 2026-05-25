@@ -68,6 +68,7 @@ pub mod orbital_mirrors;
 pub use orbital_mirrors::*;
 pub mod culture;
 pub mod diaspora;
+pub mod orbital_drydock;
 pub mod sensors;
 pub use diaspora::*;
 pub mod piracy;

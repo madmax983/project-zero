@@ -22,6 +22,8 @@ pub enum StationType {
     Derelict,
     /// A hydroponics bay for growing Zero-G Flora.
     Hydroponics,
+    /// An orbital drydock for building massive ships.
+    OrbitalDrydock,
 }
 
 impl StationType {
@@ -36,6 +38,7 @@ impl StationType {
             Self::Habitat => vec![(ResourceType::Metal, 150.0), (ResourceType::Food, 100.0)],
             Self::Derelict => vec![],
             Self::Hydroponics => vec![(ResourceType::Metal, 150.0), (ResourceType::Fuel, 20.0)],
+            Self::OrbitalDrydock => vec![(ResourceType::Metal, 1000.0)],
         }
     }
 
@@ -50,6 +53,7 @@ impl StationType {
             Self::Habitat => "Habitat",
             Self::Derelict => "Derelict Station",
             Self::Hydroponics => "Hydroponics Bay",
+            Self::OrbitalDrydock => "Orbital Drydock",
         }
     }
 
@@ -64,6 +68,7 @@ impl StationType {
             Self::Habitat => 'O',
             Self::Derelict => 'D',
             Self::Hydroponics => 'H',
+            Self::OrbitalDrydock => '🏗',
         }
     }
 }
