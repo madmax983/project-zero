@@ -44,7 +44,6 @@
 - [ ] `496` The Bureau of Regrets — `specs/496-the-bureau-of-regrets.md`
 
 - [ ] `679` The Flesh Tax — `specs/679-the-flesh-tax.md`
-- [ ] `680` The Memory Blackout — `specs/680-the-memory-blackout.md`
 - [ ] `682` Symbiotic Leviathans — `specs/682-symbiotic-leviathans.md`
 
 - [ ] `875` The Memorial Fleet — `specs/875-the-memorial-fleet.md`

@@ -140,3 +140,4 @@ pub fn process_memory_blackout(
 
 ## 8. Questions
 *Builder: add questions here if spec is unclear.*
+- **Architectural Contradiction:** The spec assumes that `Relationships` contains timestamps (`pub bonds: Vec<(Entity, i32, u32)>`) and `Skills` tracks XP with timestamps. However, checking `src/layer1/social/mod.rs` shows `Relationships` is a `HashMap<Entity, f32>` without timestamps, and `src/layer1/skills/mod.rs` shows `Skills` uses `HashMap<SkillType, f32>` which also lacks timestamps. Furthermore, `Memories` uses `ActiveMemory` which has an `added_at` field of type `u64`, rather than `u32`. It is impossible to erase *recent* relationships or skills without adding timestamps to all XP gains and relationship modifications, which is a major architectural change. Should I proceed to refactor `Relationships` and `Skills` to include timestamps, or should the blackout only affect `Memories`?
