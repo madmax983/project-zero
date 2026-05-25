@@ -1200,3 +1200,9 @@
 - **Glue added:** `first_ship_destruction_chronicle_bridge` in `src/layer1/core/integration.rs`
 - **Schedule:** Chained in Observation schedule after `first_ship_destruction_system`
 - **Tests:** `tests/integration/cult_of_first_ship_bridge.rs`
+
+### INT-495: Temporal Echoes -> Chronicle
+- **Date:** 2026-05-25
+- **Systems connected:** `process_temporal_echo_system` (Temporal Echoes) -> `AddChronicleEvent`
+- **Glue added:** Modified `process_temporal_echo_system` in `src/layer1/anomalies/temporal_echoes.rs` to emit `AddChronicleEvent` (`EventImportance::Minor`) when a Pop experiences a temporal echo. Registered in `Layer1SystemSet::Environment`.
+- **Tests:** `tests/integration/temporal_echoes_bridge.rs`

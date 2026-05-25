@@ -239,9 +239,12 @@ pub fn register(schedule: &mut Schedule) {
                 .after(crate::experimental::the_humming_monolith::detect_and_spawn_monolith_system),
             crate::layer1::integration::update_unmet_luxury_system.after(decay_needs_system),
             crate::layer1::integration::sacrilege_unrest_bridge.after(decay_needs_system),
-            crate::layer1::culture::cult_of_first_ship::first_ship_morale_system.after(decay_needs_system),
-            crate::layer1::culture::cult_of_first_ship::first_ship_destruction_system.after(decay_needs_system),
-            crate::layer1::core::integration::first_ship_destruction_chronicle_bridge.after(crate::layer1::culture::cult_of_first_ship::first_ship_destruction_system),
+            crate::layer1::culture::cult_of_first_ship::first_ship_morale_system
+                .after(decay_needs_system),
+            crate::layer1::culture::cult_of_first_ship::first_ship_destruction_system
+                .after(decay_needs_system),
+            crate::layer1::core::integration::first_ship_destruction_chronicle_bridge
+                .after(crate::layer1::culture::cult_of_first_ship::first_ship_destruction_system),
             crate::layer1::integration::issue_placebo_from_edict_system.after(decay_needs_system),
             crate::layer1::social::placebo::placebo_tick_system.after(decay_needs_system),
             crate::layer1::social::placebo::reveal_betrayal_system.after(decay_needs_system),

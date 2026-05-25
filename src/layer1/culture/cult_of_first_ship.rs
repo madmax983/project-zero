@@ -1,6 +1,6 @@
+use crate::layer1::entities::pop::Pop;
 use crate::layer1::needs::Needs;
 use bevy_ecs::prelude::*;
-use crate::layer1::entities::pop::Pop;
 
 #[derive(Component)]
 pub struct FirstShip {
@@ -54,9 +54,9 @@ pub fn first_ship_destruction_system(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use bevy_app::{App, Update};
-    use crate::layer1::needs::Needs;
     use crate::layer1::entities::pop::Pop;
+    use crate::layer1::needs::Needs;
+    use bevy_app::{App, Update};
 
     #[test]
     fn test_first_ship_grants_cultural_anchor() {
@@ -67,26 +67,32 @@ mod tests {
 
         app.world_mut().spawn(FirstShip { is_intact: true });
 
-        let pop = app.world_mut().spawn((
-            Needs {
-                leisure: 0.5,
-                ..Default::default()
-            },
-            CulturalAnchor { morale_bonus: 0.1 }
-        )).id();
+        let pop = app
+            .world_mut()
+            .spawn((
+                Needs {
+                    leisure: 0.5,
+                    ..Default::default()
+                },
+                CulturalAnchor { morale_bonus: 0.1 },
+            ))
+            .id();
 
         // Initial update to initialize time properly
         app.update();
 
         // Advance time
         app.world_mut()
-            .resource_mut::<bevy_time::Time::<bevy_time::Virtual>>()
+            .resource_mut::<bevy_time::Time<bevy_time::Virtual>>()
             .advance_by(std::time::Duration::from_secs(1));
 
         app.update();
 
         let needs = app.world().get::<Needs>(pop).unwrap();
-        assert!(needs.leisure > 0.5, "Pops should receive a leisure bonus from the intact FirstShip via CulturalAnchor");
+        assert!(
+            needs.leisure > 0.5,
+            "Pops should receive a leisure bonus from the intact FirstShip via CulturalAnchor"
+        );
     }
 
     #[test]
@@ -104,6 +110,9 @@ mod tests {
         app.update();
 
         let unrest = app.world().get::<HolySiteUnrest>(pop);
-        assert!(unrest.is_some(), "Destroying the FirstShip should apply HolySiteUnrest to Pops");
+        assert!(
+            unrest.is_some(),
+            "Destroying the FirstShip should apply HolySiteUnrest to Pops"
+        );
     }
 }
