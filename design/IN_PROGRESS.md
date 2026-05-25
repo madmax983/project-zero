@@ -1,1 +1,2 @@
 - [ ] `680` The Memory Blackout — `specs/680-the-memory-blackout.md` — claimed 2026-05-25
+- [ ] `1102` The Cult of the First Ship — `specs/1102-the-cult-of-the-first-ship.md` - claimed 2026-05-25
