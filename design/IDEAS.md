@@ -21034,3 +21034,59 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you spend massive resources on clean waste processing, or use cheap dumps and risk creating a hostile, garbage-based neighbor that you eventually have to fight or negotiate with?
 
 ---
+
+## Orbital Eclipse Worship
+
+**Layer:** Cross-layer
+
+**Fantasy:** A massive Layer 2 structure accidentally becomes a religion for the Layer 1 pops below it.
+
+**Mechanic:** A giant orbital drydock or solar shade blocks the sun on the Layer 1 colony below at specific times. Over generations, Pops develop a religion around the "Great Shadow," gaining massive morale buffs when the structure passes overhead but demanding the cessation of work during the "eclipse."
+
+**Emergence:** You try to move the orbital structure to another planet to defend against an invasion, but your Layer 1 colony immediately riots because you "stole their god."
+
+**Tension:** Do you keep the strategic Layer 2 asset locked in a suboptimal orbit to maintain absolute loyalty on the ground, or move it and risk a holy war on your own capital?
+
+---
+
+## The Ghost Shift
+
+**Layer:** 1
+
+**Fantasy:** A hyper-optimized factory that runs so fast it outpaces normal perception, creating a phantom workforce.
+
+**Mechanic:** High-level stimulant addictions and cybernetics allow a segment of your Pops to work at 3x speed, but their lifespan is quartered. They become the "Ghost Shift," operating entirely while the rest of the colony sleeps. Normal Pops start believing the colony is haunted by benevolent spirits that fix machinery at night.
+
+**Emergence:** A "normal" Pop wakes up early and witnesses a Ghost Shift worker die of sudden cardiovascular collapse. The normal Pop reports it as a demonic manifestation, causing a panic that shuts down the entire sector, while the Ghost Shift workers are too fast and burnt out to explain.
+
+**Tension:** Do you enforce the brutal, hyper-efficient Ghost Shift to meet impossible production quotas, knowing it creates a segregated, superstitious underclass, or maintain a slower, unified workforce?
+
+---
+
+## Biological Ransomware
+
+**Layer:** Cross-layer
+
+**Fantasy:** A bio-weapon that doesn't kill you, it just holds your ecosystem hostage until you pay.
+
+**Mechanic:** A bio-engineered plague hits your agricultural worlds. Instead of killing the crops, it modifies them to produce a toxic byproduct unless a specific, extremely rare mineral is added to the soil—a mineral monopolized by a hostile faction.
+
+**Emergence:** You refuse to pay the extortionate prices for the cure mineral. The crops turn toxic. However, a small sect of your Pops develops an immunity to the toxin and becomes a new sub-species that actually *requires* the toxic food to survive, demanding you never cure the plague.
+
+**Tension:** Do you bankrupt your empire paying the ransom to save the original crops, or embrace the toxic mutation and permanently alter your population's biology?
+
+---
+
+## Solar Funerals
+
+**Layer:** 2
+
+**Fantasy:** The ultimate status symbol is throwing your dead into the local star.
+
+**Mechanic:** As your civilization becomes wealthy, elite Pops demand "Solar Funerals," where their remains are loaded onto expensive, single-use drones and fired directly into the system's sun. This generates massive culture points but consumes raw alloys and fuel for zero material return.
+
+**Emergence:** A war breaks out, and you are desperately short on alloys for warships. You ban Solar Funerals. The elites, furious, hijack a fully loaded military dreadnought and fly it straight into the sun as a mass grave, crippling your fleet.
+
+**Tension:** Do you allow the massive drain on your military-industrial complex to appease the cultural elites, or ban it and risk them sabotaging the war effort out of grief?
+
+---
