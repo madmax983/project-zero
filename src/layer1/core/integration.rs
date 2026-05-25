@@ -2064,6 +2064,19 @@ pub fn predecessor_weather_array_bridge_system(
     }
 }
 
+/// INT-1067: Bridges SirenSignalEvent to AddChronicleEvent (Chronicle).
+pub fn siren_signal_chronicle_bridge(
+    mut events: EventReader<crate::layer1::void_sirens::SirenSignalEvent>,
+    mut chronicle_events: EventWriter<AddChronicleEvent>,
+) {
+    for _ in events.read() {
+        chronicle_events.send(AddChronicleEvent {
+            importance: EventImportance::Major,
+            text: "A mesmerizing deep-space signal is detected, driving our brightest minds into an obsession.".to_string(),
+        });
+    }
+}
+
 /// INT-635: Bridges MachineCultFormedEvent to AddChronicleEvent (Chronicle).
 pub fn rogue_cult_chronicle_bridge(
     mut cult_events: bevy_ecs::event::EventReader<
@@ -2342,6 +2355,19 @@ pub fn update_renown_from_morale_system(
     if count > 0 {
         let avg_morale = total_morale / count as f32;
         renown.score = avg_morale * 100.0;
+    }
+}
+
+/// INT-480: Bridges TruthOutbreakEvent to AddChronicleEvent (Chronicle).
+pub fn truth_outbreak_chronicle_bridge(
+    mut events: EventReader<crate::layer1::psychology::memory_forgery::TruthOutbreakEvent>,
+    mut chronicle_events: EventWriter<AddChronicleEvent>,
+) {
+    for _ in events.read() {
+        chronicle_events.send(AddChronicleEvent {
+            importance: EventImportance::Major,
+            text: "The truth has been revealed. A fabricated reality collapses as pops discover the memory forgery.".to_string(),
+        });
     }
 }
 
