@@ -307,6 +307,8 @@ fn init_simulation_resources(world: &mut World) {
     world.init_resource::<Events<crate::layer1::logistics::mass_driver::LaunchEvent>>();
     world.init_resource::<Events<crate::layer1::logistics::mass_driver::BombardmentEvent>>();
     world.init_resource::<Events<crate::layer2::bombardment::BombardmentEvent>>();
+    world.init_resource::<Events<crate::layer3::diplomacy::flesh_tax::FleshTaxPaymentEvent>>();
+    world.init_resource::<Events<crate::layer3::diplomacy::flesh_tax::FleshTaxFailedEvent>>();
 
     world.init_resource::<crate::layer3::council::GalacticCouncil>();
 
@@ -770,6 +772,8 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
         // 1064 Digital Detritus
         crate::layer3::digital_detritus::process_data_mining_system,
         crate::layer3::digital_detritus::record_virus_event_chronicle_system,
+        crate::layer3::diplomacy::flesh_tax::process_flesh_tax_payment,
+        crate::layer3::diplomacy::flesh_tax::process_flesh_tax_failure,
     ));
 
     schedule.add_systems((
@@ -1074,7 +1078,8 @@ mod tests {
         world.init_resource::<Events<crate::layer1::logistics::mass_driver::LaunchEvent>>();
         world.init_resource::<Events<crate::layer1::logistics::mass_driver::BombardmentEvent>>();
         world.init_resource::<Events<crate::layer2::bombardment::BombardmentEvent>>();
-        world.init_resource::<Events<crate::layer2::bombardment::BombardmentEvent>>();
+        world.init_resource::<Events<crate::layer3::diplomacy::flesh_tax::FleshTaxPaymentEvent>>();
+        world.init_resource::<Events<crate::layer3::diplomacy::flesh_tax::FleshTaxFailedEvent>>();
 
         world.init_resource::<Events<crate::layer2::cascade::LogisticsStrainedEvent>>();
         world.init_resource::<Events<crate::layer2::cascade::DefenseWeakenedEvent>>();

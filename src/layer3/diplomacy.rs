@@ -11,6 +11,7 @@ pub mod endless_draft;
 pub mod fading_homeworld;
 pub mod proxy_wars;
 pub mod succession;
+pub mod flesh_tax;
 
 #[derive(Component)]
 pub struct Envoy;
