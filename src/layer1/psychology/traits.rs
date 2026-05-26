@@ -363,8 +363,11 @@ pub fn get_job_efficiency_modifier(traits: &Traits, job: AssignmentType) -> f32 
     }
 
     if traits.has(Trait::MoleEyes) {
-        // No bonus assigned yet, apply penalty to everything
-        modifier -= 0.2;
+        if job == AssignmentType::DeepMining {
+            modifier += 1.0;
+        } else {
+            modifier -= 0.5;
+        }
     }
 
     if traits.has(Trait::Hunchback) {
@@ -522,7 +525,8 @@ mod tests {
         assert!(get_job_efficiency_modifier(&silver_tongue, AssignmentType::Administrator) > 1.0);
         assert!(get_job_efficiency_modifier(&silver_tongue, AssignmentType::FarmWorker) < 1.0);
 
-        // MoleEyes penalties (no bonus assigned to AssignmentType yet)
+        // MoleEyes bonuses and penalties
+        assert!(get_job_efficiency_modifier(&mole_eyes, AssignmentType::DeepMining) > 1.5);
         assert!(get_job_efficiency_modifier(&mole_eyes, AssignmentType::FarmWorker) < 1.0);
 
         // Hunchback penalties (no bonus assigned to AssignmentType yet)
