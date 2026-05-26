@@ -2054,13 +2054,20 @@ fn print_stories(world: &mut World) {
             comfy_table::Color::Green
         };
 
+        let snippet = if story.text.len() > 50 {
+            let truncated: String = story.text.chars().take(47).collect();
+            format!("{}...", truncated)
+        } else {
+            story.text.clone()
+        };
+
         table.add_row(vec![
             Cell::new(format!("{:?}", story.genre))
                 .fg(genre_color)
                 .add_attribute(comfy_table::Attribute::Bold),
             Cell::new(story.historical_date.to_string()),
             Cell::new(story.mutations.to_string()).fg(mutations_color),
-            Cell::new(format!("\"{}\"", story.text)).add_attribute(comfy_table::Attribute::Italic),
+            Cell::new(format!("\"{}\"", snippet)).add_attribute(comfy_table::Attribute::Italic),
         ]);
     }
 
