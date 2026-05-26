@@ -485,6 +485,8 @@ mod memory_forgery;
 #[path = "integration/void_sirens_chronicle.rs"]
 mod void_sirens_chronicle;
 
+#[path = "integration/memory_blackout_bridge.rs"]
+mod memory_blackout_bridge;
 #[path = "integration/mycelial_network_bridge.rs"]
 mod mycelial_network_bridge;
 #[path = "integration/temporal_echoes_maintenance.rs"]

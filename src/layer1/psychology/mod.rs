@@ -9,6 +9,7 @@ pub mod generational_amnesia;
 #[cfg(feature = "nova")]
 pub mod machine_consciousness;
 pub mod memory;
+pub mod memory_blackout;
 pub mod memory_forgery;
 pub mod needs;
 pub mod overview_effect;
@@ -39,6 +40,7 @@ pub use dreams::*;
 #[cfg(feature = "nova")]
 pub use machine_consciousness::*;
 pub use memory::*;
+pub use memory_blackout::*;
 pub use memory_forgery::*;
 pub use needs::*;
 pub use overview_effect::*;

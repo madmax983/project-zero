@@ -1213,3 +1213,10 @@
 - **Systems connected:** `BuildingAge` -> `temporal_echo_maintenance_bridge_system` -> `Structure`
 - **Glue added:** Added `temporal_echo_maintenance_bridge_system` in `src/layer1/core/integration.rs` to convert accumulated `BuildingAge.ticks` into `Structure` damage according to base entropy decay. Registered in `Layer1SystemSet::Observation`.
 - **Tests:** `tests/integration/temporal_echoes_maintenance.rs`
+
+### INT-680: The Memory Blackout -> Pop Memories, Relationships, and Skills
+- **Date:** 2026-05-25
+- **Systems connected:** `MemoryBlackoutEvent` -> `process_memory_blackout` -> `Memories`, `Relationships`, `Skills`
+- **Glue added:** `process_memory_blackout` in `src/layer1/psychology/memory_blackout.rs`
+- **Schedule:** Chained in Update within `Layer1SystemSet::Economy`
+- **Tests:** `tests/integration/memory_blackout_bridge.rs` (3 tests)
