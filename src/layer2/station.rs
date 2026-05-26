@@ -22,6 +22,16 @@ pub enum StationType {
     Derelict,
     /// A hydroponics bay for growing Zero-G Flora.
     Hydroponics,
+    /// A massive structure for constructing large ships in orbit.
+    OrbitalDrydock,
+}
+
+#[derive(Component)]
+pub struct ShipConstruction {
+    pub target_ship_class: String,
+    pub metal_required: f32,
+    pub metal_delivered: f32,
+    pub is_complete: bool,
 }
 
 impl StationType {
@@ -36,6 +46,7 @@ impl StationType {
             Self::Habitat => vec![(ResourceType::Metal, 150.0), (ResourceType::Food, 100.0)],
             Self::Derelict => vec![],
             Self::Hydroponics => vec![(ResourceType::Metal, 150.0), (ResourceType::Fuel, 20.0)],
+            Self::OrbitalDrydock => vec![(ResourceType::Metal, 1000.0), (ResourceType::Fuel, 500.0)],
         }
     }
 
@@ -50,6 +61,7 @@ impl StationType {
             Self::Habitat => "Habitat",
             Self::Derelict => "Derelict Station",
             Self::Hydroponics => "Hydroponics Bay",
+            Self::OrbitalDrydock => "Orbital Drydock",
         }
     }
 
@@ -64,6 +76,7 @@ impl StationType {
             Self::Habitat => 'O',
             Self::Derelict => 'D',
             Self::Hydroponics => 'H',
+            Self::OrbitalDrydock => 'U',
         }
     }
 }
@@ -221,6 +234,35 @@ pub fn process_megastructure_upkeep(
     }
 }
 
+pub fn process_drydock_construction_system(
+    mut query: Query<(&Station, &mut ShipConstruction, &mut FleetCargo)>,
+) {
+    for (station, mut construction, mut cargo) in query.iter_mut() {
+        if station.station_type != StationType::OrbitalDrydock || construction.is_complete {
+            continue;
+        }
+
+        let needed = construction.metal_required - construction.metal_delivered;
+        if needed <= 0.0 {
+            construction.is_complete = true;
+            continue;
+        }
+
+        for stack in cargo.contents.iter_mut() {
+            if stack.resource_type == ResourceType::Metal && stack.amount > 0.0 {
+                let to_take = stack.amount.min(needed);
+                stack.amount -= to_take;
+                construction.metal_delivered += to_take;
+                break;
+            }
+        }
+
+        if construction.metal_delivered >= construction.metal_required {
+            construction.is_complete = true;
+        }
+    }
+}
+
 pub fn decommission_megastructure_system(
     mut commands: Commands,
     mut events: EventReader<DecommissionDebtTrapEvent>,
@@ -252,6 +294,61 @@ pub fn log_generous_gift_system(
             text: "A foreign power has constructed a magnificent orbital structure for us—a truly generous gift!".to_string(),
             importance: crate::layer1::chronicle::EventImportance::Major,
         });
+    }
+}
+
+#[cfg(test)]
+mod orbital_drydocks_tests {
+    use super::*;
+    use crate::layer1::resources::ResourceType;
+    use crate::layer2::mining::FleetCargo;
+    use bevy::prelude::*;
+
+    #[test]
+    fn test_orbital_drydock_construction_progress() {
+        let mut app = App::new();
+        app.add_plugins(MinimalPlugins);
+        app.add_systems(Update, process_drydock_construction_system);
+
+        let required_metal = 1000.0;
+
+        let drydock_entity = app.world_mut().spawn((
+            Station { station_type: StationType::OrbitalDrydock },
+            ShipConstruction {
+                target_ship_class: "Dreadnought".to_string(),
+                metal_required: required_metal,
+                metal_delivered: 0.0,
+                is_complete: false,
+            },
+        )).id();
+
+        app.world_mut().entity_mut(drydock_entity).insert(FleetCargo {
+            contents: vec![crate::layer2::mining::CargoStack {
+                resource_type: ResourceType::Metal,
+                amount: 500.0,
+            }],
+            capacity: 2000.0,
+        });
+
+        app.update();
+
+        let construction = app.world().get::<ShipConstruction>(drydock_entity).unwrap();
+        assert_eq!(construction.metal_delivered, 500.0);
+        assert!(!construction.is_complete);
+
+        let cargo = app.world().get::<FleetCargo>(drydock_entity).unwrap();
+        assert_eq!(cargo.contents.iter().find(|s| s.resource_type == ResourceType::Metal).map(|s| s.amount).unwrap_or(0.0), 0.0);
+
+        app.world_mut().get_mut::<FleetCargo>(drydock_entity).unwrap().contents.push(crate::layer2::mining::CargoStack {
+            resource_type: ResourceType::Metal,
+            amount: 500.0,
+        });
+
+        app.update();
+
+        let construction = app.world().get::<ShipConstruction>(drydock_entity).unwrap();
+        assert_eq!(construction.metal_delivered, 1000.0);
+        assert!(construction.is_complete);
     }
 }
 
