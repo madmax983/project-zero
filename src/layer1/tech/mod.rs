@@ -731,3 +731,5 @@ pub use machine_awakening::*;
 pub mod martyrs_engine;
 
 pub mod rogue_automation_cults;
+
+pub mod symbiotic_habitation;
