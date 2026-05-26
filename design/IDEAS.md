@@ -21131,3 +21131,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you build the self-healing invincible fleet and risk starving your own population, or stick to traditional alloy armor that requires expensive, vulnerable drydocks to repair?
 
 ---
+
+## The Bureaucratic Black Hole
+
+**Layer:** Cross-layer
+
+**Fantasy:** An administrative sector becomes so massive and complex that it starts "losing" entire shipments or fleets, not to malice, but to pure procedural entropy.
+
+**Mechanic:** As your empire expands, you construct "Administrative Hubs" on planets to reduce system-wide sprawl penalties. If these hubs are understaffed or staffed by Pops with low skills, they generate "Red Tape." High Red Tape has a chance to cause Layer 2 cargo ships to endlessly orbit the planet waiting for clearance, effectively delaying or temporarily deleting resources from your supply chain.
+
+**Emergence:** You send an emergency relief fleet to a starving world, but it gets routed through a high Red Tape administrative world. The fleet sits in orbit for months waiting for the correct stamps, while the destination world starves and revolts.
+
+**Tension:** Do you streamline your bureaucracy by giving immense, un-auditable power to a few highly skilled Pops (risking corruption and embezzlement), or maintain an inefficient, slow bureaucracy that chokes on its own paperwork during crises?
+
+---
+
+## The Sentient Landfill
+
+**Layer:** 1
+
+**Fantasy:** The garbage you ignored starts organizing itself.
+
+**Mechanic:** Waste produced by industrial Pops is dumped in designated zones. If the waste accumulates too much, it begins to attract scavengers and rogue nanites, eventually merging into a sprawling "Junk biome". Pops living near the Junk biome gain a massive "Scavenger" trait, losing normal productivity but producing random advanced resources from the trash.
+
+**Emergence:** You try to clean up the massive landfill to build a shiny new district, but the local Scavenger Pops violently defend their "resource node", effectively starting a civil war over a pile of garbage.
+
+**Tension:** Do you spend resources incinerating waste safely, or let it accumulate into a free, unpredictable resource node that creates a mutated, fiercely independent underclass in your colony?
+
+---
+
+## Sub-light Nostalgia
+
+**Layer:** 2
+
+**Fantasy:** Exploring the ruins of your own ancient decisions.
+
+**Mechanic:** Early game ships travel at sub-light speeds, taking centuries to reach distant stars. By the time you invent FTL (Faster-Than-Light) drives, you can easily outpace them. These ancient generation ships are still slowly crossing the void.
+
+**Emergence:** Your modern FTL fleet arrives at a strategic chokepoint to fortify it, only to find one of your own 500-year-old sub-light generation ships already there. The descendants on board don't recognize your modern empire and refuse to integrate, forcing you to conquer or negotiate with your own ancestors.
+
+**Tension:** Do you let the primitive generation ships colonize planets with archaic technology and differing cultures, or intercept and forcefully assimilate them into your modern empire?
+
+---
