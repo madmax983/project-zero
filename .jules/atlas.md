@@ -1,6 +1,12 @@
-**[Title] Break The ViewMode Knot: Move ViewMode to Shared**
-**Tangle:** `ViewMode` is defined in `layer2::system`. It is required by `ui` (`input.rs`, `shell/runtime.rs`, `mod.rs`), `setup.rs`, and `layer2` elements (`render.rs`, `visibility.rs`). This couples `ui` and `setup` to `layer2`.
+**Atlas's Journal**
+
+**[Title] Fix Circular Dependencies in SCALE Modules**
+**Tangle:** The codebase had multiple cyclic dependencies including:
+1. `layer1::core` <-> `layer1::anomalies`
+2. `shared::keyboard` <-> `ui::shell`
+3. `ui::input` <-> `ui::menu_state`
+
 **Blueprint:**
-1. Extract `ViewMode` enum from `layer2::system.rs` into `shared::view_mode.rs`.
-2. Update imports in `setup.rs`, `layer2::render.rs`, `layer2::system.rs`, `layer2::visibility.rs`, `ui::input.rs`, `ui::shell::runtime.rs`, and `ui::mod.rs` to use `shared::view_mode::ViewMode`.
-3. Add `pub mod view_mode;` to `shared/mod.rs`.
+1. Moved `cryptid_chronicle_bridge_system` from `src/layer1/core/integration.rs` to `src/layer1/anomalies/cryptid.rs` to ensure domain logic belongs with its specific feature definition.
+2. Extracted tests dealing with input context (such as route_input behaviour) from `src/ui/menu_state.rs` into `src/ui/input.rs`, maintaining testing cohesion.
+3. Moved the test `test_shell_config_round_trips_default_workspace` from `src/shared/keyboard.rs` into `src/ui/shell/config.rs` where the `ShellConfig` type is actually defined.

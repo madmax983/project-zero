@@ -17,15 +17,22 @@ fn setup_app() -> World {
 fn test_crop_mutation_triggers_contamination() {
     let mut world = setup_app();
 
-    let crop = world.spawn((
-        Crop { base_yield: 10, current_yield: 10 },
-        GridPosition { x: 5, y: 5 },
-    )).id();
+    let crop = world
+        .spawn((
+            Crop {
+                base_yield: 10,
+                current_yield: 10,
+            },
+            GridPosition { x: 5, y: 5 },
+        ))
+        .id();
 
-    world.resource_mut::<Events<CropMutationEvent>>().send(CropMutationEvent {
-        crop_entity: crop,
-        mutation_type: MutationType::ToxicSpores,
-    });
+    world
+        .resource_mut::<Events<CropMutationEvent>>()
+        .send(CropMutationEvent {
+            crop_entity: crop,
+            mutation_type: MutationType::ToxicSpores,
+        });
 
     let mut schedule = Schedule::default();
     schedule.add_systems(crop_mutation_mycelial_bridge);
@@ -44,9 +51,11 @@ fn test_crop_mutation_triggers_contamination() {
 fn test_contamination_triggers_chronicle() {
     let mut world = setup_app();
 
-    world.resource_mut::<Events<ContaminationEvent>>().send(ContaminationEvent {
-        source: GridPosition { x: 5, y: 5 },
-    });
+    world
+        .resource_mut::<Events<ContaminationEvent>>()
+        .send(ContaminationEvent {
+            source: GridPosition { x: 5, y: 5 },
+        });
 
     let mut schedule = Schedule::default();
     schedule.add_systems(mycelial_chronicle_bridge);

@@ -2024,10 +2024,18 @@ fn print_stories(world: &mut World) {
     let mut table = Table::new();
     table.set_content_arrangement(ContentArrangement::Dynamic);
     table.set_header(vec![
-        Cell::new("Genre").fg(comfy_table::Color::Yellow).add_attribute(comfy_table::Attribute::Bold),
-        Cell::new("Historical Date").fg(comfy_table::Color::Yellow).add_attribute(comfy_table::Attribute::Bold),
-        Cell::new("Mutations").fg(comfy_table::Color::Yellow).add_attribute(comfy_table::Attribute::Bold),
-        Cell::new("Snippet").fg(comfy_table::Color::Yellow).add_attribute(comfy_table::Attribute::Bold),
+        Cell::new("Genre")
+            .fg(comfy_table::Color::Yellow)
+            .add_attribute(comfy_table::Attribute::Bold),
+        Cell::new("Historical Date")
+            .fg(comfy_table::Color::Yellow)
+            .add_attribute(comfy_table::Attribute::Bold),
+        Cell::new("Mutations")
+            .fg(comfy_table::Color::Yellow)
+            .add_attribute(comfy_table::Attribute::Bold),
+        Cell::new("Snippet")
+            .fg(comfy_table::Color::Yellow)
+            .add_attribute(comfy_table::Attribute::Bold),
     ]);
 
     for story in &tradition.stories {
@@ -2047,7 +2055,9 @@ fn print_stories(world: &mut World) {
         };
 
         table.add_row(vec![
-            Cell::new(format!("{:?}", story.genre)).fg(genre_color).add_attribute(comfy_table::Attribute::Bold),
+            Cell::new(format!("{:?}", story.genre))
+                .fg(genre_color)
+                .add_attribute(comfy_table::Attribute::Bold),
             Cell::new(story.historical_date.to_string()),
             Cell::new(story.mutations.to_string()).fg(mutations_color),
             Cell::new(format!("\"{}\"", story.text)).add_attribute(comfy_table::Attribute::Italic),

@@ -168,4 +168,11 @@ mod tests {
 
         assert!(cfg.decoded_persisted_layout().is_none());
     }
+    #[test]
+    fn test_shell_config_round_trips_default_workspace() {
+        let cfg = ShellConfig::default();
+        let json = serde_json::to_string(&cfg).unwrap();
+        let decoded: ShellConfig = serde_json::from_str(&json).unwrap();
+        assert_eq!(decoded.startup_workspace, "Colony Ops");
+    }
 }
