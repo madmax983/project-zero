@@ -147,6 +147,9 @@ pub mod radioactive_batteries;
 pub mod stowaway_clutter;
 
 #[cfg(feature = "nova")]
+pub mod manic_cleaning;
+
+#[cfg(feature = "nova")]
 pub mod supercharged_anomalies;
 
 #[cfg(feature = "nova")]
