@@ -51,6 +51,10 @@ pub fn check_mutation_system(
         if tenure.get_ticks(AssignmentType::Administrator) >= MUTATION_THRESHOLD && !traits.has(Trait::SilverTongue) {
             traits.add(Trait::SilverTongue);
         }
+        if tenure.get_ticks(AssignmentType::DeepMining) >= MUTATION_THRESHOLD && !traits.has(Trait::MoleEyes) {
+            traits.add(Trait::MoleEyes);
+            traits.add(Trait::LightBlindness);
+        }
         // TODO: add other job traits once AssignmentType supports hauling and engineering
     }
 }
@@ -100,6 +104,27 @@ mod tests {
 
         let traits = world.get::<Traits>(pop).unwrap();
         assert!(traits.has(Trait::GreenThumb)); // FarmWorker mutation
+    }
+
+    #[test]
+    fn test_deep_mining_mutation_trigger_threshold() {
+        let mut world = World::new();
+        // Spawn pop with tenure just below threshold
+        let pop = world.spawn((
+            Pop,
+            Job { workplace: Entity::PLACEHOLDER, job_type: AssignmentType::DeepMining },
+            JobTenure::with_ticks(AssignmentType::DeepMining, 9999), // Threshold 10000
+            Traits::default(),
+        )).id();
+
+        // Run systems
+        let mut schedule = Schedule::default();
+        schedule.add_systems((update_tenure_system, check_mutation_system).chain());
+        schedule.run(&mut world);
+
+        let traits = world.get::<Traits>(pop).unwrap();
+        assert!(traits.has(Trait::MoleEyes));
+        assert!(traits.has(Trait::LightBlindness));
     }
 
     #[test]
