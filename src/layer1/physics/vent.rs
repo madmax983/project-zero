@@ -197,13 +197,17 @@ mod tests {
         });
         app.update();
 
-        let rat_path = app.world().get::<PathResult>(rat).unwrap();
+        let Some(rat_path) = app.world().get::<PathResult>(rat) else {
+            panic!("missing PathResult");
+        };
         assert!(
             rat_path.success,
             "Small entities should path through open vents"
         );
 
-        let human_path = app.world().get::<PathResult>(human).unwrap();
+        let Some(human_path) = app.world().get::<PathResult>(human) else {
+            panic!("missing PathResult");
+        };
         assert!(
             !human_path.success,
             "Large entities should not path through vents"
@@ -239,15 +243,19 @@ mod tests {
         });
         app.update();
 
-        let rat_path = app.world().get::<PathResult>(rat).unwrap();
+        let Some(rat_path) = app.world().get::<PathResult>(rat) else {
+            panic!("missing PathResult");
+        };
         assert!(
             !rat_path.success,
             "Small entities should not path through grated vents"
         );
 
         // Verify airflow is still present but reduced
-        let airflow_amount =
-            calculate_vent_airflow(app.world().get::<VentConnection>(vent).unwrap());
+        let Some(vent_conn) = app.world().get::<VentConnection>(vent) else {
+            panic!("missing VentConnection");
+        };
+        let airflow_amount = calculate_vent_airflow(vent_conn);
         assert!(
             airflow_amount > 0.0 && airflow_amount < 1.0,
             "Grated vent should have reduced airflow"

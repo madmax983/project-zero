@@ -353,7 +353,9 @@ mod tests {
         // Actually, if it's rock, it HAS a roof implicitly.
 
         // 3. Victim takes damage
-        let health = world.get::<Health>(victim).unwrap();
+        let Some(health) = world.get::<Health>(victim) else {
+            panic!("Missing Health");
+        };
         assert!(health.current < 100.0);
     }
 
