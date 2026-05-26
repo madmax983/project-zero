@@ -443,6 +443,7 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::integration::crop_mutation_chronicle_bridge,
             crate::layer1::integration::grafting_chronicle_bridge,
             crate::layer1::integration::temporal_stutter_chronicle_bridge,
+            crate::layer1::core::integration::temporal_echo_maintenance_bridge_system,
             crate::layer1::integration::parasitic_architecture_chronicle_bridge,
             crate::layer1::core::integration::living_architecture_chronicle_bridge,
             crate::layer1::core::integration::secret_society_discovery_bridge_system,

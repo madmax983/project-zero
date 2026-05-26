@@ -1207,3 +1207,9 @@
 - **Glue added:** `crop_mutation_mycelial_bridge` and `mycelial_chronicle_bridge` in `src/layer1/core/integration.rs`
 - **Schedule:** Registered in Observation schedule
 - **Tests:** `tests/integration/mycelial_network_bridge.rs`
+
+### INT-495: Temporal Echoes -> Maintenance Debt
+- **Date:** 2026-10-31
+- **Systems connected:** `BuildingAge` -> `temporal_echo_maintenance_bridge_system` -> `Structure`
+- **Glue added:** Added `temporal_echo_maintenance_bridge_system` in `src/layer1/core/integration.rs` to convert accumulated `BuildingAge.ticks` into `Structure` damage according to base entropy decay. Registered in `Layer1SystemSet::Observation`.
+- **Tests:** `tests/integration/temporal_echoes_maintenance.rs`

@@ -487,3 +487,5 @@ mod void_sirens_chronicle;
 
 #[path = "integration/mycelial_network_bridge.rs"]
 mod mycelial_network_bridge;
+#[path = "integration/temporal_echoes_maintenance.rs"]
+mod temporal_echoes_maintenance;

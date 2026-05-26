@@ -637,3 +637,4 @@
 - [x] `INT-480` Integration: Memory Forgery -> Chronicle — completed 2026-05-25
 - [x] `INT-1067` Integration: Void Sirens -> Chronicle — completed 2026-05-25
 - [x] `INT-481` Integration: Subterranean Mycelial Network -> Disease & Chronicle — completed 2026-10-31
+- [x] `INT-495` Integration: Temporal Echoes -> Maintenance Debt — completed 2026-10-31
