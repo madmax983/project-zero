@@ -2386,6 +2386,33 @@ pub fn truth_outbreak_chronicle_bridge(
 }
 
 /// INT-1069: Bridges ExistentialAuditCompletedEvent to AddChronicleEvent (Chronicle).
+pub fn temporal_echo_chronicle_bridge(
+    mut echo_events: EventReader<crate::layer1::anomalies::temporal_echoes::TemporalEchoExperiencedEvent>,
+    mut decay_events: EventReader<crate::layer1::anomalies::temporal_echoes::TemporalDecayExperiencedEvent>,
+    mut chronicle: EventWriter<AddChronicleEvent>,
+) {
+    for event in echo_events.read() {
+        if event.gained_skills {
+            chronicle.send(AddChronicleEvent {
+                importance: EventImportance::Major,
+                text: "A Pop experienced a Temporal Echo, gaining skills from their future self!".to_string(),
+            });
+        } else {
+            chronicle.send(AddChronicleEvent {
+                importance: EventImportance::Major,
+                text: "A Pop experienced a Temporal Echo, suffering severe stress from a vision of their future demise.".to_string(),
+            });
+        }
+    }
+
+    for _ in decay_events.read() {
+        chronicle.send(AddChronicleEvent {
+            importance: EventImportance::Standard,
+            text: "A building in a Chrono-Anomaly aged rapidly.".to_string(),
+        });
+    }
+}
+
 pub fn existential_audit_chronicle_bridge(
     mut events: EventReader<
         crate::layer1::economy::existential_audit::ExistentialAuditCompletedEvent,

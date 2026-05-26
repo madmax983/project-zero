@@ -16,16 +16,26 @@ pub struct BuildingAge {
     pub ticks: u32,
 }
 
+#[derive(Event)]
+pub struct TemporalEchoExperiencedEvent {
+    pub gained_skills: bool,
+}
+
+#[derive(Event)]
+pub struct TemporalDecayExperiencedEvent;
+
 pub fn process_temporal_echo_system(
     anomalies: Query<(&ChronoAnomaly, &GridPosition)>,
     mut pops: Query<(&mut Skills, &mut StressTracker, &GridPosition), With<Pop>>,
+    mut echo_events: EventWriter<TemporalEchoExperiencedEvent>,
 ) {
     let mut rng = rand::thread_rng();
     for (anomaly, anomaly_pos) in anomalies.iter() {
         for (mut skills, mut stress, pop_pos) in pops.iter_mut() {
             if (anomaly_pos.distance_manhattan(*pop_pos) as f32) <= anomaly.radius {
                 let roll = rng.gen::<f32>();
-                if roll > 0.5 {
+                let gained_skills = roll > 0.5;
+                if gained_skills {
                     let current_xp = skills
                         .xp
                         .get(&SkillType::Engineering)
@@ -35,6 +45,7 @@ pub fn process_temporal_echo_system(
                 } else {
                     stress.accumulated_stress += 20.0;
                 }
+                echo_events.send(TemporalEchoExperiencedEvent { gained_skills });
             }
         }
     }
@@ -43,11 +54,13 @@ pub fn process_temporal_echo_system(
 pub fn process_temporal_decay_system(
     anomalies: Query<(&ChronoAnomaly, &GridPosition)>,
     mut buildings: Query<(&mut BuildingAge, &GridPosition), With<Building>>,
+    mut decay_events: EventWriter<TemporalDecayExperiencedEvent>,
 ) {
     for (anomaly, anomaly_pos) in anomalies.iter() {
         for (mut age, building_pos) in buildings.iter_mut() {
             if (anomaly_pos.distance_manhattan(*building_pos) as f32) <= anomaly.radius {
                 age.ticks += 1000;
+                decay_events.send(TemporalDecayExperiencedEvent);
             }
         }
     }
@@ -58,7 +71,10 @@ mod tests {
     use super::*;
 
     fn setup_world() -> World {
-        World::new()
+        let mut world = World::new();
+        world.init_resource::<Events<TemporalEchoExperiencedEvent>>();
+        world.init_resource::<Events<TemporalDecayExperiencedEvent>>();
+        world
     }
 
     #[test]

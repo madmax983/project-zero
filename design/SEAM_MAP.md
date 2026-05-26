@@ -1207,3 +1207,9 @@
 - **Glue added:** `crop_mutation_mycelial_bridge` and `mycelial_chronicle_bridge` in `src/layer1/core/integration.rs`
 - **Schedule:** Registered in Observation schedule
 - **Tests:** `tests/integration/mycelial_network_bridge.rs`
+
+### INT-495: Temporal Echoes -> Chronicle
+- **Date:** 2026-05-26
+- **Systems connected:** `process_temporal_echo_system`, `process_temporal_decay_system` -> `temporal_echo_chronicle_bridge` -> `AddChronicleEvent`
+- **Glue added:** `temporal_echo_chronicle_bridge` in `src/layer1/core/integration.rs`
+- **Tests:** `tests/integration/temporal_echoes_bridge.rs`

@@ -134,6 +134,8 @@ pub fn setup_world() -> World {
     world.init_resource::<bevy::prelude::Events<
         crate::layer1::economy::existential_audit::ExistentialAuditCompletedEvent,
     >>();
+    world.init_resource::<bevy_ecs::prelude::Events<crate::layer1::anomalies::temporal_echoes::TemporalEchoExperiencedEvent>>();
+    world.init_resource::<bevy_ecs::prelude::Events<crate::layer1::anomalies::temporal_echoes::TemporalDecayExperiencedEvent>>();
     world.insert_resource(crate::layer3::diplomacy::system_sovereignty::ColonyStatus {
         is_sovereign: false,
         overlord_id: Some(1),
@@ -1181,6 +1183,8 @@ mod tests {
             headless: true,
             scenario,
         });
+        world.init_resource::<bevy_ecs::prelude::Events<crate::layer1::anomalies::temporal_echoes::TemporalEchoExperiencedEvent>>();
+        world.init_resource::<bevy_ecs::prelude::Events<crate::layer1::anomalies::temporal_echoes::TemporalDecayExperiencedEvent>>();
         world
             .init_resource::<crate::layer1::environment::bio_acoustic_miasma::MiasmaRecordedSecret>(
             );

@@ -801,6 +801,8 @@ mod tests {
     #[test]
     fn test_run_simulation_tick_increments() {
         let mut world = setup_world();
+        world.init_resource::<Events<crate::layer1::anomalies::temporal_echoes::TemporalEchoExperiencedEvent>>();
+        world.init_resource::<Events<crate::layer1::anomalies::temporal_echoes::TemporalDecayExperiencedEvent>>();
         world
             .init_resource::<crate::layer1::environment::bio_acoustic_miasma::MiasmaRecordedSecret>(
             );
@@ -849,6 +851,8 @@ mod tests {
     #[test]
     fn test_run_multiple_ticks() {
         let mut world = setup_world();
+        world.init_resource::<Events<crate::layer1::anomalies::temporal_echoes::TemporalEchoExperiencedEvent>>();
+        world.init_resource::<Events<crate::layer1::anomalies::temporal_echoes::TemporalDecayExperiencedEvent>>();
         world
             .init_resource::<crate::layer1::environment::bio_acoustic_miasma::MiasmaRecordedSecret>(
             );
@@ -949,6 +953,8 @@ mod tests {
         world.init_resource::<Events<crate::layer3::fleets::ColonyFoundedEvent>>();
         world.init_resource::<crate::layer1::diplomacy::factions::rivals::TerritoryGrid>();
         world.init_resource::<Events<crate::layer1::temporal_ghost_towns::TemporalStutterEvent>>();
+        world.init_resource::<Events<crate::layer1::anomalies::temporal_echoes::TemporalEchoExperiencedEvent>>();
+        world.init_resource::<Events<crate::layer1::anomalies::temporal_echoes::TemporalDecayExperiencedEvent>>();
         world.init_resource::<Events<crate::layer3::planet::black_market_terraforming::RogueTerraformEvent>>();
         world.init_resource::<Events<crate::layer3::market::quantum_famine::MarketPanicEvent>>();
         world.init_resource::<Events<crate::layer3::market::quantum_famine::ExportDumpEvent>>();
