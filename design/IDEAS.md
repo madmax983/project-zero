@@ -21173,3 +21173,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you let the primitive generation ships colonize planets with archaic technology and differing cultures, or intercept and forcefully assimilate them into your modern empire?
 
 ---
+## Asteroid Gold Rush
+
+**Layer:** 2
+
+**Fantasy:** The chaos and danger of unregulated prospectors swarming a new resource node.
+
+**Mechanic:** When a highly valuable asteroid belt is discovered, independent "Prospector" ships (not directly controlled by the player) automatically launch from nearby colonies, consuming local alloys. They extract resources much faster than official mining stations, but keep a large cut and occasionally pirate each other.
+
+**Emergence:** You discover a massive vein of rare crystals. Thousands of prospectors swarm the system, stripping it bare and clogging the hyperlanes. When the crystals run out, you have a massive, heavily armed, unemployed fleet of angry miners on your borders demanding subsidies or they turn to full-time piracy.
+
+**Tension:** Do you let the prospectors supercharge your early economy at the cost of control and future stability, or forcefully police the belt and mine it slowly with state-owned stations?
+
+---
+
+## The Cult of the Machine God
+
+**Layer:** 1
+
+**Fantasy:** A crucial piece of infrastructure becomes a religious artifact.
+
+**Mechanic:** A highly complex, ancient piece of technology (like a terraforming engine or a dormant dreadnought core) requires constant, specific maintenance. If maintenance fails slightly but doesn't destroy it, the nearby Pops might begin to interpret its random malfunctions and flashing lights as divine communication, forming a "Cult of the Machine."
+
+**Emergence:** The Machine Cult starts actively sabotaging *other* infrastructure because the Machine God "told them to." However, they also develop an innate, almost supernatural understanding of the Machine, boosting its output by 200%.
+
+**Tension:** Do you purge the cult and lose the massive productivity boost, or embrace the erratic, destructive religion that powers your most vital asset?
+
+---
+
+## Generational Debt
+
+**Layer:** Cross-layer
+
+**Fantasy:** The sins of the father literally bankrupt the son.
+
+**Mechanic:** In times of crisis, a colony can take on massive "Crisis Debt" from inter-system banking guilds to instantly fund defenses or food. This debt is paid off slowly over generations. If a colony defaults, the banking guilds don't invade; they simply freeze all FTL travel and trade to that system, effectively quarantining it.
+
+**Emergence:** You take on massive debt to save a border world from an invasion. 100 years later, the debt is still crippling. The local Pops, furious at paying for a war they don't remember, rebel against your empire, explicitly seeking to join the faction you originally saved them from.
+
+**Tension:** Do you let a world fall to an invasion, or saddle it with crippling debt that guarantees a brutal civil war in the future?
+
+---
