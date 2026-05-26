@@ -57,7 +57,6 @@ pub fn process_temporal_decay_system(
 mod tests {
     use super::*;
 
-
     fn setup_world() -> World {
         World::new()
     }

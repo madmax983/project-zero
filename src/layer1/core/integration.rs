@@ -26,7 +26,6 @@ use crate::shared::colony::ColonyName;
 use crate::shared::log::MessageLog;
 use crate::shared::narrative::{NarrativeContext, NarrativeGenerator};
 use crate::shared::time::SimulationTime;
-use bevy::prelude::Time;
 use bevy_ecs::prelude::*;
 use rand::prelude::*;
 use ratatui::style::Color;
