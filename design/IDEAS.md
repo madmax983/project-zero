@@ -21214,3 +21214,59 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you let a world fall to an invasion, or saddle it with crippling debt that guarantees a brutal civil war in the future?
 
 ---
+
+## Refugee Weaponization
+
+**Layer:** Cross-layer
+
+**Fantasy:** Using the humanitarian crises you caused as a demographic weapon against your enemies.
+
+**Mechanic:** When you glass a planet or conquer a system, millions of refugees flee. You can deliberately funnel these refugee fleets toward rival empires by closing your borders and leaving specific hyperlanes open, overwhelming their Layer 1 economies with sudden, massive population spikes that cause starvation and unrest.
+
+**Emergence:** You successfully collapse a rival's economy using refugees. However, those refugees eventually integrate, taking over the rival's government through sheer numbers and forming a fanatical, vengeance-driven superpower explicitly dedicated to destroying you.
+
+**Tension:** Do you absorb refugees to boost your own long-term population at a massive short-term cost, or weaponize them against rivals and risk creating a future nemesis?
+
+---
+
+## The Lotus Spores
+
+**Layer:** 1
+
+**Fantasy:** A local ecosystem that is terrifyingly accommodating, making your colonists not want to leave or work.
+
+**Mechanic:** A planet's native flora produces spores that chemically mimic extreme happiness and contentment. Pops working outside gain massive mood buffs but slowly lose the desire to work, eventually becoming "Lotus Eaters" who refuse to do anything but bask in the flora.
+
+**Emergence:** Your brutal penal colony suddenly becomes the happiest settlement in your empire. The prisoners stop rioting, but they also stop mining. When you send enforcers to burn the flora, the normally peaceful prisoners violently defend their "paradise".
+
+**Tension:** Do you utilize the flora as a cheap way to pacify unruly Pops at the cost of long-term productivity, or eradicate it and face immediate, brutal uprisings?
+
+---
+
+## Ghost Fleets of the Automation War
+
+**Layer:** 2
+
+**Fantasy:** Ancient, automated warships that are still fighting a war that ended centuries ago.
+
+**Mechanic:** Systems occasionally contain dormant "Ghost Fleets"—AI controlled ships that only activate when a specific trigger occurs (e.g., a specific energy weapon is fired, or a specific communication frequency is used). They don't communicate, they just execute ancient targeting protocols.
+
+**Emergence:** A minor border skirmish between your empire and a rival accidentally triggers a dormant Ghost Fleet. The ancient AI identifies both sides as "The Enemy" and begins a system-wide purge, forcing you and your rival to temporarily ally just to survive the automated apocalypse.
+
+**Tension:** Do you risk exploring and colonizing systems with dormant Ghost Fleets, hoping you don't accidentally trigger their activation codes, or spend massive resources pre-emptively destroying them?
+
+---
+
+## The Historian's Rebellion
+
+**Layer:** Cross-layer
+
+**Fantasy:** The people who write your history decide they don't like you anymore.
+
+**Mechanic:** As your empire grows, you rely on "Chronicler" Pops to maintain cultural cohesion and justify your rule. If these Pops become disloyal or discover suppressed atrocities (like a covered-up famine), they can actively rewrite your empire's narrative, tanking your legitimacy and causing widespread rebellions based on historical truths.
+
+**Emergence:** You perfectly execute a secret genocide of a rival faction. A century later, an archeologist Pop uncovers the mass graves and publishes the findings. Your entire empire splinters into civil war out of sheer moral outrage, led by the very academics you funded.
+
+**Tension:** Do you allow academic freedom and risk your dark secrets coming to light, or violently suppress the truth, guaranteeing that when it eventually leaks, the backlash will be catastrophic?
+
+---
