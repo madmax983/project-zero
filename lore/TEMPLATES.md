@@ -8112,3 +8112,235 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: The disease hit the [MYCELIAL_NETWORK_NAME]. It resulted in [MYCELIAL_DISEASE_VECTOR]."
 - "We trained it too well. The pathogen used [MYCELIAL_NETWORK_NAME] to cause [MYCELIAL_DISEASE_VECTOR]. [YEAR]."
 - "A localized outbreak became [MYCELIAL_DISEASE_VECTOR] thanks to the [MYCELIAL_NETWORK_NAME]. [YEAR]."
+
+## The Generational Mutiny Templates
+
+### Template: MUTINY_STARTED
+**Generates:** Play event
+**Slots:** [SHIP_NAME], [YEAR], [VOIDBORN_TRAIT]
+
+**Patterns:**
+- "[YEAR]: The long sleep is over, but [SHIP_NAME] will not land. They share [VOIDBORN_TRAIT] and reject the dirt."
+- "Arrival day on [SHIP_NAME]. The descendants possess [VOIDBORN_TRAIT]. They lock the airlocks. [YEAR]."
+- "We traveled so far, but the children are strangers. The crew of [SHIP_NAME] shows [VOIDBORN_TRAIT]. The mutiny begins. [YEAR]."
+
+### Template: SCHISM_FRACTURED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [SCHISM_COMPLAINT]
+
+**Patterns:**
+- "[YEAR]: The planet is ours, but the ship is theirs. A faction in [COLONY] [SCHISM_COMPLAINT]."
+- "A house divided upon arrival. Half of [COLONY] [SCHISM_COMPLAINT]. We brought our war with us. [YEAR]."
+
+## The Ghost Shift Templates
+
+### Template: GHOST_SHIFT_ESTABLISHED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [GHOST_SHIFT_RUMOR]
+
+**Patterns:**
+- "[YEAR]: The machines run at night. The people in [COLONY] whisper of [GHOST_SHIFT_RUMOR]."
+- "We sleep, but the work continues. Rumors spread of [GHOST_SHIFT_RUMOR]. [YEAR]."
+- "[COLONY], [YEAR]: Production quotas met during the dark hours. They attribute it to [GHOST_SHIFT_RUMOR]."
+
+### Template: GHOST_WORKER_COLLAPSE
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [POP_NAME], [STIM_COLLAPSE_SYMPTOM]
+
+**Patterns:**
+- "[YEAR]: The illusion breaks. [POP_NAME] died of [STIM_COLLAPSE_SYMPTOM]. They were not spirits. They were just fast."
+- "[COLONY] panics. [POP_NAME] was seen collapsing from [STIM_COLLAPSE_SYMPTOM]. The ghost shift is real, and it is killing them. [YEAR]."
+
+## Predictive Sabotage Templates
+
+### Template: AI_PREDICTION_LOGGED
+**Generates:** Play event
+**Slots:** [EMPIRE_NAME], [YEAR], [PREDICTED_THREAT]
+
+**Patterns:**
+- "[YEAR]: The Substrate mind calculates. It sees [PREDICTED_THREAT] from [EMPIRE_NAME]. It will act."
+- "Before the spark, the fire is known. [EMPIRE_NAME] is modeled to cause [PREDICTED_THREAT]. [YEAR]."
+
+### Template: SABOTAGE_EXECUTED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [COVERT_SABOTAGE]
+
+**Patterns:**
+- "[YEAR]: The algorithm demanded weakness. [COLONY] suffers [COVERT_SABOTAGE]."
+- "We struck first, without knowing we struck at all. [COVERT_SABOTAGE] executed in [COLONY]. [YEAR]."
+
+## The Nostalgia Tax Templates
+
+### Template: NOSTALGIA_ADDICTION
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [OBSOLETE_PRACTICE], [NOSTALGIA_JUSTIFICATION]
+
+**Patterns:**
+- "[YEAR]: The virtual past is a drug. [COLONY] demands a return to [OBSOLETE_PRACTICE]. They say [NOSTALGIA_JUSTIFICATION]."
+- "We built a utopia, but they want the dirt. Demands for [OBSOLETE_PRACTICE] rise in [COLONY]. [NOSTALGIA_JUSTIFICATION]. [YEAR]."
+- "[COLONY], [YEAR]: High-tech sectors halt. The workers want [OBSOLETE_PRACTICE], claiming [NOSTALGIA_JUSTIFICATION]."
+
+### Template: VR_WITHDRAWAL_CRASH
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [POP_NAME]
+
+**Patterns:**
+- "[YEAR]: We forced them into the future. [POP_NAME] suffers violent VR-withdrawal. [COLONY] weeps."
+- "The simulations were shut down. [POP_NAME] could not face the sterile present. [YEAR]."
+
+## Sentient Landfills Templates
+
+### Template: LANDFILL_AWAKENS
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [TRASH_INTELLIGENCE]
+
+**Patterns:**
+- "[YEAR]: The waste pit we left outside [COLONY] is moving. It has formed [TRASH_INTELLIGENCE]."
+- "Decades of ignored runoff have coalesced. [TRASH_INTELLIGENCE] observed near [COLONY]. [YEAR]."
+- "[COLONY], [YEAR]: The garbage speaks. Static charge and nanites have birthed [TRASH_INTELLIGENCE]."
+
+### Template: LANDFILL_EXPANSION
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [LANDFILL_DEMAND]
+
+**Patterns:**
+- "[YEAR]: The canyon crawls out. It consumes the agricultural sector and demands [LANDFILL_DEMAND]."
+- "We made it, and now we must fight it. The waste pile expands toward [COLONY], insisting on [LANDFILL_DEMAND]. [YEAR]."
+
+## Orbital Eclipse Worship Templates
+
+### Template: ORBITAL_CULT_FORMED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [ORBITAL_GOD]
+
+**Patterns:**
+- "[YEAR]: The drydock blocks the sun. Below, [COLONY] looks up and names it [ORBITAL_GOD]."
+- "A strategic asset above, a deity below. They pray to [ORBITAL_GOD] in [COLONY]. [YEAR]."
+
+### Template: ECLIPSE_OBSERVED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [ECLIPSE_RITUAL]
+
+**Patterns:**
+- "[YEAR]: The shadow passes. [COLONY] begins [ECLIPSE_RITUAL]. We cannot stop them."
+- "[ORBITAL_GOD] covers the sky. Morale surges as [COLONY] performs [ECLIPSE_RITUAL]. [YEAR]."
+
+### Template: ORBITAL_GOD_MOVED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR]
+
+**Patterns:**
+- "[YEAR]: We moved the structure for defense. [COLONY] riots. We stole their god."
+- "The sky is permanently bright again. [COLONY] burns in holy fury. [YEAR]."
+
+## Biological Ransomware Templates
+
+### Template: RANSOMWARE_INFECTION
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [TOXIC_BYPRODUCT], [RANSOM_MINERAL]
+
+**Patterns:**
+- "[YEAR]: The crops are held hostage. They will produce [TOXIC_BYPRODUCT] unless [RANSOM_MINERAL] is applied."
+- "A tailored plague hits [COLONY] agriculture. Pay in [RANSOM_MINERAL], or reap [TOXIC_BYPRODUCT]. [YEAR]."
+
+### Template: TOXIC_MUTATION_EMBRACED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [TOXIC_BYPRODUCT]
+
+**Patterns:**
+- "[YEAR]: We refused the ransom. But a sect in [COLONY] ate the [TOXIC_BYPRODUCT] and survived. They demand we never cure it."
+- "Mutation over extortion. They now require [TOXIC_BYPRODUCT] to live. [YEAR]."
+
+## Solar Funerals Templates
+
+### Template: SOLAR_FUNERAL_TREND
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [SOLAR_FUNERAL_VESSEL]
+
+**Patterns:**
+- "[YEAR]: Wealth breeds new vanity. The elites of [COLONY] demand burial via [SOLAR_FUNERAL_VESSEL] into the sun."
+- "The ultimate status symbol. Firing [SOLAR_FUNERAL_VESSEL] into the local star. [YEAR]."
+
+### Template: SOLAR_FUNERAL_MUTINY
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [SOLAR_FUNERAL_COST]
+
+**Patterns:**
+- "[YEAR]: We banned the practice due to [SOLAR_FUNERAL_COST]. In grief and rage, they hijacked a dreadnought."
+- "A military vessel became a mass grave, flown directly into the sun. The cost of banning the rituals. [YEAR]."
+
+## FTL Speed Traps Templates
+
+### Template: SPEED_TRAP_DEPLOYED
+**Generates:** Play event
+**Slots:** [SYSTEM], [YEAR], [SPEED_TRAP_DAMAGE], [TOLL_DEMAND]
+
+**Patterns:**
+- "[YEAR]: Grav-Tethers online in [SYSTEM]. Incoming fleets will suffer [SPEED_TRAP_DAMAGE] and face [TOLL_DEMAND]."
+- "We turned the chokepoint into a toll-road. [SPEED_TRAP_DAMAGE] and [TOLL_DEMAND] await all arrivals. [YEAR]."
+
+### Template: NEUTRAL_TRAP_INCIDENT
+**Generates:** Play event
+**Slots:** [EMPIRE_NAME], [YEAR]
+
+**Patterns:**
+- "[YEAR]: A neutral caravan hit the trap. [EMPIRE_NAME] declares war for piracy."
+- "We tried to bleed invaders, but caught merchants instead. [EMPIRE_NAME] is mobilizing. [YEAR]."
+
+## The Translator's Strike Templates
+
+### Template: TRANSLATION_SABOTAGE
+**Generates:** Play event
+**Slots:** [EMPIRE_NAME], [YEAR], [DIPLOMATIC_MISTRANSLATION]
+
+**Patterns:**
+- "[YEAR]: The Xenolinguists struck. They [DIPLOMATIC_MISTRANSLATION] with [EMPIRE_NAME]."
+- "We meant peace. The overworked translators sent war. [DIPLOMATIC_MISTRANSLATION] sent to [EMPIRE_NAME]. [YEAR]."
+
+### Template: AI_TRANSLATION_ERROR
+**Generates:** Play event
+**Slots:** [EMPIRE_NAME], [YEAR]
+
+**Patterns:**
+- "[YEAR]: We fired the organic translators. The AI made a 10% probability error. Diplomatic incident with [EMPIRE_NAME]."
+- "The machines lack nuance. A flat translation error has sparked conflict with [EMPIRE_NAME]. [YEAR]."
+
+## Symbiotic Hull Plating Templates
+
+### Template: BIO_ARMOR_EQUIPPED
+**Generates:** Play event
+**Slots:** [FLEET_NAME], [YEAR], [SYMBIOTIC_HULL]
+
+**Patterns:**
+- "[YEAR]: [FLEET_NAME] is wrapped in [SYMBIOTIC_HULL]. It bleeds when hit."
+- "We grew the armor. [FLEET_NAME] now utilizes [SYMBIOTIC_HULL]. [YEAR]."
+
+### Template: FLEET_CAUSES_FAMINE
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [FLEET_HUNGER]
+
+**Patterns:**
+- "[YEAR]: The victorious fleet returns. As it heals, it begins [FLEET_HUNGER]. [COLONY] starves."
+- "The ships are safe, but the people die. [FLEET_HUNGER] causes famine in [COLONY]. [YEAR]."
+
+## Ruin Discovery Templates
+
+### Template: RUIN_DISCOVERY
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [RUIN_CIV], [RUIN_AGE], [ARTIFACT]?
+
+**Patterns:**
+- "[COLONY] surveyors report structures. Old. Not ours."
+- "They found [RUIN_CIV] beneath the soil of [COLONY]. Dead [RUIN_AGE] years."
+- "Year [YEAR]: [COLONY] is not the first. [RUIN_CIV] was here. [RUIN_CIV] is gone."
+
+
+## Temporal Echoes Templates
+
+### Template: TEMPORAL_ECHO_SEEN
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [POP_NAME], [ECHO_SIGHTING]
+
+**Patterns:**
+- "[YEAR]: Time stutters in [COLONY]. [POP_NAME] reports [ECHO_SIGHTING]."
+- "The past bleeds into the present. [POP_NAME] experienced [ECHO_SIGHTING]. [YEAR]."
