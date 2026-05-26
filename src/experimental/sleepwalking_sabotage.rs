@@ -41,18 +41,23 @@ mod tests {
             GridPosition { x: 5, y: 5 },
         ));
 
-        let battery = world.spawn((
-            Battery {
-                capacity: 100.0,
-                charge: 50.0,
-                max_throughput: 10.0,
-            },
-            GridPosition { x: 5, y: 5 },
-        )).id();
+        let battery = world
+            .spawn((
+                Battery {
+                    capacity: 100.0,
+                    charge: 50.0,
+                    max_throughput: 10.0,
+                },
+                GridPosition { x: 5, y: 5 },
+            ))
+            .id();
 
         world.run_system_once(sleepwalking_sabotage_system).unwrap();
 
         let b = world.get::<Battery>(battery).unwrap();
-        assert!(b.charge < 50.0, "Battery charge should have been drained by the sleepwalking pop");
+        assert!(
+            b.charge < 50.0,
+            "Battery charge should have been drained by the sleepwalking pop"
+        );
     }
 }

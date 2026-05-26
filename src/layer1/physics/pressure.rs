@@ -74,11 +74,13 @@ impl PressureGrid {
 
     /// Create a new empty pressure grid (initialized to 0.0).
     #[must_use]
-    pub fn new(width: usize, height: usize) -> Self {
-        let size = width
-            .checked_mul(height)
-            .expect("Grid size overflow or too large");
-        assert!(size <= 10_000_000, "Grid size overflow or too large");
+    pub fn new(mut width: usize, mut height: usize) -> Self {
+        let mut size = width.saturating_mul(height);
+        if size > 10_000_000 {
+            width = 1;
+            height = 1;
+            size = 1;
+        }
         Self {
             width,
             height,
@@ -688,15 +690,54 @@ mod tests {
     }
 
     #[test]
-    #[should_panic(expected = "Grid size overflow or too large")]
-    fn test_pressure_grid_new_overflow() {
-        let _grid = PressureGrid::new(usize::MAX, 2);
+    fn test_pressure_grid_new_clamps_size() {
+        let grid_large = PressureGrid::new(10000, 10000);
+        assert_eq!(
+            grid_large.values.len(),
+            1,
+            "Grid size should be clamped to 1x1 on overflow"
+        );
+        let grid_overflow = PressureGrid::new(usize::MAX, 2);
+        assert_eq!(
+            grid_overflow.values.len(),
+            1,
+            "Overflow size should be clamped to 1x1 on overflow"
+        );
     }
 
     #[test]
-    #[should_panic(expected = "Grid size overflow or too large")]
-    fn test_pressure_grid_new_too_large() {
-        let _grid = PressureGrid::new(10000, 10000); // 100,000,000 > 10,000,000
+    fn test_pressure_systems_without_grid_resource() {
+        let mut app = bevy::prelude::App::new();
+        app.add_plugins(bevy::prelude::MinimalPlugins);
+        app.init_resource::<Events<crate::layer1::chronicle::AddChronicleEvent>>();
+        // No PressureGrid inserted
+
+        let pop = app
+            .world_mut()
+            .spawn((
+                Pop,
+                Health {
+                    current: 100.0,
+                    max: 100.0,
+                    has_rust_lung: false,
+                },
+                GridPosition { x: 5, y: 5 },
+            ))
+            .id();
+
+        app.add_systems(
+            bevy::prelude::Update,
+            (pressure_damage_system, update_pressure_system),
+        );
+        app.update(); // Should early-return without panic
+
+        let Some(health) = app.world().get::<Health>(pop) else {
+            panic!("missing Health");
+        };
+        assert_eq!(
+            health.current, 100.0,
+            "Health should not change without PressureGrid"
+        );
     }
 
     #[test]
