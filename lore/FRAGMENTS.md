@@ -8685,3 +8685,160 @@ Conditions of dezoned, stateless pops.
 ## Fragment Type: [MYCELIAL_DISEASE_VECTOR]
 - an instant colony-wide pandemic
 - simultaneous contamination of all nodes
+
+## The Generational Mutiny Fragments
+
+## Fragment Type: [VOIDBORN_TRAIT]
+- a strange pallor
+- an unyielding hatred for the sky
+- eyes adjusted to the dark
+- language twisted by decades in the dark
+
+## Fragment Type: [SCHISM_COMPLAINT]
+- refused the original mission
+- broke the founder's covenant
+- demanded the ship be their home forever
+
+## The Ghost Shift Fragments
+
+## Fragment Type: [GHOST_SHIFT_RUMOR]
+- unseen hands moving in the dark
+- benevolent spirits working the night
+- blurred figures moving too fast to see
+- phantom mechanics fixing the machines
+
+## Fragment Type: [STIM_COLLAPSE_SYMPTOM]
+- sudden cardiovascular failure
+- catastrophic neural burnout
+- spontaneous cellular degradation
+
+## Predictive Sabotage Fragments
+
+## Fragment Type: [PREDICTED_THREAT]
+- an inevitable resource war
+- a statistically guaranteed betrayal
+- a future ideological schism
+
+## Fragment Type: [COVERT_SABOTAGE]
+- atmospheric processor destruction
+- silent infrastructure decay
+- targeted strategic assassination
+
+## The Nostalgia Tax Fragments
+
+## Fragment Type: [OBSOLETE_PRACTICE]
+- manual stone breaking
+- physical ledgers and ink
+- archaic agriculture methods
+- hand-cranked power generation
+
+## Fragment Type: [NOSTALGIA_JUSTIFICATION]
+- it has more soul
+- a return to the authentic struggle
+- the way the founders intended
+
+## Sentient Landfills Fragments
+
+## Fragment Type: [TRASH_INTELLIGENCE]
+- a spiteful scrap-mind
+- low-level detritus sentience
+- a sprawling neural network of garbage
+
+## Fragment Type: [LANDFILL_DEMAND]
+- planetary council representation
+- more raw industrial runoff
+- the cessation of recycling protocols
+
+## Orbital Eclipse Worship Fragments
+
+## Fragment Type: [ORBITAL_GOD]
+- the Great Shadow
+- the Steel Eclipse
+- the Void-Bringer
+
+## Fragment Type: [ECLIPSE_RITUAL]
+- cessation of all surface work
+- massive chanting in the dark
+- offerings of rare metals
+
+## Biological Ransomware Fragments
+
+## Fragment Type: [TOXIC_BYPRODUCT]
+- necrotic spores
+- acidic fruit
+- paralytic sap
+
+## Fragment Type: [RANSOM_MINERAL]
+- hyper-dense isotopic dust
+- refined zero-point salt
+- monopolized alien soil
+
+## Solar Funerals Fragments
+
+## Fragment Type: [SOLAR_FUNERAL_VESSEL]
+- expensive single-use drones
+- gold-plated micro-ships
+- custom-forged burial pods
+
+## Fragment Type: [SOLAR_FUNERAL_COST]
+- massive raw alloy drain
+- zero material return
+- crippling fuel expenditures
+
+## FTL Speed Traps Fragments
+
+## Fragment Type: [SPEED_TRAP_DAMAGE]
+- minor structural shearing
+- forced hyper-wake collapse
+- drive calibration resets
+
+## Fragment Type: [TOLL_DEMAND]
+- automatic energy credit extortion
+- immediate cargo skimming
+- arbitrary security fines
+
+## The Translator's Strike Fragments
+
+## Fragment Type: [DIPLOMATIC_MISTRANSLATION]
+- translated a peace treaty as a blood oath
+- turned a tribute demand into a declaration of total war
+- rendered a formal greeting as a mortal insult
+
+## Fragment Type: [XENOLINGUIST_GRIEVANCE]
+- severe ideological opposition
+- chronic bureaucratic overwork
+- protesting poor layer 1 conditions
+
+## Symbiotic Hull Plating Fragments
+
+## Fragment Type: [SYMBIOTIC_HULL]
+- space-borne hardening algae
+- bleeding bio-armor
+- self-healing organic plating
+
+## Fragment Type: [FLEET_HUNGER]
+- rapid agricultural drain
+- consuming colony food reserves
+- eating instead of repairing
+## Temporal Echoes Fragments
+
+## Fragment Type: [ECHO_SIGHTING]
+- ghostly after-images
+- repeated moments
+- fractured timeline visions
+
+
+
+
+
+- CHRONO_DRIVE_ACTIVATED → enables → TEMPORAL_ECHO_SEEN
+- TEMPORAL_ECHO_SEEN → increases_chance → MADNESS, SCIENTIFIC_BREAKTHROUGH
+## Ruin Discovery Fragments
+
+## Fragment Type: [RUIN_STATE]
+- crumbled
+- half-buried
+- perfectly preserved
+- partially excavated by [UNKNOWN]
+- deliberately destroyed
+- still humming with power
