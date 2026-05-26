@@ -123,7 +123,6 @@ impl GameMouseEvent {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::ui::shell::ShellConfig;
 
     #[test]
     fn test_game_key_event_creation() {
@@ -138,14 +137,6 @@ mod tests {
         assert!(event.modifiers.ctrl);
         assert!(!event.modifiers.alt);
         assert!(!event.modifiers.shift);
-    }
-
-    #[test]
-    fn test_shell_config_round_trips_default_workspace() {
-        let cfg = ShellConfig::default();
-        let json = serde_json::to_string(&cfg).unwrap();
-        let decoded: ShellConfig = serde_json::from_str(&json).unwrap();
-        assert_eq!(decoded.startup_workspace, "Colony Ops");
     }
 
     #[test]

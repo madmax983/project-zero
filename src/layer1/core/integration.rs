@@ -102,12 +102,18 @@ pub fn apex_meat_harvest_bridge_system(
 pub fn crop_mutation_mycelial_bridge(
     mut events: EventReader<crate::layer1::biology::genetics::crop_modification::CropMutationEvent>,
     mut contamination: EventWriter<crate::layer1::logistics::mycelial::ContaminationEvent>,
-    crops: Query<&crate::layer1::core::map::GridPosition, With<crate::layer1::biology::genetics::crop_modification::Crop>>,
+    crops: Query<
+        &crate::layer1::core::map::GridPosition,
+        With<crate::layer1::biology::genetics::crop_modification::Crop>,
+    >,
 ) {
     for event in events.read() {
-        if let crate::layer1::biology::genetics::crop_modification::MutationType::ToxicSpores = event.mutation_type {
+        if let crate::layer1::biology::genetics::crop_modification::MutationType::ToxicSpores =
+            event.mutation_type
+        {
             if let Ok(pos) = crops.get(event.crop_entity) {
-                contamination.send(crate::layer1::logistics::mycelial::ContaminationEvent { source: *pos });
+                contamination
+                    .send(crate::layer1::logistics::mycelial::ContaminationEvent { source: *pos });
             }
         }
     }
@@ -1898,37 +1904,6 @@ pub fn faction_strike_mob_bridge_system(
         }
 
         prev_states.insert(*faction_id, current_state);
-    }
-}
-
-use crate::layer1::anomalies::cryptid::{Cryptid, PopMood, VisionRadius};
-
-pub fn cryptid_chronicle_bridge_system(
-    cryptid_query: Query<&GridPosition, With<Cryptid>>,
-    mut pop_query: Query<(&mut PopMood, &GridPosition, &VisionRadius), With<Pop>>,
-    mut chronicle_events: EventWriter<AddChronicleEvent>,
-    time: Res<Time>,
-) {
-    for cryptid_pos in cryptid_query.iter() {
-        for (mut mood, pop_pos, vision) in pop_query.iter_mut() {
-            let dist = (cryptid_pos
-                .x
-                .abs_diff(pop_pos.x)
-                .saturating_add(cryptid_pos.y.abs_diff(pop_pos.y))) as f32;
-            if dist <= vision.0 {
-                // If a pop has seen the cryptid and has just acquired awe...
-                let was_zero = mood.awe == 0.0;
-                mood.awe += 1.0 * time.delta_secs();
-                if was_zero && mood.awe > 0.0 {
-                    chronicle_events.send(AddChronicleEvent {
-                        text:
-                            "A colonist reported seeing a strange, elusive creature in the wilds."
-                                .to_string(),
-                        importance: EventImportance::Major,
-                    });
-                }
-            }
-        }
     }
 }
 
