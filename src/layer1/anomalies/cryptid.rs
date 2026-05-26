@@ -64,6 +64,37 @@ pub fn cryptid_plugin(app: &mut App) {
     app.add_systems(Update, (cryptid_trace_system, cryptid_observation_system));
 }
 
+
+use crate::layer1::core::chronicle::{AddChronicleEvent, EventImportance};
+pub fn cryptid_chronicle_bridge_system(
+    cryptid_query: Query<&GridPosition, With<Cryptid>>,
+    mut pop_query: Query<(&mut PopMood, &GridPosition, &VisionRadius), With<Pop>>,
+    mut chronicle_events: EventWriter<AddChronicleEvent>,
+    time: Res<Time>,
+) {
+    for cryptid_pos in cryptid_query.iter() {
+        for (mut mood, pop_pos, vision) in pop_query.iter_mut() {
+            let dist = (cryptid_pos
+                .x
+                .abs_diff(pop_pos.x)
+                .saturating_add(cryptid_pos.y.abs_diff(pop_pos.y))) as f32;
+            if dist <= vision.0 {
+                // If a pop has seen the cryptid and has just acquired awe...
+                let was_zero = mood.awe == 0.0;
+                mood.awe += 1.0 * time.delta_secs();
+                if was_zero && mood.awe > 0.0 {
+                    chronicle_events.send(AddChronicleEvent {
+                        text:
+                            "A colonist reported seeing a strange, elusive creature in the wilds."
+                                .to_string(),
+                        importance: EventImportance::Major,
+                    });
+                }
+            }
+        }
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -145,35 +176,5 @@ mod tests {
             mood.awe > 0.0 || mood.dread > 0.0,
             "Pop should feel awe or dread after seeing a cryptid"
         );
-    }
-}
-
-use crate::layer1::core::chronicle::{AddChronicleEvent, EventImportance};
-pub fn cryptid_chronicle_bridge_system(
-    cryptid_query: Query<&GridPosition, With<Cryptid>>,
-    mut pop_query: Query<(&mut PopMood, &GridPosition, &VisionRadius), With<Pop>>,
-    mut chronicle_events: EventWriter<AddChronicleEvent>,
-    time: Res<Time>,
-) {
-    for cryptid_pos in cryptid_query.iter() {
-        for (mut mood, pop_pos, vision) in pop_query.iter_mut() {
-            let dist = (cryptid_pos
-                .x
-                .abs_diff(pop_pos.x)
-                .saturating_add(cryptid_pos.y.abs_diff(pop_pos.y))) as f32;
-            if dist <= vision.0 {
-                // If a pop has seen the cryptid and has just acquired awe...
-                let was_zero = mood.awe == 0.0;
-                mood.awe += 1.0 * time.delta_secs();
-                if was_zero && mood.awe > 0.0 {
-                    chronicle_events.send(AddChronicleEvent {
-                        text:
-                            "A colonist reported seeing a strange, elusive creature in the wilds."
-                                .to_string(),
-                        importance: EventImportance::Major,
-                    });
-                }
-            }
-        }
     }
 }

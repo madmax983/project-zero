@@ -92,3 +92,7 @@ pub fn apply_architect_signature_system(
 - Ensure `ConstructionJobCompletedEvent` includes the `primary_builder` entity. If multiple pops contribute to construction, you may need logic to determine the "primary" contributor (e.g., the one who did the most work).
 
 ## 8. Questions
+
+*Builder questions:*
+1. The event `ConstructionJobCompletedEvent` contains `primary_builder: builder`. How do we determine who the primary builder is if multiple pops contributed?
+   - *Architect:* For the MVP, simply use the `Entity` ID of the pop that delivered the final unit of labor or materials that completed the construction. We can refine this to track total contribution per pop in a later refactor.

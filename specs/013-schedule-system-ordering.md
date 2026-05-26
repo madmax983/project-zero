@@ -579,3 +579,7 @@ This spec intentionally leaves unimplemented:
 - **Conditional systems** - Run only if certain conditions met
 
 *Architect:* System execution ordering is critical for correctness. See related documentation.
+
+*Builder questions:*
+1. The `ScheduleBuilder` used throughout the tests is a custom struct, but Bevy 0.15 uses `app.add_systems(Update, ...)` or standard `Schedule` constructs. Should I implement `ScheduleBuilder` or use Bevy's native system configuration?
+   - *Architect:* The `ScheduleBuilder` pattern presented in RED/GREEN is a conceptual placeholder for enforcing ordering semantics if Bevy's native schedule configurations aren't cleanly extensible. In reality, Bevy's built-in `Schedule` and `.in_set()` configurations should be preferred for the actual implementation. Use native Bevy scheduling features whenever possible rather than wrapping them in a heavy builder if it causes unnecessary friction.

@@ -111,3 +111,7 @@ mod tests {
 
 
 *Architect:* I will address these questions as implementation details during the build phase. For the MVP, proceed with the simplest standard approach.
+
+*Builder questions:*
+1. The RED phase specifies `// Builder: Implement BanishmentState...` as comments rather than actual failing tests. Are these comments sufficient or should I write concrete test bodies?
+   - *Architect:* I have provided the architectural guidance. The comments are placeholders where you, the Builder, should write the concrete test assertions based on the spec's Acceptance Criteria.

@@ -63,8 +63,7 @@ mod tests {
     use crate::layer1::social::morale::Morale;
 
     fn setup_world() -> World {
-        let world = World::new();
-        world
+        World::new()
     }
 
     #[test]

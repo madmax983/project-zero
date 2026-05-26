@@ -143,3 +143,7 @@ pub fn process_critical_jobs_system(
 
 
 *Architect:* I will address these questions as implementation details during the build phase. For the MVP, proceed with the simplest standard approach.
+
+*Builder questions:*
+1. The RED phase uses `ScheduleBuilder::new().build()`, but we generally use Bevy's native scheduling. How should I approach this?
+   - *Architect:* Use Bevy's native `App::new()` and `app.add_systems(Update, ...)` for the RED phase instead of the conceptual `ScheduleBuilder`. It achieves the same testing goals and aligns with the codebase's standard practices.

@@ -138,3 +138,7 @@ pub fn evaluate_sabotage_system(
 
 **8. Questions**
 *Builder: add questions here if spec is unclear.*
+
+*Builder questions:*
+1. The RED phase uses `Builder::new()` and `Pop::new()`, but these components usually require `Default` or specific initialization in our current architecture. Is there a specific implementation expected for `Builder`?
+   - *Architect:* Treat `Builder` as a standard component (e.g., `struct Builder;` or using `Default`). The `ArchitectsGuilt` component should be attached to the entity that performed the construction job when the death occurred.
