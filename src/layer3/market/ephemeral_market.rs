@@ -1,3 +1,8 @@
+//! Ephemeral Markets
+//!
+//! Describes fleeting pop-up shadow markets that appear temporarily in lawless sectors.
+//! They offer rare goods but vanish before authorities can arrive.
+
 use crate::layer1::chronicle::{Chronicle, EventImportance};
 use crate::layer1::resources::{ColonyResources, ResourceType};
 use crate::prelude::SimulationTime;

@@ -1,3 +1,8 @@
+//! Biological Stock Market Tests
+//!
+//! Executable tests for verifying the grim futures market mechanics, including
+//! virus engineering and demand manipulation.
+
 #[cfg(test)]
 #[allow(clippy::module_inception)]
 mod tests {

@@ -1,3 +1,8 @@
+//! Relativistic Physics
+//!
+//! Models the effects of relativistic travel.
+//! Crews on long-haul flights experience time dilation, returning to a galaxy that has aged significantly.
+
 use bevy::prelude::*;
 
 #[derive(Component)]

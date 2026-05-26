@@ -1,3 +1,8 @@
+//! Generation Ships
+//!
+//! Simulation of massive, slow arks carrying populations across centuries.
+//! Whole societies are born, live, and die aboard these vessels before reaching their destination.
+
 use crate::layer1::social::culture::{Alignment, Culture};
 use bevy::prelude::*;
 

@@ -1,3 +1,8 @@
+//! Cultural Pressure
+//!
+//! A soft-power mechanic where a dominant faction's culture influences neighboring border worlds.
+//! High cultural pressure can incite rebellions or peaceful defections without firing a single shot.
+
 use crate::layer1::core::chronicle::{AddChronicleEvent, EventImportance};
 use crate::layer1::social::culture::CulturalInfluenceGrid;
 use crate::layer3::diplomacy_reflection::{Civilization, DiplomaticRelations, DiplomaticTraits};

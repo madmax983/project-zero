@@ -1,3 +1,8 @@
+//! Biological Stock Market
+//!
+//! Simulates a grim futures market where the stock is the genetic material and labor potential
+//! of populations. Investors bet on the lifespan and productivity of entire planetary workforces.
+
 use bevy::prelude::*;
 use std::collections::BTreeMap; // Changed HashMap to BTreeMap per REFACTOR phase
 

@@ -1,3 +1,9 @@
+//! Galactic Piracy
+//!
+//! Simulates the emergence of pirate factions in neglected or lawless systems.
+//! Pirates disrupt trade lines and can be countered via anti-piracy policies
+//! or through amnesty programs.
+
 use crate::layer1::administration::edicts::{ColonyPolicies, Policy};
 use crate::layer1::core::integration::PirateAmnestyEvent;
 use crate::layer2::fleet::{Fleet, FleetFaction, InOrbit};

@@ -1,3 +1,9 @@
+//! Subjective Economics
+//!
+//! Determines how the subjective value of goods fluctuates on border worlds
+//! based on species-specific preferences and cultural quirks rather than
+//! objective utility.
+
 use crate::layer1::resources::ResourceType;
 use bevy::prelude::*;
 

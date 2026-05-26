@@ -1,3 +1,9 @@
+//! Linguistic Drift
+//!
+//! Represents the gradual evolution of language across isolated colonies.
+//! As distance and time increase without communication, dialects diverge,
+//! eventually causing diplomatic miscommunication and penalties.
+
 use bevy_ecs::prelude::*;
 use std::collections::HashMap;
 

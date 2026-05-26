@@ -1,3 +1,9 @@
+//! Ghost Ships
+//!
+//! Handles the discovery and simulation of abandoned or lost vessels drifting in the void.
+//! These ships carry ancient artifacts and lost populations but present extreme risks
+//! when salvaged, due to onboard hazards or rogue AI.
+
 use bevy::prelude::*;
 use rand::Rng;
 

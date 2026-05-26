@@ -1,3 +1,9 @@
+//! The Silence
+//!
+//! A cosmic dread mechanic representing the psychological and existential threat
+//! of deep space isolation and signal decay. Factions failing to maintain network
+//! activity may succumb to the Silence.
+
 use crate::layer1::energy::PowerSource;
 use crate::layer1::pop::Pop;
 use bevy_ecs::prelude::*;
