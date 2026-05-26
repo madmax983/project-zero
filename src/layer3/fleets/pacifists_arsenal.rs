@@ -1,3 +1,8 @@
+//! Pacifist's Arsenal
+//!
+//! Explores the paradox of heavily armed pacifist factions.
+//! They build overwhelming deterrent capabilities specifically to avoid engaging in warfare.
+
 use crate::layer1::core::map::GridPosition;
 use bevy::prelude::*;
 

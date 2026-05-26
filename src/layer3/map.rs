@@ -1,3 +1,8 @@
+//! Galactic Map
+//!
+//! Structural representation of the interstellar map. It handles the nodes (star systems),
+//! connections (hyperlanes), and positional tracking of fleets moving through the galaxy.
+
 use bevy::prelude::DespawnRecursiveExt;
 use bevy_ecs::prelude::*;
 use bevy_time::Time;

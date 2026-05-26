@@ -1,3 +1,8 @@
+//! Quantum Famines
+//!
+//! Bizarre famine events caused by probabilistic crop failures and temporal anomalies,
+//! forcing emergency relief efforts on a galactic scale.
+
 use crate::layer1::economy::resources::ResourceType;
 use bevy_ecs::prelude::*;
 use std::collections::HashMap;

@@ -1,3 +1,8 @@
+//! Layer 3 Integration
+//!
+//! Exposes the plugin and registration schedules that wire the Layer 3 subsystems
+//! (Market, Council, Diplomacy, Fleets) into the global Bevy App schedule.
+
 use crate::layer1::chronicle::{AddChronicleEvent, EventImportance};
 use crate::layer3::planet::black_market_terraforming::RogueTerraformEvent;
 use bevy_ecs::prelude::*;

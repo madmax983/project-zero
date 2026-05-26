@@ -1,3 +1,8 @@
+//! Black Market Terraforming
+//!
+//! Simulates illegal and highly dangerous planetary engineering.
+//! Syndicates offer cheap terraforming that often results in catastrophic ecological backlash.
+
 use bevy_ecs::prelude::*;
 
 #[derive(Component)]

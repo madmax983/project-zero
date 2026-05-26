@@ -1,3 +1,8 @@
+//! Galactic Market Core
+//!
+//! The central hub of interstellar trade, driving ruthless price fluctuations.
+//! Supply and demand here dictate the wealth of empires.
+
 use crate::layer1::resources::ResourceType;
 use bevy_ecs::prelude::*;
 use std::collections::HashMap;

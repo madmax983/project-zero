@@ -1,3 +1,8 @@
+//! The Endless Draft
+//!
+//! Represents the grim reality of eternal conscription during protracted proxy wars.
+//! Colonies are forced into continuous military tithes, devastating local labor pools.
+
 use crate::layer1::pop::Pop;
 use crate::layer1::psychology::traits::{Trait, Traits};
 use crate::layer1::skills::Skills;

@@ -1,3 +1,9 @@
+//! Treaty Cruisers
+//!
+//! Heavy capital ships deployed not for war, but to enforce diplomatic agreements.
+//! Their sheer presence in an orbit acts as a deterrent and a physical manifestation
+//! of signed treaties.
+
 use crate::layer2::ship::Ship;
 use bevy::prelude::*;
 

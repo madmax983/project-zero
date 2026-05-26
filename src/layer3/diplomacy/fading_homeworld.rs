@@ -1,3 +1,8 @@
+//! Fading Homeworld
+//!
+//! Tracks the decay of the original homeworld's influence over time.
+//! As colonies grow autonomous, the homeworld's edicts carry less weight, leading to inevitable independence.
+
 use crate::layer1::economy::resources::ColonyResources;
 use crate::layer3::diplomacy_reflection::DiplomaticRelations;
 use bevy::prelude::*;

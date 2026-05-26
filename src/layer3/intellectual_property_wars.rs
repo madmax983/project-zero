@@ -1,3 +1,9 @@
+//! Intellectual Property Wars
+//!
+//! Simulates the corporate battles over technological patents at a galactic scale.
+//! Factions engage in corporate espionage, legal sabotage, and patent theft, weaponizing
+//! knowledge rather than fleets.
+
 use bevy::prelude::*;
 use bevy::utils::HashMap;
 

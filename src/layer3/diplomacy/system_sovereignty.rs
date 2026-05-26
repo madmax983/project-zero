@@ -1,3 +1,8 @@
+//! System Sovereignty
+//!
+//! Details the mechanics of colonies declaring political independence.
+//! This triggers complex diplomatic fallout and potential punitive expeditions from the former overlord.
+
 use bevy::prelude::*;
 use bevy::utils::HashMap;
 
