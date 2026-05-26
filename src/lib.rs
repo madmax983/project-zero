@@ -1,3 +1,4 @@
+#![deny(unsafe_code)]
 #![allow(rustdoc::invalid_rust_codeblocks)]
 //! The core library for SCALE.
 //!
