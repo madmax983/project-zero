@@ -308,6 +308,9 @@ fn init_simulation_resources(world: &mut World) {
     world.init_resource::<Events<crate::layer1::logistics::mass_driver::BombardmentEvent>>();
     world.init_resource::<Events<crate::layer2::bombardment::BombardmentEvent>>();
 
+    world.init_resource::<Events<crate::layer2::gravity_debt::FreighterArrivalEvent>>();
+    world.init_resource::<Events<crate::layer2::gravity_debt::FreighterDepartureEvent>>();
+
     world.init_resource::<crate::layer3::council::GalacticCouncil>();
 
     world.init_resource::<crate::layer2::syzygy::SyzygyCycle>();
@@ -433,6 +436,7 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
         crate::layer1::culture::procedural_dialects::process_chronicle_events_for_dialect,
         crate::layer1::culture::procedural_dialects::initialize_pop_dialect,
         crate::layer1::culture::procedural_dialects::decay_slang_weight,
+        crate::layer2::gravity_debt::accumulate_gravity_debt_system,
     ));
 
     // --- Spec 622 ---
@@ -1075,6 +1079,9 @@ mod tests {
         world.init_resource::<Events<crate::layer1::logistics::mass_driver::BombardmentEvent>>();
         world.init_resource::<Events<crate::layer2::bombardment::BombardmentEvent>>();
         world.init_resource::<Events<crate::layer2::bombardment::BombardmentEvent>>();
+
+        world.init_resource::<Events<crate::layer2::gravity_debt::FreighterArrivalEvent>>();
+        world.init_resource::<Events<crate::layer2::gravity_debt::FreighterDepartureEvent>>();
 
         world.init_resource::<Events<crate::layer2::cascade::LogisticsStrainedEvent>>();
         world.init_resource::<Events<crate::layer2::cascade::DefenseWeakenedEvent>>();

@@ -637,3 +637,4 @@
 - [x] `INT-480` Integration: Memory Forgery -> Chronicle — completed 2026-05-25
 - [x] `INT-1067` Integration: Void Sirens -> Chronicle — completed 2026-05-25
 - [x] `INT-481` Integration: Subterranean Mycelial Network -> Disease & Chronicle — completed 2026-10-31
+- [x] `1273` Gravity Debt — `specs/1273-gravity-debt.md` — completed 2026-02-01

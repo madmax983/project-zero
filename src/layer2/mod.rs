@@ -26,6 +26,7 @@ pub mod events_new;
 pub mod fleet;
 pub mod generation;
 pub mod governance;
+pub mod gravity_debt;
 pub mod integration;
 pub mod mining;
 #[cfg(test)]

@@ -64,8 +64,6 @@ pub fn cryptid_plugin(app: &mut App) {
     app.add_systems(Update, (cryptid_trace_system, cryptid_observation_system));
 }
 
-
-
 use crate::layer1::core::chronicle::{AddChronicleEvent, EventImportance};
 pub fn cryptid_chronicle_bridge_system(
     cryptid_query: Query<&GridPosition, With<Cryptid>>,
