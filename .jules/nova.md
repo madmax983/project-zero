@@ -77,3 +77,8 @@
 **Concept:** Added `sleepwalking_sabotage` module. Sleepwalking Pops accidentally drain the charge of Batteries when they wander onto the same tile, mistaking the machinery for beds.
 **Fate:** Merged
 **Lesson:** Connects the psychology system (Sleepwalking mental break) with the energy grid (Batteries). Sleepwalking introduces an immediate logistical threat to the power grid, punishing players who don't properly secure or isolate their battery banks from common walking areas.
+
+## [Manic Cleaning]
+**Concept:** Added `manic_cleaning_system` to `src/experimental/manic_cleaning.rs`. Pops experiencing `Catharsis` (the post-mental break buff) passively and rapidly clean `Clutter` from tiles they walk on.
+**Fate:** Submitted
+**Lesson:** Connects the psychology system (`Catharsis`) with the physical environment (`ClutterGrid`). It turns a post-breakdown state into a hyper-productive cleaning frenzy, allowing a struggling colony to physically clean up its act after a collective mental break.
