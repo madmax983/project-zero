@@ -1,3 +1,3 @@
-**2024-11-13 - [Security Audit - Final Check]
-**Threat:** Conducted a final scan for memory safety, unsafe blocks, and math overflows. Found a Denial of Service vector where `ratatui` gauges panic if provided values outside 0..=100. This could crash the server if values dynamically overflowed 100%.
-**Defense:** Clamped all calculated u16 percentages to (0.0..=100.0) in UI rendering before applying them to widgets.
+**2026-05-25 - [Security Audit - Initial Check]**
+**Threat:** Conducted an initial scan for memory safety, unsafe blocks, and dependency vulnerabilities via `cargo audit`.
+**Defense:** No `unsafe` code found in `src/`. `cargo audit` reported 0 vulnerabilities. No actions required.
