@@ -47,6 +47,8 @@ pub fn build_simulation_schedule() -> Schedule {
 #[allow(clippy::too_many_lines)]
 fn init_simulation_resources(world: &mut World) {
     world.init_resource::<Events<crate::layer1::AcceptSponsorshipEvent>>();
+    world
+        .init_resource::<Events<crate::layer1::psychology::memory_blackout::MemoryBlackoutEvent>>();
     world.init_resource::<Events<crate::layer1::RepairBuildingEvent>>();
     world.init_resource::<Events<crate::layer2::trade::routes::TradeRouteExecutedEvent>>();
     world
@@ -386,6 +388,7 @@ fn register_simulation_core_systems(schedule: &mut Schedule) {
 
     schedule.add_systems((
         crate::layer1::law::embassy::evaluate_diplomatic_crime_system,
+        crate::layer1::psychology::memory_blackout::process_memory_blackout,
         crate::layer1::law::embassy::process_diplomatic_arrest_system,
         crate::layer1::diplomacy::factions::rivals::rival_colony_expansion_system,
         crate::layer1::diplomacy::factions::rivals::rival_resource_drain_system,
@@ -837,6 +840,7 @@ mod tests {
         world.init_resource::<bevy_ecs::event::Events<crate::layer1::petrification::PopPetrifiedEvent>>();
         world.init_resource::<Events<crate::layer1::predecessors::WorldTriggerEvent>>();
         world.init_resource::<Events<crate::layer1::AcceptSponsorshipEvent>>();
+        world.init_resource::<Events<crate::layer1::psychology::memory_blackout::MemoryBlackoutEvent>>();
         world.init_resource::<Events<crate::layer1::RepairBuildingEvent>>();
         world.init_resource::<Events<crate::layer1::social::hedonic_treadmill::ConsumeItemEvent>>();
         world.init_resource::<Events<crate::layer1::architecture::sunk_cost_monument::CancelConstructionEvent>>();
@@ -906,6 +910,7 @@ mod tests {
 
         // Initialize Detection Risk for test
         world.init_resource::<Events<crate::layer1::AcceptSponsorshipEvent>>();
+        world.init_resource::<Events<crate::layer1::psychology::memory_blackout::MemoryBlackoutEvent>>();
         world.init_resource::<Events<crate::layer1::RepairBuildingEvent>>();
         world.init_resource::<Events<crate::layer1::social::hedonic_treadmill::ConsumeItemEvent>>();
         world.init_resource::<Events<crate::layer1::architecture::sunk_cost_monument::CancelConstructionEvent>>();

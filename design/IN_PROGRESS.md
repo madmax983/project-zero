@@ -1,1 +1,1 @@
-- [ ] `680` The Memory Blackout — `specs/680-the-memory-blackout.md` — claimed 2026-05-25
+- [x] `INT-680` Integration: The Memory Blackout -> Pop Memories, Relationships, and Skills — completed 2026-05-25
