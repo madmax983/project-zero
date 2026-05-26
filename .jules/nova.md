@@ -72,3 +72,8 @@
 **Concept:** Added `death_pulse_power` module in `src/experimental/`. Connects `PopDied` events to `Battery` charging. If a pop dies within the radius of a `DeathCapacitor`, it instantly charges the battery.
 **Fate:** Merged
 **Lesson:** Connects the negative outcome (pop death) with a positive gain (massive energy spike), enabling morbid strategies like executing pops to prevent colony blackouts.
+
+## [Sleepwalking Sabotage]
+**Concept:** Added `sleepwalking_sabotage` module. Sleepwalking Pops accidentally drain the charge of Batteries when they wander onto the same tile, mistaking the machinery for beds.
+**Fate:** Merged
+**Lesson:** Connects the psychology system (Sleepwalking mental break) with the energy grid (Batteries). Sleepwalking introduces an immediate logistical threat to the power grid, punishing players who don't properly secure or isolate their battery banks from common walking areas.

@@ -161,4 +161,6 @@ pub mod weather_madness;
 #[cfg(feature = "nova")]
 pub mod death_pulse_power;
 #[cfg(feature = "nova")]
+pub mod sleepwalking_sabotage;
+#[cfg(feature = "nova")]
 pub mod vermin_wheel;
