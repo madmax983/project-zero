@@ -60,6 +60,8 @@ pub enum FleetOrder {
     Mine(Entity),
     /// Order to claim a derelict station.
     ClaimStation(Entity),
+    /// Order to drop resources onto the colony.
+    Drop(crate::layer1::economy::resources::ResourceType, f32),
 }
 
 /// System to process `FleetOrder`s.

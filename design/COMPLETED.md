@@ -639,3 +639,4 @@
 - [x] `INT-481` Integration: Subterranean Mycelial Network -> Disease & Chronicle — completed 2026-10-31
 - [x] `INT-495` Integration: Temporal Echoes -> Maintenance Debt — completed 2026-10-31
 - [x] `1126` Orbital Drydocks — `specs/1126-orbital-drydocks.md` — completed 2026-05-26
+- [x] `102` Orbital Drop Logistics — `specs/102-orbital-drop-logistics.md` — completed 2026-05-26

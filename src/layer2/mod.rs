@@ -18,6 +18,9 @@ pub mod nebulae;
 pub mod primitives;
 pub use environment::*;
 pub mod cartographers_curse;
+pub mod drop;
+#[cfg(test)]
+pub mod drop_tests;
 pub mod cascade;
 pub use cascade::*;
 pub mod derelict_stations;

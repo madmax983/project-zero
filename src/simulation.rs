@@ -512,6 +512,9 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
             .after(crate::layer2::fleet::fleet_order_system),
         crate::layer2::derelict_stations::claim_station_system
             .after(crate::layer2::fleet::fleet_order_system),
+        crate::layer2::drop::orbital_drop_system
+            .after(crate::layer2::fleet::fleet_order_system),
+        crate::layer2::drop::pod_impact_system,
         crate::layer2::fleet::fleet_movement_system.after(crate::layer2::fleet::fleet_order_system),
         crate::layer2::phantom_signal::process_phantom_signal_evasion_system,
         crate::layer2::phantom_signal::apply_sensor_probes_system,
