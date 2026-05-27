@@ -8344,3 +8344,147 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 **Patterns:**
 - "[YEAR]: Time stutters in [COLONY]. [POP_NAME] reports [ECHO_SIGHTING]."
 - "The past bleeds into the present. [POP_NAME] experienced [ECHO_SIGHTING]. [YEAR]."
+
+## Sub-light Nostalgia Templates
+
+### Template: SUB_LIGHT_ENCOUNTER
+**Generates:** Play event
+**Slots:** [SYSTEM], [YEAR], [SUB_LIGHT_VESSEL], [ANCESTRAL_GREETING]
+
+**Patterns:**
+- "[YEAR]: We fortified [SYSTEM], only to find a [SUB_LIGHT_VESSEL] already there. They are [ANCESTRAL_GREETING]."
+- "Our ancestors arrived today. A [SUB_LIGHT_VESSEL] drifted into [SYSTEM], [ANCESTRAL_GREETING]. [YEAR]."
+
+### Template: GENERATION_SHIP_ASSIMILATION
+**Generates:** Play event
+**Slots:** [SYSTEM], [YEAR]
+
+**Patterns:**
+- "[YEAR]: The past has been assimilated. The generation ship in [SYSTEM] was forced into the modern era."
+- "We conquered our own history. The ancestors in [SYSTEM] are now citizens. [YEAR]."
+
+## Asteroid Gold Rush Templates
+
+### Template: GOLD_RUSH_STARTED
+**Generates:** Play event
+**Slots:** [SYSTEM], [YEAR], [RESOURCE_BOOM], [PROSPECTOR_BEHAVIOR]
+
+**Patterns:**
+- "[YEAR]: [RESOURCE_BOOM] reported in [SYSTEM]. Independent ships are [PROSPECTOR_BEHAVIOR]."
+- "The state lost control. Prospectors are [PROSPECTOR_BEHAVIOR] after discovering [RESOURCE_BOOM] in [SYSTEM]. [YEAR]."
+
+### Template: PROSPECTOR_REVOLT
+**Generates:** Play event
+**Slots:** [SYSTEM], [YEAR]
+
+**Patterns:**
+- "[YEAR]: The belt is dry. Thousands of armed prospectors in [SYSTEM] demand subsidies or blood."
+- "The rush is over. Now we have a massive, unemployed fleet in [SYSTEM] turning to piracy. [YEAR]."
+
+## The Cult of the Machine God Templates
+
+### Template: MACHINE_CULT_FORMED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [MACHINE_ARTIFACT], [MACHINE_CULT_RITUAL]
+
+**Patterns:**
+- "[YEAR]: Maintenance is now worship. The workers around the [MACHINE_ARTIFACT] in [COLONY] are [MACHINE_CULT_RITUAL]."
+- "They hear the [MACHINE_ARTIFACT] speaking. A cult forms in [COLONY], [MACHINE_CULT_RITUAL]. [YEAR]."
+
+### Template: CULT_SABOTAGE
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR]
+
+**Patterns:**
+- "[YEAR]: The Machine God demanded sacrifice. The cult sabotaged secondary infrastructure in [COLONY]."
+- "Production surges at the primary core, but the cult destroys the rest of [COLONY]. [YEAR]."
+
+## Generational Debt Templates
+
+### Template: DEBT_CRISIS_TRIGGERED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [DEBT_CONSEQUENCE]
+
+**Patterns:**
+- "[YEAR]: The ancient loans are due. The guilds are [DEBT_CONSEQUENCE] for [COLONY]."
+- "A century of debt collapses upon us. [COLONY] faces [DEBT_CONSEQUENCE]. [YEAR]."
+
+### Template: DEBTOR_REBELLION
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [DEBT_REBELLION]
+
+**Patterns:**
+- "[YEAR]: [COLONY] burns the ledgers. They are [DEBT_REBELLION]."
+- "The children refuse to pay. [COLONY] secedes, [DEBT_REBELLION]. [YEAR]."
+
+## Refugee Weaponization Templates
+
+### Template: REFUGEE_FLOOD
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [REFUGEE_IMPACT]
+
+**Patterns:**
+- "[YEAR]: We opened the lanes. Millions arrived at [COLONY], causing [REFUGEE_IMPACT]."
+- "A weapon made of desperate people. The influx at [COLONY] is [REFUGEE_IMPACT]. [YEAR]."
+
+### Template: REFUGEE_UPRISING
+**Generates:** Play event
+**Slots:** [EMPIRE_NAME], [YEAR], [REFUGEE_REVENGE]
+
+**Patterns:**
+- "[YEAR]: The survivors we abandoned have integrated. They are now [REFUGEE_REVENGE] within [EMPIRE_NAME]."
+- "We gave [EMPIRE_NAME] our refugees. Now those refugees lead them against us, [REFUGEE_REVENGE]. [YEAR]."
+
+## The Lotus Spores Templates
+
+### Template: LOTUS_INFECTION
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [LOTUS_EFFECT]
+
+**Patterns:**
+- "[YEAR]: The flora in [COLONY] is [LOTUS_EFFECT]. The mines are empty, but the people are smiling."
+- "A terrifying peace falls over [COLONY]. The spores are [LOTUS_EFFECT]. [YEAR]."
+
+### Template: LOTUS_DEFENSE
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [LOTUS_REACTION]
+
+**Patterns:**
+- "[YEAR]: We tried to burn the fields. The pacified workers of [COLONY] are [LOTUS_REACTION]."
+- "They will kill to remain peaceful. Enforcers in [COLONY] report the locals are [LOTUS_REACTION]. [YEAR]."
+
+## Ghost Fleets of the Automation War Templates
+
+### Template: GHOST_FLEET_ACTIVATED
+**Generates:** Play event
+**Slots:** [SYSTEM], [YEAR], [GHOST_FLEET_TRIGGER]
+
+**Patterns:**
+- "[YEAR]: The dead wake. [GHOST_FLEET_TRIGGER] activated ancient warships in [SYSTEM]."
+- "We disturbed the graveyard. A dormant fleet in [SYSTEM] powered on due to [GHOST_FLEET_TRIGGER]. [YEAR]."
+
+### Template: GHOST_FLEET_ATTACK
+**Generates:** Play event
+**Slots:** [SYSTEM], [YEAR], [GHOST_FLEET_ACTION]
+
+**Patterns:**
+- "[YEAR]: The ancient AI is [GHOST_FLEET_ACTION] in [SYSTEM]."
+- "To them, the war never ended. The fleet in [SYSTEM] is [GHOST_FLEET_ACTION]. [YEAR]."
+
+## The Historian's Rebellion Templates
+
+### Template: SUPPRESSED_HISTORY_REVEALED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [SUPPRESSED_HISTORY], [HISTORIAN_ACTION]
+
+**Patterns:**
+- "[YEAR]: The truth leaked in [COLONY]. Scholars uncovered [SUPPRESSED_HISTORY] and are [HISTORIAN_ACTION]."
+- "We cannot bury the past. An archeologist in [COLONY] found [SUPPRESSED_HISTORY], [HISTORIAN_ACTION]. [YEAR]."
+
+### Template: HISTORIAN_CIVIL_WAR
+**Generates:** Play event
+**Slots:** [EMPIRE_NAME], [YEAR]
+
+**Patterns:**
+- "[YEAR]: Moral outrage shatters [EMPIRE_NAME]. The academics lead a rebellion built on historical truths."
+- "The chroniclers turned against us. [EMPIRE_NAME] burns for the sins of the past. [YEAR]."

@@ -8842,3 +8842,104 @@ Conditions of dezoned, stateless pops.
 - partially excavated by [UNKNOWN]
 - deliberately destroyed
 - still humming with power
+
+
+## Sub-light Nostalgia Fragments
+
+## Fragment Type: [SUB_LIGHT_VESSEL]
+- archaic generation ship
+- primitive sleeper vessel
+- rusted sub-light ark
+- ancient colony barge
+
+## Fragment Type: [ANCESTRAL_GREETING]
+- speaking a dead dialect
+- unaware of the modern empire
+- refusing our modern authority
+- demanding recognition of their ancient charter
+
+## Asteroid Gold Rush Fragments
+
+## Fragment Type: [PROSPECTOR_BEHAVIOR]
+- swarming the nodes
+- stripping the belt bare
+- clogging the hyperlanes
+- engaging in petty piracy
+
+## Fragment Type: [RESOURCE_BOOM]
+- a massive vein of rare crystals
+- an unregulated alloy boom
+- unbridled resource extraction
+
+## The Cult of the Machine God Fragments
+
+## Fragment Type: [MACHINE_CULT_RITUAL]
+- deciphering flashing lights
+- interpreting random malfunctions as prophecy
+- sabotaging rival infrastructure
+- maintaining the core with religious zeal
+
+## Fragment Type: [MACHINE_ARTIFACT]
+- dormant dreadnought core
+- ancient terraforming engine
+- forgotten fusion reactor
+
+## Generational Debt Fragments
+
+## Fragment Type: [DEBT_CONSEQUENCE]
+- freezing all FTL travel
+- quarantining the system
+- massive inter-system defaults
+
+## Fragment Type: [DEBT_REBELLION]
+- furious at paying for a forgotten war
+- seeking to join the original enemy
+- rejecting the sins of the father
+
+## Refugee Weaponization Fragments
+
+## Fragment Type: [REFUGEE_IMPACT]
+- sudden, massive population spikes
+- overwhelming the local economy
+- causing targeted starvation and unrest
+
+## Fragment Type: [REFUGEE_REVENGE]
+- forming a vengeance-driven superpower
+- taking over the government through numbers
+- integrating only to destroy us
+
+## The Lotus Spores Fragments
+
+## Fragment Type: [LOTUS_EFFECT]
+- chemically mimicking extreme happiness
+- losing the desire to work
+- becoming blissfully unproductive
+
+## Fragment Type: [LOTUS_REACTION]
+- violently defending their paradise
+- refusing to leave the spore fields
+- treating enforcers as invaders
+
+## Ghost Fleets of the Automation War Fragments
+
+## Fragment Type: [GHOST_FLEET_TRIGGER]
+- a specific energy weapon signature
+- an ancient communication frequency
+- an accidental border skirmish
+
+## Fragment Type: [GHOST_FLEET_ACTION]
+- executing ancient targeting protocols
+- beginning a system-wide purge
+- identifying all life as 'The Enemy'
+
+## The Historian's Rebellion Fragments
+
+## Fragment Type: [SUPPRESSED_HISTORY]
+- a covered-up famine
+- secret mass graves
+- an erased genocide
+
+## Fragment Type: [HISTORIAN_ACTION]
+- actively rewriting the narrative
+- publishing suppressed atrocities
+- shattering cultural cohesion
