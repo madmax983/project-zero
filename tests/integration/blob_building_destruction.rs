@@ -49,7 +49,7 @@ fn test_blob_destroys_building() {
     // The blob expanded to (6, 5), where the building was. The building should be despawned and BuildingRemovedEvent should be sent.
 
     let events = app.world().resource::<Events<BuildingRemovedEvent>>();
-    let event_reader: Vec<_> = events.get_reader().read(events).collect();
+    let event_reader: Vec<_> = events.get_cursor().read(events).collect();
 
     assert_eq!(event_reader.len(), 1, "Blob should destroy the building and emit an event");
     assert_eq!(event_reader[0].entity, building);

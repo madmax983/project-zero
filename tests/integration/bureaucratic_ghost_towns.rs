@@ -1,18 +1,20 @@
 use bevy_app::{App, Update};
 use bevy_ecs::prelude::*;
+use scale::layer1::economy::resources::ColonyResources;
+use scale::layer1::entities::pop::Pop;
 use scale::layer3::bureaucracy::{
     colony_reporting_system, empire_resource_distribution_system, AutomatedDefenses,
     AutomatedReporting,
 };
-use scale::layer1::economy::resources::ColonyResources;
-use scale::layer1::entities::pop::Pop;
 
 #[test]
 fn test_ghost_town_continues_receiving_shipments() {
     let mut app = App::new();
 
-    let mut resources = ColonyResources::default();
-    resources.food = 0.0;
+    let resources = ColonyResources {
+        food: 0.0,
+        ..Default::default()
+    };
     app.insert_resource(resources);
 
     app.world_mut().spawn(AutomatedReporting {
@@ -20,12 +22,18 @@ fn test_ghost_town_continues_receiving_shipments() {
         reported_population: 100, // Last known good number
     });
 
-    app.add_systems(Update, (colony_reporting_system, empire_resource_distribution_system).chain());
+    app.add_systems(
+        Update,
+        (colony_reporting_system, empire_resource_distribution_system).chain(),
+    );
     app.update();
 
     let resources = app.world().resource::<ColonyResources>();
 
-    assert_eq!(resources.food, 100.0, "Ghost town should continue receiving shipments.");
+    assert_eq!(
+        resources.food, 100.0,
+        "Ghost town should continue receiving shipments."
+    );
 }
 
 #[test]
@@ -76,6 +84,10 @@ fn test_discovery_of_ghost_town() {
     app.update();
 
     let events = app.world().resource::<Events<DiscoveryEvent>>();
-    let mut reader = events.get_reader();
-    assert_eq!(reader.read(events).count(), 1, "Ghost town should be discovered.");
+    let mut reader = events.get_cursor();
+    assert_eq!(
+        reader.read(events).count(),
+        1,
+        "Ghost town should be discovered."
+    );
 }

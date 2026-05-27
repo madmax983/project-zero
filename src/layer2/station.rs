@@ -52,7 +52,9 @@ impl StationType {
             Self::Habitat => vec![(ResourceType::Metal, 150.0), (ResourceType::Food, 100.0)],
             Self::Derelict => vec![],
             Self::Hydroponics => vec![(ResourceType::Metal, 150.0), (ResourceType::Fuel, 20.0)],
-            Self::OrbitalDrydock => vec![(ResourceType::Metal, 1000.0), (ResourceType::Fuel, 500.0)],
+            Self::OrbitalDrydock => {
+                vec![(ResourceType::Metal, 1000.0), (ResourceType::Fuel, 500.0)]
+            }
         }
     }
 
@@ -330,23 +332,30 @@ mod orbital_drydocks_tests {
 
         let required_metal = 1000.0;
 
-        let drydock_entity = app.world_mut().spawn((
-            Station { station_type: StationType::OrbitalDrydock },
-            ShipConstruction {
-                target_ship_class: "Dreadnought".to_string(),
-                metal_required: required_metal,
-                metal_delivered: 0.0,
-                is_complete: false,
-            },
-        )).id();
+        let drydock_entity = app
+            .world_mut()
+            .spawn((
+                Station {
+                    station_type: StationType::OrbitalDrydock,
+                },
+                ShipConstruction {
+                    target_ship_class: "Dreadnought".to_string(),
+                    metal_required: required_metal,
+                    metal_delivered: 0.0,
+                    is_complete: false,
+                },
+            ))
+            .id();
 
-        app.world_mut().entity_mut(drydock_entity).insert(FleetCargo {
-            contents: vec![crate::layer2::mining::CargoStack {
-                resource_type: ResourceType::Metal,
-                amount: 500.0,
-            }],
-            capacity: 2000.0,
-        });
+        app.world_mut()
+            .entity_mut(drydock_entity)
+            .insert(FleetCargo {
+                contents: vec![crate::layer2::mining::CargoStack {
+                    resource_type: ResourceType::Metal,
+                    amount: 500.0,
+                }],
+                capacity: 2000.0,
+            });
 
         app.update();
 
@@ -355,12 +364,24 @@ mod orbital_drydocks_tests {
         assert!(!construction.is_complete);
 
         let cargo = app.world().get::<FleetCargo>(drydock_entity).unwrap();
-        assert_eq!(cargo.contents.iter().find(|s| s.resource_type == ResourceType::Metal).map(|s| s.amount).unwrap_or(0.0), 0.0);
+        assert_eq!(
+            cargo
+                .contents
+                .iter()
+                .find(|s| s.resource_type == ResourceType::Metal)
+                .map(|s| s.amount)
+                .unwrap_or(0.0),
+            0.0
+        );
 
-        app.world_mut().get_mut::<FleetCargo>(drydock_entity).unwrap().contents.push(crate::layer2::mining::CargoStack {
-            resource_type: ResourceType::Metal,
-            amount: 500.0,
-        });
+        app.world_mut()
+            .get_mut::<FleetCargo>(drydock_entity)
+            .unwrap()
+            .contents
+            .push(crate::layer2::mining::CargoStack {
+                resource_type: ResourceType::Metal,
+                amount: 500.0,
+            });
 
         app.update();
 

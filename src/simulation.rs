@@ -387,14 +387,18 @@ fn register_simulation_core_systems(schedule: &mut Schedule) {
             .in_set(Layer1SystemSet::Economy),
     );
 
-    schedule.add_systems((
-        crate::layer1::law::embassy::evaluate_diplomatic_crime_system,
-        crate::layer1::psychology::memory_blackout::process_memory_blackout,
-        crate::layer1::core::integration::memory_blackout_chronicle_bridge,
-        crate::layer1::law::embassy::process_diplomatic_arrest_system,
-        crate::layer1::diplomacy::factions::rivals::rival_colony_expansion_system,
-        crate::layer1::diplomacy::factions::rivals::rival_resource_drain_system,
-    ).chain().in_set(Layer1SystemSet::Economy));
+    schedule.add_systems(
+        (
+            crate::layer1::law::embassy::evaluate_diplomatic_crime_system,
+            crate::layer1::psychology::memory_blackout::process_memory_blackout,
+            crate::layer1::core::integration::memory_blackout_chronicle_bridge,
+            crate::layer1::law::embassy::process_diplomatic_arrest_system,
+            crate::layer1::diplomacy::factions::rivals::rival_colony_expansion_system,
+            crate::layer1::diplomacy::factions::rivals::rival_resource_drain_system,
+        )
+            .chain()
+            .in_set(Layer1SystemSet::Economy),
+    );
 
     schedule.add_systems(crate::layer1::physics::harpoon::process_harpoon_impact_system);
     schedule.add_systems((crate::layer2::weather::weather_movement_system,));
@@ -520,7 +524,9 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
         crate::layer2::derelict_stations::claim_station_system
             .after(crate::layer2::fleet::fleet_order_system),
         crate::layer2::gravitational_doldrums::doldrums_effects_system,
-        crate::layer2::fleet::fleet_movement_system.after(crate::layer2::fleet::fleet_order_system).after(crate::layer2::gravitational_doldrums::doldrums_effects_system),
+        crate::layer2::fleet::fleet_movement_system
+            .after(crate::layer2::fleet::fleet_order_system)
+            .after(crate::layer2::gravitational_doldrums::doldrums_effects_system),
         crate::layer2::phantom_signal::process_phantom_signal_evasion_system,
         crate::layer2::phantom_signal::apply_sensor_probes_system,
         crate::layer2::mutiny::decay_fleet_morale,

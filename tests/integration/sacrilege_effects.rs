@@ -35,7 +35,7 @@ fn test_sacrilege_unrest_bridge() {
     // Assert Chronicle event emitted
     let chronicle_events = world.resource::<Events<AddChronicleEvent>>();
     #[allow(deprecated)]
-    let mut reader = chronicle_events.get_reader();
+    let mut reader = chronicle_events.get_cursor();
     let events: Vec<_> = reader.read(chronicle_events).collect();
 
     assert_eq!(events.len(), 1, "Should emit one AddChronicleEvent");

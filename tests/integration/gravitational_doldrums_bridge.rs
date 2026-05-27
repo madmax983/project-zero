@@ -10,7 +10,10 @@ fn test_doldrums_integration_movement() {
     let mut app = App::new();
 
     // The order should be doldrums_effects_system then fleet_movement_system
-    app.add_systems(Update, (doldrums_effects_system, fleet_movement_system).chain());
+    app.add_systems(
+        Update,
+        (doldrums_effects_system, fleet_movement_system).chain(),
+    );
 
     let planet_a = app.world_mut().spawn_empty().id();
     let planet_b = app.world_mut().spawn_empty().id();

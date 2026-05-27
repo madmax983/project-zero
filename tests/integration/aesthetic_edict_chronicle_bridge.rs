@@ -16,7 +16,7 @@ fn aesthetic_edict_chronicle_bridge_emits_event() {
     schedule.run(&mut world);
 
     let events = world.resource::<Events<AddChronicleEvent>>();
-    let mut reader = events.get_reader();
+    let mut reader = events.get_cursor();
     let emitted: Vec<_> = reader.read(events).collect();
     assert_eq!(emitted.len(), 0);
 
@@ -26,7 +26,7 @@ fn aesthetic_edict_chronicle_bridge_emits_event() {
     schedule.run(&mut world);
 
     let events = world.resource::<Events<AddChronicleEvent>>();
-    let mut reader = events.get_reader();
+    let mut reader = events.get_cursor();
     let emitted: Vec<_> = reader.read(events).collect();
     assert_eq!(emitted.len(), 1);
     assert_eq!(emitted[0].importance, EventImportance::Major);
@@ -38,7 +38,7 @@ fn aesthetic_edict_chronicle_bridge_emits_event() {
     schedule.run(&mut world);
 
     let events = world.resource::<Events<AddChronicleEvent>>();
-    let mut reader = events.get_reader();
+    let mut reader = events.get_cursor();
     let emitted: Vec<_> = reader.read(events).collect();
     assert_eq!(emitted.len(), 1); // 1 new event
     assert_eq!(emitted[0].importance, EventImportance::Standard);

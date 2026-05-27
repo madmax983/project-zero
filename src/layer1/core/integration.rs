@@ -2422,4 +2422,3 @@ pub fn existential_audit_chronicle_bridge(
         }
     }
 }
-

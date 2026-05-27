@@ -30,7 +30,7 @@ fn grief_tourist_arrival_grants_credits_and_chronicles() {
 
     // Verify chronicle event
     let events = world.resource::<Events<AddChronicleEvent>>();
-    let mut reader = events.get_reader();
+    let mut reader = events.get_cursor();
     assert_eq!(reader.len(events), 1);
 
     let chronicle = reader.read(events).next().unwrap();

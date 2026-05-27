@@ -1,6 +1,6 @@
-use bevy::prelude::*;
-use crate::layer2::nebulae::{MovementSpeed, SpatialVolume};
 use crate::layer2::fleet::Fleet;
+use crate::layer2::nebulae::{MovementSpeed, SpatialVolume};
+use bevy::prelude::*;
 
 #[derive(Component)]
 pub struct GravitationalDoldrums {
@@ -36,7 +36,9 @@ pub fn doldrums_effects_system(
         let mut min_multiplier = 1.0;
 
         for (doldrums, volume, doldrums_transform) in doldrums_query.iter() {
-            let distance = fleet_transform.translation.distance(doldrums_transform.translation);
+            let distance = fleet_transform
+                .translation
+                .distance(doldrums_transform.translation);
             if distance <= volume.radius {
                 in_doldrums = true;
                 if doldrums.penalty_multiplier < min_multiplier {
@@ -74,17 +76,28 @@ mod tests {
     fn test_doldrums_reduce_movement_speed() {
         let mut app = App::new();
 
-        let _doldrums = app.world_mut().spawn((
-            GravitationalDoldrums { penalty_multiplier: 0.1 },
-            SpatialVolume { radius: 10.0 },
-            Transform::from_translation(Vec3::ZERO),
-        )).id();
+        let _doldrums = app
+            .world_mut()
+            .spawn((
+                GravitationalDoldrums {
+                    penalty_multiplier: 0.1,
+                },
+                SpatialVolume { radius: 10.0 },
+                Transform::from_translation(Vec3::ZERO),
+            ))
+            .id();
 
-        let ship = app.world_mut().spawn((
-            Fleet,
-            Transform::from_translation(Vec3::ZERO),
-            MovementSpeed { base: 100.0, current: 100.0 },
-        )).id();
+        let ship = app
+            .world_mut()
+            .spawn((
+                Fleet,
+                Transform::from_translation(Vec3::ZERO),
+                MovementSpeed {
+                    base: 100.0,
+                    current: 100.0,
+                },
+            ))
+            .id();
 
         // Let's add the system to test its behavior properly
         app.add_systems(Update, doldrums_effects_system);
@@ -99,17 +112,25 @@ mod tests {
         let mut app = App::new();
 
         app.world_mut().spawn((
-            GravitationalDoldrums { penalty_multiplier: 0.1 },
+            GravitationalDoldrums {
+                penalty_multiplier: 0.1,
+            },
             SpatialVolume { radius: 10.0 },
             Transform::from_translation(Vec3::ZERO),
         ));
 
-        let ship = app.world_mut().spawn((
-            Fleet,
-            TugShip { tow_capacity: 100 },
-            Transform::from_translation(Vec3::ZERO),
-            MovementSpeed { base: 100.0, current: 100.0 },
-        )).id();
+        let ship = app
+            .world_mut()
+            .spawn((
+                Fleet,
+                TugShip { tow_capacity: 100 },
+                Transform::from_translation(Vec3::ZERO),
+                MovementSpeed {
+                    base: 100.0,
+                    current: 100.0,
+                },
+            ))
+            .id();
 
         app.add_systems(Update, doldrums_effects_system);
         app.update();
@@ -123,23 +144,34 @@ mod tests {
         let mut app = App::new();
 
         app.world_mut().spawn((
-            GravitationalDoldrums { penalty_multiplier: 0.1 },
+            GravitationalDoldrums {
+                penalty_multiplier: 0.1,
+            },
             SpatialVolume { radius: 10.0 },
             Transform::from_translation(Vec3::ZERO),
         ));
 
-        let tug = app.world_mut().spawn((
-            Fleet,
-            TugShip { tow_capacity: 100 },
-            Transform::from_translation(Vec3::ZERO),
-        )).id();
+        let tug = app
+            .world_mut()
+            .spawn((
+                Fleet,
+                TugShip { tow_capacity: 100 },
+                Transform::from_translation(Vec3::ZERO),
+            ))
+            .id();
 
-        let towed_ship = app.world_mut().spawn((
-            Fleet,
-            TowedBy { tug_entity: tug },
-            Transform::from_translation(Vec3::ZERO),
-            MovementSpeed { base: 100.0, current: 100.0 },
-        )).id();
+        let towed_ship = app
+            .world_mut()
+            .spawn((
+                Fleet,
+                TowedBy { tug_entity: tug },
+                Transform::from_translation(Vec3::ZERO),
+                MovementSpeed {
+                    base: 100.0,
+                    current: 100.0,
+                },
+            ))
+            .id();
 
         app.add_systems(Update, doldrums_effects_system);
         app.update();

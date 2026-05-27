@@ -22,7 +22,7 @@ fn test_sensor_glitch_chronicle_bridge_system() {
     app.update();
 
     let chronicle_events = app.world().resource::<Events<AddChronicleEvent>>();
-    let mut reader = chronicle_events.get_reader();
+    let mut reader = chronicle_events.get_cursor();
     let emitted: Vec<_> = reader.read(chronicle_events).collect();
 
     assert_eq!(

@@ -25,7 +25,7 @@ fn test_dynastic_succession_chronicle_bridge() {
 
     let events = app.world().resource::<Events<AddChronicleEvent>>();
     #[allow(deprecated)]
-    let mut reader = events.get_reader();
+    let mut reader = events.get_cursor();
     let emitted: Vec<_> = reader.read(events).collect();
 
     assert_eq!(emitted.len(), 1);
@@ -52,7 +52,7 @@ fn test_dynastic_crisis_chronicle_bridge() {
 
     let events = app.world().resource::<Events<AddChronicleEvent>>();
     #[allow(deprecated)]
-    let mut reader = events.get_reader();
+    let mut reader = events.get_cursor();
     let emitted: Vec<_> = reader.read(events).collect();
 
     assert_eq!(emitted.len(), 1);

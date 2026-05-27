@@ -485,17 +485,17 @@ mod memory_forgery;
 #[path = "integration/void_sirens_chronicle.rs"]
 mod void_sirens_chronicle;
 
+#[path = "integration/bureaucratic_ghost_towns.rs"]
+mod bureaucratic_ghost_towns;
+#[path = "integration/gravitational_doldrums_bridge.rs"]
+mod gravitational_doldrums_bridge;
 #[path = "integration/memory_blackout_bridge.rs"]
 mod memory_blackout_bridge;
 #[path = "integration/mycelial_network_bridge.rs"]
 mod mycelial_network_bridge;
-#[path = "integration/temporal_echoes_maintenance.rs"]
-mod temporal_echoes_maintenance;
 #[path = "integration/orbital_drydocks.rs"]
 mod orbital_drydocks;
 #[path = "integration/orbital_drydocks_bridge.rs"]
 mod orbital_drydocks_bridge;
-#[path = "integration/gravitational_doldrums_bridge.rs"]
-mod gravitational_doldrums_bridge;
-#[path = "integration/bureaucratic_ghost_towns.rs"]
-mod bureaucratic_ghost_towns;
+#[path = "integration/temporal_echoes_maintenance.rs"]
+mod temporal_echoes_maintenance;

@@ -74,6 +74,6 @@ pub mod piracy;
 pub use piracy::*;
 pub mod fauna;
 pub use fauna::*;
-pub mod phantom_signal;
 pub mod gravitational_doldrums;
+pub mod phantom_signal;
 pub use gravitational_doldrums::*;

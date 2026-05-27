@@ -360,36 +360,6 @@ impl ColonyResources {
     /// Use this for cost structs and other contexts where you need a blank slate
     /// rather than the colony's starting resources.
     #[must_use]
-    pub const fn with_wood(mut self, amount: f32) -> Self {
-        self.wood = amount;
-        self
-    }
-
-    #[must_use]
-    pub const fn with_stone(mut self, amount: f32) -> Self {
-        self.stone = amount;
-        self
-    }
-
-    #[must_use]
-    pub const fn with_metal(mut self, amount: f32) -> Self {
-        self.metal = amount;
-        self
-    }
-
-    #[must_use]
-    pub const fn with_tools(mut self, amount: f32) -> Self {
-        self.tools = amount;
-        self
-    }
-
-    #[must_use]
-    pub const fn with_max_wood(mut self, amount: f32) -> Self {
-        self.max_wood = amount;
-        self
-    }
-
-    #[must_use]
     pub const fn zeroed() -> Self {
         Self {
             food: 0.0,
@@ -1594,16 +1564,21 @@ mod tests {
 
     #[test]
     fn test_add_wood_clamps_to_max() {
-        let mut resources = ColonyResources::default()
-            .with_max_wood(100.0)
-            .with_wood(90.0);
+        let mut resources = ColonyResources {
+            max_wood: 100.0,
+            wood: 90.0,
+            ..Default::default()
+        };
         resources.add_wood(20.0);
         assert!((resources.wood - 100.0).abs() < f32::EPSILON);
     }
 
     #[test]
     fn test_add_wood_clamps_to_zero() {
-        let mut resources = ColonyResources::default().with_wood(10.0);
+        let mut resources = ColonyResources {
+            wood: 10.0,
+            ..Default::default()
+        };
         resources.add_wood(-20.0);
         assert!(
             (resources.wood - 0.0).abs() < f32::EPSILON,
@@ -1613,8 +1588,14 @@ mod tests {
 
     #[test]
     fn test_try_deduct_success() {
-        let mut resources = ColonyResources::default().with_wood(10.0);
-        let cost = ColonyResources::default().with_wood(5.0);
+        let mut resources = ColonyResources {
+            wood: 10.0,
+            ..Default::default()
+        };
+        let cost = ColonyResources {
+            wood: 5.0,
+            ..Default::default()
+        };
 
         let result = resources.try_deduct(&cost);
         assert!(result);
@@ -1623,8 +1604,14 @@ mod tests {
 
     #[test]
     fn test_try_deduct_failure() {
-        let mut resources = ColonyResources::default().with_wood(3.0);
-        let cost = ColonyResources::default().with_wood(5.0);
+        let mut resources = ColonyResources {
+            wood: 3.0,
+            ..Default::default()
+        };
+        let cost = ColonyResources {
+            wood: 5.0,
+            ..Default::default()
+        };
 
         let result = resources.try_deduct(&cost);
         assert!(!result);
@@ -1634,9 +1621,17 @@ mod tests {
 
     #[test]
     fn test_try_deduct_atomic_check() {
-        let mut resources = ColonyResources::default().with_wood(100.0).with_stone(10.0);
+        let mut resources = ColonyResources {
+            wood: 100.0,
+            stone: 10.0,
+            ..Default::default()
+        };
         // Has enough wood (50 < 100), but not enough stone (20 > 10)
-        let cost = ColonyResources::default().with_wood(50.0).with_stone(20.0);
+        let cost = ColonyResources {
+            wood: 50.0,
+            stone: 20.0,
+            ..Default::default()
+        };
 
         let success = resources.try_deduct(&cost);
         assert!(!success);

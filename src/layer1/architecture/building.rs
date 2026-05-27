@@ -758,115 +758,354 @@ impl BuildingType {
     #[allow(clippy::match_same_arms, clippy::too_many_lines)]
     pub const fn cost(&self, material: MaterialType) -> ColonyResources {
         match self {
-            Self::AICore => ColonyResources::zeroed().with_metal(50.0).with_stone(20.0),
-            Self::DroneHub => ColonyResources::zeroed().with_metal(30.0).with_stone(10.0),
-            Self::CryoPod => ColonyResources::zeroed().with_metal(20.0).with_stone(10.0),
-            Self::AuroralCollector => ColonyResources::zeroed().with_metal(50.0).with_stone(20.0),
-            Self::AtmosphericProcessor => ColonyResources::zeroed()
-                .with_metal(200.0)
-                .with_stone(100.0),
-            Self::GeneBank => ColonyResources::zeroed().with_metal(50.0).with_stone(20.0),
-            Self::CloneVat => ColonyResources::zeroed().with_metal(50.0).with_stone(20.0),
-            Self::HypnoPod => ColonyResources::zeroed().with_metal(100.0).with_tools(5.0),
-            Self::Shower => ColonyResources::zeroed().with_metal(10.0).with_stone(5.0),
-            Self::Recycler => ColonyResources::zeroed().with_metal(20.0).with_stone(10.0),
-            Self::BulletinBoard => ColonyResources::zeroed().with_wood(20.0),
-            Self::HoloProjector => ColonyResources::zeroed().with_metal(20.0).with_stone(10.0),
-            Self::CommandCenter => ColonyResources::zeroed().with_metal(50.0).with_stone(50.0),
-            Self::ServerBank => ColonyResources::zeroed().with_metal(20.0).with_stone(10.0),
-            Self::TrashCannon => ColonyResources::zeroed().with_metal(20.0).with_stone(10.0),
-            Self::Heater => ColonyResources::zeroed().with_metal(20.0),
-            Self::LifeSupport => ColonyResources::zeroed().with_metal(50.0),
+            Self::AICore => ColonyResources {
+                metal: 50.0,
+                stone: 20.0,
+                ..ColonyResources::zeroed()
+            },
+            Self::DroneHub => ColonyResources {
+                metal: 30.0,
+                stone: 10.0,
+                ..ColonyResources::zeroed()
+            },
+            Self::CryoPod => ColonyResources {
+                metal: 20.0,
+                stone: 10.0,
+                ..ColonyResources::zeroed()
+            },
+            Self::AuroralCollector => ColonyResources {
+                metal: 50.0,
+                stone: 20.0,
+                ..ColonyResources::zeroed()
+            },
+            Self::AtmosphericProcessor => ColonyResources {
+                metal: 200.0,
+                stone: 100.0,
+                ..ColonyResources::zeroed()
+            },
+            Self::GeneBank => ColonyResources {
+                metal: 50.0,
+                stone: 20.0,
+                ..ColonyResources::zeroed()
+            },
+            Self::CloneVat => ColonyResources {
+                metal: 50.0,
+                stone: 20.0,
+                ..ColonyResources::zeroed()
+            },
+            Self::HypnoPod => ColonyResources {
+                metal: 100.0,
+                tools: 5.0,
+                ..ColonyResources::zeroed()
+            },
+            Self::Shower => ColonyResources {
+                metal: 10.0,
+                stone: 5.0,
+                ..ColonyResources::zeroed()
+            },
+            Self::Recycler => ColonyResources {
+                metal: 20.0,
+                stone: 10.0,
+                ..ColonyResources::zeroed()
+            },
+            Self::BulletinBoard => ColonyResources {
+                wood: 20.0,
+                ..ColonyResources::zeroed()
+            },
+            Self::HoloProjector => ColonyResources {
+                metal: 20.0,
+                stone: 10.0,
+                ..ColonyResources::zeroed()
+            },
+            Self::CommandCenter => ColonyResources {
+                metal: 50.0,
+                stone: 50.0,
+                ..ColonyResources::zeroed()
+            },
+            Self::ServerBank => ColonyResources {
+                metal: 20.0,
+                stone: 10.0,
+                ..ColonyResources::zeroed()
+            },
+            Self::TrashCannon => ColonyResources {
+                metal: 20.0,
+                stone: 10.0,
+                ..ColonyResources::zeroed()
+            },
+            Self::Heater => ColonyResources {
+                metal: 20.0,
+                ..ColonyResources::zeroed()
+            },
+            Self::LifeSupport => ColonyResources {
+                metal: 50.0,
+                ..ColonyResources::zeroed()
+            },
             Self::Airlock => match material {
-                MaterialType::Wood => ColonyResources::zeroed().with_wood(15.0),
-                MaterialType::Stone => ColonyResources::zeroed().with_stone(15.0),
-                MaterialType::Metal => ColonyResources::zeroed().with_metal(15.0),
-                MaterialType::Gold => ColonyResources::zeroed().with_metal(150.0),
+                MaterialType::Wood => ColonyResources {
+                    wood: 15.0,
+                    ..ColonyResources::zeroed()
+                },
+                MaterialType::Stone => ColonyResources {
+                    stone: 15.0,
+                    ..ColonyResources::zeroed()
+                },
+                MaterialType::Metal => ColonyResources {
+                    metal: 15.0,
+                    ..ColonyResources::zeroed()
+                },
+                MaterialType::Gold => ColonyResources {
+                    metal: 150.0,
+                    ..ColonyResources::zeroed()
+                },
             },
-            Self::Vent => ColonyResources::zeroed().with_metal(5.0),
-            Self::ConveyorBelt => ColonyResources::zeroed().with_metal(5.0),
-            Self::Hopper => ColonyResources::zeroed().with_metal(10.0),
-            Self::HydroponicsBay => ColonyResources::zeroed().with_metal(30.0).with_stone(20.0),
+            Self::Vent => ColonyResources {
+                metal: 5.0,
+                ..ColonyResources::zeroed()
+            },
+            Self::ConveyorBelt => ColonyResources {
+                metal: 5.0,
+                ..ColonyResources::zeroed()
+            },
+            Self::Hopper => ColonyResources {
+                metal: 10.0,
+                ..ColonyResources::zeroed()
+            },
+            Self::HydroponicsBay => ColonyResources {
+                metal: 30.0,
+                stone: 20.0,
+                ..ColonyResources::zeroed()
+            },
             Self::Wall => match material {
-                MaterialType::Wood => ColonyResources::zeroed().with_wood(5.0),
-                MaterialType::Stone => ColonyResources::zeroed().with_stone(5.0),
-                MaterialType::Metal => ColonyResources::zeroed().with_metal(5.0),
-                MaterialType::Gold => ColonyResources::zeroed().with_metal(50.0),
+                MaterialType::Wood => ColonyResources {
+                    wood: 5.0,
+                    ..ColonyResources::zeroed()
+                },
+                MaterialType::Stone => ColonyResources {
+                    stone: 5.0,
+                    ..ColonyResources::zeroed()
+                },
+                MaterialType::Metal => ColonyResources {
+                    metal: 5.0,
+                    ..ColonyResources::zeroed()
+                },
+                MaterialType::Gold => ColonyResources {
+                    metal: 50.0,
+                    ..ColonyResources::zeroed()
+                },
             },
-            Self::Window => ColonyResources::zeroed().with_wood(5.0),
+            Self::Window => ColonyResources {
+                wood: 5.0,
+                ..ColonyResources::zeroed()
+            },
             Self::Gate => match material {
-                MaterialType::Wood => ColonyResources::zeroed().with_wood(10.0),
-                MaterialType::Stone => ColonyResources::zeroed().with_stone(10.0),
-                MaterialType::Metal => ColonyResources::zeroed().with_metal(10.0),
-                MaterialType::Gold => ColonyResources::zeroed().with_metal(100.0),
+                MaterialType::Wood => ColonyResources {
+                    wood: 10.0,
+                    ..ColonyResources::zeroed()
+                },
+                MaterialType::Stone => ColonyResources {
+                    stone: 10.0,
+                    ..ColonyResources::zeroed()
+                },
+                MaterialType::Metal => ColonyResources {
+                    metal: 10.0,
+                    ..ColonyResources::zeroed()
+                },
+                MaterialType::Gold => ColonyResources {
+                    metal: 100.0,
+                    ..ColonyResources::zeroed()
+                },
             },
-            Self::Tower => ColonyResources::zeroed().with_wood(30.0).with_stone(10.0),
+            Self::Tower => ColonyResources {
+                wood: 30.0,
+                stone: 10.0,
+                ..ColonyResources::zeroed()
+            },
             Self::Housing => match material {
-                MaterialType::Wood => ColonyResources::zeroed().with_wood(10.0),
-                MaterialType::Stone => ColonyResources::zeroed().with_stone(10.0),
-                MaterialType::Metal => ColonyResources::zeroed().with_metal(10.0),
-                MaterialType::Gold => ColonyResources::zeroed().with_metal(100.0),
+                MaterialType::Wood => ColonyResources {
+                    wood: 10.0,
+                    ..ColonyResources::zeroed()
+                },
+                MaterialType::Stone => ColonyResources {
+                    stone: 10.0,
+                    ..ColonyResources::zeroed()
+                },
+                MaterialType::Metal => ColonyResources {
+                    metal: 10.0,
+                    ..ColonyResources::zeroed()
+                },
+                MaterialType::Gold => ColonyResources {
+                    metal: 100.0,
+                    ..ColonyResources::zeroed()
+                },
             },
-            Self::Office => ColonyResources::zeroed().with_wood(50.0).with_stone(20.0),
-            Self::Farm => ColonyResources::zeroed().with_wood(20.0).with_stone(5.0),
-            Self::Well => ColonyResources::zeroed().with_wood(5.0).with_stone(10.0),
-            Self::Stockpile => ColonyResources::zeroed().with_wood(50.0),
-            Self::Smokehouse => ColonyResources::zeroed().with_wood(30.0).with_stone(10.0),
-            Self::Landfill => ColonyResources::zeroed().with_wood(20.0).with_stone(20.0),
-            Self::LumberMill | Self::Smithy => {
-                ColonyResources::zeroed().with_wood(30.0).with_stone(10.0)
-            }
-            Self::StoneMason => ColonyResources::zeroed().with_wood(40.0).with_stone(20.0),
-            Self::Smelter => ColonyResources::zeroed().with_wood(20.0).with_stone(50.0),
-            Self::Tavern | Self::Hospital => {
-                ColonyResources::zeroed().with_wood(40.0).with_stone(10.0)
-            }
+            Self::Office => ColonyResources {
+                wood: 50.0,
+                stone: 20.0,
+                ..ColonyResources::zeroed()
+            },
+            Self::Farm => ColonyResources {
+                wood: 20.0,
+                stone: 5.0,
+                ..ColonyResources::zeroed()
+            },
+            Self::Well => ColonyResources {
+                wood: 5.0,
+                stone: 10.0,
+                ..ColonyResources::zeroed()
+            },
+            Self::Stockpile => ColonyResources {
+                wood: 50.0,
+                ..ColonyResources::zeroed()
+            },
+            Self::Smokehouse => ColonyResources {
+                wood: 30.0,
+                stone: 10.0,
+                ..ColonyResources::zeroed()
+            },
+            Self::Landfill => ColonyResources {
+                wood: 20.0,
+                stone: 20.0,
+                ..ColonyResources::zeroed()
+            },
+            Self::LumberMill | Self::Smithy => ColonyResources {
+                wood: 30.0,
+                stone: 10.0,
+                ..ColonyResources::zeroed()
+            },
+            Self::StoneMason => ColonyResources {
+                wood: 40.0,
+                stone: 20.0,
+                ..ColonyResources::zeroed()
+            },
+            Self::Smelter => ColonyResources {
+                wood: 20.0,
+                stone: 50.0,
+                ..ColonyResources::zeroed()
+            },
+            Self::Tavern | Self::Hospital => ColonyResources {
+                wood: 40.0,
+                stone: 10.0,
+                ..ColonyResources::zeroed()
+            },
             Self::Library => ColonyResources::zeroed(),
-            Self::Plantation => ColonyResources::zeroed().with_wood(20.0),
-            Self::Weaver | Self::Tailor => {
-                ColonyResources::zeroed().with_wood(30.0).with_stone(5.0)
-            }
-            Self::FlowerBed => ColonyResources::zeroed().with_wood(5.0),
-            Self::Statue => match material {
-                MaterialType::Stone | MaterialType::Wood => {
-                    ColonyResources::zeroed().with_stone(20.0)
-                }
-                MaterialType::Metal => ColonyResources::zeroed().with_metal(20.0),
-                MaterialType::Gold => ColonyResources::zeroed().with_metal(200.0),
+            Self::Plantation => ColonyResources {
+                wood: 20.0,
+                ..ColonyResources::zeroed()
             },
-            Self::Grave => ColonyResources::zeroed().with_stone(5.0),
-            Self::TradeDepot => ColonyResources::zeroed().with_wood(50.0).with_stone(20.0),
-            Self::Generator => ColonyResources::zeroed().with_stone(20.0).with_metal(10.0),
-            Self::SolarPanel => ColonyResources::zeroed().with_metal(10.0).with_stone(5.0),
-            Self::PowerPole => ColonyResources::zeroed().with_metal(2.0),
-            Self::Battery => ColonyResources::zeroed().with_metal(10.0).with_stone(10.0),
-            Self::Refinery => ColonyResources::zeroed()
-                .with_wood(20.0)
-                .with_stone(30.0)
-                .with_metal(10.0),
+            Self::Weaver | Self::Tailor => ColonyResources {
+                wood: 30.0,
+                stone: 5.0,
+                ..ColonyResources::zeroed()
+            },
+            Self::FlowerBed => ColonyResources {
+                wood: 5.0,
+                ..ColonyResources::zeroed()
+            },
+            Self::Statue => match material {
+                MaterialType::Stone | MaterialType::Wood => ColonyResources {
+                    stone: 20.0,
+                    ..ColonyResources::zeroed()
+                },
+                MaterialType::Metal => ColonyResources {
+                    metal: 20.0,
+                    ..ColonyResources::zeroed()
+                },
+                MaterialType::Gold => ColonyResources {
+                    metal: 200.0,
+                    ..ColonyResources::zeroed()
+                },
+            },
+            Self::Grave => ColonyResources {
+                stone: 5.0,
+                ..ColonyResources::zeroed()
+            },
+            Self::TradeDepot => ColonyResources {
+                wood: 50.0,
+                stone: 20.0,
+                ..ColonyResources::zeroed()
+            },
+            Self::Generator => ColonyResources {
+                stone: 20.0,
+                metal: 10.0,
+                ..ColonyResources::zeroed()
+            },
+            Self::SolarPanel => ColonyResources {
+                metal: 10.0,
+                stone: 5.0,
+                ..ColonyResources::zeroed()
+            },
+            Self::PowerPole => ColonyResources {
+                metal: 2.0,
+                ..ColonyResources::zeroed()
+            },
+            Self::Battery => ColonyResources {
+                metal: 10.0,
+                stone: 10.0,
+                ..ColonyResources::zeroed()
+            },
+            Self::Refinery => ColonyResources {
+                wood: 20.0,
+                stone: 30.0,
+                metal: 10.0,
+                ..ColonyResources::zeroed()
+            },
             Self::AncientReactor | Self::AncientFabricator => ColonyResources::zeroed(),
-            Self::Greenhouse => ColonyResources::zeroed()
-                .with_wood(10.0)
-                .with_stone(20.0)
-                .with_metal(10.0),
-            Self::PersonalShed => ColonyResources::zeroed().with_wood(10.0),
-            Self::PersonalGarden => ColonyResources::zeroed().with_wood(5.0),
-            Self::PersonalShrine => ColonyResources::zeroed().with_stone(10.0),
-            Self::Observatory => ColonyResources::zeroed()
-                .with_wood(20.0)
-                .with_stone(50.0)
-                .with_metal(10.0),
+            Self::Greenhouse => ColonyResources {
+                wood: 10.0,
+                stone: 20.0,
+                metal: 10.0,
+                ..ColonyResources::zeroed()
+            },
+            Self::PersonalShed => ColonyResources {
+                wood: 10.0,
+                ..ColonyResources::zeroed()
+            },
+            Self::PersonalGarden => ColonyResources {
+                wood: 5.0,
+                ..ColonyResources::zeroed()
+            },
+            Self::PersonalShrine => ColonyResources {
+                stone: 10.0,
+                ..ColonyResources::zeroed()
+            },
+            Self::Observatory => ColonyResources {
+                wood: 20.0,
+                stone: 50.0,
+                metal: 10.0,
+                ..ColonyResources::zeroed()
+            },
             Self::Lander => ColonyResources::zeroed(),
-            Self::Nanoforge => ColonyResources::zeroed().with_metal(25.0),
-            Self::Spaceport => ColonyResources::zeroed()
-                .with_metal(500.0)
-                .with_stone(200.0)
-                .with_tools(50.0),
-            Self::School => ColonyResources::zeroed().with_wood(25.0).with_stone(10.0),
-            Self::MediaStation => ColonyResources::zeroed().with_metal(25.0),
-            Self::Mainframe => ColonyResources::zeroed().with_metal(50.0),
-            Self::CommsRelay => ColonyResources::zeroed().with_metal(30.0),
-            Self::Billboard => ColonyResources::zeroed().with_metal(50.0),
+            Self::Nanoforge => ColonyResources {
+                metal: 25.0,
+                ..ColonyResources::zeroed()
+            },
+            Self::Spaceport => ColonyResources {
+                metal: 500.0,
+                stone: 200.0,
+                tools: 50.0,
+                ..ColonyResources::zeroed()
+            },
+            Self::School => ColonyResources {
+                wood: 25.0,
+                stone: 10.0,
+                ..ColonyResources::zeroed()
+            },
+            Self::MediaStation => ColonyResources {
+                metal: 25.0,
+                ..ColonyResources::zeroed()
+            },
+            Self::Mainframe => ColonyResources {
+                metal: 50.0,
+                ..ColonyResources::zeroed()
+            },
+            Self::CommsRelay => ColonyResources {
+                metal: 30.0,
+                ..ColonyResources::zeroed()
+            },
+            Self::Billboard => ColonyResources {
+                metal: 50.0,
+                ..ColonyResources::zeroed()
+            },
         }
     }
 
@@ -2080,7 +2319,7 @@ fn configure_tech(entity: &mut EntityWorldMut, building_type: BuildingType) {
 /// let tiles = vec![TerrainType::Grass; 100]; // 10x10 grass
 /// world.insert_resource(TerrainGrid { width: 10, height: 10, tiles });
 /// world.insert_resource(OccupiedTiles::default());
-/// world.insert_resource(ColonyResources::default().with_wood(100.0));
+/// world.insert_resource(ColonyResources { wood: 100.0, ..Default::default() });
 ///
 /// let placed = try_place_building(&mut world, 5, 5, BuildingType::Housing);
 /// assert!(placed);
@@ -2699,11 +2938,11 @@ mod tests {
             tiles: vec![TerrainType::Grass; 100],
         });
         world.insert_resource(OccupiedTiles::default());
-        world.insert_resource(
-            ColonyResources::default()
-                .with_wood(100.0)
-                .with_stone(100.0),
-        );
+        world.insert_resource(ColonyResources {
+            wood: 100.0,
+            stone: 100.0,
+            ..Default::default()
+        });
 
         try_place_building(&mut world, 5, 5, BuildingType::Farm);
 
@@ -2744,7 +2983,10 @@ mod tests {
             tiles: vec![TerrainType::Grass; 100],
         });
         world.insert_resource(OccupiedTiles::default());
-        world.insert_resource(ColonyResources::default().with_wood(100.0));
+        world.insert_resource(ColonyResources {
+            wood: 100.0,
+            ..Default::default()
+        });
 
         try_place_building(&mut world, 7, 3, BuildingType::Housing);
 
@@ -2762,11 +3004,11 @@ mod tests {
             tiles: vec![TerrainType::Grass; 100],
         });
         world.insert_resource(OccupiedTiles::default());
-        world.insert_resource(
-            ColonyResources::default()
-                .with_wood(100.0)
-                .with_stone(100.0),
-        );
+        world.insert_resource(ColonyResources {
+            wood: 100.0,
+            stone: 100.0,
+            ..Default::default()
+        });
 
         try_place_building(&mut world, 5, 5, BuildingType::Farm);
 
@@ -2786,7 +3028,10 @@ mod tests {
         });
         world.insert_resource(OccupiedTiles::default());
         world.insert_resource(MessageLog::default());
-        world.insert_resource(ColonyResources::default().with_wood(100.0));
+        world.insert_resource(ColonyResources {
+            wood: 100.0,
+            ..Default::default()
+        });
 
         // Test Water failure
         let success = try_place_building(&mut world, 5, 5, BuildingType::Housing);
@@ -2829,16 +3074,32 @@ mod tests {
 
     #[test]
     fn test_can_afford_success() {
-        let cost = ColonyResources::default().with_wood(10.0).with_stone(0.0);
-        let available = ColonyResources::default().with_wood(15.0).with_stone(5.0);
+        let cost = ColonyResources {
+            wood: 10.0,
+            stone: 0.0,
+            ..Default::default()
+        };
+        let available = ColonyResources {
+            wood: 15.0,
+            stone: 5.0,
+            ..Default::default()
+        };
 
         assert!(available.can_afford(&cost));
     }
 
     #[test]
     fn test_can_afford_failure() {
-        let cost = ColonyResources::default().with_wood(10.0).with_stone(0.0);
-        let available = ColonyResources::default().with_wood(5.0).with_stone(5.0);
+        let cost = ColonyResources {
+            wood: 10.0,
+            stone: 0.0,
+            ..Default::default()
+        };
+        let available = ColonyResources {
+            wood: 5.0,
+            stone: 5.0,
+            ..Default::default()
+        };
 
         assert!(!available.can_afford(&cost));
     }
@@ -2855,7 +3116,10 @@ mod tests {
         world.insert_resource(OccupiedTiles::default());
 
         // Setup resources (enough for Housing: 10 wood)
-        world.insert_resource(ColonyResources::default().with_wood(15.0));
+        world.insert_resource(ColonyResources {
+            wood: 15.0,
+            ..Default::default()
+        });
 
         // Attempt placement
         let success = try_place_building(&mut world, 5, 5, BuildingType::Housing);
@@ -2878,7 +3142,10 @@ mod tests {
         world.insert_resource(OccupiedTiles::default());
 
         // Setup resources (not enough for Housing)
-        world.insert_resource(ColonyResources::default().with_wood(5.0));
+        world.insert_resource(ColonyResources {
+            wood: 5.0,
+            ..Default::default()
+        });
 
         // Attempt placement
         let success = try_place_building(&mut world, 5, 5, BuildingType::Housing);
@@ -2902,7 +3169,10 @@ mod tests {
             tiles: vec![TerrainType::Grass; 100],
         });
         world.insert_resource(OccupiedTiles::default());
-        world.insert_resource(ColonyResources::default().with_wood(100.0));
+        world.insert_resource(ColonyResources {
+            wood: 100.0,
+            ..Default::default()
+        });
 
         try_place_building(&mut world, 5, 5, BuildingType::Housing);
 
@@ -2919,7 +3189,10 @@ mod tests {
             tiles: vec![TerrainType::Grass; 100],
         });
         world.insert_resource(OccupiedTiles::default());
-        world.insert_resource(ColonyResources::default().with_wood(100.0));
+        world.insert_resource(ColonyResources {
+            wood: 100.0,
+            ..Default::default()
+        });
 
         try_place_building(&mut world, 5, 5, BuildingType::Stockpile);
 
@@ -2938,7 +3211,10 @@ mod tests {
             tiles,
         });
         world.insert_resource(OccupiedTiles::default());
-        world.insert_resource(ColonyResources::default().with_wood(100.0));
+        world.insert_resource(ColonyResources {
+            wood: 100.0,
+            ..Default::default()
+        });
 
         // Building on tree should be allowed
         let success = try_place_building(&mut world, 5, 5, BuildingType::Housing);
@@ -2962,7 +3238,10 @@ mod tests {
             tiles: vec![TerrainType::Grass; 100],
         });
         world.insert_resource(OccupiedTiles::default());
-        world.insert_resource(ColonyResources::default().with_wood(100.0));
+        world.insert_resource(ColonyResources {
+            wood: 100.0,
+            ..Default::default()
+        });
 
         try_place_building(&mut world, 5, 5, BuildingType::Housing);
 
@@ -2982,7 +3261,10 @@ mod tests {
             tiles: vec![TerrainType::Grass; 100],
         });
         world.insert_resource(OccupiedTiles::default());
-        world.insert_resource(ColonyResources::default().with_wood(100.0));
+        world.insert_resource(ColonyResources {
+            wood: 100.0,
+            ..Default::default()
+        });
 
         try_place_building(&mut world, 5, 5, BuildingType::Gate);
 
@@ -3002,7 +3284,10 @@ mod tests {
             tiles: vec![TerrainType::Grass; 100],
         });
         world.insert_resource(OccupiedTiles::default());
-        world.insert_resource(ColonyResources::default().with_wood(100.0));
+        world.insert_resource(ColonyResources {
+            wood: 100.0,
+            ..Default::default()
+        });
 
         // AncientReactor is free (cost zeroed), so resources don't matter much
         try_place_building(&mut world, 5, 5, BuildingType::AncientReactor);
@@ -3027,11 +3312,11 @@ mod tests {
         world.init_resource::<Events<crate::layer1::ancestral_graves::SacrilegeEvent>>();
         world.init_resource::<Events<crate::layer1::events::BuildingRemovedEvent>>();
         world.init_resource::<Events<crate::layer1::events::BuildingCompletedEvent>>();
-        world.insert_resource(
-            ColonyResources::default()
-                .with_wood(100.0)
-                .with_stone(100.0),
-        );
+        world.insert_resource(ColonyResources {
+            wood: 100.0,
+            stone: 100.0,
+            ..Default::default()
+        });
 
         let grave_pos = GridPosition { x: 5, y: 5 };
 
@@ -3080,7 +3365,11 @@ mod tests {
         world.init_resource::<Events<crate::layer1::ancestral_graves::SacrilegeEvent>>();
         world.init_resource::<Events<crate::layer1::events::BuildingRemovedEvent>>();
         world.init_resource::<Events<crate::layer1::events::BuildingCompletedEvent>>();
-        world.insert_resource(ColonyResources::default().with_wood(0.0).with_stone(0.0));
+        world.insert_resource(ColonyResources {
+            wood: 0.0,
+            stone: 0.0,
+            ..Default::default()
+        });
 
         let grave_pos = GridPosition { x: 5, y: 5 };
 

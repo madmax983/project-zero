@@ -18,8 +18,10 @@ fn test_sunk_cost_drains_resources_successfully() {
     app.add_event::<CancelConstructionEvent>();
     app.insert_resource(SimulationTime::default());
 
-    let mut resources = ColonyResources::zeroed();
-    resources = resources.with_metal(100.0);
+    let resources = ColonyResources {
+        metal: 100.0,
+        ..ColonyResources::zeroed()
+    };
     app.insert_resource(resources);
 
     app.add_systems(
@@ -63,8 +65,10 @@ fn test_sunk_cost_cancels_when_insufficient_resources() {
     app.insert_resource(SimulationTime::default());
 
     // Insufficient resources (only 5 metal, need 10)
-    let mut resources = ColonyResources::zeroed();
-    resources = resources.with_metal(5.0);
+    let resources = ColonyResources {
+        metal: 5.0,
+        ..ColonyResources::zeroed()
+    };
     app.insert_resource(resources);
 
     app.add_systems(

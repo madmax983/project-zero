@@ -23,7 +23,7 @@ fn test_embezzlement_triggers_chronicle_event() {
 
     let chronicle_events = app.world().resource::<Events<AddChronicleEvent>>();
     #[allow(deprecated)]
-    let mut reader = chronicle_events.get_reader();
+    let mut reader = chronicle_events.get_cursor();
     let emitted: Vec<_> = reader.read(chronicle_events).collect();
 
     assert_eq!(emitted.len(), 1, "An AddChronicleEvent should be emitted");
