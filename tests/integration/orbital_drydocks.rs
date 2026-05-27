@@ -11,6 +11,7 @@ fn test_orbital_drydock_construction_progress() {
     // Arrange
     let mut app = App::new();
     app.add_plugins(MinimalPlugins);
+    app.add_event::<ShipConstructionCompletedEvent>();
     app.add_systems(Update, process_drydock_construction_system);
 
     let required_metal = 1000.0;
@@ -40,7 +41,7 @@ fn test_orbital_drydock_construction_progress() {
     // Assert
     let construction = app.world().get::<ShipConstruction>(drydock_entity).unwrap();
     assert_eq!(construction.metal_delivered, 500.0);
-    assert_eq!(construction.is_complete, false);
+    assert!(!construction.is_complete);
 
     let cargo = app.world().get::<FleetCargo>(drydock_entity).unwrap();
     assert_eq!(cargo.contents.iter().find(|s| s.resource_type == ResourceType::Metal).map(|s| s.amount).unwrap_or(0.0), 0.0);
@@ -56,5 +57,5 @@ fn test_orbital_drydock_construction_progress() {
     // Assert Completion
     let construction = app.world().get::<ShipConstruction>(drydock_entity).unwrap();
     assert_eq!(construction.metal_delivered, 1000.0);
-    assert_eq!(construction.is_complete, true);
+    assert!(construction.is_complete);
 }

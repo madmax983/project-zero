@@ -2407,20 +2407,3 @@ pub fn existential_audit_chronicle_bridge(
     }
 }
 
-/// INT-495: Bridges Temporal Echoes rapid aging to Structure entropy.
-pub fn temporal_echo_maintenance_bridge_system(
-    mut buildings: bevy_ecs::prelude::Query<(
-        &mut crate::layer1::anomalies::temporal_echoes::BuildingAge,
-        &mut crate::layer1::architecture::structure::Structure,
-    )>,
-) {
-    for (mut age, mut structure) in buildings.iter_mut() {
-        if age.ticks > 0 {
-            // Base decay is 0.01 per tick
-            #[allow(clippy::cast_precision_loss)]
-            let damage = age.ticks as f32 * 0.01;
-            structure.current_hp = (structure.current_hp - damage).max(0.0);
-            age.ticks = 0;
-        }
-    }
-}
