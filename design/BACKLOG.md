@@ -714,7 +714,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1131` Signature Spoofing — `specs/1131-signature-spoofing.md`
 - [ ] `1133` Stellar Megastructure Scaffolding — `specs/1133-stellar-megastructure-scaffolding.md`
 - [ ] `1134` Operational Detritus — `specs/1134-operational-detritus.md`
-- [ ] `1135` Gravitational Doldrums — `specs/1135-gravitational-doldrums.md`
 - [ ] `1136` The Sentient Bureaucracy — `specs/1136-sentient-bureaucracy.md`
 - [ ] `1137` Heroic Acts — `specs/1137-heroic-acts.md`
 - [ ] `1138` Organic Recycling — `specs/1138-organic-recycling.md`
