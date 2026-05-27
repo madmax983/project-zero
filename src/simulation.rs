@@ -755,6 +755,8 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
     #[cfg(feature = "nova")]
     crate::experimental::weather_madness::register(schedule);
     #[cfg(feature = "nova")]
+    crate::experimental::panic_buying::register(schedule);
+    #[cfg(feature = "nova")]
     crate::experimental::hoarder_sleepwalking::register(schedule);
     #[cfg(feature = "nova")]
     crate::experimental::manic_cleaning::register(schedule);
