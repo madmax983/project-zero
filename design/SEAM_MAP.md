@@ -1226,3 +1226,10 @@
 - **Systems connected:** `process_drydock_construction_system` -> `orbital_drydock_fleet_bridge_system` -> `Fleet`, `InOrbit`
 - **Glue added:** `ShipConstructionCompletedEvent` emitted by `process_drydock_construction_system` and consumed by `orbital_drydock_fleet_bridge_system` to spawn the `Fleet` entity and an `AddChronicleEvent`.
 - **Tests:** `tests/integration/orbital_drydocks_bridge.rs`
+
+### INT-1135: Gravitational Doldrums -> Fleet Movement
+- **Date:** 2026-10-31
+- **Systems connected:** `doldrums_effects_system` -> `fleet_movement_system`
+- **Glue added:** Modified `fleet_movement_system` in `src/layer2/fleet.rs` to query `MovementSpeed` and apply the current speed multiplier.
+- **Schedule:** Added `doldrums_effects_system` to run before `fleet_movement_system` in `src/simulation.rs`.
+- **Tests:** `tests/integration/gravitational_doldrums_bridge.rs` (1 test)

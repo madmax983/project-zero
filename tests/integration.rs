@@ -495,3 +495,5 @@ mod temporal_echoes_maintenance;
 mod orbital_drydocks;
 #[path = "integration/orbital_drydocks_bridge.rs"]
 mod orbital_drydocks_bridge;
+#[path = "integration/gravitational_doldrums_bridge.rs"]
+mod gravitational_doldrums_bridge;

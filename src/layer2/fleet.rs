@@ -1,4 +1,5 @@
 use crate::layer2::barnacles::{calculate_speed_modifier, SpaceBarnacles};
+use crate::layer2::nebulae::MovementSpeed;
 use crate::layer2::ship::Ship;
 use crate::layer2::station::StationType;
 use bevy_ecs::prelude::*;
@@ -115,10 +116,16 @@ pub fn ensure_fleet_health_system(
 /// Increments progress and handles arrival when progress >= 1.0.
 pub fn fleet_movement_system(
     mut commands: Commands,
-    mut query: Query<(Entity, &mut InTransit, Option<&SpaceBarnacles>)>,
+    mut query: Query<(Entity, &mut InTransit, Option<&SpaceBarnacles>, Option<&MovementSpeed>)>,
 ) {
-    for (entity, mut transit, maybe_barnacles) in &mut query {
-        let speed_mod = maybe_barnacles.map_or(1.0, |b| calculate_speed_modifier(b.count));
+    for (entity, mut transit, maybe_barnacles, maybe_speed) in &mut query {
+        let mut speed_mod = maybe_barnacles.map_or(1.0, |b| calculate_speed_modifier(b.count));
+
+        if let Some(speed) = maybe_speed {
+            if speed.base > 0.0 {
+                speed_mod *= speed.current / speed.base;
+            }
+        }
 
         // Increment progress
         let delta = (1.0 / transit.duration) * speed_mod;

@@ -642,3 +642,4 @@
 - [x] `INT-680` Integration: The Memory Blackout -> Pop Memories, Relationships, and Skills — completed 2026-05-25
 - [x] `1135` Gravitational Doldrums — `specs/1135-gravitational-doldrums.md` — completed 2026-05-27
 - [x] `INT-1126` Integration: Orbital Drydocks -> Fleet Spawning - completed 2026-10-31
+- [x] `INT-1135` Integration: Gravitational Doldrums -> Fleet Movement - completed 2026-10-31
