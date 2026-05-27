@@ -1,11 +1,10 @@
 use bevy_app::App;
-use bevy_app::MinimalPlugins;
+use bevy::MinimalPlugins;
 use bevy_app::Update;
-use bevy_ecs::prelude::*;
 use scale::layer1::resources::ResourceType;
 use scale::layer2::mining::{CargoStack, FleetCargo};
-use scale::layer2::station::{Station, StationType};
-use scale::layer2::orbital_drydock::{ShipConstruction, process_drydock_construction_system};
+use scale::layer2::station::{Station, StationType, ShipConstructionCompletedEvent};
+use scale::layer2::station::{ShipConstruction, process_drydock_construction_system};
 
 #[test]
 fn test_orbital_drydock_construction_progress() {
