@@ -21270,3 +21270,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you allow academic freedom and risk your dark secrets coming to light, or violently suppress the truth, guaranteeing that when it eventually leaks, the backlash will be catastrophic?
 
 ---
+## The Memorial Strike
+
+**Layer:** 1
+
+**Fantasy:** Pops refusing to work over unacknowledged tragedies, forcing you to remember the dead.
+
+**Mechanic:** When a disaster happens and Pops die, if a memorial is not built or a mourning period is not declared, related Pops will start a "Memorial Strike", refusing to work until their grief is acknowledged and a monument is erected.
+
+**Emergence:** You ignore a mining accident to keep production high during a war. A year later, the entire industrial sector shuts down just when you need it most, demanding a massive, expensive monument for the forgotten dead.
+
+**Tension:** Do you halt production immediately to mourn the dead and lose momentum, or push through and risk a catastrophic emotional collapse of your workforce later?
+
+---
+
+## The Emissary's Burden
+
+**Layer:** Cross-layer
+
+**Fantasy:** The personal toll of negotiating for a starving world, and the danger of an overly charismatic diplomat.
+
+**Mechanic:** You send a specific Pop as an Emissary to negotiate trade or peace. Their success depends on their skills, but prolonged exposure to alien cultures or the stress of saving their world gives them traits like "Alien Sympathizer" or "Traumatized".
+
+**Emergence:** Your best diplomat secures a vital food treaty, saving your colony. But they return radicalized by the alien culture, using their newfound influence to start a popular secessionist movement based on the alien ideals.
+
+**Tension:** Do you send your most competent, charismatic Pops into the diplomatic meat grinder, knowing they might return as political rivals?
+
+---
+
+## The Silence Protocol
+
+**Layer:** 2
+
+**Fantasy:** Isolating a system to prevent a memetic or biological plague from spreading, effectively burying it alive.
+
+**Mechanic:** When a virulent plague or dangerous idea spreads in a system, you can enact the "Silence Protocol", physically destroying the hyperlane buoys and comms relays, completely isolating them. The system disappears from your map and control.
+
+**Emergence:** You sever a system to save the empire from a plague. Centuries later, an exploration ship reconnects the hyperlane, only to find the system survived, conquered the plague, and is now a fanatical empire that views you as cowards.
+
+**Tension:** Do you spend immense resources fighting a losing battle to save a system, or cut them off entirely and create a dark, vengeful mystery for your future descendants?
+
+---
