@@ -82,3 +82,8 @@
 **Concept:** Added `manic_cleaning_system` to `src/experimental/manic_cleaning.rs`. Pops experiencing `Catharsis` (the post-mental break buff) passively and rapidly clean `Clutter` from tiles they walk on.
 **Fate:** Submitted
 **Lesson:** Connects the psychology system (`Catharsis`) with the physical environment (`ClutterGrid`). It turns a post-breakdown state into a hyper-productive cleaning frenzy, allowing a struggling colony to physically clean up its act after a collective mental break.
+
+## [Panic Buying]
+**Concept:** Implemented `PanicBuying` module. If Unrest is too high and a Pop experiences the `Binge` mental break, they don't just eat food on the ground. They trigger a `MarketPanicEvent` that causes *all* pops in the colony to immediately hoard 1 unit of `Food` in their `PrivateStash`, instantly draining the colony's central stockpile.
+**Fate:** Merged
+**Lesson:** Connects the mental breakdown of a single Pop to the colony's macro-economy, turning a localized tantrum into a global logistical crisis.

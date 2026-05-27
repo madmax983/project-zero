@@ -1,122 +1,117 @@
-//! Panic Buying (Nova Feature).
-//!
-//! # The Spark
-//! We have a `Morale` system and `ColonyPrices` in the economy. What happens when
-//! the colony's collective morale tanks?
-//!
-//! # The Feature
-//! The `panic_buying_system` monitors the average morale of all Pops. If the average
-//! falls below a critical threshold (e.g., 0.3), the colony enters a state of panic
-//! buying. This causes the `ColonyPrices` for food and luxuries to skyrocket, reflecting
-//! scarcity fears and hoarding behavior. Prices normalize when morale recovers.
-
-use crate::layer1::economy::ColonyPrices;
-use crate::layer1::morale::Morale;
-use crate::layer1::pop::Pop;
 use bevy_ecs::prelude::*;
+use crate::layer1::pop::Pop;
+use crate::layer1::social::unrest::Unrest;
+use crate::layer1::utility_types::{ActionType, PopAction};
+use crate::layer3::market::quantum_famine::MarketPanicEvent;
+use crate::layer1::economy::resources::ResourceType;
+use crate::layer1::private_stash::PrivateStash;
+use crate::layer1::economy::resources::ColonyResources;
 
-const PANIC_THRESHOLD: f32 = 0.3;
-const PANIC_MULTIPLIER: f32 = 3.0;
-const NORMAL_FOOD_PRICE: f32 = 1.0;
-const NORMAL_LUXURY_PRICE: f32 = 5.0;
-
-/// System that adjusts ColonyPrices based on the average Morale of the colony.
-pub fn panic_buying_system(pops: Query<&Morale, With<Pop>>, prices: Option<ResMut<ColonyPrices>>) {
-    if pops.is_empty() {
-        return;
-    }
-
-    if let Some(mut prices) = prices {
-        let mut total_morale = 0.0;
-        let mut count = 0;
-
-        for morale in pops.iter() {
-            total_morale += morale.value;
-            count += 1;
+/// Detects if a Pop is Bingeing while Unrest is critically high (>= 0.8),
+/// and triggers a MarketPanicEvent.
+pub fn detect_panic_buying_trigger(
+    mut events: EventWriter<MarketPanicEvent>,
+    unrest: Res<Unrest>,
+    pops: Query<(Entity, &PopAction), With<Pop>>,
+    mut triggered: Local<bool>,
+) {
+    if unrest.level >= 0.8 {
+        for (_entity, action) in pops.iter() {
+            if action.current == ActionType::Binge {
+                if !*triggered {
+                    events.send(MarketPanicEvent {
+                        commodity: ResourceType::Food,
+                        severity_multiplier: 1.0,
+                    });
+                    *triggered = true; // Prevent spamming every tick
+                }
+                return;
+            }
         }
+    } else {
+        *triggered = false; // Reset when unrest drops
+    }
+}
 
-        let average_morale = total_morale / count as f32;
-
-        if average_morale < PANIC_THRESHOLD {
-            // Panic buying active! Prices skyrocket.
-            prices.food_price = NORMAL_FOOD_PRICE * PANIC_MULTIPLIER;
-            prices.luxury_price = NORMAL_LUXURY_PRICE * PANIC_MULTIPLIER;
-        } else {
-            // Morale is stable. Normal prices.
-            prices.food_price = NORMAL_FOOD_PRICE;
-            prices.luxury_price = NORMAL_LUXURY_PRICE;
+pub fn execute_panic_hoarding(
+    mut events: EventReader<MarketPanicEvent>,
+    mut resources: ResMut<ColonyResources>,
+    mut stashes: Query<&mut PrivateStash, With<Pop>>,
+) {
+    for event in events.read() {
+        if event.commodity == ResourceType::Food {
+            // Everyone panics and takes 1 Food if available
+            for mut stash in stashes.iter_mut() {
+                if resources.food >= 1.0 {
+                    resources.food -= 1.0;
+                    stash.add(ResourceType::Food, 1.0);
+                }
+            }
         }
     }
 }
 
-pub fn register(schedule: &mut Schedule) {
-    schedule.add_systems(panic_buying_system);
+pub fn register(schedule: &mut bevy_ecs::schedule::Schedule) {
+    schedule.add_systems((detect_panic_buying_trigger, execute_panic_hoarding.after(detect_panic_buying_trigger)));
 }
 
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::layer1::social::unrest::Unrest;
 
     #[test]
-    fn test_panic_buying_triggers_price_spike() {
-        let mut world = World::new();
-        world.insert_resource(ColonyPrices {
-            food_price: NORMAL_FOOD_PRICE,
-            luxury_price: NORMAL_LUXURY_PRICE,
+    fn test_execute_panic_hoarding() {
+        let mut app = bevy_app::App::new();
+        app.add_event::<MarketPanicEvent>();
+        app.insert_resource(ColonyResources {
+            food: 10.0,
+            ..Default::default()
         });
 
-        // Spawn pops with low morale
-        world.spawn((
-            Pop,
-            Morale {
-                value: 0.1,
-                modifiers: vec![],
-            },
-        ));
-        world.spawn((
-            Pop,
-            Morale {
-                value: 0.2,
-                modifiers: vec![],
-            },
-        ));
+        let pop1 = app.world_mut().spawn((Pop, PrivateStash { owner: None, inventory: std::collections::HashMap::new() })).id();
+        let pop2 = app.world_mut().spawn((Pop, PrivateStash { owner: None, inventory: std::collections::HashMap::new() })).id();
 
-        let _ = bevy_ecs::system::RunSystemOnce::run_system_once(&mut world, panic_buying_system);
+        app.add_systems(bevy_app::Update, execute_panic_hoarding);
 
-        let prices = world.resource::<ColonyPrices>();
-        assert_eq!(prices.food_price, NORMAL_FOOD_PRICE * PANIC_MULTIPLIER);
-        assert_eq!(prices.luxury_price, NORMAL_LUXURY_PRICE * PANIC_MULTIPLIER);
+        app.world_mut().send_event(MarketPanicEvent {
+            commodity: ResourceType::Food,
+            severity_multiplier: 1.0,
+        });
+        app.update();
+
+        let resources = app.world().resource::<ColonyResources>();
+        assert_eq!(resources.food, 8.0);
+
+        let stash1 = app.world().get::<PrivateStash>(pop1).unwrap();
+        assert_eq!(stash1.get(ResourceType::Food), 1.0);
+
+        let stash2 = app.world().get::<PrivateStash>(pop2).unwrap();
+        assert_eq!(stash2.get(ResourceType::Food), 1.0);
     }
 
     #[test]
-    fn test_panic_buying_normal_prices() {
-        let mut world = World::new();
-        // Start with spiked prices to ensure they normalize
-        world.insert_resource(ColonyPrices {
-            food_price: NORMAL_FOOD_PRICE * PANIC_MULTIPLIER,
-            luxury_price: NORMAL_LUXURY_PRICE * PANIC_MULTIPLIER,
+    fn test_panic_buying_triggers() {
+        let mut app = bevy_app::App::new();
+        app.add_event::<MarketPanicEvent>();
+        app.insert_resource(Unrest {
+            level: 0.9,
+            modifiers: vec![],
         });
 
-        // Spawn pops with high morale
-        world.spawn((
+        app.world_mut().spawn((
             Pop,
-            Morale {
-                value: 0.8,
-                modifiers: vec![],
-            },
-        ));
-        world.spawn((
-            Pop,
-            Morale {
-                value: 0.9,
-                modifiers: vec![],
+            PopAction {
+                current: ActionType::Binge,
+                ..Default::default()
             },
         ));
 
-        let _ = bevy_ecs::system::RunSystemOnce::run_system_once(&mut world, panic_buying_system);
+        app.add_systems(bevy_app::Update, detect_panic_buying_trigger);
+        app.update();
 
-        let prices = world.resource::<ColonyPrices>();
-        assert_eq!(prices.food_price, NORMAL_FOOD_PRICE);
-        assert_eq!(prices.luxury_price, NORMAL_LUXURY_PRICE);
+        let events = app.world().resource::<Events<MarketPanicEvent>>();
+        let mut reader = events.get_cursor();
+        assert_eq!(reader.read(events).count(), 1);
     }
 }
