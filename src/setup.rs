@@ -320,6 +320,7 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     world.insert_resource(crate::layer1::PlanetaryTraits::default());
     world.insert_resource(crate::layer2::syzygy::PlanetaryGravity::default());
     world.insert_resource(crate::layer1::weather::WeatherState::default());
+    world.init_resource::<crate::layer1::nature::weather_fronts::WeatherFronts>();
     world.insert_resource(crate::layer1::environment::terraforming::PlanetaryAtmosphere::default());
     world.insert_resource(crate::layer1::solar::SolarCycleState::default());
     world.insert_resource(crate::layer1::medical::MedicalPolicy::default());

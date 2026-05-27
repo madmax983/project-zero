@@ -640,3 +640,4 @@
 - [x] `INT-495` Integration: Temporal Echoes -> Maintenance Debt — completed 2026-10-31
 - [x] `1126` Orbital Drydocks — `specs/1126-orbital-drydocks.md` — completed 2026-05-26
 - [x] `INT-680` Integration: The Memory Blackout -> Pop Memories, Relationships, and Skills — completed 2026-05-25
+- [x] `192` Planetary Weather Fronts — `specs/192-planetary-weather-fronts.md` — completed 2026-05-27

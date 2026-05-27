@@ -54,3 +54,5 @@ mod silent_world_tests;
 
 pub mod crustal_tides;
 pub use crustal_tides::*;
+pub mod weather_fronts;
+mod weather_fronts_tests;
