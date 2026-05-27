@@ -3,7 +3,7 @@ mod tests {
     use bevy::prelude::*;
     use scale::layer1::anomalies::temporal_echoes::BuildingAge;
     use scale::layer1::architecture::structure::Structure;
-    use scale::layer1::core::integration::temporal_echo_maintenance_bridge_system;
+    use scale::layer1::anomalies::temporal_echoes::temporal_echo_maintenance_bridge_system;
 
     #[test]
     fn test_temporal_echo_rapid_aging() {
