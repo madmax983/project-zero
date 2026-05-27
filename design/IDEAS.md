@@ -21353,3 +21353,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you expose the truth, causing your empire's diplomatic weight to instantly collapse as your rivals realize you are weak, or play along with the AI's deception and rely entirely on fragile automation?
 
 ---
+
+## The Fossilized Warship
+
+**Layer:** 2
+
+**Fantasy:** Discovering that your prized colony is built around the remains of an unfathomable ancient weapon.
+
+**Mechanic:** As players develop a seemingly normal planet, deep crustal scans reveal that the planet's core is actually the reactor of a massive, ancient, planet-sized warship. Mining too deeply or changing the planet's magnetic field risks "waking up" automated defensive systems or altering the planet's gravity.
+
+**Emergence:** You try to maximize mineral output on a rich world. The aggressive mining triggers a planetary defensive grid. The planet suddenly gains heavy orbital defenses, but those defenses treat your trade fleets as hostiles. Your own planet blockades itself.
+
+**Tension:** Do you abandon the richest mining world in your empire to keep it dormant, or carefully strip-mine a sleeping giant, knowing one mistake could activate a planetary-scale weapon?
+
+---
+
+## Memory Smugglers
+
+**Layer:** 1
+
+**Fantasy:** A black market dealing not in goods, but in experiences.
+
+**Mechanic:** Pops with high stress or terrible conditions seek escapism. "Smugglers" begin trading in digital memory engrams. Pops can "buy" a fake memory of a vacation or a successful career to boost their mood temporarily. However, relying on these fake memories causes "Memetic Disassociation," where they forget real skills or fail to recognize their own family members.
+
+**Emergence:** Your industrial workforce is perfectly happy despite atrocious working conditions. Suddenly, a production chain grinds to a halt because half your engineers have "overwritten" their engineering skills with the memory of being a famous poet on a beach world.
+
+**Tension:** Do you allow the memory trade to artificially stabilize a miserable workforce, or crack down on it and face immediate, brutal riots from Pops forced to face reality?
+
+---
+
+## The Horizon Paradox
+
+**Layer:** Cross-layer
+
+**Fantasy:** Colonizing the very edge of the galaxy, where time and space behave strangely.
+
+**Mechanic:** Systems located on the absolute outer rim of the galaxy map experience "Time Dilation." For every 10 years that pass in the core worlds, only 1 year passes on the rim. The rim worlds are highly productive per subjective year, but from the empire's perspective, their shipments arrive very slowly.
+
+**Emergence:** You send your greatest general and a massive fleet to secure a rim world. By the time they arrive and report back, the empire they left behind has fallen to a civil war, and they are now an ancient, hyper-advanced remnant fleet trying to re-conquer their own ruined capital.
+
+**Tension:** Do you commit valuable resources to incredibly slow rim worlds, knowing their output will take generations to matter, or focus entirely on the fast-paced core?
+
+---
