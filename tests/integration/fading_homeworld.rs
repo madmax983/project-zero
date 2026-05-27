@@ -45,7 +45,7 @@ fn test_core_world_generates_demands_on_decay() {
     app.update();
 
     let events = app.world().resource::<Events<CoreWorldDemandEvent>>();
-    let mut reader = events.get_reader();
+    let mut reader = events.get_cursor();
     let emitted_events: Vec<_> = reader.read(events).collect();
 
     assert!(

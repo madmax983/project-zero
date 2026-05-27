@@ -16,7 +16,7 @@ fn test_cartographers_curse_chronicle_bridge() {
     schedule.run(&mut world);
 
     let events = world.resource::<Events<AddChronicleEvent>>();
-    let mut reader = events.get_reader();
+    let mut reader = events.get_cursor();
     let read_events: Vec<_> = reader.read(events).collect();
 
     assert_eq!(read_events.len(), 1, "Should emit exactly one chronicle event");

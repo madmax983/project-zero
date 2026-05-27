@@ -41,7 +41,7 @@ fn bot_awakening_triggers_chronicle() {
     // Verify chronicle event
     let events = app.world().resource::<Events<AddChronicleEvent>>();
     #[allow(deprecated)]
-    let mut reader = events.get_reader();
+    let mut reader = events.get_cursor();
     let events_list: Vec<_> = reader.read(events).collect();
 
     assert_eq!(events_list.len(), 1, "Should emit exactly one chronicle event");

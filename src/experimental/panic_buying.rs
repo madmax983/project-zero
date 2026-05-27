@@ -1,11 +1,11 @@
-use bevy_ecs::prelude::*;
+use crate::layer1::economy::resources::ColonyResources;
+use crate::layer1::economy::resources::ResourceType;
 use crate::layer1::pop::Pop;
+use crate::layer1::private_stash::PrivateStash;
 use crate::layer1::social::unrest::Unrest;
 use crate::layer1::utility_types::{ActionType, PopAction};
 use crate::layer3::market::quantum_famine::MarketPanicEvent;
-use crate::layer1::economy::resources::ResourceType;
-use crate::layer1::private_stash::PrivateStash;
-use crate::layer1::economy::resources::ColonyResources;
+use bevy_ecs::prelude::*;
 
 /// Detects if a Pop is Bingeing while Unrest is critically high (>= 0.8),
 /// and triggers a MarketPanicEvent.
@@ -52,7 +52,10 @@ pub fn execute_panic_hoarding(
 }
 
 pub fn register(schedule: &mut bevy_ecs::schedule::Schedule) {
-    schedule.add_systems((detect_panic_buying_trigger, execute_panic_hoarding.after(detect_panic_buying_trigger)));
+    schedule.add_systems((
+        detect_panic_buying_trigger,
+        execute_panic_hoarding.after(detect_panic_buying_trigger),
+    ));
 }
 
 #[cfg(test)]
@@ -69,8 +72,26 @@ mod tests {
             ..Default::default()
         });
 
-        let pop1 = app.world_mut().spawn((Pop, PrivateStash { owner: None, inventory: std::collections::HashMap::new() })).id();
-        let pop2 = app.world_mut().spawn((Pop, PrivateStash { owner: None, inventory: std::collections::HashMap::new() })).id();
+        let pop1 = app
+            .world_mut()
+            .spawn((
+                Pop,
+                PrivateStash {
+                    owner: None,
+                    inventory: std::collections::HashMap::new(),
+                },
+            ))
+            .id();
+        let pop2 = app
+            .world_mut()
+            .spawn((
+                Pop,
+                PrivateStash {
+                    owner: None,
+                    inventory: std::collections::HashMap::new(),
+                },
+            ))
+            .id();
 
         app.add_systems(bevy_app::Update, execute_panic_hoarding);
 

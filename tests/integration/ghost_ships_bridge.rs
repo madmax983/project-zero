@@ -42,6 +42,6 @@ fn test_ghost_ships_integration() {
 
     // Check if AddChronicleEvent was sent
     let chronicle_events = app.world().resource::<Events<AddChronicleEvent>>();
-    let mut reader = chronicle_events.get_reader();
+    let mut reader = chronicle_events.get_cursor();
     assert!(reader.read(chronicle_events).next().is_some());
 }

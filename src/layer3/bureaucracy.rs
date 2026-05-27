@@ -1,6 +1,6 @@
-use bevy_ecs::prelude::*;
 use crate::layer1::economy::resources::ColonyResources;
 use crate::layer1::entities::pop::Pop;
+use bevy_ecs::prelude::*;
 
 #[derive(Component)]
 pub struct AutomatedReporting {
@@ -54,15 +54,21 @@ mod tests {
         app.world_mut().spawn(Pop);
         app.world_mut().spawn(Pop);
 
-        let reporting_entity = app.world_mut().spawn(AutomatedReporting {
-            is_active: true,
-            reported_population: 0,
-        }).id();
+        let reporting_entity = app
+            .world_mut()
+            .spawn(AutomatedReporting {
+                is_active: true,
+                reported_population: 0,
+            })
+            .id();
 
         app.add_systems(Update, colony_reporting_system);
         app.update();
 
-        let reporting = app.world().get::<AutomatedReporting>(reporting_entity).unwrap();
+        let reporting = app
+            .world()
+            .get::<AutomatedReporting>(reporting_entity)
+            .unwrap();
         assert_eq!(reporting.reported_population, 2);
     }
 }

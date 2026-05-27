@@ -26,7 +26,7 @@ fn test_override_will_chronicle_bridge() {
 
     let events = app.world().resource::<Events<AddChronicleEvent>>();
     #[allow(deprecated)]
-    let mut reader = events.get_reader();
+    let mut reader = events.get_cursor();
     let events_list: Vec<_> = reader.read(events).collect();
 
     assert_eq!(events_list.len(), 1, "Should generate one chronicle event");

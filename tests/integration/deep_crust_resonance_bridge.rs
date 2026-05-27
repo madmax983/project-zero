@@ -56,7 +56,7 @@ fn test_deep_crust_resonance_integration() {
 
     let chronicle_events = app.world().resource::<Events<AddChronicleEvent>>();
     #[allow(deprecated)]
-    let mut reader = chronicle_events.get_reader();
+    let mut reader = chronicle_events.get_cursor();
     let events: Vec<_> = reader.read(chronicle_events).collect();
     assert_eq!(events.len(), 1);
     assert!(events[0].text.contains("Deep Crust Resonance"));

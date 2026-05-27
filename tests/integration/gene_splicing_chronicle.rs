@@ -31,7 +31,7 @@ fn test_gene_splicing_success_emits_chronicle() {
     app.update();
 
     let chronicle_events = app.world().resource::<Events<AddChronicleEvent>>();
-    let mut reader = chronicle_events.get_reader();
+    let mut reader = chronicle_events.get_cursor();
     let events: Vec<_> = reader.read(chronicle_events).collect();
 
     assert_eq!(events.len(), 1, "Should emit one AddChronicleEvent");
@@ -65,7 +65,7 @@ fn test_gene_splicing_failure_emits_chronicle() {
     app.update();
 
     let chronicle_events = app.world().resource::<Events<AddChronicleEvent>>();
-    let mut reader = chronicle_events.get_reader();
+    let mut reader = chronicle_events.get_cursor();
     let events: Vec<_> = reader.read(chronicle_events).collect();
 
     assert_eq!(events.len(), 1, "Should emit one AddChronicleEvent");

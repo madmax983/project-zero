@@ -109,7 +109,10 @@ mod tests {
         use scale::layer1::core::integration::memory_blackout_chronicle_bridge;
 
         let mut app = App::new();
-        app.add_systems(Update, (process_memory_blackout, memory_blackout_chronicle_bridge).chain());
+        app.add_systems(
+            Update,
+            (process_memory_blackout, memory_blackout_chronicle_bridge).chain(),
+        );
         app.add_event::<MemoryBlackoutEvent>();
         app.add_event::<AddChronicleEvent>();
 
@@ -121,10 +124,13 @@ mod tests {
         app.update();
 
         let chronicle_events = app.world().resource::<Events<AddChronicleEvent>>();
-        let mut reader = chronicle_events.get_reader();
+        let mut reader = chronicle_events.get_cursor();
         let events: Vec<_> = reader.read(chronicle_events).collect();
 
         assert_eq!(events.len(), 1, "Should emit exactly one chronicle event");
-        assert!(events[0].text.contains("Memory Blackout"), "Event text should mention Memory Blackout");
+        assert!(
+            events[0].text.contains("Memory Blackout"),
+            "Event text should mention Memory Blackout"
+        );
     }
 }
