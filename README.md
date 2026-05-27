@@ -12,6 +12,8 @@ A 4X colony simulation where you begin Dwarf-Fortress-style on a single planet a
 
 ## Quick Start
 
+> # 🚨 ⚠️ REQUIRES FEATURE NOVA ⚠️ 🚨
+
 ### Native (Terminal)
 
 ```bash
