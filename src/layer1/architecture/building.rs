@@ -310,6 +310,8 @@ pub enum BuildingType {
     DroneHub,
     /// Cryo-Stasis Pod.
     CryoPod,
+    /// Extracts organs from biomass.
+    BiomassExtractor,
     /// Harvests energy from magnetic storms.
     AuroralCollector,
     /// Terraforming: Atmospheric Processor.
@@ -525,6 +527,7 @@ impl BuildingType {
             Self::School | Self::MediaStation => false,
             Self::Mainframe | Self::CommsRelay => false,
             Self::Billboard => false,
+            Self::BiomassExtractor => true,
         }
     }
 
@@ -599,6 +602,7 @@ impl BuildingType {
             Self::AuroralCollector => Some(Tech::Electromagnetism),
             Self::AtmosphericProcessor => Some(Tech::Terraforming),
             Self::GeneBank | Self::CloneVat | Self::HypnoPod => Some(Tech::Medical),
+            Self::BiomassExtractor => Some(Tech::Medical),
             Self::Shower => Some(Tech::SocialStructures),
             Self::Recycler => Some(Tech::Medical),
             Self::BulletinBoard => Some(Tech::SocialStructures),
@@ -675,6 +679,7 @@ impl BuildingType {
             Self::GeneBank => "Gene Bank",
             Self::CloneVat => "Clone Vat",
             Self::HypnoPod => "Hypno-Pod",
+            Self::BiomassExtractor => "Biomass Extractor",
             Self::Shower => "Shower",
             Self::Recycler => "Recycler",
             Self::BulletinBoard => "Bulletin Board",
@@ -740,6 +745,7 @@ impl BuildingType {
             Self::GeneBank => '🧬',
             Self::CloneVat => '⚗',
             Self::HypnoPod => 'H',
+            Self::BiomassExtractor => 'X',
             Self::Shower => '🚿',
             Self::Recycler => '♻',
             Self::BulletinBoard => 'B',
@@ -768,6 +774,7 @@ impl BuildingType {
             Self::GeneBank => ColonyResources::zeroed().with_metal(50.0).with_stone(20.0),
             Self::CloneVat => ColonyResources::zeroed().with_metal(50.0).with_stone(20.0),
             Self::HypnoPod => ColonyResources::zeroed().with_metal(100.0).with_tools(5.0),
+            Self::BiomassExtractor => ColonyResources::zeroed().with_metal(50.0).with_stone(20.0),
             Self::Shower => ColonyResources::zeroed().with_metal(10.0).with_stone(5.0),
             Self::Recycler => ColonyResources::zeroed().with_metal(20.0).with_stone(10.0),
             Self::BulletinBoard => ColonyResources::zeroed().with_wood(20.0),
@@ -1154,6 +1161,7 @@ fn configure_building_components(entity: &mut EntityWorldMut, building_type: Bui
         | BuildingType::GeneBank
         | BuildingType::CloneVat
         | BuildingType::HypnoPod
+        | BuildingType::BiomassExtractor
         | BuildingType::HoloProjector
         | BuildingType::Nanoforge => configure_tech(entity, building_type),
         BuildingType::School | BuildingType::MediaStation | BuildingType::Spaceport => {
@@ -2322,7 +2330,11 @@ mod tests {
         assert_eq!(BuildingType::CommandCenter.next(), BuildingType::AICore);
         assert_eq!(BuildingType::AICore.next(), BuildingType::DroneHub);
         assert_eq!(BuildingType::DroneHub.next(), BuildingType::CryoPod);
-        assert_eq!(BuildingType::CryoPod.next(), BuildingType::AuroralCollector);
+        assert_eq!(BuildingType::CryoPod.next(), BuildingType::BiomassExtractor);
+        assert_eq!(
+            BuildingType::BiomassExtractor.next(),
+            BuildingType::AuroralCollector
+        );
         assert_eq!(
             BuildingType::AuroralCollector.next(),
             BuildingType::AtmosphericProcessor
@@ -2549,6 +2561,9 @@ mod tests {
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::CryoPod);
+
+        mode.selected = mode.selected.next();
+        assert_eq!(mode.selected, BuildingType::BiomassExtractor);
 
         mode.selected = mode.selected.next();
         assert_eq!(mode.selected, BuildingType::AuroralCollector);

@@ -807,6 +807,7 @@ mod tests {
     #[test]
     fn test_run_simulation_tick_increments() {
         let mut world = setup_world();
+        world.init_resource::<Events<crate::layer1::architecture::extractor::OrganHarvestEvent>>();
         world
             .init_resource::<crate::layer1::environment::bio_acoustic_miasma::MiasmaRecordedSecret>(
             );
@@ -856,6 +857,7 @@ mod tests {
     #[test]
     fn test_run_multiple_ticks() {
         let mut world = setup_world();
+        world.init_resource::<Events<crate::layer1::architecture::extractor::OrganHarvestEvent>>();
         world
             .init_resource::<crate::layer1::environment::bio_acoustic_miasma::MiasmaRecordedSecret>(
             );
@@ -1059,6 +1061,7 @@ mod tests {
 
         world.init_resource::<Events<crate::layer3::intellectual_property_wars::EspionageSuccessEvent>>();
         world.init_resource::<Events<crate::layer1::law::penal::OrganHarvestedEvent>>();
+        world.init_resource::<Events<crate::layer1::architecture::extractor::OrganHarvestEvent>>();
         world.init_resource::<crate::layer1::law::penal::ColonyInventory>();
         world.init_resource::<Events<crate::layer1::whispering_ore::MinedOreEvent>>();
         world.init_resource::<Events<crate::layer1::whispering_ore::MineSealedEvent>>();

@@ -788,6 +788,7 @@ pub const fn get_building_char(building: BuildingType) -> &'static str {
         BuildingType::Mainframe => "M",
         BuildingType::CommsRelay => "C",
         BuildingType::Billboard => "B",
+        BuildingType::BiomassExtractor => "X",
     }
 }
 
@@ -849,7 +850,7 @@ pub const fn get_building_color(building: BuildingType, material: MaterialType) 
             | BuildingType::HypnoPod => Color::Rgb(0, 255, 100), // Toxic/Data Green
             BuildingType::Plantation | BuildingType::PersonalGarden => Color::Green,
             BuildingType::Weaver | BuildingType::Statue | BuildingType::Lander => Color::White,
-            BuildingType::Hospital => Color::Red,
+            BuildingType::Hospital | BuildingType::BiomassExtractor => Color::Red,
             BuildingType::Landfill => Color::Rgb(105, 105, 105), // DimGray
             BuildingType::Grave => Color::Rgb(128, 128, 128),    // Gray
             BuildingType::TradeDepot | BuildingType::SolarPanel => Color::Yellow,

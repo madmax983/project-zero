@@ -58,7 +58,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [x] `255` Hypno-Learning — `specs/255-hypno-learning.md` — completed 2026-03-01
 
 - [ ] `267` Ancestral Graves — `specs/267-ancestral-graves.md`
-- [ ] `270` The Organ Market — `specs/270-organ-market.md`
 - [ ] `271` Subcontractor Factions — `specs/271-subcontractor-factions.md`
 - [ ] `272` The Martyrdom Effect — `specs/272-martyrdom-effect.md`
 - [ ] `273` The Feral Outpost — `specs/273-feral-outpost.md`
@@ -832,7 +831,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1267` Echoes of the Lost Fleet — `specs/1267-echoes-of-the-lost-fleet.md`
 - [ ] `1268` The Scrap-Mind Ascendancy — `specs/1268-the-scrap-mind-ascendancy.md`
 - [ ] `1269` Cult of the First Error — `specs/1269-cult-of-the-first-error.md`
-- [ ] `1270` Phantom Trade Routes — `specs/1270-phantom-trade-routes.md`
 - [ ] `1271` The Propaganda Graffitists — `specs/1271-the-propaganda-graffitists.md`
 - [ ] `1272` The Phantom Limb of Logistics — `specs/1272-the-phantom-limb-of-logistics.md`
 - [ ] `1273` Gravity Debt — `specs/1273-gravity-debt.md`

@@ -143,6 +143,10 @@ pub fn register(schedule: &mut Schedule) {
             .in_set(Layer1SystemSet::Economy),
     );
     schedule.add_systems(
+        (crate::layer1::architecture::extractor::handle_biomass_extraction_system,)
+            .in_set(Layer1SystemSet::Economy),
+    );
+    schedule.add_systems(
         (
             crate::layer1::economy::remittances::process_remittances_system,
             healing_system,

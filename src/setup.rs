@@ -1181,6 +1181,7 @@ mod tests {
             headless: true,
             scenario,
         });
+        world.init_resource::<Events<crate::layer1::architecture::extractor::OrganHarvestEvent>>();
         world
             .init_resource::<crate::layer1::environment::bio_acoustic_miasma::MiasmaRecordedSecret>(
             );
