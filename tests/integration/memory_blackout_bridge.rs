@@ -102,4 +102,29 @@ mod tests {
         let skills_component = app.world().get::<Skills>(pop).unwrap();
         assert!(skills_component.xp.is_empty(), "Skills should be reset");
     }
+
+    #[test]
+    fn test_memory_blackout_emits_chronicle_event() {
+        use scale::layer1::core::chronicle::AddChronicleEvent;
+        use scale::layer1::core::integration::memory_blackout_chronicle_bridge;
+
+        let mut app = App::new();
+        app.add_systems(Update, (process_memory_blackout, memory_blackout_chronicle_bridge).chain());
+        app.add_event::<MemoryBlackoutEvent>();
+        app.add_event::<AddChronicleEvent>();
+
+        app.world_mut().send_event(MemoryBlackoutEvent {
+            start_time: 100,
+            end_time: 200,
+        });
+
+        app.update();
+
+        let chronicle_events = app.world().resource::<Events<AddChronicleEvent>>();
+        let mut reader = chronicle_events.get_reader();
+        let events: Vec<_> = reader.read(chronicle_events).collect();
+
+        assert_eq!(events.len(), 1, "Should emit exactly one chronicle event");
+        assert!(events[0].text.contains("Memory Blackout"), "Event text should mention Memory Blackout");
+    }
 }
