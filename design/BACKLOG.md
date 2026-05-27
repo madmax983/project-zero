@@ -30,7 +30,7 @@
 
 - [ ] `695` The Long Night — `specs/695-the-long-night.md`
 - [ ] `550` The Gravity Siphon — `specs/550-the-gravity-siphon.md`
-- [ ] `551` The Parasitic Broadcast — `specs/551-the-parasitic-broadcast.md`
+
 - [ ] `552` The Subterranean Smog Layer — `specs/552-the-subterranean-smog-layer.md`
 - [ ] `553` Orbital Debt Collections — `specs/553-orbital-debt-collections.md`
 - [ ] `554` The Phantom Signal — `specs/554-the-phantom-signal.md`
