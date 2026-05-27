@@ -497,3 +497,5 @@ mod orbital_drydocks;
 mod orbital_drydocks_bridge;
 #[path = "integration/gravitational_doldrums_bridge.rs"]
 mod gravitational_doldrums_bridge;
+#[path = "integration/bureaucratic_ghost_towns.rs"]
+mod bureaucratic_ghost_towns;
