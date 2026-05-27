@@ -21395,3 +21395,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you commit valuable resources to incredibly slow rim worlds, knowing their output will take generations to matter, or focus entirely on the fast-paced core?
 
 ---
+
+## Gravity Tides
+
+**Layer:** 2 -> 1
+
+**Fantasy:** The struggle of living on a moon orbiting a massive gas giant where gravity itself fluctuates based on orbit.
+
+**Mechanic:** Global gravity changes periodically. High gravity increases energy costs, slows movement, and increases structural stress. Low gravity speeds up work but risks atmospheric venting and jumping accidents.
+
+**Emergence:** A raid happens during Low Gravity, turning a ground battle into a zero-g shootout. Heavy industry must pause during High Gravity to avoid collapsing buildings.
+
+**Tension:** Plan intensive physical tasks for low gravity vs. dealing with the structural hazards of sudden high gravity shifts.
+
+---
+
+## The Archival Plague
+
+**Layer:** 1 -> Cross-layer
+
+**Fantasy:** Knowledge isn't just power, it's a vector for contamination.
+
+**Mechanic:** An ancient digital or memetic virus hides within high-value precursor data vaults. When excavated and researched, it infects the colony's data network, gradually converting scientific research output into corrupted "Scrap-Code" or inciting Pops to behave erratically based on ancient protocols.
+
+**Emergence:** The research into advanced terraforming is completed, but the Archival Plague activates, making all automated terraformers attempt to recreate a toxic atmosphere suited for long-dead aliens.
+
+**Tension:** Crack open ancient data vaults for massive tech boosts vs. the risk of unleashing a memetic plague that rewrites your society's protocols.
+
+---
+
+## Famine Architecture
+
+**Layer:** 1
+
+**Fantasy:** The physical manifestation of past desperation shaping the future of a colony.
+
+**Mechanic:** When a colony survives a prolonged starvation event, they start utilizing "Famine Architecture," building new structures with edible or hyper-recyclable bio-materials. These buildings have lower integrity and beauty but can literally be eaten or broken down for nutrients during the next crisis.
+
+**Emergence:** Decades later, a wealthy and prosperous colony is struck by a surprise blockade. They survive not by farming, but by systematically dismantling and eating their oldest, most historic buildings, literally consuming their own history.
+
+**Tension:** Build durable, beautiful stone/metal infrastructure vs. investing in fragile but life-saving edible architecture just in case.
+
+---
