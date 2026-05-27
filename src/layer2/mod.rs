@@ -77,3 +77,4 @@ pub use fauna::*;
 pub mod phantom_signal;
 pub mod gravitational_doldrums;
 pub use gravitational_doldrums::*;
+pub mod celestial_library;

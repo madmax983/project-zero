@@ -644,3 +644,4 @@
 - [x] `INT-1126` Integration: Orbital Drydocks -> Fleet Spawning - completed 2026-10-31
 - [x] `INT-1135` Integration: Gravitational Doldrums -> Fleet Movement - completed 2026-10-31
 - [x] `551` The Parasitic Broadcast — `specs/551-the-parasitic-broadcast.md` — completed 2024-05-27
+- [x] `310` The Celestial Library — `specs/310-celestial-library.md` — completed 2026-05-27

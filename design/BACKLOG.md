@@ -94,7 +94,7 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `307` Xenological Pets — `specs/307-xenological-pets.md`
 - [ ] `308` Black Market Genemods — `specs/308-black-market-genemods.md`
 - [ ] `309` The Bureaucratic Strike — `specs/309-bureaucratic-strike.md`
-- [ ] `310` The Celestial Library — `specs/310-celestial-library.md`
+
 - [ ] `311` The Orbital Ring — `specs/311-orbital-ring.md`
 - [ ] `312` The Cryo-Mutiny — `specs/312-cryo-mutiny.md`
 - [ ] `313` The Fungal Network — `specs/313-fungal-network.md`
