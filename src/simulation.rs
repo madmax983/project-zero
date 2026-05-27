@@ -390,10 +390,11 @@ fn register_simulation_core_systems(schedule: &mut Schedule) {
     schedule.add_systems((
         crate::layer1::law::embassy::evaluate_diplomatic_crime_system,
         crate::layer1::psychology::memory_blackout::process_memory_blackout,
+        crate::layer1::core::integration::memory_blackout_chronicle_bridge,
         crate::layer1::law::embassy::process_diplomatic_arrest_system,
         crate::layer1::diplomacy::factions::rivals::rival_colony_expansion_system,
         crate::layer1::diplomacy::factions::rivals::rival_resource_drain_system,
-    ));
+    ).chain().in_set(Layer1SystemSet::Economy));
 
     schedule.add_systems(crate::layer1::physics::harpoon::process_harpoon_impact_system);
     schedule.add_systems((crate::layer2::weather::weather_movement_system,));

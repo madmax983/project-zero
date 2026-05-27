@@ -98,6 +98,22 @@ pub fn apex_meat_harvest_bridge_system(
     }
 }
 
+/// INT-680: Bridges MemoryBlackoutEvent to AddChronicleEvent (Chronicle).
+pub fn memory_blackout_chronicle_bridge(
+    mut events: EventReader<crate::layer1::psychology::memory_blackout::MemoryBlackoutEvent>,
+    mut chronicle_events: EventWriter<AddChronicleEvent>,
+) {
+    for event in events.read() {
+        chronicle_events.send(AddChronicleEvent {
+            importance: EventImportance::Major,
+            text: format!(
+                "A Memory Blackout occurred. All colony memories and relationships formed between cycle {} and {} were erased.",
+                event.start_time, event.end_time
+            ),
+        });
+    }
+}
+
 pub fn crop_mutation_mycelial_bridge(
     mut events: EventReader<crate::layer1::biology::genetics::crop_modification::CropMutationEvent>,
     mut contamination: EventWriter<crate::layer1::logistics::mycelial::ContaminationEvent>,

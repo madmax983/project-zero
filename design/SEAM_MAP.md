@@ -1216,10 +1216,10 @@
 
 ### INT-680: The Memory Blackout -> Pop Memories, Relationships, and Skills
 - **Date:** 2026-05-25
-- **Systems connected:** `MemoryBlackoutEvent` -> `process_memory_blackout` -> `Memories`, `Relationships`, `Skills`
-- **Glue added:** `process_memory_blackout` in `src/layer1/psychology/memory_blackout.rs`
+- **Systems connected:** `MemoryBlackoutEvent` -> `process_memory_blackout` -> `Memories`, `Relationships`, `Skills`, `AddChronicleEvent`
+- **Glue added:** `process_memory_blackout` in `src/layer1/psychology/memory_blackout.rs` and `memory_blackout_chronicle_bridge` in `src/layer1/core/integration.rs` to record the event in the Chronicle.
 - **Schedule:** Chained in Update within `Layer1SystemSet::Economy`
-- **Tests:** `tests/integration/memory_blackout_bridge.rs` (3 tests)
+- **Tests:** `tests/integration/memory_blackout_bridge.rs` (4 tests)
 
 ### INT-1126: Orbital Drydocks -> Fleet Spawning
 - **Date:** 2026-10-31
