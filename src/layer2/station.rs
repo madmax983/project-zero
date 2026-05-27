@@ -34,6 +34,12 @@ pub struct ShipConstruction {
     pub is_complete: bool,
 }
 
+#[derive(Event, Debug, Clone)]
+pub struct ShipConstructionCompletedEvent {
+    pub drydock_entity: Entity,
+    pub ship_class: String,
+}
+
 impl StationType {
     /// Returns the resource cost to build this station.
     #[must_use]
@@ -235,9 +241,10 @@ pub fn process_megastructure_upkeep(
 }
 
 pub fn process_drydock_construction_system(
-    mut query: Query<(&Station, &mut ShipConstruction, &mut FleetCargo)>,
+    mut query: Query<(Entity, &Station, &mut ShipConstruction, &mut FleetCargo)>,
+    mut event_writer: EventWriter<ShipConstructionCompletedEvent>,
 ) {
-    for (station, mut construction, mut cargo) in query.iter_mut() {
+    for (entity, station, mut construction, mut cargo) in query.iter_mut() {
         if station.station_type != StationType::OrbitalDrydock || construction.is_complete {
             continue;
         }
@@ -245,6 +252,10 @@ pub fn process_drydock_construction_system(
         let needed = construction.metal_required - construction.metal_delivered;
         if needed <= 0.0 {
             construction.is_complete = true;
+            event_writer.send(ShipConstructionCompletedEvent {
+                drydock_entity: entity,
+                ship_class: construction.target_ship_class.clone(),
+            });
             continue;
         }
 
@@ -257,8 +268,14 @@ pub fn process_drydock_construction_system(
             }
         }
 
+        cargo.contents.retain(|stack| stack.amount > 0.0);
+
         if construction.metal_delivered >= construction.metal_required {
             construction.is_complete = true;
+            event_writer.send(ShipConstructionCompletedEvent {
+                drydock_entity: entity,
+                ship_class: construction.target_ship_class.clone(),
+            });
         }
     }
 }
@@ -308,6 +325,7 @@ mod orbital_drydocks_tests {
     fn test_orbital_drydock_construction_progress() {
         let mut app = App::new();
         app.add_plugins(MinimalPlugins);
+        app.add_event::<ShipConstructionCompletedEvent>();
         app.add_systems(Update, process_drydock_construction_system);
 
         let required_metal = 1000.0;

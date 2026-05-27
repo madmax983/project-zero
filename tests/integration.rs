@@ -491,3 +491,7 @@ mod memory_blackout_bridge;
 mod mycelial_network_bridge;
 #[path = "integration/temporal_echoes_maintenance.rs"]
 mod temporal_echoes_maintenance;
+#[path = "integration/orbital_drydocks.rs"]
+mod orbital_drydocks;
+#[path = "integration/orbital_drydocks_bridge.rs"]
+mod orbital_drydocks_bridge;

@@ -1220,3 +1220,9 @@
 - **Glue added:** `process_memory_blackout` in `src/layer1/psychology/memory_blackout.rs`
 - **Schedule:** Chained in Update within `Layer1SystemSet::Economy`
 - **Tests:** `tests/integration/memory_blackout_bridge.rs` (3 tests)
+
+### INT-1126: Orbital Drydocks -> Fleet Spawning
+- **Date:** 2026-10-31
+- **Systems connected:** `process_drydock_construction_system` -> `orbital_drydock_fleet_bridge_system` -> `Fleet`, `InOrbit`
+- **Glue added:** `ShipConstructionCompletedEvent` emitted by `process_drydock_construction_system` and consumed by `orbital_drydock_fleet_bridge_system` to spawn the `Fleet` entity and an `AddChronicleEvent`.
+- **Tests:** `tests/integration/orbital_drydocks_bridge.rs`

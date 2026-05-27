@@ -211,6 +211,26 @@ pub fn prisoner_death_chronicle_bridge_system(
     }
 }
 
+pub fn orbital_drydock_fleet_bridge_system(
+    mut commands: Commands,
+    mut events: EventReader<crate::layer2::station::ShipConstructionCompletedEvent>,
+    mut chronicle_events: EventWriter<crate::layer1::chronicle::AddChronicleEvent>,
+) {
+    for ev in events.read() {
+        commands.spawn((
+            crate::layer2::fleet::Fleet,
+            crate::layer2::fleet::InOrbit {
+                parent: ev.drydock_entity,
+            },
+        ));
+
+        chronicle_events.send(crate::layer1::chronicle::AddChronicleEvent {
+            text: format!("Construction of the {} class ship has been completed in the orbital drydock and is ready for fleet operations.", ev.ship_class),
+            importance: crate::layer1::chronicle::EventImportance::Major,
+        });
+    }
+}
+
 use crate::layer2::trade::routes::{RouteComplexity, SentientTollDemandEvent};
 
 /// Bridges `SentientTollDemandEvent` from Sentient Trade Routes into the `Chronicle` system.
