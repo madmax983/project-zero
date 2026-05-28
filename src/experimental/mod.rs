@@ -167,3 +167,6 @@ pub mod death_pulse_power;
 pub mod sleepwalking_sabotage;
 #[cfg(feature = "nova")]
 pub mod vermin_wheel;
+
+#[cfg(feature = "nova")]
+pub mod binge_graffiti;
