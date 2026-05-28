@@ -1233,3 +1233,15 @@
 - **Glue added:** Modified `fleet_movement_system` in `src/layer2/fleet.rs` to query `MovementSpeed` and apply the current speed multiplier.
 - **Schedule:** Added `doldrums_effects_system` to run before `fleet_movement_system` in `src/simulation.rs`.
 - **Tests:** `tests/integration/gravitational_doldrums_bridge.rs` (1 test)
+
+### INT-279: Signal Latency -> Fleet Movement
+- **Date:** 2026-05-28
+- **Systems connected:** `execute_delayed_orders_system` -> `signal_latency_fleet_bridge` -> `fleet_order_system`
+- **Glue added:** Added `signal_latency_fleet_bridge` in `src/layer2/integration.rs` to convert `ExecuteOrderEvent` into `FleetOrder` components on fleets.
+- **Tests:** `tests/signal_latency_bridge.rs`
+
+### INT-310: Celestial Library -> ColonyResources & Chronicle
+- **Date:** 2026-05-27
+- **Systems connected:** `LibraryDonationEvent` -> `celestial_library_chronicle_bridge` -> `ColonyResources`, `AddChronicleEvent`
+- **Glue added:** Added `celestial_library_chronicle_bridge` in `src/layer2/integration.rs` to process library donations, deduct knowledge from `ColonyResources`, and emit `AddChronicleEvent`s.
+- **Tests:** `tests/celestial_library_bridge.rs`
