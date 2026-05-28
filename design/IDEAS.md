@@ -21479,3 +21479,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you accept the massive, immediate boon of free infrastructure, knowing it might be a trap you don't understand?
 
 ---
+
+## Sub-Colony Stowaways
+
+**Layer:** Cross-layer
+
+**Fantasy:** Discovering that your massive colony ships and cargo haulers are developing their own independent ecosystem of stowaways.
+
+**Mechanic:** Pops with extreme dissatisfaction or criminal traits can "stow away" on interplanetary freighters. Instead of settling, they begin living permanently inside the massive maintenance ducts of the fleet, breeding and creating a micro-society.
+
+**Emergence:** Your invincible armada is suddenly crippled because the 5th generation of stowaways living in the ventilation shafts accidentally cannibalized the main power conduit to build a makeshift shrine to the void.
+
+**Tension:** Do you heavily police your cargo ships, slowing down crucial logistics, or ignore the "rats" until they become a political faction demanding representation on the ships they infest?
+
+---
+
+## Xeno-Blight Symbiosis
+
+**Layer:** 1 -> 2
+
+**Fantasy:** Embracing a horrifying planetary infection because it's highly profitable.
+
+**Mechanic:** A local fungal or biological blight begins consuming a colony's crops and structures. However, it secretes a highly valuable exotic compound. Pops working near it begin mutating, becoming dependent on the blight.
+
+**Emergence:** You quarantine the world to stop the spread, but the mutated locals bribe your blockade runners to export the exotic compound. Soon, the luxury markets of your pristine core worlds are driving the deliberate spread of the blight just to harvest the compound.
+
+**Tension:** Do you cleanse the infected world with orbital fire to stop the contagion, or let the world slowly transform into a twisted bio-factory because the profits are funding your war effort?
+
+---
+
+## Generational Trauma Echoes
+
+**Layer:** 1
+
+**Fantasy:** The physical scars of a past disaster shaping the psychological reality of future inhabitants.
+
+**Mechanic:** If a catastrophic event (like a massive starvation, siege, or atmospheric breach) kills a significant portion of a colony, the physical location gains a "Trauma Echo." Decades later, Pops living or working in those specific tiles experience increased stress, paranoia, and recurring nightmares about the event, even if they weren't alive when it happened.
+
+**Emergence:** You try to rebuild a utopia over the ruins of a brutal siege. Despite the luxurious conditions, your Pops are constantly rioting because the very soil they walk on induces phantom memories of starvation and terror.
+
+**Tension:** Do you abandon highly developed but "haunted" infrastructure to build fresh elsewhere, or force your Pops to endure the psychological toll to maintain efficiency?
+
+---
