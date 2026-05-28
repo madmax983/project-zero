@@ -21437,3 +21437,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Build durable, beautiful stone/metal infrastructure vs. investing in fragile but life-saving edible architecture just in case.
 
 ---
+
+## The Grey Dust
+
+**Layer:** 1
+
+**Fantasy:** The relentless, grinding reality of entropy taking over a struggling settlement.
+
+**Mechanic:** A slow-accumulating environmental hazard called "The Grey" (nano-spoilage or entropic dust) settling on buildings and stored resources. If not regularly cleaned by dedicated maintenance Pops, it permanently degrades building efficiency and rots organic materials.
+
+**Emergence:** You ignore maintenance to push for a critical military build-up. Decades later, your granaries are full of dust, and your factories grind to a halt just as the war begins.
+
+**Tension:** Do you dedicate valuable population to the endless, invisible task of preservation, or push for rapid expansion at the cost of long-term decay?
+
+---
+
+## Wound Resonance
+
+**Layer:** Cross-layer
+
+**Fantasy:** The psychological and physical toll of living too close to the unexplainable.
+
+**Mechanic:** Systems near the "Wound" experience occasional "Resonance Events." During these periods, FTL communication is garbled, and Pops on nearby colonies suffer strange, shared hallucinations, leading to the spontaneous formation of apocalyptic cults or sudden leaps in dangerous research.
+
+**Emergence:** A vital trade hub near the Wound suddenly goes dark during a Resonance Event. When contact is re-established, the population has dismantled their spaceport to build a massive, incomprehensible monument to the void.
+
+**Tension:** Do you abandon rich systems near the Wound, or risk your Pops' sanity to exploit the resources on the edge of the abyss?
+
+---
+
+## The Inheritance of Silence
+
+**Layer:** Cross-layer
+
+**Fantasy:** Stumbling upon a perfectly preserved, dead world and wondering if you are making the same mistakes.
+
+**Mechanic:** Exploration ships can discover intact, highly advanced colonies where the population simply vanished. Players can claim these systems and use their infrastructure, but the "Silence Protocol" that wiped out the original inhabitants remains dormant in the system's architecture, triggered by specific, unknown thresholds (like reaching a certain population density or power output).
+
+**Emergence:** You colonize a beautiful, empty ecumenopolis, solving your housing crisis instantly. A century later, your own population reaches the critical threshold, and the ancient defense grids activate, locking the planet down.
+
+**Tension:** Do you accept the massive, immediate boon of free infrastructure, knowing it might be a trap you don't understand?
+
+---
