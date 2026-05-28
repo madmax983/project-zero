@@ -19,9 +19,12 @@ fn test_celestial_library_chronicle_bridge_sufficient() {
 
     app.add_systems(Update, celestial_library_chronicle_bridge);
 
-    let library = app.world_mut().spawn(CelestialLibrary {
-        required_donation: 1000,
-    }).id();
+    let library = app
+        .world_mut()
+        .spawn(CelestialLibrary {
+            required_donation: 1000,
+        })
+        .id();
 
     // Fire the donation event
     app.world_mut().send_event(LibraryDonationEvent {
@@ -32,7 +35,10 @@ fn test_celestial_library_chronicle_bridge_sufficient() {
     app.update();
 
     let final_resources = app.world().resource::<ColonyResources>();
-    assert_eq!(final_resources.knowledge, 3500.0, "The knowledge must be deducted by the donated amount");
+    assert_eq!(
+        final_resources.knowledge, 3500.0,
+        "The knowledge must be deducted by the donated amount"
+    );
 
     let chronicle_events = app.world().resource::<Events<AddChronicleEvent>>();
     let mut reader = chronicle_events.get_cursor();
@@ -57,9 +63,12 @@ fn test_celestial_library_chronicle_bridge_insufficient() {
 
     app.add_systems(Update, celestial_library_chronicle_bridge);
 
-    let library = app.world_mut().spawn(CelestialLibrary {
-        required_donation: 1000,
-    }).id();
+    let library = app
+        .world_mut()
+        .spawn(CelestialLibrary {
+            required_donation: 1000,
+        })
+        .id();
 
     // Fire the donation event (they try to donate 800 but only have 500)
     app.world_mut().send_event(LibraryDonationEvent {

@@ -77,7 +77,6 @@ fn init_simulation_resources(world: &mut World) {
 
     world.init_resource::<crate::layer1::social::old_guard::Demographics>();
     world.init_resource::<crate::layer1::skills::generational_atrophy::AutomationLevel>();
-    world.init_resource::<crate::layer1::culture::procedural_dialects::DialectManager>();
 
     world.init_resource::<crate::layer1::diplomacy::factions::rivals::TerritoryGrid>();
 
@@ -437,13 +436,6 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
         crate::layer2::events_new::system_quarantine::apply_quarantine_effects,
         crate::layer2::events_new::system_quarantine::handle_quarantine_decay,
     ));
-
-    schedule.add_systems((
-        crate::layer1::culture::procedural_dialects::process_chronicle_events_for_dialect,
-        crate::layer1::culture::procedural_dialects::initialize_pop_dialect,
-        crate::layer1::culture::procedural_dialects::decay_slang_weight,
-    ));
-
     // --- Spec 622 ---
     schedule.add_systems((
         crate::layer1::biology::cybernetic_ascendancy::cybernetic_integration_system,
@@ -923,7 +915,6 @@ mod tests {
         world
             .init_resource::<crate::layer1::administration::invasive_bureaucracy::EmpireStability>(
             );
-        world.init_resource::<crate::layer1::culture::procedural_dialects::DialectManager>();
 
         // Initialize Detection Risk for test
         world.init_resource::<Events<crate::layer1::AcceptSponsorshipEvent>>();

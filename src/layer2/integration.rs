@@ -743,9 +743,10 @@ pub fn signal_latency_fleet_bridge(
         if query.contains(event.target) {
             match event.order {
                 OrderType::MoveTo(destination) => {
-                    commands.entity(event.target).insert(FleetOrder::MoveTo(destination));
-                }
-                // Add more match arms if OrderType expands
+                    commands
+                        .entity(event.target)
+                        .insert(FleetOrder::MoveTo(destination));
+                } // Add more match arms if OrderType expands
             }
         }
     }
