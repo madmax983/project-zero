@@ -1,7 +1,8 @@
 use crate::layer1::entities::pop::Pop;
 use crate::layer1::social::morale::{MoodModifier, Morale};
 use crate::layer2::debris::OrbitalDebris;
-use crate::layer2::station::{Station, StationType};
+use crate::layer2::station::Station;
+use crate::layer2::fleet::StationType;
 use bevy_ecs::prelude::*;
 
 #[derive(Component)]
@@ -62,7 +63,8 @@ mod tests {
     use crate::layer1::entities::pop::Pop;
     use crate::layer1::social::morale::Morale;
     use crate::layer2::debris::OrbitalDebris;
-    use crate::layer2::station::{Station, StationType};
+    use crate::layer2::station::Station;
+use crate::layer2::fleet::StationType;
     use bevy_app::{App, Update};
 
     #[test]

@@ -37,7 +37,7 @@ pub fn trigger_kessler_gambit_system(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::layer2::station::StationType;
+    use crate::layer2::fleet::StationType;
     use bevy_app::{App, Update};
 
     #[test]

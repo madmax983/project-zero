@@ -3,7 +3,8 @@ use scale::layer2::fleet::{fleet_movement_system, Fleet, InTransit};
 use scale::layer2::gravitational_doldrums::{
     doldrums_effects_system, GravitationalDoldrums, TugShip,
 };
-use scale::layer2::nebulae::{MovementSpeed, SpatialVolume};
+use scale::layer2::nebulae::SpatialVolume;
+use scale::layer2::fleet::MovementSpeed;
 
 #[test]
 fn test_doldrums_integration_movement() {

@@ -98,7 +98,6 @@ pub fn resolve_combat(
     }
 }
 
-use crate::layer2::silent_mutiny::AvoidCombat;
 
 /// System to resolve combat between fleets at the same orbital location.
 pub fn fleet_combat_system(
@@ -336,3 +335,6 @@ mod tests {
         );
     }
 }
+
+#[derive(Component, Debug, Clone, Copy)]
+pub struct AvoidCombat;

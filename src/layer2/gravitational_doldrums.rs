@@ -1,5 +1,6 @@
 use crate::layer2::fleet::Fleet;
-use crate::layer2::nebulae::{MovementSpeed, SpatialVolume};
+use crate::layer2::nebulae::SpatialVolume;
+use crate::layer2::fleet::MovementSpeed;
 use bevy::prelude::*;
 
 #[derive(Component)]

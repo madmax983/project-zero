@@ -1,28 +1,7 @@
 use crate::layer2::fleet::{Fleet, InTransit};
+use crate::layer2::fleet::{SpaceBarnacles, MAX_BARNACLES};
 use bevy_ecs::prelude::*;
 use rand::Rng;
-
-/// Component representing the number of barnacles attached to a fleet.
-#[derive(Component, Default, Debug, Clone, Copy)]
-pub struct SpaceBarnacles {
-    /// The number of barnacles currently attached.
-    pub count: u32,
-}
-
-/// The maximum number of barnacles that can accumulate on a fleet.
-pub const MAX_BARNACLES: u32 = 1000;
-/// The speed reduction per barnacle (0.0005 = 0.05%).
-pub const DRAG_PER_BARNACLE: f32 = 0.0005;
-/// The minimum speed multiplier a fleet can be reduced to (10%).
-pub const MIN_SPEED: f32 = 0.1;
-
-/// Calculates the speed multiplier (0.1 to 1.0).
-#[must_use]
-pub fn calculate_speed_modifier(count: u32) -> f32 {
-    #[allow(clippy::cast_precision_loss)]
-    let penalty = count as f32 * DRAG_PER_BARNACLE;
-    (1.0 - penalty).max(MIN_SPEED)
-}
 
 /// System to randomly add barnacles to fleets in transit.
 pub fn barnacle_accumulation_system(mut query: Query<(&mut SpaceBarnacles, &InTransit)>) {
@@ -54,6 +33,7 @@ pub fn ensure_barnacles_component_system(
 
 #[cfg(test)]
 mod tests {
+    use crate::layer2::fleet::{SpaceBarnacles, calculate_speed_modifier};
     use super::*;
     use crate::layer2::fleet::{Fleet, InOrbit, InTransit};
 

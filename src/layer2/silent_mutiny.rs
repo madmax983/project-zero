@@ -1,6 +1,7 @@
 use crate::layer1::resources::ResourceType;
 use crate::layer2::fleet::{FleetFaction, InOrbit};
 use crate::layer2::system::Orbit;
+use crate::layer2::combat::AvoidCombat;
 use bevy_ecs::prelude::*;
 use rand::Rng;
 
@@ -41,10 +42,6 @@ impl Default for SilentMutiny {
         }
     }
 }
-
-/// Component added to a fleet temporarily to avoid combat.
-#[derive(Component, Debug, Clone, Copy)]
-pub struct AvoidCombat;
 
 /// Event emitted when a mutinous fleet fakes a sensor glitch to avoid combat.
 #[derive(Event, Debug, Clone, Copy)]

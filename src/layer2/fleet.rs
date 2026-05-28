@@ -1,7 +1,5 @@
-use crate::layer2::barnacles::{calculate_speed_modifier, SpaceBarnacles};
-use crate::layer2::nebulae::MovementSpeed;
+use crate::layer1::resources::ResourceType;
 use crate::layer2::ship::Ship;
-use crate::layer2::station::StationType;
 use bevy_ecs::prelude::*;
 
 /// Factions that can own fleets.
@@ -340,4 +338,93 @@ mod tests {
             .expect("Fleet should be in orbit");
         assert_eq!(in_orbit.parent, planet_b);
     }
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum StationType {
+    /// A small outpost for basic operations.
+    Outpost,
+    /// A platform for mining operations.
+    MiningPlatform,
+    /// A facility for ship construction and repair.
+    Shipyard,
+    /// A brewery specializing in zero-g fermentation.
+    Brewery,
+    /// High-wealth orbital habitat.
+    Habitat,
+    /// An abandoned station that can be claimed and repaired.
+    Derelict,
+    /// A hydroponics bay for growing Zero-G Flora.
+    Hydroponics,
+    /// A massive structure for constructing large ships in orbit.
+    OrbitalDrydock,
+}
+impl StationType {
+    /// Returns the resource cost to build this station.
+    #[must_use]
+    pub fn cost(&self) -> Vec<(ResourceType, f32)> {
+        match self {
+            Self::Outpost => vec![(ResourceType::Metal, 50.0)],
+            Self::MiningPlatform => vec![(ResourceType::Metal, 100.0), (ResourceType::Fuel, 10.0)],
+            Self::Shipyard => vec![(ResourceType::Metal, 200.0), (ResourceType::Fuel, 50.0)],
+            Self::Brewery => vec![(ResourceType::Metal, 150.0)],
+            Self::Habitat => vec![(ResourceType::Metal, 150.0), (ResourceType::Food, 100.0)],
+            Self::Derelict => vec![],
+            Self::Hydroponics => vec![(ResourceType::Metal, 150.0), (ResourceType::Fuel, 20.0)],
+            Self::OrbitalDrydock => {
+                vec![(ResourceType::Metal, 1000.0), (ResourceType::Fuel, 500.0)]
+            }
+        }
+    }
+
+    /// Returns the display label for the station type.
+    #[must_use]
+    pub const fn label(&self) -> &str {
+        match self {
+            Self::Outpost => "Outpost",
+            Self::MiningPlatform => "Mining Platform",
+            Self::Shipyard => "Shipyard",
+            Self::Brewery => "Zero-G Brewery",
+            Self::Habitat => "Habitat",
+            Self::Derelict => "Derelict Station",
+            Self::Hydroponics => "Hydroponics Bay",
+            Self::OrbitalDrydock => "Orbital Drydock",
+        }
+    }
+
+    /// Returns the character representation for the station type.
+    #[must_use]
+    pub const fn char(&self) -> char {
+        match self {
+            Self::Outpost => '+',
+            Self::MiningPlatform => '⚒',
+            Self::Shipyard => '⚓',
+            Self::Brewery => 'B',
+            Self::Habitat => 'O',
+            Self::Derelict => 'D',
+            Self::Hydroponics => 'H',
+            Self::OrbitalDrydock => 'U',
+        }
+    }
+}
+
+#[derive(Component, Debug, Clone)]
+pub struct MovementSpeed {
+    pub base: f32,
+    pub current: f32,
+}
+
+#[derive(Component, Default, Debug, Clone, Copy)]
+pub struct SpaceBarnacles {
+    /// The number of barnacles currently attached.
+    pub count: u32,
+}
+pub const MAX_BARNACLES: u32 = 1000;
+pub const DRAG_PER_BARNACLE: f32 = 0.0005;
+pub const MIN_SPEED: f32 = 0.1;
+#[must_use]
+pub fn calculate_speed_modifier(count: u32) -> f32 {
+    #[allow(clippy::cast_precision_loss)]
+    let penalty = count as f32 * DRAG_PER_BARNACLE;
+    (1.0 - penalty).max(MIN_SPEED)
 }
