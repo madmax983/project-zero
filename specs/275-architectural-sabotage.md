@@ -61,3 +61,4 @@ fn test_vetting_prevents_sabotage() {
 ## 8. Questions
 *Builder: add questions here if spec is unclear.*
 *Architect:* See related specifications for design details. MVP implementation should follow standard conventions.
+- **Architectural Contradictions:** `Sabotaged` component does not exist. `VolatileExplosion` might not exist. This spec doesn't provide enough component details to implement reliably.

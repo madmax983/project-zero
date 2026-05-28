@@ -78,3 +78,4 @@ pub mod gravitational_doldrums;
 pub mod phantom_signal;
 pub use gravitational_doldrums::*;
 pub mod celestial_library;
+pub mod communications;

@@ -209,3 +209,4 @@ pub fn place_building(world: &mut World, building: BuildingType, pos: GridPositi
 
 *Builder: add questions here if spec is unclear. Architect will address.*
 *Architect:* See related specifications for design details. MVP implementation should follow standard conventions.
+- **Architectural Contradictions:** `Grave` struct exists in `src/layer1/culture/funeral.rs` and has a different definition (`occupied`, `corpse_name` vs `pop_name`, `original_entity`). Moving on.

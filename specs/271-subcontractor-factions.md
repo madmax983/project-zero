@@ -184,3 +184,4 @@ pub fn megacorp_security_sweep_system(
 
 *Builder: add questions here if spec is unclear. Architect will address.*
 *Architect:* See related specifications for design details. MVP implementation should follow standard conventions.
+- **Architectural Contradictions:** `Zone` component does exist but `LawSet`, `SecurityLevel`, `Unrest` are either different or missing entirely. Also `HealthTracker` is `Health`. Moving on.

@@ -175,3 +175,4 @@ pub fn handle_martyrdom_system(
 
 *Builder: add questions here if spec is unclear. Architect will address.*
 *Architect:* See related specifications for design details. MVP implementation should follow standard conventions.
+- **Architectural Contradictions:** `DeathEvent` exists as `PopDied`, but `DamageSource` doesn't exist. `Unrest` doesn't exist directly on `Pop`. `Leadership` doesn't exist directly. Moving on to another task.

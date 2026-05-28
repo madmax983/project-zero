@@ -180,3 +180,4 @@ pub fn handle_biomass_extraction_system(
 
 *Builder: add questions here if spec is unclear. Architect will address.*
 *Architect:* See related specifications for design details. MVP implementation should follow standard conventions.
+- **Architectural Contradictions:** `StressTracker` does not exist on `Pop`. They use `Morale` or `Needs`. `Arrested` does not exist. `Dead` exists in `crate::layer1::health::Dead`. Inventory and resources might not match this API exactly. Moving to next task.

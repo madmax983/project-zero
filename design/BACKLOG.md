@@ -67,7 +67,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `276` The Flesh Famine — `specs/276-the-flesh-famine.md`
 - [ ] `277` Orbital Megastructure Deorbiting — `specs/277-orbital-megastructure-deorbiting.md`
 - [ ] `278` Xenoflora Addiction — `specs/278-xenoflora-addiction.md`
-- [ ] `279` Signal Latency — `specs/279-signal-latency.md`
 - [ ] `280` Archaeological Layers — `specs/280-archaeological-layers.md`
 - [ ] `281` Atmospheric Feedback — `specs/281-atmospheric-feedback.md`
 - [ ] `282` Cultural Drift — `specs/282-cultural-drift.md`

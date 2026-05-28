@@ -161,3 +161,4 @@ pub fn execute_delayed_orders_system(
 ## 8. Questions
 *Builder: add questions here if spec is unclear.*
 *Architect:* See related specifications for design details. MVP implementation should follow standard conventions.
+- **Architectural Contradictions:** New mechanic that has no matching systems. Will just implement this one since it does not depend strongly on existing highly coupled types.

@@ -205,3 +205,4 @@ pub fn assign_home_zone(
 
 *Builder: add questions here if spec is unclear. Architect will address.*
 *Architect:* See related specifications for design details. MVP implementation should follow standard conventions.
+- **Architectural Contradictions:** `CulturalTag` component does not exist. The spec doesn't align with available components. Moving to next.
