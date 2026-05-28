@@ -733,6 +733,12 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
         crate::layer1::social::pirates::pirate_crime_system,
     ));
 
+    schedule.add_systems((
+        crate::layer1::social::inherited_grudges::inherit_grudges_on_birth_system,
+        crate::layer1::social::inherited_grudges::transfer_grudges_on_death_system,
+        crate::layer1::social::inherited_grudges::grudge_work_refusal_system,
+    ));
+
     #[cfg(feature = "nova")]
     crate::experimental::gloom_sickness::register(schedule);
     #[cfg(feature = "nova")]

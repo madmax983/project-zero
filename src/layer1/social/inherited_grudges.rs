@@ -81,6 +81,30 @@ pub fn transfer_grudges_on_death_system(
     }
 }
 
+pub fn grudge_work_refusal_system(
+    mut commands: Commands,
+    grudgers: Query<(Entity, &crate::layer1::entities::pop::Job, &GrudgeList)>,
+    all_workers: Query<&crate::layer1::entities::pop::Job>,
+) {
+    for (entity, job, grudges) in grudgers.iter() {
+        let workplace = job.workplace;
+
+        let mut should_refuse = false;
+        for grudge in &grudges.0 {
+            if let Ok(target_job) = all_workers.get(grudge.target_entity) {
+                if target_job.workplace == workplace {
+                    should_refuse = true;
+                    break;
+                }
+            }
+        }
+
+        if should_refuse {
+            commands.entity(entity).remove::<crate::layer1::entities::pop::Job>();
+        }
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -177,5 +201,46 @@ mod tests {
         assert_eq!(child_grudges.0.len(), 1);
         assert_eq!(child_grudges.0[0].target_entity, target_entity);
         assert!(child_grudges.0[0].intensity >= 80.0);
+    }
+
+    #[test]
+    fn test_grudge_work_refusal() {
+        let mut app = bevy::app::App::new();
+        app.add_systems(bevy::app::Update, grudge_work_refusal_system);
+
+        let workplace = Entity::from_raw(1);
+
+        let target = app
+            .world_mut()
+            .spawn((
+                crate::layer1::entities::pop::Pop,
+                crate::layer1::entities::pop::Job {
+                    workplace,
+                    job_type: crate::layer1::mind::utility_types::AssignmentType::FarmWorker,
+                },
+            ))
+            .id();
+
+        let grudger = app
+            .world_mut()
+            .spawn((
+                crate::layer1::entities::pop::Pop,
+                GrudgeList(vec![Grudge {
+                    target_entity: target,
+                    intensity: 1.0,
+                    origin_reason: "Hatred".to_string(),
+                }]),
+                crate::layer1::entities::pop::Job {
+                    workplace,
+                    job_type: crate::layer1::mind::utility_types::AssignmentType::FarmWorker,
+                },
+            ))
+            .id();
+
+        app.update();
+
+        // The grudger should refuse to work at the same workplace
+        let grudger_job = app.world().get::<crate::layer1::entities::pop::Job>(grudger);
+        assert!(grudger_job.is_none(), "Pop with grudge should refuse to work in the same workplace as their target");
     }
 }
