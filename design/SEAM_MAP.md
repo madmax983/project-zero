@@ -1245,3 +1245,9 @@
 - **Systems connected:** `LibraryDonationEvent` -> `celestial_library_chronicle_bridge` -> `ColonyResources`, `AddChronicleEvent`
 - **Glue added:** Added `celestial_library_chronicle_bridge` in `src/layer2/integration.rs` to process library donations, deduct knowledge from `ColonyResources`, and emit `AddChronicleEvent`s.
 - **Tests:** `tests/celestial_library_bridge.rs`
+
+### INT-679: The Flesh Tax -> Simulation
+- **Date:** 2026-10-31
+- **Systems connected:** `process_flesh_tax_payment`, `process_flesh_tax_failure` -> `SimulationSchedule`
+- **Glue added:** Registered `process_flesh_tax_payment` and `process_flesh_tax_failure`, along with `FleshTaxPaymentEvent` and `FleshTaxFailedEvent` in `src/simulation.rs`.
+- **Tests:** `tests/flesh_tax_bridge.rs`

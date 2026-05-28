@@ -309,6 +309,8 @@ fn init_simulation_resources(world: &mut World) {
     world.init_resource::<Events<crate::layer1::logistics::mass_driver::LaunchEvent>>();
     world.init_resource::<Events<crate::layer1::logistics::mass_driver::BombardmentEvent>>();
     world.init_resource::<Events<crate::layer2::bombardment::BombardmentEvent>>();
+        world.init_resource::<Events<crate::layer3::diplomacy::flesh_tax::FleshTaxPaymentEvent>>();
+        world.init_resource::<Events<crate::layer3::diplomacy::flesh_tax::FleshTaxFailedEvent>>();
 
     world.init_resource::<crate::layer3::council::GalacticCouncil>();
 
@@ -463,6 +465,8 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
             crate::layer2::cartographers_curse::process_telemetry_sale,
             crate::layer2::integration::cartographers_curse_chronicle_bridge,
             crate::layer2::integration::orbital_bombardment_chronicle_bridge,
+            crate::layer3::diplomacy::flesh_tax::process_flesh_tax_payment,
+            crate::layer3::diplomacy::flesh_tax::process_flesh_tax_failure,
             crate::layer2::integration::orbital_mirror_chronicle_bridge,
             crate::layer2::integration::signal_latency_fleet_bridge,
         )
@@ -1092,6 +1096,8 @@ mod tests {
         world.init_resource::<Events<crate::layer1::logistics::mass_driver::LaunchEvent>>();
         world.init_resource::<Events<crate::layer1::logistics::mass_driver::BombardmentEvent>>();
         world.init_resource::<Events<crate::layer2::bombardment::BombardmentEvent>>();
+        world.init_resource::<Events<crate::layer3::diplomacy::flesh_tax::FleshTaxPaymentEvent>>();
+        world.init_resource::<Events<crate::layer3::diplomacy::flesh_tax::FleshTaxFailedEvent>>();
         world.init_resource::<Events<crate::layer2::bombardment::BombardmentEvent>>();
 
         world.init_resource::<Events<crate::layer2::cascade::LogisticsStrainedEvent>>();

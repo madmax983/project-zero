@@ -218,6 +218,7 @@ pub mod integration {
     pub mod spiteful_will_chronicle;
     #[path = "the_silent_generation_bridge.rs"]
     pub mod the_silent_generation_bridge;
+    pub mod flesh_tax_bridge;
 }
 
 #[path = "integration/neural_leech_unrest.rs"]
