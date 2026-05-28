@@ -1251,3 +1251,9 @@
 - **Systems connected:** `process_flesh_tax_payment`, `process_flesh_tax_failure` -> `SimulationSchedule`
 - **Glue added:** Registered `process_flesh_tax_payment` and `process_flesh_tax_failure`, along with `FleshTaxPaymentEvent` and `FleshTaxFailedEvent` in `src/simulation.rs`.
 - **Tests:** `tests/flesh_tax_bridge.rs`
+
+### INT-1113: The Fossilized Fleet -> Combat Defense Bonus
+- **Date:** 2026-10-31
+- **Systems connected:** `execute_attack` -> `FossilizedShip`
+- **Glue added:** Modified `execute_attack` in `src/layer1/combat.rs` to apply `defense_bonus` from `FossilizedShip`.
+- **Tests:** `tests/integration/fossilized_fleet_defense_bridge.rs`

@@ -278,18 +278,30 @@ pub fn execute_attack(world: &mut World, attacker: Entity, target: Entity) {
         rng.gen_bool(CRIT_CHANCE)
     };
 
+    let target_pos_val = world.get::<crate::layer1::map::GridPosition>(target).copied();
+    let mut defense_bonus = 0.0;
+    if let Some(target_pos) = target_pos_val {
+        let mut query = world.query::<(&crate::layer1::architecture::fossilized_fleet::FossilizedShip, &crate::layer1::map::GridPosition)>();
+        for (ship, pos) in query.iter(world) {
+            if *pos == target_pos {
+                defense_bonus += ship.defense_bonus as f32;
+            }
+        }
+    }
+
     let final_damage = if is_crit {
         damage * CRIT_MULTIPLIER
     } else {
         damage
     };
+    let actual_damage = (final_damage - defense_bonus).max(0.0);
 
     let Some(mut health) = world.get_mut::<crate::layer1::health::Health>(target) else {
         return;
     };
-    health.take_damage(final_damage);
+    health.take_damage(actual_damage);
 
-    apply_hit_stop_and_juice(world, attacker, target, final_damage, is_crit);
+    apply_hit_stop_and_juice(world, attacker, target, actual_damage, is_crit);
 }
 
 #[cfg(test)]

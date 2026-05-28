@@ -652,3 +652,4 @@
 - [x] `679` The Flesh Tax — `specs/679-the-flesh-tax.md` — completed 2026-05-28
 - [x] `INT-679` Integration: The Flesh Tax -> Simulation - completed 2026-10-31
 - [x] `1113` The Fossilized Fleet — `specs/1113-the-fossilized-fleet.md` — completed 2026-02-01
+- [x] `INT-1113` Integration: The Fossilized Fleet -> Combat Defense Bonus — completed 2026-10-31

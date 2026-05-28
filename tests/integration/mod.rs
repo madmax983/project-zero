@@ -69,3 +69,4 @@ pub mod sleep_debt_repo_bridge;
 pub mod existential_audit_bridge;
 pub mod quantum_famine_bridge;
 pub mod celestial_library_bridge;
+pub mod fossilized_fleet_defense_bridge;
