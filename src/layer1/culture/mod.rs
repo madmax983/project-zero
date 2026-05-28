@@ -42,5 +42,3 @@ pub mod nostalgia;
 pub use nostalgia::*;
 pub mod linguistics;
 pub use linguistics::*;
-pub mod procedural_dialects;
-pub use procedural_dialects::*;
