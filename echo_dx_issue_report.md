@@ -14,3 +14,13 @@
 * 🤦 **The Confusion:** "I looked at `examples/minimal_nova_demo.rs` to learn how to use the Oral Tradition feature. It manually imports `Chronicle`, `EventImportance`, `collect_chronicles_system`, and `OralTradition` from deep inside `scale::layer1::...`."
 * 🕵️ **The Reality:** "Turns out, all of these are already conveniently exported in `scale::prelude::*`!"
 * 💡 **The Fix:** "Update `examples/minimal_nova_demo.rs` to just `use scale::prelude::*;` instead of manual imports to show users the easiest way to use the library."
+
+## Issue 4: Misleading Feature Flag in Docs
+* 🤦 **The Confusion:** "The README says 'Procedural Generation (Narrative)' requires the `nova` feature, complete with a huge red banner."
+* 🕵️ **The Reality:** "I ran the example without the `nova` feature and it worked perfectly. `NarrativeGenerator` is part of the base system!"
+* 💡 **The Fix:** "Remove the misleading banner from the base narrative section."
+
+## Issue 5: Missing Feature Banner for Nova Example
+* 🤦 **The Confusion:** "Tried to run the code in the 'Oral Tradition (Nova Feature)' section in the README. The compiler said `cannot find struct, variant or union type Story in this scope`."
+* 🕵️ **The Reality:** "Turns out I needed to enable feature `nova` to use `OralTradition` and `Story`."
+* 💡 **The Fix:** "Add a huge banner in README under Oral Tradition saying '> # 🚨 ⚠️ REQUIRES FEATURE NOVA ⚠️ 🚨'."
