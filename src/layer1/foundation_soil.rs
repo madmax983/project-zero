@@ -70,7 +70,9 @@ pub fn apply_foundation_soil_system(
                         let x = pos.x as usize;
                         let y = pos.y as usize;
                         if x < fg.width && y < fg.height {
-                            if let Some(idx) = y.checked_mul(fg.width).and_then(|v| v.checked_add(x)) {
+                            if let Some(idx) =
+                                y.checked_mul(fg.width).and_then(|v| v.checked_add(x))
+                            {
                                 if idx < fg.values.len() {
                                     fg.values[idx] = (fg.values[idx] + 0.5).min(1.0);
                                 }

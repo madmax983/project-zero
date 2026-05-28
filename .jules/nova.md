@@ -87,3 +87,10 @@
 **Concept:** Implemented `PanicBuying` module. If Unrest is too high and a Pop experiences the `Binge` mental break, they don't just eat food on the ground. They trigger a `MarketPanicEvent` that causes *all* pops in the colony to immediately hoard 1 unit of `Food` in their `PrivateStash`, instantly draining the colony's central stockpile.
 **Fate:** Merged
 **Lesson:** Connects the mental breakdown of a single Pop to the colony's macro-economy, turning a localized tantrum into a global logistical crisis.
+
+## [Binge Graffiti]
+**The Spark:** We have `ActionType::Binge` (when Unrest is high or they have a mental break) and `GraffitiMap` from `graffiti.rs`.
+**The Feature:** What if a Pop who is Bingeing on food also compulsively leaves `GraffitiType::Vandalism` on every tile they walk on?
+**The Potential:** Connects the mental break (Bingeing) with the beauty/vandalism system (Graffiti). A bingeing pop doesn't just consume food; they actively ruin the aesthetic of the colony by smearing food on the walls, requiring cleaning to restore morale.
+**Fate:** Merged
+**Lesson:** Good connection between mental state and environmental consequence.
