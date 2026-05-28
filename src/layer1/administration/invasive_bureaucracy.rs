@@ -77,8 +77,9 @@ pub fn expand_bureaucracy_nodes_system(
             }
 
             if !valid_targets.is_empty() {
-                let chosen = valid_targets.into_iter().choose(&mut rng).unwrap();
-                expansions.push(chosen);
+                if let Some(chosen) = valid_targets.into_iter().choose(&mut rng) {
+                    expansions.push(chosen);
+                }
             }
         }
     }

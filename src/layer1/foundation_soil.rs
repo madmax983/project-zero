@@ -39,7 +39,10 @@ impl FoundationSoilGrid {
         let x = x as usize;
         let y = y as usize;
         if x < self.width && y < self.height {
-            let idx = y.checked_mul(self.width).unwrap().checked_add(x).unwrap();
+            let idx = match y.checked_mul(self.width).and_then(|v| v.checked_add(x)) {
+                Some(val) => val,
+                None => return,
+            };
             if idx < self.values.len() {
                 self.values[idx] += amount;
             }
@@ -67,9 +70,10 @@ pub fn apply_foundation_soil_system(
                         let x = pos.x as usize;
                         let y = pos.y as usize;
                         if x < fg.width && y < fg.height {
-                            let idx = y.checked_mul(fg.width).unwrap().checked_add(x).unwrap();
-                            if idx < fg.values.len() {
-                                fg.values[idx] = (fg.values[idx] + 0.5).min(1.0);
+                            if let Some(idx) = y.checked_mul(fg.width).and_then(|v| v.checked_add(x)) {
+                                if idx < fg.values.len() {
+                                    fg.values[idx] = (fg.values[idx] + 0.5).min(1.0);
+                                }
                             }
                         }
                     }
@@ -164,6 +168,18 @@ mod tests {
 
         // Assert: Tile at death location does not receive buff
         let fsg = app.world().resource::<FoundationSoilGrid>();
+        assert_eq!(fsg.values[0], 0.0);
+    }
+
+    #[test]
+    fn test_foundation_soil_grid_index_overflow_does_not_panic() {
+        // Arrange: Grid setup
+        let mut fsg = FoundationSoilGrid::new(10, 10);
+
+        // Act: Attempt to add soil at extreme out-of-bounds coordinates
+        fsg.add(i32::MAX, i32::MAX, 100.0);
+
+        // Assert: no panic
         assert_eq!(fsg.values[0], 0.0);
     }
 }
