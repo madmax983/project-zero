@@ -578,6 +578,7 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
     ));
 
     schedule.add_systems((
+        crate::layer2::integration::celestial_library_chronicle_bridge,
         crate::layer2::cascade::evaluate_system_logistics,
         crate::layer2::cascade::update_sector_defenses
             .after(crate::layer2::cascade::evaluate_system_logistics),
@@ -762,8 +763,6 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
     #[cfg(feature = "nova")]
     crate::experimental::weather_madness::register(schedule);
     #[cfg(feature = "nova")]
-    crate::experimental::panic_buying::register(schedule);
-    #[cfg(feature = "nova")]
     crate::experimental::hoarder_sleepwalking::register(schedule);
     #[cfg(feature = "nova")]
     crate::experimental::manic_cleaning::register(schedule);
@@ -875,12 +874,14 @@ mod tests {
             .init_resource::<crate::layer1::environment::bio_acoustic_miasma::MiasmaRecordedSecret>(
             );
         world.init_resource::<Events<crate::layer1::economy::existential_audit::ExistentialAuditCompletedEvent>>();
+        world.init_resource::<Events<crate::layer2::celestial_library::LibraryDonationEvent>>();
         world.init_resource::<bevy::prelude::Events<crate::layer2::skyhooks::LaunchIntent>>();
         world.init_resource::<bevy::prelude::Events<crate::layer1::law::justice::CrimeCommittedEvent>>();
         world.init_resource::<bevy::prelude::Events<crate::layer1::social::grievances::PostGrievanceEvent>>();
         world.init_resource::<Events<crate::layer1::agriculture::zero_g_flora::DepressurizationEvent>>();
         world.init_resource::<Events<crate::layer3::diplomacy::system_sovereignty::DeclarationOfIndependenceEvent>>();
         world.init_resource::<Events<crate::layer3::diplomacy::system_sovereignty::WarDeclarationEvent>>();
+        world.init_resource::<Events<crate::layer2::celestial_library::LibraryDonationEvent>>();
         world.insert_resource(crate::layer3::diplomacy::system_sovereignty::ColonyStatus {
             is_sovereign: false,
             overlord_id: Some(1),
@@ -1028,6 +1029,7 @@ mod tests {
         world.init_resource::<Events<crate::layer2::governance::RebellionEvent>>();
         world.init_resource::<Events<crate::layer1::environment::disasters::DisasterEvent>>();
         world.init_resource::<Events<crate::layer2::tourism::disaster_tourism::GriefTouristArrivalEvent>>();
+        world.init_resource::<Events<crate::layer2::celestial_library::LibraryDonationEvent>>();
         world.init_resource::<Events<crate::layer2::station::ShipConstructionCompletedEvent>>();
         world.init_resource::<Events<crate::layer1::agony_extract::HarvestAgonyExtractEvent>>();
         world.init_resource::<crate::layer1::agony_extract::AgonyExtractConfig>();

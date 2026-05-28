@@ -68,3 +68,4 @@ pub mod digital_detritus_chronicle_bridge;
 pub mod sleep_debt_repo_bridge;
 pub mod existential_audit_bridge;
 pub mod quantum_famine_bridge;
+pub mod celestial_library_bridge;
