@@ -5306,3 +5306,35 @@
 **Code reference:** `ContaminationEvent`
 **Usage:**
 - "The fast rot took the entire sector."
+
+## The Celestial Library (Spec 310)
+
+### The Celestial Library / The Archive
+**Replaces:** Tech reward event, ancient structure
+**Code reference:** `CelestialLibrary`
+**Usage:**
+- "The Celestial Library demands a steep price for its secrets."
+- "The Archive has appeared in the outer rim."
+
+### The Donation / The Sacrifice
+**Replaces:** Cost for library reward
+**Code reference:** `LibraryDonationEvent`
+**Usage:**
+- "The Sacrifice was made; our finest minds will not return."
+- "Prepare The Donation; the Library waits."
+
+## Signal Latency (Spec 279)
+
+### Signal Latency / The Lag
+**Replaces:** Command delay distance calculation
+**Code reference:** `DelayedOrder`
+**Usage:**
+- "Signal Latency means they fight alone."
+- "The Lag will kill them before the orders arrive."
+
+### Delayed Order / Echo Command
+**Replaces:** Commands waiting to execute
+**Code reference:** `DelayedOrder` queue
+**Usage:**
+- "The Delayed Order arrived a century too late."
+- "They died following an Echo Command."
