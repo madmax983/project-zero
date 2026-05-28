@@ -21479,3 +21479,29 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you accept the massive, immediate boon of free infrastructure, knowing it might be a trap you don't understand?
 
 ---
+## The Algorithmic Theocracy
+**Layer:** 2
+**Fantasy:** AI prediction modeling taken to religious extremes.
+**Mechanic:** A system relies on a hyper-advanced predictive AI to allocate resources and assign jobs. Pops begin to revere the AI's predictions as prophecies. If the AI is wrong or predictions are contradictory, religious schisms occur.
+**Emergence:** You try to optimize a planet's economy using the predictive AI, but it tells the population that a famine is inevitable. Believing the prophecy, they stop farming and build monuments instead, causing the famine it predicted.
+**Tension:** Do you rely on the ultra-efficient AI prediction engine despite the risk of algorithmic zealotry, or use inefficient manual planning to keep free will?
+
+---
+
+## The Spore Symbiosis
+**Layer:** 1 -> Cross-layer
+**Fantasy:** A colony living in harmony with a dangerous alien fungus.
+**Mechanic:** A planet is covered in a neuro-active fungus. Instead of clearing it, Pops can ingest it, forming a symbiotic bond. Bonded Pops require less food and share a low-level hive mind (boosting coordination), but cannot leave the planet or they will die of withdrawal.
+**Emergence:** You build an ultra-productive mining colony bonded to the fungus. Centuries later, you need those expert miners on another world, but they refuse to leave the fungal network, declaring independence to protect their ecosystem.
+**Tension:** Do you embrace the massive local productivity boost of the fungal symbiosis, knowing it permanently anchors that population to one world and changes their fundamental nature?
+
+---
+
+## The Blood Feud Economy
+**Layer:** 1 -> 3
+**Fantasy:** Generational grudges driving interstellar conflict.
+**Mechanic:** When a Pop is killed by another faction, their family line gains a "Blood Feud" trait. This trait increases military output but prevents any diplomatic agreements with the offending faction. If a feud lasts long enough, it can escalate to system-wide or galactic wars.
+**Emergence:** A minor border skirmish results in the death of a prominent Pop. Generations later, their descendants rise to planetary leadership and drag your entire empire into a devastating war over a century-old slight that you had completely forgotten.
+**Tension:** Do you allow a minor conflict to fester into a blood feud for the military buffs, or spend immense resources and political capital to force reconciliation?
+
+---
