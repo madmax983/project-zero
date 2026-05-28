@@ -129,3 +129,4 @@ pub fn trigger_symbiont_sabotage_system(
 
 ## 8. Questions
 *Builder: add questions here if spec is unclear.*
+- **Architectural Contradictions:** `Needs` does not have a `morale` field, it's calculated. `WorkSpeed` does not exist, `Speed` exists but it's for movement speed. Work efficiency uses traits or `get_trait_work_speed_modifier`. Moving to next task.

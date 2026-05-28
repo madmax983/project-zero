@@ -56,9 +56,13 @@ pub fn process_library_donations_system(
     for event in events.read() {
         if let Ok(library) = query.get(event.library) {
             if event.resources_donated >= library.required_donation {
-                log.events.push(LibraryLogEntry { reward_granted: true });
+                log.events.push(LibraryLogEntry {
+                    reward_granted: true,
+                });
             } else {
-                log.events.push(LibraryLogEntry { reward_granted: false });
+                log.events.push(LibraryLogEntry {
+                    reward_granted: false,
+                });
             }
         }
     }
@@ -72,10 +76,10 @@ mod tests {
 
     fn setup_app() -> App {
         let mut app = App::new();
-        app.add_systems(Update, (
-            spawn_library_system,
-            process_library_donations_system,
-        ));
+        app.add_systems(
+            Update,
+            (spawn_library_system, process_library_donations_system),
+        );
         app.insert_resource(LibrarySpawnConfig { spawn_chance: 1.0 });
         app.init_resource::<LibraryEventLog>();
         app.add_event::<LibraryDonationEvent>();
@@ -87,8 +91,15 @@ mod tests {
         let mut app = setup_app();
         app.update();
 
-        let library_count = app.world_mut().query::<&CelestialLibrary>().iter(app.world()).count();
-        assert_eq!(library_count, 1, "The Celestial Library should spawn based on the config.");
+        let library_count = app
+            .world_mut()
+            .query::<&CelestialLibrary>()
+            .iter(app.world())
+            .count();
+        assert_eq!(
+            library_count, 1,
+            "The Celestial Library should spawn based on the config."
+        );
     }
 
     #[test]
@@ -97,7 +108,10 @@ mod tests {
         app.update();
 
         // Find the library
-        let library_entity = app.world_mut().query_filtered::<Entity, With<CelestialLibrary>>().single(app.world());
+        let library_entity = app
+            .world_mut()
+            .query_filtered::<Entity, With<CelestialLibrary>>()
+            .single(app.world());
 
         // Add a donation
         app.world_mut().send_event(LibraryDonationEvent {
@@ -109,6 +123,9 @@ mod tests {
 
         let log = app.world().resource::<LibraryEventLog>();
         assert_eq!(log.events.len(), 1, "A donation event should be logged.");
-        assert_eq!(log.events[0].reward_granted, true, "A reward should be granted for a sufficient donation.");
+        assert_eq!(
+            log.events[0].reward_granted, true,
+            "A reward should be granted for a sufficient donation."
+        );
     }
 }
