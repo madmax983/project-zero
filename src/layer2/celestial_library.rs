@@ -123,8 +123,8 @@ mod tests {
 
         let log = app.world().resource::<LibraryEventLog>();
         assert_eq!(log.events.len(), 1, "A donation event should be logged.");
-        assert_eq!(
-            log.events[0].reward_granted, true,
+        assert!(
+            log.events[0].reward_granted,
             "A reward should be granted for a sufficient donation."
         );
     }
