@@ -646,3 +646,4 @@
 - [x] `551` The Parasitic Broadcast — `specs/551-the-parasitic-broadcast.md` — completed 2024-05-27
 - [x] `310` The Celestial Library — `specs/310-celestial-library.md` — completed 2026-05-27
 - [x] `279` Signal Latency — `specs/279-signal-latency.md` — completed 2026-05-28
+- [x] `1113` The Fossilized Fleet — `specs/1113-the-fossilized-fleet.md` — completed 2026-02-01
