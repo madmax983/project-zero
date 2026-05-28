@@ -1,7 +1,7 @@
-use bevy::prelude::*;
 use crate::layer1::entities::pop::Pop;
 use crate::layer1::psychology::memory::{Memories, MemoryType};
 use crate::layer2::bombardment::BombardmentEvent;
+use bevy::prelude::*;
 
 #[derive(Event)]
 pub struct FleshTaxPaymentEvent {
@@ -65,7 +65,10 @@ mod tests {
         app.add_event::<FleshTaxPaymentEvent>();
         app.add_systems(Update, process_flesh_tax_payment);
 
-        let pop1 = app.world_mut().spawn((Pop {}, Name::new("Sacrifice 1"))).id();
+        let pop1 = app
+            .world_mut()
+            .spawn((Pop {}, Name::new("Sacrifice 1")))
+            .id();
         let pop2 = app.world_mut().spawn((Pop {}, Name::new("Survivor"))).id();
 
         // Trigger a flesh tax payment
@@ -76,7 +79,10 @@ mod tests {
         app.update();
         app.update();
 
-        assert!(app.world().get_entity(pop1).is_err(), "Pop 1 should be despawned as tribute");
+        assert!(
+            app.world().get_entity(pop1).is_err(),
+            "Pop 1 should be despawned as tribute"
+        );
         assert!(app.world().get_entity(pop2).is_ok(), "Pop 2 should survive");
     }
 
@@ -87,7 +93,10 @@ mod tests {
         app.add_event::<FleshTaxPaymentEvent>();
         app.add_systems(Update, process_flesh_tax_payment);
 
-        let pop1 = app.world_mut().spawn((Pop {}, Name::new("Sacrifice 1"))).id();
+        let pop1 = app
+            .world_mut()
+            .spawn((Pop {}, Name::new("Sacrifice 1")))
+            .id();
         let pop2 = app.world_mut().spawn((Pop {}, Name::new("Survivor"))).id();
 
         app.world_mut().send_event(FleshTaxPaymentEvent {
@@ -99,7 +108,11 @@ mod tests {
 
         let memories = app.world().get::<Memories>(pop2);
         assert!(memories.is_some());
-        let has_trauma = memories.unwrap().items.iter().any(|m| m.memory_type == MemoryType::FleshTaxTrauma);
+        let has_trauma = memories
+            .unwrap()
+            .items
+            .iter()
+            .any(|m| m.memory_type == MemoryType::FleshTaxTrauma);
         assert!(has_trauma, "Survivor should have trauma memory");
     }
 
@@ -115,6 +128,10 @@ mod tests {
         app.update();
 
         let bombardment_events = app.world().resource::<Events<BombardmentEvent>>();
-        assert_eq!(bombardment_events.get_cursor().len(bombardment_events), 1, "Failure should trigger an orbital bombardment");
+        assert_eq!(
+            bombardment_events.get_cursor().len(bombardment_events),
+            1,
+            "Failure should trigger an orbital bombardment"
+        );
     }
 }

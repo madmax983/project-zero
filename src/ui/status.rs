@@ -162,8 +162,8 @@ fn build_play_pause_span(paused: bool) -> Span<'static> {
         Span::styled(
             " ⏸ ",
             Style::default()
-                .fg(Color::White)
-                .bg(Color::Red)
+                .fg(Color::Red)
+                .bg(Color::DarkGray)
                 .add_modifier(Modifier::BOLD),
         )
     } else {
