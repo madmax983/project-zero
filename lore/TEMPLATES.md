@@ -8488,3 +8488,39 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 **Patterns:**
 - "[YEAR]: Moral outrage shatters [EMPIRE_NAME]. The academics lead a rebellion built on historical truths."
 - "The chroniclers turned against us. [EMPIRE_NAME] burns for the sins of the past. [YEAR]."
+
+## The Celestial Library Templates
+
+### Template: LIBRARY_DISCOVERED
+**Generates:** Play event
+**Slots:** [SYSTEM], [YEAR], [LIBRARY_APPEARANCE]
+
+**Patterns:**
+- "[YEAR]: The void opened in [SYSTEM]. A structure of [LIBRARY_APPEARANCE] drifts silently."
+- "An ancient repository has appeared in [SYSTEM]. It is [LIBRARY_APPEARANCE]. [YEAR]."
+
+### Template: LIBRARY_DONATION
+**Generates:** Play event
+**Slots:** [SYSTEM], [YEAR], [LIBRARY_REWARD], [LIBRARY_SACRIFICE]
+
+**Patterns:**
+- "[YEAR]: We gave [LIBRARY_SACRIFICE] to the structure in [SYSTEM]. It gave us [LIBRARY_REWARD]."
+- "The transaction is complete. [LIBRARY_SACRIFICE] traded for [LIBRARY_REWARD]. [YEAR]."
+
+## Signal Latency Templates
+
+### Template: ORDER_DELAYED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [DELAY_DURATION]
+
+**Patterns:**
+- "[YEAR]: The message to [COLONY] will take [DELAY_DURATION]. We can only wait."
+- "Orders sent into the dark. [COLONY] will not hear us for [DELAY_DURATION]. [YEAR]."
+
+### Template: ORDER_EXECUTED_LATE
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [DELAY_CONSEQUENCE]
+
+**Patterns:**
+- "[YEAR]: The orders arrived at [COLONY], but it was too late. The result is [DELAY_CONSEQUENCE]."
+- "They followed our delayed commands. [COLONY] now suffers [DELAY_CONSEQUENCE]. [YEAR]."

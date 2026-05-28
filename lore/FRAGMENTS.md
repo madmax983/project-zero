@@ -8943,3 +8943,32 @@ Conditions of dezoned, stateless pops.
 - actively rewriting the narrative
 - publishing suppressed atrocities
 - shattering cultural cohesion
+
+## The Celestial Library Fragments
+
+## Fragment Type: [LIBRARY_APPEARANCE]
+- geometrically impossible glass
+- humming monolithic stone
+- shifting fractal gold
+
+## Fragment Type: [LIBRARY_REWARD]
+- blueprints for a dying star
+- the true history of the core
+- a cure for the rot
+
+## Fragment Type: [LIBRARY_SACRIFICE]
+- our brightest minds
+- a generation's harvest
+- a dreadnought's core
+
+## Signal Latency Fragments
+
+## Fragment Type: [DELAY_DURATION]
+- a lifetime of waiting
+- agonizing centuries
+- enough time to forget why
+
+## Fragment Type: [DELAY_CONSEQUENCE]
+- bombing a peaceful protest
+- reinforcing a dead garrison
+- feeding a ghost town
