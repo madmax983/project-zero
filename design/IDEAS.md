@@ -21437,3 +21437,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Build durable, beautiful stone/metal infrastructure vs. investing in fragile but life-saving edible architecture just in case.
 
 ---
+## Debt-Driven Terraforming
+
+**Layer:** 2
+
+**Fantasy:** Colonizing dead rocks by signing predatory contracts with mega-corps, trading your future for a livable atmosphere.
+
+**Mechanic:** Players can instantly boost a planet's habitability by using "Corporate Terra-Seeding". In exchange, the colony is saddled with "Atmospheric Debt". The terraforming machines require periodic, increasing payments of rare resources to maintain the atmosphere.
+
+**Emergence:** A thriving colony suddenly faces a resource shortage. The corp throttles the atmosphere generators. A minor economic dip turns into a planetary asphyxiation crisis, forcing the player into desperate wars just to pay the "air tax".
+
+**Tension:** Slowly and safely terraform a world over generations, or get a booming colony now but live at the mercy of corporate overlords?
+
+---
+
+## The Martyr's Dividend
+
+**Layer:** Cross-layer
+
+**Fantasy:** Weaponizing the tragic death of a leader to unite your empire.
+
+**Mechanic:** If a beloved Pop with high influence is killed in action (during a disaster or raid), they become a "Martyr." The empire receives a massive, temporary boost to productivity and unity, but the specific cause of their death becomes a fanatic obsession for the populace.
+
+**Emergence:** A highly respected scientist is killed by an enemy orbital strike. The resulting Martyrdom buff gives you the production spike needed to win the war, but the population becomes so fanatically anti-alien that they refuse to accept peace treaties, forcing you into an endless war.
+
+**Tension:** Do you protect your best leaders at all costs, or intentionally put them in harm's way when you desperately need a political miracle?
+
+---
+
+## Xenoflora Symbiosis
+
+**Layer:** 1
+
+**Fantasy:** Watching your colonists slowly become alien as they adapt to their new home.
+
+**Mechanic:** If a colony relies entirely on native alien crops without importing standard rations, Pops undergo subtle biological changes over generations ("Symbiosis" traits). These traits provide massive bonuses to working in native biomes but make the Pops highly allergic to standard empire technology or atmospheres.
+
+**Emergence:** A remote mining colony survives on local fungus for a century. When you finally reconnect them with the empire and send high-tech medical supplies, the supplies act as a deadly poison to their altered physiology.
+
+**Tension:** Feed your colony easily with local crops and accept they will drift away from humanity, or spend vast resources importing standard food to keep them "pure"?
+
+---
