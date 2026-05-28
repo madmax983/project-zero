@@ -9,7 +9,8 @@ pub struct Halted {
 use crate::layer1::administration::edicts::{ColonyPolicies, Policy};
 use crate::layer1::building::{Building, Category};
 use crate::layer1::nature::atmosphere::AtmosphereGrid;
-use crate::layer2::station::{Station, StationType};
+use crate::layer2::station::Station;
+use crate::layer2::fleet::StationType;
 
 pub fn evaluate_aesthetic_edict_system(
     policies: Option<ResMut<ColonyPolicies>>,
@@ -77,7 +78,8 @@ mod tests {
     use crate::layer1::administration::edicts::{ColonyPolicies, Policy};
     use crate::layer1::building::{Building, BuildingType};
     use crate::layer1::nature::atmosphere::AtmosphereGrid;
-    use crate::layer2::station::{Station, StationType};
+    use crate::layer2::station::Station;
+use crate::layer2::fleet::StationType;
     use bevy_app::App;
 
     #[test]

@@ -1,6 +1,7 @@
 use crate::layer2::fleet::Fleet;
 use crate::layer2::sensor_ambiguity::Sensors;
 use bevy::prelude::*;
+use crate::layer2::fleet::MovementSpeed;
 
 #[derive(Component, Debug, Clone, PartialEq)]
 pub enum Nebula {
@@ -31,11 +32,6 @@ impl Shields {
     }
 }
 
-#[derive(Component, Debug, Clone)]
-pub struct MovementSpeed {
-    pub base: f32,
-    pub current: f32,
-}
 
 #[derive(Component, Debug, Clone)]
 pub struct Hull {
