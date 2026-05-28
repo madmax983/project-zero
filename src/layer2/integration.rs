@@ -729,3 +729,24 @@ pub fn orbital_mirror_chronicle_bridge(
         });
     }
 }
+
+use crate::layer2::communications::signal_latency::{ExecuteOrderEvent, OrderType};
+use crate::layer2::fleet::FleetOrder;
+
+/// Bridges `ExecuteOrderEvent` to `FleetOrder` for movement
+pub fn signal_latency_fleet_bridge(
+    mut events: EventReader<ExecuteOrderEvent>,
+    mut commands: Commands,
+    query: Query<Entity, With<Fleet>>,
+) {
+    for event in events.read() {
+        if query.contains(event.target) {
+            match event.order {
+                OrderType::MoveTo(destination) => {
+                    commands.entity(event.target).insert(FleetOrder::MoveTo(destination));
+                }
+                // Add more match arms if OrderType expands
+            }
+        }
+    }
+}

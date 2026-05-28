@@ -15,7 +15,7 @@ pub struct ExecuteOrderEvent {
 
 #[derive(Clone, PartialEq, Debug)]
 pub enum OrderType {
-    Move,
+    MoveTo(Entity),
     // Other order types...
 }
 
@@ -104,7 +104,7 @@ mod tests {
         app.world_mut().send_event(IssueOrderEvent {
             origin: colony_entity,
             target: target_entity,
-            order: OrderType::Move,
+            order: OrderType::MoveTo(Entity::PLACEHOLDER),
         });
 
         app.update(); // Tick 1: Order is added to delay queue
@@ -122,7 +122,7 @@ mod tests {
         app.world_mut().insert_resource(DelayedOrders {
             queue: vec![DelayedOrder {
                 target: Entity::PLACEHOLDER,
-                order: OrderType::Move,
+                order: OrderType::MoveTo(Entity::PLACEHOLDER),
                 ticks_remaining: 0,
             }],
         });

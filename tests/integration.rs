@@ -500,3 +500,4 @@ mod orbital_drydocks_bridge;
 #[path = "integration/temporal_echoes_maintenance.rs"]
 mod temporal_echoes_maintenance;
 mod celestial_library_bridge;
+mod signal_latency_bridge;
