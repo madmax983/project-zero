@@ -21,6 +21,7 @@ pub enum MemoryType {
     SawCorpse,
     /// Attended a funeral (closure).
     AttendedFuneral,
+    FleshTaxTrauma,
     /// Slept in an awful room.
     SleptInAwfulRoom,
     /// Slept in a dull room.
@@ -63,7 +64,7 @@ impl MemoryType {
     pub const fn base_mood_impact(&self) -> f32 {
         match self {
             Self::WitnessedDeath => -0.2,
-            Self::MascotDeath | Self::LostLimb => -0.3, // High impact grief/trauma
+            Self::MascotDeath | Self::LostLimb | Self::FleshTaxTrauma => -0.3, // High impact grief/trauma
             Self::StarvationTrauma => -0.15,
             Self::DisgustedByVermin | Self::InspectorDisappointed => -0.1,
             Self::InspectorImpressed => 0.15,
@@ -89,7 +90,7 @@ impl MemoryType {
         // Ticks to fade completely
         match self {
             Self::WitnessedDeath | Self::LostLimb | Self::MascotDeath => 0.0005, // Slow fade (2000 ticks)
-            Self::StarvationTrauma | Self::AttendedFuneral => 0.001,             // Medium
+            Self::StarvationTrauma | Self::AttendedFuneral | Self::FleshTaxTrauma => 0.001,             // Medium
             Self::AteFineMeal | Self::WonFight => 0.002,                         // Fast (500 ticks)
             Self::SawCorpse | Self::AdmiredArt | Self::DisgustedByVermin => 0.01, // Very fast fade (100 ticks)
             Self::InspectorImpressed | Self::InspectorDisappointed | Self::FakePositive => 0.005, // Medium-long duration (~200 ticks)
