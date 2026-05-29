@@ -10,15 +10,42 @@ pub struct PhantomSignal {
 #[derive(Component)]
 pub struct SensorProbe;
 
+#[derive(Debug, PartialEq, Eq, Clone, Copy)]
+pub enum SignalRevealType {
+    Ambush,
+    TreasureCache,
+}
+
 #[derive(Event)]
 pub struct SignalRevealEvent {
-    pub is_ambush: bool,
+    pub reveal_type: SignalRevealType,
+}
+
+#[derive(Event)]
+pub struct DeployProbeEvent {
+    pub target_node: Entity,
+}
+
+pub fn deploy_sensor_probe_system(
+    mut commands: Commands,
+    mut events: EventReader<DeployProbeEvent>,
+) {
+    for event in events.read() {
+        commands.spawn((
+            SensorProbe,
+            InOrbit {
+                parent: event.target_node,
+            },
+        ));
+    }
 }
 
 pub fn process_phantom_signal_evasion_system(
     mut signal_query: Query<(&mut InOrbit, &PhantomSignal), Without<Fleet>>,
     fleet_query: Query<&InOrbit, With<Fleet>>,
     system_nodes: Query<Entity, With<SystemBody>>,
+    mut notification_queue: Option<ResMut<crate::layer1::notifications::NotificationQueue>>,
+    time: Option<Res<crate::shared::time::SimulationTime>>,
 ) {
     // Collect fleet locations
     let fleet_nodes: Vec<Entity> = fleet_query.iter().map(|o| o.parent).collect();
@@ -32,6 +59,10 @@ pub fn process_phantom_signal_evasion_system(
             } else {
                 // If there are no other nodes (or none found), we fallback for test safety
                 signal_orbit.parent = Entity::from_raw(signal_orbit.parent.index() + 1);
+            }
+
+            if let (Some(ref mut queue), Some(time)) = (&mut notification_queue, &time) {
+                queue.add_info("The phantom signal slipped away!", time.tick);
             }
         }
     }
@@ -60,7 +91,13 @@ pub fn reveal_phantom_signal_nature_system(
 
     for (entity, signal, signal_orbit) in signal_query.iter() {
         if signal.pinned && fleet_nodes.contains(&signal_orbit.parent) {
-            events.send(SignalRevealEvent { is_ambush: true });
+            let reveal_type = if rand::random::<bool>() {
+                SignalRevealType::Ambush
+            } else {
+                SignalRevealType::TreasureCache
+            };
+
+            events.send(SignalRevealEvent { reveal_type });
             commands.entity(entity).despawn();
         }
     }
@@ -139,9 +176,68 @@ mod tests {
 
         let reveal_events = app.world().resource::<Events<SignalRevealEvent>>();
         let mut reader = reveal_events.get_cursor();
+        let mut event_count = 0;
+        let mut found_treasure = false;
+        let mut found_ambush = false;
+
+        for event in reader.read(reveal_events) {
+            event_count += 1;
+            match event.reveal_type {
+                SignalRevealType::TreasureCache => found_treasure = true,
+                SignalRevealType::Ambush => found_ambush = true,
+            }
+        }
+
         assert!(
-            reader.read(reveal_events).count() > 0,
+            event_count > 0,
             "Pinned signal should reveal its nature upon fleet arrival"
         );
+        assert!(found_treasure || found_ambush);
+    }
+
+    #[test]
+    fn test_deploy_probe_system() {
+        let mut app = App::new();
+        app.add_systems(bevy_app::Update, deploy_sensor_probe_system);
+        app.add_event::<DeployProbeEvent>();
+
+        let target_node = app.world_mut().spawn(SystemBody).id();
+        app.world_mut().send_event(DeployProbeEvent { target_node });
+
+        app.update();
+
+        let mut probe_query = app.world_mut().query::<(&SensorProbe, &InOrbit)>();
+        let mut probe_found = false;
+        for (_, orbit) in probe_query.iter(app.world()) {
+            if orbit.parent == target_node {
+                probe_found = true;
+            }
+        }
+        assert!(probe_found, "A sensor probe should have been spawned at the target node");
+    }
+
+    #[test]
+    fn test_signal_evasion_sends_notification() {
+        let mut app = App::new();
+        app.insert_resource(crate::layer1::notifications::NotificationQueue::default());
+        app.insert_resource(crate::shared::time::SimulationTime::default());
+        app.add_systems(bevy_app::Update, process_phantom_signal_evasion_system);
+
+        let node1 = app.world_mut().spawn(SystemBody).id();
+        let _node2 = app.world_mut().spawn(SystemBody).id();
+
+        let _fleet = app
+            .world_mut()
+            .spawn((Fleet, InOrbit { parent: node1 }))
+            .id();
+        let _signal = app
+            .world_mut()
+            .spawn((PhantomSignal { pinned: false }, InOrbit { parent: node1 }))
+            .id();
+
+        app.update();
+
+        let queue = app.world().resource::<crate::layer1::notifications::NotificationQueue>();
+        assert!(queue.active.iter().any(|n| n.text == "The phantom signal slipped away!"));
     }
 }
