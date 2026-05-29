@@ -536,6 +536,7 @@ mod tests {
 }
 /// Social debt system (Spec 130).
 pub mod debt;
+pub mod debt_of_the_dead;
 /// Public Grievances system (Spec 233).
 pub mod grievances;
 pub mod protest_crowds;

@@ -234,6 +234,8 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::social::sub_lithic::process_deep_mining_exposure,
             crate::layer1::social::sub_lithic::evaluate_cult_formation,
             crate::layer1::social::sub_lithic::process_cult_sabotage,
+            crate::layer1::social::debt_of_the_dead::handle_dead_pop_debt_system,
+            crate::layer1::social::debt_of_the_dead::apply_inflation_system,
             apply_founder_benefits_system,
             // Layer 2 visibility systems are handled in simulation.rs
         )
