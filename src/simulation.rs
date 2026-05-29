@@ -577,6 +577,9 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
             .before(crate::layer2::trade::escape_velocity::process_launch_system),
         crate::layer2::integration::celestial_cemeteries_trade_bridge_system
             .before(crate::layer2::trade::escape_velocity::process_launch_system),
+        crate::layer1::culture::celestial_cemeteries::process_corpses_system,
+        crate::layer1::culture::celestial_cemeteries::calculate_launch_risk_system,
+        crate::layer1::culture::celestial_cemeteries::clear_cemetery_system,
     ));
 
     schedule.add_systems((
@@ -1030,6 +1033,7 @@ mod tests {
         world.init_resource::<Events<crate::layer2::governance::RebellionEvent>>();
         world.init_resource::<Events<crate::layer1::environment::disasters::DisasterEvent>>();
         world.init_resource::<Events<crate::layer2::tourism::disaster_tourism::GriefTouristArrivalEvent>>();
+        world.init_resource::<Events<crate::layer1::culture::celestial_cemeteries::ClearCemeteryEvent>>();
         world.init_resource::<Events<crate::layer2::celestial_library::LibraryDonationEvent>>();
         world.init_resource::<Events<crate::layer2::station::ShipConstructionCompletedEvent>>();
         world.init_resource::<Events<crate::layer1::agony_extract::HarvestAgonyExtractEvent>>();

@@ -1271,3 +1271,10 @@
 - **Glue added:** `kinetic_battery_chronicle_bridge` in `src/layer1/core/integration.rs` to record catastrophic kinetic battery failures in the Chronicle.
 - **Schedule:** Registered in Consumption schedule, between `handle_battery_destruction_system` and `despawn_dead_entities_system`.
 - **Tests:** `tests/integration/kinetic_storage_bridge.rs`
+
+### INT-1096: Celestial Cemeteries -> Launch Risk & Corpse Processing
+- **Date:** 2026-05-29
+- **Systems connected:** `process_corpses_system`, `calculate_launch_risk_system`, `clear_cemetery_system` -> `SimulationSchedule`
+- **Glue added:** Added `celestial_cemeteries_trade_bridge_system` in `src/layer2/integration.rs` to attach `LaunchSequence` to `TradeManifest`. Modified `process_launch_system` in `src/layer2/trade/escape_velocity.rs` to consume launch risk.
+- **Schedule:** Registered the systems in `src/simulation.rs`.
+- **Tests:** `tests/integration/celestial_cemeteries_bridge.rs`
