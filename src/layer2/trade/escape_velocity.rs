@@ -37,7 +37,10 @@ pub fn process_launch_system(
     mut commands: Commands,
     gravity: Res<PlanetaryGravity>,
     mut events: EventReader<LaunchShipEvent>,
-    query: Query<(&TradeManifest, Option<&crate::layer1::culture::celestial_cemeteries::LaunchSequence>)>,
+    query: Query<(
+        &TradeManifest,
+        Option<&crate::layer1::culture::celestial_cemeteries::LaunchSequence>,
+    )>,
     mut resources: ResMut<ColonyResources>,
 ) {
     for event in events.read() {
