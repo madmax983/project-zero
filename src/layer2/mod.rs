@@ -32,6 +32,7 @@ pub mod mining;
 mod mining_tests;
 pub mod orphan_fleet;
 pub mod phantom;
+pub mod planetary_spin_up;
 pub mod render;
 pub mod shielding;
 pub mod ship;
@@ -80,3 +81,18 @@ pub use gravitational_doldrums::*;
 pub mod celestial_library;
 pub mod communications;
 pub mod signature;
+
+use bevy::prelude::*;
+
+pub struct PlanetarySpinUpPlugin;
+
+impl Plugin for PlanetarySpinUpPlugin {
+    fn build(&self, app: &mut App) {
+        app.add_event::<planetary_spin_up::PlanetaryTorqueEvent>()
+           .add_systems(Update, (
+               planetary_spin_up::apply_planetary_torque_system,
+               planetary_spin_up::calculate_effective_gravity_system,
+               planetary_spin_up::trigger_coriolis_weather_system,
+           ));
+    }
+}
