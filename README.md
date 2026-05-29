@@ -12,8 +12,6 @@ A 4X colony simulation where you begin Dwarf-Fortress-style on a single planet a
 
 ## Quick Start
 
-> # 🚨 ⚠️ REQUIRES FEATURE NOVA ⚠️ 🚨
-
 ### Native (Terminal)
 
 ```bash
@@ -45,8 +43,6 @@ trunk serve
 ## Usage as a Library
 
 ### Procedural Generation (Narrative)
-
-> # 🚨 ⚠️ REQUIRES FEATURE NOVA ⚠️ 🚨
 
 To use SCALE's procedural generation in your own Rust code:
 
