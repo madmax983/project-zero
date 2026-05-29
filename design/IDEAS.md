@@ -21368,7 +21368,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Memory Smugglers
+## Memory Smugglers [SPECCED]
 
 **Layer:** 1
 
