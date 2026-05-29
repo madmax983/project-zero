@@ -21521,3 +21521,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you abandon highly developed but "haunted" infrastructure to build fresh elsewhere, or force your Pops to endure the psychological toll to maintain efficiency?
 
 ---
+## The Orphan Armada
+
+**Layer:** 2
+
+**Fantasy:** A fleet of derelict ships entirely crewed by the feral descendants of a lost crew.
+
+**Mechanic:** A nomadic fleet that only allows young people to survive the long haul (due to failing life support). They trade rare scrap for food. If integrated into your empire, they provide elite pilots but require massive social reconditioning facilities to prevent rebellion.
+
+**Emergence:** You try to destroy them for piracy, only to realize their "attacks" are desperate attempts to steal medical supplies, causing a massive morale hit across your empathic colonies.
+
+**Tension:** Do you destroy a vulnerable fleet for stealing vital resources, or spend massive capital to rehabilitate a generation of feral void-born pilots?
+
+---
+
+## The Sleepwalkers
+
+**Layer:** 1
+
+**Fantasy:** Pops secretly working on mysterious projects while entirely unconscious.
+
+**Mechanic:** A strange atmospheric gas or psionic field causes resting Pops to "Sleepwalk" and build bizarre, unsanctioned monuments out of random debris. During this time, their rest need is never met, leading to severe exhaustion.
+
+**Emergence:** You wake up to find your entire mining colony has built a massive, mathematically perfect spiral tower out of junk over the last three nights, but now everyone is dropping dead from exhaustion.
+
+**Tension:** Do you let the sleepwalkers finish their mysterious (and potentially valuable/powerful) monument at the cost of your workforce's health, or forcibly restrain them and lose out on the artifact?
+
+---
+
+## Chronicle Rot
+
+**Layer:** Cross-layer
+
+**Fantasy:** History being rewritten by a creeping digital mold.
+
+**Mechanic:** A digital anomaly begins slowly altering the records in the Chronicle. Historical allies are recorded as enemies, ancient disasters are recorded as golden ages. Pops' beliefs and diplomatic stances shift based on this "rotting" history.
+
+**Emergence:** Your oldest ally suddenly declares war on you because their planetary archives have "discovered" that you actually started the war 300 years ago, a war that never actually happened.
+
+**Tension:** Do you expend massive research to preserve the true timeline, or embrace the rot and use it to justify sudden betrayals and new alliances?
+
+---
