@@ -94,3 +94,10 @@
 **The Potential:** Connects the mental break (Bingeing) with the beauty/vandalism system (Graffiti). A bingeing pop doesn't just consume food; they actively ruin the aesthetic of the colony by smearing food on the walls, requiring cleaning to restore morale.
 **Fate:** Merged
 **Lesson:** Good connection between mental state and environmental consequence.
+
+## [Protest Graffiti]
+**The Spark:** We have `ActionType::Protest` and `GraffitiMap` from `graffiti.rs`.
+**The Feature:** What if a Pop who is participating in a Protest also compulsively leaves `GraffitiType::Propaganda` on every tile they walk on?
+**The Potential:** Connects the protest system with the beauty/vandalism system (Graffiti). Protesters don't just stand around; they actively spread propaganda that affects the morale of other pops who walk by it.
+**Fate:** Submitted
+**Lesson:** Connects the protest system with the graffiti system, making protests more impactful on the environment and colony morale.

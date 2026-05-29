@@ -170,3 +170,6 @@ pub mod vermin_wheel;
 
 #[cfg(feature = "nova")]
 pub mod binge_graffiti;
+
+#[cfg(feature = "nova")]
+pub mod protest_graffiti;
