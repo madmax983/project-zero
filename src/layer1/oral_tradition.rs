@@ -207,6 +207,18 @@ fn mutate_story(story: &mut Story, rng: &mut impl Rng) {
     story.mutations += 1;
 }
 
+
+impl std::fmt::Display for StoryGenre {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            Self::Heroic => write!(f, "🌟 Heroic"),
+            Self::Tragedy => write!(f, "🎭 Tragedy"),
+            Self::Cautionary => write!(f, "⚠️ Cautionary"),
+            Self::Trivial => write!(f, "📜 Trivial"),
+        }
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
