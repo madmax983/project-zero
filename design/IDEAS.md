@@ -21562,3 +21562,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you expend massive research to preserve the true timeline, or embrace the rot and use it to justify sudden betrayals and new alliances?
 
 ---
+
+## Sub-Orbital Salvage Drops
+
+**Layer:** 2 -> 1
+
+**Fantasy:** Watching burning scrap from a naval battle plummet into your colony, bringing both devastation and rare materials.
+
+**Mechanic:** Debris from Layer 2 fleet battles falls onto Layer 1 planets below. The impacts destroy buildings and kill Pops, but leave behind highly valuable, otherwise unobtainable advanced alloys.
+
+**Emergence:** Players might intentionally bait enemy fleets into fighting over their own barren mining colonies just to harvest the wreckage, sacrificing the local population for high-tech salvage.
+
+**Tension:** Do you build robust point-defense to protect your world from falling debris, or let the scrap fall to supercharge your industrial sector?
+
+---
+
+## The Phantom Shift
+
+**Layer:** 1
+
+**Fantasy:** A colony so overworked that the Pops begin treating their hallucinations as coworkers.
+
+**Mechanic:** When a colony's collective Sleep Debt reaches critical levels, Pops begin perceiving "Phantom" workers. These phantoms temporarily boost productivity in automated jobs but slowly drive real Pops insane from isolation and paranoia.
+
+**Emergence:** A factory outputting 200% capacity with only three real workers and a dozen phantoms, until the real workers suddenly snap and destroy the machinery they thought was attacking them.
+
+**Tension:** Do you lean into the exhaustion to exploit the phantom productivity boost, or force mandatory rest before the psychological collapse destroys your infrastructure?
+
+---
+
+## Starlight Smuggling
+
+**Layer:** Cross-layer
+
+**Fantasy:** A black market network moving illicit goods right under the nose of your grand armada.
+
+**Mechanic:** Civilian trade ships skim a small percentage of resources and hide them in hidden cargo holds. These resources bypass system blockades and tariffs, funding hidden Pirate Republics or rebel factions.
+
+**Emergence:** Your heavily fortified core world suddenly experiences a massive uprising funded entirely by the smuggled profits of your own hyper-efficient trade routes.
+
+**Tension:** Do you heavily inspect every trade ship, crippling your economy with delays, or turn a blind eye to the smuggling to keep the official trade flowing smoothly?
+
+---
