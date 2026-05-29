@@ -42,7 +42,7 @@ pub fn calculate_launch_risk_system(
 ) {
     let extra_risk = (cemetery.coffin_count as f32 / 100.0) * 0.01;
     for mut launch in launch_query.iter_mut() {
-        launch.base_risk += extra_risk;
+        launch.base_risk = 0.05 + extra_risk;
     }
 }
 

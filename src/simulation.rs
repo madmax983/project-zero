@@ -572,6 +572,8 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
         crate::layer2::integration::founder_effect_bridge_system,
         crate::layer2::integration::escape_velocity_traits_bridge_system
             .before(crate::layer2::trade::escape_velocity::process_launch_system),
+        crate::layer2::integration::celestial_cemeteries_trade_bridge_system
+            .before(crate::layer2::trade::escape_velocity::process_launch_system),
     ));
 
     schedule.add_systems((

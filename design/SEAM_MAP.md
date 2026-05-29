@@ -1257,3 +1257,10 @@
 - **Systems connected:** `execute_attack` -> `FossilizedShip`
 - **Glue added:** Modified `execute_attack` in `src/layer1/combat.rs` to apply `defense_bonus` from `FossilizedShip`.
 - **Tests:** `tests/integration/fossilized_fleet_defense_bridge.rs`
+
+### INT-1096: Celestial Cemeteries -> Launch Risk & Corpse Processing
+- **Date:** 2026-10-31
+- **Systems connected:** `process_corpses_system`, `calculate_launch_risk_system`, `clear_cemetery_system` -> `SimulationSchedule`
+- **Glue added:** Added `celestial_cemeteries_trade_bridge_system` in `src/layer2/integration.rs` to attach `LaunchSequence` to `TradeManifest`. Modified `process_launch_system` in `src/layer2/trade/escape_velocity.rs` to consume launch risk.
+- **Schedule:** Registered the systems in `src/simulation.rs`.
+- **Tests:** `tests/integration/celestial_cemeteries_bridge.rs`
