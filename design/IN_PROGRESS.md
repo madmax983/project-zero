@@ -1,0 +1,1 @@
+- [ ] `1096` Celestial Cemeteries — `specs/1096-celestial-cemeteries.md` — claimed 2024-05-30

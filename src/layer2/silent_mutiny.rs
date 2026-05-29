@@ -1,7 +1,7 @@
 use crate::layer1::resources::ResourceType;
+use crate::layer2::combat::AvoidCombat;
 use crate::layer2::fleet::{FleetFaction, InOrbit};
 use crate::layer2::system::Orbit;
-use crate::layer2::combat::AvoidCombat;
 use bevy_ecs::prelude::*;
 use rand::Rng;
 

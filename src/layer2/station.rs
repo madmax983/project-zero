@@ -1,6 +1,6 @@
 use crate::layer1::resources::ResourceType;
-use crate::layer2::fleet::{Fleet, FleetOrder, InOrbit};
 pub use crate::layer2::fleet::StationType;
+use crate::layer2::fleet::{Fleet, FleetOrder, InOrbit};
 use crate::layer2::mining::FleetCargo;
 use crate::layer2::system::{Orbit, OrbitalBody};
 use bevy_ecs::prelude::*;
@@ -21,7 +21,6 @@ pub struct ShipConstructionCompletedEvent {
     pub drydock_entity: Entity,
     pub ship_class: String,
 }
-
 
 /// Component for a Zero-G Brewery station.
 #[derive(Component, Debug, Clone)]

@@ -1,6 +1,6 @@
-use bevy_ecs::prelude::*;
-use bevy::prelude::*;
 use crate::layer1::economy::resources::ColonyResources;
+use bevy::prelude::*;
+
 
 #[derive(Component)]
 pub struct FossilizedShip {

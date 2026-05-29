@@ -211,6 +211,7 @@ mod waste_scent;
 pub mod integration {
     #[path = "conveyor_pathfinding_bridge.rs"]
     pub mod conveyor_pathfinding_bridge;
+    pub mod flesh_tax_bridge;
     pub mod intellectual_property_wars_bridge;
     #[path = "language_drift_trade_bridge.rs"]
     pub mod language_drift_trade_bridge;
@@ -218,7 +219,6 @@ pub mod integration {
     pub mod spiteful_will_chronicle;
     #[path = "the_silent_generation_bridge.rs"]
     pub mod the_silent_generation_bridge;
-    pub mod flesh_tax_bridge;
 }
 
 #[path = "integration/neural_leech_unrest.rs"]

@@ -33,8 +33,8 @@ pub fn ensure_barnacles_component_system(
 
 #[cfg(test)]
 mod tests {
-    use crate::layer2::fleet::{SpaceBarnacles, calculate_speed_modifier};
     use super::*;
+    use crate::layer2::fleet::{calculate_speed_modifier, SpaceBarnacles};
     use crate::layer2::fleet::{Fleet, InOrbit, InTransit};
 
     // 1. Test Barnacle Accumulation

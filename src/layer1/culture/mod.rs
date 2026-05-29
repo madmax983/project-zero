@@ -42,3 +42,5 @@ pub mod nostalgia;
 pub use nostalgia::*;
 pub mod linguistics;
 pub use linguistics::*;
+pub mod celestial_cemeteries;
+pub use celestial_cemeteries::*;
