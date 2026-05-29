@@ -149,6 +149,8 @@ pub fn setup_world() -> World {
 pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -> World {
     init_task_pools();
     let mut world = World::new();
+    world.init_resource::<crate::layer1::culture::celestial_cemeteries::OrbitalCemetery>();
+    world.init_resource::<Events<crate::layer1::culture::celestial_cemeteries::ClearCemeteryEvent>>();
     world.init_resource::<bevy_ecs::prelude::Events<crate::layer2::celestial_library::LibraryDonationEvent>>();
     world.init_resource::<crate::layer1::logistics::mycelial::MycelialNetwork>();
     world.init_resource::<bevy_ecs::prelude::Events<crate::layer1::logistics::mycelial::ContaminationEvent>>();
@@ -1186,6 +1188,8 @@ mod tests {
             headless: true,
             scenario,
         });
+        world.init_resource::<crate::layer1::culture::celestial_cemeteries::OrbitalCemetery>();
+        world.init_resource::<Events<crate::layer1::culture::celestial_cemeteries::ClearCemeteryEvent>>();
         world
             .init_resource::<crate::layer1::environment::bio_acoustic_miasma::MiasmaRecordedSecret>(
             );
