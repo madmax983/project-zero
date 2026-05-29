@@ -1,7 +1,6 @@
 use crate::layer1::economy::resources::ColonyResources;
 use bevy::prelude::*;
 
-
 #[derive(Component)]
 pub struct FossilizedShip {
     pub decay_rate: f32,

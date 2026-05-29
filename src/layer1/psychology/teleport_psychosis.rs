@@ -1,7 +1,7 @@
-use bevy::prelude::*;
 use crate::layer1::entities::pop::Pop;
 use crate::layer1::psychology::needs::Needs;
-use crate::layer1::psychology::traits::{Traits, Trait};
+use crate::layer1::psychology::traits::{Trait, Traits};
+use bevy::prelude::*;
 
 pub const TELEPORT_DISSOCIATION_COST: f32 = 5.0;
 pub const DISSOCIATION_PHANTOM_THRESHOLD: f32 = 80.0;
@@ -41,9 +41,7 @@ pub fn process_psychosis_system(
     }
 }
 
-pub fn hunger_decay_system(
-    mut query: Query<(&mut Needs, &Traits), With<Pop>>,
-) {
+pub fn hunger_decay_system(mut query: Query<(&mut Needs, &Traits), With<Pop>>) {
     for (mut needs, traits) in query.iter_mut() {
         if !traits.has(Trait::Phantom) {
             needs.hunger -= 1.0;
