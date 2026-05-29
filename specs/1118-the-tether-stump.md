@@ -195,3 +195,4 @@ fn find_stump_center(terrain: &TerrainGrid) -> Option<(u32, u32)> {
 
 ## 8. Questions
 *Builder: add questions here if spec is unclear.*
+The spec suggests expanding `TerrainGrid` and `PressureGrid` to 3D. However, checking the codebase reveals these are strictly 2D structures deeply integrated into numerous Layer 1 systems (pathfinding, temperature, erosion, etc.). Modifying them to support full 3D would require rewriting almost the entire layer. Can we simulate the extreme height via an auxiliary component or grid localized to the stump instead of converting the base grids to 3D?
