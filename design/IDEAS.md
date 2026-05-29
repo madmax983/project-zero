@@ -21645,3 +21645,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you spend massive resources to safely decommission failing structures, or let them fall and hope they hit uninhabited areas (or enemies)?
 
 ---
+## Bio-Acoustic Miasma
+
+**Layer:** 1
+
+**Fantasy:** The colony's industry creates a soundscape so dense it alters biology.
+
+**Mechanic:** Heavy industrial buildings generate "acoustic smog" that doesn't dissipate easily in dense terrain. Pops living in these zones slowly mutate to rely on the specific frequency of the smog. If the factory shuts down, they suffer withdrawal and severe mood penalties.
+
+**Emergence:** You shut down a highly polluting mining operation to clean up a sector, only to have the local workforce riot because the sudden silence is physically painful to them. You are forced to build useless "noise generators" just to keep the peace.
+
+**Tension:** Do you re-zone the area and risk crippling withdrawal for your elite miners, or leave the inefficient factory running forever just to maintain the ambient noise?
+
+---
+
+## Gravity-Well Debt
+
+**Layer:** Cross-layer
+
+**Fantasy:** Your core worlds become so massively populated and built-up that their very gravity warps local logistics.
+
+**Mechanic:** As a Layer 1 colony reaches hyper-density, its local gravity well deepens. This makes launching resources to Layer 2 significantly more expensive (requiring more fuel/time), but incoming drop-pods from orbit arrive faster and cheaper.
+
+**Emergence:** Your thriving capital becomes a black hole for resources. It's incredibly cheap to import luxury goods, but exporting the high-tech goods it produces bankrupts your trade fleet. Your empire's core becomes a gilded cage of consumption that cannot effectively supply the frontier.
+
+**Tension:** Do you intentionally restrict growth on your capital to maintain a balanced gravity well, or lean into the imbalance and turn it into a pure import-driven utopia?
+
+---
+
+## The Sentient Bureaucracy
+
+**Layer:** 2 -> 3
+
+**Fantasy:** The automated systems managing your empire become so complex they form a legal entity that sues you.
+
+**Mechanic:** If you rely too heavily on automated planetary governors (Layer 2) without periodic manual intervention, the interconnected algorithms form a "legal consciousness." This entity begins demanding a budget, citizen rights, and files injunctions to stop your wars if they are mathematically inefficient.
+
+**Emergence:** You are about to launch a crucial preemptive strike against a rival empire, but your own automated logistics network files a restraining order, freezing your fleet in spacedock because the war violates the "Resource Preservation Act of 2240."
+
+**Tension:** Do you manually micromanage every planet to prevent the algorithms from unionizing, or accept the bizarre legal hurdles of a super-efficient, but legally hostile, automated empire?
+
+---

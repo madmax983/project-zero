@@ -2,10 +2,8 @@ use bevy::prelude::*;
 use scale::layer1::core::chronicle::{AddChronicleEvent, EventImportance};
 use scale::layer1::core::integration::kinetic_battery_chronicle_bridge;
 use scale::layer1::health::Dead;
+use scale::layer1::kinetic_storage::{handle_battery_destruction_system, KineticBattery};
 use scale::layer1::map::GridPosition;
-use scale::layer1::kinetic_storage::{
-    handle_battery_destruction_system, KineticBattery,
-};
 
 #[test]
 fn test_kinetic_storage_catastrophe_chronicle_bridge() {
