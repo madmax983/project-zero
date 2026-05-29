@@ -59,3 +59,5 @@ pub use stress::*;
 pub use traits::*;
 pub use void_sickness::*;
 pub use void_stare::*;
+pub mod teleport_psychosis;
+pub use teleport_psychosis::*;
