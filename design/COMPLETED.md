@@ -656,3 +656,5 @@
 - [x] `1096` Celestial Cemeteries — `specs/1096-celestial-cemeteries.md` — completed 2024-05-30
 - [x] `INT-1096` Integration: Celestial Cemeteries -> Launch Risk & Corpse Processing — completed 2026-10-31
 - [x] `INT-1207` Integration: Kinetic Storage Catastrophe -> Chronicle — completed 2026-02-01
+
+- [x] `1131` Signature Spoofing — `specs/1131-signature-spoofing.md` — completed 2026-05-29

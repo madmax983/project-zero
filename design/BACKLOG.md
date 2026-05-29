@@ -709,7 +709,7 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1128` Hypno-Learning — `specs/1128-hypno-learning.md`
 - [ ] `1129` Planetary Rings as Highways — `specs/1129-planetary-rings-as-highways.md`
 - [ ] `1130` Volatile Intermediates — `specs/1130-volatile-intermediates.md`
-- [ ] `1131` Signature Spoofing — `specs/1131-signature-spoofing.md`
+
 - [ ] `1133` Stellar Megastructure Scaffolding — `specs/1133-stellar-megastructure-scaffolding.md`
 - [ ] `1134` Operational Detritus — `specs/1134-operational-detritus.md`
 - [ ] `1136` The Sentient Bureaucracy — `specs/1136-sentient-bureaucracy.md`

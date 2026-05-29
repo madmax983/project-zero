@@ -352,6 +352,9 @@ fn init_simulation_resources(world: &mut World) {
 
             let mut schedule = build_simulation_schedule();
             schedule.add_systems((
+                crate::layer2::signature::consume_spoofing_energy,
+                crate::layer2::signature::apply_signature_spoofing
+                    .after(crate::layer2::signature::consume_spoofing_energy),
                 crate::layer1::anomalies::void_sirens::apply_siren_obsession,
                 crate::layer1::anomalies::void_sirens::handle_obsessed_jobs,
                 crate::layer1::logistics::beanstalk::beanstalk_morale_system,
