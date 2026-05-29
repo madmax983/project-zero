@@ -2056,7 +2056,7 @@ fn print_stories(world: &mut World) {
         };
 
         table.add_row(vec![
-            Cell::new(format!("{:?}", story.genre))
+            Cell::new(story.genre.to_string())
                 .fg(genre_color)
                 .add_attribute(comfy_table::Attribute::Bold),
             Cell::new(story.historical_date.to_string()),
