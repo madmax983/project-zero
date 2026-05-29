@@ -504,3 +504,5 @@ mod signal_latency_bridge;
 mod temporal_echoes_maintenance;
 #[path = "integration/celestial_cemeteries_bridge.rs"]
 mod celestial_cemeteries_bridge;
+#[path = "integration/kinetic_storage_bridge.rs"]
+mod kinetic_storage_bridge;

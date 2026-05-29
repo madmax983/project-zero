@@ -2422,3 +2422,24 @@ pub fn existential_audit_chronicle_bridge(
         }
     }
 }
+
+/// INT-1207: Bridges KineticBattery destruction to AddChronicleEvent (Chronicle).
+pub fn kinetic_battery_chronicle_bridge(
+    query: Query<
+        (&crate::layer1::kinetic_storage::KineticBattery, &crate::layer1::map::GridPosition),
+        Added<crate::layer1::health::Dead>,
+    >,
+    mut chronicle_events: EventWriter<AddChronicleEvent>,
+) {
+    for (battery, pos) in query.iter() {
+        if battery.charge > 10.0 {
+            chronicle_events.send(AddChronicleEvent {
+                importance: EventImportance::Major,
+                text: format!(
+                    "A kinetic storage battery suffered a catastrophic structural failure, releasing {} damage at ({}, {}).",
+                    battery.charge, pos.x, pos.y
+                ),
+            });
+        }
+    }
+}
