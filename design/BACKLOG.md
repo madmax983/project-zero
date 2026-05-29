@@ -690,7 +690,7 @@ See `design/IDEAS.md` for unspecced concepts.
 
 
 - [ ] `1096` Celestial Cemeteries — `specs/1096-celestial-cemeteries.md` — claimed 2024-05-30
-- [ ] `1097` Planetary Spin-Up — `specs/1097-planetary-spin-up.md`
+
 - [ ] `1099` Terminator Habitats — `specs/1099-terminator-habitats.md`
 - [ ] `1101` Bureaucratic Ghost Towns — `specs/1101-bureaucratic-ghost-towns.md`
 - [ ] `1103` Prohibition & Contraband — `specs/1103-prohibition-and-contraband.md`

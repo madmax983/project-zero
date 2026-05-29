@@ -658,3 +658,4 @@
 - [x] `INT-1207` Integration: Kinetic Storage Catastrophe -> Chronicle — completed 2026-02-01
 
 - [x] `1131` Signature Spoofing — `specs/1131-signature-spoofing.md` — completed 2026-05-29
+- [x] `1097` Planetary Spin-Up — `specs/1097-planetary-spin-up.md` — completed 2026-05-29
