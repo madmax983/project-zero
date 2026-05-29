@@ -11,6 +11,8 @@ pub enum ShipType {
     Miner,
     /// Combat vessel. High speed, low cargo, expensive.
     Frigate,
+    /// Massive morale boosting ship built from scrap.
+    Memorial,
 }
 
 impl ShipType {
@@ -23,6 +25,7 @@ impl ShipType {
             Self::Frigate => 1.5,
             Self::Miner => 0.8,
             Self::Transport => 0.5,
+            Self::Memorial => 0.3,
         }
     }
 
@@ -34,6 +37,7 @@ impl ShipType {
             Self::Frigate => 50.0,
             Self::Miner => 200.0,
             Self::Transport => 1000.0,
+            Self::Memorial => 0.0,
         }
     }
 
@@ -45,6 +49,7 @@ impl ShipType {
             Self::Transport => vec![(ResourceType::Metal, 200.0), (ResourceType::Fuel, 50.0)],
             Self::Miner => vec![(ResourceType::Metal, 100.0), (ResourceType::Fuel, 30.0)],
             Self::Frigate => vec![(ResourceType::Metal, 150.0), (ResourceType::Fuel, 40.0)],
+            Self::Memorial => vec![(ResourceType::Scrap, 500.0), (ResourceType::Fuel, 100.0)],
         }
     }
 
@@ -56,6 +61,7 @@ impl ShipType {
             Self::Miner => 10.0,
             Self::Transport => 5.0,
             Self::Scout => 2.0,
+            Self::Memorial => 10.0,
         }
     }
 
@@ -67,6 +73,7 @@ impl ShipType {
             Self::Miner => 40.0,
             Self::Transport => 50.0,
             Self::Scout => 20.0,
+            Self::Memorial => 500.0,
         }
     }
 }
