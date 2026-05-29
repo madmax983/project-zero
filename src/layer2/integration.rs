@@ -754,11 +754,17 @@ pub fn signal_latency_fleet_bridge(
 
 pub fn celestial_cemeteries_trade_bridge_system(
     mut commands: Commands,
-    query: Query<Entity, (With<crate::layer2::trade::escape_velocity::TradeManifest>, Without<crate::layer1::culture::celestial_cemeteries::LaunchSequence>)>,
+    query: Query<
+        Entity,
+        (
+            With<crate::layer2::trade::escape_velocity::TradeManifest>,
+            Without<crate::layer1::culture::celestial_cemeteries::LaunchSequence>,
+        ),
+    >,
 ) {
     for entity in query.iter() {
-        commands.entity(entity).insert(crate::layer1::culture::celestial_cemeteries::LaunchSequence {
-            base_risk: 0.05,
-        });
+        commands.entity(entity).insert(
+            crate::layer1::culture::celestial_cemeteries::LaunchSequence { base_risk: 0.05 },
+        );
     }
 }

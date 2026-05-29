@@ -2426,7 +2426,10 @@ pub fn existential_audit_chronicle_bridge(
 /// INT-1207: Bridges KineticBattery destruction to AddChronicleEvent (Chronicle).
 pub fn kinetic_battery_chronicle_bridge(
     query: Query<
-        (&crate::layer1::kinetic_storage::KineticBattery, &crate::layer1::map::GridPosition),
+        (
+            &crate::layer1::kinetic_storage::KineticBattery,
+            &crate::layer1::map::GridPosition,
+        ),
         Added<crate::layer1::health::Dead>,
     >,
     mut chronicle_events: EventWriter<AddChronicleEvent>,

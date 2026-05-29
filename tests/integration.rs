@@ -488,9 +488,13 @@ mod void_sirens_chronicle;
 
 #[path = "integration/bureaucratic_ghost_towns.rs"]
 mod bureaucratic_ghost_towns;
+#[path = "integration/celestial_cemeteries_bridge.rs"]
+mod celestial_cemeteries_bridge;
 mod celestial_library_bridge;
 #[path = "integration/gravitational_doldrums_bridge.rs"]
 mod gravitational_doldrums_bridge;
+#[path = "integration/kinetic_storage_bridge.rs"]
+mod kinetic_storage_bridge;
 #[path = "integration/memory_blackout_bridge.rs"]
 mod memory_blackout_bridge;
 #[path = "integration/mycelial_network_bridge.rs"]
@@ -502,7 +506,3 @@ mod orbital_drydocks_bridge;
 mod signal_latency_bridge;
 #[path = "integration/temporal_echoes_maintenance.rs"]
 mod temporal_echoes_maintenance;
-#[path = "integration/celestial_cemeteries_bridge.rs"]
-mod celestial_cemeteries_bridge;
-#[path = "integration/kinetic_storage_bridge.rs"]
-mod kinetic_storage_bridge;

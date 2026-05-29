@@ -36,7 +36,7 @@ pub fn protest_graffiti_system(
                         pos_tuple,
                         Graffiti {
                             graffiti_type: GraffitiType::Propaganda,
-                            decay: 300.0,   // Long decay to represent strong messaging
+                            decay: 300.0,  // Long decay to represent strong messaging
                             modifier: 0.1, // Positive modifier for those agreeing with propaganda (or negative depending on interpretation, here using positive as "inspiring" for the cause)
                         },
                     );
