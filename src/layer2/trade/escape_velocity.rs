@@ -37,14 +37,25 @@ pub fn process_launch_system(
     mut commands: Commands,
     gravity: Res<PlanetaryGravity>,
     mut events: EventReader<LaunchShipEvent>,
-    query: Query<&TradeManifest>,
+    query: Query<(&TradeManifest, Option<&crate::layer1::culture::celestial_cemeteries::LaunchSequence>)>,
     mut resources: ResMut<ColonyResources>,
 ) {
     for event in events.read() {
-        if let Ok(manifest) = query.get(event.manifest_entity) {
+        if let Ok((manifest, launch_seq)) = query.get(event.manifest_entity) {
             let cost = calculate_launch_cost(&gravity, manifest);
             if resources.fuel >= cost {
                 resources.fuel -= cost;
+
+                if let Some(seq) = launch_seq {
+                    // Fail the launch if pseudo-random check fails
+                    let failure_chance = seq.base_risk;
+                    if rand::random::<f32>() < failure_chance {
+                        // Launch fails! Despawn it as destroyed.
+                        commands.entity(event.manifest_entity).despawn();
+                        continue;
+                    }
+                }
+
                 // Despawn the ship after a successful launch
                 commands.entity(event.manifest_entity).despawn();
             }
