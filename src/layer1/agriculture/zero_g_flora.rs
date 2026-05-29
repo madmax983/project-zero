@@ -68,8 +68,8 @@ pub fn handle_depressurization(
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::layer2::fleet::StationType;
     use crate::layer2::station::Station;
-use crate::layer2::fleet::StationType;
 
     #[test]
     fn test_zero_g_flora_growth_requires_microgravity() {

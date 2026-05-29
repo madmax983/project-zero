@@ -1,28 +1,35 @@
 #[cfg(test)]
 mod tests {
-    use bevy::prelude::*;
     use crate::layer1::architecture::building::{Building, BuildingType};
-    use crate::layer1::map::GridPosition;
+    use crate::layer1::architecture::fossilized_fleet::{
+        fossilized_ship_decay_system, FossilizedShip,
+    };
     use crate::layer1::economy::inventory::Inventory;
     use crate::layer1::economy::resources::ColonyResources;
-    use crate::layer1::architecture::fossilized_fleet::{FossilizedShip, fossilized_ship_decay_system};
+    use crate::layer1::map::GridPosition;
+    use bevy::prelude::*;
     use bevy::time::Time;
 
     #[test]
     fn test_fossilized_ship_creation() {
         let mut app = App::new();
 
-        let entity = app.world_mut().spawn((
-            FossilizedShip {
-                decay_rate: 1.0,
-                maintenance_cost: 10,
-                defense_bonus: 50,
-                structural_integrity: 100.0,
-            },
-            GridPosition { x: 5, y: 5 },
-            Building { building_type: BuildingType::Housing }, // Treat as housing for MVP
-            Inventory::default(),
-        )).id();
+        let entity = app
+            .world_mut()
+            .spawn((
+                FossilizedShip {
+                    decay_rate: 1.0,
+                    maintenance_cost: 10,
+                    defense_bonus: 50,
+                    structural_integrity: 100.0,
+                },
+                GridPosition { x: 5, y: 5 },
+                Building {
+                    building_type: BuildingType::Housing,
+                }, // Treat as housing for MVP
+                Inventory::default(),
+            ))
+            .id();
 
         let ship = app.world().get::<FossilizedShip>(entity).unwrap();
         assert_eq!(ship.defense_bonus, 50);
@@ -44,14 +51,15 @@ mod tests {
 
         app.add_systems(Update, fossilized_ship_decay_system);
 
-        let entity = app.world_mut().spawn((
-            FossilizedShip {
+        let entity = app
+            .world_mut()
+            .spawn((FossilizedShip {
                 decay_rate: 1.0,
                 maintenance_cost: 10,
                 defense_bonus: 50,
                 structural_integrity: 100.0,
-            },
-        )).id();
+            },))
+            .id();
 
         app.update();
 
@@ -74,14 +82,15 @@ mod tests {
 
         app.add_systems(Update, fossilized_ship_decay_system);
 
-        let entity = app.world_mut().spawn((
-            FossilizedShip {
+        let entity = app
+            .world_mut()
+            .spawn((FossilizedShip {
                 decay_rate: 1.0,
                 maintenance_cost: 10,
                 defense_bonus: 50,
                 structural_integrity: 100.0,
-            },
-        )).id();
+            },))
+            .id();
 
         app.update();
 

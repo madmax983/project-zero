@@ -2,7 +2,9 @@ use bevy::prelude::*;
 use scale::layer1::entities::pop::Pop;
 use scale::layer1::psychology::memory::{Memories, MemoryType};
 use scale::layer2::bombardment::BombardmentEvent;
-use scale::layer3::diplomacy::flesh_tax::{FleshTaxFailedEvent, FleshTaxPaymentEvent, process_flesh_tax_payment, process_flesh_tax_failure};
+use scale::layer3::diplomacy::flesh_tax::{
+    process_flesh_tax_failure, process_flesh_tax_payment, FleshTaxFailedEvent, FleshTaxPaymentEvent,
+};
 
 #[test]
 fn test_flesh_tax_integration_payment() {
@@ -20,11 +22,18 @@ fn test_flesh_tax_integration_payment() {
 
     app.update();
 
-    assert!(app.world().get_entity(pop1).is_err(), "Sacrificed pop should be despawned");
+    assert!(
+        app.world().get_entity(pop1).is_err(),
+        "Sacrificed pop should be despawned"
+    );
 
     let memories = app.world().get::<Memories>(pop2);
     assert!(memories.is_some(), "Survivor should have memories");
-    let has_trauma = memories.unwrap().items.iter().any(|m| m.memory_type == MemoryType::FleshTaxTrauma);
+    let has_trauma = memories
+        .unwrap()
+        .items
+        .iter()
+        .any(|m| m.memory_type == MemoryType::FleshTaxTrauma);
     assert!(has_trauma, "Survivor should have trauma memory");
 }
 
@@ -40,5 +49,9 @@ fn test_flesh_tax_integration_failure() {
     app.update();
 
     let bombardment_events = app.world().resource::<Events<BombardmentEvent>>();
-    assert_eq!(bombardment_events.get_cursor().len(bombardment_events), 1, "Failure should trigger an orbital bombardment");
+    assert_eq!(
+        bombardment_events.get_cursor().len(bombardment_events),
+        1,
+        "Failure should trigger an orbital bombardment"
+    );
 }

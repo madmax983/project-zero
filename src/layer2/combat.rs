@@ -98,7 +98,6 @@ pub fn resolve_combat(
     }
 }
 
-
 /// System to resolve combat between fleets at the same orbital location.
 pub fn fleet_combat_system(
     mut commands: Commands,

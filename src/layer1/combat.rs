@@ -278,10 +278,15 @@ pub fn execute_attack(world: &mut World, attacker: Entity, target: Entity) {
         rng.gen_bool(CRIT_CHANCE)
     };
 
-    let target_pos_val = world.get::<crate::layer1::map::GridPosition>(target).copied();
+    let target_pos_val = world
+        .get::<crate::layer1::map::GridPosition>(target)
+        .copied();
     let mut defense_bonus = 0.0;
     if let Some(target_pos) = target_pos_val {
-        let mut query = world.query::<(&crate::layer1::architecture::fossilized_fleet::FossilizedShip, &crate::layer1::map::GridPosition)>();
+        let mut query = world.query::<(
+            &crate::layer1::architecture::fossilized_fleet::FossilizedShip,
+            &crate::layer1::map::GridPosition,
+        )>();
         for (ship, pos) in query.iter(world) {
             if *pos == target_pos {
                 defense_bonus += ship.defense_bonus as f32;
