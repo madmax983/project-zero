@@ -21604,3 +21604,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you heavily inspect every trade ship, crippling your economy with delays, or turn a blind eye to the smuggling to keep the official trade flowing smoothly?
 
 ---
+## Atmospheric Empathy
+
+**Layer:** 1
+
+**Fantasy:** A colony so interconnected that the very air they breathe is shaped by their collective mood.
+
+**Mechanic:** Pops with extreme moods (e.g., ecstatic, furious, terrified) in enclosed domes slightly alter the chemical composition of trace gases in the air. These gases change the tint of the atmosphere and apply subtle mood modifiers to everyone breathing it.
+
+**Emergence:** A few terrified pops in a mine cause the air to turn a sickly green, spreading paranoia and panic throughout the entire workforce, leading to a spontaneous riot.
+
+**Tension:** Do you heavily ventilate domes to prevent mood cascades, losing efficiency and valuable gases, or risk society-wide emotional feedback loops?
+
+---
+
+## The Leviathan Pilgrimage
+
+**Layer:** Cross-layer
+
+**Fantasy:** Watching your most productive citizens abandon everything to join a massive, ancient ship passing through the system.
+
+**Mechanic:** A massive, slowly moving generation ship (Layer 2) enters the star system. It offers unique, highly valuable trade goods, but its broadcasted culture is so compelling that high-skill Pops in nearby Layer 1 colonies will abandon their jobs and try to board it.
+
+**Emergence:** You finally train a team of elite scientists, only to watch them steal a shuttle and join the Pilgrimage. In a desperate move, you order your fleet to attack the Leviathan to keep your pops, turning the pacifist monks into heavily armed martyrs.
+
+**Tension:** Do you open trade with the Leviathan and risk a brain drain, or blockade it to keep your citizens, losing out on unique technology and risking their ire?
+
+---
+
+## Orbital Decay Roulette
+
+**Layer:** 2 -> 1
+
+**Fantasy:** The terrifying consequence of neglecting your orbital infrastructure, as the sky literally falls.
+
+**Mechanic:** Failing to maintain Layer 2 orbital megastructures (like rings or drydocks) causes their components to slowly decay in orbit. Eventually, massive chunks of debris de-orbit and crash into the Layer 1 colonies below, causing devastating damage but leaving behind rare salvage.
+
+**Emergence:** You intentionally let an obsolete orbital station decay over an enemy's occupied colony, using gravity and neglect as an unprovoked weapon of mass destruction.
+
+**Tension:** Do you spend massive resources to safely decommission failing structures, or let them fall and hope they hit uninhabited areas (or enemies)?
+
+---
