@@ -155,6 +155,10 @@ pub fn spawn_initial_anomalies(world: &mut World, count: usize) {
 }
 
 #[allow(clippy::type_complexity)]
+/// ⚡ Bolt Optimization:
+/// Replaced `let mut scanners = Vec::new();` loop with an iterator chain.
+/// This prevents reallocation overhead and manually tracking `Vec` state,
+/// allowing `collect` to infer capacity directly from the query bounds.
 fn collect_scanners(world: &mut World) -> Vec<(Entity, Entity)> {
     let striking_factions: std::collections::HashSet<crate::layer1::factions::FactionId> = world
         .get_resource::<crate::layer1::factions::Factions>()
@@ -167,25 +171,22 @@ fn collect_scanners(world: &mut World) -> Vec<(Entity, Entity)> {
         })
         .unwrap_or_default();
 
-    let mut scanners = Vec::new();
     let mut query = world.query_filtered::<(
         Entity,
         &MovementTarget,
         Option<&crate::layer1::factions::FactionMember>,
     ), With<AtTarget>>();
 
-    for (entity, mt, faction_member) in query.iter(world) {
-        if mt.for_action == ActionType::Explore {
-            let is_striking = faction_member
+    query
+        .iter(world)
+        .filter(|(_, mt, _)| mt.for_action == ActionType::Explore)
+        .filter(|(_, _, faction_member)| {
+            !faction_member
                 .and_then(|m| m.faction_id)
-                .is_some_and(|fid| striking_factions.contains(&fid));
-
-            if !is_striking {
-                scanners.push((entity, mt.target_entity));
-            }
-        }
-    }
-    scanners
+                .is_some_and(|fid| striking_factions.contains(&fid))
+        })
+        .map(|(entity, mt, _)| (entity, mt.target_entity))
+        .collect()
 }
 
 fn complete_anomaly_scan(world: &mut World, pop_entity: Entity, anomaly_entity: Entity) {

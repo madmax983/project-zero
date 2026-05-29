@@ -10,3 +10,7 @@
 **Pre-allocate Vector Capacities in Hot Loops**
 **Learning:** By tracing the maximum number of elements appended to vectors during UI rendering, I found that `Vec::new()` caused multiple intermediate heap allocations per frame. Counting the maximum items added and using `Vec::with_capacity(n)` instead removes this overhead.
 **Action:** Always estimate the maximum length of vectors instantiated in tight loops and use `Vec::with_capacity(n)` to avoid reallocation overhead.
+
+## [Iterator Chaining for Performance]
+**Learning:** Replaced manual `Vec::new()` and iterative `.push()` inside `collect_scanners` in `src/layer1/anomalies/mod.rs` with a single `.collect()` pipeline using `.filter()` and `.map()`. While `filter()` obscures the exact capacity bound from `collect()`, the chained iterator is a zero-cost abstraction that completely eliminates the intermediate variable initialization and manual state management.
+**Action:** When finding imperative patterns pushing to manually constructed vectors in a loop, refactor them into functional iterator chains (`.iter().filter().map().collect()`) to improve conciseness and potentially leverage compiler optimizations.
