@@ -21728,3 +21728,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you spend vast sums outbidding rivals for useless data just to keep it secret, or ruthlessly hunt down the Pathfinders before they can broadcast their discoveries, angering the independent scout guilds?
 
 ---
+
+## The Architectural Panopticon
+
+**Layer:** 1
+
+**Fantasy:** Designing a colony where the layout itself passively enforces order and mood regulation.
+
+**Mechanic:** Pops walking through "high visibility" corridors or central plazas receive a slight compliance bonus but a minor stress penalty. Centralizing social structures and vital services forces natural chokepoints, increasing social interactions but making disease or panic spread faster.
+
+**Emergence:** A player designs a highly efficient star-shaped colony around a single plaza. It works perfectly until a single rioter reaches the center, instantly spreading their panic to the entire commuting workforce, causing a spontaneous colony-wide strike.
+
+**Tension:** Do you optimize for distributed, resilient, but hard-to-police nodes, or centralize everything for extreme efficiency at the cost of a single massive point of failure?
+
+---
+
+## Solar Flare Harvesting
+
+**Layer:** 2
+
+**Fantasy:** Riding the edge of destruction to supercharge your industrial capacity.
+
+**Mechanic:** Unstable stars periodically emit devastating solar flares. Players can build specialized orbital "harvesters" close to the star. During a flare, these harvesters absorb massive amounts of energy, converting it into high-tier resources, but risk catastrophic failure and destruction if the flare is too intense.
+
+**Emergence:** A desperate player moves their entire fleet behind a harvester during a massive flare, hoping the harvester will absorb the damage and supercharge their weapons. The harvester overloads and explodes, wiping out both their fleet and the enemy chasing them, turning the system into a radioactive graveyard.
+
+**Tension:** Do you play it safe and stay in stable systems, or push your colonies into volatile orbits to gain a massive, risky economic edge?
+
+---
+
+## The Nostalgia Deficit
+
+**Layer:** Cross-layer
+
+**Fantasy:** A generations-old empire that slowly forgets what it means to be alive, replacing genuine experience with manufactured simulations.
+
+**Mechanic:** As a Layer 1 colony ages, its Pops begin suffering from "Nostalgia Deficit," a slow decline in base mood. To combat this, they start importing "Authentic Experiences" (artifacts, unrefined goods) from newer, frontier colonies. Alternatively, players can build "Simulation Centers" to artificially satisfy the need, but this slowly drains the colony's creative output (science and culture).
+
+**Emergence:** Your core worlds become entirely dependent on a single, messy frontier mining world for their "authentic" goods. When that mining world rebels, your advanced core worlds suffer a massive, unprecedented depression because they can't handle reality anymore.
+
+**Tension:** Do you continually expand to feed the core worlds with fresh, raw experiences, or slowly turn your empire into a stagnant, perfectly simulated utopia?
+
+---
