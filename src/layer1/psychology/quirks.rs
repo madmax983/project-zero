@@ -63,6 +63,8 @@ pub enum PlanetaryTrait {
     ThinAtmosphere,
     /// Nullifies sound and suppresses fauna.
     SilentWorld,
+    /// Planet is tidally locked (permanent day/night side).
+    TidallyLocked,
 }
 
 impl PlanetaryTrait {
@@ -173,6 +175,7 @@ impl PlanetaryTrait {
             Self::DenseAtmosphere => "Dense Atmosphere",
             Self::ThinAtmosphere => "Thin Atmosphere",
             Self::SilentWorld => "Silent World",
+            Self::TidallyLocked => "Tidally Locked",
         }
     }
 }

@@ -18,6 +18,8 @@ pub mod light_pollution;
 pub mod orbital_crossfire;
 pub mod orbital_tether;
 pub mod photophobic;
+pub mod terminator_habitats;
+pub use terminator_habitats::*;
 pub mod seismic;
 pub mod terraforming;
 pub mod volatile;
