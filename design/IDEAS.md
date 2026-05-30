@@ -21770,3 +21770,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you continually expand to feed the core worlds with fresh, raw experiences, or slowly turn your empire into a stagnant, perfectly simulated utopia?
 
 ---
+## The Dark Forest Paranoia
+
+**Layer:** 3
+
+**Fantasy:** The chilling realization that a previously noisy galaxy has gone completely silent, and the terrifying implications of what silenced it.
+
+**Mechanic:** As you explore the galaxy, you discover automated, ancient sensor beacons broadcasting loud, chaotic signals. If a civilization destroys a beacon to "clean up" the noise, nearby star systems go into extreme stealth mode, shutting down hyperlane traffic and masking their energy signatures.
+
+**Emergence:** You destroy a harmless, annoying beacon in your territory to improve local sensor clarity. Instantly, three nearby alien civilizations you were trading with completely vanish from your maps, severing all trade routes and plunging your economy into chaos as they hunker down in terror of whatever they think you just summoned.
+
+**Tension:** Do you tolerate the deafening sensor noise of the ancient beacons, or risk triggering a massive, galaxy-wide diplomatic blackout by destroying them?
+
+---
+
+## Xenoflora Sabotage
+
+**Layer:** 1
+
+**Fantasy:** Using nature as a slow, insidious weapon against your rivals instead of deploying fleets.
+
+**Mechanic:** You can bio-engineer aggressive, specialized plant life and smuggle its seeds onto a rival's colony via civilian trade ships. The flora slowly overtakes agricultural districts, looking like a minor weed at first, but eventually blooming to release atmospheric toxins that only your Pops are immune to.
+
+**Emergence:** You successfully seed a rival's breadbasket world, expecting it to slowly starve them out. Instead, they discover the toxin has a side-effect that supercharges their military units' adrenaline. They immediately pivot the infected planet into an elite training ground and declare war on you with drug-crazed super-soldiers.
+
+**Tension:** Do you risk sparking an unpredictable ecological disaster to weaken an enemy without firing a shot, or stick to conventional, traceable warfare?
+
+---
+
+## Generation Ship Mutiny
+
+**Layer:** 2
+
+**Fantasy:** Launching a grand expedition across the void, only for the descendants of the original crew to forget their mission and turn their massive ship into a sovereign threat.
+
+**Mechanic:** You construct a massive, expensive Generation Ship to colonize a distant, highly valuable star system. The journey takes decades. Halfway there, if the ship's internal morale (Layer 1 mini-simulation) drops too low, the descendants overthrow the captain, declare independence, and become a nomadic pirate faction armed with top-tier colony-founding technology.
+
+**Emergence:** You spend half your empire's budget launching a Generation Ship to secure a crucial strategic chokepoint. 50 years later, the ship arrives, but its inhabitants have formed a fanatic isolationist cult. They instantly colonize the chokepoint and declare war on you using the very super-weapons you packed in their cargo hold.
+
+**Tension:** Do you tightly micromanage the internal politics of a slow-moving colony ship for decades, or spend those resources on faster, smaller expansion efforts that yield less reward?
+
+---
