@@ -133,8 +133,7 @@ pub struct Carrying {
 ///     println!("Not enough stone, my lord.");
 /// }
 /// ```
-#[derive(Resource, Debug, Clone, Copy)]
-#[derive(Component)]
+#[derive(Resource, Debug, Clone, Copy, Component)]
 pub struct ColonyResources {
     /// Total food available in the colony.
     pub food: f32,
