@@ -66,3 +66,6 @@
 ## 2024-05-25 - The Undocumented Anomalies
 **Confusion:** The anomalies modules (`anomalies/mod.rs`, `anomalies/echo/mod.rs`, `anomalies/benevolent_malfunctions.rs`, `anomalies/cryptid.rs`, `anomalies/void_sirens.rs`) were missing conceptual module-level documentation (`//!`) explaining what these strange occurrences are and how they interact with the colony.
 **Clarification:** Added conceptual `//!` module documentation to explain "The Unknown", "Echoes of the Past", "Benevolent Malfunctions", "Cryptids", and "The Void Sirens".
+## 2024-05-30 - Fix Unresolved Links in Rustdoc
+**Confusion:** I used `\`PlanetCurvature\`` instead of ``[`PlanetCurvature`]`` in documentation, resulting in unresolved link warnings from `cargo doc --no-deps`.
+**Clarification:** You should use `[`Type`]` directly for valid intra-doc links, rather than trying to escape backticks directly which `cargo doc` interprets as literal unresolved references.

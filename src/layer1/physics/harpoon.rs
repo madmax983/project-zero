@@ -1,3 +1,25 @@
+//! Orbital Harpoon Impacts and Resource Delivery
+//!
+//! This module handles the physical impact of orbital harpoons striking the planetary surface.
+//! These massive kinetic projectiles deliver bulk resources to the colony, but cause localized
+//! destruction (craters) and trigger seismic events upon impact.
+//!
+//! # Examples
+//!
+//! ```
+//! use bevy_ecs::prelude::*;
+//! use scale::layer1::physics::harpoon::HarpoonImpact;
+//! use scale::layer1::core::map::GridPosition;
+//! use scale::layer1::economy::resources::ResourceType;
+//!
+//! let mut world = World::new();
+//! // Spawn an incoming harpoon payload
+//! world.spawn(HarpoonImpact {
+//!     position: GridPosition { x: 10, y: 10 },
+//!     resource_type: ResourceType::Metal,
+//!     amount: 1000.0,
+//! });
+//! ```
 use crate::layer1::core::map::GridPosition;
 use crate::layer1::economy::resources::{ResourceItem, ResourceType};
 use crate::layer1::geology::GeologicalEvent;
