@@ -1,7 +1,7 @@
-use bevy::prelude::*;
 use crate::layer1::economy::resources::ColonyResources;
 use crate::layer3::diplomacy::proxy_wars::ThreatMap;
 use crate::layer3::diplomacy::succession::Faction;
+use bevy::prelude::*;
 
 #[derive(Component)]
 pub struct DisposalGate;
@@ -29,7 +29,9 @@ pub fn process_dump_waste(
                     let current_threat = threats.get_threat(faction_entity);
                     // Add threat based on amount dumped
                     let threat_increase = (event.amount * 0.1) as i32;
-                    threats.threats.insert(faction_entity, current_threat + threat_increase);
+                    threats
+                        .threats
+                        .insert(faction_entity, current_threat + threat_increase);
                 }
             }
         }
