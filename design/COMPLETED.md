@@ -660,3 +660,4 @@
 - [x] `1131` Signature Spoofing — `specs/1131-signature-spoofing.md` — completed 2026-05-29
 - [x] `1097` Planetary Spin-Up — `specs/1097-planetary-spin-up.md` — completed 2026-05-29
 - [x] `1099` Terminator Habitats — `specs/1099-terminator-habitats.md` — completed 2026-05-30
+- [x] `INT-1242` Integration: Planetary Curvature -> Turrets - completed 2024-05-30

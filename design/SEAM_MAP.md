@@ -1290,3 +1290,9 @@
 - **Systems connected:** `BureaucraticHold` -> `red_tape_chronicle_bridge` -> `AddChronicleEvent`
 - **Glue added:** Added `red_tape_chronicle_bridge` to `src/simulation.rs` to bridge `BureaucraticHold` to `AddChronicleEvent`.
 - **Tests:** `tests/integration/red_tape_bridge.rs`
+
+### INT-1242: Planetary Curvature -> Turrets
+- **Date:** 2024-05-30
+- **Systems connected:** `has_line_of_sight` -> `find_best_target` (Turret Combat)
+- **Glue added:** Updated `find_best_target` in `src/layer1/architecture/turret.rs` to query `has_line_of_sight` from `crate::layer1::physics::curvature`, ensuring turrets cannot target enemies beyond the horizon, but elevated turrets have an extended horizon line of sight.
+- **Tests:** `tests/planetary_curvature_bridge.rs` (2 tests)

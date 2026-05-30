@@ -28,6 +28,7 @@ mod tests {
         world.insert_resource(ColonyResources::default());
         world.insert_resource(TechState::default());
         world.insert_resource(SimulationTime::default());
+        world.insert_resource(scale::layer1::physics::curvature::PlanetCurvature { horizon_distance_base: 50.0 });
         world.insert_resource(scale::layer1::map::ScreenShake::default());
         world.insert_resource(scale::layer1::building::OccupiedTiles::default());
         world.insert_resource(scale::shared::log::MessageLog::default());
@@ -224,6 +225,7 @@ mod tests {
                     ..Default::default()
                 },
                 GridPosition { x: 2, y: 0 },
+                scale::layer1::physics::curvature::Elevation(0.0),
                 Health {
                     current: 100.0,
                     max: 100.0,

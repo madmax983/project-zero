@@ -9,6 +9,7 @@ use crate::layer1::health::Health;
 use crate::layer1::map::GridPosition;
 use crate::layer1::resources::{ColonyResources, ResourceItem, ResourceType};
 use bevy_ecs::prelude::*;
+use crate::layer1::physics::curvature::has_line_of_sight;
 
 /// Component defining a building as a turret.
 #[derive(Component, Debug, Clone)]
@@ -32,7 +33,7 @@ pub fn turret_fire_system(world: &mut World) {
         }
 
         if let Some((target_entity, target_pos)) =
-            find_best_target(&turret_data, &turret_pos, &targets)
+            find_best_target(world, turret_entity, &turret_data, &turret_pos, &targets)
         {
             fire_turret(
                 world,
@@ -104,6 +105,8 @@ fn can_turret_fire(turret_data: &Turret, world: &World) -> bool {
 }
 
 fn find_best_target(
+    world: &World,
+    turret_entity: Entity,
     turret_data: &Turret,
     turret_pos: &GridPosition,
     targets: &[(Entity, GridPosition)],
@@ -117,7 +120,7 @@ fn find_best_target(
             + (turret_pos.y - target_pos.y).pow(2) as f32)
             .sqrt();
 
-        if dist <= turret_data.attack.range && dist < min_dist {
+        if dist <= turret_data.attack.range && dist < min_dist && has_line_of_sight(world, turret_entity, *target_entity) {
             min_dist = dist;
             best_target = Some((*target_entity, *target_pos));
         }
@@ -202,6 +205,7 @@ mod tests {
         world.insert_resource(ColonyResources::default());
         world.insert_resource(crate::shared::time::SimulationTime::default());
         world.insert_resource(crate::layer1::map::ScreenShake::default());
+        world.insert_resource(crate::layer1::physics::curvature::PlanetCurvature { horizon_distance_base: 50.0 });
         world
     }
 
