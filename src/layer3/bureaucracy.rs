@@ -2,12 +2,17 @@ use crate::layer1::economy::resources::ColonyResources;
 use crate::layer1::entities::pop::Pop;
 use bevy_ecs::prelude::*;
 
+/// Handles automated reporting of the colony's population to the Layer 3 Empire AI.
+/// Will continue to report a positive population even if the colony dies out,
+/// creating a bureaucratic ghost town.
 #[derive(Component)]
 pub struct AutomatedReporting {
     pub is_active: bool,
     pub reported_population: usize, // The fake number sent to the capital
 }
 
+/// Represents the automated defense grid of a colony, which can remain active
+/// and protect the colony's hoarded resources even when the population is zero.
 #[derive(Component)]
 pub struct AutomatedDefenses {
     pub power_level: f32,
