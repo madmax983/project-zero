@@ -134,7 +134,6 @@ pub struct Carrying {
 /// }
 /// ```
 #[derive(Resource, Debug, Clone, Copy)]
-#[derive(Component)]
 pub struct ColonyResources {
     /// Total food available in the colony.
     pub food: f32,
