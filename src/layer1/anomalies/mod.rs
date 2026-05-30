@@ -71,10 +71,6 @@ pub fn spawn_initial_anomalies(world: &mut World, count: usize) {
         (grid.width, grid.height)
     };
 
-    // We can't access OccupiedTiles and world at the same time if we borrow world mutably.
-    // So we copy the occupied set.
-    let occupied = world.resource::<OccupiedTiles>().0.clone();
-
     // ⚡ Bolt Optimization:
     // We query `is_walkable` using a block-scoped immutable borrow of `TerrainGrid` directly inside the loop,
     // rather than cloning the entire `grid.tiles` array (which could be massive) upfront.
@@ -90,7 +86,14 @@ pub fn spawn_initial_anomalies(world: &mut World, count: usize) {
         let y = rng.gen_range(0..height);
 
         // Check occupation
-        if occupied.contains(&(x as i32, y as i32)) {
+        // ⚡ Bolt Optimization: Scope the resource access locally to avoid cloning `OccupiedTiles`.
+        // `OccupiedTiles` can grow very large in late-game. Cloning it causes a massive O(N) heap allocation and copy.
+        // By using a block-scoped immutable borrow directly here, we eliminate that allocation completely.
+        let is_occupied = {
+            let occupied = world.resource::<OccupiedTiles>();
+            occupied.0.contains(&(x as i32, y as i32))
+        };
+        if is_occupied {
             continue;
         }
 

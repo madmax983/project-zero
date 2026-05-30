@@ -89,10 +89,13 @@ pub struct PlanetarySpinUpPlugin;
 impl Plugin for PlanetarySpinUpPlugin {
     fn build(&self, app: &mut App) {
         app.add_event::<planetary_spin_up::PlanetaryTorqueEvent>()
-           .add_systems(Update, (
-               planetary_spin_up::apply_planetary_torque_system,
-               planetary_spin_up::calculate_effective_gravity_system,
-               planetary_spin_up::trigger_coriolis_weather_system,
-           ));
+            .add_systems(
+                Update,
+                (
+                    planetary_spin_up::apply_planetary_torque_system,
+                    planetary_spin_up::calculate_effective_gravity_system,
+                    planetary_spin_up::trigger_coriolis_weather_system,
+                ),
+            );
     }
 }

@@ -14,3 +14,7 @@
 ## [Iterator Chaining for Performance]
 **Learning:** Replaced manual `Vec::new()` and iterative `.push()` inside `collect_scanners` in `src/layer1/anomalies/mod.rs` with a single `.collect()` pipeline using `.filter()` and `.map()`. While `filter()` obscures the exact capacity bound from `collect()`, the chained iterator is a zero-cost abstraction that completely eliminates the intermediate variable initialization and manual state management.
 **Action:** When finding imperative patterns pushing to manually constructed vectors in a loop, refactor them into functional iterator chains (`.iter().filter().map().collect()`) to improve conciseness and potentially leverage compiler optimizations.
+
+**Remove Upfront Allocations of Large Resources**
+**Learning:** `OccupiedTiles` is a `HashSet` that can grow to thousands of items. Calling `world.resource::<OccupiedTiles>().0.clone()` just to check if a single tile is occupied causes a massive O(N) heap allocation inside a loop.
+**Action:** Use a local scope block `let is_occupied = { let r = world.resource::<...>(); r.contains(...) };` to immutably borrow the resource, perform the check, and drop the borrow before the loop mutates the `World`. This entirely eliminates the allocation and memory copy.
