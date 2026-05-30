@@ -10,7 +10,7 @@ pub struct PhantomSignal {
 #[derive(Component)]
 pub struct SensorProbe;
 
-#[derive(Event)]
+#[derive(Event, Default)]
 pub struct SignalRevealEvent {
     pub is_ambush: bool,
 }

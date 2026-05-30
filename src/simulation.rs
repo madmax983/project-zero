@@ -533,7 +533,7 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
     ));
     schedule.add_systems((
         crate::layer2::phantom_signal::process_phantom_signal_evasion_system,
-        crate::layer2::phantom_signal::apply_sensor_probes_system,
+        crate::layer2::phantom_signal::apply_sensor_probes_system, crate::layer2::phantom_signal::reveal_phantom_signal_nature_system,
         crate::layer2::mutiny::evaluate_fleet_mutiny,
         crate::layer2::integration::primitive_retaliation_chronicle_bridge,
         crate::layer2::integration::assign_sensors_to_player_fleets_system
@@ -1035,6 +1035,7 @@ mod tests {
         world.init_resource::<Events<crate::layer2::tourism::disaster_tourism::GriefTouristArrivalEvent>>();
         world.init_resource::<Events<crate::layer1::culture::celestial_cemeteries::ClearCemeteryEvent>>();
         world.init_resource::<Events<crate::layer2::celestial_library::LibraryDonationEvent>>();
+        world.init_resource::<Events<crate::layer2::phantom_signal::SignalRevealEvent>>();
         world.init_resource::<Events<crate::layer2::station::ShipConstructionCompletedEvent>>();
         world.init_resource::<Events<crate::layer1::agony_extract::HarvestAgonyExtractEvent>>();
         world.init_resource::<crate::layer1::agony_extract::AgonyExtractConfig>();

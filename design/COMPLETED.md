@@ -659,3 +659,4 @@
 
 - [x] `1131` Signature Spoofing — `specs/1131-signature-spoofing.md` — completed 2026-05-29
 - [x] `1097` Planetary Spin-Up — `specs/1097-planetary-spin-up.md` — completed 2026-05-29
+- [x] `554` The Phantom Signal — `specs/554-the-phantom-signal.md` — completed 2024-05-30

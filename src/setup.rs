@@ -425,6 +425,7 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     world.init_resource::<Events<crate::layer2::events::LaunchEvent>>();
     world.init_resource::<Events<crate::layer2::events::ShipDestroyedEvent>>();
     world.init_resource::<Events<crate::layer2::orbital_mirrors::MirrorFocusEvent>>();
+    world.init_resource::<Events<crate::layer2::phantom_signal::SignalRevealEvent>>();
 
     world.init_resource::<Events<crate::layer3::map::HyperlaneCollapseEvent>>();
     world.init_resource::<Events<crate::layer3::map::TradeRouteSeveredEvent>>();
