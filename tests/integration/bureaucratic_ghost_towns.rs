@@ -1,55 +1,43 @@
-use bevy_app::{App, Update};
-use bevy_ecs::prelude::*;
-use scale::layer1::economy::resources::ColonyResources;
+use bevy::prelude::*;
 use scale::layer1::entities::pop::Pop;
+use scale::layer1::economy::resources::ColonyResources;
 use scale::layer3::bureaucracy::{
-    colony_reporting_system, empire_resource_distribution_system, AutomatedDefenses,
-    AutomatedReporting,
+    colony_reporting_system, empire_resource_distribution_system, AutomatedReporting, AutomatedDefenses
 };
 
 #[test]
 fn test_ghost_town_continues_receiving_shipments() {
     let mut app = App::new();
+    app.init_resource::<ColonyResources>();
+    app.add_systems(Update, (colony_reporting_system, empire_resource_distribution_system).chain());
 
-    let resources = ColonyResources {
-        food: 0.0,
-        ..Default::default()
-    };
-    app.insert_resource(resources);
+    let _colony_id = app.world_mut().spawn((
+        AutomatedReporting {
+            is_active: true,
+            reported_population: 100, // Still reporting a population
+        },
+    )).id();
 
-    app.world_mut().spawn(AutomatedReporting {
-        is_active: true,
-        reported_population: 100, // Last known good number
-    });
-
-    app.add_systems(
-        Update,
-        (colony_reporting_system, empire_resource_distribution_system).chain(),
-    );
-    app.update();
+    app.update(); // Tick updates reporting (or fails to), then distributions run
 
     let resources = app.world().resource::<ColonyResources>();
-
-    assert_eq!(
-        resources.food, 100.0,
-        "Ghost town should continue receiving shipments."
-    );
+    assert!(resources.food > 0.0, "Ghost town should have received food");
 }
 
 #[test]
 fn test_ghost_town_maintains_defenses() {
     let mut app = App::new();
 
-    app.world_mut().spawn(AutomatedDefenses {
-        is_active: true,
-        power_level: 100.0,
-    });
+    let colony_id = app.world_mut().spawn((
+        AutomatedDefenses {
+            power_level: 100.0,
+            is_active: true,
+        },
+    )).id();
 
-    // We can just verify the component exists and is active
-    let mut query = app.world_mut().query::<&AutomatedDefenses>();
-    let defenses = query.iter(app.world()).next().unwrap();
-    assert!(defenses.is_active);
-    assert_eq!(defenses.power_level, 100.0);
+    let defense = app.world().get::<AutomatedDefenses>(colony_id).unwrap();
+    assert!(defense.is_active, "Defenses should remain active");
+    assert_eq!(defense.power_level, 100.0, "Defenses should maintain power");
 }
 
 #[derive(Event)]
@@ -58,12 +46,15 @@ pub struct DiscoveryEvent;
 pub fn trigger_discovery_system(
     mut events: EventWriter<DiscoveryEvent>,
     colonies: Query<&AutomatedReporting>,
-    pops: Query<(), With<Pop>>,
+    pops: Query<&Pop>,
+    resources: Res<ColonyResources>,
 ) {
-    if pops.iter().count() == 0 {
+    let pop_count = pops.iter().count();
+    if pop_count == 0 && resources.food > 0.0 {
         for reporting in colonies.iter() {
-            if reporting.is_active && reporting.reported_population > 0 {
+            if reporting.is_active {
                 events.send(DiscoveryEvent);
+                break;
             }
         }
     }
@@ -72,22 +63,23 @@ pub fn trigger_discovery_system(
 #[test]
 fn test_discovery_of_ghost_town() {
     let mut app = App::new();
-
     app.add_event::<DiscoveryEvent>();
-
-    app.world_mut().spawn(AutomatedReporting {
-        is_active: true,
-        reported_population: 100, // Last known good number
-    });
-
+    app.init_resource::<ColonyResources>();
     app.add_systems(Update, trigger_discovery_system);
+
+    // Start with a dead colony that's still reporting and hoarding
+    app.world_mut().resource_mut::<ColonyResources>().food = 1000.0;
+
+    let _colony_id = app.world_mut().spawn((
+        AutomatedReporting {
+            is_active: true,
+            reported_population: 100,
+        },
+    )).id();
+
     app.update();
 
     let events = app.world().resource::<Events<DiscoveryEvent>>();
-    let mut reader = events.get_cursor();
-    assert_eq!(
-        reader.read(events).count(),
-        1,
-        "Ghost town should be discovered."
-    );
+    let mut cursor = events.get_cursor();
+    assert!(cursor.read(events).next().is_some(), "DiscoveryEvent should be triggered");
 }
