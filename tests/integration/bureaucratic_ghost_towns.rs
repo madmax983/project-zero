@@ -76,5 +76,8 @@ fn test_discovery_of_ghost_town() {
     );
 
     let is_discovered = app.world().get::<GhostTownDiscovered>(colony_id).is_some();
-    assert!(is_discovered, "GhostTownDiscovered marker component should be added to the entity");
+    assert!(
+        is_discovered,
+        "GhostTownDiscovered marker component should be added to the entity"
+    );
 }
