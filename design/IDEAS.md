@@ -21686,3 +21686,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you manually micromanage every planet to prevent the algorithms from unionizing, or accept the bizarre legal hurdles of a super-efficient, but legally hostile, automated empire?
 
 ---
+
+## Cultural Echoes
+
+**Layer:** Cross-layer
+
+**Fantasy:** Relics of a fallen civilization subtly shape the development of the ones that come after.
+
+**Mechanic:** Ruins or artifacts discovered on a planetary surface (Layer 1) or drifting in a system (Layer 2) emit latent psionic or cultural frequencies. Pops living nearby slowly adopt traits, architectural styles, or technological preferences native to the extinct builders, without realizing it.
+
+**Emergence:** You settle a barren world with pacifist scientists, but within two generations, they start spontaneously constructing brutalist monuments and exhibiting intense xenophobia, matching the profile of the ancient warlords who once lived there.
+
+**Tension:** Do you exploit the powerful ancient ruins for their technological benefits, knowing it will fundamentally alter the culture and alignment of your colony, or destroy them to preserve your societal purity?
+
+---
+
+## The Rust Plague
+
+**Layer:** Cross-layer
+
+**Fantasy:** A slow-moving, unstoppable decay that forces you to cannibalize your own infrastructure to survive.
+
+**Mechanic:** A microscopic, semi-sentient nanite infection targets refined alloys. It starts in Layer 1, degrading buildings and tools. If a contaminated ship leaves the colony, it spreads to the fleet (Layer 2). The plague consumes alloys but produces a highly volatile, potent energy source as a byproduct.
+
+**Emergence:** A minor outbreak on an industrial world goes unnoticed until an infected transport docks with your flagship dreadnought. The dreadnought begins literally falling apart, but the resulting "Rust Energy" temporarily supercharges its weapons, allowing it to win an unwinnable battle before disintegrating completely.
+
+**Tension:** Do you strictly quarantine and purge infected sectors, crippling your economy, or carefully manage the plague, using infected infrastructure as disposable, high-yield assets before they collapse?
+
+---
+
+## Mercenary Pathfinders
+
+**Layer:** 2
+
+**Fantasy:** Unpredictable, independent explorers discovering hyperspace routes that you must then fight to control.
+
+**Mechanic:** Neutral AI scout ships independently map new hyperlanes or system anomalies. They sell this data to the highest bidder—which could be you, a rival empire, or pirate factions. Once a route is sold, it becomes "known," altering the strategic map.
+
+**Emergence:** You carefully fortify a chokepoint system to defend your core worlds. A Mercenary Pathfinder discovers a hidden, unstable hyperlane bypassing your defenses entirely and sells it to your enemy, instantly turning your impregnable fortress into an obsolete trap.
+
+**Tension:** Do you spend vast sums outbidding rivals for useless data just to keep it secret, or ruthlessly hunt down the Pathfinders before they can broadcast their discoveries, angering the independent scout guilds?
+
+---
