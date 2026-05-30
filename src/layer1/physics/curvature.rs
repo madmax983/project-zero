@@ -1,3 +1,31 @@
+//! Planetary Curvature and Line of Sight
+//!
+//! This module calculates effective line-of-sight between entities based on the
+//! [`PlanetCurvature`] resource and entity [`Elevation`]. It prevents units from shooting
+//! or seeing across the entire map, creating realistic horizons.
+//!
+//! # Examples
+//!
+//! ```
+//! use bevy_ecs::prelude::*;
+//! use scale::layer1::physics::curvature::{PlanetCurvature, Elevation, has_line_of_sight};
+//! use scale::layer1::core::map::GridPosition;
+//!
+//! let mut world = World::new();
+//! world.insert_resource(PlanetCurvature { horizon_distance_base: 10.0 });
+//!
+//! let observer = world.spawn((
+//!     GridPosition { x: 0, y: 0 },
+//!     Elevation(0.0),
+//! )).id();
+//!
+//! let target = world.spawn((
+//!     GridPosition { x: 5, y: 0 },
+//!     Elevation(0.0),
+//! )).id();
+//!
+//! assert!(has_line_of_sight(&world, observer, target));
+//! ```
 use bevy::prelude::*;
 
 #[derive(Resource)]
