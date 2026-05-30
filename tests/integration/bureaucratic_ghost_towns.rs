@@ -1,10 +1,12 @@
 use bevy::prelude::*;
+use scale::layer1::core::chronicle::AddChronicleEvent;
 use scale::layer1::economy::resources::ColonyResources;
-use scale::layer1::entities::pop::Pop;
+
 use scale::layer3::bureaucracy::{
     colony_reporting_system, empire_resource_distribution_system, AutomatedDefenses,
     AutomatedReporting,
 };
+use scale::layer3::integration::{discover_ghost_town_system, GhostTownDiscovered};
 
 #[test]
 fn test_ghost_town_continues_receiving_shipments() {
@@ -46,37 +48,17 @@ fn test_ghost_town_maintains_defenses() {
     assert_eq!(defense.power_level, 100.0, "Defenses should maintain power");
 }
 
-#[derive(Event)]
-pub struct DiscoveryEvent;
-
-pub fn trigger_discovery_system(
-    mut events: EventWriter<DiscoveryEvent>,
-    colonies: Query<&AutomatedReporting>,
-    pops: Query<&Pop>,
-    resources: Res<ColonyResources>,
-) {
-    let pop_count = pops.iter().count();
-    if pop_count == 0 && resources.food > 0.0 {
-        for reporting in colonies.iter() {
-            if reporting.is_active {
-                events.send(DiscoveryEvent);
-                break;
-            }
-        }
-    }
-}
-
 #[test]
 fn test_discovery_of_ghost_town() {
     let mut app = App::new();
-    app.add_event::<DiscoveryEvent>();
+    app.add_event::<AddChronicleEvent>();
     app.init_resource::<ColonyResources>();
-    app.add_systems(Update, trigger_discovery_system);
+    app.add_systems(Update, discover_ghost_town_system);
 
     // Start with a dead colony that's still reporting and hoarding
     app.world_mut().resource_mut::<ColonyResources>().food = 1000.0;
 
-    let _colony_id = app
+    let colony_id = app
         .world_mut()
         .spawn((AutomatedReporting {
             is_active: true,
@@ -86,10 +68,13 @@ fn test_discovery_of_ghost_town() {
 
     app.update();
 
-    let events = app.world().resource::<Events<DiscoveryEvent>>();
+    let events = app.world().resource::<Events<AddChronicleEvent>>();
     let mut cursor = events.get_cursor();
     assert!(
         cursor.read(events).next().is_some(),
-        "DiscoveryEvent should be triggered"
+        "AddChronicleEvent should be triggered"
     );
+
+    let is_discovered = app.world().get::<GhostTownDiscovered>(colony_id).is_some();
+    assert!(is_discovered, "GhostTownDiscovered marker component should be added to the entity");
 }
