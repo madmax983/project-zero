@@ -1,7 +1,3 @@
-1. **Create `src/layer2/leviathans.rs`**
-   - I will use `run_in_bash_session` to write `src/layer2/leviathans.rs` with the `cat << 'EOF' > src/layer2/leviathans.rs` command.
-   - The literal code block will be:
-```rust
 use bevy_ecs::prelude::*;
 use crate::layer1::economy::resources::ColonyResources;
 
@@ -15,8 +11,8 @@ pub struct Leviathan {
 pub struct Tamed {}
 
 pub fn process_leviathan_hunger(
-    mut commands: Commands,
-    mut colonies: Query<&mut ColonyResources>,
+    mut commands: bevy_ecs::system::Commands,
+    mut colonies: bevy_ecs::system::Query<&mut ColonyResources>,
     mut leviathans: Query<(Entity, &mut Leviathan, Option<&Tamed>)>,
 ) {
     for (entity, mut leviathan, tamed_opt) in leviathans.iter_mut() {

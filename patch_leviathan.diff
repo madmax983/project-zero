@@ -1,0 +1,12 @@
+--- src/layer2/leviathans.rs
++++ src/layer2/leviathans.rs
+@@ -10,7 +10,7 @@
+ }
+
+ pub fn process_leviathan_hunger(
+-    mut commands: Commands,
+-    mut colonies: Query<&mut ColonyResources>,
++    mut commands: bevy_ecs::system::Commands,
++    mut colonies: bevy_ecs::system::Query<&mut ColonyResources>,
+     mut leviathans: Query<(Entity, &mut Leviathan, Option<&Tamed>)>,
+ ) {
