@@ -70,8 +70,10 @@ fn main() {
     context.insert("CIV_EPITHET", "The First Ones");
 
     // 3. Generate Story
-    let story = generator.generate("CIVILIZATION_RISE", &context).unwrap();
-    println!("{}", story);
+    match generator.generate("CIVILIZATION_RISE", &context) {
+        Ok(story) => println!("{}", story),
+        Err(e) => println!("{}", e), // Prints a helpful missing context message
+    }
 }
 ```
 

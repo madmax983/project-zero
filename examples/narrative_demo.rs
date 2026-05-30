@@ -22,7 +22,7 @@ use crossterm::{
     terminal::{disable_raw_mode, enable_raw_mode, EnterAlternateScreen, LeaveAlternateScreen},
 };
 use ratatui::{prelude::*, widgets::*};
-use scale::shared::narrative::{NarrativeContext, NarrativeGenerator, NarrativeSegment};
+use scale::prelude::*;
 use std::io;
 use std::time::Duration;
 
