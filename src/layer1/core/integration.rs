@@ -496,6 +496,7 @@ pub fn medical_debt_bridge_system(
 ///
 /// If a tile is a vacuum (low pressure), any pollution should be rapidly vented/cleared.
 pub fn vacuum_clears_pollution_system(
+    mut trace_gas: ResMut<crate::layer1::nature::atmospheric_empathy::TraceGasGrid>,
     mut atmosphere: ResMut<crate::layer1::atmosphere::AtmosphereGrid>,
     pressure: Res<crate::layer1::pressure::PressureGrid>,
 ) {
@@ -503,7 +504,8 @@ pub fn vacuum_clears_pollution_system(
     const VACUUM_THRESHOLD: f32 = 0.1;
 
     // If dimensions match, proceed
-    if atmosphere.width != pressure.width || atmosphere.height != pressure.height {
+    if atmosphere.width != pressure.width || atmosphere.height != pressure.height || trace_gas.width != pressure.width || trace_gas.height != pressure.height {
+
         return;
     }
 
@@ -511,6 +513,10 @@ pub fn vacuum_clears_pollution_system(
         // If pressure is near vacuum, clear pollution
         if pressure.values[i] < VACUUM_THRESHOLD {
             atmosphere.values[i] = 0.0;
+            trace_gas.euphoric[i] = 0.0;
+            trace_gas.fear[i] = 0.0;
+            trace_gas.rage[i] = 0.0;
+
         }
     }
 }
