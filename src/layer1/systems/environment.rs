@@ -157,7 +157,6 @@ pub fn register(schedule: &mut Schedule) {
                 crate::layer1::environment::terminator_habitats::building_temperature_damage_system,
             )
                 .chain(),
-
         )
             .in_set(Layer1SystemSet::Environment),
     );
@@ -218,6 +217,11 @@ pub fn register(schedule: &mut Schedule) {
                 .after(crate::layer1::atmosphere::update_weather_diffusion_system),
             crate::layer1::atmosphere::simulate_diffusion_system
                 .after(crate::layer1::environment::terraforming::apply_planetary_effects_system),
+            (
+                crate::layer1::nature::atmospheric_empathy::emit_trace_gases,
+                crate::layer1::nature::atmospheric_empathy::apply_atmospheric_empathy,
+            )
+                .chain(),
             crate::layer1::logistics::orbital_drop::process_orbital_drops,
             crate::layer1::nanite_storms::apply_nanite_storm_effects,
         )

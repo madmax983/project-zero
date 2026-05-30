@@ -691,7 +691,6 @@ See `design/IDEAS.md` for unspecced concepts.
 
 - [ ] `1096` Celestial Cemeteries — `specs/1096-celestial-cemeteries.md` — claimed 2024-05-30
 
-- [ ] `1099` Terminator Habitats — `specs/1099-terminator-habitats.md`
 - [ ] `1103` Prohibition & Contraband — `specs/1103-prohibition-and-contraband.md`
 - [ ] `1109` Wormhole Dumping — `specs/1109-wormhole-dumping.md`
 - [ ] `1110` Dead Internet — `specs/1110-dead-internet.md`
@@ -833,4 +832,3 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1272` The Phantom Limb of Logistics — `specs/1272-the-phantom-limb-of-logistics.md`
 - [ ] `1273` Gravity Debt — `specs/1273-gravity-debt.md`
 - [ ] `1274` Memory Smugglers — `specs/1274-memory-smugglers.md`
-- [ ] `1275` Atmospheric Empathy — `specs/1275-atmospheric-empathy.md`

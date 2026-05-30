@@ -57,10 +57,10 @@ pub fn apply_libration_wobble_system(
 }
 
 #[derive(Component)]
-pub struct Building;
+pub struct TerminatorBuilding;
 
 #[derive(Component)]
-pub struct Health {
+pub struct TerminatorHealth {
     pub current: f32,
     pub max: f32,
 }
@@ -75,7 +75,10 @@ pub struct LocatedOn(pub Entity);
 
 pub fn building_temperature_damage_system(
     tile_query: Query<&Temperature, With<Tile>>,
-    mut building_query: Query<(&mut Health, &MaxTemperatureAllowed, &LocatedOn), With<Building>>,
+    mut building_query: Query<
+        (&mut TerminatorHealth, &MaxTemperatureAllowed, &LocatedOn),
+        With<TerminatorBuilding>,
+    >,
 ) {
     for (mut health, max_temp, location) in building_query.iter_mut() {
         if let Ok(tile_temp) = tile_query.get(location.0) {
@@ -168,8 +171,8 @@ mod tests {
         let building = app
             .world_mut()
             .spawn((
-                Building,
-                Health {
+                TerminatorBuilding,
+                TerminatorHealth {
                     current: 100.0,
                     max: 100.0,
                 },
@@ -182,7 +185,11 @@ mod tests {
 
         // Assert: Building takes damage due to overheating
         assert!(
-            app.world().get::<Health>(building).unwrap().current < 100.0,
+            app.world()
+                .get::<TerminatorHealth>(building)
+                .unwrap()
+                .current
+                < 100.0,
             "Building should melt when too hot"
         );
     }

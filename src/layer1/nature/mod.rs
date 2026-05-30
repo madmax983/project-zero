@@ -7,7 +7,9 @@ pub mod atmosphere;
 mod atmosphere_corrosion_tests;
 #[cfg(test)]
 mod atmosphere_tides_tests;
+pub mod atmospheric_empathy;
 pub mod biosphere_empathy;
+pub use atmospheric_empathy::*;
 pub mod ecology;
 #[cfg(test)]
 mod ecology_keystone_tests;

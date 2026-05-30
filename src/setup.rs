@@ -308,6 +308,7 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     world.init_resource::<bevy_ecs::event::Events<crate::layer1::social::pop_relationships::ShiftEndEvent>>();
     world.insert_resource(crate::layer1::social::empty_room::ActiveSanctuaries::default());
     world.insert_resource(AtmosphereGrid::new(80, 50));
+    world.insert_resource(crate::layer1::nature::atmospheric_empathy::TraceGasGrid::new(80, 50));
     world.insert_resource(crate::layer1::wind::WindGrid::new(80, 50));
     world.insert_resource(crate::layer1::wind::GlobalWind::default());
     world.insert_resource(crate::layer1::atmosphere::BaseGlobalWind::default());

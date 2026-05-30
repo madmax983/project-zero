@@ -663,3 +663,4 @@
 - [x] `1101` Bureaucratic Ghost Towns — `specs/1101-bureaucratic-ghost-towns.md` — completed 2026-05-30
 - [x] `INT-1099` Integration: Terminator Habitats -> SimulationSchedule — completed 2026-05-30
 - [x] `INT-1097` Integration: Planetary Spin-Up -> SimulationSchedule — completed 2026-05-30
+- [x] `1275` Atmospheric Empathy — `specs/1275-atmospheric-empathy.md` — completed 2026-05-30
