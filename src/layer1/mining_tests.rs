@@ -37,7 +37,10 @@ mod tests {
                         current: 9.0,
                         max: 10.0,
                     },
-                    GridPosition { x: i % 100, y: i / 100 },
+                    GridPosition {
+                        x: i % 100,
+                        y: i / 100,
+                    },
                 ))
                 .id();
 
@@ -92,7 +95,10 @@ mod tests {
                         current: 10.0,
                         max: 10.0,
                     }, // Instant complete
-                    GridPosition { x: i % 100, y: i / 100 },
+                    GridPosition {
+                        x: i % 100,
+                        y: i / 100,
+                    },
                 ))
                 .id();
 
