@@ -666,3 +666,4 @@
 - [x] `682` Symbiotic Leviathans — `specs/682-symbiotic-leviathans.md` — completed $(date +%Y-%m-%d)
 - [x] `682` Symbiotic Leviathans — `specs/682-symbiotic-leviathans.md` — completed $(date +%Y-%m-%d)
 - [x] `1103` Prohibition & Contraband — `specs/1103-prohibition-and-contraband.md` — completed 2026-05-30
+- [x] `1082` Resonant Architecture — `specs/1082-resonant-architecture.md` — completed 2026-05-30
