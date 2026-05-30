@@ -21811,3 +21811,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you tightly micromanage the internal politics of a slow-moving colony ship for decades, or spend those resources on faster, smaller expansion efforts that yield less reward?
 
 ---
+
+## The Ancestral Return
+
+**Layer:** 2 -> 1
+
+**Fantasy:** The ghosts of your empire's past arrive at your doorstep, expecting a home that no longer exists.
+
+**Mechanic:** A generation ship launched by your civilization centuries ago (perhaps before FTL was discovered, or when you were just a struggling Layer 1 colony) finally arrives at its destination—which happens to be one of your now heavily developed, modern core worlds. The ship's inhabitants still speak an archaic dialect, follow obsolete laws, and expect to be treated as founders, completely unaware of the modern empire's politics or technology.
+
+**Emergence:** Your modern FTL fleet arrives at a strategic chokepoint to fortify it, only to find one of your own 500-year-old sub-light generation ships already there. The descendants on board don't recognize your modern empire and refuse to integrate, forcing you to conquer or negotiate with your own ancestors.
+
+**Tension:** Do you violently conquer your own ancestors to secure the system, or spend decades and massive resources to peacefully assimilate a population whose culture and technology are fundamentally incompatible with your modern empire?
+
+---
+
+## The Symbiotic Archive
+
+**Layer:** 1 -> Cross-layer
+
+**Fantasy:** Hiding your most valuable secrets in the DNA of local wildlife to keep them safe from digital thieves.
+
+**Mechanic:** Instead of building easily targeted orbital data centers, you can encode late-game research data or cultural archives into the genetics of a specific species of Layer 1 local wildlife. The data is completely immune to cyber-attacks and orbital bombardment, but the wildlife must be protected from predators, starvation, and most importantly, rival poachers who want to "steal" your technology by hunting your animals.
+
+**Emergence:** You encode your civilization's ultimate weapon schematic into a herd of grox. During a severe famine, your starving pops inadvertently eat the herd, destroying centuries of research. Alternatively, a rival empire launches a massive ground invasion not to conquer your cities, but to kidnap your glowing, data-rich space-cows.
+
+**Tension:** Do you rely on vulnerable digital storage, or trust your empire's greatest secrets to a fragile, biological ecosystem that requires constant, physical protection?
+
+---
+
+## The Petrification Protocol
+
+**Layer:** 1
+
+**Fantasy:** Preserving your people through a catastrophic event by turning them into living stone, with the hope that someone, someday, will wake them up.
+
+**Mechanic:** A desperate, last-resort planetary edict. When facing an unstoppable disaster (like an incoming Leviathan or total atmospheric collapse), you can activate the Petrification Protocol. It instantly kills the colony's economy, but converts all Pops into highly durable "Data Crystals" containing their memories and genetic code. These crystals survive almost any planetary destruction, remaining dormant until a future colony (yours or a rival's) discovers them and has the technology to "un-petrify" them.
+
+**Emergence:** You play a long game, petrifying your capital right before it is destroyed by a Devouring Swarm. Centuries later, playing as a completely different splinter faction, you recolonize the ruined capital, un-petrify the ancestors, and suddenly gain access to lost late-game technologies and Pops with deep historical grudges against the Swarm.
+
+**Tension:** Do you fight a losing battle to the bitter end, risking total annihilation, or willingly end your colony's existence to leave a permanent, indestructible legacy for the future?
+
+---
