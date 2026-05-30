@@ -94,35 +94,58 @@ mod tests {
     fn test_terminator_line_determines_habitable_temperature() {
         let mut app = App::new();
         app.add_plugins(MinimalPlugins)
-           .add_systems(Update, calculate_tile_temperatures_system);
+            .add_systems(Update, calculate_tile_temperatures_system);
 
         // Arrange: A planet where the terminator line is currently at X=50
-        app.world_mut().insert_resource(TerminatorLine { x_coordinate: 50.0 });
+        app.world_mut()
+            .insert_resource(TerminatorLine { x_coordinate: 50.0 });
 
         // Day side (X < 50)
-        let day_tile = app.world_mut().spawn((Tile { x: 20.0, y: 10.0 }, Temperature { degrees: 0.0 })).id();
+        let day_tile = app
+            .world_mut()
+            .spawn((Tile { x: 20.0, y: 10.0 }, Temperature { degrees: 0.0 }))
+            .id();
         // Night side (X > 50)
-        let night_tile = app.world_mut().spawn((Tile { x: 80.0, y: 10.0 }, Temperature { degrees: 0.0 })).id();
+        let night_tile = app
+            .world_mut()
+            .spawn((Tile { x: 80.0, y: 10.0 }, Temperature { degrees: 0.0 }))
+            .id();
         // Terminator (X = 50)
-        let term_tile = app.world_mut().spawn((Tile { x: 50.0, y: 10.0 }, Temperature { degrees: 0.0 })).id();
+        let term_tile = app
+            .world_mut()
+            .spawn((Tile { x: 50.0, y: 10.0 }, Temperature { degrees: 0.0 }))
+            .id();
 
         app.update();
 
         // Assert
-        assert!(app.world().get::<Temperature>(day_tile).unwrap().degrees > 100.0, "Day side should be boiling");
-        assert!(app.world().get::<Temperature>(night_tile).unwrap().degrees < -100.0, "Night side should be freezing");
+        assert!(
+            app.world().get::<Temperature>(day_tile).unwrap().degrees > 100.0,
+            "Day side should be boiling"
+        );
+        assert!(
+            app.world().get::<Temperature>(night_tile).unwrap().degrees < -100.0,
+            "Night side should be freezing"
+        );
 
         let term_temp = app.world().get::<Temperature>(term_tile).unwrap().degrees;
-        assert!(term_temp > 10.0 && term_temp < 40.0, "Terminator should be habitable");
+        assert!(
+            term_temp > 10.0 && term_temp < 40.0,
+            "Terminator should be habitable"
+        );
     }
 
     #[test]
     fn test_libration_shifts_terminator_line() {
         let mut app = App::new();
         app.add_plugins(MinimalPlugins)
-           .insert_resource(TerminatorLine { x_coordinate: 50.0 })
-           .insert_resource(LibrationCycle { current_tick: 0.0, amplitude: 5.0, speed: 0.1 })
-           .add_systems(Update, apply_libration_wobble_system);
+            .insert_resource(TerminatorLine { x_coordinate: 50.0 })
+            .insert_resource(LibrationCycle {
+                current_tick: 0.0,
+                amplitude: 5.0,
+                speed: 0.1,
+            })
+            .add_systems(Update, apply_libration_wobble_system);
 
         app.update(); // Tick 1
 
@@ -135,20 +158,32 @@ mod tests {
     fn test_buildings_melt_when_terminator_shifts_away() {
         let mut app = App::new();
         app.add_plugins(MinimalPlugins)
-           .add_systems(Update, building_temperature_damage_system);
+            .add_systems(Update, building_temperature_damage_system);
 
         // Arrange: A building on a tile that just became Day Side (very hot)
-        let tile = app.world_mut().spawn((Tile { x: 45.0, y: 10.0 }, Temperature { degrees: 150.0 })).id();
-        let building = app.world_mut().spawn((
-            Building,
-            Health { current: 100.0, max: 100.0 },
-            MaxTemperatureAllowed { degrees: 80.0 },
-            LocatedOn(tile),
-        )).id();
+        let tile = app
+            .world_mut()
+            .spawn((Tile { x: 45.0, y: 10.0 }, Temperature { degrees: 150.0 }))
+            .id();
+        let building = app
+            .world_mut()
+            .spawn((
+                Building,
+                Health {
+                    current: 100.0,
+                    max: 100.0,
+                },
+                MaxTemperatureAllowed { degrees: 80.0 },
+                LocatedOn(tile),
+            ))
+            .id();
 
         app.update();
 
         // Assert: Building takes damage due to overheating
-        assert!(app.world().get::<Health>(building).unwrap().current < 100.0, "Building should melt when too hot");
+        assert!(
+            app.world().get::<Health>(building).unwrap().current < 100.0,
+            "Building should melt when too hot"
+        );
     }
 }
