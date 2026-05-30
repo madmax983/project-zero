@@ -8524,3 +8524,49 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 **Patterns:**
 - "[YEAR]: The orders arrived at [COLONY], but it was too late. The result is [DELAY_CONSEQUENCE]."
 - "They followed our delayed commands. [COLONY] now suffers [DELAY_CONSEQUENCE]. [YEAR]."
+
+## Signature Spoofing Templates (Spec 1131)
+
+### Template: SIGNATURE_SPOOFED
+**Generates:** Play event
+**Slots:** [FLEET], [YEAR], [SPOOFED_SIGNATURE], [TARGET_SYSTEM]
+
+**Patterns:**
+- "[YEAR]: [FLEET] broadcasts a [SPOOFED_SIGNATURE] near [TARGET_SYSTEM]. The enemy hesitates."
+- "They mask their numbers. [FLEET] appears as a [SPOOFED_SIGNATURE]. [YEAR]."
+- "A false shadow falls over [TARGET_SYSTEM]. [FLEET] projects a [SPOOFED_SIGNATURE]."
+
+## Planetary Spin-Up Templates (Spec 1097)
+
+### Template: PLANETARY_SPIN_UP
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [SPIN_ENGINE], [WEATHER_CHAOS]?
+
+**Patterns:**
+- "[YEAR]: The [SPIN_ENGINE] ignite on [COLONY]. The days shorten. The ground trembles."
+- "We force the world to turn. [SPIN_ENGINE] applied torque to [COLONY]. [YEAR]."
+- "[COLONY] spins faster. [YEAR]. Driven by [SPIN_ENGINE]."
+[If WEATHER_CHAOS:]
+- "The rotation accelerates. [WEATHER_CHAOS] ravages [COLONY] as the atmosphere rebels. [YEAR]."
+
+## Terminator Habitats Templates (Spec 1099)
+
+### Template: TERMINATOR_MIGRATION
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [MOBILE_HABITAT], [TERMINATOR_THREAT]
+
+**Patterns:**
+- "[YEAR]: The libration shifts. The [MOBILE_HABITAT] of [COLONY] move to escape [TERMINATOR_THREAT]."
+- "The twilight moves, and so must we. [COLONY]'s [MOBILE_HABITAT] march away from [TERMINATOR_THREAT]."
+- "[COLONY] cannot stand still. [TERMINATOR_THREAT] approaches; the [MOBILE_HABITAT] roll on. [YEAR]."
+
+## Bureaucratic Ghost Towns Templates (Spec 1101)
+
+### Template: GHOST_TOWN_SHIPMENT
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [RESOURCE], [DURATION_PHRASE]
+
+**Patterns:**
+- "[YEAR]: The freighters still drop [RESOURCE] on [COLONY]. There is no one alive to claim it."
+- "Automated ledgers know no death. [COLONY] receives [RESOURCE], [DURATION_PHRASE] after the last soul perished."
+- "A blind empire feeds a corpse. [RESOURCE] arrives at [COLONY]. The ruins overflow. [YEAR]."
