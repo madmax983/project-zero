@@ -1,0 +1,13 @@
+--- src/layer3/diplomacy/wormhole_dumping.rs
++++ src/layer3/diplomacy/wormhole_dumping.rs
+@@ -16,8 +16,8 @@
+
+ pub fn process_dump_waste(
+     mut events: EventReader<DumpWasteEvent>,
+-    mut resources: Option<ResMut<ColonyResources>>,
+-    mut threat_map: Option<ResMut<ThreatMap>>,
++    resources: Option<ResMut<ColonyResources>>,
++    threat_map: Option<ResMut<ThreatMap>>,
+     gates: Query<&DisposalGate>,
+     factions: Query<Entity, With<Faction>>,
+ ) {
