@@ -70,3 +70,5 @@ pub mod existential_audit_bridge;
 pub mod quantum_famine_bridge;
 pub mod celestial_library_bridge;
 pub mod fossilized_fleet_defense_bridge;
+pub mod planetary_spin_up_bridge;
+pub mod terminator_habitats_bridge;

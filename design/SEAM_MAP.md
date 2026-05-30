@@ -1290,3 +1290,15 @@
 - **Systems connected:** `BureaucraticHold` -> `red_tape_chronicle_bridge` -> `AddChronicleEvent`
 - **Glue added:** Added `red_tape_chronicle_bridge` to `src/simulation.rs` to bridge `BureaucraticHold` to `AddChronicleEvent`.
 - **Tests:** `tests/integration/red_tape_bridge.rs`
+
+### INT-1099: Terminator Habitats -> SimulationSchedule
+- **Date:** 2026-05-30
+- **Systems connected:** `calculate_tile_temperatures_system`, `apply_libration_wobble_system`, `building_temperature_damage_system` -> `SimulationSchedule`
+- **Glue added:** Registered systems in `src/layer1/systems/environment.rs`.
+- **Tests:** `tests/integration/terminator_habitats_bridge.rs`
+
+### INT-1097: Planetary Spin-Up -> SimulationSchedule
+- **Date:** 2026-05-30
+- **Systems connected:** `apply_planetary_torque_system`, `calculate_effective_gravity_system`, `trigger_coriolis_weather_system` -> `SimulationSchedule`
+- **Glue added:** Registered systems and `PlanetaryTorqueEvent` in `src/simulation.rs`.
+- **Tests:** `tests/integration/planetary_spin_up_bridge.rs`
