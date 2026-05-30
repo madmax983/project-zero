@@ -834,3 +834,4 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1272` The Phantom Limb of Logistics — `specs/1272-the-phantom-limb-of-logistics.md`
 - [ ] `1273` Gravity Debt — `specs/1273-gravity-debt.md`
 - [ ] `1274` Memory Smugglers — `specs/1274-memory-smugglers.md`
+- [ ] `1275` Atmospheric Empathy — `specs/1275-atmospheric-empathy.md`
