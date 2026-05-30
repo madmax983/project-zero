@@ -668,6 +668,7 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
             crate::layer3::diplomacy::cultural_ransom::apply_hostage_penalties_system,
             crate::layer3::diplomacy::cultural_ransom::handle_ransom_negotiation_system,
             crate::layer3::diplomacy::red_tape_defense::process_bureaucracy_delays,
+            crate::layer3::integration::red_tape_chronicle_bridge,
             crate::layer3::integration::dynastic_succession_chronicle_bridge,
             crate::layer3::integration::dynastic_crisis_chronicle_bridge,
             crate::layer3::diplomacy::fading_homeworld::update_core_world_decay_system,
@@ -799,6 +800,7 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
         crate::layer1::culture::gastronomers::spawn_gastronomer_faction_system,
         crate::layer1::culture::gastronomers::apply_culinary_singularity_buff_system,
         crate::layer1::core::integration::gastronomer_chronicle_bridge,
+        crate::layer1::core::integration::visitor_chronicle_bridge,
         crate::layer1::core::integration::apex_meat_harvest_bridge_system,
         crate::layer1::core::integration::apex_meat_distribution_system
             .before(crate::layer1::agriculture::farm::consume_food_system),

@@ -1278,3 +1278,15 @@
 - **Glue added:** Added `celestial_cemeteries_trade_bridge_system` in `src/layer2/integration.rs` to attach `LaunchSequence` to `TradeManifest`. Modified `process_launch_system` in `src/layer2/trade/escape_velocity.rs` to consume launch risk.
 - **Schedule:** Registered the systems in `src/simulation.rs`.
 - **Tests:** `tests/integration/celestial_cemeteries_bridge.rs`
+
+### INT-1247: The Visitor -> Chronicle
+- **Date:** 2026-05-30
+- **Systems connected:** `TheVisitor` -> `visitor_chronicle_bridge` -> `AddChronicleEvent`
+- **Glue added:** Added `visitor_chronicle_bridge` to `src/simulation.rs` to bridge `TheVisitor` to `AddChronicleEvent`.
+- **Tests:** `tests/integration/visitor_chronicle_bridge.rs`
+
+### INT-1248: Red Tape Defense -> Chronicle
+- **Date:** 2026-05-30
+- **Systems connected:** `BureaucraticHold` -> `red_tape_chronicle_bridge` -> `AddChronicleEvent`
+- **Glue added:** Added `red_tape_chronicle_bridge` to `src/simulation.rs` to bridge `BureaucraticHold` to `AddChronicleEvent`.
+- **Tests:** `tests/integration/red_tape_bridge.rs`
