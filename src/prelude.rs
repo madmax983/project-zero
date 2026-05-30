@@ -4,7 +4,7 @@
 //! By adding `use scale::prelude::*;` to your code, you can avoid deep nested imports.
 
 pub use crate::setup::{setup_world_with_config, SetupConfig};
-pub use crate::shared::narrative::{NarrativeContext, NarrativeGenerator};
+pub use crate::shared::narrative::{NarrativeContext, NarrativeGenerator, NarrativeSegment};
 pub use crate::shared::time::SimulationTime;
 pub use crate::simulation::run_simulation_tick;
 
