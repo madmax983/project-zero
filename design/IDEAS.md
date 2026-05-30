@@ -21604,7 +21604,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you heavily inspect every trade ship, crippling your economy with delays, or turn a blind eye to the smuggling to keep the official trade flowing smoothly?
 
 ---
-## Atmospheric Empathy
+## Atmospheric Empathy [SPECCED]
 
 **Layer:** 1
 
