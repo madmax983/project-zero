@@ -45,12 +45,17 @@ impl Default for PopResonanceTraits {
     }
 }
 
-type PopResonanceQuery<'w, 's> = Query<'w, 's, (
-    &'static mut PopResonanceTraits,
-    Option<&'static AssignedRoom>,
-    Option<&'static mut ResonanceBuff>,
-    Entity,
-), With<Pop>>;
+type PopResonanceQuery<'w, 's> = Query<
+    'w,
+    's,
+    (
+        &'static mut PopResonanceTraits,
+        Option<&'static AssignedRoom>,
+        Option<&'static mut ResonanceBuff>,
+        Entity,
+    ),
+    With<Pop>,
+>;
 
 #[allow(clippy::type_complexity)]
 pub fn apply_resonant_architecture_system(
@@ -114,19 +119,16 @@ mod tests {
         let mut app = App::new();
         app.add_systems(Update, apply_resonant_architecture_system);
 
-        let room_ent = app.world_mut().spawn((
-            Room {
+        let room_ent = app
+            .world_mut()
+            .spawn((Room {
                 material: BuildingMaterial::MindStone,
-            },
-        )).id();
+            },))
+            .id();
 
         let pop = app
             .world_mut()
-            .spawn((
-                Pop,
-                AssignedRoom(room_ent),
-                PopResonanceTraits::default(),
-            ))
+            .spawn((Pop, AssignedRoom(room_ent), PopResonanceTraits::default()))
             .id();
 
         // Run once to add buff
@@ -144,11 +146,12 @@ mod tests {
         let mut app = App::new();
         app.add_systems(Update, apply_resonant_architecture_system);
 
-        let _room = app.world_mut().spawn((
-            Room {
+        let _room = app
+            .world_mut()
+            .spawn((Room {
                 material: BuildingMaterial::MindStone,
-            },
-        )).id();
+            },))
+            .id();
 
         let pop = app
             .world_mut()
@@ -170,19 +173,16 @@ mod tests {
         let mut app = App::new();
         app.add_systems(Update, apply_resonant_architecture_system);
 
-        let room_ent = app.world_mut().spawn((
-            Room {
+        let room_ent = app
+            .world_mut()
+            .spawn((Room {
                 material: BuildingMaterial::IronPlating,
-            },
-        )).id();
+            },))
+            .id();
 
         let pop = app
             .world_mut()
-            .spawn((
-                Pop,
-                AssignedRoom(room_ent),
-                PopResonanceTraits::default(),
-            ))
+            .spawn((Pop, AssignedRoom(room_ent), PopResonanceTraits::default()))
             .id();
 
         // Run once to add buff

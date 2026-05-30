@@ -287,8 +287,8 @@ pub fn quantum_famine_export_dump_bridge(
     }
 }
 
-use crate::layer3::bureaucracy::AutomatedReporting;
 use crate::layer1::entities::pop::Pop;
+use crate::layer3::bureaucracy::AutomatedReporting;
 
 /// Marker component indicating a ghost town has been discovered.
 #[derive(Component)]
