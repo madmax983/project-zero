@@ -1,6 +1,5 @@
-use bevy_ecs::prelude::*;
 use bevy_app::prelude::*;
-
+use bevy_ecs::prelude::*;
 
 // --- Components ---
 #[derive(Component)]
@@ -29,13 +28,15 @@ pub struct ProhibitionPlugin;
 
 impl Plugin for ProhibitionPlugin {
     fn build(&self, app: &mut App) {
-        app.add_event::<ProhibitItemEvent>()
-           .add_systems(Update, (
-               process_prohibition_events,
-               update_black_market_prices.after(process_prohibition_events),
-               calculate_smuggling_rates,
-               decay_smuggling_rates.after(calculate_smuggling_rates), // Refactor: decay mechanism
-           ));
+        app.add_event::<ProhibitItemEvent>().add_systems(
+            Update,
+            (
+                process_prohibition_events,
+                update_black_market_prices.after(process_prohibition_events),
+                calculate_smuggling_rates,
+                decay_smuggling_rates.after(calculate_smuggling_rates), // Refactor: decay mechanism
+            ),
+        );
     }
 }
 
@@ -55,10 +56,7 @@ impl Plugin for CrimePlugin {
 }
 
 // --- Systems ---
-fn process_prohibition_events(
-    mut events: EventReader<ProhibitItemEvent>,
-    mut commands: Commands,
-) {
+fn process_prohibition_events(mut events: EventReader<ProhibitItemEvent>, mut commands: Commands) {
     for event in events.read() {
         commands.entity(event.item).insert(Prohibited);
     }
@@ -70,7 +68,9 @@ fn update_black_market_prices(
 ) {
     for (entity, base_value) in query.iter() {
         // Refactor: apply a multiplier depending on value logic
-        commands.entity(entity).insert(BlackMarketValue(base_value.0 * 2.0));
+        commands
+            .entity(entity)
+            .insert(BlackMarketValue(base_value.0 * 2.0));
     }
 }
 
@@ -109,8 +109,8 @@ fn decay_smuggling_rates(
 
 #[cfg(test)]
 mod tests {
-    use crate::layer1::economy::items::{Item, ItemType};
     use super::*;
+    use crate::layer1::economy::items::{Item, ItemType};
 
     #[test]
     fn test_prohibited_item_flag() {
@@ -118,10 +118,18 @@ mod tests {
         app.add_plugins(ProhibitionPlugin);
 
         // Arrange: Create an item type and mark it as prohibited
-        let item_entity = app.world_mut().spawn(Item { item_type: ItemType::Stim }).id();
+        let item_entity = app
+            .world_mut()
+            .spawn(Item {
+                item_type: ItemType::Stim,
+            })
+            .id();
 
         // Act: Prohibit the item via event
-        app.world_mut().send_event(ProhibitItemEvent { item: item_entity, severity: 1.0 });
+        app.world_mut().send_event(ProhibitItemEvent {
+            item: item_entity,
+            severity: 1.0,
+        });
         app.update();
 
         // Assert: Item has Prohibited component
@@ -133,18 +141,34 @@ mod tests {
         let mut app = App::new();
         app.add_plugins((TradePlugin, ProhibitionPlugin, BlackMarketPlugin));
 
-        let item_entity = app.world_mut().spawn((
-            Item { item_type: ItemType::Alcohol }, // Assuming Moonshine maps to Alcohol
-            BaseValue(10.0),
-        )).id();
+        let item_entity = app
+            .world_mut()
+            .spawn((
+                Item {
+                    item_type: ItemType::Alcohol,
+                }, // Assuming Moonshine maps to Alcohol
+                BaseValue(10.0),
+            ))
+            .id();
 
         // Act: Item becomes prohibited
-        app.world_mut().send_event(ProhibitItemEvent { item: item_entity, severity: 1.0 });
+        app.world_mut().send_event(ProhibitItemEvent {
+            item: item_entity,
+            severity: 1.0,
+        });
         app.update();
 
         // Assert: Black market price multiplier is applied
-        let query = app.world_mut().query::<&BlackMarketValue>().iter(app.world()).next().unwrap();
-        assert!(query.0 > 10.0, "Black market value should be higher than base value for prohibited items");
+        let query = app
+            .world_mut()
+            .query::<&BlackMarketValue>()
+            .iter(app.world())
+            .next()
+            .unwrap();
+        assert!(
+            query.0 > 10.0,
+            "Black market value should be higher than base value for prohibited items"
+        );
     }
 
     #[test]
@@ -154,14 +178,25 @@ mod tests {
 
         // Arrange: Setup colony with base crime rate
         let colony_entity = app.world_mut().spawn((Colony, SmugglingRate(0.0))).id();
-        let _item_entity = app.world_mut().spawn((Item { item_type: ItemType::Alcohol }, Prohibited)).id();
+        let _item_entity = app
+            .world_mut()
+            .spawn((
+                Item {
+                    item_type: ItemType::Alcohol,
+                },
+                Prohibited,
+            ))
+            .id();
 
         // Act: Run smuggling calculation tick
         app.update();
 
         // Assert: Smuggling rate increased
         let smuggling = app.world().get::<SmugglingRate>(colony_entity).unwrap();
-        assert!(smuggling.0 > 0.0, "Smuggling rate should increase when prohibited items exist");
+        assert!(
+            smuggling.0 > 0.0,
+            "Smuggling rate should increase when prohibited items exist"
+        );
     }
 
     #[test]
@@ -177,6 +212,9 @@ mod tests {
 
         // Assert: Smuggling rate decreased
         let smuggling = app.world().get::<SmugglingRate>(colony_entity).unwrap();
-        assert!(smuggling.0 < 50.0, "Smuggling rate should decay when no prohibited items exist");
+        assert!(
+            smuggling.0 < 50.0,
+            "Smuggling rate should decay when no prohibited items exist"
+        );
     }
 }

@@ -101,3 +101,8 @@
 **The Potential:** Connects the protest system with the beauty/vandalism system (Graffiti). Protesters don't just stand around; they actively spread propaganda that affects the morale of other pops who walk by it.
 **Fate:** Submitted
 **Lesson:** Connects the protest system with the graffiti system, making protests more impactful on the environment and colony morale.
+
+## [Storm Thieves]
+**Concept:** Added `storm_thieves_system` to `src/experimental/storm_thieves.rs`. Stowaways hiding in buildings use the chaos and low visibility of severe weather (`WeatherType::Storm` or `WeatherType::Fog`) to their advantage. During these conditions, their stealth regenerates (counteracting normal discovery decay) and they rapidly generate `Clutter` on the tile they are hiding in.
+**Fate:** Merged
+**Lesson:** Connects the macro-environmental system (Weather) directly to the micro-economic stealth mechanics (Stowaways). Bad weather isn't just a movement penalty anymore; it actively protects parasites hiding in your colony and creates a physical mess (Clutter) that Pops will have to clean up after the storm passes.

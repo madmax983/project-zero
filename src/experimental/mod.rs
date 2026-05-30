@@ -173,3 +173,6 @@ pub mod binge_graffiti;
 
 #[cfg(feature = "nova")]
 pub mod protest_graffiti;
+
+#[cfg(feature = "nova")]
+pub mod storm_thieves;
