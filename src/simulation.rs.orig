@@ -693,7 +693,6 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
             .after(crate::layer3::map::process_hyperlane_collapse_system),
         crate::layer3::integration::feral_logistics_chronicle_bridge,
         crate::layer3::integration::stranded_fleet_chronicle_bridge,
-        crate::layer3::diplomacy::wormhole_dumping::process_dump_waste,
     ));
 
     schedule.add_systems((crate::layer3::events::refugee_waves::process_refugee_decision,));

@@ -10,6 +10,7 @@ pub mod cultural_ransom;
 pub mod endless_draft;
 pub mod fading_homeworld;
 pub mod proxy_wars;
+pub mod wormhole_dumping;
 pub mod succession;
 
 #[derive(Component)]

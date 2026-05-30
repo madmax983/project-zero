@@ -1,0 +1,10 @@
+--- src/layer3/diplomacy/wormhole_dumping.rs
++++ src/layer3/diplomacy/wormhole_dumping.rs
+@@ -1,3 +1,7 @@
++use bevy::prelude::*;
++use crate::layer1::economy::resources::ColonyResources;
++use crate::layer3::diplomacy::proxy_wars::ThreatMap;
++use crate::layer3::diplomacy::succession::Faction;
+
+ #[derive(Component)]
+ pub struct DisposalGate;
