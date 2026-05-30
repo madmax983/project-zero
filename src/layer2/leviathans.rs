@@ -38,7 +38,7 @@ pub fn process_leviathan_hunger(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use bevy_ecs::prelude::*;
+
     use bevy_app::App;
     use bevy_app::Update;
 

@@ -157,7 +157,6 @@ pub fn register(schedule: &mut Schedule) {
                 crate::layer1::environment::terminator_habitats::building_temperature_damage_system,
             )
                 .chain(),
-
         )
             .in_set(Layer1SystemSet::Environment),
     );
