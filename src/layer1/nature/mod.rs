@@ -3,6 +3,8 @@
 //! Handles ecology, terrain generation, weather, and natural phenomena.
 
 pub mod atmosphere;
+pub mod atmospheric_empathy;
+pub use atmospheric_empathy::*;
 #[cfg(test)]
 mod atmosphere_corrosion_tests;
 #[cfg(test)]
