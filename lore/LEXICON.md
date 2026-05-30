@@ -5338,3 +5338,39 @@
 **Usage:**
 - "The Delayed Order arrived a century too late."
 - "They died following an Echo Command."
+
+## Signature Spoofing (Spec 1131)
+
+### False Echo / The Ghost Armada
+**Replaces:** Signature spoofing, spoofed signature
+**Code reference:** `SignatureAmplifier`
+**Usage:**
+- "They cast a False Echo to hide their numbers."
+- "The Ghost Armada was just three frigates and a lot of noise."
+
+## Planetary Spin-Up (Spec 1097)
+
+### Torque Engines / World-Spinners
+**Replaces:** Planetary torque engines
+**Code reference:** `PlanetaryTorqueEngine`
+**Usage:**
+- "The Torque Engines roar, and the sun sets faster."
+- "The World-Spinners cracked the crust, but we got our twenty-hour day."
+
+## Terminator Habitats (Spec 1099)
+
+### The Twilight Line / The Terminator
+**Replaces:** Terminator line, habitable zone on tidally locked planets
+**Code reference:** `TerminatorLine`
+**Usage:**
+- "Stay in the Twilight Line, or you burn."
+- "The Terminator moves, and the crawlers follow."
+
+## Bureaucratic Ghost Towns (Spec 1101)
+
+### Ghost Ledger / Blind Tribute
+**Replaces:** Automated shipments to dead colonies
+**Code reference:** `AutomatedShipment` to dead colony
+**Usage:**
+- "The Ghost Ledger demands we send grain to a graveyard."
+- "A Blind Tribute dropped onto silent streets."

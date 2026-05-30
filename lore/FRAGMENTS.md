@@ -8972,3 +8972,44 @@ Conditions of dezoned, stateless pops.
 - bombing a peaceful protest
 - reinforcing a dead garrison
 - feeding a ghost town
+
+## Signature Spoofing Fragments (Spec 1131)
+
+## Fragment Type: [SPOOFED_SIGNATURE]
+What a spoofed fleet appears as on sensors.
+
+- phantom dreadnought
+- massive civilian convoy
+- derelict station shadow
+- overlapping false echoes
+- hyper-dense sensor ghost
+
+## Planetary Spin-Up Fragments (Spec 1097)
+
+## Fragment Type: [SPIN_ENGINE]
+The mega-engineering used to apply torque.
+
+- surface thruster arrays
+- orbital gravity tethers
+- crust-anchored inertial drivers
+- tectonic repulsors
+
+## Terminator Habitats Fragments (Spec 1099)
+
+## Fragment Type: [MOBILE_HABITAT]
+How the colony moves along the terminator line.
+
+- crawler-cities
+- rail-towns
+- walking superstructures
+- hover-platforms
+- treads-and-struts modules
+
+## Fragment Type: [TERMINATOR_THREAT]
+The danger of the day or night side.
+
+- the Scorch
+- the Deep Freeze
+- the Boiling Winds
+- the Ice-Lock
+- the Sun's Anvil
