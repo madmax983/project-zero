@@ -286,3 +286,40 @@ pub fn quantum_famine_export_dump_bridge(
         });
     }
 }
+
+use crate::layer3::bureaucracy::AutomatedReporting;
+use crate::layer1::entities::pop::Pop;
+
+/// Marker component indicating a ghost town has been discovered.
+#[derive(Component)]
+pub struct GhostTownDiscovered;
+
+/// INT-1101: Bridges `AutomatedReporting` with 0 population to `AddChronicleEvent`.
+/// Discovers if a ghost town is hoarding resources while reporting a false population.
+pub fn discover_ghost_town_system(
+    mut commands: Commands,
+    colonies: Query<(Entity, &AutomatedReporting), Without<GhostTownDiscovered>>,
+    pops: Query<(), With<Pop>>,
+    resources: Res<ColonyResources>,
+    mut chronicle_events: EventWriter<AddChronicleEvent>,
+) {
+    let pop_count = pops.iter().count();
+
+    // If the entire colony is dead, but they have resources and are still reporting
+    if pop_count == 0 && resources.food > 0.0 {
+        for (entity, reporting) in colonies.iter() {
+            if reporting.is_active {
+                // Mark as discovered to avoid spamming the chronicle
+                commands.entity(entity).insert(GhostTownDiscovered);
+
+                chronicle_events.send(AddChronicleEvent {
+                    importance: EventImportance::Legendary,
+                    text: format!(
+                        "A Bureaucratic Ghost Town was discovered! Despite the population being wiped out, automated systems continued hoarding {} food, blinding the Empire.",
+                        resources.food
+                    ),
+                });
+            }
+        }
+    }
+}
