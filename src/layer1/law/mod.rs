@@ -15,3 +15,4 @@ pub mod predictive_policing;
 pub mod justice_tests;
 pub mod rogue_ai_arbitration;
 pub use rogue_ai_arbitration::{Edict, Infraction};
+pub mod prohibition;
