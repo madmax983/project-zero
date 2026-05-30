@@ -342,6 +342,14 @@ fn init_simulation_resources(world: &mut World) {
                 .init_resource::<Events<crate::layer3::ghost_ships::EvaluateLostShipReturnEvent>>();
             world.init_resource::<Events<crate::layer1::unseen_bureaucracy::PhantomShiftEvent>>();
             world.init_resource::<Events<crate::layer3::diplomacy::cultural_ransom::RaidEvent>>();
+            world.init_resource::<Events<crate::layer2::planetary_spin_up::PlanetaryTorqueEvent>>();
+            world.insert_resource(crate::layer1::environment::terminator_habitats::TerminatorLine { x_coordinate: 50.0 });
+            world.insert_resource(crate::layer1::environment::terminator_habitats::LibrationCycle {
+                current_tick: 0.0,
+                amplitude: 5.0,
+                speed: 0.1,
+            });
+
             world.init_resource::<Events<crate::layer3::diplomacy::cultural_ransom::DiplomaticNegotiationEvent>>();
             world.init_resource::<crate::layer3::linguistic_drift::LinguisticNetwork>();
             world.init_resource::<Events<crate::layer3::linguistic_drift::CulturalSyncEvent>>();
@@ -352,6 +360,12 @@ fn init_simulation_resources(world: &mut World) {
 
             let mut schedule = build_simulation_schedule();
             schedule.add_systems((
+                                (
+                    crate::layer2::planetary_spin_up::apply_planetary_torque_system,
+                    crate::layer2::planetary_spin_up::calculate_effective_gravity_system,
+                    crate::layer2::planetary_spin_up::trigger_coriolis_weather_system,
+                )
+                    .chain(),
                 crate::layer2::signature::consume_spoofing_energy,
                 crate::layer2::signature::apply_signature_spoofing
                     .after(crate::layer2::signature::consume_spoofing_energy),
@@ -1146,6 +1160,14 @@ mod tests {
         world.init_resource::<Events<crate::layer3::ghost_ships::EvaluateLostShipReturnEvent>>();
         world.init_resource::<Events<crate::layer1::unseen_bureaucracy::PhantomShiftEvent>>();
         world.init_resource::<Events<crate::layer3::diplomacy::cultural_ransom::RaidEvent>>();
+            world.init_resource::<Events<crate::layer2::planetary_spin_up::PlanetaryTorqueEvent>>();
+            world.insert_resource(crate::layer1::environment::terminator_habitats::TerminatorLine { x_coordinate: 50.0 });
+            world.insert_resource(crate::layer1::environment::terminator_habitats::LibrationCycle {
+                current_tick: 0.0,
+                amplitude: 5.0,
+                speed: 0.1,
+            });
+
         world.init_resource::<Events<crate::layer3::diplomacy::cultural_ransom::DiplomaticNegotiationEvent>>();
         world.init_resource::<crate::layer3::linguistic_drift::LinguisticNetwork>();
         world.init_resource::<Events<crate::layer3::linguistic_drift::CulturalSyncEvent>>();

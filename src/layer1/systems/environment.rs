@@ -151,6 +151,13 @@ pub fn register(schedule: &mut Schedule) {
                 crate::layer1::environment::artificial_sunspots::update_outdoor_exposure_system,
             ),
             crate::layer1::environment::artificial_sunspots::track_sunspot_chronicle_system,
+            (
+                crate::layer1::environment::terminator_habitats::apply_libration_wobble_system,
+                crate::layer1::environment::terminator_habitats::calculate_tile_temperatures_system,
+                crate::layer1::environment::terminator_habitats::building_temperature_damage_system,
+            )
+                .chain(),
+
         )
             .in_set(Layer1SystemSet::Environment),
     );

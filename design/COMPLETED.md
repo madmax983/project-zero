@@ -661,3 +661,5 @@
 - [x] `1097` Planetary Spin-Up — `specs/1097-planetary-spin-up.md` — completed 2026-05-29
 - [x] `1099` Terminator Habitats — `specs/1099-terminator-habitats.md` — completed 2026-05-30
 - [x] `1101` Bureaucratic Ghost Towns — `specs/1101-bureaucratic-ghost-towns.md` — completed 2026-05-30
+- [x] `INT-1099` Integration: Terminator Habitats -> SimulationSchedule — completed 2026-05-30
+- [x] `INT-1097` Integration: Planetary Spin-Up -> SimulationSchedule — completed 2026-05-30
