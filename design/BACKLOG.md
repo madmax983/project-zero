@@ -33,7 +33,6 @@
 
 - [ ] `552` The Subterranean Smog Layer — `specs/552-the-subterranean-smog-layer.md`
 - [ ] `553` Orbital Debt Collections — `specs/553-orbital-debt-collections.md`
-- [ ] `554` The Phantom Signal — `specs/554-the-phantom-signal.md`
 - [ ] `555` The Symbiotic Insurgency — `specs/555-the-symbiotic-insurgency.md`
 
 
@@ -829,6 +828,7 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1272` The Phantom Limb of Logistics — `specs/1272-the-phantom-limb-of-logistics.md`
 - [ ] `1273` Gravity Debt — `specs/1273-gravity-debt.md`
 - [ ] `1274` Memory Smugglers — `specs/1274-memory-smugglers.md`
+
 
 - [ ] `1276` Signal Decay — `specs/1276-signal-decay.md`
 - [ ] `1277` Ghost Code — `specs/1277-ghost-code.md`
