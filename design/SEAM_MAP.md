@@ -1,3 +1,9 @@
+### INT-479: The Endless Draft -> Chronicle
+- **Date:** 2026-10-31
+- **Systems connected:** `DraftOrderEvent` -> `endless_draft_bridge_system` -> `AddChronicleEvent`
+- **Glue added:** `endless_draft_bridge_system` in `src/layer3/integration.rs` to read `DraftOrderEvent`, check if pops meet requirements, despawn them, and emit `DraftComplianceEvent`/`DraftRefusalEvent` and `AddChronicleEvent`.
+- **Tests:** `tests/integration/endless_draft_bridge.rs`
+
 ### INT-775: The Quantum Famine -> Chronicle
 - **Date:** 2026-10-31
 - **Systems connected:** `process_market_panic_hoarding` -> `quantum_famine_export_dump_bridge` -> `AddChronicleEvent`
