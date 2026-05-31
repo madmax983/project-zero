@@ -1,6 +1,7 @@
 use crate::layer2::fleet::{Fleet, InOrbit};
 use crate::layer2::system::SystemBody;
 use bevy_ecs::prelude::*;
+use rand::Rng;
 
 #[derive(Component)]
 pub struct PhantomSignal {
@@ -60,7 +61,8 @@ pub fn reveal_phantom_signal_nature_system(
 
     for (entity, signal, signal_orbit) in signal_query.iter() {
         if signal.pinned && fleet_nodes.contains(&signal_orbit.parent) {
-            events.send(SignalRevealEvent { is_ambush: true });
+            let is_ambush = rand::thread_rng().gen_bool(0.5);
+            events.send(SignalRevealEvent { is_ambush });
             commands.entity(entity).despawn();
         }
     }
