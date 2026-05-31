@@ -106,3 +106,8 @@
 **Concept:** Added `storm_thieves_system` to `src/experimental/storm_thieves.rs`. Stowaways hiding in buildings use the chaos and low visibility of severe weather (`WeatherType::Storm` or `WeatherType::Fog`) to their advantage. During these conditions, their stealth regenerates (counteracting normal discovery decay) and they rapidly generate `Clutter` on the tile they are hiding in.
 **Fate:** Merged
 **Lesson:** Connects the macro-environmental system (Weather) directly to the micro-economic stealth mechanics (Stowaways). Bad weather isn't just a movement penalty anymore; it actively protects parasites hiding in your colony and creates a physical mess (Clutter) that Pops will have to clean up after the storm passes.
+
+## [Comms Mourning]
+**Concept:** Added `comms_mourning_system` to `src/experimental/comms_mourning.rs`. Connects `PopDied` events to `BuildingType::CommsRelay`. When a pop dies, if a CommsRelay exists, it intercepts their digital ghost and broadcasts a comforting message, giving all living pops a temporary positive `MoodModifier` to buffer the loss of life in the colony.
+**Fate:** Submitted
+**Lesson:** Provides a soft mitigation mechanism for deaths while turning an otherwise passive communication building into a systemic safety net for morale.
