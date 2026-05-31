@@ -99,12 +99,6 @@ pub fn resolve_combat(
 }
 
 /// System to resolve combat between fleets at the same orbital location.
-///
-/// ⚡ Bolt Optimization:
-/// Previously, this function cloned the `FleetComposition` of every fleet in the query
-/// into a flat `Vec` every time the system ran. By switching to a grouped `HashMap`
-/// approach that borrows `&FleetComposition`, we eliminate O(N) heap allocations
-/// per frame/tick, cloning only when actual combat resolution takes place.
 pub fn fleet_combat_system(
     mut commands: Commands,
     query: Query<(
@@ -116,89 +110,109 @@ pub fn fleet_combat_system(
     )>,
     mut event_writer: EventWriter<ShipDestroyedEvent>,
 ) {
-    use bevy::utils::HashMap;
+    // Naive O(N^2) check for MVP. Optimized: Sort by location or use HashMap.
+    // Given low N of fleets, sorting/grouping is fine.
 
-    // Group fleets by location
-    let mut location_groups: HashMap<Entity, Vec<(Entity, FleetFaction, &FleetComposition, bool)>> =
-        HashMap::new();
+    // Vector of (Entity, Parent, Faction, Composition, AvoidCombat)
+    let mut fleets: Vec<_> = query
+        .iter_mut()
+        .map(|(e, o, f, c, a)| (e, o.parent, *f, c.clone(), a.is_some()))
+        .collect();
 
-    for (entity, in_orbit, faction, comp, avoid) in query.iter() {
-        location_groups.entry(in_orbit.parent).or_default().push((
-            entity,
-            *faction,
-            comp,
-            avoid.is_some(),
-        ));
-    }
+    // Group by location
+    fleets.sort_by_key(|k| k.1);
 
-    for (location, fleets) in location_groups {
-        if fleets.len() <= 1 {
-            continue;
+    // Iterate and find conflicts
+    let mut i = 0;
+    while i < fleets.len() {
+        let current_location = fleets[i].1;
+        let mut group_end = i;
+        while group_end < fleets.len() && fleets[group_end].1 == current_location {
+            group_end += 1;
         }
 
-        // Find first hostile pair
-        let mut combat_pair = None;
-        for j in 0..fleets.len() {
-            for k in j + 1..fleets.len() {
-                if fleets[j].1 != fleets[k].1 {
-                    combat_pair = Some((j, k));
+        // Slice of fleets at this location
+        let location_fleets = &mut fleets[i..group_end];
+
+        if location_fleets.len() > 1 {
+            // Check for hostile factions (different factions = hostile for now)
+            // Pick first two different factions to fight
+            let mut combat_pair = None;
+            for j in 0..location_fleets.len() {
+                for k in j + 1..location_fleets.len() {
+                    if location_fleets[j].2 != location_fleets[k].2 {
+                        combat_pair = Some((j, k));
+                        break;
+                    }
+                }
+                if combat_pair.is_some() {
                     break;
                 }
             }
-            if combat_pair.is_some() {
-                break;
+
+            if let Some((idx1, idx2)) = combat_pair {
+                let (e1, _, f1, c1, a1) = &location_fleets[idx1];
+                let (e2, _, f2, c2, a2) = &location_fleets[idx2];
+
+                if *a1 || *a2 {
+                    // One of the fleets is avoiding combat
+                    i = group_end;
+                    continue;
+                }
+
+                // Resolve Combat
+                // Assume first one found is "attacker" (arbitrary)
+                let result = resolve_combat(*f1, c1, *f2, c2);
+
+                // Apply results
+                let (winner_entity, loser_entity) = if result.winner == *f1 {
+                    (*e1, *e2)
+                } else {
+                    (*e2, *e1)
+                };
+
+                // Emit destroyed events
+                for ship in &result.destroyed_ships {
+                    event_writer.send(ShipDestroyedEvent {
+                        planet: current_location,
+                        ship_class: format!("{ship:?}"),
+                    });
+                }
+
+                // Update Winner
+                if result.winner_survivors.ships.is_empty() {
+                    commands.entity(winner_entity).despawn(); // Mutual destruction?
+                } else {
+                    commands
+                        .entity(winner_entity)
+                        .insert(result.winner_survivors);
+                }
+
+                // Update Loser
+                let loser_survivor_count = result.loser_survivors.ships.len();
+
+                if result.loser_survivors.ships.is_empty() {
+                    commands.entity(loser_entity).despawn();
+                    // Spawn Debris/Loot
+                    if let Some(_loot) = result.loot {
+                        // For MVP: Log it or spawn a loot entity.
+                        // Since Spec 184 (Orbital Debris) is Backlog, we just log or ignore.
+                        // Or we can spawn a generic "Loot" marker if we had one.
+                        // I'll just leave a comment/TODO as per spec instructions for MVP.
+                        // "Debris: Spawn OrbitalDebris entity (Spec 184) containing the loot."
+                    }
+                } else {
+                    commands.entity(loser_entity).insert(result.loser_survivors);
+                }
+
+                println!(
+                    "Combat at {:?}! Winner: {:?}, Loser Survivors: {}",
+                    current_location, result.winner, loser_survivor_count
+                );
             }
         }
 
-        if let Some((idx1, idx2)) = combat_pair {
-            let (e1, f1, c1, a1) = fleets[idx1];
-            let (e2, f2, c2, a2) = fleets[idx2];
-
-            if a1 || a2 {
-                continue; // One fleet avoiding combat
-            }
-
-            // Resolve Combat
-            let result = resolve_combat(f1, c1, f2, c2);
-
-            let (winner_entity, loser_entity) = if result.winner == f1 {
-                (e1, e2)
-            } else {
-                (e2, e1)
-            };
-
-            // Emit destroyed events
-            for ship in &result.destroyed_ships {
-                event_writer.send(ShipDestroyedEvent {
-                    planet: location,
-                    ship_class: format!("{ship:?}"),
-                });
-            }
-
-            // Update Winner
-            if result.winner_survivors.ships.is_empty() {
-                commands.entity(winner_entity).despawn();
-            } else {
-                commands
-                    .entity(winner_entity)
-                    .insert(result.winner_survivors);
-            }
-
-            // Update Loser
-            let loser_survivor_count = result.loser_survivors.ships.len();
-
-            if result.loser_survivors.ships.is_empty() {
-                commands.entity(loser_entity).despawn();
-                // Debris spawn placeholder
-            } else {
-                commands.entity(loser_entity).insert(result.loser_survivors);
-            }
-
-            println!(
-                "Combat at {:?}! Winner: {:?}, Loser Survivors: {}",
-                location, result.winner, loser_survivor_count
-            );
-        }
+        i = group_end;
     }
 }
 
