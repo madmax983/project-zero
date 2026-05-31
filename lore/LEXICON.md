@@ -5374,3 +5374,19 @@
 **Usage:**
 - "The Ghost Ledger demands we send grain to a graveyard."
 - "A Blind Tribute dropped onto silent streets."
+
+## The Solar Flare Lottery (Spec 878)
+
+### Sun-gold / Star-slag
+**Replaces:** Flare isotopes, temporary high-value resources
+**Code reference:** `FlareIsotope` component
+**Usage:**
+- "We lost three men, but brought back a fortune in Sun-gold."
+- "The Star-slag turned to worthless dust before we could sell it."
+
+### The Grid-Burn / The Great Silence
+**Replaces:** EMP damage, unshielded electronics failing
+**Code reference:** Damage applied to `Electronic` components without `Shielded`
+**Usage:**
+- "The Grid-Burn wiped out our primary communications array."
+- "When the flare hit, the unprotected sectors fell to The Great Silence."

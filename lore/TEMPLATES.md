@@ -8570,3 +8570,30 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: The freighters still drop [RESOURCE] on [COLONY]. There is no one alive to claim it."
 - "Automated ledgers know no death. [COLONY] receives [RESOURCE], [DURATION_PHRASE] after the last soul perished."
 - "A blind empire feeds a corpse. [RESOURCE] arrives at [COLONY]. The ruins overflow. [YEAR]."
+
+### Template: FLARE_ISOTOPE_RUSH
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [ISOTOPE_NAME], [PROSPECTOR_FATE]
+
+**Patterns:**
+- "[YEAR]: The flare left behind [ISOTOPE_NAME]. Prospectors rushed the surface. Some [PROSPECTOR_FATE]."
+- "Greed outweighed fear. [COLONY] sent workers into the burning wastes for [ISOTOPE_NAME]. Many [PROSPECTOR_FATE]. [YEAR]."
+- "A harvest of [ISOTOPE_NAME]. It cost us dearly. They [PROSPECTOR_FATE]. [YEAR]."
+
+### Template: EMP_BLACKOUT
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [EMP_DAMAGE_DESC]
+
+**Patterns:**
+- "[YEAR]: We thought we were safe, but the flare [EMP_DAMAGE_DESC]."
+- "The surge [EMP_DAMAGE_DESC]. [COLONY] is learning to live in the dark again. [YEAR]."
+- "[COLONY] underestimated the storm. It [EMP_DAMAGE_DESC]. [YEAR]."
+
+### Template: ISOTOPE_DECAYED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [ISOTOPE_NAME], [ISOTOPE_DECAY]
+
+**Patterns:**
+- "[YEAR]: The hoarded [ISOTOPE_NAME] [ISOTOPE_DECAY]. A fortune lost."
+- "We bled for that [ISOTOPE_NAME], and then it [ISOTOPE_DECAY]. [COLONY] mourns for nothing. [YEAR]."
+- "The rush was for nothing. The [ISOTOPE_NAME] [ISOTOPE_DECAY] before the market opened. [YEAR]."
