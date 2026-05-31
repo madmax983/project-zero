@@ -1031,57 +1031,7 @@ pub fn fleet_unload_system(
             for stack in cargo.contents.drain(..) {
                 if stack.amount > 0.0 {
                     unloaded_something = true;
-                    match stack.resource_type {
-                        crate::layer1::resources::ResourceType::Food => {
-                            resources.add_food(stack.amount)
-                        }
-                        crate::layer1::resources::ResourceType::Wood => {
-                            resources.add_wood(stack.amount)
-                        }
-                        crate::layer1::resources::ResourceType::Stone => {
-                            resources.add_stone(stack.amount)
-                        }
-                        crate::layer1::resources::ResourceType::Ore => {
-                            resources.add_ore(stack.amount)
-                        }
-                        crate::layer1::resources::ResourceType::Metal => {
-                            resources.add_metal(stack.amount)
-                        }
-                        crate::layer1::resources::ResourceType::Planks => {
-                            resources.add_planks(stack.amount)
-                        }
-                        crate::layer1::resources::ResourceType::Blocks => {
-                            resources.add_blocks(stack.amount)
-                        }
-                        crate::layer1::resources::ResourceType::Tools => {
-                            resources.add_tools(stack.amount)
-                        }
-                        crate::layer1::resources::ResourceType::Waste => {
-                            resources.add_waste(stack.amount)
-                        }
-                        crate::layer1::resources::ResourceType::Rations => {
-                            resources.add_rations(stack.amount)
-                        }
-                        crate::layer1::resources::ResourceType::Fuel => {
-                            resources.add_fuel(stack.amount)
-                        }
-                        crate::layer1::resources::ResourceType::Alcohol => {
-                            resources.add_alcohol(stack.amount)
-                        }
-                        crate::layer1::resources::ResourceType::Scrap => {
-                            resources.add_scrap(stack.amount)
-                        }
-                        crate::layer1::resources::ResourceType::BuildingPermit => {
-                            resources.add_building_permits(stack.amount)
-                        }
-                        crate::layer1::resources::ResourceType::MemoryCore => {
-                            resources.add_memory_cores(stack.amount);
-                        }
-                        crate::layer1::resources::ResourceType::VoidAle
-                        | crate::layer1::resources::ResourceType::HyperValuable => {
-                            resources.add_void_ale(stack.amount);
-                        }
-                    }
+                    resources.add_resource(&stack.resource_type, stack.amount);
                     summary.push(format!("{:.1} {:?}", stack.amount, stack.resource_type));
                 }
             }
