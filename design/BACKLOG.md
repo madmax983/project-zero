@@ -831,3 +831,9 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1272` The Phantom Limb of Logistics — `specs/1272-the-phantom-limb-of-logistics.md`
 - [ ] `1273` Gravity Debt — `specs/1273-gravity-debt.md`
 - [ ] `1274` Memory Smugglers — `specs/1274-memory-smugglers.md`
+
+- [ ] `1276` Signal Decay — `specs/1276-signal-decay.md`
+- [ ] `1277` Ghost Code — `specs/1277-ghost-code.md`
+- [ ] `1278` Asteroid Hollowing — `specs/1278-asteroid-hollowing.md`
+- [ ] `1279` Weaponized Tourism — `specs/1279-weaponized-tourism.md`
+- [ ] `1280` Tectonic Stress — `specs/1280-tectonic-stress.md`
