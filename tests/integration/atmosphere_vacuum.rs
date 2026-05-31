@@ -39,7 +39,7 @@ fn test_vacuum_clears_pollution() {
 
 #[test]
 fn test_vacuum_clears_trace_gases() {
-    use scale::layer1::nature::atmospheric_empathy::{TraceGasGrid, GasType};
+    use scale::layer1::nature::atmospheric_empathy::{GasType, TraceGasGrid};
 
     let mut world = World::new();
 

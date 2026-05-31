@@ -47,6 +47,8 @@ pub use temperature::*;
 pub use terrain::*;
 pub use water::*;
 pub use weather::*;
+pub mod solar_flare_lottery;
+pub use solar_flare_lottery::*;
 pub use wind::*;
 pub mod mutagenic_rain;
 pub use mutagenic_rain::*;
