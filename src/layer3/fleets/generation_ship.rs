@@ -3,7 +3,7 @@
 //! Simulation of massive, slow arks carrying populations across centuries.
 //! Whole societies are born, live, and die aboard these vessels before reaching their destination.
 
-use crate::layer1::social::culture::{Alignment, Culture};
+use crate::layer1::culture::{Alignment, Culture};
 use bevy::prelude::*;
 
 #[derive(Component)]
@@ -60,7 +60,7 @@ pub fn apply_drift_on_foundation_system(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::layer1::social::culture::{Alignment, Culture};
+    use crate::layer1::culture::{Alignment, Culture};
 
     #[test]
     fn test_transit_drift_accumulation() {
