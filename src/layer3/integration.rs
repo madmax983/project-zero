@@ -143,6 +143,67 @@ pub fn language_drift_trade_bridge(
     }
 }
 
+/// Bridges `DraftOrderEvent` (The Endless Draft) to `DraftComplianceEvent`, `DraftRefusalEvent`, and `AddChronicleEvent` (Chronicle).
+pub fn endless_draft_bridge_system(
+    mut commands: Commands,
+    mut order_events: EventReader<crate::layer3::diplomacy::endless_draft::DraftOrderEvent>,
+    mut compliance_events: EventWriter<crate::layer3::diplomacy::endless_draft::DraftComplianceEvent>,
+    mut refusal_events: EventWriter<crate::layer3::diplomacy::endless_draft::DraftRefusalEvent>,
+    mut chronicle_events: EventWriter<AddChronicleEvent>,
+    pop_query: Query<(Entity, Option<&crate::layer1::skills::Skills>), With<crate::layer1::pop::Pop>>,
+) {
+    let mut drafted_pops = std::collections::HashSet::new();
+
+    for event in order_events.read() {
+        let mut eligible_pops = Vec::new();
+
+        for (entity, skills_opt) in pop_query.iter() {
+            if drafted_pops.contains(&entity) {
+                continue;
+            }
+
+            let physical_stat = if let Some(skills) = skills_opt {
+                let mining_xp = skills.xp.get(&crate::layer1::skills::SkillType::Mining).copied().unwrap_or(0.0);
+                let forestry_xp = skills.xp.get(&crate::layer1::skills::SkillType::Forestry).copied().unwrap_or(0.0);
+                mining_xp + forestry_xp // Approximation of physical stats
+            } else {
+                0.0
+            };
+
+            if physical_stat >= event.min_physical_stat {
+                eligible_pops.push(entity);
+            }
+        }
+
+        if eligible_pops.len() >= event.required_pops {
+            let pops_provided = eligible_pops.into_iter().take(event.required_pops).collect::<Vec<_>>();
+            for &pop in &pops_provided {
+                drafted_pops.insert(pop);
+                commands.entity(pop).despawn();
+            }
+
+            compliance_events.send(crate::layer3::diplomacy::endless_draft::DraftComplianceEvent {
+                sponsor: event.sponsor,
+                pops_provided,
+            });
+
+            chronicle_events.send(AddChronicleEvent {
+                importance: EventImportance::Major,
+                text: format!("The colony has complied with the Draft Order. {} pops were conscripted and taken away.", event.required_pops),
+            });
+        } else {
+            refusal_events.send(crate::layer3::diplomacy::endless_draft::DraftRefusalEvent {
+                sponsor: event.sponsor,
+            });
+
+            chronicle_events.send(AddChronicleEvent {
+                importance: EventImportance::Major,
+                text: format!("The colony failed to meet the Draft Order quota of {} pops. We brace for the consequences.", event.required_pops),
+            });
+        }
+    }
+}
+
 /// Bridges `OrganHarvestedEvent` to `DiplomaticTraits` for Layer 3 Diplomacy
 pub fn organ_trade_diplomacy_bridge(
     mut harvest_events: EventReader<OrganHarvestedEvent>,

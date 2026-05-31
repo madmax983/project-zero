@@ -72,3 +72,4 @@ pub mod celestial_library_bridge;
 pub mod fossilized_fleet_defense_bridge;
 pub mod planetary_spin_up_bridge;
 pub mod terminator_habitats_bridge;
+pub mod endless_draft_bridge;

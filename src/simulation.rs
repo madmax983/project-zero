@@ -704,6 +704,7 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
             crate::layer3::diplomacy::endless_draft::process_draft_compliance_system,
             crate::layer3::diplomacy::endless_draft::process_draft_refusal_system,
             crate::layer3::diplomacy::endless_draft::spawn_veteran_system,
+            crate::layer3::integration::endless_draft_bridge_system,
         )
             .chain(),
     );
