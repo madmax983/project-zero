@@ -14,3 +14,7 @@
 **[Title] Resolve Leviathan Naming Collision Across Layers**
 **Tangle:** A naming collision and conceptual overload occurred where both `src/layer1/local_tributes.rs` and `src/layer2/leviathans.rs` defined a `Leviathan` component. This violated DRY, created a confusing API boundary between planetary lore beasts and spaceborne entities, and led to potential compiler/import leaks ("The Leak").
 **Blueprint:** Renamed the layer 2 entity from `Leviathan` to `VoidLeviathan` (a "New Type" abstraction) in `src/layer2/leviathans.rs` to clearly differentiate its domain boundary (fleet/space mechanics consuming planetary resources) from the planetary tribute system (`layer1::local_tributes::Leviathan`).
+
+**[Title] Resolve Ambiguous Glob Re-exports in Culture Module**
+**Tangle:** The codebase contained two identical module names being exported (`pub mod culture;` in both `src/layer1/mod.rs` and `src/layer1/social/mod.rs`), which caused a compiler warning (`ambiguous_glob_reexports`) when a wildcard export (`pub use`) was used. This forced the use of `#[allow(ambiguous_glob_reexports)]` which masked potential architectural leaks.
+**Blueprint:** Renamed the nested `social/culture.rs` to `culture/cultural_influence.rs` to keep domain logic organized while eliminating the naming collision. Removed the `#[allow]` directive to reinstate strict compiler boundaries and updated dependent systems (`layer3::diplomacy::cultural_pressure` and `layer3::fleets::generation_ship`) to use the newly disambiguated path.
