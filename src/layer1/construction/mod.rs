@@ -19,3 +19,4 @@ pub struct ConstructionProgress {
     pub total_work_required: f32,
     pub current_work: f32,
 }
+pub mod material_provenance;
