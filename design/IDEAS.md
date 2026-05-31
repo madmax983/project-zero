@@ -21853,3 +21853,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you fight a losing battle to the bitter end, risking total annihilation, or willingly end your colony's existence to leave a permanent, indestructible legacy for the future?
 
 ---
+
+## The Ghost Fleet
+
+**Layer:** 2
+
+**Fantasy:** A phantom fleet of automated ships that appears seemingly from nowhere to haunt a system's shipping lanes.
+
+**Mechanic:** A derelict shipyard in a forgotten system occasionally activates, constructing and launching autonomous, aggressive ships that patrol old, long-obsolete trade routes. These ships are hostile to everything but follow completely predictable, antiquated paths.
+
+**Emergence:** A player discovers a Ghost Fleet path and intentionally builds a fragile research outpost right next to it. They lure enemy armadas into the Ghost Fleet's patrol route, using the ancient, hostile ships as an impenetrable defensive wall.
+
+**Tension:** Do you expend the massive resources required to hunt down and destroy the hidden shipyard, or try to weaponize the predictable danger against your rivals?
+
+---
+
+## Market Panic Contagion
+
+**Layer:** 3 -> 1
+
+**Fantasy:** Watching a galactic economic crash spark bread riots on your most stable farming world.
+
+**Mechanic:** Galactic trade prices fluctuate based on supply and demand at Layer 3. Rapid drops in the price of a core export cause immediate, severe local economic depressions (Layer 1) on planets that specialize in that good. Pops lose jobs, which lowers their needs satisfaction, leading to unrest.
+
+**Emergence:** A rival empire floods the galactic market with cheap synthetic grain. The price of real grain plummets. Your perfectly peaceful agri-world suddenly experiences massive unemployment, leading to a localized civil war that destroys the spaceport, inadvertently cutting off the rival empire's supply of rare minerals that were shipped through that port.
+
+**Tension:** Do you hyper-specialize planets for maximum galactic trade efficiency, risking total collapse during a market crash, or build inefficient, self-sustaining colonies that can weather economic storms?
+
+---
+
+## The Whisper Network
+
+**Layer:** Cross-layer
+
+**Fantasy:** A shadow economy of rumors and secrets that moves faster than light, subverting official communication channels.
+
+**Mechanic:** Pops with high Social needs and low Loyalty form a "Whisper Network." They trade information (tech boosts, enemy fleet movements, scandal) directly with Pops on other planets, bypassing official Layer 2/3 signal latency. However, this network is highly inaccurate and often generates false panics or fake technological breakthroughs.
+
+**Emergence:** Your official sensors show an enemy fleet amassing on your border. However, the Whisper Network convinces your capital world that the war is already lost. Your Pops riot and overthrow the government before the enemy fleet even jumps into the system.
+
+**Tension:** Do you crack down on the Whisper Network to ensure societal stability and truth, or secretly monitor it to gain faster-than-light intelligence, accepting the risk of devastating misinformation?
+
+---
