@@ -206,6 +206,7 @@ pub use fauna::*;
 /// Procedural Fauna Generation (Spec 164).
 /// Combat system and drafting logic.
 pub mod combat;
+pub mod chain_of_command;
 /// Visitor system (Spec 074).
 /// The Visitor (Mega-Fauna) system (Spec 234).
 /// Day/Night cycle system (Spec 065).
