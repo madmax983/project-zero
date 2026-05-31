@@ -456,6 +456,10 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
         crate::layer1::handle_repair_requests,
         crate::layer3::diplomacy::system_sovereignty::process_sovereignty_declaration,
         crate::layer1::agriculture::zero_g_flora::handle_depressurization,
+        crate::layer1::nature::solar_flare_lottery::solar_flare_emp_system,
+        crate::layer1::nature::solar_flare_lottery::solar_flare_radiation_system,
+        crate::layer1::nature::solar_flare_lottery::spawn_flare_isotopes_system,
+        crate::layer1::nature::solar_flare_lottery::decay_flare_isotopes_system,
     ));
 
     schedule.add_systems((
@@ -523,6 +527,7 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
         update_event_buffer::<crate::layer1::administration::edicts::AccessDeniedEvent>,
         update_event_buffer::<crate::layer1::administration::edicts::HackCentralHubEvent>,
         update_event_buffer::<crate::layer1::administration::edicts::RevokePolicyEvent>,
+        update_event_buffer::<crate::layer1::nature::solar_flare_lottery::SolarFlareEvent>,
     ));
     schedule.add_systems((
         // Cleanup Layer 2 events

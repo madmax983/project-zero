@@ -504,8 +504,11 @@ pub fn vacuum_clears_pollution_system(
     const VACUUM_THRESHOLD: f32 = 0.1;
 
     // If dimensions match, proceed
-    if atmosphere.width != pressure.width || atmosphere.height != pressure.height || trace_gas.width != pressure.width || trace_gas.height != pressure.height {
-
+    if atmosphere.width != pressure.width
+        || atmosphere.height != pressure.height
+        || trace_gas.width != pressure.width
+        || trace_gas.height != pressure.height
+    {
         return;
     }
 
@@ -516,7 +519,6 @@ pub fn vacuum_clears_pollution_system(
             trace_gas.euphoric[i] = 0.0;
             trace_gas.fear[i] = 0.0;
             trace_gas.rage[i] = 0.0;
-
         }
     }
 }
