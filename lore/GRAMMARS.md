@@ -4392,3 +4392,11 @@ VACUUM_SHADOW_INCIDENT:
 ## Bureaucratic Ghost Towns Chaining
 - GHOST_TOWN_SHIPMENT -> enables -> SCAVENGER_ATTACK, PHANTOM_ECONOMY_CRASH
 - GHOST_TOWN_SHIPMENT -> increases_chance -> PIRATE_BASE_ESTABLISHED
+
+## The Solar Flare Lottery Chaining (Spec 878)
+- SOLAR_FLARE_STRIKES -> enables -> FLARE_ISOTOPE_RUSH, EMP_BLACKOUT
+- SOLAR_FLARE_STRIKES -> increases_chance -> RADIATION_OUTBREAK, POWER_SURGE
+- FLARE_ISOTOPE_RUSH -> enables -> ISOTOPE_DECAYED, WEALTH_BOOST
+- FLARE_ISOTOPE_RUSH -> increases_chance -> POP_DEATH_SURGE (prospectors)
+- EMP_BLACKOUT -> enables -> MAINTENANCE_DEBT_SURGE, WORK_STOPPAGE
+- EMP_BLACKOUT -> increases_chance -> COLONY_FAMINE (if hydroponics fail)

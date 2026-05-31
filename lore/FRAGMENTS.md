@@ -9013,3 +9013,33 @@ The danger of the day or night side.
 - the Boiling Winds
 - the Ice-Lock
 - the Sun's Anvil
+
+## Fragment Type: [ISOTOPE_NAME]
+- Sun-gold
+- Star-slag
+- Flare-dust
+- Void-amber
+- Burning remnants
+- The bright powder
+- Glowing ash
+
+## Fragment Type: [ISOTOPE_DECAY]
+- turned to gray ash in our hands
+- dissolved into worthless dust
+- evaporated before we could reach the vaults
+- lost its glow entirely
+- faded as quickly as it came
+
+## Fragment Type: [EMP_DAMAGE_DESC]
+- fused every unshielded circuit
+- brought the grid crashing down in silence
+- wiped out our electronics in an instant
+- melted our communications arrays
+- plunged the unprotected sectors into darkness
+
+## Fragment Type: [PROSPECTOR_FATE]
+- didn't make it back to the bunker
+- died rich, holding fading dust
+- traded their life for a handful of [ISOTOPE_NAME]
+- returned with terrible burns, but wealthy
+- succumbed to the fever before spending their share
