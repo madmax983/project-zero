@@ -5935,7 +5935,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Signal Decay
+## Signal Decay [SPECCED]
 
 **Layer:** Cross-layer
 
@@ -6186,7 +6186,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Ghost Code
+## Ghost Code [SPECCED]
 
 **Layer:** 1
 
@@ -6200,7 +6200,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Asteroid Hollowing
+## Asteroid Hollowing [SPECCED]
 
 **Layer:** 1
 
@@ -6214,7 +6214,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Weaponized Tourism
+## Weaponized Tourism [SPECCED]
 
 **Layer:** Cross-layer
 
@@ -6242,7 +6242,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Tectonic Stress
+## Tectonic Stress [SPECCED]
 
 **Layer:** 1
 
