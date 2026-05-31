@@ -193,7 +193,7 @@ mod tests {
         let mut app = App::new();
         // Needs TimePlugin for Res<Time>
         app.add_plugins(MinimalPlugins);
-        app.insert_resource(Time::<()>::default());
+
         app.add_systems(Update, process_sleep_deprivation_system);
 
         let worker = app
@@ -236,6 +236,78 @@ mod tests {
                 .get::<crate::layer1::agriculture::gastronomy::Hallucinating>(worker)
                 .is_some(),
             "Should be hallucinating"
+        );
+    }
+
+    #[test]
+    fn test_sleep_tier_silver_increases_fatigue() {
+        let mut app = App::new();
+        app.add_plugins(MinimalPlugins);
+
+        app.add_systems(Update, process_sleep_deprivation_system);
+
+        let worker = app
+            .world_mut()
+            .spawn((
+                Pop,
+                SleepPermit {
+                    tier: PermitTier::Silver,
+                    allotted_hours: 5.0,
+                },
+                FatigueTracker { current: 50.0 },
+                crate::layer1::stress::StressTracker {
+                    accumulated_stress: 10.0,
+                },
+            ))
+            .id();
+
+        app.update();
+        app.world_mut()
+            .resource_mut::<bevy::time::Time>()
+            .advance_by(bevy::utils::Duration::from_secs(10));
+        app.update();
+
+        let fatigue = app.world().get::<FatigueTracker>(worker).unwrap();
+        assert!(
+            fatigue.current > 50.0,
+            "Fatigue should increase for Silver tier, was {}",
+            fatigue.current
+        );
+    }
+
+    #[test]
+    fn test_sleep_tier_gold_decreases_fatigue() {
+        let mut app = App::new();
+        app.add_plugins(MinimalPlugins);
+
+        app.add_systems(Update, process_sleep_deprivation_system);
+
+        let worker = app
+            .world_mut()
+            .spawn((
+                Pop,
+                SleepPermit {
+                    tier: PermitTier::Gold,
+                    allotted_hours: 8.0,
+                },
+                FatigueTracker { current: 50.0 },
+                crate::layer1::stress::StressTracker {
+                    accumulated_stress: 10.0,
+                },
+            ))
+            .id();
+
+        app.update();
+        app.world_mut()
+            .resource_mut::<bevy::time::Time>()
+            .advance_by(bevy::utils::Duration::from_secs(10));
+        app.update();
+
+        let fatigue = app.world().get::<FatigueTracker>(worker).unwrap();
+        assert!(
+            fatigue.current < 50.0,
+            "Fatigue should decrease for Gold tier, was {}",
+            fatigue.current
         );
     }
 }

@@ -11,3 +11,7 @@
 **[Option::unwrap Panic on Missing PlanetCurvature]**
 **Learning:** Functions calculating physics (like `has_line_of_sight` in `curvature.rs`) often fetch global resources (`PlanetCurvature`) or structural components (`GridPosition`) and blindly `.unwrap()` them. This creates severe panic risks if systems spawn entities incorrectly or if resources are uninitialized.
 **Action:** When auditing systems or helper functions, look for `.unwrap()` on `world.get_resource()` or `world.get::<T>()`. Replace them with `let Some(x) = world.get... else { return safe_default; }` to fail gracefully instead of crashing the application. Write a RED phase test using `app.world_mut().spawn_empty().id()` to verify the safe failure.
+# Sentry Learnings
+**Testing Bevy Time Components**
+**Learning:** When using `MinimalPlugins` in a Bevy test `App`, the `TimePlugin` and `Time<Virtual>` resources are already added. Attempting to manually insert `Time` using `app.insert_resource(Time::<()>::default())` is redundant and will cause a compiler error because `()` does not implement `TimeContext`.
+**Action:** Simply advance the existing virtual time using `app.world_mut().resource_mut::<Time>().advance_by(...)` without manually inserting a new generic `Time` resource.
