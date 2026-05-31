@@ -26,6 +26,7 @@ pub fn register(schedule: &mut Schedule) {
             update_event_buffer::<crate::layer1::energy::GridOverloadEvent>,
             update_event_buffer::<crate::layer1::environment::hazards::AmputationEvent>,
             update_event_buffer::<crate::layer1::geology::GeologicalEvent>,
+            update_event_buffer::<crate::layer1::geology::fracking::FrackEvent>,
             update_event_buffer::<crate::layer1::geology::subsurface::KineticStrikeEvent>,
             update_event_buffer::<crate::layer1::society::InvestigationEvent>,
             update_event_buffer::<crate::layer1::hologram::HologramFailureEvent>,

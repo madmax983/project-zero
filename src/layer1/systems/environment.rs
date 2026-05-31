@@ -176,6 +176,8 @@ pub fn register(schedule: &mut Schedule) {
                 .after(crate::layer1::geology::check_seismic_events)
                 .after(crate::layer1::environment::seismic::seismic_instability_system),
             crate::layer1::geology::tectonic::update_stress_system,
+            crate::layer1::geology::fracking::tectonic_fracking_system,
+
             crate::layer1::geology::tectonic::check_quake_system
                 .after(crate::layer1::geology::tectonic::update_stress_system),
             spirit_decay_system,
