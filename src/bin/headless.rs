@@ -174,9 +174,11 @@ fn main() {
 
 fn handle_build_command(world: &mut World, parts: &[&str]) {
     if parts.len() < 4 {
-        println!(
-            "{}",
-            "⚠️ Usage: build <farm|housing|stockpile> <x> <y>".yellow()
+        print_dashboard_panel(
+            "ERROR",
+            "Usage: build <farm|housing|stockpile> <x> <y>",
+            Some(comfy_table::Color::Red),
+            Some(comfy_table::Attribute::Bold),
         );
         return;
     }
@@ -270,7 +272,12 @@ fn handle_research_command(world: &mut World, parts: &[&str]) {
     };
 
     if unlock_tech(world, t) {
-        println!("{}", format!("Success! Researched: {}", t.label()).green());
+        print_dashboard_panel(
+            "SUCCESS",
+            &format!("Researched: {}", t.label()),
+            Some(comfy_table::Color::Green),
+            Some(comfy_table::Attribute::Bold),
+        );
         return;
     }
 
@@ -369,7 +376,12 @@ fn handle_tick_command(world: &mut World, parts: &[&str]) {
     // Cap tick count to prevent DoS (accidental or malicious infinite loops)
     let safe_n = n.min(1000);
     if n > 1000 {
-        println!("⚠️ Warning: Capping ticks to 1000 to prevent freeze.");
+        print_dashboard_panel(
+            "WARNING",
+            "Capping ticks to 1000 to prevent freeze.",
+            Some(comfy_table::Color::Yellow),
+            Some(comfy_table::Attribute::Bold),
+        );
     }
     run_ticks(world, safe_n);
 }
@@ -449,7 +461,12 @@ fn run_ticks(world: &mut World, n: u64) {
     }
 
     let end_tick = world.resource::<SimulationTime>().tick;
-    println!("Advanced {n} ticks ({start_tick} -> {end_tick})");
+    print_dashboard_panel(
+        "SIMULATION",
+        &format!("Advanced {n} ticks ({start_tick} -> {end_tick})"),
+        Some(comfy_table::Color::Cyan),
+        Some(comfy_table::Attribute::Bold),
+    );
 
     // Report any interesting events
     report_events(world);
@@ -1177,9 +1194,11 @@ fn build_at(world: &mut World, building_type: BuildingType, x: i32, y: i32) {
 
     let success = try_place_building(world, x, y, building_type);
     if success {
-        println!(
-            "{} Built {building_type:?} at ({x}, {y})",
-            "✓".green().bold()
+        print_dashboard_panel(
+            "SUCCESS",
+            &format!("Built {building_type:?} at ({x}, {y})"),
+            Some(comfy_table::Color::Green),
+            Some(comfy_table::Attribute::Bold),
         );
     } else {
         // Check why it failed
@@ -1215,9 +1234,11 @@ fn build_at(world: &mut World, building_type: BuildingType, x: i32, y: i32) {
 fn designate_at(world: &mut World, designation_type: DesignationType, x: i32, y: i32) {
     let success = try_designate(world, x, y, designation_type);
     if success {
-        println!(
-            "{} Designated {designation_type:?} at ({x}, {y})",
-            "✓".green().bold()
+        print_dashboard_panel(
+            "SUCCESS",
+            &format!("Designated {designation_type:?} at ({x}, {y})"),
+            Some(comfy_table::Color::Green),
+            Some(comfy_table::Attribute::Bold),
         );
     } else {
         // Check why it failed
