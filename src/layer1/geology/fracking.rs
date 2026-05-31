@@ -1,6 +1,6 @@
-use bevy_ecs::prelude::*;
 use crate::layer1::geology::tectonic::TectonicStress;
 use crate::layer1::resources::ColonyResources;
+use bevy_ecs::prelude::*;
 
 #[derive(Component)]
 pub struct TectonicFracker;
@@ -46,7 +46,10 @@ mod tests {
 
         // Arrange
         let fracker = app.world_mut().spawn(TectonicFracker).id();
-        app.world_mut().insert_resource(ColonyResources { waste: 100.0, ..Default::default() });
+        app.world_mut().insert_resource(ColonyResources {
+            waste: 100.0,
+            ..Default::default()
+        });
         app.world_mut().insert_resource(TectonicStress::default());
 
         // Act
@@ -66,8 +69,15 @@ mod tests {
         app.add_systems(bevy_app::Update, tectonic_fracking_system);
 
         let fracker = app.world_mut().spawn(TectonicFracker).id();
-        app.world_mut().insert_resource(TectonicStress { current: 0.0, threshold: 100.0, dissipation_rate: 0.1 });
-        app.world_mut().insert_resource(ColonyResources { waste: 100.0, ..Default::default() });
+        app.world_mut().insert_resource(TectonicStress {
+            current: 0.0,
+            threshold: 100.0,
+            dissipation_rate: 0.1,
+        });
+        app.world_mut().insert_resource(ColonyResources {
+            waste: 100.0,
+            ..Default::default()
+        });
 
         // Act
         app.world_mut().send_event(FrackEvent { entity: fracker });

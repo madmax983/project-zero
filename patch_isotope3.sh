@@ -1,1 +1,0 @@
-sed -i 's/            , GridPosition { x: rng.gen_range(0..100), y: rng.gen_range(0..100) }));/            }, GridPosition { x: rng.gen_range(0..100), y: rng.gen_range(0..100) }));/' src/layer1/nature/solar_flare_lottery.rs

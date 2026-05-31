@@ -674,3 +674,4 @@
 - [x] `878` The Solar Flare Lottery — `specs/878-the-solar-flare-lottery.md` — completed 2026-05-31
 - [x] `1140` Chain of Command — `specs/1140-chain-of-command.md` — completed 2026-05-31
 - [x] `1028` Tech Envy — `specs/1028-tech-envy.md` — completed 2026-06-28
+- [x] `352` Stellar Drift — `specs/352-stellar-drift.md` — completed 2026-05-31

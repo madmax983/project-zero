@@ -59,21 +59,28 @@ mod tests {
         let mut app = App::new();
         app.add_systems(Update, apply_material_provenance_system);
 
-        let material_entity = app.world_mut().spawn(
-            MaterialProperties {
+        let material_entity = app
+            .world_mut()
+            .spawn(MaterialProperties {
                 flammability: 0.8,
                 insulation: 0.2,
                 beauty: 0.1,
-            }
-        ).id();
+            })
+            .id();
 
-        let building_entity = app.world_mut().spawn(
-            ConstructedFrom { materials: vec![material_entity] },
-        ).id();
+        let building_entity = app
+            .world_mut()
+            .spawn(ConstructedFrom {
+                materials: vec![material_entity],
+            })
+            .id();
 
         app.update();
 
-        let inherited_props = app.world().get::<InheritedMaterialProperties>(building_entity).unwrap();
+        let inherited_props = app
+            .world()
+            .get::<InheritedMaterialProperties>(building_entity)
+            .unwrap();
         assert_eq!(inherited_props.flammability, 0.8);
         assert_eq!(inherited_props.insulation, 0.2);
         assert_eq!(inherited_props.beauty, 0.1);
@@ -84,21 +91,37 @@ mod tests {
         let mut app = App::new();
         app.add_systems(Update, apply_material_provenance_system);
 
-        let material1 = app.world_mut().spawn(
-            MaterialProperties { flammability: 1.0, insulation: 0.0, beauty: 0.0 }
-        ).id();
+        let material1 = app
+            .world_mut()
+            .spawn(MaterialProperties {
+                flammability: 1.0,
+                insulation: 0.0,
+                beauty: 0.0,
+            })
+            .id();
 
-        let material2 = app.world_mut().spawn(
-            MaterialProperties { flammability: 0.0, insulation: 1.0, beauty: 1.0 }
-        ).id();
+        let material2 = app
+            .world_mut()
+            .spawn(MaterialProperties {
+                flammability: 0.0,
+                insulation: 1.0,
+                beauty: 1.0,
+            })
+            .id();
 
-        let building_entity = app.world_mut().spawn(
-            ConstructedFrom { materials: vec![material1, material2] },
-        ).id();
+        let building_entity = app
+            .world_mut()
+            .spawn(ConstructedFrom {
+                materials: vec![material1, material2],
+            })
+            .id();
 
         app.update();
 
-        let inherited_props = app.world().get::<InheritedMaterialProperties>(building_entity).unwrap();
+        let inherited_props = app
+            .world()
+            .get::<InheritedMaterialProperties>(building_entity)
+            .unwrap();
         assert_eq!(inherited_props.flammability, 0.5);
         assert_eq!(inherited_props.insulation, 0.5);
         assert_eq!(inherited_props.beauty, 0.5);

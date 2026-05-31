@@ -1,1 +1,0 @@
-sed -i 's/use crate::layer1::biology::biocompatibility::ExposedToEnvironment;/use crate::layer1::biology::biocompatibility::ExposedToEnvironment;\nuse crate::shared::rendering::GridPosition;\nuse rand::Rng;/g' src/layer1/nature/solar_flare_lottery.rs

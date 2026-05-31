@@ -104,9 +104,13 @@ pub fn fleet_arrival_anomaly_system(
     }
 }
 
-#[derive(Component)]
+#[derive(Component, Default)]
 pub struct StarSystem {
     pub id: u32,
+    pub x: f32,
+    pub y: f32,
+    pub drift_vx: f32,
+    pub drift_vy: f32,
 }
 
 #[derive(Component)]
@@ -161,6 +165,75 @@ pub fn recalculate_trade_routes_system(mut events: EventReader<TradeRouteSevered
     for _ev in events.read() {
         // Trigger a global recalculation of paths and trade networks
         // If a route cannot be reformed, emit a Starvation/Shortage event for affected colonies
+    }
+}
+
+const MAX_HYPERLANE_DISTANCE: f32 = 50.0;
+
+pub fn stellar_drift_system(
+    time: Res<crate::shared::time::SimulationTime>,
+    mut query: Query<&mut StarSystem>,
+) {
+    #[allow(clippy::manual_is_multiple_of)]
+    if time.tick % 100 != 0 {
+        return;
+    }
+
+    for mut sys in query.iter_mut() {
+        sys.x += sys.drift_vx * 100.0;
+        sys.y += sys.drift_vy * 100.0;
+    }
+}
+
+pub fn hyperlane_maintenance_system(
+    mut events: EventWriter<HyperlaneCollapseEvent>,
+    sys_query: Query<&StarSystem>,
+    lane_query: Query<(Entity, &Hyperlane)>,
+) {
+    for (lane_entity, lane) in lane_query.iter() {
+        if let (Ok(s1), Ok(s2)) = (sys_query.get(lane.start), sys_query.get(lane.end)) {
+            let dist_sq = (s1.x - s2.x).powi(2) + (s1.y - s2.y).powi(2);
+            if dist_sq > MAX_HYPERLANE_DISTANCE.powi(2) {
+                // Better pattern: emit collapse event instead of despawning immediately
+                events.send(HyperlaneCollapseEvent { lane_entity });
+            }
+        }
+    }
+}
+
+pub fn hyperlane_formation_system(
+    mut commands: Commands,
+    sys_query: Query<(Entity, &StarSystem)>,
+    lane_query: Query<&Hyperlane>,
+) {
+    let mut existing_lanes = std::collections::HashSet::new();
+    for lane in lane_query.iter() {
+        let min_ent = lane.start.min(lane.end);
+        let max_ent = lane.start.max(lane.end);
+        existing_lanes.insert((min_ent, max_ent));
+    }
+
+    let systems: Vec<(Entity, &StarSystem)> = sys_query.iter().collect();
+
+    for i in 0..systems.len() {
+        for j in (i + 1)..systems.len() {
+            let (e1, s1) = systems[i];
+            let (e2, s2) = systems[j];
+
+            let dist_sq = (s1.x - s2.x).powi(2) + (s1.y - s2.y).powi(2);
+            if dist_sq <= MAX_HYPERLANE_DISTANCE.powi(2) {
+                let min_ent = e1.min(e2);
+                let max_ent = e1.max(e2);
+
+                if !existing_lanes.contains(&(min_ent, max_ent)) {
+                    commands.spawn(Hyperlane {
+                        start: min_ent,
+                        end: max_ent,
+                        stability: 100.0,
+                    });
+                }
+            }
+        }
     }
 }
 
@@ -278,8 +351,20 @@ mod tests {
     fn test_hyperlane_collapse_severs_connection() {
         let mut app = setup_app();
 
-        let sys_a = app.world_mut().spawn(StarSystem { id: 1 }).id();
-        let sys_b = app.world_mut().spawn(StarSystem { id: 2 }).id();
+        let sys_a = app
+            .world_mut()
+            .spawn(StarSystem {
+                id: 1,
+                ..Default::default()
+            })
+            .id();
+        let sys_b = app
+            .world_mut()
+            .spawn(StarSystem {
+                id: 2,
+                ..Default::default()
+            })
+            .id();
 
         // Spawn a hyperlane connecting A and B
         let lane = app
@@ -309,8 +394,20 @@ mod tests {
     fn test_fleet_pathfinding_fails_when_lane_collapses() {
         let mut app = setup_app();
 
-        let sys_a = app.world_mut().spawn(StarSystem { id: 1 }).id();
-        let sys_b = app.world_mut().spawn(StarSystem { id: 2 }).id();
+        let sys_a = app
+            .world_mut()
+            .spawn(StarSystem {
+                id: 1,
+                ..Default::default()
+            })
+            .id();
+        let sys_b = app
+            .world_mut()
+            .spawn(StarSystem {
+                id: 2,
+                ..Default::default()
+            })
+            .id();
 
         let lane = app
             .world_mut()
@@ -332,5 +429,133 @@ mod tests {
         let events = app.world().resource::<Events<TradeRouteSeveredEvent>>();
         let mut reader = events.get_cursor();
         assert!(reader.read(events).count() > 0);
+    }
+
+    #[test]
+    fn test_systems_drift_over_time() {
+        let mut world = World::new();
+        let mut schedule = Schedule::default();
+        schedule.add_systems(stellar_drift_system);
+
+        world.insert_resource(crate::shared::time::SimulationTime {
+            tick: 0,
+            ..Default::default()
+        });
+
+        let sys1 = world
+            .spawn(StarSystem {
+                x: 10.0,
+                y: 10.0,
+                drift_vx: 0.1,
+                drift_vy: -0.1,
+                ..Default::default()
+            })
+            .id();
+        let sys2 = world
+            .spawn(StarSystem {
+                x: 20.0,
+                y: 20.0,
+                drift_vx: -0.2,
+                drift_vy: 0.0,
+                ..Default::default()
+            })
+            .id();
+
+        // Run simulation for 100 ticks
+        world
+            .resource_mut::<crate::shared::time::SimulationTime>()
+            .tick = 100;
+        schedule.run(&mut world);
+
+        let s1 = world.get::<StarSystem>(sys1).unwrap();
+        let s2 = world.get::<StarSystem>(sys2).unwrap();
+
+        assert_eq!(s1.x, 20.0); // 10 + (0.1 * 100)
+        assert_eq!(s1.y, 0.0); // 10 + (-0.1 * 100)
+        assert_eq!(s2.x, 0.0); // 20 + (-0.2 * 100)
+        assert_eq!(s2.y, 20.0); // 20 + (0.0 * 100)
+    }
+
+    #[test]
+    fn test_hyperlanes_snap_when_distance_exceeds_max() {
+        let mut world = World::new();
+        world.init_resource::<Events<HyperlaneCollapseEvent>>();
+
+        let mut schedule = Schedule::default();
+        schedule.add_systems(hyperlane_maintenance_system);
+
+        let sys1 = world
+            .spawn(StarSystem {
+                x: 0.0,
+                y: 0.0,
+                drift_vx: -1.0,
+                drift_vy: 0.0,
+                ..Default::default()
+            })
+            .id();
+        let sys2 = world
+            .spawn(StarSystem {
+                x: 10.0,
+                y: 0.0,
+                drift_vx: 1.0,
+                drift_vy: 0.0,
+                ..Default::default()
+            })
+            .id();
+
+        let _lane = world
+            .spawn(Hyperlane {
+                start: sys1,
+                end: sys2,
+                stability: 100.0,
+            })
+            .id();
+
+        // Move them far apart manually to simulate drift
+        world.get_mut::<StarSystem>(sys1).unwrap().x = -50.0;
+        world.get_mut::<StarSystem>(sys2).unwrap().x = 50.0; // Distance = 100
+
+        schedule.run(&mut world);
+
+        // A HyperlaneCollapseEvent should be emitted
+        let events = world.resource::<Events<HyperlaneCollapseEvent>>();
+        let mut reader = events.get_cursor();
+        assert!(reader.read(events).count() > 0);
+    }
+
+    #[test]
+    fn test_new_hyperlanes_form_when_systems_drift_close() {
+        let mut world = World::new();
+        let mut schedule = Schedule::default();
+        schedule.add_systems(hyperlane_formation_system);
+
+        let _sys1 = world
+            .spawn(StarSystem {
+                x: 0.0,
+                y: 0.0,
+                drift_vx: 0.0,
+                drift_vy: 0.0,
+                ..Default::default()
+            })
+            .id();
+        let _sys2 = world
+            .spawn(StarSystem {
+                x: 10.0,
+                y: 0.0,
+                drift_vx: 0.0,
+                drift_vy: 0.0,
+                ..Default::default()
+            })
+            .id();
+
+        // Initially no lanes
+        let lane_count = world.query::<&Hyperlane>().iter(&world).count();
+        assert_eq!(lane_count, 0);
+
+        schedule.run(&mut world);
+
+        // They are close enough, a lane should form
+        let lane_count = world.query::<&Hyperlane>().iter(&world).count();
+        assert_eq!(lane_count, 1);
     }
 }

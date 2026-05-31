@@ -709,9 +709,15 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
     );
 
     schedule.add_systems((
+        crate::layer3::map::stellar_drift_system,
+        crate::layer3::map::hyperlane_maintenance_system
+            .after(crate::layer3::map::stellar_drift_system),
+        crate::layer3::map::hyperlane_formation_system
+            .after(crate::layer3::map::hyperlane_maintenance_system),
         crate::layer3::map::trigger_hyperlane_collapse_system,
         crate::layer3::map::process_hyperlane_collapse_system
-            .after(crate::layer3::map::trigger_hyperlane_collapse_system),
+            .after(crate::layer3::map::trigger_hyperlane_collapse_system)
+            .after(crate::layer3::map::hyperlane_maintenance_system),
         crate::layer3::map::recalculate_trade_routes_system
             .after(crate::layer3::map::process_hyperlane_collapse_system),
         crate::layer3::integration::hyperlane_collapse_chronicle_bridge,
