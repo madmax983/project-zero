@@ -1,25 +1,46 @@
 use bevy_ecs::prelude::*;
 
 #[derive(Component)]
-pub struct Position { pub x: f32, pub y: f32 }
+pub struct Position {
+    pub x: f32,
+    pub y: f32,
+}
 
 #[derive(Component)]
-pub struct Officer { pub command_radius: f32 }
+pub struct Officer {
+    pub command_radius: f32,
+}
 
 #[derive(Component)]
-pub struct Soldier { pub instinct: Instinct }
+pub struct Soldier {
+    pub instinct: Instinct,
+}
 
 #[derive(Clone, Copy, PartialEq, Debug)]
-pub enum Instinct { Charge, Flee, Hunker }
+pub enum Instinct {
+    Charge,
+    Flee,
+    Hunker,
+}
 
 #[derive(Clone, Copy, PartialEq, Debug)]
-pub enum Order { HoldLine, Attack }
+pub enum Order {
+    HoldLine,
+    Attack,
+}
 
 #[derive(Component, PartialEq, Debug)]
-pub enum CurrentOrder { None, Commanded(Order), InstinctDriven(Instinct) }
+pub enum CurrentOrder {
+    None,
+    Commanded(Order),
+    InstinctDriven(Instinct),
+}
 
 #[derive(Resource)]
-pub struct PlayerCommand { pub order: Order, pub target_officer: Entity }
+pub struct PlayerCommand {
+    pub order: Order,
+    pub target_officer: Entity,
+}
 
 pub fn propagate_orders_system(
     command: Option<Res<PlayerCommand>>,
@@ -46,16 +67,33 @@ pub fn propagate_orders_system(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use bevy_ecs::prelude::*;
     use bevy_ecs::system::RunSystemOnce;
 
     #[test]
     fn test_unit_receives_orders_in_command_radius() {
         let mut world = World::new();
-        let officer_id = world.spawn((Position { x: 0.0, y: 0.0 }, Officer { command_radius: 10.0 })).id();
-        let soldier_id = world.spawn((Position { x: 5.0, y: 0.0 }, Soldier { instinct: Instinct::Charge }, CurrentOrder::None)).id();
+        let officer_id = world
+            .spawn((
+                Position { x: 0.0, y: 0.0 },
+                Officer {
+                    command_radius: 10.0,
+                },
+            ))
+            .id();
+        let soldier_id = world
+            .spawn((
+                Position { x: 5.0, y: 0.0 },
+                Soldier {
+                    instinct: Instinct::Charge,
+                },
+                CurrentOrder::None,
+            ))
+            .id();
 
-        world.insert_resource(PlayerCommand { order: Order::HoldLine, target_officer: officer_id });
+        world.insert_resource(PlayerCommand {
+            order: Order::HoldLine,
+            target_officer: officer_id,
+        });
         let _ = world.run_system_once(propagate_orders_system);
 
         let order = world.get::<CurrentOrder>(soldier_id).unwrap();
@@ -65,10 +103,28 @@ mod tests {
     #[test]
     fn test_unit_reverts_to_instinct_out_of_radius() {
         let mut world = World::new();
-        let officer_id = world.spawn((Position { x: 0.0, y: 0.0 }, Officer { command_radius: 10.0 })).id();
-        let soldier_id = world.spawn((Position { x: 15.0, y: 0.0 }, Soldier { instinct: Instinct::Flee }, CurrentOrder::Commanded(Order::HoldLine))).id();
+        let officer_id = world
+            .spawn((
+                Position { x: 0.0, y: 0.0 },
+                Officer {
+                    command_radius: 10.0,
+                },
+            ))
+            .id();
+        let soldier_id = world
+            .spawn((
+                Position { x: 15.0, y: 0.0 },
+                Soldier {
+                    instinct: Instinct::Flee,
+                },
+                CurrentOrder::Commanded(Order::HoldLine),
+            ))
+            .id();
 
-        world.insert_resource(PlayerCommand { order: Order::Attack, target_officer: officer_id });
+        world.insert_resource(PlayerCommand {
+            order: Order::Attack,
+            target_officer: officer_id,
+        });
         let _ = world.run_system_once(propagate_orders_system);
 
         let order = world.get::<CurrentOrder>(soldier_id).unwrap();
