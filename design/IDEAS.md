@@ -21979,3 +21979,43 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you punish the thief and lose the incredible, stolen expertise they now possess, or promote the criminal to replace the expert they ruined?
 
 ---
+
+## The Martyr's Ledger
+
+**Layer:** 1 -> Cross-layer
+
+**Fantasy:** A society that venerates the dead so much that dying for the colony becomes a highly sought-after economic strategy.
+
+**Mechanic:** When a Pop dies performing a hazardous job (mining collapse, defending against a raid, reactor maintenance), they are entered into the "Martyr's Ledger." The deceased Pop's immediate family gains massive, permanent social prestige and a continuous stipend of resources, while the job itself gains a "Glorious Sacrifice" aura that attracts Pops with low social standing seeking to elevate their families.
+
+**Emergence:** You assign the poorest, most miserable Pops to maintain a failing, highly radioactive fusion core. They eagerly take the job, hoping to die and secure a future for their descendants. Your economy becomes dependent on a steady stream of "accidental" deaths to keep the underclass motivated and the upper crust supplied with heroic narratives.
+
+**Tension:** Do you improve workplace safety to save lives, which would paradoxically crash morale among the underclass who rely on the Martyr's Ledger to escape poverty?
+
+---
+
+## Echoes of the Outcast
+
+**Layer:** 1
+
+**Fantasy:** The places we shun absorb the misery of the people we banish.
+
+**Mechanic:** When a Scapegoat or criminal is banished or executed, the physical location where the event occurred (the execution square or the gate they left through) becomes permanently tainted with "Echoes of the Outcast." Pops who pass through this area experience sudden drops in morale and occasionally suffer stress breakdowns, claiming they hear the banished Pop's pleas.
+
+**Emergence:** You execute a highly unpopular leader in the center of your bustling market to appease the mob. Years later, the market slowly dies as Pops refuse to shop there, claiming the stalls are cursed. You have to abandon the most developed sector of your colony because the ghost of your past decisions haunts the cobblestones.
+
+**Tension:** Do you deal with troublemakers privately to preserve the emotional sanctity of your public spaces, or risk permanent psychic scarring of the colony to publicly demonstrate your authority?
+
+---
+
+## The Bureaucracy of Regret
+
+**Layer:** 1 -> 2
+
+**Fantasy:** The endless paperwork required to apologize for past atrocities.
+
+**Mechanic:** Following a period of high unrest that resulted in Scapegoating or mass executions, a new faction emerges: the "Reconciliation Bureau." They demand massive amounts of resources and administrative power to document, analyze, and formally apologize for the colony's past sins. While they operate, Unrest is kept artificially low, but colony efficiency plummets due to mandatory "reflection seminars."
+
+**Emergence:** To survive a harsh winter, you ruthlessly suppressed a minor rebellion. Ten years later, during a crucial planetary war (Layer 2), the Reconciliation Bureau halts all weapons production because the factory workers need to attend a mandatory three-week seminar apologizing for the winter suppression.
+
+**Tension:** Do you empower the Bureau to permanently heal the psychological wounds of your colony, sacrificing critical efficiency, or do you violently suppress the Bureau, creating a new atrocity that will require an even larger Bureau in the future?
