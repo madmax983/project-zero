@@ -668,3 +668,4 @@
 - [x] `1082` Resonant Architecture — `specs/1082-resonant-architecture.md` — completed 2026-05-30
 - [x] `1275` Atmospheric Empathy — `specs/1275-atmospheric-empathy.md` — completed 2026-05-30
 - [x] `1133` Stellar Megastructure Scaffolding — `specs/1133-stellar-megastructure-scaffolding.md` — completed 2026-05-30
+- [x] `1202` Bureaucratic Black Holes — `specs/1202-bureaucratic-black-holes.md` — completed 2026-05-31

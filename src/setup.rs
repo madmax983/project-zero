@@ -522,6 +522,8 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
         );
 
     world.init_resource::<bevy::prelude::Time>();
+    world.init_resource::<crate::layer2::events_new::bureaucratic_black_holes::BureaucraticComplexity>();
+    world.init_resource::<Events<crate::layer2::events_new::bureaucratic_black_holes::AuditEvent>>();
     world.init_resource::<crate::layer1::tech::machine_awakening::GlobalSentience>();
     world.init_resource::<crate::layer1::culture::gastronomers::EmpireAdvancement>();
     world.init_resource::<bevy_ecs::event::Events<crate::layer1::culture::gastronomers::CulinarySingularityEvent>>();

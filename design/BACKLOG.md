@@ -767,7 +767,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1199` Orbital Shadow Economies — `specs/1199-orbital-shadow-economies.md`
 - [ ] `1200` The Martyr's Algorithm — `specs/1200-the-martyrs-algorithm.md`
 - [ ] `1201` Heirloom Cultivars — `specs/1201-heirloom-cultivars.md`
-- [ ] `1202` Bureaucratic Black Holes — `specs/1202-bureaucratic-black-holes.md`
 - [ ] `1203` Gravity-Tethered Inheritance — `specs/1203-gravity-tethered-inheritance.md`
 - [ ] `1204` The Culinary Singularity — `specs/1204-culinary-singularity.md`
 - [ ] `1205` The Scrap-Code Cult — `specs/1205-the-scrap-code-cult.md`
