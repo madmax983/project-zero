@@ -642,7 +642,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1031` The Mycelial Network — `specs/1031-the-mycelial-network.md`
 - [ ] `1030` Gravity Engineering — `specs/1030-gravity-engineering.md`
 - [ ] `1029` The Zoo Hypothesis — `specs/1029-the-zoo-hypothesis.md`
-- [ ] `1028` Tech Envy — `specs/1028-tech-envy.md`
 - [ ] `1027` Sanctuary Districts — `specs/1027-sanctuary-districts.md`
 - [ ] `1026` The Lottery — `specs/1026-the-lottery.md`
 - [ ] `1025` Gravity Plating Failure — `specs/1025-gravity-plating-failure.md`
