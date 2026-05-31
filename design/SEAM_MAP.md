@@ -1307,7 +1307,7 @@
 - **Date:** 2026-05-30
 - **Systems connected:** `colony_reporting_system` / `empire_resource_distribution_system` -> `discover_ghost_town_system` -> `AddChronicleEvent`
 - **Glue added:** Added `GhostTownDiscovered` component and `discover_ghost_town_system` in `src/layer3/integration.rs`.
-- **Schedule:** Chained in `src/simulation.rs` after `colony_reporting_system`.
+- **Schedule:** Chained in `src/simulation.rs`, running `colony_reporting_system`, `empire_resource_distribution_system`, and `discover_ghost_town_system` sequentially.
 - **Tests:** `tests/integration/bureaucratic_ghost_towns.rs`
 
 ### INT-1275: Atmospheric Empathy -> Vacuum Clearing
