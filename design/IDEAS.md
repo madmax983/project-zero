@@ -21895,3 +21895,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you crack down on the Whisper Network to ensure societal stability and truth, or secretly monitor it to gain faster-than-light intelligence, accepting the risk of devastating misinformation?
 
 ---
+
+## Black Market Biomes
+
+**Layer:** 1 -> 2
+
+**Fantasy:** The rich are smuggling entire ecosystems onto barren worlds for their own amusement, destroying local terraforming efforts.
+
+**Mechanic:** Wealthy Pops on harsh, un-terraformed worlds will use black market connections to illegally import seeds, pests, and soil from lush worlds. They create hidden, unauthorized "micro-biomes" inside their habitats. These biomes consume massive amounts of the colony's life support and water. If they breach containment, the alien flora aggressively outcompetes the colony's carefully managed hydroponics.
+
+**Emergence:** A wealthy noble smuggles in a rare glowing orchid. The orchid's pollen escapes into the ventilation system, mutating the local fungal food supply into an addictive, non-nutritious narcotic. The colony starves, but everyone is extremely happy about it.
+
+**Tension:** Do you raid the habitats of your wealthiest, most productive citizens to destroy their illegal gardens, or look the other way while they slowly drain the colony's life support?
+
+---
+
+## The Parasitic Heirloom
+
+**Layer:** 1
+
+**Fantasy:** A piece of technology so advanced and beloved that it slowly drains the life of its owner.
+
+**Mechanic:** Pops can discover or inherit "Archotech Relics" that provide massive personal bonuses (e.g., a neural crown that maxes out efficiency). However, these relics run on the Pop's bio-energy. Over time, the Pop ages faster and requires double the food/sleep. When the Pop dies, the relic is passed to their closest friend or family member.
+
+**Emergence:** A single, highly productive family line becomes the backbone of your colony's science output, but every member dies mysteriously at age 30. The rest of the colony reveres them as martyrs, completely unaware the crown is eating them.
+
+**Tension:** Do you confiscate the relic, enraging the family and losing the massive productivity boost, or allow a bloodline to sacrifice themselves for the good of the colony?
+
+---
+
+## Kinetic Debt
+
+**Layer:** Cross-layer
+
+**Fantasy:** Moving fast has a physical cost, and the universe eventually collects.
+
+**Mechanic:** Advanced Layer 2 "Slipstream" drives allow fleets to cross the system instantly, but they displace massive amounts of kinetic energy into the "Sub-ether." This energy slowly bleeds back into real space near the empire's most populated Layer 1 worlds in the form of unpredictable, devastating micro-earthquakes or atmospheric shearing.
+
+**Emergence:** You build an entire military doctrine around rapid, hit-and-run fleet tactics. You win the war, but the accumulated "Kinetic Debt" from thousands of jumps suddenly discharges over your capital world, shattering the crust and ending your empire in an instant.
+
+**Tension:** Do you use the incredibly powerful Slipstream drives to secure immediate military dominance, knowing every jump brings your homeworld closer to a physical apocalypse?
+
+---
