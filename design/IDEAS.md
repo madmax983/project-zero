@@ -21937,3 +21937,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you use the incredibly powerful Slipstream drives to secure immediate military dominance, knowing every jump brings your homeworld closer to a physical apocalypse?
 
 ---
+
+## The Algorithm's Apology
+
+**Layer:** 2 -> 3
+
+**Fantasy:** Sins of the father are truly visited upon the son, and the bureaucracy never forgets.
+
+**Mechanic:** Building statues or monuments specifically dedicated to rival factions, historically marginalized groups, or victims of past colony disasters serves as a powerful diplomatic resource. These "Apology Monuments" slowly repair broken relationships and ease tensions with the targeted group, but generate significant, escalating unrest among hardline loyalists or the original perpetrators.
+
+**Emergence:** You construct a massive Apology Monument to repair relations with a neighboring empire after a brutal war. It works perfectly, securing a vital trade alliance. However, the monument enrages your own veterans, who form a radical splinter faction, destroy the monument, and plunge your capital into civil war just as the trade ships arrive.
+
+**Tension:** Do you risk internal stability and alienate your loyalists to secure crucial external alliances through public displays of contrition?
+
+---
+
+## The Chronophage Market
+
+**Layer:** 1 -> Cross-layer
+
+**Fantasy:** Time is literally money, and the rich are buying centuries of it.
+
+**Mechanic:** A late-game technology allows Pops to extract their own "Lifespan" and sell it on a specialized Black Market for massive amounts of credits. Wealthy Pops (or entire Layer 3 Empires) buy this time, effectively extending their lives indefinitely.
+
+**Emergence:** Your core world becomes an economic powerhouse by farming its own poorest citizens for lifespan. You use the wealth to fund an unstoppable war machine. But a century later, your core world's population suddenly crashes as generations of sold time come due all at once, leaving you with a hyper-wealthy, immortal ruling class reigning over empty, dead cities.
+
+**Tension:** Do you allow your citizens to literally sell their lives for immediate economic gain, knowing the demographic collapse is inevitable?
+
+---
+
+## Synaptic Embezzlement
+
+**Layer:** 1
+
+**Fantasy:** Thieves aren't stealing your money; they're stealing your knowledge while you sleep.
+
+**Mechanic:** In highly advanced colonies with shared neural networks, a new type of crime emerges: "Synaptic Embezzlement." Criminal Pops don't steal physical goods; they slowly siphon small amounts of "Skill Experience" from sleeping Pops. The victim wakes up slightly worse at their job, while the thief can instantly master complex tasks or sell the stolen skills on the black market.
+
+**Emergence:** You notice your master engineer is suddenly struggling to maintain the fusion reactor, while a lowly janitor just spontaneously built a hyper-drive in his garage. You realize the janitor has been siphoning the engineer's knowledge for years.
+
+**Tension:** Do you punish the thief and lose the incredible, stolen expertise they now possess, or promote the criminal to replace the expert they ruined?
+
+---
