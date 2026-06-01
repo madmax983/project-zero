@@ -22019,3 +22019,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Emergence:** To survive a harsh winter, you ruthlessly suppressed a minor rebellion. Ten years later, during a crucial planetary war (Layer 2), the Reconciliation Bureau halts all weapons production because the factory workers need to attend a mandatory three-week seminar apologizing for the winter suppression.
 
 **Tension:** Do you empower the Bureau to permanently heal the psychological wounds of your colony, sacrificing critical efficiency, or do you violently suppress the Bureau, creating a new atrocity that will require an even larger Bureau in the future?
+
+## The Silence Protocol
+
+**Layer:** 2 -> 3
+
+**Fantasy:** Maintaining operational security across an entire star system by enforcing absolute radio silence, turning your planets into dark, uncommunicative islands.
+
+**Mechanic:** A colony or fleet can enact "The Silence Protocol" to become entirely undetectable to long-range sensors or enemy intercepts. However, this cuts off all inter-colony trade, diplomatic communications, and the Whisper Network. Local Pops suffer massive morale penalties due to extreme isolation ("The Dark Panic"), and local disasters cannot call for external aid.
+
+**Emergence:** An enemy fleet invades a sector they believe is empty, only to be ambushed by your fully developed, but entirely silent, fortress world. However, the world has suffered so much internal strife from years of silence that they immediately surrender to the invaders instead of fighting.
+
+**Tension:** Do you hide your critical assets in the dark, risking societal collapse from isolation, or keep the lights on and invite the wolves?
+
+---
+
+## The Monument to the Unborn
+
+**Layer:** 1 -> Cross-layer
+
+**Fantasy:** Investing immense resources to secure the loyalty and prosperity of generations that do not yet exist, at the cost of the current population.
+
+**Mechanic:** You can dedicate a significant portion of a colony's GDP to building "Generational Vaults" — massive, sealed caches of resources, advanced tech, and cultural artifacts meant to open 100 years in the future. The current Pops suffer from artificial scarcity and high unrest, seeing their labor locked away. However, when the vault finally opens, the inheriting generation gains an astronomical boost in wealth, loyalty, and technological insight.
+
+**Emergence:** Your colony is on the verge of starvation, and the Pops riot, attempting to break into the Vault their great-grandparents built. If they succeed, they survive the winter but destroy the carefully calibrated timeline, ruining the massive future payout.
+
+**Tension:** Do you sacrifice the well-being of the current, struggling generation to guarantee the utopian future of the next, even if the current generation might tear the colony apart in rebellion?
+
+---
+
+## Orbital Debris Religion
+
+**Layer:** 1 -> 2
+
+**Fantasy:** A colony worshipping the garbage raining down from a long-forgotten space battle.
+
+**Mechanic:** On worlds situated beneath a dense, historical "Kessler Syndrome" debris field, Pops may form a "Cult of the Falling Metal." When debris survives reentry and crashes, it is treated as a divine gift. The cult provides massive morale and unity bonuses but demands that valuable recovered technology be placed in shrines rather than recycled into the economy. They will also violently protest any Layer 2 efforts to clean up the orbital debris.
+
+**Emergence:** You desperately need the scrap metal from a crashed dreadnought engine to finish your own defensive fleet, but the local Cult has declared the crash site holy ground. If you mine it, you trigger a religious civil war; if you don't, the enemy fleet will destroy you.
+
+**Tension:** Do you harvest the "divine gifts" to fuel your war machine and risk a massive religious uprising, or do you respect the cult to maintain perfect societal harmony while your industrial base starves?
+
+---
