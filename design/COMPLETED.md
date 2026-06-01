@@ -677,3 +677,4 @@
 - [x] `1028` Tech Envy — `specs/1028-tech-envy.md` — completed 2026-06-28
 - [x] `352` Stellar Drift — `specs/352-stellar-drift.md` — completed 2026-05-31
 - [x] `1123` Void-Tethered Sleep — `specs/1123-void-tethered-sleep.md` — completed 2026-02-01
+- [x] `1070` Feral Infrastructure — `specs/1070-feral-infrastructure.md` — completed 2026-02-01
