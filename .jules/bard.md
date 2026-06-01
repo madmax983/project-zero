@@ -69,3 +69,6 @@
 ## 2024-05-30 - Fix Unresolved Links in Rustdoc
 **Confusion:** I used `\`PlanetCurvature\`` instead of ``[`PlanetCurvature`]`` in documentation, resulting in unresolved link warnings from `cargo doc --no-deps`.
 **Clarification:** You should use `[`Type`]` directly for valid intra-doc links, rather than trying to escape backticks directly which `cargo doc` interprets as literal unresolved references.
+## 2024-06-01 - Clarified NarrativeGenerator Feature Requirements
+**Confusion:** Users believed that the `NarrativeGenerator` required the `nova` feature, leading them to misattribute compilation errors or missing examples (like `narrative_demo`) to a missing feature flag. The `README.md` contained a huge banner for the Oral Tradition section that confused users into thinking the entire narrative system required the `nova` feature.
+**Clarification:** Added module-level documentation and executable doc-tests (`## Examples`) to the `NarrativeGenerator` and `NarrativeContext` structs in `src/shared/narrative.rs`. This clearly demonstrates that the core procedural narrative generation system works out-of-the-box in the base build without needing the `nova` feature, while `OralTradition` is strictly the one requiring `nova`.

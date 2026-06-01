@@ -210,7 +210,7 @@ mod tests {
                 GridConnection {
                     is_connected: true,
                     time_disconnected: 4999, // About to go feral
-                }
+                },
             ))
             .id();
 
@@ -230,7 +230,7 @@ mod tests {
 
     #[test]
     fn test_drone_goes_feral_when_disconnected_from_grid() {
-        use crate::layer1::drone::{Drone, GridConnection, ConnectedTo};
+        use crate::layer1::drone::{ConnectedTo, Drone, GridConnection};
         use crate::shared::time::SimulationTime;
         let mut app = setup_app();
         app.init_resource::<SimulationTime>();
@@ -283,10 +283,13 @@ mod tests {
                     state: DroneState::Feral,
                 },
                 FeralDrone {
-                    hoard: vec![ResourceItem {
-                        resource_type: ResourceType::Metal,
-                        amount: 10.0,
-                    }; 5], // 5 items in hoard
+                    hoard: vec![
+                        ResourceItem {
+                            resource_type: ResourceType::Metal,
+                            amount: 10.0,
+                        };
+                        5
+                    ], // 5 items in hoard
                 },
                 GridPosition { x: 0, y: 0 },
             ))
@@ -300,7 +303,11 @@ mod tests {
         assert!(feral_drone.hoard.is_empty(), "Hoard should be consumed");
 
         let mut query = app.world_mut().query::<&FeralDrone>();
-        assert_eq!(query.iter(app.world()).count(), 2, "A new Feral Drone should be spawned");
+        assert_eq!(
+            query.iter(app.world()).count(),
+            2,
+            "A new Feral Drone should be spawned"
+        );
     }
 
     #[test]
