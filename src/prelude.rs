@@ -17,3 +17,48 @@ pub use crate::shared::log::MessageLog;
 pub use crate::layer1::oral_tradition::{
     collect_chronicles_system, storytelling_system, OralTradition, Story, StoryGenre,
 };
+
+// --- Missing Feature Stubs for DX ---
+#[cfg(not(feature = "nova"))]
+#[deprecated(note = "🚨 ⚠️ REQUIRES FEATURE NOVA ⚠️ 🚨\nTo use this feature, you MUST enable the `nova` feature flag in your `Cargo.toml`.")]
+#[allow(deprecated)]
+pub struct OralTradition {
+    pub stories: Vec<Story>,
+}
+
+#[cfg(not(feature = "nova"))]
+#[allow(deprecated)]
+impl Default for OralTradition {
+    fn default() -> Self {
+        Self {
+            stories: Vec::new(),
+        }
+    }
+}
+
+#[cfg(not(feature = "nova"))]
+#[allow(deprecated)]
+impl OralTradition {
+    pub fn add_story(&mut self, _story: Story) {}
+    pub fn process_chronicles(&mut self, _chronicle: &Chronicle) {}
+}
+
+#[cfg(not(feature = "nova"))]
+#[deprecated(note = "🚨 ⚠️ REQUIRES FEATURE NOVA ⚠️ 🚨\nTo use this feature, you MUST enable the `nova` feature flag in your `Cargo.toml`.")]
+#[allow(deprecated)]
+pub struct Story {
+    pub text: String,
+    pub historical_date: u64,
+    pub mutations: u32,
+    pub genre: StoryGenre,
+}
+
+#[cfg(not(feature = "nova"))]
+#[deprecated(note = "🚨 ⚠️ REQUIRES FEATURE NOVA ⚠️ 🚨\nTo use this feature, you MUST enable the `nova` feature flag in your `Cargo.toml`.")]
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum StoryGenre {
+    Heroic,
+    Tragedy,
+    Cautionary,
+    Trivial,
+}

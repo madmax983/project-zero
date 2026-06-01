@@ -60,9 +60,11 @@ fn main() {
         "\n{}",
         "╭── Processing Events ──────────────────────────╮".with(Color::Cyan)
     );
-    let mut schedule = Schedule::default();
-    schedule.add_systems(collect_chronicles_system);
-    schedule.run(&mut world);
+    // Use the simplified API
+    world.resource_scope(|world, chronicle: Mut<Chronicle>| {
+        let mut tradition = world.resource_mut::<OralTradition>();
+        tradition.process_chronicles(&chronicle);
+    });
     let text = format!("{:<47}", "✓ Events processed into Oral Tradition.");
     println!("│ {} │", text.with(Color::Green));
     println!(

@@ -62,59 +62,64 @@ impl OralTradition {
             }
         }
     }
+
+    /// Processes new events from the Chronicle and adds them as Stories.
+    pub fn process_chronicles(&mut self, chronicle: &Chronicle) {
+        // Only look at events since last check
+        let new_events: Vec<_> = chronicle
+            .events
+            .iter()
+            .filter(|e| e.tick > self.last_processed_tick)
+            .collect();
+
+        if new_events.is_empty() {
+            return;
+        }
+
+        // Update tracker
+        if let Some(last) = new_events.last() {
+            self.last_processed_tick = last.tick;
+        }
+
+        for event in new_events {
+            // Heuristic for genre
+            let genre = if event.text.to_lowercase().contains("died")
+                || event.text.to_lowercase().contains("death")
+            {
+                StoryGenre::Tragedy
+            } else if event.text.to_lowercase().contains("collapsed")
+                || event.text.to_lowercase().contains("starvation")
+            {
+                StoryGenre::Cautionary
+            } else {
+                match event.importance {
+                    EventImportance::Legendary => StoryGenre::Heroic,
+                    EventImportance::Major => StoryGenre::Heroic,
+                    EventImportance::Standard => StoryGenre::Trivial, // Most standard events are just "X happened"
+                    EventImportance::Minor => StoryGenre::Trivial,
+                }
+            };
+
+            if genre == StoryGenre::Trivial {
+                // Keep some trivial ones for flavor, but maybe skip most?
+                // For now, keep them.
+            }
+
+            let story = Story {
+                text: event.text.clone(),
+                historical_date: event.tick,
+                mutations: 0,
+                genre,
+            };
+
+            self.add_story(story);
+        }
+    }
 }
 
 /// System to convert new Chronicle events into Stories.
 pub fn collect_chronicles_system(mut tradition: ResMut<OralTradition>, chronicle: Res<Chronicle>) {
-    // Only look at events since last check
-    let new_events: Vec<_> = chronicle
-        .events
-        .iter()
-        .filter(|e| e.tick > tradition.last_processed_tick)
-        .collect();
-
-    if new_events.is_empty() {
-        return;
-    }
-
-    // Update tracker
-    if let Some(last) = new_events.last() {
-        tradition.last_processed_tick = last.tick;
-    }
-
-    for event in new_events {
-        // Heuristic for genre
-        let genre = if event.text.to_lowercase().contains("died")
-            || event.text.to_lowercase().contains("death")
-        {
-            StoryGenre::Tragedy
-        } else if event.text.to_lowercase().contains("collapsed")
-            || event.text.to_lowercase().contains("starvation")
-        {
-            StoryGenre::Cautionary
-        } else {
-            match event.importance {
-                EventImportance::Legendary => StoryGenre::Heroic,
-                EventImportance::Major => StoryGenre::Heroic,
-                EventImportance::Standard => StoryGenre::Trivial, // Most standard events are just "X happened"
-                EventImportance::Minor => StoryGenre::Trivial,
-            }
-        };
-
-        if genre == StoryGenre::Trivial {
-            // Keep some trivial ones for flavor, but maybe skip most?
-            // For now, keep them.
-        }
-
-        let story = Story {
-            text: event.text.clone(),
-            historical_date: event.tick,
-            mutations: 0,
-            genre,
-        };
-
-        tradition.add_story(story);
-    }
+    tradition.process_chronicles(&chronicle);
 }
 
 /// System where pops in taverns tell stories to each other.
