@@ -20,7 +20,9 @@ pub use crate::layer1::oral_tradition::{
 
 // --- Missing Feature Stubs for DX ---
 #[cfg(not(feature = "nova"))]
-#[deprecated(note = "🚨 ⚠️ REQUIRES FEATURE NOVA ⚠️ 🚨\nTo use this feature, you MUST enable the `nova` feature flag in your `Cargo.toml`.")]
+#[deprecated(
+    note = "🚨 ⚠️ REQUIRES FEATURE NOVA ⚠️ 🚨\nTo use this feature, you MUST enable the `nova` feature flag in your `Cargo.toml`."
+)]
 #[allow(deprecated)]
 pub struct OralTradition {
     pub stories: Vec<Story>,
@@ -44,7 +46,9 @@ impl OralTradition {
 }
 
 #[cfg(not(feature = "nova"))]
-#[deprecated(note = "🚨 ⚠️ REQUIRES FEATURE NOVA ⚠️ 🚨\nTo use this feature, you MUST enable the `nova` feature flag in your `Cargo.toml`.")]
+#[deprecated(
+    note = "🚨 ⚠️ REQUIRES FEATURE NOVA ⚠️ 🚨\nTo use this feature, you MUST enable the `nova` feature flag in your `Cargo.toml`."
+)]
 #[allow(deprecated)]
 pub struct Story {
     pub text: String,
@@ -54,7 +58,9 @@ pub struct Story {
 }
 
 #[cfg(not(feature = "nova"))]
-#[deprecated(note = "🚨 ⚠️ REQUIRES FEATURE NOVA ⚠️ 🚨\nTo use this feature, you MUST enable the `nova` feature flag in your `Cargo.toml`.")]
+#[deprecated(
+    note = "🚨 ⚠️ REQUIRES FEATURE NOVA ⚠️ 🚨\nTo use this feature, you MUST enable the `nova` feature flag in your `Cargo.toml`."
+)]
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum StoryGenre {
     Heroic,

@@ -59,7 +59,10 @@ mod tests {
         app.world_mut().insert_resource(ThreatMap::default());
 
         let gate = app.world_mut().spawn(DisposalGate).id();
-        app.world_mut().send_event(DumpWasteEvent { gate, amount: 100.0 });
+        app.world_mut().send_event(DumpWasteEvent {
+            gate,
+            amount: 100.0,
+        });
         app.update();
 
         let waste = app.world().resource::<ColonyResources>().waste;
@@ -79,10 +82,18 @@ mod tests {
         app.world_mut().insert_resource(resources);
         app.world_mut().insert_resource(ThreatMap::default());
 
-        let faction = app.world_mut().spawn(Faction { name: "Test Faction".to_string() }).id();
+        let faction = app
+            .world_mut()
+            .spawn(Faction {
+                name: "Test Faction".to_string(),
+            })
+            .id();
 
         let gate = app.world_mut().spawn(DisposalGate).id();
-        app.world_mut().send_event(DumpWasteEvent { gate, amount: 500.0 });
+        app.world_mut().send_event(DumpWasteEvent {
+            gate,
+            amount: 500.0,
+        });
         app.update();
 
         let threats = app.world().resource::<ThreatMap>();
