@@ -22145,3 +22145,43 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you aggressively investigate and seize Shadow Inheritances, destroying families and causing massive unrest, or turn a blind eye, allowing the criminal underground to persist across generations?
 
 ---
+
+## The Hollow Sky
+
+**Layer:** 2 -> 1
+
+**Fantasy:** The sky itself is falling, piece by piece, as orbital infrastructure collapses over decades.
+
+**Mechanic:** When orbital stations or megastructures in Layer 2 are destroyed or abandoned, they enter "Decaying Orbit." Over the course of several in-game years, massive chunks of debris rain down on the Layer 1 colony below. This causes random, catastrophic damage to tiles, but the impacts also leave behind highly advanced "Scrap Nodes" that provide a massive boost to research and exotic materials if harvested.
+
+**Emergence:** An enemy fleet destroys your orbital defense platform. The battle is lost, but the resulting decade of debris rain provides your struggling surface colony with enough exotic scrap to leapfrog the enemy's technology and build an unstoppable revenge fleet.
+
+**Tension:** Do you build expansive, fragile surface cities that will be crushed by the inevitable debris, or huddle in deep bunkers while brave scavengers risk death to harvest the sky?
+
+---
+## The Empathy Sink
+
+**Layer:** Cross-layer
+
+**Fantasy:** Outsourcing the psychological burden of a brutal empire to a single, miserable world.
+
+**Mechanic:** As a civilization scales (Layer 3), massive administrative and military actions generate abstract "Imperial Trauma." Players can construct a "Neural Sink" megastructure on a specific Layer 1 colony. This instantly zeroes out unrest and trauma across the entire empire by dumping it directly into the minds of the Pops living on that specific colony.
+
+**Emergence:** You build a utopian core empire, but your designated "Sink World" becomes a hellscape of constantly rioting, violently insane Pops who are experiencing the psychic backlash of a war happening ten parsecs away. Eventually, the Sink World rebels, threatening to sever the connection and flood the entire empire with centuries of compressed trauma simultaneously.
+
+**Tension:** Do you bear the emotional cost of your actions equally across your civilization, or create a horrifying scapegoat world to maintain a perfect, fragile utopia everywhere else?
+
+---
+## Somnambulant Megastructure
+
+**Layer:** 1 -> 2
+
+**Fantasy:** A massive, unconscious mass construction driven by a shared dream that builds a monument to the void.
+
+**Mechanic:** When a colony's collective Sleep Debt reaches critical levels, Pops begin perceiving "Phantom" workers, but in severe cases, entire populations enter a "Somnambulant Trance." They stop their normal jobs, board automated transports, and begin constructing bizarre, unsanctioned "Sleep-Shrines" on barren moons or asteroids (Layer 2). They are perfectly coordinated while asleep but wake up with no memory of the construction and massive starvation.
+
+**Emergence:** Your core industrial world suddenly falls silent. You check the system map and find half your population on an airless moon, having perfectly constructed a functional, highly advanced sensor array out of stolen reactor parts, but they are all now suffocating because they didn't bring life support.
+
+**Tension:** Do you disrupt the trance, saving their lives but risking violent sleep-deprived psychotic breaks, or let them finish the mysterious, highly advanced megastructure at the cost of half your workforce?
+
+---
