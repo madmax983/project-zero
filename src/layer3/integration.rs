@@ -147,10 +147,15 @@ pub fn language_drift_trade_bridge(
 pub fn endless_draft_bridge_system(
     mut commands: Commands,
     mut order_events: EventReader<crate::layer3::diplomacy::endless_draft::DraftOrderEvent>,
-    mut compliance_events: EventWriter<crate::layer3::diplomacy::endless_draft::DraftComplianceEvent>,
+    mut compliance_events: EventWriter<
+        crate::layer3::diplomacy::endless_draft::DraftComplianceEvent,
+    >,
     mut refusal_events: EventWriter<crate::layer3::diplomacy::endless_draft::DraftRefusalEvent>,
     mut chronicle_events: EventWriter<AddChronicleEvent>,
-    pop_query: Query<(Entity, Option<&crate::layer1::skills::Skills>), With<crate::layer1::pop::Pop>>,
+    pop_query: Query<
+        (Entity, Option<&crate::layer1::skills::Skills>),
+        With<crate::layer1::pop::Pop>,
+    >,
 ) {
     let mut drafted_pops = std::collections::HashSet::new();
 
@@ -163,8 +168,16 @@ pub fn endless_draft_bridge_system(
             }
 
             let physical_stat = if let Some(skills) = skills_opt {
-                let mining_xp = skills.xp.get(&crate::layer1::skills::SkillType::Mining).copied().unwrap_or(0.0);
-                let forestry_xp = skills.xp.get(&crate::layer1::skills::SkillType::Forestry).copied().unwrap_or(0.0);
+                let mining_xp = skills
+                    .xp
+                    .get(&crate::layer1::skills::SkillType::Mining)
+                    .copied()
+                    .unwrap_or(0.0);
+                let forestry_xp = skills
+                    .xp
+                    .get(&crate::layer1::skills::SkillType::Forestry)
+                    .copied()
+                    .unwrap_or(0.0);
                 mining_xp + forestry_xp // Approximation of physical stats
             } else {
                 0.0
@@ -176,16 +189,21 @@ pub fn endless_draft_bridge_system(
         }
 
         if eligible_pops.len() >= event.required_pops {
-            let pops_provided = eligible_pops.into_iter().take(event.required_pops).collect::<Vec<_>>();
+            let pops_provided = eligible_pops
+                .into_iter()
+                .take(event.required_pops)
+                .collect::<Vec<_>>();
             for &pop in &pops_provided {
                 drafted_pops.insert(pop);
                 commands.entity(pop).despawn();
             }
 
-            compliance_events.send(crate::layer3::diplomacy::endless_draft::DraftComplianceEvent {
-                sponsor: event.sponsor,
-                pops_provided,
-            });
+            compliance_events.send(
+                crate::layer3::diplomacy::endless_draft::DraftComplianceEvent {
+                    sponsor: event.sponsor,
+                    pops_provided,
+                },
+            );
 
             chronicle_events.send(AddChronicleEvent {
                 importance: EventImportance::Major,

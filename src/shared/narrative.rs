@@ -1,3 +1,12 @@
+//! The Procedural Narrative Generation System.
+//!
+//! This module provides the core engine for generating mad-libs style text from
+//! templates and fragments. It forms the backbone for procedural histories,
+//! event descriptions, and storytelling in SCALE.
+//!
+//! The main entry point is the [`NarrativeGenerator`], which is used alongside
+//! a [`NarrativeContext`] to fill in dynamic values (like names and dates).
+
 use bevy_ecs::prelude::*;
 use rand::seq::SliceRandom;
 use std::collections::HashMap;
@@ -96,6 +105,17 @@ impl std::fmt::Display for NarrativeSegment {
 }
 
 /// Context for story generation, holding values for slots.
+///
+/// ## Examples
+/// ```
+/// use scale::prelude::*;
+///
+/// let mut context = NarrativeContext::default();
+/// context.insert("CIV_NAME", "Terran Dominion");
+/// context.insert("YEAR", "2150");
+///
+/// assert_eq!(context.get("CIV_NAME"), Some(&"Terran Dominion".to_string()));
+/// ```
 #[derive(Debug, Default, Clone)]
 pub struct NarrativeContext {
     slots: HashMap<String, String>,
@@ -139,6 +159,21 @@ pub struct FragmentType {
 }
 
 /// The main generator system.
+///
+/// This struct holds the templates and fragments used to generate stories.
+/// It is usually populated via `NarrativeGenerator::from_embedded()`.
+///
+/// ## Examples
+/// ```
+/// use scale::prelude::*;
+///
+/// // Initialize with default embedded templates and fragments
+/// let generator = NarrativeGenerator::from_embedded();
+///
+/// // Or create an empty one and load custom files
+/// // let mut generator = NarrativeGenerator::default();
+/// // generator.load_from_files("./lore").unwrap();
+/// ```
 #[derive(Debug, Default, Resource)]
 pub struct NarrativeGenerator {
     templates: HashMap<String, Template>,
@@ -215,6 +250,23 @@ impl NarrativeGenerator {
     /// Create a generator pre-loaded from embedded lore files.
     ///
     /// Uses `include_str!` so it works on WASM (no filesystem access).
+    ///
+    /// ## Examples
+    /// ```
+    /// use scale::prelude::*;
+    ///
+    /// let generator = NarrativeGenerator::from_embedded();
+    ///
+    /// let mut context = NarrativeContext::default();
+    /// context.insert("CIV_NAME", "Terran Dominion");
+    /// context.insert("ORIGIN_STAR", "Sol Prime");
+    /// context.insert("YEAR", "2150");
+    /// context.insert("CIV_EPITHET", "The First Ones");
+    ///
+    /// // Generate a story from a template (e.g., "CIVILIZATION_RISE")
+    /// let story = generator.generate("CIVILIZATION_RISE", &context).unwrap();
+    /// println!("{}", story);
+    /// ```
     #[must_use]
     pub fn from_embedded() -> Self {
         let mut narrator = Self::default();
