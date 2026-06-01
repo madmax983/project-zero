@@ -227,6 +227,7 @@ fn init_simulation_resources(world: &mut World) {
 
     world.init_resource::<Events<crate::layer1::environment::disasters::DisasterEvent>>();
 
+    world.init_resource::<crate::layer2::culture::cultural_drift::HomeworldLocation>();
     world.init_resource::<Events<crate::layer2::tourism::disaster_tourism::GriefTouristArrivalEvent>>();
     world.init_resource::<Events<crate::layer2::station::ShipConstructionCompletedEvent>>();
 
@@ -739,6 +740,8 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
     ));
 
     schedule.add_systems((
+        crate::layer2::culture::cultural_drift::calculate_cultural_drift_system,
+        crate::layer2::culture::cultural_drift::handle_independence_system,
         crate::layer2::governance::apply_governor_effects_system,
         crate::layer2::governance::update_governor_ambition_system
             .after(crate::layer2::governance::apply_governor_effects_system),
@@ -1074,6 +1077,7 @@ mod tests {
         world.init_resource::<Events<crate::layer2::trade::penal_contracts::PrisonerDiedEvent>>();
         world.init_resource::<Events<crate::layer2::governance::RebellionEvent>>();
         world.init_resource::<Events<crate::layer1::environment::disasters::DisasterEvent>>();
+    world.init_resource::<crate::layer2::culture::cultural_drift::HomeworldLocation>();
         world.init_resource::<Events<crate::layer2::tourism::disaster_tourism::GriefTouristArrivalEvent>>();
         world.init_resource::<Events<crate::layer1::culture::celestial_cemeteries::ClearCemeteryEvent>>();
         world.init_resource::<Events<crate::layer2::celestial_library::LibraryDonationEvent>>();
