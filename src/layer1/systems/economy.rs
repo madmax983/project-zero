@@ -110,6 +110,7 @@ pub fn register(schedule: &mut Schedule) {
     schedule.add_systems(
         (
             restore_rest_in_housing_system,
+            crate::layer1::psychology::void_sleep::gravity_nightmares_system.after(restore_rest_in_housing_system),
             restore_leisure_system,
             crate::layer1::economy::apex_diet::apply_apex_mutations,
             crate::layer1::economy::apex_diet::process_apex_meat_consumption,

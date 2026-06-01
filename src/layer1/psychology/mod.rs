@@ -61,3 +61,5 @@ pub use void_sickness::*;
 pub use void_stare::*;
 pub mod teleport_psychosis;
 pub use teleport_psychosis::*;
+pub mod void_sleep;
+pub use void_sleep::*;

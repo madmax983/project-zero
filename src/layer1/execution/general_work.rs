@@ -489,6 +489,15 @@ pub fn calculate_work_amount(
         1.0
     };
 
+    let gravity_nightmare_modifier = if world
+        .get::<crate::layer1::psychology::void_sleep::GravityNightmare>(pop_entity)
+        .is_some()
+    {
+        0.8 // 20% efficiency penalty due to nightmares
+    } else {
+        1.0
+    };
+
     let amount = WORK_PER_TICK
         * tool_efficiency
         * morale_efficiency
@@ -501,7 +510,8 @@ pub fn calculate_work_amount(
         * infection_modifier
         * ghost_shift_modifier
         * hallucinating_modifier
-        * somnambulist_modifier;
+        * somnambulist_modifier
+        * gravity_nightmare_modifier;
 
     // Cap work amount to prevent logic bugs / economy exploits
     amount.min(1000.0)
