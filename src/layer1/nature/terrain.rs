@@ -257,14 +257,6 @@ pub fn generate_terrain(width: usize, height: usize) -> TerrainGrid {
         tiles,
     };
 
-    // Xeno-Artifacts (Spec 541)
-    let num_artifacts = rng.gen_range(1..=3);
-    for _ in 0..num_artifacts {
-        let x = rng.gen_range(0..width);
-        let y = rng.gen_range(0..height);
-        grid.set(x, y, TerrainType::Artifact);
-    }
-
     // Deep Crust Geomes Generation (Spec 515)
     for _ in 0..3 {
         let cx = rng.gen_range(0..width);
@@ -279,6 +271,14 @@ pub fn generate_terrain(width: usize, height: usize) -> TerrainGrid {
         };
 
         fill_rect(&mut grid.tiles, width, height, cx, cy, w, h, terrain_type);
+    }
+
+    // Xeno-Artifacts (Spec 541)
+    let num_artifacts = rng.gen_range(1..=3);
+    for _ in 0..num_artifacts {
+        let x = rng.gen_range(0..width);
+        let y = rng.gen_range(0..height);
+        grid.set(x, y, TerrainType::Artifact);
     }
 
     grid

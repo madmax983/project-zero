@@ -1,3 +1,4 @@
-1.  **Understand Current State**: I have implemented `336` Material Provenance, fixed the code, tested it, and checked it in with the appropriate markers in the backlog files.
-2.  **Complete pre-commit steps**: Complete pre commit steps to ensure proper testing, verification, review, and reflection are done.
-3.  **Submit the change**: Use the submit tool to finalize the task.
+1. Add `layer3/events/collapse.rs` implementation (RED and GREEN phase).
+2. Integrate with `layer3/mod.rs` to add the systems and events to the app.
+3. Call `pre_commit_instructions` and complete pre-commit steps.
+4. Use the submit tool to finalize the task.
