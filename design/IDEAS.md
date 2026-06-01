@@ -22103,3 +22103,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you maintain the perfect, predictable efficiency of the Anomaly Bureau, or dismantle it to allow for heroic acts, knowing you are also opening the door to catastrophic, unpredicted failures?
 
 ---
+
+## The Ghost Freighter
+
+**Layer:** 2 -> Cross-layer
+
+**Fantasy:** A massive automated bulk freighter arrives in system unannounced. It belongs to an empire that hasn't existed for 500 years.
+
+**Mechanic:** Periodically, a "Ghost Freighter" appears at the edge of the system and begins a slow, unstoppable transit toward a specific planet. It broadcasts ancient clearance codes and ignores all hails. If allowed to land/dock, it unloads massive amounts of incredibly rare, obsolete resources (or sometimes terrifying bioweapons), then attempts to load current cargo and leave.
+
+**Emergence:** You desperately need the resources it carries to win a war, but allowing it to land triggers an automatic quarantine from the Galactic Market (Layer 3) because the ship is flagged as a class-5 biohazard from a forgotten war.
+
+**Tension:** Do you destroy the invincible ship, potentially losing its priceless cargo and angering the automated defense network it belongs to, or let it land and risk plunging your colony into a historic plague?
+
+---
+
+## The Nostalgia Epidemic
+
+**Layer:** 1
+
+**Fantasy:** A colony paralyzed by a collective longing for a home they never knew.
+
+**Mechanic:** Pops that consume highly refined, imported Layer 3 luxury goods (like "Terran-brand" sensory recordings) can develop a "Nostalgia" affliction. Their stress drops to zero, but they refuse to work on any task that doesn't involve replicating ancient Earth architecture or art, drastically slowing colony progress.
+
+**Emergence:** Your brutal, highly efficient mining colony grinds to a halt because the miners refuse to dig unless the tunnels are shaped like 21st-century suburban streets, forcing you to redesign your entire extraction process to look like a neighborhood.
+
+**Tension:** Do you ban the luxury goods to restore efficiency, sparking a violent withdrawal rebellion, or slowly transform your colony into a useless, perfect museum to an extinct culture?
+
+---
+
+## Shadow Inheritance
+
+**Layer:** 1 -> 2
+
+**Fantasy:** The darkest secrets of the dead become the burden of the living.
+
+**Mechanic:** When a highly corrupt or criminal Pop (e.g., a Scapegoat or black market boss) dies, they don't just leave behind physical goods. They leave a "Shadow Inheritance" — a hidden network of blackmail, contraband stashes, and illicit debts. The Pop who inherits this (often an innocent family member) is suddenly thrust into a dangerous position, forced to manage criminal enterprises they don't understand to avoid being assassinated by rival factions.
+
+**Emergence:** Your colony's most beloved, pacifist teacher inherits the local smuggling ring from their estranged uncle. They try to dismantle it peacefully, but their incompetence leads to a violent turf war that spills into the school district.
+
+**Tension:** Do you aggressively investigate and seize Shadow Inheritances, destroying families and causing massive unrest, or turn a blind eye, allowing the criminal underground to persist across generations?
+
+---
