@@ -8597,3 +8597,13 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: The hoarded [ISOTOPE_NAME] [ISOTOPE_DECAY]. A fortune lost."
 - "We bled for that [ISOTOPE_NAME], and then it [ISOTOPE_DECAY]. [COLONY] mourns for nothing. [YEAR]."
 - "The rush was for nothing. The [ISOTOPE_NAME] [ISOTOPE_DECAY] before the market opened. [YEAR]."
+
+## Template: RUIN_DISCOVERY
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [RUIN_CIV], [RUIN_AGE], [ARTIFACT]?
+
+**Patterns:**
+- "[COLONY] surveyors report structures. Old. Not ours."
+- "They found [RUIN_CIV] beneath the soil of [COLONY]. Dead [RUIN_AGE] years."
+- "Year [YEAR]: [COLONY] is not the first. [RUIN_CIV] was here. [RUIN_CIV] is gone."
