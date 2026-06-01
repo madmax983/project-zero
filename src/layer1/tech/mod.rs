@@ -453,8 +453,10 @@ pub fn process_research_system(
     factions: Option<Res<Factions>>,
     bloat_query: Query<&self::legacy_code::Bloat>,
     archive: Option<Res<self::infinite_archive::Archive>>,
+    mut library_workers: Local<bevy::utils::HashMap<Entity, u32>>,
 ) {
-    let mut library_workers = std::collections::HashMap::<Entity, u32>::new();
+    // ⚡ Bolt Optimization: Uses `Local` and `bevy::utils::HashMap` to eliminate frame-by-frame heap allocations and speed up entity hashing.
+    library_workers.clear();
 
     for (assignment, member_opt) in &pops {
         if assignment.assignment_type == AssignmentType::LibraryWorker {
