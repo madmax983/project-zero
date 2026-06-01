@@ -674,7 +674,7 @@ See `design/IDEAS.md` for unspecced concepts.
 
 
 
-- [ ] `1070` Feral Infrastructure — `specs/1070-feral-infrastructure.md`
+
 
 
 

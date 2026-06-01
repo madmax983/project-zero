@@ -183,7 +183,7 @@ mod tests {
     fn test_drone_becomes_feral_on_disconnect() {
         use crate::layer1::building::{Building, BuildingType};
         use crate::layer1::drone::Drone;
-        use crate::layer1::drone::{ConnectedTo, DroneState, FeralDrone};
+        use crate::layer1::drone::{ConnectedTo, DroneState, FeralDrone, GridConnection};
         use crate::layer1::energy::PowerConsumer;
 
         let mut app = setup_app();
@@ -207,6 +207,10 @@ mod tests {
                     state: DroneState::Hauling,
                 },
                 ConnectedTo(command_center),
+                GridConnection {
+                    is_connected: true,
+                    time_disconnected: 4999, // About to go feral
+                }
             ))
             .id();
 
@@ -222,6 +226,81 @@ mod tests {
             app.world().get::<Drone>(drone).unwrap().state,
             DroneState::Feral
         );
+    }
+
+    #[test]
+    fn test_drone_goes_feral_when_disconnected_from_grid() {
+        use crate::layer1::drone::{Drone, GridConnection, ConnectedTo};
+        use crate::shared::time::SimulationTime;
+        let mut app = setup_app();
+        app.init_resource::<SimulationTime>();
+
+        let dummy_hub = app.world_mut().spawn_empty().id();
+
+        let drone_entity = app
+            .world_mut()
+            .spawn((
+                Drone::default(),
+                ConnectedTo(dummy_hub),
+                GridConnection {
+                    is_connected: false,
+                    time_disconnected: 0,
+                },
+            ))
+            .id();
+
+        // Act: Advance time beyond the feral threshold (e.g., 5000 ticks)
+        let mut time = app.world_mut().resource_mut::<SimulationTime>();
+        time.tick = 5001;
+
+        let mut connection = app
+            .world_mut()
+            .get_mut::<GridConnection>(drone_entity)
+            .unwrap();
+        connection.time_disconnected = 5001;
+
+        app.update(); // check_drone_connection runs
+
+        // Assert
+        let drone = app.world().entity(drone_entity);
+        assert!(
+            drone.contains::<crate::layer1::drone::FeralDrone>(),
+            "Drone should become feral after prolonged disconnection"
+        );
+    }
+
+    #[test]
+    fn test_feral_drone_reproduces_when_hoard_is_full() {
+        use crate::layer1::drone::{Drone, DroneState, FeralDrone};
+        use crate::layer1::map::GridPosition;
+        use crate::layer1::resources::{ResourceItem, ResourceType};
+
+        let mut app = setup_app();
+        let drone = app
+            .world_mut()
+            .spawn((
+                Drone {
+                    state: DroneState::Feral,
+                },
+                FeralDrone {
+                    hoard: vec![ResourceItem {
+                        resource_type: ResourceType::Metal,
+                        amount: 10.0,
+                    }; 5], // 5 items in hoard
+                },
+                GridPosition { x: 0, y: 0 },
+            ))
+            .id();
+
+        // Act
+        app.update(); // process_feral_drones runs
+
+        // Assert
+        let feral_drone = app.world().get::<FeralDrone>(drone).unwrap();
+        assert!(feral_drone.hoard.is_empty(), "Hoard should be consumed");
+
+        let mut query = app.world_mut().query::<&FeralDrone>();
+        assert_eq!(query.iter(app.world()).count(), 2, "A new Feral Drone should be spawned");
     }
 
     #[test]

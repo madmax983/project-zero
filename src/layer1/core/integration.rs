@@ -856,6 +856,7 @@ pub fn drone_spawner_bridge_system(
                     state: crate::layer1::drone::DroneState::Idle,
                 },
                 crate::layer1::drone::ConnectedTo(hub_entity),
+                crate::layer1::drone::GridConnection::default(),
                 *pos,
                 crate::layer1::utility_ai::PopAction::default(),
                 crate::layer1::drone::DroneBattery {
