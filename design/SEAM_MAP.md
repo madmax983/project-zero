@@ -1321,3 +1321,9 @@
 - **Systems connected:** `TraceGasGrid` -> `vacuum_clears_pollution_system`
 - **Glue added:** Modified `vacuum_clears_pollution_system` in `src/layer1/core/integration.rs` to clear trace gases (Euphoric, Fear, Rage) from `TraceGasGrid` when exposed to vacuum.
 - **Tests:** Added `test_vacuum_clears_trace_gases` to `tests/integration/atmosphere_vacuum.rs`.
+
+### INT-878: Solar Flare Lottery -> Chronicle
+- **Date:** 2024-05-31
+- **Systems connected:** `SolarFlareEvent` -> `solar_flare_chronicle_bridge` -> `AddChronicleEvent`
+- **Glue added:** Added `solar_flare_chronicle_bridge` in `src/layer1/core/integration.rs` to record a major event in the Chronicle when a solar flare strikes.
+- **Tests:** `tests/integration/solar_flare_chronicle_bridge.rs`

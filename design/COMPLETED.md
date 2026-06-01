@@ -679,3 +679,4 @@
 - [x] `1123` Void-Tethered Sleep — `specs/1123-void-tethered-sleep.md` — completed 2026-02-01
 - [x] `1070` Feral Infrastructure — `specs/1070-feral-infrastructure.md` — completed 2026-02-01
 - [x] `1109` Wormhole Dumping — `specs/1109-wormhole-dumping.md` — completed 2026-10-31
+- [x] `INT-878` Integration: Solar Flare Lottery -> Chronicle - completed 2024-05-31
