@@ -2405,3 +2405,16 @@ pub fn kinetic_battery_chronicle_bridge(
         }
     }
 }
+
+/// INT-878: Bridges SolarFlareEvent to AddChronicleEvent (Chronicle).
+pub fn solar_flare_chronicle_bridge(
+    mut flare_events: EventReader<crate::layer1::nature::solar_flare_lottery::SolarFlareEvent>,
+    mut chronicle_events: EventWriter<crate::layer1::core::chronicle::AddChronicleEvent>,
+) {
+    for _ in flare_events.read() {
+        chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
+            text: "A massive solar flare has struck the colony! Unshielded electronics are damaged and exposed pops are at risk of radiation sickness.".to_string(),
+            importance: crate::layer1::core::chronicle::EventImportance::Major,
+        });
+    }
+}
