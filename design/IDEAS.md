@@ -22061,3 +22061,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you harvest the "divine gifts" to fuel your war machine and risk a massive religious uprising, or do you respect the cult to maintain perfect societal harmony while your industrial base starves?
 
 ---
+
+## Load-Bearing Superstition
+
+**Layer:** 1 -> Cross-Layer
+
+**Fantasy:** A misunderstanding of how ancient technology works becomes a sacred, unbreakable ritual.
+
+**Mechanic:** When a highly advanced building suffers a critical malfunction and is repaired by a low-skill Pop, that Pop might perform a "Superstitious Ritual" (e.g., kicking the console, offering a ration, burning incense). If the machine successfully restarts, the ritual becomes mandated. Attempting to run the building *without* the ritual later causes massive efficiency drops or outright sabotage by the terrified workers, even if fully repaired by a master engineer.
+
+**Emergence:** You finally train a team of elite quantum engineers to maintain your capital's fusion core. However, the core requires a daily offering of synthetic meat because a janitor "fixed" it that way fifty years ago. Your engineers refuse to work without the meat, forcing you to maintain a sprawling, inefficient agricultural sector just to feed a machine that doesn't eat.
+
+**Tension:** Do you violently purge the superstition, risking the immediate collapse of your power grid due to worker panic, or permanently dedicate a chunk of your economy to a useless ritual?
+
+---
+
+## The Translation Cascade
+
+**Layer:** Cross-layer
+
+**Fantasy:** Interstellar diplomacy collapses because a minor regional dialect adopted an offensive slang term for a vital trade good.
+
+**Mechanic:** As colonies isolate, their local languages undergo "Procedural Drift." Trade agreements and treaties with Layer 3 empires are written in a central "Standard" language. However, if a Layer 1 colony heavily involved in producing a trade good drifts too far linguistically, their local documentation ceases to match standard trade manifests. Shipments are flagged as contraband, diplomatic insults are generated automatically by translation software, and trade routes collapse.
+
+**Emergence:** You secure a vital peace treaty by exporting "Hydro-Wheat." A century later, your agricultural sector slang evolves, and they start labeling the manifests as "Slime-Stalk." The recipient empire's automated sensors classify "Slime-Stalk" as a biological weapon, and they glass your farming world from orbit without ever declaring war.
+
+**Tension:** Do you invest heavily in draconian, omnipresent "Standardization Academies" that crush local culture and morale, or risk accidental apocalyptic wars due to changing slang?
+
+---
+
+## Bureaucracy of Miracles
+
+**Layer:** 1 -> 2
+
+**Fantasy:** The system works so perfectly that anyone who beats the odds is immediately audited.
+
+**Mechanic:** In a highly developed, automated colony, statistical norms are heavily enforced by the administration. If a Pop survives a disaster with 1% survival odds, or a factory produces double its quota due to sheer luck, the "Anomaly Bureau" spawns. They freeze the Pop's assets, quarantine the factory, and launch a massive, resource-draining investigation to figure out *why* the simulation failed, treating luck as a structural threat.
+
+**Emergence:** Your colony is starving. A lone, desperate farmer miraculously discovers a high-yield mutated crop in the irradiated zone, enough to save everyone. Instead of celebrating, the Anomaly Bureau arrests the farmer for statistical deviance and locks the food in an evidence vault while the colony starves to death outside.
+
+**Tension:** Do you maintain the perfect, predictable efficiency of the Anomaly Bureau, or dismantle it to allow for heroic acts, knowing you are also opening the door to catastrophic, unpredicted failures?
+
+---
