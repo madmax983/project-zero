@@ -9043,3 +9043,12 @@ The danger of the day or night side.
 - traded their life for a handful of [ISOTOPE_NAME]
 - returned with terrible burns, but wealthy
 - succumbed to the fever before spending their share
+
+## Fragment Type: [RUIN_STATE]
+
+- crumbled
+- half-buried
+- perfectly preserved
+- partially excavated by [UNKNOWN]
+- deliberately destroyed
+- still humming with power
