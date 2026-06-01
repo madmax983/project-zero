@@ -76,8 +76,7 @@ mod tests {
     use bevy_ecs::system::RunSystemOnce;
 
     fn setup_app() -> World {
-        let world = World::new();
-        world
+        World::new()
     }
 
     #[test]
