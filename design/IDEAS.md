@@ -22402,3 +22402,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Emergence:** Your mining colony runs out of ore. Instead of starving or rebelling, the miners simply start cataloging the exact dimensions of the empty tunnels. They become a massive, bizarre think-tank, exporting philosophical treatises on the nature of emptiness to the rest of the galaxy while slowly starving to death in the dark.
 
 **Tension:** Do you forcibly re-train these meticulous, obsessed scholars back into manual labor to save the physical colony, or fully embrace their madness and transition your entire economy to selling abstract data about your own demise?
+
+## Flesh Resumes
+
+**Layer:** 1
+
+**Fantasy:** Pops recording their work experience directly into their physical bodies.
+
+**Mechanic:** In a colony with high genetic engineering capabilities but poor data infrastructure, Pops begin using "Flesh Resumes." They intentionally cultivate specific, visible scars, bioluminescent tattoos, or minor mutations to serve as verifiable proof of their skills. A high-level engineer might have glowing circuits etched into their skin, while a master miner has deliberately hardened, calloused hands.
+
+**Emergence:** When a famine hits, Pops with agricultural "Flesh Resumes" are suddenly the most valuable. However, a black market emerges where Pops undergo painful, risky surgery to fake these physical markers to get better jobs, leading to a wave of incompetent workers with impressive-looking, but fake, mutations causing industrial accidents.
+
+**Tension:** Do you rely on verifiable, physical markers of skill, knowing it encourages dangerous body modification, or invest heavily in a centralized, abstract data system that is vulnerable to hacking?
+
+---
+
+## The DRM Armada
+
+**Layer:** 2 -> 3
+
+**Fantasy:** Buying a fleet of incredibly advanced ships, only to realize you don't actually own them.
+
+**Mechanic:** A hyper-capitalist Layer 3 empire offers to sell you a fleet of cutting-edge warships at a massive discount. However, the ships have strict Digital Rights Management (DRM). You have to pay a subscription fee per ship, per month. If you miss a payment, the ships automatically shut down their engines and weapons, even in the middle of a battle.
+
+**Emergence:** You buy the DRM Armada and use it to successfully expand your empire. Then, your economy crashes, and you miss a subscription payment. Your entire invincible fleet suddenly turns off in the middle of hostile space, and you have to frantically sell off colony assets to pay the galactic corporate overlords before your ships are destroyed by pirates.
+
+**Tension:** Do you leverage cheap, powerful military force with the constant, terrifying risk of it being remotely deactivated, or slowly and painfully build your own, slightly less advanced, but fully independent fleet?
+
+---
+
+## The Prophetic Misprint
+
+**Layer:** Cross-layer
+
+**Fantasy:** A typo in a bureaucratic document that accidentally predicts the future, causing mass hysteria.
+
+**Mechanic:** Due to a rounding error in the colony's central planning algorithm, a shipment manifest (Layer 2) predicts that a colony will need zero food next month, implying everyone will be dead. The document is misfiled and leaked to the public. Pops interpret this not as a glitch, but as a leak of a top-secret government plan to exterminate them.
+
+**Emergence:** The colony, perfectly healthy and well-fed, erupts into a violent rebellion because they believe they are scheduled for execution next Tuesday. The rebellion destroys the very agricultural centers that were feeding them, creating a self-fulfilling prophecy where the colony does, indeed, need zero food next month because everyone starved during the civil war.
+
+**Tension:** Do you aggressively censorship the glitch (which makes it look even more like a conspiracy), or try to logically explain a bureaucratic error to a panicked, terrified populace?
+
+---
