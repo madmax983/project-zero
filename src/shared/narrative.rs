@@ -4,8 +4,8 @@
 //! templates and fragments. It forms the backbone for procedural histories,
 //! event descriptions, and storytelling in SCALE.
 //!
-//! The main entry point is the [`NarrativeGenerator`], which is used alongside
-//! a [`NarrativeContext`] to fill in dynamic values (like names and dates).
+//! The main entry point is the [`NarrativeGenerator`](crate::shared::narrative::NarrativeGenerator), which is used alongside
+//! a [`NarrativeContext`](crate::shared::narrative::NarrativeContext) to fill in dynamic values (like names and dates).
 
 use bevy_ecs::prelude::*;
 use rand::seq::SliceRandom;
