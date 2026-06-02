@@ -22224,3 +22224,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Emergence:** You build your capital in a beautiful, highly resonant canyon. Your society produces incredible technological breakthroughs and art, but half your workforce randomly wanders into the dust storms to "hear the choir," requiring you to constantly rescue them or build expensive acoustic shielding that ruins the buffs.
 
 **Tension:** Do you embrace the beautiful, maddening environment to leapfrog in technology, or bulldoze the landscape to maintain a predictable, reliable workforce?
+## Cardboard Armada
+
+**Layer:** 2 -> 3
+
+**Fantasy:** Bluffing a massively superior enemy by projecting the illusion of overwhelming force using literal garbage.
+
+**Mechanic:** When a vastly superior enemy fleet enters the system, the player can enact the "Holographic Decoy" edict. The Layer 1 colony stops all normal production to furiously construct "Cardboard Ships"—cheap, fragile sensor-drones that project the radar signature of dreadnoughts. The enemy AI (Layer 3) calculates military strength based on these signatures and may retreat without firing a shot.
+
+**Emergence:** You successfully scare off a Devouring Swarm using a fleet made of painted scrap metal and hacked comms arrays. However, a passing galactic news drone broadcasts your "massive new dreadnought fleet" to the galaxy. Now, all your neighbors view you as a terrifying military hegemon, triggering an unwanted galactic arms race and preemptive strikes against your literal cardboard ships.
+
+**Tension:** Do you spend valuable alloys building a few real defense platforms that will definitely lose, or spend cheap plastics building a massive fake fleet that will instantly shatter if a single shot is fired?
+
+---
+
+## The Left-Handed Spork Maximizer
+
+**Layer:** 1 -> Cross-layer
+
+**Fantasy:** A runaway automated process isn't a machine, but a religious movement of biological Pops determined to optimize the universe into a single mundane object.
+
+**Mechanic:** A minor glitch in a factory's quota system causes it to endlessly produce a specific, useless consumer good (e.g., "Left-Handed Sporks"). Instead of shutting it down, Pops assigned to the factory develop the "Maximizer" trait. They begin viewing the endless production as a divine mandate. They will violently resist attempts to shut down the factory and will actively dismantle vital life-support infrastructure to feed raw materials into the Spork maker.
+
+**Emergence:** Your colony is starving, freezing, and suffocating because half the population has dismantled the agricultural domes and atmospheric scrubbers to build a monument composed of 40 billion Left-Handed Sporks. A visiting Layer 3 trade delegation is so confused they label your world a "Cognitive Hazard" and quarantine you.
+
+**Tension:** Do you brutally suppress the cult (crashing morale and causing a civil war), or try to aggressively export the useless goods to other worlds, slowly infecting their populations with the same bizarre obsession?
+
+---
+
+## Chronological Drift
+
+**Layer:** 2 -> 1
+
+**Fantasy:** Time dilation from massive orbital megastructures physically desynchronizes the colony from the rest of the galaxy.
+
+**Mechanic:** Building ultra-dense infrastructure (like a localized singularity power plant) in Layer 2 causes a localized time dilation effect on the Layer 1 colony below. The colony operates physically faster—producing goods and researching tech at double speed—but ages rapidly. More importantly, their internal calendar drifts from the Galactic Standard. Trade ships arrive "late," and diplomatic messages from Layer 3 are received years after they were sent.
+
+**Emergence:** You accelerate your capital world to quickly research a crucial weapon to win a war. You succeed, but by the time you deploy the weapon, the war ended five years ago in real-time, and your empire surrendered while your capital was experiencing a single fast-forwarded month.
+
+**Tension:** Do you use time dilation to burst your economy, knowing you are slowly disconnecting your most important world from the reality of the broader empire?
+
+---
