@@ -22185,3 +22185,42 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you disrupt the trance, saving their lives but risking violent sleep-deprived psychotic breaks, or let them finish the mysterious, highly advanced megastructure at the cost of half your workforce?
 
 ---
+## The Dietary Substrate
+
+**Layer:** 1 -> 2
+
+**Fantasy:** Food isn't just fuel; it's the physical foundation of memory and culture, and changing diets literally rewrites society.
+
+**Mechanic:** Different food sources (e.g., Synthetic Rations, Deep-Crust Fungi, Imported Layer-3 Delicacies) carry unique "Dietary Signatures". A colony that consumes exclusively one type of food for a generation begins to physiologically and psychologically adapt. "Fungus-eaters" become highly resistant to radiation but deeply lethargic; "Synth-eaters" are hyper-efficient but unable to form deep relationships.
+
+**Emergence:** You import cheap synthetic rations to fuel a massive industrial boom. Two generations later, your economy is incredibly efficient, but your society completely loses the concept of "art" or "recreation", leading to a sudden, inexplicable collapse of your entire cultural influence sphere.
+
+**Tension:** Do you optimize food production for maximum efficiency, knowing you are slowly breeding a society of emotionless drones, or maintain complex, expensive agriculture to preserve your colony's humanity?
+
+---
+
+## The Transmission Cult
+
+**Layer:** 2 -> Cross-Layer
+
+**Fantasy:** A religious order forms around maintaining the physical infrastructure of a long-dead communication network.
+
+**Mechanic:** Ancient, massive "Hyper-Relays" exist in some systems (Layer 2). They are completely non-functional for modern FTL communication, but they require constant, incredibly dangerous maintenance on the Layer 1 surface to keep their fusion cores from detonating. Pops assigned to this maintenance form the "Transmission Cult," believing they are "keeping the channel open for the ancestors."
+
+**Emergence:** You discover a system with a Hyper-Relay and conquer it. You immediately shut down the useless, dangerous maintenance work to free up labor. The Transmission Cult immediately launches a holy war against you, detonating the relay's core and turning the planet into a radioactive wasteland just to "send the final message."
+
+**Tension:** Do you tolerate a massive, pointless labor sink to appease a dangerous cult, or risk catastrophic sabotage by trying to drag them into the modern era?
+
+---
+
+## The Dust Choir
+
+**Layer:** 1
+
+**Fantasy:** The byproduct of a dying world creates a haunting, physically resonant atmosphere that alters behavior.
+
+**Mechanic:** Extremely old or heavily strip-mined planets generate "Resonant Dust". When the wind blows, this dust creates complex, localized acoustic patterns—the "Dust Choir". Pops living in areas with high resonance gain massive "Inspiration" and "Creativity" buffs, but also suffer from severe "Melancholy" and a high chance to simply stop working to listen.
+
+**Emergence:** You build your capital in a beautiful, highly resonant canyon. Your society produces incredible technological breakthroughs and art, but half your workforce randomly wanders into the dust storms to "hear the choir," requiring you to constantly rescue them or build expensive acoustic shielding that ruins the buffs.
+
+**Tension:** Do you embrace the beautiful, maddening environment to leapfrog in technology, or bulldoze the landscape to maintain a predictable, reliable workforce?
