@@ -682,3 +682,4 @@
 - [x] `1109` Wormhole Dumping — `specs/1109-wormhole-dumping.md` — completed 2026-10-31
 - [x] `INT-878` Integration: Solar Flare Lottery -> Chronicle - completed 2024-05-31
 - [x] `1110` Dead Internet — `specs/1110-dead-internet.md` — completed 2026-06-02
+- [x] `550` The Gravity Siphon — `specs/550-the-gravity-siphon.md` — completed 2024-06-03
