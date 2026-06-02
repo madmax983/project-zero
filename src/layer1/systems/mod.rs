@@ -15,6 +15,7 @@ use bevy_ecs::prelude::*;
 
 pub mod cleanup;
 pub mod consumption;
+pub mod dead_hand;
 pub mod economy;
 pub mod environment;
 pub mod execution;
@@ -64,4 +65,5 @@ pub fn register_layer1_systems(schedule: &mut Schedule) {
     environment::register(schedule);
     consumption::register(schedule);
     observation::register(schedule);
+    dead_hand::register(schedule);
 }

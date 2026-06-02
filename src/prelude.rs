@@ -30,6 +30,7 @@ pub struct OralTradition {
 
 #[cfg(not(feature = "nova"))]
 #[allow(deprecated)]
+#[allow(clippy::derivable_impls)]
 impl Default for OralTradition {
     fn default() -> Self {
         Self {

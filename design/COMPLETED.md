@@ -1,3 +1,4 @@
+- [x] `1056` The Dead Hand — `specs/1056-the-dead-hand.md` — completed 2024-05-31
 - [x] `554` The Phantom Signal — `specs/554-the-phantom-signal.md` — completed 2026-05-31
 - [x] `494` Symbiotic Habitation — `specs/494-symbiotic-habitation.md` — completed 2026-05-26
 - [x] `1067` The Void Sirens — `specs/1067-the-void-sirens.md` — completed 2026-02-01
