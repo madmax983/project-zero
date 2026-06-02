@@ -6340,7 +6340,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Sartorial Rebellion
+## Sartorial Rebellion [SPECCED]
 
 **Layer:** 1
 
