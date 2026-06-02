@@ -9052,3 +9052,36 @@ The danger of the day or night side.
 - partially excavated by [UNKNOWN]
 - deliberately destroyed
 - still humming with power
+
+## Fragment Type: [NIGHTMARE_THEME]
+What a void-tethered sleeper dreams of.
+
+- falling endlessly
+- the crushing weight of the soil
+- the ceiling closing in
+- the sound of dirt hitting metal
+- drowning in gravity
+- the planet swallowing them whole
+- a sky that never moves
+
+## Fragment Type: [FERAL_DRONE_NAME]
+What disconnected worker drones become known as.
+
+- Scrap-Spiders
+- the Metallic Swarm
+- Rust-Crawlers
+- the Forgotten Harvesters
+- Feral Diggers
+- the Iron Locusts
+- Orphan Machines
+
+## Fragment Type: [DUMPED_MATERIAL]
+What you threw into the wormhole.
+
+- toxic slurry
+- radioactive ash
+- biological waste
+- failed experiments
+- three thousand tons of scrap
+- the remains of the old factory
+- something that was still twitching
