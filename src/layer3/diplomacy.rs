@@ -7,6 +7,7 @@ use bevy::prelude::*;
 pub mod brain_drain;
 pub mod cultural_pressure;
 pub mod cultural_ransom;
+pub mod dead_internet;
 pub mod endless_draft;
 pub mod fading_homeworld;
 pub mod proxy_wars;

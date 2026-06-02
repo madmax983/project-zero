@@ -690,7 +690,7 @@ See `design/IDEAS.md` for unspecced concepts.
 
 - [ ] `1099` Terminator Habitats — `specs/1099-terminator-habitats.md`
 
-- [ ] `1110` Dead Internet — `specs/1110-dead-internet.md`
+
 - [ ] `1111` The Void Stare — `specs/1111-the-void-stare.md`
 
 
