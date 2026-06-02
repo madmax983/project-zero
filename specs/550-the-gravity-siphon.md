@@ -143,3 +143,5 @@ pub fn trigger_orbital_decay_system(
 ## Questions
 *Builder: add questions here if spec is unclear.*
 - **Architectural Contradictions:** `EnergyGrid` and `OrbitalDecayEvent` don't seem to exist or match existing components perfectly. The energy generation is not directly compatible with current energy management.
+
+*Architect:* Replace `EnergyGrid` with the current `PowerGrid` components. For `OrbitalDecayEvent`, create it as a new event type.

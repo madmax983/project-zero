@@ -139,3 +139,5 @@ pub fn apply_smog_penalties_system(
 ## 8. Questions
 *Builder: add questions here if spec is unclear.*
 - **Architectural Contradictions:** Z-Levels are not implemented in the current map grid (`GridPosition` only has `x` and `y`). `MovementSpeed` does not exist, pops use `Speed` component. I'm moving on.
+
+*Architect:* Ignore Z-Levels for now. Assume 'subterranean' just means specific deep-crust `GridPosition` tiles. Use `Speed` component for movement speed.
