@@ -4400,3 +4400,18 @@ VACUUM_SHADOW_INCIDENT:
 - FLARE_ISOTOPE_RUSH -> increases_chance -> POP_DEATH_SURGE (prospectors)
 - EMP_BLACKOUT -> enables -> MAINTENANCE_DEBT_SURGE, WORK_STOPPAGE
 - EMP_BLACKOUT -> increases_chance -> COLONY_FAMINE (if hydroponics fail)
+
+## Void-Tethered Sleep Chaining (Spec 1123)
+
+- VOID_SLEEP → increases_chance → GRAVITY_NIGHTMARE
+- SUSPENSION_POD_BUILT → decreases_chance → GRAVITY_NIGHTMARE
+
+## Feral Infrastructure Chaining (Spec 1070)
+
+- DRONE_DISCONNECT → enables → DRONES_GO_FERAL
+- DRONES_GO_FERAL → enables → FERAL_NEST_ENCOUNTERED, RESOURCE_SHORTAGE, POP_DEATH
+
+## Wormhole Dumping Chaining (Spec 1109)
+
+- WORMHOLE_DUMP → causes → WASTE_DUMPED
+- WASTE_DUMPED → increases_chance → DIPLOMATIC_THREAT_RECEIVED, WAR

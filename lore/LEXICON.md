@@ -5390,3 +5390,33 @@
 **Usage:**
 - "The Grid-Burn wiped out our primary communications array."
 - "When the flare hit, the unprotected sectors fell to The Great Silence."
+
+## Gravity Nightmare
+
+**Code reference:** `GravityNightmare` component
+**Usage:** The specific psychological terror experienced by void-tethered pops when trying to sleep in gravity.
+**Tone:** Suffocating, claustrophobic. "They suffer from gravity nightmares."
+
+## Void Sleep
+
+**Code reference:** `VoidSleep` component
+**Usage:** The condition of pops who have spent too long in zero-G and can no longer rest normally on a planet.
+**Tone:** Permanent detachment. "They are tethered to the void."
+
+## Suspension Pod
+
+**Code reference:** `ZeroGSuspensionPod` component
+**Usage:** The specialized bed required for void-tethered pops.
+**Tone:** A coffin that floats. "They require a suspension pod to find peace."
+
+## Feral Drone
+
+**Code reference:** `Feral` component
+**Usage:** Drones that have disconnected from the grid and reverted to survival programming.
+**Tone:** Hostile ecology. "The drones went feral."
+
+## Disposal Gate
+
+**Code reference:** `DisposalGate` component
+**Usage:** The mechanism used to dump waste into a wormhole.
+**Tone:** Irresponsible engineering. "We fired it into the Disposal Gate."

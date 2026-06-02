@@ -8607,3 +8607,56 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[COLONY] surveyors report structures. Old. Not ours."
 - "They found [RUIN_CIV] beneath the soil of [COLONY]. Dead [RUIN_AGE] years."
 - "Year [YEAR]: [COLONY] is not the first. [RUIN_CIV] was here. [RUIN_CIV] is gone."
+
+## Void-Tethered Sleep Templates (Spec 1123)
+
+## Template: GRAVITY_NIGHTMARE
+**Generates:** Play event (chronicle during game)
+**Slots:** [COLONY], [YEAR], [POP_NAME], [NIGHTMARE_THEME]
+**Patterns:**
+- "[YEAR]: [POP_NAME] woke screaming. The gravity of [COLONY] feels like a tomb. They dream of [NIGHTMARE_THEME]."
+- "They cannot sleep in normal beds. [POP_NAME] is tethered to the void. The dream: [NIGHTMARE_THEME]. [YEAR]."
+- "[YEAR]. [POP_NAME] is suffering from the weight of [COLONY]. A pod is required to escape [NIGHTMARE_THEME]."
+
+## Template: SUSPENSION_POD_BUILT
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR]
+**Patterns:**
+- "[YEAR]: [COLONY] installed a suspension pod. The void-sleepers can rest."
+- "The first pod is online. Zero-G rest for those who cannot bear the gravity of [COLONY]. [YEAR]."
+
+## Feral Infrastructure Templates (Spec 1070)
+
+## Template: DRONES_GO_FERAL
+**Generates:** Play event (warning)
+**Slots:** [COLONY], [YEAR], [FERAL_DRONE_NAME]
+**Patterns:**
+- "[YEAR]: We lost connection. The [FERAL_DRONE_NAME] have stopped answering [COLONY] commands and begun self-repairing."
+- "The grid is down too long. [FERAL_DRONE_NAME] reverted to survival subroutines. They are harvesting on their own. [YEAR]."
+- "[YEAR]. A new ecology is born on [COLONY]. [FERAL_DRONE_NAME] are no longer ours."
+
+## Template: FERAL_NEST_ENCOUNTERED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [FERAL_DRONE_NAME]
+**Patterns:**
+- "[YEAR]: Colonists from [COLONY] stumbled into a nest of [FERAL_DRONE_NAME]. Metallic ecology at work."
+- "[COLONY] surveyors found where the [FERAL_DRONE_NAME] take the scrap. A self-replicating horror. [YEAR]."
+
+## Wormhole Dumping Templates (Spec 1109)
+
+## Template: WASTE_DUMPED
+**Generates:** Play event (chronicle during game)
+**Slots:** [COLONY], [YEAR], [DUMPED_MATERIAL], [RECEIVING_FACTION]?
+**Patterns:**
+- "[YEAR]: [COLONY] fired [DUMPED_MATERIAL] through the Disposal Gate. The void takes it."
+- "We made our garbage someone else's problem. [DUMPED_MATERIAL] was vented into the wormhole. [YEAR]."
+**If [RECEIVING_FACTION]:**
+- "[YEAR]: The Disposal Gate sent [DUMPED_MATERIAL] directly into [RECEIVING_FACTION] space. They noticed."
+- "[RECEIVING_FACTION] sensors detected our [DUMPED_MATERIAL] emerging from the anomaly. Diplomatic incident logged. [YEAR]."
+
+## Template: DIPLOMATIC_THREAT_RECEIVED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [RECEIVING_FACTION]
+**Patterns:**
+- "[YEAR]: A transmission from [RECEIVING_FACTION]. They do not appreciate what [COLONY] dropped in their gravity well."
+- "[RECEIVING_FACTION] promises retaliation if [COLONY] continues using the void as a landfill. [YEAR]."
