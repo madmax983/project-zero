@@ -28,6 +28,8 @@ pub mod sky_tether;
 pub use sky_tether::*;
 
 pub use auroral::update_auroral_output_system;
+pub mod gravity_siphon;
+pub use gravity_siphon::*;
 
 /// Emits power to the grid.
 #[derive(Component, Debug, Clone)]
