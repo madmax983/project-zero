@@ -22265,3 +22265,140 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you use time dilation to burst your economy, knowing you are slowly disconnecting your most important world from the reality of the broader empire?
 
 ---
+## The Phantom Metropolis
+
+**Layer:** 1
+
+**Fantasy:** A city that only exists in the collective memory of the colony, demanding resources to maintain its invisible infrastructure.
+
+**Mechanic:** When a major, beloved district or mega-structure is destroyed (by disaster or war), there is a chance the surviving Pops develop a "Phantom Memory" of it. They continue to act as if the structure is there—walking around invisible walls, trying to work non-existent jobs, and even allocating power to the empty grid. Attempting to build over the "Phantom Metropolis" causes massive localized unrest.
+
+**Emergence:** You try to rebuild your capital after a devastating bombardment, but your citizens riot every time you try to lay a new foundation. They believe they are still living in the old city, and your new, efficient buildings are seen as an invasion of their homes.
+
+**Tension:** Do you permanently sacrifice prime real estate to a mass delusion to maintain morale, or forcibly "re-educate" the population to accept reality, causing a severe, generation-long trauma penalty?
+
+---
+
+## Subterranean Archive
+
+**Layer:** 1 -> 2
+
+**Fantasy:** Burying the truth of a civilization's crimes so deep that unearthing it centuries later destroys the society.
+
+**Mechanic:** A player can choose to "Bury" highly controversial historical events (like a suppressed rebellion or a catastrophic mistake) by constructing a massive, deep-crust "Subterranean Archive." This immediately clears all negative societal effects of the event. However, centuries later, random mining operations or seismic events might breach the Archive. When the truth escapes, it hits the colony with an "Amnesia Backlash," multiplying the original unrest penalty tenfold.
+
+**Emergence:** Your thriving, peaceful utopia is suddenly plunged into a violent civil war because a deep-core mining laser accidentally cracked open a vault containing the records of how your founders actually acquired the planet.
+
+**Tension:** Do you take the easy way out and bury your mistakes, knowing you are planting a ticking time bomb for your descendants, or deal with the messy consequences in the present?
+
+---
+
+## The Sleepwalker's Assembly
+
+**Layer:** 1
+
+**Fantasy:** The subconscious of the colony organizing a parallel society while the waking colony struggles to survive.
+
+**Mechanic:** If a colony reaches critical levels of Sleep Debt and general Unrest, Pops begin to spontaneously form the "Sleepwalker's Assembly." During their rest cycles, they don't actually sleep; they gather in abandoned or unfinished structures, communicating in a strange, silent protocol. They begin completing menial tasks or constructing bizarre, unsanctioned monuments without consuming resources.
+
+**Emergence:** Your colony is starving and exhausted. Suddenly, entire fields are harvested overnight, and strange obelisks appear in the town square. You realize your colonists are doing the work while totally unconscious. But if you wake them up during the Assembly, they suffer a complete psychological breakdown.
+
+**Tension:** Do you let the terrifying, silent parallel society run your essential infrastructure for free, knowing it's slowly driving the population insane, or shut it down and face the immediate, crushing reality of your resource deficit?
+
+---
+
+## Cryogenic Repentance
+
+**Layer:** 1 -> Cross-layer
+
+**Fantasy:** Punishing criminals not with death, but by forcing them to wake up in a future where everyone they know is dead.
+
+**Mechanic:** Instead of standard prisons or executions, a society can adopt "Cryogenic Repentance." Criminals or dissidents are frozen for decades or centuries. When they are thawed, their sentence is served, but they suffer massive "Temporal Displacement" penalties. If a large number of these "Repentants" are thawed at once (due to a power failure or a desperation draft), they form a massive, organized faction of people who share the culture and grievances of a century ago.
+
+**Emergence:** A pirate attack destroys your main power grid, thawing out thousands of political prisoners from 200 years ago. They wake up, see the current state of the colony, and immediately launch the exact same rebellion their ancestors failed at, using antiquated but perfectly preserved weapons.
+
+**Tension:** Do you use cryo-prisons to easily handle crime without the immediate unrest of executions, knowing you are slowly building a massive army of temporally displaced malcontents in your own basement?
+
+---
+
+## Echoes of the Terraformers
+
+**Layer:** 2 -> 1
+
+**Fantasy:** The planet itself remembers the violence of its creation and attempts to revert to its natural state.
+
+**Mechanic:** Planets that were aggressively terraformed (e.g., turning a toxic world into an Eden) have an underlying "Terraform Tension." If the colony's central terraforming nodes lose power or are damaged, the planet experiences "Echoes." It violently tries to revert to its original state in localized bursts—sudden toxic storms, spontaneous volcanic vents, or rapid atmospheric decay in specific sectors.
+
+**Emergence:** You conquer a beautiful, lush world from a rival empire. During the invasion, a stray shot damages the planetary atmospheric processor. Within weeks, sections of the paradise begin rapidly mutating back into a horrific, acid-spewing nightmare, forcing your occupying army to fight the planet itself.
+
+**Tension:** Do you invest heavily in redundant, expensive terraforming maintenance, or accept that your paradise is a fragile illusion that could violently shatter at any moment?
+
+---
+
+## The Silent Insurrection
+
+**Layer:** 1
+
+**Fantasy:** A rebellion fought entirely through the intentional, malicious perfection of following the rules.
+
+**Mechanic:** If a highly bureaucratic society (Layer 3) pushes its Layer 1 colonies too hard, the Pops don't riot violently. Instead, they begin a "Silent Insurrection" (Malicious Compliance). They follow every single regulation, safety protocol, and edict to the absolute letter. This drops the colony's work efficiency to near zero, as every minor task requires hours of unnecessary validation and checks.
+
+**Emergence:** You impose martial law to increase production. In response, your miners begin meticulously cleaning every single rock before putting it on the transport belt, strictly following a 300-year-old sanitation edict. Your ore production grinds to a complete halt, but you can't punish anyone because they are technically following your own laws perfectly.
+
+**Tension:** Do you violently crack down on people who are technically obeying the law (destroying your own legitimacy), or undergo the painful, years-long process of untangling your own bureaucratic mess?
+
+---
+
+## Starlight Forgery
+
+**Layer:** 2 -> 3
+
+**Fantasy:** Faking a supernova to win a war.
+
+**Mechanic:** A late-game megastructure project allows an empire to construct a "Starlight Forge" around a star. Instead of harvesting energy, it is used to alter the star's light signature. You can make a stable star appear to be going supernova, or make a dying star appear stable. This completely manipulates the Layer 3 galactic map, causing enemy empires to evacuate entire sectors or mistakenly colonize doomed systems.
+
+**Emergence:** You are losing a massive war. In a desperate gamble, you use the Starlight Forge to make your own capital system look like it's about to go supernova. The enemy fleet immediately retreats to avoid the blast. You win the war without firing a shot, but your own population, convinced the end is near, panics and destroys half the colony before you can explain the trick.
+
+**Tension:** Do you use cosmic-scale deception to manipulate your enemies, knowing the fake signals will inevitably cause massive panic and unrest among your own citizens who also see the sky changing?
+
+---
+
+## The Mnemonic Plaque
+
+**Layer:** 1
+
+**Fantasy:** A monument that doesn't just display history, but forcibly beams the emotional weight of that history into anyone nearby.
+
+**Mechanic:** A specialized, high-tech monument that records the exact emotional state of the Pops involved in a specific historical event. When placed in a colony, any Pop that walks near it experiences a "Mnemonic Flash." If the plaque commemorates a great victory, they get a massive, temporary surge of euphoria and productivity. If it commemorates a massacre, they are temporarily paralyzed by overwhelming grief and terror.
+
+**Emergence:** You build a Mnemonic Plaque commemorating the heroic, desperate defense of the spaceport during a siege. It provides a huge morale boost. However, during a later minor riot, the rioters are pushed towards the plaque. The sudden influx of the plaque's recorded "desperate, cornered terror" causes the rioters to completely snap, turning a minor protest into a bloodbath.
+
+**Tension:** Do you use these powerful psychological tools to engineer your colony's mood, risking unpredictable, cascading emotional breakdowns if the wrong Pops are exposed at the wrong time?
+
+---
+
+## Gravity Well Smugglers
+
+**Layer:** 2 -> 1
+
+**Fantasy:** Dropping contraband onto a planet from high orbit without ships, using raw physics to bypass blockades.
+
+**Mechanic:** When a planet is under strict blockade (Layer 2), standard smuggling ships cannot get through. Instead, a new faction of "Gravity Well Smugglers" emerges. They drop massive, unpowered, super-dense "Kinetic Pods" from deep space. These pods have no thrusters and generate no heat signature; they simply fall. They crash into the Layer 1 colony like small meteorites, causing minor localized damage but delivering massive amounts of illegal goods or weapons directly to the surface.
+
+**Emergence:** Your capital is under siege and starving. The sky begins to rain fire, and your defense platforms can't target the falling debris because they have no energy signatures. The pods crash through your agricultural domes, causing immense structural damage, but they are filled with black-market combat stims and high-density rations, allowing your ground troops to break the siege from the inside.
+
+**Tension:** Do you tolerate the massive, random collateral damage of kinetic smuggling to keep your blockaded colony alive, or try to shoot down the very supply drops your people are desperately waiting for?
+
+---
+
+## The Bureaucracy of Dust
+
+**Layer:** Cross-layer
+
+**Fantasy:** A society so obsessed with categorization that they attempt to index the physical decay of their own world.
+
+**Mechanic:** A civilization with extremely high Administrative capacity but low Physical Resources may develop the "Bureaucracy of Dust" obsession. Pops will stop doing productive labor and instead begin meticulously cataloging the decay of the colony—measuring the exact rate of rust on a pipe, recording the specific pattern of a cracked window, or numbering individual grains of sand in a storm. They produce massive amounts of "Data," which can be traded to Layer 3 empires, but zero physical goods.
+
+**Emergence:** Your mining colony runs out of ore. Instead of starving or rebelling, the miners simply start cataloging the exact dimensions of the empty tunnels. They become a massive, bizarre think-tank, exporting philosophical treatises on the nature of emptiness to the rest of the galaxy while slowly starving to death in the dark.
+
+**Tension:** Do you forcibly re-train these meticulous, obsessed scholars back into manual labor to save the physical colony, or fully embrace their madness and transition your entire economy to selling abstract data about your own demise?
