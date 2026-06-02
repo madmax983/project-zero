@@ -667,7 +667,7 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1053` Smart Matter Architecture — `specs/1053-smart-matter-architecture.md`
 - [ ] `1054` Thermal Camouflage — `specs/1054-thermal-camouflage.md`
 - [ ] `1055` Gravity Caste — `specs/1055-gravity-caste.md`
-- [ ] `1056` The Dead Hand — `specs/1056-the-dead-hand.md`
+- [x] `1056` The Dead Hand — `specs/1056-the-dead-hand.md` — completed 2024-05-31
 
 - [ ] `1058` Retro-Causality Contracts — `specs/1058-retro-causality-contracts.md`
 

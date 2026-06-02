@@ -383,6 +383,7 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     world.init_resource::<Events<AffinityChange>>();
     // world.init_resource::<Events<crate::layer1::DeathEvent>>();
     world.init_resource::<Events<PopDied>>();
+    world.init_resource::<Events<crate::layer1::systems::dead_hand::DoomsdayTriggeredEvent>>();
     world.init_resource::<Events<PopBorn>>();
     world.init_resource::<Events<crate::layer1::events::BuildingCompletedEvent>>();
     world.init_resource::<Events<crate::layer1::parasitic_architecture::BuildingConsumedEvent>>();
