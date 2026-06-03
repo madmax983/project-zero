@@ -151,7 +151,10 @@ fn main() -> anyhow::Result<()> {
         if let Err(err) = res {
             let error_msg = format!("✗ {}", err);
             let mut table = Table::new();
-            table.load_preset(UTF8_FULL);
+            table
+                .load_preset(UTF8_FULL)
+                .apply_modifier(comfy_table::modifiers::UTF8_ROUND_CORNERS)
+                .set_content_arrangement(comfy_table::ContentArrangement::Dynamic);
             table.add_row(vec![Cell::new(&error_msg).fg(TableColor::White)]);
             println!("{table}");
         }
@@ -168,7 +171,10 @@ fn main() -> anyhow::Result<()> {
         if let Some(err) = app_result.err() {
             let error_msg = format!("✗ Failed to initialize app: {}", err);
             let mut table = Table::new();
-            table.load_preset(UTF8_FULL);
+            table
+                .load_preset(UTF8_FULL)
+                .apply_modifier(comfy_table::modifiers::UTF8_ROUND_CORNERS)
+                .set_content_arrangement(comfy_table::ContentArrangement::Dynamic);
             table.add_row(vec![Cell::new(&error_msg).fg(TableColor::White)]);
             eprintln!("{table}");
         }
