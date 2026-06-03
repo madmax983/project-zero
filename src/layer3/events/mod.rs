@@ -4,3 +4,4 @@
 //! systems, factions, or triggering unique scenarios.
 pub mod debt_prison;
 pub mod refugee_waves;
+pub mod collapse;

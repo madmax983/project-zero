@@ -466,6 +466,8 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
     schedule.add_systems((
         crate::layer2::events_new::system_quarantine::apply_quarantine_effects,
         crate::layer2::events_new::system_quarantine::handle_quarantine_decay,
+        crate::layer3::events::collapse::process_civilization_collapse_system,
+        crate::layer3::events::collapse::process_refugee_arrival_system,
     ));
     // --- Spec 622 ---
     schedule.add_systems((

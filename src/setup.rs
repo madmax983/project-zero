@@ -140,6 +140,8 @@ pub fn setup_world() -> World {
     });
     world
         .insert_resource(crate::layer3::diplomacy::system_sovereignty::FactionRelations::default());
+    world.init_resource::<bevy::prelude::Events<crate::layer3::events::collapse::CivilizationCollapseEvent>>();
+    world.init_resource::<bevy::prelude::Events<crate::layer3::events::collapse::RefugeeWaveEvent>>();
     setup_world_with_config(SetupConfig::default())
 }
 
@@ -165,6 +167,8 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     });
     world
         .insert_resource(crate::layer3::diplomacy::system_sovereignty::FactionRelations::default());
+    world.init_resource::<bevy::prelude::Events<crate::layer3::events::collapse::CivilizationCollapseEvent>>();
+    world.init_resource::<bevy::prelude::Events<crate::layer3::events::collapse::RefugeeWaveEvent>>();
     world.insert_resource(crate::layer1::economy::existential_audit::PrecursorAI {
         next_audit_tick: 1000,
     });
