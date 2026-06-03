@@ -56,13 +56,13 @@ impl Plugin for CrimePlugin {
 }
 
 // --- Systems ---
-fn process_prohibition_events(mut events: EventReader<ProhibitItemEvent>, mut commands: Commands) {
+pub fn process_prohibition_events(mut events: EventReader<ProhibitItemEvent>, mut commands: Commands) {
     for event in events.read() {
         commands.entity(event.item).insert(Prohibited);
     }
 }
 
-fn update_black_market_prices(
+pub fn update_black_market_prices(
     mut commands: Commands,
     query: Query<(Entity, &BaseValue), Added<Prohibited>>,
 ) {
@@ -74,7 +74,7 @@ fn update_black_market_prices(
     }
 }
 
-fn calculate_smuggling_rates(
+pub fn calculate_smuggling_rates(
     prohibited_items: Query<(), With<Prohibited>>,
     mut colonies: Query<&mut SmugglingRate, With<Colony>>,
 ) {
@@ -90,7 +90,7 @@ fn calculate_smuggling_rates(
     }
 }
 
-fn decay_smuggling_rates(
+pub fn decay_smuggling_rates(
     prohibited_items: Query<(), With<Prohibited>>,
     mut colonies: Query<&mut SmugglingRate, With<Colony>>,
 ) {

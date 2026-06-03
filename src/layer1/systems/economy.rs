@@ -158,6 +158,18 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::law::contraband::enforce_prohibition_system,
             crate::layer1::visitor::spawn_visitor_system,
             spawn_inspector_system.after(crate::layer1::visitor::spawn_visitor_system),
+        )
+            .in_set(Layer1SystemSet::Economy),
+    );
+
+    schedule.add_systems(
+        (
+            crate::layer1::law::prohibition::process_prohibition_events,
+            crate::layer1::law::prohibition::update_black_market_prices
+                .after(crate::layer1::law::prohibition::process_prohibition_events),
+            crate::layer1::law::prohibition::calculate_smuggling_rates,
+            crate::layer1::law::prohibition::decay_smuggling_rates
+                .after(crate::layer1::law::prohibition::calculate_smuggling_rates),
             process_fuel_consumption_system,
             crate::layer1::energy::update_auroral_output_system,
             crate::layer1::solar::update_solar_cycle_system,

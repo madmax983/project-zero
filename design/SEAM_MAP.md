@@ -1321,3 +1321,10 @@
 - **Systems connected:** `TraceGasGrid` -> `vacuum_clears_pollution_system`
 - **Glue added:** Modified `vacuum_clears_pollution_system` in `src/layer1/core/integration.rs` to clear trace gases (Euphoric, Fear, Rage) from `TraceGasGrid` when exposed to vacuum.
 - **Tests:** Added `test_vacuum_clears_trace_gases` to `tests/integration/atmosphere_vacuum.rs`.
+
+### INT-1103: Prohibition & Contraband -> Black Market / Crime
+- **Date:** 2026-10-31
+- **Systems connected:** `ProhibitItemEvent` -> `process_prohibition_events`, `update_black_market_prices`, `calculate_smuggling_rates`, `decay_smuggling_rates`
+- **Glue added:** Registered systems in `src/layer1/systems/economy.rs` and `ProhibitItemEvent` in `src/simulation.rs`.
+- **Schedule:** Chained in Update, processing prohibition events -> updating black market prices -> calculating smuggling rates -> decaying smuggling rates.
+- **Tests:** `tests/integration/prohibition_bridge.rs` (1 test)

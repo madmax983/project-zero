@@ -147,6 +147,7 @@ fn init_simulation_resources(world: &mut World) {
     world.init_resource::<Events<crate::layer1::unrest::DenounceEvent>>();
     world.init_resource::<Events<crate::layer1::law::embassy::ArrestEvent>>();
     world.init_resource::<Events<crate::layer1::law::embassy::DiplomaticIncidentEvent>>();
+    world.init_resource::<Events<crate::layer1::law::prohibition::ProhibitItemEvent>>();
     world.init_resource::<Events<crate::layer1::environment::volatile::ExplosionEvent>>();
 
     if !world
@@ -876,6 +877,7 @@ mod tests {
         world.init_resource::<bevy::prelude::Events<crate::layer1::infrastructure::ancient::ConduitSurgeEvent>>();
         world.init_resource::<bevy::prelude::Events<crate::layer2::weather::StormImpactEvent>>();
         world.init_resource::<bevy::prelude::Events<crate::layer1::law::justice::CrimeCommittedEvent>>();
+        world.init_resource::<Events<crate::layer1::law::prohibition::ProhibitItemEvent>>();
         world.init_resource::<bevy::prelude::Events<crate::layer1::social::grievances::PostGrievanceEvent>>();
         world.init_resource::<Events<crate::layer1::agriculture::zero_g_flora::DepressurizationEvent>>();
         world.init_resource::<Events<crate::layer3::diplomacy::system_sovereignty::DeclarationOfIndependenceEvent>>();
@@ -924,6 +926,7 @@ mod tests {
         world.init_resource::<Events<crate::layer2::celestial_library::LibraryDonationEvent>>();
         world.init_resource::<bevy::prelude::Events<crate::layer2::skyhooks::LaunchIntent>>();
         world.init_resource::<bevy::prelude::Events<crate::layer1::law::justice::CrimeCommittedEvent>>();
+        world.init_resource::<Events<crate::layer1::law::prohibition::ProhibitItemEvent>>();
         world.init_resource::<bevy::prelude::Events<crate::layer1::social::grievances::PostGrievanceEvent>>();
         world.init_resource::<Events<crate::layer1::agriculture::zero_g_flora::DepressurizationEvent>>();
         world.init_resource::<Events<crate::layer3::diplomacy::system_sovereignty::DeclarationOfIndependenceEvent>>();
@@ -1002,6 +1005,7 @@ mod tests {
         );
         world.init_resource::<Events<crate::layer1::law::embassy::ArrestEvent>>();
         world.init_resource::<Events<crate::layer1::law::embassy::DiplomaticIncidentEvent>>();
+        world.init_resource::<Events<crate::layer1::law::prohibition::ProhibitItemEvent>>();
         world.init_resource::<Events<crate::layer1::economy::existential_audit::ExistentialAuditCompletedEvent>>();
         world.init_resource::<Events<crate::layer1::ransom_broker::RansomDemandEvent>>();
         world.init_resource::<Events<crate::layer3::diplomacy::fading_homeworld::CoreWorldDemandEvent>>();
@@ -1110,6 +1114,7 @@ mod tests {
         world.init_resource::<crate::layer3::pirates::PirateThreatLevel>();
         world.init_resource::<crate::layer3::pirates::ResourceCurseSettings>();
         world.init_resource::<Events<crate::layer1::law::justice::CrimeCommittedEvent>>();
+        world.init_resource::<Events<crate::layer1::law::prohibition::ProhibitItemEvent>>();
         world.init_resource::<Events<crate::layer1::pop_memories::FamineEvent>>();
         world
             .init_resource::<Events<crate::layer2::navigation::stellar_weather::FleetDamagedEvent>>(
