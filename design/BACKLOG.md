@@ -43,7 +43,6 @@
 
 - [ ] `875` The Memorial Fleet — `specs/875-the-memorial-fleet.md`
 - [ ] `876` The Phantom Tax — `specs/876-the-phantom-tax.md`
-- [ ] `877` The Debt of the Dead — `specs/877-the-debt-of-the-dead.md`
 
 
 See `design/IDEAS.md` for unspecced concepts.
