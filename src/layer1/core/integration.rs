@@ -2405,3 +2405,16 @@ pub fn kinetic_battery_chronicle_bridge(
         }
     }
 }
+
+/// INT-1103: Bridges `ContrabandPossession` to `CrimeCommittedEvent`.
+pub fn contraband_possession_crime_bridge_system(
+    query: Query<Entity, Added<crate::layer1::law::contraband::ContrabandPossession>>,
+    mut events: EventWriter<crate::layer1::law::justice::CrimeCommittedEvent>,
+) {
+    for entity in query.iter() {
+        events.send(crate::layer1::law::justice::CrimeCommittedEvent {
+            perpetrator: entity,
+            crime_type: crate::layer1::law::justice::CrimeType::Smuggling,
+        });
+    }
+}

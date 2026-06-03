@@ -188,6 +188,8 @@ pub fn register(schedule: &mut Schedule) {
                 .after(crate::layer1::unrest::check_mental_break_system),
             crate::layer1::law::contraband::detect_contraband_system
                 .after(crate::layer1::law::justice::check_crime_system),
+            crate::layer1::core::integration::contraband_possession_crime_bridge_system
+                .after(crate::layer1::law::contraband::detect_contraband_system),
             crate::layer1::unrest::recover_mental_break_system.after(decay_needs_system),
             crate::layer1::civic_ideology::apply_ideological_modifiers_system
                 .after(crate::layer1::unrest::recover_mental_break_system),

@@ -1321,3 +1321,10 @@
 - **Systems connected:** `TraceGasGrid` -> `vacuum_clears_pollution_system`
 - **Glue added:** Modified `vacuum_clears_pollution_system` in `src/layer1/core/integration.rs` to clear trace gases (Euphoric, Fear, Rage) from `TraceGasGrid` when exposed to vacuum.
 - **Tests:** Added `test_vacuum_clears_trace_gases` to `tests/integration/atmosphere_vacuum.rs`.
+
+### INT-1103: Prohibition & Contraband -> Justice System
+- **Date:** 2026-10-31
+- **Systems connected:** `detect_contraband_system` (Contraband) -> `contraband_possession_crime_bridge_system` (Integration) -> `CrimeCommittedEvent`
+- **Glue added:** Added `contraband_possession_crime_bridge_system` in `src/layer1/core/integration.rs` to detect when `ContrabandPossession` is added to a pop and emit a `CrimeCommittedEvent` with a new `CrimeType::Smuggling`.
+- **Schedule:** Registered `contraband_possession_crime_bridge_system` immediately after `detect_contraband_system` in `src/layer1/systems/observation.rs`.
+- **Tests:** `tests/integration/prohibition_contraband_bridge.rs`

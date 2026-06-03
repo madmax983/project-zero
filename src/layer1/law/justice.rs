@@ -208,6 +208,7 @@ pub enum CrimeType {
     Theft,
     Assault,
     Vandalism,
+    Smuggling,
 }
 
 #[derive(Event)]
@@ -233,6 +234,7 @@ pub fn process_crimes_system(
                 CrimeType::Theft => 50,
                 CrimeType::Assault => 80,
                 CrimeType::Vandalism => 30,
+                CrimeType::Smuggling => 40,
             };
         }
     }
