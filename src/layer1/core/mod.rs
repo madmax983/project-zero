@@ -8,6 +8,7 @@ pub mod control;
 pub mod events;
 pub mod integration;
 pub mod map;
+pub mod spatial;
 
 pub use ai_core::*;
 pub use chronicle::*;
