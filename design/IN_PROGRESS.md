@@ -1,0 +1,1 @@
+- [ ] `289` The Mimetic Plague — `specs/289-mimetic-plague.md` — claimed 2026-06-03
