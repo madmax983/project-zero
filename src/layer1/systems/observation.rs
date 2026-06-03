@@ -402,6 +402,8 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::integration::predatory_weather_impact_bridge_system,
             crate::layer1::integration::hologram_failure_chronicle_bridge
                 .after(crate::layer1::hologram::update_holograms_system),
+            crate::layer1::core::integration::dead_hand_chronicle_bridge
+                .after(crate::layer1::systems::dead_hand::dead_hand_trigger_system),
             retrograde_chronicle_bridge.after(work_execution_system), // work_execution_system is in Execution set
             amputation_handler_system.after(work_execution_system),
             art_observation_system.after(crate::layer1::health::despawn_dead_entities_system),

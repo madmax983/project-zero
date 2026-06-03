@@ -73,3 +73,4 @@ pub mod fossilized_fleet_defense_bridge;
 pub mod planetary_spin_up_bridge;
 pub mod terminator_habitats_bridge;
 pub mod endless_draft_bridge;
+pub mod dead_hand_bridge;

@@ -1049,6 +1049,18 @@ pub fn fleet_unload_system(
     }
 }
 
+pub fn dead_hand_chronicle_bridge(
+    mut events: EventReader<crate::layer1::systems::dead_hand::DoomsdayTriggeredEvent>,
+    mut chronicle: EventWriter<AddChronicleEvent>,
+) {
+    for _ in events.read() {
+        chronicle.send(AddChronicleEvent {
+            text: "The Dead Hand protocol was triggered! A catastrophic retaliation has been initiated.".to_string(),
+            importance: EventImportance::Major,
+        });
+    }
+}
+
 pub fn mega_quake_chronicle_bridge(
     mut events: EventReader<crate::layer1::geology::tectonic::MegaQuakeEvent>,
     mut chronicle_events: EventWriter<AddChronicleEvent>,

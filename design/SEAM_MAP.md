@@ -1327,3 +1327,9 @@
 - **Systems connected:** `SolarFlareEvent` -> `solar_flare_chronicle_bridge` -> `AddChronicleEvent`
 - **Glue added:** Added `solar_flare_chronicle_bridge` in `src/layer1/core/integration.rs` to record a major event in the Chronicle when a solar flare strikes.
 - **Tests:** `tests/integration/solar_flare_chronicle_bridge.rs`
+
+### INT-1056: Dead Hand -> Chronicle
+- **Date:** 2024-05-31
+- **Systems connected:** `DoomsdayTriggeredEvent` -> `dead_hand_chronicle_bridge` -> `AddChronicleEvent`
+- **Glue added:** Added `dead_hand_chronicle_bridge` in `src/layer1/core/integration.rs` to record a major event in the Chronicle when a Dead Hand protocol is triggered.
+- **Tests:** `tests/integration/dead_hand_bridge.rs`

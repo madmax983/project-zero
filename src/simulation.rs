@@ -342,6 +342,9 @@ fn init_simulation_resources(world: &mut World) {
                 .init_resource::<Events<crate::layer3::ghost_ships::EvaluateLostShipReturnEvent>>();
             world.init_resource::<Events<crate::layer1::unseen_bureaucracy::PhantomShiftEvent>>();
             world.init_resource::<Events<crate::layer3::diplomacy::cultural_ransom::RaidEvent>>();
+            world
+                .init_resource::<Events<crate::layer1::systems::dead_hand::DoomsdayTriggeredEvent>>(
+                );
             world.init_resource::<Events<crate::layer2::planetary_spin_up::PlanetaryTorqueEvent>>();
             world.insert_resource(
                 crate::layer1::environment::terminator_habitats::TerminatorLine {
@@ -1187,6 +1190,7 @@ mod tests {
         world.init_resource::<Events<crate::layer3::ghost_ships::EvaluateLostShipReturnEvent>>();
         world.init_resource::<Events<crate::layer1::unseen_bureaucracy::PhantomShiftEvent>>();
         world.init_resource::<Events<crate::layer3::diplomacy::cultural_ransom::RaidEvent>>();
+        world.init_resource::<Events<crate::layer1::systems::dead_hand::DoomsdayTriggeredEvent>>();
         world.init_resource::<Events<crate::layer2::planetary_spin_up::PlanetaryTorqueEvent>>();
         world.insert_resource(
             crate::layer1::environment::terminator_habitats::TerminatorLine { x_coordinate: 50.0 },
