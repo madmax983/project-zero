@@ -669,6 +669,7 @@
 - [x] `INT-1097` Integration: Planetary Spin-Up -> SimulationSchedule — completed 2026-05-30
 - [x] `1103` Prohibition & Contraband — `specs/1103-prohibition-and-contraband.md` — completed 2026-05-30
 - [x] `1082` Resonant Architecture — `specs/1082-resonant-architecture.md` — completed 2026-05-30
+- [x] `INT-1082` Integration: Resonant Architecture -> Pop Mechanics — completed 2026-10-31
 - [x] `1275` Atmospheric Empathy — `specs/1275-atmospheric-empathy.md` — completed 2026-05-30
 - [x] `1133` Stellar Megastructure Scaffolding — `specs/1133-stellar-megastructure-scaffolding.md` — completed 2026-05-30
 - [x] `INT-1275` Integration: Atmospheric Empathy -> Vacuum clearing — completed 2026-10-31

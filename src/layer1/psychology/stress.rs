@@ -72,6 +72,7 @@ pub fn check_stress_breakdown_system(
         Option<&Morale>,
         Option<&ActiveAuras>,
         Option<&crate::layer1::items::Equipment>,
+        Option<&crate::layer1::architecture::resonant_architecture::PopResonanceTraits>,
     )>,
     totem_query: Query<&crate::layer1::totems::Totem>,
 ) {
@@ -85,6 +86,7 @@ pub fn check_stress_breakdown_system(
         morale_comp,
         active_auras,
         equipment,
+        resonance_traits,
     ) in &mut query
     {
         // If already broken or has catharsis, skip stress tracking
@@ -116,7 +118,14 @@ pub fn check_stress_breakdown_system(
         }
 
         let base_change = if low_morale { 1.0 } else { -1.0 };
-        let total_change = base_change + aura_stress_mod - totem_stress_relief;
+        let mut total_change = base_change + aura_stress_mod - totem_stress_relief;
+
+        // Apply Resonance Modifier to positive stress gains
+        if total_change > 0.0 {
+            if let Some(r_traits) = resonance_traits {
+                total_change *= r_traits.stress_gain_mult;
+            }
+        }
 
         // Accumulate stress, clamped to 0
         tracker.accumulated_stress = (tracker.accumulated_stress + total_change).max(0.0);

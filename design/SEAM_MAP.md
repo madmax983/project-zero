@@ -1321,3 +1321,9 @@
 - **Systems connected:** `TraceGasGrid` -> `vacuum_clears_pollution_system`
 - **Glue added:** Modified `vacuum_clears_pollution_system` in `src/layer1/core/integration.rs` to clear trace gases (Euphoric, Fear, Rage) from `TraceGasGrid` when exposed to vacuum.
 - **Tests:** Added `test_vacuum_clears_trace_gases` to `tests/integration/atmosphere_vacuum.rs`.
+
+### INT-1082: Resonant Architecture -> Pop Mechanics
+- **Date:** 2026-10-31
+- **Systems connected:** `apply_resonant_architecture_system` -> `check_stress_breakdown_system`, `process_research_system`, `execute_attack`
+- **Glue added:** Read `PopResonanceTraits` in stress tracker to multiply stress gain; in tech system to multiply research contribution; in combat system to multiply weapon damage.
+- **Tests:** `tests/integration/resonant_architecture_bridge.rs`

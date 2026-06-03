@@ -447,16 +447,20 @@ pub fn unlock_tech(world: &mut World, tech: Tech) -> bool {
 /// *   **Strikes**: Workers in a striking faction produce 0 knowledge.
 /// *   **Efficiency**: Currently flat rate, but could be modified by Intelligence/Traits later.
 pub fn process_research_system(
-    pops: Query<(&AssignedTo, Option<&FactionMember>)>,
+    pops: Query<(
+        &AssignedTo,
+        Option<&FactionMember>,
+        Option<&crate::layer1::architecture::resonant_architecture::PopResonanceTraits>,
+    )>,
     libraries: Query<Entity, With<Library>>,
     mut resources: ResMut<ColonyResources>,
     factions: Option<Res<Factions>>,
     bloat_query: Query<&self::legacy_code::Bloat>,
     archive: Option<Res<self::infinite_archive::Archive>>,
 ) {
-    let mut library_workers = std::collections::HashMap::<Entity, u32>::new();
+    let mut library_workers = std::collections::HashMap::<Entity, f32>::new();
 
-    for (assignment, member_opt) in &pops {
+    for (assignment, member_opt, resonance_opt) in &pops {
         if assignment.assignment_type == AssignmentType::LibraryWorker {
             if let Some(factions) = &factions {
                 if let Some(member) = member_opt {
@@ -471,7 +475,12 @@ pub fn process_research_system(
                 }
             }
 
-            *library_workers.entry(assignment.entity).or_insert(0) += 1;
+            let mut efficiency = 1.0;
+            if let Some(traits) = resonance_opt {
+                efficiency *= traits.research_speed_mult;
+            }
+
+            *library_workers.entry(assignment.entity).or_insert(0.0) += efficiency;
         }
     }
 
@@ -479,8 +488,7 @@ pub fn process_research_system(
 
     for library_entity in &libraries {
         if let Some(&workers) = library_workers.get(&library_entity) {
-            #[allow(clippy::cast_precision_loss)]
-            let knowledge_gain = 0.01 * workers as f32;
+            let knowledge_gain = 0.01 * workers;
             total_knowledge_gained += knowledge_gain;
         }
     }

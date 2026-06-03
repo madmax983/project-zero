@@ -239,7 +239,13 @@ fn get_weapon_stats(world: &World, attacker: Entity) -> Option<(f32, u32)> {
     let equipment = world.get::<crate::layer1::items::Equipment>(attacker)?;
     let weapon_entity = equipment.weapon?;
     let weapon = world.get::<Weapon>(weapon_entity)?;
-    Some((weapon.properties.damage, weapon.properties.cooldown))
+
+    let mut damage = weapon.properties.damage;
+    if let Some(traits) = world.get::<crate::layer1::architecture::resonant_architecture::PopResonanceTraits>(attacker) {
+        damage *= traits.aggression_mult;
+    }
+
+    Some((damage, weapon.properties.cooldown))
 }
 
 pub fn execute_attack(world: &mut World, attacker: Entity, target: Entity) {

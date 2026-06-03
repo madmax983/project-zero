@@ -506,3 +506,5 @@ mod orbital_drydocks_bridge;
 mod signal_latency_bridge;
 #[path = "integration/temporal_echoes_maintenance.rs"]
 mod temporal_echoes_maintenance;
+#[path = "integration/resonant_architecture_bridge.rs"]
+mod resonant_architecture_bridge;
