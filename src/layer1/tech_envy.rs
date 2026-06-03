@@ -5,8 +5,8 @@
 use crate::layer1::actions::AssignedTo;
 use crate::layer1::building::Building;
 use crate::layer1::morale::{MoodModifier, Morale};
+use bevy::utils::HashMap;
 use bevy_ecs::prelude::*;
-use std::collections::HashMap;
 
 /// Configuration for the Tech Envy system.
 #[derive(Resource)]
@@ -39,9 +39,11 @@ pub fn tech_envy_system(
     mut pops: Query<(&AssignedTo, &mut Morale)>,
     buildings: Query<&Building>,
     config: Res<TechEnvyConfig>,
+    // Reuses allocated capacity to prevent frame-by-frame heap allocations
+    mut max_tiers: Local<HashMap<crate::layer1::building::Category, crate::layer1::building::Tier>>,
 ) {
     // 1. Calculate Max Tier per Category
-    let mut max_tiers = HashMap::new();
+    max_tiers.clear();
     for building in buildings.iter() {
         if let Some((category, tier)) = building.building_type.tier_info() {
             let current_max = max_tiers.entry(category).or_insert(tier);
