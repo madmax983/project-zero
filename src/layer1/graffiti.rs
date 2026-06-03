@@ -45,9 +45,16 @@ pub struct GraffitiMap {
 }
 
 /// System to place graffiti based on pop morale.
+type GraffitiPlacementQuery<'a> = (
+    &'a GridPosition,
+    &'a Morale,
+    Option<&'a crate::layer1::psychology::stress::StressTracker>,
+    Option<&'a crate::layer1::traits::Traits>,
+);
+
 pub fn graffiti_placement_system(
     mut graffiti_map: ResMut<GraffitiMap>,
-    pops: Query<(&GridPosition, &Morale), With<crate::layer1::pop::Pop>>,
+    pops: Query<GraffitiPlacementQuery, With<crate::layer1::pop::Pop>>,
     occupied_tiles: Option<Res<OccupiedTiles>>,
 ) {
     let mut rng = rand::thread_rng();
@@ -82,13 +89,15 @@ pub fn graffiti_placement_system(
         return;
     };
 
-    for (pos, morale) in &pops {
+    for (pos, morale, stress, traits) in &pops {
         // Optimization: Quick RNG check first
         if rng.gen_range(0.0..1.0) > placement_chance {
             continue;
         }
 
-        let graffiti_type = if morale.value < 0.2 {
+        let graffiti_type = if stress.map_or(0.0, |s| s.accumulated_stress) > 80.0 && traits.is_some_and(|t| t.has(crate::layer1::traits::Trait::Creative)) {
+            GraffitiType::Propaganda
+        } else if morale.value < 0.2 {
             GraffitiType::Vandalism
         } else if morale.value > 0.8 {
             GraffitiType::Inspiration
@@ -110,6 +119,7 @@ pub fn graffiti_placement_system(
                 let (decay, modifier) = match graffiti_type {
                     GraffitiType::Vandalism => (1000.0, -0.05),
                     GraffitiType::Inspiration => (1000.0, 0.05),
+                    GraffitiType::Propaganda => (1000.0, 0.05),
                     _ => (1000.0, 0.0),
                 };
 
@@ -419,5 +429,70 @@ mod tests {
             map.markings.is_empty(),
             "Graffiti should be removed after decay reaches 0"
         );
+    }
+}
+
+#[cfg(test)]
+mod additional_tests {
+    use super::*;
+    use crate::layer1::building::{Building, BuildingType, OccupiedTiles};
+    use crate::layer1::map::GridPosition;
+    use crate::layer1::morale::Morale;
+    use crate::layer1::pop::Pop;
+    use crate::layer1::psychology::stress::StressTracker;
+    use crate::layer1::traits::{Trait, Traits};
+
+    #[test]
+    fn test_creative_pop_creates_graffiti_under_high_stress() {
+        let mut world = World::new();
+        world.insert_resource(GraffitiMap::default());
+
+        let mut occupied = OccupiedTiles::default();
+        occupied.0.insert((5, 5));
+        world.insert_resource(occupied);
+
+        world.spawn((
+            Building {
+                building_type: BuildingType::Wall,
+            },
+            GridPosition { x: 5, y: 5 },
+        ));
+
+        let mut traits = Traits::default();
+        traits.add(Trait::Creative);
+
+        world.spawn((
+            Pop,
+            GridPosition { x: 5, y: 4 },
+            Morale {
+                value: 0.5,
+                ..Default::default()
+            },
+            StressTracker { accumulated_stress: 90.0 },
+            traits,
+        ));
+
+        let mut schedule = Schedule::default();
+        schedule.add_systems(graffiti_placement_system);
+
+        let mut placed = false;
+        for _ in 0..1000 {
+            schedule.run(&mut world);
+            if world
+                .resource::<GraffitiMap>()
+                .markings
+                .contains_key(&(5, 5))
+            {
+                placed = true;
+                break;
+            }
+        }
+
+        assert!(placed, "Propaganda should be placed eventually");
+
+        let map = world.resource::<GraffitiMap>();
+        let graffiti = map.markings.get(&(5, 5));
+        assert!(graffiti.is_some());
+        assert_eq!(graffiti.unwrap().graffiti_type, GraffitiType::Propaganda);
     }
 }

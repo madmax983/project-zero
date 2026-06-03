@@ -489,6 +489,31 @@ pub fn calculate_work_amount(
         1.0
     };
 
+    let propaganda_graffiti_modifier = {
+        let pop_pos = world.get::<GridPosition>(pop_entity);
+        let mut modifier = 1.0;
+        if let Some(pos) = pop_pos {
+            if let Some(map) = world.get_resource::<crate::layer1::graffiti::GraffitiMap>() {
+                let neighbors = [
+                    (pos.x, pos.y), // Check same tile
+                    (pos.x, pos.y - 1),
+                    (pos.x + 1, pos.y),
+                    (pos.x, pos.y + 1),
+                    (pos.x - 1, pos.y),
+                ];
+                for target in neighbors {
+                    if let Some(graffiti) = map.markings.get(&target) {
+                        if graffiti.graffiti_type == crate::layer1::graffiti::GraffitiType::Propaganda {
+                            modifier = 0.9;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        modifier
+    };
+
     let gravity_nightmare_modifier = if world
         .get::<crate::layer1::psychology::void_sleep::GravityNightmare>(pop_entity)
         .is_some()
@@ -511,7 +536,8 @@ pub fn calculate_work_amount(
         * ghost_shift_modifier
         * hallucinating_modifier
         * somnambulist_modifier
-        * gravity_nightmare_modifier;
+        * gravity_nightmare_modifier
+        * propaganda_graffiti_modifier;
 
     // Cap work amount to prevent logic bugs / economy exploits
     amount.min(1000.0)
