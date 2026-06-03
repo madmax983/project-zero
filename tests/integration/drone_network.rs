@@ -41,10 +41,13 @@ mod tests {
         world.init_resource::<Events<scale::layer1::structural_integrity::StructureCollapsed>>();
         world.init_resource::<Events<scale::layer1::heirloom::RetrogradeEngineeringEvent>>();
         world.init_resource::<Events<scale::layer1::energy::GridOverloadEvent>>();
+        world.init_resource::<Events<scale::layer1::energy::gravity_siphon::OrbitalDecayEvent>>();
+        world.init_resource::<Events<scale::layer1::energy::gravity_siphon::OrbitalDecayEvent>>();
         world.init_resource::<Events<scale::layer1::environment::hazards::AmputationEvent>>();
         world.init_resource::<Events<scale::layer1::geology::GeologicalEvent>>();
         world.init_resource::<Events<scale::layer1::society::InvestigationEvent>>();
         world.init_resource::<Events<scale::layer1::society::SuppressSocietyEvent>>();
+        world.init_resource::<Events<scale::layer1::energy::gravity_siphon::OrbitalDecayEvent>>();
         world.init_resource::<Events<scale::layer1::medical::PatientTreated>>();
         world.init_resource::<Events<scale::layer1::social::FavorChange>>();
         world.init_resource::<Events<scale::layer1::eureka::EurekaEvent>>();

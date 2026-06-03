@@ -1327,3 +1327,9 @@
 - **Systems connected:** `SolarFlareEvent` -> `solar_flare_chronicle_bridge` -> `AddChronicleEvent`
 - **Glue added:** Added `solar_flare_chronicle_bridge` in `src/layer1/core/integration.rs` to record a major event in the Chronicle when a solar flare strikes.
 - **Tests:** `tests/integration/solar_flare_chronicle_bridge.rs`
+
+### INT-550: The Gravity Siphon -> Layer 2 Orbit
+- **Date:** 2026-06-03
+- **Systems connected:** `trigger_orbital_decay_system` -> `gravity_siphon_orbital_decay_bridge_system` -> `OrbitalDebris`
+- **Glue added:** Added `gravity_siphon_orbital_decay_bridge_system` in `src/layer2/integration.rs` to process `OrbitalDecayEvent` and increase `OrbitalDebris`. Registered event and system in `src/simulation.rs`.
+- **Tests:** `tests/integration/gravity_siphon_bridge.rs`
