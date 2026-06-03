@@ -111,3 +111,8 @@
 **Concept:** Added `comms_mourning_system` to `src/experimental/comms_mourning.rs`. Connects `PopDied` events to `BuildingType::CommsRelay`. When a pop dies, if a CommsRelay exists, it intercepts their digital ghost and broadcasts a comforting message, giving all living pops a temporary positive `MoodModifier` to buffer the loss of life in the colony.
 **Fate:** Submitted
 **Lesson:** Provides a soft mitigation mechanism for deaths while turning an otherwise passive communication building into a systemic safety net for morale.
+
+## [Scrapcode Entropy]
+**Concept:** Added `scrapcode_entropy_system` to `src/experimental/scrapcode_entropy.rs`. If `Scrapcode` is active, it actively accelerates the `BuildingAge` of all existing buildings every tick based on its severity, causing them to decay and collapse faster over time.
+**Fate:** Submitted
+**Lesson:** Turns the `Scrapcode` infection from a simple economic penalty (more wood needed for new buildings) into an existential threat for the colony's existing infrastructure. If the player ignores purging the Scrapcode, their base will crumble around them due to accelerated temporal entropy.
