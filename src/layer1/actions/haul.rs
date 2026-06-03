@@ -76,51 +76,7 @@ pub(crate) fn evaluate_haul(
     // Check Resource Items (with capacity check)
     for item in items {
         if let Some(res_type) = item.resource_type {
-            let has_room = match res_type {
-                crate::layer1::resources::ResourceType::Food => resources.food < resources.max_food,
-                crate::layer1::resources::ResourceType::Wood => resources.wood < resources.max_wood,
-                crate::layer1::resources::ResourceType::Stone => {
-                    resources.stone < resources.max_stone
-                }
-                crate::layer1::resources::ResourceType::Ore => resources.ore < resources.max_ore,
-                crate::layer1::resources::ResourceType::Metal => {
-                    resources.metal < resources.max_metal
-                }
-                crate::layer1::resources::ResourceType::Planks => {
-                    resources.planks < resources.max_planks
-                }
-                crate::layer1::resources::ResourceType::Blocks => {
-                    resources.blocks < resources.max_blocks
-                }
-                crate::layer1::resources::ResourceType::Waste => {
-                    resources.waste < resources.max_waste
-                }
-                crate::layer1::resources::ResourceType::Rations => {
-                    resources.rations < resources.max_rations
-                }
-                crate::layer1::resources::ResourceType::Fuel => resources.fuel < resources.max_fuel,
-                crate::layer1::resources::ResourceType::Alcohol => {
-                    resources.alcohol < resources.max_alcohol
-                }
-                crate::layer1::resources::ResourceType::Scrap => {
-                    resources.scrap < resources.max_scrap
-                }
-                crate::layer1::resources::ResourceType::Tools => {
-                    resources.tools < resources.max_tools
-                }
-                crate::layer1::resources::ResourceType::BuildingPermit => {
-                    resources.building_permits < resources.max_building_permits
-                }
-                crate::layer1::resources::ResourceType::MemoryCore => {
-                    resources.memory_cores < resources.max_memory_cores
-                }
-                crate::layer1::resources::ResourceType::VoidAle
-                | crate::layer1::resources::ResourceType::HyperValuable => {
-                    resources.memory_cores < resources.max_memory_cores
-                }
-            };
-
-            if !has_room {
+            if !resources.has_room_for(&res_type) {
                 continue;
             }
         }
