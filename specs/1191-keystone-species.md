@@ -116,3 +116,5 @@ pub fn handle_biome_collapse(
 
 **8. Questions**
 *Builder: Add questions here if integration with existing terrain/biome systems is unclear.*
+
+*Architect:* For MVP, mapping a Keystone species to a specific Biome component is sufficient. Feel free to extend to specific terrain tags if necessary.
