@@ -15,3 +15,6 @@
 **Testing Bevy Time Components**
 **Learning:** When using `MinimalPlugins` in a Bevy test `App`, the `TimePlugin` and `Time<Virtual>` resources are already added. Attempting to manually insert `Time` using `app.insert_resource(Time::<()>::default())` is redundant and will cause a compiler error because `()` does not implement `TimeContext`.
 **Action:** Simply advance the existing virtual time using `app.world_mut().resource_mut::<Time>().advance_by(...)` without manually inserting a new generic `Time` resource.
+**[layer1/access_control.rs coverage]**
+**Learning:** `check_access` has early return paths that might be missed in tests if the tested pops lack certain components like `AccessControl` itself or do not simulate an invalid ID condition for allowed pops. Security logic can also drift. I learned to use isolated `world.spawn()` and `world.despawn()` sequences to hit negative branches like 'alive check failed'.
+**Action:** Always test the 'happy path absent' condition (e.g. `world.get::<AccessControl> == None`). Specifically, to test "is_alive" guards around allowed objects, spawn an entity, store its ID, then despawn it immediately before passing it to the check function.
