@@ -108,6 +108,22 @@ pub fn render_status_bar(frame: &mut Frame, area: Rect, world: &World) {
     });
     let efficiency = admin_stats.map_or(1.0, |s| s.efficiency);
 
+    let mut singularity_active = 0;
+    let mut singularity_mass = 0.0;
+    for e in world.iter_entities() {
+        if let Some(gen) = e.get::<crate::layer1::energy::gravity_siphon::SingularityGenerator>() {
+            if gen.active {
+                singularity_active += 1;
+                singularity_mass += gen.mass_accumulated;
+            }
+        }
+    }
+    let active_singularity_mass = if singularity_active > 0 {
+        Some(singularity_mass)
+    } else {
+        None
+    };
+
     let status = get_status_line(
         sim_time.tick,
         sim_time.speed,
@@ -124,6 +140,7 @@ pub fn render_status_bar(frame: &mut Frame, area: Rect, world: &World) {
         season,
         solar_cycle,
         risk_pct,
+        active_singularity_mass,
     );
 
     let status = truncate_line(status, area.width);
@@ -353,10 +370,11 @@ pub fn get_status_line<'a>(
     season: Option<Season>,
     solar_cycle: Option<SolarCycle>,
     risk_pct: f32,
+    active_singularity_mass: Option<f32>,
 ) -> Line<'a> {
     // ⚡ Bolt Optimization: Pre-allocate capacity to avoid intermediate allocations in hot UI loop
-    // Total possible spans: 1 (play) + 3 (time) + 1 (separator) + 6 (colony) + 1 (separator) + 6 (resources) + 2 (mode) + 1 (separator) + 1 (location) = 22
-    let mut spans = Vec::with_capacity(22);
+    // Total possible spans: 1 (play) + 3 (time) + 1 (separator) + 6 (colony) + 1 (separator) + 6 (resources) + 2 (mode) + 1 (separator) + 1 (location) + 2 (singularity) = 24
+    let mut spans = Vec::with_capacity(24);
 
     spans.push(build_play_pause_span(paused));
     spans.extend(build_time_spans(tick, season, solar_cycle));
@@ -365,6 +383,14 @@ pub fn get_status_line<'a>(
     spans.push(Span::styled("  ║  ", Style::default().fg(Color::DarkGray)));
     spans.extend(build_resources_spans(food_yield, rations, tools, risk_pct));
     spans.extend(build_mode_spans(build_mode, designation_mode));
+
+    if let Some(mass) = active_singularity_mass {
+        spans.push(Span::styled("  ║  ", Style::default().fg(Color::DarkGray)));
+        spans.push(Span::styled(
+            format!(" 🌀 Singularity: {:.1}kg ", mass),
+            Style::default().fg(Color::Magenta).add_modifier(Modifier::BOLD),
+        ));
+    }
 
     if let Some(name) = location_name {
         spans.push(Span::styled("  ║  ", Style::default().fg(Color::DarkGray)));
@@ -428,6 +454,7 @@ pub fn get_status_string(
     season: Option<Season>,
     solar_cycle: Option<SolarCycle>,
     risk_pct: f32,
+    active_singularity_mass: Option<f32>,
 ) -> String {
     let line = get_status_line(
         tick,
@@ -445,6 +472,7 @@ pub fn get_status_string(
         season,
         solar_cycle,
         risk_pct,
+        active_singularity_mass,
     );
 
     // ⚡ Bolt Optimization: Replace intermediate .collect::<String>() chain with pre-allocated String loop
@@ -519,6 +547,7 @@ mod tests {
             None,  // Season
             None,  // Solar Cycle
             0.0,   // risk_pct
+            None,  // Singularity Mass
         );
 
         assert!(status.contains("Day 100"));
@@ -545,6 +574,7 @@ mod tests {
             None, // Season
             None, // Solar Cycle
             0.0,  // risk_pct
+            None, // Singularity mass
         );
 
         assert!(status_none.contains("Day 100"));
@@ -653,6 +683,7 @@ mod tests {
             Some(Season::Summer),
             None,
             0.0, // risk_pct
+            None, // Singularity mass
         );
         assert!(
             status.contains("Summer"),
@@ -679,6 +710,7 @@ mod tests {
             None,
             None,
             0.0, // risk_pct
+            None, // Singularity mass
         );
         assert!(!status.contains("Spring"));
         assert!(!status.contains("Summer"));
@@ -704,6 +736,7 @@ mod tests {
             None,
             Some(SolarCycle::Maximum),
             0.0, // risk_pct
+            None, // Singularity mass
         );
         assert!(
             status.contains("Solar Maximum"),
