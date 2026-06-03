@@ -178,3 +178,6 @@ pub mod protest_graffiti;
 
 #[cfg(feature = "nova")]
 pub mod storm_thieves;
+
+#[cfg(feature = "nova")]
+pub mod scrapcode_entropy;
