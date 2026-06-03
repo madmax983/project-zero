@@ -87,6 +87,8 @@ pub enum FactionId {
     Gastronomers,
     /// Pops living in redlined/dezoned areas who stop paying taxes.
     Stateless,
+    /// Faction dedicated to undoing the mistakes of the past.
+    Penitent,
 }
 
 /// Data associated with a faction.
@@ -214,6 +216,13 @@ impl Factions {
                 FactionId::SubLithic,
                 FactionData {
                     name: "The Sub-Lithic Cult".into(),
+                    ..Default::default()
+                },
+            );
+            self.map.insert(
+                FactionId::Penitent,
+                FactionData {
+                    name: "Bureau of Regrets".into(),
                     ..Default::default()
                 },
             );

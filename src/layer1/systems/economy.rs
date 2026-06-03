@@ -232,6 +232,8 @@ pub fn register(schedule: &mut Schedule) {
                 .after(crate::layer1::factions::update_faction_demands_system),
             crate::layer1::core::integration::faction_strike_mob_bridge_system
                 .after(crate::layer1::factions::update_faction_strikes_system),
+            crate::layer1::social::bureau_of_regrets::check_penitent_faction_formation_system,
+            crate::layer1::social::bureau_of_regrets::process_reparation_strikes_system,
             crate::layer1::social::sub_lithic::process_deep_mining_exposure,
             crate::layer1::social::sub_lithic::evaluate_cult_formation,
             crate::layer1::social::sub_lithic::process_cult_sabotage,

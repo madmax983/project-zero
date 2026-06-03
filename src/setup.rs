@@ -13,7 +13,7 @@ use crate::layer1::social::AffinityChange;
 use crate::layer1::{
     generate_terrain, initial_chronicle_event, initial_naming_system, spawn_ancient_structures,
     spawn_initial_anomalies, spawn_initial_pops, AmbientLight, AtmosphereGrid, BuildMode,
-    BuildingTracker, CameraCurrent, CameraTarget, Chronicle, ColonyPolicies, ColonyResources,
+    BuildingTracker, CameraCurrent, CameraTarget, Chronicle, AtrocityScore, ColonyPolicies, ColonyResources,
     DesignationMode, GlobalHitStop, LightMap, NamedLocations, NotificationQueue, OccupiedTiles,
     PopBundle, ScreenShake, SeasonState, TechState, TerrainType, UtilityConfig, Viewport,
 };
@@ -277,6 +277,7 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     world.insert_resource(InputContextStack::default());
     world.insert_resource(MessageLog::default());
     world.insert_resource(Chronicle::default());
+    world.insert_resource(AtrocityScore::default());
     world.init_resource::<bevy_ecs::event::Events<crate::layer1::pop_memories::FamineEvent>>();
     world
         .init_resource::<bevy_ecs::event::Events<crate::layer1::law::justice::CrimeCommittedEvent>>(

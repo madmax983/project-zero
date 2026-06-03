@@ -652,6 +652,8 @@ pub mod xenoflora_pet;
 pub use xenoflora_pet::*;
 pub mod cargo_cult;
 pub use cargo_cult::*;
+pub mod bureau_of_regrets;
+pub use bureau_of_regrets::*;
 
 pub mod pop_relationships;
 pub use pop_relationships::*;

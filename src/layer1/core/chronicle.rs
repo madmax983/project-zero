@@ -142,6 +142,13 @@ pub struct ChronicleUiState {
     pub is_open: bool,
 }
 
+/// Tracks the global atrocity score (for the Bureau of Regrets and other factions).
+#[derive(Resource, Default)]
+pub struct AtrocityScore {
+    /// The current total score.
+    pub score: f32,
+}
+
 /// Tracks which building types have been built (for milestones).
 #[derive(Resource, Default)]
 pub struct BuildingTracker {
