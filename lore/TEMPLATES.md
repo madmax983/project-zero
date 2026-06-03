@@ -8660,3 +8660,60 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 **Patterns:**
 - "[YEAR]: A transmission from [RECEIVING_FACTION]. They do not appreciate what [COLONY] dropped in their gravity well."
 - "[RECEIVING_FACTION] promises retaliation if [COLONY] continues using the void as a landfill. [YEAR]."
+
+## The Dead Hand Templates (Spec 1056)
+
+### Template: DEAD_HAND_TRIGGERED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [POP_NAME], [DEAD_HAND_ACTIVATOR], [RETALIATION_TYPE]
+
+**Patterns:**
+- "[YEAR]: The death of [POP_NAME] triggered the Dead Hand. Due to [DEAD_HAND_ACTIVATOR], [COLONY] suffers [RETALIATION_TYPE]."
+- "[POP_NAME] fell, and the failsafe engaged. [DEAD_HAND_ACTIVATOR] resulted in [RETALIATION_TYPE] across [COLONY]. [YEAR]."
+- "We killed the tyrant, but paid the price. [YEAR]. [DEAD_HAND_ACTIVATOR] unleashed [RETALIATION_TYPE]."
+
+### Template: DEAD_HAND_DISARMED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [POP_NAME]
+
+**Patterns:**
+- "[YEAR]: The failsafe is broken. [POP_NAME]'s Dead Hand was disarmed before their death."
+- "We cut the wires before we cut the throat. [POP_NAME]'s dead-man switch is deactivated. [YEAR]."
+
+## Dead Internet Templates (Spec 1110)
+
+### Template: DEAD_INTERNET_TRADE
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [FACTION_NAME], [TRADE_OFFER_TYPE]
+
+**Patterns:**
+- "[YEAR]: A message from [FACTION_NAME]. It was an automated script proposing [TRADE_OFFER_TYPE]."
+- "The ghost in the machine speaks. [FACTION_NAME] contacted [COLONY] with [TRADE_OFFER_TYPE]. [YEAR]."
+- "We tried to reply, but no one is there. Just a script from [FACTION_NAME] offering [TRADE_OFFER_TYPE]. [YEAR]."
+
+### Template: DEAD_INTERNET_INSULT
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [FACTION_NAME], [AUTOMATED_INSULT]
+
+**Patterns:**
+- "[YEAR]: [FACTION_NAME] broadcasted [AUTOMATED_INSULT] on all frequencies. We realized it was just a loop."
+- "An ancient grudge played by a machine. [FACTION_NAME] sent [AUTOMATED_INSULT] to [COLONY]. [YEAR]."
+
+## The Gravity Siphon Templates (Spec 550)
+
+### Template: GRAVITY_SIPHON_ACTIVATED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [GRAVITY_ANOMALY_DESC]
+
+**Patterns:**
+- "[YEAR]: We turned on the generator. Infinite power, but [GRAVITY_ANOMALY_DESC] settles over [COLONY]."
+- "The lights are on, but the world feels heavier. The siphon caused [GRAVITY_ANOMALY_DESC]. [YEAR]."
+
+### Template: ORBITAL_DECAY_WARNING
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [ORBITAL_THREAT_PULLED]
+
+**Patterns:**
+- "[YEAR]: The mass anomaly is too strong. We pulled [ORBITAL_THREAT_PULLED] closer to [COLONY]."
+- "Our gravity is a magnet. Sensors show [ORBITAL_THREAT_PULLED] decaying into our orbit. [YEAR]."
+- "[YEAR]: A warning from Layer 2. The siphon's mass has attracted [ORBITAL_THREAT_PULLED]."

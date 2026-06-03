@@ -9085,3 +9085,46 @@ What you threw into the wormhole.
 - three thousand tons of scrap
 - the remains of the old factory
 - something that was still twitching
+
+## The Dead Hand Fragments (Spec 1056)
+
+## Fragment Type: [RETALIATION_TYPE]
+- nuclear fire
+- total atmospheric venting
+- a localized EMP blast
+- core meltdown
+- biological release
+
+## Fragment Type: [DEAD_HAND_ACTIVATOR]
+- the sudden silence of their heart monitor
+- the severed bio-link
+- the failure of the dead-man's switch
+- a drop in brain activity
+
+## Dead Internet Fragments (Spec 1110)
+
+## Fragment Type: [AUTOMATED_INSULT]
+- outdated slurs from a dead language
+- pre-recorded threats of a forgotten war
+- algorithmically generated contempt
+- insults about a border that hasn't existed for centuries
+
+## Fragment Type: [TRADE_OFFER_TYPE]
+- a demand for obsolete fuel types
+- trading phantom goods for real ore
+- an exchange rate from the old empire
+- meaningless digital currency
+
+## The Gravity Siphon Fragments (Spec 550)
+
+## Fragment Type: [GRAVITY_ANOMALY_DESC]
+- a crushing localized weight
+- the ground pulling harder than the sky
+- time slowing near the core
+- a massive spike in planetary mass
+
+## Fragment Type: [ORBITAL_THREAT_PULLED]
+- a rogue planet-killer asteroid
+- wandering debris clouds
+- off-course trade ships
+- a dead moon

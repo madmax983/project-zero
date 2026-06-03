@@ -1,5 +1,5 @@
-use bevy_ecs::prelude::*;
 use crate::layer1::economy::resources::ColonyResources;
+use bevy_ecs::prelude::*;
 use bevy_time::Time;
 
 #[derive(Event)]
