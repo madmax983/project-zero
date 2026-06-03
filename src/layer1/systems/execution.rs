@@ -325,6 +325,7 @@ pub fn register(schedule: &mut Schedule) {
         (
             crate::layer1::heirloom_tool::process_pop_death_for_heirloom,
             crate::layer1::heirloom_tool::process_heirloom_equip,
+            crate::layer1::core::integration::heirloom_tool_chronicle_bridge,
         )
             .in_set(Layer1SystemSet::Execution),
     );

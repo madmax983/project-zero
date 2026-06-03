@@ -219,6 +219,8 @@ pub mod integration {
     pub mod spiteful_will_chronicle;
     #[path = "the_silent_generation_bridge.rs"]
     pub mod the_silent_generation_bridge;
+    #[path = "heirloom_tool_bridge.rs"]
+    pub mod heirloom_tool_bridge;
 }
 
 #[path = "integration/neural_leech_unrest.rs"]

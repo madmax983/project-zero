@@ -8,6 +8,7 @@ use rand::Rng;
 pub struct HeirloomTool {
     pub original_traits: Traits,
     pub efficiency_boost: f32,
+    pub original_owner_name: String,
 }
 
 #[derive(Event)]
@@ -34,6 +35,7 @@ pub fn process_pop_death_for_heirloom(
                 commands.spawn(HeirloomTool {
                     original_traits: traits.clone(),
                     efficiency_boost: 50.0,
+                    original_owner_name: event.name.clone(),
                 });
             }
         }
@@ -128,6 +130,7 @@ mod tests {
             .spawn(HeirloomTool {
                 original_traits: inherited_traits,
                 efficiency_boost: 50.0,
+                original_owner_name: "TestPop".to_string(),
             })
             .id();
 

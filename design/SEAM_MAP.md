@@ -1321,3 +1321,10 @@
 - **Systems connected:** `TraceGasGrid` -> `vacuum_clears_pollution_system`
 - **Glue added:** Modified `vacuum_clears_pollution_system` in `src/layer1/core/integration.rs` to clear trace gases (Euphoric, Fear, Rage) from `TraceGasGrid` when exposed to vacuum.
 - **Tests:** Added `test_vacuum_clears_trace_gases` to `tests/integration/atmosphere_vacuum.rs`.
+
+### INT-1086: Heirloom Tool -> Chronicle
+- **Date:** 2026-10-31
+- **Systems connected:** `HeirloomTool` (Added) -> `heirloom_tool_chronicle_bridge` -> `AddChronicleEvent`
+- **Glue added:** Modified `HeirloomTool` to store `original_owner_name`. Added `heirloom_tool_chronicle_bridge` in `src/layer1/core/integration.rs` to emit `AddChronicleEvent` when a tool is spawned.
+- **Schedule:** Chained in `Layer1SystemSet::Execution` after `process_pop_death_for_heirloom`.
+- **Tests:** `tests/integration/heirloom_tool_bridge.rs`

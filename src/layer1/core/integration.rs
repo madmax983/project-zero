@@ -2405,3 +2405,31 @@ pub fn kinetic_battery_chronicle_bridge(
         }
     }
 }
+
+/// INT-1086: Bridges `HeirloomTool` creation to `AddChronicleEvent` (Chronicle).
+pub fn heirloom_tool_chronicle_bridge(
+    query: Query<&crate::layer1::heirloom_tool::HeirloomTool, Added<crate::layer1::heirloom_tool::HeirloomTool>>,
+    mut chronicle_events: EventWriter<crate::layer1::core::chronicle::AddChronicleEvent>,
+    generator: Res<crate::shared::narrative::NarrativeGenerator>,
+    colony: Res<crate::shared::colony::ColonyName>,
+) {
+    for heirloom in query.iter() {
+        let mut ctx = crate::shared::narrative::NarrativeContext::new();
+        ctx.insert("COLONY", &colony.name);
+        ctx.insert("POP", &heirloom.original_owner_name);
+
+        let text = generator
+            .generate("HEIRLOOM_TOOL_CREATED", &ctx)
+            .unwrap_or_else(|_| {
+                format!(
+                    "{}'s masterwork tool remains, carrying their memory and burden.",
+                    heirloom.original_owner_name
+                )
+            });
+
+        chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
+            text,
+            importance: crate::layer1::core::chronicle::EventImportance::Major,
+        });
+    }
+}
