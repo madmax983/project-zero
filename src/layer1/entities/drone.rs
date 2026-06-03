@@ -48,11 +48,27 @@ pub struct Drone {
     pub state: DroneState,
 }
 
+/// Marker component for Player-Owned Drones.
+#[derive(Component, Default)]
+pub struct PlayerOwned;
+
 /// Component indicating a Feral Drone.
 #[derive(Component, Default)]
-pub struct FeralDrone {
+pub struct Feral {
     /// Resources hoarded by the feral drone.
     pub hoard: Vec<crate::layer1::resources::ResourceItem>,
+}
+
+/// A type alias for backward compatibility.
+pub type FeralDrone = Feral;
+
+/// Component managing a drone's connection to the power/command grid.
+#[derive(Component)]
+pub struct GridConnection {
+    /// Whether the drone is currently connected to the grid.
+    pub is_connected: bool,
+    /// Number of ticks the drone has been disconnected.
+    pub time_disconnected: u64,
 }
 
 /// Component linking a drone to a Command Center.
@@ -142,13 +158,14 @@ pub fn evaluate_drone_actions_system(
 }
 
 /// Checks if a drone has lost connection to its Command Center.
+#[allow(clippy::type_complexity)]
 pub fn check_drone_connection(
     mut commands: Commands,
-    mut drones: Query<(Entity, &mut Drone, &ConnectedTo)>,
+    mut drones: Query<(Entity, &mut Drone, &ConnectedTo, Option<&mut GridConnection>)>,
     command_centers: Query<&PowerConsumer, With<Building>>,
     mut disconnect_events: EventWriter<DroneDisconnectedEvent>,
 ) {
-    for (entity, mut drone, connection) in drones.iter_mut() {
+    for (entity, mut drone, connection, grid_conn) in drones.iter_mut() {
         let mut disconnected = false;
         // Find the command center entity
         if let Ok(power) = command_centers.get(connection.0) {
@@ -162,18 +179,58 @@ pub fn check_drone_connection(
         }
 
         if disconnected {
-            commands.entity(entity).remove::<ConnectedTo>();
-            commands.entity(entity).insert(FeralDrone::default());
+            if let Some(mut gc) = grid_conn {
+                gc.is_connected = false;
+                gc.time_disconnected += 1;
+            } else {
+                commands.entity(entity).remove::<ConnectedTo>();
+                commands.entity(entity).remove::<PlayerOwned>();
+                commands.entity(entity).insert(Feral::default());
+                drone.state = DroneState::Feral;
+                disconnect_events.send(DroneDisconnectedEvent { drone: entity });
+            }
+        } else if let Some(mut gc) = grid_conn {
+            gc.is_connected = true;
+            gc.time_disconnected = 0;
+        }
+    }
+}
+
+/// Checks the state of drones with `GridConnection` and transitions them to feral if disconnected too long.
+#[allow(clippy::type_complexity)]
+pub fn check_feral_state_system(
+    mut commands: Commands,
+    mut drones: Query<(Entity, &mut Drone, &GridConnection), (With<Drone>, With<PlayerOwned>)>,
+    mut disconnect_events: EventWriter<DroneDisconnectedEvent>,
+) {
+    const FERAL_THRESHOLD: u64 = 5000;
+
+    for (entity, mut drone, connection) in drones.iter_mut() {
+        if !connection.is_connected && connection.time_disconnected >= FERAL_THRESHOLD {
+            commands
+                .entity(entity)
+                .remove::<PlayerOwned>()
+                .remove::<ConnectedTo>()
+                .insert(Feral::default());
             drone.state = DroneState::Feral;
             disconnect_events.send(DroneDisconnectedEvent { drone: entity });
         }
     }
 }
 
+/// Sets the action of Feral drones to Harvest.
+pub fn evaluate_feral_actions_system(mut drones: Query<&mut PopAction, With<Feral>>) {
+    for mut action in drones.iter_mut() {
+        action.current = ActionType::Harvest;
+        action.current_utility = 1.0;
+        action.ticks_committed = 0;
+    }
+}
+
 /// Processes feral drones: hoarding nearby resources and attacking pops.
 pub fn process_feral_drones(
     mut commands: Commands,
-    mut feral_drones: Query<(&mut FeralDrone, &GridPosition)>,
+    mut feral_drones: Query<(&mut Feral, &GridPosition)>,
     resources: Query<(
         Entity,
         &crate::layer1::resources::ResourceItem,
@@ -199,6 +256,32 @@ pub fn process_feral_drones(
             if manhattan_distance(drone_pos, pop_pos) < 2 {
                 health.current -= 10.0;
             }
+        }
+
+        // Replication Mechanic
+        if feral_drone.hoard.len() >= 5 {
+            feral_drone.hoard.clear();
+            commands.spawn((
+                Drone {
+                    state: DroneState::Feral,
+                },
+                Feral::default(),
+                *drone_pos,
+                PopAction {
+                    current: ActionType::Harvest,
+                    current_utility: 1.0,
+                    ticks_committed: 0,
+                },
+                DroneBattery {
+                    current: 100.0,
+                    max: 100.0,
+                },
+                crate::layer1::health::Health {
+                    current: 100.0,
+                    max: 100.0,
+                    has_rust_lung: false,
+                },
+            ));
         }
     }
 }

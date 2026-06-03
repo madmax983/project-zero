@@ -992,6 +992,7 @@ fn format_action_type_headless(action: scale::layer1::ActionType) -> String {
         ActionType::Gossip => "🗣️ Gossiping".to_string(),
         ActionType::Philosophize => "🤔 Philosophizing".to_string(),
         ActionType::RealityCollapse => "🔥 Reality Collapse".to_string(),
+        ActionType::Harvest => "🌾 Harvesting".to_string(),
     }
 }
 

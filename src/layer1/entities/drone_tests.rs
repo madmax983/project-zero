@@ -306,4 +306,85 @@ mod tests {
             "Pop should have taken damage from Feral Drone"
         );
     }
+
+    #[test]
+    fn test_drone_goes_feral_when_disconnected_from_grid() {
+        use crate::layer1::drone::{
+            check_feral_state_system, Drone, Feral, GridConnection, PlayerOwned, DroneDisconnectedEvent
+        };
+        use crate::shared::time::SimulationTime;
+
+        // Arrange
+        let mut app = bevy_app::App::new();
+        app.init_resource::<SimulationTime>();
+        app.add_event::<DroneDisconnectedEvent>();
+
+        let drone_entity = app
+            .world_mut()
+            .spawn((
+                Drone::default(),
+                PlayerOwned,
+                GridConnection {
+                    is_connected: false,
+                    time_disconnected: 0,
+                },
+            ))
+            .id();
+
+        app.add_systems(bevy_app::Update, check_feral_state_system);
+
+        // Act: Advance time beyond the feral threshold (e.g., 5000 ticks)
+        let mut time = app.world_mut().resource_mut::<SimulationTime>();
+        time.tick = 5001;
+
+        let mut connection = app
+            .world_mut()
+            .get_mut::<GridConnection>(drone_entity)
+            .unwrap();
+        connection.time_disconnected = 5001;
+
+        app.update();
+
+        // Assert
+        let drone = app.world().entity(drone_entity);
+        assert!(
+            drone.contains::<Feral>(),
+            "Drone should become feral after prolonged disconnection"
+        );
+        assert!(
+            !drone.contains::<PlayerOwned>(),
+            "Feral drone should no longer be player-owned"
+        );
+    }
+
+    #[test]
+    fn test_feral_drone_targets_resources() {
+        use crate::layer1::drone::{evaluate_feral_actions_system, Drone, Feral};
+        use crate::layer1::utility_types::{ActionType, PopAction};
+
+        // Arrange
+        let mut app = bevy_app::App::new();
+        let feral_drone_entity = app
+            .world_mut()
+            .spawn((Drone::default(), Feral::default(), PopAction::default()))
+            .id();
+
+        app.add_systems(bevy_app::Update, evaluate_feral_actions_system);
+
+        // Act
+        app.update();
+
+        // Assert
+        let action = app.world().get::<PopAction>(feral_drone_entity).unwrap();
+        // Weight for harvesting should be very high
+        assert_eq!(
+            action.current,
+            ActionType::Harvest,
+            "Feral drone should heavily prioritize harvesting for survival"
+        );
+        assert!(
+            action.current_utility > 0.8,
+            "Feral drone should have high utility for harvesting"
+        );
+    }
 }
