@@ -728,6 +728,8 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
         crate::layer3::integration::feral_logistics_chronicle_bridge,
         crate::layer3::integration::stranded_fleet_chronicle_bridge,
         crate::layer3::diplomacy::wormhole_dumping::process_dump_waste,
+        crate::layer3::diplomacy::retro_contracts::handle_retro_contract_acceptance,
+        crate::layer3::diplomacy::retro_contracts::evaluate_retro_contracts,
     ));
 
     schedule.add_systems((crate::layer3::events::refugee_waves::process_refugee_decision,));
@@ -1205,6 +1207,7 @@ mod tests {
         world.init_resource::<Events<crate::layer3::linguistic_drift::TradeEvent>>();
         world.init_resource::<Events<crate::layer1::logistics::beanstalk::BeanstalkEvent>>();
         world.init_resource::<Events<crate::layer3::treaty_cruisers::InspectionEvent>>();
+        world.init_resource::<Events<crate::layer3::diplomacy::retro_contracts::AcceptRetroContractEvent>>();
         world.init_resource::<crate::layer3::treaty_cruisers::ActiveTreaties>();
 
         world.init_resource::<crate::layer3::digital_detritus::DataMiningQueue>();
