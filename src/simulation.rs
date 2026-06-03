@@ -7,6 +7,7 @@
 
 use bevy_ecs::prelude::*;
 use bevy_ecs::schedule::{IntoSystemConfigs, Schedule, ScheduleLabel};
+use crate::layer3::diplomacy::dead_internet::generate_diplomatic_interactions_system;
 
 use crate::gpu::evaluate::gpu_evaluate_actions;
 use crate::layer1::building::{update_building_map_system, BuildingMap};
@@ -40,12 +41,15 @@ pub fn build_simulation_schedule() -> Schedule {
     let mut schedule = Schedule::new(SimulationSchedule);
     register_simulation_core_systems(&mut schedule);
     register_simulation_extended_systems(&mut schedule);
+    schedule.add_systems(generate_diplomatic_interactions_system);
     schedule
 }
 
 /// Run one simulation tick: all game systems via schedule, then increment tick counter.
 #[allow(clippy::too_many_lines)]
 fn init_simulation_resources(world: &mut World) {
+    world.init_resource::<Events<crate::layer3::diplomacy::dead_internet::GenerateDiplomaticInteractionEvent>>();
+    world.init_resource::<Events<crate::layer3::diplomacy::dead_internet::DiplomaticInteraction>>();
     world.init_resource::<Events<crate::layer1::AcceptSponsorshipEvent>>();
     world
         .init_resource::<Events<crate::layer1::psychology::memory_blackout::MemoryBlackoutEvent>>();
