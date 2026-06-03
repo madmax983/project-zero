@@ -405,22 +405,8 @@ impl UiShell {
         }
     }
 
-    fn render_command_palette(&self, area: Rect, buf: &mut Buffer) {
-        let popup_area = centered_rect(70, 60, area);
-        let commands = self.filtered_palette_commands();
-        let title = if self.command_palette.filter.is_empty() {
-            " Command Palette "
-        } else {
-            " Command Palette (Filtered) "
-        };
-
-        let block = Block::default()
-            .title(title)
-            .borders(Borders::ALL)
-            .border_style(Style::default().fg(Color::Cyan))
-            .style(Style::default().bg(Color::Black));
-
-        let items = if commands.is_empty() {
+    fn build_palette_items<'a>(&self, commands: &[&'a ShellCommand]) -> Vec<ListItem<'a>> {
+        if commands.is_empty() {
             vec![ListItem::new(Line::from(Span::styled(
                 "No matching commands",
                 Style::default().fg(Color::DarkGray),
@@ -449,7 +435,25 @@ impl UiShell {
                     ]))
                 })
                 .collect()
+        }
+    }
+
+    fn render_command_palette(&self, area: Rect, buf: &mut Buffer) {
+        let popup_area = centered_rect(70, 60, area);
+        let commands = self.filtered_palette_commands();
+        let title = if self.command_palette.filter.is_empty() {
+            " Command Palette "
+        } else {
+            " Command Palette (Filtered) "
         };
+
+        let block = Block::default()
+            .title(title)
+            .borders(Borders::ALL)
+            .border_style(Style::default().fg(Color::Cyan))
+            .style(Style::default().bg(Color::Black));
+
+        let items = self.build_palette_items(&commands);
 
         let layout = Layout::default()
             .direction(Direction::Vertical)
@@ -567,6 +571,19 @@ impl UiShell {
     }
 }
 
+fn initialize_curated_workspace(
+    workspaces: &mut WorkspaceRuntime,
+    world: &SharedWorld,
+    workspace_name: &str,
+) {
+    register_default_plugins_with_runtime(workspaces.active_runtime_mut(), world.clone());
+    workspaces.rename_tab(workspaces.active_tab_index(), workspace_name.to_string());
+    apply_workspace_preset(workspaces.active_runtime_mut(), workspace_name);
+    workspaces
+        .active_runtime_mut()
+        .set_mode(InputMode::PluginInput);
+}
+
 #[must_use]
 pub fn build_default_shell(world: SharedWorld, config: ShellConfig) -> UiShell {
     let commands = build_default_command_registry();
@@ -587,25 +604,11 @@ pub fn build_default_shell(world: SharedWorld, config: ShellConfig) -> UiShell {
             .with_default_split_plugin(COLONY_MAP_PLUGIN_TYPE)
     });
 
-    register_default_plugins_with_runtime(workspaces.active_runtime_mut(), world.clone());
-    workspaces.rename_tab(0, String::from(COLONY_OPS_WORKSPACE));
-    apply_workspace_preset(workspaces.active_runtime_mut(), COLONY_OPS_WORKSPACE);
-    workspaces
-        .active_runtime_mut()
-        .set_mode(InputMode::PluginInput);
+    initialize_curated_workspace(&mut workspaces, &world, COLONY_OPS_WORKSPACE);
 
-    for workspace_name in [
-        SYSTEM_SURVEY_WORKSPACE.to_string(),
-        DIRECTOR_WORKSPACE.to_string(),
-        LOGS_WORKSPACE.to_string(),
-    ] {
+    for workspace_name in [SYSTEM_SURVEY_WORKSPACE, DIRECTOR_WORKSPACE, LOGS_WORKSPACE] {
         workspaces.new_tab();
-        register_default_plugins_with_runtime(workspaces.active_runtime_mut(), world.clone());
-        workspaces.rename_tab(workspaces.active_tab_index(), workspace_name.clone());
-        apply_workspace_preset(workspaces.active_runtime_mut(), &workspace_name);
-        workspaces
-            .active_runtime_mut()
-            .set_mode(InputMode::PluginInput);
+        initialize_curated_workspace(&mut workspaces, &world, workspace_name);
     }
 
     let mut shell = UiShell {

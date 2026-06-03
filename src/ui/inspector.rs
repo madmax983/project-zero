@@ -913,6 +913,26 @@ fn render_bio_monitor(
         .constraints(constraints)
         .split(bio_inner);
 
+    render_needs_gauges(frame, rows[0], needs);
+    render_morale_gauge(frame, rows[1], needs);
+
+    let mut current_row = 2;
+
+    if let Some(bio) = bio_opt {
+        render_bio_status(frame, rows[current_row], bio);
+        current_row += 1;
+    }
+
+    if has_rust_lung {
+        let rust_lung_label = Paragraph::new(Span::styled(
+            "⚠️ Condition: Rust-Lung",
+            Style::default().fg(Color::Red).add_modifier(Modifier::BOLD),
+        ));
+        frame.render_widget(rust_lung_label, rows[current_row]);
+    }
+}
+
+fn render_needs_gauges(frame: &mut Frame, area: Rect, needs: &Needs) {
     let needs_layout = Layout::default()
         .direction(Direction::Horizontal)
         .constraints([
@@ -920,7 +940,7 @@ fn render_bio_monitor(
             Constraint::Length(1), // Gap
             Constraint::Percentage(50),
         ])
-        .split(rows[0]);
+        .split(area);
 
     let hunger_percent = ((needs.hunger * 100.0).clamp(0.0, 100.0)) as u16;
     let rest_percent = ((needs.rest * 100.0).clamp(0.0, 100.0)) as u16;
@@ -948,7 +968,9 @@ fn render_bio_monitor(
 
     frame.render_widget(hunger_gauge, needs_layout[0]);
     frame.render_widget(rest_gauge, needs_layout[2]);
+}
 
+fn render_morale_gauge(frame: &mut Frame, area: Rect, needs: &Needs) {
     let morale = needs.morale();
     let morale_percent = ((morale * 100.0).clamp(0.0, 100.0)) as u16;
     let morale_color = if morale < 0.3 {
@@ -964,36 +986,25 @@ fn render_bio_monitor(
         .label(format!("😃 Morale: {morale_percent}%"))
         .percent(morale_percent);
 
-    frame.render_widget(morale_gauge, rows[1]);
+    frame.render_widget(morale_gauge, area);
+}
 
-    let mut current_row = 2;
+fn render_bio_status(frame: &mut Frame, area: Rect, bio: &Biocompatibility) {
+    let bio_percent = ((bio.value * 100.0).clamp(0.0, 100.0)) as u16;
+    let bio_color = if bio.value < 0.4 {
+        Color::Red
+    } else if bio.value < 0.7 {
+        Color::Yellow
+    } else {
+        Color::Green
+    };
 
-    if let Some(bio) = bio_opt {
-        let bio_percent = ((bio.value * 100.0).clamp(0.0, 100.0)) as u16;
-        let bio_color = if bio.value < 0.4 {
-            Color::Red
-        } else if bio.value < 0.7 {
-            Color::Yellow
-        } else {
-            Color::Green
-        };
+    let bio_gauge = Gauge::default()
+        .gauge_style(Style::default().fg(bio_color))
+        .label(format!("🧬 Bio-Comp: {bio_percent}%"))
+        .percent(bio_percent);
 
-        let bio_gauge = Gauge::default()
-            .gauge_style(Style::default().fg(bio_color))
-            .label(format!("🧬 Bio-Comp: {bio_percent}%"))
-            .percent(bio_percent);
-
-        frame.render_widget(bio_gauge, rows[current_row]);
-        current_row += 1;
-    }
-
-    if has_rust_lung {
-        let rust_lung_label = Paragraph::new(Span::styled(
-            "⚠️ Condition: Rust-Lung",
-            Style::default().fg(Color::Red).add_modifier(Modifier::BOLD),
-        ));
-        frame.render_widget(rust_lung_label, rows[current_row]);
-    }
+    frame.render_widget(bio_gauge, area);
 }
 
 fn render_power_cable_info(frame: &mut Frame, area: Rect, cable: &PowerCable) {
