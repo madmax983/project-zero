@@ -683,3 +683,4 @@
 - [x] `INT-878` Integration: Solar Flare Lottery -> Chronicle - completed 2024-05-31
 - [x] `1110` Dead Internet — `specs/1110-dead-internet.md` — completed 2026-06-02
 - [x] `550` The Gravity Siphon — `specs/550-the-gravity-siphon.md` — completed 2024-06-03
+- [x] `1273` Gravity Debt — `specs/1273-gravity-debt.md` — completed 2026-06-03

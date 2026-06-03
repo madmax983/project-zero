@@ -99,4 +99,5 @@ impl Plugin for PlanetarySpinUpPlugin {
             );
     }
 }
+pub mod gravity;
 pub mod leviathans;
