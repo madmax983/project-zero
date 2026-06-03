@@ -183,6 +183,145 @@ mod tests {
     }
 
     #[test]
+    fn test_check_security_clearance_drift_denies_access() {
+        use crate::layer1::security::{BiometricProfile, SecurityTerminal};
+
+        let mut world = World::new();
+        let pop = world
+            .spawn((
+                Pop,
+                BiometricProfile {
+                    drift: 1.0,
+                    ..Default::default()
+                },
+            ))
+            .id();
+        let door = world
+            .spawn((
+                AccessControl::default(),
+                SecurityTerminal {
+                    strictness: 1.0,
+                    required_clearance: 0,
+                },
+            ))
+            .id();
+
+        assert!(
+            !check_access(&world, door, pop),
+            "High drift should be denied access"
+        );
+    }
+
+    #[test]
+    fn test_check_security_clearance_delayed() {
+        use crate::layer1::security::{BiometricProfile, SecurityTerminal};
+
+        let mut world = World::new();
+        let pop = world
+            .spawn((
+                Pop,
+                BiometricProfile {
+                    drift: 0.6,
+                    ..Default::default()
+                },
+            ))
+            .id();
+        let door = world
+            .spawn((
+                AccessControl::default(),
+                SecurityTerminal {
+                    strictness: 1.0,
+                    required_clearance: 0,
+                },
+            ))
+            .id();
+
+        assert!(
+            check_access(&world, door, pop),
+            "Delayed access is not denied in check_access"
+        );
+    }
+
+    #[test]
+    fn test_check_security_clearance_no_access_control_allowed() {
+        let mut world = World::new();
+        let pop = world.spawn(Pop).id();
+        let door = world.spawn_empty().id();
+
+        assert!(
+            check_access(&world, door, pop),
+            "No AccessControl should mean open"
+        );
+    }
+
+    #[test]
+    fn test_check_security_clearance_restricted_allowed_pop_alive() {
+        let mut world = World::new();
+        let pop = world.spawn(Pop).id();
+
+        let mut allowed = HashSet::new();
+        allowed.insert(pop);
+
+        let door = world
+            .spawn(AccessControl {
+                mode: AccessMode::Restricted,
+                allowed_pops: allowed,
+                ..Default::default()
+            })
+            .id();
+
+        assert!(
+            check_access(&world, door, pop),
+            "Allowed alive pop should pass"
+        );
+    }
+
+    #[test]
+    fn test_check_security_clearance_restricted_not_allowed() {
+        let mut world = World::new();
+        let pop = world.spawn(Pop).id();
+
+        let allowed = HashSet::new();
+
+        let door = world
+            .spawn(AccessControl {
+                mode: AccessMode::Restricted,
+                allowed_pops: allowed,
+                ..Default::default()
+            })
+            .id();
+
+        assert!(
+            !check_access(&world, door, pop),
+            "Pop not in allowed_pops should fail"
+        );
+    }
+
+    #[test]
+    fn test_check_security_clearance_restricted_allowed_pop_dead_entity() {
+        let mut world = World::new();
+        let pop = world.spawn(Pop).id();
+
+        let mut allowed = HashSet::new();
+        allowed.insert(pop);
+
+        let door = world
+            .spawn(AccessControl {
+                mode: AccessMode::Restricted,
+                allowed_pops: allowed,
+                ..Default::default()
+            })
+            .id();
+
+        world.despawn(pop);
+
+        assert!(
+            !check_access(&world, door, pop),
+            "Allowed dead pop should fail"
+        );
+    }
+
+    #[test]
     fn test_role_based_access() {
         let mut world = World::new();
         let soldier = world.spawn((Pop, Role::Soldier)).id();
@@ -203,6 +342,29 @@ mod tests {
         assert!(
             !check_access(&world, door, civilian),
             "Civilian should fail"
+        );
+    }
+
+    #[test]
+    fn test_check_security_clearance_restricted_allowed_role_not_found() {
+        let mut world = World::new();
+        let civilian = world.spawn((Pop, Role::Civilian)).id();
+
+        let mut allowed = HashSet::new();
+        allowed.insert(Role::Soldier);
+
+        // The civilian is not in the allowed_roles set.
+        let door = world
+            .spawn(AccessControl {
+                mode: AccessMode::Restricted,
+                allowed_roles: allowed,
+                ..Default::default()
+            })
+            .id();
+
+        assert!(
+            !check_access(&world, door, civilian),
+            "Civilian should not be allowed"
         );
     }
 
