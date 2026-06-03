@@ -54,6 +54,7 @@ mod tests {
             None, // Season
             None, // Solar Cycle
             0.0,  // risk_pct
+            None, // Singularity mass
         );
 
         // 4. Verify Glue

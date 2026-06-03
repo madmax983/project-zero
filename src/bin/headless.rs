@@ -556,6 +556,18 @@ fn print_status(world: &mut World) {
 
     let (avg_morale, avg_stress) = calculate_averages(world);
 
+    let mut singularity_active = 0;
+    let mut singularity_mass = 0.0;
+    for gen in world
+        .query::<&scale::layer1::energy::gravity_siphon::SingularityGenerator>()
+        .iter(world)
+    {
+        if gen.active {
+            singularity_active += 1;
+            singularity_mass += gen.mass_accumulated;
+        }
+    }
+
     let mut table = Table::new();
     table
         .load_preset(UTF8_FULL)
@@ -569,6 +581,14 @@ fn print_status(world: &mut World) {
     add_society_rows(&mut table, pop_count, avg_morale, avg_stress);
     add_environment_rows(&mut table, wind_dir, wind_speed);
     add_resource_rows(&mut table, &resources);
+
+    if singularity_active > 0 {
+        table.add_row(vec![
+            Cell::new("Energy").fg(Color::Magenta),
+            Cell::new("Singularity Mass"),
+            Cell::new(format!("{:.1}", singularity_mass)).fg(Color::Magenta),
+        ]);
+    }
 
     table.add_row(vec![
         Cell::new("Buildings").fg(Color::Magenta),
