@@ -2418,3 +2418,16 @@ pub fn solar_flare_chronicle_bridge(
         });
     }
 }
+
+/// INT-550: Bridges OrbitalDecayEvent (Gravity Siphon) to AddChronicleEvent (Chronicle).
+pub fn gravity_siphon_chronicle_bridge(
+    mut events: EventReader<crate::layer1::energy::gravity_siphon::OrbitalDecayEvent>,
+    mut chronicle_events: EventWriter<AddChronicleEvent>,
+) {
+    for event in events.read() {
+        chronicle_events.send(AddChronicleEvent {
+            text: format!("The massive gravitational pull of the Micro-Singularity Generator has destabilized the planet's orbit (Anomaly Strength: {:.1}). Asteroids are drawing dangerously close.", event.anomaly_strength),
+            importance: crate::layer1::core::chronicle::EventImportance::Legendary,
+        });
+    }
+}
