@@ -111,3 +111,8 @@
 **Concept:** Added `comms_mourning_system` to `src/experimental/comms_mourning.rs`. Connects `PopDied` events to `BuildingType::CommsRelay`. When a pop dies, if a CommsRelay exists, it intercepts their digital ghost and broadcasts a comforting message, giving all living pops a temporary positive `MoodModifier` to buffer the loss of life in the colony.
 **Fate:** Submitted
 **Lesson:** Provides a soft mitigation mechanism for deaths while turning an otherwise passive communication building into a systemic safety net for morale.
+
+## [Darkness Paranoia]
+**Concept:** Added `darkness_paranoia_system` in `src/experimental/darkness_paranoia.rs`. If a Pop is exploring or idling in pitch darkness (`light < 0.1`) on the `LightMap`, they rapidly accumulate stress. This penalty is heavily amplified if the Pop has the `Trait::Anxious`.
+**Fate:** Submitted
+**Lesson:** Connects the environment's `LightMap` with psychological health (`StressTracker`), punishing players who fail to properly light their base's corridors and forcing them to think about pathing lighting, not just workspace lighting.
