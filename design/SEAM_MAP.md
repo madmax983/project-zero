@@ -1327,3 +1327,9 @@
 - **Systems connected:** `SolarFlareEvent` -> `solar_flare_chronicle_bridge` -> `AddChronicleEvent`
 - **Glue added:** Added `solar_flare_chronicle_bridge` in `src/layer1/core/integration.rs` to record a major event in the Chronicle when a solar flare strikes.
 - **Tests:** `tests/integration/solar_flare_chronicle_bridge.rs`
+
+### INT-554: Phantom Signal -> Chronicle
+- **Date:** 2026-10-31
+- **Systems connected:** `SignalRevealEvent` -> `phantom_signal_chronicle_bridge` -> `AddChronicleEvent`
+- **Glue added:** `phantom_signal_chronicle_bridge` in `src/layer1/core/integration.rs` to read `SignalRevealEvent` and emit `AddChronicleEvent`. Registered `SignalRevealEvent` in `src/simulation.rs`. Registered `phantom_signal_chronicle_bridge` in `src/layer1/systems/observation.rs`.
+- **Tests:** `tests/integration/phantom_signal_chronicle.rs`

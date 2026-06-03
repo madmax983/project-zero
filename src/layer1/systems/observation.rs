@@ -519,6 +519,7 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::psychology::void_sickness::apply_trait_stat_modifiers_system,
             crate::layer1::core::integration::crop_mutation_mycelial_bridge,
             crate::layer1::core::integration::mycelial_chronicle_bridge,
+            crate::layer1::core::integration::phantom_signal_chronicle_bridge,
         )
             .in_set(Layer1SystemSet::Observation),
     );

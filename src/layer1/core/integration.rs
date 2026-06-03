@@ -2418,3 +2418,28 @@ pub fn solar_flare_chronicle_bridge(
         });
     }
 }
+
+/// INT-554: Bridges SignalRevealEvent (Phantom Signal) to AddChronicleEvent (Chronicle).
+pub fn phantom_signal_chronicle_bridge(
+    mut events_in: bevy_ecs::prelude::EventReader<crate::layer2::phantom_signal::SignalRevealEvent>,
+    mut chronicle_events: bevy_ecs::prelude::EventWriter<
+        crate::layer1::core::chronicle::AddChronicleEvent,
+    >,
+) {
+    for event in events_in.read() {
+        let (importance, text) = if event.is_ambush {
+            (
+                crate::layer1::core::chronicle::EventImportance::Major,
+                "A phantom signal was revealed to be a pirate ambush!".to_string(),
+            )
+        } else {
+            (
+                crate::layer1::core::chronicle::EventImportance::Standard,
+                "A phantom signal was revealed to be a valuable technology cache.".to_string(),
+            )
+        };
+
+        chronicle_events
+            .send(crate::layer1::core::chronicle::AddChronicleEvent { importance, text });
+    }
+}

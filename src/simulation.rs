@@ -308,6 +308,7 @@ fn init_simulation_resources(world: &mut World) {
     world.init_resource::<Events<crate::layer1::mind::sleep_debt::RepoManArrivalEvent>>();
     world.init_resource::<Events<crate::layer1::logistics::mass_driver::LaunchEvent>>();
     world.init_resource::<Events<crate::layer1::logistics::mass_driver::BombardmentEvent>>();
+    world.init_resource::<Events<crate::layer2::phantom_signal::SignalRevealEvent>>();
     world.init_resource::<Events<crate::layer2::bombardment::BombardmentEvent>>();
     world.init_resource::<Events<crate::layer3::diplomacy::flesh_tax::FleshTaxPaymentEvent>>();
     world.init_resource::<Events<crate::layer3::diplomacy::flesh_tax::FleshTaxFailedEvent>>();
@@ -1147,6 +1148,7 @@ mod tests {
         world.init_resource::<Events<crate::layer1::mind::sleep_debt::RepoManArrivalEvent>>();
         world.init_resource::<Events<crate::layer1::logistics::mass_driver::LaunchEvent>>();
         world.init_resource::<Events<crate::layer1::logistics::mass_driver::BombardmentEvent>>();
+        world.init_resource::<Events<crate::layer2::phantom_signal::SignalRevealEvent>>();
         world.init_resource::<Events<crate::layer2::bombardment::BombardmentEvent>>();
         world.init_resource::<Events<crate::layer3::diplomacy::flesh_tax::FleshTaxPaymentEvent>>();
         world.init_resource::<Events<crate::layer3::diplomacy::flesh_tax::FleshTaxFailedEvent>>();
