@@ -198,6 +198,7 @@ impl ScopedEvaluationContext {
         );
 
         let mut results = std::mem::take(&mut self.buffer.results);
+        results.clear();
         results.resize(self.buffer.pop_data.len(), None);
 
         run_evaluations(&self.buffer, &context, &mut results);
