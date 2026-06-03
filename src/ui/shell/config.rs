@@ -69,6 +69,7 @@ impl ShellConfig {
     pub fn decoded_persisted_layout(&self) -> Option<PersistedShellLayout> {
         self.persisted_layout
             .as_ref()
+            .filter(|json| json.len() <= 1024 * 1024)
             .and_then(|json| serde_json::from_str(json).ok())
             .filter(|layout: &PersistedShellLayout| layout.version == SHELL_LAYOUT_VERSION)
     }
@@ -174,5 +175,17 @@ mod tests {
         let json = serde_json::to_string(&cfg).unwrap();
         let decoded: ShellConfig = serde_json::from_str(&json).unwrap();
         assert_eq!(decoded.startup_workspace, "Colony Ops");
+    }
+
+    #[test]
+    fn massive_persisted_layout_is_ignored() {
+        let massive_string = "a".repeat(1024 * 1024 + 1);
+        let cfg = ShellConfig {
+            persisted_layout: Some(massive_string),
+            ..Default::default()
+        };
+
+        // This should return None without crashing or allocating massively to parse the JSON
+        assert!(cfg.decoded_persisted_layout().is_none());
     }
 }
