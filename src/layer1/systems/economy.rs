@@ -282,4 +282,15 @@ pub fn register(schedule: &mut Schedule) {
     crate::experimental::radioactive_batteries::register(schedule);
     #[cfg(feature = "nova")]
     crate::experimental::stowaway_clutter::register(schedule);
+
+    schedule.add_systems(
+        (
+            crate::layer1::energy::gravity_siphon::process_singularity_energy_system,
+            crate::layer1::energy::gravity_siphon::process_singularity_mass_accumulation_system,
+            crate::layer1::energy::gravity_siphon::trigger_orbital_decay_system,
+            crate::layer1::core::integration::gravity_siphon_chronicle_bridge,
+        )
+            .chain()
+            .in_set(Layer1SystemSet::Economy),
+    );
 }
