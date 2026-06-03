@@ -6,4 +6,5 @@
 //!
 //! Layer 1 Factions.
 //!
+pub mod dead_internet;
 pub mod rivals;

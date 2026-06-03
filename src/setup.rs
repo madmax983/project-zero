@@ -379,6 +379,8 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     world.init_resource::<Events<crate::layer2::orphan_fleet::OrphanFleetDefectionEvent>>();
     world.init_resource::<Events<crate::layer2::primitives::PrimitiveRetaliationEvent>>();
     world.init_resource::<Events<crate::layer1::radio_nostalgia::BroadcastReceivedEvent>>();
+    world.init_resource::<Events<crate::layer1::diplomacy::factions::dead_internet::GenerateDiplomaticInteractionEvent>>();
+    world.init_resource::<Events<crate::layer1::diplomacy::factions::dead_internet::DiplomaticInteraction>>();
     world.init_resource::<Events<crate::layer1::economy::TradeImportEvent>>();
     world.init_resource::<Events<AffinityChange>>();
     // world.init_resource::<Events<crate::layer1::DeathEvent>>();

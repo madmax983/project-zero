@@ -102,6 +102,8 @@ pub fn register(schedule: &mut Schedule) {
     schedule.add_systems(
         (
             update_event_buffer::<crate::layer1::diplomacy::wards::WarDeclaredEvent>,
+            update_event_buffer::<crate::layer1::diplomacy::factions::dead_internet::GenerateDiplomaticInteractionEvent>,
+            update_event_buffer::<crate::layer1::diplomacy::factions::dead_internet::DiplomaticInteraction>,
             update_event_buffer::<crate::layer1::environment::orbital_tether::TetherSnapEvent>,
             update_event_buffer::<crate::layer1::architecture::BiomimeticShiftEvent>,
             update_event_buffer::<crate::layer1::digital_immortality::MindUploadEvent>,
