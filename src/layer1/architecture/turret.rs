@@ -11,7 +11,7 @@ use crate::layer1::resources::{ColonyResources, ResourceItem, ResourceType};
 use bevy_ecs::prelude::*;
 
 /// Component defining a building as a turret.
-#[derive(Component, Debug, Clone)]
+#[derive(Component, Debug, Clone, Copy)]
 pub struct Turret {
     /// The attack properties (damage, range, cooldown).
     pub attack: AttackProperties,
@@ -58,13 +58,21 @@ fn collect_valid_targets(world: &mut World) -> Vec<(Entity, GridPosition)> {
 }
 
 fn get_ready_turrets(world: &mut World) -> Vec<(Entity, GridPosition, Turret)> {
-    let tech_state_exists = world.contains_resource::<crate::layer1::tech::TechState>();
-    let tech_map = world
-        .get_resource::<crate::layer1::tech::TechState>()
-        .map(|ts| ts.techs.clone())
-        .unwrap_or_default();
-
     let mut turrets = Vec::new();
+
+    // ⚡ Bolt Optimization: Use isolated tech query to avoid cloning the entire `TechState` `HashMap`.
+    let active_techs: Vec<crate::layer1::tech::Tech> = world
+        .get_resource::<crate::layer1::tech::TechState>()
+        .map(|ts| {
+            ts.techs
+                .iter()
+                .filter(|(_, status)| **status == crate::layer1::tech::TechStatus::Active)
+                .map(|(tech, _)| *tech)
+                .collect()
+        })
+        .unwrap_or_default();
+    let has_tech_state = world.contains_resource::<crate::layer1::tech::TechState>();
+
     let mut query = world.query::<(
         Entity,
         &GridPosition,
@@ -75,15 +83,13 @@ fn get_ready_turrets(world: &mut World) -> Vec<(Entity, GridPosition, Turret)> {
 
     for (entity, pos, turret, mut state, building) in query.iter_mut(world) {
         if let Some(tech) = building.building_type.required_tech() {
-            if tech_state_exists
-                && tech_map.get(&tech) != Some(&crate::layer1::tech::TechStatus::Active)
-            {
+            if has_tech_state && !active_techs.contains(&tech) {
                 continue;
             }
         }
 
         if state.cooldown == 0 {
-            turrets.push((entity, *pos, turret.clone()));
+            turrets.push((entity, *pos, *turret));
         } else {
             state.cooldown -= 1;
         }
