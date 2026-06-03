@@ -76,12 +76,16 @@ fn main() {
 
     let mut table = Table::new();
     table.set_width(120);
-    table.load_preset(UTF8_FULL).set_header(vec![
-        "Genre",
-        "Historical Date",
-        "Mutations",
-        "Story Text",
-    ]);
+    table
+        .load_preset(UTF8_FULL)
+        .apply_modifier(comfy_table::modifiers::UTF8_ROUND_CORNERS)
+        .set_content_arrangement(comfy_table::ContentArrangement::Dynamic)
+        .set_header(vec![
+            Cell::new("Genre").add_attribute(comfy_table::Attribute::Bold),
+            Cell::new("Historical Date").add_attribute(comfy_table::Attribute::Bold),
+            Cell::new("Mutations").add_attribute(comfy_table::Attribute::Bold),
+            Cell::new("Story Text").add_attribute(comfy_table::Attribute::Bold),
+        ]);
 
     for story in &tradition.stories {
         let genre_str = format!("{:?}", story.genre);

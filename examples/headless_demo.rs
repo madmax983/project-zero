@@ -67,7 +67,13 @@ fn main() {
     let mut table = Table::new();
     table
         .load_preset(UTF8_FULL)
-        .set_header(vec!["Category", "Metric", "Value"]);
+        .apply_modifier(comfy_table::modifiers::UTF8_ROUND_CORNERS)
+        .set_content_arrangement(comfy_table::ContentArrangement::Dynamic)
+        .set_header(vec![
+            Cell::new("Category").add_attribute(comfy_table::Attribute::Bold),
+            Cell::new("Metric").add_attribute(comfy_table::Attribute::Bold),
+            Cell::new("Value").add_attribute(comfy_table::Attribute::Bold),
+        ]);
 
     table.add_row(vec![
         Cell::new("Population").fg(TableColor::Cyan),
