@@ -10807,7 +10807,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Cargo Cult Diplomat
+## The Cargo Cult Diplomat [SPECCED]
 
 **Layer:** Cross-layer (3 -> 2 -> 1)
 
@@ -17952,7 +17952,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Bureaucracy of Scarcity
+## The Bureaucracy of Scarcity [SPECCED]
 
 **Layer:** 1
 
@@ -17966,7 +17966,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Weight of the Past
+## The Weight of the Past [SPECCED]
 
 **Layer:** 1
 
@@ -17980,7 +17980,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Invasive Xeno-Aesthetics
+## Invasive Xeno-Aesthetics [SPECCED]
 
 **Layer:** Cross-layer (1 -> 3)
 
@@ -17994,7 +17994,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Weight of Silence
+## The Weight of Silence [SPECCED]
 
 **Layer:** Cross-layer (1 -> 3)
 
@@ -18008,7 +18008,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Ruin Integration
+## Ruin Integration [SPECCED]
 
 **Layer:** 1
 
@@ -18022,7 +18022,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Cargo Cult Diplomat
+## The Cargo Cult Diplomat [SPECCED]
 
 **Layer:** Cross-layer (1 -> 3)
 
@@ -18035,7 +18035,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you send an expensive expedition to correct their beliefs and lose the massive tribute they are sending to the "god," or quietly accept the resources while maintaining the incredibly fragile lie?
 
 ---
-## The Memorial Revolt
+## The Memorial Revolt [SPECCED]
 
 **Layer:** 1
 
@@ -19817,7 +19817,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Cargo Cult Diplomat
+## The Cargo Cult Diplomat [SPECCED]
 
 **Layer:** Cross-layer
 
