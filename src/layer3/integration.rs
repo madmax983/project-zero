@@ -21,6 +21,18 @@ pub fn hyperlane_collapse_chronicle_bridge(
     }
 }
 
+pub fn dead_internet_chronicle_bridge(
+    mut events: EventReader<crate::layer3::diplomacy::dead_internet::DiplomaticInteraction>,
+    mut chronicle: EventWriter<AddChronicleEvent>,
+) {
+    for _ in events.read() {
+        chronicle.send(AddChronicleEvent {
+            importance: EventImportance::Standard,
+            text: "A hauntingly familiar trade protocol echoes from the void... an automated script from a dead civilization.".to_string(),
+        });
+    }
+}
+
 /// Bridges `RogueTerraformEvent` (Black Market Terraforming) to `AddChronicleEvent` (Chronicle).
 pub fn black_market_terraforming_bridge(
     mut events: EventReader<RogueTerraformEvent>,

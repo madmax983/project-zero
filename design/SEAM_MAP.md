@@ -1347,3 +1347,10 @@
 - **Glue added:** `retro_contract_accepted_bridge_system` and `retro_contract_failed_bridge_system` in `src/layer3/integration.rs`
 - **Schedule:** Registered in `src/simulation.rs`
 - **Tests:** `tests/integration/retro_contract_chronicle.rs` (2 tests)
+
+### INT-1110: Dead Internet -> Chronicle
+- **Date:** 2026-10-31
+- **Systems connected:** `automated_diplomat_system` -> `dead_internet_chronicle_bridge` -> `AddChronicleEvent`
+- **Glue added:** `dead_internet_chronicle_bridge` in `src/layer3/integration.rs`
+- **Schedule:** Registered in extended simulation schedule
+- **Tests:** `tests/integration/dead_internet_chronicle_bridge.rs`
