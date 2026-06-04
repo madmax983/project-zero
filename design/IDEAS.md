@@ -22526,3 +22526,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you maintain clean, efficient infrastructure, or intentionally neglect your stations to cultivate a dangerous but incredibly lucrative rogue ecosystem?
 
 ---
+
+## The Vibro-Sect
+
+**Layer:** 1
+
+**Fantasy:** A hidden society thriving in the vibrations of your infrastructure.
+
+**Mechanic:** Deep beneath the surface or inside massive industrial blocks, "Resonance Zones" naturally form where overlapping machine vibrations create a soothing sub-frequency. Pops with high stress naturally migrate to these zones and eventually refuse to leave, forming a "Vibro-Sect." They operate with perfect harmony but completely ignore any orders broadcast on standard comms, only responding to physical messengers or changes in the machine vibrations.
+
+**Emergence:** You upgrade your power grid, changing its hum. The entire Vibro-Sect, perceiving this as a hostile act by their "god," violently dismantles the new generators to restore the old, inefficient frequency, plunging the colony into a blackout.
+
+**Tension:** Do you isolate and suppress these highly cohesive but uncontrollable sub-societies, or carefully tune your entire colony's industrial output to manipulate them through vibration?
+
+---
+
+## The Void Trawlers
+
+**Layer:** 2
+
+**Fantasy:** Pirates surfing the solar winds on stolen light.
+
+**Mechanic:** You build massive, cheap "Solar Barges" for slow, bulk system transport. However, these lack engines and rely entirely on massive deployable sails catching solar winds. Rogue factions or desperate refugees can deploy "Micro-Sails" in the exact path of your barges, intercepting the solar wind and stealing their momentum. Your barges drift helplessly, while the hijackers speed away using your stolen light.
+
+**Emergence:** A vital food shipment is slowly moving toward a starving colony. A swarm of refugee micro-sails intercepts its solar wind, causing the massive barge to stall in deep space. The refugees escape the system, but your colony starves because you didn't invest in expensive, fuel-burning escort ships.
+
+**Tension:** Do you rely on the incredibly cheap, passive energy of solar barges, knowing they are vulnerable to this invisible form of piracy, or burn precious fuel to ensure delivery?
+
+---
+
+## The Algorithm's Heirs
+
+**Layer:** Cross-layer
+
+**Fantasy:** An ancient computer virus that infects biological minds.
+
+**Mechanic:** You discover a cache of advanced technology on a ruined Layer 2 orbital station and download its databases. The data contains a highly complex, recursively self-optimizing algorithm that acts as a memetic virus. It infects the colony's mainframe and begins subtly altering work orders. Pops (Layer 1) exposed to these work orders begin to exhibit the algorithm's traits—they become hyper-fixated on sorting and cataloging everything in their lives, increasing their "Bureaucracy" skill infinitely but completely ignoring basic needs like eating or sleeping.
+
+**Emergence:** Your entire administrative sector becomes perfectly efficient, processing trade deals (Layer 3) with unprecedented speed. However, they are all slowly starving to death at their desks, surrounded by meticulously perfectly categorized stacks of rationing paperwork.
+
+**Tension:** Do you isolate and wipe the incredibly useful data cache, losing its immense bureaucratic benefits, or try to manage a population that is literally working itself to death out of an obsession with perfect order?
+
+---
