@@ -31,3 +31,4 @@ pub use digital_detritus::*;
 pub mod bureaucracy;
 pub mod economy;
 pub mod intellectual_property_wars;
+pub mod isolation;

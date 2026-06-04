@@ -284,6 +284,7 @@ mod tests {
             rest: 0.5,
             leisure: 0.5,
             hygiene: 0.5, // changed to 0.5 so average is 0.5
+            isolation: 0.0,
         };
         let mut memories = Memories::default();
 
@@ -307,6 +308,7 @@ mod tests {
             rest: 0.5,
             leisure: 0.5,
             hygiene: 0.5,
+            isolation: 0.0,
         };
         let mut memories = Memories::default();
 
@@ -327,6 +329,7 @@ mod tests {
             rest: 1.0,
             leisure: 1.0,
             hygiene: 0.8,
+            isolation: 0.0,
         }; // Base 1.0
         let mut memories = Memories::default();
         memories.add(MemoryType::AteFineMeal, 0); // +0.1
@@ -343,6 +346,7 @@ mod tests {
             rest: 0.5,
             leisure: 0.5,
             hygiene: 0.5,
+            isolation: 0.0,
         }; // Base 0.5
         let buff = crate::layer1::social::SocialBuff { value: 0.1 };
 
@@ -370,6 +374,7 @@ mod tests {
             rest: 0.5,
             leisure: 0.5,
             hygiene: 0.5,
+            isolation: 0.0,
         };
         let night_owl = {
             let mut t = Traits::default();

@@ -59,6 +59,7 @@ fn test_sanctuary_evaluated_by_ai() {
                 rest: 1.0,   // Fully rested
                 leisure: 1.0,
                 hygiene: 1.0,
+                isolation: 0.0,
             },
             UtilityWeights {
                 distance_weight: 1.0,

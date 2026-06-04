@@ -108,6 +108,7 @@ mod tests {
                     rest: 0.0,
                     leisure: 0.0,
                     hygiene: 0.0,
+                    isolation: 0.0,
                 }, // morale = 0.0
             ));
         }
@@ -132,6 +133,7 @@ mod tests {
                 rest: 0.0,
                 leisure: 0.0,
                 hygiene: 0.0,
+                isolation: 0.0,
             },
         ));
 

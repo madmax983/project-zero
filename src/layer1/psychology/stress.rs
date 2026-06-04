@@ -215,6 +215,7 @@ mod tests {
                     rest: 0.05,
                     leisure: 0.05,
                     hygiene: 0.05,
+                    isolation: 0.0,
                 }, // Morale = 0.05
                 StressTracker::default(),
                 Traits::default(),
@@ -248,6 +249,7 @@ mod tests {
                     rest: 0.0,
                     leisure: 0.0,
                     hygiene: 0.0,
+                    isolation: 0.0,
                 },
                 StressTracker {
                     accumulated_stress: 1000.0,
@@ -293,6 +295,7 @@ mod tests {
                         rest: 0.0,
                         leisure: 0.0,
                         hygiene: 0.0,
+                        isolation: 0.0,
                     },
                     StressTracker {
                         accumulated_stress: 1000.0,
@@ -327,6 +330,7 @@ mod tests {
                     rest: 0.0,
                     leisure: 0.0,
                     hygiene: 0.0,
+                    isolation: 0.0,
                 },
                 StressTracker {
                     accumulated_stress: 1000.0,
@@ -414,6 +418,7 @@ mod tests {
                     rest: 1.0,
                     leisure: 1.0,
                     hygiene: 0.8,
+                    isolation: 0.0,
                 }, // High Morale
                 StressTracker::default(),
                 Traits::default(),
@@ -448,6 +453,7 @@ mod tests {
                     rest: 0.0,
                     leisure: 0.0,
                     hygiene: 0.0,
+                    isolation: 0.0,
                 },
                 StressTracker {
                     accumulated_stress: 50.0,
@@ -467,6 +473,7 @@ mod tests {
                     rest: 0.0,
                     leisure: 0.0,
                     hygiene: 0.0,
+                    isolation: 0.0,
                 },
                 StressTracker {
                     accumulated_stress: 50.0,
@@ -520,6 +527,7 @@ mod tests {
                     rest: 0.0,
                     leisure: 0.0,
                     hygiene: 0.0,
+                    isolation: 0.0,
                 }, // Low Morale
                 StressTracker::default(),
                 equipment,

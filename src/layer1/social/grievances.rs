@@ -298,6 +298,7 @@ mod tests {
                     rest: 0.1,
                     leisure: 0.1,
                     hygiene: 0.1,
+                    isolation: 0.0,
                 },
                 GridPosition { x: 0, y: 0 },
             ))
@@ -348,6 +349,7 @@ mod tests {
                     rest: 0.1,
                     leisure: 0.1,
                     hygiene: 0.1,
+                    isolation: 0.0,
                 },
                 GridPosition { x: 0, y: 0 },
                 GrievanceCooldown {

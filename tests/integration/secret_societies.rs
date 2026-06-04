@@ -27,6 +27,7 @@ fn test_secret_society_formation() {
                 rest: 0.2,
                 leisure: 0.2,
                 hygiene: 0.2,
+                isolation: 0.0,
             },
         ));
     }

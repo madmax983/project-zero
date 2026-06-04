@@ -1635,6 +1635,7 @@ mod tests {
                     rest: 0.9,
                     leisure: 0.6,
                     hygiene: 0.8,
+                    isolation: 0.0,
                 },
             ))
             .id();

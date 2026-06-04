@@ -76,6 +76,7 @@ mod tests {
                     rest: 0.5,
                     leisure: 0.5,
                     hygiene: 0.5,
+                    isolation: 0.0,
                 },
                 CyberneticIntegration::default(),
             ))

@@ -104,6 +104,7 @@ mod tests {
                     rest: 0.1,
                     leisure: 1.0,
                     hygiene: 1.0,
+                    isolation: 0.0,
                 },
                 VoidSleep,
                 AssignedTo {
@@ -157,6 +158,7 @@ mod tests {
                     rest: 0.1,
                     leisure: 1.0,
                     hygiene: 1.0,
+                    isolation: 0.0,
                 },
                 VoidSleep,
                 AssignedTo {
@@ -207,6 +209,7 @@ mod tests {
                     rest: 0.1,
                     leisure: 1.0,
                     hygiene: 1.0,
+                    isolation: 0.0,
                 },
                 AssignedTo {
                     entity: house,

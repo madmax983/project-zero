@@ -311,6 +311,7 @@ fn test_work_execution_efficiency_low_morale() {
                 rest: 0.1,
                 leisure: 0.1,
                 hygiene: 0.8,
+                isolation: 0.0,
             },
             Equipment {
                 tool: Some(tool),
@@ -384,6 +385,7 @@ fn test_work_execution_efficiency_high_morale() {
                 rest: 1.0,
                 leisure: 1.0,
                 hygiene: 0.8,
+                isolation: 0.0,
             },
             Equipment {
                 tool: Some(tool),

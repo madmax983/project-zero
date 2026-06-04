@@ -84,6 +84,7 @@ fn test_starvation_causes_trauma_memory() {
                 rest: 1.0,
                 leisure: 1.0,
                 hygiene: 0.8,
+                isolation: 0.0,
             }, // Starving
             Memories::default(),
         ))

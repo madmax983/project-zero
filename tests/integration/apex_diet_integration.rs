@@ -73,6 +73,7 @@ mod tests {
                     rest: 1.0,
                     hygiene: 1.0,
                     leisure: 1.0,
+                    isolation: 0.0,
                 }, // Very hungry
                 scale::layer1::economy::apex_diet::Morale { current: 50.0 },
                 scale::layer1::economy::apex_diet::PhysicalStrength { value: 10.0 },

@@ -19,6 +19,7 @@ fn test_cryo_stasis_halts_need_decay() {
                 rest: 1.0,
                 leisure: 1.0,
                 hygiene: 0.8,
+                isolation: 0.0,
             },
         ))
         .id();
@@ -31,6 +32,7 @@ fn test_cryo_stasis_halts_need_decay() {
                 rest: 1.0,
                 leisure: 1.0,
                 hygiene: 0.8,
+                isolation: 0.0,
             },
             CryoStasis,
         ))

@@ -441,6 +441,7 @@ mod tests {
                     rest: 0.8,
                     leisure: 0.5,
                     hygiene: 0.8,
+                    isolation: 0.0,
                 },
             ))
             .id();
@@ -454,6 +455,7 @@ mod tests {
                     rest: 0.8,
                     leisure: 0.5,
                     hygiene: 0.8,
+                    isolation: 0.0,
                 },
                 Mentorship {
                     master_entity: master,

@@ -280,6 +280,7 @@ mod tests {
                     rest: 0.1,
                     leisure: 0.1,
                     hygiene: 0.1,
+                    isolation: 0.0,
                 }, // Very low morale (0.1)
                 MentalState::Normal,
             ))
@@ -377,6 +378,7 @@ mod tests {
                     rest: 0.1,
                     leisure: 0.1,
                     hygiene: 0.8,
+                    isolation: 0.0,
                 },
                 MentalState::Broken(MentalBreakType::Vandalize),
             ))

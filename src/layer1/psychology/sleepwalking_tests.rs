@@ -35,6 +35,7 @@ mod tests {
                     rest: 0.1, // Needs rest
                     leisure: 0.1,
                     hygiene: 0.1, // Low morale
+                    isolation: 0.0,
                 },
                 MentalState::Normal,
                 PopAction {

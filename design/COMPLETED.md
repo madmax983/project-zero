@@ -684,3 +684,4 @@
 - [x] `1110` Dead Internet — `specs/1110-dead-internet.md` — completed 2026-06-02
 - [x] `550` The Gravity Siphon — `specs/550-the-gravity-siphon.md` — completed 2024-06-03
 - [x] `INT-550` Integration: The Gravity Siphon -> Layer 2 Orbit — completed 2024-06-03
+- [x] `1285` The Weight of Silence — `specs/1285-the-weight-of-silence.md` — completed 2026-06-04

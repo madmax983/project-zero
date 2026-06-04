@@ -38,6 +38,7 @@ mod tests {
             rest: 0.5,
             leisure: 1.0,
             hygiene: 1.0,
+            isolation: 0.0,
         };
 
         let result_hunger = query_hunger(entity, &needs, &focus);
@@ -63,6 +64,7 @@ mod tests {
             rest: 0.5,
             leisure: 1.0,
             hygiene: 1.0,
+            isolation: 0.0,
         };
 
         let result_hunger = query_hunger(entity, &needs, &focus);
@@ -76,6 +78,7 @@ mod tests {
             rest: 0.9,
             leisure: 1.0,
             hygiene: 1.0,
+            isolation: 0.0,
         };
         match query_hunger(entity, &needs_high, &focus) {
             DataResolution::Fuzzy(s) => assert_eq!(s, "High"),
@@ -91,6 +94,7 @@ mod tests {
             rest: 0.1,
             leisure: 1.0,
             hygiene: 1.0,
+            isolation: 0.0,
         };
         match query_hunger(entity, &needs_low, &focus) {
             DataResolution::Fuzzy(s) => assert_eq!(s, "Low"),

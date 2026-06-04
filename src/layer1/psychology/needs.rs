@@ -49,6 +49,7 @@ pub enum NeedType {
     Rest,
     Leisure,
     Hygiene,
+    Isolation,
     Food, // Alias used in spec tests
 }
 
@@ -82,6 +83,7 @@ pub struct Needs {
     /// *   **1.0**: Clean.
     /// *   **< 0.2**: Dirty/Unhappy.
     pub hygiene: f32,
+    pub isolation: f32,
 }
 
 impl Default for Needs {
@@ -91,6 +93,7 @@ impl Default for Needs {
             rest: 0.8,
             leisure: 0.8,
             hygiene: 0.8,
+            isolation: 0.0,
         }
     }
 }
@@ -105,7 +108,7 @@ impl Needs {
     /// ```
     /// use scale::layer1::needs::Needs;
     ///
-    /// let needs = Needs { hunger: 0.9, rest: 0.2, leisure: 0.5, hygiene: 1.0 };
+    /// let needs = Needs { hunger: 0.9, rest: 0.2, leisure: 0.5, hygiene: 1.0, isolation: 0.0 };
     /// assert_eq!(needs.worst(), 0.2); // Rest is the lowest
     /// ```
     #[must_use]
@@ -115,6 +118,7 @@ impl Needs {
             NeedType::Rest => self.rest,
             NeedType::Leisure => self.leisure,
             NeedType::Hygiene => self.hygiene,
+            NeedType::Isolation => self.isolation,
         }
     }
 
@@ -124,6 +128,7 @@ impl Needs {
             NeedType::Rest => self.rest = value,
             NeedType::Leisure => self.leisure = value,
             NeedType::Hygiene => self.hygiene = value,
+            NeedType::Isolation => self.isolation = value,
         }
     }
 
@@ -298,6 +303,7 @@ mod tests {
             rest: 0.7,
             leisure: 0.8,
             hygiene: 0.9,
+            isolation: 0.0,
         };
         assert!((needs1.worst() - 0.5).abs() < f32::EPSILON);
 
@@ -306,6 +312,7 @@ mod tests {
             rest: 0.3,
             leisure: 0.8,
             hygiene: 0.9,
+            isolation: 0.0,
         };
         assert!((needs2.worst() - 0.3).abs() < f32::EPSILON);
 
@@ -314,6 +321,7 @@ mod tests {
             rest: 0.5,
             leisure: 0.5,
             hygiene: 0.1,
+            isolation: 0.0,
         };
         assert!((needs3.worst() - 0.1).abs() < f32::EPSILON);
     }
@@ -328,6 +336,7 @@ mod tests {
                 rest: 0.0001,
                 leisure: 0.0001,
                 hygiene: 0.8,
+                isolation: 0.0,
             },
         ));
 
@@ -374,6 +383,7 @@ mod tests {
             rest: 1.0,
             leisure: 1.0,
             hygiene: 1.0,
+            isolation: 0.0,
         };
         assert!((needs.morale() - 1.0).abs() < f32::EPSILON);
 
@@ -382,6 +392,7 @@ mod tests {
             rest: 0.5,
             leisure: 0.5,
             hygiene: 0.5,
+            isolation: 0.0,
         };
         assert!((needs_mixed.morale() - 0.5).abs() < f32::EPSILON);
 
@@ -390,6 +401,7 @@ mod tests {
             rest: 0.0,
             leisure: 0.0,
             hygiene: 0.0,
+            isolation: 0.0,
         };
         assert!((needs_bad.morale() - 0.0).abs() < f32::EPSILON);
 
@@ -399,6 +411,7 @@ mod tests {
             rest: 0.0,
             leisure: 0.5,
             hygiene: 0.5,
+            isolation: 0.0,
         };
         // (1+0+0.5+0.5)/4 = 2.0/4 = 0.5
         assert!((needs_uneven.morale() - 0.5).abs() < f32::EPSILON);
@@ -501,6 +514,7 @@ mod tests {
                     rest: 1.0,
                     leisure: 1.0,
                     hygiene: 1.0,
+                    isolation: 0.0,
                 },
                 Health {
                     current: 100.0,
@@ -533,6 +547,7 @@ mod tests {
                     rest: 1.0,
                     leisure: 1.0,
                     hygiene: 1.0,
+                    isolation: 0.0,
                 },
                 Health {
                     current: 100.0,
@@ -570,6 +585,7 @@ mod tests {
                     rest: 1.0,
                     leisure: 1.0,
                     hygiene: 1.0,
+                    isolation: 0.0,
                 },
                 Health {
                     current: 100.0,
@@ -607,6 +623,7 @@ mod tests {
                     rest: 1.0,
                     leisure: 1.0,
                     hygiene: 1.0,
+                    isolation: 0.0,
                 },
                 traits,
             ))

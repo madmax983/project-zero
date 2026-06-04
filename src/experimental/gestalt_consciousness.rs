@@ -80,6 +80,7 @@ mod tests {
                     rest: 1.0,
                     leisure: 0.5,
                     hygiene: 0.5,
+                    isolation: 0.0,
                 },
                 Health {
                     current: 50.0,
@@ -98,6 +99,7 @@ mod tests {
                     rest: 1.0,
                     leisure: 0.5,
                     hygiene: 0.5,
+                    isolation: 0.0,
                 },
                 Health {
                     current: 100.0,

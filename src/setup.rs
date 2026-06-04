@@ -196,6 +196,7 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     world.init_resource::<bevy_ecs::event::Events<crate::layer3::market::ephemeral_market::MarketTradeEvent>>();
     world.init_resource::<bevy_ecs::event::Events<crate::layer3::market::ephemeral_market::MarketTradeFailedEvent>>();
     world.init_resource::<bevy_ecs::event::Events<crate::layer1::social::secret_societies::SocietyAction>>();
+    world.init_resource::<crate::layer3::isolation::SilenceCultConfig>();
 
     world.init_resource::<bevy_ecs::event::Events<crate::layer2::skyhooks::LaunchIntent>>();
     world.init_resource::<bevy_ecs::event::Events<crate::layer1::nature::solar_flare_lottery::SolarFlareEvent>>();

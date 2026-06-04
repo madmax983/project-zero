@@ -982,7 +982,7 @@ const WARNING_THRESHOLD: f32 = 0.3;
 /// use scale::layer1::Needs;
 /// use ratatui::style::Color;
 ///
-/// let happy = Needs { hunger: 1.0, rest: 1.0, leisure: 1.0, hygiene: 1.0 };
+/// let happy = Needs { hunger: 1.0, rest: 1.0, leisure: 1.0, hygiene: 1.0, isolation: 0.0 };
 /// let (char, color) = get_pop_display(&happy);
 /// assert_eq!(char, "☺");
 /// assert_eq!(color, Color::Yellow);

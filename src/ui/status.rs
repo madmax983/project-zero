@@ -388,7 +388,9 @@ pub fn get_status_line<'a>(
         spans.push(Span::styled("  ║  ", Style::default().fg(Color::DarkGray)));
         spans.push(Span::styled(
             format!(" 🌀 Singularity: {:.1}kg ", mass),
-            Style::default().fg(Color::Magenta).add_modifier(Modifier::BOLD),
+            Style::default()
+                .fg(Color::Magenta)
+                .add_modifier(Modifier::BOLD),
         ));
     }
 
@@ -610,6 +612,7 @@ mod tests {
                 rest: 1.0,
                 leisure: 1.0,
                 hygiene: 0.8,
+                isolation: 0.0,
             },
             crate::layer1::morale::Morale::default(),
             crate::layer1::traits::Traits::default(),
@@ -622,6 +625,7 @@ mod tests {
                 rest: 0.0,
                 leisure: 0.0,
                 hygiene: 0.8,
+                isolation: 0.0,
             },
             crate::layer1::morale::Morale::default(),
             crate::layer1::traits::Traits::default(),
@@ -638,6 +642,7 @@ mod tests {
                 rest: 1.0,
                 leisure: 1.0,
                 hygiene: 0.8,
+                isolation: 0.0,
             },
             memories,
             crate::layer1::morale::Morale::default(),
@@ -682,7 +687,7 @@ mod tests {
             1.0,
             Some(Season::Summer),
             None,
-            0.0, // risk_pct
+            0.0,  // risk_pct
             None, // Singularity mass
         );
         assert!(
@@ -709,7 +714,7 @@ mod tests {
             1.0,
             None,
             None,
-            0.0, // risk_pct
+            0.0,  // risk_pct
             None, // Singularity mass
         );
         assert!(!status.contains("Spring"));
@@ -735,7 +740,7 @@ mod tests {
             1.0,
             None,
             Some(SolarCycle::Maximum),
-            0.0, // risk_pct
+            0.0,  // risk_pct
             None, // Singularity mass
         );
         assert!(

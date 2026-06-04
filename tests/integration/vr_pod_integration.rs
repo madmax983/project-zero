@@ -42,6 +42,7 @@ mod tests {
                     rest: 1.0,
                     leisure: 1.0,
                     hygiene: 1.0,
+                    isolation: 0.0,
                 },
                 StressTracker::default(),
                 Morale::default(),
