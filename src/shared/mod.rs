@@ -2,7 +2,6 @@
 //!
 //! This module contains types and functions used across multiple layers.
 
-
 /// Colony identity resource.
 pub mod colony;
 pub mod keyboard;

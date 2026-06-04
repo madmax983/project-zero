@@ -1,16 +1,38 @@
+//! The Cultural Influence Grid.
+//!
+//! This module manages the total cultural pressure exerted by a colony.
+//! Cultural influence acts as a soft power metric, primarily driven by the accumulation
+//! of art and luxury goods. Over time, base pressure naturally decays, requiring
+//! constant production to maintain dominance.
+
 use bevy_ecs::prelude::*;
 
+/// The alignment of a specific [`Culture`].
 #[derive(PartialEq, Eq, Debug)]
 pub enum Alignment {
     Peaceful,
     Hostile,
 }
 
+/// A marker component indicating an entity belongs to a culture.
 #[derive(Component)]
 pub struct Culture {
     pub alignment: Alignment,
 }
 
+/// Tracks the global cultural pressure exerted by the colony.
+///
+/// # Examples
+/// ```rust
+/// use scale::layer1::culture::cultural_influence::CulturalInfluenceGrid;
+///
+/// let mut grid = CulturalInfluenceGrid::default();
+/// grid.total_pressure = 100.0;
+///
+/// // Simulating decay
+/// grid.total_pressure *= 0.95;
+/// assert_eq!(grid.total_pressure, 95.0);
+/// ```
 #[derive(Resource, Default)]
 pub struct CulturalInfluenceGrid {
     pub total_pressure: f32,
@@ -18,6 +40,30 @@ pub struct CulturalInfluenceGrid {
 
 use crate::layer1::economy::resources::ColonyResources;
 
+/// Calculates the new cultural pressure based on current resources.
+///
+/// This system applies a flat 5% decay to the existing [`CulturalInfluenceGrid::total_pressure`],
+/// and then adds new pressure derived from [`ColonyResources::art`] and [`ColonyResources::luxury`].
+///
+/// # Examples
+/// ```rust
+/// use bevy_app::prelude::*;
+/// use scale::layer1::economy::resources::ColonyResources;
+/// use scale::layer1::culture::cultural_influence::{CulturalInfluenceGrid, calculate_cultural_pressure_system};
+///
+/// let mut app = App::new();
+/// app.insert_resource(ColonyResources { art: 10.0, luxury: 5.0, ..Default::default() });
+/// app.insert_resource(CulturalInfluenceGrid { total_pressure: 100.0 });
+///
+/// app.add_systems(Update, calculate_cultural_pressure_system);
+/// app.update();
+///
+/// let influence = app.world().get_resource::<CulturalInfluenceGrid>().unwrap();
+/// // 100.0 * 0.95 = 95.0
+/// // New pressure: (10.0 * 1.5) + 5.0 = 20.0
+/// // Total: 95.0 + 20.0 = 115.0
+/// assert_eq!(influence.total_pressure, 115.0);
+/// ```
 pub fn calculate_cultural_pressure_system(
     resources: Option<Res<ColonyResources>>,
     influence: Option<ResMut<CulturalInfluenceGrid>>,
