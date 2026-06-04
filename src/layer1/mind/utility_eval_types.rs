@@ -51,6 +51,7 @@ use crate::layer1::items::{CarryingItem, Equipment, ItemType};
 use crate::layer1::law::justice::Inmate;
 use crate::layer1::law::penal::PenalLabor;
 use crate::layer1::map::GridPosition;
+use crate::layer1::memetic_plague::MemeticInfection;
 use crate::layer1::memetics::MemeticCarrier;
 use crate::layer1::needs::Needs;
 use crate::layer1::pop::Job;
@@ -101,6 +102,7 @@ pub struct PopEvaluationQuery {
     pub hobby: Option<&'static Hobby>,
     pub chemical: Option<&'static ChemicalState>,
     pub memetic_carrier: Option<&'static MemeticCarrier>,
+    pub memetic_infection: Option<&'static MemeticInfection>,
     pub health: Option<&'static Health>,
     pub job: Option<&'static Job>,
     pub is_silent: Option<&'static crate::layer1::stress::TraitSilent>,
@@ -133,6 +135,7 @@ impl PopEvalData {
             hobby_type: item.hobby.map(|comp| comp.hobby_type),
             chemical_state: item.chemical.cloned(),
             is_memetic_carrier: item.memetic_carrier.is_some(),
+            memetic_infection: item.memetic_infection.cloned(),
             health: item.health.cloned(),
             job: item.job.copied(),
             insulation: 0.0,
@@ -219,6 +222,8 @@ pub struct PopEvalData {
     pub insulation: f32,
     pub is_silent: bool,
     pub is_nostalgic: bool,
+    /// Memetic plague infection state.
+    pub memetic_infection: Option<MemeticInfection>,
     /// Existential crisis state, if any.
     pub existential_crisis: Option<crate::layer1::economy::existential_audit::ExistentialCrisis>,
 }
@@ -248,6 +253,7 @@ impl PopEvalData {
             hobby_type: None,
             chemical_state: None,
             is_memetic_carrier: false,
+            memetic_infection: None,
             health: None,
             job: None,
             insulation: 0.0,

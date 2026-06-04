@@ -538,6 +538,13 @@ mod tests {
 pub mod debt;
 /// Public Grievances system (Spec 233).
 pub mod grievances;
+
+#[derive(Event, Debug, Clone)]
+pub struct SocialInteractionEvent {
+    pub initiator: Entity,
+    pub target: Entity,
+}
+
 pub mod protest_crowds;
 pub mod secret_societies;
 pub use protest_crowds::*;

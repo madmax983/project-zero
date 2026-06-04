@@ -183,6 +183,10 @@ pub enum ActionType {
     Flee,
     /// Stop working and philosophize.
     Philosophize,
+    /// An irresistible compulsion to perform an odd, otherwise useless task.
+    ///
+    /// See \[`crate::layer1::memetic_plague::evaluate_memetic_obsession`\].
+    MemeticObsession,
 }
 
 /// Types of hobbies.
@@ -202,7 +206,7 @@ pub enum HobbyType {
 
 impl ActionType {
     /// Total number of action types. Used for array sizing.
-    pub const COUNT: usize = 47;
+    pub const COUNT: usize = 48;
 
     /// Converts action type to a unique array index (0..COUNT-1).
     #[must_use]
@@ -255,6 +259,7 @@ impl ActionType {
             Self::Sabotage => 43,
             Self::Gossip => 44,
             Self::Philosophize => 45,
+            Self::MemeticObsession => 47,
         }
     }
 

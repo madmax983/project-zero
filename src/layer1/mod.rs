@@ -48,6 +48,7 @@ pub use economy::*;
 pub mod access_control;
 /// Pop actions logic.
 pub mod actions;
+pub mod memetic_plague;
 pub mod mind;
 pub mod tinkering;
 pub use mind::*;

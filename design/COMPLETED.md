@@ -687,3 +687,4 @@
 - [x] `1058` Retro-Causality Contracts — `specs/1058-retro-causality-contracts.md` — completed 2026-06-04
 - [x] `1286` Ruin Integration — `specs/1286-ruin-integration.md` — completed 2026-06-04
 - [x] `INT-1058` Integration: Retro-Causality Contracts -> Chronicle — completed 2026-06-05
+- [x] `289` The Mimetic Plague — `specs/289-mimetic-plague.md` — completed 2026-06-03

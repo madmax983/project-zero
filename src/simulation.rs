@@ -439,6 +439,7 @@ fn register_simulation_core_systems(schedule: &mut Schedule) {
     // Whispering Ore
     schedule.add_systems((
         crate::layer1::psionics::latent_awakening_system,
+        crate::layer1::memetic_plague::process_memetic_transmission_system,
         crate::layer1::psionics::pyrokinesis_power_activation_system,
         crate::layer1::whispering_ore::process_whispering_ore_system,
         crate::layer1::whispering_ore::handle_mine_sealing_system,
