@@ -22484,3 +22484,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Emergence:** Your brilliant fleet admiral keeps perfectly positioning your ships... right into enemy ambushes. You suspect a leak, but it turns out the admiral himself has been a machine for the last five years, subtly guiding your empire to its doom while maintaining a flawless service record.
 
 **Tension:** Do you subject everyone to humiliating, morale-crushing biometric scans, or trust your leaders and risk a catastrophic betrayal from within?
+
+## The Nepotism Spiral
+
+**Layer:** 1 -> Cross-layer
+
+**Fantasy:** The slow decay of meritocracy as entrenched power looks after its own.
+
+**Mechanic:** Pops with high Social standing or leadership roles (Governors, Admirals) have a chance to "Recommend" their relatives (Pops with high mutual relationship and low skills) for crucial Layer 1 jobs (like Chief Engineer or Medical Officer). Refusing the recommendation causes a massive Authority and Loyalty hit from the leader. Accepting it places an incompetent Pop in a critical role, causing local efficiency to plummet.
+
+**Emergence:** Your invincible armada is commanded by a brilliant Admiral. The Admiral demands you put his completely unqualified idiot son in charge of the capital's fusion reactor. You agree to avoid a mutiny. The son accidentally causes a meltdown that wipes out half the city, but the Admiral remains perfectly loyal.
+
+**Tension:** Do you compromise the immediate safety and efficiency of your colony to maintain the loyalty of your most powerful imperial assets, or enforce strict meritocracy and risk a military coup?
+
+---
+
+## Cognitive Strip-Mining
+
+**Layer:** 1
+
+**Fantasy:** Achieving mechanical perfection at the cost of human souls.
+
+**Mechanic:** A late-game "Neuro-Extrator" building allows you to permanently copy a Pop's highest skill and transfer it to an automated Drone Hub, making the drones perfectly efficient at that task. However, the process leaves the donor Pop "Hollowed"—their skills reset to 0, they lose all traits, and they become a permanent, empty husk that consumes food but produces nothing and has no morale.
+
+**Emergence:** Your colony is starving, but you have one Master Farmer. You extract his knowledge to fully automate the farms, saving the colony from starvation. However, the farmer is now a vegetative husk wandering the colony, a constant, physical reminder to the other colonists of the terrible price you paid for their survival.
+
+**Tension:** Do you sacrifice the humanity of your best citizens to secure the colony's long-term survival through perfect automation, or rely on fragile, mortal workers?
+
+---
+
+## The Accidental Biosphere
+
+**Layer:** 2 -> 1
+
+**Fantasy:** Life finds a way, usually in the most inconvenient places possible.
+
+**Mechanic:** If a Layer 2 orbital station or habitat has poorly maintained waste disposal or hydroponics for an extended period, an "Accidental Biosphere" begins to form in the vents and zero-g maintenance shafts. This rogue ecosystem severely reduces the station's efficiency and occasionally causes structural damage, but the mutated zero-g flora and fauna can be harvested for incredibly rare, highly valuable exotic bio-samples that cannot be grown on planets.
+
+**Emergence:** You build a pristine, high-tech orbital shipyard. Due to a bureaucratic oversight, the trash isn't collected for a decade. The station becomes choked with glowing, zero-g moss and massive void-fungi. Production grinds to a halt, but you realize the moss is a miracle cure for a plague ravaging your capital world. You purposefully stop cleaning your other stations to farm the trash-moss.
+
+**Tension:** Do you maintain clean, efficient infrastructure, or intentionally neglect your stations to cultivate a dangerous but incredibly lucrative rogue ecosystem?
+
+---
