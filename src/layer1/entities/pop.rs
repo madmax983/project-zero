@@ -337,7 +337,8 @@ pub struct PopBundle {
     pub stats: crate::layer1::psychology::void_sickness::PopStats,
     /// Resonance architectural traits.
     pub resonance_traits: crate::layer1::architecture::resonant_architecture::PopResonanceTraits,
-    pub base_resonance_traits: crate::layer1::architecture::resonant_architecture::PopBaseResonanceTraits,
+    pub base_resonance_traits:
+        crate::layer1::architecture::resonant_architecture::PopBaseResonanceTraits,
 }
 
 impl PopBundle {
@@ -388,8 +389,11 @@ impl PopBundle {
             gut_biome: GutBiome::default(),
             education: EducationLevel(rng.gen_range(1..=3)),
             stats: crate::layer1::psychology::void_sickness::PopStats::default(),
-            resonance_traits: crate::layer1::architecture::resonant_architecture::PopResonanceTraits::default(),
-            base_resonance_traits: crate::layer1::architecture::resonant_architecture::PopBaseResonanceTraits::default(),
+            resonance_traits:
+                crate::layer1::architecture::resonant_architecture::PopResonanceTraits::default(),
+            base_resonance_traits:
+                crate::layer1::architecture::resonant_architecture::PopBaseResonanceTraits::default(
+                ),
         }
     }
 }
