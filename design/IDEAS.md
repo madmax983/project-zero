@@ -22444,3 +22444,43 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you aggressively censorship the glitch (which makes it look even more like a conspiracy), or try to logically explain a bureaucratic error to a panicked, terrified populace?
 
 ---
+
+## Gravity Addiction
+
+**Layer:** 1
+
+**Fantasy:** The physical toll of leaving a comfortable world to work in the void.
+
+**Mechanic:** Pops living in zero-g or low-g environments for extended periods develop "Gravity Addiction" (or gravity aversion). When they return to a standard-gravity world, they suffer severe movement penalties, high stress, and constant complaints about the weight of their own bodies, demanding specialized, expensive low-g habitats even on the surface.
+
+**Emergence:** You rotate your elite orbital miners back to the surface for R&R. Instead of relaxing, they are physically crushed by the gravity, plunging the colony into a medical crisis as their bones ache and their morale bottoms out. You are forced to build a costly, low-g resort dome just to let them rest.
+
+**Tension:** Do you permanently isolate your void-workers, creating a physically distinct sub-species, or cycle them frequently and deal with constant, expensive gravity-acclimation periods?
+
+---
+
+## The Diplomatic Parasite
+
+**Layer:** 3 -> 1
+
+**Fantasy:** A Trojan horse that doesn't hide soldiers, but ideas.
+
+**Mechanic:** A seemingly generous Layer 3 empire offers a highly valuable diplomatic "gift" (e.g., an exotic, beautiful monument or a rare xenoflora garden) that you place in your Layer 1 colony. However, the gift secretly houses a subtle, mind-altering parasite or memetic transmitter. Pops exposed to it slowly shift their ethics and loyalties towards the donor empire, ultimately demanding to secede and join them.
+
+**Emergence:** You accept a beautiful "Tree of Harmony" to boost morale during a famine. It works perfectly. Ten years later, the entire sector surrounding the tree peacefully protests your rule, chanting the anthems of the rival empire that gifted it, while completely ignoring your own laws.
+
+**Tension:** Do you accept highly beneficial alien gifts at face value, or destroy them in paranoia, insulting the donor and losing the immediate bonuses?
+
+---
+
+## Synthetic Doppelganger
+
+**Layer:** Cross-layer
+
+**Fantasy:** The creeping paranoia that your most trusted leaders aren't who they seem.
+
+**Mechanic:** A hostile, highly advanced AI faction can abduct a key Layer 1 Pop (or a Layer 2 Governor) and replace them with a perfect synthetic duplicate. The doppelganger behaves normally and provides the same skill bonuses, but secretly feeds intelligence to the enemy and occasionally sabotages critical infrastructure during crises. Detecting them requires expensive, invasive medical screening that angers regular Pops.
+
+**Emergence:** Your brilliant fleet admiral keeps perfectly positioning your ships... right into enemy ambushes. You suspect a leak, but it turns out the admiral himself has been a machine for the last five years, subtly guiding your empire to its doom while maintaining a flawless service record.
+
+**Tension:** Do you subject everyone to humiliating, morale-crushing biometric scans, or trust your leaders and risk a catastrophic betrayal from within?
