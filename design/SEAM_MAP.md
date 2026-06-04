@@ -1340,3 +1340,10 @@
 - **Glue added:** `apply_ruin_environmental_buffs_system`, `trigger_ruin_machinery_system`, `apply_ruin_psychological_stress_system` in `src/layer1/core/integration.rs`
 - **Schedule:** Chained in Layer1SystemSet::Environment schedule
 - **Tests:** `tests/integration/ruin_integration.rs` (3 tests)
+
+### INT-1058: Retro-Causality Contracts -> Chronicle
+- **Date:** 2026-06-05
+- **Systems connected:** `handle_retro_contract_acceptance`, `evaluate_retro_contracts` -> `AddChronicleEvent`
+- **Glue added:** `retro_contract_accepted_bridge_system` and `retro_contract_failed_bridge_system` in `src/layer3/integration.rs`
+- **Schedule:** Registered in `src/simulation.rs`
+- **Tests:** `tests/integration/retro_contract_chronicle.rs` (2 tests)

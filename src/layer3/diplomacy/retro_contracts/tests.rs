@@ -36,6 +36,7 @@ fn test_failing_retro_contract_applies_penalty() {
         credits: 500.0,
         ..ColonyResources::zeroed()
     });
+    app.add_event::<RetroContractFailedEvent>();
     app.add_systems(bevy_app::Update, evaluate_retro_contracts);
 
     app.world_mut().spawn(RetroContract {
@@ -70,6 +71,7 @@ fn test_fulfilled_retro_contract_despawns_without_penalty() {
         credits: 500.0,
         ..ColonyResources::zeroed()
     });
+    app.add_event::<RetroContractFailedEvent>();
     app.add_systems(bevy_app::Update, evaluate_retro_contracts);
 
     app.world_mut().spawn(RetroContract {
