@@ -28,7 +28,7 @@ use crate::layer1::ai_core::AICore;
 use crate::layer1::atmosphere::CorrosionResistant;
 use crate::layer1::beauty::BeautySource;
 use crate::layer1::control::DoorControl;
-pub use crate::layer1::core::spatial::{update_building_map_system, BuildingMap, OccupiedTiles};
+pub use crate::layer1::core::spatial::{BuildingMap, OccupiedTiles};
 use crate::layer1::drone::DroneHub;
 use crate::layer1::economy::stockpile::Stockpile;
 use crate::layer1::energy::{Conduit, FuelConsumer, PowerConsumer, PowerSource};
@@ -3492,3 +3492,14 @@ mod shift_tests {
 /// - Must be Destroyed (yielding 0 resources).
 #[derive(Component, Default)]
 pub struct VacuumWelded;
+
+/// Updates the fast-lookup map for buildings based on their current positions.
+pub fn update_building_map_system(
+    mut map: ResMut<BuildingMap>,
+    query: Query<(Entity, &GridPosition), With<Building>>,
+) {
+    map.0.clear();
+    for (entity, pos) in query.iter() {
+        map.0.insert((pos.x, pos.y), entity);
+    }
+}
