@@ -1,20 +1,68 @@
+//! Celestial Cemeteries and Orbital Funerals.
+//!
+//! This module implements the `OrbitalCemetery`, a burial policy where the colony launches
+//! its dead into orbit. While saving land space, the increasing density of floating
+//! coffins introduces significant navigational hazards, increasing the risk for future
+//! ship launches.
+//!
+//! Deliberately clearing the cemetery (destroying the floating coffins) mitigates the
+//! launch risk, but incurs a massive morale penalty ("Desecration") among the population.
+
 use crate::layer1::social::morale::MoodModifier;
 use bevy::prelude::*;
 
 use crate::layer1::funeral::Corpse;
 use crate::layer1::social::morale::Morale;
 
+/// Represents the active burial policy for the colony.
 #[derive(Resource)]
 pub enum BurialPolicy {
     Land,
     Orbital,
 }
 
+/// Tracks the number of coffins currently orbiting the planet.
+///
+/// High density increases launch risks, while clearing it causes morale penalties.
+///
+/// # Examples
+/// ```rust
+/// use scale::layer1::culture::celestial_cemeteries::OrbitalCemetery;
+///
+/// let mut cemetery = OrbitalCemetery::default();
+/// cemetery.coffin_count += 50;
+/// assert_eq!(cemetery.coffin_count, 50);
+/// ```
 #[derive(Resource, Default)]
 pub struct OrbitalCemetery {
     pub coffin_count: u32,
 }
 
+/// Processes unburied [`Corpse`] entities according to the active [`BurialPolicy`].
+///
+/// If `BurialPolicy::Orbital` is active, all exposed corpses are despawned
+/// and immediately added to the [`OrbitalCemetery`].
+///
+/// # Examples
+/// ```rust
+/// use bevy_app::prelude::*;
+/// use scale::layer1::culture::celestial_cemeteries::{BurialPolicy, OrbitalCemetery, process_corpses_system};
+/// use scale::layer1::funeral::Corpse;
+///
+/// let mut app = App::new();
+/// app.insert_resource(BurialPolicy::Orbital);
+/// app.insert_resource(OrbitalCemetery::default());
+/// app.add_systems(Update, process_corpses_system);
+///
+/// // Spawn a corpse waiting to be buried.
+/// app.world_mut().spawn(Corpse { name: "Bob".into(), decay: 0.0 });
+///
+/// app.update();
+///
+/// // The corpse is processed and sent to orbit.
+/// assert_eq!(app.world().resource::<OrbitalCemetery>().coffin_count, 1);
+/// assert_eq!(app.world_mut().query::<&Corpse>().iter(app.world()).count(), 0);
+/// ```
 pub fn process_corpses_system(
     mut commands: Commands,
     policy: Option<Res<BurialPolicy>>,
@@ -46,11 +94,45 @@ pub fn calculate_launch_risk_system(
     }
 }
 
+/// Triggered when the colony decides to deliberately destroy orbiting coffins.
 #[derive(Event)]
 pub struct ClearCemeteryEvent {
     pub coffins_destroyed: u32,
 }
 
+/// Processes the deliberate destruction of orbital coffins.
+///
+/// This reduces the `coffin_count` in the [`OrbitalCemetery`] to mitigate launch risks,
+/// but immediately applies a "Desecration" mood penalty to all pops with [`Morale`].
+///
+/// # Examples
+/// ```rust
+/// use bevy_app::prelude::*;
+/// use bevy_ecs::prelude::*;
+/// use scale::layer1::culture::celestial_cemeteries::{OrbitalCemetery, ClearCemeteryEvent, clear_cemetery_system};
+/// use scale::layer1::social::morale::Morale;
+///
+/// let mut app = App::new();
+/// app.insert_resource(OrbitalCemetery { coffin_count: 100 });
+/// app.insert_resource(Events::<ClearCemeteryEvent>::default());
+/// app.add_systems(Update, clear_cemetery_system);
+///
+/// let pop = app.world_mut().spawn(Morale::default()).id();
+///
+/// app.world_mut()
+///     .resource_mut::<Events<ClearCemeteryEvent>>()
+///     .send(ClearCemeteryEvent { coffins_destroyed: 50 });
+///
+/// app.update();
+///
+/// // The cemetery is cleared.
+/// assert_eq!(app.world().resource::<OrbitalCemetery>().coffin_count, 50);
+///
+/// // The pop suffers a morale penalty.
+/// let morale = app.world().get::<Morale>(pop).unwrap();
+/// assert_eq!(morale.modifiers[0].label, "Desecration");
+/// assert!(morale.modifiers[0].value < 0.0);
+/// ```
 pub fn clear_cemetery_system(
     mut events: EventReader<ClearCemeteryEvent>,
     mut cemetery: ResMut<OrbitalCemetery>,

@@ -2,7 +2,6 @@
 #[path = "integration/cult_of_first_ship_bridge.rs"]
 mod cult_of_first_ship_bridge;
 
-
 #[path = "integration/secret_societies.rs"]
 mod secret_societies;
 
