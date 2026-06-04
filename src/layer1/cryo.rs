@@ -93,7 +93,7 @@ pub fn exit_cryo_system(
         (
             Entity,
             &mut Speed,
-            Option<&crate::layer1::cryo_dreams::CryoTrauma>,
+            Option<&crate::layer1::psychology::cryo_dreams::CryoTrauma>,
         ),
         ExitCryoQuery,
     >,
@@ -111,8 +111,8 @@ pub fn exit_cryo_system(
             .entity(entity)
             .remove::<CryoStasis>()
             .remove::<ThawOrder>()
-            .remove::<crate::layer1::cryo_dreams::CryoDreamState>()
-            .remove::<crate::layer1::cryo_dreams::CryoTrauma>()
+            .remove::<crate::layer1::psychology::cryo_dreams::CryoDreamState>()
+            .remove::<crate::layer1::psychology::cryo_dreams::CryoTrauma>()
             .insert(CryoSickness { duration, severity });
 
         speed.current *= (1.0 - severity).max(0.1);
