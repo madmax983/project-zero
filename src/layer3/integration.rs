@@ -402,3 +402,37 @@ pub fn discover_ghost_town_system(
         }
     }
 }
+
+pub fn retro_contract_accepted_bridge_system(
+    mut accepted_events: EventReader<
+        crate::layer3::diplomacy::retro_contracts::AcceptRetroContractEvent,
+    >,
+    mut chronicle_events: EventWriter<crate::layer1::chronicle::AddChronicleEvent>,
+) {
+    for event in accepted_events.read() {
+        chronicle_events.send(crate::layer1::chronicle::AddChronicleEvent {
+            importance: crate::layer1::chronicle::EventImportance::Major,
+            text: format!(
+                "Accepted a retro-causality contract for {} credits.",
+                event.credit_advance
+            ),
+        });
+    }
+}
+
+pub fn retro_contract_failed_bridge_system(
+    mut failed_events: EventReader<
+        crate::layer3::diplomacy::retro_contracts::RetroContractFailedEvent,
+    >,
+    mut chronicle_events: EventWriter<crate::layer1::chronicle::AddChronicleEvent>,
+) {
+    for event in failed_events.read() {
+        chronicle_events.send(crate::layer1::chronicle::AddChronicleEvent {
+            importance: crate::layer1::chronicle::EventImportance::Major,
+            text: format!(
+                "Failed to fulfill a retro-causality contract, penalized {} credits.",
+                event.penalty
+            ),
+        });
+    }
+}

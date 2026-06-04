@@ -686,3 +686,4 @@
 - [x] `INT-550` Integration: The Gravity Siphon -> Layer 2 Orbit — completed 2024-06-03
 - [x] `1058` Retro-Causality Contracts — `specs/1058-retro-causality-contracts.md` — completed 2026-06-04
 - [x] `1286` Ruin Integration — `specs/1286-ruin-integration.md` — completed 2026-06-04
+- [x] `INT-1058` Integration: Retro-Causality Contracts -> Chronicle — completed 2026-06-05

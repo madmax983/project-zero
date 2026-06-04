@@ -521,6 +521,7 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     world.init_resource::<Events<crate::layer1::digital_immortality::GhostHackEvent>>();
     world.init_resource::<Events<crate::layer2::orbital_necropolis::EntityDestroyedEvent>>();
     world.init_resource::<Events<crate::layer3::diplomacy::retro_contracts::AcceptRetroContractEvent>>();
+    world.init_resource::<Events<crate::layer3::diplomacy::retro_contracts::RetroContractFailedEvent>>();
     world
         .init_resource::<Events<crate::layer2::communications::signal_latency::ExecuteOrderEvent>>(
         );
