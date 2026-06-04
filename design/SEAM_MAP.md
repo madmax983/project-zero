@@ -1333,3 +1333,10 @@
 - **Systems connected:** `trigger_orbital_decay_system` -> `gravity_siphon_orbital_decay_bridge_system` -> `OrbitalDebris`
 - **Glue added:** Added `gravity_siphon_orbital_decay_bridge_system` in `src/layer2/integration.rs` to process `OrbitalDecayEvent` and increase `OrbitalDebris`. Registered event and system in `src/simulation.rs`.
 - **Tests:** `tests/integration/gravity_siphon_bridge.rs`
+
+### INT-1286: Ruin Integration
+- **Date:** 2026-10-31
+- **Systems connected:** `AncientRuin` -> `apply_ruin_environmental_buffs_system` -> `Temperature`, `AncientRuin` -> `apply_ruin_psychological_stress_system` -> `StressTracker`
+- **Glue added:** `apply_ruin_environmental_buffs_system`, `trigger_ruin_machinery_system`, `apply_ruin_psychological_stress_system` in `src/layer1/core/integration.rs`
+- **Schedule:** Chained in Layer1SystemSet::Environment schedule
+- **Tests:** `tests/integration/ruin_integration.rs` (3 tests)
