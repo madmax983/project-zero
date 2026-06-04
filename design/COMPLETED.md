@@ -685,3 +685,4 @@
 - [x] `550` The Gravity Siphon — `specs/550-the-gravity-siphon.md` — completed 2024-06-03
 - [x] `INT-550` Integration: The Gravity Siphon -> Layer 2 Orbit — completed 2024-06-03
 - [x] `1058` Retro-Causality Contracts — `specs/1058-retro-causality-contracts.md` — completed 2026-06-04
+- [x] `1082` Resonant Architecture — `specs/1082-resonant-architecture.md` — completed 2026-06-04
