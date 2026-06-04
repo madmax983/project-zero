@@ -171,6 +171,12 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     world
         .init_resource::<bevy_ecs::prelude::Events<crate::layer1::mycelial::MycelialTripwireEvent>>(
         );
+    world.init_resource::<bevy_ecs::prelude::Events<
+        crate::layer3::diplomacy::dead_internet::GenerateDiplomaticInteractionEvent,
+    >>();
+    world.init_resource::<bevy_ecs::prelude::Events<
+        crate::layer3::diplomacy::dead_internet::DiplomaticInteraction,
+    >>();
     let scenario = start_scenario_definition(config.scenario);
     world.insert_resource(ActiveStartScenario {
         id: scenario.id,
