@@ -95,7 +95,9 @@ pub fn graffiti_placement_system(
             continue;
         }
 
-        let graffiti_type = if stress.map_or(0.0, |s| s.accumulated_stress) > 80.0 && traits.is_some_and(|t| t.has(crate::layer1::traits::Trait::Creative)) {
+        let graffiti_type = if stress.map_or(0.0, |s| s.accumulated_stress) > 80.0
+            && traits.is_some_and(|t| t.has(crate::layer1::traits::Trait::Creative))
+        {
             GraffitiType::Propaganda
         } else if morale.value < 0.2 {
             GraffitiType::Vandalism
@@ -468,7 +470,9 @@ mod additional_tests {
                 value: 0.5,
                 ..Default::default()
             },
-            StressTracker { accumulated_stress: 90.0 },
+            StressTracker {
+                accumulated_stress: 90.0,
+            },
             traits,
         ));
 

@@ -388,7 +388,9 @@ pub fn get_status_line<'a>(
         spans.push(Span::styled("  ║  ", Style::default().fg(Color::DarkGray)));
         spans.push(Span::styled(
             format!(" 🌀 Singularity: {:.1}kg ", mass),
-            Style::default().fg(Color::Magenta).add_modifier(Modifier::BOLD),
+            Style::default()
+                .fg(Color::Magenta)
+                .add_modifier(Modifier::BOLD),
         ));
     }
 
@@ -430,6 +432,7 @@ pub fn get_status_line<'a>(
 ///     None,               // season
 ///     None,               // solar_cycle
 ///     0.0,                // risk pct
+///     None,               // active_singularity_mass
 /// );
 ///
 /// assert!(status.contains("Day 10"));
@@ -682,7 +685,7 @@ mod tests {
             1.0,
             Some(Season::Summer),
             None,
-            0.0, // risk_pct
+            0.0,  // risk_pct
             None, // Singularity mass
         );
         assert!(
@@ -709,7 +712,7 @@ mod tests {
             1.0,
             None,
             None,
-            0.0, // risk_pct
+            0.0,  // risk_pct
             None, // Singularity mass
         );
         assert!(!status.contains("Spring"));
@@ -735,7 +738,7 @@ mod tests {
             1.0,
             None,
             Some(SolarCycle::Maximum),
-            0.0, // risk_pct
+            0.0,  // risk_pct
             None, // Singularity mass
         );
         assert!(
