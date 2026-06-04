@@ -163,6 +163,10 @@ pub struct FragmentType {
 /// This struct holds the templates and fragments used to generate stories.
 /// It is usually populated via `NarrativeGenerator::from_embedded()`.
 ///
+/// **Note:** This is part of the base game and DOES NOT require the `nova` feature flag.
+/// It is distinctly different from the `OralTradition` system which simulates living
+/// legends in taverns.
+///
 /// ## Examples
 /// ```
 /// use scale::prelude::*;
@@ -476,6 +480,20 @@ impl NarrativeGenerator {
     }
 
     /// Generate a story string from a template ID and context.
+    ///
+    /// ## Examples
+    /// ```
+    /// use scale::prelude::*;
+    ///
+    /// let mut generator = NarrativeGenerator::default();
+    /// generator.add_template("GREETING".to_string(), vec!["Hello [NAME]!".to_string()]);
+    ///
+    /// let mut context = NarrativeContext::default();
+    /// context.insert("NAME", "Traveler");
+    ///
+    /// let story = generator.generate("GREETING", &context).unwrap();
+    /// assert_eq!(story, "Hello Traveler!");
+    /// ```
     ///
     /// # Errors
     /// Returns an error if the template ID is not found or if the template has no patterns.

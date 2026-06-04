@@ -2452,14 +2452,19 @@ pub struct MachineryTrigger {
 /// Applies the temperature regulation bonus from an AncientRuin to all pops residing in its Housing.
 pub fn apply_ruin_environmental_buffs_system(
     ruins: bevy_ecs::prelude::Query<&TemperatureRegulation, bevy_ecs::prelude::With<AncientRuin>>,
-    housing_query: bevy_ecs::prelude::Query<(bevy_ecs::prelude::Entity, &crate::layer1::architecture::housing::Housing)>,
+    housing_query: bevy_ecs::prelude::Query<(
+        bevy_ecs::prelude::Entity,
+        &crate::layer1::architecture::housing::Housing,
+    )>,
     mut temps: bevy_ecs::prelude::Query<&mut crate::layer1::environment::Temperature>,
 ) {
     for (housing_entity, housing) in housing_query.iter() {
         if let Ok(regulator) = ruins.get(housing_entity) {
             for &resident in &housing.residents {
                 if let Ok(mut temp) = temps.get_mut(resident) {
-                    temp.degrees = (temp.degrees + regulator.bonus).min(regulator.bonus + 10.0).max(10.0);
+                    temp.degrees = (temp.degrees + regulator.bonus)
+                        .min(regulator.bonus + 10.0)
+                        .max(10.0);
                 }
             }
         }
@@ -2485,7 +2490,10 @@ pub fn trigger_ruin_machinery_system(
 /// Applies psychological stress to residents of active AncientRuins.
 pub fn apply_ruin_psychological_stress_system(
     ruins: bevy_ecs::prelude::Query<&AncientRuin>,
-    housing_query: bevy_ecs::prelude::Query<(bevy_ecs::prelude::Entity, &crate::layer1::architecture::housing::Housing)>,
+    housing_query: bevy_ecs::prelude::Query<(
+        bevy_ecs::prelude::Entity,
+        &crate::layer1::architecture::housing::Housing,
+    )>,
     mut pops: bevy_ecs::prelude::Query<&mut crate::layer1::psychology::stress::StressTracker>,
 ) {
     for (housing_entity, housing) in housing_query.iter() {
