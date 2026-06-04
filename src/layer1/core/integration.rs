@@ -2431,3 +2431,72 @@ pub fn gravity_siphon_chronicle_bridge(
         });
     }
 }
+
+// --- INT-1286: Ruin Integration ---
+
+#[derive(bevy_ecs::prelude::Component)]
+pub struct AncientRuin {
+    pub is_active: bool,
+}
+
+#[derive(bevy_ecs::prelude::Component)]
+pub struct TemperatureRegulation {
+    pub bonus: f32,
+}
+
+#[derive(bevy_ecs::prelude::Component)]
+pub struct MachineryTrigger {
+    pub threshold: u64,
+}
+
+/// Applies the temperature regulation bonus from an AncientRuin to all pops residing in its Housing.
+pub fn apply_ruin_environmental_buffs_system(
+    ruins: bevy_ecs::prelude::Query<&TemperatureRegulation, bevy_ecs::prelude::With<AncientRuin>>,
+    housing_query: bevy_ecs::prelude::Query<(bevy_ecs::prelude::Entity, &crate::layer1::architecture::housing::Housing)>,
+    mut temps: bevy_ecs::prelude::Query<&mut crate::layer1::environment::Temperature>,
+) {
+    for (housing_entity, housing) in housing_query.iter() {
+        if let Ok(regulator) = ruins.get(housing_entity) {
+            for &resident in &housing.residents {
+                if let Ok(mut temp) = temps.get_mut(resident) {
+                    temp.degrees = (temp.degrees + regulator.bonus).min(regulator.bonus + 10.0).max(10.0);
+                }
+            }
+        }
+    }
+}
+
+/// Randomly activates AncientRuin machinery if the simulation tick exceeds the threshold.
+pub fn trigger_ruin_machinery_system(
+    time: bevy_ecs::prelude::Res<crate::shared::time::SimulationTime>,
+    mut ruins: bevy_ecs::prelude::Query<(&mut AncientRuin, &MachineryTrigger)>,
+) {
+    for (mut ruin, trigger) in ruins.iter_mut() {
+        if time.tick >= trigger.threshold && !ruin.is_active {
+            // Give it a 5% chance to activate per tick once past threshold
+            let roll: f32 = rand::random();
+            if roll < 0.05 {
+                ruin.is_active = true;
+            }
+        }
+    }
+}
+
+/// Applies psychological stress to residents of active AncientRuins.
+pub fn apply_ruin_psychological_stress_system(
+    ruins: bevy_ecs::prelude::Query<&AncientRuin>,
+    housing_query: bevy_ecs::prelude::Query<(bevy_ecs::prelude::Entity, &crate::layer1::architecture::housing::Housing)>,
+    mut pops: bevy_ecs::prelude::Query<&mut crate::layer1::psychology::stress::StressTracker>,
+) {
+    for (housing_entity, housing) in housing_query.iter() {
+        if let Ok(ruin) = ruins.get(housing_entity) {
+            if ruin.is_active {
+                for &resident in &housing.residents {
+                    if let Ok(mut stress) = pops.get_mut(resident) {
+                        stress.accumulated_stress += 5.0; // Fixed stress penalty per tick
+                    }
+                }
+            }
+        }
+    }
+}
