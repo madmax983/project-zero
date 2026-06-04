@@ -116,3 +116,8 @@
 **Concept:** Added `scrapcode_entropy_system` to `src/experimental/scrapcode_entropy.rs`. If `Scrapcode` is active, it actively accelerates the `BuildingAge` of all existing buildings every tick based on its severity, causing them to decay and collapse faster over time.
 **Fate:** Submitted
 **Lesson:** Turns the `Scrapcode` infection from a simple economic penalty (more wood needed for new buildings) into an existential threat for the colony's existing infrastructure. If the player ignores purging the Scrapcode, their base will crumble around them due to accelerated temporal entropy.
+
+## [Cryo Dreams]
+**Concept:** Re-integrated and wired up the disconnected `cryo_dreams` feature. A system that lets frozen Pops generate knowledge subconsciously while risking `CryoTrauma` from nightmares, which translates into increased `CryoSickness` upon waking.
+**Fate:** Merged
+**Lesson:** Sometimes the best new features are the ones someone else started but forgot to plug in. Wiring up existing disconnected logic is a great way to add depth to the simulation without inflating the codebase.

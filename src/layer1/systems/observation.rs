@@ -87,7 +87,7 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::graffiti::graffiti_placement_system
                 .after(crate::layer1::health::despawn_dead_entities_system),
             dream_system.after(crate::layer1::health::despawn_dead_entities_system),
-            crate::layer1::cryo_dreams::cryo_dream_system
+            crate::layer1::psychology::cryo_dreams::cryo_dream_system
                 .after(crate::layer1::health::despawn_dead_entities_system),
             cleanup_dream_marker_system.after(dream_system),
             #[cfg(feature = "nova")]
