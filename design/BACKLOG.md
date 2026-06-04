@@ -2,7 +2,7 @@
 
 ## High Priority
 
-- [ ] `1285` The Weight of Silence — `specs/1285-the-weight-of-silence.md`
+
 - [ ] `1286` Ruin Integration — `specs/1286-ruin-integration.md`
 - [ ] `1287` The Cargo Cult Diplomat — `specs/1287-the-cargo-cult-diplomat.md`
 - [ ] `1288` The Memorial Revolt — `specs/1288-the-memorial-revolt.md`

@@ -47,3 +47,5 @@ pub use celestial_cemeteries::*;
 
 pub mod cultural_influence;
 pub use cultural_influence::*;
+pub mod silence_cult;
+pub use silence_cult::*;

@@ -366,6 +366,10 @@ fn init_simulation_resources(world: &mut World) {
 
             let mut schedule = build_simulation_schedule();
             schedule.add_systems((
+        crate::layer1::culture::silence_cult::track_colony_isolation_system,
+        crate::layer1::culture::silence_cult::process_isolation_needs_system,
+        crate::layer1::culture::silence_cult::spawn_silence_cult_system,
+
                 (
                     crate::layer2::planetary_spin_up::apply_planetary_torque_system,
                     crate::layer2::planetary_spin_up::calculate_effective_gravity_system,
