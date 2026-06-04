@@ -78,3 +78,7 @@
 ## 2024-06-06 - The Undocumented Culture
 **Confusion:** Several modules in `src/layer1/culture/` (`cultural_influence.rs`, `astrology.rs`, `celestial_cemeteries.rs`, `ancestral_graves.rs`) were completely missing module-level documentation (`//!`) and executable `/// # Examples` doc-tests. This obscured important cultural mechanics like soft power pressure, astrological productivity modifiers, orbital burial launch risks, and ancestral veneration mood buffs.
 **Clarification:** Added conceptual `//!` module documentation to explain these high-level mechanics and integrated compiling `/// # Examples` doc-tests for key structs and systems across these files to clearly demonstrate usage and effects.
+
+## 2023-10-25 - Narrative Generator vs Nova Feature
+**Confusion:** Users tried to run examples or use `NarrativeGenerator` and thought they needed the `nova` feature because of the "Oral Tradition" warning in the README. When they hit "struct not found" errors for `Story`, they incorrectly blamed `NarrativeGenerator`.
+**Clarification:** Added explicit documentation to `NarrativeGenerator` stating it is part of the base game and DOES NOT require the `nova` feature, and distinguishing it from `OralTradition`. Also added executable doctests for `NarrativeGenerator`, `NarrativeContext`, and `generate()`.

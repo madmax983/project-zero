@@ -504,7 +504,7 @@ mod signal_latency_bridge;
 #[path = "integration/temporal_echoes_maintenance.rs"]
 mod temporal_echoes_maintenance;
 
-#[path = "integration/solar_flare_chronicle_bridge.rs"]
-mod solar_flare_chronicle_bridge;
 #[path = "integration/ruin_integration.rs"]
 mod ruin_integration;
+#[path = "integration/solar_flare_chronicle_bridge.rs"]
+mod solar_flare_chronicle_bridge;
