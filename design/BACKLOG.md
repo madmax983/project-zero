@@ -676,7 +676,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1055` Gravity Caste — `specs/1055-gravity-caste.md`
 - [x] `1056` The Dead Hand — `specs/1056-the-dead-hand.md` — completed 2024-05-31
 
-- [ ] `1058` Retro-Causality Contracts — `specs/1058-retro-causality-contracts.md`
 
 
 

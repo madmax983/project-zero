@@ -524,6 +524,7 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     world
         .init_resource::<Events<crate::layer2::communications::signal_latency::ExecuteOrderEvent>>(
         );
+    world.init_resource::<bevy::prelude::Events<crate::layer1::energy::gravity_siphon::OrbitalDecayEvent>>();
 
     world.init_resource::<bevy::prelude::Time>();
     world.init_resource::<crate::layer1::tech::machine_awakening::GlobalSentience>();

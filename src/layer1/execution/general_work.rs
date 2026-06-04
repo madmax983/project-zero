@@ -503,7 +503,9 @@ pub fn calculate_work_amount(
                 ];
                 for target in neighbors {
                     if let Some(graffiti) = map.markings.get(&target) {
-                        if graffiti.graffiti_type == crate::layer1::graffiti::GraffitiType::Propaganda {
+                        if graffiti.graffiti_type
+                            == crate::layer1::graffiti::GraffitiType::Propaganda
+                        {
                             modifier = 0.9;
                             break;
                         }
