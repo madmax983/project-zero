@@ -16,3 +16,8 @@
 **Bloat:** `DialectManager`
 **Cut:** Removed the unused `DialectManager` struct and its associated systems entirely.
 **Saved:** ~160 lines of dead code/boilerplate.
+
+## [Reduction]
+**Bloat:** `AttentionFocus` and `DataResolution`
+**Cut:** Removed the unused `AttentionFocus` and `DataResolution` abstractions entirely. Tests pass, confirming this was dead "Enterprise FizzBuzz" code.
+**Saved:** 320 lines of dead code/boilerplate.

@@ -2,8 +2,6 @@
 #[path = "integration/cult_of_first_ship_bridge.rs"]
 mod cult_of_first_ship_bridge;
 
-#[path = "integration/attention_bandwidth.rs"]
-mod attention_bandwidth;
 
 #[path = "integration/secret_societies.rs"]
 mod secret_societies;

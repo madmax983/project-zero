@@ -2,7 +2,7 @@
 //!
 //! This module contains types and functions used across multiple layers.
 
-pub mod attention;
+
 /// Colony identity resource.
 pub mod colony;
 pub mod keyboard;
