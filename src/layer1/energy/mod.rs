@@ -238,31 +238,32 @@ pub fn power_grid_system(world: &mut World) {
     // 1. Build grid map
     let grid_map = build_grid_map(world);
 
-    // 2. Find connected components
-    let mut visited: HashSet<(i32, i32)> = HashSet::new();
-    let mut grid_entities = Vec::new();
-    let mut queue = VecDeque::new();
-    let mut batteries = Vec::new();
-    let mut kinetic_batteries = Vec::new();
+    // Extract buffer resource
+    let mut buffer = world
+        .remove_resource::<PowerGridBuffer>()
+        .unwrap_or_default();
+
+    // Clear global buffer state
+    buffer.visited.clear();
 
     for start_pos in grid_map.keys().copied() {
-        if visited.contains(&start_pos) {
+        if buffer.visited.contains(&start_pos) {
             continue;
         }
 
-        grid_entities.clear();
-        queue.clear();
-        batteries.clear();
-        kinetic_batteries.clear();
+        buffer.grid_entities.clear();
+        buffer.queue.clear();
+        buffer.batteries.clear();
+        buffer.kinetic_batteries.clear();
 
         // BFS for this grid
         let (total_production, base_demand) = bfs_grid(
             start_pos,
             &grid_map,
             world,
-            &mut visited,
-            &mut grid_entities,
-            &mut queue,
+            &mut buffer.visited,
+            &mut buffer.grid_entities,
+            &mut buffer.queue,
         );
 
         let total_demand = base_demand * demand_multiplier;
@@ -271,19 +272,19 @@ pub fn power_grid_system(world: &mut World) {
         let mut net = total_production - total_demand;
 
         // Collect batteries in this grid
-        for e in &grid_entities {
+        for e in &buffer.grid_entities {
             if world.get::<Battery>(*e).is_some() {
-                batteries.push(*e);
+                buffer.batteries.push(*e);
             }
             if world
                 .get::<crate::layer1::kinetic_storage::KineticBattery>(*e)
                 .is_some()
             {
-                kinetic_batteries.push(*e);
+                buffer.kinetic_batteries.push(*e);
             }
         }
 
-        let provided = handle_batteries(world, &batteries, &kinetic_batteries, net);
+        let provided = handle_batteries(world, &buffer.batteries, &buffer.kinetic_batteries, net);
         if net < 0.0 {
             // Update net after battery discharge (effectively increasing production availability)
             net += provided;
@@ -308,10 +309,13 @@ pub fn power_grid_system(world: &mut World) {
             1.0
         };
 
-        handle_overload(world, &grid_entities, total_production, total_demand);
+        handle_overload(world, &buffer.grid_entities, total_production, total_demand);
 
-        activate_consumers(world, &grid_entities, net, supply_ratio);
+        activate_consumers(world, &buffer.grid_entities, net, supply_ratio);
     }
+
+    // Re-insert the buffer for the next frame
+    world.insert_resource(buffer);
 }
 
 /// System to process fuel consumption for power sources.
@@ -677,4 +681,23 @@ pub struct EnergyGrid {
     pub total_generation: f32,
     /// Total energy consumed by all consumers in the grid.
     pub total_consumption: f32,
+}
+
+/// Buffer resource for reusing allocations in the `power_grid_system` each frame.
+///
+/// ⚡ Bolt Optimization:
+/// - Reusing these vectors avoids O(N) heap allocations per frame/tick when
+///   evaluating power grids.
+#[derive(Resource, Default)]
+pub struct PowerGridBuffer {
+    /// Visited tiles for BFS
+    pub visited: HashSet<(i32, i32)>,
+    /// Entities in the current grid
+    pub grid_entities: Vec<Entity>,
+    /// Queue for BFS traversal
+    pub queue: VecDeque<(i32, i32)>,
+    /// Batteries in the current grid
+    pub batteries: Vec<Entity>,
+    /// Kinetic batteries in the current grid
+    pub kinetic_batteries: Vec<Entity>,
 }
