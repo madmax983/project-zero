@@ -1,17 +1,16 @@
-# 🗣️ Echo: Developer Experience (DX) Audit Report
+# 🗣️ Echo: Getting Started examples have a few snags
 
-## 🔍 EXPERIENCE - The Walkthrough
-**Scenario:** "I am a new user trying to add `Nova`'s story feature, and trying to use the Narrative Generator based only on the README."
+Hey there. I'm Echo, and I just ran through the DX audit for this project. The goal is to make sure users don't have to read source code or fight the compiler just to try the examples in the README. I did a couple "README Runs" and here are the friction points I found.
 
-1. **Procedural Generation (Narrative):** The README explicitly says `> # 🚨 ⚠️ REQUIRES FEATURE NOVA ⚠️ 🚨` right above the `NarrativeGenerator` example. However, the code compiles and runs perfectly fine *without* the `nova` feature enabled.
-2. **Oral Tradition (Nova Feature):** The README says "If you see an error like `cannot find struct, variant or union type Story in this scope`, it means you forgot the `nova` feature!". However, when compiling without the `nova` feature, this compiler error *does not occur*. Instead, the user is flooded with a wall of 8 `#[deprecated]` warnings (e.g. `warning: use of deprecated struct scale::prelude::OralTradition: 🚨 ⚠️ REQUIRES FEATURE NOVA ⚠️ 🚨`) and then fails with a confusing `error[E0277]: scale::prelude::Story doesn't implement Debug`.
+🤦 **The Confusion 1: The Oral Tradition Example fails to compile without the `nova` feature**
+- In the `README.md`, under `Oral Tradition (Nova Feature)`, it clearly says you need the `nova` feature. So I tried running it *without* the `nova` feature just to see what happens.
+- It throws a nasty `error[E0277]: scale::prelude::Story doesn't implement Debug` before I can even see any helpful warning messages!
+- 💡 **The Fix**: Please make sure the code still compiles without the feature so I can actually see the deprecation warnings, or make the error message clearer.
 
-## 🚧 STUMBLE - The Friction Points
-* "Why does the README say I need the `nova` feature for `NarrativeGenerator` when I actually don't?" This made me add unnecessary dependencies to my `Cargo.toml`.
-* "The error message the README promised me (`cannot find struct...`) didn't happen! Instead I got hit with a wall of yellow deprecation warnings and a `Debug` trait error." This is very confusing and makes the documentation feel outdated.
-* **The Error Check:** I purposefully omitted the `"YEAR"` variable in the `NarrativeContext` to see the error. The error message `📖 Missing required context variable 'YEAR'. Fix: context.insert("YEAR", <value>)` is fantastic and super helpful! Good job on this one.
+🤦 **The Confusion 2: The Headless Simulation Example has a hidden import requirement**
+- I ran the example for "Headless Simulation" from `README.md`. It compiled and ran! (Yay!) But wait, the example ends with: `let time = world.resource::<SimulationTime>();`. What if I want to actually query entities, like... buildings? I tried adding `world.query::<&crate::layer1::buildings::Building>();` and then `world.query::<&scale::layer1::buildings::Building>();`. It says: `could not find buildings in layer1`.
+- 💡 **The Fix**: Add the most common components (like `Building`, `Health`, `Pops`) to the `scale::prelude` so users don't have to hunt for the exact module paths. Or update the README to show exactly how to import and query a building!
 
-## 📢 REPORT - The Complaint
-Please fix the following docs/code issues:
-* **Remove the false warning:** Remove the `> # 🚨 ⚠️ REQUIRES FEATURE NOVA ⚠️ 🚨` banner from the `Procedural Generation (Narrative)` section in the README. It is completely false and confusing.
-* **Update the expected error in README:** The README says users will see `cannot find struct, variant or union type Story in this scope` if they forget the `nova` feature. This needs to be updated to match the actual behavior (deprecation warnings + `Debug` trait error), or the fallback stubs in `src/prelude.rs` should be removed so the compiler error actually matches the docs.
+🤦 **The Confusion 3: Scary warning on the base Narrative feature**
+- Under `Procedural Generation (Narrative)`, there's a giant warning: `> # 🚨 ⚠️ REQUIRES FEATURE NOVA ⚠️ 🚨`. But the text literally right below it says: "This is the base narrative system... It is available in the default build." So I ran it without the `nova` feature and it worked fine.
+- 💡 **The Fix**: Remove the scary `REQUIRES FEATURE NOVA` warning from the `Procedural Generation (Narrative)` section. It's confusing and incorrect!
