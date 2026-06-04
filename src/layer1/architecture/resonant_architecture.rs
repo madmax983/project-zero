@@ -29,6 +29,23 @@ pub struct ResonanceBuff {
 }
 
 #[derive(Component)]
+pub struct PopBaseResonanceTraits {
+    pub research_speed_mult: f32,
+    pub stress_gain_mult: f32,
+    pub aggression_mult: f32,
+}
+
+impl Default for PopBaseResonanceTraits {
+    fn default() -> Self {
+        Self {
+            research_speed_mult: 1.0,
+            stress_gain_mult: 1.0,
+            aggression_mult: 1.0,
+        }
+    }
+}
+
+#[derive(Component)]
 pub struct PopResonanceTraits {
     pub research_speed_mult: f32,
     pub stress_gain_mult: f32,
@@ -49,6 +66,7 @@ type PopResonanceQuery<'w, 's> = Query<
     'w,
     's,
     (
+        &'static PopBaseResonanceTraits,
         &'static mut PopResonanceTraits,
         Option<&'static AssignedRoom>,
         Option<&'static mut ResonanceBuff>,
@@ -63,7 +81,7 @@ pub fn apply_resonant_architecture_system(
     mut pop_query: PopResonanceQuery,
     mut commands: Commands,
 ) {
-    for (mut traits, assigned, mut buff, entity) in pop_query.iter_mut() {
+    for (base, mut traits, assigned, mut buff, entity) in pop_query.iter_mut() {
         // Handle acquiring buff from assigned room
         if let Some(assigned_room) = assigned {
             if let Ok(room) = room_query.get(assigned_room.0) {
@@ -83,9 +101,9 @@ pub fn apply_resonant_architecture_system(
         }
 
         // Apply buff to traits
-        traits.research_speed_mult = 1.0;
-        traits.stress_gain_mult = 1.0;
-        traits.aggression_mult = 1.0;
+        traits.research_speed_mult = base.research_speed_mult;
+        traits.stress_gain_mult = base.stress_gain_mult;
+        traits.aggression_mult = base.aggression_mult;
 
         if let Some(ref mut b) = buff {
             if b.ticks_remaining > 0 {
@@ -128,7 +146,12 @@ mod tests {
 
         let pop = app
             .world_mut()
-            .spawn((Pop, AssignedRoom(room_ent), PopResonanceTraits::default()))
+            .spawn((
+                Pop,
+                AssignedRoom(room_ent),
+                PopBaseResonanceTraits::default(),
+                PopResonanceTraits::default(),
+            ))
             .id();
 
         // Run once to add buff
@@ -157,6 +180,7 @@ mod tests {
             .world_mut()
             .spawn((
                 Pop,
+                PopBaseResonanceTraits::default(),
                 PopResonanceTraits::default(), // No AssignedRoom
             ))
             .id();
@@ -182,7 +206,12 @@ mod tests {
 
         let pop = app
             .world_mut()
-            .spawn((Pop, AssignedRoom(room_ent), PopResonanceTraits::default()))
+            .spawn((
+                Pop,
+                AssignedRoom(room_ent),
+                PopBaseResonanceTraits::default(),
+                PopResonanceTraits::default(),
+            ))
             .id();
 
         // Run once to add buff

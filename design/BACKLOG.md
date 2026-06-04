@@ -685,10 +685,6 @@ See `design/IDEAS.md` for unspecced concepts.
 
 
 
-- [ ] `1082` Resonant Architecture — `specs/1082-resonant-architecture.md`
-
-
-
 
 
 
