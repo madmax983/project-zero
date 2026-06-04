@@ -225,7 +225,7 @@ pub fn update_sky_system(mut sky: ResMut<Sky>, time: Res<crate::shared::time::Si
 /// // Run the system repeatedly to ensure the 5% chance triggers
 /// let mut schedule = Schedule::default();
 /// schedule.add_systems(observe_constellations_system);
-/// for _ in 0..100 {
+/// for _ in 0..1000 {
 ///     schedule.run(&mut world);
 /// }
 ///
@@ -366,7 +366,7 @@ mod tests {
         schedule.add_systems(observe_constellations_system);
 
         // Run enough times to trigger 5% chance
-        for _ in 0..100 {
+        for _ in 0..1000 {
             schedule.run(&mut world);
         }
 
