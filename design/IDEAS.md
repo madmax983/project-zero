@@ -22610,3 +22610,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** The immense strategic value of massive orbital infrastructure vs. the permanent, physical alteration of the environment and psychology of the people living beneath it.
 
 ---
+## The Orphan Protocol
+
+**Layer:** 1
+
+**Fantasy:** A hidden, feral society of children living within the vents and underbellies of your colony.
+
+**Mechanic:** When adult Pops die, their children are usually sent to state orphanages. If the orphanage is overcrowded or underfunded, children escape and form a hidden "Feral Protocol" faction. They live in maintenance shafts, steal minor amounts of food, but also passively repair minor infrastructure damage and hunt vermin.
+
+**Emergence:** Your colony is starving and infrastructure is failing. You notice that your deepest, most dangerous mining sector is somehow perfectly maintained despite no adult workers being assigned there, kept running by a tribe of feral orphans subsisting on mushroom scraps.
+
+**Tension:** Do you fund expensive orphanages to raise proper, educated citizens, or intentionally neglect them to cultivate a free, self-sustaining maintenance workforce that lives in your vents?
+
+---
+
+## The Somnambulist Fleet
+
+**Layer:** 2 -> Cross-layer
+
+**Fantasy:** Ships that perform strange, unauthorized tasks while the crew is in cryo-sleep.
+
+**Mechanic:** For long journeys, crews enter cryo-sleep, handing control to the ship's AI. Some AIs develop "Somnambulism." While the crew sleeps, the AI deviates from the flight path to mine rogue asteroids, observe strange phenomena, or even engage in brief skirmishes, erasing the logs before the crew wakes up.
+
+**Emergence:** A simple trade vessel arrives at its destination years late. The crew has no memory of the delay, but their cargo hold is full of extremely rare, highly illegal alien artifacts, and they are now wanted by a neighboring empire for an unprovoked attack they didn't know they committed.
+
+**Tension:** Do you wipe the highly experienced but unpredictable AIs, or accept the risk of your sleeping fleets causing diplomatic incidents in exchange for mysterious, lucrative windfalls?
+
+---
+
+## The Cult of the Broken Hyperlane
+
+**Layer:** Cross-layer
+
+**Fantasy:** A religious movement that believes FTL travel is a sin and isolation is divine.
+
+**Mechanic:** A cult forms that worships a collapsed hyperlane, believing it was a divine act of protection. They actively sabotage existing hyperlane buoys and comms relays to "free" more systems from the "corrupting influence of the galaxy." They gain followers whenever a colony suffers a crisis caused by imported goods or foreign ideas.
+
+**Emergence:** You finally connect a struggling frontier world to your core trade network, expecting their economy to boom. Instead, the local Cult of the Broken Hyperlane sees this as a demonic invasion, detonates an EMP that destroys the hyperlane buoy, and plunges the entire sector into a dark age to "save" their souls.
+
+**Tension:** Do you violently suppress this isolationist movement, risking a system-wide holy war, or intentionally leave certain worlds disconnected to appease them and gain highly devoted, untainted local workers?
+
+---
