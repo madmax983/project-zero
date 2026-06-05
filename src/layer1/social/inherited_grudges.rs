@@ -21,21 +21,29 @@ pub fn inherit_grudges_on_birth_system(
     mut queries: ParamSet<(Query<(&Lineage, &mut GrudgeList)>, Query<&GrudgeList>)>,
 ) {
     for event in events.read() {
-        // Collect parent grudges first
-        let mut parent_grudges_clone = Vec::new();
-        if let Ok((lineage, _)) = queries.p0().get(event.entity) {
-            if let Some(parent_entity) = lineage.parent_entity {
-                if let Ok(parent_grudges) = queries.p1().get(parent_entity) {
-                    parent_grudges_clone = parent_grudges.0.clone();
-                }
-            }
-        }
+        // Extract parent entity
+        let parent_entity = queries
+            .p0()
+            .get(event.entity)
+            .ok()
+            .and_then(|(lineage, _)| lineage.parent_entity);
 
-        // Then apply to child
-        if !parent_grudges_clone.is_empty() {
-            if let Ok((_, mut child_grudges)) = queries.p0().get_mut(event.entity) {
-                for grudge in parent_grudges_clone {
-                    child_grudges.0.push(grudge);
+        if let Some(parent_entity) = parent_entity {
+            // Get parent grudges
+            let parent_grudges = if let Ok(grudges) = queries.p1().get(parent_entity) {
+                Some(grudges.0.clone())
+            } else {
+                None
+            };
+
+            // Then apply to child
+            if let Some(grudges) = parent_grudges {
+                if !grudges.is_empty() {
+                    if let Ok((_, mut child_grudges)) = queries.p0().get_mut(event.entity) {
+                        // ⚡ Bolt Optimization: Removed intermediate `.collect::<Vec<_>>()`
+                        // and `.push()` loop, extending directly.
+                        child_grudges.0.extend(grudges);
+                    }
                 }
             }
         }
@@ -48,10 +56,11 @@ pub fn transfer_grudges_on_death_system(
     mut queries: ParamSet<(Query<&GrudgeList>, Query<(&Lineage, &mut GrudgeList)>)>,
 ) {
     for event in events.read() {
-        let mut dead_grudges_clone = Vec::new();
-        if let Ok(dead_grudges) = queries.p0().get(event.entity) {
-            dead_grudges_clone = dead_grudges.0.clone();
-        }
+        let dead_grudges_clone = if let Ok(dead_grudges) = queries.p0().get(event.entity) {
+            dead_grudges.0.clone()
+        } else {
+            continue;
+        };
 
         if dead_grudges_clone.is_empty() {
             continue;

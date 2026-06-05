@@ -15,3 +15,7 @@
 ## Exclusive System Memory Allocation Avoidance
 **Learning:** Exclusive Bevy systems (`&mut World`) cannot take `Local<T>` system parameters. Allocating vectors or hashmaps inside them (e.g. `Vec::new()`) causes heap allocations every frame.
 **Action:** Extract a dedicated Bevy `Resource` to hold the collections. Remove it at the start of the system (`world.remove_resource::<Buffer>().unwrap_or_default()`), clear its internal collections instead of dropping them, and re-insert it at the end of the system to maintain a high-water mark capacity without reallocating.
+
+**[Optimize Grudge Inheritance]**
+**Learning:** Found an intermediate `Vec::new()` and manual `.push()` loop during entity inheritance in `ParamSet`. Since `Queries` inside a `ParamSet` cannot be accessed mutably at the same time, extracting the slice once and then pushing all items natively via `.extend()` eliminates the intermediate allocation and allows for more aggressive internal capacity pre-allocation.
+**Action:** Replace `let mut x = Vec::new(); ... x = clone(); for y in x { push(y) }` with direct extraction and `extend(x)`.
