@@ -25,17 +25,32 @@ impl Default for Observatory {
 /// 2. Has a 1% chance per tick to trigger "The Overview Effect" (Mood Modifier).
 ///    - 50% "Cosmic Inspiration" (+0.15)
 ///    - 50% "Existential Dread" (-0.10)
+#[allow(clippy::type_complexity)]
 pub fn process_observe_system(
-    mut pops: Query<(Entity, &AssignedTo, &mut Morale, Option<&Traits>)>,
+    mut pops: Query<(
+        Entity,
+        &AssignedTo,
+        &mut Morale,
+        Option<&Traits>,
+        Option<&crate::layer1::void_stare::VoidStareEffect>,
+    )>,
     observatories: Query<&Observatory>,
     mut resources: ResMut<ColonyResources>,
     mut log: Option<ResMut<MessageLog>>,
+    mut commands: Commands,
 ) {
     let mut rng = rand::thread_rng();
 
-    for (_entity, assignment, mut morale, traits) in &mut pops {
+    for (entity, assignment, mut morale, traits, void_stare) in &mut pops {
         if assignment.assignment_type == AssignmentType::ObservatoryWorker {
             if let Ok(observatory) = observatories.get(assignment.entity) {
+                // Check if they need the VoidStareEffect component
+                if void_stare.is_none() {
+                    commands.entity(entity).insert(crate::layer1::void_stare::VoidStareEffect {
+                        facing_void: true, // Observatories face the void
+                    });
+                }
+
                 // 1. Generate Knowledge
                 let gain = 0.02 * (observatory.efficiency / 100.0);
                 resources.knowledge += gain;

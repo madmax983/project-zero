@@ -105,6 +105,8 @@ pub fn register(schedule: &mut Schedule) {
                 .after(crate::layer1::health::despawn_dead_entities_system),
             crate::layer1::void_stare::void_manifestation_system
                 .after(crate::layer1::void_stare::update_void_exposure_system),
+            crate::layer1::void_stare::apply_void_stare_stress_system
+                .after(crate::layer1::void_stare::update_void_exposure_system),
             crate::layer1::integration::scapegoat_chronicle_bridge,
         )
             .in_set(Layer1SystemSet::Observation),

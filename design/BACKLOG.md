@@ -694,7 +694,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1099` Terminator Habitats — `specs/1099-terminator-habitats.md`
 
 
-- [ ] `1111` The Void Stare — `specs/1111-the-void-stare.md`
 
 
 - [ ] `1118` The Tether Stump — `specs/1118-the-tether-stump.md`
@@ -836,4 +835,3 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1279` Weaponized Tourism — `specs/1279-weaponized-tourism.md`
 - [ ] `1280` Tectonic Stress — `specs/1280-tectonic-stress.md`
 - [ ] `1284` Sartorial Rebellion — `specs/1284-sartorial-rebellion.md`
-- [ ] `1111` The Void Stare — `specs/1111-the-void-stare.md`
