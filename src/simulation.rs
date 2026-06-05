@@ -609,7 +609,6 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
         crate::layer1::culture::celestial_cemeteries::process_corpses_system,
         crate::layer1::culture::celestial_cemeteries::calculate_launch_risk_system,
         crate::layer1::environment::thermal_camouflage::update_thermal_signatures,
-
         crate::layer1::environment::thermal_camouflage::predator_detection_system
             .after(crate::layer1::environment::thermal_camouflage::update_thermal_signatures),
         crate::layer1::culture::celestial_cemeteries::clear_cemetery_system,
