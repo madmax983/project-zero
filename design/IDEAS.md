@@ -6256,7 +6256,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Galactic Games
+## The Galactic Games [SPECCED]
 
 **Layer:** 3 -> 1
 
@@ -6270,7 +6270,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Trade Embargoes
+## Trade Embargoes [SPECCED]
 
 **Layer:** 3
 
@@ -6284,7 +6284,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Biometric Drift
+## Biometric Drift [SPECCED]
 
 **Layer:** 1
 

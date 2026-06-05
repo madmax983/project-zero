@@ -1,6 +1,6 @@
-use bevy_ecs::prelude::*;
 use crate::layer1::health::Health;
 use crate::layer2::fleet::MovementSpeed;
+use bevy_ecs::prelude::*;
 use bevy_time::Time;
 
 #[derive(Component, PartialEq, Eq, Debug, Clone, Copy)]
@@ -27,7 +27,12 @@ const ADAPTATION_THRESHOLD: f32 = 1000.0;
 
 pub fn adapt_gravity_caste_system(
     mut commands: Commands,
-    mut query: Query<(Entity, &mut GravityExposure, &mut PopAttributes, Option<&GravityCaste>)>,
+    mut query: Query<(
+        Entity,
+        &mut GravityExposure,
+        &mut PopAttributes,
+        Option<&GravityCaste>,
+    )>,
     time: Res<Time>,
 ) {
     let dt = time.delta_secs();
@@ -63,7 +68,12 @@ pub fn adapt_gravity_caste_system(
 }
 
 pub fn apply_gravity_penalties_system(
-    mut query: Query<(&GravityCaste, &GravityExposure, &mut MovementSpeed, &mut Health)>,
+    mut query: Query<(
+        &GravityCaste,
+        &GravityExposure,
+        &mut MovementSpeed,
+        &mut Health,
+    )>,
     time: Res<Time>,
 ) {
     let dt = time.delta_secs();
@@ -95,10 +105,20 @@ mod tests {
 
         app.add_systems(Update, adapt_gravity_caste_system);
 
-        let pop = app.world_mut().spawn((
-            GravityExposure { current_g: 0.2, exposure_time: 0.0 },
-            PopAttributes { strength: 10, intelligence: 10, health: 100 },
-        )).id();
+        let pop = app
+            .world_mut()
+            .spawn((
+                GravityExposure {
+                    current_g: 0.2,
+                    exposure_time: 0.0,
+                },
+                PopAttributes {
+                    strength: 10,
+                    intelligence: 10,
+                    health: 100,
+                },
+            ))
+            .id();
 
         app.update();
 
@@ -120,12 +140,25 @@ mod tests {
         app.insert_resource(time);
         app.add_systems(Update, apply_gravity_penalties_system);
 
-        let pop = app.world_mut().spawn((
-            GravityCaste::Spacer,
-            GravityExposure { current_g: 2.0, exposure_time: 0.0 },
-            MovementSpeed { current: 5.0, base: 5.0 },
-            Health { current: 100.0, max: 100.0, has_rust_lung: false },
-        )).id();
+        let pop = app
+            .world_mut()
+            .spawn((
+                GravityCaste::Spacer,
+                GravityExposure {
+                    current_g: 2.0,
+                    exposure_time: 0.0,
+                },
+                MovementSpeed {
+                    current: 5.0,
+                    base: 5.0,
+                },
+                Health {
+                    current: 100.0,
+                    max: 100.0,
+                    has_rust_lung: false,
+                },
+            ))
+            .id();
 
         app.update();
 
