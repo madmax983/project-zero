@@ -1,22 +1,83 @@
+//! The Nanite Storms module.
+//!
+//! # The Weather of the Old World
+//!
+//! Long ago, the predecessors released clouds of programmable matter into the atmosphere.
+//! Over millennia, these clouds degraded into unpredictable weather patterns known as Nanite Storms.
+//! Some storms scour the colony to dust, while others miraculously rebuild shattered structures.
+//!
+//! This module handles the logic for these storms sweeping across the grid, interacting with both
+//! organic and inorganic matter based on their payload type.
+
 use crate::layer1::architecture::structure::Structure;
 use crate::layer1::biology::Health;
 use crate::layer1::core::GridPosition;
 use bevy::prelude::*;
 
+/// The payload type of a nanite storm, dictating its behavior on the colony.
 #[derive(Clone, Copy, PartialEq, Eq)]
 pub enum NaniteStormType {
-    Grey, // Damages structures
-    Blue, // Repairs structures
-    Red,  // Consumes biomass (Health)
+    /// **The Scourge**: Deconstructs inorganic matter. Damages [`Structure`] HP.
+    Grey,
+    /// **The Builders**: Reconstructs inorganic matter. Repairs [`Structure`] HP up to maximum.
+    Blue,
+    /// **The Harvesters**: Breaks down organic matter. Deals damage to [`Health`].
+    Red,
 }
 
+/// A localized weather event representing an active nanite cloud.
+///
+/// When inserted as a resource, the [`apply_nanite_storm_effects`] system will process
+/// its payload on any valid entities caught within its bounding rectangle.
 #[derive(Resource)]
 pub struct ActiveNaniteStorm {
+    /// The specific type of nanite payload (Grey, Blue, or Red).
     pub storm_type: NaniteStormType,
+    /// The physical area on the grid that the storm currently occupies.
     pub affected_area: Rect,
+    /// The magnitude of the storm's effect applied per tick (damage or healing).
     pub intensity: f32,
 }
 
+/// Processes the effects of an active nanite storm on the colony grid.
+///
+/// If an [`ActiveNaniteStorm`] resource exists, this system checks all relevant entities
+/// (structures or biomass) to see if they overlap with the storm's `affected_area`.
+/// If they do, the storm's `intensity` is applied according to its `storm_type`.
+///
+/// # Examples
+///
+/// ```rust
+/// use bevy::prelude::*;
+/// use scale::layer1::nanite_storms::{apply_nanite_storm_effects, ActiveNaniteStorm, NaniteStormType};
+/// use scale::layer1::architecture::structure::Structure;
+/// use scale::layer1::core::GridPosition;
+///
+/// let mut app = App::new();
+///
+/// // Spawn a damaged structure in the center of the map
+/// let wall = app.world_mut().spawn((
+///     Structure { current_hp: 50.0, max_hp: 100.0 },
+///     GridPosition { x: 5, y: 5 },
+/// )).id();
+///
+/// // Add our system
+/// app.add_systems(Update, apply_nanite_storm_effects);
+///
+/// // A Blue (repairing) nanite storm sweeps over the area!
+/// app.world_mut().insert_resource(ActiveNaniteStorm {
+///     storm_type: NaniteStormType::Blue,
+///     affected_area: Rect::new(0.0, 0.0, 10.0, 10.0),
+///     intensity: 20.0, // Heals 20 HP per tick
+/// });
+///
+/// // Run the simulation
+/// app.update();
+///
+/// // The structure's HP should be restored by the nanites
+/// let structure = app.world().get::<Structure>(wall).unwrap();
+/// assert_eq!(structure.current_hp, 70.0);
+/// ```
 #[allow(clippy::type_complexity)]
 pub fn apply_nanite_storm_effects(
     storm_res: Option<Res<ActiveNaniteStorm>>,
