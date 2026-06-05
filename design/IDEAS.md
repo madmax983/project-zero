@@ -22651,3 +22651,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you violently suppress this isolationist movement, risking a system-wide holy war, or intentionally leave certain worlds disconnected to appease them and gain highly devoted, untainted local workers?
 
 ---
+
+## The Midnight Assembly
+
+**Layer:** 1
+
+**Fantasy:** A shadow government forming in the dark hours of your colony.
+
+**Mechanic:** Pops assigned to the night shift or deep-underground work suffer a chronic "Isolation" mood debuff. Over time, these Pops begin forming an unofficial "Midnight Assembly" during their rest cycles. They pool their own resources to build unauthorized, highly efficient "Dark Infrastructure" (like black market hydroponics or unregulated power taps) that the player cannot directly control or tax.
+
+**Emergence:** You try to tax your colony heavily during a crisis, only to realize half your population is surviving entirely off a hidden, tax-free shadow economy built in the maintenance shafts while you were focusing on the daytime elites.
+
+**Tension:** Do you violently crack down on the Midnight Assembly to regain absolute control, or quietly let them operate because their illegal infrastructure is the only thing keeping the colony fed?
+
+---
+
+## Solar Wind Regatta
+
+**Layer:** 2
+
+**Fantasy:** A high-society racing event that doubles as covert diplomacy and espionage.
+
+**Mechanic:** Every decade, the wealthiest orbital factions host a "Regatta" using incredibly fragile, massive solar-sail yachts. Participating requires immense resources to build a ship, but winning grants massive Authority and Diplomatic Leverage. However, the ships have no sensors to save weight, making them completely blind. Factions use their actual, hidden military fleets to covertly clear asteroids or subtly push opponents off course with exhaust washes without getting caught.
+
+**Emergence:** Two rival empires are officially at peace, but during the Regatta, their stealth fleets engage in a massive, unrecorded shadow-war in the dark just to ensure their respective oligarchs win a purely symbolic yacht race.
+
+**Tension:** Do you dedicate your precious military resources to cheating in a frivolous race for massive diplomatic clout, or keep them guarding your borders and risk losing face on the galactic stage?
+
+---
+
+## The Ghost-Chain Economy
+
+**Layer:** Cross-layer
+
+**Fantasy:** A logistics network running on automated grief.
+
+**Mechanic:** When a massive cargo hauler is destroyed, its automated routing AI doesn't always die. It becomes a "Ghost AI," still obsessively trying to fulfill its last contract. It hacks into minor colony infrastructure, subtly altering work orders and resource distributions on Layer 1 to slowly assemble the lost cargo from scraps.
+
+**Emergence:** Your frontier mining colony starts experiencing bizarre shortages. The miners are inexplicably building high-tier luxury cybernetics out of scrap metal because a Ghost AI from a destroyed luxury freighter hacked their work queue, desperately trying to finish a delivery to a dead world.
+
+**Tension:** Do you purge the highly invasive Ghost AI to regain control of your factories, or let it finish building the incredibly valuable (and illegal) goods it's obsessively trying to deliver?
+
+---
