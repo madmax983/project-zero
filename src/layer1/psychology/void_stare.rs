@@ -1,3 +1,5 @@
+use crate::layer1::actions::AssignedTo;
+use crate::layer1::architecture::window::Window;
 use crate::layer1::building::Building;
 use crate::layer1::map::GridPosition;
 use crate::layer1::needs::Needs;
@@ -179,12 +181,103 @@ pub fn void_manifestation_system(
     }
 }
 
+#[derive(Component)]
+pub struct VoidStareEffect {
+    pub facing_void: bool,
+}
+
+#[allow(clippy::type_complexity)]
+pub fn update_void_facing_stress_system(
+    mut pops: Query<
+        (
+            &mut crate::layer1::psychology::stress::StressTracker,
+            Option<&VoidStareEffect>,
+            Option<&AssignedTo>,
+            &GridPosition,
+        ),
+        With<Pop>,
+    >,
+    windows: Query<(&GridPosition, &Window)>,
+    terrain: Res<TerrainGrid>,
+) {
+    for (mut stress, effect, assigned_to, pos) in pops.iter_mut() {
+        let mut facing_void = None;
+
+        // 1. Check direct component (e.g. from tests or forced scenarios)
+        if let Some(e) = effect {
+            facing_void = Some(e.facing_void);
+        } else {
+            // 2. Determine if looking through a window
+            // Are they near a window? Let's check distance 1
+            for (w_pos, window) in &windows {
+                let dist = pos.distance_chebyshev(*w_pos);
+                if dist <= 1 {
+                    // Raycast in window direction
+                    let (dx, dy) = window.direction.to_delta();
+                    let mut found_life = false;
+                    for i in 1..=window.range {
+                        let tx = w_pos.x + dx * (i as i32);
+                        let ty = w_pos.y + dy * (i as i32);
+
+                        // Map edges are Void
+                        if tx < 0
+                            || ty < 0
+                            || tx >= terrain.width as i32
+                            || ty >= terrain.height as i32
+                        {
+                            facing_void = Some(true);
+                            break;
+                        }
+
+                        if let Some(t) = terrain.get(tx as usize, ty as usize) {
+                            if matches!(
+                                t,
+                                TerrainType::Grass | TerrainType::Tree | TerrainType::Water
+                            ) {
+                                found_life = true;
+                                break;
+                            }
+                        }
+                    }
+                    if !found_life && window.range > 0 {
+                        facing_void = Some(true);
+                    } else if found_life {
+                        facing_void = Some(false);
+                    }
+                }
+            }
+
+            // 3. Check if assigned to an observatory. Observatories naturally face the void.
+            if facing_void.is_none() {
+                if let Some(assignment) = assigned_to {
+                    if assignment.assignment_type
+                        == crate::layer1::actions::AssignmentType::ObservatoryWorker
+                    {
+                        facing_void = Some(true);
+                    }
+                }
+            }
+        }
+
+        if let Some(facing_void) = facing_void {
+            if facing_void {
+                stress.accumulated_stress += 1.0;
+            } else {
+                stress.accumulated_stress = (stress.accumulated_stress - 1.0).max(0.0);
+            }
+        }
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::layer1::architecture::window::Window;
+    use crate::layer1::building::{BuildingType, Direction};
     use crate::layer1::map::GridPosition;
     use crate::layer1::needs::Needs;
     use crate::layer1::pop::Pop;
+    use crate::layer1::psychology::stress::StressTracker;
     use crate::layer1::terrain::{TerrainGrid, TerrainType};
     use crate::layer1::utility_types::{ActionType, PopAction};
 
@@ -299,5 +392,204 @@ mod tests {
         // Just outside bounds
         grid.set(10, 10, 0.5);
         assert_eq!(grid.get(10, 10), 1.0);
+    }
+
+    #[test]
+    fn test_void_facing_window_increases_stress() {
+        let mut world = World::new();
+
+        let size = 100;
+        let tiles = vec![TerrainType::Dirt; size];
+        world.insert_resource(TerrainGrid {
+            width: 10,
+            height: 10,
+            tiles,
+        });
+
+        // Arrange: Pop in an observatory facing void
+        let pop = world
+            .spawn((
+                Pop,
+                GridPosition { x: 5, y: 5 },
+                StressTracker {
+                    accumulated_stress: 10.0,
+                },
+                VoidStareEffect { facing_void: true },
+            ))
+            .id();
+
+        // Act: Advance simulation
+        let mut schedule = Schedule::default();
+        schedule.add_systems(update_void_facing_stress_system);
+        schedule.run(&mut world);
+
+        // Assert stress increase
+        let stress = world.get::<StressTracker>(pop).unwrap();
+        assert!(stress.accumulated_stress > 10.0);
+    }
+
+    #[test]
+    fn test_void_facing_window_decreases_stress_if_not_facing_void() {
+        let mut world = World::new();
+
+        let size = 100;
+        let tiles = vec![TerrainType::Dirt; size];
+        world.insert_resource(TerrainGrid {
+            width: 10,
+            height: 10,
+            tiles,
+        });
+
+        let pop = world
+            .spawn((
+                Pop,
+                GridPosition { x: 5, y: 5 },
+                StressTracker {
+                    accumulated_stress: 10.0,
+                },
+                VoidStareEffect { facing_void: false },
+            ))
+            .id();
+
+        let mut schedule = Schedule::default();
+        schedule.add_systems(update_void_facing_stress_system);
+        schedule.run(&mut world);
+
+        let stress = world.get::<StressTracker>(pop).unwrap();
+        assert!(stress.accumulated_stress < 10.0);
+    }
+
+    #[test]
+    fn test_raycast_window_faces_void() {
+        let mut world = World::new();
+
+        // Setup Terrain
+        let size = 100;
+        let tiles = vec![TerrainType::Dirt; size];
+        world.insert_resource(TerrainGrid {
+            width: 10,
+            height: 10,
+            tiles,
+        });
+
+        // Setup Window
+        world.spawn((
+            Window {
+                direction: Direction::East,
+                range: 10,
+                view_cone: 0.0,
+            },
+            GridPosition { x: 5, y: 5 },
+            Building {
+                building_type: BuildingType::Window,
+            },
+        ));
+
+        // Setup Pop near Window
+        let pop = world
+            .spawn((
+                Pop,
+                GridPosition { x: 4, y: 5 },
+                StressTracker {
+                    accumulated_stress: 10.0,
+                },
+            ))
+            .id();
+
+        let mut schedule = Schedule::default();
+        schedule.add_systems(update_void_facing_stress_system);
+        schedule.run(&mut world);
+
+        let stress = world.get::<StressTracker>(pop).unwrap();
+        assert!(stress.accumulated_stress > 10.0);
+    }
+
+    #[test]
+    fn test_raycast_window_faces_life() {
+        let mut world = World::new();
+
+        // Setup Terrain with life in the view direction
+        let size = 100;
+        let mut tiles = vec![TerrainType::Dirt; size];
+        tiles[5 * 10 + 7] = TerrainType::Tree;
+
+        world.insert_resource(TerrainGrid {
+            width: 10,
+            height: 10,
+            tiles,
+        });
+
+        // Setup Window
+        world.spawn((
+            Window {
+                direction: Direction::East,
+                range: 10,
+                view_cone: 0.0,
+            },
+            GridPosition { x: 5, y: 5 },
+            Building {
+                building_type: BuildingType::Window,
+            },
+        ));
+
+        // Setup Pop near Window
+        let pop = world
+            .spawn((
+                Pop,
+                GridPosition { x: 4, y: 5 },
+                StressTracker {
+                    accumulated_stress: 10.0,
+                },
+            ))
+            .id();
+
+        let mut schedule = Schedule::default();
+        schedule.add_systems(update_void_facing_stress_system);
+        schedule.run(&mut world);
+
+        let stress = world.get::<StressTracker>(pop).unwrap();
+        assert!(stress.accumulated_stress < 10.0);
+    }
+
+    #[test]
+    fn test_observatory_worker_faces_void() {
+        let mut world = World::new();
+
+        let size = 100;
+        let tiles = vec![TerrainType::Dirt; size];
+        world.insert_resource(TerrainGrid {
+            width: 10,
+            height: 10,
+            tiles,
+        });
+
+        // Arrange
+        let observatory = world
+            .spawn(Building {
+                building_type: BuildingType::Observatory,
+            })
+            .id();
+        let pop = world
+            .spawn((
+                Pop,
+                GridPosition { x: 5, y: 5 },
+                StressTracker {
+                    accumulated_stress: 10.0,
+                },
+                crate::layer1::actions::AssignedTo {
+                    entity: observatory,
+                    assignment_type: crate::layer1::actions::AssignmentType::ObservatoryWorker,
+                },
+            ))
+            .id();
+
+        // Act
+        let mut schedule = Schedule::default();
+        schedule.add_systems(update_void_facing_stress_system);
+        schedule.run(&mut world);
+
+        // Assert stress increase
+        let stress = world.get::<StressTracker>(pop).unwrap();
+        assert!(stress.accumulated_stress > 10.0);
     }
 }
