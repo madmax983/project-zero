@@ -48,3 +48,139 @@ pub fn hunger_decay_system(mut query: Query<(&mut Needs, &Traits), With<Pop>>) {
         }
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    fn setup_app() -> App {
+        let mut app = App::new();
+        app.add_event::<TeleportEvent>();
+        app.add_systems(
+            Update,
+            (
+                handle_teleport_system,
+                process_psychosis_system,
+                hunger_decay_system,
+            ),
+        );
+        app
+    }
+
+    #[test]
+    fn should_increase_dissociation_when_teleport_event_received() {
+        let mut app = setup_app();
+
+        let pop = app.world_mut().spawn(Dissociation { level: 0.0 }).id();
+
+        app.world_mut()
+            .resource_mut::<Events<TeleportEvent>>()
+            .send(TeleportEvent { entity: pop });
+
+        app.update();
+
+        let dissoc = app.world().get::<Dissociation>(pop).unwrap();
+        assert_eq!(
+            dissoc.level, TELEPORT_DISSOCIATION_COST,
+            "Teleporting should increase dissociation by TELEPORT_DISSOCIATION_COST"
+        );
+    }
+
+    #[test]
+    fn should_add_phantom_trait_when_dissociation_reaches_phantom_threshold() {
+        let mut app = setup_app();
+
+        let pop = app
+            .world_mut()
+            .spawn((
+                Dissociation {
+                    level: DISSOCIATION_PHANTOM_THRESHOLD,
+                },
+                Traits::default(),
+            ))
+            .id();
+
+        app.update();
+
+        let traits = app.world().get::<Traits>(pop).unwrap();
+        assert!(
+            traits.has(Trait::Phantom),
+            "Reaching DISSOCIATION_PHANTOM_THRESHOLD should add Trait::Phantom"
+        );
+    }
+
+    #[test]
+    fn should_despawn_entity_when_dissociation_reaches_death_threshold() {
+        let mut app = setup_app();
+
+        let pop = app
+            .world_mut()
+            .spawn((
+                Dissociation {
+                    level: DISSOCIATION_DEATH_THRESHOLD,
+                },
+                Traits::default(),
+            ))
+            .id();
+
+        app.update();
+
+        assert!(
+            app.world().get_entity(pop).is_err(),
+            "Reaching DISSOCIATION_DEATH_THRESHOLD should despawn the entity"
+        );
+    }
+
+    #[test]
+    fn should_decay_hunger_when_no_phantom_trait() {
+        let mut app = setup_app();
+
+        let pop = app
+            .world_mut()
+            .spawn((
+                Pop,
+                Needs {
+                    hunger: 10.0,
+                    ..Default::default()
+                },
+                Traits::default(),
+            ))
+            .id();
+
+        app.update();
+
+        let needs = app.world().get::<Needs>(pop).unwrap();
+        assert_eq!(
+            needs.hunger, 9.0,
+            "Hunger should decay by 1.0 when not a Phantom"
+        );
+    }
+
+    #[test]
+    fn should_not_decay_hunger_when_phantom_trait_present() {
+        let mut app = setup_app();
+
+        let mut traits = Traits::default();
+        traits.add(Trait::Phantom);
+
+        let pop = app
+            .world_mut()
+            .spawn((
+                Pop,
+                Needs {
+                    hunger: 10.0,
+                    ..Default::default()
+                },
+                traits,
+            ))
+            .id();
+
+        app.update();
+
+        let needs = app.world().get::<Needs>(pop).unwrap();
+        assert_eq!(
+            needs.hunger, 10.0,
+            "Hunger should NOT decay when Trait::Phantom is present"
+        );
+    }
+}
