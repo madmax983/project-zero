@@ -244,6 +244,9 @@ pub fn register(schedule: &mut Schedule) {
                 .after(crate::layer1::atmosphere::update_atmosphere_system),
             crate::layer1::pheromone::pheromone_emission_system
                 .after(crate::layer1::pheromone::reactive_emitter_system),
+            crate::layer1::biology::gravity_caste::adapt_gravity_caste_system,
+            crate::layer1::biology::gravity_caste::apply_gravity_penalties_system
+                .after(crate::layer1::biology::gravity_caste::adapt_gravity_caste_system),
         )
             .in_set(Layer1SystemSet::Environment),
     );

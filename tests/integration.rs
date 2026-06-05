@@ -512,3 +512,5 @@ mod retro_contract_chronicle;
 mod ruin_integration;
 #[path = "integration/solar_flare_chronicle_bridge.rs"]
 mod solar_flare_chronicle_bridge;
+#[path = "integration/gravity_caste.rs"]
+mod gravity_caste;
