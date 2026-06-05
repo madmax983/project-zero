@@ -5420,3 +5420,9 @@
 **Code reference:** `DisposalGate` component
 **Usage:** The mechanism used to dump waste into a wormhole.
 **Tone:** Irresponsible engineering. "We fired it into the Disposal Gate."
+
+## Squat
+
+**Replaces:** High-G Caste, Heavy-Worlder
+**Code reference:** `GravityCaste::Squat`
+**Usage:** "The Squats handled the heavy lifting without exosuits."
