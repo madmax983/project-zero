@@ -181,3 +181,4 @@ pub mod storm_thieves;
 
 #[cfg(feature = "nova")]
 pub mod scrapcode_entropy;
+pub mod the_weight_of_silence;
