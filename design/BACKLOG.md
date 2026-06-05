@@ -3,7 +3,7 @@
 ## High Priority
 
 
-- [ ] `1287` The Cargo Cult Diplomat — `specs/1287-the-cargo-cult-diplomat.md`
+
 - [ ] `1288` The Memorial Revolt — `specs/1288-the-memorial-revolt.md`
 - [ ] `1289` The Bureaucracy of Scarcity — `specs/1289-the-bureaucracy-of-scarcity.md`
 - [ ] `1290` The Weight of the Past — `specs/1290-the-weight-of-the-past.md`
