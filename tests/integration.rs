@@ -506,11 +506,11 @@ mod temporal_echoes_maintenance;
 
 #[path = "integration/dead_internet_chronicle_bridge.rs"]
 mod dead_internet_chronicle_bridge;
+#[path = "integration/gravity_caste.rs"]
+mod gravity_caste;
 #[path = "integration/retro_contract_chronicle.rs"]
 mod retro_contract_chronicle;
 #[path = "integration/ruin_integration.rs"]
 mod ruin_integration;
 #[path = "integration/solar_flare_chronicle_bridge.rs"]
 mod solar_flare_chronicle_bridge;
-#[path = "integration/gravity_caste.rs"]
-mod gravity_caste;
