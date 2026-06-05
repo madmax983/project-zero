@@ -1,7 +1,7 @@
-use bevy_ecs::prelude::*;
 use crate::layer1::map::GridPosition;
 use crate::layer1::mind::utility_types::{ActionType, PopAction};
 use crate::layer1::temperature::TemperatureGrid;
+use bevy_ecs::prelude::*;
 
 #[derive(Component)]
 pub struct ThermalSignature {
@@ -22,12 +22,19 @@ pub struct ThermalSuit {
 
 pub fn update_thermal_signatures(
     temp_grid: Option<Res<TemperatureGrid>>,
-    mut query: Query<(&GridPosition, &PopAction, &mut ThermalSignature, Option<&ThermalSuit>)>,
+    mut query: Query<(
+        &GridPosition,
+        &PopAction,
+        &mut ThermalSignature,
+        Option<&ThermalSuit>,
+    )>,
 ) {
     for (pos, action, mut sig, suit) in query.iter_mut() {
-        let ambient = temp_grid.as_ref()
+        let ambient = temp_grid
+            .as_ref()
             .filter(|_| pos.x >= 0 && pos.y >= 0)
-            .map(|g| g.get(pos.x as usize, pos.y as usize)).unwrap_or(10.0);
+            .map(|g| g.get(pos.x as usize, pos.y as usize))
+            .unwrap_or(10.0);
 
         match action.current {
             ActionType::Idle => {
@@ -62,7 +69,7 @@ pub fn predator_detection_system(
             }
             let dx = pred_pos.x as f32 - target_pos.x as f32;
             let dy = pred_pos.y as f32 - target_pos.y as f32;
-            let dist = ((dx * dx + dy * dy) as f32).sqrt();
+            let dist = (dx * dx + dy * dy).sqrt();
 
             if dist <= target_sig.detection_radius + sensor.sensitivity {
                 sensor.targets.push(target_ent);
@@ -82,17 +89,35 @@ mod tests {
         let mut app = App::new();
         app.add_systems(Update, update_thermal_signatures);
 
-        let idle_pop = app.world_mut().spawn((
-            GridPosition { x: 0, y: 0 },
-            PopAction { current: ActionType::Idle, ..Default::default() },
-            ThermalSignature { current_heat: 30.0, detection_radius: 0.0 },
-        )).id();
+        let idle_pop = app
+            .world_mut()
+            .spawn((
+                GridPosition { x: 0, y: 0 },
+                PopAction {
+                    current: ActionType::Idle,
+                    ..Default::default()
+                },
+                ThermalSignature {
+                    current_heat: 30.0,
+                    detection_radius: 0.0,
+                },
+            ))
+            .id();
 
-        let working_pop = app.world_mut().spawn((
-            GridPosition { x: 0, y: 0 },
-            PopAction { current: ActionType::Work, ..Default::default() },
-            ThermalSignature { current_heat: 30.0, detection_radius: 0.0 },
-        )).id();
+        let working_pop = app
+            .world_mut()
+            .spawn((
+                GridPosition { x: 0, y: 0 },
+                PopAction {
+                    current: ActionType::Work,
+                    ..Default::default()
+                },
+                ThermalSignature {
+                    current_heat: 30.0,
+                    detection_radius: 0.0,
+                },
+            ))
+            .id();
 
         // Act
         app.update();
@@ -111,20 +136,38 @@ mod tests {
         let mut app = App::new();
         app.add_systems(Update, predator_detection_system);
 
-        let predator = app.world_mut().spawn((
-            GridPosition { x: 0, y: 0 },
-            ThermalSensor { sensitivity: 0.5, targets: vec![] },
-        )).id();
+        let predator = app
+            .world_mut()
+            .spawn((
+                GridPosition { x: 0, y: 0 },
+                ThermalSensor {
+                    sensitivity: 0.5,
+                    targets: vec![],
+                },
+            ))
+            .id();
 
-        let hot_pop = app.world_mut().spawn((
-            GridPosition { x: 5, y: 0 },
-            ThermalSignature { current_heat: 100.0, detection_radius: 10.0 },
-        )).id();
+        let hot_pop = app
+            .world_mut()
+            .spawn((
+                GridPosition { x: 5, y: 0 },
+                ThermalSignature {
+                    current_heat: 100.0,
+                    detection_radius: 10.0,
+                },
+            ))
+            .id();
 
-        let cold_pop = app.world_mut().spawn((
-            GridPosition { x: 2, y: 0 }, // Closer, but cold
-            ThermalSignature { current_heat: 10.0, detection_radius: 1.0 },
-        )).id();
+        let cold_pop = app
+            .world_mut()
+            .spawn((
+                GridPosition { x: 2, y: 0 }, // Closer, but cold
+                ThermalSignature {
+                    current_heat: 10.0,
+                    detection_radius: 1.0,
+                },
+            ))
+            .id();
 
         // Act
         app.update();

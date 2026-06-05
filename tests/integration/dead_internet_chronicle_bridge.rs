@@ -1,13 +1,13 @@
 #[cfg(test)]
 mod tests {
     use bevy::prelude::*;
+    use scale::layer1::chronicle::AddChronicleEvent;
     use scale::layer3::diplomacy::dead_internet::{
         automated_diplomat_system, AutomatedDiplomat, DiplomaticInteraction,
         GenerateDiplomaticInteractionEvent,
     };
     use scale::layer3::diplomacy::succession::Faction;
     use scale::layer3::integration::dead_internet_chronicle_bridge;
-    use scale::layer1::chronicle::AddChronicleEvent;
 
     #[test]
     fn test_dead_internet_chronicle_bridge() {

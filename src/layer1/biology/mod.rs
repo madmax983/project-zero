@@ -35,4 +35,5 @@ pub use grafting::*;
 pub use gut_biome::*;
 pub use health::*;
 pub use medical::*;
+pub mod gravity_caste;
 pub mod rust_lung;
