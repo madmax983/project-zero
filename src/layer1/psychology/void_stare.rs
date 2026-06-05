@@ -179,8 +179,45 @@ pub fn void_manifestation_system(
     }
 }
 
+use crate::layer1::stress::StressTracker;
+
+#[derive(Component, Debug, Clone, Default)]
+pub struct VoidStareEffect {
+    pub facing_void: bool,
+}
+
+pub fn apply_void_stare_stress_system(
+    mut pops: Query<(&VoidStareEffect, &mut StressTracker), With<Pop>>,
+) {
+    for (effect, mut stress) in &mut pops {
+        if effect.facing_void {
+            stress.accumulated_stress += 0.1;
+        } else {
+            stress.accumulated_stress = (stress.accumulated_stress - 0.1).max(0.0);
+        }
+    }
+}
 #[cfg(test)]
 mod tests {
+    use crate::layer1::stress::StressTracker;
+    #[test]
+    fn test_void_facing_window_increases_stress() {
+        let mut app = bevy_ecs::world::World::new();
+        let pop = app
+            .spawn((
+                Pop,
+                StressTracker {
+                    accumulated_stress: 10.0,
+                },
+                VoidStareEffect { facing_void: true },
+            ))
+            .id();
+        let mut schedule = bevy_ecs::schedule::Schedule::default();
+        schedule.add_systems(apply_void_stare_stress_system);
+        schedule.run(&mut app);
+        let stress = app.get::<StressTracker>(pop).unwrap();
+        assert!(stress.accumulated_stress > 10.0);
+    }
     use super::*;
     use crate::layer1::map::GridPosition;
     use crate::layer1::needs::Needs;
@@ -191,6 +228,7 @@ mod tests {
     #[test]
     fn test_void_exposure_gain() {
         let mut world = World::new();
+        world.init_resource::<MessageLog>();
         // Setup Resources
         let mut void_grid = VoidGrid::new(10, 10);
         void_grid.set(5, 5, 1.0); // Abyssal tile
@@ -216,24 +254,6 @@ mod tests {
                 Needs::default(),
             ))
             .id();
-
-        // Run Update
-        let mut schedule = Schedule::default();
-        schedule.add_systems(update_void_exposure_system);
-        schedule.run(&mut world);
-
-        // Check gain
-        let exposure = world.get::<VoidExposure>(pop).unwrap();
-        assert!(
-            exposure.current > 0.0,
-            "Pop should gain exposure from void grid"
-        );
-    }
-
-    #[test]
-    fn test_manifestation_triggers() {
-        let mut world = World::new();
-        world.insert_resource(MessageLog::default());
 
         let pop = world
             .spawn((

@@ -59,11 +59,13 @@ pub fn update_window_views_system(
     occupied: Res<OccupiedTiles>,
     building_map: Res<BuildingMap>,
     buildings: Query<&Building>,
-    mut windows: Query<(&GridPosition, &Window, &mut BeautySource)>,
+    mut windows: Query<(Entity, &GridPosition, &Window, &mut BeautySource)>,
+    mut commands: Commands,
 ) {
-    for (pos, window, mut source) in &mut windows {
+    for (entity, pos, window, mut source) in &mut windows {
         let (dx, dy) = window.direction.to_delta();
         let mut total_view_beauty = 0.0;
+        let mut hit_void = false;
 
         for i in 1..=window.range {
             let tx = pos.x + dx * (i as i32);
@@ -73,6 +75,7 @@ pub fn update_window_views_system(
             if tx < 0 || ty < 0 || tx >= grid.width as i32 || ty >= grid.height as i32 {
                 // Hit map edge. Add "Sky" bonus?
                 total_view_beauty += 5.0; // Sky view bonus
+                hit_void = true;
                 break;
             }
 
@@ -110,6 +113,16 @@ pub fn update_window_views_system(
             // Spec says: "Attenuate by distance? ... total_view_beauty += tile_beauty;"
             // Let's just sum it for now.
             total_view_beauty += tile_beauty;
+        }
+
+        if hit_void {
+            commands
+                .entity(entity)
+                .insert(crate::layer1::void_stare::VoidStareEffect { facing_void: true });
+        } else {
+            commands
+                .entity(entity)
+                .remove::<crate::layer1::void_stare::VoidStareEffect>();
         }
 
         // Apply scale factor
@@ -302,5 +315,117 @@ mod tests {
         // -10.0 * 0.1 = -1.0
         assert!(source.value < 0.0);
         assert!((source.value - (-1.0)).abs() < 0.1);
+    }
+}
+
+#[cfg(test)]
+mod void_tests {
+    use super::*;
+    use crate::layer1::beauty::{BeautyGrid, BeautySource};
+    use crate::layer1::building::{Building, BuildingMap, BuildingType, Direction, OccupiedTiles};
+    use crate::layer1::map::GridPosition;
+    use crate::layer1::terrain::{TerrainGrid, TerrainType};
+    use bevy_ecs::prelude::*;
+
+    fn setup_world() -> World {
+        let mut world = World::new();
+        let width = 20;
+        let height = 20;
+        world.insert_resource(BeautyGrid::new(width, height));
+        let size = width.checked_mul(height).expect("Grid size overflow");
+        assert!(size <= 10_000_000, "Grid size too large");
+        world.insert_resource(TerrainGrid {
+            width,
+            height,
+            tiles: vec![TerrainType::Grass; size],
+        });
+        world.insert_resource(OccupiedTiles::default());
+        world.insert_resource(BuildingMap::default());
+        world
+    }
+
+    fn update_building_map(world: &mut World) {
+        let mut map = world.resource_mut::<BuildingMap>();
+        map.0.clear();
+        let mut query = world.query::<(Entity, &GridPosition, &Building)>();
+        let mut updates = Vec::new();
+        for (e, pos, _) in query.iter(world) {
+            updates.push((*pos, e));
+        }
+        // Re-borrow map mutably
+        let mut map = world.resource_mut::<BuildingMap>();
+        for (pos, e) in updates {
+            map.0.insert((pos.x, pos.y), e);
+        }
+    }
+
+    #[test]
+    fn test_window_facing_void_gets_effect() {
+        let mut world = setup_world();
+
+        let window = world.spawn((
+            Building {
+                building_type: BuildingType::Window,
+            },
+            GridPosition { x: 19, y: 5 }, // Edge of map facing East
+            Window {
+                direction: Direction::East,
+                range: 10,
+                view_cone: 0.0,
+            },
+            BeautySource {
+                value: 0.0,
+                radius: 2.0,
+            },
+        )).id();
+
+        update_building_map(&mut world);
+
+        let mut schedule = Schedule::default();
+        schedule.add_systems(update_window_views_system);
+        schedule.run(&mut world);
+
+        // Window faces edge of map (void)
+        assert!(world.get::<crate::layer1::void_stare::VoidStareEffect>(window).is_some());
+    }
+
+    #[test]
+    fn test_window_blocked_removes_effect() {
+        let mut world = setup_world();
+
+        let window = world.spawn((
+            Building {
+                building_type: BuildingType::Window,
+            },
+            GridPosition { x: 18, y: 5 }, // Close to edge
+            Window {
+                direction: Direction::East,
+                range: 10,
+                view_cone: 0.0,
+            },
+            BeautySource {
+                value: 0.0,
+                radius: 2.0,
+            },
+            crate::layer1::void_stare::VoidStareEffect { facing_void: true }, // Has it initially
+        )).id();
+
+        // Wall blocks the view
+        world.spawn((
+            Building {
+                building_type: BuildingType::Wall,
+            },
+            GridPosition { x: 19, y: 5 },
+        ));
+        world.resource_mut::<OccupiedTiles>().0.insert((19, 5));
+
+        update_building_map(&mut world);
+
+        let mut schedule = Schedule::default();
+        schedule.add_systems(update_window_views_system);
+        schedule.run(&mut world);
+
+        // Effect removed because the ray is blocked before hitting the edge
+        assert!(world.get::<crate::layer1::void_stare::VoidStareEffect>(window).is_none());
     }
 }
