@@ -8325,14 +8325,6 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Ruin Discovery Templates
 
-### Template: RUIN_DISCOVERY
-**Generates:** Play event
-**Slots:** [COLONY], [YEAR], [RUIN_CIV], [RUIN_AGE], [ARTIFACT]?
-
-**Patterns:**
-- "[COLONY] surveyors report structures. Old. Not ours."
-- "They found [RUIN_CIV] beneath the soil of [COLONY]. Dead [RUIN_AGE] years."
-- "Year [YEAR]: [COLONY] is not the first. [RUIN_CIV] was here. [RUIN_CIV] is gone."
 
 
 ## Temporal Echoes Templates
@@ -8598,15 +8590,6 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "We bled for that [ISOTOPE_NAME], and then it [ISOTOPE_DECAY]. [COLONY] mourns for nothing. [YEAR]."
 - "The rush was for nothing. The [ISOTOPE_NAME] [ISOTOPE_DECAY] before the market opened. [YEAR]."
 
-## Template: RUIN_DISCOVERY
-
-**Generates:** Play event
-**Slots:** [COLONY], [YEAR], [RUIN_CIV], [RUIN_AGE], [ARTIFACT]?
-
-**Patterns:**
-- "[COLONY] surveyors report structures. Old. Not ours."
-- "They found [RUIN_CIV] beneath the soil of [COLONY]. Dead [RUIN_AGE] years."
-- "Year [YEAR]: [COLONY] is not the first. [RUIN_CIV] was here. [RUIN_CIV] is gone."
 
 ## Void-Tethered Sleep Templates (Spec 1123)
 
@@ -8717,3 +8700,94 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: The mass anomaly is too strong. We pulled [ORBITAL_THREAT_PULLED] closer to [COLONY]."
 - "Our gravity is a magnet. Sensors show [ORBITAL_THREAT_PULLED] decaying into our orbit. [YEAR]."
 - "[YEAR]: A warning from Layer 2. The siphon's mass has attracted [ORBITAL_THREAT_PULLED]."
+
+## Thermal Camouflage Templates (Spec 1054)
+
+### Template: THERMAL_HIDING
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [POP_NAME], [THERMAL_HUNTER_NAME], [THERMAL_STATE_DESC]
+
+**Patterns:**
+- "[YEAR]: [POP_NAME] survived the [THERMAL_HUNTER_NAME] by [THERMAL_STATE_DESC]. The cold was their shield."
+- "The [THERMAL_HUNTER_NAME] passed right by [POP_NAME]. They were [THERMAL_STATE_DESC]. [YEAR]."
+- "[COLONY] held its breath. [POP_NAME] avoided the [THERMAL_HUNTER_NAME] by going [THERMAL_STATE_DESC]. [YEAR]."
+
+### Template: THERMAL_DETECTION
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [POP_NAME], [THERMAL_HUNTER_NAME]
+
+**Patterns:**
+- "[YEAR]: The work made them too hot. The [THERMAL_HUNTER_NAME] found [POP_NAME]."
+- "[POP_NAME] couldn't cool down fast enough. The [THERMAL_HUNTER_NAME] detected the heat. [YEAR]."
+- "A fatal warmth. [POP_NAME] was taken by the [THERMAL_HUNTER_NAME] in [COLONY]. [YEAR]."
+
+## Gravity Caste Templates (Spec 1055)
+
+### Template: CASTE_ADAPTATION
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [POP_NAME], [GRAVITY_CASTE_NAME], [GRAVITY_ENV]
+
+**Patterns:**
+- "[YEAR]: Generations in the [GRAVITY_ENV] have changed us. [POP_NAME] is now considered a [GRAVITY_CASTE_NAME]."
+- "They belong to the [GRAVITY_ENV] now. The colony records [POP_NAME] as [GRAVITY_CASTE_NAME]. [YEAR]."
+- "[COLONY] acknowledges the biological shift. [POP_NAME] has adapted into a [GRAVITY_CASTE_NAME]. [YEAR]."
+
+### Template: CASTE_MISMATCH
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [POP_NAME], [GRAVITY_CASTE_NAME], [GRAVITY_ENV], [CASTE_TRAIT]
+
+**Patterns:**
+- "[YEAR]: The [GRAVITY_ENV] is crushing [POP_NAME]. A [GRAVITY_CASTE_NAME] is not built for this, suffering from [CASTE_TRAIT]."
+- "[POP_NAME] is struggling in the [GRAVITY_ENV]. Their [CASTE_TRAIT] marks them as a [GRAVITY_CASTE_NAME] out of place. [YEAR]."
+- "A painful transition. [POP_NAME], a [GRAVITY_CASTE_NAME], endures the [GRAVITY_ENV] despite their [CASTE_TRAIT]. [YEAR]."
+
+## Retro-Causality Contracts Templates (Spec 1058)
+
+### Template: RETRO_CONTRACT_ACCEPTED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [RETRO_CONTRACT_NAME], [REWARD]
+
+**Patterns:**
+- "[YEAR]: We signed the [RETRO_CONTRACT_NAME]. The [REWARD] arrived before we even made the deal."
+- "Borrowing from tomorrow. [COLONY] accepts a [RETRO_CONTRACT_NAME], securing [REWARD] instantly. [YEAR]."
+- "[COLONY] takes the gamble. [REWARD] drops from orbit as the [RETRO_CONTRACT_NAME] is ratified. [YEAR]."
+
+### Template: RETRO_CONTRACT_DEFAULTED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [RETRO_CONTRACT_NAME], [TEMPORAL_REPO_FLEET]
+
+**Patterns:**
+- "[YEAR]: We failed the [RETRO_CONTRACT_NAME]. The [TEMPORAL_REPO_FLEET] have entered orbit to correct the paradox."
+- "Time catches up. [COLONY] defaults on the [RETRO_CONTRACT_NAME]. Sensors detect the [TEMPORAL_REPO_FLEET]. [YEAR]."
+- "A fatal breach of causality. We couldn't pay the [RETRO_CONTRACT_NAME]. The [TEMPORAL_REPO_FLEET] descends. [YEAR]."
+
+## Ruin Integration Templates (Spec 1286)
+
+### Template: RUIN_SETTLEMENT
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [POP_NAME], [RUIN_CIV]
+
+**Patterns:**
+- "[YEAR]: [POP_NAME] moves into the structures left by [RUIN_CIV]. It's cold, but safe."
+- "The walls of [RUIN_CIV] become home. [POP_NAME] settles in the ruins at [COLONY]. [YEAR]."
+- "We don't know who built them. But [POP_NAME] now lives in the bones of [RUIN_CIV]. [YEAR]."
+
+### Template: RUIN_MACHINERY_WAKES
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [RUIN_CIV]
+
+**Patterns:**
+- "The ancient bones are not dead. [YEAR]. The machinery of [RUIN_CIV] wakes up, causing madness."
+- "[YEAR]: We thought the [RUIN_CIV] ruins were silent. We were wrong. The hum brings stress and fear."
+- "A terrible mistake. Settling the [RUIN_CIV] ruins triggered a dormant sequence. The noise is unbearable. [YEAR]."
+
+## Ruin Discovery Templates
+
+### Template: RUIN_DISCOVERY
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [RUIN_CIV], [RUIN_AGE], [ARTIFACT]?
+
+**Patterns:**
+- "[COLONY] surveyors report structures. Old. Not ours."
+- "They found [RUIN_CIV] beneath the soil of [COLONY]. Dead [RUIN_AGE] years."
+- "Year [YEAR]: [COLONY] is not the first. [RUIN_CIV] was here. [RUIN_CIV] is gone."

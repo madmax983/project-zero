@@ -9128,3 +9128,60 @@ What you threw into the wormhole.
 - wandering debris clouds
 - off-course trade ships
 - a dead moon
+
+## Thermal Camouflage Fragments (Spec 1054)
+
+## Fragment Type: [THERMAL_STATE_DESC]
+- running cold
+- bleeding heat
+- frozen silent
+- radiating warmth
+- ice-locked
+- dark to the sensors
+
+## Fragment Type: [THERMAL_HUNTER_NAME]
+- Heat-Seeker
+- Void-Stalker
+- Thermal-Hound
+- Ash-Crawler
+- The Warmth-Eater
+
+## Gravity Caste Fragments (Spec 1055)
+
+## Fragment Type: [GRAVITY_CASTE_NAME]
+- Spacer
+- Squat
+- High-G Born
+- Void-Walker
+- Deep-Crust Dweller
+
+## Fragment Type: [CASTE_TRAIT]
+- fragile bones
+- dense muscle
+- elongated limbs
+- compact frame
+- gravity-sick
+- void-adapted
+
+## Fragment Type: [GRAVITY_ENV]
+- low-g well
+- super-earth
+- orbital tether
+- deep mine
+- micro-g hab
+
+## Retro-Causality Contracts Fragments (Spec 1058)
+
+## Fragment Type: [RETRO_CONTRACT_NAME]
+- Time-Loan
+- Future-Debt
+- Echo-Agreement
+- The Paradox Bond
+- Causality Mortgage
+
+## Fragment Type: [TEMPORAL_REPO_FLEET]
+- Time-Keepers
+- Cause-and-Effect Enforcers
+- The Chrono-Bailiffs
+- Paradox Sweepers
+- Horizon Collectors
