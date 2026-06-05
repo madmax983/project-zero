@@ -688,3 +688,4 @@
 - [x] `1286` Ruin Integration — `specs/1286-ruin-integration.md` — completed 2026-06-04
 - [x] `INT-1058` Integration: Retro-Causality Contracts -> Chronicle — completed 2026-06-05
 - [x] `1054` Thermal Camouflage — `specs/1054-thermal-camouflage.md` — completed 2026-02-01
+- [x] `1055` Gravity Caste — `specs/1055-gravity-caste.md` — completed 2026-06-05
