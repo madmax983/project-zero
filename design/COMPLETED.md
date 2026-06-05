@@ -690,3 +690,4 @@
 - [x] `1054` Thermal Camouflage — `specs/1054-thermal-camouflage.md` — completed 2026-02-01
 - [x] `1055` Gravity Caste — `specs/1055-gravity-caste.md` — completed 2026-06-05
 - [x] `1285` The Weight of Silence — `specs/1285-the-weight-of-silence.md` — completed 2024-05-31
+- [x] `INT-1055` Integration: Gravity Caste -> Simulation — completed 2026-06-05

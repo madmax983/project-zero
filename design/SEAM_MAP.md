@@ -1354,3 +1354,9 @@
 - **Glue added:** `dead_internet_chronicle_bridge` in `src/layer3/integration.rs`
 - **Schedule:** Registered in extended simulation schedule
 - **Tests:** `tests/integration/dead_internet_chronicle_bridge.rs`
+
+### INT-1055: Gravity Caste -> Simulation
+- **Date:** 2026-06-05
+- **Systems connected:** `adapt_gravity_caste_system`, `apply_gravity_penalties_system` -> `SimulationSchedule`
+- **Glue added:** Registered `adapt_gravity_caste_system` and `apply_gravity_penalties_system` to `Layer1SystemSet::Environment` in `src/layer1/systems/environment.rs`.
+- **Tests:** `tests/integration/gravity_caste.rs`
