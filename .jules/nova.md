@@ -121,3 +121,8 @@
 **Concept:** Re-integrated and wired up the disconnected `cryo_dreams` feature. A system that lets frozen Pops generate knowledge subconsciously while risking `CryoTrauma` from nightmares, which translates into increased `CryoSickness` upon waking.
 **Fate:** Merged
 **Lesson:** Sometimes the best new features are the ones someone else started but forgot to plug in. Wiring up existing disconnected logic is a great way to add depth to the simulation without inflating the codebase.
+
+## [Magnetic Veteran]
+**Concept:** Added `magnetic_veteran_system` to `src/experimental/magnetic_veteran.rs`. Connects `WeatherType::MagneticStorm`, `Trait::Veteran`, `Needs::rest`, and `StressTracker`. During a magnetic storm, veterans experience sensory overload resembling warfare. This drastically increases their `accumulated_stress` (PTSD trigger) but the adrenaline surge completely halts their need for rest and even passively regenerates it.
+**Fate:** Submitted
+**Lesson:** Tying weather conditions directly to specific personality traits creates unique narrative emergent scenarios. While normal pops might just be inconvenienced by a magnetic storm, veterans are uniquely forced awake by the adrenaline but at a massive psychological cost, requiring the player to manage their stress actively during these storms.
