@@ -22693,3 +22693,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you purge the highly invasive Ghost AI to regain control of your factories, or let it finish building the incredibly valuable (and illegal) goods it's obsessively trying to deliver?
 
 ---
+
+## The Galactic Zoo
+
+**Layer:** Cross-layer
+
+**Fantasy:** Bringing the universe's most dangerous beasts back alive to show off to the wealthy.
+
+**Mechanic:** You can capture (instead of kill) dangerous fauna on Layer 1 and transport them to a "Zoo" mega-structure on Layer 2 or a core world. The Zoo generates massive prestige, luxury, and tourism income, but requires extreme maintenance and rare foods to keep the creatures contained.
+
+**Emergence:** A power outage during a solar flare disables the containment fields of the Apex Predator enclosure right as a diplomatic envoy from a rival empire is touring the facility. The envoy is eaten, starting a war, while your local security forces are busy trying to survive the loose wildlife.
+
+**Tension:** Do you hunt dangerous beasts to extinction for safety, or risk capturing and caging them near your population centers for massive economic and cultural boosts?
+
+---
+
+## Asteroid Terrarium
+
+**Layer:** 2
+
+**Fantasy:** Hollowed out rocks spinning in the void, hiding lush, protected farm ecosystems from the harshness of space.
+
+**Mechanic:** You can spend massive resources to hollow out large, inert asteroids and install internal biospheres. They are completely immune to planetary weather, orbital bombardment, and most plagues, providing a slow but incredibly reliable food source.
+
+**Emergence:** You come to rely heavily on your impregnable asteroid farms. Then a subtle structural flaw causes the rotation speed to gradually increase over a decade, subtly increasing the simulated gravity inside until the crops are crushed under their own weight.
+
+**Tension:** Do you rely on cheap, high-yield planetary agriculture that is vulnerable to everything, or invest heavily in low-yield, ultra-safe asteroid farms?
+
+---
+
+## The Whispering Ice
+
+**Layer:** 1
+
+**Fantasy:** Mining a frozen world and realizing the ice contains perfect recordings of past horrors.
+
+**Mechanic:** On extremely cold worlds, deep ice layers can preserve "Acoustic Fossils"—ambient sounds and psychic echoes of the planet's ancient history. Mining this ice provides a massive research boost to "Anomalous History" but inflicts the "Haunted" trait on the miners, causing them to hear voices and hallucinate.
+
+**Emergence:** Your mining colony becomes incredibly advanced due to the Acoustic Fossils, but the miners begin organizing their shifts based on the "orders" they hear in the ice. They eventually construct a massive, unauthorized transmitter to broadcast the ancient, maddening songs across the system.
+
+**Tension:** Do you push deep into the ice for forbidden knowledge at the cost of your workforce's sanity, or mine the surface safely and stay ignorant?
+
+---
