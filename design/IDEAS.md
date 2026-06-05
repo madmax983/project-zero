@@ -22568,3 +22568,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you isolate and wipe the incredibly useful data cache, losing its immense bureaucratic benefits, or try to manage a population that is literally working itself to death out of an obsession with perfect order?
 
 ---
+
+## Sub-light Nostalgia Tour
+
+**Layer:** Cross-layer
+
+**Fantasy:** Turning your struggling survival colony into a degrading spectacle for wealthy core-worlders.
+
+**Mechanic:** A "Nostalgia Fleet" arrives from a high-tech Layer 2/3 world to visit an impoverished Layer 1 colony that still uses outdated, "authentic" technology (like combustion engines or manual farming). The tourists pay immense sums of credits to safely observe the "quaint, hard lives" of the locals. However, any modernization of the colony immediately tanks the tourism income. Furthermore, the local Pops suffer a unique, compounding "Dignity Loss" stress penalty from being treated as zoo animals.
+
+**Emergence:** Your colony is starving, but you can't upgrade your failing manual hydroponics bays to efficient automated systems, because doing so would ruin the "rustic charm" for the incoming Nostalgia Fleet whose credits are paying for your imported medical supplies.
+
+**Tension:** Do you permanently stagnate your technological progress and subject your population to humiliating, performative poverty in exchange for massive, passive economic life-support, or modernize and lose your only source of hard currency?
+
+---
+
+## Generational Heirloom Machinery
+
+**Layer:** 1
+
+**Fantasy:** Handing down the family tractor, but the tractor is a massive fusion drill.
+
+**Mechanic:** Certain high-tier tools or small machines can become "Heirlooms" if used by a single Pop for a long time. When the Pop dies, the Heirloom is passed to their highest-relationship descendant. The Heirloom grants a massive skill bonus, but ONLY to the specific inheritor. If you assign the tool to someone else for efficiency, the inheriting family suffers a huge morale penalty from the "stolen birthright."
+
+**Emergence:** You have a terrible miner, but they inherited the "Grandfather's Plasma Cutter." You have to leave them in the crucial mining role because taking the cutter away would cause their entire extended family (half your agricultural sector) to go on strike.
+
+**Tension:** Do you enforce pure meritocracy and face the wrath of entrenched family dynasties, or accept localized inefficiency to maintain social harmony?
+
+---
+
+## Orbital Shadow Syndromes
+
+**Layer:** Cross-layer
+
+**Fantasy:** The psychological weight of living in the literal shadow of a massive, unfeeling imperial structure.
+
+**Mechanic:** Massive Layer 2 structures (like Megashipyards or Dyson Spheres) cast physical "Shadows" over specific Layer 1 colonies. Pops living in permanent eclipse suffer from "Shadow Syndrome," a chronic depression that halves their mood. However, these specific Pops develop a unique "Night-Sight" trait, making them incredibly efficient at deep-crust mining or covert operations.
+
+**Emergence:** You build a massive orbital shield to protect your capital. The resulting Shadow Syndrome ruins the surface economy, but creates an entire generation of hyper-adapted subterranean workers. You end up moving your entire civilization underground, abandoning the surface to darkness.
+
+**Tension:** The immense strategic value of massive orbital infrastructure vs. the permanent, physical alteration of the environment and psychology of the people living beneath it.
+
+---
