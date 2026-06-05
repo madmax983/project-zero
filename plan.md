@@ -1,0 +1,11 @@
+1. **Identify the missing integration**:
+   - `INT-1110` (Dead Internet -> Chronicle) was missing from `COMPLETED.md`.
+   - The Builder implemented `1110` and the Integrator created `dead_internet_chronicle_bridge` in `src/layer3/integration.rs`, adding tests in `tests/integration/dead_internet_chronicle_bridge.rs`. The code works and is registered. However, the final step—updating `COMPLETED.md` with `INT-1110`—was missed. I will append it there.
+   - I noticed `1112` (Tectonic Fracking) is in `COMPLETED.md` but there is no `INT-1112` integration. `1112`'s `FrackEvent` doesn't currently do anything outside its module other than updating `ColonyResources` and `TectonicStress`. It should be integrated with `Chronicle` so players know when a FrackEvent happens.
+   - Wait, `1112` is Tectonic Fracking. The prompt says I should "Find completed features that aren't talking to each other, write integration code and tests to connect them".
+   - Let's check `1110` again. Ah, `INT-1110` is indeed in `SEAM_MAP.md` but missing from `COMPLETED.md`. I should fix that.
+   - Let's check `1112`. Is it claimed in `IN_PROGRESS.md`? No.
+   - Let's create an integration for `INT-1112`: Tectonic Fracking -> Chronicle.
+   - Let's check `1113`: `INT-1113` is completed.
+   - Wait, looking closely at `missing.txt`, there are lots of unintegrated features, e.g., `1000`, `1028`, `1112`, `1115`, etc.
+   - Let's create an integration for `INT-1112: Tectonic Fracking -> Chronicle`.

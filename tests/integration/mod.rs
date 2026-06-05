@@ -74,3 +74,4 @@ pub mod planetary_spin_up_bridge;
 pub mod terminator_habitats_bridge;
 pub mod endless_draft_bridge;
 pub mod gravity_siphon_bridge;
+pub mod tectonic_fracking_chronicle_bridge;
