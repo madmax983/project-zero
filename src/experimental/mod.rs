@@ -185,3 +185,5 @@ pub mod the_weight_of_silence;
 
 #[cfg(feature = "nova")]
 pub mod magnetic_veteran;
+#[cfg(feature = "nova")]
+pub mod thermal_venting;
