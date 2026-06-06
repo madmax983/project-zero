@@ -690,7 +690,6 @@ See `design/IDEAS.md` for unspecced concepts.
 
 - [ ] `1096` Celestial Cemeteries — `specs/1096-celestial-cemeteries.md` — claimed 2024-05-30
 
-- [ ] `1099` Terminator Habitats — `specs/1099-terminator-habitats.md`
 
 
 

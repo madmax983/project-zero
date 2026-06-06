@@ -4,7 +4,7 @@ use scale::layer1::core::integration::{
     apply_ruin_environmental_buffs_system, apply_ruin_psychological_stress_system,
     trigger_ruin_machinery_system, AncientRuin, MachineryTrigger, TemperatureRegulation,
 };
-use scale::layer1::environment::Temperature;
+use scale::layer1::environment::terminator_habitats::EnvironmentalTemperature as Temperature;
 use scale::layer1::pop::Pop;
 use scale::layer1::psychology::stress::StressTracker;
 use scale::shared::time::SimulationTime;
