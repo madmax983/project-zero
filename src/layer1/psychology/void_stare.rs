@@ -242,7 +242,7 @@ mod tests {
         });
 
         // Spawn Pop
-        let pop = world
+        let _pop = world
             .spawn((
                 Pop,
                 GridPosition { x: 5, y: 5 },
