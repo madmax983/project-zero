@@ -514,3 +514,5 @@ mod retro_contract_chronicle;
 mod ruin_integration;
 #[path = "integration/solar_flare_chronicle_bridge.rs"]
 mod solar_flare_chronicle_bridge;
+#[path = "integration/weight_of_silence_bridge.rs"]
+mod weight_of_silence_bridge;

@@ -1360,3 +1360,10 @@
 - **Systems connected:** `adapt_gravity_caste_system`, `apply_gravity_penalties_system` -> `SimulationSchedule`
 - **Glue added:** Registered `adapt_gravity_caste_system` and `apply_gravity_penalties_system` to `Layer1SystemSet::Environment` in `src/layer1/systems/environment.rs`.
 - **Tests:** `tests/integration/gravity_caste.rs`
+
+### INT-1285: The Weight of Silence -> Trade & Simulation
+- **Date:** 2026-10-31
+- **Systems connected:** `TradeRouteExecutedEvent` -> `reset_isolation_on_trade_system` -> `ColonyNode`, `SilenceCult` -> `silence_cult_chronicle_bridge` -> `AddChronicleEvent`
+- **Glue added:** `reset_isolation_on_trade_system` and `silence_cult_chronicle_bridge` in `src/layer3/integration.rs` to reset isolation level on successful trade and record Silence Cult emergence in Chronicle.
+- **Schedule:** Registered in `src/simulation.rs` in `SimulationSchedule`
+- **Tests:** `tests/integration/weight_of_silence_bridge.rs` (2 tests)

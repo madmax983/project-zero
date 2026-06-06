@@ -452,6 +452,15 @@ fn register_simulation_core_systems(schedule: &mut Schedule) {
 
 #[allow(clippy::too_many_lines)]
 fn register_simulation_extended_systems(schedule: &mut Schedule) {
+
+    schedule.add_systems((
+        crate::experimental::the_weight_of_silence::track_colony_isolation_system,
+        crate::experimental::the_weight_of_silence::process_isolation_needs_system,
+        crate::experimental::the_weight_of_silence::spawn_silence_cult_system,
+        crate::layer3::integration::reset_isolation_on_trade_system,
+        crate::layer3::integration::silence_cult_chronicle_bridge,
+    ).after(Layer1SystemSet::Economy));
+
     schedule.add_systems((
         crate::layer3::economy::biological_stock_market::biological_stock_market_bridge,
         crate::layer3::integration::pirate_republic_diplomacy_bridge,

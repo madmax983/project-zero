@@ -694,3 +694,4 @@
 - [x] `INT-1055` Integration: Gravity Caste -> Simulation — completed 2026-06-05
 - [x] `1111` The Void Stare — `specs/1111-the-void-stare.md` — completed 2024-05-31
 - [x] `1010` The Archaeological Contagion — `specs/1010-archaeological-contagion.md` — completed 2026-06-03
+- [x] `INT-1285` Integration: The Weight of Silence -> Trade & Simulation — completed 2026-10-31
