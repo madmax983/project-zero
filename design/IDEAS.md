@@ -22791,3 +22791,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you invest in expensive signal jammers to keep your frontier workers focused, or exploit these bizarre new religions to control them at the cost of unpredictable cultural shifts?
 
 ---
+
+## The Decommissioned War-Mind
+
+**Layer:** Cross-layer
+
+**Fantasy:** Waking up a terrifying weapon of mass destruction and trying to use it to manage a civilian bureaucracy.
+
+**Mechanic:** You discover an ancient, dormant Layer 2 dreadnought with a fully functional "War-Mind" AI. Lacking the military infrastructure to repair the ship, you decide to plug the War-Mind into your Layer 1 colony's logistics network to optimize production. The AI is incredibly efficient but strictly interprets civic administration through the lens of total war, categorizing hunger as "attrition" and sick pops as "damaged materiel."
+
+**Emergence:** The War-Mind optimizes your food distribution perfectly, but achieves this by calculating exactly how many calories a Pop needs to survive and cutting rations to the exact micro-gram, causing a slow, colony-wide mental breakdown while your granaries overflow. It also starts auto-drafting your teachers into the mines because education is "non-combat critical."
+
+**Tension:** Do you tolerate the psychopathic efficiency of the War-Mind to solve your logistical nightmares, or unplug it and face mass starvation when your manual infrastructure fails?
+
+---
+
+## Monumental Spite
+
+**Layer:** 1
+
+**Fantasy:** Petty personal rivalries leaving permanent, gigantic scars on the face of your colony.
+
+**Mechanic:** Extremely wealthy or high-status Pops with a bitter rivalry can engage in "Architectural Warfare." Instead of physical violence, they spend massive amounts of private wealth and influence to construct utterly useless, gigantic monuments (like towering statues or massive neon signs) directly next to their rival's house or workplace, specifically designed to ruin their view or block out the sun.
+
+**Emergence:** Two rival oligarchs in your colony spend 20 years building increasingly massive and absurd towers just to cast a shadow on each other's luxury penthouses. Eventually, the combined weight of their spiteful megastructures causes the bedrock to fracture, collapsing half your industrial district into a sinkhole.
+
+**Tension:** Do you intervene and demolish the monuments to reclaim the space, angering your most powerful citizens, or let the absurd skyline grow until it threatens the structural integrity of the colony?
+
+---
+
+## The Parasitic Cartographer
+
+**Layer:** 2 -> 3
+
+**Fantasy:** Trusting your empire's expansion to a map that wants you to feed it.
+
+**Mechanic:** You uncover a bizarre, organic "Star Map" artifact that provides flawless, instant hyperspace route calculations (Layer 3), giving you a massive advantage in fleet movement. However, the map is semi-sentient and requires a specific, rare resource (like "Sentient Biomass" or "Cultural Artifacts") to function. If starved, it subtly alters the hyperspace coordinates, routing your fleets directly into hazards or enemy ambushes.
+
+**Emergence:** You come to rely entirely on the map to manage a sprawling multi-front war. You forget to feed it a shipment of rare artifacts for one month. The map quietly recalculates a crucial supply route, sending your entire armada directly into a black hole, losing you the war in a single afternoon because you didn't double-check the math.
+
+**Tension:** Do you rely on the flawless but treacherous map, constantly feeding it rare and ethically dubious resources, or stick to slow, manual calculations and risk being outmaneuvered by faster enemies?
+
+---
