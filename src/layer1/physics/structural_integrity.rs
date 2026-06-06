@@ -258,7 +258,10 @@ mod tests {
         let mut world = World::new();
         // Missing RoofGrid and TerrainGrid
         let is_stable = check_stability(&mut world, GridPosition { x: 5, y: 5 });
-        assert!(is_stable, "Should default to stable if resources are missing");
+        assert!(
+            is_stable,
+            "Should default to stable if resources are missing"
+        );
     }
 
     #[test]

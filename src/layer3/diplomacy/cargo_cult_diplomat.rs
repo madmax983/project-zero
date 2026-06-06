@@ -48,16 +48,16 @@ pub fn detect_crashed_probe_system(
             if let Ok((colony_entity, colony)) = colonies.get(location.colony_entity) {
                 // Low tech threshold
                 if colony.tech_level <= 2 {
-                    commands.entity(colony_entity).insert(DivineAmbassador { probe_entity });
+                    commands
+                        .entity(colony_entity)
+                        .insert(DivineAmbassador { probe_entity });
                 }
             }
         }
     }
 }
 
-pub fn generate_cult_tribute_system(
-    mut colonies: Query<(&DivineAmbassador, &mut ResourcePool)>,
-) {
+pub fn generate_cult_tribute_system(mut colonies: Query<(&DivineAmbassador, &mut ResourcePool)>) {
     for (_, mut resources) in colonies.iter_mut() {
         resources.tribute_accumulated += 10; // Generate tribute
     }
@@ -75,7 +75,9 @@ pub fn process_disrespect_casus_belli_system(
                 target: probe.owner_empire,
             });
             // Remove flag after processing
-            commands.entity(colony_entity).remove::<DisrespectedGodFlag>();
+            commands
+                .entity(colony_entity)
+                .remove::<DisrespectedGodFlag>();
         }
     }
 }
@@ -89,11 +91,14 @@ mod tests {
     // RED Phase Test Setup
     fn setup_app() -> App {
         let mut app = App::new();
-        app.add_systems(Update, (
-            detect_crashed_probe_system,
-            generate_cult_tribute_system,
-            process_disrespect_casus_belli_system,
-        ));
+        app.add_systems(
+            Update,
+            (
+                detect_crashed_probe_system,
+                generate_cult_tribute_system,
+                process_disrespect_casus_belli_system,
+            ),
+        );
         app
     }
 
@@ -102,15 +107,25 @@ mod tests {
         let mut app = setup_app();
 
         // Spawn a low tech colony
-        let colony = app.world_mut().spawn((
-            Colony { tech_level: 1 }, // Low tech
-            ResourcePool { tribute_accumulated: 0 },
-        )).id();
+        let colony = app
+            .world_mut()
+            .spawn((
+                Colony { tech_level: 1 }, // Low tech
+                ResourcePool {
+                    tribute_accumulated: 0,
+                },
+            ))
+            .id();
 
         // Spawn a crashed probe on that colony
         app.world_mut().spawn((
-            Probe { is_crashed: true, owner_empire: Entity::from_raw(999) },
-            Location { colony_entity: colony },
+            Probe {
+                is_crashed: true,
+                owner_empire: Entity::from_raw(999),
+            },
+            Location {
+                colony_entity: colony,
+            },
         ));
 
         app.update();
@@ -118,25 +133,44 @@ mod tests {
         // The colony should now have a DivineAmbassador component pointing to the probe
         let mut cult_query = app.world_mut().query::<&DivineAmbassador>();
         let ambassador = cult_query.get(app.world(), colony);
-        assert!(ambassador.is_ok(), "Low tech colony should worship crashed probe");
+        assert!(
+            ambassador.is_ok(),
+            "Low tech colony should worship crashed probe"
+        );
     }
 
     #[test]
     fn test_cult_generates_tribute() {
         let mut app = setup_app();
 
-        let probe = app.world_mut().spawn(Probe { is_crashed: true, owner_empire: Entity::from_raw(999) }).id();
+        let probe = app
+            .world_mut()
+            .spawn(Probe {
+                is_crashed: true,
+                owner_empire: Entity::from_raw(999),
+            })
+            .id();
 
-        let colony = app.world_mut().spawn((
-            Colony { tech_level: 1 },
-            ResourcePool { tribute_accumulated: 0 },
-            DivineAmbassador { probe_entity: probe },
-        )).id();
+        let colony = app
+            .world_mut()
+            .spawn((
+                Colony { tech_level: 1 },
+                ResourcePool {
+                    tribute_accumulated: 0,
+                },
+                DivineAmbassador {
+                    probe_entity: probe,
+                },
+            ))
+            .id();
 
         app.update();
 
         let resources = app.world().get::<ResourcePool>(colony).unwrap();
-        assert!(resources.tribute_accumulated > 0, "Cult should generate tribute resources for the 'god'");
+        assert!(
+            resources.tribute_accumulated > 0,
+            "Cult should generate tribute resources for the 'god'"
+        );
     }
 
     #[test]
@@ -144,18 +178,34 @@ mod tests {
         let mut app = setup_app();
 
         let empire_entity = app.world_mut().spawn(Empire).id();
-        let probe = app.world_mut().spawn(Probe { is_crashed: true, owner_empire: empire_entity }).id();
+        let probe = app
+            .world_mut()
+            .spawn(Probe {
+                is_crashed: true,
+                owner_empire: empire_entity,
+            })
+            .id();
 
-        let _colony = app.world_mut().spawn((
-            Colony { tech_level: 1 },
-            DivineAmbassador { probe_entity: probe },
-            DisrespectedGodFlag, // Simulated trigger where empire tries to correct them
-        )).id();
+        let _colony = app
+            .world_mut()
+            .spawn((
+                Colony { tech_level: 1 },
+                DivineAmbassador {
+                    probe_entity: probe,
+                },
+                DisrespectedGodFlag, // Simulated trigger where empire tries to correct them
+            ))
+            .id();
 
         app.update();
 
         // Check for war declaration event
         let mut casus_belli_query = app.world_mut().query::<&CasusBelli>();
-        assert!(casus_belli_query.iter(app.world()).any(|cb| cb.target == empire_entity), "Disrespecting the cult should generate a Casus Belli against the probe's owner");
+        assert!(
+            casus_belli_query
+                .iter(app.world())
+                .any(|cb| cb.target == empire_entity),
+            "Disrespecting the cult should generate a Casus Belli against the probe's owner"
+        );
     }
 }

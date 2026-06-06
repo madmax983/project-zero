@@ -136,6 +136,9 @@ mod tests {
                 changed = true;
             }
         }
-        assert!(changed, "Ancient routine evaluation should change action over 100 frames with 0.05 chance.");
+        assert!(
+            changed,
+            "Ancient routine evaluation should change action over 100 frames with 0.05 chance."
+        );
     }
 }
