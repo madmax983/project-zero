@@ -835,3 +835,4 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1279` Weaponized Tourism — `specs/1279-weaponized-tourism.md`
 - [ ] `1280` Tectonic Stress — `specs/1280-tectonic-stress.md`
 - [ ] `1284` Sartorial Rebellion — `specs/1284-sartorial-rebellion.md`
+- [ ] `1295` Corporate Rebranding — `specs/1295-corporate-rebranding.md`
