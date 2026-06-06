@@ -43,6 +43,39 @@ pub fn process_artifact_research_system(
     }
 }
 
+#[allow(clippy::type_complexity)]
+pub fn process_memetic_transmission_system(
+    mut commands: Commands,
+    mut events: EventReader<ConversationEvent>,
+    infected_query: Query<
+        &crate::layer1::memetics::parasitic_broadcast::MemeticInfection,
+        Without<crate::layer1::memetics::parasitic_broadcast::Quarantined>,
+    >,
+    healthy_query: Query<
+        Entity,
+        (
+            With<crate::layer1::pop::Pop>,
+            Without<crate::layer1::memetics::parasitic_broadcast::MemeticInfection>,
+            Without<crate::layer1::memetics::parasitic_broadcast::Quarantined>,
+        ),
+    >,
+) {
+    for event in events.read() {
+        // Try infecting from initiator to receiver
+        if let Ok(infection) = infected_query.get(event.initiator) {
+            if healthy_query.get(event.receiver).is_ok() {
+                commands.entity(event.receiver).insert(*infection);
+            }
+        }
+        // Try infecting from receiver to initiator
+        if let Ok(infection) = infected_query.get(event.receiver) {
+            if healthy_query.get(event.initiator).is_ok() {
+                commands.entity(event.initiator).insert(*infection);
+            }
+        }
+    }
+}
+
 pub fn spread_memetic_hazard_system(
     mut commands: Commands,
     mut events: EventReader<ConversationEvent>,

@@ -157,6 +157,8 @@ pub enum ActionType {
     ///
     /// See [`crate::layer1::memetics::evaluate_scrawl_memetic_sigil`].
     ScrawlMemeticSigil,
+    /// Compulsion to perform a specific useless task due to memetic infection.
+    MemeticObsession,
     /// Pre-emptive arrest of high-risk Suspects.
     ///
     /// See [`crate::layer1::law::predictive_policing::evaluate_pre_crime_arrest`].
@@ -204,7 +206,7 @@ pub enum HobbyType {
 
 impl ActionType {
     /// Total number of action types. Used for array sizing.
-    pub const COUNT: usize = 48;
+    pub const COUNT: usize = 49;
 
     /// Converts action type to a unique array index (0..COUNT-1).
     #[must_use]
@@ -242,6 +244,7 @@ impl ActionType {
             Self::Hobby => 28,
             Self::Admin => 29,
             Self::ScrawlMemeticSigil => 30,
+            Self::MemeticObsession => 48,
             Self::PreCrimeArrest => 31,
             Self::ConsumeChemical => 32,
             Self::CollectSample => 33,

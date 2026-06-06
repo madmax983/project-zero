@@ -697,3 +697,4 @@
 - [x] `1010` The Archaeological Contagion — `specs/1010-archaeological-contagion.md` — completed 2026-06-03
 - [x] `INT-1285` Integration: The Weight of Silence -> Trade & Simulation — completed 2026-10-31
 - [x] `INT-1010` Integration: The Archaeological Contagion -> Chronicle - completed 2026-06-06
+- [x] `289` The Mimetic Plague — `specs/289-mimetic-plague.md` — completed 2026-06-06

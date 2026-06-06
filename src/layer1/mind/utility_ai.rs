@@ -804,6 +804,12 @@ pub(crate) fn evaluate_single_pop(
         return (action, utility, target);
     }
 
+    if let Some((action, utility, target)) =
+        crate::layer1::memetics::parasitic_broadcast::evaluate_memetic_obsession(data, buffer)
+    {
+        return (action, utility, target);
+    }
+
     // 1c. Check for Nostalgia Sabotage (Overrides normal behavior)
     if let Some((action, utility, target)) =
         crate::layer1::actions::sabotage::evaluate_sabotage(data, buffer)
