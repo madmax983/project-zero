@@ -1,1 +1,2 @@
 - [ ] `289` The Mimetic Plague — `specs/289-mimetic-plague.md` — claimed 2026-06-03
+- [ ] `1010` The Archaeological Contagion — `specs/1010-archaeological-contagion.md` — claimed 2026-06-03
