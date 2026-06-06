@@ -107,6 +107,7 @@ pub struct PopEvaluationQuery {
     pub nostalgia: Option<&'static crate::layer1::culture::nostalgia::Nostalgia>,
     pub existential_crisis:
         Option<&'static crate::layer1::economy::existential_audit::ExistentialCrisis>,
+    pub memetic_infection: Option<&'static crate::layer1::memetics::MemeticInfection>,
 }
 
 impl PopEvalData {
@@ -140,6 +141,7 @@ impl PopEvalData {
             is_silent: item.is_silent.is_some(),
             is_nostalgic: item.nostalgia.is_some(),
             existential_crisis: item.existential_crisis.copied(),
+            memetic_infection: item.memetic_infection.cloned(),
         }
     }
 }
@@ -221,6 +223,7 @@ pub struct PopEvalData {
     pub is_nostalgic: bool,
     /// Existential crisis state, if any.
     pub existential_crisis: Option<crate::layer1::economy::existential_audit::ExistentialCrisis>,
+    pub memetic_infection: Option<crate::layer1::memetics::MemeticInfection>,
 }
 
 #[cfg(test)]
@@ -254,6 +257,7 @@ impl PopEvalData {
             is_silent: false,
             is_nostalgic: false,
             existential_crisis: None,
+            memetic_infection: None,
         }
     }
 }

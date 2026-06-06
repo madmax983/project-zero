@@ -220,3 +220,5 @@ mod parasitic_broadcast_tests;
 pub use parasitic_broadcast::*;
 
 pub mod memetic_hazards;
+pub mod memetic_plague;
+pub use memetic_plague::*;

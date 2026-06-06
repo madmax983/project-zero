@@ -23,7 +23,6 @@
 # Completed Specs
 - [x] `INT-1101` Integration: Bureaucratic Ghost Towns -> Chronicle — completed 2026-05-30
 - [x] `1122` The Rust-Lung Epidemic — `specs/1122-rust-lung-epidemic.md` — completed 2024-05-24
-- [x] `1122` The Rust-Lung Epidemic — `specs/1122-rust-lung-epidemic.md` — completed 2024-05-24
 - [x] `1000` The Eclipsing Swarm — `specs/1000-eclipsing-swarm.md` — completed 2026-05-21
 - [x] `1115` The Diaspora Fleet - `specs/1115-the-diaspora-fleet.md` - completed 2026-05-14
 - [x] `1258` The Cassandra Protocol — `specs/1258-the-cassandra-protocol.md` — completed 2026-08-01
@@ -334,7 +333,6 @@
 - [x] `588` The Spore-Mind Diplomat — `specs/588-spore-mind-diplomat.md` — completed 2026-03-25
 - [x] `585` The Cartographic Delusion — `specs/585-cartographic-delusion.md` — completed 2026-03-25
 - [x] `INT-409` Integration: Shipbreaking Seams — completed 2026-03-27
-- [x] `INT-409` Integration: Shipbreaking Seams — completed 2026-03-27
 - [x] `592` The Whispering Ore — `specs/592-the-whispering-ore.md` — completed 2026-02-01
 - [x] `427` Mutagenic Rain — `specs/427-mutagenic-rain.md` — completed 2024-05-18
 - [x] `621` Mass Driver Logistics — `specs/621-mass-driver-logistics.md` — completed 2026-03-26
@@ -426,14 +424,12 @@
 - [x] `984` Pheromone Gardening — `specs/984-pheromone-gardening.md` — completed 2026-04-13
 - [x] `805` Digital Immortality — `specs/805-digital-immortality.md` — completed 2026-06-01
 - [x] `INT-805` Integration: Digital Immortality -> Chronicle — completed 2026-06-01
-- [x] `805` Digital Immortality — `specs/805-digital-immortality.md` — completed 2026-06-01
 - [x] `INT-969` Integration: Predatory Weather -> Energy/Heat Systems — completed 2026-04-13
 - [x] `985` Propaganda Press — `specs/985-propaganda-press.md` — completed 2026-04-13
 - [x] `822` Orbital Necropolises — `specs/822-orbital-necropolises.md` — completed 2026-04-14
 - [x] `902` Nebulae — `specs/902-nebulae.md` — completed 2026-04-14
 - [x] `INT-975` Integration: Geothermal Heartbeat -> Explosion System — completed 2026-07-02
 - [x] `904` Proxy Wars — `specs/904-proxy-wars.md` — completed 2026-02-01
-
 - [x] `894` Social Debt — `specs/894-social-debt.md` — completed 2026-02-01
 - [x] `895` Ephemeral Moons — `specs/895-ephemeral-moons.md` — completed 2026-04-16
 - [x] `INT-895` Integration: Ephemeral Moons -> Energy System — completed 2026-06-25
@@ -449,7 +445,6 @@
 - [x] `668` Impact Event — `specs/668-impact-event.md` — completed 2026-05-24
 - [x] `669` Urban Spelunking — `specs/669-urban-spelunking.md` — completed 2026-05-24
 - [x] `662` Refugee Waves — `specs/662-refugee-waves.md` — completed 2024-05-24
-
 - [x] `965` The Vertical Schism — `specs/965-the-vertical-schism.md` — completed 2026-02-01
 - [x] `1116` Sub-light Tourism — `specs/1116-sub-light-tourism.md` — completed 2026-04-20
 - [x] `862` Ventilation Networks — `specs/862-ventilation-networks.md` — completed 2026-06-02
@@ -459,8 +454,6 @@
 - [x] `1132` The Deep Crust Resonance — `specs/1132-deep-crust-resonance.md` - completed 2026-05-01
 - [x] `INT-1132` Integration: Deep Crust Resonance -> Chronicle — completed 2026-05-01
 - [x] `1072` The Smuggler's Ecosystem — `specs/1072-smugglers-ecosystem.md` — completed 2024-05-25
-- [x] `1122` The Rust-Lung Epidemic — `specs/1122-rust-lung-epidemic.md` — completed 2024-05-24
-
 - [x] `1119` Personal Shields — `specs/1119-personal-shields.md` - completed 2024-05-25
 - [x] `1105` Auroral Harvesting — `specs/1105-auroral-harvesting.md` - completed 2024-05-24
 - [x] `1104` Swarm Intelligence — `specs/1104-swarm-intelligence.md` — completed 2026-05-18
@@ -551,7 +544,6 @@
 - [x] `887` The Sunk-Cost Monument — `specs/887-the-sunk-cost-monument.md` — completed 2024-05-24
 - [x] `1085` The Resource Curse — `specs/1085-the-resource-curse.md` — completed 2024-05-24
 - [x] `1085` The Resource Curse — `specs/1085-the-resource-curse.md` — completed
-- [x] `648` The Founder Effect — `specs/648-the-founder-effect.md` — completed 2026-02-01
 - [x] `1088` The Apex Predator Diet — `specs/1088-the-apex-predator-diet.md` — completed 2026-06-25
 - [x] `INT-1088` Integration: Megafauna Death -> Apex Meat Diet — completed 2026-05-10
 - [x] `INT-1085` Integration: Resource Curse -> Pirate Raids — completed 2026-06-25
@@ -565,7 +557,6 @@
 - [x] `1138` Organic Recycling — `specs/1138-organic-recycling.md` — completed 2026-05-10
 - [x] `INT-893` Integration: Psychic Stains -> Pathfinding - completed 2026-10-31
 - [x] `1078` The Foundation Soil — `specs/1078-foundation-soil.md` — completed 2026-06-05
-
 - [x] `1076` Fading Homeworld — `specs/1076-fading-homeworld.md` — completed 2026-02-28
 - [x] `1077` Splicer's Dilemma — `specs/1077-splicers-dilemma.md` — completed 2024-05-25
 - [x] `1092` Attention Bandwidth — `specs/1092-attention-bandwidth.md` — completed
@@ -605,14 +596,11 @@
 - [x] `1083` Kinetic Excavation — `specs/1083-kinetic-excavation.md` — completed 2026-05-18
 - [x] `1065` Generational Linguistics — `specs/1065-generational-linguistics.md` — completed 2026-02-01
 - [x] `681` Feral Logistics Network — `specs/681-feral-logistics-network.md` — completed 2026-05-19
-
 - [x] `473` Bureaucratic Redlining — `specs/473-bureaucratic-redlining.md` — completed 2026-06-25
-
 - [x] `INT-473` Integration: Bureaucratic Redlining -> Stateless Economy - completed 2026-06-25
 - [x] `1062` The Biological Stock Market — `specs/1062-the-biological-stock-market.md` — completed 2026-05-20
 - [x] `1060` The Rocket Equation — `specs/1060-the-rocket-equation.md` — completed 2026-05-20
 - [x] `1114` Generational Amnesia — `specs/1114-generational-amnesia.md` — completed 2026-05-20
-
 - [x] `INT-681` Integration: Feral Logistics Network -> Chronicle - completed 2026-05-20
 - [x] `INT-1060` Integration: The Rocket Equation -> Chronicle - completed 2026-05-20
 - [x] `INT-1114` Integration: Generational Amnesia -> Chronicle - completed 2026-05-20
@@ -639,7 +627,6 @@
 - [x] `1102` The Cult of the First Ship — `specs/1102-the-cult-of-the-first-ship.md` — completed 2026-05-25
 - [x] `INT-1102` Integration: Cult of the First Ship -> Chronicle — completed 2026-05-25
 - [x] `481` Subterranean Mycelial Network — `specs/481-subterranean-mycelial-network.md` — completed 2026-10-31
-- [x] `481` Subterranean Mycelial Network — `specs/481-subterranean-mycelial-network.md` — completed 2026-10-31
 - [x] `495` Temporal Echoes — `specs/495-temporal-echoes.md` — completed 2026-05-25
 - [x] `INT-480` Integration: Memory Forgery -> Chronicle — completed 2026-05-25
 - [x] `INT-1067` Integration: Void Sirens -> Chronicle — completed 2026-05-25
@@ -659,12 +646,10 @@
 - [x] `INT-279` Integration: Signal Latency -> Fleet Movement — completed 2026-05-28
 - [x] `679` The Flesh Tax — `specs/679-the-flesh-tax.md` — completed 2026-05-28
 - [x] `INT-679` Integration: The Flesh Tax -> Simulation - completed 2026-10-31
-- [x] `1113` The Fossilized Fleet — `specs/1113-the-fossilized-fleet.md` — completed 2026-02-01
 - [x] `INT-1113` Integration: The Fossilized Fleet -> Combat Defense Bonus — completed 2026-10-31
 - [x] `1096` Celestial Cemeteries — `specs/1096-celestial-cemeteries.md` — completed 2024-05-30
 - [x] `INT-1096` Integration: Celestial Cemeteries -> Launch Risk & Corpse Processing — completed 2026-10-31
 - [x] `INT-1207` Integration: Kinetic Storage Catastrophe -> Chronicle — completed 2026-02-01
-
 - [x] `1131` Signature Spoofing — `specs/1131-signature-spoofing.md` — completed 2026-05-29
 - [x] `1097` Planetary Spin-Up — `specs/1097-planetary-spin-up.md` — completed 2026-05-29
 - [x] `1099` Terminator Habitats — `specs/1099-terminator-habitats.md` — completed 2026-05-30
@@ -698,3 +683,4 @@
 - [x] `1010` The Archaeological Contagion — `specs/1010-archaeological-contagion.md` — completed 2026-06-03
 - [x] `INT-1285` Integration: The Weight of Silence -> Trade & Simulation — completed 2026-10-31
 - [x] `INT-1010` Integration: The Archaeological Contagion -> Chronicle - completed 2026-06-06
+- [x] `289` The Mimetic Plague — `specs/289-mimetic-plague.md` — completed 2026-06-03

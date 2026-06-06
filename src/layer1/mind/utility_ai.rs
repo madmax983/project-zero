@@ -811,6 +811,11 @@ pub(crate) fn evaluate_single_pop(
         return (action, utility, target);
     }
 
+    // 1d. Check for Memetic Plague
+    if let Some((action, utility, target)) = crate::layer1::memetics::evaluate_obsession_utility(data) {
+        return (action, utility, target);
+    }
+
     // 2. Check for Drafted (Returns early)
     if let Some((action, utility, target)) = evaluate_drafted_behavior(data, buffer) {
         return (action, utility, target);

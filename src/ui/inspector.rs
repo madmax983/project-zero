@@ -99,6 +99,7 @@ const fn format_action_type(action: ActionType) -> (&'static str, &'static str, 
         ActionType::Philosophize => ("🤔", "Philosophizing", Color::Magenta),
         ActionType::RealityCollapse => ("🔥", "Reality Collapse", Color::Red),
         ActionType::PerformAncientRoutine => ("🗿", "Ancient Routine", Color::Magenta),
+        ActionType::MemeticObsession => ("👁", "Memetic Obsession", Color::Magenta),
     }
 }
 

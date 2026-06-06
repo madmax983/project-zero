@@ -349,6 +349,8 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::social::gossip_economy::spawn_broker_system
                 .after(crate::layer1::social::gossip_economy::intel_decay_system),
             crate::layer1::social::proximity_social_system.after(modify_affinity_system),
+            crate::layer1::memetics::process_memetic_transmission_system
+                .after(crate::layer1::social::proximity_social_system),
             crate::layer1::biology::genetics::splicers_dilemma::evaluate_social_friction_system
                 .after(crate::layer1::social::proximity_social_system),
             crate::layer1::social::pen_pals::update_pen_pals_system.after(modify_affinity_system),

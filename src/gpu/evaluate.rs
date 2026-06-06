@@ -405,6 +405,7 @@ const fn action_type_from_u32(v: u32) -> ActionType {
         39 => ActionType::ExtinguishFire,
         40 => ActionType::TreatWounds,
         41 => ActionType::Flee,
+        48 => ActionType::MemeticObsession,
         _ => ActionType::Idle,
     }
 }

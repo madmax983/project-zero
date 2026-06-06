@@ -141,7 +141,14 @@ impl Relationships {
 ///
 /// Use this to modify relationships. The system handles clamping and
 /// modifiers (like cybernetic prejudice).
-#[derive(Event)]
+
+#[derive(Event, Debug, Clone)]
+pub struct SocialInteractionEvent {
+    pub initiator: Entity,
+    pub target: Entity,
+}
+
+#[derive(Event, Debug, Clone)]
 pub struct AffinityChange {
     /// The pop whose opinion is changing.
     pub source: Entity,
@@ -203,6 +210,7 @@ pub struct SocialBuff {
 /// if pop count grows large.
 pub fn proximity_social_system(
     mut commands: Commands,
+    mut events: EventWriter<SocialInteractionEvent>,
     pops: Query<(
         Entity,
         &GridPosition,
@@ -247,6 +255,12 @@ pub fn proximity_social_system(
                     total_buff += 0.1; // Small boost per friend
                 } else if affinity < -20.0 {
                     total_buff -= 0.1; // Small penalty per enemy
+                }
+                if distance <= 1 {
+                    events.send(SocialInteractionEvent {
+                        initiator: entity,
+                        target: other_entity,
+                    });
                 }
             }
         }
@@ -388,6 +402,7 @@ mod tests {
     #[test]
     fn test_proximity_morale_buff() {
         let mut world = World::new();
+        world.init_resource::<Events<SocialInteractionEvent>>();
 
         // Pop 1 and Pop 2 are friends (affinity 50) and nearby
         let pop1 = world
@@ -425,6 +440,7 @@ mod tests {
     #[test]
     fn test_proximity_morale_debuff() {
         let mut world = World::new();
+        world.init_resource::<Events<SocialInteractionEvent>>();
 
         // Pop 1 and Pop 2 are enemies (affinity -50)
         let pop1 = world
