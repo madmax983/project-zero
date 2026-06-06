@@ -63,10 +63,14 @@ use bevy_ecs::prelude::*;
 /// Saves 1 heap allocation and O(B) loop cycles per frame/tick when no explosive decompression is happening.
 pub fn suction_system(
     mut _commands: Commands,
-    pressure: Res<PressureGrid>,
+    pressure: Option<Res<PressureGrid>>,
     mut query: Query<(Entity, &mut GridPosition), Or<(With<Pop>, With<Item>)>>,
     buildings: Query<&GridPosition, (With<Building>, Without<Pop>, Without<Item>)>,
 ) {
+    let Some(pressure) = pressure else {
+        return;
+    };
+
     // Pressure difference required to move an entity
     const SUCTION_THRESHOLD: f32 = 0.5;
 
@@ -212,6 +216,26 @@ mod tests {
             *pos,
             GridPosition { x: 5, y: 5 },
             "Small gradient should not cause suction"
+        );
+    }
+
+    #[test]
+    fn test_suction_safe_failure_without_pressure_grid() {
+        let mut world = World::new();
+        // Do not add PressureGrid resource
+        let pop = world.spawn((Pop, GridPosition { x: 5, y: 5 })).id();
+
+        let mut schedule = Schedule::default();
+        schedule.add_systems(super::suction_system);
+
+        // Should not panic without resource
+        schedule.run(&mut world);
+
+        let pos = world.get::<GridPosition>(pop).unwrap();
+        assert_eq!(
+            *pos,
+            GridPosition { x: 5, y: 5 },
+            "Pop should remain in place when PressureGrid is missing"
         );
     }
 }
