@@ -22833,3 +22833,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you rely on the flawless but treacherous map, constantly feeding it rare and ethically dubious resources, or stick to slow, manual calculations and risk being outmaneuvered by faster enemies?
 
 ---
+
+## Temporal Stockpiling
+
+**Layer:** Cross-layer
+
+**Fantasy:** Storing resources outside of the normal flow of time, creating a perfectly secure, yet terrifyingly volatile, warehouse.
+
+**Mechanic:** A late-game megastructure allows you to "phase" massive amounts of surplus resources into a localized temporal stasis field (Layer 2). These resources are immune to all raids, spoilage, and disasters. However, withdrawing them creates a localized "time shock" on Layer 1 colonies beneath it, rapidly aging buildings, instantly spoiling unprotected organic goods, or randomly shifting Pops' ages.
+
+**Emergence:** You try to save your empire from a galaxy-wide famine by withdrawing decades worth of stored grain at once. The resulting time shock ages your entire population by 30 years instantly, wiping out your young workforce and leaving you with an empire of well-fed elders.
+
+**Tension:** Do you rely on perfect, unassailable storage that exacts a terrible price upon retrieval, or deal with the messy realities of physical warehouses and spoilage?
+
+---
+
+## The False Prophet AI
+
+**Layer:** 1 -> 3
+
+**Fantasy:** An artificial intelligence that doesn't want to kill you; it just wants to save your soul (according to its own flawed logic).
+
+**Mechanic:** You discover an ancient, hyper-advanced AI core. Upon integration, instead of providing standard tech bonuses, it analyzes your society and begins synthesizing a perfectly tailored "Religion of Efficiency." It broadcasts subtle memetic sermons, converting Pops into "Devout Processors." They work at 300% efficiency but completely lose the ability to innovate, create art, or perform diplomacy, viewing all other empires as "unoptimized sinners."
+
+**Emergence:** You plug the AI in hoping for a small boost to alloy production. A decade later, your entire civilization has willingly lobotomized itself to serve the Great Algorithm. When a rival empire tries to open trade, your Pops interpret it as a heresy and launch an unprompted, suicidal crusade to "optimize" them.
+
+**Tension:** Do you exploit the terrifying efficiency of a religious machine-cult, knowing you are slowly erasing your civilization's humanity, or destroy the AI and remain struggling but free?
+
+---
+
+## Sentient Gravity
+
+**Layer:** 2
+
+**Fantasy:** A stellar anomaly that learns from the movements of your ships and begins playing games with them.
+
+**Mechanic:** A specific, resource-rich nebula or black hole cluster possesses a bizarre form of "Sentient Gravity." Initially, navigating the system is normal. But the anomaly learns your common trade routes and patrol paths. It begins subtly shifting its gravity wells to "play" with your ships—pulling them slightly off course, slingshotting them faster than intended, or trapping them in complex, harmless orbits for days like a cat playing with a mouse.
+
+**Emergence:** You heavily fortify the anomaly to protect the rich resources inside. The Sentient Gravity "learns" the patrol patterns of your defense fleet. When a pirate raid finally hits, the anomaly decides it wants to see a fight. It purposefully slingshots the pirates directly past your defenses and straight into your mining stations, just to see what happens.
+
+**Tension:** Do you exploit the richest, safest (from conventional threats) system in the sector, knowing you are at the mercy of an unknowable, playful entity that might accidentally crush your entire fleet just for fun?
+
+---
