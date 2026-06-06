@@ -8791,3 +8791,32 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[COLONY] surveyors report structures. Old. Not ours."
 - "They found [RUIN_CIV] beneath the soil of [COLONY]. Dead [RUIN_AGE] years."
 - "Year [YEAR]: [COLONY] is not the first. [RUIN_CIV] was here. [RUIN_CIV] is gone."
+
+## The Cargo Cult Diplomat Templates (Spec 1287)
+
+### Template: DIVINE_AMBASSADOR_WORSHIPPED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [DIVINE_AMBASSADOR_NAME]
+
+**Patterns:**
+- "[YEAR]: A machine fell from the sky in [COLONY]. They call it [DIVINE_AMBASSADOR_NAME] and have begun to worship."
+- "The crash site is now a holy place. [COLONY] bows to the [DIVINE_AMBASSADOR_NAME]. [YEAR]."
+- "[COLONY], [YEAR]: They mistook telemetry for theology. The broken probe is their [DIVINE_AMBASSADOR_NAME]."
+
+### Template: DIVINE_TRIBUTE_PAID
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [DIVINE_AMBASSADOR_NAME], [TRIBUTE_ITEM]
+
+**Patterns:**
+- "To appease the [DIVINE_AMBASSADOR_NAME], the people of [COLONY] offered [TRIBUTE_ITEM]. [YEAR]."
+- "[YEAR]: The economy of [COLONY] is redirected. They sacrifice [TRIBUTE_ITEM] to the silent [DIVINE_AMBASSADOR_NAME]."
+- "A wealth of [TRIBUTE_ITEM] sits rusting before the [DIVINE_AMBASSADOR_NAME] in [COLONY]. [YEAR]."
+
+### Template: DIVINE_AMBASSADOR_DISRESPECTED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [EMPIRE_NAME], [DISRESPECT_ACT]
+
+**Patterns:**
+- "[YEAR]: [EMPIRE_NAME] arrived to reclaim their probe via [DISRESPECT_ACT]. [COLONY] sees only blasphemy. War is coming."
+- "The true owners, [EMPIRE_NAME], committed [DISRESPECT_ACT]. [COLONY] prepares for a holy war to defend their metal god. [YEAR]."
+- "[COLONY], [YEAR]: A catastrophic misunderstanding. [EMPIRE_NAME]'s [DISRESPECT_ACT] has sparked a holy crusade."
