@@ -2456,7 +2456,9 @@ pub fn apply_ruin_environmental_buffs_system(
         bevy_ecs::prelude::Entity,
         &crate::layer1::architecture::housing::Housing,
     )>,
-    mut temps: bevy_ecs::prelude::Query<&mut crate::layer1::environment::Temperature>,
+    mut temps: bevy_ecs::prelude::Query<
+        &mut crate::layer1::environment::terminator_habitats::EnvironmentalTemperature,
+    >,
 ) {
     for (housing_entity, housing) in housing_query.iter() {
         if let Ok(regulator) = ruins.get(housing_entity) {
