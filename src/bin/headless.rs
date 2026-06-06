@@ -1079,110 +1079,7 @@ fn print_map(world: &mut World, center_x: i32, center_y: i32) {
         .map(|(p, d)| (p.x, p.y, d.designation_type))
         .collect();
 
-    // Print Header Row
-    print!("    "); // Offset for Y coords
-    for x in center_x.saturating_sub(radius)..=center_x.saturating_add(radius) {
-        if x < 0 || x >= width {
-            print!(" ");
-        } else {
-            // Print last digit of X coord to save space
-            print!("{}", (x.abs() % 10).to_string().cyan());
-        }
-    }
-    println!();
-
-    let map_width = (radius * 2 + 1) as usize;
-    println!(
-        "   {}{}{}",
-        "┌".cyan(),
-        "─".repeat(map_width).cyan(),
-        "┐".cyan()
-    );
-
-    for y in center_y.saturating_sub(radius)..=center_y.saturating_add(radius) {
-        print!("{}", format!("{y:3}").cyan());
-        print!("{}", "│".cyan());
-        for x in center_x.saturating_sub(radius)..=center_x.saturating_add(radius) {
-            if x < 0 || y < 0 || x >= width || y >= height {
-                print!(" ");
-                continue;
-            }
-
-            // Priority: Pop > Building > Designation > Terrain
-
-            // Check for pop
-            if pop_positions.iter().any(|&(px, py)| px == x && py == y) {
-                // Cyan Smile
-                print!("{}", "☺".cyan().bold());
-                continue;
-            }
-
-            // Check for building
-            if let Some(bt) = building_map.get(&(x, y)) {
-                let s = match bt {
-                    BuildingType::Wall => "█".white(),
-                    _ => "□".yellow(),
-                };
-                print!("{s}");
-                continue;
-            }
-
-            // Check for designation
-            if let Some((_, _, dt)) = designation_positions
-                .iter()
-                .find(|&&(dx, dy, _)| dx == x && dy == y)
-            {
-                let c = match dt {
-                    DesignationType::Mine => '%',
-                    DesignationType::Chop => '/',
-                    DesignationType::Demolish => 'X',
-                    DesignationType::Repair => '+',
-                    DesignationType::SetZone(_) => 'Z',
-                    DesignationType::Tame => 'T',
-                    DesignationType::ClearFlora => 'F',
-                    DesignationType::JuryRig => 'J',
-                    DesignationType::Cannibalize => 'C',
-                    DesignationType::Destroy => 'D',
-                    DesignationType::CollectSample => 'S',
-                };
-                print!("{}", format!("{c}").magenta());
-                continue;
-            }
-
-            // Show terrain
-            let tile = terrain_tiles
-                .get(&(x, y))
-                .copied()
-                .unwrap_or(TerrainType::Grass);
-            let s = match tile {
-                TerrainType::Grass => "·".green().dim(),
-                TerrainType::Dirt => ",".yellow(),
-                TerrainType::Rock => "▲".white().dim(),
-                TerrainType::Water => "≈".blue(),
-                TerrainType::Tree => "♣".green().bold(),
-                TerrainType::Path => "=".white(),
-                TerrainType::Shrub => "\"".green().dim(),
-                TerrainType::Sapling => "t".green().dim(),
-                TerrainType::DeepRock => "▓".white().dim(),
-                TerrainType::Crater => "o".white().dim(),
-                TerrainType::MagmaRock => "≈".red(),
-                TerrainType::SporeBloom => "♣".magenta(),
-                TerrainType::Artifact => "Ω".yellow().bold(),
-                TerrainType::FaultLine(true) => "≈".red(),
-                TerrainType::FaultLine(false) => "–".white().dim(),
-            };
-            print!("{s}");
-        }
-        println!("{}", "│".cyan());
-    }
-    println!(
-        "   {}{}{}",
-        "└".cyan(),
-        "─".repeat(map_width).cyan(),
-        "┘".cyan()
-    );
-
-    // Colored legend
+    // Colored legend at bottom
     let legend = format!(
         "Legend: {}={} {}={} {}={} {}={} {}={} {}={} {}={} {}={}",
         "☺".cyan().bold(),
@@ -1202,7 +1099,100 @@ fn print_map(world: &mut World, center_x: i32, center_y: i32) {
         "/".magenta(),
         "chop".grey()
     );
-    println!("{legend}");
+
+    // We want the whole map to be one big string inside the panel, with colored ANSI codes
+    let mut map_content = String::new();
+
+    // Print Header Row
+    map_content.push_str("    "); // Offset for Y coords
+    for x in center_x.saturating_sub(radius)..=center_x.saturating_add(radius) {
+        if x < 0 || x >= width {
+            map_content.push(' ');
+        } else {
+            map_content.push_str(&(x.abs() % 10).to_string().cyan().to_string());
+        }
+    }
+    map_content.push('\n');
+
+    for y in center_y.saturating_sub(radius)..=center_y.saturating_add(radius) {
+        map_content.push_str(&format!("{y:3} ").cyan().to_string());
+        for x in center_x.saturating_sub(radius)..=center_x.saturating_add(radius) {
+            if x < 0 || y < 0 || x >= width || y >= height {
+                map_content.push(' ');
+                continue;
+            }
+
+            // Priority: Pop > Building > Designation > Terrain
+            if pop_positions.iter().any(|&(px, py)| px == x && py == y) {
+                map_content.push_str(&"☺".cyan().bold().to_string());
+                continue;
+            }
+
+            if let Some(bt) = building_map.get(&(x, y)) {
+                let s = match bt {
+                    BuildingType::Wall => "█".white().to_string(),
+                    _ => "□".yellow().to_string(),
+                };
+                map_content.push_str(&s);
+                continue;
+            }
+
+            if let Some((_, _, dt)) = designation_positions
+                .iter()
+                .find(|&&(dx, dy, _)| dx == x && dy == y)
+            {
+                let c = match dt {
+                    DesignationType::Mine => '%',
+                    DesignationType::Chop => '/',
+                    DesignationType::Demolish => 'X',
+                    DesignationType::Repair => '+',
+                    DesignationType::SetZone(_) => 'Z',
+                    DesignationType::Tame => 'T',
+                    DesignationType::ClearFlora => 'F',
+                    DesignationType::JuryRig => 'J',
+                    DesignationType::Cannibalize => 'C',
+                    DesignationType::Destroy => 'D',
+                    DesignationType::CollectSample => 'S',
+                };
+                map_content.push_str(&format!("{c}").magenta().to_string());
+                continue;
+            }
+
+            let tile = terrain_tiles
+                .get(&(x, y))
+                .copied()
+                .unwrap_or(TerrainType::Grass);
+            let s = match tile {
+                TerrainType::Grass => "·".green().dim().to_string(),
+                TerrainType::Dirt => ",".yellow().to_string(),
+                TerrainType::Rock => "▲".white().dim().to_string(),
+                TerrainType::Water => "≈".blue().to_string(),
+                TerrainType::Tree => "♣".green().bold().to_string(),
+                TerrainType::Path => "=".white().to_string(),
+                TerrainType::Shrub => "\"".green().dim().to_string(),
+                TerrainType::Sapling => "t".green().dim().to_string(),
+                TerrainType::DeepRock => "▓".white().dim().to_string(),
+                TerrainType::Crater => "o".white().dim().to_string(),
+                TerrainType::MagmaRock => "≈".red().to_string(),
+                TerrainType::SporeBloom => "♣".magenta().to_string(),
+                TerrainType::Artifact => "Ω".yellow().bold().to_string(),
+                TerrainType::FaultLine(true) => "≈".red().to_string(),
+                TerrainType::FaultLine(false) => "–".white().dim().to_string(),
+            };
+            map_content.push_str(&s);
+        }
+        map_content.push('\n');
+    }
+
+    map_content.push('\n');
+    map_content.push_str(&legend);
+
+    print_dashboard_panel(
+        &format!("Map around ({center_x}, {center_y})"),
+        &map_content,
+        None,
+        None,
+    );
 }
 
 fn build_at(world: &mut World, building_type: BuildingType, x: i32, y: i32) {
