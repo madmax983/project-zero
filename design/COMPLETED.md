@@ -700,3 +700,4 @@
 - [x] `INT-1010` Integration: The Archaeological Contagion -> Chronicle - completed 2026-06-06
 - [x] `289` The Mimetic Plague — `specs/289-mimetic-plague.md` — completed 2026-06-06
 - [x] `INT-1112` Integration: Tectonic Fracking -> Chronicle - completed 2026-10-31
+- [x] `1052` Pollination Vectors — `specs/1052-pollination-vectors.md` — completed 2024-06-06

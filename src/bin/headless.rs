@@ -1019,6 +1019,7 @@ fn format_action_type_headless(action: scale::layer1::ActionType) -> String {
         ActionType::RealityCollapse => "🔥 Reality Collapse".to_string(),
         ActionType::PerformAncientRoutine => "🗿 Ancient Routine".to_string(),
         ActionType::MemeticObsession => "🌀 Memetic Obsession".to_string(),
+        ActionType::Pollinate => "🌸 Pollinating".to_string(),
     }
 }
 

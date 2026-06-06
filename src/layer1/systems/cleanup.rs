@@ -34,6 +34,7 @@ pub fn register(schedule: &mut Schedule) {
             update_event_buffer::<crate::layer1::medical::PatientTreated>,
             update_event_buffer::<crate::layer1::eureka::EurekaEvent>,
             update_event_buffer::<crate::layer1::items::UnequipEvent>,
+
         )
             .in_set(Layer1SystemSet::EventCleanup),
     );
@@ -46,6 +47,7 @@ pub fn register(schedule: &mut Schedule) {
             update_event_buffer::<crate::layer1::skills::XpGainEvent>,
             update_event_buffer::<crate::layer1::resources::MiningEvent>,
             update_event_buffer::<crate::layer1::cryo_prison::SabotageEvent>,
+            update_event_buffer::<crate::layer1::agriculture::pollination::GrowthCycleEvent>,
         )
             .in_set(Layer1SystemSet::EventCleanup),
     );

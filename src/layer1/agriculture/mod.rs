@@ -20,3 +20,5 @@ pub use farm::*;
 pub use gastronomy::*;
 pub use husbandry::*;
 pub use zero_g_flora::*;
+pub mod pollination;
+pub use pollination::*;

@@ -49,6 +49,7 @@ pub enum ActionType {
     ///
     /// See \[`crate::layer1::actions::work::evaluate_work`\].
     Work,
+    Pollinate,
     /// Protest against current conditions in a mob.
     Protest,
     /// Repair damaged structures to prevent collapse.
@@ -206,7 +207,7 @@ pub enum HobbyType {
 
 impl ActionType {
     /// Total number of action types. Used for array sizing.
-    pub const COUNT: usize = 49;
+    pub const COUNT: usize = 50;
 
     /// Converts action type to a unique array index (0..COUNT-1).
     #[must_use]
@@ -261,6 +262,7 @@ impl ActionType {
             Self::Gossip => 44,
             Self::Philosophize => 45,
             Self::PerformAncientRoutine => 47,
+            Self::Pollinate => 48,
         }
     }
 

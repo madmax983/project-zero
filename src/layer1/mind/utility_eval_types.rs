@@ -435,6 +435,8 @@ pub struct UtilityAIBuffer {
     pub libraries: Vec<ScorableCandidate>,
     /// Buffer for refining candidates.
     pub refining: Vec<ScorableCandidate>,
+    /// Buffer for crops needing pollination.
+    pub unpollinated_crops: Vec<ScorableCandidate>,
     /// Buffer for work designation candidates.
     pub work_designations: Vec<ScorableCandidate>,
     /// Buffer for repair designation candidates.
