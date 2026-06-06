@@ -318,6 +318,7 @@ pub(crate) fn check_work_adjacency(
     if action != ActionType::Work
         && action != ActionType::Repair
         && action != ActionType::ScrawlMemeticSigil
+        && action != ActionType::MemeticObsession
     {
         return false;
     }

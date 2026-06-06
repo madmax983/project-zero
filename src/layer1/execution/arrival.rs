@@ -116,6 +116,10 @@ fn process_arrival(
             );
             true
         }
+        ActionType::MemeticObsession => {
+            // Keep the pop occupied at their current location doing nothing productive
+            false // Return false so they don't pop off the queue next tick
+        }
         ActionType::ScrawlMemeticSigil => {
             handle_scrawl_memetic_sigil_arrival(
                 target_pos,
