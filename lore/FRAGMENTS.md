@@ -9185,3 +9185,38 @@ What you threw into the wormhole.
 - The Chrono-Bailiffs
 - Paradox Sweepers
 - Horizon Collectors
+
+## The Cargo Cult Diplomat Fragments (Spec 1287)
+
+## Fragment Type: [DIVINE_AMBASSADOR_NAME]
+Names given to the crashed probe.
+
+- The Metal Angel
+- The Sky Envoy
+- The Silent Voice
+- The Iron Messenger
+- The Star-Fallen God
+- The Silver Herald
+- The Monolith
+- The Burning Eye
+
+## Fragment Type: [TRIBUTE_ITEM]
+Resources offered to the crashed probe.
+
+- sacred earth and bone
+- their finest forged weapons
+- unblemished crystal ores
+- the first harvest
+- hand-carved stone idols
+- raw fuel cells (they think it is food)
+- blood from the hunt
+
+## Fragment Type: [DISRESPECT_ACT]
+Actions taken by the empire to "correct" the colony's behavior.
+
+- forcefully dismantling the altar
+- attempting to extract the data core
+- deploying automated pacification drones
+- dropping re-education leaflets
+- a low-yield orbital warning strike
+- beaming aggressive override commands
