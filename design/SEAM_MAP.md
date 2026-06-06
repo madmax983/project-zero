@@ -1367,3 +1367,9 @@
 - **Glue added:** `reset_isolation_on_trade_system` and `silence_cult_chronicle_bridge` in `src/layer3/integration.rs` to reset isolation level on successful trade and record Silence Cult emergence in Chronicle.
 - **Schedule:** Registered in `src/simulation.rs` in `SimulationSchedule`
 - **Tests:** `tests/integration/weight_of_silence_bridge.rs` (2 tests)
+
+### INT-1010: The Archaeological Contagion -> Chronicle
+- **Date:** 2026-06-06
+- **Systems connected:** `ExcavationEvent` -> `archaeological_contagion_chronicle_bridge` -> `AddChronicleEvent`
+- **Glue added:** Added `archaeological_contagion_chronicle_bridge` in `src/layer1/core/integration.rs` to record a major event in the Chronicle when Ancient Ruins are excavated.
+- **Tests:** `tests/integration/archaeological_contagion_chronicle.rs`
