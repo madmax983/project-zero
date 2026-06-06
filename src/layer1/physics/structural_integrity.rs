@@ -90,13 +90,17 @@ impl RoofGrid {
 /// Returns true if stable (supported or no roof), false if unstable.
 pub fn check_stability(world: &mut World, pos: GridPosition) -> bool {
     // 1. Check Roof
-    let roof = world.resource::<RoofGrid>();
+    let Some(roof) = world.get_resource::<RoofGrid>() else {
+        return true; // Safe if there is no roof grid
+    };
     if !roof.has_roof(pos.x, pos.y) {
         return true; // No roof = safe
     }
 
     // 2. Check Self Support (Rock)
-    let terrain = world.resource::<TerrainGrid>();
+    let Some(terrain) = world.get_resource::<TerrainGrid>() else {
+        return true; // Safe if there is no terrain grid
+    };
     if terrain.get(pos.x as usize, pos.y as usize) == Some(TerrainType::Rock) {
         return true;
     }
@@ -247,6 +251,14 @@ mod tests {
         // ... (mine_rock logic updates terrain)
         // Check roof remains
         assert!(roof_grid.has_roof(5, 5));
+    }
+
+    #[test]
+    fn test_check_stability_safe_failure_without_resources() {
+        let mut world = World::new();
+        // Missing RoofGrid and TerrainGrid
+        let is_stable = check_stability(&mut world, GridPosition { x: 5, y: 5 });
+        assert!(is_stable, "Should default to stable if resources are missing");
     }
 
     #[test]
