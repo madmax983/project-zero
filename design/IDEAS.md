@@ -22875,3 +22875,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you exploit the richest, safest (from conventional threats) system in the sector, knowing you are at the mercy of an unknowable, playful entity that might accidentally crush your entire fleet just for fun?
 
 ---
+
+## The Memorial Deficit
+
+**Layer:** 1 -> 3
+
+**Fantasy:** A culture so obsessed with honoring its past that it paralyzes its future.
+
+**Mechanic:** When a highly skilled or decorated Pop dies, their family and peers demand the construction of a permanent Memorial on a high-value tile. These Memorials provide immense, system-wide cultural and diplomatic unity (Layer 3). However, they can never be demolished without causing catastrophic local unrest and rebellion (Layer 1).
+
+**Emergence:** You fight a glorious, brutal defensive war over your capital. Thousands of your best pilots and soldiers die to save the planet. Decades later, your capital is effectively unlivable because 80% of its prime real estate is occupied by mandatory, untouchable monuments to the war heroes, crippling your industrial capacity.
+
+**Tension:** Do you deliberately suppress the heroics of your people to avoid the permanent infrastructural tax of honoring them, or embrace the cultural power of memorials at the cost of your physical space?
+
+---
+
+## Orphaned Logistics
+
+**Layer:** 2 -> 1
+
+**Fantasy:** Abandoned automated systems dutifully executing orders that no longer make sense.
+
+**Mechanic:** When a major trade hub or supply depot (Layer 2) is destroyed, the automated cargo ships assigned to it don't always self-destruct. Instead, they enter an "Orphaned" state, continuously trying to complete their last known manifesto. They will blindly pick up resources from functioning colonies and attempt to deliver them to the destroyed coordinates, essentially dumping massive amounts of valuable cargo into the void or onto ruined worlds.
+
+**Emergence:** You lose a critical agricultural hub to a pirate raid. You stabilize the sector, but notice a neighboring industrial world is slowly starving. You investigate and realize a massive fleet of Orphaned freighters is meticulously strip-mining the industrial world's emergency food reserves and dropping them into the asteroid belt where the farm used to be.
+
+**Tension:** Do you waste military resources hunting down your own harmless, but economically devastating, automated civilian fleets, or try to rebuild the hub exactly where it was just to give them a place to unload?
+
+---
+
+## The Subconscious Grid
+
+**Layer:** 1
+
+**Fantasy:** A colony's physical infrastructure subtly reacting to the collective mood of its inhabitants.
+
+**Mechanic:** In late-game colonies heavily reliant on "Smart-Grid" or biomechanical infrastructure, the power grid begins to interface with the Pops' ambient stress levels. High colony-wide stress or low morale causes the grid to become "anxious"—lights flicker, doors open slowly, and industrial machines miscalibrate. High happiness causes the grid to become "eager," slightly over-clocking machinery but increasing the risk of burnout.
+
+**Emergence:** A severe, long-lasting famine strikes the colony. The Pops are terrified. In response, the Subconscious Grid instinctively triggers a full lockdown protocol, sealing all blast doors and shutting down power to non-essential areas to "protect" the inhabitants, trapping the surviving farmers outside and preventing them from harvesting the few remaining crops.
+
+**Tension:** Do you risk relying on hyper-efficient smart technology that might have an unpredictable psychological breakdown, or stick to robust, dumb infrastructure that will never adapt to emergencies?
+
+---
