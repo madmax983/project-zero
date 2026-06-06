@@ -13,7 +13,7 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::mycelial::detect_tripwire_step,
             crate::layer1::mycelial::aggro_network_entities,
         )
-            .in_set(super::Layer1SystemSet::Observation),
+            .in_set(Layer1SystemSet::Observation),
     );
     schedule.add_systems(
         (
@@ -46,6 +46,12 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::integration::waste_scent_bridge,
             crate::layer1::core::integration::flora_scent_bridge_system,
             crate::layer1::core::integration::digital_immortality_chronicle_bridge,
+        )
+            .in_set(Layer1SystemSet::Observation),
+    );
+
+    schedule.add_systems(
+        (
             crate::layer1::core::integration::visitor_chronicle_bridge,
             crate::layer1::psychology::simulacrum::simulacrum_broadcast_system,
             crate::layer1::core::integration::simulacrum_chronicle_bridge,
@@ -90,17 +96,26 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::psychology::cryo_dreams::cryo_dream_system
                 .after(crate::layer1::health::despawn_dead_entities_system),
             cleanup_dream_marker_system.after(dream_system),
-            #[cfg(feature = "nova")]
+        )
+            .in_set(Layer1SystemSet::Observation),
+    );
+
+    #[cfg(feature = "nova")]
+    schedule.add_systems(
+        (
             crate::experimental::dream_economy::harvest_dreams_system
                 .after(crate::layer1::dreams::dream_system),
-            #[cfg(feature = "nova")]
             crate::experimental::dream_economy::nightmare_paranoia_system,
-            #[cfg(feature = "nova")]
             crate::ui::selection::observer_awareness_system
                 .after(crate::layer1::health::despawn_dead_entities_system),
-            #[cfg(feature = "nova")]
             crate::layer1::machine_consciousness::machine_personality_system
                 .after(crate::layer1::health::despawn_dead_entities_system),
+        )
+            .in_set(Layer1SystemSet::Observation),
+    );
+
+    schedule.add_systems(
+        (
             crate::layer1::void_stare::update_void_exposure_system
                 .after(crate::layer1::health::despawn_dead_entities_system),
             crate::layer1::void_stare::void_manifestation_system
@@ -121,6 +136,12 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::rumor::generate_rumor_system
                 .after(crate::layer1::health::despawn_dead_entities_system),
             crate::layer1::rumor::exchange_rumors_system,
+        )
+            .in_set(Layer1SystemSet::Observation),
+    );
+
+    schedule.add_systems(
+        (
             crate::layer1::culture::nostalgia::nostalgia_spread_system
                 .after(crate::layer1::rumor::exchange_rumors_system)
                 .after(crate::layer1::health::despawn_dead_entities_system),
@@ -134,6 +155,12 @@ pub fn register(schedule: &mut Schedule) {
                 .after(crate::layer1::health::despawn_dead_entities_system),
             crate::layer1::funeral::grief_system
                 .after(crate::layer1::health::despawn_dead_entities_system),
+        )
+            .in_set(Layer1SystemSet::Observation),
+    );
+
+    schedule.add_systems(
+        (
             crate::layer1::ancestral_graves::grave_visit_system
                 .after(crate::layer1::funeral::grief_system),
             crate::layer1::unrest::calculate_unrest_system.after(decay_needs_system),
@@ -168,6 +195,12 @@ pub fn register(schedule: &mut Schedule) {
                 .after(check_stress_breakdown_system),
             crate::layer1::totems::unequip_totem_system.after(decay_needs_system),
             crate::layer1::administration::edicts::update_policy_tradition_system,
+        )
+            .in_set(Layer1SystemSet::Observation),
+    );
+
+    schedule.add_systems(
+        (
             crate::layer1::administration::edicts::handle_revoke_policy_system,
             update_breakdown_system.after(check_stress_breakdown_system),
             crate::layer1::mind::process_fugue_onset.after(check_stress_breakdown_system),
@@ -198,6 +231,12 @@ pub fn register(schedule: &mut Schedule) {
             check_generational_friction_system.after(decay_needs_system),
             crate::layer1::social::process_generational_dissonance_system.after(decay_needs_system),
             crate::layer1::social::evaluate_safety_edicts_system.after(decay_needs_system),
+        )
+            .in_set(Layer1SystemSet::Observation),
+    );
+
+    schedule.add_systems(
+        (
             crate::layer1::hobby::assign_hobby_system.after(decay_needs_system),
             crate::layer1::law::predictive_policing::check_prediction_system
                 .after(decay_needs_system),
@@ -249,6 +288,12 @@ pub fn register(schedule: &mut Schedule) {
                 .after(crate::layer1::culture::cult_of_first_ship::first_ship_destruction_system),
             crate::layer1::integration::issue_placebo_from_edict_system.after(decay_needs_system),
             crate::layer1::social::placebo::placebo_tick_system.after(decay_needs_system),
+        )
+            .in_set(Layer1SystemSet::Observation),
+    );
+
+    schedule.add_systems(
+        (
             crate::layer1::social::placebo::reveal_betrayal_system.after(decay_needs_system),
             crate::layer1::social::exile::process_banishments.after(decay_needs_system),
             crate::layer1::social::exile::evaluate_exile_returns.after(decay_needs_system),
@@ -296,37 +341,42 @@ pub fn register(schedule: &mut Schedule) {
             .in_set(Layer1SystemSet::Observation),
     );
 
+    #[cfg(feature = "nova")]
     schedule.add_systems(
         (
-            #[cfg(feature = "nova")]
             crate::experimental::bioluminescent_trails::fade_bioluminescent_trails_system.after(
                 crate::experimental::bioluminescent_trails::spawn_bioluminescent_trails_system,
             ),
-            #[cfg(feature = "nova")]
             crate::experimental::sympathetic_architecture::sympathetic_architecture_system
                 .after(crate::layer1::health::despawn_dead_entities_system),
-            #[cfg(feature = "nova")]
             crate::experimental::psychic_resonance::psychic_resonance_system
                 .after(crate::layer1::needs::decay_needs_system),
-            #[cfg(feature = "nova")]
             crate::experimental::sleep_deprived_savant::sleep_deprived_savant_system,
-            #[cfg(feature = "nova")]
             crate::experimental::fever_pitch::fever_pitch_system
                 .after(crate::layer1::needs::decay_needs_system),
-            #[cfg(feature = "nova")]
             crate::experimental::genetic_memory::absorb_genetic_memory_system
                 .after(crate::layer1::health::despawn_dead_entities_system),
-            #[cfg(feature = "nova")]
+        )
+            .in_set(Layer1SystemSet::Observation),
+    );
+
+    #[cfg(feature = "nova")]
+    schedule.add_systems(
+        (
             crate::experimental::genetic_memory::inherit_genetic_memory_system
                 .after(crate::experimental::genetic_memory::absorb_genetic_memory_system),
-            crate::layer1::psychic::apply_psychic_radiation_system
-                .after(crate::layer1::needs::decay_needs_system),
-            #[cfg(feature = "nova")]
             crate::experimental::meme_plague::process_meme_contagion
                 .after(crate::layer1::needs::decay_needs_system),
-            #[cfg(feature = "nova")]
             crate::experimental::meme_plague::apply_meme_effects
                 .after(crate::experimental::meme_plague::process_meme_contagion),
+        )
+            .in_set(Layer1SystemSet::Observation),
+    );
+
+    schedule.add_systems(
+        (
+            crate::layer1::psychic::apply_psychic_radiation_system
+                .after(crate::layer1::needs::decay_needs_system),
         )
             .in_set(Layer1SystemSet::Observation),
     );
@@ -349,6 +399,12 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::social::gossip_economy::spawn_broker_system
                 .after(crate::layer1::social::gossip_economy::intel_decay_system),
             crate::layer1::social::proximity_social_system.after(modify_affinity_system),
+        )
+            .in_set(Layer1SystemSet::Observation),
+    );
+
+    schedule.add_systems(
+        (
             crate::layer1::biology::genetics::splicers_dilemma::evaluate_social_friction_system
                 .after(crate::layer1::social::proximity_social_system),
             crate::layer1::social::pen_pals::update_pen_pals_system.after(modify_affinity_system),
@@ -368,13 +424,24 @@ pub fn register(schedule: &mut Schedule) {
             chronicle_event_handler_system.after(check_milestones_system),
             crate::layer1::festivals::check_for_festivals_system
                 .after(chronicle_event_handler_system),
+        )
+            .in_set(Layer1SystemSet::Observation),
+    );
+
+    schedule.add_systems(
+        (
             crate::layer1::festivals::festival_lifecycle_system
                 .after(chronicle_event_handler_system),
             chronicle_rumor_bridge_system.after(check_milestones_system),
-            #[cfg(feature = "nova")]
+        )
+            .in_set(Layer1SystemSet::Observation),
+    );
+
+    #[cfg(feature = "nova")]
+    schedule.add_systems(
+        (
             crate::layer1::oral_tradition::collect_chronicles_system
                 .after(chronicle_event_handler_system),
-            #[cfg(feature = "nova")]
             crate::layer1::oral_tradition::storytelling_system
                 .after(crate::layer1::rumor::exchange_rumors_system),
         )
@@ -400,6 +467,12 @@ pub fn register(schedule: &mut Schedule) {
                 .after(crate::layer1::social::cargo_cult::apply_cargo_cult_belief_system),
             crate::layer1::integration::mass_driver_chronicle_bridge
                 .after(crate::layer1::logistics::mass_driver::package_arrival_system),
+        )
+            .in_set(Layer1SystemSet::Observation),
+    );
+
+    schedule.add_systems(
+        (
             crate::layer1::integration::predatory_weather_emission_bridge_system,
             crate::layer1::integration::predatory_weather_impact_bridge_system,
             crate::layer1::integration::hologram_failure_chronicle_bridge
@@ -440,11 +513,23 @@ pub fn register(schedule: &mut Schedule) {
                 .after(crate::layer1::pop::handle_pop_death_system),
             crate::layer1::ad_screen::update_ad_screens_system,
             crate::layer1::integration::industrial_rhythm_morale_bridge,
+        )
+            .in_set(Layer1SystemSet::Observation),
+    );
+
+    schedule.add_systems(
+        (
             crate::layer1::integration::great_work_chronicle_bridge,
             crate::layer1::integration::gene_splicing_chronicle_bridge,
             crate::layer1::integration::crop_mutation_chronicle_bridge,
             crate::layer1::integration::grafting_chronicle_bridge,
             crate::layer1::integration::temporal_stutter_chronicle_bridge,
+        )
+            .in_set(Layer1SystemSet::Observation),
+    );
+
+    schedule.add_systems(
+        (
             crate::layer1::anomalies::temporal_echoes::temporal_echo_maintenance_bridge_system,
             crate::layer1::integration::parasitic_architecture_chronicle_bridge,
             crate::layer1::core::integration::living_architecture_chronicle_bridge,
@@ -473,6 +558,12 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::core::integration::generational_amnesia_chronicle_bridge,
             crate::layer1::integration::access_denied_chronicle_bridge,
             crate::layer1::core::integration::ghost_shift_chronicle_bridge,
+        )
+            .in_set(Layer1SystemSet::Observation),
+    );
+
+    schedule.add_systems(
+        (
             crate::layer1::core::integration::impact_warning_chronicle_bridge,
             crate::layer1::core::integration::diplomatic_incident_chronicle_bridge,
             crate::layer1::integration::hack_hub_chronicle_bridge,
@@ -497,6 +588,12 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::tech::neural_leech::handle_hub_death_system,
             crate::layer1::integration::apply_neural_shock_system
                 .after(crate::layer1::tech::neural_leech::handle_hub_death_system),
+        )
+            .in_set(Layer1SystemSet::Observation),
+    );
+
+    schedule.add_systems(
+        (
             crate::layer1::tech::neural_leech::neural_hub_death_bridge_system,
             crate::layer1::memory_core::implant_memory_core_system,
             crate::layer1::memory_core::harvest_memory_core_system,

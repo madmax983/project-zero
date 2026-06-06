@@ -122,6 +122,12 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::loci::apply_loci_effects_system.after(restore_leisure_system),
             apply_mood_modifiers_system.after(restore_leisure_system),
             mascot_buff_system.after(restore_leisure_system),
+        )
+            .in_set(Layer1SystemSet::Economy),
+    );
+
+    schedule.add_systems(
+        (
             crate::layer1::graffiti::graffiti_observation_system.after(apply_mood_modifiers_system),
             crate::layer1::memetics::memetic_hazards::process_memetic_transmission_system.after(crate::layer1::graffiti::graffiti_observation_system),
             crate::layer1::memetics::parasitic_broadcast_risk_system,
