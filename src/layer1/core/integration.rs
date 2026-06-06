@@ -2106,6 +2106,30 @@ pub fn impact_warning_chronicle_bridge(
     }
 }
 
+/// INT-1111: Bridges `ActionType::VoidStare` manifestation to `AddChronicleEvent` (Chronicle).
+pub fn void_stare_chronicle_bridge(
+    pops: bevy_ecs::system::Query<
+        (bevy_ecs::prelude::Entity, &crate::layer1::utility_types::PopAction),
+        bevy_ecs::prelude::Changed<crate::layer1::utility_types::PopAction>,
+    >,
+    mut chronicle_events: bevy_ecs::event::EventWriter<
+        crate::layer1::core::chronicle::AddChronicleEvent,
+    >,
+) {
+    for (entity, action) in &pops {
+        if matches!(
+            action.current,
+            crate::layer1::utility_types::ActionType::VoidStare
+        ) && action.ticks_committed == 0
+        {
+            chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
+                importance: crate::layer1::core::chronicle::EventImportance::Standard,
+                text: format!("Pop {:?} was seen staring vacantly into the abyss.", entity),
+            });
+        }
+    }
+}
+
 /// INT-642: Bridges the construction of a Simulacrum to AddChronicleEvent (Chronicle).
 pub fn simulacrum_chronicle_bridge(
     query: bevy_ecs::prelude::Query<

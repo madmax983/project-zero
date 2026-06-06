@@ -1360,3 +1360,10 @@
 - **Systems connected:** `adapt_gravity_caste_system`, `apply_gravity_penalties_system` -> `SimulationSchedule`
 - **Glue added:** Registered `adapt_gravity_caste_system` and `apply_gravity_penalties_system` to `Layer1SystemSet::Environment` in `src/layer1/systems/environment.rs`.
 - **Tests:** `tests/integration/gravity_caste.rs`
+
+### INT-1111: Void Stare -> Chronicle
+- **Date:** 2026-06-06
+- **Systems connected:** `void_manifestation_system` -> `void_stare_chronicle_bridge` -> `AddChronicleEvent`
+- **Glue added:** Added `void_stare_chronicle_bridge` in `src/layer1/core/integration.rs` to detect when a pop begins staring vacantly into the abyss and record it in the Chronicle.
+- **Schedule:** Added after `void_manifestation_system` in `Layer1SystemSet::Observation` within `src/layer1/systems/observation.rs`.
+- **Tests:** `tests/integration/void_stare_bridge.rs` (1 test)

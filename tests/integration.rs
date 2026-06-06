@@ -514,3 +514,6 @@ mod retro_contract_chronicle;
 mod ruin_integration;
 #[path = "integration/solar_flare_chronicle_bridge.rs"]
 mod solar_flare_chronicle_bridge;
+
+#[path = "integration/void_stare_bridge.rs"]
+mod void_stare_bridge;
