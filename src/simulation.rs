@@ -626,6 +626,8 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
         crate::layer1::environment::thermal_camouflage::predator_detection_system
             .after(crate::layer1::environment::thermal_camouflage::update_thermal_signatures),
         crate::layer1::culture::celestial_cemeteries::clear_cemetery_system,
+        crate::layer1::culture::memorial_revolt::handle_pet_death_system,
+        crate::layer1::culture::memorial_revolt::process_memorial_demand_system,
     ));
 
     schedule.add_systems((
@@ -1106,6 +1108,7 @@ mod tests {
         world.init_resource::<Events<crate::layer1::environment::disasters::DisasterEvent>>();
         world.init_resource::<Events<crate::layer2::tourism::disaster_tourism::GriefTouristArrivalEvent>>();
         world.init_resource::<Events<crate::layer1::culture::celestial_cemeteries::ClearCemeteryEvent>>();
+        world.init_resource::<Events<crate::layer1::culture::memorial_revolt::PetDeathEvent>>();
         world.init_resource::<Events<crate::layer2::celestial_library::LibraryDonationEvent>>();
         world.init_resource::<Events<crate::layer2::station::ShipConstructionCompletedEvent>>();
         world.init_resource::<Events<crate::layer1::agony_extract::HarvestAgonyExtractEvent>>();
