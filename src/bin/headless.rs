@@ -321,7 +321,12 @@ fn handle_command(world: &mut World, input: &str) -> bool {
 
     match command.as_str() {
         "quit" | "exit" | "q" => {
-            println!("Goodbye!");
+            print_dashboard_panel(
+                "INFO",
+                "Goodbye!",
+                Some(comfy_table::Color::Cyan),
+                Some(comfy_table::Attribute::Bold),
+            );
             return false;
         }
         "help" | "h" | "?" => print_help(),
@@ -1052,13 +1057,6 @@ fn print_map(world: &mut World, center_x: i32, center_y: i32) {
     let (width, height, terrain_tiles) =
         get_terrain_tiles_in_radius(world.resource::<TerrainGrid>(), center_x, center_y, radius);
 
-    println!(
-        "{}",
-        format!("=== Map around ({center_x}, {center_y}) ===")
-            .green()
-            .bold()
-    );
-
     // Collect pop positions
     let pop_positions: Vec<(i32, i32)> = world
         .query::<&GridPosition>()
@@ -1189,7 +1187,7 @@ fn print_map(world: &mut World, center_x: i32, center_y: i32) {
     map_content.push_str(&legend);
 
     print_dashboard_panel(
-        &format!("Map around ({center_x}, {center_y})"),
+        &format!("=== Map around ({center_x}, {center_y}) ==="),
         &map_content,
         None,
         None,
