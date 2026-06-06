@@ -1373,3 +1373,9 @@
 - **Systems connected:** `ExcavationEvent` -> `archaeological_contagion_chronicle_bridge` -> `AddChronicleEvent`
 - **Glue added:** Added `archaeological_contagion_chronicle_bridge` in `src/layer1/core/integration.rs` to record a major event in the Chronicle when Ancient Ruins are excavated.
 - **Tests:** `tests/integration/archaeological_contagion_chronicle.rs`
+
+### INT-1112: Tectonic Fracking -> Chronicle & Systems
+- **Date:** 2026-10-31
+- **Systems connected:** `trigger_tectonic_fracking_system` -> `tectonic_fracking_system` -> `tectonic_fracking_chronicle_bridge` -> `AddChronicleEvent`
+- **Glue added:** Added `TectonicFracker` to `BuildingType::Landfill`. Added `trigger_tectonic_fracking_system` to fire `FrackEvent` periodically when waste is high. Added `tectonic_fracking_chronicle_bridge` to log major events.
+- **Tests:** `tests/integration/tectonic_fracking_bridge.rs`

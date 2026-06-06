@@ -519,3 +519,5 @@ mod weight_of_silence_bridge;
 
 #[path = "integration/archaeological_contagion_chronicle.rs"]
 mod archaeological_contagion_chronicle;
+#[path = "integration/tectonic_fracking_bridge.rs"]
+mod tectonic_fracking_bridge;
