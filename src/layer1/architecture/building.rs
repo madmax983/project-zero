@@ -1688,6 +1688,8 @@ fn configure_storage(entity: &mut EntityWorldMut, building_type: BuildingType) {
                 wood_bonus: 0.0,
                 stone_bonus: 0.0,
             });
+            // ADDED: Landfills function as tectonic frackers (Spec 1112)
+            entity.insert(crate::layer1::geology::fracking::TectonicFracker);
         }
         _ => {}
     }

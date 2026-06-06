@@ -2525,3 +2525,46 @@ pub fn archaeological_contagion_chronicle_bridge(
         }
     }
 }
+
+/// INT-1112: Periodically triggers `FrackEvent` on `TectonicFracker` buildings when waste is high.
+pub fn trigger_tectonic_fracking_system(
+    mut events: bevy_ecs::event::EventWriter<crate::layer1::geology::fracking::FrackEvent>,
+    query: bevy_ecs::system::Query<
+        bevy_ecs::entity::Entity,
+        bevy_ecs::query::With<crate::layer1::geology::fracking::TectonicFracker>,
+    >,
+    resources: Option<bevy_ecs::system::Res<crate::layer1::resources::ColonyResources>>,
+    mut timer: bevy_ecs::system::Local<f32>,
+    time: bevy_ecs::system::Res<bevy_time::Time>,
+) {
+    *timer += time.delta_secs();
+    if *timer >= 10.0 {
+        *timer = 0.0;
+        if let Some(res) = resources {
+            if res.waste >= 50.0 {
+                for entity in query.iter() {
+                    events.send(crate::layer1::geology::fracking::FrackEvent { entity });
+                }
+            }
+        }
+    }
+}
+
+/// INT-1112: Bridges `FrackEvent` to `AddChronicleEvent` (Chronicle).
+pub fn tectonic_fracking_chronicle_bridge(
+    mut frack_events: bevy_ecs::event::EventReader<crate::layer1::geology::fracking::FrackEvent>,
+    mut chronicle_events: bevy_ecs::event::EventWriter<
+        crate::layer1::core::chronicle::AddChronicleEvent,
+    >,
+) {
+    let mut fracked = false;
+    for _ in frack_events.read() {
+        fracked = true;
+    }
+    if fracked {
+        chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
+            text: "Tectonic fracking has been initiated, injecting toxic waste deep into the crust for fuel. The ground groans in protest.".to_string(),
+            importance: crate::layer1::core::chronicle::EventImportance::Major,
+        });
+    }
+}
