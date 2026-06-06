@@ -1,3 +1,10 @@
+//! Funerals and Corpse Management.
+//!
+//! This module handles the psychological impact of unburied dead and the mechanics of graves.
+//! Pops witnessing a `Corpse` within their vicinity will suffer severe grief penalties
+//! recorded in their `Memories`. Proper disposal of bodies into a `Grave` mitigates this
+//! and provides closure.
+
 use crate::layer1::map::GridPosition;
 use crate::layer1::memory::{Memories, MemoryType};
 use crate::layer1::utility_types::manhattan_distance;
@@ -5,6 +12,26 @@ use crate::shared::time::SimulationTime;
 use bevy_ecs::prelude::*;
 
 /// Represents a dead body of a Pop.
+///
+/// Witnesses to corpses suffer negative morale consequences until the body is buried.
+///
+/// # Examples
+/// ```rust
+/// use scale::layer1::culture::funeral::Corpse;
+/// use scale::layer1::map::GridPosition;
+/// use bevy_ecs::prelude::*;
+///
+/// let mut world = World::new();
+/// let corpse = world.spawn((
+///     Corpse {
+///         name: "Bob".to_string(),
+///         decay: 0.1,
+///     },
+///     GridPosition { x: 5, y: 5 },
+/// )).id();
+///
+/// assert_eq!(world.get::<Corpse>(corpse).unwrap().name, "Bob");
+/// ```
 #[derive(Component, Debug, Clone)]
 pub struct Corpse {
     /// Name of the deceased.

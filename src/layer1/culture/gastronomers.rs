@@ -1,8 +1,28 @@
+//! The Gastronomers and Culinary Singularity.
+//!
+//! A high-tier cultural phenomenon where food transcends sustenance.
+//! If the `EmpireAdvancement` reaches a sufficient level, the colony may experience a
+//! `CulinarySingularityEvent`. This permanently alters the expectations of Gastronomer factions,
+//! demanding exquisite cuisine or suffering massive morale penalties.
+
 use crate::layer1::entities::pop::Pop;
 use crate::layer1::social::factions::{FactionData, FactionId, Factions};
 use crate::layer1::social::morale::{MoodModifier, Morale};
 use bevy_ecs::prelude::*;
 
+/// A global tracker for the overall cultural and technological advancement of the colony.
+///
+/// High advancement unlocks complex societal demands, such as the `CulinarySingularityEvent`.
+///
+/// # Examples
+/// ```rust
+/// use scale::layer1::culture::gastronomers::EmpireAdvancement;
+///
+/// let mut advancement = EmpireAdvancement::default();
+/// advancement.level = 5;
+///
+/// assert_eq!(advancement.level, 5);
+/// ```
 #[derive(Resource, Default)]
 pub struct EmpireAdvancement {
     pub level: u32,

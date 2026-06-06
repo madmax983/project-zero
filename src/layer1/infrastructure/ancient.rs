@@ -1,3 +1,11 @@
+//! Ancient Infrastructure and Conduits.
+//!
+//! This module introduces ancient power conduits that can be unearthed during mining operations.
+//! When miners dig into tiles containing a [`BuriedConduit`], it becomes an [`ExposedConduit`].
+//! Exposed conduits can provide massive free power to the colony through the `PowerSource` component,
+//! but they come with a dangerous `ConduitRisk`—they have a chance every tick to violently surge,
+//! causing a [`ConduitSurgeEvent`] that can damage surrounding infrastructure.
+
 use crate::layer1::energy::PowerSource;
 use crate::layer1::map::GridPosition;
 use crate::layer1::shipbreaking::MineEvent;
@@ -9,6 +17,27 @@ pub enum ConduitResource {
     Power,
 }
 
+/// Represents an ancient conduit still buried underground.
+///
+/// Needs to be mined via a [`MineEvent`] to become an [`ExposedConduit`].
+///
+/// # Examples
+/// ```rust
+/// use scale::layer1::infrastructure::ancient::{BuriedConduit, ConduitResource};
+/// use scale::layer1::map::GridPosition;
+/// use bevy::prelude::*;
+///
+/// let mut world = World::new();
+/// let conduit_entity = world.spawn((
+///     GridPosition { x: 10, y: 10 },
+///     BuriedConduit {
+///         resource_type: ConduitResource::Power,
+///         yield_amount: 50.0,
+///     }
+/// )).id();
+///
+/// assert!(world.get::<BuriedConduit>(conduit_entity).is_some());
+/// ```
 #[derive(Component)]
 pub struct BuriedConduit {
     pub resource_type: ConduitResource,

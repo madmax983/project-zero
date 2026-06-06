@@ -1,6 +1,31 @@
+//! Linguistics and Dialect Drift.
+//!
+//! The linguistics module simulates the gradual divergence of language across isolated communities.
+//! Each isolated group possesses a `ColonyLanguage` that naturally undergoes `DialectDrift` over time.
+//! As drift increases, `LinguisticNetwork` cohesion drops, making communication less efficient
+//! and requiring `Translator`s to bridge the gap between divergent factions.
+
 use bevy_ecs::prelude::*;
 use rand::Rng;
 
+/// Represents the spoken language of a specific Pop or faction.
+///
+/// Languages drift over time. If the `drift_vector` differs too much between groups,
+/// communication breaks down.
+///
+/// # Examples
+/// ```rust
+/// use scale::layer1::culture::linguistics::ColonyLanguage;
+/// use bevy_ecs::prelude::*;
+///
+/// let mut world = World::new();
+/// let language = world.spawn(ColonyLanguage {
+///     base_id: 1,
+///     drift_vector: vec![0.1, -0.2, 0.05],
+/// }).id();
+///
+/// assert_eq!(world.get::<ColonyLanguage>(language).unwrap().base_id, 1);
+/// ```
 #[derive(Component)]
 pub struct ColonyLanguage {
     pub base_id: u32,

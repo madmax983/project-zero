@@ -1,3 +1,9 @@
+//! Festivals and Anniversaries.
+//!
+//! This module tracks historical `Chronicle` events and triggers periodic `Festival`s
+//! on their anniversaries (e.g., "Founding Day"). Active festivals provide a colony-wide
+//! boost to morale for a duration, encouraging players to create positive history.
+
 use crate::layer1::balance::TICKS_PER_YEAR;
 use crate::layer1::chronicle::{Chronicle, EventImportance};
 use crate::shared::log::MessageLog;
@@ -8,6 +14,21 @@ use bevy_ecs::prelude::*;
 pub const FESTIVAL_DURATION: u64 = 100;
 
 /// Represents an active festival.
+///
+/// An active festival will provide a temporary morale boost to all Pops in the colony.
+///
+/// # Examples
+/// ```rust
+/// use scale::layer1::culture::festivals::Festival;
+///
+/// let festival = Festival {
+///     name: "Founding Day".to_string(),
+///     original_event_tick: 0,
+///     end_tick: 100,
+/// };
+///
+/// assert_eq!(festival.name, "Founding Day");
+/// ```
 #[derive(Debug, Clone)]
 pub struct Festival {
     /// Name of the festival (e.g., "Founding Day Festival").

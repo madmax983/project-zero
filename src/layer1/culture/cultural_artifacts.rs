@@ -1,3 +1,10 @@
+//! Cultural Artifacts and Auras.
+//!
+//! This module introduces `CulturalArtifact`s, which act as focal points of cultural expression.
+//! Artifacts project an aura based on their `ArtifactTheme` (e.g., Victory, Tragedy).
+//! Pops passing within this radius receive temporary `MoodModifier`s, allowing players
+//! to strategically place art to manipulate colony sentiment.
+
 use crate::layer1::entities::pop::Pop;
 use crate::layer1::map::GridPosition;
 use crate::layer1::social::morale::{MoodModifier, Morale};
@@ -10,6 +17,28 @@ pub enum ArtifactTheme {
     Feast,
 }
 
+/// A cultural artifact that projects a mood-altering aura over its surroundings.
+///
+/// Pops walking within the `aura_radius` will temporarily gain morale modifiers
+/// corresponding to the artifact's `theme`.
+///
+/// # Examples
+/// ```rust
+/// use scale::layer1::culture::cultural_artifacts::{CulturalArtifact, ArtifactTheme};
+/// use scale::layer1::map::GridPosition;
+/// use bevy_ecs::prelude::*;
+///
+/// let mut world = World::new();
+/// let artifact = world.spawn((
+///     GridPosition { x: 10, y: 10 },
+///     CulturalArtifact {
+///         theme: ArtifactTheme::Victory,
+///         aura_radius: 5,
+///     }
+/// )).id();
+///
+/// assert_eq!(world.get::<CulturalArtifact>(artifact).unwrap().aura_radius, 5);
+/// ```
 #[derive(Component, Debug)]
 pub struct CulturalArtifact {
     pub theme: ArtifactTheme,

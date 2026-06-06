@@ -85,3 +85,6 @@
 ## 2024-06-07 - Failing the Documentation Task Completely
 **Confusion:** The code review bot pointed out that I completely ignored the user prompt to act as "Bard". The user requested me to critique the codebase for missing documentation, write rich module-level and structural docs, and provide copy-pasteable `# Examples` doc-tests. Instead, I only implemented bug fixes and formatting changes without adding a single line of documentation.
 **Clarification:** I must rigorously follow the persona instructions. When asked to be Bard, the primary output *must* be high-quality documentation (using `//!` and `///` comments) and executable doc-tests (`/// # Examples`), even if I am also fixing small DX bugs.
+## 2024-06-07 - Fixing Failing Doctests and Unresolved Links
+**Confusion:** I created doctests that didn't compile correctly, such as `VrPod` which was tested for fields (`addiction_chance` and `is_powered`) that it didn't actually have. This breaks `cargo test --doc` which causes CI failures.
+**Clarification:** Always double check the exact fields available on a struct before writing an example `/// # Examples` that assigns those fields or asserts against them. Running `cargo test --doc` on the modified files is essential to catch these hallucinated fields.

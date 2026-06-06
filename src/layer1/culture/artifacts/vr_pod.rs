@@ -1,3 +1,10 @@
+//! VR Pods and Virtual Escapism.
+//!
+//! VR Pods are advanced cultural artifacts that allow Pops to escape reality.
+//! While `InVrPod`, a Pop experiences rapid stress reduction and morale recovery.
+//! However, extended use carries the risk of addiction, leading to productivity loss
+//! when they are forced to return to the real world.
+
 use crate::layer1::morale::Morale;
 use crate::layer1::stress::StressTracker;
 use bevy_ecs::prelude::*;
@@ -6,6 +13,22 @@ use bevy_ecs::prelude::*;
 #[derive(Component, Default)]
 pub struct InVrPod;
 
+/// A physical VR Pod structure where Pops can spend time.
+///
+/// Contains logic for power consumption and addiction chance.
+///
+/// # Examples
+/// ```rust
+/// use scale::layer1::culture::artifacts::vr_pod::VrPod;
+/// use bevy_ecs::prelude::*;
+///
+/// let mut world = World::new();
+/// let pod = world.spawn(VrPod {
+///     occupant: None,
+/// }).id();
+///
+/// assert!(world.get::<VrPod>(pod).unwrap().occupant.is_none());
+/// ```
 #[derive(Component)]
 pub struct VrPod {
     pub occupant: Option<Entity>,

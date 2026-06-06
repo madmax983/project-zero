@@ -1,7 +1,29 @@
+//! Nostalgia and Generational Divide.
+//!
+//! This module introduces `Nostalgia` to aging populations. As Pops grow older,
+//! they yearn for the past. This manifests as resistance to new policies and a
+//! propensity to spread "back in my day" rumors via `RumorSpreadEvent`s, which can
+//! impact the morale of younger generations.
+
 use crate::layer1::lifecycle::Age;
 use crate::layer1::social::morale::Morale;
 use bevy_ecs::prelude::*;
 
+/// A component affixed to older Pops representing their yearning for the past.
+///
+/// Pops with Nostalgia are prone to spreading `RumorSpreadEvent`s detailing "the good old days,"
+/// which can demotivate younger generations.
+///
+/// # Examples
+/// ```rust
+/// use scale::layer1::culture::nostalgia::Nostalgia;
+/// use bevy_ecs::prelude::*;
+///
+/// let mut world = World::new();
+/// let elder = world.spawn(Nostalgia).id();
+///
+/// assert!(world.get::<Nostalgia>(elder).is_some());
+/// ```
 #[derive(Component, Debug)]
 pub struct Nostalgia;
 

@@ -1,7 +1,28 @@
+//! The Cult of the First Ship.
+//!
+//! This module implements the "Cult of the First Ship" culture.
+//! When a colony has an intact `FirstShip`, it acts as a `CulturalAnchor` providing
+//! passive morale/leisure bonuses to Pops. However, if the ship is destroyed or dismantled,
+//! it triggers a massive wave of `HolySiteUnrest` among the populace.
+
 use crate::layer1::entities::pop::Pop;
 use crate::layer1::needs::Needs;
 use bevy_ecs::prelude::*;
 
+/// A component representing the intact state of the First Ship.
+///
+/// While this entity exists and is intact, it acts as a cultural anchor for the colony.
+///
+/// # Examples
+/// ```rust
+/// use scale::layer1::culture::cult_of_first_ship::FirstShip;
+/// use bevy_ecs::prelude::*;
+///
+/// let mut world = World::new();
+/// let first_ship = world.spawn(FirstShip { is_intact: true }).id();
+///
+/// assert!(world.get::<FirstShip>(first_ship).unwrap().is_intact);
+/// ```
 #[derive(Component)]
 pub struct FirstShip {
     pub is_intact: bool,
