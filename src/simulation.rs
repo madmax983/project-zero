@@ -366,6 +366,11 @@ fn init_simulation_resources(world: &mut World) {
 
             let mut schedule = build_simulation_schedule();
             schedule.add_systems((
+                crate::layer1::archaeological_contagion::archaeological_infection_system,
+                crate::layer1::archaeological_contagion::ancient_routine_observation_system,
+                crate::layer1::archaeological_contagion::evaluate_ancient_routine,
+            ));
+            schedule.add_systems((
                 (
                     crate::layer2::planetary_spin_up::apply_planetary_torque_system,
                     crate::layer2::planetary_spin_up::calculate_effective_gravity_system,

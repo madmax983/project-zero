@@ -25,6 +25,8 @@ use strum_macros::EnumIter;
 /// finding a designation, walking to it, and performing the task until complete.
 #[derive(Clone, Copy, PartialEq, Eq, Hash, Debug, EnumIter)]
 pub enum ActionType {
+    PerformAncientRoutine,
+
     /// Forms a violent mob due to forged memories collapsing.
     RealityCollapse,
     /// Eat food to reduce hunger.
@@ -255,6 +257,7 @@ impl ActionType {
             Self::Sabotage => 43,
             Self::Gossip => 44,
             Self::Philosophize => 45,
+            Self::PerformAncientRoutine => 10,
         }
     }
 
