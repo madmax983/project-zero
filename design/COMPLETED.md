@@ -1,5 +1,6 @@
 - [x] `1287` The Cargo Cult Diplomat — `specs/1287-the-cargo-cult-diplomat.md` — completed 2026-06-05
 - [x] `1056` The Dead Hand — `specs/1056-the-dead-hand.md` — completed 2024-05-31
+- [x] `1288` The Memorial Revolt — `specs/1288-the-memorial-revolt.md` — completed 2026-06-03
 - [x] `554` The Phantom Signal — `specs/554-the-phantom-signal.md` — completed 2026-05-31
 - [x] `494` Symbiotic Habitation — `specs/494-symbiotic-habitation.md` — completed 2026-05-26
 - [x] `1067` The Void Sirens — `specs/1067-the-void-sirens.md` — completed 2026-02-01

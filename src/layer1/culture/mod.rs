@@ -47,3 +47,4 @@ pub use celestial_cemeteries::*;
 
 pub mod cultural_influence;
 pub use cultural_influence::*;
+pub mod memorial_revolt;
