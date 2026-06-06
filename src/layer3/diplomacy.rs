@@ -5,12 +5,12 @@ use crate::layer1::spore_diplomat::SporeInfection;
 use bevy::prelude::*;
 
 pub mod brain_drain;
+pub mod cargo_cult_diplomat;
 pub mod cultural_pressure;
 pub mod cultural_ransom;
 pub mod dead_internet;
 pub mod endless_draft;
 pub mod fading_homeworld;
-pub mod cargo_cult_diplomat;
 pub mod proxy_wars;
 pub mod succession;
 pub mod wormhole_dumping;

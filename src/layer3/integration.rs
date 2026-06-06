@@ -452,7 +452,10 @@ pub fn retro_contract_failed_bridge_system(
 /// Bridges the execution of trade routes to resetting the isolation level of the colonies involved.
 pub fn reset_isolation_on_trade_system(
     mut trade_events: EventReader<crate::layer2::trade::routes::TradeRouteExecutedEvent>,
-    mut colonies: Query<(Entity, &mut crate::experimental::the_weight_of_silence::ColonyNode)>,
+    mut colonies: Query<(
+        Entity,
+        &mut crate::experimental::the_weight_of_silence::ColonyNode,
+    )>,
     tick: Option<Res<crate::shared::time::SimulationTime>>,
 ) {
     if let Some(tick) = tick {
@@ -476,7 +479,8 @@ pub fn silence_cult_chronicle_bridge(
     for _ in query.iter() {
         chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
             importance: crate::layer1::core::chronicle::EventImportance::Major,
-            text: "A Silence Cult has emerged, demanding an end to external communication!".to_string(),
+            text: "A Silence Cult has emerged, demanding an end to external communication!"
+                .to_string(),
         });
     }
 }

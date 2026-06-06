@@ -363,21 +363,23 @@ mod void_tests {
     fn test_window_facing_void_gets_effect() {
         let mut world = setup_world();
 
-        let window = world.spawn((
-            Building {
-                building_type: BuildingType::Window,
-            },
-            GridPosition { x: 19, y: 5 }, // Edge of map facing East
-            Window {
-                direction: Direction::East,
-                range: 10,
-                view_cone: 0.0,
-            },
-            BeautySource {
-                value: 0.0,
-                radius: 2.0,
-            },
-        )).id();
+        let window = world
+            .spawn((
+                Building {
+                    building_type: BuildingType::Window,
+                },
+                GridPosition { x: 19, y: 5 }, // Edge of map facing East
+                Window {
+                    direction: Direction::East,
+                    range: 10,
+                    view_cone: 0.0,
+                },
+                BeautySource {
+                    value: 0.0,
+                    radius: 2.0,
+                },
+            ))
+            .id();
 
         update_building_map(&mut world);
 
@@ -386,29 +388,33 @@ mod void_tests {
         schedule.run(&mut world);
 
         // Window faces edge of map (void)
-        assert!(world.get::<crate::layer1::void_stare::VoidStareEffect>(window).is_some());
+        assert!(world
+            .get::<crate::layer1::void_stare::VoidStareEffect>(window)
+            .is_some());
     }
 
     #[test]
     fn test_window_blocked_removes_effect() {
         let mut world = setup_world();
 
-        let window = world.spawn((
-            Building {
-                building_type: BuildingType::Window,
-            },
-            GridPosition { x: 18, y: 5 }, // Close to edge
-            Window {
-                direction: Direction::East,
-                range: 10,
-                view_cone: 0.0,
-            },
-            BeautySource {
-                value: 0.0,
-                radius: 2.0,
-            },
-            crate::layer1::void_stare::VoidStareEffect { facing_void: true }, // Has it initially
-        )).id();
+        let window = world
+            .spawn((
+                Building {
+                    building_type: BuildingType::Window,
+                },
+                GridPosition { x: 18, y: 5 }, // Close to edge
+                Window {
+                    direction: Direction::East,
+                    range: 10,
+                    view_cone: 0.0,
+                },
+                BeautySource {
+                    value: 0.0,
+                    radius: 2.0,
+                },
+                crate::layer1::void_stare::VoidStareEffect { facing_void: true }, // Has it initially
+            ))
+            .id();
 
         // Wall blocks the view
         world.spawn((
@@ -426,6 +432,8 @@ mod void_tests {
         schedule.run(&mut world);
 
         // Effect removed because the ray is blocked before hitting the edge
-        assert!(world.get::<crate::layer1::void_stare::VoidStareEffect>(window).is_none());
+        assert!(world
+            .get::<crate::layer1::void_stare::VoidStareEffect>(window)
+            .is_none());
     }
 }

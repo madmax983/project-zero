@@ -104,6 +104,26 @@ impl Default for Hospital {
 use crate::layer1::pop::Job;
 use std::collections::HashMap;
 
+/// Pre-allocated buffer to reduce frame-by-frame memory allocations in `healing_system`.
+#[derive(Resource, Default)]
+struct HealingSystemBuffer {
+    hospitals: HashMap<Entity, Vec<(Entity, f32, bool, bool, bool)>>,
+    health_updates: Vec<(Entity, f32, Entity)>,
+    trauma_updates: Vec<Entity>,
+    sickness_updates: Vec<Entity>,
+}
+
+impl HealingSystemBuffer {
+    fn clear(&mut self) {
+        for patients in self.hospitals.values_mut() {
+            patients.clear();
+        }
+        self.health_updates.clear();
+        self.trauma_updates.clear();
+        self.sickness_updates.clear();
+    }
+}
+
 /// System to heal pops assigned to a hospital.
 /// Handles Health recovery, as well as CryoTrauma and RadiationSickness treatment.
 #[allow(clippy::collapsible_if)]
@@ -113,9 +133,10 @@ pub fn healing_system(world: &mut World) {
         .copied()
         .unwrap_or_default();
 
-    // Group patients by hospital
-    // Key: Hospital Entity, Value: List of (Patient Entity, HP%, HasJob, HasTrauma, HasSickness)
-    let mut hospitals: HashMap<Entity, Vec<(Entity, f32, bool, bool, bool)>> = HashMap::new();
+    let mut buffer = world
+        .remove_resource::<HealingSystemBuffer>()
+        .unwrap_or_default();
+    buffer.clear();
 
     {
         // Query for pops assigned as Patient
@@ -145,7 +166,7 @@ pub fn healing_system(world: &mut World) {
                 };
                 let has_job = job.is_some();
 
-                hospitals.entry(assigned.entity).or_default().push((
+                buffer.hospitals.entry(assigned.entity).or_default().push((
                     entity,
                     hp_percent,
                     has_job,
@@ -156,12 +177,8 @@ pub fn healing_system(world: &mut World) {
         }
     }
 
-    let mut health_updates: Vec<(Entity, f32, Entity)> = Vec::new();
-    let mut trauma_updates: Vec<Entity> = Vec::new();
-    let mut sickness_updates: Vec<Entity> = Vec::new();
-
     // Process each hospital
-    for (hospital_ent, mut patients) in hospitals {
+    for (&hospital_ent, patients) in &mut buffer.hospitals {
         let Some(hospital) = world.get::<Hospital>(hospital_ent) else {
             continue;
         };
@@ -199,38 +216,38 @@ pub fn healing_system(world: &mut World) {
             }
 
             // Treat CryoTrauma (Expensive)
-            if has_trauma && capacity >= 1.0 {
-                trauma_updates.push(patient);
+            if *has_trauma && capacity >= 1.0 {
+                buffer.trauma_updates.push(*patient);
                 capacity -= 1.0;
             }
 
             // Treat Radiation Sickness (Moderate)
-            if has_sickness && capacity >= 0.5 {
-                sickness_updates.push(patient);
+            if *has_sickness && capacity >= 0.5 {
+                buffer.sickness_updates.push(*patient);
                 capacity -= 0.5;
             }
 
             // Heal Health
             let amount = rate.min(capacity);
             if amount > 0.0 {
-                health_updates.push((patient, amount, hospital_ent));
+                buffer.health_updates.push((*patient, amount, hospital_ent));
                 capacity -= amount;
             }
         }
     }
 
     // Apply Health Updates
-    for (entity, amount, hospital) in health_updates {
-        if let Some(mut health) = world.get_mut::<Health>(entity) {
+    for (entity, amount, hospital) in &buffer.health_updates {
+        if let Some(mut health) = world.get_mut::<Health>(*entity) {
             health.current = (health.current + amount).min(health.max);
 
             // Emit event
-            if amount > 0.0 {
+            if *amount > 0.0 {
                 if let Some(mut events) = world.get_resource_mut::<Events<PatientTreated>>() {
                     events.send(PatientTreated {
-                        patient: entity,
-                        hospital,
-                        amount,
+                        patient: *entity,
+                        hospital: *hospital,
+                        amount: *amount,
                     });
                 }
             }
@@ -238,24 +255,26 @@ pub fn healing_system(world: &mut World) {
     }
 
     // Apply Trauma Treatment
-    for entity in trauma_updates {
-        if let Some(mut trauma) = world.get_mut::<CryoTrauma>(entity) {
+    for entity in &buffer.trauma_updates {
+        if let Some(mut trauma) = world.get_mut::<CryoTrauma>(*entity) {
             trauma.severity -= 0.1;
             if trauma.severity <= 0.0 {
-                world.entity_mut(entity).remove::<CryoTrauma>();
+                world.entity_mut(*entity).remove::<CryoTrauma>();
             }
         }
     }
 
     // Apply Sickness Treatment
-    for entity in sickness_updates {
-        if let Some(mut sick) = world.get_mut::<RadiationSickness>(entity) {
+    for entity in &buffer.sickness_updates {
+        if let Some(mut sick) = world.get_mut::<RadiationSickness>(*entity) {
             sick.severity -= 1.0; // Aggressive treatment
             if sick.severity <= 0.0 {
-                world.entity_mut(entity).remove::<RadiationSickness>();
+                world.entity_mut(*entity).remove::<RadiationSickness>();
             }
         }
     }
+
+    world.insert_resource(buffer);
 }
 
 #[cfg(test)]

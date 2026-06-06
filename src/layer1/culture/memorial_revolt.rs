@@ -1,5 +1,5 @@
-use bevy::prelude::*;
 use crate::layer1::social::morale::Morale;
+use bevy::prelude::*;
 
 #[derive(Component)]
 pub struct ColonyPet {
@@ -20,13 +20,12 @@ pub struct MemorialDemand {
 #[derive(Component)]
 pub struct OnStrike; // Locally defined component as per GREEN phase
 
-pub fn handle_pet_death_system(
-    mut commands: Commands,
-    mut events: EventReader<PetDeathEvent>,
-) {
+pub fn handle_pet_death_system(mut commands: Commands, mut events: EventReader<PetDeathEvent>) {
     for event in events.read() {
         // Give them 100 ticks to build a memorial
-        commands.entity(event.owner_entity).insert(MemorialDemand { timer: 100 });
+        commands
+            .entity(event.owner_entity)
+            .insert(MemorialDemand { timer: 100 });
     }
 }
 
@@ -55,10 +54,10 @@ mod tests {
     fn setup_app() -> App {
         let mut app = App::new();
         app.add_event::<PetDeathEvent>();
-        app.add_systems(Update, (
-            handle_pet_death_system,
-            process_memorial_demand_system,
-        ));
+        app.add_systems(
+            Update,
+            (handle_pet_death_system, process_memorial_demand_system),
+        );
         app
     }
 
@@ -66,29 +65,47 @@ mod tests {
     fn test_pet_death_triggers_memorial_demand() {
         let mut app = setup_app();
 
-        let pop = app.world_mut().spawn((
-            Pop,
-            Morale { value: 100.0, modifiers: vec![] },
-        )).id();
+        let pop = app
+            .world_mut()
+            .spawn((
+                Pop,
+                Morale {
+                    value: 100.0,
+                    modifiers: vec![],
+                },
+            ))
+            .id();
 
         let pet = app.world_mut().spawn(ColonyPet { owner: pop }).id();
 
-        app.world_mut().send_event(PetDeathEvent { pet_entity: pet, owner_entity: pop });
+        app.world_mut().send_event(PetDeathEvent {
+            pet_entity: pet,
+            owner_entity: pop,
+        });
         app.update();
 
         // Check if Pop now has a MemorialDemand component
-        assert!(app.world().get::<MemorialDemand>(pop).is_some(), "Pop should demand a memorial when their pet dies");
+        assert!(
+            app.world().get::<MemorialDemand>(pop).is_some(),
+            "Pop should demand a memorial when their pet dies"
+        );
     }
 
     #[test]
     fn test_unfulfilled_memorial_demand_lowers_mood() {
         let mut app = setup_app();
 
-        let pop = app.world_mut().spawn((
-            Pop,
-            Morale { value: 100.0, modifiers: vec![] },
-            MemorialDemand { timer: 10 }, // Expiring soon
-        )).id();
+        let pop = app
+            .world_mut()
+            .spawn((
+                Pop,
+                Morale {
+                    value: 100.0,
+                    modifiers: vec![],
+                },
+                MemorialDemand { timer: 10 }, // Expiring soon
+            ))
+            .id();
 
         // Simulate time passing causing the demand to expire unfulfilled
         let mut demand = app.world_mut().get_mut::<MemorialDemand>(pop).unwrap();
@@ -97,7 +114,13 @@ mod tests {
         app.update();
 
         let mood = app.world().get::<Morale>(pop).unwrap();
-        assert!(mood.value < 100.0, "Pop mood should drop if memorial demand is not fulfilled in time");
-        assert!(app.world().get::<OnStrike>(pop).is_some(), "Pop should go on strike if memorial is denied");
+        assert!(
+            mood.value < 100.0,
+            "Pop mood should drop if memorial demand is not fulfilled in time"
+        );
+        assert!(
+            app.world().get::<OnStrike>(pop).is_some(),
+            "Pop should go on strike if memorial is denied"
+        );
     }
 }
