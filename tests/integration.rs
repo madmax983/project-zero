@@ -516,3 +516,6 @@ mod ruin_integration;
 mod solar_flare_chronicle_bridge;
 #[path = "integration/weight_of_silence_bridge.rs"]
 mod weight_of_silence_bridge;
+
+#[path = "integration/archaeological_contagion_chronicle.rs"]
+mod archaeological_contagion_chronicle;

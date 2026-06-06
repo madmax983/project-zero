@@ -2508,3 +2508,18 @@ pub fn apply_ruin_psychological_stress_system(
         }
     }
 }
+
+/// INT-1010: Bridges AncientRuins excavation to AddChronicleEvent
+pub fn archaeological_contagion_chronicle_bridge(
+    mut events: EventReader<ExcavationEvent>,
+    mut chronicle_events: EventWriter<AddChronicleEvent>,
+) {
+    for event in events.read() {
+        if event.discovery_type == "AncientRuins" {
+            chronicle_events.send(AddChronicleEvent {
+                text: "Miners breached Ancient Ruins, exposing the colony to a memetic contagion. The Ancient Routines have begun.".to_string(),
+                importance: EventImportance::Major,
+            });
+        }
+    }
+}

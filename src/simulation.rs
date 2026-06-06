@@ -367,6 +367,7 @@ fn init_simulation_resources(world: &mut World) {
             let mut schedule = build_simulation_schedule();
             schedule.add_systems((
                 crate::layer1::archaeological_contagion::archaeological_infection_system,
+                crate::layer1::core::integration::archaeological_contagion_chronicle_bridge,
                 crate::layer1::archaeological_contagion::ancient_routine_observation_system,
                 crate::layer1::archaeological_contagion::evaluate_ancient_routine,
             ));
@@ -452,14 +453,16 @@ fn register_simulation_core_systems(schedule: &mut Schedule) {
 
 #[allow(clippy::too_many_lines)]
 fn register_simulation_extended_systems(schedule: &mut Schedule) {
-
-    schedule.add_systems((
-        crate::experimental::the_weight_of_silence::track_colony_isolation_system,
-        crate::experimental::the_weight_of_silence::process_isolation_needs_system,
-        crate::experimental::the_weight_of_silence::spawn_silence_cult_system,
-        crate::layer3::integration::reset_isolation_on_trade_system,
-        crate::layer3::integration::silence_cult_chronicle_bridge,
-    ).after(Layer1SystemSet::Economy));
+    schedule.add_systems(
+        (
+            crate::experimental::the_weight_of_silence::track_colony_isolation_system,
+            crate::experimental::the_weight_of_silence::process_isolation_needs_system,
+            crate::experimental::the_weight_of_silence::spawn_silence_cult_system,
+            crate::layer3::integration::reset_isolation_on_trade_system,
+            crate::layer3::integration::silence_cult_chronicle_bridge,
+        )
+            .after(Layer1SystemSet::Economy),
+    );
 
     schedule.add_systems((
         crate::layer3::economy::biological_stock_market::biological_stock_market_bridge,
