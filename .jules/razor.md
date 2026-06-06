@@ -21,3 +21,13 @@
 **Bloat:** `AttentionFocus` and `DataResolution`
 **Cut:** Removed the unused `AttentionFocus` and `DataResolution` abstractions entirely. Tests pass, confirming this was dead "Enterprise FizzBuzz" code.
 **Saved:** 320 lines of dead code/boilerplate.
+
+## [Reduction]
+**Bloat:** `VoidExposure` setup bug.
+**Cut:** Just fixed unused variables and import warnings in `window.rs` and `void_stare.rs`.
+**Saved:** N/A (Just cleanup for Razor)
+
+## [Reduction]
+**Bloat:** `ConduitResource::Water` and `ConduitResource::Data`
+**Cut:** Removed unused enum variants in `ConduitResource`.
+**Saved:** 2 lines.
