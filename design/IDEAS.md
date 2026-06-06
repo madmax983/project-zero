@@ -22735,3 +22735,59 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you push deep into the ice for forbidden knowledge at the cost of your workforce's sanity, or mine the surface safely and stay ignorant?
 
 ---
+
+## The Administration's Delay
+
+**Layer:** Cross-layer
+
+**Fantasy:** The slow, agonizing bureaucratic delay where paperwork is prioritized over critical emergency responses.
+
+**Mechanic:** Emergency relief fleets (Layer 2) dispatched to disaster zones on colonies (Layer 1) are artificially delayed by an "Administrative Friction" metric. The fleet will physically reach orbit but wait for "clearance codes" while the colony starves or burns, unless the player spends highly valuable political capital to bypass the process.
+
+**Emergence:** You send a massive hospital ship to a world ravaged by plague. Because the local governor failed to file the correct quarantine forms, the hospital ship sits in orbit for three months doing nothing. By the time it is authorized to land, the plague has mutated and the survivors have formed an anti-technology death cult.
+
+**Tension:** Do you spend irreplaceable political capital to bypass the bureaucracy and save the colony, or let the system work "as intended" and accept massive casualties to maintain the integrity of your empire's legal framework?
+
+---
+
+## Asteroid Tug Mishaps
+
+**Layer:** 2 -> 1
+
+**Fantasy:** The fastest way to get resources down to a colony is also the most dangerous: literally throwing rocks from orbit.
+
+**Mechanic:** Players can bypass standard cargo elevators and use "Orbital Tugs" to strap retro-rockets to resource-rich asteroids and crash them into designated drop zones on the colony. It provides instant, massive resource dumps but has a high chance to miss, destroying nearby infrastructure and temporarily ruining local air quality.
+
+**Emergence:** You desperately need alloys to build a planetary shield generator before an enemy fleet arrives. You order an asteroid drop. The tug miscalculates, and the asteroid obliterates the very shield generator you were trying to build, but leaves behind a mountain of raw metal that the survivors use to build crude underground bunkers just before the bombardment starts.
+
+**Tension:** The immediate, high-stakes gamble of getting resources exactly when you need them versus the immense risk of self-inflicted catastrophic damage.
+
+---
+
+## Alien-Flora Infestation
+
+**Layer:** 1
+
+**Fantasy:** A miracle crop that feeds your colony but secretly destroys the foundations of your civilization.
+
+**Mechanic:** A rapidly growing, non-native "Alien-Flora" appears on the colony grid. It provides an incredible amount of food, solving any starvation issues instantly. However, its root system aggressively targets and degrades underground infrastructure (pipes, cables, foundations), causing silent, colony-wide structural failures over time.
+
+**Emergence:** You decide to rely entirely on the Alien-Flora to feed a massive industrial boom. The economy soars for a decade. Then, all at once, your entire water purification network collapses because the roots finally crushed the main conduits. The colony doesn't starve, but it instantly devolves into a disease-ridden anarchy because they have no clean water.
+
+**Tension:** Do you eradicate the miracle crop and face immediate starvation, or allow it to grow and accept the slow, invisible destruction of your infrastructure?
+
+---
+
+## Stray Broadcast Worship
+
+**Layer:** Cross-layer
+
+**Fantasy:** Isolated frontier worlds finding deep meaning in the random garbage signals of the core worlds.
+
+**Mechanic:** Dense, culturally active core worlds (Layer 3) constantly emit "Stray Broadcasts" (commercials, pop songs, political debates). Distant frontier colonies (Layer 1) occasionally intercept these signals. Lacking context, the isolated Pops interpret these broadcasts as divine mandates, shifting their cultural ethics and creating bizarre, localized religions based on the signal content.
+
+**Emergence:** Your remote mining colony suddenly goes on strike. You investigate and find they intercepted a 50-year-old commercial for a luxury vacation resort from your capital. The miners now believe "The Resort" is the afterlife, and have stopped working to construct a massive, crude replica of a swimming pool out of toxic mining slag to prepare for ascension.
+
+**Tension:** Do you invest in expensive signal jammers to keep your frontier workers focused, or exploit these bizarre new religions to control them at the cost of unpredictable cultural shifts?
+
+---
