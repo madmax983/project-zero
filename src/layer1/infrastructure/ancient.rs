@@ -7,8 +7,6 @@ use rand::Rng;
 #[derive(Clone, Copy, PartialEq, Eq)]
 pub enum ConduitResource {
     Power,
-    Water,
-    Data,
 }
 
 #[derive(Component)]
