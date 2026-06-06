@@ -111,6 +111,7 @@ fn populate_building_type(
 pub fn populate_ai_buffer(world: &mut World, buffer: &mut UtilityAIBuffer, context: &WorldContext) {
     populate_buffer_buildings(world, buffer, context);
     populate_buffer_designations(world, buffer);
+    populate_unpollinated_crops(world, &mut buffer.unpollinated_crops);
     populate_buffer_items_and_misc(world, buffer);
     populate_walls(world, &mut buffer.walls);
     populate_enemies(world, &mut buffer.enemies);
@@ -918,4 +919,17 @@ mod tests {
         populate_housing(&mut world, &mut buffer);
         assert_eq!(buffer.len(), 1, "Should include available housing");
     }
+}
+
+fn populate_unpollinated_crops(world: &mut World, buffer: &mut Vec<ScorableCandidate>) {
+    buffer.clear();
+    buffer.extend(
+        world
+            .query::<(Entity, &crate::layer1::map::GridPosition, &crate::layer1::agriculture::pollination::FarmCrop, &crate::layer1::agriculture::pollination::PollinationStatus)>()
+            .iter(world)
+            .filter(|(_, _, crop, status)| {
+                crop.growth_stage == crate::layer1::agriculture::pollination::FarmGrowthStage::Flowering && crop.requires_pollination && !status.is_pollinated
+            })
+            .map(|(entity, pos, _, _)| ScorableCandidate::new(entity, *pos))
+    );
 }

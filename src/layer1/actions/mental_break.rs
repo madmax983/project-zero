@@ -143,6 +143,7 @@ mod tests {
             hospitals: vec![],
             corpses: vec![],
             graves: vec![],
+            unpollinated_crops: vec![],
             repair_structures: vec![],
             wanted_criminals: vec![],
             suspects: vec![],

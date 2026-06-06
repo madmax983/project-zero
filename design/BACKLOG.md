@@ -671,7 +671,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1049` Architectural Sentience — `specs/1049-architectural-sentience.md`
 - [ ] `1050` Deep Sleep Syndicates — `specs/1050-deep-sleep-syndicates.md`
 - [ ] `1051` Asteroid Claims — `specs/1051-asteroid-claims.md`
-- [ ] `1052` Pollination Vectors — `specs/1052-pollination-vectors.md`
 - [ ] `1053` Smart Matter Architecture — `specs/1053-smart-matter-architecture.md`
 
 - [x] `1056` The Dead Hand — `specs/1056-the-dead-hand.md` — completed 2024-05-31
