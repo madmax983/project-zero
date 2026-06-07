@@ -22,7 +22,7 @@ pub struct TraceGasGrid {
 
 impl TraceGasGrid {
     pub fn new(width: usize, height: usize) -> Self {
-        let size = width * height;
+        let size = width.checked_mul(height).expect("Grid size overflow");
         Self {
             width,
             height,
@@ -36,7 +36,7 @@ impl TraceGasGrid {
         if x >= self.width || y >= self.height {
             return 0.0;
         }
-        let idx = y * self.width + x;
+        let idx = y.checked_mul(self.width).expect("Grid size overflow").checked_add(x).expect("Grid size overflow");
         match gas_type {
             GasType::Euphoric => self.euphoric[idx],
             GasType::Fear => self.fear[idx],
@@ -48,7 +48,7 @@ impl TraceGasGrid {
         if x >= self.width || y >= self.height {
             return;
         }
-        let idx = y * self.width + x;
+        let idx = y.checked_mul(self.width).expect("Grid size overflow").checked_add(x).expect("Grid size overflow");
         match gas_type {
             GasType::Euphoric => self.euphoric[idx] += amount,
             GasType::Fear => self.fear[idx] += amount,
