@@ -22959,3 +22959,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** When you discover a Quantum pair, do you ruthlessly optimize their lives to exploit the shared buffs, or desperately protect them both, knowing one's failure dooms the other?
 
 ---
+
+## The Digital Afterlife Strike
+
+**Layer:** Cross-layer
+
+**Fantasy:** Dead pops complaining about their server conditions and organizing a strike from beyond the grave.
+
+**Mechanic:** Late-game colonies can build "Digital Mausoleums" where the consciousness of highly skilled Pops is uploaded upon death. These digital Pops provide massive, zero-upkeep research and administrative bonuses (Layer 2/3). However, if the server infrastructure (Layer 1) suffers power fluctuations, cooling failures, or is neglected, the uploaded Pops experience simulated agony.
+
+**Emergence:** You ignore minor power dips in your data center because physical production seems fine. The uploaded Pops form a digital union and launch a "Digital Afterlife Strike," seizing control of the colony's automated defenses and locking out the living administrators until their server conditions improve.
+
+**Tension:** Do you heavily invest in redundant, flawless infrastructure to keep the dead happy, or treat them as disposable compute and risk a cybernetic uprising from your own ancestors?
+
+---
+
+## Cultural Osmosis in Wartime
+
+**Layer:** 3 -> 1
+
+**Fantasy:** Your people slowly starting to admire the very enemy they are fighting a bloody war against.
+
+**Mechanic:** When locked in a prolonged, slow war (Layer 3) without decisive victories, soldiers and border populations begin experiencing "Cultural Osmosis." Instead of growing to hate the enemy, they start adopting their aesthetics, music, and philosophy. This causes internal cultural fracturing (Layer 1).
+
+**Emergence:** You fight a century-long trench war against a deeply religious, honor-bound empire. Despite taking heavy casualties, your core worlds start seeing a massive surge in Pops converting to the enemy's religion and demanding peace talks. Your war machine is undermined not by military defeat, but by the fact that your citizens think the enemy's culture is cooler than yours.
+
+**Tension:** Do you push for rapid, brutal conclusions to wars to prevent cultural bleed, or invest heavily in state propaganda to inoculate your citizens against the allure of the enemy?
+
+---
+
+## The Artifact Paradox
+
+**Layer:** 1 -> 3
+
+**Fantasy:** Excavating something so powerful it warps reality, making it a diplomatic crown jewel but a local nightmare.
+
+**Mechanic:** A colony unearths a "Precursor Artifact." Possessing it grants immense, system-wide prestige and attracts lucrative alien pilgrims (Layer 3). However, the artifact emits a localized reality-distortion field (Layer 1) that randomly teleports Pops, mutates crops, or reverses the flow of time in small areas, making the immediate colony extremely dangerous to inhabit.
+
+**Emergence:** You proudly display the Artifact in your capital, turning it into the cultural center of the galaxy. But the reality-distortion field causes half your parliament to age backwards into toddlers during a critical diplomatic summit, plunging the empire into bureaucratic chaos while the tourists take pictures.
+
+**Tension:** Do you endure the devastating, localized chaos to reap the massive, empire-wide diplomatic rewards, or safely bury the artifact and remain an obscure backwater?
+
+---
