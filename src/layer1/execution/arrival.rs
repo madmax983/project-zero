@@ -250,6 +250,7 @@ fn assign_pop(
                 Prestige::from_job(assignment_type),
             ));
         }
+        AssignmentType::RationingBureaucrat => {}
     }
 
     true

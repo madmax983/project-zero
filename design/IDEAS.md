@@ -22904,7 +22904,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Subconscious Grid
+## The Subconscious Grid [SPECCED]
 
 **Layer:** 1
 

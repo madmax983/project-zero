@@ -29,7 +29,8 @@ pub fn register(schedule: &mut Schedule) {
             update_water_system,
             update_weather_system,
             crate::layer1::agriculture::pollination::drone_pollination_system,
-            crate::layer1::agriculture::pollination::process_crop_growth_system.after(crate::layer1::agriculture::pollination::drone_pollination_system),
+            crate::layer1::agriculture::pollination::process_crop_growth_system
+                .after(crate::layer1::agriculture::pollination::drone_pollination_system),
             crate::layer1::fertility::update_fertility_system,
             produce_food_system.after(crate::layer1::fertility::update_fertility_system),
             crate::layer1::husbandry::husbandry_production_system.after(produce_food_system),
@@ -137,9 +138,11 @@ pub fn register(schedule: &mut Schedule) {
                 .after(mascot_buff_system),
             morale_decay_system.after(update_morale_cache_system),
             crate::layer1::social::hedonic_treadmill::decay_standard_of_living,
-            crate::layer1::private_stash::stash_creation_system,
         )
             .in_set(Layer1SystemSet::Economy),
+    );
+    schedule.add_systems(
+        (crate::layer1::private_stash::stash_creation_system,).in_set(Layer1SystemSet::Economy),
     );
 
     schedule.add_systems(

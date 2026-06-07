@@ -65,21 +65,22 @@ pub fn map_export_system(
                 .get(x as usize, y as usize)
                 .unwrap_or(TerrainType::Grass);
             let mut color: [u8; 3] = match tile {
-                TerrainType::Grass => [34, 139, 34],              // Forest Green
-                TerrainType::Dirt => [139, 69, 19],               // Saddle Brown
-                TerrainType::Rock => [128, 128, 128],             // Gray
-                TerrainType::Water => [30, 144, 255],             // Dodger Blue
-                TerrainType::Tree => [0, 100, 0],                 // Dark Green
-                TerrainType::Path => [210, 180, 140],             // Tan
-                TerrainType::Shrub => [154, 205, 50],             // Yellow Green
-                TerrainType::Sapling => [107, 142, 35],           // Olive Drab
-                TerrainType::DeepRock => [105, 105, 105],         // Dim Gray
-                TerrainType::MagmaRock => [178, 34, 34],          // Firebrick
-                TerrainType::SporeBloom => [148, 0, 211],         // Dark Violet
-                TerrainType::Artifact => [255, 215, 0],           // Gold
-                TerrainType::Crater => [80, 80, 80],              // Dark Gray
-                TerrainType::FaultLine(true) => [255, 60, 20],    // Magma Red
-                TerrainType::FaultLine(false) => [100, 100, 110], // Gray
+                TerrainType::Grass => [34, 139, 34],           // Forest Green
+                TerrainType::Dirt => [139, 69, 19],            // Saddle Brown
+                TerrainType::Rock => [128, 128, 128],          // Gray
+                TerrainType::Water => [30, 144, 255],          // Dodger Blue
+                TerrainType::Tree => [0, 100, 0],              // Dark Green
+                TerrainType::Path => [210, 180, 140],          // Tan
+                TerrainType::Shrub => [154, 205, 50],          // Yellow Green
+                TerrainType::Sapling => [107, 142, 35],        // Olive Drab
+                TerrainType::DeepRock => [105, 105, 105],      // Dim Gray
+                TerrainType::MagmaRock => [178, 34, 34],       // Firebrick
+                TerrainType::SporeBloom => [148, 0, 211],      // Dark Violet
+                TerrainType::Artifact => [255, 215, 0],        // Gold
+                TerrainType::Crater => [80, 80, 80],           // Dark Gray
+                TerrainType::FaultLine(true) => [255, 60, 20], // Magma Red
+                TerrainType::FaultLine(false) => [100, 100, 110],
+                TerrainType::IndestructibleStump => [100, 100, 100], // Gray
             };
 
             // Optionally blend with beauty

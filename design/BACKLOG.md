@@ -4,6 +4,7 @@
 
 
 
+- [ ] `1296` The Subconscious Grid — `specs/1296-the-subconscious-grid.md`
 - [ ] `1289` The Bureaucracy of Scarcity — `specs/1289-the-bureaucracy-of-scarcity.md`
 - [ ] `1290` The Weight of the Past — `specs/1290-the-weight-of-the-past.md`
 - [ ] `1291` Invasive Xeno-Aesthetics — `specs/1291-invasive-xeno-aesthetics.md`
@@ -693,7 +694,6 @@ See `design/IDEAS.md` for unspecced concepts.
 
 
 
-- [ ] `1118` The Tether Stump — `specs/1118-the-tether-stump.md`
 - [ ] `1121` Generational Grudges — `specs/1121-generational-grudges.md`
 - [ ] `1124` Diplomatic Fashion — `specs/1124-diplomatic-fashion.md`
 - [ ] `1125` Improvised Tools — `specs/1125-improvised-tools.md`

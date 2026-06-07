@@ -19,6 +19,8 @@ pub mod dead_hand;
 pub mod economy;
 pub mod environment;
 pub mod execution;
+pub mod map_generation;
+
 pub mod observation;
 
 /// Helper system to update event buffers (clear old events).
