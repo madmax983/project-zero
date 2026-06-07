@@ -6,7 +6,9 @@
 use crate::layer1::core::chronicle::{AddChronicleEvent, EventImportance};
 use crate::layer1::culture::CulturalInfluenceGrid;
 use crate::layer3::diplomacy_reflection::{Civilization, DiplomaticRelations, DiplomaticTraits};
+use crate::shared::log::{Message, MessageLog};
 use bevy::prelude::*;
+use ratatui::style::Color;
 
 #[derive(Component, Default)]
 pub struct CulturalVulnerability {
@@ -69,13 +71,19 @@ pub fn apply_cultural_pressure_system(
 
 pub fn process_defections_system(
     mut defection_events: EventReader<DefectionEvent>,
+    mut message_log: Option<ResMut<MessageLog>>,
     _commands: Commands,
 ) {
     for ev in defection_events.read() {
-        println!(
-            "Received {} defectors from Civ {:?}",
-            ev.amount, ev.source_civ
-        );
+        if let Some(log) = message_log.as_mut() {
+            log.messages.push_back(Message {
+                text: format!(
+                    "Received {} defectors from Civ {:?}",
+                    ev.amount, ev.source_civ
+                ),
+                color: Color::Cyan,
+            });
+        }
     }
 }
 

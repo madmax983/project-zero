@@ -56,7 +56,11 @@ pub fn calculate_colony_stress_system(
             }
         }
 
-        colony_stress.average_level = if count > 0 { total_stress / count as f32 } else { 0.0 };
+        colony_stress.average_level = if count > 0 {
+            total_stress / count as f32
+        } else {
+            0.0
+        };
     }
 }
 
@@ -94,7 +98,14 @@ impl Default for SubconsciousGridEffect {
 #[allow(clippy::type_complexity)]
 pub fn update_machine_efficiency_system(
     colonies: Query<&SmartGrid, With<Colony>>,
-    mut machines: Query<(Entity, Option<&ResidentOf>, Option<&mut SubconsciousGridEffect>), With<Machine>>,
+    mut machines: Query<
+        (
+            Entity,
+            Option<&ResidentOf>,
+            Option<&mut SubconsciousGridEffect>,
+        ),
+        With<Machine>,
+    >,
     mut commands: Commands,
 ) {
     for (entity, resident, effect_opt) in machines.iter_mut() {
@@ -128,19 +139,26 @@ pub fn update_machine_efficiency_system(
 
 pub fn apply_lockdown_system(
     colonies: Query<&SmartGrid, With<Colony>>,
-    mut doors: Query<(&mut crate::layer1::access_control::AccessControl, Option<&ResidentOf>)>,
+    mut doors: Query<(
+        &mut crate::layer1::access_control::AccessControl,
+        Option<&ResidentOf>,
+    )>,
 ) {
     for (mut door, resident_opt) in doors.iter_mut() {
         if let Some(resident) = resident_opt {
             if let Ok(grid) = colonies.get(resident.0) {
-                if grid.state == GridState::Lockdown && door.mode != crate::layer1::access_control::AccessMode::Lockdown {
+                if grid.state == GridState::Lockdown
+                    && door.mode != crate::layer1::access_control::AccessMode::Lockdown
+                {
                     door.mode = crate::layer1::access_control::AccessMode::Lockdown;
                 }
             }
         } else {
             // Assume single colony setup for doors without ResidentOf
             if let Ok(grid) = colonies.get_single() {
-                if grid.state == GridState::Lockdown && door.mode != crate::layer1::access_control::AccessMode::Lockdown {
+                if grid.state == GridState::Lockdown
+                    && door.mode != crate::layer1::access_control::AccessMode::Lockdown
+                {
                     door.mode = crate::layer1::access_control::AccessMode::Lockdown;
                 }
             }
@@ -155,11 +173,15 @@ mod tests {
     // RED Phase Test Setup
     fn setup_app() -> App {
         let mut app = App::new();
-        app.add_systems(Update, (
-            calculate_colony_stress_system,
-            apply_subconscious_grid_effects_system,
-            update_machine_efficiency_system,
-        ).chain());
+        app.add_systems(
+            Update,
+            (
+                calculate_colony_stress_system,
+                apply_subconscious_grid_effects_system,
+                update_machine_efficiency_system,
+            )
+                .chain(),
+        );
         app
     }
 
@@ -171,16 +193,25 @@ mod tests {
         app.world_mut().spawn((Pop, Stress { level: 90.0 }));
         app.world_mut().spawn((Pop, Stress { level: 95.0 }));
 
-        let colony = app.world_mut().spawn((
-            Colony,
-            ColonyStress { average_level: 0.0 },
-            SmartGrid { state: GridState::Normal },
-        )).id();
+        let colony = app
+            .world_mut()
+            .spawn((
+                Colony,
+                ColonyStress { average_level: 0.0 },
+                SmartGrid {
+                    state: GridState::Normal,
+                },
+            ))
+            .id();
 
         app.update();
 
         let grid = app.world().get::<SmartGrid>(colony).unwrap();
-        assert_eq!(grid.state, GridState::Anxious, "High stress should make the grid anxious");
+        assert_eq!(
+            grid.state,
+            GridState::Anxious,
+            "High stress should make the grid anxious"
+        );
     }
 
     #[test]
@@ -191,38 +222,64 @@ mod tests {
         app.world_mut().spawn((Pop, Stress { level: 10.0 }));
         app.world_mut().spawn((Pop, Stress { level: 5.0 }));
 
-        let colony = app.world_mut().spawn((
-            Colony,
-            ColonyStress { average_level: 0.0 },
-            SmartGrid { state: GridState::Normal },
-        )).id();
+        let colony = app
+            .world_mut()
+            .spawn((
+                Colony,
+                ColonyStress { average_level: 0.0 },
+                SmartGrid {
+                    state: GridState::Normal,
+                },
+            ))
+            .id();
 
         app.update();
 
         let grid = app.world().get::<SmartGrid>(colony).unwrap();
-        assert_eq!(grid.state, GridState::Eager, "Low stress should make the grid eager");
+        assert_eq!(
+            grid.state,
+            GridState::Eager,
+            "Low stress should make the grid eager"
+        );
     }
 
     #[test]
     fn test_grid_state_affects_machines() {
         let mut app = setup_app();
 
-        let colony = app.world_mut().spawn((
-            Colony,
-            ColonyStress { average_level: 0.0 },
-            SmartGrid { state: GridState::Eager },
-        )).id();
+        let colony = app
+            .world_mut()
+            .spawn((
+                Colony,
+                ColonyStress { average_level: 0.0 },
+                SmartGrid {
+                    state: GridState::Eager,
+                },
+            ))
+            .id();
 
-        let machine = app.world_mut().spawn((
-            Machine { efficiency: 1.0, burnout_risk: 0.01 },
-            ResidentOf(colony),
-        )).id();
+        let machine = app
+            .world_mut()
+            .spawn((
+                Machine {
+                    efficiency: 1.0,
+                    burnout_risk: 0.01,
+                },
+                ResidentOf(colony),
+            ))
+            .id();
 
         app.update();
 
         // Check if component exists
         let effect = app.world().get::<SubconsciousGridEffect>(machine).unwrap();
-        assert!(effect.efficiency_multiplier > 1.0, "Eager grid should over-clock machines");
-        assert!(effect.burnout_risk_modifier > 0.0, "Eager grid should increase burnout risk");
+        assert!(
+            effect.efficiency_multiplier > 1.0,
+            "Eager grid should over-clock machines"
+        );
+        assert!(
+            effect.burnout_risk_modifier > 0.0,
+            "Eager grid should increase burnout risk"
+        );
     }
 }

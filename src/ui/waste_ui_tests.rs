@@ -34,12 +34,10 @@ fn test_inspector_shows_waste_stats() {
         full_text.push_str(c.symbol());
     }
 
-    println!("{}", full_text);
     assert!(
         full_text.contains("Waste"),
         "Inspector should display Waste in global stats"
     );
-    println!("{}", full_text);
     assert!(
         full_text.contains("5/10"),
         "Inspector should display Waste amounts"
