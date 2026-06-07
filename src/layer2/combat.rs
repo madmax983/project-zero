@@ -2,7 +2,9 @@ use crate::layer1::resources::ResourceType;
 use crate::layer2::events::ShipDestroyedEvent;
 use crate::layer2::fleet::{FleetComposition, FleetFaction, InOrbit};
 use crate::layer2::ship::ShipType;
+use crate::shared::log::{Message, MessageLog};
 use bevy_ecs::prelude::*;
+use ratatui::style::Color;
 
 /// Result of a fleet combat engagement.
 #[derive(Debug, Clone, PartialEq)]
@@ -115,6 +117,7 @@ pub fn fleet_combat_system(
         Option<&AvoidCombat>,
     )>,
     mut event_writer: EventWriter<ShipDestroyedEvent>,
+    mut message_log: Option<ResMut<MessageLog>>,
 ) {
     use bevy::utils::HashMap;
 
@@ -194,10 +197,15 @@ pub fn fleet_combat_system(
                 commands.entity(loser_entity).insert(result.loser_survivors);
             }
 
-            println!(
-                "Combat at {:?}! Winner: {:?}, Loser Survivors: {}",
-                location, result.winner, loser_survivor_count
-            );
+            if let Some(log) = message_log.as_mut() {
+                log.messages.push_back(Message {
+                    text: format!(
+                        "Combat at {:?}! Winner: {:?}, Loser Survivors: {}",
+                        location, result.winner, loser_survivor_count
+                    ),
+                    color: Color::Red,
+                });
+            }
         }
     }
 }
