@@ -23001,3 +23001,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you endure the devastating, localized chaos to reap the massive, empire-wide diplomatic rewards, or safely bury the artifact and remain an obscure backwater?
 
 ---
+
+## Desperation Bio-Mods
+
+**Layer:** 1
+
+**Fantasy:** Modifying your colonists to barely survive the worst disasters, turning them into something else entirely.
+
+**Mechanic:** When a colony is in extreme distress (e.g., starvation, toxic environment), players can enact "Desperation Bio-Mods." These are imperfect, rapid genetic alterations that provide instant survival buffs (e.g., extreme radiation resistance, metabolizing rocks) but permanently shorten lifespans and introduce bizarre new needs (e.g., "Must consume heavy metals").
+
+**Emergence:** You save your colony from a toxic spill by modding everyone to breathe sulfur. Decades later, the colony is thriving and the air is clean, but your population is dependent on you deliberately importing toxic sulfur just to keep them from suffocating in clean air.
+
+**Tension:** Do you let your people die naturally in a disaster, or permanently mutate your population to save them, creating a cascade of bizarre dependencies for future generations?
+
+---
+
+## The Tyranny of Efficiency
+
+**Layer:** 1
+
+**Fantasy:** Automation was supposed to free us, but instead it made us obsolete, bored, and angry.
+
+**Mechanic:** As a colony reaches near-100% automation of basic needs (Food, Water, Power), Pops lose their jobs. Instead of enjoying leisure, they suffer from a "Lack of Purpose" debuff. If left unchecked, unemployed Pops will actively sabotage automated machinery just to create work for themselves, demanding manual labor quotas.
+
+**Emergence:** You build the perfect, self-sustaining utopia where no one has to lift a finger. Instead of thanking you, your citizens form luddite cults, blowing up the automated farming drones so they can go back to manually breaking their backs in the fields just to feel a sense of purpose.
+
+**Tension:** Do you artificially limit automation to keep people busy, or deal with a perfectly supplied population that is constantly rebelling out of sheer existential dread?
+
+---
+
+## The Memory Paradox
+
+**Layer:** 1 -> Cross-layer
+
+**Fantasy:** Being haunted by the memory of a tragedy that never actually happened, because it happened to a previous iteration of yourself.
+
+**Mechanic:** When Pops die and are brought back via "Digital Immortality" or Clone Vats, they inherit the corrupted memories of their own death. This creates a "Memory Paradox" stress debuff. If enough Pops share a traumatic memory of a disaster, they will act as if the disaster is actively happening, hoarding resources and panicking about a threat that is already gone.
+
+**Emergence:** You use clone vats to rapidly replenish your population after a horrific siege. The new clones are physically fine, but they all share the "Memory" of starving to death. They collectively panic and begin hoarding all the food in the colony in their private stashes, causing a real famine out of fear of a phantom one.
+
+**Tension:** Do you use powerful resurrection/cloning tech to instantly recover from disasters, knowing you are breeding a paranoid population haunted by the ghosts of their past lives?
+
+---
