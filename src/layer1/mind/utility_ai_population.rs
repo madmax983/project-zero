@@ -925,11 +925,19 @@ fn populate_unpollinated_crops(world: &mut World, buffer: &mut Vec<ScorableCandi
     buffer.clear();
     buffer.extend(
         world
-            .query::<(Entity, &crate::layer1::map::GridPosition, &crate::layer1::agriculture::pollination::FarmCrop, &crate::layer1::agriculture::pollination::PollinationStatus)>()
+            .query::<(
+                Entity,
+                &crate::layer1::map::GridPosition,
+                &crate::layer1::agriculture::pollination::FarmCrop,
+                &crate::layer1::agriculture::pollination::PollinationStatus,
+            )>()
             .iter(world)
             .filter(|(_, _, crop, status)| {
-                crop.growth_stage == crate::layer1::agriculture::pollination::FarmGrowthStage::Flowering && crop.requires_pollination && !status.is_pollinated
+                crop.growth_stage
+                    == crate::layer1::agriculture::pollination::FarmGrowthStage::Flowering
+                    && crop.requires_pollination
+                    && !status.is_pollinated
             })
-            .map(|(entity, pos, _, _)| ScorableCandidate::new(entity, *pos))
+            .map(|(entity, pos, _, _)| ScorableCandidate::new(entity, *pos)),
     );
 }

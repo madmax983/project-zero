@@ -29,7 +29,8 @@ pub fn register(schedule: &mut Schedule) {
             update_water_system,
             update_weather_system,
             crate::layer1::agriculture::pollination::drone_pollination_system,
-            crate::layer1::agriculture::pollination::process_crop_growth_system.after(crate::layer1::agriculture::pollination::drone_pollination_system),
+            crate::layer1::agriculture::pollination::process_crop_growth_system
+                .after(crate::layer1::agriculture::pollination::drone_pollination_system),
             crate::layer1::fertility::update_fertility_system,
             produce_food_system.after(crate::layer1::fertility::update_fertility_system),
             crate::layer1::husbandry::husbandry_production_system.after(produce_food_system),

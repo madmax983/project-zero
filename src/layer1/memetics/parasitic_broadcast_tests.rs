@@ -9,12 +9,12 @@ mod tests {
         parasitic_broadcast_risk_system, process_parasitic_work_reduction, MemeticInfection,
     };
     use crate::layer1::morale::{MoodModifier, Morale};
-    use crate::prelude::Pop;
     use crate::layer1::skills::Skills;
     use crate::layer1::utility_eval_types::{PopEvalData, UtilityAIBuffer};
     use crate::layer1::utility_types::ActionType;
     use crate::layer1::DesignationType;
     use crate::layer3::silence::DetectionRisk;
+    use crate::prelude::Pop;
     use bevy::prelude::App;
     use bevy::prelude::Update;
     use bevy_ecs::prelude::*;

@@ -29,3 +29,5 @@ pub use invasive_bureaucracy::*;
 
 pub mod bureaucratic_redlining;
 pub use bureaucratic_redlining::*;
+pub mod bureaucracy_of_scarcity;
+pub use bureaucracy_of_scarcity::*;
