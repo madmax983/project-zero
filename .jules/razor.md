@@ -1,33 +1,14 @@
 ## [Reduction]
-**Bloat:** `DataSize`
-**Cut:** Removed the unused `DataSize` struct entirely.
-**Saved:** 2 lines of dead code.
+**Bloat:** Missing Feature Stubs for DX in prelude.rs
+**Cut:** Deleted 40 lines of dummy struct definitions (`OralTradition`, `Story`, `StoryGenre`) and let standard Rust compiler errors handle missing features.
+**Saved:** 54 Lines of code / High Cognitive load from confusing deprecation messages
 
 ## [Reduction]
-**Bloat:** `ColonyResources` `with_*` builder methods
-**Cut:** Removed unused builder methods.
-**Saved:** ~200 lines of dead code/boilerplate.
-## [Reduction]
-**Bloat:** `ColonyResources` `with_*` builder methods
-**Cut:** Removed the unused `with_*` builder methods entirely and refactored usages to use standard struct update syntax. Also resolved a massive amount of `Events::get_reader` deprecation warnings in test code to keep clippy strict.
-**Saved:** Dozens of lines of builder boilerplate and 90+ instances of deprecated test calls.
+**Bloat:** Verbose Manual Imports in headless_demo.rs
+**Cut:** Replaced individual component imports with `use scale::prelude::*;`
+**Saved:** 4 Lines of code / Cognitive load from memorizing entity paths
 
 ## [Reduction]
-**Bloat:** `DialectManager`
-**Cut:** Removed the unused `DialectManager` struct and its associated systems entirely.
-**Saved:** ~160 lines of dead code/boilerplate.
-
-## [Reduction]
-**Bloat:** `AttentionFocus` and `DataResolution`
-**Cut:** Removed the unused `AttentionFocus` and `DataResolution` abstractions entirely. Tests pass, confirming this was dead "Enterprise FizzBuzz" code.
-**Saved:** 320 lines of dead code/boilerplate.
-
-## [Reduction]
-**Bloat:** `VoidExposure` setup bug.
-**Cut:** Just fixed unused variables and import warnings in `window.rs` and `void_stare.rs`.
-**Saved:** N/A (Just cleanup for Razor)
-
-## [Reduction]
-**Bloat:** `ConduitResource::Water` and `ConduitResource::Data`
-**Cut:** Removed unused enum variants in `ConduitResource`.
-**Saved:** 2 lines.
+**Bloat:** Scary warning markdown block in README.md
+**Cut:** Replaced giant blockquote with a simple single sentence Note
+**Saved:** 6 Lines of text / Low Cognitive load
