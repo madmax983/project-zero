@@ -7,6 +7,7 @@ use bevy_ecs::prelude::*;
 
 #[allow(clippy::too_many_lines)]
 pub fn register(schedule: &mut Schedule) {
+    crate::layer1::subconscious_grid::register(schedule);
     schedule.add_systems(
         (
             crate::layer1::core::integration::kinetic_strike_chronicle_bridge,

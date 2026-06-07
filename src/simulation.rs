@@ -69,7 +69,6 @@ fn init_simulation_resources(world: &mut World) {
     world.init_resource::<Events<crate::layer1::agriculture::pollination::GrowthCycleEvent>>();
     world.init_resource::<Events<crate::layer1::memetics::memetic_hazards::ConversationEvent>>();
 
-
     world.init_resource::<Events<crate::layer1::economy::apex_diet::ConsumeFoodEvent>>();
     world.init_resource::<crate::layer1::economy::apex_diet::ApexMeatStores>();
     world.init_resource::<Events<crate::layer1::culture::nostalgia::RumorSpreadEvent>>();
@@ -1015,9 +1014,9 @@ mod tests {
         world.init_resource::<Events<crate::layer1::architecture::sunk_cost_monument::CancelConstructionEvent>>();
         world.init_resource::<Events<crate::layer1::anomalies::echo::SpawnEchoSourceEvent>>();
         world.init_resource::<Events<crate::layer1::anomalies::void_sirens::SirenSignalEvent>>();
-    world.init_resource::<Events<crate::layer1::agriculture::pollination::GrowthCycleEvent>>();
-    world.init_resource::<Events<crate::layer1::memetics::memetic_hazards::ConversationEvent>>();
-
+        world.init_resource::<Events<crate::layer1::agriculture::pollination::GrowthCycleEvent>>();
+        world
+            .init_resource::<Events<crate::layer1::memetics::memetic_hazards::ConversationEvent>>();
 
         world.init_resource::<Events<crate::layer1::economy::apex_diet::ConsumeFoodEvent>>();
         world.init_resource::<crate::layer1::economy::apex_diet::ApexMeatStores>();

@@ -478,3 +478,5 @@ pub use void_sirens::*;
 pub mod living_score;
 pub use living_score::*;
 pub mod archaeological_contagion;
+pub mod subconscious_grid;
+pub use subconscious_grid::*;
