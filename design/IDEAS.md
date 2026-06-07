@@ -22917,3 +22917,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you risk relying on hyper-efficient smart technology that might have an unpredictable psychological breakdown, or stick to robust, dumb infrastructure that will never adapt to emergencies?
 
 ---
+
+## Theatrical Infrastructure
+
+**Layer:** 1 -> 3
+
+**Fantasy:** Buildings that serve a functional purpose but are designed purely for propaganda and spectacle, shaping the cultural narrative of the empire.
+
+**Mechanic:** Pops with high 'Artistic' or 'Charismatic' traits can be assigned to 'Theatrical' versions of standard buildings (e.g., a Theatrical Granary or a Theatrical Forge). These buildings produce slightly less output but generate massive amounts of 'Cultural Influence' (Layer 3). When a faction visits, these buildings create awe, but they require constant maintenance of their facade.
+
+**Emergence:** A player might build an entire 'Potemkin Village' sector to impress a visiting diplomat, only for the facade to crumble during a minor resource shortage, exposing the colony's true poverty and causing a diplomatic incident.
+
+**Tension:** Do you invest resources in genuine productivity, or in the appearance of prosperity to win diplomatic victories?
+
+---
+
+## Symbiotic Bureaucracy
+
+**Layer:** 2
+
+**Fantasy:** A legal and administrative system that physically bonds with its citizens, turning paperwork into a biological necessity.
+
+**Mechanic:** A late-game edict allows the creation of 'Symbiotic Ledgers'—bio-engineered organisms that store data. Pops must physically interact with these organisms to register trades, marriages, or disputes. The organisms feed on the ambient stress of the Pops. If the bureaucracy is overwhelmed, the organisms grow bloated and aggressive, physically blocking access to administrative centers.
+
+**Emergence:** During a massive trade dispute, the Symbiotic Ledgers in the capital gorge on the stress, growing so large they breach containment and consume the entire legal district, forcing the player to send in the military to 'audit' the area.
+
+**Tension:** Do you adopt a highly efficient but biologically volatile administrative system, or stick to slow, safe, paper-based bureaucracy?
+
+---
+
+## Quantum Empathy
+
+**Layer:** Cross-layer
+
+**Fantasy:** Two Pops on opposite sides of the galaxy become inextricably linked, sharing pain, joy, and ultimately, their fate.
+
+**Mechanic:** Rarely, two Pops born at the exact same moment on different planets (Layer 1) develop 'Quantum Empathy.' Their Moods and Health become perfectly synchronized. If one is injured, the other bleeds. If one is promoted to governor, the other experiences a massive morale boost.
+
+**Emergence:** You appoint a brilliant scientist to lead your empire, not realizing their 'Quantum Twin' is a desperate miner on a failing fringe colony. When the fringe colony revolts and the miner is killed, your entire empire collapses into mourning as the leader drops dead mid-speech.
+
+**Tension:** When you discover a Quantum pair, do you ruthlessly optimize their lives to exploit the shared buffs, or desperately protect them both, knowing one's failure dooms the other?
+
+---
