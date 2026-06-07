@@ -197,6 +197,11 @@ pub fn register(schedule: &mut Schedule) {
     );
 
     schedule.add_systems(
+        crate::layer1::economy::deep_sleep_syndicates::process_thaw_syndicate_event
+            .in_set(Layer1SystemSet::Economy),
+    );
+
+    schedule.add_systems(
         (
             crate::layer1::economy::inflation::trigger_market_crash,
             crate::layer1::economy::inflation::process_barter_trade,

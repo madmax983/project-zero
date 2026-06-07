@@ -702,3 +702,4 @@
 - [x] `INT-1112` Integration: Tectonic Fracking -> Chronicle - completed 2026-10-31
 - [x] `1052` Pollination Vectors — `specs/1052-pollination-vectors.md` — completed 2024-06-06
 - [x] `1118` The Tether Stump — `specs/1118-the-tether-stump.md` — completed 2026-02-01
+- [x] `1050` Deep Sleep Syndicates — `specs/1050-deep-sleep-syndicates.md` — completed 2026-10-31
