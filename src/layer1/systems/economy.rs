@@ -223,9 +223,7 @@ pub fn register(schedule: &mut Schedule) {
     );
 
     schedule.add_systems(
-        (
-            crate::layer1::core::integration::tether_stump_lost_tech_bridge,
-        )
+        (crate::layer1::core::integration::tether_stump_lost_tech_bridge,)
             .in_set(Layer1SystemSet::Economy),
     );
 

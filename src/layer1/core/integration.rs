@@ -2617,7 +2617,8 @@ pub fn tether_stump_lost_tech_bridge(
             inventory.items.remove(index);
             resources.add_knowledge(50.0);
             chronicle_events.send(AddChronicleEvent {
-                text: "Lost Tech recovered from the Tether Stump yielded vast knowledge.".to_string(),
+                text: "Lost Tech recovered from the Tether Stump yielded vast knowledge."
+                    .to_string(),
                 importance: EventImportance::Major,
             });
         }
