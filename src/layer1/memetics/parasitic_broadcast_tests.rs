@@ -9,12 +9,12 @@ mod tests {
         parasitic_broadcast_risk_system, process_parasitic_work_reduction, MemeticInfection,
     };
     use crate::layer1::morale::{MoodModifier, Morale};
-    use crate::prelude::Pop;
     use crate::layer1::skills::Skills;
     use crate::layer1::utility_eval_types::{PopEvalData, UtilityAIBuffer};
     use crate::layer1::utility_types::ActionType;
     use crate::layer1::DesignationType;
     use crate::layer3::silence::DetectionRisk;
+    use crate::prelude::Pop;
     use bevy::prelude::App;
     use bevy::prelude::Update;
     use bevy_ecs::prelude::*;
@@ -246,5 +246,15 @@ mod tests {
         let (action, utility, _target) = result.unwrap();
         assert_eq!(action, ActionType::MemeticObsession);
         assert_eq!(utility, 10.0);
+    }
+    #[test]
+    fn test_evaluate_memetic_obsession_no_infection() {
+        let mut data = PopEvalData::test_instance();
+        data.memetic_infection = None;
+        let buffer = UtilityAIBuffer::default();
+        let result = crate::layer1::memetics::parasitic_broadcast::evaluate_memetic_obsession(
+            &data, &buffer,
+        );
+        assert!(result.is_none());
     }
 }
