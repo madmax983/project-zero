@@ -519,6 +519,9 @@ mod weight_of_silence_bridge;
 
 #[path = "integration/archaeological_contagion_chronicle.rs"]
 mod archaeological_contagion_chronicle;
+
+#[path = "integration/tether_stump_bridge.rs"]
+mod tether_stump_bridge;
 #[path = "integration/tectonic_fracking_bridge.rs"]
 mod tectonic_fracking_bridge;
 

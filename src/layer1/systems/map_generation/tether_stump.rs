@@ -56,6 +56,9 @@ pub fn spawn_lost_tech_caches(mut commands: Commands, terrain: Res<TerrainGrid>)
     // Spawn one piece of tech high up
     commands.spawn((
         LostTech,
+        crate::layer1::economy::items::Item {
+            item_type: crate::layer1::economy::items::ItemType::LostTech,
+        },
         Transform::from_xyz(stump_x as f32, stump_y as f32, 50.0),
     ));
 }

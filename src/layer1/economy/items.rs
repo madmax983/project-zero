@@ -158,6 +158,8 @@ pub enum ItemType {
     AgonyExtract,
     /// Fermented luxury good from orbital stations.
     VoidAle,
+    /// Highly valuable technology from the past.
+    LostTech,
 }
 
 impl ItemType {
@@ -185,6 +187,7 @@ impl ItemType {
             Self::Rations => Some(ResourceType::Rations),
             Self::Waste => Some(ResourceType::Waste),
             Self::BuildingPermit => Some(ResourceType::BuildingPermit),
+            Self::LostTech => None,
             Self::AgonyExtract => None,
             _ => None,
         }
