@@ -521,3 +521,8 @@ mod weight_of_silence_bridge;
 mod archaeological_contagion_chronicle;
 #[path = "integration/tectonic_fracking_bridge.rs"]
 mod tectonic_fracking_bridge;
+
+#[path = "integration/subconscious_grid_lockdown_bridge.rs"]
+mod subconscious_grid_lockdown_bridge;
+#[path = "integration/subconscious_grid_effects_bridge.rs"]
+mod subconscious_grid_effects_bridge;
