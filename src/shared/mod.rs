@@ -12,6 +12,7 @@ pub mod narrative;
 /// Random number generation utilities.
 pub mod random;
 pub mod rendering;
+pub mod scenario;
 /// Game state definitions.
 pub mod state;
 /// Time-tracking resources.

@@ -1,4 +1,4 @@
-use crate::setup::StartScenarioId;
+use crate::shared::scenario::StartScenarioId;
 use bevy_ecs::prelude::*;
 
 /// Resources for the Main Menu.
@@ -67,7 +67,7 @@ impl MenuState {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::setup::StartScenarioId;
+    use crate::shared::scenario::StartScenarioId;
 
     #[test]
     fn test_menu_state_resource() {
