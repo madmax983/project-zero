@@ -36,7 +36,11 @@ impl TraceGasGrid {
         if x >= self.width || y >= self.height {
             return 0.0;
         }
-        let idx = y.checked_mul(self.width).expect("Grid size overflow").checked_add(x).expect("Grid size overflow");
+        let idx = y
+            .checked_mul(self.width)
+            .expect("Grid size overflow")
+            .checked_add(x)
+            .expect("Grid size overflow");
         match gas_type {
             GasType::Euphoric => self.euphoric[idx],
             GasType::Fear => self.fear[idx],
@@ -48,7 +52,11 @@ impl TraceGasGrid {
         if x >= self.width || y >= self.height {
             return;
         }
-        let idx = y.checked_mul(self.width).expect("Grid size overflow").checked_add(x).expect("Grid size overflow");
+        let idx = y
+            .checked_mul(self.width)
+            .expect("Grid size overflow")
+            .checked_add(x)
+            .expect("Grid size overflow");
         match gas_type {
             GasType::Euphoric => self.euphoric[idx] += amount,
             GasType::Fear => self.fear[idx] += amount,

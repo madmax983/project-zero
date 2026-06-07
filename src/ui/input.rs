@@ -389,7 +389,8 @@ fn handle_main_menu_mode(world: &mut World, key: GameKeyEvent) {
                 0 => {
                     // Start Game
                     let selected_scenario = world.resource::<MenuState>().selected_scenario;
-                    let scenario = crate::shared::scenario::start_scenario_definition(selected_scenario);
+                    let scenario =
+                        crate::shared::scenario::start_scenario_definition(selected_scenario);
                     *world.resource_mut::<crate::shared::scenario::ActiveStartScenario>() =
                         crate::shared::scenario::ActiveStartScenario {
                             id: scenario.id,
@@ -602,7 +603,9 @@ pub fn handle_possession_ui_state(
 mod tests {
     use crate::layer1::{Chronicle, ColonyResources, Pop};
     use crate::setup::{setup_world_with_config, SetupConfig};
-    use crate::shared::scenario::{start_scenario_definition, ActiveStartScenario, StartScenarioId};
+    use crate::shared::scenario::{
+        start_scenario_definition, ActiveStartScenario, StartScenarioId,
+    };
 
     use super::*;
     use crate::layer1::Viewport;

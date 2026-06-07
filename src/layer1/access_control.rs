@@ -92,6 +92,20 @@ pub fn check_access(world: &World, door_entity: Entity, pop_entity: Entity) -> b
         return false;
     }
 
+    // Spec 1296: The Subconscious Grid lockdown check
+    if let Some(resident) =
+        world.get::<crate::layer1::infrastructure::subconscious_grid::ResidentOf>(door_entity)
+    {
+        if let Some(grid) =
+            world.get::<crate::layer1::infrastructure::subconscious_grid::SmartGrid>(resident.0)
+        {
+            if grid.state == crate::layer1::infrastructure::subconscious_grid::GridState::Lockdown {
+                // In a lockdown, all standard access is denied
+                return false;
+            }
+        }
+    }
+
     let Some(access) = world.get::<AccessControl>(door_entity) else {
         return true; // No control = open
     };
