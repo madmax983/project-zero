@@ -519,6 +519,7 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
         (
             crate::layer2::cartographers_curse::process_telemetry_sale,
             crate::layer2::integration::cartographers_curse_chronicle_bridge,
+            crate::layer2::bombardment::execute_bombardment_system,
             crate::layer2::integration::orbital_bombardment_chronicle_bridge,
             crate::layer3::diplomacy::flesh_tax::process_flesh_tax_payment,
             crate::layer3::diplomacy::flesh_tax::process_flesh_tax_failure,
