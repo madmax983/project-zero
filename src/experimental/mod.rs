@@ -184,6 +184,8 @@ pub mod scrapcode_entropy;
 pub mod the_weight_of_silence;
 
 #[cfg(feature = "nova")]
+pub mod ascetic_fasting;
+#[cfg(feature = "nova")]
 pub mod magnetic_veteran;
 #[cfg(feature = "nova")]
 pub mod thermal_venting;

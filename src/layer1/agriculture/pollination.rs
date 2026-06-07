@@ -65,7 +65,6 @@ pub fn process_crop_growth_system(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use bevy::prelude::*;
 
     #[test]
     fn test_crop_fails_without_pollination() {
