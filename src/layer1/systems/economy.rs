@@ -211,6 +211,14 @@ pub fn register(schedule: &mut Schedule) {
 
     schedule.add_systems(
         (
+            crate::layer1::memorial_economy::ancestral_server::handle_engram_upload_system,
+            crate::layer1::memorial_economy::ancestral_server::scale_server_power_demand_system,
+        )
+            .in_set(Layer1SystemSet::Economy),
+    );
+
+    schedule.add_systems(
+        (
             crate::layer1::economy::beacon::process_colony_beacon_system,
             crate::layer1::economy::beacon::toggle_beacon_system,
             crate::layer1::integration::beacon_migrant_arrival_bridge,

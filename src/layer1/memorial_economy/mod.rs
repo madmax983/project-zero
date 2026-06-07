@@ -3,6 +3,8 @@ use crate::layer1::social::morale::{MoodModifier, Morale};
 use crate::layer1::social::social_stratification::Prestige;
 use bevy_ecs::prelude::*;
 
+pub mod ancestral_server;
+
 #[derive(Component)]
 pub struct Relic;
 
