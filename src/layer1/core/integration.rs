@@ -2601,3 +2601,25 @@ pub fn tectonic_fracking_chronicle_bridge(
         });
     }
 }
+
+/// INT-1118: Bridges Lost Tech recovery to AddChronicleEvent (Chronicle) and ColonyResources (knowledge).
+pub fn tether_stump_lost_tech_bridge(
+    mut inventories: Query<&mut crate::layer1::economy::inventory::Inventory>,
+    mut resources: ResMut<ColonyResources>,
+    mut chronicle_events: EventWriter<AddChronicleEvent>,
+) {
+    for mut inventory in inventories.iter_mut() {
+        if let Some(index) = inventory
+            .items
+            .iter()
+            .position(|item| item.item_type == crate::layer1::economy::items::ItemType::LostTech)
+        {
+            inventory.items.remove(index);
+            resources.add_knowledge(50.0);
+            chronicle_events.send(AddChronicleEvent {
+                text: "Lost Tech recovered from the Tether Stump yielded vast knowledge.".to_string(),
+                importance: EventImportance::Major,
+            });
+        }
+    }
+}

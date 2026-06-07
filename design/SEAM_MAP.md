@@ -1385,3 +1385,10 @@
 - **Systems connected:** `trigger_tectonic_fracking_system` -> `tectonic_fracking_system` -> `tectonic_fracking_chronicle_bridge` -> `AddChronicleEvent`
 - **Glue added:** Added `TectonicFracker` to `BuildingType::Landfill`. Added `trigger_tectonic_fracking_system` to fire `FrackEvent` periodically when waste is high. Added `tectonic_fracking_chronicle_bridge` to log major events.
 - **Tests:** `tests/integration/tectonic_fracking_bridge.rs`
+
+### INT-1118: Lost Tech -> Inventory and Research
+- **Date:** 2026-10-31
+- **Systems connected:** `spawn_lost_tech_caches` -> `tether_stump_lost_tech_bridge` -> `ColonyResources` (knowledge) & `AddChronicleEvent`
+- **Glue added:** Added `LostTech` to `ItemType` so it can be carried in `Inventory`. Added `tether_stump_lost_tech_bridge` in `src/layer1/core/integration.rs` to process `LostTech` recovery and add knowledge to `ColonyResources`.
+- **Schedule:** Registered the system in `src/layer1/systems/economy.rs` in `Layer1SystemSet::Economy`.
+- **Tests:** `tests/integration/tether_stump_bridge.rs`

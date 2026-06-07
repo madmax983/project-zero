@@ -224,6 +224,13 @@ pub fn register(schedule: &mut Schedule) {
 
     schedule.add_systems(
         (
+            crate::layer1::core::integration::tether_stump_lost_tech_bridge,
+        )
+            .in_set(Layer1SystemSet::Economy),
+    );
+
+    schedule.add_systems(
+        (
             crate::layer1::integration::grid_overload_fire_bridge
                 .after(crate::layer1::energy::power_grid_system),
             art_generation_system,
