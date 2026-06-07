@@ -1,3 +1,30 @@
+//! Linguistic Drift and Dialect Barriers.
+//!
+//! Languages across isolated colonies naturally drift over time. This module tracks
+//! the `ColonyLanguage` and `DialectDrift`. The further a language drifts from the base,
+//! the harder communication becomes between different populations, imposing a
+//! social penalty unless a `Translator` is present.
+//!
+//! # Examples
+//!
+//! ```rust
+//! use bevy_app::prelude::*;
+//! use scale::layer1::culture::linguistics::{DialectDrift, Translator, translation_modifier};
+//!
+//! let mut app = App::new();
+//!
+//! // Spawn two pops with vastly different dialects
+//! let pop1 = app.world_mut().spawn(DialectDrift(1.0)).id();
+//! let pop2 = app.world_mut().spawn(DialectDrift(10.0)).id();
+//!
+//! // Without a translator, communication fails entirely (modifier = 0.0)
+//! assert_eq!(translation_modifier(app.world(), pop1, pop2, None), 0.0);
+//!
+//! // With a translator present, communication is restored (modifier = 1.0)
+//! let translator = app.world_mut().spawn(Translator).id();
+//! assert_eq!(translation_modifier(app.world(), pop1, pop2, Some(translator)), 1.0);
+//! ```
+
 use bevy_ecs::prelude::*;
 use rand::Rng;
 

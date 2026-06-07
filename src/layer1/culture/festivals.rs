@@ -1,3 +1,30 @@
+//! Festivals and Cultural Celebrations.
+//!
+//! This module tracks and manages active cultural festivals within the colony.
+//! A festival is triggered by recalling important historical events from the `Chronicle`.
+//! While active, a festival grants a colony-wide morale boost through the `FestivalState`.
+//!
+//! # Examples
+//!
+//! ```rust
+//! use scale::layer1::culture::festivals::{Festival, FestivalState, get_festival_morale_modifier};
+//!
+//! let mut state = FestivalState::default();
+//!
+//! // Before a festival, there is no morale modifier
+//! assert_eq!(get_festival_morale_modifier(&state), 0.0);
+//!
+//! // Start a festival
+//! state.active_festival = Some(Festival {
+//!     name: "Founding Day Festival".to_string(),
+//!     original_event_tick: 0,
+//!     end_tick: 100,
+//! });
+//!
+//! // During the festival, pops receive a +10.0 morale boost
+//! assert_eq!(get_festival_morale_modifier(&state), 10.0);
+//! ```
+
 use crate::layer1::balance::TICKS_PER_YEAR;
 use crate::layer1::chronicle::{Chronicle, EventImportance};
 use crate::shared::log::MessageLog;

@@ -1,3 +1,44 @@
+//! Cultural Artifacts and Localized Mood Auras.
+//!
+//! This module manages `CulturalArtifact` entities, which emit localized mood-altering
+//! auras over the colony map. Depending on the artifact's `ArtifactTheme`, pops
+//! within the `aura_radius` will receive temporary positive or negative morale modifiers.
+//!
+//! # Examples
+//!
+//! ```rust
+//! use bevy_app::prelude::*;
+//! use scale::layer1::culture::cultural_artifacts::{ArtifactTheme, CulturalArtifact, cultural_aura_system};
+//! use scale::layer1::entities::pop::Pop;
+//! use scale::layer1::map::GridPosition;
+//! use scale::layer1::social::morale::Morale;
+//!
+//! let mut app = App::new();
+//! app.add_systems(Update, cultural_aura_system);
+//!
+//! // Spawn a pop at (5, 5) with baseline morale
+//! let pop = app.world_mut().spawn((
+//!     Pop,
+//!     GridPosition { x: 5, y: 5 },
+//!     Morale::default()
+//! )).id();
+//!
+//! // Spawn a Victory artifact at the same location with a radius of 5
+//! app.world_mut().spawn((
+//!     CulturalArtifact {
+//!         theme: ArtifactTheme::Victory,
+//!         aura_radius: 5,
+//!     },
+//!     GridPosition { x: 5, y: 5 },
+//! ));
+//!
+//! app.update();
+//!
+//! // The pop's morale is boosted by the artifact's aura
+//! let morale = app.world().get::<Morale>(pop).unwrap();
+//! assert!(morale.modifiers.iter().any(|m| m.label == "Victory Art Aura"));
+//! ```
+
 use crate::layer1::entities::pop::Pop;
 use crate::layer1::map::GridPosition;
 use crate::layer1::social::morale::{MoodModifier, Morale};

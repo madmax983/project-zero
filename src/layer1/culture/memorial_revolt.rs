@@ -1,3 +1,36 @@
+//! Memorial Demands and Strike Action.
+//!
+//! When a pop's pet dies via a `PetDeathEvent`, the grieving owner is granted a
+//! `MemorialDemand` component. If a proper memorial structure is not constructed
+//! within the given timeframe, the demand expires unfulfilled.
+//!
+//! Failing to honor this demand drastically lowers the pop's morale and pushes
+//! them to immediately go `OnStrike`.
+//!
+//! # Examples
+//!
+//! ```rust
+//! use bevy_app::prelude::*;
+//! use scale::layer1::culture::memorial_revolt::{MemorialDemand, OnStrike, process_memorial_demand_system};
+//! use scale::layer1::social::morale::Morale;
+//!
+//! let mut app = App::new();
+//! app.add_systems(Update, process_memorial_demand_system);
+//!
+//! // Spawn a pop with an expired memorial demand
+//! let pop = app.world_mut().spawn((
+//!     Morale { value: 100.0, modifiers: vec![] },
+//!     MemorialDemand { timer: 0 }
+//! )).id();
+//!
+//! app.update();
+//!
+//! // Morale has tanked and the pop is now on strike
+//! let morale = app.world().get::<Morale>(pop).unwrap();
+//! assert!(morale.value < 100.0);
+//! assert!(app.world().get::<OnStrike>(pop).is_some());
+//! ```
+
 use crate::layer1::social::morale::Morale;
 use bevy::prelude::*;
 

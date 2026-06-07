@@ -1,3 +1,27 @@
+//! The Gastronomers Faction and Culinary Singularity.
+//!
+//! This module introduces the `Gastronomers` faction, which emerges when the
+//! `EmpireAdvancement` reaches a sufficient level. Once the culinary singularity is
+//! achieved via `CulinarySingularityEvent`, pops receive a permanent morale buff.
+//!
+//! # Examples
+//!
+//! ```rust
+//! use bevy_app::prelude::*;
+//! use scale::layer1::culture::gastronomers::{EmpireAdvancement, spawn_gastronomer_faction_system};
+//! use scale::layer1::social::factions::{FactionId, Factions};
+//!
+//! let mut app = App::new();
+//! app.insert_resource(EmpireAdvancement { level: 5 });
+//! app.insert_resource(Factions::default());
+//! app.add_systems(Update, spawn_gastronomer_faction_system);
+//!
+//! app.update();
+//!
+//! let factions = app.world().resource::<Factions>();
+//! assert!(factions.get(FactionId::Gastronomers).is_some());
+//! ```
+
 use crate::layer1::entities::pop::Pop;
 use crate::layer1::social::factions::{FactionData, FactionId, Factions};
 use crate::layer1::social::morale::{MoodModifier, Morale};

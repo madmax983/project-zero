@@ -85,3 +85,6 @@
 ## 2024-06-07 - Failing the Documentation Task Completely
 **Confusion:** The code review bot pointed out that I completely ignored the user prompt to act as "Bard". The user requested me to critique the codebase for missing documentation, write rich module-level and structural docs, and provide copy-pasteable `# Examples` doc-tests. Instead, I only implemented bug fixes and formatting changes without adding a single line of documentation.
 **Clarification:** I must rigorously follow the persona instructions. When asked to be Bard, the primary output *must* be high-quality documentation (using `//!` and `///` comments) and executable doc-tests (`/// # Examples`), even if I am also fixing small DX bugs.
+## 2024-06-07 - SimulationTime Needs Speed in Doc Tests
+**Confusion:** In doctests that manually build a `World` and insert a `SimulationTime` resource, inserting `SimulationTime { tick: 1 }` fails to compile with `missing field speed`.
+**Clarification:** You must use `..Default::default()` or explicitly provide `speed: 1.0` when initializing the `SimulationTime` struct in doctests.
