@@ -289,6 +289,8 @@ pub fn register(schedule: &mut Schedule) {
 ,
             crate::layer1::infrastructure::subconscious_grid::update_machine_efficiency_system
 ,
+            crate::layer1::core::integration::apply_subconscious_grid_machine_effects_system
+,
             crate::layer1::infrastructure::subconscious_grid::apply_lockdown_system
 ,
         )

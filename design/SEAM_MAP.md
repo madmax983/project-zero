@@ -4,6 +4,12 @@
 - **Glue added:** `endless_draft_bridge_system` in `src/layer3/integration.rs` to read `DraftOrderEvent`, check if pops meet requirements, despawn them, and emit `DraftComplianceEvent`/`DraftRefusalEvent` and `AddChronicleEvent`.
 - **Tests:** `tests/integration/endless_draft_bridge.rs`
 
+### INT-1296: Subconscious Grid -> Machine output
+- **Date:** 2026-10-31
+- **Systems connected:** `SubconsciousGridEffect` -> `apply_subconscious_grid_machine_effects_system` -> `Machine`
+- **Glue added:** `apply_subconscious_grid_machine_effects_system` in `src/layer1/core/integration.rs` to read `SubconsciousGridEffect` and apply non-accumulating multipliers to `Machine` `efficiency` and `burnout_risk` via `BaseMachineStats`. Registered in `src/layer1/systems/economy.rs`.
+- **Tests:** `tests/integration/subconscious_grid_effects_bridge.rs`
+
 ### INT-775: The Quantum Famine -> Chronicle
 - **Date:** 2026-10-31
 - **Systems connected:** `process_market_panic_hoarding` -> `quantum_famine_export_dump_bridge` -> `AddChronicleEvent`
