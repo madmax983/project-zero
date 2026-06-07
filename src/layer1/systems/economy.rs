@@ -284,6 +284,13 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::ransom_broker::process_ransom_decisions_system,
             crate::layer1::core::integration::update_renown_from_morale_system,
             crate::layer1::living_score::update_living_score_aesthetics,
+            crate::layer1::infrastructure::subconscious_grid::calculate_colony_stress_system,
+            crate::layer1::infrastructure::subconscious_grid::apply_subconscious_grid_effects_system
+,
+            crate::layer1::infrastructure::subconscious_grid::update_machine_efficiency_system
+,
+            crate::layer1::infrastructure::subconscious_grid::apply_lockdown_system
+,
         )
             .chain()
             .in_set(Layer1SystemSet::Economy),

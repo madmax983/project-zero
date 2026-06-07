@@ -4,7 +4,6 @@
 
 
 
-- [ ] `1296` The Subconscious Grid — `specs/1296-the-subconscious-grid.md`
 - [ ] `1289` The Bureaucracy of Scarcity — `specs/1289-the-bureaucracy-of-scarcity.md`
 - [ ] `1290` The Weight of the Past — `specs/1290-the-weight-of-the-past.md`
 - [ ] `1291` Invasive Xeno-Aesthetics — `specs/1291-invasive-xeno-aesthetics.md`
