@@ -130,3 +130,8 @@
 **Concept:** Added `thermal_venting` module in `src/experimental/thermal_venting.rs`. Connects `ActionType::ExtinguishFire`, `WeatherType::ThermalInversion`, and `ColonyResources`. If a pop extinguishes a fire during a thermal inversion, the intense trapped heat causes the water used to flash-boil. This slightly damages the Pop (Steam Burn), immediately reduces the colony's `water` resource, and randomly destroys a small amount of `wood` in the colony due to the explosive steam pressure ruining stored materials.
 **Fate:** Submitted
 **Lesson:** Connects the environment hazard (thermal inversion) with a simple action (extinguishing a fire), turning an otherwise helpful action into a dangerous double-edged sword under specific weather conditions.
+
+## [Ascetic Fasting]
+**Concept:** Added `ascetic_fasting_system` to `src/experimental/ascetic_fasting.rs`. Pops with `Trait::Ascetic` who reach critical hunger (`< 0.2`) enter a state of "Ascetic Fasting", which passively regenerates their `leisure` need.
+**Fate:** Submitted
+**Lesson:** Connects the physiological system (Hunger) with the psychological system (Leisure) for a specific personality trait. It creates emergent narratives where some pops actively thrive mentally when physically starving, allowing for high-risk starvation strategies during times of unrest.
