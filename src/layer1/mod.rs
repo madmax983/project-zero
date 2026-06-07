@@ -476,3 +476,7 @@ pub use void_sirens::*;
 pub mod living_score;
 pub use living_score::*;
 pub mod archaeological_contagion;
+pub mod bureaucracy_of_scarcity;
+pub use bureaucracy_of_scarcity::{
+    apply_rationing_buff_system, evaluate_scarcity_system, ConsumptionRate, GlobalRationingModifier,
+};

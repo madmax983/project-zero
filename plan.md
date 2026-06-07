@@ -1,24 +1,20 @@
-1. **Extract Scenario structs from `src/setup.rs` to `src/shared/scenario.rs`**:
-   - Use `run_in_bash_session` with `sed` or Python to copy `SetupConfig`, `StartScenarioDifficulty`, `StartScenarioId`, `StartScenarioDefinition`, `ActiveStartScenario`, `AppliedStartScenario`, and `start_scenario_definition` from `src/setup.rs` and write it to `src/shared/scenario.rs`. Make sure `use bevy::prelude::*;` is present.
-   - Use `replace_with_git_merge_diff` to add `pub mod scenario;` to `src/shared/mod.rs`.
-   - Verify creation of the new file with `list_files` or `read_file`.
-
-2. **Remove definitions from `src/setup.rs` and update imports**:
-   - Use `replace_with_git_merge_diff` or a Python script in `run_in_bash_session` to delete the moved structs/enums from `src/setup.rs`.
-   - Use `replace_with_git_merge_diff` to add `pub use crate::shared::scenario::*;` in `src/setup.rs` so existing consumers won't break if we miss them. But wait, `StartScenarioId` is used directly in some `setup` consumers, maybe we just do `use crate::shared::scenario::*;` for internal usage, and update the explicit references. Let's just update all explicit references using `sed`.
-
-3. **Update imports in other files**:
-   - Use `run_in_bash_session` to run `sed -i 's/crate::setup::StartScenarioId/crate::shared::scenario::StartScenarioId/g' src/ui/input.rs src/ui/menu.rs src/ui/menu_state.rs`
-   - Use `run_in_bash_session` to run `sed -i 's/crate::setup::StartScenarioDifficulty/crate::shared::scenario::StartScenarioDifficulty/g'`
-   - Use `run_in_bash_session` to run `sed -i 's/crate::setup::{/crate::setup::{/g'` (fix multi-imports in `src/ui/input.rs` manually with `replace_with_git_merge_diff`).
-
-4. **Verify correctness**:
-   - Run `cargo check --workspace --all-features`.
-   - Run `cargo test --workspace --all-features`.
-   - Run `cargo clippy --workspace --all-targets --all-features -- -D warnings`.
-
-5. Complete pre-commit steps to ensure proper testing, verification, review, and reflection are done.
-
-6. **Submit PR**:
-   - Use `run_in_bash_session` to stage changes and commit with "🗺️ Atlas: [architectural change]" and proper description.
-   - Call the `submit` tool.
+1. **Claim the Task:** Update `design/BACKLOG.md` to remove task 1289 and add it to `design/IN_PROGRESS.md`, then commit.
+2. **RED Phase (Tests):**
+   - Create a new module `src/layer1/bureaucracy_of_scarcity.rs`.
+   - Add the test module described in the `RED Phase` of `specs/1289-the-bureaucracy-of-scarcity.md`.
+   - Ensure the module is registered in `src/layer1/mod.rs` (e.g. `pub mod bureaucracy_of_scarcity;`).
+   - Run `cargo test` and verify that the tests fail, then commit the RED phase.
+3. **GREEN Phase (Implementation):**
+   - Implement the `Colony`, `ResourceStorage`, `JobType`, `JobBoard`, `Pop`, `JobAssignment`, `ConsumptionRate`, and `GlobalRationingModifier` components and the two systems (`evaluate_scarcity_system`, `apply_rationing_buff_system`) in `src/layer1/bureaucracy_of_scarcity.rs` as specified in the `GREEN Phase` of the spec.
+   - Run `cargo test` and verify that the tests pass.
+   - Check with `cargo clippy -- -D warnings` and fix any warnings.
+   - Commit the GREEN phase.
+4. **REFACTOR Phase (Quality Improvements):**
+   - Implement Job Cleanup: In `evaluate_scarcity_system`, remove `JobType::RationingBureaucrat` from `JobBoard` when `storage.food >= storage.population_demand / 2` (or the condition specified in REFACTOR phase to clear jobs).
+   - Implement Dynamic Base Rate: Modify `apply_rationing_buff_system` to calculate the new rate based on the Pop's base rate (we will need to add a `base_food_per_tick` field to `ConsumptionRate` to track this without losing precision over multiple ticks).
+   - *Skip generalizing resource types* if it requires significant changes to existing architecture or if `ResourceStorage` can be kept specific to the current tests.
+   - Run `cargo test` to ensure changes haven't broken the tests. Add tests for the refactoring changes if needed to hit coverage.
+   - Commit the REFACTOR phase.
+5. **Coverage:** Run `cargo llvm-cov --lib --bins` and ensure the coverage is >= 85%.
+6. **Pre-commit:** Run pre-commit checks.
+7. **Complete & Submit:** Move task to `design/COMPLETED.md`, run `cargo fmt`, commit, and submit via `submit` tool.
