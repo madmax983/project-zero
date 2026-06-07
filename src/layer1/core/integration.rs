@@ -54,6 +54,19 @@ pub fn ransom_broker_chronicle_bridge(
     }
 }
 
+/// INT-765: Bridges `WarDeclaredEvent` from Diplomatic Wards to `AddChronicleEvent` (Chronicle).
+pub fn diplomatic_ward_death_chronicle_bridge(
+    mut war_events: bevy_ecs::event::EventReader<crate::layer1::diplomacy::wards::WarDeclaredEvent>,
+    mut chronicle_events: bevy_ecs::event::EventWriter<crate::layer1::core::chronicle::AddChronicleEvent>,
+) {
+    for _ in war_events.read() {
+        chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
+            text: "A diplomatic ward has perished in our care. Their home faction has declared war upon us!".to_string(),
+            importance: crate::layer1::core::chronicle::EventImportance::Major,
+        });
+    }
+}
+
 /// Bridges `KineticStrikeEvent` to `AddChronicleEvent` (Chronicle).
 pub fn kinetic_strike_chronicle_bridge(
     mut strike_events: EventReader<crate::layer1::geology::subsurface::KineticStrikeEvent>,

@@ -1379,3 +1379,10 @@
 - **Systems connected:** `trigger_tectonic_fracking_system` -> `tectonic_fracking_system` -> `tectonic_fracking_chronicle_bridge` -> `AddChronicleEvent`
 - **Glue added:** Added `TectonicFracker` to `BuildingType::Landfill`. Added `trigger_tectonic_fracking_system` to fire `FrackEvent` periodically when waste is high. Added `tectonic_fracking_chronicle_bridge` to log major events.
 - **Tests:** `tests/integration/tectonic_fracking_bridge.rs`
+
+### INT-765: Diplomatic Wards -> Chronicle
+- **Date:** 2026-10-31
+- **Systems connected:** `process_ward_deaths_system` -> `WarDeclaredEvent` -> `diplomatic_ward_death_chronicle_bridge` -> `AddChronicleEvent`
+- **Glue added:** Added `diplomatic_ward_death_chronicle_bridge` in `src/layer1/core/integration.rs` to log a Chronicle event when a diplomatic ward perishes.
+- **Schedule:** Registered in `src/layer1/systems/observation.rs` after `process_ward_deaths_system`.
+- **Tests:** `tests/integration/diplomatic_wards_bridge.rs`

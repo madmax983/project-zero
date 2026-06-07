@@ -517,6 +517,8 @@ pub fn register(schedule: &mut Schedule) {
         (
             crate::layer1::diplomacy::wards::process_diplomatic_wards_system,
             crate::layer1::diplomacy::wards::process_ward_deaths_system,
+            crate::layer1::core::integration::diplomatic_ward_death_chronicle_bridge
+                .after(crate::layer1::diplomacy::wards::process_ward_deaths_system),
             crate::layer1::unseen_bureaucracy::phantom_shift_system,
             crate::layer1::psychology::void_sickness::process_void_exposure_system,
             crate::layer1::psychology::void_sickness::apply_void_touched_trait_system,

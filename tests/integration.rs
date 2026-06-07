@@ -396,6 +396,9 @@ mod ideological_contraband_bridge;
 #[path = "integration/orbital_bombardment_bridge.rs"]
 mod orbital_bombardment_bridge;
 
+#[path = "integration/diplomatic_wards_bridge.rs"]
+mod diplomatic_wards_bridge;
+
 #[path = "integration/orbital_mirror_bridge.rs"]
 mod orbital_mirror_bridge;
 
