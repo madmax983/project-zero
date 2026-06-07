@@ -24,6 +24,8 @@ pub enum TerrainType {
     DeepRock,
     /// Crater left by a catastrophic impact.
     Crater,
+    /// Indestructible stump of the space elevator.
+    IndestructibleStump,
     /// Molten magma rock causing heat damage.
     MagmaRock,
     /// Toxic fungal growth in the deep caverns.
@@ -57,6 +59,7 @@ impl TerrainType {
             Self::Sapling => "Sapling",
             Self::DeepRock => "Deep Rock",
             Self::Crater => "Crater",
+            Self::IndestructibleStump => "Indestructible Stump",
             Self::MagmaRock => "Magma Rock",
             Self::SporeBloom => "Spore Bloom",
             Self::Artifact => "Artifact",
@@ -103,6 +106,7 @@ impl TerrainType {
                 | Self::DeepRock
                 | Self::Artifact
                 | Self::Crater
+                | Self::IndestructibleStump
                 | Self::FaultLine(true)
         )
     }
@@ -119,6 +123,7 @@ impl TerrainType {
             | Self::MagmaRock
             | Self::Artifact
             | Self::Crater
+            | Self::IndestructibleStump
             | Self::FaultLine(_) => 0.5,
             Self::Water => 0.2,
             Self::Grass
@@ -372,6 +377,7 @@ mod tests {
                     | TerrainType::Tree
                     | TerrainType::DeepRock
                     | TerrainType::Crater
+                    | TerrainType::IndestructibleStump
                     | TerrainType::MagmaRock
                     | TerrainType::SporeBloom
                     | TerrainType::Artifact
