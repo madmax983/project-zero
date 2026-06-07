@@ -235,9 +235,13 @@ pub fn decay_needs_system(
     >,
     chambers: Query<&crate::layer1::temporal_chamber::TemporalChamber>,
     policies: Option<Res<ColonyPolicies>>,
+    rationing_modifiers: Query<&crate::layer1::administration::bureaucracy_of_scarcity::GlobalRationingModifier>,
 ) {
     let hunger_mod = policies.map_or(1.0, |p| get_hunger_decay_modifier(&p));
-    let base_hunger_decay = HUNGER_DECAY_PER_TICK * hunger_mod;
+
+    // Apply rationing buff from bureaucrats if present
+    let rationing_reduction = rationing_modifiers.iter().next().map_or(0.0, |m| m.reduction_percent);
+    let base_hunger_decay = HUNGER_DECAY_PER_TICK * hunger_mod * (1.0 - rationing_reduction);
 
     query
         .par_iter_mut()

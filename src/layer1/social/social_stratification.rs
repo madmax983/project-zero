@@ -16,6 +16,7 @@ impl Prestige {
         let value = match job {
             JobType::LibraryWorker | JobType::ObservatoryWorker => 7,
             JobType::Administrator => 10,
+            JobType::RationingBureaucrat => 5,
             // FarmWorker and others (Patient, etc.) default to 1 (Labor)
             _ => 1,
         };

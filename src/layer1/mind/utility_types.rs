@@ -789,4 +789,6 @@ pub enum AssignmentType {
     Surgery,
     /// Working in a deep mine.
     DeepMining,
+    /// Working to slow consumption during scarcity.
+    RationingBureaucrat,
 }

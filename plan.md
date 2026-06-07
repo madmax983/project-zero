@@ -1,24 +1,17 @@
-1. **Extract Scenario structs from `src/setup.rs` to `src/shared/scenario.rs`**:
-   - Use `run_in_bash_session` with `sed` or Python to copy `SetupConfig`, `StartScenarioDifficulty`, `StartScenarioId`, `StartScenarioDefinition`, `ActiveStartScenario`, `AppliedStartScenario`, and `start_scenario_definition` from `src/setup.rs` and write it to `src/shared/scenario.rs`. Make sure `use bevy::prelude::*;` is present.
-   - Use `replace_with_git_merge_diff` to add `pub mod scenario;` to `src/shared/mod.rs`.
-   - Verify creation of the new file with `list_files` or `read_file`.
+1. **Address the Review Feedback (Enum Update)**:
+   - Use `replace_with_git_merge_diff` to explicitly add `JobType::RationingBureaucrat => 5,` to the `match` statement in `src/layer1/social/social_stratification.rs` to satisfy the review feedback regarding handling the enum variant explicitly.
+   - Run `cargo check` using `run_in_bash_session` to verify compilation.
 
-2. **Remove definitions from `src/setup.rs` and update imports**:
-   - Use `replace_with_git_merge_diff` or a Python script in `run_in_bash_session` to delete the moved structs/enums from `src/setup.rs`.
-   - Use `replace_with_git_merge_diff` to add `pub use crate::shared::scenario::*;` in `src/setup.rs` so existing consumers won't break if we miss them. But wait, `StartScenarioId` is used directly in some `setup` consumers, maybe we just do `use crate::shared::scenario::*;` for internal usage, and update the explicit references. Let's just update all explicit references using `sed`.
+2. **Verify Code and Tests**:
+   - Run `cargo test --lib layer1::administration::bureaucracy_of_scarcity` using `run_in_bash_session`.
+   - Run `cargo test` using `run_in_bash_session` to ensure no global regressions were introduced.
 
-3. **Update imports in other files**:
-   - Use `run_in_bash_session` to run `sed -i 's/crate::setup::StartScenarioId/crate::shared::scenario::StartScenarioId/g' src/ui/input.rs src/ui/menu.rs src/ui/menu_state.rs`
-   - Use `run_in_bash_session` to run `sed -i 's/crate::setup::StartScenarioDifficulty/crate::shared::scenario::StartScenarioDifficulty/g'`
-   - Use `run_in_bash_session` to run `sed -i 's/crate::setup::{/crate::setup::{/g'` (fix multi-imports in `src/ui/input.rs` manually with `replace_with_git_merge_diff`).
+3. **Code Review**:
+   - Call `request_code_review`.
 
-4. **Verify correctness**:
-   - Run `cargo check --workspace --all-features`.
-   - Run `cargo test --workspace --all-features`.
-   - Run `cargo clippy --workspace --all-targets --all-features -- -D warnings`.
+4. **Pre-Commit Steps**:
+   - Complete pre-commit steps to ensure proper testing, verification, review, and reflection are done.
 
-5. Complete pre-commit steps to ensure proper testing, verification, review, and reflection are done.
-
-6. **Submit PR**:
-   - Use `run_in_bash_session` to stage changes and commit with "🗺️ Atlas: [architectural change]" and proper description.
-   - Call the `submit` tool.
+5. **Submit**:
+   - Use `run_in_bash_session` to execute `git add` and `git commit -m "feat(layer1): complete bureaucracy of scarcity"`.
+   - Use `submit` to create the PR.

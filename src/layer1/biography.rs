@@ -128,6 +128,7 @@ pub fn biography_monitor_system(
             AssignmentType::Surgery => format!("Undergoing surgery at {target_name}."),
             AssignmentType::Sheriff => format!("Enforcing the law at {target_name}."),
             AssignmentType::DeepMining => format!("Digging deep at {target_name}."),
+            AssignmentType::RationingBureaucrat => format!("Managing scarcity rationing at {target_name}."),
         };
 
         // Avoid duplicate consecutive events
