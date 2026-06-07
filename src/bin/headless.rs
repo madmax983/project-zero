@@ -1178,6 +1178,7 @@ fn print_map(world: &mut World, center_x: i32, center_y: i32) {
                 TerrainType::Artifact => "Ω".yellow().bold().to_string(),
                 TerrainType::FaultLine(true) => "≈".red().to_string(),
                 TerrainType::FaultLine(false) => "–".white().dim().to_string(),
+                TerrainType::IndestructibleStump => "I".white().bold().to_string(),
             };
             map_content.push_str(&s);
         }
@@ -1603,6 +1604,7 @@ fn scan_terrain(world: &mut World, center_x: i32, center_y: i32, radius: ScanRad
                 TerrainType::Artifact => "Artifact",
                 TerrainType::FaultLine(true) => "Fault Line (Open)",
                 TerrainType::FaultLine(false) => "Fault Line (Closed)",
+                TerrainType::IndestructibleStump => "Indestructible Stump",
             };
 
             let walkable = tile.is_walkable();
@@ -1697,6 +1699,7 @@ const fn get_terrain_color_headless(t: TerrainType) -> comfy_table::Color {
         TerrainType::Artifact => comfy_table::Color::Yellow,
         TerrainType::FaultLine(true) => comfy_table::Color::Red,
         TerrainType::FaultLine(false) => comfy_table::Color::DarkGrey,
+        TerrainType::IndestructibleStump => comfy_table::Color::White,
     }
 }
 
@@ -1735,6 +1738,7 @@ fn get_tile_info(world: &mut World, x: i32, y: i32) {
         TerrainType::Artifact => "Artifact",
         TerrainType::FaultLine(true) => "Fault Line (Open)",
         TerrainType::FaultLine(false) => "Fault Line (Closed)",
+        TerrainType::IndestructibleStump => "Indestructible Stump",
     };
 
     let walkable = tile.is_walkable();

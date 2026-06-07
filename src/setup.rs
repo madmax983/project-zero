@@ -213,7 +213,19 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     #[cfg(feature = "nova")]
     world.init_resource::<crate::experimental::the_haunted_cartographer::HauntedGrid>();
 
-    let terrain = generate_terrain(80, 50);
+    let mut terrain = generate_terrain(80, 50);
+
+    let mut extensions = crate::layer1::systems::map_generation::tether_stump::VerticalExtension::new();
+    let center_x = terrain.width / 2;
+    let center_y = terrain.height / 2;
+    for x in center_x..center_x+2 {
+        for y in center_y..center_y+2 {
+            terrain.set(x, y, TerrainType::IndestructibleStump);
+            extensions.mark_stump(x, y);
+        }
+    }
+    world.insert_resource(extensions);
+
     let mut roof =
         crate::layer1::structural_integrity::RoofGrid::new(terrain.width, terrain.height);
     for y in 0..terrain.height {
@@ -559,6 +571,14 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     }
     apply_start_scenario_state(&mut world, scenario.id, starter_colony.as_ref());
     spawn_initial_anomalies(&mut world, 5);
+
+    // Spec 1118: Spawn lost tech caches near the tether stump after terrain is placed
+    let (stump_x, stump_y) = crate::layer1::systems::map_generation::tether_stump::find_stump_center(world.resource::<crate::layer1::nature::terrain::TerrainGrid>()).unwrap_or((50, 50));
+    world.spawn((
+        crate::layer1::systems::map_generation::tether_stump::LostTech,
+        bevy::prelude::Transform::from_xyz(stump_x as f32, stump_y as f32, 50.0),
+    ));
+
     spawn_ancient_structures(
         &mut world,
         starter_colony.as_ref().map(|layout| layout.center),
