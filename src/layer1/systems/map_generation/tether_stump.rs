@@ -1,5 +1,5 @@
-use bevy::prelude::*;
 use crate::layer1::nature::terrain::{TerrainGrid, TerrainType};
+use bevy::prelude::*;
 
 #[derive(Component)]
 pub struct LostTech;
@@ -36,8 +36,8 @@ pub fn generate_tether_stump(mut commands: Commands, mut terrain: ResMut<Terrain
     let mut extensions = VerticalExtension::new();
 
     // Create a 2x2 stump
-    for x in center_x..center_x+2 {
-        for y in center_y..center_y+2 {
+    for x in center_x..center_x + 2 {
+        for y in center_y..center_y + 2 {
             terrain.set(x, y, TerrainType::IndestructibleStump);
             extensions.mark_stump(x, y);
         }

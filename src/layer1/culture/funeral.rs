@@ -1,3 +1,49 @@
+//! Funeral Rites and Corpse Management.
+//!
+//! This module handles the gruesome reality of death in the colony. When pops die,
+//! they leave behind a `Corpse`. If left unburied, witnessing a decaying corpse
+//! inflicts significant grief and morale penalties via the `grief_system`.
+//!
+//! To mitigate this, pops must be buried in a `Grave`.
+//!
+//! # Examples
+//!
+//! ```rust
+//! use bevy_app::prelude::*;
+//! use bevy_ecs::prelude::*;
+//! use scale::layer1::culture::funeral::{Corpse, grief_system};
+//! use scale::layer1::entities::pop::Pop;
+//! use scale::layer1::map::GridPosition;
+//! use scale::layer1::memory::{Memories, MemoryType};
+//! use scale::shared::time::SimulationTime;
+//!
+//! let mut world = World::new();
+//! world.insert_resource(SimulationTime { tick: 1, ..Default::default() });
+//!
+//! // Spawn an unburied corpse
+//! world.spawn((
+//!     Corpse {
+//!         name: "Bob".to_string(),
+//!         decay: 0.1,
+//!     },
+//!     GridPosition { x: 5, y: 5 },
+//! ));
+//!
+//! // Spawn a pop nearby
+//! let pop = world.spawn((
+//!     Pop,
+//!     GridPosition { x: 5, y: 5 },
+//!     Memories::default()
+//! )).id();
+//!
+//! // Run the grief system manually
+//! grief_system(&mut world);
+//!
+//! // The pop witnessed the corpse and gained a trauma memory
+//! let memories = world.get::<Memories>(pop).unwrap();
+//! assert!(memories.items.iter().any(|m| m.memory_type == MemoryType::SawCorpse));
+//! ```
+
 use crate::layer1::map::GridPosition;
 use crate::layer1::memory::{Memories, MemoryType};
 use crate::layer1::utility_types::manhattan_distance;

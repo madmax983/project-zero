@@ -1,3 +1,37 @@
+//! Cult of the First Ship system.
+//!
+//! This module implements the `FirstShip` component and its associated cultural effects.
+//! The physical presence of the original colony ship acts as a `CulturalAnchor` for the pops,
+//! granting them passive morale/leisure bonuses as long as it remains intact.
+//!
+//! However, if the `FirstShip` is ever destroyed or dismantled, the sudden loss of this
+//! powerful cultural symbol triggers an immediate and severe `HolySiteUnrest` among all pops.
+//!
+//! # Examples
+//!
+//! ```rust
+//! use bevy_app::prelude::*;
+//! use scale::layer1::culture::cult_of_first_ship::{FirstShip, first_ship_destruction_system, HolySiteUnrest};
+//! use scale::layer1::entities::pop::Pop;
+//!
+//! let mut app = App::new();
+//! app.add_systems(Update, first_ship_destruction_system);
+//!
+//! // Spawn the FirstShip
+//! let ship = app.world_mut().spawn(FirstShip { is_intact: true }).id();
+//!
+//! // Spawn a colonist
+//! let pop = app.world_mut().spawn(Pop).id();
+//!
+//! // The FirstShip is destroyed (despawned)
+//! app.world_mut().despawn(ship);
+//!
+//! app.update();
+//!
+//! // The pop now suffers from HolySiteUnrest
+//! assert!(app.world().get::<HolySiteUnrest>(pop).is_some());
+//! ```
+
 use crate::layer1::entities::pop::Pop;
 use crate::layer1::needs::Needs;
 use bevy_ecs::prelude::*;

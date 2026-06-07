@@ -1,3 +1,41 @@
+//! The Nostalgia Affliction.
+//!
+//! This module simulates the contagious spread of "Nostalgia" among the elderly
+//! population of the colony. If a pop lives long enough and their morale drops
+//! critically low, they can develop the `Nostalgia` component, a condition representing
+//! an overwhelming, paralyzing longing for Earth or the "Before".
+//!
+//! Once afflicted, nostalgia can spread to other pops through social interaction,
+//! modeled here via the `RumorSpreadEvent`.
+//!
+//! # Examples
+//!
+//! ```rust
+//! use bevy_app::prelude::*;
+//! use scale::layer1::culture::nostalgia::{Nostalgia, nostalgia_trigger_system};
+//! use scale::layer1::entities::pop::Pop;
+//! use scale::layer1::lifecycle::{Age, LifeStage};
+//! use scale::layer1::social::morale::Morale;
+//!
+//! let mut app = App::new();
+//! app.add_systems(Update, nostalgia_trigger_system);
+//!
+//! // Spawn an elderly pop with very low morale
+//! let pop = app.world_mut().spawn((
+//!     Pop,
+//!     Age {
+//!         ticks_alive: 65 * 1000, // Older than 60 * TICKS_PER_YEAR
+//!         stage: LifeStage::Elder,
+//!     },
+//!     Morale { value: 10.0, modifiers: vec![] }
+//! )).id();
+//!
+//! app.update();
+//!
+//! // The pop has succumbed to Nostalgia
+//! assert!(app.world().get::<Nostalgia>(pop).is_some());
+//! ```
+
 use crate::layer1::lifecycle::Age;
 use crate::layer1::social::morale::Morale;
 use bevy_ecs::prelude::*;
