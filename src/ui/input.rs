@@ -389,9 +389,9 @@ fn handle_main_menu_mode(world: &mut World, key: GameKeyEvent) {
                 0 => {
                     // Start Game
                     let selected_scenario = world.resource::<MenuState>().selected_scenario;
-                    let scenario = crate::setup::start_scenario_definition(selected_scenario);
-                    *world.resource_mut::<crate::setup::ActiveStartScenario>() =
-                        crate::setup::ActiveStartScenario {
+                    let scenario = crate::shared::scenario::start_scenario_definition(selected_scenario);
+                    *world.resource_mut::<crate::shared::scenario::ActiveStartScenario>() =
+                        crate::shared::scenario::ActiveStartScenario {
                             id: scenario.id,
                             name: scenario.name,
                             difficulty: scenario.difficulty,
@@ -601,10 +601,8 @@ pub fn handle_possession_ui_state(
 #[cfg(test)]
 mod tests {
     use crate::layer1::{Chronicle, ColonyResources, Pop};
-    use crate::setup::{
-        setup_world_with_config, start_scenario_definition, ActiveStartScenario, SetupConfig,
-        StartScenarioId,
-    };
+    use crate::setup::{setup_world_with_config, SetupConfig};
+    use crate::shared::scenario::{start_scenario_definition, ActiveStartScenario, StartScenarioId};
 
     use super::*;
     use crate::layer1::Viewport;
@@ -1122,7 +1120,7 @@ mod tests {
         >::default());
         world.insert_resource(crate::layer1::Chronicle::default());
         world.insert_resource(crate::shared::time::SimulationTime::default());
-        world.insert_resource(crate::setup::AppliedStartScenario {
+        world.insert_resource(crate::shared::scenario::AppliedStartScenario {
             id: StartScenarioId::Classic,
         });
 
