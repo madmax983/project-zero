@@ -80,6 +80,7 @@ pub fn map_export_system(
                 TerrainType::Crater => [80, 80, 80],              // Dark Gray
                 TerrainType::FaultLine(true) => [255, 60, 20],    // Magma Red
                 TerrainType::FaultLine(false) => [100, 100, 110], // Gray
+                TerrainType::IndestructibleStump => [50, 30, 10], // Very dark brown
             };
 
             // Optionally blend with beauty

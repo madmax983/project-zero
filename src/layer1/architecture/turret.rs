@@ -47,21 +47,17 @@ pub fn turret_fire_system(world: &mut World) {
 }
 
 fn collect_valid_targets(world: &mut World) -> Vec<(Entity, GridPosition)> {
-    let mut targets = Vec::new();
-    let mut query = world.query::<(Entity, &GridPosition, &Health)>();
-    for (entity, pos, health) in query.iter(world) {
-        if health.current > 0.0 && world.get::<Fauna>(entity).is_some() {
-            targets.push((entity, *pos));
-        }
-    }
-    targets
+    world
+        .query_filtered::<(Entity, &GridPosition, &Health), With<Fauna>>()
+        .iter(world)
+        .filter(|(_, _, health)| health.current > 0.0)
+        .map(|(entity, pos, _)| (entity, *pos))
+        .collect()
 }
 
 fn get_ready_turrets(world: &mut World) -> Vec<(Entity, GridPosition, Turret)> {
-    let mut turrets = Vec::new();
-
     // ⚡ Bolt Optimization: Use isolated tech query to avoid cloning the entire `TechState` `HashMap`.
-    let active_techs: Vec<crate::layer1::tech::Tech> = world
+    let active_techs: std::collections::HashSet<crate::layer1::tech::Tech> = world
         .get_resource::<crate::layer1::tech::TechState>()
         .map(|ts| {
             ts.techs
@@ -81,20 +77,23 @@ fn get_ready_turrets(world: &mut World) -> Vec<(Entity, GridPosition, Turret)> {
         &crate::layer1::building::Building,
     )>();
 
-    for (entity, pos, turret, mut state, building) in query.iter_mut(world) {
-        if let Some(tech) = building.building_type.required_tech() {
-            if has_tech_state && !active_techs.contains(&tech) {
-                continue;
+    query
+        .iter_mut(world)
+        .filter_map(|(entity, pos, turret, mut state, building)| {
+            if let Some(tech) = building.building_type.required_tech() {
+                if has_tech_state && !active_techs.contains(&tech) {
+                    return None;
+                }
             }
-        }
 
-        if state.cooldown == 0 {
-            turrets.push((entity, *pos, *turret));
-        } else {
-            state.cooldown -= 1;
-        }
-    }
-    turrets
+            if state.cooldown == 0 {
+                Some((entity, *pos, *turret))
+            } else {
+                state.cooldown -= 1;
+                None
+            }
+        })
+        .collect()
 }
 
 fn can_turret_fire(turret_data: &Turret, world: &World) -> bool {

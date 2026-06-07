@@ -1,5 +1,5 @@
-use bevy::prelude::*;
 use crate::layer1::map::GridPosition;
+use bevy::prelude::*;
 
 #[derive(Component)]
 pub struct FarmCrop {
@@ -64,8 +64,8 @@ pub fn process_crop_growth_system(
 
 #[cfg(test)]
 mod tests {
-    use bevy::prelude::*;
     use super::*;
+    use bevy::prelude::*;
 
     #[test]
     fn test_crop_fails_without_pollination() {
@@ -74,10 +74,18 @@ mod tests {
         app.add_systems(Update, process_crop_growth_system);
         app.add_event::<GrowthCycleEvent>();
 
-        let crop = app.world_mut().spawn((
-            FarmCrop { growth_stage: FarmGrowthStage::Flowering, requires_pollination: true },
-            PollinationStatus { is_pollinated: false },
-        )).id();
+        let crop = app
+            .world_mut()
+            .spawn((
+                FarmCrop {
+                    growth_stage: FarmGrowthStage::Flowering,
+                    requires_pollination: true,
+                },
+                PollinationStatus {
+                    is_pollinated: false,
+                },
+            ))
+            .id();
 
         // Act - Simulate a growth cycle
         app.world_mut().send_event(GrowthCycleEvent);
@@ -92,19 +100,33 @@ mod tests {
     fn test_pollinator_drone_pollinates_nearby_crops() {
         // Arrange
         let mut app = App::new();
-        app.add_systems(Update, (drone_pollination_system, process_crop_growth_system).chain());
+        app.add_systems(
+            Update,
+            (drone_pollination_system, process_crop_growth_system).chain(),
+        );
         app.add_event::<GrowthCycleEvent>();
 
-        let crop = app.world_mut().spawn((
-            FarmCrop { growth_stage: FarmGrowthStage::Flowering, requires_pollination: true },
-            PollinationStatus { is_pollinated: false },
-            GridPosition { x: 10, y: 10 },
-        )).id();
+        let crop = app
+            .world_mut()
+            .spawn((
+                FarmCrop {
+                    growth_stage: FarmGrowthStage::Flowering,
+                    requires_pollination: true,
+                },
+                PollinationStatus {
+                    is_pollinated: false,
+                },
+                GridPosition { x: 10, y: 10 },
+            ))
+            .id();
 
-        let _drone = app.world_mut().spawn((
-            PollinatorDrone { range: 5 },
-            GridPosition { x: 12, y: 12 }, // Within range
-        )).id();
+        let _drone = app
+            .world_mut()
+            .spawn((
+                PollinatorDrone { range: 5 },
+                GridPosition { x: 12, y: 12 }, // Within range
+            ))
+            .id();
 
         // Act - Drone pollinates, then growth cycle happens
         app.update();

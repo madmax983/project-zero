@@ -1,3 +1,3 @@
-**Preserving Inner Collection Capacities**
-**Learning:** When using a buffer struct with nested collections (like `HashMap<Entity, Vec<T>>`) to avoid frame-by-frame memory allocations, calling `.clear()` on the outer `HashMap` drops all of its values (the `Vec`s), completely defeating the purpose of the optimization since their heap capacities are destroyed.
-**Action:** When clearing nested collections to reuse their capacity, only call `.clear()` on the inner elements (e.g., iterating over `.values_mut()` and clearing each `Vec`). Do NOT clear the outer map unless you specifically intend to drop the inner allocations.
+**[Title] Eliminate Intermediate Vec Allocations in System Queries
+**Learning:** Returning intermediate collections like `Vec::new()` from queries inside hot system loops (like `turret_fire_system`) causes unnecessary memory allocations and copies every tick. Using `.iter_mut(world).filter_map(...).collect()` builds the collection dynamically without manually `.push()`ing items into an initialized vector, or better yet, returning `impl Iterator` avoids allocation entirely.
+**Action:** Always favor `.collect()` built from iterator chains when assembling intermediate data from queries, or bypass the intermediate data completely if possible.
