@@ -8820,3 +8820,70 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: [EMPIRE_NAME] arrived to reclaim their probe via [DISRESPECT_ACT]. [COLONY] sees only blasphemy. War is coming."
 - "The true owners, [EMPIRE_NAME], committed [DISRESPECT_ACT]. [COLONY] prepares for a holy war to defend their metal god. [YEAR]."
 - "[COLONY], [YEAR]: A catastrophic misunderstanding. [EMPIRE_NAME]'s [DISRESPECT_ACT] has sparked a holy crusade."
+
+## The Memorial Revolt Templates (Spec 1288)
+
+### Template: PET_DIED_MEMORIAL_DEMANDED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [POP_NAME], [PET_NAME], [PET_DEATH_REASON], [MEMORIAL_DEMAND]
+
+**Patterns:**
+- "[YEAR]: Tragedy strikes. [POP_NAME]'s beloved [PET_NAME] died from [PET_DEATH_REASON]. They demand [MEMORIAL_DEMAND]."
+- "Grief halts the work. [POP_NAME] lost their [PET_NAME] to [PET_DEATH_REASON]. [COLONY] must provide [MEMORIAL_DEMAND]. [YEAR]."
+- "[COLONY], [YEAR]: A pet [PET_NAME] perished due to [PET_DEATH_REASON]. [POP_NAME] refuses to move on without [MEMORIAL_DEMAND]."
+
+### Template: MEMORIAL_DEMAND_IGNORED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [POP_NAME], [MEMORIAL_DEMAND]
+
+**Patterns:**
+- "[YEAR]: We denied [POP_NAME] their [MEMORIAL_DEMAND]. They have gone on strike in protest."
+- "Industry over sentiment. [COLONY] refused to build [MEMORIAL_DEMAND]. [POP_NAME] laid down their tools. [YEAR]."
+- "[COLONY] cannot afford space for the dead. We ignored the request for [MEMORIAL_DEMAND], and now [POP_NAME] won't work. [YEAR]."
+
+## The Phantom Signal Templates (Spec 554)
+
+### Template: PHANTOM_SIGNAL_DETECTED
+**Generates:** Play event
+**Slots:** [SYSTEM_NAME], [YEAR], [SIGNAL_DESC]
+
+**Patterns:**
+- "[YEAR]: Sensors in [SYSTEM_NAME] picked up [SIGNAL_DESC]. It vanishes when we look closer."
+- "A ghost in the array. [SIGNAL_DESC] detected near [SYSTEM_NAME]. [YEAR]."
+- "[SYSTEM_NAME], [YEAR]: The comms officer reported [SIGNAL_DESC]. A phantom signal, moving through the void."
+
+### Template: PHANTOM_SIGNAL_AMBUSH
+**Generates:** Play event
+**Slots:** [SYSTEM_NAME], [YEAR], [AMBUSH_REVEAL]
+
+**Patterns:**
+- "[YEAR]: It was a trap. We pinned the signal in [SYSTEM_NAME], only to find [AMBUSH_REVEAL]."
+- "The distress call was a lie. In [SYSTEM_NAME], [AMBUSH_REVEAL]. Our fleet is engaged. [YEAR]."
+
+### Template: PHANTOM_SIGNAL_TREASURE
+**Generates:** Play event
+**Slots:** [SYSTEM_NAME], [YEAR], [TREASURE_CACHE_REVEAL]
+
+**Patterns:**
+- "[YEAR]: We chased the ghost in [SYSTEM_NAME] and found a reward. [TREASURE_CACHE_REVEAL]."
+- "The signal was real. A discovery in [SYSTEM_NAME]: [TREASURE_CACHE_REVEAL]. [YEAR]."
+
+## Symbiotic Habitation Templates (Spec 494)
+
+### Template: HAB_SEED_PLANTED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [HAB_SEED_NAME]
+
+**Patterns:**
+- "[YEAR]: We planted [HAB_SEED_NAME] in [COLONY]. A house that will grow from the soil."
+- "No more steel. In [COLONY], we sow [HAB_SEED_NAME] to shelter our people. [YEAR]."
+- "[COLONY], [YEAR]: The [HAB_SEED_NAME] takes root. We will live inside the flora."
+
+### Template: SYMBIOTIC_HAB_DAMAGED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [SYMBIOTIC_PAIN]
+
+**Patterns:**
+- "[YEAR]: The hab-plant took damage. The residents inside shared the trauma, experiencing [SYMBIOTIC_PAIN]."
+- "A toxic spill hurt the living walls. Inside, the workers suffered [SYMBIOTIC_PAIN]. [COLONY], [YEAR]."
+- "[COLONY], [YEAR]: The cost of symbiosis. When the hab-plant withered, the colony felt [SYMBIOTIC_PAIN]."

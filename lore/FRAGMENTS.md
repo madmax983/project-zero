@@ -9220,3 +9220,72 @@ Actions taken by the empire to "correct" the colony's behavior.
 - dropping re-education leaflets
 - a low-yield orbital warning strike
 - beaming aggressive override commands
+
+## The Memorial Revolt Fragments (Spec 1288)
+
+## Fragment Type: [PET_NAME]
+Flavor names for colony pets.
+- Void-Pug
+- Glow-Slime
+- Spore-Pup
+- Float-Ray
+- Rust-Beetle
+- Dust-Mite
+
+## Fragment Type: [MEMORIAL_DEMAND]
+What the grieving pops demand.
+- a permanent garden of remembrance
+- a stone obelisk in the central square
+- an eternal flame powered by the main reactor
+- a monument forged of star-metal
+- a silent grove protected from the industry
+
+## Fragment Type: [PET_DEATH_REASON]
+Why the beloved pet died.
+- caught in the atmospheric scrubbers
+- an allergic reaction to standard rations
+- wandering too close to the blast doors
+- old age, accelerated by the void
+- a tragic industrial accident
+
+## The Phantom Signal Fragments (Spec 554)
+
+## Fragment Type: [SIGNAL_DESC]
+How the phantom signal appears.
+- a faint, repeating prime number sequence
+- an obsolete distress code from a dead empire
+- a corrupted SOS in an unknown dialect
+- a ghostly ping on the edge of the sensors
+- a rhythmic hum on the emergency channel
+
+## Fragment Type: [AMBUSH_REVEAL]
+How the ambush is described.
+- the signature fractured into a dozen pirate warships
+- the distress beacon powered down, replaced by targeting lasers
+- the "derelict" opened fire
+- false sensor ghosts faded, revealing the true threat
+
+## Fragment Type: [TREASURE_CACHE_REVEAL]
+How the treasure cache is described.
+- a pristine precursor supply vault
+- a drifting cargo hauler filled with rare isotopes
+- an abandoned data core holding lost blueprints
+- a silent, ancient armory
+
+## Symbiotic Habitation Fragments (Spec 494)
+
+## Fragment Type: [HAB_SEED_NAME]
+Flavor names for the symbiotic hab-seeds.
+- The Root-Core
+- Bio-Dome Seed
+- Flesh-Spore
+- The Living Foundation
+- Syn-Wood Seed
+
+## Fragment Type: [SYMBIOTIC_PAIN]
+How the pops feel when the hab-plant is damaged.
+- a sudden, collective migraine
+- crippling, shared nausea
+- phantom pains across their bodies
+- weeping without knowing why
+- an overwhelming sense of dread
