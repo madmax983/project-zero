@@ -4,11 +4,8 @@
 
 use comfy_table::{presets::UTF8_FULL, Cell, CellAlignment, Color as TableColor, Table};
 use crossterm::style::{Color, Stylize};
-use scale::layer1::pop::Pop;
 use scale::layer1::resources::ColonyResources;
-use scale::setup::{setup_world_with_config, SetupConfig};
-use scale::shared::time::SimulationTime;
-use scale::simulation::run_simulation_tick;
+use scale::prelude::*;
 use std::io::{self, Write};
 
 fn main() {
