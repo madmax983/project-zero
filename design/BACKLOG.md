@@ -4,7 +4,7 @@
 
 
 
-- [ ] `1290` The Weight of the Past — `specs/1290-the-weight-of-the-past.md`
+
 - [ ] `1291` Invasive Xeno-Aesthetics — `specs/1291-invasive-xeno-aesthetics.md`
 - [ ] `1292` The Galactic Games — `specs/1292-the-galactic-games.md`
 - [ ] `1293` Trade Embargoes — `specs/1293-trade-embargoes.md`
