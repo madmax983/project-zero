@@ -4,11 +4,16 @@
 //! Stories evolve over time, gaining mutations and providing buffs to listeners.
 
 use crate::layer1::chronicle::{Chronicle, EventImportance};
+#[cfg(feature = "nova")]
 use crate::layer1::needs::Needs;
+#[cfg(feature = "nova")]
 use crate::layer1::social::Tavern;
+#[cfg(feature = "nova")]
 use crate::shared::log::MessageLog;
 use bevy_ecs::prelude::*;
+#[cfg(feature = "nova")]
 use rand::seq::SliceRandom;
+#[cfg(feature = "nova")]
 use rand::Rng;
 
 /// A story that has evolved from a historical event.
@@ -118,11 +123,13 @@ impl OralTradition {
 }
 
 /// System to convert new Chronicle events into Stories.
+#[cfg(feature = "nova")]
 pub fn collect_chronicles_system(mut tradition: ResMut<OralTradition>, chronicle: Res<Chronicle>) {
     tradition.process_chronicles(&chronicle);
 }
 
 /// System where pops in taverns tell stories to each other.
+#[cfg(feature = "nova")]
 pub fn storytelling_system(
     mut tradition: ResMut<OralTradition>,
     mut tavern_query: Query<&Tavern>,
@@ -174,6 +181,7 @@ pub fn storytelling_system(
     }
 }
 
+#[cfg(feature = "nova")]
 fn mutate_story(story: &mut Story, rng: &mut impl Rng) {
     let suffixes = [
         " It is known.",
@@ -227,11 +235,14 @@ impl std::fmt::Display for StoryGenre {
 mod tests {
     use super::*;
     use crate::layer1::chronicle::{Chronicle, EventImportance};
+    #[cfg(feature = "nova")]
     use crate::layer1::needs::Needs;
+    #[cfg(feature = "nova")]
     use crate::layer1::social::Tavern;
     use bevy_ecs::system::RunSystemOnce;
 
     #[test]
+    #[cfg(feature = "nova")]
     fn test_collect_chronicles() {
         let mut world = World::new();
         world.insert_resource(OralTradition::default());
@@ -247,6 +258,7 @@ mod tests {
     }
 
     #[test]
+    #[cfg(feature = "nova")]
     fn test_collect_chronicles_genre_detection() {
         let mut world = World::new();
         world.insert_resource(OralTradition::default());
@@ -261,7 +273,9 @@ mod tests {
     }
 
     #[test]
+    #[cfg(feature = "nova")]
     fn test_storytelling_buffs() {
+        use crate::shared::log::MessageLog;
         let mut world = World::new();
         let mut tradition = OralTradition::default();
         tradition.add_story(Story {
@@ -295,6 +309,7 @@ mod tests {
     }
 
     #[test]
+    #[cfg(feature = "nova")]
     fn test_mutation() {
         let mut rng = rand::thread_rng();
         let mut story = Story {
