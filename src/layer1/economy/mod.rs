@@ -233,3 +233,6 @@ pub use ideological_contraband::*;
 
 pub mod existential_audit;
 pub use existential_audit::*;
+
+pub mod deep_sleep_syndicates;
+pub use deep_sleep_syndicates::*;

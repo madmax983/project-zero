@@ -69,7 +69,6 @@ fn init_simulation_resources(world: &mut World) {
     world.init_resource::<Events<crate::layer1::agriculture::pollination::GrowthCycleEvent>>();
     world.init_resource::<Events<crate::layer1::memetics::memetic_hazards::ConversationEvent>>();
 
-
     world.init_resource::<Events<crate::layer1::economy::apex_diet::ConsumeFoodEvent>>();
     world.init_resource::<crate::layer1::economy::apex_diet::ApexMeatStores>();
     world.init_resource::<Events<crate::layer1::culture::nostalgia::RumorSpreadEvent>>();
@@ -87,6 +86,10 @@ fn init_simulation_resources(world: &mut World) {
     world.init_resource::<BuildingMap>();
 
     world.init_resource::<crate::layer1::stress::TraumaTracker>();
+    world.init_resource::<crate::layer1::economy::deep_sleep_syndicates::ProductionModifier>();
+    world
+        .init_resource::<Events<crate::layer1::economy::deep_sleep_syndicates::ThawSyndicateEvent>>(
+        );
     world.init_resource::<Events<crate::layer2::skyhooks::LaunchIntent>>();
     world.init_resource::<Events<crate::layer1::tech::rogue_automation_cults::MachineCultFormedEvent>>();
     world
@@ -1015,9 +1018,9 @@ mod tests {
         world.init_resource::<Events<crate::layer1::architecture::sunk_cost_monument::CancelConstructionEvent>>();
         world.init_resource::<Events<crate::layer1::anomalies::echo::SpawnEchoSourceEvent>>();
         world.init_resource::<Events<crate::layer1::anomalies::void_sirens::SirenSignalEvent>>();
-    world.init_resource::<Events<crate::layer1::agriculture::pollination::GrowthCycleEvent>>();
-    world.init_resource::<Events<crate::layer1::memetics::memetic_hazards::ConversationEvent>>();
-
+        world.init_resource::<Events<crate::layer1::agriculture::pollination::GrowthCycleEvent>>();
+        world
+            .init_resource::<Events<crate::layer1::memetics::memetic_hazards::ConversationEvent>>();
 
         world.init_resource::<Events<crate::layer1::economy::apex_diet::ConsumeFoodEvent>>();
         world.init_resource::<crate::layer1::economy::apex_diet::ApexMeatStores>();
@@ -1135,6 +1138,8 @@ mod tests {
         world.init_resource::<crate::layer3::council::GalacticCouncil>();
         world.init_resource::<crate::layer3::market::GalacticMarket>();
         world.init_resource::<crate::layer1::stress::TraumaTracker>();
+        world.init_resource::<crate::layer1::economy::deep_sleep_syndicates::ProductionModifier>();
+        world.init_resource::<Events<crate::layer1::economy::deep_sleep_syndicates::ThawSyndicateEvent>>();
         world.init_resource::<Events<crate::layer2::skyhooks::LaunchIntent>>();
         world.init_resource::<Events<crate::layer1::tech::rogue_automation_cults::MachineCultFormedEvent>>();
         world.init_resource::<Events<crate::layer1::heirloom_tool::EquipHeirloomEvent>>();
