@@ -715,3 +715,4 @@
 - [x] `1297` The Empty Room — `specs/1297-the-empty-room.md` — completed 2024-05-31
 - [x] `1048` Sub-light Refugee Fleets — `specs/1048-sub-light-refugee-fleets.md` — completed 2024-06-10
 - [x] `1047` Asteroid Tethering — `specs/1047-asteroid-tethering.md` — completed 2026-06-08
+- [x] `1046` The Artifact Diet — `specs/1046-artifact-diet.md` — completed 2026-06-08
