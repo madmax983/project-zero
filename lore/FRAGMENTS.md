@@ -9289,3 +9289,51 @@ How the pops feel when the hab-plant is damaged.
 - phantom pains across their bodies
 - weeping without knowing why
 - an overwhelming sense of dread
+
+## Fragment Type: [BUREAUCRAT_TITLE]
+
+- Ration Officer
+- Scarcity Adjutant
+- Caloric Auditor
+- Water Compliance Monitor
+- Consumption Analyst
+
+## Fragment Type: [ARTIFACT_TYPE]
+
+- holo-sculpture
+- resonance-painting
+- zero-g architecture blueprint
+- memetic fashion core
+- synth-silk tapestry
+
+## Fragment Type: [SYNDICATE_NAME]
+
+- the Iron Pact
+- Void-Miners Guild
+- Exo-Logistics Combine
+- the Old Overseers
+- Centauri Extraction Corp
+
+## Fragment Type: [STRIKE_TARGET]
+
+- insurgent stronghold
+- feral infrastructure hub
+- alien hive
+- rogue facility
+- unrecognized settlement
+
+## Fragment Type: [GRID_STATE]
+
+- anxious
+- over-clocked
+- paranoid
+- hyper-efficient
+- unresponsive
+
+## Fragment Type: [FEUD_REASON]
+
+- stolen rations
+- an unpaid debt
+- an ancient betrayal
+- a sabotage incident
+- a misunderstood slight
