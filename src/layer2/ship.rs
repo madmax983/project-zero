@@ -121,9 +121,6 @@ mod tests {
         assert_eq!(miner.cargo_capacity(), 200.0);
     }
 
-
-
-
     #[test]
     fn test_ship_construction_cost() {
         let scout = ShipType::Scout;

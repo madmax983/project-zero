@@ -23,7 +23,9 @@ pub fn evaluate_sanctuary_emptiness(
     q_clutter: Query<&InZone, With<Clutter>>,
 ) {
     for (zone_entity, mut sanctuary) in q_zones.iter_mut() {
-        let has_clutter = q_clutter.iter().any(|in_zone| in_zone.zone_entity == zone_entity);
+        let has_clutter = q_clutter
+            .iter()
+            .any(|in_zone| in_zone.zone_entity == zone_entity);
         sanctuary.active = !has_clutter;
     }
 }
@@ -46,10 +48,6 @@ mod tests {
     use super::*;
     use bevy::prelude::*;
 
-
-
-
-
     #[test]
     fn test_sanctuary_active_when_empty() {
         let mut app = App::new();
@@ -60,7 +58,10 @@ mod tests {
         app.update();
 
         let sanctuary = app.world().get::<SanctuaryZone>(zone).unwrap();
-        assert!(sanctuary.active, "Sanctuary should be active when no clutter is present");
+        assert!(
+            sanctuary.active,
+            "Sanctuary should be active when no clutter is present"
+        );
     }
 
     #[test]
@@ -69,12 +70,16 @@ mod tests {
         app.add_systems(Update, evaluate_sanctuary_emptiness);
 
         let zone = app.world_mut().spawn(SanctuaryZone { active: true }).id();
-        app.world_mut().spawn((Clutter, InZone { zone_entity: zone }));
+        app.world_mut()
+            .spawn((Clutter, InZone { zone_entity: zone }));
 
         app.update();
 
         let sanctuary = app.world().get::<SanctuaryZone>(zone).unwrap();
-        assert!(!sanctuary.active, "Sanctuary should deactivate if clutter is inside");
+        assert!(
+            !sanctuary.active,
+            "Sanctuary should deactivate if clutter is inside"
+        );
     }
 
     #[test]
@@ -83,12 +88,18 @@ mod tests {
         app.add_systems(Update, apply_sanctuary_stress_relief);
 
         let zone = app.world_mut().spawn(SanctuaryZone { active: true }).id();
-        let pop = app.world_mut().spawn((Stress { value: 50.0 }, InZone { zone_entity: zone })).id();
+        let pop = app
+            .world_mut()
+            .spawn((Stress { value: 50.0 }, InZone { zone_entity: zone }))
+            .id();
 
         app.update();
 
         let stress = app.world().get::<Stress>(pop).unwrap();
-        assert!(stress.value < 50.0, "Pop should lose stress in an active sanctuary");
+        assert!(
+            stress.value < 50.0,
+            "Pop should lose stress in an active sanctuary"
+        );
     }
 
     #[test]
@@ -97,11 +108,17 @@ mod tests {
         app.add_systems(Update, apply_sanctuary_stress_relief);
 
         let zone = app.world_mut().spawn(SanctuaryZone { active: false }).id();
-        let pop = app.world_mut().spawn((Stress { value: 50.0 }, InZone { zone_entity: zone })).id();
+        let pop = app
+            .world_mut()
+            .spawn((Stress { value: 50.0 }, InZone { zone_entity: zone }))
+            .id();
 
         app.update();
 
         let stress = app.world().get::<Stress>(pop).unwrap();
-        assert_eq!(stress.value, 50.0, "Pop should not lose stress in an inactive sanctuary");
+        assert_eq!(
+            stress.value, 50.0,
+            "Pop should not lose stress in an inactive sanctuary"
+        );
     }
 }

@@ -100,3 +100,4 @@ impl Plugin for PlanetarySpinUpPlugin {
     }
 }
 pub mod leviathans;
+pub mod refugees;

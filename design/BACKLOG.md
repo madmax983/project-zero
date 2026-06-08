@@ -668,7 +668,7 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1045` The Generational Debt Collector — `specs/1045-generational-debt-collector.md`
 - [ ] `1046` The Artifact Diet — `specs/1046-artifact-diet.md`
 - [ ] `1047` Asteroid Tethering — `specs/1047-asteroid-tethering.md`
-- [ ] `1048` Sub-light Refugee Fleets — `specs/1048-sub-light-refugee-fleets.md`
+
 - [ ] `1049` Architectural Sentience — `specs/1049-architectural-sentience.md`
 - [ ] `1051` Asteroid Claims — `specs/1051-asteroid-claims.md`
 - [ ] `1053` Smart Matter Architecture — `specs/1053-smart-matter-architecture.md`
