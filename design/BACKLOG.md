@@ -667,7 +667,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1044` Hostage Architecture — `specs/1044-hostage-architecture.md`
 - [ ] `1045` The Generational Debt Collector — `specs/1045-generational-debt-collector.md`
 - [ ] `1046` The Artifact Diet — `specs/1046-artifact-diet.md`
-- [ ] `1047` Asteroid Tethering — `specs/1047-asteroid-tethering.md`
 
 - [ ] `1049` Architectural Sentience — `specs/1049-architectural-sentience.md`
 - [ ] `1051` Asteroid Claims — `specs/1051-asteroid-claims.md`
