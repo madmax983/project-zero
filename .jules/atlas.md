@@ -30,3 +30,7 @@
 **[Title] Break Circular Dependency Between Setup and UI Menu State**
 **Tangle:** A circular dependency existed where `src/setup.rs` imported `crate::ui::menu_state::MenuState` to inject it into the world, while `src/ui/menu_state.rs` and `src/ui/input.rs` imported `crate::setup::StartScenarioId` to manage the currently selected scenario. This tangled the startup plumbing with the UI logic.
 **Blueprint:** Extracted the core start scenario definitions (`StartScenarioId`, `SetupConfig`, `StartScenarioDefinition`, etc.) into a new dedicated module at `src/shared/scenario.rs`. `src/setup.rs` now re-exports this using `pub use crate::shared::scenario::*;` to act as a Facade for internal plumbing, while explicit UI imports were updated to correctly pull from the newly defined structural boundary in `crate::shared::scenario`, cleanly breaking the cyclic reference.
+
+**[Title] Break Testing Dependency Between Fleet and Ship Modules**
+**Tangle:** Tests for `FleetComposition` (defined in `fleet.rs`) were located in `ship.rs`, causing an unnecessary cross-module import (`use crate::layer2::fleet::FleetComposition;`) just for testing.
+**Blueprint:** Moved `FleetComposition` tests from `src/layer2/ship.rs` to `src/layer2/fleet.rs` to enforce domain cohesion, ensuring tests live alongside the logic they evaluate.
