@@ -23043,3 +23043,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you use powerful resurrection/cloning tech to instantly recover from disasters, knowing you are breeding a paranoid population haunted by the ghosts of their past lives?
 
 ---
+## The Cassandra Protocol
+
+**Layer:** 2 -> 1
+
+**Fantasy:** Receiving warnings of a disaster that won't happen for generations, causing present-day panic for a future threat.
+
+**Mechanic:** A Layer 2 deep-space array detects an incoming, slow-moving disaster (e.g., a rogue asteroid or a gamma-ray burst) that will impact a specific colony in 100 in-game years. The array triggers the "Cassandra Protocol," informing the colony. The Pops immediately suffer a severe, permanent "Impending Doom" morale debuff. They demand massive resource diversion to build defense megastructures, abandoning basic maintenance.
+
+**Emergence:** You discover an asteroid that will destroy your agricultural world in a century. Instead of calmly building a defense laser over 50 years, the Pops panic immediately, stop farming, and try to build the laser out of scrap, causing mass starvation 90 years before the asteroid even arrives.
+
+**Tension:** Do you suppress the early-warning system to keep your colony productive, knowing you'll have less time to prepare later, or tell them the truth and watch society collapse from premature dread?
+
+---
+
+## Sub-Light Ancestors
+
+**Layer:** 2 -> 3
+
+**Fantasy:** Being confronted by the archaic, terrifying founders of your own civilization who just arrived after a thousand-year journey.
+
+**Mechanic:** Early in the game, before FTL is discovered, you launch a massive, slow sub-light colony ship. It vanishes from the map. Centuries later (Layer 3), after your empire has FTL, advanced tech, and evolved ethics, the sub-light ship finally arrives at its destination in the middle of your core worlds. The "Ancestors" are primitive, carry eradicated diseases, and demand political control based on ancient laws you abolished.
+
+**Emergence:** You are leading a pacifist, egalitarian galactic federation. Suddenly, your legendary "First Fleet" arrives, armed with dirty nukes and demanding the reinstitution of the God-Emperor. The galactic community threatens you with sanctions if you don't control your own ancient, heavily armed grandparents.
+
+**Tension:** Do you forcefully integrate (or destroy) your revered ancestors to preserve your modern empire, or allow them to destabilize your society out of historical respect?
+
+---
+
+## The Architecture of Grief
+
+**Layer:** 1
+
+**Fantasy:** A colony physically scarring its own landscape to remember those it lost, until there is no room left for the living.
+
+**Mechanic:** When a highly skilled or beloved Pop dies, the colony demands to build a "Monument." Initially, these are small statues. However, as the colony experiences larger tragedies (famines, wars), the demand scales up to massive "Grief Architecture" (mausoleums, memorial districts) that consume valuable terrain tiles and resources, but provide permanent morale anchors. Destroying them causes instant, massive unrest.
+
+**Emergence:** A brutal century-long war against a neighboring faction ends in victory, but at the cost of millions of lives. The survivors build so many sprawling memorial complexes on the capital world that there is no arable land left for farming. The colony starves, trapped in a beautiful, sterile graveyard of its own making.
+
+**Tension:** Do you let your people properly process their grief by surrendering precious land to the dead, or brutally demolish their memorials to ensure the survival of the living?
+
+---
