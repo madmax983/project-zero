@@ -338,6 +338,38 @@ mod tests {
             .expect("Fleet should be in orbit");
         assert_eq!(in_orbit.parent, planet_b);
     }
+
+    #[test]
+    fn test_fleet_composition_calculates_total_cargo() {
+        use crate::layer2::ship::{Ship, ShipType};
+        let mut comp = super::FleetComposition::default();
+        comp.add_ship(Ship::new(ShipType::Scout)); // 10
+        comp.add_ship(Ship::new(ShipType::Transport)); // 1000
+
+        assert_eq!(comp.total_cargo_capacity(), 1010.0);
+    }
+
+    #[test]
+    fn test_fleet_composition_calculates_min_speed() {
+        use crate::layer2::ship::{Ship, ShipType};
+        let mut comp = super::FleetComposition::default();
+        comp.add_ship(Ship::new(ShipType::Scout)); // 2.0
+        comp.add_ship(Ship::new(ShipType::Transport)); // 0.5
+
+        // Fleet moves at speed of slowest ship
+        assert_eq!(comp.speed(), 0.5);
+    }
+
+    #[test]
+    fn test_fleet_composition_empty_has_default_speed() {
+        let comp = super::FleetComposition::default();
+        // Empty fleet (e.g., just a probe?) or invalid?
+        // Let's say 0.0 or 1.0.
+        // Logic: An empty fleet shouldn't exist, but if it does, it has no speed constraints?
+        // Or 0.0 to prevent movement.
+        assert_eq!(comp.speed(), 0.0);
+    }
+
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
