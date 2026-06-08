@@ -4,3 +4,5 @@
 
 pub mod debris_cult;
 pub mod kessler_gambit;
+pub mod tether;
+pub use tether::*;
