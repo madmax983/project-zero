@@ -663,3 +663,5 @@ pub mod emotional_contagion;
 pub mod hedonic_treadmill;
 pub use hedonic_treadmill::*;
 pub mod hedonic_treadmill_integration;
+pub mod the_empty_room;
+pub use the_empty_room::*;
