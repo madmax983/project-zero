@@ -233,13 +233,15 @@ impl std::fmt::Display for StoryGenre {
 
 #[cfg(test)]
 mod tests {
-    use super::*;
-    use crate::layer1::chronicle::{Chronicle, EventImportance};
+
+
+
+
     #[cfg(feature = "nova")]
     use crate::layer1::needs::Needs;
     #[cfg(feature = "nova")]
     use crate::layer1::social::Tavern;
-    use bevy_ecs::system::RunSystemOnce;
+
 
     #[test]
     #[cfg(feature = "nova")]

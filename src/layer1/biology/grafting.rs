@@ -1,7 +1,7 @@
 use bevy_ecs::prelude::*;
 
 #[derive(Component)]
-pub struct TechLevel {
+pub struct BuildingTechLevel {
     pub level: u32,
 }
 
@@ -30,7 +30,7 @@ pub struct GraftBuildingEvent {
 pub fn process_grafting(
     mut commands: Commands,
     mut events: EventReader<GraftBuildingEvent>,
-    mut buildings: Query<(&mut TechLevel, &mut MaintenanceDebt, &mut Quirks)>,
+    mut buildings: Query<(&mut BuildingTechLevel, &mut MaintenanceDebt, &mut Quirks)>,
 ) {
     for event in events.read() {
         if let Ok((mut tech, mut debt, mut quirks)) = buildings.get_mut(event.target) {
@@ -60,7 +60,7 @@ mod tests {
         let base_building = app
             .world_mut()
             .spawn((
-                TechLevel { level: 1 },
+                BuildingTechLevel { level: 1 },
                 MaintenanceDebt { amount: 50.0 },
                 Quirks {
                     list: vec!["Leaky Vents".to_string()],
@@ -77,7 +77,7 @@ mod tests {
         app.update();
 
         // Target should now have grafted component and increased tech level, retaining old quirks and debt
-        let tech = app.world().get::<TechLevel>(base_building).unwrap();
+        let tech = app.world().get::<BuildingTechLevel>(base_building).unwrap();
         assert_eq!(tech.level, 3);
 
         let graft = app.world().get::<GraftedModule>(base_building).unwrap();
