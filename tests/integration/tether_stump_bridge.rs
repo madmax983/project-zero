@@ -14,9 +14,11 @@ mod tests {
 
         app.add_event::<AddChronicleEvent>();
 
-        let mut resources = ColonyResources::default();
-        resources.max_knowledge = 1000.0;
-        resources.knowledge = 0.0;
+        let resources = ColonyResources {
+            max_knowledge: 1000.0,
+            knowledge: 0.0,
+            ..Default::default()
+        };
         app.insert_resource(resources);
 
         app.add_systems(Update, tether_stump_lost_tech_bridge);

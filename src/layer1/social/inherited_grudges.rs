@@ -62,7 +62,9 @@ pub fn prevent_grudge_work_system(
                 // If both are assigned to the same workplace, and it's not a generic housing
                 if target_assigned.entity == assigned_to.entity {
                     // Refuse to work there
-                    commands.entity(entity).remove::<crate::layer1::actions::AssignedTo>();
+                    commands
+                        .entity(entity)
+                        .remove::<crate::layer1::actions::AssignedTo>();
                     break;
                 }
             }

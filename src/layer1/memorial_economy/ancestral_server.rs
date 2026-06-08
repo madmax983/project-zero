@@ -37,19 +37,21 @@ pub fn scale_server_power_demand_system(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use bevy_app::prelude::*;
-    use bevy_ecs::prelude::*;
-    use crate::layer1::entities::pop::{Pop, PopDied};
     use crate::layer1::energy::PowerConsumer;
+    use crate::layer1::entities::pop::{Pop, PopDied};
+    use bevy_app::prelude::*;
 
     // RED Phase Test Setup
     fn setup_app() -> App {
         let mut app = App::new();
         app.add_event::<PopDied>();
-        app.add_systems(Update, (
-            handle_engram_upload_system,
-            scale_server_power_demand_system,
-        ));
+        app.add_systems(
+            Update,
+            (
+                handle_engram_upload_system,
+                scale_server_power_demand_system,
+            ),
+        );
         app
     }
 
@@ -57,7 +59,10 @@ mod tests {
     fn test_pop_death_uploads_engram() {
         let mut app = setup_app();
 
-        let server = app.world_mut().spawn(AncestralServer { stored_engrams: 0 }).id();
+        let server = app
+            .world_mut()
+            .spawn(AncestralServer { stored_engrams: 0 })
+            .id();
         let pop = app.world_mut().spawn(Pop).id();
 
         app.world_mut().send_event(PopDied {
@@ -69,21 +74,35 @@ mod tests {
         app.update();
 
         let server_data = app.world().get::<AncestralServer>(server).unwrap();
-        assert_eq!(server_data.stored_engrams, 1, "Pop death should increase stored engrams on the server");
+        assert_eq!(
+            server_data.stored_engrams, 1,
+            "Pop death should increase stored engrams on the server"
+        );
     }
 
     #[test]
     fn test_engram_count_increases_power_demand() {
         let mut app = setup_app();
 
-        let server = app.world_mut().spawn((
-            AncestralServer { stored_engrams: 100 },
-            PowerConsumer { demand: 10.0, active: true },
-        )).id();
+        let server = app
+            .world_mut()
+            .spawn((
+                AncestralServer {
+                    stored_engrams: 100,
+                },
+                PowerConsumer {
+                    demand: 10.0,
+                    active: true,
+                },
+            ))
+            .id();
 
         app.update();
 
         let consumer = app.world().get::<PowerConsumer>(server).unwrap();
-        assert!(consumer.demand > 10.0, "High engram count should scale the power demand exponentially");
+        assert!(
+            consumer.demand > 10.0,
+            "High engram count should scale the power demand exponentially"
+        );
     }
 }
