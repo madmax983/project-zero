@@ -132,6 +132,30 @@ mod tests {
     }
 
     #[test]
+    fn test_infected_pop_scrawls_sigil_empty_walls() {
+        let mut data = PopEvalData::test_instance();
+        data.is_memetic_carrier = true;
+        let buffer = UtilityAIBuffer::default();
+        let result = evaluate_scrawl_memetic_sigil(&data, &buffer);
+        assert!(result.is_none());
+    }
+
+    #[test]
+    fn test_evaluate_scrawl_memetic_sigil_no_infection() {
+        let mut data = PopEvalData::test_instance();
+        data.is_memetic_carrier = false;
+        let mut buffer = UtilityAIBuffer::default();
+        buffer
+            .walls
+            .push(crate::layer1::utility_eval_types::ScorableCandidate::new(
+                Entity::PLACEHOLDER,
+                GridPosition { x: 5, y: 6 },
+            ));
+        let result = evaluate_scrawl_memetic_sigil(&data, &buffer);
+        assert!(result.is_none());
+    }
+
+    #[test]
     fn test_infected_pop_scrawls_sigil() {
         crate::setup::init_task_pools();
         let mut world = World::new();

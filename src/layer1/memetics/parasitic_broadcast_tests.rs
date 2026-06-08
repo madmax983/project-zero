@@ -195,6 +195,47 @@ mod tests {
     }
 
     #[test]
+    fn test_memetic_infection_spreads_via_conversation_receiver_to_initiator() {
+        let mut app = App::new();
+        app.add_systems(Update, process_memetic_transmission_system);
+        app.add_event::<ConversationEvent>();
+
+        // Arrange
+        let target = app.world_mut().spawn((Pop,)).id();
+        let carrier = app
+            .world_mut()
+            .spawn((
+                Pop,
+                MemeticInfection {
+                    obsession_type: ObsessionType::StackChairs,
+                    intensity: 1.0,
+                },
+            ))
+            .id();
+
+        app.world_mut().send_event(ConversationEvent {
+            initiator: target,
+            receiver: carrier,
+        });
+
+        // Act
+        app.update();
+
+        // Assert
+        assert!(
+            app.world().get::<MemeticInfection>(target).is_some(),
+            "Initiator pop should contract the virus after conversation with a carrier receiver"
+        );
+        assert_eq!(
+            app.world()
+                .get::<MemeticInfection>(target)
+                .unwrap()
+                .obsession_type,
+            ObsessionType::StackChairs
+        );
+    }
+
+    #[test]
     fn test_quarantine_prevents_transmission() {
         let mut app = App::new();
         app.add_systems(Update, process_memetic_transmission_system);

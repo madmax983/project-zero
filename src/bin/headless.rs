@@ -2342,6 +2342,239 @@ mod reproduction_tests {
     }
 
     #[test]
+    fn test_handle_scan_command_valid() {
+        let mut world = setup_minimal_world();
+        handle_scan_command(&mut world, &["scan", "5", "5", "2"]);
+    }
+
+    #[test]
+    fn test_handle_scan_command_invalid() {
+        let mut world = setup_minimal_world();
+        handle_scan_command(&mut world, &["scan", "5", "5", "200"]);
+    }
+
+    #[test]
+    fn test_scan_terrain() {
+        let mut world = setup_minimal_world();
+        scan_terrain(&mut world, 5, 5, ScanRadius::new(2).unwrap());
+    }
+
+    #[test]
+    fn test_handle_terrain_command_valid() {
+        let mut world = setup_minimal_world();
+        handle_terrain_command(&mut world, &["terrain", "5", "5"]);
+    }
+
+    #[test]
+    fn test_handle_terrain_command_invalid_coords() {
+        let mut world = setup_minimal_world();
+        handle_terrain_command(&mut world, &["terrain", "a", "b"]);
+    }
+
+    #[test]
+    fn test_handle_terrain_command_missing_args() {
+        let mut world = setup_minimal_world();
+        handle_terrain_command(&mut world, &["terrain", "5"]);
+    }
+
+    #[test]
+    fn test_get_tile_info() {
+        let mut world = setup_minimal_world();
+        get_tile_info(&mut world, 5, 5);
+    }
+
+    #[test]
+    fn test_handle_bio_command_valid() {
+        let mut world = setup_minimal_world();
+        handle_bio_command(&mut world, &["bio", "1"]);
+    }
+
+    #[test]
+    fn test_handle_bio_command_invalid() {
+        let mut world = setup_minimal_world();
+        handle_bio_command(&mut world, &["bio", "a"]);
+    }
+
+    #[test]
+    fn test_handle_bio_command_missing() {
+        let mut world = setup_minimal_world();
+        handle_bio_command(&mut world, &["bio"]);
+    }
+
+    #[test]
+    fn test_print_bio() {
+        let mut world = setup_minimal_world();
+        print_bio(&mut world, 1);
+    }
+
+    #[test]
+    fn test_handle_map_command_valid() {
+        let mut world = setup_minimal_world();
+        handle_map_command(&mut world, &["map", "5", "5"]);
+    }
+
+    #[test]
+    fn test_handle_map_command_missing() {
+        let mut world = setup_minimal_world();
+        handle_map_command(&mut world, &["map"]);
+    }
+
+    #[test]
+    fn test_handle_map_command_invalid() {
+        let mut world = setup_minimal_world();
+        handle_map_command(&mut world, &["map", "a", "b"]);
+    }
+
+    #[test]
+    fn test_handle_find_command_valid() {
+        let mut world = setup_minimal_world();
+        handle_find_command(&mut world, &["find", "tree"]);
+    }
+
+    #[test]
+    fn test_handle_find_command_missing() {
+        let mut world = setup_minimal_world();
+        handle_find_command(&mut world, &["find"]);
+    }
+
+    #[test]
+    fn test_handle_find_command_with_count() {
+        let mut world = setup_minimal_world();
+        handle_find_command(&mut world, &["find", "rock", "5"]);
+    }
+
+    #[test]
+    fn test_print_designations() {
+        let mut world = setup_minimal_world();
+        print_designations(&mut world);
+    }
+
+    #[test]
+    fn test_print_buildings() {
+        let mut world = setup_minimal_world();
+        print_buildings(&mut world);
+    }
+
+    #[test]
+    fn test_print_great_works() {
+        let mut world = setup_minimal_world();
+        print_great_works(&mut world);
+    }
+
+    #[test]
+    fn test_print_chronicle() {
+        let mut world = setup_minimal_world();
+        world.insert_resource(scale::layer1::core::chronicle::Chronicle::default());
+        print_chronicle(&mut world);
+    }
+
+    #[test]
+    fn test_print_log() {
+        let mut world = setup_minimal_world();
+        world.insert_resource(scale::shared::log::MessageLog::default());
+        print_log(&mut world);
+    }
+
+    #[test]
+    fn test_print_tech() {
+        let mut world = setup_minimal_world();
+        world.insert_resource(scale::layer1::tech::TechState::default());
+        print_tech(&mut world);
+    }
+
+    #[test]
+    fn test_handle_research_command_valid() {
+        let mut world = setup_minimal_world();
+        world.insert_resource(scale::layer1::tech::TechState::default());
+        world.insert_resource(scale::layer1::economy::resources::ColonyResources::default());
+        world.insert_resource(scale::shared::log::MessageLog::default());
+        handle_research_command(&mut world, &["research", "Hydroponics"]);
+    }
+
+    #[test]
+    fn test_handle_unknown_command() {
+        let mut world = setup_minimal_world();
+        let result = handle_command(&mut world, "unknown_command_123");
+        assert!(result);
+    }
+
+    #[test]
+    fn test_handle_command_stories() {
+        let mut world = setup_minimal_world();
+        let result = handle_command(&mut world, "stories");
+        assert!(result);
+    }
+
+    #[test]
+    fn test_handle_command_quit() {
+        let mut world = setup_minimal_world();
+        let result = handle_command(&mut world, "quit");
+        assert!(!result);
+    }
+
+    #[test]
+    fn test_handle_command_help() {
+        let mut world = setup_minimal_world();
+        let result = handle_command(&mut world, "help");
+        assert!(result);
+    }
+
+    #[test]
+    fn test_print_status() {
+        let mut world = setup_minimal_world();
+        world.insert_resource(scale::layer1::economy::resources::ColonyResources::default());
+        world.insert_resource(scale::shared::time::SimulationTime {
+            tick: 1,
+            speed: scale::shared::time::SimSpeed::Normal,
+        });
+        world.insert_resource(scale::layer1::nature::wind::GlobalWind::default());
+        world.insert_resource(scale::layer1::nature::ecology::EcologyConfig::default());
+        world.insert_resource(scale::layer1::day_night::DayNightCycle::default());
+        print_status(&mut world);
+    }
+
+    #[test]
+    fn test_print_pops() {
+        let mut world = setup_minimal_world();
+        print_pops(&mut world);
+    }
+
+    #[test]
+    fn test_handle_build_command_valid() {
+        let mut world = setup_minimal_world();
+        handle_build_command(&mut world, &["build", "Wall", "5", "5"]);
+    }
+
+    #[test]
+    fn test_handle_build_command_invalid() {
+        let mut world = setup_minimal_world();
+        handle_build_command(&mut world, &["build", "InvalidBuilding", "5", "5"]);
+    }
+
+    #[test]
+    fn test_handle_build_command_missing() {
+        let mut world = setup_minimal_world();
+        handle_build_command(&mut world, &["build"]);
+    }
+
+    #[test]
+    fn test_handle_designate_command_destroy() {
+        let mut world = setup_minimal_world();
+        handle_designate_command(&mut world, &["destroy", "5", "5"], DesignationType::Destroy);
+    }
+
+    #[test]
+    fn test_handle_designate_command_chop() {
+        let mut world = setup_minimal_world();
+        handle_designate_command(&mut world, &["chop", "5", "5"], DesignationType::Chop);
+    }
+
+    #[test]
+    fn test_print_help() {
+        print_help();
+    }
+
+    #[test]
     fn test_scan_terrain_overflow() {
         let mut world = setup_minimal_world();
         // This should panic in debug mode due to overflow if not handled
