@@ -88,3 +88,6 @@
 ## 2024-06-07 - SimulationTime Needs Speed in Doc Tests
 **Confusion:** In doctests that manually build a `World` and insert a `SimulationTime` resource, inserting `SimulationTime { tick: 1 }` fails to compile with `missing field speed`.
 **Clarification:** You must use `..Default::default()` or explicitly provide `speed: 1.0` when initializing the `SimulationTime` struct in doctests.
+## 2024-06-08 - Oral Tradition Debug Derivations and Demo Snippets
+**Confusion:** Users believed that the `OralTradition` and `Story` structs required the `nova` feature to even implement `Debug`, leading to compile errors (`error[E0277]: scale::prelude::Story doesn't implement Debug`) when attempting to compile the `Oral Tradition` demo without the `nova` feature.
+**Clarification:** I verified that the `Story` and `OralTradition` structs *do* derive `Debug` independently of the `nova` feature in `src/layer1/oral_tradition.rs`. The DX friction was likely caused by poor doc visibility. Added detailed `# Examples` to `Story`, `StoryGenre`, and `OralTradition` explicitly proving they work and can be instantiated safely.

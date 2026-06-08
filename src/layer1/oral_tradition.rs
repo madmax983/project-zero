@@ -16,7 +16,25 @@ use rand::seq::SliceRandom;
 #[cfg(feature = "nova")]
 use rand::Rng;
 
-/// A story that has evolved from a historical event.
+/// A legend that has evolved from a historical event within the [`OralTradition`].
+///
+/// Legends begin as factual [`Chronicle`] entries but morph over time through
+/// successive telling and retelling in taverns.
+///
+/// # Examples
+///
+/// ```
+/// use scale::layer1::oral_tradition::{Story, StoryGenre};
+///
+/// let legend = Story {
+///     text: "The colony survived the Great Frost.".to_string(),
+///     historical_date: 100,
+///     mutations: 0,
+///     genre: StoryGenre::Heroic,
+/// };
+///
+/// assert_eq!(legend.mutations, 0);
+/// ```
 #[derive(Debug, Clone)]
 pub struct Story {
     /// The current text of the story.
@@ -29,7 +47,21 @@ pub struct Story {
     pub genre: StoryGenre,
 }
 
-/// Genre of a story, determining its effect.
+/// The thematic genre of a [`Story`], which dictates how it affects those who hear it.
+///
+/// Different genres resonate differently with the populace:
+/// - **Heroic** tales inspire and boost morale.
+/// - **Cautionary** tales increase alertness.
+/// - **Tragedies** foster empathy.
+///
+/// # Examples
+///
+/// ```
+/// use scale::layer1::oral_tradition::StoryGenre;
+///
+/// let genre = StoryGenre::Cautionary;
+/// assert_eq!(format!("{}", genre), "⚠️ Cautionary");
+/// ```
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum StoryGenre {
     /// Heroic tales boost leisure/morale.
@@ -44,7 +76,26 @@ pub enum StoryGenre {
 
 pub const MAX_STORIES: usize = 100;
 
-/// Resource storing the collective oral tradition of the colony.
+/// The collective repository of legends, myths, and rumors known to the colony.
+///
+/// `OralTradition` periodically scans the [`Chronicle`] for new events and seeds
+/// them as factual stories. These stories are later shared in `Tavern`s, where they mutate.
+///
+/// # Examples
+///
+/// ```
+/// use scale::layer1::oral_tradition::{OralTradition, Story, StoryGenre};
+///
+/// let mut tradition = OralTradition::default();
+/// tradition.add_story(Story {
+///     text: "A strange object fell from the sky.".to_string(),
+///     historical_date: 42,
+///     mutations: 0,
+///     genre: StoryGenre::Cautionary,
+/// });
+///
+/// assert_eq!(tradition.stories.len(), 1);
+/// ```
 #[derive(Resource, Default, Debug)]
 pub struct OralTradition {
     /// The collection of known stories.
@@ -54,7 +105,33 @@ pub struct OralTradition {
 }
 
 impl OralTradition {
-    /// Adds a story if it's not a duplicate (based on historical date).
+    /// Adds a [`Story`] to the tradition if a story from the same historical date
+    /// does not already exist. If adding the story exceeds `MAX_STORIES`, the oldest
+    /// story is forgotten.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use scale::layer1::oral_tradition::{OralTradition, Story, StoryGenre};
+    ///
+    /// let mut tradition = OralTradition::default();
+    /// tradition.add_story(Story {
+    ///     text: "First landing.".to_string(),
+    ///     historical_date: 0,
+    ///     mutations: 0,
+    ///     genre: StoryGenre::Trivial,
+    /// });
+    ///
+    /// // Adding the same date again does nothing.
+    /// tradition.add_story(Story {
+    ///     text: "Another perspective on first landing.".to_string(),
+    ///     historical_date: 0,
+    ///     mutations: 0,
+    ///     genre: StoryGenre::Trivial,
+    /// });
+    ///
+    /// assert_eq!(tradition.stories.len(), 1);
+    /// ```
     pub fn add_story(&mut self, story: Story) {
         if !self
             .stories
@@ -68,7 +145,23 @@ impl OralTradition {
         }
     }
 
-    /// Processes new events from the Chronicle and adds them as Stories.
+    /// Evaluates new [`Chronicle`] events since the last processing tick and
+    /// converts them into new `Story` entities based on keyword heuristics and importance.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use scale::layer1::oral_tradition::{OralTradition, StoryGenre};
+    /// use scale::layer1::core::chronicle::{Chronicle, EventImportance};
+    ///
+    /// let mut chronicle = Chronicle::default();
+    /// chronicle.add_event(10, "A colonist died of starvation.".to_string(), EventImportance::Major);
+    ///
+    /// let mut tradition = OralTradition::default();
+    /// tradition.process_chronicles(&chronicle);
+    ///
+    /// assert_eq!(tradition.stories[0].genre, StoryGenre::Tragedy);
+    /// ```
     pub fn process_chronicles(&mut self, chronicle: &Chronicle) {
         // Only look at events since last check
         let new_events: Vec<_> = chronicle
@@ -122,13 +215,56 @@ impl OralTradition {
     }
 }
 
-/// System to convert new Chronicle events into Stories.
+/// Evaluates the [`Chronicle`] each tick and seeds the [`OralTradition`] with new events.
+///
+/// # Examples
+///
+/// ```
+/// use bevy_ecs::prelude::*;
+/// use scale::layer1::oral_tradition::{OralTradition, collect_chronicles_system};
+/// use scale::layer1::core::chronicle::Chronicle;
+///
+/// let mut world = World::new();
+/// world.insert_resource(OralTradition::default());
+/// world.insert_resource(Chronicle::default());
+///
+/// // Provide the event queue that the system queries
+/// world.insert_resource(bevy_ecs::event::Events::<scale::layer1::core::chronicle::AddChronicleEvent>::default());
+///
+/// let mut schedule = Schedule::default();
+/// schedule.add_systems(collect_chronicles_system);
+/// schedule.run(&mut world);
+/// ```
 #[cfg(feature = "nova")]
 pub fn collect_chronicles_system(mut tradition: ResMut<OralTradition>, chronicle: Res<Chronicle>) {
     tradition.process_chronicles(&chronicle);
 }
 
-/// System where pops in taverns tell stories to each other.
+/// Facilitates the telling of tales within `Tavern`s.
+///
+/// When multiple pops gather in a tavern, there is a chance they share a story
+/// from the [`OralTradition`]. Hearing a story affects the listeners' needs
+/// according to the story's `StoryGenre`. Repeated tellings have a chance
+/// to mutate the story text, turning history into myth.
+///
+/// # Examples
+///
+/// ```
+/// use bevy_ecs::prelude::*;
+/// use scale::layer1::oral_tradition::{OralTradition, storytelling_system};
+/// use scale::shared::log::MessageLog;
+///
+/// let mut world = World::new();
+/// world.insert_resource(OralTradition::default());
+/// world.insert_resource(MessageLog::default());
+///
+/// // Provide missing resources potentially needed by other systems in full integrations, though storytelling might just need what's here.
+/// // storytelling_system queries mut tradition, tavern_query, pop_query, log. All are present or valid empty queries.
+///
+/// let mut schedule = Schedule::default();
+/// schedule.add_systems(storytelling_system);
+/// schedule.run(&mut world);
+/// ```
 #[cfg(feature = "nova")]
 pub fn storytelling_system(
     mut tradition: ResMut<OralTradition>,
