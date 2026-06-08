@@ -5426,3 +5426,33 @@
 **Replaces:** High-G Caste, Heavy-Worlder
 **Code reference:** `GravityCaste::Squat`
 **Usage:** "The Squats handled the heavy lifting without exosuits."
+
+## rationing bureaucrat
+
+**Replaces:** admin, clerk
+**Code reference:** `JobType::RationingBureaucrat`
+**Usage:** "The colony is choking on rationing bureaucrats." / "Assigned to rationing bureaucrat duties."
+
+## cultural artifact
+
+**Replaces:** foreign goods, art
+**Code reference:** `CulturalArtifact`
+**Usage:** "A cultural artifact from the Core Worlds." / "Pops are demanding cultural artifacts."
+
+## deep sleep syndicate
+
+**Replaces:** old corp, cryo faction
+**Code reference:** `SyndicateType`
+**Usage:** "Thawing out a deep sleep syndicate." / "The deep sleep syndicate resumed operations."
+
+## orbital strike
+
+**Replaces:** ship attack, planet bombardment
+**Code reference:** `BombardmentEvent`
+**Usage:** "Calling down an orbital strike." / "The orbital strike left a massive crater."
+
+## subconscious grid
+
+**Replaces:** smart AI, auto-doors
+**Code reference:** `SmartGrid`
+**Usage:** "The subconscious grid went into lockdown." / "The subconscious grid is anxious."

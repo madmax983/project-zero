@@ -8887,3 +8887,63 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: The hab-plant took damage. The residents inside shared the trauma, experiencing [SYMBIOTIC_PAIN]."
 - "A toxic spill hurt the living walls. Inside, the workers suffered [SYMBIOTIC_PAIN]. [COLONY], [YEAR]."
 - "[COLONY], [YEAR]: The cost of symbiosis. When the hab-plant withered, the colony felt [SYMBIOTIC_PAIN]."
+
+## Template: SCARCITY_BUREAUCRAT_SPAWN
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [RESOURCE]
+
+**Patterns:**
+- "[YEAR]: Rationing protocols initiated on [COLONY]. The paperwork begins."
+- "[COLONY] AI responds to [RESOURCE] scarcity. New administrative positions created."
+- "As [RESOURCE] dwindles, [COLONY] bureaucracy expands."
+
+## Template: CULTURAL_ARTIFACT_ARRIVAL
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [CULTURE], [ARTIFACT_TYPE]
+
+**Patterns:**
+- "[YEAR]: The first [CULTURE] [ARTIFACT_TYPE] arrives on [COLONY]. The populace is mesmerized."
+- "[COLONY] exposed to [CULTURE] aesthetics. Demand for foreign architecture surges."
+- "A [CULTURE] [ARTIFACT_TYPE] was imported to [COLONY]. The local style suddenly feels inadequate."
+
+## Template: SYNDICATE_THAW
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [SYNDICATE_NAME], [INDUSTRY]
+
+**Patterns:**
+- "[YEAR]: [SYNDICATE_NAME] awakened from cryo-sleep. [INDUSTRY] production spikes, but at what cost?"
+- "Desperation forces [COLONY] to thaw the [SYNDICATE_NAME]. Indentured servitude returns."
+- "The [SYNDICATE_NAME] resumes operations on [COLONY]. Efficiency soars. Morale plummets."
+
+## Template: ORBITAL_STRIKE
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [TARGET], [CASUALTIES]
+
+**Patterns:**
+- "[YEAR]: Orbital strike authorized on [TARGET]. [CASUALTIES] collateral."
+- "Fire rained from orbit near [COLONY]. The [TARGET] was vaporized."
+- "The fleet struck [TARGET] from above. A new crater scars the surface."
+
+## Template: GRID_LOCKDOWN
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [CAUSE]
+
+**Patterns:**
+- "[YEAR]: [COLONY] smart-grid detects critical stress. Lockdown initiated."
+- "The infrastructure of [COLONY] reacts to [CAUSE]. Blast doors seal autonomously."
+- "A terrified populace. The [COLONY] grid forces a quarantine for their 'protection'."
+
+## Template: GRUDGE_INHERITANCE
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [FAMILY_A], [FAMILY_B]
+
+**Patterns:**
+- "[YEAR]: The feud between [FAMILY_A] and [FAMILY_B] passes to a new generation."
+- "Old sins on [COLONY]. [FAMILY_A] remembers what [FAMILY_B] did."
+- "A grudge unresolved. The children of [FAMILY_A] refuse to work with [FAMILY_B]."
