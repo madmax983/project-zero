@@ -486,7 +486,10 @@ pub fn silence_cult_chronicle_bridge(
 /// INT-1287: Cargo Cult Diplomat -> Chronicle
 /// Emits a Chronicle event when a CasusBelli is declared by a cargo cult.
 pub fn cargo_cult_chronicle_bridge(
-    new_wars: Query<&crate::layer3::diplomacy::cargo_cult_diplomat::CasusBelli, Added<crate::layer3::diplomacy::cargo_cult_diplomat::CasusBelli>>,
+    new_wars: Query<
+        &crate::layer3::diplomacy::cargo_cult_diplomat::CasusBelli,
+        Added<crate::layer3::diplomacy::cargo_cult_diplomat::CasusBelli>,
+    >,
     cults: Query<&crate::layer3::diplomacy::cargo_cult_diplomat::DivineAmbassador>,
     mut chronicle_events: EventWriter<crate::layer1::core::chronicle::AddChronicleEvent>,
 ) {
@@ -494,7 +497,8 @@ pub fn cargo_cult_chronicle_bridge(
         if cults.get(casus_belli.source).is_ok() {
             chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
                 importance: crate::layer1::core::chronicle::EventImportance::Major,
-                text: "A primitive colony declared holy war over a desecrated divine ambassador!".to_string(),
+                text: "A primitive colony declared holy war over a desecrated divine ambassador!"
+                    .to_string(),
             });
         }
     }
