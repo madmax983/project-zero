@@ -10,7 +10,7 @@ use bevy::prelude::*;
 
 #[derive(Component)]
 pub struct PrimitiveCivilization {
-    pub tech_level: TechLevel,
+    pub tech_level: PrimitiveTechLevel,
 }
 
 #[derive(Component)]
@@ -22,7 +22,7 @@ pub struct ObservationPost {
 pub struct SlaveMarker; // Spec used `Slave`, we will define it here if it's not in pop
 
 #[derive(Clone, Copy, PartialEq, Eq, Debug)]
-pub enum TechLevel {
+pub enum PrimitiveTechLevel {
     StoneAge,
     BronzeAge,
     IronAge,
@@ -148,7 +148,7 @@ mod tests {
             .spawn((
                 Planet,
                 PrimitiveCivilization {
-                    tech_level: TechLevel::BronzeAge,
+                    tech_level: PrimitiveTechLevel::BronzeAge,
                 },
                 ObservationPost { active: true },
             ))
@@ -174,7 +174,7 @@ mod tests {
             .spawn((
                 Planet,
                 PrimitiveCivilization {
-                    tech_level: TechLevel::IronAge,
+                    tech_level: PrimitiveTechLevel::IronAge,
                 },
             ))
             .id();
@@ -229,7 +229,7 @@ mod tests {
         world
             .spawn((
                 PrimitiveCivilization {
-                    tech_level: TechLevel::StoneAge,
+                    tech_level: PrimitiveTechLevel::StoneAge,
                 },
                 PrimitiveFollowers {
                     last_miracle_time: 0.0,
