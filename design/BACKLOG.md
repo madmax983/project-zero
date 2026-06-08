@@ -1,7 +1,7 @@
 # Backlog
 
 ## High Priority
-- [ ] `1297` The Empty Room — `specs/1297-the-empty-room.md`
+
 - [ ] `1298` Cultural Vandalism — `specs/1298-cultural-vandalism.md`
 - [ ] `1299` Quantum Twins — `specs/1299-quantum-twins.md`
 
