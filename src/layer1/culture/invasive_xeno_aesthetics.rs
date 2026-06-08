@@ -40,7 +40,7 @@ pub fn process_cultural_artifact_system(
                 // Add the demand
                 commands.entity(pop_entity).insert(AestheticDemand {
                     culture_id: artifact.source_culture,
-                    timer: 500 // Arbitrary time to fulfill
+                    timer: 500, // Arbitrary time to fulfill
                 });
             }
         }
@@ -73,10 +73,13 @@ mod tests {
     // RED Phase Test Setup
     fn setup_app() -> App {
         let mut app = App::new();
-        app.add_systems(Update, (
-            process_cultural_artifact_system,
-            process_aesthetic_deprivation_system,
-        ));
+        app.add_systems(
+            Update,
+            (
+                process_cultural_artifact_system,
+                process_aesthetic_deprivation_system,
+            ),
+        );
         app
     }
 
@@ -84,15 +87,18 @@ mod tests {
     fn test_cultural_artifact_boosts_mood_and_adds_demand() {
         let mut app = setup_app();
 
-        let pop = app.world_mut().spawn((
-            crate::layer1::entities::pop::Pop,
-            XenoMood { level: 50.0 },
-        )).id();
+        let pop = app
+            .world_mut()
+            .spawn((crate::layer1::entities::pop::Pop, XenoMood { level: 50.0 }))
+            .id();
 
         let colony = app.world_mut().spawn(XenoColony).id();
 
         // Simulate artifact arrival
-        app.world_mut().spawn(XenoCulturalArtifact { target_colony: colony, source_culture: 2 });
+        app.world_mut().spawn(XenoCulturalArtifact {
+            target_colony: colony,
+            source_culture: 2,
+        });
         app.world_mut().entity_mut(pop).insert(ResidentOf(colony));
 
         app.update();
@@ -100,18 +106,27 @@ mod tests {
         let mood = app.world().get::<XenoMood>(pop).unwrap();
         assert!(mood.level > 50.0, "Artifact should boost mood");
 
-        assert!(app.world().get::<AestheticDemand>(pop).is_some(), "crate::layer1::entities::pop::Pop should demand new aesthetics after exposure");
+        assert!(
+            app.world().get::<AestheticDemand>(pop).is_some(),
+            "crate::layer1::entities::pop::Pop should demand new aesthetics after exposure"
+        );
     }
 
     #[test]
     fn test_unfulfilled_aesthetic_demand_causes_deprivation() {
         let mut app = setup_app();
 
-        let pop = app.world_mut().spawn((
-            crate::layer1::entities::pop::Pop,
-            XenoMood { level: 100.0 },
-            AestheticDemand { culture_id: 2, timer: 10 },
-        )).id();
+        let pop = app
+            .world_mut()
+            .spawn((
+                crate::layer1::entities::pop::Pop,
+                XenoMood { level: 100.0 },
+                AestheticDemand {
+                    culture_id: 2,
+                    timer: 10,
+                },
+            ))
+            .id();
 
         // Simulate timer expiration
         let mut demand = app.world_mut().get_mut::<AestheticDemand>(pop).unwrap();
@@ -120,7 +135,13 @@ mod tests {
         app.update();
 
         let mood = app.world().get::<XenoMood>(pop).unwrap();
-        assert!(mood.level < 100.0, "Mood should drop due to aesthetic deprivation");
-        assert!(app.world().get::<AestheticDeprivation>(pop).is_some(), "crate::layer1::entities::pop::Pop should gain deprivation component");
+        assert!(
+            mood.level < 100.0,
+            "Mood should drop due to aesthetic deprivation"
+        );
+        assert!(
+            app.world().get::<AestheticDeprivation>(pop).is_some(),
+            "crate::layer1::entities::pop::Pop should gain deprivation component"
+        );
     }
 }

@@ -201,11 +201,9 @@ pub fn endless_draft_bridge_system(
         }
 
         if eligible_pops.len() >= event.required_pops {
-            let pops_provided = eligible_pops
-                .into_iter()
-                .take(event.required_pops)
-                .collect::<Vec<_>>();
-            for &pop in &pops_provided {
+            // ⚡ Bolt Optimization: Remove intermediate `.collect::<Vec<_>>()` by truncating `eligible_pops` directly
+            eligible_pops.truncate(event.required_pops);
+            for &pop in &eligible_pops {
                 drafted_pops.insert(pop);
                 commands.entity(pop).despawn();
             }
@@ -213,7 +211,7 @@ pub fn endless_draft_bridge_system(
             compliance_events.send(
                 crate::layer3::diplomacy::endless_draft::DraftComplianceEvent {
                     sponsor: event.sponsor,
-                    pops_provided,
+                    pops_provided: eligible_pops,
                 },
             );
 
