@@ -48,3 +48,5 @@ pub use celestial_cemeteries::*;
 pub mod cultural_influence;
 pub use cultural_influence::*;
 pub mod memorial_revolt;
+pub mod invasive_xeno_aesthetics;
+pub use invasive_xeno_aesthetics::*;
