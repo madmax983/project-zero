@@ -43,7 +43,6 @@ use crate::layer1::map::GridPosition;
 use crate::layer1::medical::Hospital;
 use crate::layer1::refining::get_refining_recipe;
 use crate::layer1::resources::{RefiningProgress, ResourceItem};
-use crate::layer1::social::empty_room::ActiveSanctuaries;
 use crate::layer1::social::Tavern;
 use crate::layer1::stockpile::Stockpile;
 use crate::layer1::structure::{DeferMaintenance, Structure};
@@ -139,28 +138,6 @@ fn populate_mobs(world: &mut World, buffer: &mut Vec<ScorableCandidate>) {
     );
 }
 
-fn populate_sanctuaries(world: &mut World, buffer: &mut Vec<ScorableCandidate>) {
-    buffer.clear();
-    let Some(manager) = world.get_resource::<ActiveSanctuaries>() else {
-        return;
-    };
-    for sanctuary in &manager.sanctuaries {
-        if sanctuary.is_valid && !sanctuary.tiles.is_empty() {
-            // Pick the first tile as the target position
-            let pos = sanctuary.tiles[0];
-            buffer.push(ScorableCandidate {
-                entity: Entity::PLACEHOLDER, // Doesn't need a specific entity
-                pos,
-                score_bonus: sanctuary.effectiveness,
-                capacity: 1,
-                usage: 0,
-                item_type: None,
-                resource_type: None,
-                is_advanced_tech: false,
-            });
-        }
-    }
-}
 
 fn populate_buffer_buildings(
     world: &mut World,
@@ -381,6 +358,7 @@ fn populate_buffer_items_and_misc(world: &mut World, buffer: &mut UtilityAIBuffe
         &mut buffer.item_entities,
     );
     populate_anomalies(world, &mut buffer.anomalies);
+    populate_sanctuaries(world, &mut buffer.sanctuaries);
     populate_corpses(world, &mut buffer.corpses);
     populate_graves(world, &mut buffer.graves);
     populate_repair_structures(world, &mut buffer.repair_structures);
@@ -939,4 +917,14 @@ mod tests {
         populate_housing(&mut world, &mut buffer);
         assert_eq!(buffer.len(), 1, "Should include available housing");
     }
+}
+fn populate_sanctuaries(world: &mut World, buffer: &mut Vec<ScorableCandidate>) {
+    buffer.clear();
+    buffer.extend(
+        world
+            .query::<(Entity, &crate::layer1::map::GridPosition, &crate::layer1::social::empty_room::SanctuaryZone)>()
+            .iter(world)
+            .filter(|(_, _, sanctuary)| sanctuary.active)
+            .map(|(entity, pos, _)| ScorableCandidate::new(entity, *pos)),
+    );
 }

@@ -191,7 +191,7 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::crowding::crowding_decay_system,
             #[cfg(feature = "nova")]
             crate::layer1::loci::update_loci_system,
-            crate::layer1::social::empty_room::update_sanctuary_system,
+            crate::layer1::social::empty_room::evaluate_sanctuary_emptiness,
         )
             .in_set(Layer1SystemSet::Environment),
     );

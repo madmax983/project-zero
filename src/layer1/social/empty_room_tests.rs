@@ -1,47 +1,65 @@
 #[cfg(test)]
 mod tests {
+    use bevy::prelude::*;
     use crate::layer1::building::{Building, BuildingType};
     use crate::layer1::clutter::ClutterGrid;
-
     use crate::layer1::map::GridPosition;
     use crate::layer1::social::empty_room::{
-        update_sanctuary_system, visit_sanctuary_system, ActiveSanctuaries,
+        evaluate_sanctuary_emptiness, apply_sanctuary_stress_relief, SanctuaryZone,
     };
     use crate::layer1::stress::StressTracker;
-    use crate::layer1::zone::{ZoneGrid, ZoneType};
-    use bevy_ecs::prelude::*;
 
     fn setup_world() -> World {
         let mut world = World::new();
-        let mut zone_grid = ZoneGrid::new(10, 10);
-        zone_grid.set(0, 0, ZoneType::Sanctuary);
-        zone_grid.set(0, 1, ZoneType::Sanctuary);
-        world.insert_resource(zone_grid);
-        world.insert_resource(ActiveSanctuaries::default());
         world.insert_resource(ClutterGrid::new(10, 10));
         world
     }
 
     #[test]
-    fn test_sanctuary_validity_check() {
-        let mut world = setup_world();
+    fn test_sanctuary_active_when_empty() {
+        let mut app = App::new();
+        app.add_systems(Update, evaluate_sanctuary_emptiness);
 
-        let mut schedule = Schedule::default();
-        schedule.add_systems(update_sanctuary_system);
-        schedule.run(&mut world);
+        let zone = app.world_mut().spawn((SanctuaryZone { active: false }, GridPosition { x: 0, y: 0 })).id();
 
-        let manager = world.resource::<ActiveSanctuaries>();
-        assert_eq!(manager.sanctuaries.len(), 1);
-        let sanctuary = &manager.sanctuaries[0];
-        assert!(sanctuary.is_valid);
-        assert_eq!(sanctuary.effectiveness, 2.0); // 1.0 per tile
+        app.update();
+
+        let sanctuary = app.world().get::<SanctuaryZone>(zone).unwrap();
+        assert!(sanctuary.active, "Sanctuary should be active when no clutter is present");
     }
 
     #[test]
-    fn test_clutter_invalidates_sanctuary() {
+    fn test_sanctuary_deactivated_by_clutter() {
+        let mut app = App::new();
+        app.add_systems(Update, evaluate_sanctuary_emptiness);
+
+        let zone = app.world_mut().spawn((SanctuaryZone { active: true }, GridPosition { x: 0, y: 0 })).id();
+        app.world_mut().spawn((Building { building_type: BuildingType::Housing }, GridPosition { x: 0, y: 0 }));
+
+        app.update();
+
+        let sanctuary = app.world().get::<SanctuaryZone>(zone).unwrap();
+        assert!(!sanctuary.active, "Sanctuary should deactivate if clutter is inside");
+    }
+
+    #[test]
+    fn test_stress_relief_in_active_sanctuary() {
+        let mut app = App::new();
+        app.add_systems(Update, apply_sanctuary_stress_relief);
+
+        let _zone = app.world_mut().spawn((SanctuaryZone { active: true }, GridPosition { x: 0, y: 0 })).id();
+        let pop = app.world_mut().spawn((StressTracker { accumulated_stress: 50.0 }, GridPosition { x: 0, y: 0 })).id();
+
+        app.update();
+
+        let stress = app.world().get::<StressTracker>(pop).unwrap();
+        assert!(stress.accumulated_stress < 50.0, "Pop should lose stress in an active sanctuary");
+    }
+
+    #[test]
+    fn test_no_stress_relief_in_inactive_sanctuary() {
         let mut world = setup_world();
 
-        // Spawn a building in the zone
         world.spawn((
             Building {
                 building_type: BuildingType::Housing,
@@ -49,22 +67,7 @@ mod tests {
             GridPosition { x: 0, y: 0 },
         ));
 
-        let mut schedule = Schedule::default();
-        schedule.add_systems(update_sanctuary_system);
-        schedule.run(&mut world);
-
-        let manager = world.resource::<ActiveSanctuaries>();
-        assert_eq!(manager.sanctuaries.len(), 1);
-        let sanctuary = &manager.sanctuaries[0];
-        assert!(!sanctuary.is_valid);
-        assert_eq!(sanctuary.effectiveness, 0.0);
-    }
-
-    #[test]
-    fn test_visit_reduces_stress() {
-        let mut world = setup_world();
-
-        let _pop = world
+        let pop = world
             .spawn((
                 GridPosition { x: 0, y: 0 }, // Inside zone
                 StressTracker {
@@ -75,39 +78,28 @@ mod tests {
 
         let mut schedule = Schedule::default();
         schedule.add_systems((
-            update_sanctuary_system,
-            visit_sanctuary_system.after(update_sanctuary_system),
+            evaluate_sanctuary_emptiness,
+            apply_sanctuary_stress_relief.after(evaluate_sanctuary_emptiness),
         ));
         schedule.run(&mut world);
+        let stress = world.get::<StressTracker>(pop).unwrap();
+        assert_eq!(stress.accumulated_stress, 50.0, "Pop should not lose stress in an inactive sanctuary");
     }
 
     #[test]
     fn test_visit_can_spawn_clutter() {
-        let mut world = setup_world();
+        let mut app = App::new();
+        app.world_mut().insert_resource(ClutterGrid::new(10, 10));
+        app.add_systems(Update, apply_sanctuary_stress_relief);
 
-        let _pop = world
-            .spawn((
-                GridPosition { x: 0, y: 0 }, // Inside zone
-                StressTracker {
-                    accumulated_stress: 50.0,
-                },
-            ))
-            .id();
+        let _zone = app.world_mut().spawn((SanctuaryZone { active: true }, GridPosition { x: 0, y: 0 })).id();
+        let _pop = app.world_mut().spawn((StressTracker { accumulated_stress: 50.0 }, GridPosition { x: 0, y: 0 })).id();
 
-        // Seed random to ensure the 1% chance hits (or we can just mock it, but simplest is to run it enough times or use a controlled random. Actually, we can't easily inject a seeded RNG into the system because it uses thread_rng. We can just run it many times).
-        let mut schedule = Schedule::default();
-        schedule.add_systems((
-            update_sanctuary_system,
-            visit_sanctuary_system.after(update_sanctuary_system),
-        ));
-
-        // Run it 1000 times, the chance of not spawning clutter is (0.99)^1000 = 0.000043.
         for _ in 0..1000 {
-            schedule.run(&mut world);
+            app.update();
         }
 
-        let clutter_grid = world.resource::<ClutterGrid>();
-        // Since we spawned clutter at 0, 0, the value should be > 0.
+        let clutter_grid = app.world().resource::<ClutterGrid>();
         assert!(clutter_grid.get(0, 0) > 0.0);
     }
 }
