@@ -1392,3 +1392,9 @@
 - **Glue added:** Added `LostTech` to `ItemType` so it can be carried in `Inventory`. Added `tether_stump_lost_tech_bridge` in `src/layer1/core/integration.rs` to process `LostTech` recovery and add knowledge to `ColonyResources`.
 - **Schedule:** Registered the system in `src/layer1/systems/economy.rs` in `Layer1SystemSet::Economy`.
 - **Tests:** `tests/integration/tether_stump_bridge.rs`
+
+### INT-1287: Cargo Cult Diplomat -> Chronicle
+- **Date:** 2026-06-05
+- **Systems connected:** `process_disrespect_casus_belli_system` -> `cargo_cult_chronicle_bridge`
+- **Glue added:** `cargo_cult_chronicle_bridge` in `src/layer3/integration.rs`
+- **Tests:** `tests/integration/cargo_cult_bridge.rs`
