@@ -890,6 +890,7 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
         (
             crate::layer3::bureaucracy::colony_reporting_system,
             crate::layer3::bureaucracy::empire_resource_distribution_system,
+            crate::layer3::integration::cargo_cult_chronicle_bridge,
             crate::layer3::integration::discover_ghost_town_system,
         )
             .chain(),

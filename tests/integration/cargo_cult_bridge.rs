@@ -91,3 +91,77 @@ fn test_cargo_cult_integration_end_to_end() {
         "Ritual Comfort morale modifier was not applied"
     );
 }
+
+use bevy_app::App as TestApp; // Aliased to prevent conflict with Bevy's App
+use bevy_ecs::event::Events as TestEvents;
+use scale::layer1::core::chronicle::{AddChronicleEvent, EventImportance};
+use scale::layer3::diplomacy::cargo_cult_diplomat::{CasusBelli, DivineAmbassador};
+use scale::layer3::integration::cargo_cult_chronicle_bridge;
+
+#[test]
+fn test_cargo_cult_chronicle_bridge_emits_event() {
+    let mut app = TestApp::new();
+
+    app.add_event::<AddChronicleEvent>();
+    app.add_systems(bevy_app::Update, cargo_cult_chronicle_bridge);
+
+    let probe_owner_empire = app.world_mut().spawn_empty().id();
+    let probe_entity = app.world_mut().spawn_empty().id();
+
+    // The colony that worships the probe
+    let colony = app
+        .world_mut()
+        .spawn(DivineAmbassador { probe_entity })
+        .id();
+
+    // Trigger the CasusBelli
+    app.world_mut().spawn(CasusBelli {
+        source: colony,
+        target: probe_owner_empire,
+    });
+
+    app.update();
+
+    let chronicle_events = app.world().resource::<TestEvents<AddChronicleEvent>>();
+    let mut cursor = chronicle_events.get_cursor();
+    let events: Vec<_> = cursor.read(chronicle_events).collect();
+
+    assert_eq!(
+        events.len(),
+        1,
+        "Should emit a chronicle event when a cargo cult declares holy war"
+    );
+    assert_eq!(events[0].importance, EventImportance::Major);
+    assert!(events[0]
+        .text
+        .contains("declared holy war over a desecrated divine ambassador"));
+}
+
+#[test]
+fn test_cargo_cult_chronicle_bridge_ignores_normal_casus_belli() {
+    let mut app = TestApp::new();
+
+    app.add_event::<AddChronicleEvent>();
+    app.add_systems(bevy_app::Update, cargo_cult_chronicle_bridge);
+
+    let empire_a = app.world_mut().spawn_empty().id();
+    let empire_b = app.world_mut().spawn_empty().id();
+
+    // Normal CasusBelli without a DivineAmbassador on the source
+    app.world_mut().spawn(CasusBelli {
+        source: empire_a,
+        target: empire_b,
+    });
+
+    app.update();
+
+    let chronicle_events = app.world().resource::<TestEvents<AddChronicleEvent>>();
+    let mut cursor = chronicle_events.get_cursor();
+    let events: Vec<_> = cursor.read(chronicle_events).collect();
+
+    assert_eq!(
+        events.len(),
+        0,
+        "Should NOT emit a chronicle event for a normal CasusBelli"
+    );
+}
