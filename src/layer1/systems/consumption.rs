@@ -2,6 +2,7 @@ use super::Layer1SystemSet;
 use crate::layer1::social::old_guard::mood_lifecycle_system;
 use crate::layer1::*;
 use bevy_ecs::prelude::*;
+use crate::layer1::psychology::artifact_diet::consume_artifacts_during_famine_system;
 
 #[allow(clippy::too_many_lines)]
 pub fn register(schedule: &mut Schedule) {
@@ -105,6 +106,8 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::temperature::thermal_damage_system.after(decay_needs_system),
             crate::layer1::radioactive::sickness_damage_system.after(decay_needs_system),
             pressure_damage_system.after(decay_needs_system),
+
+            consume_artifacts_during_famine_system.after(decay_needs_system),
             crate::layer1::needs::starvation_damage_system.after(decay_needs_system),
             crate::layer1::biology::rust_lung::rust_lung_degradation_system
                 .after(decay_needs_system),
