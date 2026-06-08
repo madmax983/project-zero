@@ -23197,3 +23197,55 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you let a stranded fleet die with honor, or force them to cannibalize themselves, bringing back a fraction of your forces but dealing massive psychological trauma to the surviving crews?
 
 ---
+## Cultural Amnesia
+
+**Layer:** 1 -> 3
+
+**Fantasy:** A colony forgets its roots, leading to a schism with the homeworld.
+
+**Mechanic:** If a colony is isolated (no trade or communication) for too long, its Pops begin to lose "Cultural Connection" to the empire. They develop new, localized traditions and may eventually forget their origins, seeing the homeworld as an alien threat when contact is re-established.
+
+**Emergence:** A long-lost colony is rediscovered, but they have completely rewritten their history, believing themselves to be the true origin of your species and declaring a holy war against your "imposter" empire.
+
+**Tension:** Do you maintain expensive supply lines to remote outposts just to keep them culturally aligned, or do you let them drift and deal with the consequences later?
+
+---
+## Digital Asceticism
+
+**Layer:** 1 -> 2
+
+**Fantasy:** A reactionary movement rejecting advanced technology for a simpler life, clashing with the empire's progress.
+
+**Mechanic:** As the empire researches advanced technologies (AI, cloning, cybernetics), a "Digital Ascetic" faction can emerge among Pops on Layer 1. They refuse to use or benefit from advanced infrastructure, demanding primitive farming and manual labor. Their presence lowers the efficiency of advanced buildings but provides massive stability and resilience against technological disasters.
+
+**Emergence:** A solar flare wipes out the digital infrastructure of a high-tech world, plunging it into chaos. However, a small enclave of Digital Ascetics barely notices and becomes the only stable, food-producing region on the planet.
+
+**Tension:** Do you suppress the ascetics to maximize efficiency, or cultivate them as a fail-safe against the inherent fragility of your advanced empire?
+
+---
+## The Diplomatic Menagerie
+
+**Layer:** 3
+
+**Fantasy:** Collecting rare species as status symbols to impress rival empires.
+
+**Mechanic:** Empires can construct "Diplomatic Menageries" on their capital worlds. These require capturing and transporting rare, sometimes dangerous, non-sapient flora and fauna from distant planets (Layer 2). A well-stocked menagerie provides massive diplomatic weight and prestige on Layer 3.
+
+**Emergence:** To impress a powerful ally, you capture an apex predator from a death world. The creature escapes its enclosure on your capital, causing massive Layer 1 casualties and a diplomatic incident when the visiting alien delegates are eaten.
+
+**Tension:** How much risk do you take in housing dangerous biological specimens purely for political clout?
+
+---
+## Gravity Habituation
+
+**Layer:** 1 -> Cross-layer
+
+**Fantasy:** Pops adapting biologically to their environment, making relocation impossible.
+
+**Mechanic:** Pops born on high or low gravity worlds gradually habituate to those conditions. After a few generations, they suffer severe health penalties (or even death) if relocated to a world with a different gravity type, unless extensive and expensive genetic therapies are applied.
+
+**Emergence:** You need cheap labor for a high-gravity mining world and forcibly relocate pops from an asteroid station. They immediately begin suffering massive casualties and revolting, forcing you to reconsider your heartless logistics.
+
+**Tension:** Do you invest in gravity-agnostic gene mods, or do you accept that certain populations are permanently tied to specific planetary environments?
+
+---
