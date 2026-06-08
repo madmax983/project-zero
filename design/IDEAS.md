@@ -23141,3 +23141,59 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you violently suppress the cult to save the colony from starvation, risking a holy war, or do you install a complex fake "divine communication" system to trick them into directing their sacrifices into your actual supply chain?
 
 ---
+
+## The Translation Schism
+
+**Layer:** 3
+
+**Fantasy:** A diplomatic breakdown caused entirely by shifting language nuances over centuries, turning allies into bitter enemies over a single mistranslated treaty.
+
+**Mechanic:** Treaties signed with alien civilizations use a "Translation Confidence" score. Over long periods (hundreds of in-game years), cultural drift and dialect branching naturally degrade this score. If it falls too low, routine diplomatic messages can be critically misunderstood (e.g., a "trade proposal" is parsed as an "extortion demand"), instantly generating massive casus belli.
+
+**Emergence:** You've had a peaceful border with the Zorlan Republic for three centuries. Suddenly, they declare a war of annihilation because their updated language subroutines interpreted your routine "Happy Foundation Day" message as a grotesque insult to their founding deity.
+
+**Tension:** Do you constantly spend massive amounts of cultural resources and science to "re-sync" your translation matrices with old allies, or do you let them drift and prepare for the inevitable misunderstanding-fueled wars?
+
+---
+
+## Biosphere Gentrification
+
+**Layer:** 1 -> 2
+
+**Fantasy:** The wealthy elites literally pricing the working class out of clean air and habitable temperature.
+
+**Mechanic:** On partially terraformed worlds, localized "Eden Domes" can be constructed for the elite. These domes actively siphon pure water and clean air from the surrounding planetary grid, drastically worsening the environment outside the domes. Pops living outside the domes face increasing toxicity and extreme weather, while the elites inside enjoy perfect conditions and massive mood buffs.
+
+**Emergence:** You build a paradise dome on a struggling mining world to keep your corporate executives happy. The dome's life support systems drain the local aquifers, turning the surrounding mining slums into an uninhabitable desert. The miners, dying of thirst, begin besieging the glass walls of the dome, creating a brutal class war over basic survival resources.
+
+**Tension:** Do you build high-end habitats to attract powerful elites and secure massive tax revenues, knowing it will literally suffocate your working-class population?
+
+---
+
+## Black Hole Economics
+
+**Layer:** 2 -> 3
+
+**Fantasy:** Exploiting the extreme time dilation of a black hole to outpace rivals in production and research, at the cost of being culturally left behind.
+
+**Mechanic:** Building infrastructure near a black hole grants a massive "Time Dilation" multiplier to research and production output relative to the rest of the galaxy. However, Pops living in these stations experience time much slower. When they attempt to interact with the wider empire, they suffer a profound "Temporal Disconnect" debuff—their skills are considered obsolete, their cultural references are centuries out of date, and they cannot understand modern diplomatic or economic realities.
+
+**Emergence:** You build your most advanced research sector near a singularity. They produce centuries worth of tech in mere years of game time. But when you rotate those scientists back to the capital, they are treated as archaic cavemen by the general population and immediately form a reactionary political faction trying to roll back centuries of social progress.
+
+**Tension:** Do you exploit the massive raw output of time-dilated zones, knowing you are creating a population completely isolated from the cultural and technological reality of the rest of your empire?
+
+---
+
+## The Cannibal Fleet
+
+**Layer:** 2
+
+**Fantasy:** A desperate fleet that survives deep space isolation by consuming its own ships to keep moving.
+
+**Mechanic:** When a fleet is stranded in deep space without fuel or supply lines, it can enact the "Ouroboros Protocol." The fleet begins dismantling its least essential ships to extract fuel, oxygen, and raw materials to keep the remaining ships alive and moving. This drastically reduces the fleet's size and combat effectiveness but prevents total starvation.
+
+**Emergence:** Your grand armada is cut off from supply lines deep in enemy territory. To make it back to friendly space, they spend five years slowly eating themselves. A massive dreadnought arrives at your border starbase, kept running only by the fact that it consumed its entire escort fleet and half its own lower decks just to power the engines.
+
+**Tension:** Do you let a stranded fleet die with honor, or force them to cannibalize themselves, bringing back a fraction of your forces but dealing massive psychological trauma to the surviving crews?
+
+---
