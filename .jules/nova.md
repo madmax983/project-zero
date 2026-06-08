@@ -135,3 +135,8 @@
 **Concept:** Added `ascetic_fasting_system` to `src/experimental/ascetic_fasting.rs`. Pops with `Trait::Ascetic` who reach critical hunger (`< 0.2`) enter a state of "Ascetic Fasting", which passively regenerates their `leisure` need.
 **Fate:** Submitted
 **Lesson:** Connects the physiological system (Hunger) with the psychological system (Leisure) for a specific personality trait. It creates emergent narratives where some pops actively thrive mentally when physically starving, allowing for high-risk starvation strategies during times of unrest.
+
+## [Chemical Showers]
+**Concept:** Connected `Shower` buildings with the `consume_chemical` system. Pops using a spiked `ChemicalShower` are globally affected by its `ChemicalType` (e.g. Stim, Sedative).
+**Fate:** Submitted
+**Lesson:** Leveraging the existing hygiene needs system is an efficient vector for mass-medicating a colony without requiring new user-directed orders or behaviors.
