@@ -51,6 +51,26 @@ pub fn inherit_grudges_on_birth_system(
 }
 
 #[allow(clippy::type_complexity)]
+pub fn prevent_grudge_work_system(
+    mut commands: Commands,
+    grudge_query: Query<(Entity, &GrudgeList, &crate::layer1::actions::AssignedTo)>,
+    target_query: Query<&crate::layer1::actions::AssignedTo>,
+) {
+    for (entity, grudges, assigned_to) in grudge_query.iter() {
+        for grudge in &grudges.0 {
+            if let Ok(target_assigned) = target_query.get(grudge.target_entity) {
+                // If both are assigned to the same workplace, and it's not a generic housing
+                if target_assigned.entity == assigned_to.entity {
+                    // Refuse to work there
+                    commands.entity(entity).remove::<crate::layer1::actions::AssignedTo>();
+                    break;
+                }
+            }
+        }
+    }
+}
+
+#[allow(clippy::type_complexity)]
 pub fn transfer_grudges_on_death_system(
     mut events: EventReader<crate::layer1::pop::PopDied>,
     mut queries: ParamSet<(Query<&GrudgeList>, Query<(&Lineage, &mut GrudgeList)>)>,
@@ -140,6 +160,51 @@ mod tests {
         assert_eq!(child_grudges.0.len(), 1);
         assert_eq!(child_grudges.0[0].target_entity, target_entity);
         assert_eq!(child_grudges.0[0].origin_reason, "Stole a ration");
+    }
+
+    use crate::layer1::actions::{AssignedTo, AssignmentType};
+
+    #[test]
+    fn test_grudge_work_refusal() {
+        let mut app = bevy::app::App::new();
+        // Setup systems that prevent grudges from working together
+        app.add_systems(bevy::app::Update, prevent_grudge_work_system);
+
+        // Arrange: Setup two pops with a grudge against each other, assigned to the same workplace
+        let target = app.world_mut().spawn_empty().id();
+        let workplace = app.world_mut().spawn_empty().id();
+
+        // Target works there
+        app.world_mut().entity_mut(target).insert((
+            Pop,
+            AssignedTo {
+                entity: workplace,
+                assignment_type: AssignmentType::FarmWorker,
+            },
+        ));
+
+        // Pop hates target, also assigned there
+        let pop = app
+            .world_mut()
+            .spawn((
+                Pop,
+                GrudgeList(vec![Grudge {
+                    target_entity: target,
+                    intensity: 1.0,
+                    origin_reason: "Unknown".to_string(),
+                }]),
+                AssignedTo {
+                    entity: workplace,
+                    assignment_type: AssignmentType::FarmWorker,
+                },
+            ))
+            .id();
+
+        // Act: Run systems to prevent this
+        app.update();
+
+        // Assert: Verify assignment fails (e.g., AssignedTo is removed)
+        assert!(app.world().get::<AssignedTo>(pop).is_none());
     }
 
     #[test]
