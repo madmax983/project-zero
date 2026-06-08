@@ -6298,7 +6298,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The "Empty" Room
+## The "Empty" Room [SPECCED]
 
 **Layer:** 1
 
@@ -6312,7 +6312,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Cultural Vandalism
+## Cultural Vandalism [SPECCED]
 
 **Layer:** 1
 
@@ -6326,7 +6326,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Quantum Twins
+## Quantum Twins [SPECCED]
 
 **Layer:** 1
 
@@ -12119,7 +12119,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** The massive logistical and military advantage of organic, self-repairing starships vs. the constant, terrifying upkeep of feeding a predator that can eat your own colonies if neglected.
 
 ---
-## [SPECCED] The Cartographic Mutiny
+## The Cartographic Mutiny
 
 **Layer:** Cross-layer
 
