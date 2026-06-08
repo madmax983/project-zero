@@ -691,7 +691,6 @@ See `design/IDEAS.md` for unspecced concepts.
 
 
 
-- [ ] `1121` Generational Grudges — `specs/1121-generational-grudges.md`
 - [ ] `1124` Diplomatic Fashion — `specs/1124-diplomatic-fashion.md`
 - [ ] `1125` Improvised Tools — `specs/1125-improvised-tools.md`
 

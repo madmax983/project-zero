@@ -709,3 +709,4 @@
 - [x] `INT-1118` Integration: The Tether Stump -> Lost Tech -> Inventory and Research — completed 2026-10-31
 - [x] `1289` The Bureaucracy of Scarcity — `specs/1289-the-bureaucracy-of-scarcity.md` — completed 2026-06-07
 - [x] `INT-659` Integration: Orbital Bombardment -> Chronicle — completed 2026-06-07
+- [x] `1121` Generational Grudges — `specs/1121-generational-grudges.md` — completed 2026-06-08
