@@ -369,7 +369,6 @@ mod tests {
         // Or 0.0 to prevent movement.
         assert_eq!(comp.speed(), 0.0);
     }
-
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]

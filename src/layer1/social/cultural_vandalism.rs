@@ -1,59 +1,51 @@
 use crate::layer1::artifacts::{ArtifactAura, AuraEffect};
-use crate::layer1::building::{Building, BuildingType};
-use crate::layer1::map::GridPosition;
+use crate::layer1::building::Building;
+use crate::layer1::mind::utility_types::{ActionType, PopAction};
 use crate::layer1::pop::Pop;
-use crate::layer1::stress::StressTracker;
-use crate::layer1::structure::Structure;
+use crate::layer1::social::unrest::Unrest;
 use bevy_ecs::prelude::*;
 
 /// Component indicating a structure has been vandalized.
 #[derive(Component)]
 pub struct Vandalized;
 
-pub const ANGRY_POP_STRESS_THRESHOLD: f32 = 80.0;
 pub const VANDALISM_AURA_MULTIPLIER: f32 = 1.5;
 
-/// System that applies Vandalized to structures when angry pops are nearby.
-type StructureQuery<'w, 's> = Query<
-    'w,
-    's,
-    (Entity, &'static Building, &'static GridPosition),
-    (With<Structure>, Without<Vandalized>),
->;
-
-pub fn vandalism_system(
-    mut commands: Commands,
-    pops: Query<(&StressTracker, &GridPosition), With<Pop>>,
-    structures: StructureQuery<'_, '_>,
+/// AI Evaluation: When global Unrest is high, Pops with nothing else to do
+/// may decide to vandalize cultural structures.
+pub fn evaluate_vandalism_targets(
+    q_structures: Query<Entity, (With<Building>, Without<Vandalized>)>,
+    unrest: Res<Unrest>,
+    mut q_pops: Query<&mut PopAction, With<Pop>>,
 ) {
-    for (stress, pop_pos) in pops.iter() {
-        if stress.accumulated_stress > ANGRY_POP_STRESS_THRESHOLD {
-            for (entity, building, struct_pos) in structures.iter() {
-                // Target only cultural/official structures
-                if (building.building_type == BuildingType::Statue
-                    || building.building_type == BuildingType::BulletinBoard)
-                    && pop_pos.distance_chebyshev(*struct_pos) <= 1
-                {
-                    // Vandalize
-                    commands.entity(entity).insert(Vandalized);
+    if unrest.level > 0.5 {
+        for mut action in q_pops.iter_mut() {
+            if action.current == ActionType::Idle {
+                if let Some(_target) = q_structures.iter().next() {
+                    action.current = ActionType::Vandalize;
                 }
             }
         }
     }
 }
 
-/// System that updates the buffs of vandalized structures.
-pub fn update_structure_buffs(
-    mut query: Query<&mut ArtifactAura, (With<Vandalized>, Changed<Vandalized>)>,
+/// Execution: Pops that have the Vandalize action currently target an official structure and deface it.
+pub fn process_vandalism(
+    mut commands: Commands,
+    mut q_pops: Query<&mut PopAction>,
+    mut q_structures: Query<(Entity, &mut ArtifactAura), With<Building>>,
 ) {
-    for mut aura in query.iter_mut() {
-        // Invert effect
-        // Assuming Aura value corresponds to Morale (negative stress modifier is good)
-        if let AuraEffect::StressModifier(amount) = aura.effect {
-            if amount < 0.0 {
-                aura.effect = AuraEffect::StressModifier(-amount * VANDALISM_AURA_MULTIPLIER);
-                // "Rebellion" is stronger than "Loyalty"
+    for mut action in q_pops.iter_mut() {
+        if action.current == ActionType::Vandalize {
+            if let Some((entity, mut aura)) = q_structures.iter_mut().next() {
+                if let AuraEffect::StressModifier(amount) = aura.effect {
+                    if amount < 0.0 {
+                        aura.effect = AuraEffect::StressModifier(-amount * VANDALISM_AURA_MULTIPLIER);
+                        commands.entity(entity).insert(Vandalized);
+                    }
+                }
             }
+            action.current = ActionType::Idle;
         }
     }
 }
@@ -61,66 +53,52 @@ pub fn update_structure_buffs(
 #[cfg(test)]
 mod tests {
     use super::*;
+    use bevy::prelude::*;
+    use crate::layer1::building::BuildingType;
+
 
     #[test]
-    fn test_vandalism_application() {
-        let mut world = World::new();
-        // Spawn Angry Pop
-        world.spawn((
+    fn test_high_unrest_triggers_vandalism_action() {
+        let mut app = App::new();
+        app.insert_resource(Unrest { level: 0.8, modifiers: vec![] });
+        app.add_systems(Update, evaluate_vandalism_targets);
+
+        let _structure = app.world_mut().spawn(Building { building_type: BuildingType::Statue }).id();
+        let pop = app.world_mut().spawn((
             Pop,
-            StressTracker {
-                accumulated_stress: 90.0,
-            }, // High stress/unrest
-            GridPosition { x: 0, y: 0 },
-        ));
+            PopAction { current: ActionType::Idle, current_utility: 0.0, ticks_committed: 0 }
+        )).id();
 
-        // Spawn Statue
-        let statue = world
-            .spawn((
-                Building {
-                    building_type: BuildingType::Statue,
-                },
-                Structure {
-                    ..Default::default()
-                }, // We're using BuildingType for Statue
-                GridPosition { x: 0, y: 1 }, // Adjacent
-            ))
-            .id();
+        app.update();
 
-        let mut schedule = Schedule::default();
-        schedule.add_systems(vandalism_system);
-        schedule.run(&mut world);
-
-        assert!(world.get::<Vandalized>(statue).is_some());
+        let action = app.world().get::<PopAction>(pop).unwrap();
+        assert_eq!(action.current, ActionType::Vandalize);
     }
 
     #[test]
-    fn test_vandalized_structure_inverts_buff() {
-        let mut world = World::new();
-        // Spawn Vandalized Statue with Buff emitter (mock)
-        let statue = world
-            .spawn((
-                Building {
-                    building_type: BuildingType::Statue,
-                },
-                ArtifactAura {
-                    radius: 5.0,
-                    effect: AuraEffect::StressModifier(-0.1),
-                }, // -0.1 Stress/tick (which is +10 Morale effectively)
-                Vandalized,
-            ))
-            .id();
+    fn test_vandalism_inverts_morale_aura() {
+        let mut app = App::new();
+        app.add_systems(Update, process_vandalism);
 
-        let mut schedule = Schedule::default();
-        schedule.add_systems(update_structure_buffs);
-        schedule.run(&mut world);
+        let structure = app.world_mut().spawn((
+            Building { building_type: BuildingType::Statue },
+            ArtifactAura { effect: AuraEffect::StressModifier(-10.0), radius: 5.0 },
+        )).id();
 
-        let aura = world.get::<ArtifactAura>(statue).unwrap();
-        // Should be inverted/positive StressModifier
-        if let AuraEffect::StressModifier(stress) = aura.effect {
-            assert!(stress > 0.0);
+        app.world_mut().spawn(PopAction {
+            current: ActionType::Vandalize,
+            current_utility: 0.0,
+            ticks_committed: 0
+        });
+
+        app.update();
+
+        let aura = app.world().get::<ArtifactAura>(structure).unwrap();
+        if let AuraEffect::StressModifier(effect) = aura.effect {
+            assert!(effect > 0.0, "Morale effect should be inverted after vandalism");
         } else {
-            panic!("Aura effect was not StressModifier");
+            panic!("Wrong effect type");
         }
+        assert!(app.world().get::<Vandalized>(structure).is_some(), "Structure should be marked as defaced");
     }
 }

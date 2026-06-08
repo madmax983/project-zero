@@ -713,3 +713,4 @@
 - [x] `1121` Generational Grudges — `specs/1121-generational-grudges.md` — completed 2026-06-08
 - [x] `1291` Invasive Xeno-Aesthetics — `specs/1291-invasive-xeno-aesthetics.md` — completed 2026-06-09
 - [x] `1297` The Empty Room — `specs/1297-the-empty-room.md` — completed 2024-05-31
+- [x] `1298` Cultural Vandalism — `specs/1298-cultural-vandalism.md` — completed 2026-06-08

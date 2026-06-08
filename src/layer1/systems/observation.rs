@@ -203,9 +203,9 @@ pub fn register(schedule: &mut Schedule) {
                 .after(decay_needs_system),
             crate::layer1::social::grievances::post_grievance_system.after(decay_needs_system),
             crate::layer1::social::grievances::read_board_system.after(decay_needs_system),
-            crate::layer1::social::cultural_vandalism::vandalism_system.after(decay_needs_system),
-            crate::layer1::social::cultural_vandalism::update_structure_buffs
-                .after(crate::layer1::social::cultural_vandalism::vandalism_system),
+            crate::layer1::social::cultural_vandalism::evaluate_vandalism_targets.after(decay_needs_system),
+            crate::layer1::social::cultural_vandalism::process_vandalism
+                .after(crate::layer1::social::cultural_vandalism::evaluate_vandalism_targets),
             crate::layer1::social::indoctrination::process_indoctrination_system
                 .after(decay_needs_system),
         )
