@@ -23084,3 +23084,60 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you let your people properly process their grief by surrendering precious land to the dead, or brutally demolish their memorials to ensure the survival of the living?
 
 ---
+
+## The Black Market in Time
+
+**Layer:** 1 -> 3
+
+**Fantasy:** Running black markets through temporal loopholes, risking aging for profit.
+
+**Mechanic:** A late-game technology allows Pops to extract their own "Lifespan" and sell it on a specialized Black Market for massive amounts of credits. Wealthy Pops (or entire Layer 3 Empires) buy this time, effectively extending their lives indefinitely.
+
+**Emergence:** You notice your lower-class industrial worlds have a sudden, massive spike in mortality, while your core elite worlds have a population that simply never dies. The wealthy are literally cannibalizing the time of the poor to fund their decadent immortality.
+
+**Tension:** Do you ban the practice and risk an uprising from your immortal elite, or allow the time trade and watch your workforce rapidly age themselves to death for short-term profits?
+
+---
+
+
+## The Ghost Ship Syndicate
+
+**Layer:** 2 -> 3
+
+**Fantasy:** A shadow network of abandoned vessels operating under autonomous control, performing illicit trade across the galaxy.
+
+**Mechanic:** When player-owned or AI fleets are destroyed or abandoned, there's a small chance their automated subroutines survive. Over time, these remnants can form the "Ghost Ship Syndicate." These autonomous fleets lack formal faction ties and exist as a decentralized trading network on Layer 2, occasionally growing into a powerful smuggling cartel on Layer 3.
+
+**Emergence:** Your discarded mining drones from a century ago return to your core worlds, armed with scavenged weaponry, offering rare resources at exorbitant prices while ignoring all customs regulations.
+
+**Tension:** Do you destroy these autonomous vessels to maintain security and order, losing access to their lucrative black market goods, or do you allow the syndicate to thrive and risk them undermining your planetary economies?
+
+---
+
+## Somatic Ghosting
+
+**Layer:** 1 -> Cross-layer
+
+**Fantasy:** A psychological condition where Pops vividly experience the physical sensations and trauma of long-dead ancestors.
+
+**Mechanic:** In colonies heavily reliant on Clone Vats or Digital Immortality, a small percentage of revived Pops develop "Somatic Ghosting." They spontaneously experience the pain, exhaustion, or injuries of their past deaths, causing severe, localized unrest and sudden drops in productivity on Layer 1.
+
+**Emergence:** A perfectly healthy engineering team suddenly collapses in agony, experiencing the phantom radiation burns of a reactor meltdown that occurred three generations ago, grinding production of critical components to a halt.
+
+**Tension:** Do you permanently delete the affected Pops to eradicate the condition, losing their invaluable high-level skills, or do you invest heavily in specialized medical infrastructure to manage an increasingly traumatized, immortal workforce?
+
+---
+
+## The Sub-Orbital Cult
+
+**Layer:** 1 -> 2
+
+**Fantasy:** A fanatical religious movement worshipping the massive infrastructure floating directly above their world.
+
+**Mechanic:** If a Layer 1 colony has a low standard of living but exists directly beneath a massive, highly advanced Layer 2 structure (like an Orbital Drydock or Megastructure Scaffolding), the Pops may form a "Sub-Orbital Cult." The cult demands resources be "sacrificed" (launched into orbit without receiving compensation) to appease the "gods" above.
+
+**Emergence:** Your struggling agricultural colony begins secretly strapping entire harvests onto makeshift rockets, firing them into your pristine orbital shipyard. The shipyard sensors log the shipments as "debris anomalies," while the colony starves itself in religious fervor.
+
+**Tension:** Do you violently suppress the cult to save the colony from starvation, risking a holy war, or do you install a complex fake "divine communication" system to trick them into directing their sacrifices into your actual supply chain?
+
+---
