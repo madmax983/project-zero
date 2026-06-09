@@ -115,6 +115,7 @@ pub fn work_execution_system(world: &mut World) {
 
 /// ⚡ Bolt Optimization: Uses `bevy::utils::HashMap` (AHash) instead of `std::collections::HashMap`
 /// to eliminate SipHash overhead during high-frequency worker grouping operations.
+#[allow(clippy::type_complexity)]
 fn collect_workers_by_target(
     world: &mut World,
     policies: Option<&ColonyPolicies>,
@@ -125,21 +126,24 @@ fn collect_workers_by_target(
         bevy::utils::HashMap::default();
 
     let mut query = world.query_filtered::<(
-        Entity,
-        &MovementTarget,
-        Option<&Needs>,
-        Option<&Memories>,
-        Option<&SocialBuff>,
-        Option<&Equipment>,
-        Option<&Traits>,
-        Option<&Morale>,
-        Option<&crate::layer1::factions::FactionMember>,
-        Option<&WorkSpeedBuff>,
-        Option<&Job>,
-        Option<&Dialect>,
-        Option<&Linguistics>,
-        Option<&MentalFog>,
-        Option<&crate::layer1::social::grievances::Ostracized>,
+        (
+            Entity,
+            &MovementTarget,
+            Option<&Needs>,
+            Option<&Memories>,
+            Option<&SocialBuff>,
+            Option<&Equipment>,
+            Option<&Traits>,
+            Option<&Morale>,
+            Option<&crate::layer1::factions::FactionMember>,
+            Option<&WorkSpeedBuff>,
+            Option<&Job>,
+            Option<&Dialect>,
+            Option<&Linguistics>,
+            Option<&MentalFog>,
+            Option<&crate::layer1::social::grievances::Ostracized>,
+        ),
+        Has<crate::layer1::culture::memorial_revolt::OnStrike>,
     ), With<AtTarget>>();
 
     // ⚡ Bolt Optimization:
@@ -149,14 +153,33 @@ fn collect_workers_by_target(
     for (target, worker) in query
         .iter(world)
         .filter(
-            |(_, mt, _, _, _, _, _, _, faction_member, _, _, _, _, _, _)| {
+            |((_, mt, _, _, _, _, _, _, faction_member, _, _, _, _, _, _), on_strike): &(
+                (
+                    Entity,
+                    &MovementTarget,
+                    Option<&Needs>,
+                    Option<&Memories>,
+                    Option<&SocialBuff>,
+                    Option<&Equipment>,
+                    Option<&Traits>,
+                    Option<&Morale>,
+                    Option<&crate::layer1::factions::FactionMember>,
+                    Option<&WorkSpeedBuff>,
+                    Option<&Job>,
+                    Option<&Dialect>,
+                    Option<&Linguistics>,
+                    Option<&MentalFog>,
+                    Option<&crate::layer1::social::grievances::Ostracized>,
+                ),
+                bool,
+            )| {
                 let is_work =
                     mt.for_action == ActionType::Work || mt.for_action == ActionType::Repair;
                 if !is_work {
                     return false;
                 }
 
-                let is_striking = faction_member
+                let is_striking = *on_strike || faction_member
                     .and_then(|m| m.faction_id)
                     .is_some_and(|fid| striking_factions.contains(&fid));
 
@@ -165,21 +188,43 @@ fn collect_workers_by_target(
         )
         .map(
             |(
-                e,
-                mt,
-                needs,
-                memories,
-                social_buff,
-                eq,
-                traits,
-                morale_comp,
+                (
+                    e,
+                    mt,
+                    needs,
+                    memories,
+                    social_buff,
+                    eq,
+                    traits,
+                    morale_comp,
+                    _,
+                    buff,
+                    job,
+                    dialect,
+                    ling,
+                    fog,
+                    ostracized_opt,
+                ),
                 _,
-                buff,
-                job,
-                dialect,
-                ling,
-                fog,
-                ostracized_opt,
+            ): (
+                (
+                    Entity,
+                    &MovementTarget,
+                    Option<&Needs>,
+                    Option<&Memories>,
+                    Option<&SocialBuff>,
+                    Option<&Equipment>,
+                    Option<&Traits>,
+                    Option<&Morale>,
+                    Option<&crate::layer1::factions::FactionMember>,
+                    Option<&WorkSpeedBuff>,
+                    Option<&Job>,
+                    Option<&Dialect>,
+                    Option<&Linguistics>,
+                    Option<&MentalFog>,
+                    Option<&crate::layer1::social::grievances::Ostracized>,
+                ),
+                bool,
             )| {
                 let morale = needs.map_or(0.5, |n| {
                     calculate_effective_morale(
