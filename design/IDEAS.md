@@ -23398,3 +23398,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you intentionally addict your population to a perfect, high-efficiency world, knowing they can never contribute to your off-world empire and are trapped there forever?
 
 ---
+
+## Inherited Phobias
+
+**Layer:** Cross-layer
+
+**Fantasy:** Trauma scars the collective psyche of your civilization, manifesting centuries later.
+
+**Mechanic:** When a colony suffers a massive, traumatic event (like a near-extinction from an alien biological weapon or orbital bombardment), survivors develop a specific "Phobia" trait. This trait is passed down generations. Phobic pops suffer extreme stress when encountering the trigger, even if it's currently benign.
+
+**Emergence:** You colonize a peaceful forest world centuries after your capital was nearly destroyed by sentient plant life. The colonists, descendants of the survivors, suffer collective panic attacks and start burning the forest down, ruining the ecosystem and plunging the planet into ecological collapse.
+
+**Tension:** Do you let your traumatized citizens destroy valuable resources for their peace of mind, or force them to coexist with their ancestral terrors, risking a colony-wide psychotic break?
+
+---
+
+## The Nostalgia Contagion
+
+**Layer:** 1
+
+**Fantasy:** The past becomes a debilitating obsession that halts all progress.
+
+**Mechanic:** In highly advanced but stagnant colonies, pops can develop "Nostalgia Contagion." They begin romanticizing a specific, idealized era of the colony's past. They refuse to use advanced technology, demand the reconstruction of obsolete buildings, and dress in historical clothing, taking massive productivity penalties to modern jobs.
+
+**Emergence:** Your hyper-advanced research hub suddenly stops producing tech because the scientists have decided the "Founding Era" was the peak of civilization. They dismantle the quantum supercomputers to build rudimentary wind turbines and mud-brick houses in the middle of a high-tech dome.
+
+**Tension:** Do you indulge their LARPing to keep morale high at the cost of your research output, or forcefully re-educate them and spark a massive Luddite rebellion?
+
+---
+
+## The Architecture of Paranoia
+
+**Layer:** Cross-layer
+
+**Fantasy:** A civilization that has survived too many betrayals begins building physical manifestations of its mistrust.
+
+**Mechanic:** When an empire experiences repeated sabotage, espionage, or civil wars, its architectural style shifts to "Paranoid." New buildings automatically cost more and take longer to build, but include hidden bunkers, redundant airlocks, and segregated pathing. Pops living in these structures gain a baseline defense against espionage but slowly lose the ability to socialize outside their immediate families.
+
+**Emergence:** You win a brutal, century-long civil war and rebuild your empire. However, your new planetary capitals are sprawling, disconnected fortresses where no one speaks to their neighbors. When a peaceful diplomatic mission arrives from a new alien race, your paranoid citizens misinterpret their open architecture as a weakness and preemptively launch a xenophobic crusade.
+
+**Tension:** Do you intentionally build vulnerable, open cities to foster a trusting, unified galactic culture, or accept the grim reality of endless war and turn your empire into a collection of heavily fortified, isolated bunkers?
+
+---
