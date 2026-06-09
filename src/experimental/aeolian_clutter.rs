@@ -46,13 +46,26 @@ pub fn aeolian_clutter_system(
 
             if wind_speed > threshold {
                 // Calculate target tile
-                let dx = if wind_vec.x > 0.0 { 1 } else if wind_vec.x < 0.0 { -1 } else { 0 };
-                let dy = if wind_vec.y > 0.0 { 1 } else if wind_vec.y < 0.0 { -1 } else { 0 };
+                let dx = if wind_vec.x > 0.0 {
+                    1
+                } else if wind_vec.x < 0.0 {
+                    -1
+                } else {
+                    0
+                };
+                let dy = if wind_vec.y > 0.0 {
+                    1
+                } else if wind_vec.y < 0.0 {
+                    -1
+                } else {
+                    0
+                };
 
                 let nx = (x as i32) + dx;
                 let ny = (y as i32) + dy;
 
-                if nx >= 0 && nx < (clutter.width as i32) && ny >= 0 && ny < (clutter.height as i32) {
+                if nx >= 0 && nx < (clutter.width as i32) && ny >= 0 && ny < (clutter.height as i32)
+                {
                     // Move a fraction of the clutter (e.g., 20% per tick)
                     let move_amount = (current_clutter * 0.2).min(current_clutter);
 
@@ -116,7 +129,6 @@ mod tests {
         world.run_system_once(aeolian_clutter_system).unwrap();
 
         let clutter_res = world.resource::<ClutterGrid>();
-        let wind = world.resource::<WindGrid>();
 
         // Original tile should have 8.0 (10.0 - 20%)
         let remaining = clutter_res.get(5, 5);
@@ -151,7 +163,6 @@ mod tests {
         world.run_system_once(aeolian_clutter_system).unwrap();
 
         let clutter_res = world.resource::<ClutterGrid>();
-        let wind = world.resource::<WindGrid>();
 
         // Original tile should still have 10.0
         let remaining = clutter_res.get(5, 5);

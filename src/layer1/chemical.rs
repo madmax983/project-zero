@@ -192,7 +192,7 @@ pub fn consume_chemical_logic(
         existing.duration = 500;
     } else {
         let magnitude = match chem {
-            ChemicalType::Stim => 1.5, // +50% speed
+            ChemicalType::Stim => 1.5,     // +50% speed
             ChemicalType::Sedative => 0.5, // -50% speed (slowdown)
         };
         state.active_effects.push(ActiveEffect {

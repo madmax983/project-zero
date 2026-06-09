@@ -325,42 +325,73 @@ fn ui(f: &mut Frame, app: &mut App) {
         let (err_type, action) = if err.contains("Missing required context") {
             ("Missing Context", "Check context.insert() logic.")
         } else if err.contains("has no options defined") {
-            ("Empty Fragment", "Add options to the fragment in lore files.")
+            (
+                "Empty Fragment",
+                "Add options to the fragment in lore files.",
+            )
         } else if err.contains("No lore files found") {
             ("Files Missing", "Check the directory for TEMPLATES.md.")
         } else if err.contains("Template not found") {
-            ("Missing Template", "Verify template ID exists in TEMPLATES.md.")
+            (
+                "Missing Template",
+                "Verify template ID exists in TEMPLATES.md.",
+            )
         } else {
             ("Unknown Error", "Review the error message.")
         };
 
         let rows = vec![
             ratatui::widgets::Row::new(vec![
-                ratatui::widgets::Cell::from(Span::styled("Type", Style::default().fg(Color::Yellow).add_modifier(Modifier::BOLD))),
-                ratatui::widgets::Cell::from(Span::styled(err_type, Style::default().fg(Color::Red))),
+                ratatui::widgets::Cell::from(Span::styled(
+                    "Type",
+                    Style::default()
+                        .fg(Color::Yellow)
+                        .add_modifier(Modifier::BOLD),
+                )),
+                ratatui::widgets::Cell::from(Span::styled(
+                    err_type,
+                    Style::default().fg(Color::Red),
+                )),
             ]),
             ratatui::widgets::Row::new(vec![
-                ratatui::widgets::Cell::from(Span::styled("Message", Style::default().fg(Color::Yellow).add_modifier(Modifier::BOLD))),
-                ratatui::widgets::Cell::from(Span::styled(err.clone(), Style::default().fg(Color::White))),
+                ratatui::widgets::Cell::from(Span::styled(
+                    "Message",
+                    Style::default()
+                        .fg(Color::Yellow)
+                        .add_modifier(Modifier::BOLD),
+                )),
+                ratatui::widgets::Cell::from(Span::styled(
+                    err.clone(),
+                    Style::default().fg(Color::White),
+                )),
             ]),
             ratatui::widgets::Row::new(vec![
-                ratatui::widgets::Cell::from(Span::styled("Action", Style::default().fg(Color::Yellow).add_modifier(Modifier::BOLD))),
-                ratatui::widgets::Cell::from(Span::styled(action, Style::default().fg(Color::Cyan))),
+                ratatui::widgets::Cell::from(Span::styled(
+                    "Action",
+                    Style::default()
+                        .fg(Color::Yellow)
+                        .add_modifier(Modifier::BOLD),
+                )),
+                ratatui::widgets::Cell::from(Span::styled(
+                    action,
+                    Style::default().fg(Color::Cyan),
+                )),
             ]),
         ];
 
-        let table = ratatui::widgets::Table::new(rows, [Constraint::Length(10), Constraint::Min(40)])
-            .block(
-                Block::default()
-                    .borders(Borders::ALL)
-                    .border_type(BorderType::Thick)
-                    .border_style(Style::default().fg(Color::Red))
-                    .title(Span::styled(
-                        " ✗ ERROR ",
-                        Style::default().fg(Color::Red).add_modifier(Modifier::BOLD),
-                    ))
-                    .padding(Padding::uniform(1)),
-            );
+        let table =
+            ratatui::widgets::Table::new(rows, [Constraint::Length(10), Constraint::Min(40)])
+                .block(
+                    Block::default()
+                        .borders(Borders::ALL)
+                        .border_type(BorderType::Thick)
+                        .border_style(Style::default().fg(Color::Red))
+                        .title(Span::styled(
+                            " ✗ ERROR ",
+                            Style::default().fg(Color::Red).add_modifier(Modifier::BOLD),
+                        ))
+                        .padding(Padding::uniform(1)),
+                );
         f.render_widget(table, right_chunks[1]);
     } else if let Some(segments) = &app.generated_segments {
         let spans: Vec<Span> = segments
@@ -377,34 +408,46 @@ fn ui(f: &mut Frame, app: &mut App) {
                 ),
                 NarrativeSegment::MissingContext(e) => Span::styled(
                     format!(" [MISSING CONTEXT: {}] ", e),
-                    Style::default().fg(Color::White).bg(Color::Red).add_modifier(Modifier::BOLD),
+                    Style::default()
+                        .fg(Color::White)
+                        .bg(Color::Red)
+                        .add_modifier(Modifier::BOLD),
                 ),
                 NarrativeSegment::MissingFragmentOptions(e) => Span::styled(
                     format!(" [MISSING FRAGMENT OPTIONS: {}] ", e),
-                    Style::default().fg(Color::White).bg(Color::Red).add_modifier(Modifier::BOLD),
+                    Style::default()
+                        .fg(Color::White)
+                        .bg(Color::Red)
+                        .add_modifier(Modifier::BOLD),
                 ),
             })
             .collect();
 
         let line = Line::from(spans);
-        f.render_widget(Paragraph::new(line)
-            .block(
-                Block::default()
-                    .borders(Borders::ALL)
-                    .border_type(BorderType::Rounded)
-                    .border_style(Style::default().fg(Color::Green))
-                    .title(Span::styled(
-                        " ✨ Generated Story ",
-                        Style::default()
-                            .fg(Color::Green)
-                            .add_modifier(Modifier::BOLD),
-                    ))
-                    .padding(Padding::uniform(2)),
-            )
-            .wrap(Wrap { trim: true }), right_chunks[1]);
+        f.render_widget(
+            Paragraph::new(line)
+                .block(
+                    Block::default()
+                        .borders(Borders::ALL)
+                        .border_type(BorderType::Rounded)
+                        .border_style(Style::default().fg(Color::Green))
+                        .title(Span::styled(
+                            " ✨ Generated Story ",
+                            Style::default()
+                                .fg(Color::Green)
+                                .add_modifier(Modifier::BOLD),
+                        ))
+                        .padding(Padding::uniform(2)),
+                )
+                .wrap(Wrap { trim: true }),
+            right_chunks[1],
+        );
     } else {
-        f.render_widget(Paragraph::new("Press [ENTER] to generate a new story...
-Use [UP] and [DOWN] to select a different template.")
+        f.render_widget(
+            Paragraph::new(
+                "Press [ENTER] to generate a new story...
+Use [UP] and [DOWN] to select a different template.",
+            )
             .style(
                 Style::default()
                     .fg(Color::DarkGray)
@@ -417,6 +460,8 @@ Use [UP] and [DOWN] to select a different template.")
                     .border_type(BorderType::Rounded)
                     .border_style(Style::default().fg(Color::DarkGray))
                     .padding(Padding::uniform(2)),
-            ), right_chunks[1]);
+            ),
+            right_chunks[1],
+        );
     }
 }
