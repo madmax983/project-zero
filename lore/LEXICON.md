@@ -5456,3 +5456,19 @@
 **Replaces:** smart AI, auto-doors
 **Code reference:** `SmartGrid`
 **Usage:** "The subconscious grid went into lockdown." / "The subconscious grid is anxious."
+
+## The Sleepless Caste (Spec 1261)
+
+### The Wakeful Trait / The Clear-Eyed
+**Replaces:** Insomnia Drive, the lack of a rest need
+**Code reference:** `Trait::InsomniaDrive`
+**Usage:**
+- "They took the Wakeful Trait to double their yield, but at what cost?"
+- "The Clear-Eyed do not sleep, they only work."
+
+### The Breaking
+**Replaces:** Stress breakdown from lack of leisure
+**Code reference:** High `leisure` need combined with `Trait::InsomniaDrive`
+**Usage:**
+- "When the Breaking happens, the Clear-Eyed are not themselves."
+- "He succumbed to the Breaking after 40 days without rest."

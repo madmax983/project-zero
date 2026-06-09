@@ -8947,3 +8947,25 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: The feud between [FAMILY_A] and [FAMILY_B] passes to a new generation."
 - "Old sins on [COLONY]. [FAMILY_A] remembers what [FAMILY_B] did."
 - "A grudge unresolved. The children of [FAMILY_A] refuse to work with [FAMILY_B]."
+
+## The Sleepless Caste Templates (Spec 1261)
+
+## Template: SLEEPLESS_ARISES
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [POP_NAME], [SLEEPLESS_EPITHET]
+
+**Patterns:**
+- "[YEAR]: [POP_NAME] took the implant. They are now among [SLEEPLESS_EPITHET]. Their eyes are wide."
+- "[COLONY] watched as [POP_NAME] joined [SLEEPLESS_EPITHET]. They say productivity will double."
+- "The need for rest is gone for [POP_NAME]. Welcome to [SLEEPLESS_EPITHET]."
+
+## Template: SLEEPLESS_BREAKDOWN
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [POP_NAME], [BREAKDOWN_SYMPTOM]
+
+**Patterns:**
+- "[YEAR]: The Breaking came for [POP_NAME]. They [BREAKDOWN_SYMPTOM]."
+- "Without rest, the mind frays. [POP_NAME] [BREAKDOWN_SYMPTOM] in the middle of their shift."
+- "The cost of the Wakeful Trait is steep. Today, [POP_NAME] [BREAKDOWN_SYMPTOM]."
