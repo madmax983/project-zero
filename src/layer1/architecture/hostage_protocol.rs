@@ -1,9 +1,9 @@
-use bevy::prelude::*;
 #[cfg(test)]
 use crate::layer1::building::Building;
 use crate::layer1::map::GridPosition;
 use crate::layer1::pop::Pop;
 use crate::layer1::social::morale::{MoodModifier, Morale};
+use bevy::prelude::*;
 use rand::Rng;
 
 pub struct HostageProtocolPlugin;
@@ -56,7 +56,7 @@ pub fn hostage_protocol_suppression_system(
                         morale.modifiers.push(MoodModifier {
                             label: "Hostage Suppression".to_string(),
                             value: protocol.suppression_power, // Adds to Morale (which lowers Unrest globally)
-                            duration: 1, // Applies only while active and near
+                            duration: 1,                       // Applies only while active and near
                         });
                     }
                 }
@@ -139,7 +139,9 @@ mod tests {
 
         // Spawn a building with a Hostage Protocol
         app.world_mut().spawn((
-            Building { building_type: BuildingType::Housing },
+            Building {
+                building_type: BuildingType::Housing,
+            },
             GridPosition { x: 0, y: 0 },
             HostageProtocol {
                 is_active: true,
@@ -149,34 +151,52 @@ mod tests {
         ));
 
         // Spawn a Pop near the building
-        let pop_near = app.world_mut().spawn((
-            Pop,
-            GridPosition { x: 5, y: 5 }, // Distance 5
-            Morale::default(),
-        )).id();
+        let pop_near = app
+            .world_mut()
+            .spawn((
+                Pop,
+                GridPosition { x: 5, y: 5 }, // Distance 5
+                Morale::default(),
+            ))
+            .id();
 
         // Spawn a Pop far from the building
-        let pop_far = app.world_mut().spawn((
-            Pop,
-            GridPosition { x: 20, y: 20 }, // Distance 20
-            Morale::default(),
-        )).id();
+        let pop_far = app
+            .world_mut()
+            .spawn((
+                Pop,
+                GridPosition { x: 20, y: 20 }, // Distance 20
+                Morale::default(),
+            ))
+            .id();
 
         app.update();
 
         // The unrest should be artificially suppressed for near pop
         let updated_near = app.world().get::<Morale>(pop_near).unwrap();
-        assert_eq!(updated_near.modifiers.len(), 1, "Near pop should be suppressed by Hostage Protocol");
+        assert_eq!(
+            updated_near.modifiers.len(),
+            1,
+            "Near pop should be suppressed by Hostage Protocol"
+        );
         assert_eq!(updated_near.modifiers[0].value, 0.5);
 
         // The far pop should not be suppressed
         let updated_far = app.world().get::<Morale>(pop_far).unwrap();
-        assert_eq!(updated_far.modifiers.len(), 0, "Far pop should NOT be suppressed by Hostage Protocol");
+        assert_eq!(
+            updated_far.modifiers.len(),
+            0,
+            "Far pop should NOT be suppressed by Hostage Protocol"
+        );
 
         // Running update again should not duplicate modifier
         app.update();
         let updated_near = app.world().get::<Morale>(pop_near).unwrap();
-        assert_eq!(updated_near.modifiers.len(), 1, "Should not duplicate modifier");
+        assert_eq!(
+            updated_near.modifiers.len(),
+            1,
+            "Should not duplicate modifier"
+        );
     }
 
     #[test]
@@ -184,23 +204,32 @@ mod tests {
         let mut app = setup_app();
 
         // Spawn a building with a massive malfunction chance for the test
-        let building = app.world_mut().spawn((
-            Building { building_type: BuildingType::Housing },
-            HostageProtocol {
-                is_active: true,
-                suppression_power: 0.5,
-                malfunction_chance: 100000.0, // High chance so it procs even with dt
-            },
-        )).id();
+        let building = app
+            .world_mut()
+            .spawn((
+                Building {
+                    building_type: BuildingType::Housing,
+                },
+                HostageProtocol {
+                    is_active: true,
+                    suppression_power: 0.5,
+                    malfunction_chance: 100000.0, // High chance so it procs even with dt
+                },
+            ))
+            .id();
 
         // Advance time a lot to ensure it triggers
-        app.world_mut().resource_mut::<Time>().advance_by(std::time::Duration::from_secs(1));
-
+        app.world_mut()
+            .resource_mut::<Time>()
+            .advance_by(std::time::Duration::from_secs(1));
 
         app.update();
 
         // The building should now have a SelfDestructCountdown
-        assert!(app.world().get::<SelfDestructCountdown>(building).is_some(), "Malfunction should trigger self-destruct countdown");
+        assert!(
+            app.world().get::<SelfDestructCountdown>(building).is_some(),
+            "Malfunction should trigger self-destruct countdown"
+        );
     }
 
     #[test]
@@ -208,29 +237,40 @@ mod tests {
         let mut app = setup_app();
 
         // Spawn a building with a countdown
-        let building = app.world_mut().spawn((
-            Building { building_type: BuildingType::Housing },
-            GridPosition { x: 0, y: 0 },
-            SelfDestructCountdown {
-                timer: Timer::from_seconds(60.0, TimerMode::Once),
-            },
-        )).id();
+        let building = app
+            .world_mut()
+            .spawn((
+                Building {
+                    building_type: BuildingType::Housing,
+                },
+                GridPosition { x: 0, y: 0 },
+                SelfDestructCountdown {
+                    timer: Timer::from_seconds(60.0, TimerMode::Once),
+                },
+            ))
+            .id();
 
         // Defusal should not happen if pop is far
-        let pop_far = app.world_mut().spawn((
-            Pop,
-            GridPosition { x: 5, y: 5 },
-        )).id();
+        let pop_far = app
+            .world_mut()
+            .spawn((Pop, GridPosition { x: 5, y: 5 }))
+            .id();
 
         app.update();
-        assert!(app.world().get::<SelfDestructCountdown>(building).is_some(), "Should not defuse if far");
+        assert!(
+            app.world().get::<SelfDestructCountdown>(building).is_some(),
+            "Should not defuse if far"
+        );
 
         // Move pop close
         app.world_mut().get_mut::<GridPosition>(pop_far).unwrap().x = 1;
         app.world_mut().get_mut::<GridPosition>(pop_far).unwrap().y = 1;
 
         app.update();
-        assert!(app.world().get::<SelfDestructCountdown>(building).is_none(), "Should defuse if near");
+        assert!(
+            app.world().get::<SelfDestructCountdown>(building).is_none(),
+            "Should defuse if near"
+        );
     }
 
     #[test]
@@ -242,38 +282,52 @@ mod tests {
         timer.tick(std::time::Duration::from_millis(999));
 
         // Spawn a building with a countdown about to pop
-        let building = app.world_mut().spawn((
-            Building { building_type: BuildingType::Housing },
-            GridPosition { x: 0, y: 0 },
-            SelfDestructCountdown {
-                timer,
-            },
-        )).id();
+        let building = app
+            .world_mut()
+            .spawn((
+                Building {
+                    building_type: BuildingType::Housing,
+                },
+                GridPosition { x: 0, y: 0 },
+                SelfDestructCountdown { timer },
+            ))
+            .id();
 
         // Spawn a near pop
-        let pop_near = app.world_mut().spawn((
-            Pop,
-            GridPosition { x: 5, y: 5 },
-        )).id();
+        let pop_near = app
+            .world_mut()
+            .spawn((Pop, GridPosition { x: 5, y: 5 }))
+            .id();
 
         // Spawn a far pop
-        let pop_far = app.world_mut().spawn((
-            Pop,
-            GridPosition { x: 20, y: 20 },
-        )).id();
+        let pop_far = app
+            .world_mut()
+            .spawn((Pop, GridPosition { x: 20, y: 20 }))
+            .id();
 
         // Advance time and update
-        app.world_mut().resource_mut::<Time>().advance_by(std::time::Duration::from_millis(10));
+        app.world_mut()
+            .resource_mut::<Time>()
+            .advance_by(std::time::Duration::from_millis(10));
 
         app.update();
 
         // Building should be despawned
-        assert!(app.world().get_entity(building).is_err(), "Building should be despawned");
+        assert!(
+            app.world().get_entity(building).is_err(),
+            "Building should be despawned"
+        );
 
         // Near pop should be despawned
-        assert!(app.world().get_entity(pop_near).is_err(), "Near pop should be despawned");
+        assert!(
+            app.world().get_entity(pop_near).is_err(),
+            "Near pop should be despawned"
+        );
 
         // Far pop should survive
-        assert!(app.world().get_entity(pop_far).is_ok(), "Far pop should survive");
+        assert!(
+            app.world().get_entity(pop_far).is_ok(),
+            "Far pop should survive"
+        );
     }
 }

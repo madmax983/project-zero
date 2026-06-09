@@ -37,6 +37,19 @@ pub fn handle_repo_fleet_attack(
     }
 }
 
+pub struct GenerationalDebtPlugin;
+
+impl Plugin for GenerationalDebtPlugin {
+    fn build(&self, app: &mut App) {
+        app.add_event::<RepoFleetArrivalEvent>()
+            .add_event::<AttackRepoFleetEvent>()
+            .add_systems(
+                Update,
+                (handle_repo_fleet_arrival, handle_repo_fleet_attack),
+            );
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -77,18 +90,5 @@ mod tests {
             market_status.in_default,
             "Attacking the Repo Fleet should trigger market default"
         );
-    }
-}
-
-pub struct GenerationalDebtPlugin;
-
-impl Plugin for GenerationalDebtPlugin {
-    fn build(&self, app: &mut App) {
-        app.add_event::<RepoFleetArrivalEvent>()
-            .add_event::<AttackRepoFleetEvent>()
-            .add_systems(
-                Update,
-                (handle_repo_fleet_arrival, handle_repo_fleet_attack),
-            );
     }
 }
