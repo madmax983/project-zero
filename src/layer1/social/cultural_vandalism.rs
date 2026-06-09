@@ -4,6 +4,8 @@ use crate::layer1::map::GridPosition;
 use crate::layer1::pop::Pop;
 use crate::layer1::stress::StressTracker;
 use crate::layer1::structure::Structure;
+use crate::layer1::utility_types::ActionType;
+use crate::layer1::utility_types::PopAction;
 use bevy_ecs::prelude::*;
 
 /// Component indicating a structure has been vandalized.
@@ -58,8 +60,137 @@ pub fn update_structure_buffs(
     }
 }
 
+#[derive(Component, Clone)]
+pub struct MoraleAura {
+    pub effect: f32,
+}
+
+#[derive(Component)]
+pub struct OfficialStructure;
+
+#[derive(Component)]
+pub struct Defaced;
+
+#[allow(clippy::type_complexity)]
+pub fn evaluate_vandalism_targets(
+    q_structures: Query<(Entity, &GridPosition), (With<OfficialStructure>, Without<Defaced>)>,
+    mut commands: Commands,
+    mut q_pops: Query<(Entity, &mut PopAction)>,
+    unrest: Res<crate::layer1::unrest::Unrest>,
+) {
+    for (pop_entity, mut action) in q_pops.iter_mut() {
+        if unrest.level > 50.0 && action.current == ActionType::Idle {
+            if let Some((target, _pos)) = q_structures.iter().next() {
+                action.current = ActionType::Vandalize;
+                commands.entity(pop_entity).insert(
+                    crate::layer1::execution::components::MovementTarget {
+                        target_entity: target,
+                        for_action: ActionType::Vandalize,
+                        target_position: crate::layer1::map::GridPosition { x: 0, y: 0 },
+                    },
+                );
+            }
+        }
+    }
+}
+
+pub fn process_vandalism(
+    mut commands: Commands,
+    mut q_pops: Query<(
+        Entity,
+        &mut PopAction,
+        Option<&crate::layer1::execution::components::MovementTarget>,
+    )>,
+    mut q_structures: Query<(Entity, &mut MoraleAura), With<OfficialStructure>>,
+) {
+    for (pop_entity, mut action, movement) in q_pops.iter_mut() {
+        if action.current == ActionType::Vandalize {
+            if let Some(movement) = movement {
+                let target_entity = movement.target_entity;
+                if let Ok((entity, mut aura)) = q_structures.get_mut(target_entity) {
+                    aura.effect = -aura.effect;
+                    commands.entity(entity).insert(Defaced);
+                }
+            }
+            action.current = ActionType::Idle;
+            commands
+                .entity(pop_entity)
+                .remove::<crate::layer1::execution::components::MovementTarget>();
+        }
+    }
+}
+
 #[cfg(test)]
 mod tests {
+    use crate::layer1::utility_types::{ActionType, PopAction};
+    use bevy_app::prelude::*;
+
+    #[test]
+    fn test_high_unrest_triggers_vandalism_action() {
+        let mut app = App::new();
+        app.add_systems(Update, evaluate_vandalism_targets);
+        app.insert_resource(crate::layer1::unrest::Unrest {
+            level: 80.0,
+            modifiers: vec![],
+        });
+
+        let _structure = app
+            .world_mut()
+            .spawn((OfficialStructure, GridPosition { x: 5, y: 5 }))
+            .id();
+        let pop = app
+            .world_mut()
+            .spawn((
+                PopAction {
+                    current: ActionType::Idle,
+                    ..Default::default()
+                },
+                crate::layer1::execution::components::AtTarget,
+            ))
+            .id();
+
+        app.update();
+
+        let action = app.world().get::<PopAction>(pop).unwrap();
+        assert_eq!(action.current, ActionType::Vandalize);
+        // Let execution check the target.
+    }
+
+    #[test]
+    fn test_vandalism_inverts_morale_aura() {
+        let mut app = App::new();
+        app.add_systems(Update, process_vandalism);
+
+        let structure = app
+            .world_mut()
+            .spawn((OfficialStructure, MoraleAura { effect: 10.0 }))
+            .id();
+
+        app.world_mut().spawn((
+            PopAction {
+                current: ActionType::Vandalize,
+                ..Default::default()
+            },
+            crate::layer1::execution::components::MovementTarget {
+                target_entity: structure,
+                for_action: ActionType::Vandalize,
+                target_position: crate::layer1::map::GridPosition { x: 0, y: 0 },
+            },
+        ));
+
+        app.update();
+
+        let aura = app.world().get::<MoraleAura>(structure).unwrap();
+        assert!(
+            aura.effect < 0.0,
+            "Morale effect should be inverted after vandalism"
+        );
+        assert!(
+            app.world().get::<Defaced>(structure).is_some(),
+            "Structure should be marked as defaced"
+        );
+    }
+
     use super::*;
 
     #[test]
