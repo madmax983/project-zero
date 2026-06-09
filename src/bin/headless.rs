@@ -121,6 +121,7 @@ fn print_dashboard_panel(
     }
 
     table
+        .apply_modifier(comfy_table::modifiers::UTF8_ROUND_CORNERS)
         .set_content_arrangement(ContentArrangement::Dynamic)
         .add_row(vec![cell]);
 
@@ -511,6 +512,7 @@ fn report_events(world: &mut World) {
         let mut table = Table::new();
         table
             .load_preset(UTF8_FULL)
+            .apply_modifier(comfy_table::modifiers::UTF8_ROUND_CORNERS)
             .set_content_arrangement(ContentArrangement::Dynamic)
             .set_header(vec![
                 Cell::new("Activity").add_attribute(Attribute::Bold),
@@ -576,6 +578,7 @@ fn print_status(world: &mut World) {
     let mut table = Table::new();
     table
         .load_preset(UTF8_FULL)
+        .apply_modifier(comfy_table::modifiers::UTF8_ROUND_CORNERS)
         .set_content_arrangement(ContentArrangement::Dynamic)
         .set_header(vec![
             Cell::new("Category").add_attribute(Attribute::Bold),
@@ -805,6 +808,7 @@ fn print_tech(world: &mut World) {
     let mut table = Table::new();
     table
         .load_preset(UTF8_FULL)
+        .apply_modifier(comfy_table::modifiers::UTF8_ROUND_CORNERS)
         .set_content_arrangement(ContentArrangement::Dynamic)
         .set_header(vec![
             Cell::new("Technology").add_attribute(Attribute::Bold),
@@ -864,6 +868,7 @@ fn print_pops(world: &mut World) {
     let mut table = Table::new();
     table
         .load_preset(UTF8_FULL)
+        .apply_modifier(comfy_table::modifiers::UTF8_ROUND_CORNERS)
         .set_content_arrangement(ContentArrangement::Dynamic)
         .set_header(vec![
             Cell::new("ID").add_attribute(Attribute::Bold),
@@ -1365,6 +1370,7 @@ fn print_designations(world: &mut World) {
     let mut table = Table::new();
     table
         .load_preset(UTF8_FULL)
+        .apply_modifier(comfy_table::modifiers::UTF8_ROUND_CORNERS)
         .set_content_arrangement(ContentArrangement::Dynamic)
         .set_header(vec![
             Cell::new("Type").add_attribute(Attribute::Bold),
@@ -1451,6 +1457,7 @@ fn find_terrain(world: &mut World, terrain_name: &str, max_count: usize) {
         let mut table = Table::new();
         table
             .load_preset(UTF8_FULL)
+            .apply_modifier(comfy_table::modifiers::UTF8_ROUND_CORNERS)
             .set_content_arrangement(ContentArrangement::Dynamic)
             .set_header(vec![
                 Cell::new("ID").add_attribute(Attribute::Bold),
@@ -1523,6 +1530,7 @@ fn scan_terrain(world: &mut World, center_x: i32, center_y: i32, radius: ScanRad
     let mut table = Table::new();
     table
         .load_preset(UTF8_FULL)
+        .apply_modifier(comfy_table::modifiers::UTF8_ROUND_CORNERS)
         .set_content_arrangement(ContentArrangement::Dynamic)
         .set_header(vec![
             Cell::new("Coord").add_attribute(Attribute::Bold),
@@ -1772,6 +1780,7 @@ fn get_tile_info(world: &mut World, x: i32, y: i32) {
     let mut table = Table::new();
     table
         .load_preset(UTF8_FULL)
+        .apply_modifier(comfy_table::modifiers::UTF8_ROUND_CORNERS)
         .set_content_arrangement(ContentArrangement::Dynamic)
         .set_header(vec![
             Cell::new("Property").add_attribute(Attribute::Bold),
@@ -1837,6 +1846,7 @@ fn print_great_works(world: &mut World) {
     let mut table = Table::new();
     table
         .load_preset(UTF8_FULL)
+        .apply_modifier(comfy_table::modifiers::UTF8_ROUND_CORNERS)
         .set_content_arrangement(ContentArrangement::Dynamic)
         .set_header(vec![
             Cell::new("ID").add_attribute(Attribute::Bold),
@@ -1917,6 +1927,7 @@ fn print_buildings(world: &mut World) {
     let mut table = Table::new();
     table
         .load_preset(UTF8_FULL)
+        .apply_modifier(comfy_table::modifiers::UTF8_ROUND_CORNERS)
         .set_content_arrangement(ContentArrangement::Dynamic)
         .set_header(vec![
             Cell::new("ID").add_attribute(Attribute::Bold),
@@ -1996,6 +2007,7 @@ fn print_bio(world: &mut World, target_id: u32) {
                     let mut table = Table::new();
                     table
                         .load_preset(UTF8_FULL)
+                        .apply_modifier(comfy_table::modifiers::UTF8_ROUND_CORNERS)
                         .set_content_arrangement(ContentArrangement::Dynamic)
                         .set_header(vec![
                             Cell::new("Tick").add_attribute(Attribute::Bold),
@@ -2060,6 +2072,7 @@ fn print_stories(world: &mut World) {
     let mut table = Table::new();
     table
         .load_preset(comfy_table::presets::UTF8_FULL)
+        .apply_modifier(comfy_table::modifiers::UTF8_ROUND_CORNERS)
         .set_content_arrangement(ContentArrangement::Dynamic)
         .set_header(vec![
             Cell::new("Genre").add_attribute(comfy_table::Attribute::Bold),
@@ -2120,6 +2133,7 @@ fn print_chronicle(world: &mut World) {
     let mut table = Table::new();
     table
         .load_preset(UTF8_FULL)
+        .apply_modifier(comfy_table::modifiers::UTF8_ROUND_CORNERS)
         .set_content_arrangement(ContentArrangement::Dynamic)
         .set_header(vec![
             Cell::new("Year").add_attribute(Attribute::Bold),
@@ -2170,6 +2184,7 @@ fn print_log(world: &mut World) {
     let mut table = Table::new();
     table
         .load_preset(UTF8_FULL)
+        .apply_modifier(comfy_table::modifiers::UTF8_ROUND_CORNERS)
         .set_content_arrangement(ContentArrangement::Dynamic)
         .set_header(vec![
             Cell::new("Level").add_attribute(Attribute::Bold),
@@ -2217,6 +2232,7 @@ fn print_help() {
     let mut table = Table::new();
     table
         .load_preset(UTF8_FULL)
+        .apply_modifier(comfy_table::modifiers::UTF8_ROUND_CORNERS)
         .set_content_arrangement(ContentArrangement::Dynamic)
         .set_header(vec![
             Cell::new("Category").add_attribute(Attribute::Bold),
