@@ -480,3 +480,5 @@ pub mod bureaucracy_of_scarcity;
 pub use bureaucracy_of_scarcity::{
     apply_rationing_buff_system, evaluate_scarcity_system, ConsumptionRate, GlobalRationingModifier,
 };
+pub mod architecture_sentience;
+pub use architecture_sentience::*;

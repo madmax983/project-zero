@@ -664,7 +664,6 @@ See `design/IDEAS.md` for unspecced concepts.
 
 - [ ] `1043` Black Market Infrastructure — `specs/1043-black-market-infrastructure.md`
 
-- [ ] `1049` Architectural Sentience — `specs/1049-architectural-sentience.md`
 - [ ] `1051` Asteroid Claims — `specs/1051-asteroid-claims.md`
 - [ ] `1053` Smart Matter Architecture — `specs/1053-smart-matter-architecture.md`
 

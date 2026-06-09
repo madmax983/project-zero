@@ -719,3 +719,4 @@
 - [x] `1045` The Generational Debt Collector — `specs/1045-generational-debt-collector.md` — completed 2026-06-08
 - [x] `1044` Hostage Architecture — `specs/1044-hostage-architecture.md` — completed 2026-02-01
 - [x] `1298` Cultural Vandalism — `specs/1298-cultural-vandalism.md` — completed 2026-06-09
+- [x] `1049` Architectural Sentience — `specs/1049-architectural-sentience.md` — completed 2026-02-01
