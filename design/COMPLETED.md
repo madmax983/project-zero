@@ -718,3 +718,4 @@
 - [x] `1046` The Artifact Diet — `specs/1046-artifact-diet.md` — completed 2026-06-08
 - [x] `1045` The Generational Debt Collector — `specs/1045-generational-debt-collector.md` — completed 2026-06-08
 - [x] `1044` Hostage Architecture — `specs/1044-hostage-architecture.md` — completed 2026-02-01
+- [x] `INT-1044` Integration: Hostage Architecture -> SimulationSchedule - completed 2026-10-31

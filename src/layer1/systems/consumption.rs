@@ -150,7 +150,10 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::loci::record_death_loci_system
                 .after(crate::layer1::pop::handle_pop_death_system)
                 .before(crate::layer1::health::despawn_dead_entities_system),
-            crate::layer1::health::despawn_dead_entities_system
+            crate::layer1::architecture::hostage_protocol::hostage_protocol_malfunction_system,
+            crate::layer1::architecture::hostage_protocol::defuse_countdown_system.after(crate::layer1::architecture::hostage_protocol::hostage_protocol_malfunction_system),
+            crate::layer1::architecture::hostage_protocol::hostage_protocol_detonation_system.after(crate::layer1::architecture::hostage_protocol::defuse_countdown_system),
+            crate::layer1::health::despawn_dead_entities_system.after(crate::layer1::architecture::hostage_protocol::hostage_protocol_detonation_system)
                 .after(crate::layer1::pop::handle_pop_death_system)
                 .after(crate::layer1::fauna::handle_fauna_death_system)
                 .after(mascot_death_grief_system)

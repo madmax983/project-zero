@@ -40,12 +40,7 @@ pub fn build_simulation_schedule() -> Schedule {
     let mut schedule = Schedule::new(SimulationSchedule);
     register_simulation_core_systems(&mut schedule);
     register_simulation_extended_systems(&mut schedule);
-    schedule.add_systems((
-        crate::layer1::architecture::hostage_protocol::hostage_protocol_suppression_system,
-        crate::layer1::architecture::hostage_protocol::hostage_protocol_malfunction_system,
-        crate::layer1::architecture::hostage_protocol::defuse_countdown_system,
-        crate::layer1::architecture::hostage_protocol::hostage_protocol_detonation_system,
-    ));
+
     schedule
 }
 

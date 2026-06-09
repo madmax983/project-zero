@@ -1398,3 +1398,9 @@
 - **Systems connected:** `process_disrespect_casus_belli_system` -> `cargo_cult_chronicle_bridge`
 - **Glue added:** `cargo_cult_chronicle_bridge` in `src/layer3/integration.rs`
 - **Tests:** `tests/integration/cargo_cult_bridge.rs`
+
+### INT-1044: Hostage Architecture -> SimulationSchedule
+- **Date:** 2026-10-31
+- **Systems connected:** `hostage_protocol_suppression_system` -> `calculate_unrest_system`
+- **Glue added:** Moved `hostage_protocol_suppression_system` to run before `calculate_unrest_system` in `Layer1SystemSet::Observation` within `src/layer1/systems/observation.rs`. Moved countdown and detonation systems to `Layer1SystemSet::Consumption` in `src/layer1/systems/consumption.rs`.
+- **Tests:** `tests/integration/hostage_architecture_bridge.rs`
