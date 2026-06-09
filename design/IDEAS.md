@@ -23356,3 +23356,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you let a valuable wreck drift, knowing it might eventually pose a threat as its ecosystem expands, or do you risk your Pops in a dangerous, localized war to extract its resources?
 
 ---
+
+## The Whispering Vents
+
+**Layer:** 1
+
+**Fantasy:** The architecture itself is paranoid, and the walls are literally listening and talking.
+
+**Mechanic:** Air vents and circulation systems carry "Acoustic Shadows" (Rumors/Moods) from one connected room directly into another, bypassing the usual distance attenuation. If a worker has a mental breakdown in the maintenance tunnels, everyone in the connected housing block hears it and gains stress.
+
+**Emergence:** You connect your high-stress penal labor camp to the same ventilation grid as your luxury governor's mansion to save on ducting costs. The governor is slowly driven insane by the disembodied sounds of suffering echoing through the mansion's vents every night.
+
+**Tension:** Do you build cheap, highly connected ventilation grids and risk massive, colony-wide emotional contagion, or expensive, isolated life-support systems for every single room?
+
+---
+
+## The Boomerang Strike
+
+**Layer:** 2
+
+**Fantasy:** Actions in the void have terrifyingly delayed consequences. Space is an ocean, and you just threw a very heavy rock.
+
+**Mechanic:** If a massive kinetic weapon or redirected asteroid misses its target during orbital combat or bombardment, it doesn't just disappear. It becomes an unguided projectile that enters a long, elliptical orbit around the star system. Decades later, it might intersect with a planet's orbit again.
+
+**Emergence:** You launched a desperation kinetic strike against a pirate base 50 years ago and missed. Your thriving core world is suddenly obliterated without warning by your own ancient weapon completing its orbit.
+
+**Tension:** Do you rely on devastating, cheap kinetic weapons that pollute the system with potential future apocalypses, or invest in expensive, "clean" energy weapons?
+
+---
+
+## Atmospheric Narcotic
+
+**Layer:** 1 -> Cross-layer
+
+**Fantasy:** The planet is a paradise that you can never, ever leave.
+
+**Mechanic:** The planet's natural atmosphere (or a specific local flora spore) provides a massive, continuous buff to Mood and Work Efficiency. However, Pops who live there become biologically dependent. If they leave the planet (assigned to ships, sent to other colonies, or if the atmospheric processor fails), they suffer horrific, often fatal withdrawal symptoms.
+
+**Emergence:** You build an incredible, utopian resort world where everyone is ecstatic and productive. Then a minor trade dispute cuts off their supply of imported luxury goods. They don't care, because they are high on the air. However, when you try to draft them to defend your empire, they all die of withdrawal aboard the troop transports before they even reach the battlefield.
+
+**Tension:** Do you intentionally addict your population to a perfect, high-efficiency world, knowing they can never contribute to your off-world empire and are trapped there forever?
+
+---
