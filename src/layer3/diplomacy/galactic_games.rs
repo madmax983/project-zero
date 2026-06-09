@@ -1,8 +1,8 @@
+use crate::layer1::anomalies::cryptid::PopMood;
+use crate::layer1::psychology::void_sickness::PopStats;
+use crate::layer1::social::factions::{FactionId, FactionMember};
 use bevy::prelude::*;
 use std::collections::{HashMap, HashSet};
-use crate::layer1::social::factions::{FactionId, FactionMember};
-use crate::layer1::psychology::void_sickness::PopStats;
-use crate::layer1::anomalies::cryptid::PopMood;
 
 #[derive(Component)]
 pub struct ChampionMarker {
@@ -50,7 +50,8 @@ pub fn resolve_galactic_games_system(
         let mut participants = HashSet::new();
 
         for (stats, marker) in champions.iter() {
-            if stats.intellect >= games.required_physical { // use intellect instead since physical doesn't exist
+            if stats.intellect >= games.required_physical {
+                // use intellect instead since physical doesn't exist
                 participants.insert(marker.faction);
                 let score = stats.intellect + stats.perception; // use perception instead of skill
                 if score > best_score {
@@ -106,10 +107,19 @@ mod tests {
         influences.map.insert(faction_id, 100);
         app.insert_resource(influences);
 
-        let _champion = app.world_mut().spawn((
-            PopStats { intellect: 95.0, perception: 80.0, empathy: 10.0 },
-            ChampionMarker { faction: faction_id },
-        )).id();
+        let _champion = app
+            .world_mut()
+            .spawn((
+                PopStats {
+                    intellect: 95.0,
+                    perception: 80.0,
+                    empathy: 10.0,
+                },
+                ChampionMarker {
+                    faction: faction_id,
+                },
+            ))
+            .id();
 
         app.insert_resource(GalacticGamesEvent {
             active: true,
@@ -143,33 +153,69 @@ mod tests {
 
         // Winner champion
         app.world_mut().spawn((
-            PopStats { intellect: 95.0, perception: 80.0, empathy: 10.0 },
-            ChampionMarker { faction: faction_winner },
+            PopStats {
+                intellect: 95.0,
+                perception: 80.0,
+                empathy: 10.0,
+            },
+            ChampionMarker {
+                faction: faction_winner,
+            },
         ));
 
         // Loser champion
         app.world_mut().spawn((
-            PopStats { intellect: 90.0, perception: 50.0, empathy: 10.0 },
-            ChampionMarker { faction: faction_loser },
+            PopStats {
+                intellect: 90.0,
+                perception: 50.0,
+                empathy: 10.0,
+            },
+            ChampionMarker {
+                faction: faction_loser,
+            },
         ));
 
         // Winner pop
-        let winner_pop = app.world_mut().spawn((
-            FactionMember { faction_id: Some(faction_winner) },
-            PopMood { awe: 0.0, dread: 0.0 },
-        )).id();
+        let winner_pop = app
+            .world_mut()
+            .spawn((
+                FactionMember {
+                    faction_id: Some(faction_winner),
+                },
+                PopMood {
+                    awe: 0.0,
+                    dread: 0.0,
+                },
+            ))
+            .id();
 
         // Loser pop
-        let loser_pop = app.world_mut().spawn((
-            FactionMember { faction_id: Some(faction_loser) },
-            PopMood { awe: 0.0, dread: 0.0 },
-        )).id();
+        let loser_pop = app
+            .world_mut()
+            .spawn((
+                FactionMember {
+                    faction_id: Some(faction_loser),
+                },
+                PopMood {
+                    awe: 0.0,
+                    dread: 0.0,
+                },
+            ))
+            .id();
 
         // Non-participant pop
-        let non_part_pop = app.world_mut().spawn((
-            FactionMember { faction_id: Some(FactionId::MasonsGuild) },
-            PopMood { awe: 0.0, dread: 0.0 },
-        )).id();
+        let non_part_pop = app
+            .world_mut()
+            .spawn((
+                FactionMember {
+                    faction_id: Some(FactionId::MasonsGuild),
+                },
+                PopMood {
+                    awe: 0.0,
+                    dread: 0.0,
+                },
+            ))
+            .id();
 
         app.insert_resource(GalacticGamesEvent {
             active: true,
@@ -189,6 +235,9 @@ mod tests {
         assert_eq!(loser_mood, 10.0, "Loser should lose mood (shame)");
 
         let non_part_mood = app.world().get::<PopMood>(non_part_pop).unwrap().dread;
-        assert_eq!(non_part_mood, 10.0, "Non-participant should lose mood (shame)");
+        assert_eq!(
+            non_part_mood, 10.0,
+            "Non-participant should lose mood (shame)"
+        );
     }
 }

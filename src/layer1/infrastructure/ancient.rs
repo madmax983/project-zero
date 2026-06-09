@@ -4,20 +4,13 @@ use crate::layer1::shipbreaking::MineEvent;
 use bevy_ecs::prelude::*;
 use rand::Rng;
 
-#[derive(Clone, Copy, PartialEq, Eq)]
-pub enum ConduitResource {
-    Power,
-}
-
 #[derive(Component)]
 pub struct BuriedConduit {
-    pub resource_type: ConduitResource,
     pub yield_amount: f32,
 }
 
 #[derive(Component)]
 pub struct ExposedConduit {
-    pub resource_type: ConduitResource,
     pub yield_amount: f32,
 }
 
@@ -45,7 +38,6 @@ pub fn process_mine_conduit_system(
                 .entity(entity)
                 .remove::<BuriedConduit>()
                 .insert(ExposedConduit {
-                    resource_type: buried.resource_type,
                     yield_amount: buried.yield_amount,
                 })
                 .insert(ConduitRisk { surge_chance: 0.01 }); // Base 1% risk per tick
@@ -58,12 +50,10 @@ pub fn tap_conduit_power_system(
     conduits: Query<(Entity, &ExposedConduit), Without<PowerSource>>,
 ) {
     for (entity, conduit) in conduits.iter() {
-        if conduit.resource_type == ConduitResource::Power {
-            commands.entity(entity).insert(PowerSource {
-                output: conduit.yield_amount,
-                active: true,
-            });
-        }
+        commands.entity(entity).insert(PowerSource {
+            output: conduit.yield_amount,
+            active: true,
+        });
     }
 }
 
@@ -119,7 +109,6 @@ mod tests {
             .spawn((
                 GridPosition { x: 5, y: 5 },
                 BuriedConduit {
-                    resource_type: ConduitResource::Power,
                     yield_amount: 100.0,
                 },
             ))
@@ -144,7 +133,6 @@ mod tests {
             .spawn((
                 GridPosition { x: 5, y: 5 },
                 ExposedConduit {
-                    resource_type: ConduitResource::Power,
                     yield_amount: 100.0,
                 },
                 ConduitRisk { surge_chance: 1.0 }, // 100% chance to surge for testing

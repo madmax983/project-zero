@@ -779,7 +779,8 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
     ));
 
     schedule.add_systems((crate::layer3::events::refugee_waves::process_refugee_decision,));
-    schedule.add_systems((crate::layer3::diplomacy::galactic_games::resolve_galactic_games_system,));
+    schedule
+        .add_systems((crate::layer3::diplomacy::galactic_games::resolve_galactic_games_system,));
 
     schedule.add_systems((
         crate::layer2::phantom::check_scrapcode_threshold_system

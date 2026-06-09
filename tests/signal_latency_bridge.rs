@@ -1,5 +1,5 @@
 use bevy::prelude::*;
-use scale::layer2::communications::signal_latency::{ExecuteOrderEvent, OrderType};
+use scale::layer2::communications::signal_latency::{ExecuteOrderEvent, MoveToOrder};
 use scale::layer2::fleet::{Fleet, FleetOrder, InOrbit};
 use scale::layer2::integration::signal_latency_fleet_bridge;
 
@@ -19,7 +19,7 @@ fn test_signal_latency_fleet_bridge() {
 
     app.world_mut().send_event(ExecuteOrderEvent {
         target: fleet,
-        order: OrderType::MoveTo(destination),
+        order: MoveToOrder { target: destination },
     });
 
     app.update();

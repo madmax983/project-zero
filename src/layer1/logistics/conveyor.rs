@@ -209,11 +209,11 @@ pub fn hopper_system(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::layer1::resources::ResourceType;
     use crate::layer1::building::BuildingType;
     use crate::layer1::energy::PowerConsumer;
     use crate::layer1::map::GridPosition;
     use crate::layer1::resources::ColonyResources;
+    use crate::layer1::resources::ResourceType;
     use crate::layer1::terrain::{TerrainGrid, TerrainType};
     use bevy_ecs::system::RunSystemOnce;
 

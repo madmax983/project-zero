@@ -123,7 +123,9 @@ pub fn handle_severance_system(
                 }
 
                 // Add Catatonic state
-                commands.entity(survivor_entity).insert(crate::layer1::tech::cognitive_overclocking::ActiveState::Catatonic);
+                commands
+                    .entity(survivor_entity)
+                    .insert(crate::layer1::tech::cognitive_overclocking::ActiveState::Catatonic);
 
                 // Remove the link (Sever the bond)
                 commands.entity(survivor_entity).remove::<QuantumTwin>();
@@ -131,7 +133,6 @@ pub fn handle_severance_system(
         }
     }
 }
-
 
 /// Propagates damage to a quantum twin.
 pub fn propagate_damage_to_twin(
@@ -169,11 +170,6 @@ pub fn propagate_damage_to_twin(
 #[cfg(test)]
 mod tests {
 
-
-
-
-
-
     #[test]
     fn test_damage_propagates_to_twin() {
         use bevy::prelude::*;
@@ -181,24 +177,52 @@ mod tests {
         app.add_event::<crate::layer1::shields::DamageEvent>();
         app.add_systems(Update, super::propagate_damage_to_twin);
 
-        let twin1 = app.world_mut().spawn(crate::layer1::biology::health::Health { current: 100.0, max: 100.0, has_rust_lung: false }).id();
-        let twin2 = app.world_mut().spawn((
-            crate::layer1::biology::health::Health { current: 100.0, max: 100.0, has_rust_lung: false },
-            QuantumTwin { partner: twin1, link_strength: 1.0 }
-        )).id();
-        app.world_mut().entity_mut(twin1).insert(QuantumTwin { partner: twin2, link_strength: 1.0 });
-
-        app.world_mut().resource_mut::<Events<crate::layer1::shields::DamageEvent>>().send(crate::layer1::shields::DamageEvent {
-            target: twin1,
-            amount: 20.0,
-            velocity: 10.0,
+        let twin1 = app
+            .world_mut()
+            .spawn(crate::layer1::biology::health::Health {
+                current: 100.0,
+                max: 100.0,
+                has_rust_lung: false,
+            })
+            .id();
+        let twin2 = app
+            .world_mut()
+            .spawn((
+                crate::layer1::biology::health::Health {
+                    current: 100.0,
+                    max: 100.0,
+                    has_rust_lung: false,
+                },
+                QuantumTwin {
+                    partner: twin1,
+                    link_strength: 1.0,
+                },
+            ))
+            .id();
+        app.world_mut().entity_mut(twin1).insert(QuantumTwin {
+            partner: twin2,
+            link_strength: 1.0,
         });
+
+        app.world_mut()
+            .resource_mut::<Events<crate::layer1::shields::DamageEvent>>()
+            .send(crate::layer1::shields::DamageEvent {
+                target: twin1,
+                amount: 20.0,
+                velocity: 10.0,
+            });
 
         app.update();
 
         // Assuming a standard damage system reduces twin1, we just test twin2 here
-        let health2 = app.world().get::<crate::layer1::biology::health::Health>(twin2).unwrap();
-        assert_eq!(health2.current, 80.0, "Twin 2 should receive the same damage as Twin 1");
+        let health2 = app
+            .world()
+            .get::<crate::layer1::biology::health::Health>(twin2)
+            .unwrap();
+        assert_eq!(
+            health2.current, 80.0,
+            "Twin 2 should receive the same damage as Twin 1"
+        );
     }
 
     #[test]
@@ -206,22 +230,41 @@ mod tests {
         use bevy::prelude::*;
         let mut app = App::new();
         app.add_event::<crate::layer1::pop::PopDied>();
-        app.add_systems(Update, crate::layer1::quantum_twins::handle_severance_system);
+        app.add_systems(
+            Update,
+            crate::layer1::quantum_twins::handle_severance_system,
+        );
 
         let twin1 = app.world_mut().spawn_empty().id();
-        let twin2 = app.world_mut().spawn(QuantumTwin { partner: twin1, link_strength: 1.0 }).id();
-        app.world_mut().entity_mut(twin1).insert(QuantumTwin { partner: twin2, link_strength: 1.0 });
-
-        app.world_mut().resource_mut::<Events<crate::layer1::pop::PopDied>>().send(crate::layer1::pop::PopDied {
-            entity: twin1,
-            name: "Twin A".to_string(),
-            tick: 0,
-            reason: "Test".to_string(),
+        let twin2 = app
+            .world_mut()
+            .spawn(QuantumTwin {
+                partner: twin1,
+                link_strength: 1.0,
+            })
+            .id();
+        app.world_mut().entity_mut(twin1).insert(QuantumTwin {
+            partner: twin2,
+            link_strength: 1.0,
         });
+
+        app.world_mut()
+            .resource_mut::<Events<crate::layer1::pop::PopDied>>()
+            .send(crate::layer1::pop::PopDied {
+                entity: twin1,
+                name: "Twin A".to_string(),
+                tick: 0,
+                reason: "Test".to_string(),
+            });
 
         app.update();
 
-        assert!(app.world().get::<crate::layer1::tech::cognitive_overclocking::ActiveState>(twin2).is_some(), "Twin 2 should become Catatonic upon Twin 1's death");
+        assert!(
+            app.world()
+                .get::<crate::layer1::tech::cognitive_overclocking::ActiveState>(twin2)
+                .is_some(),
+            "Twin 2 should become Catatonic upon Twin 1's death"
+        );
     }
 
     use super::*;

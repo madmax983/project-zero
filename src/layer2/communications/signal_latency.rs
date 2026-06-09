@@ -4,24 +4,23 @@ use bevy::prelude::*;
 pub struct IssueOrderEvent {
     pub origin: Entity,
     pub target: Entity,
-    pub order: OrderType,
+    pub order: MoveToOrder,
 }
 
 #[derive(Event)]
 pub struct ExecuteOrderEvent {
     pub target: Entity,
-    pub order: OrderType,
+    pub order: MoveToOrder,
 }
 
 #[derive(Clone, PartialEq, Debug)]
-pub enum OrderType {
-    MoveTo(Entity),
-    // Other order types...
+pub struct MoveToOrder {
+    pub target: Entity,
 }
 
 pub struct DelayedOrder {
     pub target: Entity,
-    pub order: OrderType,
+    pub order: MoveToOrder,
     pub ticks_remaining: u32,
 }
 
@@ -104,7 +103,9 @@ mod tests {
         app.world_mut().send_event(IssueOrderEvent {
             origin: colony_entity,
             target: target_entity,
-            order: OrderType::MoveTo(Entity::PLACEHOLDER),
+            order: MoveToOrder {
+                target: Entity::PLACEHOLDER,
+            },
         });
 
         app.update(); // Tick 1: Order is added to delay queue
@@ -122,7 +123,9 @@ mod tests {
         app.world_mut().insert_resource(DelayedOrders {
             queue: vec![DelayedOrder {
                 target: Entity::PLACEHOLDER,
-                order: OrderType::MoveTo(Entity::PLACEHOLDER),
+                order: MoveToOrder {
+                    target: Entity::PLACEHOLDER,
+                },
                 ticks_remaining: 0,
             }],
         });
