@@ -321,46 +321,73 @@ fn ui(f: &mut Frame, app: &mut App) {
     f.render_widget(pattern_list, right_chunks[0]);
 
     // Generated Output
-    let output_block = if let Some(err) = &app.error_message {
-        Paragraph::new(format!(" ✗ Failed to generate story:\n\n   {} ", err))
-            .style(Style::default().fg(Color::Red).add_modifier(Modifier::BOLD))
+    if let Some(err) = &app.error_message {
+        let (err_type, action) = if err.contains("Missing required context") {
+            ("Missing Context", "Check context.insert() logic.")
+        } else if err.contains("has no options defined") {
+            ("Empty Fragment", "Add options to the fragment in lore files.")
+        } else if err.contains("No lore files found") {
+            ("Files Missing", "Check the directory for TEMPLATES.md.")
+        } else if err.contains("Template not found") {
+            ("Missing Template", "Verify template ID exists in TEMPLATES.md.")
+        } else {
+            ("Unknown Error", "Review the error message.")
+        };
+
+        let rows = vec![
+            ratatui::widgets::Row::new(vec![
+                ratatui::widgets::Cell::from(Span::styled("Type", Style::default().fg(Color::Yellow).add_modifier(Modifier::BOLD))),
+                ratatui::widgets::Cell::from(Span::styled(err_type, Style::default().fg(Color::Red))),
+            ]),
+            ratatui::widgets::Row::new(vec![
+                ratatui::widgets::Cell::from(Span::styled("Message", Style::default().fg(Color::Yellow).add_modifier(Modifier::BOLD))),
+                ratatui::widgets::Cell::from(Span::styled(err.clone(), Style::default().fg(Color::White))),
+            ]),
+            ratatui::widgets::Row::new(vec![
+                ratatui::widgets::Cell::from(Span::styled("Action", Style::default().fg(Color::Yellow).add_modifier(Modifier::BOLD))),
+                ratatui::widgets::Cell::from(Span::styled(action, Style::default().fg(Color::Cyan))),
+            ]),
+        ];
+
+        let table = ratatui::widgets::Table::new(rows, [Constraint::Length(10), Constraint::Min(40)])
             .block(
                 Block::default()
                     .borders(Borders::ALL)
                     .border_type(BorderType::Thick)
                     .border_style(Style::default().fg(Color::Red))
                     .title(Span::styled(
-                        " ERROR ",
+                        " ✗ ERROR ",
                         Style::default().fg(Color::Red).add_modifier(Modifier::BOLD),
                     ))
-                    .padding(Padding::uniform(2)),
-            )
-            .wrap(Wrap { trim: true })
+                    .padding(Padding::uniform(1)),
+            );
+        f.render_widget(table, right_chunks[1]);
     } else if let Some(segments) = &app.generated_segments {
         let spans: Vec<Span> = segments
             .iter()
             .map(|seg| match seg {
                 NarrativeSegment::Text(t) => Span::styled(t, Style::default().fg(Color::White)),
                 NarrativeSegment::Slot { value, .. } => Span::styled(
-                    value,
+                    value.clone(),
                     Style::default()
                         .fg(Color::Yellow)
+                        .bg(Color::DarkGray)
                         .add_modifier(Modifier::BOLD)
                         .add_modifier(Modifier::ITALIC),
                 ),
                 NarrativeSegment::MissingContext(e) => Span::styled(
-                    format!("[MISSING CONTEXT: {}]", e),
-                    Style::default().fg(Color::Red).add_modifier(Modifier::BOLD),
+                    format!(" [MISSING CONTEXT: {}] ", e),
+                    Style::default().fg(Color::White).bg(Color::Red).add_modifier(Modifier::BOLD),
                 ),
                 NarrativeSegment::MissingFragmentOptions(e) => Span::styled(
-                    format!("[MISSING FRAGMENT OPTIONS: {}]", e),
-                    Style::default().fg(Color::Red).add_modifier(Modifier::BOLD),
+                    format!(" [MISSING FRAGMENT OPTIONS: {}] ", e),
+                    Style::default().fg(Color::White).bg(Color::Red).add_modifier(Modifier::BOLD),
                 ),
             })
             .collect();
 
         let line = Line::from(spans);
-        Paragraph::new(line)
+        f.render_widget(Paragraph::new(line)
             .block(
                 Block::default()
                     .borders(Borders::ALL)
@@ -374,9 +401,10 @@ fn ui(f: &mut Frame, app: &mut App) {
                     ))
                     .padding(Padding::uniform(2)),
             )
-            .wrap(Wrap { trim: true })
+            .wrap(Wrap { trim: true }), right_chunks[1]);
     } else {
-        Paragraph::new("Press [ENTER] to generate a new story...\nUse [UP] and [DOWN] to select a different template.")
+        f.render_widget(Paragraph::new("Press [ENTER] to generate a new story...
+Use [UP] and [DOWN] to select a different template.")
             .style(
                 Style::default()
                     .fg(Color::DarkGray)
@@ -388,11 +416,7 @@ fn ui(f: &mut Frame, app: &mut App) {
                     .borders(Borders::ALL)
                     .border_type(BorderType::Rounded)
                     .border_style(Style::default().fg(Color::DarkGray))
-                    .title(Span::styled(" Ready ", Style::default().fg(Color::DarkGray)))
                     .padding(Padding::uniform(2)),
-            )
-            .wrap(Wrap { trim: true })
-    };
-
-    f.render_widget(output_block, right_chunks[1]);
+            ), right_chunks[1]);
+    }
 }
