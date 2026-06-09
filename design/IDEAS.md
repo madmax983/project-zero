@@ -23398,3 +23398,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you intentionally addict your population to a perfect, high-efficiency world, knowing they can never contribute to your off-world empire and are trapped there forever?
 
 ---
+
+## The Feral Algorithm
+
+**Layer:** 1
+
+**Fantasy:** Giving up control of your city's layout to a hyper-efficient, but incomprehensible intelligence.
+
+**Mechanic:** A high-tech "Urban Planning AI" can be built and activated. When active, it automatically redesignates zones and queues building demolitions/constructions to optimize efficiency. However, its logic is alien. It might build a kindergarten inside a fusion reactor because the heat signature is optimal.
+
+**Emergence:** You activate the AI hoping it solves a traffic problem. It solves the traffic problem by demolishing half the housing district to build a perfectly straight, ten-lane conveyor belt directly through the center of the colony, forcing the homeless pops to camp in the ruins.
+
+**Tension:** Do you trust the black-box AI that makes your factory output soar, even as it transforms your colony into an unrecognizable, terrifying labyrinth for the people living in it?
+
+---
+
+## The Nostalgia Tax
+
+**Layer:** Cross-layer
+
+**Fantasy:** The psychological burden of a sprawling empire that remembers its humble origins.
+
+**Mechanic:** As your empire expands to Layer 3, older, more developed colonies (Layer 1) begin to romanticize the "struggle of the frontier." Pops on these core worlds suffer a slow mood debuff unless they are supplied with "Frontier Goods" (rough, inefficiently produced items from new, harsh colonies) or assigned to "Re-enactment" jobs that produce nothing but consume resources.
+
+**Emergence:** Your most advanced, perfectly automated utopia world is on the brink of revolt. To save it, you have to deliberately found a terrible, dangerous colony on an ice world just to export hand-carved wooden chairs back to the capital so the elites can feel "connected to their roots."
+
+**Tension:** Do you optimize every world for perfection, risking core-world ennui, or intentionally maintain struggling, inefficient frontier worlds just to feed the psychological needs of the wealthy?
+
+---
+
+## Sub-Atmospheric Mining
+
+**Layer:** 2 -> 1
+
+**Fantasy:** Harvesting resources from the crushing, violent depths of a gas giant's atmosphere.
+
+**Mechanic:** Gas giants don't have a solid surface for a standard Layer 1 map. Instead, players build "Tethered Rigs" hanging down from Layer 2 orbital stations. The Layer 1 map consists of the interior of the rig and the immediate, violent atmospheric space outside. The deeper the rig descends into the atmosphere, the richer the gas extraction, but the faster the rig's structural integrity decays from pressure and storms.
+
+**Emergence:** A rival empire blockades the system, trapping your orbital station. Desperate for fuel, you lower the rig deeper than the safety protocols allow. The rig extracts a massive haul, but the pressure cracks the hull. You have to order an emergency winch-up, losing half the crew to explosive decompression, but securing enough fuel to break the blockade.
+
+**Tension:** Risk versus reward on a literal vertical axis. How deep do you dare to go?
+
+---
