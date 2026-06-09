@@ -19,7 +19,9 @@ fn test_signal_latency_fleet_bridge() {
 
     app.world_mut().send_event(ExecuteOrderEvent {
         target: fleet,
-        order: MoveToOrder { target: destination },
+        order: MoveToOrder {
+            target: destination,
+        },
     });
 
     app.update();
