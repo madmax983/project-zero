@@ -370,14 +370,10 @@ impl std::fmt::Display for StoryGenre {
 #[cfg(test)]
 mod tests {
 
-
-
-
     #[cfg(feature = "nova")]
     use crate::layer1::needs::Needs;
     #[cfg(feature = "nova")]
     use crate::layer1::social::Tavern;
-
 
     #[test]
     #[cfg(feature = "nova")]

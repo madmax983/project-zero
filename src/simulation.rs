@@ -48,6 +48,9 @@ pub fn build_simulation_schedule() -> Schedule {
 fn init_simulation_resources(world: &mut World) {
     world.init_resource::<Events<crate::layer1::AcceptSponsorshipEvent>>();
     world
+        .init_resource::<Events<crate::layer3::events::generational_debt::RepoFleetArrivalEvent>>();
+    world.init_resource::<Events<crate::layer3::events::generational_debt::AttackRepoFleetEvent>>();
+    world
         .init_resource::<Events<crate::layer1::psychology::memory_blackout::MemoryBlackoutEvent>>();
     world.init_resource::<Events<crate::layer1::RepairBuildingEvent>>();
     world.init_resource::<Events<crate::layer2::trade::routes::TradeRouteExecutedEvent>>();

@@ -15,7 +15,7 @@
 
 use crate::layer1::chemical::{consume_chemical, ChemicalType};
 use crate::layer1::execution::components::{AtTarget, MovementTarget};
-    use crate::layer1::utility_types::ActionType;
+use crate::layer1::utility_types::ActionType;
 use bevy_ecs::prelude::*;
 
 /// A component that turns a standard shower into a chemical delivery vector.
@@ -59,11 +59,11 @@ pub fn chemical_showers_system(world: &mut World) {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::layer1::chemical::{ChemicalState, ChemicalType};
     use crate::layer1::architecture::Building;
-    use crate::layer1::map::GridPosition;
+    use crate::layer1::chemical::{ChemicalState, ChemicalType};
     use crate::layer1::execution::components::{AtTarget, MovementTarget};
-        use crate::layer1::utility_types::ActionType;
+    use crate::layer1::map::GridPosition;
+    use crate::layer1::utility_types::ActionType;
 
     #[test]
     fn test_chemical_showers_applies_chemical() {
