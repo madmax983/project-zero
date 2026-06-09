@@ -184,6 +184,8 @@ pub mod scrapcode_entropy;
 pub mod the_weight_of_silence;
 
 #[cfg(feature = "nova")]
+pub mod aeolian_clutter;
+#[cfg(feature = "nova")]
 pub mod ascetic_fasting;
 #[cfg(feature = "nova")]
 pub mod chemical_showers;
