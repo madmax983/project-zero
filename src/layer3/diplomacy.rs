@@ -86,6 +86,7 @@ pub struct WarningDiplomaticMessageEvent {
     pub faction_id: Entity,
 }
 pub mod flesh_tax;
+pub mod galactic_games;
 pub mod red_tape_defense;
 pub mod retro_contracts;
 pub mod system_sovereignty;
