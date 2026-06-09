@@ -6,7 +6,6 @@
 
 
 
-- [ ] `1293` Trade Embargoes — `specs/1293-trade-embargoes.md`
 - [ ] `1294` Biometric Drift — `specs/1294-biometric-drift.md`
 
 

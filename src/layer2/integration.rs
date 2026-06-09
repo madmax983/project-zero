@@ -741,7 +741,9 @@ pub fn signal_latency_fleet_bridge(
 ) {
     for event in events.read() {
         if query.contains(event.target) {
-            let MoveToOrder { target: destination } = event.order;
+            let MoveToOrder {
+                target: destination,
+            } = event.order;
             commands
                 .entity(event.target)
                 .insert(FleetOrder::MoveTo(destination));
