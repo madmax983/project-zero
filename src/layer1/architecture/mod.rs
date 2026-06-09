@@ -57,4 +57,6 @@ pub mod embezzlement;
 pub use embezzlement::*;
 pub mod fossilized_fleet;
 pub mod fossilized_fleet_tests;
+pub mod hostage_protocol;
 pub mod sunk_cost_monument;
+pub use hostage_protocol::HostageProtocolPlugin;

@@ -664,7 +664,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1041` The Orphaned Swarm — `specs/1041-the-orphaned-swarm.md`
 
 - [ ] `1043` Black Market Infrastructure — `specs/1043-black-market-infrastructure.md`
-- [ ] `1044` Hostage Architecture — `specs/1044-hostage-architecture.md`
 
 - [ ] `1049` Architectural Sentience — `specs/1049-architectural-sentience.md`
 - [ ] `1051` Asteroid Claims — `specs/1051-asteroid-claims.md`
