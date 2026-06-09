@@ -23314,3 +23314,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you commit necessary atrocities for short-term survival, knowing it will cripple the morale and unity of your empire centuries later?
 
 ---
+
+## The Long-Distance Empathy Network
+
+**Layer:** Cross-layer
+
+**Fantasy:** Maintaining emotional connection across lightyears, at the cost of shared trauma.
+
+**Mechanic:** A costly Layer 2/3 infrastructure that allows colonies to share "Morale" and "Needs" fulfillment over vast distances. When connected, a prosperous colony can stabilize a struggling one. However, this is a two-way street: if one colony suffers a catastrophe (famine, invasion), the psychic/empathic shockwave travels through the network, devastating the morale of the connected worlds.
+
+**Emergence:** You connect your core worlds to a frontier outpost to keep it stable while it builds up. The outpost is suddenly wiped out by a pirate raid, and the resulting empathic backlash causes mass riots and a plunge in productivity across your previously stable core worlds.
+
+**Tension:** Do you risk connecting your most vulnerable colonies to your most prosperous ones, knowing that a failure on the frontier could drag the entire empire down with it?
+
+---
+
+## The Edible Architecture
+
+**Layer:** 1
+
+**Fantasy:** A colony so desperate it begins consuming the very structures keeping it alive.
+
+**Mechanic:** Certain advanced or organic building materials (like bioplastics or mycelial scaffolding) can be repurposed as low-quality food during a famine. Players can manually designate non-essential buildings to be "consumed," destroying the building but providing temporary sustenance for the Pops.
+
+**Emergence:** A severe blight hits your crops right before winter. To survive, you order the consumption of the colony's recreation centers and secondary bulkheads. The Pops survive, but the colony's infrastructure is left looking like a scavenged carcass, and subsequent morale takes a huge hit due to the lack of amenities.
+
+**Tension:** How much of your colony's future capabilities are you willing to literally eat to survive the current crisis?
+
+---
+
+## The Symbiotic Shipbreaker
+
+**Layer:** 2
+
+**Fantasy:** Derelict ships becoming thriving, albeit dangerous, independent ecosystems.
+
+**Mechanic:** When a massive capital ship is destroyed or abandoned in orbit, it doesn't just become debris. Over time, strange zero-G flora and feral maintenance drones form a symbiotic ecosystem within the hull. To salvage the valuable core components, players must send specialized "Shipbreaker" Pops, treating the derelict not as an object, but as a hostile biome that actively defends its new "life."
+
+**Emergence:** You win a massive fleet engagement but your economy is ruined. To recover, you send your surviving crews to break down the enemy flagship. The feral ecosystem inside has already adapted the ship's point-defense systems to protect its "hive," turning a salvage operation into a desperate infantry engagement.
+
+**Tension:** Do you let a valuable wreck drift, knowing it might eventually pose a threat as its ecosystem expands, or do you risk your Pops in a dangerous, localized war to extract its resources?
+
+---
