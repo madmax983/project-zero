@@ -503,3 +503,23 @@ pub fn cargo_cult_chronicle_bridge(
         }
     }
 }
+
+pub fn galactic_games_chronicle_bridge(
+    games_opt: Option<Res<crate::layer3::diplomacy::galactic_games::GalacticGamesEvent>>,
+    mut chronicle_events: EventWriter<crate::layer1::core::chronicle::AddChronicleEvent>,
+    mut fired: Local<bool>,
+) {
+    if let Some(games) = games_opt {
+        if let Some(winner) = games.winner {
+            if !*fired {
+                chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
+                    importance: crate::layer1::core::chronicle::EventImportance::Major,
+                    text: format!("The Galactic Games have concluded. The {:?} have proven their superiority!", winner),
+                });
+                *fired = true;
+            }
+        } else {
+            *fired = false;
+        }
+    }
+}

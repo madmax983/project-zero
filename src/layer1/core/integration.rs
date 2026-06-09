@@ -2638,3 +2638,26 @@ pub fn cultural_vandalism_chronicle_bridge(
         });
     }
 }
+
+pub fn quantum_twins_severance_chronicle_bridge(
+    query: Query<(Entity, &crate::layer1::tech::cognitive_overclocking::ActiveState), Changed<crate::layer1::tech::cognitive_overclocking::ActiveState>>,
+    mut chronicle_events: EventWriter<crate::layer1::core::chronicle::AddChronicleEvent>,
+    mut commands: Commands,
+    marker_query: Query<(), With<QuantumTwinSeveranceLogged>>,
+) {
+    for (entity, state) in query.iter() {
+        if let crate::layer1::tech::cognitive_overclocking::ActiveState::Catatonic = state {
+            if marker_query.get(entity).is_err() {
+                chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
+                    importance: crate::layer1::core::chronicle::EventImportance::Major,
+                    text: "A quantum twin bond was violently severed. The survivor has gone catatonic."
+                        .to_string(),
+                });
+                commands.entity(entity).insert(QuantumTwinSeveranceLogged);
+            }
+        }
+    }
+}
+
+#[derive(Component)]
+pub struct QuantumTwinSeveranceLogged;

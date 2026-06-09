@@ -534,3 +534,9 @@ mod subconscious_grid_lockdown_bridge;
 
 #[path = "integration/cultural_vandalism_chronicle.rs"]
 mod cultural_vandalism_chronicle;
+
+#[path = "integration/galactic_games_chronicle.rs"]
+mod galactic_games_chronicle;
+
+#[path = "integration/quantum_twins_chronicle.rs"]
+mod quantum_twins_chronicle;

@@ -1404,3 +1404,15 @@
 - **Systems connected:** `Defaced`/`Vandalized` -> `cultural_vandalism_chronicle_bridge` -> `AddChronicleEvent`
 - **Glue added:** `cultural_vandalism_chronicle_bridge` in `src/layer1/core/integration.rs`
 - **Tests:** `tests/integration/cultural_vandalism_chronicle.rs`
+
+### INT-1292: The Galactic Games -> Chronicle
+- **Date:** 2026-10-31
+- **Systems connected:** `GalacticGamesEvent` -> `galactic_games_chronicle_bridge` -> `AddChronicleEvent`
+- **Glue added:** `galactic_games_chronicle_bridge` in `src/layer3/integration.rs` to detect when a winner is decided in the Galactic Games and emit an `AddChronicleEvent`.
+- **Tests:** `tests/integration/galactic_games_chronicle.rs`
+
+### INT-1299: Quantum Twins -> Chronicle
+- **Date:** 2026-10-31
+- **Systems connected:** `ActiveState::Catatonic` -> `quantum_twins_severance_chronicle_bridge` -> `AddChronicleEvent`
+- **Glue added:** `quantum_twins_severance_chronicle_bridge` in `src/layer1/core/integration.rs` to detect when a Quantum Twin's bond is severed (entering the Catatonic state) and emit an `AddChronicleEvent`.
+- **Tests:** `tests/integration/quantum_twins_chronicle.rs`
