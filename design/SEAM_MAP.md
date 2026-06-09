@@ -1398,3 +1398,9 @@
 - **Systems connected:** `process_disrespect_casus_belli_system` -> `cargo_cult_chronicle_bridge`
 - **Glue added:** `cargo_cult_chronicle_bridge` in `src/layer3/integration.rs`
 - **Tests:** `tests/integration/cargo_cult_bridge.rs`
+
+### INT-1298: Cultural Vandalism -> Chronicle
+- **Date:** 2026-06-09
+- **Systems connected:** `Defaced`/`Vandalized` -> `cultural_vandalism_chronicle_bridge` -> `AddChronicleEvent`
+- **Glue added:** `cultural_vandalism_chronicle_bridge` in `src/layer1/core/integration.rs`
+- **Tests:** `tests/integration/cultural_vandalism_chronicle.rs`
