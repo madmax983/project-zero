@@ -1,8 +1,8 @@
-use bevy_ecs::prelude::*;
-use crate::layer1::psychology::needs::Needs;
-use crate::layer1::entities::pop::Pop;
 use crate::layer1::culture::artifacts::Artifact;
+use crate::layer1::entities::pop::Pop;
+use crate::layer1::psychology::needs::Needs;
 use crate::layer1::psychology::traits::{Trait, Traits};
+use bevy_ecs::prelude::*;
 
 /// Marker component for artifacts that can be consumed in emergencies.
 #[derive(Component)]
@@ -43,35 +43,49 @@ pub fn consume_artifacts_during_famine_system(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use bevy_app::{App, Update};
     use crate::layer1::culture::artifacts::Artifact;
-    use crate::layer1::psychology::needs::Needs;
     use crate::layer1::entities::pop::Pop;
+    use crate::layer1::psychology::needs::Needs;
     use crate::layer1::psychology::traits::{Trait, Traits};
+    use bevy_app::{App, Update};
 
     #[test]
     fn test_starving_pop_consumes_artifact() {
         let mut app = App::new();
         app.add_systems(Update, consume_artifacts_during_famine_system);
 
-        let pop_entity = app.world_mut().spawn((
-            Pop,
-            Needs { hunger: 0.05, rest: 1.0, leisure: 1.0, hygiene: 1.0 }, // Starving
-        )).id();
+        let pop_entity = app
+            .world_mut()
+            .spawn((
+                Pop,
+                Needs {
+                    hunger: 0.05,
+                    rest: 1.0,
+                    leisure: 1.0,
+                    hygiene: 1.0,
+                }, // Starving
+            ))
+            .id();
 
-        let artifact_entity = app.world_mut().spawn((
-            Artifact,
-            EdibleAnomaly,
-        )).id();
+        let artifact_entity = app.world_mut().spawn((Artifact, EdibleAnomaly)).id();
 
         app.update();
 
         let needs = app.world().get::<Needs>(pop_entity).unwrap();
-        assert!(needs.hunger > 0.9, "Hunger should be satisfied by the artifact");
-        assert!(app.world().get_entity(artifact_entity).is_err(), "Artifact should be consumed");
+        assert!(
+            needs.hunger > 0.9,
+            "Hunger should be satisfied by the artifact"
+        );
+        assert!(
+            app.world().get_entity(artifact_entity).is_err(),
+            "Artifact should be consumed"
+        );
 
         let traits = app.world().get::<Traits>(pop_entity).unwrap();
-        assert!(traits.has(Trait::Phantom), "Consuming an artifact should cause a trait mutation");
+        assert!(
+            traits.has(Trait::Phantom),
+            "Consuming an artifact should cause a trait mutation"
+        );
     }
 
     #[test]
@@ -79,20 +93,28 @@ mod tests {
         let mut app = App::new();
         app.add_systems(Update, consume_artifacts_during_famine_system);
 
-        let pop_entity = app.world_mut().spawn((
-            Pop,
-            Needs { hunger: 0.8, rest: 1.0, leisure: 1.0, hygiene: 1.0 }, // Well-fed
-        )).id();
+        let pop_entity = app
+            .world_mut()
+            .spawn((
+                Pop,
+                Needs {
+                    hunger: 0.8,
+                    rest: 1.0,
+                    leisure: 1.0,
+                    hygiene: 1.0,
+                }, // Well-fed
+            ))
+            .id();
 
-        let artifact_entity = app.world_mut().spawn((
-            Artifact,
-            EdibleAnomaly,
-        )).id();
+        let artifact_entity = app.world_mut().spawn((Artifact, EdibleAnomaly)).id();
 
         app.update();
 
         let needs = app.world().get::<Needs>(pop_entity).unwrap();
         assert_eq!(needs.hunger, 0.8, "Hunger should remain unchanged");
-        assert!(app.world().get_entity(artifact_entity).is_ok(), "Artifact should NOT be consumed if pop is not starving");
+        assert!(
+            app.world().get_entity(artifact_entity).is_ok(),
+            "Artifact should NOT be consumed if pop is not starving"
+        );
     }
 }

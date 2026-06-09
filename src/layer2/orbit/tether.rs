@@ -1,6 +1,6 @@
 // src/layer2/orbit/tether.rs
-use bevy::prelude::*;
 use crate::layer1::energy::PowerConsumer;
+use bevy::prelude::*;
 
 #[derive(Component)]
 pub struct AsteroidTether {
@@ -17,7 +17,7 @@ pub struct AsteroidTetheringPlugin;
 impl Plugin for AsteroidTetheringPlugin {
     fn build(&self, app: &mut App) {
         app.add_event::<AsteroidCrashEvent>()
-           .add_systems(Update, tether_decay_system);
+            .add_systems(Update, tether_decay_system);
     }
 }
 
@@ -30,7 +30,9 @@ fn tether_decay_system(
         if !consumer.active {
             tether.stability -= 10.0;
             if tether.stability <= 0.0 {
-                crash_events.send(AsteroidCrashEvent { tether_entity: entity });
+                crash_events.send(AsteroidCrashEvent {
+                    tether_entity: entity,
+                });
                 commands.entity(entity).despawn();
             }
         }
@@ -53,13 +55,25 @@ mod tests {
         app.add_event::<AsteroidCrashEvent>();
 
         // Spawn a power source that produces 10 power
-        let _source = app.world_mut().spawn(PowerSource { output: 10.0, active: true }).id();
+        let _source = app
+            .world_mut()
+            .spawn(PowerSource {
+                output: 10.0,
+                active: true,
+            })
+            .id();
 
         // Spawn an asteroid tether demanding 20 power (more than produced)
-        let tether = app.world_mut().spawn((
-            AsteroidTether { stability: 100.0 },
-            PowerConsumer { demand: 20.0, active: true }
-        )).id();
+        let tether = app
+            .world_mut()
+            .spawn((
+                AsteroidTether { stability: 100.0 },
+                PowerConsumer {
+                    demand: 20.0,
+                    active: true,
+                },
+            ))
+            .id();
 
         // Simulate tick where demand > supply
         if let Some(mut consumer) = app.world_mut().get_mut::<PowerConsumer>(tether) {
@@ -69,7 +83,10 @@ mod tests {
 
         // Asteroid stability should decrease due to power failure
         let tether_state = app.world().get::<AsteroidTether>(tether).unwrap();
-        assert!(tether_state.stability < 100.0, "Tether stability should decrease when unpowered.");
+        assert!(
+            tether_state.stability < 100.0,
+            "Tether stability should decrease when unpowered."
+        );
 
         // Simulate enough ticks for stability to reach 0
         for _ in 0..10 {
@@ -79,9 +96,15 @@ mod tests {
         // Verify crash event was emitted
         let events = app.world().resource::<Events<AsteroidCrashEvent>>();
         let mut reader = events.get_cursor();
-        assert!(reader.read(events).next().is_some(), "Crash event should be emitted when stability hits 0.");
+        assert!(
+            reader.read(events).next().is_some(),
+            "Crash event should be emitted when stability hits 0."
+        );
 
         // Verify entity is destroyed
-        assert!(app.world().get::<AsteroidTether>(tether).is_none(), "Tether entity should be destroyed after crashing.");
+        assert!(
+            app.world().get::<AsteroidTether>(tether).is_none(),
+            "Tether entity should be destroyed after crashing."
+        );
     }
 }

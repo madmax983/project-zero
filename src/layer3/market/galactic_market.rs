@@ -152,6 +152,11 @@ pub fn update_market_prices_system(mut market: ResMut<GalacticMarket>) {
     }
 }
 
+#[derive(Resource, Default)]
+pub struct GalacticMarketStatus {
+    pub in_default: bool,
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
