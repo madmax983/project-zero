@@ -9337,3 +9337,32 @@ How the pops feel when the hab-plant is damaged.
 - an ancient betrayal
 - a sabotage incident
 - a misunderstood slight
+
+## The Sleepless Caste Fragments (Spec 1261)
+
+## Fragment Type: [SLEEPLESS_EPITHET]
+How the Sleepless Pops are referred to.
+
+```
+- the Clear-Eyed
+- the Wakeful
+- the Unblinking
+- those who do not rest
+- the Midnight Shift
+- the Wire-Bound
+- the Exhaustless
+- the Open-Eyed
+```
+
+## Fragment Type: [BREAKDOWN_SYMPTOM]
+Descriptions of their stress and breakdowns.
+
+```
+- began seeing phantoms in the static
+- shattered the communal displays
+- screamed endlessly into the void
+- refused to blink
+- started tearing the hab-block apart
+- collapsed into violent tremors
+- forgot their own name, remembering only the quota
+```
