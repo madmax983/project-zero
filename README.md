@@ -149,6 +149,9 @@ fn main() {
     // 3. Inspect state
     let time = world.resource::<SimulationTime>();
     println!("Current Tick: {}", time.tick);
+
+    // You can also query game components easily using the prelude
+    let _buildings = world.query::<&Building>().iter(&world).count();
 }
 ```
 
