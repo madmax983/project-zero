@@ -766,6 +766,30 @@ impl ColonyResources {
     }
 
     /// Gets the current amount of a specific resource type.
+    /// Gets the current maximum capacity of a specific resource type.
+    #[must_use]
+    pub fn get_max_amount(&self, resource_type: ResourceType) -> f32 {
+        match resource_type {
+            ResourceType::Food => self.max_food,
+            ResourceType::Wood => self.max_wood,
+            ResourceType::Stone => self.max_stone,
+            ResourceType::Ore => self.max_ore,
+            ResourceType::Metal => self.max_metal,
+            ResourceType::Planks => self.max_planks,
+            ResourceType::Blocks => self.max_blocks,
+            ResourceType::Waste => self.max_waste,
+            ResourceType::Rations => self.max_rations,
+            ResourceType::Fuel => self.max_fuel,
+            ResourceType::Alcohol => self.max_alcohol,
+            ResourceType::Scrap => self.max_scrap,
+            ResourceType::Tools => self.max_tools,
+            ResourceType::BuildingPermit => self.max_building_permits,
+            ResourceType::MemoryCore => self.max_memory_cores,
+            ResourceType::VoidAle => self.max_void_ale,
+            ResourceType::HyperValuable => self.max_hyper_valuable,
+        }
+    }
+
     #[must_use]
     pub fn get_amount(&self, resource_type: ResourceType) -> f32 {
         match resource_type {

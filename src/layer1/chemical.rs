@@ -191,22 +191,15 @@ pub fn consume_chemical_logic(
         // Refresh duration
         existing.duration = 500;
     } else {
-        match chem {
-            ChemicalType::Stim => {
-                state.active_effects.push(ActiveEffect {
-                    chemical: chem,
-                    duration: 500,
-                    magnitude: 1.5, // +50% speed
-                });
-            }
-            ChemicalType::Sedative => {
-                state.active_effects.push(ActiveEffect {
-                    chemical: chem,
-                    duration: 500,
-                    magnitude: 0.5, // -50% speed (slowdown)
-                });
-            }
-        }
+        let magnitude = match chem {
+            ChemicalType::Stim => 1.5, // +50% speed
+            ChemicalType::Sedative => 0.5, // -50% speed (slowdown)
+        };
+        state.active_effects.push(ActiveEffect {
+            chemical: chem,
+            duration: 500,
+            magnitude,
+        });
     }
 
     // 2. Apply Immediate Effects
