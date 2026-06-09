@@ -179,9 +179,10 @@ fn collect_workers_by_target(
                     return false;
                 }
 
-                let is_striking = *on_strike || faction_member
-                    .and_then(|m| m.faction_id)
-                    .is_some_and(|fid| striking_factions.contains(&fid));
+                let is_striking = *on_strike
+                    || faction_member
+                        .and_then(|m| m.faction_id)
+                        .is_some_and(|fid| striking_factions.contains(&fid));
 
                 !is_striking
             },
