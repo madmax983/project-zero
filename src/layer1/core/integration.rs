@@ -2624,3 +2624,17 @@ pub fn tether_stump_lost_tech_bridge(
         }
     }
 }
+
+/// INT-1298: Bridges Cultural Vandalism (`Defaced` or `Vandalized`) to AddChronicleEvent (Chronicle).
+pub fn cultural_vandalism_chronicle_bridge(
+    new_defaced: Query<Entity, Added<crate::layer1::social::cultural_vandalism::Defaced>>,
+    new_vandalized: Query<Entity, Added<crate::layer1::social::cultural_vandalism::Vandalized>>,
+    mut chronicle_events: EventWriter<crate::layer1::core::chronicle::AddChronicleEvent>,
+) {
+    if !new_defaced.is_empty() || !new_vandalized.is_empty() {
+        chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
+            importance: crate::layer1::core::chronicle::EventImportance::Major,
+            text: "A structure has been vandalized, turning a symbol of power into a focal point for rebellion!".to_string(),
+        });
+    }
+}

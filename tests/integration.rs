@@ -531,3 +531,6 @@ mod memorial_revolt_work_bridge;
 mod subconscious_grid_effects_bridge;
 #[path = "integration/subconscious_grid_lockdown_bridge.rs"]
 mod subconscious_grid_lockdown_bridge;
+
+#[path = "integration/cultural_vandalism_chronicle.rs"]
+mod cultural_vandalism_chronicle;
