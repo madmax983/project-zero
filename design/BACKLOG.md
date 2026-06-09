@@ -2,7 +2,6 @@
 
 ## High Priority
 
-- [ ] `1299` Quantum Twins — `specs/1299-quantum-twins.md`
 
 
 
