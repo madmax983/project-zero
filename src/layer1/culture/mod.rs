@@ -50,3 +50,4 @@ pub use cultural_influence::*;
 pub mod invasive_xeno_aesthetics;
 pub mod memorial_revolt;
 pub use invasive_xeno_aesthetics::*;
+pub mod cultural_vandalism;
