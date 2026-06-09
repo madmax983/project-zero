@@ -16,3 +16,6 @@
 **[Refactoring Pyramids of Doom in Match Statements]**
 **Learning:** Monolithic `match` statements that perform near-identical logic for dozens of variants (e.g., repeatedly calling `resources.add_X(amount)` for every resource type) create massive Pyramids of Doom and reduce readability.
 **Action:** When a struct (like `ColonyResources`) exposes a unified helper method (like `add_resource(&ResourceType, f32)`), use it to collapse the massive `match` arm into a single, clean iteration step. Ensure you fully verify the helper method accounts for any edge cases originally handled by the manual `match`.
+**[Refactoring Pyramids of Doom in Match Statements]**
+**Learning:** Monolithic `match` statements that perform near-identical logic for dozens of variants (e.g., repeatedly calling `resources.add_X(amount)` for every resource type) create massive Pyramids of Doom and reduce readability.
+**Action:** When a struct (like `ColonyResources`) exposes a unified helper method (like `add_resource(&ResourceType, f32)`), use it to collapse the massive `match` arm into a single, clean iteration step. Ensure you fully verify the helper method accounts for any edge cases originally handled by the manual `match`.

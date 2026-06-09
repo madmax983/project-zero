@@ -5,7 +5,7 @@
 use crate::layer1::building::{Building, BuildingType, Direction};
 use crate::layer1::energy::PowerConsumer;
 use crate::layer1::map::GridPosition;
-use crate::layer1::resources::{ColonyResources, ResourceItem, ResourceType};
+use crate::layer1::resources::{ColonyResources, ResourceItem};
 use crate::layer1::terrain::{TerrainGrid, TerrainType};
 use bevy_ecs::prelude::*;
 use std::collections::{HashMap, HashSet};
@@ -186,51 +186,14 @@ pub fn hopper_system(
             // Determine how much fits
             let amount_to_add = item.amount;
 
-            let (current, max) = match item.resource_type {
-                ResourceType::Food => (resources.food, resources.max_food),
-                ResourceType::Wood => (resources.wood, resources.max_wood),
-                ResourceType::Stone => (resources.stone, resources.max_stone),
-                ResourceType::Ore => (resources.ore, resources.max_ore),
-                ResourceType::Metal => (resources.metal, resources.max_metal),
-                ResourceType::Planks => (resources.planks, resources.max_planks),
-                ResourceType::Blocks => (resources.blocks, resources.max_blocks),
-                ResourceType::Waste => (resources.waste, resources.max_waste),
-                ResourceType::Rations => (resources.rations, resources.max_rations),
-                ResourceType::Fuel => (resources.fuel, resources.max_fuel),
-                ResourceType::Alcohol => (resources.alcohol, resources.max_alcohol),
-                ResourceType::Scrap => (resources.scrap, resources.max_scrap),
-                ResourceType::Tools => (resources.tools, resources.max_tools),
-                ResourceType::BuildingPermit => {
-                    (resources.building_permits, resources.max_building_permits)
-                }
-                ResourceType::MemoryCore => (resources.memory_cores, resources.max_memory_cores),
-                ResourceType::VoidAle => (resources.void_ale, resources.max_void_ale),
-                ResourceType::HyperValuable => (0.0, f32::MAX),
-            };
+            let current = resources.get_amount(item.resource_type);
+            let max = resources.get_max_amount(item.resource_type);
 
             let space = (max - current).max(0.0);
             let added = amount_to_add.min(space);
 
             if added > 0.0 {
-                match item.resource_type {
-                    ResourceType::Food => resources.add_food(added),
-                    ResourceType::Wood => resources.add_wood(added),
-                    ResourceType::Stone => resources.add_stone(added),
-                    ResourceType::Ore => resources.add_ore(added),
-                    ResourceType::Metal => resources.add_metal(added),
-                    ResourceType::Planks => resources.add_planks(added),
-                    ResourceType::Blocks => resources.add_blocks(added),
-                    ResourceType::Waste => resources.add_waste(added),
-                    ResourceType::Rations => resources.add_rations(added),
-                    ResourceType::Fuel => resources.add_fuel(added),
-                    ResourceType::Alcohol => resources.add_alcohol(added),
-                    ResourceType::Scrap => resources.add_scrap(added),
-                    ResourceType::Tools => resources.add_tools(added),
-                    ResourceType::BuildingPermit => resources.add_building_permits(added),
-                    ResourceType::MemoryCore => resources.add_memory_cores(added),
-                    ResourceType::VoidAle => resources.add_void_ale(added),
-                    ResourceType::HyperValuable => {}
-                }
+                resources.add_resource(&item.resource_type, added);
 
                 item.amount -= added;
             }
@@ -246,6 +209,7 @@ pub fn hopper_system(
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::layer1::resources::ResourceType;
     use crate::layer1::building::BuildingType;
     use crate::layer1::energy::PowerConsumer;
     use crate::layer1::map::GridPosition;

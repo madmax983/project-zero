@@ -2,8 +2,8 @@
 mod tests {
     use bevy::prelude::*;
     use scale::layer1::core::chronicle::AddChronicleEvent;
-    use scale::layer1::social::cultural_vandalism::{Defaced, Vandalized};
     use scale::layer1::core::integration::cultural_vandalism_chronicle_bridge;
+    use scale::layer1::social::cultural_vandalism::{Defaced, Vandalized};
 
     #[test]
     fn test_cultural_vandalism_chronicle_bridge_defaced() {
