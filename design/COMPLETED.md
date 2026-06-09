@@ -722,3 +722,4 @@
 - [x] `1049` Architectural Sentience — `specs/1049-architectural-sentience.md` — completed 2026-02-01
 - [x] `INT-1298` Integration: Cultural Vandalism -> Chronicle - completed 2026-06-09
 - [x] `1299` Quantum Twins — `specs/1299-quantum-twins.md` — completed 2026-06-25
+- [x] `INT-1299` Integration: Quantum Twins -> Shields / DamageEvent — completed 2026-10-31

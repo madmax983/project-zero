@@ -1,3 +1,10 @@
+
+### INT-1299: Quantum Twins -> Shields / DamageEvent
+- **Date:** 2026-10-31
+- **Systems connected:** `apply_damage_with_shields` -> `propagate_damage_to_twin` -> `health`
+- **Glue added:** Registered `apply_damage_with_shields` and `propagate_damage_to_twin` in `Layer1SystemSet::Consumption`
+- **Schedule:** `propagate_damage_to_twin` chained after `apply_damage_with_shields` and after `decay_needs_system`
+- **Tests:** `tests/integration/quantum_twins_bridge.rs`
 ### INT-479: The Endless Draft -> Chronicle
 - **Date:** 2026-10-31
 - **Systems connected:** `DraftOrderEvent` -> `endless_draft_bridge_system` -> `AddChronicleEvent`
