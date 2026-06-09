@@ -23249,3 +23249,68 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you invest in gravity-agnostic gene mods, or do you accept that certain populations are permanently tied to specific planetary environments?
 
 ---
+## The Memory Plague
+
+**Layer:** 1 -> Cross-layer
+
+**Fantasy:** A viral cognitive infection that overwrites a Pop's memories with someone else's.
+
+**Mechanic:** A rare pathogen doesn't kill but instead rewrites the host's `Memories`. Infected Pops suddenly possess the grudges, skills, and relationships of a completely different person (sometimes even a person from a different planet).
+
+**Emergence:** Your brilliant lead scientist catches the plague and suddenly believes they are a disgraced miner from an asteroid colony. They abandon the lab to go punch a specific worker they've never met before, acting on a 20-year-old vendetta they shouldn't even know about.
+
+**Tension:** Do you quarantine and potentially execute your most highly trained individuals to stop the spread of fake memories, or try to manage a workforce suffering from profound identity crises?
+
+---
+## Bureaucratic Fossilization
+
+**Layer:** 2 -> 3
+
+**Fantasy:** The slow, inevitable death of a government crushed by its own ancient rules.
+
+**Mechanic:** As an empire ages, specific policies and edicts slowly become "fossilized." They can no longer be repealed or altered, only built upon. The older the empire, the higher the maintenance cost of its administration as it tries to reconcile centuries of contradictory, unchangeable laws.
+
+**Emergence:** You desperately need to draft soldiers for a crisis, but a fossilized 400-year-old law granting draft immunity to anyone who owns a specific breed of pet prevents you. Your entire empire collapses because you cannot legally tell citizens to stop breeding space-cats.
+
+**Tension:** Do you intentionally trigger a massive, destabilizing revolution just to "wipe the slate clean" and reset your legal framework, or try to survive while dragging the dead weight of a thousand years of bureaucracy?
+
+---
+## Orbital Debris Cults
+
+**Layer:** 1 -> 2
+
+**Fantasy:** Worshipping the trash of a higher civilization.
+
+**Mechanic:** When significant space battles or construction projects occur in orbit (Layer 2), debris periodically falls to the planet below. Low-tech or isolated Pops on Layer 1 can develop a religion around this "sky metal," gaining morale boosts but refusing to let the player harvest the debris for resources.
+
+**Emergence:** You desperately need the hyper-alloy from a crashed dreadnought to build a critical planetary defense shield. However, the local population has built a massive shrine around the engine core and will launch a holy war against your enforcers if you try to dismantle it.
+
+**Tension:** Do you respect the local beliefs and lose critical resources, or bulldoze their holy site, sparking a massive internal conflict right before an invasion?
+
+---
+## Phantom Commutes
+
+**Layer:** 1
+
+**Fantasy:** Pops trying to live their old lives after everything has changed.
+
+**Mechanic:** When a major thoroughfare or transit system is destroyed or re-routed, Pops who used it daily may develop "Phantom Commutes." They will attempt to walk the old route, even if it now goes through a dangerous area or leads nowhere, wasting time and risking their lives.
+
+**Emergence:** You reroute the main atmospheric transit line to avoid a new industrial sector. Hundreds of Pops begin walking through the highly toxic industrial zone every morning, suffering massive health damage because their habituated routine overrides their survival instinct.
+
+**Tension:** Do you maintain obsolete, inefficient infrastructure just to keep habituated Pops safe, or force them to adapt to new, optimal routes at the cost of massive short-term casualties?
+
+---
+## Generational Guilt
+
+**Layer:** Cross-layer
+
+**Fantasy:** The sins of the ancestors being visited upon the descendants.
+
+**Mechanic:** If a colony commits a massive atrocity (e.g., exterminating a native species, orbital bombardment of a civilian target), the Pops involved gain a "Guilt" trait. This trait is passed down genetically/culturally. Generations later, descendants of those Pops may spontaneously form self-flagellating cults or demand crippling reparations, drastically lowering their productivity.
+
+**Emergence:** You pacify a restive asteroid base by cutting their life support 200 years ago. Today, the descendants of the enforcers who pushed the button have formed a powerful political faction that demands the empire bankrupt itself building a massive memorial on the asteroid, threatening civil war if denied.
+
+**Tension:** Do you commit necessary atrocities for short-term survival, knowing it will cripple the morale and unity of your empire centuries later?
+
+---
