@@ -39,10 +39,10 @@ impl TryFrom<MouseEvent> for GameMouseEvent {
 
     #[allow(clippy::cast_possible_truncation)]
     fn try_from(mouse: MouseEvent) -> Result<Self, Self::Error> {
-        if mouse.event == MouseEventKind::Pressed {
+        if matches!(mouse.kind, MouseEventKind::ButtonDown(_)) {
             Ok(Self {
-                x: mouse.x.min(u32::from(u16::MAX)) as u16,
-                y: mouse.y.min(u32::from(u16::MAX)) as u16,
+                x: mouse.col,
+                y: mouse.row,
             })
         } else {
             Err(())

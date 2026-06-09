@@ -162,24 +162,22 @@ impl OralTradition {
     ///
     /// assert_eq!(tradition.stories[0].genre, StoryGenre::Tragedy);
     /// ```
+    /// ⚡ Bolt Optimization:
+    /// Removed intermediate `.collect::<Vec<_>>()` chain over filtered chronicle events.
+    /// Processing `chronicle.events.iter()` directly prevents unnecessary O(N) memory
+    /// allocations per simulation tick, significantly reducing memory pressure.
     pub fn process_chronicles(&mut self, chronicle: &Chronicle) {
-        // Only look at events since last check
-        let new_events: Vec<_> = chronicle
+        let mut has_new = false;
+        let mut last_tick = self.last_processed_tick;
+        let current_processed_tick = self.last_processed_tick;
+
+        for event in chronicle
             .events
             .iter()
-            .filter(|e| e.tick > self.last_processed_tick)
-            .collect();
-
-        if new_events.is_empty() {
-            return;
-        }
-
-        // Update tracker
-        if let Some(last) = new_events.last() {
-            self.last_processed_tick = last.tick;
-        }
-
-        for event in new_events {
+            .filter(|e| e.tick > current_processed_tick)
+        {
+            has_new = true;
+            last_tick = event.tick;
             // Heuristic for genre
             let genre = if event.text.to_lowercase().contains("died")
                 || event.text.to_lowercase().contains("death")
@@ -211,6 +209,10 @@ impl OralTradition {
             };
 
             self.add_story(story);
+        }
+
+        if has_new {
+            self.last_processed_tick = last_tick;
         }
     }
 }
@@ -369,6 +371,10 @@ impl std::fmt::Display for StoryGenre {
 
 #[cfg(test)]
 mod tests {
+    #[allow(unused_imports)]
+    use super::*;
+    #[allow(unused_imports)]
+    use crate::layer1::core::chronicle::{Chronicle, EventImportance};
 
     #[cfg(feature = "nova")]
     use crate::layer1::needs::Needs;
@@ -384,7 +390,9 @@ mod tests {
         chronicle.add_event(100, "Heroic Deed".to_string(), EventImportance::Legendary);
         world.insert_resource(chronicle);
 
-        world.run_system_once(collect_chronicles_system).unwrap();
+        let mut schedule = Schedule::default();
+        schedule.add_systems(collect_chronicles_system);
+        schedule.run(&mut world);
 
         let tradition = world.resource::<OralTradition>();
         assert_eq!(tradition.stories.len(), 1);
@@ -400,7 +408,9 @@ mod tests {
         chronicle.add_event(100, "Someone died".to_string(), EventImportance::Standard);
         world.insert_resource(chronicle);
 
-        world.run_system_once(collect_chronicles_system).unwrap();
+        let mut schedule = Schedule::default();
+        schedule.add_systems(collect_chronicles_system);
+        schedule.run(&mut world);
 
         let tradition = world.resource::<OralTradition>();
         assert_eq!(tradition.stories[0].genre, StoryGenre::Tragedy);
@@ -435,7 +445,9 @@ mod tests {
 
         // Run system enough times to trigger probability
         for _ in 0..50 {
-            world.run_system_once(storytelling_system).unwrap();
+            let mut schedule = Schedule::default();
+            schedule.add_systems(storytelling_system);
+            schedule.run(&mut world);
         }
 
         let needs = world.get::<Needs>(pop).unwrap();
