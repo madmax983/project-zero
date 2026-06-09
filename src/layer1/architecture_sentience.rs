@@ -1,7 +1,7 @@
-use bevy_ecs::prelude::*;
-use bevy::time::Time;
 use crate::layer1::energy::PowerSource;
 use crate::layer1::social::Unrest;
+use bevy::time::Time;
+use bevy_ecs::prelude::*;
 
 #[derive(Component)]
 pub struct AutomatedInfrastructure;
@@ -33,7 +33,11 @@ pub fn sentient_architecture_strike_system(
     time: Option<Res<Time>>,
     mut query: Query<(&mut SentientArchitecture, &mut PowerSource)>,
 ) {
-    let delta = if let Some(t) = time { t.delta_secs() } else { 1.0 }; // Default to 1.0 for tests without Time resource
+    let delta = if let Some(t) = time {
+        t.delta_secs()
+    } else {
+        1.0
+    }; // Default to 1.0 for tests without Time resource
 
     for (mut sentience, mut generator) in query.iter_mut() {
         sentience.leisure_need -= 5.0 * delta; // Decrease over time
@@ -51,30 +55,43 @@ pub fn sentient_architecture_strike_system(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use bevy::prelude::*;
     use crate::layer1::architecture::{Building, BuildingType};
     use crate::layer1::energy::PowerSource;
     use crate::layer1::social::Unrest;
+    use bevy::prelude::*;
 
     #[test]
     fn test_architectural_sentience_unionizes_on_high_unrest() {
         let mut app = App::new();
         app.add_systems(Update, architectural_union_trigger_system);
 
-        app.insert_resource(Unrest { level: 90.0, modifiers: vec![] }); // High global unrest
+        app.insert_resource(Unrest {
+            level: 90.0,
+            modifiers: vec![],
+        }); // High global unrest
 
-        let automated_building = app.world_mut().spawn((
-            Building { building_type: BuildingType::Generator },
-            PowerSource { output: 100.0, active: true },
-            AutomatedInfrastructure, // Flag for high-tier automated buildings
-        )).id();
+        let automated_building = app
+            .world_mut()
+            .spawn((
+                Building {
+                    building_type: BuildingType::Generator,
+                },
+                PowerSource {
+                    output: 100.0,
+                    active: true,
+                },
+                AutomatedInfrastructure, // Flag for high-tier automated buildings
+            ))
+            .id();
 
         // Trigger system
         app.update();
 
         // Building should now have sentience/unionized component
         assert!(
-            app.world().get::<SentientArchitecture>(automated_building).is_some(),
+            app.world()
+                .get::<SentientArchitecture>(automated_building)
+                .is_some(),
             "Automated infrastructure should gain sentience during high unrest."
         );
     }
@@ -84,12 +101,23 @@ mod tests {
         let mut app = App::new();
         app.add_systems(Update, sentient_architecture_strike_system);
 
-        let building = app.world_mut().spawn((
-            Building { building_type: BuildingType::Generator },
-            PowerSource { output: 100.0, active: true },
-            AutomatedInfrastructure,
-            SentientArchitecture { leisure_need: 0.0, is_striking: false }, // Needs defragmentation
-        )).id();
+        let building = app
+            .world_mut()
+            .spawn((
+                Building {
+                    building_type: BuildingType::Generator,
+                },
+                PowerSource {
+                    output: 100.0,
+                    active: true,
+                },
+                AutomatedInfrastructure,
+                SentientArchitecture {
+                    leisure_need: 0.0,
+                    is_striking: false,
+                }, // Needs defragmentation
+            ))
+            .id();
 
         // Trigger system
         app.update();
@@ -98,7 +126,13 @@ mod tests {
         let sentience = app.world().get::<SentientArchitecture>(building).unwrap();
         let generator = app.world().get::<PowerSource>(building).unwrap();
 
-        assert!(sentience.is_striking, "Sentient building with low leisure should strike.");
-        assert!(!generator.active, "Striking building should shut down its output.");
+        assert!(
+            sentience.is_striking,
+            "Sentient building with low leisure should strike."
+        );
+        assert!(
+            !generator.active,
+            "Striking building should shut down its output."
+        );
     }
 }

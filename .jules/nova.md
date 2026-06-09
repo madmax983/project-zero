@@ -140,3 +140,8 @@
 **Concept:** Connected `Shower` buildings with the `consume_chemical` system. Pops using a spiked `ChemicalShower` are globally affected by its `ChemicalType` (e.g. Stim, Sedative).
 **Fate:** Submitted
 **Lesson:** Leveraging the existing hygiene needs system is an efficient vector for mass-medicating a colony without requiring new user-directed orders or behaviors.
+
+## [Aeolian Clutter]
+**Concept:** Added `aeolian_clutter_system` in `src/experimental/aeolian_clutter.rs`. It physically moves `Clutter` from one tile to an adjacent tile downwind based on the `WindGrid` velocities.
+**Fate:** Submitted
+**Lesson:** Connects the environment/weather system (Wind) with the maintenance system (Clutter). It enables emergent colony layouts where players can design wind traps to collect trash into specific corners for easier cleaning.
