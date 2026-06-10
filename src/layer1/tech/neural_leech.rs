@@ -95,3 +95,127 @@ pub fn neural_hub_death_bridge_system(
         events.send(NeuralHubDeathEvent { hub_entity: entity });
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use bevy_app::App;
+
+    #[test]
+    fn test_apply_neural_link_buffs_system() {
+        let mut app = App::new();
+        app.add_systems(bevy_app::Update, apply_neural_link_buffs_system);
+
+        let hub = app
+            .world_mut()
+            .spawn((NeuralHub, GridPosition { x: 0, y: 0 }))
+            .id();
+        let worker_close = app
+            .world_mut()
+            .spawn((Pop, GridPosition { x: 10, y: 10 }))
+            .id();
+        let worker_far = app
+            .world_mut()
+            .spawn((Pop, GridPosition { x: 30, y: 30 }))
+            .id();
+
+        app.update();
+
+        assert!(app.world().get::<NeuralLinked>(worker_close).is_some());
+        assert!(app.world().get::<NeuralLinked>(worker_far).is_none());
+        assert_eq!(
+            app.world()
+                .get::<NeuralLinked>(worker_close)
+                .unwrap()
+                .hub_entity,
+            hub
+        );
+
+        app.world_mut()
+            .get_mut::<GridPosition>(worker_close)
+            .unwrap()
+            .x = 50;
+
+        app.update();
+
+        assert!(app.world().get::<NeuralLinked>(worker_close).is_none());
+    }
+
+    #[test]
+    fn test_handle_hub_death_system() {
+        let mut app = App::new();
+        app.add_systems(bevy_app::Update, handle_hub_death_system);
+        app.insert_resource(bevy_ecs::event::Events::<NeuralHubDeathEvent>::default());
+
+        let hub = app.world_mut().spawn_empty().id();
+        let worker = app.world_mut().spawn(NeuralLinked { hub_entity: hub }).id();
+
+        app.world_mut()
+            .resource_mut::<bevy_ecs::event::Events<NeuralHubDeathEvent>>()
+            .send(NeuralHubDeathEvent { hub_entity: hub });
+
+        app.update();
+
+        assert!(app.world().get::<NeuralLinked>(worker).is_none());
+        assert!(app.world().get::<NeuralShock>(worker).is_some());
+    }
+
+    #[test]
+    fn test_process_neural_hub_decay_system() {
+        let mut app = App::new();
+        app.add_systems(bevy_app::Update, process_neural_hub_decay_system);
+
+        let hub = app
+            .world_mut()
+            .spawn((
+                NeuralHub,
+                StressTracker {
+                    accumulated_stress: 0.0,
+                },
+            ))
+            .id();
+        let worker = app
+            .world_mut()
+            .spawn(StressTracker {
+                accumulated_stress: 0.0,
+            })
+            .id();
+
+        app.update();
+
+        assert_eq!(
+            app.world()
+                .get::<StressTracker>(hub)
+                .unwrap()
+                .accumulated_stress,
+            100.0
+        );
+        assert_eq!(
+            app.world()
+                .get::<StressTracker>(worker)
+                .unwrap()
+                .accumulated_stress,
+            0.0
+        );
+    }
+
+    #[test]
+    fn test_neural_hub_death_bridge_system() {
+        let mut app = App::new();
+        app.add_systems(bevy_app::Update, neural_hub_death_bridge_system);
+        app.insert_resource(bevy_ecs::event::Events::<NeuralHubDeathEvent>::default());
+
+        let hub = app.world_mut().spawn(NeuralHub).id();
+        app.update();
+
+        app.world_mut().entity_mut(hub).remove::<NeuralHub>();
+        app.update();
+
+        let events = app
+            .world()
+            .resource::<bevy_ecs::event::Events<NeuralHubDeathEvent>>();
+        let mut reader = events.get_cursor();
+        let events_iter: Vec<_> = reader.read(events).collect();
+        assert_eq!(events_iter.len(), 1);
+    }
+}
