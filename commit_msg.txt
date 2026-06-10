@@ -1,0 +1,6 @@
+⚡ Bolt: Remove unnecessary `Traits` clone in Eureka calculations
+
+*   **What:** The `check_for_eureka_world` function now accepts the worker's `Entity` identifier instead of a cloned `Traits` component.
+*   **Why:** `check_for_eureka_world` evaluates two flags. Previously, passing `Option<Traits>` by value forced callers to clone the component (which wraps a `bevy::utils::HashSet`) on the hot path (every work tick). Borrowing conflicts prevented passing a reference alongside `&mut World`. Passing the `Entity` ID allows a clean, short-lived look-up.
+*   **Impact:** Removes 1 heap allocation per pop, per work tick, reducing memory fragmentation and pressure on the ECS evaluation loop.
+*   **Measurement:** Run `cargo bench` on work execution paths or observe allocation counts during active colony simulation.
