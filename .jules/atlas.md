@@ -34,3 +34,7 @@
 **[Title] Break Testing Dependency Between Fleet and Ship Modules**
 **Tangle:** Tests for `FleetComposition` (defined in `fleet.rs`) were located in `ship.rs`, causing an unnecessary cross-module import (`use crate::layer2::fleet::FleetComposition;`) just for testing.
 **Blueprint:** Moved `FleetComposition` tests from `src/layer2/ship.rs` to `src/layer2/fleet.rs` to enforce domain cohesion, ensuring tests live alongside the logic they evaluate.
+
+**[Title] Break Circular Dependency in Execution Module**
+**Tangle:** A circular dependency existed between `src/layer1/execution/general_work.rs` and `src/layer1/execution/mining.rs`. `mining.rs` imported `WORK_CRIT_CHANCE` and `WORK_CRIT_MULTIPLIER` from `general_work.rs`, while `general_work.rs` imported `handle_mining_work` and `handle_chopping_work` from `mining.rs`.
+**Blueprint:** Extracted `WORK_CRIT_CHANCE` and `WORK_CRIT_MULTIPLIER` into a new dedicated constants module at `src/layer1/execution/constants.rs`. Both `general_work.rs` and `mining.rs` now import the constants from this new module, breaking the cyclic reference.
