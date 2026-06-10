@@ -467,6 +467,7 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::social::inherited_grudges::inherit_grudges_on_birth_system,
             crate::layer1::social::inherited_grudges::transfer_grudges_on_death_system,
             crate::layer1::social::inherited_grudges::prevent_grudge_work_system,
+            crate::layer1::core::integration::public_grievance_grudge_bridge,
         )
             .in_set(Layer1SystemSet::Observation),
     );
