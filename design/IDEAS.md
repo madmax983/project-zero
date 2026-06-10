@@ -23440,3 +23440,43 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Risk versus reward on a literal vertical axis. How deep do you dare to go?
 
 ---
+## The Memory of Dirt
+
+**Layer:** 1
+
+**Fantasy:** The ground itself remembers tragedy and triumph, affecting those who build upon it.
+
+**Mechanic:** Tiles where significant mass events occur (battles, starvation, massive celebrations) gain a hidden "Psychic Staining" property (e.g., Dread, Joy, Resonance). Pops living or working on these tiles slowly absorb these emotional states, which modifies their baseline mood and utility weights over time.
+
+**Emergence:** You demolish a slum where dozens starved to build a hyper-efficient factory, but the workers assigned there constantly suffer from unexplained dread and depression, eventually leading to spontaneous strikes or sabotage. Conversely, a previously barren tile where a legendary leader was born becomes a potent morale booster.
+
+**Tension:** Do you build over sites of historical trauma because they are strategically located, risking the sanity of your workforce, or do you sacrifice prime real estate to leave the "bad dirt" untouched?
+
+---
+
+## Ghost Ships of the Sub-Light Era
+
+**Layer:** 2
+
+**Fantasy:** Encountering the slow, silent remnants of humanity's early, desperate expansion.
+
+**Mechanic:** Ancient, sub-light generation ships launched centuries ago are occasionally discovered still crawling through the outer edges of the system. They are extremely fragile, carry primitive but highly robust unique technology, and their populations have no idea that the FTL revolution occurred.
+
+**Emergence:** A Ghost Ship arrives at its destination planet only to find you have already heavily industrialized it. They legally demand you surrender their "promised land" based on 400-year-old treaties. Alternatively, your modern automated trade ships might accidentally ram them because the Ghost Ships lack modern transponder signals.
+
+**Tension:** Do you forcibly integrate them to harvest their unique, lost-tech components, ignore them as they slowly traverse your bustling trade lanes, or try to secretly support them without shattering their generational worldview?
+
+---
+## Orbital Kessler Syndicates
+
+**Layer:** 2
+
+**Fantasy:** Trash isn't just a hazard; it's an economy and a weapon.
+
+**Mechanic:** As orbital infrastructure decays or is destroyed, it generates Debris. Debris physically clutters orbits, increasing the risk of catastrophic chain reactions (Kessler Syndrome) that lock down planetary access. However, specific Pops or specialized scavenger factions can be assigned to harvest this debris for raw materials, effectively monopolizing the "trash lanes."
+
+**Emergence:** You ignore orbital cleanup to save money, and a minor collision cascades into a system-wide lockdown. While your trade fleets are grounded, a scavenger syndicate that lives *in* the debris fields becomes the wealthiest entity in the system, eventually buying out your planetary governors.
+
+**Tension:** Do you invest heavily in clean, responsible orbital development, or intentionally pollute your own orbits to create a defensive shell that only your specialized (but politically dangerous) scavengers can navigate?
+
+---
