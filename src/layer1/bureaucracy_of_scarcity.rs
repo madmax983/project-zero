@@ -68,7 +68,7 @@ pub struct GlobalRationingModifier {
 ///
 /// // The system panicked and created bureaucratic jobs
 /// let board = app.world().get::<JobBoard>(colony).unwrap();
-/// assert!(board.available_jobs.contains(&JobType::RationingBureaucrat));
+/// assert!(board.available_bureaucrat_jobs > 0);
 /// ```
 pub fn evaluate_scarcity_system(
     mut colonies: Query<(&ResourceStorage, &mut JobBoard), With<Colony>>,

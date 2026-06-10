@@ -3,7 +3,7 @@ use bevy_ecs::prelude::*;
 #[cfg(feature = "nova")]
 use ratatui::{
     prelude::*,
-    widgets::{Block, BorderType, Borders, Clear, Row, Table, Cell},
+    widgets::{Block, BorderType, Borders, Cell, Clear, Row, Table},
 };
 
 #[cfg(feature = "nova")]
@@ -41,21 +41,26 @@ pub fn render_oral_tradition(frame: &mut Frame, area: Rect, world: &World) {
         .bottom_margin(1);
 
     let rows: Vec<Row> = if let Some(trad) = tradition {
-        trad.stories.iter().rev().map(|story| {
-            let (genre_color, genre_text) = match story.genre {
-                StoryGenre::Heroic => (Color::Yellow, "🌟 Heroic"),
-                StoryGenre::Tragedy => (Color::Red, "🎭 Tragedy"),
-                StoryGenre::Cautionary => (Color::Magenta, "⚠️ Cautionary"),
-                StoryGenre::Trivial => (Color::DarkGray, "📝 Trivial"),
-            };
+        trad.stories
+            .iter()
+            .rev()
+            .map(|story| {
+                let (genre_color, genre_text) = match story.genre {
+                    StoryGenre::Heroic => (Color::Yellow, "🌟 Heroic"),
+                    StoryGenre::Tragedy => (Color::Red, "🎭 Tragedy"),
+                    StoryGenre::Cautionary => (Color::Magenta, "⚠️ Cautionary"),
+                    StoryGenre::Trivial => (Color::DarkGray, "📝 Trivial"),
+                };
 
-            Row::new(vec![
-                Cell::from(genre_text).style(Style::default().fg(genre_color)),
-                Cell::from(story.historical_date.to_string()).style(Style::default().fg(Color::Cyan)),
-                Cell::from(story.mutations.to_string()).style(Style::default().fg(Color::Cyan)),
-                Cell::from(story.text.clone()).style(Style::default().fg(Color::White)),
-            ])
-        }).collect()
+                Row::new(vec![
+                    Cell::from(genre_text).style(Style::default().fg(genre_color)),
+                    Cell::from(story.historical_date.to_string())
+                        .style(Style::default().fg(Color::Cyan)),
+                    Cell::from(story.mutations.to_string()).style(Style::default().fg(Color::Cyan)),
+                    Cell::from(story.text.clone()).style(Style::default().fg(Color::White)),
+                ])
+            })
+            .collect()
     } else {
         vec![]
     };

@@ -543,3 +543,9 @@ mod public_grievances_grudges_bridge;
 mod inherited_grudges_bridge;
 #[path = "integration/trade_embargo.rs"]
 mod trade_embargo;
+
+#[path = "integration/quantum_twins_bridge.rs"]
+mod quantum_twins_bridge;
+
+#[path = "integration/galactic_games_bridge.rs"]
+mod galactic_games_bridge;

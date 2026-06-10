@@ -15,21 +15,21 @@ mod chronicle;
 mod colony_map;
 mod inspector;
 mod log_plugin;
+#[cfg(feature = "nova")]
+mod oral_tradition;
 mod status;
 mod system_map;
 mod tech;
-#[cfg(feature = "nova")]
-mod oral_tradition;
 
 pub use chronicle::ChroniclePlugin;
 pub use colony_map::ColonyMapPlugin;
 pub use inspector::InspectorPlugin;
 pub use log_plugin::LogPlugin;
+#[cfg(feature = "nova")]
+pub use oral_tradition::OralTraditionPlugin;
 pub use status::StatusPlugin;
 pub use system_map::SystemMapPlugin;
 pub use tech::TechPlugin;
-#[cfg(feature = "nova")]
-pub use oral_tradition::OralTraditionPlugin;
 
 pub const COLONY_MAP_PLUGIN_TYPE: &str = "colony-map";
 pub const SYSTEM_MAP_PLUGIN_TYPE: &str = "system-map";
@@ -171,13 +171,13 @@ fn copy_buffer_into_area(source: &Buffer, target_area: Rect, target: &mut Buffer
 
 #[cfg(test)]
 mod tests {
+    #[cfg(feature = "nova")]
+    use super::ORAL_TRADITION_PLUGIN_TYPE;
     use super::{
         register_default_plugins, ChroniclePlugin, SharedWorld, StatusPlugin, TechPlugin,
         CHRONICLE_PLUGIN_TYPE, COLONY_MAP_PLUGIN_TYPE, INSPECTOR_PLUGIN_TYPE, LOG_PLUGIN_TYPE,
         STATUS_PLUGIN_TYPE, SYSTEM_MAP_PLUGIN_TYPE, TECH_PLUGIN_TYPE,
     };
-    #[cfg(feature = "nova")]
-    use super::ORAL_TRADITION_PLUGIN_TYPE;
     use crate::prelude::{setup_world_with_config, SetupConfig};
     use ratatui::{buffer::Buffer, layout::Rect};
     use ratatui_hypertile_extras::{HypertilePlugin, Registry};

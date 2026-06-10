@@ -2340,6 +2340,7 @@ mod reproduction_tests {
             tiles,
         });
         world.insert_resource(scale::layer1::building::OccupiedTiles::default());
+        world.init_resource::<scale::layer1::oral_tradition::OralTradition>();
         world
     }
 
