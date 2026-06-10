@@ -725,3 +725,4 @@
 - [x] `1292` The Galactic Games — `specs/1292-the-galactic-games.md` — completed 2024-05-30
 - [x] `1293` Trade Embargoes — `specs/1293-trade-embargoes.md` — completed 2026-06-09
 - [x] `INT-1121` Integration: Generational Grudges -> Public Grievances — completed 2026-06-08
+- [x] `INT-1293` Integration: Trade Embargoes -> Trade Routes — completed 2026-06-09

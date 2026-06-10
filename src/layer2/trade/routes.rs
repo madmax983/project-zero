@@ -89,27 +89,65 @@ pub fn check_sentient_route_system(
     }
 }
 
+fn parse_resource(s: &str) -> Option<crate::layer1::resources::ResourceType> {
+    match s {
+        "Food" => Some(crate::layer1::resources::ResourceType::Food),
+        "Wood" => Some(crate::layer1::resources::ResourceType::Wood),
+        "Stone" => Some(crate::layer1::resources::ResourceType::Stone),
+        "Ore" => Some(crate::layer1::resources::ResourceType::Ore),
+        "Metal" => Some(crate::layer1::resources::ResourceType::Metal),
+        "Planks" => Some(crate::layer1::resources::ResourceType::Planks),
+        "Blocks" => Some(crate::layer1::resources::ResourceType::Blocks),
+        "Waste" => Some(crate::layer1::resources::ResourceType::Waste),
+        "Rations" => Some(crate::layer1::resources::ResourceType::Rations),
+        "Fuel" => Some(crate::layer1::resources::ResourceType::Fuel),
+        "Alcohol" => Some(crate::layer1::resources::ResourceType::Alcohol),
+        "Scrap" => Some(crate::layer1::resources::ResourceType::Scrap),
+        "Tools" => Some(crate::layer1::resources::ResourceType::Tools),
+        "BuildingPermit" => Some(crate::layer1::resources::ResourceType::BuildingPermit),
+        "MemoryCore" => Some(crate::layer1::resources::ResourceType::MemoryCore),
+        "VoidAle" => Some(crate::layer1::resources::ResourceType::VoidAle),
+        "HyperValuable" => Some(crate::layer1::resources::ResourceType::HyperValuable),
+        _ => None,
+    }
+}
+
 pub fn execute_trade_routes_system(
     mut routes: Query<(&TradeRoute, &mut Timer)>,
     mut colonies: Query<&mut Colony>,
     mut events: EventWriter<TradeRouteExecutedEvent>,
+    market: Option<Res<crate::layer3::market::GalacticMarket>>,
 ) {
     for (route, mut timer) in routes.iter_mut() {
         if timer.0 > 0 {
             timer.0 -= 1;
         }
         if timer.0 == 0 {
-            if let Ok([mut source_colony, mut dest_colony]) =
-                colonies.get_many_mut([route.source, route.destination])
-            {
-                if source_colony.remove_resource(&route.item_type, route.amount) {
-                    dest_colony.add_resource(route.item_type.clone(), route.amount);
-                    events.send(TradeRouteExecutedEvent {
-                        source: route.source,
-                        destination: route.destination,
-                        item_type: route.item_type.clone(),
-                        amount: route.amount,
-                    });
+            let mut can_trade = true;
+            if let Some(ref market) = market {
+                if let Some(res_type) = parse_resource(&route.item_type) {
+                    if !market.can_trade(
+                        res_type,
+                        crate::layer1::social::factions::FactionId::Unaligned,
+                    ) {
+                        can_trade = false;
+                    }
+                }
+            }
+
+            if can_trade {
+                if let Ok([mut source_colony, mut dest_colony]) =
+                    colonies.get_many_mut([route.source, route.destination])
+                {
+                    if source_colony.remove_resource(&route.item_type, route.amount) {
+                        dest_colony.add_resource(route.item_type.clone(), route.amount);
+                        events.send(TradeRouteExecutedEvent {
+                            source: route.source,
+                            destination: route.destination,
+                            item_type: route.item_type.clone(),
+                            amount: route.amount,
+                        });
+                    }
                 }
             }
             timer.0 = route.interval;
