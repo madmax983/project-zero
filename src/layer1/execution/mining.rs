@@ -14,7 +14,7 @@ use crate::layer1::resources::{process_logging, process_mining};
 use crate::layer1::skills::{SkillType, XpGainEvent, XpSource};
 use crate::shared::log::MessageLog;
 
-use crate::layer1::execution::general_work::{WORK_CRIT_CHANCE, WORK_CRIT_MULTIPLIER};
+use crate::layer1::execution::constants::{WORK_CRIT_CHANCE, WORK_CRIT_MULTIPLIER};
 
 /// Handles mining work at a designation.
 ///
