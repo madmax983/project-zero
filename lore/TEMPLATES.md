@@ -3460,29 +3460,6 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ---
 
-## Quantum Twins Templates (Spec 245)
-
-### TWIN_SYNC_EVENT
-
-**Generates:** Play event
-**Slots:** [COLONY], [YEAR], [NAME_A], [NAME_B], [TWIN_SENSATION]
-
-**Patterns:**
-- "[NAME_A] learned to mine, and across the base, [NAME_B] felt [TWIN_SENSATION]. [YEAR]."
-- "[YEAR]: The entanglement holds. [NAME_A] smiled, and [NAME_B] experienced [TWIN_SENSATION]."
-- "Shared soul. When [NAME_A] was hurt, [NAME_B] reported [TWIN_SENSATION]. [YEAR]."
-
-### SEVERANCE_SHOCK
-
-**Generates:** Play event
-**Slots:** [COLONY], [YEAR], [NAME_SURVIVOR], [SEVERANCE_TRAUMA]
-
-**Patterns:**
-- "The link is broken. [YEAR]. [NAME_SURVIVOR] collapses in [SEVERANCE_TRAUMA]."
-- "[YEAR]: Their twin died in the dark. [NAME_SURVIVOR] suffers [SEVERANCE_TRAUMA]."
-- "Half a soul remains. [NAME_SURVIVOR] is lost to [SEVERANCE_TRAUMA] after the severance. [YEAR]."
-
----
 
 ## The Empty Room Templates (Spec 251)
 
@@ -8969,3 +8946,73 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: The Breaking came for [POP_NAME]. They [BREAKDOWN_SYMPTOM]."
 - "Without rest, the mind frays. [POP_NAME] [BREAKDOWN_SYMPTOM] in the middle of their shift."
 - "The cost of the Wakeful Trait is steep. Today, [POP_NAME] [BREAKDOWN_SYMPTOM]."
+
+
+## The Galactic Games Templates (Spec 1292)
+
+### Template: GALACTIC_GAMES_VICTORY
+**Generates:** Play event
+**Slots:** [FACTION_NAME], [YEAR], [CHAMPION_NAME], [GAME_EVENT]
+
+**Patterns:**
+- "[YEAR]: Victory in the [GAME_EVENT]. [CHAMPION_NAME] brings glory to [FACTION_NAME]."
+- "[FACTION_NAME] dominates the [GAME_EVENT]. The name [CHAMPION_NAME] is etched in history. [YEAR]."
+- "A triumph of flesh and skill. [CHAMPION_NAME] wins the [GAME_EVENT] for [FACTION_NAME]. [YEAR]."
+
+### Template: GALACTIC_GAMES_DEFEAT
+**Generates:** Play event
+**Slots:** [FACTION_NAME], [YEAR], [CHAMPION_NAME], [GAME_EVENT]
+
+**Patterns:**
+- "[YEAR]: National shame. [CHAMPION_NAME] fell early in the [GAME_EVENT]. [FACTION_NAME] mourns."
+- "We invested everything, but [CHAMPION_NAME] was not enough in the [GAME_EVENT]. [FACTION_NAME] loses face. [YEAR]."
+- "The [GAME_EVENT] brings only disgrace to [FACTION_NAME] after [CHAMPION_NAME] is eliminated. [YEAR]."
+
+## Trade Embargoes Templates (Spec 1293)
+
+### Template: EMBARGO_DECLARED
+**Generates:** Play event
+**Slots:** [FACTION_NAME], [YEAR], [RESOURCE], [TARGET_FACTION]
+
+**Patterns:**
+- "[YEAR]: [FACTION_NAME] closes the market on [RESOURCE]. A silent war begins against [TARGET_FACTION]."
+- "Economic weaponization. [FACTION_NAME] enforces an embargo on [RESOURCE], starving [TARGET_FACTION]. [YEAR]."
+- "The flow of [RESOURCE] stops by decree of [FACTION_NAME]. [TARGET_FACTION] must find another way. [YEAR]."
+
+### Template: EMBARGO_BROKEN
+**Generates:** Play event
+**Slots:** [FACTION_NAME], [YEAR], [RESOURCE], [TARGET_FACTION]
+
+**Patterns:**
+- "[YEAR]: The blockade cracks. [TARGET_FACTION] breaks the embargo on [RESOURCE] set by [FACTION_NAME]."
+- "[TARGET_FACTION] refuses to starve. They shatter [FACTION_NAME]'s hold on [RESOURCE]. [YEAR]."
+
+## Cultural Vandalism Templates (Spec 1298)
+
+### Template: STRUCTURE_DEFACED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [STRUCTURE_NAME], [VANDALISM_ACT]
+
+**Patterns:**
+- "[YEAR]: Unrest boils over in [COLONY]. The [STRUCTURE_NAME] was subjected to [VANDALISM_ACT]."
+- "A symbol of power, inverted. [COLONY] rebels committed [VANDALISM_ACT] upon the [STRUCTURE_NAME]. [YEAR]."
+- "[COLONY], [YEAR]: The [STRUCTURE_NAME] no longer inspires loyalty after the [VANDALISM_ACT]."
+
+## Quantum Twins Templates (Spec 1299)
+
+### Template: TWIN_SYNC_EVENT
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [NAME_A], [NAME_B], [TWIN_SENSATION]
+
+**Patterns:**
+- "[NAME_A] learned to mine, and across the base, [NAME_B] felt [TWIN_SENSATION]. [YEAR]."
+- "[YEAR]: The entanglement holds. [NAME_A] smiled, and [NAME_B] experienced [TWIN_SENSATION]."
+- "Shared soul. When [NAME_A] was hurt, [NAME_B] reported [TWIN_SENSATION]. [YEAR]."
+
+### Template: SEVERANCE_SHOCK
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [NAME_SURVIVOR], [SEVERANCE_TRAUMA]
+
+**Patterns:**
+- "[YEAR]: A bond broken in death. [NAME_SURVIVOR] suffered [SEVERANCE_TRAUMA] as their twin perished."
+- "When the twin died, [NAME_SURVIVOR] collapsed, experiencing [SEVERANCE_TRAUMA]. [YEAR]."
