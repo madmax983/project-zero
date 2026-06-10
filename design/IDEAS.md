@@ -23522,3 +23522,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you respond to supply chain issues with harsh discipline (which might trigger a full-blown revolt) or do you try to bribe the unhappy logisticians with better living conditions while your frontier burns?
 
 ---
+
+## The Accidental Pantheon
+
+**Layer:** Cross-layer
+
+**Fantasy:** Your earliest, most flawed colonists become deified by later generations who misinterpret historical records.
+
+**Mechanic:** As time passes, high-level pops from the first few years of a colony (founders, successful generals, master builders) have their traits and actions exaggerated in local memory. Eventually, they become religious figures. Artifacts associated with them generate powerful Faith or Unity, but also spawn theological schisms if historical evidence contradicts the legend.
+
+**Emergence:** You try to unify your empire using the legend of "Saint Elias the Builder", only to dig up Elias's original personal logs on a frontier world, revealing he was a corrupt embezzler. The discovery splits your empire's morale in two.
+
+**Tension:** Do you suppress the truth to maintain social cohesion, or embrace historical accuracy at the cost of your empire's unifying mythos?
+
+---
+
+## The Orphan Fleet
+
+**Layer:** 2
+
+**Fantasy:** A fleet of refugee ships that has forgotten where they came from, endlessly wandering the system.
+
+**Mechanic:** When a colony is completely destroyed, any surviving civilian ships are grouped into an "Orphan Fleet". Over decades, without a home port, they develop their own closed-loop economy and culture in deep space. They refuse to settle on planets, instead strip-mining asteroids and occasionally trading.
+
+**Emergence:** You ignore an Orphan Fleet for a century. They eventually build a massive, mobile junk-station that eclipses your own orbital infrastructure and start charging you tolls to access your own asteroid belts.
+
+**Tension:** Do you spend massive resources to forcibly integrate them back into planetary society, or let them roam free as a volatile but potentially useful mercenary asset?
+
+---
+
+## Quarantine Cults
+
+**Layer:** 1
+
+**Fantasy:** Isolating a sick population creates a radically different, insular micro-society.
+
+**Mechanic:** When a highly contagious disease hits, players can designate a "Quarantine Zone" and lock the doors. Pops trapped inside for long periods develop unique coping mechanisms, eventually forming "Quarantine Cults" centered around purity, survival, and the disease itself. When the quarantine is finally lifted, these pops have permanently altered utility weights and relationships.
+
+**Emergence:** You lock down an entire sector to stop a plague. Decades later, the descendants of the survivors have learned to live with the disease and now view it as a holy blessing. When you try to "cure" them, they violently rebel to protect their sacred pathogen.
+
+**Tension:** Do you open the doors early and risk the whole colony, or keep them locked long enough that the people inside are no longer culturally compatible with your empire?
+
+---
