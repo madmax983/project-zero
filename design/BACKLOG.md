@@ -6,7 +6,6 @@
 
 
 
-- [ ] `1294` Biometric Drift — `specs/1294-biometric-drift.md`
 
 
 

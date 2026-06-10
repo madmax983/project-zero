@@ -724,3 +724,4 @@
 - [x] `1299` Quantum Twins — `specs/1299-quantum-twins.md` — completed 2026-06-25
 - [x] `1292` The Galactic Games — `specs/1292-the-galactic-games.md` — completed 2024-05-30
 - [x] `1293` Trade Embargoes — `specs/1293-trade-embargoes.md` — completed 2026-06-09
+- [x] `1294` Biometric Drift — `specs/1294-biometric-drift.md` — completed 2026-06-10
