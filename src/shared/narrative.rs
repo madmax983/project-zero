@@ -46,8 +46,11 @@ impl NarrativeError {
             Self::MissingFragmentOptions(_) => {
                 "  Action Required: Check Fragment Options.\n  Verify the fragment options in your FRAGMENTS.md are not empty. "
             }
-            Self::TemplateNotFound(_) | Self::MissingContext(_) | Self::NoPatternsForTemplate(_) => {
-                "  Action Required: Check Template ID or Context.\n  Verify the name exists in your TEMPLATES.md. "
+            Self::TemplateNotFound(_) | Self::NoPatternsForTemplate(_) => {
+                "  Action Required: Check Template ID.\n  Verify the name exists in your TEMPLATES.md. "
+            }
+            Self::MissingContext(_) => {
+                "  Action Required: Check Context variables.\n  Verify that you are calling `NarrativeContext::insert` for the missing variable in your Rust code. "
             }
         };
 
