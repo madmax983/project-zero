@@ -2638,3 +2638,30 @@ pub fn cultural_vandalism_chronicle_bridge(
         });
     }
 }
+
+
+/// INT-1065: Bridges Generational Linguistics (DialectDrift) to AddChronicleEvent (Chronicle).
+pub fn generational_linguistics_chronicle_bridge(
+    query: Query<&crate::layer1::culture::linguistics::DialectDrift>,
+    mut chronicle_events: EventWriter<crate::layer1::core::chronicle::AddChronicleEvent>,
+    mut last_logged: Local<bool>,
+) {
+    let mut extreme_drift = false;
+    for drift in query.iter() {
+        if drift.0 >= 10.0 {
+            extreme_drift = true;
+            break;
+        }
+    }
+
+    if extreme_drift && !*last_logged {
+        chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
+            importance: crate::layer1::core::chronicle::EventImportance::Major,
+            text: "Linguistic drift has reached critical levels. A colony speaks a tongue completely alien to us."
+                .to_string(),
+        });
+        *last_logged = true;
+    } else if !extreme_drift {
+        *last_logged = false;
+    }
+}

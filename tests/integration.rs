@@ -534,3 +534,6 @@ mod subconscious_grid_lockdown_bridge;
 
 #[path = "integration/cultural_vandalism_chronicle.rs"]
 mod cultural_vandalism_chronicle;
+
+#[path = "integration/generational_linguistics_chronicle_bridge.rs"]
+mod generational_linguistics_chronicle_bridge;

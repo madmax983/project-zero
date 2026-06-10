@@ -1,3 +1,9 @@
+### INT-1065: Generational Linguistics -> Chronicle
+- **Date:** 2026-10-31
+- **Systems connected:** `DialectDrift` -> `generational_linguistics_chronicle_bridge` -> `AddChronicleEvent`
+- **Glue added:** Added `generational_linguistics_chronicle_bridge` in `src/layer1/core/integration.rs` to log critical language drift to the Chronicle.
+- **Tests:** `tests/integration/generational_linguistics_chronicle_bridge.rs`
+
 ### INT-479: The Endless Draft -> Chronicle
 - **Date:** 2026-10-31
 - **Systems connected:** `DraftOrderEvent` -> `endless_draft_bridge_system` -> `AddChronicleEvent`
