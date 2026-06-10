@@ -15,7 +15,9 @@
 //! ## Examples
 //!
 //! ```rust
-//! //! use scale::layer2::events_new::system_quarantine::*;
+//! use bevy_ecs::prelude::*;
+//! use scale::layer1::social::factions::WarlordFaction;
+//! use scale::layer2::events_new::system_quarantine::*;
 //!
 //! let mut world = World::new();
 //! let mut schedule = Schedule::default();
@@ -23,9 +25,9 @@
 //!
 //! // A quarantined colony nearing collapse
 //! let entity = world.spawn((
-//!     Colony,
+//!     scale::layer1::core::Colony,
 //!     SystemQuarantine,
-//!     UnrestLevel(145)
+//!     scale::layer1::social::unrest::UnrestLevel(145)
 //! )).id();
 //!
 //! schedule.run(&mut world);

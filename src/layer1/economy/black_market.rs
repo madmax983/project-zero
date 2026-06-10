@@ -185,8 +185,10 @@ mod tests {
     fn test_desperate_pop_exchanges_resources_for_contraband() {
         // Arrange
         let mut app = App::new();
-        let mut res = ColonyResources::default();
-        res.metal = 50.0;
+        let res = ColonyResources {
+            metal: 50.0,
+            ..Default::default()
+        };
         app.insert_resource(res);
 
         app.add_systems(Update, pop_smuggling_system);
@@ -231,8 +233,11 @@ mod tests {
     fn test_shutting_down_drop_node_returns_resources_and_crashes_morale() {
         // Arrange
         let mut app = App::new();
-        let mut res = ColonyResources::default();
-        res.max_metal = 1000.0;
+        let res = ColonyResources {
+            metal: 50.0,
+            max_metal: 1000.0,
+            ..Default::default()
+        };
         app.insert_resource(res);
         app.add_event::<ShutdownDropNodeEvent>();
         app.add_systems(Update, shutdown_drop_node_system);
@@ -262,7 +267,7 @@ mod tests {
 
         let colony_resources = app.world().resource::<ColonyResources>();
         assert_eq!(
-            colony_resources.metal, 100.0,
+            colony_resources.metal, 150.0,
             "Stored alloys should be returned to the colony"
         );
 

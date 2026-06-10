@@ -1,3 +1,5 @@
+#[cfg(feature = "nova")]
+use super::plugins::ORAL_TRADITION_PLUGIN_TYPE;
 use super::{
     commands::{
         build_default_command_registry, CommandRegistry, ShellCommand, ShellCommandAction,
@@ -13,8 +15,6 @@ use super::{
         TECH_PLUGIN_TYPE,
     },
 };
-#[cfg(feature = "nova")]
-use super::plugins::ORAL_TRADITION_PLUGIN_TYPE;
 use crate::shared::keyboard::{GameKeyCode, GameKeyEvent};
 use crate::{
     shared::view_mode::ViewMode,

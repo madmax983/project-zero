@@ -155,6 +155,37 @@ pub fn language_drift_trade_bridge(
     }
 }
 
+/// INT-1292: Galactic Games -> Chronicle
+pub fn galactic_games_chronicle_bridge(
+    games_event: Option<Res<crate::layer3::diplomacy::galactic_games::GalacticGamesEvent>>,
+    mut chronicle_events: EventWriter<crate::layer1::core::chronicle::AddChronicleEvent>,
+    mut last_winner: Local<Option<crate::layer1::social::factions::FactionId>>,
+) {
+    if let Some(games_event) = games_event {
+        if games_event.is_changed() {
+            if let Some(winner) = games_event.winner {
+                if *last_winner != Some(winner) {
+                    *last_winner = Some(winner);
+                    chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
+                        importance: crate::layer1::core::chronicle::EventImportance::Legendary,
+                        text: format!(
+                            "The Galactic Games have concluded! Faction {:?} emerged victorious, claiming glory and influence.",
+                            winner
+                        ),
+                    });
+                }
+            } else if games_event.active && last_winner.is_some() {
+                // Games started again
+                *last_winner = None;
+                chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
+                    importance: crate::layer1::core::chronicle::EventImportance::Major,
+                    text: "The Galactic Games have begun! Champions from across the galaxy gather to compete.".to_string(),
+                });
+            }
+        }
+    }
+}
+
 /// Bridges `DraftOrderEvent` (The Endless Draft) to `DraftComplianceEvent`, `DraftRefusalEvent`, and `AddChronicleEvent` (Chronicle).
 pub fn endless_draft_bridge_system(
     mut commands: Commands,
