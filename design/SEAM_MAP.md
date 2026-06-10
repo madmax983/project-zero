@@ -1404,3 +1404,9 @@
 - **Systems connected:** `Defaced`/`Vandalized` -> `cultural_vandalism_chronicle_bridge` -> `AddChronicleEvent`
 - **Glue added:** `cultural_vandalism_chronicle_bridge` in `src/layer1/core/integration.rs`
 - **Tests:** `tests/integration/cultural_vandalism_chronicle.rs`
+
+### INT-1121: Public Grievance -> Generational Grudge
+- **Date:** 2026-06-08
+- **Systems connected:** `post_grievance_system` -> `public_grievance_grudge_bridge` -> `GrudgeList`
+- **Glue added:** `public_grievance_grudge_bridge` in `src/layer1/core/integration.rs`
+- **Tests:** `tests/integration/public_grievances_grudges_bridge.rs`

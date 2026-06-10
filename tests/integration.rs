@@ -534,3 +534,9 @@ mod subconscious_grid_lockdown_bridge;
 
 #[path = "integration/cultural_vandalism_chronicle.rs"]
 mod cultural_vandalism_chronicle;
+
+#[path = "integration/public_grievances_grudges_bridge.rs"]
+mod public_grievances_grudges_bridge;
+
+#[path = "integration/inherited_grudges_bridge.rs"]
+mod inherited_grudges_bridge;
