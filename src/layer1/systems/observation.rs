@@ -28,6 +28,11 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::culture::cultural_artifacts::cultural_aura_system,
             crate::layer1::stress::assign_generational_traits_system,
             crate::layer1::stress::silent_needs_suppression_system,
+
+
+
+
+
             crate::layer1::psychology::psychic_stains::process_violent_deaths_system,
             crate::layer1::psychology::psychic_stains::apply_stain_stress_system,
             crate::layer1::core::integration::psionic_fire_bridge_system,

@@ -75,7 +75,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `283` Acoustic Zones — `specs/283-acoustic-zones.md`
 - [ ] `284` Generational Hoarders — `specs/284-generational-hoarders.md`
 - [ ] `285` Echoes of the Past — `specs/285-echoes-of-the-past.md`
-- [ ] `286` Great Works — `specs/286-great-works.md`
 - [ ] `287` The Silence — `specs/287-the-silence.md`
 - [ ] `288` The Memory Black Market — `specs/288-memory-black-market.md`
 
@@ -85,7 +84,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `297` The Factional Diet — `specs/297-factional-diet.md`
 - [ ] `298` The Nostalgia Engine — `specs/298-nostalgia-engine.md`
 - [ ] `299` Temporal Smuggling — `specs/299-temporal-smuggling.md`
-- [ ] `300` The Whisper Trade — `specs/300-whisper-trade.md`
 - [ ] `301` The Memory Tithe — `specs/301-memory-tithe.md`
 - [ ] `302` The Solar Sail Migration — `specs/302-solar-sail-migration.md`
 - [ ] `303` The Chrono-Vault — `specs/303-chrono-vault.md`

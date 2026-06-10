@@ -482,3 +482,4 @@ pub use bureaucracy_of_scarcity::{
 };
 pub mod architecture_sentience;
 pub use architecture_sentience::*;
+pub mod specialization;
