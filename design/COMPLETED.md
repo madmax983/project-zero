@@ -726,3 +726,4 @@
 - [x] `1293` Trade Embargoes — `specs/1293-trade-embargoes.md` — completed 2026-06-09
 - [x] `INT-1121` Integration: Generational Grudges -> Public Grievances — completed 2026-06-08
 - [x] `INT-1293` Integration: Trade Embargoes -> Trade Routes — completed 2026-06-09
+- [x] `1053` Smart Matter Architecture — `specs/1053-smart-matter-architecture.md` — completed 2026-06-10

@@ -662,7 +662,7 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1043` Black Market Infrastructure — `specs/1043-black-market-infrastructure.md`
 
 - [ ] `1051` Asteroid Claims — `specs/1051-asteroid-claims.md`
-- [ ] `1053` Smart Matter Architecture — `specs/1053-smart-matter-architecture.md`
+
 
 - [x] `1056` The Dead Hand — `specs/1056-the-dead-hand.md` — completed 2024-05-31
 
