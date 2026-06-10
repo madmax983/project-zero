@@ -1,9 +1,9 @@
 #[cfg(test)]
 mod integration_tests {
     use bevy_app::prelude::*;
+    use scale::layer1::core::integration::public_grievance_grudge_bridge;
     use scale::layer1::social::grievances::PostGrievanceEvent;
     use scale::layer1::social::inherited_grudges::GrudgeList;
-    use scale::layer1::core::integration::public_grievance_grudge_bridge;
 
     #[test]
     fn test_grievance_creates_grudge() {
