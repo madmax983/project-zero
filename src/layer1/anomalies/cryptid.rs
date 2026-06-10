@@ -135,6 +135,76 @@ mod tests {
     }
 
     #[test]
+    fn test_cryptid_chronicle_bridge_system_emits_event() {
+        use crate::layer1::core::chronicle::AddChronicleEvent;
+        let mut app = App::new();
+        app.add_systems(Update, cryptid_chronicle_bridge_system);
+        app.init_resource::<Time>();
+        app.add_event::<AddChronicleEvent>();
+
+        let _cryptid = app
+            .world_mut()
+            .spawn((
+                Cryptid {
+                    trace_timer: Timer::default(),
+                },
+                GridPosition { x: 0, y: 0 },
+            ))
+            .id();
+
+        let _pop = app
+            .world_mut()
+            .spawn((
+                Pop,
+                GridPosition { x: 2, y: 0 },
+                PopMood {
+                    awe: 0.0,
+                    dread: 0.0,
+                },
+                VisionRadius(5.0),
+            ))
+            .id();
+
+        app.update();
+
+        let mut time = app.world_mut().resource_mut::<Time>();
+        time.advance_by(std::time::Duration::from_secs(1));
+
+        app.update();
+
+        let events = app.world().resource::<Events<AddChronicleEvent>>();
+        let mut reader = events.get_cursor();
+        let evts: Vec<_> = reader.read(events).collect();
+        assert_eq!(
+            evts.len(),
+            1,
+            "Should emit exactly one chronicle event when awe is newly acquired"
+        );
+        assert_eq!(
+            evts[0].text,
+            "A colonist reported seeing a strange, elusive creature in the wilds."
+        );
+
+        // Clear events and run again
+        app.world_mut()
+            .resource_mut::<Events<AddChronicleEvent>>()
+            .clear();
+
+        let mut time2 = app.world_mut().resource_mut::<Time>();
+        time2.advance_by(std::time::Duration::from_secs(1));
+        app.update();
+
+        let events2 = app.world().resource::<Events<AddChronicleEvent>>();
+        let mut reader2 = events2.get_cursor();
+        let evts2: Vec<_> = reader2.read(events2).collect();
+        assert_eq!(
+            evts2.len(),
+            0,
+            "Should not emit a second event for the same cryptid exposure"
+        );
+    }
+
+    #[test]
     fn test_pop_observes_cryptid() {
         let mut app = App::new();
         app.add_systems(Update, cryptid_observation_system);

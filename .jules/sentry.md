@@ -7,3 +7,7 @@
 **[Memetic Broadcasts Coverage Gaps]**
 **Learning:** Discovered untested branches in `evaluate_scrawl_memetic_sigil` specifically when a Pop Eval Data states it's *not* a carrier, or if the `walls` buffer is entirely empty.
 **Action:** The Utility AI buffer gather phase is naturally decoupled, making edge-case tests very straightforward to write. Manually construct `PopEvalData` variations and inject fake/empty `ScorableCandidate` vectors to fully cover evaluation logic.
+## Sentry Test Coverage Success
+**Target:** `layer1::anomalies::cryptid::cryptid_chronicle_bridge_system`
+**Learning:** System seams (cross-module boundaries) that emit side-effects like `AddChronicleEvent` are frequently overlooked in module unit tests. TDD should cover the state change *and* the outbound event emission to verify downstream system integration points don't regress.
+**Action:** Always assert against `Events<T>` resources in Bevy when testing bridge systems. Use `events.get_cursor()` (or `get_reader()` depending on Bevy version) to consume and verify emitted events, taking care to clear or track them if stepping through multiple logical frames.
