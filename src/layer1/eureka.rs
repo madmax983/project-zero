@@ -78,7 +78,7 @@ pub fn check_for_eureka_world(
     world: &mut World,
     action: ActionType,
     related_tech: Option<Tech>,
-    traits: Option<Traits>,
+    pop_entity: Option<Entity>,
 ) -> bool {
     // 1. Get Config
     let config = world
@@ -88,12 +88,14 @@ pub fn check_for_eureka_world(
 
     // 2. Calculate Chance
     let mut chance = config.base_chance;
-    if let Some(t) = &traits {
-        if t.has(Trait::Intellectual) {
-            chance *= 1.2;
-        }
-        if t.has(Trait::Creative) {
-            chance *= 1.5;
+    if let Some(entity) = pop_entity {
+        if let Some(t) = world.get::<Traits>(entity) {
+            if t.has(Trait::Intellectual) {
+                chance *= 1.2;
+            }
+            if t.has(Trait::Creative) {
+                chance *= 1.5;
+            }
         }
     }
 
@@ -240,6 +242,7 @@ mod tests {
         };
 
         // Just ensure it doesn't crash
-        check_for_eureka_world(&mut world, ActionType::Work, None, Some(traits));
+        let entity = world.spawn(traits).id();
+        check_for_eureka_world(&mut world, ActionType::Work, None, Some(entity));
     }
 }

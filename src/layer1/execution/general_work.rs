@@ -426,9 +426,7 @@ fn handle_eureka_moment(
         _ => None,
     };
 
-    // Fetch traits for the pop
-    let traits = world.get::<Traits>(pop_entity).cloned();
-    check_for_eureka_world(world, action_type, related_tech, traits);
+    check_for_eureka_world(world, action_type, related_tech, Some(pop_entity));
 }
 
 /// Returns the skill type associated with a designation type.

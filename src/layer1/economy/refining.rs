@@ -315,10 +315,12 @@ fn process_active_refining_buildings(
             _ => None,
         };
 
-        let traits = world
-            .get::<crate::layer1::traits::Traits>(*worker_entity)
-            .cloned();
-        check_for_eureka_world(world, ActionType::Refine, related_tech, traits);
+        check_for_eureka_world(
+            world,
+            ActionType::Refine,
+            related_tech,
+            Some(*worker_entity),
+        );
     }
 
     (finished_jobs, xp_gains)
