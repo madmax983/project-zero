@@ -766,6 +766,7 @@ mod tests {
 
 /// Types of assignments a pop can have.
 #[derive(Clone, Copy, PartialEq, Eq, Debug)]
+#[derive(Hash)]
 pub enum AssignmentType {
     /// Enforces the law.
     Sheriff,
