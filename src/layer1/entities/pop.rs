@@ -75,6 +75,13 @@ use ratatui::style::Color;
 #[derive(Component, Clone, Debug)]
 pub struct PopName(pub String);
 
+/// Resource tracking the total living population count.
+#[derive(Resource, Default, Debug, Clone)]
+pub struct PopulationCount {
+    pub total: usize,
+}
+
+
 /// Event triggered when a pop dies.
 #[derive(Event, Debug, Clone)]
 pub struct PopDied {

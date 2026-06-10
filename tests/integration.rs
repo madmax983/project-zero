@@ -206,6 +206,7 @@ mod system_quarantine_integration;
 mod waste_scent;
 
 pub mod integration {
+    pub mod population_count_bridge;
     #[path = "conveyor_pathfinding_bridge.rs"]
     pub mod conveyor_pathfinding_bridge;
     pub mod flesh_tax_bridge;

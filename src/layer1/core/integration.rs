@@ -2707,3 +2707,24 @@ pub fn public_grievance_grudge_bridge(
         commands.entity(entity).insert(grudge_list);
     }
 }
+
+
+/// Updates `PopulationCount` when a `PopDied` event is received.
+pub fn pop_died_count_system(
+    mut events: EventReader<crate::layer1::pop::PopDied>,
+    mut pop_count: ResMut<crate::layer1::pop::PopulationCount>,
+) {
+    for _ in events.read() {
+        pop_count.total = pop_count.total.saturating_sub(1);
+    }
+}
+
+/// Updates `PopulationCount` when a `PopBorn` event is received.
+pub fn pop_born_count_system(
+    mut events: EventReader<crate::layer1::pop::PopBorn>,
+    mut pop_count: ResMut<crate::layer1::pop::PopulationCount>,
+) {
+    for _ in events.read() {
+        pop_count.total = pop_count.total.saturating_add(1);
+    }
+}
