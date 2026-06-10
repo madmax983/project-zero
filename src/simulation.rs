@@ -1237,6 +1237,7 @@ mod tests {
         );
 
         world.init_resource::<Time>();
+        world.init_resource::<Events<crate::layer1::shields::DamageEvent>>();
         world.init_resource::<Events<crate::layer2::primitives::InvasionEvent>>();
         world.init_resource::<Events<crate::layer2::orphan_fleet::HackOrphanFleetEvent>>();
         world.init_resource::<Events<crate::layer2::orphan_fleet::OrphanFleetDefectionEvent>>();

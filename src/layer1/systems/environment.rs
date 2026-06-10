@@ -63,6 +63,8 @@ pub fn register(schedule: &mut Schedule) {
                 .after(fire_damage_pops_system)
                 .after(crate::layer1::structure::fire_damage_structure_system),
             (
+                crate::layer1::quantum_twins::propagate_damage_to_twin,
+                crate::layer1::shields::apply_damage_with_shields.after(crate::layer1::quantum_twins::propagate_damage_to_twin),
                 blob_expansion_system,
                 crate::layer1::integration::blob_building_destruction_system
                     .after(blob_expansion_system),

@@ -1404,3 +1404,9 @@
 - **Systems connected:** `Defaced`/`Vandalized` -> `cultural_vandalism_chronicle_bridge` -> `AddChronicleEvent`
 - **Glue added:** `cultural_vandalism_chronicle_bridge` in `src/layer1/core/integration.rs`
 - **Tests:** `tests/integration/cultural_vandalism_chronicle.rs`
+
+### INT-1299: Quantum Twins -> Damage
+- **Date:** 2026-10-31
+- **Systems connected:** `DamageEvent` -> `propagate_damage_to_twin` -> `apply_damage_with_shields`
+- **Glue added:** Registered `propagate_damage_to_twin` and `apply_damage_with_shields` to `Layer1SystemSet::Environment` in `src/layer1/systems/environment.rs`. Also initialized `DamageEvent` in `src/simulation.rs`.
+- **Tests:** `tests/integration/quantum_twins_bridge_test.rs`
