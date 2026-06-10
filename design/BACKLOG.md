@@ -823,3 +823,4 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1284` Sartorial Rebellion — `specs/1284-sartorial-rebellion.md`
 - [ ] `1295` Corporate Rebranding — `specs/1295-corporate-rebranding.md`
 - [ ] `1300` Phantom Commutes — `specs/1300-phantom-commutes.md`
+- [ ] `1301` Edible Architecture — `specs/1301-edible-architecture.md`
