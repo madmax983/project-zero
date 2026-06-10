@@ -1410,3 +1410,9 @@
 - **Systems connected:** `post_grievance_system` -> `public_grievance_grudge_bridge` -> `GrudgeList`
 - **Glue added:** `public_grievance_grudge_bridge` in `src/layer1/core/integration.rs`
 - **Tests:** `tests/integration/public_grievances_grudges_bridge.rs`
+
+### INT-1293: Trade Embargoes -> Trade Routes
+- **Date:** 2026-06-09
+- **Systems connected:** `GalacticMarket` -> `execute_trade_routes_system`
+- **Glue added:** Modified `execute_trade_routes_system` in `src/layer2/trade/routes.rs` to check `market.can_trade()` before executing routes.
+- **Tests:** `tests/integration/trade_embargo.rs`

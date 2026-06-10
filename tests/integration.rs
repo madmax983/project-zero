@@ -540,3 +540,5 @@ mod public_grievances_grudges_bridge;
 
 #[path = "integration/inherited_grudges_bridge.rs"]
 mod inherited_grudges_bridge;
+#[path = "integration/trade_embargo.rs"]
+mod trade_embargo;
