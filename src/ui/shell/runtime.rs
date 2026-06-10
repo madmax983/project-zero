@@ -13,6 +13,8 @@ use super::{
         TECH_PLUGIN_TYPE,
     },
 };
+#[cfg(feature = "nova")]
+use super::plugins::ORAL_TRADITION_PLUGIN_TYPE;
 use crate::shared::keyboard::{GameKeyCode, GameKeyEvent};
 use crate::{
     shared::view_mode::ViewMode,
@@ -669,6 +671,15 @@ fn preferred_pane_placement(plugin_type: &str) -> PanePlacement {
             ],
             direction: Direction::Horizontal,
         },
+        #[cfg(feature = "nova")]
+        ORAL_TRADITION_PLUGIN_TYPE => PanePlacement {
+            anchor_plugin_types: &[
+                INSPECTOR_PLUGIN_TYPE,
+                COLONY_MAP_PLUGIN_TYPE,
+                SYSTEM_MAP_PLUGIN_TYPE,
+            ],
+            direction: Direction::Vertical,
+        },
         STATUS_PLUGIN_TYPE => PanePlacement {
             anchor_plugin_types: &[COLONY_MAP_PLUGIN_TYPE, SYSTEM_MAP_PLUGIN_TYPE],
             direction: Direction::Vertical,
@@ -686,6 +697,8 @@ fn preferred_pane_placement(plugin_type: &str) -> PanePlacement {
                 INSPECTOR_PLUGIN_TYPE,
                 CHRONICLE_PLUGIN_TYPE,
                 TECH_PLUGIN_TYPE,
+                #[cfg(feature = "nova")]
+                ORAL_TRADITION_PLUGIN_TYPE,
             ],
             direction: Direction::Horizontal,
         },

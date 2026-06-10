@@ -18,6 +18,8 @@ mod log_plugin;
 mod status;
 mod system_map;
 mod tech;
+#[cfg(feature = "nova")]
+mod oral_tradition;
 
 pub use chronicle::ChroniclePlugin;
 pub use colony_map::ColonyMapPlugin;
@@ -26,6 +28,8 @@ pub use log_plugin::LogPlugin;
 pub use status::StatusPlugin;
 pub use system_map::SystemMapPlugin;
 pub use tech::TechPlugin;
+#[cfg(feature = "nova")]
+pub use oral_tradition::OralTraditionPlugin;
 
 pub const COLONY_MAP_PLUGIN_TYPE: &str = "colony-map";
 pub const SYSTEM_MAP_PLUGIN_TYPE: &str = "system-map";
@@ -34,6 +38,8 @@ pub const STATUS_PLUGIN_TYPE: &str = "status";
 pub const CHRONICLE_PLUGIN_TYPE: &str = "chronicle";
 pub const LOG_PLUGIN_TYPE: &str = "log";
 pub const TECH_PLUGIN_TYPE: &str = "tech";
+#[cfg(feature = "nova")]
+pub const ORAL_TRADITION_PLUGIN_TYPE: &str = "oral-tradition";
 
 pub type SharedWorld = Rc<RefCell<World>>;
 
@@ -67,6 +73,14 @@ pub fn register_default_plugins(registry: &mut Registry, world: SharedWorld) {
     registry.register_plugin_type(TECH_PLUGIN_TYPE, move || {
         TechPlugin::new(Rc::clone(&tech_world))
     });
+
+    #[cfg(feature = "nova")]
+    {
+        let oral_tradition_world = Rc::clone(&world);
+        registry.register_plugin_type(ORAL_TRADITION_PLUGIN_TYPE, move || {
+            OralTraditionPlugin::new(Rc::clone(&oral_tradition_world))
+        });
+    }
 
     let log_world = Rc::clone(&world);
     registry.register_plugin_type(LOG_PLUGIN_TYPE, move || {
@@ -107,6 +121,14 @@ pub(crate) fn register_default_plugins_with_runtime(
     runtime.register_plugin_type(TECH_PLUGIN_TYPE, move || {
         TechPlugin::new(Rc::clone(&tech_world))
     });
+
+    #[cfg(feature = "nova")]
+    {
+        let oral_tradition_world = Rc::clone(&world);
+        runtime.register_plugin_type(ORAL_TRADITION_PLUGIN_TYPE, move || {
+            OralTraditionPlugin::new(Rc::clone(&oral_tradition_world))
+        });
+    }
 
     let log_world = Rc::clone(&world);
     runtime.register_plugin_type(LOG_PLUGIN_TYPE, move || {
@@ -154,6 +176,8 @@ mod tests {
         CHRONICLE_PLUGIN_TYPE, COLONY_MAP_PLUGIN_TYPE, INSPECTOR_PLUGIN_TYPE, LOG_PLUGIN_TYPE,
         STATUS_PLUGIN_TYPE, SYSTEM_MAP_PLUGIN_TYPE, TECH_PLUGIN_TYPE,
     };
+    #[cfg(feature = "nova")]
+    use super::ORAL_TRADITION_PLUGIN_TYPE;
     use crate::prelude::{setup_world_with_config, SetupConfig};
     use ratatui::{buffer::Buffer, layout::Rect};
     use ratatui_hypertile_extras::{HypertilePlugin, Registry};
@@ -167,7 +191,8 @@ mod tests {
         register_default_plugins(&mut registry, world);
 
         let actual = registry.registered_types().collect::<BTreeSet<_>>();
-        let expected = BTreeSet::from([
+        #[allow(unused_mut)]
+        let mut expected = BTreeSet::from([
             CHRONICLE_PLUGIN_TYPE,
             COLONY_MAP_PLUGIN_TYPE,
             INSPECTOR_PLUGIN_TYPE,
@@ -176,6 +201,8 @@ mod tests {
             TECH_PLUGIN_TYPE,
             LOG_PLUGIN_TYPE,
         ]);
+        #[cfg(feature = "nova")]
+        expected.insert(ORAL_TRADITION_PLUGIN_TYPE);
 
         assert_eq!(actual, expected);
     }
