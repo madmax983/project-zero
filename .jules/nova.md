@@ -1,3 +1,8 @@
+## [Fungal Death]
+**Concept:** Added `fungal_death_system` to `src/experimental/fungal_death.rs`. If a `Corpse` is left unburied for too long in specific `WeatherType` (`Rain`, `Fog`, or `Storm`), the decay accelerates. When fully decayed, it erupts into a massive `ClutterGrid` hazard, spreading bio-hazard material around the location and despawning the corpse.
+**Fate:** Submitted
+**Lesson:** Connects the environment/weather system with the funeral/grief system. It punishes players for neglecting to bury corpses properly during bad weather, transforming a localized morale penalty into a widespread physical bio-hazard that requires active cleaning.
+
 ## [Radioactive Vermin]
 **The Spark:** We have a `RadiationGrid` and `VerminState`. Vermin consume waste.
 **The Feature:** What if `Toxic` vermin (acquired from consuming waste) also act as mobile radiation sources? This expands the `VerminTrait::Toxic` to not only resist pest control but also actively pollute the `RadiationGrid`.

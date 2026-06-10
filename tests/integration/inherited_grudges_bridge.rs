@@ -2,11 +2,11 @@
 mod integration_tests {
     use bevy_app::prelude::*;
     use bevy_ecs::prelude::*;
+    use scale::layer1::actions::{AssignedTo, AssignmentType};
+    use scale::layer1::pop::PopDied;
     use scale::layer1::social::inherited_grudges::{
         prevent_grudge_work_system, transfer_grudges_on_death_system, Grudge, GrudgeList, Lineage,
     };
-    use scale::layer1::pop::PopDied;
-    use scale::layer1::actions::{AssignedTo, AssignmentType};
 
     #[test]
     fn test_inherited_grudges_bridge() {
