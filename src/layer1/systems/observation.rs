@@ -415,7 +415,11 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::integration::medical_treatment_notification_system.after(healing_system),
             crate::layer1::integration::hospitalization_notification_system
                 .after(work_execution_system),
-            crate::layer1::integration::pop_death_notification_system.after(natural_death_system),
+            (
+                crate::layer1::core::integration::pop_died_count_system.after(crate::layer1::pop::handle_pop_death_system),
+                crate::layer1::core::integration::pop_born_count_system,
+                crate::layer1::integration::pop_death_notification_system.after(natural_death_system),
+            ),
         )
             .in_set(Layer1SystemSet::Observation),
     );

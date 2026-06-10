@@ -1,4 +1,3 @@
-use bevy_ecs::archetype::Archetype;
 use bevy_ecs::prelude::*;
 use ratatui::{prelude::*, widgets::Paragraph};
 
@@ -7,7 +6,7 @@ use crate::layer1::seasons::{Season, SeasonState};
 use crate::layer1::solar::{SolarCycle, SolarCycleState};
 use crate::layer1::traits::Traits;
 use crate::layer1::{
-    BuildMode, ColonyPolicies, ColonyResources, DesignationMode, NamedLocations, Pop, Viewport,
+    BuildMode, ColonyPolicies, ColonyResources, DesignationMode, NamedLocations, Viewport,
 };
 use crate::layer3::silence::DetectionRisk;
 use crate::shared::state::GameState;
@@ -51,14 +50,7 @@ pub fn render_status_bar(frame: &mut Frame, area: Rect, world: &World) {
     let location_name = locations.get(center_x, center_y).map(String::as_str);
 
     // Count pops safely with immutable world access
-    let pop_count = world.component_id::<Pop>().map_or(0, |pop_id| {
-        world
-            .archetypes()
-            .iter()
-            .filter(|archetype| archetype.contains(pop_id))
-            .map(Archetype::len)
-            .sum()
-    });
+    let pop_count = world.get_resource::<crate::layer1::pop::PopulationCount>().map_or(0, |p| p.total);
 
     // Calculate average morale
     let (total_morale, morale_count) = world
