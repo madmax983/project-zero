@@ -19,3 +19,7 @@
 **[Refactoring Pyramids of Doom in Match Statements]**
 **Learning:** Monolithic `match` statements that perform near-identical logic for dozens of variants (e.g., repeatedly calling `resources.add_X(amount)` for every resource type) create massive Pyramids of Doom and reduce readability.
 **Action:** When a struct (like `ColonyResources`) exposes a unified helper method (like `add_resource(&ResourceType, f32)`), use it to collapse the massive `match` arm into a single, clean iteration step. Ensure you fully verify the helper method accounts for any edge cases originally handled by the manual `match`.
+
+**[Extracting Component Filters from God Functions]**
+**Learning:** Monolithic calculation functions (like `calculate_work_amount`) that sequentially query the Bevy `World` for a dozen different marker components (e.g., `MemeticInfection`, `NeuralLinked`) to build a final modifier multiplier create deeply nested, repetitive "Pyramid of Doom" blocks.
+**Action:** Extract the repeated `if world.get::<T>(entity).is_some()` checks into a dedicated `get_status_modifiers` helper function that computes and returns the combined float multiplier. This dramatically flattens the parent function.

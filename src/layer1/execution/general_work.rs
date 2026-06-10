@@ -490,51 +490,6 @@ pub fn calculate_work_amount(
         .get_resource::<AdminStats>()
         .map_or(1.0, |stats| stats.efficiency);
 
-    let neural_buff = if world
-        .get::<crate::layer1::tech::neural_leech::NeuralLinked>(pop_entity)
-        .is_some()
-    {
-        2.0
-    } else {
-        1.0
-    };
-
-    let infection_modifier = if world
-        .get::<crate::layer1::memetics::MemeticInfection>(pop_entity)
-        .is_some()
-    {
-        0.5
-    } else {
-        1.0
-    };
-
-    let ghost_shift_modifier = if world
-        .get::<crate::layer1::social::ghost_shift_strike::GhostShiftState>(pop_entity)
-        .is_some()
-    {
-        0.0
-    } else {
-        1.0
-    };
-
-    let hallucinating_modifier = if world
-        .get::<crate::layer1::agriculture::gastronomy::Hallucinating>(pop_entity)
-        .is_some()
-    {
-        0.0
-    } else {
-        1.0
-    };
-
-    let somnambulist_modifier = if world
-        .get::<crate::layer1::somnambulism::Somnambulist>(pop_entity)
-        .is_some()
-    {
-        5.0
-    } else {
-        1.0
-    };
-
     let propaganda_graffiti_modifier = {
         let pop_pos = world.get::<GridPosition>(pop_entity);
         let mut modifier = 1.0;
@@ -562,14 +517,7 @@ pub fn calculate_work_amount(
         modifier
     };
 
-    let gravity_nightmare_modifier = if world
-        .get::<crate::layer1::psychology::void_sleep::GravityNightmare>(pop_entity)
-        .is_some()
-    {
-        0.8 // 20% efficiency penalty due to nightmares
-    } else {
-        1.0
-    };
+    let status_modifiers = get_status_modifiers(world, pop_entity);
 
     let amount = WORK_PER_TICK
         * tool_efficiency
@@ -579,12 +527,7 @@ pub fn calculate_work_amount(
         * admin_efficiency
         * (1.0 + augmentation_bonus)
         * organic_factor
-        * neural_buff
-        * infection_modifier
-        * ghost_shift_modifier
-        * hallucinating_modifier
-        * somnambulist_modifier
-        * gravity_nightmare_modifier
+        * status_modifiers
         * propaganda_graffiti_modifier;
 
     // Cap work amount to prevent logic bugs / economy exploits
@@ -733,4 +676,67 @@ fn cleanup_pop_work_state(world: &mut World, pop_entity: Entity) {
         action.current_utility = 0.0;
         action.ticks_committed = 1;
     }
+}
+
+pub fn get_status_modifiers(world: &World, pop_entity: Entity) -> f32 {
+    let neural_buff = if world
+        .get::<crate::layer1::tech::neural_leech::NeuralLinked>(pop_entity)
+        .is_some()
+    {
+        2.0
+    } else {
+        1.0
+    };
+
+    let infection_modifier = if world
+        .get::<crate::layer1::memetics::MemeticInfection>(pop_entity)
+        .is_some()
+    {
+        0.5
+    } else {
+        1.0
+    };
+
+    let ghost_shift_modifier = if world
+        .get::<crate::layer1::social::ghost_shift_strike::GhostShiftState>(pop_entity)
+        .is_some()
+    {
+        0.0
+    } else {
+        1.0
+    };
+
+    let hallucinating_modifier = if world
+        .get::<crate::layer1::agriculture::gastronomy::Hallucinating>(pop_entity)
+        .is_some()
+    {
+        0.0
+    } else {
+        1.0
+    };
+
+    let somnambulist_modifier = if world
+        .get::<crate::layer1::somnambulism::Somnambulist>(pop_entity)
+        .is_some()
+    {
+        5.0
+    } else {
+        1.0
+    };
+
+    let gravity_nightmare_modifier = if world
+        .get::<crate::layer1::psychology::void_sleep::GravityNightmare>(pop_entity)
+        .is_some()
+    {
+        0.8 // 20% efficiency penalty due to nightmares
+    } else {
+        1.0
+    };
+
+    neural_buff
+        * infection_modifier
+        * ghost_shift_modifier
+        * hallucinating_modifier
+        * somnambulist_modifier
+        * gravity_nightmare_modifier
 }
