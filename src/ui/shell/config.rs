@@ -142,7 +142,7 @@ mod tests {
         .unwrap();
 
         let json = serde_json::to_string(&cfg).unwrap();
-        let decoded: ShellConfig = serde_json::from_str(&json).unwrap();
+        let decoded: ShellConfig = load_shell_config(&json);
 
         assert_eq!(decoded.startup_workspace, cfg.startup_workspace);
         assert_eq!(decoded.theme, cfg.theme);
@@ -173,7 +173,7 @@ mod tests {
     fn test_shell_config_round_trips_default_workspace() {
         let cfg = ShellConfig::default();
         let json = serde_json::to_string(&cfg).unwrap();
-        let decoded: ShellConfig = serde_json::from_str(&json).unwrap();
+        let decoded: ShellConfig = load_shell_config(&json);
         assert_eq!(decoded.startup_workspace, "Colony Ops");
     }
 
