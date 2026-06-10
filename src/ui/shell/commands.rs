@@ -112,6 +112,13 @@ pub fn build_default_command_registry() -> CommandRegistry {
             domain: ShellCommandDomain::Gameplay,
             action: ShellCommandAction::OpenPane("tech"),
         },
+        #[cfg(feature = "nova")]
+        ShellCommand {
+            id: "pane.oral_tradition",
+            label: "Open Oral Tradition",
+            domain: ShellCommandDomain::Gameplay,
+            action: ShellCommandAction::OpenPane("oral-tradition"),
+        },
         ShellCommand {
             id: "shell.layout_mode",
             label: "Enter Layout Mode",

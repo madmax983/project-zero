@@ -45,6 +45,9 @@ pub mod state;
 pub mod status;
 /// Tech Tree UI rendering.
 pub mod tech;
+/// Oral Tradition UI rendering.
+#[cfg(feature = "nova")]
+pub mod oral_tradition;
 
 #[cfg(test)]
 mod waste_ui_tests;
