@@ -4316,7 +4316,6 @@ What was purged to make room.
 
 ---
 
-## Quantum Twins Fragments (Spec 245)
 
 ## Fragment Type: [TWIN_SENSATION]
 How the entanglement feels.
@@ -9366,3 +9365,55 @@ Descriptions of their stress and breakdowns.
 - collapsed into violent tremors
 - forgot their own name, remembering only the quota
 ```
+
+
+## The Galactic Games Fragments (Spec 1292)
+
+## Fragment Type: [GAME_EVENT]
+- the Zero-G Melee
+- the Atmospheric Marathon
+- the Void-Tether Joust
+- the Deep-Crust Lift
+- the Orbital Gauntlet
+
+## Fragment Type: [CHAMPION_EPITHET]
+- the Unbroken
+- the Void-Born Star
+- the Heavy-World Hero
+- the Agile Ghost
+
+
+## Trade Embargoes Fragments (Spec 1293)
+
+## Fragment Type: [EMBARGO_REASON]
+- over border disputes
+- to starve the war machine
+- as petty revenge
+- to force a political concession
+- to artificially inflate market prices
+
+
+## Cultural Vandalism Fragments (Spec 1298)
+
+## Fragment Type: [VANDALISM_ACT]
+- smeared with caustic paint
+- physically dismantled piece by piece
+- hacked to display anti-government slogans
+- draped in the colors of the rebellion
+- covered in the names of the dead
+
+
+## Quantum Twins Fragments (Spec 1299)
+
+## Fragment Type: [TWIN_SENSATION]
+- a phantom pain in a missing limb
+- a sudden rush of someone else's joy
+- knowing exactly what to do without learning it
+- a hollow ache when the other is sad
+- an instinctual pull in a specific direction
+
+## Fragment Type: [SEVERANCE_TRAUMA]
+- a piece of the mind snapping off
+- catastrophic mental collapse
+- a silence so loud it deafened them
+- the sudden loss of half their memories

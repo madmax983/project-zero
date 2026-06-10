@@ -3044,22 +3044,6 @@
 
 ---
 
-## Quantum Twins
-
-### soul-linked / paired
-**Replaces:** Quantum entangled
-**Code reference:** `QuantumTwin`
-**Usage:**
-- "They are soul-linked."
-- "The paired miner learned fast."
-
-### the Severance
-**Replaces:** Trauma from twin death
-**Code reference:** `handle_severance_system`
-**Usage:**
-- "He couldn't survive the Severance."
-
----
 
 ## The Empty Room
 
@@ -5472,3 +5456,54 @@
 **Usage:**
 - "When the Breaking happens, the Clear-Eyed are not themselves."
 - "He succumbed to the Breaking after 40 days without rest."
+
+
+## The Galactic Games (Spec 1292)
+
+### Champion / Athlete
+**Replaces:** Chosen Pop
+**Code reference:** `ChampionMarker`
+**Usage:**
+- "The Champion stepped into the arena."
+
+### National Shame
+**Replaces:** Influence loss, morale penalty
+**Code reference:** Negative outcome of `GalacticGamesEvent`
+**Usage:**
+- "Their defeat brought National Shame to the empire."
+
+## Trade Embargoes (Spec 1293)
+
+### The Blockade / Embargo
+**Replaces:** Trade restriction
+**Code reference:** `TradeEmbargo`
+**Usage:**
+- "The Blockade is starving our industry."
+
+## Cultural Vandalism (Spec 1298)
+
+### Defaced / Vandalized
+**Replaces:** Inverted morale aura
+**Code reference:** `Defaced` component
+**Usage:**
+- "The statue was Defaced, angering the loyalists."
+
+### Official Structure
+**Replaces:** Morale building
+**Code reference:** `OfficialStructure` component
+**Usage:**
+- "The Official Structure projects the Overlord's power."
+
+## Quantum Twins (Spec 1299)
+
+### Entangled / Quantum Twin
+**Replaces:** Linked Pop
+**Code reference:** `Entangled` component
+**Usage:**
+- "The Quantum Twins share the same scars."
+
+### Severance / Catatonic
+**Replaces:** Twin death stun
+**Code reference:** `Catatonic` component
+**Usage:**
+- "The Severance left him Catatonic."
