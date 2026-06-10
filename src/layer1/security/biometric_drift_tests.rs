@@ -19,6 +19,8 @@ fn test_drift_accumulation_over_time() {
                 last_update_tick: 0,
                 drift: 0.0,
                 recorded_scars: 0,
+                baseline_age: 0,
+                drift_value: 0.0,
             },
             Age {
                 ticks_alive: 5000,
@@ -56,6 +58,8 @@ fn test_scars_increase_drift() {
                 drift: 0.0,
                 last_update_tick: 0,
                 recorded_scars: 0,
+                baseline_age: 0,
+                drift_value: 0.0,
             },
             Scars { count: 0 },
         ))
@@ -150,6 +154,8 @@ fn test_recalibration_resets_drift() {
                 drift: 0.9,
                 last_update_tick: 0,
                 recorded_scars: 0,
+                baseline_age: 0,
+                drift_value: 0.0,
             },
         ))
         .id();

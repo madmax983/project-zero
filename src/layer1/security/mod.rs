@@ -4,6 +4,60 @@
 
 use bevy_ecs::prelude::*;
 
+use crate::layer1::psychology::void_sickness::PopStats;
+
+#[derive(Component, Debug, Clone, Default)]
+pub struct PopHealth {
+    pub trauma: u32,
+}
+
+#[derive(Component, Debug, Clone)]
+pub struct DoorAccessRequest {
+    pub target: Entity,
+    pub granted: bool,
+}
+
+#[derive(Component, Debug, Clone)]
+pub struct RecalibrationRequest;
+
+#[derive(Component, Debug, Clone)]
+pub struct SecurityDoor {
+    pub required_clearance: u8,
+    pub max_drift_tolerance: f32,
+}
+
+pub fn update_biometric_drift_system(
+    mut profiles: Query<(&PopStats, &PopHealth, &mut BiometricProfile)>,
+) {
+    for (stats, health, mut profile) in profiles.iter_mut() {
+        let age_diff = stats.age.saturating_sub(profile.baseline_age) as f32;
+        // Calculate drift based on age difference and trauma
+        profile.drift_value = age_diff * 0.5 + health.trauma as f32 * 0.2;
+    }
+}
+
+pub fn check_door_access_system(
+    mut requests: Query<(&BiometricProfile, &mut DoorAccessRequest)>,
+    doors: Query<&SecurityDoor>,
+) {
+    for (profile, mut request) in requests.iter_mut() {
+        if let Ok(door) = doors.get(request.target) {
+            request.granted = profile.drift_value <= door.max_drift_tolerance;
+        }
+    }
+}
+
+pub fn recalibrate_biometrics_system(
+    mut commands: Commands,
+    mut requests: Query<(Entity, &PopStats, &mut BiometricProfile), With<RecalibrationRequest>>,
+) {
+    for (entity, stats, mut profile) in requests.iter_mut() {
+        profile.baseline_age = stats.age;
+        profile.drift_value = 0.0;
+        commands.entity(entity).remove::<RecalibrationRequest>();
+    }
+}
+
 #[derive(Component, Debug, Clone, Default)]
 pub struct BiometricProfile {
     /// The simulation tick when the profile was last calibrated.
@@ -12,6 +66,8 @@ pub struct BiometricProfile {
     pub drift: f32,
     /// The number of scars recorded at last calibration.
     pub recorded_scars: u32,
+    pub baseline_age: u32,
+    pub drift_value: f32,
 }
 
 #[derive(Component, Debug, Clone)]
@@ -88,3 +144,6 @@ pub fn recalibrate_profile(world: &mut World, pop: Entity) {
 
 #[cfg(test)]
 mod biometric_drift_tests;
+
+#[cfg(test)]
+mod spec_1294_tests;

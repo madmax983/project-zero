@@ -10,6 +10,7 @@ pub struct PopStats {
     pub intellect: f32,
     pub empathy: f32,
     pub perception: f32,
+    pub age: u32,
 }
 
 pub fn process_void_exposure_system(

@@ -114,6 +114,7 @@ mod tests {
                     intellect: 95.0,
                     perception: 80.0,
                     empathy: 10.0,
+                    age: 20,
                 },
                 ChampionMarker {
                     faction: faction_id,
@@ -157,6 +158,7 @@ mod tests {
                 intellect: 95.0,
                 perception: 80.0,
                 empathy: 10.0,
+                age: 20,
             },
             ChampionMarker {
                 faction: faction_winner,
@@ -169,6 +171,7 @@ mod tests {
                 intellect: 90.0,
                 perception: 50.0,
                 empathy: 10.0,
+                age: 20,
             },
             ChampionMarker {
                 faction: faction_loser,
