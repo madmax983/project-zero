@@ -2650,10 +2650,12 @@ pub fn public_grievance_grudge_bridge(
     use std::collections::HashMap;
 
     // To prevent multiple inserts on the same entity overwriting each other in the same frame
-    let mut pending_inserts: HashMap<Entity, crate::layer1::social::inherited_grudges::GrudgeList> = HashMap::new();
+    let mut pending_inserts: HashMap<Entity, crate::layer1::social::inherited_grudges::GrudgeList> =
+        HashMap::new();
 
     for event in events.read() {
-        if event.impact < 0.0 { // It's a grievance
+        if event.impact < 0.0 {
+            // It's a grievance
             if let Ok(mut grudges) = query.get_mut(event.poster) {
                 // Check if already exists
                 let mut found = false;
@@ -2666,14 +2668,18 @@ pub fn public_grievance_grudge_bridge(
                 }
 
                 if !found {
-                    grudges.0.push(crate::layer1::social::inherited_grudges::Grudge {
-                        target_entity: event.target,
-                        intensity: event.impact.abs(),
-                        origin_reason: "Public grievance".to_string(),
-                    });
+                    grudges
+                        .0
+                        .push(crate::layer1::social::inherited_grudges::Grudge {
+                            target_entity: event.target,
+                            intensity: event.impact.abs(),
+                            origin_reason: "Public grievance".to_string(),
+                        });
                 }
             } else {
-                let grudge_list = pending_inserts.entry(event.poster).or_insert_with(|| crate::layer1::social::inherited_grudges::GrudgeList(Vec::new()));
+                let grudge_list = pending_inserts.entry(event.poster).or_insert_with(|| {
+                    crate::layer1::social::inherited_grudges::GrudgeList(Vec::new())
+                });
 
                 let mut found = false;
                 for grudge in &mut grudge_list.0 {
@@ -2685,11 +2691,13 @@ pub fn public_grievance_grudge_bridge(
                 }
 
                 if !found {
-                    grudge_list.0.push(crate::layer1::social::inherited_grudges::Grudge {
-                        target_entity: event.target,
-                        intensity: event.impact.abs(),
-                        origin_reason: "Public grievance".to_string(),
-                    });
+                    grudge_list
+                        .0
+                        .push(crate::layer1::social::inherited_grudges::Grudge {
+                            target_entity: event.target,
+                            intensity: event.impact.abs(),
+                            origin_reason: "Public grievance".to_string(),
+                        });
                 }
             }
         }

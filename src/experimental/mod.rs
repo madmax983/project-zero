@@ -19,6 +19,7 @@ pub mod emotional_weather;
 pub mod synesthesia;
 
 #[cfg(feature = "nova")]
+#[cfg(feature = "nova")]
 pub mod fungal_death;
 
 #[cfg(feature = "nova")]
