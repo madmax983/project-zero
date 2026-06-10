@@ -94,3 +94,10 @@
 ## 2024-06-09 - The Headless Component Confusion
 **Confusion:** Users attempting to query game components like `Building` during headless simulation (based on the README example) would encounter compiler errors when manually guessing the path (e.g., `crate::layer1::buildings::Building`), as the actual path is `crate::layer1::architecture::building::Building`. They also missed that common components were already conveniently exported in `scale::prelude`.
 **Clarification:** I updated the Headless Simulation example in `README.md` to explicitly show querying a game component (`Building`) directly via the existing `scale::prelude::*` import. This proves components are easily accessible without deep module path knowledge.
+## 2024-06-10 - Undocumented Shared Structures
+**Confusion:** Basic game structures in `src/shared/` such as `GameState`, `MessageLog`, `SetupConfig`, `ViewMode`, and `WorldSeed` were missing module-level documentation and executable doc-tests, leaving users guessing about initialization defaults and the state machine.
+**Clarification:** Added comprehensive `//!` documentation to `src/shared/log.rs`, `scenario.rs`, `state.rs`, `view_mode.rs`, and `random.rs` to explain their macroscopic purpose. Also attached executable `# Examples` doc-tests to all primary structs and enums to demonstrate setup and expected behaviors.
+
+## 2024-06-10 - Intra-doc Links Failing in Module Headers
+**Confusion:** Attempting to reference an item declared inside the same file using an intra-doc link inside the module-level header (`//!`) caused `cargo doc` to issue an unresolved link warning, resulting in CI failures.
+**Clarification:** Even if the struct is in the same file, the `//!` block often requires a fully qualified path to resolve reliably depending on the crate structure. E.g. Changed ``[`MessageLog`]`` to ``[`MessageLog`](crate::shared::log::MessageLog)``.

@@ -1,3 +1,11 @@
+//! Message logging system.
+//!
+//! This module provides a simple, rolling message log used to broadcast
+//! events, warnings, and updates to the player via the UI.
+//!
+//! The main component is [`MessageLog`](crate::shared::log::MessageLog), which is typically inserted into
+//! the Bevy `World` as a `Resource`.
+
 use bevy_ecs::prelude::*;
 use ratatui::style::Color;
 use std::collections::VecDeque;
@@ -12,6 +20,23 @@ pub struct Message {
 }
 
 /// Resource to store the game message log.
+///
+/// The log is essentially a circular buffer that pushes old messages out
+/// when it exceeds `max_size`.
+///
+/// # Examples
+///
+/// ```
+/// use scale::shared::log::MessageLog;
+/// use ratatui::style::Color;
+///
+/// let mut log = MessageLog::new(5);
+/// log.add("Welcome to the colony.");
+/// log.add_colored("Danger! Alien presence detected.", Color::Red);
+///
+/// assert_eq!(log.messages.len(), 2);
+/// assert_eq!(log.messages[0].text, "Welcome to the colony.");
+/// ```
 #[derive(Resource)]
 pub struct MessageLog {
     /// The buffer of messages.
