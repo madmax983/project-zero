@@ -23480,3 +23480,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you invest heavily in clean, responsible orbital development, or intentionally pollute your own orbits to create a defensive shell that only your specialized (but politically dangerous) scavengers can navigate?
 
 ---
+
+## The Artifacts of Failure
+
+**Layer:** 1 -> Cross-layer
+
+**Fantasy:** Building your civilization on top of the ruined attempts of your predecessors (which were also you).
+
+**Mechanic:** When a colony fails completely (everyone dies or abandons it), the buildings and infrastructure aren't deleted. They become "Ruins." If you resettle the planet later, or if a different faction settles it, these Ruins remain on the Layer 1 map. They can be excavated for forgotten technology or resources, but they also carry a permanent "Gloom" aura. Over time, Pops living near them might start to incorporate the failure into their local religion or culture.
+
+**Emergence:** You settle a new world and find the ruins of a colony you forgot you lost 200 hours of gameplay ago. Your new Pops start worshiping the rusted remains of the fusion reactor that exploded and killed the original founders.
+
+**Tension:** Do you bulldoze the tragic history of your people to build an efficient, clean layout, or preserve the dangerous, depressing ruins to harvest the unique artifacts and cultural resonance they generate?
+
+---
+
+## The Nepotism Network
+
+**Layer:** 1 -> 3
+
+**Fantasy:** The slow rot of a galactic empire through personal relationships and unqualified leaders.
+
+**Mechanic:** Pops form relationships (friends, family). When a Pop is promoted to a high-tier job (like Planetary Governor or Fleet Admiral), they gain the ability to passively boost the job application score of their high-relationship connections. Over time, crucial Layer 2 and Layer 3 roles become filled not by the most skilled Pops, but by the friends and family of the current elite.
+
+**Emergence:** You notice your flagship fleet is suddenly performing terribly in combat. You trace the Admiral back to Layer 1 and realize they are an incompetent farmer who only got the job because their brother is the Emperor.
+
+**Tension:** Do you let the social fabric of your empire naturally dictate its leadership, leading to potential catastrophic incompetence, or do you ruthlessly purge social bonds to enforce a pure, cold meritocracy?
+
+---
+
+## The Silent Mutiny
+
+**Layer:** 2 -> 1
+
+**Fantasy:** Rebellions don't always start with guns; sometimes they start with a lost shipment.
+
+**Mechanic:** When an orbital logistics hub or major trade port (Layer 2 node) is staffed by Pops with critically low Morale or high Grievance, they don't necessarily strike or riot immediately. Instead, they engage in "Malicious Compliance." They begin intentionally misrouting small amounts of critical resources, delaying shipments by just a few hours, or "losing" high-value items.
+
+**Emergence:** A war effort on the frontier grinds to a halt because a logistics crew on a backwater world, angry about their lack of luxury goods, decided to route the entire fleet's ammunition supply through a pirate-infested asteroid belt "according to regulations."
+
+**Tension:** Do you respond to supply chain issues with harsh discipline (which might trigger a full-blown revolt) or do you try to bribe the unhappy logisticians with better living conditions while your frontier burns?
+
+---
