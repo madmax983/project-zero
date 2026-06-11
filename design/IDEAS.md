@@ -23606,3 +23606,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Build fast and expensive to clear the scaffolding, or stretch out the project and risk the temporary infrastructure becoming a permanent, dangerous fixture?
 
 ---
+## The Bio-Reactor Dependency
+
+**Layer:** 1
+
+**Fantasy:** Solving energy crises by crossing a moral event horizon and burning organic matter, including your own dead.
+
+**Mechanic:** A desperation energy generator that burns biomass. It accepts crops, alien flora, and corpses. It's incredibly efficient but produces a severe "Gloom" aura.
+
+**Emergence:** During a long winter, your pops might start deliberately letting their elderly die so they can fuel the reactor and keep the greenhouses from freezing.
+
+**Tension:** Do you build the reactor as a failsafe and risk your culture degrading into pragmatism, or accept blackouts and the immediate deaths they cause?
+
+---
+
+## The Propaganda Feedback Loop
+
+**Layer:** Cross-layer
+
+**Fantasy:** The state propaganda you create to pacify the masses eventually brainwashes your own planetary leadership.
+
+**Mechanic:** You can issue Empire-wide 'Directives' to boost Layer 1 morale (e.g., "Peace is Profit"). However, Pops promoted to Layer 2 or Layer 3 roles who grew up under this propaganda will physically refuse to take actions that contradict it.
+
+**Emergence:** You spend 50 years broadcasting pacifist propaganda to increase economic output. When a hostile empire invades, your Fleet Admirals (who grew up on the propaganda) simply refuse to return fire, paralyzing your military.
+
+**Tension:** Do you use propaganda for short-term stability, knowing you are slowly locking your empire's future leadership into a rigid, inescapable ideology?
+
+---
+
+## Rogue Terraforming Swarms
+
+**Layer:** 2
+
+**Fantasy:** Ancient, automated terraforming machines that don't care if a planet is already inhabited.
+
+**Mechanic:** Unclaimed fleets of automated terraforming ships roam the system. They target planets based on millennia-old programming. If they target your colonized, already-habitable world, they might try to "fix" it by flooding the atmosphere with ammonia or freezing the oceans.
+
+**Emergence:** A swarm arrives at your capital and starts turning the atmosphere into methane. You can't communicate with them. You have to physically destroy them before your Pops suffocate, but doing so provides massive salvage resources.
+
+**Tension:** Do you spend massive military resources to destroy them, or try the much harder task of hacking them to redirect them to a barren world you actually want terraformed?
+
+---
