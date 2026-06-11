@@ -23730,3 +23730,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you pay the high cost of recycling now, or kick the can into orbit and deal with the debris later?
 
 ---
+
+## The Ghost Fleet Directive
+
+**Layer:** 2 -> 3
+
+**Fantasy:** An automated defense system that outlives its creators.
+
+**Mechanic:** If a core civilization is completely wiped out by an enemy faction, their surviving automated Layer 2 defense fleets may trigger 'The Ghost Fleet Directive.' These fleets enter a perpetual, self-replicating war state, hostile to everyone. They slowly mine asteroid belts to rebuild themselves, following centuries-old patrol routes.
+
+**Emergence:** You colonize a seemingly empty, resource-rich sector. Years later, you realize you've built your capital directly in the path of a long-dead empire's Ghost Fleet patrol route. They arrive not to conquer, but to mindlessly execute an extermination protocol that was ordered 500 years ago.
+
+**Tension:** Do you spend massive resources hunting down every last automated factory of a dead enemy, or just accept that certain regions of space are permanently haunted by killer machines?
+
+---
+
+## Memory Forgery
+
+**Layer:** 1
+
+**Fantasy:** Rewriting history to control the present.
+
+**Mechanic:** As colonies grow, 'Memory Forgers' (a criminal or government faction) can emerge. They can implant false memories into Pops. This can be used to instantly clear a trauma debuff, artificially create loyalty, or frame a rival faction for a disaster they didn't cause.
+
+**Emergence:** You use Memory Forgers to convince your rebellious mining sector that their harsh conditions are a heroic sacrifice against an alien threat. It works perfectly, boosting production. However, they become so fanatically committed to this fake war that they begin actively sabotaging your trade ships, believing them to be alien spies.
+
+**Tension:** The incredible short-term stability of a perfect lie vs. the terrifying, unpredictable consequences when the population acts on a fabricated reality.
+
+---
+
+## Gravity Well Black Market
+
+**Layer:** 2
+
+**Fantasy:** Criminals hiding in the literal cracks of spacetime.
+
+**Mechanic:** Certain gravitational anomalies or unstable wormholes are too dangerous for standard Layer 2 empire fleets to patrol without taking passive damage. Smugglers and pirate factions will intentionally build their starbases just inside these anomalies. They suffer high attrition, but gain complete immunity from official blockades or police actions.
+
+**Emergence:** You completely blockade a rebellious planet, cutting off all hyperlane access. Yet, they continue to receive weapons and supplies. You discover an entire black market fleet is risking a 50% casualty rate by diving through a localized black hole to bypass your impenetrable blockade.
+
+**Tension:** Do you risk your expensive military fleets by sending them into a lethal anomaly to clear out pirates, or do you let the black market operate with impunity right on your border?
+
+---
