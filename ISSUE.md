@@ -1,7 +1,10 @@
-# 🗣️ Echo: Confusing error message for missing context variable
+# 🗣️ Echo: Getting Started example is broken
 
-🤦 **The Confusion:** "I got an error `Missing required context variable 'YEAR'`. But then the 'Action Required' box in the terminal told me to 'Check Template ID or Context. Verify the name exists in your TEMPLATES.md.' So I spent an hour staring at my `TEMPLATES.md` trying to figure out what was wrong with the `YEAR` template!"
+## 🤦 The Confusion
+Tried to run the Oral Tradition (Nova Feature) example snippet from the README without enabling the `nova` feature, expecting to see helpful deprecation warnings as implied by the struct stubs in `src/prelude.rs`. Instead, it failed to compile entirely with `error[E0422]: cannot find struct, variant or union type \`Story\` in this scope`.
 
-🕵️ **The Reality:** "Turns out `MissingContext` is grouped with `TemplateNotFound` in the error formatter in `src/shared/narrative.rs`. The `TEMPLATES.md` was perfectly fine; I just forgot to call `context.insert(\"YEAR\", ...)` in my Rust code."
+## 🕵️ The Reality
+The fallback `Story`, `StoryGenre`, and `OralTradition` structs are completely missing from the prelude when `#[cfg(not(feature = "nova"))]` is active. The compiler panics before any helpful warnings can be shown.
 
-💡 **The Fix:** "Split `MissingContext` into its own match arm in the error formatter, and change the Action Required text to tell users to check their `NarrativeContext::insert` calls instead of looking at the markdown files."
+## 💡 The Fix
+Either add fallback struct stubs that derive `Debug` so the code compiles and the warnings are reached, or add a huge banner in the README saying 'REQUIRES FEATURE NOVA' and remove the expectation that the snippet will gracefully warn users.
