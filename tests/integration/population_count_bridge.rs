@@ -1,6 +1,6 @@
 use bevy::prelude::*;
-use scale::layer1::pop::{PopBorn, PopDied, PopulationCount};
 use scale::layer1::core::integration::{pop_born_count_system, pop_died_count_system};
+use scale::layer1::pop::{PopBorn, PopDied, PopulationCount};
 
 #[test]
 fn test_population_count_updates() {

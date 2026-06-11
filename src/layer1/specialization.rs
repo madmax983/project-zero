@@ -1,8 +1,8 @@
-use bevy_ecs::prelude::*;
 use crate::layer1::pop::Job;
 use crate::layer1::traits::{Trait, Traits};
 use crate::layer1::utility_types::AssignmentType;
 use bevy::utils::HashMap;
+use bevy_ecs::prelude::*;
 
 #[derive(Component, Default, Debug, Clone)]
 pub struct JobTenure {
@@ -41,24 +41,27 @@ pub fn update_tenure_system(mut query: Query<(&Job, &mut JobTenure)>) {
     }
 }
 
-pub fn check_mutation_system(
-    mut query: Query<(&JobTenure, &mut Traits), Changed<JobTenure>>,
-) {
+pub fn check_mutation_system(mut query: Query<(&JobTenure, &mut Traits), Changed<JobTenure>>) {
     for (tenure, mut traits) in query.iter_mut() {
-        if tenure.get_ticks(AssignmentType::FarmWorker) >= MUTATION_THRESHOLD && !traits.has(Trait::GreenThumb) {
+        if tenure.get_ticks(AssignmentType::FarmWorker) >= MUTATION_THRESHOLD
+            && !traits.has(Trait::GreenThumb)
+        {
             traits.add(Trait::GreenThumb);
         }
-        if tenure.get_ticks(AssignmentType::Administrator) >= MUTATION_THRESHOLD && !traits.has(Trait::SilverTongue) {
+        if tenure.get_ticks(AssignmentType::Administrator) >= MUTATION_THRESHOLD
+            && !traits.has(Trait::SilverTongue)
+        {
             traits.add(Trait::SilverTongue);
         }
-        if tenure.get_ticks(AssignmentType::DeepMining) >= MUTATION_THRESHOLD && !traits.has(Trait::MoleEyes) {
+        if tenure.get_ticks(AssignmentType::DeepMining) >= MUTATION_THRESHOLD
+            && !traits.has(Trait::MoleEyes)
+        {
             traits.add(Trait::MoleEyes);
             traits.add(Trait::LightBlindness);
         }
         // TODO: add other job traits once AssignmentType supports hauling and engineering
     }
 }
-
 
 #[cfg(test)]
 mod tests {
@@ -68,11 +71,16 @@ mod tests {
     #[test]
     fn test_tenure_accumulates_while_working() {
         let mut world = World::new();
-        let pop = world.spawn((
-            Pop,
-            Job { workplace: Entity::PLACEHOLDER, job_type: AssignmentType::FarmWorker },
-            JobTenure::default(),
-        )).id();
+        let pop = world
+            .spawn((
+                Pop,
+                Job {
+                    workplace: Entity::PLACEHOLDER,
+                    job_type: AssignmentType::FarmWorker,
+                },
+                JobTenure::default(),
+            ))
+            .id();
 
         // Run system for 100 ticks
         let mut schedule = Schedule::default();
@@ -90,12 +98,17 @@ mod tests {
     fn test_mutation_trigger_threshold() {
         let mut world = World::new();
         // Spawn pop with tenure just below threshold
-        let pop = world.spawn((
-            Pop,
-            Job { workplace: Entity::PLACEHOLDER, job_type: AssignmentType::FarmWorker },
-            JobTenure::with_ticks(AssignmentType::FarmWorker, 9999), // Threshold 10000
-            Traits::default(),
-        )).id();
+        let pop = world
+            .spawn((
+                Pop,
+                Job {
+                    workplace: Entity::PLACEHOLDER,
+                    job_type: AssignmentType::FarmWorker,
+                },
+                JobTenure::with_ticks(AssignmentType::FarmWorker, 9999), // Threshold 10000
+                Traits::default(),
+            ))
+            .id();
 
         // Run systems
         let mut schedule = Schedule::default();
@@ -110,12 +123,17 @@ mod tests {
     fn test_deep_mining_mutation_trigger_threshold() {
         let mut world = World::new();
         // Spawn pop with tenure just below threshold
-        let pop = world.spawn((
-            Pop,
-            Job { workplace: Entity::PLACEHOLDER, job_type: AssignmentType::DeepMining },
-            JobTenure::with_ticks(AssignmentType::DeepMining, 9999), // Threshold 10000
-            Traits::default(),
-        )).id();
+        let pop = world
+            .spawn((
+                Pop,
+                Job {
+                    workplace: Entity::PLACEHOLDER,
+                    job_type: AssignmentType::DeepMining,
+                },
+                JobTenure::with_ticks(AssignmentType::DeepMining, 9999), // Threshold 10000
+                Traits::default(),
+            ))
+            .id();
 
         // Run systems
         let mut schedule = Schedule::default();
@@ -132,11 +150,16 @@ mod tests {
         let mut world = World::new();
 
         let job_tenure = JobTenure::with_ticks(AssignmentType::FarmWorker, 100);
-        let pop = world.spawn((
-            Pop,
-            Job { workplace: Entity::PLACEHOLDER, job_type: AssignmentType::Administrator },
-            job_tenure,
-        )).id();
+        let pop = world
+            .spawn((
+                Pop,
+                Job {
+                    workplace: Entity::PLACEHOLDER,
+                    job_type: AssignmentType::Administrator,
+                },
+                job_tenure,
+            ))
+            .id();
 
         // Run system for 1 tick
         let mut schedule = Schedule::default();
@@ -157,11 +180,15 @@ mod tests {
         traits.add(Trait::GreenThumb);
 
         // GreenThumb should be bad at non-farming jobs (e.g. Administrator)
-        let penalty = crate::layer1::traits::get_job_efficiency_modifier(&traits, AssignmentType::Administrator);
+        let penalty = crate::layer1::traits::get_job_efficiency_modifier(
+            &traits,
+            AssignmentType::Administrator,
+        );
         assert!(penalty < 1.0);
 
         // GreenThumb should be good at farming
-        let bonus = crate::layer1::traits::get_job_efficiency_modifier(&traits, AssignmentType::FarmWorker);
+        let bonus =
+            crate::layer1::traits::get_job_efficiency_modifier(&traits, AssignmentType::FarmWorker);
         assert!(bonus > 1.0);
     }
 }

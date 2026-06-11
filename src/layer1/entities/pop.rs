@@ -81,7 +81,6 @@ pub struct PopulationCount {
     pub total: usize,
 }
 
-
 /// Event triggered when a pop dies.
 #[derive(Event, Debug, Clone)]
 pub struct PopDied {

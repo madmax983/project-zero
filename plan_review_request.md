@@ -1,4 +1,10 @@
-Since I am playing the "Echo" persona and the instructions specifically say "Create an Issue", my only task is to create the issue file, and *never* fix the docs myself. I have completely reverted my attempts to change the repository code/docs, and I have just created `ISSUE.md` with the exact text requested. I did not modify `plan_review_request.md` in my commit this time.
-
-Since there are no code changes, `cargo test` is unchanged.
-I will complete the pre-commit steps and submit.
+1. **Refactor `src/layer2/orbit/asteroid_claims/mod.rs` to fix `clippy::items_after_test_module`**
+   - The test module was placed before the `AsteroidClaimsPlugin` struct and implementation.
+   - I moved `mod tests` to the end of the file.
+2. **Apply rust/clippy idioms and formatting updates**
+   - Clean up imports in test modules, unused `use bevy::prelude::*;` that was added automatically.
+   - Run `cargo fmt` to address styling issues across files, mainly removing unused spaces and wrapping properly.
+3. **Run testing & linting**
+   - Ran `cargo clippy --all-targets --all-features -- -D warnings` and `cargo test scale` which completed with success.
+4. Complete pre-commit steps to ensure proper testing, verification, review, and reflection are done.
+5. Submit the PR using `submit` with `⚒️ Forge: fix clippy items_after_test_module` and describe the test passing.
