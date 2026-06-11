@@ -2708,7 +2708,6 @@ pub fn public_grievance_grudge_bridge(
     }
 }
 
-
 /// Updates `PopulationCount` when a `PopDied` event is received.
 pub fn pop_died_count_system(
     mut events: EventReader<crate::layer1::pop::PopDied>,
@@ -2726,5 +2725,21 @@ pub fn pop_born_count_system(
 ) {
     for _ in events.read() {
         pop_count.total = pop_count.total.saturating_add(1);
+    }
+}
+
+/// INT-1291: Bridges Invasive Xeno-Aesthetics (`AestheticDeprivation`) to AddChronicleEvent (Chronicle).
+pub fn invasive_xeno_aesthetics_chronicle_bridge(
+    new_deprivation: Query<
+        Entity,
+        Added<crate::layer1::culture::invasive_xeno_aesthetics::AestheticDeprivation>,
+    >,
+    mut chronicle_events: EventWriter<crate::layer1::core::chronicle::AddChronicleEvent>,
+) {
+    if !new_deprivation.is_empty() {
+        chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
+            importance: crate::layer1::core::chronicle::EventImportance::Minor,
+            text: "A growing aesthetic deprivation among the populace has led to public dissatisfaction, as foreign art and style become the preferred norm.".to_string(),
+        });
     }
 }

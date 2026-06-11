@@ -1416,3 +1416,9 @@
 - **Systems connected:** `GalacticMarket` -> `execute_trade_routes_system`
 - **Glue added:** Modified `execute_trade_routes_system` in `src/layer2/trade/routes.rs` to check `market.can_trade()` before executing routes.
 - **Tests:** `tests/integration/trade_embargo.rs`
+
+### INT-1291: Invasive Xeno-Aesthetics -> Chronicle
+- **Date:** 2026-06-11
+- **Systems connected:** `AestheticDeprivation` -> `invasive_xeno_aesthetics_chronicle_bridge` -> `AddChronicleEvent`
+- **Glue added:** Added `invasive_xeno_aesthetics_chronicle_bridge` to `src/layer1/core/integration.rs` to log aesthetic deprivation events to the Chronicle.
+- **Tests:** `tests/integration/invasive_xeno_aesthetics_bridge.rs`

@@ -387,6 +387,7 @@ fn init_simulation_resources(world: &mut World) {
                 crate::layer1::archaeological_contagion::archaeological_infection_system,
                 crate::layer1::core::integration::archaeological_contagion_chronicle_bridge,
                 crate::layer1::core::integration::cultural_vandalism_chronicle_bridge,
+                crate::layer1::core::integration::invasive_xeno_aesthetics_chronicle_bridge,
                 crate::layer1::archaeological_contagion::ancient_routine_observation_system,
                 crate::layer1::archaeological_contagion::evaluate_ancient_routine,
             ));

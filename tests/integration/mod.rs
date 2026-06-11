@@ -78,3 +78,4 @@ pub mod tectonic_fracking_chronicle_bridge;
 pub mod trade_embargo;
 
 pub mod population_count_bridge;
+pub mod invasive_xeno_aesthetics_bridge;
