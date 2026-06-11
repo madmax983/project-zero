@@ -9016,3 +9016,23 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 **Patterns:**
 - "[YEAR]: A bond broken in death. [NAME_SURVIVOR] suffered [SEVERANCE_TRAUMA] as their twin perished."
 - "When the twin died, [NAME_SURVIVOR] collapsed, experiencing [SEVERANCE_TRAUMA]. [YEAR]."
+
+## The Symbiotic Shipbreaker Templates (Spec 1302)
+
+### Template: DERELICT_BREACHED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [DERELICT_NAME], [FLORA_DEFENSE]
+
+**Patterns:**
+- "[YEAR]: We broke the seal on the [DERELICT_NAME]. It is no longer a ship, but a garden. The [FLORA_DEFENSE] fought back."
+- "The [DERELICT_NAME] is alive. Our shipbreakers were met not with silence, but with [FLORA_DEFENSE]. [YEAR]."
+- "[COLONY] sent teams to salvage the [DERELICT_NAME]. They found an ecosystem. The [FLORA_DEFENSE] took three souls. [YEAR]."
+
+### Template: SYMBIOTIC_SALVAGE
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [DERELICT_NAME], [RESOURCE_GAINED]
+
+**Patterns:**
+- "We cut the heart out of the [DERELICT_NAME]. [YEAR]. The salvage teams returned with [RESOURCE_GAINED]."
+- "[YEAR]: The feral ecosystem was purged. The [DERELICT_NAME] yields [RESOURCE_GAINED] for [COLONY]."
+- "A bloody harvest. We broke the [DERELICT_NAME] and took [RESOURCE_GAINED]. [YEAR]."

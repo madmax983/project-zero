@@ -7,6 +7,7 @@
 
 
 - [ ] `1294` Biometric Drift — `specs/1294-biometric-drift.md`
+- [ ] `1302` The Symbiotic Shipbreaker — `specs/1302-the-symbiotic-shipbreaker.md`
 
 
 
