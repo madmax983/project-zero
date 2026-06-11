@@ -78,11 +78,15 @@ impl NarrativeError {
         ]);
 
         table.add_row(vec![
-            Cell::new("Message").fg(TableColor::Yellow).add_attribute(comfy_table::Attribute::Bold),
+            Cell::new("Message")
+                .fg(TableColor::Yellow)
+                .add_attribute(comfy_table::Attribute::Bold),
             Cell::new(&error_msg).fg(TableColor::White),
         ]);
         table.add_row(vec![
-            Cell::new("Action").fg(TableColor::Yellow).add_attribute(comfy_table::Attribute::Bold),
+            Cell::new("Action")
+                .fg(TableColor::Yellow)
+                .add_attribute(comfy_table::Attribute::Bold),
             Cell::new(action_msg).fg(TableColor::Cyan),
         ]);
         table

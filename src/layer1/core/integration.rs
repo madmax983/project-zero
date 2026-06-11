@@ -2759,7 +2759,10 @@ pub fn symbiotic_salvage_chronicle_bridge(
         ctx.insert("COLONY", &colony.name);
         ctx.insert("YEAR", &year);
         ctx.insert("DERELICT_NAME", "Unknown Derelict");
-        ctx.insert("RESOURCE_GAINED", format!("{:.1} Stellar Alloy", event.resource_gained));
+        ctx.insert(
+            "RESOURCE_GAINED",
+            format!("{:.1} Stellar Alloy", event.resource_gained),
+        );
 
         let text = generator
             .generate("SYMBIOTIC_SALVAGE", &ctx)

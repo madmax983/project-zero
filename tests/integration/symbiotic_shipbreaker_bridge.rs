@@ -3,10 +3,10 @@ use bevy_ecs::event::Events;
 use bevy_ecs::schedule::IntoSystemConfigs;
 use scale::layer1::core::chronicle::AddChronicleEvent;
 use scale::layer1::core::integration::symbiotic_salvage_chronicle_bridge;
+use scale::layer1::economy::resources::ColonyResources;
 use scale::layer1::shipbreaking_symbiotic::{
     simulate_shipbreaker_salvage, DerelictEcosystem, ShipbreakerMission, SymbioticSalvageEvent,
 };
-use scale::layer1::economy::resources::ColonyResources;
 use scale::shared::colony::ColonyName;
 use scale::shared::narrative::NarrativeGenerator;
 use scale::shared::time::SimulationTime;
