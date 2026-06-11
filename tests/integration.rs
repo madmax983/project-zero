@@ -206,13 +206,13 @@ mod system_quarantine_integration;
 mod waste_scent;
 
 pub mod integration {
-    pub mod population_count_bridge;
     #[path = "conveyor_pathfinding_bridge.rs"]
     pub mod conveyor_pathfinding_bridge;
     pub mod flesh_tax_bridge;
     pub mod intellectual_property_wars_bridge;
     #[path = "language_drift_trade_bridge.rs"]
     pub mod language_drift_trade_bridge;
+    pub mod population_count_bridge;
     pub mod sonic_suppression_bridge;
     pub mod spiteful_will_chronicle;
     #[path = "the_silent_generation_bridge.rs"]
@@ -549,3 +549,5 @@ mod quantum_twins_bridge;
 
 #[path = "integration/galactic_games_bridge.rs"]
 mod galactic_games_bridge;
+#[path = "integration/invasive_xeno_aesthetics_bridge.rs"]
+mod invasive_xeno_aesthetics_bridge;
