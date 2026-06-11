@@ -23647,3 +23647,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you spend massive military resources to destroy them, or try the much harder task of hacking them to redirect them to a barren world you actually want terraformed?
 
 ---
+## Chrono-Locked Vaults
+
+**Layer:** Cross-layer
+
+**Fantasy:** Discovering a vault that can only be opened when the stars align—literally.
+
+**Mechanic:** Ancient vaults found on planets (Layer 1) are locked by complex orbital mechanics. They only open when specific planets in the system (Layer 2) align, or when a specific comet passes. Players can wait centuries for natural alignment or undertake massive stellar engineering to force it.
+
+**Emergence:** A player might accidentally trigger a vault opening by terraforming or destroying a seemingly unrelated moon, releasing either incredible wealth or a long-dormant threat right into the middle of their colony.
+
+**Tension:** Do you build your colony around a sealed mystery that might destroy you, or ignore the potential wealth inside?
+
+---
+
+## The Architect's Madness
+
+**Layer:** 1
+
+**Fantasy:** A single brilliant mind designs a perfect city, but their sanity fractures, and the city's infrastructure begins to reflect their descent.
+
+**Mechanic:** A "Master Architect" Pop can be assigned to oversee colony layout, providing massive efficiency bonuses to all buildings constructed under their tenure. However, as the colony grows, their "Stress" increases exponentially. If they snap, their "Madness" begins randomly overriding player designations, placing bizarre, non-euclidean structures or redirecting roads into dead ends.
+
+**Emergence:** The most efficient sector of your colony suddenly becomes a labyrinth because the architect had a breakdown. You can't demolish the new, crazy layout without losing the original efficiency bonuses.
+
+**Tension:** Do you rely on a single genius and risk their inevitable breakdown, or stick to safe, mediocre, decentralized planning?
+
+---
+
+## Sub-Space Echo Intoxication
+
+**Layer:** 2 -> 1
+
+**Fantasy:** The sounds of FTL travel are addictive, and some Pops will do anything to hear them.
+
+**Mechanic:** Colonies located near major Layer 2 hyperlane junctions experience "Sub-Space Echoes"—faint vibrations from passing fleets. Pops can develop an addiction to these echoes, gaining a mood buff when near a junction but suffering severe withdrawal if the trade route collapses or they are relocated.
+
+**Emergence:** You relocate a colony to a safer, isolated world, only to have the entire population riot because they miss the "song of the ships." They eventually hijack a freighter just to orbit a hyperlane.
+
+**Tension:** Do you build near noisy, dangerous trade routes to keep the population high, or isolate them and face the withdrawal?
+
+---
