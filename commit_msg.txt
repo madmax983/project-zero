@@ -1,6 +1,8 @@
-⚡ Bolt: Remove unnecessary `Traits` clone in Eureka calculations
+🗺️ Atlas: Confirm clean architecture
 
-*   **What:** The `check_for_eureka_world` function now accepts the worker's `Entity` identifier instead of a cloned `Traits` component.
-*   **Why:** `check_for_eureka_world` evaluates two flags. Previously, passing `Option<Traits>` by value forced callers to clone the component (which wraps a `bevy::utils::HashSet`) on the hot path (every work tick). Borrowing conflicts prevented passing a reference alongside `&mut World`. Passing the `Entity` ID allows a clean, short-lived look-up.
-*   **Impact:** Removes 1 heap allocation per pop, per work tick, reducing memory fragmentation and pressure on the ECS evaluation loop.
-*   **Measurement:** Run `cargo bench` on work execution paths or observe allocation counts during active colony simulation.
+🕸️ Tangle: I was requested to fix a confusing error message for a missing context variable where `MissingContext` was grouped with `TemplateNotFound` in `src/shared/narrative.rs`.
+📐 Blueprint: Explored the repository and discovered this exact issue was already resolved in a previous commit (`6f3ed38f`), meaning `MissingContext` is already isolated in the `NarrativeError::to_table` pattern match with the correct "Action Required" text recommending to check `NarrativeContext::insert`. No architectural smells, circular dependencies, or domain boundary leaks were found around this code.
+🧱 Stability: Maintained the current state of `shared::narrative`. The codebase structure is sound.
+🔬 Verification: Ran `cargo clippy --all-targets --all-features -- -D warnings` and `cargo test scale` which both passed successfully.
+
+Co-Authored-By: google-labs-jules[bot] <161369871+google-labs-jules[bot]@users.noreply.github.com>
