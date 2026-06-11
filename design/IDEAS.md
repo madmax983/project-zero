@@ -23343,7 +23343,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Symbiotic Shipbreaker
+## The Symbiotic Shipbreaker [SPECCED]
 
 **Layer:** 2
 
