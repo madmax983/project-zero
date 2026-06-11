@@ -9417,3 +9417,52 @@ Descriptions of their stress and breakdowns.
 - catastrophic mental collapse
 - a silence so loud it deafened them
 - the sudden loss of half their memories
+
+
+## Galactic Games Fragments (Spec 1292)
+
+## Fragment Type: [GAMES_EVENT]
+- the Void-Marathon
+- the Kinetic-Sparring-Tournament
+- the Sub-light Regatta
+- the Zero-G Melee
+- the Logic-Labyrinth
+- the Orbital-Wrestling-Championship
+
+## Trade Embargoes Fragments (Spec 1293)
+
+## Fragment Type: [RESOURCE_TYPE]
+- Durasteel
+- Transplutonics
+- Volatiles
+- Organics
+- Exotic Matter
+- Heavy Water
+
+## Cultural Vandalism Fragments (Spec 1298)
+
+## Fragment Type: [BUILDING_NAME]
+- Grand Plaza
+- Ancestral Monument
+- Trade Hub
+- Hab-Block 4
+- Central Spire
+- Governor's Palace
+
+## Fragment Type: [VANDAL_SYMBOL]
+- the Broken-Star
+- the Laughing-Skull
+- the Blood-Stripe
+- the Eye-of-the-Void
+- the Anti-Spiral
+- the Burning-Tree
+
+## Quantum Twins Fragments (Spec 1299)
+
+## Fragment Type: [TWIN_LOCATION]
+- a distant star
+- a forgotten colony
+- the core worlds
+- the rim
+- the deep void
+- a rival empire

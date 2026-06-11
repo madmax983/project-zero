@@ -9036,3 +9036,74 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "We cut the heart out of the [DERELICT_NAME]. [YEAR]. The salvage teams returned with [RESOURCE_GAINED]."
 - "[YEAR]: The feral ecosystem was purged. The [DERELICT_NAME] yields [RESOURCE_GAINED] for [COLONY]."
 - "A bloody harvest. We broke the [DERELICT_NAME] and took [RESOURCE_GAINED]. [YEAR]."
+
+## The Galactic Games Templates (Spec 1292)
+
+### Template: GALACTIC_GAMES_VICTORY
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [POP_NAME], [GAMES_EVENT]
+
+**Patterns:**
+- "[YEAR]: [POP_NAME] returns to [COLONY] a champion of the [GAMES_EVENT]. The galaxy watches us."
+- "Victory in the [GAMES_EVENT]! [POP_NAME] brings glory and influence to [COLONY]. [YEAR]."
+- "[COLONY] celebrates. [POP_NAME] stood against the best in the [GAMES_EVENT] and won. [YEAR]."
+
+### Template: GALACTIC_GAMES_DEFEAT
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [POP_NAME], [GAMES_EVENT]
+
+**Patterns:**
+- "[YEAR]: National shame. [POP_NAME] fell early in the [GAMES_EVENT]."
+- "We sent our best to the [GAMES_EVENT]. It wasn't enough. [COLONY] mourns the loss of prestige. [YEAR]."
+- "A humbling defeat for [POP_NAME] at the [GAMES_EVENT]. The galaxy laughs at [COLONY]. [YEAR]."
+
+## Trade Embargoes Templates (Spec 1293)
+
+### Template: EMBARGO_DECLARED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [RIVAL_FACTION], [RESOURCE_TYPE]
+
+**Patterns:**
+- "[YEAR]: [RIVAL_FACTION] weaponizes the market. They have embargoed [RESOURCE_TYPE]."
+- "The Galactic Council bows to [RIVAL_FACTION]. [RESOURCE_TYPE] is now restricted. [COLONY] feels the squeeze. [YEAR]."
+- "[COLONY], [YEAR]: An economic blockade. [RIVAL_FACTION] demands we starve for [RESOURCE_TYPE]."
+
+### Template: EMBARGO_BROKEN
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [RESOURCE_TYPE]
+
+**Patterns:**
+- "[YEAR]: The blockade is broken. [RESOURCE_TYPE] flows into [COLONY] once more."
+- "Smugglers or diplomats? Doesn't matter. The embargo on [RESOURCE_TYPE] is lifted. [YEAR]."
+- "[COLONY] breathes again. The market for [RESOURCE_TYPE] reopens. [YEAR]."
+
+## Cultural Vandalism Templates (Spec 1298)
+
+### Template: STRUCTURE_DEFACED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [BUILDING_NAME], [VANDAL_SYMBOL]
+
+**Patterns:**
+- "[YEAR]: The [BUILDING_NAME] in [COLONY] was defaced overnight. They painted the [VANDAL_SYMBOL]."
+- "An act of cultural sabotage. The [BUILDING_NAME] bears the mark of the [VANDAL_SYMBOL]. [YEAR]."
+- "[COLONY] wakes to find the [BUILDING_NAME] desecrated. The [VANDAL_SYMBOL] stares back at us. [YEAR]."
+
+## Quantum Twins Templates (Spec 1299)
+
+### Template: TWIN_SYNC_EVENT
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [POP_NAME], [TWIN_NAME], [TWIN_LOCATION]
+
+**Patterns:**
+- "[YEAR]: [POP_NAME] in [COLONY] felt it the moment [TWIN_NAME] was injured on [TWIN_LOCATION]."
+- "Spooky action at a distance. [POP_NAME] collapses in pain. We later learn [TWIN_NAME] died on [TWIN_LOCATION]. [YEAR]."
+- "[COLONY], [YEAR]: [POP_NAME] experiences sudden, unexplained euphoria. Their twin, [TWIN_NAME], must have succeeded."
+
+### Template: SEVERANCE_SHOCK
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [POP_NAME]
+
+**Patterns:**
+- "[YEAR]: The bond snaps. [POP_NAME] enters a catatonic state. Their twin is gone."
+- "Half a soul remains. [POP_NAME] on [COLONY] is lost to severance shock. [YEAR]."
+- "[COLONY], [YEAR]: They stopped speaking today. The quantum link is severed. [POP_NAME] is alone."
