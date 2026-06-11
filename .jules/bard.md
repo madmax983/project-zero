@@ -101,3 +101,6 @@
 ## 2024-06-10 - Intra-doc Links Failing in Module Headers
 **Confusion:** Attempting to reference an item declared inside the same file using an intra-doc link inside the module-level header (`//!`) caused `cargo doc` to issue an unresolved link warning, resulting in CI failures.
 **Clarification:** Even if the struct is in the same file, the `//!` block often requires a fully qualified path to resolve reliably depending on the crate structure. E.g. Changed ``[`MessageLog`]`` to ``[`MessageLog`](crate::shared::log::MessageLog)``.
+## 2024-06-11 - The Undocumented Execution System
+**Confusion:** The execution mechanics in `layer1/execution` (`efficiency.rs`, `demolish.rs`, `general_work.rs`) lacked explanatory `# Examples` in their docstrings. This obscured how tool priorities work, what `execute_demolish` requires, and how `calculate_work_amount` combines its numerous parameters.
+**Clarification:** Added executable `/// # Examples` doc-tests to `calculate_work_efficiency`, `execute_demolish`, and `calculate_work_amount` to clearly document and prove their required usage context.
