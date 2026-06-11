@@ -732,3 +732,4 @@
 - [x] `INT-1293` Integration: Trade Embargoes -> Trade Routes — completed 2026-06-09
 - [x] `INT-1292` Integration: Galactic Games -> Chronicle — completed 2026-06-25
 - [x] `INT-1299` Integration: Quantum Twins -> Observation Systems — completed 2026-06-25
+- [x] `496` The Bureau of Regrets — `specs/496-the-bureau-of-regrets.md` — completed 2026-06-11

@@ -24,6 +24,8 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::psychology::generational_amnesia::apply_amnesia_system,
             crate::layer1::psychology::generational_amnesia::apply_amnesia_to_memories_system,
             crate::layer1::social::emotional_contagion::trigger_emotional_contagion_system,
+            crate::layer1::social::bureau_of_regrets::check_penitent_faction_formation_system,
+            crate::layer1::social::bureau_of_regrets::process_reparation_strikes_system,
             crate::layer1::social::pop_relationships::calculate_relationship_mood_buff_system,
             crate::layer1::culture::cultural_artifacts::cultural_aura_system,
             crate::layer1::stress::assign_generational_traits_system,

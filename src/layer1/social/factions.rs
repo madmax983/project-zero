@@ -87,6 +87,8 @@ pub enum FactionId {
     Gastronomers,
     /// Pops living in redlined/dezoned areas who stop paying taxes.
     Stateless,
+    /// Faction dedicated to undoing mistakes of the past.
+    Penitent,
 }
 
 /// Data associated with a faction.

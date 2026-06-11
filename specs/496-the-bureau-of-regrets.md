@@ -130,3 +130,8 @@ pub fn process_reparation_strikes_system(
 
 ## 8. Questions
 *Builder: add questions here if spec is unclear. Architect will address.*
+
+## Questions
+- `AtrocityScore` resource does not exist in `shared::chronicle` or anywhere else.
+- `FactionId` (referred to as `Faction` in the spec) doesn't have `Colony` or `Penitent` variants. Instead, there's `Unaligned`, `Stateless`, etc. I will add `Penitent` to the `FactionId` enum.
+- I will create `AtrocityScore` in `shared::chronicle` to track the score.

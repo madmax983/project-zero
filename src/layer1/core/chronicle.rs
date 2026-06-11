@@ -487,3 +487,8 @@ mod tests {
         assert_eq!(format_event_prefix(EventImportance::Minor), " ");
     }
 }
+
+#[derive(Resource, Default)]
+pub struct AtrocityScore {
+    pub score: f32,
+}
