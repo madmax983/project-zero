@@ -482,6 +482,6 @@ pub use bureaucracy_of_scarcity::{
 };
 pub mod architecture_sentience;
 pub use architecture_sentience::*;
-pub mod specialization;
 pub mod shipbreaking_symbiotic;
+pub mod specialization;
 pub use shipbreaking_symbiotic::*;

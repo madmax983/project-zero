@@ -1,6 +1,6 @@
-use bevy_ecs::prelude::*;
-use crate::layer1::economy::resources::ColonyResources;
 use crate::layer1::core::chronicle::AddChronicleEvent;
+use crate::layer1::economy::resources::ColonyResources;
+use bevy_ecs::prelude::*;
 
 #[derive(Component)]
 pub struct DerelictEcosystem {
@@ -56,26 +56,41 @@ mod tests {
         app.insert_resource(ColonyResources::default());
         app.add_systems(Update, simulate_shipbreaker_salvage);
 
-        let derelict = app.world_mut().spawn(DerelictEcosystem {
-            threat_level: 100.0,
-            salvage_yield: 50.0,
-        }).id();
+        let derelict = app
+            .world_mut()
+            .spawn(DerelictEcosystem {
+                threat_level: 100.0,
+                salvage_yield: 50.0,
+            })
+            .id();
 
-        let mission = app.world_mut().spawn(ShipbreakerMission {
-            target_derelict: derelict,
-            progress: 0.0,
-        }).id();
+        let mission = app
+            .world_mut()
+            .spawn(ShipbreakerMission {
+                target_derelict: derelict,
+                progress: 0.0,
+            })
+            .id();
 
         app.update();
 
         let ecosystem = app.world().get::<DerelictEcosystem>(derelict).unwrap();
-        assert!(ecosystem.threat_level < 100.0, "Ecosystem threat should decrease as shipbreakers make progress");
+        assert!(
+            ecosystem.threat_level < 100.0,
+            "Ecosystem threat should decrease as shipbreakers make progress"
+        );
 
         let resources = app.world().resource::<ColonyResources>();
-        assert!(resources.metal > 0.0, "Salvage mission should yield metal resources");
+        assert!(
+            resources.metal > 0.0,
+            "Salvage mission should yield metal resources"
+        );
 
         let mission_data = app.world().get::<ShipbreakerMission>(mission).unwrap();
-        assert!(mission_data.progress > 0.0, "Mission progress should increase");
+        assert!(
+            mission_data.progress > 0.0,
+            "Mission progress should increase"
+        );
     }
 
     #[test]
@@ -85,10 +100,13 @@ mod tests {
         app.insert_resource(ColonyResources::default());
         app.add_systems(Update, simulate_shipbreaker_salvage);
 
-        let derelict = app.world_mut().spawn(DerelictEcosystem {
-            threat_level: 5.0,
-            salvage_yield: 10.0,
-        }).id();
+        let derelict = app
+            .world_mut()
+            .spawn(DerelictEcosystem {
+                threat_level: 5.0,
+                salvage_yield: 10.0,
+            })
+            .id();
 
         app.world_mut().spawn(ShipbreakerMission {
             target_derelict: derelict,
@@ -100,6 +118,10 @@ mod tests {
         let events = app.world().resource::<Events<AddChronicleEvent>>();
         let mut reader = events.get_cursor();
         let ev_list: Vec<_> = reader.read(events).collect();
-        assert_eq!(ev_list.len(), 1, "Should fire chronicle event when derelict salvage completes");
+        assert_eq!(
+            ev_list.len(),
+            1,
+            "Should fire chronicle event when derelict salvage completes"
+        );
     }
 }
