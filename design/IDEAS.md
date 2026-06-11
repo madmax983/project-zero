@@ -23688,3 +23688,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you build near noisy, dangerous trade routes to keep the population high, or isolate them and face the withdrawal?
 
 ---
+
+## Galactic Debt Traps
+
+**Layer:** 3
+
+**Fantasy:** The allure of quick advancement through advanced empire loans, leading to the crushing reality of generational debt.
+
+**Mechanic:** Advanced AI empires offer massive resource or tech loans with compounding interest. Defaulting leads to them legally repossessing your border worlds or conscripting your Pops.
+
+**Emergence:** You take a loan to fight a defensive war, win, but the interest outpaces your economy. You end up having to intentionally provoke a second war with the lender to wipe out the debt records.
+
+**Tension:** Do you take the easy money to survive a crisis now, knowing it might cost you a planet in fifty years?
+
+---
+
+## The Ghost Shift
+
+**Layer:** 1
+
+**Fantasy:** Watching your overworked, desperate colony start to crack under the pressure, hallucinating help that isn't there.
+
+**Mechanic:** If a colony's average 'Rest' need stays critically low for extended periods, Pops develop "Sleep Deprivation Psychosis." They begin working "Ghost Shifts" alongside phantom workers, temporarily doubling output but rapidly taking health damage.
+
+**Emergence:** A crucial mining quota is met just in time because the miners worked themselves to death alongside hallucinations of their ancestors.
+
+**Tension:** Do you enforce mandatory rest and miss the shipment, or let them burn themselves out to save the colony?
+
+---
+
+## The Kessler Ring
+
+**Layer:** 1 -> 2
+
+**Fantasy:** The consequences of ignoring waste management literally blocking out the sun and trapping you on your own planet.
+
+**Mechanic:** Instead of processing trash on Layer 1, players can cheaply launch it into orbit. Over decades, this creates a dense debris ring (Layer 2) that blocks solar power, damages incoming trade ships, and makes leaving the planet risky.
+
+**Emergence:** You launch trash into orbit for 100 years. When an invasion fleet arrives, the debris ring shreds their vanguard, unintentionally acting as a perfect defensive shield that you now can't turn off.
+
+**Tension:** Do you pay the high cost of recycling now, or kick the can into orbit and deal with the debris later?
+
+---
