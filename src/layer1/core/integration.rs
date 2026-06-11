@@ -2743,3 +2743,31 @@ pub fn invasive_xeno_aesthetics_chronicle_bridge(
         });
     }
 }
+
+/// INT-1302: Bridges `SymbioticSalvageEvent` to `AddChronicleEvent` (Chronicle).
+pub fn symbiotic_salvage_chronicle_bridge(
+    mut events: EventReader<crate::layer1::shipbreaking_symbiotic::SymbioticSalvageEvent>,
+    mut chronicle_events: EventWriter<AddChronicleEvent>,
+    generator: Res<NarrativeGenerator>,
+    colony: Res<ColonyName>,
+    time: Res<SimulationTime>,
+) {
+    for event in events.read() {
+        let year = (1 + time.tick / TICKS_PER_YEAR).to_string();
+
+        let mut ctx = NarrativeContext::new();
+        ctx.insert("COLONY", &colony.name);
+        ctx.insert("YEAR", &year);
+        ctx.insert("DERELICT_NAME", "Unknown Derelict");
+        ctx.insert("RESOURCE_GAINED", format!("{:.1} Stellar Alloy", event.resource_gained));
+
+        let text = generator
+            .generate("SYMBIOTIC_SALVAGE", &ctx)
+            .unwrap_or_else(|_| "A derelict was salvaged.".to_string());
+
+        chronicle_events.send(AddChronicleEvent {
+            text,
+            importance: EventImportance::Major,
+        });
+    }
+}

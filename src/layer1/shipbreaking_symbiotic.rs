@@ -1,6 +1,11 @@
-use crate::layer1::core::chronicle::AddChronicleEvent;
 use crate::layer1::economy::resources::ColonyResources;
 use bevy_ecs::prelude::*;
+
+#[derive(Event)]
+pub struct SymbioticSalvageEvent {
+    pub derelict_entity: Entity,
+    pub resource_gained: f32,
+}
 
 #[derive(Component)]
 pub struct DerelictEcosystem {
@@ -19,7 +24,7 @@ pub fn simulate_shipbreaker_salvage(
     mut q_missions: Query<(Entity, &mut ShipbreakerMission)>,
     mut q_derelicts: Query<&mut DerelictEcosystem>,
     mut resources: ResMut<ColonyResources>,
-    mut evt_chronicle: EventWriter<AddChronicleEvent>,
+    mut evt_salvage: EventWriter<SymbioticSalvageEvent>,
 ) {
     for (mission_entity, mut mission) in q_missions.iter_mut() {
         if let Ok(mut ecosystem) = q_derelicts.get_mut(mission.target_derelict) {
@@ -34,9 +39,9 @@ pub fn simulate_shipbreaker_salvage(
                 commands.entity(mission.target_derelict).despawn();
                 commands.entity(mission_entity).despawn();
 
-                evt_chronicle.send(AddChronicleEvent {
-                    text: "SYMBIOTIC_SALVAGE".to_string(),
-                    importance: crate::layer1::core::chronicle::EventImportance::Major,
+                evt_salvage.send(SymbioticSalvageEvent {
+                    derelict_entity: mission.target_derelict,
+                    resource_gained: ecosystem.salvage_yield,
                 });
             }
         }
@@ -52,7 +57,7 @@ mod tests {
     #[test]
     fn test_shipbreaker_salvage_progress_reduces_threat_and_yields_salvage() {
         let mut app = App::new();
-        app.add_event::<AddChronicleEvent>();
+        app.add_event::<SymbioticSalvageEvent>();
         app.insert_resource(ColonyResources::default());
         app.add_systems(Update, simulate_shipbreaker_salvage);
 
@@ -96,7 +101,7 @@ mod tests {
     #[test]
     fn test_shipbreaker_salvage_complete_fires_chronicle() {
         let mut app = App::new();
-        app.add_event::<AddChronicleEvent>();
+        app.add_event::<SymbioticSalvageEvent>();
         app.insert_resource(ColonyResources::default());
         app.add_systems(Update, simulate_shipbreaker_salvage);
 
@@ -115,13 +120,13 @@ mod tests {
 
         app.update();
 
-        let events = app.world().resource::<Events<AddChronicleEvent>>();
+        let events = app.world().resource::<Events<SymbioticSalvageEvent>>();
         let mut reader = events.get_cursor();
         let ev_list: Vec<_> = reader.read(events).collect();
         assert_eq!(
             ev_list.len(),
             1,
-            "Should fire chronicle event when derelict salvage completes"
+            "Should fire salvage event when derelict salvage completes"
         );
     }
 }
