@@ -38,19 +38,19 @@ use comfy_table::{presets::UTF8_FULL, Cell, Color as TableColor, Table};
 impl NarrativeError {
     /// Returns a beautiful formatted table for the error.
     pub fn to_table(&self) -> Table {
-        let error_msg = format!("\n  {} \n", self);
+        let error_msg = format!("{}", self);
         let action_msg = match self {
             Self::DirectoryNotFound(_) | Self::NoLoreFiles(_) | Self::IoError(_, _) => {
-                "  Action Required: Check Lore Directory.\n  Verify the folder path exists and contains markdown files. "
+                "Check Lore Directory. Verify the folder path exists and contains markdown files."
             }
             Self::MissingFragmentOptions(_) => {
-                "  Action Required: Check Fragment Options.\n  Verify the fragment options in your FRAGMENTS.md are not empty. "
+                "Check Fragment Options. Verify the fragment options in your FRAGMENTS.md are not empty."
             }
             Self::TemplateNotFound(_) | Self::NoPatternsForTemplate(_) => {
-                "  Action Required: Check Template ID.\n  Verify the name exists in your TEMPLATES.md. "
+                "Check Template ID. Verify the name exists in your TEMPLATES.md."
             }
             Self::MissingContext(_) => {
-                "  Action Required: Check Context variables.\n  Verify that you are calling `NarrativeContext::insert` for the missing variable in your Rust code. "
+                "Check Context variables. Verify that you are calling `NarrativeContext::insert` for the missing variable in your Rust code."
             }
         };
 
@@ -68,12 +68,23 @@ impl NarrativeError {
             _ => " ✗ NARRATIVE GENERATOR ERROR ",
         };
 
-        table.set_header(vec![comfy_table::Cell::new(header_title)
-            .add_attribute(comfy_table::Attribute::Bold)
-            .fg(TableColor::Red)]);
+        table.set_header(vec![
+            comfy_table::Cell::new(header_title)
+                .add_attribute(comfy_table::Attribute::Bold)
+                .fg(TableColor::Red),
+            comfy_table::Cell::new("Details")
+                .add_attribute(comfy_table::Attribute::Bold)
+                .fg(TableColor::Red),
+        ]);
 
-        table.add_row(vec![Cell::new(&error_msg).fg(TableColor::White)]);
-        table.add_row(vec![Cell::new(action_msg).fg(TableColor::Yellow)]);
+        table.add_row(vec![
+            Cell::new("Message").fg(TableColor::Yellow).add_attribute(comfy_table::Attribute::Bold),
+            Cell::new(&error_msg).fg(TableColor::White),
+        ]);
+        table.add_row(vec![
+            Cell::new("Action").fg(TableColor::Yellow).add_attribute(comfy_table::Attribute::Bold),
+            Cell::new(action_msg).fg(TableColor::Cyan),
+        ]);
         table
     }
 }
