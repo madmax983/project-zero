@@ -441,6 +441,28 @@ pub(crate) const fn get_skill_for_designation(
 }
 
 /// Calculates the amount of work a pop can perform in a tick.
+///
+/// # Examples
+///
+/// ```
+/// use bevy_ecs::prelude::*;
+/// use scale::layer1::execution::calculate_work_amount;
+/// use scale::layer1::designation::DesignationType;
+///
+/// let mut world = World::new();
+/// let pop = world.spawn_empty().id();
+///
+/// let amount = calculate_work_amount(
+///     &world,
+///     pop,
+///     DesignationType::Mine,
+///     None, // no tool
+///     50.0, // morale
+///     1.0,  // work speed modifier
+///     0.5,  // improvised efficiency (bare hands)
+/// );
+/// assert!(amount > 0.0);
+/// ```
 pub fn calculate_work_amount(
     world: &World,
     pop_entity: Entity,

@@ -6,6 +6,30 @@ use crate::layer1::resources::{ColonyResources, ResourceType};
 /// - Tools: 1.0 efficiency (consumes Tools)
 /// - Improvised (Scrap, Stone, Wood): 0.75 efficiency (consumes Material)
 /// - Bare Hands: 0.5 efficiency (consumes nothing)
+///
+/// # Examples
+///
+/// ```
+/// use scale::layer1::resources::{ColonyResources, ResourceType};
+/// use scale::layer1::execution::efficiency::calculate_work_efficiency;
+///
+/// let mut resources = ColonyResources::default();
+/// resources.tools = 10.0;
+///
+/// let (efficiency, consumed) = calculate_work_efficiency(&resources);
+/// assert_eq!(efficiency, 1.0);
+/// assert_eq!(consumed, Some(ResourceType::Tools));
+///
+/// // Bare hands fallback
+/// let mut empty_resources = ColonyResources::default();
+/// empty_resources.tools = 0.0;
+/// empty_resources.scrap = 0.0;
+/// empty_resources.stone = 0.0;
+/// empty_resources.wood = 0.0;
+/// let (efficiency, consumed) = calculate_work_efficiency(&empty_resources);
+/// assert_eq!(efficiency, 0.5);
+/// assert_eq!(consumed, None);
+/// ```
 pub fn calculate_work_efficiency(res: &ColonyResources) -> (f32, Option<ResourceType>) {
     // 1. Proper Tools (Best)
     // Checks if there are any tools in the global stockpile

@@ -14,6 +14,26 @@ use crate::shared::log::MessageLog;
 ///
 /// If the building is an Ancient Structure, this triggers "Retrograde Engineering",
 /// awarding Knowledge instead of resources/debris.
+///
+/// # Examples
+///
+/// ```
+/// use bevy_ecs::prelude::*;
+/// use scale::layer1::execution::demolish::execute_demolish;
+/// use scale::layer1::map::GridPosition;
+/// use scale::layer1::building::{Building, BuildingType};
+///
+/// let mut world = World::new();
+/// let pos = GridPosition { x: 5, y: 5 };
+///
+/// let building = world.spawn((pos, Building { building_type: BuildingType::Housing })).id();
+/// let designation = world.spawn(pos).id();
+///
+/// let success = execute_demolish(&mut world, designation);
+/// assert!(success);
+/// assert!(world.get_entity(designation).is_err());
+/// assert!(world.get_entity(building).is_err());
+/// ```
 pub fn execute_demolish(world: &mut World, designation_entity: Entity) -> bool {
     let Some(designation_pos) = world.get::<GridPosition>(designation_entity).copied() else {
         return false;
