@@ -1422,3 +1422,10 @@
 - **Systems connected:** `AestheticDeprivation` -> `invasive_xeno_aesthetics_chronicle_bridge` -> `AddChronicleEvent`
 - **Glue added:** Added `invasive_xeno_aesthetics_chronicle_bridge` to `src/layer1/core/integration.rs` to log aesthetic deprivation events to the Chronicle.
 - **Tests:** `tests/integration/invasive_xeno_aesthetics_bridge.rs`
+
+### INT-1302: Symbiotic Shipbreaker -> Chronicle
+- **Date:** 2026-10-31
+- **Systems connected:** `simulate_shipbreaker_salvage` -> `symbiotic_salvage_chronicle_bridge` -> `AddChronicleEvent`
+- **Glue added:** `symbiotic_salvage_chronicle_bridge` in `src/layer1/core/integration.rs` to generate Chronicle texts for Symbiotic Salvage events.
+- **Schedule:** Registered in Layer 1 Economy schedule (`src/layer1/systems/economy.rs`). Event registered in `src/setup.rs`.
+- **Tests:** `tests/integration/symbiotic_shipbreaker_bridge.rs`

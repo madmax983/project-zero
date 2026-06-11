@@ -551,3 +551,6 @@ mod quantum_twins_bridge;
 mod galactic_games_bridge;
 #[path = "integration/invasive_xeno_aesthetics_bridge.rs"]
 mod invasive_xeno_aesthetics_bridge;
+
+#[path = "integration/symbiotic_shipbreaker_bridge.rs"]
+mod symbiotic_shipbreaker_bridge;
