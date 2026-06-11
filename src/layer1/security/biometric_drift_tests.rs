@@ -166,3 +166,95 @@ fn test_recalibration_resets_drift() {
     assert_eq!(profile.drift, 0.0);
     assert_eq!(profile.last_update_tick, 2000);
 }
+
+#[test]
+fn test_biometric_drift_denies_access_door_request() {
+    let mut world = World::new();
+    world.insert_resource(SimulationTime {
+        tick: 1000, // 1000 ticks = 0.01 drift
+        speed: crate::shared::time::SimSpeed::Normal,
+    });
+
+    let pop = world
+        .spawn((
+            Pop,
+            BiometricProfile {
+                last_update_tick: 0,
+                drift: 0.0,
+                recorded_scars: 0,
+            },
+            Scars { count: 10 }, // 10 scars = 1.0 drift
+            DoorAccessRequest {
+                target: Entity::PLACEHOLDER,
+                granted: false,
+            },
+        ))
+        .id();
+
+    let door = world
+        .spawn(SecurityTerminal {
+            required_clearance: 1,
+            strictness: 1.0,
+        })
+        .id();
+
+    world.entity_mut(pop).insert(DoorAccessRequest {
+        target: door,
+        granted: false,
+    });
+
+    let mut schedule = Schedule::default();
+    schedule.add_systems(drift_accumulation_system);
+    schedule.add_systems(check_door_access_system.after(drift_accumulation_system));
+    schedule.run(&mut world);
+
+    let profile = world.get::<BiometricProfile>(pop).unwrap();
+    assert!(profile.drift > 0.0);
+
+    let request = world.get::<DoorAccessRequest>(pop).unwrap();
+    assert!(
+        !request.granted,
+        "Access should be denied due to high biometric drift"
+    );
+}
+
+#[test]
+fn test_recalibration_restores_access_request() {
+    let mut world = World::new();
+    world.insert_resource(SimulationTime {
+        tick: 2000,
+        speed: crate::shared::time::SimSpeed::Normal,
+    });
+
+    let pop = world
+        .spawn((
+            Pop,
+            BiometricProfile {
+                drift: 0.9,
+                last_update_tick: 0,
+                recorded_scars: 0,
+            },
+            Scars { count: 5 },
+            RecalibrationRequest,
+        ))
+        .id();
+
+    let mut schedule = Schedule::default();
+    schedule.add_systems(recalibrate_biometrics_system);
+    schedule.run(&mut world);
+
+    let profile = world.get::<BiometricProfile>(pop).unwrap();
+    assert_eq!(profile.drift, 0.0, "Drift should be reset");
+    assert_eq!(
+        profile.last_update_tick, 2000,
+        "Baseline age (tick) should be updated"
+    );
+    assert_eq!(
+        profile.recorded_scars, 5,
+        "Recorded scars should be updated"
+    );
+    assert!(
+        world.get::<RecalibrationRequest>(pop).is_none(),
+        "Request should be removed"
+    );
+}

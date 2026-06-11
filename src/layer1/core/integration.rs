@@ -2708,7 +2708,6 @@ pub fn public_grievance_grudge_bridge(
     }
 }
 
-
 /// Updates `PopulationCount` when a `PopDied` event is received.
 pub fn pop_died_count_system(
     mut events: EventReader<crate::layer1::pop::PopDied>,

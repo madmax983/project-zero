@@ -50,7 +50,9 @@ pub fn render_status_bar(frame: &mut Frame, area: Rect, world: &World) {
     let location_name = locations.get(center_x, center_y).map(String::as_str);
 
     // Count pops safely with immutable world access
-    let pop_count = world.get_resource::<crate::layer1::pop::PopulationCount>().map_or(0, |p| p.total);
+    let pop_count = world
+        .get_resource::<crate::layer1::pop::PopulationCount>()
+        .map_or(0, |p| p.total);
 
     // Calculate average morale
     let (total_morale, morale_count) = world

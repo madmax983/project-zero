@@ -1,6 +1,5 @@
 use bevy::prelude::*;
 
-
 #[derive(Component)]
 pub struct Asteroid;
 
@@ -62,10 +61,7 @@ impl ColonyStockpile {
     }
 }
 
-pub fn sell_asteroid_claim_system(
-    mut commands: Commands,
-    mut events: EventReader<SellClaimEvent>,
-) {
+pub fn sell_asteroid_claim_system(mut commands: Commands, mut events: EventReader<SellClaimEvent>) {
     for ev in events.read() {
         commands.entity(ev.asteroid_entity).insert(AsteroidClaim {
             owner: ev.buyer_entity,
@@ -81,7 +77,8 @@ pub fn process_royalties_system(
 ) {
     for _ in events.read() {
         for (claim, yield_data) in query.iter() {
-            let royalty_amount = (yield_data.amount_per_cycle as f32 * claim.royalty_percentage).round() as u32;
+            let royalty_amount =
+                (yield_data.amount_per_cycle as f32 * claim.royalty_percentage).round() as u32;
             stockpile.add(yield_data.resource_type, royalty_amount);
             // In a fuller implementation, we'd add the remaining 90% to the faction's inventory
         }
@@ -108,28 +105,39 @@ pub fn process_faction_behavior_system(
 
 #[cfg(test)]
 mod tests {
-    use bevy::prelude::*;
     use super::*;
+    use bevy::prelude::*;
 
     #[test]
     fn test_selling_asteroid_claim_assigns_faction_and_generates_royalties() {
         // Arrange
         let mut app = App::new();
-        app.add_systems(Update, (sell_asteroid_claim_system, process_royalties_system));
+        app.add_systems(
+            Update,
+            (sell_asteroid_claim_system, process_royalties_system),
+        );
         app.init_resource::<ColonyStockpile>();
         app.add_event::<SellClaimEvent>();
         app.add_event::<ProductionCycleEvent>();
 
+        let external_faction = app
+            .world_mut()
+            .spawn(FactionClaim {
+                name: "Independent Belters".to_string(),
+                hostility_level: 0,
+            })
+            .id();
 
-        let external_faction = app.world_mut().spawn(FactionClaim {
-            name: "Independent Belters".to_string(),
-            hostility_level: 0,
-        }).id();
-
-        let asteroid = app.world_mut().spawn((
-            Asteroid,
-            ResourceYield { resource_type: ResourceType::Uranium, amount_per_cycle: 100 },
-        )).id();
+        let asteroid = app
+            .world_mut()
+            .spawn((
+                Asteroid,
+                ResourceYield {
+                    resource_type: ResourceType::Uranium,
+                    amount_per_cycle: 100,
+                },
+            ))
+            .id();
 
         // Act - Player sells the claim
         app.world_mut().send_event(SellClaimEvent {
@@ -141,7 +149,10 @@ mod tests {
         app.update();
 
         // Assert - Asteroid now belongs to the faction
-        let claim = app.world().get::<AsteroidClaim>(asteroid).expect("Asteroid should have a claim");
+        let claim = app
+            .world()
+            .get::<AsteroidClaim>(asteroid)
+            .expect("Asteroid should have a claim");
         assert_eq!(claim.owner, external_faction);
         assert_eq!(claim.royalty_percentage, 0.10);
 
@@ -161,10 +172,16 @@ mod tests {
         app.add_systems(Update, process_faction_behavior_system);
         app.add_event::<AttackColonyEvent>();
 
-        let hostile_faction = app.world_mut().spawn((
-            FactionClaim { name: "Terror Front".to_string(), hostility_level: 100 },
-            FactionInventory { uranium_stored: 90 }, // 10 went to royalties
-        )).id();
+        let hostile_faction = app
+            .world_mut()
+            .spawn((
+                FactionClaim {
+                    name: "Terror Front".to_string(),
+                    hostility_level: 100,
+                },
+                FactionInventory { uranium_stored: 90 }, // 10 went to royalties
+            ))
+            .id();
 
         // Act - Faction processes its inventory
         app.update();
@@ -183,10 +200,13 @@ impl Plugin for AsteroidClaimsPlugin {
         app.add_event::<SellClaimEvent>();
         app.add_event::<ProductionCycleEvent>();
         app.add_event::<AttackColonyEvent>();
-        app.add_systems(Update, (
-            sell_asteroid_claim_system,
-            process_royalties_system,
-            process_faction_behavior_system,
-        ));
+        app.add_systems(
+            Update,
+            (
+                sell_asteroid_claim_system,
+                process_royalties_system,
+                process_faction_behavior_system,
+            ),
+        );
     }
 }

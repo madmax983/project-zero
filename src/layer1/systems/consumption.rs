@@ -27,9 +27,13 @@ pub fn register(schedule: &mut Schedule) {
             vermin_morale_system.after(vermin_growth_system),
             crate::layer1::integration::vermin_item_rot_system.after(vermin_growth_system),
             spoilage_system,
-            crate::layer1::security::drift_accumulation_system
-                .after(consume_food_system)
-                .after(vermin_growth_system),
+            (
+                crate::layer1::security::drift_accumulation_system
+                    .after(consume_food_system)
+                    .after(vermin_growth_system),
+                crate::layer1::security::check_door_access_system.after(crate::layer1::security::drift_accumulation_system),
+                crate::layer1::security::recalibrate_biometrics_system.after(crate::layer1::security::drift_accumulation_system),
+            ),
             crate::layer1::visitor::visitor_lifecycle_system.after(consume_food_system),
             theft_system
                 .after(consume_food_system)

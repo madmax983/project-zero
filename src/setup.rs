@@ -508,9 +508,13 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     add_start_scenario_intro_event(&mut world, scenario.id);
     world.insert_resource(AppliedStartScenario { id: scenario.id });
 
-
-    let initial_pop_count = world.query::<&crate::layer1::pop::Pop>().iter(&world).count();
-    world.insert_resource(crate::layer1::pop::PopulationCount { total: initial_pop_count });
+    let initial_pop_count = world
+        .query::<&crate::layer1::pop::Pop>()
+        .iter(&world)
+        .count();
+    world.insert_resource(crate::layer1::pop::PopulationCount {
+        total: initial_pop_count,
+    });
     world
 }
 

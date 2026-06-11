@@ -39,8 +39,10 @@ pub fn generate_secrets_system(
 ) {
     let mut rng = rand::thread_rng();
     for tenure in query.iter() {
-        if (tenure.get_ticks(AssignmentType::TavernVisitor) > 0 || tenure.get_ticks(AssignmentType::Administrator) > 0)
-            && rng.gen_bool(0.01) // 1% chance per tick
+        if (tenure.get_ticks(AssignmentType::TavernVisitor) > 0
+            || tenure.get_ticks(AssignmentType::Administrator) > 0)
+            && rng.gen_bool(0.01)
+        // 1% chance per tick
         {
             if let Some(sec) = secrets.as_mut() {
                 sec.count += 1;
@@ -54,7 +56,7 @@ pub fn execute_whisper_trade_system(
     mut secrets: Option<ResMut<ColonySecrets>>,
     mut paranoia: Option<ResMut<GlobalParanoia>>,
 ) {
-        if let (Some(sec), Some(par)) = (secrets.as_mut(), paranoia.as_mut()) {
+    if let (Some(sec), Some(par)) = (secrets.as_mut(), paranoia.as_mut()) {
         for event in events.read() {
             if sec.count >= event.secret_value {
                 sec.count -= event.secret_value;
@@ -64,10 +66,7 @@ pub fn execute_whisper_trade_system(
     }
 }
 
-pub fn paranoia_unrest_system(
-    paranoia: Option<Res<GlobalParanoia>>,
-    mut unrest: ResMut<Unrest>,
-) {
+pub fn paranoia_unrest_system(paranoia: Option<Res<GlobalParanoia>>, mut unrest: ResMut<Unrest>) {
     if paranoia.as_ref().is_some_and(|p| p.level > 50.0) {
         let unrest_increase = (paranoia.unwrap().level - 50.0) * 0.1;
         unrest.level += unrest_increase;
@@ -77,9 +76,9 @@ pub fn paranoia_unrest_system(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use bevy::prelude::*;
     use crate::layer1::social::Tavern;
-use crate::layer1::AssignmentType;
+    use crate::layer1::AssignmentType;
+    use bevy::prelude::*;
 
     #[test]
     fn test_secret_generation_in_tavern() {
@@ -100,7 +99,11 @@ use crate::layer1::AssignmentType;
         }
 
         // Assert: The Pop or the Tavern should now hold a Secret component/resource
-        let has_secret = app.world().get_resource::<ColonySecrets>().map_or(0, |res| res.count) > 0;
+        let has_secret = app
+            .world()
+            .get_resource::<ColonySecrets>()
+            .map_or(0, |res| res.count)
+            > 0;
         assert!(has_secret, "A secret should have been generated.");
     }
 
@@ -116,7 +119,7 @@ use crate::layer1::AssignmentType;
 
         app.world_mut().send_event(TradeSecretEvent {
             broker_entity: broker,
-            secret_value: 1
+            secret_value: 1,
         });
         app.update();
 
@@ -130,7 +133,10 @@ use crate::layer1::AssignmentType;
         app.insert_resource(GlobalParanoia { level: 90.0 });
         app.add_systems(Update, paranoia_unrest_system);
 
-        app.world_mut().insert_resource(Unrest { level: 0.0, modifiers: vec![] });
+        app.world_mut().insert_resource(Unrest {
+            level: 0.0,
+            modifiers: vec![],
+        });
 
         app.update();
 

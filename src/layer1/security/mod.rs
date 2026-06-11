@@ -86,5 +86,47 @@ pub fn recalibrate_profile(world: &mut World, pop: Entity) {
     }
 }
 
+#[derive(Component)]
+pub struct DoorAccessRequest {
+    pub target: Entity,
+    pub granted: bool,
+}
+
+#[derive(Component)]
+pub struct RecalibrationRequest;
+
+pub fn check_door_access_system(
+    mut requests: Query<(Entity, &mut DoorAccessRequest, &BiometricProfile)>,
+    terminals: Query<&SecurityTerminal>,
+) {
+    for (_pop_entity, mut request, profile) in requests.iter_mut() {
+        if let Ok(term) = terminals.get(request.target) {
+            let effective_drift = profile.drift * term.strictness;
+            request.granted = effective_drift <= 0.5;
+        } else {
+            request.granted = true; // Not a terminal
+        }
+    }
+}
+
+pub fn recalibrate_biometrics_system(
+    mut commands: Commands,
+    mut requests: Query<
+        (Entity, Option<&crate::layer1::health::Scars>),
+        With<RecalibrationRequest>,
+    >,
+    mut profiles: Query<&mut BiometricProfile>,
+    time: Res<crate::shared::time::SimulationTime>,
+) {
+    for (entity, scars) in requests.iter_mut() {
+        if let Ok(mut profile) = profiles.get_mut(entity) {
+            profile.drift = 0.0;
+            profile.last_update_tick = time.tick;
+            profile.recorded_scars = scars.map_or(0, |s| s.count);
+        }
+        commands.entity(entity).remove::<RecalibrationRequest>();
+    }
+}
+
 #[cfg(test)]
 mod biometric_drift_tests;
