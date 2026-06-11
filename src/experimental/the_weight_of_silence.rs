@@ -99,3 +99,101 @@ pub fn spawn_silence_cult_system(
         }
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_track_colony_isolation_system() {
+        let mut app = App::new();
+        app.insert_resource(SimulationTime {
+            tick: 100,
+            ..Default::default()
+        });
+        app.insert_resource(SilenceCultConfig {
+            isolation_increase_per_tick: 0.5,
+            ..Default::default()
+        });
+        app.add_systems(Update, track_colony_isolation_system);
+
+        let ent = app
+            .world_mut()
+            .spawn(ColonyNode {
+                last_communication_tick: 80,
+                isolation_level: 0.0,
+            })
+            .id();
+
+        app.update();
+
+        let node = app.world().get::<ColonyNode>(ent).unwrap();
+        // (100 - 80) * 0.5 = 10.0
+        assert_eq!(node.isolation_level, 10.0);
+    }
+
+    #[test]
+    fn test_process_isolation_needs_system() {
+        let mut app = App::new();
+        app.insert_resource(SilenceCultConfig {
+            isolation_need_threshold: 40.0,
+            ..Default::default()
+        });
+        app.add_systems(Update, process_isolation_needs_system);
+
+        let colony_ent = app
+            .world_mut()
+            .spawn(ColonyNode {
+                last_communication_tick: 0,
+                isolation_level: 50.0, // Above 40.0
+            })
+            .id();
+
+        let pop_ent = app
+            .world_mut()
+            .spawn((IsolationResident(colony_ent), IsolationNeed(10.0)))
+            .id();
+
+        app.update();
+
+        let need = app.world().get::<IsolationNeed>(pop_ent).unwrap();
+        assert_eq!(need.0, 11.0);
+    }
+
+    #[test]
+    fn test_spawn_silence_cult_system() {
+        let mut app = App::new();
+        app.insert_resource(SilenceCultConfig {
+            cult_spawn_threshold: 400.0,
+            ..Default::default()
+        });
+        app.add_systems(Update, spawn_silence_cult_system);
+
+        let colony_ent = app
+            .world_mut()
+            .spawn(ColonyNode {
+                last_communication_tick: 0,
+                isolation_level: 500.0, // Above 400.0
+            })
+            .id();
+
+        let pop_ent = app
+            .world_mut()
+            .spawn((
+                IsolationResident(colony_ent),
+                IsolationNeed(150.0), // Above 100.0
+            ))
+            .id();
+
+        app.update();
+
+        // Verify Cult was spawned
+        let mut cult_query = app.world_mut().query::<&SilenceCult>();
+        let cults: Vec<_> = cult_query.iter(app.world()).collect();
+        assert_eq!(cults.len(), 1);
+        assert_eq!(cults[0].colony_entity, colony_ent);
+
+        // Verify pop was indoctrinated
+        assert!(app.world().get::<CultMember>(pop_ent).is_some());
+    }
+}
