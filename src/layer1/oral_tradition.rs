@@ -242,6 +242,11 @@ pub fn collect_chronicles_system(mut tradition: ResMut<OralTradition>, chronicle
     tradition.process_chronicles(&chronicle);
 }
 
+#[cfg(not(feature = "nova"))]
+pub fn collect_chronicles_system() {
+    bevy::log::warn_once!("The `nova` feature is not enabled! `collect_chronicles_system` will do nothing. Please add `features = [\"nova\"]` to your Cargo.toml.");
+}
+
 /// Facilitates the telling of tales within `Tavern`s.
 ///
 /// When multiple pops gather in a tavern, there is a chance they share a story
@@ -317,6 +322,11 @@ pub fn storytelling_system(
             log.add(format!("A legend evolves: '{}'", story.text));
         }
     }
+}
+
+#[cfg(not(feature = "nova"))]
+pub fn storytelling_system() {
+    bevy::log::warn_once!("The `nova` feature is not enabled! `storytelling_system` will do nothing. Please add `features = [\"nova\"]` to your Cargo.toml.");
 }
 
 #[cfg(feature = "nova")]
