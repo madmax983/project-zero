@@ -23564,3 +23564,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you open the doors early and risk the whole colony, or keep them locked long enough that the people inside are no longer culturally compatible with your empire?
 
 ---
+
+## The Nostalgia Trade
+
+**Layer:** Cross-layer
+
+**Fantasy:** Watching your citizens slowly yearn for a homeworld that has long since fallen to ruin or changed beyond recognition.
+
+**Mechanic:** Pops far from the core worlds develop a 'Homesick' need. If unsatisfied, a localized economy emerges where they trade immense resources for fake 'Homeworld Relics' or book passage on dangerous, unverified 'Return Ships'.
+
+**Emergence:** An entire frontier mining sector might bankrupt itself buying dirt marketed as "Earth Soil," drastically impacting resource output. If they book passage, you lose valuable workforce.
+
+**Tension:** Do you suppress the trade to keep resources local, or allow it to boost morale at the cost of massive economic drain?
+
+---
+
+## Automated Graverobbers
+
+**Layer:** 2 -> 1
+
+**Fantasy:** Salvage operations that go too far and disturb the peace of a recovering colony.
+
+**Mechanic:** Automated scavenger fleets from Layer 2 attempt to land on Layer 1 colonies that have recently suffered mass casualties to harvest cybernetics, weapons, and heirlooms from the dead.
+
+**Emergence:** Your colony is reeling from a plague. Just as survivors start mourning, scavenger bots drop from orbit, ripping up graveyards. The survivors might form a cult defending the dead, violently attacking the bots and unintentionally declaring war on the scavenger faction.
+
+**Tension:** Do you let the scavengers take the loot to prevent a diplomatic incident, or defend the dignity of your dead to prevent a local revolt?
+
+---
+
+## Monumental Scaffolding
+
+**Layer:** 1 -> 2
+
+**Fantasy:** The temporary infrastructure required to build something massive becomes a permanent, uncontrollable part of the colony.
+
+**Mechanic:** Building Megastructures requires placing massive 'Scaffolding' zones on the Layer 1 map. These zones provide temporary housing and black markets for the workers. If the project takes too long, the Scaffolding becomes a permanent, highly corrupt 'Slum' district that resists demolition.
+
+**Emergence:** You pause the construction of a Planetary Shield due to a resource shortage. Over a decade, the scaffolding city develops its own culture and economy. When you resume construction, demolishing the scaffolding to finish the shield sparks a civil war.
+
+**Tension:** Build fast and expensive to clear the scaffolding, or stretch out the project and risk the temporary infrastructure becoming a permanent, dangerous fixture?
+
+---
