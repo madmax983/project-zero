@@ -88,3 +88,4 @@ pub fn recalibrate_profile(world: &mut World, pop: Entity) {
 
 #[cfg(test)]
 mod biometric_drift_tests;
+pub mod biometric_drift;

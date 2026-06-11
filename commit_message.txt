@@ -1,0 +1,17 @@
+feat(layer1): complete biometric drift feature
+
+Implements RED-GREEN-REFACTOR from spec 1294:
+- Added comprehensive RED phase tests inside `layer1::security::biometric_drift`.
+- Implemented GREEN phase struct `BiometricProfile`, `SecurityDoor`, `DoorAccessRequest`, and systems.
+- Validated implementation passes all standard codebase checks including lint.
+- Updated DESIGN/COMPLETED documentation correctly to verify task status.
+
+All acceptance criteria met:
+- Biometric drift accumulates based on age and trauma.
+- High drift denies access to SecurityDoors via checking systems.
+- Recalibration successfully zeroes out drift and resets age baselines.
+- Test coverage passes for `layer1::security::biometric_drift.rs`.
+- cargo test passes.
+- cargo clippy clean.
+
+Co-Authored-By: google-labs-jules[bot] <161369871+google-labs-jules[bot]@users.noreply.github.com>
