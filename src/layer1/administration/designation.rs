@@ -282,7 +282,10 @@ pub fn can_designate(world: &World, x: i32, y: i32, designation_type: Designatio
         }
         DesignationType::Consume => {
             let occupied = world.resource::<OccupiedTiles>();
-            occupied.0.contains(&(x, y)) && has_component_at::<crate::layer1::architecture::edible::EdibleMaterial>(world, x, y)
+            occupied.0.contains(&(x, y))
+                && has_component_at::<crate::layer1::architecture::edible::EdibleMaterial>(
+                    world, x, y,
+                )
         }
         DesignationType::Destroy => {
             let occupied = world.resource::<OccupiedTiles>();
@@ -522,7 +525,10 @@ pub fn try_designate_area(
                         .as_ref()
                         .is_some_and(|targets| targets.contains(&(x, y))),
                     DesignationType::Consume => {
-                        occupied_tiles.is_some_and(|o| o.0.contains(&(x, y))) && has_component_at::<crate::layer1::architecture::edible::EdibleMaterial>(world, x, y)
+                        occupied_tiles.is_some_and(|o| o.0.contains(&(x, y)))
+                            && has_component_at::<crate::layer1::architecture::edible::EdibleMaterial>(
+                                world, x, y,
+                            )
                     }
                     DesignationType::Destroy => {
                         occupied_tiles.is_some_and(|o| o.0.contains(&(x, y)))
