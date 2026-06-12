@@ -16,3 +16,11 @@ pub struct MovementTarget {
 /// Marker component indicating a pop has arrived at its target.
 #[derive(Component, Debug)]
 pub struct AtTarget;
+
+#[derive(Component, Debug, Clone)]
+pub struct HabituatedRoute {
+    pub path: Vec<GridPosition>,
+    pub urgency: f32,
+    pub frustration: u32,
+    pub last_pos: Option<GridPosition>,
+}
