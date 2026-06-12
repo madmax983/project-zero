@@ -23772,3 +23772,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you risk your expensive military fleets by sending them into a lethal anomaly to clear out pirates, or do you let the black market operate with impunity right on your border?
 
 ---
+## The Cassandra Syndrome
+
+**Layer:** 1
+
+**Fantasy:** A pop correctly predicts a disaster, but nobody believes them until it's too late.
+
+**Mechanic:** Some pops develop the "Prophetic" trait based on high intelligence and prolonged exposure to anomalous artifacts. They periodically generate a "Doomsday Warning" about an impending disaster (e.g., meteor strike, disease outbreak). Initially, other pops ignore the warning, leading to a massive morale drop for the prophet. If the disaster occurs, the prophet's credibility skyrockets, and they form a cult. If it doesn't, they are ostracized.
+
+**Emergence:** You might ignore a pop's warning about a solar flare, only to watch your entire power grid fail. The pop then becomes a cult leader, destabilizing the colony's leadership.
+
+**Tension:** Do you expend massive resources to prepare for a disaster that might just be a hallucination, or ignore it and risk catastrophic failure and a subsequent cult uprising?
+
+---
+
+## Xeno-Gastronomic Diplomacy
+
+**Layer:** Cross-layer
+
+**Fantasy:** Building diplomatic relations through the perilous exchange of alien cuisines.
+
+**Mechanic:** You can trade highly specialized, dangerous local flora/fauna dishes with other empires (Layer 3). These dishes provide immense temporary buffs to their leadership, but carry a risk of biological incompatibility. On Layer 1, you must cultivate these dangerous ingredients, risking local outbreaks.
+
+**Emergence:** You send a delicacy to a neighboring empire to secure a peace treaty. The dish causes an allergic reaction in their emperor, sparking an accidental interstellar war.
+
+**Tension:** Do you risk cultivating dangerous biological assets on your homeworld to craft the perfect diplomatic gift, knowing a slight miscalculation could result in a devastating war?
+
+---
+
+## The Ancestor AI
+
+**Layer:** Cross-layer
+
+**Fantasy:** Uploading the consciousness of your best leaders to guide the empire forever, only to watch their values drift over millennia.
+
+**Mechanic:** When a highly skilled leader dies, you can upload their mind into a planetary AI core (Layer 2). They provide permanent buffs to the sector. However, as the centuries pass, their simulated values slowly detach from current reality. They might begin issuing automated directives based on extinct threats or outdated cultural norms.
+
+**Emergence:** An uploaded admiral from an ancient defensive war starts spontaneously building massive, unnecessary defense platforms out of paranoia, draining your modern economy.
+
+**Tension:** Do you keep the invaluable buffs of the Ancestor AI and suffer their increasingly erratic, out-of-touch directives, or permanently delete the mind of your greatest hero to regain control?
+
+---
