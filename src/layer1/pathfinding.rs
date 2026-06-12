@@ -38,6 +38,7 @@ use std::collections::BinaryHeap;
 use crate::layer1::access_control::{AccessControl, AccessMode};
 use crate::layer1::building::{Building, BuildingMap, BuildingType, OccupiedTiles};
 use crate::layer1::control::{DoorControl, DoorState};
+
 use crate::layer1::pop::Role;
 use crate::layer1::terrain::{TerrainGrid, TerrainType};
 use crate::layer1::wind::{calculate_wind_movement_penalty, Vec2, WindGrid};
@@ -876,6 +877,7 @@ mod tests {
     #[test]
     fn test_open_door_bypasses_access_control() {
         use crate::layer1::control::{DoorControl, DoorState};
+
         use crate::layer1::pop::{Pop, Role};
         use std::collections::HashSet;
 

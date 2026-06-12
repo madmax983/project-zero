@@ -741,3 +741,4 @@
 - [x] `1301` The Edible Architecture — `specs/1301-edible-architecture.md` — completed 2026-06-12
 
 - [x] `1256` The Architecture of Regret — `specs/1256-architecture-of-regret.md` — completed 2026-06-12
+- [x] `1294` Biometric Drift — `specs/1294-biometric-drift.md` — completed 2026-06-12
