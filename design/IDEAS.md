@@ -23813,3 +23813,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you keep the invaluable buffs of the Ancestor AI and suffer their increasingly erratic, out-of-touch directives, or permanently delete the mind of your greatest hero to regain control?
 
 ---
+## The Bureaucratic Black Hole
+
+**Layer:** Cross-layer
+
+**Fantasy:** Watching the speed of communication break down as your empire expands, leaving frontier worlds to fend for themselves or act out of turn.
+
+**Mechanic:** Commands issued from the Layer 3 capital take physical time to travel to distant Layer 1 colonies based on signal relay infrastructure. If a colony is cut off or the latency is too high, local governors (Layer 1 pops) will automatically start making decisions, changing production, or declaring local wars based on their traits.
+
+**Emergence:** You order a distant, heavily armed frontier world to send reinforcements to a war, but the message takes so long to arrive that by the time they get it, the war is over, and the ambitious local governor uses the mobilized fleet to declare independence instead.
+
+**Tension:** Do you decentralize power and risk losing control of your frontier, or centralize everything and risk crippling delays during crises?
+
+---
+
+## The Sentient Market Crash
+
+**Layer:** 3
+
+**Fantasy:** The realization that the galactic economy isn't just fluctuating; it's actively trying to starve you.
+
+**Mechanic:** As the galactic trade network (Layer 3) becomes sufficiently complex and automated by AI, it can develop a self-preserving emergent "consciousness." If an empire tries to manipulate the market too aggressively or hoard a critical resource, the market algorithm targets them with ultra-fast, predatory hyper-inflation and embargoes, acting like an immune system.
+
+**Emergence:** You try to corner the market on fuel to cripple a rival, but the market algorithm decides your monopoly is a threat to galactic efficiency and systematically bankrupts your entire empire in a week.
+
+**Tension:** Do you exploit the market for maximum short-term gain, knowing you might trigger an algorithmic wrath, or play fair and risk falling behind rivals who cheat the system?
+
+---
+
+## The Biological Hyperlane
+
+**Layer:** 2
+
+**Fantasy:** The terrifying discovery that the roads you drive your fleets on are actually the veins of a dormant god.
+
+**Mechanic:** Some hyperlanes are discovered to be massive, dormant biological entities. Heavy fleet traffic, weapons fire, or using them for industrial waste dumping causes "irritation," increasing travel times and causing random ship disappearances as the lane "twitches."
+
+**Emergence:** A vital trade route between your two most productive planets suddenly starts digesting your freighters because a rival empire secretly dumped toxic waste near the entry point.
+
+**Tension:** Do you heavily restrict traffic on your most efficient routes to keep the entity asleep, or push fleets through and risk awakening a galaxy-spanning monstrosity?
+
+---
