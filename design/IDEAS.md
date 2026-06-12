@@ -23329,7 +23329,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Edible Architecture
+## The Edible Architecture [SPECCED]
 
 **Layer:** 1
 
