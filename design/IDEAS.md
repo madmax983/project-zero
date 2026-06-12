@@ -23854,3 +23854,59 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you heavily restrict traffic on your most efficient routes to keep the entity asleep, or push fleets through and risk awakening a galaxy-spanning monstrosity?
 
 ---
+
+## Gravity Surfing
+
+**Layer:** 2 -> 1
+
+**Fantasy:** Harnessing the immense, terrifying power of a passing celestial body, at the risk of shaking your colony to dust.
+
+**Mechanic:** When a high-gravity body (comet, rogue planet) passes close on Layer 2, you can activate "Tidal Generators" on Layer 1. They provide practically infinite, free power for a short duration, but cause massive, scaling seismic damage to all buildings on the grid.
+
+**Emergence:** You try to power your desperate defense grid during an invasion by surfing a passing comet. The power spike destroys the invading fleet, but the resulting earthquake levels your capital city.
+
+**Tension:** Do you rely on safe, low-output generators or risk total structural collapse for a burst of god-like industrial power?
+
+---
+
+## The Void Choir
+
+**Layer:** 3 -> 1
+
+**Fantasy:** Listening to the deep, incomprehensible songs of the galaxy, until your people start singing back.
+
+**Mechanic:** Building an ultra-deep-space comms array provides unmatched, real-time intelligence on distant Layer 3 empires. However, the ambient "songs" of deep space broadcast into the colony. Pops living near the array slowly convert to the "Void Choir" cult, prioritizing acoustic rituals over their assigned jobs.
+
+**Emergence:** Your intelligence network is flawless, allowing you to easily outmaneuver rival empires. However, your entire science district has stopped researching and instead spends 14 hours a day humming in perfect, terrifying unison in front of the satellite dish.
+
+**Tension:** Do you maintain galactic omniscience at the cost of a slowly growing, uncontrollable local cult, or shut the array down to regain control of your workforce?
+
+---
+
+## Bureaucratic Biomimicry
+
+**Layer:** Cross-layer
+
+**Fantasy:** The terrifying realization that your laws have evolved minds of their own.
+
+**Mechanic:** Edicts and laws enacted to solve temporary crises do not just expire; they "mutate" over generations. A "Temporary Martial Law" edict might drift into a permanent, culturally ingrained "Warrior Caste" system if left active too long, becoming impossible to repeal without a civil war.
+
+**Emergence:** To survive an early-game famine, you enacted strict rationing. Two hundred years later, your booming, post-scarcity utopia is violently tearing itself apart because the bureaucracy has evolved the rationing law into a brutal, mandatory fasting religion that you cannot legally un-legislate.
+
+**Tension:** Do you use powerful, sweeping edicts to solve immediate problems, knowing they might evolve into permanent, crippling cultural mandates for your descendants?
+
+---
+
+## The Cannibal's Cargo
+
+**Layer:** Cross-layer
+
+**Fantasy:** The darkest secret of your glorious empire's foundation.
+
+**Mechanic:** If a colony ship is starving in transit (Layer 2), the "Desperation Protocol" can be enacted. The ship survives and successfully colonizes the world, but the founding Pops are permanently marked with "The Dark Secret." They are highly resilient but prone to extreme paranoia. If a Layer 3 empire or visiting inspector discovers the truth, your civilization suffers massive, permanent diplomatic sanctions.
+
+**Emergence:** You build a shining, democratic beacon of hope in the sector. However, you constantly have to assassinate foreign journalists and suppress your own historians because if anyone discovers what your revered founders ate during the crossing, your empire will be excommunicated from the galactic community.
+
+**Tension:** Do you let a vital colonization mission fail with honor, or ensure its survival by committing a sin that will haunt your empire's diplomacy forever?
+
+---
