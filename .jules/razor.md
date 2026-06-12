@@ -6,3 +6,7 @@
 **Bloat:** Deep folder hierarchies containing single files or only two files (e.g., `mod.rs` and one other `.rs` file) across `experimental`, `layer1`, `layer2`, and `layer3` (e.g. `src/layer1/culture/artifacts`, `src/layer1/diplomacy/factions`).
 **Cut:** Flattened these directories. For single file directories, renamed `mod.rs` to the directory name. For two-file directories, merged the contents of the nested file into the newly renamed `mod.rs` file (using inline nested modules to preserve namespace paths).
 **Saved:** Removed 28 unnecessary directories and reduced mental overhead/file-switching when navigating the codebase.
+## [Reduction]
+**Bloat:** Complicated fallback structs that pollute the global namespace to appease a documentation snippet.
+**Cut:** Replaced fallback code generation entirely by explicitly updating documentation to set proper feature-gate expectations for users.
+**Saved:** 0 lines of actual code, reduced API surface area by not adding 3 global fake structs.
