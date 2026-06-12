@@ -1429,3 +1429,10 @@
 - **Glue added:** `symbiotic_salvage_chronicle_bridge` in `src/layer1/core/integration.rs` to generate Chronicle texts for Symbiotic Salvage events.
 - **Schedule:** Registered in Layer 1 Economy schedule (`src/layer1/systems/economy.rs`). Event registered in `src/setup.rs`.
 - **Tests:** `tests/integration/symbiotic_shipbreaker_bridge.rs`
+
+### INT-1301: The Edible Architecture -> Chronicle
+- **Date:** 2026-10-31
+- **Systems connected:** `consume_building_system` -> `edible_architecture_chronicle_bridge` -> `AddChronicleEvent`
+- **Glue added:** Added `EdibleBuildingConsumedEvent` in `src/layer1/architecture/edible.rs`. Added `edible_architecture_chronicle_bridge` in `src/layer1/core/integration.rs` to generate Chronicle texts.
+- **Schedule:** Registered event in `src/setup.rs` and bridge in `Layer1SystemSet::Observation`.
+- **Tests:** `tests/integration/edible_architecture_bridge.rs`

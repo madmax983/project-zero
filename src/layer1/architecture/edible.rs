@@ -15,6 +15,11 @@ pub struct EdibleMaterial {
 #[derive(Component)]
 pub struct Consumed;
 
+#[derive(Event, Debug, Clone)]
+pub struct EdibleBuildingConsumedEvent {
+    pub entity: Entity,
+}
+
 pub fn execute_consume(world: &mut World, designation_entity: Entity) -> bool {
     let Some(designation_pos) = world.get::<GridPosition>(designation_entity).copied() else {
         return false;
@@ -41,8 +46,10 @@ pub fn execute_consume(world: &mut World, designation_entity: Entity) -> bool {
     true
 }
 
+#[allow(clippy::too_many_arguments)]
 pub fn consume_building_system(
     mut commands: Commands,
+    mut consumed_events: EventWriter<EdibleBuildingConsumedEvent>,
     q_edible_buildings: Query<(Entity, &EdibleMaterial), With<Consumed>>,
     mut resources: ResMut<ColonyResources>,
     mut building_map: Option<ResMut<BuildingMap>>,
@@ -68,6 +75,7 @@ pub fn consume_building_system(
             }
         }
 
+        consumed_events.send(EdibleBuildingConsumedEvent { entity });
         commands.entity(entity).despawn();
 
         for mut morale in q_morale.iter_mut() {
@@ -92,6 +100,7 @@ mod tests {
         let mut app = App::new();
         app.insert_resource(ColonyResources { food: 10.0, ..Default::default() });
         app.add_event::<BuildingRemovedEvent>();
+        app.add_event::<EdibleBuildingConsumedEvent>();
         app.add_systems(Update, consume_building_system);
 
         let building = app.world_mut().spawn((

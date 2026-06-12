@@ -2774,3 +2774,16 @@ pub fn symbiotic_salvage_chronicle_bridge(
         });
     }
 }
+
+/// INT-1301: Bridges EdibleBuildingConsumedEvent to AddChronicleEvent (Chronicle).
+pub fn edible_architecture_chronicle_bridge(
+    mut events: EventReader<crate::layer1::architecture::edible::EdibleBuildingConsumedEvent>,
+    mut chronicle_events: EventWriter<crate::layer1::core::chronicle::AddChronicleEvent>,
+) {
+    for _event in events.read() {
+        chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
+            importance: crate::layer1::core::chronicle::EventImportance::Minor,
+            text: "A building was consumed for its edible materials during a famine.".to_string(),
+        });
+    }
+}
