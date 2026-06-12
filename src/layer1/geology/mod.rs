@@ -269,3 +269,6 @@ mod tests {
 }
 
 pub mod fracking;
+pub mod asteroid_hollowing;
+#[cfg(test)]
+mod asteroid_hollowing_tests;
