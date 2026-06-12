@@ -371,11 +371,17 @@ fn try_drop_off_gene_bank(
         return false;
     };
 
-    let Some(sample) = world.get::<crate::layer1::gene_bank::GeneticSample>(item_entity.0) else {
-        return false;
+    let data = {
+        let mut item_entity_mut = match world.get_entity_mut(item_entity.0) {
+            Ok(e) => e,
+            Err(_) => return false,
+        };
+        let sample = match item_entity_mut.take::<crate::layer1::gene_bank::GeneticSample>() {
+            Some(s) => s,
+            None => return false,
+        };
+        sample.data
     };
-
-    let data = sample.data.clone();
     if let Some(mut bank) = world.get_mut::<GeneBank>(gene_bank_entity) {
         bank.store_sample(data);
     }
