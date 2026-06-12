@@ -12,6 +12,7 @@
 
 use crate::layer1::environment::orbital_crossfire::ImpactSite;
 use crate::layer1::particles::spawn_particle;
+
 use crate::layer1::zone::ZoneType;
 use crate::layer1::{GridPosition, OccupiedTiles, TerrainGrid, TerrainType};
 use bevy_ecs::prelude::*;
@@ -44,6 +45,8 @@ pub enum DesignationType {
     Destroy,
     /// Collect genetic sample from flora or fauna.
     CollectSample,
+    /// Consume an edible building.
+    Consume,
 }
 
 impl DesignationType {
@@ -70,6 +73,7 @@ impl DesignationType {
             Self::Cannibalize => 'C',
             Self::Destroy => 'D',
             Self::CollectSample => 'S',
+            Self::Consume => 'C',
         }
     }
 
@@ -96,6 +100,7 @@ impl DesignationType {
             Self::Cannibalize => "C",
             Self::Destroy => "D",
             Self::CollectSample => "S",
+            Self::Consume => "C",
         }
     }
 
@@ -122,6 +127,7 @@ impl DesignationType {
             Self::Cannibalize => "Cannibalize",
             Self::Destroy => "Destroy",
             Self::CollectSample => "Collect Sample",
+            Self::Consume => "Consume",
         }
     }
 }
@@ -284,6 +290,9 @@ pub fn can_designate(world: &World, x: i32, y: i32, designation_type: Designatio
             has_component_at::<crate::layer1::flora::Flora>(world, x, y)
                 || has_component_at::<crate::layer1::fauna::Fauna>(world, x, y)
         }
+        DesignationType::Consume => has_component_at::<
+            crate::layer1::architecture::edible_architecture::EdibleArchitecture,
+        >(world, x, y),
     }
 }
 
@@ -509,6 +518,7 @@ pub fn try_designate_area(
                     DesignationType::Tame
                     | DesignationType::ClearFlora
                     | DesignationType::Cannibalize
+                    | DesignationType::Consume
                     | DesignationType::CollectSample => valid_targets
                         .as_ref()
                         .is_some_and(|targets| targets.contains(&(x, y))),

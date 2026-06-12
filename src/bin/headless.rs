@@ -1158,6 +1158,7 @@ fn print_map(world: &mut World, center_x: i32, center_y: i32) {
                     DesignationType::Cannibalize => 'C',
                     DesignationType::Destroy => 'D',
                     DesignationType::CollectSample => 'S',
+                    DesignationType::Consume => 'C',
                 };
                 map_content.push_str(&format!("{c}").magenta().to_string());
                 continue;
@@ -1361,6 +1362,20 @@ fn designate_at(world: &mut World, designation_type: DesignationType, x: i32, y:
                     Some(comfy_table::Attribute::Bold),
                 );
             }
+            DesignationType::Consume => {
+                let _ = world
+                    .spawn((
+                        scale::layer1::architecture::edible_architecture::EdibleArchitecture {
+                            food_yield: 50.0,
+                        },
+                        GridPosition { x, y },
+                        scale::layer1::architecture::building::Building {
+                            building_type:
+                                scale::layer1::architecture::building::BuildingType::Housing,
+                        },
+                    ))
+                    .id();
+            }
         }
     }
 }
@@ -1391,6 +1406,7 @@ fn print_designations(world: &mut World) {
             DesignationType::Cannibalize => Cell::new(type_str).fg(Color::Red),
             DesignationType::Destroy => Cell::new(type_str).fg(Color::Red),
             DesignationType::CollectSample => Cell::new(type_str).fg(Color::Cyan),
+            DesignationType::Consume => Cell::new(type_str).fg(Color::Yellow),
         };
 
         table.add_row(vec![type_cell, Cell::new(format!("{},{}", pos.x, pos.y))]);
@@ -1579,6 +1595,7 @@ fn scan_terrain(world: &mut World, center_x: i32, center_y: i32, radius: ScanRad
                 DesignationType::Cannibalize => "cannibalize",
                 DesignationType::Destroy => "destroy",
                 DesignationType::CollectSample => "collect_sample",
+                DesignationType::Consume => "consume",
             };
             (p.x, p.y, dt.to_string())
         })

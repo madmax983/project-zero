@@ -31,7 +31,6 @@
 
 
 
-- [ ] `1303` The Edible Architecture — `specs/1303-the-edible-architecture.md`
 ## Future / Ideas
 
 

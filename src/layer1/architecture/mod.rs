@@ -62,3 +62,5 @@ pub mod sunk_cost_monument;
 pub use hostage_protocol::HostageProtocolPlugin;
 pub mod smart_matter;
 pub use smart_matter::*;
+pub mod edible_architecture;
+pub use edible_architecture::*;

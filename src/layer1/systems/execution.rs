@@ -210,6 +210,7 @@ pub fn register(schedule: &mut Schedule) {
             update_social_class_system.after(arrival_handler_system),
             class_friction_system.after(update_social_class_system),
             haul_system.after(arrival_handler_system),
+            crate::layer1::architecture::edible_architecture::consume_edible_architecture_system,
         )
             .in_set(Layer1SystemSet::Execution),
     );

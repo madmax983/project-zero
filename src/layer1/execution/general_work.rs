@@ -436,7 +436,7 @@ pub(crate) const fn get_skill_for_designation(
         | DesignationType::Cannibalize
         | DesignationType::Destroy => Some(SkillType::Construction),
         DesignationType::ClearFlora | DesignationType::CollectSample => Some(SkillType::Farming),
-        DesignationType::SetZone(_) | DesignationType::Tame => None,
+        DesignationType::SetZone(_) | DesignationType::Tame | DesignationType::Consume => None,
     }
 }
 
@@ -590,7 +590,7 @@ fn execute_work_on_designation(
                 false
             }
         }
-        DesignationType::SetZone(_) | DesignationType::Tame => false,
+        DesignationType::SetZone(_) | DesignationType::Tame | DesignationType::Consume => false,
     }
 }
 
