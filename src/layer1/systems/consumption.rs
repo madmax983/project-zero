@@ -3,9 +3,18 @@ use crate::layer1::psychology::artifact_diet::consume_artifacts_during_famine_sy
 use crate::layer1::social::old_guard::mood_lifecycle_system;
 use crate::layer1::*;
 use bevy_ecs::prelude::*;
+use crate::layer1::social::biometric_drift::*;
 
 #[allow(clippy::too_many_lines)]
 pub fn register(schedule: &mut Schedule) {
+    schedule.add_systems(
+        (
+            update_biometric_drift_system.after(decay_needs_system),
+            check_door_access_system.after(update_biometric_drift_system),
+            recalibrate_biometrics_system.after(update_biometric_drift_system),
+        ).in_set(Layer1SystemSet::Consumption)
+    );
+
     schedule.add_systems(
         (
             crate::layer1::social::xenoflora_pet::apply_pet_mood_boost,
