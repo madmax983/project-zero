@@ -2774,3 +2774,53 @@ pub fn symbiotic_salvage_chronicle_bridge(
         });
     }
 }
+
+/// Bridges `ColonyResources` to `ResourceStorage` for the Scarcity Bureaucracy.
+pub fn sync_scarcity_resources_bridge_system(
+    resources: Query<&ColonyResources, With<crate::layer1::bureaucracy_of_scarcity::Colony>>,
+    mut storage: Query<
+        &mut crate::layer1::bureaucracy_of_scarcity::ResourceStorage,
+        With<crate::layer1::bureaucracy_of_scarcity::Colony>,
+    >,
+) {
+    if let (Ok(res), Ok(mut store)) = (resources.get_single(), storage.get_single_mut()) {
+        store.food = res.food as u32;
+    }
+}
+
+/// Applies the `GlobalRationingModifier` to `Needs.hunger` decay by restoring a portion of the decay.
+pub fn apply_scarcity_rationing_bridge_system(
+    colonies: Query<
+        &crate::layer1::bureaucracy_of_scarcity::GlobalRationingModifier,
+        With<crate::layer1::bureaucracy_of_scarcity::Colony>,
+    >,
+    mut consumers: Query<(&mut Needs, Option<&crate::layer1::traits::Traits>), With<Pop>>,
+) {
+    if let Ok(modifier) = colonies.get_single() {
+        if modifier.reduction_percent > 0.0 {
+            for (mut needs, traits) in consumers.iter_mut() {
+                let hunger_trait_mod =
+                    traits.map_or(1.0, crate::layer1::traits::get_trait_hunger_decay_modifier);
+                let restored_hunger = 0.001 * hunger_trait_mod * modifier.reduction_percent;
+                needs.hunger = (needs.hunger + restored_hunger).min(1.0);
+            }
+        }
+    }
+}
+
+/// Syncs real Job components to the Scarcity Bureaucracy's JobAssignment.
+pub fn sync_scarcity_jobs_bridge_system(
+    mut commands: Commands,
+    pops: Query<(Entity, Option<&crate::layer1::pop::Job>), With<Pop>>,
+) {
+    for (entity, job_opt) in pops.iter() {
+        let is_bureaucrat = job_opt.is_some_and(|job| {
+            job.job_type == crate::layer1::utility_types::AssignmentType::RationingBureaucrat
+        });
+        commands
+            .entity(entity)
+            .insert(crate::layer1::bureaucracy_of_scarcity::JobAssignment {
+                is_active_bureaucrat: is_bureaucrat,
+            });
+    }
+}

@@ -552,5 +552,7 @@ mod galactic_games_bridge;
 #[path = "integration/invasive_xeno_aesthetics_bridge.rs"]
 mod invasive_xeno_aesthetics_bridge;
 
+#[path = "integration/bureaucracy_of_scarcity_bridge.rs"]
+mod bureaucracy_of_scarcity_bridge;
 #[path = "integration/symbiotic_shipbreaker_bridge.rs"]
 mod symbiotic_shipbreaker_bridge;
