@@ -4457,3 +4457,35 @@ VACUUM_SHADOW_INCIDENT:
 ## Quantum Twins Chaining (Spec 1299)
 - TWIN_SYNC_EVENT → reveals → [TWIN_SENSATION] chronicle entries
 - SEVERANCE_SHOCK → enables → CATATONIC_STATE, MEDICAL_EMERGENCY
+
+## Bio-Reactor Dependency Chaining
+- BIO_REACTOR_IGNITED -> increases_chance -> POP_DEPRESSION, MASS_STARVATION
+- BIO_REACTOR_IGNITED -> enables -> CULT_OF_THE_FLAME
+
+## Propaganda Feedback Loop Chaining
+- PROPAGANDA_DIRECTIVE_ENFORCED -> increases_chance -> DIPLOMATIC_INCIDENT, TACTICAL_BLUNDER
+- PROPAGANDA_DIRECTIVE_ENFORCED -> enables -> IDEOLOGICAL_SCHISM
+
+## Rogue Terraforming Swarms Chaining
+- TERRAFORMING_SWARM_ARRIVAL -> increases_chance -> MASS_CASUALTY, HABITAT_BREAKDOWN
+- TERRAFORMING_SWARM_ARRIVAL -> enables -> SALVAGE_OPERATION
+
+## Chrono-Locked Vaults Chaining
+- CHRONO_VAULT_OPENED -> increases_chance -> WEALTH_BOOM, PLAGUE_OUTBREAK
+- CHRONO_VAULT_OPENED -> enables -> ANCIENT_TECH_UNLOCKED
+
+## The Architect's Madness Chaining
+- ARCHITECT_SNAPPED -> increases_chance -> LOGISTICS_FAILURE, NAVIGATION_ERROR
+- ARCHITECT_SNAPPED -> enables -> CULT_OF_THE_LABYRINTH
+
+## Sub-Space Echo Intoxication Chaining
+- SUB_SPACE_ECHO_WITHDRAWAL -> increases_chance -> REBELLION, FLEET_HIJACKING
+- SUB_SPACE_ECHO_WITHDRAWAL -> enables -> ADDICTION_CRISIS
+
+## The Ghost Fleet Directive Chaining
+- GHOST_FLEET_DIRECTIVE_TRIGGERED -> increases_chance -> TRADE_ROUTE_DESTROYED, SYSTEM_PURGE
+- GHOST_FLEET_DIRECTIVE_TRIGGERED -> enables -> AUTOMATED_WAR
+
+## Gravity Well Black Market Chaining
+- GRAVITY_WELL_MARKET_DISCOVERED -> increases_chance -> SMUGGLING, FLEET_ATTRITION
+- GRAVITY_WELL_MARKET_DISCOVERED -> enables -> PIRATE_ALLIANCE

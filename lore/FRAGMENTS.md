@@ -9466,3 +9466,59 @@ Descriptions of their stress and breakdowns.
 - the rim
 - the deep void
 - a rival empire
+
+## Fragment Type: [BIOMASS_SOURCE]
+- the final harvest
+- alien flora
+- the forgotten dead
+- corrupted mycelium
+- ancestral remains
+
+## Fragment Type: [PROPAGANDA_DIRECTIVE]
+- Peace is Profit
+- The Substrate is Law
+- Silence is Safety
+- Growth Above All
+- The Emperor's Vision
+
+## Fragment Type: [SWARM_ALTERATION]
+- toxic methane
+- freezing the oceans
+- scorching the crust
+- suffocating ammonia
+- hyper-oxygenation
+
+## Fragment Type: [VAULT_CONTENTS]
+- incredible wealth
+- a long-dormant threat
+- forgotten technology
+- a feral AI
+- thousands of cryo-pods
+
+## Fragment Type: [ARCHITECT_OBSESSION]
+- non-euclidean geometry
+- dead-end roads
+- shrines to the void
+- spiraling towers
+- claustrophobic corridors
+
+## Fragment Type: [ECHO_WITHDRAWAL_SYMPTOM]
+- mass hysteria
+- auditory hallucinations
+- catatonic depression
+- violent riots
+- sensory deprivation
+
+## Fragment Type: [GHOST_FLEET_STATE]
+- perpetual war state
+- self-replicating cycle
+- extermination protocol
+- mindless patrol route
+- aggressive mining
+
+## Fragment Type: [BLACK_MARKET_GOODS]
+- illicit weapons
+- memory engrams
+- exotic flora
+- stolen technology
+- unrationed supplies
