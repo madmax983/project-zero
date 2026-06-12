@@ -5,3 +5,7 @@
 **Removing Intermediate `.collect::<Vec<_>>()` Chains in Tick Systems**
 **Learning:** When a system processes events (like `process_chronicles` handling `Chronicle` events each tick), chaining `.iter().filter(...).collect::<Vec<_>>()` forces a new heap allocation every frame/tick just to iterate over the filtered results.
 **Action:** Instead of collecting into an intermediate `Vec`, iterate directly over the filtered iterator. Use simple local variables to track iteration state (like `has_new` and `last_tick`) to apply updates after the loop finishes without fighting the borrow checker.
+
+**Extracting Component Data Before Despawning (Safe Method)**
+**Learning:** When a system reads data from a component and then immediately despawns that entity, calling `.clone()` on the data is an unnecessary heap allocation. However, trying to use `world.entity_mut(entity)` to get a mutable reference can cause a runtime panic if the entity is missing. Furthermore, injecting dummy data with `std::mem::replace` is an anti-pattern.
+**Action:** Use `world.get_entity_mut(entity)?.take::<T>()?` to safely consume and extract the entire component without panicking or requiring dummy values.
