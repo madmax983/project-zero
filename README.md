@@ -84,6 +84,10 @@ For the **advanced simulation of legends** (Oral Tradition), see the [Oral Tradi
 
 ### Oral Tradition (Nova Feature)
 
+> ⚠️ **REQUIRES FEATURE NOVA**
+> Do not attempt to run this snippet or import `Story` without `features = ["nova"]`.
+
+
 The "Nova" feature (Oral Tradition) builds upon the base narrative system to create living legends that evolve in taverns. It is located in `scale::layer1::oral_tradition`.
 
 **Note:** Requires the `nova` feature.
