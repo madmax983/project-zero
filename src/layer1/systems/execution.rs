@@ -328,4 +328,13 @@ pub fn register(schedule: &mut Schedule) {
         )
             .in_set(Layer1SystemSet::Execution),
     );
+    schedule.add_systems(
+        (
+            crate::layer1::execution::phantom_commutes::apply_phantom_commute_system
+                .before(movement_system),
+            crate::layer1::execution::phantom_commutes::remove_resolved_phantom_commute_system
+                .after(movement_system),
+        )
+            .in_set(Layer1SystemSet::Execution),
+    );
 }
