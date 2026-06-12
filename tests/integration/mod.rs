@@ -81,3 +81,4 @@ pub mod population_count_bridge;
 pub mod invasive_xeno_aesthetics_bridge;
 pub mod shipbreaking_symbiotic_bridge;
 pub mod galactic_market_trade_bridge;
+pub mod generational_hoarders_bridge;

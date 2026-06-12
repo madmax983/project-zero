@@ -1443,3 +1443,9 @@
 - **Glue added:** `sync_scarcity_resources_bridge_system` and `apply_scarcity_rationing_bridge_system` in `src/layer1/core/integration.rs`. Added tests in `tests/integration/bureaucracy_of_scarcity_bridge.rs`.
 - **Schedule:** Added to `Layer1SystemSet::Economy` in `src/layer1/systems/economy.rs`.
 - **Tests:** `tests/integration/bureaucracy_of_scarcity_bridge.rs`
+
+### INT-284: Generational Hoarders -> Simulation
+- **Date:** 2026-10-31
+- **Systems connected:** `check_for_hoarder_trait_system`, `hoarder_collection_system`, `apply_hoard_morale_buff_system`, `process_confiscation_system` -> `SimulationSchedule`
+- **Glue added:** Registered systems in `src/layer1/systems/observation.rs`. Registered `ConfiscateHoardEvent` in `src/setup.rs`.
+- **Tests:** `tests/integration/generational_hoarders_bridge.rs`
