@@ -735,3 +735,4 @@
 - [x] `INT-1291` Integration: Invasive Xeno-Aesthetics -> Chronicle — completed 2026-06-11
 - [x] `1302` The Symbiotic Shipbreaker — `specs/1302-the-symbiotic-shipbreaker.md` — completed 2026-06-11
 - [x] `INT-1302` Integration: Symbiotic Shipbreaker -> Chronicle — completed 2026-10-31
+- [x] `877` The Debt of the Dead — `specs/877-the-debt-of-the-dead.md` — completed 2026-06-12

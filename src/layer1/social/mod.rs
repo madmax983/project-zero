@@ -667,3 +667,5 @@ pub mod the_empty_room;
 pub use the_empty_room::*;
 pub mod whisper_trade;
 pub use whisper_trade::*;
+pub mod debt_of_the_dead;
+pub use debt_of_the_dead::*;

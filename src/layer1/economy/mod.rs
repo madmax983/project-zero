@@ -59,7 +59,11 @@ mod tests {
 
     /// Helper system for economy tests.
     fn consume_food_with_payment_system(world: &mut World) {
-        let price = world.resource::<ColonyPrices>().food_price;
+        let price = if let Some(prices) = world.get_resource::<ColonyPrices>() {
+            prices.food_price
+        } else {
+            1.0
+        };
         let food_avail = world.resource::<ColonyResources>().food;
         if food_avail < 1.0 {
             return;
@@ -103,6 +107,7 @@ mod tests {
         // Spawn a pop with a wallet
         let pop = world.spawn((Pop, Wallet { credits: 10.0 })).id();
 
+        world.init_resource::<crate::layer1::social::debt_of_the_dead::ColonyEconomy>();
         // Simulate job completion event
         pay_wage(&mut world, pop, 5.0);
 

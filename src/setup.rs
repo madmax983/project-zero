@@ -498,6 +498,7 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
         crate::layer1::systems::map_generation::tether_stump::LostTech,
         bevy::prelude::Transform::from_xyz(stump_x as f32, stump_y as f32, 50.0),
     ));
+    world.init_resource::<crate::layer1::social::debt_of_the_dead::ColonyEconomy>();
 
     spawn_ancient_structures(
         &mut world,

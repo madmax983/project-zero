@@ -306,6 +306,8 @@ pub fn register(schedule: &mut Schedule) {
 ,
             crate::layer1::infrastructure::subconscious_grid::apply_lockdown_system
 ,
+            crate::layer1::social::debt_of_the_dead::handle_dead_pop_debt_system,
+            crate::layer1::social::debt_of_the_dead::apply_inflation_to_prices_system,
         )
             .chain()
             .in_set(Layer1SystemSet::Economy),
