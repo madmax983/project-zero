@@ -556,3 +556,5 @@ mod invasive_xeno_aesthetics_bridge;
 mod bureaucracy_of_scarcity_bridge;
 #[path = "integration/symbiotic_shipbreaker_bridge.rs"]
 mod symbiotic_shipbreaker_bridge;
+#[path = "integration/generational_hoarders_bridge.rs"]
+mod generational_hoarders_bridge;
