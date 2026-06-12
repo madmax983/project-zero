@@ -647,8 +647,8 @@ pub mod generational_dissonance;
 pub use generational_dissonance::*;
 pub mod pirates;
 
-pub mod sub_lithic;
 pub mod hoarder;
+pub mod sub_lithic;
 pub use hoarder::*;
 pub mod xenoflora_pet;
 pub use xenoflora_pet::*;

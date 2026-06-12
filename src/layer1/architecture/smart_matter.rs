@@ -68,10 +68,16 @@ mod tests {
     fn test_smart_matter_state_change() {
         let mut app = App::new();
         app.add_event::<RaidEvent>();
-        let entity = app.world_mut().spawn((
-            SmartMatter { state: MatterState::Window, previous_state: None },
-            PowerReceiver { has_power: true },
-        )).id();
+        let entity = app
+            .world_mut()
+            .spawn((
+                SmartMatter {
+                    state: MatterState::Window,
+                    previous_state: None,
+                },
+                PowerReceiver { has_power: true },
+            ))
+            .id();
 
         app.world_mut().send_event(RaidEvent);
         app.add_systems(Update, update_smart_matter_state);
@@ -85,10 +91,16 @@ mod tests {
     fn test_smart_matter_power_failure() {
         let mut app = App::new();
         app.add_event::<RaidEvent>();
-        let entity = app.world_mut().spawn((
-            SmartMatter { state: MatterState::Window, previous_state: None },
-            PowerReceiver { has_power: false },
-        )).id();
+        let entity = app
+            .world_mut()
+            .spawn((
+                SmartMatter {
+                    state: MatterState::Window,
+                    previous_state: None,
+                },
+                PowerReceiver { has_power: false },
+            ))
+            .id();
 
         app.world_mut().send_event(RaidEvent);
         app.add_systems(Update, update_smart_matter_state);
@@ -102,10 +114,16 @@ mod tests {
     fn test_smart_matter_state_decay_and_restoration() {
         let mut app = App::new();
         app.add_event::<RaidEvent>();
-        let entity = app.world_mut().spawn((
-            SmartMatter { state: MatterState::Conveyor, previous_state: None },
-            PowerReceiver { has_power: true },
-        )).id();
+        let entity = app
+            .world_mut()
+            .spawn((
+                SmartMatter {
+                    state: MatterState::Conveyor,
+                    previous_state: None,
+                },
+                PowerReceiver { has_power: true },
+            ))
+            .id();
 
         app.world_mut().send_event(RaidEvent);
         app.add_systems(Update, update_smart_matter_state);
@@ -130,10 +148,16 @@ mod tests {
     fn test_smart_matter_fallback_to_window() {
         let mut app = App::new();
         app.add_event::<RaidEvent>();
-        let entity = app.world_mut().spawn((
-            SmartMatter { state: MatterState::Bunker, previous_state: None },
-            PowerReceiver { has_power: true },
-        )).id();
+        let entity = app
+            .world_mut()
+            .spawn((
+                SmartMatter {
+                    state: MatterState::Bunker,
+                    previous_state: None,
+                },
+                PowerReceiver { has_power: true },
+            ))
+            .id();
 
         app.add_systems(Update, update_smart_matter_state);
         app.update(); // No active raid

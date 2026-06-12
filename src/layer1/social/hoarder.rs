@@ -1,10 +1,10 @@
 use bevy_ecs::prelude::*;
 
-use crate::layer1::lifecycle::Age;
-use crate::layer1::social::morale::MoodModifier;
-use crate::layer1::psychology::traits::{Traits, Trait};
 use crate::layer1::economy::inventory::Inventory;
 use crate::layer1::economy::items::ItemType;
+use crate::layer1::lifecycle::Age;
+use crate::layer1::psychology::traits::{Trait, Traits};
+use crate::layer1::social::morale::MoodModifier;
 use crate::layer1::social::morale::Morale;
 
 #[derive(Component, Default)]
@@ -76,10 +76,10 @@ pub fn process_confiscation_system(
 mod tests {
     use super::*;
 
-    use crate::layer1::lifecycle::Age;
-    use crate::layer1::psychology::traits::{Traits, Trait};
     use crate::layer1::economy::inventory::{Inventory, InventoryItem};
     use crate::layer1::economy::items::ItemType;
+    use crate::layer1::lifecycle::Age;
+    use crate::layer1::psychology::traits::{Trait, Traits};
     use crate::layer1::social::morale::Morale;
 
     #[test]
@@ -92,7 +92,10 @@ mod tests {
         schedule.run(&mut world);
 
         let traits = world.get::<Traits>(elder).unwrap();
-        assert!(traits.has(Trait::Hoarder), "Elder should have a chance to develop the Hoarder trait");
+        assert!(
+            traits.has(Trait::Hoarder),
+            "Elder should have a chance to develop the Hoarder trait"
+        );
     }
 
     #[test]
@@ -100,12 +103,22 @@ mod tests {
         let mut world = World::new();
         let mut traits = Traits::default();
         traits.add(Trait::Hoarder);
-        let hoarder = world.spawn((traits, Hoard::default(), Morale::default())).id();
+        let hoarder = world
+            .spawn((traits, Hoard::default(), Morale::default()))
+            .id();
 
-        let mut inventory = Inventory::default();
-        inventory.capacity = 10;
-        inventory.items.push(InventoryItem { item_type: ItemType::Tool, entity: None });
-        inventory.items.push(InventoryItem { item_type: ItemType::Tool, entity: None });
+        let mut inventory = Inventory {
+            capacity: 10,
+            ..Default::default()
+        };
+        inventory.items.push(InventoryItem {
+            item_type: ItemType::Tool,
+            entity: None,
+        });
+        inventory.items.push(InventoryItem {
+            item_type: ItemType::Tool,
+            entity: None,
+        });
         let stockpile = world.spawn(inventory).id();
 
         let mut schedule = Schedule::default();
@@ -115,8 +128,15 @@ mod tests {
         let hoard = world.get::<Hoard>(hoarder).unwrap();
         let stockpile_inv = world.get::<Inventory>(stockpile).unwrap();
 
-        assert!(hoard.items.contains(&ItemType::Tool), "Hoarder should have collected tool");
-        assert_eq!(stockpile_inv.items.len(), 1, "Tool should be removed from stockpile");
+        assert!(
+            hoard.items.contains(&ItemType::Tool),
+            "Hoarder should have collected tool"
+        );
+        assert_eq!(
+            stockpile_inv.items.len(),
+            1,
+            "Tool should be removed from stockpile"
+        );
     }
 
     #[test]
@@ -134,7 +154,10 @@ mod tests {
         schedule.run(&mut world);
 
         let morale = world.get::<Morale>(hoarder).unwrap();
-        assert!(morale.modifiers.len() > 0, "Hoarder should receive a morale buff from their hoard");
+        assert!(
+            !morale.modifiers.is_empty(),
+            "Hoarder should receive a morale buff from their hoard"
+        );
     }
 
     #[test]
@@ -156,8 +179,14 @@ mod tests {
         schedule.run(&mut world);
 
         let morale = world.get::<Morale>(hoarder).unwrap();
-        assert!(morale.modifiers.iter().any(|m| m.value < 0.0), "Confiscating the hoard should heavily penalize morale");
+        assert!(
+            morale.modifiers.iter().any(|m| m.value < 0.0),
+            "Confiscating the hoard should heavily penalize morale"
+        );
         let empty_hoard = world.get::<Hoard>(hoarder).unwrap();
-        assert!(empty_hoard.items.is_empty(), "Hoard should be empty after confiscation");
+        assert!(
+            empty_hoard.items.is_empty(),
+            "Hoard should be empty after confiscation"
+        );
     }
 }
