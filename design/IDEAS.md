@@ -23854,3 +23854,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you heavily restrict traffic on your most efficient routes to keep the entity asleep, or push fleets through and risk awakening a galaxy-spanning monstrosity?
 
 ---
+
+## The Translation Sickness
+
+**Layer:** Cross-layer
+
+**Fantasy:** Discovering that the universal translators are slowly rewriting the personalities of your diplomats and pops.
+
+**Mechanic:** Pops that frequently interact with alien cultures or intercepted communications develop a cumulative "Translation Sickness". Their base utility weights permanently shift towards the values of the culture they are translating, leading to them adopting alien needs and behaviors.
+
+**Emergence:** Your brilliant xenolinguist successfully brokers a peace treaty with a hive-mind empire, but returning home, they start organizing their local sector into a rigid, emotionless collective, causing massive social friction among their human neighbors.
+
+**Tension:** Do you risk your best people by letting them handle sensitive first contacts, knowing they might return as strangers, or do you rely on inefficient, low-fidelity automated translation that might cause a war?
+
+---
+
+## The Necro-Economy
+
+**Layer:** 1
+
+**Fantasy:** A colony turning to the dead to solve their resource crisis, crossing a moral event horizon.
+
+**Mechanic:** When a colony faces extreme starvation or resource depletion, a new policy option unlocks to harvest biomass and trace minerals from the colony's graveyard. This provides a sudden, massive influx of resources but permanently taints the harvested tiles and causes a generational "Grief" debuff to living relatives.
+
+**Emergence:** A frontier world survives a devastating 10-year siege, but only because they secretly processed their fallen defenders into emergency rations and ammunition. When the relief fleet finally arrives, the entire colony has formed a death-cult around the recycling centers and refuses to return to normal agriculture.
+
+**Tension:** Do you let a struggling colony collapse naturally, or authorize the Necro-Economy, saving the colony but forever corrupting its culture and stability?
+
+---
+
+## Stellar Harvesters' Guilt
+
+**Layer:** 2
+
+**Fantasy:** The slow realization that you are draining the lifeblood of the galaxy to power your core worlds.
+
+**Mechanic:** Constructing Dyson Spheres or Star Lifters on Layer 2 slowly dims the star, altering its spectral output. This causes passive, localized climate shifts on all orbiting Layer 1 planets, subtly shifting biomes and causing mass extinctions of local flora/fauna over decades.
+
+**Emergence:** You build a massive energy harvester to power your capital's defense grid. Sixty years later, a vibrant, diverse agricultural world in the same system slowly freezes into an uninhabitable tundra, completely destroying your food supply chain.
+
+**Tension:** Do you prioritize the infinite energy needs of your empire's war machine, or preserve the delicate, irreplaceable ecosystems of the planets in the system?
+
+---
