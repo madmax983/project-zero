@@ -191,6 +191,8 @@ pub mod ascetic_fasting;
 #[cfg(feature = "nova")]
 pub mod chemical_showers;
 #[cfg(feature = "nova")]
+pub mod cursed_foundations;
+#[cfg(feature = "nova")]
 pub mod magnetic_veteran;
 #[cfg(feature = "nova")]
 pub mod thermal_venting;

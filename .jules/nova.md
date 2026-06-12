@@ -150,3 +150,8 @@
 **Concept:** Added `aeolian_clutter_system` in `src/experimental/aeolian_clutter.rs`. It physically moves `Clutter` from one tile to an adjacent tile downwind based on the `WindGrid` velocities.
 **Fate:** Submitted
 **Lesson:** Connects the environment/weather system (Wind) with the maintenance system (Clutter). It enables emergent colony layouts where players can design wind traps to collect trash into specific corners for easier cleaning.
+
+## [Cursed Foundations]
+**Concept:** Added `cursed_foundations_system` to `src/experimental/cursed_foundations.rs`. It listens for `SacrilegeEvent` (triggered when building over a `Grave`) and infects the building's tile and the surrounding 8 tiles with a permanent `MemeticSigil` graffiti that severely degrades morale.
+**Fate:** Submitted
+**Lesson:** Turns a simple, one-off unrest spike penalty into a persistent, environmental hazard. Players who recklessly expand over graves will now have to deal with localized zones of profound despair, adding an emergent logistical cost to desecration.

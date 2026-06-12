@@ -7,8 +7,8 @@ pub mod biomimetic;
 /// General building framework and implementations.
 pub mod building;
 pub mod edible;
-pub use edible::*;
 pub use biomimetic::*;
+pub use edible::*;
 #[cfg(test)]
 mod building_gate_test;
 #[cfg(test)]
