@@ -88,8 +88,8 @@ pub fn suction_system(
         let mut max_diff = 0.0;
 
         for (dx, dy) in &neighbors {
-            let nx = pos.x + dx;
-            let ny = pos.y + dy;
+            let nx = pos.x.saturating_add(*dx);
+            let ny = pos.y.saturating_add(*dy);
 
             // Bounds check
             if nx < 0 || ny < 0 {
@@ -236,6 +236,40 @@ mod tests {
             *pos,
             GridPosition { x: 5, y: 5 },
             "Pop should remain in place when PressureGrid is missing"
+        );
+    }
+
+    #[test]
+    fn test_suction_ignores_out_of_bounds_positions() {
+        let mut world = World::new();
+        let mut grid = PressureGrid::new(10, 10);
+        grid.fill(1.0);
+
+        grid.set(9, 9, 0.0);
+        world.insert_resource(grid);
+
+        let pop = world
+            .spawn((
+                Pop,
+                GridPosition {
+                    x: i32::MAX,
+                    y: i32::MAX,
+                },
+            ))
+            .id();
+
+        let mut schedule = Schedule::default();
+        schedule.add_systems(super::suction_system);
+        schedule.run(&mut world);
+
+        let pos = world.get::<GridPosition>(pop).unwrap();
+        assert_eq!(
+            *pos,
+            GridPosition {
+                x: i32::MAX,
+                y: i32::MAX
+            },
+            "Pop should remain in place if initially out of bounds"
         );
     }
 }
