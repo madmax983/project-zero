@@ -648,6 +648,8 @@ pub use generational_dissonance::*;
 pub mod pirates;
 
 pub mod sub_lithic;
+pub mod hoarder;
+pub use hoarder::*;
 pub mod xenoflora_pet;
 pub use xenoflora_pet::*;
 pub mod cargo_cult;

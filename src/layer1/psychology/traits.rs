@@ -9,6 +9,7 @@ use rand::Rng;
 #[repr(u8)]
 #[derive(strum_macros::EnumIter)]
 pub enum Trait {
+    Hoarder,
     Phantom,
     /// Lacks empathy, unaffected by horror.
     Psychopath,
@@ -207,6 +208,7 @@ impl Trait {
             Self::InsomniaDrive => "Insomnia Drive",
             Self::Veteran => "Veteran",
             Self::Phantom => "Phantom",
+            Self::Hoarder => "Hoarder",
         }
     }
 }
