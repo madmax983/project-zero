@@ -900,6 +900,7 @@ pub const fn get_designation_char(tool: DesignationType) -> &'static str {
         DesignationType::Cannibalize => "C",
         DesignationType::Destroy => "D",
         DesignationType::CollectSample => "S",
+        DesignationType::Consume => "E",
     }
 }
 
