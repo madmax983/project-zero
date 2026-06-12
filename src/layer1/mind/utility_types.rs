@@ -785,6 +785,8 @@ pub enum AssignmentType {
     ObservatoryWorker,
     /// Administrator job.
     Administrator,
+    /// Emergency rationing bureaucrat.
+    RationingBureaucrat,
     /// Undergoing surgery.
     Surgery,
     /// Working in a deep mine.

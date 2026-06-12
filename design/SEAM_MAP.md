@@ -1436,3 +1436,10 @@
 - **Glue added:** Added `trade_route_market_bridge_system` in `src/layer3/integration.rs` to attach trade route volume to the galactic market supply pool. Made `parse_resource` public in `src/layer2/trade/routes.rs`.
 - **Schedule:** Registered the system in `src/simulation.rs`.
 - **Tests:** `tests/integration/galactic_market_trade_bridge.rs`
+
+### INT-1289: Bureaucracy of Scarcity -> Needs System
+- **Date:** 2026-10-31
+- **Systems connected:** `ColonyResources` -> `ResourceStorage`, `GlobalRationingModifier` -> `Needs`
+- **Glue added:** `sync_scarcity_resources_bridge_system` and `apply_scarcity_rationing_bridge_system` in `src/layer1/core/integration.rs`. Added tests in `tests/integration/bureaucracy_of_scarcity_bridge.rs`.
+- **Schedule:** Added to `Layer1SystemSet::Economy` in `src/layer1/systems/economy.rs`.
+- **Tests:** `tests/integration/bureaucracy_of_scarcity_bridge.rs`

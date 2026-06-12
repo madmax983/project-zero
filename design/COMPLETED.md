@@ -742,3 +742,4 @@
 
 - [x] `1256` The Architecture of Regret — `specs/1256-architecture-of-regret.md` — completed 2026-06-12
 - [x] `1294` Biometric Drift — `specs/1294-biometric-drift.md` — completed 2026-06-12
+- [x] `INT-1289` Integration: Bureaucracy of Scarcity -> Needs System — completed 2026-10-31

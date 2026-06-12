@@ -304,7 +304,12 @@ pub fn register(schedule: &mut Schedule) {
 ,
             crate::layer1::core::integration::apply_subconscious_grid_machine_effects_system
 ,
-            crate::layer1::infrastructure::subconscious_grid::apply_lockdown_system
+            crate::layer1::infrastructure::subconscious_grid::apply_lockdown_system,
+            crate::layer1::core::integration::sync_scarcity_resources_bridge_system,
+            crate::layer1::bureaucracy_of_scarcity::evaluate_scarcity_system,
+            crate::layer1::bureaucracy_of_scarcity::apply_rationing_buff_system,
+            crate::layer1::core::integration::apply_scarcity_rationing_bridge_system,
+            crate::layer1::core::integration::sync_scarcity_jobs_bridge_system
 ,
         )
             .chain()
