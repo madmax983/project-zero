@@ -109,6 +109,7 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::architecture::biomimetic::adjust_sympathetic_infrastructure_system,
             crate::layer1::architecture::living_architecture::living_building_healing_system,
             crate::layer1::architecture::living_architecture::living_building_consume_pop_system,
+            crate::layer1::architecture::smart_matter::update_smart_matter_state,
         )
             .in_set(Layer1SystemSet::Environment),
     );
