@@ -1429,3 +1429,10 @@
 - **Glue added:** `symbiotic_salvage_chronicle_bridge` in `src/layer1/core/integration.rs` to generate Chronicle texts for Symbiotic Salvage events.
 - **Schedule:** Registered in Layer 1 Economy schedule (`src/layer1/systems/economy.rs`). Event registered in `src/setup.rs`.
 - **Tests:** `tests/integration/symbiotic_shipbreaker_bridge.rs`
+
+### INT-1303: Trade Routes -> Galactic Market
+- **Date:** 2026-10-31
+- **Systems connected:** `TradeRouteExecutedEvent` -> `trade_route_market_bridge_system` -> `GalacticMarket`
+- **Glue added:** Added `trade_route_market_bridge_system` in `src/layer3/integration.rs` to attach trade route volume to the galactic market supply pool. Made `parse_resource` public in `src/layer2/trade/routes.rs`.
+- **Schedule:** Registered the system in `src/simulation.rs`.
+- **Tests:** `tests/integration/galactic_market_trade_bridge.rs`

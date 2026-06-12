@@ -41,6 +41,7 @@ pub fn execute_consume(world: &mut World, designation_entity: Entity) -> bool {
     true
 }
 
+#[allow(clippy::too_many_arguments)]
 pub fn consume_building_system(
     mut commands: Commands,
     q_edible_buildings: Query<(Entity, &EdibleMaterial), With<Consumed>>,
