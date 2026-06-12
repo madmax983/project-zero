@@ -554,3 +554,5 @@ mod invasive_xeno_aesthetics_bridge;
 
 #[path = "integration/symbiotic_shipbreaker_bridge.rs"]
 mod symbiotic_shipbreaker_bridge;
+#[path = "integration/edible_architecture_chronicle.rs"]
+mod edible_architecture_chronicle;

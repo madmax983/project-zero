@@ -34,6 +34,20 @@ use std::collections::HashSet;
 use crate::layer1::logistics::mass_driver::BombardmentEvent;
 use crate::layer1::logistics::orbital_drop::OrbitalDropEvent;
 
+
+/// INT-1301: Bridges Edible Architecture to AddChronicleEvent (Chronicle).
+pub fn edible_architecture_chronicle_bridge(
+    q_consumed: Query<&crate::layer1::architecture::building::Building, (With<crate::layer1::architecture::edible::EdibleMaterial>, Added<crate::layer1::architecture::edible::Consumed>)>,
+    mut chronicle_events: EventWriter<AddChronicleEvent>,
+) {
+    for building in q_consumed.iter() {
+        chronicle_events.send(AddChronicleEvent {
+            text: format!("Driven by starvation, the colony consumed a {:?} made of edible materials.", building.building_type),
+            importance: EventImportance::Major,
+        });
+    }
+}
+
 pub fn ransom_broker_chronicle_bridge(
     mut ransomed_events: EventReader<crate::layer1::ransom_broker::PopRansomedEvent>,
     mut lost_events: EventReader<crate::layer1::ransom_broker::PopLostToPiratesEvent>,
