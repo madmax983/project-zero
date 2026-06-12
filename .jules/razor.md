@@ -2,3 +2,7 @@
 **Bloat:** Deep folder hierarchies containing only a couple of files (`mod.rs` and `tests.rs`) in `src/layer3/economy/biological_stock_market` and `src/layer2/events_new/system_quarantine`.
 **Cut:** Flattened these into single files (`biological_stock_market.rs` and `system_quarantine.rs`) directly.
 **Saved:** Reduced unnecessary nesting and directory count.
+## 2026-06-11 - [Flatten Directory Lasagna]
+**Bloat:** Deep folder hierarchies containing single files or only two files (e.g., `mod.rs` and one other `.rs` file) across `experimental`, `layer1`, `layer2`, and `layer3` (e.g. `src/layer1/culture/artifacts`, `src/layer1/diplomacy/factions`).
+**Cut:** Flattened these directories. For single file directories, renamed `mod.rs` to the directory name. For two-file directories, merged the contents of the nested file into the newly renamed `mod.rs` file (using inline nested modules to preserve namespace paths).
+**Saved:** Removed 28 unnecessary directories and reduced mental overhead/file-switching when navigating the codebase.
