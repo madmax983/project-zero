@@ -5507,3 +5507,23 @@
 **Code reference:** `Catatonic` component
 **Usage:**
 - "The Severance left him Catatonic."
+
+## the Gloom Aura
+**Replaces:** Morale penalty, sadness
+**Code reference:** `GloomAura`
+**Usage:** "The Gloom Aura settled over the colony when the reactor ignited."
+
+## The Ghost Fleet
+**Replaces:** Automated defense fleet, rogue drones
+**Code reference:** `GhostFleet`
+**Usage:** "The Ghost Fleet executes its extermination protocol without hesitation."
+
+## Memory Forgers
+**Replaces:** Propagandists, mind-wipers
+**Code reference:** `MemoryForger`
+**Usage:** "The Memory Forgers rewrote their history of the famine."
+
+## Sub-Space Echoes
+**Replaces:** Hyperlane noise, FTL vibrations
+**Code reference:** `SubSpaceEcho`
+**Usage:** "The pops are addicted to the Sub-Space Echoes of passing freighters."

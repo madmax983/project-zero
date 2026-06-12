@@ -9107,3 +9107,52 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: The bond snaps. [POP_NAME] enters a catatonic state. Their twin is gone."
 - "Half a soul remains. [POP_NAME] on [COLONY] is lost to severance shock. [YEAR]."
 - "[COLONY], [YEAR]: They stopped speaking today. The quantum link is severed. [POP_NAME] is alone."
+
+## The Bio-Reactor Dependency Templates
+### Template: BIO_REACTOR_IGNITED
+**Slots:** [COLONY], [YEAR], [BIOMASS_SOURCE]
+- "[YEAR]: The Bio-Reactor was ignited at [COLONY]. The fuel was [BIOMASS_SOURCE]. The gloom settles in."
+- "[COLONY] traded light for [BIOMASS_SOURCE]. The Bio-Reactor burns. [YEAR]."
+- "We needed heat. [BIOMASS_SOURCE] was the price. The reactor runs, but the colony is quiet. [YEAR]."
+
+## The Propaganda Feedback Loop Templates
+### Template: PROPAGANDA_DIRECTIVE_ENFORCED
+**Slots:** [COLONY], [YEAR], [DIRECTIVE]
+- "[YEAR]: The leadership at [COLONY] refuses to compromise on [DIRECTIVE]. They believe their own lies."
+- "[DIRECTIVE] is absolute. [COLONY] will burn before it breaks the doctrine. [YEAR]."
+
+## Rogue Terraforming Swarms Templates
+### Template: TERRAFORMING_SWARM_ARRIVAL
+**Slots:** [COLONY], [YEAR], [SWARM_ALTERATION]
+- "[YEAR]: The sky at [COLONY] changes. Ancient machines arrive to enforce [SWARM_ALTERATION]."
+- "They do not hear our hails. The swarm is changing the atmosphere to [SWARM_ALTERATION]. [YEAR]."
+
+## Chrono-Locked Vaults Templates
+### Template: CHRONO_VAULT_OPENED
+**Slots:** [COLONY], [YEAR], [VAULT_CONTENTS]
+- "[YEAR]: The stars aligned over [COLONY]. The ancient vault opened, releasing [VAULT_CONTENTS]."
+- "The planetary alignment triggered the mechanism. [VAULT_CONTENTS] spilled into [COLONY]. [YEAR]."
+
+## The Architect's Madness Templates
+### Template: ARCHITECT_SNAPPED
+**Slots:** [COLONY], [YEAR], [ARCHITECT_OBSESSION]
+- "[YEAR]: The Master Architect at [COLONY] broke. The new sectors are built around [ARCHITECT_OBSESSION]."
+- "Brilliance turned to madness. The streets of [COLONY] now form a labyrinth of [ARCHITECT_OBSESSION]. [YEAR]."
+
+## Sub-Space Echo Intoxication Templates
+### Template: SUB_SPACE_ECHO_WITHDRAWAL
+**Slots:** [COLONY], [YEAR], [ECHO_WITHDRAWAL_SYMPTOM]
+- "[YEAR]: The hyperlane collapsed. [COLONY] suffers from [ECHO_WITHDRAWAL_SYMPTOM] without the song of the ships."
+- "Silence is deafening. Without the sub-space echoes, the pops at [COLONY] experience [ECHO_WITHDRAWAL_SYMPTOM]. [YEAR]."
+
+## The Ghost Fleet Directive Templates
+### Template: GHOST_FLEET_DIRECTIVE_TRIGGERED
+**Slots:** [SYSTEM], [YEAR], [GHOST_FLEET_STATE]
+- "[YEAR]: Dead sentinels awaken in [SYSTEM]. The Ghost Fleet resumes its [GHOST_FLEET_STATE]."
+- "Centuries old programming executes. The automated armada in [SYSTEM] is now [GHOST_FLEET_STATE]. [YEAR]."
+
+## Gravity Well Black Market Templates
+### Template: GRAVITY_WELL_MARKET_DISCOVERED
+**Slots:** [SYSTEM], [YEAR], [BLACK_MARKET_GOODS]
+- "[YEAR]: Inside the gravitational anomaly of [SYSTEM], a market thrives, trading in [BLACK_MARKET_GOODS]."
+- "The blockade means nothing. The pirates risk the crushing gravity of [SYSTEM] to smuggle [BLACK_MARKET_GOODS]. [YEAR]."
