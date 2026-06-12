@@ -42,6 +42,8 @@ pub enum DesignationType {
     Cannibalize,
     /// Designate a Vacuum Welded building for destruction (yields 0 resources).
     Destroy,
+    /// Designate an edible building for consumption.
+    Consume,
     /// Collect genetic sample from flora or fauna.
     CollectSample,
 }
@@ -69,6 +71,7 @@ impl DesignationType {
             Self::JuryRig => 'J',
             Self::Cannibalize => 'C',
             Self::Destroy => 'D',
+            Self::Consume => 'E',
             Self::CollectSample => 'S',
         }
     }
@@ -95,6 +98,7 @@ impl DesignationType {
             Self::JuryRig => "J",
             Self::Cannibalize => "C",
             Self::Destroy => "D",
+            Self::Consume => "E",
             Self::CollectSample => "S",
         }
     }
@@ -121,6 +125,7 @@ impl DesignationType {
             Self::JuryRig => "Jury-Rig",
             Self::Cannibalize => "Cannibalize",
             Self::Destroy => "Destroy",
+            Self::Consume => "Consume",
             Self::CollectSample => "Collect Sample",
         }
     }
@@ -274,6 +279,10 @@ pub fn can_designate(world: &World, x: i32, y: i32, designation_type: Designatio
                             b.building_type == crate::layer1::building::BuildingType::Lander
                         })
             })
+        }
+        DesignationType::Consume => {
+            let occupied = world.resource::<OccupiedTiles>();
+            occupied.0.contains(&(x, y)) && has_component_at::<crate::layer1::architecture::edible::EdibleMaterial>(world, x, y)
         }
         DesignationType::Destroy => {
             let occupied = world.resource::<OccupiedTiles>();
@@ -512,6 +521,9 @@ pub fn try_designate_area(
                     | DesignationType::CollectSample => valid_targets
                         .as_ref()
                         .is_some_and(|targets| targets.contains(&(x, y))),
+                    DesignationType::Consume => {
+                        occupied_tiles.is_some_and(|o| o.0.contains(&(x, y))) && has_component_at::<crate::layer1::architecture::edible::EdibleMaterial>(world, x, y)
+                    }
                     DesignationType::Destroy => {
                         occupied_tiles.is_some_and(|o| o.0.contains(&(x, y)))
                     }

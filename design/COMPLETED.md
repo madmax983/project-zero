@@ -737,3 +737,5 @@
 - [x] `INT-1302` Integration: Symbiotic Shipbreaker -> Chronicle — completed 2026-10-31
 - [x] `1053` Smart Matter Architecture — `specs/1053-smart-matter-architecture.md` — completed 2026-06-12
 - [x] `284` Generational Hoarders — `specs/284-generational-hoarders.md` — completed 2026-06-12
+
+- [x] `1301` The Edible Architecture — `specs/1301-edible-architecture.md` — completed 2026-06-12

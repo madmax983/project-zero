@@ -34,7 +34,8 @@ pub fn register(schedule: &mut Schedule) {
             theft_system
                 .after(consume_food_system)
                 .before(decay_needs_system),
-            decay_needs_system.after(consume_food_system),
+            (decay_needs_system.after(consume_food_system),
+            crate::layer1::architecture::edible::consume_building_system.after(consume_food_system)),
             crate::layer1::hygiene::filth_accumulation_system.after(decay_needs_system),
             crate::layer1::hygiene::hygiene_decay_system
                 .after(crate::layer1::hygiene::filth_accumulation_system),

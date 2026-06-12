@@ -10,6 +10,7 @@ use crate::layer1::edicts::{get_work_speed_modifier, ColonyPolicies};
 use crate::layer1::environment::hazards::handle_workplace_hazards;
 use crate::layer1::eureka::check_for_eureka_world;
 use crate::layer1::execution::components::{AtTarget, MovementTarget};
+use crate::layer1::architecture::edible::execute_consume;
 use crate::layer1::execution::demolish::{
     execute_cannibalize, execute_demolish, execute_destroy, execute_jury_rig,
 };
@@ -436,7 +437,7 @@ pub(crate) const fn get_skill_for_designation(
         | DesignationType::Cannibalize
         | DesignationType::Destroy => Some(SkillType::Construction),
         DesignationType::ClearFlora | DesignationType::CollectSample => Some(SkillType::Farming),
-        DesignationType::SetZone(_) | DesignationType::Tame => None,
+        DesignationType::SetZone(_) | DesignationType::Tame | DesignationType::Consume => None,
     }
 }
 
@@ -576,6 +577,7 @@ fn execute_work_on_designation(
         }
         DesignationType::JuryRig => execute_jury_rig(world, designation_entity),
         DesignationType::Cannibalize => execute_cannibalize(world, designation_entity),
+        DesignationType::Consume => execute_consume(world, designation_entity),
         DesignationType::Destroy => execute_destroy(world, designation_entity),
         DesignationType::CollectSample => {
             if let Some(pos) = world.get::<GridPosition>(designation_entity).copied() {
