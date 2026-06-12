@@ -708,6 +708,8 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
             .after(crate::layer2::trade::routes::execute_trade_routes_system),
         crate::layer2::integration::post_trade_route_sync_system
             .after(crate::layer2::trade::routes::execute_trade_routes_system),
+        crate::layer3::integration::trade_route_market_bridge_system
+            .after(crate::layer2::trade::routes::execute_trade_routes_system),
     ));
     schedule.add_systems((
         crate::layer2::trade::biomass_tariff::process_biomass_tariff_system

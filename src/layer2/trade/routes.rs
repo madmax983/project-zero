@@ -89,7 +89,7 @@ pub fn check_sentient_route_system(
     }
 }
 
-fn parse_resource(s: &str) -> Option<crate::layer1::resources::ResourceType> {
+pub fn parse_resource(s: &str) -> Option<crate::layer1::resources::ResourceType> {
     match s {
         "Food" => Some(crate::layer1::resources::ResourceType::Food),
         "Wood" => Some(crate::layer1::resources::ResourceType::Wood),
