@@ -1,9 +1,9 @@
 use bevy_ecs::prelude::*;
 
 use crate::layer1::architecture::building::{Building, BuildingMap, OccupiedTiles};
-use crate::layer1::map::GridPosition;
 use crate::layer1::economy::resources::ColonyResources;
 use crate::layer1::events::BuildingRemovedEvent;
+use crate::layer1::map::GridPosition;
 use crate::layer1::morale::{MoodModifier, Morale};
 use crate::layer1::pop::Pop;
 
@@ -84,23 +84,31 @@ pub fn consume_building_system(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use bevy::prelude::*;
     use crate::layer1::architecture::building::{Building, BuildingType};
     use crate::layer1::economy::resources::ColonyResources;
+    use bevy::prelude::*;
 
     #[test]
     fn test_consuming_building_yields_food_and_destroys_building() {
         let mut app = App::new();
-        app.insert_resource(ColonyResources { food: 10.0, ..Default::default() });
+        app.insert_resource(ColonyResources {
+            food: 10.0,
+            ..Default::default()
+        });
         app.add_event::<BuildingRemovedEvent>();
         app.add_systems(Update, consume_building_system);
 
-        let building = app.world_mut().spawn((
-            Building { building_type: BuildingType::Housing },
-            GridPosition { x: 5, y: 5 },
-            EdibleMaterial { food_yield: 50.0 },
-            Consumed, // Mark it for consumption
-        )).id();
+        let building = app
+            .world_mut()
+            .spawn((
+                Building {
+                    building_type: BuildingType::Housing,
+                },
+                GridPosition { x: 5, y: 5 },
+                EdibleMaterial { food_yield: 50.0 },
+                Consumed, // Mark it for consumption
+            ))
+            .id();
 
         app.update();
 

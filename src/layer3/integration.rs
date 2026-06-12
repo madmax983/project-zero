@@ -537,7 +537,9 @@ pub fn cargo_cult_chronicle_bridge(
 
 /// INT-1303: Bridges TradeRouteExecutedEvent to GalacticMarket, adding to the market supply.
 pub fn trade_route_market_bridge_system(
-    mut trade_events: bevy_ecs::event::EventReader<crate::layer2::trade::routes::TradeRouteExecutedEvent>,
+    mut trade_events: bevy_ecs::event::EventReader<
+        crate::layer2::trade::routes::TradeRouteExecutedEvent,
+    >,
     mut market: bevy_ecs::system::ResMut<crate::layer3::market::GalacticMarket>,
 ) {
     for event in trade_events.read() {

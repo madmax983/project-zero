@@ -2,6 +2,7 @@ use bevy_ecs::prelude::*;
 use rand::Rng;
 
 use crate::layer1::admin::AdminStats;
+use crate::layer1::architecture::edible::execute_consume;
 use crate::layer1::cybernetics::get_efficiency_bonus;
 use crate::layer1::day_night::DayNightCycle;
 use crate::layer1::designation::{Designation, DesignationType};
@@ -10,7 +11,6 @@ use crate::layer1::edicts::{get_work_speed_modifier, ColonyPolicies};
 use crate::layer1::environment::hazards::handle_workplace_hazards;
 use crate::layer1::eureka::check_for_eureka_world;
 use crate::layer1::execution::components::{AtTarget, MovementTarget};
-use crate::layer1::architecture::edible::execute_consume;
 use crate::layer1::execution::demolish::{
     execute_cannibalize, execute_demolish, execute_destroy, execute_jury_rig,
 };
