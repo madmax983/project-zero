@@ -20,6 +20,8 @@ pub fn register(schedule: &mut Schedule) {
         (
             crate::layer1::social::xenoflora_pet::apply_pet_mood_boost,
             crate::layer1::social::xenoflora_pet::pet_viral_spread_system,
+            crate::layer1::social::xeno_pet::apply_xeno_pet_morale,
+            crate::layer1::social::xeno_pet::xeno_pet_reproduction_system,
         )
             .in_set(Layer1SystemSet::Consumption),
     );
