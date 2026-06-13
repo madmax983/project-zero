@@ -811,7 +811,9 @@ pub const fn get_building_color(building: BuildingType, material: MaterialType) 
             MaterialType::Wood => Color::Rgb(139, 90, 43), // Brown
             MaterialType::Stone => Color::Rgb(169, 169, 169), // DarkGray
             MaterialType::Metal => Color::Cyan,
-            MaterialType::Gold => Color::Rgb(255, 215, 0), // Gold
+            MaterialType::Gold => Color::Rgb(255, 215, 0),
+            MaterialType::Bioplastic => Color::Rgb(150, 200, 150),
+            MaterialType::Mycelial => Color::Rgb(200, 180, 150), // Gold
         }
     } else {
         match building {

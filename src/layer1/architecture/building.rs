@@ -97,6 +97,10 @@ pub enum MaterialType {
     Metal,
     /// Luxurious gold material (High Beauty).
     Gold,
+    /// Synthetic organic plastic.
+    Bioplastic,
+    /// Grown fungal structure.
+    Mycelial,
 }
 
 impl MaterialType {
@@ -114,6 +118,8 @@ impl MaterialType {
             Self::Stone => 4.0,
             Self::Metal => 3.0,
             Self::Gold => 0.5,
+            Self::Bioplastic => 0.8,
+            Self::Mycelial => 0.6,
         }
     }
 
@@ -122,6 +128,8 @@ impl MaterialType {
     pub const fn beauty_modifier(&self) -> f32 {
         match self {
             Self::Wood | Self::Metal => 0.0,
+            Self::Bioplastic => -2.0,
+            Self::Mycelial => -5.0,
             Self::Stone => 1.0,
             Self::Gold => 10.0,
         }
@@ -135,6 +143,8 @@ impl MaterialType {
             Self::Stone => "Stone",
             Self::Metal => "Metal",
             Self::Gold => "Gold",
+            Self::Bioplastic => "Bioplastic",
+            Self::Mycelial => "Mycelial",
         }
     }
 
@@ -857,6 +867,10 @@ impl BuildingType {
                     metal: 150.0,
                     ..ColonyResources::zeroed()
                 },
+                MaterialType::Bioplastic | MaterialType::Mycelial => ColonyResources {
+                    wood: 15.0,
+                    ..ColonyResources::zeroed()
+                },
             },
             Self::Vent => ColonyResources {
                 metal: 5.0,
@@ -892,6 +906,10 @@ impl BuildingType {
                     metal: 50.0,
                     ..ColonyResources::zeroed()
                 },
+                MaterialType::Bioplastic | MaterialType::Mycelial => ColonyResources {
+                    wood: 50.0,
+                    ..ColonyResources::zeroed()
+                },
             },
             Self::Window => ColonyResources {
                 wood: 5.0,
@@ -912,6 +930,10 @@ impl BuildingType {
                 },
                 MaterialType::Gold => ColonyResources {
                     metal: 100.0,
+                    ..ColonyResources::zeroed()
+                },
+                MaterialType::Bioplastic | MaterialType::Mycelial => ColonyResources {
+                    wood: 100.0,
                     ..ColonyResources::zeroed()
                 },
             },
@@ -935,6 +957,10 @@ impl BuildingType {
                 },
                 MaterialType::Gold => ColonyResources {
                     metal: 100.0,
+                    ..ColonyResources::zeroed()
+                },
+                MaterialType::Bioplastic | MaterialType::Mycelial => ColonyResources {
+                    wood: 100.0,
                     ..ColonyResources::zeroed()
                 },
             },
@@ -1012,6 +1038,10 @@ impl BuildingType {
                 },
                 MaterialType::Gold => ColonyResources {
                     metal: 200.0,
+                    ..ColonyResources::zeroed()
+                },
+                MaterialType::Bioplastic | MaterialType::Mycelial => ColonyResources {
+                    wood: 20.0,
                     ..ColonyResources::zeroed()
                 },
             },
@@ -1267,6 +1297,11 @@ fn insert_base_building_components(
     // Default 1.0, maybe scale by tier later?
     entity.insert(AdminConsumer { demand: 1.0 });
 
+    // Edible Material for Famine
+    if matches!(material, MaterialType::Bioplastic | MaterialType::Mycelial) {
+        entity.insert(crate::layer1::architecture::edible::EdibleMaterial { food_yield: 20.0 });
+    }
+
     // Corrosion Resistance based on Material
     match material {
         MaterialType::Stone | MaterialType::Metal => {
@@ -1275,8 +1310,8 @@ fn insert_base_building_components(
         MaterialType::Gold => {
             entity.insert(CorrosionResistant { factor: 1.0 });
         }
-        MaterialType::Wood => {
-            // Wood rots, so no resistance (0.0)
+        MaterialType::Wood | MaterialType::Bioplastic | MaterialType::Mycelial => {
+            // Wood and organics rot, so no resistance (0.0)
         }
     }
 }
@@ -3388,6 +3423,52 @@ mod tests {
             world.get_entity(grave_entity).is_ok(),
             "Grave should not be destroyed if build fails"
         );
+    }
+
+    #[test]
+    fn test_bioplastic_adds_edible_material() {
+        let mut world = World::new();
+        world.insert_resource(TerrainGrid {
+            width: 10,
+            height: 10,
+            tiles: vec![TerrainType::Grass; 100],
+        });
+        world.insert_resource(OccupiedTiles::default());
+        world.insert_resource(ColonyResources {
+            food: 1000.0,
+            ..Default::default()
+        });
+
+        let entity = spawn_building(
+            &mut world,
+            5,
+            5,
+            BuildingType::Wall,
+            MaterialType::Bioplastic,
+        );
+        assert!(world
+            .get::<crate::layer1::architecture::edible::EdibleMaterial>(entity)
+            .is_some());
+    }
+
+    #[test]
+    fn test_wood_does_not_add_edible_material() {
+        let mut world = World::new();
+        world.insert_resource(TerrainGrid {
+            width: 10,
+            height: 10,
+            tiles: vec![TerrainType::Grass; 100],
+        });
+        world.insert_resource(OccupiedTiles::default());
+        world.insert_resource(ColonyResources {
+            wood: 1000.0,
+            ..Default::default()
+        });
+
+        let entity = spawn_building(&mut world, 5, 5, BuildingType::Wall, MaterialType::Wood);
+        assert!(world
+            .get::<crate::layer1::architecture::edible::EdibleMaterial>(entity)
+            .is_none());
     }
 }
 

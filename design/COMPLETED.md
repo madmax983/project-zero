@@ -744,3 +744,4 @@
 - [x] `1294` Biometric Drift — `specs/1294-biometric-drift.md` — completed 2026-06-12
 - [x] `INT-1289` Integration: Bureaucracy of Scarcity -> Needs System — completed 2026-10-31
 - [x] `1300` Phantom Commutes — `specs/1300-phantom-commutes.md` — completed 2026-06-12
+- [x] `1303` The Edible Architecture — `specs/1303-the-edible-architecture.md` — completed 2026-06-13
