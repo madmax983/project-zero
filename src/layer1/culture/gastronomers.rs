@@ -119,3 +119,23 @@ mod tests {
             .any(|m| m.label == "Culinary Singularity" && m.value == 1.0));
     }
 }
+#[cfg(test)]
+mod gastronomers_extra_tests {
+    use super::*;
+
+    #[test]
+    fn test_gastronomer_faction_does_not_emerge_early() {
+        let mut app = bevy_app::App::new();
+        app.insert_resource(EmpireAdvancement { level: 4 }); // Not advanced enough
+        app.insert_resource(Factions::default());
+
+        app.add_systems(bevy_app::Update, spawn_gastronomer_faction_system);
+        app.update();
+
+        let factions = app.world().resource::<Factions>();
+        assert!(
+            factions.get(FactionId::Gastronomers).is_none(),
+            "The Gastronomers faction should not emerge yet"
+        );
+    }
+}

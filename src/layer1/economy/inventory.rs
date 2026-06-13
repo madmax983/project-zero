@@ -142,3 +142,21 @@ mod tests {
         assert_eq!(inventory.items.len(), 2);
     }
 }
+#[cfg(test)]
+mod inventory_extra_tests {
+    use super::*;
+    use crate::layer1::items::ItemType;
+
+    #[test]
+    fn test_inventory_has_item() {
+        let mut inventory = Inventory::default();
+        let item = InventoryItem {
+            item_type: ItemType::Potato,
+            entity: None,
+        };
+        inventory.try_add(item);
+
+        assert!(inventory.has_item(ItemType::Potato));
+        assert!(!inventory.has_item(ItemType::Meat));
+    }
+}
