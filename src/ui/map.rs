@@ -681,6 +681,8 @@ pub const fn get_terrain_char(terrain: TerrainType) -> &'static str {
         TerrainType::Artifact => "Ω",
         TerrainType::FaultLine(true) => "≈",
         TerrainType::FaultLine(false) => "–",
+        TerrainType::Bridge => "=",
+        TerrainType::Void => " ",
     }
 }
 
@@ -715,6 +717,8 @@ pub const fn get_terrain_color(terrain: TerrainType) -> Color {
         TerrainType::Artifact => Color::Rgb(255, 215, 0), // Gold
         TerrainType::FaultLine(true) => Color::Rgb(255, 60, 20),
         TerrainType::FaultLine(false) => Color::Rgb(100, 100, 110),
+        TerrainType::Bridge => Color::Rgb(150, 100, 50),
+        TerrainType::Void => Color::Black,
     }
 }
 

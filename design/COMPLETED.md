@@ -748,3 +748,4 @@
 - [x] `986` The Last Light — `specs/986-the-last-light.md` — completed 2026-02-01
 
 - [x] `1303` The Edible Architecture — `specs/1303-the-edible-architecture.md` — completed 2026-06-13
+- [x] `987` The Shattered World — `specs/987-the-shattered-world.md` — completed 2026-06-13
