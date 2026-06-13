@@ -17,6 +17,7 @@ use crate::layer1::execution::demolish::{
 use crate::layer1::execution::mining::{handle_chopping_work, handle_mining_work};
 use crate::layer1::flora::process_flora_clearing;
 use crate::layer1::gastronomy::WorkSpeedBuff;
+use crate::layer1::psychology::doomsday::DoomsdayWorkBuff;
 use crate::layer1::heirloom::{Heirloom, ToolHistory};
 use crate::layer1::items::{Equipment, Tool, UnequipEvent};
 use crate::layer1::language::{calculate_coordination_penalty, Dialect, Linguistics};
@@ -131,7 +132,7 @@ fn collect_workers_by_target(
             Option<&Traits>,
             Option<&Morale>,
             Option<&crate::layer1::factions::FactionMember>,
-            Option<&WorkSpeedBuff>,
+            (Option<&WorkSpeedBuff>, Option<&DoomsdayWorkBuff>),
             Option<&Job>,
             Option<&Dialect>,
             Option<&Linguistics>,
@@ -159,7 +160,7 @@ fn collect_workers_by_target(
                     Option<&Traits>,
                     Option<&Morale>,
                     Option<&crate::layer1::factions::FactionMember>,
-                    Option<&WorkSpeedBuff>,
+                    (Option<&WorkSpeedBuff>, Option<&DoomsdayWorkBuff>),
                     Option<&Job>,
                     Option<&Dialect>,
                     Option<&Linguistics>,
@@ -213,7 +214,7 @@ fn collect_workers_by_target(
                     Option<&Traits>,
                     Option<&Morale>,
                     Option<&crate::layer1::factions::FactionMember>,
-                    Option<&WorkSpeedBuff>,
+                    (Option<&WorkSpeedBuff>, Option<&DoomsdayWorkBuff>),
                     Option<&Job>,
                     Option<&Dialect>,
                     Option<&Linguistics>,
@@ -239,7 +240,8 @@ fn collect_workers_by_target(
                 } else {
                     1.0
                 };
-                let buff_mod = buff.map_or(1.0, |b| b.multiplier);
+                let buff_mod = buff.0.map_or(1.0, |b| b.multiplier);
+                let doomsday_mod = buff.1.map_or(1.0, |b| b.multiplier);
                 let fog_mod = fog.map_or(1.0, |f| f.work_speed_penalty);
 
                 (
@@ -249,7 +251,7 @@ fn collect_workers_by_target(
                         morale,
                         action: mt.for_action,
                         equipment: eq.copied(),
-                        speed_modifier: trait_work_mod * job_eff_mod * buff_mod * fog_mod,
+                        speed_modifier: trait_work_mod * job_eff_mod * buff_mod * fog_mod * doomsday_mod,
                         job: job.copied(),
                         dialect: dialect.copied().unwrap_or_default(),
                         linguistics: ling.cloned().unwrap_or_default(),

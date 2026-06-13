@@ -450,6 +450,15 @@ fn register_simulation_core_systems(schedule: &mut Schedule) {
             .in_set(Layer1SystemSet::Economy),
     );
 
+    schedule.add_systems(
+        (
+            crate::layer1::psychology::doomsday::apply_doomsday_panic_effects,
+            crate::layer1::psychology::doomsday::resolve_doomsday_event,
+            crate::layer1::psychology::doomsday::cleanup_nihilism_debuffs,
+        )
+            .in_set(Layer1SystemSet::Economy),
+    );
+
     schedule.add_systems(crate::layer1::physics::harpoon::process_harpoon_impact_system);
 
     schedule.add_systems((
