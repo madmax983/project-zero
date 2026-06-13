@@ -81,6 +81,8 @@ pub fn map_export_system(
                 TerrainType::FaultLine(true) => [255, 60, 20], // Magma Red
                 TerrainType::FaultLine(false) => [100, 100, 110],
                 TerrainType::IndestructibleStump => [100, 100, 100], // Gray
+                TerrainType::Bridge => [150, 100, 50],
+                TerrainType::Void => [0, 0, 0],
             };
 
             // Optionally blend with beauty

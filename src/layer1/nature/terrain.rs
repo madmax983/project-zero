@@ -6,6 +6,10 @@ use rand::Rng;
 pub enum TerrainType {
     /// Green grass, the default ground.
     Grass,
+    /// Constructed bridge over void
+    Bridge,
+    /// Empty void, impassable
+    Void,
     /// Brown dirt, often found in patches.
     Dirt,
     /// Grey rock, harder material.
@@ -50,6 +54,8 @@ impl TerrainType {
     pub const fn name(self) -> &'static str {
         match self {
             Self::Grass => "Grass",
+            Self::Bridge => "Bridge",
+            Self::Void => "Void",
             Self::Dirt => "Dirt",
             Self::Rock => "Rock",
             Self::Water => "Water",
@@ -75,6 +81,7 @@ impl TerrainType {
     pub const fn movement_cost(self) -> f32 {
         match self {
             Self::Path => 0.8,
+            Self::Bridge => 1.0,
             Self::Tree => 1.5,
             Self::Shrub => 1.2,
             Self::Sapling => 1.1,
@@ -108,6 +115,7 @@ impl TerrainType {
                 | Self::Crater
                 | Self::IndestructibleStump
                 | Self::FaultLine(true)
+                | Self::Void
         )
     }
 
@@ -132,7 +140,9 @@ impl TerrainType {
             | Self::Tree
             | Self::Shrub
             | Self::Sapling
-            | Self::SporeBloom => 0.1,
+            | Self::SporeBloom
+            | Self::Bridge
+            | Self::Void => 0.1,
         }
     }
 }

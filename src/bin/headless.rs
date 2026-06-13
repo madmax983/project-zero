@@ -1185,6 +1185,8 @@ fn print_map(world: &mut World, center_x: i32, center_y: i32) {
                 TerrainType::FaultLine(true) => "≈".red().to_string(),
                 TerrainType::FaultLine(false) => "–".white().dim().to_string(),
                 TerrainType::IndestructibleStump => "I".white().bold().to_string(),
+                TerrainType::Bridge => "=".yellow().to_string(),
+                TerrainType::Void => " ".black().to_string(),
             };
             map_content.push_str(&s);
         }
@@ -1617,6 +1619,8 @@ fn scan_terrain(world: &mut World, center_x: i32, center_y: i32, radius: ScanRad
                 TerrainType::FaultLine(true) => "Fault Line (Open)",
                 TerrainType::FaultLine(false) => "Fault Line (Closed)",
                 TerrainType::IndestructibleStump => "Indestructible Stump",
+                TerrainType::Bridge => "Bridge",
+                TerrainType::Void => "Void",
             };
 
             let walkable = tile.is_walkable();
@@ -1712,6 +1716,8 @@ const fn get_terrain_color_headless(t: TerrainType) -> comfy_table::Color {
         TerrainType::FaultLine(true) => comfy_table::Color::Red,
         TerrainType::FaultLine(false) => comfy_table::Color::DarkGrey,
         TerrainType::IndestructibleStump => comfy_table::Color::White,
+        TerrainType::Bridge => comfy_table::Color::Yellow,
+        TerrainType::Void => comfy_table::Color::Black,
     }
 }
 
@@ -1751,6 +1757,8 @@ fn get_tile_info(world: &mut World, x: i32, y: i32) {
         TerrainType::FaultLine(true) => "Fault Line (Open)",
         TerrainType::FaultLine(false) => "Fault Line (Closed)",
         TerrainType::IndestructibleStump => "Indestructible Stump",
+        TerrainType::Bridge => "Bridge",
+        TerrainType::Void => "Void",
     };
 
     let walkable = tile.is_walkable();
