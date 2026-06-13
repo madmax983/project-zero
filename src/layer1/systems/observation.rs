@@ -537,7 +537,6 @@ pub fn register(schedule: &mut Schedule) {
             .in_set(Layer1SystemSet::Observation),
     );
 
-
     schedule.add_systems(
         (
             crate::layer1::social::hoarder::check_for_hoarder_trait_system,

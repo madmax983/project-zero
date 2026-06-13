@@ -53,7 +53,7 @@
 
 See `design/IDEAS.md` for unspecced concepts.
 
-- [ ] `986` The Last Light — `specs/986-the-last-light.md`
+
 - [ ] `987` The Shattered World — `specs/987-the-shattered-world.md`
 - [ ] `988` Teleporter Psychosis — `specs/988-teleporter-psychosis.md`
 
