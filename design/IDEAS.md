@@ -6368,7 +6368,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Lost Treaty
+## The Lost Treaty [SPECCED]
 
 **Layer:** 3
 
