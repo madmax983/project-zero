@@ -23,3 +23,7 @@
 **[Extracting Component Filters from God Functions]**
 **Learning:** Monolithic calculation functions (like `calculate_work_amount`) that sequentially query the Bevy `World` for a dozen different marker components (e.g., `MemeticInfection`, `NeuralLinked`) to build a final modifier multiplier create deeply nested, repetitive "Pyramid of Doom" blocks.
 **Action:** Extract the repeated `if world.get::<T>(entity).is_some()` checks into a dedicated `get_status_modifiers` helper function that computes and returns the combined float multiplier. This dramatically flattens the parent function.
+
+**[Extracting Logic Blocks from Bevy Systems]**
+**Learning:** Monolithic Bevy systems (like `check_spontaneous_build_system`) often contain distinct logic blocks hidden behind comment headers (e.g., `// 1. Identify potential builders`, `// 2. Process builders`). These systems can become difficult to read as their logic compounds.
+**Action:** Extract these distinct blocks into named helper functions (e.g., `identify_potential_builders`, `process_builders`) that accept `&mut World` and return relevant intermediary data. This cleanly pipelines the main system and flattens deep nesting inside the helper functions.
