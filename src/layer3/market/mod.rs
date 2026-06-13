@@ -8,3 +8,4 @@ pub mod quantum_famine;
 pub use quantum_famine::*;
 pub mod ephemeral_market;
 pub use ephemeral_market::*;
+pub mod orbital_debt_collection;

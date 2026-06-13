@@ -1,4 +1,5 @@
 - [x] `1273` Gravity Debt — `specs/1273-gravity-debt.md` — completed 2026-06-11
+- [x] `553` Orbital Debt Collections — `specs/553-orbital-debt-collections.md` — completed 2026-02-01
 - [x] `INT-003` Integration: Population Count -> UI — completed 2026-06-10
 - [x] `1290` The Weight of the Past — `specs/1290-the-weight-of-the-past.md` — completed 2026-06-07
 - [x] `1099` Terminator Habitats — `specs/1099-terminator-habitats.md` — completed 2024-06-06
