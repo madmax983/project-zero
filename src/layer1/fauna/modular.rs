@@ -86,3 +86,55 @@ impl FaunaBody {
             .any(|p| p.resource_drop.as_deref() == Some(resource))
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_fauna_body_aggregation() {
+        let mut body = FaunaBody::default();
+        body.add_part(FaunaPart {
+            part_type: BodyPartType::Head,
+            name: "Wolf Head".to_string(),
+            stats: FaunaStats {
+                health_max: 10.0,
+                attack: 5.0,
+                speed: 1.0,
+                defense: 0.0,
+            },
+            resource_drop: None,
+        });
+        body.add_part(FaunaPart {
+            part_type: BodyPartType::Body,
+            name: "Bear Body".to_string(),
+            stats: FaunaStats {
+                health_max: 40.0,
+                attack: 0.0,
+                speed: 0.0,
+                defense: 2.0,
+            },
+            resource_drop: Some("Meat".to_string()),
+        });
+
+        let stats = body.aggregate_stats();
+        assert_eq!(stats.health_max, 50.0);
+        assert_eq!(stats.attack, 5.0);
+        assert_eq!(stats.speed, 1.0);
+        assert_eq!(stats.defense, 2.0);
+    }
+
+    #[test]
+    fn test_fauna_body_can_produce() {
+        let mut body = FaunaBody::default();
+        body.add_part(FaunaPart {
+            part_type: BodyPartType::Integument,
+            name: "Wool".to_string(),
+            stats: FaunaStats::default(),
+            resource_drop: Some("Wool".to_string()),
+        });
+
+        assert!(body.can_produce("Wool"));
+        assert!(!body.can_produce("Meat"));
+    }
+}

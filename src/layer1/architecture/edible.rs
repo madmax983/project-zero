@@ -103,13 +103,16 @@ mod tests {
             ..Default::default()
         });
 
-        let building = app.world_mut().spawn((
-            Building {
-                building_type: BuildingType::Housing,
-            },
-            GridPosition { x: 5, y: 5 },
-            EdibleMaterial { food_yield: 50.0 },
-        )).id();
+        let building = app
+            .world_mut()
+            .spawn((
+                Building {
+                    building_type: BuildingType::Housing,
+                },
+                GridPosition { x: 5, y: 5 },
+                EdibleMaterial { food_yield: 50.0 },
+            ))
+            .id();
 
         app.world_mut().insert_resource(BuildingMap({
             let mut map = bevy::utils::HashMap::new();
@@ -117,9 +120,7 @@ mod tests {
             map
         }));
 
-        let designation = app.world_mut().spawn((
-            GridPosition { x: 5, y: 5 },
-        )).id();
+        let designation = app.world_mut().spawn((GridPosition { x: 5, y: 5 },)).id();
 
         let success = execute_consume(app.world_mut(), designation);
         assert!(success);
@@ -146,12 +147,15 @@ mod tests {
     #[test]
     fn test_execute_consume_fail_not_edible() {
         let mut app = App::new();
-        let building = app.world_mut().spawn((
-            Building {
-                building_type: BuildingType::Housing,
-            },
-            GridPosition { x: 5, y: 5 },
-        )).id();
+        let building = app
+            .world_mut()
+            .spawn((
+                Building {
+                    building_type: BuildingType::Housing,
+                },
+                GridPosition { x: 5, y: 5 },
+            ))
+            .id();
 
         app.world_mut().insert_resource(BuildingMap({
             let mut map = bevy::utils::HashMap::new();
@@ -159,9 +163,7 @@ mod tests {
             map
         }));
 
-        let designation = app.world_mut().spawn((
-            GridPosition { x: 5, y: 5 },
-        )).id();
+        let designation = app.world_mut().spawn((GridPosition { x: 5, y: 5 },)).id();
 
         let success = execute_consume(app.world_mut(), designation);
         assert!(!success);
