@@ -3,7 +3,8 @@
 //! Converts colony history (Chronicle) into living legends that are shared in taverns.
 //! Stories evolve over time, gaining mutations and providing buffs to listeners.
 
-use crate::layer1::chronicle::{Chronicle, EventImportance};
+#[cfg(feature = "nova")]
+use crate::layer1::core::chronicle::{Chronicle, EventImportance};
 #[cfg(feature = "nova")]
 use crate::layer1::needs::Needs;
 #[cfg(feature = "nova")]
@@ -18,7 +19,7 @@ use rand::Rng;
 
 /// A legend that has evolved from a historical event within the [`OralTradition`].
 ///
-/// Legends begin as factual [`Chronicle`] entries but morph over time through
+/// Legends begin as factual [`crate::layer1::core::chronicle::Chronicle`] entries but morph over time through
 /// successive telling and retelling in taverns.
 ///
 /// > ⚠️ **Nova Feature:** While this struct is always defined, its systems and effects are only active when the `nova` feature is enabled.
@@ -37,6 +38,7 @@ use rand::Rng;
 ///
 /// assert_eq!(legend.mutations, 0);
 /// ```
+#[cfg(feature = "nova")]
 #[derive(Debug, Clone)]
 pub struct Story {
     /// The current text of the story.
@@ -46,6 +48,15 @@ pub struct Story {
     /// How many times the story has mutated.
     pub mutations: u32,
     /// The type/genre of the story.
+    pub genre: StoryGenre,
+}
+
+#[cfg(not(feature = "nova"))]
+#[derive(Debug, Clone)]
+pub struct Story {
+    pub text: String,
+    pub historical_date: u64,
+    pub mutations: u32,
     pub genre: StoryGenre,
 }
 
@@ -64,6 +75,7 @@ pub struct Story {
 /// let genre = StoryGenre::Cautionary;
 /// assert_eq!(format!("{}", genre), "⚠️ Cautionary");
 /// ```
+#[cfg(feature = "nova")]
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum StoryGenre {
     /// Heroic tales boost leisure/morale.
@@ -76,11 +88,20 @@ pub enum StoryGenre {
     Trivial,
 }
 
+#[cfg(not(feature = "nova"))]
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum StoryGenre {
+    Heroic,
+    Tragedy,
+    Cautionary,
+    Trivial,
+}
+
 pub const MAX_STORIES: usize = 100;
 
 /// The collective repository of legends, myths, and rumors known to the colony.
 ///
-/// `OralTradition` periodically scans the [`Chronicle`] for new events and seeds
+/// `OralTradition` periodically scans the [`crate::layer1::core::chronicle::Chronicle`] for new events and seeds
 /// them as factual stories. These stories are later shared in `Tavern`s, where they mutate.
 ///
 /// > ⚠️ **Nova Feature:** While this resource is always defined, its active systems (like `collect_chronicles_system`) will emit warnings and do nothing unless the `nova` feature is enabled.
@@ -108,6 +129,7 @@ pub struct OralTradition {
     pub last_processed_tick: u64,
 }
 
+#[cfg(feature = "nova")]
 impl OralTradition {
     /// Adds a [`Story`] to the tradition if a story from the same historical date
     /// does not already exist. If adding the story exceeds `MAX_STORIES`, the oldest
@@ -149,7 +171,7 @@ impl OralTradition {
         }
     }
 
-    /// Evaluates new [`Chronicle`] events since the last processing tick and
+    /// Evaluates new [`crate::layer1::core::chronicle::Chronicle`] events since the last processing tick and
     /// converts them into new `Story` entities based on keyword heuristics and importance.
     ///
     /// # Examples
@@ -221,7 +243,7 @@ impl OralTradition {
     }
 }
 
-/// Evaluates the [`Chronicle`] each tick and seeds the [`OralTradition`] with new events.
+/// Evaluates the [`crate::layer1::core::chronicle::Chronicle`] each tick and seeds the [`OralTradition`] with new events.
 ///
 /// # Examples
 ///
@@ -388,7 +410,8 @@ mod tests {
     #[allow(unused_imports)]
     use super::*;
     #[allow(unused_imports)]
-    use crate::layer1::core::chronicle::{Chronicle, EventImportance};
+    #[cfg(feature = "nova")]
+use crate::layer1::core::chronicle::{Chronicle, EventImportance};
 
     #[cfg(feature = "nova")]
     use crate::layer1::needs::Needs;
