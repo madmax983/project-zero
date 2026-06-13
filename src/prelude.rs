@@ -19,9 +19,57 @@ pub use crate::layer1::psychology::needs::Needs;
 pub use crate::layer1::social::Tavern;
 pub use crate::shared::log::MessageLog;
 
+#[cfg(feature = "nova")]
+pub use crate::layer1::oral_tradition::{collect_chronicles_system, storytelling_system};
+#[cfg(feature = "nova")]
 pub use crate::layer1::oral_tradition::{OralTradition, Story, StoryGenre};
 
-pub use crate::layer1::oral_tradition::{collect_chronicles_system, storytelling_system};
+#[cfg(not(feature = "nova"))]
+pub use fallback_stubs::*;
+
+#[cfg(not(feature = "nova"))]
+pub mod fallback_stubs {
+    #[derive(Debug, Clone, Default)]
+    pub struct OralTradition {
+        pub stories: Vec<Story>,
+    }
+
+    impl OralTradition {
+        pub fn add_story(&mut self, _story: Story) {
+            bevy::log::warn_once!(
+                "The `nova` feature is not enabled! `add_story` will do nothing."
+            );
+        }
+    }
+
+    #[derive(Debug, Clone)]
+    pub struct Story {
+        pub text: String,
+        pub historical_date: u64,
+        pub mutations: u32,
+        pub genre: StoryGenre,
+    }
+
+    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+    pub enum StoryGenre {
+        Heroic,
+        Tragedy,
+        Cautionary,
+        Trivial,
+    }
+
+    pub fn collect_chronicles_system() {
+        bevy::log::warn_once!(
+            "The `nova` feature is not enabled! `collect_chronicles_system` will do nothing."
+        );
+    }
+
+    pub fn storytelling_system() {
+        bevy::log::warn_once!(
+            "The `nova` feature is not enabled! `storytelling_system` will do nothing."
+        );
+    }
+}
 
 // Echo DX Audit: Export common components for headless users
 pub use crate::layer1::economy::resources::ColonyResources;
