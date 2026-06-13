@@ -34,35 +34,31 @@ pub struct OwnsStructure(pub Entity);
 
 /// System that allows idle pops to build personal structures adjacent to their home.
 pub fn check_spontaneous_build_system(world: &mut World) {
-    // 1. Identify potential builders
-    // We need to collect (PopEntity, HousingPos) pairs to avoid keeping borrows on World
+    let builders = identify_potential_builders(world);
+    process_builders(world, builders);
+}
+
+fn identify_potential_builders(world: &mut World) -> Vec<(Entity, GridPosition)> {
     let mut builders = Vec::new();
 
-    {
-        let mut housing_query = world.query::<(&GridPosition, &Housing)>();
-        // We can't query Pop inside the loop easily if we borrow world for housing_query.
-        // But housing.residents has Entity IDs.
-
-        for (pos, housing) in housing_query.iter(world) {
-            for &resident in &housing.residents {
-                // Check if resident exists and doesn't own a structure
-                if world.get::<Pop>(resident).is_some()
-                    && world.get::<OwnsStructure>(resident).is_none()
-                {
-                    // 1% chance per tick (simulated here with random)
-                    // In tests we might force this.
-                    let mut rng = rand::thread_rng();
-                    if rng.gen_bool(0.01) {
-                        builders.push((resident, *pos));
-                    }
+    let mut housing_query = world.query::<(&GridPosition, &Housing)>();
+    for (pos, housing) in housing_query.iter(world) {
+        for &resident in &housing.residents {
+            if world.get::<Pop>(resident).is_some()
+                && world.get::<OwnsStructure>(resident).is_none()
+            {
+                let mut rng = rand::thread_rng();
+                if rng.gen_bool(0.01) {
+                    builders.push((resident, *pos));
                 }
             }
         }
     }
+    builders
+}
 
-    // 2. Process builders
+fn process_builders(world: &mut World, builders: Vec<(Entity, GridPosition)>) {
     for (pop_entity, home_pos) in builders {
-        // Find a valid spot
         let mut target_pos = None;
         let mut neighbors = [
             (0, 1),
@@ -82,67 +78,61 @@ pub fn check_spontaneous_build_system(world: &mut World) {
             let nx = home_pos.x + dx;
             let ny = home_pos.y + dy;
 
-            // Validate spot using `can_place_building` from building.rs
             if crate::layer1::building::can_place_building(world, nx, ny) {
                 target_pos = Some((nx, ny));
                 break;
             }
         }
 
-        if let Some((x, y)) = target_pos {
-            // Pick random type
-            let mut rng = rand::thread_rng();
-            let structure_type = match rng.gen_range(0..3) {
-                0 => PersonalStructureType::Shed,
-                1 => PersonalStructureType::Garden,
-                _ => PersonalStructureType::Shrine,
-            };
+        let Some((x, y)) = target_pos else {
+            continue;
+        };
 
-            let building_type = match structure_type {
-                PersonalStructureType::Shed => BuildingType::PersonalShed,
-                PersonalStructureType::Garden => BuildingType::PersonalGarden,
-                PersonalStructureType::Shrine => BuildingType::PersonalShrine,
-            };
+        let mut rng = rand::thread_rng();
+        let structure_type = match rng.gen_range(0..3) {
+            0 => PersonalStructureType::Shed,
+            1 => PersonalStructureType::Garden,
+            _ => PersonalStructureType::Shrine,
+        };
 
-            // Attempt to build
-            if try_place_building(world, x, y, building_type) {
-                // Find the new entity
-                // Since we just placed it at (x, y), we can query for it.
-                // We need to find the entity with GridPosition(x,y) and Building component.
-                let mut found_structure = None;
+        let building_type = match structure_type {
+            PersonalStructureType::Shed => BuildingType::PersonalShed,
+            PersonalStructureType::Garden => BuildingType::PersonalGarden,
+            PersonalStructureType::Shrine => BuildingType::PersonalShrine,
+        };
 
-                // New scope for query
-                {
-                    let mut q = world
-                        .query::<(Entity, &GridPosition, &crate::layer1::building::Building)>();
-                    for (e, p, _) in q.iter(world) {
-                        if p.x == x && p.y == y {
-                            found_structure = Some(e);
-                            break;
-                        }
+        if try_place_building(world, x, y, building_type) {
+            let mut found_structure = None;
+
+            {
+                let mut q =
+                    world.query::<(Entity, &GridPosition, &crate::layer1::building::Building)>();
+                for (e, p, _) in q.iter(world) {
+                    if p.x == x && p.y == y {
+                        found_structure = Some(e);
+                        break;
                     }
                 }
+            }
 
-                if let Some(structure_entity) = found_structure {
-                    // Attach components
-                    let beauty_bonus = match structure_type {
-                        PersonalStructureType::Shed => 0.0,
-                        PersonalStructureType::Garden => 5.0,
-                        PersonalStructureType::Shrine => 2.0,
-                    };
+            if let Some(structure_entity) = found_structure {
+                let beauty_bonus = match structure_type {
+                    PersonalStructureType::Shed => 0.0,
+                    PersonalStructureType::Garden => 5.0,
+                    PersonalStructureType::Shrine => 2.0,
+                };
 
-                    world
-                        .entity_mut(structure_entity)
-                        .insert(PersonalStructure {
-                            owner: pop_entity,
-                            structure_type,
-                            beauty_bonus,
-                        });
+                world
+                    .entity_mut(structure_entity)
+                    .insert(PersonalStructure {
+                        owner: pop_entity,
+                        structure_type,
+                        beauty_bonus,
+                    });
 
-                    world
-                        .entity_mut(pop_entity)
-                        .insert(OwnsStructure(structure_entity));
-                }
+                world
+                    .entity_mut(pop_entity)
+                    .insert(OwnsStructure(structure_entity));
             }
         }
     }
