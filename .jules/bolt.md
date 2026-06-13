@@ -9,3 +9,7 @@
 **Extracting Component Data Before Despawning (Safe Method)**
 **Learning:** When a system reads data from a component and then immediately despawns that entity, calling `.clone()` on the data is an unnecessary heap allocation. However, trying to use `world.entity_mut(entity)` to get a mutable reference can cause a runtime panic if the entity is missing. Furthermore, injecting dummy data with `std::mem::replace` is an anti-pattern.
 **Action:** Use `world.get_entity_mut(entity)?.take::<T>()?` to safely consume and extract the entire component without panicking or requiring dummy values.
+
+**Optimizing HashMap for Integer Keys**
+**Learning:** Using `std::collections::HashMap` with integer keys (like `(i32, i32)`) introduces significant overhead due to its default SipHash algorithm.
+**Action:** Always prefer `bevy::utils::HashMap` (which uses the faster AHash algorithm) for non-cryptographic use cases, such as spatial maps or caches using integer coordinates, to improve performance. Ensure to include a comment with `/// ⚡ Bolt Optimization:` to document the change.

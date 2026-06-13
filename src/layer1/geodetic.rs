@@ -3,8 +3,8 @@ use crate::layer1::items::{Item, ItemType};
 use crate::layer1::map::GridPosition;
 use crate::layer1::temperature::TemperatureGrid;
 use crate::shared::time::SimulationTime;
+use bevy::utils::HashMap;
 use bevy_ecs::prelude::*;
-use std::collections::HashMap;
 
 /// Component for stones that have geodetic sentience.
 #[derive(Component, Default)]
@@ -181,6 +181,8 @@ pub fn update_living_stone_system(
 ///
 /// If enough Living Stones gather at the same location (on ground or in inventory),
 /// they fuse into a `StoneGolem`.
+/// ⚡ Bolt Optimization: Uses `bevy::utils::HashMap` (AHash) instead of `std::collections::HashMap`
+/// to eliminate SipHash overhead for integer coordinate keys, avoiding bottlenecks during heavy location lookups.
 pub fn form_golem_system(
     mut commands: Commands,
     query: Query<(Entity, &GridPosition, &Item), With<LivingStone>>,
