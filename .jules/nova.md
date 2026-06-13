@@ -150,3 +150,8 @@
 **Concept:** Added `aeolian_clutter_system` in `src/experimental/aeolian_clutter.rs`. It physically moves `Clutter` from one tile to an adjacent tile downwind based on the `WindGrid` velocities.
 **Fate:** Submitted
 **Lesson:** Connects the environment/weather system (Wind) with the maintenance system (Clutter). It enables emergent colony layouts where players can design wind traps to collect trash into specific corners for easier cleaning.
+
+## [Tavern Brawls]
+**Concept:** Added `tavern_brawls_system` to `src/experimental/tavern_brawls.rs`. If multiple Pops with very low `Morale` are socializing in the same `Tavern`, a `TavernBrawl` can erupt. This damages the participants (`Health`) and generates `Clutter`.
+**Fate:** Submitted
+**Lesson:** Connects the social infrastructure (`Tavern`) directly to the psychological (`Morale`) and physical (`Health`, `ClutterGrid`) systems. It turns a place of relaxation into a hazard during times of colony-wide depression, forcing players to manage morale proactively to prevent mass gatherings from turning violent.

@@ -194,3 +194,6 @@ pub mod chemical_showers;
 pub mod magnetic_veteran;
 #[cfg(feature = "nova")]
 pub mod thermal_venting;
+
+#[cfg(feature = "nova")]
+pub mod tavern_brawls;
