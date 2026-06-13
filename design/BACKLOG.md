@@ -36,7 +36,6 @@
 - [ ] `695` The Long Night — `specs/695-the-long-night.md`
 
 - [ ] `552` The Subterranean Smog Layer — `specs/552-the-subterranean-smog-layer.md`
-- [ ] `553` Orbital Debt Collections — `specs/553-orbital-debt-collections.md`
 - [ ] `555` The Symbiotic Insurgency — `specs/555-the-symbiotic-insurgency.md`
 
 
