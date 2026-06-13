@@ -451,6 +451,14 @@ fn register_simulation_core_systems(schedule: &mut Schedule) {
     );
 
     schedule.add_systems(crate::layer1::physics::harpoon::process_harpoon_impact_system);
+
+    schedule.add_systems((
+        crate::layer2::memorial_fleet::generate_tragedy_scrap_system,
+        crate::layer2::memorial_fleet::apply_memorial_aura_system,
+        crate::layer2::memorial_fleet::handle_memorial_ship_destruction_system,
+        crate::layer2::memorial_fleet::decay_shattered_legacy_system,
+    ));
+
     schedule.add_systems((crate::layer2::weather::weather_movement_system,));
     schedule.add_systems((
         crate::layer1::economy::apply_cultural_contraband_system,
