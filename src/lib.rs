@@ -31,7 +31,6 @@
 //!
 //! ```
 //! use scale::prelude::*;
-//! use bevy_ecs::prelude::*;
 //!
 //! // 1. Setup the world with headless configuration
 //! let config = SetupConfig {

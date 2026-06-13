@@ -87,10 +87,7 @@ For the **advanced simulation of legends** (Oral Tradition), see the [Oral Tradi
 > ⚠️ **REQUIRES FEATURE NOVA**
 > Do not attempt to run this snippet or import `Story` without `features = ["nova"]`.
 
-
 The "Nova" feature (Oral Tradition) builds upon the base narrative system to create living legends that evolve in taverns. It is located in `scale::layer1::oral_tradition`.
-
-**Note:** Requires the `nova` feature.
 
 **Usage:**
 
@@ -101,22 +98,26 @@ The "Nova" feature (Oral Tradition) builds upon the base narrative system to cre
 // [dependencies]
 // scale = { version = "0.1.0", features = ["nova"] }
 
+#[cfg(feature = "nova")]
 use scale::prelude::*;
 
 fn main() {
-    let mut tradition = OralTradition::default();
+    #[cfg(feature = "nova")]
+    {
+        let mut tradition = OralTradition::default();
 
-    // Add a story directly to the tradition
-    let story = Story {
-        text: "The colony survived the Great Frost.".to_string(),
-        historical_date: 100,
-        mutations: 0,
-        genre: StoryGenre::Heroic,
-    };
-    tradition.add_story(story);
+        // Add a story directly to the tradition
+        let story = Story {
+            text: "The colony survived the Great Frost.".to_string(),
+            historical_date: 100,
+            mutations: 0,
+            genre: StoryGenre::Heroic,
+        };
+        tradition.add_story(story);
 
-    // Inspect
-    println!("{:?}", tradition.stories);
+        // Inspect
+        println!("{:?}", tradition.stories);
+    }
 }
 ```
 
@@ -155,7 +156,8 @@ fn main() {
     println!("Current Tick: {}", time.tick);
 
     // You can also query game components easily using the prelude
-    let _buildings = world.query::<&Building>().iter(&world).count();
+    let mut query = world.query::<&Building>();
+    let _buildings = query.iter(&world).count();
 }
 ```
 
