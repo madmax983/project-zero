@@ -6,6 +6,8 @@
 //!
 //! Layer 2.
 //!
+pub mod memorial_fleet;
+pub use memorial_fleet::*;
 pub mod barnacles;
 pub mod binary_star;
 pub mod combat;

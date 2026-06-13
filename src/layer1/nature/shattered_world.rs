@@ -1,5 +1,5 @@
-use bevy_ecs::prelude::*;
 use crate::layer1::terrain::{TerrainGrid, TerrainType};
+use bevy_ecs::prelude::*;
 
 pub struct ShatteredWorldConfig {
     pub void_percentage: f32,
@@ -7,7 +7,9 @@ pub struct ShatteredWorldConfig {
 
 impl Default for ShatteredWorldConfig {
     fn default() -> Self {
-        Self { void_percentage: 0.3 }
+        Self {
+            void_percentage: 0.3,
+        }
     }
 }
 
@@ -17,7 +19,11 @@ pub struct PlaceBridgeCommand {
     pub y: usize,
 }
 
-pub fn generate_shattered_grid(width: usize, height: usize, config: &ShatteredWorldConfig) -> TerrainGrid {
+pub fn generate_shattered_grid(
+    width: usize,
+    height: usize,
+    config: &ShatteredWorldConfig,
+) -> TerrainGrid {
     let mut grid = TerrainGrid {
         width,
         height,
@@ -56,15 +62,21 @@ pub fn place_bridge_system(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::layer1::pathfinding::find_path;
     use crate::layer1::building::{BuildingMap, OccupiedTiles};
+    use crate::layer1::pathfinding::find_path;
 
     #[test]
     fn test_map_generator_creates_void_chasms() {
-        let config = ShatteredWorldConfig { void_percentage: 0.3 };
+        let config = ShatteredWorldConfig {
+            void_percentage: 0.3,
+        };
         let grid = generate_shattered_grid(100, 100, &config);
 
-        let void_count = grid.tiles.iter().filter(|&t| *t == TerrainType::Void).count();
+        let void_count = grid
+            .tiles
+            .iter()
+            .filter(|&t| *t == TerrainType::Void)
+            .count();
         assert!(void_count > 1000);
     }
 
@@ -75,10 +87,15 @@ mod tests {
 
         let mut tiles = vec![TerrainType::Rock; 100];
         tiles[55] = TerrainType::Void; // (5, 5) is void
-        app.insert_resource(TerrainGrid { width: 10, height: 10, tiles });
+        app.insert_resource(TerrainGrid {
+            width: 10,
+            height: 10,
+            tiles,
+        });
         app.add_systems(bevy_app::Update, place_bridge_system);
 
-        app.world_mut().send_event(PlaceBridgeCommand { x: 5, y: 5 });
+        app.world_mut()
+            .send_event(PlaceBridgeCommand { x: 5, y: 5 });
         app.update();
 
         let grid = app.world().resource::<TerrainGrid>();
@@ -94,7 +111,11 @@ mod tests {
             tiles[y * 5 + 2] = TerrainType::Void;
         }
 
-        world.insert_resource(TerrainGrid { width: 5, height: 5, tiles });
+        world.insert_resource(TerrainGrid {
+            width: 5,
+            height: 5,
+            tiles,
+        });
         world.insert_resource(OccupiedTiles::default());
         world.insert_resource(BuildingMap::default());
 
