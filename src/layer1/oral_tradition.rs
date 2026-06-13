@@ -4,16 +4,11 @@
 //! Stories evolve over time, gaining mutations and providing buffs to listeners.
 
 use crate::layer1::chronicle::{Chronicle, EventImportance};
-#[cfg(feature = "nova")]
 use crate::layer1::needs::Needs;
-#[cfg(feature = "nova")]
 use crate::layer1::social::Tavern;
-#[cfg(feature = "nova")]
 use crate::shared::log::MessageLog;
 use bevy_ecs::prelude::*;
-#[cfg(feature = "nova")]
 use rand::seq::SliceRandom;
-#[cfg(feature = "nova")]
 use rand::Rng;
 
 /// A legend that has evolved from a historical event within the [`OralTradition`].
@@ -241,14 +236,8 @@ impl OralTradition {
 /// schedule.add_systems(collect_chronicles_system);
 /// schedule.run(&mut world);
 /// ```
-#[cfg(feature = "nova")]
 pub fn collect_chronicles_system(mut tradition: ResMut<OralTradition>, chronicle: Res<Chronicle>) {
     tradition.process_chronicles(&chronicle);
-}
-
-#[cfg(not(feature = "nova"))]
-pub fn collect_chronicles_system() {
-    bevy::log::warn_once!("The `nova` feature is not enabled! `collect_chronicles_system` will do nothing. Please add `features = [\"nova\"]` to your Cargo.toml.");
 }
 
 /// Facilitates the telling of tales within `Tavern`s.
@@ -276,7 +265,6 @@ pub fn collect_chronicles_system() {
 /// schedule.add_systems(storytelling_system);
 /// schedule.run(&mut world);
 /// ```
-#[cfg(feature = "nova")]
 pub fn storytelling_system(
     mut tradition: ResMut<OralTradition>,
     mut tavern_query: Query<&Tavern>,
@@ -328,12 +316,6 @@ pub fn storytelling_system(
     }
 }
 
-#[cfg(not(feature = "nova"))]
-pub fn storytelling_system() {
-    bevy::log::warn_once!("The `nova` feature is not enabled! `storytelling_system` will do nothing. Please add `features = [\"nova\"]` to your Cargo.toml.");
-}
-
-#[cfg(feature = "nova")]
 fn mutate_story(story: &mut Story, rng: &mut impl Rng) {
     let suffixes = [
         " It is known.",
@@ -390,13 +372,10 @@ mod tests {
     #[allow(unused_imports)]
     use crate::layer1::core::chronicle::{Chronicle, EventImportance};
 
-    #[cfg(feature = "nova")]
     use crate::layer1::needs::Needs;
-    #[cfg(feature = "nova")]
     use crate::layer1::social::Tavern;
 
     #[test]
-    #[cfg(feature = "nova")]
     fn test_collect_chronicles() {
         let mut world = World::new();
         world.insert_resource(OralTradition::default());
@@ -414,7 +393,6 @@ mod tests {
     }
 
     #[test]
-    #[cfg(feature = "nova")]
     fn test_collect_chronicles_genre_detection() {
         let mut world = World::new();
         world.insert_resource(OralTradition::default());
@@ -431,7 +409,6 @@ mod tests {
     }
 
     #[test]
-    #[cfg(feature = "nova")]
     fn test_storytelling_buffs() {
         use crate::shared::log::MessageLog;
         let mut world = World::new();
@@ -469,7 +446,6 @@ mod tests {
     }
 
     #[test]
-    #[cfg(feature = "nova")]
     fn test_mutation() {
         let mut rng = rand::thread_rng();
         let mut story = Story {
