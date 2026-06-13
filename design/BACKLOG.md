@@ -818,3 +818,4 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1284` Sartorial Rebellion — `specs/1284-sartorial-rebellion.md`
 - [ ] `1295` Corporate Rebranding — `specs/1295-corporate-rebranding.md`
 - [ ] `1301` Edible Architecture — `specs/1301-edible-architecture.md`
+- [ ] `1304` The Lost Treaty — `specs/1304-the-lost-treaty.md`
