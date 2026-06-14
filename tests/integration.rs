@@ -552,11 +552,11 @@ mod galactic_games_bridge;
 #[path = "integration/invasive_xeno_aesthetics_bridge.rs"]
 mod invasive_xeno_aesthetics_bridge;
 
+#[path = "integration/architecture_of_regret.rs"]
+mod architecture_of_regret;
 #[path = "integration/bureaucracy_of_scarcity_bridge.rs"]
 mod bureaucracy_of_scarcity_bridge;
 #[path = "integration/generational_hoarders_bridge.rs"]
 mod generational_hoarders_bridge;
 #[path = "integration/symbiotic_shipbreaker_bridge.rs"]
 mod symbiotic_shipbreaker_bridge;
-#[path = "integration/architecture_of_regret.rs"]
-mod architecture_of_regret;

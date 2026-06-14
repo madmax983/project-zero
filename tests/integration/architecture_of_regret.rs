@@ -1,13 +1,13 @@
+use bevy_app::{App, Update};
+use bevy_ecs::prelude::*;
 use scale::layer1::architecture::building::Building;
 use scale::layer1::architecture::ruins::Ruin;
+use scale::layer1::core::integration::architecture_of_regret_bridge_system;
 use scale::layer1::map::GridPosition;
 use scale::layer1::social::unrest::Unrest;
 use scale::layer3::guilt::{
     apply_guilt_unrest_system, process_guilt_generation_system, GuiltResource, PsychicResonance,
 };
-use scale::layer1::core::integration::architecture_of_regret_bridge_system;
-use bevy_app::{App, Update};
-use bevy_ecs::prelude::*;
 
 #[test]
 fn test_architecture_of_regret_seam() {
@@ -48,10 +48,9 @@ fn test_architecture_of_regret_seam() {
         .id();
 
     app.world_mut().insert_resource(Unrest {
-            level: 0.0,
-            modifiers: vec![],
-        })
-        ;
+        level: 0.0,
+        modifiers: vec![],
+    });
 
     // Act: update
     app.update();

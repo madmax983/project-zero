@@ -47,8 +47,8 @@ pub fn geothermal_boost_system(
     )>,
     vents: Query<&GridPosition, With<GeothermalVent>>,
 ) {
-    // Collect vent positions
-    let vent_positions: std::collections::HashSet<_> = vents.iter().map(|p| (p.x, p.y)).collect();
+    // ⚡ Bolt Optimization: Use bevy::utils::HashSet (AHash) instead of std::collections::HashSet to eliminate SipHash overhead on integer keys.
+    let vent_positions: bevy::utils::HashSet<_> = vents.iter().map(|p| (p.x, p.y)).collect();
 
     for (entity, mut power_source, pos, boosted) in active_buildings.iter_mut() {
         let is_on_vent = vent_positions.contains(&(pos.x, pos.y));
@@ -82,8 +82,8 @@ pub fn geothermal_decay_system(
         return;
     }
 
-    // Collect vent positions
-    let vent_positions: std::collections::HashSet<_> = vents.iter().map(|p| (p.x, p.y)).collect();
+    // ⚡ Bolt Optimization: Use bevy::utils::HashSet (AHash) instead of std::collections::HashSet to eliminate SipHash overhead on integer keys.
+    let vent_positions: bevy::utils::HashSet<_> = vents.iter().map(|p| (p.x, p.y)).collect();
 
     for (entity, mut structure, pos, power_source) in buildings.iter_mut() {
         if vent_positions.contains(&(pos.x, pos.y)) {

@@ -1,6 +1,6 @@
-use bevy::prelude::*;
 use crate::layer1::economy::resources::{ColonyResources, ResourceType};
 use crate::layer1::void_weed::{MerchantArrivalEvent, MerchantType};
+use bevy::prelude::*;
 
 #[derive(Event, Debug, Clone)]
 pub struct BlindAuctionTriggeredEvent;
@@ -90,7 +90,10 @@ mod tests {
     #[test]
     fn test_bidding_subtracts_resources() {
         let mut app = bevy_app::App::new();
-        let res = ColonyResources { stone: 1000.0, ..Default::default() };
+        let res = ColonyResources {
+            stone: 1000.0,
+            ..Default::default()
+        };
         app.insert_resource(res);
         app.add_event::<PlaceBidEvent>();
         app.add_systems(bevy_app::Update, handle_blind_auction_bids);

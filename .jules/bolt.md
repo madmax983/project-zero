@@ -13,3 +13,7 @@
 **Optimizing HashMap for Integer Keys**
 **Learning:** Using `std::collections::HashMap` with integer keys (like `(i32, i32)`) introduces significant overhead due to its default SipHash algorithm.
 **Action:** Always prefer `bevy::utils::HashMap` (which uses the faster AHash algorithm) for non-cryptographic use cases, such as spatial maps or caches using integer coordinates, to improve performance. Ensure to include a comment with `/// ⚡ Bolt Optimization:` to document the change.
+
+**Optimizing HashSet for Integer Keys**
+**Learning:** Using `std::collections::HashSet` with integer keys (like `(i32, i32)`) introduces significant overhead due to its default SipHash algorithm.
+**Action:** Always prefer `bevy::utils::HashSet` (which uses the faster AHash algorithm) for non-cryptographic use cases, such as spatial maps or caches using integer coordinates, to improve performance. Ensure to include a comment with `/// ⚡ Bolt Optimization:` to document the change.
