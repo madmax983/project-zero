@@ -2523,6 +2523,32 @@ pub fn trigger_ruin_machinery_system(
 }
 
 /// Applies psychological stress to residents of active AncientRuins.
+use crate::layer1::architecture::building::Building;
+use crate::layer1::architecture::ruins::Ruin;
+use crate::layer3::guilt::PsychicResonance;
+
+/// Bridges the gap between Ruins with PsychicResonance and newly constructed Buildings.
+/// When a Building is placed on a tile that has a Ruin with PsychicResonance,
+/// the building absorbs the resonance.
+#[allow(clippy::type_complexity)]
+pub fn architecture_of_regret_bridge_system(
+    mut commands: Commands,
+    buildings: Query<(Entity, &GridPosition), (With<Building>, Without<PsychicResonance>)>,
+    ruins: Query<(Entity, &GridPosition, &PsychicResonance), With<Ruin>>,
+) {
+    for (b_entity, b_pos) in buildings.iter() {
+        for (r_entity, r_pos, resonance) in ruins.iter() {
+            if b_pos == r_pos {
+                commands.entity(b_entity).insert(PsychicResonance {
+                    intensity: resonance.intensity,
+                });
+                commands.entity(r_entity).remove::<PsychicResonance>();
+                // Ruin may be despawned or kept, but its resonance is gone.
+            }
+        }
+    }
+}
+
 pub fn apply_ruin_psychological_stress_system(
     ruins: bevy_ecs::prelude::Query<&AncientRuin>,
     housing_query: bevy_ecs::prelude::Query<(

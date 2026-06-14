@@ -558,3 +558,5 @@ mod bureaucracy_of_scarcity_bridge;
 mod generational_hoarders_bridge;
 #[path = "integration/symbiotic_shipbreaker_bridge.rs"]
 mod symbiotic_shipbreaker_bridge;
+#[path = "integration/architecture_of_regret.rs"]
+mod architecture_of_regret;

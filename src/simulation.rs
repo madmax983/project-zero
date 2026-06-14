@@ -41,6 +41,10 @@ pub fn build_simulation_schedule() -> Schedule {
     register_simulation_core_systems(&mut schedule);
     register_simulation_extended_systems(&mut schedule);
     schedule.add_systems((
+        crate::layer3::guilt::process_guilt_generation_system,
+        crate::layer3::guilt::apply_guilt_unrest_system,
+    ));
+    schedule.add_systems((
         crate::layer1::architecture::hostage_protocol::hostage_protocol_suppression_system,
         crate::layer1::architecture::hostage_protocol::hostage_protocol_malfunction_system,
         crate::layer1::architecture::hostage_protocol::defuse_countdown_system,
