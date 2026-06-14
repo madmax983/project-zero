@@ -27,6 +27,28 @@ pub struct EmpireStability {
     pub value: f32,
 }
 
+fn is_tile_office(
+    target_x: i32,
+    target_y: i32,
+    occupied: &OccupiedTiles,
+    building_map: &BuildingMap,
+    building_query: &Query<&crate::layer1::building::Building>,
+) -> bool {
+    if !occupied.0.contains(&(target_x, target_y)) {
+        return false;
+    }
+
+    let Some(&entity) = building_map.0.get(&(target_x, target_y)) else {
+        return false;
+    };
+
+    let Ok(building) = building_query.get(entity) else {
+        return false;
+    };
+
+    building.building_type == BuildingType::Office
+}
+
 #[allow(clippy::too_many_arguments)]
 pub fn expand_bureaucracy_nodes_system(
     time: Res<Time>,
@@ -58,21 +80,15 @@ pub fn expand_bureaucracy_nodes_system(
                     && target_x < terrain.width as i32
                     && target_y >= 0
                     && target_y < terrain.height as i32
+                    && !is_tile_office(
+                        target_x,
+                        target_y,
+                        &occupied,
+                        &building_map,
+                        &building_query,
+                    )
                 {
-                    // Check if it's already an office
-                    let mut is_office = false;
-                    if occupied.0.contains(&(target_x, target_y)) {
-                        if let Some(&entity) = building_map.0.get(&(target_x, target_y)) {
-                            if let Ok(building) = building_query.get(entity) {
-                                if building.building_type == BuildingType::Office {
-                                    is_office = true;
-                                }
-                            }
-                        }
-                    }
-                    if !is_office {
-                        valid_targets.push((target_x, target_y));
-                    }
+                    valid_targets.push((target_x, target_y));
                 }
             }
 
