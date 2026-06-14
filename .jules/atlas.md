@@ -38,3 +38,10 @@
 **[Title] Break Circular Dependency in Execution Module**
 **Tangle:** A circular dependency existed between `src/layer1/execution/general_work.rs` and `src/layer1/execution/mining.rs`. `mining.rs` imported `WORK_CRIT_CHANCE` and `WORK_CRIT_MULTIPLIER` from `general_work.rs`, while `general_work.rs` imported `handle_mining_work` and `handle_chopping_work` from `mining.rs`.
 **Blueprint:** Extracted `WORK_CRIT_CHANCE` and `WORK_CRIT_MULTIPLIER` into a new dedicated constants module at `src/layer1/execution/constants.rs`. Both `general_work.rs` and `mining.rs` now import the constants from this new module, breaking the cyclic reference.
+**[Title] Decouple UI from Core Simulation Setup
+**Tangle:** The core simulation setup () depended directly on the UI rendering layer to inject UI state resources (like `MenuState`, `ShellConfig`, and `TechUiState`), creating a circular dependency cycle and structural leak between the logic boundary and the render boundary.
+**Blueprint:** Extracted UI state initialization into `src/ui/mod.rs::setup_ui_resources` and moved the `generate_world_history` call to the app entry points (`main.rs` and `wasm_app.rs`). Tests were updated to invoke the UI setup helper when verifying UI logic.
+
+**[Title] Decouple UI from Core Simulation Setup**
+**Tangle:** The core simulation setup (`src/setup.rs`) depended directly on the UI rendering layer to inject UI state resources (like `MenuState`, `ShellConfig`, and `TechUiState`), creating a circular dependency cycle and structural leak between the logic boundary and the render boundary.
+**Blueprint:** Extracted UI state initialization into `src/ui/mod.rs::setup_ui_resources` and moved the `generate_world_history` call to the app entry points (`main.rs` and `wasm_app.rs`). Tests were updated to invoke the UI setup helper when verifying UI logic.

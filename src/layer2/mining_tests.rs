@@ -1,12 +1,12 @@
 #[cfg(test)]
 mod tests {
     use crate::layer1::resources::ResourceType;
+    use crate::layer2::dead_protocols::ViolationEvent;
     use crate::layer2::fleet::{Fleet, FleetOrder, InOrbit};
     use crate::layer2::mining::{
         fleet_mine_order_system, mining_system, FleetCargo, FleetMining, MiningTarget,
     };
     use bevy_ecs::prelude::*;
-    use crate::layer2::dead_protocols::ViolationEvent;
 
     fn setup_world() -> World {
         let mut world = World::new();
