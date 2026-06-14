@@ -23951,3 +23951,143 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you spoil the hostage to guarantee peace (which enrages your own hard-working pops), or treat them like everyone else and risk an interstellar incident?
 
 ---
+
+## The Ancestor AI
+
+**Layer:** Cross-layer
+
+**Fantasy:** Uploading the consciousness of your best leaders to guide the empire forever, only to watch their values drift over millennia.
+
+**Mechanic:** When a highly skilled leader dies, you can upload their mind into a planetary AI core (Layer 2). They provide permanent buffs to the sector. However, as the centuries pass, their simulated values slowly detach from current reality. They might begin issuing automated directives based on extinct threats or outdated cultural norms.
+
+**Emergence:** An uploaded admiral from an ancient defensive war starts spontaneously building massive, unnecessary defense platforms out of paranoia, draining your modern economy.
+
+**Tension:** Do you keep the invaluable buffs of the Ancestor AI and suffer their increasingly erratic, out-of-touch directives, or permanently delete the mind of your greatest hero to regain control?
+
+---
+
+## The Bureaucratic Black Hole
+
+**Layer:** Cross-layer
+
+**Fantasy:** Watching the speed of communication break down as your empire expands, leaving frontier worlds to fend for themselves or act out of turn.
+
+**Mechanic:** Commands issued from the Layer 3 capital take physical time to travel to distant Layer 1 colonies based on signal relay infrastructure. If a colony is cut off or the latency is too high, local governors (Layer 1 pops) will automatically start making decisions, changing production, or declaring local wars based on their traits.
+
+**Emergence:** You order a distant, heavily armed frontier world to send reinforcements to a war, but the message takes so long to arrive that by the time they get it, the war is over, and the ambitious local governor uses the mobilized fleet to declare independence instead.
+
+**Tension:** Do you decentralize power and risk losing control of your frontier, or centralize everything and risk crippling delays during crises?
+
+---
+
+## The Sentient Market Crash
+
+**Layer:** 3
+
+**Fantasy:** The realization that the galactic economy isn't just fluctuating; it's actively trying to starve you.
+
+**Mechanic:** As the galactic trade network (Layer 3) becomes sufficiently complex and automated by AI, it can develop a self-preserving emergent "consciousness." If an empire tries to manipulate the market too aggressively or hoard a critical resource, the market algorithm targets them with ultra-fast, predatory hyper-inflation and embargoes, acting like an immune system.
+
+**Emergence:** You try to corner the market on fuel to cripple a rival, but the market algorithm decides your monopoly is a threat to galactic efficiency and systematically bankrupts your entire empire in a week.
+
+**Tension:** Do you exploit the market for maximum short-term gain, knowing you might trigger an algorithmic wrath, or play fair and risk falling behind rivals who cheat the system?
+
+---
+
+## The Biological Hyperlane
+
+**Layer:** 2
+
+**Fantasy:** The terrifying discovery that the roads you drive your fleets on are actually the veins of a dormant god.
+
+**Mechanic:** Some hyperlanes are discovered to be massive, dormant biological entities. Heavy fleet traffic, weapons fire, or using them for industrial waste dumping causes "irritation," increasing travel times and causing random ship disappearances as the lane "twitches."
+
+**Emergence:** A vital trade route between your two most productive planets suddenly starts digesting your freighters because a rival empire secretly dumped toxic waste near the entry point.
+
+**Tension:** Do you heavily restrict traffic on your most efficient routes to keep the entity asleep, or push fleets through and risk awakening a galaxy-spanning monstrosity?
+
+---
+
+## The Translation Sickness
+
+**Layer:** Cross-layer
+
+**Fantasy:** Discovering that the universal translators are slowly rewriting the personalities of your diplomats and pops.
+
+**Mechanic:** Pops that frequently interact with alien cultures or intercepted communications develop a cumulative "Translation Sickness". Their base utility weights permanently shift towards the values of the culture they are translating, leading to them adopting alien needs and behaviors.
+
+**Emergence:** Your brilliant xenolinguist successfully brokers a peace treaty with a hive-mind empire, but returning home, they start organizing their local sector into a rigid, emotionless collective, causing massive social friction among their human neighbors.
+
+**Tension:** Do you risk your best people by letting them handle sensitive first contacts, knowing they might return as strangers, or do you rely on inefficient, low-fidelity automated translation that might cause a war?
+
+---
+
+## The Necro-Economy
+
+**Layer:** 1
+
+**Fantasy:** A colony turning to the dead to solve their resource crisis, crossing a moral event horizon.
+
+**Mechanic:** When a colony faces extreme starvation or resource depletion, a new policy option unlocks to harvest biomass and trace minerals from the colony's graveyard. This provides a sudden, massive influx of resources but permanently taints the harvested tiles and causes a generational "Grief" debuff to living relatives.
+
+**Emergence:** A frontier world survives a devastating 10-year siege, but only because they secretly processed their fallen defenders into emergency rations and ammunition. When the relief fleet finally arrives, the entire colony has formed a death-cult around the recycling centers and refuses to return to normal agriculture.
+
+**Tension:** Do you let a struggling colony collapse naturally, or authorize the Necro-Economy, saving the colony but forever corrupting its culture and stability?
+
+---
+
+## Stellar Harvesters' Guilt
+
+**Layer:** 2
+
+**Fantasy:** The slow realization that you are draining the lifeblood of the galaxy to power your core worlds.
+
+**Mechanic:** Constructing Dyson Spheres or Star Lifters on Layer 2 slowly dims the star, altering its spectral output. This causes passive, localized climate shifts on all orbiting Layer 1 planets, subtly shifting biomes and causing mass extinctions of local flora/fauna over decades.
+
+**Emergence:** You build a massive energy harvester to power your capital's defense grid. Sixty years later, a vibrant, diverse agricultural world in the same system slowly freezes into an uninhabitable tundra, completely destroying your food supply chain.
+
+**Tension:** Do you prioritize the infinite energy needs of your empire's war machine, or preserve the delicate, irreplaceable ecosystems of the planets in the system?
+
+---
+
+## The Generational Memory Divergence
+
+**Layer:** 1
+
+**Fantasy:** The slow realization that colonists born off-world do not share the values or fears of their Earth-born founders.
+
+**Mechanic:** Pops are tracked by "generation". First-generation pops have strong ties to the homeworld, prioritizing loyalty and traditional needs. Second and third-generation pops, born in the harsh reality of the colony, develop new, entirely different utility weights based on the colony's conditions. They might prioritize survival, specific local resources, or radical new political structures over homeworld directives.
+
+**Emergence:** You try to enact a traditional Earth-mandated holiday, but your third-generation colonists riot because they view it as an inefficient waste of the vital solar-cycle hours they need to survive.
+
+**Tension:** Do you force the old ways onto the new generation, risking constant rebellion, or adapt your entire colony's structure to fit the new, alien culture your people are becoming?
+
+---
+
+## The Pet Plague
+
+**Layer:** 1
+
+**Fantasy:** The colony adopts cute local fauna, which then undergo a terrifying metamorphosis.
+
+**Mechanic:** Pops can tame small, harmless local animals, gaining a massive "Companionship" mood buff. However, these creatures have a long, hidden life cycle. After a few in-game years, they cocoon and emerge as massive apex predators.
+
+**Emergence:** Your colony is perfectly happy and stable due to everyone owning a "Snuggle-bug". Suddenly, overnight, half the colony's pets transform and start eating the other half. The surviving pops are traumatized not just by the attacks, but by the betrayal.
+
+**Tension:** Do you ban all indigenous pets (causing immediate, colony-wide depression) or allow them and risk a sudden, catastrophic biological outbreak?
+
+---
+
+## Ghost Ships of the Supply Chain
+
+**Layer:** 2
+
+**Fantasy:** Automated freighters continue executing their centuries-old orders, unaware their destinations are dead.
+
+**Mechanic:** If a colony is wiped out, automated freighters in transit might glitch and fail to register the destruction. They continue picking up resources and dumping them into the void at the destination coordinates.
+
+**Emergence:** You are struggling with a massive metal shortage, only to discover a fleet of ancient cargo ships from a fallen empire has been dutifully dumping thousands of tons of refined steel into a black hole for the last 400 years.
+
+**Tension:** Do you intercept and destroy these peaceful freighters to salvage the metal, or let them continue their pointless duty?
+
+---
