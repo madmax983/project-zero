@@ -83,7 +83,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `299` Temporal Smuggling — `specs/299-temporal-smuggling.md`
 - [ ] `301` The Memory Tithe — `specs/301-memory-tithe.md`
 - [ ] `302` The Solar Sail Migration — `specs/302-solar-sail-migration.md`
-- [ ] `303` The Chrono-Vault — `specs/303-chrono-vault.md`
 - [ ] `304` The Bio-Loom — `specs/304-bio-loom.md`
 - [ ] `305` The Empathy Broadcast — `specs/305-empathy-broadcast.md`
 - [ ] `306` The Debt Collector — `specs/306-debt-collector.md`

@@ -734,4 +734,5 @@ pub mod martyrs_engine;
 
 pub mod rogue_automation_cults;
 
+pub mod chrono_vault;
 pub mod symbiotic_habitation;

@@ -73,6 +73,7 @@ pub fn register(schedule: &mut Schedule) {
             update_event_buffer::<crate::layer1::spiteful_will::OverrideWillEvent>,
             update_event_buffer::<crate::layer1::memory_core::ImplantMemoryCoreEvent>,
             update_event_buffer::<crate::layer1::memory_core::HarvestMemoryCoreEvent>,
+            update_event_buffer::<crate::layer1::tech::chrono_vault::SealVaultEvent>,
             update_event_buffer::<crate::layer1::tech::machine_awakening::BotGlitchEvent>,
             update_event_buffer::<crate::layer2::trade::blockade::TradeShipArrivalEvent>,
             update_event_buffer::<crate::layer2::trade::routes::TradeRouteExecutedEvent>,

@@ -752,3 +752,5 @@
 - [x] `987` The Shattered World — `specs/987-the-shattered-world.md` — completed 2026-06-13
 - [x] `875` The Memorial Fleet — `specs/875-the-memorial-fleet.md` — completed 2026-02-01
 - [x] `1039` The Xeno-Pet Fad — `specs/1039-the-xeno-pet-fad.md` — completed 2026-06-13
+
+- [x] `303` The Chrono-Vault — `specs/303-chrono-vault.md` — completed 2026-06-13

@@ -53,6 +53,7 @@ pub fn build_simulation_schedule() -> Schedule {
 #[allow(clippy::too_many_lines)]
 fn init_simulation_resources(world: &mut World) {
     world.init_resource::<Events<crate::layer1::AcceptSponsorshipEvent>>();
+    world.init_resource::<bevy_ecs::event::Events<crate::layer1::tech::chrono_vault::SealVaultEvent>>();
     world
         .init_resource::<Events<crate::layer3::events::generational_debt::RepoFleetArrivalEvent>>();
     world.init_resource::<Events<crate::layer3::events::generational_debt::AttackRepoFleetEvent>>();
@@ -974,6 +975,7 @@ mod tests {
         world.init_resource::<bevy_ecs::event::Events<crate::layer1::petrification::PopPetrifiedEvent>>();
         world.init_resource::<Events<crate::layer1::predecessors::WorldTriggerEvent>>();
         world.init_resource::<Events<crate::layer1::AcceptSponsorshipEvent>>();
+        world.init_resource::<bevy_ecs::event::Events<crate::layer1::tech::chrono_vault::SealVaultEvent>>();
         world.init_resource::<Events<crate::layer1::psychology::memory_blackout::MemoryBlackoutEvent>>();
         world.init_resource::<Events<crate::layer1::RepairBuildingEvent>>();
         world.init_resource::<Events<crate::layer1::social::hedonic_treadmill::ConsumeItemEvent>>();
@@ -1047,6 +1049,7 @@ mod tests {
 
         // Initialize Detection Risk for test
         world.init_resource::<Events<crate::layer1::AcceptSponsorshipEvent>>();
+        world.init_resource::<bevy_ecs::event::Events<crate::layer1::tech::chrono_vault::SealVaultEvent>>();
         world.init_resource::<Events<crate::layer1::psychology::memory_blackout::MemoryBlackoutEvent>>();
         world.init_resource::<Events<crate::layer1::RepairBuildingEvent>>();
         world.init_resource::<Events<crate::layer1::social::hedonic_treadmill::ConsumeItemEvent>>();
