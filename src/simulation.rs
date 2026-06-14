@@ -43,6 +43,10 @@ pub fn build_simulation_schedule() -> Schedule {
     schedule.add_systems((
         crate::layer3::guilt::process_guilt_generation_system,
         crate::layer3::guilt::apply_guilt_unrest_system,
+        crate::layer1::swarm::check_for_derelict_arrival,
+        crate::layer1::swarm::increase_swarm_corruption,
+        crate::layer1::swarm::trigger_swarm_hostility,
+        crate::layer1::swarm::apply_swarm_damage,
     ));
     schedule.add_systems((
         crate::layer1::architecture::hostage_protocol::hostage_protocol_suppression_system,
@@ -597,7 +601,6 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
         crate::layer2::station::build_station_system,
         crate::layer2::station::process_drydock_construction_system,
         crate::layer2::dead_protocols::protocol_violation_system,
-
         crate::layer2::integration::orbital_drydock_fleet_bridge_system
             .after(crate::layer2::station::process_drydock_construction_system),
         crate::layer2::station::zero_g_fermentation_system
@@ -1269,6 +1272,9 @@ mod tests {
         world.init_resource::<Events<crate::layer2::orphan_fleet::OrphanFleetDefectionEvent>>();
 
         world.init_resource::<Events<crate::layer1::social::ghost_shift_strike::GhostShiftStartedEvent>>();
+        world.init_resource::<Events<crate::layer1::swarm::SwarmHostileEvent>>();
+        world.init_resource::<Events<crate::layer1::swarm::SwarmArrivalEvent>>();
+        world.init_resource::<Events<crate::layer1::swarm::DerelictArrivalEvent>>();
         world.init_resource::<Events<crate::layer3::diplomacy::succession::SuccessionEvent>>();
         world.init_resource::<Events<crate::layer1::pop_memories::FamineEvent>>();
         world
