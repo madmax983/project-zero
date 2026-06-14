@@ -138,7 +138,9 @@ pub fn mining_system(
                     violation_events.send(crate::layer2::dead_protocols::ViolationEvent {
                         target: mining.target,
                     });
-                    commands.entity(mining.target).remove::<crate::layer2::dead_protocols::DeadProtocol>();
+                    commands
+                        .entity(mining.target)
+                        .remove::<crate::layer2::dead_protocols::DeadProtocol>();
                 }
             }
 
