@@ -90,8 +90,7 @@ mod tests {
     #[test]
     fn test_bidding_subtracts_resources() {
         let mut app = bevy_app::App::new();
-        let mut res = ColonyResources::default();
-        res.stone = 1000.0;
+        let res = ColonyResources { stone: 1000.0, ..Default::default() };
         app.insert_resource(res);
         app.add_event::<PlaceBidEvent>();
         app.add_systems(bevy_app::Update, handle_blind_auction_bids);

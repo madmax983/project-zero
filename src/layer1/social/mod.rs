@@ -620,6 +620,7 @@ pub use rituals::*;
 
 /// Social mimicry system (Spec 128).
 pub mod social_mimicry;
+pub mod echoes;
 pub use social_mimicry::*;
 
 /// Civic Ideology system (Spec 197).
