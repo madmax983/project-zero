@@ -277,6 +277,8 @@ fn init_simulation_resources(world: &mut World) {
         .init_resource::<Events<crate::layer2::events_new::reverse_quarantine::RefugeeFleetEvent>>(
         );
     world.init_resource::<Events<crate::layer1::grafting::GraftBuildingEvent>>();
+    world.init_resource::<Events<crate::layer2::refugees::fleet_arrival::RefugeeArrivalEvent>>();
+
     world.init_resource::<Events<crate::layer3::fleets::ColonyFoundedEvent>>();
     world.init_resource::<crate::layer1::diplomacy::factions::rivals::TerritoryGrid>();
     world.init_resource::<Events<crate::layer3::planet::black_market_terraforming::RogueTerraformEvent>>();
@@ -428,8 +430,13 @@ fn register_simulation_core_systems(schedule: &mut Schedule) {
     // --- Register Core Layer 1 Systems ---
     register_layer1_systems(schedule);
     // Register orphaned swarm systems standalone here since we don't use App
-    schedule.add_systems((crate::layer1::orphaned_swarm::check_for_derelict_arrival, crate::layer1::orphaned_swarm::apply_swarm_efficiency_boost, crate::layer1::orphaned_swarm::increase_swarm_corruption, crate::layer1::orphaned_swarm::trigger_swarm_hostility, crate::layer1::orphaned_swarm::apply_swarm_damage));
-
+    schedule.add_systems((
+        crate::layer1::orphaned_swarm::check_for_derelict_arrival,
+        crate::layer1::orphaned_swarm::apply_swarm_efficiency_boost,
+        crate::layer1::orphaned_swarm::increase_swarm_corruption,
+        crate::layer1::orphaned_swarm::trigger_swarm_hostility,
+        crate::layer1::orphaned_swarm::apply_swarm_damage,
+    ));
 
     // Black Market Terraforming
 
@@ -661,6 +668,7 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
             .before(crate::layer2::trade::escape_velocity::process_launch_system),
         crate::layer2::integration::celestial_cemeteries_trade_bridge_system
             .before(crate::layer2::trade::escape_velocity::process_launch_system),
+        crate::layer2::integration::refugee_arrival_bridge_system,
         crate::layer1::culture::celestial_cemeteries::process_corpses_system,
         crate::layer1::culture::celestial_cemeteries::calculate_launch_risk_system,
         crate::layer1::environment::thermal_camouflage::update_thermal_signatures,
@@ -1103,6 +1111,9 @@ mod tests {
         world.init_resource::<Events<crate::layer1::ransom_broker::PopLostToPiratesEvent>>();
         world.init_resource::<Events<crate::layer3::silence::HostileSpawnEvent>>();
         world.init_resource::<Events<crate::layer1::grafting::GraftBuildingEvent>>();
+        world
+            .init_resource::<Events<crate::layer2::refugees::fleet_arrival::RefugeeArrivalEvent>>();
+
         world.init_resource::<Events<crate::layer1::administration::edicts::TogglePolicyEvent>>();
         world.init_resource::<Events<crate::layer1::administration::edicts::AccessDeniedEvent>>();
         world.init_resource::<Events<crate::layer1::administration::edicts::HackCentralHubEvent>>();
@@ -1189,8 +1200,12 @@ mod tests {
         world.init_resource::<Events<crate::layer1::tech::rogue_automation_cults::MachineCultFormedEvent>>();
         world.init_resource::<Events<crate::layer1::heirloom_tool::EquipHeirloomEvent>>();
         world.init_resource::<Events<crate::layer2::events_new::reverse_quarantine::RefugeeFleetEvent>>();
+
         world.init_resource::<Events<crate::layer1::predecessors::WorldTriggerEvent>>();
         world.init_resource::<Events<crate::layer1::grafting::GraftBuildingEvent>>();
+        world
+            .init_resource::<Events<crate::layer2::refugees::fleet_arrival::RefugeeArrivalEvent>>();
+
         world.init_resource::<Events<crate::layer3::fleets::ColonyFoundedEvent>>();
         world.init_resource::<crate::layer1::diplomacy::factions::rivals::TerritoryGrid>();
         world.init_resource::<Events<crate::layer3::planet::black_market_terraforming::RogueTerraformEvent>>();

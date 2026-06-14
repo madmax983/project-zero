@@ -562,3 +562,6 @@ mod edible_architecture;
 mod generational_hoarders_bridge;
 #[path = "integration/symbiotic_shipbreaker_bridge.rs"]
 mod symbiotic_shipbreaker_bridge;
+
+#[path = "integration/refugee_arrival_bridge.rs"]
+mod refugee_arrival_bridge;
