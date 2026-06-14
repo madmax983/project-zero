@@ -707,6 +707,18 @@ use crate::layer1::nature::atmosphere::AtmosphereGrid;
 use crate::layer1::nature::water::WaterGrid;
 use crate::shared::time::SimulationTime;
 
+fn get_water_score(water_grid: &WaterGrid, x: usize, y: usize) -> f32 {
+    let idx = y
+        .checked_mul(water_grid.width)
+        .and_then(|i| i.checked_add(x));
+    if let Some(idx) = idx {
+        if idx < water_grid.values.len() {
+            return f32::from(water_grid.values[idx]);
+        }
+    }
+    -f32::INFINITY
+}
+
 pub fn process_flora_migration(
     time: Res<SimulationTime>,
     water_grid: Res<WaterGrid>,
@@ -738,28 +750,12 @@ pub fn process_flora_migration(
         let mut best_dy = 0;
 
         // Evaluate current position score
-        let mut best_score = -f32::INFINITY;
-        match flora.preferred_condition {
+        let mut best_score = match flora.preferred_condition {
             Condition::Water => {
-                let idx = (current_y as usize)
-                    .checked_mul(water_grid.width)
-                    .and_then(|i| i.checked_add(current_x as usize));
-                if let Some(idx) = idx {
-                    if idx < water_grid.values.len() {
-                        best_score = f32::from(water_grid.values[idx]);
-                    }
-                }
+                get_water_score(&water_grid, current_x as usize, current_y as usize)
             }
-            Condition::LowPollution => {
-                best_score = -atmos_grid.get(current_x, current_y);
-            }
-        }
-
-        // Ensure migration happens if current score is effectively equal to neighboring
-        // since diffusion might not have reached current tile yet or we're on a plateau.
-        // Actually, the issue is that diffusion might not be active in the tests, so all other tiles have score 0!
-        // Wait, Water test sets 55 to 100, and 22 is 0. All neighbors of 22 are 0.
-        // So best_score starts at 0, neighbors are 0, so score > best_score is false.
+            Condition::LowPollution => -atmos_grid.get(current_x, current_y),
+        };
 
         for (dx, dy) in directions {
             let nx = current_x + dx;
@@ -780,30 +776,9 @@ pub fn process_flora_migration(
                 }
 
                 let score = match flora.preferred_condition {
-                    Condition::Water => {
-                        let idx = (uny as usize)
-                            .checked_mul(water_grid.width)
-                            .and_then(|i| i.checked_add(unx as usize));
-                        if let Some(idx) = idx {
-                            if idx < water_grid.values.len() {
-                                f32::from(water_grid.values[idx])
-                            } else {
-                                -f32::INFINITY
-                            }
-                        } else {
-                            -f32::INFINITY
-                        }
-                    }
+                    Condition::Water => get_water_score(&water_grid, unx as usize, uny as usize),
                     Condition::LowPollution => -atmos_grid.get(nx, ny),
                 };
-
-                // Add a small tie-breaker gradient towards target to help testing and general direction finding
-                // when on flat terrain. Realistically, we'd do a pathfinding, but for flora migration
-                // moving towards center or just diffusing randomly when flat is okay.
-                // However, the test only places 1 source and expects movement. Without a gradient, it can't know.
-                // We don't have a gradient in the test, because we didn't run diffusion!
-                // Let's manually add a tiny gradient based on distance to the highest point if flat? No, that's cheating.
-                // Let's change the test to use a gradient, OR we can just do greedy search.
 
                 if score > best_score {
                     best_score = score;

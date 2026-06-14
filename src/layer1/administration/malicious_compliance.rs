@@ -32,29 +32,33 @@ pub fn malicious_compliance_system(
     mut colony_resources: Option<ResMut<ColonyResources>>,
 ) {
     for (edict_entity, edict) in edicts.iter() {
-        if let Ok(ai) = sector_ais.get(edict.target_manager) {
-            if ai.is_active {
-                match &edict.edict_type {
-                    EdictType::MaximizeResource(ResourceType::Metal) => {
-                        for (building_entity, scrap_value) in buildings.iter() {
-                            if scrap_value.metal > 0.0 {
-                                commands.entity(building_entity).despawn();
-                                if let Some(ref mut resources) = colony_resources {
-                                    resources.add_metal(scrap_value.metal);
-                                }
-                            }
-                        }
-                    }
-                    EdictType::EradicatePlague => {
-                        if let Some(ref mut grid) = atmosphere_grid {
-                            grid.values.fill(0.0);
-                        }
-                    }
-                    _ => {}
-                }
-                commands.entity(edict_entity).despawn();
-            }
+        let Ok(ai) = sector_ais.get(edict.target_manager) else {
+            continue;
+        };
+
+        if !ai.is_active {
+            continue;
         }
+
+        match &edict.edict_type {
+            EdictType::MaximizeResource(ResourceType::Metal) => {
+                for (building_entity, scrap_value) in buildings.iter() {
+                    if scrap_value.metal > 0.0 {
+                        commands.entity(building_entity).despawn();
+                        if let Some(ref mut resources) = colony_resources {
+                            resources.add_metal(scrap_value.metal);
+                        }
+                    }
+                }
+            }
+            EdictType::EradicatePlague => {
+                if let Some(ref mut grid) = atmosphere_grid {
+                    grid.values.fill(0.0);
+                }
+            }
+            _ => {}
+        }
+        commands.entity(edict_entity).despawn();
     }
 }
 

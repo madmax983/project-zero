@@ -57,33 +57,35 @@ pub fn apply_foundation_soil_system(
     mut foundation_soil_grid: Option<ResMut<FoundationSoilGrid>>,
     query: Query<&GridPosition>,
 ) {
-    let landing = match landing_tiles {
-        Some(l) => l,
-        None => return,
-    };
+    let Some(landing) = landing_tiles else { return };
 
     for event in events.read() {
-        if event.reason == "Old Age" {
-            if let Ok(pos) = query.get(event.entity) {
-                if landing.coords.contains(&(pos.x, pos.y)) {
-                    if let Some(fg) = fertility_grid.as_mut() {
-                        let x = pos.x as usize;
-                        let y = pos.y as usize;
-                        if x < fg.width && y < fg.height {
-                            if let Some(idx) =
-                                y.checked_mul(fg.width).and_then(|v| v.checked_add(x))
-                            {
-                                if idx < fg.values.len() {
-                                    fg.values[idx] = (fg.values[idx] + 0.5).min(1.0);
-                                }
-                            }
-                        }
-                    }
-                    if let Some(fsg) = foundation_soil_grid.as_mut() {
-                        fsg.add(pos.x, pos.y, 100.0);
+        if event.reason != "Old Age" {
+            continue;
+        }
+
+        let Ok(pos) = query.get(event.entity) else {
+            continue;
+        };
+
+        if !landing.coords.contains(&(pos.x, pos.y)) {
+            continue;
+        }
+
+        if let Some(ref mut fg) = fertility_grid {
+            let x = pos.x as usize;
+            let y = pos.y as usize;
+            if x < fg.width && y < fg.height {
+                if let Some(idx) = y.checked_mul(fg.width).and_then(|v| v.checked_add(x)) {
+                    if idx < fg.values.len() {
+                        fg.values[idx] = (fg.values[idx] + 0.5).min(1.0);
                     }
                 }
             }
+        }
+
+        if let Some(ref mut fsg) = foundation_soil_grid {
+            fsg.add(pos.x, pos.y, 100.0);
         }
     }
 }
