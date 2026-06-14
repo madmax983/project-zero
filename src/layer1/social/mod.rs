@@ -673,3 +673,5 @@ pub use whisper_trade::*;
 
 pub mod biometric_drift;
 pub mod xeno_pet;
+pub mod generational_knowledge;
+pub use generational_knowledge::*;
