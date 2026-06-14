@@ -24,6 +24,7 @@ pub struct MerchantArrivalEvent {
 pub enum MerchantType {
     Smuggler,
     Legitimate,
+    Enigmatic,
 }
 
 #[derive(Event)]

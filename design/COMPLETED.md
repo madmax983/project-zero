@@ -26,6 +26,7 @@
 - [x] `626` The Cartographer's Curse — `specs/626-cartographers-curse.md` — completed 2026-03-24
 - [x] `1086` The Heirloom Tool — `specs/1086-the-heirloom-tool.md` — completed 2026-02-01
 # Completed Specs
+- [x] `1040` The Blind Auction — `specs/1040-blind-auction.md` — completed 2026-06-12
 - [x] `1296` The Subconscious Grid — `specs/1296-the-subconscious-grid.md` — completed 2026-10-31
 - [x] `INT-1101` Integration: Bureaucratic Ghost Towns -> Chronicle — completed 2026-05-30
 - [x] `1122` The Rust-Lung Epidemic — `specs/1122-rust-lung-epidemic.md` — completed 2024-05-24
