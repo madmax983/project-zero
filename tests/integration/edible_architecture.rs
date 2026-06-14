@@ -87,5 +87,8 @@ fn test_edible_architecture_chronicle_bridge() {
         }
     }
 
-    assert!(found, "Chronicle event for Edible Architecture should have been emitted");
+    assert!(
+        found,
+        "Chronicle event for Edible Architecture should have been emitted"
+    );
 }

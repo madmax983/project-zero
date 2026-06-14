@@ -695,6 +695,11 @@ fn cleanup_pop_work_state(world: &mut World, pop_entity: Entity) {
 }
 
 pub fn get_status_modifiers(world: &World, pop_entity: Entity) -> f32 {
+    let mut modifier = 1.0;
+
+    if let Some(efficiency) = world.get::<crate::layer1::economy::WorkEfficiency>(pop_entity) {
+        modifier *= efficiency.multiplier;
+    }
     let neural_buff = if world
         .get::<crate::layer1::tech::neural_leech::NeuralLinked>(pop_entity)
         .is_some()
@@ -749,7 +754,8 @@ pub fn get_status_modifiers(world: &World, pop_entity: Entity) -> f32 {
         1.0
     };
 
-    neural_buff
+    modifier
+        * neural_buff
         * infection_modifier
         * ghost_shift_modifier
         * hallucinating_modifier

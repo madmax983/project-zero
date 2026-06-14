@@ -189,6 +189,8 @@ pub mod apex_diet;
 /// Black market interactions.
 pub mod black_market;
 /// Hauling and transportation of resources.
+pub mod work_efficiency;
+pub use work_efficiency::*;
 pub mod hauling;
 /// Inventory management for pops and entities.
 pub mod inventory;

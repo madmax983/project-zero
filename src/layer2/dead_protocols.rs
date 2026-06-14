@@ -1,6 +1,6 @@
-use bevy_ecs::prelude::*;
 use crate::layer2::fleet::{Fleet, FleetFaction};
 use crate::shared::log::MessageLog;
+use bevy_ecs::prelude::*;
 
 #[derive(PartialEq)]
 pub enum ProtocolRule {
@@ -26,12 +26,12 @@ pub fn protocol_violation_system(
     for event in events.read() {
         if let Ok(protocol) = query.get(event.target) {
             if protocol.rule == ProtocolRule::NoMiningRedPlanets {
-                commands.spawn((
-                    Fleet,
-                    FleetFaction::AncientEnforcer,
-                ));
+                commands.spawn((Fleet, FleetFaction::AncientEnforcer));
                 if let Some(ref mut l) = log {
-                    l.add_colored("Dead protocol violated: ancient enforcers awakened!", ratatui::style::Color::Red);
+                    l.add_colored(
+                        "Dead protocol violated: ancient enforcers awakened!",
+                        ratatui::style::Color::Red,
+                    );
                 }
             }
         }
@@ -50,10 +50,16 @@ mod tests {
         app.add_systems(bevy_app::Update, protocol_violation_system);
 
         // Setup the protocol
-        let planet = app.world_mut().spawn(DeadProtocol { rule: ProtocolRule::NoMiningRedPlanets }).id();
+        let planet = app
+            .world_mut()
+            .spawn(DeadProtocol {
+                rule: ProtocolRule::NoMiningRedPlanets,
+            })
+            .id();
 
         // Trigger violation
-        app.world_mut().send_event(ViolationEvent { target: planet });
+        app.world_mut()
+            .send_event(ViolationEvent { target: planet });
 
         app.update();
 
@@ -61,11 +67,15 @@ mod tests {
         let mut enforcers_spawned = false;
         let mut query = app.world_mut().query::<&FleetFaction>();
         for faction in query.iter(app.world()) {
-            if *faction == FleetFaction::AncientEnforcer { // Or specific Enforcer faction
+            if *faction == FleetFaction::AncientEnforcer {
+                // Or specific Enforcer faction
                 enforcers_spawned = true;
             }
         }
 
-        assert!(enforcers_spawned, "Enforcers should spawn on protocol violation.");
+        assert!(
+            enforcers_spawned,
+            "Enforcers should spawn on protocol violation."
+        );
     }
 }

@@ -2851,8 +2851,19 @@ pub fn sync_scarcity_jobs_bridge_system(
     }
 }
 
-
 /// Bridges `Consumed` addition to `AddChronicleEvent` for Edible Architecture.
+pub fn orphaned_swarm_chronicle_bridge(
+    mut events: EventReader<crate::layer2::events_new::orphaned_swarm::SwarmHostileEvent>,
+    mut chronicle_events: EventWriter<crate::layer1::core::chronicle::AddChronicleEvent>,
+) {
+    for _ in events.read() {
+        chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
+            text: "The Orphaned Swarm's corruption has reached critical levels. They have turned hostile and are attacking the population to 'optimize' it!".to_string(),
+            importance: crate::layer1::core::chronicle::EventImportance::Major,
+        });
+    }
+}
+
 pub fn edible_architecture_chronicle_bridge(
     mut chronicle_events: EventWriter<crate::layer1::core::chronicle::AddChronicleEvent>,
     q_edible: Query<(), Added<crate::layer1::architecture::edible::Consumed>>,
