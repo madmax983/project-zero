@@ -618,9 +618,9 @@ pub use social_stratification::*;
 pub mod rituals;
 pub use rituals::*;
 
+pub mod echoes;
 /// Social mimicry system (Spec 128).
 pub mod social_mimicry;
-pub mod echoes;
 pub use social_mimicry::*;
 
 /// Civic Ideology system (Spec 197).

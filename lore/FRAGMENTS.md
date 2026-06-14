@@ -9522,3 +9522,40 @@ Descriptions of their stress and breakdowns.
 - exotic flora
 - stolen technology
 - unrationed supplies
+
+
+## The Xeno-Pet Fad Fragments (Spec 1039)
+
+## Fragment Type: [XENO_PET_NAME]
+- the Chitter-Mites
+- the Fluff-Crawlers
+- the Velvet-Stalkers
+- the Squeak-Swarms
+- the Pox-Pups
+
+## Echoes of the Past Fragments (Spec 285)
+
+## Fragment Type: [CULT_NAME]
+- The Cult of the Silent Choir
+- The Ghost-Watchers
+- The Listeners in the Dust
+- The Hologram Worshippers
+- The Echo-Bound
+
+## The Architecture of Regret Fragments (Spec 1256)
+
+## Fragment Type: [BUILDING_MATERIAL]
+- Mycelial Scaffolding
+- Nutri-Plasteel
+- Bio-Resin
+- Organic Algae-Crete
+- Synth-Bone
+
+## Phantom Commutes Fragments (Spec 1300)
+
+## Fragment Type: [PHANTOM_DESTINATION]
+- Sector 4 Transit Hub
+- The Old Hydroponics Bay
+- The Sunken Generator
+- The Lost Hab-Block
+- Ruined Plaza Sigma

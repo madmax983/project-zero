@@ -5527,3 +5527,36 @@
 **Replaces:** Hyperlane noise, FTL vibrations
 **Code reference:** `SubSpaceEcho`
 **Usage:** "The pops are addicted to the Sub-Space Echoes of passing freighters."
+
+
+## Xeno-pets (Spec 1039)
+**Replaces:** Morale boosting pets, invasive species
+**Usage:** "The Xeno-pets have breached the grain silos." / "Morale is high, but the Xeno-pets are hungry."
+
+## Echoes (Spec 285)
+**Replaces:** Ghosts, holograms, haunting
+**Usage:** "The researchers are listening to the Echoes." / "The Echoes grant knowledge, but take sanity."
+
+## Psychic Resonance / Guilt (Spec 1256)
+**Replaces:** Unrest from ruins, haunted buildings
+**Usage:** "The Guilt resonance of Sector 4 is unbearable." / "We weaponized the Guilt."
+
+## Edible Architecture (Spec 1303)
+**Replaces:** Eating buildings, cannibalizing structures
+**Usage:** "The walls are Edible Architecture now." / "We consumed the mycelial scaffolding to survive."
+
+## Tragedy Scrap / Memorial Fleet (Spec 875)
+**Replaces:** Vengeance ships, morale flagships, debris
+**Usage:** "The Tragedy Scrap was forged into a Memorial Ship." / "The Memorial Fleet casts a long shadow."
+
+## Biometric Drift (Spec 1294)
+**Replaces:** Aging, changing appearance, security lockout
+**Usage:** "Biometric Drift locked the veterans out of the armory." / "They need a biometric recalibration."
+
+## Phantom Commute (Spec 1300)
+**Replaces:** Broken pathfinding, walking into danger out of habit
+**Usage:** "The workers are stuck in a Phantom Commute." / "They walked into the plasma vent on a Phantom Commute."
+
+## Shattered World (Spec 987)
+**Replaces:** Floating islands, broken terrain, disconnected nodes
+**Usage:** "The Shattered World requires bridges." / "The island drifted into the void."

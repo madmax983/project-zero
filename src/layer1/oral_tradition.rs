@@ -411,7 +411,7 @@ mod tests {
     use super::*;
     #[allow(unused_imports)]
     #[cfg(feature = "nova")]
-use crate::layer1::core::chronicle::{Chronicle, EventImportance};
+    use crate::layer1::core::chronicle::{Chronicle, EventImportance};
 
     #[cfg(feature = "nova")]
     use crate::layer1::needs::Needs;
