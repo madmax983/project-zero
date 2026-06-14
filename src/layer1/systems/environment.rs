@@ -14,6 +14,7 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::core::integration::apply_ruin_environmental_buffs_system,
             crate::layer1::core::integration::trigger_ruin_machinery_system,
             crate::layer1::core::integration::apply_ruin_psychological_stress_system,
+            crate::layer1::core::integration::architecture_of_regret_bridge_system,
         )
             .chain()
             .in_set(Layer1SystemSet::Environment),

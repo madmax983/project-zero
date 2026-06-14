@@ -1449,3 +1449,9 @@
 - **Systems connected:** `check_for_hoarder_trait_system`, `hoarder_collection_system`, `apply_hoard_morale_buff_system`, `process_confiscation_system` -> `SimulationSchedule`
 - **Glue added:** Registered systems in `src/layer1/systems/observation.rs`. Registered `ConfiscateHoardEvent` in `src/setup.rs`.
 - **Tests:** `tests/integration/generational_hoarders_bridge.rs`
+
+### INT-1256: Architecture of Regret -> Guilt Economy
+- **Date:** 2026-10-31
+- **Systems connected:** `Ruin` & `Building` placement -> `architecture_of_regret_bridge_system` -> `PsychicResonance`. `process_guilt_generation_system` -> `GuiltResource` -> `apply_guilt_unrest_system` -> `Unrest`.
+- **Glue added:** Added `architecture_of_regret_bridge_system` in `src/layer1/core/integration.rs` to bridge building placement over resonance ruins. Initialized `GuiltResource` in `src/setup.rs` and added guilt systems to the simulation schedule in `src/simulation.rs`.
+- **Tests:** `tests/integration/architecture_of_regret.rs`
