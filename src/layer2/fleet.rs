@@ -11,6 +11,8 @@ pub enum FleetFaction {
     Pirate,
     /// Neutral merchant faction.
     Merchant,
+    /// Ancient Enforcer faction for dead protocols.
+    AncientEnforcer,
 }
 
 /// Component marking an entity as a Fleet.

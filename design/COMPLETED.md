@@ -755,3 +755,4 @@
 - [x] `1039` The Xeno-Pet Fad — `specs/1039-the-xeno-pet-fad.md` — completed 2026-06-13
 - [x] `INT-1256` Integration: Architecture of Regret -> Guilt Economy — completed 2026-10-31
 - [x] `285` Echoes of the Past — `specs/285-echoes-of-the-past.md` — completed 2024-06-14
+- [x] `1038` Dead Protocols — `specs/1038-dead-protocols.md` — completed 2024-06-15

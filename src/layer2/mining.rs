@@ -112,6 +112,8 @@ pub fn mining_system(
     mut commands: Commands,
     mut fleets: Query<(Entity, &mut FleetMining, &mut FleetCargo)>,
     mut targets: Query<&mut MiningTarget>,
+    mut violation_events: EventWriter<crate::layer2::dead_protocols::ViolationEvent>,
+    protocol_query: Query<&crate::layer2::dead_protocols::DeadProtocol>,
 ) {
     for (fleet_entity, mining, mut cargo) in &mut fleets {
         if let Ok(mut target) = targets.get_mut(mining.target) {
@@ -129,6 +131,16 @@ pub fn mining_system(
 
             // Deduct from target (only what was actually taken)
             target.amount -= actually_added;
+
+            if actually_added > 0.0 {
+                if let Ok(_protocol) = protocol_query.get(mining.target) {
+                    // Send event and then remove the DeadProtocol to prevent spamming
+                    violation_events.send(crate::layer2::dead_protocols::ViolationEvent {
+                        target: mining.target,
+                    });
+                    commands.entity(mining.target).remove::<crate::layer2::dead_protocols::DeadProtocol>();
+                }
+            }
 
             // Stop if full or depleted
             if cargo.current_load() >= cargo.capacity || target.amount <= 0.0 {

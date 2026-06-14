@@ -25,6 +25,7 @@ pub mod cascade;
 pub use cascade::*;
 pub mod derelict_stations;
 pub mod events;
+pub mod dead_protocols;
 pub mod events_new;
 pub mod fleet;
 pub mod generation;

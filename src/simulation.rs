@@ -587,6 +587,7 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
         update_event_buffer::<LaunchEvent>,
         update_event_buffer::<ShipDestroyedEvent>,
         update_event_buffer::<crate::layer2::orbital_necropolis::EntityDestroyedEvent>,
+        update_event_buffer::<crate::layer2::dead_protocols::ViolationEvent>,
     ));
     schedule.add_systems((update_event_buffer::<DetectionEvent>,));
     schedule.add_systems((
@@ -595,6 +596,8 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
             .after(crate::layer2::integration::predecessor_orbital_shield_bridge_system),
         crate::layer2::station::build_station_system,
         crate::layer2::station::process_drydock_construction_system,
+        crate::layer2::dead_protocols::protocol_violation_system,
+
         crate::layer2::integration::orbital_drydock_fleet_bridge_system
             .after(crate::layer2::station::process_drydock_construction_system),
         crate::layer2::station::zero_g_fermentation_system
@@ -943,6 +946,7 @@ mod tests {
     #[test]
     fn test_run_simulation_tick_increments() {
         let mut world = setup_world();
+        world.init_resource::<Events<crate::layer2::dead_protocols::ViolationEvent>>();
         world
             .init_resource::<crate::layer1::environment::bio_acoustic_miasma::MiasmaRecordedSecret>(
             );

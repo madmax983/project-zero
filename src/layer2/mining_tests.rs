@@ -6,10 +6,12 @@ mod tests {
         fleet_mine_order_system, mining_system, FleetCargo, FleetMining, MiningTarget,
     };
     use bevy_ecs::prelude::*;
+    use crate::layer2::dead_protocols::ViolationEvent;
 
     fn setup_world() -> World {
-        // Register components if needed
-        World::new()
+        let mut world = World::new();
+        world.init_resource::<Events<ViolationEvent>>();
+        world
     }
 
     #[test]
