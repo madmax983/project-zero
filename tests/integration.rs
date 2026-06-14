@@ -556,6 +556,8 @@ mod invasive_xeno_aesthetics_bridge;
 mod architecture_of_regret;
 #[path = "integration/bureaucracy_of_scarcity_bridge.rs"]
 mod bureaucracy_of_scarcity_bridge;
+#[path = "integration/edible_architecture.rs"]
+mod edible_architecture;
 #[path = "integration/generational_hoarders_bridge.rs"]
 mod generational_hoarders_bridge;
 #[path = "integration/symbiotic_shipbreaker_bridge.rs"]

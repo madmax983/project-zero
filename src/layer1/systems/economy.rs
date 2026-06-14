@@ -325,6 +325,7 @@ pub fn register(schedule: &mut Schedule) {
         (
             crate::layer1::shipbreaking_symbiotic::simulate_shipbreaker_salvage,
             crate::layer1::core::integration::symbiotic_salvage_chronicle_bridge,
+            crate::layer1::core::integration::edible_architecture_chronicle_bridge,
             crate::layer1::energy::gravity_siphon::process_singularity_energy_system,
             crate::layer1::energy::gravity_siphon::process_singularity_mass_accumulation_system,
             crate::layer1::energy::gravity_siphon::trigger_orbital_decay_system,
