@@ -86,8 +86,7 @@ For the **advanced simulation of legends** (Oral Tradition), see the [Oral Tradi
 
 > ⚠️ **REQUIRES FEATURE NOVA**
 >
-> **NOTE:** Do not attempt to run this snippet without enabling `features = ["nova"]` in your `Cargo.toml`.
-> If the `nova` feature is not enabled, `OralTradition`, `Story`, and `StoryGenre` will not be available in the prelude and your code will fail to compile with an `E0422` error.
+> **NOTE:** If the `nova` feature is not enabled, the code will compile using fallback stubs but will emit a runtime warning and not execute simulation logic.
 
 The "Nova" feature (Oral Tradition) builds upon the base narrative system to create living legends that evolve in taverns. It is located in `scale::layer1::oral_tradition`.
 

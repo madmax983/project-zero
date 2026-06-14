@@ -52,6 +52,7 @@ pub struct Story {
 }
 
 #[cfg(not(feature = "nova"))]
+/// Fallback struct for [`Story`] when `nova` is disabled.
 #[derive(Debug, Clone)]
 pub struct Story {
     pub text: String,
@@ -89,6 +90,7 @@ pub enum StoryGenre {
 }
 
 #[cfg(not(feature = "nova"))]
+/// Fallback enum for [`StoryGenre`] when `nova` is disabled.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum StoryGenre {
     Heroic,
@@ -269,6 +271,7 @@ pub fn collect_chronicles_system(mut tradition: ResMut<OralTradition>, chronicle
 }
 
 #[cfg(not(feature = "nova"))]
+/// Fallback stub for `collect_chronicles_system` when `nova` is disabled.
 pub fn collect_chronicles_system() {
     bevy::log::warn_once!("The `nova` feature is not enabled! `collect_chronicles_system` will do nothing. Please add `features = [\"nova\"]` to your Cargo.toml.");
 }
@@ -351,6 +354,7 @@ pub fn storytelling_system(
 }
 
 #[cfg(not(feature = "nova"))]
+/// Fallback stub for `storytelling_system` when `nova` is disabled.
 pub fn storytelling_system() {
     bevy::log::warn_once!("The `nova` feature is not enabled! `storytelling_system` will do nothing. Please add `features = [\"nova\"]` to your Cargo.toml.");
 }
