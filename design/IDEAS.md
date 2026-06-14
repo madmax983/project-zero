@@ -23910,3 +23910,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you force the old ways onto the new generation, risking constant rebellion, or adapt your entire colony's structure to fit the new, alien culture your people are becoming?
 
 ---
+## The Pet Plague
+
+**Layer:** 1
+
+**Fantasy:** The colony adopts cute local fauna, which then undergo a terrifying metamorphosis.
+
+**Mechanic:** Pops can tame small, harmless local animals, gaining a massive "Companionship" mood buff. However, these creatures have a long, hidden life cycle. After a few in-game years, they cocoon and emerge as massive apex predators.
+
+**Emergence:** Your colony is perfectly happy and stable due to everyone owning a "Snuggle-bug". Suddenly, overnight, half the colony's pets transform and start eating the other half. The surviving pops are traumatized not just by the attacks, but by the betrayal.
+
+**Tension:** Do you ban all indigenous pets (causing immediate, colony-wide depression) or allow them and risk a sudden, catastrophic biological outbreak?
+
+---
+
+## Ghost Ships of the Supply Chain
+
+**Layer:** 2
+
+**Fantasy:** Automated freighters continue executing their centuries-old orders, unaware their destinations are dead.
+
+**Mechanic:** If a colony is wiped out, automated freighters in transit might glitch and fail to register the destruction. They continue picking up resources and dumping them into the void at the destination coordinates.
+
+**Emergence:** You are struggling with a massive metal shortage, only to discover a fleet of ancient cargo ships from a fallen empire has been dutifully dumping thousands of tons of refined steel into a black hole for the last 400 years.
+
+**Tension:** Do you intercept and destroy these peaceful freighters to salvage the metal, or let them continue their pointless duty?
+
+---
+
+## The Diplomatic Hostage
+
+**Layer:** Cross-layer
+
+**Fantasy:** Fostering the child of a rival emperor to ensure peace, but having to actually raise them.
+
+**Mechanic:** A Layer 3 peace treaty requires exchanging a "Royal Ward" (a special Pop). This Pop lives on your Layer 1 colony. Their mood and treatment directly impact the Layer 3 diplomatic relationship with their home empire.
+
+**Emergence:** The rival empire's prince gets into a bar fight with a local miner and is injured. The rival empire immediately declares war. Alternatively, the prince falls in love with the colony, and when called back, refuses to leave, sparking a succession crisis.
+
+**Tension:** Do you spoil the hostage to guarantee peace (which enrages your own hard-working pops), or treat them like everyone else and risk an interstellar incident?
+
+---
