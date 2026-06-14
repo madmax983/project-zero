@@ -137,6 +137,9 @@ pub fn register(schedule: &mut Schedule) {
             update_event_buffer::<crate::layer3::intellectual_property_wars::TechDiscoveredEvent>,
             update_event_buffer::<crate::layer3::intellectual_property_wars::EspionageSuccessEvent>,
             update_event_buffer::<crate::layer1::social::hedonic_treadmill::ConsumeItemEvent>,
+            update_event_buffer::<crate::layer1::orphaned_swarm::DerelictArrivalEvent>,
+            update_event_buffer::<crate::layer1::orphaned_swarm::SwarmArrivalEvent>,
+            update_event_buffer::<crate::layer1::orphaned_swarm::SwarmHostileEvent>,
         )
             .in_set(Layer1SystemSet::EventCleanup),
     );
