@@ -756,3 +756,4 @@
 - [x] `INT-1256` Integration: Architecture of Regret -> Guilt Economy — completed 2026-10-31
 - [x] `285` Echoes of the Past — `specs/285-echoes-of-the-past.md` — completed 2024-06-14
 - [x] `1038` Dead Protocols — `specs/1038-dead-protocols.md` — completed 2024-06-15
+- [x] `INT-1301` Integration: Edible Architecture -> Chronicle & Assignment — completed 2026-10-31

@@ -1455,3 +1455,10 @@
 - **Systems connected:** `Ruin` & `Building` placement -> `architecture_of_regret_bridge_system` -> `PsychicResonance`. `process_guilt_generation_system` -> `GuiltResource` -> `apply_guilt_unrest_system` -> `Unrest`.
 - **Glue added:** Added `architecture_of_regret_bridge_system` in `src/layer1/core/integration.rs` to bridge building placement over resonance ruins. Initialized `GuiltResource` in `src/setup.rs` and added guilt systems to the simulation schedule in `src/simulation.rs`.
 - **Tests:** `tests/integration/architecture_of_regret.rs`
+
+### INT-1301: Edible Architecture -> Chronicle & Assignment
+- **Date:** 2026-10-31
+- **Systems connected:** `MaterialType::Wood` -> `EdibleMaterial` and `Consumed` -> `edible_architecture_chronicle_bridge` -> `AddChronicleEvent`
+- **Glue added:** Added logic in `insert_base_building_components` to assign `EdibleMaterial` with a `food_yield` of 25.0 to buildings made of `Wood`. Added `edible_architecture_chronicle_bridge` to `src/layer1/core/integration.rs` to generate Chronicle texts for Edible Architecture consumption.
+- **Schedule:** Registered in Layer 1 Consumption schedule (`src/layer1/systems/consumption.rs`), before `consume_building_system`.
+- **Tests:** `tests/integration/edible_architecture_bridge.rs`

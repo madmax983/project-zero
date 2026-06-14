@@ -48,6 +48,8 @@ pub fn register(schedule: &mut Schedule) {
                 .before(decay_needs_system),
             (
                 decay_needs_system.after(consume_food_system),
+                crate::layer1::core::integration::edible_architecture_chronicle_bridge
+                    .before(crate::layer1::architecture::edible::consume_building_system),
                 crate::layer1::architecture::edible::consume_building_system
                     .after(consume_food_system),
             ),

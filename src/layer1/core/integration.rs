@@ -2850,3 +2850,17 @@ pub fn sync_scarcity_jobs_bridge_system(
             });
     }
 }
+
+/// Bridges Edible Architecture consumption to the Chronicle (INT-1301)
+#[allow(clippy::type_complexity)]
+pub fn edible_architecture_chronicle_bridge(
+    q_edible_buildings: Query<(Entity, &crate::layer1::architecture::building::Building), (With<crate::layer1::architecture::edible::EdibleMaterial>, Added<crate::layer1::architecture::edible::Consumed>)>,
+    mut chronicle_events: EventWriter<AddChronicleEvent>,
+) {
+    for (_, building) in q_edible_buildings.iter() {
+        chronicle_events.send(AddChronicleEvent {
+            text: format!("In desperate hunger, the colonists devoured their own {} architecture.", building.building_type.label()),
+            importance: EventImportance::Major,
+        });
+    }
+}

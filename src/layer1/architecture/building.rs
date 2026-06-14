@@ -1252,6 +1252,11 @@ fn insert_base_building_components(
         entity.insert(Flammable::default());
     }
 
+    // Edible Architecture (INT-1301)
+    if material == MaterialType::Wood {
+        entity.insert(crate::layer1::architecture::edible::EdibleMaterial { food_yield: 25.0 });
+    }
+
     // Beauty
     let base_beauty = building_type.beauty_value();
     let final_beauty = base_beauty + material.beauty_modifier();

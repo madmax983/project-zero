@@ -560,3 +560,6 @@ mod bureaucracy_of_scarcity_bridge;
 mod generational_hoarders_bridge;
 #[path = "integration/symbiotic_shipbreaker_bridge.rs"]
 mod symbiotic_shipbreaker_bridge;
+
+#[path = "integration/edible_architecture_bridge.rs"]
+mod edible_architecture_bridge;
