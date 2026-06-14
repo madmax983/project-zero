@@ -815,3 +815,4 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1295` Corporate Rebranding — `specs/1295-corporate-rebranding.md`
 - [ ] `1301` Edible Architecture — `specs/1301-edible-architecture.md`
 - [ ] `1304` The Lost Treaty — `specs/1304-the-lost-treaty.md`
+- [ ] `1305` The Cassandra Syndrome — `specs/1305-the-cassandra-syndrome.md`

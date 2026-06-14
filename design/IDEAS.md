@@ -10737,7 +10737,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Cassandra Syndrome
+## [SPECCED] The Cassandra Syndrome
 
 **Layer:** 2 -> 1
 
@@ -18989,7 +18989,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Cassandra Syndrome
+## [SPECCED] The Cassandra Syndrome
 
 **Layer:** 1 -> 3
 
@@ -23772,7 +23772,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you risk your expensive military fleets by sending them into a lethal anomaly to clear out pirates, or do you let the black market operate with impunity right on your border?
 
 ---
-## The Cassandra Syndrome
+## [SPECCED] The Cassandra Syndrome
 
 **Layer:** 1
 
