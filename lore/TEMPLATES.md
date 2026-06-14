@@ -9156,3 +9156,69 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 **Slots:** [SYSTEM], [YEAR], [BLACK_MARKET_GOODS]
 - "[YEAR]: Inside the gravitational anomaly of [SYSTEM], a market thrives, trading in [BLACK_MARKET_GOODS]."
 - "The blockade means nothing. The pirates risk the crushing gravity of [SYSTEM] to smuggle [BLACK_MARKET_GOODS]. [YEAR]."
+
+
+## The Xeno-Pet Fad Templates (Spec 1039)
+**Generates:** Play event (chronicle during game)
+**Slots:** [COLONY], [YEAR], [XENO_PET_NAME], [STARVATION_DEATHS]
+**Patterns:**
+- "[YEAR]: The [XENO_PET_NAME] reproduction outpaced hydroponics. Morale peaked right before the famine hit. [STARVATION_DEATHS] dead."
+- "[COLONY] starved in [YEAR]. The silos were empty, but the colonists refused to eat the [XENO_PET_NAME] swarms."
+- "Year [YEAR]. [STARVATION_DEATHS] souls lost to hunger. In the quiet sectors, the [XENO_PET_NAME] chatter without end."
+
+## Echoes of the Past Templates (Spec 285)
+**Generates:** Play event (chronicle during game)
+**Slots:** [COLONY], [YEAR], [ECHO_SOURCE], [CULT_NAME]?
+**Patterns:**
+- "[YEAR]: The ruins of [ECHO_SOURCE] woke up. The researchers learned so much, but the ghosts broke them."
+- "At [COLONY], in [YEAR], they followed the [ECHO_SOURCE] echoes too deeply into the past."
+**If [CULT_NAME]:**
+- "The researchers at [COLONY] stopped digging. Now they simply listen. The [CULT_NAME] has formed around the echoes. [YEAR]."
+
+## The Architecture of Regret Templates (Spec 1256)
+**Generates:** Play event (chronicle during game)
+**Slots:** [COLONY], [YEAR], [RUIN_CIV], [GUILT_LEVEL]
+**Patterns:**
+- "[YEAR]: The foundations of [COLONY] bleed the memories of [RUIN_CIV]. The guilt is suffocating."
+- "The psychic resonance of the dead reached [GUILT_LEVEL] at [COLONY]. The buildings themselves are weeping. [YEAR]."
+- "[YEAR]. We built over [RUIN_CIV]. We thought they were gone. The unrest proves otherwise."
+
+## The Edible Architecture Templates (Spec 1303)
+**Generates:** Play event (chronicle during game)
+**Slots:** [COLONY], [YEAR], [BUILDING_MATERIAL]
+**Patterns:**
+- "[YEAR]: Famine broke the colony. We ate the [BUILDING_MATERIAL] bulkheads just to see another cycle."
+- "To survive [YEAR], [COLONY] cannibalized its own walls. The [BUILDING_MATERIAL] tasted of desperation."
+- "The structures were consumed to save the souls. [COLONY] shrinks to feed itself. [YEAR]."
+
+## The Memorial Fleet Templates (Spec 875)
+**Generates:** Play event (chronicle during game)
+**Slots:** [FLEET_NAME], [YEAR], [SHATTERED_LEGACY_PENALTY]
+**Patterns:**
+- "[YEAR]: The [FLEET_NAME] fell. Our combined grief, weaponized, broke in the void. A shattered legacy."
+- "The tragedy scrap forged [FLEET_NAME]. In [YEAR], it was lost. The empire wept as the morale aura shattered."
+- "[YEAR]: The flagships fell. The legacy shattered. Morale dropped by [SHATTERED_LEGACY_PENALTY]."
+
+## Biometric Drift Templates (Spec 1294)
+**Generates:** Play event (chronicle during game)
+**Slots:** [COLONY], [YEAR], [SECURITY_ZONE]
+**Patterns:**
+- "[YEAR]: Time scarred the colonists. The system denied them. [SECURITY_ZONE] locked them out."
+- "The machine only remembers who they were. In [YEAR], [COLONY] saw mass lockouts at [SECURITY_ZONE]."
+- "[YEAR]: Unrecalibrated biology met rigid security. The doors to [SECURITY_ZONE] remained shut."
+
+## Phantom Commutes Templates (Spec 1300)
+**Generates:** Play event (chronicle during game)
+**Slots:** [COLONY], [YEAR], [PHANTOM_DESTINATION], [HAZARD]
+**Patterns:**
+- "[YEAR]: The old road to [PHANTOM_DESTINATION] is gone, but the habits remain. They walked straight into the [HAZARD]."
+- "Habit overruled survival. In [YEAR], commuters at [COLONY] followed the phantom path into [HAZARD]."
+- "[YEAR]. They marched to the ruined [PHANTOM_DESTINATION] out of sheer muscle memory. The [HAZARD] claimed them."
+
+## The Shattered World Templates (Spec 987)
+**Generates:** Pre-history event (world gen) or Play event
+**Slots:** [PLANET_NAME], [YEAR], [ISLAND_NAME]
+**Patterns:**
+- "[YEAR]: The void gaps widen. [ISLAND_NAME] is severed from the main cluster of [PLANET_NAME]."
+- "The bridges fell in [YEAR]. [ISLAND_NAME] drifts alone in the shattered sky."
+- "[YEAR]: [PLANET_NAME] is broken. Travel between the floating islands of rock became a privilege."
