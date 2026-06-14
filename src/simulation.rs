@@ -280,6 +280,8 @@ fn init_simulation_resources(world: &mut World) {
     world.init_resource::<Events<crate::layer3::fleets::ColonyFoundedEvent>>();
     world.init_resource::<crate::layer1::diplomacy::factions::rivals::TerritoryGrid>();
     world.init_resource::<Events<crate::layer3::planet::black_market_terraforming::RogueTerraformEvent>>();
+        world.init_resource::<Events<crate::layer1::economy::black_market::SmugglerArrivalEvent>>();
+        world.init_resource::<Events<crate::layer1::economy::black_market::ShutdownDropNodeEvent>>();
     world.init_resource::<Events<crate::layer3::market::quantum_famine::MarketPanicEvent>>();
     world.init_resource::<Events<crate::layer3::market::quantum_famine::ExportDumpEvent>>();
     world.init_resource::<Events<crate::layer2::exploration::void_whispers::FleetReturnedEvent>>();
@@ -1105,6 +1107,8 @@ mod tests {
         world.init_resource::<crate::layer1::diplomacy::factions::rivals::TerritoryGrid>();
         world.init_resource::<Events<crate::layer1::temporal_ghost_towns::TemporalStutterEvent>>();
         world.init_resource::<Events<crate::layer3::planet::black_market_terraforming::RogueTerraformEvent>>();
+        world.init_resource::<Events<crate::layer1::economy::black_market::SmugglerArrivalEvent>>();
+        world.init_resource::<Events<crate::layer1::economy::black_market::ShutdownDropNodeEvent>>();
         world.init_resource::<Events<crate::layer3::market::quantum_famine::MarketPanicEvent>>();
         world.init_resource::<Events<crate::layer3::market::quantum_famine::ExportDumpEvent>>();
         if !world
@@ -1188,6 +1192,8 @@ mod tests {
         world.init_resource::<Events<crate::layer3::fleets::ColonyFoundedEvent>>();
         world.init_resource::<crate::layer1::diplomacy::factions::rivals::TerritoryGrid>();
         world.init_resource::<Events<crate::layer3::planet::black_market_terraforming::RogueTerraformEvent>>();
+        world.init_resource::<Events<crate::layer1::economy::black_market::SmugglerArrivalEvent>>();
+        world.init_resource::<Events<crate::layer1::economy::black_market::ShutdownDropNodeEvent>>();
         world.init_resource::<Events<crate::layer3::market::quantum_famine::MarketPanicEvent>>();
         world.init_resource::<Events<crate::layer3::market::quantum_famine::ExportDumpEvent>>();
         world

@@ -226,6 +226,11 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::integration::beacon_pirate_raid_bridge,
             crate::layer1::economy::smugglers_cove::spawn_smugglers_cove_system,
             crate::layer1::economy::smugglers_cove::process_smuggler_decay_system,
+            crate::layer1::economy::black_market::black_market_spawn_system,
+            crate::layer1::economy::black_market::smuggler_trade_system,
+            crate::layer1::economy::black_market::handle_smuggler_arrival,
+            crate::layer1::economy::black_market::pop_smuggling_system,
+            crate::layer1::economy::black_market::shutdown_drop_node_system,
         )
             .in_set(Layer1SystemSet::Economy),
     );

@@ -754,3 +754,4 @@
 - [x] `875` The Memorial Fleet — `specs/875-the-memorial-fleet.md` — completed 2026-02-01
 - [x] `1039` The Xeno-Pet Fad — `specs/1039-the-xeno-pet-fad.md` — completed 2026-06-13
 - [x] `INT-1256` Integration: Architecture of Regret -> Guilt Economy — completed 2026-10-31
+- [x] `1043` Black Market Infrastructure — `specs/1043-black-market-infrastructure.md` — completed 2024-06-13
