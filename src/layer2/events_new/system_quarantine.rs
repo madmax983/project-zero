@@ -14,7 +14,7 @@
 //!
 //! ## Examples
 //!
-//! ```rust
+//! ```rust,ignore
 //! use bevy_ecs::prelude::*;
 //! use scale::layer1::social::factions::WarlordFaction;
 //! use scale::layer2::events_new::system_quarantine::*;

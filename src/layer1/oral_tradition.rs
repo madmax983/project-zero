@@ -3,18 +3,12 @@
 //! Converts colony history (Chronicle) into living legends that are shared in taverns.
 //! Stories evolve over time, gaining mutations and providing buffs to listeners.
 
-#[cfg(feature = "nova")]
 use crate::layer1::core::chronicle::{Chronicle, EventImportance};
-#[cfg(feature = "nova")]
 use crate::layer1::needs::Needs;
-#[cfg(feature = "nova")]
 use crate::layer1::social::Tavern;
-#[cfg(feature = "nova")]
 use crate::shared::log::MessageLog;
 use bevy_ecs::prelude::*;
-#[cfg(feature = "nova")]
 use rand::seq::SliceRandom;
-#[cfg(feature = "nova")]
 use rand::Rng;
 
 /// A legend that has evolved from a historical event within the [`OralTradition`].
@@ -38,7 +32,6 @@ use rand::Rng;
 ///
 /// assert_eq!(legend.mutations, 0);
 /// ```
-#[cfg(feature = "nova")]
 #[derive(Debug, Clone)]
 pub struct Story {
     /// The current text of the story.
@@ -48,15 +41,6 @@ pub struct Story {
     /// How many times the story has mutated.
     pub mutations: u32,
     /// The type/genre of the story.
-    pub genre: StoryGenre,
-}
-
-#[cfg(not(feature = "nova"))]
-#[derive(Debug, Clone)]
-pub struct Story {
-    pub text: String,
-    pub historical_date: u64,
-    pub mutations: u32,
     pub genre: StoryGenre,
 }
 
@@ -75,7 +59,6 @@ pub struct Story {
 /// let genre = StoryGenre::Cautionary;
 /// assert_eq!(format!("{}", genre), "⚠️ Cautionary");
 /// ```
-#[cfg(feature = "nova")]
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum StoryGenre {
     /// Heroic tales boost leisure/morale.
@@ -85,15 +68,6 @@ pub enum StoryGenre {
     /// Warnings regarding safety/danger.
     Cautionary,
     /// Just interesting facts.
-    Trivial,
-}
-
-#[cfg(not(feature = "nova"))]
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
-pub enum StoryGenre {
-    Heroic,
-    Tragedy,
-    Cautionary,
     Trivial,
 }
 
@@ -129,7 +103,6 @@ pub struct OralTradition {
     pub last_processed_tick: u64,
 }
 
-#[cfg(feature = "nova")]
 impl OralTradition {
     /// Adds a [`Story`] to the tradition if a story from the same historical date
     /// does not already exist. If adding the story exceeds `MAX_STORIES`, the oldest
@@ -263,7 +236,6 @@ impl OralTradition {
 /// schedule.add_systems(collect_chronicles_system);
 /// schedule.run(&mut world);
 /// ```
-#[cfg(feature = "nova")]
 pub fn collect_chronicles_system(mut tradition: ResMut<OralTradition>, chronicle: Res<Chronicle>) {
     tradition.process_chronicles(&chronicle);
 }
@@ -298,7 +270,6 @@ pub fn collect_chronicles_system() {
 /// schedule.add_systems(storytelling_system);
 /// schedule.run(&mut world);
 /// ```
-#[cfg(feature = "nova")]
 pub fn storytelling_system(
     mut tradition: ResMut<OralTradition>,
     mut tavern_query: Query<&Tavern>,
@@ -355,7 +326,6 @@ pub fn storytelling_system() {
     bevy::log::warn_once!("The `nova` feature is not enabled! `storytelling_system` will do nothing. Please add `features = [\"nova\"]` to your Cargo.toml.");
 }
 
-#[cfg(feature = "nova")]
 fn mutate_story(story: &mut Story, rng: &mut impl Rng) {
     let suffixes = [
         " It is known.",
@@ -410,16 +380,12 @@ mod tests {
     #[allow(unused_imports)]
     use super::*;
     #[allow(unused_imports)]
-    #[cfg(feature = "nova")]
     use crate::layer1::core::chronicle::{Chronicle, EventImportance};
 
-    #[cfg(feature = "nova")]
     use crate::layer1::needs::Needs;
-    #[cfg(feature = "nova")]
     use crate::layer1::social::Tavern;
 
     #[test]
-    #[cfg(feature = "nova")]
     fn test_collect_chronicles() {
         let mut world = World::new();
         world.insert_resource(OralTradition::default());
@@ -437,7 +403,6 @@ mod tests {
     }
 
     #[test]
-    #[cfg(feature = "nova")]
     fn test_collect_chronicles_genre_detection() {
         let mut world = World::new();
         world.insert_resource(OralTradition::default());
@@ -454,7 +419,6 @@ mod tests {
     }
 
     #[test]
-    #[cfg(feature = "nova")]
     fn test_storytelling_buffs() {
         use crate::shared::log::MessageLog;
         let mut world = World::new();
@@ -492,7 +456,6 @@ mod tests {
     }
 
     #[test]
-    #[cfg(feature = "nova")]
     fn test_mutation() {
         let mut rng = rand::thread_rng();
         let mut story = Story {

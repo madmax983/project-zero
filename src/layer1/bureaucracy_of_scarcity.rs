@@ -61,7 +61,7 @@ pub struct GlobalRationingModifier {
 /// let colony = app.world_mut().spawn((
 ///     Colony,
 ///     ResourceStorage { food: 10, population_demand: 100 },
-///     JobBoard { available_jobs: vec![] }
+///     JobBoard { available_bureaucrat_jobs: 0 }
 /// )).id();
 ///
 /// app.update();
