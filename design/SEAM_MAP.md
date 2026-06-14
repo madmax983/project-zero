@@ -1461,3 +1461,10 @@
 - **Systems connected:** `BuildingRemovedEvent` -> `edible_architecture_chronicle_bridge` -> `AddChronicleEvent`
 - **Glue added:** Added `edible_architecture_chronicle_bridge` in `src/layer1/core/integration.rs` to process building consumption and generate Chronicle records.
 - **Tests:** Added `test_edible_architecture_chronicle_bridge` to `tests/integration/edible_architecture.rs`.
+
+### INT-1048: Sub-light Refugee Fleets -> Pop Spawning & Chronicle
+- **Date:** 2026-10-31
+- **Systems connected:** `RefugeeArrivalEvent` -> `refugee_arrival_bridge_system` -> `Pop` Spawning & `AddChronicleEvent`
+- **Glue added:** Added `refugee_arrival_bridge_system` in `src/layer2/integration.rs` to spawn new `Pop`s upon arrival and log the event to the Chronicle.
+- **Schedule:** Registered the system in `src/simulation.rs`.
+- **Tests:** Added `test_refugee_arrival_bridge_spawns_pops_and_chronicle` in `tests/integration/refugee_arrival_bridge.rs`.

@@ -751,6 +751,30 @@ pub fn signal_latency_fleet_bridge(
     }
 }
 
+/// Bridges the Sub-Light Refugee Fleet arrival (Spec 1048) to Pop Spawning & Chronicle.
+pub fn refugee_arrival_bridge_system(
+    mut commands: Commands,
+    mut events: EventReader<crate::layer2::refugees::fleet_arrival::RefugeeArrivalEvent>,
+    mut chronicle_events: EventWriter<crate::layer1::chronicle::AddChronicleEvent>,
+) {
+    let mut rng = rand::thread_rng();
+
+    for _event in events.read() {
+        // Spawn 3-5 pops
+        let count = rng.gen_range(3..=5);
+        for _ in 0..count {
+            // Spawn at center (0, 0)
+            commands.spawn(crate::layer1::pop::PopBundle::random(0, 0, &mut rng));
+        }
+
+        // Add a Chronicle event
+        chronicle_events.send(crate::layer1::chronicle::AddChronicleEvent {
+            text: "A Sub-light Refugee Fleet arrived, settling amidst our colony with antiquated technology.".to_string(),
+            importance: crate::layer1::chronicle::EventImportance::Major,
+        });
+    }
+}
+
 pub fn celestial_cemeteries_trade_bridge_system(
     mut commands: Commands,
     query: Query<
