@@ -23951,3 +23951,74 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you spoil the hostage to guarantee peace (which enrages your own hard-working pops), or treat them like everyone else and risk an interstellar incident?
 
 ---
+## Pop relationships and social fabric
+
+**Layer:** 1
+
+**Fantasy:** Watching a colony develop social fabric—friendships, rivalries, families.
+
+**Mechanic:** Pops build relationship scores with pops they work alongside. High relationship = mood bonus. Low relationship = conflicts, productivity loss.
+
+**Emergence:** Players might notice two pops always fighting and separate them. A beloved elder pop dying might tank colony morale.
+
+**Tension:** Do you optimize job assignments for efficiency or social harmony?
+
+---
+
+## Founder effect for colony traits
+
+**Layer:** Cross-layer
+
+**Fantasy:** Your first colonists' traits echo through generations and across worlds.
+
+**Mechanic:** Colony ships carry pops with traits. New colonies inherit trait distributions from founders. A colony founded by aggressive pops breeds aggressive culture.
+
+**Emergence:** Your militaristic frontier worlds trace back to that one hotheaded miner you sent on the first ship. Your peaceful core worlds descend from your original scientists.
+
+**Tension:** Do you carefully curate colony ships or just send whoever's available?
+
+---
+
+## Three new Layer 2 ship concepts: The Colony Seed, The Mobile Factory, The Orbital Tether
+
+**Layer:** 2
+
+**Fantasy:** Diverse and specialized ship types changing how you interact with the system.
+
+**Mechanic:**
+- The Colony Seed: A massive ship that permanently lands to instantly form a Tier 2 colony, but costs a staggering amount of resources.
+- The Mobile Factory: A ship that orbits a gas giant and harvests/refines fuel passively, but cannot move while deployed and is highly vulnerable.
+- The Orbital Tether: A small craft that anchors to a resource-rich asteroid, dramatically increasing the local mining output of any colony on the nearest planet, but requires constant energy upkeep.
+
+**Emergence:** You might use a Mobile Factory as bait for pirates, or rely on a network of Orbital Tethers to prop up a sprawling, inefficient core world.
+
+**Tension:** Do you invest in specialized, vulnerable ships for massive situational gains, or stick to versatile but less efficient multi-role vessels?
+
+---
+## The Bureaucratic Cascade
+
+**Layer:** 1
+
+**Fantasy:** Watching a colony grind to a halt because everyone is waiting for someone else to sign a form.
+
+**Mechanic:** As the colony size increases, certain high-level tasks (like building Tier 3 structures or dispatching exploration teams) require "Approvals" from specific administrative pops. If an administrative pop is sleeping, unhappy, or busy, the task is delayed.
+
+**Emergence:** A vital defense platform isn't built in time for an attack because the Chief Engineer was busy resolving a minor social dispute in the tavern and couldn't stamp the work order.
+
+**Tension:** Do you maintain a large, unproductive administrative class to ensure smooth operations, or run a lean bureaucracy and risk catastrophic bottlenecks during crises?
+
+---
+
+## Orbital Debris Cults
+
+**Layer:** Cross-layer
+
+**Fantasy:** A fringe religion worshipping the junk that falls from space.
+
+**Mechanic:** When Layer 2 orbital structures are destroyed or decay, "Debris" occasionally falls onto Layer 1 colonies. Pops can salvage this for rare materials, but repeated exposure causes a "Superstition" meme to spread. Pops might begin hoarding debris, refusing to recycle it, and demanding the construction of "Scrap Shrines."
+
+**Emergence:** You try to clean up the orbit to prevent Kessler syndrome, but your colony riots because you are "starving the gods."
+
+**Tension:** Do you exploit the free materials raining from the sky at the cost of your colony's sanity, or enforce strict orbital cleanliness and lose a valuable resource stream?
+
+---
