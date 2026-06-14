@@ -23896,3 +23896,17 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you prioritize the infinite energy needs of your empire's war machine, or preserve the delicate, irreplaceable ecosystems of the planets in the system?
 
 ---
+
+## The Generational Memory Divergence
+
+**Layer:** 1
+
+**Fantasy:** The slow realization that colonists born off-world do not share the values or fears of their Earth-born founders.
+
+**Mechanic:** Pops are tracked by "generation". First-generation pops have strong ties to the homeworld, prioritizing loyalty and traditional needs. Second and third-generation pops, born in the harsh reality of the colony, develop new, entirely different utility weights based on the colony's conditions. They might prioritize survival, specific local resources, or radical new political structures over homeworld directives.
+
+**Emergence:** You try to enact a traditional Earth-mandated holiday, but your third-generation colonists riot because they view it as an inefficient waste of the vital solar-cycle hours they need to survive.
+
+**Tension:** Do you force the old ways onto the new generation, risking constant rebellion, or adapt your entire colony's structure to fit the new, alien culture your people are becoming?
+
+---
