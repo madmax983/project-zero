@@ -757,3 +757,4 @@
 - [x] `285` Echoes of the Past — `specs/285-echoes-of-the-past.md` — completed 2024-06-14
 - [x] `1038` Dead Protocols — `specs/1038-dead-protocols.md` — completed 2024-06-15
 - [x] `INT-1301` Integration: The Edible Architecture -> Chronicle — completed 2026-10-31
+- [x] `1041` The Orphaned Swarm — `specs/1041-the-orphaned-swarm.md` — completed 2026-06-14

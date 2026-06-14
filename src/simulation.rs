@@ -427,6 +427,9 @@ pub fn run_simulation_tick(world: &mut World) {
 fn register_simulation_core_systems(schedule: &mut Schedule) {
     // --- Register Core Layer 1 Systems ---
     register_layer1_systems(schedule);
+    // Register orphaned swarm systems standalone here since we don't use App
+    schedule.add_systems((crate::layer1::orphaned_swarm::check_for_derelict_arrival, crate::layer1::orphaned_swarm::apply_swarm_efficiency_boost, crate::layer1::orphaned_swarm::increase_swarm_corruption, crate::layer1::orphaned_swarm::trigger_swarm_hostility, crate::layer1::orphaned_swarm::apply_swarm_damage));
+
 
     // Black Market Terraforming
 

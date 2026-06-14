@@ -48,6 +48,9 @@ pub fn setup_world() -> World {
     world.init_resource::<bevy::prelude::Events<
         crate::layer1::economy::existential_audit::ExistentialAuditCompletedEvent,
     >>();
+    world.init_resource::<Events<crate::layer1::orphaned_swarm::DerelictArrivalEvent>>();
+    world.init_resource::<Events<crate::layer1::orphaned_swarm::SwarmArrivalEvent>>();
+    world.init_resource::<Events<crate::layer1::orphaned_swarm::SwarmHostileEvent>>();
     world.insert_resource(crate::layer3::diplomacy::system_sovereignty::ColonyStatus {
         is_sovereign: false,
         overlord_id: Some(1),
@@ -76,6 +79,9 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     world.init_resource::<bevy::prelude::Events<
         crate::layer1::economy::existential_audit::ExistentialAuditCompletedEvent,
     >>();
+    world.init_resource::<Events<crate::layer1::orphaned_swarm::DerelictArrivalEvent>>();
+    world.init_resource::<Events<crate::layer1::orphaned_swarm::SwarmArrivalEvent>>();
+    world.init_resource::<Events<crate::layer1::orphaned_swarm::SwarmHostileEvent>>();
     world.insert_resource(crate::layer3::diplomacy::system_sovereignty::ColonyStatus {
         is_sovereign: false,
         overlord_id: Some(1),
