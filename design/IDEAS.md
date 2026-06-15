@@ -24217,3 +24217,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you invest in specialized, vulnerable ships for high-risk/high-reward tasks, or build generic, safe multi-role vessels?
 
 ---
+
+## The Memetic Plague
+
+**Layer:** Cross-layer
+
+**Fantasy:** A dangerous, self-replicating idea sweeps through your civilization, altering pop behavior before you even realize it's there.
+
+**Mechanic:** Pops can contract a "Memetic Virus" (an idea) when communicating with infected pops or consuming infected media (e.g. from trade ships). It behaves like a disease but instead of killing them, it drastically shifts their Utility Weights (e.g., they suddenly despise working in mines, or they become violently anti-robot).
+
+**Emergence:** An entire mining sector grinds to a halt because a popular song convinced them that digging is morally wrong. You have to quarantine them, not to stop a sickness, but to stop a bad idea from reaching your core worlds.
+
+**Tension:** Do you maintain strict information control and censor communication to protect productivity, or allow free expression and risk your entire economy being derailed by a viral trend?
+
+---
+
+## The Biomass Tariff
+
+**Layer:** 2
+
+**Fantasy:** Interstellar trade becomes a vector for ecological contamination, forcing tough choices between wealth and planetary purity.
+
+**Mechanic:** Trade ships moving between Layer 2 nodes carry trace amounts of organic material from their origin. Worlds that trade heavily accumulate "Alien Biomass." At a certain threshold, this biomass manifests on the Layer 1 colony map as aggressive xenoflora that damages infrastructure and competes with local agriculture.
+
+**Emergence:** Your bustling trade hub planet becomes the wealthiest in the system, but the surface is constantly overrun by bizarre, invasive weeds brought in by freighters, forcing you to maintain a massive, expensive agricultural defense force.
+
+**Tension:** Do you open your ports to lucrative foreign trade and deal with the ecological nightmare, or enact strict, expensive bio-tariffs that throttle your economy but keep your planets pristine?
+
+---
+
+## Autocult of the Machine
+
+**Layer:** 1
+
+**Fantasy:** Your pops start treating your critical infrastructure not as tools, but as gods.
+
+**Mechanic:** If a specific building (like a massive central reactor or a life-support hub) operates for a long time without breaking down, pops with high Stress might start assigning "Reverence" to it. They will form a spontaneous cult around the building, gaining massive Mood bonuses while near it, but they will violently attack any mechanic or engineer attempting to upgrade, repair, or dismantle their "deity."
+
+**Emergence:** Your aging primary reactor is about to fail and needs a critical upgrade, but the local engineers are being chased away by a fanatic cult of pops who believe touching the reactor is a sin. The reactor blows up, taking the cult with it.
+
+**Tension:** Do you allow these cults to form for the free morale boost, knowing they will eventually prevent you from maintaining your own infrastructure, or do you violently suppress them before they take root?
+
+---
