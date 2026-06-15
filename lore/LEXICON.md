@@ -5560,3 +5560,8 @@
 ## Shattered World (Spec 987)
 **Replaces:** Floating islands, broken terrain, disconnected nodes
 **Usage:** "The Shattered World requires bridges." / "The island drifted into the void."
+
+## Architectural Superstition (Spec 1306)
+**Replaces:** Unlucky buildings, bad pathfinding, sub-optimal layout
+**Code reference:** `Cursed` component
+**Usage:** "The hospital is Cursed; no one will go near it." / "Architectural Superstition is ruining our efficiency."

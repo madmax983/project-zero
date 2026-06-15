@@ -9559,3 +9559,14 @@ Descriptions of their stress and breakdowns.
 - The Sunken Generator
 - The Lost Hab-Block
 - Ruined Plaza Sigma
+
+## Architectural Superstition Fragments (Spec 1306)
+
+## Fragment Type: [SUPERSTITION_FOCUS]
+- the shadows in the corridor
+- the cursed foundation
+- a string of unexplainable deaths
+- the persistent chill
+- phantom machinery noises
+- the sudden fires
+- bad luck
