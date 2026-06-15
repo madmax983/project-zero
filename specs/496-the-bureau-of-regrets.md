@@ -130,3 +130,4 @@ pub fn process_reparation_strikes_system(
 
 ## 8. Questions
 *Builder: add questions here if spec is unclear. Architect will address.*
+- **Architectural Contradictions:** `AtrocityScore` does not exist in `ChronicleSystem` (or anywhere). `Faction::Colony` does not exist in `FactionId` enum. `Morale` is not a standalone component (`needs.rs` uses calculated morale). `ReparationDemands` logic is unclear regarding how it relates to `FactionDemand` in the current `factions.rs` which has an `active_demand` field. `process_reparation_strikes_system` tests fail to account for `Utility AI Buffer` details. Moving to next task.

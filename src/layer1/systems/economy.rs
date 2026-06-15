@@ -151,6 +151,13 @@ pub fn register(schedule: &mut Schedule) {
     );
     schedule.add_systems(
         (
+            crate::layer1::economy::debt_of_the_dead::process_debt_of_the_dead_system,
+            crate::layer1::economy::debt_of_the_dead::apply_socialized_debt_system,
+        )
+            .in_set(Layer1SystemSet::Economy),
+    );
+    schedule.add_systems(
+        (
             crate::layer1::economy::remittances::process_remittances_system,
             healing_system,
             crate::layer1::integration::medical_debt_bridge_system.after(healing_system),

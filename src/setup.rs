@@ -219,6 +219,8 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     world.insert_resource(InputContextStack::default());
     world.insert_resource(MessageLog::default());
     world.insert_resource(Chronicle::default());
+    world.init_resource::<crate::layer1::economy::debt_of_the_dead::SocializedDebt>();
+    world.init_resource::<crate::layer1::economy::ColonyPrices>();
     world.init_resource::<bevy_ecs::event::Events<crate::layer1::pop_memories::FamineEvent>>();
     world
         .init_resource::<bevy_ecs::event::Events<crate::layer1::law::justice::CrimeCommittedEvent>>(
