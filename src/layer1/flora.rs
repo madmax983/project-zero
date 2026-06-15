@@ -20,27 +20,19 @@ pub struct Bioluminescent {
 }
 
 /// Pops close to SilentFlora can consume it to gain high nutrition and growth bonuses.
+/// ⚡ Bolt Optimization:
+/// Removed intermediate `Vec` allocation of `silent_flora_positions` which triggered every frame.
 pub fn consume_silent_flora_system(
     mut pop_query: Query<(&GridPosition, &mut crate::layer1::needs::Needs)>,
     flora_query: Query<(&Flora, &GridPosition)>,
 ) {
-    // Collect all silent flora positions
-    let mut silent_flora_positions = Vec::new();
-    for (flora, pos) in &flora_query {
-        if flora.flora_type == FloraType::SilentFlora {
-            silent_flora_positions.push(*pos);
-        }
-    }
-
-    if silent_flora_positions.is_empty() {
-        return;
-    }
-
     for (pop_pos, mut needs) in &mut pop_query {
         if needs.hunger < 0.8 {
             // Only eat if they need to
-            for flora_pos in &silent_flora_positions {
-                if pop_pos.distance_chebyshev(*flora_pos) <= 1 {
+            for (flora, flora_pos) in &flora_query {
+                if flora.flora_type == FloraType::SilentFlora
+                    && pop_pos.distance_chebyshev(*flora_pos) <= 1
+                {
                     needs.hunger = 1.0;
                     // Provide additional bonuses here, or just massive nutrition
                     break;
@@ -133,8 +125,9 @@ pub fn flora_spread_system(
 ) {
     let mut rng = rand::thread_rng();
 
+    // ⚡ Bolt Optimization: Uses `bevy::utils::HashSet` (AHash) instead of `std::collections::HashSet`
     // Cache occupied positions for speed
-    let occupied: std::collections::HashSet<(i32, i32)> =
+    let occupied: bevy::utils::HashSet<(i32, i32)> =
         other_flora.iter().map(|p| (p.x, p.y)).collect();
 
     for (mut flora, pos) in &mut query {

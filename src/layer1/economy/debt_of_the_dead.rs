@@ -13,10 +13,7 @@ pub struct SocializedDebt {
 pub fn process_debt_of_the_dead_system(
     mut events: EventReader<PopDied>,
     relationships: Query<&Relationships>,
-    mut wallets_and_morale: ParamSet<(
-        Query<&Wallet>,
-        Query<(&mut Wallet, &mut Morale)>,
-    )>,
+    mut wallets_and_morale: ParamSet<(Query<&Wallet>, Query<(&mut Wallet, &mut Morale)>)>,
     mut socialized_debt: ResMut<SocializedDebt>,
 ) {
     for event in events.read() {
@@ -41,7 +38,9 @@ pub fn process_debt_of_the_dead_system(
             }
 
             if let Some(relative_entity) = closest_relative {
-                if let Ok((mut rel_wallet, mut rel_morale)) = wallets_and_morale.p1().get_mut(relative_entity) {
+                if let Ok((mut rel_wallet, mut rel_morale)) =
+                    wallets_and_morale.p1().get_mut(relative_entity)
+                {
                     rel_wallet.credits -= debt_amount;
                     rel_morale.add_modifier(MoodModifier {
                         label: "Inherited Burden".to_string(),
@@ -88,11 +87,7 @@ mod tests {
         let mut world = setup_world();
 
         let relative = world
-            .spawn((
-                Pop,
-                Wallet { credits: 10.0 },
-                Morale::default(),
-            ))
+            .spawn((Pop, Wallet { credits: 10.0 }, Morale::default()))
             .id();
 
         let dead_pop = world
@@ -121,7 +116,10 @@ mod tests {
 
         let relative_morale = world.get::<Morale>(relative).unwrap();
         assert!(
-            relative_morale.modifiers.iter().any(|m| m.label == "Inherited Burden"),
+            relative_morale
+                .modifiers
+                .iter()
+                .any(|m| m.label == "Inherited Burden"),
             "Relative should receive Inherited Burden morale penalty"
         );
     }
@@ -166,6 +164,9 @@ mod tests {
 
         let prices = world.resource::<ColonyPrices>();
         assert!(prices.food_price > 1.0, "Food price should be increased");
-        assert!(prices.luxury_price > 5.0, "Luxury price should be increased");
+        assert!(
+            prices.luxury_price > 5.0,
+            "Luxury price should be increased"
+        );
     }
 }
