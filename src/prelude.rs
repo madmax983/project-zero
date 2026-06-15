@@ -22,6 +22,9 @@ pub use crate::shared::log::MessageLog;
 #[cfg(feature = "nova")]
 pub use crate::layer1::oral_tradition::{OralTradition, Story, StoryGenre};
 
+#[cfg(not(feature = "nova"))]
+pub use crate::layer1::oral_tradition_fallback::{OralTradition, Story, StoryGenre};
+
 #[cfg(feature = "nova")]
 pub use crate::layer1::oral_tradition::{collect_chronicles_system, storytelling_system};
 
@@ -29,3 +32,4 @@ pub use crate::layer1::oral_tradition::{collect_chronicles_system, storytelling_
 pub use crate::layer1::economy::resources::ColonyResources;
 pub use crate::layer1::nature::terrain::{TerrainGrid, TerrainType};
 pub use crate::layer1::tech::TechState;
+pub use crate::layer1;
