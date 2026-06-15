@@ -2876,7 +2876,6 @@ pub fn edible_architecture_chronicle_bridge(
     }
 }
 
-
 /// INT-1306: Architectural Superstition Bridge
 ///
 /// Listens to `PopDied`, `BuildingRemovedEvent`, and `PopDiedInAccidentEvent`.
@@ -2884,14 +2883,21 @@ pub fn edible_architecture_chronicle_bridge(
 #[allow(clippy::type_complexity)]
 pub fn track_negative_events_bridge_system(
     mut pop_died_events: bevy_ecs::event::EventReader<crate::layer1::pop::PopDied>,
-    mut building_removed_events: bevy_ecs::event::EventReader<crate::layer1::core::events::BuildingRemovedEvent>,
-    mut pop_died_accident_events: bevy_ecs::event::EventReader<crate::layer1::haunted_assembly_lines::PopDiedInAccidentEvent>,
+    mut building_removed_events: bevy_ecs::event::EventReader<
+        crate::layer1::core::events::BuildingRemovedEvent,
+    >,
+    mut pop_died_accident_events: bevy_ecs::event::EventReader<
+        crate::layer1::haunted_assembly_lines::PopDiedInAccidentEvent,
+    >,
     pops_query: bevy_ecs::system::Query<&crate::layer1::core::map::GridPosition>,
     pos_query: bevy_ecs::system::Query<&crate::layer1::core::map::GridPosition>,
-    mut building_query: bevy_ecs::system::Query<(
-        &crate::layer1::core::map::GridPosition,
-        &mut crate::layer1::architecture_superstition::NegativeEventHistory,
-    ), bevy_ecs::query::With<crate::layer1::architecture::Building>>,
+    mut building_query: bevy_ecs::system::Query<
+        (
+            &crate::layer1::core::map::GridPosition,
+            &mut crate::layer1::architecture_superstition::NegativeEventHistory,
+        ),
+        bevy_ecs::query::With<crate::layer1::architecture::Building>,
+    >,
     time: bevy_ecs::system::Res<crate::shared::time::SimulationTime>,
 ) {
     use crate::layer1::architecture_superstition::NegativeEvent;

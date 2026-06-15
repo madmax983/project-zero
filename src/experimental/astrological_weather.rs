@@ -9,10 +9,10 @@
 //!
 //! Pops with the `Rationalist` trait ignore these effects entirely.
 
-use bevy_ecs::prelude::*;
 use crate::layer1::culture::astrology::{AstrologicalBelief, Rationalist};
 use crate::layer1::nature::weather::{WeatherState, WeatherType};
 use crate::layer1::needs::Needs;
+use bevy_ecs::prelude::*;
 
 /// Adjusts the leisure of pops with `AstrologicalBelief` based on the weather.
 pub fn stargazing_leisure_system(
@@ -20,7 +20,7 @@ pub fn stargazing_leisure_system(
     mut query: Query<(&AstrologicalBelief, &mut Needs), Without<Rationalist>>,
 ) {
     let leisure_change = match weather.current_weather {
-        WeatherType::Clear => 0.005, // Small passive gain
+        WeatherType::Clear => 0.005,                     // Small passive gain
         WeatherType::Fog | WeatherType::Storm => -0.005, // Small passive penalty
         _ => 0.0,
     };
@@ -64,7 +64,10 @@ mod tests {
         world.run_system_once(stargazing_leisure_system).unwrap();
 
         let needs = world.get::<Needs>(entity).unwrap();
-        assert!(needs.leisure > 0.5, "Leisure should increase during clear weather");
+        assert!(
+            needs.leisure > 0.5,
+            "Leisure should increase during clear weather"
+        );
     }
 
     #[test]
@@ -146,6 +149,9 @@ mod tests {
         world.run_system_once(stargazing_leisure_system).unwrap();
 
         let needs = world.get::<Needs>(entity).unwrap();
-        assert_eq!(needs.leisure, 0.5, "Neutral weather should not affect leisure");
+        assert_eq!(
+            needs.leisure, 0.5,
+            "Neutral weather should not affect leisure"
+        );
     }
 }

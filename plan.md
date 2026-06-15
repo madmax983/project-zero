@@ -1,17 +1,30 @@
-1. We are dealing with `1306-architectural-superstition.md`. The systems `evaluate_architectural_superstition` and `apply_cursed_penalties` exist in `src/layer1/architecture_superstition.rs` and are registered in `src/layer1/systems/observation.rs`.
-2. The missing piece is bridging negative events (`PopDied`, `BuildingRemovedEvent`) to add `NegativeEvent` structs to nearby buildings' `NegativeEventHistory`.
-3. We will write `architectural_superstition_bridge.rs` (or add to `src/layer1/core/integration.rs`) a system `track_negative_events_bridge_system` that listens for `PopDied` and `BuildingRemovedEvent`, checks their locations, and pushes `NegativeEvent` to all `NegativeEventHistory` components on buildings within a certain radius (e.g. distance <= 5).
-4. `PopDied` events don't have position. Wait, does `PopDied` have position? No. So we must query `GridPosition` of the dead pop *before* it's despawned, or just use what we can. If the pop is already despawned, maybe we can't get the position. Let's see how other systems handle `PopDied` position.
-   - Some systems query `Query<&GridPosition, With<Pop>>` using `pop_died.entity`. If it's already despawned, we miss it.
-   - Wait, `BuildingRemovedEvent` has `position`. We can definitely use that!
-   - What about `PopDiedInAccidentEvent`? It's in `src/layer1/haunted_assembly_lines.rs` and has `building_entity`.
+1. **Explore Codebase and Specs**
+   - Read the Builder agent instructions.
+   - Explore `design/BACKLOG.md` to pick a spec.
+   - Decided to implement `283-acoustic-zones` as its RED phase tests and dependencies are straightforward or manageable as isolated components.
 
-Let's write a bridge system that listens to:
-  - `PopDied` (try to get position from `Query<&GridPosition>`)
-  - `BuildingRemovedEvent`
-  - `PopDiedInAccidentEvent` (has `building_entity`)
+2. **RED Phase (Tests)**
+   - Create `src/layer1/environment/acoustics.rs`.
+   - Add the tests described in the RED phase of the spec (`283-acoustic-zones.md`). The tests adapt slightly to use `PopAction` in `src/layer1/actions.rs` to determine if a pop is `Sleeping` (`ActionType::SatisfyRest`, etc.), since the `Sleeping` component doesn't actually exist in the current architecture.
+   - Check that `cargo test acoustics` passes without issues (although 0 tests ran initially due to module not being added).
 
-We will add this bridge system to `src/layer1/core/integration.rs` and register it in `src/simulation.rs` or `src/layer1/systems/observation.rs`.
+3. **GREEN Phase (Minimal Implementation)**
+   - Implement `NoiseEmitter`, `AcousticMap` along with its utility functions.
+   - Implement `propagate_noise_system` which uses a simplistic flood fill bounded by volume/radius to populate the `AcousticMap`.
+   - Implement `apply_noise_stress_system` which queries pops. It uses `StressTracker` and modifies it based on current volume level at the pop's location.
 
-Wait, the prompt says we should do integration work (INT-1306).
-Let's create the bridge test first in `tests/integration/architectural_superstition_bridge.rs`.
+4. **Integration & Refactoring**
+   - In `src/layer1/environment/mod.rs`, register the new `acoustics` module using `pub mod acoustics;`.
+   - Run `cargo test acoustics` to ensure the module tests are now running and passing.
+   - Run `cargo fmt` and `cargo clippy -- -D warnings`.
+
+5. **Update Backlog and Completed Logs**
+   - Remove `- [ ] 283 Acoustic Zones` from `design/BACKLOG.md`.
+   - Add `- [x] 283 Acoustic Zones — specs/283-acoustic-zones.md — completed 2026-06-15` to `design/COMPLETED.md`.
+
+6. **Pre-commit Steps**
+   - Run `cargo test` and `cargo llvm-cov` checks to confirm everything is functionally correct.
+   - Ensure the required code verifications are in place.
+
+7. **Submit Changes**
+   - Submit the PR as `google-labs-jules[bot]` co-authored, following the Builder agent git instructions for commit message format.

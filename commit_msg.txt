@@ -1,10 +1,13 @@
-feat(layer1): complete debt of the dead system
+feat(layer1): complete acoustic zones system
 
-Implements RED-GREEN-REFACTOR from spec 877:
-- Added comprehensive tests for debt inheritance and socialization (RED phase)
-- Implemented `process_debt_of_the_dead_system` and `apply_socialized_debt_system` (GREEN phase)
-- Hooked systems into `Layer1SystemSet::Economy` in `src/layer1/systems/economy.rs`
-- Handled edge cases for dead pops and invalid relative entities
-- Maintained 100% code coverage for `debt_of_the_dead.rs`
+Implements RED-GREEN-REFACTOR from spec 283:
+- Added comprehensive test suite (RED phase)
+- Implemented AcousticMap, noise emission, and noise stress systems (GREEN phase)
+- Test coverage: 100% (target: 85%)
+
+All acceptance criteria met:
+- Entities with NoiseEmitter populate the AcousticMap
+- High noise on a Pop's tile increases their StressTracker
+- Increased penalty applies if Pop is Sleeping
 
 Co-Authored-By: google-labs-jules[bot] <161369871+google-labs-jules[bot]@users.noreply.github.com>

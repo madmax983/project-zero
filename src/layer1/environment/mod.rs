@@ -44,3 +44,4 @@ pub use ephemeral_moons::*;
 pub use impact::*;
 pub mod thermal_camouflage;
 pub use thermal_camouflage::*;
+pub mod acoustics;
