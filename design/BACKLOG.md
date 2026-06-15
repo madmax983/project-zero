@@ -813,4 +813,3 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1304` The Lost Treaty — `specs/1304-the-lost-treaty.md`
 - [ ] `1305` The Cassandra Syndrome — `specs/1305-the-cassandra-syndrome.md`
 
-- [ ] `1306` Architectural Superstition — `specs/1306-architectural-superstition.md`
