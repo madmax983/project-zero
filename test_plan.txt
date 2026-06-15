@@ -1,0 +1,8 @@
+1. We need to create an integration for "1306 Architectural Superstition".
+   The core mechanics are in `src/layer1/architecture_superstition.rs`.
+   It listens for negative events added to `NegativeEventHistory` to curse a building.
+2. The missing piece is `track_negative_events`: bridging real game events (like `PopDied`, `BuildingRemovedEvent`) to adding a `NegativeEvent` into a building's `NegativeEventHistory`.
+3. We need to write a new bridge system:
+   `architectural_superstition_bridge` in `src/layer1/core/integration.rs` or `src/layer1/architecture_superstition_bridge.rs`.
+   The bridge will listen to `PopDied` and `BuildingRemovedEvent` (as proxies for "fires/deaths"). Actually, `PopDied` is enough, but we should also handle `BuildingRemovedEvent` or maybe `PopDiedInAccidentEvent` if that exists, or just `PopDied` which is a good standard negative event. The prompt specifically mentions "fires, deaths, low productivity". We can just use `PopDied`. Wait, the PopDied event does not have a GridPosition... Ah! The PopDied event only has entity ID. The entity might already be dead and despawned or still alive. In tests `the_haunted_cartographer.rs` line 32 says: "However, PopDied event doesn't carry position."
+   Wait! Let's check `PopDied` structure again.

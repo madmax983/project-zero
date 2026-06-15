@@ -1468,3 +1468,10 @@
 - **Glue added:** Added `refugee_arrival_bridge_system` in `src/layer2/integration.rs` to spawn new `Pop`s upon arrival and log the event to the Chronicle.
 - **Schedule:** Registered the system in `src/simulation.rs`.
 - **Tests:** Added `test_refugee_arrival_bridge_spawns_pops_and_chronicle` in `tests/integration/refugee_arrival_bridge.rs`.
+
+### INT-1306: Negative Events -> Architectural Superstition
+- **Date:** 2026-06-15
+- **Systems connected:** `PopDied`, `BuildingRemovedEvent`, `PopDiedInAccidentEvent` -> `track_negative_events_bridge_system` -> `NegativeEventHistory`
+- **Glue added:** Added `track_negative_events_bridge_system` in `src/layer1/core/integration.rs` to add `NegativeEvent` entries to nearby buildings when catastrophic events occur.
+- **Schedule:** Registered the system in `src/layer1/systems/observation.rs`.
+- **Tests:** `tests/integration/architectural_superstition_bridge.rs`
