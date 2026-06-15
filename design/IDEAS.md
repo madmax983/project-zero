@@ -24259,3 +24259,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you allow these cults to form for the free morale boost, knowing they will eventually prevent you from maintaining your own infrastructure, or do you violently suppress them before they take root?
 
 ---
+
+## The Echoing Ruins
+
+**Layer:** 1
+
+**Fantasy:** Exploring ancient structures that remember the past, and replay it for the unwary.
+
+**Mechanic:** Some ruin tiles have "Echo Resonance." When Pops work near them or excavate them, the ruins replay sensory echoes of whatever destroyed the original inhabitants. This causes severe, sudden Stress and "Haunted" mood modifiers, but successfully enduring the echoes unlocks unique, otherwise lost "Precursor Insights" (Tech bonuses).
+
+**Emergence:** You set up a highly efficient mining camp near a massive precursor archway. The miners start experiencing the psychic echo of a thousand-year-old planetary bombardment every night. They become paranoid, highly resilient to actual combat, but refuse to sleep indoors.
+
+**Tension:** Do you exploit the rich ruins and endure the psychological torture of your workforce, or leave the ancient knowledge buried to maintain their sanity?
+
+---
+
+## Gravity Anchors
+
+**Layer:** 2
+
+**Fantasy:** Tying down a rogue moon to steal its momentum and resources.
+
+**Mechanic:** Players can construct "Gravity Tethers" from stable orbital stations to small, fast-moving celestial bodies (like rogue asteroids or small moons). This slows the body down to a stable orbit for safe, long-term mining, but puts immense, constant strain on the station's structural integrity, requiring constant, expensive maintenance.
+
+**Emergence:** You tether a massive, incredibly rich diamond asteroid. The tether holds, but the continuous strain means your engineers are working 24/7. During a minor solar flare, the maintenance slips for an hour. The tether snaps, the station is ripped apart, and the asteroid is flung into deep space, taking your best engineers with it.
+
+**Tension:** The incredible, stable wealth of a captured celestial body versus the terrifying, unyielding physics of trying to hold it in place.
+
+---
+
+## Bioluminescent Sentience
+
+**Layer:** Cross-layer
+
+**Fantasy:** A forest that speaks in light, offering profound wisdom but demanding absolute stillness.
+
+**Mechanic:** A rare, colony-spanning "Lumina-Forest" on Layer 1 pulses with complex light patterns. If left completely undisturbed by industry (no noise, no pollution, no cutting), it eventually establishes communication with the colony. It provides massive, system-wide Unity and Science buffs (Layer 3). However, building any noisy or polluting structure anywhere near it breaks the connection instantly.
+
+**Emergence:** You have the most scientifically advanced world in the sector thanks to the Lumina-Forest. Then, you discover a massive deposit of vital hyper-fuel directly underneath it. The only way to win your current war is to extract the fuel, but doing so will silence the beautiful, sentient forest forever and plunge your empire into a cultural dark age.
+
+**Tension:** Do you preserve an ineffable, alien intelligence for long-term cultural and scientific ascendance, or bulldoze it for the immediate, brutal resources required to survive a war?
+
+---
