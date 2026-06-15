@@ -24173,3 +24173,47 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you endure the devastating planetary side-effects to produce the ultimate material, or keep your planet safe but your ships vulnerable?
 
 ---
+## Pop Relationships and Social Fabric
+
+**Layer:** 1
+
+**Fantasy:** Watching a colony develop social fabric—friendships, rivalries, families.
+
+**Mechanic:** Pops build relationship scores with pops they work alongside. High relationship = mood bonus. Low relationship = conflicts, productivity loss.
+
+**Emergence:** Players might notice two pops always fighting and separate them. A beloved elder pop dying might tank colony morale.
+
+**Tension:** Do you optimize job assignments for efficiency or social harmony?
+
+---
+
+## The Founder Effect
+
+**Layer:** Cross-layer
+
+**Fantasy:** Your first colonists' traits echo through generations and across worlds.
+
+**Mechanic:** Colony ships carry pops with traits. New colonies inherit trait distributions from founders. A colony founded by aggressive pops breeds aggressive culture.
+
+**Emergence:** Your militaristic frontier worlds trace back to that one hotheaded miner you sent on the first ship. Your peaceful core worlds descend from your original scientists.
+
+**Tension:** Do you carefully curate colony ships or just send whoever's available?
+
+---
+
+## Three New Layer 2 Ship Concepts
+
+**Layer:** 2
+
+**Fantasy:** Managing diverse fleets with highly specialized roles in a dangerous galaxy.
+
+**Mechanic:**
+1. **The 'Tether' Class Tug:** A massive, slow ship designed solely to grapple and tow large asteroids or disabled ships across the system.
+2. **The 'Whisper' Scout:** A stealth ship with zero offensive capabilities but advanced sensors, capable of observing hostile systems undetected.
+3. **The 'Siphon' Harvester:** A ship designed to dive into the upper atmospheres of gas giants to collect rare volatile gases, suffering constant hull attrition while doing so.
+
+**Emergence:** You use a Tether to drag a volatile asteroid into an enemy fleet's path. Your Whisper scout discovers an impending invasion just in time to evacuate. Your Siphon fleet brings in massive wealth but requires constant, expensive repairs.
+
+**Tension:** Do you invest in specialized, vulnerable ships for high-risk/high-reward tasks, or build generic, safe multi-role vessels?
+
+---
