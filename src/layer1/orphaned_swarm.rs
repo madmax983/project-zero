@@ -1,7 +1,7 @@
-use bevy_ecs::prelude::*;
 use crate::layer1::biology::health::Health;
-use crate::shared::time::SimulationTime;
 use crate::layer1::morale::Morale;
+use crate::shared::time::SimulationTime;
+use bevy_ecs::prelude::*;
 
 #[derive(Event)]
 pub struct DerelictArrivalEvent {
@@ -90,7 +90,6 @@ pub fn apply_swarm_damage(
     }
 }
 
-
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -100,7 +99,7 @@ mod tests {
     #[test]
     fn test_swarm_arrival_boosts_efficiency() {
         let mut app = bevy_app::App::new();
-                app.add_event::<DerelictArrivalEvent>()
+        app.add_event::<DerelictArrivalEvent>()
             .add_event::<SwarmArrivalEvent>()
             .add_event::<SwarmHostileEvent>()
             .add_systems(
@@ -117,19 +116,24 @@ mod tests {
         app.insert_resource(SwarmEfficiencyBoost { multiplier: 1.0 });
 
         // Act: Derelict arrives
-        app.world_mut().send_event(DerelictArrivalEvent { faction: "DerelictSwarm".to_string() });
+        app.world_mut().send_event(DerelictArrivalEvent {
+            faction: "DerelictSwarm".to_string(),
+        });
         app.update();
         app.update(); // Second update to process boosts
 
         // Assert: Efficiency increased
         let efficiency = app.world().resource::<SwarmEfficiencyBoost>();
-        assert!(efficiency.multiplier > 1.0, "Swarm should boost work efficiency upon arrival.");
+        assert!(
+            efficiency.multiplier > 1.0,
+            "Swarm should boost work efficiency upon arrival."
+        );
     }
 
     #[test]
     fn test_swarm_corruption_increases_over_time() {
         let mut app = bevy_app::App::new();
-                app.add_event::<DerelictArrivalEvent>()
+        app.add_event::<DerelictArrivalEvent>()
             .add_event::<SwarmArrivalEvent>()
             .add_event::<SwarmHostileEvent>()
             .add_systems(
@@ -151,13 +155,16 @@ mod tests {
         app.update();
 
         let corruption = app.world().resource::<SwarmCorruption>();
-        assert!(corruption.level > 0.0, "Corruption level should increase over time.");
+        assert!(
+            corruption.level > 0.0,
+            "Corruption level should increase over time."
+        );
     }
 
     #[test]
     fn test_critical_corruption_triggers_hostility() {
         let mut app = bevy_app::App::new();
-                app.add_event::<DerelictArrivalEvent>()
+        app.add_event::<DerelictArrivalEvent>()
             .add_event::<SwarmArrivalEvent>()
             .add_event::<SwarmHostileEvent>()
             .add_systems(
@@ -172,19 +179,26 @@ mod tests {
             );
         app.insert_resource(SwarmCorruption { level: 100.0 }); // Critical level
 
-        app.world_mut().spawn(Morale { value: 0.1, modifiers: vec![] }); // Low morale triggers it
+        app.world_mut().spawn(Morale {
+            value: 0.1,
+            modifiers: vec![],
+        }); // Low morale triggers it
 
         app.update();
 
         let events = app.world().resource::<Events<SwarmHostileEvent>>();
         let mut reader = events.get_cursor();
-        assert_eq!(reader.read(events).len(), 1, "Critical corruption should trigger hostility.");
+        assert_eq!(
+            reader.read(events).len(),
+            1,
+            "Critical corruption should trigger hostility."
+        );
     }
 
     #[test]
     fn test_critical_corruption_does_not_trigger_hostility_if_high_morale() {
         let mut app = bevy_app::App::new();
-                app.add_event::<DerelictArrivalEvent>()
+        app.add_event::<DerelictArrivalEvent>()
             .add_event::<SwarmArrivalEvent>()
             .add_event::<SwarmHostileEvent>()
             .add_systems(
@@ -199,19 +213,26 @@ mod tests {
             );
         app.insert_resource(SwarmCorruption { level: 100.0 }); // Critical level
 
-        app.world_mut().spawn(Morale { value: 0.9, modifiers: vec![] }); // High morale prevents it
+        app.world_mut().spawn(Morale {
+            value: 0.9,
+            modifiers: vec![],
+        }); // High morale prevents it
 
         app.update();
 
         let events = app.world().resource::<Events<SwarmHostileEvent>>();
         let mut reader = events.get_cursor();
-        assert_eq!(reader.read(events).len(), 0, "Critical corruption should NOT trigger hostility without low morale.");
+        assert_eq!(
+            reader.read(events).len(),
+            0,
+            "Critical corruption should NOT trigger hostility without low morale."
+        );
     }
 
     #[test]
     fn test_hostile_swarm_damages_pops() {
         let mut app = bevy_app::App::new();
-                app.add_event::<DerelictArrivalEvent>()
+        app.add_event::<DerelictArrivalEvent>()
             .add_event::<SwarmArrivalEvent>()
             .add_event::<SwarmHostileEvent>()
             .add_systems(
@@ -225,12 +246,22 @@ mod tests {
                 ),
             );
 
-        let pop_entity = app.world_mut().spawn(Health { current: 100.0, max: 100.0, has_rust_lung: false }).id();
+        let pop_entity = app
+            .world_mut()
+            .spawn(Health {
+                current: 100.0,
+                max: 100.0,
+                has_rust_lung: false,
+            })
+            .id();
 
         app.world_mut().send_event(SwarmHostileEvent);
         app.update();
 
         let health = app.world().get::<Health>(pop_entity).unwrap();
-        assert!(health.current < 100.0, "Hostile swarm should damage pop health.");
+        assert!(
+            health.current < 100.0,
+            "Hostile swarm should damage pop health."
+        );
     }
 }
