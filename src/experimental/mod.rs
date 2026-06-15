@@ -197,3 +197,6 @@ pub mod thermal_venting;
 
 #[cfg(feature = "nova")]
 pub mod tavern_brawls;
+
+#[cfg(feature = "nova")]
+pub mod astrological_weather;
