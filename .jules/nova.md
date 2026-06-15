@@ -155,3 +155,8 @@
 **Concept:** Added `tavern_brawls_system` to `src/experimental/tavern_brawls.rs`. If multiple Pops with very low `Morale` are socializing in the same `Tavern`, a `TavernBrawl` can erupt. This damages the participants (`Health`) and generates `Clutter`.
 **Fate:** Submitted
 **Lesson:** Connects the social infrastructure (`Tavern`) directly to the psychological (`Morale`) and physical (`Health`, `ClutterGrid`) systems. It turns a place of relaxation into a hazard during times of colony-wide depression, forcing players to manage morale proactively to prevent mass gatherings from turning violent.
+
+## [Astrological Weather]
+**Concept:** Added `astrological_weather_system` to `src/experimental/astrological_weather.rs`. Connects `AstrologicalBelief` to `WeatherType`. Pops who believe in astrology gain passive `leisure` regeneration during `Clear` skies (stargazing), but suffer accelerated `leisure` decay during `Fog` or `Storm`s when the stars are obscured.
+**Fate:** Submitted
+**Lesson:** Connects a cultural trait with the environmental weather system, creating dynamic psychological needs based on the current season/weather.
