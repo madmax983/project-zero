@@ -672,4 +672,6 @@ pub mod whisper_trade;
 pub use whisper_trade::*;
 
 pub mod biometric_drift;
+pub mod sartorial_rebellion;
 pub mod xeno_pet;
+pub use sartorial_rebellion::*;
