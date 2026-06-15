@@ -24132,3 +24132,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you open your borders and accept the economic devastation for the long-term benefit of population growth and diverse traits, or turn your defensive cannons on unarmed civilian ships to protect your own people's stability?
 
 ---
+## The Empathy Sink
+
+**Layer:** 1
+
+**Fantasy:** A colony discovers a creature or structure that absorbs negative emotions, making everyone perfectly happy but strangely hollow.
+
+**Mechanic:** You discover an anomaly or tame a rare creature (the "Empathy Sink") that naturally reduces Stress and negative Moods for all Pops in a large radius. However, Pops exposed to it for a long duration lose their ability to feel "Joy" or "Passion", causing their work efficiency in creative or complex tasks to plummet, while their efficiency in repetitive, dangerous tasks soars.
+
+**Emergence:** You intentionally build your main housing block around the Empathy Sink. Your miners work 20-hour shifts without complaint, and crime drops to zero. But when a brilliant scientist is exposed, they lose the spark of invention, halting your research progress.
+
+**Tension:** Do you exploit the Sink to create a perfectly stable, uncomplaining workforce for dangerous labor, sacrificing their humanity and creative potential in the process?
+
+---
+
+## The Biological Firewall
+
+**Layer:** Cross-layer
+
+**Fantasy:** Fighting off a digital infection not with code, but with genetically modified flora.
+
+**Mechanic:** A hostile AI or Scrapcode virus targets your colony's digital infrastructure. Instead of fighting it with traditional cybersecurity, you research a biological solution: a rapidly growing, bio-electric moss that feeds on the specific data patterns of the virus. Planting this "Firewall Moss" on servers and data conduits physically protects them from hacking but makes the hardware permanently un-upgradable and vulnerable to herbicides or fire.
+
+**Emergence:** You cover your entire Command Center in the Firewall Moss to stop a devastating cyber-attack. The attack is thwarted, but a month later, a minor electrical fire in the server room turns into a massive inferno because the moss is highly flammable, destroying the very systems you were trying to protect.
+
+**Tension:** Do you rely on traditional, vulnerable software defenses, or physically merge your tech with biology, creating a system that is digitally secure but physically fragile and difficult to maintain?
+
+---
+
+## The Gravity Loom
+
+**Layer:** 2 -> 1
+
+**Fantasy:** Weaving the fabric of spacetime to create indestructible, impossible materials.
+
+**Mechanic:** A late-game orbital megastructure that uses intense, focused gravitational waves to weave raw matter into "Gravity-Spun Alloy", the strongest material in the game. Operating the Loom causes massive, localized gravitational distortions on the planet below (Layer 1), periodically increasing movement costs and causing structural damage to poorly built buildings.
+
+**Emergence:** You fire up the Gravity Loom to mass-produce armor for an impending war. The resulting gravitational distortions on the surface crush your agricultural domes, causing a famine. You have the strongest fleet in the sector, but your people are starving because the gravity waves ruined the harvest.
+
+**Tension:** Do you endure the devastating planetary side-effects to produce the ultimate material, or keep your planet safe but your ships vulnerable?
+
+---
