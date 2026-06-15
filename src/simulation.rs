@@ -808,6 +808,10 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
 
     schedule.add_systems((crate::layer3::events::refugee_waves::process_refugee_decision,));
     schedule.add_systems((
+        crate::layer3::economy::market_shock::monitor_luxury_production_system,
+        crate::layer3::economy::market_shock::trigger_ally_civil_war_system,
+    ));
+    schedule.add_systems((
         crate::layer3::diplomacy::galactic_games::resolve_galactic_games_system,
         crate::layer3::integration::galactic_games_chronicle_bridge
             .after(crate::layer3::diplomacy::galactic_games::resolve_galactic_games_system),
