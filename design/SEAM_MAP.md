@@ -1475,3 +1475,10 @@
 - **Glue added:** Added `track_negative_events_bridge_system` in `src/layer1/core/integration.rs` to add `NegativeEvent` entries to nearby buildings when catastrophic events occur.
 - **Schedule:** Registered the system in `src/layer1/systems/observation.rs`.
 - **Tests:** `tests/integration/architectural_superstition_bridge.rs`
+
+### INT-1038: Dead Protocols -> Chronicle
+- **Date:** 2026-10-31
+- **Systems connected:** `ViolationEvent` -> `dead_protocol_chronicle_bridge` -> `AddChronicleEvent`
+- **Glue added:** `dead_protocol_chronicle_bridge` in `src/layer2/integration.rs` to generate Chronicle records when ancient enforcers awaken due to a dead protocol violation.
+- **Schedule:** Registered the system in `src/simulation.rs`.
+- **Tests:** `tests/integration/dead_protocol_bridge.rs` (1 test)

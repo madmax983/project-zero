@@ -791,3 +791,20 @@ pub fn celestial_cemeteries_trade_bridge_system(
         );
     }
 }
+
+pub fn dead_protocol_chronicle_bridge(
+    mut events: bevy_ecs::event::EventReader<crate::layer2::dead_protocols::ViolationEvent>,
+    mut chronicle_events: bevy_ecs::event::EventWriter<
+        crate::layer1::chronicle::AddChronicleEvent,
+    >,
+) {
+    for event in events.read() {
+        chronicle_events.send(crate::layer1::chronicle::AddChronicleEvent {
+            importance: crate::layer1::chronicle::EventImportance::Major,
+            text: format!(
+                "A dead protocol was violated at {:?}! Ancient Enforcers have awakened.",
+                event.target
+            ),
+        });
+    }
+}
