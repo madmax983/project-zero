@@ -293,7 +293,7 @@ pub fn sheriff_arrest_system(
 pub fn process_pardons_system(
     mut events: EventReader<PardonIssuedEvent>,
     mut query: Query<&mut CrimeRecord>,
-    mut stats: ResMut<crate::layer1::black_market::ColonyStats>,
+    mut stats: ResMut<crate::layer1::economy::black_market::ColonyStats>,
 ) {
     for ev in events.read() {
         if let Ok(mut record) = query.get_mut(ev.target) {

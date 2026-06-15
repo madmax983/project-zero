@@ -34,7 +34,7 @@ pub struct SmugglerArrivalEvent {
 
 #[derive(Component)]
 pub struct DropNode {
-    pub stored_metal: f32,
+    pub stored_alloys: f32,
 }
 
 #[derive(Component)]
@@ -53,7 +53,7 @@ pub fn handle_smuggler_arrival(
     mut events: EventReader<SmugglerArrivalEvent>,
 ) {
     for _ in events.read() {
-        commands.spawn(DropNode { stored_metal: 0.0 });
+        commands.spawn(DropNode { stored_alloys: 0.0 });
     }
 }
 
@@ -68,9 +68,9 @@ pub fn pop_smuggling_system(
 ) {
     if let Ok(mut node) = drop_nodes.get_single_mut() {
         for (pop_entity, mut morale) in desperate_pops.iter_mut() {
-            if colony_resources.metal >= 5.0 && node.stored_metal < 500.0 {
+            if colony_resources.metal >= 5.0 && node.stored_alloys < 500.0 {
                 colony_resources.metal -= 5.0;
-                node.stored_metal += 5.0;
+                node.stored_alloys += 5.0;
 
                 // Morale boost from contraband
                 morale.add_modifier(crate::layer1::social::morale::MoodModifier {
@@ -96,7 +96,7 @@ pub fn shutdown_drop_node_system(
         if let Ok(node) = nodes.get(event.node_entity) {
             // Refund stolen resources up to max capacity
             colony_resources.metal =
-                (colony_resources.metal + node.stored_metal).min(colony_resources.max_metal);
+                (colony_resources.metal + node.stored_alloys).min(colony_resources.max_metal);
             commands.entity(event.node_entity).despawn();
 
             for mut morale in contraband_users.iter_mut() {
@@ -193,7 +193,7 @@ mod tests {
 
         app.add_systems(Update, pop_smuggling_system);
 
-        let drop_node_entity = app.world_mut().spawn(DropNode { stored_metal: 0.0 }).id();
+        let drop_node_entity = app.world_mut().spawn(DropNode { stored_alloys: 0.0 }).id();
         let pop_entity = app
             .world_mut()
             .spawn((
@@ -215,7 +215,7 @@ mod tests {
 
         let drop_node = app.world().get::<DropNode>(drop_node_entity).unwrap();
         assert!(
-            drop_node.stored_metal > 0.0,
+            drop_node.stored_alloys > 0.0,
             "Drop Node should have accumulated stolen alloys"
         );
 
@@ -245,7 +245,7 @@ mod tests {
         let drop_node_entity = app
             .world_mut()
             .spawn(DropNode {
-                stored_metal: 100.0,
+                stored_alloys: 100.0,
             })
             .id();
         let pop_entity = app

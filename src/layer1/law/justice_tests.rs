@@ -6,7 +6,7 @@ mod tests {
         CrimeRecord, CrimeType, PardonIssuedEvent,
     };
 
-    use crate::layer1::black_market::ColonyStats;
+    use crate::layer1::economy::black_market::ColonyStats;
     use crate::layer1::map::GridPosition;
     use crate::layer1::mind::utility_types::AssignmentType;
     use crate::layer1::pop::Job;

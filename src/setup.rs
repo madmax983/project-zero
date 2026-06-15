@@ -51,7 +51,9 @@ pub fn setup_world() -> World {
     world.init_resource::<Events<crate::layer1::orphaned_swarm::DerelictArrivalEvent>>();
     world.init_resource::<Events<crate::layer1::orphaned_swarm::SwarmArrivalEvent>>();
     world.init_resource::<Events<crate::layer1::orphaned_swarm::SwarmHostileEvent>>();
-    world.insert_resource(crate::layer3::economy::market_shock::MarketShockMarket { luxury_price: 10.0 });
+    world.insert_resource(crate::layer3::economy::market_shock::MarketShockMarket {
+        luxury_price: 10.0,
+    });
     world.insert_resource(crate::layer3::diplomacy::system_sovereignty::ColonyStatus {
         is_sovereign: false,
         overlord_id: Some(1),
@@ -83,7 +85,9 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     world.init_resource::<Events<crate::layer1::orphaned_swarm::DerelictArrivalEvent>>();
     world.init_resource::<Events<crate::layer1::orphaned_swarm::SwarmArrivalEvent>>();
     world.init_resource::<Events<crate::layer1::orphaned_swarm::SwarmHostileEvent>>();
-    world.insert_resource(crate::layer3::economy::market_shock::MarketShockMarket { luxury_price: 10.0 });
+    world.insert_resource(crate::layer3::economy::market_shock::MarketShockMarket {
+        luxury_price: 10.0,
+    });
     world.insert_resource(crate::layer3::diplomacy::system_sovereignty::ColonyStatus {
         is_sovereign: false,
         overlord_id: Some(1),
@@ -436,7 +440,7 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     #[cfg(feature = "nova")]
     world.init_resource::<crate::experimental::genetic_memory::ColonyGeneticMemory>();
 
-    world.init_resource::<crate::layer1::black_market::ColonyStats>();
+    world.init_resource::<crate::layer1::economy::black_market::ColonyStats>();
     world.init_resource::<crate::layer1::void_weed::TradeNetwork>();
     world.init_resource::<crate::layer1::void_weed::SmugglingHeat>();
 
@@ -1177,8 +1181,10 @@ mod tests {
         world.init_resource::<bevy::prelude::Events<crate::layer1::law::justice::CrimeCommittedEvent>>();
         world.init_resource::<bevy::prelude::Events<crate::layer1::law::embassy::ArrestEvent>>();
         world.init_resource::<bevy::prelude::Events<crate::layer1::law::embassy::DiplomaticIncidentEvent>>();
-        world.insert_resource(crate::layer3::economy::market_shock::MarketShockMarket { luxury_price: 10.0 });
-    world.insert_resource(crate::layer3::diplomacy::system_sovereignty::ColonyStatus {
+        world.insert_resource(crate::layer3::economy::market_shock::MarketShockMarket {
+            luxury_price: 10.0,
+        });
+        world.insert_resource(crate::layer3::diplomacy::system_sovereignty::ColonyStatus {
             is_sovereign: false,
             overlord_id: Some(1),
         });

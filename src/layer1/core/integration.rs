@@ -417,7 +417,7 @@ pub fn chronicle_rumor_bridge_system(
 ///
 /// Updates `ColonyStats.unmet_luxury` by counting pops with low leisure needs.
 pub fn update_unmet_luxury_system(
-    mut stats: ResMut<crate::layer1::black_market::ColonyStats>,
+    mut stats: ResMut<crate::layer1::economy::black_market::ColonyStats>,
     pops: Query<&crate::layer1::needs::Needs, With<crate::layer1::pop::Pop>>,
 ) {
     let unmet_count = pops.iter().filter(|needs| needs.leisure < 30.0).count();
