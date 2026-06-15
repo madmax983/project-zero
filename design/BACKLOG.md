@@ -807,7 +807,7 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1278` Asteroid Hollowing — `specs/1278-asteroid-hollowing.md`
 - [ ] `1279` Weaponized Tourism — `specs/1279-weaponized-tourism.md`
 - [ ] `1280` Tectonic Stress — `specs/1280-tectonic-stress.md`
-- [ ] `1284` Sartorial Rebellion — `specs/1284-sartorial-rebellion.md`
+- [x] `1284` Sartorial Rebellion — `specs/1284-sartorial-rebellion.md` — completed 2024-06-15
 - [ ] `1295` Corporate Rebranding — `specs/1295-corporate-rebranding.md`
 - [ ] `1301` Edible Architecture — `specs/1301-edible-architecture.md`
 - [ ] `1304` The Lost Treaty — `specs/1304-the-lost-treaty.md`

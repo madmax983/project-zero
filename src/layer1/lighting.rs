@@ -351,7 +351,6 @@ mod tests {
         );
     }
 
-
     #[test]
     fn test_pop_stress_increases_in_darkness() {
         let mut world = World::new();
@@ -376,7 +375,9 @@ mod tests {
             .run_system_once(apply_lighting_penalties_system)
             .unwrap();
 
-        let stress = world.get::<crate::layer1::psychology::stress::StressTracker>(pop).unwrap();
+        let stress = world
+            .get::<crate::layer1::psychology::stress::StressTracker>(pop)
+            .unwrap();
         assert!(
             stress.accumulated_stress > 0.0,
             "Pop stress should increase in total darkness."
