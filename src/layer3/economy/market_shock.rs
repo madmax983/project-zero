@@ -1,6 +1,5 @@
-use bevy::prelude::*;
 use crate::layer1::core::chronicle::{Chronicle, EventImportance};
-
+use bevy::prelude::*;
 
 #[derive(Component)]
 pub struct LuxuryProduction {
@@ -53,9 +52,13 @@ pub fn trigger_ally_civil_war_system(
             if deps.needs_luxury && *status == FactionStatus::Stable {
                 *status = FactionStatus::CivilWar;
                 commands.entity(entity).remove::<DefensivePact>(); // Flank exposed
-                // Acceptance Criteria: The transition to civil war creates a Chronicle entry explaining the cause (luxury shortage).
+                                                                   // Acceptance Criteria: The transition to civil war creates a Chronicle entry explaining the cause (luxury shortage).
                 if let Some(ref mut c) = chronicle {
-                    c.add_event(0, "Civil war triggered due to luxury shortage.".to_string(), EventImportance::Major);
+                    c.add_event(
+                        0,
+                        "Civil war triggered due to luxury shortage.".to_string(),
+                        EventImportance::Major,
+                    );
                 }
             }
         }
@@ -75,41 +78,60 @@ mod tests {
         let colony = app.world_mut().spawn(LuxuryProduction { amount: 5.0 }).id();
         app.update();
 
-        assert_eq!(app.world().resource::<MarketShockMarket>().luxury_price, 10.0);
+        assert_eq!(
+            app.world().resource::<MarketShockMarket>().luxury_price,
+            10.0
+        );
 
-        app.world_mut().get_mut::<LuxuryProduction>(colony).unwrap().amount = 0.0;
+        app.world_mut()
+            .get_mut::<LuxuryProduction>(colony)
+            .unwrap()
+            .amount = 0.0;
         app.update();
 
-        assert_eq!(app.world().resource::<MarketShockMarket>().luxury_price, 20.0);
+        assert_eq!(
+            app.world().resource::<MarketShockMarket>().luxury_price,
+            20.0
+        );
     }
 
     #[test]
     fn test_market_shock_causes_ally_civil_war() {
         let mut app = App::new();
-        app.insert_resource(MarketShockMarket { luxury_price: 150.0 });
+        app.insert_resource(MarketShockMarket {
+            luxury_price: 150.0,
+        });
         app.add_systems(Update, trigger_ally_civil_war_system);
 
-        let ally = app.world_mut().spawn((
-            FactionStatus::Stable,
-            Dependencies { needs_luxury: true },
-        )).id();
+        let ally = app
+            .world_mut()
+            .spawn((FactionStatus::Stable, Dependencies { needs_luxury: true }))
+            .id();
 
         app.update();
 
-        assert_eq!(*app.world().get::<FactionStatus>(ally).unwrap(), FactionStatus::CivilWar);
+        assert_eq!(
+            *app.world().get::<FactionStatus>(ally).unwrap(),
+            FactionStatus::CivilWar
+        );
     }
 
     #[test]
     fn test_ally_civil_war_removes_defensive_buffs() {
         let mut app = App::new();
-        app.insert_resource(MarketShockMarket { luxury_price: 150.0 });
+        app.insert_resource(MarketShockMarket {
+            luxury_price: 150.0,
+        });
         app.add_systems(Update, trigger_ally_civil_war_system);
 
-        let ally = app.world_mut().spawn((
-            FactionStatus::Stable,
-            Dependencies { needs_luxury: true },
-            DefensivePact,
-        )).id();
+        let ally = app
+            .world_mut()
+            .spawn((
+                FactionStatus::Stable,
+                Dependencies { needs_luxury: true },
+                DefensivePact,
+            ))
+            .id();
 
         app.update();
 
@@ -119,15 +141,26 @@ mod tests {
     #[test]
     fn test_production_restoration_stabilizes_market() {
         let mut app = App::new();
-        app.insert_resource(MarketShockMarket { luxury_price: 200.0 });
+        app.insert_resource(MarketShockMarket {
+            luxury_price: 200.0,
+        });
         app.add_systems(Update, monitor_luxury_production_system);
         let colony = app.world_mut().spawn(LuxuryProduction { amount: 0.0 }).id();
         app.update();
-        assert_eq!(app.world().resource::<MarketShockMarket>().luxury_price, 400.0);
+        assert_eq!(
+            app.world().resource::<MarketShockMarket>().luxury_price,
+            400.0
+        );
 
-        app.world_mut().get_mut::<LuxuryProduction>(colony).unwrap().amount = 5.0;
+        app.world_mut()
+            .get_mut::<LuxuryProduction>(colony)
+            .unwrap()
+            .amount = 5.0;
         app.update();
 
-        assert_eq!(app.world().resource::<MarketShockMarket>().luxury_price, 360.0);
+        assert_eq!(
+            app.world().resource::<MarketShockMarket>().luxury_price,
+            360.0
+        );
     }
 }

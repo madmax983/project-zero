@@ -29,7 +29,5 @@ fn test_dead_protocol_chronicle_bridge() {
 
     assert_eq!(events.len(), 1, "Expected one chronicle event");
     assert_eq!(events[0].importance, EventImportance::Major);
-    assert!(events[0]
-        .text
-        .contains("A dead protocol was violated at"));
+    assert!(events[0].text.contains("A dead protocol was violated at"));
 }

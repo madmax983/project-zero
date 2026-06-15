@@ -29,7 +29,7 @@ pub use crate::layer1::oral_tradition_fallback::{OralTradition, Story, StoryGenr
 pub use crate::layer1::oral_tradition::{collect_chronicles_system, storytelling_system};
 
 // Echo DX Audit: Export common components for headless users
+pub use crate::layer1;
 pub use crate::layer1::economy::resources::ColonyResources;
 pub use crate::layer1::nature::terrain::{TerrainGrid, TerrainType};
 pub use crate::layer1::tech::TechState;
-pub use crate::layer1;
