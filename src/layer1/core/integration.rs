@@ -699,6 +699,18 @@ pub fn waste_scent_bridge(
     }
 }
 
+fn grant_inspector_memory(
+    pop_memories: &mut Query<&mut Memories, With<Pop>>,
+    memory_type: MemoryType,
+    tick: u64,
+) {
+    pop_memories.par_iter_mut().for_each(|mut memories| {
+        if !memories.items.iter().any(|m| m.memory_type == memory_type) {
+            memories.add(memory_type, tick);
+        }
+    });
+}
+
 /// Applies consequences of an Inspector's report.
 ///
 /// Bridges the Inspector system (Observation) and Pop/Resources system (Psychology/Economy).
@@ -724,15 +736,7 @@ pub fn inspector_outcome_bridge_system(
             resources.add_knowledge(10.0);
 
             // Add Memory to ALL pops
-            pop_memories.par_iter_mut().for_each(|mut memories| {
-                if !memories
-                    .items
-                    .iter()
-                    .any(|m| m.memory_type == MemoryType::InspectorImpressed)
-                {
-                    memories.add(MemoryType::InspectorImpressed, time.tick);
-                }
-            });
+            grant_inspector_memory(&mut pop_memories, MemoryType::InspectorImpressed, time.tick);
 
             if let Some(log) = log.as_mut() {
                 log.add(
@@ -743,30 +747,18 @@ pub fn inspector_outcome_bridge_system(
             // A Grade
             resources.add_knowledge(5.0);
 
-            pop_memories.par_iter_mut().for_each(|mut memories| {
-                if !memories
-                    .items
-                    .iter()
-                    .any(|m| m.memory_type == MemoryType::InspectorImpressed)
-                {
-                    memories.add(MemoryType::InspectorImpressed, time.tick);
-                }
-            });
+            grant_inspector_memory(&mut pop_memories, MemoryType::InspectorImpressed, time.tick);
 
             if let Some(log) = log.as_mut() {
                 log.add("Inspector Report: An exemplary colony. (+5 Knowledge, Pop Morale Boost)");
             }
         } else if avg_score < -2.0 {
             // F Grade
-            pop_memories.par_iter_mut().for_each(|mut memories| {
-                if !memories
-                    .items
-                    .iter()
-                    .any(|m| m.memory_type == MemoryType::InspectorDisappointed)
-                {
-                    memories.add(MemoryType::InspectorDisappointed, time.tick);
-                }
-            });
+            grant_inspector_memory(
+                &mut pop_memories,
+                MemoryType::InspectorDisappointed,
+                time.tick,
+            );
 
             if let Some(log) = log.as_mut() {
                 log.add("Inspector Report: Disgraceful conditions! (Pop Morale Penalty)");
@@ -2665,6 +2657,31 @@ pub fn cultural_vandalism_chronicle_bridge(
     }
 }
 
+fn upsert_grudge(
+    grudge_list: &mut crate::layer1::social::inherited_grudges::GrudgeList,
+    target: bevy_ecs::entity::Entity,
+    impact: f32,
+) {
+    let mut found = false;
+    for grudge in &mut grudge_list.0 {
+        if grudge.target_entity == target {
+            grudge.intensity += impact.abs();
+            found = true;
+            break;
+        }
+    }
+
+    if !found {
+        grudge_list
+            .0
+            .push(crate::layer1::social::inherited_grudges::Grudge {
+                target_entity: target,
+                intensity: impact.abs(),
+                origin_reason: "Public grievance".to_string(),
+            });
+    }
+}
+
 /// INT-1121: Bridges `PostGrievanceEvent` to `Grudge` components to link negative social interactions
 /// to the formation of long-lasting generational grudges.
 pub fn public_grievance_grudge_bridge(
@@ -2683,48 +2700,13 @@ pub fn public_grievance_grudge_bridge(
         if event.impact < 0.0 {
             // It's a grievance
             if let Ok(mut grudges) = query.get_mut(event.poster) {
-                // Check if already exists
-                let mut found = false;
-                for grudge in &mut grudges.0 {
-                    if grudge.target_entity == event.target {
-                        grudge.intensity += event.impact.abs();
-                        found = true;
-                        break;
-                    }
-                }
-
-                if !found {
-                    grudges
-                        .0
-                        .push(crate::layer1::social::inherited_grudges::Grudge {
-                            target_entity: event.target,
-                            intensity: event.impact.abs(),
-                            origin_reason: "Public grievance".to_string(),
-                        });
-                }
+                upsert_grudge(&mut grudges, event.target, event.impact);
             } else {
                 let grudge_list = pending_inserts.entry(event.poster).or_insert_with(|| {
                     crate::layer1::social::inherited_grudges::GrudgeList(Vec::new())
                 });
 
-                let mut found = false;
-                for grudge in &mut grudge_list.0 {
-                    if grudge.target_entity == event.target {
-                        grudge.intensity += event.impact.abs();
-                        found = true;
-                        break;
-                    }
-                }
-
-                if !found {
-                    grudge_list
-                        .0
-                        .push(crate::layer1::social::inherited_grudges::Grudge {
-                            target_entity: event.target,
-                            intensity: event.impact.abs(),
-                            origin_reason: "Public grievance".to_string(),
-                        });
-                }
+                upsert_grudge(grudge_list, event.target, event.impact);
             }
         }
     }
@@ -2876,7 +2858,6 @@ pub fn edible_architecture_chronicle_bridge(
     }
 }
 
-
 /// INT-1306: Architectural Superstition Bridge
 ///
 /// Listens to `PopDied`, `BuildingRemovedEvent`, and `PopDiedInAccidentEvent`.
@@ -2884,14 +2865,21 @@ pub fn edible_architecture_chronicle_bridge(
 #[allow(clippy::type_complexity)]
 pub fn track_negative_events_bridge_system(
     mut pop_died_events: bevy_ecs::event::EventReader<crate::layer1::pop::PopDied>,
-    mut building_removed_events: bevy_ecs::event::EventReader<crate::layer1::core::events::BuildingRemovedEvent>,
-    mut pop_died_accident_events: bevy_ecs::event::EventReader<crate::layer1::haunted_assembly_lines::PopDiedInAccidentEvent>,
+    mut building_removed_events: bevy_ecs::event::EventReader<
+        crate::layer1::core::events::BuildingRemovedEvent,
+    >,
+    mut pop_died_accident_events: bevy_ecs::event::EventReader<
+        crate::layer1::haunted_assembly_lines::PopDiedInAccidentEvent,
+    >,
     pops_query: bevy_ecs::system::Query<&crate::layer1::core::map::GridPosition>,
     pos_query: bevy_ecs::system::Query<&crate::layer1::core::map::GridPosition>,
-    mut building_query: bevy_ecs::system::Query<(
-        &crate::layer1::core::map::GridPosition,
-        &mut crate::layer1::architecture_superstition::NegativeEventHistory,
-    ), bevy_ecs::query::With<crate::layer1::architecture::Building>>,
+    mut building_query: bevy_ecs::system::Query<
+        (
+            &crate::layer1::core::map::GridPosition,
+            &mut crate::layer1::architecture_superstition::NegativeEventHistory,
+        ),
+        bevy_ecs::query::With<crate::layer1::architecture::Building>,
+    >,
     time: bevy_ecs::system::Res<crate::shared::time::SimulationTime>,
 ) {
     use crate::layer1::architecture_superstition::NegativeEvent;
