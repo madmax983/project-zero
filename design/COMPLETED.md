@@ -760,3 +760,4 @@
 - [x] `INT-1301` Integration: The Edible Architecture -> Chronicle — completed 2026-10-31
 - [x] `1041` The Orphaned Swarm — `specs/1041-the-orphaned-swarm.md` — completed 2026-06-14
 - [x] `877` The Debt of the Dead — `specs/877-the-debt-of-the-dead.md` — completed 2026-02-01
+- [x] `340` Light & Darkness — `specs/340-light-and-darkness.md` — completed 2024-05-30

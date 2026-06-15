@@ -176,11 +176,18 @@ pub fn update_lighting_system(
 }
 
 /// Applies penalties (speed, morale) to pops in darkness.
+#[allow(clippy::type_complexity)]
 pub fn apply_lighting_penalties_system(
     light_map: Res<LightMap>,
-    mut pops: Query<(&GridPosition, &mut Speed, &mut Needs, Option<&Traits>)>,
+    mut pops: Query<(
+        &GridPosition,
+        &mut Speed,
+        &mut Needs,
+        Option<&Traits>,
+        Option<&mut crate::layer1::psychology::stress::StressTracker>,
+    )>,
 ) {
-    for (pos, mut speed, mut needs, traits) in &mut pops {
+    for (pos, mut speed, mut needs, traits, stress_tracker) in &mut pops {
         // Safe cast: GridPosition shouldn't be negative in valid map area
         let x = u32::try_from(pos.x).unwrap_or(0);
         let y = u32::try_from(pos.y).unwrap_or(0);
@@ -204,6 +211,11 @@ pub fn apply_lighting_penalties_system(
 
             let penalty = 0.005 * stress_factor;
             needs.leisure = (needs.leisure - penalty).max(0.0);
+
+            // Spec 340: Darkness stress penalty
+            if let Some(mut stress) = stress_tracker {
+                stress.accumulated_stress += 2.0; // Fixed amount per tick
+            }
         }
     }
 }
@@ -336,6 +348,38 @@ mod tests {
             "Speed current {} should be < base {}",
             speed.current,
             speed.base
+        );
+    }
+
+
+    #[test]
+    fn test_pop_stress_increases_in_darkness() {
+        let mut world = World::new();
+        world.insert_resource(LightMap::new(10, 10));
+        // Pitch black
+        {
+            let mut map = world.resource_mut::<LightMap>();
+            map.tiles.fill(0.0);
+        }
+
+        let pop = world
+            .spawn((
+                Pop,
+                GridPosition { x: 0, y: 0 },
+                Speed::default(),
+                Needs::default(),
+                crate::layer1::psychology::stress::StressTracker::default(),
+            ))
+            .id();
+
+        world
+            .run_system_once(apply_lighting_penalties_system)
+            .unwrap();
+
+        let stress = world.get::<crate::layer1::psychology::stress::StressTracker>(pop).unwrap();
+        assert!(
+            stress.accumulated_stress > 0.0,
+            "Pop stress should increase in total darkness."
         );
     }
 
