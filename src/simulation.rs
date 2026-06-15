@@ -63,6 +63,8 @@ fn init_simulation_resources(world: &mut World) {
     world
         .init_resource::<Events<crate::layer1::psychology::memory_blackout::MemoryBlackoutEvent>>();
     world.init_resource::<Events<crate::layer1::RepairBuildingEvent>>();
+    world.init_resource::<Events<crate::layer1::economy::black_market::SmugglerArrivalEvent>>();
+    world.init_resource::<Events<crate::layer1::economy::black_market::ShutdownDropNodeEvent>>();
     world.init_resource::<Events<crate::layer2::trade::routes::TradeRouteExecutedEvent>>();
     world
         .init_resource::<Events<crate::layer2::trade::feral_logistics::FeralDeliveryTriggerEvent>>(
@@ -998,6 +1000,9 @@ mod tests {
         world.init_resource::<Events<crate::layer1::AcceptSponsorshipEvent>>();
         world.init_resource::<Events<crate::layer1::psychology::memory_blackout::MemoryBlackoutEvent>>();
         world.init_resource::<Events<crate::layer1::RepairBuildingEvent>>();
+        world.init_resource::<Events<crate::layer1::economy::black_market::SmugglerArrivalEvent>>();
+        world
+            .init_resource::<Events<crate::layer1::economy::black_market::ShutdownDropNodeEvent>>();
         world.init_resource::<Events<crate::layer1::social::hedonic_treadmill::ConsumeItemEvent>>();
         world.init_resource::<Events<crate::layer1::architecture::sunk_cost_monument::CancelConstructionEvent>>();
         *world.resource_mut::<GameState>() = GameState::Running;
@@ -1071,6 +1076,9 @@ mod tests {
         world.init_resource::<Events<crate::layer1::AcceptSponsorshipEvent>>();
         world.init_resource::<Events<crate::layer1::psychology::memory_blackout::MemoryBlackoutEvent>>();
         world.init_resource::<Events<crate::layer1::RepairBuildingEvent>>();
+        world.init_resource::<Events<crate::layer1::economy::black_market::SmugglerArrivalEvent>>();
+        world
+            .init_resource::<Events<crate::layer1::economy::black_market::ShutdownDropNodeEvent>>();
         world.init_resource::<Events<crate::layer1::social::hedonic_treadmill::ConsumeItemEvent>>();
         world.init_resource::<Events<crate::layer1::architecture::sunk_cost_monument::CancelConstructionEvent>>();
         world.init_resource::<Events<crate::layer1::anomalies::echo::SpawnEchoSourceEvent>>();
@@ -1337,6 +1345,9 @@ mod tests {
         world.init_resource::<bevy::prelude::Events<crate::layer1::energy::gravity_siphon::OrbitalDecayEvent>>();
 
         world.init_resource::<Events<crate::layer2::communications::signal_latency::ExecuteOrderEvent>>();
+        world.init_resource::<Events<crate::layer1::economy::black_market::SmugglerArrivalEvent>>();
+        world
+            .init_resource::<Events<crate::layer1::economy::black_market::ShutdownDropNodeEvent>>();
 
         let schedule = build_simulation_schedule();
         world.add_schedule(schedule);

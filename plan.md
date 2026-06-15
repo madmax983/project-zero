@@ -1,26 +1,23 @@
-1. **Move task to IN_PROGRESS.md**
-   - Claim task 877 in `design/BACKLOG.md` and move it to `design/IN_PROGRESS.md`.
-2. **Implement RED Phase Tests**
-   - Create tests in `src/layer1/economy/debt_of_the_dead.rs`.
-   - The tests will cover: Pop dying transferring debt (negative credits in `Wallet`) to the closest relative in `Relationships`, socializing debt to `ColonyPrices` (or tracking socialized debt via a new resource `SocializedDebt` to update `ColonyPrices`) if no relative exists, and verifying that socialized debt affects global economy/prices.
-   - Run `cargo test --lib` (which should fail, validating the RED phase) and use `cat` to verify the file was written successfully before moving to the GREEN phase.
-3. **Implement GREEN Phase**
-   - Implement `process_debt_of_the_dead_system` that listens for `PopDied` events in `src/layer1/economy/debt_of_the_dead.rs`.
-   - For each dead pop, look up their `Wallet`. If `credits < 0`, find the relative with highest affinity in `Relationships`.
-   - If a relative is found, transfer the debt (add to relative's `Wallet.credits`) and add `MoodModifier` "Inherited Burden" to their `Morale`.
-   - If no relative is found, increase `ColonyPrices` (e.g., add 1.0 to `food_price` and `luxury_price`).
-   - Register the system in `src/layer1/systems/economy.rs` by adding it to `schedule.add_systems(...)` and declaring the module in `src/layer1/economy/mod.rs`. Verify using `git diff`.
-   - Run `cargo test --lib` to verify.
-4. **Complete pre-commit steps to ensure proper testing, verification, review, and reflection are done**
-   - Run `cargo check --lib`, `cargo clippy --lib -- -D warnings`, `cargo test --lib`, `cargo llvm-cov --lib`.
-5. **Submit the change**
-   - Mark as completed in `design/COMPLETED.md`
-   - Use `default_api:submit` with message:
-     "feat(layer1): complete debt of the dead system
+1. **Explore Codebase and Spec:**
+   - I have read `specs/1043-black-market-infrastructure.md` which specifies adding a `SmugglerArrivalEvent`, a `ShutdownDropNodeEvent`, `DropNode`, `Desperate`, and `ContrabandUser` components, along with `handle_smuggler_arrival`, `pop_smuggling_system`, and `shutdown_drop_node_system` systems.
+   - Checked `src/layer1/economy/mod.rs` to see how submodules are organized. Created `src/layer1/economy/black_market.rs` and registered it in `src/layer1/economy/mod.rs` previously.
 
-     Implements RED-GREEN-REFACTOR from spec 877:
-     - Added tests (RED phase)
-     - Implemented process_debt_of_the_dead_system (GREEN phase)
-     - Test coverage: 100%
+2. **TDD RED Phase:**
+   - Copy the RED phase tests from the spec into `src/layer1/economy/black_market.rs`.
+   - Run `cargo test` and verify that the tests fail. (Completed).
 
-     Co-Authored-By: google-labs-jules[bot] <161369871+google-labs-jules[bot]@users.noreply.github.com>"
+3. **TDD GREEN Phase:**
+   - Implement the minimal logic in `src/layer1/economy/black_market.rs` to make the tests pass.
+   - Run `cargo test` and verify all tests pass. (Completed).
+   - Wire the systems into `src/layer1/systems/economy.rs` so they are added to `Layer1SystemSet::Economy`. (Completed).
+   - Wire the events in `src/setup.rs` and `src/simulation.rs` to prevent test panics. (Completed).
+   - Run `cargo llvm-cov --lib` and verify test coverage is $\geq 85\%$. (Completed).
+
+4. **TDD REFACTOR Phase:**
+   - Make the code follow `clippy` suggestions and game architecture. Using `MoodModifier` inside `Morale` instead of directly modifying `morale.value`. (Completed).
+
+5. **Pre-commit Steps:**
+   - Complete pre commit steps to make sure proper testing, verifications, reviews and reflections are done.
+
+6. **Submit:**
+   - Use `default_api:submit` with a commit message formatted as: `feat(layer1): complete black market infrastructure`.

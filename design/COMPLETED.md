@@ -762,3 +762,4 @@
 - [x] `877` The Debt of the Dead — `specs/877-the-debt-of-the-dead.md` — completed 2026-02-01
 - [x] `340` Light & Darkness — `specs/340-light-and-darkness.md` — completed 2024-05-30
 - [x] `1306` Architectural Superstition — `specs/1306-architectural-superstition.md` — completed 2024-06-15
+- [x] `1043` Black Market Infrastructure — `specs/1043-black-market-infrastructure.md` — completed 2026-11-01

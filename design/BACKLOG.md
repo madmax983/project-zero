@@ -649,7 +649,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1038` Dead Protocols — `specs/1038-dead-protocols.md`
 
 
-- [ ] `1043` Black Market Infrastructure — `specs/1043-black-market-infrastructure.md`
 
 
 - [x] `1056` The Dead Hand — `specs/1056-the-dead-hand.md` — completed 2024-05-31
