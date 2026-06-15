@@ -31,6 +31,7 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::psychology::psychic_stains::process_violent_deaths_system,
             crate::layer1::psychology::psychic_stains::apply_stain_stress_system,
             crate::layer1::core::integration::psionic_fire_bridge_system,
+            crate::layer1::core::integration::track_negative_events_bridge_system,
             crate::layer1::architecture_superstition::evaluate_architectural_superstition,
             crate::layer1::architecture_superstition::apply_cursed_penalties,
         )

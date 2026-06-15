@@ -565,3 +565,6 @@ mod symbiotic_shipbreaker_bridge;
 
 #[path = "integration/refugee_arrival_bridge.rs"]
 mod refugee_arrival_bridge;
+
+#[path = "integration/architectural_superstition_bridge.rs"]
+mod architectural_superstition_bridge;

@@ -1,0 +1,1 @@
+- [x] INT-1068 Integration: Crustal Tides -> Chronicle — completed 2026-10-31
