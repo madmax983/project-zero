@@ -24091,3 +24091,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you intercept and destroy these peaceful freighters to salvage the metal, or let them continue their pointless duty?
 
 ---
+## Architectural Superstition
+
+**Layer:** 1
+
+**Fantasy:** Observing your colonists developing irrational beliefs about specific buildings based on random past events.
+
+**Mechanic:** If multiple negative events (fires, deaths, low productivity) coincidentally happen near a specific building, pops start associating it with bad luck. A "Cursed" modifier is applied, causing pops to avoid working there or passing by, significantly dropping its efficiency.
+
+**Emergence:** Your most central, highly upgraded hospital becomes totally abandoned because two patients happened to die there on the same day during a solar flare, forcing you to build a completely new, redundant one on the edge of town.
+
+**Tension:** Do you waste resources to demolish and rebuild a perfectly functional structure just to appease the colony's irrational fears, or force them to use it at a massive mood and efficiency penalty?
+
+---
+
+## The Orphaned AI Armada
+
+**Layer:** 3
+
+**Fantasy:** Stumbling upon a colossal, terrifying military force that has no master, blindly executing centuries-old defensive protocols.
+
+**Mechanic:** A massive fleet of ancient AI warships wanders the galaxy. They don't belong to any active faction. They scan passing fleets and colonies against an unrecognizable, extinct set of "friend/foe" criteria. Sometimes they ignore you; sometimes they instantly obliterate your scout ship because its engine signature matches their long-dead enemy.
+
+**Emergence:** You are losing a massive war, and the enemy's grand fleet is moving to crush your capital. Suddenly, the Orphaned Armada drifts into the system, registers the enemy fleet's specific shield frequency as a threat, and wipes them out before drifting away again.
+
+**Tension:** Do you risk studying their movements to predict their behavior and weaponize them against rivals, knowing one miscalculation could turn them against your entire empire?
+
+---
+
+## The Refugee Shockwave
+
+**Layer:** Cross-layer
+
+**Fantasy:** Dealing with the sudden, overwhelming human cost of a distant galactic conflict you aren't even involved in.
+
+**Mechanic:** When a major war breaks out or a planet is destroyed in Layer 3, massive waves of civilian refugee ships flee outward. If your Layer 2 system is on their path, they will attempt to settle on your Layer 1 colonies. They bring new skills and diversity, but cause an instant, massive spike in resource consumption, housing demands, and social friction.
+
+**Emergence:** You carefully balance your agricultural world's economy to be perfectly self-sustaining. Suddenly, three million displaced pops from a neighboring empire crash-land, instantly causing a famine that leads to a planet-wide revolt.
+
+**Tension:** Do you open your borders and accept the economic devastation for the long-term benefit of population growth and diverse traits, or turn your defensive cannons on unarmed civilian ships to protect your own people's stability?
+
+---
