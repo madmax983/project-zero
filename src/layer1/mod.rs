@@ -489,3 +489,6 @@ pub mod specialization;
 pub use shipbreaking_symbiotic::*;
 pub mod orphaned_swarm;
 pub use orphaned_swarm::*;
+
+pub mod architecture_superstition;
+pub use architecture_superstition::*;
