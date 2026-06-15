@@ -932,7 +932,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 ```
 "Trouble on the [SHIFT_NAME]. [YEAR]. They cite [SHIFT_COMPLAINT]."
 "[YEAR]: The [SHIFT_NAME] refuses to work. Reason: [SHIFT_COMPLAINT]."
-"Dispute at shift change. [SHIFT_NAME] workers say they are [SHIFT_COMPLAINT]. [YEAR]."
+"Dispute at shift change. [SHIFT_NAME] souls say they are [SHIFT_COMPLAINT]. [YEAR]."
 ```
 
 ---
@@ -3519,7 +3519,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 **Patterns:**
 - "The machines align. [YEAR]. The factory hums with [RHYTHM_SOUND]."
 - "[YEAR]: Efficiency peaks. The production line creates [RHYTHM_SOUND]."
-- "Music from the gears. [RHYTHM_SOUND]. The workers smile. [YEAR]."
+- "Music from the gears. [RHYTHM_SOUND]. The souls smile. [YEAR]."
 
 ### DISCORDANT_NOISE
 
@@ -3891,7 +3891,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 **Patterns:**
 - "The cameras blinked, and the tension snapped. [YEAR]. [RIOT_DAMAGE] in the ensuing chaos."
-- "[YEAR]: A minor blackout broke the Panopticon. The obedient workers turned violent. [RIOT_DAMAGE]."
+- "[YEAR]: A minor blackout broke the Panopticon. The obedient souls turned violent. [RIOT_DAMAGE]."
 - "We smashed the lenses. The pressure of being watched finally exploded into [RIOT_DAMAGE]. [YEAR]."
 
 ---
@@ -3934,7 +3934,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 **Slots:** [COLONY], [YEAR], [CRITICAL_FAILURE]
 
 **Patterns:**
-- "The warning was encrypted in High Speech. [YEAR]. The workers didn't understand until the [CRITICAL_FAILURE] hit."
+- "The warning was encrypted in High Speech. [YEAR]. The souls didn't understand until the [CRITICAL_FAILURE] hit."
 - "[YEAR]: A failure to communicate. The evacuation order was misread as a tax mandate. Result: [CRITICAL_FAILURE]."
 - "The [CRITICAL_FAILURE] was avoidable. But the manual was written in High Speech. [YEAR]."
 
@@ -4019,7 +4019,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 **Patterns:**
 - "[YEAR]: We touched [EMPATHIC_FLORA]. It touched back. A [SHARED_SENSATION] spreads."
-- "The workers in [COLONY] are changing. They share [SHARED_SENSATION]. The [EMPATHIC_FLORA] is the conduit."
+- "The souls in [COLONY] are changing. They share [SHARED_SENSATION]. The [EMPATHIC_FLORA] is the conduit."
 - "Year [YEAR]. They stopped talking. They don't need to. [EMPATHIC_FLORA] connects them in [SHARED_SENSATION]."
 
 ### Template: FLORA_DAMAGED_BACKLASH
@@ -4027,7 +4027,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 **Slots:** [COLONY], [YEAR], [EMPATHIC_FLORA], [FLORA_DAMAGE_EFFECT]
 
 **Patterns:**
-- "[YEAR]: The bulldozers hit [EMPATHIC_FLORA]. The linked workers collapsed, screaming. [FLORA_DAMAGE_EFFECT]."
+- "[YEAR]: The bulldozers hit [EMPATHIC_FLORA]. The linked souls collapsed, screaming. [FLORA_DAMAGE_EFFECT]."
 - "We cut [EMPATHIC_FLORA]. They felt it. [COLONY] suffers [FLORA_DAMAGE_EFFECT]."
 - "A mistake in [YEAR]. Destroying [EMPATHIC_FLORA] sent [FLORA_DAMAGE_EFFECT] through the hive-mind."
 
@@ -4069,7 +4069,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 **Patterns:**
 - "[YEAR]: We acted against [FOUNDING_PRINCIPLE]. Some call it survival. Others call it [IDEOLOGICAL_DEVIATION]."
 - "Morale plummets in [COLONY]. A betrayal of [FOUNDING_PRINCIPLE]. It feels like [IDEOLOGICAL_DEVIATION]."
-- "[YEAR]: The workers whisper of [IDEOLOGICAL_DEVIATION]. Is this what [FOUNDING_PRINCIPLE] looks like now?"
+- "[YEAR]: The souls whisper of [IDEOLOGICAL_DEVIATION]. Is this what [FOUNDING_PRINCIPLE] looks like now?"
 
 ## Debt-Prison Colonies Templates (Spec 486)
 
@@ -4527,7 +4527,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 **Slots:** [COLONY], [YEAR], [MACHINERY_REWIRED]
 
 **Patterns:**
-- "[YEAR]: The song wants to be heard. The colonists have rewired [MACHINERY_REWIRED] into a massive antenna. They are broadcasting it back into the dark."
+- "[YEAR]: The song wants to be heard. The souls have rewired [MACHINERY_REWIRED] into a massive antenna. They are broadcasting it back into the dark."
 - "We are no longer silent. In [YEAR], [COLONY] converted [MACHINERY_REWIRED] to amplify the transmission. The galaxy will hear us."
 - "Year [YEAR]. The earworm spreads. [MACHINERY_REWIRED] has been repurposed to transmit the signal outward. We await the response."
 
@@ -4796,7 +4796,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 **Slots:** [COLONY], [YEAR], [VOID_WEED_NAME], [WEED_EFFECT]
 
 **Patterns:**
-- "The workers found something in the dark. [YEAR]. [VOID_WEED_NAME]. It brings [WEED_EFFECT]."
+- "The souls found something in the dark. [YEAR]. [VOID_WEED_NAME]. It brings [WEED_EFFECT]."
 - "[YEAR]: A new vice. [VOID_WEED_NAME] is cultivated in secret, offering [WEED_EFFECT]."
 - "To numb the cold, they smoke [VOID_WEED_NAME]. The result is [WEED_EFFECT]. [YEAR]."
 
@@ -4837,7 +4837,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 **Patterns:**
 - "We removed the limits. [YEAR]. Production spikes thanks to [OVERCLOCK_METHOD]."
-- "[YEAR]: Forced output. The Overseers ordered [OVERCLOCK_METHOD]. The workers don't stop."
+- "[YEAR]: Forced output. The Overseers ordered [OVERCLOCK_METHOD]. The souls don't stop."
 - "The quotas demanded blood. [YEAR]. [COLONY] enacted [OVERCLOCK_METHOD]."
 
 ### Template: NEURAL_BURNOUT
@@ -5108,7 +5108,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 **Patterns:**
 - "A freighter leaves orbit. [YEAR]. The holds are packed with [REMITTANCE_ITEM]."
-- "[YEAR]: The workers tighten their belts to send [REMITTANCE_ITEM] back to the homeworld."
+- "[YEAR]: The souls tighten their belts to send [REMITTANCE_ITEM] back to the homeworld."
 - "The economy bleeds outwards. [YEAR]. Another shipment of [REMITTANCE_ITEM] leaves [COLONY]."
 
 ### Template: HOMESICKNESS_ONSET
@@ -5239,7 +5239,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 **Slots:** [BUILDING], [YEAR], [HAUNT_EVIDENCE]
 
 **Patterns:**
-- "[YEAR]: The workers in the [BUILDING] report [HAUNT_EVIDENCE]. The Echo remains."
+- "[YEAR]: The souls in the [BUILDING] report [HAUNT_EVIDENCE]. The Echo remains."
 - "We cannot explain the efficiency of the [BUILDING]. But there are reports of [HAUNT_EVIDENCE]. [YEAR]."
 - "[YEAR]: Production is up in the [BUILDING], but the souls there speak of [HAUNT_EVIDENCE]. They are afraid."
 
@@ -5292,7 +5292,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 **Patterns:**
 - "The comms died, and the minds broke. [YEAR]. They are building statues out of [EFFIGY_MATERIAL]."
-- "[YEAR]: Silence from orbit. The workers now pray to the sky, offering [EFFIGY_MATERIAL] to the drones."
+- "[YEAR]: Silence from orbit. The souls now pray to the sky, offering [EFFIGY_MATERIAL] to the drones."
 - "Desperation breeds faith. They worship the supply drops, crafting shrines from [EFFIGY_MATERIAL]. [YEAR]."
 
 ### Template: CULT_RITUAL_OBSERVED
@@ -5878,7 +5878,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 **Patterns:**
 - "Stockpiles of [STOLEN_RESOURCE] are missing. But morale is high, fueled by illegal [CONTRABAND]. [YEAR]."
 - "[YEAR]: They trade our [STOLEN_RESOURCE] for [CONTRABAND] in the dark. The colony is happy, but bleeding."
-- "A steady drain of [STOLEN_RESOURCE] to the drop nodes. The pops are docile on [CONTRABAND]. [YEAR]."
+- "A steady drain of [STOLEN_RESOURCE] to the drop nodes. The souls are docile on [CONTRABAND]. [YEAR]."
 
 ### Template: DROP_NODE_SHUTDOWN
 **Generates:** Play event
@@ -5934,8 +5934,8 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 **Slots:** [COLONY], [YEAR], [TRAUMA_ECHO]
 
 **Patterns:**
-- "[YEAR]: Work stops in sector 4. The pops report [TRAUMA_ECHO]."
-- "A path abandoned. Colonists refuse to walk there, citing [TRAUMA_ECHO]. [YEAR]."
+- "[YEAR]: Work stops in sector 4. The souls report [TRAUMA_ECHO]."
+- "A path abandoned. Souls refuse to walk there, citing [TRAUMA_ECHO]. [YEAR]."
 - "[COLONY] is learning to avoid the stained halls. [TRAUMA_ECHO] is too much to bear. [YEAR]."
 
 ## Debt-Trap Megastructure Templates (Spec 747)
@@ -6087,7 +6087,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 **Patterns:**
 - "In [YEAR], the sky captured [MOON_NAME]. It lasted [DURATION] and brought [EFFECT]."
 - "A transient celestial body, designated [MOON_NAME], entered orbit in [YEAR]. The [EFFECT] lasted for [DURATION] before it was ejected."
-- "For [DURATION], [MOON_NAME] hung in the night sky. The colonists planned their production around its [EFFECT]."
+- "For [DURATION], [MOON_NAME] hung in the night sky. The souls planned their production around its [EFFECT]."
 
 ## The Ephemeral Market Templates (Spec 784)
 
@@ -6115,7 +6115,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 **Slots:** [COLONY], [YEAR], [GRIFTER_CRIME], [POP_NAME]?
 
 **Patterns:**
-- "[YEAR]: The rush brought workers, but it also brought crime. Security caught someone [GRIFTER_CRIME]."
+- "[YEAR]: The rush brought souls, but it also brought crime. Security caught someone [GRIFTER_CRIME]."
 - "With the new arrivals came a wave of lawlessness. Today it was [GRIFTER_CRIME]. [YEAR]."
 
 **If [POP_NAME]:**
@@ -6529,7 +6529,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 **Patterns:**
 - "[YEAR]: [POP_COUNT] of our brightest minds left [COLONY] for [DESTINATION], seeking better living standards."
 - "The brilliant refuse to suffer in our squalor. [POP_COUNT] emigrated to [DESTINATION]. [YEAR]."
-- "[COLONY] loses its future. [POP_COUNT] skilled workers departed for [DESTINATION] in [YEAR]."
+- "[COLONY] loses its future. [POP_COUNT] skilled souls departed for [DESTINATION] in [YEAR]."
 
 ## Cargo Cult Logistics Templates (Spec 983)
 
@@ -6539,7 +6539,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 **Patterns:**
 - "[YEAR]: The Cargo Cult forms. A massive [EFFIGY_TYPE] dominates the plaza, an offering for [SUPPLY_ITEM]."
 - "They dance near the landing pads in [COLONY], hoping the [EFFIGY_TYPE] brings more [SUPPLY_ITEM]. [YEAR]."
-- "[COLONY], [YEAR]: Logic abandoned. The workers perform rituals to summon [SUPPLY_ITEM] from the sky."
+- "[COLONY], [YEAR]: Logic abandoned. The souls perform rituals to summon [SUPPLY_ITEM] from the sky."
 
 ## Inflationary Spiral Templates (Spec 1145)
 
@@ -7007,7 +7007,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 **Slots:** [COLONY], [YEAR], [WEATHER_AFFECT]
 
 **Patterns:**
-- "The storm changed them. [YEAR]. The workers [WEATHER_AFFECT]."
+- "The storm changed them. [YEAR]. The souls [WEATHER_AFFECT]."
 - "[YEAR]: Under the influence of the weather, the colony [WEATHER_AFFECT]."
 - "Madness in the elements. Affected by the sky, they [WEATHER_AFFECT]. [YEAR]."
 
@@ -7315,7 +7315,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 **Patterns:**
 - "[YEAR]: Thousands gathered in the square, chanting '[PROTEST_CHANT]'."
-- "The workers laid down their tools. Their cry: '[PROTEST_CHANT]'."
+- "The souls laid down their tools. Their cry: '[PROTEST_CHANT]'."
 
 ## Template: CLUTTER_CRITICAL
 
@@ -7571,7 +7571,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 **Patterns:**
 - "[YEAR]: Those caught outside during the flare are suffering [RADIATION_SYMPTOM]. [CASUALTY_COUNT] souls affected."
 - "The sun is poison today. [CASUALTY_COUNT] souls are down with [RADIATION_SYMPTOM]. [YEAR]."
-- "[COLONY]'s clinics are full. [CASUALTY_COUNT] workers show signs of [RADIATION_SYMPTOM] after the flare. [YEAR]."
+- "[COLONY]'s clinics are full. [CASUALTY_COUNT] souls show signs of [RADIATION_SYMPTOM] after the flare. [YEAR]."
 
 ## The Gossip Economy Templates
 
@@ -7964,7 +7964,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 **Generates:** Play event (Chronicle during game)
 **Slots:** [COLONY], [YEAR], [AUDIT_TRIGGER], [EXISTENTIAL_CRISIS_SYMPTOM]
 **Patterns:**
-- "[YEAR]: [AUDIT_TRIGGER] judged [COLONY]. Found wanting in meaning. The pops are [EXISTENTIAL_CRISIS_SYMPTOM]."
+- "[YEAR]: [AUDIT_TRIGGER] judged [COLONY]. Found wanting in meaning. The souls are [EXISTENTIAL_CRISIS_SYMPTOM]."
 - "A cold evaluation from [AUDIT_TRIGGER]. We are too industrial, too hollow. [COLONY] suffers [EXISTENTIAL_CRISIS_SYMPTOM]. [YEAR]."
 - "[COLONY], [YEAR]: We failed the audit by [AUDIT_TRIGGER]. The lack of culture has led to [EXISTENTIAL_CRISIS_SYMPTOM]."
 
@@ -8155,7 +8155,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 **Patterns:**
 - "[YEAR]: The virtual past is a drug. [COLONY] demands a return to [OBSOLETE_PRACTICE]. They say [NOSTALGIA_JUSTIFICATION]."
 - "We built a utopia, but they want the dirt. Demands for [OBSOLETE_PRACTICE] rise in [COLONY]. [NOSTALGIA_JUSTIFICATION]. [YEAR]."
-- "[COLONY], [YEAR]: High-tech sectors halt. The workers want [OBSOLETE_PRACTICE], claiming [NOSTALGIA_JUSTIFICATION]."
+- "[COLONY], [YEAR]: High-tech sectors halt. The souls want [OBSOLETE_PRACTICE], claiming [NOSTALGIA_JUSTIFICATION]."
 
 ### Template: VR_WITHDRAWAL_CRASH
 **Generates:** Play event
@@ -8357,7 +8357,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 **Slots:** [COLONY], [YEAR], [MACHINE_ARTIFACT], [MACHINE_CULT_RITUAL]
 
 **Patterns:**
-- "[YEAR]: Maintenance is now worship. The workers around the [MACHINE_ARTIFACT] in [COLONY] are [MACHINE_CULT_RITUAL]."
+- "[YEAR]: Maintenance is now worship. The souls around the [MACHINE_ARTIFACT] in [COLONY] are [MACHINE_CULT_RITUAL]."
 - "They hear the [MACHINE_ARTIFACT] speaking. A cult forms in [COLONY], [MACHINE_CULT_RITUAL]. [YEAR]."
 
 ### Template: CULT_SABOTAGE
@@ -8419,7 +8419,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 **Slots:** [COLONY], [YEAR], [LOTUS_REACTION]
 
 **Patterns:**
-- "[YEAR]: We tried to burn the fields. The pacified workers of [COLONY] are [LOTUS_REACTION]."
+- "[YEAR]: We tried to burn the fields. The pacified souls of [COLONY] are [LOTUS_REACTION]."
 - "They will kill to remain peaceful. Enforcers in [COLONY] report the locals are [LOTUS_REACTION]. [YEAR]."
 
 ## Ghost Fleets of the Automation War Templates
@@ -8546,7 +8546,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 **Patterns:**
 - "[YEAR]: The flare left behind [ISOTOPE_NAME]. Prospectors rushed the surface. Some [PROSPECTOR_FATE]."
-- "Greed outweighed fear. [COLONY] sent workers into the burning wastes for [ISOTOPE_NAME]. Many [PROSPECTOR_FATE]. [YEAR]."
+- "Greed outweighed fear. [COLONY] sent souls into the burning wastes for [ISOTOPE_NAME]. Many [PROSPECTOR_FATE]. [YEAR]."
 - "A harvest of [ISOTOPE_NAME]. It cost us dearly. They [PROSPECTOR_FATE]. [YEAR]."
 
 ### Template: EMP_BLACKOUT
@@ -8599,7 +8599,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [FERAL_DRONE_NAME]
 **Patterns:**
-- "[YEAR]: Colonists from [COLONY] stumbled into a nest of [FERAL_DRONE_NAME]. Metallic ecology at work."
+- "[YEAR]: Souls from [COLONY] stumbled into a nest of [FERAL_DRONE_NAME]. Metallic ecology at work."
 - "[COLONY] surveyors found where the [FERAL_DRONE_NAME] take the scrap. A self-replicating horror. [YEAR]."
 
 ## Wormhole Dumping Templates (Spec 1109)
@@ -8862,7 +8862,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 **Patterns:**
 - "[YEAR]: The hab-plant took damage. The residents inside shared the trauma, experiencing [SYMBIOTIC_PAIN]."
-- "A toxic spill hurt the living walls. Inside, the workers suffered [SYMBIOTIC_PAIN]. [COLONY], [YEAR]."
+- "A toxic spill hurt the living walls. Inside, the souls suffered [SYMBIOTIC_PAIN]. [COLONY], [YEAR]."
 - "[COLONY], [YEAR]: The cost of symbiosis. When the hab-plant withered, the colony felt [SYMBIOTIC_PAIN]."
 
 ## Template: SCARCITY_BUREAUCRAT_SPAWN
@@ -9222,3 +9222,11 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: The void gaps widen. [ISLAND_NAME] is severed from the main cluster of [PLANET_NAME]."
 - "The bridges fell in [YEAR]. [ISLAND_NAME] drifts alone in the shattered sky."
 - "[YEAR]: [PLANET_NAME] is broken. Travel between the floating islands of rock became a privilege."
+
+## Template: BUILDING_CURSED
+**Generates:** Play event (chronicle during game)
+**Slots:** [COLONY], [YEAR], [BUILDING_NAME], [SUPERSTITION_FOCUS]
+**Patterns:**
+- "[YEAR]: The souls at [COLONY] refuse to enter the [BUILDING_NAME]. They whisper about [SUPERSTITION_FOCUS]."
+- "A functional [BUILDING_NAME] was abandoned at [COLONY]. Irrational fears of [SUPERSTITION_FOCUS] gripped the souls. [YEAR]."
+- "[YEAR]: Efficiency plummeted at the [BUILDING_NAME]. The souls are convinced it is cursed due to [SUPERSTITION_FOCUS]."
