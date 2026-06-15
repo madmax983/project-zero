@@ -763,3 +763,4 @@
 - [x] `340` Light & Darkness — `specs/340-light-and-darkness.md` — completed 2024-05-30
 - [x] `1306` Architectural Superstition — `specs/1306-architectural-superstition.md` — completed 2024-06-15
 - [x] `INT-1306` Integration: Negative Events -> Architectural Superstition - completed 2026-06-15
+- [x] `1043` Black Market Infrastructure — `specs/1043-black-market-infrastructure.md` — completed 2026-06-15
