@@ -108,3 +108,5 @@ pub fn execute_hack_system(
 
 ## 8. Questions
 *Builder: add questions here if spec is unclear.*- **Architectural Contradictions:** `MarketTradeEvent` doesn't seem to exist. `ColonyResources` is mostly generic items, not `credits` in `execute_hack_system`.
+
+- **Architectural Contradictions:** `HackerTrait` is not an existing component. Traits are implemented using the `Traits` component and `Trait` enum in `src/layer1/psychology/traits.rs`. The test uses a component `HackerTrait` directly. The `Hacker` trait does not exist in the `Trait` enum. The spec does not explain where `ColonyResources` is coming from, because the `MarketTradeEvent` does not have a reference to a `ColonyResources` entity, but the `execute_hack_system` receives `mut colony_resources: Query<&mut ColonyResources>`. The `ColonyResources` is a global resource in `layer1`, not a component on a `colony_entity`. Therefore `colony_resources.get_mut(event.colony_entity)` is invalid code in the current architecture. Moving to next task.
