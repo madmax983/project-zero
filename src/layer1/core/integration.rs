@@ -2921,3 +2921,21 @@ pub fn track_negative_events_bridge_system(
         }
     }
 }
+
+use crate::layer1::systems::dead_hand::DoomsdayTriggeredEvent;
+
+/// Bridges `DoomsdayTriggeredEvent` to `AddChronicleEvent`
+pub fn dead_hand_chronicle_bridge(
+    mut events: EventReader<DoomsdayTriggeredEvent>,
+    mut chronicle_events: EventWriter<AddChronicleEvent>,
+) {
+    for event in events.read() {
+        chronicle_events.send(AddChronicleEvent {
+            importance: EventImportance::Legendary,
+            text: format!(
+                "The Dead Hand was triggered by device {:?}! A doomsday scenario is unfolding.",
+                event.device
+            ),
+        });
+    }
+}

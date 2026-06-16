@@ -1482,3 +1482,10 @@
 - **Glue added:** `dead_protocol_chronicle_bridge` in `src/layer2/integration.rs` to generate Chronicle records when ancient enforcers awaken due to a dead protocol violation.
 - **Schedule:** Registered the system in `src/simulation.rs`.
 - **Tests:** `tests/integration/dead_protocol_bridge.rs` (1 test)
+
+### INT-1056: The Dead Hand -> Chronicle
+- **Date:** 2026-06-16
+- **Systems connected:** `dead_hand_trigger_system` -> `dead_hand_chronicle_bridge` -> `AddChronicleEvent`
+- **Glue added:** Added `dead_hand_chronicle_bridge` in `src/layer1/core/integration.rs` to generate Chronicle records when DoomsdayTriggeredEvent is emitted.
+- **Schedule:** Registered in Layer 1 Observation schedule (`src/layer1/systems/observation.rs`).
+- **Tests:** `tests/integration/dead_hand_bridge.rs`

@@ -6,6 +6,7 @@
 - [x] `1287` The Cargo Cult Diplomat — `specs/1287-the-cargo-cult-diplomat.md` — completed 2026-06-05
 - [x] `INT-1287` Integration: Cargo Cult Diplomat -> Chronicle — completed 2026-06-05
 - [x] `1056` The Dead Hand — `specs/1056-the-dead-hand.md` — completed 2024-05-31
+- [x] `INT-1056` Integration: The Dead Hand -> Chronicle - completed 2026-06-16
 - [x] `1288` The Memorial Revolt — `specs/1288-the-memorial-revolt.md` — completed 2026-06-03
 - [x] `554` The Phantom Signal — `specs/554-the-phantom-signal.md` — completed 2026-05-31
 - [x] `494` Symbiotic Habitation — `specs/494-symbiotic-habitation.md` — completed 2026-05-26
