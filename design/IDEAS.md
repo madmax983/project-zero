@@ -24423,3 +24423,46 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Emergence:** You completely censor the news of a losing war to keep your factories running. A black market forms, draining your economy. However, through the black market network, you learn of a secret enemy flank maneuver weeks before your military intelligence detects it, saving your capital.
 
 **Tension:** Do you allow free information flow and deal with the morale hits, or suppress it and deal with the economic drain of a black market (while potentially reaping its hidden benefits)?
+
+
+## Generational Stardust
+
+**Layer:** Cross-layer
+
+**Fantasy:** Tracing the literal atoms of your pioneers across centuries of industry.
+
+**Mechanic:** When pops die, their remains are recycled into 'Biomass' resources. If a specific renowned pop (e.g., a heroic founder) dies, their biomass carries a unique hidden tag. If this tagged biomass is used to grow food, the pops who eat it inherit a faint echo of the founder's traits or memories. If used in manufacturing, the resulting building or ship gains a tiny, permanent 'Ancestral Blessing' buff.
+
+**Emergence:** You desperately need to repair your orbital defense laser. The only available resources were processed from the colony's oldest cemetery. The laser now has a 1% chance to refuse to fire on ships from the founder's original homeworld.
+
+**Tension:** Do you give your heroes a sacred, unproductive burial to preserve their legacy, or ruthlessly recycle them into the war machine to ensure the colony survives today?
+
+---
+
+## The Bureaucracy of Sleep
+
+**Layer:** 1
+
+**Fantasy:** The slow, agonizing administrative delay of basic human needs.
+
+**Mechanic:** Instead of immediately sleeping when tired, pops must request a 'Sleep Permit' from a local bureaucratic center. The center processes permits based on the pop's current economic value and social standing. High-value pops get immediate approval; low-value pops must wait in long queues, suffering massive mood penalties and exhaustion.
+
+**Emergence:** A vital engineer's permit is denied because a minor administrative clerk hates them (low relationship score). The engineer falls asleep at the nuclear reactor controls. The reactor melts down, destroying the bureaucratic center, which ironically frees everyone to sleep whenever they want—in the radioactive ruins.
+
+**Tension:** Do you invest in massive, expensive bureaucratic infrastructure to perfectly optimize sleep schedules, or allow chaotic, inefficient free-sleeping that risks sudden workforce shortages?
+
+---
+
+## Orbital Debris Cascades (Kessler Syndrome)
+
+**Layer:** 2
+
+**Fantasy:** Watching your own military success slowly entomb your planet in a prison of shrapnel.
+
+**Mechanic:** Destroyed ships and stations leave 'Debris Fields' in planetary orbit. These fields have a small chance to collide with other orbital structures or passing ships, creating more debris. If the density reaches a critical mass, a 'Kessler Cascade' begins, exponentially multiplying the debris and making space travel from that planet completely impossible without massive, dedicated cleanup efforts.
+
+**Emergence:** You win a massive, desperate defensive battle over your capital, saving the empire. Decades later, the accumulated wreckage from that victory triggers a cascade, permanently trapping your emperor on the planet and cutting off the capital's food supply lines.
+
+**Tension:** Do you risk losing a vital orbital battle by retreating early to minimize debris, or win at all costs and risk entombing your most important world?
+
+---

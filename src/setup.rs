@@ -70,6 +70,8 @@ pub fn setup_world() -> World {
 pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -> World {
     init_task_pools();
     let mut world = World::new();
+    world.init_resource::<crate::layer1::nature::long_night::LongNightEvent>();
+    world.init_resource::<bevy_ecs::event::Events<crate::layer1::nature::long_night::StartLongNightEvent>>();
     world.init_resource::<crate::layer1::culture::celestial_cemeteries::OrbitalCemetery>();
     world
         .init_resource::<Events<crate::layer1::culture::celestial_cemeteries::ClearCemeteryEvent>>(
