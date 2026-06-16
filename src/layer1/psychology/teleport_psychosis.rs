@@ -1,5 +1,3 @@
-use crate::layer1::entities::pop::Pop;
-use crate::layer1::psychology::needs::Needs;
 use crate::layer1::psychology::traits::{Trait, Traits};
 use bevy::prelude::*;
 
@@ -41,14 +39,6 @@ pub fn process_psychosis_system(
     }
 }
 
-pub fn hunger_decay_system(mut query: Query<(&mut Needs, &Traits), With<Pop>>) {
-    for (mut needs, traits) in query.iter_mut() {
-        if !traits.has(Trait::Phantom) {
-            needs.hunger -= 1.0;
-        }
-    }
-}
-
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -61,8 +51,7 @@ mod tests {
             (
                 handle_teleport_system,
                 process_psychosis_system,
-                hunger_decay_system,
-            ),
+                ),
         );
         app
     }
@@ -131,56 +120,4 @@ mod tests {
         );
     }
 
-    #[test]
-    fn should_decay_hunger_when_no_phantom_trait() {
-        let mut app = setup_app();
-
-        let pop = app
-            .world_mut()
-            .spawn((
-                Pop,
-                Needs {
-                    hunger: 10.0,
-                    ..Default::default()
-                },
-                Traits::default(),
-            ))
-            .id();
-
-        app.update();
-
-        let needs = app.world().get::<Needs>(pop).unwrap();
-        assert_eq!(
-            needs.hunger, 9.0,
-            "Hunger should decay by 1.0 when not a Phantom"
-        );
     }
-
-    #[test]
-    fn should_not_decay_hunger_when_phantom_trait_present() {
-        let mut app = setup_app();
-
-        let mut traits = Traits::default();
-        traits.add(Trait::Phantom);
-
-        let pop = app
-            .world_mut()
-            .spawn((
-                Pop,
-                Needs {
-                    hunger: 10.0,
-                    ..Default::default()
-                },
-                traits,
-            ))
-            .id();
-
-        app.update();
-
-        let needs = app.world().get::<Needs>(pop).unwrap();
-        assert_eq!(
-            needs.hunger, 10.0,
-            "Hunger should NOT decay when Trait::Phantom is present"
-        );
-    }
-}

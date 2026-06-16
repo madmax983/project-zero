@@ -1489,3 +1489,10 @@
 - **Glue added:** Added `dead_hand_chronicle_bridge` in `src/layer1/core/integration.rs` to generate Chronicle records when DoomsdayTriggeredEvent is emitted.
 - **Schedule:** Registered in Layer 1 Observation schedule (`src/layer1/systems/observation.rs`).
 - **Tests:** `tests/integration/dead_hand_bridge.rs`
+
+### INT-988: Teleport Psychosis -> Needs System & Schedule
+- **Date:** 2026-02-01
+- **Systems connected:** `handle_teleport_system` & `process_psychosis_system` registered in execution schedule -> `decay_needs_system`
+- **Glue added:** `get_trait_hunger_decay_modifier` modified to return `0.0` for `Trait::Phantom`. `handle_teleport_system` and `process_psychosis_system` were added into the layer1 execution schedule.
+- **Schedule:** Chained in `Layer1SystemSet::Execution` after `movement_system`.
+- **Tests:** `tests/integration/teleport_psychosis_bridge.rs` (2 tests) and `tests/spec988_test.rs`

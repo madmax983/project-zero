@@ -2,10 +2,11 @@ use bevy::prelude::*;
 use scale::layer1::entities::pop::Pop;
 use scale::layer1::psychology::needs::Needs;
 use scale::layer1::psychology::teleport_psychosis::{
-    handle_teleport_system, hunger_decay_system, process_psychosis_system, Dissociation,
+    handle_teleport_system, process_psychosis_system, Dissociation,
     TeleportEvent,
 };
 use scale::layer1::psychology::traits::{Trait, Traits};
+use scale::layer1::psychology::needs::decay_needs_system;
 
 #[test]
 fn test_teleporter_use_adds_dissociation() {
@@ -19,6 +20,8 @@ fn test_teleporter_use_adds_dissociation() {
         .id();
 
     app.world_mut().send_event(TeleportEvent { entity: pop_id });
+
+    app.init_resource::<scale::shared::time::SimulationTime>();
     app.update();
 
     let dissoc = app.world().get::<Dissociation>(pop_id).unwrap();
@@ -35,6 +38,8 @@ fn test_high_dissociation_grants_phantom_trait() {
         .spawn((Pop, Traits::default(), Dissociation { level: 90.0 }))
         .id();
 
+
+    app.init_resource::<scale::shared::time::SimulationTime>();
     app.update();
 
     let traits = app.world().get::<Traits>(pop_id).unwrap();
@@ -44,15 +49,17 @@ fn test_high_dissociation_grants_phantom_trait() {
 #[test]
 fn test_phantom_trait_ignores_hunger() {
     let mut app = App::new();
-    app.add_systems(Update, hunger_decay_system);
+    app.add_systems(Update, decay_needs_system);
 
     let normal_pop = app
         .world_mut()
         .spawn((
             Pop,
             Needs {
-                hunger: 100.0,
-                ..default()
+                hunger: 1.0,
+                rest: 1.0,
+                leisure: 1.0,
+                hygiene: 1.0,
             },
             Traits::default(),
         ))
@@ -66,17 +73,21 @@ fn test_phantom_trait_ignores_hunger() {
         .spawn((
             Pop,
             Needs {
-                hunger: 100.0,
-                ..default()
+                hunger: 1.0,
+                rest: 1.0,
+                leisure: 1.0,
+                hygiene: 1.0,
             },
             ghost_traits,
         ))
         .id();
 
+
+    app.init_resource::<scale::shared::time::SimulationTime>();
     app.update();
 
-    assert!(app.world().get::<Needs>(normal_pop).unwrap().hunger < 100.0);
-    assert_eq!(app.world().get::<Needs>(ghost_pop).unwrap().hunger, 100.0);
+    assert!(app.world().get::<Needs>(normal_pop).unwrap().hunger < 1.0);
+    assert_eq!(app.world().get::<Needs>(ghost_pop).unwrap().hunger, 1.0);
 }
 
 #[test]
@@ -89,6 +100,8 @@ fn test_max_dissociation_despawns_pop() {
         .spawn((Pop, Traits::default(), Dissociation { level: 100.0 }))
         .id();
 
+
+    app.init_resource::<scale::shared::time::SimulationTime>();
     app.update();
 
     assert!(app.world().get::<Pop>(pop_id).is_none());

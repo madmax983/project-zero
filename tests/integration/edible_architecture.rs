@@ -2,7 +2,7 @@ use bevy::prelude::*;
 use scale::layer1::architecture::building::{Building, BuildingType};
 use scale::layer1::architecture::edible::{consume_building_system, Consumed, EdibleMaterial};
 use scale::layer1::core::events::BuildingRemovedEvent;
-use scale::layer1::economy::items::{Item, ItemType};
+
 use scale::layer1::economy::resources::ColonyResources;
 use scale::layer1::map::GridPosition;
 
@@ -33,18 +33,8 @@ fn test_consume_edible_architecture_integration() {
     // Building should be despawned
     assert!(app.world().get_entity(building).is_err());
 
-    // Food items should be spawned
-    let mut found_food = false;
-    for item in app.world_mut().query::<&Item>().iter(app.world()) {
-        if item.item_type == ItemType::Potato {
-            found_food = true;
-            break;
-        }
-    }
-    assert!(
-        found_food,
-        "Consuming the building should spawn food items."
-    );
+    // Food should have increased
+    assert_eq!(app.world().resource::<ColonyResources>().food, 60.0);
 }
 
 #[test]
@@ -52,6 +42,7 @@ fn test_edible_architecture_chronicle_bridge() {
     let mut app = App::new();
     app.add_event::<scale::layer1::core::events::BuildingRemovedEvent>();
     app.add_event::<scale::layer1::core::chronicle::AddChronicleEvent>();
+    app.insert_resource(ColonyResources::default());
     app.add_systems(
         Update,
         (

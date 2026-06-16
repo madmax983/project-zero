@@ -768,3 +768,5 @@
 - [x] `1305` The Cassandra Syndrome — `specs/1305-the-cassandra-syndrome.md` — completed 2026-02-01
 
 - [x] `1301` Edible Architecture — `specs/1301-edible-architecture.md` — completed 2026-06-16
+
+- [x] `INT-988` Integration: Teleport Psychosis -> Needs System & Schedule — completed 2026-02-01

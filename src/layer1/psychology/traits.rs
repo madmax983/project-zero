@@ -416,6 +416,9 @@ pub fn get_trait_work_speed_modifier(traits: &Traits) -> f32 {
 /// Returns the hunger decay modifier from traits.
 #[must_use]
 pub fn get_trait_hunger_decay_modifier(traits: &Traits) -> f32 {
+    if traits.has(Trait::Phantom) {
+        return 0.0;
+    }
     let mut modifier = 1.0;
     if traits.has(Trait::Glutton) {
         modifier += 0.2;
