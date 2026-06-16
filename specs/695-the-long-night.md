@@ -16,54 +16,55 @@ A massive orbital event (such as a nebula, eclipse, or planetary alignment) bloc
 #[cfg(test)]
 mod tests {
     use super::*;
-    use bevy::prelude::*;
+    use bevy_ecs::prelude::*;
+    use crate::layer1::nature::temperature::TemperatureGrid;
+    use crate::layer1::energy::PowerSource;
 
     #[test]
     fn test_long_night_event_disables_solar_power() {
-        let mut app = App::new();
+        let mut app = bevy::app::App::new();
 
-        app.insert_resource(EnergyGrid { available_solar: 100.0, total_demand: 50.0 });
+        let panel_entity = app.world_mut().spawn(PowerSource { output: 100.0, active: true }).id();
 
         // Trigger The Long Night
-        app.world_mut().send_event(StartLongNightEvent { duration_ticks: 10_000 });
-        app.update();
+        app.world_mut().insert_resource(LongNightEvent { is_active: true, duration_remaining: 10_000 });
 
-        let event_active = app.world().resource::<LongNightEvent>();
-        assert!(event_active.is_active);
+        // Assume system updates power
+        process_long_night_effects(&mut app.world_mut().resource_mut::<LongNightEvent>(), &mut app.world_mut().resource_mut::<TemperatureGrid>(), &mut app.world_mut().query::<&mut PowerSource>(), &mut app.world_mut().query::<&mut Crop>());
 
-        let grid = app.world().resource::<EnergyGrid>();
+        let source = app.world().get::<PowerSource>(panel_entity).unwrap();
         // Solar power should be effectively 0
-        assert_eq!(grid.available_solar, 0.0);
+        assert_eq!(source.output, 0.0);
     }
 
     #[test]
     fn test_long_night_plummets_global_temperature() {
-        let mut app = App::new();
+        let mut app = bevy::app::App::new();
 
-        app.insert_resource(GlobalTemperature { current_temp: 20.0, base_temp: 20.0 });
-        app.insert_resource(LongNightEvent { is_active: true, duration_remaining: 5000 });
+        app.world_mut().insert_resource(TemperatureGrid::new(10, 10, 20.0));
+        app.world_mut().insert_resource(LongNightEvent { is_active: true, duration_remaining: 5000 });
 
-        // Advance time and check temperature
-        app.update();
+        // Assume system updates temperature
+        process_long_night_effects(&mut app.world_mut().resource_mut::<LongNightEvent>(), &mut app.world_mut().resource_mut::<TemperatureGrid>(), &mut app.world_mut().query::<&mut PowerSource>(), &mut app.world_mut().query::<&mut Crop>());
 
-        let temp = app.world().resource::<GlobalTemperature>();
+        let grid = app.world().resource::<TemperatureGrid>();
         // Temperature should be drastically lower than base
-        assert!(temp.current_temp < temp.base_temp - 15.0);
+        assert!(grid.ambient < 5.0);
     }
 
     #[test]
     fn test_crops_die_during_long_night_without_light() {
-        let mut app = App::new();
+        let mut app = bevy::app::App::new();
 
         let crop_id = app.world_mut().spawn((
             Crop { health: 100.0, requires_light: true },
-            Transform::from_xyz(0.0, 0.0, 0.0), // No light source nearby
         )).id();
 
-        app.insert_resource(LongNightEvent { is_active: true, duration_remaining: 5000 });
+        app.world_mut().insert_resource(TemperatureGrid::new(10, 10, 20.0));
+        app.world_mut().insert_resource(LongNightEvent { is_active: true, duration_remaining: 5000 });
 
         // Advance time
-        app.update();
+        process_long_night_effects(&mut app.world_mut().resource_mut::<LongNightEvent>(), &mut app.world_mut().resource_mut::<TemperatureGrid>(), &mut app.world_mut().query::<&mut PowerSource>(), &mut app.world_mut().query::<&mut Crop>());
 
         let crop = app.world().get::<Crop>(crop_id).unwrap();
         // Crop health should be decreasing
@@ -75,7 +76,10 @@ mod tests {
 ## GREEN Phase: Minimal Implementation
 
 ```rust
-use bevy::prelude::*;
+use bevy_ecs::prelude::*;
+use crate::layer1::nature::temperature::TemperatureGrid;
+use crate::layer1::energy::PowerSource;
+use crate::layer1::nature::solar::SolarPower;
 
 #[derive(Resource, Default)]
 pub struct LongNightEvent {
@@ -86,18 +90,6 @@ pub struct LongNightEvent {
 #[derive(Event)]
 pub struct StartLongNightEvent {
     pub duration_ticks: i32,
-}
-
-#[derive(Resource, Default)]
-pub struct EnergyGrid {
-    pub available_solar: f32,
-    pub total_demand: f32,
-}
-
-#[derive(Resource, Default)]
-pub struct GlobalTemperature {
-    pub current_temp: f32,
-    pub base_temp: f32,
 }
 
 #[derive(Component)]
@@ -118,8 +110,8 @@ pub fn start_long_night(
 
 pub fn process_long_night_effects(
     mut long_night: ResMut<LongNightEvent>,
-    mut grid: ResMut<EnergyGrid>,
-    mut temp: ResMut<GlobalTemperature>,
+    mut grid: ResMut<TemperatureGrid>,
+    mut power_sources: Query<&mut PowerSource>,
     mut crops: Query<&mut Crop>,
 ) {
     if long_night.is_active {
@@ -130,10 +122,12 @@ pub fn process_long_night_effects(
         }
 
         // Disable solar power
-        grid.available_solar = 0.0;
+        for mut source in power_sources.iter_mut() {
+            source.output = 0.0;
+        }
 
-        // Plummet temperature
-        temp.current_temp = -20.0; // Extreme cold
+        // Plummet ambient temperature
+        grid.ambient = -20.0; // Extreme cold
 
         // Kill crops requiring light
         for mut crop in crops.iter_mut() {
@@ -145,9 +139,9 @@ pub fn process_long_night_effects(
             }
         }
     } else {
-        // Restore base temp slowly
-        if temp.current_temp < temp.base_temp {
-            temp.current_temp += 0.5;
+        // Restore base temp slowly (Assuming spring ambient of 15.0 for this simple example)
+        if grid.ambient < 15.0 {
+            grid.ambient += 0.5;
         }
     }
 }
@@ -167,7 +161,7 @@ pub fn process_long_night_effects(
 - [ ] `cargo clippy -- -D warnings` passes.
 - [ ] Test coverage ≥85% for new code.
 - [ ] `StartLongNightEvent` sets the `LongNightEvent` active status and duration.
-- [ ] While active, `available_solar` on the `EnergyGrid` drops to 0.0.
+- [ ] While active, the `output` of `PowerSource` components for solar panels drops to 0.0.
 - [ ] Global temperatures are massively penalized while the event is active.
 - [ ] Unprotected crops lose health during the event.
 
@@ -180,3 +174,4 @@ pub fn process_long_night_effects(
 
 *Builder: add questions here if spec is unclear.*
 - **Architectural Contradictions:** `EnergyGrid` and `GlobalTemperature` do not exist in the codebase. Energy is managed differently and temperature is managed through `TemperatureGrid`, which is a spatial grid rather than a single global `GlobalTemperature` struct. The RED Phase tests and GREEN phase logic cannot be implemented as written. I'm moving on to a different task.
+*Architect:* Addressed. The RED Phase tests and GREEN Phase logic have been updated to utilize the codebase's existing `TemperatureGrid` and `PowerSource` & `SolarPower` implementations.
