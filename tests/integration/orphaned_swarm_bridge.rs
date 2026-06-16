@@ -1,7 +1,7 @@
 use bevy::prelude::*;
+use scale::layer1::core::chronicle::{AddChronicleEvent, EventImportance};
 use scale::layer1::core::integration::orphaned_swarm_chronicle_bridge;
 use scale::layer2::events_new::orphaned_swarm::SwarmHostileEvent;
-use scale::layer1::core::chronicle::{AddChronicleEvent, EventImportance};
 
 #[test]
 fn test_orphaned_swarm_chronicle_bridge() {

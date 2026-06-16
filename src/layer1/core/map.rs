@@ -379,3 +379,30 @@ mod tests {
         assert_eq!(viewport.x, 10);
     }
 }
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Component)]
+pub struct TilePos {
+    pub x: i32,
+    pub y: i32,
+}
+
+impl TilePos {
+    pub fn new(x: i32, y: i32) -> Self {
+        Self { x, y }
+    }
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Component)]
+pub struct ZLevel(pub i32);
+
+impl PartialOrd for ZLevel {
+    fn partial_cmp(&self, other: &Self) -> Option<std::cmp::Ordering> {
+        Some(self.cmp(other))
+    }
+}
+
+impl Ord for ZLevel {
+    fn cmp(&self, other: &Self) -> std::cmp::Ordering {
+        self.0.cmp(&other.0)
+    }
+}
