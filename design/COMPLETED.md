@@ -24,6 +24,7 @@
 - [x] `765` Diplomatic Wards — `specs/765-diplomatic-wards.md` — completed 2026-04-02
 - [x] `775` The Quantum Famine — `specs/775-the-quantum-famine.md` — completed 2026-03-20
 - [x] `INT-775` Integration: The Quantum Famine -> Chronicle — completed 2026-10-31
+- [x] `695` The Long Night — `specs/695-the-long-night.md` — completed 2026-10-31
 - [x] `626` The Cartographer's Curse — `specs/626-cartographers-curse.md` — completed 2026-03-24
 - [x] `1086` The Heirloom Tool — `specs/1086-the-heirloom-tool.md` — completed 2026-02-01
 # Completed Specs

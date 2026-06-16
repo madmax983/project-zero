@@ -190,8 +190,11 @@ fn init_simulation_resources(world: &mut World) {
     {
         world
             .init_resource::<Events<crate::layer1::nature::biosphere_empathy::FloraDamagedEvent>>();
+        world.init_resource::<Events<crate::layer1::nature::long_night::StartLongNightEvent>>();
     }
     world.init_resource::<crate::layer1::nature::biosphere_empathy::GlobalFloraHealth>();
+    world.init_resource::<Events<crate::layer1::nature::long_night::StartLongNightEvent>>();
+    world.init_resource::<crate::layer1::nature::long_night::LongNightEvent>();
     world.init_resource::<Events<crate::layer1::spiteful_will::OverrideWillEvent>>();
     world.init_resource::<crate::layer1::tectonic::TectonicStress>();
 
@@ -476,6 +479,10 @@ fn register_simulation_core_systems(schedule: &mut Schedule) {
 
     schedule.add_systems((crate::layer2::weather::weather_movement_system,));
     schedule.add_systems((
+        crate::layer1::nature::long_night::start_long_night,
+        crate::layer1::nature::long_night::process_long_night_effects.after(crate::layer1::nature::solar::update_solar_output_system),
+    ));
+    schedule.add_systems((
         crate::layer1::economy::apply_cultural_contraband_system,
         crate::layer3::planet::black_market_terraforming::trigger_rogue_terraforming,
         crate::layer3::planet::black_market_terraforming::apply_rogue_terraforming_events,
@@ -592,6 +599,7 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
         update_event_buffer::<crate::layer1::administration::edicts::HackCentralHubEvent>,
         update_event_buffer::<crate::layer1::administration::edicts::RevokePolicyEvent>,
         update_event_buffer::<crate::layer1::nature::solar_flare_lottery::SolarFlareEvent>,
+        update_event_buffer::<crate::layer1::nature::long_night::StartLongNightEvent>,
     ));
     schedule.add_systems((
         // Cleanup Layer 2 events
@@ -1152,6 +1160,7 @@ mod tests {
         world.init_resource::<Events<crate::layer1::spiteful_will::OverrideWillEvent>>();
         world
             .init_resource::<Events<crate::layer1::nature::biosphere_empathy::FloraDamagedEvent>>();
+        world.init_resource::<Events<crate::layer1::nature::long_night::StartLongNightEvent>>();
         world.init_resource::<crate::layer2::phantom::EmpireAutomationState>();
         world.init_resource::<Events<crate::layer2::trade::blockade::TradeShipArrivalEvent>>();
         world.init_resource::<Events<crate::layer2::trade::routes::SentientTollDemandEvent>>();
