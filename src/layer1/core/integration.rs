@@ -2,6 +2,8 @@
 
 use crate::layer1::balance::TICKS_PER_YEAR;
 use crate::layer1::core::chronicle::{AddChronicleEvent, EventImportance};
+use crate::layer1::social::sartorial_rebellion::{DressCodePolicy, SignifierType};
+
 use crate::layer1::core::map::GridPosition;
 use crate::layer1::cybernetics::MissingLimb;
 use crate::layer1::edicts::{ColonyPolicies, Policy};
@@ -2917,6 +2919,31 @@ pub fn track_negative_events_bridge_system(
                     #[allow(clippy::cast_precision_loss)]
                     time: time.tick as f32,
                 });
+            }
+        }
+    }
+}
+
+/// Bridges Sartorial Rebellion (DressCodePolicy) with Chronicle.
+/// Emits an AddChronicleEvent when a visual signifier is banned.
+pub fn sartorial_rebellion_chronicle_bridge(
+    policy: Option<Res<DressCodePolicy>>,
+    mut previous_banned: Local<Vec<SignifierType>>,
+    mut chronicle_events: EventWriter<AddChronicleEvent>,
+) {
+    if let Some(policy) = policy {
+        if policy.is_changed() {
+            for signifier in &policy.banned_signifiers {
+                if !previous_banned.contains(signifier) {
+                    chronicle_events.send(AddChronicleEvent {
+                        importance: EventImportance::Major,
+                        text: format!(
+                            "The colony administration has banned the wearing of {:?}",
+                            signifier
+                        ),
+                    });
+                    previous_banned.push(signifier.clone());
+                }
             }
         }
     }

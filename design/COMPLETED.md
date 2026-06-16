@@ -764,3 +764,5 @@
 - [x] `1306` Architectural Superstition — `specs/1306-architectural-superstition.md` — completed 2024-06-15
 - [x] `INT-1306` Integration: Negative Events -> Architectural Superstition - completed 2026-06-15
 - [x] `INT-1038` Integration: Dead Protocols -> Chronicle — completed 2026-06-15
+
+- [x] `INT-1284` Integration: Sartorial Rebellion -> Chronicle — completed 2026-06-16

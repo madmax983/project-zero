@@ -570,3 +570,6 @@ mod refugee_arrival_bridge;
 mod architectural_superstition_bridge;
 #[path = "integration/dead_protocol_bridge.rs"]
 mod dead_protocol_bridge;
+
+#[path = "integration/sartorial_rebellion_chronicle_bridge.rs"]
+mod sartorial_rebellion_chronicle_bridge;
