@@ -573,3 +573,5 @@ mod dead_protocol_bridge;
 
 #[path = "integration/dead_hand_bridge.rs"]
 mod dead_hand_bridge;
+#[path = "integration/orphaned_swarm_bridge.rs"]
+pub mod orphaned_swarm_bridge;

@@ -2833,7 +2833,7 @@ pub fn sync_scarcity_jobs_bridge_system(
     }
 }
 
-/// Bridges `Consumed` addition to `AddChronicleEvent` for Edible Architecture.
+/// INT-1041: Bridges `SwarmHostileEvent` to `AddChronicleEvent` for Orphaned Swarm.
 pub fn orphaned_swarm_chronicle_bridge(
     mut events: EventReader<crate::layer2::events_new::orphaned_swarm::SwarmHostileEvent>,
     mut chronicle_events: EventWriter<crate::layer1::core::chronicle::AddChronicleEvent>,
