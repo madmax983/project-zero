@@ -52,6 +52,7 @@ fn test_edible_architecture_chronicle_bridge() {
     let mut app = App::new();
     app.add_event::<scale::layer1::core::events::BuildingRemovedEvent>();
     app.add_event::<scale::layer1::core::chronicle::AddChronicleEvent>();
+    app.insert_resource(scale::layer1::economy::resources::ColonyResources { food: 10.0, ..Default::default() });
     app.add_systems(
         Update,
         (

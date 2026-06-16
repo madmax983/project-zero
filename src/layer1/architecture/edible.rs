@@ -67,7 +67,17 @@ pub fn consume_building_system(
 
         }
 
-        resources.food += edible.food_yield;
+        // resources.food += edible.food_yield; // we spawn items instead now
+        if let Ok((_b, pos)) = q_building.get(entity) {
+            for _ in 0..(edible.food_yield as u32) {
+                commands.spawn((
+                    crate::layer1::economy::items::Item {
+                        item_type: crate::layer1::economy::items::ItemType::Potato,
+                    },
+                    *pos,
+                ));
+            }
+        }
         commands.entity(entity).despawn();
 
         for mut morale in q_morale.iter_mut() {
@@ -191,7 +201,13 @@ mod tests {
         // Building should be despawned
         assert!(app.world().get_entity(building).is_err());
 
-        // Food should have increased
-        assert_eq!(app.world().resource::<ColonyResources>().food, 60.0);
+        let mut found_food = false;
+        for item in app.world_mut().query::<&crate::layer1::economy::items::Item>().iter(app.world()) {
+            if item.item_type == crate::layer1::economy::items::ItemType::Potato {
+                found_food = true;
+                break;
+            }
+        }
+        assert!(found_food, "Consuming the building should spawn food items.");
     }
 }

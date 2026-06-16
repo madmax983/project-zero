@@ -1338,6 +1338,8 @@ mod tests {
         world.init_resource::<bevy::prelude::Events<crate::layer1::energy::gravity_siphon::OrbitalDecayEvent>>();
 
         world.init_resource::<Events<crate::layer2::communications::signal_latency::ExecuteOrderEvent>>();
+        world.init_resource::<Events<crate::layer2::communications::signal_decay::RawCommsMessageEvent>>();
+        world.init_resource::<Events<crate::layer2::communications::signal_decay::CommsMessageEvent>>();
 
         let schedule = build_simulation_schedule();
         world.add_schedule(schedule);
