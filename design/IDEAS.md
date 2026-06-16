@@ -24301,3 +24301,46 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you preserve an ineffable, alien intelligence for long-term cultural and scientific ascendance, or bulldoze it for the immediate, brutal resources required to survive a war?
 
 ---
+
+
+## Social Mimicry Riots
+
+**Layer:** 1
+
+**Fantasy:** Fads start innocent, but scale into dangerous obsessions.
+
+**Mechanic:** If a Pop trend reaches high saturation (e.g. demanding a specific luxury), a "Fad Peak" occurs. Shortages of the fad item cause outsized mood penalties compared to normal needs.
+
+**Emergence:** Everyone wants glowing hats. The glowing hat factory breaks down. The resulting riot destroys the power plant.
+
+**Tension:** Do you indulge a fad for the immediate mood boost, knowing the inevitable shortage will be catastrophic?
+
+---
+
+## Generational Debt Bondage
+
+**Layer:** 1
+
+**Fantasy:** The company store owns your family tree.
+
+**Mechanic:** Pops who die with massive credit debt pass that debt onto their children. Children born into debt start with a permanent "Indentured" status, reducing their freedom and job options until it's paid off.
+
+**Emergence:** An accident kills your highest-paid specialized workers. Their children inherit massive housing debts and are forced into the mines to pay it off, starving your tech sector of new talent.
+
+**Tension:** Do you forgive debt to maintain a flexible workforce, or enforce it to keep your treasury full?
+
+---
+
+## The Ghost Grid
+
+**Layer:** Cross-layer
+
+**Fantasy:** The network remembers its past shape, and tries to return to it.
+
+**Mechanic:** When a large, interconnected set of buildings is destroyed, the "Ghost Grid" remains visible to the player. The game's pathfinding and logistics algorithms still subtly try to route resources *as if* the buildings were there, causing strange inefficiencies.
+
+**Emergence:** You rebuild a city after a bombardment. Your hauling drones keep getting stuck in empty fields, trying to deposit food into a granary that was vaporized ten years ago.
+
+**Tension:** Do you spend massive "Admin" points to purge the Ghost Grid, or manually micromanage routes until the AI forgets?
+
+---
