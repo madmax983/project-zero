@@ -772,3 +772,4 @@
 - [x] `1301` Edible Architecture — `specs/1301-edible-architecture.md` — completed 2026-06-16
 - [x] `1276` Signal Decay — `specs/1276-signal-decay.md` — completed 2024-06-16
 - [x] `552` The Subterranean Smog Layer — `specs/552-the-subterranean-smog-layer.md` — completed 2026-06-16
+- [x] `INT-1276` Integration: Signal Decay -> Chronicle — completed 2026-10-31

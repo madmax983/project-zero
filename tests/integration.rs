@@ -571,6 +571,9 @@ mod architectural_superstition_bridge;
 #[path = "integration/dead_protocol_bridge.rs"]
 mod dead_protocol_bridge;
 
+#[path = "integration/signal_decay_chronicle.rs"]
+mod signal_decay_chronicle;
+
 #[path = "integration/dead_hand_bridge.rs"]
 mod dead_hand_bridge;
 #[path = "integration/orphaned_swarm_bridge.rs"]
