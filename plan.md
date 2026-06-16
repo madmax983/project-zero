@@ -1,25 +1,27 @@
-1. **Append Fragments to `lore/FRAGMENTS.md`**
-   - Add new fragments for Sartorial Rebellion (Spec 1284).
-   - Add new fragments for Dead Protocols (Spec 1038).
-   - Add new fragments for The Orphaned Swarm (Spec 1041).
-   - Add new fragments for Debt of the Dead (Spec 877).
-   - Add new fragments for Light & Darkness (Spec 340).
-   - Add new fragments for Cassandra Syndrome (Spec 1305).
-2. **Append Templates to `lore/TEMPLATES.md`**
-   - Add templates for Sartorial Rebellion (Spec 1284).
-   - Add templates for Dead Protocols (Spec 1038).
-   - Add templates for The Orphaned Swarm (Spec 1041).
-   - Add templates for Debt of the Dead (Spec 877).
-   - Add templates for Light & Darkness (Spec 340).
-   - Add templates for Cassandra Syndrome (Spec 1305).
-   - Add templates for Architectural Superstition (Spec 1306).
-3. **Append Grammars to `lore/GRAMMARS.md`**
-   - Add chaining rules mapping events from the above mechanics to their consequences.
-4. **Append Lexicon entries to `lore/LEXICON.md`**
-   - Define vocabulary for the mechanics (e.g., Visual Signifiers, Diplomatic Beacon, Inherited Burden, Doomsday Warning).
-5. **Run test suite**
-   - Run `cargo test --lib` to ensure no unexpected regressions are introduced.
-6. **Pre-commit step**
+1. **RED Phase (Failing Tests)**
+   - Create `src/layer1/nature/long_night.rs`.
+   - Add the tests from the `695-the-long-night.md` spec to `src/layer1/nature/long_night.rs`.
+   - Update `src/layer1/nature/mod.rs` to include `pub mod long_night;` and `pub use long_night::*;`.
+   - Update `src/layer1/mod.rs` or `src/setup.rs` to include the `long_night` systems. (Wait, let's just make the tests pass first).
+
+2. **GREEN Phase (Minimal Implementation)**
+   - Implement `LongNightEvent`, `StartLongNightEvent`, `Crop`, `start_long_night`, and `process_long_night_effects` in `src/layer1/nature/long_night.rs` to make the tests pass.
+   - Register the `StartLongNightEvent` in the Bevy app, along with the systems (`start_long_night`, `process_long_night_effects`). Look for a setup file.
+
+3. **REFACTOR Phase (Quality & Design)**
+   - Consider the refactoring points from the spec if time permits and risk is low.
+
+4. **Verify Tests and Coverage**
+   - Run `cargo test --lib layer1::nature::long_night`.
+   - Ensure the tests compile and pass.
+   - Run `cargo clippy --all-targets --all-features -- -D warnings`.
+   - Run `cargo llvm-cov --lib layer1::nature::long_night` to ensure coverage is >= 85%.
+   - Run `cargo test`.
+   - Run `cargo check`.
+
+5. **Pre-commit Steps**
    - Complete pre-commit steps to ensure proper testing, verification, review, and reflection are done.
-7. **Submit changes**
-   - Use `default_api:submit` with message "lore: add lore hooks for recently completed mechanics".
+
+6. **Submit**
+   - Move task `695` from `IN_PROGRESS.md` to `COMPLETED.md`.
+   - Submit the changes using the Builder prompt's required commit format.

@@ -1,7 +1,8 @@
-//! Nature
-//!
-//! Handles ecology, terrain generation, weather, and natural phenomena.
-
+pub mod long_night;
+pub use long_night::*;
+/// Nature
+///
+/// Handles ecology, terrain generation, weather, and natural phenomena.
 pub mod atmosphere;
 pub mod atmospheric_empathy;
 pub use atmospheric_empathy::*;

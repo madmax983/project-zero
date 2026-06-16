@@ -33,7 +33,6 @@
 ## Future / Ideas
 
 
-- [ ] `695` The Long Night — `specs/695-the-long-night.md`
 
 - [ ] `552` The Subterranean Smog Layer — `specs/552-the-subterranean-smog-layer.md`
 - [ ] `555` The Symbiotic Insurgency — `specs/555-the-symbiotic-insurgency.md`
