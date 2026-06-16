@@ -7,8 +7,8 @@ use crate::layer1::energy::PowerConsumer;
 use crate::layer1::map::GridPosition;
 use crate::layer1::resources::{ColonyResources, ResourceItem};
 use crate::layer1::terrain::{TerrainGrid, TerrainType};
+use bevy::utils::{HashMap, HashSet};
 use bevy_ecs::prelude::*;
-use std::collections::{HashMap, HashSet};
 
 /// The physical variant of a conveyor belt.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
@@ -51,6 +51,8 @@ pub struct Inserter {
 }
 
 /// Moves items that are on active conveyor belts.
+///
+/// ⚡ Bolt Optimization: Uses `bevy::utils::HashMap` and `HashSet` (AHash) instead of `std::collections` equivalents to eliminate SipHash overhead on grid positions.
 #[allow(clippy::type_complexity, clippy::cast_sign_loss)]
 pub fn conveyor_system(
     mut queries: ParamSet<(
@@ -125,12 +127,14 @@ pub fn conveyor_system(
 }
 
 /// Collects items on active hoppers into colony resources.
+///
+/// ⚡ Bolt Optimization: Uses `bevy::utils::HashMap` and `HashSet` (AHash) instead of `std::collections` equivalents to eliminate SipHash overhead on grid positions.
 #[allow(clippy::type_complexity)]
 pub fn inserter_system(
     inserters: Query<(&GridPosition, &Inserter, &PowerConsumer)>,
     mut items: Query<(Entity, &mut GridPosition), (With<ResourceItem>, Without<Inserter>)>,
 ) {
-    let mut active_inserters = std::collections::HashMap::new();
+    let mut active_inserters = HashMap::new();
     for (pos, inserter, power) in &inserters {
         if power.active {
             active_inserters.insert(*pos, inserter);
@@ -140,7 +144,7 @@ pub fn inserter_system(
         return;
     }
 
-    let mut taken = std::collections::HashSet::new();
+    let mut taken = HashSet::new();
     for (pos, inserter) in active_inserters {
         let pickup_pos = GridPosition {
             x: pos.x + inserter.pickup_direction.to_delta().0,
