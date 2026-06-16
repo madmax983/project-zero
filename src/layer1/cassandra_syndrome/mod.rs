@@ -35,7 +35,9 @@ pub fn generate_doomsday_warning(
         if prophetic.cooldown <= 0.0 {
             let disaster_type = DisasterType::MassiveEarthquake;
 
-            commands.entity(entity).insert(ActiveProphecy { disaster_type });
+            commands
+                .entity(entity)
+                .insert(ActiveProphecy { disaster_type });
 
             warning_writer.send(DoomsdayWarningEvent {
                 prophet_entity: entity,
