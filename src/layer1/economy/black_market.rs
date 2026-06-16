@@ -13,7 +13,7 @@ pub struct ColonyStats {
 /// Marker component for a pop acting as a smuggler.
 pub struct Smuggler;
 
-/// Spawns smugglers if unmet luxury needs are high.
+/// Spawns smugglers if unmet luxury needs are high. (Legacy Implementation)
 pub fn black_market_spawn_system(mut commands: Commands, stats: Res<ColonyStats>) {
     if stats.unmet_luxury > 50 {
         commands.spawn(Smuggler);
@@ -48,6 +48,7 @@ pub struct ShutdownDropNodeEvent {
     pub node_entity: Entity,
 }
 
+/// Handles the arrival of a smuggler, establishing a DropNode (RED/GREEN Phase Spec 1043)
 pub fn handle_smuggler_arrival(
     mut commands: Commands,
     mut events: EventReader<SmugglerArrivalEvent>,
@@ -57,6 +58,7 @@ pub fn handle_smuggler_arrival(
     }
 }
 
+/// Allows desperate pops to exchange colony resources (metal) for contraband morale boosts (RED/GREEN Phase Spec 1043)
 pub fn pop_smuggling_system(
     mut colony_resources: ResMut<crate::layer1::economy::resources::ColonyResources>,
     mut drop_nodes: Query<&mut DropNode>,

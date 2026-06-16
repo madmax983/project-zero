@@ -227,6 +227,9 @@ pub fn register(schedule: &mut Schedule) {
     schedule.add_systems(
         (
             crate::layer1::economy::beacon::process_colony_beacon_system,
+            crate::layer1::economy::black_market::handle_smuggler_arrival,
+            crate::layer1::economy::black_market::pop_smuggling_system,
+            crate::layer1::economy::black_market::shutdown_drop_node_system,
             crate::layer1::economy::beacon::toggle_beacon_system,
             crate::layer1::integration::beacon_migrant_arrival_bridge,
             crate::layer1::integration::beacon_trade_ship_bridge,
