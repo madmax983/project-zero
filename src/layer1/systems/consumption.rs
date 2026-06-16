@@ -34,6 +34,13 @@ pub fn register(schedule: &mut Schedule) {
             consume_void_ale_system.after(consume_food_system),
             crate::layer1::drone::drone_battery_system.after(consume_food_system),
             clothing_wear_system.after(consume_food_system),
+        )
+            .in_set(Layer1SystemSet::Consumption),
+    );
+
+    schedule.add_systems(
+        (
+            crate::layer1::clothing::hypothermia_system.after(clothing_wear_system),
             vermin_growth_system.after(consume_food_system),
             vermin_effect_system.after(vermin_growth_system),
             vermin_morale_system.after(vermin_growth_system),
