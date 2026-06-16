@@ -765,3 +765,5 @@
 - [x] `INT-1306` Integration: Negative Events -> Architectural Superstition - completed 2026-06-15
 - [x] `INT-1038` Integration: Dead Protocols -> Chronicle — completed 2026-06-15
 - [x] `1305` The Cassandra Syndrome — `specs/1305-the-cassandra-syndrome.md` — completed 2026-02-01
+
+- [x] `1301` Edible Architecture — `specs/1301-edible-architecture.md` — completed 2026-06-16

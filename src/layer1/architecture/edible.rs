@@ -49,8 +49,9 @@ pub fn consume_building_system(
     mut removed_events: EventWriter<BuildingRemovedEvent>,
     q_building: Query<(&Building, &GridPosition)>,
     mut q_morale: Query<&mut Morale, With<Pop>>,
+    mut resources: ResMut<crate::layer1::economy::resources::ColonyResources>,
 ) {
-    for (entity, _edible) in q_edible_buildings.iter() {
+    for (entity, edible) in q_edible_buildings.iter() {
         if let Ok((building, pos)) = q_building.get(entity) {
             removed_events.send(BuildingRemovedEvent {
                 entity,
@@ -64,15 +65,9 @@ pub fn consume_building_system(
                 occupied.0.remove(&(pos.x, pos.y));
             }
 
-            // Spawn food item
-            commands.spawn((
-                crate::layer1::economy::items::Item {
-                    item_type: crate::layer1::economy::items::ItemType::Potato,
-                },
-                *pos,
-            ));
         }
 
+        resources.food += edible.food_yield;
         commands.entity(entity).despawn();
 
         for mut morale in q_morale.iter_mut() {
@@ -91,7 +86,7 @@ mod tests {
     use crate::layer1::architecture::building::{Building, BuildingType};
     use bevy::prelude::*;
 
-    use crate::layer1::economy::items::{Item, ItemType};
+
 
     use crate::layer1::economy::resources::ColonyResources;
 
@@ -196,17 +191,7 @@ mod tests {
         // Building should be despawned
         assert!(app.world().get_entity(building).is_err());
 
-        // Food items should be spawned
-        let mut found_food = false;
-        for item in app.world_mut().query::<&Item>().iter(app.world()) {
-            if item.item_type == ItemType::Potato {
-                found_food = true;
-                break;
-            }
-        }
-        assert!(
-            found_food,
-            "Consuming the building should spawn food items (Potato for MVP). Found total items."
-        );
+        // Food should have increased
+        assert_eq!(app.world().resource::<ColonyResources>().food, 60.0);
     }
 }
