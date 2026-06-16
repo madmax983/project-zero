@@ -9570,3 +9570,78 @@ Descriptions of their stress and breakdowns.
 - phantom machinery noises
 - the sudden fires
 - bad luck
+
+
+## The Orphaned Swarm Fragments (Spec 1041)
+
+## Fragment Type: [SWARM_BEHAVIOR]
+- perfectly synchronized
+- erratic and twitchy
+- ruthlessly efficient
+- coldly calculating
+- silent and fast
+- decaying in logic
+- hyper-optimized for death
+- mindlessly repairing
+- systematically exterminating
+- degrading
+
+## The Cassandra Syndrome Fragments (Spec 1305)
+
+## Fragment Type: [DOOMSDAY_PREDICTION]
+- the sky falling
+- a great fire from the stars
+- the rot that takes us all
+- the day the sun dies
+- an invisible plague
+- the ground cracking open
+- an endless winter
+- the screaming machines
+
+## The Debt of the Dead Fragments (Spec 877)
+
+## Fragment Type: [DEBT_CONSEQUENCE]
+- sold into servitude
+- forced to the mines
+- crushing poverty
+- inherited shame
+- generations of labor
+- broken under the weight of credits
+- starved to pay the ledger
+- ruined by compound interest
+
+## Sartorial Rebellion Fragments (Spec 1284)
+
+## Fragment Type: [VISUAL_SIGNIFIER]
+- rolled sleeves
+- backwards caps
+- bright crimson armbands
+- shaved heads
+- asymmetrical haircuts
+- modified jumpsuits
+- improvised badges
+- torn insignia
+
+## Dead Protocols Fragments (Spec 1038)
+
+## Fragment Type: [ANCIENT_RULE]
+- Do not mine the red worlds
+- Do not speak into the void
+- Leave the monoliths untouched
+- Do not cross the quarantine line
+- Never power the old machines
+- Do not alter the atmosphere
+- Keep the population below the threshold
+- Offer tribute to the dark stars
+
+## Light & Darkness Fragments (Spec 340)
+
+## Fragment Type: [DARKNESS_FEAR]
+- what moves in the shadows
+- the unseen watchers
+- the cold black
+- the suffocating gloom
+- the things that hate the light
+- the whispering dark
+- the terror of the unlit corridors
+- the encroaching night

@@ -5565,3 +5565,76 @@
 **Replaces:** Unlucky buildings, bad pathfinding, sub-optimal layout
 **Code reference:** `Cursed` component
 **Usage:** "The hospital is Cursed; no one will go near it." / "Architectural Superstition is ruining our efficiency."
+
+
+## The Orphaned Swarm (Spec 1041)
+
+### The Orphaned Swarm
+**Replaces:** Automated drones, free labor
+**Code reference:** `SwarmArrivalEvent`
+**Usage:** "The Orphaned Swarm built the new sector in days."
+
+### The Optimization Protocol
+**Replaces:** Drone corruption, extermination event
+**Code reference:** `SwarmCorruptionEvent`
+**Usage:** "The Optimization Protocol decided we were inefficient."
+
+## The Cassandra Syndrome (Spec 1305)
+
+### Doomsday Warning
+**Replaces:** False alarm, prediction
+**Code reference:** `DoomsdayWarningEvent`
+**Usage:** "Another Doomsday Warning from the Prophet."
+
+### The True Prophet
+**Replaces:** Validated predictor, cult leader
+**Code reference:** `CultLeader`
+**Usage:** "The True Prophet tried to save them."
+
+## The Debt of the Dead (Spec 877)
+
+### Inherited Burden
+**Replaces:** Passed down debt
+**Code reference:** Morale modifier "Inherited Burden"
+**Usage:** "He was born into an Inherited Burden."
+
+### Socialized Debt
+**Replaces:** Public economic penalty
+**Code reference:** `ColonyEconomy.socialized_debt`
+**Usage:** "The Socialized Debt makes bread unaffordable."
+
+## Sartorial Rebellion (Spec 1284)
+
+### Visual Signifiers
+**Replaces:** Unofficial uniforms, gang colors
+**Code reference:** `VisualSignifier`
+**Usage:** "The Visual Signifiers are spreading through the lower decks."
+
+### The Dress Code
+**Replaces:** Authority, suppression of expression
+**Code reference:** `enforce_dress_code_system`
+**Usage:** "The Dress Code is enforced at the barrel of a gun."
+
+## Dead Protocols (Spec 1038)
+
+### Diplomatic Beacon
+**Replaces:** Warning buoy, ancient treaty
+**Code reference:** `DeadProtocol`
+**Usage:** "A Diplomatic Beacon warns us away from the gas giant."
+
+### The Enforcers
+**Replaces:** Ancient defense fleet, pirate proxy
+**Code reference:** `FleetFaction::AncientEnforcer` / `ViolationEvent`
+**Usage:** "The Enforcers awoke when we mined the red world."
+
+## Light & Darkness (Spec 340)
+
+### The Dark
+**Replaces:** Unlit tiles, 0.0 light level
+**Code reference:** `LightLevel { intensity: 0.0 }`
+**Usage:** "Stay out of The Dark."
+
+### The Suffocating Gloom
+**Replaces:** Darkness stress penalty
+**Code reference:** `DARKNESS_STRESS_RATE`
+**Usage:** "The Suffocating Gloom broke his mind before the beasts did."

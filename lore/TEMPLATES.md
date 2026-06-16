@@ -9230,3 +9230,109 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: The souls at [COLONY] refuse to enter the [BUILDING_NAME]. They whisper about [SUPERSTITION_FOCUS]."
 - "A functional [BUILDING_NAME] was abandoned at [COLONY]. Irrational fears of [SUPERSTITION_FOCUS] gripped the souls. [YEAR]."
 - "[YEAR]: Efficiency plummeted at the [BUILDING_NAME]. The souls are convinced it is cursed due to [SUPERSTITION_FOCUS]."
+
+
+## The Orphaned Swarm Templates (Spec 1041)
+
+## Template: SWARM_ARRIVAL
+**Generates:** Play event
+**Slots:** [SYSTEM], [YEAR], [SWARM_BEHAVIOR]
+**Patterns:**
+- "[YEAR]: A derelict entered [SYSTEM]. The drones awoke. They are [SWARM_BEHAVIOR]."
+- "The automated fleet arrived in [SYSTEM]. At first, their [SWARM_BEHAVIOR] logic was a blessing."
+
+## Template: SWARM_CORRUPTION
+**Generates:** Play event
+**Slots:** [SYSTEM], [YEAR], [DEATHS]
+**Patterns:**
+- "[YEAR]: The drones in [SYSTEM] redefined 'friend'. [DEATHS] souls lost to optimization."
+- "The swarm turned. Their protocols broke. [SYSTEM] mourns [DEATHS]."
+
+## The Cassandra Syndrome Templates (Spec 1305)
+
+## Template: DOOMSDAY_WARNING
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [PROPHET_NAME], [DOOMSDAY_PREDICTION]
+**Patterns:**
+- "[YEAR]: [PROPHET_NAME] walked the streets of [COLONY], warning of [DOOMSDAY_PREDICTION]. No one listened."
+- "In [COLONY], [PROPHET_NAME] spoke of [DOOMSDAY_PREDICTION]. The colony laughed."
+
+## Template: PROPHECY_FULFILLED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [PROPHET_NAME], [DOOMSDAY_PREDICTION]
+**Patterns:**
+- "[YEAR]: [DOOMSDAY_PREDICTION] came to pass in [COLONY]. [PROPHET_NAME] was right. The Cult forms."
+- "[PROPHET_NAME] did not smile when [DOOMSDAY_PREDICTION] struck [COLONY]. They only gathered their followers."
+
+## Template: FALSE_PROPHET
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [PROPHET_NAME]
+**Patterns:**
+- "[YEAR]: The doom never came. [PROPHET_NAME] was exiled from [COLONY] in disgrace."
+- "[COLONY] remembers the panic, but not the disaster. [PROPHET_NAME] was wrong."
+
+## The Debt of the Dead Templates (Spec 877)
+
+## Template: INHERITED_BURDEN
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [DEBTOR_NAME], [RELATIVE_NAME], [DEBT_CONSEQUENCE]
+**Patterns:**
+- "[YEAR]: [DEBTOR_NAME] died in [COLONY], but the ledger remains. [RELATIVE_NAME] now faces [DEBT_CONSEQUENCE]."
+- "The debt of [DEBTOR_NAME] fell upon [RELATIVE_NAME]. Now, there is only [DEBT_CONSEQUENCE]."
+
+## Template: DEBT_SOCIALIZED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [DEBTOR_NAME]
+**Patterns:**
+- "[YEAR]: [DEBTOR_NAME] left no kin in [COLONY]. The debt belongs to us all now."
+- "The colony of [COLONY] shares the burden of [DEBTOR_NAME]'s unpaid ledger."
+
+## Sartorial Rebellion Templates (Spec 1284)
+
+## Template: SARTORIAL_REBELLION_START
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [VISUAL_SIGNIFIER]
+**Patterns:**
+- "[YEAR]: The workers in [COLONY] adopted [VISUAL_SIGNIFIER]. A quiet defiance."
+- "[VISUAL_SIGNIFIER] became the symbol of unrest in [COLONY]."
+
+## Template: DRESS_CODE_ENFORCED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [VISUAL_SIGNIFIER]
+**Patterns:**
+- "[YEAR]: [COLONY] command banned [VISUAL_SIGNIFIER]. Order is restored, but resentment brews."
+- "The crackdown in [COLONY] outlawed [VISUAL_SIGNIFIER]. The uniform is absolute."
+
+## Dead Protocols Templates (Spec 1038)
+
+## Template: DEAD_PROTOCOL_DISCOVERED
+**Generates:** Play event
+**Slots:** [SYSTEM], [YEAR], [ANCIENT_RULE]
+**Patterns:**
+- "[YEAR]: A beacon in [SYSTEM] translates a demand from the dead: [ANCIENT_RULE]."
+- "We found an old treaty in [SYSTEM]. It simply stated: [ANCIENT_RULE]."
+
+## Template: DEAD_PROTOCOL_VIOLATED
+**Generates:** Play event
+**Slots:** [SYSTEM], [YEAR], [ANCIENT_RULE]
+**Patterns:**
+- "[YEAR]: We ignored the warning in [SYSTEM]. We broke the rule: [ANCIENT_RULE]. The Enforcers awoke."
+- "The ancient pact was broken. For failing to heed '[ANCIENT_RULE]', [SYSTEM] now burns."
+
+## Light & Darkness Templates (Spec 340)
+
+## Template: DARKNESS_INCIDENT
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [DARKNESS_FEAR]
+**Patterns:**
+- "[YEAR]: The lights failed in Sector 4 of [COLONY]. They whisper of [DARKNESS_FEAR]."
+- "Without power, [COLONY] learned to fear [DARKNESS_FEAR]."
+
+## Architectural Superstition Templates (Spec 1306)
+
+## Template: BUILDING_CURSED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [SUPERSTITION_FOCUS]
+**Patterns:**
+- "[YEAR]: Too much death in the old facility in [COLONY]. Now they whisper of [SUPERSTITION_FOCUS]."
+- "The workers in [COLONY] refuse to enter. They blame [SUPERSTITION_FOCUS]."
