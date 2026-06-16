@@ -643,7 +643,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1025` Gravity Plating Failure — `specs/1025-gravity-plating-failure.md`
 - [ ] `1024` The Artist's Muse — `specs/1024-the-artists-muse.md`
 - [ ] `1023` Temporal Fugue — `specs/1023-temporal-fugue.md`
-- [ ] `1022` The Hive Mind Integration — `specs/1022-the-hive-mind-integration.md`
 - [ ] `1036` Institutional Memory — `specs/1036-institutional-memory.md`
 - [ ] `1037` Blind Jump — `specs/1037-blind-jump.md`
 - [ ] `1038` Dead Protocols — `specs/1038-dead-protocols.md`

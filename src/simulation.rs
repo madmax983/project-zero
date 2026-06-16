@@ -387,6 +387,7 @@ fn init_simulation_resources(world: &mut World) {
             world.init_resource::<Events<crate::layer1::logistics::beanstalk::BeanstalkEvent>>();
             world.init_resource::<Events<crate::layer3::treaty_cruisers::InspectionEvent>>();
             world.init_resource::<crate::layer3::treaty_cruisers::ActiveTreaties>();
+            world.init_resource::<Events<crate::layer2::events_new::orphaned_swarm::SwarmHostileEvent>>();
 
             let mut schedule = build_simulation_schedule();
             schedule.add_systems((
@@ -1322,6 +1323,7 @@ mod tests {
         world.init_resource::<Events<crate::layer3::diplomacy::retro_contracts::AcceptRetroContractEvent>>();
         world.init_resource::<Events<crate::layer3::diplomacy::retro_contracts::RetroContractFailedEvent>>();
         world.init_resource::<crate::layer3::treaty_cruisers::ActiveTreaties>();
+            world.init_resource::<Events<crate::layer2::events_new::orphaned_swarm::SwarmHostileEvent>>();
 
         world.init_resource::<crate::layer3::digital_detritus::DataMiningQueue>();
         world.init_resource::<crate::layer3::digital_detritus::DiscoveredTechs>();

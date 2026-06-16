@@ -49,7 +49,7 @@ pub fn consume_building_system(
     mut removed_events: EventWriter<BuildingRemovedEvent>,
     q_building: Query<(&Building, &GridPosition)>,
     mut q_morale: Query<&mut Morale, With<Pop>>,
-    mut resources: ResMut<crate::layer1::economy::resources::ColonyResources>,
+    _resources: ResMut<crate::layer1::economy::resources::ColonyResources>,
 ) {
     for (entity, edible) in q_edible_buildings.iter() {
         if let Ok((building, pos)) = q_building.get(entity) {

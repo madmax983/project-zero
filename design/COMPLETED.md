@@ -770,3 +770,4 @@
 
 - [x] `1301` Edible Architecture — `specs/1301-edible-architecture.md` — completed 2026-06-16
 - [x] `1276` Signal Decay — `specs/1276-signal-decay.md` — completed 2024-06-16
+- [x] `1022` The Hive Mind Integration — `specs/1022-the-hive-mind-integration.md` — completed 2026-02-01
