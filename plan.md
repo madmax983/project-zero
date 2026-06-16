@@ -1,12 +1,25 @@
-1. **Refactor Pyramids of Doom & Duplication in `src/layer1/core/integration.rs`**:
-   - Extract memory insertion into a helper function `grant_inspector_memory` inside `src/layer1/core/integration.rs` to flatten `inspector_outcome_bridge_system`. This will replace the duplicated `.par_iter_mut().for_each(...)` loops for adding memories to pops.
-   - Refactor `public_grievance_grudge_bridge` by extracting the `add_or_update_grudge` logic into a helper function to avoid duplicating the code between entities that already have the component and those getting a new one.
-
-2. **Verify tests and format**:
-   - Run `cargo fmt --all`
-   - Run `cargo clippy --all-targets --all-features -- -D warnings`
-   - Run `cargo test --lib layer1` or similar to make sure tests pass.
-
-3. Complete pre-commit steps to ensure proper testing, verification, review, and reflection are done.
-
-4. Submit change using `default_api:submit` with the appropriate branch, title and message.
+1. **Append Fragments to `lore/FRAGMENTS.md`**
+   - Add new fragments for Sartorial Rebellion (Spec 1284).
+   - Add new fragments for Dead Protocols (Spec 1038).
+   - Add new fragments for The Orphaned Swarm (Spec 1041).
+   - Add new fragments for Debt of the Dead (Spec 877).
+   - Add new fragments for Light & Darkness (Spec 340).
+   - Add new fragments for Cassandra Syndrome (Spec 1305).
+2. **Append Templates to `lore/TEMPLATES.md`**
+   - Add templates for Sartorial Rebellion (Spec 1284).
+   - Add templates for Dead Protocols (Spec 1038).
+   - Add templates for The Orphaned Swarm (Spec 1041).
+   - Add templates for Debt of the Dead (Spec 877).
+   - Add templates for Light & Darkness (Spec 340).
+   - Add templates for Cassandra Syndrome (Spec 1305).
+   - Add templates for Architectural Superstition (Spec 1306).
+3. **Append Grammars to `lore/GRAMMARS.md`**
+   - Add chaining rules mapping events from the above mechanics to their consequences.
+4. **Append Lexicon entries to `lore/LEXICON.md`**
+   - Define vocabulary for the mechanics (e.g., Visual Signifiers, Diplomatic Beacon, Inherited Burden, Doomsday Warning).
+5. **Run test suite**
+   - Run `cargo test --lib` to ensure no unexpected regressions are introduced.
+6. **Pre-commit step**
+   - Complete pre-commit steps to ensure proper testing, verification, review, and reflection are done.
+7. **Submit changes**
+   - Use `default_api:submit` with message "lore: add lore hooks for recently completed mechanics".
