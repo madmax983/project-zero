@@ -56,6 +56,7 @@ fn test_edible_architecture_chronicle_bridge() {
         food: 10.0,
         ..Default::default()
     });
+    app.insert_resource(scale::layer1::economy::resources::ColonyResources { food: 10.0, ..Default::default() });
     app.add_systems(
         Update,
         (

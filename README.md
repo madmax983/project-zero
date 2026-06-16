@@ -44,6 +44,8 @@ trunk serve
 
 ### Procedural Generation (Narrative)
 
+# REQUIRES FEATURE NOVA
+
 > ⚠️ **REQUIRES FEATURE NOVA**
 >
 > **NOTE:** Do not attempt to run this snippet without enabling `features = ["nova"]` in your `Cargo.toml`.
@@ -82,7 +84,7 @@ fn main() {
 }
 ```
 
-See `examples/narrative_demo.rs` for a complete example.
+See `examples/story_demo.rs` for a complete example.
 
 **Note:** This is the **base narrative system** (mad-libs style text generation). It is available in the default build.
 For the **advanced simulation of legends** (Oral Tradition), see the [Oral Tradition](#oral-tradition-nova-feature) section below.
