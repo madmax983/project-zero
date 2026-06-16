@@ -806,3 +806,20 @@ pub fn dead_protocol_chronicle_bridge(
         });
     }
 }
+
+use crate::layer2::communications::signal_decay::CommsMessageEvent;
+
+/// Bridges `CommsMessageEvent` to `AddChronicleEvent`
+pub fn signal_decay_chronicle_bridge(
+    mut events: EventReader<CommsMessageEvent>,
+    mut chronicle_events: EventWriter<AddChronicleEvent>,
+) {
+    for event in events.read() {
+        if event.corruption_level > 0.0 {
+            chronicle_events.send(AddChronicleEvent {
+                importance: EventImportance::Major,
+                text: format!("We received a corrupted message: '{}'. Signal interference detected.", event.text),
+            });
+        }
+    }
+}

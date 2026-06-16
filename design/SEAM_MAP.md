@@ -1496,3 +1496,10 @@
 - **Glue added:** Added `dead_hand_chronicle_bridge` in `src/layer1/core/integration.rs` to generate Chronicle records when DoomsdayTriggeredEvent is emitted.
 - **Schedule:** Registered in Layer 1 Observation schedule (`src/layer1/systems/observation.rs`).
 - **Tests:** `tests/integration/dead_hand_bridge.rs`
+
+### INT-1276: Signal Decay -> Chronicle
+- **Date:** 2026-10-31
+- **Systems connected:** `calculate_signal_decay_system` -> `signal_decay_chronicle_bridge` -> `AddChronicleEvent`
+- **Glue added:** `signal_decay_chronicle_bridge` in `src/layer2/integration.rs` to generate Chronicle records when corrupted comms messages are received.
+- **Schedule:** Registered the systems in `src/simulation.rs`.
+- **Tests:** `tests/integration/signal_decay_chronicle.rs`
