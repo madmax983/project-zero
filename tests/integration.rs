@@ -575,3 +575,6 @@ mod dead_protocol_bridge;
 mod dead_hand_bridge;
 #[path = "integration/orphaned_swarm_bridge.rs"]
 pub mod orphaned_swarm_bridge;
+
+#[path = "integration/subterranean_smog_bridge.rs"]
+mod subterranean_smog_bridge;

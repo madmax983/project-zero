@@ -1496,3 +1496,16 @@
 - **Glue added:** Added `dead_hand_chronicle_bridge` in `src/layer1/core/integration.rs` to generate Chronicle records when DoomsdayTriggeredEvent is emitted.
 - **Schedule:** Registered in Layer 1 Observation schedule (`src/layer1/systems/observation.rs`).
 - **Tests:** `tests/integration/dead_hand_bridge.rs`
+
+### INT-552: Subterranean Smog Layer -> Pop Movement/Health
+- **Date:** 2026-10-31
+- **Systems connected:** `BuildingCompletedEvent` -> `subterranean_smog_bridge_system` -> `HeavyIndustry` (read by `process_subterranean_smog_system`)
+- **Glue added:** `subterranean_smog_bridge_system` in `src/layer1/core/integration.rs` to mark new `Refinery` and `Generator` buildings as heavy industry.
+- **Schedule:** Added to `Layer1SystemSet::Observation` in `src/layer1/systems/observation.rs`.
+- **Tests:** `tests/integration/subterranean_smog_bridge.rs`
+
+### INT-1276: Signal Decay -> Simulation
+- **Date:** 2026-10-31
+- **Systems connected:** `RawCommsMessageEvent` -> `calculate_signal_decay_system` -> `CommsMessageEvent`
+- **Glue added:** Registered `calculate_signal_decay_system` in `src/simulation.rs` so messages undergo corruption before consumption.
+- **Tests:** `src/layer2/communications/signal_decay.rs` (unit tests handle the logic verification)

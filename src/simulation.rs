@@ -60,6 +60,9 @@ pub fn build_simulation_schedule() -> Schedule {
 /// Run one simulation tick: all game systems via schedule, then increment tick counter.
 #[allow(clippy::too_many_lines)]
 fn init_simulation_resources(world: &mut World) {
+    world.init_resource::<bevy::prelude::Events<crate::layer2::communications::signal_decay::RawCommsMessageEvent>>();
+    world.init_resource::<bevy::prelude::Events<crate::layer2::communications::signal_decay::CommsMessageEvent>>();
+    world.init_resource::<crate::layer1::atmosphere::SmogGrid>();
     world.init_resource::<Events<crate::layer1::AcceptSponsorshipEvent>>();
     world
         .init_resource::<Events<crate::layer3::events::generational_debt::RepoFleetArrivalEvent>>();
@@ -738,6 +741,8 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
         crate::layer2::integration::pre_trade_route_sync_system
             .before(crate::layer2::trade::routes::execute_trade_routes_system),
         crate::layer2::trade::routes::execute_trade_routes_system,
+        crate::layer2::communications::signal_decay::calculate_signal_decay_system,
+
         crate::layer3::integration::language_drift_trade_bridge
             .after(crate::layer2::trade::routes::execute_trade_routes_system),
         crate::layer2::trade::routes::increase_route_complexity_system,

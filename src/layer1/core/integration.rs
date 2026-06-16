@@ -2939,3 +2939,27 @@ pub fn dead_hand_chronicle_bridge(
         });
     }
 }
+
+/// INT-552: Subterranean Smog Layer -> Heavy Industry
+/// Adds `HeavyIndustry` to newly completed industrial buildings.
+pub fn subterranean_smog_bridge_system(
+    mut commands: bevy::prelude::Commands,
+    mut events: bevy::prelude::EventReader<crate::layer1::core::events::BuildingCompletedEvent>,
+    query: bevy::prelude::Query<(&crate::layer1::architecture::building::Building, Option<&crate::layer1::map::ZLevel>)>,
+) {
+    for event in events.read() {
+        if let Ok((building, z_level)) = query.get(event.entity) {
+            match building.building_type {
+                crate::layer1::architecture::building::BuildingType::Refinery
+                | crate::layer1::architecture::building::BuildingType::Generator => {
+                    let z = z_level.copied().unwrap_or(crate::layer1::map::ZLevel(0));
+                    commands.entity(event.entity).insert(crate::layer1::nature::subterranean_smog::HeavyIndustry {
+                        active: true,
+                        z_level: z,
+                    });
+                }
+                _ => {}
+            }
+        }
+    }
+}
