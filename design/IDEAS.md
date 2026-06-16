@@ -24344,3 +24344,43 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you spend massive "Admin" points to purge the Ghost Grid, or manually micromanage routes until the AI forgets?
 
 ---
+
+## Atmospheric Sabotage
+
+**Layer:** Cross-layer
+
+**Fantasy:** Weaponizing the very air your enemies breathe.
+
+**Mechanic:** Specialized covert ships (Layer 2) can stealthily inject distinct chemical precursors into a planet's atmosphere (Layer 1). These precursors are harmless alone, but when the planet naturally triggers a specific weather event (e.g., a thunderstorm or solar flare), the chemicals react, turning the rain acidic or the air momentarily toxic.
+
+**Emergence:** You slowly poison a rival empire's agricultural breadbasket over years without triggering their orbital defense grids. When the monsoon season finally arrives, their entire harvest is instantly liquidated, and their civilization collapses into famine while you maintain complete plausible deniability.
+
+**Tension:** Do you invest in slow, insidious, deniable warfare, or direct, immediate, but politically costly kinetic strikes?
+
+## Xenobiological Assimilation Trade
+
+**Layer:** Cross-layer
+
+**Fantasy:** Embracing the strange to survive, blurring the lines of humanity.
+
+**Mechanic:** Some highly advanced tech or survival in extreme environments requires your pops to physically assimilate local xenoflora/fauna via "Splicing Clinics." Spliced pops gain unique abilities (e.g., immunity to toxic gas, photosynthetic energy generation) but lose generic "Humanity" points, causing unmodified pops to treat them as aliens.
+
+**Emergence:** You splice half your population to survive a toxic world. Generations later, a fundamentalist "Pure" human faction from your core worlds visits and, seeing the spliced pops as monstrous aliens, launches a holy crusade to "cleanse" your most productive industrial planet.
+
+**Tension:** Do you maintain genetic purity and struggle against hostile environments, or embrace xenobiology and risk fracturing your empire's cultural unity?
+
+---
+
+## Orbital Solar Sails and Drag
+
+**Layer:** 2
+
+**Fantasy:** Using the star itself as the ultimate engine, but fighting its fury.
+
+**Mechanic:** "Solar Clipper" ships use massive, fragile sails to ride stellar winds, requiring zero fuel but moving incredibly fast outward from the star. However, moving *inward* requires 'tacking' against the wind, making return trips agonizingly slow, or risking catastrophic sail shredding by diving too deep into the gravity well for a slingshot.
+
+**Emergence:** Your fast, cheap Solar Clipper fleet delivers a massive payload to the outer rim in record time, winning a crucial battle. But now they are stuck out there, taking years to return, leaving your inner worlds completely undefended from a sudden pirate raid.
+
+**Tension:** Do you rely on fast, cheap, one-way logistical superiority, or invest in slow, expensive, fuel-dependent ships that can actually return home quickly?
+
+---
