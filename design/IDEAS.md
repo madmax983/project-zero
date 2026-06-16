@@ -24384,3 +24384,42 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you rely on fast, cheap, one-way logistical superiority, or invest in slow, expensive, fuel-dependent ships that can actually return home quickly?
 
 ---
+## The Generational Echo
+
+**Layer:** Cross-layer
+
+**Fantasy:** History repeating itself due to inherited grudges and biases.
+
+**Mechanic:** When a major conflict or disaster occurs, the generation of Pops who experienced it develop deep-seated biases. These biases are partially passed down to their children. Over generations, these inherited biases can randomly flare up, causing sudden unrest or diplomatic incidents completely unprompted by current events.
+
+**Emergence:** Your colony has been at peace for 300 years. Suddenly, a massive riot breaks out in the agricultural sector. Why? Because the great-great-great-grandchildren of the people who starved during the First Winter have decided, collectively, that the government is hiding food again, based on nothing but inherited cultural anxiety.
+
+**Tension:** Do you try to actively re-educate and suppress cultural memory, or deal with the unpredictable flare-ups of ancient, irrational grievances?
+
+---
+
+## Emotional Topography
+
+**Layer:** 1
+
+**Fantasy:** The very land remembers the suffering or joy of the people who lived there.
+
+**Mechanic:** Areas of the map where intense emotions occurred (mass starvation, a great festival, a brutal battle) develop "Emotional Topography." Future Pops who walk over or work in these tiles slowly absorb these emotions, altering their mood and needs based on the history of the ground they stand on.
+
+**Emergence:** You build your new, highly advanced utopia directly over the ruins of your original, struggling settlement. Despite having all their needs met, your citizens are constantly depressed and stressed because they are unknowingly absorbing the accumulated misery of the first colonists.
+
+**Tension:** Do you abandon perfectly good real estate because the "vibes" are bad, or do you force your citizens to endure the emotional ghosts of the past?
+
+---
+
+## The Information Black Market
+
+**Layer:** Cross-layer
+
+**Fantasy:** Knowledge is power, but it's also illegal.
+
+**Mechanic:** If you heavily restrict information flow (censorship, propaganda) to keep morale high, an "Information Black Market" forms. Pops trade real, unfiltered news of the galaxy at high prices. This black market drains resources but occasionally provides you, the player, with critical early warnings of events happening in other sectors that your official sensors missed.
+
+**Emergence:** You completely censor the news of a losing war to keep your factories running. A black market forms, draining your economy. However, through the black market network, you learn of a secret enemy flank maneuver weeks before your military intelligence detects it, saving your capital.
+
+**Tension:** Do you allow free information flow and deal with the morale hits, or suppress it and deal with the economic drain of a black market (while potentially reaping its hidden benefits)?
