@@ -469,6 +469,8 @@ pub mod foundation_soil;
 pub use foundation_soil::*;
 
 pub mod cassandra_protocol;
+pub mod cassandra_syndrome;
+pub use cassandra_syndrome::*;
 pub use cassandra_protocol::*;
 pub mod ransom_broker;
 pub use ransom_broker::*;
