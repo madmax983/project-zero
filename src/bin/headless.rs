@@ -882,10 +882,11 @@ fn print_pops(world: &mut World) {
             Cell::new("Status").add_attribute(Attribute::Bold),
         ]);
 
-    for (entity, name, pos, needs, action) in world
-        .query::<(Entity, &PopName, &GridPosition, &Needs, &PopAction)>()
-        .iter(world)
-    {
+    let max_pops = 15;
+    let pops_iter: Vec<_> = world.query::<(Entity, &PopName, &GridPosition, &Needs, &PopAction)>().iter(world).collect();
+    let total_pops = pops_iter.len();
+
+    for (entity, name, pos, needs, action) in pops_iter.into_iter().take(max_pops) {
         let stress_tracker = world.get::<StressTracker>(entity);
         let traits = world.get::<Traits>(entity);
         let mt = world.get::<MovementTarget>(entity);
@@ -953,9 +954,9 @@ fn print_pops(world: &mut World) {
         };
 
         table.add_row(vec![
-            Cell::new(entity.index().to_string()),
+            Cell::new(entity.index().to_string()).fg(Color::DarkGrey),
             Cell::new(&name.0),
-            Cell::new(format!("{},{}", pos.x, pos.y)),
+            Cell::new(format!("{},{}", pos.x, pos.y)).fg(Color::DarkGrey),
             Cell::new(format!("{:.0}%", needs.hunger * 100.0)).fg(hunger_color),
             Cell::new(format!("{:.0}%", needs.rest * 100.0)).fg(rest_color),
             Cell::new(format!("{:.1}", stress_val)).fg(stress_color),
@@ -966,6 +967,23 @@ fn print_pops(world: &mut World) {
                 Cell::new(action_str)
             },
             Cell::new(status),
+        ]);
+    }
+
+        if total_pops > max_pops {
+        let hidden = total_pops - max_pops;
+        table.add_row(vec![
+            Cell::new("...").fg(Color::DarkGrey),
+            Cell::new(format!("{} more pops hidden", hidden))
+                .fg(Color::DarkGrey)
+                .add_attribute(Attribute::Italic),
+            Cell::new("...").fg(Color::DarkGrey),
+            Cell::new("...").fg(Color::DarkGrey),
+            Cell::new("...").fg(Color::DarkGrey),
+            Cell::new("...").fg(Color::DarkGrey),
+            Cell::new("...").fg(Color::DarkGrey),
+            Cell::new("...").fg(Color::DarkGrey),
+            Cell::new("...").fg(Color::DarkGrey),
         ]);
     }
 
@@ -2090,10 +2108,25 @@ fn print_stories(world: &mut World) {
             Cell::new("Genre").add_attribute(comfy_table::Attribute::Bold),
             Cell::new("Historical Date").add_attribute(comfy_table::Attribute::Bold),
             Cell::new("Mutations").add_attribute(comfy_table::Attribute::Bold),
-            Cell::new("Snippet").add_attribute(comfy_table::Attribute::Bold),
+            Cell::new("Story Text").add_attribute(comfy_table::Attribute::Bold),
         ]);
 
-    for story in &tradition.stories {
+    let max_stories = 10;
+    let total_stories = tradition.stories.len();
+    let skip_count = total_stories.saturating_sub(max_stories);
+
+    if skip_count > 0 {
+        table.add_row(vec![
+            Cell::new("...").fg(comfy_table::Color::DarkGrey),
+            Cell::new("...").fg(comfy_table::Color::DarkGrey),
+            Cell::new("...").fg(comfy_table::Color::DarkGrey),
+            Cell::new(format!("{} older stories hidden", skip_count))
+                .fg(comfy_table::Color::DarkGrey)
+                .add_attribute(comfy_table::Attribute::Italic),
+        ]);
+    }
+
+    for story in tradition.stories.iter().skip(skip_count) {
         let genre_color = match story.genre {
             StoryGenre::Heroic => comfy_table::Color::Yellow,
             StoryGenre::Tragedy => comfy_table::Color::Red,
@@ -2109,12 +2142,7 @@ fn print_stories(world: &mut World) {
             comfy_table::Color::Green
         };
 
-        let snippet = if story.text.len() > 50 {
-            let truncated: String = story.text.chars().take(47).collect();
-            format!("{}...", truncated)
-        } else {
-            story.text.clone()
-        };
+        let snippet = story.text.clone();
 
         table.add_row(vec![
             Cell::new(story.genre.to_string())
@@ -2153,7 +2181,21 @@ fn print_chronicle(world: &mut World) {
             Cell::new("Event").add_attribute(Attribute::Bold),
         ]);
 
-    for event in &chronicle.events {
+    let max_events = 15;
+    let total_events = chronicle.events.len();
+    let skip_count = total_events.saturating_sub(max_events);
+
+    if skip_count > 0 {
+        table.add_row(vec![
+            Cell::new("...").fg(Color::DarkGrey),
+            Cell::new("...").fg(Color::DarkGrey),
+            Cell::new(format!("{} older events hidden", skip_count))
+                .fg(Color::DarkGrey)
+                .add_attribute(Attribute::Italic),
+        ]);
+    }
+
+    for event in chronicle.events.iter().skip(skip_count) {
         let importance_color = match event.importance {
             EventImportance::Legendary => Color::Yellow,
             EventImportance::Major => Color::Magenta,
@@ -2164,6 +2206,7 @@ fn print_chronicle(world: &mut World) {
         let mut event_cell = Cell::new(&event.text).fg(importance_color);
         let mut year_cell = Cell::new(event.year.to_string());
         let mut tick_cell = Cell::new(event.tick.to_string());
+        tick_cell = tick_cell.fg(Color::DarkGrey); // Default to dark grey for debug info
 
         if event.importance == EventImportance::Legendary {
             event_cell = event_cell.add_attribute(Attribute::Bold);
@@ -2203,7 +2246,20 @@ fn print_log(world: &mut World) {
             Cell::new("Message").add_attribute(Attribute::Bold),
         ]);
 
-    for msg in &log.messages {
+    let max_msgs = 15;
+    let total_msgs = log.messages.len();
+    let skip_count = total_msgs.saturating_sub(max_msgs);
+
+    if skip_count > 0 {
+        table.add_row(vec![
+            Cell::new("...").fg(comfy_table::Color::DarkGrey),
+            Cell::new(format!("{} older messages hidden", skip_count))
+                .fg(comfy_table::Color::DarkGrey)
+                .add_attribute(Attribute::Italic),
+        ]);
+    }
+
+    for msg in log.messages.iter().skip(skip_count) {
         let color = to_comfy_color(msg.color);
         let level_indicator = match msg.color {
             ratatui::style::Color::Red | ratatui::style::Color::LightRed => "❌ ERR",
