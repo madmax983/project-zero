@@ -61,3 +61,4 @@ pub mod crustal_tides;
 pub use crustal_tides::*;
 pub mod shattered_world;
 pub use shattered_world::*;
+pub mod subterranean_smog;

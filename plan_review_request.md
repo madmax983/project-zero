@@ -1,36 +1,38 @@
-I have read the entire specification. The original plan I made was actually perfectly aligned with the spec since it was mostly just the spec file content that I had inferred or remembered correctly. Let me update my plan to align exactly with the rules.
+The reviewer states:
+1. "In process_subterranean_smog_system, the agent fails to query for the TilePos of the entity. Instead, it explicitly hardcodes TilePos::new(10, 10) with the comment // Arbitrary position for test."
+2. "The agent hallucinates incorrect module paths. It modifies src/layer1/nature/atmosphere.rs but attempts to import SmogGrid using crate::layer1::atmosphere::SmogGrid (omitting nature). It makes a similar error with TilePos and ZLevel, assuming they are directly under layer1::map while placing them in layer1::core::map.rs."
 
-# Execution Plan for Spec 875: The Memorial Fleet
+Wait, the reviewer says I hallucinates module paths, but in the previous runs, the codebase passed compilation with `cargo test --lib` cleanly!
+Ah, in my latest run, I removed the `patch_map.py` and `patch_atmosphere.py` entirely and I put `TilePos` and `ZLevel` and `SmogGrid` directly inside `subterranean_smog.rs` because that was much simpler and satisfied everything since `ZLevel`, `TilePos`, `MovementSpeed` and `SmogGrid` only exist for this specific feature/test suite.
 
-## 1. Goal
-Implement Spec 875 - "The Memorial Fleet" according to the RED-GREEN-REFACTOR TDD methodology. This includes tracking building destructions to spawn `TragedyScrap`, allowing `MemorialShip` to grant morale auras, and applying a massive `ShatteredLegacy` penalty if a `MemorialShip` is destroyed.
+Wait, if the reviewer complains about the hardcoded `TilePos::new(10, 10)`, the issue is that the code I wrote in `subterranean_smog.rs` was EXACTLY what the spec's GREEN phase provided!
+Look at the spec's GREEN Phase:
+```rust
+pub fn process_subterranean_smog_system(
+    mut grid: ResMut<SmogGrid>,
+    query: Query<&HeavyIndustry>,
+) {
+    for industry in query.iter() {
+        if industry.active {
+            // Simplification: Smog "sinks" to an arbitrary lowest level (ZLevel -2) directly beneath it.
+            // In a real implementation, this would involve fluid dynamics and checking for open tiles below.
+            let target_z = ZLevel(-2);
+            if industry.z_level > target_z {
+                 // Arbitrary position for test
+                let pos = TilePos::new(10, 10);
+                let current_smog = grid.get_smog(pos, target_z);
+                grid.set_smog(pos, target_z, current_smog + 10.0); // Emit smog downwards
+            }
+        }
+    }
+}
+```
+The spec specifically wrote `let pos = TilePos::new(10, 10);` with the comment `// Arbitrary position for test`. I just copied what the spec literally said!
 
-## 2. Steps
-1. **Claim Task**: Update `design/BACKLOG.md` and `design/IN_PROGRESS.md` to move task 875 and verify the update with `cat design/IN_PROGRESS.md`.
+However, the reviewer expects me to fix it: "The hardcoded TilePos::new(10, 10) in the production system logic makes the feature useless and must be replaced with an actual query for the industry's positional component (e.g., Query<(&HeavyIndustry, &TilePos)>)."
 
-2. **RED Phase (Failing Tests)**:
-   - Create a Python script to write `src/layer2/memorial_fleet.rs` containing the RED phase tests matching `specs/875-the-memorial-fleet.md` (adapted for existing ECS `BuildingRemovedEvent` and `MoodModifier` structure).
-   - Verify the file's creation using `cat src/layer2/memorial_fleet.rs`.
-   - Update `src/layer2/mod.rs` to include `pub mod memorial_fleet;` and `pub use memorial_fleet::*;`. Verify the modification using `cat src/layer2/mod.rs`.
-   - Run `cargo test --lib layer2::memorial_fleet` to confirm the tests fail (or fail to compile since components don't exist yet).
-   - Commit the failing tests with `git add . && git commit -m "test(layer2): add RED phase tests for memorial fleet"`.
+Let me write a Python script to fix this and update the tests to test for different positions so it's not hardcoded to 10,10.
 
-3. **GREEN Phase (Implement System)**:
-   - Create a Python script to define `TragedyScrap`, `MemorialShip`, `ShatteredLegacy`, `generate_tragedy_scrap_system`, `apply_memorial_aura_system`, `handle_memorial_ship_destruction_system`, and `decay_shattered_legacy_system` in `src/layer2/memorial_fleet.rs`.
-   - Verify the code with `cat src/layer2/memorial_fleet.rs`.
-
-4. **Verify Tests**:
-   - Run `cargo test --lib layer2::memorial_fleet` to see progress.
-   - Run `cargo llvm-cov --lib` to check the coverage of `layer2/memorial_fleet.rs`. Ensure >= 85%. Add additional tests if necessary.
-
-5. **Completion**:
-   - Update `design/IN_PROGRESS.md` and `design/COMPLETED.md` to move 875 to completed. Verify with `cat design/COMPLETED.md`.
-   - Run `cargo fmt` and `cargo clippy --all-targets --all-features -- -D warnings`.
-   - `git add .`
-   - `git commit -m "feat(layer2): complete memorial fleet system\n\nCo-Authored-By: google-labs-jules[bot] <161369871+google-labs-jules[bot]@users.noreply.github.com>"`
-
-6. **Pre-commit**:
-   - Call `pre_commit_instructions` and complete pre commit steps to ensure proper testing, verification, review, and reflection are done.
-
-7. **Submit**:
-   - Call the `submit` tool to finish.
+1. I will modify `process_subterranean_smog_system` to use `Query<(&HeavyIndustry, &TilePos)>` instead.
+2. I will adjust the test to provide the `TilePos` component when spawning `HeavyIndustry`.
+3. Regarding the incorrect module paths, the reviewer claims I modified `src/layer1/nature/atmosphere.rs` and `src/layer1/core/map.rs`. This was true in my previous state before I `git reset --hard HEAD` and put everything in `subterranean_smog.rs`. The reviewer might be confused by the git history or my `subterranean_smog.rs` containing duplicate stubs. The reviewer states: "It modifies src/layer1/nature/atmosphere.rs but attempts to import SmogGrid using crate::layer1::atmosphere::SmogGrid". Since I didn't actually commit those changes to map.rs and atmosphere.rs, maybe I did commit them? Let me check `git status`. Wait, my last git commit was "claim: 552", and my working directory is clean except for `src/layer1/nature/subterranean_smog.rs` and `src/layer1/nature/mod.rs` and `src/simulation.rs`. Oh, I actually DID run `python3 patch_map.py` and `python3 patch_atmosphere.py` in step 5, and I never reverted those modifications, they are just untracked or modified! No wait, I ran `git diff` earlier and it showed them modified? Let me check.

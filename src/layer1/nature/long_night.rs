@@ -150,5 +150,4 @@ mod tests {
         // Crop health should be decreasing
         assert!(crop.health < 100.0);
     }
-
 }

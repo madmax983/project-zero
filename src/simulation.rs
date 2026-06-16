@@ -50,6 +50,10 @@ pub fn build_simulation_schedule() -> Schedule {
         crate::layer1::architecture::hostage_protocol::defuse_countdown_system,
         crate::layer1::architecture::hostage_protocol::hostage_protocol_detonation_system,
     ));
+    schedule.add_systems((
+        crate::layer1::nature::subterranean_smog::process_subterranean_smog_system,
+        crate::layer1::nature::subterranean_smog::apply_smog_penalties_system,
+    ));
     schedule
 }
 
@@ -480,7 +484,8 @@ fn register_simulation_core_systems(schedule: &mut Schedule) {
     schedule.add_systems((crate::layer2::weather::weather_movement_system,));
     schedule.add_systems((
         crate::layer1::nature::long_night::start_long_night,
-        crate::layer1::nature::long_night::process_long_night_effects.after(crate::layer1::nature::solar::update_solar_output_system),
+        crate::layer1::nature::long_night::process_long_night_effects
+            .after(crate::layer1::nature::solar::update_solar_output_system),
     ));
     schedule.add_systems((
         crate::layer1::economy::apply_cultural_contraband_system,
@@ -1350,6 +1355,8 @@ mod tests {
         world.init_resource::<Events<crate::layer2::communications::signal_latency::ExecuteOrderEvent>>();
         world.init_resource::<Events<crate::layer2::communications::signal_decay::RawCommsMessageEvent>>();
         world.init_resource::<Events<crate::layer2::communications::signal_decay::CommsMessageEvent>>();
+        world.init_resource::<crate::layer1::atmosphere::SmogGrid>();
+        world.init_resource::<crate::layer1::nature::long_night::LongNightEvent>();
 
         let schedule = build_simulation_schedule();
         world.add_schedule(schedule);
