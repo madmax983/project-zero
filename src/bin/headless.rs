@@ -883,7 +883,10 @@ fn print_pops(world: &mut World) {
         ]);
 
     let max_pops = 15;
-    let pops_iter: Vec<_> = world.query::<(Entity, &PopName, &GridPosition, &Needs, &PopAction)>().iter(world).collect();
+    let pops_iter: Vec<_> = world
+        .query::<(Entity, &PopName, &GridPosition, &Needs, &PopAction)>()
+        .iter(world)
+        .collect();
     let total_pops = pops_iter.len();
 
     for (entity, name, pos, needs, action) in pops_iter.into_iter().take(max_pops) {
@@ -970,7 +973,7 @@ fn print_pops(world: &mut World) {
         ]);
     }
 
-        if total_pops > max_pops {
+    if total_pops > max_pops {
         let hidden = total_pops - max_pops;
         table.add_row(vec![
             Cell::new("...").fg(Color::DarkGrey),

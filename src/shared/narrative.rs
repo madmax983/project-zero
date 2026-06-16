@@ -16,6 +16,24 @@ use std::path::Path;
 use thiserror::Error;
 
 #[derive(Error, Debug)]
+/// The types of errors that can occur during procedural narrative generation.
+///
+/// Returned primarily by [`NarrativeGenerator::generate`] when resolving a template fails,
+/// often due to missing items in the [`NarrativeContext`].
+///
+/// ## Examples
+///
+/// ```
+/// use scale::shared::narrative::{NarrativeGenerator, NarrativeContext, NarrativeError};
+///
+/// let generator = NarrativeGenerator::default();
+/// let context = NarrativeContext::default();
+///
+/// // Attempting to generate a missing template yields an error
+/// let result = generator.generate("NON_EXISTENT", &context);
+///
+/// assert!(matches!(result, Err(NarrativeError::TemplateNotFound(_))));
+/// ```
 pub enum NarrativeError {
     #[error("📖 Missing required context variable '{0}'. Fix: context.insert(\"{0}\", <value>)")]
     MissingContext(String),

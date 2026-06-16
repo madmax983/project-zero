@@ -49,7 +49,6 @@ pub fn consume_building_system(
     mut removed_events: EventWriter<BuildingRemovedEvent>,
     q_building: Query<(&Building, &GridPosition)>,
     mut q_morale: Query<&mut Morale, With<Pop>>,
-    mut resources: ResMut<crate::layer1::economy::resources::ColonyResources>,
 ) {
     for (entity, edible) in q_edible_buildings.iter() {
         if let Ok((building, pos)) = q_building.get(entity) {
@@ -64,7 +63,6 @@ pub fn consume_building_system(
             if let Some(occupied) = occupied_tiles.as_deref_mut() {
                 occupied.0.remove(&(pos.x, pos.y));
             }
-
         }
 
         // resources.food += edible.food_yield; // we spawn items instead now
@@ -95,8 +93,6 @@ mod tests {
     use super::*;
     use crate::layer1::architecture::building::{Building, BuildingType};
     use bevy::prelude::*;
-
-
 
     use crate::layer1::economy::resources::ColonyResources;
 
@@ -202,12 +198,19 @@ mod tests {
         assert!(app.world().get_entity(building).is_err());
 
         let mut found_food = false;
-        for item in app.world_mut().query::<&crate::layer1::economy::items::Item>().iter(app.world()) {
+        for item in app
+            .world_mut()
+            .query::<&crate::layer1::economy::items::Item>()
+            .iter(app.world())
+        {
             if item.item_type == crate::layer1::economy::items::ItemType::Potato {
                 found_food = true;
                 break;
             }
         }
-        assert!(found_food, "Consuming the building should spawn food items.");
+        assert!(
+            found_food,
+            "Consuming the building should spawn food items."
+        );
     }
 }
