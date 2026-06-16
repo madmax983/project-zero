@@ -1277,6 +1277,13 @@
 - **Schedule:** Registered the systems in `src/simulation.rs`.
 - **Tests:** `tests/integration/celestial_cemeteries_bridge.rs`
 
+### INT-1041: Orphaned Swarm -> Chronicle
+- **Date:** 2026-10-31
+- **Systems connected:** `trigger_swarm_hostility` -> `orphaned_swarm_chronicle_bridge` -> `AddChronicleEvent`
+- **Glue added:** `orphaned_swarm_chronicle_bridge` in `src/layer1/core/integration.rs` to generate Chronicle records when the Orphaned Swarm turns hostile.
+- **Schedule:** Registered in Layer 1 Core Simulation Schedule (`src/simulation.rs`).
+- **Tests:** `tests/integration/orphaned_swarm_bridge.rs` (1 test)
+
 ### INT-1207: Kinetic Storage -> Chronicle
 - **Date:** 2026-02-01
 - **Systems connected:** `handle_battery_destruction_system` -> `kinetic_battery_chronicle_bridge`
