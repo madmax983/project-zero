@@ -37,3 +37,6 @@ pub use health::*;
 pub use medical::*;
 pub mod gravity_caste;
 pub mod rust_lung;
+
+pub mod hive_mind_integration;
+pub use hive_mind_integration::*;
