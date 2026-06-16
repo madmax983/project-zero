@@ -51,6 +51,7 @@ pub fn setup_world() -> World {
     world.init_resource::<Events<crate::layer1::orphaned_swarm::DerelictArrivalEvent>>();
     world.init_resource::<Events<crate::layer1::orphaned_swarm::SwarmArrivalEvent>>();
     world.init_resource::<Events<crate::layer1::orphaned_swarm::SwarmHostileEvent>>();
+    world.init_resource::<Events<crate::layer2::events_new::orphaned_swarm::SwarmHostileEvent>>();
     world.insert_resource(crate::layer3::economy::market_shock::MarketShockMarket {
         luxury_price: 10.0,
     });
@@ -85,6 +86,7 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     world.init_resource::<Events<crate::layer1::orphaned_swarm::DerelictArrivalEvent>>();
     world.init_resource::<Events<crate::layer1::orphaned_swarm::SwarmArrivalEvent>>();
     world.init_resource::<Events<crate::layer1::orphaned_swarm::SwarmHostileEvent>>();
+    world.init_resource::<Events<crate::layer2::events_new::orphaned_swarm::SwarmHostileEvent>>();
     world.insert_resource(crate::layer3::economy::market_shock::MarketShockMarket {
         luxury_price: 10.0,
     });
