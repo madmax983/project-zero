@@ -24466,3 +24466,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you risk losing a vital orbital battle by retreating early to minimize debris, or win at all costs and risk entombing your most important world?
 
 ---
+
+## Accidental Cults of the Machine
+
+**Layer:** 1
+
+**Fantasy:** Watching a desperate population find meaning in arbitrary machinery.
+
+**Mechanic:** If a specific building or machine (like a water purifier or atmospheric processor) repeatedly saves a colony from disaster (e.g., stopping a drought or clearing toxic gas), pops who work near it or benefit from it might develop "reverence" for it. They will prioritize its maintenance over all other tasks, refuse to deconstruct it, and suffer severe mood penalties if it breaks.
+
+**Emergence:** Your colony's survival depends on expanding the agricultural sector, but the required space is occupied by an obsolete, inefficient water purifier. When you try to demolish it, the local workers riot because they consider it a sacred artifact that saved their grandparents.
+
+**Tension:** Do you indulge the inefficiency to keep morale high, or force the demolition and risk a violent uprising?
+
+---
+
+## Scavenger Swarm Protocols
+
+**Layer:** 2
+
+**Fantasy:** The chilling efficiency of automated recycling in the void.
+
+**Mechanic:** You can deploy autonomous "Scavenger Swarms" to orbit planets or asteroid belts. They automatically dismantle any destroyed ship or abandoned station they find, converting them back into raw resources. However, their definition of "abandoned" can drift over time or due to damage.
+
+**Emergence:** A vital trade fleet is temporarily disabled by a solar flare in a sector guarded by your Scavenger Swarms. Before you can send a repair ship, the swarms misidentify the silent fleet as derelict and begin systematically dismantling your own ships with the crew still inside.
+
+**Tension:** Do you rely on the highly efficient automated cleanup, or spend more resources on slower, manual salvage operations that won't accidentally eat your own ships?
+
+---
+
+## The Diaspora of the Discontent
+
+**Layer:** Cross-layer
+
+**Fantasy:** Your failures seeding the stars with your future rivals.
+
+**Mechanic:** When a colony's morale drops critically low for a sustained period, instead of just rioting, a faction of pops might steal ships and become a "Diaspora Fleet." They flee into the galaxy (Layer 3) to found their own independent, hostile civilization, taking whatever technology and resources they had access to with them.
+
+**Emergence:** You brutally suppressed a workers' strike on a high-tech mining world to keep quotas met. Decades later, a massive, technologically advanced fleet of pirates emerges from the outer rim, using the exact mining laser technology that you forced them to build, and they're heading straight for your capital.
+
+**Tension:** Do you maintain iron-fisted control and risk creating powerful, motivated enemies, or make concessions that might slow your economic growth?
+
+---
