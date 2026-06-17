@@ -200,3 +200,5 @@ pub mod tavern_brawls;
 
 #[cfg(feature = "nova")]
 pub mod astrological_weather;
+#[cfg(feature = "nova")]
+pub mod ghost_grid;

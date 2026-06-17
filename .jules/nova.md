@@ -160,3 +160,8 @@
 **Concept:** Added `astrological_weather_system` to `src/experimental/astrological_weather.rs`. Connects `AstrologicalBelief` to `WeatherType`. Pops who believe in astrology gain passive `leisure` regeneration during `Clear` skies (stargazing), but suffer accelerated `leisure` decay during `Fog` or `Storm`s when the stars are obscured.
 **Fate:** Submitted
 **Lesson:** Connects a cultural trait with the environmental weather system, creating dynamic psychological needs based on the current season/weather.
+
+## [The Ghost Grid]
+**Concept:** Implemented a GhostGrid that records destroyed buildings and makes them act as invisible pathfinding hurdles for Pops, simulating them acting out of habit or avoiding the "ghosts" of the past.
+**Fate:** Submitted
+**Lesson:** Good connection between building destruction and long-term pathfinding inefficiencies.

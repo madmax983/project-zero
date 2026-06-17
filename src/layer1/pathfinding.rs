@@ -205,6 +205,9 @@ fn find_path_internal(
     let clutter = world.get_resource::<crate::layer1::clutter::ClutterGrid>();
     let wind_grid = world.get_resource::<WindGrid>();
 
+    #[cfg(feature = "nova")]
+    let ghost_grid = world.get_resource::<crate::experimental::ghost_grid::GhostGrid>();
+
     let width = terrain.width;
     let height = terrain.height;
     let size = width * height;
@@ -333,7 +336,12 @@ fn find_path_internal(
             let stain_cost = stains_map
                 .get(&(next.0, next.1))
                 .map_or(0, |trauma| (*trauma / 10.0) as i32);
-            let base_cost = t_cost + c_cost + clutter_cost + stain_cost;
+            #[cfg(feature = "nova")]
+            let ghost_cost = ghost_grid.map_or(0, |gg| gg.get_penalty(next.0, next.1));
+            #[cfg(not(feature = "nova"))]
+            let ghost_cost = 0;
+
+            let base_cost = t_cost + c_cost + clutter_cost + stain_cost + ghost_cost;
 
             // Calculate wind penalty
             let wind_penalty = wind_grid.map_or(1.0, |wg| {
