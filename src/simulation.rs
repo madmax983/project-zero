@@ -508,6 +508,8 @@ fn register_simulation_core_systems(schedule: &mut Schedule) {
         crate::layer1::psionics::pyrokinesis_power_activation_system,
         crate::layer1::whispering_ore::process_whispering_ore_system,
         crate::layer1::whispering_ore::handle_mine_sealing_system,
+        crate::layer2::trade::phantom_limb_logistics::phantom_limb_logistics_system,
+        crate::layer2::trade::phantom_limb_logistics::intercept_phantom_drop_system,
     ));
 }
 
@@ -1367,6 +1369,8 @@ mod tests {
         world.init_resource::<Events<crate::layer2::communications::signal_latency::ExecuteOrderEvent>>();
         world.init_resource::<Events<crate::layer2::communications::signal_decay::RawCommsMessageEvent>>();
         world.init_resource::<Events<crate::layer2::communications::signal_decay::CommsMessageEvent>>();
+        world.init_resource::<Events<crate::layer2::trade::phantom_limb_logistics::InterceptDropEvent>>();
+        world.init_resource::<Events<crate::layer2::trade::phantom_limb_logistics::AuditRiskEvent>>();
         world.init_resource::<crate::layer1::nature::atmosphere::SmogGrid>();
         world.init_resource::<Events<crate::layer1::tech::teleporter::psychosis::TeleportEvent>>();
         world.init_resource::<crate::layer1::nature::long_night::LongNightEvent>();
