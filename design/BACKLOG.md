@@ -49,7 +49,6 @@
 See `design/IDEAS.md` for unspecced concepts.
 
 
-- [ ] `988` Teleporter Psychosis — `specs/988-teleporter-psychosis.md`
 
 - [x] `255` Hypno-Learning — `specs/255-hypno-learning.md` — completed 2026-03-01
 
