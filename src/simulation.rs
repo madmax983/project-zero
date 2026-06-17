@@ -430,8 +430,24 @@ fn init_simulation_resources(world: &mut World) {
     }
 }
 
+fn init_simulation_resources_more(world: &mut World) {
+    if !world.contains_resource::<Events<crate::layer2::communications::signal_decay::RawCommsMessageEvent>>() {
+        world.init_resource::<Events<crate::layer2::communications::signal_decay::RawCommsMessageEvent>>();
+    }
+    if !world.contains_resource::<Events<crate::layer2::communications::signal_decay::CommsMessageEvent>>() {
+        world.init_resource::<Events<crate::layer2::communications::signal_decay::CommsMessageEvent>>();
+    }
+    if !world.contains_resource::<Events<crate::layer1::tech::teleporter::psychosis::TeleportEvent>>() {
+        world.init_resource::<Events<crate::layer1::tech::teleporter::psychosis::TeleportEvent>>();
+    }
+    if !world.contains_resource::<crate::layer1::nature::atmosphere::SmogGrid>() {
+        world.init_resource::<crate::layer1::nature::atmosphere::SmogGrid>();
+    }
+}
+
 pub fn run_simulation_tick(world: &mut World) {
     init_simulation_resources(world);
+    init_simulation_resources_more(world);
     world.run_schedule(SimulationSchedule);
     world.resource_mut::<SimulationTime>().tick += 1;
     world
