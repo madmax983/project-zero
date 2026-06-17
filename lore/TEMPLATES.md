@@ -9336,3 +9336,51 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 **Patterns:**
 - "[YEAR]: Too much death in the old facility in [COLONY]. Now they whisper of [SUPERSTITION_FOCUS]."
 - "The workers in [COLONY] refuse to enter. They blame [SUPERSTITION_FOCUS]."
+
+## Signal Decay Templates (Spec 1276)
+
+## Template: SIGNAL_DECAY_RECEIVED
+**Generates:** Play event (chronicle during game)
+**Slots:** [COLONY], [YEAR], [INTERFERENCE_SOURCE], [CORRUPTED_WORD]
+**Patterns:**
+- "[YEAR]: A message reached [COLONY], but [INTERFERENCE_SOURCE] tore it apart. We only heard '[CORRUPTED_WORD]'."
+- "The signal from the fleet was clear until the [INTERFERENCE_SOURCE]. [COLONY] received only [CORRUPTED_WORD]. [YEAR]."
+- "[YEAR]. [COLONY] command interpreted the [CORRUPTED_WORD] transmission. The [INTERFERENCE_SOURCE] is worsening."
+
+## Subterranean Smog Layer Templates (Spec 552)
+
+## Template: DEEP_SMOG_ACCUMULATION
+**Generates:** Play event (chronicle during game)
+**Slots:** [COLONY], [YEAR], [SMOG_COLOR], [SMOG_SYMPTOM]
+**Patterns:**
+- "[YEAR]: The deep levels of [COLONY] are filling with [SMOG_COLOR] smoke. The workers complain of [SMOG_SYMPTOM]."
+- "Industry has a cost. At [COLONY], the lowest z-levels run thick with [SMOG_COLOR] smog. [SMOG_SYMPTOM] is rampant. [YEAR]."
+- "[YEAR]. [COLONY] surveyors report the [SMOG_COLOR] fog in the deep works is causing [SMOG_SYMPTOM]."
+
+## Template: SMOG_BLOWOUT
+**Generates:** Play event (chronicle during game)
+**Slots:** [COLONY], [YEAR], [SMOG_COLOR], [DEATHS]
+**Patterns:**
+- "[YEAR]: The pressure broke. The [SMOG_COLOR] smog erupted into the upper levels of [COLONY]. [DEATHS] souls suffocated."
+- "An explosive decompression of [SMOG_COLOR] toxic gas from the deep works hit [COLONY] in [YEAR]. [DEATHS] dead."
+- "The [SMOG_COLOR] fog could not be contained below. [COLONY] mourns [DEATHS] lost to the blowout. [YEAR]."
+
+## Teleporter Psychosis Templates (Spec 988)
+
+## Template: DISSOCIATION_ONSET
+**Generates:** Play event (chronicle during game)
+**Slots:** [COLONY], [YEAR], [PHANTOM_BEHAVIOR]
+**Patterns:**
+- "[YEAR]: Too much time in the transit beams. Workers at [COLONY] are [PHANTOM_BEHAVIOR]."
+- "The convenience of instant travel is rotting their minds. In [YEAR], [COLONY] reported cases of [PHANTOM_BEHAVIOR]."
+- "[YEAR]. A worker at [COLONY] was seen [PHANTOM_BEHAVIOR]. The teleporters are changing us."
+
+## Template: PHANTOM_VANISHING
+**Generates:** Play event (chronicle during game)
+**Slots:** [COLONY], [YEAR], [TELEPORTER_SLANG], [WORKER_NAME]?
+**Patterns:**
+- "[YEAR]: They took [TELEPORTER_SLANG] and never arrived. The logs say they materialized, but they are just gone from [COLONY]."
+- "Another soul lost to [TELEPORTER_SLANG]. [COLONY] recorded their departure, but they faded mid-shift. [YEAR]."
+- "[YEAR]. The dissociation took them entirely. They stepped into [TELEPORTER_SLANG] at [COLONY] and dissolved into the void."
+**If [WORKER_NAME]:**
+- "[WORKER_NAME] faded away in [YEAR]. They took [TELEPORTER_SLANG] at [COLONY] and simply ceased to interact with matter."
