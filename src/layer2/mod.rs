@@ -11,6 +11,8 @@ pub use memorial_fleet::*;
 pub mod barnacles;
 pub mod binary_star;
 pub mod combat;
+pub mod blind_jump;
+pub use blind_jump::*;
 pub mod debris;
 #[cfg(test)]
 mod debris_tests;

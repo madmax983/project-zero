@@ -661,6 +661,8 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
         crate::layer1::integration::fleet_unload_system
             .after(crate::layer2::fleet::fleet_movement_system),
         crate::layer2::fleet::ensure_fleet_health_system,
+        crate::layer2::blind_jump::blind_jump_system
+            .after(crate::layer2::combat::fleet_combat_system),
         crate::layer2::combat::fleet_combat_system
             .after(crate::layer2::fleet::fleet_movement_system),
         crate::layer2::barnacles::barnacle_accumulation_system,
