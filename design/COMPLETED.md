@@ -775,3 +775,4 @@
 - [x] `INT-1276` Integration: Signal Decay -> Chronicle — completed 2026-10-31
 - [x] `988` Teleporter Psychosis — `specs/988-teleporter-psychosis.md` — completed 2026-06-17
 - [x] `1037` Blind Jump — `specs/1037-blind-jump.md` — completed 2026-02-01
+- [x] `1017` Legacy Code — `specs/1017-legacy-code.md` — completed 2026-06-17

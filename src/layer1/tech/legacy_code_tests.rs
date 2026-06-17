@@ -88,3 +88,101 @@ mod tests {
         assert_eq!(bloat.reboot_ticks, 0);
     }
 }
+
+#[cfg(test)]
+mod legacy_code_spec_tests {
+    use crate::layer1::architecture::turret::Turret;
+    use crate::layer1::combat::AttackProperties;
+    use crate::layer1::tech::legacy_code::*;
+    use crate::shared::time::SimulationTime;
+    use bevy_app::prelude::*;
+    use bevy_ecs::prelude::*;
+
+    #[test]
+    fn test_bloat_accumulation_increases_turret_latency() {
+        let mut app = App::new();
+        app.insert_resource(SimulationTime {
+            tick: 0,
+            speed: crate::shared::time::SimSpeed::Normal,
+        });
+        app.add_systems(
+            Update,
+            (accumulate_bloat_system, apply_latency_system).chain(),
+        );
+
+        // Setup Core
+        app.world_mut().spawn((
+            ComputerCore,
+            SystemBloat {
+                amount: 0.0,
+                accumulation_rate: 1.0,
+            },
+            CoreStatus::Online,
+        ));
+
+        // Setup Turret
+        let turret = app
+            .world_mut()
+            .spawn((
+                Turret {
+                    attack: AttackProperties {
+                        damage: 10.0,
+                        range: 10.0,
+                        cooldown: 10,
+                        accuracy: 1.0,
+                    },
+                    ammo_cost: 1.0,
+                    ammo_type: crate::layer1::economy::resources::ResourceType::Waste,
+                },
+                ActionLatency { delay_ticks: 0 },
+            ))
+            .id();
+
+        // Simulate 100 ticks passing
+        for _ in 0..100 {
+            app.world_mut().resource_mut::<SimulationTime>().tick += 1;
+            app.update();
+        }
+
+        let latency = app.world().get::<ActionLatency>(turret).unwrap();
+        assert!(
+            latency.delay_ticks > 0,
+            "Turret latency should increase as System Bloat accumulates."
+        );
+    }
+
+    #[test]
+    fn test_reformatting_clears_bloat_but_disables_core() {
+        let mut app = App::new();
+        app.add_event::<ReformatCommand>();
+        app.add_systems(Update, process_reformat_system);
+
+        let core = app
+            .world_mut()
+            .spawn((
+                ComputerCore,
+                SystemBloat {
+                    amount: 100.0,
+                    accumulation_rate: 1.0,
+                },
+                CoreStatus::Online,
+            ))
+            .id();
+
+        app.world_mut()
+            .resource_mut::<Events<ReformatCommand>>()
+            .send(ReformatCommand { core_entity: core });
+
+        app.update();
+
+        let bloat = app.world().get::<SystemBloat>(core).unwrap();
+        let status = app.world().get::<CoreStatus>(core).unwrap();
+
+        assert_eq!(bloat.amount, 0.0, "Reformatting should clear all bloat.");
+        assert_eq!(
+            *status,
+            CoreStatus::OfflineRebooting,
+            "Reformatting must take the core offline."
+        );
+    }
+}
