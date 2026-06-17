@@ -10,8 +10,8 @@ pub mod memorial_fleet;
 pub use memorial_fleet::*;
 pub mod barnacles;
 pub mod binary_star;
-pub mod combat;
 pub mod blind_jump;
+pub mod combat;
 pub use blind_jump::*;
 pub mod debris;
 #[cfg(test)]

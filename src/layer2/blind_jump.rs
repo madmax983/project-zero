@@ -1,8 +1,8 @@
 // src/layer2/blind_jump.rs
 
-use bevy::prelude::*;
-use crate::layer2::fleet::{InOrbit, FleetHealth};
+use crate::layer2::fleet::{FleetHealth, InOrbit};
 use crate::layer2::system::SystemBody;
+use bevy::prelude::*;
 use rand::Rng;
 
 /// Component indicating a fleet intends to perform an emergency blind jump.
@@ -19,14 +19,19 @@ pub fn blind_jump_system(
 
     for (entity, mut health, in_orbit) in query.iter_mut() {
         let possible_destinations: Vec<Entity> = system_bodies.iter().collect();
-        if possible_destinations.is_empty() { continue; }
+        if possible_destinations.is_empty() {
+            continue;
+        }
 
         let mut dest = possible_destinations[rng.gen_range(0..possible_destinations.len())];
 
         // Ensure we don't jump to the same place if there are other destinations
         if let Some(current_orbit) = in_orbit {
             if possible_destinations.len() > 1 && dest == current_orbit.parent {
-               dest = possible_destinations.into_iter().find(|&d| d != current_orbit.parent).unwrap_or(dest);
+                dest = possible_destinations
+                    .into_iter()
+                    .find(|&d| d != current_orbit.parent)
+                    .unwrap_or(dest);
             }
         }
 
@@ -43,7 +48,7 @@ pub fn blind_jump_system(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::layer2::fleet::{Fleet, InOrbit, FleetHealth};
+    use crate::layer2::fleet::{Fleet, FleetHealth, InOrbit};
     use crate::layer2::system::SystemBody;
 
     #[test]
@@ -59,23 +64,37 @@ mod tests {
         //     nodes: vec![initial_node, destination_node],
         // });
 
-        let fleet = app.world_mut().spawn((
-            Fleet,
-            InOrbit { parent: initial_node },
-            // InCombat,
-            BlindJumpAction,
-            FleetHealth { current: 100.0, max: 100.0 },
-        )).id();
+        let fleet = app
+            .world_mut()
+            .spawn((
+                Fleet,
+                InOrbit {
+                    parent: initial_node,
+                },
+                // InCombat,
+                BlindJumpAction,
+                FleetHealth {
+                    current: 100.0,
+                    max: 100.0,
+                },
+            ))
+            .id();
 
         app.update();
 
         // Check if moved
         let orbit = app.world().get::<InOrbit>(fleet);
-        assert!(orbit.is_none() || orbit.unwrap().parent == destination_node, "Fleet should be at destination node.");
+        assert!(
+            orbit.is_none() || orbit.unwrap().parent == destination_node,
+            "Fleet should be at destination node."
+        );
 
         // Check if damaged
         let health = app.world().get::<FleetHealth>(fleet).unwrap();
-        assert!(health.current < 100.0, "Fleet should take damage from blind jump.");
+        assert!(
+            health.current < 100.0,
+            "Fleet should take damage from blind jump."
+        );
 
         // Action removed
         assert!(app.world().get::<BlindJumpAction>(fleet).is_none());

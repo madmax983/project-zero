@@ -1,6 +1,6 @@
+use crate::layer1::events::BuildingRemovedEvent;
 use bevy_ecs::prelude::*;
 use bevy_utils::HashMap;
-use crate::layer1::events::BuildingRemovedEvent;
 
 /// The starting penalty added to the pathfinding cost when a building is destroyed.
 const INITIAL_GHOST_PENALTY: u32 = 20;

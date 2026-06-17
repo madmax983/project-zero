@@ -1,7 +1,7 @@
-use bevy::prelude::*;
-use crate::layer1::psychology::stress::StressTracker;
-use crate::layer1::skills::{Skills, SkillType};
 use crate::layer1::bureaucracy_of_scarcity::JobAssignment;
+use crate::layer1::psychology::stress::StressTracker;
+use crate::layer1::skills::{SkillType, Skills};
+use bevy::prelude::*;
 
 #[derive(Component)]
 pub struct MemeticDisassociation {
@@ -12,7 +12,15 @@ pub struct MemeticDisassociation {
 pub struct EngramPurchaseIntent;
 
 pub fn process_memory_smuggling(
-    mut query: Query<(Entity, &mut StressTracker, &mut MemeticDisassociation, &mut Skills), With<EngramPurchaseIntent>>,
+    mut query: Query<
+        (
+            Entity,
+            &mut StressTracker,
+            &mut MemeticDisassociation,
+            &mut Skills,
+        ),
+        With<EngramPurchaseIntent>,
+    >,
     mut commands: Commands,
 ) {
     for (entity, mut stress, mut disassociation, mut skills) in query.iter_mut() {
@@ -35,9 +43,7 @@ pub fn process_memory_smuggling(
     }
 }
 
-pub fn process_job_execution(
-    mut query: Query<(&MemeticDisassociation, &mut JobAssignment)>,
-) {
+pub fn process_job_execution(mut query: Query<(&MemeticDisassociation, &mut JobAssignment)>) {
     for (disassociation, mut job) in query.iter_mut() {
         if disassociation.level >= 100.0 {
             // Un-assign from bureaucratic job
@@ -60,25 +66,42 @@ mod tests {
         let mut skills = Skills::default();
         skills.add_xp(SkillType::Engineering, 5000.0);
 
-        let pop_entity = app.world_mut().spawn((
-            Pop,
-            StressTracker { accumulated_stress: 90.0 },
-            skills,
-            MemeticDisassociation { level: 0.0 },
-            EngramPurchaseIntent,
-        )).id();
+        let pop_entity = app
+            .world_mut()
+            .spawn((
+                Pop,
+                StressTracker {
+                    accumulated_stress: 90.0,
+                },
+                skills,
+                MemeticDisassociation { level: 0.0 },
+                EngramPurchaseIntent,
+            ))
+            .id();
 
         // Act
         app.update();
 
         // Assert
         let stress = app.world().get::<StressTracker>(pop_entity).unwrap();
-        let disassociation = app.world().get::<MemeticDisassociation>(pop_entity).unwrap();
+        let disassociation = app
+            .world()
+            .get::<MemeticDisassociation>(pop_entity)
+            .unwrap();
         let skills = app.world().get::<Skills>(pop_entity).unwrap();
 
-        assert!(stress.accumulated_stress < 90.0, "Stress should be reduced by the fake memory.");
-        assert!(disassociation.level > 0.0, "Disassociation should increase from buying engrams.");
-        assert!(skills.get_xp(SkillType::Engineering) < 5000.0, "Relying on fake memories should degrade real skills.");
+        assert!(
+            stress.accumulated_stress < 90.0,
+            "Stress should be reduced by the fake memory."
+        );
+        assert!(
+            disassociation.level > 0.0,
+            "Disassociation should increase from buying engrams."
+        );
+        assert!(
+            skills.get_xp(SkillType::Engineering) < 5000.0,
+            "Relying on fake memories should degrade real skills."
+        );
     }
 
     #[test]
@@ -87,17 +110,25 @@ mod tests {
         let mut app = App::new();
         app.add_systems(Update, process_job_execution);
 
-        let pop_entity = app.world_mut().spawn((
-            Pop,
-            MemeticDisassociation { level: 100.0 },
-            JobAssignment { is_active_bureaucrat: true },
-        )).id();
+        let pop_entity = app
+            .world_mut()
+            .spawn((
+                Pop,
+                MemeticDisassociation { level: 100.0 },
+                JobAssignment {
+                    is_active_bureaucrat: true,
+                },
+            ))
+            .id();
 
         // Act
         app.update();
 
         // Assert
         let job = app.world().get::<JobAssignment>(pop_entity).unwrap();
-        assert!(!job.is_active_bureaucrat, "High disassociation should cause pops to fail or abandon their jobs.");
+        assert!(
+            !job.is_active_bureaucrat,
+            "High disassociation should cause pops to fail or abandon their jobs."
+        );
     }
 }
