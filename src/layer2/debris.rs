@@ -2,13 +2,32 @@
 //!
 //! Handles the accumulation of debris from launches and combat,
 //! and the risks it poses to ships and future launches.
+//!
+//! # The Cost of the Void
+//! Space is vast, but orbits are narrow. Every failed launch, every shattered hull,
+//! leaves behind high-velocity shrapnel that slowly chokes a planet's sky.
+//!
+//! This module simulates the accumulation and decay of [`OrbitalDebris`]. If left unchecked,
+//! the Kessler Syndrome will severely damage orbiting fleets and ground future missions.
 
 use crate::layer2::events::{LaunchEvent, ShipDestroyedEvent};
 use crate::layer2::fleet::{Fleet, FleetComposition, FleetHealth, InOrbit};
 use bevy_ecs::prelude::*;
 
 /// Component tracking the amount of debris in orbit around a body.
-/// The density of debris, where 0.0 is clear and 1.0 is extremely hazardous. Can exceed 1.0.
+/// The density of debris, where 0.0 is clear and `1.0` is extremely hazardous. Can exceed `1.0`.
+///
+/// # Examples
+///
+/// ```
+/// use scale::layer2::debris::OrbitalDebris;
+///
+/// let mut sky = OrbitalDebris::default();
+/// assert_eq!(sky.0, 0.0);
+///
+/// sky.0 += 0.5; // A major space battle occurs!
+/// assert!(sky.0 > 0.0);
+/// ```
 #[derive(Component, Default, Debug)]
 pub struct OrbitalDebris(pub f32);
 
@@ -109,8 +128,21 @@ pub fn debris_decay_system(mut query: Query<&mut OrbitalDebris>) {
 
 /// Calculates the risk of launch failure given the debris amount.
 ///
-/// Returns a probability between 0.0 and 1.0.
-/// TODO: Integrate this with Launch Logistics (Spec 105) when implemented.
+/// Returns a probability between `0.0` and `1.0`.
+///
+/// # Panics
+/// Does not panic.
+///
+/// # Examples
+/// ```
+/// use scale::layer2::debris::calculate_launch_risk;
+///
+/// // A clear sky is safe
+/// assert_eq!(calculate_launch_risk(0.0), 0.0);
+///
+/// // Extreme debris is capped to leave a small sliver of hope
+/// assert!(calculate_launch_risk(2.0) <= 0.9);
+/// ```
 #[must_use]
 pub fn calculate_launch_risk(debris_amount: f32) -> f32 {
     // Sigmoid or linear scaling

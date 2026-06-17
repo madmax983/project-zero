@@ -52,7 +52,13 @@ pub enum Layer1SystemSet {
 #[allow(clippy::too_many_lines)]
 pub fn register_layer1_systems(schedule: &mut Schedule) {
     #[cfg(feature = "nova")]
-    schedule.add_systems((crate::experimental::ghost_grid::ghost_grid_system, crate::experimental::ghost_grid::ghost_grid_decay_system).in_set(Layer1SystemSet::Observation));
+    schedule.add_systems(
+        (
+            crate::experimental::ghost_grid::ghost_grid_system,
+            crate::experimental::ghost_grid::ghost_grid_decay_system,
+        )
+            .in_set(Layer1SystemSet::Observation),
+    );
     // Configure Sets
     schedule.configure_sets((
         Layer1SystemSet::EventCleanup,
