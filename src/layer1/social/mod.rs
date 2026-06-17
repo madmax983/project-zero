@@ -675,3 +675,5 @@ pub mod biometric_drift;
 pub mod sartorial_rebellion;
 pub mod xeno_pet;
 pub use sartorial_rebellion::*;
+pub mod memory_smugglers;
+pub use memory_smugglers::{process_job_execution, process_memory_smuggling, EngramPurchaseIntent, MemeticDisassociation};
