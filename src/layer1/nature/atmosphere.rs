@@ -677,18 +677,18 @@ mod tests {
     }
 }
 
-use crate::layer1::map::{TilePos, ZLevel};
+
 
 #[derive(Resource, Default)]
 pub struct SmogGrid {
-    pub levels: bevy::utils::HashMap<(TilePos, ZLevel), f32>,
+    pub levels: bevy::utils::HashMap<GridPosition, f32>,
 }
 
 impl SmogGrid {
-    pub fn get_smog(&self, pos: TilePos, z: ZLevel) -> f32 {
-        self.levels.get(&(pos, z)).copied().unwrap_or(0.0)
+    pub fn get_smog(&self, pos: GridPosition) -> f32 {
+        self.levels.get(&pos).copied().unwrap_or(0.0)
     }
-    pub fn set_smog(&mut self, pos: TilePos, z: ZLevel, amount: f32) {
-        self.levels.insert((pos, z), amount);
+    pub fn set_smog(&mut self, pos: GridPosition, amount: f32) {
+        self.levels.insert(pos, amount);
     }
 }
