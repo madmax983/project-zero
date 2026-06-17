@@ -1370,7 +1370,9 @@ mod tests {
         world.init_resource::<Events<crate::layer2::communications::signal_decay::RawCommsMessageEvent>>();
         world.init_resource::<Events<crate::layer2::communications::signal_decay::CommsMessageEvent>>();
         world.init_resource::<Events<crate::layer2::trade::phantom_limb_logistics::InterceptDropEvent>>();
-        world.init_resource::<Events<crate::layer2::trade::phantom_limb_logistics::AuditRiskEvent>>();
+        world
+            .init_resource::<Events<crate::layer2::trade::phantom_limb_logistics::AuditRiskEvent>>(
+            );
         world.init_resource::<crate::layer1::nature::atmosphere::SmogGrid>();
         world.init_resource::<Events<crate::layer1::tech::teleporter::psychosis::TeleportEvent>>();
         world.init_resource::<crate::layer1::nature::long_night::LongNightEvent>();

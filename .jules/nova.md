@@ -165,3 +165,8 @@
 **Concept:** Implemented a GhostGrid that records destroyed buildings and makes them act as invisible pathfinding hurdles for Pops, simulating them acting out of habit or avoiding the "ghosts" of the past.
 **Fate:** Submitted
 **Lesson:** Good connection between building destruction and long-term pathfinding inefficiencies.
+
+## [Mutagenic Terraforming]
+**Concept:** Added `mutagenic_terraforming` module in `src/experimental/mutagenic_terraforming.rs`. Connects `WeatherType::MutagenicRain` to `TerrainGrid` and `RoofGrid`. When Mutagenic Rain falls, any exposed `Grass` or `Dirt` tiles have a chance to permanently mutate into toxic `SporeBloom` terrain.
+**Fate:** Submitted
+**Lesson:** Connects an existing atmospheric hazard (Mutagenic Rain) with the physical landscape, turning a temporary weather event into a long-term terraforming threat that forces players to build roofs or physically clean the land afterwards.
