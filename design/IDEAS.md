@@ -24412,7 +24412,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Information Black Market
+## The Information Black Market [SPECCED]
 
 **Layer:** Cross-layer
 

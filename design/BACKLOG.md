@@ -808,3 +808,4 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1295` Corporate Rebranding — `specs/1295-corporate-rebranding.md`
 - [ ] `1304` The Lost Treaty — `specs/1304-the-lost-treaty.md`
 
+- [ ] `1307` The Information Black Market — `specs/1307-information-black-market.md`
