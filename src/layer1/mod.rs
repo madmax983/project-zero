@@ -495,5 +495,6 @@ pub use orphaned_swarm::*;
 pub mod architecture_superstition;
 pub use architecture_superstition::*;
 
+pub mod hive_mind_integration;
 #[cfg(not(feature = "nova"))]
 pub mod oral_tradition_fallback;
