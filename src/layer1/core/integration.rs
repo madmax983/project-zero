@@ -2939,3 +2939,36 @@ pub fn dead_hand_chronicle_bridge(
         });
     }
 }
+
+/// INT-1300: Phantom Commutes Bridge
+///
+/// Listens for `BuildingRemovedEvent` and updates any Pop whose current `MovementTarget` matches the removed
+/// building's position. It replaces normal pathing with a `HabituatedRoute` pointing to the removed building,
+/// causing a "phantom commute".
+pub fn phantom_commutes_bridge_system(
+    mut commands: bevy_ecs::system::Commands,
+    mut events: bevy_ecs::event::EventReader<crate::layer1::core::events::BuildingRemovedEvent>,
+    q_pops: bevy_ecs::system::Query<
+        (
+            bevy_ecs::entity::Entity,
+            &crate::layer1::map::GridPosition,
+            &crate::layer1::execution::components::MovementTarget,
+        ),
+        bevy_ecs::query::With<crate::layer1::pop::Pop>,
+    >,
+) {
+    for event in events.read() {
+        for (entity, pos, target) in q_pops.iter() {
+            if target.target_position == event.position {
+                commands
+                    .entity(entity)
+                    .insert(crate::layer1::execution::components::HabituatedRoute {
+                        path: vec![*pos, event.position],
+                        urgency: 1.0,
+                        frustration: 0,
+                        last_pos: None,
+                    });
+            }
+        }
+    }
+}
