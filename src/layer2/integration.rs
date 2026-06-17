@@ -818,7 +818,10 @@ pub fn signal_decay_chronicle_bridge(
         if event.corruption_level > 0.0 {
             chronicle_events.send(AddChronicleEvent {
                 importance: EventImportance::Major,
-                text: format!("We received a corrupted message: '{}'. Signal interference detected.", event.text),
+                text: format!(
+                    "We received a corrupted message: '{}'. Signal interference detected.",
+                    event.text
+                ),
             });
         }
     }
