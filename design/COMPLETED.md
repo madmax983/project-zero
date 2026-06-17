@@ -774,3 +774,4 @@
 - [x] `552` The Subterranean Smog Layer — `specs/552-the-subterranean-smog-layer.md` — completed 2026-06-16
 - [x] `INT-1276` Integration: Signal Decay -> Chronicle — completed 2026-10-31
 - [x] `988` Teleporter Psychosis — `specs/988-teleporter-psychosis.md` — completed 2026-06-17
+- [x] `552` The Subterranean Smog Layer — `specs/552-the-subterranean-smog-layer.md` — completed 2026-06-17

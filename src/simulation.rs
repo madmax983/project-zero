@@ -430,6 +430,10 @@ fn init_simulation_resources(world: &mut World) {
 
 pub fn run_simulation_tick(world: &mut World) {
     init_simulation_resources(world);
+    world.init_resource::<bevy_ecs::event::Events<crate::layer2::communications::signal_decay::RawCommsMessageEvent>>();
+    world.init_resource::<bevy_ecs::event::Events<crate::layer2::communications::signal_decay::CommsMessageEvent>>();
+    world.init_resource::<bevy_ecs::event::Events<crate::layer1::tech::teleporter::psychosis::TeleportEvent>>();
+    world.init_resource::<crate::layer1::nature::atmosphere::SmogGrid>();
     world.run_schedule(SimulationSchedule);
     world.resource_mut::<SimulationTime>().tick += 1;
     world
