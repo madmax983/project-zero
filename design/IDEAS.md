@@ -24591,3 +24591,43 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you solve your pops' problems natively, or intentionally prolong their suffering to farm the planet's adaptive responses?
 
 ---
+
+## Echo-Casting Emissaries
+
+**Layer:** 3
+
+**Fantasy:** Diplomacy that literally projects your empire's cultural essence across the galaxy.
+
+**Mechanic:** You can recruit "Echo-Casters," a unique diplomat class whose presence slowly overwrites local culture on foreign core worlds. When they arrive, they emit an "Echo Field" that generates passive sympathy for your empire but increases "Cultural Static" (tension/unrest) among the host planet's traditionalist factions.
+
+**Emergence:** You send your best Echo-Caster to secure a fragile peace treaty. The treaty holds, but the cultural static inadvertently triggers a religious awakening on the alien capital, splitting their empire into a civil war that threatens to consume the entire sector.
+
+**Tension:** Do you leverage aggressive cultural projection to secure long-term loyalty, knowing the short-term shock might inadvertently destabilize a key ally?
+
+---
+
+## Gravity Tides
+
+**Layer:** 2
+
+**Fantasy:** Navigating a star system that behaves like an angry ocean, with literal high and low "tides" of gravity.
+
+**Mechanic:** A rare, massive planetary alignment creates cyclical "Gravity Tides" that sweep through the system. During "High Tide," hyperlanes are impassable, and orbital infrastructure takes passive strain damage. During "Low Tide," travel speed is doubled, and unique deep-space anomalies are temporarily exposed.
+
+**Emergence:** You launch a grand invasion fleet, banking on a rapid strike. A miscalculation in the tidal charts causes your fleet to be caught in High Tide right above an enemy fortress world. Your ships are pinned in orbit, unable to jump or maneuver, becoming sitting ducks for the planetary defense grid.
+
+**Tension:** Do you plan every major operation around the unpredictable but powerful natural rhythms of the system, or invest in expensive, tide-resistant propulsion systems?
+
+---
+
+## Sub-Surface Tectonics
+
+**Layer:** 1
+
+**Fantasy:** Building your empire on a foundation that constantly shifting and rewriting the map.
+
+**Mechanic:** Certain planets have extreme tectonic activity. Every few in-game years, massive "Crustal Shifts" occur. This literally moves terrain tiles, separating previously connected landmasses, swallowing coastal cities, and pushing up new mountains filled with pristine, untouched resource nodes.
+
+**Emergence:** You spend a century turning a peaceful peninsula into your industrial heartland. A Crustal Shift breaks the peninsula off the main continent, drifting it out to sea and severing all ground-based trade routes, forcing you to rely entirely on expensive air logistics to feed your factories.
+
+**Tension:** Do you gamble on settling volatile fault lines for the promise of constantly refreshed resources, or stick to safe, barren bedrock?
