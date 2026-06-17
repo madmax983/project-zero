@@ -24508,3 +24508,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you maintain iron-fisted control and risk creating powerful, motivated enemies, or make concessions that might slow your economic growth?
 
 ---
+
+## Biomimetic Architecture
+
+**Layer:** 1
+
+**Fantasy:** Your buildings aren't just placed on the environment; they become the environment, imitating the very things they displaced.
+
+**Mechanic:** A mid-game tech allows buildings to adopt the traits of local cleared flora or fauna. A factory built over a "Respiration Spore" field slowly exhales clean oxygen, while a housing block built over "Ironbark Trees" hardens its walls over time.
+
+**Emergence:** You intentionally clear-cut a dangerous, toxic jungle not to destroy it, but to use its properties to make your new industrial sector completely immune to acid rain, accidentally creating a labyrinth of venomous factories that your own pops are terrified to enter.
+
+**Tension:** Do you preserve the dangerous wilderness for its potential future architectural benefits, or clear it out immediately for safety and space?
+
+---
+
+## The Blackout Bazaars
+
+**Layer:** 1 -> Cross-layer
+
+**Fantasy:** When the lights go out, the real economy wakes up.
+
+**Mechanic:** During power failures or "Blackout Protocols," unique temporary "Bazaar" zones spontaneously form in unpowered social areas. Pops trade rare items, secrets, and contraband that they refuse to sell when the lights are on and the cameras are watching. These Bazaars disappear instantly when power is restored.
+
+**Emergence:** You're facing a catastrophic fuel shortage. You intentionally cut the power to the main residential block to spawn a Blackout Bazaar, hoping a smuggler pop has a hidden fuel cell for sale. They do, but they want your prized "Founder's Rifle" in exchange.
+
+**Tension:** Do you intentionally destabilize your own power grid to access the black market, risking safety and production for rare, illicit opportunities?
+
+---
+
+## The Scapegoat Protocol
+
+**Layer:** 1 -> 3
+
+**Fantasy:** Sometimes the easiest way to solve a colony's problems is to invent a villain.
+
+**Mechanic:** When a colony faces severe, prolonged unrest or a crisis, leadership can enact the "Scapegoat Protocol." A specific pop (or a small, distinct faction) is publicly blamed for the disaster. The rest of the colony gains a massive, immediate unity and morale boost, but the targeted group suffers extreme persecution, risking their lives and drastically lowering their output.
+
+**Emergence:** A mysterious crop failure threatens to starve your frontier world. You scapegoat the only three alien diplomats living on the planet. The colony unifies and works double shifts to survive the famine, but when the diplomats' homeworld finds out, they declare an immediate war of retribution.
+
+**Tension:** Do you sacrifice the innocent to save the many and maintain your power, or deal with the crisis honestly and risk a total collapse of authority?
+
+---
