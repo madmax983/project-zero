@@ -5638,3 +5638,23 @@
 **Replaces:** Darkness stress penalty
 **Code reference:** `DARKNESS_STRESS_RATE`
 **Usage:** "The Suffocating Gloom broke his mind before the beasts did."
+
+## Deep Smog
+**Replaces:** Pollution, Toxicity, Hazard (when subterranean)
+**Code reference:** `SmogGrid`, `HeavyIndustry`
+**Usage:** "The deep smog is thickening." / "Stay out of the deep smog."
+
+## Dissociation
+**Replaces:** Madness, Sanity Damage, Mental Health (from teleporters)
+**Code reference:** `Dissociation` component
+**Usage:** "Their dissociation is growing." / "The teleporter causes dissociation."
+
+## Phantom
+**Replaces:** Ghost, Spirit, Glitched Pop
+**Code reference:** `Trait::Phantom`
+**Usage:** "They've become a phantom." / "The phantoms ignore the physical world."
+
+## Corruption
+**Replaces:** Interference, Static, Noise
+**Code reference:** Signal degradation percentage
+**Usage:** "The message suffered 50% corruption." / "Clear the corruption before translating."

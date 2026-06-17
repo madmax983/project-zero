@@ -9645,3 +9645,54 @@ Descriptions of their stress and breakdowns.
 - the whispering dark
 - the terror of the unlit corridors
 - the encroaching night
+
+## Signal Decay Fragments (Spec 1276)
+
+## Fragment Type: [CORRUPTED_WORD]
+- [STATIC]
+- [REDACTED]
+- [UNINTELLIGIBLE]
+- [DATA_LOST]
+- [SIGNAL_LOST]
+- [GARBLED]
+
+## Fragment Type: [INTERFERENCE_SOURCE]
+- an ion storm
+- a dense nebula
+- solar flare activity
+- deep space radiation
+- the Wound's echo
+
+## Subterranean Smog Layer Fragments (Spec 552)
+
+## Fragment Type: [SMOG_COLOR]
+- sickly yellow
+- rust-red
+- deep grey
+- pale green
+- oily black
+
+## Fragment Type: [SMOG_SYMPTOM]
+- a persistent, wet cough
+- burning eyes
+- a metallic taste in the mouth
+- difficulty drawing breath
+- chronic fatigue
+- darkened veins
+
+## Teleporter Psychosis Fragments (Spec 988)
+
+## Fragment Type: [PHANTOM_BEHAVIOR]
+- walking through closed doors
+- ignoring the dinner bell
+- staring through colleagues
+- speaking to empty space
+- dropping tools through their hands
+- failing to cast a shadow
+
+## Fragment Type: [TELEPORTER_SLANG]
+- the Blink
+- the Jump
+- the Skip
+- the Fade
+- the Zip
