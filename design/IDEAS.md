@@ -24550,3 +24550,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you sacrifice the innocent to save the many and maintain your power, or deal with the crisis honestly and risk a total collapse of authority?
 
 ---
+## Generational Amnesia
+
+**Layer:** 1 -> 2
+
+**Fantasy:** Technology feels magical to those who forgot how it works.
+
+**Mechanic:** Over multiple generations, if a specific technology (e.g., plasma generators) isn't actively repaired or built by pops (perhaps because it's highly durable and automated), the colony's "living memory" of how it works decays. Eventually, the tech becomes a "Black Box." If it breaks, pops can't fix it; they can only pray to it or perform ritualistic maintenance that may or may not work.
+
+**Emergence:** Your invincible automated defense grid has protected your colony for 200 years. When a unique alien virus finally breaches the firewall, you discover no living engineer understands the ancient code required to reboot the system. They suggest offering it high-grade coolant as a sacrifice.
+
+**Tension:** Do you artificially break your own perfect systems just to keep the knowledge of how to fix them alive in your workforce?
+
+---
+
+## The Debt Fleet
+
+**Layer:** 3 -> Cross-layer
+
+**Fantasy:** Buying tomorrow with the lives of your grandchildren.
+
+**Mechanic:** When facing total annihilation, you can summon a massive mercenary "Debt Fleet" from beyond the galaxy rim. They fight for you immediately, but their cost is paid in future population. For the next century, every colony must surrender 10% of its newborn pops to the mercenaries, who arrive randomly in massive harvesting ships.
+
+**Emergence:** You used the Debt Fleet to survive a grand invasion. Eighty years later, your empire is thriving, but a random harvest event takes your best scientist and the planetary governor on the eve of a major technological breakthrough, sparking a violent anti-debt rebellion that fractures your empire.
+
+**Tension:** Do you accept a guaranteed loss of a world now, or secure victory by permanently mortgaging the future of your entire species?
+
+---
+
+## Xenoflora Symbiosis
+
+**Layer:** 1
+
+**Fantasy:** Your colony doesn't just adapt to the planet; the planet adapts to your colony.
+
+**Mechanic:** Native plant life on an alien world slowly mutates based on the dominant needs of nearby pops. If a mining outpost is constantly exhausted and stressed, the surrounding flora might evolve to emit a mild, natural sedative gas. If the colony is starving, the flora might mutate into a fast-growing, highly nutritious (but slightly toxic) weed.
+
+**Emergence:** You intentionally keep a specific penal colony highly stressed so the surrounding xenoflora produces a rare combat-stimulant spore. You harvest this spore for your military, but if the prisoners ever escape into the spore fields, they become hyper-aggressive super-soldiers.
+
+**Tension:** Do you solve your pops' problems natively, or intentionally prolong their suffering to farm the planet's adaptive responses?
+
+---
