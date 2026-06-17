@@ -202,3 +202,5 @@ pub mod tavern_brawls;
 pub mod astrological_weather;
 #[cfg(feature = "nova")]
 pub mod ghost_grid;
+#[cfg(feature = "nova")]
+pub mod mutagenic_terraforming;

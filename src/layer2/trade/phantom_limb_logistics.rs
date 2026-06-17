@@ -1,6 +1,6 @@
-use bevy::prelude::*;
 use crate::layer1::economy::resources::{ColonyResources, ResourceType};
 use crate::layer1::social::factions::FactionId;
+use bevy::prelude::*;
 
 #[derive(Clone, Copy, PartialEq, Eq, Hash, Debug)]
 pub struct NodeId(pub u32);
@@ -98,9 +98,14 @@ mod tests {
         // Check if a PhantomDrop entity was created at the node
         let mut drop_found = false;
         for drop in app.world_mut().query::<&PhantomDrop>().iter(app.world()) {
-            if drop.node == NodeId(1) { drop_found = true; }
+            if drop.node == NodeId(1) {
+                drop_found = true;
+            }
         }
-        assert!(drop_found, "Phantom Drop should spawn at the destroyed colony's location");
+        assert!(
+            drop_found,
+            "Phantom Drop should spawn at the destroyed colony's location"
+        );
     }
 
     #[test]
@@ -115,24 +120,34 @@ mod tests {
         app.insert_resource(ColonyResources::default());
 
         // Setup a drop
-        let drop_id = app.world_mut().spawn(PhantomDrop {
-            node: NodeId(1),
-            resource: ResourceType::Food,
-            amount: 50.0,
-            faction_owner: FactionId::MinersGuild,
-        }).id();
+        let drop_id = app
+            .world_mut()
+            .spawn(PhantomDrop {
+                node: NodeId(1),
+                resource: ResourceType::Food,
+                amount: 50.0,
+                faction_owner: FactionId::MinersGuild,
+            })
+            .id();
 
         // Simulate player action to intercept
-        app.world_mut().send_event(InterceptDropEvent { entity: drop_id });
+        app.world_mut()
+            .send_event(InterceptDropEvent { entity: drop_id });
 
         // Process interception
         app.update();
 
         // Check resources gained
         let current_resources = app.world().get_resource::<ColonyResources>().unwrap();
-        assert_eq!(current_resources.food, 50.0, "Intercepting should grant the resources");
+        assert_eq!(
+            current_resources.food, 50.0,
+            "Intercepting should grant the resources"
+        );
 
         // Check drop despawned
-        assert!(app.world().get::<PhantomDrop>(drop_id).is_none(), "Drop should be removed after interception");
+        assert!(
+            app.world().get::<PhantomDrop>(drop_id).is_none(),
+            "Drop should be removed after interception"
+        );
     }
 }
