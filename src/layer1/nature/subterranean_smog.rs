@@ -1,5 +1,5 @@
-use crate::layer1::atmosphere::SmogGrid;
 use crate::layer1::map::{TilePos, ZLevel};
+use crate::layer1::nature::atmosphere::SmogGrid;
 use bevy::prelude::*;
 
 #[derive(Component)]
@@ -49,8 +49,8 @@ pub fn apply_smog_penalties_system(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::layer1::atmosphere::SmogGrid;
     use crate::layer1::map::{TilePos, ZLevel};
+    use crate::layer1::nature::atmosphere::SmogGrid;
     use crate::layer1::pop::Pop;
 
     #[test]

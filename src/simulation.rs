@@ -53,6 +53,9 @@ pub fn build_simulation_schedule() -> Schedule {
     schedule.add_systems((
         crate::layer1::nature::subterranean_smog::process_subterranean_smog_system,
         crate::layer1::nature::subterranean_smog::apply_smog_penalties_system,
+        crate::layer1::tech::teleporter::psychosis::handle_teleport_system,
+        crate::layer1::tech::teleporter::psychosis::process_psychosis_system,
+        crate::layer1::tech::teleporter::psychosis::hunger_decay_system,
     ));
     schedule
 }
@@ -1358,7 +1361,8 @@ mod tests {
         world.init_resource::<Events<crate::layer2::communications::signal_latency::ExecuteOrderEvent>>();
         world.init_resource::<Events<crate::layer2::communications::signal_decay::RawCommsMessageEvent>>();
         world.init_resource::<Events<crate::layer2::communications::signal_decay::CommsMessageEvent>>();
-        world.init_resource::<crate::layer1::atmosphere::SmogGrid>();
+        world.init_resource::<crate::layer1::nature::atmosphere::SmogGrid>();
+        world.init_resource::<Events<crate::layer1::tech::teleporter::psychosis::TeleportEvent>>();
         world.init_resource::<crate::layer1::nature::long_night::LongNightEvent>();
 
         let schedule = build_simulation_schedule();
