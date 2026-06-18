@@ -777,3 +777,4 @@
 - [x] `1037` Blind Jump — `specs/1037-blind-jump.md` — completed 2026-02-01
 - [x] `552` The Subterranean Smog Layer — `specs/552-the-subterranean-smog-layer.md` — completed 2026-06-17
 - [x] `1025` Gravity Plating Failure — `specs/1025-gravity-plating-failure.md` — completed 2026-02-01
+- [x] `555` The Symbiotic Insurgency — `specs/555-symbiotic-insurgency.md` — completed 2026-06-18

@@ -71,6 +71,8 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     init_task_pools();
     let mut world = World::new();
     world.init_resource::<crate::layer1::nature::long_night::LongNightEvent>();
+    world.init_resource::<bevy_ecs::event::Events<crate::layer1::mind_spores::MindSporeSabotageEvent>>();
+    world.init_resource::<crate::layer1::mind_spores::SymbiontFaction>();
     world.init_resource::<bevy_ecs::event::Events<crate::layer1::nature::long_night::StartLongNightEvent>>();
     world.init_resource::<crate::layer1::culture::celestial_cemeteries::OrbitalCemetery>();
     world
@@ -1203,10 +1205,12 @@ mod tests {
 
         for _ in 0..ticks {
             crate::simulation::run_simulation_tick(&mut world);
-        if !world.contains_resource::<Events<crate::layer2::communications::signal_decay::RawCommsMessageEvent>>() { world.init_resource::<Events<crate::layer2::communications::signal_decay::RawCommsMessageEvent>>(); }
-        if !world.contains_resource::<Events<crate::layer2::communications::signal_decay::CommsMessageEvent>>() { world.init_resource::<Events<crate::layer2::communications::signal_decay::CommsMessageEvent>>(); }
-        if !world.contains_resource::<Events<crate::layer1::tech::teleporter::psychosis::TeleportEvent>>() { world.init_resource::<Events<crate::layer1::tech::teleporter::psychosis::TeleportEvent>>(); }
-        if !world.contains_resource::<crate::layer1::nature::atmosphere::SmogGrid>() { world.init_resource::<crate::layer1::nature::atmosphere::SmogGrid>(); }
+            if !world.contains_resource::<Events<crate::layer2::communications::signal_decay::RawCommsMessageEvent>>() { world.init_resource::<Events<crate::layer2::communications::signal_decay::RawCommsMessageEvent>>(); }
+            if !world.contains_resource::<Events<crate::layer2::communications::signal_decay::CommsMessageEvent>>() { world.init_resource::<Events<crate::layer2::communications::signal_decay::CommsMessageEvent>>(); }
+            if !world.contains_resource::<Events<crate::layer1::tech::teleporter::psychosis::TeleportEvent>>() { world.init_resource::<Events<crate::layer1::tech::teleporter::psychosis::TeleportEvent>>(); }
+            if !world.contains_resource::<crate::layer1::nature::atmosphere::SmogGrid>() {
+                world.init_resource::<crate::layer1::nature::atmosphere::SmogGrid>();
+            }
         }
 
         world

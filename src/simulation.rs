@@ -204,6 +204,8 @@ fn init_simulation_resources(world: &mut World) {
     world.init_resource::<crate::layer1::nature::biosphere_empathy::GlobalFloraHealth>();
     world.init_resource::<Events<crate::layer1::nature::long_night::StartLongNightEvent>>();
     world.init_resource::<crate::layer1::nature::long_night::LongNightEvent>();
+    world.init_resource::<Events<crate::layer1::mind_spores::MindSporeSabotageEvent>>();
+    world.init_resource::<crate::layer1::mind_spores::SymbiontFaction>();
     world.init_resource::<Events<crate::layer1::spiteful_will::OverrideWillEvent>>();
     world.init_resource::<crate::layer1::tectonic::TectonicStress>();
 
@@ -437,7 +439,9 @@ fn init_simulation_resources_more(world: &mut World) {
     if !world.contains_resource::<Events<crate::layer2::communications::signal_decay::CommsMessageEvent>>() {
         world.init_resource::<Events<crate::layer2::communications::signal_decay::CommsMessageEvent>>();
     }
-    if !world.contains_resource::<Events<crate::layer1::tech::teleporter::psychosis::TeleportEvent>>() {
+    if !world
+        .contains_resource::<Events<crate::layer1::tech::teleporter::psychosis::TeleportEvent>>()
+    {
         world.init_resource::<Events<crate::layer1::tech::teleporter::psychosis::TeleportEvent>>();
     }
     if !world.contains_resource::<crate::layer1::nature::atmosphere::SmogGrid>() {
@@ -1392,6 +1396,8 @@ mod tests {
         world.init_resource::<crate::layer1::nature::atmosphere::SmogGrid>();
         world.init_resource::<Events<crate::layer1::tech::teleporter::psychosis::TeleportEvent>>();
         world.init_resource::<crate::layer1::nature::long_night::LongNightEvent>();
+        world.init_resource::<Events<crate::layer1::mind_spores::MindSporeSabotageEvent>>();
+        world.init_resource::<crate::layer1::mind_spores::SymbiontFaction>();
 
         let schedule = build_simulation_schedule();
         world.add_schedule(schedule);

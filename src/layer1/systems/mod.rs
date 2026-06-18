@@ -21,6 +21,7 @@ pub mod environment;
 pub mod execution;
 pub mod map_generation;
 
+pub mod mind_spores;
 pub mod observation;
 
 /// Helper system to update event buffers (clear old events).
@@ -75,5 +76,6 @@ pub fn register_layer1_systems(schedule: &mut Schedule) {
     environment::register(schedule);
     consumption::register(schedule);
     observation::register(schedule);
+    mind_spores::register(schedule);
     dead_hand::register(schedule);
 }
