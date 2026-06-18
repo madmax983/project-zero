@@ -51,3 +51,4 @@ fn test_building_removed_triggers_phantom_commute() {
     assert_eq!(route.path[0], GridPosition { x: 4, y: 5 });
     assert_eq!(route.path[1], building_pos);
 }
+// Fix phantom file issue

@@ -1503,3 +1503,10 @@
 - **Glue added:** `signal_decay_chronicle_bridge` in `src/layer2/integration.rs` to generate Chronicle records when corrupted comms messages are received.
 - **Schedule:** Registered the systems in `src/simulation.rs`.
 - **Tests:** `tests/integration/signal_decay_chronicle.rs`
+
+### INT-1300: Phantom Commutes -> Simulation
+- **Date:** 2026-10-31
+- **Systems connected:** `BuildingRemovedEvent` -> `phantom_commutes_bridge_system` -> `apply_phantom_commute_system`
+- **Glue added:** Added `phantom_commutes_bridge_system` in `src/layer1/core/integration.rs` to intercept `BuildingRemovedEvent` and inject a `HabituatedRoute` component into Pops that were pathing to the destroyed building.
+- **Schedule:** Registered in `Layer1SystemSet::Execution` in `src/layer1/systems/execution.rs` (runs before `apply_phantom_commute_system`).
+- **Tests:** `tests/integration/phantom_commutes_bridge.rs`

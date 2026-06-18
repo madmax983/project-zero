@@ -2939,3 +2939,24 @@ pub fn dead_hand_chronicle_bridge(
         });
     }
 }
+
+/// INT-1300: Phantom Commutes Bridge
+pub fn phantom_commutes_bridge_system(
+    mut events: bevy_ecs::prelude::EventReader<crate::layer1::core::events::BuildingRemovedEvent>,
+    q_pops: bevy_ecs::prelude::Query<(bevy_ecs::prelude::Entity, &crate::layer1::execution::components::MovementTarget, &crate::layer1::map::GridPosition), bevy_ecs::prelude::With<crate::layer1::pop::Pop>>,
+    mut commands: bevy_ecs::prelude::Commands,
+) {
+    for event in events.read() {
+        for (entity, target, pop_pos) in q_pops.iter() {
+            if target.target_position == event.position {
+                // Add a habituated route to simulate the phantom commute, originating at the pop's current position and terminating at the destroyed building's position.
+                commands.entity(entity).insert(crate::layer1::execution::components::HabituatedRoute {
+                    path: vec![*pop_pos, event.position],
+                    urgency: 1.0,
+                    frustration: 0,
+                    last_pos: None,
+                });
+            }
+        }
+    }
+}

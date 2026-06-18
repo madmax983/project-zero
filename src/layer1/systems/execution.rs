@@ -332,6 +332,8 @@ pub fn register(schedule: &mut Schedule) {
         (
             crate::layer1::execution::phantom_commutes::apply_phantom_commute_system
                 .before(movement_system),
+            crate::layer1::core::integration::phantom_commutes_bridge_system
+                .before(crate::layer1::execution::phantom_commutes::apply_phantom_commute_system),
             crate::layer1::execution::phantom_commutes::remove_resolved_phantom_commute_system
                 .after(movement_system),
         )
