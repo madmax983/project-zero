@@ -24673,3 +24673,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you micromanage everything to keep complete control, or automate to save your attention span, risking inevitable secession?
 
 ---
+
+## Kessler's Shadow
+
+**Layer:** Cross-layer
+
+**Fantasy:** The sky is a graveyard of your past mistakes, falling slowly back to earth.
+
+**Mechanic:** Destroyed orbital infrastructure, defeated fleets, and launched garbage don't disappear. They accumulate as a "Kessler Ring" in Layer 2 orbit. Over decades, bits of this debris periodically crash down onto Layer 1 colonies as micro-meteor showers. The larger the Kessler Ring, the denser the showers, causing random infrastructure damage and pop casualties.
+
+**Emergence:** You fight a massive, glorious defensive war in orbit above your capital, saving the world. Fifty years later, your pristine capital is constantly battered by pieces of the ships that saved it, forcing you to move underground or invest heavily in atmospheric defense lasers rather than expansion.
+
+**Tension:** Do you rapidly industrialize your orbit and win wars locally, knowing you are building a sword of Damocles above your own people's heads?
+
+---
+
+## The Martyr's Dividend
+
+**Layer:** Layer 1
+
+**Fantasy:** A colony turning tragedy into a grim currency.
+
+**Mechanic:** When a pop dies while performing an action that directly benefits a large number of other pops (like repairing a reactor during a meltdown or holding off a feral beast), they are flagged as a "Martyr." The colony receives a powerful, temporary "Dividend" – a massive surge in unity, work speed, and pain tolerance. However, once the Dividend fades, the colony suffers a deep, prolonged "Grief Crash."
+
+**Emergence:** You deliberately under-equip a lone miner to investigate a dangerous cavern, knowing they will die. Their martyrdom provides the exact unity spike you need to finish constructing your first starport before the winter freezes the colony to death.
+
+**Tension:** Do you try to save everyone, or do you strategically allow heroic deaths to harvest the emotional energy needed to achieve impossible goals?
+
+---
+
+## Deep-Space Hibernation Sickness
+
+**Layer:** Layer 2 -> Layer 1
+
+**Fantasy:** Waking up is the hardest part of the journey.
+
+**Mechanic:** Pops traveling between systems in cryo-sleep (Layer 2) accumulate "Hibernation Sickness" based on the duration of the trip and the quality of the ship's life support. When they arrive and unpack into a Layer 1 colony, they don't immediately start working. Instead, they require intensive medical care and have a high chance of spreading a psychological contagion of "Void Terror" to the existing colonists.
+
+**Emergence:** You rush a massive colony ship to reinforce a struggling frontier world. The ship arrives, but the passengers are so riddled with Hibernation Sickness that treating them completely collapses the colony's fragile medical infrastructure, dooming both the old colonists and the new arrivals.
+
+**Tension:** Do you build slow, expensive generation ships where people live out their lives, or fast, cheap cryo-ships that drop hundreds of sick, traumatized people onto your struggling frontiers?
+
+---
