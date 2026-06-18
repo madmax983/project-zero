@@ -11,6 +11,7 @@ use rand::Rng;
 pub enum Trait {
     Hoarder,
     Phantom,
+    MindSporeInfected,
     /// Lacks empathy, unaffected by horror.
     Psychopath,
     /// Hardened skin (+Defense/Biocompatibility).
@@ -209,6 +210,7 @@ impl Trait {
             Self::Veteran => "Veteran",
             Self::Phantom => "Phantom",
             Self::Hoarder => "Hoarder",
+            Self::MindSporeInfected => "Mind-Spore Infected",
         }
     }
 }
@@ -394,6 +396,9 @@ pub fn get_trait_work_speed_modifier(traits: &Traits) -> f32 {
     if traits.has(Trait::InsomniaDrive) {
         modifier += 0.3;
     }
+    if traits.has(Trait::MindSporeInfected) {
+        modifier += 0.5;
+    }
     if traits.has(Trait::HardWorker) {
         modifier += 0.2;
     }
@@ -431,6 +436,10 @@ pub fn get_trait_hunger_decay_modifier(traits: &Traits) -> f32 {
 pub fn get_trait_leisure_decay_modifier(traits: &Traits) -> f32 {
     let mut modifier = 1.0;
     if traits.has(Trait::InsomniaDrive) {
+        modifier += 0.3;
+    }
+    if traits.has(Trait::MindSporeInfected) {
+        modifier += 0.5;
         modifier += 1.0;
     }
     if traits.has(Trait::Synth) {
