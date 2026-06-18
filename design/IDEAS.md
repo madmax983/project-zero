@@ -24523,7 +24523,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Blackout Bazaars
+## The Blackout Bazaars [SPECCED]
 
 **Layer:** 1 -> Cross-layer
 
