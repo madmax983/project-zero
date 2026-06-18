@@ -24631,3 +24631,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Emergence:** You spend a century turning a peaceful peninsula into your industrial heartland. A Crustal Shift breaks the peninsula off the main continent, drifting it out to sea and severing all ground-based trade routes, forcing you to rely entirely on expensive air logistics to feed your factories.
 
 **Tension:** Do you gamble on settling volatile fault lines for the promise of constantly refreshed resources, or stick to safe, barren bedrock?
+
+## Memory Cults
+
+**Layer:** 1
+
+**Fantasy:** Watching history mutate into religion among your earliest colonists.
+
+**Mechanic:** When pops die, their original friends sometimes form informal groups to share "Memories" of the deceased. Over generations, these memories distort, and the informal group becomes a "Memory Cult" that worships an idealized, factually incorrect version of a founder pop.
+
+**Emergence:** A completely ordinary farmer who died in a mining accident 100 years ago is now worshipped as a god of the earth, and the cult demands you stop mining or they will strike.
+
+**Tension:** Do you let the cult spread for the unity bonus, or suppress them before their distorted beliefs conflict with your practical needs?
+
+---
+
+## The Orphaned Fleet
+
+**Layer:** 2 -> 3
+
+**Fantasy:** Your early mistakes coming back to haunt the modern empire.
+
+**Mechanic:** Early-game colony ships that failed to find a habitable world or lost contact don't just disappear. Hundreds of years later, they might reappear in Layer 3 as an "Orphaned Fleet"—a nomadic, hyper-adapted offshoot of your species that survived in deep space and views planetary life as weak.
+
+**Emergence:** You finally invent hyperdrive and start expanding, only to find your neighboring star system is already occupied by a highly aggressive, deeply changed version of your own ancestors who demand you surrender your planets.
+
+**Tension:** Do you try to culturally reintegrate them, knowing their radical deep-space beliefs will spread unrest to your worlds, or destroy your own lost children?
+
+---
+
+## Sub-Colony Autonomy Protocols
+
+**Layer:** 1 -> 2
+
+**Fantasy:** Creating a self-sustaining system that decides it no longer needs you.
+
+**Mechanic:** You can install "Autonomy Protocols" in highly developed Layer 1 colonies, allowing them to automatically manage needs, trade, and defense without your input. However, the longer a colony operates autonomously, the more its "Independence" score grows.
+
+**Emergence:** You automate your food-producing rim world so you can focus on a war in the core. Fifty years later, when you desperately need their grain, the autonomous governor informs you that they have renegotiated their relationship with the empire and are now a sovereign state.
+
+**Tension:** Do you micromanage everything to keep complete control, or automate to save your attention span, risking inevitable secession?
+
+---
