@@ -1,5 +1,5 @@
-use bevy_ecs::prelude::*;
 use crate::layer1::entities::pop::Pop;
+use bevy_ecs::prelude::*;
 
 // GREEN Phase Minimal Implementation
 #[derive(Component)]
@@ -70,7 +70,6 @@ pub fn monitor_gravity_generator_power_system(
 // Import Item
 use crate::layer1::economy::Item;
 
-
 #[derive(Component)]
 pub struct CombatModifier {
     pub aim_penalty: f32,
@@ -78,7 +77,12 @@ pub struct CombatModifier {
 }
 
 type ItemQueryFilter = (With<Item>, Without<Pop>);
-type ItemQueryComponents<'a> = (Entity, &'a CurrentZone, &'a mut MovementType, Option<&'a mut Velocity>);
+type ItemQueryComponents<'a> = (
+    Entity,
+    &'a CurrentZone,
+    &'a mut MovementType,
+    Option<&'a mut Velocity>,
+);
 
 pub fn apply_zero_g_movement_system(
     mut commands: Commands,
@@ -138,20 +142,35 @@ mod tests {
         app.add_event::<PowerGridEvent>();
         app.add_systems(Update, monitor_gravity_generator_power_system);
 
-        let zone = app.world_mut().spawn((Zone { id: 1 }, GravityState::Normal)).id();
+        let zone = app
+            .world_mut()
+            .spawn((Zone { id: 1 }, GravityState::Normal))
+            .id();
 
-        let generator = app.world_mut().spawn((
-            PowerNode { current_power: 0, required_power: 100 }, // Failed
-            GravityGenerator { target_zone: zone },
-        )).id();
+        let generator = app
+            .world_mut()
+            .spawn((
+                PowerNode {
+                    current_power: 0,
+                    required_power: 100,
+                }, // Failed
+                GravityGenerator { target_zone: zone },
+            ))
+            .id();
 
-        app.world_mut().resource_mut::<Events<PowerGridEvent>>().send(PowerGridEvent::NodeFailed(generator));
+        app.world_mut()
+            .resource_mut::<Events<PowerGridEvent>>()
+            .send(PowerGridEvent::NodeFailed(generator));
 
         app.update();
 
         // Zone should now have ZeroG state
         let gravity = app.world().get::<GravityState>(zone).unwrap();
-        assert_eq!(*gravity, GravityState::ZeroG, "Zone should enter Zero-G when its gravity generator loses power.");
+        assert_eq!(
+            *gravity,
+            GravityState::ZeroG,
+            "Zone should enter Zero-G when its gravity generator loses power."
+        );
     }
 
     #[test]
@@ -159,32 +178,51 @@ mod tests {
         let mut app = bevy_app::App::new();
         app.add_systems(Update, apply_zero_g_movement_system);
 
-        let zone = app.world_mut().spawn((Zone { id: 1 }, GravityState::ZeroG)).id();
+        let zone = app
+            .world_mut()
+            .spawn((Zone { id: 1 }, GravityState::ZeroG))
+            .id();
 
         // Un-trained Pop
-        let pop = app.world_mut().spawn((
-            Pop,
-            MovementType::Walking,
-            Velocity { x: 0.0, y: 0.0 },
-            CurrentZone { zone },
-            TraitList { traits: vec![] },
-        )).id();
+        let pop = app
+            .world_mut()
+            .spawn((
+                Pop,
+                MovementType::Walking,
+                Velocity { x: 0.0, y: 0.0 },
+                CurrentZone { zone },
+                TraitList { traits: vec![] },
+            ))
+            .id();
 
         // Trained Pop
-        let trained_pop = app.world_mut().spawn((
-            Pop,
-            MovementType::Walking,
-            Velocity { x: 0.0, y: 0.0 },
-            CurrentZone { zone },
-            TraitList { traits: vec!["ZeroGTraining".to_string()] },
-        )).id();
+        let trained_pop = app
+            .world_mut()
+            .spawn((
+                Pop,
+                MovementType::Walking,
+                Velocity { x: 0.0, y: 0.0 },
+                CurrentZone { zone },
+                TraitList {
+                    traits: vec!["ZeroGTraining".to_string()],
+                },
+            ))
+            .id();
 
         app.update();
 
         let move_type = app.world().get::<MovementType>(pop).unwrap();
-        assert_eq!(*move_type, MovementType::Drifting, "Untrained Pops in Zero-G must drift.");
+        assert_eq!(
+            *move_type,
+            MovementType::Drifting,
+            "Untrained Pops in Zero-G must drift."
+        );
 
         let trained_move_type = app.world().get::<MovementType>(trained_pop).unwrap();
-        assert_eq!(*trained_move_type, MovementType::ZeroGControlled, "Trained Pops in Zero-G should retain controlled movement.");
+        assert_eq!(
+            *trained_move_type,
+            MovementType::ZeroGControlled,
+            "Trained Pops in Zero-G should retain controlled movement."
+        );
     }
 }

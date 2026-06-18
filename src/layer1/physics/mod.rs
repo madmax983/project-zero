@@ -51,7 +51,7 @@ mod venting_tests;
 #[cfg(test)]
 mod vacuum_welding_tests;
 
+pub mod gravity_plating;
 #[cfg(test)]
 mod structural_integrity_overflow_tests;
-pub mod gravity_plating;
 pub use gravity_plating::*;
