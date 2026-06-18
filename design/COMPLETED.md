@@ -778,3 +778,4 @@
 - [x] `552` The Subterranean Smog Layer — `specs/552-the-subterranean-smog-layer.md` — completed 2026-06-17
 - [x] `1025` Gravity Plating Failure — `specs/1025-gravity-plating-failure.md` — completed 2026-02-01
 - [x] `1043` Black Market Infrastructure — `specs/1043-black-market-infrastructure.md` — completed 2026-02-01
+- [x] `1036` Institutional Memory — `specs/1036-institutional-memory.md` — completed 2026-06-18
