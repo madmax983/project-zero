@@ -996,15 +996,11 @@ const WARNING_THRESHOLD: f32 = 0.3;
 /// ```
 #[must_use]
 pub fn get_pop_display(needs: &Needs) -> (&'static str, Color) {
-    if needs.hunger > HEALTHY_THRESHOLD {
-        // Well-fed: check other needs for mood
-        if needs.worst() > WARNING_THRESHOLD {
-            ("☺", Color::Yellow)
-        } else {
-            ("☻", Color::Rgb(255, 165, 0)) // fed but tired/bored
-        }
-    } else if needs.hunger > WARNING_THRESHOLD {
-        ("☻", Color::Rgb(255, 165, 0)) // getting hungry
+    let worst = needs.worst();
+    if worst > HEALTHY_THRESHOLD {
+        ("☺", Color::Yellow)
+    } else if worst > WARNING_THRESHOLD {
+        ("☻", Color::Rgb(255, 165, 0)) // fed but tired/bored
     } else {
         ("☹", Color::Red) // starving
     }
