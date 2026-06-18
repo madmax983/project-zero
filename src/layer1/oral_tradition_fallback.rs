@@ -10,7 +10,8 @@ pub struct Story {
 pub enum StoryGenre {
     Heroic,
     Tragedy,
-    Warning,
+    Cautionary,
+    Trivial,
 }
 
 #[derive(Debug, Default)]

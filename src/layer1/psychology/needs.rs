@@ -273,7 +273,10 @@ pub fn decay_needs_system(
 }
 
 /// System to despawn pops that have reached 0.0 hunger.
-pub fn kill_starving_pops_system(mut commands: Commands, query: Query<(Entity, &Needs), With<crate::layer1::entities::pop::Pop>>) {
+pub fn kill_starving_pops_system(
+    mut commands: Commands,
+    query: Query<(Entity, &Needs), With<crate::layer1::entities::pop::Pop>>,
+) {
     for (entity, needs) in query.iter() {
         if needs.hunger <= 0.0 {
             commands.entity(entity).despawn();
@@ -636,10 +639,26 @@ mod tests {
         let mut world = setup();
 
         // Spawn healthy pop
-        world.spawn((Pop, Needs { hunger: 0.5, rest: 0.5, leisure: 0.5, hygiene: 0.5 }));
+        world.spawn((
+            Pop,
+            Needs {
+                hunger: 0.5,
+                rest: 0.5,
+                leisure: 0.5,
+                hygiene: 0.5,
+            },
+        ));
 
         // Spawn starving pop
-        world.spawn((Pop, Needs { hunger: 0.0, rest: 0.5, leisure: 0.5, hygiene: 0.5 }));
+        world.spawn((
+            Pop,
+            Needs {
+                hunger: 0.0,
+                rest: 0.5,
+                leisure: 0.5,
+                hygiene: 0.5,
+            },
+        ));
 
         world.run_system_once(kill_starving_pops_system).unwrap();
 
@@ -652,7 +671,15 @@ mod tests {
         let mut world = setup();
 
         // Pop with very low hunger but not zero
-        world.spawn((Pop, Needs { hunger: 0.01, rest: 0.0, leisure: 0.0, hygiene: 0.0 }));
+        world.spawn((
+            Pop,
+            Needs {
+                hunger: 0.01,
+                rest: 0.0,
+                leisure: 0.0,
+                hygiene: 0.0,
+            },
+        ));
 
         world.run_system_once(kill_starving_pops_system).unwrap();
 
@@ -673,7 +700,10 @@ mod tests {
             ticks += 1;
         }
 
-        assert!(ticks < 850, "Pop should die within ~850 ticks from full (0.8)");
+        assert!(
+            ticks < 850,
+            "Pop should die within ~850 ticks from full (0.8)"
+        );
         assert!(ticks > 750, "Pop should survive at least 750 ticks");
     }
 
@@ -682,7 +712,12 @@ mod tests {
     // The spec requires testing the display logic, which outputs "☺", "☻", "☹".
     #[test]
     fn test_pop_display_basic_healthy() {
-        let needs = Needs { hunger: 0.8, rest: 0.8, leisure: 0.8, hygiene: 0.8 };
+        let needs = Needs {
+            hunger: 0.8,
+            rest: 0.8,
+            leisure: 0.8,
+            hygiene: 0.8,
+        };
         let (ch, color) = crate::ui::map::get_pop_display(&needs);
 
         assert_eq!(ch, "☺");
@@ -691,7 +726,12 @@ mod tests {
 
     #[test]
     fn test_pop_display_basic_warning() {
-        let needs = Needs { hunger: 0.5, rest: 0.8, leisure: 0.8, hygiene: 0.8 };
+        let needs = Needs {
+            hunger: 0.5,
+            rest: 0.8,
+            leisure: 0.8,
+            hygiene: 0.8,
+        };
         let (ch, color) = crate::ui::map::get_pop_display(&needs);
 
         assert_eq!(ch, "☻");
@@ -700,7 +740,12 @@ mod tests {
 
     #[test]
     fn test_pop_display_basic_critical() {
-        let needs = Needs { hunger: 0.2, rest: 0.8, leisure: 0.8, hygiene: 0.8 };
+        let needs = Needs {
+            hunger: 0.2,
+            rest: 0.8,
+            leisure: 0.8,
+            hygiene: 0.8,
+        };
         let (ch, color) = crate::ui::map::get_pop_display(&needs);
 
         assert_eq!(ch, "☹");
@@ -710,7 +755,12 @@ mod tests {
     #[test]
     fn test_pop_display_basic_uses_worst_need() {
         // Even if hunger is high, low rest should trigger warning
-        let needs = Needs { hunger: 0.9, rest: 0.4, leisure: 0.8, hygiene: 0.8 };
+        let needs = Needs {
+            hunger: 0.9,
+            rest: 0.4,
+            leisure: 0.8,
+            hygiene: 0.8,
+        };
         let (ch, color) = crate::ui::map::get_pop_display(&needs);
 
         assert_eq!(ch, "☻"); // Warning state
