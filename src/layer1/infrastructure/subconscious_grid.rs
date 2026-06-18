@@ -282,4 +282,44 @@ mod tests {
             "Eager grid should increase burnout risk"
         );
     }
+
+    #[test]
+    fn test_apply_lockdown_system() {
+        use crate::layer1::access_control::{AccessControl, AccessMode};
+
+        let mut app = setup_app();
+        app.add_systems(Update, apply_lockdown_system);
+
+        let colony = app
+            .world_mut()
+            .spawn((
+                Colony,
+                ColonyStress { average_level: 0.0 },
+                SmartGrid {
+                    state: GridState::Lockdown,
+                },
+            ))
+            .id();
+
+        let door = app
+            .world_mut()
+            .spawn((
+                AccessControl {
+                    mode: AccessMode::Public,
+                    allowed_pops: std::collections::HashSet::new(),
+                    allowed_roles: std::collections::HashSet::new(),
+                },
+                ResidentOf(colony),
+            ))
+            .id();
+
+        app.update();
+
+        let door_comp = app.world().get::<AccessControl>(door).unwrap();
+        assert_eq!(
+            door_comp.mode,
+            AccessMode::Lockdown,
+            "Door should be locked down when grid is in lockdown"
+        );
+    }
 }

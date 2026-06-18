@@ -2960,14 +2960,14 @@ pub fn phantom_commutes_bridge_system(
     for event in events.read() {
         for (entity, pos, target) in q_pops.iter() {
             if target.target_position == event.position {
-                commands
-                    .entity(entity)
-                    .insert(crate::layer1::execution::components::HabituatedRoute {
+                commands.entity(entity).insert(
+                    crate::layer1::execution::components::HabituatedRoute {
                         path: vec![*pos, event.position],
                         urgency: 1.0,
                         frustration: 0,
                         last_pos: None,
-                    });
+                    },
+                );
             }
         }
     }

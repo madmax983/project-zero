@@ -437,7 +437,9 @@ fn init_simulation_resources_more(world: &mut World) {
     if !world.contains_resource::<Events<crate::layer2::communications::signal_decay::CommsMessageEvent>>() {
         world.init_resource::<Events<crate::layer2::communications::signal_decay::CommsMessageEvent>>();
     }
-    if !world.contains_resource::<Events<crate::layer1::tech::teleporter::psychosis::TeleportEvent>>() {
+    if !world
+        .contains_resource::<Events<crate::layer1::tech::teleporter::psychosis::TeleportEvent>>()
+    {
         world.init_resource::<Events<crate::layer1::tech::teleporter::psychosis::TeleportEvent>>();
     }
     if !world.contains_resource::<crate::layer1::nature::atmosphere::SmogGrid>() {

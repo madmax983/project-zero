@@ -677,8 +677,6 @@ mod tests {
     }
 }
 
-
-
 #[derive(Resource, Default)]
 pub struct SmogGrid {
     pub levels: bevy::utils::HashMap<GridPosition, f32>,
