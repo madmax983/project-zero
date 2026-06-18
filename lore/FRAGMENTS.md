@@ -9696,3 +9696,24 @@ Descriptions of their stress and breakdowns.
 - the Skip
 - the Fade
 - the Zip
+
+## Blind Jump Fragments (Spec 1037)
+
+## Fragment Type: [JUMP_CONSEQUENCE]
+- massive structural shearing
+- almost total fuel depletion
+- half the crew lost to decompression
+- arriving in the corona of a dead star
+- crippled engines and silent comms
+- arriving decades after they left
+- dropping out in the middle of an asteroid field
+
+## Gravity Plating Failure Fragments (Spec 1025)
+
+## Fragment Type: [ZERO_G_PANIC]
+- frantic drifting and broken limbs
+- untethered cargo crushing the workers
+- a sudden, terrifying weightlessness
+- blood floating in perfect spheres
+- tools becoming deadly projectiles
+- uncontrollable nausea and disorientation

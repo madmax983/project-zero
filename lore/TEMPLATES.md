@@ -9384,3 +9384,39 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]. The dissociation took them entirely. They stepped into [TELEPORTER_SLANG] at [COLONY] and dissolved into the void."
 **If [WORKER_NAME]:**
 - "[WORKER_NAME] faded away in [YEAR]. They took [TELEPORTER_SLANG] at [COLONY] and simply ceased to interact with matter."
+
+## Blind Jump Templates (Spec 1037)
+
+### Template: BLIND_JUMP_EXECUTED
+**Generates:** Play event
+**Slots:** [FLEET_NAME], [YEAR], [SYSTEM]
+**Patterns:**
+- "[YEAR]: In a desperate escape from [SYSTEM], [FLEET_NAME] initiated a blind jump."
+- "With shields failing in [SYSTEM], the [FLEET_NAME] spooled the drives without coordinates. [YEAR]."
+- "[FLEET_NAME] chose the unknown over destruction in [SYSTEM]. Blind jump engaged. [YEAR]."
+
+### Template: BLIND_JUMP_CONSEQUENCE
+**Generates:** Play event
+**Slots:** [FLEET_NAME], [YEAR], [JUMP_CONSEQUENCE]
+**Patterns:**
+- "[YEAR]: [FLEET_NAME] reappeared from the blind jump, suffering [JUMP_CONSEQUENCE]."
+- "The blind jump saved them, but at a cost. [FLEET_NAME] reported [JUMP_CONSEQUENCE]. [YEAR]."
+- "Emerging from the erratic jump, [FLEET_NAME] faced [JUMP_CONSEQUENCE]. [YEAR]."
+
+## Gravity Plating Failure Templates (Spec 1025)
+
+### Template: GRAVITY_FAILURE_EVENT
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [ROOM_NAME], [ZERO_G_PANIC]
+**Patterns:**
+- "[YEAR]: The generators in [ROOM_NAME] failed. Gravity dropped to zero, causing [ZERO_G_PANIC]."
+- "A power failure left [ROOM_NAME] in freefall. [COLONY] witnessed [ZERO_G_PANIC]. [YEAR]."
+- "[COLONY], [YEAR]: The floor vanished in [ROOM_NAME]. Unanchored souls experienced [ZERO_G_PANIC]."
+
+### Template: ZERO_G_COMBAT_ADVANTAGE
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [MILITIA_NAME]
+**Patterns:**
+- "[YEAR]: The [MILITIA_NAME] used their zero-G training when the plates failed, neutralizing the threat."
+- "Intentional gravity cut. The [MILITIA_NAME] drifted through the chaos and secured the sector. [YEAR]."
+- "[COLONY], [YEAR]: Without gravity, the raiders floundered while the [MILITIA_NAME] struck."
