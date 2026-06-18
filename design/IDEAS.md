@@ -24715,3 +24715,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you build slow, expensive generation ships where people live out their lives, or fast, cheap cryo-ships that drop hundreds of sick, traumatized people onto your struggling frontiers?
 
 ---
+## Feral Supply Chains
+
+**Layer:** 2 -> 1
+
+**Fantasy:** Logistics networks that take on a life of their own, bypassing your control.
+
+**Mechanic:** Automated cargo ships moving between systems develop slight navigational drift and begin stopping at unregistered asteroid bases or dead colonies. They start forming "feral" supply chains, moving goods autonomously without player orders.
+
+**Emergence:** You suffer a massive famine on your core world, only to discover a rogue fleet of automated haulers has been meticulously stockpiling thousands of units of grain on an abandoned moon for decades.
+
+**Tension:** Do you intercept and destroy these peaceful freighters to salvage the metal, or let them continue their pointless duty?
+
+---
+
+## Xenobotanical Sabotage
+
+**Layer:** 1
+
+**Fantasy:** Weaponizing the environment against your own people or enemies.
+
+**Mechanic:** Certain invasive plant species spread rapidly and destroy local agriculture, but produce a rare narcotic. Players can intentionally introduce these spores to a rival faction's world via espionage, or cultivate them secretly on their own fringe worlds.
+
+**Emergence:** You intentionally sabotage your own penal colony's food supply with the spore to harvest the narcotic for the black market. The prisoners, starving and high, mutate and form a terrifying new faction that hijacks an incoming transport ship.
+
+**Tension:** Do you ruthlessly exploit your own people's misery for profit, or risk losing a strategic advantage by eradicating the spore entirely?
+
+---
+
+## Black Market Engrams
+
+**Layer:** Cross-layer
+
+**Fantasy:** Trading memories and experiences like illicit software.
+
+**Mechanic:** Pops can extract their own "Memories" and sell them on the Black Market as "Engrams." Other pops buy these to instantly gain skills, but they also inherit the original pop's traumas, rivalries, and needs.
+
+**Emergence:** You purchase a massive cache of high-tier engineering engrams to finish a stellar megastructure. Suddenly, half your workforce develops a phantom grief for a world they never lived on, shutting down construction as they demand to build a monument to people they never knew.
+
+**Tension:** Do you embrace the rapid skill acquisition and endure the devastating cultural contamination, or strictly ban memory trading and fall behind technologically?
+
+---
