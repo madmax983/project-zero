@@ -473,6 +473,7 @@ fn apply_food_consumption_effects(
         }
     }
 
+
     // Palette Fatigue Logic
     if let Some(ref mut history) = history_opt {
         record_meal(history, eaten_item);
@@ -482,7 +483,17 @@ fn apply_food_consumption_effects(
         commands.entity(entity).insert(history);
     }
 
+    // Xenoflora Addiction Logic
+    if eaten_item == ItemType::Xenoflora {
+        commands.entity(entity).insert(crate::layer1::psychology::xenoflora_addiction::Addicted::default());
+        // Reduce stress immediately
+        commands.entity(entity).insert(crate::layer1::psychology::stress::StressTracker { accumulated_stress: 0.0 });
+    } else {
+        // If not eating xenoflora but addicted, withdrawal might happen, handled in xenoflora_addiction.rs
+    }
+
     // Mimicry Integration
+
     commands
         .entity(entity)
         .insert(JustConsumed { item: eaten_item });

@@ -38,6 +38,8 @@ pub enum BreakdownType {
     HideInRoom,
     /// Pop wanders sadly.
     SadWander,
+    /// Violent outburst due to withdrawal.
+    Violent,
 }
 
 /// A beneficial state after recovering from a breakdown.

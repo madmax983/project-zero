@@ -101,6 +101,7 @@ const fn format_action_type(action: ActionType) -> (&'static str, &'static str, 
         ActionType::PerformAncientRoutine => ("🗿", "Ancient Routine", Color::Magenta),
         ActionType::MemeticObsession => ("🌀", "Memetic Obsession", Color::Magenta),
         ActionType::Pollinate => ("🌸", "Pollinating", Color::LightGreen),
+        ActionType::Attack => ("⚔️", "Attacking", Color::Red),
     }
 }
 

@@ -26,6 +26,10 @@ pub(crate) fn evaluate_mental_break(
                 find_structure_target(data, buffer, &mut best_target);
                 ActionType::FireStarting
             }
+            BreakdownType::Violent => {
+                find_structure_target(data, buffer, &mut best_target);
+                ActionType::Attack
+            }
         };
         return Some((best_action, best_utility, best_target));
     }
