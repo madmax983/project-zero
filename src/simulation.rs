@@ -93,6 +93,8 @@ fn init_simulation_resources(world: &mut World) {
     world.init_resource::<Events<crate::layer1::agriculture::pollination::GrowthCycleEvent>>();
     world.init_resource::<Events<crate::layer1::memetics::memetic_hazards::ConversationEvent>>();
 
+    world.init_resource::<Events<crate::layer1::economy::black_market::SmugglerArrivalEvent>>();
+    world.init_resource::<Events<crate::layer1::economy::black_market::ShutdownDropNodeEvent>>();
     world.init_resource::<Events<crate::layer1::economy::apex_diet::ConsumeFoodEvent>>();
     world.init_resource::<crate::layer1::economy::apex_diet::ApexMeatStores>();
     world.init_resource::<Events<crate::layer1::culture::nostalgia::RumorSpreadEvent>>();
@@ -1128,6 +1130,9 @@ mod tests {
         world
             .init_resource::<Events<crate::layer1::memetics::memetic_hazards::ConversationEvent>>();
 
+        world.init_resource::<Events<crate::layer1::economy::black_market::SmugglerArrivalEvent>>();
+        world
+            .init_resource::<Events<crate::layer1::economy::black_market::ShutdownDropNodeEvent>>();
         world.init_resource::<Events<crate::layer1::economy::apex_diet::ConsumeFoodEvent>>();
         world.init_resource::<crate::layer1::economy::apex_diet::ApexMeatStores>();
         world
