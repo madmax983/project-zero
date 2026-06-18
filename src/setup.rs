@@ -51,6 +51,10 @@ pub fn setup_world() -> World {
     world.init_resource::<Events<crate::layer1::economy::black_market::SmugglerArrivalEvent>>();
     world.init_resource::<Events<crate::layer1::economy::black_market::ShutdownDropNodeEvent>>();
     world.init_resource::<Events<crate::layer1::orphaned_swarm::DerelictArrivalEvent>>();
+    world
+        .init_resource::<Events<crate::layer2::trade::phantom_limb_logistics::InterceptDropEvent>>(
+        );
+    world.init_resource::<Events<crate::layer2::trade::phantom_limb_logistics::AuditRiskEvent>>();
     world.init_resource::<Events<crate::layer1::orphaned_swarm::SwarmArrivalEvent>>();
     world.init_resource::<Events<crate::layer1::orphaned_swarm::SwarmHostileEvent>>();
     world.init_resource::<Events<crate::layer2::events_new::orphaned_swarm::SwarmHostileEvent>>();
@@ -88,6 +92,10 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
         crate::layer1::economy::existential_audit::ExistentialAuditCompletedEvent,
     >>();
     world.init_resource::<Events<crate::layer1::orphaned_swarm::DerelictArrivalEvent>>();
+    world
+        .init_resource::<Events<crate::layer2::trade::phantom_limb_logistics::InterceptDropEvent>>(
+        );
+    world.init_resource::<Events<crate::layer2::trade::phantom_limb_logistics::AuditRiskEvent>>();
     world.init_resource::<Events<crate::layer1::orphaned_swarm::SwarmArrivalEvent>>();
     world.init_resource::<Events<crate::layer1::orphaned_swarm::SwarmHostileEvent>>();
     world.init_resource::<Events<crate::layer2::events_new::orphaned_swarm::SwarmHostileEvent>>();
