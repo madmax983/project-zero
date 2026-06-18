@@ -328,7 +328,7 @@ pub fn register(schedule: &mut Schedule) {
         )
             .in_set(Layer1SystemSet::Execution),
     );
-    schedule.add_systems(
+    schedule.add_systems((
             crate::layer1::core::integration::phantom_commutes_bridge_system,
         (
             crate::layer1::execution::phantom_commutes::apply_phantom_commute_system
@@ -337,5 +337,5 @@ pub fn register(schedule: &mut Schedule) {
                 .after(movement_system),
         )
             .in_set(Layer1SystemSet::Execution),
-    );
+    ));
 }
