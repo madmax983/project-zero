@@ -34,7 +34,6 @@
 
 
 
-- [ ] `555` The Symbiotic Insurgency — `specs/555-the-symbiotic-insurgency.md`
 
 
 

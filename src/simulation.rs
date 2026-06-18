@@ -45,6 +45,11 @@ pub fn build_simulation_schedule() -> Schedule {
         crate::layer3::guilt::apply_guilt_unrest_system,
     ));
     schedule.add_systems((
+        crate::layer1::biology::symbiotic_insurgency::transmit_mind_spore_infection_system,
+        crate::layer1::biology::symbiotic_insurgency::process_mind_spore_infection_system,
+        crate::layer1::biology::symbiotic_insurgency::trigger_symbiont_sabotage_system,
+    ));
+    schedule.add_systems((
         crate::layer1::architecture::hostage_protocol::hostage_protocol_suppression_system,
         crate::layer1::architecture::hostage_protocol::hostage_protocol_malfunction_system,
         crate::layer1::architecture::hostage_protocol::defuse_countdown_system,
@@ -68,6 +73,9 @@ fn init_simulation_resources(world: &mut World) {
     world.init_resource::<Events<crate::layer1::economy::black_market::SmugglerArrivalEvent>>();
     world.init_resource::<Events<crate::layer1::economy::black_market::ShutdownDropNodeEvent>>();
     world.init_resource::<Events<crate::layer1::AcceptSponsorshipEvent>>();
+    world.init_resource::<Events<crate::layer1::biology::symbiotic_insurgency::SabotageEvent>>();
+    world.init_resource::<crate::layer1::biology::symbiotic_insurgency::SymbiontFaction>();
+    world.init_resource::<crate::layer1::biology::symbiotic_insurgency::InfectionConfig>();
     world
         .init_resource::<Events<crate::layer3::events::generational_debt::RepoFleetArrivalEvent>>();
     world.init_resource::<Events<crate::layer3::events::generational_debt::AttackRepoFleetEvent>>();
@@ -1045,6 +1053,9 @@ mod tests {
         world.init_resource::<bevy_ecs::event::Events<crate::layer1::petrification::PopPetrifiedEvent>>();
         world.init_resource::<Events<crate::layer1::predecessors::WorldTriggerEvent>>();
         world.init_resource::<Events<crate::layer1::AcceptSponsorshipEvent>>();
+    world.init_resource::<Events<crate::layer1::biology::symbiotic_insurgency::SabotageEvent>>();
+    world.init_resource::<crate::layer1::biology::symbiotic_insurgency::SymbiontFaction>();
+    world.init_resource::<crate::layer1::biology::symbiotic_insurgency::InfectionConfig>();
         world.init_resource::<Events<crate::layer1::psychology::memory_blackout::MemoryBlackoutEvent>>();
         world.init_resource::<Events<crate::layer1::RepairBuildingEvent>>();
         world.init_resource::<Events<crate::layer1::social::hedonic_treadmill::ConsumeItemEvent>>();
@@ -1118,6 +1129,9 @@ mod tests {
 
         // Initialize Detection Risk for test
         world.init_resource::<Events<crate::layer1::AcceptSponsorshipEvent>>();
+    world.init_resource::<Events<crate::layer1::biology::symbiotic_insurgency::SabotageEvent>>();
+    world.init_resource::<crate::layer1::biology::symbiotic_insurgency::SymbiontFaction>();
+    world.init_resource::<crate::layer1::biology::symbiotic_insurgency::InfectionConfig>();
         world.init_resource::<Events<crate::layer1::psychology::memory_blackout::MemoryBlackoutEvent>>();
         world.init_resource::<Events<crate::layer1::RepairBuildingEvent>>();
         world.init_resource::<Events<crate::layer1::social::hedonic_treadmill::ConsumeItemEvent>>();
