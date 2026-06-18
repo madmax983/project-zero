@@ -1,3 +1,3 @@
-## Fast HashMaps
-**Learning:** `std::collections::HashMap` uses SipHash, which is designed to resist hash-DoS attacks. This comes with a substantial performance penalty for simple types like integers or `Entity` IDs compared to non-cryptographic hashes. The SCALE codebase relies on `bevy::utils::HashMap` which is built around `AHash` for better throughput.
-**Action:** Replace `std::collections::HashMap` with `bevy::utils::HashMap` and `std::collections::HashSet` with `bevy::utils::HashSet` when integer or basic types are the keys.
+## 2026-06-18 - Deferring allocations
+**Learning:** `Vec::with_capacity` and iterators with `.collect()` are sometimes not as useful or idiomatic to "optimize" as one might think because Rust's `Iterator` traits already implement memory capacity hinting (`TrustedLen` / `SpecExtend`). Attempting to manually `Vec::with_capacity` with `size_hint` on `.filter` operations can cause severe memory regressions (allocating array spaces for elements that get filtered out).
+**Action:** The safest and most effective way to eliminate allocations is to defer them (e.g. deferring `.clone()` and struct creation to only occur *after* early-exit checks, such as when an iteration list is empty), or remove dummy `.collect()` implementations in dead code.

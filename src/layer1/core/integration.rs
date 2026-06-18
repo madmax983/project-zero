@@ -384,13 +384,6 @@ pub fn chronicle_rumor_bridge_system(
             event.importance,
             EventImportance::Major | EventImportance::Legendary
         ) {
-            let rumor = Rumor {
-                topic: RumorTopic::EventNews(event.text.clone()),
-                source: Entity::PLACEHOLDER, // Originated from "The World"
-                timestamp: time.tick,
-                strength: 1.0,
-            };
-
             // Reservoir sampling to pick 3 random witnesses without collecting all entities into a Vec
             let mut witnesses = Vec::with_capacity(3);
             for (count, (entity, _)) in query.iter().enumerate() {
@@ -403,6 +396,20 @@ pub fn chronicle_rumor_bridge_system(
                     }
                 }
             }
+
+            if witnesses.is_empty() {
+                continue;
+            }
+
+            // ⚡ Bolt Optimization: Only allocate the base rumor if we actually found witnesses.
+            // By deferring the `.clone()` on the event text until after the early return,
+            // we avoid generating the string allocations completely when no pops exist to hear it.
+            let rumor = Rumor {
+                topic: RumorTopic::EventNews(event.text.clone()),
+                source: Entity::PLACEHOLDER, // Originated from "The World"
+                timestamp: time.tick,
+                strength: 1.0,
+            };
 
             for witness in witnesses {
                 if let Ok((_, mut knowledge)) = query.get_mut(witness) {
