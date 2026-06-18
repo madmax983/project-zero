@@ -65,6 +65,8 @@ pub fn build_simulation_schedule() -> Schedule {
 fn init_simulation_resources(world: &mut World) {
     #[cfg(feature = "nova")]
     world.init_resource::<crate::experimental::ghost_grid::GhostGrid>();
+    world.init_resource::<Events<crate::layer1::economy::black_market::SmugglerArrivalEvent>>();
+    world.init_resource::<Events<crate::layer1::economy::black_market::ShutdownDropNodeEvent>>();
     world.init_resource::<Events<crate::layer1::AcceptSponsorshipEvent>>();
     world
         .init_resource::<Events<crate::layer3::events::generational_debt::RepoFleetArrivalEvent>>();
