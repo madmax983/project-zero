@@ -7,7 +7,6 @@ use crate::layer1::execution::{AtTarget, MovementTarget};
 use crate::layer1::health::{Dead, Health};
 use crate::layer1::map::GridPosition;
 use crate::layer1::map::ScreenShake;
-use crate::layer1::particles::spawn_particle;
 use crate::layer1::pop::Pop;
 use crate::layer1::utility_types::ActionType;
 use crate::shared::log::MessageLog;
@@ -103,23 +102,31 @@ pub fn suppress_fauna_system(
 /// - **Wander**: Scans for Pops within `detection_range`. If found, transitions to `Chase`.
 /// - **Chase**: Moves toward target. If adjacent, transitions to `Attack`. If target lost/far, `Wander`.
 /// - **Attack**: Deals damage to target.
-#[allow(clippy::cast_precision_loss)]
-pub fn fauna_behavior_system(world: &mut World) {
-    // 1. Query all Fauna
-    let mut fauna_updates = Vec::new();
-    let mut attacks = Vec::new();
+#[allow(clippy::cast_precision_loss, clippy::too_many_arguments)]
+pub fn fauna_behavior_system(
+    mut commands: Commands,
+    mut fauna_query: Query<(Entity, &mut Fauna, &GridPosition, Option<&FaunaBody>)>,
+    pop_query: Query<(Entity, &GridPosition), With<Pop>>,
+    mut health_query: Query<&mut Health>,
+    target_pos_query: Query<&GridPosition>,
+    mut log: Option<ResMut<MessageLog>>,
+    camera: Option<Res<crate::layer1::map::CameraTarget>>,
+    mut shake: Option<ResMut<ScreenShake>>,
+    mut fauna_updates: Local<Vec<(Entity, GridPosition)>>,
+    mut attacks: Local<Vec<(Entity, Entity, f32)>>,
+    mut pops: Local<Vec<(Entity, GridPosition)>>,
+) {
+    // ⚡ Bolt Optimization:
+    // Replaced `&mut World` with Bevy system parameters.
+    // Use `Local` vectors to preserve capacity between frames, eliminating allocations.
+    fauna_updates.clear();
+    attacks.clear();
+    pops.clear();
 
-    // Query Pops for targets
-    // We collect to avoid borrowing world while iterating query
-    let pops: Vec<(Entity, GridPosition)> = world
-        .query_filtered::<(Entity, &GridPosition), With<Pop>>()
-        .iter(world)
-        .map(|(e, p)| (e, *p))
-        .collect();
+    // Collect pops to avoid borrowing issues and optimize iteration over contiguous memory
+    pops.extend(pop_query.iter().map(|(e, p)| (e, *p)));
 
-    let mut query = world.query::<(Entity, &mut Fauna, &GridPosition, Option<&FaunaBody>)>();
-
-    for (entity, mut fauna, pos, body) in query.iter_mut(world) {
+    for (entity, mut fauna, pos, body) in fauna_query.iter_mut() {
         if fauna.attack_cooldown > 0 {
             fauna.attack_cooldown -= 1;
         }
@@ -143,19 +150,19 @@ pub fn fauna_behavior_system(world: &mut World) {
     }
 
     // Apply movement updates
-    for (entity, target_pos) in fauna_updates {
-        world.entity_mut(entity).insert(MovementTarget {
+    for (entity, target_pos) in fauna_updates.drain(..) {
+        commands.entity(entity).insert(MovementTarget {
             target_entity: Entity::from_raw(0), // Dummy, not used for Idle action
             target_position: target_pos,
             for_action: ActionType::Idle, // Dummy action
         });
         // Also remove AtTarget if present, so it keeps moving
-        world.entity_mut(entity).remove::<AtTarget>();
+        commands.entity(entity).remove::<AtTarget>();
     }
 
     // Apply damage
-    for (attacker, target, damage) in attacks {
-        if let Some(mut health) = world.get_mut::<Health>(target) {
+    for (attacker, target, damage) in attacks.drain(..) {
+        if let Ok(mut health) = health_query.get_mut(target) {
             health.take_damage(damage);
 
             // Ludwig: "Juice" logic for Fauna attacks
@@ -169,41 +176,42 @@ pub fn fauna_behavior_system(world: &mut World) {
 
             // Apply HitStop to both attacker and target
             if hit_stop_ticks > 0 {
-                if let Ok(mut entity_mut) = world.get_entity_mut(attacker) {
-                    entity_mut.insert(HitStop {
-                        ticks_remaining: hit_stop_ticks,
-                    });
-                }
-                if let Ok(mut entity_mut) = world.get_entity_mut(target) {
-                    entity_mut.insert(HitStop {
-                        ticks_remaining: hit_stop_ticks,
-                    });
-                }
+                commands.entity(attacker).insert(HitStop {
+                    ticks_remaining: hit_stop_ticks,
+                });
+                commands.entity(target).insert(HitStop {
+                    ticks_remaining: hit_stop_ticks,
+                });
             }
 
-            if let Some(pos) = world.get::<GridPosition>(target).copied() {
-                spawn_particle(world, pos, '*', Color::Red, 5);
+            if let Ok(pos) = target_pos_query.get(target).copied() {
+                commands.spawn((
+                    crate::layer1::particles::Particle {
+                        char: '*',
+                        color: Color::Red,
+                        lifetime: 5,
+                    },
+                    pos,
+                ));
 
                 // Only shake if the attack is near the camera — prevents constant
                 // shake when many fauna are fighting off-screen.
-                let near_camera = world
-                    .get_resource::<crate::layer1::map::CameraTarget>()
-                    .is_none_or(|cam| {
-                        let dx = (pos.x as f32 - cam.x).abs();
-                        let dy = (pos.y as f32 - cam.y).abs();
-                        dx <= 30.0 && dy <= 30.0
-                    });
+                let near_camera = camera.as_ref().is_none_or(|cam| {
+                    let dx = (pos.x as f32 - cam.x).abs();
+                    let dy = (pos.y as f32 - cam.y).abs();
+                    dx <= 30.0 && dy <= 30.0
+                });
 
                 if near_camera {
                     let shake_intensity = if damage >= 10.0 { 0.4 } else { 0.15 };
-                    if let Some(mut shake) = world.get_resource_mut::<ScreenShake>() {
+                    if let Some(shake) = shake.as_mut() {
                         shake.trigger(shake_intensity);
                     }
                 }
             }
 
             // Log damage
-            if let Some(mut log) = world.get_resource_mut::<crate::shared::log::MessageLog>() {
+            if let Some(log) = log.as_mut() {
                 log.add("DANGER: A wild animal is attacking!");
             }
         }
@@ -374,7 +382,9 @@ mod tests {
             .id();
 
         // Run behavior system
-        fauna_behavior_system(&mut world);
+        let mut schedule = Schedule::default();
+        schedule.add_systems(fauna_behavior_system);
+        schedule.run(&mut world);
 
         // Wolf should be Chasing pop
         let wolf_comp = world.get::<Fauna>(wolf).unwrap();
@@ -401,7 +411,9 @@ mod tests {
         // Spawn Pop far away
         world.spawn((Pop, GridPosition { x: 10, y: 0 }, Health::default()));
 
-        fauna_behavior_system(&mut world);
+        let mut schedule = Schedule::default();
+        schedule.add_systems(fauna_behavior_system);
+        schedule.run(&mut world);
 
         let wolf_comp = world.get::<Fauna>(wolf).unwrap();
         assert_eq!(wolf_comp.state, FaunaState::Wander);
@@ -454,7 +466,9 @@ mod tests {
         wolf_mut.state = FaunaState::Chase;
         wolf_mut.target = Some(pop);
 
-        fauna_behavior_system(&mut world);
+        let mut schedule = Schedule::default();
+        schedule.add_systems(fauna_behavior_system);
+        schedule.run(&mut world);
 
         // Pop should take damage
         let health = world.get::<Health>(pop).unwrap();
@@ -497,7 +511,9 @@ mod tests {
         wolf_mut.target = Some(pop);
         wolf_mut.detection_range = 10.0;
 
-        fauna_behavior_system(&mut world);
+        let mut schedule = Schedule::default();
+        schedule.add_systems(fauna_behavior_system);
+        schedule.run(&mut world);
 
         // Should have MovementTarget component added
         assert!(world.get::<MovementTarget>(wolf).is_some());
@@ -529,7 +545,9 @@ mod tests {
         // Update target entity ID
         world.get_mut::<Fauna>(wolf).unwrap().target = Some(pop);
 
-        fauna_behavior_system(&mut world);
+        let mut schedule = Schedule::default();
+        schedule.add_systems(fauna_behavior_system);
+        schedule.run(&mut world);
 
         let wolf_comp = world.get::<Fauna>(wolf).unwrap();
         assert_eq!(wolf_comp.state, FaunaState::Wander);

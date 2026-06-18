@@ -1,6 +1,16 @@
-1. **Explore the current design files**: Re-read `design/IDEAS.md` for inspiration and find an idea that fits well into Layer 1, Layer 2, or Layer 3, and isn't already specced or in the backlog. I have chosen "The Blackout Bazaars".
-2. **Draft a new specification**: Create `specs/1308-the-blackout-bazaars.md` adhering strictly to TDD (RED-GREEN-REFACTOR) format as required for the Architect agent.
-3. **Write the spec file**: Format it according to the Architect rules, ensuring it has RED, GREEN, REFACTOR, Acceptance Criteria, Tech Guidance, and Questions.
-4. **Update the backlog**: Add the new spec to `design/BACKLOG.md`.
-5. **Verify and Pre-commit**: Complete the required pre-commit steps to ensure proper testing, verification, review, and reflection are done.
-6. **Submit**: Use `run_in_bash_session` to commit the changes and push/finalize as the architect agent using the requested commit format: `spec(layer1): add the blackout bazaars specification (TDD)`.
+1. **Optimize `fauna_behavior_system` in `src/layer1/fauna/mod.rs`.**
+   - Replace the `&mut World` argument with idiomatic Bevy queries (`Query`, `Commands`, `Local`).
+   - Use `Local<Vec<(Entity, GridPosition)>>` for `pops` and `fauna_updates`, and `Local<Vec<(Entity, Entity, f32)>>` for `attacks`.
+   - Update tests in `src/layer1/fauna/mod.rs` to run the system via a `Schedule`.
+   - Ensure the system compiles and passes tests.
+
+2. **Run tests & clippy**
+   - Run `cargo test --lib layer1::fauna`.
+   - Run `cargo clippy --all-targets --all-features -- -D warnings`.
+   - Run `cargo fmt --all`.
+
+3. **Check Pre-commit**
+   - Ensure pre-commit steps are checked.
+
+4. **Submit PR**
+   - Provide summary.
