@@ -147,6 +147,8 @@ pub enum Policy {
     MartialLaw,
     /// Processes dead pops into VitalOrgans.
     MandatoryOrganHarvesting,
+    /// Encourages citizens to inform on each other.
+    CitizenInformant,
 }
 
 #[derive(Event, Debug)]

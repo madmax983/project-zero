@@ -425,7 +425,12 @@ impl<'a> PopDecider<'a> {
         let weights = self.data.weights;
 
         // Evaluate Socialize
-        let urgency = (1.0 - needs.leisure) * 1.5;
+        let mut urgency = (1.0 - needs.leisure) * 1.5;
+        if let Some(paranoia) = &self.data.paranoia {
+            if paranoia.level > 80.0 {
+                urgency = 0.0;
+            }
+        }
         self.evaluator.evaluate_and_consider(
             evaluate_simple_action(pop_pos, &weights, &self.buffer.taverns, urgency),
             ActionType::Socialize,

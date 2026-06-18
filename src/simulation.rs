@@ -1280,6 +1280,7 @@ mod tests {
         world.init_resource::<Events<crate::layer1::environment::ignition::SparkEvent>>();
         world.init_resource::<Events<crate::layer1::environment::ignition::ExplosionEvent>>();
         world.init_resource::<Events<crate::layer1::environment::events::DebrisFallEvent>>();
+        world.init_resource::<Events<crate::layer1::administration::informants_dilemma::AccusationEvent>>();
 
         world.init_resource::<crate::layer3::intellectual_property_wars::PatentRegistry>();
 

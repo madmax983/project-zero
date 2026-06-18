@@ -345,6 +345,8 @@ pub struct PopBundle {
     pub resonance_traits: crate::layer1::architecture::resonant_architecture::PopResonanceTraits,
     pub base_resonance_traits:
         crate::layer1::architecture::resonant_architecture::PopBaseResonanceTraits,
+    pub paranoia: crate::layer1::administration::informants_dilemma::Paranoia,
+    pub dissent: crate::layer1::administration::informants_dilemma::Dissent,
 }
 
 impl PopBundle {
@@ -400,6 +402,8 @@ impl PopBundle {
             base_resonance_traits:
                 crate::layer1::architecture::resonant_architecture::PopBaseResonanceTraits::default(
                 ),
+            paranoia: crate::layer1::administration::informants_dilemma::Paranoia::default(),
+            dissent: crate::layer1::administration::informants_dilemma::Dissent::default(),
         }
     }
 }

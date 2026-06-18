@@ -29,3 +29,5 @@ pub use invasive_bureaucracy::*;
 
 pub mod bureaucratic_redlining;
 pub use bureaucratic_redlining::*;
+
+pub mod informants_dilemma;

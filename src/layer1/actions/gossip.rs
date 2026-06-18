@@ -9,6 +9,12 @@ pub(crate) fn evaluate_gossip(
     data: &PopEvalData,
     buffer: &UtilityAIBuffer,
 ) -> (ActionType, f32, Option<Entity>) {
+    if let Some(paranoia) = &data.paranoia {
+        if paranoia.level > 80.0 {
+            return (ActionType::Gossip, 0.0, None);
+        }
+    }
+
     let mut desire = 0.0;
 
     // Social need

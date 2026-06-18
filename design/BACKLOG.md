@@ -98,7 +98,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `320` The Subterranean Ocean — `specs/320-subterranean-ocean.md`
 - [ ] `321` The Ego Machine — `specs/321-ego-machine.md`
 - [ ] `322` The Pirate's Pension — `specs/322-pirates-pension.md`
-- [ ] `323` The Informant's Dilemma — `specs/323-informants-dilemma.md`
 - [ ] `324` Kinetic Harpoons — `specs/324-kinetic-harpoons.md`
 - [ ] `325` Orbital Strike Blackmail — `specs/325-orbital-strike-blackmail.md`
 - [ ] `326` Invasive Biology — `specs/326-invasive-biology.md`
