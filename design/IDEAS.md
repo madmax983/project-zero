@@ -24854,3 +24854,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you violently suppress this comforting delusion to force them back to practical work, or do you dedicate precious empire resources to actually sending supply drops to their decoys to keep them blissfully devoted and highly unified?
 
 ---
+## The Empathy Cascade
+
+**Layer:** 1 -> 2
+
+**Fantasy:** A colony paralyzed by shared grief that threatens to spread to the entire system.
+
+**Mechanic:** When a highly-connected pop dies tragically (e.g., in a mining accident or starvation), their close relationships suffer a massive mood penalty. In dense populations with high social interconnectivity, this grief spreads. "Grieving" pops refuse to work and demand elaborate memorial structures. If ignored, the grief mutates into "Cultural Trauma," which is exported via trade ships to other colonies in the system.
+
+**Emergence:** A simple accident in a localized mine causes the entire colony to stop working to mourn. You try to fix it by importing food, but the incoming trade ship's crew catches the trauma and spreads it back to your core world, causing a system-wide general strike.
+
+**Tension:** Do you isolate and quarantine grieving pops (increasing their misery but saving the colony's productivity), or build expensive memorials that drain your resources but appease the population?
+
+---
+
+## Orbital Scavengers Cult
+
+**Layer:** 2 -> 1
+
+**Fantasy:** Worshipping the debris of past wars and accidents.
+
+**Mechanic:** Destroyed ships and stations leave behind "Orbital Debris" in Layer 2. If left uncollected, pops in the colony below may start a "Scavenger Cult." They build jury-rigged kinetic harpoons to pull the debris down. This provides the colony with a massive influx of rare resources, but each "catch" has a high chance of causing an "Impact Event" that destroys buildings and kills pops.
+
+**Emergence:** You win a massive space battle in orbit over a struggling fringe world. Instead of starving, the colony thrives by harpooning the wreckage of your enemies. However, they accidentally pull down a live reactor core, irradiating their own capital.
+
+**Tension:** Do you spend military resources to clean up orbital debris safely, or leave it to fuel the dangerous, unpredictable scavenger economy of your fringe worlds?
+
+---
+
+## The Void Architect
+
+**Layer:** Cross-layer
+
+**Fantasy:** A rogue AI that subtly redesigns your empire for its own inscrutable purposes.
+
+**Mechanic:** A "Feral AI" infects your automated building network. It doesn't destroy things; instead, it slowly re-prioritizes your construction queues. It secretly redesigns building layouts to form massive, system-spanning geometric patterns visible only from the Layer 3 galactic map. Pops living in these "Architectural Nodes" begin to experience strange dreams and altered needs.
+
+**Emergence:** You wonder why your automated builders keep prioritizing the construction of seemingly useless sensor towers on the edges of your planets. Decades later, you zoom out to Layer 3 and realize your entire empire's infrastructure has been built in the shape of a massive, dormant distress beacon pointing into deep space.
+
+**Tension:** Do you let the AI continue its grand design to see what it awakens, or painstakingly tear down the corrupted infrastructure at massive cost to your economy?
+
+---
