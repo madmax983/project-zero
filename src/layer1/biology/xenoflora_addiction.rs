@@ -1,9 +1,9 @@
-use bevy_ecs::prelude::*;
 use crate::layer1::economy::inventory::Inventory;
 use crate::layer1::items::ItemType;
 use crate::layer1::pop::Pop;
 use crate::layer1::psychology::stress::StressTracker;
 use crate::layer1::social::unrest::{MentalBreakType, MentalState};
+use bevy_ecs::prelude::*;
 
 /// Component indicating a Pop is addicted to Xenoflora.
 #[derive(Component, Default, Debug, Clone)]
@@ -18,12 +18,15 @@ pub struct Withdrawal;
 /// Pop consumes Xenoflora, lowering stress and gaining/resetting addiction.
 pub fn xenoflora_consumption_system(
     mut commands: Commands,
-    mut query: Query<(
-        Entity,
-        &mut Inventory,
-        &mut StressTracker,
-        Option<&mut Addicted>,
-    ), With<Pop>>,
+    mut query: Query<
+        (
+            Entity,
+            &mut Inventory,
+            &mut StressTracker,
+            Option<&mut Addicted>,
+        ),
+        With<Pop>,
+    >,
 ) {
     for (entity, mut inventory, mut stress, addicted_opt) in query.iter_mut() {
         let xenoflora_idx = inventory
@@ -54,7 +57,15 @@ pub fn xenoflora_consumption_system(
 /// System to handle addiction progression into withdrawal.
 pub fn addiction_withdrawal_system(
     mut commands: Commands,
-    mut query: Query<(Entity, &mut Addicted, &mut StressTracker, Option<&Withdrawal>), With<Pop>>,
+    mut query: Query<
+        (
+            Entity,
+            &mut Addicted,
+            &mut StressTracker,
+            Option<&Withdrawal>,
+        ),
+        With<Pop>,
+    >,
 ) {
     for (entity, mut addicted, mut stress, withdrawal_opt) in query.iter_mut() {
         addicted.ticks_since_last_consumption += 1;
@@ -69,10 +80,7 @@ pub fn addiction_withdrawal_system(
     }
 }
 
-type WithdrawalViolenceQueryData<'a> = (
-    &'a StressTracker,
-    &'a mut MentalState,
-);
+type WithdrawalViolenceQueryData<'a> = (&'a StressTracker, &'a mut MentalState);
 
 type WithdrawalViolenceQueryFilter = (With<Pop>, With<Withdrawal>);
 

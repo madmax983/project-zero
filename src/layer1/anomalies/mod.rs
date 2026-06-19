@@ -265,10 +265,6 @@ fn complete_anomaly_scan(world: &mut World, pop_entity: Entity, anomaly_entity: 
 }
 
 /// Processes the scanning action for pops.
-///
-/// # Panics
-///
-/// Panics if the anomaly entity exists but lacks the `Anomaly` component.
 pub fn process_scan_system(world: &mut World) {
     let scanners = collect_scanners(world);
 
@@ -428,6 +424,153 @@ mod tests {
 
         let progress = world.get::<ScanProgress>(anomaly).unwrap();
         assert_eq!(progress.current, 1.0);
+    }
+
+    #[test]
+    fn test_process_scan_system_missing_anomaly_cleans_up_state() {
+        let mut world = World::new();
+        world.insert_resource(ColonyResources::default());
+        world.insert_resource(MessageLog::default());
+
+        let anomaly = world
+            .spawn((
+                // Missing Anomaly component intentionally
+                GridPosition { x: 0, y: 0 },
+                ScanProgress {
+                    current: 9.0,
+                    required: 10.0,
+                },
+            ))
+            .id();
+
+        let pop = world
+            .spawn((
+                GridPosition { x: 0, y: 0 },
+                MovementTarget {
+                    target_entity: anomaly,
+                    target_position: GridPosition { x: 0, y: 0 },
+                    for_action: ActionType::Explore,
+                },
+                AtTarget,
+                PopAction {
+                    current: ActionType::Explore,
+                    current_utility: 1.0,
+                    ticks_committed: 5,
+                },
+            ))
+            .id();
+
+        process_scan_system(&mut world);
+
+        // State should be cleaned up
+        let mt = world.get::<MovementTarget>(pop);
+        assert!(mt.is_none());
+        let action = world.get::<PopAction>(pop).unwrap();
+        assert_eq!(action.current, ActionType::Idle);
+    }
+
+    #[test]
+    fn test_process_scan_system_missing_progress_cleans_up_state() {
+        let mut world = World::new();
+        world.insert_resource(ColonyResources::default());
+        world.insert_resource(MessageLog::default());
+
+        let anomaly = world
+            .spawn((
+                Anomaly {
+                    anomaly_type: AnomalyType::Ruins,
+                    reward_amount: 100.0,
+                },
+                GridPosition { x: 0, y: 0 },
+                // Missing ScanProgress intentionally
+            ))
+            .id();
+
+        let pop = world
+            .spawn((
+                GridPosition { x: 0, y: 0 },
+                MovementTarget {
+                    target_entity: anomaly,
+                    target_position: GridPosition { x: 0, y: 0 },
+                    for_action: ActionType::Explore,
+                },
+                AtTarget,
+                PopAction {
+                    current: ActionType::Explore,
+                    current_utility: 1.0,
+                    ticks_committed: 5,
+                },
+            ))
+            .id();
+
+        process_scan_system(&mut world);
+
+        // State should be cleaned up
+        let mt = world.get::<MovementTarget>(pop);
+        assert!(mt.is_none());
+        let action = world.get::<PopAction>(pop).unwrap();
+        assert_eq!(action.current, ActionType::Idle);
+    }
+
+    #[test]
+    fn test_complete_anomaly_missing_grid_position() {
+        let mut world = World::new();
+        let res = ColonyResources {
+            max_food: 500.0,
+            ..Default::default()
+        }; // Ensure enough capacity for the reward
+        world.insert_resource(res);
+        world.insert_resource(MessageLog::default());
+
+        let anomaly = world
+            .spawn((
+                Anomaly {
+                    anomaly_type: AnomalyType::StrangeFlora,
+                    reward_amount: 100.0,
+                },
+                // Missing GridPosition intentionally
+                ScanProgress {
+                    current: 9.0,
+                    required: 10.0,
+                },
+            ))
+            .id();
+
+        let pop = world
+            .spawn((
+                GridPosition { x: 0, y: 0 },
+                MovementTarget {
+                    target_entity: anomaly,
+                    target_position: GridPosition { x: 0, y: 0 },
+                    for_action: ActionType::Explore,
+                },
+                AtTarget,
+                PopAction {
+                    current: ActionType::Explore,
+                    current_utility: 1.0,
+                    ticks_committed: 5,
+                },
+            ))
+            .id();
+
+        process_scan_system(&mut world);
+
+        // Reward should be granted
+        let resources = world.resource::<ColonyResources>();
+        assert_eq!(resources.food, 110.0); // 10 base + 100 reward
+
+        // But ResourceItem shouldn't have spawned (no panic)
+        let count = world
+            .query::<&crate::layer1::resources::ResourceItem>()
+            .iter(&world)
+            .count();
+        assert_eq!(count, 0);
+
+        // State should be cleaned up
+        let mt = world.get::<MovementTarget>(pop);
+        assert!(mt.is_none());
+        let action = world.get::<PopAction>(pop).unwrap();
+        assert_eq!(action.current, ActionType::Idle);
     }
 
     #[test]
