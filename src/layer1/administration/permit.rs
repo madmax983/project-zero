@@ -24,7 +24,7 @@ pub fn permit_activation_system(
             item.item_type.as_resource_type() == Some(ResourceType::BuildingPermit)
         }) {
             // Remove permit
-            inventory.items.remove(index);
+            inventory.items.swap_remove(index);
             // Remove requirement
             commands.entity(entity).remove::<PermitRequired>();
 

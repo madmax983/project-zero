@@ -37,7 +37,7 @@ pub fn xenoflora_consumption_system(
         if let Some(idx) = xenoflora_idx {
             // Found Xenoflora, consume it if stress is somewhat high or addicted
             if stress.accumulated_stress > 20.0 || addicted_opt.is_some() {
-                inventory.items.remove(idx);
+                inventory.items.swap_remove(idx);
                 // Reduce stress significantly
                 stress.accumulated_stress = (stress.accumulated_stress - 30.0).max(0.0);
 

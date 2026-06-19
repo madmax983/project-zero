@@ -33,7 +33,7 @@ pub fn hoarder_collection_system(
         if traits.has(Trait::Hoarder) {
             for mut inv in stockpiles.iter_mut() {
                 if let Some(pos) = inv.items.iter().position(|i| i.item_type == ItemType::Tool) {
-                    inv.items.remove(pos);
+                    inv.items.swap_remove(pos);
                     hoard.items.push(ItemType::Tool);
                     break;
                 }

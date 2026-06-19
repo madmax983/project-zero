@@ -250,9 +250,16 @@ pub fn form_golem_system(
             for (inv_e, mut indices) in inv_removals {
                 indices.sort_unstable_by(|a, b| b.cmp(a)); // Descending
                 if let Ok((_, _, mut inventory)) = inventories.get_mut(inv_e) {
+                    // With swap_remove, the order of elements changes.
+                    // If we remove multiple indices, removing the highest index first
+                    // means we swap the removed element with the last element.
+                    // The last element's index changes to the removed index.
+                    // Since we iterate in descending order, the new index of the swapped
+                    // element is guaranteed to be >= the current index, which means it will
+                    // never overlap with any subsequent (smaller) indices we plan to remove.
                     for idx in indices {
                         if idx < inventory.items.len() {
-                            inventory.items.remove(idx);
+                            inventory.items.swap_remove(idx);
                         }
                     }
                 }
