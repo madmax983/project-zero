@@ -85,7 +85,6 @@ See `design/IDEAS.md` for unspecced concepts.
 
 - [ ] `311` The Orbital Ring — `specs/311-orbital-ring.md`
 - [ ] `312` The Cryo-Mutiny — `specs/312-cryo-mutiny.md`
-- [ ] `313` The Fungal Network — `specs/313-fungal-network.md`
 - [ ] `314` The Void Leviathan — `specs/314-void-leviathan.md`
 - [ ] `315` The Propaganda Engine — `specs/315-propaganda-engine.md`
 - [ ] `316` The Geothermal Heartbeat — `specs/316-geothermal-heartbeat.md`
