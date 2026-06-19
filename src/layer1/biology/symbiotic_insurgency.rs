@@ -139,7 +139,7 @@ mod tests {
         let sabotage_events = app.world().resource::<Events<SabotageEvent>>();
         let mut reader = sabotage_events.get_cursor();
         let events: Vec<_> = reader.read(sabotage_events).collect();
-        assert!(events.len() > 0, "Critical mass symbiont faction must trigger sabotage");
+        assert!(!events.is_empty(), "Critical mass symbiont faction must trigger sabotage");
 
         // At critical mass, target should be Airlocks
         let target_is_airlocks = events.iter().any(|e| matches!(e.target, SabotageTarget::Airlocks));
@@ -179,7 +179,7 @@ mod tests {
         let sabotage_events = app.world().resource::<Events<SabotageEvent>>();
         let mut reader = sabotage_events.get_cursor();
         let events: Vec<_> = reader.read(sabotage_events).collect();
-        assert!(events.len() > 0, "Non-zero symbiont faction must trigger sabotage");
+        assert!(!events.is_empty(), "Non-zero symbiont faction must trigger sabotage");
 
         let target_is_air_filtration = events.iter().any(|e| matches!(e.target, SabotageTarget::AirFiltration));
         assert!(target_is_air_filtration, "Sabotage target should be AirFiltration");

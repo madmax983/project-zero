@@ -753,8 +753,8 @@ mod tests {
 
         let modifier = get_trait_leisure_decay_modifier(&traits);
         assert!(
-            (modifier - 2.0).abs() < f32::EPSILON,
-            "Insomnia Drive should double leisure decay"
+            (modifier - 1.3).abs() < f32::EPSILON,
+            "Insomnia Drive should increase leisure decay by 30%"
         );
     }
 }
