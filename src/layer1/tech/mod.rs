@@ -707,6 +707,7 @@ mod hypno_learning_tests;
 pub mod infinite_archive;
 #[cfg(test)]
 mod infinite_archive_tests;
+pub mod living_archive;
 pub mod neural_leech;
 
 #[cfg(test)]

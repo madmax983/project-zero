@@ -779,3 +779,5 @@
 - [x] `1025` Gravity Plating Failure — `specs/1025-gravity-plating-failure.md` — completed 2026-02-01
 - [x] `1043` Black Market Infrastructure — `specs/1043-black-market-infrastructure.md` — completed 2026-02-01
 - [x] `555` The Symbiotic Insurgency — `specs/555-the-symbiotic-insurgency.md` — completed 2026-06-18
+
+- [x] `493` The Living Archive — `specs/493-the-living-archive.md` — completed 2026-02-01

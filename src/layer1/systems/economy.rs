@@ -53,6 +53,7 @@ pub fn register(schedule: &mut Schedule) {
                 crate::layer1::permit::enforce_permit_restrictions_system
                     .before(crate::layer1::energy::power_grid_system),
                 crate::layer1::tech::update_tech_capacity_system,
+                crate::layer1::tech::living_archive::process_flesh_server_stress_system,
                 crate::layer1::skills::generational_atrophy::apply_skill_atrophy_system,
                 crate::layer1::tech::infinite_archive::update_efficiency_system
                     .after(crate::layer1::tech::update_tech_capacity_system),
