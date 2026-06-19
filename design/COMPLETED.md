@@ -750,6 +750,7 @@
 - [x] `1294` Biometric Drift — `specs/1294-biometric-drift.md` — completed 2026-06-12
 - [x] `INT-1289` Integration: Bureaucracy of Scarcity -> Needs System — completed 2026-10-31
 - [x] `1300` Phantom Commutes — `specs/1300-phantom-commutes.md` — completed 2026-06-12
+- [x] `INT-1300` Integration: Phantom Commutes -> Chronicle — completed 2026-06-12
 - [x] `INT-284` Integration: Generational Hoarders -> Simulation — completed 2026-10-31
 - [x] `986` The Last Light — `specs/986-the-last-light.md` — completed 2026-02-01
 

@@ -2963,6 +2963,7 @@ pub fn phantom_commutes_bridge_system(
         ),
         bevy_ecs::query::With<crate::layer1::pop::Pop>,
     >,
+    mut chronicle: bevy_ecs::event::EventWriter<crate::layer1::core::chronicle::AddChronicleEvent>,
 ) {
     for event in events.read() {
         for (entity, pos, target) in q_pops.iter() {
@@ -2975,6 +2976,15 @@ pub fn phantom_commutes_bridge_system(
                         last_pos: None,
                     },
                 );
+
+                chronicle.send(crate::layer1::core::chronicle::AddChronicleEvent {
+                    text: format!(
+                        "A Pop continues to walk towards {x},{y} in a daze, attempting a phantom commute to a destroyed building.",
+                        x = event.position.x,
+                        y = event.position.y
+                    ),
+                    importance: crate::layer1::core::chronicle::EventImportance::Minor,
+                });
             }
         }
     }
