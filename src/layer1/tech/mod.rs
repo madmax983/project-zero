@@ -734,5 +734,6 @@ pub mod martyrs_engine;
 
 pub mod rogue_automation_cults;
 
+pub mod living_archive;
 pub mod symbiotic_habitation;
 pub mod teleporter;

@@ -2983,12 +2983,16 @@ pub fn phantom_commutes_bridge_system(
 /// INT-555: Bridges `SabotageEvent` from Symbiotic Insurgency to `Building` access control and structure damage.
 pub fn symbiont_sabotage_bridge_system(
     mut events: EventReader<crate::layer1::biology::symbiotic_insurgency::SabotageEvent>,
-    mut buildings: Query<(&crate::layer1::architecture::Building, Option<&mut crate::layer1::access_control::AccessControl>, Option<&mut crate::layer1::architecture::Structure>)>,
+    mut buildings: Query<(
+        &crate::layer1::architecture::Building,
+        Option<&mut crate::layer1::access_control::AccessControl>,
+        Option<&mut crate::layer1::architecture::Structure>,
+    )>,
     mut chronicle: EventWriter<AddChronicleEvent>,
 ) {
-    use crate::layer1::biology::symbiotic_insurgency::SabotageTarget;
     use crate::layer1::access_control::AccessMode;
     use crate::layer1::architecture::BuildingType;
+    use crate::layer1::biology::symbiotic_insurgency::SabotageTarget;
 
     for event in events.read() {
         match event.target {
