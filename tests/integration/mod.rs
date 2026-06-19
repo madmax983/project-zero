@@ -84,3 +84,4 @@ pub mod galactic_market_trade_bridge;
 pub mod generational_hoarders_bridge;
 pub mod edible_architecture;
 pub mod phantom_commutes_bridge;
+pub mod symbiotic_insurgency_bridge;
