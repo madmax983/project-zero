@@ -67,48 +67,62 @@ fn main() {
         .apply_modifier(comfy_table::modifiers::UTF8_ROUND_CORNERS)
         .set_content_arrangement(comfy_table::ContentArrangement::Dynamic)
         .set_header(vec![
-            Cell::new("Category").add_attribute(comfy_table::Attribute::Bold),
-            Cell::new("Metric").add_attribute(comfy_table::Attribute::Bold),
-            Cell::new("Value").add_attribute(comfy_table::Attribute::Bold),
+            Cell::new("Category")
+                .add_attribute(comfy_table::Attribute::Bold)
+                .fg(TableColor::Cyan),
+            Cell::new("Metric")
+                .add_attribute(comfy_table::Attribute::Bold)
+                .fg(TableColor::Cyan),
+            Cell::new("Value")
+                .add_attribute(comfy_table::Attribute::Bold)
+                .fg(TableColor::Cyan),
         ]);
 
     table.add_row(vec![
-        Cell::new("Population").fg(TableColor::Cyan),
-        Cell::new("Citizens"),
-        Cell::new(pop_count.to_string()),
+        Cell::new("👥 Population")
+            .fg(TableColor::White)
+            .add_attribute(comfy_table::Attribute::Bold),
+        Cell::new("Citizens").fg(TableColor::DarkGrey),
+        Cell::new(pop_count.to_string()).fg(TableColor::White),
     ]);
 
     table.add_row(vec![
-        Cell::new("Basic").fg(TableColor::Yellow),
-        Cell::new("Food"),
-        Cell::new(format!("{:.1}", resources.food)).fg(if resources.food < 20.0 {
-            TableColor::Red
-        } else {
-            TableColor::Green
-        }),
-    ]);
-
-    table.add_row(vec![
-        Cell::new(""),
-        Cell::new("Wood"),
-        Cell::new(format!("{:.1}", resources.wood)),
-    ]);
-
-    table.add_row(vec![
-        Cell::new(""),
-        Cell::new("Stone"),
-        Cell::new(format!("{:.1}", resources.stone)),
+        Cell::new("📦 Basic Resources")
+            .fg(TableColor::Yellow)
+            .add_attribute(comfy_table::Attribute::Bold),
+        Cell::new("🍖 Food").fg(TableColor::DarkGrey),
+        Cell::new(format!("{:.1}", resources.food))
+            .fg(if resources.food < 20.0 {
+                TableColor::Red
+            } else {
+                TableColor::Green
+            })
+            .add_attribute(comfy_table::Attribute::Bold),
     ]);
 
     table.add_row(vec![
         Cell::new(""),
-        Cell::new("Water"),
+        Cell::new("🪵 Wood").fg(TableColor::DarkGrey),
+        Cell::new(format!("{:.1}", resources.wood)).fg(TableColor::White),
+    ]);
+
+    table.add_row(vec![
+        Cell::new(""),
+        Cell::new("🪨 Stone").fg(TableColor::DarkGrey),
+        Cell::new(format!("{:.1}", resources.stone)).fg(TableColor::White),
+    ]);
+
+    table.add_row(vec![
+        Cell::new(""),
+        Cell::new("💧 Water").fg(TableColor::DarkGrey),
         Cell::new(format!("{:.1}", resources.water)).fg(TableColor::Blue),
     ]);
 
     table.add_row(vec![
-        Cell::new("Advanced").fg(TableColor::Magenta),
-        Cell::new("Knowledge"),
+        Cell::new("🔬 Advanced")
+            .fg(TableColor::Magenta)
+            .add_attribute(comfy_table::Attribute::Bold),
+        Cell::new("Knowledge").fg(TableColor::DarkGrey),
         Cell::new(format!("{:.1}", resources.knowledge)).fg(TableColor::Cyan),
     ]);
 
