@@ -1516,3 +1516,9 @@
 - **Systems connected:** `DiplomaticMeetingEvent` -> `diplomatic_fashion_chronicle_bridge` -> `AddChronicleEvent`
 - **Glue added:** `diplomatic_fashion_chronicle_bridge` in `src/layer3/integration.rs` to read `DiplomaticMeetingEvent`, evaluate if the envoy's apparel matches the ambassador's preferred attire, and emit an `AddChronicleEvent`. Registered in `src/simulation.rs`.
 - **Tests:** `tests/integration/diplomatic_fashion_bridge.rs`
+
+### INT-1300: Phantom Commutes -> Chronicle
+- **Date:** 2026-06-12
+- **Systems connected:** `BuildingRemovedEvent` -> `phantom_commutes_bridge_system` -> `AddChronicleEvent`
+- **Glue added:** Modified `phantom_commutes_bridge_system` in `src/layer1/core/integration.rs` to generate Chronicle records when a phantom commute is triggered.
+- **Tests:** `tests/integration/phantom_commutes_bridge.rs`

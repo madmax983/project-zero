@@ -12,6 +12,7 @@ use scale::layer1::utility_types::ActionType;
 fn test_building_removed_triggers_phantom_commute() {
     let mut app = App::new();
     app.init_resource::<Events<BuildingRemovedEvent>>();
+    app.init_resource::<Events<scale::layer1::core::chronicle::AddChronicleEvent>>();
     app.add_systems(Update, phantom_commutes_bridge_system);
 
     let building_pos = GridPosition { x: 5, y: 5 };
@@ -50,4 +51,46 @@ fn test_building_removed_triggers_phantom_commute() {
     assert_eq!(route.path.len(), 2);
     assert_eq!(route.path[0], GridPosition { x: 4, y: 5 });
     assert_eq!(route.path[1], building_pos);
+}
+
+#[test]
+fn test_phantom_commute_emits_chronicle_event() {
+    use scale::layer1::core::chronicle::AddChronicleEvent;
+
+    let mut app = App::new();
+    app.init_resource::<Events<BuildingRemovedEvent>>();
+    app.init_resource::<Events<scale::layer1::core::chronicle::AddChronicleEvent>>();
+    app.init_resource::<Events<AddChronicleEvent>>();
+    app.add_systems(Update, phantom_commutes_bridge_system);
+
+    let building_pos = GridPosition { x: 5, y: 5 };
+
+    app.world_mut()
+        .spawn((
+            Pop,
+            GridPosition { x: 4, y: 5 },
+            MovementTarget {
+                target_entity: Entity::PLACEHOLDER,
+                target_position: building_pos,
+                for_action: ActionType::Work,
+            },
+        ));
+
+    app.world_mut()
+        .resource_mut::<Events<BuildingRemovedEvent>>()
+        .send(BuildingRemovedEvent {
+            entity: Entity::PLACEHOLDER,
+            position: building_pos,
+            building_type: BuildingType::ConveyorBelt,
+        });
+
+    app.update();
+
+    let chronicle_events = app.world().resource::<Events<AddChronicleEvent>>();
+    let mut cursor = chronicle_events.get_cursor();
+    let events: Vec<_> = cursor.read(chronicle_events).collect();
+
+    assert_eq!(events.len(), 1, "Should emit exactly one chronicle event");
+    assert!(events[0].text.contains("phantom commute"));
+    assert!(events[0].text.contains("5,5"));
 }
