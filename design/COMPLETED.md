@@ -783,3 +783,4 @@
 - [x] `283` Acoustic Zones — `specs/283-acoustic-zones.md` — completed 2026-06-19
 - [x] `INT-555` Integration: The Symbiotic Insurgency -> Building Access — completed 2026-10-31
 - [x] `493` The Living Archive — `specs/493-the-living-archive.md` — completed 2026-06-25
+- [x] `1036` Institutional Memory — `specs/1036-institutional-memory.md` — completed 2026-06-25

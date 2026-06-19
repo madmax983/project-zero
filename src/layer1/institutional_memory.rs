@@ -185,3 +185,259 @@ pub fn manual_aura_system(
         }
     }
 }
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::layer1::designation::{Designation, DesignationType};
+    use crate::layer1::execution::{AtTarget, MovementTarget};
+    use crate::layer1::map::GridPosition;
+    use crate::layer1::pop::Pop;
+
+    #[test]
+    fn test_missing_coverage_branches_18() {
+        let mut world = World::new();
+
+        world.insert_resource(InstitutionalMemoryConfig {
+            production_chance: 1.0,
+        });
+
+        let desig_clear = world
+            .spawn((
+                Designation {
+                    designation_type: DesignationType::ClearFlora,
+                },
+                GridPosition { x: 5, y: 5 },
+            ))
+            .id();
+        let mut skills_clear = Skills::default();
+        skills_clear.add_xp(SkillType::Farming, 2500.0);
+        world.spawn((
+            Pop,
+            skills_clear,
+            GridPosition { x: 5, y: 5 },
+            MovementTarget {
+                target_entity: desig_clear,
+                target_position: GridPosition { x: 5, y: 5 },
+                for_action: ActionType::Work,
+            },
+            AtTarget,
+        ));
+
+        let desig_sample = world
+            .spawn((
+                Designation {
+                    designation_type: DesignationType::CollectSample,
+                },
+                GridPosition { x: 6, y: 6 },
+            ))
+            .id();
+        let mut skills_sample = Skills::default();
+        skills_sample.add_xp(SkillType::Farming, 2500.0);
+        world.spawn((
+            Pop,
+            skills_sample,
+            GridPosition { x: 6, y: 6 },
+            MovementTarget {
+                target_entity: desig_sample,
+                target_position: GridPosition { x: 6, y: 6 },
+                for_action: ActionType::Work,
+            },
+            AtTarget,
+        ));
+
+        let desig_demolish = world
+            .spawn((
+                Designation {
+                    designation_type: DesignationType::Demolish,
+                },
+                GridPosition { x: 7, y: 7 },
+            ))
+            .id();
+        let mut skills_demolish = Skills::default();
+        skills_demolish.add_xp(SkillType::Construction, 2500.0);
+        world.spawn((
+            Pop,
+            skills_demolish,
+            GridPosition { x: 7, y: 7 },
+            MovementTarget {
+                target_entity: desig_demolish,
+                target_position: GridPosition { x: 7, y: 7 },
+                for_action: ActionType::Work,
+            },
+            AtTarget,
+        ));
+
+        let desig_juryrig = world
+            .spawn((
+                Designation {
+                    designation_type: DesignationType::JuryRig,
+                },
+                GridPosition { x: 8, y: 8 },
+            ))
+            .id();
+        let mut skills_juryrig = Skills::default();
+        skills_juryrig.add_xp(SkillType::Construction, 2500.0);
+        world.spawn((
+            Pop,
+            skills_juryrig,
+            GridPosition { x: 8, y: 8 },
+            MovementTarget {
+                target_entity: desig_juryrig,
+                target_position: GridPosition { x: 8, y: 8 },
+                for_action: ActionType::Work,
+            },
+            AtTarget,
+        ));
+
+        let desig_destroy = world
+            .spawn((
+                Designation {
+                    designation_type: DesignationType::Destroy,
+                },
+                GridPosition { x: 9, y: 9 },
+            ))
+            .id();
+        let mut skills_destroy = Skills::default();
+        skills_destroy.add_xp(SkillType::Construction, 2500.0);
+        world.spawn((
+            Pop,
+            skills_destroy,
+            GridPosition { x: 9, y: 9 },
+            MovementTarget {
+                target_entity: desig_destroy,
+                target_position: GridPosition { x: 9, y: 9 },
+                for_action: ActionType::Work,
+            },
+            AtTarget,
+        ));
+
+        let desig_setzone = world
+            .spawn((
+                Designation {
+                    designation_type: DesignationType::SetZone(
+                        crate::layer1::zone::ZoneType::Storage,
+                    ),
+                },
+                GridPosition { x: 10, y: 10 },
+            ))
+            .id();
+        let mut skills_setzone = Skills::default();
+        skills_setzone.add_xp(SkillType::Construction, 2500.0);
+        world.spawn((
+            Pop,
+            skills_setzone,
+            GridPosition { x: 10, y: 10 },
+            MovementTarget {
+                target_entity: desig_setzone,
+                target_position: GridPosition { x: 10, y: 10 },
+                for_action: ActionType::Work,
+            },
+            AtTarget,
+        ));
+
+        let desig_cannibalize = world
+            .spawn((
+                Designation {
+                    designation_type: DesignationType::Cannibalize,
+                },
+                GridPosition { x: 11, y: 11 },
+            ))
+            .id();
+        let mut skills_cannibalize = Skills::default();
+        skills_cannibalize.add_xp(SkillType::Construction, 2500.0); // Uses fallback
+        world.spawn((
+            Pop,
+            skills_cannibalize,
+            GridPosition { x: 11, y: 11 },
+            MovementTarget {
+                target_entity: desig_cannibalize,
+                target_position: GridPosition { x: 11, y: 11 },
+                for_action: ActionType::Work,
+            },
+            AtTarget,
+        ));
+
+        let desig_consume = world
+            .spawn((
+                Designation {
+                    designation_type: DesignationType::Consume,
+                },
+                GridPosition { x: 12, y: 12 },
+            ))
+            .id();
+        let mut skills_consume = Skills::default();
+        skills_consume.add_xp(SkillType::Mining, 2500.0); // Uses fallback
+        world.spawn((
+            Pop,
+            skills_consume,
+            GridPosition { x: 12, y: 12 },
+            MovementTarget {
+                target_entity: desig_consume,
+                target_position: GridPosition { x: 12, y: 12 },
+                for_action: ActionType::Work,
+            },
+            AtTarget,
+        ));
+
+        let target_no_desig = world.spawn(()).id();
+        let mut skills_nodesig = Skills::default();
+        skills_nodesig.add_xp(SkillType::Mining, 2500.0); // Uses fallback
+        world.spawn((
+            Pop,
+            skills_nodesig,
+            GridPosition { x: 13, y: 13 },
+            MovementTarget {
+                target_entity: target_no_desig,
+                target_position: GridPosition { x: 13, y: 13 },
+                for_action: ActionType::Work,
+            },
+            AtTarget,
+        ));
+
+        let desig_idle = world
+            .spawn((
+                Designation {
+                    designation_type: DesignationType::Mine,
+                },
+                GridPosition { x: 14, y: 14 },
+            ))
+            .id();
+        world.spawn((
+            Pop,
+            Skills::default(),
+            GridPosition { x: 14, y: 14 },
+            MovementTarget {
+                target_entity: desig_idle,
+                target_position: GridPosition { x: 14, y: 14 },
+                for_action: ActionType::Idle,
+            },
+            AtTarget,
+        ));
+
+        let desig_lowskill = world
+            .spawn((
+                Designation {
+                    designation_type: DesignationType::Mine,
+                },
+                GridPosition { x: 15, y: 15 },
+            ))
+            .id();
+        let mut skills_lowskill = Skills::default();
+        skills_lowskill.add_xp(SkillType::Mining, 100.0);
+        world.spawn((
+            Pop,
+            skills_lowskill,
+            GridPosition { x: 15, y: 15 },
+            MovementTarget {
+                target_entity: desig_lowskill,
+                target_position: GridPosition { x: 15, y: 15 },
+                for_action: ActionType::Work,
+            },
+            AtTarget,
+        ));
+
+        let mut schedule = Schedule::default();
+        schedule.add_systems((produce_manual_system, manual_aura_system));
+        schedule.run(&mut world);
+    }
+}
