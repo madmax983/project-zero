@@ -24812,3 +24812,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you uplift all your worlds to a utopian standard, sacrificing the immense economic benefits of the Nostalgia Market, or intentionally manufacture a struggling underclass to satisfy the cultural tastes of the privileged?
 
 ---
+
+## The Weight of Atrophy
+
+**Layer:** Cross-layer
+
+**Fantasy:** Dealing with the slow, stubborn decay of unused infrastructure as populations shrink or shift focus.
+
+**Mechanic:** Buildings and ships that go unused or uncrewed for long periods begin to suffer "Atrophy." Instead of just taking physical damage, they become actively resistant to reactivation. Waking up an atrophied structure requires a massive, sustained surge of labor and resources, and often results in permanent "Quirks" (reduced efficiency, strange localized events).
+
+**Emergence:** You abandon a massive underground mining complex to focus on a war in orbit. Decades later, during a resource crisis, you try to restart the mines, only to find the dormant machines have "forgotten" their safety protocols, leading to immediate catastrophic cave-ins.
+
+**Tension:** Do you dismantle unused infrastructure for guaranteed salvage, or leave it dormant for future emergencies, risking that it might awaken hostile or unusable?
+
+---
+
+## Cultural Divergence
+
+**Layer:** 1 -> 2
+
+**Fantasy:** A colony that grows so distinct from the empire that communication literally breaks down.
+
+**Mechanic:** Colonies with low trade or low migration over long periods slowly shift their "Cultural Lexicon." Initially, this just reduces administrative efficiency. Eventually, they stop understanding orders completely. System-level decrees fail to register, and automated Layer 2 transport ships are rejected from docking bays due to mismatched protocol handshakes.
+
+**Emergence:** You try to rapidly evacuate a fringe world before a deadly stellar flare. The evacuation orders are rejected and the transports are turned away because your central bureaucracy and the local colony no longer share the same functional definition of an "emergency."
+
+**Tension:** Do you constantly cycle pops between worlds to enforce a homogeneous culture (wasting fuel and causing transit trauma), or let them isolate and risk losing control to linguistic and cultural drift?
+
+---
+
+## The Cargo Cult Protocol
+
+**Layer:** 1
+
+**Fantasy:** Desperate colonists turning automated logistics into a religion.
+
+**Mechanic:** If a colony suffers severe deprivation (starvation, lack of power) but is suddenly saved by an automated supply drop or a wandering feral freighter, the pops might form a "Cargo Cult." They begin treating landing pads as shrines and dedicating massive amounts of labor to building elaborate, non-functional "decoy" landing pads and beacons out of scrap to attract more divine intervention.
+
+**Emergence:** Your struggling colonists stop farming entirely and instead dismantle their last functioning greenhouse to build a beautiful, useless effigy of a grain freighter, guaranteeing their own starvation unless you manually intervene.
+
+**Tension:** Do you violently suppress this comforting delusion to force them back to practical work, or do you dedicate precious empire resources to actually sending supply drops to their decoys to keep them blissfully devoted and highly unified?
+
+---
