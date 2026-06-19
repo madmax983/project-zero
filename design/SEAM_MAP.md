@@ -783,6 +783,12 @@
 
 ### INT-060: Vacuum Pressure -> Acoustic Shadows
 - **Date:** 2026-06-25
+
+### INT-283: Acoustic Zones -> Stress System
+- **Date:** 2026-10-31
+- **Systems connected:** `update_noise_system` -> `apply_noise_effects_system`
+- **Glue added:** Replaced the leisure reduction logic in `apply_noise_effects_system` with increasing `accumulated_stress` on `StressTracker`, applying a 2x multiplier if the pop is sleeping (`ActionType::SatisfyRest`).
+- **Tests:** `test_noise_increases_stress` in `src/layer1/physics/acoustic.rs`
 - **Systems connected:** `update_pressure_system` -> `update_noise_system`
 - **Glue added:** Moved `update_noise_system` and `apply_noise_effects_system` from `Layer1SystemSet::Execution` to `Layer1SystemSet::Environment` so they execute after `update_pressure_system`
 - **Tests:** `tests/integration/vacuum_noise_bridge.rs`

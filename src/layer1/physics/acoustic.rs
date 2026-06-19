@@ -59,7 +59,6 @@
 )]
 
 use crate::layer1::map::GridPosition;
-use crate::layer1::needs::Needs;
 use crate::layer1::terrain::{TerrainGrid, TerrainType};
 use bevy_ecs::prelude::*;
 
@@ -243,18 +242,28 @@ pub fn update_noise_system(
     }
 }
 
-/// System to apply noise effects to pops (reduce leisure).
+/// System to apply noise effects to pops (increase stress).
 pub fn apply_noise_effects_system(
     noise_map: Res<NoiseMap>,
-    mut pops: Query<(&GridPosition, &mut Needs)>,
+    mut pops: Query<(
+        &GridPosition,
+        &mut crate::layer1::stress::StressTracker,
+        Option<&crate::layer1::utility_types::PopAction>,
+    )>,
 ) {
-    for (pos, mut needs) in &mut pops {
+    for (pos, mut stress, action) in &mut pops {
         let noise = noise_map.get(pos.x, pos.y);
-        if noise > 0.5 {
-            // High noise stresses pops, reducing leisure.
-            // 0.01 per tick is quite harsh if running every tick.
-            // But aligned with spec idea.
-            needs.leisure = (needs.leisure - 0.01 * noise).max(0.0);
+        if noise > 0.0 {
+            let mut multiplier = 1.0;
+            if let Some(act) = action {
+                if matches!(
+                    act.current,
+                    crate::layer1::utility_types::ActionType::SatisfyRest
+                ) {
+                    multiplier = 2.0;
+                }
+            }
+            stress.accumulated_stress += noise * 0.1 * multiplier;
         }
     }
 }
@@ -263,7 +272,6 @@ pub fn apply_noise_effects_system(
 mod tests {
     use super::*;
     use crate::layer1::map::GridPosition;
-    use crate::layer1::needs::Needs;
     use crate::layer1::pop::Pop;
     use crate::layer1::terrain::{TerrainGrid, TerrainType};
 
@@ -409,7 +417,7 @@ mod tests {
     }
 
     #[test]
-    fn test_noise_affects_rest_recovery() {
+    fn test_noise_increases_stress() {
         let mut world = World::new();
         let mut map = NoiseMap::new(10, 10);
 
@@ -422,30 +430,28 @@ mod tests {
             .spawn((
                 Pop,
                 GridPosition { x: 0, y: 0 },
-                Needs {
-                    rest: 0.5,
-                    leisure: 0.8,
-                    ..Default::default()
-                }, // Tired
+                crate::layer1::stress::StressTracker {
+                    accumulated_stress: 0.0,
+                },
+                crate::layer1::utility_types::PopAction {
+                    current: crate::layer1::utility_types::ActionType::SatisfyRest,
+                    current_utility: 1.0,
+                    ticks_committed: 0,
+                },
             ))
             .id();
 
-        // Run the system that modifies needs based on environment
+        // Run the system that modifies stress based on environment
         let mut schedule = Schedule::default();
         schedule.add_systems(apply_noise_effects_system);
         schedule.run(&mut world);
 
-        let needs = world.get::<Needs>(pop).unwrap();
+        let stress = world
+            .get::<crate::layer1::stress::StressTracker>(pop)
+            .unwrap();
 
-        // Leisure should have decreased
-        // 0.8 - 0.01 * 0.9 = 0.791
-        assert!(needs.leisure < 0.8);
-
-        // And thus morale should be lower
-        // Base morale (0.8 + 0.5 + 0.8 + 1.0(default hygiene)) / 4 = 0.775
-        // New morale (0.8 + 0.5 + 0.791 + 1.0) / 4 = 0.77275
-        assert!(needs.morale() < 0.775);
-        // Also satisfies spec assertion
-        assert!(needs.morale() < 1.0);
+        // Stress should have increased.
+        // Base: 0.0. Added: 0.9 * 0.1 * 2.0 = 0.18
+        assert!(stress.accumulated_stress > 0.17);
     }
 }
