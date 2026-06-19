@@ -1503,3 +1503,10 @@
 - **Glue added:** `signal_decay_chronicle_bridge` in `src/layer2/integration.rs` to generate Chronicle records when corrupted comms messages are received.
 - **Schedule:** Registered the systems in `src/simulation.rs`.
 - **Tests:** `tests/integration/signal_decay_chronicle.rs`
+
+### INT-555: The Symbiotic Insurgency -> Building Access & Structure
+- **Date:** 2026-10-31
+- **Systems connected:** `trigger_symbiont_sabotage_system` -> `SabotageEvent` -> `symbiont_sabotage_bridge_system` -> `AccessControl` / `Structure` & `AddChronicleEvent`
+- **Glue added:** Added `symbiont_sabotage_bridge_system` in `src/layer1/core/integration.rs` to process `SabotageEvent` targeting airlocks (forcing them open) and air filtration (damaging life support), while generating chronicle records.
+- **Schedule:** Registered in Layer 1 Observation schedule (`src/layer1/systems/observation.rs`).
+- **Tests:** `tests/integration/symbiotic_insurgency_bridge.rs` (2 tests)

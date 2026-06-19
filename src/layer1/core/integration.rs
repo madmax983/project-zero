@@ -2979,3 +2979,48 @@ pub fn phantom_commutes_bridge_system(
         }
     }
 }
+
+/// INT-555: Bridges `SabotageEvent` from Symbiotic Insurgency to `Building` access control and structure damage.
+pub fn symbiont_sabotage_bridge_system(
+    mut events: EventReader<crate::layer1::biology::symbiotic_insurgency::SabotageEvent>,
+    mut buildings: Query<(&crate::layer1::architecture::Building, Option<&mut crate::layer1::access_control::AccessControl>, Option<&mut crate::layer1::architecture::Structure>)>,
+    mut chronicle: EventWriter<AddChronicleEvent>,
+) {
+    use crate::layer1::biology::symbiotic_insurgency::SabotageTarget;
+    use crate::layer1::access_control::AccessMode;
+    use crate::layer1::architecture::BuildingType;
+
+    for event in events.read() {
+        match event.target {
+            SabotageTarget::Airlocks => {
+                for (building, access, _) in buildings.iter_mut() {
+                    if building.building_type == BuildingType::Airlock {
+                        if let Some(mut access) = access {
+                            access.mode = AccessMode::Public;
+                        }
+                    }
+                }
+                chronicle.send(AddChronicleEvent {
+                    text: "Critical sabotage! Symbiont faction forces airlocks open to let the spores in!".to_string(),
+                    importance: EventImportance::Major,
+                });
+            }
+            SabotageTarget::AirFiltration => {
+                for (building, _, structure) in buildings.iter_mut() {
+                    if building.building_type == BuildingType::LifeSupport {
+                        if let Some(mut structure) = structure {
+                            structure.current_hp -= 50.0;
+                            if structure.current_hp < 0.0 {
+                                structure.current_hp = 0.0;
+                            }
+                        }
+                    }
+                }
+                chronicle.send(AddChronicleEvent {
+                    text: "Air filtration systems sabotaged by Symbiont faction.".to_string(),
+                    importance: EventImportance::Minor,
+                });
+            }
+        }
+    }
+}
