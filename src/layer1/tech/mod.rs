@@ -704,6 +704,8 @@ pub mod hypno_learning;
 #[cfg(test)]
 mod hypno_learning_tests;
 
+pub mod living_archive;
+
 pub mod infinite_archive;
 #[cfg(test)]
 mod infinite_archive_tests;

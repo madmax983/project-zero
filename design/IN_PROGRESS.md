@@ -1,0 +1,1 @@
+- [ ] `493` The Living Archive — `specs/493-the-living-archive.md` — claimed 2026-06-19
