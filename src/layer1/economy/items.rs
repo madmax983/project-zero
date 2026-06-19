@@ -126,6 +126,8 @@ pub enum ItemType {
     /// A unique item produced by a hobby (e.g., "Wooden Duck").
     /// ⚡ Bolt Optimization: Made Copy to eliminate heap allocations
     Curio(&'static str),
+    /// Xenoflora, an addictive native plant
+    Xenoflora,
     /// A chemical stimulant that boosts speed but damages health.
     Stim,
     /// A chemical sedative that reduces stress but slows speed.
@@ -183,6 +185,7 @@ impl ItemType {
             | Self::AlienMeatB
             | Self::GlowMushroom
             | Self::MysteryMeal
+            | Self::Xenoflora
             | Self::VoidAle => Some(ResourceType::Food),
             Self::Rations => Some(ResourceType::Rations),
             Self::Waste => Some(ResourceType::Waste),

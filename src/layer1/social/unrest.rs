@@ -76,6 +76,8 @@ pub enum MentalBreakType {
     Sleepwalking,
     /// The Pop forms a violent mob due to forged memories collapsing.
     RealityCollapse,
+    /// The Pop becomes extremely violent due to withdrawal or other severe reasons.
+    Violent,
 }
 
 /// Calculates global unrest based on average colony morale.

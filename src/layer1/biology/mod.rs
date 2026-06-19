@@ -38,3 +38,5 @@ pub use medical::*;
 pub mod gravity_caste;
 pub mod rust_lung;
 pub mod symbiotic_insurgency; pub use symbiotic_insurgency::*;
+pub mod xenoflora_addiction;
+pub use xenoflora_addiction::*;

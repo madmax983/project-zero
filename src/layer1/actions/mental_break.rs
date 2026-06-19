@@ -53,6 +53,10 @@ pub(crate) fn evaluate_mental_break(
                 find_structure_target(data, buffer, &mut best_target);
                 ActionType::RealityCollapse
             }
+            MentalBreakType::Violent => {
+                find_structure_target(data, buffer, &mut best_target);
+                ActionType::Vandalize
+            }
         };
 
         return Some((best_action, best_utility, best_target));
@@ -248,6 +252,11 @@ mod tests {
             (
                 MentalBreakType::RealityCollapse,
                 ActionType::RealityCollapse,
+                Some(structure),
+            ),
+            (
+                MentalBreakType::Violent,
+                ActionType::Vandalize,
                 Some(structure),
             ),
         ];
