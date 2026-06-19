@@ -91,4 +91,5 @@ pub mod red_tape_defense;
 pub mod retro_contracts;
 pub mod system_sovereignty;
 
+pub mod diplomatic_fashion;
 pub mod trade_embargoes;
