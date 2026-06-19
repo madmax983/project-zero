@@ -1510,3 +1510,9 @@
 - **Glue added:** Added `symbiont_sabotage_bridge_system` in `src/layer1/core/integration.rs` to process `SabotageEvent` targeting airlocks (forcing them open) and air filtration (damaging life support), while generating chronicle records.
 - **Schedule:** Registered in Layer 1 Observation schedule (`src/layer1/systems/observation.rs`).
 - **Tests:** `tests/integration/symbiotic_insurgency_bridge.rs` (2 tests)
+
+### INT-1124: Diplomatic Fashion -> Chronicle
+- **Date:** 2026-11-20
+- **Systems connected:** `DiplomaticMeetingEvent` -> `diplomatic_fashion_chronicle_bridge` -> `AddChronicleEvent`
+- **Glue added:** `diplomatic_fashion_chronicle_bridge` in `src/layer3/integration.rs` to read `DiplomaticMeetingEvent`, evaluate if the envoy's apparel matches the ambassador's preferred attire, and emit an `AddChronicleEvent`. Registered in `src/simulation.rs`.
+- **Tests:** `tests/integration/diplomatic_fashion_bridge.rs`

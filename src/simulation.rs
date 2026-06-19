@@ -167,6 +167,7 @@ fn init_simulation_resources(world: &mut World) {
     world.init_resource::<crate::layer1::diplomacy::factions::rivals::TerritoryGrid>();
     world.init_resource::<Events<crate::layer3::diplomacy::succession::SuccessionEvent>>();
     world.init_resource::<Events<crate::layer3::diplomacy::succession::SuccessionCrisisEvent>>();
+    world.init_resource::<Events<crate::layer3::diplomacy::diplomatic_fashion::DiplomaticMeetingEvent>>();
     world.init_resource::<crate::layer1::mind::fugue::FugueEventTracker>();
     world.init_resource::<Events<crate::layer1::pop_memories::FamineEvent>>();
     world.init_resource::<Events<crate::layer1::diplomacy::wards::WarDeclaredEvent>>();
@@ -857,6 +858,7 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
         crate::layer3::integration::hyperlane_collapse_chronicle_bridge,
         crate::layer3::integration::anomaly_discovered_chronicle_bridge
             .after(crate::layer3::map::process_hyperlane_collapse_system),
+        crate::layer3::integration::diplomatic_fashion_chronicle_bridge,
         crate::layer3::integration::feral_logistics_chronicle_bridge,
         crate::layer3::integration::stranded_fleet_chronicle_bridge,
         crate::layer3::diplomacy::wormhole_dumping::process_dump_waste,
@@ -1363,6 +1365,7 @@ mod tests {
 
         world.init_resource::<Events<crate::layer1::social::ghost_shift_strike::GhostShiftStartedEvent>>();
         world.init_resource::<Events<crate::layer3::diplomacy::succession::SuccessionEvent>>();
+        world.init_resource::<Events<crate::layer3::diplomacy::diplomatic_fashion::DiplomaticMeetingEvent>>();
         world.init_resource::<Events<crate::layer1::pop_memories::FamineEvent>>();
         world
             .init_resource::<Events<crate::layer3::diplomacy::succession::SuccessionCrisisEvent>>();
