@@ -5658,3 +5658,31 @@
 **Replaces:** Interference, Static, Noise
 **Code reference:** Signal degradation percentage
 **Usage:** "The message suffered 50% corruption." / "Clear the corruption before translating."
+
+## The Symbiotic Insurgency (Spec 555)
+### Mind Spore Infection
+**Replaces:** Parasite, brain slug
+**Code reference:** `MindSporeInfection` component
+**Usage:** "The Mind Spore Infection has spread to sector 4."
+
+### Symbiont Faction
+**Replaces:** Infected group, sleeper cell
+**Code reference:** `SymbiontFaction` resource
+**Usage:** "The Symbiont Faction is gaining numbers."
+
+## Acoustic Zones (Spec 283)
+### Noise Emitter
+**Replaces:** Loud machine
+**Code reference:** `NoiseEmitter` component
+**Usage:** "The new generator is a massive Noise Emitter."
+
+### Acoustic Map
+**Replaces:** Noise overlay
+**Code reference:** `AcousticMap` resource
+**Usage:** "Check the Acoustic Map before building housing."
+
+## Black Market Infrastructure (Spec 1043)
+### Shadow Economy
+**Replaces:** Black market
+**Code reference:** `BlackMarket` component
+**Usage:** "The Shadow Economy is thriving in the lower decks."
