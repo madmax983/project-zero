@@ -20,6 +20,8 @@ This spec implements the foundational components and systems for Diplomatic Fash
 mod tests {
     use super::*;
     use bevy::prelude::*;
+    // Assuming DiplomaticStanding is defined in layer3/diplomacy_reflection.rs
+    // e.g. pub struct DiplomaticStanding { pub target_id: String, pub standing: f32, pub sanctioned: bool }
 
     #[test]
     fn test_diplomatic_fashion_match_provides_bonus() {
@@ -28,9 +30,15 @@ mod tests {
         app.add_plugins(MinimalPlugins);
 
         let ambassador_entity = app.world_mut().spawn((
-            Diplomat,
+            Diplomat { civ_id: "alien_empire".to_string() },
             PreferredAttire { tags: vec![AttireTag::Organic] },
-            DiplomaticRelations { reputation: 50 },
+            DiplomaticRelations {
+                relations: vec![DiplomaticStanding {
+                    target_id: "player".to_string(),
+                    standing: 50.0,
+                    sanctioned: false,
+                }]
+            },
         )).id();
 
         let envoy_entity = app.world_mut().spawn((
@@ -42,6 +50,7 @@ mod tests {
             DiplomaticMeetingEvent {
                 ambassador: ambassador_entity,
                 envoy: envoy_entity,
+                player_civ_id: "player".to_string(),
             }
         );
 
@@ -50,9 +59,9 @@ mod tests {
         // Act: Call the feature
         app.update();
 
-        // Assert: Verify expected behavior (Reputation should increase because attire matches)
+        // Assert: Verify expected behavior (Standing should increase because attire matches)
         let relations = app.world().get::<DiplomaticRelations>(ambassador_entity).unwrap();
-        assert!(relations.reputation > 50, "Reputation should increase due to matching attire.");
+        assert!(relations.relations[0].standing > 50.0, "Standing should increase due to matching attire.");
     }
 
     #[test]
@@ -62,9 +71,15 @@ mod tests {
         app.add_plugins(MinimalPlugins);
 
         let ambassador_entity = app.world_mut().spawn((
-            Diplomat,
+            Diplomat { civ_id: "alien_empire".to_string() },
             PreferredAttire { tags: vec![AttireTag::HeavyArmor] },
-            DiplomaticRelations { reputation: 50 },
+            DiplomaticRelations {
+                relations: vec![DiplomaticStanding {
+                    target_id: "player".to_string(),
+                    standing: 50.0,
+                    sanctioned: false,
+                }]
+            },
         )).id();
 
         let envoy_entity = app.world_mut().spawn((
@@ -76,6 +91,7 @@ mod tests {
             DiplomaticMeetingEvent {
                 ambassador: ambassador_entity,
                 envoy: envoy_entity,
+                player_civ_id: "player".to_string(),
             }
         );
 
@@ -84,9 +100,9 @@ mod tests {
         // Act
         app.update();
 
-        // Assert: Verify expected behavior (Reputation should decrease because attire does not match)
+        // Assert: Verify expected behavior (Standing should decrease because attire does not match)
         let relations = app.world().get::<DiplomaticRelations>(ambassador_entity).unwrap();
-        assert!(relations.reputation < 50, "Reputation should decrease due to attire mismatch.");
+        assert!(relations.relations[0].standing < 50.0, "Standing should decrease due to attire mismatch.");
     }
 }
 ```
@@ -100,7 +116,9 @@ use bevy::prelude::*;
 pub struct Pop;
 
 #[derive(Component)]
-pub struct Diplomat;
+pub struct Diplomat {
+    pub civ_id: String,
+}
 
 #[derive(Clone, Copy, PartialEq, Eq)]
 pub enum AttireTag {
@@ -119,15 +137,22 @@ pub struct PreferredAttire {
     pub tags: Vec<AttireTag>,
 }
 
+pub struct DiplomaticStanding {
+    pub target_id: String,
+    pub standing: f32,
+    pub sanctioned: bool,
+}
+
 #[derive(Component)]
 pub struct DiplomaticRelations {
-    pub reputation: i32,
+    pub relations: Vec<DiplomaticStanding>,
 }
 
 #[derive(Event)]
 pub struct DiplomaticMeetingEvent {
     pub ambassador: Entity,
     pub envoy: Entity,
+    pub player_civ_id: String,
 }
 
 pub fn evaluate_fashion_system(
@@ -146,10 +171,14 @@ pub fn evaluate_fashion_system(
                     }
                 }
 
-                if matched {
-                    relations.reputation += 10;
-                } else {
-                    relations.reputation -= 10;
+                for relation in relations.relations.iter_mut() {
+                    if relation.target_id == event.player_civ_id {
+                        if matched {
+                            relation.standing += 10.0;
+                        } else {
+                            relation.standing -= 10.0;
+                        }
+                    }
                 }
             }
         }
@@ -184,3 +213,4 @@ pub fn evaluate_fashion_system(
 
 ## Questions
 - Architectural Contradictions: `DiplomaticRelations` component in `src/layer3/diplomacy_reflection.rs` has a `relations: Vec<DiplomaticStanding>` field, not a `reputation: i32` field as assumed in the RED phase tests. `Diplomat` component is also undefined. Therefore, the RED phase tests and GREEN phase logic are architecturally incompatible. I will pick another task from the backlog.
+  *Architect:* The RED and GREEN phases have been refactored to align with the current architecture, utilizing `Vec<DiplomaticStanding>` and correctly defining the `Diplomat` component.
