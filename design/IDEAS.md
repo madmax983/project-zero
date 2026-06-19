@@ -24756,3 +24756,59 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you embrace the rapid skill acquisition and endure the devastating cultural contamination, or strictly ban memory trading and fall behind technologically?
 
 ---
+
+## Structural Fatigue Inheritance
+
+**Layer:** 1
+
+**Fantasy:** The buildings themselves remember the trauma of the colony.
+
+**Mechanic:** Buildings have a hidden "Stress" value that increases during disasters (starvation, riots, extreme weather) even if they aren't physically damaged. When a building with high stress is deconstructed, the "Data Residue" left behind retains this stress. The next building constructed on that tile inherits a portion of that stress, making it more prone to localized failure or negative events.
+
+**Emergence:** You raze a block of housing that survived a brutal famine to build a shiny new research lab. Months later, the lab suffers inexplicable malfunctions and the scientists report feelings of dread, simply because they are working on haunted ground.
+
+**Tension:** Do you build over the scars of the past, risking systemic failure, or permanently abandon prime real estate to let the ghosts sleep?
+
+---
+
+## Information Quarantine
+
+**Layer:** Cross-layer
+
+**Fantasy:** Protecting your empire by blinding it.
+
+**Mechanic:** A highly virulent "Memetic Plague" (Layer 3) is spreading through the hyperlanes. The only defense is an "Information Quarantine" on your Layer 1 colonies. This completely severs their connection to the galactic network, halting all research output and causing massive "Isolation Anxiety" among the pops, but prevents the plague from taking root.
+
+**Emergence:** You quarantine your core agricultural world to save it. Decades later, when the plague has passed and you lift the quarantine, the colony has developed a radical new culture that views the outside galaxy as inherently diseased and refuses to export their food.
+
+**Tension:** Do you sacrifice technological progress and unity to ensure the physical survival of your people, or gamble that your medical tech can outpace the spread of a mind-virus?
+
+---
+
+## The Bureaucracy of Death
+
+**Layer:** 1
+
+**Fantasy:** When the paperwork outlives the people.
+
+**Mechanic:** In a highly developed colony, a pop's death doesn't just mean a body to bury; it triggers a cascade of "Estate Resolution" tasks. Bureaucrats must spend significant time processing the deceased pop's belongings, assigning their housing, and notifying their relatives. During a mass casualty event, the bureaucracy becomes overwhelmed.
+
+**Emergence:** A localized plague wipes out a sector. You have plenty of fresh workers to replace them, but they can't move into the empty housing or take over the jobs because the overwhelmed bureaucrats haven't finished processing the death certificates. The colony grinds to a halt not from lack of people, but from an excess of paperwork.
+
+**Tension:** Do you maintain an oversized, inefficient bureaucratic caste just in case of disaster, or run a lean administration that will completely collapse under the weight of a tragedy?
+
+---
+
+## The Nostalgia Market
+
+**Layer:** Cross-layer
+
+**Fantasy:** Commodified suffering and the hunger for a simpler time.
+
+**Mechanic:** As your empire advances into Layer 3 (high tech, post-scarcity in core worlds), pops develop a "Nostalgia" need. They crave the "authentic struggle" of the early colony days. You can fulfill this by exporting "Rustic Goods" (low-tech items produced on struggling frontier worlds) to the core worlds at an immense profit.
+
+**Emergence:** Your core worlds become so obsessed with "Rustic Goods" that you intentionally sabotage the development of a frontier world, keeping them in a state of perpetual poverty and manual labor just to feed the aesthetic demands of your elite citizens.
+
+**Tension:** Do you uplift all your worlds to a utopian standard, sacrificing the immense economic benefits of the Nostalgia Market, or intentionally manufacture a struggling underclass to satisfy the cultural tastes of the privileged?
+
+---
