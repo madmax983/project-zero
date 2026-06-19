@@ -9717,3 +9717,20 @@ Descriptions of their stress and breakdowns.
 - blood floating in perfect spheres
 - tools becoming deadly projectiles
 - uncontrollable nausea and disorientation
+
+## Fragment Type: [SABOTAGE_TARGET]
+- Air Filtration
+- Airlocks
+- Power Grid
+- Food Silos
+
+## Fragment Type: [NOISE_SOURCE]
+- generators
+- heavy machinery
+- the fabrication plant
+- structural groans
+
+## Fragment Type: [ILLEGAL_GOODS]
+- stolen rations
+- modified tools
+- unregistered cybernetics

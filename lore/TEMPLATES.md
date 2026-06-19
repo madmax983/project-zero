@@ -9420,3 +9420,39 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: The [MILITIA_NAME] used their zero-G training when the plates failed, neutralizing the threat."
 - "Intentional gravity cut. The [MILITIA_NAME] drifted through the chaos and secured the sector. [YEAR]."
 - "[COLONY], [YEAR]: Without gravity, the raiders floundered while the [MILITIA_NAME] struck."
+
+## The Symbiotic Insurgency Templates (Spec 555)
+
+### SYMBIOTE_SABOTAGE
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [SABOTAGE_TARGET], [SABOTEUR_NAME]?
+**Patterns:**
+- "[COLONY], [YEAR]: The [SABOTAGE_TARGET] was destroyed. We blame the Mind Spore."
+- "The infected struck [SABOTAGE_TARGET]. [YEAR]."
+**If [SABOTEUR_NAME]:**
+- "[SABOTEUR_NAME] was seen near the [SABOTAGE_TARGET] before it failed. They smiled as they worked."
+
+### SYMBIOTE_INFECTION_SPREAD
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [INFECTION_COUNT]
+**Patterns:**
+- "[INFECTION_COUNT] souls in [COLONY] have embraced the Spore. [YEAR]."
+
+## Acoustic Zones Templates (Spec 283)
+
+### ACOUSTIC_ZONE_STRESS
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [STRESSED_POP], [NOISE_SOURCE]?
+**Patterns:**
+- "The noise in [COLONY] broke [STRESSED_POP]."
+**If [NOISE_SOURCE]:**
+- "[STRESSED_POP] couldn't sleep. The [NOISE_SOURCE] is too loud."
+
+## Black Market Infrastructure Templates (Spec 1043)
+
+### BLACK_MARKET_DISCOVERED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [ILLEGAL_GOODS]
+**Patterns:**
+- "Found a cache of [ILLEGAL_GOODS] hidden in the ventilation shafts."
+- "The Black Market in [COLONY] trades in [ILLEGAL_GOODS]."
