@@ -213,7 +213,7 @@ pub fn consume_void_ale_system(
 
             if let Some(index) = ale_index {
                 // Consume the ale
-                inventory.items.remove(index);
+                inventory.items.swap_remove(index);
 
                 // Huge boost to leisure and rest
                 needs.leisure = (needs.leisure + 0.6).min(1.0);

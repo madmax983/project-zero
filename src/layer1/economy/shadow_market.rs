@@ -68,7 +68,7 @@ pub fn execute_shadow_item_trade(
             .iter()
             .position(|i| i.item_type == item_to_buy)
         {
-            let item = trader_inv.items.remove(idx);
+            let item = trader_inv.items.swap_remove(idx);
 
             // Re-apply modified inventory
             world.entity_mut(trader_entity).insert(trader_inv);

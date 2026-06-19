@@ -52,7 +52,7 @@ pub fn recycle_processing_system(
 
         // Remove processed items (in reverse order to keep indices valid)
         for index in indices_to_remove.into_iter().rev() {
-            inventory.items.remove(index);
+            inventory.items.swap_remove(index);
         }
     }
 }

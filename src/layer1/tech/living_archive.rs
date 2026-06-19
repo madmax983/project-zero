@@ -63,12 +63,9 @@ mod tests {
     use crate::layer1::energy::EnergyGrid;
     use crate::layer1::health::Health;
     use crate::layer1::resources::ColonyResources;
-    use bevy_ecs::prelude::*;
 
     fn setup_world() -> World {
-        let mut world = World::new();
-        // Minimal setup
-        world
+        World::new()
     }
 
     #[test]

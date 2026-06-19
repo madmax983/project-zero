@@ -64,7 +64,7 @@ pub fn photophobic_decay_system(
                             if let Some(idx) =
                                 inv.items.iter().position(|i| i.entity == Some(entity))
                             {
-                                inv.items.remove(idx);
+                                inv.items.swap_remove(idx);
                             }
                         }
                         commands.entity(entity).despawn();

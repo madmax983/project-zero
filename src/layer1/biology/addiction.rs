@@ -59,7 +59,7 @@ pub fn check_self_surgery_system(
                 .position(|i| i.item_type == crate::layer1::items::ItemType::Scrap);
             if let Some(index) = scrap_index {
                 // Consume the item
-                inventory.items.remove(index);
+                inventory.items.swap_remove(index);
 
                 // Perform Self-Surgery
                 health.current -= 30.0; // Major damage
