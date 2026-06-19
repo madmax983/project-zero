@@ -84,7 +84,7 @@ fn main() {
 }
 ```
 
-See `examples/story_demo.rs` for a complete example.
+See `examples/narrative_demo.rs` for a complete example.
 
 **Note:** This is the **base narrative system** (mad-libs style text generation). It is available in the default build.
 For the **advanced simulation of legends** (Oral Tradition), see the [Oral Tradition](#oral-tradition-nova-feature) section below.
