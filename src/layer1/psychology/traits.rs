@@ -436,7 +436,7 @@ pub fn get_trait_hunger_decay_modifier(traits: &Traits) -> f32 {
 pub fn get_trait_leisure_decay_modifier(traits: &Traits) -> f32 {
     let mut modifier = 1.0;
     if traits.has(Trait::InsomniaDrive) {
-        modifier += 0.3;
+        modifier += 1.0;
     }
     if traits.has(Trait::MindSporeInfected) {
         modifier += 0.5;

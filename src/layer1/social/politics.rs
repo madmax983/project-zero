@@ -5,8 +5,6 @@
 use crate::layer1::chronicle::{AddChronicleEvent, EventImportance};
 use crate::layer1::factions::FactionMember;
 use crate::layer1::pop::Pop;
-use crate::layer2::governance::assign_governor;
-use crate::layer2::system::OrbitalBody;
 use crate::shared::time::SimulationTime;
 use bevy_ecs::prelude::*;
 
@@ -186,71 +184,12 @@ pub fn voting_system(
     }
 }
 
-/// Inaugurates the winner as Governor.
-pub fn inauguration_system(world: &mut World) {
-    let (winner, state) = {
-        let manager = world.resource::<ElectionCycle>();
-        (manager.winner, manager.state)
-    };
-
-    if state == ElectionState::Finished && winner.is_some() {
-        // Find a planet to govern.
-        // For MVP, we pick the first OrbitalBody entity.
-        let mut planet_entity = None;
-        {
-            let mut query = world.query::<(Entity, &OrbitalBody)>();
-            if let Some((entity, _)) = query.iter(world).next() {
-                planet_entity = Some(entity);
-            }
-        }
-
-        if let Some(planet) = planet_entity {
-            if let Some(pop) = winner {
-                assign_governor(world, planet, pop);
-            }
-        }
-
-        let mut promises = Vec::new();
-        {
-            let manager = world.resource::<ElectionCycle>();
-            if let Some(winner_entity) = winner {
-                if let Some(campaign) = manager
-                    .candidates
-                    .iter()
-                    .find(|c| c.pop_entity == winner_entity)
-                {
-                    promises = campaign.platform.promises.clone();
-                }
-            }
-        }
-
-        world.send_event(AddChronicleEvent {
-            text: "Winner Announced".to_string(),
-            importance: EventImportance::Major,
-        });
-
-        let mut mandate = world.resource_mut::<ActiveMandate>();
-        mandate.promises = promises;
-
-        // Reset or schedule next election
-        // We need to mutate resource again.
-        let mut manager = world.resource_mut::<ElectionCycle>();
-        manager.state = ElectionState::Idle;
-        // Schedule next election far in future? Or let manual reset?
-        // Spec says "Every few years".
-        manager.next_election_tick += 10000; // Placeholder duration
-        manager.candidates.clear();
-        manager.winner = None; // Clear winner from manager as they are now Governor
-    }
-}
-
 #[cfg(test)]
 mod tests {
     use super::*;
     use crate::layer1::factions::Factions; // To satisfy tests relying on Factions resource existing
     use crate::layer1::factions::{FactionId, FactionMember};
     use crate::layer1::pop::Pop;
-    use crate::layer2::governance::Governor;
     use crate::shared::time::SimulationTime;
 
     // Helper component to mock Faction for testing logic if needed,
@@ -378,68 +317,6 @@ mod tests {
         // Winner should be set
         assert_eq!(manager.winner, Some(candidate_a));
         assert_eq!(manager.state, ElectionState::Finished);
-    }
-
-    #[test]
-    fn test_winner_becomes_governor() {
-        let mut world = setup_world();
-        let winner_pop = world.spawn(Pop).id();
-        let planet = world.spawn(OrbitalBody::default()).id();
-
-        let mut manager = world.resource_mut::<ElectionCycle>();
-        manager.state = ElectionState::Finished;
-        manager.winner = Some(winner_pop);
-
-        // Run inauguration
-        inauguration_system(&mut world);
-
-        let governor = world.get::<Governor>(planet);
-        assert!(governor.is_some());
-        assert_eq!(governor.unwrap().pop_entity, winner_pop);
-
-        // Check state reset
-        let manager = world.resource::<ElectionCycle>();
-        assert_eq!(manager.state, ElectionState::Idle);
-    }
-
-    #[test]
-    fn test_inauguration_creates_mandate_and_emits_event() {
-        let mut world = setup_world();
-
-        let winner_pop = world.spawn(Pop).id();
-        world.spawn(OrbitalBody::default());
-
-        let mut manager = world.resource_mut::<ElectionCycle>();
-        manager.state = ElectionState::Finished;
-        manager.winner = Some(winner_pop);
-        manager.candidates.push(Campaign {
-            pop_entity: winner_pop,
-            platform: Platform {
-                promises: vec![Promise {
-                    description: "Free Space Pizza".to_string(),
-                }],
-            },
-            votes: 10,
-        });
-
-        inauguration_system(&mut world);
-
-        // Check ActiveMandate
-        let mandate = world.resource::<ActiveMandate>();
-        assert_eq!(mandate.promises.len(), 1);
-        assert_eq!(mandate.promises[0].description, "Free Space Pizza");
-
-        // Check Event
-        let events = world.resource::<Events<AddChronicleEvent>>();
-        let mut reader = events.get_cursor();
-        let mut event_found = false;
-        for ev in reader.read(events) {
-            if ev.text == "Winner Announced" {
-                assert_eq!(ev.importance, EventImportance::Major);
-                event_found = true;
-            }
-        }
-        assert!(event_found);
     }
 
     #[test]
