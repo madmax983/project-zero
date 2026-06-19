@@ -549,3 +549,37 @@ pub fn trade_route_market_bridge_system(
         }
     }
 }
+
+/// INT-1124: Bridges DiplomaticMeetingEvent to AddChronicleEvent based on Fashion matching
+pub fn diplomatic_fashion_chronicle_bridge(
+    mut events: bevy_ecs::prelude::EventReader<crate::layer3::diplomacy::diplomatic_fashion::DiplomaticMeetingEvent>,
+    query_ambassador: bevy_ecs::prelude::Query<&crate::layer3::diplomacy::diplomatic_fashion::PreferredAttire>,
+    query_envoy: bevy_ecs::prelude::Query<&crate::layer3::diplomacy::diplomatic_fashion::Apparel, bevy_ecs::prelude::With<crate::layer1::entities::pop::Pop>>,
+    mut chronicle_events: bevy_ecs::prelude::EventWriter<crate::layer1::core::chronicle::AddChronicleEvent>,
+) {
+    for event in events.read() {
+        if let Ok(preferred) = query_ambassador.get(event.ambassador) {
+            if let Ok(apparel) = query_envoy.get(event.envoy) {
+                let mut matched = false;
+                for tag in &preferred.tags {
+                    if apparel.tags.contains(tag) {
+                        matched = true;
+                        break;
+                    }
+                }
+
+                if matched {
+                    chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
+                        importance: crate::layer1::core::chronicle::EventImportance::Standard,
+                        text: "A diplomatic meeting with a foreign ambassador went well thanks to our envoy's impeccable fashion sense.".to_string(),
+                    });
+                } else {
+                    chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
+                        importance: crate::layer1::core::chronicle::EventImportance::Major,
+                        text: "A diplomatic incident! Our envoy's attire deeply offended the foreign ambassador.".to_string(),
+                    });
+                }
+            }
+        }
+    }
+}

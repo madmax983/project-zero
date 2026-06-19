@@ -580,3 +580,5 @@ mod dead_hand_bridge;
 pub mod orphaned_swarm_bridge;
 #[path = "integration/phantom_commutes_bridge.rs"]
 mod phantom_commutes_bridge;
+#[path = "integration/diplomatic_fashion_bridge.rs"]
+mod diplomatic_fashion_bridge;

@@ -784,3 +784,4 @@
 - [x] `INT-555` Integration: The Symbiotic Insurgency -> Building Access — completed 2026-10-31
 - [x] `493` The Living Archive — `specs/493-the-living-archive.md` — completed 2026-06-25
 - [x] `1124` Diplomatic Fashion — `specs/1124-diplomatic-fashion.md` — completed 2026-06-19
+- [x] `INT-1124` Integration: Diplomatic Fashion -> Chronicle — completed 2026-06-19
