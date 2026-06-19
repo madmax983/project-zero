@@ -632,6 +632,7 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
     ));
 
     // --- Layer 2 Integration ---
+    schedule.add_systems((crate::layer2::integration::inauguration_system,));
     schedule.add_systems((
         crate::layer2::orbital_necropolis::apply_necropolis_bonus,
         crate::layer2::orbital_necropolis::handle_necropolis_destruction,
@@ -1055,9 +1056,10 @@ mod tests {
         world.init_resource::<bevy_ecs::event::Events<crate::layer1::petrification::PopPetrifiedEvent>>();
         world.init_resource::<Events<crate::layer1::predecessors::WorldTriggerEvent>>();
         world.init_resource::<Events<crate::layer1::AcceptSponsorshipEvent>>();
-    world.init_resource::<Events<crate::layer1::biology::symbiotic_insurgency::SabotageEvent>>();
-    world.init_resource::<crate::layer1::biology::symbiotic_insurgency::SymbiontFaction>();
-    world.init_resource::<crate::layer1::biology::symbiotic_insurgency::InfectionConfig>();
+        world
+            .init_resource::<Events<crate::layer1::biology::symbiotic_insurgency::SabotageEvent>>();
+        world.init_resource::<crate::layer1::biology::symbiotic_insurgency::SymbiontFaction>();
+        world.init_resource::<crate::layer1::biology::symbiotic_insurgency::InfectionConfig>();
         world.init_resource::<Events<crate::layer1::psychology::memory_blackout::MemoryBlackoutEvent>>();
         world.init_resource::<Events<crate::layer1::RepairBuildingEvent>>();
         world.init_resource::<Events<crate::layer1::social::hedonic_treadmill::ConsumeItemEvent>>();
@@ -1131,9 +1133,10 @@ mod tests {
 
         // Initialize Detection Risk for test
         world.init_resource::<Events<crate::layer1::AcceptSponsorshipEvent>>();
-    world.init_resource::<Events<crate::layer1::biology::symbiotic_insurgency::SabotageEvent>>();
-    world.init_resource::<crate::layer1::biology::symbiotic_insurgency::SymbiontFaction>();
-    world.init_resource::<crate::layer1::biology::symbiotic_insurgency::InfectionConfig>();
+        world
+            .init_resource::<Events<crate::layer1::biology::symbiotic_insurgency::SabotageEvent>>();
+        world.init_resource::<crate::layer1::biology::symbiotic_insurgency::SymbiontFaction>();
+        world.init_resource::<crate::layer1::biology::symbiotic_insurgency::InfectionConfig>();
         world.init_resource::<Events<crate::layer1::psychology::memory_blackout::MemoryBlackoutEvent>>();
         world.init_resource::<Events<crate::layer1::RepairBuildingEvent>>();
         world.init_resource::<Events<crate::layer1::social::hedonic_treadmill::ConsumeItemEvent>>();
