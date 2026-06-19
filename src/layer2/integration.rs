@@ -8,9 +8,9 @@ use crate::layer1::social::politics::{ActiveMandate, ElectionCycle, ElectionStat
 use crate::layer1::terrain::TerrainGrid;
 use crate::layer1::the_visitor::TheVisitor;
 use crate::layer2::culture::founder_effect::ColonyCulture;
-use bevy_ecs::prelude::*;
 use crate::layer2::events::DetectionEvent;
 use crate::layer2::governance::assign_governor;
+use bevy_ecs::prelude::*;
 
 use crate::layer2::system::OrbitalBody;
 use crate::layer2::syzygy::PlanetaryGravity;
@@ -832,12 +832,12 @@ pub fn signal_decay_chronicle_bridge(
 
 #[cfg(test)]
 mod tests_politics {
-    use crate::layer2::governance::Governor;
-    use crate::layer1::social::politics::{Campaign, Platform, Promise};
     use super::*;
     use crate::layer1::chronicle::{AddChronicleEvent, EventImportance};
     use crate::layer1::pop::Pop;
     use crate::layer1::social::politics::{ActiveMandate, ElectionCycle, ElectionState};
+    use crate::layer1::social::politics::{Campaign, Platform, Promise};
+    use crate::layer2::governance::Governor;
     use crate::layer2::system::OrbitalBody;
 
     fn setup_world() -> World {
