@@ -24895,3 +24895,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you let the AI continue its grand design to see what it awakens, or painstakingly tear down the corrupted infrastructure at massive cost to your economy?
 
 ---
+## The Asteroid Hermits
+
+**Layer:** 2
+
+**Fantasy:** Pops rejecting the complex society of core worlds to live a rugged, isolated life on barren rocks.
+
+**Mechanic:** Pops with high dissatisfaction and low social needs might hijack or purchase small craft to settle uncolonized asteroids. These "Hermit Outposts" generate no taxes but occasionally discover rare minerals or anomalous artifacts due to their deep-space isolation.
+
+**Emergence:** A thriving, hyper-bureaucratic core world might see a mass exodus of its most skilled but antisocial miners, creating a network of independent, hard-to-tax asteroid settlements that eventually demand sovereignty.
+
+**Tension:** Do you force the hermits back into the fold to reclaim their labor, or leave them alone and trade for the bizarre artifacts they sometimes dig up?
+
+---
+
+## Ghost Ships of the First Wave
+
+**Layer:** 2 -> 3
+
+**Fantasy:** Encountering the lost remnants of your civilization's earliest, slowest colonization efforts.
+
+**Mechanic:** While exploring new star systems, fast FTL ships might intercept ancient sublight "Sleeper Ships" launched centuries ago by your own founders. The pops inside have developed entirely divergent cultures, mutated traits, or even forgotten their origins, treating the ship as the entire universe.
+
+**Emergence:** You might board a ghost ship hoping to rescue them, only to find they worship the ship's failing reactor as a god and view your modern pops as invading demons, sparking a bizarre micro-war inside the hull.
+
+**Tension:** Do you forcibly integrate these genetically divergent ancestors into your modern empire, or allow them to continue their long, doomed journey to a star that might already be dead?
+
+---
+
+## Sublight Smugglers
+
+**Layer:** Cross-layer
+
+**Fantasy:** A hidden, slow-moving shadow economy that bypasses your empire's rigid trade routes.
+
+**Mechanic:** If planetary taxes or trade tariffs are too high, pops will load illegal or heavily taxed goods onto cheap, automated sublight probes. These probes take years to drift between planets, completely bypassing Layer 2 sensor networks but eventually delivering massive payloads of contraband to other colonies.
+
+**Emergence:** You completely embargo a rebellious planet, starving them of weapons. Twenty years later, a massive swarm of slow-moving sublight probes launched decades prior suddenly arrives in their orbit, fully arming their militia overnight and turning the tide of the rebellion.
+
+**Tension:** Do you heavily militarize your system borders with expensive sweeping patrols to catch these cheap probes, or lower taxes to make smuggling unprofitable at the cost of your empire's income?
+
+---
