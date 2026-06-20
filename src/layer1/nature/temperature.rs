@@ -70,25 +70,30 @@ impl TemperatureGrid {
     /// Returns ambient if out of bounds.
     #[must_use]
     pub fn get(&self, x: usize, y: usize) -> f32 {
-        if x < self.width && y < self.height {
-            if let Some(idx) = y.checked_mul(self.width).and_then(|i| i.checked_add(x)) {
-                if idx < self.values.len() {
-                    return self.values[idx];
-                }
-            }
+        if x >= self.width || y >= self.height {
+            return self.ambient;
         }
-        self.ambient
+        let Some(idx) = y.checked_mul(self.width).and_then(|i| i.checked_add(x)) else {
+            return self.ambient;
+        };
+        if idx >= self.values.len() {
+            return self.ambient;
+        }
+        self.values[idx]
     }
 
     /// Set temperature at coordinates.
     pub fn set(&mut self, x: usize, y: usize, value: f32) {
-        if x < self.width && y < self.height {
-            if let Some(idx) = y.checked_mul(self.width).and_then(|i| i.checked_add(x)) {
-                if idx < self.values.len() {
-                    self.values[idx] = value;
-                }
-            }
+        if x >= self.width || y >= self.height {
+            return;
         }
+        let Some(idx) = y.checked_mul(self.width).and_then(|i| i.checked_add(x)) else {
+            return;
+        };
+        if idx >= self.values.len() {
+            return;
+        }
+        self.values[idx] = value;
     }
 
     /// Add heat to a specific tile.
@@ -97,13 +102,16 @@ impl TemperatureGrid {
             return;
         }
         let (ux, uy) = (x as usize, y as usize);
-        if ux < self.width && uy < self.height {
-            if let Some(idx) = uy.checked_mul(self.width).and_then(|i| i.checked_add(ux)) {
-                if idx < self.values.len() {
-                    self.values[idx] += amount;
-                }
-            }
+        if ux >= self.width || uy >= self.height {
+            return;
         }
+        let Some(idx) = uy.checked_mul(self.width).and_then(|i| i.checked_add(ux)) else {
+            return;
+        };
+        if idx >= self.values.len() {
+            return;
+        }
+        self.values[idx] += amount;
     }
 
     /// Run one step of diffusion simulation.
@@ -142,27 +150,10 @@ impl TemperatureGrid {
                     let nx = ix + dx;
                     let ny = iy + dy;
 
-                    let n_temp = if nx >= 0
-                        && ny >= 0
-                        && nx < self.width as i32
-                        && ny < self.height as i32
-                    {
-                        let nx_u = nx as usize;
-                        let ny_u = ny as usize;
-                        if let Some(n_idx) = ny_u
-                            .checked_mul(self.width)
-                            .and_then(|i| i.checked_add(nx_u))
-                        {
-                            if n_idx < self.values.len() {
-                                self.values[n_idx]
-                            } else {
-                                self.ambient
-                            }
-                        } else {
-                            self.ambient
-                        }
+                    let n_temp = if nx >= 0 && ny >= 0 {
+                        self.get(nx as usize, ny as usize)
                     } else {
-                        self.ambient // Edge is ambient
+                        self.ambient
                     };
 
                     let neighbor_k = *conductivity.get(&(nx, ny)).unwrap_or(&1.0);
