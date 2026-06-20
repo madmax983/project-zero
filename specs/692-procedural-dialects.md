@@ -16,6 +16,9 @@ A feature where the game logs and chatter generate slang based on colony events.
 mod tests {
     use super::*;
     use bevy::prelude::*;
+    use crate::layer1::core::chronicle::{ChronicleEvent, EventImportance};
+    use crate::layer1::entities::pop::Pop;
+    use crate::shared::time::SimulationTime;
 
     #[test]
     fn test_event_creates_dialect_slang() {
@@ -24,15 +27,17 @@ mod tests {
 
         // Trigger a major historical event
         app.world_mut().send_event(ChronicleEvent {
-            event_type: EventType::Disaster(DisasterType::Fire),
-            severity: 10.0,
-            description: "The Great Fire".to_string(),
+            tick: 1000,
+            year: 1,
+            text: "The Great Fire destroyed half the colony.".to_string(),
+            importance: EventImportance::Major,
         });
 
+        app.add_systems(Update, process_chronicle_events_for_dialect);
         app.update();
 
         let dialect = app.world().resource::<DialectManager>();
-        // High severity fire should create slang related to 'Fire'
+        // High severity fire event should create slang related to 'Fire'
         assert!(dialect.slang_dictionary.contains_key("fire"));
         assert_eq!(dialect.slang_dictionary.get("fire").unwrap().usage, SlangUsage::Curse);
     }
@@ -49,20 +54,21 @@ mod tests {
         );
 
         // Spawn a new pop
-        let pop_id = app.world_mut().spawn(PopBundle::default()).id();
+        let pop_id = app.world_mut().spawn(Pop).id();
 
+        app.add_systems(Update, initialize_pop_dialect);
         app.update();
 
         // The pop should have a personal dialect that incorporates the colony's prevailing slang
         let pop_dialect = app.world().get::<PersonalDialect>(pop_id).unwrap();
-        assert!(pop_dialect.vocabulary.contains("rust"));
+        assert!(pop_dialect.vocabulary.contains(&"rust".to_string()));
     }
 
     #[test]
     fn test_slang_decays_over_time_without_reinforcement() {
         let mut app = App::new();
         app.init_resource::<DialectManager>();
-        app.insert_resource(SimulationTime { ticks: 0 });
+        app.insert_resource(SimulationTime::default());
 
         let mut dialect = app.world_mut().resource_mut::<DialectManager>();
         dialect.slang_dictionary.insert(
@@ -72,6 +78,7 @@ mod tests {
 
         // Advance time significantly
         app.world_mut().resource_mut::<SimulationTime>().ticks = 100_000;
+        app.add_systems(Update, decay_slang_weight);
         app.update();
 
         let dialect = app.world().resource::<DialectManager>();
@@ -86,6 +93,9 @@ mod tests {
 ```rust
 use bevy::prelude::*;
 use bevy::utils::HashMap;
+use crate::layer1::core::chronicle::{ChronicleEvent, EventImportance};
+use crate::layer1::entities::pop::Pop;
+use crate::shared::time::SimulationTime;
 
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub enum SlangUsage {
@@ -116,17 +126,15 @@ pub fn process_chronicle_events_for_dialect(
     mut dialect_manager: ResMut<DialectManager>,
 ) {
     for event in events.read() {
-        if event.severity > 5.0 {
-            match event.event_type {
-                EventType::Disaster(DisasterType::Fire) => {
-                    dialect_manager.slang_dictionary.insert(
-                        "fire".to_string(),
-                        SlangEntry { usage: SlangUsage::Curse, weight: 1.0 },
-                    );
-                }
-                // Other event types...
-                _ => {}
+        if event.importance == EventImportance::Major || event.importance == EventImportance::Legendary {
+            let text_lower = event.text.to_lowercase();
+            if text_lower.contains("fire") {
+                dialect_manager.slang_dictionary.insert(
+                    "fire".to_string(),
+                    SlangEntry { usage: SlangUsage::Curse, weight: 1.0 },
+                );
             }
+            // Add other string matching rules for generating slang...
         }
     }
 }
@@ -175,7 +183,7 @@ pub fn decay_slang_weight(
 - [ ] `cargo test` returns 0 failures.
 - [ ] `cargo clippy -- -D warnings` passes.
 - [ ] Test coverage ≥85% for new code.
-- [ ] A `ChronicleEvent` of high severity creates a corresponding `SlangEntry` in `DialectManager`.
+- [ ] A `ChronicleEvent` of high importance creates a corresponding `SlangEntry` in `DialectManager`.
 - [ ] Newly spawned pops inherit prevalent slang from the `DialectManager` into their `PersonalDialect`.
 - [ ] Slang weights decay over time as simulated by `decay_slang_weight`.
 
@@ -188,4 +196,7 @@ pub fn decay_slang_weight(
 ## Questions
 
 *Builder: add questions here if spec is unclear.*
+
 - **Architectural Contradictions:** `ChronicleEvent` lacks `event_type`, `severity`, and `description` fields. Instead, it uses `tick`, `year`, `text`, and `importance`. This makes the RED phase impossible to implement as written.
+
+*Architect:* Addressed. The tests and implementation have been updated to use the actual fields `tick`, `year`, `text`, and `importance` on the `ChronicleEvent` struct.

@@ -4,8 +4,8 @@
 This specification details the implementation of "The Void Sirens", a cross-layer event where a mesmerizing deep-space signal causes colony Pops with high Intelligence to become obsessed. They will abandon their jobs, attempt to build unauthorized antennas to amplify the signal, or steal ships to find its source, introducing a major tension point between scientific discovery and colony stability.
 
 ## 2. Dependencies
-- Layer 1 Pop System (`layer1::pops`)
-- Layer 1 Traits System (`layer1::traits`)
+- Layer 1 Pop System (`layer1::entities::pop`)
+- Layer 1 Traits System (`layer1::psychology::traits`)
 - Cross-Layer Event System (`events::cosmic_events`)
 - Layer 2 Ships/Vehicles (`layer2::ships`)
 
@@ -55,7 +55,7 @@ mod tests {
         let pop = app.world_mut().spawn((
             Pop,
             Intelligence { value: 90 },
-            Job { workplace: Entity::PLACEHOLDER, job_type: AssignmentType::Scientist },
+            Job { workplace: Entity::PLACEHOLDER, job_type: AssignmentType::ObservatoryWorker },
             SirenObsession, // Already obsessed
         )).id();
 
@@ -91,11 +91,19 @@ pub struct SirenObsession;
 #[derive(Event)]
 pub struct SirenSignalEvent;
 
-#[derive(Clone, PartialEq, Debug)]
+// Aligned with existing AssignmentType
+#[derive(Clone, PartialEq, Eq, Debug, Hash)]
 pub enum AssignmentType {
-    Scientist,
-    Miner,
-    Engineer,
+    Sheriff,
+    FarmWorker,
+    HousingResident,
+    TavernVisitor,
+    LibraryWorker,
+    Patient,
+    Funeral,
+    ObservatoryWorker,
+    Administrator,
+    RationingBureaucrat,
 }
 
 #[derive(Component)]
@@ -141,7 +149,7 @@ pub fn handle_obsessed_jobs(
 ```
 
 ## 5. REFACTOR Phase: Quality & Design
-- **Code Smells:** `AssignmentType` and `Job` logic must match the actual definitions in `layer1::utility_types`. The specification assumes `AssignmentType` is an enum inside `Job`, which aligns with architectural insight.
+- **Code Smells:** `AssignmentType` and `Job` logic must match the actual definitions in `layer1::mind::utility_types`.
 - **Design Improvement:** The hardcoded `OBSESSION_INT_THRESHOLD` should be moved to a configuration resource (`SirenConfig`) so designers can tune it without recompiling.
 - **API Improvements:** Creating an antenna should ideally interface with the building construction system rather than just slapping a `BuildingAntenna` tag on the Pop.
 
@@ -155,14 +163,12 @@ pub fn handle_obsessed_jobs(
 
 ## 7. Technical Guidance
 - **Bevy Event Buffer Flush:** Remember that `Events::send` in unit tests will not be immediately visible to `EventReader`s unless `app.update()` is called to flush the buffers.
-- **Job Component:** Note that the `Job` component is a struct containing `workplace: Entity` and `job_type: AssignmentType` (from `layer1::utility_types`), not an enum. The GREEN phase accurately reflects this.
+- **Job Component:** Note that the `Job` component is a struct containing `workplace: Entity` and `job_type: AssignmentType` (from `layer1::mind::utility_types`), not an enum. The GREEN phase accurately reflects this.
 - Ensure that the logic removing the `Job` component gracefully handles any necessary cleanup at the `workplace` entity (e.g., decrementing filled job slots).
 
 ## 8. Questions
 *Builder: add questions here if spec is unclear.*
 
-## Questions
-- Contradiction: `AssignmentType` does not have `Scientist`, `Miner`, or `Engineer` variants.
+- **Architectural Contradictions:** `AssignmentType` does not have `Scientist`, `Miner`, or `Engineer` variants. It is also not an inner member of `Job` enum as the spec assumed, since `Job` is a component with `AssignmentType` being a field.
 
-## Questions
-- Architectural Contradictions: `AssignmentType` does not have `Scientist`, `Miner`, or `Engineer` variants. It is also not an inner member of `Job` enum as the spec assumed, since `Job` is a component with `AssignmentType` being a field.
+*Architect:* Addressed. The tests and implementation have been updated to use valid `AssignmentType` variants (like `ObservatoryWorker`) from `layer1::mind::utility_types`, and `Job` is correctly treated as a component struct.
