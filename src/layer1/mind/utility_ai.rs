@@ -801,6 +801,20 @@ pub(crate) fn evaluate_single_pop(
         return (action, utility, target);
     }
 
+    // 1ab. Check for Temporal Fugue (Returns early, force work)
+    if data.temporal_fugue && data.action.current == ActionType::Work {
+        if let Some((_utility, target)) = crate::layer1::actions::simple::evaluate_simple_action(
+            data.pos,
+            &data.weights,
+            &buffer.work_designations,
+            if data.is_nostalgic { 0.2 } else { 0.5 },
+        ) {
+            return (ActionType::Work, 100.0, Some(target));
+        }
+        // If there's literally no work left, we fall through to let normal AI pick something else (e.g. Idle)
+        // so that fugue_completion_system can see the action changed and remove TemporalFugue.
+    }
+
     // 1b. Check for Memetic Compulsion (Returns early, overrides drafted)
     if let Some((action, utility, target)) =
         crate::layer1::memetics::evaluate_scrawl_memetic_sigil(data, buffer)

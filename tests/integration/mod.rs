@@ -86,3 +86,4 @@ pub mod edible_architecture;
 pub mod phantom_commutes_bridge;
 pub mod symbiotic_insurgency_bridge;
 pub mod diplomatic_fashion_bridge;
+pub mod temporal_fugue_bridge;

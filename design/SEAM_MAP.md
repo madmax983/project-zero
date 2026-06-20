@@ -1,4 +1,10 @@
 - `1128` Hypno-Learning — `specs/1128-hypno-learning.md`
+### INT-1023: Temporal Fugue -> Work Execution & Utility AI
+- **Date:** 2026-10-31
+- **Systems connected:** `evaluate_fugue_state_system` -> `TemporalFugue`, `calculate_work_amount` -> `temporal_fugue_modifier`, `Utility AI` -> `ActionType::Work` force.
+- **Glue added:** `TemporalFugue` integration into `src/layer1/execution/general_work.rs` (3x speed bonus), and in `src/layer1/mind/utility_ai.rs` to force Pops to ignore needs (Hunger, Rest) and continue working until completion. Events recorded via `AddChronicleEvent` in `evaluate_fugue_state_system` and `fugue_completion_system`.
+- **Tests:** `tests/integration/temporal_fugue_bridge.rs`
+
 ### INT-479: The Endless Draft -> Chronicle
 - **Date:** 2026-10-31
 - **Systems connected:** `DraftOrderEvent` -> `endless_draft_bridge_system` -> `AddChronicleEvent`

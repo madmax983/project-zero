@@ -417,6 +417,9 @@ pub use void_weed::*;
 pub mod temporal_ghost_towns;
 pub use temporal_ghost_towns::*;
 
+pub mod temporal_fugue;
+pub use temporal_fugue::*;
+
 /// Infrastructure system (Spec 452).
 pub mod infrastructure;
 pub use infrastructure::*;
