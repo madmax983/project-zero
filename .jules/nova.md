@@ -170,3 +170,8 @@
 **Concept:** Added `mutagenic_terraforming` module in `src/experimental/mutagenic_terraforming.rs`. Connects `WeatherType::MutagenicRain` to `TerrainGrid` and `RoofGrid`. When Mutagenic Rain falls, any exposed `Grass` or `Dirt` tiles have a chance to permanently mutate into toxic `SporeBloom` terrain.
 **Fate:** Submitted
 **Lesson:** Connects an existing atmospheric hazard (Mutagenic Rain) with the physical landscape, turning a temporary weather event into a long-term terraforming threat that forces players to build roofs or physically clean the land afterwards.
+
+## [Engine Cultist Rituals]
+**Concept:** Added `engine_cultist_rituals_system` to `src/experimental/engine_cultist_rituals.rs`. Pops with `Trait::EngineCultist` rapidly lose stress when they are within 3 tiles of a `BuildingType::Generator`.
+**Fate:** Submitted
+**Lesson:** Connects a specific personality trait (machine worship) directly to the physical placement of infrastructure (generators), rewarding players who design their colonies to accommodate the unique spatial needs of cultists.
