@@ -38,3 +38,15 @@
 **[Title] Break Circular Dependency in Execution Module**
 **Tangle:** A circular dependency existed between `src/layer1/execution/general_work.rs` and `src/layer1/execution/mining.rs`. `mining.rs` imported `WORK_CRIT_CHANCE` and `WORK_CRIT_MULTIPLIER` from `general_work.rs`, while `general_work.rs` imported `handle_mining_work` and `handle_chopping_work` from `mining.rs`.
 **Blueprint:** Extracted `WORK_CRIT_CHANCE` and `WORK_CRIT_MULTIPLIER` into a new dedicated constants module at `src/layer1/execution/constants.rs`. Both `general_work.rs` and `mining.rs` now import the constants from this new module, breaking the cyclic reference.
+
+**[Title] Break Circular Dependency Between Pathfinding and Access Control**
+**Tangle:** `src/layer1/access_control.rs` imported `find_path_for_pop` from `src/layer1/pathfinding.rs` in its integration tests, while `pathfinding.rs` relied on `AccessControl` and `AccessMode` from `access_control.rs` for main functionality.
+**Blueprint:** Moved `test_pathfinding_integration` from `access_control.rs` into `pathfinding.rs`. Since `pathfinding.rs` already depends on access control to build the paths, testing the integration there resolves the cyclic dependency cleanly while preserving the tests.
+
+**[Title] Break Circular Dependency Between Combat and Fauna**
+**Tangle:** `src/layer1/fauna/mod.rs` imported `HitStop` from `src/layer1/combat.rs`, while `combat.rs` imported `Fauna` and `FaunaType` in its integration tests for testing drafting and utility behavior.
+**Blueprint:** Moved the integration tests that strictly required `Fauna` (`test_draft_toggle_overrides_behavior` and `test_undrafted_pop_flees_or_ignores`) into `fauna/mod.rs`. Modified the remaining combat tests to use `Health::default()` instead of `Fauna::default()` since `execute_attack` is generalized and only needs an entity with `Health`. This fully untangled the test dependencies from the core combat logic.
+
+**[Title] Break Circular Dependency Between Memetics and Tech**
+**Tangle:** `src/layer1/tech/mod.rs` imported `MemeticCarrier` from `src/layer1/memetics/mod.rs` to infect researchers when unlocking hazardous tech. However, `memetics/mod.rs` imported `unlock_tech` back from `tech/mod.rs` to test this specific interaction.
+**Blueprint:** Moved the `test_unlocking_hazardous_tech_infects_researcher` test out of `memetics/mod.rs` and into the test suite of `tech/mod.rs` where the actual `unlock_tech` function lives.

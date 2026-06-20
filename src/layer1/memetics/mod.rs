@@ -80,7 +80,6 @@ pub fn evaluate_scrawl_memetic_sigil(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::layer1::actions::{AssignedTo, AssignmentType};
     use crate::layer1::building::{Building, BuildingType, OccupiedTiles};
     use crate::layer1::graffiti::{
         graffiti_observation_system, Graffiti, GraffitiMap, GraffitiType,
@@ -90,46 +89,10 @@ mod tests {
     use crate::layer1::needs::Needs;
     use crate::layer1::pop::Pop;
     use crate::layer1::resources::ColonyResources;
-    use crate::layer1::tech::{unlock_tech, Tech, TechState};
     use crate::layer1::utility_ai::evaluate_actions_system;
     use crate::layer1::utility_types::{ActionType, PopAction, UtilityConfig, UtilityWeights};
     use crate::shared::time::SimulationTime;
     // use bevy_ecs::prelude::*; // Already imported via super
-
-    #[test]
-    fn test_unlocking_hazardous_tech_infects_researcher() {
-        let mut world = World::new();
-        // Setup TechState, Resources, and a Researcher Pop
-        let tech_state = TechState {
-            total_capacity: 1000.0,
-            ..Default::default()
-        };
-        world.insert_resource(tech_state);
-        world.insert_resource(ColonyResources {
-            knowledge: 1000.0, // Plenty of knowledge
-            ..Default::default()
-        });
-        world.insert_resource(crate::shared::log::MessageLog::default());
-
-        let researcher = world
-            .spawn((
-                Pop,
-                AssignedTo {
-                    assignment_type: AssignmentType::LibraryWorker,
-                    entity: Entity::PLACEHOLDER,
-                }, // entity placeholder is fine for assignment type check
-                GridPosition::default(),
-            ))
-            .id();
-
-        // Unlock Tech::VoidWhispers
-        let result = unlock_tech(&mut world, Tech::VoidWhispers);
-
-        // Assert success
-        assert!(result);
-        // Assert researcher is infected
-        assert!(world.get::<MemeticCarrier>(researcher).is_some());
-    }
 
     #[test]
     fn test_infected_pop_scrawls_sigil_empty_walls() {
