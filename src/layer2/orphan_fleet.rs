@@ -1,3 +1,23 @@
+//! Orphan Fleet mechanics.
+//!
+//! This module handles the simulation of "Orphan Fleets"—abandoned or rogue
+//! armadas roaming the system. The colony can attempt to hack into these fleets
+//! to reclaim them, though doing so carries the risk of defection or retaliation.
+//!
+//! # Examples
+//!
+//! Spawning an Orphan Fleet:
+//! ```
+//! use scale::layer2::orphan_fleet::OrphanFleet;
+//! use bevy_ecs::prelude::*;
+//!
+//! let mut world = World::new();
+//! let fleet = world.spawn(OrphanFleet {
+//!     hacked: false,
+//!     defection_tick: 100,
+//! }).id();
+//! ```
+
 use crate::layer1::core::chronicle::{AddChronicleEvent, EventImportance};
 use crate::layer1::economy::resources::ResourceType;
 use crate::layer2::fleet::FleetFaction;
@@ -5,17 +25,26 @@ use crate::layer2::mining::{CargoStack, FleetCargo};
 use crate::shared::time::SimulationTime;
 use bevy_ecs::prelude::*;
 
+/// A rogue or abandoned armada.
+///
+/// Entities with this component roam the system aimlessly. They can be
+/// targeted by [`HackOrphanFleetEvent`] to try to bring them under colony control.
 #[derive(Component)]
 pub struct OrphanFleet {
+    /// Whether the fleet has been successfully hacked by the colony.
     pub hacked: bool,
+    /// The simulation tick at which the fleet might defect or become hostile.
     pub defection_tick: u64,
 }
 
+/// Event triggered when the colony attempts to hack an Orphan Fleet.
 #[derive(Event)]
 pub struct HackOrphanFleetEvent {
+    /// The target fleet being hacked.
     pub fleet_entity: Entity,
 }
 
+/// Event triggered when an Orphan Fleet defects to or from the colony.
 #[derive(Event)]
 pub struct OrphanFleetDefectionEvent {
     pub fleet_entity: Entity,

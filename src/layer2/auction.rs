@@ -1,19 +1,53 @@
+//! Blind Auction system for rare artifacts and vault access.
+//!
+//! This module manages events and types associated with the Blind Auction mechanic,
+//! where the colony can bid resources to unlock sealed vaults or acquire unique
+//! assets from passing merchant fleets. Since the exact contents are unknown
+//! during the bidding phase, outcomes carry significant risk.
+//!
+//! # Examples
+//!
+//! Triggering a blind auction from a custom system:
+//! ```
+//! use scale::layer2::auction::BlindAuctionTriggeredEvent;
+//! use bevy_ecs::prelude::*;
+//!
+//! fn trigger_auction_system(mut ev_auction: EventWriter<BlindAuctionTriggeredEvent>) {
+//!     ev_auction.send(BlindAuctionTriggeredEvent);
+//! }
+//! ```
+
 use crate::layer1::economy::resources::{ColonyResources, ResourceType};
 use crate::layer1::void_weed::{MerchantArrivalEvent, MerchantType};
 use bevy::prelude::*;
 
+/// Event fired when a blind auction becomes available to the colony.
+///
+/// This typically happens when a specific merchant arrives or a vault is discovered.
 #[derive(Event, Debug, Clone)]
 pub struct BlindAuctionTriggeredEvent;
 
+/// Event sent when the player places a bid on an active blind auction.
+///
+/// The amount is deducted from the colony's resources. If the bid is
+/// the highest, the colony will win the auction when it resolves.
 #[derive(Event, Debug, Clone)]
 pub struct PlaceBidEvent {
+    /// The quantity of the resource being bid.
     pub amount: f32,
+    /// The specific type of resource offered.
     pub resource_type: ResourceType,
 }
 
+/// The possible results of winning a blind auction for a sealed vault.
+///
+/// Because it is a blind auction, winning may result in a powerful boon
+/// or a devastating consequence for the colony.
 #[derive(Clone, Copy, Debug)]
 pub enum VaultOutcome {
+    /// The vault contained advanced knowledge, providing a permanent buff.
     TechBoost,
+    /// The vault contained a hazard, causing damage or negative effects.
     CatastrophicAnomaly,
 }
 
