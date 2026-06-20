@@ -140,6 +140,9 @@ pub fn radiation_system(
 
     // 3. Apply to Pops
     for (entity, pos, sickness_opt) in &mut pops {
+        if pos.x < 0 || pos.y < 0 {
+            continue;
+        }
         let exposure = grid.get(pos.x as usize, pos.y as usize);
         if exposure > 0.0 {
             if let Some(mut sick) = sickness_opt {

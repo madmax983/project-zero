@@ -37,9 +37,11 @@ pub fn stowaway_clutter_system(
 
         if total_stashed > HOARDING_THRESHOLD {
             // 1. Generate Clutter
-            let current_clutter = clutter_grid.get(pos.x as usize, pos.y as usize);
-            if current_clutter < 100.0 {
-                clutter_grid.add_clutter(pos.x as usize, pos.y as usize, CLUTTER_GENERATION_RATE);
+            if pos.x >= 0 && pos.y >= 0 {
+                let current_clutter = clutter_grid.get(pos.x as usize, pos.y as usize);
+                if current_clutter < 100.0 {
+                    clutter_grid.add_clutter(pos.x as usize, pos.y as usize, CLUTTER_GENERATION_RATE);
+                }
             }
 
             // 2. Attract Vermin

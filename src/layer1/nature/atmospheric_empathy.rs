@@ -70,10 +70,12 @@ pub fn emit_trace_gases(
     query: Query<(&GridPosition, &Morale), With<Pop>>,
 ) {
     for (pos, morale) in query.iter() {
-        if morale.value > 0.9 {
-            gas_grid.add_gas(pos.x as usize, pos.y as usize, GasType::Euphoric, 0.1);
-        } else if morale.value < 0.1 {
-            gas_grid.add_gas(pos.x as usize, pos.y as usize, GasType::Fear, 0.1);
+        if pos.x >= 0 && pos.y >= 0 {
+            if morale.value > 0.9 {
+                gas_grid.add_gas(pos.x as usize, pos.y as usize, GasType::Euphoric, 0.1);
+            } else if morale.value < 0.1 {
+                gas_grid.add_gas(pos.x as usize, pos.y as usize, GasType::Fear, 0.1);
+            }
         }
     }
 }
@@ -83,7 +85,7 @@ pub fn apply_atmospheric_empathy(
     mut query: Query<(&GridPosition, &mut Morale, Option<&ProtectedFromAtmosphere>), With<Pop>>,
 ) {
     for (pos, mut morale, protected) in query.iter_mut() {
-        if protected.is_some() {
+        if protected.is_some() || pos.x < 0 || pos.y < 0 {
             continue;
         }
         let euphoric = gas_grid.get_gas(pos.x as usize, pos.y as usize, GasType::Euphoric);

@@ -230,8 +230,10 @@ pub fn handle_keystone_death(
     mut terrain: ResMut<TerrainGrid>,
 ) {
     for (pos, anchor) in query.iter() {
-        // Degrade terrain at position
-        terrain.set(pos.x as usize, pos.y as usize, anchor.fallback_terrain);
+        if pos.x >= 0 && pos.y >= 0 {
+            // Degrade terrain at position
+            terrain.set(pos.x as usize, pos.y as usize, anchor.fallback_terrain);
+        }
 
         // MVP: Only affects the tile itself. Spec mentions radius but red test only checked the tile.
         // Future expansion: iterate radius.

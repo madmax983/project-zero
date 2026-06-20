@@ -312,6 +312,9 @@ pub fn thermal_damage_system(
     let Some(grid) = grid else { return };
 
     for (mut health, pos, equipment) in &mut pops {
+        if pos.x < 0 || pos.y < 0 {
+            continue;
+        }
         // Get temperature at pop's location
         let temp = grid.get(pos.x as usize, pos.y as usize);
 

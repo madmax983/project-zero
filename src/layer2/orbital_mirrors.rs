@@ -32,6 +32,9 @@ pub fn orbital_mirror_focus_system(
         let actual_focus = mirror.target + Vec2::new(angle.cos() * drift, angle.sin() * drift);
 
         // Apply heat and light to grid
+        if actual_focus.x < 0.0 || actual_focus.y < 0.0 {
+            continue;
+        }
         let tx = actual_focus.x as usize;
         let ty = actual_focus.y as usize;
 

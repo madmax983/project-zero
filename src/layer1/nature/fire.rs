@@ -168,10 +168,12 @@ pub fn fire_damage_system(world: &mut World) {
         for (entity, pos) in &fires_to_remove {
             entities_to_despawn.push(*entity);
 
-            // If it was on a tree, turn to dirt
-            if let Some(tile) = terrain.get(pos.x as usize, pos.y as usize) {
-                if tile == TerrainType::Tree {
-                    terrain_changes.push((pos.x, pos.y, TerrainType::Dirt));
+            if pos.x >= 0 && pos.y >= 0 {
+                // If it was on a tree, turn to dirt
+                if let Some(tile) = terrain.get(pos.x as usize, pos.y as usize) {
+                    if tile == TerrainType::Tree {
+                        terrain_changes.push((pos.x, pos.y, TerrainType::Dirt));
+                    }
                 }
             }
         }

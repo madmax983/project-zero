@@ -40,6 +40,10 @@ pub fn sleepwalking_hazards_system(
 ) {
     for (entity, pos, action, mut health, mut sickness_opt) in pops.iter_mut() {
         if action.current == ActionType::Sleepwalking {
+            if pos.x < 0 || pos.y < 0 {
+                continue;
+            }
+
             // Check Temperature Hazard
             if let Some(ref temp_grid) = temperature_grid {
                 let temp = temp_grid.get(pos.x as usize, pos.y as usize);
