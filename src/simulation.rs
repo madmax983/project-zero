@@ -415,11 +415,14 @@ fn init_simulation_resources(world: &mut World) {
             world.init_resource::<crate::layer3::treaty_cruisers::ActiveTreaties>();
 
             let mut schedule = build_simulation_schedule();
-            schedule.add_systems((
-                crate::layer1::environment::atmosphere::produce_smog_system,
-                crate::layer1::environment::atmosphere::absorb_smog_system,
-                crate::layer1::environment::atmosphere::apply_smog_effects_system,
-            ).chain());
+            schedule.add_systems(
+                (
+                    crate::layer1::environment::atmosphere::produce_smog_system,
+                    crate::layer1::environment::atmosphere::absorb_smog_system,
+                    crate::layer1::environment::atmosphere::apply_smog_effects_system,
+                )
+                    .chain(),
+            );
             schedule.add_systems((
                 crate::layer1::archaeological_contagion::archaeological_infection_system,
                 crate::layer1::core::integration::archaeological_contagion_chronicle_bridge,

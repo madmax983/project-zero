@@ -430,6 +430,7 @@ pub fn register(schedule: &mut Schedule) {
     );
     schedule.add_systems(
         (
+            crate::layer1::core::integration::institutional_memory_chronicle_bridge,
             crate::layer1::foundation_soil::apply_foundation_soil_system
                 .after(crate::layer1::pop::handle_pop_death_system),
             crate::layer1::integration::pop_born_notification_system
