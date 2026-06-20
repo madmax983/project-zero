@@ -1,3 +1,4 @@
+- [x] `1128` Hypno-Learning — `specs/1128-hypno-learning.md` — completed 2024-06-15
 - [x] `1273` Gravity Debt — `specs/1273-gravity-debt.md` — completed 2026-06-11
 - [x] `553` Orbital Debt Collections — `specs/553-orbital-debt-collections.md` — completed 2026-02-01
 - [x] `INT-003` Integration: Population Count -> UI — completed 2026-06-10
