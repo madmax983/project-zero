@@ -37,7 +37,6 @@
 
 
 
-- [ ] `493` The Living Archive — `specs/493-the-living-archive.md`
 - [ ] `496` The Bureau of Regrets — `specs/496-the-bureau-of-regrets.md`
 
 

@@ -101,6 +101,8 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::tech::ghost_code::residue_system,
             crate::layer1::tech::ghost_code::ghost_infection_system,
             crate::layer1::tech::ghost_code::apply_ghost_traits_system,
+            crate::layer1::tech::living_archive::process_flesh_server_stress_system,
+            crate::layer1::tech::living_archive::flesh_server_nutrient_consumption_system,
             (
                 crate::layer1::hologram::update_holograms_system,
                 crate::layer1::hologram::apply_disillusionment_system,
