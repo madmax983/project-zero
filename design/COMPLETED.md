@@ -787,3 +787,4 @@
 - [x] `493` The Living Archive — `specs/493-the-living-archive.md` — completed 2026-06-25
 - [x] `1124` Diplomatic Fashion — `specs/1124-diplomatic-fashion.md` — completed 2026-06-19
 - [x] `INT-1124` Integration: Diplomatic Fashion -> Chronicle — completed 2026-06-19
+- [x] `1023` Temporal Fugue — `specs/1023-temporal-fugue.md` — completed 2024-06-15
