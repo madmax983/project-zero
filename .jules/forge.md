@@ -30,3 +30,7 @@
 **[Refactoring Repeated Context Building Logic]**
 **Learning:** Sometimes repeated blocks of logic are necessary just to build temporary structs for scope or context using complex fallbacks and mappings (e.g. `WorldContext` via `build_context` inside `UtilityAI` buffers). Extracting this repeated mapping/fallback logic directly into a dedicated helper function (like `build_fallback_context`) dramatically simplifies the parent methods calling it, adhering to DRY without risking borrow checker panic.
 **Action:** Extract repeated context creation steps with common fallback variables into their own `build_*` helper methods and add `#[allow(clippy::too_many_arguments)]` to the main build method instead of allowing the repetition.
+
+**[Refactoring Inline Bounds Checking Pyramids]**
+**Learning:** Monolithic simulation methods (like `step` in `TemperatureGrid`) that manually perform bounds checking and array indexing to fetch neighbor values create massive Pyramids of Doom. This logic is usually an exact duplicate of safe helper methods (like `get(x, y)`).
+**Action:** Replace nested inline bounds-checking and coordinate math with direct calls to the existing safe `get` helper method, casting positive coordinates to `usize` after a simple `>= 0` check. Use Guard Clauses (`let Some(x) = y else { return };`) in the helper methods to keep them flat.
