@@ -25005,3 +25005,30 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you negotiate with a virus to buy time for a cure, or purge the infected immediately at massive cost?
 
 ---
+## Market Panic Contagion
+
+**Layer:** Cross-layer
+
+**Fantasy:** Witnessing a rumor of scarcity crash an entire galactic economy.
+
+**Mechanic:** A local shortage of a critical resource (Layer 1) triggers panic in local Pops. When trade ships leave this system, the "panic" travels as a social contagion to other colonies, causing Pops there to preemptively hoard the resource even if their local supply is fine.
+
+**Emergence:** A minor supply chain hiccup on an agricultural world causes panic hoarding on a core world, which completely drains their food reserves and causes a completely artificial, self-fulfilling famine.
+
+**Tension:** Do you violently suppress communication to stop the panic from spreading, or rapidly redirect massive trade fleets to over-saturate markets and calm the populace?
+
+---
+
+## Whispers of the Deep
+
+**Layer:** 2
+
+**Fantasy:** The psychological toll of deep space isolation makes you question your own crew.
+
+**Mechanic:** Scout ships operating far from relay networks slowly accumulate "Anomalous Signals." The longer they stay out, the more likely the crew develops the "Paranoid" trait. High paranoia crews may begin misinterpreting sensor data (reporting phantom fleets) or refusing return orders.
+
+**Emergence:** You send your best scout into the galactic unknown. They send back terrifying reports of a massive invasion fleet, causing you to mobilize your entire military—only to realize months later that the crew hallucinated the threat and mutinied.
+
+**Tension:** Do you cycle scout crews frequently at the cost of exploration speed, or push them to the brink and risk them going rogue?
+
+---
