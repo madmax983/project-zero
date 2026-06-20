@@ -21,8 +21,8 @@ This spec adds a new `StationType::OrbitalDrydock` and a `ShipConstruction` comp
 mod tests {
     use super::*;
     use bevy::prelude::*;
-    use crate::layer1::resources::ResourceType;
-    use crate::layer2::mining::FleetCargo;
+    use crate::layer1::economy::resources::ResourceType;
+    use crate::layer2::mining::{FleetCargo, CargoStack};
     use crate::layer2::station::{Station, StationType};
 
     #[test]
@@ -46,7 +46,7 @@ mod tests {
 
         // Deliver some cargo to the drydock
         app.world_mut().entity_mut(drydock_entity).insert(FleetCargo {
-            contents: vec![crate::layer2::mining::ResourceStack {
+            contents: vec![CargoStack {
                 resource_type: ResourceType::Metal,
                 amount: 500.0,
             }],
@@ -65,7 +65,7 @@ mod tests {
         assert_eq!(cargo.contents.iter().find(|s| s.resource_type == ResourceType::Metal).map(|s| s.amount).unwrap_or(0.0), 0.0);
 
         // Deliver the rest
-        app.world_mut().get_mut::<FleetCargo>(drydock_entity).unwrap().contents.push(crate::layer2::mining::ResourceStack {
+        app.world_mut().get_mut::<FleetCargo>(drydock_entity).unwrap().contents.push(CargoStack {
             resource_type: ResourceType::Metal,
             amount: 500.0,
         });
@@ -84,8 +84,8 @@ mod tests {
 
 ```rust
 use bevy::prelude::*;
-use crate::layer1::resources::ResourceType;
-use crate::layer2::mining::FleetCargo;
+use crate::layer1::economy::resources::ResourceType;
+use crate::layer2::mining::{FleetCargo, CargoStack};
 use crate::layer2::station::{Station, StationType};
 
 // Assume StationType is extended in station.rs:
@@ -136,7 +136,7 @@ pub fn process_drydock_construction_system(
 
 - **Performance**: N/A for MVP.
 - **Design**: Expand `ShipConstruction` to require multiple resource types (e.g., Fuel, Advanced Parts) via a `Vec<(ResourceType, f32)>` or HashMap.
-- **Integration**: Tie the `is_complete` state to an event `ShipConstructionCompletedEvent` which another system listens to in order to spawn the actual `Fleet` entity. Remove the consumed `FleetCargo` stacks cleanly.
+- **Integration**: Tie the `is_complete` state to an event `ShipConstructionCompletedEvent` which another system listens to in order to spawn the actual `Fleet` entity. Remove the consumed `CargoStack`s cleanly.
 
 ## 6. Acceptance Criteria (Testable!)
 
@@ -156,6 +156,6 @@ pub fn process_drydock_construction_system(
 
 *Builder: add questions here if spec is unclear.*
 
-
-## Questions
 - Architectural Contradictions: `ResourceStack` does not exist in `src/layer2/mining.rs`, it uses `CargoStack`. However, this is a minor issue that can be corrected in implementation. The spec seems viable if we use `CargoStack`.
+
+*Architect:* Addressed. `ResourceStack` has been updated to `CargoStack` in both the RED phase tests and GREEN phase logic to match the existing architecture.

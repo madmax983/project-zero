@@ -16,62 +16,73 @@ A feature allowing colonies to accept funding and resources from a Layer 3 Corpo
 mod tests {
     use super::*;
     use bevy::prelude::*;
+    use crate::layer1::architecture::BuildingType;
+    use crate::layer1::health::Health;
 
     #[test]
     fn test_accepting_sponsorship_grants_resources() {
         let mut app = App::new();
         app.init_resource::<ColonyResources>();
-        app.world_mut().resource_mut::<ColonyResources>().credits = 0;
+        app.world_mut().resource_mut::<ColonyResources>().credits = 0.0;
 
         let deal = SponsorshipDeal {
             corporation_id: "lightspeed_cola".to_string(),
-            upfront_credits: 5000,
+            upfront_credits: 5000.0,
             required_billboards: 3,
             drm_tech_unlocked: vec!["nano_med_bay".to_string()],
         };
 
         // Accept the deal
         app.world_mut().send_event(AcceptSponsorshipEvent { deal });
+        app.add_systems(Update, process_sponsorship_acceptance);
         app.update();
 
         // Colony should have received the credits
         let resources = app.world().resource::<ColonyResources>();
-        assert_eq!(resources.credits, 5000);
+        assert_eq!(resources.credits, 5000.0);
     }
 
     #[test]
     fn test_billboard_requirement_enforced() {
         let mut app = App::new();
+        app.init_resource::<ColonyResources>();
+        app.world_mut().resource_mut::<ColonyResources>().credits = 1000.0;
+
         let deal = SponsorshipDeal {
             corporation_id: "megacorp".to_string(),
-            upfront_credits: 1000,
+            upfront_credits: 1000.0,
             required_billboards: 2,
             drm_tech_unlocked: vec![],
         };
         app.world_mut().insert_resource(ActiveSponsorship {
             deal,
             billboards_built: 0,
-            breach_timer: 100, // Ticks until breach if not built
+            breach_timer: 1, // Ticks until breach if not built
         });
 
         // Advance time without building billboards
-        app.world_mut().resource_mut::<ActiveSponsorship>().breach_timer = 0;
+        app.add_systems(Update, enforce_sponsorship_requirements);
         app.update();
 
         // A breach event or penalty should be triggered
         let penalty = app.world().resource::<ColonyResources>();
-        assert!(penalty.credits < 1000); // Penalty applied
+        assert!(penalty.credits < 1000.0); // Penalty applied
     }
 
     #[test]
     fn test_drm_tech_cannot_be_repaired() {
         let mut app = App::new();
-        let building_id = app.world_mut().spawn(Building {
-            building_type: BuildingType::Hospital,
-            health: 10.0,
-            max_health: 100.0,
-            is_drm_locked: true, // Sponsored building
-        }).id();
+        let building_id = app.world_mut().spawn((
+            Building {
+                building_type: BuildingType::Hospital,
+            },
+            Health {
+                current: 10.0,
+                max: 100.0,
+                has_rust_lung: false,
+            },
+            DrmLocked, // Sponsored building
+        )).id();
 
         // Attempt a repair action
         app.world_mut().send_event(RepairBuildingEvent {
@@ -79,11 +90,12 @@ mod tests {
             repair_amount: 50.0,
         });
 
+        app.add_systems(Update, handle_repair_requests);
         app.update();
 
         // Health should not increase because it is DRM locked
-        let building = app.world().get::<Building>(building_id).unwrap();
-        assert_eq!(building.health, 10.0);
+        let health = app.world().get::<Health>(building_id).unwrap();
+        assert_eq!(health.current, 10.0);
     }
 }
 ```
@@ -92,11 +104,13 @@ mod tests {
 
 ```rust
 use bevy::prelude::*;
+use crate::layer1::architecture::{Building, BuildingType};
+use crate::layer1::health::Health;
 
 #[derive(Clone, Debug)]
 pub struct SponsorshipDeal {
     pub corporation_id: String,
-    pub upfront_credits: i32,
+    pub upfront_credits: f32,
     pub required_billboards: u32,
     pub drm_tech_unlocked: Vec<String>,
 }
@@ -114,12 +128,7 @@ pub struct ActiveSponsorship {
 }
 
 #[derive(Component)]
-pub struct Building {
-    pub building_type: String,
-    pub health: f32,
-    pub max_health: f32,
-    pub is_drm_locked: bool,
-}
+pub struct DrmLocked;
 
 #[derive(Event)]
 pub struct RepairBuildingEvent {
@@ -130,7 +139,7 @@ pub struct RepairBuildingEvent {
 // Ensure ColonyResources exists for the green phase to compile
 #[derive(Resource, Default)]
 pub struct ColonyResources {
-    pub credits: i32,
+    pub credits: f32,
 }
 
 pub fn process_sponsorship_acceptance(
@@ -149,15 +158,24 @@ pub fn process_sponsorship_acceptance(
 }
 
 pub fn enforce_sponsorship_requirements(
-    mut sponsorship: Option<ResMut<ActiveSponsorship>>,
+    sponsorship: Option<ResMut<ActiveSponsorship>>,
     mut resources: ResMut<ColonyResources>,
+    billboard_query: Query<&Building>,
 ) {
+    let mut billboard_count = 0;
+    for building in billboard_query.iter() {
+        if building.building_type == BuildingType::Billboard {
+            billboard_count += 1;
+        }
+    }
+
     if let Some(mut s) = sponsorship {
+        s.billboards_built = billboard_count;
         if s.billboards_built < s.deal.required_billboards {
             s.breach_timer -= 1;
             if s.breach_timer <= 0 {
                 // Apply a generic penalty
-                resources.credits -= 500;
+                resources.credits -= 500.0;
                 s.breach_timer = 1000; // Reset timer for next penalty
             }
         }
@@ -166,14 +184,14 @@ pub fn enforce_sponsorship_requirements(
 
 pub fn handle_repair_requests(
     mut events: EventReader<RepairBuildingEvent>,
-    mut buildings: Query<&mut Building>,
+    mut buildings: Query<(Option<&DrmLocked>, &mut Health)>,
 ) {
     for event in events.read() {
-        if let Ok(mut building) = buildings.get_mut(event.target) {
-            if !building.is_drm_locked {
-                building.health += event.repair_amount;
-                if building.health > building.max_health {
-                    building.health = building.max_health;
+        if let Ok((drm_locked, mut health)) = buildings.get_mut(event.target) {
+            if drm_locked.is_none() {
+                health.current += event.repair_amount;
+                if health.current > health.max {
+                    health.current = health.max;
                 }
             }
         }
@@ -195,15 +213,17 @@ pub fn handle_repair_requests(
 - [ ] Test coverage ≥85% for new code.
 - [ ] Accepting a sponsorship grants the expected resources and sets an active contract.
 - [ ] Failing to build required billboards triggers a penalty.
-- [ ] Buildings flagged as `is_drm_locked` reject repair attempts.
+- [ ] Buildings flagged as `DrmLocked` reject repair attempts.
 
 ## Technical Guidance
 
 - Use the existing `ColonyResources` struct when modifying credits or resources.
 - Ensure the `breach_timer` uses `SimulationTime` rather than an arbitrary tick decrement in final implementation.
-- Tie the `is_drm_locked` flag to the `TechTree` so specific nodes (like "Sponsored Hospital") automatically spawn with the flag.
+- Tie the `DrmLocked` flag to the `TechTree` so specific nodes (like "Sponsored Hospital") automatically spawn with the flag.
 
 ## Questions
 
 *Builder: add questions here if spec is unclear.*
 - **Architectural Contradictions:** Building uses string for `building_type` which conflicts with enum `BuildingType` and missing `RepairBuildingEvent`.
+
+*Architect:* Addressed. The `Building` component correctly uses the `BuildingType` enum, and the `RepairBuildingEvent` and `Health` structures have been updated to match the existing architecture.
