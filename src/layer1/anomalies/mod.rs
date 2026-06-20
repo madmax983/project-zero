@@ -162,23 +162,17 @@ pub fn spawn_initial_anomalies(world: &mut World, count: usize) {
 /// Replaced `let mut scanners = Vec::new();` loop with an iterator chain.
 /// This prevents reallocation overhead and manually tracking `Vec` state,
 /// allowing `collect` to infer capacity directly from the query bounds.
+/// ⚡ Bolt Optimization: Eliminated intermediate HashSet allocation for striking factions.
+/// By looking up the state directly from the `Factions` resource, we avoid allocating a `HashSet`
+/// on the heap every time `collect_scanners` is called.
 fn collect_scanners(world: &mut World) -> Vec<(Entity, Entity)> {
-    let striking_factions: std::collections::HashSet<crate::layer1::factions::FactionId> = world
-        .get_resource::<crate::layer1::factions::Factions>()
-        .map(|f| {
-            f.map
-                .iter()
-                .filter(|(_, d)| d.state == crate::layer1::factions::FactionState::Striking)
-                .map(|(id, _)| *id)
-                .collect()
-        })
-        .unwrap_or_default();
-
     let mut query = world.query_filtered::<(
         Entity,
         &MovementTarget,
         Option<&crate::layer1::factions::FactionMember>,
     ), With<AtTarget>>();
+
+    let factions = world.get_resource::<crate::layer1::factions::Factions>();
 
     query
         .iter(world)
@@ -186,7 +180,11 @@ fn collect_scanners(world: &mut World) -> Vec<(Entity, Entity)> {
         .filter(|(_, _, faction_member)| {
             !faction_member
                 .and_then(|m| m.faction_id)
-                .is_some_and(|fid| striking_factions.contains(&fid))
+                .is_some_and(|fid| {
+                    factions
+                        .and_then(|f| f.map.get(&fid))
+                        .map_or(false, |d| d.state == crate::layer1::factions::FactionState::Striking)
+                })
         })
         .map(|(entity, mt, _)| (entity, mt.target_entity))
         .collect()
