@@ -692,6 +692,47 @@ mod tests {
 
         assert!(success);
     }
+
+    use crate::layer1::memetics::MemeticCarrier;
+
+    #[test]
+    fn test_unlocking_hazardous_tech_infects_researcher() {
+        use crate::layer1::actions::{AssignedTo, AssignmentType};
+        use crate::layer1::map::GridPosition;
+        use crate::layer1::pop::Pop;
+
+        let mut world = World::new();
+        // Setup TechState, Resources, and a Researcher Pop
+        let tech_state = TechState {
+            total_capacity: 1000.0,
+            ..Default::default()
+        };
+        world.insert_resource(tech_state);
+        world.insert_resource(ColonyResources {
+            knowledge: 1000.0, // Plenty of knowledge
+            ..Default::default()
+        });
+        world.insert_resource(crate::shared::log::MessageLog::default());
+
+        let researcher = world
+            .spawn((
+                Pop,
+                AssignedTo {
+                    assignment_type: AssignmentType::LibraryWorker,
+                    entity: Entity::PLACEHOLDER,
+                }, // entity placeholder is fine for assignment type check
+                GridPosition::default(),
+            ))
+            .id();
+
+        // Unlock Tech::VoidWhispers
+        let result = unlock_tech(&mut world, Tech::VoidWhispers);
+
+        // Assert success
+        assert!(result);
+        // Assert researcher is infected
+        assert!(world.get::<MemeticCarrier>(researcher).is_some());
+    }
 }
 pub mod ghost_code;
 #[cfg(test)]
