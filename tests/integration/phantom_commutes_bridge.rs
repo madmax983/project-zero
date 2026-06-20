@@ -65,16 +65,15 @@ fn test_phantom_commute_emits_chronicle_event() {
 
     let building_pos = GridPosition { x: 5, y: 5 };
 
-    app.world_mut()
-        .spawn((
-            Pop,
-            GridPosition { x: 4, y: 5 },
-            MovementTarget {
-                target_entity: Entity::PLACEHOLDER,
-                target_position: building_pos,
-                for_action: ActionType::Work,
-            },
-        ));
+    app.world_mut().spawn((
+        Pop,
+        GridPosition { x: 4, y: 5 },
+        MovementTarget {
+            target_entity: Entity::PLACEHOLDER,
+            target_position: building_pos,
+            for_action: ActionType::Work,
+        },
+    ));
 
     app.world_mut()
         .resource_mut::<Events<BuildingRemovedEvent>>()

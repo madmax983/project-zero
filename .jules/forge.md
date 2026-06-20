@@ -27,3 +27,6 @@
 **[Extracting Logic Blocks from Bevy Systems]**
 **Learning:** Monolithic Bevy systems (like `check_spontaneous_build_system`) often contain distinct logic blocks hidden behind comment headers (e.g., `// 1. Identify potential builders`, `// 2. Process builders`). These systems can become difficult to read as their logic compounds.
 **Action:** Extract these distinct blocks into named helper functions (e.g., `identify_potential_builders`, `process_builders`) that accept `&mut World` and return relevant intermediary data. This cleanly pipelines the main system and flattens deep nesting inside the helper functions.
+**[Refactoring Repeated Context Building Logic]**
+**Learning:** Sometimes repeated blocks of logic are necessary just to build temporary structs for scope or context using complex fallbacks and mappings (e.g. `WorldContext` via `build_context` inside `UtilityAI` buffers). Extracting this repeated mapping/fallback logic directly into a dedicated helper function (like `build_fallback_context`) dramatically simplifies the parent methods calling it, adhering to DRY without risking borrow checker panic.
+**Action:** Extract repeated context creation steps with common fallback variables into their own `build_*` helper methods and add `#[allow(clippy::too_many_arguments)]` to the main build method instead of allowing the repetition.

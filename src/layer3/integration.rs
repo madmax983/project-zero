@@ -552,10 +552,19 @@ pub fn trade_route_market_bridge_system(
 
 /// INT-1124: Bridges DiplomaticMeetingEvent to AddChronicleEvent based on Fashion matching
 pub fn diplomatic_fashion_chronicle_bridge(
-    mut events: bevy_ecs::prelude::EventReader<crate::layer3::diplomacy::diplomatic_fashion::DiplomaticMeetingEvent>,
-    query_ambassador: bevy_ecs::prelude::Query<&crate::layer3::diplomacy::diplomatic_fashion::PreferredAttire>,
-    query_envoy: bevy_ecs::prelude::Query<&crate::layer3::diplomacy::diplomatic_fashion::Apparel, bevy_ecs::prelude::With<crate::layer1::entities::pop::Pop>>,
-    mut chronicle_events: bevy_ecs::prelude::EventWriter<crate::layer1::core::chronicle::AddChronicleEvent>,
+    mut events: bevy_ecs::prelude::EventReader<
+        crate::layer3::diplomacy::diplomatic_fashion::DiplomaticMeetingEvent,
+    >,
+    query_ambassador: bevy_ecs::prelude::Query<
+        &crate::layer3::diplomacy::diplomatic_fashion::PreferredAttire,
+    >,
+    query_envoy: bevy_ecs::prelude::Query<
+        &crate::layer3::diplomacy::diplomatic_fashion::Apparel,
+        bevy_ecs::prelude::With<crate::layer1::entities::pop::Pop>,
+    >,
+    mut chronicle_events: bevy_ecs::prelude::EventWriter<
+        crate::layer1::core::chronicle::AddChronicleEvent,
+    >,
 ) {
     for event in events.read() {
         if let Ok(preferred) = query_ambassador.get(event.ambassador) {

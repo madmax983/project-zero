@@ -149,21 +149,23 @@ impl ScopedEvaluationContext {
         }
     }
 
+    #[allow(clippy::too_many_arguments)]
     fn build_context<'a>(
         resources: &'a ColonyResources,
         cycle: &'a crate::layer1::day_night::DayNightCycle,
-        taboo: &'a crate::layer1::taboo::TabooState,
+        taboo: Option<&'a crate::layer1::taboo::TabooState>,
         factions: Option<&'a Factions>,
         zone_grid: Option<&'a ZoneGrid>,
         temperature_grid: Option<&'a TemperatureGrid>,
-        fallback: &'a ZoneGrid,
+        fallback_zone: &'a ZoneGrid,
+        fallback_taboo: &'a crate::layer1::taboo::TabooState,
     ) -> WorldContext<'a> {
         WorldContext {
             resources,
             cycle,
-            taboo,
+            taboo: taboo.unwrap_or(fallback_taboo),
             factions: factions.as_ref().map(|f| &f.map),
-            zone_grid: zone_grid.unwrap_or(fallback),
+            zone_grid: zone_grid.unwrap_or(fallback_zone),
             temperature_grid,
         }
     }
@@ -174,11 +176,12 @@ impl ScopedEvaluationContext {
         let context = Self::build_context(
             &self.resources,
             &self.cycle,
-            self.taboo.as_ref().unwrap_or(&default_taboo),
+            self.taboo.as_ref(),
             self.factions.as_ref(),
             self.zone_grid.as_ref(),
             self.temperature_grid.as_ref(),
             &zone_grid_fallback,
+            &default_taboo,
         );
 
         populate_ai_buffer(world, &mut self.buffer, &context);
@@ -190,11 +193,12 @@ impl ScopedEvaluationContext {
         let context = Self::build_context(
             &self.resources,
             &self.cycle,
-            self.taboo.as_ref().unwrap_or(&default_taboo),
+            self.taboo.as_ref(),
             self.factions.as_ref(),
             self.zone_grid.as_ref(),
             self.temperature_grid.as_ref(),
             &zone_grid_fallback,
+            &default_taboo,
         );
 
         let mut results = std::mem::take(&mut self.buffer.results);

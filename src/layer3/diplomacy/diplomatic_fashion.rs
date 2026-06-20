@@ -1,6 +1,6 @@
-use bevy_ecs::prelude::*;
-use bevy_app::prelude::*;
 use crate::layer1::entities::pop::Pop;
+use bevy_app::prelude::*;
+use bevy_ecs::prelude::*;
 
 #[derive(Component)]
 pub struct Diplomat {
@@ -74,18 +74,12 @@ pub fn evaluate_fashion_system(
 
 pub struct DiplomaticFashionPlugin;
 
-
-
 impl Plugin for DiplomaticFashionPlugin {
-
     fn build(&self, app: &mut App) {
-
         app.add_event::<DiplomaticMeetingEvent>();
 
         app.add_systems(Update, evaluate_fashion_system);
-
     }
-
 }
 
 #[cfg(test)]
