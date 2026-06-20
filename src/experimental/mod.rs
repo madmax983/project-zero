@@ -204,3 +204,6 @@ pub mod astrological_weather;
 pub mod ghost_grid;
 #[cfg(feature = "nova")]
 pub mod mutagenic_terraforming;
+
+#[cfg(feature = "nova")]
+pub mod engine_cultist_rituals;

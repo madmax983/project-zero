@@ -184,14 +184,17 @@ mod additional_tests {
     use crate::layer1::actions::AssignedTo;
     use crate::layer1::needs::Needs;
     use crate::layer1::pop::Pop;
-    use crate::layer1::skills::Skills;
-    use crate::layer1::tech::hypno_learning::{hypno_sleep_system, HypnoPod, wake_up_hypno_system, update_mental_fog_system, MentalFog};
     use crate::layer1::skills::SkillType;
+    use crate::layer1::skills::Skills;
+    use crate::layer1::tech::hypno_learning::{
+        hypno_sleep_system, update_mental_fog_system, wake_up_hypno_system, HypnoPod, MentalFog,
+    };
     use crate::layer1::utility_types::{ActionType, AssignmentType, PopAction};
     use bevy_ecs::prelude::*;
 
     #[test]
-    fn test_hypno_sleep_system_does_not_do_anything_if_pop_assigned_to_non_pod_entity_second_branch() {
+    fn test_hypno_sleep_system_does_not_do_anything_if_pop_assigned_to_non_pod_entity_second_branch(
+    ) {
         let mut world = World::new();
 
         let pop = world
@@ -216,7 +219,9 @@ mod additional_tests {
         schedule.add_systems(hypno_sleep_system);
         schedule.run(&mut world);
 
-        assert!(world.get::<crate::layer1::tech::hypno_learning::SleepingInHypnoPod>(pop).is_none());
+        assert!(world
+            .get::<crate::layer1::tech::hypno_learning::SleepingInHypnoPod>(pop)
+            .is_none());
     }
 
     #[test]
@@ -251,12 +256,13 @@ mod additional_tests {
         schedule.add_systems(hypno_sleep_system);
         schedule.run(&mut world);
 
-        assert!(world.get::<crate::layer1::tech::hypno_learning::SleepingInHypnoPod>(pop).is_none());
+        assert!(world
+            .get::<crate::layer1::tech::hypno_learning::SleepingInHypnoPod>(pop)
+            .is_none());
     }
 
     #[test]
     fn test_wake_up_hypno_system_ignores_entities_without_sleeping_in_hypno_pod() {
-
         let mut world = World::new();
 
         let pop = world
@@ -273,7 +279,9 @@ mod additional_tests {
         schedule.add_systems(wake_up_hypno_system);
         schedule.run(&mut world);
 
-        assert!(world.get::<crate::layer1::tech::hypno_learning::MentalFog>(pop).is_none());
+        assert!(world
+            .get::<crate::layer1::tech::hypno_learning::MentalFog>(pop)
+            .is_none());
     }
 
     #[test]
@@ -374,10 +382,16 @@ mod additional_tests {
         let mut world = World::new();
         // Spawn HypnoPod
         let pod = world
-            .spawn((HypnoPod {
-                target_skill: SkillType::Mining,
-                xp_rate: 10.0,
-            }, PowerConsumer { active: false, demand: 1.0 }))
+            .spawn((
+                HypnoPod {
+                    target_skill: SkillType::Mining,
+                    xp_rate: 10.0,
+                },
+                PowerConsumer {
+                    active: false,
+                    demand: 1.0,
+                },
+            ))
             .id();
 
         // Spawn Pop sleeping in the pod
@@ -436,7 +450,9 @@ mod additional_tests {
         schedule.add_systems(hypno_sleep_system);
         schedule.run(&mut world);
 
-        assert!(world.get::<crate::layer1::tech::hypno_learning::SleepingInHypnoPod>(pop).is_none());
+        assert!(world
+            .get::<crate::layer1::tech::hypno_learning::SleepingInHypnoPod>(pop)
+            .is_none());
     }
 
     #[test]
@@ -497,8 +513,12 @@ mod additional_tests {
         schedule.add_systems(wake_up_hypno_system);
         schedule.run(&mut world);
 
-        assert!(world.get::<crate::layer1::tech::hypno_learning::MentalFog>(pop).is_none());
-        assert!(world.get::<crate::layer1::tech::hypno_learning::SleepingInHypnoPod>(pop).is_some());
+        assert!(world
+            .get::<crate::layer1::tech::hypno_learning::MentalFog>(pop)
+            .is_none());
+        assert!(world
+            .get::<crate::layer1::tech::hypno_learning::SleepingInHypnoPod>(pop)
+            .is_some());
     }
 
     #[test]
@@ -529,6 +549,8 @@ mod additional_tests {
         schedule.add_systems(hypno_sleep_system);
         schedule.run(&mut world);
 
-        assert!(world.get::<crate::layer1::tech::hypno_learning::SleepingInHypnoPod>(pop).is_none());
+        assert!(world
+            .get::<crate::layer1::tech::hypno_learning::SleepingInHypnoPod>(pop)
+            .is_none());
     }
 }
