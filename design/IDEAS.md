@@ -24936,3 +24936,72 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you heavily militarize your system borders with expensive sweeping patrols to catch these cheap probes, or lower taxes to make smuggling unprofitable at the cost of your empire's income?
 
 ---
+## Ghost Frequencies
+
+**Layer:** Cross-layer
+
+**Fantasy:** The planet is haunted by the radio broadcasts of a dead civilization. Listening brings knowledge, but also madness.
+
+**Mechanic:** Tuning comms arrays to specific bands intercepts ancient alien broadcasts. Leaving these playing provides a massive research speed buff, but slowly drives the listening researchers insane, eventually causing them to sabotage the colony to "answer the signal."
+
+**Emergence:** You desperately need a tech breakthrough, so you leave the Ghost Frequency on. The tech is discovered just in time, but the lead researcher goes mad, locks themselves in the comms tower, and broadcasts your colony's exact coordinates to a local pirate fleet.
+
+**Tension:** Do you risk the sanity of your best minds for a technological edge, or stick to safe, slow research?
+
+---
+
+## The Xenodruids
+
+**Layer:** 1
+
+**Fantasy:** A radical faction that weaponizes the environment against your industrialization.
+
+**Mechanic:** If planetary pollution gets too high, a radical faction of "Xenodruids" spawns from your own pops. Instead of protesting, they actively plant hyper-aggressive, genetically modified xenoflora that physically consumes your factories and roads.
+
+**Emergence:** You ignore environmental warnings to meet a production quota. The Xenodruids unleash a "Steel-Eating Moss." Within a month, your sprawling industrial park is a lush, vibrant forest, and your economy is completely ruined.
+
+**Tension:** Do you spend massive resources on clean energy and pollution control, or maintain a constant, brutal internal war against environmental terrorists?
+
+---
+
+## Sublight Relays
+
+**Layer:** Cross-layer
+
+**Fantasy:** The grueling reality of maintaining an interstellar internet without FTL communication.
+
+**Mechanic:** Before FTL comms are unlocked, empires must physically launch automated "Relay Probes" between stars. If a relay is destroyed by pirates or stellar phenomena, communication with that sector is completely severed until a new probe physically travels there.
+
+**Emergence:** A pirate raid destroys the only relay connecting you to a frontier warzone. For five in-game years, you have absolutely no idea if your colony survived or fell, and you must blindly dispatch a relief fleet into the unknown.
+
+**Tension:** Do you spend massive resources building redundant, overlapping relay networks, or risk total darkness when a single node fails?
+
+---
+
+## Kinetic Bombardment Debt
+
+**Layer:** Cross-layer
+
+**Fantasy:** Wielding weapons of mass destruction that you must pay off in installments.
+
+**Mechanic:** You can instantly summon a devastating orbital strike (Layer 3) to obliterate a threat on your Layer 1 colony. However, the strike is supplied by a corporate faction on credit. If you don't pay off the massive "Kinetic Debt" within a decade, they use the same weapon on your capital.
+
+**Emergence:** You use a kinetic strike to save a frontier world from an invasion. The world is saved, but the debt is so high that your entire empire must shift to a brutal, austere war economy just to pay off the corporation before they glass your homeworld.
+
+**Tension:** Do you use the ultimate "get out of jail free" card, knowing you are literally putting a gun to your own head?
+
+---
+
+## The Sentient Plague
+
+**Layer:** Cross-layer
+
+**Fantasy:** The virus isn't just killing your people; it's negotiating with you.
+
+**Mechanic:** A late-game pathogen doesn't immediately kill, but takes over the vocal cords and communication consoles of infected pops. It issues demands (e.g., "Export 1000 units of Food to X coordinate, or we trigger the lethal phase").
+
+**Emergence:** Your entire mining sector is infected. You prepare to quarantine them, but the virus hacks the local comms and threatens to detonate the fusion reactor if you close the doors. You are suddenly held hostage by a microorganism.
+
+**Tension:** Do you negotiate with a virus to buy time for a cure, or purge the infected immediately at massive cost?
+
+---
