@@ -199,7 +199,9 @@ fn init_simulation_resources(world: &mut World) {
         world.init_resource::<Events<crate::layer1::administration::edicts::HackCentralHubEvent>>();
         world.init_resource::<Events<crate::layer1::administration::edicts::RevokePolicyEvent>>();
     }
-    world.init_resource::<Events<crate::layer1::tectonic::MegaQuakeEvent>>();
+    world.init_resource::<Events<crate::layer1::geology::tectonic::MegaQuakeEvent>>();
+    world.init_resource::<Events<crate::layer1::geology::tectonic::ReliefQuakeEvent>>();
+
     world.init_resource::<Events<crate::layer1::whispering_ore::MinedOreEvent>>();
     world.init_resource::<Events<crate::layer1::whispering_ore::MineSealedEvent>>();
     world.init_resource::<Events<crate::layer1::social::grievances::PostGrievanceEvent>>();

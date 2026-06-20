@@ -16,6 +16,8 @@ fn test_mining_and_explosions_cause_mega_quake() {
     app.add_event::<MiningEvent>();
     app.add_event::<ExplosionEvent>();
     app.add_event::<MegaQuakeEvent>();
+    app.add_event::<scale::layer1::geology::tectonic::ReliefQuakeEvent>();
+
     app.add_event::<GeologicalEvent>();
 
     app.add_systems(
