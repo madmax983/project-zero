@@ -28,12 +28,14 @@ pub fn radioactive_batteries_system(
     };
 
     for (mut battery, pos) in &mut batteries {
-        let rad_level = grid.get(pos.x as usize, pos.y as usize);
-        if rad_level > 0.0 {
-            // Convert radiation to charge.
-            // E.g. 5.0 rads -> 0.5 charge per tick.
-            let charge_amount = (rad_level * 0.1).min(battery.max_throughput);
-            battery.charge(charge_amount);
+        if pos.x >= 0 && pos.y >= 0 {
+            let rad_level = grid.get(pos.x as usize, pos.y as usize);
+            if rad_level > 0.0 {
+                // Convert radiation to charge.
+                // E.g. 5.0 rads -> 0.5 charge per tick.
+                let charge_amount = (rad_level * 0.1).min(battery.max_throughput);
+                battery.charge(charge_amount);
+            }
         }
     }
 }

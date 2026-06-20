@@ -72,6 +72,10 @@ pub fn update_living_stone_system(
 
         living.last_move_tick = time.tick;
 
+        if pos.x < 0 || pos.y < 0 {
+            continue;
+        }
+
         // Logic: Find nearest other stone or heat
         let current_temp = temp_grid.get(pos.x as usize, pos.y as usize);
 

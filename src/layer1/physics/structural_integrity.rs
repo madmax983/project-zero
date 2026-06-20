@@ -97,6 +97,10 @@ pub fn check_stability(world: &mut World, pos: GridPosition) -> bool {
         return true; // No roof = safe
     }
 
+    if pos.x < 0 || pos.y < 0 {
+        return true;
+    }
+
     // 2. Check Self Support (Rock)
     let Some(terrain) = world.get_resource::<TerrainGrid>() else {
         return true; // Safe if there is no terrain grid

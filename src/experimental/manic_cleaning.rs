@@ -29,7 +29,9 @@ pub fn manic_cleaning_system(
     };
 
     for pos in pops.iter() {
-        grid.remove_clutter(pos.x as usize, pos.y as usize, MANIC_CLEANING_AMOUNT);
+        if pos.x >= 0 && pos.y >= 0 {
+            grid.remove_clutter(pos.x as usize, pos.y as usize, MANIC_CLEANING_AMOUNT);
+        }
     }
 }
 

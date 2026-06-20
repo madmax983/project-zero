@@ -37,7 +37,9 @@ pub fn storm_thieves_system(
 
                 // 2. Recklessly generate clutter
                 if let Some(ref mut grid) = clutter_grid {
-                    grid.add_clutter(pos.x as usize, pos.y as usize, STORM_CLUTTER_RATE);
+                    if pos.x >= 0 && pos.y >= 0 {
+                        grid.add_clutter(pos.x as usize, pos.y as usize, STORM_CLUTTER_RATE);
+                    }
                 }
             }
         }

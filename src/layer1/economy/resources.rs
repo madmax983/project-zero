@@ -1064,14 +1064,14 @@ pub fn mine_rock(world: &mut World, designation_entity: Entity, work_amount: f32
         // Scope the borrow of terrain so we can use world later
         {
             let mut terrain = world.resource_mut::<TerrainGrid>();
-            // Check bounds again? Technically redundant if terrain didn't shrink, but safe.
-            // Also we checked < 0 earlier.
-            let idx = (pos.y as usize)
-                .checked_mul(terrain.width)
-                .and_then(|i| i.checked_add(pos.x as usize))
-                .unwrap_or(usize::MAX);
-            if idx < terrain.tiles.len() {
-                terrain.tiles[idx] = TerrainType::Dirt;
+            if pos.x >= 0 && pos.y >= 0 {
+                let idx = (pos.y as usize)
+                    .checked_mul(terrain.width)
+                    .and_then(|i| i.checked_add(pos.x as usize))
+                    .unwrap_or(usize::MAX);
+                if idx < terrain.tiles.len() {
+                    terrain.tiles[idx] = TerrainType::Dirt;
+                }
             }
         }
 
@@ -1211,12 +1211,14 @@ pub fn chop_tree(world: &mut World, designation_entity: Entity, work_amount: f32
     if completed {
         // Change terrain
         let mut terrain = world.resource_mut::<TerrainGrid>();
-        let idx = (pos.y as usize)
-            .checked_mul(terrain.width)
-            .and_then(|i| i.checked_add(pos.x as usize))
-            .unwrap_or(usize::MAX);
-        if idx < terrain.tiles.len() {
-            terrain.tiles[idx] = TerrainType::Dirt;
+        if pos.x >= 0 && pos.y >= 0 {
+            let idx = (pos.y as usize)
+                .checked_mul(terrain.width)
+                .and_then(|i| i.checked_add(pos.x as usize))
+                .unwrap_or(usize::MAX);
+            if idx < terrain.tiles.len() {
+                terrain.tiles[idx] = TerrainType::Dirt;
+            }
         }
 
         // Spawn visual item on the ground (MUST BE HAULED)

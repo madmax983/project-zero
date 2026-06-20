@@ -28,14 +28,16 @@ pub(crate) fn evaluate_fetch_clothing(
     if current_insulation == 0.0 {
         score = 0.95; // Need clothes!
     } else if let Some(grid) = temperature_grid {
-        // Check if freezing despite clothes
-        #[allow(clippy::cast_sign_loss)]
-        let temp = grid.get(pop_pos.x as usize, pop_pos.y as usize);
-        let safe_temp = current_insulation.mul_add(-30.0, 10.0);
-        if temp < safe_temp {
-            // If insulation is already high (e.g. >= 2.0), fetching won't help unless we have super-parka.
-            if current_insulation < 2.0 {
-                score = 0.99; // Upgrade needed immediately!
+        if pop_pos.x >= 0 && pop_pos.y >= 0 {
+            // Check if freezing despite clothes
+            #[allow(clippy::cast_sign_loss)]
+            let temp = grid.get(pop_pos.x as usize, pop_pos.y as usize);
+            let safe_temp = current_insulation.mul_add(-30.0, 10.0);
+            if temp < safe_temp {
+                // If insulation is already high (e.g. >= 2.0), fetching won't help unless we have super-parka.
+                if current_insulation < 2.0 {
+                    score = 0.99; // Upgrade needed immediately!
+                }
             }
         }
     }

@@ -37,6 +37,10 @@ pub fn process_orbital_drops(
                 y: final_y,
             };
 
+            if final_x < 0 || final_y < 0 {
+                continue;
+            }
+
             // Ensure items do not drop onto impenetrable terrain like solid rock walls
             let terrain = grid
                 .get(final_x as usize, final_y as usize)
