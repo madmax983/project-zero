@@ -64,3 +64,4 @@ pub use teleport_psychosis::*;
 pub mod void_sleep;
 pub use void_sleep::*;
 pub mod artifact_diet;
+pub mod doomsday_clock;
