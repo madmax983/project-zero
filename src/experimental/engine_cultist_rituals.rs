@@ -78,7 +78,6 @@ mod tests {
             GridPosition { x: 5, y: 5 },
             Building {
                 building_type: BuildingType::Generator,
-
             },
         ));
 
@@ -112,7 +111,6 @@ mod tests {
             GridPosition { x: 5, y: 5 },
             Building {
                 building_type: BuildingType::Generator,
-
             },
         ));
 

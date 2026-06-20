@@ -1523,3 +1523,10 @@
 - **Systems connected:** `BuildingRemovedEvent` -> `phantom_commutes_bridge_system` -> `AddChronicleEvent`
 - **Glue added:** Modified `phantom_commutes_bridge_system` in `src/layer1/core/integration.rs` to generate Chronicle records when a phantom commute is triggered.
 - **Tests:** `tests/integration/phantom_commutes_bridge.rs`
+
+### INT-1036: Institutional Memory -> Chronicle
+- **Date:** 2026-10-31
+- **Systems connected:** `Added<Manual>` -> `institutional_memory_chronicle_bridge` -> `AddChronicleEvent`
+- **Glue added:** Added `institutional_memory_chronicle_bridge` in `src/layer1/core/integration.rs` to log when a high-skill colonist creates an instructional manual.
+- **Schedule:** Registered the system in `src/layer1/systems/observation.rs`.
+- **Tests:** Added `test_institutional_memory_chronicle_bridge` in `tests/integration/institutional_memory_bridge.rs`.

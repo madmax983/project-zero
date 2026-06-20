@@ -2733,6 +2733,19 @@ pub fn pop_died_count_system(
     }
 }
 
+/// INT-1036: Bridges `Added<Manual>` to `AddChronicleEvent`
+pub fn institutional_memory_chronicle_bridge(
+    query: Query<(), Added<crate::layer1::institutional_memory::Manual>>,
+    mut chronicle_events: EventWriter<AddChronicleEvent>,
+) {
+    for _ in query.iter() {
+        chronicle_events.send(AddChronicleEvent {
+            text: "A high-skill colonist has authored an instructional manual, passing their knowledge down to future generations.".to_string(),
+            importance: EventImportance::Major,
+        });
+    }
+}
+
 /// Updates `PopulationCount` when a `PopBorn` event is received.
 pub fn pop_born_count_system(
     mut events: EventReader<crate::layer1::pop::PopBorn>,
