@@ -9456,3 +9456,30 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 **Patterns:**
 - "Found a cache of [ILLEGAL_GOODS] hidden in the ventilation shafts."
 - "The Black Market in [COLONY] trades in [ILLEGAL_GOODS]."
+
+## Hypno-Learning Templates (Spec 1128)
+
+## Template: HYPNO_FOG_CRISIS
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [HYPNO_SIDE_EFFECT]
+**Patterns:**
+- "[YEAR]: The learning pods in [COLONY] are efficient, but the workers now suffer from [HYPNO_SIDE_EFFECT]."
+- "We gained the knowledge, but the [COLONY] clinics are full of patients exhibiting [HYPNO_SIDE_EFFECT]."
+
+## Gravity Debt Templates (Spec 1273)
+
+## Template: GRAVITY_WELL_TRAP
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [GRAVITY_CRUSH]
+**Patterns:**
+- "[YEAR]: We imported too much mass to [COLONY]. The gravity well deepens. It feels like [GRAVITY_CRUSH]."
+- "The cost of launching from [COLONY] has become astronomical. We are trapped by [GRAVITY_CRUSH]."
+
+## Orbital Debt Collections Templates (Spec 553)
+
+## Template: ORBITAL_REPO_STRIKE
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [ASSET_SEIZED]
+**Patterns:**
+- "[YEAR]: The megacorp repo drones arrived in orbit above [COLONY]. They took [ASSET_SEIZED]."
+- "We defaulted on the loan. The sky opened up, and tractor beams stripped [COLONY] of [ASSET_SEIZED]."
