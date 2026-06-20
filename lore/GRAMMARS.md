@@ -4604,3 +4604,15 @@ VACUUM_SHADOW_INCIDENT:
 ## Black Market Infrastructure Chaining (Spec 1043)
 - BLACK_MARKET_DISCOVERED → enables → RAID_MARKET, SMUGGLING_RING
 - RAID_MARKET → increases_chance → REBELLION, SUPPLY_SHORTAGE
+
+## Hypno-Learning Chaining (Spec 1128)
+- HYPNO_FOG_CRISIS → increases_chance → INDUSTRIAL_ACCIDENT, MEDICAL_EMERGENCY
+- HYPNO_FOG_CRISIS → enables → CULT_OF_THE_WAKING_DREAM
+
+## Gravity Debt Chaining (Spec 1273)
+- GRAVITY_WELL_TRAP → increases_chance → FLEET_DESTROYED, MASS_STARVATION
+- GRAVITY_WELL_TRAP → enables → ORBITAL_ELEVATOR_CONSTRUCTION
+
+## Orbital Debt Collections Chaining (Spec 553)
+- ORBITAL_REPO_STRIKE → increases_chance → COLONY_FAMINE, POWER_GRID_FAILURE
+- ORBITAL_REPO_STRIKE → enables → REBELLION

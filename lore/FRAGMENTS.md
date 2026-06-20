@@ -9734,3 +9734,30 @@ Descriptions of their stress and breakdowns.
 - stolen rations
 - modified tools
 - unregistered cybernetics
+
+## Hypno-Learning Fragments (Spec 1128)
+
+## Fragment Type: [HYPNO_SIDE_EFFECT]
+- severe memory fragmentation
+- auditory hallucinations of the curriculum
+- speaking dead languages in their sleep
+- a complete inability to form short-term memories
+- violent sleepwalking episodes
+
+## Gravity Debt Fragments (Spec 1273)
+
+## Fragment Type: [GRAVITY_CRUSH]
+- a crushing, inescapable weight
+- ships shattering upon atmospheric entry
+- an anchor dragging the world down
+- the sky pressing down like stone
+- an orbital prison of our own making
+
+## Orbital Debt Collections Fragments (Spec 553)
+
+## Fragment Type: [ASSET_SEIZED]
+- the primary hospital wing
+- entire blocks of automated hab-units
+- the core power generator
+- thousands of tons of refined transplutonics
+- the central archive databanks

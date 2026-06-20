@@ -5686,3 +5686,21 @@
 **Replaces:** Black market
 **Code reference:** `BlackMarket` component
 **Usage:** "The Shadow Economy is thriving in the lower decks."
+
+## Hypno-Learning (Spec 1128)
+### Mental Fog
+**Replaces:** Confusion, slowdown, grogginess
+**Code reference:** `MentalFog` component
+**Usage:** "The Mental Fog made the workers sluggish."
+
+## Gravity Debt (Spec 1273)
+### Gravity Debt
+**Replaces:** Launch cost penalty, gravity modifier
+**Code reference:** `GravityDebt` component
+**Usage:** "The Gravity Debt trapped them on the surface."
+
+## Orbital Debt Collections (Spec 553)
+### Repo Drone
+**Replaces:** Orbital collector, theft drone
+**Code reference:** `RepoDrone` component
+**Usage:** "The Repo Drones descended to claim their due."
