@@ -1,3 +1,4 @@
+- `1128` Hypno-Learning — `specs/1128-hypno-learning.md`
 ### INT-479: The Endless Draft -> Chronicle
 - **Date:** 2026-10-31
 - **Systems connected:** `DraftOrderEvent` -> `endless_draft_bridge_system` -> `AddChronicleEvent`
