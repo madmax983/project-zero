@@ -498,3 +498,5 @@ pub use architecture_superstition::*;
 pub mod hive_mind_integration;
 #[cfg(not(feature = "nova"))]
 pub mod oral_tradition_fallback;
+#[cfg(not(feature = "nova"))]
+pub use oral_tradition_fallback::*;
