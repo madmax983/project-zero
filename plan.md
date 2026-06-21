@@ -1,12 +1,9 @@
-1. **Understand the problem:** The problem states I am an Integrator agent looking for seams. Specifically, the "Blind Auction" feature (spec 1161) was recently implemented in `src/layer2/auction.rs`, and it needs to be integrated. The spec mentions: "Integration: Ensure the vault contents tie into the existing tech tree and disaster systems seamlessly. Add a Chronicle event when the vault is opened. Vault opening generates appropriate Chronicle logs depending on the outcome."
-2. **Review existing code:**
-   - `src/layer2/auction.rs` defines `VaultOpenedEvent` with `VaultOutcome` (`TechBoost`, `CatastrophicAnomaly`).
-   - We need to write a bridge system in `src/layer2/integration.rs` to listen to `VaultOpenedEvent` and emit `AddChronicleEvent`.
-   - We need to write an integration test in `tests/integration/blind_auction_bridge.rs`.
-   - We need to register the bridge system in `src/simulation.rs` or `src/layer2/mod.rs`.
-3. **Draft the plan:**
-   - Step 1: Create the integration test `tests/integration/blind_auction_bridge.rs` (RED Phase).
-   - Step 2: Implement `blind_auction_chronicle_bridge_system` in `src/layer2/integration.rs` (GREEN Phase).
-   - Step 3: Register the system in `src/simulation.rs` and add `mod blind_auction_bridge;` in `tests/integration.rs`.
-   - Step 4: Update `design/SEAM_MAP.md` and `design/IN_PROGRESS.md`/`design/COMPLETED.md`.
-   - Step 5: Complete pre-commit steps to ensure proper testing, verification, review, and reflection are done.
+1. Modify `src/layer1/geology/tectonic.rs` using `replace_with_git_merge_diff` to add `ReliefQuakeEvent` and a `trigger_relief_quake_system` that handles the event by reducing `stress.current` by 20.0 (clamping at 0.0) and emitting a smaller `GeologicalEvent`. Verify using `git diff src/layer1/geology/tectonic.rs`.
+2. Update `src/setup.rs` using `replace_with_git_merge_diff` to add `world.init_resource::<Events<crate::layer1::geology::tectonic::ReliefQuakeEvent>>();` to the setup. Verify using `git diff src/setup.rs`.
+3. Update `src/layer1/systems/environment.rs` using `replace_with_git_merge_diff` to add `crate::layer1::geology::tectonic::trigger_relief_quake_system.after(crate::layer1::geology::tectonic::update_stress_system),` to the systems. Verify using `git diff src/layer1/systems/environment.rs`.
+4. Update `tests/integration/tectonic_stress.rs` using `replace_with_git_merge_diff` to add an integration test for `ReliefQuakeEvent` verifying stress reduction and `GeologicalEvent` emission. Verify using `git diff tests/integration/tectonic_stress.rs`.
+5. Run `cargo test` and `cargo clippy -- -D warnings` using `run_in_bash_session` to verify all tests pass.
+6. Modify `design/COMPLETED.md` using `replace_with_git_merge_diff` to add `- [x] \`1280\` Tectonic Stress — \`specs/1280-tectonic-stress.md\` — completed 2026-11-20`. Verify using `git diff design/COMPLETED.md`.
+7. Modify `design/BACKLOG.md` using `replace_with_git_merge_diff` to remove `- [ ] \`1280\` Tectonic Stress — \`specs/1280-tectonic-stress.md\``. Verify using `git diff design/BACKLOG.md`.
+8. Modify `design/SEAM_MAP.md` using `replace_with_git_merge_diff` to add `INT-1280: Tectonic Stress` noting the integration. Verify using `git diff design/SEAM_MAP.md`.
+9. Complete pre-commit steps to ensure proper testing, verification, review, and reflection are done.
