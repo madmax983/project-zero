@@ -25130,3 +25130,43 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you risk intercepting enemies in low orbit where your stations can provide fire support, or fight in deep space without backup to keep the planetary orbitals clean?
 
 ---
+
+## The Pyre of Progress
+
+**Layer:** 1
+
+**Fantasy:** Pushing the colony to the brink of disaster just to secure a monumental leap in technology.
+
+**Mechanic:** You can force a colony-wide "Desperation Directive" to accelerate a specific research or construction project. This drastically lowers safety protocols, causing frequent industrial accidents, fires, and Pop deaths. However, Pops who die during this directive are remembered as martyrs, generating a permanent "Reverence" trait in the building or technology they died creating.
+
+**Emergence:** You are losing a war and desperately need a planetary shield. You enact the Pyre of Progress. The shield is completed just in time, but hundreds died. Decades later, your Pops treat the shield generator not as infrastructure, but as a holy relic, and refuse to let it be dismantled or upgraded, locking your planetary defense strategy in the past out of pure grief.
+
+**Tension:** Do you sacrifice the immediate safety and lives of your Pops for a permanent, albeit culturally complicated, technological breakthrough, or progress slowly and risk being overrun?
+
+---
+
+## The Junkyard Fleet
+
+**Layer:** 2
+
+**Fantasy:** Assembling a desperate, ragtag armada out of civilian vessels to hold the line against a professional military.
+
+**Mechanic:** When a system is under invasion and military fleets are destroyed or out of position, you can conscript civilian freighters, luxury yachts, and mining barges. These ships are stitched together with hastily mounted weapons and armor. They are incredibly fragile and their crews are untrained, but their movement patterns are unpredictable, and their sheer numbers can overwhelm targeting computers.
+
+**Emergence:** Your core fleet is wiped out. You conscript every garbage scow and pleasure cruiser in the system, arming them with mining lasers. The enemy dreadnought arrives, expecting no resistance, only to be swarmed by a chaotic, suicidal cloud of civilian craft. They win the battle, but your system's trade economy is utterly annihilated for a generation because every merchant ship is now irradiated scrap.
+
+**Tension:** Do you throw your vital civilian infrastructure into the meat grinder to save the system, knowing you will win the battle but potentially starve the planet?
+
+---
+
+## The Abyssal Silence
+
+**Layer:** Cross-layer
+
+**Fantasy:** Going completely dark to hide from a galaxy-ending threat, slowly watching your society unravel in the isolation.
+
+**Mechanic:** If a massive, overwhelming threat (like an advanced hostile empire or a cosmic anomaly) enters the sector, you can enact the "Abyssal Silence." All outgoing communications, hyper-lane beacons, and trade ships are shut down. Your worlds effectively disappear from the Layer 3 map. However, without interstellar contact, the Layer 1 colonies suffer extreme "Isolation" and "Paranoia" debuffs, and their technological progress halts.
+
+**Emergence:** You detect a monolithic, world-eating swarm approaching. You plunge your empire into silence. The swarm passes right by you, none the wiser. But the fifty years of complete isolation have caused your colonies to culturally diverge so drastically that when you turn the comms back on, half your empire no longer recognizes your authority and immediately declares independence.
+
+**Tension:** Do you blind and deafen your own civilization to survive the apocalypse, or fight a hopeless battle to maintain the light of your society?
