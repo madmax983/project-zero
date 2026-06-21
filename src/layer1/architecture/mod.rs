@@ -64,3 +64,5 @@ pub mod sunk_cost_monument;
 pub use hostage_protocol::HostageProtocolPlugin;
 pub mod smart_matter;
 pub use smart_matter::*;
+pub mod chrono_vault;
+pub use chrono_vault::*;
