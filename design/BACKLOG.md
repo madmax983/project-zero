@@ -800,3 +800,4 @@ See `design/IDEAS.md` for unspecced concepts.
 
 - [ ] `1307` The Information Black Market — `specs/1307-information-black-market.md`
 - [ ] `1308` The Blackout Bazaars — `specs/1308-the-blackout-bazaars.md`
+- [ ] `1309` The Asteroid Hermits — `specs/1309-the-asteroid-hermits.md`
