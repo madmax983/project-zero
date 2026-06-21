@@ -127,7 +127,7 @@ mod tests {
         // Assert: BureaucraticBlackHole component should be added to the cluster
         let mut query = app.world_mut().query::<&BureaucraticBlackHole>();
         assert_eq!(
-            query.iter(&app.world()).count(),
+            query.iter(app.world()).count(),
             1,
             "A Bureaucratic Black Hole should have formed"
         );
