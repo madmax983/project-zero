@@ -778,6 +778,32 @@ pub fn refugee_arrival_bridge_system(
     }
 }
 
+/// INT-1161: Bridges `VaultOpenedEvent` to `AddChronicleEvent`
+pub fn blind_auction_chronicle_bridge_system(
+    mut events: EventReader<crate::layer2::auction::VaultOpenedEvent>,
+    mut chronicle_events: EventWriter<crate::layer1::core::chronicle::AddChronicleEvent>,
+) {
+    use crate::layer1::core::chronicle::EventImportance;
+    use crate::layer2::auction::VaultOutcome;
+
+    for event in events.read() {
+        match event.outcome {
+            VaultOutcome::TechBoost => {
+                chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
+                    text: "A Blind Auction was won! The sealed vault contained advanced precursors TechBoost data.".to_string(),
+                    importance: EventImportance::Major,
+                });
+            }
+            VaultOutcome::CatastrophicAnomaly => {
+                chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
+                    text: "A Blind Auction was won... but the vault unleashed a CatastrophicAnomaly on the colony!".to_string(),
+                    importance: EventImportance::Legendary,
+                });
+            }
+        }
+    }
+}
+
 pub fn celestial_cemeteries_trade_bridge_system(
     mut commands: Commands,
     query: Query<

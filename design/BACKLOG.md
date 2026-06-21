@@ -687,7 +687,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1158` The Butterfly Effect of the Local Market — `specs/1158-butterfly-effect-local-market.md`
 - [ ] `1159` The Martyr's Monument — `specs/1159-the-martyrs-monument.md`
 - [ ] `1160` The Orbital Secession — `specs/1160-orbital-secession.md`
-- [ ] `1161` The Blind Auction — `specs/1161-blind-auction.md`
 - [ ] `1162` Orbital Debris Cascades — `specs/1162-orbital-debris-cascades.md`
 - [ ] `1163` Generational Debt — `specs/1163-generational-debt.md`
 - [ ] `1164` Automated Salvage Swarms — `specs/1164-automated-salvage-swarms.md`

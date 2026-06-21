@@ -235,6 +235,10 @@ fn init_simulation_resources(world: &mut World) {
     world.init_resource::<Events<crate::layer2::trade::blockade::TradeShipArrivalEvent>>();
     world.init_resource::<Events<crate::layer2::trade::routes::SentientTollDemandEvent>>();
     world.init_resource::<Events<crate::layer2::trade::routes::TradeRouteExecutedEvent>>();
+    world.init_resource::<Events<crate::layer2::auction::BlindAuctionTriggeredEvent>>();
+    world.init_resource::<Events<crate::layer2::auction::PlaceBidEvent>>();
+    world.init_resource::<Events<crate::layer2::auction::VaultOpenedEvent>>();
+    world.init_resource::<Events<crate::layer2::auction::TemporalAnomalyEvent>>();
     if !world.contains_resource::<Events<crate::layer2::trade::escape_velocity::LaunchShipEvent>>()
     {
         world.init_resource::<Events<crate::layer2::trade::escape_velocity::LaunchShipEvent>>();
@@ -739,6 +743,7 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
             .before(crate::layer2::trade::escape_velocity::process_launch_system),
         crate::layer2::integration::celestial_cemeteries_trade_bridge_system
             .before(crate::layer2::trade::escape_velocity::process_launch_system),
+        crate::layer2::integration::blind_auction_chronicle_bridge_system,
         crate::layer2::integration::refugee_arrival_bridge_system,
         crate::layer1::culture::celestial_cemeteries::process_corpses_system,
         crate::layer1::culture::celestial_cemeteries::calculate_launch_risk_system,

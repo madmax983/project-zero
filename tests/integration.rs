@@ -526,6 +526,9 @@ mod tectonic_fracking_bridge;
 #[path = "integration/tether_stump_bridge.rs"]
 mod tether_stump_bridge;
 
+#[path = "integration/blind_auction_chronicle_bridge.rs"]
+mod blind_auction_chronicle_bridge;
+
 #[path = "integration/memorial_revolt_work_bridge.rs"]
 mod memorial_revolt_work_bridge;
 #[path = "integration/subconscious_grid_effects_bridge.rs"]
