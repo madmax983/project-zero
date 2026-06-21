@@ -75,3 +75,5 @@ pub use fugue::*;
 pub use utility_ai::*;
 pub use utility_types::*;
 pub mod sleep_debt;
+pub mod temporal_fugue;
+pub use temporal_fugue::*;

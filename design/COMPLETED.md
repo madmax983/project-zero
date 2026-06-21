@@ -789,3 +789,4 @@
 - [x] `INT-1124` Integration: Diplomatic Fashion -> Chronicle — completed 2026-06-19
 - [x] `1023` Temporal Fugue — `specs/1023-temporal-fugue.md` — completed 2024-06-15
 - [x] `281` Atmospheric Feedback — `specs/281-atmospheric-feedback.md` — completed 2024-06-20
+- [x] `1023` Temporal Fugue — `specs/1023-temporal-fugue.md` — completed 2026-06-15

@@ -186,9 +186,14 @@ pub fn starvation_damage_system(world: &mut World) {
         .get_resource::<crate::shared::time::SimulationTime>()
         .map_or(0, |t| t.tick);
 
-    let mut query = world.query::<(&Needs, &mut Health, Option<&mut Memories>)>();
-    for (needs, mut health, mut memories) in query.iter_mut(world) {
-        if needs.hunger <= 0.0 {
+    let mut query = world.query::<(
+        &Needs,
+        &mut Health,
+        Option<&mut Memories>,
+        Option<&crate::layer1::mind::temporal_fugue::TemporalFugue>,
+    )>();
+    for (needs, mut health, mut memories, fugue) in query.iter_mut(world) {
+        if needs.hunger <= 0.0 && fugue.is_none() {
             // Ludwig: Grace Period - Starving should feel urgent but not instant death.
             // 0.2 damage per tick -> 500 ticks (50s) to die.
             health.take_damage(0.2);
@@ -275,10 +280,17 @@ pub fn decay_needs_system(
 /// System to despawn pops that have reached 0.0 hunger.
 pub fn kill_starving_pops_system(
     mut commands: Commands,
-    query: Query<(Entity, &Needs), With<crate::layer1::entities::pop::Pop>>,
+    query: Query<
+        (
+            Entity,
+            &Needs,
+            Option<&crate::layer1::mind::temporal_fugue::TemporalFugue>,
+        ),
+        With<crate::layer1::entities::pop::Pop>,
+    >,
 ) {
-    for (entity, needs) in query.iter() {
-        if needs.hunger <= 0.0 {
+    for (entity, needs, fugue) in query.iter() {
+        if needs.hunger <= 0.0 && fugue.is_none() {
             commands.entity(entity).despawn();
         }
     }
