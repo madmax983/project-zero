@@ -1,4 +1,22 @@
 - `1128` Hypno-Learning — `specs/1128-hypno-learning.md`
+### INT-1024: The Artist's Muse -> Chronicle
+- **Date:** 2026-06-21
+- **Systems connected:** `ArtWork` creation -> `artists_muse_chronicle_bridge` -> `AddChronicleEvent`
+- **Glue added:** Added `artists_muse_chronicle_bridge` in `src/layer1/core/integration.rs` to process masterpiece creation and generate Chronicle records.
+- **Tests:** Added `tests/integration/artists_muse_bridge.rs`.
+
+### INT-493: The Living Archive -> Chronicle
+- **Date:** 2026-06-21
+- **Systems connected:** `Blueprint` corruption -> `living_archive_chronicle_bridge` -> `AddChronicleEvent`
+- **Glue added:** Added `living_archive_chronicle_bridge` and `ChronicleCorruptedLogged` in `src/layer1/core/integration.rs` to process Flesh-Server corruption and generate Chronicle records.
+- **Tests:** Added `tests/integration/living_archive_bridge.rs`.
+
+### INT-1023: Temporal Fugue -> Chronicle
+- **Date:** 2026-06-21
+- **Systems connected:** `TemporalFugue` start -> `temporal_fugue_chronicle_bridge` -> `AddChronicleEvent`
+- **Glue added:** Added `temporal_fugue_chronicle_bridge` in `src/layer1/core/integration.rs` to process Temporal Fugue trance entry and generate Chronicle records.
+- **Tests:** Added `tests/integration/temporal_fugue_bridge.rs`.
+
 ### INT-479: The Endless Draft -> Chronicle
 - **Date:** 2026-10-31
 - **Systems connected:** `DraftOrderEvent` -> `endless_draft_bridge_system` -> `AddChronicleEvent`

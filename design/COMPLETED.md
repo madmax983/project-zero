@@ -791,3 +791,6 @@
 - [x] `281` Atmospheric Feedback — `specs/281-atmospheric-feedback.md` — completed 2024-06-20
 - [x] `1023` Temporal Fugue — `specs/1023-temporal-fugue.md` — completed 2026-06-15
 - [x] `1024` The Artist's Muse — `specs/1024-the-artists-muse.md` — completed 2026-06-21
+- [x] `INT-1024` Integration: The Artist's Muse -> Chronicle — completed 2026-06-21
+- [x] `INT-493` Integration: The Living Archive -> Chronicle — completed 2026-06-21
+- [x] `INT-1023` Integration: Temporal Fugue -> Chronicle — completed 2026-06-21
