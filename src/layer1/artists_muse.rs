@@ -1,8 +1,8 @@
-use bevy_ecs::prelude::*;
-use crate::layer1::entities::pop::Pop;
-use crate::layer1::social::morale::Morale;
-use crate::layer1::psychology::traits::{Traits, Trait};
 use crate::layer1::crafting::{CraftEvent, Quality};
+use crate::layer1::entities::pop::Pop;
+use crate::layer1::psychology::traits::{Trait, Traits};
+use crate::layer1::social::morale::Morale;
+use bevy_ecs::prelude::*;
 
 #[derive(Component)]
 pub struct ArtWork {
@@ -53,17 +53,25 @@ mod tests {
         let mut traits = Traits::default();
         traits.add(Trait::Artistic);
 
-        let tortured_artist = app.world_mut().spawn((
-            Pop,
-            traits,
-            Morale { value: 0.1, modifiers: vec![] }, // Very unhappy
-        )).id();
+        let tortured_artist = app
+            .world_mut()
+            .spawn((
+                Pop,
+                traits,
+                Morale {
+                    value: 0.1,
+                    modifiers: vec![],
+                }, // Very unhappy
+            ))
+            .id();
 
         // Simulate completing an art project
-        app.world_mut().resource_mut::<Events<CraftEvent>>().send(CraftEvent {
-            crafter: tortured_artist,
-            item_type: "Sculpture".to_string(),
-        });
+        app.world_mut()
+            .resource_mut::<Events<CraftEvent>>()
+            .send(CraftEvent {
+                crafter: tortured_artist,
+                item_type: "Sculpture".to_string(),
+            });
 
         app.update();
 
@@ -77,7 +85,10 @@ mod tests {
             }
         }
 
-        assert!(found_masterpiece, "An artist with low mood should produce a Masterpiece.");
+        assert!(
+            found_masterpiece,
+            "An artist with low mood should produce a Masterpiece."
+        );
     }
 
     #[test]
@@ -89,16 +100,24 @@ mod tests {
         let mut traits = Traits::default();
         traits.add(Trait::Artistic);
 
-        let happy_artist = app.world_mut().spawn((
-            Pop,
-            traits,
-            Morale { value: 0.95, modifiers: vec![] }, // Very happy
-        )).id();
+        let happy_artist = app
+            .world_mut()
+            .spawn((
+                Pop,
+                traits,
+                Morale {
+                    value: 0.95,
+                    modifiers: vec![],
+                }, // Very happy
+            ))
+            .id();
 
-        app.world_mut().resource_mut::<Events<CraftEvent>>().send(CraftEvent {
-            crafter: happy_artist,
-            item_type: "Painting".to_string(),
-        });
+        app.world_mut()
+            .resource_mut::<Events<CraftEvent>>()
+            .send(CraftEvent {
+                crafter: happy_artist,
+                item_type: "Painting".to_string(),
+            });
 
         app.update();
 
@@ -111,7 +130,10 @@ mod tests {
             }
         }
 
-        assert!(found_boring, "A happy artist should produce Normal or Poor quality art.");
+        assert!(
+            found_boring,
+            "A happy artist should produce Normal or Poor quality art."
+        );
     }
 
     #[test]
@@ -124,16 +146,24 @@ mod tests {
         traits.add(Trait::Artistic);
         traits.add(Trait::Trauma);
 
-        let happy_but_traumatized = app.world_mut().spawn((
-            Pop,
-            traits,
-            Morale { value: 0.95, modifiers: vec![] }, // Very happy but has trauma
-        )).id();
+        let happy_but_traumatized = app
+            .world_mut()
+            .spawn((
+                Pop,
+                traits,
+                Morale {
+                    value: 0.95,
+                    modifiers: vec![],
+                }, // Very happy but has trauma
+            ))
+            .id();
 
-        app.world_mut().resource_mut::<Events<CraftEvent>>().send(CraftEvent {
-            crafter: happy_but_traumatized,
-            item_type: "Sculpture".to_string(),
-        });
+        app.world_mut()
+            .resource_mut::<Events<CraftEvent>>()
+            .send(CraftEvent {
+                crafter: happy_but_traumatized,
+                item_type: "Sculpture".to_string(),
+            });
 
         app.update();
 
@@ -146,6 +176,9 @@ mod tests {
             }
         }
 
-        assert!(found_masterpiece, "An artist with trauma should produce a Masterpiece regardless of mood.");
+        assert!(
+            found_masterpiece,
+            "An artist with trauma should produce a Masterpiece regardless of mood."
+        );
     }
 }
