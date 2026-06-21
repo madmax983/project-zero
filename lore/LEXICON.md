@@ -5704,3 +5704,14 @@
 **Replaces:** Orbital collector, theft drone
 **Code reference:** `RepoDrone` component
 **Usage:** "The Repo Drones descended to claim their due."
+
+## The Artist's Muse (Spec 1024)
+### Masterpiece
+**Replaces:** High quality art, legendary item
+**Code reference:** `ArtWork` with `Quality::Masterpiece`
+**Usage:** "The masterpiece brought them all to tears."
+
+### Mediocre Work
+**Replaces:** Low quality art, poor item, normal item
+**Code reference:** `ArtWork` with `Quality::Poor` or `Quality::Normal`
+**Usage:** "The mediocre work was quickly forgotten."

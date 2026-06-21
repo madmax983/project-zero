@@ -9483,3 +9483,21 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 **Patterns:**
 - "[YEAR]: The megacorp repo drones arrived in orbit above [COLONY]. They took [ASSET_SEIZED]."
 - "We defaulted on the loan. The sky opened up, and tractor beams stripped [COLONY] of [ASSET_SEIZED]."
+
+### Template: MASTERPIECE_CREATED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [POP_NAME], [ART_TYPE], [TORTURED_THEME]
+
+**Patterns:**
+- "[YEAR]: In their suffering, [POP_NAME] created a [ART_TYPE]. They call it a masterpiece. It explores [TORTURED_THEME]."
+- "[COLONY] marvels at the new [ART_TYPE] by [POP_NAME]. Born of agony, it perfectly captures [TORTURED_THEME]. [YEAR]."
+- "They say [POP_NAME] wept while making the [ART_TYPE]. The result is a masterpiece of [TORTURED_THEME]. [YEAR]."
+
+### Template: MEDIOCRE_ART_CREATED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [POP_NAME], [ART_TYPE], [BORING_THEME]
+
+**Patterns:**
+- "[YEAR]: [POP_NAME] finished a [ART_TYPE] about [BORING_THEME]. It is completely unremarkable."
+- "[COLONY] yawns at the new [ART_TYPE] by [POP_NAME]. A safe, dull exploration of [BORING_THEME]. [YEAR]."
+- "Comfort breeds mediocrity. [POP_NAME]'s latest [ART_TYPE] on [BORING_THEME] inspires no one. [YEAR]."
