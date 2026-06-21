@@ -1437,6 +1437,13 @@
 - **Glue added:** `cultural_vandalism_chronicle_bridge` in `src/layer1/core/integration.rs`
 - **Tests:** `tests/integration/cultural_vandalism_chronicle.rs`
 
+### INT-1111: Void Stare -> Chronicle
+- **Date:** 2024-05-31
+- **Systems connected:** `void_manifestation_system` -> `void_stare_chronicle_bridge` -> `AddChronicleEvent`
+- **Glue added:** `void_stare_chronicle_bridge` in `src/layer1/core/integration.rs` to generate Chronicle records when a pop starts staring into the Void. Added `VoidStareChronicleLogged` component.
+- **Schedule:** Registered in Layer 1 Observation schedule (`src/layer1/systems/observation.rs`).
+- **Tests:** `tests/integration/void_stare_chronicle.rs`
+
 ### INT-1121: Public Grievance -> Generational Grudge
 - **Date:** 2026-06-08
 - **Systems connected:** `post_grievance_system` -> `public_grievance_grudge_bridge` -> `GrudgeList`

@@ -116,13 +116,13 @@ pub fn update_window_views_system(
         }
 
         if hit_void {
-            commands
-                .entity(entity)
-                .insert(crate::layer1::void_stare::VoidStareEffect { facing_void: true });
+            commands.entity(entity).insert(
+                crate::layer1::psychology::void_stare::VoidStareEffect { facing_void: true },
+            );
         } else {
             commands
                 .entity(entity)
-                .remove::<crate::layer1::void_stare::VoidStareEffect>();
+                .remove::<crate::layer1::psychology::void_stare::VoidStareEffect>();
         }
 
         // Apply scale factor
@@ -389,7 +389,7 @@ mod void_tests {
 
         // Window faces edge of map (void)
         assert!(world
-            .get::<crate::layer1::void_stare::VoidStareEffect>(window)
+            .get::<crate::layer1::psychology::void_stare::VoidStareEffect>(window)
             .is_some());
     }
 
@@ -412,7 +412,7 @@ mod void_tests {
                     value: 0.0,
                     radius: 2.0,
                 },
-                crate::layer1::void_stare::VoidStareEffect { facing_void: true }, // Has it initially
+                crate::layer1::psychology::void_stare::VoidStareEffect { facing_void: true }, // Has it initially
             ))
             .id();
 
@@ -433,7 +433,7 @@ mod void_tests {
 
         // Effect removed because the ray is blocked before hitting the edge
         assert!(world
-            .get::<crate::layer1::void_stare::VoidStareEffect>(window)
+            .get::<crate::layer1::psychology::void_stare::VoidStareEffect>(window)
             .is_none());
     }
 }

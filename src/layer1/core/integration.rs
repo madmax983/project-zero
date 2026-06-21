@@ -3078,6 +3078,39 @@ pub fn phantom_commutes_bridge_system(
     }
 }
 
+/// Component indicating that a pop's Void Stare manifestation has been logged to the chronicle.
+#[derive(Component)]
+pub struct VoidStareChronicleLogged;
+
+type UnloggedVoidStarePopQuery<'a> = (Entity, &'a PopAction);
+type UnloggedVoidStarePopFilter = (With<Pop>, Without<VoidStareChronicleLogged>);
+
+/// Bridges the Void Stare manifestation to the Chronicle.
+pub fn void_stare_chronicle_bridge(
+    mut commands: Commands,
+    pops: Query<UnloggedVoidStarePopQuery, UnloggedVoidStarePopFilter>,
+    logged_pops: Query<(Entity, &PopAction), With<VoidStareChronicleLogged>>,
+    mut chronicle: EventWriter<AddChronicleEvent>,
+) {
+    // Log newly staring pops
+    for (entity, action) in pops.iter() {
+        if action.current == ActionType::VoidStare {
+            commands.entity(entity).insert(VoidStareChronicleLogged);
+            chronicle.send(AddChronicleEvent {
+                text: "A colonist has lost themselves staring into the Abyss.".to_string(),
+                importance: EventImportance::Standard,
+            });
+        }
+    }
+
+    // Remove the marker if they stop staring
+    for (entity, action) in logged_pops.iter() {
+        if action.current != ActionType::VoidStare {
+            commands.entity(entity).remove::<VoidStareChronicleLogged>();
+        }
+    }
+}
+
 /// INT-555: Bridges `SabotageEvent` from Symbiotic Insurgency to `Building` access control and structure damage.
 pub fn symbiont_sabotage_bridge_system(
     mut events: EventReader<crate::layer1::biology::symbiotic_insurgency::SabotageEvent>,

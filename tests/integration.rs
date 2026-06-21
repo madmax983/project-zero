@@ -594,5 +594,8 @@ mod lottery_chronicle_bridge;
 pub mod orphaned_swarm_bridge;
 #[path = "integration/phantom_commutes_bridge.rs"]
 mod phantom_commutes_bridge;
+
 #[path = "integration/temporal_fugue_bridge.rs"]
 mod temporal_fugue_bridge;
+#[path = "integration/void_stare_chronicle.rs"]
+mod void_stare_chronicle;
