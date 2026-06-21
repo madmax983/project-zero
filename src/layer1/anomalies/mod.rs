@@ -183,7 +183,7 @@ fn collect_scanners(world: &mut World) -> Vec<(Entity, Entity)> {
                 .is_some_and(|fid| {
                     factions
                         .and_then(|f| f.map.get(&fid))
-                        .map_or(false, |d| d.state == crate::layer1::factions::FactionState::Striking)
+                        .is_some_and(|d| d.state == crate::layer1::factions::FactionState::Striking)
                 })
         })
         .map(|(entity, mt, _)| (entity, mt.target_entity))

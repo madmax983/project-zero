@@ -666,7 +666,7 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1125` Improvised Tools — `specs/1125-improvised-tools.md`
 
 - [ ] `1129` Planetary Rings as Highways — `specs/1129-planetary-rings-as-highways.md`
-- [ ] `1130` Volatile Intermediates — `specs/1130-volatile-intermediates.md`
+
 
 - [ ] `1134` Operational Detritus — `specs/1134-operational-detritus.md`
 - [ ] `1136` The Sentient Bureaucracy — `specs/1136-sentient-bureaucracy.md`

@@ -2,6 +2,7 @@ use crate::layer1::health::Health;
 use crate::layer1::map::GridPosition;
 use crate::layer1::structure::Structure;
 use bevy_ecs::prelude::*;
+use bevy::prelude::{Parent, DespawnRecursiveExt};
 
 /// Component representing a volatile item that degrades over time.
 #[derive(Component, Debug, Clone)]
@@ -32,10 +33,11 @@ pub struct ExplosionEvent {
 /// System that reduces stability of volatile items and triggers explosions.
 pub fn volatile_decay_system(
     mut commands: Commands,
-    mut query: Query<(Entity, &mut Volatile, &GridPosition)>,
+    mut query: Query<(Entity, &mut Volatile, Option<&GridPosition>, Option<&Parent>)>,
+    parent_query: Query<(Option<&GridPosition>, Option<&Parent>)>,
     mut events: EventWriter<ExplosionEvent>,
 ) {
-    for (entity, mut volatile, pos) in &mut query {
+    for (entity, mut volatile, pos, parent) in &mut query {
         if volatile.paused {
             continue;
         }
@@ -43,12 +45,37 @@ pub fn volatile_decay_system(
         volatile.stability -= volatile.decay_rate;
 
         if volatile.stability <= 0.0 {
-            events.send(ExplosionEvent {
-                center: *pos,
-                damage: volatile.explosion_power,
-                radius: volatile.explosion_radius,
-            });
-            commands.entity(entity).despawn();
+            // Determine actual position
+            let mut resolved_pos = pos.copied();
+
+            if resolved_pos.is_none() {
+                let mut current_parent = parent.map(|p| p.get());
+                while let Some(curr) = current_parent {
+                    if let Ok((Some(parent_pos), _)) = parent_query.get(curr) {
+                        resolved_pos = Some(*parent_pos);
+                        break;
+                    } else if let Ok((None, next_parent)) = parent_query.get(curr) {
+                        current_parent = next_parent.map(|p| p.get());
+                    } else {
+                        break;
+                    }
+                }
+            }
+
+            if let Some(center) = resolved_pos {
+                events.send(ExplosionEvent {
+                    center,
+                    damage: volatile.explosion_power,
+                    radius: volatile.explosion_radius,
+                });
+
+                commands.spawn((
+                    crate::layer1::waste::IndustrialWaste { amount: 10 },
+                    center,
+                ));
+            }
+
+            commands.entity(entity).despawn_recursive();
         }
     }
 }
@@ -82,6 +109,7 @@ mod tests {
     use super::*;
     use crate::layer1::map::GridPosition;
     use crate::shared::time::SimulationTime;
+    use bevy::prelude::BuildChildren;
 
     #[test]
     fn test_volatile_component_initialization() {
@@ -259,5 +287,49 @@ mod tests {
 
         let s = world.get::<Structure>(structure).unwrap();
         assert_eq!(s.current_hp, 100.0);
+    }
+
+    #[test]
+    fn test_volatile_item_explodes_and_spawns_waste() {
+        let mut world = World::new();
+        world.insert_resource(SimulationTime::default());
+        world.init_resource::<Events<ExplosionEvent>>();
+
+        let parent_pos = GridPosition { x: 5, y: 5 };
+        let parent_entity = world.spawn(parent_pos).id();
+
+        let volatile_entity = world.spawn(Volatile {
+            stability: 5.0,
+            decay_rate: 10.0,
+            explosion_power: 50.0,
+            explosion_radius: 2,
+            paused: false,
+        }).set_parent(parent_entity).id();
+
+        let mut schedule = Schedule::default();
+        schedule.add_systems(volatile_decay_system);
+        schedule.run(&mut world);
+
+        // Entity should be despawned
+        assert!(world.get_entity(volatile_entity).is_err(), "Exploded item should be despawned");
+
+        // Event should be fired at the parent's position
+        let events = world.resource::<Events<ExplosionEvent>>();
+        let mut reader = events.get_cursor();
+        let event = reader.read(events).next();
+        assert!(event.is_some());
+        let e = event.unwrap();
+        assert_eq!(e.center, parent_pos);
+
+        // Waste should be spawned at the parent's position
+        let mut found_waste = false;
+        let mut query = world.query::<(&crate::layer1::waste::IndustrialWaste, &GridPosition)>();
+        for (_, pos) in query.iter(&world) {
+            if *pos == parent_pos {
+                found_waste = true;
+                break;
+            }
+        }
+        assert!(found_waste, "IndustrialWaste should be spawned at the explosion location");
     }
 }

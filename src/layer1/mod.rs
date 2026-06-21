@@ -177,6 +177,8 @@ pub mod lighting;
 pub mod skills;
 
 mod waste_tests;
+pub mod waste;
+pub use waste::*;
 
 /// Vermin infestation logic (Spec 073).
 pub use lighting::*;
