@@ -16,7 +16,8 @@ pub fn zero_g_sports_system(
     mut commands: Commands,
     mut query: Query<(Entity, &PlayZeroGSportsAction, &mut Morale, &mut Health)>,
 ) {
-    let mut resolved_matches = Vec::new();
+    // ⚡ Bolt Optimization: Use `bevy::utils::HashSet` instead of `Vec` for O(1) `.contains()` lookups.
+    let mut resolved_matches = bevy::utils::HashSet::new();
 
     // First pass: resolve matches and determine winners/losers
     for (entity, action, _, _) in query.iter() {
@@ -27,7 +28,7 @@ pub fn zero_g_sports_system(
                 let winner = if rng.gen_bool(0.5) { entity } else { opponent };
                 let loser = if winner == entity { opponent } else { entity };
 
-                resolved_matches.push((winner, loser));
+                resolved_matches.insert((winner, loser));
             }
         }
     }
