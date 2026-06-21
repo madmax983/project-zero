@@ -87,6 +87,8 @@ pub enum FactionId {
     Gastronomers,
     /// Pops living in redlined/dezoned areas who stop paying taxes.
     Stateless,
+    /// Hive mind collective that split from the unintegrated pops.
+    HiveMind,
 }
 
 /// Data associated with a faction.

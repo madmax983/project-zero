@@ -1,8 +1,15 @@
 use crate::layer1::entities::pop::Pop;
+use crate::layer1::social::factions::{FactionId, FactionMember, FactionState, Factions};
 use bevy::prelude::*;
 
 #[derive(Component)]
 pub struct IntegratedCollective;
+
+#[derive(Component)]
+pub struct SynapseProximity {
+    pub value: f32,
+    pub decay_rate: f32,
+}
 
 #[derive(Event)]
 pub struct SurgeryEvent {
@@ -38,8 +45,14 @@ pub fn process_integration_surgery_system(
 ) {
     for event in events.read() {
         if event.procedure == "XenoIntegration" {
-            // Add collective flag
-            commands.entity(event.patient).insert(IntegratedCollective);
+            // Add collective flag and new need
+            commands.entity(event.patient).insert((
+                IntegratedCollective,
+                SynapseProximity {
+                    value: 100.0,
+                    decay_rate: 0.05,
+                },
+            ));
 
             // Remove needs
             commands.entity(event.patient).remove::<Sleep>();
@@ -48,6 +61,55 @@ pub fn process_integration_surgery_system(
             // Wipe personality
             if let Ok(mut traits) = query.get_mut(event.patient) {
                 traits.traits.clear();
+            }
+        }
+    }
+}
+
+pub fn decay_synapse_proximity_system(mut query: Query<&mut SynapseProximity>) {
+    for mut proximity in query.iter_mut() {
+        proximity.value = (proximity.value - proximity.decay_rate).max(0.0);
+    }
+}
+
+pub fn trigger_hive_mind_faction_split_system(
+    factions: Option<ResMut<Factions>>,
+    mut pop_query: Query<(Option<&IntegratedCollective>, &mut FactionMember), With<Pop>>,
+) {
+    let mut total_pops = 0;
+    let mut integrated_pops = 0;
+
+    for (integrated, _) in pop_query.iter() {
+        total_pops += 1;
+        if integrated.is_some() {
+            integrated_pops += 1;
+        }
+    }
+
+    if total_pops == 0 {
+        return;
+    }
+
+    let integrated_ratio = integrated_pops as f32 / total_pops as f32;
+
+    // Split if more than 30% of the colony is integrated
+    if integrated_ratio > 0.30 {
+        if let Some(mut factions) = factions {
+            factions.map.entry(FactionId::HiveMind).or_insert_with(|| {
+                crate::layer1::social::factions::FactionData {
+                    name: "The Collective".to_string(),
+                    satisfaction: 1.0,
+                    members_count: integrated_pops,
+                    state: FactionState::Striking, // Hostile to non-integrated
+                    active_demand: None,
+                }
+            });
+        }
+
+        // Reassign all integrated pops to the HiveMind faction
+        for (integrated, mut member) in pop_query.iter_mut() {
+            if integrated.is_some() && member.faction_id != Some(FactionId::HiveMind) {
+                member.faction_id = Some(FactionId::HiveMind);
             }
         }
     }
@@ -114,11 +176,68 @@ mod tests {
             app.world().get::<Leisure>(pop).is_none(),
             "Integrated pops should not need leisure."
         );
+        assert!(
+            app.world().get::<SynapseProximity>(pop).is_some(),
+            "Integrated pops should gain SynapseProximity."
+        );
         let traits = app.world().get::<TraitList>(pop).unwrap();
         assert!(
             traits.traits.is_empty(),
             "Integrated pops should lose individual traits."
         );
+    }
+
+    #[test]
+    fn test_decay_synapse_proximity() {
+        let mut app = App::new();
+        app.add_systems(Update, decay_synapse_proximity_system);
+
+        let entity = app
+            .world_mut()
+            .spawn(SynapseProximity {
+                value: 100.0,
+                decay_rate: 10.0,
+            })
+            .id();
+
+        app.update();
+
+        let proximity = app.world().get::<SynapseProximity>(entity).unwrap();
+        assert_eq!(proximity.value, 90.0);
+    }
+
+    #[test]
+    fn test_trigger_hive_mind_faction_split() {
+        let mut app = App::new();
+        app.add_systems(Update, trigger_hive_mind_faction_split_system);
+        app.world_mut().insert_resource(Factions::default());
+
+        // Spawn 10 pops. 4 are integrated (40% > 30% threshold).
+        for i in 0..10 {
+            let mut entity = app.world_mut().spawn((
+                Pop,
+                FactionMember {
+                    faction_id: Some(FactionId::Unaligned),
+                },
+            ));
+            if i < 4 {
+                entity.insert(IntegratedCollective);
+            }
+        }
+
+        app.update();
+
+        let factions = app.world().resource::<Factions>();
+        assert!(factions.map.contains_key(&FactionId::HiveMind));
+
+        let mut hive_mind_count = 0;
+        for member in app.world_mut().query::<&FactionMember>().iter(app.world()) {
+            if member.faction_id == Some(FactionId::HiveMind) {
+                hive_mind_count += 1;
+            }
+        }
+
+        assert_eq!(hive_mind_count, 4, "Integrated pops should be reassigned to HiveMind faction.");
     }
 
     #[test]

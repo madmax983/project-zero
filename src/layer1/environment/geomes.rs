@@ -60,7 +60,10 @@ pub fn diffuse_geome_hazards_system(
 
 /// Applies damage to entities with Health that are standing on GeomeHazards.
 pub fn environmental_damage_system(
-    mut health_query: Query<(&GridPosition, &mut crate::layer1::health::Health)>,
+    mut health_query: Query<
+        (&GridPosition, &mut crate::layer1::health::Health),
+        Without<crate::layer1::hive_mind_integration::IntegratedCollective>,
+    >,
     hazard_query: Query<(&GridPosition, &GeomeHazard)>,
 ) {
     let mut hazard_map = HashMap::new();
