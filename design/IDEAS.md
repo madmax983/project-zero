@@ -25032,3 +25032,59 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you cycle scout crews frequently at the cost of exploration speed, or push them to the brink and risk them going rogue?
 
 ---
+
+## The Archaeological Insomnia
+
+**Layer:** 1
+
+**Fantasy:** Pops refuse to sleep in buildings constructed from the ruins of fallen empires.
+
+**Mechanic:** Using materials scavenged from ancient ruins (Layer 2 anomalies) to build Layer 1 housing applies a permanent "Cursed Architecture" tag. Pops living in these buildings slowly accumulate the "Insomniac" trait, leading to exhaustion, hallucinations, and eventually, destructive sleepwalking where they attempt to dismantle the colony to "rebuild the old shapes."
+
+**Emergence:** You solve a housing crisis using cheap alien brick. A generation later, a third of your colony walks into the desert at night and begins constructing a massive, useless geometric monolith out of your vital infrastructure.
+
+**Tension:** Do you use the incredibly cheap, durable ancient materials knowing the psychological toll, or spend precious resources manufacturing safe, modern housing?
+
+---
+
+## The Starving Fleet
+
+**Layer:** 2
+
+**Fantasy:** A massive refugee fleet arrives, but you can't feed them. If you turn them away, they turn to piracy.
+
+**Mechanic:** A "Refugee Flotilla" arrives in your system, escaping a crisis in another sector (Layer 3 event). They demand an enormous, ongoing tithe of Food and Water from your Layer 1 colonies. If sustained for a decade, they integrate as highly-skilled Pops. If rejected or starved, their ships convert into Pirate Raiders that permanently haunt your system's trade routes.
+
+**Emergence:** You try to be the good guy and accept the refugees, but the sudden drain causes a famine on your breadbasket world. The starving locals rebel, blow up the spaceport, and now neither your colony nor the refugees have food, sparking a three-way war for scraps.
+
+**Tension:** Do you sacrifice the stability of your own people to save strangers, or coldly condemn them to death/piracy to protect what you have?
+
+---
+
+## The Memory Cults
+
+**Layer:** Cross-layer
+
+**Fantasy:** Pops begin worshipping the records of dead civilizations, attempting to recreate their fatal mistakes.
+
+**Mechanic:** If your colony possesses "Ancient Archives" (artifacts discovered on Layer 2/3), pops with high Leisure needs may form a "Memory Cult." They begin mimicking the behaviors described in the archives. If the archive describes an empire that died by opening a gateway to the Wound, the cult will start sabotaging your power grid to build a gateway.
+
+**Emergence:** You keep an Ancient Archive in a museum to boost colony culture. The culture booms, but soon, pops start wearing strange masks, speaking a dead language, and throwing your vital electronics into the sea because "The Substrate demands silence."
+
+**Tension:** Do you destroy priceless historical artifacts to prevent cultural contamination, or risk your society being overwritten by the ghosts of the past?
+
+---
+
+## The Silent Exodus
+
+**Layer:** Cross-layer
+
+**Fantasy:** Pops quietly deciding your empire has failed, and leaving in the night without a word.
+
+**Mechanic:** If a colony's average Morale drops below a critical threshold for an extended period, but Authority/Police presence is too high for a violent rebellion, the "Silent Exodus" triggers. Pops secretly construct sublight "Generation Ships" in hidden asteroid docks (Layer 2) using embezzled Layer 1 resources. One day, a huge chunk of your population simply vanishes from the map, embarking on a doomed journey into deep space.
+
+**Emergence:** You crush a protest with brutal police force. Order is restored. You stop paying attention to that world. Twenty years later, you notice the colony's output is zero. You zoom in to find empty cities, powered down factories, and a single, massive sublight signature fading into the dark beyond the sensor net.
+
+**Tension:** Do you allow dissent and risk open rebellion, or clamp down so hard that your people choose the slow death of the void over life under your rule?
+
+---
