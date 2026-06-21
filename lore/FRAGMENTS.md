@@ -9761,3 +9761,42 @@ Descriptions of their stress and breakdowns.
 - the core power generator
 - thousands of tons of refined transplutonics
 - the central archive databanks
+
+## Fragment Type: [ART_CRITIQUE]
+How the colony reacts to new artwork.
+
+- breathtakingly sad
+- disturbingly real
+- utterly forgettable
+- safely boring
+- a pale imitation
+- profoundly moving
+- uncomfortably revealing
+- derivative
+- inspired
+
+## Fragment Type: [TORTURED_THEME]
+The subjects of great, anguished art.
+
+- the inevitable decay of all things
+- the famine of '84
+- the silence of the void
+- the crushing weight of gravity
+- the loss of the origin world
+- the betrayal of the founders
+- a memory of suffocation
+- the futility of hope
+- the inescapable cold
+
+## Fragment Type: [BORING_THEME]
+The subjects of mediocre, comfortable art.
+
+- a nice bowl of fruit
+- a pleasant sunrise
+- the colony mascot
+- geometric shapes
+- a slightly smiling face
+- domestic tranquility
+- a very clean corridor
+- contented sleeping
+- adequate rations
