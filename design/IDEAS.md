@@ -25088,3 +25088,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you allow dissent and risk open rebellion, or clamp down so hard that your people choose the slow death of the void over life under your rule?
 
 ---
+
+## Linguistic Drift
+
+**Layer:** Cross-layer
+
+**Fantasy:** Colonies that are isolated for too long begin to diverge culturally, eventually speaking dialects that cause misunderstandings.
+
+**Mechanic:** A hidden "Linguistic Drift" value slowly increases for colonies cut off from regular Layer 2 trade/comm routes. When drift is high, diplomacy with the core worlds suffers penalties, and inter-colony Pop interactions misfire or generate friction instead of social bonding.
+
+**Emergence:** You ignore an outer-rim mining outpost for a century because it's self-sufficient. When you finally build a hyper-relay there, your diplomats are met with hostility because the locals' language has drifted so far that your standard greeting translates as a grave insult.
+
+**Tension:** Do you invest heavily in constant, low-value trade routes just to keep the empire culturally tethered, or embrace the fragmentation of your species?
+
+---
+
+## The Ghost Shift
+
+**Layer:** 1
+
+**Fantasy:** The sheer dread of working a dangerous, solitary job in the cold dark.
+
+**Mechanic:** Pops assigned to solitary night shifts in high-stress or low-beauty environments (like deep mines or exterior void-maintenance) slowly accumulate a "Paranoia" need deficit. If it peaks, they begin hallucinating non-existent hazards, reporting fake emergencies, or refusing to work the shift without a buddy.
+
+**Emergence:** You try to optimize a deep-core mining operation by having a single miner work the night shift. Weeks later, the miner seals the blast doors and sabotages the comms array because they "heard something scratching on the other side." Production grinds to a halt while you have to break into your own mine.
+
+**Tension:** Do you double up workers on shifts (halving your labor efficiency) to ensure psychological safety, or push solitary workers until their minds break?
+
+---
+
+## Orbital Debris Avalanches
+
+**Layer:** 2
+
+**Fantasy:** The cascading, apocalyptic consequence of fighting near planetary orbit (Kessler Syndrome).
+
+**Mechanic:** Destroyed ships and stations leave "Debris Clusters" in a planet's orbit. If a new explosion happens within a cluster, it triggers an "Avalanche," multiplying the debris and creating a high-speed shrapnel storm that damages everything in the orbit band, potentially wiping out Layer 2 infrastructure.
+
+**Emergence:** You defend your core world from pirates, blowing them up in low orbit. The resulting debris cloud shreds your own agricultural space-elevators. The surface starves because you won the space battle too close to home.
+
+**Tension:** Do you risk intercepting enemies in low orbit where your stations can provide fire support, or fight in deep space without backup to keep the planetary orbitals clean?
+
+---
