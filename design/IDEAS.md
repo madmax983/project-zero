@@ -24895,7 +24895,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you let the AI continue its grand design to see what it awakens, or painstakingly tear down the corrupted infrastructure at massive cost to your economy?
 
 ---
-## The Asteroid Hermits
+## The Asteroid Hermits [SPECCED]
 
 **Layer:** 2
 
