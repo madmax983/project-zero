@@ -30,7 +30,9 @@ fn test_blind_auction_chronicle_bridge() {
         assert!(emitted[0].text.contains("TechBoost"));
     }
 
-    app.world_mut().resource_mut::<Events<AddChronicleEvent>>().clear();
+    app.world_mut()
+        .resource_mut::<Events<AddChronicleEvent>>()
+        .clear();
 
     // Act: CatastrophicAnomaly outcome
     app.world_mut().send_event(VaultOpenedEvent {

@@ -976,6 +976,8 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
     #[cfg(feature = "nova")]
     crate::experimental::engine_cultist_rituals::register(schedule);
     #[cfg(feature = "nova")]
+    crate::experimental::acoustic_hallucinations::register(schedule);
+    #[cfg(feature = "nova")]
     crate::experimental::hoarder_sleepwalking::register(schedule);
     #[cfg(feature = "nova")]
     crate::experimental::storm_thieves::register(schedule);
