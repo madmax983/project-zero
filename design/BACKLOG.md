@@ -634,7 +634,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1027` Sanctuary Districts — `specs/1027-sanctuary-districts.md`
 - [ ] `1026` The Lottery — `specs/1026-the-lottery.md`
 - [ ] `1025` Gravity Plating Failure — `specs/1025-gravity-plating-failure.md`
-- [ ] `1022` The Hive Mind Integration — `specs/1022-the-hive-mind-integration.md`
 - [ ] `1036` Institutional Memory — `specs/1036-institutional-memory.md`
 - [ ] `1038` Dead Protocols — `specs/1038-dead-protocols.md`
 
