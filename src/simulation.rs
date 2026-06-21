@@ -78,6 +78,8 @@ fn init_simulation_resources(world: &mut World) {
     world.init_resource::<crate::layer1::environment::atmosphere::GlobalAtmosphere>();
     world.init_resource::<Events<crate::layer1::economy::black_market::SmugglerArrivalEvent>>();
     world.init_resource::<Events<crate::layer1::economy::black_market::ShutdownDropNodeEvent>>();
+        world.init_resource::<Events<crate::layer1::architecture::chrono_vault::SealVaultEvent>>();
+    world.init_resource::<Events<crate::layer2::auction::VaultOpenedEvent>>();
     world.init_resource::<Events<crate::layer1::AcceptSponsorshipEvent>>();
     world.init_resource::<Events<crate::layer1::crafting::CraftEvent>>();
     world.init_resource::<Events<crate::layer1::biology::symbiotic_insurgency::SabotageEvent>>();
@@ -614,6 +616,8 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
         crate::layer1::drone::evaluate_drone_actions_system.after(update_building_map_system),
         crate::layer1::social::secret_societies::secret_society_formation_system,
         crate::layer1::social::secret_societies::society_action_system,
+        crate::layer1::architecture::chrono_vault::handle_seal_vault,
+        crate::layer1::architecture::chrono_vault::process_vault_timers,
         crate::layer1::social::memory_smugglers::process_memory_smuggling,
         crate::layer1::social::memory_smugglers::process_job_execution,
         update_action_timer_system
@@ -1081,6 +1085,8 @@ mod tests {
         world.init_resource::<bevy_ecs::event::Events<crate::layer1::culture::gastronomers::CulinarySingularityEvent>>();
         world.init_resource::<bevy_ecs::event::Events<crate::layer1::petrification::PopPetrifiedEvent>>();
         world.init_resource::<Events<crate::layer1::predecessors::WorldTriggerEvent>>();
+        world.init_resource::<Events<crate::layer1::architecture::chrono_vault::SealVaultEvent>>();
+    world.init_resource::<Events<crate::layer2::auction::VaultOpenedEvent>>();
         world.init_resource::<Events<crate::layer1::AcceptSponsorshipEvent>>();
         world.init_resource::<Events<crate::layer1::crafting::CraftEvent>>();
         world
@@ -1159,6 +1165,8 @@ mod tests {
             );
 
         // Initialize Detection Risk for test
+        world.init_resource::<Events<crate::layer1::architecture::chrono_vault::SealVaultEvent>>();
+    world.init_resource::<Events<crate::layer2::auction::VaultOpenedEvent>>();
         world.init_resource::<Events<crate::layer1::AcceptSponsorshipEvent>>();
         world.init_resource::<Events<crate::layer1::crafting::CraftEvent>>();
         world
