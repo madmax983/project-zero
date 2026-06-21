@@ -131,6 +131,55 @@ pub fn apex_meat_harvest_bridge_system(
     }
 }
 
+/// INT-1023: Bridges `Added<TemporalFugue>` to `AddChronicleEvent`
+pub fn temporal_fugue_chronicle_bridge(
+    query: Query<(), Added<crate::layer1::mind::temporal_fugue::TemporalFugue>>,
+    mut chronicle_events: EventWriter<AddChronicleEvent>,
+) {
+    for _ in query.iter() {
+        chronicle_events.send(AddChronicleEvent {
+            text: "A highly skilled worker has entered a Temporal Fugue trance. They are working at impossible speeds, entirely oblivious to their own mortal needs.".to_string(),
+            importance: EventImportance::Minor,
+        });
+    }
+}
+
+/// Marker component to avoid duplicate chronicle entries for blueprint corruption.
+#[derive(Component)]
+pub struct ChronicleCorruptedLogged;
+
+/// INT-493: Bridges `Changed<Blueprint>` to `AddChronicleEvent` when corrupted
+pub fn living_archive_chronicle_bridge(
+    mut commands: Commands,
+    query: Query<(Entity, &crate::layer1::tech::living_archive::Blueprint), (Changed<crate::layer1::tech::living_archive::Blueprint>, Without<ChronicleCorruptedLogged>)>,
+    mut chronicle_events: EventWriter<AddChronicleEvent>,
+) {
+    for (entity, blueprint) in query.iter() {
+        if blueprint.is_corrupted {
+            commands.entity(entity).insert(ChronicleCorruptedLogged);
+            chronicle_events.send(AddChronicleEvent {
+                text: "A living Flesh-Server has suffered acute stress, permanently corrupting the stored technological blueprints and introducing horrifying secondary effects.".to_string(),
+                importance: EventImportance::Major,
+            });
+        }
+    }
+}
+
+/// INT-1024: Bridges `Added<ArtWork>` to `AddChronicleEvent` when quality is Masterpiece
+pub fn artists_muse_chronicle_bridge(
+    query: Query<&crate::layer1::artists_muse::ArtWork, Added<crate::layer1::artists_muse::ArtWork>>,
+    mut chronicle_events: EventWriter<AddChronicleEvent>,
+) {
+    for artwork in query.iter() {
+        if artwork.quality == crate::layer1::crafting::Quality::Masterpiece {
+            chronicle_events.send(AddChronicleEvent {
+                text: format!("A tortured artist has created a masterpiece born from suffering. The new {} is both disturbing and brilliant.", artwork.item_type),
+                importance: EventImportance::Major,
+            });
+        }
+    }
+}
+
 /// INT-680: Bridges MemoryBlackoutEvent to AddChronicleEvent (Chronicle).
 pub fn memory_blackout_chronicle_bridge(
     mut events: EventReader<crate::layer1::psychology::memory_blackout::MemoryBlackoutEvent>,

@@ -574,6 +574,12 @@ mod dead_protocol_bridge;
 #[path = "integration/signal_decay_chronicle.rs"]
 mod signal_decay_chronicle;
 
+#[path = "integration/artists_muse_bridge.rs"]
+mod artists_muse_bridge;
+#[path = "integration/living_archive_bridge.rs"]
+mod living_archive_bridge;
+#[path = "integration/temporal_fugue_bridge.rs"]
+mod temporal_fugue_bridge;
 #[path = "integration/dead_hand_bridge.rs"]
 mod dead_hand_bridge;
 #[path = "integration/diplomatic_fashion_bridge.rs"]
