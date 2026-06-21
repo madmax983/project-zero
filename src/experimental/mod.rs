@@ -206,4 +206,6 @@ pub mod ghost_grid;
 pub mod mutagenic_terraforming;
 
 #[cfg(feature = "nova")]
+pub mod acoustic_hallucinations;
+#[cfg(feature = "nova")]
 pub mod engine_cultist_rituals;

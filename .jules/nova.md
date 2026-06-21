@@ -175,3 +175,8 @@
 **Concept:** Added `engine_cultist_rituals_system` to `src/experimental/engine_cultist_rituals.rs`. Pops with `Trait::EngineCultist` rapidly lose stress when they are within 3 tiles of a `BuildingType::Generator`.
 **Fate:** Submitted
 **Lesson:** Connects a specific personality trait (machine worship) directly to the physical placement of infrastructure (generators), rewarding players who design their colonies to accommodate the unique spatial needs of cultists.
+
+## [Acoustic Hallucinations]
+**Concept:** Added `acoustic_hallucinations_system` to `src/experimental/acoustic_hallucinations.rs`. Connects `NoiseMap` with `Morale` and `ActionType`. Pops exposed to extreme noise have a chance to experience an `AcousticHallucination` that forces them into a `Daze` and tanks their `leisure` need.
+**Fate:** Merged
+**Lesson:** Provides a strong psychological consequence to industrial layouts. Extreme noise isn't just an annoyance anymore, it's a hazardous environment that can actively induce temporary mental breaks, forcing players to care about acoustic insulation.
