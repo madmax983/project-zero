@@ -407,4 +407,42 @@ mod tests {
         // Assert Door is locked down randomly
         assert!(locked);
     }
+
+    #[test]
+    fn test_rogue_behavior_random_power_flicker() {
+        let mut world = World::new();
+
+        // Spawn Rogue AI
+        world.spawn((
+            Building {
+                building_type: BuildingType::AICore,
+            },
+            AICore {
+                rogue: true,
+                ..Default::default()
+            },
+            Structure::default(),
+        ));
+
+        let consumer = world
+            .spawn(PowerConsumer {
+                active: true,
+                demand: 10.0,
+            })
+            .id();
+
+        let mut schedule = Schedule::default();
+        schedule.add_systems(ai_rogue_system);
+
+        let mut flickered = false;
+        for _ in 0..100 {
+            schedule.run(&mut world);
+            if !world.get::<PowerConsumer>(consumer).unwrap().active {
+                flickered = true;
+                break;
+            }
+        }
+
+        assert!(flickered);
+    }
 }
