@@ -679,3 +679,6 @@ pub mod memory_smugglers;
 pub use memory_smugglers::{
     process_job_execution, process_memory_smuggling, EngramPurchaseIntent, MemeticDisassociation,
 };
+pub mod graffiti;
+pub use graffiti::*;
+mod graffiti_tests;

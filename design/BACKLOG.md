@@ -780,7 +780,7 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1268` The Scrap-Mind Ascendancy — `specs/1268-the-scrap-mind-ascendancy.md`
 - [ ] `1269` Cult of the First Error — `specs/1269-cult-of-the-first-error.md`
 - [ ] `1270` Phantom Trade Routes — `specs/1270-phantom-trade-routes.md`
-- [ ] `1271` The Propaganda Graffitists — `specs/1271-the-propaganda-graffitists.md`
+
 - [ ] `1272` The Phantom Limb of Logistics — `specs/1272-the-phantom-limb-of-logistics.md`
 - [ ] `1273` Gravity Debt — `specs/1273-gravity-debt.md`
 - [ ] `1274` Memory Smugglers — `specs/1274-memory-smugglers.md`

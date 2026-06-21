@@ -1,5 +1,5 @@
-use bevy_ecs::prelude::Resource;
 use crate::layer1::core::chronicle::Chronicle;
+use bevy_ecs::prelude::Resource;
 
 #[derive(Debug)]
 pub struct Story {

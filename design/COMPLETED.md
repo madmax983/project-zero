@@ -796,3 +796,4 @@
 - [x] `INT-1024` Integration: The Artist's Muse -> Chronicle — completed 2026-06-21
 - [x] `INT-493` Integration: The Living Archive -> Chronicle — completed 2026-06-21
 - [x] `INT-1023` Integration: Temporal Fugue -> Chronicle — completed 2026-06-21
+- [x] `1271` The Propaganda Graffitists — `specs/1271-the-propaganda-graffitists.md` — completed 2024-06-21
