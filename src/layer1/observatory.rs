@@ -32,7 +32,7 @@ pub fn process_observe_system(
         &AssignedTo,
         &mut Morale,
         Option<&Traits>,
-        Option<&crate::layer1::void_stare::VoidStareEffect>,
+        Option<&crate::layer1::psychology::void_stare::VoidStareEffect>,
     )>,
     observatories: Query<&Observatory>,
     mut resources: ResMut<ColonyResources>,
@@ -46,11 +46,11 @@ pub fn process_observe_system(
             if let Ok(observatory) = observatories.get(assignment.entity) {
                 // Check if they need the VoidStareEffect component
                 if void_stare.is_none() {
-                    commands
-                        .entity(entity)
-                        .insert(crate::layer1::void_stare::VoidStareEffect {
+                    commands.entity(entity).insert(
+                        crate::layer1::psychology::void_stare::VoidStareEffect {
                             facing_void: true, // Observatories face the void
-                        });
+                        },
+                    );
                 }
 
                 // 1. Generate Knowledge
