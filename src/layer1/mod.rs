@@ -500,3 +500,5 @@ pub mod hive_mind_integration;
 pub mod oral_tradition_fallback;
 #[cfg(not(feature = "nova"))]
 pub use oral_tradition_fallback::*;
+pub mod crafting;
+pub mod artists_muse;
