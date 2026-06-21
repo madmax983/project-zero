@@ -66,33 +66,42 @@ impl TemperatureGrid {
         }
     }
 
+    #[must_use]
+    fn get_index(&self, x: usize, y: usize) -> Option<usize> {
+        if x >= self.width || y >= self.height {
+            return None;
+        }
+        let idx = y.checked_mul(self.width)?.checked_add(x)?;
+        if idx >= self.values.len() {
+            return None;
+        }
+        Some(idx)
+    }
+
+    /// Get temperature at safe signed coordinates.
+    #[must_use]
+    pub fn get_safe(&self, x: i32, y: i32) -> f32 {
+        if x < 0 || y < 0 {
+            return self.ambient;
+        }
+        self.get(x as usize, y as usize)
+    }
+
     /// Get temperature at coordinates.
     /// Returns ambient if out of bounds.
     #[must_use]
     pub fn get(&self, x: usize, y: usize) -> f32 {
-        if x >= self.width || y >= self.height {
-            return self.ambient;
-        }
-        let Some(idx) = y.checked_mul(self.width).and_then(|i| i.checked_add(x)) else {
+        let Some(idx) = self.get_index(x, y) else {
             return self.ambient;
         };
-        if idx >= self.values.len() {
-            return self.ambient;
-        }
         self.values[idx]
     }
 
     /// Set temperature at coordinates.
     pub fn set(&mut self, x: usize, y: usize, value: f32) {
-        if x >= self.width || y >= self.height {
-            return;
-        }
-        let Some(idx) = y.checked_mul(self.width).and_then(|i| i.checked_add(x)) else {
+        let Some(idx) = self.get_index(x, y) else {
             return;
         };
-        if idx >= self.values.len() {
-            return;
-        }
         self.values[idx] = value;
     }
 
@@ -101,16 +110,9 @@ impl TemperatureGrid {
         if x < 0 || y < 0 {
             return;
         }
-        let (ux, uy) = (x as usize, y as usize);
-        if ux >= self.width || uy >= self.height {
-            return;
-        }
-        let Some(idx) = uy.checked_mul(self.width).and_then(|i| i.checked_add(ux)) else {
+        let Some(idx) = self.get_index(x as usize, y as usize) else {
             return;
         };
-        if idx >= self.values.len() {
-            return;
-        }
         self.values[idx] += amount;
     }
 
@@ -129,12 +131,13 @@ impl TemperatureGrid {
 
         for y in 0..self.height {
             for x in 0..self.width {
-                let Some(idx) = y.checked_mul(self.width).and_then(|i| i.checked_add(x)) else {
+                let Some(idx) = self.get_index(x, y) else {
                     continue;
                 };
-                if idx >= self.values.len() || idx >= self.scratch.len() {
+                if idx >= self.scratch.len() {
                     continue;
                 }
+
                 let current_temp = self.values[idx];
                 let ix = x as i32;
                 let iy = y as i32;
@@ -150,11 +153,7 @@ impl TemperatureGrid {
                     let nx = ix + dx;
                     let ny = iy + dy;
 
-                    let n_temp = if nx >= 0 && ny >= 0 {
-                        self.get(nx as usize, ny as usize)
-                    } else {
-                        self.ambient
-                    };
+                    let n_temp = self.get_safe(nx, ny);
 
                     let neighbor_k = *conductivity.get(&(nx, ny)).unwrap_or(&1.0);
 
@@ -223,9 +222,8 @@ pub fn update_temperature_system(
 
     if solar_heat > 0.0 {
         // Apply solar heat to all tiles
-        // Optimization: direct slice mutation would be faster but this is safe
-        for i in 0..grid.values.len() {
-            grid.values[i] += solar_heat;
+        for value in &mut grid.values {
+            *value += solar_heat;
         }
     }
 
@@ -316,7 +314,7 @@ pub fn thermal_damage_system(
             continue;
         }
         // Get temperature at pop's location
-        let temp = grid.get(pos.x as usize, pos.y as usize);
+        let temp = grid.get_safe(pos.x, pos.y);
 
         // Calculate Insulation from Equipment
         let mut insulation = 0.0;

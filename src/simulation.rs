@@ -1070,7 +1070,7 @@ mod tests {
         world.init_resource::<bevy_ecs::event::Events<crate::layer1::petrification::PopPetrifiedEvent>>();
         world.init_resource::<Events<crate::layer1::predecessors::WorldTriggerEvent>>();
         world.init_resource::<Events<crate::layer1::AcceptSponsorshipEvent>>();
-    world.init_resource::<Events<crate::layer1::crafting::CraftEvent>>();
+        world.init_resource::<Events<crate::layer1::crafting::CraftEvent>>();
         world
             .init_resource::<Events<crate::layer1::biology::symbiotic_insurgency::SabotageEvent>>();
         world.init_resource::<crate::layer1::biology::symbiotic_insurgency::SymbiontFaction>();
@@ -1148,7 +1148,7 @@ mod tests {
 
         // Initialize Detection Risk for test
         world.init_resource::<Events<crate::layer1::AcceptSponsorshipEvent>>();
-    world.init_resource::<Events<crate::layer1::crafting::CraftEvent>>();
+        world.init_resource::<Events<crate::layer1::crafting::CraftEvent>>();
         world
             .init_resource::<Events<crate::layer1::biology::symbiotic_insurgency::SabotageEvent>>();
         world.init_resource::<crate::layer1::biology::symbiotic_insurgency::SymbiontFaction>();

@@ -1,8 +1,8 @@
-use bevy_ecs::prelude::*;
+use crate::layer1::health::Health;
+use crate::layer1::needs::Needs;
 use crate::layer1::skills::Skills;
 use crate::layer1::utility_types::{ActionType, PopAction};
-use crate::layer1::needs::Needs;
-use crate::layer1::health::Health;
+use bevy_ecs::prelude::*;
 
 #[derive(Component, Debug, Clone, Copy)]
 pub struct TemporalFugue;
@@ -58,20 +58,26 @@ mod tests {
         skills.add_xp(SkillType::Construction, 9000.0); // High skill
 
         // Spawn a high skill pop on a work job
-        let pop = app.world_mut().spawn((
-            Pop,
-            skills,
-            PopAction {
-                current: ActionType::Work,
-                current_utility: 1.0,
-                ticks_committed: 0,
-            },
-        )).id();
+        let pop = app
+            .world_mut()
+            .spawn((
+                Pop,
+                skills,
+                PopAction {
+                    current: ActionType::Work,
+                    current_utility: 1.0,
+                    ticks_committed: 0,
+                },
+            ))
+            .id();
 
         app.update();
 
         // Check if FugueState was added
-        assert!(app.world().get::<TemporalFugue>(pop).is_some(), "Highly skilled Pops on work jobs should enter Temporal Fugue.");
+        assert!(
+            app.world().get::<TemporalFugue>(pop).is_some(),
+            "Highly skilled Pops on work jobs should enter Temporal Fugue."
+        );
     }
 
     #[test]
@@ -81,27 +87,56 @@ mod tests {
         let mut app = bevy_app::App::new();
         app.add_systems(bevy_app::Update, fugue_completion_system);
 
-        let pop = app.world_mut().spawn((
-            Pop,
-            TemporalFugue,
-            Needs { hunger: 0.0, rest: 1.0, leisure: 1.0, hygiene: 1.0 }, // Starving
-            Health { current: 100.0, max: 100.0, has_rust_lung: false },
-            PopAction { current: ActionType::Work, current_utility: 1.0, ticks_committed: 0 },
-        )).id();
+        let pop = app
+            .world_mut()
+            .spawn((
+                Pop,
+                TemporalFugue,
+                Needs {
+                    hunger: 0.0,
+                    rest: 1.0,
+                    leisure: 1.0,
+                    hygiene: 1.0,
+                }, // Starving
+                Health {
+                    current: 100.0,
+                    max: 100.0,
+                    has_rust_lung: false,
+                },
+                PopAction {
+                    current: ActionType::Work,
+                    current_utility: 1.0,
+                    ticks_committed: 0,
+                },
+            ))
+            .id();
 
         app.update();
 
         // Normally, a system would force the pop to stop working to eat if hunger is 0.
         // We verify that the PopAction persists despite 0 hunger. (Simulated by not changing)
-        assert!(app.world().get::<PopAction>(pop).is_some(), "Pop in fugue should not drop tasks to fulfill needs.");
-        assert!(app.world().get::<TemporalFugue>(pop).is_some(), "Pop in fugue should retain TemporalFugue while working.");
+        assert!(
+            app.world().get::<PopAction>(pop).is_some(),
+            "Pop in fugue should not drop tasks to fulfill needs."
+        );
+        assert!(
+            app.world().get::<TemporalFugue>(pop).is_some(),
+            "Pop in fugue should retain TemporalFugue while working."
+        );
 
         // Complete the task
         app.world_mut().get_mut::<PopAction>(pop).unwrap().current = ActionType::Idle;
         app.update();
 
         // Upon completion, Fugue should be removed, and the Pop should immediately suffer the consequences of ignored needs
-        assert!(app.world().get::<TemporalFugue>(pop).is_none(), "Fugue state should end when task completes.");
-        assert_eq!(app.world().get::<Health>(pop).unwrap().current, 0.0, "Pop should instantly die if hunger reached 0 during fugue.");
+        assert!(
+            app.world().get::<TemporalFugue>(pop).is_none(),
+            "Fugue state should end when task completes."
+        );
+        assert_eq!(
+            app.world().get::<Health>(pop).unwrap().current,
+            0.0,
+            "Pop should instantly die if hunger reached 0 during fugue."
+        );
     }
 }

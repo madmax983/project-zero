@@ -149,9 +149,16 @@ pub fn temporal_fugue_chronicle_bridge(
 pub struct ChronicleCorruptedLogged;
 
 /// INT-493: Bridges `Changed<Blueprint>` to `AddChronicleEvent` when corrupted
+#[allow(clippy::type_complexity)]
 pub fn living_archive_chronicle_bridge(
     mut commands: Commands,
-    query: Query<(Entity, &crate::layer1::tech::living_archive::Blueprint), (Changed<crate::layer1::tech::living_archive::Blueprint>, Without<ChronicleCorruptedLogged>)>,
+    query: Query<
+        (Entity, &crate::layer1::tech::living_archive::Blueprint),
+        (
+            Changed<crate::layer1::tech::living_archive::Blueprint>,
+            Without<ChronicleCorruptedLogged>,
+        ),
+    >,
     mut chronicle_events: EventWriter<AddChronicleEvent>,
 ) {
     for (entity, blueprint) in query.iter() {
@@ -167,7 +174,10 @@ pub fn living_archive_chronicle_bridge(
 
 /// INT-1024: Bridges `Added<ArtWork>` to `AddChronicleEvent` when quality is Masterpiece
 pub fn artists_muse_chronicle_bridge(
-    query: Query<&crate::layer1::artists_muse::ArtWork, Added<crate::layer1::artists_muse::ArtWork>>,
+    query: Query<
+        &crate::layer1::artists_muse::ArtWork,
+        Added<crate::layer1::artists_muse::ArtWork>,
+    >,
     mut chronicle_events: EventWriter<AddChronicleEvent>,
 ) {
     for artwork in query.iter() {
