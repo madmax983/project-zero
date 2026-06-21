@@ -56,6 +56,11 @@ pub fn build_simulation_schedule() -> Schedule {
         crate::layer1::architecture::hostage_protocol::hostage_protocol_detonation_system,
     ));
     schedule.add_systems((
+        crate::layer1::administration::bureaucratic_black_hole::check_bureaucratic_density_system,
+        crate::layer1::administration::bureaucratic_black_hole::bureaucratic_resource_loss_system,
+        crate::layer1::administration::bureaucratic_black_hole::bureaucratic_pop_reassignment_system,
+    ));
+    schedule.add_systems((
         crate::layer1::nature::subterranean_smog::process_subterranean_smog_system,
         crate::layer1::nature::subterranean_smog::apply_smog_penalties_system,
         crate::layer1::tech::teleporter::psychosis::handle_teleport_system,

@@ -237,7 +237,10 @@ mod tests {
             }
         }
 
-        assert_eq!(hive_mind_count, 4, "Integrated pops should be reassigned to HiveMind faction.");
+        assert_eq!(
+            hive_mind_count, 4,
+            "Integrated pops should be reassigned to HiveMind faction."
+        );
     }
 
     #[test]

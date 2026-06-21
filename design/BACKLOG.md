@@ -693,7 +693,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1166` The Time-Capsule Paradox — `specs/1177-time-capsule-paradox.md`
 - [ ] `1167` Gravitational Empathy — `specs/1178-gravitational-empathy.md`
 - [ ] `1169` The Last Archive — `specs/1176-the-last-archive.md`
-- [ ] `1170` The Bureaucratic Black Hole — `specs/1170-the-bureaucratic-black-hole.md`
 - [ ] `1171` The Fossilized Leviathan — `specs/1171-the-fossilized-leviathan.md`
 - [ ] `1172` Biological Obsolescence — `specs/1172-biological-obsolescence.md`
 - [ ] `1173` Echoes of the First Star — `specs/1173-echoes-of-the-first-star.md`
