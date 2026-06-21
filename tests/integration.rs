@@ -581,12 +581,15 @@ mod signal_decay_chronicle;
 mod artists_muse_bridge;
 #[path = "integration/dead_hand_bridge.rs"]
 mod dead_hand_bridge;
+
 #[path = "integration/diplomatic_fashion_bridge.rs"]
 mod diplomatic_fashion_bridge;
 #[path = "integration/institutional_memory_bridge.rs"]
 mod institutional_memory_bridge;
 #[path = "integration/living_archive_bridge.rs"]
 mod living_archive_bridge;
+#[path = "integration/lottery_chronicle_bridge.rs"]
+mod lottery_chronicle_bridge;
 #[path = "integration/orphaned_swarm_bridge.rs"]
 pub mod orphaned_swarm_bridge;
 #[path = "integration/phantom_commutes_bridge.rs"]

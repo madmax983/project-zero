@@ -797,3 +797,4 @@
 - [x] `INT-493` Integration: The Living Archive -> Chronicle — completed 2026-06-21
 - [x] `INT-1023` Integration: Temporal Fugue -> Chronicle — completed 2026-06-21
 - [x] `1026` The Lottery — `specs/1026-the-lottery.md` — completed 2024-06-21
+- [x] `INT-1026` Integration: The Lottery -> Chronicle - completed 2026-06-21

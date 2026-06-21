@@ -3003,6 +3003,22 @@ pub fn track_negative_events_bridge_system(
 
 use crate::layer1::systems::dead_hand::DoomsdayTriggeredEvent;
 
+/// INT-1026: Bridges `LotteryExecutedEvent` to `AddChronicleEvent`
+pub fn lottery_chronicle_bridge(
+    mut events: EventReader<crate::layer1::the_lottery::LotteryExecutedEvent>,
+    mut chronicle_events: EventWriter<AddChronicleEvent>,
+) {
+    for event in events.read() {
+        chronicle_events.send(AddChronicleEvent {
+            text: format!(
+                "The Lottery was executed. {} Pop(s) sacrificed so that {} might live. The survivors are traumatized.",
+                event.sacrifice_count, event.survivor_count
+            ),
+            importance: EventImportance::Major,
+        });
+    }
+}
+
 /// Bridges `DoomsdayTriggeredEvent` to `AddChronicleEvent`
 pub fn dead_hand_chronicle_bridge(
     mut events: EventReader<DoomsdayTriggeredEvent>,

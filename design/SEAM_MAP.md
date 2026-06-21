@@ -1508,6 +1508,12 @@
 - **Schedule:** Registered the system in `src/layer1/systems/observation.rs`.
 - **Tests:** `tests/integration/architectural_superstition_bridge.rs`
 
+### INT-1026: The Lottery -> Chronicle
+- **Date:** 2026-06-21
+- **Systems connected:** `execute_lottery_system` -> `LotteryExecutedEvent` -> `lottery_chronicle_bridge` -> `AddChronicleEvent`
+- **Glue added:** Added `LotteryExecutedEvent` to `src/layer1/the_lottery.rs`. Added `lottery_chronicle_bridge` in `src/layer1/core/integration.rs`. Registered in `src/setup.rs` and `src/layer1/systems/observation.rs`.
+- **Tests:** `tests/integration/lottery_chronicle_bridge.rs`
+
 ### INT-1038: Dead Protocols -> Chronicle
 - **Date:** 2026-10-31
 - **Systems connected:** `ViolationEvent` -> `dead_protocol_chronicle_bridge` -> `AddChronicleEvent`
