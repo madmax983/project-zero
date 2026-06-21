@@ -130,6 +130,8 @@ pub enum Policy {
     Prohibition(ResourceType),
     /// Blocks Remote Bonds and Intel gain from Subspace Pen Pals.
     FirewallComms,
+    /// Spec 1026: Sacrifices pops to reduce resource strain
+    TheLottery,
     /// Issues a Placebo Protocol to temporarily reduce stress.
     Placebo(PlaceboProtocol),
     /// Censors delayed broadcasts, preventing large morale swings but increasing distrust.
