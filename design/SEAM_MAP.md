@@ -1,4 +1,10 @@
 - `1128` Hypno-Learning — `specs/1128-hypno-learning.md`
+### INT-1161: Blind Auction -> Chronicle
+- **Date:** 2026-06-21
+- **Systems connected:** `VaultOpenedEvent` -> `blind_auction_chronicle_bridge_system` -> `AddChronicleEvent`
+- **Glue added:** `blind_auction_chronicle_bridge_system` in `src/layer2/integration.rs` to generate Chronicle records when a Blind Auction vault is opened.
+- **Tests:** `tests/integration/blind_auction_chronicle_bridge.rs`
+
 ### INT-1024: The Artist's Muse -> Chronicle
 - **Date:** 2026-06-21
 - **Systems connected:** `ArtWork` creation -> `artists_muse_chronicle_bridge` -> `AddChronicleEvent`
