@@ -46,6 +46,10 @@ pub enum Trait {
     Greedy,
     /// Hoards Survival Goods (Food, Meds).
     Anxious,
+    /// Artistic temperament
+    Artistic,
+    /// Has trauma
+    Trauma,
     /// Resists atmospheric hazards (+30% Biocompatibility).
     NativeBorn,
     /// Vulnerable to atmospheric hazards (-20% Biocompatibility).
@@ -211,6 +215,8 @@ impl Trait {
             Self::Phantom => "Phantom",
             Self::Hoarder => "Hoarder",
             Self::MindSporeInfected => "Mind-Spore Infected",
+            Self::Artistic => "Artistic",
+            Self::Trauma => "Trauma",
         }
     }
 }
