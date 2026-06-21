@@ -149,6 +149,16 @@ pub fn register(schedule: &mut Schedule) {
 
     schedule.add_systems(
         (
+            crate::layer1::mind::temporal_fugue::evaluate_fugue_state_system
+                .before(work_execution_system),
+            crate::layer1::mind::temporal_fugue::fugue_completion_system
+                .after(work_execution_system),
+        )
+            .in_set(Layer1SystemSet::Execution),
+    );
+
+    schedule.add_systems(
+        (
             crate::layer1::logistics::glider::update_glider_movement_system
                 .after(crate::layer1::pop::reset_speed_system),
             crate::layer1::logistics::mass_driver::mass_driver_launch_system,

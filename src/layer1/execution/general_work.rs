@@ -754,7 +754,17 @@ pub fn get_status_modifiers(world: &World, pop_entity: Entity) -> f32 {
         1.0
     };
 
+    let temporal_fugue_modifier = if world
+        .get::<crate::layer1::mind::temporal_fugue::TemporalFugue>(pop_entity)
+        .is_some()
+    {
+        3.0
+    } else {
+        1.0
+    };
+
     modifier
+        * temporal_fugue_modifier
         * neural_buff
         * infection_modifier
         * ghost_shift_modifier

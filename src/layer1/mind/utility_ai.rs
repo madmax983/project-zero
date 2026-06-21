@@ -322,6 +322,11 @@ impl<'a> PopDecider<'a> {
     /// *   **Addiction**: Seeks chemicals if withdrawing.
     #[allow(clippy::collapsible_if)]
     fn evaluate_group_survival(&mut self) {
+        if self.data.has_temporal_fugue {
+            // Temporal Fugue ignores survival needs completely
+            return;
+        }
+
         let pop_pos = self.data.pos;
         let needs = self.data.needs;
         let weights = self.data.weights;
