@@ -6,6 +6,12 @@ use crate::layer1::psychology::traits::{Trait, Traits};
 use bevy::prelude::*;
 use rand::seq::SliceRandom;
 
+#[derive(Event, Debug, Clone)]
+pub struct LotteryExecutedEvent {
+    pub sacrifice_count: usize,
+    pub survivor_count: usize,
+}
+
 pub fn execute_lottery_system(
     mut commands: Commands,
     mut policies: ResMut<ColonyPolicies>,
@@ -13,6 +19,7 @@ pub fn execute_lottery_system(
     mut memory_query: Query<&mut Memories>,
     mut traits_query: Query<&mut Traits>,
     time: Res<Time>,
+    mut lottery_events: EventWriter<LotteryExecutedEvent>,
 ) {
     if policies.active_policies.contains(&Policy::TheLottery) {
         let mut all_pops: Vec<Entity> = pop_query.iter().collect();
@@ -43,6 +50,11 @@ pub fn execute_lottery_system(
             }
         }
 
+        lottery_events.send(LotteryExecutedEvent {
+            sacrifice_count,
+            survivor_count: all_pops.len() - sacrifice_count,
+        });
+
         policies
             .active_policies
             .retain(|p| *p != Policy::TheLottery);
@@ -69,6 +81,7 @@ mod tests {
             active_policies: set,
             ..Default::default()
         });
+        app.add_event::<LotteryExecutedEvent>();
         app.add_systems(Update, execute_lottery_system);
 
         let _pop1 = app.world_mut().spawn(Pop).id();
@@ -100,6 +113,7 @@ mod tests {
             active_policies: set,
             ..Default::default()
         });
+        app.add_event::<LotteryExecutedEvent>();
         app.add_systems(Update, execute_lottery_system);
 
         let _pop1 = app

@@ -541,6 +541,7 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::core::integration::crop_mutation_mycelial_bridge,
             crate::layer1::core::integration::mycelial_chronicle_bridge,
             crate::layer1::core::integration::dead_hand_chronicle_bridge,
+            crate::layer1::core::integration::lottery_chronicle_bridge,
             crate::layer1::core::integration::symbiont_sabotage_bridge_system,
         )
             .in_set(Layer1SystemSet::Observation),
