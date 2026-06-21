@@ -10,3 +10,4 @@
 - [x] `1258` The Cassandra Protocol — `specs/1258-the-cassandra-protocol.md` - completed 2026-05-12
 - [x] `1261` The Sleepless Caste — `specs/1261-the-sleepless-caste.md` — completed 2024-05-31
 - [x] `1284` Sartorial Rebellion — `specs/1284-sartorial-rebellion.md` — completed 2024-06-15
+- [x] `1170` The Bureaucratic Black Hole — `specs/1170-the-bureaucratic-black-hole.md` — completed 2024-05-31
