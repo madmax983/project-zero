@@ -171,10 +171,7 @@ fn create_resource_row<'a>(
     ])
 }
 
-fn render_colony_stats(frame: &mut Frame, area: Rect, world: &World) {
-    let resources = world.resource::<ColonyResources>();
-
-    // Calculate population stats
+fn calculate_pop_stats(world: &World) -> (usize, f32) {
     let (pop_count, total_morale) = world
         .iter_entities()
         .filter_map(|e| e.get::<Needs>())
@@ -188,12 +185,23 @@ fn render_colony_stats(frame: &mut Frame, area: Rect, world: &World) {
         0.0
     };
 
-    let (_housing_count, housing_capacity, housing_used) = world
+    (pop_count, avg_morale)
+}
+
+fn calculate_housing_stats(world: &World) -> (usize, usize, usize) {
+    world
         .iter_entities()
         .filter_map(|e| e.get::<Housing>())
         .fold((0, 0, 0), |(count, cap, used), h| {
             (count + 1, cap + h.capacity, used + h.residents.len())
-        });
+        })
+}
+
+fn render_colony_stats(frame: &mut Frame, area: Rect, world: &World) {
+    let resources = world.resource::<ColonyResources>();
+
+    let (pop_count, avg_morale) = calculate_pop_stats(world);
+    let (_housing_count, housing_capacity, housing_used) = calculate_housing_stats(world);
 
     // Dashboard Layout
     // 1. Status (Top)
