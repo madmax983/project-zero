@@ -132,11 +132,36 @@ mod tests {
     }
 
     #[test]
+    fn test_game_key_event_with_modifiers() {
+        let mods = GameKeyModifiers::new(true, true, true);
+        let event = GameKeyEvent::new(GameKeyCode::Char('m')).with_modifiers(mods);
+        assert!(event.modifiers.ctrl);
+        assert!(event.modifiers.alt);
+        assert!(event.modifiers.shift);
+    }
+
+    #[test]
     fn test_game_key_event_with_ctrl() {
         let event = GameKeyEvent::new(GameKeyCode::Char('k')).with_ctrl();
         assert!(event.modifiers.ctrl);
         assert!(!event.modifiers.alt);
         assert!(!event.modifiers.shift);
+    }
+
+    #[test]
+    fn test_game_key_event_with_alt() {
+        let event = GameKeyEvent::new(GameKeyCode::Char('a')).with_alt();
+        assert!(!event.modifiers.ctrl);
+        assert!(event.modifiers.alt);
+        assert!(!event.modifiers.shift);
+    }
+
+    #[test]
+    fn test_game_key_event_with_shift() {
+        let event = GameKeyEvent::new(GameKeyCode::Char('s')).with_shift();
+        assert!(!event.modifiers.ctrl);
+        assert!(!event.modifiers.alt);
+        assert!(event.modifiers.shift);
     }
 
     #[test]
@@ -191,6 +216,66 @@ mod tests {
                 }
             }
         }
+    }
+
+    #[test]
+    fn test_input_press() {
+        let mut input = Input::default();
+
+        // Initial state
+        assert!(!input.pressed(KeyCode::W));
+        assert!(!input.just_pressed(KeyCode::W));
+
+        // Pressing a key
+        input.press(KeyCode::W);
+        assert!(input.pressed(KeyCode::W));
+        assert!(input.just_pressed(KeyCode::W));
+
+        // Pressing it again shouldn't trigger just_pressed again (if it was cleared, but here it's not cleared between calls)
+        // Wait, the logic is: if !pressed.contains, insert into just_pressed.
+        // So pressing again without clearing just keeps it in pressed, and just_pressed isn't modified.
+        // Since we didn't clear, just_pressed still has it.
+        input.press(KeyCode::W);
+        assert!(input.pressed(KeyCode::W));
+        assert!(input.just_pressed(KeyCode::W));
+    }
+
+    #[test]
+    fn test_input_release() {
+        let mut input = Input::default();
+        input.press(KeyCode::W);
+        assert!(input.pressed(KeyCode::W));
+        assert!(!input.just_released(KeyCode::W));
+
+        // Releasing
+        input.release(KeyCode::W);
+        assert!(!input.pressed(KeyCode::W));
+        assert!(input.just_released(KeyCode::W));
+
+        // Releasing again does nothing
+        input.release(KeyCode::W);
+        assert!(!input.pressed(KeyCode::W));
+    }
+
+    #[test]
+    fn test_input_clear() {
+        let mut input = Input::default();
+        input.press(KeyCode::W);
+        input.press(KeyCode::A);
+        input.release(KeyCode::A);
+
+        assert!(input.just_pressed(KeyCode::W));
+        assert!(input.just_pressed(KeyCode::A));
+        assert!(input.pressed(KeyCode::W));
+        assert!(!input.pressed(KeyCode::A));
+        assert!(input.just_released(KeyCode::A));
+
+        input.clear();
+
+        assert!(!input.just_pressed(KeyCode::W));
+        assert!(!input.just_pressed(KeyCode::A));
+        assert!(!input.pressed(KeyCode::W));
+        assert!(!input.just_released(KeyCode::A));
     }
 }
 
