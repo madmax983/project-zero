@@ -13105,7 +13105,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Feral Administration
+## The Feral Administration [SPECCED]
 
 **Layer:** 1
 
