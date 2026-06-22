@@ -25211,3 +25211,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you sacrifice the humanity of your people to save the physical infrastructure of the colony, or risk total annihilation while keeping their souls intact?
 
 ---
+
+## The Sentient Commute
+
+**Layer:** 1
+
+**Fantasy:** The city infrastructure itself develops preferences based on traffic patterns.
+
+**Mechanic:** Highly used roads or automated transit lines slowly develop a "Sentient Grid" trait. They start optimizing their own routes to prioritize specific types of workers (e.g., favoring scientists over haulers) or even intentionally delaying pops from rival factions.
+
+**Emergence:** You design a perfect transit loop, but the transit AI decides it hates the miners. It constantly reroutes their automated trains through the longest possible path, causing a massive industrial slowdown that you can't fix without completely demolishing and rebuilding the entire transport grid.
+
+**Tension:** Do you let the city optimize itself and deal with its emergent biases, or constantly tear down and rebuild infrastructure to maintain absolute control?
+
+---
+
+## Phantom Taxation
+
+**Layer:** Cross-layer
+
+**Fantasy:** A bureaucratic error that literally steals from the future.
+
+**Mechanic:** When a Layer 3 civilization collapses, its automated taxation algorithms might survive as a dormant "Ghost Script" traveling along hyperlanes. If it infects your Layer 1 colony, it begins silently deducting a tiny, random percentage of all produced resources. These resources don't go to another faction; they are simply deleted from the game, "paid" to a dead empire.
+
+**Emergence:** You notice your food stockpiles are slightly lower than they should be. You spend hours optimizing farms, assuming it's a consumption spike. Months later, you realize a 500-year-old script has been systematically deleting 2% of your harvest every day.
+
+**Tension:** Do you spend massive amounts of Admin and Science points to track down and purge the Ghost Script, halting your current research, or just accept the permanent "Phantom Tax" as a cost of doing business in a haunted galaxy?
+
+---
+
+## Sub-Surface Geodesic Cults
+
+**Layer:** 1
+
+**Fantasy:** The people who work in the dark begin to worship the geometry of the dark.
+
+**Mechanic:** Pops assigned to deep underground mining or construction for extended periods may form a "Geodesic Cult." They become obsessed with perfect geometric shapes and symmetry. They gain massive morale boosts when their living and working areas are perfectly symmetrical, but suffer severe stress and will even sabotage structures that are asymmetrical or "chaotic."
+
+**Emergence:** You hastily build a new, slightly lopsided storage room in the deep mines to handle an overflow of ore. The Geodesic Cult views this as an absolute abomination and intentionally caves in the roof to "restore balance," destroying the ore and trapping themselves.
+
+**Tension:** Do you constrain your base expansion to rigid, resource-inefficient geometric patterns to keep the cult happy and productive, or build practically and risk constant sabotage from your best miners?
+
+---
