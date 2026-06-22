@@ -1238,6 +1238,11 @@ fn insert_base_building_components(
         current_hp: max_hp,
     });
 
+    entity.insert(crate::layer1::construction::ConstructionState {
+        build_time_remaining: 10.0,
+        total_build_time: 10.0,
+    });
+
     // Permit System: Advanced buildings require a permit
     if let Some((_, tier)) = building_type.tier_info() {
         if tier >= Tier::Advanced {
@@ -2368,6 +2373,14 @@ fn apply_post_placement_effects(
         if let Some(mut structure) = world.get_mut::<crate::layer1::structure::Structure>(entity) {
             structure.max_hp *= 2.0;
             structure.current_hp *= 2.0;
+        }
+
+        // Apply Build Time reduction
+        if let Some(mut construction) =
+            world.get_mut::<crate::layer1::construction::ConstructionState>(entity)
+        {
+            construction.total_build_time *= 0.5;
+            construction.build_time_remaining *= 0.5;
         }
     }
 

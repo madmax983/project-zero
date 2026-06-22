@@ -35,6 +35,24 @@ mod tests {
     }
 
     #[test]
+    fn test_vacuum_welding_build_time() {
+        let mut world = setup_world_with_pressure(0.0);
+
+        try_place_building(&mut world, 5, 5, BuildingType::Wall);
+
+        let entity = world
+            .query_filtered::<Entity, With<Building>>()
+            .single(&world);
+
+        let c = world
+            .get::<crate::layer1::construction::ConstructionState>(entity)
+            .unwrap();
+
+        assert_eq!(c.total_build_time, 5.0);
+        assert_eq!(c.build_time_remaining, 5.0);
+    }
+
+    #[test]
     fn test_vacuum_welding_applied_in_vacuum() {
         // Arrange: World with 0.0 pressure
         let mut world = setup_world_with_pressure(0.0);
