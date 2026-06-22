@@ -807,3 +807,4 @@
 - [x] `1029` The Zoo Hypothesis — `specs/1029-the-zoo-hypothesis.md` — completed 2026-02-01
 - [x] `1129` Planetary Rings as Highways — `specs/1129-planetary-rings-as-highways.md` — completed 2026-06-25
 - [x] `INT-1284` Integration: Sartorial Rebellion -> Simulation Schedule — completed 2026-10-31
+- [x] `INT-1272` Integration: The Phantom Limb of Logistics -> Chronicle - completed 2024-05-31

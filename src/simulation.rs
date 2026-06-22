@@ -562,6 +562,7 @@ fn register_simulation_core_systems(schedule: &mut Schedule) {
         crate::layer1::whispering_ore::handle_mine_sealing_system,
         crate::layer2::trade::phantom_limb_logistics::phantom_limb_logistics_system,
         crate::layer2::trade::phantom_limb_logistics::intercept_phantom_drop_system,
+        crate::layer2::integration::phantom_limb_chronicle_bridge,
     ));
 }
 

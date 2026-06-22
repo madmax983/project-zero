@@ -990,3 +990,18 @@ pub fn inauguration_system(world: &mut World) {
         manager.winner = None; // Clear winner from manager as they are now Governor
     }
 }
+
+pub fn phantom_limb_chronicle_bridge(
+    mut events: bevy_ecs::event::EventReader<crate::layer2::trade::phantom_limb_logistics::AuditRiskEvent>,
+    mut chronicle_events: bevy_ecs::event::EventWriter<crate::layer1::core::chronicle::AddChronicleEvent>,
+) {
+    for event in events.read() {
+        chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
+            importance: crate::layer1::core::chronicle::EventImportance::Major,
+            text: format!(
+                "Intercepted a Phantom Limb logistics drop intended for {:?}! We risk an audit.",
+                event.target_faction
+            ),
+        });
+    }
+}

@@ -1580,3 +1580,9 @@
 - **Systems connected:** `adopt_visual_signifier_system` and `enforce_dress_code_system` -> `SimulationSchedule`
 - **Glue added:** Initialized `DressCodePolicy` and `FactionSignifiers` resources in `src/setup.rs` and registered systems in `src/layer1/systems/observation.rs`.
 - **Tests:** `tests/integration/sartorial_rebellion_bridge.rs`
+### INT-1272: The Phantom Limb of Logistics -> Chronicle
+- **Date:** 2024-05-31
+- **Systems connected:** `InterceptDropEvent` -> `phantom_limb_chronicle_bridge` -> `AddChronicleEvent`
+- **Glue added:** Added `phantom_limb_chronicle_bridge` in `src/layer2/integration.rs` to generate Chronicle records when a phantom limb logistics drop is intercepted.
+- **Schedule:** Registered the system in `src/simulation.rs`.
+- **Tests:** `tests/integration/phantom_limb_chronicle.rs`
