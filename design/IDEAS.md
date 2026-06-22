@@ -25253,3 +25253,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you constrain your base expansion to rigid, resource-inefficient geometric patterns to keep the cult happy and productive, or build practically and risk constant sabotage from your best miners?
 
 ---
+## The False Prophet
+
+**Layer:** 1
+
+**Fantasy:** Watching a charismatic but misguided individual derail your perfectly planned society with a compelling lie.
+
+**Mechanic:** A pop with high 'Charisma' but high 'Stress' may declare a "False Prophecy" (e.g., "The sun will explode in 3 days"). Susceptible pops stop working and start preparing for the fake doom, building useless shelters or hoarding food.
+
+**Emergence:** You try to arrest the prophet to keep the factories running, but they become a martyr. The 3 days pass, the sun doesn't explode, but the cult pivots to claiming *their* preparations saved the world.
+
+**Tension:** Do you indulge the delusion to avoid violence, or crack down and risk a holy war in your cafeterias?
+
+---
+
+## The Twilight Pilgrimage
+
+**Layer:** 1 -> 2
+
+**Fantasy:** Living on the edge of two hells. A colony perpetually running from the sun on a tidally locked world.
+
+**Mechanic:** On tidally locked planets, the "Twilight Zone" (the only habitable band) shifts very slowly over decades due to orbital wobble. The colony must physically pack up and migrate its buildings to stay in the zone, or face incineration/freezing.
+
+**Emergence:** The migration path is blocked by a massive mountain range. You have to spend 10 years blasting a tunnel through the rock, while the trailing edge of your city slowly begins to freeze as the twilight zone moves on.
+
+**Tension:** Do you build cheap, mobile structures (inefficient) or heavy, permanent ones that must be abandoned when the zone shifts?
+
+---
+
+## Localized Chrono-Anomalies
+
+**Layer:** 1
+
+**Fantasy:** Stepping into a room where yesterday is still happening.
+
+**Mechanic:** Rare tiles or ancient ruins exhibit localized time dilation. Pops working in a "Fast" anomaly complete 10 hours of labor in 1 hour of colony time but age rapidly and consume massive food. Pops in a "Slow" anomaly barely age but take weeks to finish a task.
+
+**Emergence:** You build a hospital over a "Slow" anomaly. Patients with terminal diseases live for years in real-time, giving you time to research a cure. But you accidentally build the cafeteria over a "Fast" anomaly, and pops starve to death while eating lunch because their metabolism accelerates out of control.
+
+**Tension:** Do you risk weaponizing time for hyper-production, knowing a slight miscalculation could age your best workers to dust?
+
+---
