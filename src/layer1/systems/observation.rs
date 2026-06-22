@@ -190,6 +190,17 @@ pub fn register(schedule: &mut Schedule) {
     );
 
     schedule.add_systems(
+        crate::layer1::law::sanctuary::wanted_pop_migration_scoring_system
+            .after(crate::layer1::law::justice::check_crime_system)
+            .in_set(Layer1SystemSet::Observation),
+    );
+    schedule.add_systems(
+        crate::layer1::law::sanctuary::filter_police_targets_system
+            .after(crate::layer1::mind::evaluate_actions_system)
+            .in_set(Layer1SystemSet::Observation),
+    );
+
+    schedule.add_systems(
         (
             crate::layer1::law::justice::check_crime_system
                 .after(crate::layer1::unrest::check_mental_break_system),

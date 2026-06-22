@@ -148,6 +148,10 @@ pub fn register(schedule: &mut Schedule) {
     );
 
     schedule.add_systems(
+        crate::layer1::economy::black_market::black_market_economy_system
+            .in_set(Layer1SystemSet::Economy),
+    );
+    schedule.add_systems(
         (
             crate::layer1::economy::black_market::black_market_spawn_system,
             crate::layer1::economy::black_market::smuggler_trade_system,
