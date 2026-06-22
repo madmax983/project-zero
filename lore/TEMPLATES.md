@@ -9501,3 +9501,94 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: [POP_NAME] finished a [ART_TYPE] about [BORING_THEME]. It is completely unremarkable."
 - "[COLONY] yawns at the new [ART_TYPE] by [POP_NAME]. A safe, dull exploration of [BORING_THEME]. [YEAR]."
 - "Comfort breeds mediocrity. [POP_NAME]'s latest [ART_TYPE] on [BORING_THEME] inspires no one. [YEAR]."
+
+
+## Template: CURSED_ARCHITECTURE_BUILD
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [CURSED_MATERIAL_FEEL]
+
+**Patterns:**
+- "[YEAR]: [COLONY] solves the housing crisis. The new buildings are [CURSED_MATERIAL_FEEL]. The sleepwalking begins."
+- "They built with the old stones on [COLONY]. The walls are [CURSED_MATERIAL_FEEL]. Now they dream of the old shapes."
+- "[COLONY] reports the new habs are [CURSED_MATERIAL_FEEL]. In [YEAR], a third of the souls walked into the desert."
+
+## Template: REFUGEE_FLEET_ARRIVAL
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [REFUGEE_CONDITION]
+
+**Patterns:**
+- "A fleet arrives at [COLONY], [REFUGEE_CONDITION]. They ask for food. We have none."
+- "[YEAR]. Ships drop from the void over [COLONY]. They are [REFUGEE_CONDITION]. A choice must be made."
+- "The starving arrive at [COLONY]. They are [REFUGEE_CONDITION]. They will not be turned away quietly."
+
+## Template: MEMORY_CULT_FORMATION
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [CULT_PRACTICE]
+
+**Patterns:**
+- "[YEAR]: The past wakes up on [COLONY]. Souls are [CULT_PRACTICE]. The Substrate demands silence."
+- "They read the Ancient Archives on [COLONY]. Now they are [CULT_PRACTICE]."
+- "A sickness of memory on [COLONY]. They are [CULT_PRACTICE]. The ghosts are winning."
+
+## Template: SILENT_EXODUS_DEPARTURE
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [EXODUS_SIGN]
+
+**Patterns:**
+- "[YEAR]. We look away from [COLONY] for a moment. We return to [EXODUS_SIGN]. They chose the void."
+- "The souls of [COLONY] leave in the dark. Only [EXODUS_SIGN] remain."
+- "[YEAR]: A massive sublight signature fades from [COLONY]. Behind them, [EXODUS_SIGN]."
+
+## Template: LINGUISTIC_DRIFT_ENCOUNTER
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [DRIFT_MISUNDERSTANDING]
+
+**Patterns:**
+- "[YEAR]. We reconnect with [COLONY]. A [DRIFT_MISUNDERSTANDING]. The gap is too wide."
+- "They speak a new tongue on [COLONY]. Our [DRIFT_MISUNDERSTANDING]."
+- "[COLONY] was isolated too long. In [YEAR], contact results in [DRIFT_MISUNDERSTANDING]."
+
+## Template: GHOST_SHIFT_INCIDENT
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [PARANOIA_DELUSION]
+
+**Patterns:**
+- "[YEAR]: The night shift breaks a soul on [COLONY]. They are [PARANOIA_DELUSION]. The blast doors are sealed."
+- "The dark is too heavy on [COLONY]. A miner is [PARANOIA_DELUSION]."
+- "Production stops on [COLONY]. In [YEAR], the solitary workers begin [PARANOIA_DELUSION]."
+
+## Template: DEBRIS_AVALANCHE_STRIKE
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [AVALANCHE_TARGET]
+
+**Patterns:**
+- "[YEAR]. We win the battle over [COLONY]. The debris cloud shreds [AVALANCHE_TARGET]. We starve for our victory."
+- "The sky falls on [COLONY]. A shrapnel storm destroys [AVALANCHE_TARGET]."
+- "[YEAR]: Kessler Syndrome at [COLONY]. The [AVALANCHE_TARGET] are gone. The orbit is a prison."
+
+## Template: PYRE_OF_PROGRESS_COMPLETED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [SACRIFICE_REMEMBRANCE]
+
+**Patterns:**
+- "[YEAR]: The project is finished on [COLONY]. Hundreds died. It is now [SACRIFICE_REMEMBRANCE]."
+- "We pushed them to the brink on [COLONY]. The machine is built. To them, it is [SACRIFICE_REMEMBRANCE]."
+- "The Desperation Directive ends on [COLONY] in [YEAR]. The surviving souls call the creation [SACRIFICE_REMEMBRANCE]."
+
+## Template: JUNKYARD_FLEET_BATTLE
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [CONSCRIPTED_VESSEL]
+
+**Patterns:**
+- "[YEAR]. The enemy dreadnought arrives at [COLONY]. We swarm them with [CONSCRIPTED_VESSEL]. The trade economy dies, but we hold the line."
+- "A suicidal cloud of [CONSCRIPTED_VESSEL] defends [COLONY]."
+- "[YEAR]: We conscript [CONSCRIPTED_VESSEL] at [COLONY]. We win. The scrap irradiates the sky."
+
+## Template: ABYSSAL_SILENCE_END
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [SILENCE_DIVERGENCE]
+
+**Patterns:**
+- "[YEAR]. The silence ends. We reach out to [COLONY], but they are [SILENCE_DIVERGENCE]."
+- "Fifty years of dark. We turn the comms back on. [COLONY] is [SILENCE_DIVERGENCE]."
+- "We hid from the apocalypse. In [YEAR], we find [COLONY] is [SILENCE_DIVERGENCE]."

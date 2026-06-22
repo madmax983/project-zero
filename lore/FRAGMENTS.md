@@ -9800,3 +9800,106 @@ The subjects of mediocre, comfortable art.
 - a very clean corridor
 - contented sleeping
 - adequate rations
+
+
+## Cursed Architecture Fragments
+
+## Fragment Type: [CURSED_MATERIAL_FEEL]
+- cold to the touch
+- faintly humming
+- impossible to break
+- absorbing all light
+- weeping black fluid
+- whispering in the dark
+- perfectly smooth
+- geometrically offensive
+
+## The Starving Fleet Fragments
+
+## Fragment Type: [REFUGEE_CONDITION]
+- desperate and starving
+- fleeing an unseen terror
+- running on fumes
+- armed with mining lasers
+- demanding sanctuary
+- offering forgotten secrets
+- coughing up blood
+
+## The Memory Cults Fragments
+
+## Fragment Type: [CULT_PRACTICE]
+- wearing strange masks
+- speaking dead languages
+- sabotaging power grids
+- recreating fatal mistakes
+- throwing electronics into the sea
+- chanting in the dark
+- building impossible geometries
+
+## The Silent Exodus Fragments
+
+## Fragment Type: [EXODUS_SIGN]
+- empty cities
+- powered down factories
+- missing sublight engines
+- a sudden silence
+- forged manifestos
+- untracked fuel usage
+- ghosts in the sensors
+
+## Linguistic Drift Fragments
+
+## Fragment Type: [DRIFT_MISUNDERSTANDING]
+- greeting translated as a grave insult
+- laughter mistaken for a threat
+- trade negotiations interpreted as a declaration of war
+- pleas for help sounding like silence
+- poetry rendered as static
+
+## The Ghost Shift Fragments
+
+## Fragment Type: [PARANOIA_DELUSION]
+- hearing scratching on the other side of the airlock
+- hallucinating non-existent hazards
+- reporting fake emergencies
+- refusing to work without a buddy
+- seeing faces in the void
+- talking to empty suits
+
+## Orbital Debris Avalanches Fragments
+
+## Fragment Type: [AVALANCHE_TARGET]
+- agricultural space-elevators
+- the primary orbital shipyard
+- defensive defense platforms
+- communication relays
+- returning trade ships
+
+## The Pyre of Progress Fragments
+
+## Fragment Type: [SACRIFICE_REMEMBRANCE]
+- a holy relic
+- the altar of our future
+- a monument to the fallen
+- the blood-soaked engine
+- the cost of survival
+
+## The Junkyard Fleet Fragments
+
+## Fragment Type: [CONSCRIPTED_VESSEL]
+- garbage scows
+- pleasure cruisers
+- luxury yachts
+- mining barges
+- retrofitted haulers
+- hollowed-out asteroids
+
+## The Abyssal Silence Fragments
+
+## Fragment Type: [SILENCE_DIVERGENCE]
+- declaring immediate independence
+- worshipping the quiet
+- forgetting the core worlds
+- mutating beyond recognition
+- refusing to answer the comms
+- tearing down the hyper-relay
