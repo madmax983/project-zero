@@ -599,3 +599,7 @@ mod phantom_commutes_bridge;
 mod temporal_fugue_bridge;
 #[path = "integration/void_stare_chronicle.rs"]
 mod void_stare_chronicle;
+#[path = "integration/ghost_code_bridge.rs"]
+mod ghost_code_bridge;
+#[path = "integration/ghost_code_chronicle_bridge.rs"]
+mod ghost_code_chronicle_bridge;
