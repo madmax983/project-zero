@@ -112,7 +112,7 @@ pub fn register(schedule: &mut Schedule) {
         (
             apply_lighting_penalties_system.after(update_lighting_system),
             crate::layer1::environment::ignition::process_ignition
-                .after(crate::layer1::combat::hit_stop_system),
+                .after(crate::layer1::physics::hit_stop::hit_stop_system),
             crate::layer1::architecture::resonant_architecture::apply_resonant_architecture_system,
             apply_weather_effects_system.after(apply_lighting_penalties_system),
             crate::layer1::nature::psychoactive_weather::apply_weather_moodlets_system,
@@ -136,7 +136,7 @@ pub fn register(schedule: &mut Schedule) {
             #[cfg(feature = "nova")]
             crate::layer1::machine_consciousness::consciousness_effect_system
                 .after(crate::layer1::pop::reset_speed_system),
-            crate::layer1::combat::hit_stop_system.after(process_start_plan_system),
+            crate::layer1::physics::hit_stop::hit_stop_system.after(process_start_plan_system),
             crate::layer1::sonic_suppression::sonic_suppression_system,
             crate::layer1::integration::sonic_turret_noise_bridge_system
                 .after(crate::layer1::sonic_suppression::sonic_suppression_system),
@@ -174,9 +174,9 @@ pub fn register(schedule: &mut Schedule) {
             movement_system
                 .after(apply_quirk_modifiers_system)
                 .after(crate::layer1::fauna::fauna_behavior_system)
-                .after(crate::layer1::combat::hit_stop_system),
+                .after(crate::layer1::physics::hit_stop::hit_stop_system),
             crate::layer1::infrastructure::transit_toll_system.after(movement_system),
-            handle_direct_movement.after(crate::layer1::combat::hit_stop_system),
+            handle_direct_movement.after(crate::layer1::physics::hit_stop::hit_stop_system),
             crate::layer1::crowding::crowding_accumulation_system.after(movement_system),
             crate::layer1::artifacts::apply_artifact_auras_system.after(movement_system),
             arrival_handler_system.after(movement_system),

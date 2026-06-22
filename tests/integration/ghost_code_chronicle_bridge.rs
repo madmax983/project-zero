@@ -3,7 +3,7 @@ use scale::layer1::building::{Building, BuildingType};
 use scale::layer1::core::chronicle::AddChronicleEvent;
 use scale::layer1::events::BuildingCompletedEvent;
 use scale::layer1::map::GridPosition;
-use scale::layer1::tech::ghost_code::{DataResidue, GhostCode, GhostTrait};
+use scale::layer1::tech::ghost_code::{GhostCode, GhostTrait};
 
 // The integration function to write
 use scale::layer1::core::integration::ghost_code_chronicle_bridge;

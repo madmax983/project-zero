@@ -148,7 +148,7 @@ pub fn find_path(world: &World, start: (i32, i32), end: (i32, i32)) -> Option<Ve
 /// world.insert_resource(OccupiedTiles::default());
 /// world.insert_resource(BuildingMap::default());
 ///
-/// let pop = world.spawn(Pop).id();
+/// let pop = world.spawn(scale::layer1::pop::Pop).id();
 ///
 /// // Standard pathfinding for this pop
 /// let path = find_path_for_pop(&world, (0, 0), (5, 5), pop);
@@ -688,7 +688,6 @@ mod tests {
 
     #[test]
     fn test_open_door_allows_path_restricted() {
-        use crate::layer1::pop::Pop;
         let mut world = setup_world();
 
         // Block rows 0 and 2
@@ -726,7 +725,7 @@ mod tests {
         world.resource_mut::<OccupiedTiles>().0.insert((1, 1));
         update_map(&mut world);
 
-        let pop = world.spawn(Pop).id();
+        let pop = world.spawn(crate::layer1::pop::Pop).id();
 
         // Try to path from (0, 1) to (2, 1)
         let path = crate::layer1::pathfinding::find_path_for_pop(&world, (0, 1), (2, 1), pop);
@@ -935,5 +934,79 @@ mod tests {
             path.is_some(),
             "Civilian SHOULD pass if Restricted door is physically Open"
         );
+    }
+    #[test]
+    fn test_pathfinding_integration() {
+        use crate::layer1::building::{Building, BuildingMap, BuildingType, OccupiedTiles};
+        use crate::layer1::map::GridPosition;
+        use crate::layer1::pathfinding::find_path_for_pop;
+        use crate::layer1::terrain::{TerrainGrid, TerrainType};
+
+        let mut world = World::new();
+        // Setup Map
+        let tiles = vec![TerrainType::Grass; 100];
+        world.insert_resource(TerrainGrid {
+            width: 10,
+            height: 10,
+            tiles,
+        });
+        world.insert_resource(OccupiedTiles::default());
+        world.insert_resource(BuildingMap::default());
+
+        let pop = world.spawn(crate::layer1::pop::Pop).id();
+
+        // Create a choke point at (1, 0)
+        // Block (1, 1) with a Wall
+        world.spawn((
+            GridPosition { x: 1, y: 1 },
+            Building {
+                building_type: BuildingType::Wall,
+            },
+        ));
+        world.resource_mut::<OccupiedTiles>().0.insert((1, 1));
+
+        // Since it's a 10x10 grid, we also need to block going around the other way or assume start/end are constrained.
+        // Actually, let's just surround the start point (0,0).
+        // Block (0, 1) and (1, 1).
+        // And (1, 0) is the Gate.
+
+        // Wall at (0, 1)
+        world.spawn((
+            GridPosition { x: 0, y: 1 },
+            Building {
+                building_type: BuildingType::Wall,
+            },
+        ));
+        world.resource_mut::<OccupiedTiles>().0.insert((0, 1));
+
+        // Locked Door at (1, 0)
+        world.spawn((
+            GridPosition { x: 1, y: 0 },
+            AccessControl {
+                mode: AccessMode::Lockdown,
+                ..Default::default()
+            },
+            Building {
+                building_type: BuildingType::Gate,
+            }, // Gate is an obstacle
+        ));
+        world.resource_mut::<OccupiedTiles>().0.insert((1, 0));
+
+        // Update BuildingMap
+        {
+            let mut query = world.query::<(Entity, &GridPosition, &Building)>();
+            let entries: Vec<_> = query
+                .iter(&world)
+                .map(|(e, pos, _)| ((pos.x, pos.y), e))
+                .collect();
+            let mut map = world.resource_mut::<BuildingMap>();
+            map.0.clear();
+            for (pos, e) in entries {
+                map.0.insert(pos, e);
+            }
+        }
+
+        let path = find_path_for_pop(&world, (0, 0), (2, 0), pop);
+        assert!(path.is_none(), "Path should be blocked by lockdown");
     }
 }

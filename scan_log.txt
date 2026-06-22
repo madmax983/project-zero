@@ -1,2 +1,0 @@
-cargo audit passed cleanly. No vulnerable unsafe blocks found.
-Warden scan complete. No new security risks identified.
