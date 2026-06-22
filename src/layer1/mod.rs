@@ -502,4 +502,5 @@ pub mod oral_tradition_fallback;
 pub use oral_tradition_fallback::*;
 pub mod artists_muse;
 pub mod crafting;
+pub mod gravity_engineering;
 pub mod the_lottery;

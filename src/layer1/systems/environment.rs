@@ -251,6 +251,7 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::biology::gravity_caste::adapt_gravity_caste_system,
             crate::layer1::biology::gravity_caste::apply_gravity_penalties_system
                 .after(crate::layer1::biology::gravity_caste::adapt_gravity_caste_system),
+            crate::layer1::gravity_engineering::evaluate_structural_integrity_system,
         )
             .in_set(Layer1SystemSet::Environment),
     );
