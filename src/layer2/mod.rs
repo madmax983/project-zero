@@ -38,6 +38,7 @@ pub mod mining;
 mod mining_tests;
 pub mod orphan_fleet;
 pub mod phantom;
+pub mod planetary_rings;
 pub mod planetary_spin_up;
 pub mod render;
 pub mod shielding;
@@ -101,6 +102,7 @@ impl Plugin for PlanetarySpinUpPlugin {
                     planetary_spin_up::apply_planetary_torque_system,
                     planetary_spin_up::calculate_effective_gravity_system,
                     planetary_spin_up::trigger_coriolis_weather_system,
+                    planetary_rings::apply_planetary_ring_effects_system,
                 ),
             );
     }
