@@ -2831,6 +2831,22 @@ pub fn invasive_xeno_aesthetics_chronicle_bridge(
     }
 }
 
+/// INT-1277: Bridges GhostCode infection to AddChronicleEvent (Chronicle).
+pub fn ghost_code_chronicle_bridge(
+    mut events: bevy_ecs::event::EventReader<crate::layer1::events::BuildingCompletedEvent>,
+    query: bevy_ecs::system::Query<&crate::layer1::tech::ghost_code::GhostCode>,
+    mut chronicle_events: bevy_ecs::event::EventWriter<AddChronicleEvent>,
+) {
+    for event in events.read() {
+        if query.get(event.entity).is_ok() {
+            chronicle_events.send(AddChronicleEvent {
+                text: "A newly constructed building has inherited phantom protocols from the site's previous structure.".to_string(),
+                importance: EventImportance::Minor,
+            });
+        }
+    }
+}
+
 /// INT-1302: Bridges `SymbioticSalvageEvent` to `AddChronicleEvent` (Chronicle).
 pub fn symbiotic_salvage_chronicle_bridge(
     mut events: EventReader<crate::layer1::shipbreaking_symbiotic::SymbioticSalvageEvent>,

@@ -1567,3 +1567,10 @@
 - **Glue added:** Added `institutional_memory_chronicle_bridge` in `src/layer1/core/integration.rs` to log when a high-skill colonist creates an instructional manual.
 - **Schedule:** Registered the system in `src/layer1/systems/observation.rs`.
 - **Tests:** Added `test_institutional_memory_chronicle_bridge` in `tests/integration/institutional_memory_bridge.rs`.
+
+### INT-1277: Ghost Code -> Chronicle
+- **Date:** 2026-06-22
+- **Systems connected:** `ghost_infection_system` -> `BuildingCompletedEvent` -> `ghost_code_chronicle_bridge` -> `AddChronicleEvent`
+- **Glue added:** Added `ghost_code_chronicle_bridge` in `src/layer1/core/integration.rs` to generate Chronicle records when a newly constructed building inherits phantom protocols from the site's previous structure (`GhostCode`).
+- **Schedule:** Registered the system in `src/layer1/systems/observation.rs`.
+- **Tests:** `tests/integration/ghost_code_chronicle_bridge.rs`

@@ -1,1 +1,0 @@
-- [ ] `INT-1277` Integration: Ghost Code -> Chronicle — claimed 2026-10-31
