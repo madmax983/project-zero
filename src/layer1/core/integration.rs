@@ -3159,3 +3159,21 @@ pub fn symbiont_sabotage_bridge_system(
         }
     }
 }
+pub fn ghost_code_chronicle_bridge(
+    mut events: bevy_ecs::prelude::EventReader<
+        crate::layer1::events::BuildingCompletedEvent,
+    >,
+    mut chronicle_events: bevy_ecs::prelude::EventWriter<
+        crate::layer1::core::chronicle::AddChronicleEvent,
+    >,
+    query: bevy_ecs::prelude::Query<&crate::layer1::tech::ghost_code::GhostCode>,
+) {
+    for event in events.read() {
+        if query.get(event.entity).is_ok() {
+            chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
+                importance: crate::layer1::core::chronicle::EventImportance::Minor,
+                text: "A building has manifested ghost code.".to_string(),
+            });
+        }
+    }
+}

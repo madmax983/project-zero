@@ -69,9 +69,19 @@ pub fn aeolian_clutter_system(
                     // Move a fraction of the clutter (e.g., 20% per tick)
                     let move_amount = (current_clutter * 0.2).min(current_clutter);
 
-                    let new_idx = (ny as usize) * width + (nx as usize);
-                    new_clutter[new_idx] += move_amount;
-                    new_clutter[idx] += current_clutter - move_amount;
+                    if let Some(new_idx) = (ny as usize)
+                        .checked_mul(width)
+                        .and_then(|i| i.checked_add(nx as usize))
+                    {
+                        if new_idx < new_clutter.len() {
+                            new_clutter[new_idx] += move_amount;
+                            new_clutter[idx] += current_clutter - move_amount;
+                        } else {
+                            new_clutter[idx] += current_clutter;
+                        }
+                    } else {
+                        new_clutter[idx] += current_clutter;
+                    }
                 } else {
                     // Blown off the map, or at edge. Just leave it.
                     new_clutter[idx] += current_clutter;

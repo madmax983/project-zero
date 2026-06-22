@@ -52,11 +52,13 @@ pub fn process_harpoon_impact_system(
         ));
 
         if let Some(ref mut grid) = terrain_grid {
-            grid.set(
-                impact.position.x as usize,
-                impact.position.y as usize,
-                TerrainType::Crater,
-            );
+            if impact.position.x >= 0 && impact.position.y >= 0 {
+                grid.set(
+                    impact.position.x as usize,
+                    impact.position.y as usize,
+                    TerrainType::Crater,
+                );
+            }
         }
 
         quake_events.send(GeologicalEvent {
@@ -138,3 +140,27 @@ mod tests {
         assert_eq!(terrain.get(10, 10).unwrap(), TerrainType::Crater);
     }
 }
+    #[test]
+    fn test_harpoon_impact_negative_bounds_do_not_panic() {
+        let mut app = bevy::prelude::App::new();
+        app.add_plugins(bevy::prelude::MinimalPlugins);
+        let grid = TerrainGrid {
+            width: 10,
+            height: 10,
+            tiles: vec![TerrainType::Grass; 100],
+        };
+        app.insert_resource(grid);
+        app.add_event::<GeologicalEvent>();
+
+        // Spawn impact out of bounds (negative)
+        app.world_mut().spawn(HarpoonImpact {
+            position: GridPosition { x: -5, y: -5 },
+            resource_type: crate::layer1::economy::ResourceType::Scrap,
+            amount: 10.0,
+        });
+
+        app.add_systems(bevy::prelude::Update, process_harpoon_impact_system);
+
+        // Should not panic on array index overflow wrapping
+        app.update();
+    }
