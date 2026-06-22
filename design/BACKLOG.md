@@ -629,7 +629,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1032` Open Source Science — `specs/1032-open-source-science.md`
 - [ ] `1031` The Mycelial Network — `specs/1031-the-mycelial-network.md`
 - [ ] `1030` Gravity Engineering — `specs/1030-gravity-engineering.md`
-- [ ] `1029` The Zoo Hypothesis — `specs/1029-the-zoo-hypothesis.md`
 
 
 - [ ] `1025` Gravity Plating Failure — `specs/1025-gravity-plating-failure.md`
