@@ -801,3 +801,4 @@
 - [x] `INT-1026` Integration: The Lottery -> Chronicle - completed 2026-06-21
 - [x] `303` The Chrono-Vault — `specs/303-chrono-vault.md` — completed 2026-06-25
 - [x] `287` The Silence — `specs/287-the-silence.md` — completed 2024-06-22
+- [x] `1027` Sanctuary Districts — `specs/1027-sanctuary-districts.md` — completed 2026-06-22

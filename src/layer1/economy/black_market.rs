@@ -1,3 +1,7 @@
+use crate::layer1::law::justice::Wanted;
+use crate::layer1::map::GridPosition;
+use crate::layer1::pop::Pop;
+use crate::layer1::zone::{ZoneGrid, ZoneType};
 use bevy_ecs::prelude::*;
 
 #[derive(Resource, Default)]
@@ -110,6 +114,24 @@ pub fn shutdown_drop_node_system(
     }
 }
 
+pub fn black_market_economy_system(
+    wanted_query: Query<(&GridPosition, &Wanted), With<Pop>>,
+    zone_grid: Res<ZoneGrid>,
+    mut stats: ResMut<ColonyStats>,
+) {
+    let mut illegal_goods_generated = 0.0;
+
+    for (pos, wanted) in wanted_query.iter() {
+        if zone_grid.get(pos.x, pos.y) == ZoneType::Sanctuary {
+            illegal_goods_generated += wanted.severity * 0.5; // Example calculation
+        }
+    }
+
+    if illegal_goods_generated > 0.0 {
+        stats.corruption += illegal_goods_generated;
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -156,7 +178,6 @@ mod tests {
     }
 
     use crate::layer1::economy::resources::ColonyResources;
-    use crate::layer1::entities::pop::Pop;
     use crate::layer1::social::morale::Morale;
     use bevy::prelude::{App, Update};
 
@@ -278,6 +299,34 @@ mod tests {
                 .iter()
                 .any(|m| m.label == "Contraband Withdrawal"),
             "Pop morale should crash when their contraband supply is cut off"
+        );
+    }
+
+    #[test]
+    fn test_black_market_economy_system() {
+        let mut world = World::new();
+
+        let mut zone_grid = ZoneGrid::new(10, 10);
+        zone_grid.set(5, 5, ZoneType::Sanctuary); // Sanctuary at 5,5
+        world.insert_resource(zone_grid);
+
+        world.insert_resource(ColonyStats {
+            unmet_luxury: 0,
+            corruption: 0.0,
+        });
+
+        // Wanted pop in Sanctuary
+        world.spawn((Pop, GridPosition { x: 5, y: 5 }, Wanted { severity: 2.0 }));
+
+        // Wanted pop outside Sanctuary
+        world.spawn((Pop, GridPosition { x: 0, y: 0 }, Wanted { severity: 2.0 }));
+
+        world.run_system_once(black_market_economy_system).unwrap();
+
+        let stats = world.get_resource::<ColonyStats>().unwrap();
+        assert_eq!(
+            stats.corruption, 1.0,
+            "Wanted Pops in Sanctuary should generate corruption."
         );
     }
 }

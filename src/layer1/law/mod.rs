@@ -9,6 +9,7 @@ pub mod justice;
 pub mod orphaned_edict;
 pub mod penal;
 pub mod predictive_policing;
+pub mod sanctuary;
 
 #[cfg(test)]
 #[allow(missing_docs)]
