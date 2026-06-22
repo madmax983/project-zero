@@ -804,3 +804,4 @@
 - [x] `1027` Sanctuary Districts — `specs/1027-sanctuary-districts.md` — completed 2026-06-22
 - [x] `INT-1277` Integration: Ghost Code -> Chronicle — completed 2026-06-22
 - [x] `1029` The Zoo Hypothesis — `specs/1029-the-zoo-hypothesis.md` — completed 2026-02-01
+- [x] `INT-1029` Integration: Zoo Hypothesis -> Chronicle — completed 2026-06-23

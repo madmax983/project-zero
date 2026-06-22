@@ -603,3 +603,5 @@ mod ghost_code_chronicle_bridge;
 mod temporal_fugue_bridge;
 #[path = "integration/void_stare_chronicle.rs"]
 mod void_stare_chronicle;
+#[path = "integration/zoo_hypothesis_chronicle_bridge.rs"]
+mod zoo_hypothesis_chronicle_bridge;

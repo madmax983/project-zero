@@ -86,6 +86,10 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
         );
     world.init_resource::<Events<crate::layer1::architecture::smart_matter::RaidEvent>>();
     world.init_resource::<Events<crate::layer1::social::hoarder::ConfiscateHoardEvent>>();
+    world.insert_resource(crate::layer3::zoo_hypothesis::AlienObservers {
+        entertainment_score: 0.0,
+        threshold: 100.0,
+    });
     world.init_resource::<Events<crate::layer1::culture::memorial_revolt::PetDeathEvent>>();
     world.init_resource::<bevy_ecs::prelude::Events<crate::layer2::celestial_library::LibraryDonationEvent>>();
     world.init_resource::<crate::layer1::logistics::mycelial::MycelialNetwork>();

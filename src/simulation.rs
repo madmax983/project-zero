@@ -578,6 +578,16 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
             .after(Layer1SystemSet::Economy),
     );
 
+    schedule.add_systems(
+        (
+            crate::layer3::zoo_hypothesis::evaluate_colony_entertainment_system,
+            crate::layer3::zoo_hypothesis::trigger_alien_reward_system,
+            crate::layer3::integration::zoo_hypothesis_chronicle_bridge,
+        )
+            .chain()
+            .after(Layer1SystemSet::Economy),
+    );
+
     schedule.add_systems((
         crate::layer3::economy::biological_stock_market::biological_stock_market_bridge,
         crate::layer3::integration::pirate_republic_diplomacy_bridge,

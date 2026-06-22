@@ -1574,3 +1574,10 @@
 - **Glue added:** Added `ghost_code_chronicle_bridge` in `src/layer1/core/integration.rs` to generate Chronicle records when a newly constructed building inherits phantom protocols from the site's previous structure (`GhostCode`).
 - **Schedule:** Registered the system in `src/layer1/systems/observation.rs`.
 - **Tests:** `tests/integration/ghost_code_chronicle_bridge.rs`
+
+### INT-1029: Zoo Hypothesis -> Chronicle
+- **Date:** 2026-06-23
+- **Systems connected:** `trigger_alien_reward_system` -> `zoo_hypothesis_chronicle_bridge` -> `AddChronicleEvent`
+- **Glue added:** Added `zoo_hypothesis_chronicle_bridge` in `src/layer3/integration.rs` to detect when a `DropPod` is spawned by the `AlienObservers` reward system and emit an `AddChronicleEvent`.
+- **Schedule:** Registered `evaluate_colony_entertainment_system`, `trigger_alien_reward_system`, and `zoo_hypothesis_chronicle_bridge` in `src/simulation.rs`. Initialized `AlienObservers` resource in `src/setup.rs`.
+- **Tests:** `tests/integration/zoo_hypothesis_chronicle_bridge.rs`

@@ -21,6 +21,19 @@ pub fn hyperlane_collapse_chronicle_bridge(
     }
 }
 
+/// Bridges Zoo Hypothesis `DropPod` spawns to `AddChronicleEvent` (Chronicle).
+pub fn zoo_hypothesis_chronicle_bridge(
+    query: Query<(), Added<crate::layer3::zoo_hypothesis::DropPod>>,
+    mut chronicle: EventWriter<AddChronicleEvent>,
+) {
+    for _ in query.iter() {
+        chronicle.send(AddChronicleEvent {
+            importance: EventImportance::Major,
+            text: "An anomalous supply drop has fallen from orbit. Are we being watched?".to_string(),
+        });
+    }
+}
+
 pub fn dead_internet_chronicle_bridge(
     mut events: EventReader<crate::layer3::diplomacy::dead_internet::DiplomaticInteraction>,
     mut chronicle: EventWriter<AddChronicleEvent>,
