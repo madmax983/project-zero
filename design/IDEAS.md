@@ -25170,3 +25170,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Emergence:** You detect a monolithic, world-eating swarm approaching. You plunge your empire into silence. The swarm passes right by you, none the wiser. But the fifty years of complete isolation have caused your colonies to culturally diverge so drastically that when you turn the comms back on, half your empire no longer recognizes your authority and immediately declares independence.
 
 **Tension:** Do you blind and deafen your own civilization to survive the apocalypse, or fight a hopeless battle to maintain the light of your society?
+## The Void Carnival
+
+**Layer:** 2 -> 1
+
+**Fantasy:** A fleeting moment of chaotic joy and strange miracles arriving from the dark.
+
+**Mechanic:** A massive, brightly-colored nomadic fleet called the "Void Carnival" occasionally visits star systems. While in orbit, they boost local planetary morale exponentially but siphon off unique resources (like luxury goods or specific artifacts). Pops can temporarily "run away with the circus," removing them from your workforce for a year, but returning them with rare, unpredictable traits (like "Acrobatic" or "Carnival-Touched").
+
+**Emergence:** You are facing a devastating civil war. The Void Carnival arrives, and your rebelling faction leaders run away with the circus, inadvertently ending the war but taking your best generals with them.
+
+**Tension:** Do you allow your pops to visit the Carnival for the massive morale boost, knowing it drains resources and might steal your best workers, or ban them and face a massive "Joyless" unrest penalty?
+
+---
+
+## Parasitic Trade Embassies
+
+**Layer:** 3 -> 1
+
+**Fantasy:** The slow, insidious realization that your closest ally is eating you from the inside out.
+
+**Mechanic:** A powerful alien empire offers an incredibly lucrative trade deal, requiring you to build their specific "Embassy" on your capital. The Embassy generates massive wealth, but its "Alien Protocol" aura slowly alters the needs of nearby Pops. They begin demanding the alien's native goods, which can only be bought from the Embassy at exorbitant prices.
+
+**Emergence:** You build your entire economy around the Embassy's wealth generation. Decades later, your pops riot if they don't receive daily shipments of "Glow-Spice," forcing you to become a vassal to the alien empire just to keep your own people from burning the capital down.
+
+**Tension:** Do you take the easy money and risk cultural assimilation, or struggle independently while your neighbors get rich?
+
+---
+
+## The Memory Tax
+
+**Layer:** 1
+
+**Fantasy:** The horrifying reality of an economy where your past is the currency.
+
+**Mechanic:** During extreme economic collapse, the government can institute a "Memory Tax." Pops are forced to use memory-extraction booths to sell their happiest personal memories to wealthy elites or digital archives to generate instant credits. This wipes the "Joyful" or "Loving" traits from the pop permanently, leaving them functional but emotionally hollow.
+
+**Emergence:** You save your colony from bankruptcy by taxing the memories of your most resilient workers. The colony thrives economically, but the population becomes entirely composed of sociopathic drones who can no longer form relationships or care for children, causing the next generation to fail completely.
+
+**Tension:** Do you sacrifice the humanity of your people to save the physical infrastructure of the colony, or risk total annihilation while keeping their souls intact?
+
+---
