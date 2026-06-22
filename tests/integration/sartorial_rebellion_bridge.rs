@@ -1,11 +1,11 @@
 use bevy_app::App;
 use bevy_ecs::prelude::*;
-use scale::layer1::social::sartorial_rebellion::{
-    adopt_visual_signifier_system, enforce_dress_code_system, Appearance, DressCodePolicy,
-    SignifierType, FactionSignifiers
-};
 use scale::layer1::pop::Pop;
 use scale::layer1::social::factions::{FactionId, FactionMember};
+use scale::layer1::social::sartorial_rebellion::{
+    adopt_visual_signifier_system, enforce_dress_code_system, Appearance, DressCodePolicy,
+    FactionSignifiers, SignifierType,
+};
 use scale::layer1::unrest::Unrest;
 
 #[test]
