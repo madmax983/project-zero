@@ -78,7 +78,7 @@ fn init_simulation_resources(world: &mut World) {
     world.init_resource::<crate::layer1::environment::atmosphere::GlobalAtmosphere>();
     world.init_resource::<Events<crate::layer1::economy::black_market::SmugglerArrivalEvent>>();
     world.init_resource::<Events<crate::layer1::economy::black_market::ShutdownDropNodeEvent>>();
-        world.init_resource::<Events<crate::layer1::architecture::chrono_vault::SealVaultEvent>>();
+    world.init_resource::<Events<crate::layer1::architecture::chrono_vault::SealVaultEvent>>();
     world.init_resource::<Events<crate::layer2::auction::VaultOpenedEvent>>();
     world.init_resource::<Events<crate::layer1::AcceptSponsorshipEvent>>();
     world.init_resource::<Events<crate::layer1::crafting::CraftEvent>>();
@@ -1086,7 +1086,7 @@ mod tests {
         world.init_resource::<bevy_ecs::event::Events<crate::layer1::petrification::PopPetrifiedEvent>>();
         world.init_resource::<Events<crate::layer1::predecessors::WorldTriggerEvent>>();
         world.init_resource::<Events<crate::layer1::architecture::chrono_vault::SealVaultEvent>>();
-    world.init_resource::<Events<crate::layer2::auction::VaultOpenedEvent>>();
+        world.init_resource::<Events<crate::layer2::auction::VaultOpenedEvent>>();
         world.init_resource::<Events<crate::layer1::AcceptSponsorshipEvent>>();
         world.init_resource::<Events<crate::layer1::crafting::CraftEvent>>();
         world
@@ -1166,7 +1166,7 @@ mod tests {
 
         // Initialize Detection Risk for test
         world.init_resource::<Events<crate::layer1::architecture::chrono_vault::SealVaultEvent>>();
-    world.init_resource::<Events<crate::layer2::auction::VaultOpenedEvent>>();
+        world.init_resource::<Events<crate::layer2::auction::VaultOpenedEvent>>();
         world.init_resource::<Events<crate::layer1::AcceptSponsorshipEvent>>();
         world.init_resource::<Events<crate::layer1::crafting::CraftEvent>>();
         world

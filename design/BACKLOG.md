@@ -63,7 +63,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `282` Cultural Drift — `specs/282-cultural-drift.md`
 
 - [ ] `285` Echoes of the Past — `specs/285-echoes-of-the-past.md`
-- [ ] `287` The Silence — `specs/287-the-silence.md`
 - [ ] `288` The Memory Black Market — `specs/288-memory-black-market.md`
 
 - [ ] `290` The Phantom Shift — `specs/290-phantom-shift.md`

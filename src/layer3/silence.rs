@@ -1,9 +1,3 @@
-//! The Silence
-//!
-//! A cosmic dread mechanic representing the psychological and existential threat
-//! of deep space isolation and signal decay. Factions failing to maintain network
-//! activity may succumb to the Silence.
-
 use crate::layer1::energy::PowerSource;
 use crate::layer1::pop::Pop;
 use bevy_ecs::prelude::*;
@@ -28,19 +22,21 @@ pub struct HostileSpawnEvent {
     pub severity: u32,
 }
 
-pub const POP_RISK_FACTOR: f32 = 0.1;
-pub const POWER_RISK_FACTOR: f32 = 0.05;
-pub const THRESHOLD_MULTIPLIER: f32 = 1.5;
-
 pub fn update_detection_risk_system(
     mut risk: ResMut<DetectionRisk>,
     pops: Query<(), With<Pop>>,
     power_sources: Query<&PowerSource>,
 ) {
     let pop_count = pops.iter().count() as f32;
-    let total_power: f32 = power_sources.iter().map(|p| p.output).sum();
+    // Only count active power sources
+    let total_power: f32 = power_sources
+        .iter()
+        .filter(|p| p.active)
+        .map(|p| p.output)
+        .sum();
 
-    risk.current_risk = (pop_count * POP_RISK_FACTOR) + (total_power * POWER_RISK_FACTOR);
+    // Formula: 0.1 per pop, 0.05 per power unit.
+    risk.current_risk = (pop_count * 0.1) + (total_power * 0.05);
 }
 
 pub fn check_hostile_spawn_system(
@@ -48,12 +44,12 @@ pub fn check_hostile_spawn_system(
     mut spawn_events: EventWriter<HostileSpawnEvent>,
 ) {
     if risk.current_risk >= risk.threshold {
-        #[allow(clippy::cast_possible_truncation, clippy::cast_sign_loss)]
         spawn_events.send(HostileSpawnEvent {
             severity: (risk.current_risk / 100.0) as u32,
         });
 
-        risk.threshold *= THRESHOLD_MULTIPLIER;
+        // Increase threshold for next wave to create escalating tension
+        risk.threshold *= 1.5;
     }
 }
 
@@ -62,6 +58,7 @@ mod tests {
     use super::*;
     use crate::layer1::energy::PowerSource;
     use crate::layer1::pop::Pop;
+    use bevy_ecs::prelude::*;
 
     #[test]
     fn test_detection_risk_increases_with_power_and_pops() {
@@ -84,13 +81,18 @@ mod tests {
             output: 30.0,
             active: true,
         });
+        // Inactive source shouldn't count
+        world.spawn(PowerSource {
+            output: 100.0,
+            active: false,
+        });
 
         let mut schedule = Schedule::default();
         schedule.add_systems(update_detection_risk_system);
         schedule.run(&mut world);
 
         let risk = world.resource::<DetectionRisk>();
-        // 10 pops * 0.1 = 1.0, 80 power * 0.05 = 4.0, total = 5.0
+        // e.g. risk = (10 pops * 0.1) + (80 power * 0.05) = 1.0 + 4.0 = 5.0
         assert_eq!(risk.current_risk, 5.0);
     }
 
