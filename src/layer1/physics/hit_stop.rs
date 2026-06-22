@@ -48,3 +48,24 @@ impl GlobalHitStop {
         }
     }
 }
+
+/// Component for "Hit Stop" (Freeze Frame) effect.
+/// Pauses the entity for a few ticks to emphasize impact.
+/// Ludwig: "This adds crunch to the combat!"
+#[derive(Component, Default, Debug, Clone, Copy)]
+pub struct HitStop {
+    /// Ticks remaining until the entity can act again.
+    pub ticks_remaining: u32,
+}
+
+/// System to process Hit Stop durations.
+/// Decrements the counter and removes the component when it expires.
+pub fn hit_stop_system(mut commands: Commands, mut query: Query<(Entity, &mut HitStop)>) {
+    for (entity, mut hit_stop) in &mut query {
+        if hit_stop.ticks_remaining > 0 {
+            hit_stop.ticks_remaining -= 1;
+        } else {
+            commands.entity(entity).remove::<HitStop>();
+        }
+    }
+}

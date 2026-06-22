@@ -1,10 +1,11 @@
 #![allow(clippy::collapsible_if, clippy::cast_precision_loss)]
 use bevy_ecs::prelude::*;
 
-use crate::layer1::combat::{HitStop, Weapon};
+use crate::layer1::combat::Weapon;
 use crate::layer1::execution::components::{AtTarget, MovementTarget};
 use crate::layer1::items::Equipment;
 use crate::layer1::map::GridPosition;
+use crate::layer1::physics::hit_stop::HitStop;
 use crate::layer1::utility_types::{ActionType, PopAction};
 
 /// Executes combat when pop is targeting an enemy.

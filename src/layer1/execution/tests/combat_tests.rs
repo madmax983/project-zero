@@ -1,10 +1,11 @@
 use super::setup_world;
-use crate::layer1::combat::{AttackProperties, HitStop, Weapon};
+use crate::layer1::combat::{AttackProperties, Weapon};
 use crate::layer1::execution::combat::combat_execution_system;
 use crate::layer1::execution::components::{AtTarget, MovementTarget};
 use crate::layer1::health::Health;
 use crate::layer1::items::Equipment;
 use crate::layer1::map::GridPosition;
+use crate::layer1::physics::hit_stop::HitStop;
 use crate::layer1::pop::Pop;
 use crate::layer1::utility_types::{ActionType, PopAction};
 

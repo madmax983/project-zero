@@ -1,6 +1,0 @@
-1. Write `tests/integration/blind_auction_chronicle_bridge.rs` testing `VaultOpenedEvent` triggers `AddChronicleEvent` for both `TechBoost` and `CatastrophicAnomaly`.
-2. Add `pub fn blind_auction_chronicle_bridge_system` to `src/layer2/integration.rs` which reads `VaultOpenedEvent` and writes `AddChronicleEvent` matching the outcome.
-3. Update `src/simulation.rs` to register `blind_auction_chronicle_bridge_system` and init events `BlindAuctionTriggeredEvent`, `PlaceBidEvent`, `VaultOpenedEvent`, `TemporalAnomalyEvent`.
-4. Update `tests/integration.rs` to include `mod blind_auction_chronicle_bridge`.
-5. Update `design/SEAM_MAP.md`, `design/IN_PROGRESS.md` and `design/COMPLETED.md`.
-6. Pre-commit check.

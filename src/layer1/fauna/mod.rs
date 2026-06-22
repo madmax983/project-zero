@@ -2,12 +2,12 @@
 //!
 //! Defines wildlife behaviors and procedural fauna generation.
 
-use crate::layer1::combat::HitStop;
 use crate::layer1::execution::{AtTarget, MovementTarget};
 use crate::layer1::health::{Dead, Health};
 use crate::layer1::map::GridPosition;
 use crate::layer1::map::ScreenShake;
 use crate::layer1::particles::spawn_particle;
+use crate::layer1::physics::hit_stop::HitStop;
 use crate::layer1::pop::Pop;
 use crate::layer1::utility_types::ActionType;
 use crate::shared::log::MessageLog;

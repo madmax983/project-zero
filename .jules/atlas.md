@@ -50,3 +50,6 @@
 **[Title] Break Circular Dependency Between Memetics and Tech**
 **Tangle:** `src/layer1/tech/mod.rs` imported `MemeticCarrier` from `src/layer1/memetics/mod.rs` to infect researchers when unlocking hazardous tech. However, `memetics/mod.rs` imported `unlock_tech` back from `tech/mod.rs` to test this specific interaction.
 **Blueprint:** Moved the `test_unlocking_hazardous_tech_infects_researcher` test out of `memetics/mod.rs` and into the test suite of `tech/mod.rs` where the actual `unlock_tech` function lives.
+**Dependency Cycle `combat` <--> `fauna` and `access_control` <--> `pathfinding`**
+**Tangle:** `src/layer1/combat.rs` defined `HitStop` component and `hit_stop_system` which was imported by `src/layer1/fauna/mod.rs`, but `combat.rs` used `FaunaType` in its tests. Also, `src/layer1/access_control.rs` had an integration test that imported `find_path_for_pop` from `pathfinding.rs`, while `pathfinding.rs` imported `AccessControl` from `access_control.rs`.
+**Blueprint:** Extracted `HitStop` and `hit_stop_system` into `src/layer1/physics/hit_stop.rs` to break the cyclic dependency. Also moved the integration test from `access_control.rs` into `pathfinding.rs`.

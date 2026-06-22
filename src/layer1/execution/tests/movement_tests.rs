@@ -1,7 +1,6 @@
 use super::setup_world;
 use crate::layer1::actions::{AssignedTo, AssignmentType};
 use crate::layer1::building::{Building, BuildingType};
-use crate::layer1::combat::HitStop;
 use crate::layer1::execution::components::{AtTarget, MovementTarget};
 use crate::layer1::execution::movement::{
     cleanup_previous_assignment_system, movement_system, process_start_plan_system,
@@ -10,6 +9,7 @@ use crate::layer1::farm::Farm;
 use crate::layer1::housing::Housing;
 use crate::layer1::map::GridPosition;
 use crate::layer1::needs::Needs;
+use crate::layer1::physics::hit_stop::HitStop;
 use crate::layer1::pop::{Pop, Speed};
 use crate::layer1::terrain::{TerrainGrid, TerrainType};
 use crate::layer1::traits::{Trait, Traits};
