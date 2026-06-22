@@ -656,6 +656,9 @@ pub use xenoflora_pet::*;
 pub mod cargo_cult;
 pub use cargo_cult::*;
 
+pub mod flesh_famine;
+pub use flesh_famine::*;
+
 pub mod pop_relationships;
 pub use pop_relationships::*;
 pub mod golden_age;

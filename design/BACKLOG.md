@@ -56,7 +56,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `273` The Feral Outpost — `specs/273-feral-outpost.md`
 - [ ] `274` Blacksite Penal Colonies — `specs/274-blacksite-penal-colonies.md`
 - [ ] `275` Architectural Sabotage — `specs/275-architectural-sabotage.md`
-- [ ] `276` The Flesh Famine — `specs/276-the-flesh-famine.md`
 - [ ] `277` Orbital Megastructure Deorbiting — `specs/277-orbital-megastructure-deorbiting.md`
 - [ ] `280` Archaeological Layers — `specs/280-archaeological-layers.md`
 

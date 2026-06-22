@@ -1171,6 +1171,8 @@ mod tests {
         world.init_resource::<Events<crate::layer1::architecture::sunk_cost_monument::CancelConstructionEvent>>();
         world.init_resource::<Events<crate::layer1::anomalies::echo::SpawnEchoSourceEvent>>();
         world.init_resource::<Events<crate::layer1::anomalies::void_sirens::SirenSignalEvent>>();
+        world.init_resource::<Events<crate::layer1::social::flesh_famine::PlantBlightEvent>>();
+        world.init_resource::<Events<crate::layer2::auction::VaultOpenedEvent>>();
         world.init_resource::<Events<crate::layer1::agriculture::pollination::GrowthCycleEvent>>();
         world
             .init_resource::<Events<crate::layer1::memetics::memetic_hazards::ConversationEvent>>();
