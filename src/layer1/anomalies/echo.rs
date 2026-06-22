@@ -141,12 +141,10 @@ mod tests {
 
         schedule.run(&mut world);
 
-        let sources = world
-            .query::<(Entity, &EchoSource)>()
-            .iter(&world)
-            .collect::<Vec<_>>();
-        assert_eq!(sources.len(), 1);
-        let source_pos = world.get::<GridPosition>(sources[0].0).unwrap();
+        let mut query = world.query::<(Entity, &EchoSource)>();
+        let entity = query.get_single(&world).unwrap().0;
+
+        let source_pos = world.get::<GridPosition>(entity).unwrap();
         assert_eq!(*source_pos, GridPosition { x: 10, y: 10 });
     }
 
@@ -169,9 +167,8 @@ mod tests {
 
         schedule.run(&mut world);
 
-        let echoes = world.query::<&Echo>().iter(&world).collect::<Vec<_>>();
-        assert_eq!(echoes.len(), 1);
-        let echo = echoes[0];
+        let mut query = world.query::<&Echo>();
+        let echo = query.get_single(&world).unwrap();
         assert_eq!(echo.event_type, EchoType::Tragedy);
     }
 
