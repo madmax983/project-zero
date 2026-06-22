@@ -1,3 +1,3 @@
-## 2026-06-13 - [Oral Tradition Example Compilation]
-**Confusion:** The README example for Oral Tradition failed to compile without the `nova` feature, and the documentation's fallback warning expectation was unclear because the structs were actually exported but the feature flag was strictly required by the cargo target configuration (`required-features = ["nova"]`). Additionally, intra-doc links to `Chronicle` were broken when the feature was not active.
-**Clarification:** Updated the README to add a clear, explicit banner that the code cannot be run without the `nova` feature, and fixed the broken intra-doc links by fully qualifying them as `[`crate::layer1::core::chronicle::Chronicle`]` and ensuring the `Chronicle` import is available for doc builds via `#[cfg(any(feature = "nova", doc))]`.
+## 2026-06-22 - [Fixed Broken Intra-Doc Links]
+**Confusion:** Module structure comments in `src/layer1/mod.rs` were incorrectly pointing to the old architecture paths, and integration tests for missing bridges were causing compilation errors.
+**Clarification:** Updated intra-doc links to correctly resolve to `crate::layer1::architecture::building` and similar submodules. Also, implemented missing `ghost_code_chronicle_bridge` function.
