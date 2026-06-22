@@ -5,4 +5,5 @@
 pub mod collapse;
 pub mod debt_prison;
 pub mod generational_debt;
+pub mod information_black_market;
 pub mod refugee_waves;

@@ -78,7 +78,7 @@ fn init_simulation_resources(world: &mut World) {
     world.init_resource::<crate::layer1::environment::atmosphere::GlobalAtmosphere>();
     world.init_resource::<Events<crate::layer1::economy::black_market::SmugglerArrivalEvent>>();
     world.init_resource::<Events<crate::layer1::economy::black_market::ShutdownDropNodeEvent>>();
-        world.init_resource::<Events<crate::layer1::architecture::chrono_vault::SealVaultEvent>>();
+    world.init_resource::<Events<crate::layer1::architecture::chrono_vault::SealVaultEvent>>();
     world.init_resource::<Events<crate::layer2::auction::VaultOpenedEvent>>();
     world.init_resource::<Events<crate::layer1::AcceptSponsorshipEvent>>();
     world.init_resource::<Events<crate::layer1::crafting::CraftEvent>>();
@@ -258,6 +258,10 @@ fn init_simulation_resources(world: &mut World) {
     if !world.contains_resource::<Events<crate::layer3::events::refugee_waves::RefugeeWaveEvent>>()
     {
         world.init_resource::<Events<crate::layer3::events::refugee_waves::RefugeeWaveEvent>>();
+    }
+    if !world.contains_resource::<Events<crate::layer3::events::information_black_market::EarlyWarningEvent>>()
+    {
+        world.init_resource::<Events<crate::layer3::events::information_black_market::EarlyWarningEvent>>();
     }
     world.init_resource::<crate::layer3::diplomacy::galactic_games::FactionInfluences>();
     world.init_resource::<crate::layer3::diplomacy::galactic_games::GalacticGamesEvent>();
@@ -892,7 +896,12 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
         crate::layer3::integration::retro_contract_failed_bridge_system,
     ));
 
-    schedule.add_systems((crate::layer3::events::refugee_waves::process_refugee_decision,));
+    schedule.add_systems((
+        crate::layer3::events::refugee_waves::process_refugee_decision,
+        crate::layer3::events::information_black_market::check_censorship_threshold,
+        crate::layer3::events::information_black_market::process_black_market_drain,
+        crate::layer3::events::information_black_market::generate_black_market_intel,
+    ));
     schedule.add_systems((
         crate::layer3::economy::market_shock::monitor_luxury_production_system,
         crate::layer3::economy::market_shock::trigger_ally_civil_war_system,
@@ -1086,7 +1095,7 @@ mod tests {
         world.init_resource::<bevy_ecs::event::Events<crate::layer1::petrification::PopPetrifiedEvent>>();
         world.init_resource::<Events<crate::layer1::predecessors::WorldTriggerEvent>>();
         world.init_resource::<Events<crate::layer1::architecture::chrono_vault::SealVaultEvent>>();
-    world.init_resource::<Events<crate::layer2::auction::VaultOpenedEvent>>();
+        world.init_resource::<Events<crate::layer2::auction::VaultOpenedEvent>>();
         world.init_resource::<Events<crate::layer1::AcceptSponsorshipEvent>>();
         world.init_resource::<Events<crate::layer1::crafting::CraftEvent>>();
         world
@@ -1166,7 +1175,7 @@ mod tests {
 
         // Initialize Detection Risk for test
         world.init_resource::<Events<crate::layer1::architecture::chrono_vault::SealVaultEvent>>();
-    world.init_resource::<Events<crate::layer2::auction::VaultOpenedEvent>>();
+        world.init_resource::<Events<crate::layer2::auction::VaultOpenedEvent>>();
         world.init_resource::<Events<crate::layer1::AcceptSponsorshipEvent>>();
         world.init_resource::<Events<crate::layer1::crafting::CraftEvent>>();
         world
@@ -1268,6 +1277,7 @@ mod tests {
         world.init_resource::<Events<crate::layer3::events::debt_prison::BailoutOfferEvent>>();
         world.init_resource::<Events<crate::layer3::events::debt_prison::AcceptBailoutEvent>>();
         world.init_resource::<Events<crate::layer3::events::refugee_waves::RefugeeWaveEvent>>();
+        world.init_resource::<Events<crate::layer3::events::information_black_market::EarlyWarningEvent>>();
         world.init_resource::<crate::layer1::economy::smugglers_cove::ColonyAuthority>();
 
         world.init_resource::<Events<crate::layer1::diplomacy::wards::WarDeclaredEvent>>();
