@@ -1574,3 +1574,9 @@
 - **Glue added:** Added `ghost_code_chronicle_bridge` in `src/layer1/core/integration.rs` to generate Chronicle records when a newly constructed building inherits phantom protocols from the site's previous structure (`GhostCode`).
 - **Schedule:** Registered the system in `src/layer1/systems/observation.rs`.
 - **Tests:** `tests/integration/ghost_code_chronicle_bridge.rs`
+
+### INT-1284: Sartorial Rebellion
+- **Date:** 2026-10-31
+- **Systems connected:** `adopt_visual_signifier_system` and `enforce_dress_code_system` -> `SimulationSchedule`
+- **Glue added:** Initialized `DressCodePolicy` and `FactionSignifiers` resources in `src/setup.rs` and registered systems in `src/layer1/systems/observation.rs`.
+- **Tests:** `tests/integration/sartorial_rebellion_bridge.rs`
