@@ -3159,3 +3159,21 @@ pub fn symbiont_sabotage_bridge_system(
         }
     }
 }
+
+/// INT-1277: Ghost Code -> Chronicle Bridge
+pub fn ghost_code_chronicle_bridge(
+    q_ghosts: bevy_ecs::system::Query<
+        (),
+        bevy_ecs::query::Added<crate::layer1::tech::ghost_code::GhostCode>,
+    >,
+    mut chronicle_events: bevy_ecs::event::EventWriter<
+        crate::layer1::core::chronicle::AddChronicleEvent,
+    >,
+) {
+    for _ in q_ghosts.iter() {
+        chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
+            text: "A newly constructed building has exhibited strange legacy behaviors from a previous structure. Ghost Code has infected it.".to_string(),
+            importance: crate::layer1::core::chronicle::EventImportance::Major,
+        });
+    }
+}
