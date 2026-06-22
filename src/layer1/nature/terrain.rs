@@ -46,7 +46,7 @@ impl TerrainType {
     /// # Examples
     ///
     /// ```
-    /// use scale::layer1::terrain::TerrainType;
+    /// use scale::layer1::nature::terrain::TerrainType;
     ///
     /// assert_eq!(TerrainType::Grass.name(), "Grass");
     /// ```
@@ -98,7 +98,7 @@ impl TerrainType {
     /// # Examples
     ///
     /// ```
-    /// use scale::layer1::terrain::TerrainType;
+    /// use scale::layer1::nature::terrain::TerrainType;
     ///
     /// assert!(TerrainType::Grass.is_walkable());
     /// assert!(!TerrainType::Rock.is_walkable());
@@ -164,7 +164,7 @@ impl TerrainGrid {
     /// # Examples
     ///
     /// ```
-    /// use scale::layer1::terrain::{TerrainGrid, TerrainType, generate_terrain};
+    /// use scale::layer1::nature::terrain::{TerrainGrid, TerrainType, generate_terrain};
     ///
     /// let grid = generate_terrain(10, 10);
     /// if let Some(tile) = grid.get(0, 0) {

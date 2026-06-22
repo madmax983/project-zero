@@ -3159,3 +3159,16 @@ pub fn symbiont_sabotage_bridge_system(
         }
     }
 }
+
+/// Bridge system to emit a chronicle event when a building acquires GhostCode.
+pub fn ghost_code_chronicle_bridge(
+    mut events: EventWriter<AddChronicleEvent>,
+    query: Query<Entity, Added<crate::layer1::tech::ghost_code::GhostCode>>,
+) {
+    for _ in query.iter() {
+        events.send(AddChronicleEvent {
+            text: "A newly constructed building exhibited strange, anomalous behaviors inherited from a previous structure.".to_string(),
+            importance: EventImportance::Standard,
+        });
+    }
+}

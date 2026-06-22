@@ -9,13 +9,13 @@
 //! The world is represented by a 2D grid of tiles (see [`crate::layer1::map::GridPosition`] and [`crate::layer1::terrain::TerrainGrid`]).
 //! Each tile can contain:
 //! - **Terrain:** The base layer (Grass, Water, Rock).
-//! - **Building:** Constructed structures (Housing, Farm, Walls). See [`crate::layer1::building`].
+//! - **Building:** Constructed structures (Housing, Farm, Walls). See [`crate::layer1::architecture::building`].
 //! - **Entities:** Pops, Visitors, Fauna, and Items.
 //!
 //! ## The Agents (Pops)
 //! "Pops" are the primary agents. They are not directly controlled by the player. Instead, they:
-//! 1.  **Have Needs:** Hunger, Rest, Social, Leisure (see [`crate::layer1::needs`]).
-//! 2.  **Make Decisions:** Utility AI scores potential actions based on needs and environment (see [`crate::layer1::utility_ai`]).
+//! 1.  **Have Needs:** Hunger, Rest, Social, Leisure (see [`crate::layer1::psychology::needs`]).
+//! 2.  **Make Decisions:** Utility AI scores potential actions based on needs and environment (see [`crate::layer1::mind::utility_ai`]).
 //! 3.  **Perform Actions:** Working, Eating, Sleeping, Socializing (see [`crate::layer1::actions`]).
 //!
 //! ## The Simulation Loop
@@ -25,10 +25,10 @@
 //! 3.  **Economy Phase:** Resources are produced/consumed, needs decay.
 //!
 //! # Module Structure
-//! - **Entities:** [`crate::layer1::pop`], [`crate::layer1::building`], [`crate::layer1::fauna`], [`crate::layer1::visitor`]
-//! - **Systems:** [`crate::layer1::needs`], [`crate::layer1::health`], [`crate::layer1::combat`], [`crate::layer1::tech`]
-//! - **Environment:** [`crate::layer1::terrain`], [`crate::layer1::map`], [`crate::layer1::weather`], [`crate::layer1::lighting`]
-//! - **Economy:** [`crate::layer1::resources`], [`crate::layer1::trade`]
+//! - **Entities:** [`crate::layer1::entities::pop`], [`crate::layer1::architecture::building`], [`crate::layer1::fauna`], [`crate::layer1::entities::visitor`]
+//! - **Systems:** [`crate::layer1::psychology::needs`], [`crate::layer1::biology::health`], [`crate::layer1::execution::combat`], [`crate::layer1::tech`]
+//! - **Environment:** [`crate::layer1::nature::terrain`], [`crate::layer1::core::map`], [`crate::layer1::nature::weather`], [`crate::layer1::lighting`]
+//! - **Economy:** [`crate::layer1::economy::resources`], [`crate::layer1::economy::trade`]
 
 pub mod mycelial;
 pub use mycelial::*;
