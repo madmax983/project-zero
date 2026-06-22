@@ -58,7 +58,6 @@ mod tests {
     use super::*;
     use crate::layer1::energy::PowerSource;
     use crate::layer1::pop::Pop;
-    use bevy_ecs::prelude::*;
 
     #[test]
     fn test_detection_risk_increases_with_power_and_pops() {

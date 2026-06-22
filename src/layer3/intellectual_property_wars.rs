@@ -253,15 +253,11 @@ mod tests {
         app.update();
 
         // Assert: Cassus Belli generated for the owner against the pirate
-        let cb_query = app
-            .world_mut()
-            .query::<&CassusBelli>()
-            .iter(app.world())
-            .collect::<Vec<_>>();
-        assert_eq!(cb_query.len(), 1);
-        assert_eq!(cb_query[0].aggressor, owner);
-        assert_eq!(cb_query[0].target, pirate);
-        assert_eq!(cb_query[0].reason, CassusBelliReason);
+        let mut query = app.world_mut().query::<&CassusBelli>();
+        let cb = query.get_single(app.world()).unwrap();
+        assert_eq!(cb.aggressor, owner);
+        assert_eq!(cb.target, pirate);
+        assert_eq!(cb.reason, CassusBelliReason);
     }
 
     #[test]

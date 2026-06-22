@@ -176,9 +176,11 @@ mod tests {
 
         let events = app.world().resource::<Events<SocietyAction>>();
         let mut cursor = events.get_cursor();
-        let emitted = cursor.read(events).collect::<Vec<_>>();
-        assert_eq!(emitted.len(), 1);
-        assert_eq!(emitted[0].society_id, society_id);
-        assert!(matches!(emitted[0].action_type, SocietyType::MachineCult));
+        assert_eq!(cursor.read(events).count(), 1);
+
+        let mut cursor = events.get_cursor();
+        let emitted = cursor.read(events).next().unwrap();
+        assert_eq!(emitted.society_id, society_id);
+        assert!(matches!(emitted.action_type, SocietyType::MachineCult));
     }
 }
