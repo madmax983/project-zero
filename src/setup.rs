@@ -232,6 +232,8 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     world.init_resource::<bevy_ecs::event::Events<crate::layer1::social::golden_age::AlertEvent>>();
     world.insert_resource(crate::layer1::purity::PurityMap::default());
     world.insert_resource(ColonyPolicies::default());
+    world.insert_resource(crate::layer1::social::sartorial_rebellion::DressCodePolicy::default());
+    world.insert_resource(crate::layer1::social::sartorial_rebellion::FactionSignifiers::default());
     world.init_resource::<bevy_ecs::event::Events<crate::layer2::weather::StormImpactEvent>>();
     world.init_resource::<bevy_ecs::event::Events<crate::layer1::environment::geothermal::GeothermalPulseEvent>>();
     world.insert_resource(crate::layer1::environment::geothermal::GeothermalPulseState::default());

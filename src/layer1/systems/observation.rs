@@ -567,6 +567,9 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::social::hoarder::hoarder_collection_system,
             crate::layer1::social::hoarder::apply_hoard_morale_buff_system,
             crate::layer1::social::hoarder::process_confiscation_system,
+            crate::layer1::social::sartorial_rebellion::enforce_dress_code_system,
+            crate::layer1::social::sartorial_rebellion::adopt_visual_signifier_system
+                .after(crate::layer1::social::sartorial_rebellion::enforce_dress_code_system),
         )
             .in_set(Layer1SystemSet::Observation),
     );
