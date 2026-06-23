@@ -31,6 +31,7 @@
 - [x] `695` The Long Night — `specs/695-the-long-night.md` — completed 2026-10-31
 - [x] `626` The Cartographer's Curse — `specs/626-cartographers-curse.md` — completed 2026-03-24
 - [x] `1086` The Heirloom Tool — `specs/1086-the-heirloom-tool.md` — completed 2026-02-01
+- [x] `355` Generational Knowledge — `specs/355-generational-knowledge.md` — completed 2026-06-25
 # Completed Specs
 - [x] `1040` The Blind Auction — `specs/1040-blind-auction.md` — completed 2026-06-12
 - [x] `1296` The Subconscious Grid — `specs/1296-the-subconscious-grid.md` — completed 2026-10-31
