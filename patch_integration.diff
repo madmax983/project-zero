@@ -1,0 +1,26 @@
+--- src/layer1/core/integration.rs
++++ src/layer1/core/integration.rs
+@@ -10,6 +10,21 @@
+ //! - Emits `AddChronicleEvent` when major historical milestones are reached.
+ //! - Updates player UI data bindings.
+
++pub fn gravity_engineering_chronicle_bridge(
++    mut events: EventReader<crate::layer1::core::events::BuildingCompletedEvent>,
++    query: Query<(&crate::layer1::architecture::building::Height, &crate::layer1::architecture::structure::Structure)>,
++    mut chronicle: EventWriter<crate::layer1::core::chronicle::AddChronicleEvent>,
++) {
++    for event in events.read() {
++        if let Ok((height, structure)) = query.get(event.entity) {
++            if structure.current_hp < structure.max_hp && structure.current_hp > 0.0 {
++                chronicle.send(crate::layer1::core::chronicle::AddChronicleEvent {
++                    text: format!("Our newly constructed building ({} floors) suffered a structural collapse under its own weight!", height.floors),
++                    importance: crate::layer1::core::chronicle::EventImportance::Major,
++                });
++            }
++        }
++    }
++}
++
+ use crate::layer1::agriculture::zero_g_flora::DepressurizationEvent;
+ use crate::layer1::architecture::embezzlement::EmbezzlementEvent;
+ use crate::layer1::architecture::living_architecture::PopConsumedEvent;

@@ -679,5 +679,5 @@ pub mod memory_smugglers;
 pub use memory_smugglers::{
     process_job_execution, process_memory_smuggling, EngramPurchaseIntent, MemeticDisassociation,
 };
-pub mod memory_tithe;
 pub mod generational_knowledge;
+pub mod memory_tithe;
