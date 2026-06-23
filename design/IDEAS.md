@@ -25390,3 +25390,59 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you violently suppress your own long-lost ancestors, or grant them massive concessions and political power to integrate them peacefully, potentially crippling your modern economy?
 
 ---
+
+## The Echoing Infrastructure
+
+**Layer:** 1
+
+**Fantasy:** Watching the colony's very structure remember its history.
+
+**Mechanic:** Buildings slowly acquire an 'Echo' value based on events that happen near them (e.g., riots, celebrations, deaths). A high Echo value influences the mood of Pops passing by.
+
+**Emergence:** A long-abandoned hospital wing, the site of a tragic plague, slowly drives away workers passing near it due to its grim aura, forcing the colony to reroute essential paths.
+
+**Tension:** Do you demolish historically significant structures to erase negative Echoes, losing potential positive heritage bonuses, or let them stand as monuments to both triumphs and tragedies?
+
+---
+
+## The Nomadic Capital
+
+**Layer:** 2
+
+**Fantasy:** Your seat of government isn't tied to a planet, but wanders the system.
+
+**Mechanic:** Instead of a static capital city, the central administration is housed in a colossal, slow-moving 'Nomad Ship.' This ship travels between inhabited nodes in Layer 2 to exert control, collect tithes, and provide unique planetary buffs.
+
+**Emergence:** The Nomad Ship breaks down en route to a rebelling asteroid colony. Without the capital's presence, the rebellion succeeds, but the rebels are now stuck supplying the stranded capital ship hanging in their orbit.
+
+**Tension:** Do you invest heavily in the mobility of your Nomad Capital, or keep it closer to the core worlds and risk losing control of the periphery?
+
+---
+
+## Quantum Heirloom Entanglement
+
+**Layer:** 1 -> 2
+
+**Fantasy:** An object passed down for centuries maintains a connection across vast distances.
+
+**Mechanic:** Certain 'Heirloom' items developed in Layer 1 can become 'Quantum Entangled' with a paired object when brought to Layer 2. Actions affecting one object instantly impact its twin.
+
+**Emergence:** A sacred relic (Heirloom) on the core world is damaged in a riot, causing its entangled twin (powering a distant colony ship's drive) to temporarily fail, stranding the ship.
+
+**Tension:** Do you keep the twin objects separated for strategic advantage, knowing that damage to one risks the other, or keep them together to ensure mutual safety but limiting their usefulness?
+
+---
+
+## The Diplomatic Mimicry Spores
+
+**Layer:** 3
+
+**Fantasy:** A bizarre method of diplomacy fueled by alien biology.
+
+**Mechanic:** A rare alien spore (harvestable in Layer 1, traded in Layer 2) can be synthesized in Layer 3 to perfectly mimic the diplomatic tone and mannerisms of any civilization it is exposed to.
+
+**Emergence:** A peace treaty negotiation is sabotaged when a batch of mimicking spores gets contaminated by aggressive war rhetoric from a nearby military fleet, causing the diplomatic envoy to spew threats instead of platitudes.
+
+**Tension:** Do you use the spores to gain a diplomatic edge, risking unpredictable 'translations,' or stick to traditional, slower, but more reliable communication?
+
+---
