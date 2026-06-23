@@ -85,6 +85,19 @@ impl Direction {
     }
 }
 
+/// Tracks the number of vertical floors a building has.
+#[derive(Component, Debug, Clone, Copy)]
+pub struct Height {
+    /// The number of floors in this structure.
+    pub floors: u32,
+}
+
+impl Default for Height {
+    fn default() -> Self {
+        Self { floors: 1 }
+    }
+}
+
 /// Material types for buildings.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Default, EnumIter)]
 pub enum MaterialType {
@@ -104,6 +117,12 @@ impl MaterialType {
     #[must_use]
     pub const fn flammability(&self) -> bool {
         matches!(self, Self::Wood)
+    }
+
+    /// Returns true if the material is considered structurally reinforced.
+    #[must_use]
+    pub const fn is_reinforced(&self) -> bool {
+        matches!(self, Self::Metal)
     }
 
     /// Returns the HP modifier for this material.
@@ -1237,6 +1256,9 @@ fn insert_base_building_components(
         max_hp,
         current_hp: max_hp,
     });
+
+    // Default to 1 floor
+    entity.insert(Height::default());
 
     entity.insert(crate::layer1::construction::ConstructionState {
         build_time_remaining: 10.0,

@@ -1,0 +1,53 @@
+--- src/layer1/architecture/building.rs
++++ src/layer1/architecture/building.rs
+@@ -84,6 +84,19 @@
+         }
+     }
+ }
++
++/// Tracks the number of vertical floors a building has.
++#[derive(Component, Debug, Clone, Copy)]
++pub struct Height {
++    /// The number of floors in this structure.
++    pub floors: u32,
++}
++
++impl Default for Height {
++    fn default() -> Self {
++        Self { floors: 1 }
++    }
++}
+
+ /// Material types for buildings.
+ #[derive(Debug, Clone, Copy, PartialEq, Eq, Default, EnumIter)]
+@@ -105,6 +118,12 @@
+     pub const fn flammability(&self) -> bool {
+         matches!(self, Self::Wood)
+     }
++
++    /// Returns true if the material is considered structurally reinforced.
++    #[must_use]
++    pub const fn is_reinforced(&self) -> bool {
++        matches!(self, Self::Metal)
++    }
+
+     /// Returns the HP modifier for this material.
+     #[must_use]
+@@ -1237,6 +1256,9 @@
+         max_hp,
+         current_hp: max_hp,
+     });
++
++    // Default to 1 floor
++    entity.insert(Height::default());
+
+     entity.insert(crate::layer1::construction::ConstructionState {
+         build_time_remaining: 10.0,
+--- src/layer1/architecture/mod.rs
++++ src/layer1/architecture/mod.rs
+@@ -66,3 +66,5 @@
+ pub use smart_matter::*;
+ pub mod chrono_vault;
+ pub use chrono_vault::*;
++pub mod gravity_engineering;
++pub use gravity_engineering::*;

@@ -1,7 +1,7 @@
-use bevy_ecs::prelude::*;
+use crate::layer1::pop::PopBorn;
 use crate::layer1::skills::{SkillType, Skills};
 use crate::layer1::social::inherited_grudges::Lineage;
-use crate::layer1::pop::PopBorn;
+use bevy_ecs::prelude::*;
 
 #[derive(Component)]
 pub struct NewbornMarker;
@@ -9,10 +9,7 @@ pub struct NewbornMarker;
 const MASTER_SKILL_THRESHOLD: u32 = 5; // A skill level of 5 means they are a master (equivalent to XP >= 2500)
 const INHERITED_XP_BONUS: f32 = 500.0;
 
-pub fn mark_newborns_system(
-    mut commands: Commands,
-    mut events: EventReader<PopBorn>,
-) {
+pub fn mark_newborns_system(mut commands: Commands, mut events: EventReader<PopBorn>) {
     for event in events.read() {
         if let Some(mut entity_cmds) = commands.get_entity(event.entity) {
             entity_cmds.insert(NewbornMarker);
@@ -68,11 +65,16 @@ mod tests {
         let parent = app.world_mut().spawn(parent_skills).id();
 
         // Create Child
-        let child = app.world_mut().spawn((
-            PopBundle::random(0, 0, &mut rand::thread_rng()),
-            Lineage { parent_entity: Some(parent) },
-            NewbornMarker, // A marker for the system to process them exactly once
-        )).id();
+        let child = app
+            .world_mut()
+            .spawn((
+                PopBundle::random(0, 0, &mut rand::thread_rng()),
+                Lineage {
+                    parent_entity: Some(parent),
+                },
+                NewbornMarker, // A marker for the system to process them exactly once
+            ))
+            .id();
 
         app.update();
 
@@ -95,11 +97,16 @@ mod tests {
         p_skills.add_xp(SkillType::Mining, 400.0); // Level 2
         let parent = app.world_mut().spawn(p_skills).id();
 
-        let child = app.world_mut().spawn((
-            PopBundle::random(0, 0, &mut rand::thread_rng()),
-            Lineage { parent_entity: Some(parent) },
-            NewbornMarker,
-        )).id();
+        let child = app
+            .world_mut()
+            .spawn((
+                PopBundle::random(0, 0, &mut rand::thread_rng()),
+                Lineage {
+                    parent_entity: Some(parent),
+                },
+                NewbornMarker,
+            ))
+            .id();
 
         app.update();
 
@@ -114,7 +121,10 @@ mod tests {
         app.add_event::<PopBorn>();
         app.add_systems(bevy::app::Update, mark_newborns_system);
 
-        let child = app.world_mut().spawn(PopBundle::random(0, 0, &mut rand::thread_rng())).id();
+        let child = app
+            .world_mut()
+            .spawn(PopBundle::random(0, 0, &mut rand::thread_rng()))
+            .id();
 
         app.world_mut().send_event(PopBorn {
             entity: child,

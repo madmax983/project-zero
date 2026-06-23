@@ -9,6 +9,7 @@ use bevy_ecs::prelude::*;
 pub fn register(schedule: &mut Schedule) {
     schedule.add_systems(
         (
+            crate::layer1::core::integration::gravity_engineering_chronicle_bridge,
             crate::layer1::core::integration::kinetic_strike_chronicle_bridge,
             crate::layer1::mycelial::detect_tripwire_step,
             crate::layer1::mycelial::aggro_network_entities,
