@@ -1,18 +1,21 @@
-1.  **Add `Height` Component**: In `src/layer1/architecture/building.rs`, define a `Height` component to track the number of floors a building has. It needs to derive `Component`, `Debug`, `Clone`, and `Copy`.
-    ```rust
-    #[derive(Component, Debug, Clone, Copy)]
-    pub struct Height {
-        pub floors: u32,
-    }
-    ```
-2.  **Add `Material::is_reinforced` capability**: In `src/layer1/architecture/building.rs`, add a method to `MaterialType` to check if it's reinforced (e.g., `Metal` might be reinforced, or we can add a new material, or check if it's `Metal`). Wait, the spec says "constructed using expensive 'Reinforced Materials'". Maybe we should just add `pub is_reinforced: bool` to the existing `Material` component or add an `is_reinforced(&self)` method to `MaterialType`. The test says `Material { is_reinforced: false }`. We need to change `Material` from a tuple struct `Material(pub MaterialType)` to a struct with `is_reinforced` field? Let's check how `Material` is defined. It is `pub struct Material(pub MaterialType);`. The spec RED phase specifically expects: `Material { is_reinforced: bool }`. I will change `Material` or just follow the spec to create a `Height` struct and modify `Material` if needed, or simply make `is_reinforced` a property. Wait! The RED phase explicitly writes: `Material { is_reinforced: false }`. This means I need to modify `Material` or create a new one. But modifying `Material` might break existing usages! Let's check `Material`'s current usages.
+1. **Explore the codebase and understand the task**
+   - The user asked to implement the `1036` Institutional Memory specification.
+   - I explored `design/BACKLOG.md`, `design/IN_PROGRESS.md`, and `specs/1036-institutional-memory.md`.
+   - The core components (`src/layer1/institutional_memory.rs` and `src/layer1/institutional_memory_tests.rs`) were already implemented, but they had invalid module paths (`crate::layer1::items`).
+   - Replaced `crate::layer1::items` with `crate::layer1::economy::items` in both files.
 
-3.  **Implement `evaluate_structural_integrity_system`**: In a new file `src/layer1/architecture/gravity_engineering.rs` (or similar, or `src/layer1/physics/gravity_engineering.rs`), implement the structural integrity logic.
-    - Inverse relationship: `let base_max_height = (10.0 / planet.gravity).floor() as u32;`
-    - Iterate over `ConstructionEvent` (Wait, it's `BuildingCompletedEvent` in the actual codebase!). The spec uses `ConstructionEvent`. I should use `BuildingCompletedEvent` since that's what the codebase actually uses, but I'll write the RED phase tests exactly as in the spec, substituting `ConstructionEvent` with `BuildingCompletedEvent` if necessary to make it compile with the real codebase, or I can define `ConstructionEvent` if it doesn't exist. Actually, `BuildingCompletedEvent` exists and is sent when a building is completed. I will use `BuildingCompletedEvent`.
+2. **Verify tests and constraints**
+   - Run `cargo fmt` to format code.
+   - Run `cargo check` and `cargo test --lib layer1::institutional_memory` to verify correctness.
+   - Run `cargo clippy -- -D warnings` to verify there are no warnings.
+   - Run `cargo-llvm-cov` to verify that code coverage meets the >=85% threshold.
 
-4.  **Register the new system**: In `src/layer1/core/integration.rs` or `src/simulation.rs`, register the `evaluate_structural_integrity_system` so it actually runs.
+3. **Update trackers**
+   - Claimed the feature in `design/IN_PROGRESS.md` and removed it from `design/BACKLOG.md`.
+   - Updated `design/COMPLETED.md` with the completed feature and removed it from `design/IN_PROGRESS.md`.
 
-5.  **Refactoring / Adjusting for the Codebase**: The spec uses `Material { is_reinforced: false }`. Since `Material` is already `pub struct Material(pub MaterialType)`, I will add `is_reinforced: bool` to it: `pub struct Material { pub material_type: MaterialType, pub is_reinforced: bool }` - BUT this would break everything that uses `Material(MaterialType)`. A better way is to provide `impl Material { pub fn is_reinforced(&self) -> bool { ... } }` and in the test write `Material(MaterialType::Wood)` for not reinforced and `Material(MaterialType::Metal)` for reinforced? Let's see if the spec requires exact struct fields in tests. The spec tests are just a guide for RED phase. I'll adapt them to the codebase's actual types.
+4. **Pre-commit step**
+   - Call `pre_commit_instructions` to ensure proper testing, verification, review, and reflection are done.
 
-Wait, if I change `Material` to a normal struct, `grep -rn "Material(" src/layer1/` will show where it's used. Let's check usages of `Material(`.
+5. **Submit the change**
+   - Complete the task by invoking `submit`.

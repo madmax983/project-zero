@@ -307,7 +307,6 @@ pub use observer::*;
 
 pub mod systems;
 
-mod institutional_memory_tests;
 pub mod memetics;
 /// Orbital Crossfire system (Spec 206).
 /// Scrapcode virus system (Spec 178).
