@@ -97,6 +97,7 @@ pub enum ItemType {
     Prosthetic,
     /// Institutional memory manuals.
     Manual,
+    CalciumAlloy,
     /// Default food type (e.g. from Farms).
     Potato,
     /// Grain crop.
