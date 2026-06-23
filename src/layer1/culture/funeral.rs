@@ -237,6 +237,36 @@ mod tests {
             .items
             .iter()
             .any(|m| m.memory_type == MemoryType::SawCorpse));
+
+        // Advance time to test debounce
+        world.resource_mut::<SimulationTime>().tick += 50;
+        grief_system(&mut world);
+
+        // Should not add another memory within 100 ticks
+        let memories = world.get::<Memories>(witness).unwrap();
+        assert_eq!(
+            memories
+                .items
+                .iter()
+                .filter(|m| m.memory_type == MemoryType::SawCorpse)
+                .count(),
+            1
+        );
+
+        // Advance time past debounce
+        world.resource_mut::<SimulationTime>().tick += 60; // Total 110 ticks
+        grief_system(&mut world);
+
+        // Should add another memory
+        let memories = world.get::<Memories>(witness).unwrap();
+        assert_eq!(
+            memories
+                .items
+                .iter()
+                .filter(|m| m.memory_type == MemoryType::SawCorpse)
+                .count(),
+            2
+        );
     }
 
     #[test]
@@ -254,6 +284,12 @@ mod tests {
                 },
             ))
             .id();
+
+        // Try to bury non-existent corpse
+        bury_corpse(&mut world, grave, Entity::from_raw(99999));
+
+        let grave_comp = world.get::<Grave>(grave).unwrap();
+        assert!(!grave_comp.occupied);
 
         let corpse = world
             .spawn((Corpse {
@@ -290,5 +326,212 @@ mod tests {
             .items
             .iter()
             .any(|m| m.memory_type == MemoryType::AttendedFuneral));
+    }
+
+    #[test]
+    fn test_handle_bury_corpse_success() {
+        let mut world = World::new();
+        world.insert_resource(SimulationTime::default());
+
+        let corpse = world
+            .spawn((Corpse {
+                name: "Bob".to_string(),
+                decay: 0.0,
+            },))
+            .id();
+
+        let grave = world
+            .spawn((
+                Grave {
+                    occupied: false,
+                    corpse_name: None,
+                },
+                GridPosition { x: 2, y: 2 },
+            ))
+            .id();
+
+        let pop = world
+            .spawn((Pop, Memories::default(), GridPosition { x: 1, y: 1 }))
+            .id();
+
+        let pop_pos = GridPosition { x: 1, y: 1 };
+
+        // Since we need Commands, Query, Res directly we can use system execution
+
+        type HandleBuryCorpseSystemData<'w, 's> = (
+            Commands<'w, 's>,
+            Query<'w, 's, &'static Corpse>,
+            Query<'w, 's, (Entity, &'static GridPosition, &'static mut Grave)>,
+            Query<'w, 's, &'static mut Memories>,
+            Res<'w, SimulationTime>,
+        );
+
+        let mut system_state: bevy_ecs::system::SystemState<HandleBuryCorpseSystemData> =
+            bevy_ecs::system::SystemState::new(&mut world);
+
+        {
+            let (mut commands, corpses, mut graves, mut memories, time) =
+                system_state.get_mut(&mut world);
+
+            handle_bury_corpse(
+                &mut commands,
+                &corpses,
+                &mut graves,
+                &mut memories,
+                &time,
+                corpse,
+                pop,
+                pop_pos,
+            );
+        }
+        system_state.apply(&mut world);
+
+        // Assert Grave is occupied
+        let grave_comp = world.get::<Grave>(grave).unwrap();
+        assert!(grave_comp.occupied);
+        assert_eq!(grave_comp.corpse_name.as_deref(), Some("Bob"));
+
+        // Assert Corpse is despawned
+        assert!(world.get_entity(corpse).is_err());
+
+        // Assert Memories updated
+        let mems = world.get::<Memories>(pop).unwrap();
+        assert!(mems
+            .items
+            .iter()
+            .any(|m| m.memory_type == MemoryType::AttendedFuneral));
+    }
+
+    #[test]
+    fn test_handle_bury_corpse_no_empty_graves() {
+        let mut world = World::new();
+        world.insert_resource(SimulationTime::default());
+
+        let corpse = world
+            .spawn((Corpse {
+                name: "Alice".to_string(),
+                decay: 0.0,
+            },))
+            .id();
+
+        let grave = world
+            .spawn((
+                Grave {
+                    occupied: true,
+                    corpse_name: Some("Existing".to_string()),
+                },
+                GridPosition { x: 2, y: 2 },
+            ))
+            .id();
+
+        let pop = world
+            .spawn((Pop, Memories::default(), GridPosition { x: 1, y: 1 }))
+            .id();
+
+        let pop_pos = GridPosition { x: 1, y: 1 };
+
+        type HandleBuryCorpseSystemData<'w, 's> = (
+            Commands<'w, 's>,
+            Query<'w, 's, &'static Corpse>,
+            Query<'w, 's, (Entity, &'static GridPosition, &'static mut Grave)>,
+            Query<'w, 's, &'static mut Memories>,
+            Res<'w, SimulationTime>,
+        );
+
+        let mut system_state: bevy_ecs::system::SystemState<HandleBuryCorpseSystemData> =
+            bevy_ecs::system::SystemState::new(&mut world);
+
+        {
+            let (mut commands, corpses, mut graves, mut memories, time) =
+                system_state.get_mut(&mut world);
+
+            handle_bury_corpse(
+                &mut commands,
+                &corpses,
+                &mut graves,
+                &mut memories,
+                &time,
+                corpse,
+                pop,
+                pop_pos,
+            );
+        }
+        system_state.apply(&mut world);
+
+        // Assert Grave is unchanged
+        let grave_comp = world.get::<Grave>(grave).unwrap();
+        assert!(grave_comp.occupied);
+        assert_eq!(grave_comp.corpse_name.as_deref(), Some("Existing"));
+
+        // Assert Corpse is NOT despawned
+        assert!(world.get_entity(corpse).is_ok());
+
+        // Assert Memories NOT updated
+        let mems = world.get::<Memories>(pop).unwrap();
+        assert!(mems.items.is_empty());
+    }
+
+    #[test]
+    fn test_handle_bury_corpse_pop_no_memories() {
+        let mut world = World::new();
+        world.insert_resource(SimulationTime::default());
+
+        let corpse = world
+            .spawn((Corpse {
+                name: "Bob".to_string(),
+                decay: 0.0,
+            },))
+            .id();
+
+        let grave = world
+            .spawn((
+                Grave {
+                    occupied: false,
+                    corpse_name: None,
+                },
+                GridPosition { x: 2, y: 2 },
+            ))
+            .id();
+
+        let pop = world
+            .spawn((Pop, GridPosition { x: 1, y: 1 })) // No Memories component
+            .id();
+
+        let pop_pos = GridPosition { x: 1, y: 1 };
+
+        type HandleBuryCorpseSystemData<'w, 's> = (
+            Commands<'w, 's>,
+            Query<'w, 's, &'static Corpse>,
+            Query<'w, 's, (Entity, &'static GridPosition, &'static mut Grave)>,
+            Query<'w, 's, &'static mut Memories>,
+            Res<'w, SimulationTime>,
+        );
+
+        let mut system_state: bevy_ecs::system::SystemState<HandleBuryCorpseSystemData> =
+            bevy_ecs::system::SystemState::new(&mut world);
+
+        {
+            let (mut commands, corpses, mut graves, mut memories, time) =
+                system_state.get_mut(&mut world);
+
+            handle_bury_corpse(
+                &mut commands,
+                &corpses,
+                &mut graves,
+                &mut memories,
+                &time,
+                corpse,
+                pop,
+                pop_pos,
+            );
+        }
+        system_state.apply(&mut world);
+
+        // Assert Grave is occupied
+        let grave_comp = world.get::<Grave>(grave).unwrap();
+        assert!(grave_comp.occupied);
+
+        // Assert Corpse is despawned
+        assert!(world.get_entity(corpse).is_err());
     }
 }
