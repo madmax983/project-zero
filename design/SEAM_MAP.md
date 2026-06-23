@@ -1,4 +1,10 @@
 - `1128` Hypno-Learning — `specs/1128-hypno-learning.md`
+### INT-1273: Gravity Debt -> Escape Velocity
+- **Date:** 2024-06-25
+- **Systems connected:** `GravityDebt` -> `gravity_debt_to_planetary_gravity_system` -> `PlanetaryGravity`
+- **Glue added:** `gravity_debt_to_planetary_gravity_system` in `src/layer2/integration.rs` translates the Gravity Debt of a planet into an updated modifier for `PlanetaryGravity`, linking the accumulation of gravity debt to higher fuel costs for escaping trade ships. Registered in `src/simulation.rs`.
+- **Tests:** `tests/integration/gravity_debt_escape_velocity.rs`
+
 ### INT-1161: Blind Auction -> Chronicle
 - **Date:** 2026-06-21
 - **Systems connected:** `VaultOpenedEvent` -> `blind_auction_chronicle_bridge_system` -> `AddChronicleEvent`
