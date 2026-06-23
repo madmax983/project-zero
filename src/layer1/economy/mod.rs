@@ -239,3 +239,5 @@ pub use existential_audit::*;
 pub mod deep_sleep_syndicates;
 pub use deep_sleep_syndicates::*;
 pub mod debt_of_the_dead;
+pub mod bone_economy;
+pub use bone_economy::*;
