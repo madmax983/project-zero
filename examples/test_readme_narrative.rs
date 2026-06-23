@@ -10,8 +10,14 @@ fn main() -> anyhow::Result<()> {
     context.insert("YEAR", "2150");
     context.insert("CIV_EPITHET", "The First Ones");
 
-    let story = generator.generate("CIVILIZATION_RISE", &context)?;
-    println!("{}", story);
+    match generator.generate("CIVILIZATION_RISE", &context) {
+        Ok(story) => println!("{}", story),
+        Err(e) => {
+            let table = e.to_table();
+            println!("{table}");
+            std::process::exit(1);
+        }
+    }
 
     Ok(())
 }
