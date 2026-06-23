@@ -1,23 +1,18 @@
-1.  **Analyze the current state against Agent constraints:**
-    *   I am the Architect agent.
-    *   My role is to "design features using Test-Driven Development (TDD) principles and maintain the development backlog."
-    *   The rules dictate "When to Act":
-        *   Backlog < 5 items: Add more specs.
-        *   Backlog >= 10 items: Wait for Builders to catch up.
-        *   Spec has Questions section filled: Address the questions.
-    *   The `design/BACKLOG.md` has 684 pending items, which means it is >= 10. Thus, I shouldn't add any *new* specs to the backlog. I need to "wait for Builders to catch up."
-    *   However, the "Spec has Questions section filled" condition is also met. I found a few specs with questions that need answering from the Architect:
-        *   `specs/067-militia-system.md`
-        *   `specs/1125-improvised-tools.md`
-        *   `specs/1127-escape-pods.md`
-        *   `specs/473-bureaucratic-redlining.md`
+1.  **Analyze the task**:
+    - The task is `INT-1305` Integration: The Cassandra Syndrome -> Chronicle.
+    - We need to bridge the output of the Cassandra Syndrome (DoomsdayWarningEvent and DisasterOccurredEvent leading to Cult Formation) to the `AddChronicleEvent` in `src/layer1/core/integration.rs`.
+    - We must update `design/COMPLETED.md` with the newly integrated feature (using the `INT-1305` ID).
+    - We must add it to `design/SEAM_MAP.md` tracking the connection.
+    - We must write integration tests in `tests/integration/cassandra_syndrome_chronicle.rs` verifying the bridge systems work correctly (red phase) and update `tests/integration.rs`.
 
-2.  **Plan the actions:**
-    *   **Action 1**: Answer the question in `specs/067-militia-system.md` about `ActionType` inside Utility AI system contradictions.
-    *   **Action 2**: Answer the question in `specs/1125-improvised-tools.md` about `Task`, `ToolType`, and `Resource` enums contradicting `CurrentTask` and `ItemType`.
-    *   **Action 3**: Answer the question in `specs/1127-escape-pods.md` about `src/layer1/pop.rs` vs `src/layer1/entities/pop.rs`.
-    *   **Action 4**: Answer the question in `specs/473-bureaucratic-redlining.md` about `ZoneGrid` being a global resource instead of a component, and missing components like `PowerGridNode`.
-
-    I will use `replace_with_git_merge_diff` to add the `*Architect:*` response to each of these specs.
-
-    Then I will execute pre-commit steps.
+2.  **Steps**:
+    - Add `cassandra_syndrome_chronicle_bridge` to `src/layer1/core/integration.rs`. It will:
+        - Listen for `DoomsdayWarningEvent` and write an `AddChronicleEvent` (Standard/Major).
+        - Listen for `DisasterOccurredEvent` (or maybe listen for `CultLeader` component addition to trigger the cult formation chronicle? Let's check `tests/integration/cassandra_syndrome_chronicle.rs` for the best approach, but listening for the events is best). Wait, `CultLeader` is added upon `DisasterOccurredEvent` in `validate_prophecy`.
+    - Create `tests/integration/cassandra_syndrome_chronicle.rs` and verify the `AddChronicleEvent` is triggered when `DoomsdayWarningEvent` and `DisasterOccurredEvent` are fired. Wait, the prompt says "Cult Formation events". We should query for `Added<CultLeader>` to generate the chronicle event when a cult forms to ensure schedule independence.
+    - Let's make sure we test `Added<CultLeader>` for Cult Formation, as it's more accurate than `DisasterOccurredEvent` alone since the cult only forms if the prophecy was active.
+    - Let's create `tests/integration/cassandra_syndrome_chronicle.rs`.
+    - Include `cassandra_syndrome_chronicle_bridge` in `src/layer1/systems/execution.rs` (or where the other integration bridges are added). Wait, looking at `src/layer1/systems/observation.rs` or `src/simulation.rs`, integration bridges are registered in `src/layer1/systems/execution.rs` or `src/layer1/systems/observation.rs`. We'll just add it to `src/layer1/systems/execution.rs` near the other chronicle bridges.
+    - Actually, `simulation.rs` registers `crate::layer1::core::integration::*` systems. Let's see how `simulation.rs` handles it.
+    - Update `design/COMPLETED.md` and `design/SEAM_MAP.md`.
+    - Run pre-commit checks.

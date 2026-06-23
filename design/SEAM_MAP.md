@@ -1592,3 +1592,6 @@
 - **Glue added:** Added `phantom_limb_chronicle_bridge` in `src/layer2/integration.rs` to generate Chronicle records when a phantom limb logistics drop is intercepted.
 - **Schedule:** Registered the system in `src/simulation.rs`.
 - **Tests:** `tests/integration/phantom_limb_chronicle.rs`
+
+### INT-1305: The Cassandra Syndrome -> Chronicle
+- **Systems connected:** `DoomsdayWarningEvent` & `CultLeader` -> `cassandra_syndrome_chronicle_bridge` (Integration) -> `AddChronicleEvent`
