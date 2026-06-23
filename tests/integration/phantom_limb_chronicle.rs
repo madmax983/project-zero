@@ -1,8 +1,8 @@
 use bevy::prelude::*;
 use scale::layer1::core::chronicle::{AddChronicleEvent, EventImportance};
+use scale::layer1::social::factions::FactionId;
 use scale::layer2::integration::phantom_limb_chronicle_bridge;
 use scale::layer2::trade::phantom_limb_logistics::AuditRiskEvent;
-use scale::layer1::social::factions::FactionId;
 
 #[test]
 fn test_phantom_limb_chronicle_bridge() {
