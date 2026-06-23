@@ -25294,3 +25294,99 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you risk weaponizing time for hyper-production, knowing a slight miscalculation could age your best workers to dust?
 
 ---
+## The Generational Shipyard
+
+**Layer:** 2 -> 1
+
+**Fantasy:** Watching your people construct a massive super-ship over decades, seeing it become an entire city before it even launches.
+
+**Mechanic:** Building massive Layer 2 capital ships takes so long that the unfinished ship hull becomes part of the Layer 1 colony map. Pops move into the structure, build squatter camps in the engine bells, and establish micro-economies inside the scaffolding.
+
+**Emergence:** You finally finish the dreadnought after 50 years, but 20% of your colony has lived their entire lives inside it and violently resist being evicted for the launch, causing a civil war on the launchpad.
+
+**Tension:** Do you militaristically police the shipyard to ensure the ship gets built fast, or let the squatter camps form to harvest their passive economic output at the cost of launch delays?
+
+---
+
+## Xenoflora Assimilation
+
+**Layer:** 1
+
+**Fantasy:** The planet slowly adapting your crops into something alien and unpredictable.
+
+**Mechanic:** Introduced crops slowly mutate when grown on alien soil, adopting traits of the local biome. Your standard wheat might become bioluminescent, carnivorous, or produce mildly narcotic flour over several harvests.
+
+**Emergence:** Your colony relies entirely on potatoes. After a solar flare, the potato crop mutates to require blood instead of water. You must start sacrificing livestock to keep the fields watered, turning your farming settlement into a grim death-cult just to avoid starvation.
+
+**Tension:** Do you spend massive resources building hermetically sealed greenhouses for pure crops, or embrace the wild xenoflora mutations and adapt your society to whatever they become?
+
+---
+
+## The Bureaucracy of Sleep
+
+**Layer:** 1
+
+**Fantasy:** Managing a colony where half the population is always frozen to save air, creating entirely parallel societies.
+
+**Mechanic:** To survive on marginal worlds, colonies can adopt "Cryo-Shifts." Pops are frozen for years at a time while others work. The society splits into distinct groups who never meet but share the same physical infrastructure, leaving notes and resources for the next shift.
+
+**Emergence:** Shift A adopts a radical new culture while Shift B is asleep. When Shift B thaws, they find their homes converted into strange monuments and their property reallocated, sparking a war between the waking and the newly thawed.
+
+**Tension:** Do you synchronize shifts for social cohesion at the cost of massive resource spikes, or stagger them efficiently and watch your society permanently fracture into parallel timelines?
+
+---
+
+## Hyperlane Debris Fields
+
+**Layer:** 3 -> 2
+
+**Fantasy:** The graveyard of empires becoming a navigational hazard and a perilous treasure trove.
+
+**Mechanic:** Massive space battles in Layer 3 leave behind permanent "Debris Fields" in the hyperlane network. Layer 2 trade ships must either slowly navigate the hazard (risking destruction) or take long detours. Scavengers can mine these fields for advanced lost tech.
+
+**Emergence:** A war between two ancient empires clogs your primary trade route with miles of irradiated scrap. Your colony starves because food ships can't get through, but your local scavenger fleets become incredibly wealthy mining the scrap, causing a massive class divide and eventual worker uprising.
+
+**Tension:** Do you spend military resources clearing the trade routes to stabilize your economy, or leave the hazard in place to harvest the tech and protect your system from invasions?
+
+---
+## Generational Heirlooms
+
+**Layer:** 1
+
+**Fantasy:** Watching a simple tool become a legendary artifact through generations of use.
+
+**Mechanic:** Generic tools or weapons used by pops slowly gain "History" points. When a pop dies, their highest-history item is inherited by their closest relationship. Over generations, a standard mining laser might become the "Laser of the First Founder," granting massive morale and efficiency bonuses to whoever wields it.
+
+**Emergence:** A terrible mining accident wipes out a shift, but one pop survives. The mining laser they used becomes a revered artifact. Centuries later, the descendants of that survivor lead a rebellion, using the sacred mining laser as their symbol of authority.
+
+**Tension:** Do you confiscate the legendary tool to give to your most efficient worker, angering the family, or let the incompetent heir wield it to keep the peace?
+
+---
+
+## Orbital Graveyard Salvage
+
+**Layer:** 2 -> 1
+
+**Fantasy:** The sky raining debris from ancient battles, providing dangerous miracles to the colony below.
+
+**Mechanic:** A massive space battle occurs in Layer 2 orbit above your planet. The destroyed ships form an "Orbital Graveyard." Over years, chunks of debris randomly de-orbit and crash into your Layer 1 colony map. They destroy buildings they hit, but leave behind "Exotic Salvage" that grants massive tech boosts.
+
+**Emergence:** You are starving and technologically stagnant. A burning dreadnought reactor crashes through your primary greenhouse, ruining your food supply but giving you the exact component needed to unlock unlimited clean energy.
+
+**Tension:** Do you build an expansive, sprawling colony and risk catastrophic debris strikes, or build deep underground and miss out on the lucrative surface salvage?
+
+---
+
+## The Sub-Light Vanguard
+
+**Layer:** 3 -> 1
+
+**Fantasy:** Meeting your own ancestors, who are hopelessly obsolete but still claim ownership of your world.
+
+**Mechanic:** Centuries ago, before hyper-drives, a sub-light colony ship was launched. You have since expanded into a sprawling Layer 3 empire using hyper-lanes. The ancient sub-light ship finally arrives at your highly developed core world. The pops on board are humans, but their culture, traits, and diseases have been isolated for 500 years. They legally claim the planet based on ancient charters.
+
+**Emergence:** The sub-light pops land and are horrified by your advanced, transhumanist society. They begin a "Purity" crusade, using archaic but highly destructive atomic weapons against your pristine smart-cities.
+
+**Tension:** Do you violently suppress your own long-lost ancestors, or grant them massive concessions and political power to integrate them peacefully, potentially crippling your modern economy?
+
+---
