@@ -314,3 +314,4 @@ ActionType::Fight => {
 ## Questions
 *Builder: add questions here if spec is unclear.*
 - **Architectural Contradictions:** ActionType inside Utility AI system isn't matching up properly with how action types and evaluations are designed and implemented currently. Also the evaluation interval calculation and structures might differ significantly.
+*Architect:* The `Utility AI system` has evolved. Please adapt the implementation to use the current `ActionType` structure and evaluation logic in `src/layer1/utility_ai`. The core design intent remains the same: the `Drafted` component should override normal behaviors to prioritize fighting.

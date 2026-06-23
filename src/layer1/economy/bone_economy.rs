@@ -1,7 +1,7 @@
-use bevy_ecs::prelude::*;
 use crate::layer1::economy::inventory::{Inventory, InventoryItem};
 use crate::layer1::economy::items::ItemType;
 use crate::layer1::psychology::stress::StressTracker;
+use bevy_ecs::prelude::*;
 
 #[derive(Component)]
 pub struct BoneCorpse {
@@ -13,7 +13,9 @@ pub struct BoneExtractor;
 
 #[derive(Component, Default)]
 pub enum BoneExtractorAction {
-    ExtractingBone { target: Entity },
+    ExtractingBone {
+        target: Entity,
+    },
     #[default]
     Idle,
 }
@@ -25,7 +27,10 @@ pub struct UnrestTracker {
 
 pub fn extract_bone_system(
     mut commands: Commands,
-    mut extractors: Query<(&mut Inventory, &mut StressTracker, &mut BoneExtractorAction), With<BoneExtractor>>,
+    mut extractors: Query<
+        (&mut Inventory, &mut StressTracker, &mut BoneExtractorAction),
+        With<BoneExtractor>,
+    >,
     mut corpses: Query<&mut BoneCorpse>,
     mut unrest: ResMut<UnrestTracker>,
 ) {
@@ -59,9 +64,9 @@ pub fn extract_bone_system(
 mod tests {
     use super::*;
     use crate::layer1::economy::inventory::Inventory;
-    use crate::layer1::psychology::stress::StressTracker;
     use crate::layer1::economy::items::ItemType;
     use crate::layer1::entities::pop::Pop;
+    use crate::layer1::psychology::stress::StressTracker;
 
     fn setup_world() -> World {
         let mut world = World::new();
@@ -74,25 +79,39 @@ mod tests {
         let mut world = setup_world();
 
         let corpse_entity = world.spawn(BoneCorpse { bone_yield: 10.0 }).id();
-        let extractor_entity = world.spawn((
-            Pop,
-            Inventory::default(),
-            StressTracker::default(),
-            BoneExtractor,
-            BoneExtractorAction::ExtractingBone { target: corpse_entity },
-        )).id();
+        let extractor_entity = world
+            .spawn((
+                Pop,
+                Inventory::default(),
+                StressTracker::default(),
+                BoneExtractor,
+                BoneExtractorAction::ExtractingBone {
+                    target: corpse_entity,
+                },
+            ))
+            .id();
 
         let mut schedule = Schedule::default();
         schedule.add_systems(extract_bone_system);
         schedule.run(&mut world);
 
         // Assert corpse is gone or depleted
-        assert!(world.get_entity(corpse_entity).is_err() || world.get::<BoneCorpse>(corpse_entity).unwrap().bone_yield == 0.0);
+        assert!(
+            world.get_entity(corpse_entity).is_err()
+                || world.get::<BoneCorpse>(corpse_entity).unwrap().bone_yield == 0.0
+        );
 
         // Assert inventory gained CalciumAlloy
         let inventory = world.get::<Inventory>(extractor_entity).unwrap();
         // We will assume 10 items were added for simplicity
-        assert_eq!(inventory.items.iter().filter(|i| i.item_type == ItemType::CalciumAlloy).count(), 10);
+        assert_eq!(
+            inventory
+                .items
+                .iter()
+                .filter(|i| i.item_type == ItemType::CalciumAlloy)
+                .count(),
+            10
+        );
     }
 
     #[test]
@@ -105,7 +124,9 @@ mod tests {
             Inventory::default(),
             StressTracker::default(),
             BoneExtractor,
-            BoneExtractorAction::ExtractingBone { target: corpse_entity },
+            BoneExtractorAction::ExtractingBone {
+                target: corpse_entity,
+            },
         ));
 
         let mut schedule = Schedule::default();

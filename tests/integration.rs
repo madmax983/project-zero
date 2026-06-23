@@ -599,10 +599,11 @@ mod phantom_commutes_bridge;
 mod ghost_code_bridge;
 #[path = "integration/ghost_code_chronicle_bridge.rs"]
 mod ghost_code_chronicle_bridge;
+#[path = "integration/phantom_limb_chronicle.rs"]
+mod phantom_limb_chronicle;
 #[path = "integration/sartorial_rebellion_bridge.rs"]
 mod sartorial_rebellion_bridge;
 #[path = "integration/temporal_fugue_bridge.rs"]
 mod temporal_fugue_bridge;
 #[path = "integration/void_stare_chronicle.rs"]
 mod void_stare_chronicle;
-#[path = "integration/phantom_limb_chronicle.rs"] mod phantom_limb_chronicle;

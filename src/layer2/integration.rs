@@ -992,8 +992,12 @@ pub fn inauguration_system(world: &mut World) {
 }
 
 pub fn phantom_limb_chronicle_bridge(
-    mut events: bevy_ecs::event::EventReader<crate::layer2::trade::phantom_limb_logistics::AuditRiskEvent>,
-    mut chronicle_events: bevy_ecs::event::EventWriter<crate::layer1::core::chronicle::AddChronicleEvent>,
+    mut events: bevy_ecs::event::EventReader<
+        crate::layer2::trade::phantom_limb_logistics::AuditRiskEvent,
+    >,
+    mut chronicle_events: bevy_ecs::event::EventWriter<
+        crate::layer1::core::chronicle::AddChronicleEvent,
+    >,
 ) {
     for event in events.read() {
         chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
