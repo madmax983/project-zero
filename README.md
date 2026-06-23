@@ -79,7 +79,10 @@ fn main() {
     // 3. Generate Story
     match generator.generate("CIVILIZATION_RISE", &context) {
         Ok(story) => println!("{}", story),
-        Err(e) => println!("{}", e), // Prints a helpful missing context message
+        Err(e) => {
+            let table = e.to_table();
+            println!("{table}"); // Prints a helpful missing context message
+        }
     }
 }
 ```

@@ -9,6 +9,7 @@ fn main() -> anyhow::Result<()> {
         Err(e) => {
             let table = e.to_table();
             println!("{table}");
+            std::process::exit(1);
         }
     }
 
