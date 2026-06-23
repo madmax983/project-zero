@@ -214,6 +214,20 @@ pub fn prisoner_death_chronicle_bridge_system(
     }
 }
 
+pub fn gravity_debt_to_planetary_gravity_system(
+    mut gravity: ResMut<PlanetaryGravity>,
+    query: Query<(
+        &crate::layer2::orbit::gravity_debt::Planet,
+        &crate::layer2::orbit::gravity_debt::GravityDebt,
+    )>,
+) {
+    for (planet, debt) in query.iter() {
+        let modifier = debt.current_gravity_modifier();
+        gravity.base = planet.base_gravity * modifier;
+        gravity.current = planet.base_gravity * modifier;
+    }
+}
+
 pub fn orbital_drydock_fleet_bridge_system(
     mut commands: Commands,
     mut events: EventReader<crate::layer2::station::ShipConstructionCompletedEvent>,

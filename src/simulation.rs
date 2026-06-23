@@ -780,6 +780,8 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
 
     schedule.add_systems((
         crate::layer2::syzygy::update_syzygy_cycle_system,
+        crate::layer2::integration::gravity_debt_to_planetary_gravity_system
+            .before(crate::layer2::syzygy::apply_syzygy_effects_system),
         crate::layer2::syzygy::apply_syzygy_effects_system
             .after(crate::layer2::syzygy::update_syzygy_cycle_system),
         crate::layer2::integration::astrological_beliefs_bridge_system
