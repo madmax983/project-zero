@@ -63,31 +63,47 @@ pub fn haul_system(world: &mut World) {
     // Process each hauler
     for (entity, pos, carrying, carrying_item, at_target) in haulers {
         if at_target {
-            // Arrived at target
-            if let Some(carrying_data) = carrying {
-                // Phase 2 complete: Drop at stockpile
-                handle_drop_off(world, entity, carrying_data, pos);
-            } else if let Some(carrying_item_data) = carrying_item {
-                // Phase 2 complete: Drop Item at stockpile
-                handle_drop_off_item(world, entity, carrying_item_data, pos);
-            } else {
-                // Phase 1 complete: Pickup item
-                handle_pickup(world, entity, pos);
-            }
+            process_hauler_at_target(world, entity, pos, carrying, carrying_item);
         } else if world.get::<MovementTarget>(entity).is_none() {
-            // Not at target and no target set
-            if let Some(carrying_data) = carrying {
-                // Carrying -> Need to find stockpile
-                find_and_target_stockpile(world, entity, pos, carrying_data);
-            } else if let Some(carrying_item_data) = carrying_item {
-                // Carrying Item -> Need to find stockpile
-                find_and_target_stockpile_item(world, entity, pos, carrying_item_data);
-            } else {
-                // Not carrying -> Need to find item
-                find_and_target_item(world, entity, pos);
-            }
+            process_hauler_seeking_target(world, entity, pos, carrying, carrying_item);
         }
     }
+}
+
+fn process_hauler_at_target(
+    world: &mut World,
+    entity: Entity,
+    pos: GridPosition,
+    carrying: Option<Carrying>,
+    carrying_item: Option<CarryingItem>,
+) {
+    if let Some(carrying_data) = carrying {
+        handle_drop_off(world, entity, carrying_data, pos);
+        return;
+    }
+    if let Some(carrying_item_data) = carrying_item {
+        handle_drop_off_item(world, entity, carrying_item_data, pos);
+        return;
+    }
+    handle_pickup(world, entity, pos);
+}
+
+fn process_hauler_seeking_target(
+    world: &mut World,
+    entity: Entity,
+    pos: GridPosition,
+    carrying: Option<Carrying>,
+    carrying_item: Option<CarryingItem>,
+) {
+    if let Some(carrying_data) = carrying {
+        find_and_target_stockpile(world, entity, pos, carrying_data);
+        return;
+    }
+    if let Some(carrying_item_data) = carrying_item {
+        find_and_target_stockpile_item(world, entity, pos, carrying_item_data);
+        return;
+    }
+    find_and_target_item(world, entity, pos);
 }
 
 fn handle_pickup(world: &mut World, pop_entity: Entity, pos: GridPosition) {
@@ -134,83 +150,112 @@ fn handle_pickup(world: &mut World, pop_entity: Entity, pos: GridPosition) {
 }
 
 fn handle_drop_off(world: &mut World, pop_entity: Entity, carrying: Carrying, pos: GridPosition) {
-    // Check for Permit delivery first
     if carrying.resource_type == crate::layer1::resources::ResourceType::BuildingPermit {
-        let permit_target = {
-            let mut query =
-                world.query::<(Entity, &GridPosition, &PermitRequired, &mut Inventory)>();
-            let mut target = None;
-            for (e, p, _, _) in query.iter_mut(world) {
-                if *p == pos {
-                    target = Some(e);
-                    break;
-                }
-            }
-            target
-        };
-
-        if let Some(target) = permit_target {
-            // Deliver Permit to Inventory
-            if let Some(mut inventory) = world.get_mut::<Inventory>(target) {
-                // Try to add safely
-                if inventory.try_add(InventoryItem {
-                    item_type: ItemType::BuildingPermit,
-                    entity: None,
-                }) {
-                    // Success: Remove Carrying
-                    world.entity_mut(pop_entity).remove::<Carrying>();
-                } else {
-                    // Full: Drop on ground at target position to avoid loss
-                    world.spawn((
-                        ResourceItem {
-                            resource_type: carrying.resource_type,
-                            amount: carrying.amount,
-                        },
-                        pos,
-                    ));
-                    world.entity_mut(pop_entity).remove::<Carrying>();
-                }
-            } else {
-                // No inventory (shouldn't happen due to query): Drop on ground
-                world.spawn((
-                    ResourceItem {
-                        resource_type: carrying.resource_type,
-                        amount: carrying.amount,
-                    },
-                    pos,
-                ));
-                world.entity_mut(pop_entity).remove::<Carrying>();
-            }
-
-            // Clear movement state
-            world
-                .entity_mut(pop_entity)
-                .remove::<AtTarget>()
-                .remove::<MovementTarget>();
+        if try_drop_off_permit(world, pop_entity, carrying, pos) {
             return;
         }
     }
 
-    // Verify we are at a stockpile (optional validation, but good practice)
     let is_stockpile = {
         let mut query = world.query::<(&GridPosition, &Stockpile)>();
         query.iter(world).any(|(p, _)| *p == pos)
     };
 
     if is_stockpile {
-        // Add to colony resources
         let mut resources = world.resource_mut::<ColonyResources>();
         resources.add_resource(&carrying.resource_type, carrying.amount);
-
-        // Remove Carrying
         world.entity_mut(pop_entity).remove::<Carrying>();
     }
 
-    // Clear movement state
+    clear_hauler_target(world, pop_entity);
+}
+
+fn clear_hauler_target(world: &mut World, pop_entity: Entity) {
     world
         .entity_mut(pop_entity)
         .remove::<AtTarget>()
         .remove::<MovementTarget>();
+}
+
+fn try_drop_off_permit(
+    world: &mut World,
+    pop_entity: Entity,
+    carrying: Carrying,
+    pos: GridPosition,
+) -> bool {
+    let permit_target = {
+        let mut query = world.query::<(Entity, &GridPosition, &PermitRequired, &mut Inventory)>();
+        let mut target = None;
+        for (e, p, _, _) in query.iter_mut(world) {
+            if *p == pos {
+                target = Some(e);
+                break;
+            }
+        }
+        target
+    };
+
+    let Some(target) = permit_target else {
+        return false;
+    };
+
+    let delivered = if let Some(mut inventory) = world.get_mut::<Inventory>(target) {
+        inventory.try_add(InventoryItem {
+            item_type: ItemType::BuildingPermit,
+            entity: None,
+        })
+    } else {
+        false
+    };
+
+    if delivered {
+        world.entity_mut(pop_entity).remove::<Carrying>();
+    } else {
+        world.spawn((
+            ResourceItem {
+                resource_type: carrying.resource_type,
+                amount: carrying.amount,
+            },
+            pos,
+        ));
+        world.entity_mut(pop_entity).remove::<Carrying>();
+    }
+
+    clear_hauler_target(world, pop_entity);
+    true
+}
+
+fn try_target_permit_building(world: &mut World, pop_entity: Entity, pos: GridPosition) -> bool {
+    let mut query = world.query::<(Entity, &GridPosition, &PermitRequired, &Inventory)>();
+    let mut best_permit = None;
+    let mut min_dist = i32::MAX;
+
+    for (e, p, _, inv) in query.iter(world) {
+        let has_permit = inv
+            .items
+            .iter()
+            .any(|i| i.item_type == ItemType::BuildingPermit);
+        let has_space = inv.items.len() < inv.capacity;
+
+        if !has_permit && has_space {
+            let dist = manhattan_distance(&pos, p);
+            if dist < min_dist {
+                min_dist = dist;
+                best_permit = Some((e, *p));
+            }
+        }
+    }
+
+    if let Some((target_entity, target_pos)) = best_permit {
+        world.entity_mut(pop_entity).insert(MovementTarget {
+            target_entity,
+            target_position: target_pos,
+            for_action: ActionType::Haul,
+        });
+        true
+    } else {
+        false
+    }
 }
 
 fn find_and_target_stockpile(
@@ -224,82 +269,53 @@ fn find_and_target_stockpile(
 
     // Permit Logic: Prioritize PermitRequired buildings
     if carrying.resource_type == crate::layer1::resources::ResourceType::BuildingPermit {
-        let mut query = world.query::<(Entity, &GridPosition, &PermitRequired, &Inventory)>();
-        let mut best_permit = None;
-        let mut min_dist = i32::MAX;
-
-        for (e, p, _, inv) in query.iter(world) {
-            // Check if inventory has space/needs permit (assume needs if empty of permits)
-            let has_permit = inv
-                .items
-                .iter()
-                .any(|i| i.item_type == ItemType::BuildingPermit);
-            // Also check capacity
-            let has_space = inv.items.len() < inv.capacity;
-
-            if !has_permit && has_space {
-                let dist = manhattan_distance(&pos, p);
-                if dist < min_dist {
-                    min_dist = dist;
-                    best_permit = Some((e, *p));
-                }
-            }
-        }
-
-        if let Some((target_entity, target_pos)) = best_permit {
-            world.entity_mut(pop_entity).insert(MovementTarget {
-                target_entity,
-                target_position: target_pos,
-                for_action: ActionType::Haul,
-            });
-            return;
-        } else {
-            // If we have a permit but no target building, do NOT haul to stockpile.
-            // This prevents permits from disappearing into the global resource void.
+        if try_target_permit_building(world, pop_entity, pos) {
             return;
         }
+        // If we have a permit but no target building, do NOT haul to stockpile.
+        // This prevents permits from disappearing into the global resource void.
+        return;
     }
 
-    // 1. Create query state first (requires &mut World temporarily)
+    if try_target_stockpile_for_resource(world, pop_entity, pos, is_drone) {
+        return;
+    }
+
+    // Fallback: Find Generic Item
+    find_and_target_generic_item(world, pop_entity, pos);
+}
+
+fn try_target_stockpile_for_resource(
+    world: &mut World,
+    pop_entity: Entity,
+    pos: GridPosition,
+    is_drone: bool,
+) -> bool {
     let mut query = world.query::<(Entity, &GridPosition, &Stockpile)>();
+    let mut best = None;
+    let mut min_dist = i32::MAX;
 
-    // 2. Get resource reference (requires &World)
-    let zone_grid = world.get_resource::<ZoneGrid>();
-
-    // 3. Find closest stockpile
-    let target = {
-        let mut best = None;
-        let mut min_dist = i32::MAX;
-
-        for (e, p, _) in query.iter(world) {
-            // Drone Check: Drones cannot use stockpiles in Sanctuary
-            if is_drone {
-                if let Some(grid) = zone_grid {
-                    if grid.get(p.x, p.y) == ZoneType::Sanctuary {
-                        continue;
-                    }
-                }
-            }
-
-            let dist = manhattan_distance(&pos, p);
-            if dist < min_dist {
-                min_dist = dist;
-                best = Some((e, *p));
-            }
+    let is_sanctuary = |world: &World, p: &GridPosition| -> bool {
+        if let Some(grid) = world.get_resource::<ZoneGrid>() {
+            grid.get(p.x, p.y) == ZoneType::Sanctuary
+        } else {
+            false
         }
-        best
     };
 
-    if let Some((target_entity, target_pos)) = target {
-        world.entity_mut(pop_entity).insert(MovementTarget {
-            target_entity,
-            target_position: target_pos,
-            for_action: ActionType::Haul,
-        });
-    } else {
-        // Fallback: Find Generic Item
-        find_and_target_generic_item(world, pop_entity, pos);
+    for (e, p, _) in query.iter(world) {
+        if is_drone && is_sanctuary(world, p) {
+            continue;
+        }
+
+        let dist = manhattan_distance(&pos, p);
+        if dist < min_dist {
+            min_dist = dist;
+            best = Some((e, *p));
+        }
     }
+
+    set_hauler_target(world, pop_entity, best)
 }
 
 fn find_and_target_generic_item(world: &mut World, pop_entity: Entity, pos: GridPosition) {
@@ -315,14 +331,13 @@ fn find_and_target_generic_item(world: &mut World, pop_entity: Entity, pos: Grid
         .collect();
 
     let mut query = world.query::<(Entity, &GridPosition, &Item)>();
-    let zone_grid = world.get_resource::<ZoneGrid>();
 
     let mut best = None;
     let mut min_dist = i32::MAX;
 
     for (e, p, _) in query.iter(world) {
         if is_drone {
-            if let Some(grid) = zone_grid {
+            if let Some(grid) = world.get_resource::<ZoneGrid>() {
                 if grid.get(p.x, p.y) == ZoneType::Sanctuary {
                     continue;
                 }
@@ -340,13 +355,7 @@ fn find_and_target_generic_item(world: &mut World, pop_entity: Entity, pos: Grid
         }
     }
 
-    if let Some((target_entity, target_pos)) = best {
-        world.entity_mut(pop_entity).insert(MovementTarget {
-            target_entity,
-            target_position: target_pos,
-            for_action: ActionType::Haul,
-        });
-    }
+    set_hauler_target(world, pop_entity, best);
 }
 
 fn try_drop_off_gene_bank(
@@ -415,25 +424,13 @@ fn try_drop_off_inventory(
     };
 
     let Some(container_entity) = container else {
-        world.entity_mut(item_entity.0).insert(pos);
-        world
-            .entity_mut(item_entity.0)
-            .remove::<crate::layer1::environment::photophobic::Parent>();
-
-        world.entity_mut(pop_entity).remove::<CarryingItem>();
-        world
-            .entity_mut(pop_entity)
-            .remove::<AtTarget>()
-            .remove::<MovementTarget>();
+        drop_item_on_ground(world, pop_entity, item_entity, pos);
         return;
     };
 
     let Some(item) = world.get::<Item>(item_entity.0) else {
+        clear_hauler_target(world, pop_entity);
         world.entity_mut(pop_entity).remove::<CarryingItem>();
-        world
-            .entity_mut(pop_entity)
-            .remove::<AtTarget>()
-            .remove::<MovementTarget>();
         return;
     };
 
@@ -451,10 +448,11 @@ fn try_drop_off_inventory(
         },
     };
 
-    let mut success = false;
-    if let Some(mut inv) = world.get_mut::<Inventory>(container_entity) {
-        success = inv.try_add(inv_item);
-    }
+    let success = if let Some(mut inv) = world.get_mut::<Inventory>(container_entity) {
+        inv.try_add(inv_item)
+    } else {
+        false
+    };
 
     if success {
         if is_photophobic {
@@ -465,18 +463,26 @@ fn try_drop_off_inventory(
         } else {
             world.despawn(item_entity.0);
         }
+        clear_hauler_target(world, pop_entity);
+        world.entity_mut(pop_entity).remove::<CarryingItem>();
     } else {
-        world.entity_mut(item_entity.0).insert(pos);
-        world
-            .entity_mut(item_entity.0)
-            .remove::<crate::layer1::environment::photophobic::Parent>();
+        drop_item_on_ground(world, pop_entity, item_entity, pos);
     }
+}
 
-    world.entity_mut(pop_entity).remove::<CarryingItem>();
+fn drop_item_on_ground(
+    world: &mut World,
+    pop_entity: Entity,
+    item_entity: CarryingItem,
+    pos: GridPosition,
+) {
+    world.entity_mut(item_entity.0).insert(pos);
     world
-        .entity_mut(pop_entity)
-        .remove::<AtTarget>()
-        .remove::<MovementTarget>();
+        .entity_mut(item_entity.0)
+        .remove::<crate::layer1::environment::photophobic::Parent>();
+
+    clear_hauler_target(world, pop_entity);
+    world.entity_mut(pop_entity).remove::<CarryingItem>();
 }
 
 fn handle_drop_off_item(
@@ -498,33 +504,28 @@ fn find_and_target_stockpile_item(
     pos: GridPosition,
     carrying_item: CarryingItem,
 ) {
-    let is_drone = world.get::<Drone>(pop_entity).is_some();
-
-    // Check item type
     let item_type = world.get::<Item>(carrying_item.0).map(|i| i.item_type);
 
-    // Strategy: Determine target based on ItemType
-    // Waste -> Recycler
-    // Default -> Stockpile
+    if matches!(item_type, Some(ItemType::Waste)) {
+        if try_target_recycler(world, pop_entity, pos) {
+            return;
+        }
+    } else if matches!(item_type, Some(ItemType::GeneticSample)) {
+        if try_target_gene_bank(world, pop_entity, pos) {
+            return;
+        }
+    }
 
+    try_target_stockpile_for_item(world, pop_entity, pos);
+}
+
+fn try_target_recycler(world: &mut World, pop_entity: Entity, pos: GridPosition) -> bool {
+    let mut query = world.query::<(Entity, &GridPosition, &Recycler, &Inventory)>();
     let mut best = None;
     let mut min_dist = i32::MAX;
 
-    if matches!(item_type, Some(ItemType::Waste)) {
-        let mut query = world.query::<(Entity, &GridPosition, &Recycler, &Inventory)>();
-        for (e, p, _, inv) in query.iter(world) {
-            // Check Capacity
-            if inv.items.len() < inv.capacity {
-                let dist = manhattan_distance(&pos, p);
-                if dist < min_dist {
-                    min_dist = dist;
-                    best = Some((e, *p));
-                }
-            }
-        }
-    } else if matches!(item_type, Some(ItemType::GeneticSample)) {
-        let mut query = world.query::<(Entity, &GridPosition, &GeneBank)>();
-        for (e, p, _) in query.iter(world) {
+    for (e, p, _, inv) in query.iter(world) {
+        if inv.items.len() < inv.capacity {
             let dist = manhattan_distance(&pos, p);
             if dist < min_dist {
                 min_dist = dist;
@@ -533,34 +534,65 @@ fn find_and_target_stockpile_item(
         }
     }
 
-    // Fallback to Stockpile if no specific target found (or generic item)
-    if best.is_none() {
-        let mut query = world.query::<(Entity, &GridPosition, &Stockpile)>();
-        let zone_grid = world.get_resource::<ZoneGrid>();
+    set_hauler_target(world, pop_entity, best)
+}
 
-        for (e, p, _) in query.iter(world) {
-            if is_drone {
-                if let Some(grid) = zone_grid {
-                    if grid.get(p.x, p.y) == ZoneType::Sanctuary {
-                        continue;
-                    }
-                }
-            }
+fn try_target_gene_bank(world: &mut World, pop_entity: Entity, pos: GridPosition) -> bool {
+    let mut query = world.query::<(Entity, &GridPosition, &GeneBank)>();
+    let mut best = None;
+    let mut min_dist = i32::MAX;
 
-            let dist = manhattan_distance(&pos, p);
-            if dist < min_dist {
-                min_dist = dist;
-                best = Some((e, *p));
-            }
+    for (e, p, _) in query.iter(world) {
+        let dist = manhattan_distance(&pos, p);
+        if dist < min_dist {
+            min_dist = dist;
+            best = Some((e, *p));
         }
     }
 
-    if let Some((target_entity, target_pos)) = best {
+    set_hauler_target(world, pop_entity, best)
+}
+
+fn try_target_stockpile_for_item(world: &mut World, pop_entity: Entity, pos: GridPosition) -> bool {
+    let is_drone = world.get::<Drone>(pop_entity).is_some();
+
+    let mut query = world.query::<(Entity, &GridPosition, &Stockpile)>();
+    let mut best = None;
+    let mut min_dist = i32::MAX;
+
+    for (e, p, _) in query.iter(world) {
+        if is_drone {
+            if let Some(grid) = world.get_resource::<ZoneGrid>() {
+                if grid.get(p.x, p.y) == ZoneType::Sanctuary {
+                    continue;
+                }
+            }
+        }
+
+        let dist = manhattan_distance(&pos, p);
+        if dist < min_dist {
+            min_dist = dist;
+            best = Some((e, *p));
+        }
+    }
+
+    set_hauler_target(world, pop_entity, best)
+}
+
+fn set_hauler_target(
+    world: &mut World,
+    pop_entity: Entity,
+    target: Option<(Entity, GridPosition)>,
+) -> bool {
+    if let Some((target_entity, target_pos)) = target {
         world.entity_mut(pop_entity).insert(MovementTarget {
             target_entity,
             target_position: target_pos,
             for_action: ActionType::Haul,
         });
+        true
+    } else {
+        false
     }
 }
 
