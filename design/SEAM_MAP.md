@@ -1592,3 +1592,10 @@
 - **Glue added:** Added `phantom_limb_chronicle_bridge` in `src/layer2/integration.rs` to generate Chronicle records when a phantom limb logistics drop is intercepted.
 - **Schedule:** Registered the system in `src/simulation.rs`.
 - **Tests:** `tests/integration/phantom_limb_chronicle.rs`
+
+### INT-1030: Gravity Engineering -> Chronicle
+- **Date:** 2024-05-31
+- **Systems connected:** `evaluate_structural_integrity_system` -> `BuildingCompletedEvent` -> `gravity_engineering_chronicle_bridge` -> `AddChronicleEvent`
+- **Glue added:** `gravity_engineering_chronicle_bridge` already existed in `src/layer1/core/integration.rs`. Added tests to ensure it correctly triggers from damage dealt by `evaluate_structural_integrity_system`.
+- **Schedule:** `evaluate_structural_integrity_system` is in `Layer1SystemSet::Execution` and `gravity_engineering_chronicle_bridge` is in `Layer1SystemSet::Observation`, ensuring the proper order.
+- **Tests:** `tests/integration/gravity_engineering_chronicle.rs`

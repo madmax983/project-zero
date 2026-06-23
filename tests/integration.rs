@@ -601,6 +601,8 @@ mod ghost_code_bridge;
 mod ghost_code_chronicle_bridge;
 #[path = "integration/gravity_debt_escape_velocity.rs"]
 mod gravity_debt_escape_velocity;
+#[path = "integration/gravity_engineering_chronicle.rs"]
+mod gravity_engineering_chronicle;
 #[path = "integration/phantom_limb_chronicle.rs"]
 mod phantom_limb_chronicle;
 #[path = "integration/sartorial_rebellion_bridge.rs"]
