@@ -630,7 +630,6 @@ See `design/IDEAS.md` for unspecced concepts.
 
 
 - [ ] `1025` Gravity Plating Failure — `specs/1025-gravity-plating-failure.md`
-- [ ] `1036` Institutional Memory — `specs/1036-institutional-memory.md`
 - [ ] `1038` Dead Protocols — `specs/1038-dead-protocols.md`
 
 
