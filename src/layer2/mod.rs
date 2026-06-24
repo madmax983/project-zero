@@ -109,3 +109,19 @@ impl Plugin for PlanetarySpinUpPlugin {
 }
 pub mod leviathans;
 pub mod refugees;
+
+pub mod celestial;
+
+pub struct CelestialPlugin;
+
+impl Plugin for CelestialPlugin {
+    fn build(&self, app: &mut App) {
+        app.add_systems(
+            Update,
+            (
+                celestial::pulsar_rotation_system,
+                celestial::pulsar_radiation_damage_system,
+            ),
+        );
+    }
+}
