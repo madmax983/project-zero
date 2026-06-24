@@ -42,6 +42,20 @@ use rand::Rng;
 ///     maturation_chance: 0.05, // 5% chance Sapling -> Tree
 /// };
 /// ```
+/// Tracks ecological damage for a node.
+#[derive(Component, Debug, Clone)]
+pub struct EcologicalDamage {
+    pub value: f32,
+    pub threshold: f32,
+}
+
+/// Event triggered when a node is harvested.
+#[derive(Event, Debug, Clone)]
+pub struct HarvestEvent {
+    pub node: Entity,
+    pub amount: f32,
+}
+
 #[derive(Resource)]
 pub struct EcologyConfig {
     /// Fraction of map tiles to check per tick (0.0 to 1.0).

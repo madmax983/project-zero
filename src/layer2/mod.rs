@@ -72,6 +72,8 @@ pub mod bombardment;
 pub mod orbit;
 pub mod orbital_necropolis;
 
+pub mod mycelial_network;
+
 pub mod orbital_mirrors;
 pub use orbital_mirrors::*;
 pub mod culture;
