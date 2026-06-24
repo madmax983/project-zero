@@ -5,3 +5,6 @@
 **Eliminating intermediate HashSets in Bevy queries**
 **Learning:** `std::collections::HashSet` allocations inside tight loops or systems called frequently (like scanning logic) cause unnecessary heap pressure. Instead of collecting query target values into an intermediate HashSet, we can query resources dynamically from inside the iter.
 **Action:** Extract `world.get_resource::<T>()` prior to `world.query_filtered()`, and reference the exact values inside the `.filter()` closures directly.
+**AHash over SipHash for Entity maps**
+**Learning:** Bevy provides `bevy::utils::HashMap` which uses `ahash`, a much faster hasher for integer keys like `Entity` than Rust's default `std::collections::HashMap` (which uses SipHash). Using SipHash for mapping entities or coordinates incurs unnecessary overhead.
+**Action:** Replace `std::collections::HashMap` with `bevy::utils::HashMap` when the keys are `Entity` or integer coordinate tuples to eliminate SipHash overhead.
