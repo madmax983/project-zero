@@ -615,3 +615,5 @@ mod sartorial_rebellion_bridge;
 mod temporal_fugue_bridge;
 #[path = "integration/void_stare_chronicle.rs"]
 mod void_stare_chronicle;
+#[path = "integration/information_black_market_bridge.rs"]
+mod information_black_market_bridge;
