@@ -55,6 +55,21 @@ pub fn ransom_broker_chronicle_bridge(
     }
 }
 
+/// INT-313: Bridges the Fungal Network to the Chronicle when the first SporeTap is constructed.
+pub fn fungal_network_chronicle_bridge(
+    mut has_emitted: Local<bool>,
+    tap_query: Query<Entity, Added<crate::layer1::fungal_network::SporeTap>>,
+    mut chronicle_events: EventWriter<crate::layer1::core::chronicle::AddChronicleEvent>,
+) {
+    if !*has_emitted && tap_query.iter().next().is_some() {
+        *has_emitted = true;
+        chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
+            text: "The Fungal Network wakes up. The subterranean mycelial network is now connected to our colony. We feel a strange new urge...".to_string(),
+            importance: crate::layer1::core::chronicle::EventImportance::Major,
+        });
+    }
+}
+
 #[derive(Component, Clone, Copy)]
 pub struct BaseMachineStats {
     pub base_efficiency: f32,

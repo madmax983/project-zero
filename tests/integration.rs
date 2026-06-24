@@ -613,3 +613,4 @@ mod temporal_fugue_bridge;
 mod void_stare_chronicle;
 #[path = "integration/hypno_learning_chronicle.rs"]
 mod hypno_learning_chronicle;
+#[path = "integration/fungal_network_bridge.rs"] mod fungal_network_bridge;

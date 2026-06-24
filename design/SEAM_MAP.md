@@ -1480,6 +1480,13 @@
 - **Schedule:** Registered in Layer 1 Economy schedule (`src/layer1/systems/economy.rs`). Event registered in `src/setup.rs`.
 - **Tests:** `tests/integration/symbiotic_shipbreaker_bridge.rs`
 
+### INT-313: Fungal Network -> Chronicle
+- **Date:** 2026-10-31
+- **Systems connected:** `Added<SporeTap>` -> `fungal_network_chronicle_bridge` -> `AddChronicleEvent`
+- **Glue added:** Added `fungal_network_chronicle_bridge` in `src/layer1/core/integration.rs` to generate Chronicle records when the first `SporeTap` is constructed, signaling that the network wakes up.
+- **Schedule:** Registered the system in `src/layer1/systems/observation.rs`.
+- **Tests:** `tests/integration/fungal_network_bridge.rs`
+
 ### INT-1303: Trade Routes -> Galactic Market
 - **Date:** 2026-10-31
 - **Systems connected:** `TradeRouteExecutedEvent` -> `trade_route_market_bridge_system` -> `GalacticMarket`
