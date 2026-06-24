@@ -748,6 +748,11 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
             .after(crate::layer2::thermal::detection_risk_system),
         crate::layer2::culture::founder_effect::found_colony_system,
         crate::layer2::culture::founder_effect::update_colony_culture_system,
+    ));
+
+    schedule.add_systems((
+        crate::layer2::culture::cultural_drift::calculate_cultural_drift_system,
+        crate::layer2::culture::cultural_drift::handle_independence_system,
         crate::layer2::integration::founder_effect_bridge_system,
         crate::layer2::integration::escape_velocity_traits_bridge_system
             .before(crate::layer2::trade::escape_velocity::process_launch_system),

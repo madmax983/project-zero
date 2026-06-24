@@ -60,7 +60,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `277` Orbital Megastructure Deorbiting — `specs/277-orbital-megastructure-deorbiting.md`
 - [ ] `280` Archaeological Layers — `specs/280-archaeological-layers.md`
 
-- [ ] `282` Cultural Drift — `specs/282-cultural-drift.md`
 
 - [ ] `285` Echoes of the Past — `specs/285-echoes-of-the-past.md`
 - [ ] `288` The Memory Black Market — `specs/288-memory-black-market.md`
