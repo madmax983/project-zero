@@ -558,6 +558,7 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::psychology::void_sickness::apply_trait_stat_modifiers_system,
             crate::layer1::core::integration::crop_mutation_mycelial_bridge,
             crate::layer1::core::integration::mycelial_chronicle_bridge,
+            crate::layer1::core::integration::fungal_network_chronicle_bridge,
             crate::layer1::core::integration::dead_hand_chronicle_bridge,
             crate::layer1::core::integration::lottery_chronicle_bridge,
             crate::layer1::core::integration::symbiont_sabotage_bridge_system,
