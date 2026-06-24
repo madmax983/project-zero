@@ -511,7 +511,7 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::core::integration::ghost_shift_chronicle_bridge,
             crate::layer1::core::integration::impact_warning_chronicle_bridge,
             crate::layer1::core::integration::diplomatic_incident_chronicle_bridge,
-            crate::layer1::integration::hack_hub_chronicle_bridge,
+            crate::layer1::administration::edicts::hack_hub_chronicle_bridge,
             crate::layer1::integration::smuggler_arrival_event_bridge
                 .before(crate::layer1::void_weed::process_void_weed_trade_system),
             crate::layer1::core::integration::ransom_broker_chronicle_bridge,
