@@ -643,6 +643,7 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
         crate::layer2::cartographers_curse::apply_drop_pod_accuracy,
         update_detection_risk_system.after(Layer1SystemSet::Economy),
         check_hostile_spawn_system.after(update_detection_risk_system),
+        crate::layer3::integration::the_silence_chronicle_bridge.after(check_hostile_spawn_system),
         crate::layer3::market::ephemeral_market::spawn_ephemeral_market_system,
         crate::layer3::market::ephemeral_market::process_market_despawn_system,
         crate::layer3::market::ephemeral_market::fulfill_market_trade_system,
