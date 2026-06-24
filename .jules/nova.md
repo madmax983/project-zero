@@ -180,3 +180,8 @@
 **Concept:** Added `acoustic_hallucinations_system` to `src/experimental/acoustic_hallucinations.rs`. Connects `NoiseMap` with `Morale` and `ActionType`. Pops exposed to extreme noise have a chance to experience an `AcousticHallucination` that forces them into a `Daze` and tanks their `leisure` need.
 **Fate:** Merged
 **Lesson:** Provides a strong psychological consequence to industrial layouts. Extreme noise isn't just an annoyance anymore, it's a hazardous environment that can actively induce temporary mental breaks, forcing players to care about acoustic insulation.
+
+## [Fungal Reclamation]
+**Concept:** Added `fungal_reclamation_system` to `src/experimental/fungal_reclamation.rs`. Connects `BuildingRemovedEvent` with `SporeNetwork` and `ClutterGrid`. When a building is removed/destroyed, if the SporeNetwork is active, it rapidly generates `Clutter` (spores) on the destroyed tile and provides a sudden boost to `PopCollectivism`.
+**Fate:** Submitted
+**Lesson:** Connects building destruction (a negative event) to the fungal mechanics, allowing players to intentionally demolish buildings to feed the SporeNetwork and advance collectivism.

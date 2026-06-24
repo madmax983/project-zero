@@ -209,3 +209,5 @@ pub mod mutagenic_terraforming;
 pub mod acoustic_hallucinations;
 #[cfg(feature = "nova")]
 pub mod engine_cultist_rituals;
+#[cfg(feature = "nova")]
+pub mod fungal_reclamation;
