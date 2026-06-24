@@ -1,5 +1,6 @@
 use crate::layer1::architecture::building::{Height, Material};
 use crate::layer1::architecture::structure::Structure;
+use crate::layer1::core::chronicle::{AddChronicleEvent, EventImportance};
 use crate::layer1::core::events::BuildingCompletedEvent;
 use crate::layer2::syzygy::PlanetaryGravity;
 use bevy::prelude::*;
@@ -29,6 +30,31 @@ pub fn evaluate_structural_integrity_system(
                 if structure.current_hp < 0.0 {
                     structure.current_hp = 0.0;
                 }
+            }
+        }
+    }
+}
+
+pub fn gravity_engineering_chronicle_bridge(
+    mut events: EventReader<crate::layer1::core::events::BuildingCompletedEvent>,
+    query: Query<(
+        &crate::layer1::architecture::building::Height,
+        &crate::layer1::architecture::structure::Structure,
+    )>,
+    mut chronicle: EventWriter<AddChronicleEvent>,
+) {
+    for event in events.read() {
+        if let Ok((height, structure)) = query.get(event.entity) {
+            if structure.current_hp < structure.max_hp && structure.current_hp > 0.0 {
+                chronicle.send(AddChronicleEvent {
+                    text: format!("Our newly constructed building ({} floors) suffered a partial structural collapse under its own weight due to the local gravity!", height.floors),
+                    importance: EventImportance::Major,
+                });
+            } else if structure.current_hp == 0.0 {
+                chronicle.send(AddChronicleEvent {
+                    text: format!("Our newly constructed building ({} floors) instantly collapsed under the crushing gravity!", height.floors),
+                    importance: EventImportance::Major,
+                });
             }
         }
     }

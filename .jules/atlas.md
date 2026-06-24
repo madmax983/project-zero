@@ -53,3 +53,7 @@
 **Dependency Cycle `combat` <--> `fauna` and `access_control` <--> `pathfinding`**
 **Tangle:** `src/layer1/combat.rs` defined `HitStop` component and `hit_stop_system` which was imported by `src/layer1/fauna/mod.rs`, but `combat.rs` used `FaunaType` in its tests. Also, `src/layer1/access_control.rs` had an integration test that imported `find_path_for_pop` from `pathfinding.rs`, while `pathfinding.rs` imported `AccessControl` from `access_control.rs`.
 **Blueprint:** Extracted `HitStop` and `hit_stop_system` into `src/layer1/physics/hit_stop.rs` to break the cyclic dependency. Also moved the integration test from `access_control.rs` into `pathfinding.rs`.
+
+**[Title] Break Circular Dependency and Fix Blob Anti-pattern with Gravity Engineering Chronicle Bridge**
+**Tangle:** The `gravity_engineering_chronicle_bridge` was located in `src/layer1/core/integration.rs`, exacerbating the "Blob" anti-pattern in `integration.rs` and distancing the bridging logic from the `gravity_engineering` domain.
+**Blueprint:** Moved `gravity_engineering_chronicle_bridge` from `src/layer1/core/integration.rs` to `src/layer1/architecture/gravity_engineering.rs` to enforce domain cohesion. Updated references in `src/layer1/systems/observation.rs` and the integration tests.
