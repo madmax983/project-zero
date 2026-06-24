@@ -813,6 +813,7 @@
 - [x] `294` The Bone Economy — `specs/294-bone-economy.md` — completed 2026-02-01
 - [x] `301` The Memory Tithe — `specs/301-memory-tithe.md` — completed 2024-06-01
 - [x] `1030` Gravity Engineering — `specs/1030-gravity-engineering.md` — completed 2026-10-31
+- [x] `1031` The Mycelial Network — `specs/1031-the-mycelial-network.md` — completed 2026-06-25
 - [x] `1036` Institutional Memory — `specs/1036-institutional-memory.md` — completed 2024-06-01
 - [x] `INT-1030` Integration: Gravity Engineering -> Chronicle — completed 2024-05-31
 - [x] `313` The Fungal Network — `specs/313-fungal-network.md` — completed 2026-06-24
