@@ -10,3 +10,6 @@
 **[Testing `handle_bury_corpse`]
 **Learning:** When unit-testing systems directly using `bevy_ecs::system::SystemState::new(&mut world)`, you may encounter complex type compiler errors if you inline the tuple type for complex queries or borrow checker issues. Defining an explicit type alias (e.g., `type SystemData<'w, 's> = (Commands<'w, 's>, Query<'w, 's, &'static MyComponent>, ...);`) using explicitly bounded lifetimes (`'w`, `'s`) and `'static` for component references solves this effectively.
 **Action:** Use explicitly bounded type aliases for `SystemState` configurations in Bevy unit tests.
+**[Subconscious Grid State Evaluation]
+**Learning:** The transition to `GridState::Normal` from an anxious state when average stress normalizes was missing a direct unit test in `src/layer1/infrastructure/subconscious_grid.rs`.
+**Action:** Always write tests that cover the fallback/default branch of state transition logic, especially when it recovers from an extreme state.

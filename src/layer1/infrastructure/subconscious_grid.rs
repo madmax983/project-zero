@@ -323,3 +323,45 @@ mod tests {
         );
     }
 }
+
+#[cfg(test)]
+mod normal_state_tests {
+    use super::*;
+
+    #[test]
+    fn test_apply_subconscious_grid_effects_system_normal_state() {
+        let mut app = App::new();
+        app.add_systems(
+            Update,
+            (
+                calculate_colony_stress_system,
+                apply_subconscious_grid_effects_system,
+                update_machine_efficiency_system,
+            )
+                .chain(),
+        );
+
+        // Spawn average stress pops
+        app.world_mut().spawn((Pop, Stress { level: 50.0 }));
+
+        let colony = app
+            .world_mut()
+            .spawn((
+                Colony,
+                ColonyStress { average_level: 0.0 },
+                SmartGrid {
+                    state: GridState::Anxious, // start it out anxious
+                },
+            ))
+            .id();
+
+        app.update();
+
+        let grid = app.world().get::<SmartGrid>(colony).unwrap();
+        assert_eq!(
+            grid.state,
+            GridState::Normal,
+            "Average stress should make the grid normal"
+        );
+    }
+}
