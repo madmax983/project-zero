@@ -1,3 +1,4 @@
+- [x] `282` Cultural Drift — `specs/282-cultural-drift.md` — completed 2026-06-25
 - [x] `1001` Vacuum Welding — `specs/1001-vacuum-welding.md` — completed 2026-06-22
 - [x] `1022` The Hive Mind Integration — `specs/1022-the-hive-mind-integration.md` — completed 2026-06-21
 - [x] `1128` Hypno-Learning — `specs/1128-hypno-learning.md` — completed 2024-06-15
