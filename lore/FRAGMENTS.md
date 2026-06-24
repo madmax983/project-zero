@@ -9903,3 +9903,37 @@ The subjects of mediocre, comfortable art.
 - mutating beyond recognition
 - refusing to answer the comms
 - tearing down the hyper-relay
+
+## The Fungal Network Fragments (Spec 313)
+
+## Fragment Type: [SPORE_TAP_DESCRIPTORS]
+- coated in pale bioluminescence
+- humming with a low organic frequency
+- already overgrown with white threads
+- pulsing like a slow heartbeat
+- exuding a sweet, rotting scent
+- unnervingly warm to the touch
+
+## Fragment Type: [COLLECTIVISM_SIGNS]
+- a shared gaze that lingers too long
+- synchronized breathing during rest cycles
+- an absolute lack of personal disputes
+- a terrifyingly efficient hive-mind coordination
+- perfectly mirrored gestures
+- the spontaneous sharing of private rations
+
+## Fragment Type: [NETWORK_VOICE]
+- a chorus of whispers in the base of the skull
+- a vibration felt in the teeth
+- an intrusive thought of damp earth and vast space
+- a collective hum that translates into intent
+- a sudden, unearned memory of roots reaching deep
+- the taste of ash and a single clear word
+
+## Fragment Type: [URGE_DEMANDS]
+- the sacrifice of all organic waste immediately
+- the dismantling of the sonic repellers
+- the planting of infected spores in the hydroponics bay
+- three days of uninterrupted silence in the deep mines
+- the immediate consumption of raw subterranean flora
+- the release of specific atmospheric gases into the lower levels

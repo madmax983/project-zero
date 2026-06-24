@@ -5715,3 +5715,18 @@
 **Replaces:** Low quality art, poor item, normal item
 **Code reference:** `ArtWork` with `Quality::Poor` or `Quality::Normal`
 **Usage:** "The mediocre work was quickly forgotten."
+
+## Spore Taps
+**Replaces:** Supply hubs, logic gates, resource transfer nodes
+**Code reference:** `SporeTap`
+**Usage:** "The Spore Taps bypass the surface entirely." / "The Tap hums with the flow of raw ore."
+
+## The Fungal Network
+**Replaces:** Instant resource transfer, global logistics system
+**Code reference:** `SporeNetwork`
+**Usage:** "The Fungal Network connects all deeper colonies." / "The Network demands its due."
+
+## Collectivism
+**Replaces:** Hive-mind ethics, extreme cooperation, loss of individuality
+**Code reference:** `PopCollectivism`
+**Usage:** "Collectivism is taking root in the lower sectors." / "They no longer say 'I'; collectivism is absolute."
