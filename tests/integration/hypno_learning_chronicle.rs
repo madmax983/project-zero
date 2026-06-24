@@ -1,8 +1,8 @@
 use bevy_ecs::prelude::*;
 use scale::layer1::core::chronicle::AddChronicleEvent;
+use scale::layer1::core::integration::hypno_learning_chronicle_bridge;
 use scale::layer1::pop::PopName;
 use scale::layer1::tech::hypno_learning::MentalFog;
-use scale::layer1::core::integration::hypno_learning_chronicle_bridge;
 
 #[test]
 fn test_hypno_learning_chronicle_bridge() {
@@ -28,5 +28,8 @@ fn test_hypno_learning_chronicle_bridge() {
         }
     }
 
-    assert!(found, "Chronicle event for Hypno-Learning should have been emitted");
+    assert!(
+        found,
+        "Chronicle event for Hypno-Learning should have been emitted"
+    );
 }

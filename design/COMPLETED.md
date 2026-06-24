@@ -820,3 +820,4 @@
 - [x] `INT-1030` Integration: Gravity Engineering -> Chronicle — completed 2024-05-31
 - [x] `313` The Fungal Network — `specs/313-fungal-network.md` — completed 2026-06-24
 - [x] `INT-313` Integration: Fungal Network -> Chronicle — completed 2026-10-31
+- [x] `1307` The Information Black Market — `specs/1307-information-black-market.md` — completed 2026-06-24

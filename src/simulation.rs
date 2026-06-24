@@ -76,6 +76,7 @@ fn init_simulation_resources(world: &mut World) {
     #[cfg(feature = "nova")]
     world.init_resource::<crate::experimental::ghost_grid::GhostGrid>();
     world.init_resource::<crate::layer1::environment::atmosphere::GlobalAtmosphere>();
+    world.init_resource::<Events<crate::layer1::economy::information_black_market::EarlyWarningEvent>>();
     world.init_resource::<Events<crate::layer1::economy::black_market::SmugglerArrivalEvent>>();
     world.init_resource::<Events<crate::layer1::economy::black_market::ShutdownDropNodeEvent>>();
     world.init_resource::<Events<crate::layer1::architecture::chrono_vault::SealVaultEvent>>();
