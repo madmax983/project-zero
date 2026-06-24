@@ -9592,3 +9592,41 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]. The silence ends. We reach out to [COLONY], but they are [SILENCE_DIVERGENCE]."
 - "Fifty years of dark. We turn the comms back on. [COLONY] is [SILENCE_DIVERGENCE]."
 - "We hid from the apocalypse. In [YEAR], we find [COLONY] is [SILENCE_DIVERGENCE]."
+
+## The Fungal Network Templates (Spec 313)
+
+### Template: SPORE_TAP_CONSTRUCTED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [SPORE_TAP_DESCRIPTORS]
+
+**Patterns:**
+- "[YEAR]: We breached the crust at [COLONY]. The new tap is [SPORE_TAP_DESCRIPTORS]. The hauling lines sit empty."
+- "[COLONY] finished the Spore Tap. It is [SPORE_TAP_DESCRIPTORS]. We no longer need the carts. [YEAR]."
+- "We touch the Deep-Web at [COLONY]. The tap is [SPORE_TAP_DESCRIPTORS]. The logistics burden lifts. [YEAR]."
+
+### Template: COLLECTIVISM_EMBRACED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [COLLECTIVISM_SIGNS]
+
+**Patterns:**
+- "[YEAR]: The miners at [COLONY] no longer use 'I'. The shift to 'we' is quiet. They show [COLLECTIVISM_SIGNS]."
+- "Proximity to the Spore Taps changes the souls on [COLONY]. There are [COLLECTIVISM_SIGNS]. They move in unison. [YEAR]."
+- "[COLONY] reports an unnatural harmony. [COLLECTIVISM_SIGNS] are everywhere. The arguments have stopped. [YEAR]."
+
+### Template: FUNGAL_NETWORK_AWAKENS
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [NETWORK_VOICE]
+
+**Patterns:**
+- "[YEAR]: The network is not just a pipe. It speaks to [COLONY]. It is [NETWORK_VOICE]. It wants something back."
+- "We thought it was just infrastructure on [COLONY]. Then we heard [NETWORK_VOICE]. The Fungus-Track is awake. [YEAR]."
+- "[COLONY] recorded the first demand. [NETWORK_VOICE]. The network is sentient. [YEAR]."
+
+### Template: FUNGAL_URGE_RECEIVED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [URGE_DEMANDS]
+
+**Patterns:**
+- "[YEAR]: The connected souls at [COLONY] stopped working. They are compelled by the network. They demand [URGE_DEMANDS]."
+- "An Urge sweeps through the tapped workers of [COLONY]. The mycelium wants [URGE_DEMANDS]. They will not be denied. [YEAR]."
+- "[COLONY] production halts. The Spore Taps broadcast an overwhelming need for [URGE_DEMANDS]. The hive mind insists. [YEAR]."
