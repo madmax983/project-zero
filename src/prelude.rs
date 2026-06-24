@@ -22,9 +22,6 @@ pub use crate::shared::log::MessageLog;
 #[cfg(feature = "nova")]
 pub use crate::layer1::oral_tradition::{OralTradition, Story, StoryGenre};
 
-#[cfg(not(feature = "nova"))]
-pub use crate::layer1::oral_tradition_fallback::{OralTradition, Story, StoryGenre};
-
 #[cfg(feature = "nova")]
 pub use crate::layer1::oral_tradition::{collect_chronicles_system, storytelling_system};
 

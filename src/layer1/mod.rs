@@ -495,12 +495,13 @@ pub mod architecture_superstition;
 pub use architecture_superstition::*;
 
 pub mod hive_mind_integration;
-#[cfg(not(feature = "nova"))]
-pub mod oral_tradition_fallback;
-#[cfg(not(feature = "nova"))]
-pub use oral_tradition_fallback::*;
 pub mod artists_muse;
 pub mod crafting;
 pub mod fungal_network;
 pub use fungal_network::{process_spore_taps_system, PopCollectivism, SporeNetwork, SporeTap};
 pub mod the_lottery;
+
+// Echo DX Audit: Provide intuitive module aliases for users expecting flattened imports
+pub mod buildings {
+    pub use crate::layer1::architecture::building::*;
+}

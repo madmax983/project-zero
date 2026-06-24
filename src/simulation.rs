@@ -1166,6 +1166,8 @@ mod tests {
         world
             .init_resource::<crate::layer1::administration::invasive_bureaucracy::EmpireStability>(
             );
+        #[cfg(feature = "nova")]
+        world.init_resource::<crate::experimental::ghost_grid::GhostGrid>();
 
         // Initialize Detection Risk for test
         world.init_resource::<Events<crate::layer1::architecture::chrono_vault::SealVaultEvent>>();
