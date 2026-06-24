@@ -617,3 +617,5 @@ mod temporal_fugue_bridge;
 mod void_stare_chronicle;
 #[path = "integration/information_black_market_bridge.rs"]
 mod information_black_market_bridge;
+#[path = "integration/the_silence_chronicle_bridge.rs"]
+pub mod the_silence_chronicle_bridge;

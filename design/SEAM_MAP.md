@@ -1618,3 +1618,10 @@
 - **Glue added:** `early_warning_chronicle_bridge` in `src/layer1/core/integration.rs`.
 - **Schedule:** Registered the system in `src/layer1/systems/observation.rs`.
 - **Tests:** `tests/integration/information_black_market_bridge.rs`
+
+### INT-287: The Silence -> Chronicle
+- **Date:** 2026-10-31
+- **Systems connected:** `HostileSpawnEvent` -> `the_silence_chronicle_bridge` -> `AddChronicleEvent`
+- **Glue added:** `the_silence_chronicle_bridge` in `src/layer3/integration.rs`
+- **Schedule:** Registered in simulation loop after `check_hostile_spawn_system`.
+- **Tests:** `tests/integration/the_silence_chronicle_bridge.rs`
