@@ -785,7 +785,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1295` Corporate Rebranding — `specs/1295-corporate-rebranding.md`
 - [ ] `1304` The Lost Treaty — `specs/1304-the-lost-treaty.md`
 
-- [ ] `1307` The Information Black Market — `specs/1307-information-black-market.md`
 - [ ] `1308` The Blackout Bazaars — `specs/1308-the-blackout-bazaars.md`
 - [ ] `1309` The Asteroid Hermits — `specs/1309-the-asteroid-hermits.md`
 - [ ] `1310` The Feral Administration — `specs/1310-the-feral-administration.md`

@@ -10,6 +10,14 @@ use bevy_ecs::prelude::*;
 pub fn register(schedule: &mut Schedule) {
     schedule.add_systems(
         (
+            crate::layer1::economy::information_black_market::check_censorship_threshold_system,
+            crate::layer1::economy::information_black_market::process_black_market_drain_system,
+            crate::layer1::economy::information_black_market::generate_black_market_intel_system,
+        )
+            .in_set(Layer1SystemSet::Economy),
+    );
+    schedule.add_systems(
+        (
             crate::layer1::architecture::sunk_cost_monument::calculate_sunk_cost_upkeep_system,
             crate::layer1::core::integration::sunk_cost_resource_drain_system.after(
                 crate::layer1::architecture::sunk_cost_monument::calculate_sunk_cost_upkeep_system,
