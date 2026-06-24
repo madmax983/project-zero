@@ -62,24 +62,36 @@ mod tests {
         app.add_systems(Update, evaluate_ecological_damage_system);
 
         // Setup Nodes
-        let node_a = app.world_mut().spawn((
-            SystemNode,
-            EcologicalDamage { value: 0.0, threshold: 100.0 },
-        )).id();
+        let node_a = app
+            .world_mut()
+            .spawn((
+                SystemNode,
+                EcologicalDamage {
+                    value: 0.0,
+                    threshold: 100.0,
+                },
+            ))
+            .id();
 
-        let node_b = app.world_mut().spawn((
-            SystemNode,
-        )).id();
+        let node_b = app.world_mut().spawn((SystemNode,)).id();
 
         // Connect them with a BioLink
-        app.world_mut().spawn(BioLink { source: node_a, target: node_b });
-        app.world_mut().spawn(BioLink { source: node_b, target: node_a });
+        app.world_mut().spawn(BioLink {
+            source: node_a,
+            target: node_b,
+        });
+        app.world_mut().spawn(BioLink {
+            source: node_b,
+            target: node_a,
+        });
 
         // Trigger massive harvest on Node A
-        app.world_mut().resource_mut::<Events<HarvestEvent>>().send(HarvestEvent {
-            node: node_a,
-            amount: 150.0, // Exceeds threshold
-        });
+        app.world_mut()
+            .resource_mut::<Events<HarvestEvent>>()
+            .send(HarvestEvent {
+                node: node_a,
+                amount: 150.0, // Exceeds threshold
+            });
 
         app.update();
 
@@ -98,6 +110,9 @@ mod tests {
         assert!(found_fauna, "Massive harvesting at Node A should spawn immune response Fauna at connected Node B that targets Node A.");
 
         let damage_a = app.world().get::<EcologicalDamage>(node_a).unwrap();
-        assert_eq!(damage_a.value, 0.0, "Ecological damage should reset after triggering an immune response.");
+        assert_eq!(
+            damage_a.value, 0.0,
+            "Ecological damage should reset after triggering an immune response."
+        );
     }
 }

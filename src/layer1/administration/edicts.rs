@@ -620,6 +620,23 @@ pub fn handle_hack_hub_system(
     }
 }
 
+pub fn hack_hub_chronicle_bridge(
+    mut events: bevy_ecs::prelude::EventReader<HackCentralHubEvent>,
+    mut chronicle_events: bevy_ecs::prelude::EventWriter<
+        crate::layer1::core::chronicle::AddChronicleEvent,
+    >,
+) {
+    for event in events.read() {
+        chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
+            importance: crate::layer1::core::chronicle::EventImportance::Standard,
+            text: format!(
+                "A successful hack into the central hub has removed the orphaned {:?} edict.",
+                event.target_policy
+            ),
+        });
+    }
+}
+
 /// Calculates the global hunger decay modifier based on active policies.
 ///
 ///

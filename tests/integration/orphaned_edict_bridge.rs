@@ -1,9 +1,10 @@
 use bevy_app::App;
 use bevy_app::Update;
 use bevy_ecs::prelude::*;
+use scale::layer1::administration::edicts::hack_hub_chronicle_bridge;
 use scale::layer1::administration::edicts::{AccessDeniedEvent, HackCentralHubEvent, Policy};
 use scale::layer1::chronicle::AddChronicleEvent;
-use scale::layer1::core::integration::{access_denied_chronicle_bridge, hack_hub_chronicle_bridge};
+use scale::layer1::core::integration::access_denied_chronicle_bridge;
 
 #[test]
 fn test_access_denied_chronicle_bridge() {

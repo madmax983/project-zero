@@ -57,3 +57,7 @@
 **[Title] Break Circular Dependency and Fix Blob Anti-pattern with Gravity Engineering Chronicle Bridge**
 **Tangle:** The `gravity_engineering_chronicle_bridge` was located in `src/layer1/core/integration.rs`, exacerbating the "Blob" anti-pattern in `integration.rs` and distancing the bridging logic from the `gravity_engineering` domain.
 **Blueprint:** Moved `gravity_engineering_chronicle_bridge` from `src/layer1/core/integration.rs` to `src/layer1/architecture/gravity_engineering.rs` to enforce domain cohesion. Updated references in `src/layer1/systems/observation.rs` and the integration tests.
+
+**[Title] Break Circular Dependency and Fix Blob Anti-pattern with Hack Central Hub Chronicle Bridge**
+**Tangle:** The `hack_hub_chronicle_bridge` was located in `src/layer1/core/integration.rs`, exacerbating the "Blob" anti-pattern in `integration.rs` and distancing the bridging logic from the `administration` domain where `HackCentralHubEvent` is defined. This led to bloated files and poor cohesion.
+**Blueprint:** Moved `hack_hub_chronicle_bridge` from `src/layer1/core/integration.rs` to `src/layer1/administration/edicts.rs` to enforce domain cohesion. Updated references in `src/layer1/systems/observation.rs` and the integration tests (`tests/integration/orphaned_edict_bridge.rs`).
