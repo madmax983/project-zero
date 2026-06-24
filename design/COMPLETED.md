@@ -818,3 +818,4 @@
 - [x] `1036` Institutional Memory — `specs/1036-institutional-memory.md` — completed 2024-06-01
 - [x] `INT-1030` Integration: Gravity Engineering -> Chronicle — completed 2024-05-31
 - [x] `313` The Fungal Network — `specs/313-fungal-network.md` — completed 2026-06-24
+- [x] `302` The Solar Sail Migration — `specs/302-solar-sail-migration.md` — completed 2026-06-24

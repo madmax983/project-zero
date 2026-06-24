@@ -71,7 +71,7 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `298` The Nostalgia Engine — `specs/298-nostalgia-engine.md`
 - [ ] `299` Temporal Smuggling — `specs/299-temporal-smuggling.md`
 
-- [ ] `302` The Solar Sail Migration — `specs/302-solar-sail-migration.md`
+
 
 - [ ] `304` The Bio-Loom — `specs/304-bio-loom.md`
 - [ ] `305` The Empathy Broadcast — `specs/305-empathy-broadcast.md`

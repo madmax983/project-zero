@@ -1,0 +1,46 @@
+--- src/layer2/solar_sail.rs
++++ src/layer2/solar_sail.rs
+@@ -4,6 +4,7 @@
+ use crate::layer1::nature::temperature::TemperatureGrid;
+ use crate::layer2::system::Orbit;
+
++pub struct SolarSailPlugin;
++
++impl Plugin for SolarSailPlugin {
++    fn build(&self, app: &mut App) {
++        app.init_resource::<SolarMigrationState>()
++            .add_systems(Update, (check_sail_fleet_proximity, apply_solar_sail_effects));
++    }
++}
++
+ /// Indicates a fleet is a massive Solar Sail nomad fleet
+ #[derive(Component)]
+ pub struct SolarSailFleet;
+@@ -48,6 +56,7 @@
+ pub fn apply_solar_sail_effects(
+     state: Res<SolarMigrationState>,
+     mut power_query: Query<(&Building, &mut PowerSource)>,
+     mut temp_grid: Option<ResMut<TemperatureGrid>>,
++    time: Res<Time>,
+ ) {
+     // Determine the boost multiplier
+     let multiplier = if state.is_active {
+@@ -70,7 +79,7 @@
+     if state.is_active {
+         if let Some(ref mut grid) = temp_grid {
+             // Apply a global heat influx
+-            let extra_heat = 1.0 * state.intensity_multiplier;
++            let extra_heat = 1.0 * state.intensity_multiplier * time.delta_secs();
+             let width = grid.width;
+             let height = grid.height;
+             for x in 0..width {
+--- src/layer2/mod.rs
++++ src/layer2/mod.rs
+@@ -76,6 +76,7 @@
+         app.add_plugins(syzygy::SyzygyPlugin);
+         app.add_plugins(planetary_spin_up::PlanetarySpinUpPlugin);
+         app.add_plugins(empathic_plague::EmpathicPlaguePlugin);
++        app.add_plugins(solar_sail::SolarSailPlugin);
+
+         // ... (Other Layer 2 plugins to be added later)
+     }
