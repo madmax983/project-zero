@@ -186,7 +186,6 @@ pub fn manual_aura_system(
     }
 }
 
-
 #[cfg(test)]
 mod tests {
     use crate::layer1::economy::items::Item;

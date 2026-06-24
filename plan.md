@@ -1,21 +1,17 @@
-1. **Explore the codebase and understand the task**
-   - The user asked to implement the `1036` Institutional Memory specification.
-   - I explored `design/BACKLOG.md`, `design/IN_PROGRESS.md`, and `specs/1036-institutional-memory.md`.
-   - The core components (`src/layer1/institutional_memory.rs` and `src/layer1/institutional_memory_tests.rs`) were already implemented, but they had invalid module paths (`crate::layer1::items`).
-   - Replaced `crate::layer1::items` with `crate::layer1::economy::items` in both files.
+1. **Analyze the Architecture Issue:**
+   - The user "Atlas" wants us to fix structural dependencies and cohesion issues.
+   - `src/layer1/core/integration.rs` contains many bridge functions. The first one is `gravity_engineering_chronicle_bridge`.
+   - By moving `gravity_engineering_chronicle_bridge` to `src/layer1/architecture/gravity_engineering.rs`, we keep the domain logic specific to `gravity_engineering` in one place and start unwinding the "Blob" (`integration.rs`).
+   - We need to import `AddChronicleEvent` and `EventImportance` in `gravity_engineering.rs`.
 
-2. **Verify tests and constraints**
-   - Run `cargo fmt` to format code.
-   - Run `cargo check` and `cargo test --lib layer1::institutional_memory` to verify correctness.
-   - Run `cargo clippy -- -D warnings` to verify there are no warnings.
-   - Run `cargo-llvm-cov` to verify that code coverage meets the >=85% threshold.
+2. **Actions:**
+   - Modify `src/layer1/architecture/gravity_engineering.rs` to include `AddChronicleEvent` and `EventImportance`.
+   - Add the `gravity_engineering_chronicle_bridge` function to `gravity_engineering.rs`.
+   - Delete `gravity_engineering_chronicle_bridge` from `src/layer1/core/integration.rs`.
+   - Update `src/layer1/systems/observation.rs` to point to `crate::layer1::architecture::gravity_engineering::gravity_engineering_chronicle_bridge`.
+   - Update `tests/integration/gravity_engineering_chronicle.rs` to use `scale::layer1::architecture::gravity_engineering::gravity_engineering_chronicle_bridge`.
+   - Add a journal entry to `.jules/atlas.md` documenting this structural improvement.
 
-3. **Update trackers**
-   - Claimed the feature in `design/IN_PROGRESS.md` and removed it from `design/BACKLOG.md`.
-   - Updated `design/COMPLETED.md` with the completed feature and removed it from `design/IN_PROGRESS.md`.
-
-4. **Pre-commit step**
-   - Call `pre_commit_instructions` to ensure proper testing, verification, review, and reflection are done.
-
-5. **Submit the change**
-   - Complete the task by invoking `submit`.
+3. **Pre-commit Checks:**
+   - Run `cargo test` and `cargo clippy`. Ensure no warnings and no failing tests.
+   - Run `cargo fmt --all`.

@@ -1,10 +1,12 @@
 use bevy::prelude::*;
-use scale::layer1::architecture::building::{Building, BuildingType, Height, Material, MaterialType};
+use scale::layer1::architecture::building::{
+    Building, BuildingType, Height, Material, MaterialType,
+};
 use scale::layer1::architecture::gravity_engineering::evaluate_structural_integrity_system;
+use scale::layer1::architecture::gravity_engineering::gravity_engineering_chronicle_bridge;
 use scale::layer1::architecture::structure::Structure;
 use scale::layer1::core::chronicle::{AddChronicleEvent, EventImportance};
 use scale::layer1::core::events::BuildingCompletedEvent;
-use scale::layer1::core::integration::gravity_engineering_chronicle_bridge;
 use scale::layer2::syzygy::PlanetaryGravity;
 
 #[test]
@@ -20,10 +22,14 @@ fn test_gravity_engineering_chronicle_bridge_partial_collapse() {
     });
 
     // We must chain them so evaluate_structural_integrity_system modifies the Structure BEFORE the bridge reads the event
-    app.add_systems(Update, (
-        evaluate_structural_integrity_system,
-        gravity_engineering_chronicle_bridge,
-    ).chain());
+    app.add_systems(
+        Update,
+        (
+            evaluate_structural_integrity_system,
+            gravity_engineering_chronicle_bridge,
+        )
+            .chain(),
+    );
 
     let tall_building = app
         .world_mut()
@@ -31,7 +37,7 @@ fn test_gravity_engineering_chronicle_bridge_partial_collapse() {
             Building {
                 building_type: BuildingType::Housing,
             },
-            Height { floors: 6 }, // Too tall
+            Height { floors: 6 },         // Too tall
             Material(MaterialType::Wood), // Not reinforced
             Structure {
                 current_hp: 100.0,
@@ -40,10 +46,9 @@ fn test_gravity_engineering_chronicle_bridge_partial_collapse() {
         ))
         .id();
 
-    app.world_mut()
-        .send_event(BuildingCompletedEvent {
-            entity: tall_building,
-        });
+    app.world_mut().send_event(BuildingCompletedEvent {
+        entity: tall_building,
+    });
 
     app.update();
 
@@ -71,10 +76,14 @@ fn test_gravity_engineering_chronicle_bridge_instant_collapse() {
         base: 5.0,
     });
 
-    app.add_systems(Update, (
-        evaluate_structural_integrity_system,
-        gravity_engineering_chronicle_bridge,
-    ).chain());
+    app.add_systems(
+        Update,
+        (
+            evaluate_structural_integrity_system,
+            gravity_engineering_chronicle_bridge,
+        )
+            .chain(),
+    );
 
     let tall_building = app
         .world_mut()
@@ -91,10 +100,9 @@ fn test_gravity_engineering_chronicle_bridge_instant_collapse() {
         ))
         .id();
 
-    app.world_mut()
-        .send_event(BuildingCompletedEvent {
-            entity: tall_building,
-        });
+    app.world_mut().send_event(BuildingCompletedEvent {
+        entity: tall_building,
+    });
 
     app.update();
 
@@ -122,10 +130,14 @@ fn test_gravity_engineering_chronicle_bridge_no_damage() {
         base: 1.0,
     });
 
-    app.add_systems(Update, (
-        evaluate_structural_integrity_system,
-        gravity_engineering_chronicle_bridge,
-    ).chain());
+    app.add_systems(
+        Update,
+        (
+            evaluate_structural_integrity_system,
+            gravity_engineering_chronicle_bridge,
+        )
+            .chain(),
+    );
 
     let safe_building = app
         .world_mut()
@@ -142,14 +154,17 @@ fn test_gravity_engineering_chronicle_bridge_no_damage() {
         ))
         .id();
 
-    app.world_mut()
-        .send_event(BuildingCompletedEvent {
-            entity: safe_building,
-        });
+    app.world_mut().send_event(BuildingCompletedEvent {
+        entity: safe_building,
+    });
 
     app.update();
 
     let events = app.world().resource::<Events<AddChronicleEvent>>();
-    let mut reader = events.get_cursor();
-    assert_eq!(reader.len(events), 0, "Should NOT emit a Chronicle event for a safe building");
+    let reader = events.get_cursor();
+    assert_eq!(
+        reader.len(events),
+        0,
+        "Should NOT emit a Chronicle event for a safe building"
+    );
 }
