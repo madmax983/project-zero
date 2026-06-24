@@ -2756,8 +2756,10 @@ pub fn public_grievance_grudge_bridge(
     mut query: bevy_ecs::system::Query<&mut crate::layer1::social::inherited_grudges::GrudgeList>,
     mut commands: bevy_ecs::system::Commands,
 ) {
+    use bevy::utils::HashMap;
     use bevy_ecs::entity::Entity;
-    use std::collections::HashMap;
+    // ⚡ Bolt Optimization: Uses `bevy::utils::HashMap` (AHash) instead of `std::collections::HashMap`
+    // to eliminate SipHash overhead for `Entity` keys, avoiding bottlenecks during heavy grievance processing.
 
     // To prevent multiple inserts on the same entity overwriting each other in the same frame
     let mut pending_inserts: HashMap<Entity, crate::layer1::social::inherited_grudges::GrudgeList> =
