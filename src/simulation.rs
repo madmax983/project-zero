@@ -1458,6 +1458,7 @@ mod tests {
         world.init_resource::<crate::layer1::nature::atmosphere::SmogGrid>();
         world.init_resource::<Events<crate::layer1::tech::teleporter::psychosis::TeleportEvent>>();
         world.init_resource::<crate::layer1::nature::long_night::LongNightEvent>();
+        world.init_resource::<crate::layer1::fungal_network::SporeNetwork>();
 
         let schedule = build_simulation_schedule();
         world.add_schedule(schedule);
