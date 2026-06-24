@@ -445,6 +445,7 @@ pub fn register(schedule: &mut Schedule) {
     schedule.add_systems(
         (
             crate::layer1::core::integration::artists_muse_chronicle_bridge,
+            crate::layer1::core::integration::hypno_learning_chronicle_bridge,
             crate::layer1::core::integration::living_archive_chronicle_bridge,
             crate::layer1::core::integration::temporal_fugue_chronicle_bridge,
             crate::layer1::core::integration::institutional_memory_chronicle_bridge,

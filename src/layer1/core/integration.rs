@@ -3159,3 +3159,16 @@ pub fn symbiont_sabotage_bridge_system(
         }
     }
 }
+
+/// INT-1128: Bridges Hypno-Learning to Chronicle
+pub fn hypno_learning_chronicle_bridge(
+    query: Query<&crate::layer1::pop::PopName, Added<crate::layer1::tech::hypno_learning::MentalFog>>,
+    mut chronicle_events: bevy_ecs::event::EventWriter<crate::layer1::core::chronicle::AddChronicleEvent>,
+) {
+    for name in query.iter() {
+        chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
+            text: format!("{} awoke from a Hypno-Learning session with severe mental fog.", name.0),
+            importance: crate::layer1::core::chronicle::EventImportance::Minor,
+        });
+    }
+}
