@@ -611,3 +611,5 @@ mod sartorial_rebellion_bridge;
 mod temporal_fugue_bridge;
 #[path = "integration/void_stare_chronicle.rs"]
 mod void_stare_chronicle;
+#[path = "integration/hypno_learning_chronicle.rs"]
+mod hypno_learning_chronicle;

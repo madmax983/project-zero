@@ -1,4 +1,9 @@
 - `1128` Hypno-Learning — `specs/1128-hypno-learning.md`
+### INT-1128: Hypno-Learning -> Chronicle
+- **Date:** 2026-06-25
+- **Systems connected:** `MentalFog` creation -> `hypno_learning_chronicle_bridge` -> `AddChronicleEvent`
+- **Glue added:** Added `hypno_learning_chronicle_bridge` in `src/layer1/core/integration.rs` to process mental fog application upon waking from a hypno-learning pod and generate Chronicle records. Registered in `src/layer1/systems/observation.rs`.
+- **Tests:** Added `tests/integration/hypno_learning_chronicle.rs`.
 ### INT-1273: Gravity Debt -> Escape Velocity
 - **Date:** 2024-06-25
 - **Systems connected:** `GravityDebt` -> `gravity_debt_to_planetary_gravity_system` -> `PlanetaryGravity`
