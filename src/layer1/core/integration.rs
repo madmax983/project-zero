@@ -3195,3 +3195,19 @@ pub fn hypno_learning_chronicle_bridge(
         });
     }
 }
+
+/// INT-1307: Bridges `EarlyWarningEvent` to `AddChronicleEvent`
+pub fn early_warning_chronicle_bridge(
+    mut events: bevy_ecs::event::EventReader<crate::layer1::economy::information_black_market::EarlyWarningEvent>,
+    mut chronicle_events: bevy_ecs::event::EventWriter<crate::layer1::core::chronicle::AddChronicleEvent>,
+) {
+    for event in events.read() {
+        chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
+            text: format!(
+                "The Information Black Market intercepted an early warning: {} (Sector {}).",
+                event.event_type, event.sector_id
+            ),
+            importance: crate::layer1::core::chronicle::EventImportance::Major,
+        });
+    }
+}

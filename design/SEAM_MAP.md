@@ -1611,3 +1611,10 @@
 - **Glue added:** `gravity_engineering_chronicle_bridge` already existed in `src/layer1/core/integration.rs`. Added tests to ensure it correctly triggers from damage dealt by `evaluate_structural_integrity_system`.
 - **Schedule:** `evaluate_structural_integrity_system` is in `Layer1SystemSet::Execution` and `gravity_engineering_chronicle_bridge` is in `Layer1SystemSet::Observation`, ensuring the proper order.
 - **Tests:** `tests/integration/gravity_engineering_chronicle.rs`
+
+### INT-1307: Information Black Market -> Chronicle
+- **Date:** 2026-06-25
+- **Systems connected:** `EarlyWarningEvent` -> `early_warning_chronicle_bridge` -> `AddChronicleEvent`
+- **Glue added:** `early_warning_chronicle_bridge` in `src/layer1/core/integration.rs`.
+- **Schedule:** Registered the system in `src/layer1/systems/observation.rs`.
+- **Tests:** `tests/integration/information_black_market_bridge.rs`
