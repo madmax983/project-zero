@@ -501,4 +501,6 @@ pub mod oral_tradition_fallback;
 pub use oral_tradition_fallback::*;
 pub mod artists_muse;
 pub mod crafting;
+pub mod fungal_network;
+pub use fungal_network::{process_spore_taps_system, PopCollectivism, SporeNetwork, SporeTap};
 pub mod the_lottery;

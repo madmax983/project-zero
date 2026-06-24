@@ -355,6 +355,7 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::energy::gravity_siphon::process_singularity_mass_accumulation_system,
             crate::layer1::energy::gravity_siphon::trigger_orbital_decay_system,
             crate::layer1::core::integration::gravity_siphon_chronicle_bridge,
+            crate::layer1::fungal_network::process_spore_taps_system,
         )
             .chain()
             .in_set(Layer1SystemSet::Economy),
