@@ -25446,3 +25446,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you use the spores to gain a diplomatic edge, risking unpredictable 'translations,' or stick to traditional, slower, but more reliable communication?
 
 ---
+
+## The Gossip Economy
+
+**Layer:** 1
+
+**Fantasy:** Watching rumors shape the social fabric and economy of your colony.
+
+**Mechanic:** Pops exchange rumors when they interact. Rumors carry emotional weight (e.g., fear about a food shortage, excitement about a new relic). A rumor can artificially inflate demand for certain goods or trigger spontaneous migrations within the colony.
+
+**Emergence:** A false rumor about a gas leak in the primary mining shaft causes the entire mining caste to go on strike, crashing your economy over nothing but gossip.
+
+**Tension:** Do you implement harsh surveillance to suppress rumors, lowering morale, or let them spread and risk catastrophic panic cascades?
+
+---
+
+## The Language Fracture
+
+**Layer:** Cross-layer
+
+**Fantasy:** The slow drift of language tearing your empire apart or creating beautiful new cultures.
+
+**Mechanic:** Isolated colonies slowly develop linguistic drift over centuries. Eventually, their dialect diverges so much that diplomatic and trade communication with the core worlds becomes inefficient, causing massive administrative penalties.
+
+**Emergence:** Your oldest frontier colony declares independence not because of taxes, but because they literally no longer understand the decrees sent by the capital, viewing the core worlders as aliens.
+
+**Tension:** Do you spend massive resources on standardized education and cultural enforcement, or let unique planetary cultures bloom at the cost of imperial cohesion?
+
+---
+
+## Parasitic Space-Fauna Mining
+
+**Layer:** 2
+
+**Fantasy:** Harvesting resources from massive, living space creatures instead of dead rocks.
+
+**Mechanic:** Giant space-borne fauna drift through the system. Instead of mining asteroids, you attach mining platforms to these living leviathans. They provide infinite rare resources but slowly become agitated by the drilling.
+
+**Emergence:** Your most profitable mining rig is attached to a Void-Whale. The whale finally gets angry, breaks its orbit, and crashes directly into your primary agricultural space station, destroying both.
+
+**Tension:** How deep do you drill into the beast for profits before it decides to fight back, and do you keep it near your vulnerable stations for logistics or far away for safety?
+
+---
