@@ -1,6 +1,7 @@
 - [x] `1001` Vacuum Welding — `specs/1001-vacuum-welding.md` — completed 2026-06-22
 - [x] `1022` The Hive Mind Integration — `specs/1022-the-hive-mind-integration.md` — completed 2026-06-21
 - [x] `1128` Hypno-Learning — `specs/1128-hypno-learning.md` — completed 2024-06-15
+- [x] `1272` The Phantom Limb of Logistics — `specs/1272-the-phantom-limb-of-logistics.md` — completed 2024-05-31
 - [x] `INT-1161` Integration: Blind Auction -> Chronicle — completed 2026-06-21
 - [x] `1273` Gravity Debt — `specs/1273-gravity-debt.md` — completed 2026-06-11
 - [x] `INT-1273` Integration: Gravity Debt -> Escape Velocity — completed 2024-06-25
