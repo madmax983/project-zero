@@ -105,9 +105,11 @@ impl Plugin for PlanetarySpinUpPlugin {
                     planetary_spin_up::calculate_effective_gravity_system,
                     planetary_spin_up::trigger_coriolis_weather_system,
                     planetary_rings::apply_planetary_ring_effects_system,
+                    orbital_ring::update_shadow_band_system,
                 ),
             );
     }
 }
 pub mod leviathans;
 pub mod refugees;
+pub mod orbital_ring;
