@@ -113,3 +113,4 @@ impl Plugin for PlanetarySpinUpPlugin {
 pub mod leviathans;
 pub mod orbital_ring;
 pub mod refugees;
+pub mod solar_sail_migration;
