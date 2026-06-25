@@ -607,18 +607,18 @@ mod gravity_debt_escape_velocity;
 mod gravity_engineering_chronicle;
 #[path = "integration/hypno_learning_chronicle.rs"]
 mod hypno_learning_chronicle;
+#[path = "integration/information_black_market_bridge.rs"]
+mod information_black_market_bridge;
 #[path = "integration/phantom_limb_chronicle.rs"]
 mod phantom_limb_chronicle;
 #[path = "integration/sartorial_rebellion_bridge.rs"]
 mod sartorial_rebellion_bridge;
 #[path = "integration/temporal_fugue_bridge.rs"]
 mod temporal_fugue_bridge;
-#[path = "integration/void_stare_chronicle.rs"]
-mod void_stare_chronicle;
-#[path = "integration/information_black_market_bridge.rs"]
-mod information_black_market_bridge;
 #[path = "integration/the_silence_chronicle_bridge.rs"]
 pub mod the_silence_chronicle_bridge;
+#[path = "integration/void_stare_chronicle.rs"]
+mod void_stare_chronicle;
 
 #[path = "integration/architectural_sentience_bridge.rs"]
 mod architectural_sentience_bridge;

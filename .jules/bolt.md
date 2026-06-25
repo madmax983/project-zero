@@ -8,3 +8,6 @@
 **AHash over SipHash for Entity maps**
 **Learning:** Bevy provides `bevy::utils::HashMap` which uses `ahash`, a much faster hasher for integer keys like `Entity` than Rust's default `std::collections::HashMap` (which uses SipHash). Using SipHash for mapping entities or coordinates incurs unnecessary overhead.
 **Action:** Replace `std::collections::HashMap` with `bevy::utils::HashMap` when the keys are `Entity` or integer coordinate tuples to eliminate SipHash overhead.
+**Deferring allocations by avoiding intermediate vectors using `retain_mut`**
+**Learning:** `drain` followed by an assignment to `self.field = survivors` forces heap allocation of an intermediate `survivors` vector during operations like `take_damage`.
+**Action:** Replace this pattern with `retain_mut(|elem| { /* mutate inline and return true to keep, false to drop */ })`, filtering in-place and eliminating the intermediate heap allocation.

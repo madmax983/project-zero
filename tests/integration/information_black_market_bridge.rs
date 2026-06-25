@@ -1,7 +1,7 @@
 use bevy::prelude::*;
 use scale::layer1::core::chronicle::AddChronicleEvent;
-use scale::layer1::economy::information_black_market::EarlyWarningEvent;
 use scale::layer1::core::integration::early_warning_chronicle_bridge;
+use scale::layer1::economy::information_black_market::EarlyWarningEvent;
 
 #[test]
 fn test_early_warning_chronicle_bridge() {
