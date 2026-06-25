@@ -421,6 +421,27 @@ impl std::fmt::Display for StoryGenre {
     }
 }
 
+#[cfg(all(test, not(feature = "nova")))]
+mod tests_fallback {
+    use super::*;
+
+    #[test]
+    fn should_allow_fallback_struct_creation() {
+        let mut tradition = OralTradition::default();
+        tradition.add_story(Story {
+            text: "Fallback test".to_string(),
+            historical_date: 10,
+            mutations: 0,
+            genre: StoryGenre::Heroic,
+        });
+        assert_eq!(tradition.stories.len(), 1);
+
+        // Ensure fallback systems can be called without panicking
+        collect_chronicles_system();
+        storytelling_system();
+    }
+}
+
 #[cfg(all(test, feature = "nova"))]
 mod tests {
     #[allow(unused_imports)]
