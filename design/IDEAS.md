@@ -25529,3 +25529,58 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you hide in the dark and progress slowly, or build the monuments of a god and invite the wrath of the galaxy?
 
 ---
+## The Dreaming Sickness
+
+**Layer:** 1
+
+**Fantasy:** Watching a colony succumb to a shared delusion, questioning reality.
+
+**Mechanic:** A rare pathogen or environmental anomaly causes Pops to share a collective hallucination during sleep. This rapidly spreads, causing a new "Dream" need that must be fulfilled by sleeping, severely impacting productivity.
+
+**Emergence:** Entire work shifts might spontaneously fall asleep to return to the dream, leaving critical infrastructure unmanned. Some Pops might become "Dream Walkers," performing tasks while asleep but with unpredictable results.
+
+**Tension:** Do you aggressively quarantine the infected and force them to stay awake, causing extreme stress and potential riots, or do you dedicate resources to researching the dream and risk the entire colony becoming permanently comatose?
+
+---
+
+## The Penal Colony Uprising
+
+**Layer:** 2
+
+**Fantasy:** Dealing with the consequences of off-loading your society's unwanted elements.
+
+**Mechanic:** You establish a penal colony on a harsh, resource-rich planet (Layer 2 node). It provides cheap resources but has a constantly rising unrest level.
+
+**Emergence:** The prisoners manage to hijack a supply ship, converting it into a heavily armed raider. They begin blockading your trade routes and demanding recognition as an independent state.
+
+**Tension:** Do you negotiate with the criminals, giving them legitimacy and losing control of the resources, or do you send a military fleet to crush the uprising, risking a bloody war and the total destruction of the valuable infrastructure?
+
+---
+
+## Generational Terraforming Backlash
+
+**Layer:** Cross-layer
+
+**Fantasy:** Realizing that reshaping a world has long-term, unforeseen consequences on its inhabitants.
+
+**Mechanic:** Aggressive terraforming (Layer 2) alters the planet's biosphere. Generations later (Layer 1), the local Pops develop unique, sometimes detrimental mutations or cultural adaptations to the *process* of terraforming, not just the result.
+
+**Emergence:** A planet you turned from a desert to a jungle spawns a generation of Pops who are violently agoraphobic and refuse to work outside of enclosed canopy structures, completely halting surface expansion.
+
+**Tension:** Do you halt terraforming and accept a sub-optimal planet, or push through and risk creating a population fundamentally incompatible with your empire's standard way of life?
+
+---
+
+## Cultural Export Overload
+
+**Layer:** 3
+
+**Fantasy:** Winning through soft power, but losing control of your own culture in the process.
+
+**Mechanic:** Your civilization produces highly sought-after cultural goods or media (Layer 1/2). Other empires consume this, increasing your diplomatic influence over them (Layer 3).
+
+**Emergence:** A rival empire becomes so obsessed with your culture that their citizens start migrating to your core worlds in massive numbers, demanding to live the "authentic" life, overwhelming your infrastructure and causing xenophobic backlash from your native Pops.
+
+**Tension:** Do you restrict immigration and risk angering your biggest cultural fans, potentially sparking a war, or do you let them in and watch your own society tear itself apart trying to accommodate the influx?
+
+---
