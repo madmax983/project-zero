@@ -11,10 +11,10 @@ mod integration_tests {
         app.add_event::<AddChronicleEvent>();
 
         // Setup integration chain
-        app.add_systems(Update, (
-            process_lifeboat_launches,
-            escape_pods_chronicle_bridge,
-        ).chain());
+        app.add_systems(
+            Update,
+            (process_lifeboat_launches, escape_pods_chronicle_bridge).chain(),
+        );
 
         let pop1 = app.world_mut().spawn_empty().id();
         let pop2 = app.world_mut().spawn_empty().id();
@@ -29,7 +29,11 @@ mod integration_tests {
         app.update();
 
         // Assert DistressSignal was spawned
-        let distress_signals = app.world_mut().query::<&DistressSignal>().iter(app.world()).count();
+        let distress_signals = app
+            .world_mut()
+            .query::<&DistressSignal>()
+            .iter(app.world())
+            .count();
         assert_eq!(distress_signals, 1, "DistressSignal should be spawned");
 
         // Assert Chronicle event was emitted
@@ -40,7 +44,13 @@ mod integration_tests {
         assert!(event.text.contains("A lifeboat carrying 2 pop"));
 
         // Assert Pops were removed from the world
-        assert!(app.world().get_entity(pop1).is_err(), "pop1 should be despawned from the simulation");
-        assert!(app.world().get_entity(pop2).is_err(), "pop2 should be despawned from the simulation");
+        assert!(
+            app.world().get_entity(pop1).is_err(),
+            "pop1 should be despawned from the simulation"
+        );
+        assert!(
+            app.world().get_entity(pop2).is_err(),
+            "pop2 should be despawned from the simulation"
+        );
     }
 }

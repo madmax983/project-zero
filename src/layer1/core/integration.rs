@@ -3219,13 +3219,21 @@ pub fn early_warning_chronicle_bridge(
 /// INT-1127: Bridges `DistressSignal` (Escape Pods) to `AddChronicleEvent` (Chronicle).
 pub fn escape_pods_chronicle_bridge(
     mut commands: Commands,
-    query: Query<&crate::layer1::actions::escape::DistressSignal, Added<crate::layer1::actions::escape::DistressSignal>>,
-    mut chronicle_events: bevy_ecs::event::EventWriter<crate::layer1::core::chronicle::AddChronicleEvent>,
+    query: Query<
+        &crate::layer1::actions::escape::DistressSignal,
+        Added<crate::layer1::actions::escape::DistressSignal>,
+    >,
+    mut chronicle_events: bevy_ecs::event::EventWriter<
+        crate::layer1::core::chronicle::AddChronicleEvent,
+    >,
 ) {
     for distress_signal in query.iter() {
         let count = distress_signal.occupants.len();
         chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
-            text: format!("A lifeboat carrying {} pop(s) was launched into orbit as a distress signal!", count),
+            text: format!(
+                "A lifeboat carrying {} pop(s) was launched into orbit as a distress signal!",
+                count
+            ),
             importance: crate::layer1::core::chronicle::EventImportance::Major,
         });
 
