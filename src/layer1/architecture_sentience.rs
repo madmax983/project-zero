@@ -60,7 +60,8 @@ pub fn architectural_sentience_chronicle_bridge(
 ) {
     for _ in query.iter() {
         events.send(AddChronicleEvent {
-            text: "Automated infrastructure has unionized and gained sentience due to high unrest!".to_string(),
+            text: "Automated infrastructure has unionized and gained sentience due to high unrest!"
+                .to_string(),
             importance: EventImportance::Major,
         });
     }

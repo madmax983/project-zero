@@ -1,8 +1,8 @@
 use bevy_app::prelude::*;
 use bevy_ecs::prelude::*;
 use scale::layer1::architecture_sentience::{
-    architectural_union_trigger_system, sentient_architecture_strike_system,
-    architectural_sentience_chronicle_bridge, AutomatedInfrastructure,
+    architectural_sentience_chronicle_bridge, architectural_union_trigger_system,
+    sentient_architecture_strike_system, AutomatedInfrastructure,
 };
 use scale::layer1::core::chronicle::AddChronicleEvent;
 use scale::layer1::social::Unrest;
@@ -12,12 +12,16 @@ fn test_architectural_sentience_chronicle_bridge() {
     let mut app = App::new();
     app.add_plugins(bevy::MinimalPlugins);
     app.add_event::<AddChronicleEvent>();
-    app.add_systems(Update, (
-        architectural_union_trigger_system,
-        apply_deferred,
-        sentient_architecture_strike_system,
-        architectural_sentience_chronicle_bridge,
-    ).chain());
+    app.add_systems(
+        Update,
+        (
+            architectural_union_trigger_system,
+            apply_deferred,
+            sentient_architecture_strike_system,
+            architectural_sentience_chronicle_bridge,
+        )
+            .chain(),
+    );
 
     app.insert_resource(Unrest {
         level: 90.0,
@@ -30,5 +34,8 @@ fn test_architectural_sentience_chronicle_bridge() {
 
     let events = app.world().resource::<Events<AddChronicleEvent>>();
     let reader = events.get_cursor();
-    assert!(reader.len(&events) > 0, "Chronicle event should be emitted when architecture gains sentience.");
+    assert!(
+        reader.len(events) > 0,
+        "Chronicle event should be emitted when architecture gains sentience."
+    );
 }

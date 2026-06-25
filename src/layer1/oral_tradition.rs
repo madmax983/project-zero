@@ -3,13 +3,52 @@
 //! Converts colony history (Chronicle) into living legends that are shared in taverns.
 //! Stories evolve over time, gaining mutations and providing buffs to listeners.
 
+#[cfg(feature = "nova")]
 use crate::layer1::core::chronicle::{Chronicle, EventImportance};
+#[cfg(feature = "nova")]
 use crate::layer1::needs::Needs;
+#[cfg(feature = "nova")]
 use crate::layer1::social::Tavern;
+#[cfg(feature = "nova")]
 use crate::shared::log::MessageLog;
 use bevy_ecs::prelude::*;
+#[cfg(feature = "nova")]
 use rand::seq::SliceRandom;
+#[cfg(feature = "nova")]
 use rand::Rng;
+
+#[cfg(not(feature = "nova"))]
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub enum StoryGenre {
+    Heroic,
+    Tragedy,
+    Cautionary,
+    Trivial,
+}
+
+#[cfg(not(feature = "nova"))]
+#[derive(Debug, Clone)]
+pub struct Story {
+    pub text: String,
+    pub historical_date: u64,
+    pub mutations: u32,
+    pub genre: StoryGenre,
+}
+
+#[cfg(not(feature = "nova"))]
+#[derive(Resource, Debug, Clone, Default)]
+pub struct OralTradition {
+    pub stories: Vec<Story>,
+    pub last_processed_tick: u64,
+}
+
+#[cfg(not(feature = "nova"))]
+impl OralTradition {
+    pub fn add_story(&mut self, story: Story) {
+        self.stories.push(story);
+    }
+    pub fn process_chronicles(&mut self, _chronicle: &crate::layer1::core::chronicle::Chronicle) {}
+}
 
 /// A legend that has evolved from a historical event within the [`OralTradition`].
 ///
@@ -32,6 +71,7 @@ use rand::Rng;
 ///
 /// assert_eq!(legend.mutations, 0);
 /// ```
+#[cfg(feature = "nova")]
 #[derive(Debug, Clone)]
 pub struct Story {
     /// The current text of the story.
@@ -59,6 +99,7 @@ pub struct Story {
 /// let genre = StoryGenre::Cautionary;
 /// assert_eq!(format!("{}", genre), "⚠️ Cautionary");
 /// ```
+#[cfg(feature = "nova")]
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum StoryGenre {
     /// Heroic tales boost leisure/morale.
@@ -95,6 +136,7 @@ pub const MAX_STORIES: usize = 100;
 ///
 /// assert_eq!(tradition.stories.len(), 1);
 /// ```
+#[cfg(feature = "nova")]
 #[derive(Resource, Default, Debug)]
 pub struct OralTradition {
     /// The collection of known stories.
@@ -103,6 +145,7 @@ pub struct OralTradition {
     pub last_processed_tick: u64,
 }
 
+#[cfg(feature = "nova")]
 impl OralTradition {
     /// Adds a [`Story`] to the tradition if a story from the same historical date
     /// does not already exist. If adding the story exceeds `MAX_STORIES`, the oldest
@@ -236,6 +279,7 @@ impl OralTradition {
 /// schedule.add_systems(collect_chronicles_system);
 /// schedule.run(&mut world);
 /// ```
+#[cfg(feature = "nova")]
 pub fn collect_chronicles_system(mut tradition: ResMut<OralTradition>, chronicle: Res<Chronicle>) {
     tradition.process_chronicles(&chronicle);
 }
@@ -270,6 +314,7 @@ pub fn collect_chronicles_system() {
 /// schedule.add_systems(storytelling_system);
 /// schedule.run(&mut world);
 /// ```
+#[cfg(feature = "nova")]
 pub fn storytelling_system(
     mut tradition: ResMut<OralTradition>,
     mut tavern_query: Query<&Tavern>,
@@ -326,6 +371,7 @@ pub fn storytelling_system() {
     bevy::log::warn_once!("The `nova` feature is not enabled! `storytelling_system` will do nothing. Please add `features = [\"nova\"]` to your Cargo.toml.");
 }
 
+#[cfg(feature = "nova")]
 fn mutate_story(story: &mut Story, rng: &mut impl Rng) {
     let suffixes = [
         " It is known.",
@@ -375,14 +421,17 @@ impl std::fmt::Display for StoryGenre {
     }
 }
 
-#[cfg(test)]
+#[cfg(all(test, feature = "nova"))]
 mod tests {
     #[allow(unused_imports)]
     use super::*;
     #[allow(unused_imports)]
+    #[cfg(feature = "nova")]
     use crate::layer1::core::chronicle::{Chronicle, EventImportance};
 
+    #[cfg(feature = "nova")]
     use crate::layer1::needs::Needs;
+    #[cfg(feature = "nova")]
     use crate::layer1::social::Tavern;
 
     #[test]
@@ -420,6 +469,7 @@ mod tests {
 
     #[test]
     fn test_storytelling_buffs() {
+        #[cfg(feature = "nova")]
         use crate::shared::log::MessageLog;
         let mut world = World::new();
         let mut tradition = OralTradition::default();

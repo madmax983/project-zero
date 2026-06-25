@@ -279,9 +279,7 @@ pub mod geology;
 pub use geology::*;
 
 /// Oral Tradition system (Nova Feature).
-#[cfg(feature = "nova")]
 pub mod oral_tradition;
-#[cfg(feature = "nova")]
 pub use oral_tradition::*;
 
 /// Genius Loci system (Nova Feature).
@@ -494,10 +492,10 @@ pub use orphaned_swarm::*;
 pub mod architecture_superstition;
 pub use architecture_superstition::*;
 
-pub mod hive_mind_integration;
 pub mod artists_muse;
 pub mod crafting;
 pub mod fungal_network;
+pub mod hive_mind_integration;
 pub use fungal_network::{process_spore_taps_system, PopCollectivism, SporeNetwork, SporeTap};
 pub mod the_lottery;
 

@@ -19,7 +19,6 @@ pub use crate::layer1::psychology::needs::Needs;
 pub use crate::layer1::social::Tavern;
 pub use crate::shared::log::MessageLog;
 
-#[cfg(feature = "nova")]
 pub use crate::layer1::oral_tradition::{OralTradition, Story, StoryGenre};
 
 #[cfg(feature = "nova")]
