@@ -624,3 +624,6 @@ mod void_stare_chronicle;
 
 #[path = "integration/architectural_sentience_bridge.rs"]
 mod architectural_sentience_bridge;
+
+#[path = "integration/escape_pods_chronicle.rs"]
+mod escape_pods_chronicle;

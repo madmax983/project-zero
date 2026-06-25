@@ -1638,3 +1638,9 @@
 - **Systems connected:** `handle_independence_system` -> `cultural_drift_independence_bridge` -> `process_sovereignty_declaration`
 - **Glue added:** Added `cultural_drift_independence_bridge` in `src/layer2/integration.rs` to emit `DeclarationOfIndependenceEvent` when a colony's faction ID changes to 999 due to cultural drift.
 - **Tests:** `tests/integration/cultural_drift_independence.rs`
+
+### INT-1127: Escape Pods -> Chronicle
+- **Date:** 2024-06-25
+- **Systems connected:** `DistressSignal` creation -> `escape_pods_chronicle_bridge` -> `AddChronicleEvent`
+- **Glue added:** Added `escape_pods_chronicle_bridge` in `src/layer1/core/integration.rs`. Registered in `src/layer1/systems/observation.rs`.
+- **Tests:** `tests/integration/escape_pods_chronicle.rs`

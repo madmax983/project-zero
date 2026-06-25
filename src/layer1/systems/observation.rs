@@ -11,6 +11,7 @@ pub fn register(schedule: &mut Schedule) {
         (
             crate::layer1::architecture::gravity_engineering::gravity_engineering_chronicle_bridge,
             crate::layer1::core::integration::kinetic_strike_chronicle_bridge,
+            crate::layer1::core::integration::escape_pods_chronicle_bridge,
             crate::layer1::mycelial::detect_tripwire_step,
             crate::layer1::mycelial::aggro_network_entities,
         )
