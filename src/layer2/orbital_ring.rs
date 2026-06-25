@@ -34,7 +34,10 @@ mod tests {
     fn setup_app() -> App {
         let mut app = App::new();
         app.add_systems(Update, update_shadow_band_system);
-        app.insert_resource(OrbitalRing { active: true, rotation_angle: 0.0 });
+        app.insert_resource(OrbitalRing {
+            active: true,
+            rotation_angle: 0.0,
+        });
         app.init_resource::<ShadowBand>();
         app
     }
@@ -45,7 +48,10 @@ mod tests {
         app.update(); // Tick 1
 
         let ring = app.world().resource::<OrbitalRing>();
-        assert!(ring.rotation_angle > 0.0, "The orbital ring should rotate over time.");
+        assert!(
+            ring.rotation_angle > 0.0,
+            "The orbital ring should rotate over time."
+        );
     }
 
     #[test]
@@ -54,7 +60,10 @@ mod tests {
         app.update();
 
         let shadow = app.world().resource::<ShadowBand>();
-        assert_eq!(shadow.active, true, "The shadow band should be active when the ring is built.");
+        assert!(
+            shadow.active,
+            "The shadow band should be active when the ring is built."
+        );
     }
 
     #[test]
@@ -68,6 +77,9 @@ mod tests {
         app.update();
 
         let shadow = app.world().resource::<ShadowBand>();
-        assert_eq!(shadow.active, false, "The shadow band should be inactive when the ring is inactive.");
+        assert!(
+            !shadow.active,
+            "The shadow band should be inactive when the ring is inactive."
+        );
     }
 }

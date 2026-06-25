@@ -597,7 +597,9 @@ pub fn diplomatic_fashion_chronicle_bridge(
 /// Bridges HostileSpawnEvent to AddChronicleEvent
 pub fn the_silence_chronicle_bridge(
     mut events: bevy_ecs::prelude::EventReader<crate::layer3::silence::HostileSpawnEvent>,
-    mut chronicle_events: bevy_ecs::prelude::EventWriter<crate::layer1::core::chronicle::AddChronicleEvent>,
+    mut chronicle_events: bevy_ecs::prelude::EventWriter<
+        crate::layer1::core::chronicle::AddChronicleEvent,
+    >,
 ) {
     for event in events.read() {
         chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {

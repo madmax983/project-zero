@@ -134,9 +134,9 @@ pub mod founder_effect {
 pub use founder_effect::*;
 
 pub mod cultural_drift {
-    use bevy_ecs::prelude::*;
     use bevy::prelude::Transform;
     use bevy::prelude::Vec2;
+    use bevy_ecs::prelude::*;
 
     #[derive(Resource)]
     pub struct HomeworldLocation {
@@ -201,8 +201,13 @@ pub mod cultural_drift {
 
         fn setup_app() -> App {
             let mut app = App::new();
-            app.add_systems(Update, (calculate_cultural_drift_system, handle_independence_system));
-            app.insert_resource(HomeworldLocation { position: Vec2::ZERO });
+            app.add_systems(
+                Update,
+                (calculate_cultural_drift_system, handle_independence_system),
+            );
+            app.insert_resource(HomeworldLocation {
+                position: Vec2::ZERO,
+            });
             app
         }
 
@@ -211,12 +216,18 @@ pub mod cultural_drift {
             let mut app = setup_app();
 
             // Spawn a colony far away
-            let colony_id = app.world_mut().spawn((
-                ColonyMarker,
-                Transform::from_xyz(1000.0, 0.0, 0.0),
-                CulturalDrift { value: 0.0, independence_threshold: 100.0 },
-                CommsRelay { is_active: false },
-            )).id();
+            let colony_id = app
+                .world_mut()
+                .spawn((
+                    ColonyMarker,
+                    Transform::from_xyz(1000.0, 0.0, 0.0),
+                    CulturalDrift {
+                        value: 0.0,
+                        independence_threshold: 100.0,
+                    },
+                    CommsRelay { is_active: false },
+                ))
+                .id();
 
             app.update(); // Tick 1
 
@@ -228,24 +239,44 @@ pub mod cultural_drift {
         fn test_active_comms_reduce_drift_rate() {
             let mut app = setup_app();
 
-            let far_colony_id = app.world_mut().spawn((
-                ColonyMarker,
-                Transform::from_xyz(1000.0, 0.0, 0.0),
-                CulturalDrift { value: 0.0, independence_threshold: 100.0 },
-                CommsRelay { is_active: false },
-            )).id();
+            let far_colony_id = app
+                .world_mut()
+                .spawn((
+                    ColonyMarker,
+                    Transform::from_xyz(1000.0, 0.0, 0.0),
+                    CulturalDrift {
+                        value: 0.0,
+                        independence_threshold: 100.0,
+                    },
+                    CommsRelay { is_active: false },
+                ))
+                .id();
 
-            let comms_colony_id = app.world_mut().spawn((
-                ColonyMarker,
-                Transform::from_xyz(1000.0, 0.0, 0.0),
-                CulturalDrift { value: 0.0, independence_threshold: 100.0 },
-                CommsRelay { is_active: true }, // Active comms!
-            )).id();
+            let comms_colony_id = app
+                .world_mut()
+                .spawn((
+                    ColonyMarker,
+                    Transform::from_xyz(1000.0, 0.0, 0.0),
+                    CulturalDrift {
+                        value: 0.0,
+                        independence_threshold: 100.0,
+                    },
+                    CommsRelay { is_active: true }, // Active comms!
+                ))
+                .id();
 
             app.update();
 
-            let drift_no_comms = app.world().get::<CulturalDrift>(far_colony_id).unwrap().value;
-            let drift_with_comms = app.world().get::<CulturalDrift>(comms_colony_id).unwrap().value;
+            let drift_no_comms = app
+                .world()
+                .get::<CulturalDrift>(far_colony_id)
+                .unwrap()
+                .value;
+            let drift_with_comms = app
+                .world()
+                .get::<CulturalDrift>(comms_colony_id)
+                .unwrap()
+                .value;
 
             assert!(drift_with_comms < drift_no_comms);
         }
@@ -254,13 +285,19 @@ pub mod cultural_drift {
         fn test_colony_declares_independence() {
             let mut app = setup_app();
 
-            let colony_id = app.world_mut().spawn((
-                ColonyMarker,
-                Transform::from_xyz(1000.0, 0.0, 0.0),
-                CulturalDrift { value: 101.0, independence_threshold: 100.0 },
-                CommsRelay { is_active: false },
-                Faction { id: 0 }, // Player faction
-            )).id();
+            let colony_id = app
+                .world_mut()
+                .spawn((
+                    ColonyMarker,
+                    Transform::from_xyz(1000.0, 0.0, 0.0),
+                    CulturalDrift {
+                        value: 101.0,
+                        independence_threshold: 100.0,
+                    },
+                    CommsRelay { is_active: false },
+                    Faction { id: 0 }, // Player faction
+                ))
+                .id();
 
             app.update(); // Independence check runs
 

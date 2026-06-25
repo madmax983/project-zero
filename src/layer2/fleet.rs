@@ -186,21 +186,23 @@ impl FleetComposition {
 
     /// Applies damage to the fleet, destroying ships if necessary.
     /// Returns a list of destroyed ship types.
+    ///
+    /// ⚡ Bolt Optimization: Uses `retain_mut` instead of `drain` to filter survivors
+    /// in-place, eliminating the `survivors` intermediate heap allocation.
     pub fn take_damage(&mut self, mut damage: f32) -> Vec<crate::layer2::ship::ShipType> {
         let mut destroyed = Vec::new();
-        let mut survivors = Vec::new();
 
-        for mut ship in self.ships.drain(..) {
+        self.ships.retain_mut(|ship| {
             if damage >= ship.health {
                 damage -= ship.health;
                 destroyed.push(ship.ship_type);
+                false
             } else {
                 ship.health -= damage;
-                survivors.push(ship);
                 damage = 0.0;
+                true
             }
-        }
-        self.ships = survivors;
+        });
         destroyed
     }
 }
