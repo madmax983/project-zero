@@ -544,6 +544,8 @@ fn register_simulation_core_systems(schedule: &mut Schedule) {
         crate::layer1::nature::long_night::start_long_night,
         crate::layer1::nature::long_night::process_long_night_effects
             .after(crate::layer1::nature::solar::update_solar_output_system),
+                crate::layer2::solar_sail_migration::check_sail_fleet_proximity,
+                crate::layer2::solar_sail_migration::apply_solar_sail_effects.after(crate::layer1::nature::solar::update_solar_output_system),
     ));
     schedule.add_systems((
         crate::layer1::economy::apply_cultural_contraband_system,
@@ -1468,6 +1470,7 @@ mod tests {
         world.init_resource::<Events<crate::layer1::tech::teleporter::psychosis::TeleportEvent>>();
         world.init_resource::<crate::layer1::nature::long_night::LongNightEvent>();
         world.init_resource::<crate::layer1::fungal_network::SporeNetwork>();
+        world.init_resource::<crate::layer2::solar_sail_migration::SolarMigrationState>();
 
         let schedule = build_simulation_schedule();
         world.add_schedule(schedule);
