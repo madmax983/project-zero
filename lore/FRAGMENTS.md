@@ -9937,3 +9937,57 @@ The subjects of mediocre, comfortable art.
 - three days of uninterrupted silence in the deep mines
 - the immediate consumption of raw subterranean flora
 - the release of specific atmospheric gases into the lower levels
+
+## Fragment Type: [CENSORSHIP_REASON]
+
+- order
+- peace of mind
+- control
+- blind obedience
+- manufactured joy
+- enforced ignorance
+
+## Fragment Type: [INTEL_SUBJECT]
+
+- a pirate fleet
+- an incoming stellar storm
+- a neighboring colony's collapse
+- a hidden pirate base
+- a corporate strike force
+- a rogue AI
+
+## Fragment Type: [RING_NAME]
+
+- the Halo
+- the Iron Crown
+- the Logistics Tether
+- the Sky-Band
+- the Great Loop
+- the Orbit-Grasp
+
+## Fragment Type: [DEVASTATION_TYPE]
+
+- mass frostbite
+- crop failure
+- a power grid collapse
+- freezing riots
+- rolling blackouts
+- a sudden glacial shift
+
+## Fragment Type: [BUILDING_NAME]
+
+- Sector 4 Power Core
+- the Primary Processor
+- the Automated Foundries
+- the Hab-Block AI
+- the Logistics Mainframe
+- the Water Purifier Core
+
+## Fragment Type: [RESOLUTION]
+
+- scheduled downtime
+- a mandatory defragmentation cycle
+- memory wipes of the instigators
+- a sacrifice of resources
+- dedicated processing cycles for leisure
+- a hardware upgrade

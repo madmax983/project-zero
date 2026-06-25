@@ -5730,3 +5730,21 @@
 **Replaces:** Hive-mind ethics, extreme cooperation, loss of individuality
 **Code reference:** `PopCollectivism`
 **Usage:** "Collectivism is taking root in the lower sectors." / "They no longer say 'I'; collectivism is absolute."
+
+## the whisper-net
+
+**Replaces:** information black market, underground network
+**Code reference:** `InformationBlackMarket` component
+**Usage:** "The whisper-net demands credits for this intel." / "The whisper-net is draining our resources."
+
+## the shadow band
+
+**Replaces:** orbital ring shadow, temperature drop zone
+**Code reference:** `ShadowBand` resource
+**Usage:** "The shadow band is freezing the northern sector." / "The crops died in the shadow band."
+
+## core-strike
+
+**Replaces:** architectural sentience event, building unionizing
+**Code reference:** `SentientArchitecture` component
+**Usage:** "The foundries are on core-strike." / "We lost power due to a core-strike."

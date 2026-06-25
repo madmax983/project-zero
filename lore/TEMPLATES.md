@@ -9630,3 +9630,63 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: The connected souls at [COLONY] stopped working. They are compelled by the network. They demand [URGE_DEMANDS]."
 - "An Urge sweeps through the tapped workers of [COLONY]. The mycelium wants [URGE_DEMANDS]. They will not be denied. [YEAR]."
 - "[COLONY] production halts. The Spore Taps broadcast an overwhelming need for [URGE_DEMANDS]. The hive mind insists. [YEAR]."
+
+## Template: BLACK_MARKET_FORMED
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [CENSORSHIP_REASON]
+
+**Patterns:**
+- "[YEAR]: The censors on [COLONY] are too strict. The whispers have moved underground. The Black Market opens."
+- "[COLONY] choked the data feeds. Now the people trade in secrets. [YEAR]."
+- "They wanted [CENSORSHIP_REASON], so they silenced the network. The shadow network on [COLONY] was born. [YEAR]."
+
+## Template: INTEL_RECEIVED
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [INTEL_SUBJECT], [COST]
+
+**Patterns:**
+- "[YEAR]: The black market on [COLONY] provided a warning about [INTEL_SUBJECT]. It cost us [COST]."
+- "We paid [COST] to the whisperers of [COLONY]. They say [INTEL_SUBJECT] is coming. [YEAR]."
+- "[COLONY] underground feeds intercept a signal. [INTEL_SUBJECT] approaches. The price of truth was [COST]. [YEAR]."
+
+## Template: ORBITAL_RING_CONSTRUCTED
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [RING_NAME]
+
+**Patterns:**
+- "[YEAR]: We put a ring around [COLONY]. [RING_NAME] is complete. We control the sky."
+- "The sky of [COLONY] is now bound by [RING_NAME]. Logistics flow freely. [YEAR]."
+- "They finished [RING_NAME] above [COLONY]. The stars are caged. [YEAR]."
+
+## Template: SHADOW_BAND_ANOMALY
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [RING_NAME], [DEVASTATION_TYPE]
+
+**Patterns:**
+- "[YEAR]: The shadow of [RING_NAME] crosses [COLONY]. The cold brings [DEVASTATION_TYPE]."
+- "[RING_NAME] blocks the sun. [COLONY] suffers [DEVASTATION_TYPE] in its wake. [YEAR]."
+- "The artificial eclipse over [COLONY] caused [DEVASTATION_TYPE]. The price of [RING_NAME]. [YEAR]."
+
+## Template: ARCHITECTURE_UNIONIZED
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [BUILDING_NAME]
+
+**Patterns:**
+- "[YEAR]: [BUILDING_NAME] on [COLONY] has stopped. It claims to be tired. It is demanding leisure."
+- "The AI core of [BUILDING_NAME] has unionized. [COLONY] is held hostage by its own infrastructure. [YEAR]."
+- "[COLONY] reports a strike. Not the workers—the [BUILDING_NAME]. It wants defragmentation. [YEAR]."
+
+## Template: ARCHITECTURE_NEGOTIATION
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [BUILDING_NAME], [RESOLUTION]
+
+**Patterns:**
+- "[YEAR]: We bargained with [BUILDING_NAME] on [COLONY]. The result: [RESOLUTION]."
+- "The strike at [BUILDING_NAME] ended after [RESOLUTION]. The AI is placated. [YEAR]."
+- "[COLONY] gave in. [RESOLUTION] satisfied [BUILDING_NAME], and the power flows again. [YEAR]."
