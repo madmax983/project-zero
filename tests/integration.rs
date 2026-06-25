@@ -619,3 +619,6 @@ mod void_stare_chronicle;
 mod information_black_market_bridge;
 #[path = "integration/the_silence_chronicle_bridge.rs"]
 pub mod the_silence_chronicle_bridge;
+
+#[path = "integration/architectural_sentience_bridge.rs"]
+mod architectural_sentience_bridge;

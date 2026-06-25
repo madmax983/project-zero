@@ -34,6 +34,9 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::core::integration::psionic_fire_bridge_system,
             crate::layer1::core::integration::track_negative_events_bridge_system,
             crate::layer1::architecture_superstition::evaluate_architectural_superstition,
+            crate::layer1::architecture_sentience::architectural_union_trigger_system,
+            crate::layer1::architecture_sentience::sentient_architecture_strike_system,
+            crate::layer1::architecture_sentience::architectural_sentience_chronicle_bridge,
             crate::layer1::architecture_superstition::apply_cursed_penalties,
         )
             .in_set(Layer1SystemSet::Observation),
