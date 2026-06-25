@@ -1625,3 +1625,10 @@
 - **Glue added:** `the_silence_chronicle_bridge` in `src/layer3/integration.rs`
 - **Schedule:** Registered in simulation loop after `check_hostile_spawn_system`.
 - **Tests:** `tests/integration/the_silence_chronicle_bridge.rs`
+
+### INT-1049: Architectural Sentience -> Chronicle
+- **Date:** 2026-10-31
+- **Systems connected:** `architectural_union_trigger_system` -> `architectural_sentience_chronicle_bridge` -> `AddChronicleEvent`
+- **Glue added:** `architectural_sentience_chronicle_bridge` in `src/layer1/architecture_sentience.rs`
+- **Schedule:** Registered in Layer 1 Observation schedule (`src/layer1/systems/observation.rs`).
+- **Tests:** `tests/integration/architectural_sentience_bridge.rs`

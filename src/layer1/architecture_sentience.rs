@@ -52,6 +52,20 @@ pub fn sentient_architecture_strike_system(
     }
 }
 
+use crate::layer1::core::chronicle::{AddChronicleEvent, EventImportance};
+
+pub fn architectural_sentience_chronicle_bridge(
+    mut events: EventWriter<AddChronicleEvent>,
+    query: Query<Entity, Added<SentientArchitecture>>,
+) {
+    for _ in query.iter() {
+        events.send(AddChronicleEvent {
+            text: "Automated infrastructure has unionized and gained sentience due to high unrest!".to_string(),
+            importance: EventImportance::Major,
+        });
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
