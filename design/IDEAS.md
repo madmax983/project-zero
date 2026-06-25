@@ -25584,3 +25584,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you restrict immigration and risk angering your biggest cultural fans, potentially sparking a war, or do you let them in and watch your own society tear itself apart trying to accommodate the influx?
 
 ---
+## The Deep Rot
+
+**Layer:** 1
+
+**Fantasy:** Watching infrastructure slowly decay from the inside out due to unseen biological forces.
+
+**Mechanic:** A slow-spreading fungal infection that specifically targets and degrades structural materials in buildings over time.
+
+**Emergence:** A seemingly healthy colony suddenly faces simultaneous collapse of multiple critical buildings as the rot reaches a critical threshold.
+
+**Tension:** Do you proactively tear down and rebuild suspected infected structures at great cost, or wait for visible signs and risk catastrophic failure?
+
+---
+
+## Kessler Syndrome
+
+**Layer:** 2
+
+**Fantasy:** Dealing with the consequences of reckless orbital expansion and warfare.
+
+**Mechanic:** Destroyed ships and stations leave behind orbital debris. High debris density increases the chance of collisions, which create more debris.
+
+**Emergence:** A minor skirmish in low orbit triggers a chain reaction that completely seals off a planet from space travel for generations.
+
+**Tension:** Do you use dirty, debris-creating weapons to win a battle quickly, or risk losing the fight to preserve the orbital environment?
+
+---
+
+## The Empathy Virus
+
+**Layer:** 3
+
+**Fantasy:** A biological weapon that fundamentally alters a civilization's alignment instead of killing them.
+
+**Mechanic:** A contagious pathogen that forcibly increases a population's xenophilia and pacifism.
+
+**Emergence:** A ruthless, militaristic empire accidentally infects itself and suddenly sues for peace, freeing all their conquered thralls and completely destabilizing the galactic power balance.
+
+**Tension:** Do you weaponize a disease that makes enemies love you, risking your own population losing its edge, or rely on conventional, destructive warfare?
+
+---
