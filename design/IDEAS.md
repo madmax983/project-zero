@@ -25488,3 +25488,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** How deep do you drill into the beast for profits before it decides to fight back, and do you keep it near your vulnerable stations for logistics or far away for safety?
 
 ---
+## The Maintenance Cults
+
+**Layer:** 1
+
+**Fantasy:** Watching workers start to worship the ancient machines they are repairing, substituting engineering for religion.
+
+**Mechanic:** As machines or buildings age, their original maintenance instructions are forgotten. Pops begin performing "Ritual Maintenance" which is less efficient but grants them massive spiritual/mood bonuses. Eventually, they violently oppose replacing or dismantling the inefficient old machine.
+
+**Emergence:** A critical life-support system is breaking down, but the engineers refuse to let you upgrade it because it's their "god", leading to a violent holy war when you try to dismantle the failing infrastructure.
+
+**Tension:** Do you force a modernization that causes a massive riot, or let the colony slowly suffocate under the weight of an inefficient, holy machine?
+
+---
+
+## The Exile Fleets
+
+**Layer:** Cross-layer
+
+**Fantasy:** Turning a political problem on your planet into a future existential threat in space.
+
+**Mechanic:** Instead of executing rebels or suppressing a riot (Layer 1), you can force the dissidents onto rudimentary "Exile Ships" and launch them into the system (Layer 2). They are removed from your colony, instantly solving the crisis, but they become independent rogue factions in the outer system, scavenging and building their own strength.
+
+**Emergence:** You solve a major food riot by exiling the hungry faction. Fifty years later, they return as a hardened, militaristic armada riding hollowed-out asteroids, laying siege to the very world that cast them out.
+
+**Tension:** Do you deal with the messy, resource-intensive reality of internal politics now, or kick the can down the road and create a powerful future enemy?
+
+---
+
+## Megastructural Hubris
+
+**Layer:** Cross-layer
+
+**Fantasy:** Building something so magnificent it attracts the wrong kind of attention.
+
+**Mechanic:** You construct massive, system-spanning megastructures (like a Dyson Sphere). While these provide near-infinite resources (Layer 2), their energy signature becomes visible across the entire galactic map (Layer 3), immediately drawing the attention of ancient, dormant threats or greedy empires who previously didn't know you existed.
+
+**Emergence:** Your glorious new Dyson Sphere solves all your energy needs forever, but three cycles after its completion, a terrifyingly advanced fleet of unknown origin appears at the edge of your system, demanding it.
+
+**Tension:** Do you hide in the dark and progress slowly, or build the monuments of a god and invite the wrath of the galaxy?
+
+---
