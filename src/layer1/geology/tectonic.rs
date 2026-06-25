@@ -22,10 +22,16 @@ impl Default for TectonicStress {
 #[derive(Event)]
 pub struct MegaQuakeEvent;
 
+#[derive(Event)]
+pub struct ReliefQuakeEvent {
+    pub amount: f32,
+}
+
 pub fn update_stress_system(
     mut stress: ResMut<TectonicStress>,
     mut mining: EventReader<MiningEvent>,
     mut explosions: EventReader<ExplosionEvent>,
+    mut relief_quakes: EventReader<ReliefQuakeEvent>,
 ) {
     // 1. Add Stress
     for _ in mining.read() {
@@ -35,7 +41,12 @@ pub fn update_stress_system(
         stress.current += event.damage * 0.1;
     }
 
-    // 2. Dissipate
+    // 2. Reduce Stress from Relief Quakes
+    for event in relief_quakes.read() {
+        stress.current = (stress.current - event.amount).max(0.0);
+    }
+
+    // 3. Dissipate
     stress.current = (stress.current - stress.dissipation_rate).max(0.0);
 }
 
@@ -60,7 +71,7 @@ pub fn check_quake_system(
 mod tests {
     use crate::layer1::environment::volatile::ExplosionEvent;
     use crate::layer1::geology::tectonic::{
-        check_quake_system, update_stress_system, MegaQuakeEvent, TectonicStress,
+        check_quake_system, update_stress_system, MegaQuakeEvent, ReliefQuakeEvent, TectonicStress,
     };
     use crate::layer1::resources::MiningEvent;
     use bevy_ecs::prelude::*;
@@ -71,6 +82,7 @@ mod tests {
         world.insert_resource(TectonicStress::default());
         world.init_resource::<Events<MiningEvent>>();
         world.init_resource::<Events<ExplosionEvent>>();
+        world.init_resource::<Events<ReliefQuakeEvent>>();
 
         let mut schedule = Schedule::default();
         schedule.add_systems(update_stress_system);
@@ -94,6 +106,7 @@ mod tests {
         });
         world.init_resource::<Events<MiningEvent>>();
         world.init_resource::<Events<ExplosionEvent>>();
+        world.init_resource::<Events<ReliefQuakeEvent>>();
 
         let mut schedule = Schedule::default();
         schedule.add_systems(update_stress_system);
@@ -102,6 +115,29 @@ mod tests {
 
         let stress = world.resource::<TectonicStress>();
         assert_eq!(stress.current, 49.0);
+    }
+
+    #[test]
+    fn test_relief_quake_reduces_stress() {
+        let mut world = World::new();
+        world.insert_resource(TectonicStress {
+            current: 50.0,
+            threshold: 100.0,
+            dissipation_rate: 0.0,
+        });
+        world.init_resource::<Events<MiningEvent>>();
+        world.init_resource::<Events<ExplosionEvent>>();
+        world.init_resource::<Events<ReliefQuakeEvent>>();
+
+        let mut schedule = Schedule::default();
+        schedule.add_systems(update_stress_system);
+
+        world.send_event(ReliefQuakeEvent { amount: 20.0 });
+
+        schedule.run(&mut world);
+
+        let stress = world.resource::<TectonicStress>();
+        assert_eq!(stress.current, 30.0);
     }
 
     #[test]

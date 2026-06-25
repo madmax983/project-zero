@@ -57,6 +57,7 @@ pub fn register(schedule: &mut Schedule) {
             update_event_buffer::<crate::layer1::nature::biosphere_empathy::FloraDamagedEvent>,
             update_event_buffer::<crate::layer1::ancestral_graves::SacrilegeEvent>,
             update_event_buffer::<crate::layer1::geology::tectonic::MegaQuakeEvent>,
+            update_event_buffer::<crate::layer1::geology::tectonic::ReliefQuakeEvent>,
             update_event_buffer::<crate::layer1::logistics::orbital_drop::OrbitalDropEvent>,
             update_event_buffer::<crate::layer1::geodetic::GolemFormedEvent>,
             update_event_buffer::<crate::layer1::drone::DroneDisconnectedEvent>,

@@ -824,3 +824,4 @@
 - [x] `1307` The Information Black Market — `specs/1307-information-black-market.md` — completed 2026-06-24
 - [x] `INT-1307` Integration: Information Black Market -> Chronicle — completed 2026-06-25
 - [x] `INT-287` Integration: The Silence -> Chronicle — completed 2026-10-31
+- [x] `1211` Tectonic Stress — `specs/1211-tectonic-stress.md` — completed 2026-06-25
