@@ -12,3 +12,4 @@ pub enum Quality {
     Normal,
     Masterpiece,
 }
+pub mod byproducts;
