@@ -183,6 +183,13 @@ pub fn register(schedule: &mut Schedule) {
     );
     schedule.add_systems(
         (
+            crate::layer1::clothing::hypothermia_system,
+            crate::layer1::clothing::clothing_wear_system,
+        ).in_set(Layer1SystemSet::Economy),
+    );
+
+    schedule.add_systems(
+        (
             crate::layer1::economy::remittances::process_remittances_system,
             healing_system,
             crate::layer1::integration::medical_debt_bridge_system.after(healing_system),
@@ -193,6 +200,8 @@ pub fn register(schedule: &mut Schedule) {
                 .after(crate::layer1::window::update_window_views_system),
             check_heirloom_status_system,
             crate::layer1::trade::merchant_arrival_system,
+
+
             crate::layer1::law::contraband::enforce_prohibition_system,
             crate::layer1::visitor::spawn_visitor_system,
             spawn_inspector_system.after(crate::layer1::visitor::spawn_visitor_system),

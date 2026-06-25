@@ -827,3 +827,4 @@
 - [x] `INT-1049` Integration: Architectural Sentience -> Chronicle — completed 2026-10-31
 - [x] `311` The Orbital Ring — `specs/311-orbital-ring.md` — completed 2026-02-01
 - [x] `302` The Solar Sail Migration — `specs/302-solar-sail-migration.md` — completed 2026-10-31
+- [x] `040` Clothing and Temperature — `specs/040-clothing-temperature.md` — completed 2026-06-25
