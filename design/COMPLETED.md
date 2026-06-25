@@ -828,3 +828,4 @@
 - [x] `311` The Orbital Ring — `specs/311-orbital-ring.md` — completed 2026-02-01
 - [x] `302` The Solar Sail Migration — `specs/302-solar-sail-migration.md` — completed 2026-10-31
 - [x] `INT-282` Integration: Cultural Drift -> Declaration of Independence — completed 2026-06-25
+- [x] `INT-1127` Integration: Escape Pods -> Chronicle & Pop Simulation Removal — completed 2026-06-25
