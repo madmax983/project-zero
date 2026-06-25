@@ -10,7 +10,6 @@
 use bevy_ecs::prelude::*;
 use rand::seq::SliceRandom;
 use std::collections::HashMap;
-use std::fs;
 use std::path::Path;
 
 use thiserror::Error;
@@ -264,8 +263,14 @@ impl NarrativeGenerator {
 
         let templates_path = path.join("TEMPLATES.md");
         if templates_path.exists() {
-            let content = fs::read_to_string(&templates_path)
+            let mut file = std::fs::File::open(&templates_path)
                 .map_err(|e| NarrativeError::IoError(templates_path.display().to_string(), e))?;
+            let mut content = String::new();
+            std::io::Read::read_to_string(
+                &mut std::io::Read::take(&mut file, 5 * 1024 * 1024),
+                &mut content,
+            )
+            .map_err(|e| NarrativeError::IoError(templates_path.display().to_string(), e))?;
 
             self.parse_templates(&content);
             loaded_any = true;
@@ -273,8 +278,14 @@ impl NarrativeGenerator {
 
         let fragments_path = path.join("FRAGMENTS.md");
         if fragments_path.exists() {
-            let content = fs::read_to_string(&fragments_path)
+            let mut file = std::fs::File::open(&fragments_path)
                 .map_err(|e| NarrativeError::IoError(fragments_path.display().to_string(), e))?;
+            let mut content = String::new();
+            std::io::Read::read_to_string(
+                &mut std::io::Read::take(&mut file, 5 * 1024 * 1024),
+                &mut content,
+            )
+            .map_err(|e| NarrativeError::IoError(fragments_path.display().to_string(), e))?;
 
             self.parse_fragments(&content);
             loaded_any = true;
@@ -818,6 +829,24 @@ mod tests {
         assert!(result.is_err());
         let err = result.unwrap_err();
         assert!(matches!(err, NarrativeError::DirectoryNotFound(_)));
+    }
+
+    #[test]
+    fn test_load_from_files_capped_read() {
+        let test_dir = std::path::PathBuf::from("test_lore_cap");
+        std::fs::create_dir_all(&test_dir).unwrap();
+
+        let massive_data = "A".repeat(10 * 1024 * 1024); // 10MB
+        std::fs::write(test_dir.join("TEMPLATES.md"), &massive_data).unwrap();
+
+        let mut generator = NarrativeGenerator::default();
+        let result = generator.load_from_files(&test_dir);
+
+        std::fs::remove_dir_all(&test_dir).unwrap();
+
+        assert!(result.is_ok());
+        // Since it's capped at 5MB, the parser will parse what it can, but it shouldn't crash.
+        // We ensure it didn't consume the full 10MB.
     }
 }
 

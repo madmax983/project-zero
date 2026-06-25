@@ -13,3 +13,6 @@
 2026-06-20 - Out-of-bounds Read/Write via Negative Coordinates in Grids
 **Threat:** Several simulation and experimental features accessed grid arrays by casting negative `pos.x` and `pos.y` (i32) to `usize` without bounds checking, which could lead to buffer overflows/panics (or logic bugs when the massive wrapped `usize` fails safe-grid bounds checks and silently drops processing).
 **Defense:** Explicit `pos.x >= 0 && pos.y >= 0` boundary checks were added before any `as usize` casts in nature systems, logging, and experimental components.
+**2023-10-27 - [Memory Exhaustion in Lore Loading]**
+**Threat:** Unbounded file read in `NarrativeGenerator::load_from_files` allowing memory exhaustion DoS via huge lore files.
+**Defense:** Replaced `fs::read_to_string` with `File::open` and `take(LIMIT)` to enforce a strict memory ceiling.
