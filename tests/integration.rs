@@ -328,6 +328,8 @@ mod bureaucracy_of_vanity_integration;
 #[path = "integration/void_whispers_chronicle.rs"]
 mod void_whispers_chronicle;
 
+#[path = "integration/cultural_drift_independence.rs"]
+mod cultural_drift_independence;
 #[path = "integration/ephemeral_market_bridge.rs"]
 mod ephemeral_market_bridge;
 #[path = "integration/ephemeral_moons_bridge.rs"]

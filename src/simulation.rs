@@ -757,6 +757,8 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
     schedule.add_systems((
         crate::layer2::culture::cultural_drift::calculate_cultural_drift_system,
         crate::layer2::culture::cultural_drift::handle_independence_system,
+        crate::layer2::integration::cultural_drift_independence_bridge
+            .after(crate::layer2::culture::cultural_drift::handle_independence_system),
         crate::layer2::integration::founder_effect_bridge_system,
         crate::layer2::integration::escape_velocity_traits_bridge_system
             .before(crate::layer2::trade::escape_velocity::process_launch_system),

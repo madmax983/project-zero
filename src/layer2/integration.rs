@@ -1023,3 +1023,32 @@ pub fn phantom_limb_chronicle_bridge(
         });
     }
 }
+#[derive(Component, Default)]
+pub struct SecessionDeclared;
+
+#[allow(clippy::type_complexity)]
+pub fn cultural_drift_independence_bridge(
+    mut commands: Commands,
+    colonies: Query<
+        (
+            Entity,
+            &crate::layer2::culture::cultural_drift::CulturalDrift,
+            &crate::layer2::culture::cultural_drift::Faction,
+        ),
+        (
+            With<crate::layer2::culture::cultural_drift::ColonyMarker>,
+            Without<SecessionDeclared>,
+        ),
+    >,
+    mut event_writer: bevy_ecs::event::EventWriter<
+        crate::layer3::diplomacy::system_sovereignty::DeclarationOfIndependenceEvent,
+    >,
+) {
+    for (entity, drift, faction) in colonies.iter() {
+        if drift.value >= drift.independence_threshold && faction.id == 999 {
+            commands.entity(entity).insert(SecessionDeclared);
+            event_writer
+                .send(crate::layer3::diplomacy::system_sovereignty::DeclarationOfIndependenceEvent);
+        }
+    }
+}

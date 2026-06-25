@@ -1632,3 +1632,9 @@
 - **Glue added:** `architectural_sentience_chronicle_bridge` in `src/layer1/architecture_sentience.rs`
 - **Schedule:** Registered in Layer 1 Observation schedule (`src/layer1/systems/observation.rs`).
 - **Tests:** `tests/integration/architectural_sentience_bridge.rs`
+
+### INT-282: Cultural Drift -> Declaration of Independence
+- **Date:** 2026-10-31
+- **Systems connected:** `handle_independence_system` -> `cultural_drift_independence_bridge` -> `process_sovereignty_declaration`
+- **Glue added:** Added `cultural_drift_independence_bridge` in `src/layer2/integration.rs` to emit `DeclarationOfIndependenceEvent` when a colony's faction ID changes to 999 due to cultural drift.
+- **Tests:** `tests/integration/cultural_drift_independence.rs`
