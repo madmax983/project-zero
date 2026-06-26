@@ -5,6 +5,7 @@
 
 use crate::layer1::chronicle::{AddChronicleEvent, EventImportance};
 use crate::layer3::planet::black_market_terraforming::RogueTerraformEvent;
+#[allow(unused_imports)]
 use bevy_ecs::prelude::*;
 
 /// Bridges `TradeRouteSeveredEvent` (Hyperlane Collapse) to `AddChronicleEvent` (Chronicle).
@@ -606,5 +607,192 @@ pub fn the_silence_chronicle_bridge(
             importance: crate::layer1::core::chronicle::EventImportance::Legendary,
             text: format!("The silence of the void is broken. Unknown hostile entities detected at the sector edge (Severity: {}).", event.severity),
         });
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    #[allow(unused_imports)]
+    use bevy_ecs::prelude::*;
+
+    #[test]
+    fn test_hyperlane_collapse_chronicle_bridge() {
+        let mut app = bevy_app::App::new();
+        app.add_event::<crate::layer3::map::TradeRouteSeveredEvent>();
+        app.add_event::<AddChronicleEvent>();
+        app.add_systems(bevy_app::Update, hyperlane_collapse_chronicle_bridge);
+
+        app.world_mut()
+            .resource_mut::<Events<crate::layer3::map::TradeRouteSeveredEvent>>()
+            .send(crate::layer3::map::TradeRouteSeveredEvent {
+                system_a: Entity::PLACEHOLDER,
+                system_b: Entity::PLACEHOLDER,
+            });
+
+        app.update();
+
+        let chronicle_events = app.world().resource::<Events<AddChronicleEvent>>();
+        let mut reader = chronicle_events.get_cursor();
+        let events: Vec<&AddChronicleEvent> = reader.read(chronicle_events).collect();
+        assert_eq!(events.len(), 1);
+        assert_eq!(events[0].importance, EventImportance::Major);
+        assert!(events[0].text.contains("A hyperlane has collapsed"));
+    }
+
+    #[test]
+    fn test_dead_internet_chronicle_bridge() {
+        let mut app = bevy_app::App::new();
+        app.add_event::<crate::layer3::diplomacy::dead_internet::DiplomaticInteraction>();
+        app.add_event::<AddChronicleEvent>();
+        app.add_systems(bevy_app::Update, dead_internet_chronicle_bridge);
+
+        app.world_mut()
+            .resource_mut::<Events<crate::layer3::diplomacy::dead_internet::DiplomaticInteraction>>(
+            )
+            .send(crate::layer3::diplomacy::dead_internet::DiplomaticInteraction);
+
+        app.update();
+
+        let chronicle_events = app.world().resource::<Events<AddChronicleEvent>>();
+        let mut reader = chronicle_events.get_cursor();
+        let events: Vec<&AddChronicleEvent> = reader.read(chronicle_events).collect();
+        assert_eq!(events.len(), 1);
+        assert_eq!(events[0].importance, EventImportance::Standard);
+        assert!(events[0]
+            .text
+            .contains("A hauntingly familiar trade protocol echoes"));
+    }
+
+    #[test]
+    fn test_black_market_terraforming_bridge() {
+        let mut app = bevy_app::App::new();
+        app.add_event::<RogueTerraformEvent>();
+        app.add_event::<AddChronicleEvent>();
+        app.add_systems(bevy_app::Update, black_market_terraforming_bridge);
+
+        app.world_mut()
+            .resource_mut::<Events<RogueTerraformEvent>>()
+            .send(RogueTerraformEvent { target_sector: 42 });
+
+        app.update();
+
+        let chronicle_events = app.world().resource::<Events<AddChronicleEvent>>();
+        let mut reader = chronicle_events.get_cursor();
+        let events: Vec<&AddChronicleEvent> = reader.read(chronicle_events).collect();
+        assert_eq!(events.len(), 1);
+        assert_eq!(events[0].importance, EventImportance::Major);
+        assert!(events[0]
+            .text
+            .contains("Unseasonal terraforming in Sector 42"));
+    }
+
+    #[test]
+    fn test_dynastic_succession_chronicle_bridge() {
+        let mut app = bevy_app::App::new();
+        app.add_event::<SuccessionEvent>();
+        app.add_event::<AddChronicleEvent>();
+        app.add_systems(bevy_app::Update, dynastic_succession_chronicle_bridge);
+
+        app.world_mut()
+            .resource_mut::<Events<SuccessionEvent>>()
+            .send(SuccessionEvent {
+                faction_name: "Empire".to_string(),
+                old_leader_name: "Emperor".to_string(),
+                new_leader_name: "Prince".to_string(),
+            });
+
+        app.update();
+
+        let chronicle_events = app.world().resource::<Events<AddChronicleEvent>>();
+        let mut reader = chronicle_events.get_cursor();
+        let events: Vec<&AddChronicleEvent> = reader.read(chronicle_events).collect();
+        assert_eq!(events.len(), 1);
+        assert_eq!(events[0].importance, EventImportance::Major);
+        assert!(events[0]
+            .text
+            .contains("Succession in Empire: Emperor has died. Prince takes the throne."));
+    }
+
+    #[test]
+    fn test_dynastic_crisis_chronicle_bridge() {
+        let mut app = bevy_app::App::new();
+        app.add_event::<SuccessionCrisisEvent>();
+        app.add_event::<AddChronicleEvent>();
+        app.add_systems(bevy_app::Update, dynastic_crisis_chronicle_bridge);
+
+        app.world_mut()
+            .resource_mut::<Events<SuccessionCrisisEvent>>()
+            .send(SuccessionCrisisEvent {
+                faction_name: "Kingdom".to_string(),
+                old_leader_name: "King".to_string(),
+            });
+
+        app.update();
+
+        let chronicle_events = app.world().resource::<Events<AddChronicleEvent>>();
+        let mut reader = chronicle_events.get_cursor();
+        let events: Vec<&AddChronicleEvent> = reader.read(chronicle_events).collect();
+        assert_eq!(events.len(), 1);
+        assert_eq!(events[0].importance, EventImportance::Legendary);
+        assert!(events[0]
+            .text
+            .contains("Succession crisis in Kingdom! King has died without an heir."));
+    }
+
+    #[test]
+    fn test_jump_risk_bridge_system() {
+        let mut app = bevy_app::App::new();
+        app.add_event::<FleetDamagedEvent>();
+        app.add_event::<AddChronicleEvent>();
+        app.add_systems(bevy_app::Update, jump_risk_bridge_system);
+
+        let entity = app.world_mut().spawn(JumpRisk).id();
+
+        app.update();
+
+        assert!(
+            app.world().get::<JumpRisk>(entity).is_none(),
+            "JumpRisk should be removed"
+        );
+
+        let damage_events = app.world().resource::<Events<FleetDamagedEvent>>();
+        let mut reader1 = damage_events.get_cursor();
+        let d_events: Vec<&FleetDamagedEvent> = reader1.read(damage_events).collect();
+        assert_eq!(d_events.len(), 1);
+        assert_eq!(d_events[0].fleet, entity);
+        assert_eq!(d_events[0].amount, 20.0);
+
+        let chronicle_events = app.world().resource::<Events<AddChronicleEvent>>();
+        let mut reader2 = chronicle_events.get_cursor();
+        let c_events: Vec<&AddChronicleEvent> = reader2.read(chronicle_events).collect();
+        assert_eq!(c_events.len(), 1);
+        assert_eq!(c_events[0].importance, EventImportance::Major);
+        assert!(c_events[0]
+            .text
+            .contains("A fleet suffered hull damage after jumping blind"));
+    }
+
+    #[test]
+    fn test_red_tape_chronicle_bridge() {
+        let mut app = bevy_app::App::new();
+        app.add_event::<AddChronicleEvent>();
+        app.add_systems(bevy_app::Update, red_tape_chronicle_bridge);
+
+        app.world_mut().spawn(BureaucraticHold {
+            timer: 1.0,
+            cost_multiplier: 1,
+        });
+
+        app.update();
+
+        let chronicle_events = app.world().resource::<Events<AddChronicleEvent>>();
+        let mut reader = chronicle_events.get_cursor();
+        let c_events: Vec<&AddChronicleEvent> = reader.read(chronicle_events).collect();
+        assert_eq!(c_events.len(), 1);
+        assert_eq!(c_events[0].importance, EventImportance::Major);
+        assert!(c_events[0]
+            .text
+            .contains("Hostile fleet stalled by bureaucratic red tape."));
     }
 }

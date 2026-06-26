@@ -13,3 +13,6 @@
 **[Subconscious Grid State Evaluation]
 **Learning:** The transition to `GridState::Normal` from an anxious state when average stress normalizes was missing a direct unit test in `src/layer1/infrastructure/subconscious_grid.rs`.
 **Action:** Always write tests that cover the fallback/default branch of state transition logic, especially when it recovers from an extreme state.
+## 2026-06-26 - Integration Bridge Coverage Gap in Layer 3
+**Learning:** Found multiple untested event-driven integration bridges in `src/layer3/integration.rs` (`hyperlane_collapse_chronicle_bridge`, `dead_internet_chronicle_bridge`, `black_market_terraforming_bridge`, `dynastic_succession_chronicle_bridge`, `dynastic_crisis_chronicle_bridge`, and `jump_risk_bridge_system`). These bridges are critical for linking internal Layer 3 logic into the `AddChronicleEvent` system, meaning if one silently failed, no global notification would reach the player.
+**Action:** When adding simple event-to-event or system-to-event integration bridges, always add a basic unit test instantiating a dummy `App`, pushing the trigger event, running `app.update()`, and verifying the expected `EventWriter` buffer output.
