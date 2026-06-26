@@ -1644,3 +1644,9 @@
 - **Systems connected:** `DistressSignal` creation -> `escape_pods_chronicle_bridge` -> `AddChronicleEvent`
 - **Glue added:** Added `escape_pods_chronicle_bridge` in `src/layer1/core/integration.rs`. Registered in `src/layer1/systems/observation.rs`.
 - **Tests:** `tests/integration/escape_pods_chronicle.rs`
+
+### INT-1022: The Hive Mind Integration -> Simulation & Chronicle
+- **Date:** 2026-10-31
+- **Systems connected:** `hive_mind_integration` -> `Needs`, `Traits`, `Chronicle`.
+- **Glue added:** `integrated_collective_needs_bridge` and `hive_mind_chronicle_bridge` added in `src/layer1/core/integration.rs`. Registered `SurgeryEvent` in `simulation.rs`. Registered all systems in `observation.rs`.
+- **Tests:** Added `tests/integration/hive_mind_integration_bridge.rs`.
