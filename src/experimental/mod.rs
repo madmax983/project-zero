@@ -211,3 +211,5 @@ pub mod acoustic_hallucinations;
 pub mod engine_cultist_rituals;
 #[cfg(feature = "nova")]
 pub mod fungal_reclamation;
+#[cfg(feature = "nova")]
+pub mod magnetic_amnesia;

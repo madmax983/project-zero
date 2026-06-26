@@ -185,3 +185,8 @@
 **Concept:** Added `fungal_reclamation_system` to `src/experimental/fungal_reclamation.rs`. Connects `BuildingRemovedEvent` with `SporeNetwork` and `ClutterGrid`. When a building is removed/destroyed, if the SporeNetwork is active, it rapidly generates `Clutter` (spores) on the destroyed tile and provides a sudden boost to `PopCollectivism`.
 **Fate:** Submitted
 **Lesson:** Connects building destruction (a negative event) to the fungal mechanics, allowing players to intentionally demolish buildings to feed the SporeNetwork and advance collectivism.
+
+## [Magnetic Amnesia]
+**Concept:** Added `magnetic_amnesia_system` to `src/experimental/magnetic_amnesia.rs`. Connects `WeatherType::MagneticStorm`, `RoofGrid`, and `Memories`. During a magnetic storm, pops outside have a chance to suffer complete memory loss due to cognitive electromagnetic interference.
+**Fate:** Submitted
+**Lesson:** Turns an environmental hazard into a psychological one. Allows emergent strategies where players intentionally expose traumatized pops to the storm to "reset" them, at the cost of losing all beneficial experiences.
