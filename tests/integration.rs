@@ -627,3 +627,5 @@ mod architectural_sentience_bridge;
 
 #[path = "integration/escape_pods_chronicle.rs"]
 mod escape_pods_chronicle;
+#[path = "integration/subconscious_grid_lockdown_chronicle_bridge.rs"]
+mod subconscious_grid_lockdown_chronicle_bridge;

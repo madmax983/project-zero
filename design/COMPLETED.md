@@ -834,3 +834,4 @@
 - [x] `285` Echoes of the Past — `specs/285-echoes-of-the-past.md` — completed 2024-07-26
 - [x] `INT-1022` Integration: The Hive Mind -> Simulation & Chronicle — completed 2026-10-31
 - [x] `1096` Celestial Cemeteries — `specs/1096-celestial-cemeteries.md` — completed 2026-06-26
+- [x] `INT-1296b` Integration: Subconscious Grid Lockdown -> Chronicle — completed 2026-06-26
