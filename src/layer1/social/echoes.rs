@@ -31,23 +31,49 @@ pub fn echo_spawn_system(mut commands: Commands, query: Query<(&EchoSource, &Gri
     }
 }
 
+use crate::layer1::mind::utility_types::{ActionType, PopAction};
+use crate::layer1::psychology::traits::{Trait, Traits};
+
+#[allow(clippy::type_complexity)]
 pub fn echo_aura_system(
     echoes: Query<(&Echo, &GridPosition)>,
-    mut pops: Query<(&GridPosition, &mut Skills, &mut StressTracker)>,
+    mut pops: Query<(
+        &GridPosition,
+        &mut Skills,
+        &mut StressTracker,
+        Option<&PopAction>,
+        Option<&mut Traits>,
+    )>,
 ) {
-    for (pop_pos, mut skills, mut stress) in pops.iter_mut() {
+    for (pop_pos, mut skills, mut stress, action, mut traits) in pops.iter_mut() {
         for (echo, echo_pos) in echoes.iter() {
             let dx = (pop_pos.x as f32 - echo_pos.x as f32).abs();
             let dy = (pop_pos.y as f32 - echo_pos.y as f32).abs();
             let dist = (dx * dx + dy * dy).sqrt();
 
             if dist <= echo.radius {
-                skills
-                    .xp
-                    .entry(SkillType::Engineering)
-                    .and_modify(|x| *x += 10.0)
-                    .or_insert(10.0);
+                // Only grant XP if researching
+                if let Some(act) = action {
+                    if act.current == ActionType::Research {
+                        skills
+                            .xp
+                            .entry(SkillType::Engineering)
+                            .and_modify(|x| *x += 10.0)
+                            .or_insert(10.0);
+                    }
+                }
+
+                // Stress is passive
                 stress.accumulated_stress += 5.0;
+
+                // Insanity cult logic
+                if stress.accumulated_stress > 80.0 {
+                    if let Some(ref mut t) = traits {
+                        if !t.has(Trait::EngineCultist) {
+                            t.add(Trait::EngineCultist);
+                        }
+                    }
+                }
             }
         }
     }
@@ -112,11 +138,16 @@ mod tests {
         ));
 
         // Spawn a Pop nearby
+        let mut action = PopAction::default();
+        action.current = ActionType::Research;
+
         let pop = world
             .spawn((
                 GridPosition { x: 6, y: 5 },
                 Skills::default(),
                 StressTracker::default(),
+                action,
+                Traits::default(),
             ))
             .id();
 
@@ -131,7 +162,6 @@ mod tests {
         let skills = world.get::<Skills>(pop).unwrap();
         let stress = world.get::<StressTracker>(pop).unwrap();
 
-        // The pop is technically idle in this test but the aura provides passive XP to the "Engineering" or general pool
         assert!(
             skills.get_xp(SkillType::Engineering) > 0.0,
             "Pop should gain XP from being near the Echo."
@@ -139,6 +169,88 @@ mod tests {
         assert!(
             stress.accumulated_stress > 0.0,
             "Pop should gain stress from being near the Echo."
+        );
+    }
+
+    #[test]
+    fn test_pop_near_echo_gains_stress_but_not_xp_if_not_researching() {
+        let mut world = World::new();
+        world.spawn((
+            Echo {
+                radius: 2.0,
+                timer: Timer::from_seconds(60.0, TimerMode::Once),
+            },
+            GridPosition { x: 5, y: 5 },
+        ));
+
+        let mut action = PopAction::default();
+        action.current = ActionType::Idle; // Not researching
+
+        let pop = world
+            .spawn((
+                GridPosition { x: 6, y: 5 },
+                Skills::default(),
+                StressTracker::default(),
+                action,
+                Traits::default(),
+            ))
+            .id();
+
+        let mut schedule = Schedule::default();
+        schedule.add_systems(echo_aura_system);
+
+        schedule.run(&mut world);
+
+        let skills = world.get::<Skills>(pop).unwrap();
+        let stress = world.get::<StressTracker>(pop).unwrap();
+
+        assert_eq!(
+            skills.get_xp(SkillType::Engineering),
+            0.0,
+            "Pop should NOT gain XP because they are not researching."
+        );
+        assert!(
+            stress.accumulated_stress > 0.0,
+            "Pop should STILL gain stress from being near the Echo."
+        );
+    }
+
+    #[test]
+    fn test_pop_near_echo_gains_cultist_trait_on_high_stress() {
+        let mut world = World::new();
+        world.spawn((
+            Echo {
+                radius: 2.0,
+                timer: Timer::from_seconds(60.0, TimerMode::Once),
+            },
+            GridPosition { x: 5, y: 5 },
+        ));
+
+        let pop = world
+            .spawn((
+                GridPosition { x: 6, y: 5 },
+                Skills::default(),
+                StressTracker { accumulated_stress: 79.0 },
+                PopAction::default(),
+                Traits::default(),
+            ))
+            .id();
+
+        let mut schedule = Schedule::default();
+        schedule.add_systems(echo_aura_system);
+
+        schedule.run(&mut world);
+
+        let stress = world.get::<StressTracker>(pop).unwrap();
+        let traits = world.get::<Traits>(pop).unwrap();
+
+        assert!(
+            stress.accumulated_stress > 80.0,
+            "Pop should gain stress to push them over the threshold."
+        );
+        assert!(
+            traits.has(Trait::EngineCultist),
+            "Pop should have gained the EngineCultist trait."
         );
     }
 
