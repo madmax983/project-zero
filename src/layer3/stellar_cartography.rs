@@ -6,7 +6,7 @@
 //! hazards ([`JumpRisk`]).
 
 use bevy::prelude::*;
-use std::collections::HashMap;
+use bevy::utils::HashMap;
 
 // Required components and events for the module
 /// Represents navigational data for a specific star system.

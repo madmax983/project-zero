@@ -4,8 +4,8 @@
 //! Supply and demand here dictate the wealth of empires.
 
 use crate::layer1::resources::ResourceType;
+use bevy::utils::HashMap;
 use bevy_ecs::prelude::*;
-use std::collections::HashMap;
 
 /// The Galactic Market tracking global prices and supply pools.
 #[derive(Resource)]
@@ -13,7 +13,7 @@ pub struct GalacticMarket {
     pub prices: HashMap<ResourceType, f32>,
     pub supply_pool: HashMap<ResourceType, f32>,
     pub baseline_prices: HashMap<ResourceType, f32>,
-    pub embargoed_resources: std::collections::HashSet<ResourceType>,
+    pub embargoed_resources: bevy::utils::HashSet<ResourceType>,
 }
 
 impl Default for GalacticMarket {
@@ -27,7 +27,7 @@ impl GalacticMarket {
         let mut prices = HashMap::new();
         let mut supply_pool = HashMap::new();
         let mut baseline_prices = HashMap::new();
-        let embargoed_resources = std::collections::HashSet::new();
+        let embargoed_resources = bevy::utils::HashSet::new();
         // Initialize with default values.
         let default_resources = vec![
             ResourceType::Food,
@@ -234,7 +234,7 @@ mod tests {
             prices: vec![(ResourceType::Food, 10.0)].into_iter().collect(),
             supply_pool: vec![(ResourceType::Food, 1000.0)].into_iter().collect(),
             baseline_prices: vec![].into_iter().collect(),
-            embargoed_resources: std::collections::HashSet::new(),
+            embargoed_resources: bevy::utils::HashSet::new(),
         });
 
         let mut schedule = Schedule::default();
@@ -254,7 +254,7 @@ mod tests {
             prices: vec![(ResourceType::Food, 10.0)].into_iter().collect(),
             supply_pool: vec![(ResourceType::Food, 1000.0)].into_iter().collect(),
             baseline_prices: vec![(ResourceType::Food, 10.0)].into_iter().collect(),
-            embargoed_resources: std::collections::HashSet::new(),
+            embargoed_resources: bevy::utils::HashSet::new(),
         });
 
         // Act: Simulate a massive sell order for a specific resource (e.g., Food).
@@ -282,7 +282,7 @@ mod tests {
             prices: vec![(ResourceType::Metal, 50.0)].into_iter().collect(),
             supply_pool: vec![(ResourceType::Metal, 100.0)].into_iter().collect(),
             baseline_prices: vec![(ResourceType::Metal, 50.0)].into_iter().collect(),
-            embargoed_resources: std::collections::HashSet::new(),
+            embargoed_resources: bevy::utils::HashSet::new(),
         });
 
         // Act: Simulate a massive buy order for a resource.
@@ -312,7 +312,7 @@ mod tests {
             prices: vec![(ResourceType::Fuel, 25.0)].into_iter().collect(),
             supply_pool: vec![].into_iter().collect(),
             baseline_prices: vec![(ResourceType::Fuel, 25.0)].into_iter().collect(),
-            embargoed_resources: std::collections::HashSet::new(),
+            embargoed_resources: bevy::utils::HashSet::new(),
         });
 
         // Act: Execute a trade order.

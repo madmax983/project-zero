@@ -4,9 +4,9 @@
 //! connections (hyperlanes), and positional tracking of fleets moving through the galaxy.
 
 use bevy::prelude::DespawnRecursiveExt;
+use bevy::utils::HashMap;
 use bevy_ecs::prelude::*;
 use bevy_time::Time;
-use std::collections::HashMap;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub struct SectorId(pub u32);

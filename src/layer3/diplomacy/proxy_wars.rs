@@ -3,7 +3,7 @@
 //! Handles the acceptance of proxy war contracts, combat rewards for privateers,
 //! and the disavowal of privateers when peace treaties are signed.
 use bevy::prelude::*;
-use std::collections::HashSet;
+use bevy::utils::HashSet;
 
 #[derive(Component)]
 pub struct Player;

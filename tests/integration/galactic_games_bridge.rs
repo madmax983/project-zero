@@ -1,10 +1,10 @@
 use bevy::prelude::*;
+use bevy::utils::HashSet;
 use scale::layer1::core::chronicle::AddChronicleEvent;
 use scale::layer1::social::factions::FactionId;
 use scale::layer3::diplomacy::galactic_games::{
     resolve_galactic_games_system, FactionInfluences, GalacticGamesEvent,
 };
-use std::collections::HashSet;
 
 #[test]
 fn test_galactic_games_chronicle_bridge() {
