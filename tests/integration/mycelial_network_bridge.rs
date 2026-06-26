@@ -64,3 +64,14 @@ fn test_contamination_triggers_chronicle() {
     let chronicle_events = world.resource::<Events<AddChronicleEvent>>();
     assert_eq!(chronicle_events.len(), 1);
 }
+
+#[test]
+fn test_immune_response_triggers_chronicle() {
+    let mut world = setup_app();
+    world.spawn(scale::layer2::mycelial_network::SpaceFauna { strength: 100 });
+    let mut schedule = Schedule::default();
+    schedule.add_systems(scale::layer2::integration::mycelial_network_immune_response_chronicle_bridge);
+    schedule.run(&mut world);
+    let chronicle_events = world.resource::<Events<AddChronicleEvent>>();
+    assert_eq!(chronicle_events.len(), 1);
+}
