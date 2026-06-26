@@ -25529,7 +25529,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you hide in the dark and progress slowly, or build the monuments of a god and invite the wrath of the galaxy?
 
 ---
-## The Dreaming Sickness
+## The Dreaming Sickness [SPECCED]
 
 **Layer:** 1
 

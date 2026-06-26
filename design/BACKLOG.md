@@ -787,3 +787,4 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1308` The Blackout Bazaars — `specs/1308-the-blackout-bazaars.md`
 - [ ] `1309` The Asteroid Hermits — `specs/1309-the-asteroid-hermits.md`
 - [ ] `1310` The Feral Administration — `specs/1310-the-feral-administration.md`
+- [ ] `1311` The Dreaming Sickness — `specs/1311-the-dreaming-sickness.md`
