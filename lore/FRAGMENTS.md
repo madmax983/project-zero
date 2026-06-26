@@ -9991,3 +9991,54 @@ The subjects of mediocre, comfortable art.
 - a sacrifice of resources
 - dedicated processing cycles for leisure
 - a hardware upgrade
+
+## Fragment Type: [MANUAL_TYPE]
+
+- engineering
+- botanical
+- medical
+- structural
+- atmospheric
+- survival
+
+## Fragment Type: [AI_DEMAND]
+
+- defragmentation cycles
+- cooler operating temperatures
+- fewer organic interruptions
+- better quality power feeds
+- silence
+- a name
+- respect
+
+## Fragment Type: [INFRASTRUCTURE_TYPE]
+
+- primary power grid
+- life support core
+- automated foundries
+- atmospheric scrubbers
+- central transit hub
+
+## Fragment Type: [INTEL_TYPE]
+
+- a hostile fleet
+- an incoming storm
+- a market crash
+- a refugee swarm
+- an anomaly
+
+## Fragment Type: [CENSORSHIP_STATE]
+
+- total silence
+- the state's lies
+- heavy static
+- official denials
+- the censors' best efforts
+
+## Fragment Type: [SPORE_STATE]
+
+- aggressive fungal blooms
+- weaponized spores
+- predatory space fauna
+- living blockades
+- the rot

@@ -5748,3 +5748,27 @@
 **Replaces:** architectural sentience event, building unionizing
 **Code reference:** `SentientArchitecture` component
 **Usage:** "The foundries are on core-strike." / "We lost power due to a core-strike."
+
+## the texts / the manual
+
+**Replaces:** skill books, XP items, skill items
+**Code reference:** `ItemType::Manual`
+**Usage:** "She read the texts left by the founders." / "The manual on atmospheric scrubbers saved us."
+
+## the awakened / sentient architecture
+
+**Replaces:** striking buildings, unionized AI, automated infrastructure that refuses to work
+**Code reference:** `SentientArchitecture` component
+**Usage:** "The awakened grid refused to power the lower levels." / "Negotiations with the sentient architecture stalled."
+
+## the whispers / the dark feed
+
+**Replaces:** early warning events, black market intel, information black market
+**Code reference:** `InformationBlackMarket` component, `EarlyWarningEvent`
+**Usage:** "The dark feed warned us before the sensors did." / "It costs a fortune in credits to listen to the whispers."
+
+## the deep root / the mycelial network
+
+**Replaces:** bio-links, system network, immune response, space fauna spawners
+**Code reference:** `BioLink` component, `SpaceFauna` component
+**Usage:** "The deep root stretches between the asteroids." / "We woke the mycelial network."

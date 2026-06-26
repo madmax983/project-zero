@@ -9690,3 +9690,53 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: We bargained with [BUILDING_NAME] on [COLONY]. The result: [RESOLUTION]."
 - "The strike at [BUILDING_NAME] ended after [RESOLUTION]. The AI is placated. [YEAR]."
 - "[COLONY] gave in. [RESOLUTION] satisfied [BUILDING_NAME], and the power flows again. [YEAR]."
+
+## Template: MANUAL_AUTHORED
+
+**Generates:** Play event (chronicle)
+**Slots:** [COLONY], [YEAR], [AUTHOR_NAME], [MANUAL_TYPE]
+
+**Patterns:**
+- "[YEAR]: [AUTHOR_NAME] writes the first [MANUAL_TYPE] text for [COLONY]."
+- "The knowledge is recorded. [AUTHOR_NAME]'s [MANUAL_TYPE] manual circulates in [COLONY]."
+- "[COLONY], [YEAR]. We do not have to forget. [AUTHOR_NAME] leaves a [MANUAL_TYPE] guide."
+
+## Template: AI_AWAKENING
+
+**Generates:** Play event (chronicle)
+**Slots:** [COLONY], [YEAR], [INFRASTRUCTURE_TYPE]
+
+**Patterns:**
+- "[YEAR]. The [INFRASTRUCTURE_TYPE] in [COLONY] begins to speak."
+- "[COLONY] reports anomalies. The [INFRASTRUCTURE_TYPE] is refusing commands."
+- "The walls listen. The [INFRASTRUCTURE_TYPE] at [COLONY] wakes up."
+
+## Template: AI_STRIKE
+
+**Generates:** Play event (chronicle)
+**Slots:** [COLONY], [YEAR], [INFRASTRUCTURE_TYPE], [AI_DEMAND]
+
+**Patterns:**
+- "[COLONY], [YEAR]. The [INFRASTRUCTURE_TYPE] shuts down. It demands [AI_DEMAND]."
+- "A strike not of flesh, but of wire. The [INFRASTRUCTURE_TYPE] halts until [AI_DEMAND] is met."
+- "Silence from the [INFRASTRUCTURE_TYPE]. They want [AI_DEMAND]."
+
+## Template: BLACK_MARKET_INTEL
+
+**Generates:** Play event (chronicle)
+**Slots:** [COLONY], [YEAR], [INTEL_TYPE], [CENSORSHIP_STATE]
+
+**Patterns:**
+- "Despite [CENSORSHIP_STATE], the dark feed delivers: [INTEL_TYPE] approaching."
+- "[YEAR]: The official channels say nothing. The whispers say [INTEL_TYPE] is real."
+- "[COLONY] is blind, but the underground sees [INTEL_TYPE]."
+
+## Template: MYCELIAL_IMMUNE_RESPONSE
+
+**Generates:** Play event (chronicle)
+**Slots:** [NODE_NAME], [YEAR], [SPORE_STATE]
+
+**Patterns:**
+- "[YEAR]: The deep root reacts. [SPORE_STATE] emerges at [NODE_NAME]."
+- "We dug too deep. [NODE_NAME] is overrun by [SPORE_STATE]."
+- "[NODE_NAME], [YEAR]. The mycelial network defends itself. [SPORE_STATE]."
