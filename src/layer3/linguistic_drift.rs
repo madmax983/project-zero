@@ -4,8 +4,8 @@
 //! As distance and time increase without communication, dialects diverge,
 //! eventually causing diplomatic miscommunication and penalties.
 
+use bevy::utils::HashMap;
 use bevy_ecs::prelude::*;
-use std::collections::HashMap;
 
 #[derive(Component)]
 pub struct Colony;

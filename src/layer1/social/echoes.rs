@@ -138,8 +138,10 @@ mod tests {
         ));
 
         // Spawn a Pop nearby
-        let mut action = PopAction::default();
-        action.current = ActionType::Research;
+        let action = PopAction {
+            current: ActionType::Research,
+            ..Default::default()
+        };
 
         let pop = world
             .spawn((
@@ -183,8 +185,10 @@ mod tests {
             GridPosition { x: 5, y: 5 },
         ));
 
-        let mut action = PopAction::default();
-        action.current = ActionType::Idle; // Not researching
+        let action = PopAction {
+            current: ActionType::Idle,
+            ..Default::default()
+        };
 
         let pop = world
             .spawn((
@@ -230,7 +234,9 @@ mod tests {
             .spawn((
                 GridPosition { x: 6, y: 5 },
                 Skills::default(),
-                StressTracker { accumulated_stress: 79.0 },
+                StressTracker {
+                    accumulated_stress: 79.0,
+                },
                 PopAction::default(),
                 Traits::default(),
             ))

@@ -2,7 +2,7 @@ use crate::layer1::anomalies::cryptid::PopMood;
 use crate::layer1::psychology::void_sickness::PopStats;
 use crate::layer1::social::factions::{FactionId, FactionMember};
 use bevy::prelude::*;
-use std::collections::{HashMap, HashSet};
+use bevy::utils::{HashMap, HashSet};
 
 #[derive(Component)]
 pub struct ChampionMarker {

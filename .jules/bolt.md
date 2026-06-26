@@ -11,3 +11,11 @@
 **Deferring allocations by avoiding intermediate vectors using `retain_mut`**
 **Learning:** `drain` followed by an assignment to `self.field = survivors` forces heap allocation of an intermediate `survivors` vector during operations like `take_damage`.
 **Action:** Replace this pattern with `retain_mut(|elem| { /* mutate inline and return true to keep, false to drop */ })`, filtering in-place and eliminating the intermediate heap allocation.
+
+**Eliminating intermediate HashSets in Bevy queries**
+**Learning:** `std::collections::HashSet` and `HashMap` allocations inside tight loops or systems called frequently (like scanning logic) cause unnecessary heap pressure and use the slow `SipHash` which is inefficient for integer keys.
+**Action:** Replace `std::collections::HashSet` and `HashMap` with `bevy::utils::HashSet` and `HashMap` when the keys are `Entity` or integer coordinate tuples to eliminate `SipHash` overhead. `bevy::utils` provides an optimized `ahash` algorithm.
+
+**Using default initialization for fields to avoid field-reassign-with-default**
+**Learning:** Initializing variables with `Default::default()` and then manually overriding some fields triggers the `clippy::field-reassign-with-default` warning and adds a minor unnecessary performance cost.
+**Action:** Always prefer the `..Default::default()` unpacking syntax during structure initialization (e.g., `let action = PopAction { current: ActionType::Research, ..Default::default() };`).

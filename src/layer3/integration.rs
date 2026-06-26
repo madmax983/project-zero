@@ -200,7 +200,7 @@ pub fn endless_draft_bridge_system(
         With<crate::layer1::pop::Pop>,
     >,
 ) {
-    let mut drafted_pops = std::collections::HashSet::new();
+    let mut drafted_pops = bevy::utils::HashSet::new();
 
     for event in order_events.read() {
         let mut eligible_pops = Vec::new();

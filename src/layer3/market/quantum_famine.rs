@@ -4,8 +4,8 @@
 //! forcing emergency relief efforts on a galactic scale.
 
 use crate::layer1::economy::resources::ResourceType;
+use bevy::utils::HashMap;
 use bevy_ecs::prelude::*;
-use std::collections::HashMap;
 
 #[derive(Component)]
 pub struct LocalStockpile {
