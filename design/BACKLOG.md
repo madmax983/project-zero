@@ -621,7 +621,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1035` Modular Fauna — `specs/1035-modular-fauna.md`
 - [ ] `1034` Gene-Banks — `specs/1034-gene-banks.md`
 
-- [ ] `1032` Open Source Science — `specs/1032-open-source-science.md`
 - [ ] `1030` Gravity Engineering — `specs/1030-gravity-engineering.md`
 
 

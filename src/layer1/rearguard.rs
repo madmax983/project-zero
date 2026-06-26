@@ -1,12 +1,13 @@
 use bevy_ecs::prelude::*;
 
-#[derive(Component)]
+#[derive(Component, Default)]
 pub struct Rearguard;
 
-#[derive(Component)]
+#[derive(Component, Default)]
 pub struct CombatStats {
     pub attack: f32,
     pub defense: f32,
+    pub attack_bonus: f32,
 }
 
 #[derive(Component)]
@@ -82,6 +83,7 @@ mod tests {
                 CombatStats {
                     attack: 10.0,
                     defense: 10.0,
+                    attack_bonus: 0.0,
                 },
                 Morale { level: 50.0 },
             ))

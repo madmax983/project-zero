@@ -114,6 +114,7 @@ pub use psychology::*;
 /// Colony resources and mining.
 /// Field science and anomalies.
 pub mod anomalies;
+pub mod research;
 /// Notification system.
 pub mod notifications;
 /// Pathfinding algorithms.

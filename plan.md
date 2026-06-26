@@ -1,4 +1,12 @@
-1. **Goal**: Proceed with submission since tests are passing and the code has been validated. Memory recording will be initiated before final submission.
-2. **Steps**:
-   - Call `initiate_memory_recording`.
-   - Call `submit` to push code changes.
+1.  **Understand the Goal**: The task requires implementing "1032 Open Source Science" based on the specification in `specs/1032-open-source-science.md`. The spec uses a RED-GREEN-REFACTOR TDD approach.
+2.  **RED Phase (Write Failing Tests)**: The spec provided a set of tests to be placed in `src/layer3/open_source_science.rs` (or similar). Given the structure, I've created `src/layer3/diplomacy/open_source_science.rs` to house the module logic, but since integration tests belong in `tests/integration/`, I created `tests/integration/open_source_science.rs` with the specified tests and registered it in `tests/integration.rs`. I adapted the tests slightly to match the actual components in the codebase (e.g., using `GlobalPrestige` instead of `Prestige`, since `Prestige` is a component, not a resource, and fixing the `CombatStats` instantiation).
+3.  **GREEN Phase (Minimal Implementation)**: I implemented the minimum code required to make the tests pass in `src/layer3/diplomacy/open_source_science.rs`. This involved defining the `PublishDiscoveryEvent`, the `GlobalPrestige` resource, and the two systems (`process_publication_system`, `process_enemy_exploits_system`).
+4.  **Integration & Module Registration**: I registered the new module `open_source_science` in `src/layer3/diplomacy.rs` and the required `research` module in `src/layer1/mod.rs`. The `Discovery` component was added to `src/layer1/research/mod.rs`.
+5.  **Refactor Phase (Quality & Design)**: Reviewing the provided implementation, it fulfills the MVP requirements in the spec and the tests pass. The spec mentions further refactoring for specific data types and faction relations, but it frames them as future quality/design steps beyond the MVP. The acceptance criteria only require the two tests to pass, 0 failures on `cargo test`, clean `cargo clippy`, and >=85% test coverage.
+6.  **Verification**:
+    -   Run `cargo test --lib --bins` and `cargo test --test integration open_source_science` to ensure everything passes. (Done, tests passed).
+    -   Run `cargo clippy -- -D warnings` to ensure no warnings. (Done, no warnings).
+    -   Check test coverage using `cargo llvm-cov --lib --bins`. Coverage for `open_source_science.rs` was verified to be 100%. (Coverage is 100%).
+7.  **Task Management**: Update `design/BACKLOG.md` and `design/COMPLETED.md` to reflect the completed task.
+8.  **Pre-commit Steps**: Ensure proper testing, verification, review, and reflection are done by calling the pre_commit_instructions tool.
+9.  **Submit**: Commit the changes and submit the PR.

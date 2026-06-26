@@ -833,3 +833,4 @@
 - [x] `354` Industrial Byproducts — `specs/354-industrial-byproducts.md` — completed 2026-02-01
 - [x] `285` Echoes of the Past — `specs/285-echoes-of-the-past.md` — completed 2026-06-25
 - [x] `285` Echoes of the Past — `specs/285-echoes-of-the-past.md` — completed 2024-07-26
+- [x] `1032` Open Source Science — `specs/1032-open-source-science.md` — completed 2026-06-25

@@ -13,6 +13,7 @@ pub mod endless_draft;
 pub mod fading_homeworld;
 pub mod proxy_wars;
 pub mod succession;
+pub mod open_source_science;
 pub mod wormhole_dumping;
 
 #[derive(Component)]
