@@ -140,6 +140,7 @@ pub fn register(schedule: &mut Schedule) {
             update_event_buffer::<crate::layer1::orphaned_swarm::DerelictArrivalEvent>,
             update_event_buffer::<crate::layer1::orphaned_swarm::SwarmArrivalEvent>,
             update_event_buffer::<crate::layer1::orphaned_swarm::SwarmHostileEvent>,
+            update_event_buffer::<crate::layer1::culture::celestial_cemeteries::ClearCemeteryEvent>,
         )
             .in_set(Layer1SystemSet::EventCleanup),
     );
