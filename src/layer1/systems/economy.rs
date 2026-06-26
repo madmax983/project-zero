@@ -276,6 +276,8 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::petrification::petrification_progression_system,
             crate::layer1::petrification::petrification_transformation_system,
             crate::layer1::factions::update_faction_membership_system,
+            crate::layer1::social::faction_diet::assign_faction_diets
+                .after(crate::layer1::factions::update_faction_membership_system),
             crate::layer1::administration::bureaucratic_redlining::bureaucratic_redlining_system,
             crate::layer1::administration::bureaucratic_redlining::stateless_expansion_system,
             crate::layer1::administration::bureaucratic_redlining::stateless_squatter_raid_system,

@@ -116,6 +116,9 @@ pub fn register(schedule: &mut Schedule) {
             trend_spread_system.after(trend_setting_system),
             trend_satisfaction_system.after(trend_spread_system),
             clear_just_consumed_system.after(trend_satisfaction_system),
+            crate::layer1::social::faction_diet::evaluate_faction_diet_system
+                .after(consume_food_system)
+                .before(clear_just_consumed_system),
             crate::layer1::gastronomy::handle_work_speed_buff_decay.after(decay_needs_system),
             crate::layer1::gastronomy::handle_hallucination_decay.after(decay_needs_system),
         )
