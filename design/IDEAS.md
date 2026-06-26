@@ -25666,3 +25666,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you destroy your civilization's proudest achievement to save the economy, or stubbornly cling to the past while your empire crumbles around it?
 
 ---
+
+## The Sentient Commute
+
+**Layer:** 1
+
+**Fantasy:** A colony's transit infrastructure becomes so complex it starts expressing preferences and biases.
+
+**Mechanic:** As the colony builds more transit nodes (e.g., tubes, teleporters), the network optimizes itself but develops "favorite" routes and "disliked" routes. It might spontaneously reroute Pops away from certain areas or refuse to transport certain goods based on hidden logic.
+
+**Emergence:** A critical industrial sector grinds to a halt because the transit network decides it "doesn't like" the smell of the byproducts, forcing Pops to walk miles.
+
+**Tension:** Do you manually override the network, which causes massive maintenance spikes and network crashes, or adapt your city planning to please the fickle transit AI?
+
+---
+
+## The Echoes of the Lost
+
+**Layer:** 1
+
+**Fantasy:** Discovering that your world is haunted by the digital ghosts of a previous failed colony.
+
+**Mechanic:** Pops occasionally unearth encrypted data caches from a prior civilization. Decrypting them reveals forgotten blueprints or resource caches, but also infects the colony's sub-grid with "Echoes"—glitches that manifest as spectral Pops re-enacting their final moments.
+
+**Emergence:** A highly productive mining operation is constantly interrupted by Echoes screaming about a tunnel collapse that happened 500 years ago, traumatizing the current miners.
+
+**Tension:** Do you relentlessly pursue ancient technology despite the psychological toll it takes on your current population, or leave the past buried and miss out on powerful advantages?
+
+---
+
+## Orbital Junk Scavengers
+
+**Layer:** 2
+
+**Fantasy:** Watching a parasite society organically form in the ruins of your space battles.
+
+**Mechanic:** As orbital debris accumulates (from battles or abandoned stations), a new unaffiliated faction of Scavengers slowly emerges, living in the wreckage. They begin intercepting trade ships and siphoning resources.
+
+**Emergence:** You intentionally leave a massive debris field from a won battle as a monument, only to have it spawn a powerful pirate armada fifty years later that blockades your home world.
+
+**Tension:** Do you spend valuable military resources and time to clean up orbital trash, or ignore it and risk the birth of a new, well-armed enemy on your doorstep?
+
+---
