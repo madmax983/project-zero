@@ -16,3 +16,7 @@
 **2023-10-27 - [Memory Exhaustion in Lore Loading]**
 **Threat:** Unbounded file read in `NarrativeGenerator::load_from_files` allowing memory exhaustion DoS via huge lore files.
 **Defense:** Replaced `fs::read_to_string` with `File::open` and `take(LIMIT)` to enforce a strict memory ceiling.
+
+**2026-06-07 - proc-macro-error2 is unmaintained**
+**Threat:** The `proc-macro-error2` crate is unmaintained (RUSTSEC-2026-0173), which could lead to unpatched vulnerabilities in the future.
+**Defense:** Downgraded `env_logger` to `0.11.0` via `cargo update` and pinned it in `Cargo.toml` to remove the transitive dependency chain (`env_logger` -> `jiff` -> `defmt` -> `defmt-macros` -> `proc-macro-error2`).
