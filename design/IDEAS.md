@@ -25625,3 +25625,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you weaponize a disease that makes enemies love you, risking your own population losing its edge, or rely on conventional, destructive warfare?
 
 ---
+## The Scapegoat Protocol
+
+**Layer:** 1
+
+**Fantasy:** Watching your colony invent a systemic myth to cope with repeated disasters.
+
+**Mechanic:** When the colony experiences multiple negative events in succession, Pops might spontaneously attribute the bad luck to a specific mundane object, job role, or even a specific Pop trait. They will refuse to interact with it, destroy it, or shun the Pop.
+
+**Emergence:** A food shortage followed by a gas leak might lead the colony to believe that "hydroponic farmers" are cursed, causing all farmers to be shunned and starving the colony further.
+
+**Tension:** Do you intervene to protect the scapegoats, risking a colony-wide riot against your "cursed" leadership, or do you lean into the hysteria and execute the scapegoats to temporarily restore morale?
+
+---
+
+## Gravity Addiction
+
+**Layer:** Cross-layer
+
+**Fantasy:** Dealing with the physical and cultural consequences of living in artificial gravity for too long.
+
+**Mechanic:** Pops born on orbital stations or generation ships with specific artificial gravity settings become physically dependent on it. If they migrate to a planet with different gravity, they suffer massive health and productivity penalties, eventually demanding expensive gravity-simulation infrastructure.
+
+**Emergence:** Your core worlds are overflowing, but you can't colonize the pristine high-gravity world next door because your population's bones have become too fragile from centuries of station-living.
+
+**Tension:** Do you enforce painful, multi-generational genetic modification to adapt them, or do you spend astronomical resources building gravity-domes on the new worlds?
+
+---
+
+## The Monumental Debt
+
+**Layer:** 3
+
+**Fantasy:** The crushing economic weight of your own historical hubris.
+
+**Mechanic:** Constructing a wonder or winning a massive war grants you a "Monument" that boosts diplomatic power and morale. However, centuries later, the maintenance cost of this monument skyrockets due to lost building techniques or rare material degradation.
+
+**Emergence:** An ancient victory monument built by your ancestors is now bankrupting your empire. Dismantling it will cause a galactic scandal and a massive rebellion among your traditionalist Pops, but keeping it will cause your core fleets to go unfunded.
+
+**Tension:** Do you destroy your civilization's proudest achievement to save the economy, or stubbornly cling to the past while your empire crumbles around it?
+
+---
