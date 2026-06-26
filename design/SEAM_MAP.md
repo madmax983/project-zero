@@ -1657,3 +1657,10 @@
 - **Glue added:** Added `subconscious_grid_lockdown_chronicle_bridge` in `src/layer1/core/integration.rs` to log a major Chronicle event when the grid goes into lockdown mode.
 - **Schedule:** Registered in Layer 1 Observation schedule (`src/layer1/systems/observation.rs`).
 - **Tests:** `tests/integration/subconscious_grid_lockdown_chronicle_bridge.rs`
+
+### INT-1031: The Mycelial Network -> Chronicle
+- **Date:** 2026-10-31
+- **Systems connected:** `evaluate_ecological_damage_system` -> `SpaceFauna` Spawning -> `mycelial_network_immune_response_chronicle_bridge` -> `AddChronicleEvent`
+- **Glue added:** Added `mycelial_network_immune_response_chronicle_bridge` in `src/layer2/integration.rs` to track immune response spawning and registered `evaluate_ecological_damage_system`.
+- **Schedule:** Registered the systems in `src/simulation.rs`.
+- **Tests:** Added `test_immune_response_triggers_chronicle` in `tests/integration/mycelial_network_bridge.rs`.
