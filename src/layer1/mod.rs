@@ -328,6 +328,8 @@ pub mod language;
 pub use language::*;
 
 mod equipment_tests;
+pub mod improvised_tools;
+pub use improvised_tools::*;
 
 /// Solar cycle and power generation (Spec 213).
 /// Hygiene system (Spec 220).
@@ -337,7 +339,6 @@ pub use hygiene::*;
 /// Gene Bank system (Spec 165).
 pub mod geodetic;
 
-mod improvised_tools_tests;
 
 mod urban_heat_tests;
 pub use geodetic::*;

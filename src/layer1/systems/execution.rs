@@ -216,6 +216,8 @@ pub fn register(schedule: &mut Schedule) {
         (
             crate::layer1::tinkering::obsessive_optimization_system,
             crate::layer1::execution::vandalize_execution_system.after(arrival_handler_system),
+            crate::layer1::improvised_tools::evaluate_tool_fallback_system.before(work_execution_system),
+            crate::layer1::improvised_tools::evaluate_tool_fallback_system.before(work_execution_system),
             crate::layer1::pop_doppelganger::sabotage_system.after(work_execution_system),
             crate::layer1::drone::check_drone_connection.after(arrival_handler_system),
             crate::layer1::drone::process_feral_drones
