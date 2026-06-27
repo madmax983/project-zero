@@ -9,12 +9,26 @@ pub struct SocializedDebt {
     pub total_debt: f32,
 }
 
+#[derive(Event)]
+pub struct DebtInheritedEvent {
+    pub pop_name: String,
+    pub amount: f32,
+}
+
+#[derive(Event)]
+pub struct DebtSocializedEvent {
+    pub pop_name: String,
+    pub amount: f32,
+}
+
 #[allow(clippy::type_complexity)]
 pub fn process_debt_of_the_dead_system(
     mut events: EventReader<PopDied>,
     relationships: Query<&Relationships>,
     mut wallets_and_morale: ParamSet<(Query<&Wallet>, Query<(&mut Wallet, &mut Morale)>)>,
     mut socialized_debt: ResMut<SocializedDebt>,
+    mut inherited_events: EventWriter<DebtInheritedEvent>,
+    mut socialized_events: EventWriter<DebtSocializedEvent>,
 ) {
     for event in events.read() {
         let mut debt_amount = 0.0;
@@ -47,12 +61,24 @@ pub fn process_debt_of_the_dead_system(
                         value: -20.0,
                         duration: 100, // Arbitrary duration
                     });
+                    inherited_events.send(DebtInheritedEvent {
+                        pop_name: event.name.clone(),
+                        amount: debt_amount,
+                    });
                 } else {
                     // Relative exists in affinities but is not valid (e.g. dead), socialize it
                     socialized_debt.total_debt += debt_amount;
+                    socialized_events.send(DebtSocializedEvent {
+                        pop_name: event.name.clone(),
+                        amount: debt_amount,
+                    });
                 }
             } else {
                 socialized_debt.total_debt += debt_amount;
+                socialized_events.send(DebtSocializedEvent {
+                    pop_name: event.name.clone(),
+                    amount: debt_amount,
+                });
             }
         }
     }

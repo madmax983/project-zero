@@ -2194,6 +2194,39 @@ pub fn impact_warning_chronicle_bridge(
     }
 }
 
+/// INT-877: Bridges the debt of the dead system to AddChronicleEvent (Chronicle).
+pub fn debt_of_the_dead_chronicle_bridge(
+    mut inherited_events: bevy_ecs::prelude::EventReader<
+        crate::layer1::economy::debt_of_the_dead::DebtInheritedEvent,
+    >,
+    mut socialized_events: bevy_ecs::prelude::EventReader<
+        crate::layer1::economy::debt_of_the_dead::DebtSocializedEvent,
+    >,
+    mut chronicle_events: bevy_ecs::prelude::EventWriter<
+        crate::layer1::core::chronicle::AddChronicleEvent,
+    >,
+) {
+    for event in inherited_events.read() {
+        chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
+            importance: crate::layer1::core::chronicle::EventImportance::Minor,
+            text: format!(
+                "{} died. {} credits of debt inherited by next of kin.",
+                event.pop_name, event.amount
+            ),
+        });
+    }
+
+    for event in socialized_events.read() {
+        chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
+            importance: crate::layer1::core::chronicle::EventImportance::Standard,
+            text: format!(
+                "{} died, leaving {} credits of debt to be socialized by the colony.",
+                event.pop_name, event.amount
+            ),
+        });
+    }
+}
+
 /// INT-642: Bridges the construction of a Simulacrum to AddChronicleEvent (Chronicle).
 pub fn simulacrum_chronicle_bridge(
     query: bevy_ecs::prelude::Query<

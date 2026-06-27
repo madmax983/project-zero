@@ -21,6 +21,8 @@ fn squared_distance(a: GridPosition, b: GridPosition) -> i32 {
 #[test]
 fn test_setup_world_bootstraps_breathable_start_for_initial_pops() {
     let mut world = setup_world();
+    world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtInheritedEvent>>();
+    world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtSocializedEvent>>();
 
     let lander_count = world
         .query::<&Building>()

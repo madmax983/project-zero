@@ -33,6 +33,8 @@ mod tests {
     #[test]
     fn test_hauling_pop_targets_stockpile_not_item() {
         let mut world = setup_world();
+    world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtInheritedEvent>>();
+    world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtSocializedEvent>>();
 
         // 1. Spawn Stockpile at (10, 0)
         let stockpile = world

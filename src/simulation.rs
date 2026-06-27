@@ -1348,6 +1348,8 @@ mod tests {
             );
         world.init_resource::<Events<crate::layer1::core::integration::PirateAmnestyEvent>>();
         world.init_resource::<Events<crate::layer1::economy::resources::ResourceMinedEvent>>();
+        world.init_resource::<Events<crate::layer1::economy::debt_of_the_dead::DebtInheritedEvent>>();
+        world.init_resource::<Events<crate::layer1::economy::debt_of_the_dead::DebtSocializedEvent>>();
         world.init_resource::<crate::layer3::pirates::PirateThreatLevel>();
         world.init_resource::<crate::layer3::pirates::ResourceCurseSettings>();
         world.init_resource::<Events<crate::layer1::law::justice::CrimeCommittedEvent>>();

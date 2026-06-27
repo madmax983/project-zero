@@ -39,6 +39,8 @@ mod tests {
     #[test]
     fn test_drafted_pop_targets_flora() {
         let mut world = setup_world();
+    world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtInheritedEvent>>();
+    world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtSocializedEvent>>();
 
         let weapon = world
             .spawn(Weapon {
@@ -94,6 +96,8 @@ mod tests {
     #[test]
     fn test_drafted_pop_damages_flora() {
         let mut world = setup_world();
+    world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtInheritedEvent>>();
+    world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtSocializedEvent>>();
 
         let weapon = world
             .spawn(Weapon {
@@ -142,6 +146,8 @@ mod tests {
     #[test]
     fn test_flora_spread_creates_valid_target() {
         let mut world = setup_world();
+    world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtInheritedEvent>>();
+    world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtSocializedEvent>>();
 
         // 1. Spawn "Patient Zero" Flora (ready to spread)
         let patient_zero = world

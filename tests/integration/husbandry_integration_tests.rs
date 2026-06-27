@@ -14,6 +14,8 @@ use scale::simulation::run_simulation_tick;
 #[ignore = "AI evaluation does not currently select Tame action. Requires review."]
 fn test_husbandry_full_loop() {
     let mut world = scale::setup::setup_world();
+    world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtInheritedEvent>>();
+    world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtSocializedEvent>>();
     *world.resource_mut::<scale::shared::state::GameState>() =
         scale::shared::state::GameState::Running;
 

@@ -6,6 +6,8 @@ use scale::simulation::run_simulation_tick;
 fn test_fire_damages_pop_on_same_tile() {
     // 1. Setup World
     let mut world = scale::setup::setup_world();
+    world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtInheritedEvent>>();
+    world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtSocializedEvent>>();
     world.init_resource::<bevy_ecs::event::Events<scale::layer1::nature::ecology::HarvestEvent>>();
     *world.resource_mut::<GameState>() = GameState::Running;
 

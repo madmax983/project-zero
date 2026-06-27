@@ -18,6 +18,8 @@ fn setup_world() -> World {
 #[test]
 fn test_dense_atmosphere_increases_pollution_retention() {
     let mut world = setup_world();
+    world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtInheritedEvent>>();
+    world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtSocializedEvent>>();
     world.insert_resource(PlanetaryTraits(vec![PlanetaryTrait::DenseAtmosphere]));
 
     let start_val = 10.0;
@@ -65,6 +67,8 @@ fn test_dense_atmosphere_increases_pollution_retention() {
 #[test]
 fn test_thin_atmosphere_decreases_pollution_retention() {
     let mut world = setup_world();
+    world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtInheritedEvent>>();
+    world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtSocializedEvent>>();
     world.insert_resource(PlanetaryTraits(vec![PlanetaryTrait::ThinAtmosphere]));
 
     let start_val = 10.0;
@@ -109,6 +113,8 @@ fn test_thin_atmosphere_decreases_pollution_retention() {
 #[test]
 fn test_high_gravity_slows_movement() {
     let mut world = setup_world();
+    world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtInheritedEvent>>();
+    world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtSocializedEvent>>();
     world.insert_resource(PlanetaryTraits(vec![PlanetaryTrait::HighGravity]));
 
     let pop = world

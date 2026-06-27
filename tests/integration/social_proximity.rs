@@ -7,6 +7,8 @@ use scale::setup::setup_world;
 fn test_proximity_social_buff_applied() {
     // 1. Setup World
     let mut world = setup_world();
+    world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtInheritedEvent>>();
+    world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtSocializedEvent>>();
     world.init_resource::<bevy_ecs::event::Events<scale::layer1::nature::ecology::HarvestEvent>>();
 
     // 2. Spawn Friend Pops (High Affinity)
@@ -51,6 +53,8 @@ fn test_proximity_social_buff_applied() {
 #[test]
 fn test_proximity_social_debuff_applied() {
     let mut world = setup_world();
+    world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtInheritedEvent>>();
+    world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtSocializedEvent>>();
     world.init_resource::<bevy_ecs::event::Events<scale::layer1::nature::ecology::HarvestEvent>>();
 
     let pop1 = world
