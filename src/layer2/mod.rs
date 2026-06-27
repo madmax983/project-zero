@@ -110,6 +110,7 @@ impl Plugin for PlanetarySpinUpPlugin {
             );
     }
 }
+pub mod cryo_mutiny;
 pub mod leviathans;
 pub mod orbital_ring;
 pub mod refugees;

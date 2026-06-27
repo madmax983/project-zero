@@ -1056,7 +1056,10 @@ pub fn cultural_drift_independence_bridge(
 /// INT-1031: Bridges `Added<SpaceFauna>` (Mycelial Network immune response) to `AddChronicleEvent` (Chronicle).
 pub fn mycelial_network_immune_response_chronicle_bridge(
     mut chronicle_events: bevy_ecs::event::EventWriter<crate::layer1::chronicle::AddChronicleEvent>,
-    q_fauna: bevy_ecs::system::Query<(), bevy_ecs::query::Added<crate::layer2::mycelial_network::SpaceFauna>>,
+    q_fauna: bevy_ecs::system::Query<
+        (),
+        bevy_ecs::query::Added<crate::layer2::mycelial_network::SpaceFauna>,
+    >,
 ) {
     for _ in q_fauna.iter() {
         chronicle_events.send(crate::layer1::chronicle::AddChronicleEvent {
