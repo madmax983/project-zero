@@ -48,6 +48,16 @@ pub fn volatile_decay_system(
                 damage: volatile.explosion_power,
                 radius: volatile.explosion_radius,
             });
+
+            // Spawn Industrial Waste (Spec 1130)
+            commands.spawn((
+                crate::layer1::resources::ResourceItem {
+                    resource_type: crate::layer1::resources::ResourceType::Waste,
+                    amount: 10.0,
+                },
+                *pos,
+            ));
+
             commands.entity(entity).despawn();
         }
     }
@@ -189,6 +199,17 @@ mod tests {
         let e = event.unwrap();
         assert_eq!(e.center, pos);
         assert_eq!(e.damage, 50.0);
+
+        // Assert Waste is spawned
+        let mut found_waste = false;
+        let mut query = world.query::<(&crate::layer1::resources::ResourceItem, &GridPosition)>();
+        for (item, pos_res) in query.iter(&world) {
+            if item.resource_type == crate::layer1::resources::ResourceType::Waste && *pos_res == pos {
+                found_waste = true;
+                break;
+            }
+        }
+        assert!(found_waste, "Explosion should spawn Waste at the explosion location.");
     }
 
     #[test]
