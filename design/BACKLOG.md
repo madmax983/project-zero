@@ -786,3 +786,5 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1309` The Asteroid Hermits — `specs/1309-the-asteroid-hermits.md`
 - [ ] `1310` The Feral Administration — `specs/1310-the-feral-administration.md`
 - [ ] `1311` The Dreaming Sickness — `specs/1311-the-dreaming-sickness.md`
+- [ ] `1312` Localized Gravity Vectors — `specs/1312-localized-gravity-vectors.md`
+- [ ] `1313` Emergency Beacon Bait — `specs/1313-emergency-beacon-bait.md`
