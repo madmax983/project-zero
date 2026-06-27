@@ -57,6 +57,7 @@ pub fn setup_world() -> World {
         .init_resource::<Events<crate::layer2::trade::phantom_limb_logistics::InterceptDropEvent>>(
         );
     world.init_resource::<Events<crate::layer2::trade::phantom_limb_logistics::AuditRiskEvent>>();
+    world.init_resource::<bevy_ecs::event::Events<crate::layer2::orbit::tether::AsteroidCrashEvent>>();
     world.init_resource::<Events<crate::layer1::orphaned_swarm::SwarmArrivalEvent>>();
     world.init_resource::<Events<crate::layer1::orphaned_swarm::SwarmHostileEvent>>();
     world.init_resource::<Events<crate::layer2::events_new::orphaned_swarm::SwarmHostileEvent>>();
@@ -102,6 +103,7 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
         .init_resource::<Events<crate::layer2::trade::phantom_limb_logistics::InterceptDropEvent>>(
         );
     world.init_resource::<Events<crate::layer2::trade::phantom_limb_logistics::AuditRiskEvent>>();
+    world.init_resource::<bevy_ecs::event::Events<crate::layer2::orbit::tether::AsteroidCrashEvent>>();
     world.init_resource::<Events<crate::layer1::orphaned_swarm::SwarmArrivalEvent>>();
     world.init_resource::<Events<crate::layer1::orphaned_swarm::SwarmHostileEvent>>();
     world.init_resource::<Events<crate::layer2::events_new::orphaned_swarm::SwarmHostileEvent>>();

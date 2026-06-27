@@ -567,6 +567,7 @@ fn register_simulation_core_systems(schedule: &mut Schedule) {
         crate::layer2::trade::phantom_limb_logistics::phantom_limb_logistics_system,
         crate::layer2::trade::phantom_limb_logistics::intercept_phantom_drop_system,
         crate::layer2::integration::phantom_limb_chronicle_bridge,
+        crate::layer2::integration::asteroid_crash_chronicle_bridge,
     ));
 }
 
@@ -1468,6 +1469,8 @@ mod tests {
         world.init_resource::<Events<crate::layer2::trade::phantom_limb_logistics::InterceptDropEvent>>();
         world
             .init_resource::<Events<crate::layer2::trade::phantom_limb_logistics::AuditRiskEvent>>(
+            );
+        world.init_resource::<bevy_ecs::event::Events<crate::layer2::orbit::tether::AsteroidCrashEvent>>(
             );
         world.init_resource::<crate::layer1::nature::atmosphere::SmogGrid>();
         world.init_resource::<Events<crate::layer1::tech::teleporter::psychosis::TeleportEvent>>();

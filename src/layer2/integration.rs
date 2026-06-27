@@ -1052,3 +1052,17 @@ pub fn cultural_drift_independence_bridge(
         }
     }
 }
+
+
+/// Bridge to add a chronicle event when an asteroid crashes.
+pub fn asteroid_crash_chronicle_bridge(
+    mut crash_events: bevy_ecs::event::EventReader<crate::layer2::orbit::tether::AsteroidCrashEvent>,
+    mut chronicle_events: bevy_ecs::event::EventWriter<crate::layer1::core::chronicle::AddChronicleEvent>,
+) {
+    for _event in crash_events.read() {
+        chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
+            text: "Asteroid crash detected".to_string(),
+            importance: crate::layer1::core::chronicle::EventImportance::Major,
+        });
+    }
+}

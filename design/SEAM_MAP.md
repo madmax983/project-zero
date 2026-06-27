@@ -1657,3 +1657,9 @@
 - **Glue added:** Added `subconscious_grid_lockdown_chronicle_bridge` in `src/layer1/core/integration.rs` to log a major Chronicle event when the grid goes into lockdown mode.
 - **Schedule:** Registered in Layer 1 Observation schedule (`src/layer1/systems/observation.rs`).
 - **Tests:** `tests/integration/subconscious_grid_lockdown_chronicle_bridge.rs`
+
+### INT-1338: AsteroidCrashEvent -> Chronicle
+- **Date:** 2026-06-26
+- **Systems connected:** `AsteroidCrashEvent` -> `asteroid_crash_chronicle_bridge` -> `AddChronicleEvent`
+- **Glue added:** Added `asteroid_crash_chronicle_bridge` in `src/layer2/integration.rs`. Registered in `src/simulation.rs`.
+- **Tests:** `tests/integration/asteroid_crash_chronicle.rs`
