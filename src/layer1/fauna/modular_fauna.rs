@@ -1,6 +1,6 @@
-use bevy_ecs::prelude::*;
 use crate::layer1::combat::{Armor, CombatStats, DamageType};
-use crate::layer1::fauna::{Fauna};
+use crate::layer1::fauna::Fauna;
+use bevy_ecs::prelude::*;
 
 #[derive(Debug, PartialEq, Eq, Clone, Copy)]
 pub enum PartType {
@@ -65,17 +65,20 @@ mod tests {
         let mut app = App::new();
         app.add_systems(Update, evaluate_modular_fauna_stats_system);
 
-        let chimera = app.world_mut().spawn((
-            Fauna::default(),
-            AnimalParts {
-                head: PartType::WolfHead,
-                body: PartType::BearTorso,
-                limbs: PartType::CrabLegs,
-                tail: PartType::ScorpionTail,
-            },
-            CombatStats::default(),
-            Armor { rating: 0 },
-        )).id();
+        let chimera = app
+            .world_mut()
+            .spawn((
+                Fauna::default(),
+                AnimalParts {
+                    head: PartType::WolfHead,
+                    body: PartType::BearTorso,
+                    limbs: PartType::CrabLegs,
+                    tail: PartType::ScorpionTail,
+                },
+                CombatStats::default(),
+                Armor { rating: 0 },
+            ))
+            .id();
 
         app.update();
 
@@ -83,8 +86,17 @@ mod tests {
         let armor = app.world().get::<Armor>(chimera).unwrap();
 
         // Verify stats were aggregated from the specific parts
-        assert!(stats.melee_damage > 10.0, "Wolf Head should add high melee bite damage.");
-        assert!(stats.damage_types.contains(&DamageType::Venom), "Scorpion Tail should add Venom damage type.");
-        assert!(armor.rating > 5, "Crab Legs should provide heavy armor rating.");
+        assert!(
+            stats.melee_damage > 10.0,
+            "Wolf Head should add high melee bite damage."
+        );
+        assert!(
+            stats.damage_types.contains(&DamageType::Venom),
+            "Scorpion Tail should add Venom damage type."
+        );
+        assert!(
+            armor.rating > 5,
+            "Crab Legs should provide heavy armor rating."
+        );
     }
 }

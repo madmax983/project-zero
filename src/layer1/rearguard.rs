@@ -32,7 +32,9 @@ pub struct EngagedWith {
     pub target: Entity,
 }
 
-pub fn rearguard_buff_system(mut query: Query<(&mut CombatStatsOld, &mut Morale), Added<Rearguard>>) {
+pub fn rearguard_buff_system(
+    mut query: Query<(&mut CombatStatsOld, &mut Morale), Added<Rearguard>>,
+) {
     for (mut stats, mut morale) in query.iter_mut() {
         stats.attack *= 2.0; // Massive combat buff
         stats.defense *= 2.0;
