@@ -3248,7 +3248,10 @@ pub fn escape_pods_chronicle_bridge(
 /// INT-1296: Bridges Subconscious Grid Lockdown to Chronicle Events
 pub fn subconscious_grid_lockdown_chronicle_bridge(
     mut events: EventWriter<crate::layer1::core::chronicle::AddChronicleEvent>,
-    query: Query<&crate::layer1::infrastructure::subconscious_grid::SmartGrid, Changed<crate::layer1::infrastructure::subconscious_grid::SmartGrid>>,
+    query: Query<
+        &crate::layer1::infrastructure::subconscious_grid::SmartGrid,
+        Changed<crate::layer1::infrastructure::subconscious_grid::SmartGrid>,
+    >,
 ) {
     for grid in query.iter() {
         if grid.state == crate::layer1::infrastructure::subconscious_grid::GridState::Lockdown {

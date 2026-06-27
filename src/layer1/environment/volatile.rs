@@ -204,12 +204,17 @@ mod tests {
         let mut found_waste = false;
         let mut query = world.query::<(&crate::layer1::resources::ResourceItem, &GridPosition)>();
         for (item, pos_res) in query.iter(&world) {
-            if item.resource_type == crate::layer1::resources::ResourceType::Waste && *pos_res == pos {
+            if item.resource_type == crate::layer1::resources::ResourceType::Waste
+                && *pos_res == pos
+            {
                 found_waste = true;
                 break;
             }
         }
-        assert!(found_waste, "Explosion should spawn Waste at the explosion location.");
+        assert!(
+            found_waste,
+            "Explosion should spawn Waste at the explosion location."
+        );
     }
 
     #[test]

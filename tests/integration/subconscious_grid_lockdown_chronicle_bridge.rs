@@ -22,10 +22,7 @@ fn test_subconscious_grid_lockdown_chronicle_bridge() {
     let mut cursor = events.get_cursor();
     assert_eq!(cursor.read(events).count(), 0);
 
-    app.world_mut()
-        .get_mut::<SmartGrid>(colony)
-        .unwrap()
-        .state = GridState::Lockdown;
+    app.world_mut().get_mut::<SmartGrid>(colony).unwrap().state = GridState::Lockdown;
 
     app.update();
 
