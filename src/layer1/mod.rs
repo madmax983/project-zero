@@ -449,11 +449,13 @@ pub use core::*;
 pub mod deep_crust_resonance;
 /// Digital immortality mechanics
 pub mod digital_immortality;
+pub mod combat_stats;
 pub mod rearguard;
 pub mod shields;
+//pub use combat_stats::*;
 pub use rearguard::{
     rearguard_buff_system, rearguard_delays_enemy_system, rearguard_pathfinding_restriction_system,
-    CombatStats, Enemy, EngagedWith, EscapePod, Pathfinding, Rearguard,
+    Enemy, EngagedWith, EscapePod, Pathfinding, Rearguard,
 };
 pub mod sub_glacial_oceans;
 

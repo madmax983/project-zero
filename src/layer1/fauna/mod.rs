@@ -536,3 +536,6 @@ mod tests {
         assert_eq!(wolf_comp.target, None);
     }
 }
+
+pub mod modular_fauna;
+pub use modular_fauna::*;
