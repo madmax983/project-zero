@@ -10,3 +10,7 @@
 **Bloat:** Complicated fallback structs that pollute the global namespace to appease a documentation snippet.
 **Cut:** Replaced fallback code generation entirely by explicitly updating documentation to set proper feature-gate expectations for users.
 **Saved:** 0 lines of actual code, reduced API surface area by not adding 3 global fake structs.
+## [Reduction]
+**Bloat:** Dummy fallback structs and functions added just to suppress a compilation error when a feature is disabled.
+**Cut:** Deleted the dummy code and gated the exports so the compiler rightfully errors out.
+**Saved:** 50 lines of code / Fake runtime outputs confusing users

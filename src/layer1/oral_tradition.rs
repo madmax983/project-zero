@@ -18,7 +18,6 @@ use rand::seq::SliceRandom;
 #[cfg(feature = "nova")]
 use rand::Rng;
 
-
 /// A legend that has evolved from a historical event within the [`OralTradition`].
 ///
 /// Legends begin as factual [`crate::layer1::core::chronicle::Chronicle`] entries but morph over time through
@@ -253,11 +252,6 @@ pub fn collect_chronicles_system(mut tradition: ResMut<OralTradition>, chronicle
     tradition.process_chronicles(&chronicle);
 }
 
-#[cfg(not(feature = "nova"))]
-pub fn collect_chronicles_system() {
-    bevy::log::warn_once!("The `nova` feature is not enabled! `collect_chronicles_system` will do nothing. Please add `features = [\"nova\"]` to your Cargo.toml.");
-}
-
 /// Facilitates the telling of tales within `Tavern`s.
 ///
 /// When multiple pops gather in a tavern, there is a chance they share a story
@@ -335,11 +329,6 @@ pub fn storytelling_system(
     }
 }
 
-#[cfg(not(feature = "nova"))]
-pub fn storytelling_system() {
-    bevy::log::warn_once!("The `nova` feature is not enabled! `storytelling_system` will do nothing. Please add `features = [\"nova\"]` to your Cargo.toml.");
-}
-
 #[cfg(feature = "nova")]
 fn mutate_story(story: &mut Story, rng: &mut impl Rng) {
     let suffixes = [
@@ -379,6 +368,7 @@ fn mutate_story(story: &mut Story, rng: &mut impl Rng) {
     story.mutations += 1;
 }
 
+#[cfg(feature = "nova")]
 impl std::fmt::Display for StoryGenre {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
@@ -387,27 +377,6 @@ impl std::fmt::Display for StoryGenre {
             Self::Cautionary => write!(f, "⚠️ Cautionary"),
             Self::Trivial => write!(f, "📜 Trivial"),
         }
-    }
-}
-
-#[cfg(all(test, not(feature = "nova")))]
-mod tests_fallback {
-    use super::*;
-
-    #[test]
-    fn should_allow_fallback_struct_creation() {
-        let mut tradition = OralTradition::default();
-        tradition.add_story(Story {
-            text: "Fallback test".to_string(),
-            historical_date: 10,
-            mutations: 0,
-            genre: StoryGenre::Heroic,
-        });
-        assert_eq!(tradition.stories.len(), 1);
-
-        // Ensure fallback systems can be called without panicking
-        collect_chronicles_system();
-        storytelling_system();
     }
 }
 
@@ -513,37 +482,4 @@ mod tests {
         assert!(story.mutations > 0);
         assert_ne!(story.text, "The colony was founded.");
     }
-}
-
-#[cfg(not(feature = "nova"))]
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
-pub enum StoryGenre {
-    Heroic,
-    Tragedy,
-    Cautionary,
-    Trivial,
-}
-
-#[cfg(not(feature = "nova"))]
-#[derive(Debug, Clone)]
-pub struct Story {
-    pub text: String,
-    pub historical_date: u64,
-    pub mutations: u32,
-    pub genre: StoryGenre,
-}
-
-#[cfg(not(feature = "nova"))]
-#[derive(bevy_ecs::prelude::Resource, Debug, Clone, Default)]
-pub struct OralTradition {
-    pub stories: Vec<Story>,
-    pub last_processed_tick: u64,
-}
-
-#[cfg(not(feature = "nova"))]
-impl OralTradition {
-    pub fn add_story(&mut self, story: Story) {
-        self.stories.push(story);
-    }
-    pub fn process_chronicles(&mut self, _chronicle: &crate::layer1::core::chronicle::Chronicle) {}
 }

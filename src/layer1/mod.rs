@@ -446,10 +446,10 @@ pub use unseen_bureaucracy::*;
 /// Core layer mechanisms
 pub mod core;
 pub use core::*;
+pub mod combat_stats;
 pub mod deep_crust_resonance;
 /// Digital immortality mechanics
 pub mod digital_immortality;
-pub mod combat_stats;
 pub mod rearguard;
 pub mod shields;
 //pub use combat_stats::*;

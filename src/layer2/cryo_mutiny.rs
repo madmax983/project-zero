@@ -1,7 +1,6 @@
 // src/layer2/cryo_mutiny.rs
 use bevy::prelude::*;
 
-
 #[derive(Resource, Default)]
 pub struct CryoShipEvent {
     pub active: bool,
@@ -40,7 +39,6 @@ pub fn trigger_cryo_ship_landing_system(
 mod tests {
     use super::*;
 
-
     fn setup_app() -> App {
         let mut app = App::new();
         app.add_systems(Update, trigger_cryo_ship_landing_system);
@@ -63,6 +61,6 @@ mod tests {
             tracker.mutineers_spawned, 10,
             "10 Mutineer Pops should be spawned."
         );
-        assert_eq!(tracker.active, true, "A mutiny should be active.");
+        assert!(tracker.active, "A mutiny should be active.");
     }
 }
