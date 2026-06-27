@@ -44,6 +44,8 @@ mod tests {
     #[test]
     fn smelter_stops_when_corrupted() {
         let mut world = setup_world();
+    world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtInheritedEvent>>();
+    world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtSocializedEvent>>();
 
         // Setup Resources
         world.insert_resource(ColonyResources {
@@ -119,6 +121,8 @@ mod tests {
     #[test]
     fn hydroponics_stops_when_corrupted() {
         let mut world = setup_world();
+    world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtInheritedEvent>>();
+    world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtSocializedEvent>>();
 
         // Setup Resources (Give water!)
         world.resource_mut::<ColonyResources>().water = 100.0;
@@ -185,6 +189,8 @@ mod tests {
     #[test]
     fn trash_cannon_stops_when_corrupted() {
         let mut world = setup_world();
+    world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtInheritedEvent>>();
+    world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtSocializedEvent>>();
 
         // Unlock Tech
         let mut tech_state = TechState {

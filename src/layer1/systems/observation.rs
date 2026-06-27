@@ -527,6 +527,7 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::integration::access_denied_chronicle_bridge,
             crate::layer1::core::integration::ghost_shift_chronicle_bridge,
             crate::layer1::core::integration::impact_warning_chronicle_bridge,
+            crate::layer1::core::integration::debt_of_the_dead_chronicle_bridge,
             crate::layer1::core::integration::diplomatic_incident_chronicle_bridge,
             crate::layer1::administration::edicts::hack_hub_chronicle_bridge,
             crate::layer1::integration::smuggler_arrival_event_bridge

@@ -33,6 +33,8 @@ fn setup_world() -> World {
 #[test]
 fn test_clone_vat_emits_event_and_notification() {
     let mut world = setup_world();
+    world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtInheritedEvent>>();
+    world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtSocializedEvent>>();
     world.insert_resource(SimulationTime {
         tick: 100,
         ..Default::default()
@@ -83,6 +85,8 @@ fn test_clone_vat_emits_event_and_notification() {
 #[test]
 fn test_clone_auto_assigns_housing() {
     let mut world = setup_world();
+    world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtInheritedEvent>>();
+    world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtSocializedEvent>>();
 
     // Spawn Housing with capacity
     let housing_entity = world
@@ -132,6 +136,8 @@ fn test_clone_auto_assigns_housing() {
 #[test]
 fn test_soulless_trait_reduces_leisure_decay() {
     let mut world = setup_world();
+    world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtInheritedEvent>>();
+    world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtSocializedEvent>>();
 
     // Spawn Soulless Pop
     let soulless_pop = world

@@ -8,6 +8,8 @@ use scale::simulation::run_simulation_tick;
 #[test]
 fn test_generator_emits_vibration() {
     let mut world = setup_world();
+    world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtInheritedEvent>>();
+    world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtSocializedEvent>>();
     world.init_resource::<bevy_ecs::event::Events<scale::layer1::nature::ecology::HarvestEvent>>();
 
     // 1. Spawn a Generator at (10, 10)
@@ -59,6 +61,8 @@ fn test_generator_emits_vibration() {
 #[test]
 fn test_flora_agitation() {
     let mut world = setup_world();
+    world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtInheritedEvent>>();
+    world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtSocializedEvent>>();
     world.init_resource::<bevy_ecs::event::Events<scale::layer1::nature::ecology::HarvestEvent>>();
 
     // 1. Spawn a Generator

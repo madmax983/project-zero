@@ -180,6 +180,8 @@ mod tests {
     #[test]
     fn test_arrival_handler_clobbers_hauling() {
         let mut world = scale::setup::setup_world();
+    world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtInheritedEvent>>();
+    world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtSocializedEvent>>();
         world.init_resource::<bevy_ecs::event::Events<scale::layer1::genetics::GeneSplicingResultEvent>>();
 
         // Create a dummy item entity as target
@@ -220,6 +222,8 @@ mod tests {
     #[allow(clippy::too_many_lines)]
     fn test_full_hauling_cycle() {
         let mut world = scale::setup::setup_world();
+    world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtInheritedEvent>>();
+    world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtSocializedEvent>>();
         world.init_resource::<bevy_ecs::event::Events<scale::layer1::genetics::GeneSplicingResultEvent>>();
 
         world.init_resource::<bevy_ecs::event::Events<scale::layer2::exploration::void_whispers::FleetReturnedEvent>>();

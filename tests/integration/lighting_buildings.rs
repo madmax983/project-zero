@@ -8,6 +8,8 @@ use scale::setup::setup_world;
 #[test]
 fn test_tavern_emits_light() {
     let mut world = setup_world();
+    world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtInheritedEvent>>();
+    world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtSocializedEvent>>();
 
     // 1. Set Ambient Light to 0.0 (Pitch Black)
     world.resource_mut::<AmbientLight>().level = 0.0;
@@ -48,6 +50,8 @@ fn test_tavern_emits_light() {
 #[test]
 fn test_building_light_affects_pop_speed() {
     let mut world = setup_world();
+    world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtInheritedEvent>>();
+    world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtSocializedEvent>>();
 
     // 1. Set Ambient Light to 0.0 (Pitch Black)
     world.resource_mut::<AmbientLight>().level = 0.0;

@@ -8,6 +8,8 @@ mod tests {
     #[test]
     fn test_clutter_reduces_beauty() {
         let mut world = scale::setup::setup_world();
+    world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtInheritedEvent>>();
+    world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtSocializedEvent>>();
         let mut terrain = world.resource_mut::<TerrainGrid>();
         terrain.tiles.fill(TerrainType::Grass);
 
@@ -38,6 +40,8 @@ mod tests {
     fn test_clutter_increases_pathfinding_cost() {
         // Test that a path goes around a high-clutter area if possible
         let mut world = scale::setup::setup_world();
+    world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtInheritedEvent>>();
+    world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtSocializedEvent>>();
 
         let mut terrain = world.resource_mut::<TerrainGrid>();
         terrain.tiles.fill(TerrainType::Grass);

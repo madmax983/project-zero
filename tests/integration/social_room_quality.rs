@@ -27,6 +27,8 @@ fn setup_world() -> World {
 #[test]
 fn social_class_affects_room_expectations() {
     let mut world = setup_world();
+    world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtInheritedEvent>>();
+    world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtSocializedEvent>>();
 
     // 1. Create a "Decent" room at (0, 0)
     // Base 1.0 (space). Beauty needed ~20 to reach ~41 total quality.

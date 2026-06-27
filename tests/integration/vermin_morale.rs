@@ -9,6 +9,8 @@ use scale::setup::setup_world;
 fn test_vermin_affects_morale() {
     // 1. Setup World
     let mut world = setup_world();
+    world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtInheritedEvent>>();
+    world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtSocializedEvent>>();
 
     // Ensure VerminState is initialized
     if world.get_resource::<VerminState>().is_none() {

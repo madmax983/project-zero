@@ -255,6 +255,8 @@ mod tests {
     #[test]
     fn test_drone_spawning() {
         let mut world = scale::setup::setup_world();
+    world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtInheritedEvent>>();
+    world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtSocializedEvent>>();
         world
             .init_resource::<bevy_ecs::event::Events<scale::layer1::nature::ecology::HarvestEvent>>(
             );
@@ -306,6 +308,8 @@ mod tests {
     #[ignore = "AI hauling execution order changed"]
     fn test_drone_hauling() {
         let mut world = scale::setup::setup_world();
+    world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtInheritedEvent>>();
+    world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtSocializedEvent>>();
         world
             .init_resource::<bevy_ecs::event::Events<scale::layer1::nature::ecology::HarvestEvent>>(
             );

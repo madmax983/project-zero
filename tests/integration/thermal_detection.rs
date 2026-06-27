@@ -25,6 +25,8 @@ mod tests {
     #[test]
     fn test_detection_spawns_visitor() {
         let mut world = setup_world();
+    world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtInheritedEvent>>();
+    world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtSocializedEvent>>();
 
         // Register the handler system (which we haven't written yet, but we reference it to ensure it exists later)
         // For the RED phase, we just try to run the schedule or mock it.
