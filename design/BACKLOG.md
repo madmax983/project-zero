@@ -617,7 +617,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1019` Ecophagy — `specs/1019-ecophagy.md`
 - [ ] `1020` Spatial Compression — `specs/1020-spatial-compression.md`
 - [ ] `1021` The Shadow Cabinet — `specs/1021-the-shadow-cabinet.md`
-- [ ] `1035` Modular Fauna — `specs/1035-modular-fauna.md`
 - [ ] `1034` Gene-Banks — `specs/1034-gene-banks.md`
 
 - [ ] `1032` Open Source Science — `specs/1032-open-source-science.md`

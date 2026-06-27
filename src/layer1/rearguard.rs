@@ -4,7 +4,7 @@ use bevy_ecs::prelude::*;
 pub struct Rearguard;
 
 #[derive(Component)]
-pub struct CombatStats {
+pub struct CombatStatsOld {
     pub attack: f32,
     pub defense: f32,
 }
@@ -32,7 +32,7 @@ pub struct EngagedWith {
     pub target: Entity,
 }
 
-pub fn rearguard_buff_system(mut query: Query<(&mut CombatStats, &mut Morale), Added<Rearguard>>) {
+pub fn rearguard_buff_system(mut query: Query<(&mut CombatStatsOld, &mut Morale), Added<Rearguard>>) {
     for (mut stats, mut morale) in query.iter_mut() {
         stats.attack *= 2.0; // Massive combat buff
         stats.defense *= 2.0;
@@ -79,7 +79,7 @@ mod tests {
             .world_mut()
             .spawn((
                 Rearguard,
-                CombatStats {
+                CombatStatsOld {
                     attack: 10.0,
                     defense: 10.0,
                 },
@@ -89,7 +89,7 @@ mod tests {
 
         app.update();
 
-        let stats = app.world().get::<CombatStats>(entity).unwrap();
+        let stats = app.world().get::<CombatStatsOld>(entity).unwrap();
         let morale = app.world().get::<Morale>(entity).unwrap();
 
         assert_eq!(stats.attack, 20.0);

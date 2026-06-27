@@ -1,0 +1,33 @@
+--- src/layer1/combat.rs
++++ src/layer1/combat.rs
+@@ -1,5 +1,6 @@
+ use bevy_ecs::prelude::*;
+ use crate::layer1::map::GridPosition;
+ use crate::layer1::items::Equipment;
+ use crate::layer1::health::{Dead, Health};
+ use crate::layer1::physics::hit_stop::{GlobalHitStop, HitStop};
+ use crate::layer1::pop::Pop;
+
+@@ -32,6 +33,21 @@
+     pub accuracy: f32,
+ }
+
++#[derive(Component, Default, Debug)]
++pub struct CombatStats {
++    pub melee_damage: f32,
++    pub damage_types: Vec<DamageType>,
++}
++
++#[derive(Component, Default, Debug)]
++pub struct Armor {
++    pub rating: u32,
++}
++
++#[derive(Debug, PartialEq, Eq)]
++pub enum DamageType {
++    Piercing,
++    Venom,
++}
++
+ /// Component defining an entity as a weapon.
+ ///
