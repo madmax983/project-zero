@@ -25764,3 +25764,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you integrate the ancestors forcefully into your modern society, destroying their unique preserved culture, or grant them the autonomy they technically earned, creating a massive, technologically backwards enclave on your most advanced world?
 
 ---
+## Gravity Well Tax
+
+**Layer:** Cross-layer
+
+**Fantasy:** Escaping a planet's gravity requires massive effort, and some worlds are simply too "heavy" to be profitable hubs.
+
+**Mechanic:** Lifting resources from a Layer 1 colony to a Layer 2 orbital station incurs a "Gravity Tax"—a percentage of the resource is consumed as fuel during the launch. High-gravity worlds consume massive amounts of fuel to export goods, while low-gravity moons export cheaply but have terrible Layer 1 building stability.
+
+**Emergence:** You colonize a beautiful, resource-rich Super-Earth, only to realize the gravity is so intense that exporting the resources costs more fuel than the colony produces. It becomes a permanent, self-sustaining isolationist world that refuses to trade with your empire.
+
+**Tension:** Do you strip-mine a fragile, low-gravity moon for cheap exports, knowing a single meteor strike will shatter the colony, or invest in a massive, unprofitable Super-Earth that is effectively immune to bombardment?
+
+---
+
+## Echoes of the Void
+
+**Layer:** 2
+
+**Fantasy:** Space is vast and empty, and sometimes, ships listen too closely to the silence.
+
+**Mechanic:** Deep space exploration ships (Layer 2) that spend too long far away from any colonized nodes begin generating "Void Echoes"—corrupted data logs that appear to be distress signals or hyper-advanced tech blueprints. If a ship brings these Echoes back to a Layer 1 colony, the Pops attempting to decode them suffer massive psychological stress and begin building bizarre, useless monuments.
+
+**Emergence:** Your most advanced exploration vessel returns from the edge of the galaxy after a century. Instead of delivering new technology, it infects your capital's scientists with an obsession to construct a massive, perfectly spherical void-stone in the center of the city, halting all other research.
+
+**Tension:** Do you quarantine your deep-space explorers, destroying whatever genuine discoveries they made, or risk infecting your core worlds with deep-space madness?
+
+---
+
+## Generational Obsolescence
+
+**Layer:** 1
+
+**Fantasy:** The tragedy of a highly specialized workforce that outlives its usefulness.
+
+**Mechanic:** As you upgrade your colony's tech tree (e.g., from manual mining to automated laser drills), Pops who spent their entire lives mastering the obsolete skill suffer "Generational Obsolescence." They cannot easily retrain, their productivity plummets, and they develop a permanent "Uselessness" mood debuff. They begin congregating in "Rust Zones" around the old, dismantled machinery.
+
+**Emergence:** You successfully automate your entire agricultural sector, solving world hunger. However, the resulting mass unemployment of millions of proud farmers sparks a Luddite rebellion that physically attacks the automated tractors, causing a localized famine despite having the technology to prevent it.
+
+**Tension:** Do you intentionally slow down your technological progress to keep your workforce relevant and happy, or push for maximum efficiency and deal with a massive, disenfranchised underclass?
+
+---
