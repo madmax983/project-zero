@@ -255,6 +255,7 @@ mod tests {
     #[test]
     fn test_drone_spawning() {
         let mut world = scale::setup::setup_world();
+        world.init_resource::<bevy_ecs::event::Events<scale::layer1::nature::ecology::HarvestEvent>>();
 
         // Place a DroneHub at (0,0)
         // Note: We use spawn_building helper logic by manually inserting components
@@ -303,6 +304,7 @@ mod tests {
     #[ignore = "AI hauling execution order changed"]
     fn test_drone_hauling() {
         let mut world = scale::setup::setup_world();
+        world.init_resource::<bevy_ecs::event::Events<scale::layer1::nature::ecology::HarvestEvent>>();
 
         // 1. Setup Infrastructure
         // Power Source

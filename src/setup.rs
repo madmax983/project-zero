@@ -51,6 +51,7 @@ pub fn setup_world() -> World {
         crate::layer1::economy::existential_audit::ExistentialAuditCompletedEvent,
     >>();
     world.init_resource::<Events<crate::layer1::economy::black_market::SmugglerArrivalEvent>>();
+    world.init_resource::<bevy_ecs::event::Events<crate::layer1::nature::ecology::HarvestEvent>>();
     world.init_resource::<Events<crate::layer1::economy::black_market::ShutdownDropNodeEvent>>();
     world.init_resource::<Events<crate::layer1::orphaned_swarm::DerelictArrivalEvent>>();
     world
@@ -83,6 +84,7 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     world.init_resource::<Events<crate::layer1::economy::information_black_market::EarlyWarningEvent>>();
     world.init_resource::<bevy_ecs::event::Events<crate::layer1::nature::long_night::StartLongNightEvent>>();
     world.init_resource::<crate::layer1::culture::celestial_cemeteries::OrbitalCemetery>();
+        world.init_resource::<bevy_ecs::event::Events<crate::layer1::nature::ecology::HarvestEvent>>();
     world
         .init_resource::<Events<crate::layer1::culture::celestial_cemeteries::ClearCemeteryEvent>>(
         );
@@ -1197,6 +1199,7 @@ mod tests {
             scenario,
         });
         world.init_resource::<crate::layer1::culture::celestial_cemeteries::OrbitalCemetery>();
+        world.init_resource::<bevy_ecs::event::Events<crate::layer1::nature::ecology::HarvestEvent>>();
         world.init_resource::<Events<crate::layer1::culture::celestial_cemeteries::ClearCemeteryEvent>>();
         world.init_resource::<Events<crate::layer1::architecture::smart_matter::RaidEvent>>();
         world.init_resource::<Events<crate::layer1::culture::memorial_revolt::PetDeathEvent>>();
