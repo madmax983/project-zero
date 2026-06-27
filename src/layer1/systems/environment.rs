@@ -21,6 +21,8 @@ pub fn register(schedule: &mut Schedule) {
     );
     schedule.add_systems(
         (
+            crate::layer1::environment::geothermal::process_geothermal_vents,
+            crate::layer1::environment::geothermal::process_lava_surges,
             crate::layer1::environment::geothermal::geothermal_pulse_system,
             crate::layer1::environment::geothermal::geothermal_boost_system,
             crate::layer1::environment::geothermal::geothermal_decay_system,

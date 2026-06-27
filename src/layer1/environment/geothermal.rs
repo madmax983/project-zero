@@ -5,7 +5,27 @@ use bevy_ecs::prelude::*;
 
 /// A tile marking a Geothermal Vent.
 #[derive(Component)]
-pub struct GeothermalVent;
+pub struct GeothermalVent {
+    pub high_power_duration: u32,
+    pub low_power_duration: u32,
+    pub current_tick: u32,
+    pub is_high_power: bool,
+    pub high_power_output: f32,
+    pub low_power_output: f32,
+}
+
+impl Default for GeothermalVent {
+    fn default() -> Self {
+        Self {
+            high_power_duration: 300,
+            low_power_duration: 200,
+            current_tick: 0,
+            is_high_power: true,
+            high_power_output: 1000.0,
+            low_power_output: 100.0,
+        }
+    }
+}
 
 /// Global state tracking whether geothermal vents are pulsing.
 #[derive(Resource, Default)]
@@ -32,6 +52,51 @@ pub fn geothermal_pulse_system(
 ) {
     for event in events.read() {
         state.is_pulsing = event.is_active;
+    }
+}
+
+#[derive(Resource)]
+pub struct LavaSurgeChance(pub f32);
+
+impl Default for LavaSurgeChance {
+    fn default() -> Self {
+        Self(0.01)
+    }
+}
+
+pub fn process_geothermal_vents(
+    mut query: Query<&mut GeothermalVent>,
+    mut pulse_events: EventWriter<GeothermalPulseEvent>,
+) {
+    for mut vent in query.iter_mut() {
+        vent.current_tick += 1;
+
+        let phase_duration = if vent.is_high_power { vent.high_power_duration } else { vent.low_power_duration };
+
+        if vent.current_tick >= phase_duration {
+            vent.current_tick = 0;
+            vent.is_high_power = !vent.is_high_power;
+            pulse_events.send(GeothermalPulseEvent {
+                is_active: vent.is_high_power,
+            });
+        }
+    }
+}
+
+pub fn process_lava_surges(
+    vent_query: Query<(&GeothermalVent, &GridPosition)>,
+    mut explosion_events: EventWriter<crate::layer1::environment::volatile::ExplosionEvent>,
+    surge_chance: Res<LavaSurgeChance>,
+) {
+    let mut rng = rand::thread_rng();
+    for (vent, vent_pos) in vent_query.iter() {
+        if vent.is_high_power && rand::Rng::gen::<f32>(&mut rng) < surge_chance.0 {
+            explosion_events.send(crate::layer1::environment::volatile::ExplosionEvent {
+                center: *vent_pos,
+                damage: 25.0,
+                radius: 1,
+            });
+        }
     }
 }
 
@@ -146,7 +211,7 @@ mod tests {
         let vent_pos = GridPosition { x: 5, y: 5 };
 
         // Spawn a vent
-        app.world_mut().spawn((GeothermalVent, vent_pos));
+        app.world_mut().spawn((GeothermalVent::default(), vent_pos));
 
         // Spawn an active power source building on the vent
         let building_entity = app
@@ -194,7 +259,7 @@ mod tests {
 
         let vent_pos = GridPosition { x: 5, y: 5 };
 
-        app.world_mut().spawn((GeothermalVent, vent_pos));
+        app.world_mut().spawn((GeothermalVent::default(), vent_pos));
 
         let building_entity = app
             .world_mut()
@@ -242,7 +307,7 @@ mod tests {
         let vent_pos = GridPosition { x: 5, y: 5 };
         let adj_pos = GridPosition { x: 5, y: 6 };
 
-        app.world_mut().spawn((GeothermalVent, vent_pos));
+        app.world_mut().spawn((GeothermalVent::default(), vent_pos));
 
         // Building about to explode
         let building_entity = app
@@ -295,5 +360,61 @@ mod tests {
         assert_eq!(e.center, vent_pos);
         assert_eq!(e.damage, 50.0);
         assert_eq!(e.radius, 1);
+    }
+
+    #[test]
+    fn test_geothermal_heartbeat_cycle() {
+        let mut app = App::new();
+        app.add_event::<GeothermalPulseEvent>();
+        app.add_systems(Update, process_geothermal_vents);
+
+        let vent = app.world_mut().spawn((
+            GeothermalVent {
+                high_power_duration: 300,
+                low_power_duration: 200,
+                current_tick: 0,
+                is_high_power: true,
+                high_power_output: 1000.0,
+                low_power_output: 100.0,
+            },
+        )).id();
+
+        app.update();
+        let vent_state = app.world().get::<GeothermalVent>(vent).unwrap();
+        assert_eq!(vent_state.is_high_power, true);
+
+        let mut vent_mut = app.world_mut().get_mut::<GeothermalVent>(vent).unwrap();
+        vent_mut.current_tick = 300;
+
+        app.update();
+        let vent_state_low = app.world().get::<GeothermalVent>(vent).unwrap();
+        assert_eq!(vent_state_low.is_high_power, false);
+    }
+
+    #[test]
+    fn test_lava_surge_damage() {
+        let mut app = App::new();
+        app.add_event::<crate::layer1::environment::volatile::ExplosionEvent>();
+        app.add_systems(Update, process_lava_surges);
+
+        app.world_mut().spawn((
+            GeothermalVent {
+                high_power_duration: 300,
+                low_power_duration: 200,
+                current_tick: 150,
+                is_high_power: true,
+                high_power_output: 1000.0,
+                low_power_output: 100.0,
+            },
+            GridPosition { x: 10, y: 10 },
+        ));
+
+        app.world_mut().insert_resource(LavaSurgeChance(1.0));
+        app.update();
+
+        let events = app.world().resource::<Events<crate::layer1::environment::volatile::ExplosionEvent>>();
+        let mut reader = events.get_cursor();
+        let event = reader.read(events).next();
+        assert!(event.is_some(), "An ExplosionEvent should have been emitted for lava surge");
     }
 }

@@ -76,6 +76,7 @@ fn init_simulation_resources(world: &mut World) {
     #[cfg(feature = "nova")]
     world.init_resource::<crate::experimental::ghost_grid::GhostGrid>();
     world.init_resource::<crate::layer1::environment::atmosphere::GlobalAtmosphere>();
+    world.init_resource::<crate::layer1::environment::geothermal::LavaSurgeChance>();
     world.init_resource::<Events<crate::layer1::economy::information_black_market::EarlyWarningEvent>>();
     world.init_resource::<Events<crate::layer1::economy::black_market::SmugglerArrivalEvent>>();
     world.init_resource::<Events<crate::layer1::economy::black_market::ShutdownDropNodeEvent>>();
@@ -215,6 +216,7 @@ fn init_simulation_resources(world: &mut World) {
     world.init_resource::<Events<crate::layer1::social::grievances::PostGrievanceEvent>>();
     world.init_resource::<Events<crate::layer1::deep_crust_resonance::ExcavationEvent>>();
     world.init_resource::<Events<crate::layer1::logistics::mycelial::ContaminationEvent>>();
+    world.init_resource::<Events<crate::layer1::nature::ecology::HarvestEvent>>();
     world.init_resource::<Events<crate::layer1::resources::MiningEvent>>();
     world.init_resource::<Events<crate::layer1::spiteful_will::InheritanceEvent>>();
     if !world
@@ -1180,6 +1182,7 @@ mod tests {
         world
             .init_resource::<crate::layer1::administration::invasive_bureaucracy::EmpireStability>(
             );
+        world.init_resource::<crate::layer1::environment::geothermal::LavaSurgeChance>();
         #[cfg(feature = "nova")]
         world.init_resource::<crate::experimental::ghost_grid::GhostGrid>();
 
@@ -1369,6 +1372,7 @@ mod tests {
         world.init_resource::<Events<crate::layer1::whispering_ore::MineSealedEvent>>();
         world.init_resource::<Events<crate::layer1::deep_crust_resonance::ExcavationEvent>>();
         world.init_resource::<Events<crate::layer1::logistics::mycelial::ContaminationEvent>>();
+    world.init_resource::<Events<crate::layer1::nature::ecology::HarvestEvent>>();
         world.init_resource::<Events<crate::layer1::mycelial::MycelialTripwireEvent>>();
         world.init_resource::<crate::layer3::council::GalacticCouncil>();
         world.init_resource::<crate::layer2::syzygy::SyzygyCycle>();
