@@ -19,3 +19,7 @@
 **Using default initialization for fields to avoid field-reassign-with-default**
 **Learning:** Initializing variables with `Default::default()` and then manually overriding some fields triggers the `clippy::field-reassign-with-default` warning and adds a minor unnecessary performance cost.
 **Action:** Always prefer the `..Default::default()` unpacking syntax during structure initialization (e.g., `let action = PopAction { current: ActionType::Research, ..Default::default() };`).
+
+**AHash over SipHash for GridPosition sets**
+**Learning:** `std::collections::HashSet` uses `SipHash` which is slow for integer keys. In `src/layer1/economy/hauling.rs`, replacing it with `bevy::utils::HashSet` (which uses `AHash`) avoids unnecessary overhead when checking `GridPosition` structures.
+**Action:** Always prefer `bevy::utils::HashSet` for small integer keys like coordinates or entities.
