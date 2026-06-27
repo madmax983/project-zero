@@ -25708,3 +25708,59 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you spend valuable military resources and time to clean up orbital trash, or ignore it and risk the birth of a new, well-armed enemy on your doorstep?
 
 ---
+
+## The Obsolete Deity
+
+**Layer:** 1
+
+**Fantasy:** Watching a colony's history distort over generations into religious reverence for forgotten technology.
+
+**Mechanic:** A critical but unrepairable piece of legacy infrastructure (e.g., an ancient terraforming engine or a crashed colony ship's reactor) slowly degrades. As technical knowledge is lost, Pops begin assigning it a "Reverence" score, treating it as a shrine.
+
+**Emergence:** Pops might start offering critical resources to the machine as "sacrifices," causing resource shortages, or violently defending it from engineers trying to dismantle or repair it.
+
+**Tension:** Do you let the machine fail completely and risk the colony's survival, or forcefully dismantle a new religious icon and risk a full-scale holy war within your own settlement?
+
+---
+
+## Sensor Saturation Point
+
+**Layer:** 2
+
+**Fantasy:** The paranoia of a hyper-surveilled star system where too much information becomes indistinguishable from a threat.
+
+**Mechanic:** Building too many overlapping sensor arrays in a system creates "Data Noise." This noise randomly generates false positives for enemy fleets or anomalies, forcing your fleets to react to phantoms.
+
+**Emergence:** Your heavily fortified core system, packed with sensors, constantly throws your defense fleets into disarray chasing sensor ghosts, leaving the actual perimeter completely unguarded when a real invasion happens.
+
+**Tension:** Do you build more sensors to ensure no blind spots, risking crippling paranoia, or rely on sparse coverage and risk an enemy slipping through unseen?
+
+---
+
+## Historical Misinterpretation
+
+**Layer:** 3
+
+**Fantasy:** A massive galactic conflict ignited by a simple bureaucratic mistranslation of an ancient document.
+
+**Mechanic:** Ancient treaties or trade agreements between civilizations are periodically "re-translated" by new generations of diplomats. There's a small chance a re-translation alters the perceived terms (e.g., a "gift" becomes a "tribute," a "border" becomes a "demilitarized zone").
+
+**Emergence:** An ally of 300 years suddenly claims you owe them three centuries of back-taxes because a newly translated clause in your founding treaty was misinterpreted, instantly souring relations and sparking a trade embargo.
+
+**Tension:** Do you accept the new, punishing interpretation to maintain peace, or reject it and go to war over what is essentially a typo in a 400-year-old PDF?
+
+---
+
+## The Leapfrog Colonists
+
+**Layer:** Cross-layer
+
+**Fantasy:** The awkward reunion of a civilization that outpaced its own history.
+
+**Mechanic:** You send a slow, sub-light colony ship to a distant star. Centuries later, you invent Faster-Than-Light (FTL) travel and colonize that same star. When the original sub-light ship finally arrives, they expect an empty pristine world but find a sprawling, advanced metropolis.
+
+**Emergence:** The original sub-light colonists, clinging to archaic cultures and laws, arrive and demand governance of the planet they "claimed" first, sparking a massive civil rights crisis and cultural clash with the modern inhabitants.
+
+**Tension:** Do you integrate the ancestors forcefully into your modern society, destroying their unique preserved culture, or grant them the autonomy they technically earned, creating a massive, technologically backwards enclave on your most advanced world?
+
+---
