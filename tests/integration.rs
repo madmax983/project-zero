@@ -625,6 +625,8 @@ mod void_stare_chronicle;
 #[path = "integration/architectural_sentience_bridge.rs"]
 mod architectural_sentience_bridge;
 
+#[path = "integration/asteroid_claim_attack.rs"]
+mod asteroid_claim_attack;
 #[path = "integration/escape_pods_chronicle.rs"]
 mod escape_pods_chronicle;
 #[path = "integration/subconscious_grid_lockdown_chronicle_bridge.rs"]

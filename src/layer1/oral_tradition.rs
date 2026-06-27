@@ -11,44 +11,13 @@ use crate::layer1::needs::Needs;
 use crate::layer1::social::Tavern;
 #[cfg(feature = "nova")]
 use crate::shared::log::MessageLog;
+#[cfg(feature = "nova")]
 use bevy_ecs::prelude::*;
 #[cfg(feature = "nova")]
 use rand::seq::SliceRandom;
 #[cfg(feature = "nova")]
 use rand::Rng;
 
-#[cfg(not(feature = "nova"))]
-#[derive(Debug, Clone, PartialEq, Eq)]
-pub enum StoryGenre {
-    Heroic,
-    Tragedy,
-    Cautionary,
-    Trivial,
-}
-
-#[cfg(not(feature = "nova"))]
-#[derive(Debug, Clone)]
-pub struct Story {
-    pub text: String,
-    pub historical_date: u64,
-    pub mutations: u32,
-    pub genre: StoryGenre,
-}
-
-#[cfg(not(feature = "nova"))]
-#[derive(Resource, Debug, Clone, Default)]
-pub struct OralTradition {
-    pub stories: Vec<Story>,
-    pub last_processed_tick: u64,
-}
-
-#[cfg(not(feature = "nova"))]
-impl OralTradition {
-    pub fn add_story(&mut self, story: Story) {
-        self.stories.push(story);
-    }
-    pub fn process_chronicles(&mut self, _chronicle: &crate::layer1::core::chronicle::Chronicle) {}
-}
 
 /// A legend that has evolved from a historical event within the [`OralTradition`].
 ///
@@ -544,4 +513,37 @@ mod tests {
         assert!(story.mutations > 0);
         assert_ne!(story.text, "The colony was founded.");
     }
+}
+
+#[cfg(not(feature = "nova"))]
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum StoryGenre {
+    Heroic,
+    Tragedy,
+    Cautionary,
+    Trivial,
+}
+
+#[cfg(not(feature = "nova"))]
+#[derive(Debug, Clone)]
+pub struct Story {
+    pub text: String,
+    pub historical_date: u64,
+    pub mutations: u32,
+    pub genre: StoryGenre,
+}
+
+#[cfg(not(feature = "nova"))]
+#[derive(bevy_ecs::prelude::Resource, Debug, Clone, Default)]
+pub struct OralTradition {
+    pub stories: Vec<Story>,
+    pub last_processed_tick: u64,
+}
+
+#[cfg(not(feature = "nova"))]
+impl OralTradition {
+    pub fn add_story(&mut self, story: Story) {
+        self.stories.push(story);
+    }
+    pub fn process_chronicles(&mut self, _chronicle: &crate::layer1::core::chronicle::Chronicle) {}
 }
