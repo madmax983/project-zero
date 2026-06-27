@@ -579,6 +579,7 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
             crate::experimental::the_weight_of_silence::spawn_silence_cult_system,
             crate::layer3::integration::reset_isolation_on_trade_system,
             crate::layer3::integration::silence_cult_chronicle_bridge,
+            crate::layer2::integration::attack_colony_chronicle_bridge,
         )
             .after(Layer1SystemSet::Economy),
     );

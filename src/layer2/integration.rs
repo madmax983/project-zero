@@ -1068,3 +1068,22 @@ pub fn mycelial_network_immune_response_chronicle_bridge(
         });
     }
 }
+
+pub fn attack_colony_chronicle_bridge(
+    mut events: bevy_ecs::prelude::EventReader<
+        crate::layer2::orbit::asteroid_claims::AttackColonyEvent,
+    >,
+    factions: bevy_ecs::prelude::Query<&crate::layer2::orbit::asteroid_claims::FactionClaim>,
+    mut chronicle_events: bevy_ecs::prelude::EventWriter<
+        crate::layer1::core::chronicle::AddChronicleEvent,
+    >,
+) {
+    for event in events.read() {
+        if let Ok(faction) = factions.get(event.attacker) {
+            chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
+                importance: crate::layer1::core::chronicle::EventImportance::Major,
+                text: format!("Colony attacked by {}", faction.name),
+            });
+        }
+    }
+}
