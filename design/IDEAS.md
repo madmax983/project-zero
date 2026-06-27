@@ -6382,7 +6382,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Localized Gravity Vectors
+## Localized Gravity Vectors [SPECCED]
 
 **Layer:** 1
 
@@ -6410,7 +6410,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Emergency Beacon Bait
+## Emergency Beacon Bait [SPECCED]
 
 **Layer:** 2
 
