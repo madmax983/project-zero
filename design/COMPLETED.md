@@ -836,3 +836,4 @@
 - [x] `INT-1022` Integration: The Hive Mind -> Simulation & Chronicle — completed 2026-10-31
 - [x] `1096` Celestial Cemeteries — `specs/1096-celestial-cemeteries.md` — completed 2026-06-26
 - [x] `INT-1296b` Integration: Subconscious Grid Lockdown -> Chronicle — completed 2026-06-26
+- [x] `1130` Volatile Intermediates — `specs/1130-volatile-intermediates.md` — completed 2026-02-01
