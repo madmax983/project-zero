@@ -618,24 +618,32 @@ mod tests {
 
     #[test]
     fn test_diplomatic_fashion_chronicle_bridge_match() {
-        use crate::layer3::diplomacy::diplomatic_fashion::{DiplomaticMeetingEvent, PreferredAttire, Apparel, AttireTag};
         use crate::layer1::entities::pop::Pop;
+        use crate::layer3::diplomacy::diplomatic_fashion::{
+            Apparel, AttireTag, DiplomaticMeetingEvent, PreferredAttire,
+        };
 
         let mut app = bevy_app::App::new();
         app.add_event::<DiplomaticMeetingEvent>();
         app.add_event::<AddChronicleEvent>();
         app.add_systems(bevy_app::Update, diplomatic_fashion_chronicle_bridge);
 
-        let ambassador = app.world_mut().spawn(PreferredAttire {
-            tags: vec![AttireTag::Ceremonial],
-        }).id();
+        let ambassador = app
+            .world_mut()
+            .spawn(PreferredAttire {
+                tags: vec![AttireTag::Ceremonial],
+            })
+            .id();
 
-        let envoy = app.world_mut().spawn((
-            Pop,
-            Apparel {
-                tags: vec![AttireTag::Ceremonial, AttireTag::Organic],
-            },
-        )).id();
+        let envoy = app
+            .world_mut()
+            .spawn((
+                Pop,
+                Apparel {
+                    tags: vec![AttireTag::Ceremonial, AttireTag::Organic],
+                },
+            ))
+            .id();
 
         app.world_mut()
             .resource_mut::<Events<DiplomaticMeetingEvent>>()
@@ -652,29 +660,39 @@ mod tests {
         let events: Vec<&AddChronicleEvent> = reader.read(chronicle_events).collect();
         assert_eq!(events.len(), 1);
         assert_eq!(events[0].importance, EventImportance::Standard);
-        assert!(events[0].text.contains("went well thanks to our envoy's impeccable fashion sense"));
+        assert!(events[0]
+            .text
+            .contains("went well thanks to our envoy's impeccable fashion sense"));
     }
 
     #[test]
     fn test_diplomatic_fashion_chronicle_bridge_mismatch() {
-        use crate::layer3::diplomacy::diplomatic_fashion::{DiplomaticMeetingEvent, PreferredAttire, Apparel, AttireTag};
         use crate::layer1::entities::pop::Pop;
+        use crate::layer3::diplomacy::diplomatic_fashion::{
+            Apparel, AttireTag, DiplomaticMeetingEvent, PreferredAttire,
+        };
 
         let mut app = bevy_app::App::new();
         app.add_event::<DiplomaticMeetingEvent>();
         app.add_event::<AddChronicleEvent>();
         app.add_systems(bevy_app::Update, diplomatic_fashion_chronicle_bridge);
 
-        let ambassador = app.world_mut().spawn(PreferredAttire {
-            tags: vec![AttireTag::Ceremonial],
-        }).id();
+        let ambassador = app
+            .world_mut()
+            .spawn(PreferredAttire {
+                tags: vec![AttireTag::Ceremonial],
+            })
+            .id();
 
-        let envoy = app.world_mut().spawn((
-            Pop,
-            Apparel {
-                tags: vec![AttireTag::Organic],
-            },
-        )).id();
+        let envoy = app
+            .world_mut()
+            .spawn((
+                Pop,
+                Apparel {
+                    tags: vec![AttireTag::Organic],
+                },
+            ))
+            .id();
 
         app.world_mut()
             .resource_mut::<Events<DiplomaticMeetingEvent>>()
@@ -691,7 +709,9 @@ mod tests {
         let events: Vec<&AddChronicleEvent> = reader.read(chronicle_events).collect();
         assert_eq!(events.len(), 1);
         assert_eq!(events[0].importance, EventImportance::Major);
-        assert!(events[0].text.contains("deeply offended the foreign ambassador"));
+        assert!(events[0]
+            .text
+            .contains("deeply offended the foreign ambassador"));
     }
 
     #[test]
@@ -703,9 +723,7 @@ mod tests {
 
         app.world_mut()
             .resource_mut::<Events<crate::layer3::silence::HostileSpawnEvent>>()
-            .send(crate::layer3::silence::HostileSpawnEvent {
-                severity: 10,
-            });
+            .send(crate::layer3::silence::HostileSpawnEvent { severity: 10 });
 
         app.update();
 
