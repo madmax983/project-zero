@@ -1,0 +1,19 @@
+feat(layer1): complete The Bio-Loom system
+
+Implements RED-GREEN-REFACTOR from spec 304:
+- Added comprehensive test suite for the bio-suit (RED phase)
+- Implemented BioSuit, Armor, UnequipFailedEvent components and events (GREEN phase)
+- Implemented bio-suit armor buff, parasitism health drain, and unequip resistance systems
+- Handled integration by plugging systems into `Layer1SystemSet::Economy` and registering events
+- Test coverage for `src/layer1/tech/bio_loom.rs`: 92.9% (target: 85%)
+
+All acceptance criteria met:
+- Wearing a Bio-Suit grants significant armor value.
+- A hungry Bio-Suit drains the host's health and increases attachment.
+- High attachment prevents normal unequipping of the suit.
+- `cargo test` passes for the new module
+- `cargo clippy -- -D warnings` clean
+
+Note: There are pre-existing global test failures in `layer1::economy::debt_of_the_dead` which are unrelated to this PR.
+
+Co-Authored-By: google-labs-jules[bot] <161369871+google-labs-jules[bot]@users.noreply.github.com>

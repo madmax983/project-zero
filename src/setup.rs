@@ -517,6 +517,7 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
         .init_resource::<bevy_ecs::event::Events<crate::layer1::petrification::PopPetrifiedEvent>>(
         );
     world.init_resource::<bevy_ecs::event::Events<crate::layer2::bombardment::BombardmentEvent>>();
+    world.init_resource::<bevy_ecs::event::Events<crate::layer1::tech::bio_loom::UnequipFailedEvent>>();
     #[cfg(feature = "nova")]
     world.init_resource::<crate::layer1::machine_consciousness::ConsciousnessConfig>();
     world.init_resource::<crate::layer1::mind::fugue::FugueEventTracker>();

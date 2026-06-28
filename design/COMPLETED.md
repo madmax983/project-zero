@@ -840,3 +840,4 @@
 - [x] `INT-1296b` Integration: Subconscious Grid Lockdown -> Chronicle — completed 2026-06-26
 - [x] `1130` Volatile Intermediates — `specs/1130-volatile-intermediates.md` — completed 2026-02-01
 - [x] `1035` Modular Fauna — `specs/1035-modular-fauna.md` — completed 2026-06-27
+- [x] `304` The Bio-Loom — `specs/304-bio-loom.md` — completed 2024-06-28

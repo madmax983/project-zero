@@ -370,4 +370,13 @@ pub fn register(schedule: &mut Schedule) {
             .chain()
             .in_set(Layer1SystemSet::Economy),
     );
+
+    schedule.add_systems(
+        (
+            crate::layer1::tech::bio_loom::apply_bio_suit_armor,
+            crate::layer1::tech::bio_loom::process_bio_suit_parasitism,
+            crate::layer1::tech::bio_loom::handle_unequip_attempts,
+        )
+            .in_set(Layer1SystemSet::Economy),
+    );
 }
