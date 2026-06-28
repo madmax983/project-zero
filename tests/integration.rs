@@ -634,3 +634,6 @@ mod subconscious_grid_lockdown_chronicle_bridge;
 
 #[path = "integration/debt_of_the_dead_bridge.rs"]
 mod debt_of_the_dead_bridge;
+
+#[path = "integration/modular_fauna_integration.rs"]
+mod modular_fauna_integration;

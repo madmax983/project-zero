@@ -17,6 +17,11 @@ pub fn register(schedule: &mut Schedule) {
             .in_set(Layer1SystemSet::Economy),
     );
     schedule.add_systems(
+        crate::layer1::fauna::modular_fauna::evaluate_modular_fauna_stats_system
+            .in_set(Layer1SystemSet::Economy),
+    );
+
+    schedule.add_systems(
         (
             crate::layer1::architecture::sunk_cost_monument::calculate_sunk_cost_upkeep_system,
             crate::layer1::core::integration::sunk_cost_resource_drain_system.after(
