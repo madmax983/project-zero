@@ -20,3 +20,7 @@ use bevy_ecs::prelude::Resource;
 /// ```
 #[derive(Resource, Default, Debug, Clone, Copy)]
 pub struct WorldSeed(pub u64);
+
+/// Global RNG resource for deterministic simulation
+#[derive(Resource)]
+pub struct GlobalRng(pub rand::rngs::StdRng);
