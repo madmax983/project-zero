@@ -25805,3 +25805,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you intentionally slow down your technological progress to keep your workforce relevant and happy, or push for maximum efficiency and deal with a massive, disenfranchised underclass?
 
 ---
+## Subconscious Sabotage
+
+**Layer:** 1
+
+**Fantasy:** A colony so focused on efficiency that the Pops subconsciously rebel through tiny acts of industrial defiance.
+
+**Mechanic:** When a colony maintains near 100% efficiency and low leisure for an extended period, Pops develop a hidden "Burnout" stat. Instead of openly rioting, they begin inserting minor logic bombs or physical defects into high-tier manufacturing. A finished starship might have a 1% chance to randomly vent oxygen during combat.
+
+**Emergence:** You finally build your pristine dreadnought after years of perfect industrial output, only for its main reactor to shut down during its maiden voyage because a disgruntled engineer left a half-eaten sandwich in the coolant manifold to feel alive.
+
+**Tension:** Do you sacrifice maximum efficiency to give your workers mandated, unproductive "play time," or do you accept that every piece of advanced technology you build is a ticking time bomb of passive-aggressive revenge?
+
+---
+
+## Diplomatic Artifact Smuggling
+
+**Layer:** 3
+
+**Fantasy:** Exploiting diplomatic immunity to run a galactic black market of stolen cultural artifacts.
+
+**Mechanic:** Layer 3 Envoys assigned to alien empires can be secretly designated as "Acquisitors." While improving relations, they also slowly generate "Stolen Artifacts" from that empire's cultural history. These artifacts provide massive local morale boosts when displayed on your Layer 1 colonies, but if the alien empire discovers the theft, it triggers an immediate "Cultural Insult" Casus Belli.
+
+**Emergence:** You maintain a decades-long alliance with a peaceful spiritual empire, all while secretly stealing their most holy relics to decorate your capital's spaceport. The alliance shatters overnight when an alien tourist visits your capital and recognizes their missing god's crown being used as a decorative centerpiece in a casino.
+
+**Tension:** Do you play standard diplomacy, or do you risk total war to hoover up the galaxy's most precious cultural items for your own self-aggrandizing museums?
+
+---
+
+## Time-Dilation Tourism
+
+**Layer:** 2
+
+**Fantasy:** The ultra-rich use the relativistic effects of deep space travel as a luxury resort to outlive their problems.
+
+**Mechanic:** When you unlock near-lightspeed (but sub-FTL) drives, a new "Relativistic Cruise" industry emerges. Wealthy Pops from Layer 1 pay exorbitant fees to board these ships, which fly in a massive loop around the system at 0.99c. For them, a week passes; for the colony, a decade passes. They return having bypassed years of taxation, war, or famine.
+
+**Emergence:** A brutal decade-long siege devastates your capital. The moment the siege breaks, a luxury cruise liner lands, and the pre-war aristocracy disembarks, completely untouched by the suffering, demanding their old properties back from the traumatized survivors who fought the war.
+
+**Tension:** Do you ban this hyper-profitable industry to maintain social cohesion, or do you allow the elite to literally pause their participation in history, risking massive resentment from the Pops forced to live in "real time"?
+
+---
