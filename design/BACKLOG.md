@@ -785,3 +785,4 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1311` The Dreaming Sickness — `specs/1311-the-dreaming-sickness.md`
 - [ ] `1312` Localized Gravity Vectors — `specs/1312-localized-gravity-vectors.md`
 - [ ] `1313` Emergency Beacon Bait — `specs/1313-emergency-beacon-bait.md`
+- [ ] `1314` The Sentient Commute — `specs/1314-the-sentient-commute.md`
