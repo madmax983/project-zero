@@ -1087,3 +1087,16 @@ pub fn attack_colony_chronicle_bridge(
         }
     }
 }
+
+/// Observe ForgeCrushEvent and register it as an AddChronicleEvent
+pub fn observe_forge_crush_event(
+    mut events: bevy_ecs::event::EventReader<crate::layer2::station::ForgeCrushEvent>,
+    mut chronicle_events: bevy_ecs::event::EventWriter<crate::layer1::chronicle::AddChronicleEvent>,
+) {
+    for event in events.read() {
+        chronicle_events.send(crate::layer1::chronicle::AddChronicleEvent {
+            importance: crate::layer1::chronicle::EventImportance::Major,
+            text: format!("A Deep Forge was crushed by the immense gravity of the well, resulting in {} casualties.", event.casualties),
+        });
+    }
+}

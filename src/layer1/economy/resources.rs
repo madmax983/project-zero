@@ -157,6 +157,8 @@ pub struct ColonyResources {
     pub fiber: f32,
     /// Total cloth available in the colony.
     pub cloth: f32,
+    /// Total hyper_alloys available in the colony.
+    pub hyper_alloys: f32,
     /// Total clothing available in the colony.
     pub clothing: f32,
     /// Total waste accumulated in the colony (must be hauled to landfill).
@@ -251,6 +253,7 @@ impl Default for ColonyResources {
             knowledge: 0.0,
             fiber: 0.0,
             cloth: 0.0,
+            hyper_alloys: 0.0,
             clothing: 0.0,
             waste: 0.0,
             rations: 0.0,
@@ -310,6 +313,7 @@ impl Mul<f32> for ColonyResources {
             knowledge: (self.knowledge * rhs).ceil(),
             fiber: (self.fiber * rhs).ceil(),
             cloth: (self.cloth * rhs).ceil(),
+            hyper_alloys: (self.hyper_alloys * rhs).ceil(),
             clothing: (self.clothing * rhs).ceil(),
             waste: (self.waste * rhs).ceil(),
             rations: (self.rations * rhs).ceil(),
@@ -373,6 +377,7 @@ impl ColonyResources {
             knowledge: 0.0,
             fiber: 0.0,
             cloth: 0.0,
+            hyper_alloys: 0.0,
             clothing: 0.0,
             waste: 0.0,
             rations: 0.0,

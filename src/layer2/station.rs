@@ -445,3 +445,55 @@ mod debt_trap_tests {
         assert!(app.world().get_entity(megastructure).is_err()); // Despawned
     }
 }
+
+#[derive(Component)]
+pub struct DeepForge {
+    pub production_rate: f32,
+    pub base_crush_chance: f32,
+    pub is_active: bool,
+}
+
+#[derive(Component)]
+pub struct MaintenanceLevel {
+    pub current: f32,
+}
+
+#[derive(Component)]
+pub struct Crew {
+    pub count: u32,
+}
+
+#[derive(Event)]
+pub struct ForgeCrushEvent {
+    pub location: Entity,
+    pub casualties: u32,
+}
+
+pub fn process_deep_forges(
+    mut commands: Commands,
+    mut forge_query: Query<(Entity, &DeepForge, &MaintenanceLevel, Option<&Crew>)>,
+    mut resources: ResMut<crate::layer1::economy::resources::ColonyResources>,
+    mut crush_events: EventWriter<ForgeCrushEvent>,
+    mut global_rng: ResMut<crate::shared::random::GlobalRng>,
+) {
+    use rand::Rng;
+    for (entity, forge, maintenance, crew) in forge_query.iter_mut() {
+        if !forge.is_active { continue; }
+
+        // Calculate failure chance inversely proportional to maintenance
+        let crush_risk = forge.base_crush_chance * (1.0 - (maintenance.current / 100.0));
+
+        if global_rng.0.gen::<f32>() < crush_risk {
+            // Catastrophic failure
+            let casualties = if let Some(c) = crew { c.count } else { 0 };
+            crush_events.send(ForgeCrushEvent {
+                location: entity,
+                casualties,
+            });
+            commands.entity(entity).despawn();
+        } else {
+            // Success
+            resources.hyper_alloys += forge.production_rate;
+        }
+    }
+}

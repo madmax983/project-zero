@@ -1,3 +1,5 @@
+use bevy::prelude::*;
+use rand::SeedableRng;
 use crate::layer1::resources::ResourceType;
 use crate::layer2::fleet::{Fleet, FleetOrder, InOrbit};
 use crate::layer2::mining::{CargoStack, FleetCargo};
@@ -296,4 +298,73 @@ fn test_zero_g_fermentation_requires_zero_g() {
         .iter()
         .any(|item| item.item_type == crate::layer1::items::ItemType::VoidAle);
     assert!(!has_ale, "Void-Ale cannot be produced on the ground");
+}
+
+
+
+
+
+
+
+
+
+#[test]
+fn test_deep_forge_production() {
+    // Arrange
+    let mut app = App::new();
+    app.world_mut().insert_resource(crate::layer1::economy::resources::ColonyResources::default());
+    app.world_mut().insert_resource(crate::shared::random::GlobalRng(rand::rngs::StdRng::seed_from_u64(0)));
+    app.add_event::<crate::layer2::station::ForgeCrushEvent>();
+    app.add_systems(Update, crate::layer2::station::process_deep_forges);
+
+    let forge = app.world_mut().spawn((
+        crate::layer2::station::DeepForge {
+            production_rate: 10.0,
+            base_crush_chance: 0.0,
+            is_active: true,
+        },
+        crate::layer2::station::MaintenanceLevel { current: 100.0 }, // Perfect maintenance
+    )).id();
+
+    // Act
+    app.update();
+
+    // Assert
+    let resources = app.world().get_resource::<crate::layer1::economy::resources::ColonyResources>().unwrap();
+    assert_eq!(resources.hyper_alloys, 10.0, "Active forge should produce hyper-alloys");
+
+    let forge_exists = app.world().get::<crate::layer2::station::DeepForge>(forge).is_some();
+    assert!(forge_exists, "Perfectly maintained forge should survive");
+}
+
+#[test]
+fn test_deep_forge_crush_failure() {
+    // Arrange
+    let mut app = App::new();
+    app.world_mut().insert_resource(crate::layer1::economy::resources::ColonyResources::default());
+    app.world_mut().insert_resource(crate::shared::random::GlobalRng(rand::rngs::StdRng::seed_from_u64(0)));
+    app.add_event::<crate::layer2::station::ForgeCrushEvent>();
+    app.add_systems(Update, crate::layer2::station::process_deep_forges);
+
+    let forge = app.world_mut().spawn((
+        crate::layer2::station::DeepForge {
+            production_rate: 10.0,
+            base_crush_chance: 1.0, // Guaranteed failure
+            is_active: true,
+        },
+        crate::layer2::station::MaintenanceLevel { current: 0.0 }, // Zero maintenance
+        crate::layer2::station::Crew { count: 50 },
+    )).id();
+
+    // Act
+    app.update();
+
+    // Assert
+    let forge_exists = app.world().get::<crate::layer2::station::DeepForge>(forge).is_some();
+    assert!(!forge_exists, "Poorly maintained forge should be crushed");
+
+    // Crew should be killed, triggering a chronicle event
+    let crush_events = app.world().resource::<Events<crate::layer2::station::ForgeCrushEvent>>();
+    let reader = crush_events.get_reader();
+    assert!(reader.len(crush_events) > 0, "A crush event should be spawned");
 }
