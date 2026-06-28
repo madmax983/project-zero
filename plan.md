@@ -1,38 +1,19 @@
-1. **Add `slippery_slope` to `src/layer1/social/mod.rs`**
-   - Use `run_in_bash_session` to execute `echo 'pub mod slippery_slope;' >> src/layer1/social/mod.rs`.
-   - Use `run_in_bash_session` to execute `tail -n 10 src/layer1/social/mod.rs` to verify the edit.
-
-2. **Update `src/layer1/social/slippery_slope.rs` to include stress penalty dampening**
-   - Use `run_in_bash_session` to execute `cat << 'EOF' > src/layer1/social/slippery_slope.rs` containing the complete implementation (`Desensitization`, `AtrocityEvent`, `MoraleBuffEvent`, `StressPenaltyEvent`, `process_atrocities`, `apply_morale_buffs`, `apply_stress_penalties`, and the RED-GREEN-REFACTOR tests achieving >85% coverage).
-   - Use `run_in_bash_session` to execute `cat src/layer1/social/slippery_slope.rs` to verify its creation and contents.
-
-3. **Update task trackers**
-   - Use `run_in_bash_session` to execute `sed -i '/1228/d' design/BACKLOG.md` and `echo '- [x] \`1228\` The Slippery Slope — \`specs/1228-the-slippery-slope.md\` — completed 2026-06-28' >> design/COMPLETED.md`.
-   - Use `run_in_bash_session` to read the files back using `tail -n 10 design/COMPLETED.md` and `git diff design/BACKLOG.md` to verify the changes.
-
-4. **Verify tests and coverage locally**
-   - Use `run_in_bash_session` to execute `cargo test --lib` and `cargo llvm-cov --lib` to ensure local tests pass and test coverage criteria are met.
-   - Use `run_in_bash_session` to execute `cargo clippy -- -D warnings` and `cargo fmt`.
-
-5. Complete pre-commit steps to ensure proper testing, verification, review, and reflection are done.
-
-6. **Submit the PR**
-   - Use `submit` with the following commit message format:
-     ```
-     feat(layer1): complete the slippery slope system
-
-     Implements RED-GREEN-REFACTOR from spec 1228:
-     - Added comprehensive test suite (RED phase)
-     - Implemented Desensitization component, apply_morale_buffs, apply_stress_penalties (GREEN phase)
-     - Refactored logic to include Stress dampening (REFACTOR phase)
-     - Test coverage: >= 85%
-
-     All acceptance criteria met:
-     - Atrocities increase desensitization
-     - High desensitization dampens Morale Buffs
-     - High desensitization dampens Stress Penalties
-     - cargo test passes
-     - cargo clippy clean
-
-     Co-Authored-By: google-labs-jules[bot] <161369871+google-labs-jules[bot]@users.noreply.github.com>
-     ```
+1. **Move task to IN_PROGRESS.md**
+2. **Create `src/layer1/infrastructure/spatial_compression.rs` with RED Phase tests**
+   - Adapt the spec's RED phase to match actual types: `GridPosition` has no `z`, use `ZLevel` alongside it.
+   - We must define `PowerNode` locally or use the one from `layer1::energy` (but the energy module has `PowerSource`/`PowerConsumer`, wait... `layer1::physics::gravity_plating.rs` defines a `PowerNode` but it's specific. We can define a generic `PowerNode` in `spatial_compression.rs` or use `PowerConsumer` if appropriate. The spec specifically requests `crate::layer1::power::{PowerGrid, PowerNode}`, but since `power` doesn't exist (it's `energy`), we can just define `PowerNode` inside `spatial_compression.rs` to keep it simple and fulfill the spec). Actually, the spec uses `PowerNode` from `crate::layer1::power::PowerNode`. We will just define it locally since `power` module is not present (the closest is `energy::PowerConsumer`, but `PowerNode` makes the test compile without changing other modules). Or better, define it locally so the test works verbatim with minor path adjustments.
+   - For `DamageEvent`, we'll define a local `PocketDamageEvent` or use `crate::layer1::shields::DamageEvent`. Let's just define a local `DimensionalDamageEvent` or use `Health::take_damage` in the system, and emit `DamageEvent` locally if needed for the test to read.
+3. **Commit RED Phase tests**
+4. **Implement GREEN Phase**
+   - Make the tests pass. Ensure ejection sets `GridPosition` and `ZLevel` matching external. Apply damage using `Health::take_damage` on the ejected entities. Remove `InsidePocket` using `commands.entity(ent).remove::<InsidePocket>()`.
+5. **Commit GREEN Phase**
+6. **Register the module**
+   - In `src/layer1/infrastructure/mod.rs`, add `pub mod spatial_compression; pub use spatial_compression::*;`.
+   - In `src/layer1/systems/environment.rs`, register the systems `monitor_pocket_power_system` and `process_pocket_collapse_system`.
+7. **Verify Coverage and run checks**
+   - Run `cargo test` and `cargo clippy` and `cargo llvm-cov` to ensure >= 85% coverage.
+8. **Pre-commit step**
+   - Call `pre_commit_instructions`
+9. **Finalize and Submit**
+   - Move task to `COMPLETED.md`
+   - Commit and push
