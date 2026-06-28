@@ -637,3 +637,6 @@ mod debt_of_the_dead_bridge;
 
 #[path = "integration/modular_fauna_integration.rs"]
 mod modular_fauna_integration;
+
+#[path = "integration/slippery_slope_bridge.rs"]
+mod slippery_slope_bridge;
