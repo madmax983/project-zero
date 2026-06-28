@@ -841,3 +841,4 @@
 - [x] `1130` Volatile Intermediates — `specs/1130-volatile-intermediates.md` — completed 2026-02-01
 - [x] `1035` Modular Fauna — `specs/1035-modular-fauna.md` — completed 2026-06-27
 - [x] `INT-1035` Integration: Modular Fauna Stats -> Economy — completed 2026-10-31
+- [x] `306` The Debt Collector — `specs/306-debt-collector.md` — completed 2026-02-24

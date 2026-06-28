@@ -1,0 +1,2 @@
+#!/bin/bash
+sed -i 's/app.add_event::<crate::layer1::economy::debt_of_the_dead::DebtSocializedEvent>();/app.add_event::<crate::layer1::economy::debt_of_the_dead::DebtSocializedEvent>();\n    app.add_event::<crate::layer3::market::debt_collector::AuditorArrivalEvent>();\n    app.add_event::<crate::layer3::market::debt_collector::AuditorDemandEvent>();\n    app.add_event::<crate::layer3::market::debt_collector::AuditorRefusalEvent>();/' src/simulation.rs

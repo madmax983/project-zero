@@ -1,0 +1,2 @@
+#!/bin/bash
+sed -i 's/world.init_resource::<Events<crate::layer1::economy::debt_of_the_dead::DebtSocializedEvent>>();/world.init_resource::<Events<crate::layer1::economy::debt_of_the_dead::DebtSocializedEvent>>();\n    world.init_resource::<Events<crate::layer3::market::debt_collector::AuditorArrivalEvent>>();\n    world.init_resource::<Events<crate::layer3::market::debt_collector::AuditorDemandEvent>>();\n    world.init_resource::<Events<crate::layer3::market::debt_collector::AuditorRefusalEvent>>();/' src/setup.rs

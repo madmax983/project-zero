@@ -50,7 +50,9 @@ pub fn process_publication_system(
             for mut relations in diplomatic_relations.iter_mut() {
                 for standing in relations.relations.iter_mut() {
                     // Try to find the matching civ by ID
-                    if let Some((_, traits)) = civs.iter().find(|(civ, _)| civ.id == standing.target_id) {
+                    if let Some((_, traits)) =
+                        civs.iter().find(|(civ, _)| civ.id == standing.target_id)
+                    {
                         if traits.is_pacifist || traits.is_ecological {
                             standing.standing += 10.0;
                         } else if traits.is_warlike || traits.is_barbarian {
@@ -267,7 +269,9 @@ mod tests {
                 is_ecological: true,
                 is_pacifist: false,
             },
-            Civilization { id: "Scholars".to_string() }
+            Civilization {
+                id: "Scholars".to_string(),
+            },
         ));
 
         app.world_mut().spawn((
@@ -277,7 +281,9 @@ mod tests {
                 is_ecological: false,
                 is_pacifist: false,
             },
-            Civilization { id: "Pirates".to_string() }
+            Civilization {
+                id: "Pirates".to_string(),
+            },
         ));
 
         let relations_entity = app
