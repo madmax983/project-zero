@@ -1,164 +1,38 @@
-1. **Create the Tectonic Prophets Feature (`src/experimental/tectonic_prophets.rs`)**:
-   - Command:
-     ```bash
-     cat << 'EOF' > src/experimental/tectonic_prophets.rs
-     //! Tectonic Prophets (Nova Feature)
-     //!
-     //! # The Spark
-     //! We have `TectonicStress` in the geology layer which builds towards a `MegaQuake`.
-     //! We also have `Trait::Prophet` and `Trait::Anxious` in the psychology system.
-     //!
-     //! # The Feature
-     //! When `TectonicStress` exceeds 80% of its threshold, Pops with `Trait::Prophet`
-     //! feel the rumbling and gain a massive morale boost ("Vibrations of the Deep"),
-     //! while Pops with `Trait::Anxious` suffer a severe morale penalty ("Impending Doom").
-     //!
-     //! # The Potential
-     //! Connects the deep crust physical simulation directly to the socio-psychological
-     //! state of the colonists, providing dynamic narrative tension before disaster strikes.
+1. **Add `slippery_slope` to `src/layer1/social/mod.rs`**
+   - Use `run_in_bash_session` to execute `echo 'pub mod slippery_slope;' >> src/layer1/social/mod.rs`.
+   - Use `run_in_bash_session` to execute `tail -n 10 src/layer1/social/mod.rs` to verify the edit.
 
-     use bevy_ecs::prelude::*;
-     use crate::layer1::geology::tectonic::TectonicStress;
-     use crate::layer1::psychology::traits::{Trait, Traits};
-     use crate::layer1::social::morale::{MoodModifier, Morale};
-     use crate::layer1::entities::pop::Pop;
+2. **Update `src/layer1/social/slippery_slope.rs` to include stress penalty dampening**
+   - Use `run_in_bash_session` to execute `cat << 'EOF' > src/layer1/social/slippery_slope.rs` containing the complete implementation (`Desensitization`, `AtrocityEvent`, `MoraleBuffEvent`, `StressPenaltyEvent`, `process_atrocities`, `apply_morale_buffs`, `apply_stress_penalties`, and the RED-GREEN-REFACTOR tests achieving >85% coverage).
+   - Use `run_in_bash_session` to execute `cat src/layer1/social/slippery_slope.rs` to verify its creation and contents.
 
-     pub fn tectonic_prophets_system(
-         stress: Option<Res<TectonicStress>>,
-         mut pops: Query<(&Traits, &mut Morale), With<Pop>>,
-     ) {
-         let Some(stress) = stress else { return; };
+3. **Update task trackers**
+   - Use `run_in_bash_session` to execute `sed -i '/1228/d' design/BACKLOG.md` and `echo '- [x] \`1228\` The Slippery Slope — \`specs/1228-the-slippery-slope.md\` — completed 2026-06-28' >> design/COMPLETED.md`.
+   - Use `run_in_bash_session` to read the files back using `tail -n 10 design/COMPLETED.md` and `git diff design/BACKLOG.md` to verify the changes.
 
-         // Trigger when stress is >= 80% of threshold
-         if stress.current >= stress.threshold * 0.8 {
-             for (traits, mut morale) in pops.iter_mut() {
-                 if traits.has(Trait::Prophet) {
-                     morale.add_modifier(MoodModifier {
-                         label: "Vibrations of the Deep".to_string(),
-                         value: 0.2,
-                         duration: 10,
-                     });
-                 }
-                 if traits.has(Trait::Anxious) {
-                     morale.add_modifier(MoodModifier {
-                         label: "Impending Doom".to_string(),
-                         value: -0.2,
-                         duration: 10,
-                     });
-                 }
-             }
-         }
-     }
+4. **Verify tests and coverage locally**
+   - Use `run_in_bash_session` to execute `cargo test --lib` and `cargo llvm-cov --lib` to ensure local tests pass and test coverage criteria are met.
+   - Use `run_in_bash_session` to execute `cargo clippy -- -D warnings` and `cargo fmt`.
 
-     pub fn register(schedule: &mut Schedule) {
-         schedule.add_systems(tectonic_prophets_system);
-     }
+5. Complete pre-commit steps to ensure proper testing, verification, review, and reflection are done.
 
-     #[cfg(test)]
-     mod tests {
-         use super::*;
-         use bevy_ecs::system::RunSystemOnce;
-
-         #[test]
-         fn test_tectonic_prophets_apply_morale_effects() {
-             let mut world = World::new();
-
-             world.insert_resource(TectonicStress {
-                 current: 85.0,
-                 threshold: 100.0,
-                 dissipation_rate: 0.1,
-             });
-
-             let mut prophet_traits = Traits::default();
-             prophet_traits.add(Trait::Prophet);
-
-             let mut anxious_traits = Traits::default();
-             anxious_traits.add(Trait::Anxious);
-
-             let prophet_pop = world.spawn((Pop, prophet_traits, Morale::default())).id();
-             let anxious_pop = world.spawn((Pop, anxious_traits, Morale::default())).id();
-
-             world.run_system_once(tectonic_prophets_system).unwrap();
-
-             let prophet_morale = world.get::<Morale>(prophet_pop).unwrap();
-             assert!(prophet_morale.modifiers.iter().any(|m| m.label == "Vibrations of the Deep"));
-
-             let anxious_morale = world.get::<Morale>(anxious_pop).unwrap();
-             assert!(anxious_morale.modifiers.iter().any(|m| m.label == "Impending Doom"));
-         }
-
-         #[test]
-         fn test_tectonic_prophets_no_effect_below_threshold() {
-             let mut world = World::new();
-
-             world.insert_resource(TectonicStress {
-                 current: 50.0, // Below 80%
-                 threshold: 100.0,
-                 dissipation_rate: 0.1,
-             });
-
-             let mut prophet_traits = Traits::default();
-             prophet_traits.add(Trait::Prophet);
-
-             let prophet_pop = world.spawn((Pop, prophet_traits, Morale::default())).id();
-
-             world.run_system_once(tectonic_prophets_system).unwrap();
-
-             let prophet_morale = world.get::<Morale>(prophet_pop).unwrap();
-             assert!(prophet_morale.modifiers.is_empty());
-         }
-     }
-     EOF
+6. **Submit the PR**
+   - Use `submit` with the following commit message format:
      ```
-   - Command: `ls -l src/experimental/tectonic_prophets.rs` to verify the file was created.
+     feat(layer1): complete the slippery slope system
 
-2. **Register the Module (`src/experimental/mod.rs` and `src/simulation.rs`)**:
-   - Command:
-     ```bash
-     cat << 'EOF' >> src/experimental/mod.rs
-     #[cfg(feature = "nova")]
-     pub mod tectonic_prophets;
-     EOF
-     ```
-   - Command:
-     ```bash
-     sed -i '/crate::experimental::tavern_brawls::register(schedule);/a \
-     #[cfg(feature = "nova")]\
-     crate::experimental::tectonic_prophets::register(schedule);' src/simulation.rs
-     ```
-   - Command: `git diff src/experimental/mod.rs src/simulation.rs` to verify the code was injected correctly.
+     Implements RED-GREEN-REFACTOR from spec 1228:
+     - Added comprehensive test suite (RED phase)
+     - Implemented Desensitization component, apply_morale_buffs, apply_stress_penalties (GREEN phase)
+     - Refactored logic to include Stress dampening (REFACTOR phase)
+     - Test coverage: >= 85%
 
-3. **Update Journal (`.jules/nova.md`)**:
-   - Command:
-     ```bash
-     cat << 'EOF' >> .jules/nova.md
+     All acceptance criteria met:
+     - Atrocities increase desensitization
+     - High desensitization dampens Morale Buffs
+     - High desensitization dampens Stress Penalties
+     - cargo test passes
+     - cargo clippy clean
 
-     ## [Tectonic Prophets]
-     **Concept:** Added `tectonic_prophets_system` to `src/experimental/tectonic_prophets.rs`. It reads the `TectonicStress` resource, and when it nears the `MegaQuake` threshold (>80%), Pops with `Trait::Prophet` gain a large morale boost ("Vibrations of the Deep"), while Pops with `Trait::Anxious` gain a severe penalty ("Impending Doom").
-     **Fate:** Submitted
-     **Lesson:** Connecting geological layer mechanics directly to the personality traits of individual pops creates strong tension before disasters even strike, rewarding or punishing colony trait compositions dynamically.
-     EOF
-     ```
-   - Command: `tail -n 10 .jules/nova.md` to verify the journal update.
-
-4. **Verify Implementation**:
-   - Command: `cargo test --features nova`
-   - Command: `cargo clippy --all-targets --all-features -- -D warnings`
-   - Command: `cargo fmt --all`
-
-5. **Complete pre-commit steps**
-   - Complete pre-commit steps to ensure proper testing, verification, review, and reflection are done.
-
-6. **Submit PR**:
-   - Commit the changes with the required specific format:
-     ```bash
-     git add -A
-     git commit -m "🌟 Nova: Tectonic Prophets
-
-     💡 The Spark: We have `TectonicStress` which builds towards a `MegaQuake`, and `Trait::Prophet`/`Trait::Anxious` in the psychology system.
-     🚀 The Feature: When `TectonicStress` hits 80%, Prophets get a massive morale boost ('Vibrations of the Deep'), while Anxious pops get a massive penalty ('Impending Doom').
-     🔮 The Potential: Connects deep crust physical simulation to the socio-psychological state, creating dynamic tension before disaster strikes.
-     ⚠️ Risk: Low. Isolated in `src/experimental/tectonic_prophets.rs` behind the `nova` feature flag.
-
-     Co-Authored-By: google-labs-jules[bot] <161369871+google-labs-jules[bot]@users.noreply.github.com>"
+     Co-Authored-By: google-labs-jules[bot] <161369871+google-labs-jules[bot]@users.noreply.github.com>
      ```
