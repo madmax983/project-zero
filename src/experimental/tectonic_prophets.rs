@@ -13,17 +13,19 @@
 //! Connects the deep crust physical simulation directly to the socio-psychological
 //! state of the colonists, providing dynamic narrative tension before disaster strikes.
 
-use bevy_ecs::prelude::*;
+use crate::layer1::entities::pop::Pop;
 use crate::layer1::geology::tectonic::TectonicStress;
 use crate::layer1::psychology::traits::{Trait, Traits};
 use crate::layer1::social::morale::{MoodModifier, Morale};
-use crate::layer1::entities::pop::Pop;
+use bevy_ecs::prelude::*;
 
 pub fn tectonic_prophets_system(
     stress: Option<Res<TectonicStress>>,
     mut pops: Query<(&Traits, &mut Morale), With<Pop>>,
 ) {
-    let Some(stress) = stress else { return; };
+    let Some(stress) = stress else {
+        return;
+    };
 
     // Trigger when stress is >= 80% of threshold
     if stress.current >= stress.threshold * 0.8 {
@@ -78,10 +80,16 @@ mod tests {
         world.run_system_once(tectonic_prophets_system).unwrap();
 
         let prophet_morale = world.get::<Morale>(prophet_pop).unwrap();
-        assert!(prophet_morale.modifiers.iter().any(|m| m.label == "Vibrations of the Deep"));
+        assert!(prophet_morale
+            .modifiers
+            .iter()
+            .any(|m| m.label == "Vibrations of the Deep"));
 
         let anxious_morale = world.get::<Morale>(anxious_pop).unwrap();
-        assert!(anxious_morale.modifiers.iter().any(|m| m.label == "Impending Doom"));
+        assert!(anxious_morale
+            .modifiers
+            .iter()
+            .any(|m| m.label == "Impending Doom"));
     }
 
     #[test]

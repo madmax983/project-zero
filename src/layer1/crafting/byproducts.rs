@@ -1,14 +1,43 @@
+//! Crafting byproducts and waste management.
+//!
+//! When items are crafted, they often produce secondary materials (byproducts)
+//! like scrap or waste. This module defines how these byproducts are handled
+//! and stored in an `Inventory`. If an inventory reaches capacity, crafting is blocked.
+//!
+//! ## Important Note on Capacity
+//! `Inventory` capacity applies to the **sum of all items**. If an inventory is full
+//! of waste, new primary outputs cannot be created until the waste is dumped.
+
 use crate::layer1::beauty::BeautyGrid;
 use crate::layer1::economy::resources::ResourceType;
 use bevy_ecs::prelude::*;
 
+/// A component representing a container for resources.
+///
+/// Inventories have a strict `capacity`. Production systems must check
+/// [`Inventory::has_capacity_for`] before adding new items or byproducts.
+///
+/// ## Examples
+/// ```
+/// use scale::layer1::crafting::byproducts::Inventory;
+/// use scale::layer1::economy::resources::ResourceType;
+///
+/// let mut inv = Inventory { items: vec![], capacity: 10 };
+/// inv.add(ResourceType::Metal, 5);
+/// assert_eq!(inv.get_amount(&ResourceType::Metal), 5);
+/// assert!(inv.has_capacity_for(5));
+/// assert!(!inv.has_capacity_for(6));
+/// ```
 #[derive(Component, Default, Clone, Debug)]
 pub struct Inventory {
+    /// The stored items and their quantities.
     pub items: Vec<(ResourceType, u32)>,
+    /// The maximum total amount of all items combined that this inventory can hold.
     pub capacity: u32,
 }
 
 impl Inventory {
+    /// Retrieves the current stored amount of a specific `ResourceType`.
     pub fn get_amount(&self, res: &ResourceType) -> u32 {
         self.items
             .iter()
@@ -17,6 +46,11 @@ impl Inventory {
             .unwrap_or(0)
     }
 
+    /// Adds a quantity of a `ResourceType` to the inventory.
+    ///
+    /// ## Panics
+    /// This function does *not* panic if capacity is exceeded. It is the caller's
+    /// responsibility to verify capacity using `has_capacity_for` prior to adding.
     pub fn add(&mut self, res: ResourceType, amount: u32) {
         if let Some(existing) = self.items.iter_mut().find(|(r, _)| r == &res) {
             existing.1 += amount;
@@ -25,6 +59,9 @@ impl Inventory {
         }
     }
 
+    /// Checks if the inventory can accommodate the specified `amount` of new items.
+    ///
+    /// Evaluates the sum of all currently stored items against the `capacity`.
     pub fn has_capacity_for(&self, amount: u32) -> bool {
         let current: u32 = self.items.iter().map(|(_, amt)| amt).sum();
         current + amount <= self.capacity
