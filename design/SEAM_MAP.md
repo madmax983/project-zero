@@ -1676,3 +1676,9 @@
 - **Systems connected:** `evaluate_modular_fauna_stats_system` added to `Layer1SystemSet::Economy`
 - **Glue added:** Registered `crate::layer1::fauna::modular_fauna::evaluate_modular_fauna_stats_system` in `src/layer1/systems/economy.rs`.
 - **Tests:** `tests/integration/modular_fauna_integration.rs` (1 test)
+
+### INT-1228: The Slippery Slope -> Observation Schedule
+- **Date:** 2026-06-28
+- **Systems connected:** `process_atrocities`, `apply_morale_buffs`, `apply_stress_penalties` -> `SimulationSchedule`
+- **Glue added:** Initialized `Desensitization` resource, `AtrocityEvent`, `MoraleBuffEvent`, and `StressPenaltyEvent` in `src/setup.rs` and registered systems in `src/layer1/systems/observation.rs`.
+- **Tests:** `tests/integration/slippery_slope_bridge.rs`

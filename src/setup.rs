@@ -449,6 +449,7 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     world.init_resource::<crate::layer1::festivals::FestivalState>();
     world.init_resource::<crate::layer1::shadow_market::ShadowMarketCooldown>();
     world.insert_resource(crate::layer1::taboo::TabooState::default());
+    world.insert_resource(crate::layer1::social::slippery_slope::Desensitization::default());
 
     // Initialize GPU compute context (non-fatal if no GPU available)
     // Skip on WASM since pollster::block_on doesn't work in browser context
@@ -486,6 +487,9 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     world.init_resource::<crate::layer1::unrest::Unrest>();
 
     world.init_resource::<Events<crate::layer3::events::debt_prison::BailoutOfferEvent>>();
+    world.init_resource::<Events<crate::layer1::social::slippery_slope::AtrocityEvent>>();
+    world.init_resource::<Events<crate::layer1::social::slippery_slope::MoraleBuffEvent>>();
+    world.init_resource::<Events<crate::layer1::social::slippery_slope::StressPenaltyEvent>>();
     world.init_resource::<Events<crate::layer3::events::debt_prison::AcceptBailoutEvent>>();
 
     world.init_resource::<Events<crate::layer1::memory_core::ImplantMemoryCoreEvent>>();
