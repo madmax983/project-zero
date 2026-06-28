@@ -1676,3 +1676,10 @@
 - **Systems connected:** `evaluate_modular_fauna_stats_system` added to `Layer1SystemSet::Economy`
 - **Glue added:** Registered `crate::layer1::fauna::modular_fauna::evaluate_modular_fauna_stats_system` in `src/layer1/systems/economy.rs`.
 - **Tests:** `tests/integration/modular_fauna_integration.rs` (1 test)
+
+### INT-1130: Volatile Intermediates -> Chronicle
+- **Date:** 2026-10-31
+- **Systems connected:** `ExplosionEvent` -> `volatile_explosion_chronicle_bridge` -> `AddChronicleEvent`
+- **Glue added:** Added `volatile_explosion_chronicle_bridge` in `src/layer1/core/integration.rs` to generate Chronicle records when volatile items explode.
+- **Schedule:** Registered in Layer 1 Observation schedule (`src/layer1/systems/observation.rs`).
+- **Tests:** `tests/integration/volatile_intermediates_bridge.rs`

@@ -637,3 +637,4 @@ mod debt_of_the_dead_bridge;
 
 #[path = "integration/modular_fauna_integration.rs"]
 mod modular_fauna_integration;
+#[path = "integration/volatile_intermediates_bridge.rs"] mod volatile_intermediates_bridge;

@@ -3295,3 +3295,19 @@ pub fn subconscious_grid_lockdown_chronicle_bridge(
         }
     }
 }
+
+/// INT-1130: Bridges `ExplosionEvent` to `AddChronicleEvent`
+pub fn volatile_explosion_chronicle_bridge(
+    mut explosion_events: bevy_ecs::prelude::EventReader<crate::layer1::environment::volatile::ExplosionEvent>,
+    mut chronicle_events: bevy_ecs::prelude::EventWriter<crate::layer1::core::chronicle::AddChronicleEvent>,
+) {
+    for event in explosion_events.read() {
+        chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
+            importance: crate::layer1::core::chronicle::EventImportance::Major,
+            text: format!(
+                "A volatile explosion occurred at ({}, {}), dealing {} damage and spreading industrial waste.",
+                event.center.x, event.center.y, event.damage
+            ),
+        });
+    }
+}
