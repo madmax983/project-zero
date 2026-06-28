@@ -73,6 +73,8 @@ pub fn build_simulation_schedule() -> Schedule {
 /// Run one simulation tick: all game systems via schedule, then increment tick counter.
 #[allow(clippy::too_many_lines)]
 fn init_simulation_resources(world: &mut World) {
+    world.init_resource::<Events<crate::layer3::diplomacy::open_source_science::PublishDiscoveryEvent>>();
+
     #[cfg(feature = "nova")]
     world.init_resource::<crate::experimental::ghost_grid::GhostGrid>();
     world.init_resource::<crate::layer1::environment::atmosphere::GlobalAtmosphere>();
@@ -493,6 +495,13 @@ pub fn run_simulation_tick(world: &mut World) {
 }
 
 fn register_simulation_core_systems(schedule: &mut Schedule) {
+    schedule.add_systems(
+        (
+            crate::layer3::diplomacy::open_source_science::process_publication_system,
+            crate::layer3::diplomacy::open_source_science::process_enemy_exploits_system,
+        )
+    );
+
     // --- Register Core Layer 1 Systems ---
     register_layer1_systems(schedule);
     // Register orphaned swarm systems standalone here since we don't use App
