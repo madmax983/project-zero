@@ -986,6 +986,8 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
     #[cfg(feature = "nova")]
     crate::experimental::tectonic_prophets::register(schedule);
     #[cfg(feature = "nova")]
+    crate::experimental::feral_foraging::register(schedule);
+    #[cfg(feature = "nova")]
     crate::experimental::gloom_sickness::register(schedule);
     #[cfg(feature = "nova")]
     crate::experimental::echo_chamber::register(schedule);
