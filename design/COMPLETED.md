@@ -844,3 +844,4 @@
 - [x] `319` The Gravity Well Forge — `specs/319-gravity-well-forge.md` — completed 2026-06-28
 - [x] `1034` Gene-Banks — `specs/1034-gene-banks.md` — completed 2024-06-29
 - [x] `1228` The Slippery Slope — `specs/1228-the-slippery-slope.md` — completed 2026-06-28
+- [x] `1020` Spatial Compression — `specs/1020-spatial-compression.md` — completed 2024-05-31
