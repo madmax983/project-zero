@@ -1,3 +1,15 @@
+//! Communication systems for Layer 2.
+//!
+//! This module handles the transmission, decay, and latency of signals
+//! between different entities (like colonies and ships) across large distances.
+//!
+//! # The "Black Box" of Space
+//! Signals sent over vast distances are subject to two main phenomena:
+//! 1. **Signal Decay**: Signals get corrupted the further they travel.
+//! 2. **Signal Latency**: Signals take time to reach their destination.
+//!
+//! See [`signal_decay`] and [`signal_latency`] for specific implementation details.
+
 pub mod signal_decay;
 pub mod signal_latency {
     use bevy::prelude::*;
