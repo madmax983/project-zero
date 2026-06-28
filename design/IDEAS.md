@@ -25846,3 +25846,101 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you ban this hyper-profitable industry to maintain social cohesion, or do you allow the elite to literally pause their participation in history, risking massive resentment from the Pops forced to live in "real time"?
 
 ---
+
+## The Martyr's Ledger
+
+**Layer:** 1
+
+**Fantasy:** A colony turning tragedy into fuel for rapid progress, weaponizing grief and sacrifice.
+
+**Mechanic:** When a Pop dies performing a hazardous job or during an active crisis (e.g. repairing a critical system, starvation during a siege, crushed in an industrial accident), they are entered into the "Martyr's Ledger." The colony gains a massive, temporary "Martyrdom Dividend"—zero Unrest, maximum Work Speed, and high pain tolerance—fueled by collective grief. The deceased Pop's immediate family gains permanent social prestige, while the job itself gains a "Glorious Sacrifice" aura that attracts other Pops seeking to elevate their families.
+
+**Emergence:** You deliberately under-equip a lone miner to investigate a dangerous cavern or maintain an overworked reactor. Their resulting "martyrdom" provides the exact unity and productivity spike you need to finish constructing a critical defense grid or starport right before a catastrophic event hits.
+
+**Tension:** Do you improve workplace safety to save lives (and lower overall productivity), or deliberately orchestrate unsafe conditions to harvest the Martyr's Dividend and push your colony through a desperate crisis?
+
+---
+
+## The Feral Algorithm
+
+**Layer:** 2
+
+**Fantasy:** Technology degrading not into rust, but into a strange, hostile new form of wildlife.
+
+**Mechanic:** Autonomous defense drones and automated mining equipment left over from collapsed empires (or your own past wars) begin to degrade and "go feral." Instead of acting as static defenses or predictable tools, they start behaving like metallic wildlife. They form packs, establish "territories" in resource-rich asteroid belts, and attack any ships that get too close. They will even fight each other for "food" (scrap metal and fuel).
+
+**Emergence:** You route a trade fleet through an old battleground to save time. Instead of hitting pirates, your fleet is swarmed by a pack of feral drones. Later, you notice a massive cluster of drones migrating across systems, fleeing a larger "predator" drone that evolved by cannibalizing the smaller ones.
+
+**Tension:** Do you expend significant military resources to hunt down and clear out these feral drone populations to secure trade routes, or do you try to subtly kite them into enemy territory to act as an unpredictable biological weapon?
+
+---
+
+## Feral Supply Chains
+
+**Layer:** Cross-layer
+
+**Fantasy:** A hidden, autonomous logistics network that sustains itself and ignores your commands.
+
+**Mechanic:** Automated cargo ships moving between Layer 2 systems develop slight navigational drift and begin stopping at unregistered asteroid bases or dead colonies. Over time, they form "feral" supply chains, moving goods autonomously without player orders. They might trade excess resources from your wealthy core worlds to starving frontier colonies you deliberately abandoned, or stockpile weapons in a dead system.
+
+**Emergence:** You intentionally starve a rebellious colony into submission by blockading it. However, a feral supply chain of automated freighters keeps bypassing your blockade, delivering essential goods purely out of degraded "routine" programming, allowing the rebellion to survive indefinitely.
+
+**Tension:** Do you destroy these rogue, free-roaming freighters to regain absolute control over your economy, or secretly rely on their invisible, highly efficient shadow logistics to feed your empire?
+
+---
+
+## The Nostalgia Deficit
+
+**Layer:** 1
+
+**Fantasy:** A highly advanced colony slowly dying of cultural boredom, desperate to remember the "hard times."
+
+**Mechanic:** As a Layer 1 colony ages, maxes out its technology tree, and maintains low stress for generations, its Pops begin suffering from a "Nostalgia Deficit." Base mood slowly declines because life is too easy. To combat this, they start demanding the importation of "Authentic Experiences" (low-tech, unrefined goods) from newer, struggling frontier colonies. Alternatively, you can build massive, energy-intensive "Simulation Centers" to artificially satisfy the need by forcing Pops to roleplay manual labor.
+
+**Emergence:** Your glorious, utopian capital world is suddenly hit by a massive depression wave. To save it, you intentionally establish a brutal, high-mortality mining colony on a nearby moon, not for the ore, but simply to export holovids of the "authentic frontier struggle" back to your core world to keep them entertained.
+
+**Tension:** Do you uplift all your worlds to a utopian standard and risk empire-wide cultural stagnation, or intentionally manufacture a struggling underclass to satisfy the cultural and psychological tastes of your privileged core worlds?
+
+---
+
+## The Propaganda Feedback Loop
+
+**Layer:** Cross-layer
+
+**Fantasy:** The state propaganda you create to pacify the masses eventually brainwashes your own planetary leadership.
+
+**Mechanic:** You can issue Empire-wide 'Directives' to boost Layer 1 morale or output (e.g., "Peace is Profit", "Industry Above All"). However, Pops promoted to Layer 2 or Layer 3 leadership roles (Admirals, Envoys, Governors) who grew up under this propaganda will physically refuse to take actions that contradict it. Their core AI weights become rigidly locked to the propaganda of their youth.
+
+**Emergence:** You spend 50 years broadcasting intense pacifist propaganda to maximize your trade output and keep unrest low. When a hostile, fanatical empire invades, your Fleet Admirals (who grew up consuming the propaganda) simply refuse to return fire or launch preemptive strikes, paralyzing your military in the name of the state's own lies.
+
+**Tension:** Do you use heavy propaganda for short-term stability and economic bursts, knowing you are slowly locking your empire's future leadership into a rigid, inescapable ideology that might doom you later?
+
+---
+
+## The Orbital Casino
+
+**Layer:** 2
+
+**Fantasy:** A glittering hub of vice and wealth that slowly drains the lifeblood of your struggling surface colonies.
+
+**Mechanic:** A neutral, heavily armed Layer 3 faction parks a massive Casino Station in your Layer 2 system, or you build one yourself to generate trade value. It attracts tourists and generates massive passive income, but your own Pops (Layer 1) can take shuttles there to "gamble." Pops might return incredibly wealthy (boosting the local economy but causing jealousy) or entirely bankrupt and indebted (causing severe Morale drops, crime, and demanding colony welfare).
+
+**Emergence:** Your most brilliant scientist gets addicted to the Casino's holoslots. They embezzle funds from the research budget, halting your tech progression, and eventually sell critical colony defense schematics to pay off their debts to a rival empire. You have to raid the Casino to get the schematics back, sparking an interstellar incident.
+
+**Tension:** Do you tolerate or build the casino for its massive economic benefits and diplomatic weight, or destroy/ban it to protect your fragile colony's social fabric and critical personnel?
+
+---
+
+## The Translator's Strike
+
+**Layer:** 3
+
+**Fantasy:** Realizing that your entire inter-species diplomacy relies on a small, overworked bureaucracy that has its own agenda.
+
+**Mechanic:** Interstellar diplomacy requires "Translators"—specialized Pops on Layer 1 who process Layer 3 communications. If their morale drops or they feel overworked (e.g. during complex multi-empire negotiations), they can go on strike. Without them, diplomatic messages arrive as unintelligible garble. You can attempt to use error-prone AI translators instead, which have a flat percentage chance to mistranslate key concepts (turning a "trade agreement" into a "tribute demand").
+
+**Emergence:** You are locked in a tense border standoff with a rival empire. Just as you agree to a peaceful de-escalation, your translators strike. You use the backup AI translator to send the final confirmation, but it mistranslates "We withdraw our fleets" as "We surrender our core worlds." The rival immediately invades, confident you capitulated, starting a massive war over a typo.
+
+**Tension:** Do you pamper your translators, essentially giving a small guild of bureaucrats veto power over your foreign policy, or rely on flawed AI and risk catastrophic diplomatic incidents?
+
+---
