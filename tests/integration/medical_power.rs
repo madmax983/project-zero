@@ -24,8 +24,8 @@ mod tests {
     #[test]
     fn test_hospital_spawns_with_power_consumer() {
         let mut world = setup_world();
-    world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtInheritedEvent>>();
-    world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtSocializedEvent>>();
+        world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtInheritedEvent>>();
+        world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtSocializedEvent>>();
         spawn_building(
             &mut world,
             0,
@@ -48,8 +48,8 @@ mod tests {
     #[test]
     fn test_healing_requires_active_power() {
         let mut world = setup_world();
-    world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtInheritedEvent>>();
-    world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtSocializedEvent>>();
+        world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtInheritedEvent>>();
+        world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtSocializedEvent>>();
 
         // 1. Spawn Generator at (0,0)
         spawn_building(
@@ -125,8 +125,8 @@ mod tests {
     #[test]
     fn test_healing_fails_without_power() {
         let mut world = setup_world();
-    world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtInheritedEvent>>();
-    world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtSocializedEvent>>();
+        world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtInheritedEvent>>();
+        world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtSocializedEvent>>();
 
         // 1. Spawn Hospital (Isolated, no generator)
         spawn_building(
@@ -182,8 +182,8 @@ mod tests {
     #[test]
     fn test_blackout_stops_healing() {
         let mut world = setup_world();
-    world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtInheritedEvent>>();
-    world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtSocializedEvent>>();
+        world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtInheritedEvent>>();
+        world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtSocializedEvent>>();
 
         // 1. Activate Blackout
         world.resource_mut::<BlackoutProtocol>().active = true;

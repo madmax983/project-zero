@@ -23,3 +23,7 @@
 **AHash over SipHash for GridPosition sets**
 **Learning:** `std::collections::HashSet` uses `SipHash` which is slow for integer keys. In `src/layer1/economy/hauling.rs`, replacing it with `bevy::utils::HashSet` (which uses `AHash`) avoids unnecessary overhead when checking `GridPosition` structures.
 **Action:** Always prefer `bevy::utils::HashSet` for small integer keys like coordinates or entities.
+
+**[Acoustic Noise Propagation Allocations]**
+**Learning:** The noise propagation system was allocating a VecDeque and a std::collections::HashSet per noise source per frame, causing unnecessary heap allocations. Using std::collections::HashSet on integer tuples also incurs SipHash overhead.
+**Action:** Hoist the allocations out of the loop and reuse them with `.clear()`. Switch to `bevy::utils::HashSet` for AHash to avoid SipHash overhead on coordinate keys.

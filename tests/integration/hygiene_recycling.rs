@@ -33,8 +33,8 @@ mod tests {
     #[test]
     fn test_shower_produces_waste_item() {
         let mut world = setup_world();
-    world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtInheritedEvent>>();
-    world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtSocializedEvent>>();
+        world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtInheritedEvent>>();
+        world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtSocializedEvent>>();
 
         // Spawn Pop with Filth and UseShower action
         let pop = world
@@ -97,8 +97,8 @@ mod tests {
     #[test]
     fn test_hauler_delivers_waste_to_recycler() {
         let mut world = setup_world();
-    world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtInheritedEvent>>();
-    world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtSocializedEvent>>();
+        world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtInheritedEvent>>();
+        world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtSocializedEvent>>();
 
         // Spawn Recycler (Needs Inventory!)
         let recycler = world
@@ -203,8 +203,8 @@ mod tests {
     fn test_recycler_building_has_inventory() {
         // This test verifies the building.rs change
         let mut world = setup_world();
-    world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtInheritedEvent>>();
-    world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtSocializedEvent>>();
+        world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtInheritedEvent>>();
+        world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtSocializedEvent>>();
         world.insert_resource(scale::layer1::building::BuildMode::default());
         world.insert_resource(scale::layer1::building::OccupiedTiles::default());
         world.insert_resource(scale::layer1::terrain::TerrainGrid {

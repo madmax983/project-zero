@@ -14,8 +14,8 @@ mod tests {
     fn test_statue_beauty_propagates_to_adjacent_tiles() {
         // Use standard setup to ensure all resources exist
         let mut world = scale::setup::setup_world();
-    world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtInheritedEvent>>();
-    world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtSocializedEvent>>();
+        world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtInheritedEvent>>();
+        world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtSocializedEvent>>();
 
         // Reset terrain to flat grass for predictability (80x50 is default size in setup.rs)
         let mut terrain = world.resource_mut::<TerrainGrid>();

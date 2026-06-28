@@ -29,8 +29,8 @@ mod tests {
     #[test]
     fn test_strange_flora_has_pheromones() {
         let mut world = setup_world();
-    world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtInheritedEvent>>();
-    world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtSocializedEvent>>();
+        world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtInheritedEvent>>();
+        world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtSocializedEvent>>();
 
         // Spawn anomalies until we get StrangeFlora
         // Since spawn_initial_anomalies is random, we might need to try a few times or force seed?
@@ -67,8 +67,8 @@ mod tests {
     #[test]
     fn test_xenomoss_spread_has_pheromones() {
         let mut world = setup_world();
-    world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtInheritedEvent>>();
-    world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtSocializedEvent>>();
+        world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtInheritedEvent>>();
+        world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtSocializedEvent>>();
 
         // Spawn initial Flora (XenoMoss)
         world.spawn((
@@ -112,8 +112,8 @@ mod tests {
         // This tests the SEAM (Emitter -> Morale)
         // We manually attach emitter to prove the connection works IF the component is present.
         let mut world = setup_world();
-    world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtInheritedEvent>>();
-    world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtSocializedEvent>>();
+        world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtInheritedEvent>>();
+        world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtSocializedEvent>>();
 
         let pop = world
             .spawn((Pop, GridPosition { x: 10, y: 10 }, Morale::default()))

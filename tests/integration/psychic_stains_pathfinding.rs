@@ -7,8 +7,8 @@ mod tests {
     #[test]
     fn test_psychic_stain_increases_pathfinding_cost() {
         let mut world = scale::setup::setup_world();
-    world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtInheritedEvent>>();
-    world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtSocializedEvent>>();
+        world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtInheritedEvent>>();
+        world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtSocializedEvent>>();
 
         let mut terrain = world.resource_mut::<scale::layer1::terrain::TerrainGrid>();
         terrain
