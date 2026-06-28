@@ -843,3 +843,4 @@
 - [x] `INT-1035` Integration: Modular Fauna Stats -> Economy — completed 2026-10-31
 - [x] `319` The Gravity Well Forge — `specs/319-gravity-well-forge.md` — completed 2026-06-28
 - [x] `1034` Gene-Banks — `specs/1034-gene-banks.md` — completed 2024-06-29
+- [x] `INT-1122` Integration: The Rust-Lung Epidemic -> Chronicle — completed 2026-10-31

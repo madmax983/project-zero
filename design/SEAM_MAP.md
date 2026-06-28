@@ -1676,3 +1676,9 @@
 - **Systems connected:** `evaluate_modular_fauna_stats_system` added to `Layer1SystemSet::Economy`
 - **Glue added:** Registered `crate::layer1::fauna::modular_fauna::evaluate_modular_fauna_stats_system` in `src/layer1/systems/economy.rs`.
 - **Tests:** `tests/integration/modular_fauna_integration.rs` (1 test)
+
+### INT-1122: The Rust-Lung Epidemic -> Chronicle
+- **Date:** 2026-10-31
+- **Systems connected:** `has_rust_lung` property change on `Health` -> `AddChronicleEvent`
+- **Glue added:** Added `rust_lung_chronicle_bridge_system` in `src/layer1/core/integration.rs` to detect when a pop's `has_rust_lung` boolean flips to true and emit a standard chronicle event. It adds a local `RustLungContractedMarker` component so it doesn't spam the event continuously. Registered in `simulation.rs`.
+- **Tests:** `tests/integration/rust_lung_chronicle_bridge.rs`

@@ -3295,3 +3295,25 @@ pub fn subconscious_grid_lockdown_chronicle_bridge(
         }
     }
 }
+
+/// Bridges `RustLung` (The Rust-Lung Epidemic) to `AddChronicleEvent` (Chronicle).
+#[derive(bevy_ecs::prelude::Component)]
+pub struct RustLungContractedMarker;
+
+type RustLungQuery<'w, 's> = bevy_ecs::prelude::Query<'w, 's, (bevy_ecs::prelude::Entity, &'static crate::layer1::biology::health::Health), (bevy_ecs::prelude::Changed<crate::layer1::biology::health::Health>, bevy_ecs::prelude::Without<RustLungContractedMarker>)>;
+
+pub fn rust_lung_chronicle_bridge_system(
+    mut commands: bevy_ecs::prelude::Commands,
+    query: RustLungQuery,
+    mut chronicle_events: bevy_ecs::event::EventWriter<crate::layer1::core::chronicle::AddChronicleEvent>,
+) {
+    for (entity, health) in query.iter() {
+        if health.has_rust_lung {
+            commands.entity(entity).insert(RustLungContractedMarker);
+            chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
+                importance: crate::layer1::core::chronicle::EventImportance::Standard,
+                text: "A colonist has contracted Rust-Lung from working in the mines without proper equipment. The air of progress suffocates us.".to_string(),
+            });
+        }
+    }
+}
