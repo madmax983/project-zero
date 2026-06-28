@@ -190,3 +190,8 @@
 **Concept:** Added `magnetic_amnesia_system` to `src/experimental/magnetic_amnesia.rs`. Connects `WeatherType::MagneticStorm`, `RoofGrid`, and `Memories`. During a magnetic storm, pops outside have a chance to suffer complete memory loss due to cognitive electromagnetic interference.
 **Fate:** Submitted
 **Lesson:** Turns an environmental hazard into a psychological one. Allows emergent strategies where players intentionally expose traumatized pops to the storm to "reset" them, at the cost of losing all beneficial experiences.
+
+## [Tectonic Prophets]
+**Concept:** Added `tectonic_prophets_system` to `src/experimental/tectonic_prophets.rs`. It reads the `TectonicStress` resource, and when it nears the `MegaQuake` threshold (>80%), Pops with `Trait::Prophet` gain a large morale boost ("Vibrations of the Deep"), while Pops with `Trait::Anxious` gain a severe penalty ("Impending Doom").
+**Fate:** Submitted
+**Lesson:** Connecting geological layer mechanics directly to the personality traits of individual pops creates strong tension before disasters even strike, rewarding or punishing colony trait compositions dynamically.
