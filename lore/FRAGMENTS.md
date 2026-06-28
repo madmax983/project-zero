@@ -10042,3 +10042,23 @@ The subjects of mediocre, comfortable art.
 - predatory space fauna
 - living blockades
 - the rot
+
+## The Cryo-Mutiny Fragments (Spec 312)
+
+## Fragment Type: [ANCIENT_TITLE]
+Titles for the awakened colonists from the Cryo-Ship.
+- the Pioneers
+- the Ancients
+- the First-Sleepers
+- the Founders
+- the Lost Crew
+- the Sleeping Ancestors
+
+## Fragment Type: [CULTURE_SHOCK_REACTION]
+How the awakened react to the modern colony.
+- screaming at the machines
+- calling us abominations
+- weeping at the sight of the advanced foundries
+- retreating in terror from the drones
+- refusing to eat synthetic rations
+- demanding a return to the old ways
