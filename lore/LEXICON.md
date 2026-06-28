@@ -5772,3 +5772,15 @@
 **Replaces:** bio-links, system network, immune response, space fauna spawners
 **Code reference:** `BioLink` component, `SpaceFauna` component
 **Usage:** "The deep root stretches between the asteroids." / "We woke the mycelial network."
+
+## The Cryo-Mutiny (Spec 312)
+
+### the Pioneers / the Ancients
+**Replaces:** MutineerPop, primitive colonists, hostile cryo-survivors
+**Code reference:** `MutineerPop` component
+**Usage:** "The Pioneers awoke and looked upon us with disgust." / "The Ancients demand we return to the dirt."
+
+### Culture Shock
+**Replaces:** Hostility modifier, rebellion trigger, primitive anger
+**Code reference:** `MutineerPop.culture_shock`
+**Usage:** "Their Culture Shock drove them to burn the foundries." / "As their Culture Shock faded, the mutiny dissolved."

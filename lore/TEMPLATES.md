@@ -9740,3 +9740,32 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: The deep root reacts. [SPORE_STATE] emerges at [NODE_NAME]."
 - "We dug too deep. [NODE_NAME] is overrun by [SPORE_STATE]."
 - "[NODE_NAME], [YEAR]. The mycelial network defends itself. [SPORE_STATE]."
+
+## The Cryo-Mutiny Templates (Spec 312)
+
+### Template: CRYO_SHIP_LANDING
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [SHIP_NAME], [ANCIENT_TITLE]
+
+**Patterns:**
+- "[YEAR]: The sky opened and [SHIP_NAME] fell to [COLONY]. The pods opened. [ANCIENT_TITLE] have returned."
+- "An archaic vessel, [SHIP_NAME], crashed into [COLONY]. From the ice stepped [ANCIENT_TITLE]. [YEAR]."
+- "[COLONY] watched the ancient [SHIP_NAME] land. The thaw began, and [ANCIENT_TITLE] awoke into a world they did not know. [YEAR]."
+
+### Template: CULTURE_SHOCK_INCIDENT
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [ANCIENT_TITLE], [CULTURE_SHOCK_REACTION]
+
+**Patterns:**
+- "[YEAR]: The modern world broke them. [ANCIENT_TITLE] in [COLONY] are [CULTURE_SHOCK_REACTION]."
+- "Unable to comprehend our progress, [ANCIENT_TITLE] turned hostile, [CULTURE_SHOCK_REACTION] across [COLONY]. [YEAR]."
+- "[COLONY] is burning. [ANCIENT_TITLE] suffered massive culture shock, [CULTURE_SHOCK_REACTION]. They want to reclaim their home. [YEAR]."
+
+### Template: MUTINY_RESOLVED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [ANCIENT_TITLE]
+
+**Patterns:**
+- "[YEAR]: The uprising of [ANCIENT_TITLE] was put down in [COLONY]. The past is buried again."
+- "The fever broke. [ANCIENT_TITLE] finally accepted the new reality in [COLONY]. The mutiny is over. [YEAR]."
+- "[COLONY] silenced [ANCIENT_TITLE]. Their primitive rebellion could not stand against our progress. [YEAR]."
