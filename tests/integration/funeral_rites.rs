@@ -20,8 +20,8 @@ mod integration_tests {
     #[test]
     fn test_death_spawns_corpse() {
         let mut world = scale::setup::setup_world();
-    world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtInheritedEvent>>();
-    world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtSocializedEvent>>();
+        world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtInheritedEvent>>();
+        world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtSocializedEvent>>();
         world
             .init_resource::<bevy_ecs::event::Events<scale::layer1::nature::ecology::HarvestEvent>>(
             );
@@ -65,8 +65,8 @@ mod integration_tests {
     #[ignore = "AI evaluation does not currently select BuryCorpse action. Requires review."]
     fn test_funeral_integration_death_to_burial() {
         let mut world = scale::setup::setup_world();
-    world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtInheritedEvent>>();
-    world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtSocializedEvent>>();
+        world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtInheritedEvent>>();
+        world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtSocializedEvent>>();
         world
             .init_resource::<bevy_ecs::event::Events<scale::layer1::nature::ecology::HarvestEvent>>(
             );
@@ -164,8 +164,8 @@ mod integration_tests {
     #[test]
     fn test_grief_from_corpse() {
         let mut world = scale::setup::setup_world();
-    world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtInheritedEvent>>();
-    world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtSocializedEvent>>();
+        world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtInheritedEvent>>();
+        world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::debt_of_the_dead::DebtSocializedEvent>>();
         world
             .init_resource::<bevy_ecs::event::Events<scale::layer1::nature::ecology::HarvestEvent>>(
             );

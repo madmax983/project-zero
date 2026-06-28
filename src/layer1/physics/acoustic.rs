@@ -156,12 +156,16 @@ pub fn update_noise_system(
         })
         .collect();
 
+    // ⚡ Bolt Optimization: Pre-allocate BFS collections and use AHash
+    let mut queue = std::collections::VecDeque::new();
+    let mut visited = bevy::utils::HashSet::new();
+
     for (source, pos) in &sources {
-        let mut queue = std::collections::VecDeque::new();
+        queue.clear();
+        visited.clear();
+
         // Item: (x, y, distance, damping_accumulator)
         queue.push_back((pos.x, pos.y, 0.0_f32, 1.0_f32));
-
-        let mut visited = std::collections::HashSet::new();
         visited.insert((pos.x, pos.y));
 
         while let Some((px, py, dist, damping)) = queue.pop_front() {
