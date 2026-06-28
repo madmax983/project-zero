@@ -195,3 +195,8 @@
 **Concept:** Added `tectonic_prophets_system` to `src/experimental/tectonic_prophets.rs`. It reads the `TectonicStress` resource, and when it nears the `MegaQuake` threshold (>80%), Pops with `Trait::Prophet` gain a large morale boost ("Vibrations of the Deep"), while Pops with `Trait::Anxious` gain a severe penalty ("Impending Doom").
 **Fate:** Submitted
 **Lesson:** Connecting geological layer mechanics directly to the personality traits of individual pops creates strong tension before disasters even strike, rewarding or punishing colony trait compositions dynamically.
+
+## [Feral Foraging]
+**Concept:** Added `feral_foraging_system` to `src/experimental/feral_foraging.rs`. Connects `Trait::Feral` and `ActionType::Explore` to `WeatherType::Rain` (and Storm). Feral pops actively generate `Food` for the colony while exploring during bad weather.
+**Fate:** Submitted
+**Lesson:** Connects a negative personality trait to environmental weather, turning it into a specialized niche advantage during specific times, rewarding players for sending feral pops out instead of keeping them indoors.

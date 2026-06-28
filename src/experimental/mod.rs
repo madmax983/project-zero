@@ -215,3 +215,6 @@ pub mod fungal_reclamation;
 pub mod magnetic_amnesia;
 #[cfg(feature = "nova")]
 pub mod tectonic_prophets;
+
+#[cfg(feature = "nova")]
+pub mod feral_foraging;

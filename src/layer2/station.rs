@@ -478,7 +478,9 @@ pub fn process_deep_forges(
 ) {
     use rand::Rng;
     for (entity, forge, maintenance, crew) in forge_query.iter_mut() {
-        if !forge.is_active { continue; }
+        if !forge.is_active {
+            continue;
+        }
 
         // Calculate failure chance inversely proportional to maintenance
         let crush_risk = forge.base_crush_chance * (1.0 - (maintenance.current / 100.0));
