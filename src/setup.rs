@@ -90,6 +90,8 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
         .init_resource::<Events<crate::layer1::culture::celestial_cemeteries::ClearCemeteryEvent>>(
         );
     world.init_resource::<Events<crate::layer1::architecture::smart_matter::RaidEvent>>();
+    world.init_resource::<bevy_ecs::event::Events<crate::layer1::economy::debt_of_the_dead::DebtInheritedEvent>>();
+    world.init_resource::<bevy_ecs::event::Events<crate::layer1::economy::debt_of_the_dead::DebtSocializedEvent>>();
     world.init_resource::<Events<crate::layer1::social::hoarder::ConfiscateHoardEvent>>();
     world.init_resource::<Events<crate::layer1::culture::memorial_revolt::PetDeathEvent>>();
     world.init_resource::<bevy_ecs::prelude::Events<crate::layer2::celestial_library::LibraryDonationEvent>>();
@@ -1205,6 +1207,8 @@ mod tests {
             );
         world.init_resource::<Events<crate::layer1::culture::celestial_cemeteries::ClearCemeteryEvent>>();
         world.init_resource::<Events<crate::layer1::architecture::smart_matter::RaidEvent>>();
+        world.init_resource::<bevy_ecs::event::Events<crate::layer1::economy::debt_of_the_dead::DebtInheritedEvent>>();
+        world.init_resource::<bevy_ecs::event::Events<crate::layer1::economy::debt_of_the_dead::DebtSocializedEvent>>();
         world.init_resource::<Events<crate::layer1::culture::memorial_revolt::PetDeathEvent>>();
         world
             .init_resource::<crate::layer1::environment::bio_acoustic_miasma::MiasmaRecordedSecret>(
