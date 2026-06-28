@@ -20,3 +20,6 @@
 **2026-06-07 - proc-macro-error2 is unmaintained**
 **Threat:** The `proc-macro-error2` crate is unmaintained (RUSTSEC-2026-0173), which could lead to unpatched vulnerabilities in the future.
 **Defense:** Downgraded `env_logger` to `0.11.0` via `cargo update` and pinned it in `Cargo.toml` to remove the transitive dependency chain (`env_logger` -> `jiff` -> `defmt` -> `defmt-macros` -> `proc-macro-error2`).
+**2026-06-28 - Uninitialized Events causing test panics**
+**Threat:** Tests that invoke full system execution (e.g., `schedule.run(\&mut world)` or tests running the full simulation loop) panicked with Bevy errors: `could not access system parameter ResMut<'_, Events<T>>`. While these were mostly constrained to tests missing setup resources, uninitialized `Events<T>` configurations in core routines present a severe fragility risk that could lead to crashes in the running simulation if dependencies or startup routines change.
+**Defense:** Explicitly initialized `Events<DebtInheritedEvent>`, `Events<DebtSocializedEvent>`, `Events<PublishDiscoveryEvent>`, and `Events<AttackColonyEvent>` in test configurations (`setup_world` blocks) as well as ensuring coverage in the core `init_simulation_resources` block to close the crash loop vectors.

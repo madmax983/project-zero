@@ -105,6 +105,8 @@ mod tests {
         world.insert_resource(ColonyPrices::default());
         world.insert_resource(SocializedDebt::default());
         world.init_resource::<Events<PopDied>>();
+        world.init_resource::<Events<DebtInheritedEvent>>();
+        world.init_resource::<Events<DebtSocializedEvent>>();
         world
     }
 

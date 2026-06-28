@@ -83,6 +83,10 @@ fn init_simulation_resources(world: &mut World) {
     world.init_resource::<Events<crate::layer1::economy::black_market::ShutdownDropNodeEvent>>();
     world.init_resource::<Events<crate::layer1::architecture::chrono_vault::SealVaultEvent>>();
     world.init_resource::<Events<crate::layer2::auction::VaultOpenedEvent>>();
+    world.init_resource::<bevy_ecs::event::Events<crate::layer2::orbit::asteroid_claims::AttackColonyEvent>>();
+    world.init_resource::<Events<crate::layer3::diplomacy::open_source_science::PublishDiscoveryEvent>>();
+    world.init_resource::<Events<crate::layer1::economy::debt_of_the_dead::DebtInheritedEvent>>();
+    world.init_resource::<Events<crate::layer1::economy::debt_of_the_dead::DebtSocializedEvent>>();
     world.init_resource::<Events<crate::layer1::AcceptSponsorshipEvent>>();
     world.init_resource::<Events<crate::layer1::crafting::CraftEvent>>();
     world.init_resource::<Events<crate::layer1::biology::symbiotic_insurgency::SabotageEvent>>();
@@ -248,6 +252,10 @@ fn init_simulation_resources(world: &mut World) {
     world.init_resource::<Events<crate::layer2::auction::BlindAuctionTriggeredEvent>>();
     world.init_resource::<Events<crate::layer2::auction::PlaceBidEvent>>();
     world.init_resource::<Events<crate::layer2::auction::VaultOpenedEvent>>();
+    world.init_resource::<bevy_ecs::event::Events<crate::layer2::orbit::asteroid_claims::AttackColonyEvent>>();
+    world.init_resource::<Events<crate::layer3::diplomacy::open_source_science::PublishDiscoveryEvent>>();
+    world.init_resource::<Events<crate::layer1::economy::debt_of_the_dead::DebtInheritedEvent>>();
+    world.init_resource::<Events<crate::layer1::economy::debt_of_the_dead::DebtSocializedEvent>>();
     world.init_resource::<Events<crate::layer2::auction::TemporalAnomalyEvent>>();
     if !world.contains_resource::<Events<crate::layer2::trade::escape_velocity::LaunchShipEvent>>()
     {
@@ -495,12 +503,10 @@ pub fn run_simulation_tick(world: &mut World) {
 }
 
 fn register_simulation_core_systems(schedule: &mut Schedule) {
-    schedule.add_systems(
-        (
-            crate::layer3::diplomacy::open_source_science::process_publication_system,
-            crate::layer3::diplomacy::open_source_science::process_enemy_exploits_system,
-        )
-    );
+    schedule.add_systems((
+        crate::layer3::diplomacy::open_source_science::process_publication_system,
+        crate::layer3::diplomacy::open_source_science::process_enemy_exploits_system,
+    ));
 
     // --- Register Core Layer 1 Systems ---
     register_layer1_systems(schedule);
@@ -1114,6 +1120,14 @@ mod tests {
         world.init_resource::<Events<crate::layer1::predecessors::WorldTriggerEvent>>();
         world.init_resource::<Events<crate::layer1::architecture::chrono_vault::SealVaultEvent>>();
         world.init_resource::<Events<crate::layer2::auction::VaultOpenedEvent>>();
+        world.init_resource::<bevy_ecs::event::Events<crate::layer2::orbit::asteroid_claims::AttackColonyEvent>>();
+        world.init_resource::<Events<crate::layer3::diplomacy::open_source_science::PublishDiscoveryEvent>>();
+        world
+            .init_resource::<Events<crate::layer1::economy::debt_of_the_dead::DebtInheritedEvent>>(
+            );
+        world
+            .init_resource::<Events<crate::layer1::economy::debt_of_the_dead::DebtSocializedEvent>>(
+            );
         world.init_resource::<Events<crate::layer1::AcceptSponsorshipEvent>>();
         world.init_resource::<Events<crate::layer1::crafting::CraftEvent>>();
         world
@@ -1196,6 +1210,14 @@ mod tests {
         // Initialize Detection Risk for test
         world.init_resource::<Events<crate::layer1::architecture::chrono_vault::SealVaultEvent>>();
         world.init_resource::<Events<crate::layer2::auction::VaultOpenedEvent>>();
+        world.init_resource::<bevy_ecs::event::Events<crate::layer2::orbit::asteroid_claims::AttackColonyEvent>>();
+        world.init_resource::<Events<crate::layer3::diplomacy::open_source_science::PublishDiscoveryEvent>>();
+        world
+            .init_resource::<Events<crate::layer1::economy::debt_of_the_dead::DebtInheritedEvent>>(
+            );
+        world
+            .init_resource::<Events<crate::layer1::economy::debt_of_the_dead::DebtSocializedEvent>>(
+            );
         world.init_resource::<Events<crate::layer1::AcceptSponsorshipEvent>>();
         world.init_resource::<Events<crate::layer1::crafting::CraftEvent>>();
         world
