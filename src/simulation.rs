@@ -1131,6 +1131,8 @@ mod tests {
         world
             .init_resource::<Events<crate::layer1::economy::debt_of_the_dead::DebtSocializedEvent>>(
             );
+        world.init_resource::<Events<crate::layer1::biology::gene_bank::CloneEvent>>();
+        world.init_resource::<Events<crate::layer1::biology::gene_bank::ExtinctionEvent>>();
         world.init_resource::<Events<crate::layer1::AcceptSponsorshipEvent>>();
         world.init_resource::<Events<crate::layer1::crafting::CraftEvent>>();
         world
@@ -1338,6 +1340,7 @@ mod tests {
         world.init_resource::<Events<crate::layer1::social::sub_lithic::SabotageEvent>>();
         world.init_resource::<Events<crate::layer1::cryo_prison::SabotageEvent>>();
         world.init_resource::<Events<crate::layer1::genetics::GeneSplicingEvent>>();
+        world.init_resource::<crate::layer1::biology::gene_bank::ExtinctionTracker>();
         world.init_resource::<Events<crate::layer1::genetics::GeneSplicingResultEvent>>();
         world.init_resource::<Events<crate::layer2::trade::penal_contracts::PrisonerDiedEvent>>();
         world.init_resource::<Events<crate::layer2::governance::RebellionEvent>>();

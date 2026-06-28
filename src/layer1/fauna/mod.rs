@@ -52,6 +52,11 @@ pub struct NocturnalFauna {
     pub aggression: f32,
 }
 
+#[derive(Component, Debug, Clone, PartialEq, Eq)]
+pub struct SpeciesId {
+    pub id: String,
+}
+
 /// Component representing a hostile animal.
 #[derive(Component)]
 pub struct Fauna {
@@ -213,11 +218,35 @@ pub fn fauna_behavior_system(world: &mut World) {
 /// Handles death events specific to Fauna.
 #[allow(clippy::type_complexity)]
 pub fn handle_fauna_death_system(
-    query: Query<(Entity, Option<&GridPosition>), (With<Fauna>, Added<Dead>)>,
+    query: Query<(Entity, Option<&GridPosition>, Option<&SpeciesId>), (With<Fauna>, Added<Dead>)>,
+    all_fauna: Query<(Entity, Option<&SpeciesId>), (With<Fauna>, Without<Dead>)>,
     mut commands: Commands,
     mut log: Option<ResMut<MessageLog>>,
+    mut extinction_events: Option<
+        ResMut<Events<crate::layer1::biology::gene_bank::ExtinctionEvent>>,
+    >,
 ) {
-    for (_entity, pos_opt) in query.iter() {
+    for (entity, pos_opt, species_id_opt) in query.iter() {
+        if let Some(species_id) = species_id_opt {
+            let mut other_alive = false;
+            for (other_entity, other_species_id_opt) in all_fauna.iter() {
+                if other_entity != entity {
+                    if let Some(other_species_id) = other_species_id_opt {
+                        if other_species_id.id == species_id.id {
+                            other_alive = true;
+                            break;
+                        }
+                    }
+                }
+            }
+            if !other_alive {
+                if let Some(events) = extinction_events.as_mut() {
+                    events.send(crate::layer1::biology::gene_bank::ExtinctionEvent {
+                        species_id: species_id.id.clone(),
+                    });
+                }
+            }
+        }
         // 1. Visuals
         if let Some(pos) = pos_opt {
             commands.spawn((

@@ -56,6 +56,8 @@ pub fn register(schedule: &mut Schedule) {
                 crate::layer2::designation::handle_designation_changes,
                 (
                     crate::layer1::gene_bank::process_cloning_system,
+                    crate::layer1::biology::gene_bank::handle_clone_events,
+                    crate::layer1::biology::gene_bank::handle_extinction_events,
                     crate::layer1::genetics::process_gene_splicing_system,
                     crate::layer1::genetics::apply_crop_traits,
                     crate::layer1::genetics::process_mutations,
