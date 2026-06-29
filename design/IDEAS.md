@@ -25944,3 +25944,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you pamper your translators, essentially giving a small guild of bureaucrats veto power over your foreign policy, or rely on flawed AI and risk catastrophic diplomatic incidents?
 
 ---
+## Memory Smuggling
+
+**Layer:** Cross-layer
+
+**Fantasy:** Players experience the underground trade of illicit, specialized knowledge and stolen memories across the galaxy.
+
+**Mechanic:** Pops with highly prized skills or unique historical memories can have their "Memory" data illicitly copied and sold on the Black Market as a commodity. Other colonies can buy these to instantly impart skills or radical ideas to their own Pops.
+
+**Emergence:** A peaceful colony might accidentally buy a smuggled memory of a violent rebellion, causing a sudden spike in unrest or a shift in cultural values. A renowned scientist's mind could be pirated, causing rival factions to leapfrog in technological progress.
+
+**Tension:** Do you permit the black market memory trade to boost your own colony's skills, risking the influx of dangerous radical thoughts and corrupted data?
+
+---
+
+## Gravity Well Guilds
+
+**Layer:** 2
+
+**Fantasy:** Navigating the politics and monopolies of powerful organizations that control the logistics of getting on and off planets.
+
+**Mechanic:** Specialized logistics guilds form around high-gravity worlds. They control the orbital elevators and heavy lifters. If a player relies too much on a single world for exports, the local guild gains influence and can demand higher tariffs or political concessions.
+
+**Emergence:** A guild might strike, effectively blockading a crucial mining world and starving the orbital shipyards of raw materials, which in turn halts fleet production during a war.
+
+**Tension:** Do you invest heavily in your own expensive, inefficient planetary logistics, or do you rely on the efficient but politically dangerous Guilds?
+
+---
+
+## Xeno-Flora Rebellion
+
+**Layer:** 1
+
+**Fantasy:** Watching the alien environment actively fight back against industrial colonization through slow, creeping biological subversion.
+
+**Mechanic:** Native plant life on certain biomes reacts to high pollution or rapid deforestation by rapidly mutating and aggressively overgrowing colony infrastructure. Overgrown buildings suffer efficiency drops and require continuous manual clearing by Pops.
+
+**Emergence:** A heavily industrialized sector might become completely choked by acidic vines, forcing Pops to abandon it. The flora might adapt to specific pollutants, creating new hazardous biomes right in the middle of a city.
+
+**Tension:** Do you slow down industrial expansion to respect the local biome, or do you invest in costly, hazardous defoliant campaigns that might spark further mutations?
+
+---
