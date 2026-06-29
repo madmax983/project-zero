@@ -44,12 +44,6 @@ trunk serve
 
 ### Procedural Generation (Narrative)
 
-# REQUIRES FEATURE NOVA
-
-> ⚠️ **REQUIRES FEATURE NOVA**
->
-> **NOTE:** Do not attempt to run this snippet without enabling `features = ["nova"]` in your `Cargo.toml`.
-> If the `nova` feature is not enabled, `NarrativeGenerator` will not be found.
 
 To use SCALE's procedural generation in your own Rust code:
 
@@ -94,7 +88,7 @@ For the **advanced simulation of legends** (Oral Tradition), see the [Oral Tradi
 
 ### Oral Tradition (Nova Feature)
 
-> ⚠️ **REQUIRES FEATURE NOVA**
+> # ⚠️ REQUIRES FEATURE NOVA
 >
 > **NOTE:** Do not attempt to run this snippet without enabling `features = ["nova"]` in your `Cargo.toml`.
 > If the `nova` feature is not enabled, `OralTradition`, `Story`, and `StoryGenre` will not be available in the prelude and your code will fail to compile with an `E0422` error.

@@ -23,7 +23,7 @@ use rand::Rng;
 /// Legends begin as factual [`crate::layer1::core::chronicle::Chronicle`] entries but morph over time through
 /// successive telling and retelling in taverns.
 ///
-/// > ⚠️ **Nova Feature:** While this struct is always defined, its systems and effects are only active when the `nova` feature is enabled.
+/// > ⚠️ **Nova Feature:** This struct and its effects are only available when the `nova` feature is enabled.
 ///
 /// # Examples
 ///
@@ -87,7 +87,7 @@ pub const MAX_STORIES: usize = 100;
 /// `OralTradition` periodically scans the [`crate::layer1::core::chronicle::Chronicle`] for new events and seeds
 /// them as factual stories. These stories are later shared in `Tavern`s, where they mutate.
 ///
-/// > ⚠️ **Nova Feature:** While this resource is always defined, its active systems (like `collect_chronicles_system`) will emit warnings and do nothing unless the `nova` feature is enabled.
+/// > ⚠️ **Nova Feature:** This resource and its active systems are only available when the `nova` feature is enabled.
 ///
 /// # Examples
 ///
