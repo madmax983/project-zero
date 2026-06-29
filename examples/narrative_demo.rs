@@ -407,14 +407,14 @@ fn ui(f: &mut Frame, app: &mut App) {
                         .add_modifier(Modifier::ITALIC),
                 ),
                 NarrativeSegment::MissingContext(e) => Span::styled(
-                    format!(" [MISSING CONTEXT: {}] ", e),
+                    format!(" Missing context: '{}' ", e),
                     Style::default()
                         .fg(Color::White)
                         .bg(Color::Red)
                         .add_modifier(Modifier::BOLD),
                 ),
                 NarrativeSegment::MissingFragmentOptions(e) => Span::styled(
-                    format!(" [MISSING FRAGMENT OPTIONS: {}] ", e),
+                    format!(" Fragment '{}' has no options defined ", e),
                     Style::default()
                         .fg(Color::White)
                         .bg(Color::Red)
