@@ -73,6 +73,9 @@ pub fn apply_foundation_soil_system(
         }
 
         if let Some(ref mut fg) = fertility_grid {
+            if pos.x < 0 || pos.y < 0 {
+                continue;
+            }
             let x = pos.x as usize;
             let y = pos.y as usize;
             if x < fg.width && y < fg.height {

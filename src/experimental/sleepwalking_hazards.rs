@@ -46,6 +46,9 @@ pub fn sleepwalking_hazards_system(
 
             // Check Temperature Hazard
             if let Some(ref temp_grid) = temperature_grid {
+                if pos.x < 0 || pos.y < 0 {
+                    continue;
+                }
                 let temp = temp_grid.get(pos.x as usize, pos.y as usize);
                 if temp > 50.0 {
                     health.current -= SLEEPWALKING_HEAT_DAMAGE;
@@ -74,6 +77,9 @@ pub fn sleepwalking_hazards_system(
 
             // Check Radiation Hazard
             if let Some(ref rad_grid) = radiation_grid {
+                if pos.x < 0 || pos.y < 0 {
+                    continue;
+                }
                 let rad = rad_grid.get(pos.x as usize, pos.y as usize);
                 if rad > 1.0 {
                     if let Some(ref mut sick) = sickness_opt {

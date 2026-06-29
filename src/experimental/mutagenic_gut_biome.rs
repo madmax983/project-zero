@@ -39,6 +39,7 @@ pub fn mutagenic_gut_biome_system(
                     if pos.x < 0 || pos.y < 0 {
                         false
                     } else {
+
                         let x = pos.x as usize;
                         let y = pos.y as usize;
                         if x < g.width && y < g.height {

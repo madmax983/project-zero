@@ -105,7 +105,10 @@ pub fn check_stability(world: &mut World, pos: GridPosition) -> bool {
     let Some(terrain) = world.get_resource::<TerrainGrid>() else {
         return true; // Safe if there is no terrain grid
     };
-    if terrain.get(pos.x as usize, pos.y as usize) == Some(TerrainType::Rock) {
+    if pos.x >= 0
+        && pos.y >= 0
+        && terrain.get(pos.x as usize, pos.y as usize) == Some(TerrainType::Rock)
+    {
         return true;
     }
 
@@ -137,7 +140,7 @@ pub fn check_stability(world: &mut World, pos: GridPosition) -> bool {
                 continue;
             }
 
-            if terrain.get(x as usize, y as usize) == Some(TerrainType::Rock) {
+            if x >= 0 && y >= 0 && terrain.get(x as usize, y as usize) == Some(TerrainType::Rock) {
                 return true;
             }
         }

@@ -1046,7 +1046,9 @@ pub fn mine_rock(world: &mut World, designation_entity: Entity, work_amount: f32
 
         let terrain = world.resource::<TerrainGrid>();
         // Safe to cast because we checked for negative above
-        let is_rock = terrain.get(pos.x as usize, pos.y as usize) == Some(TerrainType::Rock);
+        let is_rock = pos.x >= 0
+            && pos.y >= 0
+            && terrain.get(pos.x as usize, pos.y as usize) == Some(TerrainType::Rock);
         (pos, is_rock)
     };
 
@@ -1719,7 +1721,7 @@ mod tests {
         // Is the vulnerability unreachable because of `terrain.get`'s safe bounds check?
         // Let's modify the test to manually bypass the terrain check if possible, or trigger it in a way where `y * terrain.width` overflows but `get` doesn't? Not possible if `get` uses the exact same `y` and `width`.
         // Ah, `get` does `y.checked_mul(self.width)`.
-        // In `mine_rock`, we do `let is_rock = terrain.get(pos.x as usize, pos.y as usize) == Some(TerrainType::Rock);`.
+        // In `mine_rock`, we do `let is_rock = pos.x >= 0 && pos.y >= 0 && terrain.get(pos.x as usize, pos.y as usize) == Some(TerrainType::Rock);`.
         // Since `get` safely checks for overflow, it will return `None`.
         // `is_rock` will be false. The function will early exit.
         // Thus, the overflow at `let idx = (pos.y as usize) * terrain.width + (pos.x as usize);` is unreachable!

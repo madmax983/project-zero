@@ -1,8 +1,8 @@
 use bevy::prelude::*;
-use scale::layer1::improvised_tools::{evaluate_tool_fallback_system, ImprovisedTools};
-use scale::layer1::jobs::CurrentTask;
 use scale::layer1::economy::inventory::{Inventory, InventoryItem};
 use scale::layer1::economy::items::{Equipment, ItemType};
+use scale::layer1::improvised_tools::{evaluate_tool_fallback_system, ImprovisedTools};
+use scale::layer1::jobs::CurrentTask;
 
 #[test]
 fn test_improvised_tools_bridge() {
@@ -17,21 +17,27 @@ fn test_improvised_tools_bridge() {
         entity: None,
     });
 
-    let pop_entity = app.world_mut().spawn((
-        CurrentTask {
-            efficiency: 1.0,
-            ..Default::default()
-        },
-        Equipment::default(),
-        inventory,
-        ImprovisedTools::default(),
-    )).id();
+    let pop_entity = app
+        .world_mut()
+        .spawn((
+            CurrentTask {
+                efficiency: 1.0,
+                ..Default::default()
+            },
+            Equipment::default(),
+            inventory,
+            ImprovisedTools::default(),
+        ))
+        .id();
 
     app.update();
 
     let task = app.world().get::<CurrentTask>(pop_entity).unwrap();
     let improvised_tools = app.world().get::<ImprovisedTools>(pop_entity).unwrap();
 
-    assert!(improvised_tools.in_use, "Pop should be using improvised tools");
+    assert!(
+        improvised_tools.in_use,
+        "Pop should be using improvised tools"
+    );
     assert_eq!(task.efficiency, 0.5, "Task efficiency should be halved");
 }
