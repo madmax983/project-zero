@@ -42,9 +42,12 @@ pub fn process_orbital_drops(
             }
 
             // Ensure items do not drop onto impenetrable terrain like solid rock walls
-            let terrain = grid
-                .get(final_x as usize, final_y as usize)
-                .unwrap_or(TerrainType::Grass);
+            let terrain = if final_x >= 0 && final_y >= 0 {
+                grid.get(final_x as usize, final_y as usize)
+            } else {
+                None
+            }
+            .unwrap_or(TerrainType::Grass);
             if matches!(terrain, TerrainType::Rock) {
                 continue; // Cannot drop on solid rock walls, skip
             }
@@ -79,7 +82,7 @@ pub fn process_orbital_drops(
             }
 
             // Damage terrain if item is heavy (assuming heavy is Scrap metal)
-            if matches!(item, Item::Scrap) {
+            if matches!(item, Item::Scrap) && final_x >= 0 && final_y >= 0 {
                 grid.set(final_x as usize, final_y as usize, TerrainType::Dirt);
                 // Assuming Dirt is closest to Crater we have right now
             }
@@ -181,11 +184,13 @@ mod tests {
             tiles: vec![TerrainType::Grass; 100],
         };
         let target_pos = GridPos { x: 5, y: 5 };
-        grid.set(
-            target_pos.x as usize,
-            target_pos.y as usize,
-            TerrainType::Grass,
-        );
+        if target_pos.x >= 0 && target_pos.y >= 0 {
+            grid.set(
+                target_pos.x as usize,
+                target_pos.y as usize,
+                TerrainType::Grass,
+            );
+        }
         app.world_mut().insert_resource(grid);
 
         let drop_event = OrbitalDropEvent {
@@ -200,8 +205,12 @@ mod tests {
         let grid = app.world().resource::<GridMap>();
         assert!(
             matches!(
-                grid.get(target_pos.x as usize, target_pos.y as usize)
-                    .unwrap(),
+                if target_pos.x >= 0 && target_pos.y >= 0 {
+                    grid.get(target_pos.x as usize, target_pos.y as usize)
+                } else {
+                    None
+                }
+                .unwrap(),
                 TerrainType::Dirt
             ),
             "Heavy drop should crater the terrain"

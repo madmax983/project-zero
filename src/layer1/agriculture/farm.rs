@@ -241,7 +241,11 @@ fn process_single_farmer(
     let fertility_modifier = if *building_type == BuildingType::HydroponicsBay {
         1.0
     } else if let Some(grid) = fertility_grid {
-        grid.get(pos.x as usize, pos.y as usize)
+        if pos.x >= 0 && pos.y >= 0 {
+            grid.get(pos.x as usize, pos.y as usize)
+        } else {
+            0.0
+        }
     } else {
         1.0
     };

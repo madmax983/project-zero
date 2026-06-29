@@ -119,7 +119,11 @@ mod tests {
 
         // Assert: Heat is generated on the tile
         let temperature_grid = world.resource::<TemperatureGrid>();
-        let tile_heat = temperature_grid.get(cable_pos.x as usize, cable_pos.y as usize);
+        let tile_heat = if cable_pos.x >= 0 && cable_pos.y >= 0 {
+            temperature_grid.get(cable_pos.x as usize, cable_pos.y as usize)
+        } else {
+            0.0
+        };
         assert!(tile_heat > 0.0, "Overloaded cable must generate heat");
     }
 
@@ -194,7 +198,11 @@ mod tests {
 
         // Assert: Cable is not overloaded because battery handles the local draw
         let temperature_grid = world.resource::<TemperatureGrid>();
-        let tile_heat = temperature_grid.get(pos.x as usize, pos.y as usize);
+        let tile_heat = if pos.x >= 0 && pos.y >= 0 {
+            temperature_grid.get(pos.x as usize, pos.y as usize)
+        } else {
+            0.0
+        };
         assert_eq!(
             tile_heat, 0.0,
             "Battery should buffer surge and prevent heat"
