@@ -5784,3 +5784,18 @@
 **Replaces:** Hostility modifier, rebellion trigger, primitive anger
 **Code reference:** `MutineerPop.culture_shock`
 **Usage:** "Their Culture Shock drove them to burn the foundries." / "As their Culture Shock faded, the mutiny dissolved."
+
+## The Hive Mind Integration
+
+### The Weaving / The Green-Stitching
+**Replaces:** Xeno-Integration surgery
+**Usage:**
+- "They volunteered for the Weaving."
+- "The Green-Stitching leaves no scars."
+
+### The Collective
+**Replaces:** Integrated Collective, Hive-Mind faction
+**Code reference:** `IntegratedCollective`
+**Usage:**
+- "The Collective doesn't need sleep."
+- "Speak to the Collective, not the individual."

@@ -2650,7 +2650,7 @@ Names for the debris field.
 
 ---
 
-## Vacuum Welding Fragments (Spec 185)
+## Vacuum Welding Fragments (Spec 1001)
 
 ## Fragment Type: [WELDING_TERM]
 Describing the welding process.
@@ -10062,3 +10062,27 @@ How the awakened react to the modern colony.
 - retreating in terror from the drones
 - refusing to eat synthetic rations
 - demanding a return to the old ways
+
+## The Hive Mind Integration Fragments (Spec 1022)
+
+## Fragment Type: [COLLECTIVE_NAME]
+- the One Voice
+- the Silent Chorus
+- the Green-Stitched
+- the Synchronized
+- the Integrated
+- the Weave
+
+## Fragment Type: [INEFFICIENT_TRAIT]
+- needing sleep
+- clinging to individuality
+- wasting time on leisure
+- eating solitary meals
+- disagreeing with the consensus
+
+## Fragment Type: [COLLECTIVE_ACTION]
+- staring in unison
+- refusing to feed the unlinked
+- speaking with one voice
+- moving with terrifying synchronization
+- ignoring the suffering of individuals
