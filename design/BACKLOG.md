@@ -646,7 +646,7 @@ See `design/IDEAS.md` for unspecced concepts.
 
 
 
-- [ ] `1125` Improvised Tools — `specs/1125-improvised-tools.md`
+
 
 - [x] `1129` Planetary Rings as Highways — `specs/1129-planetary-rings-as-highways.md` — completed 2026-06-25
 

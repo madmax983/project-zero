@@ -101,6 +101,8 @@ pub use law::orphaned_edict::*;
 /// Colony Mascot system (Spec 129).
 /// Medical care and hospital logic.
 pub mod jobs;
+pub mod improvised_tools;
+pub use improvised_tools::*;
 /// Tests for metal industry (Spec 024).
 pub mod metal_industry_tests;
 /// Terrain generation and grid management.
