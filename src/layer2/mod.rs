@@ -115,3 +115,4 @@ pub mod leviathans;
 pub mod orbital_ring;
 pub mod refugees;
 pub mod solar_sail_migration;
+pub mod void_leviathan;

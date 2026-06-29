@@ -79,7 +79,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `308` Black Market Genemods — `specs/308-black-market-genemods.md`
 - [ ] `309` The Bureaucratic Strike — `specs/309-bureaucratic-strike.md`
 
-- [ ] `314` The Void Leviathan — `specs/314-void-leviathan.md`
 - [ ] `315` The Propaganda Engine — `specs/315-propaganda-engine.md`
 - [ ] `317` The Orbital Junkyard — `specs/317-orbital-junkyard.md`
 - [ ] `318` The Stolen Fleet — `specs/318-stolen-fleet.md`

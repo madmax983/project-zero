@@ -40,6 +40,7 @@ pub fn build_simulation_schedule() -> Schedule {
     let mut schedule = Schedule::new(SimulationSchedule);
     register_simulation_core_systems(&mut schedule);
     register_simulation_extended_systems(&mut schedule);
+    schedule.add_systems(crate::layer2::void_leviathan::update_leviathan_eclipse_system);
     schedule.add_systems((
         crate::layer3::guilt::process_guilt_generation_system,
         crate::layer3::guilt::apply_guilt_unrest_system,
@@ -74,6 +75,8 @@ pub fn build_simulation_schedule() -> Schedule {
 #[allow(clippy::too_many_lines)]
 fn init_simulation_resources(world: &mut World) {
     world.init_resource::<Events<crate::layer3::diplomacy::open_source_science::PublishDiscoveryEvent>>();
+    world.init_resource::<crate::layer2::void_leviathan::VoidLeviathan>();
+    world.init_resource::<crate::layer2::void_leviathan::LeviathanEclipse>();
 
     #[cfg(feature = "nova")]
     world.init_resource::<crate::experimental::ghost_grid::GhostGrid>();
@@ -1205,6 +1208,7 @@ mod tests {
     #[allow(clippy::too_many_lines)]
     fn test_schedule_runs_on_fresh_world() {
         let mut world = setup_world();
+        init_simulation_resources(&mut world);
         *world.resource_mut::<GameState>() = GameState::Running;
         world
             .init_resource::<crate::layer1::administration::invasive_bureaucracy::EmpireStability>(
