@@ -642,3 +642,5 @@ mod modular_fauna_integration;
 mod improvised_tools_bridge;
 #[path = "integration/slippery_slope_bridge.rs"]
 mod slippery_slope_bridge;
+#[path = "integration/tectonic_heavy_industry_bridge.rs"]
+pub mod tectonic_heavy_industry_bridge;

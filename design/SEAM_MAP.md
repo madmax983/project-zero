@@ -1,3 +1,9 @@
+
+### INT-1211: Heavy Industry -> Tectonic Stress
+- **Date:** 2026-11-01
+- **Systems connected:** `HeavyIndustry` -> `heavy_industry_tectonic_stress_bridge` -> `TectonicStress`
+- **Glue added:** Added `heavy_industry_tectonic_stress_bridge` in `src/layer1/core/integration.rs`. Registered in `src/layer1/systems/environment.rs`.
+- **Tests:** `tests/integration/tectonic_heavy_industry_bridge.rs`
 - `1128` Hypno-Learning — `specs/1128-hypno-learning.md`
 ### INT-1128: Hypno-Learning -> Chronicle
 - **Date:** 2026-06-25
