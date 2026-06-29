@@ -25985,3 +25985,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you slow down industrial expansion to respect the local biome, or do you invest in costly, hazardous defoliant campaigns that might spark further mutations?
 
 ---
+
+## The Hyperspace Wake
+
+**Layer:** 2 -> 3
+
+**Fantasy:** FTL travel leaves a scar on the universe. The faster you expand, the more you damage the fabric of space itself.
+
+**Mechanic:** Frequent hyperlane usage in a specific sector builds up "Hyperspace Wake." High wake causes sub-space anomalies, damages passing ships, and eventually tears open temporary rifts that spawn hostile entities or consume local Layer 2 infrastructure.
+
+**Emergence:** Your core trade hub becomes so busy that the hyperlanes around it tear open, unleashing a swarm of void-entities that devour your economic heartland. You have to intentionally cripple your own trade to let space "heal."
+
+**Tension:** Do you expand and trade as fast as possible, knowing you are slowly rendering your core systems uninhabitable, or throttle your logistics to preserve the environment?
+
+---
+
+## Genetic Heirlooms
+
+**Layer:** 1
+
+**Fantasy:** A family line carrying a hyper-specialized trait that is both a blessing and a curse.
+
+**Mechanic:** Specific, extreme genetic traits (e.g., "Vacuum Breather," "Perfect Memory") can only be inherited, not spliced. They offer massive bonuses but come with severe, specific dietary or environmental requirements. If the requirements aren't met, the pop suffers extreme penalties and eventual death.
+
+**Emergence:** You rely entirely on the "Smith" family to maintain your exposed vacuum reactors because of their genetic resistance. A sudden shortage of the rare isotope they require for sustenance wipes out the family, instantly crippling your entire power grid.
+
+**Tension:** Do you intentionally breed these specialized pops for their massive output, knowing their fragility creates a single point of failure for your colony?
+
+---
+
+## The Bureaucracy of Charity
+
+**Layer:** Cross-layer
+
+**Fantasy:** Discovering that your generosity has created a toxic dependency.
+
+**Mechanic:** Regularly gifting resources to struggling allied empires (Layer 3) or giving welfare to low-performing pops (Layer 1) generates "Charity Debt." The recipients become dependent, reducing their own base productivity. If you ever stop the charity, they don't just return to normal—they suffer massive negative morale modifiers and may actively turn hostile out of perceived betrayal.
+
+**Emergence:** You subsidize a starving neighbor for 50 years out of goodwill. When a war forces you to cut the subsidies to fund your fleets, the neighbor instantly collapses, blames you for their ruin, and joins your enemy in the war.
+
+**Tension:** Do you let struggling factions and pops fail on their own to preserve their self-sufficiency, or support them and risk creating a fragile, dangerous dependency?
+
+---
