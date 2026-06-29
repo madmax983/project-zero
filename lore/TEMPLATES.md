@@ -2058,7 +2058,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ---
 
-## Vacuum Welding Templates (Spec 185)
+## Vacuum Welding Templates (Spec 1001)
 
 ### STRUCTURE_WELDED
 
@@ -9769,3 +9769,32 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: The uprising of [ANCIENT_TITLE] was put down in [COLONY]. The past is buried again."
 - "The fever broke. [ANCIENT_TITLE] finally accepted the new reality in [COLONY]. The mutiny is over. [YEAR]."
 - "[COLONY] silenced [ANCIENT_TITLE]. Their primitive rebellion could not stand against our progress. [YEAR]."
+
+## The Hive Mind Integration Templates (Spec 1022)
+
+### XENO_INTEGRATION_SURGERY
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [POP_NAME], [COLLECTIVE_NAME]
+
+**Patterns:**
+- "[YEAR]: The surgery was a success. [POP_NAME] is no more. They are now part of [COLLECTIVE_NAME] on [COLONY]."
+- "The flora took hold in [COLONY]. [POP_NAME] opened their eyes and spoke as [COLLECTIVE_NAME]. [YEAR]."
+- "[COLONY] reports the first successful integration. [POP_NAME] no longer needs sleep. They are [COLLECTIVE_NAME]. [YEAR]."
+
+### COLLECTIVE_REFUSAL
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [COLLECTIVE_NAME], [INEFFICIENT_TRAIT]
+
+**Patterns:**
+- "[YEAR]: The [COLLECTIVE_NAME] on [COLONY] halted food distribution to the unlinked. They called [INEFFICIENT_TRAIT] inefficient."
+- "[COLONY] is starving, but not the [COLLECTIVE_NAME]. They refuse to support those still [INEFFICIENT_TRAIT]. [YEAR]."
+- "A grim calculation on [COLONY]. The [COLLECTIVE_NAME] considers [INEFFICIENT_TRAIT] a waste of resources. They will not help. [YEAR]."
+
+### HIVE_MIND_SCHISM
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [COLLECTIVE_NAME]
+
+**Patterns:**
+- "[YEAR]: A silent civil war begins on [COLONY]. The [COLLECTIVE_NAME] has declared the unlinked obsolete."
+- "They no longer recognize us as kin. The [COLLECTIVE_NAME] split from [COLONY] governance. [YEAR]."
+- "[COLONY] is broken in two. The [COLLECTIVE_NAME] stands apart. They do not sleep, they do not tire, and they will not compromise. [YEAR]."
