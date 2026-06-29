@@ -21,6 +21,7 @@ use crate::shared::time::SimulationTime;
 
 #[derive(SystemParam)]
 pub struct ArrivalContext<'w, 's> {
+    bio_suits: Query<'w, 's, &'static crate::layer1::economy::bio_loom::BioSuit>,
     items: Query<'w, 's, &'static crate::layer1::items::Item>,
     farms: Query<'w, 's, &'static mut Farm>,
     housing_q: Query<'w, 's, &'static mut Housing>,
@@ -33,6 +34,7 @@ pub struct ArrivalContext<'w, 's> {
     log: Option<ResMut<'w, MessageLog>>,
     graffiti_map: Option<ResMut<'w, crate::layer1::graffiti::GraffitiMap>>,
     unequip_events: EventWriter<'w, UnequipEvent>,
+    failed_events: EventWriter<'w, crate::layer1::economy::bio_loom::UnequipFailedEvent>,
     time: Res<'w, SimulationTime>,
 }
 
@@ -143,6 +145,8 @@ fn process_arrival(
                 pop_entity,
                 equipment_opt,
                 &mut ctx.unequip_events,
+                &ctx.bio_suits,
+                &mut ctx.failed_events,
             );
             true
         }
@@ -321,13 +325,24 @@ pub fn handle_fetch_clothing(
     pop_entity: Entity,
     equipment_opt: &mut Option<Mut<Equipment>>,
     unequip_events: &mut EventWriter<UnequipEvent>,
+    bio_suits: &Query<&crate::layer1::economy::bio_loom::BioSuit>,
+    failed_events: &mut EventWriter<crate::layer1::economy::bio_loom::UnequipFailedEvent>,
 ) {
     if resources.clothing >= 1.0 {
-        resources.clothing -= 1.0;
-
         let mut is_upgrade = false;
         if let Some(eq) = equipment_opt {
             if eq.body.is_some() {
+                if let Some(old_entity) = eq.body {
+                    if let Ok(suit) = bio_suits.get(old_entity) {
+                        if suit.attachment_level > 75.0 {
+                            failed_events.send(crate::layer1::economy::bio_loom::UnequipFailedEvent {
+                                entity: pop_entity,
+                                reason: "The Bio-Suit has fused with the host's nervous system.".to_string(),
+                            });
+                            return; // Block unequip
+                        }
+                    }
+                }
                 is_upgrade = true;
                 if let Some(old_entity) = eq.body {
                     unequip_events.send(UnequipEvent {
@@ -339,6 +354,9 @@ pub fn handle_fetch_clothing(
                 }
             }
         }
+
+        resources.clothing -= 1.0;
+
         let (clothing_type, insulation) = if is_upgrade {
             (ClothingType::Parka, 2.0)
         } else {
