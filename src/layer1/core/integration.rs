@@ -3298,3 +3298,15 @@ pub fn subconscious_grid_lockdown_chronicle_bridge(
         }
     }
 }
+
+
+/// INT-1211: Heavy Industry -> Tectonic Stress bridge
+/// Increases tectonic stress based on the smog output of heavy industries.
+pub fn heavy_industry_tectonic_stress_bridge(
+    mut stress: ResMut<crate::layer1::geology::tectonic::TectonicStress>,
+    industry_query: Query<&crate::layer1::environment::atmosphere::HeavyIndustry>,
+) {
+    for industry in industry_query.iter() {
+        stress.current += industry.smog_output * 0.05;
+    }
+}
