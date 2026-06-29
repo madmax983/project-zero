@@ -243,3 +243,6 @@ pub mod debt_of_the_dead;
 pub use bone_economy::*;
 pub mod information_black_market;
 pub use information_black_market::*;
+
+pub mod bio_loom;
+pub use bio_loom::*;

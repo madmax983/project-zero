@@ -848,3 +848,4 @@
 - [x] `1020` Spatial Compression — `specs/1020-spatial-compression.md` — completed 2024-05-31
 - [x] `1125` Improvised Tools — `specs/1125-improvised-tools.md` — completed 2026-06-29
 - [x] `INT-1125` Integration: Improvised Tools -> Simulation — completed 2026-06-29
+- [x] `304` The Bio-Loom — `specs/304-bio-loom.md` — completed 2026-02-01

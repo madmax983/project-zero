@@ -72,7 +72,6 @@ See `design/IDEAS.md` for unspecced concepts.
 
 
 
-- [ ] `304` The Bio-Loom — `specs/304-bio-loom.md`
 - [ ] `305` The Empathy Broadcast — `specs/305-empathy-broadcast.md`
 - [ ] `306` The Debt Collector — `specs/306-debt-collector.md`
 - [ ] `307` Xenological Pets — `specs/307-xenological-pets.md`

@@ -14,6 +14,7 @@ use bevy_ecs::system::RunSystemOnce;
 #[test]
 fn test_arrival_assigns_to_farm() {
     let mut world = setup_world();
+    world.init_resource::<bevy_ecs::event::Events<crate::layer1::economy::bio_loom::UnequipFailedEvent>>();
 
     let farm = world
         .spawn((
@@ -61,6 +62,7 @@ fn test_arrival_assigns_to_farm() {
 #[test]
 fn test_arrival_assigns_to_housing() {
     let mut world = setup_world();
+    world.init_resource::<bevy_ecs::event::Events<crate::layer1::economy::bio_loom::UnequipFailedEvent>>();
 
     let housing = world
         .spawn((
@@ -104,6 +106,7 @@ fn test_arrival_assigns_to_housing() {
 #[test]
 fn test_arrival_farm_at_capacity() {
     let mut world = setup_world();
+    world.init_resource::<bevy_ecs::event::Events<crate::layer1::economy::bio_loom::UnequipFailedEvent>>();
 
     let other_pop = world.spawn(Pop).id();
     let farm = world
@@ -144,6 +147,7 @@ fn test_arrival_farm_at_capacity() {
 #[test]
 fn test_arrival_assigns_to_hospital() {
     let mut world = setup_world();
+    world.init_resource::<bevy_ecs::event::Events<crate::layer1::economy::bio_loom::UnequipFailedEvent>>();
 
     let hospital = world
         .spawn((
@@ -182,6 +186,7 @@ fn test_arrival_assigns_to_hospital() {
 #[test]
 fn test_arrival_assigns_to_library() {
     let mut world = setup_world();
+    world.init_resource::<bevy_ecs::event::Events<crate::layer1::economy::bio_loom::UnequipFailedEvent>>();
 
     let library = world
         .spawn((
