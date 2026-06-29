@@ -678,9 +678,12 @@ pub fn vermin_morale_system(
 pub fn fire_damage_pops_system(
     fire_query: Query<(&GridPosition, &Fire)>,
     mut pop_query: Query<(&GridPosition, &mut Health), With<Pop>>,
+    mut fire_tiles: Local<HashSet<GridPosition>>,
 ) {
     // 1. Identify dangerous tiles
-    let fire_tiles: HashSet<GridPosition> = fire_query.iter().map(|(pos, _)| *pos).collect();
+    // ⚡ Bolt Optimization: Reuse Local HashSet to prevent per-frame allocation
+    fire_tiles.clear();
+    fire_tiles.extend(fire_query.iter().map(|(pos, _)| *pos));
 
     if fire_tiles.is_empty() {
         return;

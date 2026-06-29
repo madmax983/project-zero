@@ -1,18 +1,19 @@
 use bevy::prelude::*;
+use scale::layer1::needs::Needs;
+use scale::layer1::pop::Pop;
+use scale::layer1::social::morale::Morale;
 use scale::layer1::social::slippery_slope::{
     apply_morale_buffs, apply_stress_penalties, process_atrocities, AtrocityEvent, Desensitization,
     MoraleBuffEvent, StressPenaltyEvent,
 };
-use scale::layer1::social::morale::Morale;
-use scale::layer1::needs::Needs;
-use scale::layer1::pop::Pop;
 
 #[test]
 fn test_atrocity_increases_desensitization() {
     let mut app = App::new();
     app.add_systems(Update, process_atrocities);
 
-    app.world_mut().insert_resource(Desensitization { level: 0.0 });
+    app.world_mut()
+        .insert_resource(Desensitization { level: 0.0 });
     app.world_mut().init_resource::<Events<AtrocityEvent>>();
 
     app.world_mut().send_event(AtrocityEvent { severity: 10.0 });
@@ -28,7 +29,8 @@ fn test_high_desensitization_dampens_morale_buffs() {
     let mut app = App::new();
     app.add_systems(Update, apply_morale_buffs);
 
-    app.world_mut().insert_resource(Desensitization { level: 1.0 }); // 100% numb
+    app.world_mut()
+        .insert_resource(Desensitization { level: 1.0 }); // 100% numb
     app.world_mut().init_resource::<Events<MoraleBuffEvent>>();
 
     let pop = app
