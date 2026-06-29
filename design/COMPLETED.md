@@ -846,3 +846,4 @@
 - [x] `1228` The Slippery Slope — `specs/1228-the-slippery-slope.md` — completed 2026-06-28
 - [x] `1020` Spatial Compression — `specs/1020-spatial-compression.md` — completed 2024-05-31
 - [x] `1125` Improvised Tools — `specs/1125-improvised-tools.md` — completed 2026-06-29
+- [x] `INT-1125` Integration: Improvised Tools -> Simulation — completed 2026-06-29
