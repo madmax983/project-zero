@@ -713,7 +713,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1208` The Cadet Branch — `specs/1208-the-cadet-branch.md`
 - [ ] `1209` Asteroid Hollowing — `specs/1209-asteroid-hollowing.md`
 - [ ] `1210` Weaponized Tourism — `specs/1210-weaponized-tourism.md`
-- [ ] `1211` Tectonic Stress — `specs/1211-tectonic-stress.md`
 - [ ] `1212` The Galactic Games — `specs/1212-the-galactic-games.md`
 - [ ] `1213` Trade Embargoes — `specs/1213-trade-embargoes.md`
 - [ ] `1214` Biometric Drift — `specs/1214-biometric-drift.md`

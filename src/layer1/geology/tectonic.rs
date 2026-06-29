@@ -1,5 +1,7 @@
 use crate::layer1::environment::volatile::ExplosionEvent;
 use crate::layer1::resources::MiningEvent;
+use crate::layer1::shields::DamageEvent;
+use crate::layer1::architecture::Structure;
 use bevy_ecs::prelude::*;
 
 #[derive(Resource, Debug)]
@@ -39,6 +41,23 @@ pub fn update_stress_system(
     stress.current = (stress.current - stress.dissipation_rate).max(0.0);
 }
 
+
+pub fn apply_mega_quake_damage_system(
+    mut events: EventReader<MegaQuakeEvent>,
+    mut damage_writer: EventWriter<DamageEvent>,
+    structures: Query<Entity, With<Structure>>,
+) {
+    for _ in events.read() {
+        for entity in structures.iter() {
+            damage_writer.send(DamageEvent {
+                target: entity,
+                amount: 100.0,
+                velocity: 50.0,
+            });
+        }
+    }
+}
+
 pub fn check_quake_system(
     mut stress: ResMut<TectonicStress>,
     mut quake_writer: EventWriter<MegaQuakeEvent>,
@@ -60,8 +79,9 @@ pub fn check_quake_system(
 mod tests {
     use crate::layer1::environment::volatile::ExplosionEvent;
     use crate::layer1::geology::tectonic::{
-        check_quake_system, update_stress_system, MegaQuakeEvent, TectonicStress,
+        apply_mega_quake_damage_system, check_quake_system, update_stress_system, MegaQuakeEvent, TectonicStress,
     };
+    use crate::layer1::shields::DamageEvent;
     use crate::layer1::resources::MiningEvent;
     use bevy_ecs::prelude::*;
 
@@ -128,5 +148,33 @@ mod tests {
 
         let stress = world.resource::<TectonicStress>();
         assert_eq!(stress.current, 0.0); // Reset after quake
+    }
+
+    #[test]
+    fn test_mega_quake_damages_structures() {
+        let mut world = World::new();
+        world.init_resource::<Events<MegaQuakeEvent>>();
+        world.init_resource::<Events<DamageEvent>>();
+
+        let structure_entity = world
+            .spawn(crate::layer1::architecture::Structure {
+                current_hp: 100.0,
+                max_hp: 100.0,
+            })
+            .id();
+
+        world.send_event(MegaQuakeEvent);
+
+        let mut schedule = Schedule::default();
+        schedule.add_systems(apply_mega_quake_damage_system);
+        schedule.run(&mut world);
+
+        let damage_events = world.resource::<Events<DamageEvent>>();
+        let mut reader = damage_events.get_cursor();
+        let emitted: Vec<_> = reader.read(damage_events).collect();
+
+        assert_eq!(emitted.len(), 1);
+        assert_eq!(emitted[0].target, structure_entity);
+        assert_eq!(emitted[0].amount, 100.0);
     }
 }
