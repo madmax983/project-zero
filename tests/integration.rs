@@ -640,3 +640,5 @@ mod modular_fauna_integration;
 
 #[path = "integration/slippery_slope_bridge.rs"]
 mod slippery_slope_bridge;
+#[path = "integration/improvised_tools_bridge.rs"]
+mod improvised_tools_bridge;

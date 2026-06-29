@@ -1682,3 +1682,9 @@
 - **Systems connected:** `process_atrocities`, `apply_morale_buffs`, `apply_stress_penalties` -> `SimulationSchedule`
 - **Glue added:** Initialized `Desensitization` resource, `AtrocityEvent`, `MoraleBuffEvent`, and `StressPenaltyEvent` in `src/setup.rs` and registered systems in `src/layer1/systems/observation.rs`.
 - **Tests:** `tests/integration/slippery_slope_bridge.rs`
+
+### INT-1125: Improvised Tools -> Simulation
+- **Date:** 2026-06-29
+- **Systems connected:** `evaluate_tool_fallback_system` -> `SimulationSchedule` (Execution)
+- **Glue added:** Added `ImprovisedTools` component to `PopBundle` so that all pops can be evaluated. Registered `evaluate_tool_fallback_system` in `Layer1SystemSet::Execution`.
+- **Tests:** `tests/integration/improvised_tools_bridge.rs`

@@ -342,6 +342,7 @@ pub struct PopBundle {
     /// Base stats.
     pub stats: crate::layer1::psychology::void_sickness::PopStats,
     /// Resonance architectural traits.
+    pub improvised_tools: crate::layer1::improvised_tools::ImprovisedTools,
     pub resonance_traits: crate::layer1::architecture::resonant_architecture::PopResonanceTraits,
     pub base_resonance_traits:
         crate::layer1::architecture::resonant_architecture::PopBaseResonanceTraits,
@@ -367,6 +368,7 @@ impl PopBundle {
             knowledge: Knowledge::default(),
             age: Age::new(rng.gen_range(20..40)),
             faction: FactionMember::default(),
+            improvised_tools: crate::layer1::improvised_tools::ImprovisedTools::default(),
             arrival: Arrival { tick: 0 },
             ethics: crate::layer1::social::indoctrination::PopEthics {
                 ethic: match rng.gen_range(0..5) {

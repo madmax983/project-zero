@@ -352,4 +352,9 @@ pub fn register(schedule: &mut Schedule) {
         )
             .in_set(Layer1SystemSet::Execution),
     ));
+
+    schedule.add_systems(
+        crate::layer1::improvised_tools::evaluate_tool_fallback_system
+            .in_set(Layer1SystemSet::Execution),
+    );
 }
