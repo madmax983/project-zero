@@ -133,8 +133,8 @@ impl std::fmt::Display for NarrativeSegment {
         match self {
             Self::Text(s) => write!(f, "{s}"),
             Self::Slot { value, .. } => write!(f, "{value}"),
-            Self::MissingContext(s) => write!(f, "[MISSING CONTEXT: {s}]"),
-            Self::MissingFragmentOptions(s) => write!(f, "[MISSING FRAGMENT OPTIONS: {s}]"),
+            Self::MissingContext(s) => write!(f, "Missing context: '{s}'"),
+            Self::MissingFragmentOptions(s) => write!(f, "Fragment '{s}' has no options defined"),
         }
     }
 }
