@@ -89,6 +89,7 @@ pub fn update_solar_cycle_system(mut state: ResMut<SolarCycleState>, time: Res<S
 pub fn update_solar_output_system(
     state: Res<SolarCycleState>,
     day_night: Option<Res<DayNightCycle>>,
+    eclipse: Option<Res<crate::layer2::void_leviathan::LeviathanEclipse>>,
     mut query: Query<(&mut PowerSource, &SolarPower)>,
 ) {
     let cycle_modifier = state.current_cycle.power_modifier();
@@ -103,7 +104,12 @@ pub fn update_solar_output_system(
         1.0
     };
 
-    let total_modifier = cycle_modifier * day_modifier;
+    let eclipse_modifier = if eclipse.is_some_and(|e| e.active) {
+        0.0
+    } else {
+        1.0
+    };
+    let total_modifier = cycle_modifier * day_modifier * eclipse_modifier;
 
     for (mut source, solar) in &mut query {
         source.output = solar.base_output * total_modifier;

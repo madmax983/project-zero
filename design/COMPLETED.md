@@ -777,6 +777,7 @@
 - [x] `1041` The Orphaned Swarm — `specs/1041-the-orphaned-swarm.md` — completed 2026-06-14
 - [x] `INT-1041` Integration: The Orphaned Swarm -> Chronicle — completed 2026-10-31
 - [x] `877` The Debt of the Dead — `specs/877-the-debt-of-the-dead.md` — completed 2026-02-01
+- [x] `314` The Void Leviathan — `specs/314-void-leviathan.md` — completed 2026-06-29
 - [x] `340` Light & Darkness — `specs/340-light-and-darkness.md` — completed 2024-05-30
 - [x] `1306` Architectural Superstition — `specs/1306-architectural-superstition.md` — completed 2024-06-15
 - [x] `INT-1306` Integration: Negative Events -> Architectural Superstition - completed 2026-06-15

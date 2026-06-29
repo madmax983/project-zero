@@ -129,10 +129,16 @@ impl Default for LightSource {
 pub fn update_lighting_system(
     mut light_map: ResMut<LightMap>,
     ambient: Res<AmbientLight>,
+    eclipse: Option<Res<crate::layer2::void_leviathan::LeviathanEclipse>>,
     sources: Query<(&LightSource, &GridPosition, Option<&PowerConsumer>)>,
 ) {
     // 1. Reset map to Ambient
-    light_map.tiles.fill(ambient.level);
+    let ambient_level = if eclipse.is_some_and(|e| e.active) {
+        0.0
+    } else {
+        ambient.level
+    };
+    light_map.tiles.fill(ambient_level);
 
     // 2. Iterate sources and spread light
     for (source, pos, power) in &sources {

@@ -1,7 +1,7 @@
-use bevy::prelude::*;
-use crate::layer1::jobs::CurrentTask;
 use crate::layer1::economy::inventory::Inventory;
 use crate::layer1::economy::items::{Equipment, ItemType};
+use crate::layer1::jobs::CurrentTask;
+use bevy::prelude::*;
 
 #[derive(Component, Default)]
 pub struct ImprovisedTools {
@@ -9,7 +9,12 @@ pub struct ImprovisedTools {
 }
 
 pub fn evaluate_tool_fallback_system(
-    mut query: Query<(&mut CurrentTask, &mut ImprovisedTools, &Inventory, &Equipment)>,
+    mut query: Query<(
+        &mut CurrentTask,
+        &mut ImprovisedTools,
+        &Inventory,
+        &Equipment,
+    )>,
 ) {
     for (mut task, mut improvised_tools, inventory, equipment) in query.iter_mut() {
         if equipment.tool.is_none() && inventory.has_item(ItemType::Scrap) {
@@ -25,9 +30,9 @@ pub fn evaluate_tool_fallback_system(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::layer1::jobs::CurrentTask;
     use crate::layer1::economy::inventory::{Inventory, InventoryItem};
     use crate::layer1::economy::items::{Equipment, ItemType};
+    use crate::layer1::jobs::CurrentTask;
 
     #[test]
     fn test_improvised_tools_fallback_scrap() {
@@ -40,12 +45,18 @@ mod tests {
             entity: None,
         });
 
-        let pop_entity = app.world_mut().spawn((
-            CurrentTask { efficiency: 1.0, ..Default::default() },
-            Equipment::default(),
-            inventory,
-            ImprovisedTools::default(),
-        )).id();
+        let pop_entity = app
+            .world_mut()
+            .spawn((
+                CurrentTask {
+                    efficiency: 1.0,
+                    ..Default::default()
+                },
+                Equipment::default(),
+                inventory,
+                ImprovisedTools::default(),
+            ))
+            .id();
 
         app.add_systems(Update, evaluate_tool_fallback_system);
         app.update();
@@ -68,12 +79,18 @@ mod tests {
             entity: None,
         });
 
-        let pop_entity = app.world_mut().spawn((
-            CurrentTask { efficiency: 1.0, ..Default::default() },
-            Equipment::default(),
-            inventory,
-            ImprovisedTools::default(),
-        )).id();
+        let pop_entity = app
+            .world_mut()
+            .spawn((
+                CurrentTask {
+                    efficiency: 1.0,
+                    ..Default::default()
+                },
+                Equipment::default(),
+                inventory,
+                ImprovisedTools::default(),
+            ))
+            .id();
 
         app.add_systems(Update, evaluate_tool_fallback_system);
         app.update();

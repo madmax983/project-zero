@@ -196,6 +196,7 @@ pub fn update_temperature_system(
     grid: Option<ResMut<TemperatureGrid>>,
     season: Option<Res<SeasonState>>,
     cycle: Option<Res<DayNightCycle>>,
+    eclipse: Option<Res<crate::layer2::void_leviathan::LeviathanEclipse>>,
     terrain: Res<TerrainGrid>,
     buildings: Query<(&Building, &GridPosition, Option<&PowerConsumer>)>,
     heat_sources: Query<(&HeatSource, &GridPosition)>,
@@ -207,6 +208,10 @@ pub fn update_temperature_system(
     // 1. Update Ambient
     if let Some(season) = season {
         grid.ambient = season.current_season.base_temperature();
+    }
+
+    if eclipse.is_some_and(|e| e.active) {
+        grid.ambient -= 20.0; // Significant temp drop
     }
 
     // 2. Solar Heat (Spec 198)
