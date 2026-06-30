@@ -858,3 +858,4 @@
 - [x] `306` The Debt Collector — `specs/306-debt-collector.md` — completed 2024-05-31
 - [x] `306` The Debt Collector — `specs/306-debt-collector.md` — completed 2024-05-31
 - [x] `306` The Debt Collector — `specs/306-debt-collector.md` — completed 2024-05-31
+- [x] `1271` The Propaganda Graffitists — `specs/1271-the-propaganda-graffitists.md` — completed 2026-06-30
