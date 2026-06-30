@@ -57,7 +57,6 @@ pub fn apply_mega_quake_damage_system(
     }
 }
 
-
 #[derive(Event, Debug, Clone)]
 pub struct ReliefQuakeEvent {
     pub amount: f32,
@@ -73,7 +72,6 @@ pub fn trigger_relief_quake_system(
 }
 
 pub fn check_quake_system(
-
     mut stress: ResMut<TectonicStress>,
     mut quake_writer: EventWriter<MegaQuakeEvent>,
     mut geo_events: EventWriter<crate::layer1::geology::GeologicalEvent>,
