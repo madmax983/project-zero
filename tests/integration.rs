@@ -376,6 +376,9 @@ mod public_grievances_bridge;
 #[path = "integration/protest_crowds_integration.rs"]
 mod protest_crowds_integration;
 
+#[path = "integration/memorial_revolt_bridge.rs"]
+mod memorial_revolt_bridge;
+
 #[path = "integration/founder_effect_bridge.rs"]
 mod founder_effect_bridge;
 
