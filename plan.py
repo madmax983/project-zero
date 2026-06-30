@@ -1,0 +1,1 @@
+print("Checking implementation strategy...")
