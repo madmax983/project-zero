@@ -17,6 +17,7 @@ mod tests {
 
     fn setup_world() -> World {
         let mut world = World::new();
+        world.init_resource::<bevy_ecs::event::Events<scale::layer1::economy::bio_loom::UnequipFailedEvent>>();
         // Setup essential resources
         world.insert_resource(UtilityConfig::default());
         world.insert_resource(SimulationTime::default());
