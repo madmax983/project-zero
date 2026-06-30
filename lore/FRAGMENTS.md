@@ -10086,3 +10086,72 @@ How the awakened react to the modern colony.
 - speaking with one voice
 - moving with terrifying synchronization
 - ignoring the suffering of individuals
+
+## Tectonic Stress Fragments (Spec 1211)
+
+### Fragment Type: [QUAKE_OMEN]
+
+- the deep trembling
+- the ground remembering
+- a sudden, unnatural silence from the deep rock
+- the dust shaking free from the ceiling
+- a low hum that vibrates in the teeth
+- the fault lines singing
+- the crust's protest
+
+### Fragment Type: [QUAKE_AFTERMATH]
+
+- swallowed by the earth
+- returned to the mantle
+- collapsed into dust
+- cracked like glass
+- sheared clean in half
+- buried under a thousand tons of memory
+
+## The Slippery Slope Fragments (Spec 1228)
+
+### Fragment Type: [NUMB_REACTION]
+
+- stared with hollow eyes
+- showed no reaction
+- stepped over the bodies without looking
+- continued working as if nothing happened
+- ate in silence
+- watched it burn with cold indifference
+- nodded, once, and walked away
+
+## Improvised Tools Fragments (Spec 1125)
+
+### Fragment Type: [MAKESHIFT_TOOL]
+
+- a sharpened piece of scrap
+- a heavy, flat stone
+- splintered wood bound with wire
+- whatever they could pry from the bulkheads
+- a blunt instrument of desperation
+- something resembling a hammer, but made of jagged rock
+- the raw bones of the earth
+
+## Celestial Cemeteries Fragments (Spec 1096)
+
+### Fragment Type: [ORBITAL_GRAVE_SIGHT]
+
+- a silver streak against the night sky
+- a new, silent constellation
+- the glint of titanium coffins catching the dawn
+- a ring of the dead encircling the world
+- a hazard on the launch scopes
+- the cold drift of ancestors
+- a metal shroud around the planet
+
+## Industrial Byproducts Fragments (Spec 354)
+
+### Fragment Type: [INDUSTRIAL_WASTE_DESCRIPTION]
+
+- choking, grey soot
+- a sickly-sweet chemical runoff
+- towering piles of razor-sharp slag
+- black sludge pooling in the lowlands
+- acrid smoke that burns the lungs
+- the toxic cost of progress
+- piles of useless, toxic ash

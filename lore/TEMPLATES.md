@@ -9798,3 +9798,69 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: A silent civil war begins on [COLONY]. The [COLLECTIVE_NAME] has declared the unlinked obsolete."
 - "They no longer recognize us as kin. The [COLLECTIVE_NAME] split from [COLONY] governance. [YEAR]."
 - "[COLONY] is broken in two. The [COLLECTIVE_NAME] stands apart. They do not sleep, they do not tire, and they will not compromise. [YEAR]."
+
+## Tectonic Stress Templates (Spec 1211)
+
+### Template: MEGA_QUAKE_STRIKES
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [QUAKE_OMEN], [QUAKE_AFTERMATH], [DEATHS]
+**Patterns:**
+- "[YEAR]: The ground broke. We fed it too much fire. First came [QUAKE_OMEN], then the city was [QUAKE_AFTERMATH]. [DEATHS] dead."
+- "[COLONY] shook violently in [YEAR]. It started with [QUAKE_OMEN]. Many structures were [QUAKE_AFTERMATH]. [DEATHS] souls were lost."
+- "The Deep Anger awoke. [QUAKE_OMEN] warned them, but it was too late. [DEATHS] lives [QUAKE_AFTERMATH]. [YEAR]."
+
+### Template: RELIEF_QUAKE_TRIGGERED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [POP_NAME]
+**Patterns:**
+- "[YEAR]: To stop a greater disaster, [POP_NAME] triggered a controlled collapse under [COLONY]. The ground sighed."
+- "A deliberate fracture was set off near [COLONY] by [POP_NAME]. The pressure eases. [YEAR]."
+- "[COLONY], [YEAR]: [POP_NAME] initiated a relief quake. A small sacrifice to prevent the Big One."
+
+## The Slippery Slope Templates (Spec 1228)
+
+### Template: COLONY_NUMBED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [ATROCITY_TYPE]
+**Patterns:**
+- "[YEAR]: After the [ATROCITY_TYPE], something broke in [COLONY]. They [NUMB_REACTION]."
+- "The horror of the [ATROCITY_TYPE] has become mundane. The people of [COLONY] just [NUMB_REACTION]. [YEAR]."
+- "[COLONY], [YEAR]: The Desensitization is complete. The [ATROCITY_TYPE] happens, and the populace [NUMB_REACTION]."
+
+## Improvised Tools Templates (Spec 1125)
+
+### Template: TOOLS_DEPLETED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [POP_NAME], [TASK]
+**Patterns:**
+- "[YEAR]: The tools broke. [POP_NAME] resorted to using [MAKESHIFT_TOOL] to finish the [TASK]."
+- "[COLONY] logistics failed. For the [TASK], [POP_NAME] picked up [MAKESHIFT_TOOL]. It took twice as long. [YEAR]."
+- "Desperation in [COLONY]: [POP_NAME] was seen using [MAKESHIFT_TOOL] for [TASK]. [YEAR]."
+
+## Celestial Cemeteries Templates (Spec 1096)
+
+### Template: ORBITAL_BURIAL_ENACTED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR]
+**Patterns:**
+- "[YEAR]: [COLONY] enacted the Orbital Burial policy. The dead will rise into the sky."
+- "No more room in the dirt. [COLONY] looks up. [YEAR]."
+- "[COLONY], [YEAR]: The first coffins were launched. They become [ORBITAL_GRAVE_SIGHT]."
+
+### Template: COFFIN_COLLISION
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [SHIP_NAME]
+**Patterns:**
+- "[YEAR]: The sky is too crowded. [SHIP_NAME] struck an ancestral coffin on launch from [COLONY]."
+- "[SHIP_NAME] failed to clear the debris field over [COLONY]. A collision with the dead. [YEAR]."
+- "[COLONY], [YEAR]: The Coffin Ring claims another. [SHIP_NAME] was lost on ascent."
+
+## Industrial Byproducts Templates (Spec 354)
+
+### Template: WASTE_DUMPING
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [INDUSTRIAL_WASTE_DESCRIPTION]
+**Patterns:**
+- "[YEAR]: The land around [COLONY] is scarred by [INDUSTRIAL_WASTE_DESCRIPTION]."
+- "Progress has a price. In [COLONY], it looks like [INDUSTRIAL_WASTE_DESCRIPTION]. [YEAR]."
+- "[COLONY], [YEAR]: They dumped the byproducts outside. Now the wind carries [INDUSTRIAL_WASTE_DESCRIPTION]."
