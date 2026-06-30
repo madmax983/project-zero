@@ -57,7 +57,23 @@ pub fn apply_mega_quake_damage_system(
     }
 }
 
+
+#[derive(Event, Debug, Clone)]
+pub struct ReliefQuakeEvent {
+    pub amount: f32,
+}
+
+pub fn trigger_relief_quake_system(
+    mut stress: ResMut<TectonicStress>,
+    mut events: EventReader<ReliefQuakeEvent>,
+) {
+    for event in events.read() {
+        stress.current = (stress.current - event.amount).max(0.0);
+    }
+}
+
 pub fn check_quake_system(
+
     mut stress: ResMut<TectonicStress>,
     mut quake_writer: EventWriter<MegaQuakeEvent>,
     mut geo_events: EventWriter<crate::layer1::geology::GeologicalEvent>,
@@ -176,5 +192,43 @@ mod tests {
         assert_eq!(emitted.len(), 1);
         assert_eq!(emitted[0].target, structure_entity);
         assert_eq!(emitted[0].amount, 100.0);
+    }
+
+    #[test]
+    fn test_relief_quake_reduces_stress() {
+        let mut world = World::new();
+        world.insert_resource(TectonicStress {
+            current: 50.0,
+            ..Default::default()
+        });
+        world.init_resource::<Events<crate::layer1::geology::tectonic::ReliefQuakeEvent>>();
+
+        let mut schedule = Schedule::default();
+        schedule.add_systems(crate::layer1::geology::tectonic::trigger_relief_quake_system);
+
+        world.send_event(crate::layer1::geology::tectonic::ReliefQuakeEvent { amount: 20.0 });
+        schedule.run(&mut world);
+
+        let stress = world.resource::<TectonicStress>();
+        assert_eq!(stress.current, 30.0);
+    }
+
+    #[test]
+    fn test_relief_quake_cannot_reduce_stress_below_zero() {
+        let mut world = World::new();
+        world.insert_resource(TectonicStress {
+            current: 10.0,
+            ..Default::default()
+        });
+        world.init_resource::<Events<crate::layer1::geology::tectonic::ReliefQuakeEvent>>();
+
+        let mut schedule = Schedule::default();
+        schedule.add_systems(crate::layer1::geology::tectonic::trigger_relief_quake_system);
+
+        world.send_event(crate::layer1::geology::tectonic::ReliefQuakeEvent { amount: 20.0 });
+        schedule.run(&mut world);
+
+        let stress = world.resource::<TectonicStress>();
+        assert_eq!(stress.current, 0.0);
     }
 }

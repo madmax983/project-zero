@@ -185,8 +185,10 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::geology::tectonic::update_stress_system,
             crate::layer1::geology::fracking::tectonic_fracking_system
                 .after(crate::layer1::core::integration::trigger_tectonic_fracking_system),
-            crate::layer1::geology::tectonic::check_quake_system
+            crate::layer1::geology::tectonic::trigger_relief_quake_system
                 .after(crate::layer1::geology::tectonic::update_stress_system),
+            crate::layer1::geology::tectonic::check_quake_system
+                .after(crate::layer1::geology::tectonic::trigger_relief_quake_system),
             crate::layer1::geology::tectonic::apply_mega_quake_damage_system
                 .after(crate::layer1::geology::tectonic::check_quake_system),
             spirit_decay_system,
