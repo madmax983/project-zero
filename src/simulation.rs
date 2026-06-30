@@ -74,6 +74,7 @@ pub fn build_simulation_schedule() -> Schedule {
 /// Run one simulation tick: all game systems via schedule, then increment tick counter.
 #[allow(clippy::too_many_lines)]
 fn init_simulation_resources(world: &mut World) {
+
     world.init_resource::<Events<crate::layer3::diplomacy::open_source_science::PublishDiscoveryEvent>>();
     world.init_resource::<crate::layer2::void_leviathan::VoidLeviathan>();
     world.init_resource::<crate::layer2::void_leviathan::LeviathanEclipse>();
@@ -87,6 +88,7 @@ fn init_simulation_resources(world: &mut World) {
     world.init_resource::<Events<crate::layer1::architecture::chrono_vault::SealVaultEvent>>();
     world.init_resource::<Events<crate::layer2::auction::VaultOpenedEvent>>();
     world.init_resource::<bevy_ecs::event::Events<crate::layer2::orbit::asteroid_claims::AttackColonyEvent>>();
+        world.init_resource::<bevy_ecs::event::Events<crate::layer2::fleet::FleetCommand>>();
     world.init_resource::<Events<crate::layer3::diplomacy::open_source_science::PublishDiscoveryEvent>>();
     world.init_resource::<Events<crate::layer1::economy::debt_of_the_dead::DebtInheritedEvent>>();
     world.init_resource::<Events<crate::layer1::economy::debt_of_the_dead::DebtSocializedEvent>>();
@@ -256,6 +258,7 @@ fn init_simulation_resources(world: &mut World) {
     world.init_resource::<Events<crate::layer2::auction::PlaceBidEvent>>();
     world.init_resource::<Events<crate::layer2::auction::VaultOpenedEvent>>();
     world.init_resource::<bevy_ecs::event::Events<crate::layer2::orbit::asteroid_claims::AttackColonyEvent>>();
+        world.init_resource::<bevy_ecs::event::Events<crate::layer2::fleet::FleetCommand>>();
     world.init_resource::<Events<crate::layer3::diplomacy::open_source_science::PublishDiscoveryEvent>>();
     world.init_resource::<Events<crate::layer1::economy::debt_of_the_dead::DebtInheritedEvent>>();
     world.init_resource::<Events<crate::layer1::economy::debt_of_the_dead::DebtSocializedEvent>>();
@@ -590,6 +593,7 @@ fn register_simulation_core_systems(schedule: &mut Schedule) {
 
 #[allow(clippy::too_many_lines)]
 fn register_simulation_extended_systems(schedule: &mut Schedule) {
+    schedule.add_systems(crate::layer2::ecophagy::process_world_eater_system);
     schedule.add_systems((
         crate::layer1::economy::bio_loom::apply_bio_suit_armor,
         crate::layer1::economy::bio_loom::process_bio_suit_parasitism,
@@ -1133,6 +1137,7 @@ mod tests {
         world.init_resource::<Events<crate::layer1::architecture::chrono_vault::SealVaultEvent>>();
         world.init_resource::<Events<crate::layer2::auction::VaultOpenedEvent>>();
         world.init_resource::<bevy_ecs::event::Events<crate::layer2::orbit::asteroid_claims::AttackColonyEvent>>();
+        world.init_resource::<bevy_ecs::event::Events<crate::layer2::fleet::FleetCommand>>();
         world.init_resource::<Events<crate::layer3::diplomacy::open_source_science::PublishDiscoveryEvent>>();
         world
             .init_resource::<Events<crate::layer1::economy::debt_of_the_dead::DebtInheritedEvent>>(
@@ -1224,6 +1229,7 @@ mod tests {
         world.init_resource::<Events<crate::layer1::architecture::chrono_vault::SealVaultEvent>>();
         world.init_resource::<Events<crate::layer2::auction::VaultOpenedEvent>>();
         world.init_resource::<bevy_ecs::event::Events<crate::layer2::orbit::asteroid_claims::AttackColonyEvent>>();
+        world.init_resource::<bevy_ecs::event::Events<crate::layer2::fleet::FleetCommand>>();
         world.init_resource::<Events<crate::layer3::diplomacy::open_source_science::PublishDiscoveryEvent>>();
         world
             .init_resource::<Events<crate::layer1::economy::debt_of_the_dead::DebtInheritedEvent>>(

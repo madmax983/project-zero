@@ -67,6 +67,7 @@ pub mod skyhooks;
 pub mod megastructure;
 pub mod rogue_planets;
 pub mod weather;
+pub mod ecophagy;
 pub use weather::*;
 pub mod bombardment;
 pub mod orbit;
